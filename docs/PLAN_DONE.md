@@ -16759,3 +16759,51 @@ Of 7.174 (open in PLAN.md):
     marks as they are. AT: e2e at 3000 and 800 m/px: a counter and a marker are discs of their flag's colours; a
     click on a ball opens its formation's panel as on Classic's marker; `sortie` e2e finds a winged ball where the
     sortie is.
+
+<!-- moved 2026-10-31 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+Of 7.174 (open in PLAN.md):
+
+  - [x] 7.174h Countryballs the default, last (the user's decision, 2026-10-31): `DEFAULT_UNIT_LOOK` 'balls', and
+    Playwright's config pins Classic (`use.storageState`) in the same commit, so the pixel specs keep the look
+    they measure. AT: unit test: the default 'balls', the pin at the config's `baseURL`; `settings1938`: 'balls'
+    with nothing stored; the full e2e run green with Classic pinned (a config every spec stands on: the one full
+    run of 7.174).
+
+<!-- moved 2026-10-31 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.174 Countryball units by default (the user's request, 2026-10-31; ADR-777): every unit drawn as a
+  countryball, a circle filled with its nation's flag, with eyes, animated; a setting turns back to the
+  look of today ("Classic"). View only: no sim input, the seed-99 pin unchanged by every part.
+  - [x] 7.174a The setting. `Settings.unitLook` ('balls' | 'classic', key `warsim.unitLook`), a row in […]
+  - [x] 7.174b The flags on the GPU. One texture of every nation's flag (`FlagStore.pixelsOf`, 36×24 a slot), […]
+  - [x] 7.174c The ball at T2 and T3 (the user's choice: one ball per element at T3, not its figures). A second […]
+  - [x] 7.174d The class by props (the user's choice): infantry a helmet, tanks treads and a barrel (turning as the […]
+  - [x] 7.174e Animation, on the render clock only (nothing of it sim state): a bob on the march (the walk phase, […]
+  - [x] 7.174f T0, T1 and the sky (the user's choice: every level). Counters and markers as balls of the flag […]
+  - [x] 7.174g SPEC §8: the ball look in the Forces column and a note of the setting. AT: parity green.
+  - [x] 7.174h Countryballs the default, last (the user's decision, 2026-10-31): `DEFAULT_UNIT_LOOK` 'balls', and […]

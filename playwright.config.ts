@@ -3,6 +3,17 @@ import { defineConfig, devices } from '@playwright/test';
 
 // E2E runs against the production build (`vite preview`) so tests see what ships.
 const PORT = 4173;
+const BASE_URL = `http://127.0.0.1:${PORT}`;
+
+/**
+ * Every page starts with the classic unit look stored (PLAN 7.174h, ADR-777): the pixel specs
+ * measure the sprites, markers and counters they were written for, while countryballs are the
+ * game's default. A spec of the balls stores 'balls' itself; one of the default clears this.
+ */
+export const CLASSIC_PIN = {
+  cookies: [],
+  origins: [{ origin: BASE_URL, localStorage: [{ name: 'warsim.unitLook', value: 'classic' }] }],
+};
 
 export default defineConfig({
   testDir: 'tests/e2e',
@@ -21,7 +32,8 @@ export default defineConfig({
   retries: 0,
   reporter: [['list']],
   use: {
-    baseURL: `http://127.0.0.1:${PORT}`,
+    baseURL: BASE_URL,
+    storageState: CLASSIC_PIN,
     trace: 'retain-on-failure',
   },
   projects: [
@@ -32,7 +44,7 @@ export default defineConfig({
   ],
   webServer: {
     command: `npm run build && npx vite preview --port ${PORT} --strictPort --host 127.0.0.1`,
-    url: `http://127.0.0.1:${PORT}`,
+    url: BASE_URL,
     reuseExistingServer: !process.env['CI'],
     timeout: 120_000,
   },

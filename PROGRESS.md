@@ -25120,3 +25120,25 @@ No rule changed and nothing on screen changed. One task came out of it.
   the flag atlas, eyes, props, motion, dead balls), and the GPU budget they are held to (ADR-778). §9 Settings:
   the unit look and its key. **AT:** parity green.
 - **Next:** PLAN 7.174h.
+
+## 2026-10-31 — PLAN 7.174h: countryballs the default (done; PLAN 7.174 done)
+
+- **Built:** `DEFAULT_UNIT_LOOK` 'balls'. `playwright.config.ts` stores the classic look for every page
+  (`use.storageState`: `CLASSIC_PIN`, `warsim.unitLook` = 'classic' at the base URL), so the pixel specs measure
+  the look they were written for; the ball specs store 'balls' themselves; `settings1938`'s unit-look test runs
+  with no storage (`test.use({ storageState: empty })`).
+- **AT:** `unitLook.test.ts`: the default 'balls', the pin the config's at its `baseURL`. `settings1938`: nothing
+  stored → 'balls', the select's value 'balls'; classic chosen persists over a reload; 'squares' → 'balls'.
+  The full e2e run with Classic pinned (the one of 7.174, the config every spec stands on): first gate 304 passed,
+  3 red, 1 not run: `fightCamera1938` and `fire1938` (on `knownRed.json`) green alone; `seaRow1938`'s Speed x1
+  test (on `knownRed.json`, BLOCKERS) red alone, and red and green in turn on HEAD without the change too (its
+  26–27 frames in 6 s). The gate run again: 303 passed, 4 red (the same three and `nukeFx1938`), all four alone 3 of
+  3 green but `seaRow1938` (1 of 3; on HEAD without the change 2 of 3). The full run rewrites evidence PNGs: restored.
+- **The gate (ADR-779, the user's decision):** the e2e stage runs a red test again alone and fails only on one red
+  twice that is not on `knownRed.json`, as its unit stage and `check:review` judge; perf on its own project after
+  chromium (a red in chromium had left it not run). `tools/gate/check.ts`, `review.ts` (`e2eRuns`, `e2eRedTwice`,
+  `splitKnown`), `gate.test.ts`; its tests green (29), typecheck and lint green.
+- **Committed without the gate** (the user's decision, 2026-10-31): the third gate run, the first under ADR-779, was
+  stopped and the change committed on the two full runs and the reruns alone above. The next gate's e2e is the first
+  under the new rule.
+- **Next:** PLAN 7.5 (the critic).

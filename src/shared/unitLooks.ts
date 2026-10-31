@@ -8,13 +8,13 @@ import type { UnitSymbol } from './protocol';
 
 /**
  * How units are drawn (PLAN 7.174, ADR-777): as countryballs, a disc of the nation's flag with
- * eyes, or as the tinted sprites, markers and counters drawn until then. The default stays
- * classic while the balls are built; PLAN 7.174h makes it countryballs and pins the e2e specs
- * to classic in the same commit (one full e2e run, the user's decision).
+ * eyes, or as the tinted sprites, markers and counters drawn until then. Countryballs are the
+ * default (PLAN 7.174h, the user's decision); the e2e specs measure classic, pinned in
+ * `playwright.config.ts` (`CLASSIC_PIN`).
  */
 export const UNIT_LOOKS = ['balls', 'classic'] as const;
 export type UnitLook = (typeof UNIT_LOOKS)[number];
-export const DEFAULT_UNIT_LOOK: UnitLook = 'classic';
+export const DEFAULT_UNIT_LOOK: UnitLook = 'balls';
 
 /** The look a stored value names, or the default for anything else (none stored, an unknown word). */
 export function parseUnitLook(v: string | null | undefined): UnitLook {

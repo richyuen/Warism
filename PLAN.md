@@ -33,21 +33,6 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.174 Countryball units by default (the user's request, 2026-10-31; ADR-777): every unit drawn as a
-  countryball, a circle filled with its nation's flag, with eyes, animated; a setting turns back to the
-  look of today ("Classic"). View only: no sim input, the seed-99 pin unchanged by every part.
-  - [x] 7.174a The setting. `Settings.unitLook` ('balls' | 'classic', key `warsim.unitLook`), a row in […]
-  - [x] 7.174b The flags on the GPU. One texture of every nation's flag (`FlagStore.pixelsOf`, 36×24 a slot), […]
-  - [x] 7.174c The ball at T2 and T3 (the user's choice: one ball per element at T3, not its figures). A second […]
-  - [x] 7.174d The class by props (the user's choice): infantry a helmet, tanks treads and a barrel (turning as the […]
-  - [x] 7.174e Animation, on the render clock only (nothing of it sim state): a bob on the march (the walk phase, […]
-  - [x] 7.174f T0, T1 and the sky (the user's choice: every level). Counters and markers as balls of the flag […]
-  - [x] 7.174g SPEC §8: the ball look in the Forces column and a note of the setting. AT: parity green.
-  - [ ] 7.174h Countryballs the default, last (the user's decision, 2026-10-31): `DEFAULT_UNIT_LOOK` 'balls', and
-    Playwright's config pins Classic (`use.storageState`) in the same commit, so the pixel specs keep the look
-    they measure. AT: unit test: the default 'balls', the pin at the config's `baseURL`; `settings1938`: 'balls'
-    with nothing stored; the full e2e run green with Classic pinned (a config every spec stands on: the one full
-    run of 7.174).
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 
@@ -439,3 +424,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.172 A land formation's "To its fight" frames the formation and its own fight: the formation on screen […]
 - [x] 7.162 The DONE condition's runs on the HEAD after 7.161 (the last soak was 2026-10-16, the last full […]
 - [x] 7.173 The living nations stop outgrowing their own past late in the game: the sweep's "no break-up" (the […]
+- [x] 7.174 Countryball units by default (the user's request, 2026-10-31; ADR-777): every unit drawn as a […]

@@ -104,16 +104,19 @@ test('settings: UI size, unit size, screenshot, seed and speed persistence', asy
   });
 });
 
-// PLAN 7.174a (ADR-777): the units' look. With nothing stored it is the default, classic until
-// PLAN 7.174h.
+// PLAN 7.174a (ADR-777): the units' look. With nothing stored it is the default, countryballs
+// since PLAN 7.174h: this test starts without the config's pin of classic.
+test.describe('the unit look, nothing stored', () => {
+  test.use({ storageState: { cookies: [], origins: [] } });
 test('settings: the unit look switches at once, persists, and falls back to the default', async ({ page }) => {
   test.setTimeout(180_000);
   const look = (): Promise<string> => page.evaluate(() => window.__warsim!.view!.unitLook);
   await open(page);
-  expect(await look(), 'nothing stored').toBe('classic');
+  expect(await page.evaluate(() => localStorage.getItem('warsim.unitLook')), 'nothing stored').toBeNull();
+  expect(await look(), 'nothing stored: the default').toBe('balls');
   await page.getByTestId('settings-btn').click();
   const select = page.getByTestId('settings-unit-look');
-  await expect(select).toHaveValue('classic');
+  await expect(select).toHaveValue('balls');
   expect(await select.locator('option').allTextContents()).toEqual(['Countryballs', 'Classic']);
 
   // At once: the view has the look chosen, before any reload.
@@ -123,17 +126,17 @@ test('settings: the unit look switches at once, persists, and falls back to the 
   await select.selectOption('classic');
   expect(await look()).toBe('classic');
 
-  // Persists: balls chosen, reloaded, still balls; and the panel says so.
-  await select.selectOption('balls');
+  // Persists: classic chosen, reloaded, still classic; and the panel says so.
   await open(page);
-  expect(await look()).toBe('balls');
+  expect(await look()).toBe('classic');
   await page.getByTestId('settings-btn').click();
-  await expect(page.getByTestId('settings-unit-look')).toHaveValue('balls');
+  await expect(page.getByTestId('settings-unit-look')).toHaveValue('classic');
 
   // A value it does not know is the default.
   await page.evaluate(() => localStorage.setItem('warsim.unitLook', 'squares'));
   await open(page);
-  expect(await look()).toBe('classic');
+  expect(await look()).toBe('balls');
+});
 });
 
 // PLAN 3.12Rh5: in a view 600 px high the panel is taller than its `max-height`: its last rows
