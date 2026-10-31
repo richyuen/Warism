@@ -25142,3 +25142,10 @@ No rule changed and nothing on screen changed. One task came out of it.
   stopped and the change committed on the two full runs and the reruns alone above. The next gate's e2e is the first
   under the new rule.
 - **Next:** PLAN 7.5 (the critic).
+
+## 2026-10-31 — PLAN 7.175 filed: force war (the user's request; ADR-780)
+
+- The player's and God's Declare war breaks the truce, alliance (the attacker leaves) or puppet bond (the puppet goes
+  free) in its way; overrun, at war and the rest still refused. The right-click menu and the Actions tab say the
+  target's standing; "Force war" where a bond stands. Parts a (the sim's `forceWar`) and b (the menus), before 7.5.
+- **Next:** PLAN 7.175a.

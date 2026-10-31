@@ -33,6 +33,26 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
+- [ ] 7.175 Force war (the user's request, 2026-10-31; ADR-780): a war the player or God declares breaks the
+  truce, alliance or puppet bond in its way instead of being refused. The AI keeps the bonds.
+  - [ ] 7.175a The sim: a `forceWar` command. Of the refusals of `whyNotWar` it breaks, in order: the attacker a
+    puppet in the way (of the defender, of the defender's overlord's realm, or one overlord's with the defender)
+    goes free (`releasePuppet`); the defender the attacker's puppet goes free; the attacker allied to the
+    defender or its realm leaves its alliance with its puppets (`leaveAlliance`), the alliance going on without
+    it; a truce of the attacker with the defender or its overlord ends. Then it declares (`declareWar`). It
+    breaks nothing and refuses as now when the war is refused for another reason (no such nation, the same
+    one, a dead one, already at war, overrun: the user's decision). Each bond broken has its event and row in
+    the ticker. AT: unit tests, one a bond: a truce, allies, an ally's realm, a puppet of either, one overlord's
+    two puppets: refused by `declareWar`, at war by `forceWar`, the bond gone and the alliance's other members
+    still in it; overrun and at war still refused, nothing broken; the pin of seed 99 unchanged (no AI path).
+  - [ ] 7.175b The menus: the right-click menu of a nation (`NationMenu`) says its standing with the played
+    nation under its name: At war, Allied, Puppet (of the one or the other), Truce (the days left) or
+    Neutral; its war button reads "Force war" where a bond stands, "Declare war" when neutral, and "Offer
+    peace" at war as now. The Actions tab says the chosen nation's standing and labels its button so; it and
+    God's tab send `forceWar`. AT: e2e: playing Germany, Italy (allied by the 1938 start, or allied in the
+    test) reads Allied and "Force war", the click makes the war and Germany leaves the alliance; a nation in
+    truce reads its days and its click makes the war; a neutral one reads Neutral and "Declare war"; God's
+    war on two allies makes it.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 

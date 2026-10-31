@@ -167,6 +167,18 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-780 · 2026-10-31 · accepted (the user's decision) — PLAN 7.175: the player's and God's war breaks the bond in its way
+**Decision.** Declare war from the right-click menu, the Actions tab or God's tab no longer refuses for a truce, an
+alliance or a puppet bond: it breaks them (a `forceWar` command). An attacker allied to the defender or its realm
+leaves its alliance (the alliance goes on); a puppet in the way goes free; a truce ends. A war refused for another
+reason (no such nation, the same, a dead one, already at war, overrun: one side has 3/4 of its land occupied and the
+war would end at once) is still refused, nothing broken. The right-click menu and the Actions tab say the target's
+standing (At war, Allied, Puppet, Truce with its days, Neutral); the button reads "Force war" where a bond stands.
+**Why.** The user's request: "war can be declared no matter what". The choices (both buttons; the attacker leaves,
+not the alliance dissolved; the puppet freed; overrun still refused) are the user's answers of 2026-10-31.
+**Consequences.** The AI's declarations keep `whyNotWar` (no AI path changes; the pin of seed 99 stays). A
+`WarRejected` row for a bond no longer comes from the player's menus.
+
 ### ADR-779 · 2026-10-31 · accepted (the user's decision) — the gate's e2e stage runs a red test again alone; a known red passes
 **Decision.** `npm run check`'s e2e stage judges as its unit stage (ADR-423) and as `npm run check:review` judges a
 chunk (ADR-297): each run's red chromium test is run again alone (its file, one worker); the stage fails only on a
