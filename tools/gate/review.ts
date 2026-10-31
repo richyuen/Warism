@@ -207,6 +207,7 @@ function vitest(config: string, files: string[], stage: string, verb = 'run'): s
 /** A Playwright run: its red ids, or null when it wrote no report. */
 function playwright(args: string, stage: string): string[] | null {
   const out = path.join(DIR, 'playwright.json');
+  mkdirSync(DIR, { recursive: true });
   rmSync(out, { force: true });
   const ok = run(`npx playwright test ${args} --reporter=line,json`, { PLAYWRIGHT_JSON_OUTPUT_NAME: out });
   const r = readJson<Parameters<typeof playwrightRed>[0]>(out);
@@ -232,6 +233,48 @@ export function again(first: string[], rerun: (file: string) => string[] | null)
 export function unitRedTwice(related?: string[]): string[] {
   const first = related ? vitest('--passWithNoTests', related, 'test', 'related --run') : vitest('', [], 'test');
   return first === null ? ['stage:test'] : again(first, (f) => vitest('', [f], 'test'));
+}
+
+/** A run of the browser suite: a project's specs (its arguments to `npx playwright test`). */
+export interface E2eRun {
+  project: 'chromium' | 'perf';
+  args: string;
+}
+
+/**
+ * The runs of the ordinary gate's e2e stage for `specs` (all of them when empty): the chromium
+ * project, and the perf specs on their own project with no dependencies (ADR-779). Run as one, a
+ * red in chromium left perf not run.
+ */
+export function e2eRuns(specs: readonly string[]): E2eRun[] {
+  const perf = specs.filter((f) => f.endsWith('.perf.spec.ts'));
+  const rest = specs.filter((f) => !f.endsWith('.perf.spec.ts'));
+  const runs: E2eRun[] = [];
+  if (specs.length === 0 || rest.length > 0) runs.push({ project: 'chromium', args: [...rest, '--project=chromium'].join(' ') });
+  if (specs.length === 0 || perf.length > 0) runs.push({ project: 'perf', args: [...perf, '--project=perf', '--no-deps'].join(' ') });
+  return runs;
+}
+
+/**
+ * The ordinary gate's e2e stage (ADR-779, the user's decision), as this run judges a chunk: each
+ * run, a chromium test red in it run again alone (its file, one worker); the ids red both times. A
+ * perf test is red once (its timings are the test), as `e2e:perf` here.
+ */
+export function e2eRedTwice(runs: readonly E2eRun[]): string[] {
+  const red: string[] = [];
+  for (const r of runs) {
+    const stage = r.project === 'perf' ? 'e2e:perf' : 'e2e';
+    const first = playwright(r.args, stage);
+    if (first === null) red.push(`stage:${stage}`);
+    else red.push(...(r.project === 'perf' ? first : again(first, (f) => playwright(`--project=chromium --workers=1 ${f}`, stage))));
+  }
+  return red;
+}
+
+/** The ids of `red` on the list of known reds (`known`) and those not on it. */
+export function splitKnown(red: readonly string[], known: readonly string[]): { known: string[]; unknown: string[] } {
+  const list = new Set(known);
+  return { known: red.filter((t) => list.has(t)), unknown: red.filter((t) => !list.has(t)) };
 }
 
 function step(name: string, specs: string[]): string[] {

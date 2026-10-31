@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { ALL_STAGES, changedFiles, changedSpecsCommand, gatedTrees, newTicks, PIN_TEST, planE2e, planGate, planSweep, planUnit, reviewTicked, tickedTasks, worktreeTree } from '../../tools/gate/check';
+import { e2eRuns, splitKnown } from '../../tools/gate/review';
+import { ALL_STAGES, changedFiles, gatedTrees, newTicks, PIN_TEST, planE2e, planGate, planSweep, planUnit, reviewTicked, tickedTasks, worktreeTree } from '../../tools/gate/check';
 import { criticDue, tickedReviews } from '../../tools/gate/criticDue';
 import { archive, LEDGER, MOVED } from '../../tools/plan/archive';
 
@@ -123,10 +124,24 @@ describe('gate plan (ADR-48, ADR-49)', () => {
   });
 
   // A perf spec named alone ran the whole suite: the perf project depends on chromium (PLAN 4.7's tick).
-  it('the changed specs: a perf spec on its project without its dependency, the others on chromium', () => {
-    expect(changedSpecsCommand(['tests/e2e/fire1938.spec.ts'])).toBe('npx playwright test tests/e2e/fire1938.spec.ts --project=chromium');
-    expect(changedSpecsCommand(['tests/e2e/provinces.perf.spec.ts'])).toBe('npx playwright test tests/e2e/provinces.perf.spec.ts --project=perf --no-deps');
-    expect(changedSpecsCommand(['tests/e2e/a.spec.ts', 'tests/e2e/b.perf.spec.ts'])).toBe('npx playwright test tests/e2e/a.spec.ts --project=chromium && npx playwright test tests/e2e/b.perf.spec.ts --project=perf --no-deps');
+  it('the e2e runs: a perf spec on its project without its dependency, the others on chromium', () => {
+    expect(e2eRuns(['tests/e2e/fire1938.spec.ts'])).toEqual([{ project: 'chromium', args: 'tests/e2e/fire1938.spec.ts --project=chromium' }]);
+    expect(e2eRuns(['tests/e2e/provinces.perf.spec.ts'])).toEqual([{ project: 'perf', args: 'tests/e2e/provinces.perf.spec.ts --project=perf --no-deps' }]);
+    expect(e2eRuns(['tests/e2e/a.spec.ts', 'tests/e2e/b.perf.spec.ts'])).toEqual([
+      { project: 'chromium', args: 'tests/e2e/a.spec.ts --project=chromium' },
+      { project: 'perf', args: 'tests/e2e/b.perf.spec.ts --project=perf --no-deps' },
+    ]);
+    // In full (ADR-779): chromium, then perf on its own (a red in chromium left perf not run).
+    expect(e2eRuns([])).toEqual([
+      { project: 'chromium', args: '--project=chromium' },
+      { project: 'perf', args: '--project=perf --no-deps' },
+    ]);
+  });
+
+  it('fails the e2e stage only on a test red twice that is not a known red (ADR-779)', () => {
+    const red = ['tests/e2e/seaRow1938.spec.ts › x', 'tests/e2e/new.spec.ts › y'];
+    expect(splitKnown(red, ['tests/e2e/seaRow1938.spec.ts › x', 'tests/e2e/other.spec.ts › z'])).toEqual({ known: ['tests/e2e/seaRow1938.spec.ts › x'], unknown: ['tests/e2e/new.spec.ts › y'] });
+    expect(splitKnown([], ['tests/e2e/seaRow1938.spec.ts › x'])).toEqual({ known: [], unknown: [] });
   });
 
   it('a file that only looks like a document is code', () => {

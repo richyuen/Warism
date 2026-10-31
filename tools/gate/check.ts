@@ -24,7 +24,11 @@
  *
  * And of the e2e stage (ADR-87, ADR-293): all of it when the change ticks a phase review
  * (`- [x] 4.8 Phase 4 review`; until ADR-293 every numbered task); otherwise only the spec files that
- * changed, or none (`planE2e`).
+ * changed, or none (`planE2e`). As the unit stage, a test red in it is run again alone (its file,
+ * one worker), and red is what fails both times and is not on `tools/gate/knownRed.json`
+ * (ADR-779, the user's decision: the timing specs of BLOCKERS fail under the parallel run's load,
+ * a different few each run, and pass alone; a known red is this machine's, with its BLOCKERS entry).
+ * The perf specs run on their own project, after (`e2eRuns`).
  *
  * Nothing but `npm run parity` reads the documents, and nothing but a sim input can change what
  * the sweep tests prove. `critic/` is the critic's own output and is ignored. The gate runs
@@ -39,7 +43,7 @@ import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { tickedReviews } from './criticDue';
-import { reviewProven, unitRedTwice } from './review';
+import { e2eRedTwice, e2eRuns, KNOWN, knownRed, reviewProven, splitKnown, unitRedTwice } from './review';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const STAMP_DIR = path.join(ROOT, '.cache/gate');
@@ -117,20 +121,6 @@ export function planUnit(files: readonly string[] | null, ticked: readonly strin
   if (gone !== undefined) return { mode: 'full', files: [], why: `${gone} removed` };
   if (code.length === 0) return { mode: 'none', files: [], why: 'no source or unit test changed' };
   return { mode: 'related', files: code, why: 'no phase review ticked: the tests that import what changed' };
-}
-
-/**
- * The command for the spec files that changed (an e2e stage of `changed`): a perf spec on its own
- * project without its dependency (`--no-deps`: the perf project runs after chromium's every test,
- * so named alone it would run them all), the others on chromium.
- */
-export function changedSpecsCommand(specs: readonly string[]): string {
-  const perf = specs.filter((f) => f.endsWith('.perf.spec.ts'));
-  const rest = specs.filter((f) => !f.endsWith('.perf.spec.ts'));
-  const parts: string[] = [];
-  if (rest.length > 0) parts.push(`npx playwright test ${rest.join(' ')} --project=chromium`);
-  if (perf.length > 0) parts.push(`npx playwright test ${perf.join(' ')} --project=perf --no-deps`);
-  return parts.join(' && ');
 }
 
 /** The phase reviews ticked in `planNow` and not in `planAtHead` (null = unknown; ADR-293: a numbered task is not one). */
@@ -289,10 +279,17 @@ function main(): void {
       process.exitCode = 1;
       return;
     }
+    if (stage === 'e2e') {
+      const { known, unknown } = splitKnown(e2eRedTwice(e2eRuns(e2e.mode === 'changed' ? e2e.specs : [])), knownRed());
+      for (const t of known) console.log(`gate: known red (${KNOWN}): ${t}`);
+      if (unknown.length === 0) continue;
+      console.error(`gate: red in the e2e run and again alone, not on ${KNOWN}:\n  ${unknown.join('\n  ')}`);
+      console.error('gate: FAILED at e2e');
+      process.exitCode = 1;
+      return;
+    }
     const command =
-      stage === 'e2e' && e2e.mode === 'changed'
-        ? changedSpecsCommand(e2e.specs)
-        : stage === 'test:sweep' && sweep === 'pin'
+      stage === 'test:sweep' && sweep === 'pin'
           ? `npx vitest run --config vitest.sweep.config.ts ${PIN_TEST}`
           : `npm run ${stage}`;
     const r = spawnSync(command, { cwd: ROOT, stdio: 'inherit', shell: true });

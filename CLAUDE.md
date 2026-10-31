@@ -37,7 +37,8 @@ There is no memory between sessions. Read these files:
     (`npm test`) when in doubt that the import graph covers a change.
   - e2e (hours in a container without a GPU): in full only when the change ticks a phase review
     (ADR-87, ADR-293), or a helper or the config every spec stands on changed. Otherwise only the
-    spec files that changed, or none. While
+    spec files that changed, or none. A test red in it is run again alone, and the stage fails only on one red
+    twice that is not on `tools/gate/knownRed.json` (ADR-779). While
     working on a part, run the specs of what you touch by hand (`npx playwright test <file>`; a
     perf spec with `--project=perf --no-deps`, or it runs every test first). They include the pinned state hash of seed 99 after one year
     (`tests/sweep/baselineHash.test.ts`): a rule change updates the pin and logs it in DECISIONS.

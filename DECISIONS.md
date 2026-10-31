@@ -167,6 +167,20 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-779 · 2026-10-31 · accepted (the user's decision) — the gate's e2e stage runs a red test again alone; a known red passes
+**Decision.** `npm run check`'s e2e stage judges as its unit stage (ADR-423) and as `npm run check:review` judges a
+chunk (ADR-297): each run's red chromium test is run again alone (its file, one worker); the stage fails only on a
+test red both times that is not on `tools/gate/knownRed.json` (a known red is logged). The perf specs run on their
+own project with no dependencies, after chromium (`e2eRuns`); a perf test is red once, as `e2e:perf` in the review.
+**Why.** PLAN 7.174h changed `playwright.config.ts` (the classic pin), so its gate ran the whole browser suite: twice,
+303–304 passed and 3–4 red. `fightCamera1938`, `fire1938` and `nukeFx1938` were red under the parallel run's load and
+green alone 3 of 3 each; `seaRow1938`'s Speed x1 test (known red, BLOCKERS) was green 1 of 3 alone with the change and
+2 of 3 on HEAD without it. A full run of the plain gate could not be green on this machine, whatever the change; and
+run as one, a red in chromium left the perf spec not run ("1 did not run").
+**Consequences.** `tools/gate/check.ts` calls `e2eRedTwice(e2eRuns(specs))` and `splitKnown` (`tools/gate/review.ts`);
+`changedSpecsCommand` is gone (its test is `e2eRuns`'). A test that fails alone still fails the gate unless it is on
+the list, which takes a BLOCKERS entry. The rerun costs the red files' time alone.
+
 ### ADR-778 · 2026-10-31 · accepted (the user's decision) — PLAN 7.174d: the countryballs are judged by SPEC's GPU budget, not 10 % of Classic
 
 - **Context.** PLAN 7.174c's AT set its own bar: bench B's frame GPU time within 10 % of Classic's (met then:
