@@ -25313,3 +25313,20 @@ No rule changed and nothing on screen changed. One task came out of it.
   under ADR-773 (a design objection). Run 21's items re-checked fixed. No frame-rate cost of the balls.
 - Filed PLAN 7.179 (R22-B1) and 7.180 (map visuals 6: the planes at T2, the report's other "Fix").
 - **Next:** PLAN 7.179.
+
+## 2026-11-01 — PLAN 7.179: the flag whole below the helmet's brim (critic R22-B1; done, ADR-782 proposed)
+
+- **Cause:** the helmet covered y < −0.4 of a ball of 0.9 (28 % of the disc), and the flag was sampled over the
+  whole disc: the top stripe that names a horizontal tricolour (Germany's black) was under the helmet, so German and
+  Polish infantry both read white over red.
+- **Built:** `HELMET_FLAG_TOP` (the brim's lower edge) and `flagUv`: under a helmet the flag's full height maps onto
+  the disc below the brim, blended in with the props' fade (`vEyes`), so a small ball with no helmet keeps its whole
+  flag. `ball2d` draws the flag the same way under its helmet (T1 markers, T0 counters).
+- **AT (corrected, ADR-782 proposed as the user's decision):** the filed bar (mean colour ≥ 100 apart) read 81 → 57
+  at 10 m/px and 68 → 51 at 600 m/px under the fix (the critic's 52 was red pixels alone), so the bar is the top
+  stripe: e2e `countryballs1938` "under a helmet" (seed 7019, contact on day 1): the band below the brim is the flag's
+  top colour on German 8 of 8 (10 m/px) and 15 of 15 (600 m/px), Polish 3 of 3 and 12 of 12, no black on a Polish
+  band; on `4a977fdb` German 0 of 8 and 0 of 15. Unit `ballShader.test.ts` (`flagUv`). The spec's flag-colour test
+  follows `flagUv` for infantry (worst point 2 at 15 m/px, 13 at 100 m/px, limit 40). `countryballs1938` 6 of 6,
+  `settings1938` green. Evidence `docs/evidence/7.179/helmet-10m.png`, `helmet-600m.png`.
+- **Next:** PLAN 7.180.

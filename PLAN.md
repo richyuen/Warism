@@ -33,17 +33,6 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.179 The infantry helmet hides the flag that names the countryball (critic R22-B1, run 22 on
-  `4a977fdb`; map visuals 7 → 6): the helmet covers the top 30 % of the disc, the stripe that names a
-  horizontal tricolour, so German, Austrian and Polish infantry read white over red alike at T1–T3
-  (`critic/shots/c22cb2_helmet_pair_GER_left_POL_right.png`; at 10 m/px means (190, 5, 5) against
-  (195, 20, 55), `critic/c22_cb2_7019_GER_POL_10_pixels.json`), where Classic's boxes read German grey
-  against Polish red. Fix as the report says: the flag mapped onto the disc below the brim (or the helmet a
-  thin cap), or the ball's rim in the nation's map colour, as Classic's box had.
-  AT: e2e on the critic's case (seed 7019, Germany v Poland, day 4–5, the default look): at 10 m/px and at
-  600 m/px the mean colour of German and Polish infantry balls ≥ 100 apart (RGB distance; 52 on `4a977fdb`),
-  and at 10 m/px the German ball shows its black (a run of pixels under 60 in each channel); the other
-  countryball specs green.
 - [ ] 7.180 Planes in the ball look read as units (map visuals 6, needs 7; critic run 22's "Fix" and
   aircraft's): at T2 the planes are the largest balls on the screen
   (`critic/shots/c22cb_7019_arm_0250m_balls_crop.png`). A wing silhouette for planes in flight at T0–T2 in
@@ -447,3 +436,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.176 The played nation in the title bar; God's placing in God's tab (the user's requests, 2026-10-31; ADR-781). […]
 - [x] 7.177 Control from the menu; Place at once first (the user's requests, 2026-10-31; ADR-781, extended). […]
 - [x] 7.178 Countryballs show their losses (the user's report, 2026-10-31: "the countryballs don't seem to lose any […]
+- [x] 7.179 The infantry helmet hides the flag that names the countryball (critic R22-B1, run 22 on […]

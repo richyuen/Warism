@@ -17054,3 +17054,30 @@ Of 7.176 (open in PLAN.md):
   e2e `countryballs1938` "countryballs show their losses": a German and a Polish division fight until a battalion
   has half its men; each element's level is its share's, and the most hurt one at 15 m/px has the plaster's colour
   on its cheek.
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.179 The infantry helmet hides the flag that names the countryball (critic R22-B1, run 22 on
+  `4a977fdb`; map visuals 7 → 6): the helmet covers the top 30 % of the disc, the stripe that names a
+  horizontal tricolour, so German, Austrian and Polish infantry read white over red alike at T1–T3
+  (`critic/shots/c22cb2_helmet_pair_GER_left_POL_right.png`; at 10 m/px means (190, 5, 5) against
+  (195, 20, 55), `critic/c22_cb2_7019_GER_POL_10_pixels.json`), where Classic's boxes read German grey
+  against Polish red. Fix as the report says: the flag mapped onto the disc below the brim (or the helmet a
+  thin cap), or the ball's rim in the nation's map colour, as Classic's box had.
+  AT (corrected, ADR-782 proposed: the filed mean-colour bar read 81 → 57 under the fix): e2e
+  `countryballs1938` "under a helmet" on the critic's case (seed 7019, Germany v Poland, the default look): at
+  10 m/px and at 600 m/px a band just below the brim is the flag's top colour (within 60 on ≥ 0.4 of it) on ≥ 80 %
+  of German balls (black) and of Polish balls (white), no Polish band ≥ 0.2 black (on `4a977fdb` German 0 of 8
+  and 0 of 15); the other countryball specs green.

@@ -119,6 +119,22 @@ export const HELMET_AT = [0, -0.5] as const;
 export const HELMET_R = [0.74, 0.52] as const;
 export const HELMET_BRIM_Y = -0.4;
 export const HELMET_BRIM_X = 0.95;
+/**
+ * Under a helmet the flag is drawn whole below the brim's lower edge (critic R22-B1): the top
+ * stripe that names a horizontal tricolour (Germany's black, Poland's white) is not hidden.
+ */
+export const HELMET_FLAG_TOP = HELMET_BRIM_Y + 0.06;
+
+/**
+ * The flag's uv (0–1, y down) at (x, y) ball units: the disc's square, or under a helmet the part
+ * below HELMET_FLAG_TOP, mixed by `helmet` (0–1, the props' fade). The shader's own sum (tests).
+ */
+export function flagUv(x: number, y: number, helmet: number): [number, number] {
+  const c = (v: number): number => Math.min(1, Math.max(0, v));
+  const v0 = c(0.5 + y / (2 * BALL_R));
+  const v1 = c((y - HELMET_FLAG_TOP) / (BALL_R - HELMET_FLAG_TOP));
+  return [c(0.5 + x / (2 * BALL_R)), v0 + (v1 - v0) * helmet];
+}
 /** The treads under the ball: a rounded box. */
 export const TREADS = { x: 1.12, top: 0.5, bottom: 1.12, round: 0.22 } as const;
 /** The gun's barrel, from its root to its end toward the facing and up a little, and its half width; its wheel. */
@@ -422,6 +438,8 @@ void main() {
     vec3 b = vColor.rgb;
     if (vSlot >= 0.0) {
       vec2 uv = clamp(0.5 + vP / (2.0 * R), 0.0, 1.0);
+      // Under the helmet, the whole flag below its brim (R22-B1).
+      if (vClass == ${BallClass.infantry} && props) uv.y = mix(uv.y, clamp((vP.y - ${f(HELMET_FLAG_TOP)}) / (R - ${f(HELMET_FLAG_TOP)}), 0.0, 1.0), vEyes);
       vec2 texel = vFlagOrigin + uv * vec2(${f(FLAG_W)}, ${f(FLAG_H)});
       b = texture(uFlags, texel / vec2(${f(FLAG_ATLAS_W)}, uFlagH)).rgb;
     }

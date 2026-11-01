@@ -4,7 +4,7 @@
  * (`ballShader.ts`): its flag in a disc, darker to the rim, a dark outline, two white eyes on the
  * side it faces, and a prop for what it stands for (a helmet, treads, wheels, wings, a hull).
  */
-import { BALL_R, EYE_GAP, EYE_RX, EYE_RY, EYES_ACROSS, EYES_UP, HELMET_RGB, HULL_RGB, OUTLINE_RGB, STEEL_RGB, TREAD_RGB, WING_RGB } from './ballShader';
+import { BALL_R, EYE_GAP, EYE_RX, EYE_RY, EYES_ACROSS, EYES_UP, HELMET_FLAG_TOP, HELMET_RGB, HULL_RGB, OUTLINE_RGB, STEEL_RGB, TREAD_RGB, WING_RGB } from './ballShader';
 
 /** A 2D ball's wings, ball units: deeper than the shader's, a plane's ball being a few px. */
 export const WING_Y = 0.12;
@@ -90,7 +90,9 @@ export function drawBall2d(ctx: CanvasRenderingContext2D, x: number, y: number, 
   ctx.fillRect(x - r, y - r, 2 * r, 2 * r);
   if (b.flag) {
     ctx.imageSmoothingEnabled = true;
-    ctx.drawImage(b.flag, x - r, y - r, 2 * r, 2 * r);
+    // Under a helmet, the whole flag below its brim (R22-B1), as the shader draws it.
+    if (b.prop === 'helmet') ctx.drawImage(b.flag, x - r, y + HELMET_FLAG_TOP * u, 2 * r, (BALL_R - HELMET_FLAG_TOP) * u);
+    else ctx.drawImage(b.flag, x - r, y - r, 2 * r, 2 * r);
   }
   const shade = ctx.createRadialGradient(x - 0.4 * r, y - 0.45 * r, 0, x, y, r);
   shade.addColorStop(0, 'rgba(255, 255, 255, 0.16)');

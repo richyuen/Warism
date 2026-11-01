@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
-import { BALL_R, BallClass, ballClassOf, ballShade, BallState, EYES_FULL_PX, EYES_NONE_PX, eyeCentres, FLINCH_HZ, HURT_SHIFT, hurtLevel, OUTLINE_SHARE, PLASTER_RGB, propPoint, WING_RGB } from '../../src/render/units/ballShader';
+import { BALL_R, BallClass, ballClassOf, ballShade, BallState, EYE_RX, EYE_RY, EYES_FULL_PX, EYES_NONE_PX, eyeCentres, flagUv, HELMET_FLAG_TOP, FLINCH_HZ, HURT_SHIFT, hurtLevel, OUTLINE_SHARE, PLASTER_RGB, propPoint, WING_RGB } from '../../src/render/units/ballShader';
 import { WING_RY, WING_Y } from '../../src/render/units/ball2d';
 import { FLAG_ATLAS_COLS, FLAG_PAD, FLAG_SLOT_H, FLAG_SLOT_W } from '../../src/render/units/flagAtlas';
 import { PLANE_BALL } from '../../src/render/units/sorties';
@@ -28,6 +28,7 @@ const FRAMES: number[] = [Frame.infantry, Frame.prone, Frame.gun];
 /** A ball as the page read it: a box of device pixels about it, and its flag's slot from the atlas. */
 interface Ball {
   facing: number;
+  frame: number;
   /** `BallState` bits as uploaded: engaged, hit. */
   state: number;
   /** Ball centre in device px, relative to the box's top left. */
@@ -87,7 +88,7 @@ function readBalls(page: Page): Promise<{ balls: Ball[]; px: number; dpr: number
         const fy = Math.floor(slot / cols) * slotH;
         const flag: number[] = [];
         for (let y = 0; y < slotH; y++) for (let x = 0; x < slotW; x++) for (let k = 0; k < 3; k++) flag.push(atlas.pixels[((fy + y) * 2048 + fx + x) * 4 + k]!);
-        balls.push({ facing: v.elementFacing(i), state: v.elementBallState(i), cx: sx * dpr - x0, cy: sy * dpr - y0, half, side, box, flag });
+        balls.push({ facing: v.elementFacing(i), frame: v.elementFrame(i), state: v.elementBallState(i), cx: sx * dpr - x0, cy: sy * dpr - y0, half, side, box, flag });
       }
       return { balls, px: size, dpr };
     },
@@ -103,10 +104,15 @@ function at(b: Ball, x: number, y: number): { rgb: number[]; p: [number, number]
   return { rgb: [b.box[o]!, b.box[o + 1]!, b.box[o + 2]!], p: [(dx + 0.5 - b.cx) / b.half, (dy + 0.5 - b.cy) / b.half] };
 }
 
-/** The flag's colour the shader draws at p (ball units): LINEAR-filtered texels, shaded. */
-function flagAt(b: Ball, [px, py]: [number, number]): number[] {
-  const u = Math.min(1, Math.max(0, 0.5 + px / (2 * BALL_R)));
-  const v = Math.min(1, Math.max(0, 0.5 + py / (2 * BALL_R)));
+/** The props' fade at a ball of `size` CSS px (the shader's vEyes). */
+function eyesFade(size: number): number {
+  const t = Math.min(1, Math.max(0, (size - EYES_NONE_PX) / (EYES_FULL_PX - EYES_NONE_PX)));
+  return t * t * (3 - 2 * t);
+}
+
+/** The flag's colour the shader draws at p (ball units) on a ball of `size` CSS px: LINEAR-filtered texels, shaded; under a helmet, the flag below its brim (R22-B1). */
+function flagAt(b: Ball, [px, py]: [number, number], size: number): number[] {
+  const [u, v] = flagUv(px, py, ballClassOf(b.frame) === BallClass.infantry ? eyesFade(size) : 0);
   const tx = FLAG_PAD + u * FLAG_W - 0.5;
   const ty = FLAG_PAD + v * FLAG_H - 0.5;
   const x0 = Math.floor(tx);
@@ -216,7 +222,7 @@ test('countryballs at T2 and T3: the flag in the ball, the outline, the eyes tow
       const points: [number, number][] = size >= EYES_FULL_PX ? [[0.45 * away, 0.45], [0.45 * away, -0.15], [0, 0.55]] : size <= EYES_NONE_PX ? [[0, 0], ...dotEyes] : [[0, 0]];
       for (const [x, y] of points) {
         const { rgb, p } = at(b, x, y);
-        const d = dist(rgb, flagAt(b, p));
+        const d = dist(rgb, flagAt(b, p, size));
         worst = Math.max(worst, d);
         flagAll++;
         if (d <= 40) flagOk++;
@@ -671,4 +677,137 @@ test('countryballs show their losses: cracks and plasters by the share of men le
   });
   await page.waitForTimeout(1500);
   await page.screenshot({ path: path.join(info.outputPath(), 'balls-hurt-max.png'), clip: { x: 400, y: 200, width: 600, height: 400 } });
+});
+
+// PLAN 7.179 (critic R22-B1): under the helmet the flag is drawn whole below the brim, so the
+// stripe that names it shows: Germany's black, Poland's white. The critic's case: seed 7019,
+// Germany at war with Poland, stepped a day at a time until a German infantry formation is in
+// contact (day 1 here; day 4–5 in the critic's run, before later commits). For each infantry ball
+// clear of the others, a band just below the brim (a third of the flag's top stripe down to two
+// thirds), at 10 m/px (T3, its eyes left out) and at 600 m/px (T1, the markers' balls, eyes and
+// all): the share of its pixels within 60 of its flag's top colour (≥ 0.4: its top shows), and the
+// share of black (≥ 0.2 on no Polish ball: the control). On 4a977fdb the German band was white.
+test('countryballs under a helmet show the flag that names them: German and Polish infantry apart', async ({ page }, info) => {
+  test.setTimeout(400_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.addInitScript(() => localStorage.setItem('warsim.unitLook', 'balls'));
+  await page.goto('/?scenario=1938&paused=1&seed=7019');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  expect(await page.evaluate(() => window.__warsim!.view!.unitLook)).toBe('balls');
+  const [GER, POL] = [id('GER'), id('POL')];
+  await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: GER, d: POL });
+  let pick: [number, number] | null = null;
+  let day = 0;
+  for (; day < 20 && !pick; day++) {
+    pick = await page.evaluate(async (n) => {
+      const w = window.__warsim!;
+      const v = w.view!;
+      const target = v.lastTick + 24;
+      await w.sim.step(24);
+      await new Promise<void>((done) => {
+        const go = (): void => void (v.lastTick >= target ? done() : setTimeout(go, 5));
+        go();
+      });
+      const f = v.formationsOf(n).find((f) => v.formationEngaged(f) && /Infantry/.test(v.formationTitle(f)?.kind ?? ''));
+      return f === undefined ? null : v.formationPos(f);
+    }, GER);
+  }
+  expect(pick, 'a German infantry formation in contact within 20 days').not.toBeNull();
+  const look = async (m: number): Promise<void> => {
+    await page.evaluate(({ p, m }) => {
+      const v = window.__warsim!.view!;
+      v.controller.set({ cx: p[0], cy: p[1], scale: (v.metresPerPx * v.controller.cam.scale) / m });
+    }, { p: pick!, m });
+    await page.waitForTimeout(1500);
+  };
+  // Each flag's top colour: the middle of its top row.
+  const top = await page.evaluate(
+    ({ ns, w }) =>
+      ns.map((n) => {
+        const c = window.__warsim!.view!.flags.pixelsOf(n)[w >> 1]!;
+        return [(c >> 16) & 255, (c >> 8) & 255, c & 255];
+      }),
+    { ns: [GER, POL], w: FLAG_W },
+  );
+  const topOf = (n: number): number[] => top[n === GER ? 0 : 1]!;
+  // The band: from a third of the top stripe (a third of the flag below the brim) to two thirds.
+  const stripe = (BALL_R - HELMET_FLAG_TOP) / 3;
+  const [y0, y1] = [HELMET_FLAG_TOP + stripe / 3, HELMET_FLAG_TOP + (2 * stripe) / 3];
+  type Read = { near: number; dark: number };
+  /** A ball about (x, y) CSS px of `u` CSS px a ball unit: its band's share near `want`, and its share of black. */
+  const band = (img: { px: number[]; w: number; h: number; dpr: number }, x: number, y: number, u: number, eyes: [number, number][], want: number[]): Read => {
+    let n = 0;
+    let near = 0;
+    let dark = 0;
+    const step = 0.5 / (u * img.dpr);
+    for (let by = y0; by <= y1; by += step)
+      for (let bx = -0.78; bx <= 0.78; bx += step) {
+        if (Math.hypot(bx, by) > 0.78 || eyes.some(([ex, ey]) => ((bx - ex) / (EYE_RX + 0.08)) ** 2 + ((by - ey) / (EYE_RY + 0.08)) ** 2 < 1)) continue;
+        const o = (Math.floor((y + by * u) * img.dpr) * img.w + Math.floor((x + bx * u) * img.dpr)) * 3;
+        const c = [img.px[o]!, img.px[o + 1]!, img.px[o + 2]!];
+        n++;
+        if (dist(c, want) <= 60) near++;
+        if (Math.max(...c) < 60) dark++;
+      }
+    return { near: near / Math.max(1, n), dark: dark / Math.max(1, n) };
+  };
+  const sum = (rs: Read[]): { balls: number; top: number; black: number } => ({ balls: rs.length, top: rs.filter((r) => r.near >= 0.4).length, black: rs.filter((r) => r.dark >= 0.2).length });
+  const report: Record<string, unknown> = { day, top };
+
+  // T3, 10 m/px: the element balls.
+  await look(10);
+  const balls = await page.evaluate(
+    ({ GER, POL }) => {
+      const v = window.__warsim!.view!;
+      const cam = v.controller.cam;
+      const c = document.getElementById('map') as HTMLCanvasElement;
+      const [vw, vh] = [c.clientWidth, c.clientHeight];
+      const size = v.elementPx;
+      const at = (i: number): [number, number] => [(v.elementX[i]! - cam.cx) * cam.scale + vw / 2, (v.elementY[i]! - cam.cy) * cam.scale + vh / 2];
+      const out: { nation: number; x: number; y: number; facing: number; frame: number }[] = [];
+      for (let i = 0; i < v.elementCount; i++) {
+        const n = v.elementNation[i]!;
+        if (n !== GER && n !== POL) continue;
+        const [x, y] = at(i);
+        if (x < size || y < size || x > vw - size || y > vh - size) continue;
+        let clear = true;
+        for (let j = 0; j < v.elementCount && clear; j++) if (j !== i && Math.hypot(at(j)[0] - x, at(j)[1] - y) < size * 1.05) clear = false;
+        if (clear) out.push({ nation: n, x, y, facing: v.elementFacing(i), frame: v.elementFrame(i) });
+      }
+      return { out, size };
+    },
+    { GER, POL },
+  );
+  let img = await composite(page);
+  await page.screenshot({ path: path.join(info.outputPath(), 'helmet-10m.png') });
+  const t3: Record<number, Read[]> = { [GER]: [], [POL]: [] };
+  for (const b of balls.out) if (ballClassOf(b.frame) === BallClass.infantry) t3[b.nation]!.push(band(img, b.x, b.y, balls.size / 2, eyeCentres(b.facing), topOf(b.nation)));
+  report['t3'] = { size: balls.size, GER: sum(t3[GER]!), POL: sum(t3[POL]!) };
+
+  // T1, 600 m/px: the markers' balls.
+  await look(600);
+  const marks = await page.evaluate(
+    ({ GER, POL }) => {
+      const v = window.__warsim!.view!;
+      return v.markerRects
+        .filter((r) => r.alpha > 0.9 && r.scale === 1 && (r.nation === GER || r.nation === POL) && /Infantry/.test(v.formationTitle(r.id)?.kind ?? ''))
+        .map((r) => ({ nation: r.nation, x: r.x + r.w / 2, y: r.y + (17 / 2) * v.unitScale, r: 9.5 * v.unitScale }));
+    },
+    { GER, POL },
+  );
+  img = await composite(page);
+  await page.screenshot({ path: path.join(info.outputPath(), 'helmet-600m.png') });
+  const t1: Record<number, Read[]> = { [GER]: [], [POL]: [] };
+  for (const m of marks) t1[m.nation]!.push(band(img, m.x, m.y, m.r / BALL_R, [], topOf(m.nation)));
+  report['t1'] = { GER: sum(t1[GER]!), POL: sum(t1[POL]!) };
+  console.log(`helmet flags (seed 7019): ${JSON.stringify(report)}`);
+
+  for (const [m, rs] of [[10, t3], [600, t1]] as const) {
+    const [g, p] = [sum(rs[GER]!), sum(rs[POL]!)];
+    expect(g.balls, `${m} m/px: German infantry balls read`).toBeGreaterThanOrEqual(3);
+    expect(p.balls, `${m} m/px: Polish infantry balls read`).toBeGreaterThanOrEqual(3);
+    expect(g.top, `${m} m/px: German balls show their black below the brim`).toBeGreaterThanOrEqual(Math.ceil(g.balls * 0.8));
+    expect(p.top, `${m} m/px: Polish balls show their white below the brim`).toBeGreaterThanOrEqual(Math.ceil(p.balls * 0.8));
+    expect(p.black, `${m} m/px: no black on a Polish ball's band`).toBe(0);
+  }
 });

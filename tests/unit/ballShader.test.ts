@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { ATLAS_FRAMES } from '../../src/render/units/atlas';
-import { BALL_QUAD, BALL_QUAD_MAX, BALL_R, BallClass, ballClassOf, BallState, GUN_BARREL, HURT_AT, HURT_SHIFT, hurtLevel, GUN_WHEEL, HELMET_AT, HELMET_BRIM_X, HELMET_R, propPoint, SHIP_HULL, TREADS, TURRET_BARREL_HALF, TURRET_BARREL_LEN, WINGS } from '../../src/render/units/ballShader';
+import { BALL_QUAD, BALL_QUAD_MAX, BALL_R, BallClass, ballClassOf, BallState, GUN_BARREL, HURT_AT, HURT_SHIFT, hurtLevel, GUN_WHEEL, HELMET_AT, HELMET_BRIM_X, HELMET_BRIM_Y, HELMET_FLAG_TOP, HELMET_R, flagUv, propPoint, SHIP_HULL, TREADS, TURRET_BARREL_HALF, TURRET_BARREL_LEN, WINGS } from '../../src/render/units/ballShader';
 import { Frame, isShipFrame } from '../../src/shared/unitLooks';
 
 // PLAN 7.174d (ADR-777): what each frame's ball wears, and a quad that holds it.
@@ -70,5 +70,25 @@ describe('hurtLevel', () => {
   it('sits above the engaged and hit bits', () => {
     expect((BallState.engaged | BallState.hit) >> HURT_SHIFT).toBe(0);
     expect(((3 << HURT_SHIFT) | BallState.hit) >> HURT_SHIFT).toBe(3);
+  });
+});
+
+describe('flagUv (PLAN 7.179, critic R22-B1)', () => {
+  it('is the disc\'s square with no helmet', () => {
+    expect(flagUv(0, 0, 0)).toEqual([0.5, 0.5]);
+    expect(flagUv(-BALL_R, -BALL_R, 0)).toEqual([0, 0]);
+  });
+  it('puts the whole flag below the brim under a helmet: its top row at the brim\'s lower edge, its last at the bottom', () => {
+    expect(HELMET_FLAG_TOP).toBeGreaterThan(HELMET_BRIM_Y);
+    expect(flagUv(0, HELMET_FLAG_TOP, 1)[1]).toBe(0);
+    expect(flagUv(0, BALL_R, 1)[1]).toBe(1);
+    // A top stripe of a third (Germany's black) is seen below the brim, not under it.
+    const yThird = HELMET_FLAG_TOP + (BALL_R - HELMET_FLAG_TOP) / 3;
+    expect(yThird).toBeGreaterThan(HELMET_FLAG_TOP);
+    expect(flagUv(0, yThird - 0.01, 1)[1]).toBeLessThan(1 / 3);
+    // Half faded, half way between.
+    const [, a] = flagUv(0, 0.2, 0);
+    const [, b] = flagUv(0, 0.2, 1);
+    expect(flagUv(0, 0.2, 0.5)[1]).toBeCloseTo((a + b) / 2, 10);
   });
 });

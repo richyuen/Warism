@@ -167,6 +167,24 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-782 · 2026-11-01 · proposed (the user's decision) — PLAN 7.179: the flag whole below the helmet's brim; the AT's bar is the top stripe, not a mean colour
+**Decision.** An infantry ball's flag is drawn whole below the helmet's brim (`HELMET_FLAG_TOP`, `flagUv`; the
+shader blends it in with the props' fade, so a small ball with no helmet keeps its whole flag; `ball2d` squashes it
+the same way for the T1 markers and T0 counters). PLAN 7.179's AT is corrected from "the mean colour of German and
+Polish infantry balls ≥ 100 apart" to "a band just below the brim is the flag's top colour" (Germany's black,
+Poland's white), on ≥ 80 % of each nation's balls at 10 and 600 m/px, and no black on a Polish band.
+**Why.** The filed bar borrowed the critic's figure of 52, which was the mean of the red pixels alone (German red
+against Polish red, which no fix touches). The whole disc below the brim, as the test measures it, reads 81 apart at
+10 m/px and 68 at 600 m/px on `4a977fdb`, and 57 and 51 with the fix: both balls gain their top stripe, and a
+black-white-red ball and a white-red one share two of three colours. The bar went the wrong way under the right fix.
+The critic's own discriminator was the dark share (`c22_cb2_pixels.py`): the band says it per nation. On
+`4a977fdb` the German band shows its black on 0 of 8 balls at 10 m/px and 0 of 15 at 600 m/px (it is white); with
+the fix 8 of 8 and 15 of 15; Poland 3 of 3 and 12 of 12 white both times, no black. Seed 7019 finds German infantry in contact on
+day 1 now, not the critic's day 4–5 (commits since have moved its history).
+**Consequences.** The bar is changed after the run read it, so it is the user's to accept (as ADR-525): (a) accept
+the band bar, 7.179 stays ticked; (b) keep the mean-colour bar, 7.179 closed not done, the fix kept. The rim in the
+nation's map colour (the report's other option) is not taken: it would change the ball's outline, the user's look.
+
 ### ADR-781 · 2026-10-31 · accepted (the user's decision) — PLAN 7.176: the played nation in the title bar; God's placing for the selected nation
 **Decision.** The top bar's tagline gives way to "Playing {name} · {n} selected" while a nation is played; a click on
 it opens the played nation's panel; the bottom bar's label goes. "Place at once" moves from the Actions tab (where it
