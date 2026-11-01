@@ -19,9 +19,10 @@
  * menu closes with its action, a press on the map, Escape, or a change of the nation played. What
  * the sim refuses of its action in the next seconds is told where the menu was (`menuNotice`).
  *
- * With God Mode on, a template of any domain can be armed for placing (`placing`): each map
- * click then puts one of the played nation's there at once, with no gold, training or research
- * (`spawnFormation`, `spawnFleet`, `spawnWing`), until Escape, another order armed, or God Mode off.
+ * With God Mode on, a template of any domain can be armed for placing (`placing`) from God's tab
+ * of a nation's panel, played or not (`placeFor`, PLAN 7.176b): each map click then puts one of
+ * that nation's there at once, with no gold, training or research (`spawnFormation`,
+ * `spawnFleet`, `spawnWing`), until Escape, another order armed, or God Mode off.
  */
 import { signal } from '@preact/signals';
 import type { Command } from '../shared/commands';
@@ -57,6 +58,8 @@ export class PlayerControl {
   readonly dropArmed = signal(false);
   /** The template armed for God Mode's placing, or null. */
   readonly placing = signal<number | null>(null);
+  /** The nation God Mode's placing places for (PLAN 7.176b): the panel's when armed. */
+  readonly placeFor = signal(0);
   /** The menu of a nation opened by a right-click, or null; the refusal of its action, in words' key, where it was. */
   readonly menu = signal<NationMenu | null>(null);
   /**
@@ -243,11 +246,12 @@ export class PlayerControl {
     this.dropArmed.value = !this.dropArmed.value && this.view.selectedFormations.size > 0;
   }
 
-  /** Arms template `t` for God Mode's placing (the same again disarms it); an armed God tool goes. */
-  armPlace(t: number): void {
+  /** Arms template `t` for God Mode's placing for `nation` (the same again disarms it); an armed God tool goes. */
+  armPlace(t: number, nation: number): void {
     this.wingOrder.value = null;
     this.dropArmed.value = false;
-    this.placing.value = this.placing.value === t ? null : t;
+    this.placing.value = this.placing.value === t && this.placeFor.value === nation ? null : t;
+    this.placeFor.value = nation;
     if (this.placing.value !== null) this.hud.setGodTool(null);
   }
 
@@ -262,16 +266,16 @@ export class PlayerControl {
    * march there. Returns true when the click was used.
    */
   click(x: number, y: number, sx: number, sy: number, shift: boolean, own?: number): boolean {
-    const n = this.nation.value;
-    if (n === 0) return false;
-    // God Mode's placing armed: one of the template's at the click, and it stays armed.
+    // God Mode's placing armed: one of the template's for its nation at the click, and it stays armed.
     const t = this.placing.value;
-    if (t !== null) {
+    if (t !== null && this.placeFor.value !== 0) {
       const domain = this.hud.templates.peek()[t]?.domain ?? 0;
-      const at = { nation: n, x: x + 0.5, y: y + 0.5, template: t };
+      const at = { nation: this.placeFor.value, x: x + 0.5, y: y + 0.5, template: t };
       this.hud.command(domain === 1 ? { kind: 'spawnFleet', ...at, free: true } : domain === 2 ? { kind: 'spawnWing', ...at } : { kind: 'spawnFormation', ...at, strength: 0 });
       return true;
     }
+    const n = this.nation.value;
+    if (n === 0) return false;
     // A wing's order armed (PLAN 5.8v1): this click is its place.
     const armed = this.wingOrder.value;
     if (armed) {

@@ -1,8 +1,9 @@
 import { useRef, useState } from 'preact/hooks';
 import { Refusal, type Command } from '../shared/commands';
-import type { NationStat, WarStat, WorldRules } from '../shared/protocol';
+import type { NationStat, TemplateInfo, WarStat, WorldRules } from '../shared/protocol';
 import { t, type MessageKey } from './i18n';
 import { displayName } from './NationPanel';
+import { PlaceSection } from './PlaceSection';
 
 export type GodToolId = 'revolt' | 'nation' | 'battle' | 'brush' | 'nuke' | 'city' | 'raze';
 const BUFFS = ['attack', 'defense', 'speed', 'income', 'manpower', 'unrest'] as const;
@@ -57,6 +58,8 @@ export interface GodTabProps {
   /** Why the last command sent was not carried out (`Refusal`; 0 = it was). */
   refusal: number;
   onCommand: (cmd: Command) => void;
+  /** "Place at once" for this nation (PLAN 7.176b), with the scenario's templates; null without a player control. */
+  place?: { templates: readonly TemplateInfo[]; armed: number | null; onArm: (template: number) => void } | null;
 }
 
 /**
@@ -64,7 +67,7 @@ export interface GodTabProps {
  * nation, plus map tools (revolt, breakthrough, territory brush) that take the next map clicks.
  * Kill asks for a second click instead of a browser dialog.
  */
-export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, rules, refusal, onCommand }: GodTabProps) {
+export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, rules, refusal, onCommand, place }: GodTabProps) {
   const n = nation.id;
   const others = nations.filter((o) => o.id !== n).sort((a, b) => displayName(a.name).localeCompare(displayName(b.name)));
   // The name typed and the armed Kill are this nation's (PLAN 2.17e3): each is kept with the
@@ -281,6 +284,7 @@ export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, r
           onCommand({ kind: 'collapseNation', nation: n });
         }, armKill)}
       </div>
+      {place ? <PlaceSection templates={place.templates} place={{ armed: place.armed, onArm: place.onArm, refusal }} /> : null}
     </section>
   );
 }

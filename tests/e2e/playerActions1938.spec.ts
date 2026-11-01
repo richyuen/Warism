@@ -193,10 +193,11 @@ test('a right-click on a nation\'s ground: declare war from its menu, and a refu
   expect((await pol(page)).enemies).not.toContain(LIT);
 });
 
-// The user's request of 2026-10-29: with God Mode on, the played nation's Actions tab places any
-// unit at once, researched or not, for no gold: a division on its land and on another's, a fleet
-// on the water by the click, a wing at an airbase of its. A fleet where no sea is near is refused
-// in words. Escape disarms; God Mode off takes the section away.
+// The user's request of 2026-10-29: with God Mode on, a nation's panel places any unit at once,
+// researched or not, for no gold: a division on its land and on another's, a fleet on the water by
+// the click, a wing at an airbase of its. A fleet where no sea is near is refused in words. Escape
+// disarms; God Mode off takes the section away. Since PLAN 7.176b (the user's request, ADR-781) in
+// God's tab, not the Actions tab.
 test('God Mode places any unit of the played nation at once: a division, a fleet, a wing', async ({ page }, info) => {
   test.setTimeout(150_000);
   await page.setViewportSize({ width: 1400, height: 800 });
@@ -212,11 +213,15 @@ test('God Mode places any unit of the played nation at once: a division, a fleet
   const destroyers = names.indexOf('template.destroyer_flotilla');
   const fighters = names.indexOf('template.fighter_group');
   expect([panzer, destroyers, fighters].every((i) => i >= 0)).toBe(true);
-  // Without God Mode there is no placing.
-  await expect(page.getByTestId(`act-place-${panzer}`)).toHaveCount(0);
+  // Without God Mode there is no placing; with it, in God's tab and not the Actions tab.
+  await expect(page.getByTestId(`god-place-${panzer}`)).toHaveCount(0);
   await page.getByTestId('god-btn').click();
   await page.getByTestId('tab-actions').click();
-  await expect(page.getByTestId(`act-place-${panzer}`)).toBeVisible();
+  await expect(page.getByTestId(`act-build-${panzer}`)).toBeVisible();
+  await expect(page.getByTestId('panel-actions')).not.toContainText('Place at once');
+  await expect(page.getByTestId(`god-place-${panzer}`)).toHaveCount(0);
+  await page.getByTestId('tab-god').click();
+  await expect(page.getByTestId(`god-place-${panzer}`)).toBeVisible();
 
   // Poland's ground, Germany's, the Baltic, and Polish ground far from the sea, on the screen.
   const at = (await page.evaluate((p) => window.__warsim!.view!.formationPos(window.__warsim!.view!.formationsOf(p)[0]!), POL))!;
@@ -240,15 +245,15 @@ test('God Mode places any unit of the played nation at once: a division, a fleet
   const before = (await polish()).length;
 
   // The template's icon is a button too (ADR-767): it arms the placing, and again disarms it.
-  await page.getByTestId(`act-place-${panzer}-icon`).click();
-  await expect(page.getByTestId('act-place-armed')).toContainText('Armoured division');
-  await expect(page.getByTestId(`act-place-${panzer}-icon`)).toHaveAttribute('aria-pressed', 'true');
-  await page.getByTestId(`act-place-${panzer}-icon`).click();
-  await expect(page.getByTestId('act-place-armed')).toHaveCount(0);
+  await page.getByTestId(`god-place-${panzer}-icon`).click();
+  await expect(page.getByTestId('god-place-armed')).toContainText('Armoured division');
+  await expect(page.getByTestId(`god-place-${panzer}-icon`)).toHaveAttribute('aria-pressed', 'true');
+  await page.getByTestId(`god-place-${panzer}-icon`).click();
+  await expect(page.getByTestId('god-place-armed')).toHaveCount(0);
 
   // A division not researched (the panzer division), on Polish ground and on German ground.
-  await page.getByTestId(`act-place-${panzer}`).click();
-  await expect(page.getByTestId('act-place-armed')).toContainText('Armoured division');
+  await page.getByTestId(`god-place-${panzer}`).click();
+  await expect(page.getByTestId('god-place-armed')).toContainText('Armoured division');
   await page.mouse.click(spots.own![0], spots.own![1]);
   await expect.poll(async () => (await polish()).length).toBe(before + 1);
   await page.mouse.click(spots.german![0], spots.german![1]);
@@ -260,15 +265,15 @@ test('God Mode places any unit of the played nation at once: a division, a fleet
   expect(placed.every((f) => f.elements > 0 && f.strength > 0), 'with its elements').toBe(true);
 
   // A fleet: refused where no sea is near (told in words), placed on the water by the coast.
-  await page.getByTestId(`act-place-${destroyers}`).click();
+  await page.getByTestId(`god-place-${destroyers}`).click();
   await page.mouse.click(spots.inland![0], spots.inland![1]);
-  await expect(page.getByTestId('act-place-refusal')).toContainText('no water of a sea');
+  await expect(page.getByTestId('god-place-refusal')).toContainText('no water of a sea');
   await page.mouse.click(spots.sea![0], spots.sea![1]);
   await expect.poll(async () => (await polish()).length).toBe(before + 3);
-  await expect(page.getByTestId('act-place-refusal')).toHaveCount(0);
+  await expect(page.getByTestId('god-place-refusal')).toHaveCount(0);
 
   // A wing, at a Polish airbase with room.
-  await page.getByTestId(`act-place-${fighters}`).click();
+  await page.getByTestId(`god-place-${fighters}`).click();
   await page.mouse.click(spots.own![0], spots.own![1]);
   await expect.poll(async () => (await polish()).filter((f) => f.wing).length).toBeGreaterThan(0);
   expect((await polish()).length).toBe(before + 4);
@@ -281,7 +286,7 @@ test('God Mode places any unit of the played nation at once: a division, a fleet
 
   // Escape disarms: a click on ground places nothing.
   await page.keyboard.press('Escape');
-  await expect(page.getByTestId('act-place-armed')).toHaveCount(0);
+  await expect(page.getByTestId('god-place-armed')).toHaveCount(0);
   await page.mouse.click(spots.own![0], spots.own![1]);
   await page.waitForTimeout(300);
   expect((await polish()).length).toBe(before + 4);
@@ -290,11 +295,11 @@ test('God Mode places any unit of the played nation at once: a division, a fleet
     window.__warsim!.hud.selectFormation(0);
     window.__warsim!.view!.select(p);
   }, POL);
-  await page.getByTestId('tab-actions').click();
-  await page.getByTestId(`act-place-${panzer}`).click();
-  await expect(page.getByTestId('act-place-armed')).toBeVisible();
+  await page.getByTestId('tab-god').click();
+  await page.getByTestId(`god-place-${panzer}`).click();
+  await expect(page.getByTestId('god-place-armed')).toBeVisible();
   await page.getByTestId('god-btn').click();
-  await expect(page.getByTestId(`act-place-${panzer}`)).toHaveCount(0);
+  await expect(page.getByTestId(`god-place-${panzer}`)).toHaveCount(0);
   expect(await page.evaluate(() => window.__warsim!.player!.placing.value)).toBeNull();
 });
 
@@ -332,4 +337,59 @@ test('the diplomacy lists open on no nation: war, alliance and annexation wait f
   for (const b of ['god-war', 'god-ally', 'god-puppet', 'god-annex', 'god-donate']) await expect(page.getByTestId(b), b).toBeDisabled();
   await page.getByTestId('god-target').selectOption({ label: 'Italy' });
   for (const b of ['god-war', 'god-ally', 'god-puppet', 'god-annex', 'god-donate']) await expect(page.getByTestId(b), b).toBeEnabled();
+});
+
+// PLAN 7.176b (the user's request, ADR-781): God's placing is for the nation of the panel, played or
+// not. God on, nothing played, France's panel: a division placed on French ground is French. Playing
+// Poland with Germany's panel open: a division placed is German.
+test("God's placing is for the panel's nation, played or not", async ({ page }) => {
+  test.setTimeout(120_000);
+  const [FRA, GER] = [id('FRA'), id('GER')];
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.hud.templates.value.length > 0, null, { timeout: 60_000 });
+  await page.evaluate(() => window.__warsim!.sim.command({ kind: 'setSetting', key: 'aiEnabled', value: false }, true));
+  const inf = (await page.evaluate(() => window.__warsim!.hud.templates.value.map((t) => t.nameKey))).indexOf('template.infantry_div');
+  expect(inf).toBeGreaterThanOrEqual(0);
+  const count = (n: number) => page.evaluate(async (n) => (await window.__warsim!.sim.inspect(true)).formations.filter((f) => f.nation === n).length, n);
+  // A spot of nation n's ground on the screen, its first formation in view.
+  const groundOf = async (n: number): Promise<[number, number]> => {
+    const at = (await page.evaluate((n) => window.__warsim!.view!.formationPos(window.__warsim!.view!.formationsOf(n)[0]!), n))!;
+    await page.evaluate(([x, y]) => window.__warsim!.view!.controller.set({ cx: x, cy: y, scale: 10 }), at);
+    await page.waitForTimeout(300);
+    const spot = await page.evaluate((n) => {
+      const v = window.__warsim!.view!;
+      for (let r = 0; r < 300; r += 12) for (let a = 0; a < 6.28; a += 0.5) {
+        const [x, y] = [700 + 40 + r * Math.cos(a), 400 + r * Math.sin(a)];
+        if (v.nationAt(x, y) === n && v.formationPick(x, y) === 0) return [x, y] as [number, number];
+      }
+      return null;
+    }, n);
+    expect(spot, `ground of ${n}`).not.toBeNull();
+    return spot!;
+  };
+
+  // God on, nothing played, France's panel.
+  await page.getByTestId('god-btn').click();
+  await page.evaluate((n) => window.__warsim!.view!.select(n), FRA);
+  await page.getByTestId('tab-god').click();
+  const fra = await groundOf(FRA);
+  const f0 = await count(FRA);
+  await page.getByTestId(`god-place-${inf}`).click();
+  await expect(page.getByTestId('god-place-armed')).toBeVisible();
+  await page.mouse.click(fra[0], fra[1]);
+  await expect.poll(() => count(FRA)).toBe(f0 + 1);
+  await page.keyboard.press('Escape');
+
+  // Playing Poland, Germany's panel: German.
+  await page.evaluate((n) => window.__warsim!.view!.select(n), POL);
+  await page.getByTestId('take-control').click();
+  await page.evaluate((n) => window.__warsim!.view!.select(n), GER);
+  await page.getByTestId('tab-god').click();
+  const ger = await groundOf(GER);
+  const [g0, p0] = [await count(GER), await count(POL)];
+  await page.getByTestId(`god-place-${inf}`).click();
+  await page.mouse.click(ger[0], ger[1]);
+  await expect.poll(() => count(GER)).toBe(g0 + 1);
+  expect(await count(POL)).toBe(p0);
 });

@@ -509,7 +509,7 @@
   "act.assist.diplomacy": "Diplomacy",
   "act.assist.economy": "Economy",
   "act.assist.nukes": "Nuclear strikes",
-  "act.place": "God Mode: place at once",
+  "act.place": "Place at once",
   "act.placeButton": "Place",
   "act.placeHint": "Every unit, researched or not: no gold, no training. A division on any land, a fleet on the water by the click, a wing at an airbase of yours.",
   "act.placeArmed": "Click the map to place: {name}. Esc to stop.",

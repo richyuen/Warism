@@ -33,14 +33,6 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.176 The played nation in the title bar; God's placing in God's tab (the user's requests, 2026-10-31; ADR-781).
-  - [x] 7.176a The top bar says "Playing {name} · {n} selected" in place of its tagline while a nation is played […]
-  - [ ] 7.176b "Place at once" moves from the Actions tab to God's tab and places for the nation of the panel (the
-    selected one), played or not; armed, the next clicks on the map place its units (a division on its land or
-    any land as now, a fleet on the water, a wing at its airbase) until Escape, another tool or God Mode off.
-    AT: e2e: God on, nothing played, France's panel: God tab's Place on an infantry division, a click on French
-    land makes a French division; playing Germany with Poland's panel open, a placement is Polish; the Actions
-    tab has no "Place at once".
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 
@@ -434,3 +426,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.173 The living nations stop outgrowing their own past late in the game: the sweep's "no break-up" (the […]
 - [x] 7.174 Countryball units by default (the user's request, 2026-10-31; ADR-777): every unit drawn as a […]
 - [x] 7.175 Force war (the user's request, 2026-10-31; ADR-780): a war the player or God declares breaks the […]
+- [x] 7.176 The played nation in the title bar; God's placing in God's tab (the user's requests, 2026-10-31; ADR-781). […]

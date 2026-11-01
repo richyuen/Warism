@@ -16985,3 +16985,26 @@ Of 7.176 (open in PLAN.md):
     panel (and selects it, as a click on its ground). AT: e2e: playing Germany, the top bar reads its label,
     the bottom bar has none; a click opens Germany's panel; with nothing played the tagline; at phone width the
     label in view and not cut.
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.176 The played nation in the title bar; God's placing in God's tab (the user's requests, 2026-10-31; ADR-781).
+  - [x] 7.176a The top bar says "Playing {name} · {n} selected" in place of its tagline while a nation is played […]
+  - [x] 7.176b "Place at once" moves from the Actions tab to God's tab and places for the nation of the panel (the
+    selected one), played or not; armed, the next clicks on the map place its units (a division on its land or
+    any land as now, a fleet on the water, a wing at its airbase) until Escape, another tool or God Mode off.
+    AT: e2e: God on, nothing played, France's panel: God tab's Place on an infantry division, a click on French
+    land makes a French division; playing Germany with Poland's panel open, a placement is Polish; the Actions
+    tab has no "Place at once".

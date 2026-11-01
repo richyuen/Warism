@@ -362,7 +362,6 @@ export function App({
                   dropArmed: player.dropArmed.value,
                   onArmDrop: () => player.armDrop(),
                   assist: { layers: stats.playerAi, onChange: (layers) => hud.command({ kind: 'setPlayerAi', layers }) },
-                  place: hud.godMode.value ? { armed: player.placing.value, onArm: (t) => player.armPlace(t), refusal: hud.refusal.value } : null,
                 }
               : null
           }
@@ -386,6 +385,9 @@ export function App({
                   rules: stats.rules,
                   refusal: hud.refusal.value,
                   onCommand: (c) => hud.command(c),
+                  place: player
+                    ? { templates: hud.templates.value, armed: player.placeFor.value === nation.id ? player.placing.value : null, onArm: (t) => player.armPlace(t, nation.id) }
+                    : null,
                 }
               : null
           }

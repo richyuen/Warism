@@ -25262,3 +25262,15 @@ No rule changed and nothing on screen changed. One task came out of it.
   `player1938` test timed out at the page load in the batch and passed alone). Evidence
   `docs/evidence/7.4/f25-bar-1024-playing.png` re-shot.
 - **Next:** PLAN 7.176b.
+
+## 2026-10-31 — PLAN 7.176b: Place at once in God's tab, for the panel's nation (done; PLAN 7.176 done)
+
+- **Built:** the placing section leaves the Actions tab for God's tab (`PlaceSection`, test ids `god-place-*`; its
+  heading "Place at once"). Arming remembers the panel's nation (`PlayerControl.placeFor`), played or not; a map
+  click then places for that nation (`click` no longer needs a played nation for it). Escape, another order, a God
+  tool or God Mode off disarm it as before.
+- **AT:** e2e `playerActions1938`: the old placing test moved to God's tab (the Actions tab without "Place at once");
+  new "God's placing is for the panel's nation": God on, nothing played, France's panel, an infantry division placed
+  on French ground is French; playing Poland with Germany's panel, the division is German, Poland's count unchanged.
+  `godUi1938`, `forceWar1938` green.
+- **Next:** PLAN 7.5, the critic run (`npm run check:review` first).
