@@ -81,6 +81,18 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
     answer), with a "Go to country" item first, which selects it and flies there as the chip did. AT: e2e:
     playing Germany, Overview's ally chip Italy opens Italy's menu with Go to country; Go to country selects
     Italy and the camera flies there; God on, its God items as 7.175e.
+- [ ] 7.176 The played nation in the title bar; God's placing in God's tab (the user's requests, 2026-10-31; ADR-781).
+  - [ ] 7.176a The top bar says "Playing {name} · {n} selected" in place of its tagline while a nation is played
+    (the tagline when none is), and the bottom bar's label is gone; a click on it opens the played nation's
+    panel (and selects it, as a click on its ground). AT: e2e: playing Germany, the top bar reads its label,
+    the bottom bar has none; a click opens Germany's panel; with nothing played the tagline; at phone width the
+    label in view and not cut.
+  - [ ] 7.176b "Place at once" moves from the Actions tab to God's tab and places for the nation of the panel (the
+    selected one), played or not; armed, the next clicks on the map place its units (a division on its land or
+    any land as now, a fleet on the water, a wing at its airbase) until Escape, another tool or God Mode off.
+    AT: e2e: God on, nothing played, France's panel: God tab's Place on an infantry division, a click on French
+    land makes a French division; playing Germany with Poland's panel open, a placement is Polish; the Actions
+    tab has no "Place at once".
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 

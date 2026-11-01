@@ -167,6 +167,14 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-781 · 2026-10-31 · accepted (the user's decision) — PLAN 7.176: the played nation in the title bar; God's placing for the selected nation
+**Decision.** The top bar's tagline gives way to "Playing {name} · {n} selected" while a nation is played; a click on
+it opens the played nation's panel; the bottom bar's label goes. "Place at once" moves from the Actions tab (where it
+placed for the played nation) to God's tab, placing for the panel's nation, played or not.
+**Why.** The user's requests of 2026-10-31: the played nation one click from its panel, where the eye looks first;
+God's placing with God's other tools, and for any nation.
+**Consequences.** God Mode places units without a played nation. The bottom bar has room the label took.
+
 ### ADR-780 · 2026-10-31 · accepted (the user's decision) — PLAN 7.175: the player's and God's war breaks the bond in its way
 **Decision.** Declare war from the right-click menu, the Actions tab or God's tab no longer refuses for a truce, an
 alliance or a puppet bond: it breaks them (a `forceWar` command). An attacker allied to the defender or its realm

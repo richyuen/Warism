@@ -25150,4 +25150,6 @@ No rule changed and nothing on screen changed. One task came out of it.
   target's standing; "Force war" where a bond stands. Parts a (the sim's `forceWar`), b (the menus) and c (the
   right-click menu's "Offer peace" greyed out while the enemy would refuse), d (a phone "Diplomacy" toggle), e (God's
   diplomacy in the menu) and f (Overview's chips open the menu, with "Go to country"), before 7.5.
+- PLAN 7.176 filed (ADR-781): "Playing … · n selected" in the top bar for the tagline, a click opens the played
+  nation's panel (a); "Place at once" in God's tab, for the panel's nation (b).
 - **Next:** PLAN 7.175a.
