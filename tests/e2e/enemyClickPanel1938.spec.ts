@@ -32,7 +32,11 @@ async function front(page: Page, seed: number, a: number, label: string, b: numb
   await page.getByTestId('take-control').click();
   await page.getByTestId('tab-actions').click();
   await page.locator('.nation-panel select').first().selectOption({ label });
-  await page.getByRole('button', { name: 'Declare war' }).click();
+  // Japan starts at war with China (1937), and Declare war is greyed out at war (PLAN 7.175b).
+  if ((await page.getByTestId('act-standing').getAttribute('data-standing').catch(() => null)) !== 'war') {
+    await page.getByRole('button', { name: 'Declare war' }).click();
+  }
+  await expect(page.getByTestId('act-standing')).toHaveAttribute('data-standing', 'war');
   await page.getByTestId('nation-close').click().catch(() => {});
   await page.evaluate(async (n) => {
     const w = window.__warsim!;
