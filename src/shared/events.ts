@@ -189,7 +189,17 @@ export const EventKind = {
    * bombs did of it (a fraction). Not logged: the headless report sums b (`carrierSunk`).
    */
   CarrierSunk: 63,
+  /**
+   * A war forced by the player or God (PLAN 7.175a, ADR-780): the bonds that stood in its way,
+   * broken in the hour its `WarDeclared` follows. a = the attacker, b = the nation war was
+   * declared on, x = NaN (no place: the row is at b's capital), y = the bonds broken, a sum of
+   * `Bond`'s bits (a truce ended, an alliance left, a puppet freed).
+   */
+  BondsBroken: 64,
 } as const;
+
+/** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */
+export const Bond = { truce: 1, alliance: 2, puppet: 4 } as const;
 export type EventKind = (typeof EventKind)[keyof typeof EventKind];
 
 /** Why a formation's order was refused (`MoveRejected`'s x, PLAN 4.9a). */

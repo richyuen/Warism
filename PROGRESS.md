@@ -25153,3 +25153,19 @@ No rule changed and nothing on screen changed. One task came out of it.
 - PLAN 7.176 filed (ADR-781): "Playing … · n selected" in the top bar for the tagline, a click opens the played
   nation's panel (a); "Place at once" in God's tab, for the panel's nation (b).
 - **Next:** PLAN 7.175a.
+
+## 2026-10-31 — PLAN 7.175a: forceWar, the sim (done)
+
+- **Built:** a `forceWar` command (`sim/systems/war.ts`). A war refused for a non-bond reason (no such nation, the
+  same, a dead one, already at war with the defender or its overlord, overrun of either leader as they will stand)
+  is refused as `declareWar` refuses it, nothing broken. Otherwise it breaks what `whyNotWar` names until nothing:
+  a truce of the attacker with the defender or its overlord ends; an attacker that is a puppet in the way goes free
+  (`releasePuppet`), or the defender that is the attacker's puppet; an attacker allied to the defender or its realm
+  leaves its alliance (`leaveAlliance`; it goes on without it). A `BondsBroken` event (64; a = attacker, b = the
+  nation declared on, y = `Bond` bits: truce 1, alliance 2, puppet 4) before the `WarDeclared`, in the history and
+  the ticker (the war's sound cue): "The United Kingdom broke its alliance with France". No AI path calls it;
+  the pin of seed 99 unchanged.
+- **AT:** `forceWar.test.ts` (7): truce, allies (the alliance going on with the others), an ally's realm, a puppet
+  of either, one overlord's two puppets: refused by `whyNotWar`, at war after; at war, the same, none and overrun
+  still refused, the alliance kept, no `BondsBroken`; the history sentence, with two bonds "alliance and truce".
+- **Next:** PLAN 7.175b.

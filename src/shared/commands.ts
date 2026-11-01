@@ -74,6 +74,12 @@ export type Command =
   | { kind: 'paintControl'; nation: number; x: number; y: number; r: number; x2?: number; y2?: number }
   /** PLAN 1.16: `attacker` declares war on `defender` (each brings its puppets). */
   | { kind: 'declareWar'; attacker: number; defender: number }
+  /**
+   * PLAN 7.175a (ADR-780): the player's and God's war. The truce, alliance or puppet bond in its
+   * way is broken (the attacker leaves its alliance, a puppet goes free, a truce ends) and war is
+   * declared; refused, nothing broken, for any other reason `declareWar` has.
+   */
+  | { kind: 'forceWar'; attacker: number; defender: number }
   /** God Mode: conclude war `war` now on its current score. */
   | { kind: 'forcePeace'; war: number }
   /** God Mode "To Death": side 0 = attackers, 1 = defenders. */
@@ -179,6 +185,7 @@ export const COMMAND_KINDS: Record<Command['kind'], true> = {
   collapseNation: true,
   paintControl: true,
   declareWar: true,
+  forceWar: true,
   forcePeace: true,
   setWarFightToDeath: true,
   createAlliance: true,

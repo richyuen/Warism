@@ -174,13 +174,14 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     if (near) row.near = near;
     const toll = kind === EventKind.NukeCasualties ? tollAfter(rows, i) : undefined;
     if (toll) row.toll = toll;
+    if (kind === EventKind.BondsBroken) [row.bonds, row.y] = [y, null];
     out.push(row);
   }
   return out;
 }
 
 /** The kinds whose b is the nation the event happened to (the one a war was declared on, the loser of a peace, the one a bond took out of its war). */
-const PLACE_OF_B: ReadonlySet<number> = new Set([EventKind.WarDeclared, EventKind.PeaceSigned, EventKind.WarEnded]);
+const PLACE_OF_B: ReadonlySet<number> = new Set([EventKind.WarDeclared, EventKind.PeaceSigned, EventKind.WarEnded, EventKind.BondsBroken]);
 
 /**
  * The ticker's rows (PLAN 3.12c): the last `TICKER_ROWS` major events of the last `TICKER_HOURS`,
@@ -252,6 +253,7 @@ function tickerRowAt(world: World, i: number, nation: (v: number) => string, cit
   if (near) row.near = near;
   const toll = kind === EventKind.NukeCasualties ? tollAfter(rows, i) : undefined;
   if (toll) row.toll = toll;
+  if (kind === EventKind.BondsBroken) row.bonds = y;
   return row;
 }
 

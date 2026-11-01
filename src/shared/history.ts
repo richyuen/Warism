@@ -102,6 +102,8 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.NukeMeansLost]: ['nation', 'nation'],
   // A new nuclear power (PLAN 7.37i): its income's rank that day, told in words.
   [EventKind.NuclearPower]: ['nation', 'number'],
+  // A forced war's bonds broken (PLAN 7.175a): the attacker, the nation war was declared on.
+  [EventKind.BondsBroken]: ['nation', 'nation'],
 };
 
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */
@@ -142,6 +144,8 @@ export interface HistoryRow {
    * it in the log. Absent in a game saved before: its sentence then has the dead alone.
    */
   toll?: NukeToll;
+  /** The bonds a forced war broke (`BondsBroken`, PLAN 7.175a): a sum of `Bond`'s bits, the log's y. */
+  bonds?: number;
 }
 
 export type HistoryAs = 'revived' | 'joined' | 'left' | 'founded' | 'puppet';
@@ -169,6 +173,8 @@ export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.NukeMeansLost,
   // A new nuclear power (PLAN 7.37i).
   EventKind.NuclearPower,
+  // The bonds a forced war broke (PLAN 7.175a), told before its declaration.
+  EventKind.BondsBroken,
 ]);
 /** Kinds of which the ticker takes one row an hour, the last logged: a month's air rows, logged the largest last. */
 export const TICKER_ONE_AN_HOUR: ReadonlySet<number> = new Set<number>([EventKind.AirWar, EventKind.AirRaids]);

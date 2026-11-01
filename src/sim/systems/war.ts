@@ -58,9 +58,10 @@
  */
 import { isDayStart } from '../../shared/calendar';
 import { Refusal } from '../../shared/commands';
-import { EventKind } from '../../shared/events';
+import { Bond, EventKind } from '../../shared/events';
 import { Terrain } from '../../shared/terrain';
-import { annexNation, makePuppet } from './puppets';
+import { annexNation, makePuppet, releasePuppet } from './puppets';
+import { leaveAlliance } from './alliances';
 import { forceMen } from './seaControl';
 import { capitalCell } from './capitals';
 import { warsWithFront } from './warFront';
@@ -156,6 +157,58 @@ export function whyNotWar(world: World, attacker: number, defender: number): Ref
   // a war of no hours.
   const land = world.landCounts();
   return overrun(land, attacker) || overrun(land, o || defender) ? Refusal.Overrun : Refusal.None;
+}
+
+/**
+ * The player's and God's war (PLAN 7.175a, ADR-780, the user's decision): the bonds in its way
+ * are broken, then war is declared. What `whyNotWar` names is broken, until it has nothing more:
+ * a truce of the attacker with the defender or its overlord ends; an attacker that is a puppet in
+ * the way (of the defender's realm, or one overlord's with the defender) goes free, and a defender
+ * that is the attacker's puppet; an attacker allied to the defender or its realm leaves its
+ * alliance (it goes on without it). A war refused for anything else (no such nation, the same,
+ * a dead one, already at war, overrun) is refused as `declareWar` refuses it, nothing broken.
+ * The bonds broken are a `BondsBroken` row before the `WarDeclared`.
+ */
+export function forceWar(world: World, attacker: number, defender: number): Refusal {
+  const nc = world.nations.cols;
+  const hard = (why: Refusal): boolean => why !== Refusal.None && why !== Refusal.Truce && why !== Refusal.Subject && why !== Refusal.Allied && why !== Refusal.SameOverlord && why !== Refusal.AlliedRealm;
+  const first = whyNotWar(world, attacker, defender);
+  // Overrun is judged only once the bonds pass: asked first of the leaders as they will stand.
+  const lead = nc.overlord[defender] === attacker ? defender : nc.overlord[defender] || defender;
+  const land = world.landCounts();
+  const overrunNow = world.nations.has(attacker) && world.nations.has(lead) && (overrun(land, attacker) || overrun(land, lead));
+  if (hard(first) || overrunNow || (lead !== defender && hard(whyNotWarOn(world, attacker, lead)))) {
+    declareWar(world, attacker, defender); // refused: its `WarRejected`
+    return hard(first) ? first : overrunNow ? Refusal.Overrun : whyNotWarOn(world, attacker, lead);
+  }
+  let broke = 0;
+  const al = world.alliances;
+  for (let step = 0; step < 8; step++) {
+    const why = whyNotWar(world, attacker, defender);
+    if (why === Refusal.None || hard(why)) break;
+    const o = nc.overlord[defender]!;
+    if (why === Refusal.Truce) {
+      const before = world.wars.truces.length;
+      world.wars.truces = world.wars.truces.filter((t) => !((t.a === attacker || t.b === attacker) && [defender, o].includes(t.a === attacker ? t.b : t.a) && t.untilTick > world.tick));
+      if (world.wars.truces.length === before) break;
+      broke |= Bond.truce;
+    } else if (why === Refusal.Subject || why === Refusal.SameOverlord || (why === Refusal.AlliedRealm && nc.overlord[attacker] !== 0 && !al.allied(attacker, o || defender) && !al.allied(attacker, defender))) {
+      // The attacker a puppet in the way goes free; else the defender, the attacker's puppet.
+      if (nc.overlord[attacker] !== 0) releasePuppet(world, attacker);
+      else if (o === attacker) releasePuppet(world, defender);
+      else break;
+      broke |= Bond.puppet;
+    } else {
+      // Allied, or an ally of the defender's realm: the attacker leaves its alliance.
+      if (al.allianceOf(attacker) === undefined) break;
+      leaveAlliance(world, attacker);
+      broke |= Bond.alliance;
+    }
+  }
+  const why = whyNotWar(world, attacker, defender);
+  if (broke !== 0) world.out.emit(world.tick, EventKind.BondsBroken, attacker, defender, NaN, broke);
+  declareWar(world, attacker, defender);
+  return why;
 }
 
 /** Whether `n` has CAPITULATE of its own land under occupiers, of whatever war (the capitulation's rule). */

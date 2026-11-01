@@ -7,7 +7,7 @@ import { orderParadrop } from './systems/airLift';
 import { finiteCommand, inRange, Refusal, type Command } from '../shared/commands';
 import { EventKind } from '../shared/events';
 import { destroyFormation, equipFormation } from './systems/elements';
-import { declareWar, makePeace, offerPeace, whyNotWar } from './systems/war';
+import { declareWar, forceWar, makePeace, offerPeace, whyNotWar } from './systems/war';
 import { canJoin, leaveAlliance, noWarAmong, proposeAlliance } from './systems/alliances';
 import { annexNation, makePuppet, releasePuppet } from './systems/puppets';
 import { removeCity, setCapital, setCore, spawnCity } from './scenarioEdit';
@@ -251,6 +251,8 @@ function applyCommand(world: World, cmd: Command): Refusal {
       declareWar(world, cmd.attacker, cmd.defender); // a refused one has its event (`WarRejected`)
       return why;
     }
+    case 'forceWar':
+      return forceWar(world, cmd.attacker, cmd.defender);
     case 'forcePeace': {
       const war = world.wars.list.find((w) => w.id === cmd.war);
       if (!war) return Refusal.NoSuch;

@@ -60,6 +60,8 @@ describe('sound cues (PLAN 3.12d)', () => {
     // God Mode's acts (PLAN 7.33b): a nation set down as a return, a town its own.
     expect(cueOfKind(EventKind.NationSpawned)).toBe('return');
     for (const k of [EventKind.CitySpawned, EventKind.CityRazed]) expect(cueOfKind(k)).toBe('town');
+    // A forced war's bonds broken (PLAN 7.175a): the war's.
+    expect(cueOfKind(EventKind.BondsBroken)).toBe('war');
     for (const k of Object.values(EventKind)) expect(cueOfKind(k) !== null, `kind ${k}`).toBe(TICKER_KINDS.has(k));
   });
 

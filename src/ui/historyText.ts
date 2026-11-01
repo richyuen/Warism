@@ -1,4 +1,4 @@
-import { EventKind } from '../shared/events';
+import { Bond, EventKind } from '../shared/events';
 import { convoyTake, HISTORY_ROLES, kindName, nukeStrike, nukeToll, seaSide, type HistoryRow, type NukeToll } from '../shared/history';
 import { displayName, t, type MessageKey } from './i18n';
 import en from './i18n/en.json';
@@ -59,6 +59,13 @@ function lostOrNone(toll: NukeToll): string {
   return forces ? t('history.nukeForces', { forces }) : t('history.nukeForces.none');
 }
 
+/** The bonds of a `BondsBroken` row in words (PLAN 7.175a): "alliance", "puppet bond and truce". */
+function bondsText(bits: number): string {
+  const parts = ([['alliance', Bond.alliance], ['puppet', Bond.puppet], ['truce', Bond.truce]] as const).filter(([, b]) => (bits & b) !== 0).map(([k]) => t(`history.bond.${k}`));
+  if (parts.length <= 1) return parts[0] ?? t('history.bond.truce');
+  return t('history.listAnd', { rest: parts.slice(0, -1).join(', '), last: parts.at(-1)! });
+}
+
 /** "10,855 men, 40 guns and 12 tanks", those of none left out; '' when the burst found no forces (PLAN 7.32b). */
 function forcesLost({ men, guns, tanks }: NukeToll): string {
   const part = (n: number, key: 'history.nukeMen' | 'history.nukeGuns' | 'history.nukeTanks'): string[] => (n > 0 ? [t(n === 1 ? `${key}.one` : key, { n: count(n) })] : []);
@@ -108,7 +115,9 @@ export function historyText(r: HistoryRow): string {
   const means = r.kind === EventKind.NukeMeansLost ? { near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '' } : {};
   // A new nuclear power (PLAN 7.37i): its income's rank, "largest income", "2nd largest income".
   const power = r.kind === EventKind.NuclearPower ? { rank: incomeRank(r.b) } : {};
+  // A forced war's bonds broken (PLAN 7.175a): "alliance and truce".
+  const broke = r.kind === EventKind.BondsBroken ? { bonds: bondsText(r.bonds ?? 0) } : {};
   const decided = r.kind === EventKind.NukeDecided ?{ near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '', weighed: t(nukeWeighed(r.b / 1000)) } : {};
-  const s = t((!r.bn && rb !== 'number' && rb !== 'side' && none in en ? none : key) as MessageKey, { a: part(ra, r.a, r.an), b: part(rb, r.b, r.bn), c: r.cn ? displayName(r.cn) : '', ...ships, ...strike, ...lost, ...decided, ...means, ...power, gold: gold(took) });
+  const s = t((!r.bn && rb !== 'number' && rb !== 'side' && none in en ? none : key) as MessageKey, { a: part(ra, r.a, r.an), b: part(rb, r.b, r.bn), c: r.cn ? displayName(r.cn) : '', ...ships, ...strike, ...lost, ...decided, ...means, ...power, ...broke, gold: gold(took) });
   return s.charAt(0).toLocaleUpperCase() + s.slice(1);
 }

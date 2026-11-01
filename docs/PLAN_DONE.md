@@ -16807,3 +16807,30 @@ Of 7.174 (open in PLAN.md):
   - [x] 7.174f T0, T1 and the sky (the user's choice: every level). Counters and markers as balls of the flag […]
   - [x] 7.174g SPEC §8: the ball look in the Forces column and a note of the setting. AT: parity green.
   - [x] 7.174h Countryballs the default, last (the user's decision, 2026-10-31): `DEFAULT_UNIT_LOOK` 'balls', and […]
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+Of 7.175 (open in PLAN.md):
+
+  - [x] 7.175a The sim: a `forceWar` command. Of the refusals of `whyNotWar` it breaks, in order: the attacker a
+    puppet in the way (of the defender, of the defender's overlord's realm, or one overlord's with the defender)
+    goes free (`releasePuppet`); the defender the attacker's puppet goes free; the attacker allied to the
+    defender or its realm leaves its alliance with its puppets (`leaveAlliance`), the alliance going on without
+    it; a truce of the attacker with the defender or its overlord ends. Then it declares (`declareWar`). It
+    breaks nothing and refuses as now when the war is refused for another reason (no such nation, the same
+    one, a dead one, already at war, overrun: the user's decision). Each bond broken has its event and row in
+    the ticker. AT: unit tests, one a bond: a truce, allies, an ally's realm, a puppet of either, one overlord's
+    two puppets: refused by `declareWar`, at war by `forceWar`, the bond gone and the alliance's other members
+    still in it; overrun and at war still refused, nothing broken; the pin of seed 99 unchanged (no AI path).
