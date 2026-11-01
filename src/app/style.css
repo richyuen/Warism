@@ -1929,6 +1929,21 @@ button.unit-icon.on {
   width: 21px;
   height: 14px;
 }
+/* The nation's standing with the played one (PLAN 7.175b): under its name; a bond in amber, a war in red. */
+.nation-menu-standing {
+  font-size: 0.85em;
+  color: var(--ui-text-dim, #b4bdcb);
+}
+.nation-menu-standing.standing-war {
+  color: #ff7a6b;
+}
+.nation-menu-standing.standing-allied,
+.nation-menu-standing.standing-realm,
+.nation-menu-standing.standing-puppet,
+.nation-menu-standing.standing-overlord,
+.nation-menu-standing.standing-truce {
+  color: var(--ui-accent);
+}
 .nation-menu .god-btn {
   text-align: left;
 }

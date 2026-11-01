@@ -2,6 +2,7 @@ import type { Refusal } from '../shared/commands';
 import { REFUSAL_KEY } from './GodTab';
 import { t } from './i18n';
 import { displayName } from './NationPanel';
+import { standingText, type Standing } from './standing';
 
 export interface NationMenuProps {
   /** The nation's name, and its flag's image. */
@@ -14,6 +15,8 @@ export interface NationMenuProps {
   war: number | null;
   /** Whether the two are allies: no alliance is proposed. */
   allied: boolean;
+  /** Its standing with the played nation (PLAN 7.175b): said under its name; a bond makes the war button "Force war". */
+  standing: Standing;
   onWar: () => void;
   onPeace: (war: number) => void;
   onAlly: () => void;
@@ -21,7 +24,7 @@ export interface NationMenuProps {
 
 /** The menu's width and most height, CSS px: it is kept inside the window. */
 const MENU_W = 200;
-const MENU_H = 110;
+const MENU_H = 130;
 
 /** Keeps a box of w × h at (x, y) + 8 inside the window. */
 function placed(x: number, y: number, w: number, h: number): { left: string; top: string } {
@@ -35,16 +38,19 @@ function placed(x: number, y: number, w: number, h: number): { left: string; top
  * (`PlayerControl.openMenu`): declare war on it (or offer peace in the war with it) and propose
  * an alliance, the Actions tab's commands for that nation.
  */
-export function NationMenu({ name, flagUrl, x, y, war, allied, onWar, onPeace, onAlly }: NationMenuProps) {
+export function NationMenu({ name, flagUrl, x, y, war, allied, standing, onWar, onPeace, onAlly }: NationMenuProps) {
   return (
     <div class="nation-menu" data-testid="nation-menu" role="menu" style={placed(x, y, MENU_W, MENU_H)} onContextMenu={(e) => e.preventDefault()}>
       <div class="nation-menu-title">
         {flagUrl ? <img class="nation-menu-flag" src={flagUrl} alt="" /> : null}
         <span data-testid="nation-menu-name">{displayName(name)}</span>
       </div>
+      <div class={`nation-menu-standing standing-${standing.kind}`} data-testid="nation-menu-standing" data-standing={standing.kind}>
+        {standingText(standing)}
+      </div>
       {war === null ? (
-        <button type="button" class="god-btn" role="menuitem" data-testid="nation-menu-war" onClick={onWar}>
-          {t('god.war')}
+        <button type="button" class="god-btn" role="menuitem" data-testid="nation-menu-war" data-force={standing.bond ? 1 : 0} onClick={onWar}>
+          {t(standing.bond ? 'act.forceWar' : 'god.war')}
         </button>
       ) : (
         <button type="button" class="god-btn" role="menuitem" data-testid="nation-menu-peace" onClick={() => onPeace(war)}>

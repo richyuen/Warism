@@ -4,6 +4,7 @@ import type { NationStat, PlayerWing, TemplateInfo, WarStat } from '../shared/pr
 import { REFUSAL_KEY } from './GodTab';
 import { t, type MessageKey } from './i18n';
 import { displayName } from './NationPanel';
+import { standingOf, standingText } from './standing';
 import { UnitIcon } from './UnitIcon';
 
 export interface ActionsTabProps {
@@ -71,6 +72,9 @@ export function ActionsTab({ nation, nations, wars, templates, day, onCommand, w
   // No nation until one is chosen (PLAN 7.164): the list opened on the first by name, one click from war.
   const tgt = target !== 0 && others.some((o) => o.id === target) ? target : 0;
   const myWars = wars.filter((w) => w.attackers.includes(n) || w.defenders.includes(n));
+  // The chosen nation's standing with this one (PLAN 7.175b): a bond makes the war "Force war".
+  const byId = new Map([nation, ...nations].map((o) => [o.id, o]));
+  const standing = tgt !== 0 ? standingOf(n, tgt, (id) => byId.get(id), wars) : null;
   const nameOf = (id: number): string => {
     const o = nations.find((x) => x.id === id);
     return o ? displayName(o.name) : `#${id}`;
@@ -105,9 +109,14 @@ export function ActionsTab({ nation, nations, wars, templates, day, onCommand, w
           ))}
         </select>
       </div>
+      {standing ? (
+        <div class={`panel-note standing-${standing.kind}`} data-testid="act-standing" data-standing={standing.kind}>
+          {standingText(standing)}
+        </div>
+      ) : null}
       <div class="god-row">
-        <button type="button" class="god-btn" data-testid="act-war" disabled={tgt === 0} onClick={() => onCommand({ kind: 'declareWar', attacker: n, defender: tgt })}>
-          {t('god.war')}
+        <button type="button" class="god-btn" data-testid="act-war" data-force={standing?.bond ? 1 : 0} disabled={tgt === 0 || standing?.kind === 'war'} onClick={() => onCommand({ kind: 'forceWar', attacker: n, defender: tgt })}>
+          {t(standing?.bond ? 'act.forceWar' : 'god.war')}
         </button>
         <button type="button" class="god-btn" data-testid="act-ally" disabled={tgt === 0} onClick={() => onCommand({ kind: 'proposeAlliance', from: n, to: tgt })}>
           {t('act.proposeAlliance')}

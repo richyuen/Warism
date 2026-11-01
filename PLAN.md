@@ -36,14 +36,7 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
 - [ ] 7.175 Force war (the user's request, 2026-10-31; ADR-780): a war the player or God declares breaks the
   truce, alliance or puppet bond in its way instead of being refused. The AI keeps the bonds.
   - [x] 7.175a The sim: a `forceWar` command. Of the refusals of `whyNotWar` it breaks, in order: the attacker a […]
-  - [ ] 7.175b The menus: the right-click menu of a nation (`NationMenu`) says its standing with the played
-    nation under its name: At war, Allied, Puppet (of the one or the other), Truce (the days left) or
-    Neutral; its war button reads "Force war" where a bond stands, "Declare war" when neutral, and "Offer
-    peace" at war as now. The Actions tab says the chosen nation's standing and labels its button so; it and
-    God's tab send `forceWar`. AT: e2e: playing Germany, Italy (allied by the 1938 start, or allied in the
-    test) reads Allied and "Force war", the click makes the war and Germany leaves the alliance; a nation in
-    truce reads its days and its click makes the war; a neutral one reads Neutral and "Declare war"; God's
-    war on two allies makes it.
+  - [x] 7.175b The menus: the right-click menu of a nation (`NationMenu`) says its standing with the played […]
   - [ ] 7.175c The right-click menu's "Offer peace" (the user's request, 2026-10-31; the menu only, the Actions
     tab as it is): greyed out while the enemy would refuse it (`offerPeace`: it fights to the death, or the
     played side leads by less than `PEACE_ACCEPT_SCORE` and the enemy's exhaustion is not above

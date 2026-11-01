@@ -593,6 +593,8 @@ export interface NationStat {
   integration: number;
   puppets: number[];
   enemies: number[];
+  /** Its truces in force (PLAN 7.175b): with whom, and the days left (rounded up). */
+  truces: { with: number; days: number }[];
   aiOff: boolean;
   /** Whether God Mode has left it allowed nuclear weapons (PLAN 6.1a; the world's toggle apart). */
   nukesAllowed: boolean;

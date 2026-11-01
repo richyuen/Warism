@@ -166,13 +166,30 @@ test('a right-click on a nation\'s ground: declare war from its menu, and a refu
   await page.mouse.click(lit[0], lit[1]);
   await expect(menu).toHaveCount(0);
 
-  // Peace forced (God Mode's command): a truce. War declared again from the menu is refused, in words.
+  // Peace forced (God Mode's command): a truce. The menu says so, with its days, and its war
+  // button forces the war (PLAN 7.175b, ADR-780: until then the truce refused it).
   const war = (await inspect(page)).wars.find((w) => w.attackers.includes(POL) && w.defenders.includes(LIT))!;
   await page.evaluate((w) => window.__warsim!.sim.command({ kind: 'forcePeace', war: w }, true), war.id);
   await expect.poll(async () => (await pol(page)).enemies).not.toContain(LIT);
   await page.mouse.click(lit[0], lit[1], { button: 'right' });
+  await expect(page.getByTestId('nation-menu-standing')).toHaveText(/^Truce \(\d+ days\)$/);
+  await expect(page.getByTestId('nation-menu-war')).toHaveText('Force war');
   await page.getByTestId('nation-menu-war').click();
-  await expect(page.getByTestId('nation-menu-notice')).toContainText('truce');
+  await expect.poll(async () => (await pol(page)).enemies).toContain(LIT);
+
+  // A refusal that is no bond is still told, in words: Lithuania made the puppet of Germany, at war
+  // with Poland (God's commands), is not at war with Poland itself; a war on it is a war on its
+  // overlord, with whom Poland is at war already.
+  const peace = (await inspect(page)).wars.find((w) => w.attackers.includes(POL) && w.defenders.includes(LIT))!;
+  await page.evaluate((w) => window.__warsim!.sim.command({ kind: 'forcePeace', war: w }, true), peace.id);
+  await expect.poll(async () => (await pol(page)).enemies).not.toContain(LIT);
+  const GER = id('GER');
+  await page.evaluate(([g, p]) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: g!, defender: p! }, true), [GER, POL]);
+  await page.evaluate(([g, l]) => window.__warsim!.sim.command({ kind: 'createPuppet', overlord: g!, subject: l!, autonomy: 50 }, true), [GER, LIT]);
+  await expect.poll(async () => (await inspect(page)).nations.find((n) => n.id === LIT)?.overlord).toBe(GER);
+  await page.mouse.click(lit[0], lit[1], { button: 'right' });
+  await page.getByTestId('nation-menu-war').click();
+  await expect(page.getByTestId('nation-menu-notice')).toContainText('at war');
   expect((await pol(page)).enemies).not.toContain(LIT);
 });
 

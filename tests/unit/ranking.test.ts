@@ -32,6 +32,7 @@ const nation = (id: number, v: number): NationStat => ({
   integration: 0,
   puppets: Array.from({ length: v }, (_, i) => 100 + i),
   enemies: Array.from({ length: v }, (_, i) => 200 + i),
+  truces: [],
   aiOff: false,
   nukesAllowed: true,
   warheads: v * 8,

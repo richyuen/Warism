@@ -25169,3 +25169,23 @@ No rule changed and nothing on screen changed. One task came out of it.
   of either, one overlord's two puppets: refused by `whyNotWar`, at war after; at war, the same, none and overrun
   still refused, the alliance kept, no `BondsBroken`; the history sentence, with two bonds "alliance and truce".
 - **Next:** PLAN 7.175b.
+
+## 2026-10-31 — PLAN 7.175b: the standing and "Force war" in the menus (done)
+
+- **Built:** `ui/standing.ts`: a nation's standing with the played one from the statistics message (at war, your
+  puppet, your overlord, allied, allied realm, truce with its days, neutral) and whether a bond stands (`forceWar`
+  would break it), as `whyNotWar`/`bond` judge. Each nation's truces now go to the page (`NationStat.truces`). The
+  right-click menu says the standing under the name; its war button reads "Force war" where a bond stands and sends
+  `forceWar`. The Actions tab says the chosen nation's standing, labels its button so (disabled at war), and sends
+  `forceWar`; God's tab sends `forceWar`.
+- **AT:** `standing.test.ts`: each kind on the 1938 start and a truce; `bond` agrees with `whyNotWar` on every pair of
+  40+ nations; the words. e2e `forceWar1938` (2): playing Germany, Switzerland Neutral / "Declare war", Italy Allied /
+  "Force war", its click the war, Germany out of the alliance (Italy's goes on), the ticker "broke its alliance with
+  Italy", then At war; the Actions tab the same; God's war of the United Kingdom on France made. `playerActions1938`'s
+  truce step changed with the rule (ADR-780): the menu reads "Truce (n days)" and "Force war", its click the war; its
+  refusal still told, with one that is no bond (Lithuania Germany's puppet, Poland at war with Germany: "at war").
+  `godUi1938`'s refusal test changed with the rule too: its "war on an ally says why not" steps use Ally (Italy in an
+  alliance already), and it ends with God's war on the ally made, France out of the alliance. The other specs that
+  press a war button (`godPanelMore`, `sound`, `ticker`, `touchMenu`) green unchanged. Evidence
+  `docs/evidence/7.175/b-menu-allied.png`.
+- **Next:** PLAN 7.175c.

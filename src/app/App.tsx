@@ -3,6 +3,7 @@ import { AIR_CONTESTED, AIR_CONTESTED_COLOR } from '../shared/mapModes';
 import { MapLegend } from '../ui/MapLegend';
 import { MapTooltip } from '../ui/MapTooltip';
 import { NationMenu, NationMenuNotice } from '../ui/NationMenu';
+import { standingOf } from '../ui/standing';
 import { FormationPanel } from '../ui/FormationPanel';
 import { HistoryPanel } from '../ui/HistoryPanel';
 import { StatsChart } from '../ui/StatsChart';
@@ -396,7 +397,8 @@ export function App({
                 y={m.y}
                 war={war ? war.id : null}
                 allied={mine !== undefined && target.alliance?.id === mine}
-                onWar={() => player.menuCommand({ kind: 'declareWar', attacker: me, defender: m.nation })}
+                standing={standingOf(me, m.nation, (id) => byId.get(id), stats.wars)}
+                onWar={() => player.menuCommand({ kind: 'forceWar', attacker: me, defender: m.nation })}
                 onPeace={(w) => player.menuCommand({ kind: 'offerPeace', war: w, from: me })}
                 onAlly={() => player.menuCommand({ kind: 'proposeAlliance', from: me, to: m.nation })}
               />

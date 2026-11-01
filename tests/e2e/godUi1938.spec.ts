@@ -265,7 +265,9 @@ test('a God action that is refused says why: Ally with a nation of another allia
   await expect.poll(async () => nation(await inspect(page), FRA).incomeBonus).toBe(bonus + 10);
   await expect(page.getByTestId('god-refusal')).toHaveCount(0);
 
-  // Italy leaves its alliance; then France's Ally takes it in, and war on an ally says why not.
+  // Italy leaves its alliance; then France's Ally takes it in, and Ally again says why not (it is
+  // in an alliance already). Until PLAN 7.175b war on an ally was the refusal here; since ADR-780
+  // God's war breaks the alliance (below).
   await select(12.5, 43, ITA);
   await page.getByTestId('god-leave').click();
   await expect.poll(() => leaderOf(ITA)).toBeUndefined();
@@ -275,9 +277,9 @@ test('a God action that is refused says why: Ally with a nation of another allia
   await page.getByTestId('god-ally').click();
   await expect.poll(() => leaderOf(ITA)).toBe(ofFrance);
   await expect(page.getByTestId('god-refusal')).toHaveCount(0);
-  await page.getByTestId('god-war').click();
-  await expect(page.getByTestId('god-refusal')).toContainText('they are allies');
-  expect(atWar(await inspect(page), FRA, ITA)).toBe(false);
+  await page.getByTestId('god-ally').click();
+  await expect(page.getByTestId('god-refusal')).toContainText('in an alliance already');
+  expect(await leaderOf(ITA)).toBe(ofFrance);
 
   // The words are France's: a click on another nation, and they are gone (PLAN 2.17e2). Nor do they
   // come back with France, or stay through God Mode switched off and on.
@@ -286,13 +288,20 @@ test('a God action that is refused says why: Ally with a nation of another allia
   await expect(page.getByTestId('god-refusal')).toHaveCount(0);
   await select(2.5, 47, FRA);
   await expect(page.getByTestId('god-refusal')).toHaveCount(0);
-  await page.getByTestId('god-war').click();
-  await expect(page.getByTestId('god-refusal')).toContainText('they are allies');
+  await page.getByTestId('god-ally').click();
+  await expect(page.getByTestId('god-refusal')).toContainText('in an alliance already');
   await page.getByTestId('god-btn').click();
   await expect(page.getByTestId('panel-god')).toHaveCount(0);
   await page.getByTestId('god-btn').click();
   await page.getByTestId('tab-god').click();
   await expect(page.getByTestId('panel-god')).toBeVisible();
+  await expect(page.getByTestId('god-refusal')).toHaveCount(0);
+
+  // God's war on an ally (PLAN 7.175b, ADR-780): made, France out of the alliance, no refusal.
+  await page.getByTestId('god-target').selectOption(String(ITA));
+  await page.getByTestId('god-war').click();
+  await expect.poll(async () => atWar(await inspect(page), FRA, ITA)).toBe(true);
+  expect(await leaderOf(FRA)).toBeUndefined();
   await expect(page.getByTestId('god-refusal')).toHaveCount(0);
 });
 

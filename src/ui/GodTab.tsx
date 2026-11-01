@@ -216,7 +216,7 @@ export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, r
         </select>
       </div>
       <div class="god-row">
-        {btn('god-war', t('god.war'), () => onCommand({ kind: 'declareWar', attacker: n, defender: tgt }), false, tgt === 0)}
+        {btn('god-war', t('god.war'), () => onCommand({ kind: 'forceWar', attacker: n, defender: tgt }), false, tgt === 0)}
         {btn('god-ally', t('god.ally'), () =>
           onCommand(nation.alliance ? { kind: 'joinAlliance', nation: tgt, alliance: nation.alliance.id } : { kind: 'createAlliance', leader: n, members: [tgt], nameKey: 'alliance.defensive' }),
           false,
