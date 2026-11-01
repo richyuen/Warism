@@ -16884,3 +16884,29 @@ Of 7.175 (open in PLAN.md):
     with its stats (`WarStat`). AT: unit test: the menu's rule agrees with `offerPeace` on wars of each case; e2e:
     playing Germany at war with Poland on day 1, the menu's "Offer peace" disabled with the lead's words; with
     the war's score set past the bar (God), enabled, and its click makes the peace.
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+Of 7.175 (open in PLAN.md):
+
+  - [x] 7.175d A "Diplomacy" toggle on the phone layout (the user's request and decision, 2026-10-31): there is no
+    right-click on a touch screen, and on an iPhone a long press does not reach the page, so PLAN 7.171's long
+    press on another nation's land (which opened its menu) is gone: a long press is the selection box alone.
+    Shown at phone width while a nation is played; on, it lights, and the next tap on a nation opens its menu
+    (no selection, no order) and turns it off; a second tap of it, Escape or Cancel turns it off. The desktop as
+    it is. AT: e2e at 390 × 844 (`touchMenu1938`, as changed): playing Germany, a long press held still on Poland
+    opens no menu; Diplomacy then Cancel turns it off and a tap is a tap; Diplomacy then a tap on Poland opens
+    Poland's menu, the toggle off after, and its war button makes the war; the box by a long press's drag on
+    Germany's land as before.

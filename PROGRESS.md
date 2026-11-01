@@ -25204,3 +25204,18 @@ No rule changed and nothing on screen changed. One task came out of it.
   First run: the build had stopped at a test importing a `.tsx` (no jsx in the tests' config), so the page had no
   exhaustion and read every offer accepted; `peaceWhy` moved to `ui/standing.ts`.
 - **Next:** PLAN 7.175d.
+
+## 2026-10-31 — PLAN 7.175d: the phone's Diplomacy toggle (done)
+
+- **Built:** `PlayerControl.diplomacy` (a signal; `toggleDiplomacy`, `takeDiplomacy`); `MapView.menuTap`, asked at a
+  tap: on, the tap opens the menu of the nation there (`onContextClick`) and the toggle goes off. A "Diplomacy" button
+  in the bottom bar at phone width while a nation is played, lit while on; Cancel and Escape turn it off first. PLAN
+  7.171's long press on another nation's land (its menu) is gone (the user's decision: a long press does not reach
+  the page on an iPhone): a long press is the selection box alone.
+- **AT:** `touchMenu1938` as changed: at 390 × 844 by touch, playing Germany, a long press held still on Poland opens
+  no menu; Diplomacy then Cancel: off, a tap no menu; Diplomacy then a tap on Poland: Poland's menu, the toggle off,
+  and its war button the war; a long press's drag on Germany's land boxes its formations as before. `phoneLayout1938`
+  green. Evidence `docs/evidence/7.175/d-touch-menu-poland.png` (the bar: Cancel, Diplomacy, …).
+- **Not checked:** whether a long press reaches the page on an iPhone for the selection box either (the user's report
+  was of the menu); no iPhone here.
+- **Next:** PLAN 7.175e.

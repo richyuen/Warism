@@ -39,6 +39,8 @@ export interface BottomBarProps {
    * first in the bar: a touch screen has no Escape (the user's request of 2026-10-29). Null: none.
    */
   onCancel?: (() => void) | null;
+  /** The phone's Diplomacy toggle (PLAN 7.175d), while a nation is played at a phone's size: lit when on. */
+  diplomacy?: { on: boolean; onToggle: () => void } | null;
 }
 
 /**
@@ -60,7 +62,7 @@ function speedLabels(): string {
  * Bottom bar (PLAN 1.8), in the user's order (ADR-763): Cancel when there is something to cancel,
  * Pause/Resume, speed, God Mode, map, Statistics, History, Editor, the date, Settings.
  */
-export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, mapMode, onMapMode, showStats, onToggleStats, godMode, onToggleGod, playing, showHistory, onToggleHistory, showEditor, onToggleEditor, showSettings, onToggleSettings, godTools, onCancel }: BottomBarProps) {
+export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, mapMode, onMapMode, showStats, onToggleStats, godMode, onToggleGod, playing, showHistory, onToggleHistory, showEditor, onToggleEditor, showSettings, onToggleSettings, godTools, onCancel, diplomacy }: BottomBarProps) {
   const isMax = SPEED_LEVELS[speedLevel] === 'max';
   // How far the bar's top is from the view's bottom, for what stands above it (PLAN 7.4f25): a
   // played nation's label that does not fit goes onto a second line.
@@ -86,6 +88,11 @@ export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, ma
       {onCancel ? (
         <button type="button" class="bar-btn bar-cancel" data-testid="cancel-btn" title={t('bar.cancelHint')} onClick={onCancel}>
           {t('bar.cancel')}
+        </button>
+      ) : null}
+      {diplomacy ? (
+        <button type="button" class={diplomacy.on ? 'bar-btn bar-diplomacy active' : 'bar-btn bar-diplomacy'} data-testid="diplomacy-btn" aria-pressed={diplomacy.on} title={t('bar.diplomacyHint')} onClick={diplomacy.onToggle}>
+          {t('bar.diplomacy')}
         </button>
       ) : null}
       <button type="button" class="bar-btn bar-reserve" data-testid="pause-btn" data-reserve={paused ? t('bar.pause') : t('bar.resume')} aria-pressed={paused} onClick={onTogglePause}>

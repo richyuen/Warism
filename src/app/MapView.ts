@@ -440,16 +440,9 @@ export class MapView {
         if (b.active) {
           const [sx, sy] = local(e);
           [b.x1, b.y1] = [sx, sy];
-          // A long press held still on another nation's land: its menu, as the mouse's right click
-          // (PLAN 7.171; critic runs 20–21: on touch there was no way to declare war). Dragged, or on
-          // the player's own land or the sea, it is the box as before.
-          const other = b.touch && Math.hypot(sx - b.x0, sy - b.y0) <= BOX_SLACK_PX ? this.nationAt(sx, sy) : 0;
-          if (other !== 0 && this.selectionNation !== 0 && other !== this.selectionNation && this.onContextClick) {
-            this.onContextClick(other, sx, sy, e.clientX, e.clientY);
-            endBox();
-            down = null;
-            return;
-          }
+          // A long press is the box alone (PLAN 7.175d, the user's decision: the phone's Diplomacy
+          // toggle opens the menu; from PLAN 7.171 a long press held still on another nation's land
+          // opened it, and on an iPhone a long press does not reach the page).
           this.onBoxSelect?.(this.formationsInBox(b.x0, b.y0, b.x1, b.y1, this.selectionNation), b.remove);
           endBox();
           down = null;
@@ -462,6 +455,12 @@ export class MapView {
         const sx = e.clientX - r.left;
         const sy = e.clientY - r.top;
         // A pointer toward an enemy off the frame (PLAN 7.34d): the camera goes to that enemy's block, at the same zoom.
+        // The phone's Diplomacy toggle on (PLAN 7.175d): the tap opens the menu of the nation there.
+        if (this.menuTap?.()) {
+          this.onContextClick?.(this.nationAt(sx, sy), sx, sy, e.clientX, e.clientY);
+          down = null;
+          return;
+        }
         const enemy = this.enemyPointerAt(sx, sy);
         const pos = enemy === 0 ? null : this.formationPos(enemy);
         if (pos) {
@@ -890,6 +889,8 @@ export class MapView {
    * and the page's (cx, cy), with the nation of the ground there (the player's menu of a nation).
    */
   onContextClick: ((nation: number, sx: number, sy: number, cx: number, cy: number) => void) | null = null;
+  /** Asked at a tap (PLAN 7.175d): true when the phone's Diplomacy toggle was on, and the tap opens the menu (`onContextClick`). */
+  menuTap: (() => boolean) | null = null;
 
   /** The tool that paints on a primary-button drag, if any (PLAN 1.44; the editor's brush and line). */
   paint: PaintDrag | null = null;

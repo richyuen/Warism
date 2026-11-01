@@ -615,6 +615,8 @@ textarea,
   color: #fff3c4;
   font-weight: 700;
 }
+/* The phone's Diplomacy toggle (PLAN 7.175d), lit while on. */
+.bar-diplomacy.active,
 .bar-god.active {
   background: rgba(233, 196, 106, 0.35);
   color: #fff3c4;

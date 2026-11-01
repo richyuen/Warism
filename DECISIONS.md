@@ -188,7 +188,8 @@ not the alliance dissolved; the puppet freed; overrun still refused) are the use
 `WarRejected` row for a bond no longer comes from the player's menus. The right-click menu's "Offer peace" is
 greyed out while the enemy would refuse it, saying why (7.175c, the user's request; the Actions tab unchanged).
 - **Extended (the user's requests and answers, 2026-10-31):** the phone gets a "Diplomacy" toggle whose next tap
-  opens the menu (7.175d). With God mode on the menu carries God's diplomacy, acting for the played nation, or with
+  opens the menu (7.175d); it replaces PLAN 7.171's long press on another nation's land (the user's decision: on an
+  iPhone a long press does not reach the page), a long press now being the selection box alone. With God mode on the menu carries God's diplomacy, acting for the played nation, or with
   none played for the selected one (Ally, Make puppet, Annex, at war Force peace and Fight to the death; Leave
   alliance only when the two are allied; no Donate gold) (7.175e). The Overview's nation chips open the clicked
   nation's menu, as on the map, with "Go to country" first (7.175f).

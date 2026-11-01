@@ -112,6 +112,8 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     // A right-click on another nation's ground opens its menu for the player (declare war, peace,
     // alliance); a press of any button on the map or a wheel turn closes it.
     view.onContextClick = (nation, _sx, _sy, cx, cy) => p.openMenu(nation, cx, cy);
+    // The phone's Diplomacy toggle (PLAN 7.175d): its tap is the menu's, as a right-click.
+    view.menuTap = () => p.takeDiplomacy();
     // A selection box (Shift-drag; Ctrl+Shift-drag takes out; a long press's drag on a touch screen).
     view.onBoxSelect = (ids, remove) => p.boxSelect(ids, remove);
     // God Mode's placing is God Mode's: it goes with it, and with a God tool armed.
@@ -130,6 +132,7 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       // Escape (PLAN 7.4f1): the player's selection or armed order first, else the nearest panel.
       if (e.key === 'Escape') {
         if (p.menu.value !== null) p.closeMenu();
+        else if (p.diplomacy.value) p.diplomacy.value = false;
         else if (p.placing.value !== null) p.stopPlacing();
         else if (p.selectedCount.value > 0 || p.wingOrder.value !== null || p.dropArmed.value || p.followedWing.value !== null) p.clearSelection();
         else hud.escape();

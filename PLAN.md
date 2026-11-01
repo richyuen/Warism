@@ -38,12 +38,7 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
   - [x] 7.175a The sim: a `forceWar` command. Of the refusals of `whyNotWar` it breaks, in order: the attacker a […]
   - [x] 7.175b The menus: the right-click menu of a nation (`NationMenu`) says its standing with the played […]
   - [x] 7.175c The right-click menu's "Offer peace" (the user's request, 2026-10-31; the menu only, the Actions […]
-  - [ ] 7.175d A "Diplomacy" toggle on the phone layout (the user's request, 2026-10-31): there is no right-click
-    and a long press draws the selection box, so the menu had no way in. Shown at phone width while the menu has
-    something to show (7.175e); on, it lights, and the next tap on a nation opens its menu (no selection) and
-    turns it off; a second tap of it, or Cancel, turns it off. The desktop as it is. AT: e2e at 390 × 844:
-    playing Germany, Diplomacy then a tap on Poland opens Poland's menu, the toggle off after; Cancel with it on
-    turns it off and a tap selects as before.
+  - [x] 7.175d A "Diplomacy" toggle on the phone layout (the user's request and decision, 2026-10-31): there is no […]
   - [ ] 7.175e God's diplomacy in the menu (the user's request and answers, 2026-10-31): with God mode on, the
     menu acts for the played nation, or with none played for the selected one (its panel open); with neither,
     it shows the clicked nation's standing alone. It opens so in God mode without a played nation too. Under

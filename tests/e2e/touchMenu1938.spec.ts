@@ -5,11 +5,14 @@ import type {} from '../../src/app/testApi';
 import { cellOf } from '../../src/sim/data/terrain';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 
-// PLAN 7.171 AT (critic runs 20–21, `c20_pt_touch.json`: on a touch screen a long press only drew a
-// selection box, and there was no way to the nation menu, so no war could be declared by touch): at
-// 390 × 844 with touch, playing Germany, a long press held still on Poland's land opens Poland's
-// menu, and "Declare war" there starts the war; a long press on Germany's own land, then its drag,
-// still selects the formations in the box, and opens no menu.
+// PLAN 7.171 AT (critic runs 20–21, `c20_pt_touch.json`: on a touch screen there was no way to the
+// nation menu, so no war could be declared by touch), as PLAN 7.175d changed it (the user's
+// decision: a long press does not reach the page on an iPhone; the phone's Diplomacy toggle opens
+// the menu, and a long press is the selection box alone): at 390 × 844 with touch, playing Germany,
+// Diplomacy then a tap on Poland's land opens Poland's menu, the toggle off after, and "Declare
+// war" there starts the war; Cancel with it on turns it off, and a tap selects as before; a long
+// press on Germany's land, then its drag, selects the formations in the box; a long press held
+// still on Poland's opens no menu.
 
 const GER = NATIONS_1938.findIndex((n) => n.tag === 'GER') + 1;
 const POL = NATIONS_1938.findIndex((n) => n.tag === 'POL') + 1;
@@ -32,7 +35,7 @@ async function press(page: Page, id: number, x: number, y: number, ms: number, x
 
 test.use({ hasTouch: true });
 
-test("a long press on Poland opens its menu and declares war; on Germany's own land it still draws a box", async ({ page }, info) => {
+test('Diplomacy then a tap on Poland opens its menu and declares war; a long press is the box alone', async ({ page }, info) => {
   test.setTimeout(120_000);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/?scenario=1938&paused=1&seed=1938');
@@ -69,11 +72,26 @@ test("a long press on Poland opens its menu and declares war; on Germany's own l
   await press(page, 12, own[0], own[1], 700);
   await expect(menu).toHaveCount(0);
 
-  // A long press held still on Poland's land: Poland's menu.
+  // A long press held still on Poland's land: no menu (PLAN 7.175d).
   await press(page, 13, pol[0], pol[1], 700);
+  await expect(menu).toHaveCount(0);
+
+  // Diplomacy, then Cancel: off, and a tap on Poland is a tap as before (with formations selected, their order): no menu.
+  const toggle = page.getByTestId('diplomacy-btn');
+  await toggle.tap();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  await page.getByTestId('cancel-btn').tap();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  await press(page, 15, pol[0], pol[1], 50);
+  await expect(menu).toHaveCount(0);
+
+  // Diplomacy, then a tap on Poland's land: Poland's menu, the toggle off.
+  await toggle.tap();
+  await press(page, 16, pol[0], pol[1], 50);
   await expect(menu).toBeVisible();
   await expect(page.getByTestId('nation-menu-name')).toHaveText('Poland');
-  const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/7.171') : info.outputPath();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/7.175') : info.outputPath();
   mkdirSync(out, { recursive: true });
   await page.screenshot({ path: path.join(out, 'touch-menu-poland.png') });
   // "Declare war" there: the war is on, and the menu closed.

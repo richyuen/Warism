@@ -484,6 +484,8 @@
   "act.proposeAlliance": "Propose alliance",
   "act.chooseNation": "Choose a nation…",
   "act.forceWar": "Force war",
+  "bar.diplomacy": "Diplomacy",
+  "bar.diplomacyHint": "Then tap a nation: its menu (war, peace, alliance)",
   "peace.refused.death": "They fight to the death: no peace while they do.",
   "peace.refused.lead": "They refuse: lead the war score by {need} (now {lead}), or wear them out (war weariness {worn} of {bar}).",
   "standing.war": "At war",

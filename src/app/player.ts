@@ -57,6 +57,12 @@ export class PlayerControl {
   readonly placing = signal<number | null>(null);
   /** The menu of a nation opened by a right-click, or null; the refusal of its action, in words' key, where it was. */
   readonly menu = signal<NationMenu | null>(null);
+  /**
+   * The phone's Diplomacy toggle (PLAN 7.175d, the user's request: no right-click on a touch
+   * screen, and a long press does not reach the page on an iPhone): on, the next tap on the map
+   * opens the menu of the nation there, and turns it off.
+   */
+  readonly diplomacy = signal(false);
   readonly menuNotice = signal<(NationMenu & { reason: number }) | null>(null);
   private menuSent: { at: number; menu: NationMenu } | null = null;
   private noticeTimer: ReturnType<typeof setTimeout> | null = null;
@@ -103,6 +109,17 @@ export class PlayerControl {
       if (this.noticeTimer) clearTimeout(this.noticeTimer);
       this.noticeTimer = setTimeout(() => (this.menuNotice.value = null), MENU_NOTICE_MS);
     });
+  }
+
+  toggleDiplomacy(): void {
+    this.diplomacy.value = !this.diplomacy.value;
+  }
+
+  /** Whether the Diplomacy toggle was on, for the tap now: it is used, and goes off. */
+  takeDiplomacy(): boolean {
+    if (!this.diplomacy.value) return false;
+    this.diplomacy.value = false;
+    return true;
   }
 
   /** Opens the menu of `nation` at page point (x, y): only while playing, and for another nation. */

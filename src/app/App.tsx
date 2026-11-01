@@ -112,7 +112,9 @@ export function App({
   // What Escape cancels that has no close button of its own (`game.tsx`'s Escape, in its order):
   // God Mode's placing, the player's selection or armed order, an armed God tool.
   const cancel: (() => void) | null =
-    player && player.placing.value !== null
+    player && player.diplomacy.value
+      ? () => (player.diplomacy.value = false)
+      : player && player.placing.value !== null
       ? () => player.stopPlacing()
       : player && (player.selectedCount.value > 0 || player.wingOrder.value !== null || player.dropArmed.value || player.followedWing.value !== null)
         ? () => player.clearSelection()
@@ -155,6 +157,7 @@ export function App({
         showEditor={hud.showEditor.value}
         onToggleEditor={stats ? () => hud.toggleEditor() : undefined}
         onCancel={cancel}
+        diplomacy={phone && player && player.nation.value !== 0 ? { on: player.diplomacy.value, onToggle: () => player.toggleDiplomacy() } : null}
         playing={player && player.nation.value !== 0 ? { name: nameOf(player.nation.value) ?? `#${player.nation.value}`, selected: player.selectedCount.value } : null}
       />
       {/* Before the panels of the centre, which are drawn over a row of banners that reaches them (PLAN 3.12Rh5). */}
