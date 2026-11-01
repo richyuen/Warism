@@ -339,6 +339,7 @@ export function App({
           techs={hud.techs.value}
           flagUrl={view && flagVersion >= 0 ? view.flags.urlOf(nation.id) : null}
           onSelect={(id) => hud.onSelectNation(id)}
+          onChip={player ? (id, x, y) => player.openChipMenu(id, x, y) : null}
           actions={
             player && stats && player.nation.value === nation.id
               ? {
@@ -430,6 +431,14 @@ export function App({
                         onPeace: () => war && player.menuCommand({ kind: 'forcePeace', war: war.id }),
                         onToDeath: () => war && player.menuCommand({ kind: 'setWarFightToDeath', war: war.id, side, value: !war.toDeath[side] }),
                         onLeave: () => player.menuCommand({ kind: 'leaveAlliance', nation: me }),
+                      }
+                    : null
+                }
+                onGoTo={
+                  m.chip
+                    ? () => {
+                        player.closeMenu();
+                        hud.onSelectNation(m.nation);
                       }
                     : null
                 }

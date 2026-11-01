@@ -219,3 +219,39 @@ test("God's diplomacy in the menu: for the selected nation with none played, for
   await expect(page.getByTestId('nation-menu-war')).toBeVisible();
   await expect(page.getByTestId('nation-menu-god')).toHaveCount(0);
 });
+
+// PLAN 7.175f (the user's request): the Overview's nation chips open the clicked nation's menu by the
+// chip, as a right-click on its ground would, with "Go to country" first, which selects it and goes
+// there as the chip did. Playing Germany: its ally chip Italy opens Italy's menu (Allied, "Force
+// war"), and Go to country selects Italy; God on, the menu has God's items.
+test('an Overview chip opens the nation\'s menu with "Go to country"', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate((n) => window.__warsim!.view!.select(n), GER);
+  await page.getByTestId('take-control').click();
+  await page.getByTestId('tab-overview').click();
+  const chip = page.getByTestId('panel-allies').locator(`[data-testid=nation-chip][data-nation="${ITA}"]`);
+  await chip.click();
+  const menu = page.getByTestId('nation-menu');
+  await expect(page.getByTestId('nation-menu-name')).toHaveText('Italy');
+  await expect(page.getByTestId('nation-menu-standing')).toHaveText('Allied');
+  await expect(page.getByTestId('nation-menu-war')).toHaveText('Force war');
+  // Go to country, first; by the chip.
+  await expect(menu.getByRole('menuitem').first()).toHaveText('Go to country');
+  const [c, m] = [await chip.boundingBox(), await menu.boundingBox()];
+  expect(Math.abs(m!.y - (c!.y + c!.height)), 'the menu by the chip').toBeLessThan(40);
+  await expect(page.getByTestId('nation-menu-god')).toHaveCount(0);
+  await page.getByTestId('nation-menu-goto').click();
+  await expect(menu).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => window.__warsim!.hud.selected.value)).toBe(ITA);
+
+  // God on: Germany's panel again, the chip's menu has God's items.
+  await page.getByTestId('god-btn').click();
+  await page.evaluate((n) => window.__warsim!.view!.select(n), GER);
+  await page.getByTestId('tab-overview').click();
+  await page.getByTestId('panel-allies').locator(`[data-testid=nation-chip][data-nation="${ITA}"]`).click();
+  await expect(page.getByTestId('nation-menu-god')).toBeVisible();
+  await expect(page.getByTestId('nation-menu-god-leave')).toBeVisible();
+});

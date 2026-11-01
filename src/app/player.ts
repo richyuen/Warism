@@ -36,6 +36,8 @@ export interface NationMenu {
   nation: number;
   x: number;
   y: number;
+  /** Opened by a nation chip of the Overview (PLAN 7.175f): it has "Go to country" first. */
+  chip?: boolean;
 }
 
 /** How long after a menu's action a refusal is taken for its (ms): the sim answers a `now` command at once. */
@@ -130,6 +132,12 @@ export class PlayerControl {
     this.menuNotice.value = null;
     const me = this.nation.value;
     this.menu.value = nation !== 0 && ((me !== 0 && nation !== me) || this.hud.godMode.value) ? { nation, x, y } : null;
+  }
+
+  /** Opens the menu of `nation` from a chip of the Overview (PLAN 7.175f) at page point (x, y): always, "Go to country" first. */
+  openChipMenu(nation: number, x: number, y: number): void {
+    this.menuNotice.value = null;
+    this.menu.value = nation !== 0 ? { nation, x, y, chip: true } : null;
   }
 
   closeMenu(): void {

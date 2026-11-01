@@ -32,6 +32,7 @@ export function NationPanel({
   byId,
   techs,
   onSelect,
+  onChip,
   god,
   control,
   actions,
@@ -44,6 +45,8 @@ export function NationPanel({
   /** The scenario's techs, for the names and prices of what the nation is researching (PLAN 3.1e). */
   techs: readonly TechInfo[];
   onSelect: (id: number) => void;
+  /** A click on a nation chip (PLAN 7.175f): its menu by the chip, at its bottom-left corner (page px); without, it selects the nation. */
+  onChip?: ((id: number, x: number, y: number) => void) | null;
   god?: Omit<GodTabProps, 'nation'> | null;
   control?: ControlProps | null;
   /** Actions of the controlled nation (PLAN 1.33b); only for the nation the player controls. */
@@ -66,7 +69,17 @@ export function NationPanel({
   const chip = (id: number) => {
     const n = byId.get(id);
     return (
-      <button key={id} class="nation-chip" data-testid="nation-chip" onClick={() => onSelect(id)}>
+      <button
+        key={id}
+        class="nation-chip"
+        data-testid="nation-chip"
+        data-nation={id}
+        onClick={(e) => {
+          const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
+          if (onChip) onChip(id, r.left, r.bottom - 8);
+          else onSelect(id);
+        }}
+      >
         <span class="chip-swatch" style={{ background: hex(n?.color ?? 0x777777) }} />
         {n ? displayName(n.name) : `#${id}`}
       </button>

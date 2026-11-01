@@ -484,6 +484,7 @@
   "act.proposeAlliance": "Propose alliance",
   "act.chooseNation": "Choose a nation…",
   "act.forceWar": "Force war",
+  "menu.goTo": "Go to country",
   "bar.diplomacy": "Diplomacy",
   "bar.diplomacyHint": "Then tap a nation: its menu (war, peace, alliance)",
   "peace.refused.death": "They fight to the death: no peace while they do.",

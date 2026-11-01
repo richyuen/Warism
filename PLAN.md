@@ -33,18 +33,6 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.175 Force war (the user's request, 2026-10-31; ADR-780): a war the player or God declares breaks the
-  truce, alliance or puppet bond in its way instead of being refused. The AI keeps the bonds.
-  - [x] 7.175a The sim: a `forceWar` command. Of the refusals of `whyNotWar` it breaks, in order: the attacker a […]
-  - [x] 7.175b The menus: the right-click menu of a nation (`NationMenu`) says its standing with the played […]
-  - [x] 7.175c The right-click menu's "Offer peace" (the user's request, 2026-10-31; the menu only, the Actions […]
-  - [x] 7.175d A "Diplomacy" toggle on the phone layout (the user's request and decision, 2026-10-31): there is no […]
-  - [x] 7.175e God's diplomacy in the menu (the user's request and answers, 2026-10-31): with God mode on, the […]
-  - [ ] 7.175f The Overview's nation chips (allies, overlord, puppets, enemies; the user's request, 2026-10-31):
-    a click opens the clicked nation's menu by the chip, as a right-click on its ground would (the user's
-    answer), with a "Go to country" item first, which selects it and flies there as the chip did. AT: e2e:
-    playing Germany, Overview's ally chip Italy opens Italy's menu with Go to country; Go to country selects
-    Italy and the camera flies there; God on, its God items as 7.175e.
 - [ ] 7.176 The played nation in the title bar; God's placing in God's tab (the user's requests, 2026-10-31; ADR-781).
   - [ ] 7.176a The top bar says "Playing {name} · {n} selected" in place of its tagline while a nation is played
     (the tagline when none is), and the bottom bar's label is gone; a click on it opens the played nation's
@@ -449,3 +437,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.162 The DONE condition's runs on the HEAD after 7.161 (the last soak was 2026-10-16, the last full […]
 - [x] 7.173 The living nations stop outgrowing their own past late in the game: the sweep's "no break-up" (the […]
 - [x] 7.174 Countryball units by default (the user's request, 2026-10-31; ADR-777): every unit drawn as a […]
+- [x] 7.175 Force war (the user's request, 2026-10-31; ADR-780): a war the player or God declares breaks the […]

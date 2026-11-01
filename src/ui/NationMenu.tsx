@@ -46,6 +46,8 @@ export interface NationMenuProps {
   player: PlayerItems | null;
   /** God's items, with God Mode on and a nation acting. */
   god: GodItems | null;
+  /** "Go to country", first (PLAN 7.175f: the menu of an Overview chip): selects it and goes there. */
+  onGoTo?: (() => void) | null;
 }
 
 /** The menu's width, CSS px, and its height for `items` buttons: it is kept inside the window. */
@@ -65,13 +67,14 @@ function placed(x: number, y: number, w: number, h: number): { left: string; top
  * war with it) and propose an alliance, the Actions tab's commands for that nation; with God Mode
  * on, God's diplomacy too (PLAN 7.175e).
  */
-export function NationMenu({ name, flagUrl, x, y, standing, war, onWar, player, god }: NationMenuProps) {
+export function NationMenu({ name, flagUrl, x, y, standing, war, onWar, player, god, onGoTo }: NationMenuProps) {
   const btn = (id: string, label: string, onClick: () => void, opts: { disabled?: boolean; title?: string | undefined; active?: boolean; force?: boolean } = {}) => (
     <button type="button" class={opts.active ? 'god-btn active' : 'god-btn'} role="menuitem" data-testid={id} data-force={opts.force === undefined ? undefined : opts.force ? 1 : 0} disabled={opts.disabled} title={opts.title} onClick={onClick}>
       {label}
     </button>
   );
   const items = [
+    onGoTo ? btn('nation-menu-goto', t('menu.goTo'), onGoTo) : null,
     war === null && onWar ? btn('nation-menu-war', t(standing?.bond ? 'act.forceWar' : 'god.war'), onWar, { force: standing?.bond ?? false }) : null,
     war !== null && player ? btn('nation-menu-peace', t('act.offerPeace'), () => player.onPeace(war), { disabled: player.peace ? !player.peace.accepted : false, title: player.peace ? peaceWhy(player.peace) || undefined : undefined }) : null,
     player ? btn('nation-menu-ally', t('act.proposeAlliance'), player.onAlly, { disabled: player.allied || war !== null }) : null,

@@ -57,13 +57,17 @@ test('nation panel: click a nation, read its overview and economy, follow a chip
   expect(Math.abs(int(await page.getByTestId('stat-balance').textContent()) - (income - expenses))).toBeLessThanOrEqual(1);
   await page.screenshot({ path: path.join(out, 'panel-economy.png') });
 
-  // Spain's side is at war: its enemy chip selects the other side's leader.
+  // Spain's side is at war: its enemy chip opens the other side's leader's menu (PLAN 7.175f), whose
+  // "Go to country" selects it.
   await page.getByTestId('tab-overview').click();
   await page.evaluate((s) => window.__warsim!.view!.select(s), id('NSP'));
   await expect(panel).toHaveAttribute('data-nation', String(id('NSP')));
   const chip = page.getByTestId('panel-wars').getByTestId('nation-chip').first();
   const enemy = await chip.textContent();
   await chip.click();
+  await expect(page.getByTestId('nation-menu-name')).toHaveText(enemy ?? '');
+  await page.getByTestId('nation-menu-goto').click();
+  await expect(page.getByTestId('nation-menu')).toHaveCount(0);
   await expect(page.getByTestId('nation-name')).toHaveText(enemy ?? '');
   expect(await page.evaluate(() => window.__warsim!.hud.selected.value)).not.toBe(id('NSP'));
 

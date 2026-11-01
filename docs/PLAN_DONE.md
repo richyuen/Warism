@@ -16936,3 +16936,30 @@ Of 7.175 (open in PLAN.md):
     nothing played, France selected: a right-click on Poland shows the God items acting for France, Make
     puppet makes Poland France's puppet; God on, playing Germany, a right-click on Italy (allied) shows Leave
     alliance and it leaves; at war, Force peace ends the war; God off, no God items.
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.175 Force war (the user's request, 2026-10-31; ADR-780): a war the player or God declares breaks the
+  truce, alliance or puppet bond in its way instead of being refused. The AI keeps the bonds.
+  - [x] 7.175a The sim: a `forceWar` command. Of the refusals of `whyNotWar` it breaks, in order: the attacker a […]
+  - [x] 7.175b The menus: the right-click menu of a nation (`NationMenu`) says its standing with the played […]
+  - [x] 7.175c The right-click menu's "Offer peace" (the user's request, 2026-10-31; the menu only, the Actions […]
+  - [x] 7.175d A "Diplomacy" toggle on the phone layout (the user's request and decision, 2026-10-31): there is no […]
+  - [x] 7.175e God's diplomacy in the menu (the user's request and answers, 2026-10-31): with God mode on, the […]
+  - [x] 7.175f The Overview's nation chips (allies, overlord, puppets, enemies; the user's request, 2026-10-31):
+    a click opens the clicked nation's menu by the chip, as a right-click on its ground would (the user's
+    answer), with a "Go to country" item first, which selects it and flies there as the chip did. AT: e2e:
+    playing Germany, Overview's ally chip Italy opens Italy's menu with Go to country; Go to country selects
+    Italy and the camera flies there; God on, its God items as 7.175e.

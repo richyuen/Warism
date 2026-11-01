@@ -25235,3 +25235,15 @@ No rule changed and nothing on screen changed. One task came out of it.
   death shown, Force peace ends the war; God off, no God items. `playerActions1938`, `touchMenu1938`, `godUi1938`
   green.
 - **Next:** PLAN 7.175f.
+
+## 2026-10-31 — PLAN 7.175f: the Overview's chips open the menu (done; PLAN 7.175 done)
+
+- **Built:** a nation chip of the Overview (allies, overlord, puppets, enemies) opens the clicked nation's menu by
+  the chip (`PlayerControl.openChipMenu`, at its bottom-left), as a right-click on its ground would, with "Go to
+  country" first (`NationMenu.onGoTo`): it closes the menu and selects the nation as the chip did
+  (`hud.onSelectNation`). Without a player control (`?view=0`) a chip selects as before.
+- **AT:** e2e `forceWar1938` "an Overview chip": playing Germany, its ally chip Italy opens Italy's menu by the chip,
+  Allied and "Force war", "Go to country" first, no God items; Go to country closes it and selects Italy; God on, the
+  chip's menu has God's items and Leave alliance. `nationPanel1938`'s chip step changed with the rule: the enemy chip
+  opens its menu, Go to country selects it.
+- **Next:** PLAN 7.176a.
