@@ -1,0 +1,197 @@
+{
+ "seed": 7019,
+ "bin": "critic/c23_seed7019_y20.bin",
+ "historyOpenMs": 121,
+ "count": "3652 of 3652 events",
+ "rowsInDom": 400,
+ "kinds": [
+  "All types",
+  "Bankruptcy",
+  "Capital captured",
+  "Nation destroyed",
+  "War declared",
+  "Peace",
+  "Alliance left",
+  "Alliance dissolved",
+  "Union formed",
+  "Alliance joined",
+  "Puppet created",
+  "Puppet released",
+  "Puppet integrated",
+  "Revolt",
+  "Nation revived",
+  "Major battle",
+  "Major battle ended",
+  "Annexation",
+  "Army disbanded",
+  "Land handed over",
+  "War ended",
+  "Sea battle",
+  "Convoys raided",
+  "Air war",
+  "Air raids",
+  "Nuclear strike",
+  "Nuclear decision",
+  "Nuclear means lost",
+  "New nuclear power"
+ ],
+ "firstRows": [
+  "24 December 1957 Lithuania made peace with Germany",
+  "1 December 1957 Land held by United States rose and went back to Anglo-Egyptian Sudan",
+  "1 December 1957 Land held by United States rose and went back to France",
+  "1 December 1957 Land held by United States rose and went back to United Kingdom",
+  "1 December 1957 United Kingdom's air force struck Germany this month: 5,364 men, guns and vehicles lost",
+  "1 December 1957 Japan's air force struck Soviet Union this month: 5,217 men, guns and vehicles lost",
+  "1 December 1957 China's air force struck British India this month: 4,996 men, guns and vehicles lost",
+  "1 December 1957 Germany and United Kingdom fought in the air this month: Germany lost 12 aircraft, United Kingdom 9",
+  "1 December 1957 Poland and Netherlands fought in the air this month: Poland lost 0 aircraft, Netherlands 12",
+  "1 December 1957 Soviet Union and United States fought in the air this month: Soviet Union lost 3 aircraft, United States 0",
+  "19 November 1957 United Kingdom captured Free Diyarbakır's capital",
+  "12 November 1957 United Kingdom captured Turkey's capital"
+ ],
+ "byKind": [
+  {
+   "label": "Bankruptcy",
+   "count": "1 of 3652 events",
+   "ms": 168
+  },
+  {
+   "label": "Capital captured",
+   "count": "295 of 3652 events",
+   "ms": 174
+  },
+  {
+   "label": "Nation destroyed",
+   "count": "83 of 3652 events",
+   "ms": 156
+  },
+  {
+   "label": "War declared",
+   "count": "241 of 3652 events",
+   "ms": 160
+  },
+  {
+   "label": "Peace",
+   "count": "230 of 3652 events",
+   "ms": 163
+  },
+  {
+   "label": "Alliance left",
+   "count": "52 of 3652 events",
+   "ms": 171
+  },
+  {
+   "label": "Alliance dissolved",
+   "count": "11 of 3652 events",
+   "ms": 160
+  },
+  {
+   "label": "Union formed",
+   "count": "14 of 3652 events",
+   "ms": 162
+  },
+  {
+   "label": "Alliance joined",
+   "count": "90 of 3652 events",
+   "ms": 167
+  },
+  {
+   "label": "Puppet created",
+   "count": "62 of 3652 events",
+   "ms": 170
+  },
+  {
+   "label": "Puppet released",
+   "count": "17 of 3652 events",
+   "ms": 167
+  },
+  {
+   "label": "Puppet integrated",
+   "count": "9 of 3652 events",
+   "ms": 164
+  },
+  {
+   "label": "Revolt",
+   "count": "74 of 3652 events",
+   "ms": 170
+  },
+  {
+   "label": "Nation revived",
+   "count": "34 of 3652 events",
+   "ms": 166
+  },
+  {
+   "label": "Major battle",
+   "count": "155 of 3652 events",
+   "ms": 168
+  },
+  {
+   "label": "Major battle ended",
+   "count": "155 of 3652 events",
+   "ms": 170
+  },
+  {
+   "label": "Annexation",
+   "count": "26 of 3652 events",
+   "ms": 164
+  },
+  {
+   "label": "Army disbanded",
+   "count": "83 of 3652 events",
+   "ms": 167
+  },
+  {
+   "label": "Land handed over",
+   "count": "459 of 3652 events",
+   "ms": 173
+  },
+  {
+   "label": "War ended",
+   "count": "3 of 3652 events",
+   "ms": 157
+  },
+  {
+   "label": "Sea battle",
+   "count": "180 of 3652 events",
+   "ms": 171
+  },
+  {
+   "label": "Convoys raided",
+   "count": "225 of 3652 events",
+   "ms": 178
+  },
+  {
+   "label": "Air war",
+   "count": "410 of 3652 events",
+   "ms": 178
+  },
+  {
+   "label": "Air raids",
+   "count": "717 of 3652 events",
+   "ms": 181
+  },
+  {
+   "label": "Nuclear strike",
+   "count": "10 of 3652 events",
+   "ms": 173
+  },
+  {
+   "label": "Nuclear decision",
+   "count": "11 of 3652 events",
+   "ms": 169
+  },
+  {
+   "label": "Nuclear means lost",
+   "count": "1 of 3652 events",
+   "ms": 163
+  },
+  {
+   "label": "New nuclear power",
+   "count": "4 of 3652 events",
+   "ms": 166
+  }
+ ],
+ "chartsMs": 1536,
+ "chartsText": "Warism\nWorld war simulator\nResume\n−\nSpeed ×5\n+\nGod Mode\nMap: Political\nStatistics\nHistory\nEditor\n27 December 1957 · Paused\nSettings\n1 December 1957 Germany and United Kingdom fought in the air this month: Germany lost 12 aircraft, United Kingdom 9\n1 December 1957 United Kingdom's air force struck Germany this month: 5,364 men, guns and vehicles lost\n24 December 1957 Lithuania made peace with Germany\nUnited Kingdom\n+4\n⚔\nChina\n+13\nPortugal\n+2\n⚔\nChina\n+14\nVenezuela\n+34\n⚔\nUnited Kingdom\n+3\nGermany\n+2\n⚔\nChina\n+7\nUnited States\n+9\n⚔\nAnglo-Egyptian Sudan\nUnited States\n+9\n⚔\nFree Kandahar\nStatistics\nLan",
+ "errors": []
+}

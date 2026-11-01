@@ -25348,3 +25348,15 @@ No rule changed and nothing on screen changed. One task came out of it.
   shut 3–4 of 13 on 4 of 7 runs (HEAD 0 of 7). It now reads twice 0.5 s apart (13 of 13, 4 of 4 runs).
 - Evidence `docs/evidence/7.180/planes-250m.png`, `planes-250m-zoom.png`.
 - **Next:** PLAN 7.5, the critic run (`npm run check:review` first).
+
+## 2026-11-01 — PLAN 7.5: critic run 23 on 81beca11 (blocking 0)
+
+- `npm run check:review` green before the run (0 known red, 0 not known); `fightCamera1938`, `nukeAlertTwo1938`
+  and `seaRow1938` each red once and green alone. Evidence PNGs the review re-rendered were restored.
+- Scores: map **7** (was 6), diplomacy 7, emergent 7, God Mode 7, editor 7, stats 7, UI 7, performance 7,
+  stability 7; zoom 8, naval 8, tanks 8, aircraft 8, nukes 8. Blocking 0: R22-B1 fixed (German helmeted balls'
+  dark share at 10 m/px 0.071 -> 0.354, Polish 0.047 -> 0.030); run 22's planes-as-units item fixed. Run 22's
+  other non-blocking items unchanged. Sim unchanged (seed 7019's yearly hashes 20 of 20 as run 22).
+- Every dimension at its bar and no blocking issue: the report part of the DONE CONDITION holds at 81beca11.
+  Nothing filed.
+- **Next:** PLAN 7.5, the rest of the DONE CONDITION at HEAD (gate in full, soak, sweep, scripted demo, budgets).
