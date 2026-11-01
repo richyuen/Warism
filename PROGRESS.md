@@ -25219,3 +25219,19 @@ No rule changed and nothing on screen changed. One task came out of it.
 - **Not checked:** whether a long press reaches the page on an iPhone for the selection box either (the user's report
   was of the menu); no iPhone here.
 - **Next:** PLAN 7.175e.
+
+## 2026-10-31 — PLAN 7.175e: God's diplomacy in the menu (done)
+
+- **Built:** the right-click menu acts for the played nation, or with none played and God Mode on for the selected
+  one (the user's answer); `openMenu` opens with God Mode on for any nation. `NationMenu` in parts: the standing and
+  the war button (`forceWar`) when a nation acts; the player's own items (Offer peace, Propose alliance) only when it
+  acts for the played nation; with God Mode on, God's under a line: Ally (create or join, as God's tab), Make
+  puppet, Annex, at war Force peace and Fight to the death (the acting side's), Leave alliance only when the two are
+  allied; no Donate gold. Its height for placing follows its items. The phone's Diplomacy toggle shows in God Mode
+  without a played nation too.
+- **AT:** e2e `forceWar1938` "God's diplomacy in the menu": God off and nothing played, no menu; God on, France
+  selected: Poland's menu Neutral with God's items and none of the player's, Make puppet makes Poland France's
+  puppet; playing Germany, Italy Allied with Leave alliance, and Germany leaves; at war with Switzerland, Fight to the
+  death shown, Force peace ends the war; God off, no God items. `playerActions1938`, `touchMenu1938`, `godUi1938`
+  green.
+- **Next:** PLAN 7.175f.

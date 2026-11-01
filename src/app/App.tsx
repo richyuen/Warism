@@ -157,7 +157,7 @@ export function App({
         showEditor={hud.showEditor.value}
         onToggleEditor={stats ? () => hud.toggleEditor() : undefined}
         onCancel={cancel}
-        diplomacy={phone && player && player.nation.value !== 0 ? { on: player.diplomacy.value, onToggle: () => player.toggleDiplomacy() } : null}
+        diplomacy={phone && player && (player.nation.value !== 0 || hud.godMode.value) ? { on: player.diplomacy.value, onToggle: () => player.toggleDiplomacy() } : null}
         playing={player && player.nation.value !== 0 ? { name: nameOf(player.nation.value) ?? `#${player.nation.value}`, selected: player.selectedCount.value } : null}
       />
       {/* Before the panels of the centre, which are drawn over a row of banners that reaches them (PLAN 3.12Rh5). */}
@@ -388,24 +388,51 @@ export function App({
       {player && stats && player.menu.value
         ? (() => {
             const m = player.menu.value;
-            const me = player.nation.value;
+            const played = player.nation.value;
             const target = byId.get(m.nation);
             if (!target) return null;
-            const war = stats.wars.find((w) => (w.attackers.includes(me) && w.defenders.includes(m.nation)) || (w.defenders.includes(me) && w.attackers.includes(m.nation)));
-            const mine = byId.get(me)?.alliance?.id;
+            // Who the menu acts for (PLAN 7.175e, the user's answer): the played nation, or with none
+            // played and God Mode on, the selected one; none for the nation itself.
+            const god = hud.godMode.value;
+            const by = played !== 0 ? played : god ? hud.selected.value : 0;
+            const me = by !== m.nation && byId.has(by) ? by : 0;
+            const war = me === 0 ? undefined : stats.wars.find((w) => (w.attackers.includes(me) && w.defenders.includes(m.nation)) || (w.defenders.includes(me) && w.attackers.includes(m.nation)));
+            const mine = byId.get(me)?.alliance ?? null;
+            const allied = mine !== null && target.alliance?.id === mine.id;
+            const side: 0 | 1 = war && war.attackers.includes(me) ? 0 : 1;
             return (
               <NationMenu
                 name={target.name}
                 flagUrl={view && flagVersion >= 0 ? view.flags.urlOf(m.nation) : null}
                 x={m.x}
                 y={m.y}
+                standing={me !== 0 ? standingOf(me, m.nation, (id) => byId.get(id), stats.wars) : null}
                 war={war ? war.id : null}
-                allied={mine !== undefined && target.alliance?.id === mine}
-                standing={standingOf(me, m.nation, (id) => byId.get(id), stats.wars)}
-                peace={war ? peaceVerdict(war.score, war.exhaustion, war.toDeath, war.attackers.includes(me) ? 0 : 1) : null}
-                onWar={() => player.menuCommand({ kind: 'forceWar', attacker: me, defender: m.nation })}
-                onPeace={(w) => player.menuCommand({ kind: 'offerPeace', war: w, from: me })}
-                onAlly={() => player.menuCommand({ kind: 'proposeAlliance', from: me, to: m.nation })}
+                onWar={me !== 0 ? () => player.menuCommand({ kind: 'forceWar', attacker: me, defender: m.nation }) : null}
+                player={
+                  me !== 0 && me === played
+                    ? {
+                        allied,
+                        peace: war ? peaceVerdict(war.score, war.exhaustion, war.toDeath, side) : null,
+                        onPeace: (w) => player.menuCommand({ kind: 'offerPeace', war: w, from: me }),
+                        onAlly: () => player.menuCommand({ kind: 'proposeAlliance', from: me, to: m.nation }),
+                      }
+                    : null
+                }
+                god={
+                  god && me !== 0
+                    ? {
+                        allied,
+                        toDeath: war ? war.toDeath[side] : null,
+                        onAlly: () => player.menuCommand(mine ? { kind: 'joinAlliance', nation: m.nation, alliance: mine.id } : { kind: 'createAlliance', leader: me, members: [m.nation], nameKey: 'alliance.defensive' }),
+                        onPuppet: () => player.menuCommand({ kind: 'createPuppet', overlord: me, subject: m.nation, autonomy: 50 }),
+                        onAnnex: () => player.menuCommand({ kind: 'annexNation', annexer: me, target: m.nation }),
+                        onPeace: () => war && player.menuCommand({ kind: 'forcePeace', war: war.id }),
+                        onToDeath: () => war && player.menuCommand({ kind: 'setWarFightToDeath', war: war.id, side, value: !war.toDeath[side] }),
+                        onLeave: () => player.menuCommand({ kind: 'leaveAlliance', nation: me }),
+                      }
+                    : null
+                }
               />
             );
           })()

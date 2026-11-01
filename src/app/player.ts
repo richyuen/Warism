@@ -122,10 +122,14 @@ export class PlayerControl {
     return true;
   }
 
-  /** Opens the menu of `nation` at page point (x, y): only while playing, and for another nation. */
+  /**
+   * Opens the menu of `nation` at page point (x, y): while playing, for another nation; with God
+   * Mode on, for any (PLAN 7.175e: it acts for the played nation, or with none for the selected one).
+   */
   openMenu(nation: number, x: number, y: number): void {
     this.menuNotice.value = null;
-    this.menu.value = this.nation.value !== 0 && nation !== 0 && nation !== this.nation.value ? { nation, x, y } : null;
+    const me = this.nation.value;
+    this.menu.value = nation !== 0 && ((me !== 0 && nation !== me) || this.hud.godMode.value) ? { nation, x, y } : null;
   }
 
   closeMenu(): void {

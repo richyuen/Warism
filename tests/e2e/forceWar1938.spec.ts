@@ -158,3 +158,64 @@ test('"Offer peace" greyed out while refused, saying why; enabled once they woul
   await peace.click();
   await expect.poll(() => atWar(page, GER, POL)).toBe(false);
 });
+
+// PLAN 7.175e (the user's request and answers): with God Mode on, the menu carries God's diplomacy,
+// acting for the played nation, or with none played for the selected one. God on, nothing played,
+// France selected: a right-click on Poland shows God's items acting for France, and Make puppet
+// makes Poland France's puppet. Playing Germany: Italy (allied) has Leave alliance, and it leaves;
+// at war with Poland, Force peace ends the war. God off: no God items.
+test("God's diplomacy in the menu: for the selected nation with none played, for the played one", async ({ page }) => {
+  test.setTimeout(180_000);
+  const [POL] = [id('POL')];
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.waitForFunction((n) => window.__warsim!.view!.formationsOf(n).length > 3, POL, { timeout: 60_000 });
+  const overlordOf = (n: number): Promise<number> => page.evaluate(async (n) => (await window.__warsim!.sim.inspect()).nations.find((x) => x.id === n)?.overlord ?? -1, n);
+  const menu = page.getByTestId('nation-menu');
+
+  // God off, nothing played: a right-click opens no menu.
+  const pol = await groundOf(page, POL);
+  await page.mouse.click(pol[0], pol[1], { button: 'right' });
+  await expect(menu).toHaveCount(0);
+
+  // God on, nothing played, France selected: God's items, for France.
+  await page.getByTestId('god-btn').click();
+  await page.evaluate((n) => window.__warsim!.view!.select(n), FRA);
+  await page.mouse.click(pol[0], pol[1], { button: 'right' });
+  await expect(page.getByTestId('nation-menu-name')).toHaveText('Poland');
+  await expect(page.getByTestId('nation-menu-standing')).toHaveText('Neutral');
+  for (const k of ['ally', 'puppet', 'annex']) await expect(page.getByTestId(`nation-menu-god-${k}`), k).toBeVisible();
+  await expect(page.getByTestId('nation-menu-god-leave')).toHaveCount(0);
+  await expect(page.getByTestId('nation-menu-peace')).toHaveCount(0);
+  await expect(page.getByTestId('nation-menu-ally')).toHaveCount(0);
+  await page.getByTestId('nation-menu-god-puppet').click();
+  await expect.poll(() => overlordOf(POL)).toBe(FRA);
+
+  // Playing Germany (God on): Italy, allied, has Leave alliance; it leaves.
+  await page.evaluate((n) => window.__warsim!.view!.select(n), GER);
+  await page.getByTestId('take-control').click();
+  await page.evaluate(() => window.__warsim!.view!.select(0));
+  const ita = await groundOf(page, ITA);
+  await page.mouse.click(ita[0], ita[1], { button: 'right' });
+  await expect(page.getByTestId('nation-menu-standing')).toHaveText('Allied');
+  await expect(page.getByTestId('nation-menu-ally')).toBeVisible();
+  await page.getByTestId('nation-menu-god-leave').click();
+  await expect.poll(() => allianceOf(page, GER)).toBeNull();
+
+  // At war with Switzerland: Force peace ends it.
+  await page.evaluate(([g, s]) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: g!, defender: s! }, true), [GER, SWI]);
+  await expect.poll(() => atWar(page, GER, SWI)).toBe(true);
+  const swi = await groundOf(page, SWI);
+  await page.mouse.click(swi[0], swi[1], { button: 'right' });
+  await expect(page.getByTestId('nation-menu-standing')).toHaveText('At war');
+  await expect(page.getByTestId('nation-menu-god-death')).toBeVisible();
+  await page.getByTestId('nation-menu-god-peace').click();
+  await expect.poll(() => atWar(page, GER, SWI)).toBe(false);
+
+  // God off: the player's items alone.
+  await page.getByTestId('god-btn').click();
+  await page.mouse.click(swi[0], swi[1], { button: 'right' });
+  await expect(page.getByTestId('nation-menu-war')).toBeVisible();
+  await expect(page.getByTestId('nation-menu-god')).toHaveCount(0);
+});

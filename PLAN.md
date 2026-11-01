@@ -39,15 +39,7 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
   - [x] 7.175b The menus: the right-click menu of a nation (`NationMenu`) says its standing with the played […]
   - [x] 7.175c The right-click menu's "Offer peace" (the user's request, 2026-10-31; the menu only, the Actions […]
   - [x] 7.175d A "Diplomacy" toggle on the phone layout (the user's request and decision, 2026-10-31): there is no […]
-  - [ ] 7.175e God's diplomacy in the menu (the user's request and answers, 2026-10-31): with God mode on, the
-    menu acts for the played nation, or with none played for the selected one (its panel open); with neither,
-    it shows the clicked nation's standing alone. It opens so in God mode without a played nation too. Under
-    the player's items (one war button: `forceWar`), God's: Ally (create or join, as God's tab), Make puppet,
-    Annex, and at war Force peace and Fight to the death (the acting nation's side); Leave alliance only when
-    the acting nation is allied with the clicked one; no Donate gold (the God tab keeps it). AT: e2e: God on,
-    nothing played, France selected: a right-click on Poland shows the God items acting for France, Make
-    puppet makes Poland France's puppet; God on, playing Germany, a right-click on Italy (allied) shows Leave
-    alliance and it leaves; at war, Force peace ends the war; God off, no God items.
+  - [x] 7.175e God's diplomacy in the menu (the user's request and answers, 2026-10-31): with God mode on, the […]
   - [ ] 7.175f The Overview's nation chips (allies, overlord, puppets, enemies; the user's request, 2026-10-31):
     a click opens the clicked nation's menu by the chip, as a right-click on its ground would (the user's
     answer), with a "Go to country" item first, which selects it and flies there as the chip did. AT: e2e:

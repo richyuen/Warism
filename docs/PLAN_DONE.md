@@ -16910,3 +16910,29 @@ Of 7.175 (open in PLAN.md):
     opens no menu; Diplomacy then Cancel turns it off and a tap is a tap; Diplomacy then a tap on Poland opens
     Poland's menu, the toggle off after, and its war button makes the war; the box by a long press's drag on
     Germany's land as before.
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+Of 7.175 (open in PLAN.md):
+
+  - [x] 7.175e God's diplomacy in the menu (the user's request and answers, 2026-10-31): with God mode on, the
+    menu acts for the played nation, or with none played for the selected one (its panel open); with neither,
+    it shows the clicked nation's standing alone. It opens so in God mode without a played nation too. Under
+    the player's items (one war button: `forceWar`), God's: Ally (create or join, as God's tab), Make puppet,
+    Annex, and at war Force peace and Fight to the death (the acting nation's side); Leave alliance only when
+    the acting nation is allied with the clicked one; no Donate gold (the God tab keeps it). AT: e2e: God on,
+    nothing played, France selected: a right-click on Poland shows the God items acting for France, Make
+    puppet makes Poland France's puppet; God on, playing Germany, a right-click on Italy (allied) shows Leave
+    alliance and it leaves; at war, Force peace ends the war; God off, no God items.

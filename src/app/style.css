@@ -1946,6 +1946,18 @@ button.unit-icon.on {
 .nation-menu-standing.standing-truce {
   color: var(--ui-accent);
 }
+/* God's items (PLAN 7.175e): under a line of their own. */
+.nation-menu-god {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 4px;
+}
+.nation-menu-sub {
+  font-size: 0.75em;
+  color: var(--ui-accent);
+}
 .nation-menu .god-btn {
   text-align: left;
 }
