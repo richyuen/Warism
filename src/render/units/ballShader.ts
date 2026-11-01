@@ -21,6 +21,10 @@
  * flinches, eyes squeezed and shaking, while it is under fire (the snapshot's `hit`); one destroyed
  * is a ball with crossed eyes that fades where it died (`deadBalls.ts`).
  *
+ * Its losses show (PLAN 7.178, the user's choice): one ball is a whole battalion, so as it loses men
+ * it gets a crack, then a plaster on its cheek, then a second crack and plaster (`hurtLevel`, in the
+ * state's bits from HURT_SHIFT); the ball keeps its size and is not faded as a sprite is.
+ *
  * The geometry is in ball units, p in [-1, 1]² over the sprite's square, y down; `eyeCentres` is
  * the shader's own sum, for tests.
  */
@@ -188,8 +192,27 @@ export const FLINCH_HZ = 7;
 export const ANGRY_CUT = 0.1;
 export const ANGRY_SLOPE = 0.8;
 
-/** What a ball's state carries (the instance's `aState`): its formation engaged, it fired at. */
+/** What a ball's state carries (the instance's `aState`): its formation engaged, it fired at; its hurt level from HURT_SHIFT. */
 export const BallState = { engaged: 1, hit: 2 } as const;
+export const HURT_SHIFT = 2;
+
+/** The share of its men left at or under which a ball shows hurt level 1, 2 and 3 (PLAN 7.178). */
+export const HURT_AT = [0.75, 0.5, 0.25] as const;
+
+/** A ball's hurt level (0 whole – 3) for an element of `strength` of the `size` men it has when whole. */
+export function hurtLevel(strength: number, size: number): number {
+  if (size <= 0) return 0;
+  const share = strength / size;
+  return share <= HURT_AT[2] ? 3 : share <= HURT_AT[1] ? 2 : share <= HURT_AT[0] ? 1 : 0;
+}
+
+/** The plaster's colour, 0–1; its strips' half width and half length, and the crack's half width, ball units (at least the px). */
+export const PLASTER_RGB = [0.94, 0.86, 0.7] as const;
+export const PLASTER_HALF = 0.12;
+export const PLASTER_LEN = 0.3;
+export const PLASTER_MIN_PX = 1.3;
+export const CRACK_HALF = 0.045;
+export const CRACK_MIN_PX = 0.7;
 
 /** The eyes' height at `timeS` as a share of theirs, for a ball of `state` and seed `seed`. */
 export function eyeOpen(state: number, timeS: number, seed: number): number {
@@ -232,6 +255,8 @@ const float CLASS_OF[${ATLAS_FRAMES}] = float[${ATLAS_FRAMES}](${CLASS_OF});
 const float QUAD_OF[${ATLAS_FRAMES}] = float[${ATLAS_FRAMES}](${QUAD_OF});
 const float BOB_H[8] = float[8](${BOBS_H});
 const float BOB_HZ[8] = float[8](${BOBS_HZ});
+const int HURT_SHIFT_I = ${HURT_SHIFT};
+flat out float vHurt;  // 0 whole – 3 (PLAN 7.178)
 out float vOpen;     // the eyes' height, a share of theirs
 out float vAngry;
 out vec2 vP;
@@ -255,8 +280,10 @@ void main() {
   float part = aMisc.z - float(frame);
   float phase = (part - 0.5) / uMarchSpan;
   float bob = part >= 0.25 ? BOB_H[cls] * abs(sin(3.14159265 * (uTime * BOB_HZ[cls] + phase))) : 0.0;
-  bool hit = aState >= 2.0;
-  vAngry = mod(aState, 2.0) >= 1.0 ? 1.0 : 0.0;
+  int st = int(aState + 0.5);
+  bool hit = (st & ${BallState.hit}) != 0;
+  vAngry = (st & ${BallState.engaged}) != 0 ? 1.0 : 0.0;
+  vHurt = float((st >> HURT_SHIFT_I) & 3);
   float shake = hit ? ${f(FLINCH_AMP)} * sin(6.2831853 * ${f(FLINCH_HZ)} * uTime) : 0.0;
   // A blink by a hash of the ball's place.
   float seed = fract(sin(dot(floor(aPrevCur.zw * 256.0), vec2(12.9898, 78.233))) * 43758.5453);
@@ -276,7 +303,8 @@ void main() {
   float col = mod(aFlag, ${f(FLAG_ATLAS_COLS)});
   float row = floor(aFlag / ${f(FLAG_ATLAS_COLS)} + 0.0001);
   vFlagOrigin = vec2(col * ${f(FLAG_SLOT_W)} + ${f(FLAG_PAD)}, row * ${f(FLAG_SLOT_H)} + ${f(FLAG_PAD)});
-  vColor = vec4(aColor.rgb, aColor.a * aMisc.w * uAlpha);
+  // Not faded by its losses as a sprite is (PLAN 7.178): its cracks and plasters say them.
+  vColor = vec4(aColor.rgb, aColor.a * uAlpha);
 }
 `;
 
@@ -296,6 +324,7 @@ in float vPxP;
 in float vEyes;
 in float vOpen;
 in float vAngry;
+flat in float vHurt;
 out vec4 outColor;
 const float R = ${f(BALL_R)};
 const vec3 OUTLINE = vec3(${OUTLINE_RGB.map(f).join(', ')});
@@ -308,6 +337,19 @@ float sdSegment(vec2 p, vec2 a, vec2 b, float r) {
   vec2 pa = p - a, ba = b - a;
   float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
   return length(pa - ba * h) - r;
+}
+vec2 rot(vec2 p, float a) {
+  float s = sin(a), k = cos(a);
+  return vec2(k * p.x + s * p.y, -s * p.x + k * p.y);
+}
+// A crack: three segments from the rim inward, through a, b, c, d.
+float sdCrack(vec2 p, vec2 a, vec2 b, vec2 c, vec2 d, float h) {
+  return min(min(sdSegment(p, a, b, h), sdSegment(p, b, c, h * 0.8)), sdSegment(p, c, d, h * 0.6));
+}
+// A plaster: two strips crossed at c, of half length l.
+float sdPlaster(vec2 p, vec2 c, float l, float h) {
+  vec2 d = p - c;
+  return min(sdBox(rot(d, 0.7), vec2(0.0), vec2(l, h), h * 0.6), sdBox(rot(d, -0.7), vec2(0.0), vec2(l, h), h * 0.6));
 }
 float sdEllipse(vec2 p, vec2 c, vec2 r) {
   return (length((p - c) / r) - 1.0) * min(r.x, r.y);
@@ -397,6 +439,21 @@ void main() {
       float inside = max(e1.x, e2.x) * vEyes;
       float white = max(e1.y, e2.y);
       b = mix(b, mix(OUTLINE, vec3(1.0), white), inside);
+    }
+    // Its losses (PLAN 7.178): a crack at the back, a plaster on the cheek, then a second of each.
+    if (props && vHurt > 0.5) {
+      float ca = 0.0;
+      vec3 cc = b;
+      float ch = max(${f(CRACK_HALF)}, ${f(CRACK_MIN_PX)} * uDpr * vPxP);
+      float d = sdCrack(q, vec2(-0.9, -0.15), vec2(-0.58, -0.02), vec2(-0.64, 0.18), vec2(-0.38, 0.3), ch);
+      if (vHurt > 2.5) d = min(d, sdCrack(q, vec2(0.15, 0.88), vec2(0.05, 0.6), vec2(0.22, 0.48), vec2(0.1, 0.3), ch));
+      b = mix(b, OUTLINE, (1.0 - smoothstep(-aa, aa, d)) * vEyes);
+      if (vHurt > 1.5) {
+        float ph = max(${f(PLASTER_HALF)}, ${f(PLASTER_MIN_PX)} * uDpr * vPxP);
+        over(cc, ca, sdPlaster(q, vec2(0.42, 0.38), ${f(PLASTER_LEN)}, ph), ${v3(PLASTER_RGB)}, min(pw * 0.6, ph * 0.4), aa);
+        if (vHurt > 2.5) over(cc, ca, sdPlaster(q, vec2(-0.45, 0.5), ${f(PLASTER_LEN * 0.85)}, ph), ${v3(PLASTER_RGB)}, min(pw * 0.6, ph * 0.4), aa);
+        b = mix(b, cc, ca * vEyes);
+      }
     }
     c = mix(c, b, disc);
     a = a + (1.0 - a) * disc;

@@ -428,3 +428,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.175 Force war (the user's request, 2026-10-31; ADR-780): a war the player or God declares breaks the […]
 - [x] 7.176 The played nation in the title bar; God's placing in God's tab (the user's requests, 2026-10-31; ADR-781). […]
 - [x] 7.177 Control from the menu; Place at once first (the user's requests, 2026-10-31; ADR-781, extended). […]
+- [x] 7.178 Countryballs show their losses (the user's report, 2026-10-31: "the countryballs don't seem to lose any […]

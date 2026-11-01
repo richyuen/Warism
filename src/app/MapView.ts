@@ -13,7 +13,7 @@ import { MarkerStacks, type StackItem } from '../render/units/markerStacks';
 import { CounterLayer, counterNation, type CounterSource } from '../render/units/counters';
 import { drawSeaBattles } from '../render/units/seaBattles';
 import { FlagAtlas, NO_FLAG_SLOT } from '../render/units/flagAtlas';
-import { BallState } from '../render/units/ballShader';
+import { BallState, HURT_SHIFT, hurtLevel } from '../render/units/ballShader';
 import { DeadBalls } from '../render/units/deadBalls';
 import { airFxSize, drawSorties, type PlacedSortie } from '../render/units/sorties';
 import { AirFx } from '../render/fx/air';
@@ -1303,7 +1303,8 @@ export class MapView {
       p.colors.set(this.spriteRgba(e.nation[i]!, e.frame[i]!, e.x[i]!, e.y[i]!), i * 4);
       p.flagSlots[i] = this.flagAtlas.slotOf(e.nation[i]!);
       // The ball's face (PLAN 7.174e): angry while its formation is engaged, flinching while fired at.
-      p.states[i] = ((e.flags[i]! & FormationFlag.engaged) !== 0 ? BallState.engaged : 0) | (e.hit[i] ? BallState.hit : 0);
+      // Its losses (PLAN 7.178): cracks and plasters, by the share of its men left.
+      p.states[i] = ((e.flags[i]! & FormationFlag.engaged) !== 0 ? BallState.engaged : 0) | (e.hit[i] ? BallState.hit : 0) | (hurtLevel(e.strength[i]!, e.size[i]!) << HURT_SHIFT);
     }
     this.elementTurrets = hulls;
     this.elementTurretOwner = new Uint32Array(hulls);

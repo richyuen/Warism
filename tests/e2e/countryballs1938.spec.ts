@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
-import { BALL_R, BallClass, ballClassOf, ballShade, BallState, EYES_FULL_PX, EYES_NONE_PX, eyeCentres, FLINCH_HZ, OUTLINE_SHARE, propPoint, WING_RGB } from '../../src/render/units/ballShader';
+import { BALL_R, BallClass, ballClassOf, ballShade, BallState, EYES_FULL_PX, EYES_NONE_PX, eyeCentres, FLINCH_HZ, HURT_SHIFT, hurtLevel, OUTLINE_SHARE, PLASTER_RGB, propPoint, WING_RGB } from '../../src/render/units/ballShader';
 import { WING_RY, WING_Y } from '../../src/render/units/ball2d';
 import { FLAG_ATLAS_COLS, FLAG_PAD, FLAG_SLOT_H, FLAG_SLOT_W } from '../../src/render/units/flagAtlas';
 import { PLANE_BALL } from '../../src/render/units/sorties';
@@ -560,4 +560,115 @@ test('countryballs far out and in the air: counters and markers are flag balls; 
   expect(clear.length, 'planes over the front').toBeGreaterThanOrEqual(3);
   expect(flagged, 'flag balls').toBeGreaterThanOrEqual(Math.ceil(clear.length * 0.8));
   expect(winged, 'with wings').toBeGreaterThanOrEqual(Math.ceil(clear.length * 0.8));
+});
+
+// PLAN 7.178 (the user's report: "the countryballs don't seem to lose any units when zoomed in max"
+// and choice): a ball is a whole battalion, so its losses show on it: a crack at 3/4 of its men, a
+// plaster on its cheek at 1/2, a second of each at 1/4. A German and a Polish infantry division
+// fight until a battalion has lost half; at 15 m/px each ball's hurt level is its share's, and a
+// ball at level 2 or more has the plaster's colour on its cheek.
+test('countryballs show their losses: cracks and plasters by the share of men left', async ({ page }, info) => {
+  test.setTimeout(300_000);
+  await open(page);
+  const [px, py] = cellOf(16.3, 52.4, W, H);
+  const GER = id('GER');
+  const POL = id('POL');
+  const ids = await page.evaluate(
+    async ({ GER, POL, INFANTRY, px, py }) => {
+      const { sim, view } = window.__warsim!;
+      sim.command({ kind: 'declareWar', attacker: GER, defender: POL });
+      const before = new Set([...view!.formationsOf(GER), ...view!.formationsOf(POL)]);
+      sim.command({ kind: 'spawnFormation', nation: GER, x: px - 0.35, y: py, strength: 0, template: INFANTRY });
+      sim.command({ kind: 'spawnFormation', nation: POL, x: px + 0.35, y: py, strength: 0, template: INFANTRY });
+      const tick = (await sim.step(1)).tick;
+      await new Promise<void>((done) => {
+        const wait = (): void => (view!.lastTick === tick ? done() : void setTimeout(wait, 5));
+        wait();
+      });
+      return [...view!.formationsOf(GER), ...view!.formationsOf(POL)].filter((f) => !before.has(f));
+    },
+    { GER, POL, INFANTRY, px, py },
+  );
+  expect(ids).toHaveLength(2);
+  const look = async (m: number): Promise<void> => {
+    const ps = await page.evaluate((ids) => ids.map((f) => window.__warsim!.view!.formationPos(f)).filter((p) => p !== null), ids);
+    const [cx, cy] = [ps.reduce((t, p) => t + p[0], 0) / ps.length, ps.reduce((t, p) => t + p[1], 0) / ps.length];
+    await page.evaluate(({ cx, cy, m }) => {
+      const v = window.__warsim!.view!;
+      v.controller.set({ cx, cy, scale: (v.metresPerPx * v.controller.cam.scale) / m });
+    }, { cx, cy, m });
+    await page.waitForFunction(() => (window.__warsim!.view!.subscription?.tier ?? 0) >= 2 && window.__warsim!.view!.elementCount > 0, null, { timeout: 20_000 });
+  };
+  // Step until a battalion of theirs has half its men or fewer (at most 30 days).
+  await look(100);
+  let hurt = false;
+  for (let h = 0; h < 720 && !hurt; h += 6) {
+    hurt = await page.evaluate(async (ids) => {
+      const { sim, view } = window.__warsim!;
+      const tick = (await sim.step(6)).tick;
+      await new Promise<void>((done) => {
+        const wait = (): void => (view!.lastTick === tick ? done() : void setTimeout(wait, 5));
+        wait();
+      });
+      for (let i = 0; i < view!.elementCount; i++) if (ids.includes(view!.elementFormation[i]!) && view!.elementStrength[i]! * 2 <= view!.elementSize[i]!) return true;
+      return false;
+    }, ids);
+  }
+  expect(hurt, 'a battalion at half its men').toBe(true);
+  await look(15);
+  await page.waitForTimeout(1500);
+  // Each element's state carries its hurt level.
+  const levels = await page.evaluate((shift) => {
+    const v = window.__warsim!.view!;
+    const out: [number, number, number][] = [];
+    for (let i = 0; i < v.elementCount; i++) out.push([v.elementStrength[i]!, v.elementSize[i]!, (v.elementBallState(i) >> shift) & 3]);
+    return out;
+  }, HURT_SHIFT);
+  for (const [st, size, lvl] of levels) expect(lvl, `hurt level of ${st}/${size}`).toBe(hurtLevel(st, size));
+  // The most hurt battalion, in the middle of the view: the plaster's colour on its cheek, where no
+  // other ball is drawn over it.
+  const worst = await page.evaluate(() => {
+    const v = window.__warsim!.view!;
+    let best = -1;
+    for (let i = 0; i < v.elementCount; i++) if (v.elementSize[i]! > 0 && (best < 0 || v.elementStrength[i]! / v.elementSize[i]! < v.elementStrength[best]! / v.elementSize[best]!)) best = i;
+    const [x, y] = [v.elementX[best]!, v.elementY[best]!];
+    v.controller.set({ cx: x, cy: y, scale: v.controller.cam.scale });
+    return { x, y };
+  });
+  await page.waitForTimeout(800);
+  const shot = await page.evaluate(({ x, y }) => {
+    const v = window.__warsim!.view!;
+    const canvas = document.getElementById('map') as HTMLCanvasElement;
+    v.draw(performance.now());
+    const cam = v.controller.cam;
+    const [vw, vh] = [canvas.clientWidth, canvas.clientHeight];
+    const screen = (i: number): [number, number] => [(v.elementX[i]! - cam.cx) * cam.scale + vw / 2, (v.elementY[i]! - cam.cy) * cam.scale + vh / 2];
+    let k = -1;
+    for (let i = 0; i < v.elementCount; i++) if (v.elementSize[i]! > 0 && (k < 0 || v.elementStrength[i]! / v.elementSize[i]! < v.elementStrength[k]! / v.elementSize[k]!)) k = i;
+    if (k < 0 || Math.hypot(v.elementX[k]! - x, v.elementY[k]! - y) > 1) return null;
+    const [sx, sy] = screen(k);
+    const half = v.elementBallPx(k) / 2;
+    const dir = Math.cos(v.elementFacing(k)) >= 0 ? 1 : -1;
+    const [qx, qy] = [sx + 0.42 * dir * half, sy + 0.38 * half];
+    // Drawn after it and over the point: another ball there.
+    let covered = false;
+    for (let j = k + 1; j < v.elementCount; j++) if (Math.hypot(screen(j)[0] - qx, screen(j)[1] - qy) < v.elementBallPx(j) * 0.5) covered = true;
+    const gl = canvas.getContext('webgl2')!;
+    const dpr = canvas.width / vw;
+    const out = new Uint8Array(4);
+    gl.readPixels(Math.floor(qx * dpr), canvas.height - 1 - Math.floor(qy * dpr), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, out);
+    return { rgb: [out[0]!, out[1]!, out[2]!], level: (v.elementBallState(k) >> 2) & 3, covered, sx, sy, half, share: v.elementStrength[k]! / v.elementSize[k]! };
+  }, worst);
+  expect(shot, 'the most hurt battalion in view').not.toBeNull();
+  await page.screenshot({ path: path.join(info.outputPath(), 'balls-hurt-15m.png'), clip: { x: shot!.sx - 6 * shot!.half, y: shot!.sy - 4 * shot!.half, width: 12 * shot!.half, height: 8 * shot!.half } });
+  console.log(`most hurt: share ${shot!.share.toFixed(2)}, level ${shot!.level}, cheek ${shot!.rgb.join(',')}, covered ${shot!.covered}`);
+  expect(shot!.level).toBeGreaterThanOrEqual(2);
+  if (!shot!.covered) expect(dist(shot!.rgb, PLASTER_RGB.map((c) => c * 255)), 'the plaster on its cheek').toBeLessThan(40);
+  // At the closest zoom, for the eye.
+  await page.evaluate(() => {
+    const v = window.__warsim!.view!;
+    v.controller.set({ ...v.controller.cam, scale: v.controller.cam.scale * 1000 });
+  });
+  await page.waitForTimeout(1500);
+  await page.screenshot({ path: path.join(info.outputPath(), 'balls-hurt-max.png'), clip: { x: 400, y: 200, width: 600, height: 400 } });
 });

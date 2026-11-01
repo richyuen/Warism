@@ -17031,3 +17031,26 @@ Of 7.176 (open in PLAN.md):
     AT: e2e `forceWar1938`: nothing played, Poland's menu is Take control alone, which plays Poland; on its ground
     Release control alone, which releases it; God on playing Germany, Poland's menu ends with Take control under
     God's items, which switches to Poland. `playerActions1938`: own ground's menu is Release control alone.
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.178 Countryballs show their losses (the user's report, 2026-10-31: "the countryballs don't seem to lose any
+  units when zoomed in max"; the user's choice: bandages / cracks; ADR-777, extended). A ball is a whole battalion,
+  so it lost nothing to see until the battalion died (Classic's T3 figures go one by one). Now a crack at 3/4 of its
+  men, a plaster on its cheek at 1/2, a second crack and plaster at 1/4 (`hurtLevel`, in the ball state's bits); it
+  keeps its size, and it is no longer faded by its losses as a sprite is. AT: unit `ballShader.test.ts` hurtLevel;
+  e2e `countryballs1938` "countryballs show their losses": a German and a Polish division fight until a battalion
+  has half its men; each element's level is its share's, and the most hurt one at 15 m/px has the plaster's colour
+  on its cheek.

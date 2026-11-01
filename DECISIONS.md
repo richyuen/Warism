@@ -243,6 +243,9 @@ the list, which takes a BLOCKERS entry. The rerun costs the red files' time alon
   one commit, so the full run happens once, at the end, not at 7.174a.
 - **Consequences.** The critic plays the default and judges the balls' readability. The T3 figures (ADR-69,
   ADR-80) and the turrets (PLAN 3.6a) stay Classic's; in ball mode an element is one ball at T2 and T3.
+- **Extended (the user's report and choice, 2026-10-31; PLAN 7.178).** One ball a battalion showed no losses until
+  it died: a ball now gets a crack at 3/4 of its men, a plaster at 1/2, a second of each at 1/4, and is not faded by
+  its losses (the sprites' `spriteAlpha`), which washed the plasters out.
 
 ### ADR-776 · 2026-10-31 · accepted — PLAN 7.173: at war, full suppression keeps the war's reserve; the pin moves
 

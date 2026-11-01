@@ -25285,3 +25285,17 @@ No rule changed and nothing on screen changed. One task came out of it.
   "God's diplomacy in the menu" and `playerActions1938`'s menu test changed with the rule (a right-click with nothing
   played, and on own ground, now opens the control menu). `touchMenu1938`, `nationPanel1938`, `godUi1938` green.
 - **Next:** PLAN 7.5, the critic run.
+
+## 2026-10-31 — PLAN 7.178: countryballs show their losses (done)
+
+- **Cause:** at T2/T3 a ball is a whole battalion (the user's choice of 7.174); its only sign of losses was the
+  sprites' fade (`spriteAlpha`, to about half), and it went only when the battalion was empty. Classic's T3 figures
+  go one by one, so Classic showed losses and the balls did not.
+- **Built (the user's choice, bandages / cracks):** `hurtLevel(strength, size)` (0 whole; 1 at ≤ 3/4, 2 at ≤ 1/2,
+  3 at ≤ 1/4) in the ball state's bits from `HURT_SHIFT`; the ball shader draws a crack at the back, then a crossed
+  plaster on the cheek, then a second of each, each at least a px or so wide; with the eyes and props they go out
+  when the ball is small. A ball is no longer faded by its losses.
+- **AT:** unit `ballShader.test.ts` (levels, bits); e2e `countryballs1938` "countryballs show their losses": after
+  the fight every element's uploaded level is its share's (100 elements: 73, 26, 1), and the most hurt (0.42 of its
+  men) reads the plaster's colour exactly on its cheek at 15 m/px. The other four countryball tests green. Evidence
+  `docs/evidence/7.178/balls-hurt-max.png`.

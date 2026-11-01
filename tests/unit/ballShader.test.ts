@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { ATLAS_FRAMES } from '../../src/render/units/atlas';
-import { BALL_QUAD, BALL_QUAD_MAX, BALL_R, BallClass, ballClassOf, GUN_BARREL, GUN_WHEEL, HELMET_AT, HELMET_BRIM_X, HELMET_R, propPoint, SHIP_HULL, TREADS, TURRET_BARREL_HALF, TURRET_BARREL_LEN, WINGS } from '../../src/render/units/ballShader';
+import { BALL_QUAD, BALL_QUAD_MAX, BALL_R, BallClass, ballClassOf, BallState, GUN_BARREL, HURT_AT, HURT_SHIFT, hurtLevel, GUN_WHEEL, HELMET_AT, HELMET_BRIM_X, HELMET_R, propPoint, SHIP_HULL, TREADS, TURRET_BARREL_HALF, TURRET_BARREL_LEN, WINGS } from '../../src/render/units/ballShader';
 import { Frame, isShipFrame } from '../../src/shared/unitLooks';
 
 // PLAN 7.174d (ADR-777): what each frame's ball wears, and a quad that holds it.
@@ -50,5 +50,25 @@ describe('the countryballs\' props (PLAN 7.174d)', () => {
       }
     }
     expect(propPoint(BallClass.none, 0)).toBeNull();
+  });
+});
+
+// PLAN 7.178: a ball's losses, by the share of its men left; the level's bits clear of the face's.
+describe('hurtLevel', () => {
+  it('is 0 whole, then 1, 2, 3 at 3/4, 1/2 and 1/4 of its men', () => {
+    expect(hurtLevel(500, 500)).toBe(0);
+    expect(hurtLevel(376, 500)).toBe(0);
+    expect(hurtLevel(375, 500)).toBe(1);
+    expect(hurtLevel(251, 500)).toBe(1);
+    expect(hurtLevel(250, 500)).toBe(2);
+    expect(hurtLevel(126, 500)).toBe(2);
+    expect(hurtLevel(125, 500)).toBe(3);
+    expect(hurtLevel(1, 500)).toBe(3);
+    expect(hurtLevel(3, 0), 'a size not known: whole').toBe(0);
+    expect(HURT_AT).toEqual([0.75, 0.5, 0.25]);
+  });
+  it('sits above the engaged and hit bits', () => {
+    expect((BallState.engaged | BallState.hit) >> HURT_SHIFT).toBe(0);
+    expect(((3 << HURT_SHIFT) | BallState.hit) >> HURT_SHIFT).toBe(3);
   });
 });
