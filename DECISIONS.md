@@ -167,6 +167,26 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-784 · 2026-11-01 · accepted — PLAN 7.181: the overlay's countryballs drawn once and copied
+- **Context.** PLAN 7.5's DONE-condition bench on fbc9fbc3: GPU T0 135 fps, p95 21 ms, against fbca2cc4's 348 fps,
+  p95 4.3 ms (budget 60, so in budget). The same code in the classic look: 346. A probe of T0 as bench G sets it
+  (each part of `draw` timed) put the CPU of the two looks within 0.3 ms; the long frames were on the GPU's raster
+  of the 2D overlay. With the planes' balls left out, classic's frames. Each ball drew a clip, a flag, a radial
+  gradient and outlines; the gradient was most of it (left out: p95 11.3 → 5.4 ms). One gradient a context, set by a
+  transform, and a pattern fill for the clip, did not help (11.8).
+- **Decision.** `Ball2dCache` and `drawBall2dCached` (`ball2d.ts`): a ball is drawn once by `drawBall2d` into its own
+  canvas, keyed by its flag's image (a new image draws anew), tint, look, prop, ring, radius, device scale and its
+  centre's place off the device pixel to a quarter pixel; then copied onto the device's pixels unscaled. The T0
+  counters and the planes in flight use it; a vee's balls are drawn after its planes with the shadow off (the shadow
+  was on for the copy). A cache starts again past 4096 balls (a plane's ball takes a new size at each zoom). Under a
+  turn or skew, or with no canvas (node), drawn as before. The T1 markers are unchanged (not in the bench's T0).
+- **What it changes on the screen.** A ball's centre within 1/8 px of where it was; a ball fading (opacity under 1)
+  fades as one picture, not part over part. A first cache at a radius step of 1/8, drawn scaled to fractional places,
+  blurred the planes' 1.3 px balls into their outlines (`countryballs1938`'s flag reads 28 of 62, bar 50); the
+  quarter-pixel phases read 50 of 62, as HEAD.
+- **AT** (`docs/evidence/7.181/`): bench G fix, fbca2cc4, fix, back to back: T0 322.7, 345.5, 323.4 fps (≥ 0.9 ×:
+  311), p95 4.6, 4.6, 4.6 ms; T2 174.8, 182.6, 179.1 (≥ 164).
+
 ### ADR-783 · 2026-11-01 · accepted (the user's decision) — PLAN 7.180: a plane in the ball look is its silhouette with a small ball on it
 - **Context.** Critic run 22 (map visuals 6): at T2 the planes were the largest balls on the screen and read as units.
   At 250 m/px an infantry ball is 4.5 px across (radius 2.25); a plane's ball was 0.5 of its 13–19 px span (radius

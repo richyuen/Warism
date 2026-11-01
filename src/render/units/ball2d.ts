@@ -143,6 +143,116 @@ export function drawBall2d(ctx: CanvasRenderingContext2D, x: number, y: number, 
   ctx.restore();
 }
 
+/** A ball drawn once, to be copied (`drawBall2dCached`). */
+interface CachedBall {
+  canvas: HTMLCanvasElement | OffscreenCanvas;
+  /** Its half side, device px; the ball's centre this far in, and the phase on. */
+  half: number;
+}
+
+/** Balls a cache keeps before it starts again (a plane's ball takes a new size as the view zooms). */
+const CACHE_MOST = 4096;
+
+/** A ball's place off the device pixel, as cached: to a quarter of a pixel each way. */
+const PHASES = 4;
+
+/**
+ * Balls drawn once, by their look, size, device scale and place off the device pixel (PLAN
+ * 7.181): the counters and the planes in flight drew a clipped flag, a gradient and outlines for
+ * each ball on every frame, and the GPU's raster of the overlay was long now and then, the world
+ * view at 135 fps against classic's 346. A flag's balls by the flag's image, so a new image draws
+ * anew.
+ */
+export class Ball2dCache {
+  private byFlag = new WeakMap<object, Map<string, CachedBall | null>>();
+  private noFlag = new Map<string, CachedBall | null>();
+  private count = 0;
+
+  /** The ball of radius `r` CSS px at `scale` device px a CSS px, its centre (px, py) device px off its pixel's corner. */
+  get(r: number, b: Ball2d, scale: number, px = 0, py = 0): CachedBall | null {
+    const key = `${r}|${scale}|${px}|${py}|${b.tint}|${b.look}|${b.prop}|${b.engaged ? 1 : 0}`;
+    let map = this.noFlag;
+    if (b.flag) {
+      let m = this.byFlag.get(b.flag);
+      if (!m) this.byFlag.set(b.flag, (m = new Map()));
+      map = m;
+    }
+    if (map.has(key)) return map.get(key)!;
+    if (++this.count > CACHE_MOST) {
+      this.byFlag = new WeakMap();
+      this.noFlag = new Map();
+      this.count = 1;
+      map = this.noFlag;
+      if (b.flag) this.byFlag.set(b.flag, (map = new Map()));
+    }
+    // Wide enough for a hull (1.7 ball units out), treads, and the engaged ring.
+    const half = Math.ceil((2 * (r / BALL_R) + 3) * scale);
+    const made = canvasOf(2 * half);
+    let ball: CachedBall | null = null;
+    if (made) {
+      made.ctx.setTransform(scale, 0, 0, scale, half + px, half + py);
+      drawBall2d(made.ctx as CanvasRenderingContext2D, 0, 0, r, b);
+      ball = { canvas: made.canvas, half };
+    }
+    map.set(key, ball);
+    return ball;
+  }
+}
+
+/**
+ * Draws a ball as `drawBall2d` does, from `cache`: its pixels drawn once and copied onto the
+ * device's pixels, at its place to a quarter of a pixel. At an opacity under 1 the ball fades as one
+ * picture, not part over part. Under a turn or a skew, or where no canvas can be made (node), drawn
+ * as `drawBall2d`.
+ */
+export function drawBall2dCached(ctx: CanvasRenderingContext2D, cache: Ball2dCache, x: number, y: number, r: number, b: Ball2d): void {
+  const m = ctx.getTransform();
+  if (m.b !== 0 || m.c !== 0 || m.a <= 0 || m.a !== m.d) {
+    drawBall2d(ctx, x, y, r, b);
+    return;
+  }
+  // The centre in device px, its pixel and its place in it.
+  const dx = m.a * x + m.e;
+  const dy = m.d * y + m.f;
+  let ix = Math.floor(dx);
+  let iy = Math.floor(dy);
+  let px = Math.round((dx - ix) * PHASES) / PHASES;
+  let py = Math.round((dy - iy) * PHASES) / PHASES;
+  if (px === 1) {
+    ix++;
+    px = 0;
+  }
+  if (py === 1) {
+    iy++;
+    py = 0;
+  }
+  const ball = cache.get(r, b, m.a, px, py);
+  if (!ball) {
+    drawBall2d(ctx, x, y, r, b);
+    return;
+  }
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.drawImage(ball.canvas, ix - ball.half, iy - ball.half);
+  ctx.restore();
+}
+
+function canvasOf(side: number): { canvas: HTMLCanvasElement | OffscreenCanvas; ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D } | null {
+  if (typeof document !== 'undefined') {
+    const canvas = document.createElement('canvas');
+    canvas.width = side;
+    canvas.height = side;
+    const ctx = canvas.getContext('2d');
+    return ctx ? { canvas, ctx } : null;
+  }
+  if (typeof OffscreenCanvas !== 'undefined') {
+    const canvas = new OffscreenCanvas(side, side);
+    const ctx = canvas.getContext('2d');
+    return ctx ? { canvas, ctx } : null;
+  }
+  return null;
+}
+
 function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number): void {
   ctx.beginPath();
   ctx.moveTo(x + r, y);

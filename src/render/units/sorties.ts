@@ -11,7 +11,7 @@ import { SORTIE_STRIDE, SortieRole } from '../../shared/protocol';
 import { Leg, sortieAt, type Sortie } from '../../shared/sorties';
 import { worldToScreen, itemOffsets, type Camera, type MapGeometry } from '../camera';
 import { sizeScale } from '../sizeScale';
-import { drawBall2d, type Ball2d } from './ball2d';
+import { Ball2dCache, drawBall2dCached, type Ball2d } from './ball2d';
 import { LINE_CELLS } from './individuals';
 
 /** A plane's span, CSS px (before the unit size), by role: a fighter's, a bomber's. */
@@ -218,6 +218,9 @@ export function drawSorties(
 export const PLANE_BALL = 0.17;
 
 /** A wing's planes of `span` at `alpha` with a short trail: a vee, the leader, then one either side behind it; each plane's middle into `at`. */
+/** The planes' balls, drawn once each (PLAN 7.181). */
+const BALLS = new Ball2dCache();
+
 function vee(ctx: CanvasRenderingContext2D, x: number, y: number, heading: number, n: number, span: number, alpha: number, at: [number, number][] | null, ball?: Ball2d, ballShare = PLANE_BALL): void {
   if (alpha <= 0.01) return;
   ctx.globalAlpha = alpha;
@@ -240,13 +243,25 @@ function vee(ctx: CanvasRenderingContext2D, x: number, y: number, heading: numbe
   ctx.restore();
   const back = span * 0.9;
   const side = span * 0.8;
+  const places: [number, number][] = [];
   for (let k = 0; k < n; k++) {
     const b = k === 0 ? 0 : back;
     const sgn = k === 1 ? -1 : k === 2 ? 1 : 0;
     const [px, py] = [x - cos * b - sin * side * sgn, y - sin * b + cos * side * sgn];
     at?.push([px, py]);
+    places.push([px, py]);
     plane(ctx, px, py, heading, span, !small);
-    // In the ball look, a small countryball on the plane, at `ballShare` of its span.
-    if (ball) drawBall2d(ctx, px, py, ballShare * span, ball);
   }
+  if (!ball) return;
+  // In the ball look, a small countryball on each plane, at `ballShare` of its span: after the
+  // vee's planes and without their shadow (PLAN 7.181: a ball between two shadowed planes made
+  // the GPU's raster of the overlay long now and then, the world view 135 fps against 346; a
+  // vee's planes are 0.8 of a span apart, so no plane covers another's ball).
+  ctx.save();
+  ctx.shadowColor = 'transparent';
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 0;
+  for (const [px, py] of places) drawBall2dCached(ctx, BALLS, px, py, ballShare * span, ball);
+  ctx.restore();
 }

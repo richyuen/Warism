@@ -17105,3 +17105,25 @@ Of 7.176 (open in PLAN.md):
   tags (≥ 3), every ball no larger than an infantry ball (radius 2.25 px; 6.5 on `4a977fdb`), and on ≥ 80 % both
   wings in the nation's colour, a ball of its flag, the plane's colour out of its ball ≥ its ball's area;
   `planesT3_1938`, `sortiesSeen1938` green.
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.181 The world view's frame rate (from PLAN 7.5's DONE-condition runs on fbc9fbc3; in budget, filed so it is
+  not passed by): `npm run bench -- G` GPU T0 135.0 and 136.2 fps, p95 21.1 and 21.2 ms, on two runs, against
+  fbca2cc4's 347.6 fps, p95 4.3 ms (PLAN 7.162) on this machine; the GPU's frame 0.55 ms (0.52), draw CPU p50 2.8 ms
+  (2.0): long frames now and then, not a slower draw. T2 176.6 (182.9) unchanged. Find the commit between fbca2cc4 and
+  81beca11 and what in the frame is long; fix it without changing what is drawn.
+  AT: `npm run bench -- G` on HEAD and on fbca2cc4 run back to back on this machine: HEAD's GPU T0 fps ≥ 0.9 × fbca2cc4's
+  and its p95 ≤ 1.5 × fbca2cc4's; T2 not lower than 0.9 × fbca2cc4's. Evidence in `docs/evidence/7.181/`.

@@ -12,7 +12,7 @@
  * appears or disappears anywhere except under a counter in the same place.
  */
 import { progress, running } from '../timing';
-import { drawBall2d } from './ball2d';
+import { Ball2dCache, drawBall2dCached } from './ball2d';
 import { strengthText } from './markers';
 import { worldToScreen, itemOffsets, type Camera, type MapGeometry } from '../camera';
 
@@ -255,6 +255,8 @@ export class CounterLayer {
    * that came out could take a shown neighbour with it: fewer counters after a zoom in, and
    * not those of a view opened there.
    */
+  /** The ball look's chips, drawn once each (PLAN 7.181). */
+  private readonly ballCache = new Ball2dCache();
   private hold = new Set<string>();
   /** The zoom (px per cell) of the frame that left `hold`. */
   private holdScale: number | null = null;
@@ -482,7 +484,7 @@ export class CounterLayer {
         ctx.lineWidth = 1;
         ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
         // In the ball look the chip is a countryball over the box's left end (a fleet's hull is the box's own).
-        if (balls) drawBall2d(ctx, x + 7, y + h / 2, COUNTER_BALL_R, { flag, tint: colorOf(nation), look: 1, prop: 'none' });
+        if (balls) drawBall2dCached(ctx, this.ballCache, x + 7, y + h / 2, COUNTER_BALL_R, { flag, tint: colorOf(nation), look: 1, prop: 'none' });
         if (naval) {
           ctx.fillStyle = '#8ec5ff';
           ctx.beginPath();

@@ -25379,3 +25379,17 @@ No rule changed and nothing on screen changed. One task came out of it.
   176.6 against 30, GPU and draw CPU in SPEC). But T0 fell from 7.162's 347.6 fps, p95 4.3 → 21 ms, on both runs, the
   GPU's frame unchanged: filed as **PLAN 7.181** before 7.5, so the condition waits on it.
 - **Next:** PLAN 7.181.
+
+## 2026-11-01 — PLAN 7.181: the overlay's countryballs drawn once and copied; T0 back to 323 fps (ADR-784)
+
+- **Cause:** the ball look's T0 (classic on the same code 346 fps). A probe of T0 as bench G sets it timed each part
+  of `draw`: the CPU of the two looks within 0.3 ms, the long frames on the GPU's raster of the 2D overlay. Without
+  the planes' balls (71 planes at T0, balls ~1.3 px), classic's frames. Each ball's radial gradient was most of it.
+- **Fix** (ADR-784): `Ball2dCache` / `drawBall2dCached` in `ball2d.ts`; a ball drawn once into its own canvas (by
+  flag image, tint, look, prop, ring, radius, scale, and its place off the device pixel to a quarter pixel) and
+  copied unscaled. The T0 counters and the planes use it; a vee's balls after its planes, shadow off.
+- **AT** (bench G back to back, `docs/evidence/7.181/`): fix 322.7, fbca2cc4 345.5, fix 323.4 fps at T0 (bar 311);
+  p95 4.6 ms all three (bar 6.9); T2 174.8, 182.6, 179.1 (bar 164). Met.
+- Specs run by hand: `countryballs1938`, `counters1938`, `countersRest1938`, `sortiesSeen1938`, `markers1938`: 12
+  of 12 (the planes' flag reads 50 of 62 at 1000 m/px, as on HEAD). New unit test `ball2dCache.test.ts`.
+- **Next:** PLAN 7.5, the DONE condition's runs again on the new code (bench; then check:review, critic).
