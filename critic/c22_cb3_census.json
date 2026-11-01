@@ -1,0 +1,328 @@
+{
+ "nations": 102,
+ "pairs": [
+  {
+   "a": "Germany",
+   "ida": 1,
+   "b": "Austria",
+   "idb": 2,
+   "dFull": 247,
+   "dHelm": 72
+  },
+  {
+   "a": "Germany",
+   "ida": 1,
+   "b": "Yugoslavia",
+   "idb": 14,
+   "dFull": 157,
+   "dHelm": 39
+  },
+  {
+   "a": "Germany",
+   "ida": 1,
+   "b": "Iran",
+   "idb": 57,
+   "dFull": 175,
+   "dHelm": 55
+  },
+  {
+   "a": "Austria",
+   "ida": 2,
+   "b": "Yugoslavia",
+   "idb": 14,
+   "dFull": 254,
+   "dHelm": 72
+  },
+  {
+   "a": "Austria",
+   "ida": 2,
+   "b": "Iran",
+   "idb": 57,
+   "dFull": 234,
+   "dHelm": 73
+  },
+  {
+   "a": "Soviet Union",
+   "ida": 10,
+   "b": "Communist China",
+   "idb": 70,
+   "dFull": 105,
+   "dHelm": 65
+  },
+  {
+   "a": "Yugoslavia",
+   "ida": 14,
+   "b": "Iran",
+   "idb": 57,
+   "dFull": 137,
+   "dHelm": 55
+  },
+  {
+   "a": "Turkey",
+   "ida": 18,
+   "b": "Communist China",
+   "idb": 70,
+   "dFull": 108,
+   "dHelm": 76
+  },
+  {
+   "a": "Netherlands",
+   "ida": 28,
+   "b": "South Africa",
+   "idb": 39,
+   "dFull": 134,
+   "dHelm": 66
+  },
+  {
+   "a": "Netherlands",
+   "ida": 28,
+   "b": "Honduras",
+   "idb": 85,
+   "dFull": 256,
+   "dHelm": 88
+  },
+  {
+   "a": "Netherlands",
+   "ida": 28,
+   "b": "El Salvador",
+   "idb": 86,
+   "dFull": 213,
+   "dHelm": 52
+  },
+  {
+   "a": "Netherlands",
+   "ida": 28,
+   "b": "Nicaragua",
+   "idb": 87,
+   "dFull": 247,
+   "dHelm": 75
+  },
+  {
+   "a": "29",
+   "ida": 29,
+   "b": "Honduras",
+   "idb": 85,
+   "dFull": 290,
+   "dHelm": 79
+  },
+  {
+   "a": "29",
+   "ida": 29,
+   "b": "Nicaragua",
+   "idb": 87,
+   "dFull": 283,
+   "dHelm": 74
+  },
+  {
+   "a": "South Africa",
+   "ida": 39,
+   "b": "Dutch East Indies",
+   "idb": 67,
+   "dFull": 134,
+   "dHelm": 56
+  },
+  {
+   "a": "South Africa",
+   "ida": 39,
+   "b": "El Salvador",
+   "idb": 86,
+   "dFull": 302,
+   "dHelm": 71
+  },
+  {
+   "a": "South Africa",
+   "ida": 39,
+   "b": "Paraguay",
+   "idb": 99,
+   "dFull": 99,
+   "dHelm": 45
+  },
+  {
+   "a": "Oman",
+   "ida": 56,
+   "b": "Communist China",
+   "idb": 70,
+   "dFull": 113,
+   "dHelm": 61
+  },
+  {
+   "a": "Dutch East Indies",
+   "ida": 67,
+   "b": "El Salvador",
+   "idb": 86,
+   "dFull": 213,
+   "dHelm": 90
+  },
+  {
+   "a": "El Salvador",
+   "ida": 86,
+   "b": "Paraguay",
+   "idb": 99,
+   "dFull": 247,
+   "dHelm": 62
+  }
+ ],
+ "neigh": [
+  {
+   "a": "Germany",
+   "ida": 1,
+   "b": "Austria",
+   "idb": 2,
+   "dFull": 247,
+   "dHelm": 72
+  },
+  {
+   "a": "Germany",
+   "ida": 1,
+   "b": "Yugoslavia",
+   "idb": 14,
+   "dFull": 157,
+   "dHelm": 39
+  },
+  {
+   "a": "Germany",
+   "ida": 1,
+   "b": "Iran",
+   "idb": 57,
+   "dFull": 175,
+   "dHelm": 55
+  },
+  {
+   "a": "Austria",
+   "ida": 2,
+   "b": "Yugoslavia",
+   "idb": 14,
+   "dFull": 254,
+   "dHelm": 72
+  },
+  {
+   "a": "Austria",
+   "ida": 2,
+   "b": "Iran",
+   "idb": 57,
+   "dFull": 234,
+   "dHelm": 73
+  },
+  {
+   "a": "Soviet Union",
+   "ida": 10,
+   "b": "Communist China",
+   "idb": 70,
+   "dFull": 105,
+   "dHelm": 65
+  },
+  {
+   "a": "Yugoslavia",
+   "ida": 14,
+   "b": "Iran",
+   "idb": 57,
+   "dFull": 137,
+   "dHelm": 55
+  },
+  {
+   "a": "Turkey",
+   "ida": 18,
+   "b": "Communist China",
+   "idb": 70,
+   "dFull": 108,
+   "dHelm": 76
+  },
+  {
+   "a": "Netherlands",
+   "ida": 28,
+   "b": "South Africa",
+   "idb": 39,
+   "dFull": 134,
+   "dHelm": 66
+  },
+  {
+   "a": "Netherlands",
+   "ida": 28,
+   "b": "Honduras",
+   "idb": 85,
+   "dFull": 256,
+   "dHelm": 88
+  },
+  {
+   "a": "Netherlands",
+   "ida": 28,
+   "b": "El Salvador",
+   "idb": 86,
+   "dFull": 213,
+   "dHelm": 52
+  },
+  {
+   "a": "Netherlands",
+   "ida": 28,
+   "b": "Nicaragua",
+   "idb": 87,
+   "dFull": 247,
+   "dHelm": 75
+  },
+  {
+   "a": "29",
+   "ida": 29,
+   "b": "Honduras",
+   "idb": 85,
+   "dFull": 290,
+   "dHelm": 79
+  },
+  {
+   "a": "29",
+   "ida": 29,
+   "b": "Nicaragua",
+   "idb": 87,
+   "dFull": 283,
+   "dHelm": 74
+  },
+  {
+   "a": "South Africa",
+   "ida": 39,
+   "b": "Dutch East Indies",
+   "idb": 67,
+   "dFull": 134,
+   "dHelm": 56
+  },
+  {
+   "a": "South Africa",
+   "ida": 39,
+   "b": "El Salvador",
+   "idb": 86,
+   "dFull": 302,
+   "dHelm": 71
+  },
+  {
+   "a": "South Africa",
+   "ida": 39,
+   "b": "Paraguay",
+   "idb": 99,
+   "dFull": 99,
+   "dHelm": 45
+  },
+  {
+   "a": "Oman",
+   "ida": 56,
+   "b": "Communist China",
+   "idb": 70,
+   "dFull": 113,
+   "dHelm": 61
+  },
+  {
+   "a": "Dutch East Indies",
+   "ida": 67,
+   "b": "El Salvador",
+   "idb": 86,
+   "dFull": 213,
+   "dHelm": 90
+  },
+  {
+   "a": "El Salvador",
+   "ida": 86,
+   "b": "Paraguay",
+   "idb": 99,
+   "dFull": 247,
+   "dHelm": 62
+  }
+ ],
+ "errors": []
+}

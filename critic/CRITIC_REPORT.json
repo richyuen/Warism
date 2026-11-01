@@ -1,7 +1,7 @@
 {
-  "commit": "bd7940de3f16f054fdc267cdf83050a5fd5b7bae",
+  "commit": "4a977fdbc373e591a71c04c328336f8817b33dca",
   "scores": {
-    "mapVisuals": 7,
+    "mapVisuals": 6,
     "diplomacyWarDepth": 7,
     "emergentDynamics": 7,
     "godMode": 7,
@@ -16,6 +16,13 @@
     "aircraft": 8,
     "aiNukes": 8
   },
-  "blocking": [],
-  "timestamp": "2026-10-31T05:10:00Z"
+  "blocking": [
+    {
+      "id": "R22-B1",
+      "title": "The infantry helmet hides the flag that names the countryball: German, Austrian and Polish infantry read alike (white over red) at T1-T3 on the default look",
+      "evidence": "critic/shots/c22cb_7019_arm_1200m_balls_crop.png; critic/shots/c22cb_7019_arm_0600m_balls.png vs critic/shots/c22cb_7019_arm_0600m_classic.png; critic/shots/c22g_4877_01_after_places.png; critic/shots/c22cb2_7019_GER_POL_10_0_annot.png; critic/shots/c22cb2_helmet_pair_GER_left_POL_right.png; critic/c22_cb2_7019_GER_POL_10_pixels.json; critic/c22_cb3_census.json",
+      "fix": "Map the flag onto the disc below the helmet's brim (or make the helmet a thin cap), or give each ball / T1 box a rim or fill in the nation's map colour as Classic's box had; add a pixel test that German and Polish infantry balls differ."
+    }
+  ],
+  "timestamp": "2026-11-01T16:36:31Z"
 }

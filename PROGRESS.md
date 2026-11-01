@@ -25299,3 +25299,17 @@ No rule changed and nothing on screen changed. One task came out of it.
   the fight every element's uploaded level is its share's (100 elements: 73, 26, 1), and the most hurt (0.42 of its
   men) reads the plaster's colour exactly on its cheek at 15 m/px. The other four countryball tests green. Evidence
   `docs/evidence/7.178/balls-hurt-max.png`.
+
+## 2026-11-01 — PLAN 7.5: critic run 22 on 4a977fdb (blocking 1)
+
+- `npm run check:review` green before the run (1 known red: `seaRow1938` Speed x1; 0 not known). Its first run was
+  red twice on `enemyClickPanel1938`'s Japan–China case: Japan starts at war with China and Declare war is greyed
+  out at war since PLAN 7.175b; the setup fixed in 4a977fdb (the click checks unchanged). Evidence PNGs the
+  review's e2e re-rendered were restored, not committed.
+- Scores: map **6** (was 7), diplomacy 7, emergent 7, God Mode 7, editor 7, stats 7, UI 7, performance 7,
+  stability 7; zoom 8, naval 8, tanks 8, aircraft 8, nukes 8. Blocking 1: R22-B1, the infantry helmet hides the
+  flag, so German, Austrian and Polish balls read alike. Non-blocking: a puppet freed by Force war stays in the
+  overlord's war 7+ days; Breakthrough's refusal shown only in God's tab; own units in mixed stacks hard to select
+  under ADR-773 (a design objection). Run 21's items re-checked fixed. No frame-rate cost of the balls.
+- Filed PLAN 7.179 (R22-B1) and 7.180 (map visuals 6: the planes at T2, the report's other "Fix").
+- **Next:** PLAN 7.179.

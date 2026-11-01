@@ -1,0 +1,4907 @@
+{
+ "1213": {
+  "rows": [
+   {
+    "y": 1,
+    "living": [
+     99,
+     99
+    ],
+    "founded": [
+     0,
+     0
+    ],
+    "tiny": [
+     26,
+     26
+    ],
+    "wars": [
+     9,
+     9
+    ],
+    "flipped": [
+     30207,
+     30207
+    ],
+    "tickMs": [
+     3.647,
+     3.614
+    ],
+    "revolts": [
+     0,
+     0
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     36,
+     36
+    ],
+    "annexed": [
+     4,
+     4
+    ],
+    "sea": [
+     46,
+     46
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.1%",
+      "Canada 12.3%",
+      "United States 7.3%"
+     ],
+     [
+      "Soviet Union 27.1%",
+      "Canada 12.3%",
+      "United States 7.3%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 2,
+    "living": [
+     98,
+     97
+    ],
+    "founded": [
+     0,
+     0
+    ],
+    "tiny": [
+     25,
+     25
+    ],
+    "wars": [
+     6,
+     7
+    ],
+    "flipped": [
+     23436,
+     25370
+    ],
+    "tickMs": [
+     2.507,
+     2.661
+    ],
+    "revolts": [
+     0,
+     0
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     10,
+     12
+    ],
+    "annexed": [
+     1,
+     3
+    ],
+    "sea": [
+     5,
+     10
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.7%",
+      "Canada 12.3%",
+      "United States 7.5%"
+     ],
+     [
+      "Soviet Union 27.7%",
+      "Canada 12.3%",
+      "United States 7.6%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 3,
+    "living": [
+     98,
+     95
+    ],
+    "founded": [
+     1,
+     0
+    ],
+    "tiny": [
+     24,
+     24
+    ],
+    "wars": [
+     14,
+     8
+    ],
+    "flipped": [
+     20760,
+     17043
+    ],
+    "tickMs": [
+     2.051,
+     1.809
+    ],
+    "revolts": [
+     2,
+     0
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     17,
+     11
+    ],
+    "annexed": [
+     4,
+     2
+    ],
+    "sea": [
+     14,
+     9
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.7%",
+      "Canada 12.3%",
+      "United States 8.0%"
+     ],
+     [
+      "Soviet Union 28.3%",
+      "Canada 12.3%",
+      "United States 7.9%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 4,
+    "living": [
+     96,
+     91
+    ],
+    "founded": [
+     2,
+     0
+    ],
+    "tiny": [
+     21,
+     22
+    ],
+    "wars": [
+     6,
+     5
+    ],
+    "flipped": [
+     21621,
+     12138
+    ],
+    "tickMs": [
+     2.081,
+     1.696
+    ],
+    "revolts": [
+     2,
+     0
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     8,
+     11
+    ],
+    "annexed": [
+     5,
+     5
+    ],
+    "sea": [
+     8,
+     9
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.7%",
+      "Canada 12.1%",
+      "United States 8.8%"
+     ],
+     [
+      "Soviet Union 28.5%",
+      "Canada 12.3%",
+      "United States 8.2%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 5,
+    "living": [
+     97,
+     86
+    ],
+    "founded": [
+     4,
+     0
+    ],
+    "tiny": [
+     25,
+     21
+    ],
+    "wars": [
+     7,
+     8
+    ],
+    "flipped": [
+     19981,
+     31614
+    ],
+    "tickMs": [
+     1.889,
+     2.114
+    ],
+    "revolts": [
+     6,
+     1
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     19,
+     10
+    ],
+    "annexed": [
+     6,
+     7
+    ],
+    "sea": [
+     5,
+     6
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.4%",
+      "Canada 12.3%",
+      "United States 9.3%"
+     ],
+     [
+      "Soviet Union 28.2%",
+      "Canada 12.7%",
+      "United States 8.2%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 6,
+    "living": [
+     96,
+     85
+    ],
+    "founded": [
+     4,
+     3
+    ],
+    "tiny": [
+     24,
+     21
+    ],
+    "wars": [
+     6,
+     12
+    ],
+    "flipped": [
+     20635,
+     37065
+    ],
+    "tickMs": [
+     1.584,
+     2.655
+    ],
+    "revolts": [
+     2,
+     5
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     8,
+     13
+    ],
+    "annexed": [
+     4,
+     7
+    ],
+    "sea": [
+     6,
+     13
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.7%",
+      "Canada 12.3%",
+      "United States 9.4%"
+     ],
+     [
+      "Soviet Union 27.7%",
+      "Canada 12.7%",
+      "United States 8.7%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 7,
+    "living": [
+     94,
+     81
+    ],
+    "founded": [
+     2,
+     3
+    ],
+    "tiny": [
+     25,
+     24
+    ],
+    "wars": [
+     8,
+     7
+    ],
+    "flipped": [
+     41672,
+     53051
+    ],
+    "tickMs": [
+     2.548,
+     2.893
+    ],
+    "revolts": [
+     13,
+     1
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     25,
+     11
+    ],
+    "annexed": [
+     21,
+     5
+    ],
+    "sea": [
+     8,
+     2
+    ],
+    "top3": [
+     [
+      "Soviet Union 23.8%",
+      "Canada 12.4%",
+      "United States 12.0%"
+     ],
+     [
+      "Soviet Union 27.3%",
+      "Canada 12.7%",
+      "United States 10.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 8,
+    "living": [
+     86,
+     73
+    ],
+    "founded": [
+     2,
+     2
+    ],
+    "tiny": [
+     25,
+     25
+    ],
+    "wars": [
+     9,
+     6
+    ],
+    "flipped": [
+     70797,
+     61753
+    ],
+    "tickMs": [
+     2.43,
+     2.769
+    ],
+    "revolts": [
+     4,
+     2
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     15,
+     7
+    ],
+    "annexed": [
+     13,
+     11
+    ],
+    "sea": [
+     5,
+     13
+    ],
+    "top3": [
+     [
+      "Soviet Union 23.7%",
+      "Canada 12.6%",
+      "United States 12.3%"
+     ],
+     [
+      "Soviet Union 27.3%",
+      "United States 13.8%",
+      "Canada 11.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 9,
+    "living": [
+     83,
+     71
+    ],
+    "founded": [
+     3,
+     1
+    ],
+    "tiny": [
+     25,
+     22
+    ],
+    "wars": [
+     9,
+     6
+    ],
+    "flipped": [
+     29219,
+     16941
+    ],
+    "tickMs": [
+     2.405,
+     1.502
+    ],
+    "revolts": [
+     2,
+     2
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     9,
+     7
+    ],
+    "annexed": [
+     5,
+     4
+    ],
+    "sea": [
+     9,
+     4
+    ],
+    "top3": [
+     [
+      "Soviet Union 23.8%",
+      "Canada 12.5%",
+      "United States 12.1%"
+     ],
+     [
+      "Soviet Union 27.3%",
+      "United States 13.8%",
+      "Canada 11.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 10,
+    "living": [
+     81,
+     68
+    ],
+    "founded": [
+     3,
+     1
+    ],
+    "tiny": [
+     22,
+     22
+    ],
+    "wars": [
+     8,
+     6
+    ],
+    "flipped": [
+     31518,
+     8105
+    ],
+    "tickMs": [
+     2.058,
+     1.671
+    ],
+    "revolts": [
+     1,
+     0
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     4,
+     6
+    ],
+    "annexed": [
+     4,
+     3
+    ],
+    "sea": [
+     1,
+     5
+    ],
+    "top3": [
+     [
+      "Soviet Union 23.1%",
+      "Canada 12.5%",
+      "United States 12.1%"
+     ],
+     [
+      "Soviet Union 27.2%",
+      "United States 13.8%",
+      "Canada 11.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 11,
+    "living": [
+     82,
+     67
+    ],
+    "founded": [
+     4,
+     2
+    ],
+    "tiny": [
+     20,
+     21
+    ],
+    "wars": [
+     8,
+     4
+    ],
+    "flipped": [
+     38891,
+     16953
+    ],
+    "tickMs": [
+     2.705,
+     2.204
+    ],
+    "revolts": [
+     1,
+     3
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     6,
+     7
+    ],
+    "annexed": [
+     0,
+     4
+    ],
+    "sea": [
+     3,
+     5
+    ],
+    "top3": [
+     [
+      "Soviet Union 22.1%",
+      "United States 14.1%",
+      "Canada 12.5%"
+     ],
+     [
+      "Soviet Union 27.1%",
+      "United States 14.0%",
+      "Canada 11.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 12,
+    "living": [
+     85,
+     66
+    ],
+    "founded": [
+     6,
+     2
+    ],
+    "tiny": [
+     21,
+     22
+    ],
+    "wars": [
+     10,
+     4
+    ],
+    "flipped": [
+     42453,
+     40298
+    ],
+    "tickMs": [
+     2.802,
+     2.324
+    ],
+    "revolts": [
+     7,
+     0
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     14,
+     7
+    ],
+    "annexed": [
+     5,
+     1
+    ],
+    "sea": [
+     1,
+     0
+    ],
+    "top3": [
+     [
+      "Soviet Union 18.8%",
+      "United States 16.4%",
+      "Canada 12.5%"
+     ],
+     [
+      "Soviet Union 27.0%",
+      "United States 15.6%",
+      "Canada 10.7%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 13,
+    "living": [
+     88,
+     67
+    ],
+    "founded": [
+     9,
+     4
+    ],
+    "tiny": [
+     20,
+     23
+    ],
+    "wars": [
+     12,
+     6
+    ],
+    "flipped": [
+     42310,
+     60497
+    ],
+    "tickMs": [
+     3.04,
+     3.1
+    ],
+    "revolts": [
+     9,
+     4
+    ],
+    "burst": [
+     0,
+     2
+    ],
+    "declared": [
+     18,
+     8
+    ],
+    "annexed": [
+     8,
+     3
+    ],
+    "sea": [
+     7,
+     4
+    ],
+    "top3": [
+     [
+      "Soviet Union 18.9%",
+      "United States 17.6%",
+      "Canada 12.7%"
+     ],
+     [
+      "Soviet Union 23.6%",
+      "United States 20.0%",
+      "Canada 10.7%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 14,
+    "living": [
+     91,
+     70
+    ],
+    "founded": [
+     13,
+     6
+    ],
+    "tiny": [
+     23,
+     27
+    ],
+    "wars": [
+     8,
+     6
+    ],
+    "flipped": [
+     64001,
+     75623
+    ],
+    "tickMs": [
+     3.016,
+     2.858
+    ],
+    "revolts": [
+     8,
+     13
+    ],
+    "burst": [
+     0,
+     10
+    ],
+    "declared": [
+     18,
+     15
+    ],
+    "annexed": [
+     7,
+     15
+    ],
+    "sea": [
+     10,
+     3
+    ],
+    "top3": [
+     [
+      "Soviet Union 22.5%",
+      "United States 16.1%",
+      "Canada 13.2%"
+     ],
+     [
+      "United States 20.5%",
+      "Soviet Union 18.1%",
+      "China 15.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 15,
+    "living": [
+     92,
+     79
+    ],
+    "founded": [
+     13,
+     9
+    ],
+    "tiny": [
+     27,
+     30
+    ],
+    "wars": [
+     10,
+     7
+    ],
+    "flipped": [
+     64954,
+     79026
+    ],
+    "tickMs": [
+     3.654,
+     3.202
+    ],
+    "revolts": [
+     5,
+     11
+    ],
+    "burst": [
+     0,
+     3
+    ],
+    "declared": [
+     11,
+     13
+    ],
+    "annexed": [
+     5,
+     3
+    ],
+    "sea": [
+     8,
+     5
+    ],
+    "top3": [
+     [
+      "Soviet Union 20.3%",
+      "United States 18.9%",
+      "Canada 13.4%"
+     ],
+     [
+      "United States 20.2%",
+      "China 18.7%",
+      "Soviet Union 13.2%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 16,
+    "living": [
+     95,
+     77
+    ],
+    "founded": [
+     13,
+     9
+    ],
+    "tiny": [
+     30,
+     20
+    ],
+    "wars": [
+     8,
+     9
+    ],
+    "flipped": [
+     57920,
+     102307
+    ],
+    "tickMs": [
+     3.466,
+     4.523
+    ],
+    "revolts": [
+     7,
+     13
+    ],
+    "burst": [
+     0,
+     3
+    ],
+    "declared": [
+     16,
+     17
+    ],
+    "annexed": [
+     6,
+     16
+    ],
+    "sea": [
+     7,
+     7
+    ],
+    "top3": [
+     [
+      "Soviet Union 22.1%",
+      "United States 20.6%",
+      "Canada 13.2%"
+     ],
+     [
+      "United States 20.1%",
+      "China 20.0%",
+      "Canada 10.9%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 17,
+    "living": [
+     96,
+     79
+    ],
+    "founded": [
+     16,
+     10
+    ],
+    "tiny": [
+     30,
+     25
+    ],
+    "wars": [
+     6,
+     6
+    ],
+    "flipped": [
+     56075,
+     86677
+    ],
+    "tickMs": [
+     2.986,
+     4.604
+    ],
+    "revolts": [
+     4,
+     12
+    ],
+    "burst": [
+     0,
+     1
+    ],
+    "declared": [
+     17,
+     15
+    ],
+    "annexed": [
+     4,
+     17
+    ],
+    "sea": [
+     3,
+     11
+    ],
+    "top3": [
+     [
+      "United States 24.0%",
+      "Soviet Union 18.5%",
+      "Canada 12.6%"
+     ],
+     [
+      "China 21.2%",
+      "United States 20.7%",
+      "Canada 11.6%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 18,
+    "living": [
+     99,
+     79
+    ],
+    "founded": [
+     17,
+     11
+    ],
+    "tiny": [
+     34,
+     19
+    ],
+    "wars": [
+     7,
+     7
+    ],
+    "flipped": [
+     68589,
+     145796
+    ],
+    "tickMs": [
+     3.176,
+     3.913
+    ],
+    "revolts": [
+     4,
+     6
+    ],
+    "burst": [
+     0,
+     6
+    ],
+    "declared": [
+     15,
+     15
+    ],
+    "annexed": [
+     2,
+     10
+    ],
+    "sea": [
+     2,
+     1
+    ],
+    "top3": [
+     [
+      "United States 23.9%",
+      "Soviet Union 14.8%",
+      "Canada 12.3%"
+     ],
+     [
+      "United States 19.7%",
+      "Soviet Union 16.9%",
+      "Canada 12.5%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 19,
+    "living": [
+     96,
+     79
+    ],
+    "founded": [
+     17,
+     11
+    ],
+    "tiny": [
+     34,
+     20
+    ],
+    "wars": [
+     6,
+     6
+    ],
+    "flipped": [
+     41129,
+     52182
+    ],
+    "tickMs": [
+     2.391,
+     3.32
+    ],
+    "revolts": [
+     3,
+     5
+    ],
+    "burst": [
+     0,
+     2
+    ],
+    "declared": [
+     6,
+     9
+    ],
+    "annexed": [
+     8,
+     8
+    ],
+    "sea": [
+     3,
+     4
+    ],
+    "top3": [
+     [
+      "United States 21.1%",
+      "Soviet Union 17.9%",
+      "Canada 12.3%"
+     ],
+     [
+      "United States 19.0%",
+      "Soviet Union 18.4%",
+      "Canada 12.5%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 20,
+    "living": [
+     103,
+     80
+    ],
+    "founded": [
+     23,
+     11
+    ],
+    "tiny": [
+     35,
+     24
+    ],
+    "wars": [
+     9,
+     6
+    ],
+    "flipped": [
+     53451,
+     79036
+    ],
+    "tickMs": [
+     3.373,
+     3.981
+    ],
+    "revolts": [
+     7,
+     9
+    ],
+    "burst": [
+     0,
+     2
+    ],
+    "declared": [
+     18,
+     13
+    ],
+    "annexed": [
+     0,
+     8
+    ],
+    "sea": [
+     9,
+     4
+    ],
+    "top3": [
+     [
+      "Soviet Union 20.0%",
+      "United States 17.4%",
+      "Canada 12.3%"
+     ],
+     [
+      "Soviet Union 19.5%",
+      "United States 17.4%",
+      "Canada 14.1%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 21,
+    "living": [
+     100,
+     81
+    ],
+    "founded": [
+     23,
+     13
+    ],
+    "tiny": [
+     33,
+     20
+    ],
+    "wars": [
+     8,
+     5
+    ],
+    "flipped": [
+     72460,
+     66479
+    ],
+    "tickMs": [
+     3.854,
+     2.982
+    ],
+    "revolts": [
+     2,
+     8
+    ],
+    "burst": [
+     0,
+     2
+    ],
+    "declared": [
+     8,
+     18
+    ],
+    "annexed": [
+     5,
+     11
+    ],
+    "sea": [
+     1,
+     5
+    ],
+    "top3": [
+     [
+      "United States 21.6%",
+      "Soviet Union 14.7%",
+      "Canada 12.5%"
+     ],
+     [
+      "Soviet Union 21.8%",
+      "United States 17.9%",
+      "Canada 12.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 22,
+    "living": [
+     102,
+     83
+    ],
+    "founded": [
+     23,
+     15
+    ],
+    "tiny": [
+     34,
+     21
+    ],
+    "wars": [
+     8,
+     7
+    ],
+    "flipped": [
+     51363,
+     38761
+    ],
+    "tickMs": [
+     3.088,
+     2.622
+    ],
+    "revolts": [
+     8,
+     5
+    ],
+    "burst": [
+     0,
+     6
+    ],
+    "declared": [
+     19,
+     11
+    ],
+    "annexed": [
+     12,
+     5
+    ],
+    "sea": [
+     12,
+     16
+    ],
+    "top3": [
+     [
+      "United States 19.9%",
+      "Soviet Union 15.2%",
+      "Canada 12.5%"
+     ],
+     [
+      "Soviet Union 21.5%",
+      "United States 15.8%",
+      "Canada 12.5%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 23,
+    "living": [
+     101,
+     81
+    ],
+    "founded": [
+     23,
+     13
+    ],
+    "tiny": [
+     30,
+     22
+    ],
+    "wars": [
+     7,
+     3
+    ],
+    "flipped": [
+     69538,
+     43126
+    ],
+    "tickMs": [
+     2.715,
+     3.24
+    ],
+    "revolts": [
+     2,
+     1
+    ],
+    "burst": [
+     0,
+     1
+    ],
+    "declared": [
+     5,
+     4
+    ],
+    "annexed": [
+     5,
+     4
+    ],
+    "sea": [
+     3,
+     10
+    ],
+    "top3": [
+     [
+      "United States 16.5%",
+      "Soviet Union 16.4%",
+      "Canada 12.5%"
+     ],
+     [
+      "Soviet Union 22.2%",
+      "United States 14.6%",
+      "Canada 12.8%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 24,
+    "living": [
+     101,
+     85
+    ],
+    "founded": [
+     23,
+     16
+    ],
+    "tiny": [
+     33,
+     23
+    ],
+    "wars": [
+     6,
+     7
+    ],
+    "flipped": [
+     110435,
+     26547
+    ],
+    "tickMs": [
+     4.148,
+     2.36
+    ],
+    "revolts": [
+     3,
+     4
+    ],
+    "burst": [
+     0,
+     6
+    ],
+    "declared": [
+     10,
+     13
+    ],
+    "annexed": [
+     4,
+     0
+    ],
+    "sea": [
+     8,
+     8
+    ],
+    "top3": [
+     [
+      "United States 20.6%",
+      "Canada 12.7%",
+      "Soviet Union 7.5%"
+     ],
+     [
+      "Soviet Union 22.2%",
+      "United States 13.8%",
+      "Canada 12.8%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 25,
+    "living": [
+     100,
+     81
+    ],
+    "founded": [
+     23,
+     15
+    ],
+    "tiny": [
+     31,
+     20
+    ],
+    "wars": [
+     4,
+     8
+    ],
+    "flipped": [
+     92220,
+     81065
+    ],
+    "tickMs": [
+     4.098,
+     3.069
+    ],
+    "revolts": [
+     0,
+     4
+    ],
+    "burst": [
+     1,
+     0
+    ],
+    "declared": [
+     9,
+     8
+    ],
+    "annexed": [
+     1,
+     10
+    ],
+    "sea": [
+     2,
+     10
+    ],
+    "top3": [
+     [
+      "United States 27.0%",
+      "Canada 12.7%",
+      "France 7.9%"
+     ],
+     [
+      "Soviet Union 21.1%",
+      "Canada 13.8%",
+      "United States 10.8%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 26,
+    "living": [
+     97,
+     85
+    ],
+    "founded": [
+     22,
+     18
+    ],
+    "tiny": [
+     28,
+     19
+    ],
+    "wars": [
+     6,
+     6
+    ],
+    "flipped": [
+     82536,
+     72554
+    ],
+    "tickMs": [
+     5.138,
+     3.151
+    ],
+    "revolts": [
+     4,
+     8
+    ],
+    "burst": [
+     9,
+     0
+    ],
+    "declared": [
+     10,
+     14
+    ],
+    "annexed": [
+     11,
+     6
+    ],
+    "sea": [
+     12,
+     3
+    ],
+    "top3": [
+     [
+      "United States 21.7%",
+      "Canada 12.8%",
+      "Soviet Union 8.2%"
+     ],
+     [
+      "Soviet Union 22.8%",
+      "United States 15.9%",
+      "Canada 12.7%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 27,
+    "living": [
+     95,
+     77
+    ],
+    "founded": [
+     22,
+     12
+    ],
+    "tiny": [
+     25,
+     15
+    ],
+    "wars": [
+     5,
+     7
+    ],
+    "flipped": [
+     85513,
+     55701
+    ],
+    "tickMs": [
+     3.878,
+     3.462
+    ],
+    "revolts": [
+     4,
+     2
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     14,
+     10
+    ],
+    "annexed": [
+     9,
+     11
+    ],
+    "sea": [
+     4,
+     4
+    ],
+    "top3": [
+     [
+      "United States 21.9%",
+      "Canada 12.9%",
+      "France 8.1%"
+     ],
+     [
+      "Soviet Union 20.9%",
+      "United States 14.9%",
+      "Canada 12.5%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 28,
+    "living": [
+     97,
+     77
+    ],
+    "founded": [
+     24,
+     11
+    ],
+    "tiny": [
+     25,
+     15
+    ],
+    "wars": [
+     4,
+     5
+    ],
+    "flipped": [
+     60031,
+     31328
+    ],
+    "tickMs": [
+     3.998,
+     2.907
+    ],
+    "revolts": [
+     4,
+     6
+    ],
+    "burst": [
+     0,
+     3
+    ],
+    "declared": [
+     11,
+     11
+    ],
+    "annexed": [
+     4,
+     9
+    ],
+    "sea": [
+     1,
+     0
+    ],
+    "top3": [
+     [
+      "United States 18.4%",
+      "Canada 12.9%",
+      "Soviet Union 9.9%"
+     ],
+     [
+      "Soviet Union 21.2%",
+      "United States 15.4%",
+      "Canada 12.5%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 29,
+    "living": [
+     96,
+     77
+    ],
+    "founded": [
+     23,
+     10
+    ],
+    "tiny": [
+     24,
+     20
+    ],
+    "wars": [
+     6,
+     11
+    ],
+    "flipped": [
+     85088,
+     79799
+    ],
+    "tickMs": [
+     3.589,
+     3.509
+    ],
+    "revolts": [
+     1,
+     5
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     7,
+     17
+    ],
+    "annexed": [
+     3,
+     7
+    ],
+    "sea": [
+     0,
+     20
+    ],
+    "top3": [
+     [
+      "United States 15.3%",
+      "Soviet Union 13.4%",
+      "Canada 12.3%"
+     ],
+     [
+      "Soviet Union 17.2%",
+      "Canada 12.5%",
+      "United States 12.0%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 30,
+    "living": [
+     97,
+     77
+    ],
+    "founded": [
+     24,
+     10
+    ],
+    "tiny": [
+     24,
+     19
+    ],
+    "wars": [
+     6,
+     7
+    ],
+    "flipped": [
+     68191,
+     47295
+    ],
+    "tickMs": [
+     3.356,
+     3.175
+    ],
+    "revolts": [
+     4,
+     3
+    ],
+    "burst": [
+     1,
+     2
+    ],
+    "declared": [
+     12,
+     7
+    ],
+    "annexed": [
+     6,
+     5
+    ],
+    "sea": [
+     0,
+     15
+    ],
+    "top3": [
+     [
+      "Soviet Union 16.0%",
+      "United States 12.4%",
+      "Canada 12.2%"
+     ],
+     [
+      "Soviet Union 16.4%",
+      "Canada 12.4%",
+      "United States 8.9%"
+     ]
+    ],
+    "hashEq": false
+   }
+  ],
+  "sum": {
+   "wars": [
+    226,
+    201
+   ],
+   "flipped": [
+    1616994,
+    1574337
+   ],
+   "revolts": [
+    119,
+    133
+   ],
+   "burst": [
+    11,
+    49
+   ],
+   "sea": [
+    203,
+    252
+   ],
+   "declared": [
+    395,
+    356
+   ],
+   "annexed": [
+    172,
+    204
+   ]
+  },
+  "hashEq": 0
+ },
+ "3301": {
+  "rows": [
+   {
+    "y": 1,
+    "living": [
+     97,
+     97
+    ],
+    "founded": [
+     0,
+     0
+    ],
+    "tiny": [
+     21,
+     21
+    ],
+    "wars": [
+     7,
+     7
+    ],
+    "flipped": [
+     22906,
+     22906
+    ],
+    "tickMs": [
+     2.976,
+     2.948
+    ],
+    "revolts": [
+     0,
+     0
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     24,
+     24
+    ],
+    "annexed": [
+     6,
+     6
+    ],
+    "sea": [
+     35,
+     35
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.7%",
+      "Canada 12.4%",
+      "United States 7.3%"
+     ],
+     [
+      "Soviet Union 27.7%",
+      "Canada 12.4%",
+      "United States 7.3%"
+     ]
+    ],
+    "hashEq": true
+   },
+   {
+    "y": 2,
+    "living": [
+     96,
+     95
+    ],
+    "founded": [
+     0,
+     0
+    ],
+    "tiny": [
+     20,
+     20
+    ],
+    "wars": [
+     7,
+     7
+    ],
+    "flipped": [
+     22459,
+     16345
+    ],
+    "tickMs": [
+     2.232,
+     2.377
+    ],
+    "revolts": [
+     2,
+     1
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     16,
+     15
+    ],
+    "annexed": [
+     4,
+     5
+    ],
+    "sea": [
+     8,
+     14
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.2%",
+      "Canada 12.4%",
+      "United States 7.3%"
+     ],
+     [
+      "Soviet Union 28.0%",
+      "Canada 12.4%",
+      "United States 7.3%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 3,
+    "living": [
+     92,
+     90
+    ],
+    "founded": [
+     2,
+     0
+    ],
+    "tiny": [
+     16,
+     15
+    ],
+    "wars": [
+     5,
+     6
+    ],
+    "flipped": [
+     44278,
+     28697
+    ],
+    "tickMs": [
+     2.988,
+     2.669
+    ],
+    "revolts": [
+     4,
+     1
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     10,
+     9
+    ],
+    "annexed": [
+     10,
+     7
+    ],
+    "sea": [
+     14,
+     16
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.1%",
+      "Canada 12.4%",
+      "United States 7.4%"
+     ],
+     [
+      "Soviet Union 28.1%",
+      "Canada 12.4%",
+      "United States 7.5%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 4,
+    "living": [
+     95,
+     88
+    ],
+    "founded": [
+     3,
+     0
+    ],
+    "tiny": [
+     19,
+     17
+    ],
+    "wars": [
+     12,
+     3
+    ],
+    "flipped": [
+     34515,
+     18705
+    ],
+    "tickMs": [
+     2.501,
+     2.053
+    ],
+    "revolts": [
+     4,
+     0
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     16,
+     9
+    ],
+    "annexed": [
+     2,
+     3
+    ],
+    "sea": [
+     4,
+     7
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.6%",
+      "Canada 12.4%",
+      "United States 7.4%"
+     ],
+     [
+      "Soviet Union 28.4%",
+      "Canada 12.4%",
+      "United States 7.6%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 5,
+    "living": [
+     94,
+     82
+    ],
+    "founded": [
+     4,
+     0
+    ],
+    "tiny": [
+     21,
+     17
+    ],
+    "wars": [
+     12,
+     6
+    ],
+    "flipped": [
+     46871,
+     33459
+    ],
+    "tickMs": [
+     3.084,
+     2.213
+    ],
+    "revolts": [
+     10,
+     1
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     24,
+     11
+    ],
+    "annexed": [
+     13,
+     8
+    ],
+    "sea": [
+     16,
+     8
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.9%",
+      "Canada 12.4%",
+      "United States 7.6%"
+     ],
+     [
+      "Soviet Union 29.0%",
+      "Canada 12.6%",
+      "United States 9.0%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 6,
+    "living": [
+     98,
+     81
+    ],
+    "founded": [
+     8,
+     1
+    ],
+    "tiny": [
+     19,
+     19
+    ],
+    "wars": [
+     10,
+     3
+    ],
+    "flipped": [
+     49675,
+     36219
+    ],
+    "tickMs": [
+     3.302,
+     2.58
+    ],
+    "revolts": [
+     10,
+     4
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     20,
+     8
+    ],
+    "annexed": [
+     6,
+     7
+    ],
+    "sea": [
+     10,
+     7
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.1%",
+      "Canada 12.4%",
+      "United States 8.9%"
+     ],
+     [
+      "Soviet Union 29.5%",
+      "Canada 12.9%",
+      "United States 9.9%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 7,
+    "living": [
+     103,
+     81
+    ],
+    "founded": [
+     14,
+     1
+    ],
+    "tiny": [
+     25,
+     18
+    ],
+    "wars": [
+     10,
+     3
+    ],
+    "flipped": [
+     30890,
+     19121
+    ],
+    "tickMs": [
+     2.751,
+     2.236
+    ],
+    "revolts": [
+     6,
+     0
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     19,
+     6
+    ],
+    "annexed": [
+     1,
+     0
+    ],
+    "sea": [
+     9,
+     4
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.9%",
+      "Canada 12.4%",
+      "United States 9.2%"
+     ],
+     [
+      "Soviet Union 28.8%",
+      "Canada 12.8%",
+      "United States 10.9%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 8,
+    "living": [
+     91,
+     77
+    ],
+    "founded": [
+     12,
+     2
+    ],
+    "tiny": [
+     26,
+     18
+    ],
+    "wars": [
+     6,
+     5
+    ],
+    "flipped": [
+     63006,
+     52433
+    ],
+    "tickMs": [
+     2.403,
+     2.069
+    ],
+    "revolts": [
+     0,
+     5
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     9,
+     16
+    ],
+    "annexed": [
+     14,
+     9
+    ],
+    "sea": [
+     13,
+     8
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.8%",
+      "Canada 12.1%",
+      "United States 9.7%"
+     ],
+     [
+      "Soviet Union 28.9%",
+      "Canada 12.7%",
+      "United States 11.2%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 9,
+    "living": [
+     93,
+     79
+    ],
+    "founded": [
+     11,
+     3
+    ],
+    "tiny": [
+     25,
+     21
+    ],
+    "wars": [
+     12,
+     5
+    ],
+    "flipped": [
+     24319,
+     9813
+    ],
+    "tickMs": [
+     2.285,
+     1.619
+    ],
+    "revolts": [
+     4,
+     2
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     17,
+     6
+    ],
+    "annexed": [
+     4,
+     0
+    ],
+    "sea": [
+     12,
+     4
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.6%",
+      "Canada 12.4%",
+      "United States 10.1%"
+     ],
+     [
+      "Soviet Union 28.7%",
+      "Canada 12.6%",
+      "United States 11.2%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 10,
+    "living": [
+     93,
+     81
+    ],
+    "founded": [
+     12,
+     3
+    ],
+    "tiny": [
+     23,
+     22
+    ],
+    "wars": [
+     7,
+     4
+    ],
+    "flipped": [
+     53744,
+     36353
+    ],
+    "tickMs": [
+     3.12,
+     1.998
+    ],
+    "revolts": [
+     2,
+     3
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     13,
+     5
+    ],
+    "annexed": [
+     2,
+     2
+    ],
+    "sea": [
+     0,
+     24
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.9%",
+      "United States 13.2%",
+      "Canada 12.1%"
+     ],
+     [
+      "Soviet Union 28.8%",
+      "United States 14.4%",
+      "Canada 12.7%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 11,
+    "living": [
+     92,
+     83
+    ],
+    "founded": [
+     13,
+     4
+    ],
+    "tiny": [
+     22,
+     23
+    ],
+    "wars": [
+     10,
+     3
+    ],
+    "flipped": [
+     58545,
+     45275
+    ],
+    "tickMs": [
+     2.788,
+     2.233
+    ],
+    "revolts": [
+     2,
+     5
+    ],
+    "burst": [
+     0,
+     1
+    ],
+    "declared": [
+     12,
+     9
+    ],
+    "annexed": [
+     4,
+     5
+    ],
+    "sea": [
+     3,
+     5
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.5%",
+      "United States 17.7%",
+      "Canada 8.5%"
+     ],
+     [
+      "Soviet Union 28.6%",
+      "Canada 12.9%",
+      "United States 12.1%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 12,
+    "living": [
+     94,
+     82
+    ],
+    "founded": [
+     17,
+     5
+    ],
+    "tiny": [
+     29,
+     22
+    ],
+    "wars": [
+     11,
+     5
+    ],
+    "flipped": [
+     45283,
+     22587
+    ],
+    "tickMs": [
+     2.391,
+     1.66
+    ],
+    "revolts": [
+     6,
+     1
+    ],
+    "burst": [
+     1,
+     0
+    ],
+    "declared": [
+     12,
+     11
+    ],
+    "annexed": [
+     5,
+     4
+    ],
+    "sea": [
+     2,
+     8
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.2%",
+      "United States 16.8%",
+      "Canada 8.3%"
+     ],
+     [
+      "Soviet Union 28.4%",
+      "Canada 12.9%",
+      "United States 12.6%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 13,
+    "living": [
+     91,
+     80
+    ],
+    "founded": [
+     13,
+     4
+    ],
+    "tiny": [
+     27,
+     20
+    ],
+    "wars": [
+     9,
+     4
+    ],
+    "flipped": [
+     27733,
+     19590
+    ],
+    "tickMs": [
+     2.25,
+     2.333
+    ],
+    "revolts": [
+     2,
+     1
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     10,
+     9
+    ],
+    "annexed": [
+     9,
+     4
+    ],
+    "sea": [
+     6,
+     4
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.8%",
+      "United States 18.0%",
+      "Canada 7.8%"
+     ],
+     [
+      "Soviet Union 28.8%",
+      "Canada 12.9%",
+      "United States 12.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 14,
+    "living": [
+     92,
+     80
+    ],
+    "founded": [
+     14,
+     5
+    ],
+    "tiny": [
+     25,
+     19
+    ],
+    "wars": [
+     6,
+     4
+    ],
+    "flipped": [
+     35150,
+     20732
+    ],
+    "tickMs": [
+     2.229,
+     2.277
+    ],
+    "revolts": [
+     3,
+     1
+    ],
+    "burst": [
+     3,
+     0
+    ],
+    "declared": [
+     11,
+     4
+    ],
+    "annexed": [
+     4,
+     2
+    ],
+    "sea": [
+     2,
+     4
+    ],
+    "top3": [
+     [
+      "Soviet Union 25.1%",
+      "United States 17.5%",
+      "Canada 8.5%"
+     ],
+     [
+      "Soviet Union 29.2%",
+      "Canada 13.0%",
+      "United States 12.1%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 15,
+    "living": [
+     88,
+     80
+    ],
+    "founded": [
+     12,
+     5
+    ],
+    "tiny": [
+     22,
+     18
+    ],
+    "wars": [
+     5,
+     5
+    ],
+    "flipped": [
+     64616,
+     30022
+    ],
+    "tickMs": [
+     2.987,
+     2.459
+    ],
+    "revolts": [
+     1,
+     1
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     11,
+     8
+    ],
+    "annexed": [
+     7,
+     1
+    ],
+    "sea": [
+     4,
+     13
+    ],
+    "top3": [
+     [
+      "Soviet Union 20.5%",
+      "United States 18.0%",
+      "China 8.3%"
+     ],
+     [
+      "Soviet Union 28.9%",
+      "Canada 12.8%",
+      "United States 12.6%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 16,
+    "living": [
+     89,
+     79
+    ],
+    "founded": [
+     14,
+     5
+    ],
+    "tiny": [
+     26,
+     18
+    ],
+    "wars": [
+     6,
+     2
+    ],
+    "flipped": [
+     66652,
+     41799
+    ],
+    "tickMs": [
+     2.799,
+     2.412
+    ],
+    "revolts": [
+     2,
+     0
+    ],
+    "burst": [
+     0,
+     1
+    ],
+    "declared": [
+     6,
+     2
+    ],
+    "annexed": [
+     1,
+     1
+    ],
+    "sea": [
+     5,
+     5
+    ],
+    "top3": [
+     [
+      "United States 17.9%",
+      "Soviet Union 13.4%",
+      "China 12.6%"
+     ],
+     [
+      "Soviet Union 29.8%",
+      "United States 13.8%",
+      "Canada 10.5%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 17,
+    "living": [
+     95,
+     76
+    ],
+    "founded": [
+     21,
+     6
+    ],
+    "tiny": [
+     32,
+     17
+    ],
+    "wars": [
+     7,
+     4
+    ],
+    "flipped": [
+     64097,
+     31306
+    ],
+    "tickMs": [
+     3.046,
+     2.872
+    ],
+    "revolts": [
+     8,
+     1
+    ],
+    "burst": [
+     1,
+     0
+    ],
+    "declared": [
+     13,
+     7
+    ],
+    "annexed": [
+     1,
+     5
+    ],
+    "sea": [
+     1,
+     12
+    ],
+    "top3": [
+     [
+      "United States 18.4%",
+      "China 17.7%",
+      "Canada 8.1%"
+     ],
+     [
+      "Soviet Union 30.6%",
+      "United States 12.3%",
+      "Canada 10.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 18,
+    "living": [
+     95,
+     74
+    ],
+    "founded": [
+     20,
+     5
+    ],
+    "tiny": [
+     28,
+     16
+    ],
+    "wars": [
+     7,
+     6
+    ],
+    "flipped": [
+     103327,
+     42870
+    ],
+    "tickMs": [
+     2.92,
+     3.093
+    ],
+    "revolts": [
+     6,
+     1
+    ],
+    "burst": [
+     5,
+     1
+    ],
+    "declared": [
+     10,
+     8
+    ],
+    "annexed": [
+     7,
+     4
+    ],
+    "sea": [
+     3,
+     6
+    ],
+    "top3": [
+     [
+      "United States 17.7%",
+      "Soviet Union 15.6%",
+      "China 9.8%"
+     ],
+     [
+      "Soviet Union 33.4%",
+      "United States 10.6%",
+      "Canada 10.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 19,
+    "living": [
+     92,
+     70
+    ],
+    "founded": [
+     18,
+     5
+    ],
+    "tiny": [
+     27,
+     16
+    ],
+    "wars": [
+     5,
+     5
+    ],
+    "flipped": [
+     46843,
+     34659
+    ],
+    "tickMs": [
+     2.316,
+     2.612
+    ],
+    "revolts": [
+     1,
+     0
+    ],
+    "burst": [
+     1,
+     2
+    ],
+    "declared": [
+     4,
+     5
+    ],
+    "annexed": [
+     4,
+     4
+    ],
+    "sea": [
+     6,
+     7
+    ],
+    "top3": [
+     [
+      "Soviet Union 17.2%",
+      "United States 16.3%",
+      "Canada 10.5%"
+     ],
+     [
+      "Soviet Union 33.4%",
+      "United States 10.7%",
+      "Canada 10.1%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 20,
+    "living": [
+     90,
+     70
+    ],
+    "founded": [
+     17,
+     4
+    ],
+    "tiny": [
+     25,
+     15
+    ],
+    "wars": [
+     8,
+     5
+    ],
+    "flipped": [
+     58056,
+     58386
+    ],
+    "tickMs": [
+     4.685,
+     2.754
+    ],
+    "revolts": [
+     1,
+     2
+    ],
+    "burst": [
+     6,
+     0
+    ],
+    "declared": [
+     12,
+     4
+    ],
+    "annexed": [
+     5,
+     2
+    ],
+    "sea": [
+     3,
+     2
+    ],
+    "top3": [
+     [
+      "Soviet Union 17.1%",
+      "United States 15.6%",
+      "Canada 10.2%"
+     ],
+     [
+      "Soviet Union 33.4%",
+      "United States 15.3%",
+      "China 8.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 21,
+    "living": [
+     88,
+     73
+    ],
+    "founded": [
+     14,
+     5
+    ],
+    "tiny": [
+     24,
+     15
+    ],
+    "wars": [
+     8,
+     6
+    ],
+    "flipped": [
+     49656,
+     41330
+    ],
+    "tickMs": [
+     3.571,
+     2.44
+    ],
+    "revolts": [
+     2,
+     4
+    ],
+    "burst": [
+     8,
+     1
+    ],
+    "declared": [
+     9,
+     11
+    ],
+    "annexed": [
+     5,
+     1
+    ],
+    "sea": [
+     12,
+     2
+    ],
+    "top3": [
+     [
+      "United States 16.6%",
+      "Soviet Union 15.3%",
+      "Canada 9.9%"
+     ],
+     [
+      "Soviet Union 32.4%",
+      "United States 16.2%",
+      "China 7.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 22,
+    "living": [
+     79,
+     71
+    ],
+    "founded": [
+     9,
+     3
+    ],
+    "tiny": [
+     19,
+     17
+    ],
+    "wars": [
+     8,
+     7
+    ],
+    "flipped": [
+     66926,
+     38624
+    ],
+    "tickMs": [
+     3.884,
+     2.954
+    ],
+    "revolts": [
+     1,
+     1
+    ],
+    "burst": [
+     2,
+     0
+    ],
+    "declared": [
+     9,
+     10
+    ],
+    "annexed": [
+     10,
+     5
+    ],
+    "sea": [
+     4,
+     3
+    ],
+    "top3": [
+     [
+      "United States 20.5%",
+      "Soviet Union 12.0%",
+      "Canada 8.8%"
+     ],
+     [
+      "Soviet Union 33.7%",
+      "United States 14.3%",
+      "China 7.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 23,
+    "living": [
+     85,
+     72
+    ],
+    "founded": [
+     15,
+     3
+    ],
+    "tiny": [
+     24,
+     15
+    ],
+    "wars": [
+     9,
+     8
+    ],
+    "flipped": [
+     55355,
+     42792
+    ],
+    "tickMs": [
+     3.964,
+     2.905
+    ],
+    "revolts": [
+     12,
+     2
+    ],
+    "burst": [
+     2,
+     0
+    ],
+    "declared": [
+     18,
+     7
+    ],
+    "annexed": [
+     6,
+     1
+    ],
+    "sea": [
+     4,
+     4
+    ],
+    "top3": [
+     [
+      "United States 22.2%",
+      "Soviet Union 10.5%",
+      "Syria 8.6%"
+     ],
+     [
+      "Soviet Union 34.2%",
+      "United States 15.6%",
+      "China 7.7%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 24,
+    "living": [
+     87,
+     72
+    ],
+    "founded": [
+     16,
+     5
+    ],
+    "tiny": [
+     24,
+     16
+    ],
+    "wars": [
+     6,
+     7
+    ],
+    "flipped": [
+     122824,
+     49780
+    ],
+    "tickMs": [
+     3.953,
+     2.194
+    ],
+    "revolts": [
+     6,
+     5
+    ],
+    "burst": [
+     3,
+     0
+    ],
+    "declared": [
+     7,
+     12
+    ],
+    "annexed": [
+     3,
+     5
+    ],
+    "sea": [
+     0,
+     3
+    ],
+    "top3": [
+     [
+      "United States 22.7%",
+      "Soviet Union 9.4%",
+      "China 7.4%"
+     ],
+     [
+      "Soviet Union 33.5%",
+      "United States 12.7%",
+      "Canada 9.3%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 25,
+    "living": [
+     85,
+     75
+    ],
+    "founded": [
+     15,
+     6
+    ],
+    "tiny": [
+     23,
+     17
+    ],
+    "wars": [
+     7,
+     7
+    ],
+    "flipped": [
+     110958,
+     39465
+    ],
+    "tickMs": [
+     4.959,
+     2.6
+    ],
+    "revolts": [
+     7,
+     5
+    ],
+    "burst": [
+     2,
+     1
+    ],
+    "declared": [
+     10,
+     9
+    ],
+    "annexed": [
+     8,
+     1
+    ],
+    "sea": [
+     5,
+     9
+    ],
+    "top3": [
+     [
+      "United States 28.5%",
+      "Soviet Union 10.8%",
+      "China 7.7%"
+     ],
+     [
+      "Soviet Union 34.3%",
+      "United States 13.7%",
+      "Canada 9.3%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 26,
+    "living": [
+     87,
+     74
+    ],
+    "founded": [
+     15,
+     7
+    ],
+    "tiny": [
+     26,
+     15
+    ],
+    "wars": [
+     7,
+     9
+    ],
+    "flipped": [
+     94126,
+     33218
+    ],
+    "tickMs": [
+     4.763,
+     2.118
+    ],
+    "revolts": [
+     5,
+     3
+    ],
+    "burst": [
+     0,
+     2
+    ],
+    "declared": [
+     15,
+     14
+    ],
+    "annexed": [
+     3,
+     5
+    ],
+    "sea": [
+     4,
+     2
+    ],
+    "top3": [
+     [
+      "United States 37.3%",
+      "Soviet Union 7.9%",
+      "China 7.5%"
+     ],
+     [
+      "Soviet Union 33.8%",
+      "United States 14.3%",
+      "Canada 9.3%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 27,
+    "living": [
+     85,
+     73
+    ],
+    "founded": [
+     14,
+     7
+    ],
+    "tiny": [
+     25,
+     13
+    ],
+    "wars": [
+     8,
+     6
+    ],
+    "flipped": [
+     91794,
+     66737
+    ],
+    "tickMs": [
+     4.555,
+     3.57
+    ],
+    "revolts": [
+     2,
+     1
+    ],
+    "burst": [
+     2,
+     0
+    ],
+    "declared": [
+     10,
+     4
+    ],
+    "annexed": [
+     5,
+     3
+    ],
+    "sea": [
+     7,
+     4
+    ],
+    "top3": [
+     [
+      "United States 41.5%",
+      "China 7.1%",
+      "Soviet Union 6.6%"
+     ],
+     [
+      "Soviet Union 29.6%",
+      "United States 12.5%",
+      "Canada 11.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 28,
+    "living": [
+     90,
+     74
+    ],
+    "founded": [
+     20,
+     9
+    ],
+    "tiny": [
+     26,
+     17
+    ],
+    "wars": [
+     13,
+     11
+    ],
+    "flipped": [
+     119849,
+     55566
+    ],
+    "tickMs": [
+     5.622,
+     2.989
+    ],
+    "revolts": [
+     11,
+     2
+    ],
+    "burst": [
+     2,
+     4
+    ],
+    "declared": [
+     27,
+     18
+    ],
+    "annexed": [
+     8,
+     2
+    ],
+    "sea": [
+     5,
+     11
+    ],
+    "top3": [
+     [
+      "United States 39.5%",
+      "China 6.1%",
+      "Soviet Union 4.7%"
+     ],
+     [
+      "Soviet Union 32.3%",
+      "Canada 11.4%",
+      "United States 11.1%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 29,
+    "living": [
+     89,
+     75
+    ],
+    "founded": [
+     20,
+     10
+    ],
+    "tiny": [
+     28,
+     18
+    ],
+    "wars": [
+     10,
+     9
+    ],
+    "flipped": [
+     113653,
+     43777
+    ],
+    "tickMs": [
+     4.58,
+     2.665
+    ],
+    "revolts": [
+     4,
+     3
+    ],
+    "burst": [
+     5,
+     0
+    ],
+    "declared": [
+     14,
+     13
+    ],
+    "annexed": [
+     5,
+     2
+    ],
+    "sea": [
+     3,
+     11
+    ],
+    "top3": [
+     [
+      "United States 28.8%",
+      "Canada 9.8%",
+      "Soviet Union 7.4%"
+     ],
+     [
+      "Soviet Union 31.9%",
+      "Canada 12.3%",
+      "United States 10.3%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 30,
+    "living": [
+     85,
+     72
+    ],
+    "founded": [
+     18,
+     9
+    ],
+    "tiny": [
+     26,
+     18
+    ],
+    "wars": [
+     10,
+     9
+    ],
+    "flipped": [
+     104182,
+     40779
+    ],
+    "tickMs": [
+     4.809,
+     4.036
+    ],
+    "revolts": [
+     7,
+     1
+    ],
+    "burst": [
+     6,
+     0
+    ],
+    "declared": [
+     10,
+     5
+    ],
+    "annexed": [
+     16,
+     5
+    ],
+    "sea": [
+     23,
+     5
+    ],
+    "top3": [
+     [
+      "United States 22.8%",
+      "Canada 9.7%",
+      "Soviet Union 9.3%"
+     ],
+     [
+      "Soviet Union 31.5%",
+      "Canada 12.3%",
+      "United States 10.0%"
+     ]
+    ],
+    "hashEq": false
+   }
+  ],
+  "sum": {
+   "wars": [
+    248,
+    171
+   ],
+   "flipped": [
+    1892288,
+    1073345
+   ],
+   "revolts": [
+    131,
+    57
+   ],
+   "burst": [
+    49,
+    13
+   ],
+   "sea": [
+    223,
+    247
+   ],
+   "declared": [
+    398,
+    279
+   ],
+   "annexed": [
+    178,
+    109
+   ]
+  },
+  "hashEq": 1
+ },
+ "7019": {
+  "rows": [
+   {
+    "y": 1,
+    "living": [
+     96,
+     96
+    ],
+    "founded": [
+     0,
+     0
+    ],
+    "tiny": [
+     24,
+     24
+    ],
+    "wars": [
+     9,
+     9
+    ],
+    "flipped": [
+     34759,
+     34759
+    ],
+    "tickMs": [
+     3.556,
+     3.516
+    ],
+    "revolts": [
+     0,
+     0
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     30,
+     30
+    ],
+    "annexed": [
+     7,
+     7
+    ],
+    "sea": [
+     60,
+     60
+    ],
+    "top3": [
+     [
+      "Soviet Union 28.8%",
+      "Canada 12.3%",
+      "United States 7.3%"
+     ],
+     [
+      "Soviet Union 28.8%",
+      "Canada 12.3%",
+      "United States 7.3%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 2,
+    "living": [
+     96,
+     88
+    ],
+    "founded": [
+     3,
+     0
+    ],
+    "tiny": [
+     24,
+     19
+    ],
+    "wars": [
+     9,
+     9
+    ],
+    "flipped": [
+     22110,
+     20898
+    ],
+    "tickMs": [
+     3.009,
+     2.787
+    ],
+    "revolts": [
+     5,
+     1
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     18,
+     14
+    ],
+    "annexed": [
+     7,
+     10
+    ],
+    "sea": [
+     16,
+     18
+    ],
+    "top3": [
+     [
+      "Soviet Union 29.0%",
+      "Canada 12.3%",
+      "United States 7.4%"
+     ],
+     [
+      "Soviet Union 29.3%",
+      "Canada 12.3%",
+      "United States 7.5%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 3,
+    "living": [
+     100,
+     89
+    ],
+    "founded": [
+     9,
+     1
+    ],
+    "tiny": [
+     28,
+     21
+    ],
+    "wars": [
+     10,
+     5
+    ],
+    "flipped": [
+     23208,
+     18026
+    ],
+    "tickMs": [
+     1.941,
+     2.296
+    ],
+    "revolts": [
+     9,
+     3
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     20,
+     9
+    ],
+    "annexed": [
+     4,
+     3
+    ],
+    "sea": [
+     4,
+     14
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.9%",
+      "Canada 12.3%",
+      "United States 7.6%"
+     ],
+     [
+      "Soviet Union 29.4%",
+      "Canada 12.3%",
+      "United States 7.8%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 4,
+    "living": [
+     101,
+     89
+    ],
+    "founded": [
+     8,
+     1
+    ],
+    "tiny": [
+     26,
+     21
+    ],
+    "wars": [
+     9,
+     6
+    ],
+    "flipped": [
+     34467,
+     24680
+    ],
+    "tickMs": [
+     2.265,
+     2.01
+    ],
+    "revolts": [
+     6,
+     1
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     22,
+     7
+    ],
+    "annexed": [
+     7,
+     2
+    ],
+    "sea": [
+     4,
+     9
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.5%",
+      "Canada 10.2%",
+      "United States 10.2%"
+     ],
+     [
+      "Soviet Union 29.8%",
+      "Canada 12.3%",
+      "United States 8.0%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 5,
+    "living": [
+     98,
+     89
+    ],
+    "founded": [
+     7,
+     1
+    ],
+    "tiny": [
+     24,
+     21
+    ],
+    "wars": [
+     6,
+     5
+    ],
+    "flipped": [
+     26735,
+     34851
+    ],
+    "tickMs": [
+     2.396,
+     1.873
+    ],
+    "revolts": [
+     5,
+     3
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     15,
+     11
+    ],
+    "annexed": [
+     12,
+     3
+    ],
+    "sea": [
+     8,
+     7
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.6%",
+      "United States 11.2%",
+      "Canada 9.4%"
+     ],
+     [
+      "Soviet Union 30.8%",
+      "Canada 12.4%",
+      "United States 8.4%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 6,
+    "living": [
+     100,
+     89
+    ],
+    "founded": [
+     9,
+     2
+    ],
+    "tiny": [
+     27,
+     20
+    ],
+    "wars": [
+     6,
+     6
+    ],
+    "flipped": [
+     46791,
+     28608
+    ],
+    "tickMs": [
+     3.348,
+     2.527
+    ],
+    "revolts": [
+     6,
+     6
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     14,
+     12
+    ],
+    "annexed": [
+     5,
+     8
+    ],
+    "sea": [
+     16,
+     5
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.8%",
+      "United States 12.1%",
+      "Canada 9.4%"
+     ],
+     [
+      "Soviet Union 29.2%",
+      "Canada 12.4%",
+      "United States 8.8%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 7,
+    "living": [
+     101,
+     91
+    ],
+    "founded": [
+     10,
+     5
+    ],
+    "tiny": [
+     27,
+     27
+    ],
+    "wars": [
+     9,
+     6
+    ],
+    "flipped": [
+     31889,
+     40016
+    ],
+    "tickMs": [
+     2.528,
+     2.752
+    ],
+    "revolts": [
+     1,
+     7
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     11,
+     15
+    ],
+    "annexed": [
+     0,
+     7
+    ],
+    "sea": [
+     7,
+     4
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.6%",
+      "United States 11.2%",
+      "Canada 9.4%"
+     ],
+     [
+      "Soviet Union 29.2%",
+      "Canada 12.6%",
+      "United States 10.6%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 8,
+    "living": [
+     94,
+     84
+    ],
+    "founded": [
+     13,
+     4
+    ],
+    "tiny": [
+     29,
+     30
+    ],
+    "wars": [
+     9,
+     8
+    ],
+    "flipped": [
+     70066,
+     61108
+    ],
+    "tickMs": [
+     2.523,
+     2.134
+    ],
+    "revolts": [
+     4,
+     4
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     10,
+     22
+    ],
+    "annexed": [
+     11,
+     13
+    ],
+    "sea": [
+     21,
+     10
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.9%",
+      "United States 12.2%",
+      "Canada 9.4%"
+     ],
+     [
+      "Soviet Union 28.6%",
+      "Canada 12.8%",
+      "United States 10.8%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 9,
+    "living": [
+     96,
+     82
+    ],
+    "founded": [
+     13,
+     5
+    ],
+    "tiny": [
+     28,
+     28
+    ],
+    "wars": [
+     6,
+     8
+    ],
+    "flipped": [
+     59169,
+     27117
+    ],
+    "tickMs": [
+     2.848,
+     2.193
+    ],
+    "revolts": [
+     3,
+     3
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     6,
+     8
+    ],
+    "annexed": [
+     1,
+     4
+    ],
+    "sea": [
+     8,
+     0
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.4%",
+      "Canada 11.1%",
+      "United States 10.9%"
+     ],
+     [
+      "Soviet Union 27.1%",
+      "Canada 12.8%",
+      "United States 12.0%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 10,
+    "living": [
+     94,
+     84
+    ],
+    "founded": [
+     12,
+     7
+    ],
+    "tiny": [
+     28,
+     29
+    ],
+    "wars": [
+     9,
+     7
+    ],
+    "flipped": [
+     73939,
+     33570
+    ],
+    "tickMs": [
+     3.831,
+     1.909
+    ],
+    "revolts": [
+     8,
+     5
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     12,
+     15
+    ],
+    "annexed": [
+     9,
+     6
+    ],
+    "sea": [
+     4,
+     4
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.6%",
+      "United States 11.4%",
+      "Canada 9.4%"
+     ],
+     [
+      "Soviet Union 26.4%",
+      "United States 13.1%",
+      "Canada 12.9%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 11,
+    "living": [
+     91,
+     83
+    ],
+    "founded": [
+     10,
+     7
+    ],
+    "tiny": [
+     22,
+     31
+    ],
+    "wars": [
+     9,
+     8
+    ],
+    "flipped": [
+     74095,
+     52799
+    ],
+    "tickMs": [
+     2.193,
+     2.191
+    ],
+    "revolts": [
+     3,
+     2
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     12,
+     7
+    ],
+    "annexed": [
+     11,
+     3
+    ],
+    "sea": [
+     1,
+     6
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.7%",
+      "United States 12.0%",
+      "Canada 9.3%"
+     ],
+     [
+      "Soviet Union 25.2%",
+      "United States 13.4%",
+      "Canada 12.9%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 12,
+    "living": [
+     92,
+     82
+    ],
+    "founded": [
+     9,
+     6
+    ],
+    "tiny": [
+     21,
+     31
+    ],
+    "wars": [
+     8,
+     6
+    ],
+    "flipped": [
+     41727,
+     47872
+    ],
+    "tickMs": [
+     2.349,
+     2.873
+    ],
+    "revolts": [
+     3,
+     1
+    ],
+    "burst": [
+     0,
+     1
+    ],
+    "declared": [
+     12,
+     11
+    ],
+    "annexed": [
+     3,
+     3
+    ],
+    "sea": [
+     0,
+     0
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.8%",
+      "United States 12.7%",
+      "Canada 8.8%"
+     ],
+     [
+      "Soviet Union 21.5%",
+      "United States 17.2%",
+      "Canada 13.1%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 13,
+    "living": [
+     91,
+     85
+    ],
+    "founded": [
+     9,
+     7
+    ],
+    "tiny": [
+     22,
+     27
+    ],
+    "wars": [
+     8,
+     9
+    ],
+    "flipped": [
+     48695,
+     45261
+    ],
+    "tickMs": [
+     2.608,
+     3.152
+    ],
+    "revolts": [
+     3,
+     7
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     12,
+     10
+    ],
+    "annexed": [
+     6,
+     4
+    ],
+    "sea": [
+     7,
+     15
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.2%",
+      "United States 11.1%",
+      "Canada 10.4%"
+     ],
+     [
+      "Soviet Union 19.6%",
+      "United States 17.7%",
+      "Canada 12.8%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 14,
+    "living": [
+     92,
+     87
+    ],
+    "founded": [
+     12,
+     7
+    ],
+    "tiny": [
+     28,
+     33
+    ],
+    "wars": [
+     3,
+     10
+    ],
+    "flipped": [
+     43647,
+     39004
+    ],
+    "tickMs": [
+     3.044,
+     2.922
+    ],
+    "revolts": [
+     6,
+     8
+    ],
+    "burst": [
+     1,
+     0
+    ],
+    "declared": [
+     9,
+     15
+    ],
+    "annexed": [
+     6,
+     8
+    ],
+    "sea": [
+     7,
+     5
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.5%",
+      "United States 10.4%",
+      "Canada 10.3%"
+     ],
+     [
+      "United States 18.4%",
+      "Soviet Union 18.1%",
+      "Canada 12.5%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 15,
+    "living": [
+     93,
+     85
+    ],
+    "founded": [
+     14,
+     5
+    ],
+    "tiny": [
+     25,
+     30
+    ],
+    "wars": [
+     10,
+     10
+    ],
+    "flipped": [
+     43348,
+     60278
+    ],
+    "tickMs": [
+     3.024,
+     3.43
+    ],
+    "revolts": [
+     3,
+     3
+    ],
+    "burst": [
+     0,
+     4
+    ],
+    "declared": [
+     12,
+     11
+    ],
+    "annexed": [
+     1,
+     7
+    ],
+    "sea": [
+     0,
+     4
+    ],
+    "top3": [
+     [
+      "Soviet Union 27.1%",
+      "United States 11.9%",
+      "Canada 10.3%"
+     ],
+     [
+      "Soviet Union 18.6%",
+      "United States 17.5%",
+      "Canada 12.3%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 16,
+    "living": [
+     94,
+     83
+    ],
+    "founded": [
+     14,
+     6
+    ],
+    "tiny": [
+     30,
+     28
+    ],
+    "wars": [
+     7,
+     4
+    ],
+    "flipped": [
+     36814,
+     71917
+    ],
+    "tickMs": [
+     3.068,
+     4.112
+    ],
+    "revolts": [
+     5,
+     5
+    ],
+    "burst": [
+     0,
+     0
+    ],
+    "declared": [
+     10,
+     10
+    ],
+    "annexed": [
+     3,
+     8
+    ],
+    "sea": [
+     3,
+     5
+    ],
+    "top3": [
+     [
+      "Soviet Union 26.4%",
+      "United States 12.2%",
+      "Canada 10.3%"
+     ],
+     [
+      "Soviet Union 19.9%",
+      "United States 18.0%",
+      "Canada 12.5%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 17,
+    "living": [
+     98,
+     85
+    ],
+    "founded": [
+     16,
+     8
+    ],
+    "tiny": [
+     33,
+     31
+    ],
+    "wars": [
+     7,
+     3
+    ],
+    "flipped": [
+     45584,
+     67811
+    ],
+    "tickMs": [
+     3.226,
+     4.116
+    ],
+    "revolts": [
+     5,
+     3
+    ],
+    "burst": [
+     5,
+     0
+    ],
+    "declared": [
+     15,
+     8
+    ],
+    "annexed": [
+     1,
+     1
+    ],
+    "sea": [
+     6,
+     8
+    ],
+    "top3": [
+     [
+      "Soviet Union 24.7%",
+      "United States 13.1%",
+      "Canada 10.3%"
+     ],
+     [
+      "United States 21.7%",
+      "Soviet Union 15.3%",
+      "Canada 12.6%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 18,
+    "living": [
+     93,
+     84
+    ],
+    "founded": [
+     15,
+     8
+    ],
+    "tiny": [
+     30,
+     30
+    ],
+    "wars": [
+     7,
+     4
+    ],
+    "flipped": [
+     41700,
+     60042
+    ],
+    "tickMs": [
+     2.983,
+     3.501
+    ],
+    "revolts": [
+     1,
+     1
+    ],
+    "burst": [
+     8,
+     0
+    ],
+    "declared": [
+     8,
+     7
+    ],
+    "annexed": [
+     7,
+     2
+    ],
+    "sea": [
+     2,
+     0
+    ],
+    "top3": [
+     [
+      "Soviet Union 23.1%",
+      "United States 12.3%",
+      "Canada 10.6%"
+     ],
+     [
+      "United States 23.4%",
+      "China 14.3%",
+      "Soviet Union 14.0%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 19,
+    "living": [
+     96,
+     86
+    ],
+    "founded": [
+     19,
+     9
+    ],
+    "tiny": [
+     31,
+     28
+    ],
+    "wars": [
+     13,
+     6
+    ],
+    "flipped": [
+     108570,
+     33073
+    ],
+    "tickMs": [
+     3.73,
+     2.745
+    ],
+    "revolts": [
+     21,
+     5
+    ],
+    "burst": [
+     1,
+     4
+    ],
+    "declared": [
+     29,
+     9
+    ],
+    "annexed": [
+     23,
+     5
+    ],
+    "sea": [
+     7,
+     2
+    ],
+    "top3": [
+     [
+      "Soviet Union 21.8%",
+      "United States 10.9%",
+      "Canada 9.5%"
+     ],
+     [
+      "United States 23.3%",
+      "Soviet Union 15.0%",
+      "China 14.5%"
+     ]
+    ],
+    "hashEq": false
+   },
+   {
+    "y": 20,
+    "living": [
+     101,
+     88
+    ],
+    "founded": [
+     23,
+     8
+    ],
+    "tiny": [
+     33,
+     29
+    ],
+    "wars": [
+     16,
+     6
+    ],
+    "flipped": [
+     80273,
+     87373
+    ],
+    "tickMs": [
+     4.03,
+     4.428
+    ],
+    "revolts": [
+     7,
+     6
+    ],
+    "burst": [
+     0,
+     1
+    ],
+    "declared": [
+     14,
+     10
+    ],
+    "annexed": [
+     3,
+     5
+    ],
+    "sea": [
+     2,
+     4
+    ],
+    "top3": [
+     [
+      "Soviet Union 17.9%",
+      "United States 11.9%",
+      "China 9.0%"
+     ],
+     [
+      "United States 19.7%",
+      "China 14.3%",
+      "Soviet Union 13.6%"
+     ]
+    ],
+    "hashEq": false
+   }
+  ],
+  "sum": {
+   "wars": [
+    170,
+    135
+   ],
+   "flipped": [
+    987586,
+    889063
+   ],
+   "revolts": [
+    104,
+    74
+   ],
+   "burst": [
+    15,
+    10
+   ],
+   "sea": [
+    183,
+    180
+   ],
+   "declared": [
+    291,
+    241
+   ],
+   "annexed": [
+    127,
+    109
+   ]
+  },
+  "hashEq": 0
+ }
+}

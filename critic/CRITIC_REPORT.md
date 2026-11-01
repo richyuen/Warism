@@ -1,36 +1,42 @@
-# Critic report, run 21
+# Critic report, run 22
 
-- **Commit:** `bd7940de3f16f054fdc267cdf83050a5fd5b7bae` (HEAD at the start). Run 20 was on `a3edf009`; 4 commits since.
-  The only source change is 9 lines in `src/app/game.tsx` (`onPick`): while playing, a click opens the panel of the
-  played nation's formation under it (`formationAt`), else what is drawn there (`formationPick`) (PLAN 7.160, ADR-769).
-  The rest is documents, `.gitignore`, an e2e spec and PROMPT step 2a (ADR-770). **No file under `src/sim/` changed.**
-- **Date:** 2026-10-31.
-- **Build:** `vite build --outDir critic/c21_dist`, exit 0 (`critic/c21_build.log`), served by `vite preview` on
-  127.0.0.1:**5399**. Run 20's build (`critic/c20_dist`, `a3edf009`) was served on **5398** for before/after on the
-  same cases. Both stopped at the end. Chromium through Playwright, headless: 1600 × 900, eight widths, 390 × 844 and
-  844 × 390 with touch.
-- **Runs:** seeds 1213 and 3301 × 30 years headless (identity check against run 20), 7019 × 20 years saved for the
-  page probes (run 20's `c18` save was deleted in the 2026-10-30 clean-up); run 20's page suites re-run
-  (`c21_suite1.sh`, `c21_suite2.sh`); new probes EX/EX2 (clicks on the enemy at the front, both builds), SXT (R20-B1 on
-  touch), SXG (the one-pick rule on two new seeds and fronts, both builds), LW (a new seed watched 10 years at Max in
-  the page), OS2 (an old scenario file).
-- **Reference:** `reference/screens/`, `reference/text/AOC_TEXT_NOTES.md`. AoC has no player-commanded units or unit
-  panels; what I say about those in AoC is from text only.
-- **Prefix:** every path below was made in this run (`c21`). Scripts are in `critic/scripts/c21_*`.
+- **Commit:** `4a977fdbc373e591a71c04c328336f8817b33dca` (HEAD at the start, `critic/c22_commit.txt`). Run 21 was on
+  `bd7940de`; 45 commits since. What changed for a player: **units are countryballs by default** (PLAN 7.174, ADR-777,
+  ADR-778; Classic is a setting), losses shown as cracks and plasters (7.178); **"Force war"** breaks alliances, puppet
+  bonds and truces (7.175, ADR-780); the right-click menu carries standing, God's diplomacy, Take/Release control
+  (7.175b–f, 7.177); the played nation in the title bar (7.176a); Place at once moved to God's tab (7.176b, 7.177);
+  "what is drawn under a click wins" (7.163, ADR-773); and run 21's non-blocking list (7.164–7.171). **The sim
+  changed:** at war, full suppression keeps the war's reserve (ADR-776, pin b22bcdd1 → dc41c283), plus `forceWar`.
+- **Date:** 2026-11-01.
+- **Build:** `vite build --outDir critic/c22_dist`, exit 0 (`critic/c22_build.log`), served by `vite preview` on
+  127.0.0.1:**5299**. Run 21's build (`critic/c21_dist`, `bd7940de`) served on **5298** for before/after on the same
+  clicks. Both stopped at the end. Chromium through Playwright, headless, 1600 × 900 (1400 × 800 for menus), 390 × 844
+  with touch.
+- **Runs:** seeds 1213, 3301 × 30 years and 7019 × 20 years headless on HEAD, against run 21's files for the same seeds
+  (`critic/c22_dyn.json`); run 21's page suites re-run (`c22_suite1.sh`, `c22_suite2.sh`, `c22_clicks.sh`); new probes
+  CB/CB2/CB3 (countryballs against Classic, the helmet), HU (losses), SB (a sea battle), PF (frame rate by look), FW/FW2
+  (Force war), TD (war from the map on touch), K2 (Breakthrough's refusal), and a 10-year page watch of 8243.
+- **Reference:** `reference/screens/`, `reference/text/AOC_TEXT_NOTES.md`. AoC has no unit sprites at this level and no
+  countryballs; what I say of AoC's units is from text and the trailer frames only.
+- Every path below was made in this run (`c22`). Scripts are in `critic/scripts/c22_*`.
 
 ## Verdict
 
-**R20-B1 is fixed, and the fix holds beyond the case it was written for: 12 of 12 own clicks show the selected
-formation's panel on seed 4441 (mouse and touch), on Japan's front in China (seed 6827, run 20's build: 6 of 12) and on
-Italy's (seed 3917, run 20's build: 1 of 12). The world is run 20's world, hash for hash (60 of 60 world-years). The
-fix has a price the ADR names: a click on an enemy counter beside one's own now opens one's own panel more often. That
-price is measured below and is not blocking. No new blocking issue was found.**
+**The new default look has one execution defect that hits the first war of the default scenario: the infantry
+helmet sits over the top third of the flag, and every nation whose flag is a horizontal tricolour loses the stripe that
+names it.** German, Austrian and Polish infantry, as T1 markers and as T2/T3 balls, all read as a white-over-red ball
+under a helmet (`c22cb_7019_arm_1200m_balls_crop.png`, `c22g_4877_01_after_places.png`,
+`c22cb2_helmet_pair_GER_left_POL_right.png`). Classic told the two sides apart by the marker's box in the nation's
+map colour (`c22cb_7019_arm_0600m_classic.png`); the balls dropped that cue and kept a flag that no longer shows.
+This is blocking (R22-B1). Everything else that moved moved the right way: most of run 21's non-blocking items are
+resolved and seen resolved, war from the map now works on touch, old files are refused with a reason, and the balls
+cost no frame rate.
 
 ## Scores
 
-| Dimension | Run 20 | Run 21 |
+| Dimension | Run 21 | Run 22 |
 |---|---|---|
-| Map visuals and readability | 7 | 7 |
+| Map visuals and readability | 7 | **6** |
 | Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 |
 | Emergent world dynamics over long runs | 7 | 7 |
 | God Mode | 7 | 7 |
@@ -45,166 +51,220 @@ price is measured below and is not blocking. No new blocking issue was found.**
 | Aircraft (needs 8) | 8 | 8 |
 | AI nuclear use (needs 8) | 8 | 8 |
 
-No score moved. The sim is identical (60 of 60 hashes). UI/UX loses its worst defect, but what run 20 named beside it
-(the phone bar, clipped God tools, the wing mark close in, 28 identical air rows) is byte-identical on HEAD, so the
-score has no new evidence of parity to rise on (UI/UX below).
+**Map visuals 7 → 6:** the same frozen moment in both looks on HEAD (seed 7019, Germany v Poland, day 4–5), so the
+before/after is the same case: Classic's T1 boxes read German grey against Polish red at a glance; the default balls read
+white-red against white-red (`c22cb_7019_arm_0600m_classic.png` vs `c22cb_7019_arm_0600m_balls.png`). No other score
+moved: UI/UX lost most of its listed defects but gained the cost of ADR-773 in mixed stacks and two small new ones
+(below), and the sim change shows as a quieter world, not a better or worse one, on three seeds.
 
-## Run 20's cases re-run
+## Run 21's cases re-run
 
-| Run 20 case | On HEAD | Evidence |
+| Run 21 case | On HEAD | Evidence |
 |---|---|---|
-| **R20-B1:** 12 clicks on German formations at the front (4441, day 60), panel ≠ selection on 7 | **Resolved.** 12 of 12 panels are the selected formation's (`mismatch 0`, `idMismatch 0`). | `critic/c21_sx_4441.json`, `critic/c21_sx.log` |
-| R20-B1 on the phone (run 20: `c20ph_portrait_06_selected.png`) | **Resolved.** 390 × 844 touch, 12 taps on German formations at the drawn place: 12 selected, 12 of 12 panels the selected one. | `critic/c21_sxt_4441.json`, `critic/shots/c21sxt_0.png`, `critic/shots/c21sxt_1.png` |
-| Seeds' yearly hashes (sim identity) | 1213 and 3301 × 30 years: **60 of 60** equal to run 20 (1213 y30 `3361f088`, 3301 y30 `d569de48` on both). | `critic/c21_ident.json`, `critic/c21_headless_1213.json`, `critic/c21_headless_3301.json` |
-| Slowest year at Max in the page (3301 y27 → y28, 56.4 s, 59.6 fps) | **Not re-run:** the y27 checkpoint was deleted in the clean-up. LW on new seed 8243 is this run's page timing: contended, a trend only. | `critic/c21_lw_8243.json` |
-| Wing mark at 250 m/px (5557) | Unchanged code, same shape: 3,000 m/px median 32 px (p90 86); 250 m/px median 70 px, p90 663, max 777, no German plane on screen in 24 of 59 samples (run 20 by the same script: median 141, p90 714, max 1,245, 22 of 58). The spread is wall-clock sampling, not a change. | `critic/c21_w_5557.json` |
-| 28 identical air rows, diplomacy select on Afghanistan, restyle census (5557) | **Byte-identical** JSON to run 20. | `critic/c21_u_1600_5557.json` |
-| Phone bar and God tools (390 × 844) | **Byte-identical**: Map, Statistics, History, Editor, Settings off screen; Revolt, Spawn nation, Breakthrough, Territory, Nuke, Found city, Raze city clipped. | `critic/c21_p.json` |
-| Phone map menu, eight widths, touch, compact phone news | Byte-identical (11 of 11 hit at every width; tap/pan/long-press/order hold). | `critic/c21_p2_phone_menu.json`, `critic/c21_p3_widths.json`, `critic/c21_pt_touch.json`, `critic/c21_ph.json` |
-| Breakthrough silent (2203), God revolt told as a war (6421), Offer peace (6011) | Byte-identical. | `critic/c21_k_2203.json`, `critic/c21_q_6421.json`, `critic/c21_pl_6011.json` |
-| Land "To its fight" off its formation (5381 d21), fleet "To its fight" (4877) | Same results (only shot names differ). | `critic/c21_ft_5381_d21.json`, `critic/c21_fp2_4877.json` |
-| Editor fleets and refusal (4877) | Placement and the refusal hold. Run 20's probe ended in a timeout; this one finished. Day marks are wall-clock dependent and not compared. | `critic/c21_g_4877.json` |
-| God nukes (4219), zoom (5861), armour close up (7019), new-seed watch (3301) | Same results within wall-clock noise. | `critic/c21_a_4219.json`, `critic/c21_z_5861.json`, `critic/c21_c_7019.json`, `critic/c21_ww_3301.json` |
-| History panel (7019 y20) | 4,154 of 4,154 events, opened in 112 ms (run 20: 4,154, 112 ms), on a save remade on HEAD. | `critic/c21_hi_7019.json` |
-| History export a/b raw | **Unchanged:** `SeaBattle,458771,France,524312,Spanish Republic`. | `critic/c21_dl_7019.csv` |
-| Broken format-1 save offered again | Run 20's `c10_seed4219_y10.bin` is gone; re-run with run 10's `c10_seed4877_y20.bin`: offered on the title ("27 December 1957, Continue"), refused after Continue with the plain message. Same behaviour. | `critic/c21_os_c10fmt1.json` |
-| `cfa73219` save through Continue | **Not re-run:** `critic/c18_seed7019_y20.bin` was deleted in the clean-up ADR-770 describes. | n/a |
-| Old `.warsim-scenario` file (ADR-761) | Run 20's c689c2e4 file is gone too. A `WARISM-SCENARIO` file from `a3edf009` loads in 2.8 s. A **run 10** file (magic `WARSIM-SCENARIO`) is new evidence, below. | `critic/c21_os2_c20.json`, `critic/c21_os2_c10.json` |
+| Seeds' yearly hashes (1213, 3301 × 30) | **Not comparable:** the sim changed (ADR-776, forceWar). 1 of 80 world-years equal (3301 y1). Compared instead by what a watcher sees, below. | `critic/c22_dyn.json`, `critic/c22_headless_{1213,3301,7019}.json` |
+| R20-B1 invariant (panel = selection, 4441) | **Holds:** 12 of 12 clicks, `mismatch 0`, `idMismatch 0`. But own clicks now select 7 of 12 (run 21: 12): five opened a Polish or Italian panel drawn over the German counter (ADR-773). | `critic/c22_sx_4441.json` |
+| Same on the phone (SXT, 12 taps) | 9 of 12 select (run 21: 12), panel = selection 9 of 9; the other three show a Polish or Italian panel. | `critic/c22_sxt_4441.json` |
+| **Non-blocking 1: enemy clicks open one's own panel (EX2, 4441, scale 12)** | **Resolved on this front:** HEAD 7 of 12 open the clicked Polish formation, **0** a German panel, 0 select; run 21's build on 5298, same script: 5, 3, 3. At scale 120: 12 of 12 on both. | `critic/c22_ex2_4441.json`, `critic/c22_ex2old_4441.json` |
+| Same on Japan v China (6827) | Enemy clicks: a Chinese panel 8 of 12 (run 21's build 5), own 4 (7); the clicked formation's own panel 0 of 12 on both. | `critic/c22_sxg_6827_JAP.json`, `critic/c22_sxgold_6827_JAP.json` |
+| Same on Italy v Yugoslavia (3917) | **Own clicks select 1 of 12** (run 21's build 12 of 12): the Vienna–Bratislava knot draws German, Romanian and Yugoslav counters over Italy's; 11 clicks opened their panels. Different worlds (the sim changed), same rule change. | `critic/c22_sxg_3917_ITA.json`, `critic/shots/c22sxg_3917_ITA_own_0.png` |
+| Non-blocking 2: fallback panel ≠ selection | No case in 72 clicks and taps. | `c22_sx_4441.json`, `c22_sxg_*` |
+| **Non-blocking 3: old scenario file offered then refused** | **Resolved:** refused at the preview, "Could not load: it was made by an older version of Warism, and this one cannot start it", no Start. A run 21 file still loads in 2.8 s. | `critic/c22_os2_c10.json`, `critic/shots/c22os2_c10_chosen.png`, `critic/c22_os2_c21.json` |
+| Broken format-1 save offered again | **Resolved:** the title says "from an older version … cannot be continued", no Continue. Run 21's own autosave (`bd7940de`, 7019 y20, format 1) **continues** on HEAD to 27 Dec 1957. | `critic/c22_os_c10fmt1.json`, `critic/c22_os_c21save_f1.json` |
+| Phone bar and God tools clipped (390 × 844) | **Resolved:** `off: []`, `clipped: []`; the bar wraps to three rows. Cost: the bar is 83 px tall (was 32); covered share at start 0.11 → 0.16, at day 60 0.18 → 0.24. | `critic/c22_p.json`, `critic/c22_ph.json`, `critic/shots/c22p_phone_03_god.png` |
+| 28 identical air rows | **Resolved:** each row names its wing and base ("Fighter group 1252 · at Tempelhof"). | `critic/shots/c22u_1600_05c_actions_air.png` |
+| Diplomacy select on Afghanistan | **Resolved:** "Choose a nation…". | `critic/c22_pl_6011.json` |
+| Identical carrier rows in the ticker | **Resolved on 8243:** rows are grouped ("Carrier strike ashore: Japan on China ×3"); no repeated rows in 10 years. | `critic/c22_lw_8243.json`, `critic/shots/c22hu_7019_d12_8m_balls.png` |
+| Export a/b raw | **Resolved:** `SeaBattle,19,France,24,Spanish Republic`. | `critic/c22_dl_7019.csv` |
+| God revolt told as a war | **Resolved:** "Free Saxony broke away from Germany". | `critic/c22_q_6421.json` |
+| Breakthrough silent (2203) | **Partly:** with God's tab open, "Not done: it is at war with no one: there is no front to break through." From the bar's Map tools with the panel on Overview, two clicks: nothing anywhere on the page, the tool disarms. | `critic/c22_k3_2203.json`, `critic/shots/c22k3_godtab.png`, `critic/c22_k2_2203.json`, `critic/shots/c22k2_overview.png` |
+| New-seed watch (3301, run 21's WW) | Re-run on HEAD, finished without page errors; a different world (sim changed), not compared. | `critic/c22_ww_3301.json` |
+| No war from the map on touch | **Resolved:** Diplomacy, a tap on Italy: the menu, in view (186,430 178 × 118), "Declare war" makes the war. | `critic/c22_td_3391.json`, `critic/shots/c22td_02_menu.png`, `critic/shots/c22td_03_war.png` |
+| Land "To its fight" off its formation (5381 d21), fleet "To its fight" (4877) | Same results as run 21 (ADR-775 keeps it). | `critic/c22_ft_5381_d21.json`, `critic/c22_fp2_4877.json` |
+| Wing mark on its hourly point (5557) | Same shape (250 m/px median 68 px, p90 586). The user's decision (ADR-771): moved to design objections. | `critic/c22_w_5557.json` |
+| Editor fleets and refusal (4877) | Same: placements hold, "no water of a sea is near the place". | `critic/c22_g_4877.json` |
+| God nukes (4219), zoom series (5861) | Same results; zoom series identical (element counts per step). | `critic/c22_a_4219.json`, `critic/c22_z_5861.json` |
+| History panel (7019 y20) | 3,652 of 3,652 events in 116 ms (run 21: 4,154 in 112 ms; a different world). | `critic/c22_hi_7019.json` |
+| Page watch of 8243, 10 years at Max | 27–53 s a year (53 s in year 6 while another suite ran), 59.8–60 fps, longest gap 83 ms; run 21: 31–41 s, gap 100 ms. | `critic/c22_lw_8243.json` |
 
 ## New in this run
 
 | Case | What happened | Evidence |
 |---|---|---|
-| **EX2: a click on an enemy counter at the front, aimed at its drawn place (4441, Germany v Poland, day 60, the 12 Polish formations nearest a German)** | At scale 12 (R20-B1's zoom; scale is px per map cell, so about 1,600 m/px at the equator, 40 ≈ 490 m/px, 120 ≈ 160 m/px): **HEAD** opens the clicked Polish formation's panel 5 of 12, a German panel 3 of 12, and the click selects a German 3 of 12. **Run 20's build:** 7 of 12, 0 German panels, 3 selections. At scale 40: 7 of 12 on both. At scale 120: 12 of 12 on both. So the cost ADR-769 names is real but small on this front: 3 clicks of 12 that showed a Polish panel now show a German one, and only where a German counter is within 14 px. Zooming in always reaches the enemy. | `critic/c21_ex2_4441.json`, `critic/c21_ex2old_4441.json`, `critic/shots/c21ex2_play_12_0.png` |
-| EX (first version, aimed at `formationPos`, not the drawn counter) | Overstated the cost (10 of 12 German panels) because at mid zoom the counter is not drawn at `formationPos`; superseded by EX2. Kept for the record. | `critic/c21_ex_4441.json` |
-| **SXG: the rule on new seeds and fronts, both builds** | **Japan v China (6827, day 45):** own clicks: panel = selection **12 of 12** (run 20's build 6 of 12). Enemy clicks: the clicked Chinese formation's panel 0 of 12 on both builds; a Japanese panel 7 of 12 (old 4). One enemy click opened Japanese division 382's panel with nothing selected: the `formationPick` fallback chose a Japanese counter that `formationAt`'s 14 px missed. **Italy v Yugoslavia (3917, day 45):** own **12 of 12** (old **1 of 12**); enemy panel the clicked one 4 of 12 (old 5), Italian panel 1 (old 0). | `critic/c21_sxg_6827_JAP.json`, `critic/c21_sxgold_6827_JAP.json`, `critic/c21_sxg_3917_ITA.json`, `critic/c21_sxgold_3917_ITA.json`, `critic/shots/c21sxg_6827_JAP_enemy_0.png`, `critic/shots/c21sxg_3917_ITA_own_0.png` |
-| **LW: seed 8243 watched 10 years at Max in the page (1600 × 900, world zoom)** | Each year took 31–41 s, at 59.9–60 fps, longest frame gap 17–100 ms, none over 500 ms. The probes ran beside 2–4 other browsers and 3 headless sims, so the times are a trend. 100 nations in 1939, 83 in 1948. Ten years in: Soviet Union, United States and France lead, China at war with Canada, Poland holding land in Canada, the United States taking Belgium's capital. As in earlier runs the late world is busy and global, if not historical. **The ticker's last three rows are the same "⚓ Carrier strike ashore: United States on Greece"** (run 20's identical-rows issue, on a new seed). My zoom series at the end found no engaged formation to aim at (`fight.engaged 0`); I suspect my probe's filter rather than the game and drew no finding from it. | `critic/c21_lw_8243.json`, `critic/c21_lw_8243.log`, `critic/shots/c21lw_8243_y10_world.png`, `critic/shots/c21lw_8243_y05_world.png` |
-| **OS2: a run 10 scenario file on HEAD's title** | The title reads it and offers it ("Critic standoff 8 · World, 1938 · 1 January 1938 · Start this scenario"). After Start it goes to `?failed=scenario`: "The scenario file could not be loaded. Choose it again." No reason is given, no console line (`game.tsx` swallows the error: `catch { location.replace(loadFailedUrl()) }`), and "Choose it again" cannot help, since the same file fails the same way. A file from `a3edf009` loads in 2.8 s. ADR-761 promises only that renamed files load. An old format failing is fair, but it should be refused at the preview, with the reason. | `critic/c21_os2_c10.json`, `critic/shots/c21os2_c10_stuck.png`, `critic/c21_os2_c20.json` |
+| **CB: balls against Classic, the same frozen moment at ten zooms** (7019, Germany v Poland, armour in contact) | T0: the flag chip becomes a ball with eyes; readable, the German ball keeps its black stripe. **T1: infantry markers wear a helmet over the flag's top third; German infantry read white-red like Poland's.** Classic's boxes are filled with the nation's colour; the balls' boxes are dark. T2 at 250–120 m/px: battalions are a few px, the most visible balls on screen are planes. T3 at 25–5 m/px: charming and clear for armour (tracks, barrel, the full German tricolour), less so for infantry. | `critic/c22_cb_7019.json`, `critic/shots/c22cb_7019_arm_*_{balls,classic}.png`, `critic/shots/c22cb_7019_arm_0025m_balls_crop.png`, `critic/shots/c22cb_7019_arm_0005m_balls.png` |
+| **CB2: what the pixels show at 10 m/px** | Every element on screen with its nation (`view.elementNation`); 10 clear German helmeted balls and 6 Polish. Below the brim: dark pixels 7.1 % of the disc (German) vs 4.7 % (Polish; eyes and outline make most of both); mean red (190, 5, 5) vs (195, 20, 55). Scarlet against crimson, on a 40 px ball, is the only difference. | `critic/c22_cb2_7019_GER_POL_10.json`, `critic/c22_cb2_7019_GER_POL_10_pixels.json`, `critic/shots/c22cb2_7019_GER_POL_10_0_annot.png` (yellow dot German, cyan Polish), `critic/shots/c22cb2_helmet_pair_GER_left_POL_right.png` |
+| CB3: a census of the 102 start flags under the helmet | A crude 4 × 4 colour signature of the visible disc: 20 pairs whose full flags differ but whose helmeted balls nearly match, among them **Germany–Austria** (neighbours), Germany–Yugoslavia, Netherlands–El Salvador. Germany–Poland is not in it (the metric is coarser than the eye: CB2 is the evidence for that pair). | `critic/c22_cb3_census.json` |
+| HU: losses at a real front (7019, day 12) | Of 1,007 elements in view: 723 whole, 221 cracked, 46 one plaster, 17 two. At 8 m/px the cracks and crossed plasters read well. A level-3 ball's two crossed plasters, under the eyes, read as an ✕ at a glance. | `critic/c22_hu_7019_d12.json`, `critic/shots/c22hu_7019_d12_8m_crops.png` |
+| PF: frame rate by look, 7019 y20 save, Max, three alternating pairs per zoom | No cost: 3000 m/px 60.1 / 60.1 fps; 1200: 60.0 / 59.6; 600: 60.1 / 60.1; 120: 41.0 / 42.1; 30: 45.4 / 43.8 (balls / Classic). The 52 fps CB read at 3000 m/px was taken beside three headless sims and is not repeated idle. | `critic/c22_pf_7019.json`, `critic/c22_cb_7019.json` |
+| SB: a sea battle (7019, France v Spanish Republic, hour 290) | Ships are balls on hulls with the flag; readable at 250 m/px, gunfire as before. | `critic/shots/c22sb_7019_250m_pair.png` |
+| **FW: Force war, Japan on its ally Germany (2207)** | Standing "Allied", button "Force war"; after: Japan out of the Anti-Comintern, at war with Germany, Italy and Albania (Italy's puppet); ticker "Japan broke its alliance with Germany", then "declared war". Italy's menu then reads "At war" with Offer peace. Works as ADR-780 says. The menu still offers "Propose alliance" to a nation one is at war with. | `critic/c22_fw_2207.json`, `critic/shots/c22fw_2207_A_menu.png` |
+| **FW2: Albania, Italy's puppet, forces war on Italy** | Standing "Your overlord", "Force war"; "Albania broke its puppet bond with Italy", war declared. **But Albania stays on Italy's side in Japan's war:** for at least 7 days it is a defender beside Italy and Germany against Japan while attacking Italy in its own war (`sameSideAsOverlord: 1` at day 1 and 7, and still at day 30 beside the Greek–Turkish war). | `critic/c22_fw2_2207.json`, `critic/shots/c22fw_2207_B_after.png` |
+| TD: war from the map on a phone | Works (above). The player's own new war is not among the two banners shown; it sits behind "+1". | `critic/shots/c22td_03_war.png` |
+| World dynamics, same seeds, run 21's commit against HEAD | Wars declared over the run: 1213 395 → 356, 3301 398 → 279, 7019 291 → 241. Cells changing hands: 3301 1.89 M → 1.07 M (−43 %), 1213 and 7019 −3 % and −10 %. Living nations at the end: 97 → 77, 85 → 72, 101 → 88; founded statelets 24 → 10, 18 → 9, 23 → 8. Revolts mixed: 119 → 133, 131 → 57, 104 → 74. Wars every year on every seed (4–10 at a time). ADR-776 did what it says (fewer statelets); the world is somewhat quieter. Three seeds, unpinned headless runs three at a time. | `critic/c22_dyn.json` |
 
 ## Dimensions
 
-### Map visuals and readability: 7 (unchanged)
+### Map visuals and readability: 6 (was 7)
 
-- **Tested:** fronts at scale 12 and 40 on three fronts (Poland, China, Czechoslovakia/Hungary), the world at year 1–10
-  of a new seed.
-- **Evidence:** `critic/shots/c21sxg_6827_JAP_enemy_0.png`, `critic/shots/c21sxg_3917_ITA_own_0.png`,
-  `critic/shots/c21lw_8243_y10_world.png`.
-- **What AoC does better:** readable contiguous blobs. Here fronts are still dense stacks of counters, dashed order
-  lines and plane glyphs (`c21sxg_3917_ITA_own_0.png`, the Vienna–Bratislava knot). The map code is unchanged.
+- **Tested:** the default look against Classic at ten zooms on one frozen front; pixel sampling of the balls; a census
+  of all start flags under the helmet; the world at year 10 of 8243; a sea battle.
+- **Evidence:** `c22cb_7019_arm_0600m_balls.png` / `_classic.png`, `c22cb_7019_arm_1200m_balls_crop.png`,
+  `c22g_4877_01_after_places.png` (Germany, Austria and Poland, three neighbours, all white-red helmets),
+  `c22k_2203_00_breakthrough_clicked.png`, `c22ph_portrait_06_selected.png` (the phone at day 60: German and Polish
+  markers alike), `c22cb2_helmet_pair_GER_left_POL_right.png`.
+- **What AoC does better:** AoC's armies are blobs and counters in the nation's own colour; one cannot mistake the
+  sides. The balls' charm is real at T3 (`c22cb_7019_arm_0005m_balls.png`), but at T1, where a player reads a front,
+  the default look tells sides apart worse than Classic did.
+- **Fix:** see R22-B1. Also: at T2 the planes are the largest balls on screen and read as units
+  (`c22cb_7019_arm_0250m_balls_crop.png`).
 
 ### Diplomacy, war, alliance, puppet, revolt depth: 7 (unchanged)
 
-- Same worlds (identity). The diplomacy select still opens on Afghanistan (`c21_u_1600_5557.json`, byte-identical).
+- **Better (verified):** Force war breaks an alliance, a puppet bond, a truce, and the menu says the standing ("Allied",
+  "Your overlord", "At war", "Neutral") (`c22_fw_2207.json`). God's diplomacy is in the menu.
+- **Wrong (verified):** a freed puppet fights on both sides of its old overlord for days (`c22_fw2_2207.json`). "Propose
+  alliance" is offered to an enemy at war.
+- **Why not up:** the new depth is the player's; the AI's diplomacy is unchanged (ADR-780), and the one new
+  inconsistency is in that new path.
+- **What AoC does better:** (text only) a nation leaving a bond simply leaves its wars; no co-belligerent enemies.
+- **Fix:** a broken puppet bond or alliance takes the nation out of the other's wars; hide "Propose alliance" at war.
 
 ### Emergent world dynamics over long runs: 7 (unchanged)
 
-- 60 of 60 world-years identical to run 20 (`critic/c21_ident.json`). New seed 8243 over 10 years: wars every year,
-  the map remade (`c21lw_8243_y10_world.png`). Run 20's reasons stand.
+- Three seeds on both commits (`c22_dyn.json`): fewer statelets and fewer wars, 4–10 wars at a time every year,
+  great powers shifting (3301: the Soviet Union 27.7 % → 31.5 % of land; 1213: the United States 20.2 % at y15). The
+  8243 watch: Germany at war with France in Brazil, Japan taking Communist China's capital, Italy holding Africa
+  (`c22lw_8243_y10_world.png`). Busy, global, not historical, as before. A difference this size on three seeds does
+  not move the score.
+- **What AoC does better:** long runs end in a few huge empires the player can follow; here 70–90 nations live at
+  year 30, a busy map with less of a story. **Fix:** none needed for this run's change; watch the quieter trend.
 
 ### God Mode: 7 (unchanged)
 
-- God tools, nukes and Breakthrough byte-identical or the same (`c21_q_6421.json`, `c21_a_4219.json`,
-  `c21_k_2203.json`). Still clipped on a phone (`c21_p.json`).
+- **Better (verified):** revolt told as a breakaway (`c22_q_6421.json`); Place at once for any nation from God's tab
+  (`c22_u_1600_5557.json`: 31 icons, arm and Cancel work); tools whole on a phone (`c22_p.json`).
+- **Still:** Breakthrough at peace refused silently from the bar unless God's tab is the one open
+  (`c22k2_overview.png`). Nukes unchanged (`c22_a_4219.json`).
+- **What AoC does better:** its tools act or say why at once, wherever clicked. **Fix:** show a refusal by the bar or
+  in the ticker, not only in God's tab.
 
 ### Editor and scenarios: 7 (unchanged)
 
-- Placement and the refusal on land hold (`c21_g_4877.json`). A current scenario file loads in 2.8 s. **New:** a run 10
-  file is offered and then refused without a reason (`c21_os2_c10.json`). This is minor and old content, so it moves no score.
+- Placements and the refusal on land hold (`c22_g_4877.json`); old files refused at the preview with the reason
+  (`c22_os2_c10.json`); a run 21 file loads (`c22_os2_c21.json`).
+- **What AoC does better:** painting a scenario is quicker (text). **Fix:** none new.
 
 ### Stats and history: 7 (unchanged)
 
-- History 4,154 events in 112 ms (`c21_hi_7019.json`). Export a/b still raw (`c21_dl_7019.csv`). Identical carrier rows
-  seen again on a new seed (`c21_lw_8243.json`).
+- Export names both nations (`c22_dl_7019.csv`); ticker groups repeats; air list names wings and bases. History
+  3,652 events in 116 ms (`c22_hi_7019.json`). These were defects; fixing them returns the score to parity, it does not
+  pass it.
+- **What AoC does better:** nothing measured here. **Fix:** none new.
 
 ### UI/UX and polish: 7 (unchanged)
 
-- **Better (verified):** R20-B1 is gone. Own clicks show the selected formation's panel on 36 of 36 clicks over three
-  fronts and on 12 of 12 taps, against 12 of 36 on run 20's build (4441: 5, 6827: 6, 3917: 1).
-- **Cost (verified, measured):** a click on an enemy counter beside one's own now opens one's own panel on 3 of 12 (4441)
-  and 7 of 12 (6827) clicks, against 0 and 4 before. On 6827 the clicked enemy's panel was never reachable at that zoom on
-  either build. One click opened an own panel with nothing selected, the old mismatch through
-  the fallback branch.
-- **Still wrong, byte-identical to run 20:** the portrait bar hides Map, Statistics, History, Editor and Settings and
-  clips God tools; 28 identical air rows; the wing mark off the planes close in; the diplomacy select on Afghanistan.
-- **Why not 8:** fixing a defect returns the score to where it should have been, and every other UI case is byte-identical.
-  AoC's UI shows no wrong unit and has no hidden buttons. I cannot claim parity-plus without new evidence that it was beaten.
+- **Better (verified):** the phone bar whole; war from the map on touch; enemy clicks open the enemy (4441: 0 German
+  panels of 12, was 3); the played nation in the title bar opens its panel; diplomacy lists start empty; Settings has
+  "Unit look" (`c22cb_7019_settings.png`).
+- **Worse or new (verified):** own counters in mixed stacks are harder to select (4441 7 of 12, was 12; 3917's knot 1 of
+  12) — the user's rule, so a design objection, but the player feels it; the phone bar now covers 24 % of the screen at
+  day 60 (was 18 %); a player's own new war hidden behind "+1" on the phone; Breakthrough's refusal unseen from the bar.
+- **Why not 8:** the gains are fixes of defects; AoC's UI has none of these costs.
+- **Fix:** a second click on a stack cycles it; the player's own war first among the phone's banners.
 
 ### Performance: 7 (unchanged)
 
-- **Tested:** a new seed 10 years at Max in the page: 31–41 s a year, ~60 fps, longest gap 100 ms, under heavy
-  contention (`c21_lw_8243.json`). The headless runs were three at once beside page probes, so they are a trend only.
-- **Why not up:** the sim is unchanged; run 20's paired figures stand.
+- Balls cost nothing measured (`c22_pf_7019.json`, three alternating pairs at five zooms). The page at Max: 60 fps at
+  world zoom for 10 years (`c22_lw_8243.json`); 41–45 fps at 120–30 m/px on a year-20 world with the sim at Max (both
+  looks). Headless mean tick 2.5–2.9 ms on HEAD vs 2.9–3.4 ms on run 21's commit for the same seeds — unpinned, three
+  at once, a trend only (`c22_headless_*.json`, `c21_headless_*.json`).
+- **What AoC does better:** nothing measured. **Fix:** none.
 
 ### Stability: 7 (unchanged)
 
-- **Held:** 60 of 60 world-years deterministic; no page error in any probe (`errors: []` throughout). Current saves and
-  scenarios load.
-- **Not more:** the broken format-1 save is still offered again; an old scenario file is offered and then refused
-  without a reason.
+- No page error in any probe (`errors: []` in every `c22_*.json`). Saves: run 21's continues; old ones refused with a
+  reason. The puppet on both sides is a state inconsistency, not a crash.
+- **What AoC does better:** no inconsistent war sides seen in its footage (text only). **Fix:** non-blocking 1.
 
 ### Semantic zoom to unit level: 8 (unchanged)
 
-- Zoom series unchanged (`c21_z_5861.json`). At scale 120 every enemy and own counter clicked opened its own panel
-  (`c21_ex2_4441.json`, 12 of 12), so the unit level stays inspectable close in.
+- The zoom series is identical to run 21's (`c22_z_5861.json`). At T3 the balls show one ball an element, not the
+  figures (ADR-777, the user's choice): still readable unit by unit with props and losses (`c22hu_7019_d12_8m_crops.png`).
+  The helmet defect is scored under map visuals, not twice.
+- **What AoC does better:** nothing at this level (AoC has none). **Fix:** R22-B1 for infantry balls.
 
 ### Naval warfare: 8 (unchanged)
 
-- Same worlds. Fleet "To its fight" holds (`c21_fp2_4877.json`).
+- Ships as balls on hulls are readable (`c22sb_7019_250m_pair.png`); fleet "To its fight" as before (`c22_fp2_4877.json`).
+  Sea battles per run: 203 → 252, 223 → 247, 183 → 180 on the three seeds.
+- **What AoC does better:** nothing here. **Fix:** none new.
 
 ### Tanks: 8 (unchanged)
 
-- `critic/c21_c_7019.json`. Code unchanged.
+- Armour balls keep the whole flag (no helmet) and wear treads and a barrel; the German tricolour is plain at 25 and 5
+  m/px (`c22cb_7019_arm_0025m_balls_crop.png`).
+- **What AoC does better:** nothing here. **Fix:** none new.
 
 ### Aircraft: 8 (unchanged)
 
-- Same worlds; the wing mark is unchanged (`c21_w_5557.json`).
+- Planes as winged balls; at T0–T2 they read as a swarm of units rather than aircraft (`c22cb_7019_arm_6000m_balls_crop.png`,
+  `c22cb_7019_arm_0120m_balls.png`; Classic's silhouettes in `_classic.png`). Air list fixed. Not enough to move the score.
+- **What AoC does better:** nothing here. **Fix:** a wing silhouette for planes in flight at T0–T2 in the ball look.
 
 ### AI nuclear use: 8 (unchanged)
 
-- Same worlds (identity). God nukes unchanged (`c21_a_4219.json`).
+- Bursts per run: 11 → 49 (1213), 49 → 13 (3301), 15 → 10 (7019): still used, a different world. God nukes as before.
+- **What AoC does better:** nothing here. **Fix:** none new.
 
 ## Blocking issues, in priority order
 
-**None.** R20-B1 is resolved (`c21_sx_4441.json`, `c21_sxt_4441.json`, `c21_sxg_*`). Nothing found this run would
-make a player quit or contradicts a claimed feature.
+1. **R22-B1: the infantry helmet hides the flag that names the ball; Germany, Austria and Poland read alike at T1–T3.**
+   The default look draws a T1 infantry marker and every T2/T3 infantry ball as a flag ball with a helmet over
+   uv.y < 0.3 of the flag. For horizontal tricolours that is the identifying stripe: German infantry (black-white-red)
+   and Austrian (red-white-red) show white over red, like Poland. Classic's marker box was filled with the nation's map
+   colour and told sides apart; the balls' box is dark. On the first war of the default scenario, at the zoom where a
+   front is read, the sides are told apart only by scarlet against crimson.
+   Evidence: `critic/shots/c22cb_7019_arm_1200m_balls_crop.png`, `critic/shots/c22cb_7019_arm_0600m_balls.png` vs
+   `_classic.png`, `critic/shots/c22g_4877_01_after_places.png`, `critic/shots/c22cb2_7019_GER_POL_10_0_annot.png`,
+   `critic/shots/c22cb2_helmet_pair_GER_left_POL_right.png`, `critic/c22_cb2_7019_GER_POL_10_pixels.json`,
+   `critic/c22_cb3_census.json`.
+   Fix: map the flag onto the part of the disc the helmet leaves (squash it below the brim), or draw the helmet as a
+   thin cap, or give every ball (or every T1 box) a rim or fill in the nation's map colour as Classic's box had; then
+   test with a pixel check that German and Polish infantry balls differ.
 
 ## Non-blocking issues
 
-1. **Enemy counters at the front are harder to inspect while playing (ADR-769's cost):** 3 of 12 (4441) and 7 of 12
-   (6827) clicks on enemy counters open one's own panel. On 6827 the clicked
-   Chinese formation's panel opened 0 of 12 times at scale 12 on both builds. Fix: when the drawn top of the click is an
-   enemy counter and the click selects nothing new, show the enemy's panel; or cycle the stack on a second click
-   (`c21_ex2_4441.json`, `c21_sxg_6827_JAP.json`).
-2. **The fallback can still show a panel that is not the selection:** one click on 6827 opened Japanese division 382's
-   panel with nothing selected (`formationPick` found it, `formationAt`'s 14 px did not) (`c21_sxg_6827_JAP.json`,
-   enemy click on 433).
-3. **An old scenario file is offered, then refused without a reason** (`c21_os2_c10.json`). Fix: validate at the
-   preview, and say why (old version) instead of "Choose it again".
-4. **Unchanged from run 20:** the wing mark and camera ride an hourly point; 28 identical air rows; phone bar and God
-   tools clipped; the diplomacy select defaults to Afghanistan; identical carrier rows in the ticker (seen again on
-   8243); export a/b raw; Breakthrough silent; God revolt told as a war; land "To its fight" off its own formation; the
-   broken format-1 save offered again; no war from the map on touch.
+1. **A freed puppet fights on both sides:** Albania, after Force war on Italy, stays Italy's co-belligerent against Japan
+   for 7+ days (`c22_fw2_2207.json`). Fix: a broken puppet bond takes the puppet out of the overlord's wars.
+2. **Breakthrough's refusal is shown only in God's tab** (`c22k2_overview.png`). Fix: show it by the bar, or as a ticker row.
+3. **The cost of ADR-773 (the user's rule, not a defect; see Design objections):** own counters in mixed stacks are
+   hard to select (4441: 7 of 12; 3917: 1 of 12; `c22_sx_4441.json`, `c22_sxg_3917_ITA.json`).
+4. **A level-3 hurt ball may be confused with a dead one:** its two crossed plasters sit on the cheeks under the eyes
+   and read as an ✕ at a glance (`c22hu_7019_d12_8m_crops.png`; a dead ball was not shot beside it).
+5. **Planes are the most visible balls at T0–T2** and read as units (`c22cb_7019_arm_0250m_balls_crop.png`).
+6. **On a phone the player's own new war is behind "+1"** (`c22td_03_war.png`); the bar now covers 24 % of the screen at
+   day 60 (`c22_ph.json`).
+7. **"Propose alliance" offered to a nation at war with you** (`c22_fw_2207.json`, Italy's menu after the war).
+8. **Unchanged:** land "To its fight" off its own formation (ADR-775), the editor fleets' long wait (`c22_g_4877.json`).
 
 ## Design objections (none blocking, no score lowered)
 
-- **Own first in a mixed stack (ADR-769):** it is the right default for orders. But a front is exactly where a player
-  wants to read the enemy, and there the own-first rule hides it. A second click on the same spot could
-  cycle to the enemy.
-- **Saves out of git (ADR-770):** the report's saved states are rebuilt "on demand" only if their seeds and commit
-  are rerun. Two of run 20's cases could not be re-run on this machine a day later.
-- Run 20's objections stand (follow by hourly stats, the AI taking God-placed units, gunmetal plates).
+- **What is drawn wins (ADR-773):** right for reading the enemy; but in a knot such as Vienna–Bratislava (3917) the
+  player cannot click its own division at T1 (1 of 12). A second click that cycles would keep both.
+- **One ball an element at T3 (ADR-777):** T3 loses the 64 figures of a battalion and the ranks in contact (ADR-80,
+  ADR-496); a ball cracks instead. The close tier now shows less than it did; that was a differentiator's strength.
+- **The wing mark on its hourly point (ADR-771):** unchanged, 250 m/px median 68 px off the planes (`c22_w_5557.json`).
+- Run 21's other objections stand (saves out of git; follow by hourly stats; gunmetal plates).
 
 ## Notes
 
-- **Evidence lost:** run 18–19 saves cited by run 20's cases (`c18_seed7019_y20.bin`, `c10_seed4219_y10.bin`, run 19's scenario file, run 19's 3301 y27 checkpoint) are gone, so three cases could not be re-run as they were. ADR-770 now keeps `*.bin` out of git, so this run's saves will go the same way.
-- **Observing arm not probed:** EX2's step that releases control never found the button, so "the observer's click is unchanged" rests on the diff (`n !== 0` guards the new branch), not on a probe.
-- Before/after was against run 20's own build directory (`critic/c20_dist`, `a3edf009`) on port 5398, not a worktree:
-  the source diff is one UI function, and the sim is shown identical by hashes.
-- Preview servers on 5398 and 5399 and every browser were stopped at the end.
+- **Not re-run as before:** EX2's observing arm still dies on `release-control` (now in the right-click menu,
+  PLAN 7.177); the observer's click rests on the diff. The editor probe ends on its 15-minute wait as in run 21.
+- The CB frame rate at 3000 m/px (52 vs 60 fps) was taken under contention and is superseded by PF.
+- Preview servers on 5298 and 5299 and every browser were stopped at the end.
 
 ## Strengths, verified
 
-- **The fix generalises:** own-click panels went from 1 of 12 to 12 of 12 on a front the builder never tested
-  (Italy, 3917), and from 6 to 12 on Japan's, with no change to the sim (60 of 60 hashes).
-- **Stable long play in the page:** a new seed 10 years at Max held ~60 fps with no frame gap over 100 ms
-  (`c21_lw_8243.json`).
+- **The countryballs cost nothing and look good close in:** no frame-rate difference at five zooms
+  (`c22_pf_7019.json`); at 5–25 m/px the armour, treads, eyes and losses are a real step past AoC's look
+  (`c22cb_7019_arm_0005m_balls.png`, `c22hu_7019_d12_8m_crops.png`).
+- **Run 21's list was worked through:** most of its non-blocking items are gone (phone bar, air rows, diplomacy select, ticker repeats, export, God revolt, old files, touch war, enemy clicks), each seen gone on the same case.

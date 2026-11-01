@@ -1,0 +1,59 @@
+{
+ "seed": 7019,
+ "tick": 290,
+ "at": [
+  1018.5,
+  373.5
+ ],
+ "views": [
+  {
+   "m": 250,
+   "look": "balls",
+   "tick": 288,
+   "el": 60,
+   "mpp": 250,
+   "shot": "critic/shots/c22sb_7019_250m_balls.png"
+  },
+  {
+   "m": 250,
+   "look": "classic",
+   "tick": 291,
+   "el": 56,
+   "mpp": 250,
+   "shot": "critic/shots/c22sb_7019_250m_classic.png"
+  },
+  {
+   "m": 60,
+   "look": "balls",
+   "tick": 293,
+   "el": 24,
+   "mpp": 60,
+   "shot": "critic/shots/c22sb_7019_60m_balls.png"
+  },
+  {
+   "m": 60,
+   "look": "classic",
+   "tick": 294,
+   "el": 24,
+   "mpp": 60,
+   "shot": "critic/shots/c22sb_7019_60m_classic.png"
+  },
+  {
+   "m": 25,
+   "look": "balls",
+   "tick": 296,
+   "el": 0,
+   "mpp": 25,
+   "shot": "critic/shots/c22sb_7019_25m_balls.png"
+  },
+  {
+   "m": 25,
+   "look": "classic",
+   "tick": 298,
+   "el": 0,
+   "mpp": 25,
+   "shot": "critic/shots/c22sb_7019_25m_classic.png"
+  }
+ ],
+ "errors": []
+}
