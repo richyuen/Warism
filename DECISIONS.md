@@ -174,6 +174,9 @@ placed for the played nation) to God's tab, placing for the panel's nation, play
 **Why.** The user's requests of 2026-10-31: the played nation one click from its panel, where the eye looks first;
 God's placing with God's other tools, and for any nation.
 **Consequences.** God Mode places units without a played nation. The bottom bar has room the label took.
+**Extended (the user's requests, 2026-10-31; PLAN 7.177):** Place at once is the first section of God's tab; the
+right-click menu opens on any nation with "Take control" last (alone when nothing is played and God Mode is off), and
+on the nation played "Release control".
 
 ### ADR-780 · 2026-10-31 · accepted (the user's decision) — PLAN 7.175: the player's and God's war breaks the bond in its way
 **Decision.** Declare war from the right-click menu, the Actions tab or God's tab no longer refuses for a truce, an

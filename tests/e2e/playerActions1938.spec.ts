@@ -130,8 +130,11 @@ test('a right-click on a nation\'s ground: declare war from its menu, and a refu
   expect(own, 'Polish ground on the screen').not.toBeNull();
   const menu = page.getByTestId('nation-menu');
 
-  // Own ground: no menu. A drag of the right button pans: no menu.
+  // Own ground: a menu of "Release control" alone (PLAN 7.177b; until then no menu); Escape closes
+  // it. A drag of the right button pans: no menu.
   await page.mouse.click(own[0], own[1], { button: 'right' });
+  await expect(menu.getByRole('menuitem')).toHaveText(['Release control']);
+  await page.keyboard.press('Escape');
   await expect(menu).toHaveCount(0);
   await page.mouse.move(lit[0], lit[1]);
   await page.mouse.down({ button: 'right' });

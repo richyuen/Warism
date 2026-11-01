@@ -174,10 +174,11 @@ test("God's diplomacy in the menu: for the selected nation with none played, for
   const overlordOf = (n: number): Promise<number> => page.evaluate(async (n) => (await window.__warsim!.sim.inspect()).nations.find((x) => x.id === n)?.overlord ?? -1, n);
   const menu = page.getByTestId('nation-menu');
 
-  // God off, nothing played: a right-click opens no menu.
+  // God off, nothing played: a right-click opens a menu of "Take control" alone (PLAN 7.177b).
   const pol = await groundOf(page, POL);
   await page.mouse.click(pol[0], pol[1], { button: 'right' });
-  await expect(menu).toHaveCount(0);
+  await expect(menu.getByRole('menuitem')).toHaveText(['Take control']);
+  await page.keyboard.press('Escape');
 
   // God on, nothing played, France selected: God's items, for France.
   await page.getByTestId('god-btn').click();
@@ -254,4 +255,47 @@ test('an Overview chip opens the nation\'s menu with "Go to country"', async ({ 
   await page.getByTestId('panel-allies').locator(`[data-testid=nation-chip][data-nation="${ITA}"]`).click();
   await expect(page.getByTestId('nation-menu-god')).toBeVisible();
   await expect(page.getByTestId('nation-menu-god-leave')).toBeVisible();
+});
+
+// PLAN 7.177 (the user's request): God's tab has Place at once first; the right-click menu has
+// "Take control" last (under God's items), or alone with nothing played, and "Release control" on
+// the nation played. Nothing played, God off: Poland's menu, Take control, plays Poland; its own
+// ground: Release control alone, which releases it; God on, playing Germany: Poland's menu ends
+// with Take control, under God's items, and it switches to Poland.
+test('the menu takes and releases control; Place at once first in God\'s tab', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  const POL = id('POL');
+  const played = () => page.evaluate(() => window.__warsim!.player!.nation.value);
+  const menu = page.getByTestId('nation-menu');
+  const pol = await groundOf(page, POL);
+
+  await page.mouse.click(pol[0], pol[1], { button: 'right' });
+  await expect(menu.getByRole('menuitem')).toHaveText(['Take control']);
+  await page.getByTestId('nation-menu-take').click();
+  await expect(menu).toHaveCount(0);
+  await expect.poll(played).toBe(POL);
+  await expect(page.getByTestId('player-label')).toContainText('Poland');
+
+  await page.mouse.click(pol[0], pol[1], { button: 'right' });
+  await expect(menu.getByRole('menuitem')).toHaveText(['Release control']);
+  await page.getByTestId('nation-menu-release').click();
+  await expect.poll(played).toBe(0);
+  await expect(page.getByTestId('player-label')).toHaveCount(0);
+
+  // God on, playing Germany: Take control last, under God's items.
+  await page.getByTestId('god-btn').click();
+  await page.evaluate((n) => window.__warsim!.view!.select(n), GER);
+  await page.getByTestId('take-control').click();
+  // God's tab: Place at once first.
+  await page.getByTestId('tab-god').click();
+  await expect(page.getByTestId('panel-god').locator(':scope > *').first()).toHaveAttribute('data-testid', 'god-place');
+  await page.evaluate(() => window.__warsim!.view!.select(0));
+  await page.mouse.click(pol[0], pol[1], { button: 'right' });
+  await expect(page.getByTestId('nation-menu-god')).toBeVisible();
+  await expect(menu.getByRole('menuitem').last()).toHaveText('Take control');
+  await page.getByTestId('nation-menu-take').click();
+  await expect.poll(played).toBe(POL);
 });

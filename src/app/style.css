@@ -1951,7 +1951,8 @@ button.unit-icon.on {
 .nation-menu-standing.standing-truce {
   color: var(--ui-accent);
 }
-/* God's items (PLAN 7.175e): under a line of their own. */
+/* God's items (PLAN 7.175e) and Take / Release control (PLAN 7.177b): under a line of their own. */
+.nation-menu-control,
 .nation-menu-god {
   display: flex;
   flex-direction: column;

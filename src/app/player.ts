@@ -128,13 +128,13 @@ export class PlayerControl {
   }
 
   /**
-   * Opens the menu of `nation` at page point (x, y): while playing, for another nation; with God
-   * Mode on, for any (PLAN 7.175e: it acts for the played nation, or with none for the selected one).
+   * Opens the menu of `nation` at page point (x, y), of any nation (PLAN 7.177b: it has Take or
+   * Release control last; PLAN 7.175e: with God Mode on it acts for the played nation, or with
+   * none for the selected one).
    */
   openMenu(nation: number, x: number, y: number): void {
     this.menuNotice.value = null;
-    const me = this.nation.value;
-    this.menu.value = nation !== 0 && ((me !== 0 && nation !== me) || this.hud.godMode.value) ? { nation, x, y } : null;
+    this.menu.value = nation !== 0 ? { nation, x, y } : null;
   }
 
   /** Opens the menu of `nation` from a chip of the Overview (PLAN 7.175f) at page point (x, y): always, "Go to country" first. */

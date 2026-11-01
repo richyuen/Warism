@@ -25274,3 +25274,14 @@ No rule changed and nothing on screen changed. One task came out of it.
   on French ground is French; playing Poland with Germany's panel, the division is German, Poland's count unchanged.
   `godUi1938`, `forceWar1938` green.
 - **Next:** PLAN 7.5, the critic run (`npm run check:review` first).
+
+## 2026-10-31 — PLAN 7.177: control from the menu; Place at once first (done)
+
+- **Built:** `PlaceSection` first in God's tab. `openMenu` opens on any nation; `NationMenu.control` is its last item,
+  under a line: "Take control" (`player.take`) of another nation, "Release control" (`player.release`) on the one
+  played; with nothing played and God Mode off it is the menu's one item. The phone's Diplomacy toggle shows whenever
+  there is a player control.
+- **AT:** e2e `forceWar1938` "the menu takes and releases control; Place at once first in God's tab" (new);
+  "God's diplomacy in the menu" and `playerActions1938`'s menu test changed with the rule (a right-click with nothing
+  played, and on own ground, now opens the control menu). `touchMenu1938`, `nationPanel1938`, `godUi1938` green.
+- **Next:** PLAN 7.5, the critic run.

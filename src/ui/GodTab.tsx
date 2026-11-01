@@ -111,6 +111,8 @@ export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, r
   );
   return (
     <section class="god-tab" data-testid="panel-god">
+      {/* Place at once first (PLAN 7.177a, the user's request). */}
+      {place ? <PlaceSection templates={place.templates} place={{ armed: place.armed, onArm: place.onArm, refusal }} /> : null}
       {refusal !== 0 ? (
         <div class="panel-warn" data-testid="god-refusal" role="status">
           {t('refusal.lead')} {t(REFUSAL_KEY[refusal as Exclude<Refusal, 0>] ?? 'refusal.noEffect')}
@@ -284,7 +286,6 @@ export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, r
           onCommand({ kind: 'collapseNation', nation: n });
         }, armKill)}
       </div>
-      {place ? <PlaceSection templates={place.templates} place={{ armed: place.armed, onArm: place.onArm, refusal }} /> : null}
     </section>
   );
 }

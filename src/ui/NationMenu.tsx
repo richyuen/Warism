@@ -48,6 +48,8 @@ export interface NationMenuProps {
   god: GodItems | null;
   /** "Go to country", first (PLAN 7.175f: the menu of an Overview chip): selects it and goes there. */
   onGoTo?: (() => void) | null;
+  /** Last (PLAN 7.177b): "Take control" of another nation, or "Release control" of the one played. */
+  control?: { release: boolean; onClick: () => void } | null;
 }
 
 /** The menu's width, CSS px, and its height for `items` buttons: it is kept inside the window. */
@@ -67,7 +69,7 @@ function placed(x: number, y: number, w: number, h: number): { left: string; top
  * war with it) and propose an alliance, the Actions tab's commands for that nation; with God Mode
  * on, God's diplomacy too (PLAN 7.175e).
  */
-export function NationMenu({ name, flagUrl, x, y, standing, war, onWar, player, god, onGoTo }: NationMenuProps) {
+export function NationMenu({ name, flagUrl, x, y, standing, war, onWar, player, god, onGoTo, control }: NationMenuProps) {
   const btn = (id: string, label: string, onClick: () => void, opts: { disabled?: boolean; title?: string | undefined; active?: boolean; force?: boolean } = {}) => (
     <button type="button" class={opts.active ? 'god-btn active' : 'god-btn'} role="menuitem" data-testid={id} data-force={opts.force === undefined ? undefined : opts.force ? 1 : 0} disabled={opts.disabled} title={opts.title} onClick={onClick}>
       {label}
@@ -90,7 +92,7 @@ export function NationMenu({ name, flagUrl, x, y, standing, war, onWar, player, 
       ].filter((b) => b !== null)
     : [];
   return (
-    <div class="nation-menu" data-testid="nation-menu" role="menu" style={placed(x, y, MENU_W, menuHeight(items.length + godItems.length))} onContextMenu={(e) => e.preventDefault()}>
+    <div class="nation-menu" data-testid="nation-menu" role="menu" style={placed(x, y, MENU_W, menuHeight(items.length + godItems.length + (control ? 1 : 0)))} onContextMenu={(e) => e.preventDefault()}>
       <div class="nation-menu-title">
         {flagUrl ? <img class="nation-menu-flag" src={flagUrl} alt="" /> : null}
         <span data-testid="nation-menu-name">{displayName(name)}</span>
@@ -106,6 +108,9 @@ export function NationMenu({ name, flagUrl, x, y, standing, war, onWar, player, 
           <div class="nation-menu-sub">{t('bar.god')}</div>
           {godItems}
         </div>
+      ) : null}
+      {control ? (
+        <div class="nation-menu-control">{btn(control.release ? 'nation-menu-release' : 'nation-menu-take', t(control.release ? 'player.release' : 'player.take'), control.onClick)}</div>
       ) : null}
     </div>
   );

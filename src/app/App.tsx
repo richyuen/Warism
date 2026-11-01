@@ -163,7 +163,7 @@ export function App({
         showEditor={hud.showEditor.value}
         onToggleEditor={stats ? () => hud.toggleEditor() : undefined}
         onCancel={cancel}
-        diplomacy={phone && player && (player.nation.value !== 0 || hud.godMode.value) ? { on: player.diplomacy.value, onToggle: () => player.toggleDiplomacy() } : null}
+        diplomacy={phone && player ? { on: player.diplomacy.value, onToggle: () => player.toggleDiplomacy() } : null}
       />
       {/* Before the panels of the centre, which are drawn over a row of banners that reaches them (PLAN 3.12Rh5). */}
       {stats ? (
@@ -440,6 +440,11 @@ export function App({
                         onLeave: () => player.menuCommand({ kind: 'leaveAlliance', nation: me }),
                       }
                     : null
+                }
+                control={
+                  m.nation === played
+                    ? { release: true, onClick: () => (player.closeMenu(), player.release()) }
+                    : { release: false, onClick: () => (player.closeMenu(), player.take(m.nation)) }
                 }
                 onGoTo={
                   m.chip

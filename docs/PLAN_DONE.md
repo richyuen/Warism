@@ -17008,3 +17008,26 @@ Of 7.176 (open in PLAN.md):
     AT: e2e: God on, nothing played, France's panel: God tab's Place on an infantry division, a click on French
     land makes a French division; playing Germany with Poland's panel open, a placement is Polish; the Actions
     tab has no "Place at once".
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.177 Control from the menu; Place at once first (the user's requests, 2026-10-31; ADR-781, extended).
+  - [x] 7.177a "Place at once" is the first section of God's tab. AT: e2e `forceWar1938` "the menu takes and
+    releases control": God's tab's first child is the placing.
+  - [x] 7.177b The right-click menu (and an Overview chip's) opens on any nation: "Take control" last, under God's
+    items if any, alone with nothing played and God Mode off; on the nation played, "Release control" in its place.
+    AT: e2e `forceWar1938`: nothing played, Poland's menu is Take control alone, which plays Poland; on its ground
+    Release control alone, which releases it; God on playing Germany, Poland's menu ends with Take control under
+    God's items, which switches to Poland. `playerActions1938`: own ground's menu is Release control alone.
