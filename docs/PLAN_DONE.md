@@ -17127,3 +17127,23 @@ Of 7.176 (open in PLAN.md):
   81beca11 and what in the frame is long; fix it without changing what is drawn.
   AT: `npm run bench -- G` on HEAD and on fbca2cc4 run back to back on this machine: HEAD's GPU T0 fps ≥ 0.9 × fbca2cc4's
   and its p95 ≤ 1.5 × fbca2cc4's; T2 not lower than 0.9 × fbca2cc4's. Evidence in `docs/evidence/7.181/`.
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.182 A new-game option to draw the 1938 start's alliances, guarantees and wars by the seed (the user's request,
+  ADR-785); puppets stay the scenario's. AT: `tests/unit/gameOptions.test.ts` (as many alliances of the same sizes and
+  unity, guarantees and wars; new members; independents only, one alliance each, led by the largest; wars between
+  land neighbours, no allies on opposite sides; puppets unchanged; same per seed) and `tests/e2e/gameOptions1938.spec.ts`
+  (`opt-diplomacy` from the settings panel, `diplo=random` in the URL, back to the scenario's).

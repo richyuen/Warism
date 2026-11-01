@@ -25393,3 +25393,14 @@ No rule changed and nothing on screen changed. One task came out of it.
 - Specs run by hand: `countryballs1938`, `counters1938`, `countersRest1938`, `sortiesSeen1938`, `markers1938`: 12
   of 12 (the planes' flag reads 50 of 62 at 1000 m/px, as on HEAD). New unit test `ball2dCache.test.ts`.
 - **Next:** PLAN 7.5, the DONE condition's runs again on the new code (bench; then check:review, critic).
+
+## 2026-11-01 — PLAN 7.182: the 1938 start's alliances, guarantees and wars drawn by the seed (ADR-785)
+
+- **The user's request:** an option to randomize the starting alliances and wars. 1938 starts with 7 alliances,
+  8 guarantees and 2 wars (`data/scenarios/1938/diplomacy.json`). Puppets kept, the user's choice.
+- **Change:** `GameOptions.diplomacy` (`?diplo=random`), the "Alliances and wars" row of the new-game form where the
+  scenario has diplomacy (title screen and settings panel), `randomDiplomacy` in `src/sim/gameOptions.ts`.
+- **Tests:** new unit test in `tests/unit/gameOptions.test.ts`; `tests/e2e/gameOptions1938.spec.ts` extended (run by
+  hand, green). Seeds 5–7 drew e.g. Germany–Czechoslovakia–Romania and Nicaragua–El Salvador–Honduras pacts, and
+  wars Denmark on Germany's pact, Poland on Lithuania, Brazil on Argentina (with its guarantor China).
+- **Next:** PLAN 7.5.

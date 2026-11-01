@@ -4,7 +4,8 @@ import type { Inspection } from '../../src/shared/protocol';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 
 // PLAN 1.39b1 AT: e2e starts games with each new-game option and verifies the effect in the sim
-// (looping map, random aggression, random traits, starting gold, combat-efficiency mode). The
+// (looping map, random aggression, random traits, starting gold, combat-efficiency mode, and the
+// start's alliances and wars drawn by the seed: PLAN 7.182). The
 // options are chosen in the settings panel; New game reloads with them in the URL.
 
 const inspect = (page: Page): Promise<Inspection> => page.evaluate(() => window.__warsim!.sim.inspect());
@@ -27,10 +28,11 @@ test('new-game options from the settings panel take effect in the sim', async ({
   await page.getByTestId('opt-aggression').selectOption('random');
   await page.getByTestId('opt-traits').selectOption('random');
   await page.getByTestId('opt-gold').selectOption('equal');
+  await page.getByTestId('opt-diplomacy').selectOption('random');
   await page.getByTestId('opt-ce').selectOption('static');
   await Promise.all([page.waitForURL(/looping=0/), page.getByTestId('settings-new-game').click()]);
   expect(page.url()).toMatch(/seed=77/);
-  for (const p of ['looping=0', 'aggr=random', 'traits=random', 'gold=equal', 'ce=static']) expect(page.url()).toContain(p);
+  for (const p of ['looping=0', 'aggr=random', 'traits=random', 'gold=equal', 'diplo=random', 'ce=static']) expect(page.url()).toContain(p);
   await ready(page);
 
   const s = await inspect(page);
@@ -43,6 +45,12 @@ test('new-game options from the settings panel take effect in the sim', async ({
   const byId = new Map(plain.nations.map((n) => [n.id, n]));
   expect(living(s).filter((n) => n.aggression !== byId.get(n.id)!.aggression).length).toBeGreaterThan(10);
   expect(living(s).filter((n) => n.incomeMult !== byId.get(n.id)!.incomeMult).length).toBeGreaterThan(10);
+  // As many alliances of the same sizes and wars as the scenario's, not its own (PLAN 7.182).
+  const pacts = (x: Inspection): string[] => x.alliances.map((a) => [...a.members].sort((p, q) => p - q).join(',')).sort();
+  const sizes = (x: Inspection): number[] => x.alliances.map((a) => a.members.length).sort();
+  expect(sizes(s)).toEqual(sizes(plain));
+  expect(pacts(s)).not.toEqual(pacts(plain));
+  expect(s.wars.length).toBe(plain.wars.length);
   // The map renders without wrap copies: far east of the map shows no land again.
   expect(await page.evaluate(() => window.__warsim!.view!.wrapsX)).toBe(false);
   // Zoomed out as far as it goes the view is wider than the map, and the points beside it are
@@ -72,12 +80,15 @@ test('new-game options from the settings panel take effect in the sim', async ({
   await page.getByTestId('opt-aggression').selectOption('scenario');
   await page.getByTestId('opt-traits').selectOption('scenario');
   await page.getByTestId('opt-gold').selectOption('scenario');
+  await expect(page.getByTestId('opt-diplomacy')).toHaveValue('random');
+  await page.getByTestId('opt-diplomacy').selectOption('scenario');
   await page.getByTestId('opt-ce').selectOption('scenario');
   await Promise.all([page.waitForURL((u) => !u.search.includes('looping')), page.getByTestId('settings-new-game').click()]);
   await ready(page);
   const back = await inspect(page);
   expect(back.settings.loopingMap).toBe(true);
   expect(living(back).map((n) => n.gold)).toEqual(living(plain).map((n) => n.gold));
+  expect(pacts(back)).toEqual(pacts(plain));
 });
 
 // PLAN 7.1b8: the map's size among the new-game options. The scenario's own (M) is the picker's

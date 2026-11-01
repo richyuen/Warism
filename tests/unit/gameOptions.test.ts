@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { navOf } from '../../src/sim/world';
+import { neighbourMap } from '../../src/sim/ai/strategic';
 import type { GameOptions } from '../../src/shared/gameOptions';
 import { assets1938 } from '../helpers/earth';
 
@@ -62,5 +63,56 @@ describe('new-game options (PLAN 1.39b1)', () => {
     s.step(48);
     t.step(48);
     expect(t.hash()).toBe(s.hash());
+  }, 120_000);
+
+  // PLAN 7.182: the start's alliances, guarantees and wars drawn by the seed; puppets the scenario's.
+  it('random diplomacy: as many alliances (same sizes and unity), guarantees and wars, new ones, the same per seed', () => {
+    const a = make(5, { diplomacy: 'random' });
+    const al0 = base.world.alliances;
+    const al = a.world.alliances;
+    const nc = a.world.nations.cols;
+    const shape = (l: typeof al.list): string[] => l.map((x) => `${x.members.length}/${x.unity}`).sort();
+    expect(shape(al.list)).toEqual(shape(al0.list));
+    expect(al.guarantees.length).toBe(al0.guarantees.length);
+    expect(a.world.wars.list.length).toBe(base.world.wars.list.length);
+    // Nothing of the scenario's left in the history: no alliance of it dissolved.
+    expect(al.past).toEqual([]);
+    // New members, every one an independent nation in one alliance only, led by its largest.
+    const sets = (l: typeof al.list): string[] => l.map((x) => [...x.members].sort((p, q) => p - q).join(',')).sort();
+    expect(sets(al.list)).not.toEqual(sets(al0.list));
+    const land = a.world.landCounts().owned;
+    const seen = new Set<number>();
+    for (const x of al.list) {
+      expect(x.nameKey).toBe('alliance.defensive');
+      for (const m of x.members) {
+        expect(seen.has(m)).toBe(false);
+        seen.add(m);
+        expect(nc.overlord[m]).toBe(0);
+        expect(land[m]!).toBeLessThanOrEqual(land[x.leader]!);
+      }
+    }
+    const free: number[] = [];
+    a.world.nations.forEach((n) => {
+      if (nc.living[n] === 1 && nc.overlord[n] === 0) free.push(n);
+    });
+    const half = [...free].sort((p, q) => land[q]! - land[p]! || p - q).slice(0, Math.ceil(free.length / 2));
+    for (const g of al.guarantees) {
+      expect(half).toContain(g.guarantor);
+      expect(g.guarantor).not.toBe(g.target);
+      expect(al.allied(g.guarantor, g.target)).toBe(false);
+      expect(nc.overlord[g.guarantor]).toBe(0);
+      expect(nc.overlord[g.target]).toBe(0);
+    }
+    // Wars between land neighbours; no allies on opposite sides.
+    const nb = neighbourMap(a.world);
+    for (const w of a.world.wars.list) {
+      const [att, def] = w.sides;
+      expect(nb.get(att[0]!)?.has(def[0]!)).toBe(true);
+      for (const x of att) for (const y of def) expect(al.allied(x, y)).toBe(false);
+    }
+    // Puppets as in the scenario.
+    base.world.nations.forEach((n) => expect(nc.overlord[n]).toBe(base.world.nations.cols.overlord[n]));
+    expect(make(5, { diplomacy: 'random' }).hash()).toBe(a.hash());
+    expect(make(6, { diplomacy: 'random' }).hash()).not.toBe(a.hash());
   }, 120_000);
 });

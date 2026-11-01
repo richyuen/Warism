@@ -4,6 +4,11 @@ export interface GameOptions {
   aggression?: 'scenario' | 'random';
   traits?: 'scenario' | 'random';
   gold?: 'scenario' | 'random' | 'equal';
+  /**
+   * The alliances, guarantees and wars at the start (PLAN 7.182): the scenario's, or as many drawn
+   * by the seed. Puppets stay the scenario's.
+   */
+  diplomacy?: 'scenario' | 'random';
   /** The random world only (PLAN 2.16): how many nations it starts with. */
   nations?: number;
   ceMode?: 'dynamic' | 'progressive' | 'static' | 'locked' | 'random';

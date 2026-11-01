@@ -167,6 +167,23 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-785 · 2026-11-01 · accepted (the user's request and decision) — PLAN 7.182: the start's alliances, guarantees and wars drawn by the seed; puppets kept
+**Decision.** A new-game option "Alliances and wars" (`GameOptions.diplomacy`, `?diplo=random`, `opt-diplomacy`; i18n
+key `settings.diplomacy`), offered where the scenario starts with alliances or wars (`ScenarioInfo.diplomacy`: the
+1938 world; not the random or toy world, which start with none). Random: `randomDiplomacy` (src/sim/gameOptions.ts)
+lets the scenario's alliances, guarantees and wars go without a trace (no alliance into `past`, so the history log
+shows none dissolved) and draws as many of each from the seed. The shape is the scenario's: 7 alliances of its sizes
+and unity, named "Defensive Pact", of independent nations grown from a first one through land neighbours (any
+unaligned nation when none borders them), led by the largest by land; 8 guarantees, each guarantor of the larger
+half of independent nations by land; 2 wars, each declared by `declareWar` (puppets, allies and guarantors called,
+bonds kept out) by an independent nation at peace on an independent land neighbour at peace. The default path is
+untouched (the pinned hash of seed 99 stands).
+**Why.** The user asked for a start option to randomize 1938's alliances and wars. Puppets (40, mostly empires'
+colonies and dominions) stay the scenario's: asked whether to reshuffle, free or keep them, the user chose keep.
+A guarantor drawn from any pair gave pledges such as Guatemala's to the CCP; the larger half keeps a pledge of weight.
+**Consequences.** The counts follow the scenario; a random count is a later option if wanted. A war declared at the
+start calls the attacker's realm and allies as any war: Britain's draws its empire in.
+
 ### ADR-784 · 2026-11-01 · accepted — PLAN 7.181: the overlay's countryballs drawn once and copied
 - **Context.** PLAN 7.5's DONE-condition bench on fbc9fbc3: GPU T0 135 fps, p95 21 ms, against fbca2cc4's 348 fps,
   p95 4.3 ms (budget 60, so in budget). The same code in the classic look: 346. A probe of T0 as bench G sets it

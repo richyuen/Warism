@@ -432,3 +432,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.179 The infantry helmet hides the flag that names the countryball (critic R22-B1, run 22 on […]
 - [x] 7.180 Planes in the ball look read as units (map visuals 6, needs 7; critic run 22's "Fix" and […]
 - [x] 7.181 The world view's frame rate (from PLAN 7.5's DONE-condition runs on fbc9fbc3; in budget, filed so it is […]
+- [x] 7.182 A new-game option to draw the 1938 start's alliances, guarantees and wars by the seed (the user's request, […]
