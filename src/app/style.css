@@ -669,16 +669,22 @@ textarea,
   width: 100%;
   margin-bottom: 0.4rem;
 }
-.bottombar > .bar-playing {
-  /* Last, so that it is what goes onto a line of its own (PLAN 7.4f25: at 1024 px it was cut to
-     its first letter); it shrinks only where that line is too short (PLAN 3.12Rh4). */
-  order: 1;
-  flex: 0 1 auto;
+/* The played nation in the top bar (PLAN 7.176a): a button that opens its panel; it shrinks with an
+   ellipsis where the bar is narrow (a phone's width). */
+.topbar-playing {
+  font: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: #ffe28a;
+  color: var(--ui-accent);
+}
+.topbar-playing:hover {
+  text-decoration: underline;
 }
 
 /* Player actions (PLAN 1.33b). */
@@ -1356,7 +1362,6 @@ input[type='range'] {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 .god-tools-name,
-.bottombar > .bar-playing,
 .formation-notice {
   color: var(--ui-accent);
 }

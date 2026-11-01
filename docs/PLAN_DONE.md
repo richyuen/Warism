@@ -16963,3 +16963,25 @@ Of 7.175 (open in PLAN.md):
     answer), with a "Go to country" item first, which selects it and flies there as the chip did. AT: e2e:
     playing Germany, Overview's ally chip Italy opens Italy's menu with Go to country; Go to country selects
     Italy and the camera flies there; God on, its God items as 7.175e.
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+Of 7.176 (open in PLAN.md):
+
+  - [x] 7.176a The top bar says "Playing {name} · {n} selected" in place of its tagline while a nation is played
+    (the tagline when none is), and the bottom bar's label is gone; a click on it opens the played nation's
+    panel (and selects it, as a click on its ground). AT: e2e: playing Germany, the top bar reads its label,
+    the bottom bar has none; a click opens Germany's panel; with nothing played the tagline; at phone width the
+    label in view and not cut.

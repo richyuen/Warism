@@ -30,8 +30,6 @@ export interface BottomBarProps {
   /** History log toggle (PLAN 1.34a). */
   showHistory?: boolean;
   onToggleHistory?: (() => void) | undefined;
-  /** The nation the player controls and its selected formations (PLAN 1.33a). */
-  playing?: { name: string; selected: number } | null;
   /** God Mode's map tools, a row of the bar's own while God Mode is on (PLAN 7.16b). */
   godTools?: ComponentChildren;
   /**
@@ -62,10 +60,10 @@ function speedLabels(): string {
  * Bottom bar (PLAN 1.8), in the user's order (ADR-763): Cancel when there is something to cancel,
  * Pause/Resume, speed, God Mode, map, Statistics, History, Editor, the date, Settings.
  */
-export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, mapMode, onMapMode, showStats, onToggleStats, godMode, onToggleGod, playing, showHistory, onToggleHistory, showEditor, onToggleEditor, showSettings, onToggleSettings, godTools, onCancel, diplomacy }: BottomBarProps) {
+export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, mapMode, onMapMode, showStats, onToggleStats, godMode, onToggleGod, showHistory, onToggleHistory, showEditor, onToggleEditor, showSettings, onToggleSettings, godTools, onCancel, diplomacy }: BottomBarProps) {
   const isMax = SPEED_LEVELS[speedLevel] === 'max';
-  // How far the bar's top is from the view's bottom, for what stands above it (PLAN 7.4f25): a
-  // played nation's label that does not fit goes onto a second line.
+  // How far the bar's top is from the view's bottom, for what stands above it (PLAN 7.4f25): the
+  // bar wraps onto rows where it is narrow.
   const bar = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = bar.current;
@@ -134,11 +132,6 @@ export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, ma
         <button type="button" class="bar-btn" data-testid="editor-btn" aria-pressed={showEditor} onClick={onToggleEditor}>
           {t('bar.editor')}
         </button>
-      ) : null}
-      {playing ? (
-        <span class="bar-playing" data-testid="player-label" title={t('player.playing', { name: playing.name, n: playing.selected })}>
-          {t('player.playing', { name: playing.name, n: playing.selected })}
-        </span>
       ) : null}
       <span class="bar-date bar-reserve" data-testid="date-label" data-reserve={widestDates(date.year)}>
         {t('date.format', { day: date.day, month: t(`month.${date.month}` as MessageKey), year: date.year })}

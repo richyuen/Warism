@@ -480,6 +480,7 @@
   "player.take": "Take control",
   "player.release": "Release control",
   "player.playing": "Playing {name} · {n} selected",
+  "player.open": "Open its panel",
   "panel.actions": "Actions",
   "act.proposeAlliance": "Propose alliance",
   "act.chooseNation": "Choose a nation…",

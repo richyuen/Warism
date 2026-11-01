@@ -34,11 +34,7 @@ Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
 - [ ] 7.176 The played nation in the title bar; God's placing in God's tab (the user's requests, 2026-10-31; ADR-781).
-  - [ ] 7.176a The top bar says "Playing {name} · {n} selected" in place of its tagline while a nation is played
-    (the tagline when none is), and the bottom bar's label is gone; a click on it opens the played nation's
-    panel (and selects it, as a click on its ground). AT: e2e: playing Germany, the top bar reads its label,
-    the bottom bar has none; a click opens Germany's panel; with nothing played the tagline; at phone width the
-    label in view and not cut.
+  - [x] 7.176a The top bar says "Playing {name} · {n} selected" in place of its tagline while a nation is played […]
   - [ ] 7.176b "Place at once" moves from the Actions tab to God's tab and places for the nation of the panel (the
     selected one), played or not; armed, the next clicks on the map place its units (a division on its land or
     any land as now, a fleet on the water, a wing at its airbase) until Escape, another tool or God Mode off.

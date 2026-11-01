@@ -25247,3 +25247,18 @@ No rule changed and nothing on screen changed. One task came out of it.
   chip's menu has God's items and Leave alliance. `nationPanel1938`'s chip step changed with the rule: the enemy chip
   opens its menu, Go to country selects it.
 - **Next:** PLAN 7.176a.
+
+## 2026-10-31 — PLAN 7.176a: the played nation in the title bar (done)
+
+- **Built:** `TopBar` takes `playing`: while a nation is played, "Playing {name} · {n} selected" stands in the
+  tagline's place as a button (`player-label`, title "Open its panel") whose click selects the played nation and
+  opens its panel (`hud.onSelectNation`); none played, the tagline. The bottom bar's label and its CSS (a line of its
+  own where the bar was full, PLAN 7.4f25) are gone; `.topbar-playing` shrinks with an ellipsis where the bar is
+  narrow.
+- **AT:** e2e `barNarrow1938` rewritten for the rule (its PLAN 7.4f25 checks kept where they still apply): at 1024 ×
+  600 the tagline with none played; playing Poland the label in the top bar, whole, none in the bottom bar, which is
+  as tall as with none played, the war banners above it; a click opens Poland's panel; at 1400 and at 390 × 844 the
+  label in view and not cut. `player1938`, `phoneLayout1938`, `ticker1938`, `playerActions1938` green (one
+  `player1938` test timed out at the page load in the batch and passed alone). Evidence
+  `docs/evidence/7.4/f25-bar-1024-playing.png` re-shot.
+- **Next:** PLAN 7.176b.

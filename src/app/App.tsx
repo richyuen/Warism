@@ -124,7 +124,13 @@ export function App({
   const lastOrder = formationTitle ? orderNews.filter((n) => n.id === hud.formation.value).at(-1) : undefined;
   return (
     <>
-      <TopBar />
+      <TopBar
+        playing={
+          player && player.nation.value !== 0
+            ? { name: nameOf(player.nation.value) ?? `#${player.nation.value}`, selected: player.selectedCount.value, onOpen: () => hud.onSelectNation(player.nation.value) }
+            : null
+        }
+      />
       <BottomBar
         date={hud.date()}
         speedLevel={hud.speedLevel.value}
@@ -158,7 +164,6 @@ export function App({
         onToggleEditor={stats ? () => hud.toggleEditor() : undefined}
         onCancel={cancel}
         diplomacy={phone && player && (player.nation.value !== 0 || hud.godMode.value) ? { on: player.diplomacy.value, onToggle: () => player.toggleDiplomacy() } : null}
-        playing={player && player.nation.value !== 0 ? { name: nameOf(player.nation.value) ?? `#${player.nation.value}`, selected: player.selectedCount.value } : null}
       />
       {/* Before the panels of the centre, which are drawn over a row of banners that reaches them (PLAN 3.12Rh5). */}
       {stats ? (
