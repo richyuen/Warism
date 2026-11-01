@@ -25148,5 +25148,6 @@ No rule changed and nothing on screen changed. One task came out of it.
 - The player's and God's Declare war breaks the truce, alliance (the attacker leaves) or puppet bond (the puppet goes
   free) in its way; overrun, at war and the rest still refused. The right-click menu and the Actions tab say the
   target's standing; "Force war" where a bond stands. Parts a (the sim's `forceWar`), b (the menus) and c (the
-  right-click menu's "Offer peace" greyed out while the enemy would refuse), before 7.5.
+  right-click menu's "Offer peace" greyed out while the enemy would refuse), d (a phone "Diplomacy" toggle), e (God's
+  diplomacy in the menu) and f (Overview's chips open the menu, with "Go to country"), before 7.5.
 - **Next:** PLAN 7.175a.

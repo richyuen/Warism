@@ -61,6 +61,26 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
     with its stats (`WarStat`). AT: unit test: the menu's rule agrees with `offerPeace` on wars of each case; e2e:
     playing Germany at war with Poland on day 1, the menu's "Offer peace" disabled with the lead's words; with
     the war's score set past the bar (God), enabled, and its click makes the peace.
+  - [ ] 7.175d A "Diplomacy" toggle on the phone layout (the user's request, 2026-10-31): there is no right-click
+    and a long press draws the selection box, so the menu had no way in. Shown at phone width while the menu has
+    something to show (7.175e); on, it lights, and the next tap on a nation opens its menu (no selection) and
+    turns it off; a second tap of it, or Cancel, turns it off. The desktop as it is. AT: e2e at 390 × 844:
+    playing Germany, Diplomacy then a tap on Poland opens Poland's menu, the toggle off after; Cancel with it on
+    turns it off and a tap selects as before.
+  - [ ] 7.175e God's diplomacy in the menu (the user's request and answers, 2026-10-31): with God mode on, the
+    menu acts for the played nation, or with none played for the selected one (its panel open); with neither,
+    it shows the clicked nation's standing alone. It opens so in God mode without a played nation too. Under
+    the player's items (one war button: `forceWar`), God's: Ally (create or join, as God's tab), Make puppet,
+    Annex, and at war Force peace and Fight to the death (the acting nation's side); Leave alliance only when
+    the acting nation is allied with the clicked one; no Donate gold (the God tab keeps it). AT: e2e: God on,
+    nothing played, France selected: a right-click on Poland shows the God items acting for France, Make
+    puppet makes Poland France's puppet; God on, playing Germany, a right-click on Italy (allied) shows Leave
+    alliance and it leaves; at war, Force peace ends the war; God off, no God items.
+  - [ ] 7.175f The Overview's nation chips (allies, overlord, puppets, enemies; the user's request, 2026-10-31):
+    a click opens the clicked nation's menu by the chip, as a right-click on its ground would (the user's
+    answer), with a "Go to country" item first, which selects it and flies there as the chip did. AT: e2e:
+    playing Germany, Overview's ally chip Italy opens Italy's menu with Go to country; Go to country selects
+    Italy and the camera flies there; God on, its God items as 7.175e.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 
