@@ -177,7 +177,8 @@ standing (At war, Allied, Puppet, Truce with its days, Neutral); the button read
 **Why.** The user's request: "war can be declared no matter what". The choices (both buttons; the attacker leaves,
 not the alliance dissolved; the puppet freed; overrun still refused) are the user's answers of 2026-10-31.
 **Consequences.** The AI's declarations keep `whyNotWar` (no AI path changes; the pin of seed 99 stays). A
-`WarRejected` row for a bond no longer comes from the player's menus.
+`WarRejected` row for a bond no longer comes from the player's menus. The right-click menu's "Offer peace" is
+greyed out while the enemy would refuse it, saying why (7.175c, the user's request; the Actions tab unchanged).
 
 ### ADR-779 · 2026-10-31 · accepted (the user's decision) — the gate's e2e stage runs a red test again alone; a known red passes
 **Decision.** `npm run check`'s e2e stage judges as its unit stage (ADR-423) and as `npm run check:review` judges a

@@ -53,6 +53,14 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
     test) reads Allied and "Force war", the click makes the war and Germany leaves the alliance; a nation in
     truce reads its days and its click makes the war; a neutral one reads Neutral and "Declare war"; God's
     war on two allies makes it.
+  - [ ] 7.175c The right-click menu's "Offer peace" (the user's request, 2026-10-31; the menu only, the Actions
+    tab as it is): greyed out while the enemy would refuse it (`offerPeace`: it fights to the death, or the
+    played side leads by less than `PEACE_ACCEPT_SCORE` and the enemy's exhaustion is not above
+    `PEACE_ACCEPT_EXHAUSTION`), its title saying why (to the death; the lead needed and the lead now, or their
+    exhaustion and the bar); enabled once they would accept. The war's exhaustion of each side goes to the page
+    with its stats (`WarStat`). AT: unit test: the menu's rule agrees with `offerPeace` on wars of each case; e2e:
+    playing Germany at war with Poland on day 1, the menu's "Offer peace" disabled with the lead's words; with
+    the war's score set past the bar (God), enabled, and its click makes the peace.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 
