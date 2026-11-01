@@ -4,6 +4,7 @@
  * war"). Read from the statistics message as the sim's `whyNotWar` and `bond` read the world: at
  * war, one the other's puppet, allies, one overlord's puppets or allied realms, a truce.
  */
+import { PEACE_ACCEPT_EXHAUSTION, PEACE_ACCEPT_SCORE, type PeaceVerdict } from '../shared/peace';
 import type { NationStat, WarStat } from '../shared/protocol';
 import { t } from './i18n';
 
@@ -44,4 +45,11 @@ export function standingOf(a: number, b: number, of: (id: number) => Who | undef
 export function standingText(s: Standing): string {
   if (s.kind === 'truce') return t(s.days === 1 ? 'standing.truce.one' : 'standing.truce', { n: s.days });
   return t(`standing.${s.kind}`);
+}
+
+/** Why the enemy would refuse peace (PLAN 7.175c: the right-click menu's "Offer peace" title); '' when accepted. */
+export function peaceWhy(v: PeaceVerdict): string {
+  if (v.why === 'death') return t('peace.refused.death');
+  if (v.why === 'lead') return t('peace.refused.lead', { need: PEACE_ACCEPT_SCORE, lead: `${v.lead >= 0 ? '+' : ''}${Math.round(v.lead)}`, worn: Math.round(v.exhaustion), bar: PEACE_ACCEPT_EXHAUSTION });
+  return '';
 }

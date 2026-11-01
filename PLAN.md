@@ -37,14 +37,7 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
   truce, alliance or puppet bond in its way instead of being refused. The AI keeps the bonds.
   - [x] 7.175a The sim: a `forceWar` command. Of the refusals of `whyNotWar` it breaks, in order: the attacker a […]
   - [x] 7.175b The menus: the right-click menu of a nation (`NationMenu`) says its standing with the played […]
-  - [ ] 7.175c The right-click menu's "Offer peace" (the user's request, 2026-10-31; the menu only, the Actions
-    tab as it is): greyed out while the enemy would refuse it (`offerPeace`: it fights to the death, or the
-    played side leads by less than `PEACE_ACCEPT_SCORE` and the enemy's exhaustion is not above
-    `PEACE_ACCEPT_EXHAUSTION`), its title saying why (to the death; the lead needed and the lead now, or their
-    exhaustion and the bar); enabled once they would accept. The war's exhaustion of each side goes to the page
-    with its stats (`WarStat`). AT: unit test: the menu's rule agrees with `offerPeace` on wars of each case; e2e:
-    playing Germany at war with Poland on day 1, the menu's "Offer peace" disabled with the lead's words; with
-    the war's score set past the bar (God), enabled, and its click makes the peace.
+  - [x] 7.175c The right-click menu's "Offer peace" (the user's request, 2026-10-31; the menu only, the Actions […]
   - [ ] 7.175d A "Diplomacy" toggle on the phone layout (the user's request, 2026-10-31): there is no right-click
     and a long press draws the selection box, so the menu had no way in. Shown at phone width while the menu has
     something to show (7.175e); on, it lights, and the next tap on a nation opens its menu (no selection) and

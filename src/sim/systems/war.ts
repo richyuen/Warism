@@ -59,6 +59,7 @@
 import { isDayStart } from '../../shared/calendar';
 import { Refusal } from '../../shared/commands';
 import { Bond, EventKind } from '../../shared/events';
+import { PEACE_ACCEPT_EXHAUSTION, peaceVerdict } from '../../shared/peace';
 import { Terrain } from '../../shared/terrain';
 import { annexNation, makePuppet, releasePuppet } from './puppets';
 import { leaveAlliance } from './alliances';
@@ -104,10 +105,8 @@ export const SMALL_STATE_KM2 = 8500;
  * statelets come together again instead of living on as rumps.
  */
 export const STATELET_KM2 = 50_000;
-/** Player peace offers (PLAN 1.33b) are accepted when the offering side leads by this score… */
-export const PEACE_ACCEPT_SCORE = 25;
-/** …or the other side's exhaustion exceeds this (the AI's stalemate threshold). */
-export const PEACE_ACCEPT_EXHAUSTION = 40;
+// Player peace offers (PLAN 1.33b): accepted by `peaceVerdict` (shared, the menu's rule too: PLAN 7.175c).
+export { PEACE_ACCEPT_EXHAUSTION, PEACE_ACCEPT_SCORE } from '../../shared/peace';
 /**
  * A side gains ground while it has held more of the other's land than ever before within this many
  * days (PLAN 7.27c): a winner that gains, not worn, refuses a suit by exhaustion.
@@ -552,9 +551,7 @@ export function offerPeace(world: World, warId: number, from: number): boolean {
   if (!war) return false;
   const side = war.sides[ATTACKERS]!.includes(from) ? ATTACKERS : war.sides[DEFENDERS]!.includes(from) ? DEFENDERS : -1;
   if (side < 0) return false;
-  const other = 1 - side;
-  const lead = side === ATTACKERS ? war.score : -war.score;
-  if (war.fightToDeath[other] || (lead < PEACE_ACCEPT_SCORE && war.exhaustion[other]! <= PEACE_ACCEPT_EXHAUSTION)) {
+  if (!peaceVerdict(war.score, war.exhaustion, war.fightToDeath, side === ATTACKERS ? 0 : 1).accepted) {
     world.out.emit(world.tick, EventKind.PeaceRejected, war.id, from, NaN, NaN);
     return false;
   }

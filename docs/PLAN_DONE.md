@@ -16859,3 +16859,28 @@ Of 7.175 (open in PLAN.md):
     test) reads Allied and "Force war", the click makes the war and Germany leaves the alliance; a nation in
     truce reads its days and its click makes the war; a neutral one reads Neutral and "Declare war"; God's
     war on two allies makes it.
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+Of 7.175 (open in PLAN.md):
+
+  - [x] 7.175c The right-click menu's "Offer peace" (the user's request, 2026-10-31; the menu only, the Actions
+    tab as it is): greyed out while the enemy would refuse it (`offerPeace`: it fights to the death, or the
+    played side leads by less than `PEACE_ACCEPT_SCORE` and the enemy's exhaustion is not above
+    `PEACE_ACCEPT_EXHAUSTION`), its title saying why (to the death; the lead needed and the lead now, or their
+    exhaustion and the bar); enabled once they would accept. The war's exhaustion of each side goes to the page
+    with its stats (`WarStat`). AT: unit test: the menu's rule agrees with `offerPeace` on wars of each case; e2e:
+    playing Germany at war with Poland on day 1, the menu's "Offer peace" disabled with the lead's words; with
+    the war's score set past the bar (God), enabled, and its click makes the peace.

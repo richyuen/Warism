@@ -1,8 +1,9 @@
 import type { Refusal } from '../shared/commands';
+import type { PeaceVerdict } from '../shared/peace';
 import { REFUSAL_KEY } from './GodTab';
 import { t } from './i18n';
 import { displayName } from './NationPanel';
-import { standingText, type Standing } from './standing';
+import { peaceWhy, standingText, type Standing } from './standing';
 
 export interface NationMenuProps {
   /** The nation's name, and its flag's image. */
@@ -17,6 +18,8 @@ export interface NationMenuProps {
   allied: boolean;
   /** Its standing with the played nation (PLAN 7.175b): said under its name; a bond makes the war button "Force war". */
   standing: Standing;
+  /** At war: whether the enemy would accept peace (PLAN 7.175c); refused, "Offer peace" is greyed out, its title why. */
+  peace?: PeaceVerdict | null;
   onWar: () => void;
   onPeace: (war: number) => void;
   onAlly: () => void;
@@ -38,7 +41,7 @@ function placed(x: number, y: number, w: number, h: number): { left: string; top
  * (`PlayerControl.openMenu`): declare war on it (or offer peace in the war with it) and propose
  * an alliance, the Actions tab's commands for that nation.
  */
-export function NationMenu({ name, flagUrl, x, y, war, allied, standing, onWar, onPeace, onAlly }: NationMenuProps) {
+export function NationMenu({ name, flagUrl, x, y, war, allied, standing, peace, onWar, onPeace, onAlly }: NationMenuProps) {
   return (
     <div class="nation-menu" data-testid="nation-menu" role="menu" style={placed(x, y, MENU_W, MENU_H)} onContextMenu={(e) => e.preventDefault()}>
       <div class="nation-menu-title">
@@ -53,7 +56,7 @@ export function NationMenu({ name, flagUrl, x, y, war, allied, standing, onWar, 
           {t(standing.bond ? 'act.forceWar' : 'god.war')}
         </button>
       ) : (
-        <button type="button" class="god-btn" role="menuitem" data-testid="nation-menu-peace" onClick={() => onPeace(war)}>
+        <button type="button" class="god-btn" role="menuitem" data-testid="nation-menu-peace" disabled={peace ? !peace.accepted : false} title={peace ? peaceWhy(peace) : undefined} onClick={() => onPeace(war)}>
           {t('act.offerPeace')}
         </button>
       )}

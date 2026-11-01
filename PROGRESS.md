@@ -25189,3 +25189,18 @@ No rule changed and nothing on screen changed. One task came out of it.
   press a war button (`godPanelMore`, `sound`, `ticker`, `touchMenu`) green unchanged. Evidence
   `docs/evidence/7.175/b-menu-allied.png`.
 - **Next:** PLAN 7.175c.
+
+## 2026-10-31 — PLAN 7.175c: "Offer peace" greyed out while refused (done)
+
+- **Built:** `shared/peace.ts`: `peaceVerdict` (with `PEACE_ACCEPT_SCORE` and `PEACE_ACCEPT_EXHAUSTION`, moved there
+  and re-exported by `war.ts`), the one rule of the sim's `offerPeace` and of the menu. Each war's exhaustion goes to
+  the page (`WarStat.exhaustion`). The right-click menu's "Offer peace" is disabled while the enemy would refuse, its
+  title why (`peaceWhy`: "They fight to the death…", or "lead the war score by 25 (now +12), or wear them out (war
+  weariness 30 of 40)"). The Actions tab's peace buttons unchanged (the user's request: the menu only).
+- **AT:** `peaceVerdict.test.ts`: on eight wars (the bar's edges, the enemy's exhaustion at and past 40, either side
+  to the death) the verdict is what `offerPeace` does; the words. e2e `forceWar1938` "Offer peace greyed out":
+  playing Germany at war with Poland on day 1, disabled with the lead's words; German control painted about Warsaw
+  (God's brush) a day at a time until Germany leads by 25, the war going on: enabled, no title, its click the peace.
+  First run: the build had stopped at a test importing a `.tsx` (no jsx in the tests' config), so the page had no
+  exhaustion and read every offer accepted; `peaceWhy` moved to `ui/standing.ts`.
+- **Next:** PLAN 7.175d.

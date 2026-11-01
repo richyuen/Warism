@@ -104,3 +104,57 @@ test("God's war on two allies makes it: the United Kingdom on France", async ({ 
   await expect.poll(() => atWar(page, ENG, FRA)).toBe(true);
   await expect.poll(() => allianceOf(page, ENG)).toBeNull();
 });
+
+// PLAN 7.175c (the user's request): the right-click menu's "Offer peace" is greyed out while the
+// enemy would refuse, its title saying why; once the war is won enough (German control painted
+// over Polish land with God's brush, a day at a time, until Germany leads by the bar), it is
+// enabled and its click makes the peace.
+test('"Offer peace" greyed out while refused, saying why; enabled once they would accept, and its click the peace', async ({ page }) => {
+  test.setTimeout(240_000);
+  const POL = id('POL');
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.waitForFunction((n) => window.__warsim!.view!.formationsOf(n).length > 3, POL, { timeout: 60_000 });
+  await page.evaluate((n) => window.__warsim!.view!.select(n), GER);
+  await page.getByTestId('take-control').click();
+  await page.evaluate(() => window.__warsim!.view!.select(0));
+  await page.evaluate(([g, p]) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: g!, defender: p! }, true), [GER, POL]);
+  await expect.poll(() => atWar(page, GER, POL)).toBe(true);
+
+  // Day one: an even war. Greyed out, and why.
+  const pol = await groundOf(page, POL);
+  await page.mouse.click(pol[0], pol[1], { button: 'right' });
+  const peace = page.getByTestId('nation-menu-peace');
+  await expect(peace).toBeDisabled();
+  await expect(peace).toHaveAttribute('title', /^They refuse: lead the war score by 25 \(now [+-]?\d+\), or wear them out/);
+  await page.keyboard.press('Escape');
+
+  // German control over Warsaw and about it, wider a day at a time, until Germany leads by 25.
+  const warsaw = (await page.evaluate(async (p) => (await window.__warsim!.sim.inspect(true)).cities.find((c) => c.capitalOf === p)!, POL))!;
+  const score = (): Promise<number> => page.evaluate(([g, p]) => window.__warsim!.hud.stats.value!.wars.find((w) => w.attackers.includes(g!) && w.defenders.includes(p!))?.score ?? NaN, [GER, POL]);
+  for (let r = 2; r <= 12 && (await score()) < 25; r += 2) {
+    await page.evaluate(([g, x, y, r]) => window.__warsim!.sim.command({ kind: 'paintControl', nation: g!, x: x!, y: y!, r: r! }, true), [GER, warsaw.x, warsaw.y, r]);
+    await page.evaluate(async () => {
+      const w = window.__warsim!;
+      const t = (await w.sim.step(24)).tick;
+      await new Promise<void>((done) => {
+        const go = (): void => void (w.view!.lastTick >= t ? done() : setTimeout(go, 5));
+        go();
+      });
+    });
+    await page.waitForTimeout(300);
+  }
+  expect(await score(), 'Germany leads by the bar').toBeGreaterThanOrEqual(25);
+  expect(await atWar(page, GER, POL), 'the war goes on (no capitulation)').toBe(true);
+
+  // Enabled, with no reason; its click makes the peace. (Polish ground found again: the first
+  // spot may be under German control now, Germany's to the menu.)
+  const free = await groundOf(page, POL);
+  await page.mouse.click(free[0], free[1], { button: 'right' });
+  await expect(page.getByTestId('nation-menu-name')).toHaveText('Poland');
+  await expect(peace).toBeEnabled();
+  await expect(peace).not.toHaveAttribute('title', /\S/);
+  await peace.click();
+  await expect.poll(() => atWar(page, GER, POL)).toBe(false);
+});

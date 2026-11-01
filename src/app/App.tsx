@@ -4,6 +4,7 @@ import { MapLegend } from '../ui/MapLegend';
 import { MapTooltip } from '../ui/MapTooltip';
 import { NationMenu, NationMenuNotice } from '../ui/NationMenu';
 import { standingOf } from '../ui/standing';
+import { peaceVerdict } from '../shared/peace';
 import { FormationPanel } from '../ui/FormationPanel';
 import { HistoryPanel } from '../ui/HistoryPanel';
 import { StatsChart } from '../ui/StatsChart';
@@ -398,6 +399,7 @@ export function App({
                 war={war ? war.id : null}
                 allied={mine !== undefined && target.alliance?.id === mine}
                 standing={standingOf(me, m.nation, (id) => byId.get(id), stats.wars)}
+                peace={war ? peaceVerdict(war.score, war.exhaustion, war.toDeath, war.attackers.includes(me) ? 0 : 1) : null}
                 onWar={() => player.menuCommand({ kind: 'forceWar', attacker: me, defender: m.nation })}
                 onPeace={(w) => player.menuCommand({ kind: 'offerPeace', war: w, from: me })}
                 onAlly={() => player.menuCommand({ kind: 'proposeAlliance', from: me, to: m.nation })}
