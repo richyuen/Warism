@@ -182,7 +182,9 @@ untouched (the pinned hash of seed 99 stands).
 colonies and dominions) stay the scenario's: asked whether to reshuffle, free or keep them, the user chose keep.
 A guarantor drawn from any pair gave pledges such as Guatemala's to the CCP; the larger half keeps a pledge of weight.
 **Consequences.** The counts follow the scenario; a random count is a later option if wanted. A war declared at the
-start calls the attacker's realm and allies as any war: Britain's draws its empire in.
+start calls the attacker's realm and allies as any war: Britain's draws its empire in. Each drawn war is a
+`WarDeclared` row of the history log on the first day (the scenario's own wars have none): the player is told of
+wars that no history book gives; the drawn alliances have no row.
 
 ### ADR-784 · 2026-11-01 · accepted — PLAN 7.181: the overlay's countryballs drawn once and copied
 - **Context.** PLAN 7.5's DONE-condition bench on fbc9fbc3: GPU T0 135 fps, p95 21 ms, against fbca2cc4's 348 fps,

@@ -36,7 +36,7 @@ export interface SimInit {
   seed: number;
   /** Required for '1938' and 'random'. In the worker, `init` loads them from `assetBase` when absent. */
   assets?: ScenarioAssets;
-  /** New-game options (PLAN 1.39b1): looping map, random aggression/traits/gold, CE mode. */
+  /** New-game options (PLAN 1.39b1): looping map, random aggression/traits/gold/diplomacy, CE mode. */
   options?: GameOptions;
 }
 

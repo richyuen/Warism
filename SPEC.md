@@ -3364,7 +3364,8 @@ on screen.
   ring and the click, ADR-241), what a view is sent (`inBbox`) or rendering; a world's build
   wraps as its map does), aggression (random 0..100), traits (1–3 random, exclusions respected → income and
   manpower multipliers and aggression bias), starting gold (random 0.25–2× or equal = median),
-  CE mode, and for the random world the number of nations (`nations`, §3.4). Applied once at
+  CE mode, the start's alliances, guarantees and wars as the scenario's or drawn by the seed (`diplomacy`,
+  PLAN 7.182, ADR-785; puppets stay), and for the random world the number of nations (`nations`, §3.4). Applied once at
   init from the seed; carried in the URL
   (`looping=0&aggr=random&traits=random&gold=random|equal&ce=…&nations=N`). The type is
   `GameOptions` (`src/shared/gameOptions.ts`).
@@ -3388,7 +3389,7 @@ on screen.
   banners reach above a panel's foot (eight banners in a view 1,100 px wide), the panel is
   drawn over them and takes the pointer.
 - **Seeds & randomisation**: seed field (shareable), random-seed button, options
-  (randomise aggression, traits, starting gold, efficiency mode).
+  (randomise aggression, traits, starting gold, alliances and wars, efficiency mode).
 
 ---
 
