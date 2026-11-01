@@ -17081,3 +17081,27 @@ Of 7.176 (open in PLAN.md):
   10 m/px and at 600 m/px a band just below the brim is the flag's top colour (within 60 on ≥ 0.4 of it) on ≥ 80 %
   of German balls (black) and of Polish balls (white), no Polish band ≥ 0.2 black (on `4a977fdb` German 0 of 8
   and 0 of 15); the other countryball specs green.
+
+<!-- moved 2026-11-01 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.180 Planes in the ball look read as units (map visuals 6, needs 7; critic run 22's "Fix" and
+  aircraft's): at T2 the planes are the largest balls on the screen
+  (`critic/shots/c22cb_7019_arm_0250m_balls_crop.png`). A wing silhouette for planes in flight at T0–T2 in
+  the ball look, in the nation's colours.
+  AT (re-scoped with the user's choice, ADR-783: silhouette and a small ball): e2e `countryballs1938` "planes in
+  the ball look" on seed 7019 at 250 m/px, the default look: of the planes clear of the others and of the name
+  tags (≥ 3), every ball no larger than an infantry ball (radius 2.25 px; 6.5 on `4a977fdb`), and on ≥ 80 % both
+  wings in the nation's colour, a ball of its flag, the plane's colour out of its ball ≥ its ball's area;
+  `planesT3_1938`, `sortiesSeen1938` green.

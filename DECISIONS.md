@@ -167,7 +167,25 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
-### ADR-782 · 2026-11-01 · proposed (the user's decision) — PLAN 7.179: the flag whole below the helmet's brim; the AT's bar is the top stripe, not a mean colour
+### ADR-783 · 2026-11-01 · accepted (the user's decision) — PLAN 7.180: a plane in the ball look is its silhouette with a small ball on it
+- **Context.** Critic run 22 (map visuals 6): at T2 the planes were the largest balls on the screen and read as units.
+  At 250 m/px an infantry ball is 4.5 px across (radius 2.25); a plane's ball was 0.5 of its 13–19 px span (radius
+  6.5–9.5) with grey oval wings. ADR-777 has every level a ball (the user's choice), planes too.
+- **Options put to the user:** (a) Classic's silhouette in the nation's colour at its span, a flag ball no larger than
+  an infantry ball on it; (b) the same shrunk until the whole plane is under an infantry ball's area (~8 px span:
+  the filed bar, which even Classic's plane, ~38 px² against ~16, fails); (c) today's winged ball, smaller.
+  **Chosen: (a)** (2026-11-01).
+- **Decision.** In the ball look `vee` draws the plane's silhouette (as Classic, in its nation's colour) and a ball of
+  its flag on it at PLANE_BALL (0.17) of a fighter's span at the plane's zoom: a bomber's plane is larger, its ball a
+  fighter's. At every zoom, so nothing pops at T2/T3. `ball2d` loses its wings prop (no other user).
+- **AT, re-scoped with the choice:** each plane's ball no larger than an infantry ball; both wings in the nation's
+  colour; a ball of its flag; the plane's colour out of its ball at least the ball's area (the plane, not the ball,
+  is most of it). The filed "width ≥ 2 × height" does not fit a plane's outline, as long nose to tail as tip to tip.
+- **Also:** `countryballs1938`'s eye check read once at a wall-clock moment, and a blink (by wall time) shut 3–4 of
+  13 balls' eyes on 4 of 7 runs with this change, 0 of 7 without: it now reads the balls twice, 0.5 s apart, and a
+  ball's eyes count white in either read (a blink is 0.18 s in 3–6 s). 13 of 13 on 4 of 4 runs.
+
+### ADR-782 · 2026-11-01 · accepted (the user's decision, option a) — PLAN 7.179: the flag whole below the helmet's brim; the AT's bar is the top stripe, not a mean colour
 **Decision.** An infantry ball's flag is drawn whole below the helmet's brim (`HELMET_FLAG_TOP`, `flagUv`; the
 shader blends it in with the props' fade, so a small ball with no helmet keeps its whole flag; `ball2d` squashes it
 the same way for the T1 markers and T0 counters). PLAN 7.179's AT is corrected from "the mean colour of German and

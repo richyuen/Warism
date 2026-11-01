@@ -25330,3 +25330,21 @@ No rule changed and nothing on screen changed. One task came out of it.
   follows `flagUv` for infantry (worst point 2 at 15 m/px, 13 at 100 m/px, limit 40). `countryballs1938` 6 of 6,
   `settings1938` green. Evidence `docs/evidence/7.179/helmet-10m.png`, `helmet-600m.png`.
 - **Next:** PLAN 7.180.
+
+## 2026-11-01 — PLAN 7.180: planes in the ball look are their silhouette with a small ball (map visuals 6; done, ADR-783)
+
+- **Decision:** ADR-782 accepted as option (a) (the user, 2026-11-01): 7.179 stays ticked.
+- **Cause:** a plane's ball was 0.5 of its span (radius 6.5 px at T2's 13 px) with grey oval wings; an infantry ball
+  at 250 m/px is radius 2.25 px, so the planes were the largest balls on the screen (critic run 22).
+- **Built (the user's choice, ADR-783):** `vee` draws Classic's silhouette in the nation's colour and a flag ball on
+  it at PLANE_BALL 0.17 of a fighter's span (a bomber's plane larger, its ball a fighter's), at every zoom. The
+  `wings` prop of `ball2d` is gone (no other user).
+- **AT:** e2e `countryballs1938` "planes in the ball look" (seed 7019, 250 m/px): 9 planes clear of the others and the
+  tags; ball radius 2.21 px at most against the infantry's 2.25; 9 of 9 both wings in the colour, 9 of 9 a flag
+  ball, 9 of 9 the plane's colour out of the ball ≥ the ball's area (least 1.30). The far-out test's air part follows
+  the rule: 50 of 62 a flag ball, 52 of 62 both wings in their colour at 1000 m/px. `planesT3_1938`,
+  `sortiesSeen1938`, `settings1938` green.
+- **Flaky eye check:** `countryballs1938`'s T2/T3 test read the eyes at one wall-clock moment; with this change a blink
+  shut 3–4 of 13 on 4 of 7 runs (HEAD 0 of 7). It now reads twice 0.5 s apart (13 of 13, 4 of 4 runs).
+- Evidence `docs/evidence/7.180/planes-250m.png`, `planes-250m-zoom.png`.
+- **Next:** PLAN 7.5, the critic run (`npm run check:review` first).

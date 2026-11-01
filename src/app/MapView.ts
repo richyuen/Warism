@@ -1919,7 +1919,7 @@ export class MapView {
     // In its sprites' tint, as its men and tanks (PLAN 7.51a: Germany's grey was drawn as it is
     // on the map, under a white edge: "white glyphs").
     const tint = (n: number): string => `#${this.nationColor(n).toString(16).padStart(6, '0')}`;
-    // In the ball look each plane a countryball with wings (PLAN 7.174f).
+    // In the ball look each plane its silhouette with a small countryball on it (PLAN 7.174f, 7.180).
     const balls = this.unitLook === 'balls';
     this.sortieMarks = drawSorties(ctx, this.sorties, this.tickProgress(now) - 1, cam, this.geo, vw, vh, 1, tint, this.unitScale, this.shares.individuals, balls ? flagOf : undefined);
     // The air's fights, bombs and flak (PLAN 5.7b), with the sorties; at T3 a strike's bombs on

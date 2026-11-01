@@ -1,25 +1,20 @@
 /**
  * A countryball on a Canvas2D overlay (PLAN 7.174f, ADR-777): the T0 counters, the T1 markers and
- * the planes in flight in the ball look, drawn as the shader draws an element's ball
- * (`ballShader.ts`): its flag in a disc, darker to the rim, a dark outline, two white eyes on the
- * side it faces, and a prop for what it stands for (a helmet, treads, wheels, wings, a hull).
+ * the planes in flight in the ball look (`sorties.ts`: a small ball on its plane's silhouette, PLAN
+ * 7.180), drawn as the shader draws an element's ball (`ballShader.ts`): its flag in a disc, darker
+ * to the rim, a dark outline, two white eyes on the side it faces, and a prop for what it stands for
+ * (a helmet, treads, wheels, a hull).
  */
-import { BALL_R, EYE_GAP, EYE_RX, EYE_RY, EYES_ACROSS, EYES_UP, HELMET_FLAG_TOP, HELMET_RGB, HULL_RGB, OUTLINE_RGB, STEEL_RGB, TREAD_RGB, WING_RGB } from './ballShader';
-
-/** A 2D ball's wings, ball units: deeper than the shader's, a plane's ball being a few px. */
-export const WING_Y = 0.12;
-export const WING_RX = 1.6;
-export const WING_RY = 0.32;
+import { BALL_R, EYE_GAP, EYE_RX, EYE_RY, EYES_ACROSS, EYES_UP, HELMET_FLAG_TOP, HELMET_RGB, HULL_RGB, OUTLINE_RGB, STEEL_RGB, TREAD_RGB } from './ballShader';
 
 /** What a 2D ball wears. */
-export type Prop2d = 'none' | 'helmet' | 'treads' | 'wheels' | 'wings' | 'hull';
+export type Prop2d = 'none' | 'helmet' | 'treads' | 'wheels' | 'hull';
 
 const css = (c: readonly number[]): string => `rgb(${c.map((v) => Math.round(v * 255)).join(', ')})`;
 const OUTLINE = css(OUTLINE_RGB);
 const HELMET = css(HELMET_RGB);
 const TREAD = css(TREAD_RGB);
 const STEEL = css(STEEL_RGB);
-const WING = css(WING_RGB);
 const HULL = css(HULL_RGB);
 
 /** A ball's look on the overlay. */
@@ -44,20 +39,11 @@ export function drawBall2d(ctx: CanvasRenderingContext2D, x: number, y: number, 
   const lw = Math.max(1, 0.1 * r);
   ctx.save();
   ctx.lineJoin = 'round';
-  // No shadow of the caller's (a plane's): one part's shadow fell on the next, the wings greyed.
+  // No shadow of the caller's (a plane's): one part's shadow fell on the next.
   ctx.shadowColor = 'transparent';
   ctx.shadowBlur = 0;
   // Behind the ball.
-  if (b.prop === 'wings') {
-    ctx.fillStyle = WING;
-    ctx.strokeStyle = OUTLINE;
-    ctx.lineWidth = lw;
-    ctx.beginPath();
-    ctx.ellipse(x, y + WING_Y * u, WING_RX * u, WING_RY * u, 0, 0, Math.PI * 2);
-    ctx.fill();
-    // A small plane's wings are a px or two deep: their colour, not their edge.
-    if (r >= 6) ctx.stroke();
-  } else if (b.prop === 'treads') {
+  if (b.prop === 'treads') {
     ctx.fillStyle = TREAD;
     ctx.strokeStyle = OUTLINE;
     ctx.lineWidth = lw;

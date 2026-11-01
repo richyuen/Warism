@@ -1,12 +1,11 @@
 import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
-import { BALL_R, BallClass, ballClassOf, ballShade, BallState, EYE_RX, EYE_RY, EYES_FULL_PX, EYES_NONE_PX, eyeCentres, flagUv, HELMET_FLAG_TOP, FLINCH_HZ, HURT_SHIFT, hurtLevel, OUTLINE_SHARE, PLASTER_RGB, propPoint, WING_RGB } from '../../src/render/units/ballShader';
-import { WING_RY, WING_Y } from '../../src/render/units/ball2d';
+import { BALL_R, BallClass, ballClassOf, ballShade, BallState, EYE_RX, EYE_RY, EYES_FULL_PX, EYES_NONE_PX, eyeCentres, flagUv, HELMET_FLAG_TOP, FLINCH_HZ, HURT_SHIFT, hurtLevel, OUTLINE_SHARE, PLASTER_RGB, propPoint } from '../../src/render/units/ballShader';
 import { FLAG_ATLAS_COLS, FLAG_PAD, FLAG_SLOT_H, FLAG_SLOT_W } from '../../src/render/units/flagAtlas';
-import { PLANE_BALL } from '../../src/render/units/sorties';
+import { PLANE_BALL, PLANE_PX } from '../../src/render/units/sorties';
 import { FLAG_H, FLAG_W } from '../../src/shared/flagPixels';
-import { FormationFlag } from '../../src/shared/protocol';
+import { FormationFlag, SortieRole } from '../../src/shared/protocol';
 import { Frame } from '../../src/shared/unitLooks';
 import { cellOf } from '../../src/sim/data/terrain';
 import { NATIONS_1938, SIZE_1938, TEMPLATES_LAND } from '../../src/sim/scenario1938';
@@ -50,15 +49,15 @@ async function open(page: Page): Promise<void> {
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
 }
 
-/** Draws once and reads each ball clear of the others in the view (at most 24). */
-function readBalls(page: Page): Promise<{ balls: Ball[]; px: number; dpr: number }> {
+/** Draws once (`laterMs` after the next nought of a flinch's shake, to a whole period) and reads each ball clear of the others in the view (at most 24). */
+function readBalls(page: Page, laterMs = 0): Promise<{ balls: Ball[]; px: number; dpr: number }> {
   return page.evaluate(
-    ({ frames, cols, slotW, slotH, shakeHz }) => {
+    ({ frames, cols, slotW, slotH, shakeHz, laterMs }) => {
       const v = window.__warsim!.view!;
       const canvas = document.getElementById('map') as HTMLCanvasElement;
       const gl = canvas.getContext('webgl2')!;
       // A time when a flinch's shake is nought (PLAN 7.174e): a whole number of its periods.
-      const now = (Math.ceil(((performance.now() + 100) * shakeHz) / 1000) * 1000) / shakeHz;
+      const now = ((Math.ceil(((performance.now() + 100) * shakeHz) / 1000) + Math.ceil((laterMs * shakeHz) / 1000)) * 1000) / shakeHz;
       v.draw(now);
       const dpr = canvas.width / canvas.clientWidth;
       const cam = v.controller.cam;
@@ -92,7 +91,7 @@ function readBalls(page: Page): Promise<{ balls: Ball[]; px: number; dpr: number
       }
       return { balls, px: size, dpr };
     },
-    { frames: FRAMES, cols: FLAG_ATLAS_COLS, slotW: FLAG_SLOT_W, slotH: FLAG_SLOT_H, shakeHz: 2 * FLINCH_HZ },
+    { frames: FRAMES, cols: FLAG_ATLAS_COLS, slotW: FLAG_SLOT_W, slotH: FLAG_SLOT_H, shakeHz: 2 * FLINCH_HZ, laterMs },
   );
 }
 
@@ -204,6 +203,10 @@ test('countryballs at T2 and T3: the flag in the ball, the outline, the eyes tow
     await look(m);
     await page.waitForTimeout(1500);
     const { balls, px: size, dpr } = await readBalls(page);
+    // The same balls half a second on: a blink (BLINK_S, once in 3 to 6 s, by wall time) cannot shut
+    // a ball's eyes in both reads, so a ball's eyes are white in one of them unless they are not.
+    const later = (await readBalls(page, 500)).balls;
+    expect(later.length, `${m} m/px: the same balls half a second on`).toBe(balls.length);
     await page.screenshot({ path: path.join(info.outputPath(), `balls-${m}m.png`) });
     let flagOk = 0;
     let flagAll = 0;
@@ -213,7 +216,7 @@ test('countryballs at T2 and T3: the flag in the ball, the outline, the eyes tow
     let eyesWhite = 0;
     let underFire = 0;
     let eyesSquint = 0;
-    for (const b of balls) {
+    for (const [k, b] of balls.entries()) {
       const away = Math.cos(b.facing) >= 0 ? -1 : 1; // the side without the eyes
       // A dot without eyes is its flag where the eyes would be (a white there may be the flag's),
       // inside the band where the shader blends the rim and the outline (a device px of it each).
@@ -238,7 +241,8 @@ test('countryballs at T2 and T3: the flag in the ball, the outline, the eyes tow
         if (eyes.every((c) => Math.max(...c) < 90)) eyesSquint++;
       } else {
         calm++;
-        if (eyes.every(white)) eyesWhite++;
+        const b2 = later[k]!;
+        if (eyes.every(white) || eyeCentres(b2.facing).every(([x, y]) => white(at(b2, x, y).rgb))) eyesWhite++;
       }
     }
     console.log(`${m} m/px: ball ${size.toFixed(1)} px (dpr ${dpr}), ${balls.length} balls clear of the others; flag points ${flagOk} of ${flagAll} within 40 (worst ${worst.toFixed(0)}); outline dark ${outlineDark}; both eyes white ${eyesWhite} of ${calm} not under fire, squeezed dark ${eyesSquint} of ${underFire} under fire`);
@@ -246,7 +250,7 @@ test('countryballs at T2 and T3: the flag in the ball, the outline, the eyes tow
     expect(flagOk, `${m} m/px: the flag's colour where the shader puts it${size <= EYES_NONE_PX ? ', at the eyes too (a flag dot)' : ''}`).toBe(flagAll);
     if (size >= EYES_FULL_PX) {
       expect(outlineDark, `${m} m/px: the outline`).toBe(balls.length);
-      // A blink shuts a ball's eyes for 0.18 s in 3 to 6: a ninth of the balls may blink.
+      // Two reads half a second apart: a blink (0.18 s in 3 to 6) shuts the eyes in one of them at most.
       expect(eyesWhite, `${m} m/px: two white eyes, not under fire`).toBeGreaterThanOrEqual(Math.floor(calm * 0.89));
       expect(eyesSquint, `${m} m/px: two dark slits, under fire`).toBeGreaterThanOrEqual(Math.floor(underFire * 0.89));
     }
@@ -484,6 +488,54 @@ function discOf(img: { px: number[]; w: number; dpr: number }, x: number, y: num
   return near / Math.max(1, n);
 }
 
+/** A plane in flight as the page placed it (`sortieMarks`): its middle, CSS px, its heading and span. */
+interface PlaneAt {
+  nation: number;
+  x: number;
+  y: number;
+  span: number;
+  heading: number;
+  role: number;
+}
+
+/** The planes of every sortie on the screen. */
+function planesOnScreen(page: Page): Promise<PlaneAt[]> {
+  return page.evaluate(() => window.__warsim!.view!.sortieMarks.flatMap((s) => s.at.map(([x, y]) => ({ nation: s.nation, x, y, span: s.span, heading: s.heading, role: s.role }))));
+}
+
+/** A plane's ball's radius, CSS px: PLANE_BALL of a fighter's span at the plane's zoom (`sorties.ts`). */
+const planeBall = (p: PlaneAt): number => (PLANE_BALL * p.span * PLANE_PX[SortieRole.fighter]) / (PLANE_PX[p.role] ?? PLANE_PX[SortieRole.fighter]);
+
+/** A nation's colour as its sprites and planes are tinted. */
+function tintOf(page: Page, n: number): Promise<number[]> {
+  return page.evaluate((n) => {
+    const c = (window.__warsim!.view! as unknown as { nationColor(n: number): number }).nationColor(n);
+    return [(c >> 16) & 255, (c >> 8) & 255, c & 255];
+  }, n);
+}
+
+/**
+ * A plane in the ball look (PLAN 7.180): its ball (PLANE_BALL of its span) a disc of its flag; each
+ * wing out of the ball in its nation's colour (a px of it near a point 0.55 of the half span out);
+ * the px of its colour within its half span and out of its ball, against its ball's area.
+ */
+function planeLook(img: { px: number[]; w: number; h: number; dpr: number }, p: PlaneAt, flag: number[][], tint: number[]): { flag: boolean; tips: number; cover: number } {
+  const h = p.span / 2;
+  const r = planeBall(p);
+  const [c, s] = [Math.cos(p.heading), Math.sin(p.heading)];
+  const tips = [-1, 1].filter((k) => discOf(img, p.x - k * 0.55 * h * s, p.y + k * 0.55 * h * c, Math.max(0.7, 0.12 * h), [tint]) > 0).length;
+  let n = 0;
+  const step = 1 / img.dpr;
+  for (let dy = -h; dy <= h; dy += step)
+    for (let dx = -h; dx <= h; dx += step) {
+      const d = Math.hypot(dx, dy);
+      if (d > h || d < r + 1) continue;
+      const o = (Math.floor((p.y + dy) * img.dpr) * img.w + Math.floor((p.x + dx) * img.dpr)) * 3;
+      if (dist([img.px[o]!, img.px[o + 1]!, img.px[o + 2]!], tint) <= 60) n++;
+    }
+  return { flag: discOf(img, p.x, p.y, Math.max(0.6, 0.5 * r), flag) >= 0.5, tips, cover: n / (img.dpr * img.dpr) / (Math.PI * r * r) };
+}
+
 // PLAN 7.174f (ADR-777): the far tiers and the sky in the ball look. At 3000 m/px (T0) each
 // counter's chip is a ball of its nation's flag; at 800 m/px (T1) each marker's box; a click on a
 // marker's ball opens its formation's panel; Germany at war with Poland, the planes over the front
@@ -533,9 +585,9 @@ test('countryballs far out and in the air: counters and markers are flag balls; 
   await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: id('GER'), d: id('POL') });
   const [fx, fy] = cellOf(17.5, 52.3, W, H);
   await at(fx, fy, 1000);
-  let planes: { nation: number; x: number; y: number; span: number; look: number }[] = [];
+  let planes: PlaneAt[] = [];
   for (let h = 0; h < 96 && planes.length < 6; h++) {
-    planes = await page.evaluate(async () => {
+    await page.evaluate(async () => {
       const w = window.__warsim!;
       const v = w.view!;
       const target = v.lastTick + 1;
@@ -545,24 +597,21 @@ test('countryballs far out and in the air: counters and markers are flag balls; 
         go();
       });
       v.draw(performance.now());
-      return v.sortieMarks.flatMap((s) => s.at.map(([x, y]) => ({ nation: s.nation, x, y, span: s.span, look: Math.cos(s.heading) >= 0 ? 1 : -1 })));
     });
+    planes = await planesOnScreen(page);
   }
   const img = await composite(page);
   await page.screenshot({ path: path.join(info.outputPath(), 'air-1000m.png') });
-  const wing = WING_RGB.map((c) => c * 255);
   let winged = 0;
   let flagged = 0;
-  // A vee's planes fly 0.8 to 0.9 of a span apart: their balls (0.7 of it across) do not touch, their wings may.
+  // A vee's planes fly 0.8 to 0.9 of a span apart: their balls do not touch, their wings may.
   const clear = planes.filter((p) => planes.every((q) => q === p || Math.hypot(q.x - p.x, q.y - p.y) > p.span * 0.75) && p.x > 20 && p.y > 20);
   for (const p of clear) {
-    const r = PLANE_BALL * p.span;
-    const u = r / BALL_R;
-    if (discOf(img, p.x - 0.3 * u * p.look, p.y + 0.3 * u, r * 0.35, await flagColours(page, p.nation)) >= 0.5) flagged++;
-    // A wing's colour out of the ball, either side.
-    if ([-1, 1].some((s) => discOf(img, p.x + s * 1.3 * u, p.y + WING_Y * u, Math.max(0.6, WING_RY * u), [wing]) > 0)) winged++;
+    const k = planeLook(img, p, await flagColours(page, p.nation), await tintOf(page, p.nation));
+    if (k.flag) flagged++;
+    if (k.tips === 2) winged++;
   }
-  console.log(`air at 1000 m/px: ${planes.length} planes, ${clear.length} clear of the others; ${flagged} a ball of their flag, ${winged} with wings`);
+  console.log(`air at 1000 m/px: ${planes.length} planes, ${clear.length} clear of the others; ${flagged} a ball of their flag, ${winged} with both wings in their colour`);
   expect(clear.length, 'planes over the front').toBeGreaterThanOrEqual(3);
   expect(flagged, 'flag balls').toBeGreaterThanOrEqual(Math.ceil(clear.length * 0.8));
   expect(winged, 'with wings').toBeGreaterThanOrEqual(Math.ceil(clear.length * 0.8));
@@ -810,4 +859,68 @@ test('countryballs under a helmet show the flag that names them: German and Poli
     expect(p.top, `${m} m/px: Polish balls show their white below the brim`).toBeGreaterThanOrEqual(Math.ceil(p.balls * 0.8));
     expect(p.black, `${m} m/px: no black on a Polish ball's band`).toBe(0);
   }
+});
+
+// PLAN 7.180 (critic run 22, map visuals 6: "at T2 the planes are the largest balls on the screen";
+// the user's choice): a plane in the ball look is its silhouette in its nation's colour with a small
+// ball of its flag on it, no larger than an infantry ball. The critic's case: seed 7019, Germany at
+// war with Poland, at 250 m/px over the front, an hour at a time until three planes are clear of the
+// others. On 4a977fdb a plane's ball was 0.5 of its span (6.5 px against the infantry's 2.25) with
+// grey oval wings.
+test('planes in the ball look: a silhouette in their colour with a ball no larger than an infantry ball', async ({ page }, info) => {
+  test.setTimeout(400_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.addInitScript(() => localStorage.setItem('warsim.unitLook', 'balls'));
+  await page.goto('/?scenario=1938&paused=1&seed=7019');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: id('GER'), d: id('POL') });
+  const [fx, fy] = cellOf(17.5, 52.3, W, H);
+  await page.evaluate(({ x, y }) => {
+    const v = window.__warsim!.view!;
+    v.controller.set({ cx: x, cy: y, scale: (v.metresPerPx * v.controller.cam.scale) / 250 });
+  }, { x: fx, y: fy });
+  const clearOf = (ps: PlaneAt[]): PlaneAt[] => ps.filter((p) => ps.every((q) => q === p || Math.hypot(q.x - p.x, q.y - p.y) > p.span * 0.75) && p.x > 20 && p.y > 20 && p.x < 1380 && p.y < 780);
+  let planes: PlaneAt[] = [];
+  for (let h = 0; h < 120 && clearOf(planes).length < 3; h++) {
+    await page.evaluate(async () => {
+      const w = window.__warsim!;
+      const v = w.view!;
+      const target = v.lastTick + 1;
+      await w.sim.step(1);
+      await new Promise<void>((done) => {
+        const go = (): void => void (v.lastTick >= target ? done() : setTimeout(go, 4));
+        go();
+      });
+      v.draw(performance.now());
+    });
+    planes = await planesOnScreen(page);
+    // Follow the air: the camera on the first plane, so the sorties stay on the screen.
+    if (planes.length > 0 && clearOf(planes).length < 3) {
+      const p = planes[0]!;
+      await page.evaluate(({ x, y }) => {
+        const v = window.__warsim!.view!;
+        const c = v.controller.cam;
+        const el = document.getElementById('map') as HTMLCanvasElement;
+        v.controller.set({ cx: c.cx + (x - el.clientWidth / 2) / c.scale, cy: c.cy + (y - el.clientHeight / 2) / c.scale, scale: c.scale });
+      }, p);
+    }
+  }
+  await page.waitForTimeout(300);
+  await page.evaluate(() => window.__warsim!.view!.draw(performance.now()));
+  planes = await planesOnScreen(page);
+  const elementPx = await page.evaluate(() => window.__warsim!.view!.elementPx);
+  const img = await composite(page);
+  await page.screenshot({ path: path.join(info.outputPath(), 'planes-250m.png') });
+  const infantryR = BALL_R * (elementPx / 2);
+  // Not under a formation's name tag: it is drawn over the planes.
+  const tags = await page.evaluate(() => window.__warsim!.view!.tagRects.map((t) => ({ x: t.x, y: t.y, w: t.w, h: t.h })));
+  const clear = clearOf(planes).filter((p) => tags.every((t) => p.x + p.span / 2 < t.x || p.x - p.span / 2 > t.x + t.w || p.y + p.span / 2 < t.y || p.y - p.span / 2 > t.y + t.h));
+  const reads: { span: number; role: number; ball: number; flag: boolean; tips: number; cover: number }[] = [];
+  for (const p of clear) reads.push({ span: p.span, role: p.role, ball: planeBall(p), ...planeLook(img, p, await flagColours(page, p.nation), await tintOf(page, p.nation)) });
+  console.log(`planes at 250 m/px (seed 7019): infantry ball radius ${infantryR.toFixed(2)} px; ${JSON.stringify(reads)}`);
+  expect(clear.length, 'planes clear of the others').toBeGreaterThanOrEqual(3);
+  for (const k of reads) expect(k.ball, "a plane's ball no larger than an infantry ball").toBeLessThanOrEqual(infantryR + 0.05);
+  expect(reads.filter((k) => k.tips === 2).length, "both wings in the nation's colour").toBeGreaterThanOrEqual(Math.ceil(reads.length * 0.8));
+  expect(reads.filter((k) => k.flag).length, 'a ball of its flag on the plane').toBeGreaterThanOrEqual(Math.ceil(reads.length * 0.8));
+  expect(reads.filter((k) => k.cover >= 1).length, 'the plane, not its ball, is most of it').toBeGreaterThanOrEqual(Math.ceil(reads.length * 0.8));
 });

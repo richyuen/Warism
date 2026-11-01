@@ -33,13 +33,6 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.180 Planes in the ball look read as units (map visuals 6, needs 7; critic run 22's "Fix" and
-  aircraft's): at T2 the planes are the largest balls on the screen
-  (`critic/shots/c22cb_7019_arm_0250m_balls_crop.png`). A wing silhouette for planes in flight at T0–T2 in
-  the ball look, in the nation's colours.
-  AT: e2e on seed 7019 at 250 m/px, the default look: each plane in flight drawn with its drawn pixels'
-  width at least 2 × their height or a wing's shape the test names, and its area under the median infantry
-  ball's at that zoom (over it on `4a977fdb`); `planesT3_1938`, `sortiesSeen1938` green.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 
@@ -437,3 +430,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.177 Control from the menu; Place at once first (the user's requests, 2026-10-31; ADR-781, extended). […]
 - [x] 7.178 Countryballs show their losses (the user's report, 2026-10-31: "the countryballs don't seem to lose any […]
 - [x] 7.179 The infantry helmet hides the flag that names the countryball (critic R22-B1, run 22 on […]
+- [x] 7.180 Planes in the ball look read as units (map visuals 6, needs 7; critic run 22's "Fix" and […]
