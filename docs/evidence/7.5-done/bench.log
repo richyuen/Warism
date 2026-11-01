@@ -1,0 +1,412 @@
+
+> warism@0.0.1 bench
+> tsx tools/bench/run.ts
+
+
+> warism@0.0.1 build
+> tsc -b && vite build
+
+[36mvite v8.3.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+✓ 872 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/bench.html                                         0.63 kB │ gzip:  0.38 kB
+dist/index.html                                         1.31 kB │ gzip:  0.46 kB
+dist/assets/lato-latin-ext-700-normal-C6gwlRgY.woff2    5.55 kB
+dist/assets/lato-latin-ext-400-normal-CK4GAP86.woff2    5.61 kB
+dist/assets/lato-latin-ext-900-normal-BhetttCG.woff2    5.64 kB
+dist/assets/lato-latin-900-normal-CZBfLiEO.woff        17.18 kB
+dist/assets/lato-latin-400-normal-B11PyLys.woff        17.45 kB
+dist/assets/lato-latin-700-normal-DAdL7O4w.woff        17.62 kB
+dist/assets/lato-latin-900-normal-C3uaq3BA.woff2       22.50 kB
+dist/assets/lato-latin-700-normal-BUGMgin4.woff2       23.04 kB
+dist/assets/lato-latin-400-normal-BEhtfm5r.woff2       23.58 kB
+dist/assets/entry-bZ3lPF8f.js                         879.24 kB
+dist/assets/main-CVf2xUJi.css                          46.96 kB │ gzip: 18.89 kB
+dist/assets/webworkerAll-D9ofPBVB.js                    0.05 kB │ gzip:  0.06 kB
+dist/assets/WebGLRenderer-DSNEf6Mr.js                   0.07 kB │ gzip:  0.07 kB
+dist/assets/CanvasRenderer-34zQxQdn.js                  0.07 kB │ gzip:  0.08 kB
+dist/assets/WebGPURenderer-BDAW1ZX3.js                  0.07 kB │ gzip:  0.08 kB
+dist/assets/hash-VYJsGXV-.js                            0.25 kB │ gzip:  0.21 kB │ map:     1.20 kB
+dist/assets/getTextureBatchBindGroup-BrlgokzH.js        0.40 kB │ gzip:  0.31 kB │ map:     2.01 kB
+dist/assets/lib-DtnxXbSE.js                             0.48 kB │ gzip:  0.29 kB
+dist/assets/modulepreload-polyfill-P2Xu9kJm.js          0.67 kB │ gzip:  0.38 kB
+dist/assets/lib-DbCLpB2p.js                             0.85 kB │ gzip:  0.46 kB │ map:    56.45 kB
+dist/assets/provincesView-By-a7g-Z.js                   0.91 kB │ gzip:  0.61 kB │ map:     2.97 kB
+dist/assets/benchUtil-BJEkoupA.js                       1.15 kB │ gzip:  0.66 kB │ map:     4.95 kB
+dist/assets/flagGrid-CtmIV4PW.js                        1.18 kB │ gzip:  0.72 kB │ map:     3.97 kB
+dist/assets/proxyScene-CQ4tytK9.js                      1.26 kB │ gzip:  0.59 kB │ map:     4.74 kB
+dist/assets/preload-helper-BaNbYf_w.js                  1.39 kB │ gzip:  0.75 kB
+dist/assets/precision-9TQMbSZQ.js                       1.53 kB │ gzip:  0.94 kB │ map:     6.72 kB
+dist/assets/bench-D9rGkHIN.js                           1.81 kB │ gzip:  0.82 kB │ map:     1.13 kB
+dist/assets/synthetic-BocosXmq.js                       2.32 kB │ gzip:  1.19 kB │ map:    10.85 kB
+dist/assets/benchB-C5D-lD9w.js                          2.55 kB │ gzip:  1.42 kB │ map:     9.35 kB
+dist/assets/politicalView-BbkDASde.js                   2.55 kB │ gzip:  1.30 kB │ map:     8.81 kB
+dist/assets/terrainView-DMKiWuBO.js                     3.24 kB │ gzip:  1.24 kB │ map:     7.57 kB
+dist/assets/benchA-Dkbm_RfB.js                          3.67 kB │ gzip:  1.86 kB │ map:    14.67 kB
+dist/assets/flags-CMfHqXnG.js                           4.12 kB │ gzip:  2.01 kB │ map:    23.73 kB
+dist/assets/canvasUtils-BlZ1xmP9.js                     6.10 kB │ gzip:  2.09 kB │ map:    23.28 kB
+dist/assets/cityLabels-BynliB05.js                      6.81 kB │ gzip:  3.06 kB │ map:    39.48 kB
+dist/assets/atlas-Ci7QJNxe.js                           7.16 kB │ gzip:  2.52 kB │ map:    38.13 kB
+dist/assets/simClient-BuWCYIVe.js                       8.41 kB │ gzip:  2.24 kB │ map:    29.27 kB
+dist/assets/GroundInstances-DzgV1A42.js                 9.12 kB │ gzip:  4.20 kB │ map:    30.83 kB
+dist/assets/getTexelRangeRects-MBtImDLS.js             11.37 kB │ gzip:  3.01 kB │ map:    29.21 kB
+dist/assets/init-D4uv2SHD.js                           15.34 kB │ gzip:  4.81 kB │ map:    55.02 kB
+dist/assets/nations-8MCbRKIb.js                        23.69 kB │ gzip:  4.54 kB │ map:    34.62 kB
+dist/assets/benchBP-BsEFz9FL.js                        24.13 kB │ gzip:  8.03 kB │ map:    90.40 kB
+dist/assets/init-BCwhXt3x.js                           24.87 kB │ gzip:  8.59 kB │ map:   110.39 kB
+dist/assets/ProxyRenderer-Dku3neFR.js                  25.90 kB │ gzip:  9.45 kB │ map:    76.17 kB
+dist/assets/browserAll-BeoXm1ev.js                     43.64 kB │ gzip: 11.37 kB │ map:   163.54 kB
+dist/assets/WebGPURenderer-CbPCKE_y.js                 55.51 kB │ gzip: 15.94 kB │ map:   190.88 kB
+dist/assets/WebGLRenderer-B6tRmjsE.js                  73.35 kB │ gzip: 20.17 kB │ map:   245.27 kB
+dist/assets/RenderTargetSystem-Ca9gn23k.js             78.69 kB │ gzip: 22.40 kB │ map:   297.76 kB
+dist/assets/MapRenderer-DUzrLcZT.js                    81.88 kB │ gzip: 25.57 kB │ map:   592.78 kB
+dist/assets/CanvasRenderer-BmWdQc2j.js                 89.08 kB │ gzip: 28.10 kB │ map:   493.68 kB
+dist/assets/flags-CpIozDZK.js                          92.87 kB │ gzip: 28.11 kB │ map:   157.63 kB
+dist/assets/Geometry-BXYIVPra.js                      113.45 kB │ gzip: 34.41 kB │ map:   562.60 kB
+dist/assets/main-Bbacs7SX.js                          273.35 kB │ gzip: 89.16 kB │ map: 1,286.59 kB
+
+[32m✓ built in 409ms[39m
+{
+  "bench": "A",
+  "date": "2026-11-01T20:12:26.346Z",
+  "result": {
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Ti (0x00002782) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "dpr": 1,
+    "map": [
+      2048,
+      1024
+    ],
+    "nations": 150,
+    "genMs": 425.90000000596046,
+    "uploadMs": 2.399999976158142,
+    "drawMs": {
+      "T0-world": 0.5733034666666667,
+      "europe-4px": 0.5393237333333333,
+      "close-48px": 0.5018794666666666,
+      "close-48px-ground": 0.8972629333333334,
+      "close-400px-ground": 0.9313450666666667,
+      "close-48px-ground-coast-coverage": 0.7811861333333333,
+      "close-400px-ground-coast-coverage": 0.7262037333333333,
+      "close-48px-ground-coast-mask": 0.7831551999999999,
+      "close-400px-ground-coast-mask": 0.751872,
+      "close-55px-ground-things": 0.8467285333333333,
+      "close-55px-ground-things-cpu": 0.5,
+      "close-55px-ground-things-count": 8685
+    },
+    "t0": {
+      "frames": 9600,
+      "seconds": 4.605600000000001,
+      "fps": 2084.4189682126103,
+      "frameMsP50": 0.09999999999990905,
+      "frameMsP95": 0.20000000000027285,
+      "cpuMsP50": 0,
+      "cpuMsP95": 0.09999999403953552
+    },
+    "t0TileChurn": {
+      "frames": 3236,
+      "seconds": 3.133300000000001,
+      "fps": 1032.7769444355788,
+      "frameMsP50": 0.3999999999996362,
+      "frameMsP95": 0.6000000000003638,
+      "cpuMsP50": 0.30000001192092896,
+      "cpuMsP95": 0.5,
+      "tilesPerFrame": 32
+    }
+  }
+}
+{
+  "bench": "B",
+  "date": "2026-11-01T20:12:34.340Z",
+  "result": {
+    "stack": "raw WebGL2 + twgl (instanced, GPU interpolation)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Ti (0x00002782) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "dpr": 1,
+    "cases": [
+      {
+        "proxies": 10000,
+        "frames": 6762,
+        "seconds": 3.0131000000000006,
+        "fps": 2244.2003252464237,
+        "frameMsP50": 0.09999999999990905,
+        "frameMsP95": 0.20000000000004547,
+        "cpuMsP50": 0,
+        "cpuMsP95": 0.09999999403953552,
+        "gpuFrameMs": 0.49408,
+        "gpuUnitsMs": 0.014574933333333335,
+        "tickUploadMsP50": 0.5999999940395355
+      },
+      {
+        "proxies": 30000,
+        "frames": 5553,
+        "seconds": 2.9861999999999997,
+        "fps": 1859.5539481615433,
+        "frameMsP50": 0.1000000000003638,
+        "frameMsP95": 7,
+        "cpuMsP50": 0,
+        "cpuMsP95": 6.299999982118607,
+        "gpuFrameMs": 0.5649749333333334,
+        "gpuUnitsMs": 0.0714752,
+        "tickUploadMsP50": 1.4000000059604645
+      }
+    ]
+  }
+}
+{
+  "bench": "BP",
+  "date": "2026-11-01T20:12:41.282Z",
+  "result": {
+    "stack": "PixiJS 8.22.0 ParticleContainer (CPU interpolation)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Ti (0x00002782) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "dpr": 1,
+    "cases": [
+      {
+        "proxies": 10000,
+        "frames": 7809,
+        "seconds": 2.9897,
+        "fps": 2611.967755962137,
+        "frameMsP50": 0.2999999999999545,
+        "frameMsP95": 1.300000000000182,
+        "cpuMsP50": 0.10000002384185791,
+        "cpuMsP95": 1.199999988079071,
+        "gpuFrameMs": 0.0221184,
+        "gpuUnitsMs": null,
+        "tickUploadMsP50": 0.30000001192092896
+      },
+      {
+        "proxies": 30000,
+        "frames": 4276,
+        "seconds": 2.9984999999999995,
+        "fps": 1426.0463565115895,
+        "frameMsP50": 0.5,
+        "frameMsP95": 1.5999999999994543,
+        "cpuMsP50": 0.4000000059604645,
+        "cpuMsP95": 1.4000000059604645,
+        "gpuFrameMs": 0.31317333333333336,
+        "gpuUnitsMs": null,
+        "tickUploadMsP50": 1
+      }
+    ]
+  }
+}
+{
+  "bench": "R",
+  "date": "2026-11-01T20:12:41.743Z",
+  "result": {
+    "w": 2048,
+    "h": 1024,
+    "provinces": 4596,
+    "present": 4596,
+    "forced": 724,
+    "missing": 0,
+    "landCells": 632588,
+    "hash": 3345486829,
+    "ms": {
+      "fetch": 60.19999998807907,
+      "decode": 41,
+      "raster": 66.80000001192093,
+      "total": 171.40000000596046
+    }
+  }
+}
+gpu T0: 136.2 fps, 102 nations
+gpu T2: 174.9 fps, 10752 of 10752 sprites on screen
+swiftshader T0: 2.5 fps, 102 nations
+swiftshader T2: 1.0 fps, 236 of 266 sprites on screen
+{
+  "bench": "G",
+  "date": "2026-11-01T20:21:15.861Z",
+  "budgets": {
+    "t0Fps": 60,
+    "t2Fps": 30,
+    "t2Proxies": 10000,
+    "specT0GpuMs": 1,
+    "specT2GpuMs": 2,
+    "specFrameCpuMs": 6,
+    "judgedBy": [
+      "gpu"
+    ]
+  },
+  "pass": true,
+  "settings": [
+    {
+      "setting": "gpu",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Ti (0x00002782) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "cases": [
+        {
+          "tier": "T0",
+          "proxiesOnScreen": 0,
+          "elements": 0,
+          "nations": 102,
+          "metresPerPx": 20614.711934156378,
+          "frames": 1093,
+          "seconds": 8.02340000000596,
+          "fps": 136.22653737806766,
+          "rafFps": 136.10190193673367,
+          "frameMsP50": 3.899999999999636,
+          "frameMsP95": 21.199999999999818,
+          "frameMsMax": 26.600000000000364,
+          "cpuMsP50": 2.7000000178813934,
+          "cpuMsP95": 3.5999999940395355,
+          "gpuFrameMs": 0.5537414736842106,
+          "gpuDrawsMs": 0.5523456,
+          "gpuPasses": 38,
+          "budgetFps": 60,
+          "specGpuMs": {
+            "budget": 1,
+            "value": 0.5537414736842106,
+            "within": true
+          },
+          "specCpuMs": {
+            "budget": 6,
+            "value": 2.7000000178813934,
+            "within": true
+          },
+          "pass": true
+        },
+        {
+          "tier": "T2",
+          "proxiesOnScreen": 10752,
+          "elements": 10752,
+          "nations": 102,
+          "metresPerPx": 200,
+          "frames": 1402,
+          "seconds": 8.015199999988079,
+          "fps": 174.91765645299995,
+          "rafFps": 174.79289350260552,
+          "frameMsP50": 5,
+          "frameMsP95": 8.700000000000728,
+          "frameMsMax": 11.5,
+          "cpuMsP50": 4.5,
+          "cpuMsP95": 5.4000000059604645,
+          "gpuFrameMs": 1.073664,
+          "gpuDrawsMs": 1.0678272,
+          "gpuPasses": 36,
+          "budgetFps": 30,
+          "specGpuMs": {
+            "budget": 2,
+            "value": 1.073664,
+            "within": true
+          },
+          "specCpuMs": {
+            "budget": 6,
+            "value": 4.5,
+            "within": true
+          },
+          "stage": {
+            "nation": "JAP",
+            "template": "infantry_div",
+            "divisions": 384,
+            "grid": [
+              24,
+              16
+            ],
+            "site": [
+              1578.5,
+              338.5
+            ]
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "setting": "swiftshader",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "cases": [
+        {
+          "tier": "T0",
+          "proxiesOnScreen": 0,
+          "elements": 0,
+          "nations": 102,
+          "metresPerPx": 20614.711934156378,
+          "frames": 20,
+          "seconds": 8.14709999999404,
+          "fps": 2.454861238970263,
+          "rafFps": 2.33211817702175,
+          "frameMsP50": 584.1000000000004,
+          "frameMsP95": 651.7999999999993,
+          "frameMsMax": 651.7999999999993,
+          "cpuMsP50": 5.0999999940395355,
+          "cpuMsP95": 11.600000023841858,
+          "gpuFrameMs": 215.43155,
+          "gpuDrawsMs": 186.29051333333334,
+          "gpuPasses": 2,
+          "budgetFps": 60,
+          "specGpuMs": {
+            "budget": 1,
+            "value": 215.43155,
+            "within": false
+          },
+          "specCpuMs": {
+            "budget": 6,
+            "value": 5.0999999940395355,
+            "within": true
+          },
+          "pass": null
+        },
+        {
+          "tier": "T2",
+          "proxiesOnScreen": 236,
+          "elements": 266,
+          "nations": 97,
+          "metresPerPx": 200,
+          "frames": 10,
+          "seconds": 9.603399999976158,
+          "fps": 1.041297873672327,
+          "rafFps": 0.9371680863050944,
+          "frameMsP50": 17.89999999999418,
+          "frameMsP95": 4970.899999999994,
+          "frameMsMax": 4970.899999999994,
+          "cpuMsP50": 5.0999999940395355,
+          "cpuMsP95": 3541.100000023842,
+          "gpuFrameMs": 462.263,
+          "gpuDrawsMs": 372.79411999999996,
+          "gpuPasses": 2,
+          "budgetFps": 30,
+          "specGpuMs": {
+            "budget": 2,
+            "value": 462.263,
+            "within": false
+          },
+          "specCpuMs": {
+            "budget": 6,
+            "value": 5.0999999940395355,
+            "within": true
+          },
+          "stage": {
+            "nation": "JAP",
+            "template": "infantry_div",
+            "divisions": 384,
+            "grid": [
+              24,
+              16
+            ],
+            "site": [
+              1578.5,
+              338.5
+            ]
+          },
+          "pass": null
+        }
+      ]
+    }
+  ]
+}
+gpu T0: 136.2 fps (budget 60), p95 21.2 ms, 0 sprites on screen, 102 nations: PASS | SPEC gpu 0.554 <= 1 (30 whole draws 0.552), draw cpu p50 2.70 <= 6
+gpu T2: 174.9 fps (budget 30), p95 8.7 ms, 10752 sprites on screen, 102 nations: PASS | SPEC gpu 1.074 <= 2 (30 whole draws 1.068), draw cpu p50 4.50 <= 6
+swiftshader T0: 2.5 fps (budget 60), p95 651.8 ms, 0 sprites on screen, 102 nations: reported | SPEC gpu 215.432 > 1 (30 whole draws 186.291), draw cpu p50 5.10 <= 6
+swiftshader T2: 1.0 fps (budget 30), p95 4970.9 ms, 236 sprites on screen, 97 nations: reported | SPEC gpu 462.263 > 2 (30 whole draws 372.794), draw cpu p50 5.10 <= 6

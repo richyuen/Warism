@@ -25360,3 +25360,22 @@ No rule changed and nothing on screen changed. One task came out of it.
 - Every dimension at its bar and no blocking issue: the report part of the DONE CONDITION holds at 81beca11.
   Nothing filed.
 - **Next:** PLAN 7.5, the rest of the DONE CONDITION at HEAD (gate in full, soak, sweep, scripted demo, budgets).
+
+## 2026-11-01 — PLAN 7.5: the DONE condition's runs on fbc9fbc3 (code of 81beca11): green but for the T0 frame rate, filed as 7.181
+
+- **Code:** fbc9fbc3 differs from 81beca11 only in `critic/` and PROGRESS.md (`git diff --name-only`), so the critic
+  report of run 23 (81beca11: parity 7, differentiators 8, blocking 0) and its `check:review` stand for it.
+- **check:full** (`npm run check:review`, 81beca11): green, 0 red twice; `fightCamera1938`, `nukeAlertTwo1938`,
+  `seaRow1938` red once, green alone. The scripted demos (zoom, sea, tank, air, nuclear specs) in it.
+  `docs/evidence/7.5-done/check-review-81beca11.json` and `-steps.txt`.
+- **Soak** (`npm run soak -- --scenario 1938 --seed 99 --minutes 30 --affinity 0xFFFF`): green, 34.24 years (299,904
+  ticks) in 30.0 min, 5 saves and loads, no exception, no desync; final hash e631fc14 (7.162: 28.06 years).
+- **Sweep** (`npm run sweep -- --first 1501 --tag done23`, seeds 1501–1510 × 50 years, unseen): land changing
+  controller in the last 5 years 40.5–69.7 %, ≥ 1 % on 10 of 10 (the condition). The sweep's own verdict FAILING on
+  limits 5 of 10 (largest income over 40 % on 1501, 1502, 1508, 1509, 1510; 1508's USA 36.8 % of the land): "no
+  hegemon" struck, ADR-740, reported (1481–1490 7 of 10, 1491–1500 9 of 10). Riser, faller, no stasis, no break-up
+  10 of 10; nukes in 10 of 10. `docs/sweeps/2026-11-01-sweep-done23.md`, copy in the evidence.
+- **Bench** (`npm run bench`, then `bench -- G` alone): budgets PASS (T0 136.2 and 135.0 fps against 60, T2 174.9 and
+  176.6 against 30, GPU and draw CPU in SPEC). But T0 fell from 7.162's 347.6 fps, p95 4.3 → 21 ms, on both runs, the
+  GPU's frame unchanged: filed as **PLAN 7.181** before 7.5, so the condition waits on it.
+- **Next:** PLAN 7.181.

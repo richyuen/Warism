@@ -1,0 +1,92 @@
+
+> warism@0.0.1 sweep
+> tsx tools/sweep/run.ts --first 1501 --tag done23
+
+seed 1505 year 10/50: alive 69, top land 15.7%, wars 4, changed 13498302 km², warheads 17 (4 nations), strikes 2, MAD days 239, fallout 0.01%
+seed 1508 year 10/50: alive 78, top land 19.4%, wars 5, changed 10399354 km², warheads 22 (4 nations), strikes 0, MAD days 0, fallout 0.00%
+seed 1507 year 10/50: alive 81, top land 19.1%, wars 6, changed 5776656 km², warheads 18 (3 nations), strikes 0, MAD days 125, fallout 0.00%
+seed 1502 year 10/50: alive 79, top land 14.5%, wars 8, changed 15574790 km², warheads 21 (4 nations), strikes 0, MAD days 0, fallout 0.00%
+seed 1510 year 10/50: alive 78, top land 25.4%, wars 6, changed 16629482 km², warheads 22 (4 nations), strikes 0, MAD days 27, fallout 0.00%
+seed 1506 year 10/50: alive 84, top land 17.6%, wars 5, changed 7836778 km², warheads 18 (3 nations), strikes 0, MAD days 268, fallout 0.00%
+seed 1503 year 10/50: alive 72, top land 13.6%, wars 5, changed 14114418 km², warheads 18 (3 nations), strikes 0, MAD days 0, fallout 0.00%
+seed 1509 year 10/50: alive 100, top land 13.4%, wars 8, changed 7270645 km², warheads 18 (3 nations), strikes 0, MAD days 0, fallout 0.00%
+seed 1501 year 10/50: alive 71, top land 19.9%, wars 7, changed 13627894 km², warheads 22 (4 nations), strikes 1, MAD days 95, fallout 0.00%
+seed 1504 year 10/50: alive 76, top land 19.6%, wars 6, changed 16902270 km², warheads 18 (3 nations), strikes 1, MAD days 0, fallout 0.02%
+seed 1508 year 20/50: alive 68, top land 25.7%, wars 5, changed 10198507 km², warheads 61 (3 nations), strikes 2, MAD days 223, fallout 0.07%
+seed 1510 year 20/50: alive 79, top land 22.8%, wars 5, changed 5389169 km², warheads 90 (4 nations), strikes 0, MAD days 123, fallout 0.00%
+seed 1506 year 20/50: alive 77, top land 17.3%, wars 9, changed 3789603 km², warheads 136 (7 nations), strikes 0, MAD days 355, fallout 0.00%
+seed 1507 year 20/50: alive 88, top land 20.3%, wars 4, changed 7582709 km², warheads 116 (4 nations), strikes 0, MAD days 365, fallout 0.00%
+seed 1502 year 20/50: alive 75, top land 23.9%, wars 6, changed 17160273 km², warheads 128 (5 nations), strikes 1, MAD days 365, fallout 0.12%
+seed 1505 year 20/50: alive 81, top land 12.2%, wars 5, changed 9792159 km², warheads 107 (5 nations), strikes 0, MAD days 0, fallout 0.02%
+seed 1503 year 20/50: alive 79, top land 19.4%, wars 9, changed 10467755 km², warheads 127 (4 nations), strikes 0, MAD days 285, fallout 0.00%
+seed 1501 year 20/50: alive 74, top land 18.6%, wars 4, changed 21746523 km², warheads 110 (4 nations), strikes 0, MAD days 0, fallout 0.01%
+seed 1509 year 20/50: alive 85, top land 22.2%, wars 5, changed 11367069 km², warheads 85 (2 nations), strikes 0, MAD days 334, fallout 0.18%
+seed 1504 year 20/50: alive 82, top land 11.5%, wars 5, changed 13468254 km², warheads 102 (3 nations), strikes 0, MAD days 365, fallout 0.03%
+seed 1508 year 30/50: alive 68, top land 32.1%, wars 6, changed 13683390 km², warheads 81 (2 nations), strikes 5, MAD days 322, fallout 1.01%
+seed 1506 year 30/50: alive 72, top land 19.5%, wars 8, changed 9455650 km², warheads 147 (6 nations), strikes 8, MAD days 365, fallout 0.48%
+seed 1510 year 30/50: alive 78, top land 28.1%, wars 5, changed 4524936 km², warheads 131 (5 nations), strikes 2, MAD days 365, fallout 0.59%
+seed 1505 year 30/50: alive 75, top land 13.2%, wars 6, changed 5926495 km², warheads 119 (6 nations), strikes 4, MAD days 21, fallout 1.04%
+seed 1501 year 30/50: alive 76, top land 30.8%, wars 4, changed 15307193 km², warheads 147 (4 nations), strikes 2, MAD days 119, fallout 0.18%
+seed 1507 year 30/50: alive 72, top land 24.6%, wars 7, changed 11932487 km², warheads 154 (4 nations), strikes 0, MAD days 331, fallout 0.02%
+seed 1503 year 30/50: alive 71, top land 14.3%, wars 7, changed 9779468 km², warheads 145 (3 nations), strikes 1, MAD days 350, fallout 0.19%
+seed 1509 year 30/50: alive 75, top land 16.0%, wars 6, changed 15213993 km², warheads 152 (4 nations), strikes 3, MAD days 297, fallout 0.04%
+seed 1502 year 30/50: alive 74, top land 22.2%, wars 9, changed 20697569 km², warheads 147 (4 nations), strikes 4, MAD days 365, fallout 0.67%
+seed 1504 year 30/50: alive 79, top land 9.8%, wars 8, changed 14014079 km², warheads 153 (5 nations), strikes 0, MAD days 365, fallout 0.12%
+seed 1508 year 40/50: alive 59, top land 31.6%, wars 5, changed 12358407 km², warheads 115 (4 nations), strikes 3, MAD days 365, fallout 0.48%
+seed 1506 year 40/50: alive 71, top land 18.3%, wars 6, changed 11033393 km², warheads 149 (4 nations), strikes 0, MAD days 365, fallout 0.35%
+seed 1507 year 40/50: alive 72, top land 21.6%, wars 12, changed 10988133 km², warheads 146 (3 nations), strikes 0, MAD days 200, fallout 0.04%
+seed 1505 year 40/50: alive 75, top land 14.0%, wars 11, changed 20781977 km², warheads 134 (9 nations), strikes 4, MAD days 365, fallout 0.62%
+seed 1510 year 40/50: alive 64, top land 34.1%, wars 5, changed 20930065 km², warheads 117 (5 nations), strikes 0, MAD days 365, fallout 0.42%
+seed 1503 year 40/50: alive 66, top land 13.7%, wars 5, changed 12401044 km², warheads 152 (3 nations), strikes 0, MAD days 261, fallout 0.05%
+seed 1501 year 40/50: alive 79, top land 23.0%, wars 6, changed 19770307 km², warheads 153 (3 nations), strikes 1, MAD days 344, fallout 0.19%
+seed 1509 year 40/50: alive 82, top land 15.1%, wars 7, changed 10978449 km², warheads 179 (5 nations), strikes 0, MAD days 345, fallout 0.14%
+seed 1504 year 40/50: alive 79, top land 17.9%, wars 3, changed 16771289 km², warheads 161 (5 nations), strikes 0, MAD days 365, fallout 0.17%
+seed 1502 year 40/50: alive 68, top land 25.2%, wars 6, changed 17251474 km², warheads 157 (4 nations), strikes 3, MAD days 365, fallout 0.16%
+seed 1508 year 50/50: alive 60, top land 36.8%, wars 3, changed 9605283 km², warheads 129 (3 nations), strikes 0, MAD days 0, fallout 0.03%
+seed 1510 year 50/50: alive 75, top land 26.7%, wars 6, changed 13628457 km², warheads 146 (5 nations), strikes 0, MAD days 151, fallout 0.19%
+seed 1506 year 50/50: alive 75, top land 16.2%, wars 11, changed 15894870 km², warheads 161 (5 nations), strikes 11, MAD days 365, fallout 1.06%
+seed 1507 year 50/50: alive 67, top land 18.6%, wars 10, changed 13469850 km², warheads 166 (4 nations), strikes 1, MAD days 365, fallout 0.02%
+seed 1505 year 50/50: alive 73, top land 9.4%, wars 5, changed 6904760 km², warheads 166 (9 nations), strikes 1, MAD days 365, fallout 0.72%
+seed 1503 year 50/50: alive 58, top land 10.4%, wars 4, changed 10129886 km², warheads 168 (3 nations), strikes 0, MAD days 365, fallout 0.18%
+seed 1509 year 50/50: alive 75, top land 12.5%, wars 8, changed 13717313 km², warheads 190 (5 nations), strikes 1, MAD days 365, fallout 0.16%
+seed 1501 year 50/50: alive 82, top land 19.9%, wars 3, changed 9226744 km², warheads 172 (4 nations), strikes 2, MAD days 365, fallout 0.05%
+seed 1504 year 50/50: alive 94, top land 14.1%, wars 7, changed 15693604 km², warheads 124 (4 nations), strikes 0, MAD days 365, fallout 0.24%
+seed 1502 year 50/50: alive 75, top land 11.8%, wars 6, changed 14229824 km², warheads 155 (4 nations), strikes 0, MAD days 365, fallout 0.05%
+# Sweep 2026-11-01: seeds 1501–1510 × 50 years — FAILING (limits)
+
+Criteria (SPEC §10, tools/sweep/criteria.ts, ADR-54; land by area in km², ADR-52). Limits, every seed: land changing controller in the last 5 years ≥ 1.0%; largest nation < 35.0% of land and < 40.0% of income at the end; 20–250 nations alive every year; a war active in ≥ 80.0% of the years. Dynamism, by realm (a nation with no overlord, with its puppets' land), each in ≥ 80.0% of the seeds of runs of ≥ 50 years: a riser (a realm ending with ≥ 1.0% of the land and ≥ 1.5 × its land after year 1) and a faller (one of the ten largest realms after year 1 ending with ≤ 66.7% of its land then); no break-up (the living nations never more than 1.1 × the most they were 20 years or more before; ADR-428). Reported, not judged: stasis (the longest run of the same five largest by land, as a set; ✓ under 20 years; ADR-750) and the last two columns.
+
+| Seed | Land moving (last 5 y) | Largest land | Largest income | Alive (min–max) | Years with war | Largest riser (realm, M km²) | Largest faller (realm, M km²) | One top five (longest) | Alive over the most 20 y before | New in top 10 | Leader share range |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1501 | 52.3% pass | 19.9% pass | 40.2% **FAIL** | 70–101 pass | 100.0% pass | GER × 80.98 (0.61 → 49.80) yes | ENG × 0.00 (35.47 → 0.00) yes | 7 y yes | × 0.83 yes | 5 | 16.4% |
+| 1502 | 69.7% pass | 11.8% pass | 40.9% **FAIL** | 61–99 pass | 100.0% pass | POL × 28.32 (0.46 → 13.08) yes | ENG × 0.00 (35.29 → 0.00) yes | 5 y yes | × 0.80 yes | 3 | 18.5% |
+| 1503 | 58.1% pass | 10.4% pass | 31.0% pass | 58–97 pass | 100.0% pass | GER × 10.98 (0.91 → 9.97) yes | SOV × 0.00 (26.35 → 0.00) yes | 12 y yes | × 0.78 yes | 3 | 12.9% |
+| 1504 | 55.4% pass | 14.1% pass | 36.2% pass | 71–98 pass | 100.0% pass | GER × 47.88 (0.89 → 42.44) yes | FRA × 0.00 (13.26 → 0.00) yes | 6 y yes | × 0.98 yes | 6 | 19.3% |
+| 1505 | 44.9% pass | 9.4% pass | 24.2% pass | 66–96 pass | 100.0% pass | SWE × 8.30 (0.43 → 3.60) yes | ENG × 0.00 (35.45 → 0.00) yes | 9 y yes | × 0.89 yes | 4 | 11.4% |
+| 1506 | 58.2% pass | 16.2% pass | 32.6% pass | 64–98 pass | 100.0% pass | JAP × 4.64 (2.32 → 10.77) yes | ITA × 0.00 (4.40 → 0.00) yes | 6 y yes | × 0.82 yes | 4 | 5.3% |
+| 1507 | 43.9% pass | 18.6% pass | 30.5% pass | 63–96 pass | 100.0% pass | ARG × 4.61 (2.78 → 12.81) yes | BRA × 0.00 (8.51 → 0.00) yes | 16 y yes | × 0.91 yes | 3 | 10.1% |
+| 1508 | 40.5% pass | 36.8% **FAIL** | 64.7% **FAIL** | 58–99 pass | 100.0% pass | USA × 7.13 (9.57 → 68.25) yes | ENG × 0.00 (35.24 → 0.00) yes | 10 y yes | × 0.86 yes | 4 | 20.9% |
+| 1509 | 54.9% pass | 12.5% pass | 42.0% **FAIL** | 61–100 pass | 100.0% pass | JAP × 18.30 (0.67 → 12.25) yes | CHI × 0.00 (6.53 → 0.00) yes | 12 y yes | × 0.87 yes | 4 | 17.3% |
+| 1510 | 44.7% pass | 26.7% pass | 54.0% **FAIL** | 64–96 pass | 100.0% pass | USA × 6.90 (9.64 → 66.53) yes | SOV × 0.00 (26.57 → 0.00) yes | 8 y yes | × 0.86 yes | 2 | 24.7% |
+
+Limits: 5 of 10 seeds. Riser: 10 of 10. Faller: 10 of 10. No stasis (reported): 10 of 10. No break-up: 10 of 10. Needed: 8 of 10 each.
+
+## Nuclear weapons (PLAN 6.8)
+
+| Seed | First warhead | Warheads at the end (nations) | AI decisions | Bursts | Most land under fallout | Days of war under MAD |
+|---|---|---|---|---|---|---|
+| 1501 | 1946 | 172 (4) | 25 | 24 | 0.59% | 4927 |
+| 1502 | 1946 | 155 (4) | 37 | 37 | 0.67% | 12690 |
+| 1503 | 1946 | 168 (3) | 27 | 27 | 0.97% | 10809 |
+| 1504 | 1946 | 124 (4) | 37 | 37 | 0.67% | 12995 |
+| 1505 | 1946 | 166 (9) | 61 | 61 | 1.23% | 11380 |
+| 1506 | 1946 | 161 (5) | 71 | 71 | 1.06% | 12849 |
+| 1507 | 1946 | 166 (4) | 12 | 12 | 0.04% | 8521 |
+| 1508 | 1946 | 129 (3) | 68 | 67 | 1.01% | 6897 |
+| 1509 | 1946 | 190 (5) | 13 | 13 | 0.21% | 12680 |
+| 1510 | 1946 | 146 (5) | 50 | 50 | 2.13% | 7992 |
+
+Nukes used in 10 of 10 seeds (at least 1: pass); the most land under fallout on a day 2.13% (at most 50.0%: pass).
+
+Wall time 30.5 min with 10 processes (per seed: 1501: 27.9 min, 1502: 30.5 min, 1503: 27.7 min, 1504: 29.5 min, 1505: 27.7 min, 1506: 26.4 min, 1507: 26.6 min, 1508: 25.2 min, 1509: 27.9 min, 1510: 26.0 min).
+

@@ -1,0 +1,41 @@
+5:review: npm run typecheck
+10:review: npm run lint
+15:review: npm run build
+82:review: npm run parity
+88:review: npx vitest run  --reporter=default --reporter=json --outputFile=C:\Git\Warism\.cache\gate\vitest.json 
+1862: Test Files  354 passed (354)
+1863:      Tests  2011 passed (2011)
+1868:review: npx vitest run --config vitest.sweep.config.ts --reporter=default --reporter=json --outputFile=C:\Git\Warism\.cache\gate\vitest.json 
+1952: Test Files  13 passed (13)
+1953:      Tests  18 passed (18)
+1958:review: npx playwright test --project=chromium tests/e2e/airControl1938.spec.ts tests/e2e/airDemo1938.spec.ts tests/e2e/airFx1938.spec.ts tests/e2e/airMapR
+2044:  33 passed (3.9m)
+2045:review: npx playwright test --project=chromium tests/e2e/carrierDeck1938.spec.ts tests/e2e/carrierRaidRow1938.spec.ts tests/e2e/carrierStrikeAshore1938.spe
+2238:  37 passed (5.2m)
+2239:review: npx playwright test --project=chromium tests/e2e/editorForces1938.spec.ts tests/e2e/elements1938.spec.ts tests/e2e/enemyClickPanel1938.spec.ts test
+2396:  1 failed
+2398:  32 passed (11.0m)
+2399:review: npx playwright test --project=chromium --workers=1 tests/e2e/fightCamera1938.spec.ts --reporter=line,json
+2404:  1 passed (1.1m)
+2405:review: npx playwright test --project=chromium tests/e2e/formationPanel1938.spec.ts tests/e2e/formationPlace1938.spec.ts tests/e2e/gameOptions1938.spec.ts 
+2640:  55 passed (6.6m)
+2641:review: npx playwright test --project=chromium tests/e2e/invasion1938.spec.ts tests/e2e/labelFades1938.spec.ts tests/e2e/labels1938.spec.ts tests/e2e/lakeT
+2792:  27 passed (3.8m)
+2793:review: npx playwright test --project=chromium tests/e2e/navalDemo1938.spec.ts tests/e2e/nuclearPower1938.spec.ts tests/e2e/nukeAlert1938.spec.ts tests/e2e
+2906:  1 failed
+2908:  33 passed (2.8m)
+2909:review: npx playwright test --project=chromium --workers=1 tests/e2e/nukeAlertTwo1938.spec.ts --reporter=line,json
+2915:  2 passed (27.9s)
+2916:review: npx playwright test --project=chromium tests/e2e/player1938.spec.ts tests/e2e/playerActions1938.spec.ts tests/e2e/political.spec.ts tests/e2e/preci
+2982:  31 passed (4.2m)
+2983:review: npx playwright test --project=chromium tests/e2e/seaRow1938.spec.ts tests/e2e/seamFight1938.spec.ts tests/e2e/seamItems1938.spec.ts tests/e2e/seamN
+3208:  1 failed
+3210:  31 passed (8.5m)
+3211:review: npx playwright test --project=chromium --workers=1 tests/e2e/seaRow1938.spec.ts --reporter=line,json
+3229:  3 passed (2.3m)
+3230:review: npx playwright test --project=chromium tests/e2e/tankHulls1938.spec.ts tests/e2e/tankSides1938.spec.ts tests/e2e/terrain.spec.ts tests/e2e/tickCloc
+3389:  35 passed (5.7m)
+3390:review: npx playwright test --project=perf --no-deps --reporter=line,json
+3400:  1 passed (4.2s)
+3401:review: green (0 known red, 0 not known)
+3402:exit=0
