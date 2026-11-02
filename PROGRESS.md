@@ -25533,3 +25533,11 @@ No rule changed and nothing on screen changed. One task came out of it.
 - **Not built:** no sea hero can meet 0.30 whatever the AI does; the bar is the user's (ADR-792: (a) against the
   ceiling, recommended; (b) land only; (c) close not done). Nothing in `src/` changed.
 - **Next:** waits on ADR-790 (7.184b3) and ADR-792 (7.184e); then PLAN 7.5.
+
+## 2026-11-02 — the user's decisions: ADR-790 (a), ADR-792 (a)
+
+- **ADR-790 (a):** 7.184b3's bench bar read as heroes on ≥ 0.97 × heroes off on one build: 0.977, 7.184b3 and 7.184b
+  ticked.
+- **ADR-792 (a):** 7.184e's AT against the ceiling (land ≥ 50 % of its army's fighting days; sea with its largest
+  fleet ≥ 50 % of days and in ≥ 50 % of its battle days).
+- **Next:** PLAN 7.184e.

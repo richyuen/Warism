@@ -167,7 +167,7 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
-### ADR-792 · 2026-11-02 · proposed (the user's decision) — PLAN 7.184e: the AT's 30 % is out of reach at sea
+### ADR-792 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.184e: the AT's 30 % is out of reach at sea
 **Context.** 7.184e's AT: each AI hero of a nation at war in battle on ≥ 30 % of its days at war (1461–1470 × 3
 years). HEAD's read before any rule (`docs/evidence/7.184e/head-read.md`, `tools/diag/heroBattle.ts`, 1461–1465): land
 heroes 0.000–0.207, sea heroes 0.000–0.123. The ceiling (the days any formation of the hero's nation in its domain is
@@ -191,7 +191,7 @@ on it on the map, PLAN 7.183), whichever nation is played; a gone hero's row is 
 **Consequences.** At the world's zoom the camera has no room to move (the view is clamped to the map): the follow
 centres the hero from a nearer zoom only.
 
-### ADR-790 · 2026-11-01 · proposed (the user's decision) — PLAN 7.184b3: bench G's T0 with heroes on, 309 fps against a bar of 311
+### ADR-790 · 2026-11-01 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.184b3: bench G's T0 with heroes on, 309 fps against a bar of 311
 **Context.** 7.184b's AT: bench G with `heroes=on` keeps T0 over 311 fps (0.9 × fbca2cc4's 345, ADR-784) and p95 under
 6.9 ms. Bench G's GPU setting, heroes off and on alternately on the same build, three pairs each (`docs/evidence/7.184b/`
 `b3-bench.txt`): with the hero counters painted each frame, off 318.1, 312.1, 311.9 and on 299.2, 301.6, 294.9 (−5 %);
