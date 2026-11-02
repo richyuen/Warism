@@ -167,6 +167,19 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-792 · 2026-11-02 · proposed (the user's decision) — PLAN 7.184e: the AT's 30 % is out of reach at sea
+**Context.** 7.184e's AT: each AI hero of a nation at war in battle on ≥ 30 % of its days at war (1461–1470 × 3
+years). HEAD's read before any rule (`docs/evidence/7.184e/head-read.md`, `tools/diag/heroBattle.ts`, 1461–1465): land
+heroes 0.000–0.207, sea heroes 0.000–0.123. The ceiling (the days any formation of the hero's nation in its domain is
+in battle): sea 0.003–0.172 on all 35 — a navy fights on few of its days at war, so a sea hero with its largest fleet,
+or with every fleet, cannot reach 0.30; land 0.261–0.903, under 0.30 for 2 of 35 (an army that never meets its enemy).
+**Options.** (a) The bar against the ceiling: a land hero in battle on ≥ 50 % of the days its nation's army is (where
+that army fights on ≥ 10 % of its days at war); a sea hero with its nation's largest fleet (same sea zone or within
+`SORTIE_KM`) on ≥ 50 % of its days at war, and in ≥ 50 % of the sea battles of that fleet (recommended: what the task
+asks the AI to do, read where it can be done); (b) keep 30 % for land heroes only (where the army's ceiling is ≥ 30 %),
+drop the sea clause's figure for the fleet's company; (c) close 7.184e not done, the heroes moved by the AI as any.
+**Until then.** No rule: 7.184e waits with a BLOCKERS entry.
+
 ### ADR-791 · 2026-11-01 · accepted — PLAN 7.184c: a nation's heroes in its Overview
 **Decision.** `NationStat.heroes` (`HeroStat`: formation or 0, name key, sea, health, days until back), built by the
 worker's stats from the roster for a nation with heroes, absent otherwise. The Overview's first block, "Heroes": a

@@ -5,6 +5,14 @@ entries are kept and marked **RESOLVED** with the date and fix.
 
 ## Open
 
+### PLAN 7.184e: the AT's 30 % in battle is out of reach for a sea hero (ADR-792, waits on the user)
+- **The bar:** each AI hero of a nation at war in battle on ≥ 30 % of its days at war, 1461–1470 × 3 years.
+- **What was read** (HEAD, no rule; `docs/evidence/7.184e/head-read.md`): shares land 0.000–0.207, sea 0.000–0.123;
+  the ceiling (days any formation of its nation in its domain fights) sea 0.003–0.172 on all 35, land 0.261–0.903.
+- **Left:** a bar the rule can be judged by. ADR-792: (a) against the ceiling (land ≥ 50 % of its army's fighting
+  days; sea with the largest fleet ≥ 50 % of days and in ≥ 50 % of its battles; recommended); (b) 30 % for land
+  only; (c) close not done.
+
 ### PLAN 7.184b3: bench G's T0 with heroes on at 309 fps, bar 311 (ADR-790, waits on the user)
 - **The bar:** bench G with `heroes=on`: T0 over 311 fps and p95 under 6.9 ms.
 - **What moved:** the hero counters drawn once and copied: on/off 0.95 → 0.977 (pairs on one build,

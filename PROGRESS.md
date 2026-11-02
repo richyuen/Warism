@@ -25524,3 +25524,12 @@ No rule changed and nothing on screen changed. One task came out of it.
   `docs/evidence/7.184d/settings-heroes.png`.
 - **Specs by hand:** `settings1938`, `title` (14 of 14).
 - **Next:** PLAN 7.184e (7.184b3 waits on ADR-790).
+
+## 2026-11-02 — PLAN 7.184e: HEAD read first; the AT's 30 % out of reach at sea (ADR-792, BLOCKERS)
+
+- **Read** (`tools/diag/heroBattle.ts`, new; 1461–1465 × 3 years, heroes on, HEAD): heroes in battle on land
+  0.000–0.207 of their days at war, at sea 0.000–0.123. The ceiling (any formation of the nation in the hero's domain
+  in battle that day): sea 0.003–0.172 on all 35, land 0.261–0.903 (`docs/evidence/7.184e/head-read.md`).
+- **Not built:** no sea hero can meet 0.30 whatever the AI does; the bar is the user's (ADR-792: (a) against the
+  ceiling, recommended; (b) land only; (c) close not done). Nothing in `src/` changed.
+- **Next:** waits on ADR-790 (7.184b3) and ADR-792 (7.184e); then PLAN 7.5.

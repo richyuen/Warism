@@ -60,7 +60,8 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
   - [x] 7.184d The option in the new-game form and settings panel, `?heroes=on` in the URL (as 7.182: `gameUrl.ts`, […]
   - [ ] 7.184e The AI uses its heroes: a land hero goes to its nation's main front and leads its attack, a sea hero
     sails with its nation's largest fleet. AT: seeds 1461–1470 × 3 years with heroes on: each AI hero of a nation at war
-    is in battle on ≥ 30 % of its days at war (not idle at home); `sweep:quick` with heroes on and off, as a smoke test
+    is in battle on ≥ 30 % of its days at war (not idle at home) — out of reach at sea, BLOCKERS, ADR-792 waits on the
+    user (`docs/evidence/7.184e/head-read.md`); `sweep:quick` with heroes on and off, as a smoke test
     only: limits green both, the riser and faller reported in PROGRESS.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
