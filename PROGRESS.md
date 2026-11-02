@@ -25599,3 +25599,13 @@ No rule changed and nothing on screen changed. One task came out of it.
 - **Kept:** the sea hero with its largest fleet (7.184e), the land hero to its army's nearest fight (7.185).
 - **Smoke:** sweep:quick with heroes off and on, running on HEAD; reported when done.
 - **Next:** PLAN 7.5 (the critic runs).
+
+## 2026-11-02 — the heroes' smoke: sweep:quick with heroes off and on (PLAN 7.184e–7.186)
+
+- **Run** (seeds 1–10 × 20, HEAD ec098292's rules; `docs/evidence/7.186/2026-11-02-sweep-heroes-{off,on}.md`): limits
+  7 of 10 off, 8 of 10 on; every failure the largest income ≥ 40 % (the open one of done23, BLOCKERS). Riser and
+  faller 10 of 10 both, no break-up, no stasis; nukes 9 / 10 of 10.
+- **Riser and faller:** off, the largest riser varied (GER 2, USA 2, CHI 2, IRQ 2, AUT, ARG), the faller ENG 4, SOV 4,
+  CHI 2; on, the largest riser GER in 7 of 10 (× 11.8 to × 23.4), USA 2, NED, COL; the faller BRA 3, ENG 2, ITA 2, FRA,
+  CHI, SOV. Germany rises more with the heroes on (the Maus and the Bismarck): reported, not judged (ADR-58).
+- **Next:** PLAN 7.5.
