@@ -22,8 +22,11 @@ export function wakesFor(data: Float32Array, count: number): number {
   return n;
 }
 
-/** Writes the wakes of the first `count` instances from instance `at` on; returns the number there are then. */
-export function appendWakes(data: Float32Array, colors: Uint8Array, count: number, at: number): number {
+/**
+ * Writes the wakes of the first `count` instances from instance `at` on; returns the number there are then.
+ * With `states`, a wake takes its ship's (a hero's wake is drawn at its hero's size, PLAN 7.184b2).
+ */
+export function appendWakes(data: Float32Array, colors: Uint8Array, count: number, at: number, states?: Float32Array): number {
   let j = at;
   for (let i = 0; i < count; i++) {
     const o = i * PROXY_STRIDE;
@@ -42,6 +45,7 @@ export function appendWakes(data: Float32Array, colors: Uint8Array, count: numbe
     data[t + 6] = Frame.wake;
     data[t + 7] = WAKE_ALPHA * data[o + 7]!;
     colors.set(WHITE, j * 4);
+    if (states) states[j] = states[i]!;
     j++;
   }
   return j;

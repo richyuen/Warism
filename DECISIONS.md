@@ -173,7 +173,15 @@ world with heroes; the new-game form and the settings panel stay PLAN 7.184d's. 
 is its name alone ("Yamato"), not its kind and number: there is one of it (`MapView.formationName`, by
 `TemplateInfo.hero`).
 **Why.** The drawing's AT needs heroes on a page; the URL is the game's own way to pass a new-game option.
-**Consequences.** `heroFormations()` on the view lists them (tests, and the parts after).
+(b2) At T2 and T3 a hero's sprite (its element, its figure; its turret and wake with it; its stand-in) is drawn
+`HERO_SCALE` (2) × its kind's size, in both looks: a bit of the instance's `aState` (`HERO_BIT`, 16, above the hurt
+level's two bits), which the ball shader already read and the classic shader now declares; each multiplies its
+size after the clamp to the least and most px. Its tag's box and the tests' `elementBallPx` and `shipHullPx` go with it.
+**Why.** Through most of T2 an element is at its least size (5 px, a tank 8, a ship its class's): a hero's size in
+cells doubled would draw the same as its kind's there. No new attribute or wider stride: the state buffer is bound
+for both programs.
+**Consequences.** `heroFormations()` on the view lists them (tests, and the parts after). A hero's ball is large
+enough to show its prop (a barrel, a hull) where its kind's is not.
 
 ### ADR-788 · 2026-11-01 · accepted — PLAN 7.184a3: the heroes' figures; a hero's tank carries its damage
 **Decision.** Every sea hero: `hard` 1,100 (a battleship of 2,000 hit points sunk in about an hour of its fire),

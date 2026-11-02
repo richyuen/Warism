@@ -25473,3 +25473,15 @@ No rule changed and nothing on screen changed. One task came out of it.
 - **AT:** new e2e `heroes1938` (by hand, green): 14 hero formations with `heroes=on`; at 150 m/px Yamato's tag reads
   "Yamato" and the Maus's "Maus" (`docs/evidence/7.184b/b1-tag-*.png`). `gameUrl.test.ts` 10 of 10 (a new case).
 - **Next:** PLAN 7.184b2.
+
+## 2026-11-01 — PLAN 7.184b2: a hero's sprite twice its kind's at T2 and T3, both looks (ADR-789)
+
+- **Built:** `HERO_BIT` / `HERO_SCALE` (`ballShader.ts`): both shaders multiply a sprite's size after its clamp when
+  the instance's state has the bit; `MapView` sets it for a hero's element, figures and stand-in, a turret and a wake
+  take their hull's (`appendWakes` takes the states). The tag box, `elementBallPx` and `shipHullPx` follow.
+- **AT (`heroes1938`'s second test, by hand green; `docs/evidence/7.184b/b2-sizes.txt`, `b2-*.png`):** each sprite
+  drawn alone: Classic T2 Yamato 1.995 ×, Maus 1.999; T3 1.976, 1.999; Countryball T2 1.923, 2.000; T3 2.000, 2.029
+  (bar 1.9–2.1). Sprites of a squadron overlap at T2 and a company's tanks touch at T3: measured on the scene they
+  were clusters, hence the draw alone.
+- **Specs by hand:** `countryballs1938` (7 of 7), `armourT21938`, `closeZoom1938` (4 of 4) green.
+- **Next:** PLAN 7.184b3.

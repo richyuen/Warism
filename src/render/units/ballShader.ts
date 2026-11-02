@@ -211,6 +211,12 @@ export const ANGRY_SLOPE = 0.8;
 /** What a ball's state carries (the instance's `aState`): its formation engaged, it fired at; its hurt level from HURT_SHIFT. */
 export const BallState = { engaged: 1, hit: 2 } as const;
 export const HURT_SHIFT = 2;
+/**
+ * A hero's sprite (PLAN 7.184b2), in either look: a bit of `aState` above the hurt level's two, read
+ * by both shaders, which draw it HERO_SCALE × its kind's size after the size's clamp (ADR-789).
+ */
+export const HERO_BIT = 16;
+export const HERO_SCALE = 2;
 
 /** The share of its men left at or under which a ball shows hurt level 1, 2 and 3 (PLAN 7.178). */
 export const HURT_AT = [0.75, 0.5, 0.25] as const;
@@ -287,7 +293,8 @@ out float vEyes;     // the eyes' and props' share, 0–1
 void main() {
   vec2 pos = mix(aPrevCur.xy, aPrevCur.zw, uT);
   int frame = int(floor(aMisc.z));
-  float sizePx = min(max(aMisc.y * uScale, max(uMinPx, uFrameMinPx[frame])), uMaxPx) * uSizeMul;
+  int st = int(aState + 0.5);
+  float sizePx = min(max(aMisc.y * uScale, max(uMinPx, uFrameMinPx[frame])), uMaxPx) * uSizeMul * ((st & ${HERO_BIT}) != 0 ? ${f(HERO_SCALE)} : 1.0);
   vEyes = smoothstep(${f(EYES_NONE_PX)}, ${f(EYES_FULL_PX)}, sizePx / uDpr);
   // Props out (small): the quad is the ball's.
   float quad = vEyes > 0.0 ? QUAD_OF[frame] : 1.0;
@@ -296,7 +303,6 @@ void main() {
   float part = aMisc.z - float(frame);
   float phase = (part - 0.5) / uMarchSpan;
   float bob = part >= 0.25 ? BOB_H[cls] * abs(sin(3.14159265 * (uTime * BOB_HZ[cls] + phase))) : 0.0;
-  int st = int(aState + 0.5);
   bool hit = (st & ${BallState.hit}) != 0;
   vAngry = (st & ${BallState.engaged}) != 0 ? 1.0 : 0.0;
   vHurt = float((st >> HURT_SHIFT_I) & 3);

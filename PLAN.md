@@ -46,10 +46,11 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
       the view's set of hero formations, a hero's tag its name alone ("Yamato", not "Yamato 12"). AT: `heroes1938`'s
       first test: with `heroes=on`, 14 hero formations; at T2 Yamato's and the Maus's tags read "Yamato" and "Maus";
       `tests/unit/gameUrl.test.ts` round-trips it, and no parameter (or another value) is no option.
-    - [ ] 7.184b2 T2 and T3: a hero's sprite (its element at T2, its figure at T3; its turret and wake with it) 2 × its
+    - [x] 7.184b2 T2 and T3: a hero's sprite (its element at T2, its figure at T3; its turret and wake with it) 2 × its
       kind's after the size's clamp, in the classic and the ball shader (a bit of `aState`). AT: `heroes1938`: Yamato
-      against a lone Japanese battleship and the Maus against a lone German heavy tank company, drawn boxes of their
-      pixels on the sprite layer alone, 1.9–2.1 × at T2 (150 m/px) and T3 (15 m/px), Classic and Countryball.
+      against a Japanese battleship of a battle squadron and the Maus against a heavy tank of a heavy panzer division,
+      each sprite drawn alone (every other instance moved off the map for one draw), 1.9–2.1 × at T2 (150 m/px) and T3
+      (15 m/px), Classic (the square root of its cover: a silhouette turns) and Countryball (its diameter).
     - [ ] 7.184b3 T0 and T1: a hero its own counter (never folded into its nation's) and its own marker (never in a
       stack), each 2 × (box, ball, flag chip); bench G with `heroes=on`. AT: `heroes1938`: the hero's counter at T0
       (5,000 m/px) and marker at T1 (1,000 m/px) against its nation's normal one, drawn boxes on the overlay, 1.9–2.1 ×,

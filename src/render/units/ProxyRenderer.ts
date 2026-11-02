@@ -11,7 +11,7 @@ import type { Camera } from '../camera';
 import { isShipFrame, smallFrameOf } from '../../shared/unitLooks';
 import { hash2 } from '../hash';
 import { ATLAS_FRAMES } from './atlas';
-import { BALL_FS, BALL_VS } from './ballShader';
+import { BALL_FS, BALL_VS, HERO_BIT, HERO_SCALE } from './ballShader';
 
 /** The share of a frame's fraction above a half that carries a marching sprite's phase. */
 const MARCH_SPAN = 0.49;
@@ -35,6 +35,7 @@ in vec2 aCorner;            // per-vertex quad corner in [-0.5, 0.5]
 in vec4 aPrevCur;           // per-instance prev.xy, cur.xy (cells, relative to origin)
 in vec4 aMisc;              // facing (rad), size (cells), frame (+ marchFraction on the march), alpha
 in vec4 aColor;             // tint (normalised u8)
+in float aState;            // the countryballs' state bits; here only a hero's (HERO_BIT, PLAN 7.184b2)
 uniform vec2 uCam;          // camera centre relative to origin (cells)
 uniform float uScale;       // device px per cell
 uniform vec2 uViewport;     // device px
@@ -58,6 +59,8 @@ void main() {
   vec2 pos = mix(aPrevCur.xy, aPrevCur.zw, uT);
   float frame = floor(aMisc.z);
   float sizePx = min(max(aMisc.y * uScale, max(uMinPx, uFrameMinPx[int(frame)])), uMaxPx) * uSizeMul;
+  // A hero (PLAN 7.184b2): its kind's size, clamped as any, then HERO_SCALE × that.
+  if ((int(aState + 0.5) & ${HERO_BIT}) != 0) sizePx *= ${HERO_SCALE.toFixed(1)};
   // Moving (frame + 0.5 and up): infantry sway side to side at a walking cadence, vehicles judder.
   // The rest of the fraction is the sprite's phase (marchFraction): its own from tick to tick,
   // and a turret's is its hull's (PLAN 3.6a).

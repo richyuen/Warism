@@ -1,0 +1,8 @@
+classic T2 150 m/px Yamato (frame 13): 288 px² (28.0 × 12.0) against 72 px² (14.0 × 6.0): side 1.995 ×
+classic T2 150 m/px Maus (frame 7): 153 px² (16.0 × 10.0) against 38 px² (8.0 × 6.0): side 1.999 ×
+classic T3 15 m/px Yamato (frame 13): 1871 px² (70.0 × 32.0) against 479 px² (36.0 × 16.0): side 1.976 ×
+classic T3 15 m/px Maus (frame 7): 362 px² (23.0 × 16.0) against 90 px² (12.0 × 8.0): side 1.999 ×
+balls T2 150 m/px Yamato (frame 13): 652 px² (42.0 × 25.0) against 164 px² (21.0 × 13.0): side 1.923 ×
+balls T2 150 m/px Maus (frame 7): 235 px² (23.0 × 16.0) against 48 px² (8.0 × 8.0): side 2.000 ×
+balls T3 15 m/px Yamato (frame 13): 4018 px² (106.0 × 62.0) against 1007 px² (53.0 × 31.0): side 2.000 ×
+balls T3 15 m/px Maus (frame 7): 4209 px² (96.0 × 69.0) against 1056 px² (48.0 × 34.0): side 2.029 ×

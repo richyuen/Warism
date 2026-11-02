@@ -13,7 +13,7 @@ import { MarkerStacks, type StackItem } from '../render/units/markerStacks';
 import { CounterLayer, counterNation, type CounterSource } from '../render/units/counters';
 import { drawSeaBattles } from '../render/units/seaBattles';
 import { FlagAtlas, NO_FLAG_SLOT } from '../render/units/flagAtlas';
-import { BallState, HURT_SHIFT, hurtLevel } from '../render/units/ballShader';
+import { BallState, HERO_BIT, HERO_SCALE, HURT_SHIFT, hurtLevel } from '../render/units/ballShader';
 import { DeadBalls } from '../render/units/deadBalls';
 import { airFxSize, drawSorties, type PlacedSortie } from '../render/units/sorties';
 import { AirFx } from '../render/fx/air';
@@ -751,6 +751,8 @@ export class MapView {
       p.colors[i * 4 + 2] = col & 255;
       p.colors[i * 4 + 3] = 255;
       p.flagSlots[i] = this.flagAtlas.slotOf(f.nation[i]!);
+      // A hero's stand-in at twice its kind's size (PLAN 7.184b2).
+      p.states[i] = this.heroAt(i) ? HERO_BIT : 0;
     }
     p.upload(f.count);
     // The elements of the snapshot before, for the tanks lost since (PLAN 3.6d). Not across a
@@ -1210,7 +1212,11 @@ export class MapView {
   }
   /** The side of element `i`'s ball in CSS px, by the ball program's rule (PLAN 7.174d; tests). */
   elementBallPx(i: number): number {
-    return Math.max(ELEMENT_CELLS * sizeScale * this.controller.cam.scale, ELEMENT_MIN_PX, BALL_FRAME_MIN_PX[this.elementFrame(i)]!) * this.unitScale;
+    return Math.max(ELEMENT_CELLS * sizeScale * this.controller.cam.scale, ELEMENT_MIN_PX, BALL_FRAME_MIN_PX[this.elementFrame(i)]!) * this.unitScale * this.elementHeroScale(i);
+  }
+  /** HERO_SCALE for element sprite `i` of a hero, else 1 (PLAN 7.184b2). */
+  elementHeroScale(i: number): number {
+    return (this.elementProxies.states[i]! & HERO_BIT) !== 0 ? HERO_SCALE : 1;
   }
   /** Whether element sprite `i` was uploaded as walking (tests). */
   elementWalks(i: number): boolean {
@@ -1285,6 +1291,7 @@ export class MapView {
     let ships = 0;
     for (let i = 0; i < e.count; i++) if (isShipFrame(e.frame[i]!) && marching(e.flags[i]!)) ships++;
     p.reserve(e.count + hulls + ships);
+    const heroes = this.heroIdSet();
     p.originX = Math.floor(this.geo.w / 2);
     p.originY = Math.floor(this.geo.h / 2);
     for (let i = 0; i < e.count; i++) {
@@ -1304,17 +1311,18 @@ export class MapView {
       p.flagSlots[i] = this.flagAtlas.slotOf(e.nation[i]!);
       // The ball's face (PLAN 7.174e): angry while its formation is engaged, flinching while fired at.
       // Its losses (PLAN 7.178): cracks and plasters, by the share of its men left.
-      p.states[i] = ((e.flags[i]! & FormationFlag.engaged) !== 0 ? BallState.engaged : 0) | (e.hit[i] ? BallState.hit : 0) | (hurtLevel(e.strength[i]!, e.size[i]!) << HURT_SHIFT);
+      // A hero's sprite is drawn twice its kind's size (PLAN 7.184b2).
+      p.states[i] = ((e.flags[i]! & FormationFlag.engaged) !== 0 ? BallState.engaged : 0) | (e.hit[i] ? BallState.hit : 0) | (hurtLevel(e.strength[i]!, e.size[i]!) << HURT_SHIFT) | (heroes.has(e.formation[i]!) ? HERO_BIT : 0);
     }
     this.elementTurrets = hulls;
     this.elementTurretOwner = new Uint32Array(hulls);
     const withTurrets = appendTurrets(p.data, p.colors, e.count, this.elementTurretOwner);
-    const all = appendWakes(p.data, p.colors, e.count, withTurrets);
+    // A turret shakes with its hull's flinch, and is a hero's size with it.
+    for (let k = 0; k < hulls; k++) p.states[e.count + k] = p.states[this.elementTurretOwner[k]!]!;
+    // A wake takes its ship's state (a hero's size; the balls draw no wake).
+    const all = appendWakes(p.data, p.colors, e.count, withTurrets, p.states);
     // Turrets and wakes have no flag (PLAN 7.174d draws a turret as its hull's barrel, no wake).
     p.flagSlots.fill(NO_FLAG_SLOT, e.count, all);
-    // A turret shakes with its hull's flinch.
-    for (let k = 0; k < hulls; k++) p.states[e.count + k] = p.states[this.elementTurretOwner[k]!]!;
-    p.states.fill(0, withTurrets, all);
     this.elementWakes = all - withTurrets;
     p.upload(all);
     // Near T3 the section is kept, so that the figures can be built in the frame the close tier
@@ -1457,6 +1465,7 @@ export class MapView {
     const fit = fitScales(e);
     const xs = new Float64Array(total);
     const ys = new Float64Array(total);
+    const heroes = this.heroIdSet();
     let j = 0;
     for (let i = 0; i < e.count; i++) {
       const n = figureCount(e.strength[i]!, e.size[i]!);
@@ -1479,6 +1488,8 @@ export class MapView {
       const moving = marching(e.flags[i]!);
       const rgba = this.spriteRgba(e.nation[i]!, frame, e.x[i]!, e.y[i]!);
       const flagSlot = this.flagAtlas.slotOf(e.nation[i]!);
+      // A hero's figure is drawn twice its kind's size (PLAN 7.184b2).
+      const state = heroes.has(e.formation[i]!) ? HERO_BIT : 0;
       for (let k = 0; k < n; k++, j++) {
         const o = j * PROXY_STRIDE;
         const dx = off[k * 2]! * s;
@@ -1493,6 +1504,7 @@ export class MapView {
         p.data[o + 7] = 1;
         p.colors.set(rgba, j * 4);
         p.flagSlots[j] = flagSlot;
+        p.states[j] = state;
         owner[j] = e.id[i]!;
         cellsOf[j] = size;
         xs[j] = e.x[i]! + dx;
@@ -1503,7 +1515,9 @@ export class MapView {
     this.individualTurrets = hulls;
     this.individualTurretOwner = new Uint32Array(hulls);
     // And a ship under way its wake (PLAN 4.7b).
-    const figuresAll = appendWakes(p.data, p.colors, total, appendTurrets(p.data, p.colors, total, this.individualTurretOwner));
+    const withTurrets = appendTurrets(p.data, p.colors, total, this.individualTurretOwner);
+    for (let k = 0; k < hulls; k++) p.states[total + k] = p.states[this.individualTurretOwner[k]!]!;
+    const figuresAll = appendWakes(p.data, p.colors, total, withTurrets, p.states);
     p.flagSlots.fill(NO_FLAG_SLOT, total, figuresAll);
     p.upload(figuresAll);
     this.individualCount = total;
@@ -1863,7 +1877,7 @@ export class MapView {
       this.shares.individuals > 0.5
         ? Math.max(shipSideCells(frame, this.geo.kmPerCell) * scale, FIGURE_MIN_PX, this.shipMinPx(SLOT_GAP_CELLS * sizeScale * scale)[frame]!)
         : Math.max(ELEMENT_CELLS * sizeScale * scale, ELEMENT_MIN_PX, ELEMENT_FRAME_MIN_PX[frame]!);
-    return side * this.unitScale * share;
+    return side * this.unitScale * share * this.elementHeroScale(i);
   }
 
   /**
@@ -2007,6 +2021,13 @@ export class MapView {
     return this.templates[this.formTemplate[i]!]?.hero === true;
   }
 
+  /** The ids of the hero formations of the last snapshot (PLAN 7.184b2: their sprites' size). */
+  private heroIdSet(): Set<number> {
+    const out = new Set<number>();
+    for (let i = 0; i < this.formIds.length; i++) if (this.heroAt(i)) out.add(this.formIds[i]!);
+    return out;
+  }
+
   /** The hero formations of the last snapshot (PLAN 7.184b; tests). */
   heroFormations(): number[] {
     const out: number[] = [];
@@ -2050,7 +2071,7 @@ export class MapView {
         for (let k = 0; k < offs.length; k++) {
           const [px, py] = worldToScreen(cam, this.elementX[i]! + offs[k]!, this.elementY[i]!, vw, vh);
           if (px < -vw || px > 2 * vw || py < -vh || py > 2 * vh) continue;
-          grow(this.elementFormation[i]! * copies + k, px, py, r);
+          grow(this.elementFormation[i]! * copies + k, px, py, r * this.elementHeroScale(i));
         }
       }
     } else {
