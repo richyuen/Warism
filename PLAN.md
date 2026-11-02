@@ -51,7 +51,7 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
     | --- | --- | --- |
     | JAP | Yamato (battleship, 46 cm guns) | O-I (super-heavy tank project, ~120 t) |
     | USA | USS Iowa (battleship) | T28 (super-heavy assault tank, 86 t) |
-    | SOV | Sovetsky Soyuz (battleship, laid down 1938, never finished) | T-42 (Grotte's super-heavy, ~100 t, 3 turrets, 107 mm) |
+    | SOV | Sovetsky Soyuz (battleship, laid down 1938, never finished) | T-42 (Grote's super-heavy project of 1930–32, never built: ~100 t, 107 mm and two 45 mm guns, 90 mm armour, crew 14–15, 20–27 km/h) |
     | GER | Bismarck (battleship) | Maus (super-heavy tank, 188 t) |
     | ENG | HMS Hood ("the Mighty Hood", battlecruiser) | TOG II (super-heavy tank, 80 t) |
     | FRA | Richelieu (battleship) | Char 2C (69 t, in service in 1938: the largest tank ever fielded) |
