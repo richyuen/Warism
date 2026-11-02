@@ -5,6 +5,19 @@ entries are kept and marked **RESOLVED** with the date and fix.
 
 ## Open
 
+### PLAN 7.5: the review before critic run 25 red on `aiSweep1`: 24 of 197 fleets of the start stand after one year, floor 25 (ADR-633)
+- **The red** (`npm run check:review` on 5d7b214b, twice, deterministic): seed 1 stood 54 after one year on the
+  review of 82d428c1, 24 now; seeds 2 and 3 stand 70 and 71 (were 56 and 64).
+- **Why** (`tools/diag/fleetYear.ts 1 365`, HEAD against ac449e8d): the same wars are declared to day 158. PLAN
+  7.188 keeps Czechoslovakia out of the Soviet war on Romania (its pledge), and that war ends 5 days earlier (day 64
+  for 69). Before, the United States' war on Romania (day 59) ended the same day as Romania's with the Soviet
+  Union; now it goes on with Romania a Soviet puppet, the United States lands (its score 0 to 30 on days 95–130),
+  and 27 of its 36 fleets at home sail on days 90–120 (Italy's 10 by day 90). `leaveBondedWars` is unchanged by
+  the refactor; the rules work, the history moved. Not a machine red: not for `knownRed.json`.
+- **Left:** ADR-798: (a) the floor a stated share, a tenth of the start's fleets (recommended); (b) keep 25 and a
+  rule that a nation made a puppet leaves the wars its overlord is not in; (c) keep 25, a PLAN task to read the
+  puppet's war first. Critic run 25 waits on it (PLAN 7.5 needs a green review).
+
 ### RESOLVED 2026-11-02 (option a, the user's decision: the crossing dropped, 7.186 and the heroes' AI closed not done; ADR-796) · PLAN 7.186: the crossing by sea moved nothing: 0.547 of the lives (HEAD 0.579), bar 2/3
 - **Where:** Britain and the United States 13 of 42 (HEAD 20 of 55), bar 1/2. `docs/evidence/7.186/at-run.md`.
 - **Left:** ADR-796: (a) drop it, close 7.186 and the heroes' AI not done (recommended); (b) read whether heroes go

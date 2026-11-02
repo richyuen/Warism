@@ -167,6 +167,28 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-798 · 2026-11-02 · proposed (the user's decision) — The ten-year runs' fleet guard after PLAN 7.188: seed 1 stands 24 of 197 after one year, floor 25 (ADR-633)
+
+- **Context** (`npm run check:review` before critic run 25, PLAN 7.5): `tests/sweep/aiSweep1` red twice, "fleets
+  of the start that stand after one year: expected 24 to be greater than or equal to 25". On the review of 82d428c1:
+  54, 56, 64 on seeds 1–3; on 5d7b214b: 24, 70, 71.
+- **Measured** (`tools/diag/fleetYear.ts`, HEAD against ac449e8d, seed 1): standing 81 / 78 / 62 / 35 / 24 on days
+  30, 60, 90, 120, 365 (before 81 / 78 / 75 / 74 / 54). The wars declared are the same to day 158. 7.188 keeps
+  Czechoslovakia out of the Soviet war on Romania; it ends on day 64 (was 69), Romania a Soviet puppet both times.
+  Before, the United States' war on Romania (declared day 59) ended with it on day 69; now it goes on, the United
+  States lands (score 0 → 30 on days 95–130), and 27 of its 36 fleets at home sail on days 90–120. `makePuppet`
+  takes the new puppet out of the wars against its overlord's side only, as before 7.188.
+- **Options.**
+  - (a) *Recommended.* The floor is a stated share: a tenth of the start's fleets stand after one year (20 of 197).
+    The guard asks that the daily test (a fleet no rule should have touched is a line, unchanged) has fleets to ask;
+    24 fleets for 365 days still do, and a war that sails a great power's navy is the rules' work. ADR-633 amended.
+  - (b) Keep 25, and a rule: a nation made a puppet leaves the wars its overlord is not in (its diplomacy its
+    overlord's). A sim change, the pin moves, every history after it with it; its own AT.
+  - (c) Keep 25, and a PLAN task to read the puppet's war first (a puppet at war for months beside no overlord);
+    the critic waits on that task.
+- **Consequences.** (a) the review green on the next run, no sim change; (b) and (c) change the rules or wait.
+  Critic run 25 waits on the decision either way.
+
 ### ADR-797 · 2026-11-02 · accepted — PLAN 7.188: a pledge binds as a bond; nobody fights beside its enemy; the pin moves
 
 - **Context.** Critic run 24 scored diplomacy 6 (R24-B1, fixed in 7.187, and its non-blocking 1, 6, 9). (9) The

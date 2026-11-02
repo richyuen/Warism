@@ -25627,3 +25627,12 @@ No rule changed and nothing on screen changed. One task came out of it.
   `farWait1938` re-aimed to seed 4 (day 255); seed 3's first wait (formation 820, day 253) is not taken: the plan's
   sector orders, outside ADR-703's wait, are refused 4 times while it waits (a gap of ADR-703's scope, not filed).
 - **Next:** PLAN 7.5 (the critic again: diplomacy's blocking and its dimension task are done).
+
+## 2026-11-02 — PLAN 7.5: the review before critic run 25 red on the fleet guard (ADR-798 proposed)
+- `npm run check:review` on 5d7b214b: green but `tests/sweep/aiSweep1`, red twice: 24 of 197 fleets of the start
+  stand after one year, floor 25 (ADR-633); seeds 2 and 3 stand 70 and 71. The browser reds (fightCamera,
+  seaRow, shipMarks T3) went green alone.
+- Why (`tools/diag/fleetYear.ts`, against ac449e8d): 7.188 keeps Czechoslovakia out of the Soviet war on Romania,
+  which ends 5 days earlier; the United States' war on Romania no longer ends with it, and 27 American fleets
+  sail on days 90–120. No rule broken; the history moved. Not a machine red.
+- **Next:** waits on ADR-798 (the guard's floor), then PLAN 7.5's critic run 25.
