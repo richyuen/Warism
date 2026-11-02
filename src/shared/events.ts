@@ -196,6 +196,18 @@ export const EventKind = {
    * `Bond`'s bits (a truce ended, an alliance left, a puppet freed).
    */
   BondsBroken: 64,
+  /**
+   * A guarantee ended because its guarantor and target are at war (PLAN 7.190, ADR-797: a guarantor
+   * that declares on its own, or is declared on by it). a = the guarantor, b = the target, x = y = NaN.
+   * A pledge of a nation that dies goes with it, told by the death.
+   */
+  GuaranteeLapsed: 65,
+  /**
+   * A nation left a war that goes on without it (PLAN 7.190, critic run 25's 1): a bond took it
+   * out (`leaveBondedWars`: made a puppet, handed over). a = the nation that left, b = the leader of
+   * the side it fought, x = y = NaN. A war that ends so is `WarEnded`.
+   */
+  WarLeft: 66,
 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */

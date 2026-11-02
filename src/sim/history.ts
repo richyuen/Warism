@@ -52,6 +52,10 @@ export const HISTORY_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.NuclearPower,
   // The bonds a forced war broke (PLAN 7.175a).
   EventKind.BondsBroken,
+  // A guarantee lapsed at a war between its two (PLAN 7.190).
+  EventKind.GuaranteeLapsed,
+  // A nation out of a war that goes on (PLAN 7.190).
+  EventKind.WarLeft,
 ]);
 
 export class History implements Stateful {

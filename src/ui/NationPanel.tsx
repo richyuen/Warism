@@ -218,6 +218,18 @@ export function NationPanel({
               <div class="chips">{nation.puppets.map(chip)}</div>
             </div>
           ) : null}
+          {nation.guarantees.length > 0 ? (
+            <div class="panel-block" data-testid="panel-guarantees">
+              <div class="panel-sub">{t('panel.guarantees')}</div>
+              <div class="chips">{nation.guarantees.map(chip)}</div>
+            </div>
+          ) : null}
+          {nation.guarantors.length > 0 ? (
+            <div class="panel-block" data-testid="panel-guarantors">
+              <div class="panel-sub">{t('panel.guarantors')}</div>
+              <div class="chips">{nation.guarantors.map(chip)}</div>
+            </div>
+          ) : null}
           <div class="panel-block" data-testid="panel-wars">
             <div class="panel-sub">{t('panel.atWarWith')}</div>
             {nation.enemies.length > 0 ? <div class="chips">{nation.enemies.map(chip)}</div> : <div class="panel-note">{t('panel.atPeace')}</div>}

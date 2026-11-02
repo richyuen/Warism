@@ -114,6 +114,11 @@ describe('no war inside one realm or one alliance (PLAN 3.8)', () => {
     expect(declareWar(w, SOV, CHI)).not.toBeNull();
     expect(w.alliances.guarantorsOf(CHI)).not.toContain(SOV);
     for (const g of w.alliances.guarantees) expect(w.wars.atWar(g.guarantor, g.target), `${tag(g.guarantor)} on ${tag(g.target)}`).toBe(false);
+    // PLAN 7.190 (critic run 25's 9): the lapse is a row of the history, after the declaration.
+    const rows = historyRows(w, (n) => (n === SOV ? '=the Soviet Union' : n === CHI ? '=China' : `=n${n}`), () => '');
+    const kinds = rows.map((r) => r.kind);
+    expect(kinds.indexOf(EventKind.GuaranteeLapsed)).toBeGreaterThan(kinds.indexOf(EventKind.WarDeclared));
+    expect(rows.filter((r) => r.kind === EventKind.GuaranteeLapsed).map(historyText)).toEqual(["The Soviet Union's guarantee of China lapsed: they are at war"]);
   });
 
   // PLAN 7.188 (critic run 24's 1, its case on 2207): Japan forces war on its ally Germany, Italy
@@ -218,6 +223,10 @@ describe('no war inside one realm or one alliance (PLAN 3.8)', () => {
     expect(controller[inAof]).toBe(AOF);
     expect(controller[inRep]).toBe(REP);
     expect(controller[inGer]).toBe(REP);
+    // PLAN 7.190 (critic run 25's 1): the war that goes on without it has a row, as the one that ended.
+    const rows = historyRows(w, (n) => (n === REP ? '=Republican Spain' : n === AOF ? '=French West Africa' : n === AEF ? '=French Equatorial Africa' : `=n${n}`), () => '');
+    expect(rows.filter((r) => r.kind === EventKind.WarLeft).map(historyText)).toEqual(['Republican Spain left its war with French West Africa']);
+    expect(rows.filter((r) => r.kind === EventKind.WarEnded)).toHaveLength(1);
   });
 
   // PLAN 3.8d2: seed 1, day 300. Poland annexed Hungary and got its puppet Albania, which was at

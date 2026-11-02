@@ -104,6 +104,10 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.NuclearPower]: ['nation', 'number'],
   // A forced war's bonds broken (PLAN 7.175a): the attacker, the nation war was declared on.
   [EventKind.BondsBroken]: ['nation', 'nation'],
+  // A guarantee lapsed at a war between its two (PLAN 7.190): the guarantor, the target.
+  [EventKind.GuaranteeLapsed]: ['nation', 'nation'],
+  // A nation out of a war that goes on (PLAN 7.190): it, the enemy's leader.
+  [EventKind.WarLeft]: ['nation', 'nation'],
 };
 
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */

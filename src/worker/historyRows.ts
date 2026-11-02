@@ -181,7 +181,7 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
 }
 
 /** The kinds whose b is the nation the event happened to (the one a war was declared on, the loser of a peace, the one a bond took out of its war). */
-const PLACE_OF_B: ReadonlySet<number> = new Set([EventKind.WarDeclared, EventKind.PeaceSigned, EventKind.WarEnded, EventKind.BondsBroken]);
+const PLACE_OF_B: ReadonlySet<number> = new Set([EventKind.WarDeclared, EventKind.PeaceSigned, EventKind.WarEnded, EventKind.BondsBroken, EventKind.GuaranteeLapsed]);
 
 /**
  * The ticker's rows (PLAN 3.12c): the last `TICKER_ROWS` major events of the last `TICKER_HOURS`,

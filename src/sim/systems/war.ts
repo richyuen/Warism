@@ -278,6 +278,8 @@ export function leaveBondedWars(world: World, n: number): void {
     // The war is over when they were the last of their side: the log says so (PLAN 3.12Rn: it
     // declared the war and never ended it).
     if (!world.wars.list.includes(war)) world.out.emit(world.tick, EventKind.WarEnded, enemies[0]!, n, NaN, NaN);
+    // A war that goes on without it: the log says it left (PLAN 7.190, critic run 25's 1).
+    else world.out.emit(world.tick, EventKind.WarLeft, n, enemies[0]!, NaN, NaN);
     if (before > 0) war.startMen[s] = war.startMen[s]! * (of(war.sides[s]!) / before);
     for (const m of leaving) for (const o of enemies) parted.push([m, o]);
   }
@@ -378,10 +380,14 @@ export function declareWar(world: World, attacker: number, target: number, alone
   const war = world.wars.start(a, d, world.tick, [ftd(a), ftd(d)]);
   // A pledge between the two sides lapses (only the leaders' can be left): a guarantor that
   // declares on the nation it guarantees, or is declared on by it, is its guarantor no more.
-  const before = al.guarantees.length;
-  al.guarantees = al.guarantees.filter((g) => !((a.includes(g.guarantor) && d.includes(g.target)) || (d.includes(g.guarantor) && a.includes(g.target))));
-  if (al.guarantees.length !== before) al.changed();
+  // The lapse is a row of the history after the declaration (PLAN 7.190).
+  const lapsed = al.guarantees.filter((g) => (a.includes(g.guarantor) && d.includes(g.target)) || (d.includes(g.guarantor) && a.includes(g.target)));
+  if (lapsed.length > 0) {
+    al.guarantees = al.guarantees.filter((g) => !lapsed.includes(g));
+    al.changed();
+  }
   world.out.emit(world.tick, EventKind.WarDeclared, attacker, defender, NaN, NaN);
+  for (const g of lapsed) world.out.emit(world.tick, EventKind.GuaranteeLapsed, g.guarantor, g.target, NaN, NaN);
   return war;
 }
 

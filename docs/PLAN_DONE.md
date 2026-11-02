@@ -17466,3 +17466,26 @@ Of 7.184 (open in PLAN.md):
   AT: on the critic's cases (7019, 2531, 8467, the player's Poland and God's Force war), the old war still on and its
   held cells unchanged an hour after the declaration (0 of 3 left, as run 24's build); 7.188's freed puppet on one
   side of each war; a unit test red on `e4386478`.
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.190 Diplomacy 6, needs 7 (critic run 25): what 7.189 leaves, the report's non-blocking 1 and 9. (9) Guarantees
+  are shown nowhere: the panels list allies, puppets and wars, so a pledge, its binding (ADR-797) and its lapse are
+  invisible (`critic/c25_gu_3739.json`). (1) A war a nation leaves gets no row (`critic/c25_es_head_7019.json`).
+  Fix: the nation panel lists its guarantees given and held; a pledge that lapses, and any war left, gets a ticker and
+  history row.
+  AT: on 3739 day 0, each guarantee of the 1938 start named in both its nations' panels, the guarantor's and the
+  target's (an e2e test, red on `e4386478`); on 1522–1531 to day 60, every pledge that lapses has its row (a unit test, red on
+  `e4386478`).

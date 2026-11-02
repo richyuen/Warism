@@ -597,6 +597,9 @@ export interface NationStat {
   enemies: number[];
   /** Its truces in force (PLAN 7.175b): with whom, and the days left (rounded up). */
   truces: { with: number; days: number }[];
+  /** The nations it guarantees, and those that guarantee it (PLAN 7.190: the panel's pledges). */
+  guarantees: number[];
+  guarantors: number[];
   aiOff: boolean;
   /** Whether God Mode has left it allowed nuclear weapons (PLAN 6.1a; the world's toggle apart). */
   nukesAllowed: boolean;

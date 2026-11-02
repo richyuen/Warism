@@ -901,6 +901,8 @@ export class SimServer {
         puppets: puppets.get(id) ?? [],
         enemies: [...(enemies.get(id) ?? [])],
         truces: world.wars.truces.filter((t) => t.untilTick > world.tick && (t.a === id || t.b === id)).map((t) => ({ with: t.a === id ? t.b : t.a, days: Math.ceil((t.untilTick - world.tick) / 24) })),
+        guarantees: world.alliances.guarantees.filter((g) => g.guarantor === id).map((g) => g.target),
+        guarantors: world.alliances.guarantorsOf(id),
         aiOff: nc.aiOff[id] === 1,
         nukesAllowed: !world.nukesBanned.has(id),
         warheads: warheadsOf(world, id),

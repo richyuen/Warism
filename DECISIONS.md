@@ -167,6 +167,20 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-800 · 2026-11-02 · accepted — PLAN 7.190: the pledges in the nation panel; a lapse and a war left are rows
+
+- **Context.** Critic run 25 kept diplomacy at 6 with R25-B1 (7.189) and its non-blocking 1 and 9: guarantees were
+  shown nowhere, so a pledge, its binding (ADR-797) and its lapse were invisible; a war a nation left had no row.
+- **Decision.** The statistics message carries each nation's `guarantees` (the nations it guarantees) and `guarantors`;
+  the panel's overview lists them as "Guarantees" and "Guaranteed by", nation chips. `GuaranteeLapsed` (a guarantor, b
+  target) is logged after a declaration that puts the two on opposite sides; `WarLeft` (a the nation, b the enemy's
+  leader) when a bond takes a nation out of a war that goes on (`leaveBondedWars`; one that ends so stays
+  `WarEnded`). Both are history rows, not the ticker's (as an alliance's changes; the declaration is the ticker's).
+  A pledge of a nation that dies goes with it, told by the death.
+- **Consequences.** On 3739 day 0 the 8 guarantees of the start in both panels (an e2e test, red on e4386478); 1 of 1
+  lapse with its row on 1522–1531 to day 60 (`tools/diag/pledgeRows.ts`, `docs/evidence/7.190/at-run.md`). Seed 99's
+  pin unchanged.
+
 ### ADR-799 · 2026-11-02 · accepted — PLAN 7.189 (R25-B1): a war on one's partner in a war is refused; 7.188's leave rule goes
 
 - **Context.** Critic run 25's blocking issue: PLAN 7.188 (ADR-797) took an attacker that stood on one side with a

@@ -25658,3 +25658,12 @@ No rule changed and nothing on screen changed. One task came out of it.
   unit tests red on e4386478, a standing test; the Albania test reads the refusal; the forceWar overrun case in its
   own world. Unit 2041 of 2041 (the 1938 build-time test 2017 ms under the whole suite, green alone); pin unchanged.
 - **Next:** PLAN 7.190.
+
+## 2026-11-02 — PLAN 7.190 (diplomacy 6, ADR-800): the pledges shown; a lapse and a war left logged
+- The nation panel lists "Guarantees" and "Guaranteed by" (the statistics message's `guarantees`, `guarantors`).
+  New history rows: `GuaranteeLapsed` after a declaration between a guarantor and its target, `WarLeft` when a bond
+  takes a nation out of a war that goes on.
+- AT (`docs/evidence/7.190/at-run.md`): the 8 guarantees of the start in both panels on 3739 (e2e, red on e4386478);
+  the rows' words in unit tests (red on e4386478); 1 of 1 lapse with its row on 1522–1531 to day 60. Unit 2041 of
+  2041; e2e guarantees, history, nation panel, puppets 7 of 7; pin unchanged.
+- **Next:** PLAN 7.5 (the critic again: R25-B1 and diplomacy's dimension task done).
