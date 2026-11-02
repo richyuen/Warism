@@ -25619,4 +25619,11 @@ No rule changed and nothing on screen changed. One task came out of it.
   armies left in foreign land march home at the day's start (`repatriationSystem`). AT: land held at peace 0 at days
   0, 30, 180 on 1517, 3739, 8821 and 1501–1510 (39 of 39; `docs/evidence/7.187/at-run.md`, `tools/diag/peaceHeld.ts`);
   the unit test red without (1,345 cells on 1517). The default path is untouched (seed 99's pin unchanged).
-- **Next:** PLAN 7.188.
+- **2026-11-02 · PLAN 7.188 (diplomacy 6, ADR-797):** in `declareWar` a pledge binds as a bond (a nation called
+  against one it guarantees, or that guarantees it, stays out; a pledge between the sides lapses), and an attacker on
+  one side with a defender in an older war leaves it (`leaveWarsWhere`). The nation menu offers no alliance at war.
+  AT (`docs/evidence/7.188/at-run.md`): no guarantor at war with its own to day 30 on 13 of 13 seeds (the critic's 3
+  of 3 before); the critic's freed-puppet case and the menu as tests, red before. Pin dc41c283 → a7946f81.
+  `farWait1938` re-aimed to seed 4 (day 255); seed 3's first wait (formation 820, day 253) is not taken: the plan's
+  sector orders, outside ADR-703's wait, are refused 4 times while it waits (a gap of ADR-703's scope, not filed).
+- **Next:** PLAN 7.5 (the critic again: diplomacy's blocking and its dimension task are done).

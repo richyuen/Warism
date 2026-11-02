@@ -167,6 +167,21 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-797 · 2026-11-02 · accepted — PLAN 7.188: a pledge binds as a bond; nobody fights beside its enemy; the pin moves
+
+- **Context.** Critic run 24 scored diplomacy 6 (R24-B1, fixed in 7.187, and its non-blocking 1, 6, 9). (9) The
+  Soviet Union declared on Romania on days 4–11 of 3 of 3 seeds and called Czechoslovakia, Romania's ally, in
+  against itself while it guaranteed it, the pledge kept. (1) Albania, freed by its force war on Italy, fought
+  Italy and stood with it against Japan. (6) The nation menu offered "Propose alliance" (greyed) to an enemy.
+- **Decision.** In `declareWar`: a nation called against one it guarantees, or one that guarantees it, stays out
+  as one with a bond does; a pledge between the two sides that is left (only the leaders' can be) lapses; and an
+  attacker on one side with a defender in an older war leaves that war (`leaveWarsWhere`, the way of
+  `leaveBondedWars`: its puppets of that side with it, the land held back). The menu shows no "Propose alliance"
+  at war (to an ally, greyed as before); the Actions tab's is greyed at war.
+- **Consequences.** On 1517, 3739, 8821 and 1511–1521 (not 1517 twice) to day 30, no guarantor at war with its own
+  (`tools/diag/pledgeWars.ts`, `docs/evidence/7.188/at-run.md`); the Soviet Union still goes to war on Romania on
+  the same days, without Czechoslovakia. The default world changes: seed 99's pin dc41c283 → a7946f81.
+
 ### ADR-796 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.186: the crossing by sea moved nothing; the AT missed
 **Context.** The rule (uncommitted): a land hero with no way over land to its army's nearest fights goes to the nearest
 on another land by sea, by a port of its land where its nation's transports wait (`orderMove`'s `byPort`, as a

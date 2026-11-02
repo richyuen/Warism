@@ -254,6 +254,15 @@ export function bond(world: World, a: number, b: number): Refusal {
  * side's men at the start are scaled to those who stay, so its losses read as before.
  */
 export function leaveBondedWars(world: World, n: number): void {
+  leaveWarsWhere(world, n, (war, s) => war.sides[1 - s]!.some((o) => bond(world, n, o) !== Refusal.None));
+}
+
+/**
+ * `n` leaves, with its puppets of its side, each war `when` names (its side `s` in it), as
+ * `leaveBondedWars` tells; between each that left and each nation it is no longer at war with,
+ * the land held goes back to its owner.
+ */
+function leaveWarsWhere(world: World, n: number, when: (war: War, s: number) => boolean): void {
   const realm = withPuppets(world, n);
   const parted: [number, number][] = [];
   let men: Map<number, number> | null = null;
@@ -261,7 +270,7 @@ export function leaveBondedWars(world: World, n: number): void {
     const s: number = war.sides[ATTACKERS].includes(n) ? ATTACKERS : war.sides[DEFENDERS].includes(n) ? DEFENDERS : -1;
     if (s < 0) continue;
     const enemies = war.sides[1 - s]!;
-    if (!enemies.some((o) => bond(world, n, o) !== Refusal.None)) continue;
+    if (!when(war, s)) continue;
     const leaving = war.sides[s]!.filter((m) => realm.includes(m));
     men ??= menOf(world);
     const of = (side: number[]): number => side.reduce((sum, m) => sum + (men!.get(m) ?? 0), 0);
@@ -341,7 +350,11 @@ export function declareWar(world: World, attacker: number, target: number, alone
   // war was scored in the second on its first day, and the second's peace handed it over.
   // The puppet a declaration names stands as the leaders do: the war is about it (PLAN 3.8e1).
   const leader = (x: number): boolean => x === attacker || x === defender || x === target;
-  const bound = (x: number, enemies: number[]): boolean => enemies.some((o) => world.wars.atWar(x, o) || bond(world, x, o) !== Refusal.None);
+  // A pledge binds as a bond does (PLAN 7.188, critic run 24's 9): a nation called against one it
+  // guarantees, or that guarantees it, stays out (the Soviet Union on Romania called in
+  // Czechoslovakia, its own pledge, against it).
+  const pledged = (x: number, o: number): boolean => al.guarantees.some((g) => (g.guarantor === x && g.target === o) || (g.guarantor === o && g.target === x));
+  const bound = (x: number, enemies: number[]): boolean => enemies.some((o) => world.wars.atWar(x, o) || bond(world, x, o) !== Refusal.None || pledged(x, o));
   const without = (sides: [number[], number[]], asked: (x: number) => boolean, enemiesOf: (s: number, stand: Set<number>) => number[]): [number[], number[]] => {
     const out = new Set<number>();
     const stand = new Set<number>();
@@ -362,6 +375,15 @@ export function declareWar(world: World, attacker: number, target: number, alone
   // on, so whole alliance blocs fought every later war forever and fronts froze).
   const ftd = (side: number[]): boolean => nc.fightToDeath[side[0]!] === 1;
   const war = world.wars.start(a, d, world.tick, [ftd(a), ftd(d)]);
+  // A pledge between the two sides lapses (only the leaders' can be left): a guarantor that
+  // declares on the nation it guarantees, or is declared on by it, is its guarantor no more.
+  const before = al.guarantees.length;
+  al.guarantees = al.guarantees.filter((g) => !((a.includes(g.guarantor) && d.includes(g.target)) || (d.includes(g.guarantor) && a.includes(g.target))));
+  if (al.guarantees.length !== before) al.changed();
+  // No nation fights beside its enemy (PLAN 7.188, critic run 24's 1): an attacker that is on one
+  // side with a defender in an older war leaves that war (Albania, freed to declare on Italy, had
+  // stayed on Italy's side against Japan).
+  for (const x of a) leaveWarsWhere(world, x, (w2, t) => w2 !== war && w2.sides[t]!.some((y) => d.includes(y)));
   world.out.emit(world.tick, EventKind.WarDeclared, attacker, defender, NaN, NaN);
   return war;
 }

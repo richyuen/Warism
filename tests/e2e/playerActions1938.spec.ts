@@ -164,7 +164,7 @@ test('a right-click on a nation\'s ground: declare war from its menu, and a refu
   await page.mouse.click(lit[0], lit[1], { button: 'right' });
   await expect(page.getByTestId('nation-menu-peace')).toBeVisible();
   await expect(page.getByTestId('nation-menu-war')).toHaveCount(0);
-  await expect(page.getByTestId('nation-menu-ally')).toBeDisabled();
+  await expect(page.getByTestId('nation-menu-ally')).toHaveCount(0);
   // A left press on the map closes it.
   await page.mouse.click(lit[0], lit[1]);
   await expect(menu).toHaveCount(0);

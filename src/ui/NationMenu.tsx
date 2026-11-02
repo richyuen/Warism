@@ -79,7 +79,8 @@ export function NationMenu({ name, flagUrl, x, y, standing, war, onWar, player, 
     onGoTo ? btn('nation-menu-goto', t('menu.goTo'), onGoTo) : null,
     war === null && onWar ? btn('nation-menu-war', t(standing?.bond ? 'act.forceWar' : 'god.war'), onWar, { force: standing?.bond ?? false }) : null,
     war !== null && player ? btn('nation-menu-peace', t('act.offerPeace'), () => player.onPeace(war), { disabled: player.peace ? !player.peace.accepted : false, title: player.peace ? peaceWhy(player.peace) || undefined : undefined }) : null,
-    player ? btn('nation-menu-ally', t('act.proposeAlliance'), player.onAlly, { disabled: player.allied || war !== null }) : null,
+    // Not offered to an enemy (PLAN 7.188, critic run 24's 6): peace comes first. To an ally, greyed out.
+    player && war === null ? btn('nation-menu-ally', t('act.proposeAlliance'), player.onAlly, { disabled: player.allied }) : null,
   ].filter((b) => b !== null);
   const godItems = god
     ? [

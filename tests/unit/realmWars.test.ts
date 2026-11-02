@@ -6,7 +6,7 @@ import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { canJoin, noWarAmong } from '../../src/sim/systems/alliances';
 import { annexNation, makePuppet } from '../../src/sim/systems/puppets';
-import { declareWar, whyNotWar } from '../../src/sim/systems/war';
+import { declareWar, forceWar, whyNotWar } from '../../src/sim/systems/war';
 import { TICKER_KINDS } from '../../src/shared/history';
 import { cueOfKind } from '../../src/shared/sound';
 import { historyText } from '../../src/ui/historyText';
@@ -91,6 +91,52 @@ describe('no war inside one realm or one alliance (PLAN 3.8)', () => {
   // PLAN 3.8d1: seed 1, day 199. Republican Spain was at war with French West Africa and French
   // Equatorial Africa when the peace of its war with France made it France's puppet: two wars
   // inside one realm from that hour.
+  // PLAN 7.188 (critic run 24's 9): the Soviet Union guarantees Czechoslovakia. On Romania it called
+  // Czechoslovakia (of Romania's Little Entente) in against itself, the pledge kept, on 3 of 3 seeds.
+  it('a nation called against one it guarantees, or one that guarantees it, stays out of the war', () => {
+    const w = world1938(5).world;
+    const [SOV, ROM, CZS] = ['SOV', 'ROM', 'CZS'].map(nationId) as [number, number, number];
+    expect(w.alliances.guarantorsOf(CZS)).toContain(SOV);
+    expect(w.alliances.allied(ROM, CZS)).toBe(true);
+    const war = declareWar(w, SOV, ROM);
+    expect(war).not.toBeNull();
+    expect(war!.sides[1]).toContain(ROM);
+    expect(war!.sides[1]).not.toContain(CZS);
+    expect(w.wars.atWar(SOV, CZS)).toBe(false);
+    expect(w.alliances.guarantorsOf(CZS)).toContain(SOV);
+  });
+
+  it('a guarantor that declares on the nation it guarantees is its guarantor no more', () => {
+    const w = world1938(5).world;
+    const [SOV, CHI] = ['SOV', 'CHI'].map(nationId) as [number, number];
+    expect(w.alliances.guarantorsOf(CHI)).toContain(SOV);
+    expect(w.wars.atWar(SOV, CHI)).toBe(false);
+    expect(declareWar(w, SOV, CHI)).not.toBeNull();
+    expect(w.alliances.guarantorsOf(CHI)).not.toContain(SOV);
+    for (const g of w.alliances.guarantees) expect(w.wars.atWar(g.guarantor, g.target), `${tag(g.guarantor)} on ${tag(g.target)}`).toBe(false);
+  });
+
+  // PLAN 7.188 (critic run 24's 1, its case on 2207): Japan forces war on its ally Germany, Italy
+  // and Albania with it; Albania, Italy's puppet, forces war on Italy. Freed, it fought Italy and
+  // stood with it against Japan.
+  it('a freed puppet that declares on its overlord leaves the war it fought at its side', () => {
+    const s = world1938(5);
+    const w = s.world;
+    const JAP = nationId('JAP');
+    forceWar(w, JAP, GER);
+    expect(w.wars.atWar(JAP, ALB)).toBe(true);
+    forceWar(w, ALB, ITA);
+    expect(w.nations.cols.overlord[ALB]).toBe(0);
+    expect(w.wars.atWar(ALB, ITA)).toBe(true);
+    expect(w.wars.atWar(ALB, JAP)).toBe(false);
+    const beside: string[] = [];
+    for (const u of w.wars.list) for (const v of w.wars.list) {
+      if (u === v) continue;
+      for (const side of u.sides) for (const x of side) for (const y of side) if (x !== y && ((v.sides[0].includes(x) && v.sides[1].includes(y)) || (v.sides[1].includes(x) && v.sides[0].includes(y)))) beside.push(`${tag(x)} with ${tag(y)}`);
+    }
+    expect(beside).toEqual([]);
+  });
+
   it('a nation made a puppet leaves its wars against its new realm, and the land held in them goes back', () => {
     const w = world1938(5).world;
     const [REP, POR] = [nationId('REP'), nationId('POR')];

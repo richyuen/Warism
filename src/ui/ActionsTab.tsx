@@ -112,7 +112,7 @@ export function ActionsTab({ nation, nations, wars, templates, day, onCommand, w
         <button type="button" class="god-btn" data-testid="act-war" data-force={standing?.bond ? 1 : 0} disabled={tgt === 0 || standing?.kind === 'war'} onClick={() => onCommand({ kind: 'forceWar', attacker: n, defender: tgt })}>
           {t(standing?.bond ? 'act.forceWar' : 'god.war')}
         </button>
-        <button type="button" class="god-btn" data-testid="act-ally" disabled={tgt === 0} onClick={() => onCommand({ kind: 'proposeAlliance', from: n, to: tgt })}>
+        <button type="button" class="god-btn" data-testid="act-ally" disabled={tgt === 0 || standing?.kind === 'war'} onClick={() => onCommand({ kind: 'proposeAlliance', from: n, to: tgt })}>
           {t('act.proposeAlliance')}
         </button>
       </div>

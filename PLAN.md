@@ -33,15 +33,6 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.188 Diplomacy 6, needs 7 (critic run 24): what R24-B1 (7.187) leaves, the report's "Also non-blocking 1, 6, 9":
-  (1) a freed puppet fights on both sides (`critic/c24_fw2_2207.json`); (6) "Propose alliance" offered to an enemy
-  (`critic/c24_fw_2207.json`); (9) the Soviet Union declares on Romania on days 4–11 on 3 of 3 seeds, calling in
-  Czechoslovakia, whose guarantor it is, against itself, the pledge kept (`critic/c24_dp.json` scenario rows' `odd`
-  at day 30). Fix (9): a guarantor stays out of, or is refused, a declaration that would call the nation it guarantees
-  against it; or the pledge lapses.
-  AT: on the critic's cases, (1) the freed puppet on one side of each war, (6) no "Propose alliance" to a nation at
-  war with the player, (9) on 1517, 3739, 8821 and unseen 1511–1520 to day 30, no nation at war with a nation it
-  guarantees; a unit test red on `82d428c1` for each rule.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 
@@ -447,3 +438,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.185 (closed not done, ADR-795 a, the user's decision: the rule kept, 0.640 of 2/3; PLAN 7.186) A land hero in its army's battles (found at 7.184e's AT, ADR-793 a): a land hero of the AI is in battle on […]
 - [x] 7.186 (closed not done, ADR-796 a, the user's decision: the crossing dropped; the heroes' AI closed) A land hero overseas (found at 7.185's AT, ADR-795 a): a land hero is ordered over land only […]
 - [x] 7.187 R24-B1: "Alliances and wars: random" (PLAN 7.182, ADR-785) leaves Japan occupying 1,345 cells of China […]
+- [x] 7.188 Diplomacy 6, needs 7 (critic run 24): what R24-B1 (7.187) leaves, the report's "Also non-blocking 1, 6, 9": […]

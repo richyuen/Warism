@@ -17414,3 +17414,27 @@ Of 7.184 (open in PLAN.md):
   AT: with the option random, on 1517, 3739, 8821 and unseen 1501–1510, at days 0, 30 and 180, no cell whose
   controller is not its owner where the two are at peace; a unit test red on `82d428c1`; the default path's pin of
   seed 99 unchanged.
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.188 Diplomacy 6, needs 7 (critic run 24): what R24-B1 (7.187) leaves, the report's "Also non-blocking 1, 6, 9":
+  (1) a freed puppet fights on both sides (`critic/c24_fw2_2207.json`); (6) "Propose alliance" offered to an enemy
+  (`critic/c24_fw_2207.json`); (9) the Soviet Union declares on Romania on days 4–11 on 3 of 3 seeds, calling in
+  Czechoslovakia, whose guarantor it is, against itself, the pledge kept (`critic/c24_dp.json` scenario rows' `odd`
+  at day 30). Fix (9): a guarantor stays out of, or is refused, a declaration that would call the nation it guarantees
+  against it; or the pledge lapses.
+  AT: on the critic's cases, (1) the freed puppet on one side of each war, (6) no "Propose alliance" to a nation at
+  war with the player, (9) on 1517, 3739, 8821 and unseen 1511–1520 to day 30, no nation at war with a nation it
+  guarantees; a unit test red on `82d428c1` for each rule.
