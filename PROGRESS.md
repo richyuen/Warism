@@ -25559,3 +25559,13 @@ No rule changed and nothing on screen changed. One task came out of it.
   HEAD). Pin unchanged (the gate).
 - **Filed:** PLAN 7.185, a land hero in its army's battles (read the cause first), with 7.184e's sweep:quick smoke.
 - **Next:** PLAN 7.185.
+
+## 2026-11-02 — PLAN 7.185: the cause read, a rule tried, the AT missed (ADR-794, BLOCKERS)
+
+- **Read** (`tools/diag/heroLandWhy.ts`): on its army's fighting days a land hero fought 17 %, stood 38 %, marched 45 %;
+  41 % of the days out of a fight it was over 80 cells from the nearest.
+- **Rule** (not committed): `joinFights`, onto the enemy formation by its army's nearest fight. AT, 1471–1480 × 3: land
+  `ofArmy` 0.201, ≥ 0.5 on 1 of 70; sea `with` 58 of 70, `ofFleet` 50 of 58 (86 %; 7.184e's 57 of 64, 89 %).
+- **Causes** (`tools/diag/heroCeiling.ts`): the regulars' best 0.29–0.72, top decile 0.05–0.56 (the hero at or above it
+  in 13 of 30 lives); refused orders strand a hero (Japan's O-I, 1471: 698 refused, a year still).
+- **Next:** ADR-794 waits on the user (the bar to the top-decile regular, keep the rule, the refusals: recommended).

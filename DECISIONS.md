@@ -167,6 +167,25 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-794 · 2026-11-02 · proposed (the user's decision) — PLAN 7.185: the AT missed; the bar is above the regulars
+**Context.** 7.185's read (`docs/evidence/7.185/at-run.md`, `tools/diag/heroLandWhy.ts`): on its army's fighting days a
+land hero fought on 17 %, stood on 38 % (most a week or more) and marched on 45 %; 41 % of the days out of a fight it
+was over 80 cells from the nearest. The rule (uncommitted): `joinFights`, the hero ordered onto the enemy formation
+nearest to its army's nearest fight, 3 tried. AT on unseen 1471–1480 × 3: land `ofArmy` 0.161 (7.184e's seeds) →
+0.201, ≥ 0.5 on 1 of 70: missed. Sea `with` ≥ 0.5 on 58 of 70 (7.184e 50 of 70), `ofFleet` 50 of 58 (86 %; 7.184e 57
+of 64, 89 %). Two causes (`tools/diag/heroCeiling.ts`, 1471/1474/1476 × 1): (1) the bar is above what the regulars
+reach: of each nation's ordinary land formations alive the whole year, the best is in 0.29–0.72 of its army's fighting
+days, the top decile 0.05–0.56, the median 0.00–0.43; the hero is at or above its nation's top decile in 13 of 30 hero
+lives; (2) refused orders: where every target of the hero is refused it stands (1471 Japan's O-I: 698 refused, 0 ok,
+a year still, with its army fighting on its land 311 days; 1474 Soviet T-42 372 refused, 1476 Italy's P100 282).
+**Options.** (a) Re-scope the bar to the regulars: each land hero's `ofArmy` at least its nation's top-decile ordinary
+formation's, on ≥ 2/3 of the hero lives, unseen seeds; keep `joinFights`; within 7.185 a rule for the refusals (a hero
+whose targets are refused tries the fights its way reaches) (recommended); (b) keep 0.5 and work on the refusals
+(the best regular reaches 0.5 in few nations: likely a miss again); (c) keep `joinFights`, close 7.185 not done; (d)
+drop it, close not done.
+**Until then.** The rule and its test stay out of `main` (the test is green without the rule too, so it is rewritten
+before any commit); the probes and the evidence are committed.
+
 ### ADR-793 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.184e: the AT missed; which of the heroes' rules to keep
 **Context.** 7.184e's rules (in the working tree, not committed): a land hero, out of the operational AI's allotment,
 ordered each plan onto the attack cell of its nation's most threatened own sector (up to 3 tried for a way); a sea

@@ -40,7 +40,8 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
   where its army fights), then a rule for that cause. AT: seeds 1471–1480 × 3 years, heroes on
   (`tools/diag/heroBattle.ts`): each land hero `ofArmy` ≥ 0.5 where its army's ceiling is ≥ 0.10; the sea columns not
   below 7.184e's (`with` ≥ 0.5 on 50 of 70, `ofFleet` on 57 of 64, as counted there); `sweep:quick` with heroes on and
-  off as a smoke test only (limits green both, the riser and faller in PROGRESS).
+  off as a smoke test only (limits green both, the riser and faller in PROGRESS). Missed (`docs/evidence/7.185/at-run.md`:
+  `joinFights` 0.201, 1 of 70; the regulars' best 0.29–0.72): BLOCKERS, ADR-794 waits on the user.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 

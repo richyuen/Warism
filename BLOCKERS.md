@@ -5,6 +5,15 @@ entries are kept and marked **RESOLVED** with the date and fix.
 
 ## Open
 
+### PLAN 7.185: the AT missed: land heroes 0.20 of their army's fighting days, bar 0.5 (ADR-794, waits on the user)
+- **The bar:** 1471–1480 × 3: each land hero `ofArmy` ≥ 0.5 where its army's ceiling is ≥ 0.10. With `joinFights`
+  (uncommitted): 0.201, 1 of 70.
+- **Why** (`docs/evidence/7.185/at-run.md`): the best ordinary formation of a nation reaches 0.29–0.72, the top decile
+  0.05–0.56; and a hero whose every target is refused stands (Japan's O-I on 1471: 698 refused).
+- **Sea:** `with` 58 of 70; `ofFleet` 50 of 58 (86 %), below 7.184e's count of 57 of 64 (89 %), other seeds.
+- **Left:** ADR-794: (a) the bar to the top-decile regular, keep the rule, a rule for the refusals (recommended);
+  (b) keep 0.5 and work on the refusals; (c) keep the rule, close not done; (d) drop it, close not done.
+
 ### RESOLVED 2026-11-02 (option a, the user's decision: the sea rule kept, the land rule dropped, 7.184e closed not done, PLAN 7.185; ADR-793) · PLAN 7.184e: the AT missed: land heroes in 0.15 of their army's fighting days, bar 0.5
 - **The bar:** 1461–1470 × 3, heroes on: each land hero in battle on ≥ 50 % of its army's fighting days; each sea hero
   with its largest fleet on ≥ 50 % of its days at war and in ≥ 50 % of that fleet's battle days.
