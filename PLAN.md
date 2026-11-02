@@ -33,6 +33,58 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
+- [ ] 7.183 The camera follows any formation clicked, played or not (the user's request of 2026-11-01). Today a click
+  on another nation's formation, or on any with no nation played, opens its panel and marks it (`hud.selectFormation`,
+  `MapView.pickedFormation`) but the camera stays: `PlayerControl.click` follows only the played nation's own
+  (`followSelection`), and `followPoint` reads `selectedFormations` alone. Follow the picked formation where it is drawn
+  (`shownAt`) until a pan, Escape, its panel closed or the formation gone, as `followWing` does; a fleet too. AT: a new
+  e2e `tests/e2e/followPicked1938.spec.ts`: with no nation played, a German division and a British fleet clicked in
+  turn, the view's centre within 2 px of each one's drawn place after 48 ticks of its march, at T1 and T2; a pan ends
+  it (the centre stays put the next 24 ticks); the specs of the player's own selection (`select*`, `follow*`) green.
+- [ ] 7.184 Heroes: a new-game option (off by default) giving each of 7 great powers of 1938 a named land and sea
+  unit, much stronger and drawn bigger than any other, that heals and comes back when destroyed (the user's request of
+  2026-11-01; the user's choices: heal and return, 2–3 × a normal formation, land and sea only, no China). Parts:
+  - [ ] 7.184a Data and sim. `GameOptions.heroes` (`'off' | 'on'`, 1938 only, as `diplomacy`). The roster in
+    `data/scenarios/1938/heroes.json` (tag, name key, domain, unit type, place), each hero its own unit type of
+    elementSize 1 in `data/units/*.json` (`hero: true`), one formation of one element:
+    | Nation | Sea | Land |
+    | --- | --- | --- |
+    | JAP | Yamato (battleship, 46 cm guns) | O-I (super-heavy tank project, ~120 t) |
+    | USA | USS Iowa (battleship) | T28 (super-heavy assault tank, 86 t) |
+    | SOV | Sovetsky Soyuz (battleship, laid down 1938, never finished) | T-42 (Grotte's super-heavy, ~100 t, 3 turrets, 107 mm) |
+    | GER | Bismarck (battleship) | Maus (super-heavy tank, 188 t) |
+    | ENG | HMS Hood ("the Mighty Hood", battlecruiser) | TOG II (super-heavy tank, 80 t) |
+    | FRA | Richelieu (battleship) | Char 2C (69 t, in service in 1938: the largest tank ever fielded) |
+    | ITA | Roma (Littorio-class battleship) | P26/40 (Italy's heavy tank) |
+    A sea hero starts at its nation's first naval base of `fleets.json`, a land hero at its capital. A hero formation
+    (a flag saved with the world) is never disbanded, laid up, folded or merged (`ai/economic.ts`: `foldHollow`, the
+    disband and lay-up steps) and costs no upkeep. Out of battle it heals 5 % of its strength a day (a ship anywhere,
+    not only in port). Destroyed, it comes back whole 60 days later (by tick, seed-stable) at its start place, or the
+    capital / nearest naval base its nation holds; none while its nation is dead, again with a revival; never more than
+    one alive. AT: `tests/unit/heroes.test.ts`: with the option off, the pinned hash of seed 99 unchanged
+    (`tests/sweep/baselineHash.test.ts`); on, 14 heroes at tick 0 at their places; a hero emptied by hand is back at
+    full strength 60 days later to the tick, none for a dead nation; 20 days out of battle heal a hero at half
+    strength to full; save/load keeps a hero's flag and its return day; a month of an indebted nation disbands and lays
+    up none. Strength: a hero battleship against one standard battle squadron (4 BB) wins with over half its strength
+    left, against three loses; the land hero likewise against an armoured division and three (a probe in the test).
+  - [ ] 7.184b Drawing: a hero twice the size of its kind at every zoom (T0 counter, T1 marker, T2 block, T3 figure), the
+    same in Classic and Countryball (no ball of its own), with its name on its tag. AT: `tests/e2e/heroes1938.spec.ts`
+    measures Yamato's and the Maus's drawn boxes against a normal battleship's and tank's: 1.9–2.1 × at T0–T3, both
+    looks (evidence PNGs in `docs/evidence/7.184b/`); bench G with heroes on keeps T0 over 311 fps and p95 under 6.9 ms.
+  - [ ] 7.184c Overview: a Heroes block first in a nation's Overview tab (`NationPanel.tsx`; the stats message carries
+    each hero's name, domain, strength and return day): its name, a strength bar, or "returns in N days". A click selects
+    it on the map, opens its panel and the camera follows it (7.183), the nation played or not. AT: the e2e of 7.184b:
+    `panel-heroes` is the Overview's first block for Japan with 2 rows; a click on Yamato's row puts the view's centre
+    within 2 px of it after 24 ticks; a destroyed hero's row reads "returns in 60 days"; no block with the option off
+    or for Poland.
+  - [ ] 7.184d The option in the new-game form and settings panel, `?heroes=on` in the URL (as 7.182: `gameUrl.ts`,
+    `scenarios.ts`, `NewGameForm.tsx`, `SettingsPanel.tsx`, `en.json` with the 14 names). AT:
+    `tests/e2e/gameOptions1938.spec.ts` (`opt-heroes` from the settings panel, `heroes=on` in the URL, back to off) and
+    `tests/unit/gameOptions.test.ts`.
+  - [ ] 7.184e The AI uses its heroes: a land hero goes to its nation's main front and leads its attack, a sea hero
+    sails with its nation's largest fleet. AT: seeds 1461–1470 × 3 years with heroes on: each AI hero of a nation at war
+    is in battle on ≥ 30 % of its days at war (not idle at home); `sweep:quick` with heroes on and off, as a smoke test
+    only: limits green both, the riser and faller reported in PROGRESS.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 
