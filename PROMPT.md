@@ -176,12 +176,17 @@ added without code changes.
     has been ticked in PLAN.md since the report (`npm run critic:due` checks
     these two), or you believe the DONE CONDITION is otherwise met, then
     running the critic is this iteration's only task: commit any pending
-    work first; run `npm run check:review` (the unit and e2e suites in
-    full, resumable after a cut-off; a test red twice is fixed first, step
-    2's way, or goes on `tools/gate/knownRed.json` with a BLOCKERS entry
-    when the machine and not the code is its cause; added 2026-10-19,
-    ADR-554, the user's decision: Phase 7 has no phase review, so this is
-    the run those entries wait for); then spawn the `critic` subagent
+    work first. No `npm run check:review` before the run (changed
+    2026-11-02, ADR-803, the user's decision: ADR-554's review took an hour
+    a lap and found no blocking issue); the gate each commit passed stands.
+    Then re-run the last report's probes on HEAD (ADR-803, the user's
+    decision): the scripts in `critic/scripts/` behind its blocking issues
+    and its scores under the bar, with the seeds and arguments the report
+    and its evidence name, and `tools/diag/diploInvariants.ts` on the
+    seeds of `tests/unit/diploInvariants*.test.ts`. Running them is not
+    acting as the critic. A probe that still shows its defect means the
+    task that fixed it did not: reopen that task (or file one before PLAN
+    7.5) and end the iteration without the critic. Then spawn the `critic` subagent
     (Agent tool, subagent_type
     `critic`) with no hints about what to look at, wait for it to finish,
     and check that `critic/CRITIC_REPORT.json` now names HEAD. Commit the
@@ -273,6 +278,23 @@ on simulation runs (DECISIONS ADR-48).
   (the sweep with nukes on) and in Phase 7.
 - One cause per commit. When a task or a critic finding has several causes,
   split it in PLAN.md and fix, gate and commit them one at a time.
+- A rule change checks the decisions it stands on (added 2026-11-02,
+  ADR-803, the user's decision: critic runs 24–26 each found a blocking
+  issue made by the fix before, and R26-B1 was run 25's own "Fix" line
+  against ADR-780). Before changing a sim rule, for a task or a critic
+  finding: search DECISIONS.md and SPEC.md for the functions and rules the
+  change touches (`declareWar`, `forceWar`, "war of independence", ...) and
+  list in the task's evidence the accepted ADRs and SPEC lines it could
+  contradict. Each gets a test that is green before and after the change,
+  or the change is not made and the conflict goes to DECISIONS.md as a
+  question for the user. A critic's "Fix" line is a suggestion, not a
+  decision: it is checked the same way.
+- The rules of war and peace hold together
+  (`tests/helpers/diploInvariants.ts`, ADR-803): land held at peace, a
+  silent exit from a war, a war inside a realm, a bond's break refused.
+  A finding about war, peace or the bonds that the checker would not have
+  caught adds its rule to the checker, red on the commit the critic read,
+  in the task that fixes it.
 - An acceptance test names a number and a stop (added 2026-10-19, ADR-554,
   the user's decision). "Measured, before and after" is a measure, not a
   test: the AT says the figure, the bar it must reach (or the case that

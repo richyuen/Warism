@@ -25703,3 +25703,12 @@ No rule changed and nothing on screen changed. One task came out of it.
   - Unit 2043 of 2044 (territory's timing bar under load; green alone); e2e 19 of 19; pin unchanged.
 - The loop stops here at the user's request, before PLAN 7.5 (critic run 27).
 - **Next:** PLAN 7.5: the review, then critic run 27.
+
+## 2026-11-02 — ADR-803 (the user's decision): the critic loop shortened
+- Runs 24–26 were one chain: each blocking issue was made by the fix before (7.182 → R24-B1, 7.188 → R25-B1,
+  7.189 → R26-B1). The rules of war and peace are now checked together: `tests/helpers/diploInvariants.ts`, with
+  `tests/unit/diploInvariants{Scenario,Random}.test.ts` (7019, 2207, 8821, 3739; 81 s). 0 broken on 60d1ef05.
+  Red on 82d428c1 (R24-B1), e4386478 (R25-B1, 23 and 26 silent exits) and 33c84306 (R26-B1).
+- PROMPT step 2a: no `check:review` before a critic run; the last report's probes and the checker are re-run first.
+  A sim rule change lists the ADRs and SPEC lines it could contradict, each with a test.
+- **Next:** PLAN 7.5: the last report's probes (`critic/scripts/c26_*`) and the checker on HEAD, then critic run 27.

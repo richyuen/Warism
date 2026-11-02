@@ -167,6 +167,43 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-803 · 2026-11-02 · accepted (the user's decision) — the critic loop: the rules of war and peace checked together; the last report's probes before a run; no check:review
+
+- **Context.** Critic runs 24–26 each scored diplomacy 6 with one blocking issue, and each was made by the fix before:
+  - R24-B1 came from the random diplomacy option (7.182), added after run 23 was clean;
+  - R25-B1 came from 7.188's leave rule;
+  - R26-B1 came from 7.189's `Beside` refusal, which was run 25's own "Fix" line and went against ADR-780.
+
+  No test checked the rules together, so each regression cost a lap of about 2–4 hours (fix, `check:review` about an
+  hour, the critic). Before each of these runs, `check:review` found nothing the critic then blocked on.
+- **Decision.**
+  - `tests/helpers/diploInvariants.ts` checks four rules on a 1938 run:
+    - no land held at peace;
+    - no exit from a war, and no war over, without a row (a peace, `WarEnded`, `WarLeft`, a death);
+    - no war inside a realm or alliance, and no nation at war with one it fights beside;
+    - a bonded puppet's or ally's Force war, or a puppet's revolt, never refused for `Beside`.
+
+    It checks them every day of half a year. On days 30, 90 and 150, on copies of the world, it also checks pairs
+    that fight beside each other, bonded pairs and random pairs going to war by `declareWar` and by `forceWar`, and
+    puppets revolting. `tests/unit/diploInvariants{Scenario,Random}.test.ts` cover 7019 and 2207 (scenario), 8821
+    and 3739 (random); `tools/diag/diploInvariants.ts` runs one case.
+  - PROMPT step 2a: no `npm run check:review` before a critic run (this replaces ADR-554's run). Instead, the last
+    report's probes in `critic/scripts/` and the checker are re-run on HEAD. A probe that still shows its defect
+    reopens its task, and the critic waits.
+  - PROMPT, KEEPING ITERATIONS SHORT:
+    - a sim rule change first lists the accepted ADRs and SPEC lines it could contradict, each with a test, or the
+      conflict goes to the user. A critic's "Fix" line is checked the same way;
+    - a war-and-peace finding the checker misses adds its rule to the checker.
+- **Consequences.**
+  - On HEAD 60d1ef05 the checker finds 0 broken on all four cases (33–47 s each; 81 s for both files under vitest).
+  - On the commits the critic read it is red:
+    - 82d428c1 (8821 random): `held: JAP on CHI, 1345 cells at peace` on day 0 (R24-B1);
+    - e4386478 (7019 scenario, 8821 random): 23 and 26 exits with no row (R25-B1);
+    - 33c84306 (7019 scenario): a bonded Force war and a revolt refused for `Beside` (R26-B1).
+  - Nothing runs the whole unit and e2e suites before a critic run now. A break in a test outside the changed
+    files' imports is found by `npm run check:full` at the DONE CONDITION, or by the critic.
+  - No sim change; seed 99's pin is unchanged.
+
 ### ADR-802 · 2026-11-02 · accepted — PLAN 7.192: a war left and a revolt in the ticker; the bond and the shared war; the alliance greyed
 
 - **Context.** Critic run 26 kept diplomacy at 6. Its non-blocking 1–3:
