@@ -46,7 +46,8 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
     (`tools/diag/heroBattle.ts`): each land hero in battle on ≥ 50 % of the days its nation's army is (where that army
     fights on ≥ 10 % of its days at war); each sea hero with its nation's largest fleet (the same sea zone or within
     `SORTIE_KM`) on ≥ 50 % of its days at war, and in ≥ 50 % of that fleet's days in a sea battle; `sweep:quick` with
-    heroes on and off, as a smoke test only: limits green both, the riser and faller reported in PROGRESS.
+    heroes on and off, as a smoke test only: limits green both, the riser and faller reported in PROGRESS. Missed
+    (`docs/evidence/7.184e/at-run.md`: land 0.148, 1 of 69; sea with 25 of 35): BLOCKERS, ADR-793 waits on the user.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 
