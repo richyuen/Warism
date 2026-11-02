@@ -1,0 +1,397 @@
+{
+ "heroes": [
+  1468,
+  1469,
+  1470,
+  1471,
+  1472,
+  1473,
+  1474,
+  1475,
+  1476,
+  1477,
+  1478,
+  1479,
+  1480,
+  1481
+ ],
+ "fkeys": [
+  "id",
+  "nation",
+  "strength",
+  "elementMen",
+  "elements",
+  "x",
+  "y",
+  "wing"
+ ],
+ "fs": [
+  {
+   "id": 1468,
+   "nation": 75,
+   "strength": 2500,
+   "elementMen": 2500,
+   "elements": 1,
+   "x": 1818.9375,
+   "y": 388.9375,
+   "wing": false
+  },
+  {
+   "id": 1469,
+   "nation": 75,
+   "strength": 11,
+   "elementMen": 11,
+   "elements": 1,
+   "x": 1819.019377777778,
+   "y": 385.2819169650518,
+   "wing": false
+  },
+  {
+   "id": 1470,
+   "nation": 82,
+   "strength": 2700,
+   "elementMen": 2700,
+   "elements": 1,
+   "x": 356.5,
+   "y": 404.5,
+   "wing": false
+  },
+  {
+   "id": 1471,
+   "nation": 82,
+   "strength": 4,
+   "elementMen": 4,
+   "elements": 1,
+   "x": 585.8907022222222,
+   "y": 364.19792930379083,
+   "wing": false
+  },
+  {
+   "id": 1472,
+   "nation": 10,
+   "strength": 1800,
+   "elementMen": 1800,
+   "elements": 1,
+   "x": 1193.5,
+   "y": 207.5,
+   "wing": false
+  },
+  {
+   "id": 1473,
+   "nation": 10,
+   "strength": 15,
+   "elementMen": 15,
+   "elements": 1,
+   "x": 1237.979591111111,
+   "y": 242.1368298667249,
+   "wing": false
+  },
+  {
+   "id": 1474,
+   "nation": 1,
+   "strength": 2200,
+   "elementMen": 2200,
+   "elements": 1,
+   "x": 1070.5625,
+   "y": 259.0625,
+   "wing": false
+  },
+  {
+   "id": 1475,
+   "nation": 1,
+   "strength": 6,
+   "elementMen": 6,
+   "elements": 1,
+   "x": 1100.2288355555554,
+   "y": 267.3981779047986,
+   "wing": false
+  },
+  {
+   "id": 1476,
+   "nation": 20,
+   "strength": 1400,
+   "elementMen": 1400,
+   "elements": 1,
+   "x": 1006.5,
+   "y": 216.5,
+   "wing": false
+  },
+  {
+   "id": 1477,
+   "nation": 20,
+   "strength": 8,
+   "elementMen": 8,
+   "elements": 1,
+   "x": 1023.3247288888889,
+   "y": 275.1737112720215,
+   "wing": false
+  },
+  {
+   "id": 1478,
+   "nation": 19,
+   "strength": 1600,
+   "elementMen": 1600,
+   "elements": 1,
+   "x": 998.5,
+   "y": 298.5,
+   "wing": false
+  },
+  {
+   "id": 1479,
+   "nation": 19,
+   "strength": 12,
+   "elementMen": 12,
+   "elements": 1,
+   "x": 1037.2630755555556,
+   "y": 294.7747091050998,
+   "wing": false
+  },
+  {
+   "id": 1480,
+   "nation": 15,
+   "strength": 1900,
+   "elementMen": 1900,
+   "elements": 1,
+   "x": 1121.5,
+   "y": 353.5,
+   "wing": false
+  },
+  {
+   "id": 1481,
+   "nation": 15,
+   "strength": 10,
+   "elementMen": 10,
+   "elements": 1,
+   "x": 1095.0047288888888,
+   "y": 344.024127834463,
+   "wing": false
+  }
+ ],
+ "nkeys": [
+  "id",
+  "name",
+  "color",
+  "cells",
+  "area",
+  "landShare",
+  "gold",
+  "income",
+  "expenses",
+  "incomeBonus",
+  "bankrupt",
+  "manpower",
+  "men",
+  "formations",
+  "aircraft",
+  "wings",
+  "airLost",
+  "bombed",
+  "nukeDead",
+  "fallout",
+  "efficiency",
+  "ceLocked",
+  "alliance",
+  "overlord",
+  "autonomy",
+  "loyalty",
+  "integration",
+  "puppets",
+  "enemies",
+  "truces",
+  "aiOff",
+  "nukesAllowed",
+  "warheads",
+  "canDeliver",
+  "means",
+  "restraint",
+  "aggression",
+  "incomeMult",
+  "living",
+  "queue",
+  "techs",
+  "shipyard",
+  "airRoom",
+  "research",
+  "lines",
+  "heroes"
+ ],
+ "n0": {
+  "id": 1,
+  "name": "nation.GER",
+  "heroes": [
+   {
+    "formation": 1474,
+    "nameKey": "template.hero_bismarck",
+    "sea": true,
+    "health": 1,
+    "returnDays": null
+   },
+   {
+    "formation": 1475,
+    "nameKey": "template.hero_maus",
+    "sea": false,
+    "health": 1,
+    "returnDays": null
+   }
+  ]
+ },
+ "withHeroes": [
+  [
+   1,
+   "nation.GER",
+   [
+    {
+     "formation": 1474,
+     "nameKey": "template.hero_bismarck",
+     "sea": true,
+     "health": 1,
+     "returnDays": null
+    },
+    {
+     "formation": 1475,
+     "nameKey": "template.hero_maus",
+     "sea": false,
+     "health": 1,
+     "returnDays": null
+    }
+   ]
+  ],
+  [
+   10,
+   "nation.SOV",
+   [
+    {
+     "formation": 1472,
+     "nameKey": "template.hero_sovetsky_soyuz",
+     "sea": true,
+     "health": 1,
+     "returnDays": null
+    },
+    {
+     "formation": 1473,
+     "nameKey": "template.hero_t42",
+     "sea": false,
+     "health": 1,
+     "returnDays": null
+    }
+   ]
+  ],
+  [
+   15,
+   "nation.ITA",
+   [
+    {
+     "formation": 1480,
+     "nameKey": "template.hero_roma",
+     "sea": true,
+     "health": 1,
+     "returnDays": null
+    },
+    {
+     "formation": 1481,
+     "nameKey": "template.hero_p100",
+     "sea": false,
+     "health": 1,
+     "returnDays": null
+    }
+   ]
+  ],
+  [
+   19,
+   "nation.FRA",
+   [
+    {
+     "formation": 1478,
+     "nameKey": "template.hero_richelieu",
+     "sea": true,
+     "health": 1,
+     "returnDays": null
+    },
+    {
+     "formation": 1479,
+     "nameKey": "template.hero_char2c",
+     "sea": false,
+     "health": 1,
+     "returnDays": null
+    }
+   ]
+  ],
+  [
+   20,
+   "nation.ENG",
+   [
+    {
+     "formation": 1476,
+     "nameKey": "template.hero_hood",
+     "sea": true,
+     "health": 1,
+     "returnDays": null
+    },
+    {
+     "formation": 1477,
+     "nameKey": "template.hero_tog2",
+     "sea": false,
+     "health": 1,
+     "returnDays": null
+    }
+   ]
+  ],
+  [
+   75,
+   "nation.JAP",
+   [
+    {
+     "formation": 1468,
+     "nameKey": "template.hero_yamato",
+     "sea": true,
+     "health": 1,
+     "returnDays": null
+    },
+    {
+     "formation": 1469,
+     "nameKey": "template.hero_o_i",
+     "sea": false,
+     "health": 1,
+     "returnDays": null
+    }
+   ]
+  ],
+  [
+   82,
+   "nation.USA",
+   [
+    {
+     "formation": 1470,
+     "nameKey": "template.hero_iowa",
+     "sea": true,
+     "health": 1,
+     "returnDays": null
+    },
+    {
+     "formation": 1471,
+     "nameKey": "template.hero_t28",
+     "sea": false,
+     "health": 1,
+     "returnDays": null
+    }
+   ]
+  ]
+ ],
+ "names": [
+  "Formation 1468",
+  "Formation 1469",
+  "Formation 1470",
+  "Formation 1471",
+  "Formation 1472",
+  "Formation 1473",
+  "Formation 1474",
+  "Formation 1475",
+  "Formation 1476",
+  "Formation 1477",
+  "Formation 1478",
+  "Formation 1479",
+  "Formation 1480",
+  "Formation 1481"
+ ],
+ "errors": []
+}

@@ -25609,3 +25609,9 @@ No rule changed and nothing on screen changed. One task came out of it.
   CHI 2; on, the largest riser GER in 7 of 10 (× 11.8 to × 23.4), USA 2, NED, COL; the faller BRA 3, ENG 2, ITA 2, FRA,
   CHI, SOV. Germany rises more with the heroes on (the Maus and the Bismarck): reported, not judged (ADR-58).
 - **Next:** PLAN 7.5.
+- **2026-11-02 · critic run 24 (on `82d428c1`):** check:review green after shipMarks1938's T3 went on the known reds
+  (red twice in the review at 16.5 px, bar 17; 8 of 8 by hand; BLOCKERS). Scores: map 7, diplomacy **6** (was 7), emergent
+  7, God 7, editor 7, stats 7, UI 7, performance 7, stability 7; zoom 8, naval 8, tanks 8, aircraft 8, nukes 8. Blocking 1
+  (R24-B1: random diplomacy leaves Japan occupying China at peace). Filed PLAN 7.187 (R24-B1) and 7.188 (diplomacy 6).
+  The default world unchanged (seed 7019's 20 yearly hashes equal run 23's).
+- **Next:** PLAN 7.187.

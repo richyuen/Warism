@@ -1,8 +1,8 @@
 {
-  "commit": "81beca11c0155229b44b5fa6b4c3615ce618acb9",
+  "commit": "82d428c11e99152c221c5df7064f4a0138508557",
   "scores": {
     "mapVisuals": 7,
-    "diplomacyWarDepth": 7,
+    "diplomacyWarDepth": 6,
     "emergentDynamics": 7,
     "godMode": 7,
     "editorScenarios": 7,
@@ -16,6 +16,13 @@
     "aircraft": 8,
     "aiNukes": 8
   },
-  "blocking": [],
-  "timestamp": "2026-11-01T19:06:42Z"
+  "blocking": [
+    {
+      "id": "R24-B1",
+      "title": "\"Alliances and wars: random\" leaves Japan occupying 1,345 cells of China at peace, for years",
+      "evidence": "critic/c24_dp.json (all 3 random seeds from day 0; 0 in scenario mode), critic/c24_occ_8821.log (still 1,345 cells at peace on day 900), critic/shots/c24dr_rnd_8821_d1_china.png, critic/shots/c24dr_rnd_8821_d180_china.png (hatched occupied land; China's panel 'At peace')",
+      "fix": "When randomDiplomacy drops the scenario's wars, end them as a peace would: occupied land back to its owner (controller = owner) and foreign armies out, before the drawn wars are declared."
+    }
+  ],
+  "timestamp": "2026-11-02T10:00:00Z"
 }

@@ -1,0 +1,93 @@
+{
+ "c24_a_4219.json": [
+  ".notes.langOptions: len 18 != 22",
+  ".notes.langOptions[11]: Equal for all != Off",
+  ".notes.langOptions[12]: As in the scenario != On",
+  ".notes.langOptions[13]: Dynamic != As in the scenario",
+  ".notes.langOptions[14]: Progressive != Random",
+  ".notes.langOptions[15]: Static != Equal for all",
+  ".notes.langOptions[16]: Locked != As in the scenario"
+ ],
+ "c24_c_7019.json": [
+  ".views[3].sorties: 4 != 5",
+  ".views[13].sorties: 4 != 3"
+ ],
+ "c24_cb2_7019_GER_POL_10.json": "identical",
+ "c24_cb_7019.json": "identical",
+ "c24_dl_7019.json": "identical",
+ "c24_ex2_4441.json": [
+  ".playing.s12.gerWithin14: 3 != 2",
+  ".playing.s12.res[0].gerWithin14px: 1 != 0"
+ ],
+ "c24_fp2_4877.json": "identical",
+ "c24_ft_5381_d21.json": "identical",
+ "c24_fw2_2207.json": "identical",
+ "c24_fw_2207.json": "identical",
+ "c24_g_4877.json": [
+  ".marks[0].fleetsNear.GER.within15: 2 != 0",
+  ".marks[0].histSea: len 0 != 1",
+  ".marks[0].polForces.all: 50 != 48",
+  ".marks[0].polForces.wings: 5 != 3",
+  ".marks[1].fleetsNear.GER.afloat: 10 != 9",
+  ".marks[1].histSea: len 0 != 1",
+  ".marks[1].polForces.all: 50 != 48"
+ ],
+ "c24_headless_7019.json": [
+  ".totalS: 512.47 != 526.47"
+ ],
+ "c24_hi_7019.json": "identical",
+ "c24_hu_7019_d12.json": "identical",
+ "c24_k2_2203.json": "identical",
+ "c24_k3_2203.json": "identical",
+ "c24_k_2203.json": "identical",
+ "c24_os2_c10.json": [
+  ".titleText: Warism\n\nWORLD WAR SIMULATOR\n\nSCENARIOS\nWorld, 1938\n1 January 1938\nRandom world\n1 != Warism\n\nWORLD WAR SIMULATOR\n\nSCENARIOS\nWorld, 1938\n1 January 1938\nRandom world\n1"
+ ],
+ "c24_os_c10fmt1.json": [
+  ".steps[0].text: Warism\n\nWORLD WAR SIMULATOR\n\nSAVED GAME\nWorld, 1938\n27 December 1957\nSaved 10/31 != Warism\n\nWORLD WAR SIMULATOR\n\nSAVED GAME\nWorld, 1938\n27 December 1957\nSaved 11/1/",
+  ".steps[1].text: Warism\n\nWORLD WAR SIMULATOR\n\nSAVED GAME\nWorld, 1938\n27 December 1957\nSaved 10/31 != Warism\n\nWORLD WAR SIMULATOR\n\nSAVED GAME\nWorld, 1938\n27 December 1957\nSaved 11/1/"
+ ],
+ "c24_os_scen.json": "identical",
+ "c24_p.json": "identical",
+ "c24_p2_phone_menu.json": "identical",
+ "c24_p3_widths.json": "identical",
+ "c24_ph.json": "identical",
+ "c24_pl_6011.json": "identical",
+ "c24_pt_touch.json": "identical",
+ "c24_q_6421.json": "identical",
+ "c24_sb_7019.json": [
+  ".views[2].tick: 292 != 291",
+  ".views[3].tick: 294 != 293",
+  ".views[4].tick: 296 != 294",
+  ".views[5].tick: 298 != 296"
+ ],
+ "c24_sx_4441.json": "identical",
+ "c24_sxg_3917_ITA.json": "identical",
+ "c24_sxg_6827_JAP.json": "identical",
+ "c24_sxt_4441.json": "identical",
+ "c24_td_3391.json": "identical",
+ "c24_tg_7019.json": "identical",
+ "c24_u_1600_5557.json": [
+  ".steps[11].10.val: land != scenario",
+  ".steps[11].11: only in c24",
+  ".steps[11].12: only in c24",
+  ".steps[11].9.val: scenario != off",
+  ".steps[12].n: 123 != 125"
+ ],
+ "c24_w_5557.json": [
+  ".raw_x1_250: len 59 != 58",
+  ".raw_x1_250[8].mark: [800, 450] != None",
+  ".raw_x1_250[8].nearestSortiePx: 0 != None",
+  ".raw_x1_250[8].wx: 1062.85 != 1071.5",
+  ".raw_x1_250[8].wy: 280.53 != 272.5",
+  ".raw_x1_250[9].nearestSortiePx: 703 != 694",
+  ".raw_x1_250[10].mark[0]: 911 != 897"
+ ],
+ "c24_ww_3301.json": [
+  ".samples[1].ticker[0]: \u2693 Carrier strike ashore: United Kingdom on Nationalist Spain != 24 February 1938 Nationalist Spain declared war on Portugal 25 February 1938 Ger"
+ ],
+ "c24_z_5861.json": [
+  ".steps[5].el: 1894 != 1922",
+  ".steps[17].ind: 4443 != 4453"
+ ]
+}

@@ -1,46 +1,48 @@
-# Critic report, run 23
+# Critic report, run 24
 
-- **Commit:** `81beca11c0155229b44b5fa6b4c3615ce618acb9` (HEAD at the start, `critic/c23_commit.txt`). Run 22 was on
-  `4a977fdb`; 3 commits since. What changed for a player: **the flag is drawn whole below the infantry helmet's brim**
-  (PLAN 7.179, ADR-782, against R22-B1) in the shader (T2/T3) and on the 2D overlay (T0 counters, T1 markers); **planes
-  in the ball look are their silhouette in the nation's colour with a small flag ball on it** (PLAN 7.180, ADR-783, the
-  user's choice). Only `src/render/units/{ballShader,ball2d,sorties}.ts` and a comment in `MapView.ts` changed in
-  `src/`. **The sim did not change:** seed 7019's 20 yearly state hashes on HEAD equal run 22's, 20 of 20
-  (`critic/c23_headless_7019.json` against `critic/c22_headless_7019.json`).
-- **Date:** 2026-11-01.
-- **Build:** `vite build --outDir critic/c23_dist`, exit 0 (`critic/c23_build.log`), served by `vite preview` on
-  127.0.0.1:**5299**; run 22's build (`critic/c22_dist`, `4a977fdb`) on **5298** for before/after on the same moment.
-  Both stopped at the end. Chromium through Playwright, headless, 1600 × 900 (900 × 600 for the flag sheet), 390 × 844
-  with touch for the phone probes.
-- **Runs:** run 22's three page suites re-run on HEAD (`c23_suite1.sh`, `c23_suite2.sh`, `c23_clicks.sh`) and its
-  new probes (`c23_misc.sh`: FW, FW2, K2, K3, TD, HU, SB, OS2); CB and CB2 (the helmet case) on the same frozen moment;
-  new: PL (planes, HEAD against run 22's build, same moment), FL (24 nations' helmeted infantry), PF alone after every
-  other job, a 10-year page watch of a new seed (2468), and two new seeds × 30 years headless (2468, 5113).
-- **Reference:** `reference/screens/`, `reference/text/AOC_TEXT_NOTES.md`. AoC has no unit sprites at this level; what
-  I say of AoC's units is from text and the trailer frames only.
-- Every path below was made in this run (`c23`) unless it names `c22`. Scripts are in `critic/scripts/c23_*`.
+- **Commit:** `82d428c11e99152c221c5df7064f4a0138508557` (HEAD at the start, `critic/c24_commit.txt`). Run 23 was on
+  `81beca11`; 24 commits since. What changed for a player: **new-game option "Alliances and wars": the 1938 start's
+  diplomacy drawn by the seed** (PLAN 7.182, ADR-785); **new-game option "Heroes"**: 14 named super-units (Bismarck,
+  Maus, Yamato …) with their own counters, an Overview block, healing and a 60-day return (PLAN 7.184, ADR-787–796; the
+  heroes' AI closed "not done" by the user's decision); **the camera follows any formation clicked** (PLAN 7.183,
+  ADR-786); **T0 countryballs and planes' balls drawn once and copied** (PLAN 7.181, ADR-784).
+  **The default sim did not change:** seed 7019's 20 yearly hashes on HEAD equal run 23's, 20 of 20
+  (`critic/c24_headless_7019.json` against `critic/c23_headless_7019.json`).
+- **Date:** 2026-11-02.
+- **Build:** `vite build --outDir critic/c24_dist`, exit 0 (`critic/c24_build.log`), served by `vite preview` on
+  127.0.0.1:**5299**; run 23's build (`critic/c23_dist`, `81beca11`) on **5298** for before/after. Both stopped at the
+  end (no listener left on 5298/5299). Chromium through Playwright, headless, 1600 × 900; 390 × 844 touch for the phone probes.
+- **Runs:** run 23's three page suites and its misc probes re-run on HEAD (`c24_suite1.sh`, `c24_suite2.sh`,
+  `c24_clicks.sh`, `c24_misc.sh`), CB/CB2/PL on the same frozen moment as run 23, PL on both builds; PF alone at the end;
+  an A-B-A-B draw-cost probe (DC) on both builds on one save. New: DP/DR/OCC (seed-drawn diplomacy, headless and page),
+  HV/HS/HEROES/HERODEATH/HEROPOS (heroes), FO (camera follow), GU/SOVCZS (a guarantee in war), a 10-year page watch with
+  both new options on (seed 6197), two new seeds × 30 years headless (3739, 6197).
+- Every path below was made in this run (`c24`) unless it names `c23`. Scripts are in `critic/scripts/c24_*`.
+  The re-run comparison of every probe JSON is `critic/c24_cmp.txt` / `critic/c24_cmp.json`.
 
 ## Verdict
 
-**R22-B1 is fixed, on the same case, and seen fixed at every tier.** On the same frozen moment of seed 7019 (Germany v
-Poland, day 1 for CB2 and day 4 for CB, same formations picked on both builds), German infantry now carry the whole
-black-white-red under the helmet and Polish the white-red: at 10 m/px the dark share of the German disc below the brim
-went 0.071 → **0.354** while Poland's stayed 0.047 → 0.030 (`critic/c23_cb2_7019_GER_POL_10_pixels.json` against
-`critic/c22_cb2_7019_GER_POL_10_pixels.json`); at 1200 and 600 m/px the T1 markers read as two nations
-(`critic/shots/c23cb_7019_arm_1200m_pair_c22left_c23right.png`, `..._0600m_pair_...`). Austria (red-white-red),
-Yugoslavia, Latvia, Estonia and Hungary all keep their identifying stripe under the helmet (`critic/shots/c23fl_sheet_10m.png`).
-The planes no longer read as a swarm of units: at 250 m/px they are blue French silhouettes with a roundel-like ball,
-the same planes as run 22's winged balls (`critic/shots/c23pl_250m_crop_5299_balls.png` vs
-`critic/shots/c23pl_250m_crop_5298_balls.png`). Nothing else moved: every other re-run probe on HEAD returned the same
-result as run 22, most byte for byte. No new blocking issue. Map visuals return to 7; nothing passes parity that did
-not before.
+**One new blocking issue, in a new feature.** With "Alliances and wars: random" the scenario's Japan–China war is let
+go, but **Japan's occupation of 1,345 Chinese cells is not**: from the first frame Peiping, Tientsin and the Shanghai
+pocket are hatched as Japanese-held land while China's panel reads "At peace", and on seed 8821 it is still so after 900
+days (`critic/c24_occ_8821.log`, `critic/shots/c24dr_rnd_8821_d1_china.png`, `..._d180_china.png`). On all three
+seeds tried the hold is there at day 0; it ends only when a new war between the two happens to come
+(`critic/c24_dp.json`). SPEC says occupation (`controller`) only changes owner through a peace and a white peace returns
+it (SPEC §"Occupation vs owner", §"Terms"); the option creates a state the sim otherwise never produces and ADR-785 says
+the scenario's diplomacy goes "without a trace". Diplomacy goes 7 → 6 for it.
+
+Everything else re-run returned run 23's result: 24 probe JSONs identical after dropping timings, the rest differing only
+in the new option rows of the forms and live counts at Max speed. The ball cache (ADR-784) changes no plane or ball to the
+eye: 7–170 px of 1.44 M differ between builds at the same moment, all anti-aliasing (`critic/c24_pldiff.json`,
+`critic/shots/c24pl_3000m_pair_c23left_c24right.png`). The camera follow works as specified in every step tried (FO).
+The heroes are drawn and listed as ADR-789/791 say, but over ten years they mostly stand (below; design objection).
 
 ## Scores
 
-| Dimension | Run 22 | Run 23 |
+| Dimension | Run 23 | Run 24 |
 |---|---|---|
-| Map visuals and readability | 6 | **7** |
-| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 |
+| Map visuals and readability | 7 | 7 |
+| Diplomacy, war, alliance, puppet, revolt depth | 7 | **6** |
 | Emergent world dynamics over long runs | 7 | 7 |
 | God Mode | 7 | 7 |
 | Editor and scenarios | 7 | 7 |
@@ -54,160 +56,138 @@ not before.
 | Aircraft (needs 8) | 8 | 8 |
 | AI nuclear use (needs 8) | 8 | 8 |
 
-**Map visuals 6 → 7:** the one defect that took it down, the helmet hiding the stripe that names the ball, is gone on
-the same case (above), and the planes at T2 are aircraft again. It returns to parity, not past it: AoC's counters in the
-nation's own colour still cannot be mistaken at a glance, and at T1 the balls' boxes are dark where Classic's carried
-the map colour (a helmeted Polish ball and a helmeted Austrian ball are still white-red and red-white-red on the same
-dark box; told apart by the stripe order only, `critic/shots/c23fl_sheet_10m.png`).
+**Diplomacy 7 → 6:** R24-B1 (above), new code, not present on run 23's build (the option did not exist; the default
+path is byte-identical). It is the only score that moves.
 
-## Run 22's cases re-run
+## Run 23's cases re-run
 
-| Run 22 case | On HEAD | Evidence |
+| Run 23 case | On HEAD | Evidence |
 |---|---|---|
-| **R22-B1, CB2: helmeted balls at 10 m/px (7019, GER v POL, day 1, formation 15)** | **Fixed.** Same moment (36 elements on screen on both). German helmeted balls: dark share below the brim 0.071 → **0.354** (max 0.47), 14 clear balls; Polish 0.047 → 0.030, 8 balls. German reads black-white-red, Polish white-red, and the unhelmeted German guns keep the whole flag. | `critic/c23_cb2_7019_GER_POL_10.json`, `critic/c23_cb2_7019_GER_POL_10_pixels.json`, `critic/shots/c23cb2_7019_GER_POL_10_0.png`, `critic/shots/c23cb2_7019_artillery_crop.png`, `critic/shots/c23cb2_7019_polish_crop.png` |
-| **R22-B1, CB: the same moment at ten zooms, both looks (day 4, armour 40, infantry 11)** | **Fixed at T1:** at 1200 and 600 m/px German helmeted markers show the black band under the brim; Polish do not. Classic unchanged. T0 counters at 3000 m/px keep the whole German flag (as before). At 25 m/px the German infantry read black-topped among Polish white-topped. | `critic/c23_cb_7019.json`, `critic/shots/c23cb_7019_arm_1200m_pair_c22left_c23right.png`, `critic/shots/c23cb_7019_arm_0600m_pair_c22left_c23right.png`, `critic/shots/c23cb_7019_arm_0025m_balls.png`, `critic/shots/c23pl_3000m_germany_zoom.png` |
-| CB3: start flags alike under the helmet (Germany–Austria, Germany–Yugoslavia …) | **Moot:** the whole flag is now drawn (squashed to the disc below the brim), so a helmeted pair is as alike as the full flags. Seen on 17 nations' infantry at 10 m/px: every one keeps its stripes or emblem (Turkey's crescent, Portugal's arms, Greece's cross and stripes). | `critic/c23fl.json`, `critic/shots/c23fl_sheet_10m.png`, `critic/shots/c23fl_*_1200m.png` |
-| **Non-blocking 5: planes the most visible balls at T0–T2** | **Fixed.** Same moment on both builds (seed 7019, hour 2, the same 7 sortie marks at 250 m/px): run 22's French planes were tricolour balls with grey wings, larger than the infantry stacks under the tags; HEAD's are blue silhouettes with a ball a few px across. At 600 and 1200 m/px German planes are light silhouettes with a small ball; at 3000 m/px they read as aircraft round Berlin. | `critic/c23pl_7019_GER_POL_5299.json`, `critic/c23pl_7019_GER_POL_5298.json`, `critic/shots/c23pl_250m_crop_5299_balls.png`, `critic/shots/c23pl_250m_crop_5298_balls.png`, `critic/shots/c23pl_250m_crop_5299_classic.png`, `critic/shots/c23pl_0600m_crop_5299.png` |
-| Non-blocking 1: freed puppet on both sides (FW2, 2207) | **Unchanged** (output identical to run 22's): Albania stays Italy's co-belligerent against Japan after breaking its bond. | `critic/c23_fw2_2207.json` |
-| Non-blocking 7: "Propose alliance" to an enemy (FW, 2207) | **Unchanged** (identical). | `critic/c23_fw_2207.json` |
-| Non-blocking 2: Breakthrough refusal only in God's tab (K2, K3, K, 2203) | **Unchanged** (all three identical). | `critic/c23_k2_2203.json`, `critic/c23_k3_2203.json`, `critic/c23_k_2203.json` |
-| Non-blocking 3: ADR-773 in mixed stacks (SX, SXT, SXG 6827, SXG 3917, EX2 4441) | **Unchanged**, all five identical byte for byte: 3917's knot still 1 of 12 own clicks; EX2 still dies on `release-control` as in run 22. | `critic/c23_sx_4441.json`, `critic/c23_sxt_4441.json`, `critic/c23_sxg_6827_JAP.json`, `critic/c23_sxg_3917_ITA.json`, `critic/c23_ex2_4441.json` |
-| Non-blocking 4: level-3 plasters read as ✕ (HU, 7019 d12) | **Unchanged**: same counts (1,007 in view: 723 / 221 / 46 / 17); the two crossed plasters now sit over the squashed flag under the helmet, still an ✕ at a glance. | `critic/c23_hu_7019_d12.json`, `critic/shots/c23hu_7019_d12_8m_balls.png` |
-| Non-blocking 6: own war behind "+1" on the phone; bar 24 % (TD, PH, P) | **Unchanged** (identical). | `critic/c23_td_3391.json`, `critic/c23_ph.json`, `critic/c23_p.json` |
-| Old files refused at the preview (OS2 c10); run 22's file loads | **Unchanged:** c10 refused with the reason; run 22's scenario file starts in 2.9 s. | `critic/c23_os2_c10.json`, `critic/c23_os2_c22.json` |
-| Format-1 save (OS c10fmt1) | Unchanged: refused with "cannot be continued". | `critic/c23_os_c10fmt1.json` |
-| Fights, fleets, editor, God tools, nukes, zoom, tags, UI, wing mark, phone widths, touch | Unchanged: FT, FP2, Q, PL, TG, U, P2, P3, PT identical; A, Z, W, SB, G differ only in boot ms, frame counts and live x1 positions (a few px). Editor probe ends on its 15-minute wait as in runs 21–22. | `critic/c23_ft_5381_d21.json`, `critic/c23_fp2_4877.json`, `critic/c23_q_6421.json`, `critic/c23_a_4219.json`, `critic/c23_z_5861.json`, `critic/c23_w_5557.json`, `critic/c23_sb_7019.json`, `critic/c23_g_4877.json`, `critic/c23_u_1600_5557.json` |
-| History (7019 y20), export | Same: 3,652 of 3,652 events, 121 ms (was 116); CSV names both nations. | `critic/c23_hi_7019.json`, `critic/c23_dl_7019.csv` |
-| PF: frame rate by look (7019 y20 save, Max), run alone | Same shape as run 22: 60 fps at 3000/1200/600 m/px in both looks; 120 m/px 40.6 / 41.8, 30 m/px 44.3 / 41.7 (balls / Classic). Planes' two passes cost nothing measurable. (CB's 52 fps at 3000 m/px was again taken beside three headless sims and is superseded.) | `critic/c23_pf.log`, `critic/c23_cb_7019.json` |
-| World dynamics (1213, 3301, 7019) | **Same sim:** 7019's 20 yearly hashes equal run 22's; the other seeds were not re-run (no sim input changed). | `critic/c23_headless_7019.json` |
+| R22-B1 fix, CB2: helmeted balls at 10 m/px (7019, GER v POL, day 1) | **Identical** to run 23 (marker code changed for heroes; the helmet fix survives). | `critic/c24_cb2_7019_GER_POL_10.json` |
+| CB: the same moment at ten zooms, both looks | **Identical** JSON; T1 pairs as run 23. | `critic/c24_cb_7019.json`, `critic/shots/c24cb_7019_arm_1200m_balls.png` |
+| Non-blocking 5 (fixed in 23): planes as silhouettes, PL on both builds | **Same to the eye**; JSON identical on both builds; 7–170 differing px a screen (sub-pixel), none a plane changed. | `critic/c24pl_7019_GER_POL_5299.json`, `critic/c24_pldiff.json`, `critic/shots/c24pl_0250m_pair_c23left_c24right.png` |
+| Non-blocking 1: freed puppet on both sides (FW2, 2207) | **Unchanged** (identical). | `critic/c24_fw2_2207.json` |
+| Non-blocking 6: "Propose alliance" to an enemy (FW, 2207) | **Unchanged** (identical). | `critic/c24_fw_2207.json` |
+| Non-blocking 2: Breakthrough refusal only in God's tab (K, K2, K3, 2203) | **Unchanged** (identical). | `critic/c24_k2_2203.json`, `critic/c24_k3_2203.json` |
+| Non-blocking 3: own counters in mixed stacks (SX, SXT, SXG 6827/3917) | **Unchanged** (identical; 3917 still 1 of 12). EX2 differs only in a live count (3 vs 2 German within 14 px). | `critic/c24_sxg_3917_ITA.json`, `critic/c24_ex2_4441.json` |
+| Non-blocking 4: level-3 plasters read as ✕ (HU) | **Unchanged** (identical). | `critic/c24_hu_7019_d12.json` |
+| Non-blocking 5: own war behind "+1" on the phone, bar 24 % (TD, PH, P) | **Unchanged** (TD identical). | `critic/c24_td_3391.json` |
+| Old files at the preview (OS2 c10, run 23's scenario file), format-1 save | Unchanged: c10 refused with its reason, run 23's file loads; only the title page's text gained the new options. | `critic/c24_os2_c10.json`, `critic/c24_os2_c23.json`, `critic/c24_os_c10fmt1.json` |
+| Non-blocking 7: editor fleets' long wait (G, 4877) | Run 23's probe timed out waiting for day 120 at Max; this run reached it. Different load on the machine; **not compared**, no score moves. Placements and the land refusal unchanged. | `critic/c24_g_4877.json` |
+| Fights, fleets, God tools, nukes, zoom, tags, wing mark, widths, touch, play | FT, FP2, Q, PL(6011), PT, SX* identical; A, Z, W, SB, C differ only in live tick / sortie counts and the new form rows. No page error in any. | `critic/c24_cmp.txt` |
+| History (7019 y20), export | **Identical** JSON (3,652 events). | `critic/c24_hi_7019.json`, `critic/c24_dl_7019.json` |
+| PF: frame rate by look (7019 y20, Max), alone | Same as run 23: 60 fps at 3000/1200/600 m/px both looks; 120 m/px 41.1 / 42.6, 30 m/px 44.7 / 41.7 (balls / Classic). | `critic/c24_pf.log` |
+| World dynamics | Same sim (20 of 20 hashes). | `critic/c24_headless_7019.json` |
 
 ## New in this run
 
 | Case | What happened | Evidence |
 |---|---|---|
-| FL: 24 nations' infantry at the 1938 start, 10 and 1200 m/px | 17 found and shot (the other 7: none found by the probe's filter, a title matching "Infantry" with a position). Every flag reads under the helmet; horizontal tricolours (Hungary, Bulgaria, Lithuania, Estonia, Latvia, Austria, Yugoslavia) are told apart by stripe order. Squashing to the lower two-thirds of the disc makes emblems oval; nothing seen lost. On German balls the black stripe now carries the eyes: a "masked" face, white eyes only. | `critic/c23fl.json`, `critic/shots/c23fl_sheet_10m.png` |
-| PL: planes, both builds, same moment, seven zooms | Above. At 60 and 25 m/px a plane is still its ~10 px symbol, smaller than an infantry ball (the same on run 22's build). | `critic/shots/c23pl_7019_GER_POL_5299_0060m_balls.png` |
-| New seeds 2468 and 5113 × 30 years, headless (new seeds, not compared) | 2468: 85–100 nations living, 4–13 wars a year, 22 bursts (UK 10, Germany 9), 14 interceptions, the United States 27 % of land at y30. 5113: 66 living at y30, the Soviet Union ~31 % throughout, 21 bursts by four nations. Mean tick 3.2 and 2.7 ms (three at once, unpinned). | `critic/c23_headless_2468.json`, `critic/c23_headless_5113.json` |
-| LW: page watch of seed 2468, 10 years at Max | 24–39 s a year, 59.9–60 fps, longest frame gap 83 ms, no page error. By 15 Jan 1948 a coalition war on the Soviet Union (the UK +16, Poland +10, Mexico +10, China +2 against it), France has the bomb, Belgium holds Congo and half of Brazil's east; 4–6 wars on the banner row each year. Busy and global, as on run 22's seeds. | `critic/c23_lw_2468.log`, `critic/shots/c23lw_2468_y10_world.png` | `critic/c23_lw_2468.json` |
+| **DP: seed-drawn diplomacy, 3 seeds × {scenario, random}, days 0–180** | Random: Japan holds 1,345 Chinese cells at peace on all 3 seeds from day 0 (scenario mode: 0 at every sample). Drawn shapes are odd but per ADR (Iran–CCP–Afghanistan, Bolivia–Siam–Paraguay pacts; Tibet guaranteeing Greece). No puppet against its overlord, no allies on opposite sides. | `critic/c24_dp.json` |
+| **OCC: how long it lasts** | 8821: 1,345 cells at peace every 90 days through day 900. 1517: to day 540, then a JAP–CHI war starts with Japan already holding them. | `critic/c24_occ_8821.log`, `critic/c24_occ_1517.log` |
+| **DR: what the player sees** | Day 1 and day 180 on 8821: hatched "occupied land" round Peiping/Tientsin and Shanghai with Japanese 41.2k stacks inside it; China's panel "AT WAR WITH: At peace" (day 1); history shows only the two drawn wars. | `critic/shots/c24dr_rnd_8821_d1_china.png`, `critic/shots/c24dr_rnd_8821_d180_china.png`, `critic/c24_dr_rnd_8821.json` |
+| **SOVCZS/GU (default path, pre-existing): the Soviet Union at war with the nation it guarantees** | On 3 of 3 seeds the Soviet Union declares on Romania on day 4–11, CZS is called in as Romania's ally, and the Soviet guarantee of CZS stands through the war. Guarantees appear in no nation panel, so a player does not see the contradiction; the predictability (same opening war on every seed) is what a watcher notices. Same sim as run 23: new finding, not a change. | `critic/scripts/c24_sovczs.ts` output in this report, `critic/c24_dp.json` (`odd` at d30, all scenario rows), `critic/c24_gu_3739.json` |
+| **FO: camera follows any clicked formation (observer)** | A German formation clicked at 250 m/px is centred (0 px) after 48 h and after an off-centre wheel zoom; a Polish one clicked takes the follow; a click on ground ends it; a fleet is followed 48 h; an arrow-key pan ends it. As ADR-786 says. | `critic/c24_fo_7019.json`, `critic/shots/c24fo_7019_*` |
+| **HV: heroes on the map and in the panel (3739)** | T0: each hero a large named counter; at world zoom the 14 names are the largest labels on the map after nation names (`c24lwhd_6197_y10_world.png`). T1: the hero's marker shows its crew ("6" for the Maus, "8" for the TOG II, "2.2k" for the Bismarck) where the T0 counter shows its name. T2: the Maus at 120 m/px is a ~10 px ball next to 30-figure infantry blocks. The Overview's Heroes block works; a row click opens and follows the hero (0 px); "returns in 52 days" shown for a sunk Bismarck. | `critic/c24_hv_3739.json`, `critic/shots/c24hv_3739_1475_120m.png`, `critic/shots/c24hv_3739_1475_1200m.png`, `critic/shots/c24hv_3739_gone_row.png`, `critic/shots/c24hv_3739_maus_click.png` |
+| **HS: a hero over its own stack** | Germany's battle squadron, destroyer and submarine flotillas sit at the Bismarck's spot; at 1200 m/px the marker there carries "×4", and five clicks open the Bismarck five times: the squadron cannot be opened there. Same for Infantry division 1 under the Maus at Berlin. ADR-789 accepts that a hero covers its neighbours. | `critic/c24_hs_3739.json`, `critic/shots/c24hs_3739_1474_1200m.png` |
+| **HEROES: 14 heroes × 10 years, 2 seeds (headless)** | Land heroes in battle on 1–24 % of their nation's war days (O-I 79 of 3,416 on 3739), standing still (< 1 cell a day) on 50–97 % of them; sea heroes in battle on 0.4–3 % and lost 8–35 times in ten years (Sovetsky Soyuz alive 1,229 of 3,650 days on 8821). | `critic/c24_heroes_3739.json`, `critic/c24_heroes_8821.json` |
+| **HERODEATH (8821, 500 days)** | Sea heroes are lost in battle (0 h since engaged), mostly in hours full of air strikes; the Maus, Bismarck, T-28 and T-42 were each also lost 200–3,500 hours after their last fight (air strikes with no battle). | `critic/c24_herodeath_8821.log` |
+| **LW-HD: 10 years in the page with heroes on and random diplomacy (6197)** | 27–42 s a year, 59.8–60 fps, longest gap 125 ms, no page error; 6 wars on the banner each year; by 1948 the US, China and the Soviet Union lead. Hero positions checked headless: each sea hero at sea. | `critic/c24_lwhd_6197.json`, `critic/shots/c24lwhd_6197_y10_world.png`, `critic/c24_heropos_6197.log` |
+| **DC: draw cost, both builds, one save, A-B-A-B** | Means 1.8–3.3 ms (HEAD, first pass), 2.1–6.0 (c23), 2.3–5.4 (HEAD, second), 1.9–6.0 (c23); the spread between passes of one build is larger than between builds. No measurable change either way on this instrument. | `critic/c24_dc_head1.json`, `critic/c24_dc_c23.json`, `critic/c24_dc_head2.json`, `critic/c24_dc_c23b.json` |
+| New seeds 3739 and 6197 × 30 years (new seeds, not compared) | 3739: 76–97 nations living, 4–11 wars a year, nuclear use by Germany, the UK, China and the US; the US 23.9 % of land at y30. 6197: 2–10 wars a year, nuclear use by the UK only; the US 33.6 % at y30. Mean tick 2.7 ms (three at once, unpinned). | `critic/c24_headless_3739.json`, `critic/c24_headless_6197.json` |
 
 ## Dimensions
 
-### Map visuals and readability: 7 (was 6)
+### Map visuals and readability: 7 (unchanged)
+- **Tested:** CB, CB2, PL on run 23's moment, both builds; heroes at four zooms.
+- **Evidence:** `c24pl_0250m_pair_c23left_c24right.png`, `c24_cb_7019.json`, `c24hv_3739_1475_120m.png`.
+- **What AoC does better:** counters in the nation's colour (as run 23). **Fix:** none new; hero T1 marker see non-blocking 8.
 
-- **Tested:** CB and CB2 on run 22's frozen moment; FL across 17 nations; planes on both builds at the same moment.
-- **Evidence:** `c23cb2_7019_GER_POL_10_0.png`, `c23cb_7019_arm_1200m_pair_c22left_c23right.png`,
-  `c23cb_7019_arm_0600m_pair_c22left_c23right.png`, `c23fl_sheet_10m.png`, `c23pl_250m_crop_5299_balls.png`.
-- **What AoC does better:** its counters are the nation's colour; here a T1 box is dark for every nation, so a
-  helmeted Polish ball and a helmeted Austrian one differ only by stripe order on a ball 14–20 px across.
-- **Why not 8:** the fix removes a defect; nothing here reads better than AoC's colour blocks at the front.
-- **Fix:** none; see Design objections (ADR-782 chose the squash over a map-colour rim).
-
-### Diplomacy, war, alliance, puppet, revolt depth: 7 (unchanged)
-
-- Nothing changed (FW, FW2 identical). The freed puppet on both sides and "Propose alliance" to an enemy stand.
-- **What AoC does better:** (text) a nation leaving a bond leaves its wars. **Fix:** non-blocking 1 and 6.
+### Diplomacy, war, alliance, puppet, revolt depth: 6 (was 7)
+- **Tested:** DP on 3 seeds, OCC to 900 days, DR in the page; FW/FW2 re-run (identical); SOVCZS on 3 seeds.
+- **Evidence:** `c24_dp.json`, `c24_occ_8821.log`, `c24dr_rnd_8821_d1_china.png`, `c24dr_rnd_8821_d180_china.png`.
+- **What AoC does better:** (text) occupation exists only in a war; peace returns or cedes land.
+- **Fix:** R24-B1. Also non-blocking 1, 6, 9.
 
 ### Emergent world dynamics over long runs: 7 (unchanged)
-
-- The sim is byte-identical to run 22's (7019's hashes). Two new seeds: busy, global, 4–13 wars a year, a new
-  leader at y30 on 2468 (the United States), a static Soviet giant on 5113.
-- **What AoC does better:** long runs end in a few large empires a watcher can follow. **Fix:** none new.
+- Same sim; new seeds busy and global; the Soviet day-4–11 war on the Little Entente on every seed tried is a sameness a watcher of several games will see (non-blocking 9). LW-HD with both options: busy, global.
 
 ### God Mode: 7 (unchanged)
-
-- Q, A, K, K2, K3 identical or equal; Breakthrough's refusal still unseen from the bar.
-- **What AoC does better:** its tools act or say why wherever clicked. **Fix:** non-blocking 2.
+- Q, A, K, K2, K3 identical. **Fix:** non-blocking 2.
 
 ### Editor and scenarios: 7 (unchanged)
-
-- Editor placements and the land refusal as before (`c23_g_4877.json`); old files refused at the preview, run 22's
-  file loads (`c23_os2_c10.json`, `c23_os2_c22.json`).
-- **What AoC does better:** painting a scenario is quicker (text). **Fix:** none new.
+- Editor placements and refusal as before (`c24_g_4877.json`); old files as before. The two new options are offered in
+  the form and the settings (`c24u_1600_11_settings.png`); one of them is R24-B1 (scored under Diplomacy, where its effect is).
 
 ### Stats and history: 7 (unchanged)
-
-- History 3,652 events in 121 ms; export names both sides (`c23_hi_7019.json`, `c23_dl_7019.csv`).
-- **What AoC does better:** nothing measured. **Fix:** none new.
+- History and export identical. The heroes' Overview block reads well (`c24hv_3739_gone_row.png`).
 
 ### UI/UX and polish: 7 (unchanged)
-
-- All UI probes identical to run 22's (U, P, P2, P3, PH, PT, TD, TG, SX*, EX2). Run 22's costs stand: own counters in
-  mixed stacks (3917: 1 of 12), the phone bar's 24 %, the player's war behind "+1".
-- **What AoC does better:** none of these costs. **Fix:** a second click that cycles a stack.
+- Follow of any formation works in every step (FO). Costs: a hero covers its stack at T1 (HS), mixed-stack clicks (3917: 1 of 12), the phone bar.
+- **Fix:** non-blocking 3, 8.
 
 ### Performance: 7 (unchanged)
-
-- PF run alone: 60 fps at world, T1 and 600 m/px in both looks; 40–44 fps at 120–30 m/px on a year-20 world at Max,
-  equal between looks (`c23_pf.log`). Headless ticks 2.7–3.5 ms (unpinned).
-- **What AoC does better:** nothing measured. **Fix:** none.
+- PF alone equals run 23's; DC finds no difference between builds; LW-HD at 60 fps for ten years with heroes on.
 
 ### Stability: 7 (unchanged)
-
-- No page error in any probe (`errors: []` in every `c23_*.json`). Sim deterministic across the two builds.
-- **What AoC does better:** no inconsistent war sides seen (text). **Fix:** non-blocking 1.
+- No page error in any probe; default sim deterministic across builds (20 of 20). R24-B1 is a state inconsistency, scored once under Diplomacy.
 
 ### Semantic zoom to unit level: 8 (unchanged)
-
-- Zoom series as run 22's (`c23_z_5861.json`, element counts per step within 10 of 4,450). The helmet fix makes T3
-  infantry legible as nations (`c23cb2_7019_GER_POL_10_0.png`). One ball an element (ADR-777) stays a design objection.
-- **What AoC does better:** nothing at this level. **Fix:** none new.
+- Z re-run within 30 elements of run 23 at every step (`c24_z_5861.json`); CB identical.
 
 ### Naval warfare: 8 (unchanged)
-
-- SB as before (`c23_sb_7019.json`); sea battles every year on the new seeds (2468: 291 logged, 5113: 240).
-- **What AoC does better:** nothing here. **Fix:** none new.
+- SB as before; sea battles every year on new seeds. Sea heroes add little (in battle on 0.4–3 % of war days).
 
 ### Tanks: 8 (unchanged)
-
-- Armour balls untouched by the change; whole flag, treads and barrel (`c23hu_7019_d12_8m_balls.png`).
-- **What AoC does better:** nothing here. **Fix:** none new.
+- Armour unchanged. The land heroes (super-heavy tanks) stand most of their wars (design objection).
 
 ### Aircraft: 8 (unchanged)
-
-- The planes now read as aircraft at T0–T2 in the default look (`c23pl_250m_crop_5299_balls.png`,
-  `c23pl_3000m_germany_zoom.png`); air war as before (1,000–3,000 air battles a year headless).
-- **Why not 9:** the change returns the default look to what Classic already showed; the air war itself is unchanged.
-- **What AoC does better:** nothing here. **Fix:** none.
+- Planes unchanged to the eye after the cache (PL pairs); air war as before.
 
 ### AI nuclear use: 8 (unchanged)
-
-- New seeds: 22 bursts by four nations with 14 interceptions (2468), 21 bursts by four nations (5113)
-  (`c23_headless_2468.json`, `c23_headless_5113.json`). God nukes as before (`c23_a_4219.json`).
-- **What AoC does better:** nothing here. **Fix:** none new.
+- New seeds: four nations use the bomb on 3739, one on 6197 (`c24_headless_*.json`); God nukes as before (`c24_a_4219.json`).
 
 ## Blocking issues, in priority order
 
-None. R22-B1 is fixed on its own case (above).
+1. **R24-B1: "Alliances and wars: random" leaves Japan occupying 1,345 cells of China at peace, for years.**
+   Evidence: `critic/c24_dp.json` (all 3 random seeds, day 0; 0 in scenario mode), `critic/c24_occ_8821.log` (900 days),
+   `critic/shots/c24dr_rnd_8821_d1_china.png`, `critic/shots/c24dr_rnd_8821_d180_china.png` (hatched, China "At peace").
+   Fix: when `randomDiplomacy` drops the scenario's wars, end them as a peace would: occupied land goes back to its owner
+   (controller = owner) and foreign armies inside leave, before the drawn wars are declared.
 
 ## Non-blocking issues
 
-1. **A freed puppet fights on both sides** (unchanged; `c23_fw2_2207.json`). Fix: a broken bond takes it out of the
-   overlord's wars.
-2. **Breakthrough's refusal shown only in God's tab** (unchanged; `c23_k2_2203.json`). Fix: say it by the bar.
-3. **ADR-773's cost in mixed stacks** (unchanged; `c23_sxg_3917_ITA.json`: 1 of 12). See Design objections.
-4. **Level-3 plasters read as ✕** (unchanged; `c23hu_7019_d12_8m_balls.png`).
-5. **The player's own war behind "+1" on the phone; bar 24 %** (unchanged; `c23_td_3391.json`, `c23_ph.json`).
-6. **"Propose alliance" offered to an enemy** (unchanged; `c23_fw_2207.json`).
-7. **Unchanged:** land "To its fight" off its formation (ADR-775); the editor fleets' long wait (`c23_g_4877.json`).
+1. **A freed puppet fights on both sides** (unchanged; `c24_fw2_2207.json`).
+2. **Breakthrough's refusal shown only in God's tab** (unchanged; `c24_k2_2203.json`).
+3. **Own counters in mixed stacks** (unchanged; `c24_sxg_3917_ITA.json`: 1 of 12).
+4. **Level-3 plasters read as ✕** (unchanged; `c24_hu_7019_d12.json`).
+5. **The player's own war behind "+1" on the phone; bar 24 %** (unchanged; `c24_td_3391.json`).
+6. **"Propose alliance" offered to an enemy** (unchanged; `c24_fw_2207.json`).
+7. **Unchanged:** land "To its fight" off its formation (ADR-775).
+8. **Hero markers (new):** at T1 a hero's marker shows its crew ("6", "8") where its counter shows its name, and it
+   carries the "×4" of the stack it covers while only the hero opens there (`c24hs_3739_1474_1200m.png`,
+   `c24_hs_3739.json`). Fix: the name on the T1 marker too; a second click on a hero's spot opens the formation under it.
+9. **The Soviet Union fights the nation it guarantees, and does so in the same opening on every seed** (default path,
+   pre-existing): SOV on Romania on day 4–11 on 3 of 3 seeds, CZS called in against its guarantor, the pledge kept
+   (`c24_dp.json` scenario rows' `odd` at day 30; SOVCZS). Fix: a guarantor is torn (stays out, or its declaration is refused) where the declaration would call its guaranteed nation against it; or the pledge lapses.
 
 ## Design objections (none blocking, no score lowered)
 
-- **What is drawn wins (ADR-773):** the player cannot click its own division in a knot (3917: 1 of 12).
-- **One ball an element at T3 (ADR-777):** T3 shows less than the 64-figure battalions did.
-- **The flag squash over a map-colour rim (ADR-782, option a):** it works, but a helmeted Polish and Austrian ball still differ
-  only by stripe order on the same dark T1 box; a rim in the map colour would read at the first glance
-  (`c23fl_sheet_10m.png`, `c23cb_7019_arm_1200m_pair_c22left_c23right.png`).
-- **A plane is a silhouette with a small ball (ADR-783):** it works; the ball at ~2 px radius at T2 is a colour dot,
-  not a readable flag, so a plane's nation is read from the silhouette's colour, as in Classic.
-- **The wing mark on its hourly point (ADR-771)** and run 21's other objections stand.
+- **The heroes' AI (ADR-793–796, closed "not done" by the user):** a player who turns Heroes on watches 14 named
+  super-units that, over ten years, stand still on 50–97 % of their nation's war days, fight on 1–24 % (land) and 0.4–3 %
+  (sea) of them, and sea heroes are sunk and reborn 8–35 times (`c24_heroes_3739.json`, `c24_heroes_8821.json`,
+  `c24_herodeath_8821.log`). A "hero" that is mostly a parked counter or a recurring loss is not what the name promises.
+- **A hero covers its neighbours at T1 (ADR-789):** Germany's main fleet at its base cannot be opened by click with heroes on (`c24_hs_3739.json`).
+- **Hero counters at world zoom (HERO_SCALE 2):** the 14 hero names are the largest labels on the world map after nation names and crowd it (`c24lwhd_6197_y10_world.png`).
+- **The seed-drawn diplomacy's shapes (ADR-785):** pacts of nations a world apart in kind (Iran–CCP–Afghanistan; Tibet guaranteeing Greece) read as noise, not history (`c24_dp.json`).
+- Run 23's objections stand (ADR-773, ADR-777, ADR-782, ADR-783, ADR-771).
 
 ## Notes
 
-- EX2's observer arm still dies on `release-control` (as in run 22); the panel figures rest on SX and SXG.
-- Preview servers on 5298 and 5299 and every browser were stopped at the end (`netstat`: no listener left, only TIME_WAIT).
+- `metresPerPx * cam.scale` in HV/FO logs is metres per cell, constant; zoom changes are read from the shots, not those numbers.
+- Preview servers on 5298 and 5299 stopped at the end (no listener); no browser left.
 
 ## Strengths, verified
 
-- **A blocking defect fixed in one commit and seen fixed on its own case at every tier**, with the sim untouched
-  (20 of 20 hashes): `c23cb2_7019_GER_POL_10_pixels.json` against run 22's, and the 1200/600 m/px pairs.
-- **The default look costs nothing:** PF run alone, both looks within noise at five zooms (`c23_pf.log`).
+- **A large feature set landed without touching the default world:** 20 of 20 yearly hashes equal run 23's, and 24 page probes return byte-identical results.
+- **The camera follow is right in every case tried** (click, wheel, switch, ground, fleet, keyboard pan; `c24_fo_7019.json`).
