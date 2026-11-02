@@ -44,6 +44,26 @@ see it demonstrated. Those files are leads for where to attack, never evidence.
   difference that the same seeds do not show on both commits does not move
   a score.
 
+# FULL OR FOCUSED RUN (added 2026-11-02, ADR-804, the user's decision)
+Decide this yourself, from git, before anything else. A run is **focused** when all of these hold:
+- the last report has a blocking issue or a score under its bar;
+- every commit since the last report's commit is one of two kinds. Either its subject names a PLAN task
+  that the commit adding that report filed (`git log -1 <that commit>`: "Critic run N on ...;
+  PLAN 7.191, 7.192"), or it changes no file under `src/`, `data/` or `public/`;
+- the last three reports were not all focused (each JSON's `mode`; a report without one is full).
+
+Otherwise the run is **full**. A full run is the whole brief below. A focused run:
+- re-runs every named case of the last report, as the rule below says;
+- scores afresh each dimension the last report scored under its bar or found a blocking issue in,
+  and each dimension the changed files touch (`git diff --stat <last report's commit> HEAD`). It
+  explores those freely, with new seeds;
+- carries every other dimension's score from the last report, marked "carried" in the report. A
+  defect you meet in passing still counts and moves that score.
+
+The DONE CONDITION needs a full run with no blocking issue, so a clean focused run is followed by
+a full one. Say the mode and the reason at the top of the report, and write `"mode": "full"` or
+`"mode": "focused"` in the JSON.
+
 # DIMENSIONS (score 0-10; 7 = on par with AoC, 10 = clearly better)
 Parity: map visuals and readability; diplomacy/war/alliance/puppet/revolt
 depth; emergent, watchable world dynamics over long runs; God Mode; editor and
@@ -58,8 +78,8 @@ aircraft; AI nuclear use.
    BLOCKING issues (would make a player quit or contradict a claimed feature)
    and non-blocking issues. Then the last report's cases re-run, and the
    "Design objections" (none of them blocking).
-2. `critic/CRITIC_REPORT.json`: `{commit, scores:{dimension:number},
+2. `critic/CRITIC_REPORT.json`: `{commit, mode, scores:{dimension:number},
    blocking:[{id,title,evidence,fix}], timestamp}`, where commit is the
-   current git HEAD hash.
+   current git HEAD hash and mode is `"full"` or `"focused"`.
 3. Scores must be defensible; every score above 7 needs explicit evidence of
    parity or superiority.

@@ -162,8 +162,12 @@ added without code changes.
 
 # EVERY ITERATION
 
-1. Read SPEC.md, PLAN.md, the tail of PROGRESS.md, BLOCKERS.md, and
-   `critic/CRITIC_REPORT.md` if it exists. PLAN.md is read from its top to
+1. Read SPEC.md §1 and §2 and the sections the task touches, PLAN.md, the
+   tail of PROGRESS.md, BLOCKERS.md, and `critic/CRITIC_REPORT.md` if it
+   exists (changed 2026-11-02, ADR-804, the user's decision: SPEC.md is
+   290 KB; the rest of it is searched). BLOCKERS.md holds the open entries
+   and the watch list; an entry resolved is moved to
+   `docs/BLOCKERS_DONE.md`, which is searched, not read. PLAN.md is read from its top to
    the heading `## Phase 7` (about 18 KB: the open task and the phases
    ahead; changed 2026-10-09, ADR-235, the user's decision). Phase 7 is
    read when the task is one of its own or a line is to be added under
@@ -182,8 +186,8 @@ added without code changes.
     Then re-run the last report's probes on HEAD (ADR-803, the user's
     decision): the scripts in `critic/scripts/` behind its blocking issues
     and its scores under the bar, with the seeds and arguments the report
-    and its evidence name, and `tools/diag/diploInvariants.ts` on the
-    seeds of `tests/unit/diploInvariants*.test.ts`. Running them is not
+    and its evidence name, and the war-and-peace checker's tests
+    (`npx vitest run tests/unit/diploInvariants`). Running them is not
     acting as the critic. A probe that still shows its defect means the
     task that fixed it did not: reopen that task (or file one before PLAN
     7.5) and end the iteration without the critic. Then spawn the `critic` subagent
@@ -207,6 +211,27 @@ added without code changes.
     PLAN 7.5 (added 2026-10-17, ADR-486, the user's decision). No finding may
     depend on the report staying recent. Then end the iteration. Never act
     as the critic yourself.
+    A clean report finishes first (added 2026-11-02, ADR-804, the user's
+    decision: runs 21 and 23 were clean, and each time new features came
+    before the release; runs 19, 20, 22 and 24 each blocked on the newest
+    feature). On a full report with no blocking issue and every dimension at
+    its bar, the next iteration runs the DONE CONDITION's other checks
+    (`npm run check:full`, the soak, the sweep, the scripted demo run, the
+    budgets). A check that fails is filed before PLAN 7.5 and fixed, then
+    the critic runs again. When every check holds, tag the commit
+    `release-<YYYY-MM-DD>` (`git tag`, `git push --tags`) and output the
+    DONE string. The critic decides for itself whether its run is full or
+    focused (`CRITIC_PROMPT.md`); a focused report never meets the DONE
+    CONDITION, so a clean one is followed by a full run.
+    New features wait for the release (ADR-804, the user's decision). A
+    feature the user asks for while PLAN 7.5 is open goes in a batch after
+    PLAN 7.5, unless the user says it comes first. After the release, the
+    loop builds the batch's tasks one after another, with no critic run
+    between them, then runs the critic once on the whole batch. Each
+    feature task adds the rules it brings to a checker run on several seeds,
+    as `tests/helpers/diploInvariants.ts` checks war and peace: a rule
+    nothing checks together with the others is the next critic run's
+    finding.
     One run per phase (changed 2026-10-03, ADR-59, the user's decision). The
     critic no longer returns every 5 commits, and the "Critic " prefix on
     commit subjects no longer counts for anything. The user may ask for a
@@ -379,7 +404,8 @@ on simulation runs (DECISIONS ADR-48).
 # DONE CONDITION
 
 Only when ALL are true:
-- `critic/CRITIC_REPORT.json` exists for the current HEAD commit, every parity
+- `critic/CRITIC_REPORT.json` exists for the current HEAD commit, from a full
+  run (`"mode": "full"`, or no `mode`; ADR-804), every parity
   dimension scores >= 7, every differentiator dimension scores >= 8, and it
   lists zero blocking issues;
 - every PLAN.md item is checked or has a documented blocker;
@@ -393,6 +419,6 @@ Only when ALL are true:
   nuclear strike;
 - performance budgets are met.
 
-Then output exactly:
+Then tag the commit `release-<YYYY-MM-DD>` and push the tag (ADR-804), and output exactly:
 <promise>WORLD_WAR_SIM_COMPLETE</promise>
 Do not output that string until it is fully true.

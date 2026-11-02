@@ -167,6 +167,42 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-804 · 2026-11-02 · accepted (the user's decision) — release before new features; focused critic runs; the checker over the options; less to read each iteration
+
+- **Context.** Across critic runs 18–26 every report had 0 or 1 blocking issue, almost always in the newest feature:
+  R19 the map-mode menu, R20 the formation panel, R22 the countryballs' helmet, R24 random diplomacy. Runs 21 and 23
+  were clean. After run 23 only the T0 frame rate (7.181) was left, then random diplomacy, the heroes and the camera
+  follow came before a release. A critic run takes about 1 h 45 m (runs 25, 26) and re-scores all 14 dimensions,
+  even on a round that fixes one. ADR-803's checker ran only the default options. An iteration's read list (SPEC
+  290 KB, BLOCKERS 187 KB, DECISIONS 2.0 MB, PARITY 190 KB) was over 4 MB.
+- **Decision.**
+  - PROMPT step 2a, after a clean full report:
+    - the next iteration runs the DONE CONDITION's other checks. When they hold, it tags `release-<YYYY-MM-DD>`
+      and pushes the tag;
+    - a feature the user asks for while PLAN 7.5 is open goes in a batch after 7.5, unless the user says otherwise;
+    - after the release a batch is built whole, with one critic run on it. Each feature adds its rules to a checker,
+      as `diploInvariants` does for war and peace.
+  - `CRITIC_PROMPT.md`: the critic decides from git whether its run is **focused**. It is focused when the last
+    report has a blocking issue or a score under its bar, every commit since is a task that report filed or changes
+    nothing under `src/`, `data/` or `public/`, and the last three runs were not all focused. A focused run re-runs
+    the last report's cases, and scores afresh the dimensions that report had under its bar or blocked on, plus
+    those the changed files touch. It carries the other scores, marked "carried". The JSON gets `mode`. The DONE
+    CONDITION needs a full run.
+  - `tests/unit/diploInvariantsOptions.test.ts`: the checker with the heroes on (8821, random diplomacy) and on
+    the random world of 60 (seed 7). Both are green on HEAD (44 s and 24 s); the heroes with scenario diplomacy on
+    7019 are green too (41 s).
+  - The read list (CLAUDE.md, PROMPT step 1):
+    - SPEC §1, §2 and the sections the task touches;
+    - BLOCKERS' open entries and watch list, with the 108 resolved sections (and the two waits on done PLAN
+      7.90–7.92) moved to `docs/BLOCKERS_DONE.md`, which is searched (BLOCKERS.md 187 → 57 KB);
+    - DECISIONS' last day of ADRs, the rest searched;
+    - PARITY's rows the task touches.
+- **Consequences.**
+  - A fix round costs a focused run, likely shorter. The cost is less free exploration of the dimensions it
+    carries; every fourth run at most is full anyway.
+  - The user's feature requests near a release wait for it, unless the user puts them first.
+  - No sim change; seed 99's pin is unchanged.
+
 ### ADR-803 · 2026-11-02 · accepted (the user's decision) — the critic loop: the rules of war and peace checked together; the last report's probes before a run; no check:review
 
 - **Context.** Critic runs 24–26 each scored diplomacy 6 with one blocking issue, and each was made by the fix before:

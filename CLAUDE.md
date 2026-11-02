@@ -9,16 +9,19 @@ on source and writes only to `critic/`.
 
 ## State lives in files
 
-There is no memory between sessions. Read these files:
-- `SPEC.md`: the design.
+There is no memory between sessions. Read these files, as each line says (ADR-804: whole, they
+were over 4 MB):
+- `SPEC.md`: the design. Read §1 and §2 and the sections the task touches; search the rest.
 - `PLAN.md`: tasks and acceptance tests, those still to do. Read it from the top to
   `## Phase 7`; Phase 7 only when working there or adding a line under PLAN 1.42; its last
   section ("Done: the first lines", the ticks the gate reads) never. The text of a done task is
   in `docs/PLAN_DONE.md`, which is searched, not read (ADR-231, ADR-235).
 - `PROGRESS.md`: the log; read the tail.
-- `BLOCKERS.md`.
-- `DECISIONS.md`.
-- `docs/PARITY.md`.
+- `BLOCKERS.md`: the open entries and the watch list. The resolved ones are in
+  `docs/BLOCKERS_DONE.md`, which is searched, not read.
+- `DECISIONS.md`: newest first; read the ADRs of the last day and search for the rest (an ADR's
+  number, a function, a rule's name).
+- `docs/PARITY.md`: the rows the task touches.
 - `critic/CRITIC_REPORT.json`, if present.
 
 ## Commands
@@ -52,7 +55,7 @@ There is no memory between sessions. Read these files:
   test goes on that list only with a BLOCKERS entry for it. Not run before a critic run
   (ADR-803, the user's decision; it was, ADR-554): PROMPT step 2a re-runs the last report's
   probes instead.
-- `npx tsx tools/diag/diploInvariants.ts <seed> [scenario|random]`: the rules of war and peace
+- `npx tsx tools/diag/diploInvariants.ts <seed> [scenario|random] [--heroes] [--world random]`: the rules of war and peace
   (land held at peace, a silent exit, a war in a realm, a bond's break refused) on one run, as
   `tests/unit/diploInvariants*.test.ts` check them (ADR-803).
 - `npm run typecheck`: `src/`, `tools/` and `tests/` (a bare `tsc --noEmit -p .` skips `tests/`; a

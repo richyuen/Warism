@@ -19,7 +19,9 @@ import { realmWars } from './realmWars';
 //   bond    a puppet's or ally's Force war on its partner, and a puppet's revolt, never refused
 //           because the two fight beside each other (ADR-780, R26-B1).
 
-const tag = (n: number): string => TAGS_1938[n - 1] ?? `#${n}`;
+const tag1938 = (n: number): string => TAGS_1938[n - 1] ?? `#${n}`;
+/** The names in the lines: the 1938 tags, or the ids of a random world's nations (set per case). */
+let tag: (n: number) => string = tag1938;
 const assets = assets1938(SIZE_1938.w);
 
 /** Whether a and b fight on one side in a war (as `beside` in the war system, kept here so the checker runs on builds before it). */
@@ -150,6 +152,11 @@ function puppetPassNow(w: World): void {
 export interface DiploCase {
   seed: number;
   diplomacy: 'scenario' | 'random';
+  /** The 1938 world (the default) or the random world of `nations` nations (ADR-108). */
+  world?: '1938' | 'random';
+  nations?: number;
+  /** The heroes new-game option (PLAN 7.184). */
+  heroes?: boolean;
   days: number;
   /** The days on which the wars a player or God could declare are tried, each on a copy. */
   probeDays: number[];
@@ -165,10 +172,14 @@ export interface DiploCase {
  */
 export function diploBreaks(c: DiploCase): string[] {
   const breaks = new Breaks();
-  const label = `${c.seed} ${c.diplomacy}`;
-  const s = new Sim({ scenario: '1938', seed: c.seed, assets, options: { diplomacy: c.diplomacy } });
+  const scenario = c.world ?? '1938';
+  tag = scenario === '1938' ? tag1938 : (n) => `#${n}`;
+  const label = `${c.seed} ${scenario === '1938' ? '' : `random world ${c.nations ?? 60}, `}${c.diplomacy}${c.heroes ? ', heroes' : ''}`;
+  const init = { scenario, seed: c.seed, assets, options: { diplomacy: c.diplomacy, ...(scenario === 'random' ? { nations: c.nations ?? 60 } : {}), ...(c.heroes ? { heroes: 'on' as const } : {}) } };
+  const s = new Sim(init);
   breaks.add(`${label} day 0`, worldBreaks(s.world));
-  const copy = new Sim({ scenario: '1938', seed: c.seed, assets });
+  // The copies are loaded from the run's saves: built as the run was, for the same tables.
+  const copy = new Sim(init);
   let day = 0;
   for (const probe of [...c.probeDays, c.days]) {
     stepChecked(s, 24 * (probe - day), breaks, label);

@@ -25712,3 +25712,14 @@ No rule changed and nothing on screen changed. One task came out of it.
 - PROMPT step 2a: no `check:review` before a critic run; the last report's probes and the checker are re-run first.
   A sim rule change lists the ADRs and SPEC lines it could contradict, each with a test.
 - **Next:** PLAN 7.5: the last report's probes (`critic/scripts/c26_*`) and the checker on HEAD, then critic run 27.
+
+## 2026-11-02 — ADR-804 (the user's decision): release before new features; focused critic runs; less to read
+- PROMPT 2a: a clean full report leads to the DONE checks and a `release-<date>` tag. Features asked for while 7.5
+  is open wait in a batch after it, and the critic runs once a batch.
+- CRITIC_PROMPT: a focused run on a fix round (the last report's cases, its dimensions under bar, what changed); the
+  JSON's `mode`; the DONE CONDITION needs a full run.
+- The war-and-peace checker with the heroes on and on the random world of 60
+  (`tests/unit/diploInvariantsOptions.test.ts`), green.
+- BLOCKERS.md 187 → 57 KB: the resolved entries in `docs/BLOCKERS_DONE.md`. SPEC, DECISIONS and PARITY are read by
+  section, the rest searched.
+- **Next:** PLAN 7.5: run 26's probes and the checker on HEAD, then critic run 27 (focused).
