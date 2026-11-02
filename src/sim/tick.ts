@@ -87,6 +87,8 @@ function applyCommand(world: World, cmd: Command): Refusal {
     case 'spawnFormation': {
       const why = whyNotNation(world, cmd.nation);
       if (why) return why;
+      // A hero is never placed (PLAN 7.184): its nation has its one on the option.
+      if (cmd.template !== undefined && world.rules?.templates[cmd.template]?.hero) return Refusal.NoSuch;
       // A fleet is not put on land (PLAN 4.2a).
       if (cmd.template !== undefined && (world.rules?.templates[cmd.template]?.domain ?? Domain.land) !== Domain.land) return Refusal.NotOfLand;
       // On land by the fine mask (PLAN 2.9a): a place given on the water of a coastal cell is the cell's land point.
@@ -111,12 +113,15 @@ function applyCommand(world: World, cmd: Command): Refusal {
     }
     case 'spawnFleet':
     case 'spawnWing':
+      if (world.rules?.templates[cmd.template]?.hero) return Refusal.NoSuch;
       return whyNotNation(world, cmd.nation) || (cmd.kind === 'spawnFleet' ? placeFleet(world, cmd.nation, cmd.template, cmd.x, cmd.y, cmd.free !== true) : placeWing(world, cmd.nation, cmd.template, cmd.x, cmd.y));
     case 'removeFormation':
       if (!world.formations.has(cmd.id)) return Refusal.NoSuch;
       destroyFormation(world, cmd.id); // with its elements and cached path
       return Refusal.None;
     case 'queueFormation':
+      // A hero is never built (PLAN 7.184).
+      if (world.rules?.templates[cmd.template]?.hero) return Refusal.NoSuch;
       queueFormation(world, cmd.nation, cmd.template);
       return Refusal.None;
     case 'paradrop':

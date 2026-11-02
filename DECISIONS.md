@@ -167,6 +167,25 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-787 · 2026-11-01 · accepted (the user's request) — PLAN 7.184a1: heroes' data stand last; a hero is a formation of one element
+**Decision.** The 14 heroes are unit types and one-element templates in `data/units/heroes.json` and
+`data/templates/heroes.json`, read after every other file of their kind (`UNITS`, `TEMPLATES_1938`), so that the
+indices an element and a formation are saved with stay those of every save before. `hero: true` on the unit type
+makes `TemplateRule.hero`: the sim refuses such a template to `queueFormation`, `spawnFormation`, `spawnFleet` and
+`spawnWing` (`NoSuch`), and the page leaves it out of the Actions tab's production, God's placing and the editor's
+lists (`TemplateInfo.hero`). The roster is `data/scenarios/1938/heroes.json` (validated: a hero template of its
+domain, a living nation, one of each domain a nation, a sea hero at its nation's naval base). With `heroes: 'on'`
+(`GameOptions`), the Sim raises them after `applyGameOptions` (`addHeroes1938`): a sea hero at the water a fleet of
+its port finds (`placeFleets`), a land hero at its capital. `World.heroRoster` (nation, template, start place) and
+`World.heroes` (formation → row) are state, saved while not empty, so the hash of a world without heroes is the one
+before. The economic AI lays up, disbands, folds and refills no hero (`world.heroes` guards; their upkeep is 0 too).
+**Why.** The user's request. A unit of one element keeps the hero one thing on the map and in combat; ids and
+indices after everything keep the option-off world and every old save bit for bit.
+**Consequences.** A hero's men (`strength`) are its crew while it lives: losses are its element's `wound`, so its
+health is `1 − wound` (healing, the Overview's bar). A hero's tank takes supply attrition and breaks down as any tank
+with no supply. A puppet integrated by its overlord hands its formations over, a hero too. The figures are first
+guesses; PLAN 7.184a3 sets them against a battle squadron and an armoured division.
+
 ### ADR-786 · 2026-11-01 · accepted (the user's request) — PLAN 7.183: the camera follows any formation clicked
 **Decision.** A click on a formation the player cannot order (another nation's, or any with no nation played) opens
 its panel as before and now has the camera follow it where it is drawn (`MapView.pickedPoint`, `followPicked`; the

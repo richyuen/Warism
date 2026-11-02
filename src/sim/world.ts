@@ -11,6 +11,7 @@ import type { Port } from './data/ports';
 import type { Airbase } from './data/airbases';
 import type { WingMission } from './systems/air';
 import type { Sortie } from './systems/sorties';
+import type { HeroRow } from './systems/heroes';
 import { isCommand, type Command, type LoggedCommand } from '../shared/commands';
 import { FireLog, type EventKind } from '../shared/events';
 import { xxhash32View } from './core/hash';
@@ -131,6 +132,8 @@ export type FlipCauseId = (typeof FlipCause)[keyof typeof FlipCause];
 export interface TemplateRule {
   /** Of the land, or a fleet (PLAN 4.2a): all its elements are of the one domain. */
   domain: DomainId;
+  /** A hero's (PLAN 7.184): never queued, placed by God or offered for building; its formation is on `World.heroes`. */
+  hero?: true;
   /** Gold and manpower paid when queued. */
   gold: number;
   manpower: number;
@@ -436,6 +439,9 @@ class WorldCore implements Stateful {
       // The player's AI assist and direct orders (ADR-759): only while not the default, not empty.
       ...(w.playerAi === PLAYER_AI_DEFAULT ? [] : [{ name: 'world.playerAi', dtype: 'i32' as const, data: Int32Array.from([w.playerAi]) }]),
       ...(w.playerOrders.size === 0 ? [] : [{ name: 'world.playerOrders', dtype: 'f64' as const, data: Float64Array.from([...w.playerOrders].sort((a, b) => a[0] - b[0]).flatMap(([id, o]) => [id, o.kind, o.until, o.through ? 1 : 0])) }]),
+      // The heroes (PLAN 7.184): [nation, template, x, y] a row; [formation, row] a hero alive. Only with the option.
+      ...(w.heroRoster.length === 0 ? [] : [{ name: 'world.heroRoster', dtype: 'f64' as const, data: Float64Array.from(w.heroRoster.flatMap((r) => [r.nation, r.template, r.x, r.y])) }]),
+      ...(w.heroes.size === 0 ? [] : [{ name: 'world.heroes', dtype: 'i32' as const, data: Int32Array.from([...w.heroes].sort((a, b) => a[0] - b[0]).flat()) }]),
       ...(w.station.size === 0 ? [] : [{ name: 'world.station', dtype: 'f64' as const, data: Float64Array.from([...w.station].sort((a, b) => a[0] - b[0]).flatMap(([id, [x, y]]) => [id, x, y])) }]),
       ...(w.embarked.size === 0 ? [] : [{ name: 'world.embarked', dtype: 'f64' as const, data: Float64Array.from([...w.embarked].sort((a, b) => a[0] - b[0]).flatMap(([id, e]) => [id, e.fleet, e.land, e.water, e.target])) }]),
       // Sea control (PLAN 4.4a): [zones + 1, holders..., days...], only while a zone is held.
@@ -552,6 +558,12 @@ class WorldCore implements Stateful {
     w.farWait = new Map();
     const waits = sections.find((s) => s.name === 'world.farWait')?.data as Int32Array | undefined;
     for (let at = 0; waits && at < waits.length; at += 2) w.farWait.set(waits[at]!, waits[at + 1]!);
+    w.heroRoster = [];
+    const roster = sections.find((s) => s.name === 'world.heroRoster')?.data as Float64Array | undefined;
+    for (let at = 0; roster && at < roster.length; at += 4) w.heroRoster.push({ nation: roster[at]!, template: roster[at + 1]!, x: roster[at + 2]!, y: roster[at + 3]! });
+    w.heroes = new Map();
+    const heroes = sections.find((s) => s.name === 'world.heroes')?.data as Int32Array | undefined;
+    for (let at = 0; heroes && at < heroes.length; at += 2) w.heroes.set(heroes[at]!, heroes[at + 1]!);
     const stations = sections.find((s) => s.name === 'world.station')?.data as Float64Array | undefined;
     for (let at = 0; stations && at < stations.length; at += 3) w.station.set(stations[at]!, [stations[at + 1]!, stations[at + 2]!]);
     w.playerAi = (sections.find((s) => s.name === 'world.playerAi')?.data as Int32Array | undefined)?.[0] ?? PLAYER_AI_DEFAULT;
@@ -1310,6 +1322,12 @@ export class World {
    * it breaks off beaten (`breakOff`). State, saved while not empty.
    */
   station = new Map<number, [number, number]>();
+  /**
+   * The heroes' roster (PLAN 7.184, `systems/heroes.ts`): each row a hero's nation, template and
+   * start place; and each hero's formation, by id, to its row. State, saved while not empty.
+   */
+  heroRoster: HeroRow[] = [];
+  heroes = new Map<number, number>();
   /**
    * The player's AI assist (ADR-759): the layers of the AI (`AiLayer`) that act for the nation the
    * player controls. State, saved while not the default.

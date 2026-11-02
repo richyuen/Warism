@@ -36,15 +36,18 @@ export function PlaceSection({ templates, place }: { templates: readonly Templat
           {t(REFUSAL_KEY[place.refusal as Exclude<Refusal, 0>])}
         </div>
       ) : null}
-      {templates.map((tp, i) => (
-        <div class="god-row act-template" key={i}>
-          <UnitIcon template={tp} onClick={() => place.onArm(i)} pressed={place.armed === i} label={`${t('act.placeButton')}: ${t(tp.nameKey as MessageKey)}`} testId={`god-place-${i}-icon`} />
-          <span class="god-war-name">{t(tp.nameKey as MessageKey)}</span>
-          <button type="button" class={place.armed === i ? 'god-btn active' : 'god-btn'} data-testid={`god-place-${i}`} onClick={() => place.onArm(i)}>
-            {t('act.placeButton')}
-          </button>
-        </div>
-      ))}
+      {templates.map((tp, i) =>
+        // A hero is never placed (PLAN 7.184).
+        tp.hero ? null : (
+          <div class="god-row act-template" key={i}>
+            <UnitIcon template={tp} onClick={() => place.onArm(i)} pressed={place.armed === i} label={`${t('act.placeButton')}: ${t(tp.nameKey as MessageKey)}`} testId={`god-place-${i}-icon`} />
+            <span class="god-war-name">{t(tp.nameKey as MessageKey)}</span>
+            <button type="button" class={place.armed === i ? 'god-btn active' : 'god-btn'} data-testid={`god-place-${i}`} onClick={() => place.onArm(i)}>
+              {t('act.placeButton')}
+            </button>
+          </div>
+        ),
+      )}
     </div>
   );
 }

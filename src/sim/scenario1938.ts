@@ -32,9 +32,12 @@ import techNuclear from '../../data/tech/nuclear.json' with { type: 'json' };
 import templatesLand from '../../data/templates/land.json' with { type: 'json' };
 import templatesSea from '../../data/templates/sea.json' with { type: 'json' };
 import templatesAir from '../../data/templates/air.json' with { type: 'json' };
+import templatesHeroes from '../../data/templates/heroes.json' with { type: 'json' };
 import unitsLand from '../../data/units/land.json' with { type: 'json' };
 import unitsSea from '../../data/units/sea.json' with { type: 'json' };
 import unitsAir from '../../data/units/air.json' with { type: 'json' };
+import unitsHeroes from '../../data/units/heroes.json' with { type: 'json' };
+import heroes1938 from '../../data/scenarios/1938/heroes.json' with { type: 'json' };
 import diplomacy1938 from '../../data/scenarios/1938/diplomacy.json' with { type: 'json' };
 import economy1938 from '../../data/scenarios/1938/economy.json' with { type: 'json' };
 import traitsJson from '../../data/traits/traits.json' with { type: 'json' };
@@ -56,6 +59,7 @@ import type { StraitDef } from './data/terrain';
 import { budgetOf } from './ai/economic';
 import { cellWeight, ECON_PER_BN, industrialCapacity, MANPOWER_START_SHARE, monthlyAccounts, type EconomyTables } from './systems/economy';
 import { equipFormation } from './systems/elements';
+import { placeHeroes, type HeroRow } from './systems/heroes';
 import { initProvinceCores } from './systems/revolts';
 import { staticCe } from './systems/efficiency';
 import { LOYALTY_BASE, LOYALTY_PER_AUTONOMY } from './systems/puppets';
@@ -76,8 +80,15 @@ export const NATIONS_1938 = nations1938.nations as unknown as NationDef[];
 export const TEMPLATES_LAND = templatesLand.templates as TemplateDef[];
 export const TEMPLATES_SEA = templatesSea.templates as TemplateDef[];
 export const TEMPLATES_AIR = templatesAir.templates as TemplateDef[];
-/** Every template of the rules, by its index: the land's, then the sea's (PLAN 4.2a), then the air's (PLAN 5.1b). A formation and an order are saved with it. */
-export const TEMPLATES_1938: readonly TemplateDef[] = [...TEMPLATES_LAND, ...TEMPLATES_SEA, ...TEMPLATES_AIR];
+/** The heroes' templates (PLAN 7.184): one element of one hero unit. */
+export const TEMPLATES_HEROES = templatesHeroes.templates as TemplateDef[];
+/**
+ * Every template of the rules, by its index: the land's, then the sea's (PLAN 4.2a), then the
+ * air's (PLAN 5.1b), then the heroes' (PLAN 7.184). A formation and an order are saved with it.
+ */
+export const TEMPLATES_1938: readonly TemplateDef[] = [...TEMPLATES_LAND, ...TEMPLATES_SEA, ...TEMPLATES_AIR, ...TEMPLATES_HEROES];
+/** The heroes of the 1938 start (PLAN 7.184), on the option `heroes`: a sea hero at the water of `port`, a land hero at its nation's capital. */
+export const HEROES_1938 = heroes1938.heroes as { nation: string; template: string; domain: 'land' | 'sea'; port?: string }[];
 /** Starting treasury in months of gross income (ADR-22). */
 export const START_GOLD_MONTHS = 6;
 /**
@@ -93,13 +104,14 @@ export const START_ARMY_MONTHS = 12;
 type UnitDef = UnitTypeLite & {
   mobility: string;
   techReq?: string;
+  hero?: true;
   cost: { gold: number; manpower: number; days: number };
   upkeep: { gold: number };
   stats: { soft: number; hard: number; armor: number; piercing: number; hpPerUnit: number; aa: number; defense: number; fuelPerHour: number; speed_kmh: number; range_km: number; detection: number; stealth: number; torpedo?: number; torpedo_km?: number; asw?: number; bomb_t?: number };
   terrainMods: Partial<Record<TerrainId, { atk: number; def: number; speed: number }>>;
 };
-/** The unit types of the rules, by their index: the land's, then the sea's (PLAN 4.2a), then the air's (PLAN 5.1b). An element is saved with its type's index. */
-const UNITS: readonly UnitDef[] = [...(unitsLand.types as unknown as UnitDef[]), ...(unitsSea.types as unknown as UnitDef[]), ...(unitsAir.types as unknown as UnitDef[])];
+/** The unit types of the rules, by their index: the land's, then the sea's (PLAN 4.2a), then the air's (PLAN 5.1b), then the heroes' (PLAN 7.184). An element is saved with its type's index. */
+const UNITS: readonly UnitDef[] = [...(unitsLand.types as unknown as UnitDef[]), ...(unitsSea.types as unknown as UnitDef[]), ...(unitsAir.types as unknown as UnitDef[]), ...(unitsHeroes.types as unknown as UnitDef[])];
 const unitTypes = new Map(UNITS.map((u) => [u.id, u]));
 const tankTypes = new Set(UNITS.filter((u) => u.class.startsWith('armor')).map((u) => u.id));
 const upkeepOfElements = (t: TemplateDef, only?: ReadonlySet<string>): number => t.elements.reduce((s, e) => s + (only && !only.has(e.type) ? 0 : unitTypes.get(e.type)!.upkeep.gold * e.count), 0);
@@ -206,6 +218,7 @@ export const RULES_1938: ScenarioRules = {
   })),
   templates: TEMPLATES_1938.map((t) => ({
     ...templateMobility(t),
+    ...(t.elements.some((e) => unitTypes.get(e.type)!.hero === true) ? { hero: true as const } : {}),
     elements: t.elements.map((e) => ({ unit: unitIndex.get(e.type)!, count: e.count })),
     techs: techClosure(
       TECHS_1938,
@@ -411,6 +424,38 @@ export function addFleets(world: World, groups: readonly FleetGroup[], ports: Po
     f.org[id] = 1;
     equipFormation(world, id, ti); // sets strength from the elements: a fleet's is its crews
   }
+}
+
+/**
+ * The heroes of the 1938 start (PLAN 7.184), on the option `heroes`: after every other formation
+ * and wing, so that with the option off no id moves. A sea hero at the water of its port, found as
+ * a fleet of the start finds its own (`placeFleets`); a land hero at its nation's capital, on land.
+ * A nation not alive has none. Returns the formations raised.
+ */
+export function addHeroes1938(world: World): number[] {
+  const tags = TAGS_1938;
+  const templateIndex = new Map(TEMPLATES_1938.map((t, i) => [t.id, i]));
+  const nc = world.nations.cols;
+  const { w, h, terrain } = world.cells;
+  const wrapX = world.settings.loopingMap;
+  const waterOf = new Map<string, number>();
+  for (const p of world.ports) if (p.def >= 0) waterOf.set(PORTS_1938.ports[p.def]!.name, portWater(p, terrain, w, h, world.portReach, wrapX));
+  const roster: HeroRow[] = [];
+  for (const r of HEROES_1938) {
+    const nation = tags.indexOf(r.nation) + 1;
+    if (nation === 0 || nc.living[nation] !== 1) continue;
+    const template = templateIndex.get(r.template)!;
+    if (r.domain === 'sea') {
+      const placed = placeFleets({ w, h, terrain, wrapX, tags, groups: [{ nation: r.nation, template: r.template, count: 1, port: r.port! }], waterOf, stands: (cell) => world.seaPoint(cell) !== null });
+      if (placed.unplaced.length > 0) throw new Error(`heroes: ${r.template} at ${r.port} found no water`);
+      const [x, y] = world.seaPoint(placed.fleets[0]!.cell)!;
+      roster.push({ nation, template, x, y });
+    } else {
+      const [x, y] = world.standPoint(nc.capitalX[nation]!, nc.capitalY[nation]!);
+      roster.push({ nation, template, x, y });
+    }
+  }
+  return placeHeroes(world, roster);
 }
 
 /**

@@ -2,10 +2,11 @@ import { describe, expect, it } from 'vitest';
 import unitsAir from '../../data/units/air.json';
 import unitsLand from '../../data/units/land.json';
 import unitsSea from '../../data/units/sea.json';
+import unitsHeroes from '../../data/units/heroes.json';
 import en from '../../src/ui/i18n/en.json';
 import { Refusal, type Command } from '../../src/shared/commands';
 import { EventKind } from '../../src/shared/events';
-import { NATIONS_1938, RULES_1938, SIZE_1938, TEMPLATES_1938, TEMPLATES_AIR, TEMPLATES_LAND, TEMPLATES_SEA, UNIT_IDS_1938 } from '../../src/sim/scenario1938';
+import { NATIONS_1938, RULES_1938, SIZE_1938, TEMPLATES_1938, TEMPLATES_AIR, TEMPLATES_HEROES, TEMPLATES_LAND, TEMPLATES_SEA, UNIT_IDS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { queueFormation } from '../../src/sim/systems/production';
 import { Domain } from '../../src/sim/world';
@@ -23,11 +24,12 @@ describe('air wing templates in the rules (PLAN 5.1b)', () => {
   it('the land\'s and the sea\'s templates and units keep their indices: the air\'s stand after them', () => {
     const before = TEMPLATES_LAND.length + TEMPLATES_SEA.length;
     expect(TEMPLATES_1938.slice(0, before).map((t) => t.id)).toEqual([...TEMPLATES_LAND, ...TEMPLATES_SEA].map((t) => t.id));
-    expect(TEMPLATES_1938.slice(before).map((t) => t.id)).toEqual(AIR);
+    // The heroes' after the air's (PLAN 7.184), the last.
+    expect(TEMPLATES_1938.slice(before).map((t) => t.id)).toEqual([...AIR, ...TEMPLATES_HEROES.map((t) => t.id)]);
     expect(TEMPLATES_AIR.map((t) => t.id)).toEqual(AIR);
     const units = unitsLand.types.length + unitsSea.types.length;
     expect(UNIT_IDS_1938.slice(0, units)).toEqual([...unitsLand.types, ...unitsSea.types].map((u) => u.id));
-    expect(UNIT_IDS_1938.slice(units)).toEqual(unitsAir.types.map((u) => u.id));
+    expect(UNIT_IDS_1938.slice(units)).toEqual([...unitsAir.types, ...unitsHeroes.types].map((u) => u.id));
     expect(RULES_1938.units).toHaveLength(UNIT_IDS_1938.length);
     expect(RULES_1938.templates).toHaveLength(TEMPLATES_1938.length);
     for (const t of AIR) expect((en as Record<string, string>)[`template.${t}`], t).toMatch(/\S/);

@@ -214,7 +214,8 @@ export function ActionsTab({ nation, nations, wars, templates, day, onCommand, w
 
       <div class="panel-sub">{t('act.production')}</div>
       {templates.map((tp, i) => {
-        // Every template, the land's, the sea's and the air's (PLAN 5.8v4). `i` stays the template's index.
+        // Every template, the land's, the sea's and the air's (PLAN 5.8v4), but a hero's (PLAN 7.184). `i` stays the template's index.
+        if (tp.hero) return null;
         const affordable = nation.gold >= tp.gold && nation.manpower >= tp.manpower;
         // The sim refuses a template whose techs the nation does not know (PLAN 3.1a), a fleet of a
         // nation with no port (PLAN 4.2e), and a wing of one with no airbase with room for it (PLAN 5.8s1).

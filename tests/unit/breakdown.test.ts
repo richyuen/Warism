@@ -29,9 +29,11 @@ describe('breakdowns (PLAN 3.2d)', () => {
   it('a unit type breaks down when it burns fuel and is counted in vehicles or guns, not in men', () => {
     // Of the land (PLAN 4.2a): every ship burns fuel and has a crew, and none is in the list.
     const breaks = UNIT_IDS_1938.filter((_, u) => RULES_1938.units[u]!.domain === Domain.land && RULES_1938.units[u]!.fuel > 0 && RULES_1938.units[u]!.menPerUnit > 1);
-    expect(breaks).toEqual(['artillery_heavy', 'tank_light', 'tank_medium', 'tank_medium_2', 'tank_heavy', 'tank_mbt']);
+    // The land heroes (PLAN 7.184) are tanks of one: they break down as tanks, one hero's whole.
+    expect(breaks).toEqual(['artillery_heavy', 'tank_light', 'tank_medium', 'tank_medium_2', 'tank_heavy', 'tank_mbt', 'hero_o_i', 'hero_t28', 'hero_t42', 'hero_maus', 'hero_tog2', 'hero_char2c', 'hero_p100']);
     const ships = UNIT_IDS_1938.filter((_, u) => RULES_1938.units[u]!.domain === Domain.sea);
-    expect(ships).toHaveLength(7);
+    // Seven types, and the seven sea heroes.
+    expect(ships).toHaveLength(14);
     for (const id of ships) expect(RULES_1938.units[unit(id)]!.fuel * RULES_1938.units[unit(id)]!.menPerUnit, id).toBeGreaterThan(1);
     // The men of the motorised and the mechanised infantry burn fuel and are men.
     for (const id of ['infantry_motorised', 'infantry_mechanised']) {

@@ -59,6 +59,20 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
     strength to full; save/load keeps a hero's flag and its return day; a month of an indebted nation disbands and lays
     up none. Strength: a hero battleship against one standard battle squadron (4 BB) wins with over half its strength
     left, against three loses; the land hero likewise against an armoured division and three (a probe in the test).
+    Split in three (one cause a commit), the AT's parts each in its own:
+    - [x] 7.184a1 Data, option, start. The 14 unit types and one-element templates in `data/units/heroes.json` and
+      `data/templates/heroes.json`, read after every other file (unit and template indices of saves unchanged), `hero`
+      in the schema and the rules; the names in `en.json`; no hero template queued, placed by God or offered in a build
+      list; `GameOptions.heroes`; the 14 placed at the start; `World.heroes` (formation → roster row) saved and in the
+      state hash; never disbanded, laid up, folded or merged; no upkeep. AT: `tests/unit/heroes.test.ts`: option off,
+      seed 99's pin unchanged and no hero; on, 14 at tick 0 (sea at the first base's water, land at the capital), save
+      and load keep them; a month of every nation at −1,000 gold disbands and lays up no hero.
+    - [ ] 7.184a2 Healing and return (a hero's health is its one element's `1 − wound`: its men, `strength`, stay
+      whole until it is lost, ADR-787): 5 % a day out of battle anywhere; destroyed, back whole 60 days later at its
+      start place or its nation's capital / nearest naval base; none while the nation is dead; one alive. AT: the
+      test's heal, return (to the tick), dead-nation and save/load-of-a-return-day cases.
+    - [ ] 7.184a3 Strength: the stats that make a hero battleship beat one battle squadron with over half left and lose
+      to three, the land hero likewise against one and three armoured divisions. AT: the test's probe cases.
   - [ ] 7.184b Drawing: a hero twice the size of its kind at every zoom (T0 counter, T1 marker, T2 block, T3 figure), the
     same in Classic and Countryball (no ball of its own), with its name on its tag. AT: `tests/e2e/heroes1938.spec.ts`
     measures Yamato's and the Maus's drawn boxes against a normal battleship's and tank's: 1.9–2.1 × at T0–T3, both

@@ -464,6 +464,8 @@ export interface TemplateInfo {
    * marker's pips are laid out by (PLAN 7.21c2).
    */
   parts: readonly { frame: number; count: number }[];
+  /** A hero's (PLAN 7.184): drawn as any, never in a list to build or place. */
+  hero?: boolean;
 }
 
 /** A tech for the nation panel (PLAN 3.1e): its name and what its research costs. */

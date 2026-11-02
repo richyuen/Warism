@@ -194,7 +194,7 @@ export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onC
         <div class="god-row">
           <select data-testid="editor-template" value={state.template} onChange={(e) => set({ template: num(e) })}>
             {templates.map((x, i) =>
-              x.domain === (state.tool === 'fleet' ? 1 : 2) ? (
+              x.domain === (state.tool === 'fleet' ? 1 : 2) && !x.hero ? (
                 <option key={i} value={i}>
                   {t(x.nameKey as MessageKey)}
                 </option>

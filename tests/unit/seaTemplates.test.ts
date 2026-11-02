@@ -7,7 +7,7 @@ import en from '../../src/ui/i18n/en.json';
 import { Refusal, type Command } from '../../src/shared/commands';
 import { EventKind } from '../../src/shared/events';
 import { validateDataSet } from '../../src/sim/data/schemas';
-import { ECONOMY_TABLES_1938, NATIONS_1938, RULES_1938, SIZE_1938, TEMPLATES_1938, TEMPLATES_LAND, TEMPLATES_SEA, UNIT_IDS_1938 } from '../../src/sim/scenario1938';
+import { ECONOMY_TABLES_1938, NATIONS_1938, RULES_1938, SIZE_1938, TEMPLATES_1938, TEMPLATES_HEROES, TEMPLATES_LAND, TEMPLATES_SEA, UNIT_IDS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { PRODUCTION_COST_SCALE, queueFormation, SHIP_TIME_SCALE } from '../../src/sim/systems/production';
 import { Domain } from '../../src/sim/world';
@@ -52,6 +52,13 @@ describe('ship types and fleet templates in the rules (PLAN 4.2a)', () => {
     RULES_1938.templates.forEach((rule, i) => {
       const id = TEMPLATES_1938[i]!.id;
       const ships = rule.elements.filter((e) => sea.has(UNIT_IDS_1938[e.unit]!)).length;
+      // The heroes' (PLAN 7.184) stand last, each of the domain of its one unit.
+      if (i >= TEMPLATES_1938.length - TEMPLATES_HEROES.length) {
+        expect(rule.hero, id).toBe(true);
+        expect(rule.elements, id).toHaveLength(1);
+        expect(rule.domain, id).toBe(RULES_1938.units[rule.elements[0]!.unit]!.domain);
+        return;
+      }
       expect(rule.domain, id).toBe(i < TEMPLATES_LAND.length ? Domain.land : i < TEMPLATES_LAND.length + SEA.length ? Domain.sea : Domain.air);
       expect(ships, id).toBe(rule.domain === Domain.sea ? rule.elements.length : 0);
     });

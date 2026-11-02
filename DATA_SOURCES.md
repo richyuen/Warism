@@ -29,6 +29,7 @@ downloaded), **rejected** (evaluated and not used, with the reason).
 | Source | What | License | Status | Notes |
 |---|---|---|---|---|
 | Our own work | `data/terrain.json`, `data/units/*`, `data/tech/*`, `data/traits/*`, `data/buildings/*`, `data/maps/*/map.json`, `data/scenarios/*/scenario.json` (PLAN 1.1) | project license | in use | first-pass values from general military-history knowledge; no AoC data (ADR-14) |
+| Our own work | heroes (PLAN 7.184): `data/units/heroes.json`, `data/templates/heroes.json`, `data/scenarios/1938/heroes.json` | project license | in use | names of real ships and tank designs of 1938–45 (public facts; the T-42's row from its Wikipedia article, the P.100 "Ercole" a hypothetical design, the user's choice); every figure our own |
 
 ## Art
 

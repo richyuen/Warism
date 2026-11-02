@@ -52,7 +52,7 @@ export function foldHollow(world: World, backToPool: number): number {
   world.formations.forEach((id) => {
     const n = fc.nation[id]!;
     // The army's layer of the AI (ADR-759); not a formation on a player's order.
-    if (nc.living[n] !== 1 || !aiRuns(world, n, AiLayer.army) || playerHeld(world, id) || world.isFleet(id) || world.isWing(id) || world.offLand(id)) return;
+    if (nc.living[n] !== 1 || !aiRuns(world, n, AiLayer.army) || playerHeld(world, id) || world.heroes.has(id) || world.isFleet(id) || world.isWing(id) || world.offLand(id)) return;
     const rule = rules.templates[fc.template[id]!];
     if (!rule || rule.domain !== Domain.land || rule.manpower <= 0 || !index.has(id)) return;
     const l = byNation.get(n) ?? [];

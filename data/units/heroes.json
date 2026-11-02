@@ -1,0 +1,565 @@
+{
+  "comment": "Heroes (PLAN 7.184, the user's request of 2026-11-01): one named land and sea unit each of seven great powers of 1938, on the new-game option `heroes`. Each is a unit type of one (elementSize 1) and never built (`hero`: no build list, queue or God placing offers it), no upkeep. Read after every other unit file: a unit's index is saved with its elements, so these stand last. Our own figures, much above any other unit's.",
+  "types": [
+    {
+      "id": "hero_yamato",
+      "nameKey": "unit.hero_yamato",
+      "class": "bb",
+      "domain": "sea",
+      "elementSize": 1,
+      "mobility": "ship",
+      "hero": true,
+      "stats": {
+        "soft": 40,
+        "hard": 220,
+        "defense": 120,
+        "breakthrough": 0,
+        "armor": 120,
+        "piercing": 140,
+        "aa": 30,
+        "range_km": 38,
+        "speed_kmh": 52,
+        "org": 60,
+        "hpPerUnit": 12000,
+        "detection": 22,
+        "stealth": 2,
+        "fuelPerHour": 20,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 1200,
+        "industry": 1400,
+        "manpower": 2500,
+        "days": 1400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {}
+    },
+    {
+      "id": "hero_o_i",
+      "nameKey": "unit.hero_o_i",
+      "class": "armor_h",
+      "domain": "land",
+      "elementSize": 1,
+      "mobility": "tracked",
+      "hero": true,
+      "stats": {
+        "soft": 120,
+        "hard": 140,
+        "defense": 60,
+        "breakthrough": 150,
+        "armor": 150,
+        "piercing": 160,
+        "aa": 2,
+        "range_km": 3,
+        "speed_kmh": 20,
+        "org": 60,
+        "hpPerUnit": 2500,
+        "detection": 6,
+        "stealth": 0,
+        "fuelPerHour": 15,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 400,
+        "industry": 500,
+        "manpower": 11,
+        "days": 400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {
+        "marsh": {
+          "atk": 0.8,
+          "def": 1,
+          "speed": 0.6
+        }
+      }
+    },
+    {
+      "id": "hero_iowa",
+      "nameKey": "unit.hero_iowa",
+      "class": "bb",
+      "domain": "sea",
+      "elementSize": 1,
+      "mobility": "ship",
+      "hero": true,
+      "stats": {
+        "soft": 40,
+        "hard": 220,
+        "defense": 120,
+        "breakthrough": 0,
+        "armor": 120,
+        "piercing": 140,
+        "aa": 30,
+        "range_km": 38,
+        "speed_kmh": 52,
+        "org": 60,
+        "hpPerUnit": 12000,
+        "detection": 22,
+        "stealth": 2,
+        "fuelPerHour": 20,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 1200,
+        "industry": 1400,
+        "manpower": 2700,
+        "days": 1400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {}
+    },
+    {
+      "id": "hero_t28",
+      "nameKey": "unit.hero_t28",
+      "class": "armor_h",
+      "domain": "land",
+      "elementSize": 1,
+      "mobility": "tracked",
+      "hero": true,
+      "stats": {
+        "soft": 120,
+        "hard": 140,
+        "defense": 60,
+        "breakthrough": 150,
+        "armor": 150,
+        "piercing": 160,
+        "aa": 2,
+        "range_km": 3,
+        "speed_kmh": 20,
+        "org": 60,
+        "hpPerUnit": 2500,
+        "detection": 6,
+        "stealth": 0,
+        "fuelPerHour": 15,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 400,
+        "industry": 500,
+        "manpower": 4,
+        "days": 400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {
+        "marsh": {
+          "atk": 0.8,
+          "def": 1,
+          "speed": 0.6
+        }
+      }
+    },
+    {
+      "id": "hero_sovetsky_soyuz",
+      "nameKey": "unit.hero_sovetsky_soyuz",
+      "class": "bb",
+      "domain": "sea",
+      "elementSize": 1,
+      "mobility": "ship",
+      "hero": true,
+      "stats": {
+        "soft": 40,
+        "hard": 220,
+        "defense": 120,
+        "breakthrough": 0,
+        "armor": 120,
+        "piercing": 140,
+        "aa": 30,
+        "range_km": 38,
+        "speed_kmh": 52,
+        "org": 60,
+        "hpPerUnit": 12000,
+        "detection": 22,
+        "stealth": 2,
+        "fuelPerHour": 20,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 1200,
+        "industry": 1400,
+        "manpower": 1800,
+        "days": 1400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {}
+    },
+    {
+      "id": "hero_t42",
+      "nameKey": "unit.hero_t42",
+      "class": "armor_h",
+      "domain": "land",
+      "elementSize": 1,
+      "mobility": "tracked",
+      "hero": true,
+      "stats": {
+        "soft": 120,
+        "hard": 140,
+        "defense": 60,
+        "breakthrough": 150,
+        "armor": 150,
+        "piercing": 160,
+        "aa": 2,
+        "range_km": 3,
+        "speed_kmh": 20,
+        "org": 60,
+        "hpPerUnit": 2500,
+        "detection": 6,
+        "stealth": 0,
+        "fuelPerHour": 15,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 400,
+        "industry": 500,
+        "manpower": 15,
+        "days": 400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {
+        "marsh": {
+          "atk": 0.8,
+          "def": 1,
+          "speed": 0.6
+        }
+      }
+    },
+    {
+      "id": "hero_bismarck",
+      "nameKey": "unit.hero_bismarck",
+      "class": "bb",
+      "domain": "sea",
+      "elementSize": 1,
+      "mobility": "ship",
+      "hero": true,
+      "stats": {
+        "soft": 40,
+        "hard": 220,
+        "defense": 120,
+        "breakthrough": 0,
+        "armor": 120,
+        "piercing": 140,
+        "aa": 30,
+        "range_km": 38,
+        "speed_kmh": 52,
+        "org": 60,
+        "hpPerUnit": 12000,
+        "detection": 22,
+        "stealth": 2,
+        "fuelPerHour": 20,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 1200,
+        "industry": 1400,
+        "manpower": 2200,
+        "days": 1400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {}
+    },
+    {
+      "id": "hero_maus",
+      "nameKey": "unit.hero_maus",
+      "class": "armor_h",
+      "domain": "land",
+      "elementSize": 1,
+      "mobility": "tracked",
+      "hero": true,
+      "stats": {
+        "soft": 120,
+        "hard": 140,
+        "defense": 60,
+        "breakthrough": 150,
+        "armor": 150,
+        "piercing": 160,
+        "aa": 2,
+        "range_km": 3,
+        "speed_kmh": 20,
+        "org": 60,
+        "hpPerUnit": 2500,
+        "detection": 6,
+        "stealth": 0,
+        "fuelPerHour": 15,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 400,
+        "industry": 500,
+        "manpower": 6,
+        "days": 400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {
+        "marsh": {
+          "atk": 0.8,
+          "def": 1,
+          "speed": 0.6
+        }
+      }
+    },
+    {
+      "id": "hero_hood",
+      "nameKey": "unit.hero_hood",
+      "class": "bb",
+      "domain": "sea",
+      "elementSize": 1,
+      "mobility": "ship",
+      "hero": true,
+      "stats": {
+        "soft": 40,
+        "hard": 220,
+        "defense": 120,
+        "breakthrough": 0,
+        "armor": 120,
+        "piercing": 140,
+        "aa": 30,
+        "range_km": 38,
+        "speed_kmh": 52,
+        "org": 60,
+        "hpPerUnit": 12000,
+        "detection": 22,
+        "stealth": 2,
+        "fuelPerHour": 20,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 1200,
+        "industry": 1400,
+        "manpower": 1400,
+        "days": 1400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {}
+    },
+    {
+      "id": "hero_tog2",
+      "nameKey": "unit.hero_tog2",
+      "class": "armor_h",
+      "domain": "land",
+      "elementSize": 1,
+      "mobility": "tracked",
+      "hero": true,
+      "stats": {
+        "soft": 120,
+        "hard": 140,
+        "defense": 60,
+        "breakthrough": 150,
+        "armor": 150,
+        "piercing": 160,
+        "aa": 2,
+        "range_km": 3,
+        "speed_kmh": 20,
+        "org": 60,
+        "hpPerUnit": 2500,
+        "detection": 6,
+        "stealth": 0,
+        "fuelPerHour": 15,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 400,
+        "industry": 500,
+        "manpower": 8,
+        "days": 400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {
+        "marsh": {
+          "atk": 0.8,
+          "def": 1,
+          "speed": 0.6
+        }
+      }
+    },
+    {
+      "id": "hero_richelieu",
+      "nameKey": "unit.hero_richelieu",
+      "class": "bb",
+      "domain": "sea",
+      "elementSize": 1,
+      "mobility": "ship",
+      "hero": true,
+      "stats": {
+        "soft": 40,
+        "hard": 220,
+        "defense": 120,
+        "breakthrough": 0,
+        "armor": 120,
+        "piercing": 140,
+        "aa": 30,
+        "range_km": 38,
+        "speed_kmh": 52,
+        "org": 60,
+        "hpPerUnit": 12000,
+        "detection": 22,
+        "stealth": 2,
+        "fuelPerHour": 20,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 1200,
+        "industry": 1400,
+        "manpower": 1600,
+        "days": 1400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {}
+    },
+    {
+      "id": "hero_char2c",
+      "nameKey": "unit.hero_char2c",
+      "class": "armor_h",
+      "domain": "land",
+      "elementSize": 1,
+      "mobility": "tracked",
+      "hero": true,
+      "stats": {
+        "soft": 120,
+        "hard": 140,
+        "defense": 60,
+        "breakthrough": 150,
+        "armor": 150,
+        "piercing": 160,
+        "aa": 2,
+        "range_km": 3,
+        "speed_kmh": 20,
+        "org": 60,
+        "hpPerUnit": 2500,
+        "detection": 6,
+        "stealth": 0,
+        "fuelPerHour": 15,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 400,
+        "industry": 500,
+        "manpower": 12,
+        "days": 400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {
+        "marsh": {
+          "atk": 0.8,
+          "def": 1,
+          "speed": 0.6
+        }
+      }
+    },
+    {
+      "id": "hero_roma",
+      "nameKey": "unit.hero_roma",
+      "class": "bb",
+      "domain": "sea",
+      "elementSize": 1,
+      "mobility": "ship",
+      "hero": true,
+      "stats": {
+        "soft": 40,
+        "hard": 220,
+        "defense": 120,
+        "breakthrough": 0,
+        "armor": 120,
+        "piercing": 140,
+        "aa": 30,
+        "range_km": 38,
+        "speed_kmh": 52,
+        "org": 60,
+        "hpPerUnit": 12000,
+        "detection": 22,
+        "stealth": 2,
+        "fuelPerHour": 20,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 1200,
+        "industry": 1400,
+        "manpower": 1900,
+        "days": 1400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {}
+    },
+    {
+      "id": "hero_p100",
+      "nameKey": "unit.hero_p100",
+      "class": "armor_h",
+      "domain": "land",
+      "elementSize": 1,
+      "mobility": "tracked",
+      "hero": true,
+      "stats": {
+        "soft": 120,
+        "hard": 140,
+        "defense": 60,
+        "breakthrough": 150,
+        "armor": 150,
+        "piercing": 160,
+        "aa": 2,
+        "range_km": 3,
+        "speed_kmh": 20,
+        "org": 60,
+        "hpPerUnit": 2500,
+        "detection": 6,
+        "stealth": 0,
+        "fuelPerHour": 15,
+        "supplyPerHour": 3
+      },
+      "cost": {
+        "gold": 400,
+        "industry": 500,
+        "manpower": 10,
+        "days": 400
+      },
+      "upkeep": {
+        "gold": 0,
+        "supply": 0
+      },
+      "terrainMods": {
+        "marsh": {
+          "atk": 0.8,
+          "def": 1,
+          "speed": 0.6
+        }
+      }
+    }
+  ]
+}

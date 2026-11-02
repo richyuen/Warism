@@ -6,7 +6,7 @@ import type { Command } from '../shared/commands';
 import type { ScenarioId, SimInit } from '../shared/protocol';
 import { loadBytes, saveBytes, stateHash } from './core/state';
 import { applyPendingCommands, step, type System } from './tick';
-import { BUILD_MIX_1938, createWorld1938, ECONOMY_TABLES_1938, size1938 } from './scenario1938';
+import { addHeroes1938, BUILD_MIX_1938, createWorld1938, ECONOMY_TABLES_1938, size1938 } from './scenario1938';
 import { allianceSystem } from './systems/alliances';
 import { economicAi, startAir } from './ai/economic';
 import { operationalAiOf } from './ai/operational';
@@ -84,6 +84,8 @@ export class Sim {
         const size = size1938(init.options?.size);
         this.world = init.scenario === '1938' ? createWorld1938(init.seed, init.assets, size) : createRandomWorld(init.seed, init.options?.nations, init.assets, size);
         if (init.options) applyGameOptions(this.world, init.options);
+        // The heroes (PLAN 7.184): the 1938 world's, after every other formation.
+        if (init.scenario === '1938' && init.options?.heroes === 'on') addHeroes1938(this.world);
         startAir(this.world);
         // SPEC §2.5 order: production and economy (3), supply (4), land movement (7),
         // engagement and combat (8), territory (9).

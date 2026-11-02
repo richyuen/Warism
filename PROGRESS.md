@@ -25421,3 +25421,20 @@ No rule changed and nothing on screen changed. One task came out of it.
   alone (as at the reviews). `stackPick1938` red: the first click now brings the stack to the middle; it clicks the
   stack where it is drawn once the camera settles (its check unchanged), green.
 - **Next:** PLAN 7.184a.
+
+## 2026-11-01 — PLAN 7.184a1: heroes' data, the option, the start (ADR-787); 7.184a split in three
+
+- **Split:** 7.184a into a1 (data, option, start, guards), a2 (healing, return), a3 (strength), one cause a commit.
+- **Built:** `data/units/heroes.json`, `data/templates/heroes.json` (14 each, read last), `data/scenarios/1938/heroes.json`
+  (schema `HeroesFile` with cross-file checks), `hero` in the unit schema and `TemplateRule`, the names in `en.json`;
+  `GameOptions.heroes`, `addHeroes1938` in the Sim after the options; `systems/heroes.ts` (`placeHeroes`,
+  `raiseHero`); `World.heroRoster` / `World.heroes` saved while not empty; `destroyFormation` drops a hero's mark;
+  guards in the lay-up, disband, fold and refill steps; queue and God placing refuse a hero (`NoSuch`), the page's
+  build and placing lists leave them out.
+- **AT (a1's part):** `tests/unit/heroes.test.ts` 5 of 5: off = no option (hash), no hero; on, 14 at tick 0 (sea within
+  6 cells of its port on water, land at the capital), one land and one sea each of ENG FRA GER ITA JAP SOV USA;
+  save/load keeps them; hero templates refused three ways; a month of every nation at −1,000 gold lays up fleets and
+  disbands formations, no hero. The pin of seed 99 unchanged (the gate).
+- **Tests extended for the heroes after the air:** `airTemplates`, `seaTemplates`, `breakdown` (the hero tanks break
+  down as tanks; 14 sea types). The fold guard is a safeguard: a living hero is never hollow (its men are its crew).
+- **Next:** PLAN 7.184a2.

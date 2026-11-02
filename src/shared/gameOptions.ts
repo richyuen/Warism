@@ -9,6 +9,11 @@ export interface GameOptions {
    * by the seed. Puppets stay the scenario's.
    */
   diplomacy?: 'scenario' | 'random';
+  /**
+   * Heroes (PLAN 7.184): on, each of seven great powers of 1938 starts with a named land and sea
+   * unit much stronger than any other. The 1938 world only.
+   */
+  heroes?: 'off' | 'on';
   /** The random world only (PLAN 2.16): how many nations it starts with. */
   nations?: number;
   ceMode?: 'dynamic' | 'progressive' | 'static' | 'locked' | 'random';

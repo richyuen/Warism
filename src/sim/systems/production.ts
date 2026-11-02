@@ -320,7 +320,8 @@ export const REFILL_SUPPLY = 0.5;
 export function refillable(world: World, id: number): boolean {
   const fc = world.formations.cols;
   const rule = world.rules?.templates[fc.template[id]!];
-  if (!world.formations.has(id)) return false;
+  // A hero heals by its own rule (PLAN 7.184), from no pool.
+  if (!world.formations.has(id) || world.heroes.has(id)) return false;
   if (!rule || rule.domain !== Domain.land || rule.manpower <= 0 || world.offLand(id)) return false;
   const n = fc.nation[id]!;
   if (world.nations.cols.living[n] !== 1 || fc.strength[id]! >= rule.manpower) return false;

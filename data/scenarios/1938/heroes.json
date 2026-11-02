@@ -1,0 +1,82 @@
+{
+  "comment": "The heroes of the 1938 start (PLAN 7.184), with the option `heroes` on: each a formation of its template, a sea hero at the water of `port` (its nation's first naval base of fleets.json), a land hero at its nation's capital.",
+  "heroes": [
+    {
+      "nation": "JAP",
+      "template": "hero_yamato",
+      "domain": "sea",
+      "port": "Yokosuka"
+    },
+    {
+      "nation": "JAP",
+      "template": "hero_o_i",
+      "domain": "land"
+    },
+    {
+      "nation": "USA",
+      "template": "hero_iowa",
+      "domain": "sea",
+      "port": "San Diego"
+    },
+    {
+      "nation": "USA",
+      "template": "hero_t28",
+      "domain": "land"
+    },
+    {
+      "nation": "SOV",
+      "template": "hero_sovetsky_soyuz",
+      "domain": "sea",
+      "port": "Kronstadt"
+    },
+    {
+      "nation": "SOV",
+      "template": "hero_t42",
+      "domain": "land"
+    },
+    {
+      "nation": "GER",
+      "template": "hero_bismarck",
+      "domain": "sea",
+      "port": "Wilhelmshaven"
+    },
+    {
+      "nation": "GER",
+      "template": "hero_maus",
+      "domain": "land"
+    },
+    {
+      "nation": "ENG",
+      "template": "hero_hood",
+      "domain": "sea",
+      "port": "Scapa Flow"
+    },
+    {
+      "nation": "ENG",
+      "template": "hero_tog2",
+      "domain": "land"
+    },
+    {
+      "nation": "FRA",
+      "template": "hero_richelieu",
+      "domain": "sea",
+      "port": "Brest"
+    },
+    {
+      "nation": "FRA",
+      "template": "hero_char2c",
+      "domain": "land"
+    },
+    {
+      "nation": "ITA",
+      "template": "hero_roma",
+      "domain": "sea",
+      "port": "Taranto"
+    },
+    {
+      "nation": "ITA",
+      "template": "hero_p100",
+      "domain": "land"
+    }
+  ]
+}

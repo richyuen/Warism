@@ -1,0 +1,145 @@
+{
+  "comment": "Hero templates (PLAN 7.184): one element of one hero unit type (data/units/heroes.json). Read after the air templates: a formation is saved with its template's index, so these stand last.",
+  "templates": [
+    {
+      "id": "hero_yamato",
+      "nameKey": "template.hero_yamato",
+      "elements": [
+        {
+          "type": "hero_yamato",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_o_i",
+      "nameKey": "template.hero_o_i",
+      "elements": [
+        {
+          "type": "hero_o_i",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_iowa",
+      "nameKey": "template.hero_iowa",
+      "elements": [
+        {
+          "type": "hero_iowa",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_t28",
+      "nameKey": "template.hero_t28",
+      "elements": [
+        {
+          "type": "hero_t28",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_sovetsky_soyuz",
+      "nameKey": "template.hero_sovetsky_soyuz",
+      "elements": [
+        {
+          "type": "hero_sovetsky_soyuz",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_t42",
+      "nameKey": "template.hero_t42",
+      "elements": [
+        {
+          "type": "hero_t42",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_bismarck",
+      "nameKey": "template.hero_bismarck",
+      "elements": [
+        {
+          "type": "hero_bismarck",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_maus",
+      "nameKey": "template.hero_maus",
+      "elements": [
+        {
+          "type": "hero_maus",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_hood",
+      "nameKey": "template.hero_hood",
+      "elements": [
+        {
+          "type": "hero_hood",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_tog2",
+      "nameKey": "template.hero_tog2",
+      "elements": [
+        {
+          "type": "hero_tog2",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_richelieu",
+      "nameKey": "template.hero_richelieu",
+      "elements": [
+        {
+          "type": "hero_richelieu",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_char2c",
+      "nameKey": "template.hero_char2c",
+      "elements": [
+        {
+          "type": "hero_char2c",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_roma",
+      "nameKey": "template.hero_roma",
+      "elements": [
+        {
+          "type": "hero_roma",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "hero_p100",
+      "nameKey": "template.hero_p100",
+      "elements": [
+        {
+          "type": "hero_p100",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

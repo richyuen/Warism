@@ -140,6 +140,8 @@ export const UnitTypeDef = z
     upkeep: z.strictObject({ gold: nonNeg, supply: nonNeg }),
     terrainMods: partialRecord(TERRAIN_IDS, z.strictObject({ atk: mult, def: mult, speed: mult })),
     techReq: id.optional(),
+    /** A hero (PLAN 7.184): never built, queued or placed by God; one formation a nation, on the new-game option. */
+    hero: z.literal(true).optional(),
   })
   .superRefine((u, ctx) => {
     const domain = (LAND_CLASSES as readonly string[]).includes(u.class) ? 'land' : (SEA_CLASSES as readonly string[]).includes(u.class) ? 'sea' : 'air';
@@ -149,7 +151,7 @@ export const UnitTypeDef = z
       ctx.addIssue({ code: 'custom', path: ['mobility'], message: `${domain} units move by ${okMobility.join('|')}` });
     }
   });
-export const UnitsFile = z.strictObject({ types: z.array(UnitTypeDef).min(1) });
+export const UnitsFile = z.strictObject({ comment: z.string().optional(), types: z.array(UnitTypeDef).min(1) });
 
 // ── tech (data/tech/*.json) ──────────────────────────────────────────────────
 
@@ -430,6 +432,16 @@ export const FleetsFile = z.strictObject({
   ),
 });
 
+/**
+ * The heroes of a start (PLAN 7.184, `addHeroes1938`), on the option `heroes`: each a hero
+ * template of a living nation, of the land or the sea; a sea hero at a naval base of ports.json
+ * that its nation holds, by its name; a land hero at its nation's capital.
+ */
+export const HeroesFile = z.strictObject({
+  comment: z.string().optional(),
+  heroes: z.array(z.strictObject({ nation: tag, template: id, domain: z.enum(['land', 'sea']), port: z.string().min(1).optional() })),
+});
+
 /** City-list inputs (PLAN 1.5): keys are 'NE NAME|ADM0_A3'; read by tools/data/cities.ts. */
 const placeKey = z.string().regex(/^[^|]+\|[A-Z0-9]{3}$/, "place keys are 'NAME|ADM0'");
 export const CityRulesFile = z.strictObject({
@@ -503,6 +515,7 @@ export const DATA_FILES: readonly { pattern: RegExp; schema: z.ZodType }[] = [
   { pattern: /^scenarios\/[a-z0-9_]+\/airbases\.json$/, schema: AirbasesFile },
   { pattern: /^scenarios\/[a-z0-9_]+\/air\.json$/, schema: AirFile },
   { pattern: /^scenarios\/[a-z0-9_]+\/fleets\.json$/, schema: FleetsFile },
+  { pattern: /^scenarios\/[a-z0-9_]+\/heroes\.json$/, schema: HeroesFile },
 ];
 
 export function schemaFor(file: string): z.ZodType | undefined {
@@ -626,6 +639,9 @@ export function validateDataSet(files: Readonly<Record<string, unknown>>): strin
 
   const unitDomain = new Map(unitFiles.flatMap(([, x]) => x.types.map((u) => [u.id, u.domain] as const)));
   const unitIds = new Set(unitDomain.keys());
+  /** The heroes' unit types (PLAN 7.184), and the templates of one. */
+  const heroUnits = new Set(unitFiles.flatMap(([, x]) => x.types.filter((u) => u.hero === true).map((u) => u.id)));
+  const heroTemplates = new Set<string>();
   /** A template's domain (PLAN 4.2a): that of its first element's unit type. */
   const templateDomain = new Map<string, string>();
   const templateFiles = of<z.infer<typeof TemplatesFile>>(/^templates\//);
@@ -634,6 +650,7 @@ export function validateDataSet(files: Readonly<Record<string, unknown>>): strin
     x.templates.forEach((t, i) =>
       t.elements.forEach((e, j) => {
         if (!unitIds.has(e.type)) errors.push(`${f}: templates[${i}].elements[${j}].type: unknown unit type '${e.type}'`);
+        if (heroUnits.has(e.type)) heroTemplates.add(t.id);
         const domain = unitDomain.get(e.type);
         if (domain === undefined) return;
         const first = templateDomain.get(t.id) ?? domain;
@@ -787,6 +804,29 @@ export function validateDataSet(files: Readonly<Record<string, unknown>>): strin
           errors.push(`${fleetsF}: groups[${i}].port: '${g.port}' is held by '${rows[0]!.nation ?? 'no nation'}', neither '${g.nation}' nor a puppet of it`);
       });
     }
+    // The heroes (PLAN 7.184): a hero template of its domain, of a living nation; one of each domain a nation; a sea hero at its nation's naval base.
+    const heroesF = f.replace(/nations\.json$/, 'heroes.json');
+    const heroes = ok[heroesF] as z.infer<typeof HeroesFile> | undefined;
+    if (heroes) {
+      const ports = (ok[f.replace(/nations\.json$/, 'ports.json')] as z.infer<typeof PortsFile> | undefined)?.ports ?? [];
+      const seen = new Set<string>();
+      heroes.heroes.forEach((h, i) => {
+        const n = byTag.get(h.nation);
+        if (!n || n.alive === false) errors.push(`${heroesF}: heroes[${i}].nation: '${h.nation}' is not a living nation`);
+        if (seen.has(`${h.nation} ${h.domain}`)) errors.push(`${heroesF}: heroes[${i}]: a second ${h.domain} hero of '${h.nation}'`);
+        seen.add(`${h.nation} ${h.domain}`);
+        if (!templates.has(h.template)) errors.push(`${heroesF}: heroes[${i}].template: unknown template '${h.template}'`);
+        else if (!heroTemplates.has(h.template)) errors.push(`${heroesF}: heroes[${i}].template: '${h.template}' is no hero's`);
+        else if (templateDomain.get(h.template) !== h.domain) errors.push(`${heroesF}: heroes[${i}].template: '${h.template}' is no ${h.domain} template`);
+        if (h.domain === 'land') {
+          if (h.port !== undefined) errors.push(`${heroesF}: heroes[${i}].port: a land hero starts at its capital`);
+          return;
+        }
+        const rows = ports.filter((q) => q.name === h.port);
+        if (rows.length !== 1) errors.push(`${heroesF}: heroes[${i}].port: ${rows.length === 0 ? `no port '${h.port ?? ''}'` : `${rows.length} ports named '${h.port ?? ''}'`}`);
+        else if (rows[0]!.navalBase < 1 || rows[0]!.nation !== h.nation) errors.push(`${heroesF}: heroes[${i}].port: '${h.port ?? ''}' is no naval base of '${h.nation}'`);
+      });
+    }
     const own = ok[f.replace(/nations\.json$/, 'ownership.json')] as OwnershipFile | undefined;
     if (!own) continue;
     const of2 = f.replace(/nations\.json$/, 'ownership.json');
@@ -804,8 +844,8 @@ export function validateDataSet(files: Readonly<Record<string, unknown>>): strin
       check(o.owner, `occupation[${i}].owner`);
     });
   }
-  for (const [f] of of<unknown>(/^scenarios\/[a-z0-9_]+\/(ownership|diplomacy|cities|flags|oob|fleets)\.json$/)) {
-    if (!(f.replace(/(ownership|diplomacy|cities|flags|oob|fleets)\.json$/, 'nations.json') in ok)) errors.push(`${f}: no valid nations.json next to this file`);
+  for (const [f] of of<unknown>(/^scenarios\/[a-z0-9_]+\/(ownership|diplomacy|cities|flags|oob|fleets|heroes)\.json$/)) {
+    if (!(f.replace(/(ownership|diplomacy|cities|flags|oob|fleets|heroes)\.json$/, 'nations.json') in ok)) errors.push(`${f}: no valid nations.json next to this file`);
   }
   for (const [f, s] of of<ScenarioMeta>(/^scenarios\/[a-z0-9_]+\/scenario\.json$/)) {
     const dir = f.split('/')[1];
