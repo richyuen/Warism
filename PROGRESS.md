@@ -25501,3 +25501,14 @@ No rule changed and nothing on screen changed. One task came out of it.
 - **Specs by hand:** `counters1938`, `countersRest1938`, `markerStacks1938`, `markers1938`, `navalCounter1938`,
   `retreatMarker1938`, `stackBlocks1938`, `stackPick1938`, `labels1938`, `countryballs1938`: 21 of 21 green.
 - **Next:** PLAN 7.184c (7.184b3 open on ADR-790).
+
+## 2026-11-01 — PLAN 7.184c: the heroes in a nation's Overview (ADR-791)
+
+- **Built:** `HeroStat` / `NationStat.heroes` (worker stats from the roster), the "Heroes" block first in the
+  Overview (`NationPanel.tsx`, styles, `en.json`), `PlayerControl.openHero` (the formation's panel, the follow).
+- **AT (`heroes1938`'s fourth test, by hand green; `docs/evidence/7.184c/`):** Japan's Overview opens with
+  `panel-heroes`, 2 rows (Yamato, O-I, 100 %); a click on Yamato's row from Europe at 1,500 m/px opens its panel and
+  after 24 ticks the view's centre is within 2 px of it; Yamato removed: its row reads "returns in 60 days", disabled;
+  no block for Poland, none for Japan with the option off.
+- **Specs by hand:** `nationPanel1938`, `followPicked1938` green.
+- **Next:** PLAN 7.184d (7.184b3 waits on ADR-790).

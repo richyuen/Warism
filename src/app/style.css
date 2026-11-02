@@ -1970,3 +1970,56 @@ button.unit-icon.on {
 .nation-menu-notice {
   pointer-events: none;
 }
+
+/* A nation's heroes in its Overview (PLAN 7.184c): a row a hero, a click opens it on the map. */
+.panel-heroes .hero-row {
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.2rem;
+  border: 0;
+  border-radius: 3px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.panel-heroes .hero-row:hover:not(:disabled) {
+  background: rgba(214, 178, 94, 0.18);
+}
+.panel-heroes .hero-row:disabled {
+  cursor: default;
+  opacity: 0.75;
+}
+.panel-heroes .hero-name {
+  font-weight: 700;
+}
+.panel-heroes .hero-health {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.panel-heroes .hero-bar {
+  display: inline-block;
+  width: 4.5rem;
+  height: 0.4rem;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+.panel-heroes .hero-fill {
+  display: block;
+  height: 100%;
+  background: #8bd17c;
+}
+.panel-heroes .hero-fill.warn {
+  background: #f1c40f;
+}
+.panel-heroes .hero-fill.low {
+  background: #e74c3c;
+}
+.panel-heroes .hero-return {
+  color: var(--ui-muted);
+  font-style: italic;
+}

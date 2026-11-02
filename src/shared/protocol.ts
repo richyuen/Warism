@@ -635,6 +635,21 @@ export interface NationStat {
   research: number;
   /** What it is researching, in the order the lines were opened: index into `mapLayers.techs` and the gold paid. */
   lines: { tech: number; paid: number }[];
+  /** Its heroes (PLAN 7.184c), in the roster's order; none (or absent) without the option. */
+  heroes?: HeroStat[];
+}
+
+/** A hero of a nation (PLAN 7.184c), for its Overview. */
+export interface HeroStat {
+  /** Its formation while it lives, else 0. */
+  formation: number;
+  /** Its name (the template's: "Yamato"). */
+  nameKey: string;
+  sea: boolean;
+  /** Its health 0..1 (`heroHealth`); 0 while it is gone. */
+  health: number;
+  /** While it is gone, the days until it is back (0: it waits for a place, or for its nation's revival); null while it lives. */
+  returnDays: number | null;
 }
 
 /**

@@ -56,12 +56,7 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
       (5,000 m/px) and marker at T1 (1,000 m/px) against its nation's normal one, drawn boxes on the overlay, 1.9–2.1 ×,
       both looks; bench G T0 over 311 fps and p95 under 6.9 ms. Drawing done and its e2e green (`b3-sizes.txt`: 2.0 ×);
       bench G's T0 309 fps against 311 — BLOCKERS, ADR-790 waits on the user.
-  - [ ] 7.184c Overview: a Heroes block first in a nation's Overview tab (`NationPanel.tsx`; the stats message carries
-    each hero's name, domain, strength and return day): its name, a strength bar, or "returns in N days". A click selects
-    it on the map, opens its panel and the camera follows it (7.183), the nation played or not. AT: the e2e of 7.184b:
-    `panel-heroes` is the Overview's first block for Japan with 2 rows; a click on Yamato's row puts the view's centre
-    within 2 px of it after 24 ticks; a destroyed hero's row reads "returns in 60 days"; no block with the option off
-    or for Poland.
+  - [x] 7.184c Overview: a Heroes block first in a nation's Overview tab (`NationPanel.tsx`; the stats message carries […]
   - [ ] 7.184d The option in the new-game form and settings panel, `?heroes=on` in the URL (as 7.182: `gameUrl.ts`,
     `scenarios.ts`, `NewGameForm.tsx`, `SettingsPanel.tsx`, `en.json` with the 14 names). AT:
     `tests/e2e/gameOptions1938.spec.ts` (`opt-heroes` from the settings panel, `heroes=on` in the URL, back to off) and

@@ -2,12 +2,13 @@ import { expect, test, type Page } from '@playwright/test';
 import { writeFileSync } from 'node:fs';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
-import { TEMPLATES_LAND } from '../../src/sim/scenario1938';
+import { NATIONS_1938, TEMPLATES_LAND } from '../../src/sim/scenario1938';
 
 // PLAN 7.184b: the heroes drawn. With `?heroes=on` the 1938 world has the 14 heroes of
 // data/scenarios/1938/heroes.json (PLAN 7.184a), each a formation of one element.
 
 const EVIDENCE = path.resolve('docs/evidence/7.184b');
+const EVIDENCE_C = path.resolve('docs/evidence/7.184c');
 const HEAVY = TEMPLATES_LAND.findIndex((t) => t.id === 'heavy_panzer_div');
 
 /** Opens the 1938 world, paused, with the heroes on. */
@@ -289,4 +290,72 @@ test('PLAN 7.184b3: a hero is its own counter at T0 and its own marker at T1, tw
   }
   writeFileSync(path.join(EVIDENCE, 'b3-sizes.txt'), `${lines.join('\n')}\n`);
   expect(fails, 'heroes not 1.9–2.1 × their nation’s counters and markers').toEqual([]);
+});
+
+test('PLAN 7.184c: a nation’s heroes first in its Overview; a row opens and follows its hero; a lost one returns in 60 days', async ({ page }) => {
+  test.setTimeout(240_000);
+  await openWithHeroes(page);
+  const nationOf = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
+  const [JAP, POL] = [nationOf('JAP'), nationOf('POL')];
+  await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), JAP);
+  const overview = page.getByTestId('panel-overview');
+  await expect(overview).toBeVisible();
+  // The Overview's first block, with Japan's two.
+  expect(await overview.evaluate((s) => (s.firstElementChild as HTMLElement | null)?.dataset.testid)).toBe('panel-heroes');
+  const rows = page.getByTestId('hero-row');
+  await expect(rows).toHaveCount(2);
+  await expect(rows.nth(0)).toContainText('Yamato');
+  await expect(rows.nth(1)).toContainText('O-I');
+  await expect(rows.nth(0).getByTestId('hero-health')).toContainText('100%');
+  await page.screenshot({ path: path.join(EVIDENCE_C, 'overview-japan.png'), clip: { x: 0, y: 0, width: 420, height: 500 } });
+  // A click on Yamato's row: its panel, and the camera on it 24 ticks on, from far off (the view on
+  // Europe at 1,500 m/px; at the world's zoom the view has no room to move).
+  const yamato = await heroId(page, 'Yamato');
+  await page.evaluate(() => {
+    const v = window.__warsim!.view!;
+    v.controller.set({ cx: v.geo.w * 0.52, cy: v.geo.h * 0.25, scale: (v.metresPerPx * v.controller.cam.scale) / 1500 });
+  });
+  await rows.nth(0).click();
+  expect(await page.evaluate(() => window.__warsim!.hud.formation.value)).toBe(yamato);
+  expect(await page.evaluate(() => window.__warsim!.view!.controller.following), 'following after the click').toBe(true);
+  await page.evaluate(async () => {
+    const { sim, view } = window.__warsim!;
+    const tick = (await sim.step(24)).tick;
+    await new Promise<void>((done) => {
+      const wait = (): void => (view!.lastTick === tick ? done() : void setTimeout(wait, 5));
+      wait();
+    });
+  });
+  await page.waitForTimeout(1500);
+  const off = await page.evaluate(() => {
+    const v = window.__warsim!.view!;
+    const p = v.pickedPoint()!;
+    const cam = v.controller.cam;
+    return Math.hypot(p[0] - cam.cx, p[1] - cam.cy) * cam.scale;
+  });
+  expect(off, 'px between the view’s centre and Yamato').toBeLessThanOrEqual(2);
+  await page.screenshot({ path: path.join(EVIDENCE_C, 'yamato-followed.png') });
+  // Yamato lost: its row says when it is back.
+  await page.evaluate(async (id) => {
+    const { sim, view } = window.__warsim!;
+    sim.command({ kind: 'removeFormation', id });
+    const tick = (await sim.step(1)).tick;
+    await new Promise<void>((done) => {
+      const wait = (): void => (view!.lastTick === tick ? done() : void setTimeout(wait, 5));
+      wait();
+    });
+  }, yamato);
+  await expect(rows.nth(0).getByTestId('hero-return')).toHaveText('returns in 60 days', { timeout: 15_000 });
+  await expect(rows.nth(0)).toBeDisabled();
+  await page.screenshot({ path: path.join(EVIDENCE_C, 'overview-japan-lost.png'), clip: { x: 0, y: 0, width: 420, height: 500 } });
+  // Poland has none.
+  await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), POL);
+  await expect(page.getByTestId('nation-panel')).toHaveAttribute('data-nation', String(POL));
+  await expect(page.getByTestId('panel-heroes')).toHaveCount(0);
+  // Without the option, Japan has none.
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), JAP);
+  await expect(page.getByTestId('panel-overview')).toBeVisible();
+  await expect(page.getByTestId('panel-heroes')).toHaveCount(0);
 });

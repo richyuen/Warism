@@ -346,6 +346,8 @@ export function App({
           flagUrl={view && flagVersion >= 0 ? view.flags.urlOf(nation.id) : null}
           onSelect={(id) => hud.onSelectNation(id)}
           onChip={player ? (id, x, y) => player.openChipMenu(id, x, y) : null}
+          // A hero's row (PLAN 7.184c): its panel opened and the camera on it, following it (PLAN 7.183).
+          onHero={player ? (f) => player.openHero(f) : null}
           actions={
             player && stats && player.nation.value === nation.id
               ? {

@@ -17224,3 +17224,26 @@ Of 7.184 (open in PLAN.md):
       test's heal, return (to the tick), dead-nation and save/load-of-a-return-day cases.
     - [x] 7.184a3 Strength: the stats that make a hero battleship beat one battle squadron with over half left and lose
       to three, the land hero likewise against one and three armoured divisions. AT: the test's probe cases.
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+Of 7.184 (open in PLAN.md):
+
+  - [x] 7.184c Overview: a Heroes block first in a nation's Overview tab (`NationPanel.tsx`; the stats message carries
+    each hero's name, domain, strength and return day): its name, a strength bar, or "returns in N days". A click selects
+    it on the map, opens its panel and the camera follows it (7.183), the nation played or not. AT: the e2e of 7.184b:
+    `panel-heroes` is the Overview's first block for Japan with 2 rows; a click on Yamato's row puts the view's centre
+    within 2 px of it after 24 ticks; a destroyed hero's row reads "returns in 60 days"; no block with the option off
+    or for Poland.

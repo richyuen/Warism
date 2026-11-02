@@ -39,6 +39,7 @@ export function NationPanel({
   flagUrl,
   economy,
   onEconomy,
+  onHero,
 }: {
   nation: NationStat;
   byId: Map<number, NationStat>;
@@ -56,6 +57,8 @@ export function NationPanel({
   /** Its month in parts (PLAN 7.4f34), asked for by `onEconomy(nation)` while the economy tab is open (0: closed). */
   economy?: EconomyBreakdown | null;
   onEconomy?: (nation: number) => void;
+  /** A click on a living hero's row (PLAN 7.184c): its formation opened on the map and followed. */
+  onHero?: ((formation: number) => void) | null;
 }) {
   const [chosen, setTab] = useState<Tab>('overview');
   // The God tab exists only in God Mode (PLAN 1.32b).
@@ -126,6 +129,42 @@ export function NationPanel({
         <GodTab nation={nation} {...god} />
       ) : tab === 'overview' ? (
         <section data-testid="panel-overview">
+          {nation.heroes && nation.heroes.length > 0 ? (
+            // Its heroes first (PLAN 7.184c): each its name and its health, or the days until it is back.
+            <div class="panel-block panel-heroes" data-testid="panel-heroes">
+              <div class="panel-sub">{t('panel.heroes')}</div>
+              {nation.heroes.map((h, k) => {
+                const name = t(h.nameKey as MessageKey);
+                const pct = Math.round(h.health * 100);
+                return (
+                  <button
+                    key={k}
+                    type="button"
+                    class="panel-row hero-row"
+                    data-testid="hero-row"
+                    data-formation={h.formation}
+                    disabled={h.formation === 0 || !onHero}
+                    title={h.formation !== 0 ? t('panel.heroOpen', { name }) : undefined}
+                    onClick={() => h.formation !== 0 && onHero?.(h.formation)}
+                  >
+                    <span class="hero-name">{name}</span>
+                    {h.returnDays === null ? (
+                      <span class="hero-health" data-testid="hero-health">
+                        <span class="hero-bar">
+                          <span class={pct > 50 ? 'hero-fill' : pct > 25 ? 'hero-fill warn' : 'hero-fill low'} style={{ width: `${pct}%` }} />
+                        </span>
+                        {pct}%
+                      </span>
+                    ) : (
+                      <span class="hero-return" data-testid="hero-return">
+                        {h.returnDays === 0 ? t('panel.heroWaits') : h.returnDays === 1 ? t('panel.heroReturnsOne') : t('panel.heroReturns', { n: h.returnDays })}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          ) : null}
           {row('panel.land', num(nation.area), 'stat-land')}
           {row('panel.landShare', `${(nation.landShare * 100).toFixed(1)}%`, 'stat-land-share')}
           {row('panel.army', `${num(nation.men)} (${nation.formations})`, 'stat-army')}

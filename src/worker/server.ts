@@ -25,6 +25,7 @@ import { economyBreakdown } from '../sim/systems/economy';
 import { largestBattle, warsWithBattle } from '../sim/systems/warBattle';
 import { DAYS_PER_MONTH } from '../sim/systems/research';
 import { shipyard } from '../sim/systems/production';
+import { heroHealth } from '../sim/systems/heroes';
 import { AT_PORT_CELLS, carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
@@ -50,6 +51,7 @@ import {
   type Subscription,
   type SimInit,
   type ToWorker,
+  type HeroStat,
   type NationStat,
   type FormationDetail,
   type Inspection,
@@ -843,6 +845,26 @@ export class SimServer {
       }
       return best && best.r.reason !== 'none' ? { reason: best.r.reason, by: best.r.by, war: best.war } : null;
     };
+    // The heroes (PLAN 7.184c): each row of the roster under its nation, alive (its formation) or gone (its return).
+    const heroes = new Map<number, HeroStat[]>();
+    if (world.heroRoster.length > 0) {
+      const alive = new Map<number, number>();
+      for (const [f, row] of world.heroes) alive.set(row, f);
+      world.heroRoster.forEach((r, row) => {
+        const f = alive.get(row) ?? 0;
+        const back = world.heroReturn.get(row);
+        const t = TEMPLATES_1938[r.template];
+        const list = heroes.get(r.nation) ?? [];
+        list.push({
+          formation: f,
+          nameKey: t ? `template.${t.id}` : '',
+          sea: world.rules?.templates[r.template]?.domain === Domain.sea,
+          health: f !== 0 ? heroHealth(world, f) : 0,
+          returnDays: f !== 0 ? null : back === undefined ? 0 : Math.max(0, Math.ceil((back - world.tick) / 24)),
+        });
+        heroes.set(r.nation, list);
+      });
+    }
     const nations: (NationStat & { living: boolean })[] = [];
     world.nations.forEach((id) => {
       if (!withDead && nc.living[id] !== 1) return;
@@ -894,6 +916,7 @@ export class SimServer {
         airRoom: nc.living[id] === 1 ? (airRoom.get(id) ?? 0) : 0,
         research: nc.research[id]! * DAYS_PER_MONTH,
         lines: lines.get(id) ?? [],
+        ...(heroes.has(id) ? { heroes: heroes.get(id)! } : {}),
       });
     });
     return { nations, wars };

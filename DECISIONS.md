@@ -167,6 +167,17 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-791 · 2026-11-01 · accepted — PLAN 7.184c: a nation's heroes in its Overview
+**Decision.** `NationStat.heroes` (`HeroStat`: formation or 0, name key, sea, health, days until back), built by the
+worker's stats from the roster for a nation with heroes, absent otherwise. The Overview's first block, "Heroes": a
+row a hero, its name and a health bar (green over 50 %, yellow over 25 %, red) with its share, or "returns in N days"
+while it is gone ("waits to return" when its hour has passed and it has no place, or its nation is dead). A living
+hero's row is a button: its formation's panel opens and the camera follows it (`PlayerControl.openHero`, as a click
+on it on the map, PLAN 7.183), whichever nation is played; a gone hero's row is disabled.
+**Why.** The user's request (7.184): the heroes are seen and found from their nation.
+**Consequences.** At the world's zoom the camera has no room to move (the view is clamped to the map): the follow
+centres the hero from a nearer zoom only.
+
 ### ADR-790 · 2026-11-01 · proposed (the user's decision) — PLAN 7.184b3: bench G's T0 with heroes on, 309 fps against a bar of 311
 **Context.** 7.184b's AT: bench G with `heroes=on` keeps T0 over 311 fps (0.9 × fbca2cc4's 345, ADR-784) and p95 under
 6.9 ms. Bench G's GPU setting, heroes off and on alternately on the same build, three pairs each (`docs/evidence/7.184b/`

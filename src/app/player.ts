@@ -233,6 +233,15 @@ export class PlayerControl {
   }
 
   /**
+   * A hero's row in a nation's Overview (PLAN 7.184c), the nation played or not: its panel opens and
+   * the camera goes to it and follows it, as after a click on it on the map (PLAN 7.183).
+   */
+  openHero(formation: number): void {
+    this.hud.selectFormation(formation);
+    this.followPicked();
+  }
+
+  /**
    * A click on a formation that is not the player's to order (another nation's, or any with no
    * nation played; PLAN 7.183): the camera follows it (`MapView.followPicked`) in place of a wing.
    */
