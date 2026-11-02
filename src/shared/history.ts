@@ -179,6 +179,9 @@ export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.NuclearPower,
   // The bonds a forced war broke (PLAN 7.175a), told before its declaration.
   EventKind.BondsBroken,
+  // A war a nation left while it goes on, and a puppet's revolt (PLAN 7.192, critic run 26's 1).
+  EventKind.WarLeft,
+  EventKind.PuppetRevolt,
 ]);
 /** Kinds of which the ticker takes one row an hour, the last logged: a month's air rows, logged the largest last. */
 export const TICKER_ONE_AN_HOUR: ReadonlySet<number> = new Set<number>([EventKind.AirWar, EventKind.AirRaids]);

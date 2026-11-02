@@ -3,7 +3,7 @@ import { AIR_CONTESTED, AIR_CONTESTED_COLOR } from '../shared/mapModes';
 import { MapLegend } from '../ui/MapLegend';
 import { MapTooltip } from '../ui/MapTooltip';
 import { NationMenu, NationMenuNotice } from '../ui/NationMenu';
-import { standingOf } from '../ui/standing';
+import { allyWhy, standingOf } from '../ui/standing';
 import { peaceVerdict } from '../shared/peace';
 import { FormationPanel } from '../ui/FormationPanel';
 import { HistoryPanel } from '../ui/HistoryPanel';
@@ -425,6 +425,7 @@ export function App({
                   me !== 0 && me === played
                     ? {
                         allied,
+                        allyWhy: allyWhy(me, m.nation, (id) => byId.get(id)),
                         peace: war ? peaceVerdict(war.score, war.exhaustion, war.toDeath, side) : null,
                         onPeace: (w) => player.menuCommand({ kind: 'offerPeace', war: w, from: me }),
                         onAlly: () => player.menuCommand({ kind: 'proposeAlliance', from: me, to: m.nation }),

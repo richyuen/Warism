@@ -213,6 +213,11 @@ describe('no war inside one realm or one alliance (PLAN 3.8)', () => {
     expect(w.wars.atWar(MAN, JAP)).toBe(true);
     expect(w.wars.atWar(MAN, CHI)).toBe(false);
     expect(realmWars(w, tag)).toEqual([]);
+    // Both told in the ticker (PLAN 7.192, critic run 26's 1): the war left and the revolt.
+    const ticker = tickerRows(w, (n) => `=${tag(n)}`).map((r) => r.kind);
+    expect(ticker).toContain(EventKind.WarLeft);
+    expect(ticker).toContain(EventKind.PuppetRevolt);
+    expect(TICKER_KINDS.has(EventKind.WarLeft) && TICKER_KINDS.has(EventKind.PuppetRevolt)).toBe(true);
   });
 
   // A nation called into a war against one it fights beside in another stays out of the new war.

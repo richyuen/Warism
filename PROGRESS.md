@@ -25690,3 +25690,16 @@ No rule changed and nothing on screen changed. One task came out of it.
   - Unit tests red on 33c84306 (4); Poland on France still refused.
   - Unit 2042 of 2042; e2e 13 of 13; pin unchanged.
 - **Next:** PLAN 7.192.
+
+## 2026-11-02 — PLAN 7.192 (diplomacy 6, ADR-802): a war left and a revolt in the ticker; the bond and the shared war; the alliance greyed
+- Changes:
+  - `WarLeft` and `PuppetRevolt` are in `TICKER_KINDS`, with cues (peace, war).
+  - A bond's standing with a partner reads "Allied · fights beside you" or "Your overlord · fights beside you".
+  - `allyWhy` greys "Propose alliance" with its reason in the menu and the Actions tab.
+  - The sim refuses a puppet's alliance with its overlord.
+- AT (`docs/evidence/7.192/at-run.md`):
+  - Unit tests red on 33c84306; `allyWhy` agrees with the sim on 72 of 72 pairs.
+  - e2e `bondsMenu1938`: Manchukuo's menu of Japan, the alliance greyed, Force war's exit in the ticker.
+  - Unit 2043 of 2044 (territory's timing bar under load; green alone); e2e 19 of 19; pin unchanged.
+- The loop stops here at the user's request, before PLAN 7.5 (critic run 27).
+- **Next:** PLAN 7.5: the review, then critic run 27.

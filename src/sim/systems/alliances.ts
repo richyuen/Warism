@@ -79,6 +79,8 @@ export function proposeAlliance(world: World, from: number, to: number): boolean
     nc.living[to] === 1 &&
     al.allianceOf(to) === undefined &&
     nc.overlord[to] === 0 &&
+    // A puppet makes no alliance with its own overlord: the bond is already the closer (PLAN 7.192).
+    nc.overlord[from] !== to &&
     noWarAmong(world, [from, to]);
   const own = ok ? al.allianceOf(from) : undefined;
   const joined = !ok ? null : own ? (canJoin(world, to, own) && al.join(to, own) ? own : null) : al.create(from, [to], 'alliance.defensive', 50);

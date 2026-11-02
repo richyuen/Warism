@@ -167,6 +167,25 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-802 · 2026-11-02 · accepted — PLAN 7.192: a war left and a revolt in the ticker; the bond and the shared war; the alliance greyed
+
+- **Context.** Critic run 26 kept diplomacy at 6. Its non-blocking 1–3:
+  - the ticker told neither a war left nor a revolt;
+  - "Fights beside you" hid "Allied" and "Your overlord";
+  - "Propose alliance" was live where the sim turns it down (one's own overlord, a nation in an alliance).
+- **Decision.**
+  - `WarLeft` and `PuppetRevolt` are ticker kinds, with cues: a war left the peace cue, a revolt the war cue. This
+    amends ADR-800 for `WarLeft`. `GuaranteeLapsed` stays a history row only.
+  - A bond's standing with a nation it fights beside carries `beside` and reads "<bond> · fights beside you".
+  - `allyWhy` mirrors `proposeAlliance`. The menu and the Actions tab grey "Propose alliance", with its reason as
+    the title.
+  - The sim refuses a puppet's alliance with its own overlord.
+- **Consequences.**
+  - On 72 pairs at the 1938 start, `allyWhy` agrees with the sim on every one.
+  - Unit tests are red on 33c84306, and an e2e test (`bondsMenu1938`) covers the menu and the ticker
+    (`docs/evidence/7.192/at-run.md`).
+  - Seed 99's pin is unchanged.
+
 ### ADR-801 · 2026-11-02 · accepted — PLAN 7.191 (R26-B1): a bond's break wins over `Beside`; a rebel leaves its overlord's wars
 
 - **Context.** Critic run 26's blocking issue: ADR-799's `Refusal.Beside` was checked before the bonds and `forceWar`

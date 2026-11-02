@@ -18,18 +18,38 @@ export interface Standing {
   days: number;
   /** Whether a bond stands in a war's way: `forceWar` would break it. */
   bond: boolean;
+  /** A bond's standing with a nation that also fights on one side with it in a war (PLAN 7.192): set, true. */
+  beside?: true;
 }
 
 export type Who = Pick<NationStat, 'id' | 'overlord' | 'alliance' | 'truces'>;
 
-/** The standing of `b` with `a` (ids); `of` a nation's stats by id, `wars` the world's. */
-export function standingOf(a: number, b: number, of: (id: number) => Who | undefined, wars: readonly Pick<WarStat, 'attackers' | 'defenders'>[]): Standing {
-  const at = (kind: StandingKind, bond: boolean, days = 0): Standing => ({ kind, days, bond });
+/**
+ * Why `a`'s alliance proposal to `b` would be turned down, in words; '' when it may be made (PLAN
+ * 7.192, critic run 26's 3). As the sim's `proposeAlliance` judges it: no alliance with one's own
+ * overlord, none with a puppet (its overlord makes its alliances), none with a nation in an alliance
+ * (one's own: already allies). A war between them is the standing's (`war`).
+ */
+export function allyWhy(a: number, b: number, of: (id: number) => Who | undefined): string {
   const me = of(a);
   const them = of(b);
+  if (!me || !them || a === b) return '';
+  if (me.overlord === b) return t('alliance.why.overlord');
+  if (them.overlord !== 0) return t('alliance.why.puppet');
+  if (them.alliance) return t(them.alliance.id === me.alliance?.id ? 'refusal.allied' : 'refusal.inAlliance');
+  return '';
+}
+
+/** The standing of `b` with `a` (ids); `of` a nation's stats by id, `wars` the world's. */
+export function standingOf(a: number, b: number, of: (id: number) => Who | undefined, wars: readonly Pick<WarStat, 'attackers' | 'defenders'>[]): Standing {
+  const side = (x: number, y: number): boolean => wars.some((w) => (w.attackers.includes(x) && w.attackers.includes(y)) || (w.defenders.includes(x) && w.defenders.includes(y)));
+  const me = of(a);
+  const them = of(b);
+  // A bond's standing says too that the two fight on one side (PLAN 7.192, critic run 26's 2).
+  const shared = !!me && !!them && (side(a, b) || (them.overlord !== 0 && side(a, them.overlord)));
+  const at = (kind: StandingKind, bond: boolean, days = 0): Standing => (bond && kind !== 'truce' && shared ? { kind, days, bond, beside: true } : { kind, days, bond });
   if (!me || !them) return at('neutral', false);
   if (wars.some((w) => (w.attackers.includes(a) && w.defenders.includes(b)) || (w.defenders.includes(a) && w.attackers.includes(b)))) return at('war', false);
-  const side = (x: number, y: number): boolean => wars.some((w) => (w.attackers.includes(x) && w.attackers.includes(y)) || (w.defenders.includes(x) && w.defenders.includes(y)));
   if (them.overlord === a) return at('puppet', true);
   if (me.overlord === b) return at('overlord', true);
   const allied = (x: number, y: number): boolean => {
@@ -45,10 +65,11 @@ export function standingOf(a: number, b: number, of: (id: number) => Who | undef
   return at('neutral', false);
 }
 
-/** A standing in words: "Allied", "Truce (12 days)". */
+/** A standing in words: "Allied", "Truce (12 days)", "Allied · fights beside you". */
 export function standingText(s: Standing): string {
   if (s.kind === 'truce') return t(s.days === 1 ? 'standing.truce.one' : 'standing.truce', { n: s.days });
-  return t(`standing.${s.kind}`);
+  const text = t(`standing.${s.kind}`);
+  return s.beside ? t('standing.andBeside', { s: text }) : text;
 }
 
 /** Why the enemy would refuse peace (PLAN 7.175c: the right-click menu's "Offer peace" title); '' when accepted. */

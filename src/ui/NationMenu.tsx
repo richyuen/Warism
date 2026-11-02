@@ -11,6 +11,8 @@ export interface PlayerItems {
   peace?: PeaceVerdict | null;
   /** Whether the two are allies: no alliance is proposed. */
   allied: boolean;
+  /** Why an alliance would be turned down (`allyWhy`, PLAN 7.192): greyed, this its title; '' when it may be proposed. */
+  allyWhy?: string;
   onPeace: (war: number) => void;
   onAlly: () => void;
 }
@@ -81,7 +83,7 @@ export function NationMenu({ name, flagUrl, x, y, standing, war, onWar, player, 
     war === null && onWar ? btn('nation-menu-war', t(standing?.bond ? 'act.forceWar' : 'god.war'), onWar, { force: standing?.bond ?? false, disabled: standing?.kind === 'beside', title: standing?.kind === 'beside' ? t('refusal.beside') : undefined }) : null,
     war !== null && player ? btn('nation-menu-peace', t('act.offerPeace'), () => player.onPeace(war), { disabled: player.peace ? !player.peace.accepted : false, title: player.peace ? peaceWhy(player.peace) || undefined : undefined }) : null,
     // Not offered to an enemy (PLAN 7.188, critic run 24's 6): peace comes first. To an ally, greyed out.
-    player && war === null ? btn('nation-menu-ally', t('act.proposeAlliance'), player.onAlly, { disabled: player.allied }) : null,
+    player && war === null ? btn('nation-menu-ally', t('act.proposeAlliance'), player.onAlly, { disabled: player.allied || !!player.allyWhy, title: player.allyWhy || undefined }) : null,
   ].filter((b) => b !== null);
   const godItems = god
     ? [

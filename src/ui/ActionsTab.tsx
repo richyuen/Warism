@@ -3,7 +3,7 @@ import type { Command } from '../shared/commands';
 import type { NationStat, PlayerWing, TemplateInfo, WarStat } from '../shared/protocol';
 import { t, type MessageKey } from './i18n';
 import { displayName } from './NationPanel';
-import { standingOf, standingText } from './standing';
+import { allyWhy, standingOf, standingText } from './standing';
 import { UnitIcon } from './UnitIcon';
 
 export interface ActionsTabProps {
@@ -69,6 +69,8 @@ export function ActionsTab({ nation, nations, wars, templates, day, onCommand, w
   // The chosen nation's standing with this one (PLAN 7.175b): a bond makes the war "Force war".
   const byId = new Map([nation, ...nations].map((o) => [o.id, o]));
   const standing = tgt !== 0 ? standingOf(n, tgt, (id) => byId.get(id), wars) : null;
+  // Why an alliance proposal would be turned down (PLAN 7.192): greyed, the reason its title.
+  const allyNo = tgt !== 0 ? allyWhy(n, tgt, (id) => byId.get(id)) : '';
   const nameOf = (id: number): string => {
     const o = nations.find((x) => x.id === id);
     return o ? displayName(o.name) : `#${id}`;
@@ -112,7 +114,7 @@ export function ActionsTab({ nation, nations, wars, templates, day, onCommand, w
         <button type="button" class="god-btn" data-testid="act-war" data-force={standing?.bond ? 1 : 0} disabled={tgt === 0 || standing?.kind === 'war' || standing?.kind === 'beside'} title={standing?.kind === 'beside' ? t('refusal.beside') : undefined} onClick={() => onCommand({ kind: 'forceWar', attacker: n, defender: tgt })}>
           {t(standing?.bond ? 'act.forceWar' : 'god.war')}
         </button>
-        <button type="button" class="god-btn" data-testid="act-ally" disabled={tgt === 0 || standing?.kind === 'war'} onClick={() => onCommand({ kind: 'proposeAlliance', from: n, to: tgt })}>
+        <button type="button" class="god-btn" data-testid="act-ally" disabled={tgt === 0 || standing?.kind === 'war' || allyNo !== ''} title={allyNo || undefined} onClick={() => onCommand({ kind: 'proposeAlliance', from: n, to: tgt })}>
           {t('act.proposeAlliance')}
         </button>
       </div>

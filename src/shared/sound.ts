@@ -35,6 +35,9 @@ const CUE_OF_KIND: Readonly<Record<number, Cue>> = {
   [EventKind.NuclearPower]: 'nuke',
   // A forced war's bonds broken (PLAN 7.175a): the war's cue, its declaration in the same hour.
   [EventKind.BondsBroken]: 'war',
+  // A war left (PLAN 7.192): out of a war, as a peace; a revolt: a war of independence, the war's.
+  [EventKind.WarLeft]: 'peace',
+  [EventKind.PuppetRevolt]: 'war',
 };
 
 /** The cue of an event kind (null: the event is silent). Every kind of the ticker has one. */

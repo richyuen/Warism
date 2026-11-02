@@ -17518,3 +17518,28 @@ Of 7.184 (open in PLAN.md):
   AT: on the critic's 4 seeds, Force war of a puppet on its overlord and of an ally on its ally refused for `Beside` on
   0 % of days; God's revolt of Manchukuo on 7019 gives `WarDeclared MAN JAP`; Poland on France (and 7.189's cases)
   still refused, the old war on; unit tests red on `33c84306`.
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.192 Diplomacy 6, needs 7 (critic run 26): what 7.191 leaves, the report's non-blocking 1–3. (1) The ticker
+  tells neither a war left nor a revolt (`WarLeft`, `PuppetRevolt` not ticker kinds; `critic/c26_pg_7019_wl.json`,
+  `critic/c26_pp_head_7019_MAN.json`). (2) "Fights beside you" hides the bond: an ally or overlord reads it in place of
+  "Allied" / "Your overlord" (`critic/shots/c26es_head_7019_d61_itamenu.png`). (3) "Propose alliance" is live to one's
+  own overlord and to a war partner.
+  Fix: both kinds in `TICKER_KINDS`; the standing shows the bond and the shared war together; the alliance proposal
+  greyed, with its reason, where it cannot be made.
+  AT: on 7019 a war left and a revolt each with a ticker row (e2e); Italy from Germany at day 61 reads its alliance and
+  the shared war, Japan from Manchukuo its overlordship; Propose alliance disabled to the overlord and to France from
+  Poland; tests red on `33c84306`.

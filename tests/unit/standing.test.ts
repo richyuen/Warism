@@ -5,7 +5,8 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { declareWar, makePeace, whyNotWar } from '../../src/sim/systems/war';
 import type { World } from '../../src/sim/world';
-import { standingOf, standingText, type Who } from '../../src/ui/standing';
+import { proposeAlliance } from '../../src/sim/systems/alliances';
+import { allyWhy, standingOf, standingText, type Who } from '../../src/ui/standing';
 import { assets1938 } from '../helpers/earth';
 import { nationId } from '../helpers/sim1938';
 
@@ -77,7 +78,9 @@ describe('a nation\'s standing with the played one (PLAN 7.175b)', () => {
     const s = stats(w);
     const of = (a: number, b: number) => standingOf(a, b, (id) => s.get(id), warsOf(w));
     expect(of(POL, FRA)).toEqual({ kind: 'beside', days: 0, bond: false });
-    expect(of(GER, ITA)).toEqual({ kind: 'allied', days: 0, bond: true });
+    // The bond, and the war fought on one side (PLAN 7.192, critic run 26's 2).
+    expect(of(GER, ITA)).toEqual({ kind: 'allied', days: 0, bond: true, beside: true });
+    expect(standingText(of(GER, ITA))).toBe('Allied · fights beside you');
     const ids = [...new Set(w.wars.list.flatMap((x) => [...x.sides[0]!, ...x.sides[1]!]))].concat([ENG, SWI]);
     const wrong: string[] = [];
     for (const a of ids)
@@ -89,6 +92,46 @@ describe('a nation\'s standing with the played one (PLAN 7.175b)', () => {
       }
     expect(wrong).toEqual([]);
     expect(standingText(of(POL, FRA))).toBe('Fights beside you');
+  });
+
+  // PLAN 7.192 (critic run 26's 2): Manchukuo, beside Japan in its war on China, read "Fights beside
+  // you" of its overlord; the bond and the shared war are both said.
+  it("an overlord fought beside reads both: 'Your overlord · fights beside you'", () => {
+    const w = new Sim({ scenario: '1938', seed: 5, assets: assets1938(SIZE_1938.w) }).world;
+    const [MAN, JAP] = [nationId('MAN'), nationId('JAP')];
+    const s = stats(w);
+    const st = standingOf(MAN, JAP, (id) => s.get(id), warsOf(w));
+    expect(st).toEqual({ kind: 'overlord', days: 0, bond: true, beside: true });
+    expect(standingText(st)).toBe('Your overlord · fights beside you');
+    expect(standingText(standingOf(JAP, MAN, (id) => s.get(id), warsOf(w)))).toBe('Your puppet · fights beside you');
+    expect(standingText(standingOf(GER, ITA, (id) => s.get(id), warsOf(w)))).toBe('Allied');
+  });
+
+  // PLAN 7.192 (critic run 26's 3): "Propose alliance" was live to one's own overlord and to a partner
+  // in an alliance, and the sim turned it down. Greyed with its reason exactly where the sim refuses.
+  it('the alliance proposal greyed exactly where the sim turns it down, with its reason', () => {
+    const tags = ['GER', 'ITA', 'JAP', 'MAN', 'POL', 'FRA', 'SWI', 'ALB', 'TIB'];
+    const ids = tags.map(nationId);
+    const base = new Sim({ scenario: '1938', seed: 5, assets: assets1938(SIZE_1938.w) });
+    const bytes = base.save();
+    const s = stats(base.world);
+    const wrong: string[] = [];
+    let greyed = 0;
+    for (const a of ids)
+      for (const b of ids) {
+        if (a === b || base.world.wars.atWar(a, b)) continue;
+        const why = allyWhy(a, b, (id) => s.get(id));
+        const c = new Sim({ scenario: '1938', seed: 5, assets: assets1938(SIZE_1938.w) });
+        c.load(bytes);
+        const made = proposeAlliance(c.world, a, b);
+        if (made === (why !== '')) wrong.push(`${tags[ids.indexOf(a)]}→${tags[ids.indexOf(b)]}: ${made ? 'made' : 'turned down'}, why '${why}'`);
+        if (why !== '') greyed++;
+      }
+    expect(wrong).toEqual([]);
+    expect(greyed).toBeGreaterThan(0);
+    const [MAN, JAP, POL, FRA] = ['MAN', 'JAP', 'POL', 'FRA'].map(nationId) as [number, number, number, number];
+    expect(allyWhy(MAN, JAP, (id) => s.get(id))).toBe('It is your overlord: you are bound to it already.');
+    expect(allyWhy(POL, FRA, (id) => s.get(id))).not.toBe('');
   });
 
   it('in words', () => {

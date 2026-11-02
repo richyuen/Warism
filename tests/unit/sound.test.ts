@@ -62,6 +62,9 @@ describe('sound cues (PLAN 3.12d)', () => {
     for (const k of [EventKind.CitySpawned, EventKind.CityRazed]) expect(cueOfKind(k)).toBe('town');
     // A forced war's bonds broken (PLAN 7.175a): the war's.
     expect(cueOfKind(EventKind.BondsBroken)).toBe('war');
+    // A war left, a revolt (PLAN 7.192).
+    expect(cueOfKind(EventKind.WarLeft)).toBe('peace');
+    expect(cueOfKind(EventKind.PuppetRevolt)).toBe('war');
     for (const k of Object.values(EventKind)) expect(cueOfKind(k) !== null, `kind ${k}`).toBe(TICKER_KINDS.has(k));
   });
 
