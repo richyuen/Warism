@@ -167,7 +167,7 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
-### ADR-798 · 2026-11-02 · proposed (the user's decision) — The ten-year runs' fleet guard after PLAN 7.188: seed 1 stands 24 of 197 after one year, floor 25 (ADR-633)
+### ADR-798 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — The ten-year runs' fleet guard after PLAN 7.188: seed 1 stands 24 of 197 after one year, floor 25 (ADR-633)
 
 - **Context** (`npm run check:review` before critic run 25, PLAN 7.5): `tests/sweep/aiSweep1` red twice, "fleets
   of the start that stand after one year: expected 24 to be greater than or equal to 25". On the review of 82d428c1:
@@ -186,8 +186,8 @@ runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on d
     overlord's). A sim change, the pin moves, every history after it with it; its own AT.
   - (c) Keep 25, and a PLAN task to read the puppet's war first (a puppet at war for months beside no overlord);
     the critic waits on that task.
-- **Consequences.** (a) the review green on the next run, no sim change; (b) and (c) change the rules or wait.
-  Critic run 25 waits on the decision either way.
+- **Consequences.** (a) taken: `tests/helpers/aiSweep.ts` asks `Math.ceil(fleets.start / 10)` (20 of 197); seed 1's
+  24 passes. No sim change, the pin unchanged. Critic run 25 after the review.
 
 ### ADR-797 · 2026-11-02 · accepted — PLAN 7.188: a pledge binds as a bond; nobody fights beside its enemy; the pin moves
 

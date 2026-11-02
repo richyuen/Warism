@@ -25636,3 +25636,8 @@ No rule changed and nothing on screen changed. One task came out of it.
   which ends 5 days earlier; the United States' war on Romania no longer ends with it, and 27 American fleets
   sail on days 90–120. No rule broken; the history moved. Not a machine red.
 - **Next:** waits on ADR-798 (the guard's floor), then PLAN 7.5's critic run 25.
+
+## 2026-11-02 — ADR-798 (a): the fleet guard's floor a tenth of the start's fleets
+- `tests/helpers/aiSweep.ts`: fleets of the start standing after one year ≥ `ceil(start / 10)` (20 of 197), for 25.
+  Seeds 1–3 stood 24, 70, 71 on the review of 5d7b214b. No sim change.
+- **Next:** PLAN 7.5: the review again, then critic run 25.

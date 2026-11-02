@@ -5,7 +5,7 @@ entries are kept and marked **RESOLVED** with the date and fix.
 
 ## Open
 
-### PLAN 7.5: the review before critic run 25 red on `aiSweep1`: 24 of 197 fleets of the start stand after one year, floor 25 (ADR-633)
+### RESOLVED 2026-11-02 (option a, the user's decision: the floor a tenth of the start's fleets; ADR-798) · PLAN 7.5: the review before critic run 25 red on `aiSweep1`: 24 of 197 fleets of the start stand after one year, floor 25 (ADR-633)
 - **The red** (`npm run check:review` on 5d7b214b, twice, deterministic): seed 1 stood 54 after one year on the
   review of 82d428c1, 24 now; seeds 2 and 3 stand 70 and 71 (were 56 and 64).
 - **Why** (`tools/diag/fleetYear.ts 1 365`, HEAD against ac449e8d): the same wars are declared to day 158. PLAN

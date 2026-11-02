@@ -271,10 +271,12 @@ export function aiSweep(seed: number): void {
   // AI sails fleets (4.6c), lays them up (4.6e1) and lands at capitals (7.69), every fleet of the start
   // has sailed or fought by year 10 (seed 1's last, a Soviet fleet, struck at its base on day 913 of
   // the Soviet war with Britain): 1 of 197 standing on seeds 1 and 2 before 7.69, 0 after. At the end
-  // of year 1, 53, 49 and 63 of 197 stand on seeds 1, 2 and 3 (2026-10-22); the floor is about half.
+  // of year 1, 53, 49 and 63 of 197 stood on seeds 1, 2 and 3 (2026-10-22), a floor of 25 about half.
+  // Since PLAN 7.188 seed 1's United States fights Romania on through the year and sails its navy: 24,
+  // 70, 71 (2026-11-02). The floor is a stated share, a tenth of the start's (ADR-798, the user's decision).
   process.stderr.write(`seed ${seed}: ${standingYear1} of ${fleets.start} fleets of the start stand after one year, ${fleets.start - fleets.gone - fleets.sailed - fleets.fought - fleets.carried - fleets.laid} after ten (PLAN 4.2b)
 `);
-  expect(standingYear1, `seed ${seed}: fleets of the start that stand after one year`).toBeGreaterThanOrEqual(25);
+  expect(standingYear1, `seed ${seed}: fleets of the start that stand after one year`).toBeGreaterThanOrEqual(Math.ceil(fleets.start / 10));
   process.stderr.write(`seed ${seed}: ${fleets.start} fleets at the start, ${fleets.start - fleets.gone - fleets.sailed - fleets.fought - fleets.carried - fleets.laid} at their cells with their ships after ten years, ${fleets.sailed} sailed (from bases lost, PLAN 4.4e; by the naval AI, PLAN 4.6c), ${fleets.fought} in sea battles, ${fleets.carried} carried troops (PLAN 4.5a), ${fleets.laid} laid up (PLAN 4.6e1), ${fleets.gone} gone with their nations
 `);
   // PLAN 3.12Rk: no march home waits out a war before an enemy's cell.
