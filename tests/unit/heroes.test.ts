@@ -6,6 +6,8 @@ import { Refusal } from '../../src/shared/commands';
 import { Domain, type World } from '../../src/sim/world';
 import { isMonthStart } from '../../src/shared/calendar';
 import { assets1938 } from '../helpers/earth';
+import { elementIndex } from '../../src/sim/systems/elements';
+import { HERO_RETURN_HOURS, heroHealth } from '../../src/sim/systems/heroes';
 
 // PLAN 7.184a1: heroes, a new-game option of the 1938 world. With it off the world is as before;
 // on, 14 heroes at the start (sea at the water of its nation's first naval base, land at its
@@ -120,5 +122,84 @@ describe('heroes (PLAN 7.184a1)', () => {
     expect(cut, 'formations disbanded in the month').toBeGreaterThan(0);
     expect(heroIds(w)).toEqual(heroes);
     for (const id of heroes) expect(w.rules!.templates[w.formations.cols.template[id]!]!.hero).toBe(true);
+  });
+});
+
+describe('heroes heal and come back (PLAN 7.184a2)', () => {
+  const quiet = (x: World): void => {
+    x.out.events.length = 0;
+    x.out.fires.length = 0;
+  };
+  const heroOf = (w: World, template: string): number => [...w.heroes].find(([, row]) => TEMPLATES_1938[w.heroRoster[row]!.template]!.id === template)?.[0] ?? 0;
+  const rowOf = (w: World, template: string): number => w.heroRoster.findIndex((r) => TEMPLATES_1938[r.template]!.id === template);
+  const hurt = (w: World, id: number, wound: number): void => {
+    w.elements.cols.wound[elementIndex(w).get(id)![0]!] = wound;
+  };
+
+  it('a hero at half its health, out of battle, heals 5 % a day: whole in 10 days, and still whole at 20', () => {
+    const sim = make('on');
+    const w = sim.world;
+    w.settings.aiEnabled = false;
+    const hood = heroOf(w, 'hero_hood');
+    hurt(w, hood, 0.5);
+    expect(heroHealth(w, hood)).toBe(0.5);
+    sim.step(24 * 5, quiet);
+    expect(w.formations.cols.engaged[hood]).toBe(0);
+    expect(heroHealth(w, hood)).toBeCloseTo(0.75, 9);
+    sim.step(24 * 15, quiet);
+    expect(heroHealth(w, hood)).toBe(1);
+  });
+
+  it('destroyed, a hero is back whole at its start 60 days later to the tick; save and load keep the day', () => {
+    const sim = make('on');
+    const w = sim.world;
+    const maus = heroOf(w, 'hero_maus');
+    const row = rowOf(w, 'hero_maus');
+    hurt(w, maus, 0.3);
+    sim.command({ kind: 'removeFormation', id: maus });
+    sim.step(1, quiet);
+    expect(heroOf(w, 'hero_maus')).toBe(0);
+    const due = w.heroReturn.get(row)!;
+    expect(due).toBe(w.tick - 1 + HERO_RETURN_HOURS);
+    // A copy by save and load comes back at the same tick.
+    const copy = make('off');
+    copy.load(sim.save());
+    expect(copy.world.heroReturn).toEqual(w.heroReturn);
+    while (w.tick < due) sim.step(1, quiet);
+    expect(heroOf(w, 'hero_maus'), 'not back before its hour').toBe(0);
+    sim.step(1, quiet);
+    const back = heroOf(w, 'hero_maus');
+    expect(back, 'back at its hour').not.toBe(0);
+    expect(w.heroReturn.has(row)).toBe(false);
+    expect(heroHealth(w, back)).toBe(1);
+    // Berlin held: at its start place.
+    expect([w.formations.cols.x[back], w.formations.cols.y[back]]).toEqual([w.heroRoster[row]!.x, w.heroRoster[row]!.y]);
+    while (copy.world.tick < w.tick) copy.step(1, quiet);
+    expect(copy.hash()).toBe(sim.hash());
+  });
+
+  it("a dead nation's heroes do not come back until it is revived", () => {
+    const sim = make('on');
+    const w = sim.world;
+    const ger = NATIONS_1938.findIndex((n) => n.tag === 'GER') + 1;
+    sim.command({ kind: 'collapseNation', nation: ger });
+    sim.step(1, quiet);
+    expect(w.nations.cols.living[ger]).toBe(0);
+    expect(heroOf(w, 'hero_maus')).toBe(0);
+    expect(heroOf(w, 'hero_bismarck')).toBe(0);
+    expect(w.heroReturn.has(rowOf(w, 'hero_maus'))).toBe(true);
+    sim.step(HERO_RETURN_HOURS + 24, quiet);
+    expect(heroOf(w, 'hero_maus'), 'none while Germany is dead').toBe(0);
+    expect(heroOf(w, 'hero_bismarck')).toBe(0);
+    // Revived (its cooldown waived): its heroes come back within the hour.
+    w.nations.cols.revivalAt[ger] = w.tick;
+    sim.command({ kind: 'reviveNation', nation: ger });
+    sim.step(2, quiet);
+    expect(w.nations.cols.living[ger]).toBe(1);
+    expect(heroOf(w, 'hero_maus'), 'the Maus with the revival').not.toBe(0);
+    expect(w.formations.cols.nation[heroOf(w, 'hero_maus')]).toBe(ger);
+    // Never two of a row.
+    const rows = [...w.heroes.values()];
+    expect(new Set(rows).size).toBe(rows.length);
   });
 });

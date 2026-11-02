@@ -67,7 +67,7 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
       state hash; never disbanded, laid up, folded or merged; no upkeep. AT: `tests/unit/heroes.test.ts`: option off,
       seed 99's pin unchanged and no hero; on, 14 at tick 0 (sea at the first base's water, land at the capital), save
       and load keep them; a month of every nation at −1,000 gold disbands and lays up no hero.
-    - [ ] 7.184a2 Healing and return (a hero's health is its one element's `1 − wound`: its men, `strength`, stay
+    - [x] 7.184a2 Healing and return (a hero's health is its one element's `1 − wound`: its men, `strength`, stay
       whole until it is lost, ADR-787): 5 % a day out of battle anywhere; destroyed, back whole 60 days later at its
       start place or its nation's capital / nearest naval base; none while the nation is dead; one alive. AT: the
       test's heal, return (to the tick), dead-nation and save/load-of-a-return-day cases.

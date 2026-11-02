@@ -5,12 +5,15 @@
  * placed by God.
  *
  * The roster (`World.heroRoster`) is the world's: each row a hero's nation, template and start
- * place (cells). `World.heroes` maps a hero's formation to its row. Both are state, saved while
- * there is one. A hero's formation is never disbanded, laid up, folded into another or refilled
- * by the economic AI, and its template has no upkeep.
+ * place (cells). `World.heroes` maps a hero's formation to its row, and `World.heroReturn` a row
+ * whose hero is gone to the hour it comes back. All three are state, saved while not empty. A
+ * hero's formation is never disbanded, laid up, folded into another or refilled by the economic
+ * AI, and its template has no upkeep.
  */
-import { equipFormation } from './elements';
-import type { World } from '../world';
+import { isDayStart } from '../../shared/calendar';
+import { portWater } from '../data/ports';
+import { Domain, type World } from '../world';
+import { cellX, elementIndex, equipFormation, wrapDx } from './elements';
 
 /** A hero of the roster: its nation, its template (index of the rules) and its start place (cells). */
 export interface HeroRow {
@@ -33,6 +36,7 @@ export function isHero(world: World, id: number): boolean {
 export function placeHeroes(world: World, roster: readonly HeroRow[]): number[] {
   world.heroRoster = roster.map((r) => ({ ...r }));
   world.heroes = new Map();
+  world.heroReturn = new Map();
   world.formations.reserve(world.formations.count + roster.length);
   const ids: number[] = [];
   roster.forEach((r, row) => ids.push(raiseHero(world, row, r.x, r.y)));
@@ -54,4 +58,96 @@ export function raiseHero(world: World, row: number, x: number, y: number): numb
   equipFormation(world, id, r.template); // sets strength from the element
   world.heroes.set(id, row);
   return id;
+}
+
+/** How long a hero is gone once destroyed, hours (PLAN 7.184a2: 60 days). */
+export const HERO_RETURN_HOURS = 60 * 24;
+/** What a hero out of battle heals in a day, of its health (`1 − wound` of its one element). */
+export const HERO_HEAL_PER_DAY = 0.05;
+
+/**
+ * A hero's formation destroyed (`destroyFormation`): its row comes back at the tick
+ * HERO_RETURN_HOURS on (`heroSystem`).
+ */
+export function heroLost(world: World, id: number): void {
+  const row = world.heroes.get(id);
+  if (row === undefined) return;
+  world.heroes.delete(id);
+  world.heroReturn.set(row, world.tick + HERO_RETURN_HOURS);
+}
+
+/** A hero's health, 0..1: its one element's `1 − wound`; 0 when it is gone. */
+export function heroHealth(world: World, id: number): number {
+  const list = elementIndex(world).get(id);
+  if (!world.heroes.has(id) || !list || list.length === 0) return 0;
+  const ec = world.elements.cols;
+  return ec.strength[list[0]!]! > 0 ? 1 - ec.wound[list[0]!]! : 0;
+}
+
+/**
+ * Where row `row`'s hero comes back, cells, or null while it cannot: its start place while its
+ * nation holds it (a sea hero's, the port it was raised at); else, on land, its nation's capital;
+ * at sea, the water of the naval base its nation holds nearest its start.
+ */
+function returnPlace(world: World, row: number): [number, number] | null {
+  const r = world.heroRoster[row]!;
+  const nc = world.nations.cols;
+  const { w, h, controller, terrain } = world.cells;
+  const sea = world.rules?.templates[r.template]?.domain === Domain.sea;
+  if (!sea) {
+    const cx = cellX(world, Math.floor(r.x));
+    const cy = Math.floor(r.y);
+    if (cx !== null && cy >= 0 && cy < h && controller[cy * w + cx] === r.nation) return [r.x, r.y];
+    return world.standPoint(nc.capitalX[r.nation]!, nc.capitalY[r.nation]!);
+  }
+  // At sea: the naval base by its start (the one it was raised at) while held, else the nearest held.
+  let best: [number, number] | null = null;
+  let bestD = Infinity;
+  for (const p of world.ports) {
+    if (p.navalBase < 1 || controller[p.cell] !== r.nation) continue;
+    // Squared (no root: the comparison is exact on every engine).
+    const dx = wrapDx(world, r.x, p.x);
+    const d = dx * dx + (p.y - r.y) * (p.y - r.y);
+    if (d >= bestD) continue;
+    const cell = portWater(p, terrain, w, h, world.portReach, world.settings.loopingMap);
+    const at = cell >= 0 ? world.seaPoint(cell) : null;
+    if (!at) continue;
+    bestD = d;
+    best = at;
+  }
+  return best;
+}
+
+/**
+ * The heroes' day (PLAN 7.184a2). Each day's start, a hero out of battle heals HERO_HEAL_PER_DAY
+ * of its health, a ship anywhere. Each hour, a row whose hero is gone comes back whole at its
+ * hour or after it (`HERO_RETURN_HOURS`), while its nation lives and has a place for it
+ * (`returnPlace`); a dead nation's waits for its revival. Never two of a row.
+ */
+export function heroSystem(world: World): void {
+  if (world.heroRoster.length === 0) return;
+  if (isDayStart(world.tick)) {
+    const ec = world.elements.cols;
+    const index = elementIndex(world);
+    for (const id of [...world.heroes.keys()].sort((a, b) => a - b)) {
+      if (world.formations.cols.engaged[id] === 1) continue;
+      const el = index.get(id)?.[0];
+      if (el === undefined || ec.wound[el]! <= 0) continue;
+      ec.wound[el] = Math.max(0, ec.wound[el]! - HERO_HEAL_PER_DAY);
+    }
+  }
+  if (world.heroReturn.size === 0) return;
+  for (const [row, at] of [...world.heroReturn].sort((a, b) => a[0] - b[0])) {
+    if (world.tick < at) continue;
+    const r = world.heroRoster[row]!;
+    if (world.nations.cols.living[r.nation] !== 1) continue;
+    if ([...world.heroes.values()].includes(row)) {
+      world.heroReturn.delete(row);
+      continue;
+    }
+    const place = returnPlace(world, row);
+    if (!place) continue;
+    world.heroReturn.delete(row);
+    raiseHero(world, row, place[0], place[1]);
+  }
 }

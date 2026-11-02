@@ -11,6 +11,7 @@ import { atan2, cos, sin, sqrt } from '../core/dmath';
 import { hash32 } from '../core/hash';
 import { SLOT_SPACING, slotGrid, slotPose } from '../core/pose';
 import { Domain, type World } from '../world';
+import { heroLost } from './heroes';
 
 /**
  * Where element `slot` of a formation at (`fx`, `fy`) stands: its slot in the block (`slotPose`);
@@ -752,8 +753,8 @@ export function destroyFormation(world: World, fid: number): void {
   world.station.delete(fid);
   world.playerOrders.delete(fid);
   world.farWait.delete(fid);
-  // A hero's mark goes with it: a formation given the id again is none (PLAN 7.184).
-  world.heroes.delete(fid);
+  // A hero's mark goes with it, and its return is set (PLAN 7.184): a formation given the id again is none.
+  heroLost(world, fid);
   // A wing's base goes with it; the wings a carrier's fleet carried are lost with it at the air
   // system's hour (PLAN 5.1d), and a formation given the id again carries none.
   world.wingBase.delete(fid);

@@ -442,6 +442,7 @@ class WorldCore implements Stateful {
       // The heroes (PLAN 7.184): [nation, template, x, y] a row; [formation, row] a hero alive. Only with the option.
       ...(w.heroRoster.length === 0 ? [] : [{ name: 'world.heroRoster', dtype: 'f64' as const, data: Float64Array.from(w.heroRoster.flatMap((r) => [r.nation, r.template, r.x, r.y])) }]),
       ...(w.heroes.size === 0 ? [] : [{ name: 'world.heroes', dtype: 'i32' as const, data: Int32Array.from([...w.heroes].sort((a, b) => a[0] - b[0]).flat()) }]),
+      ...(w.heroReturn.size === 0 ? [] : [{ name: 'world.heroReturn', dtype: 'f64' as const, data: Float64Array.from([...w.heroReturn].sort((a, b) => a[0] - b[0]).flat()) }]),
       ...(w.station.size === 0 ? [] : [{ name: 'world.station', dtype: 'f64' as const, data: Float64Array.from([...w.station].sort((a, b) => a[0] - b[0]).flatMap(([id, [x, y]]) => [id, x, y])) }]),
       ...(w.embarked.size === 0 ? [] : [{ name: 'world.embarked', dtype: 'f64' as const, data: Float64Array.from([...w.embarked].sort((a, b) => a[0] - b[0]).flatMap(([id, e]) => [id, e.fleet, e.land, e.water, e.target])) }]),
       // Sea control (PLAN 4.4a): [zones + 1, holders..., days...], only while a zone is held.
@@ -564,6 +565,9 @@ class WorldCore implements Stateful {
     w.heroes = new Map();
     const heroes = sections.find((s) => s.name === 'world.heroes')?.data as Int32Array | undefined;
     for (let at = 0; heroes && at < heroes.length; at += 2) w.heroes.set(heroes[at]!, heroes[at + 1]!);
+    w.heroReturn = new Map();
+    const back = sections.find((s) => s.name === 'world.heroReturn')?.data as Float64Array | undefined;
+    for (let at = 0; back && at < back.length; at += 2) w.heroReturn.set(back[at]!, back[at + 1]!);
     const stations = sections.find((s) => s.name === 'world.station')?.data as Float64Array | undefined;
     for (let at = 0; stations && at < stations.length; at += 3) w.station.set(stations[at]!, [stations[at + 1]!, stations[at + 2]!]);
     w.playerAi = (sections.find((s) => s.name === 'world.playerAi')?.data as Int32Array | undefined)?.[0] ?? PLAYER_AI_DEFAULT;
@@ -1328,6 +1332,8 @@ export class World {
    */
   heroRoster: HeroRow[] = [];
   heroes = new Map<number, number>();
+  /** A roster row whose hero is gone, to the tick it comes back from (PLAN 7.184a2). */
+  heroReturn = new Map<number, number>();
   /**
    * The player's AI assist (ADR-759): the layers of the AI (`AiLayer`) that act for the nation the
    * player controls. State, saved while not the default.

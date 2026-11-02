@@ -25438,3 +25438,16 @@ No rule changed and nothing on screen changed. One task came out of it.
 - **Tests extended for the heroes after the air:** `airTemplates`, `seaTemplates`, `breakdown` (the hero tanks break
   down as tanks; 14 sea types). The fold guard is a safeguard: a living hero is never hollow (its men are its crew).
 - **Next:** PLAN 7.184a2.
+
+## 2026-11-01 — PLAN 7.184a2: heroes heal and come back
+
+- **Built:** `heroSystem` (after `collapse`, before `stats`): at each day's start a hero not engaged heals
+  `HERO_HEAL_PER_DAY` 0.05 of its health (`1 − wound` of its element), a ship anywhere; `destroyFormation` sets the
+  row's return (`heroLost`, `World.heroReturn`, saved while not empty) at `HERO_RETURN_HOURS` (1,440) on; at that hour
+  or after, a row comes back whole while its nation lives and has a place: its start while held, else the capital
+  (land) or the water of the held naval base nearest its start (sea); never two of a row. No hero, no work: the pin
+  of seed 99 unchanged.
+- **AT (a2's part):** `heroes.test.ts` 8 of 8: Hood at half heals to 0.75 in 5 days and whole by 20; the Maus removed
+  is gone until its hour and back whole at Berlin the tick after, a saved-and-loaded copy the same hash; Germany
+  collapsed: no Maus or Bismarck 61 days on, the Maus back within two hours of the revival, one of a row.
+- **Next:** PLAN 7.184a3.
