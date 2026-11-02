@@ -25404,3 +25404,20 @@ No rule changed and nothing on screen changed. One task came out of it.
   hand, green). Seeds 5–7 drew e.g. Germany–Czechoslovakia–Romania and Nicaragua–El Salvador–Honduras pacts, and
   wars Denmark on Germany's pact, Poland on Lithuania, Brazil on Argentina (with its guarantor China).
 - **Next:** PLAN 7.5.
+
+## 2026-11-01 — PLAN 7.183: the camera follows any formation clicked (ADR-786)
+
+- **Built:** `MapView.pickedPoint` / `followPicked` and `PlayerControl.followPicked`: a click on a formation the
+  player cannot order (another nation's, or any with no nation played) follows it where it is drawn, land or sea,
+  until a pan, its panel closed (Escape, its button, a click on ground) or the formation gone (the point null).
+- **AT:** new e2e `followPicked1938` (seed 1938, no nation played): a German division at T1 (1,500 m/px) and T2
+  (150 m/px) and the British cruiser squadron at Gibraltar sent to Alexandria, at T1 and T2: after 48 ticks of the
+  march the centre within 2 px of the drawn place, the camera moved with it; a pan ends it (the camera unchanged the
+  next 24 ticks); Escape ends it. Red without the `game.tsx` change ("following after the click"). Evidence
+  `docs/evidence/7.183/`.
+- **Specs by hand:** `player1938`, `formationPanel1938`, `enemyClickPanel1938`, `airOrders1938`, `toBattle1938`
+  (19 of 19); `buildArmour1938`, `carrierDeck1938`, `fightSeen1938`, `fleetFight1938`, `formationClickPanel1938`,
+  `formationFight1938`, `hotkeys1938`, `playerActions1938`, `seamFight1938` green; `fightCamera1938` red once, green
+  alone (as at the reviews). `stackPick1938` red: the first click now brings the stack to the middle; it clicks the
+  stack where it is drawn once the camera settles (its check unchanged), green.
+- **Next:** PLAN 7.184a.

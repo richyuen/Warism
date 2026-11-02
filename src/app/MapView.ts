@@ -2274,6 +2274,27 @@ export class MapView {
     this.controller.follow(on ? () => this.followPoint() : null);
   }
 
+  /**
+   * Where the formation whose panel is open is drawn at `now` (PLAN 7.183; world cells, x near
+   * the camera's), as `followPoint` for one. Null with no panel open or the formation gone.
+   */
+  pickedPoint(now = performance.now()): [number, number] | null {
+    if (this.picked === 0) return null;
+    const i = this.formIds.indexOf(this.picked);
+    if (i < 0) return null;
+    const [x, y] = this.shownAt(i, this.tickProgress(now));
+    return [this.unwrapped(x, this.controller.cam.cx), y];
+  }
+
+  /**
+   * Has the camera follow the formation whose panel is open (`pickedPoint`), any nation's, land
+   * or sea (PLAN 7.183): until a pan, or its panel closed (Escape, its button, another click) or
+   * the formation gone, when the point is null and the follow ends by itself.
+   */
+  followPicked(): void {
+    this.controller.follow(() => this.pickedPoint());
+  }
+
   /** Whether a selection box can be drawn: the player plays a nation, and the game takes boxes. */
   private boxable(): boolean {
     return this.onBoxSelect !== null && this.selectionNation !== 0;

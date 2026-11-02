@@ -24,8 +24,26 @@ test('clicks on a stack of markers open each of its formations in turn', async (
   expect(stack, 'a stack on the front').not.toBeNull();
   const open = () => page.evaluate(() => window.__warsim!.hud.formation.value);
   const seen: number[] = [];
+  // The camera follows the formation opened (PLAN 7.183): each click is on the stack where it is
+  // drawn now, once the camera has brought it to the middle.
+  const where = (lead: number) =>
+    page.evaluate((lead) => {
+      const v = window.__warsim!.view!;
+      v.draw();
+      const r = v.markerRects.find((m) => m.members.includes(lead))!;
+      return { cx: r.x + r.w / 2, cy: r.y + 12, members: r.members };
+    }, lead);
+  const settled = () =>
+    page.evaluate(() => {
+      const v = window.__warsim!.view!;
+      const p = v.pickedPoint();
+      return p === null || Math.hypot(p[0] - v.controller.cam.cx, p[1] - v.controller.cam.cy) * v.controller.cam.scale < 0.5;
+    });
   for (let i = 0; i <= stack!.members.length; i++) {
-    await page.mouse.click(stack!.cx, stack!.cy);
+    await expect.poll(settled).toBe(true);
+    const at = await where(stack!.lead);
+    expect(new Set(at.members), 'the same stack').toEqual(new Set(stack!.members));
+    await page.mouse.click(at.cx, at.cy);
     await expect.poll(open).not.toBe(seen[seen.length - 1] ?? -1);
     seen.push(await open());
   }

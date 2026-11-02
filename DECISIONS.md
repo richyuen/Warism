@@ -167,6 +167,17 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-786 · 2026-11-01 · accepted (the user's request) — PLAN 7.183: the camera follows any formation clicked
+**Decision.** A click on a formation the player cannot order (another nation's, or any with no nation played) opens
+its panel as before and now has the camera follow it where it is drawn (`MapView.pickedPoint`, `followPicked`; the
+same `shownAt` as the selection's follow), land or sea. The follow ends with a pan, or when the point is gone: its
+panel closed (Escape, its button, a click on ground) or the formation gone. A click that is an order (the player's
+selection marched onto an enemy's formation) keeps the selection's follow.
+**Why.** The user asked for it: before, only the played nation's own selection was followed.
+**Consequences.** A click on a stack of T1 markers brings the stack to the middle, so the next click to open its next
+formation (ADR of PLAN 7.4f20) is where the stack now is: `stackPick1938` clicks the stack where it is drawn once
+the camera has settled (its check, each member opened in turn and the lead again, unchanged).
+
 ### ADR-785 · 2026-11-01 · accepted (the user's request and decision) — PLAN 7.182: the start's alliances, guarantees and wars drawn by the seed; puppets kept
 **Decision.** A new-game option "Alliances and wars" (`GameOptions.diplomacy`, `?diplo=random`, `opt-diplomacy`; i18n
 key `settings.diplomacy`), offered where the scenario starts with alliances or wars (`ScenarioInfo.diplomacy`: the

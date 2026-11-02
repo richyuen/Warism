@@ -33,14 +33,6 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.183 The camera follows any formation clicked, played or not (the user's request of 2026-11-01). Today a click
-  on another nation's formation, or on any with no nation played, opens its panel and marks it (`hud.selectFormation`,
-  `MapView.pickedFormation`) but the camera stays: `PlayerControl.click` follows only the played nation's own
-  (`followSelection`), and `followPoint` reads `selectedFormations` alone. Follow the picked formation where it is drawn
-  (`shownAt`) until a pan, Escape, its panel closed or the formation gone, as `followWing` does; a fleet too. AT: a new
-  e2e `tests/e2e/followPicked1938.spec.ts`: with no nation played, a German division and a British fleet clicked in
-  turn, the view's centre within 2 px of each one's drawn place after 48 ticks of its march, at T1 and T2; a pan ends
-  it (the centre stays put the next 24 ticks); the specs of the player's own selection (`select*`, `follow*`) green.
 - [ ] 7.184 Heroes: a new-game option (off by default) giving each of 7 great powers of 1938 a named land and sea
   unit, much stronger and drawn bigger than any other, that heals and comes back when destroyed (the user's request of
   2026-11-01; the user's choices: heal and return, 2–3 × a normal formation, land and sea only, no China). Parts:
@@ -485,3 +477,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.180 Planes in the ball look read as units (map visuals 6, needs 7; critic run 22's "Fix" and […]
 - [x] 7.181 The world view's frame rate (from PLAN 7.5's DONE-condition runs on fbc9fbc3; in budget, filed so it is […]
 - [x] 7.182 A new-game option to draw the 1938 start's alliances, guarantees and wars by the seed (the user's request, […]
+- [x] 7.183 The camera follows any formation clicked, played or not (the user's request of 2026-11-01). Today a click […]

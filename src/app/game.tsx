@@ -107,7 +107,12 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       const own = n === 0 || armed ? 0 : drawn !== 0 ? (view.formationNation(drawn) === n ? drawn : 0) : view.formationAt(sx, sy, n);
       const formation = own !== 0 ? own : drawn;
       hud.selectFormation(formation);
-      return p.click(x, y, sx, sy, shift, own) || formation !== 0;
+      if (p.click(x, y, sx, sy, shift, own)) return true;
+      // Another nation's formation, or any with no nation played (PLAN 7.183): the camera follows
+      // it where it is drawn, as it follows the player's selection.
+      if (formation === 0) return false;
+      p.followPicked();
+      return true;
     };
     // A right-click on another nation's ground opens its menu for the player (declare war, peace,
     // alliance); a press of any button on the map or a wheel turn closes it.

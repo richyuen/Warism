@@ -12,7 +12,8 @@
  * A click that selects a formation has the camera follow the selection (`MapView.followSelection`)
  * until the user pans, or the selection is empty. A box (a Shift-drag, a long press's drag:
  * `boxSelect`) adds its formations, Ctrl+Shift takes them out, and Ctrl+A selects all
- * (`selectAll`); both leave the camera where it is.
+ * (`selectAll`); both leave the camera where it is. A click on a formation the player cannot
+ * order has the camera follow it while its panel is open (`followPicked`, PLAN 7.183).
  *
  * A right-click on another nation's ground opens its menu (`menu`): declare war on it, or offer
  * peace in the war with it, and propose an alliance; the same commands as the Actions tab's. The
@@ -228,6 +229,16 @@ export class PlayerControl {
       const w = this.hud.stats.peek()?.wings.find((x) => x.id === wing);
       return w ? [w.x, w.y] : null;
     });
+    this.view.requestDraw();
+  }
+
+  /**
+   * A click on a formation that is not the player's to order (another nation's, or any with no
+   * nation played; PLAN 7.183): the camera follows it (`MapView.followPicked`) in place of a wing.
+   */
+  followPicked(): void {
+    this.followedWing.value = null;
+    this.view.followPicked();
     this.view.requestDraw();
   }
 

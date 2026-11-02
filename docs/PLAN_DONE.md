@@ -17147,3 +17147,26 @@ Of 7.176 (open in PLAN.md):
   unity, guarantees and wars; new members; independents only, one alliance each, led by the largest; wars between
   land neighbours, no allies on opposite sides; puppets unchanged; same per seed) and `tests/e2e/gameOptions1938.spec.ts`
   (`opt-diplomacy` from the settings panel, `diplo=random` in the URL, back to the scenario's).
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.183 The camera follows any formation clicked, played or not (the user's request of 2026-11-01). Today a click
+  on another nation's formation, or on any with no nation played, opens its panel and marks it (`hud.selectFormation`,
+  `MapView.pickedFormation`) but the camera stays: `PlayerControl.click` follows only the played nation's own
+  (`followSelection`), and `followPoint` reads `selectedFormations` alone. Follow the picked formation where it is drawn
+  (`shownAt`) until a pan, Escape, its panel closed or the formation gone, as `followWing` does; a fleet too. AT: a new
+  e2e `tests/e2e/followPicked1938.spec.ts`: with no nation played, a German division and a British fleet clicked in
+  turn, the view's centre within 2 px of each one's drawn place after 48 ticks of its march, at T1 and T2; a pan ends
+  it (the centre stays put the next 24 ticks); the specs of the player's own selection (`select*`, `follow*`) green.
