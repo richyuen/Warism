@@ -5,6 +5,14 @@ entries are kept and marked **RESOLVED** with the date and fix.
 
 ## Open
 
+### PLAN 7.184b3: bench G's T0 with heroes on at 309 fps, bar 311 (ADR-790, waits on the user)
+- **The bar:** bench G with `heroes=on`: T0 over 311 fps and p95 under 6.9 ms.
+- **What moved:** the hero counters drawn once and copied: on/off 0.95 → 0.977 (pairs on one build,
+  `docs/evidence/7.184b/b3-bench.txt`); on 307.0, 308.7, 311.9 fps, p95 4.8 ms; off 314–318.
+- **Left:** 2.3 % against heroes off; heroes off itself reads 316 here (the bar is 0.9 × 345 of an earlier day).
+  ADR-790: (a) tick with the bar ≥ 0.97 × heroes off (recommended); (b) keep 311, a numbered task for the last 2 %;
+  (c) close not done.
+
 ### RESOLVED 2026-10-29 (the user's decision: a budget of 6.5 ms, 7.158 closed not done, ADR-757) · PLAN 7.158: the plans of a shared front made cheaper; the AT missed after a pure speed-up (ADR-756, waits on the user)
 - **The bar:** on 2539 y28's month-1 save, the operational AI ≤ 0.75 × HEAD's, paired; then pinned ≤ 5.5 ms on 1461 y29,
   2539 y28, 1307 y30, 1468 y25 and y26.

@@ -140,7 +140,8 @@ export function wreckOf(cls: string): Wreck {
 
 /**
  * Marker symbol of a template (PLAN 2.1): by its dominant element type. Infantry in lorries and
- * infantry in half-tracks (PLAN 3.1c) are both the motorised symbol.
+ * infantry in half-tracks (PLAN 3.1c) are both the motorised symbol. A land hero (PLAN 7.184b3, a
+ * `hero_` unit type: each is a super-heavy tank) is armour; a sea hero is a fleet's, as any.
  */
 export function symbolOf(t: { id: string; elements: readonly { type: string; count: number }[] }): UnitSymbol {
   if (t.id.startsWith('garrison')) return 'garrison';
@@ -151,7 +152,7 @@ export function symbolOf(t: { id: string; elements: readonly { type: string; cou
   let all = 0;
   for (const e of t.elements) {
     all += e.count;
-    if (e.type.startsWith('tank')) tanks += e.count;
+    if (e.type.startsWith('tank') || e.type.startsWith('hero_')) tanks += e.count;
     else if (e.type.endsWith('motorised') || e.type.endsWith('mechanised')) motor += e.count;
     else if (e.type === 'cavalry') horse += e.count;
   }

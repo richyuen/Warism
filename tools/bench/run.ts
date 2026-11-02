@@ -8,7 +8,7 @@ import { spawn, execSync, type ChildProcess } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import type {} from '../../src/app/bench/benchApi';
-import { FRAME_CPU_MS, gameBench, T0_FPS, T0_GPU_MS, T2_FPS, T2_GPU_MS, T2_PROXIES, type Setting } from './game';
+import { FRAME_CPU_MS, gameBench, HEROES, T0_FPS, T0_GPU_MS, T2_FPS, T2_GPU_MS, T2_PROXIES, type Setting } from './game';
 
 const root = path.resolve(import.meta.dirname, '../..');
 const outDir = path.join(root, 'docs/bench');
@@ -150,6 +150,7 @@ async function runGame(): Promise<void> {
   const record = {
     bench: 'G',
     date: new Date().toISOString(),
+    heroes: HEROES,
     budgets: { t0Fps: T0_FPS, t2Fps: T2_FPS, t2Proxies: T2_PROXIES, specT0GpuMs: T0_GPU_MS, specT2GpuMs: T2_GPU_MS, specFrameCpuMs: FRAME_CPU_MS, judgedBy: GAME_SETTINGS.filter((s) => s.judged).map((s) => s.name) },
     pass: judged.length > 0 && judged.every((c) => c.pass === true),
     settings,

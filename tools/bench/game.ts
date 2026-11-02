@@ -196,9 +196,12 @@ function judge(m: Measured, budgetFps: number, judged: boolean, ok = true): bool
   return judged ? ok && m.fps >= budgetFps : null;
 }
 
+/** `--heroes` (PLAN 7.184b3): the world with its 14 heroes (`?heroes=on`). */
+export const HEROES = process.argv.includes('--heroes');
+
 async function openGame(page: Page): Promise<void> {
   // Paused at first: the T2 stage is laid out before a tick runs.
-  await page.goto('/?scenario=1938&seed=1938&paused=1');
+  await page.goto(`/?scenario=1938&seed=1938&paused=1${HEROES ? '&heroes=on' : ''}`);
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.sim.mapLayers !== null, null, { timeout: 120_000 });
 }
 

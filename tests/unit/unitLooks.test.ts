@@ -105,5 +105,7 @@ describe('symbolOf', () => {
     // PLAN 3.1c: infantry in half-tracks is not infantry on foot (the mechanised division had the rifle cross).
     expect(symbol('mech_div')).toBe('motorised');
     for (const id of ['panzer_div_2', 'heavy_panzer_div', 'mbt_div']) expect(symbol(id), id).toBe('armour');
+    // PLAN 7.184b3: a land hero is a super-heavy tank (the O-I had the rifle cross).
+    for (const id of ['hero_o_i', 'hero_t28', 'hero_t42', 'hero_maus', 'hero_tog2', 'hero_char2c', 'hero_p100']) expect(symbolOf({ id, elements: [{ type: id, count: 1 }] }), id).toBe('armour');
   });
 });

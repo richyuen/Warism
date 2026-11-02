@@ -10,7 +10,7 @@ import { formationPips, type Pips } from '../render/units/pips';
 import { AT_REST, drawMarkers, drawOrderArrows, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, type StackItem } from '../render/units/markerStacks';
-import { CounterLayer, counterNation, type CounterSource } from '../render/units/counters';
+import { CounterLayer, counterNation, type CounterSource, type HeroCounter } from '../render/units/counters';
 import { drawSeaBattles } from '../render/units/seaBattles';
 import { FlagAtlas, NO_FLAG_SLOT } from '../render/units/flagAtlas';
 import { BallState, HERO_BIT, HERO_SCALE, HURT_SHIFT, hurtLevel } from '../render/units/ballShader';
@@ -1921,8 +1921,14 @@ export class MapView {
     const hex = (id: number): string => `#${(this.ownColor.get(id) ?? 0x888888).toString(16).padStart(6, '0')}`;
     const flagOf = (n: number): CanvasImageSource | null => this.flags.canvasOf(n);
     const src: CounterSource[] = [];
+    // A hero is a counter of its own, larger, with its name (PLAN 7.184b3): not in its nation's.
+    const heroes: HeroCounter[] = [];
     // A fleet is a counter of its own, drawn as a navy's (PLAN 4.10a).
-    for (let i = 0; i < this.formIds.length; i++) src.push({ x: this.formX[i]!, y: this.formY[i]!, nation: counterNation(this.formNation[i]!, this.templates[this.formTemplate[i]!]?.domain === 1), strength: this.formStrength[i]! });
+    for (let i = 0; i < this.formIds.length; i++) {
+      const naval = this.templates[this.formTemplate[i]!]?.domain === 1;
+      if (this.heroAt(i)) heroes.push({ id: this.formIds[i]!, nation: this.formNation[i]!, naval, x: this.formX[i]!, y: this.formY[i]!, name: this.formationName(this.formIds[i]!, this.formTemplate[i]!) });
+      else src.push({ x: this.formX[i]!, y: this.formY[i]!, nation: counterNation(this.formNation[i]!, naval), strength: this.formStrength[i]! });
+    }
     const vw = this.canvas.clientWidth;
     const vh = this.canvas.clientHeight;
     // The sorties in flight (PLAN 5.7a), at every tier (PLAN 5.9), where they are at this frame's time: under
@@ -1939,7 +1945,7 @@ export class MapView {
     // The air's fights, bombs and flak (PLAN 5.7b), with the sorties; at T3 a strike's bombs on
     // the men it hit, its formation's drawn elements (PLAN 5.9).
     this.airFx.draw(ctx, cam, this.geo, vw, vh, now, airFxSize(cam.scale, this.unitScale), this.shares.individuals, (f) => this.elementPlaces(f));
-    this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls);
+    this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls, heroes);
     // The sea battles going on (PLAN 4.10b), at T0 to T2: gone with the figures of T3.
     this.seaMarks = drawSeaBattles(ctx, this.seas, cam, this.geo, vw, vh, 1 - this.shares.individuals, this.unitScale);
     if (share * Math.max(this.morph.box, this.morph.bar) <= 0.01) {
@@ -1960,7 +1966,9 @@ export class MapView {
       // At its copy nearest the camera (PLAN 7.4f43): markers either side of the seam stand side by
       // side on the screen, a map's width apart in its cells.
       const fx = this.geo.wrapX ? this.formX[i]! + w * Math.round((cam.cx - this.formX[i]!) / w) : this.formX[i]!;
-      items.push({ id: this.formIds[i]!, nation: this.formNation[i]!, x: fx * cam.scale, y: this.formY[i]! * cam.scale, strength: this.formStrength[i]!, generation: this.formGen[i]! });
+      // A hero is never in a stack (PLAN 7.184b3): its marker, larger, stands alone.
+      const hero = this.heroAt(i);
+      if (!hero) items.push({ id: this.formIds[i]!, nation: this.formNation[i]!, x: fx * cam.scale, y: this.formY[i]! * cam.scale, strength: this.formStrength[i]!, generation: this.formGen[i]! });
       const t = this.templates[this.formTemplate[i]!];
       const moving = (this.formFlags[i]! & FormationFlag.moving) !== 0 && orderShown(this.formIds[i]!, this.formNation[i]!, viewer);
       if (moving) this.orderLineIds.push(this.formIds[i]!);
@@ -1979,6 +1987,7 @@ export class MapView {
         way: moving && this.formWayStart[i + 1]! - this.formWayStart[i]! >= 4 ? this.formWay.subarray(this.formWayStart[i]!, this.formWayStart[i + 1]!) : null,
         pips: this.pipsOf.get(this.formIds[i]!) ?? null,
         pipsIn: this.pipStates.value(this.formIds[i]!, this.pipsOf.has(this.formIds[i]!)),
+        hero,
       });
     }
     this.pipStates.end();

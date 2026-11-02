@@ -1,0 +1,27 @@
+Bench G GPU setting, T0 (world) and T2, alternating heroes off/on on one build (.cache/probe/gpuT0.ts, gameBench's GPU case).
+Hero counters painted each frame:
+RESULT heroes=false T0 318.1 fps p95 4.8 ms
+RESULT heroes=false T2 172.5 fps p95 9.1 ms
+RESULT heroes=true T0 299.2 fps p95 5.2 ms
+RESULT heroes=true T2 172.4 fps p95 9.2 ms
+RESULT heroes=false T0 312.1 fps p95 4.8 ms
+RESULT heroes=false T2 172.1 fps p95 9.1 ms
+RESULT heroes=true T0 301.6 fps p95 5.4 ms
+RESULT heroes=true T2 173.1 fps p95 8.9 ms
+RESULT heroes=false T0 311.9 fps p95 4.8 ms
+RESULT heroes=false T2 167.5 fps p95 9.2 ms
+RESULT heroes=true T0 294.9 fps p95 5.0 ms
+RESULT heroes=true T2 168.7 fps p95 9.2 ms
+Hero counters drawn once and copied (heroPictures):
+RESULT heroes=false T0 317.3 fps p95 4.7 ms
+RESULT heroes=false T2 174.2 fps p95 8.9 ms
+RESULT heroes=true T0 307.0 fps p95 4.8 ms
+RESULT heroes=true T2 170.8 fps p95 9.2 ms
+RESULT heroes=false T0 314.1 fps p95 4.7 ms
+RESULT heroes=false T2 173.9 fps p95 9.0 ms
+RESULT heroes=true T0 308.7 fps p95 4.8 ms
+RESULT heroes=true T2 175.1 fps p95 8.9 ms
+RESULT heroes=false T0 318.2 fps p95 4.9 ms
+RESULT heroes=false T2 171.8 fps p95 9.2 ms
+RESULT heroes=true T0 311.9 fps p95 4.8 ms
+RESULT heroes=true T2 172.5 fps p95 9.0 ms

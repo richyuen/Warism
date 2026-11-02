@@ -13,6 +13,7 @@
  */
 import { progress, running } from '../timing';
 import { Ball2dCache, drawBall2dCached } from './ball2d';
+import { HERO_SCALE } from './ballShader';
 import { strengthText } from './markers';
 import { worldToScreen, itemOffsets, type Camera, type MapGeometry } from '../camera';
 
@@ -73,6 +74,18 @@ export interface DrawnCounter {
   y: number;
   w: number;
   h: number;
+  /** A hero's own counter (PLAN 7.184b3): its formation. */
+  hero?: number;
+}
+
+/** A hero at T0 (PLAN 7.184b3): its own counter, HERO_SCALE × a nation's, with its name. */
+export interface HeroCounter {
+  id: number;
+  nation: number;
+  naval: boolean;
+  x: number;
+  y: number;
+  name: string;
 }
 
 export const CLUSTER_PX = 64;
@@ -257,6 +270,11 @@ export class CounterLayer {
    */
   /** The ball look's chips, drawn once each (PLAN 7.181). */
   private readonly ballCache = new Ball2dCache();
+  /**
+   * The heroes' counters as pictures (PLAN 7.184b3), each drawn once at its device scale and copied: painted
+   * anew each frame, the 14 boxes at twice the size cost bench G's T0 5 % of its frames (ADR-789).
+   */
+  private readonly heroPictures = new Map<string, { flag: CanvasImageSource | null; canvas: HTMLCanvasElement; pad: number }>();
   private hold = new Set<string>();
   /** The zoom (px per cell) of the frame that left `hold`. */
   private holdScale: number | null = null;
@@ -428,6 +446,8 @@ export class CounterLayer {
     size = 1,
     /** The ball look (PLAN 7.174f): the flag chip a countryball. */
     balls = false,
+    /** The heroes (PLAN 7.184b3), not in `src`: each its own counter, never folded, above the others. */
+    heroes: readonly HeroCounter[] = [],
   ): void {
     this.drawn = [];
     this.boxes = [];
@@ -464,46 +484,142 @@ export class CounterLayer {
         if (sx - (w / 2) * size > vw || sy - (h / 2) * size > vh || sx + (w / 2) * size < 0 || sy + (h / 2) * size < 0) continue;
         box ??= [sx + (x - sx) * size, sy + (y - sy) * size];
         this.boxes.push({ x: sx + (x - sx) * size, y: sy + (y - sy) * size, w: w * size, h: h * size, alpha: a, own: it.alpha });
-        ctx.save();
-        ctx.globalAlpha = a;
-        if (size !== 1) {
-          ctx.translate(sx, sy);
-          ctx.scale(size, size);
-          ctx.translate(-sx, -sy);
-        }
-        // A navy's counter (PLAN 4.10a): a sea-blue box and frame with a hull under its strength.
-        ctx.fillStyle = naval ? 'rgba(14, 38, 72, 0.9)' : 'rgba(16, 18, 24, 0.85)';
-        ctx.fillRect(x, y, w, h);
-        const flag = flagOf(nation);
-        if (!balls) {
-          ctx.fillStyle = colorOf(nation);
-          ctx.fillRect(x + 1, y + 1, 12, h - 2);
-          if (flag) ctx.drawImage(flag, x + 2, y + 3, 10, 8);
-        }
-        ctx.strokeStyle = naval ? '#8ec5ff' : 'rgba(0, 0, 0, 0.9)';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
-        // In the ball look the chip is a countryball over the box's left end (a fleet's hull is the box's own).
-        if (balls) drawBall2dCached(ctx, this.ballCache, x + 7, y + h / 2, COUNTER_BALL_R, { flag, tint: colorOf(nation), look: 1, prop: 'none' });
-        if (naval) {
-          ctx.fillStyle = '#8ec5ff';
-          ctx.beginPath();
-          ctx.moveTo(x + 14, y + h - 4);
-          ctx.lineTo(x + w - 2, y + h - 4);
-          ctx.lineTo(x + w - 5, y + h - 2);
-          ctx.lineTo(x + 16, y + h - 2);
-          ctx.closePath();
-          ctx.fill();
-        }
-        ctx.fillStyle = naval ? '#d6ecff' : '#ffe28a';
-        ctx.fillText(text, x + 15, y + h / 2 + (naval ? -0.5 : 0.5));
-        if (it.others > 0) {
-          ctx.fillStyle = '#b4bdcb';
-          ctx.fillText(`+${it.others}`, x + 15 + widthOf(text) + BADGE_GAP, y + h / 2 + 0.5);
-        }
-        ctx.restore();
+        this.paint(ctx, sx, sy, x, y, w, h, size, a, naval, nation, text, it.others, widthOf, colorOf, flagOf, balls);
       }
       if (box) this.drawn.push({ key: it.key, nation, naval, wx: it.x, wy: it.y, alpha: a, strength: it.strength, text, others: it.others, folded: it.folded, x: box[0], y: box[1], w: w * size, h: h * size });
+    }
+    // The heroes (PLAN 7.184b3): each its own counter about its place, HERO_SCALE × the size, its name for
+    // its strength; never folded into its nation's, and above them. One that would cover another hero's
+    // (Japan's two, at Yokosuka and Tokyo) steps down below it, as many times as it takes.
+    const hs = size * HERO_SCALE;
+    if (alpha > 0.01) {
+      const taken: [number, number, number, number][] = [];
+      const clear = (x: number, y: number, w: number, hh: number): boolean => taken.every(([tx, ty, tw, th]) => x >= tx + tw || x + w <= tx || y >= ty + th || y + hh <= ty);
+      for (const hero of heroes) {
+        const w = widthOf(hero.name) + 18;
+        let box: [number, number] | null = null;
+        for (const off of offs) {
+          const [sx, sy0] = worldToScreen(cam, hero.x + off, hero.y, vw, vh);
+          let sy = sy0;
+          for (let k = 0; k < heroes.length && !clear(sx - (w / 2) * hs, sy - (h / 2) * hs, w * hs, h * hs); k++) sy += (h + 2) * hs;
+          taken.push([sx - (w / 2) * hs, sy - (h / 2) * hs, w * hs, h * hs]);
+          const x = Math.round(sx - w / 2);
+          const y = Math.round(sy - h / 2);
+          if (sx - (w / 2) * hs > vw || sy - (h / 2) * hs > vh || sx + (w / 2) * hs < 0 || sy + (h / 2) * hs < 0) continue;
+          box ??= [sx + (x - sx) * hs, sy + (y - sy) * hs];
+          this.boxes.push({ x: sx + (x - sx) * hs, y: sy + (y - sy) * hs, w: w * hs, h: h * hs, alpha, own: 1 });
+          this.paintHero(ctx, sx + (x - sx) * hs, sy + (y - sy) * hs, w, h, hs, alpha, hero, widthOf, colorOf, flagOf, balls);
+        }
+        if (box) this.drawn.push({ key: `hero:${hero.id}`, nation: hero.nation, naval: hero.naval, wx: hero.x, wy: hero.y, alpha, strength: 0, text: hero.name, others: 0, folded: false, x: box[0], y: box[1], w: w * hs, h: h * hs, hero: hero.id });
+      }
+    }
+    ctx.restore();
+  }
+
+  /** A hero's counter, its box's corner at (bx, by) CSS px and `size`, from its picture (`heroPictures`). */
+  private paintHero(
+    ctx: CanvasRenderingContext2D,
+    bx: number,
+    by: number,
+    w: number,
+    h: number,
+    size: number,
+    alpha: number,
+    hero: HeroCounter,
+    widthOf: (text: string) => number,
+    colorOf: (nation: number) => string,
+    flagOf: (nation: number) => CanvasImageSource | null,
+    balls: boolean,
+  ): void {
+    const m = ctx.getTransform();
+    const flag = flagOf(hero.nation);
+    const tint = colorOf(hero.nation);
+    if (typeof document === 'undefined' || m.b !== 0 || m.c !== 0 || m.a <= 0 || m.a !== m.d) {
+      this.paint(ctx, bx, by, bx, by, w, h, size, alpha, hero.naval, hero.nation, hero.name, 0, widthOf, colorOf, flagOf, balls);
+      return;
+    }
+    const k = m.a * size;
+    const key = `${hero.id}|${hero.name}|${hero.naval ? 1 : 0}|${tint}|${balls ? 1 : 0}|${k}`;
+    let pic = this.heroPictures.get(key);
+    if (!pic || pic.flag !== flag) {
+      // The ball overhangs the box's left end by a px or two (COUNTER_BALL_R about its chip).
+      const pad = 3;
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.ceil((w + 2 * pad) * k);
+      canvas.height = Math.ceil((h + 2 * pad) * k);
+      const g = canvas.getContext('2d')!;
+      g.setTransform(k, 0, 0, k, pad * k, pad * k);
+      g.imageSmoothingEnabled = false;
+      g.font = ctx.font;
+      g.textAlign = 'left';
+      g.textBaseline = 'middle';
+      this.paint(g, 0, 0, 0, 0, w, h, 1, 1, hero.naval, hero.nation, hero.name, 0, widthOf, colorOf, flagOf, balls);
+      if (this.heroPictures.size > 256) this.heroPictures.clear();
+      this.heroPictures.set(key, (pic = { flag, canvas, pad }));
+    }
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(pic.canvas, Math.round(m.a * bx + m.e - pic.pad * k), Math.round(m.d * by + m.f - pic.pad * k));
+    ctx.restore();
+  }
+
+  /** One counter's box, about (sx, sy) at `size`: its flag chip (or ball), frame, a navy's hull, its text and "+n". */
+  private paint(
+    ctx: CanvasRenderingContext2D,
+    sx: number,
+    sy: number,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    size: number,
+    a: number,
+    naval: boolean,
+    nation: number,
+    text: string,
+    others: number,
+    widthOf: (text: string) => number,
+    colorOf: (nation: number) => string,
+    flagOf: (nation: number) => CanvasImageSource | null,
+    balls: boolean,
+  ): void {
+    ctx.save();
+    ctx.globalAlpha = a;
+    if (size !== 1) {
+      ctx.translate(sx, sy);
+      ctx.scale(size, size);
+      ctx.translate(-sx, -sy);
+    }
+    // A navy's counter (PLAN 4.10a): a sea-blue box and frame with a hull under its strength.
+    ctx.fillStyle = naval ? 'rgba(14, 38, 72, 0.9)' : 'rgba(16, 18, 24, 0.85)';
+    ctx.fillRect(x, y, w, h);
+    const flag = flagOf(nation);
+    if (!balls) {
+      ctx.fillStyle = colorOf(nation);
+      ctx.fillRect(x + 1, y + 1, 12, h - 2);
+      if (flag) ctx.drawImage(flag, x + 2, y + 3, 10, 8);
+    }
+    ctx.strokeStyle = naval ? '#8ec5ff' : 'rgba(0, 0, 0, 0.9)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+    // In the ball look the chip is a countryball over the box's left end (a fleet's hull is the box's own).
+    if (balls) drawBall2dCached(ctx, this.ballCache, x + 7, y + h / 2, COUNTER_BALL_R, { flag, tint: colorOf(nation), look: 1, prop: 'none' });
+    if (naval) {
+      ctx.fillStyle = '#8ec5ff';
+      ctx.beginPath();
+      ctx.moveTo(x + 14, y + h - 4);
+      ctx.lineTo(x + w - 2, y + h - 4);
+      ctx.lineTo(x + w - 5, y + h - 2);
+      ctx.lineTo(x + 16, y + h - 2);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.fillStyle = naval ? '#d6ecff' : '#ffe28a';
+    ctx.fillText(text, x + 15, y + h / 2 + (naval ? -0.5 : 0.5));
+    if (others > 0) {
+      ctx.fillStyle = '#b4bdcb';
+      ctx.fillText(`+${others}`, x + 15 + widthOf(text) + BADGE_GAP, y + h / 2 + 0.5);
     }
     ctx.restore();
   }

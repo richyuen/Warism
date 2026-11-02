@@ -25485,3 +25485,19 @@ No rule changed and nothing on screen changed. One task came out of it.
   were clusters, hence the draw alone.
 - **Specs by hand:** `countryballs1938` (7 of 7), `armourT21938`, `closeZoom1938` (4 of 4) green.
 - **Next:** PLAN 7.184b3.
+
+## 2026-11-01 — PLAN 7.184b3: heroes' T0 counters and T1 markers (ADR-789); bench G's bar missed (ADR-790, BLOCKERS)
+
+- **Built:** `CounterLayer.draw`'s `heroes`: a hero its own counter, 2 ×, its name, not folded, above, stepping clear
+  of another hero's; drawn once into a picture and copied (`heroPictures`). `MarkerInput.hero`: 2 × marker, out of the
+  stacks, drawn last. `symbolOf`: a land hero is armour (the O-I had the rifle cross; `unitLooks.test.ts`). Bench G
+  `--heroes`.
+- **AT (`heroes1938`'s third test, by hand green; `b3-sizes.txt`, `b3-*.png`):** T0 (5,000 m/px) counter height 28
+  against 14, T1 (1,000 m/px) marker 52 × 82 against 26 × 41, Yamato and the Maus, both looks; the counter reads the
+  name; the marker stands for itself alone.
+- **Bench G (GPU, alternating pairs, one build):** painted each frame: off 318.1/312.1/311.9, on 299.2/301.6/294.9;
+  cached: off 317.3/314.1/318.2, on 307.0/308.7/311.9 fps, p95 4.8 ms. Bar 311 missed by 0.6 % on the mean: BLOCKERS,
+  ADR-790 (the user's). T2 unchanged (168–175 both).
+- **Specs by hand:** `counters1938`, `countersRest1938`, `markerStacks1938`, `markers1938`, `navalCounter1938`,
+  `retreatMarker1938`, `stackBlocks1938`, `stackPick1938`, `labels1938`, `countryballs1938`: 21 of 21 green.
+- **Next:** PLAN 7.184c (7.184b3 open on ADR-790).

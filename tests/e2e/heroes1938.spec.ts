@@ -234,3 +234,59 @@ test('PLAN 7.184b2: a hero is drawn twice its kind at T2 and T3, Classic and Cou
   writeFileSync(path.join(EVIDENCE, 'b2-sizes.txt'), `${lines.join('\n')}\n`);
   expect(fails, 'heroes not 1.9–2.1 × their kind').toEqual([]);
 });
+
+test('PLAN 7.184b3: a hero is its own counter at T0 and its own marker at T1, twice its nation’s, both looks', async ({ page }) => {
+  test.setTimeout(240_000);
+  await openWithHeroes(page);
+  const lines: string[] = [];
+  const fails: string[] = [];
+  const check = (line: string, ratios: number[]): void => {
+    lines.push(line);
+    if (!ratios.every((r) => r >= 1.9 && r <= 2.1)) fails.push(line);
+  };
+  for (const look of ['classic', 'balls'] as const) {
+    await page.evaluate((look) => window.__warsim!.settings.setUnitLook(look), look);
+    for (const name of ['Yamato', 'Maus']) {
+      const id = await heroId(page, name);
+      // T0: the counters as the layer drew them; the hero's box against its nation's others of its kind (a
+      // navy's for Yamato), by height (a counter's width follows its text).
+      await lookAt(page, id, 5000);
+      await page.waitForFunction((id) => {
+        const v = window.__warsim!.view!;
+        return v.subscription?.tier === 0 && v.markerOpacity < 0.01 && v.counters.drawn.some((d) => d.hero === id && d.alpha > 0.99);
+      }, id, { timeout: 30_000 });
+      await page.waitForTimeout(800);
+      const t0 = await page.evaluate((id) => {
+        const v = window.__warsim!.view!;
+        const hero = v.counters.drawn.find((d) => d.hero === id)!;
+        const own = v.counters.drawn.filter((d) => d.hero === undefined && d.nation === hero.nation && d.naval === hero.naval && d.alpha > 0.99);
+        return { hero: { w: hero.w, h: hero.h, text: hero.text }, own: own.map((d) => d.h), heroes: v.counters.drawn.filter((d) => d.hero !== undefined).length };
+      }, id);
+      expect(t0.own.length, `${name}: its nation's other counters of its kind in the view`).toBeGreaterThan(0);
+      expect(t0.hero.text, `${name}'s counter reads its name`).toBe(name);
+      check(`${look} T0 5,000 m/px ${name}: ${t0.hero.w.toFixed(1)} × ${t0.hero.h.toFixed(1)} px against heights ${[...new Set(t0.own.map((h) => h.toFixed(1)))].join(', ')}`, t0.own.map((h) => t0.hero.h / h));
+      await page.screenshot({ path: path.join(EVIDENCE, `b3-${look}-t0-${name.toLowerCase()}.png`), clip: { x: 500, y: 250, width: 400, height: 300 } });
+      // T1: the markers as drawn; the hero's alone (never in a stack), against each other of its nation.
+      await lookAt(page, id, 1000);
+      await page.waitForFunction((id) => {
+        const v = window.__warsim!.view!;
+        return v.markerOpacity > 0.99 && v.markerRects.some((r) => r.id === id);
+      }, id, { timeout: 30_000 });
+      await page.waitForTimeout(800);
+      const t1 = await page.evaluate((id) => {
+        const v = window.__warsim!.view!;
+        const hero = v.markerRects.find((r) => r.id === id)!;
+        const nation = v.formationNation(id);
+        const heroes = new Set(v.heroFormations());
+        const own = v.markerRects.filter((r) => r.nation === nation && !heroes.has(r.id) && r.alpha > 0.99);
+        return { hero: { w: hero.w, h: hero.h, members: hero.members.length }, own: own.map((r) => [r.w, r.h] as const) };
+      }, id);
+      expect(t1.own.length, `${name}: its nation's other markers in the view`).toBeGreaterThan(0);
+      expect(t1.hero.members, `${name}'s marker stands for itself alone`).toBe(1);
+      check(`${look} T1 1,000 m/px ${name}: ${t1.hero.w.toFixed(1)} × ${t1.hero.h.toFixed(1)} px against ${[...new Set(t1.own.map(([w, h]) => `${w.toFixed(1)} × ${h.toFixed(1)}`))].join(', ')}`, t1.own.flatMap(([w, h]) => [t1.hero.w / w, t1.hero.h / h]));
+      await page.screenshot({ path: path.join(EVIDENCE, `b3-${look}-t1-${name.toLowerCase()}.png`), clip: { x: 500, y: 250, width: 400, height: 300 } });
+    }
+  }
+  writeFileSync(path.join(EVIDENCE, 'b3-sizes.txt'), `${lines.join('\n')}\n`);
+  expect(fails, 'heroes not 1.9–2.1 × their nation’s counters and markers').toEqual([]);
+});

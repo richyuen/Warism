@@ -17,6 +17,7 @@ import { FADE_MS, smooth } from '../timing';
 import type { StackedMarker } from './markerStacks';
 import { drawBall2d, type Prop2d } from './ball2d';
 import { drawPips, PIP_PANEL_H, type Pips } from './pips';
+import { HERO_SCALE } from './ballShader';
 
 /** The ink of a retreat's badge on a T1 marker (PLAN 7.4g2). */
 export const RETREAT_INK = '#f4a261';
@@ -43,6 +44,8 @@ export interface MarkerInput {
    * twos, the first where it stands; the line goes along them and not straight to `target`.
    */
   way?: ArrayLike<number> | null;
+  /** A hero's (PLAN 7.184b3): its marker HERO_SCALE × the others' about its place, never in a stack. */
+  hero?: boolean;
 }
 
 /**
@@ -406,22 +409,25 @@ export function drawMarkers(
   if (boxAlpha > 0.01) drawOrderArrows(ctx, markers, cam, geo, vw, vh);
   // Pictures of the boxes, made when a morph needs them (one for each nation, symbol and state).
   const sprites = new Map<string, HTMLCanvasElement>();
-  // Boxes, back to front by y.
-  const order = [...markers].sort((a, b) => a.y - b.y || a.id - b.id);
+  // Boxes, back to front by y; a hero's above the others (PLAN 7.184b3), its pips and number not under theirs.
+  const order = [...markers].sort((a, b) => Number(a.hero ?? false) - Number(b.hero ?? false) || a.y - b.y || a.id - b.id);
   ctx.font = '600 9px system-ui, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
-  const tags: { px: number; py: number; x: number; y: number; text: string; alpha: number; of: number }[] = [];
+  // Each with the size its marker is drawn at (a hero's is larger: PLAN 7.184b3).
+  const tags: { px: number; py: number; x: number; y: number; text: string; alpha: number; of: number; s: number }[] = [];
   /**
    * The boxes that stand for a formation on the retreat (PLAN 7.4g2): a badge on the corner, drawn
    * with the tags. Of a stack, when any of its formations is (a retreat begins where its stack
    * stands); a click through the stack shows which.
    */
-  const retreats: { px: number; py: number; x: number; y: number; alpha: number }[] = [];
+  const retreats: { px: number; py: number; x: number; y: number; alpha: number; s: number }[] = [];
   const retreating = new Set<number>();
   for (const m of markers) if (m.retreating) retreating.add(m.id);
-  const frames: { px: number; py: number; x: number; y: number; alpha: number }[] = [];
+  const frames: { px: number; py: number; x: number; y: number; alpha: number; s: number }[] = [];
   for (const m of order) {
+    // A hero's marker is HERO_SCALE × the others' (PLAN 7.184b3).
+    const ms = m.hero ? size * HERO_SCALE : size;
     for (const off of offs) {
       const stack = stacks?.get(m.id);
       // The box stands on its formation, or a few px from it to keep clear of a marker of
@@ -431,15 +437,15 @@ export function drawMarkers(
       const py = fy + (stack?.dy ?? 0);
       const x = Math.round(px - BOX_W / 2);
       const y = Math.round(py - BOX_H / 2);
-      if (px + BOX_W * size < 0 || py + BOX_H * size < 0 || px - BOX_W * size > vw || py - BOX_H * size > vh) continue;
+      if (px + BOX_W * ms < 0 || py + BOX_H * ms < 0 || px - BOX_W * ms > vw || py - BOX_H * ms > vh) continue;
       // In a stack: its men are in its lead's number. On its way in or out: fading where it stands.
       const part = stack?.alpha ?? 1;
       if (part <= 0.01) continue;
       const members = stack?.members ?? [m.id];
       ctx.save();
-      if (size !== 1) {
+      if (ms !== 1) {
         ctx.translate(px, py);
-        ctx.scale(size, size);
+        ctx.scale(ms, ms);
         ctx.translate(-px, -py);
       }
       // The pips (or the strength bar) and the number under the box, on their dark backing. They
@@ -456,7 +462,7 @@ export function drawMarkers(
         ctx.fillStyle = 'rgba(16, 18, 24, 0.82)';
         ctx.fillRect(x - 1, y + BOX_H, BOX_W + 2, PIP_PANEL_H + NUMBER_H);
         // How many formations it stands for: a tag, drawn after all the boxes (below).
-        if (members.length > 1) tags.push({ px, py, x, y, text: `×${members.length}`, alpha: bar, of: placed.length });
+        if (members.length > 1) tags.push({ px, py, x, y, text: `×${members.length}`, alpha: bar, of: placed.length, s: ms });
         const pipsIn = m.pips && m.pips.count > 0 ? Math.max(0, Math.min(1, m.pipsIn ?? 1)) : 0;
         if (pipsIn < 0.99) {
           // No elements in hand (a wing's are never sent; a formation's come a snapshot after the
@@ -509,19 +515,19 @@ export function drawMarkers(
       ctx.restore();
       // On the retreat (PLAN 7.4g2): a march like any other on the page until now.
       const back = members.some((f) => retreating.has(f));
-      if (back && boxAlpha * part > 0.01) retreats.push({ px, py, x, y, alpha: boxAlpha * part });
+      if (back && boxAlpha * part > 0.01) retreats.push({ px, py, x, y, alpha: boxAlpha * part, s: ms });
       const marked = picked !== 0 && members.includes(picked);
-      if (marked && boxAlpha * part > 0.01) frames.push({ px, py, x, y, alpha: boxAlpha * part });
-      placed.push({ id: m.id, nation: m.nation, retreating: back && boxAlpha * part > 0.01, wx: m.x, wy: m.y, alpha: boxAlpha * part, bar, own: part, scale: morph.scale, x: px - (BOX_W / 2) * size, y: py - (BOX_H / 2) * size, w: BOX_W * size, h: MARKER_H * size, text, members, pips: pipsDrawn, picked: marked });
+      if (marked && boxAlpha * part > 0.01) frames.push({ px, py, x, y, alpha: boxAlpha * part, s: ms });
+      placed.push({ id: m.id, nation: m.nation, retreating: back && boxAlpha * part > 0.01, wx: m.x, wy: m.y, alpha: boxAlpha * part, bar, own: part, scale: morph.scale, x: px - (BOX_W / 2) * ms, y: py - (BOX_H / 2) * ms, w: BOX_W * ms, h: MARKER_H * ms, text, members, pips: pipsDrawn, picked: marked });
     }
   }
   // A retreat's badge on the box's top-left corner, above every box (the stack's tag is on the
   // right): a dark square with an orange « (PLAN 7.4g2).
   for (const r of retreats) {
     ctx.save();
-    if (size !== 1) {
+    if (r.s !== 1) {
       ctx.translate(r.px, r.py);
-      ctx.scale(size, size);
+      ctx.scale(r.s, r.s);
       ctx.translate(-r.px, -r.py);
     }
     ctx.globalAlpha = r.alpha;
@@ -541,16 +547,16 @@ export function drawMarkers(
   // by nation, symbol and state.
   for (const t of tags) {
     ctx.save();
-    if (size !== 1) {
+    if (t.s !== 1) {
       ctx.translate(t.px, t.py);
-      ctx.scale(size, size);
+      ctx.scale(t.s, t.s);
       ctx.translate(-t.px, -t.py);
     }
     ctx.globalAlpha = t.alpha;
     const tw = Math.ceil(ctx.measureText(t.text).width) + 5;
     const tx = t.x + BOX_W - tw + 4;
     const ty = t.y - 6;
-    placed[t.of]!.tag = { x: t.px + (tx - t.px) * size, y: t.py + (ty - t.py) * size, w: tw * size, h: 11 * size };
+    placed[t.of]!.tag = { x: t.px + (tx - t.px) * t.s, y: t.py + (ty - t.py) * t.s, w: tw * t.s, h: 11 * t.s };
     ctx.fillStyle = 'rgba(16, 18, 24, 0.92)';
     ctx.fillRect(tx, ty, tw, 11);
     ctx.strokeStyle = 'rgba(255, 226, 138, 0.9)';
@@ -565,9 +571,9 @@ export function drawMarkers(
   // (an edge that fades where it stands changes no pixel by its motion: ADR-71).
   for (const f of frames) {
     ctx.save();
-    if (size !== 1) {
+    if (f.s !== 1) {
       ctx.translate(f.px, f.py);
-      ctx.scale(size, size);
+      ctx.scale(f.s, f.s);
       ctx.translate(-f.px, -f.py);
     }
     ctx.globalAlpha = f.alpha;

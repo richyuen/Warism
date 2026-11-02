@@ -54,7 +54,8 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
     - [ ] 7.184b3 T0 and T1: a hero its own counter (never folded into its nation's) and its own marker (never in a
       stack), each 2 × (box, ball, flag chip); bench G with `heroes=on`. AT: `heroes1938`: the hero's counter at T0
       (5,000 m/px) and marker at T1 (1,000 m/px) against its nation's normal one, drawn boxes on the overlay, 1.9–2.1 ×,
-      both looks; bench G T0 over 311 fps and p95 under 6.9 ms.
+      both looks; bench G T0 over 311 fps and p95 under 6.9 ms. Drawing done and its e2e green (`b3-sizes.txt`: 2.0 ×);
+      bench G's T0 309 fps against 311 — BLOCKERS, ADR-790 waits on the user.
   - [ ] 7.184c Overview: a Heroes block first in a nation's Overview tab (`NationPanel.tsx`; the stats message carries
     each hero's name, domain, strength and return day): its name, a strength bar, or "returns in N days". A click selects
     it on the map, opens its panel and the camera follows it (7.183), the nation played or not. AT: the e2e of 7.184b:

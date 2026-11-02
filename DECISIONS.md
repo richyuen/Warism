@@ -167,6 +167,17 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-790 · 2026-11-01 · proposed (the user's decision) — PLAN 7.184b3: bench G's T0 with heroes on, 309 fps against a bar of 311
+**Context.** 7.184b's AT: bench G with `heroes=on` keeps T0 over 311 fps (0.9 × fbca2cc4's 345, ADR-784) and p95 under
+6.9 ms. Bench G's GPU setting, heroes off and on alternately on the same build, three pairs each (`docs/evidence/7.184b/`
+`b3-bench.txt`): with the hero counters painted each frame, off 318.1, 312.1, 311.9 and on 299.2, 301.6, 294.9 (−5 %);
+with each drawn once and copied (`heroPictures`), off 317.3, 314.1, 318.2 and on 307.0, 308.7, 311.9 (−2.3 %, mean
+309.2). p95 4.8 ms on (bar 6.9). The world without heroes reads 316 on this machine now, 0.92 × the 345 the bar came from.
+**Options.** (a) Tick 7.184b3: the bar read as heroes on ≥ 0.97 × heroes off on the same build and machine (0.977 now)
+— the bar measures the heroes' cost, not the machine's day (recommended); (b) keep 311: find the last 2 % (14 more
+formations in the world, the counters' extra pass) as a numbered task; (c) close 7.184b3 not done.
+**Until then.** 7.184b3 stays open with a BLOCKERS entry; the drawing is committed (its own AT holds).
+
 ### ADR-789 · 2026-11-01 · accepted — PLAN 7.184b: how a hero is drawn
 **Decision.** (b1) `?heroes=on` is read from the URL now (`gameUrl.ts`), the way the e2e of the drawing opens a
 world with heroes; the new-game form and the settings panel stay PLAN 7.184d's. A hero's name on its tag and panel
@@ -180,8 +191,17 @@ size after the clamp to the least and most px. Its tag's box and the tests' `ele
 **Why.** Through most of T2 an element is at its least size (5 px, a tank 8, a ship its class's): a hero's size in
 cells doubled would draw the same as its kind's there. No new attribute or wider stride: the state buffer is bound
 for both programs.
+(b3) At T0 a hero is a counter of its own (`HeroCounter`, `CounterLayer.draw`'s `heroes`): not in its nation's
+clusters, never folded, `HERO_SCALE` × a counter about its place, its name where a counter has its strength (a hero's
+men are its crew: "6" told nothing), drawn above the others; one that would cover another hero's steps down below it
+(Japan's two, at Yokosuka and Tokyo). At T1 its marker is `HERO_SCALE` × the others' (box, ball, chip, pips, number,
+badges), never in a stack, drawn above the others. A land hero's symbol is armour (`symbolOf`: a `hero_` type counts
+as a tank; it had the rifle cross). A hero's counter is drawn once into a picture at its device scale and copied
+each frame (`heroPictures`, as ADR-784's balls): painted anew, the 14 cost bench G's T0 5 % of its frames, cached 2.3 %
+(ADR-790).
+**Why.** A hero folded into its nation's counter, or the lead of a stack, would not be seen at all.
 **Consequences.** `heroFormations()` on the view lists them (tests, and the parts after). A hero's ball is large
-enough to show its prop (a barrel, a hull) where its kind's is not.
+enough to show its prop (a barrel, a hull) where its kind's is not. A hero's T1 marker covers its neighbours'.
 
 ### ADR-788 · 2026-11-01 · accepted — PLAN 7.184a3: the heroes' figures; a hero's tank carries its damage
 **Decision.** Every sea hero: `hard` 1,100 (a battleship of 2,000 hit points sunk in about an hour of its fire),

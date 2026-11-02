@@ -1,0 +1,8 @@
+classic T0 5,000 m/px Yamato: 108.0 × 28.0 px against heights 14.0
+classic T1 1,000 m/px Yamato: 52.0 × 82.0 px against 26.0 × 41.0
+classic T0 5,000 m/px Maus: 88.0 × 28.0 px against heights 14.0
+classic T1 1,000 m/px Maus: 52.0 × 82.0 px against 26.0 × 41.0
+balls T0 5,000 m/px Yamato: 108.0 × 28.0 px against heights 14.0
+balls T1 1,000 m/px Yamato: 52.0 × 82.0 px against 26.0 × 41.0
+balls T0 5,000 m/px Maus: 88.0 × 28.0 px against heights 14.0
+balls T1 1,000 m/px Maus: 52.0 × 82.0 px against 26.0 × 41.0
