@@ -68,6 +68,18 @@ entries are kept and marked **RESOLVED** with the date and fix.
 - **Left:** the plans' cost on a shared front of ~2,500 sectors (PLAN 7.158). Waits on the user: ADR-756 (a) keep 5.5,
   7.158 next (recommended); (b) budget 6.0; (c) cap the levy's cadres.
 
+### shipMarks1938's T3 test (the review before critic run 19): red twice in the review, green in 8 of 8 by hand; on `tools/gate/knownRed.json`
+- **The bar:** at 20 m/px on the fleets of seed 2251's first Italy–UK sea battle, a destroyer's median hull length
+  over 17 px (`shipMarks1938.spec.ts`, PLAN 7.35c; about 19 by the rule).
+- **What was read** (2026-11-02): red in `npm run check:review` on `942da00a`, in chunk 8 and again alone, 16.5 px both
+  times (7 destroyers). By hand on the same code: T3 alone 4 of 4 (17.5–18), the file as the review's retry runs it
+  (`--workers=1`) 17.5, T3 beside six headless sims 18, the review's whole chunk 8 (20 files, parallel) 17.5. The world
+  is the same each run (paused, stepped by hand); the per-ship lengths are not (15.5–20 px, the camera's spots seeing
+  6 to 49 figures), so the measure moves with the frames' timing and sits 0.5–1 px over its bar. The T3 view was
+  reached at every spot (logged). No drawing of ships changed since critic run 18 (`81beca1`): 7.184b2's wakes take a
+  hero's size only. The test is not changed.
+- **Left:** the test leaves the list when it passes in a review here. Nothing waits on the user.
+
 ### seaRow1938's Speed x1 test (critic run 18's review): red on this machine, the code not its cause; on `tools/gate/knownRed.json`
 - **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
   with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a).
