@@ -33,21 +33,14 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.184 Heroes: a new-game option (off by default) giving each of 7 great powers of 1938 a named land and sea
-  unit, much stronger and drawn bigger than any other, that heals and comes back when destroyed (the user's request of
-  2026-11-01; the user's choices: heal and return, 2–3 × a normal formation, land and sea only, no China). Parts:
-  - [x] 7.184a Data and sim. `GameOptions.heroes` (`'off' | 'on'`, 1938 only, as `diplomacy`). The roster in […]
-  - [x] 7.184b Drawing: a hero twice the size of its kind at every zoom (T0 counter, T1 marker, T2 block, T3 figure), the […]
-  - [x] 7.184c Overview: a Heroes block first in a nation's Overview tab (`NationPanel.tsx`; the stats message carries […]
-  - [x] 7.184d The option in the new-game form and settings panel, `?heroes=on` in the URL (as 7.182: `gameUrl.ts`, […]
-  - [ ] 7.184e The AI uses its heroes: a land hero goes to its nation's main front and leads its attack, a sea hero
-    sails with its nation's largest fleet. AT (ADR-792 (a), the user's decision of 2026-11-02: 30 % of its days at war
-    is out of reach at sea, `docs/evidence/7.184e/head-read.md`): seeds 1461–1470 × 3 years with heroes on
-    (`tools/diag/heroBattle.ts`): each land hero in battle on ≥ 50 % of the days its nation's army is (where that army
-    fights on ≥ 10 % of its days at war); each sea hero with its nation's largest fleet (the same sea zone or within
-    `SORTIE_KM`) on ≥ 50 % of its days at war, and in ≥ 50 % of that fleet's days in a sea battle; `sweep:quick` with
-    heroes on and off, as a smoke test only: limits green both, the riser and faller reported in PROGRESS. Missed
-    (`docs/evidence/7.184e/at-run.md`: land 0.148, 1 of 69; sea with 25 of 35): BLOCKERS, ADR-793 waits on the user.
+- [ ] 7.185 A land hero in its army's battles (found at 7.184e's AT, ADR-793 a): a land hero of the AI is in battle on
+  0.16 of the days its nation's army is (1461–1470 × 3, `docs/evidence/7.184e/at-run.md`), and 7.184e's rule (onto the
+  attack cell of its nation's most threatened own sector, every plan) moved nothing (0.158 → 0.148). Read first why a
+  hero on the march to the front's enemy cell is rarely engaged (where it stands and goes on its days at war, against
+  where its army fights), then a rule for that cause. AT: seeds 1471–1480 × 3 years, heroes on
+  (`tools/diag/heroBattle.ts`): each land hero `ofArmy` ≥ 0.5 where its army's ceiling is ≥ 0.10; the sea columns not
+  below 7.184e's (`with` ≥ 0.5 on 50 of 70, `ofFleet` on 57 of 64, as counted there); `sweep:quick` with heroes on and
+  off as a smoke test only (limits green both, the riser and faller in PROGRESS).
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 
@@ -449,3 +442,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.181 The world view's frame rate (from PLAN 7.5's DONE-condition runs on fbc9fbc3; in budget, filed so it is […]
 - [x] 7.182 A new-game option to draw the 1938 start's alliances, guarantees and wars by the seed (the user's request, […]
 - [x] 7.183 The camera follows any formation clicked, played or not (the user's request of 2026-11-01). Today a click […]
+- [x] 7.184 Heroes: a new-game option (off by default) giving each of 7 great powers of 1938 a named land and sea […]

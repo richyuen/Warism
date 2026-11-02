@@ -129,12 +129,15 @@ export function navalAi(world: World): void {
   const day = world.tick / 24;
   const f = world.formations;
   const c = f.cols;
+  // The sea heroes of nations at war go with their navies' largest fleets, every day (PLAN 7.184e).
+  const following = world.heroes.size > 0 ? heroFleets(world) : null;
   // The standing fleets by nation, of the nations that act today.
   const fleets = new Map<number, number[]>();
   // The fleets the editor placed (`World.station`) of nations at war, that act today (PLAN 7.59).
   const placed = new Map<number, number[]>();
   f.forEach((id) => {
     if (!world.isFleet(id) || c.moving[id] === 1 || c.engaged[id] === 1 || seaRangeOf(world, id) !== undefined || playerHeld(world, id)) return;
+    if (following?.has(id)) return;
     const n = c.nation[id]!;
     // The navy's layer of the AI (ADR-759); not a fleet on a player's order (above).
     if (nc.living[n] !== 1 || !aiRuns(world, n, AiLayer.navy) || (day + n) % STAGGER !== 0) return;
@@ -153,11 +156,69 @@ export function navalAi(world: World): void {
     if (!list) fleets.set(n, (list = []));
     list.push(id);
   });
-  if (fleets.size === 0 && placed.size === 0) return;
-  const power = world.wars.list.length > 0 ? navalPower(world) : new Map<number, Map<number, number>>();
-  let standing: Prey[] | undefined;
-  const prey = (): Prey[] => (standing ??= standingWarfleets(world));
-  for (const n of [...new Set([...fleets.keys(), ...placed.keys()])].sort((a, b) => a - b)) plan(world, n, fleets.get(n) ?? [], power, prey, placed.get(n) ?? []);
+  if (fleets.size > 0 || placed.size > 0) {
+    const power = world.wars.list.length > 0 ? navalPower(world) : new Map<number, Map<number, number>>();
+    let standing: Prey[] | undefined;
+    const prey = (): Prey[] => (standing ??= standingWarfleets(world));
+    for (const n of [...new Set([...fleets.keys(), ...placed.keys()])].sort((a, b) => a - b)) plan(world, n, fleets.get(n) ?? [], power, prey, placed.get(n) ?? []);
+  }
+  // After the fleets' own orders of the day: a hero goes where its fleet goes now.
+  if (following) sailWith(world, following);
+}
+
+/**
+ * The sea heroes (PLAN 7.184e, ADR-793): each day, a sea hero of a nation at war (its AI's navy on, not on
+ * a player's order, not in a sea battle) goes with its nation's largest fleet, the one of most power
+ * (`fleetPower`) of its others: to where that fleet fights, else to where it sails, else to where it
+ * stands, unless the hero is within `AT_PORT_CELLS` of that place or sailing there already. Daily, not
+ * on the nation's day of `STAGGER`: a battle is hours long. `heroFleets` picks the heroes so led and
+ * their fleets before the day's plans (the rest of the naval AI leaves those heroes alone; a nation
+ * with no other fleet of power leaves its hero to it); `sailWith` orders them after, to where their
+ * fleets go once the plans have given their orders.
+ */
+function heroFleets(world: World): Map<number, number> {
+  const led = new Map<number, number>();
+  const c = world.formations.cols;
+  const nc = world.nations.cols;
+  const heroes = [...world.heroes.keys()].filter((id) => world.isFleet(id)).sort((a, b) => a - b);
+  if (heroes.length === 0) return led;
+  // The largest fleet of power of each nation with a sea hero, by id on a tie.
+  const largest = new Map<number, { id: number; p: number }>();
+  const wanted = new Set(heroes.map((id) => c.nation[id]!));
+  world.formations.forEach((id) => {
+    const n = c.nation[id]!;
+    if (!wanted.has(n) || world.heroes.has(id) || !world.isFleet(id)) return;
+    const p = fleetPower(world, id);
+    const was = largest.get(n);
+    if (p > 0 && (!was || p > was.p || (p === was.p && id < was.id))) largest.set(n, { id, p });
+  });
+  for (const id of heroes) {
+    const n = c.nation[id]!;
+    if (nc.living[n] !== 1 || !aiRuns(world, n, AiLayer.navy) || playerHeld(world, id) || seaRangeOf(world, id) !== undefined) continue;
+    if (!world.wars.list.some((war) => war.sides[0].includes(n) || war.sides[1].includes(n))) continue;
+    const big = largest.get(n);
+    if (big) led.set(id, big.id);
+  }
+  return led;
+}
+
+/** The heroes of `heroFleets` sail to where their fleets fight, sail or stand (see there). */
+function sailWith(world: World, led: ReadonlyMap<number, number>): void {
+  const c = world.formations.cols;
+  const w = world.cells.w;
+  const close = (a: number, b: number): boolean => {
+    let dx = Math.abs((a % w) - (b % w));
+    if (world.settings.loopingMap && dx > w / 2) dx = w - dx;
+    return dx <= world.atSize(AT_PORT_CELLS) && Math.abs(Math.floor(a / w) - Math.floor(b / w)) <= world.atSize(AT_PORT_CELLS);
+  };
+  for (const [id, b] of led) {
+    if (!world.formations.has(id) || !world.formations.has(b) || c.engaged[id] === 1) continue;
+    const there = Math.floor(c.y[b]!) * w + Math.floor(c.x[b]!);
+    const goal = c.engaged[b] !== 1 && c.moving[b] === 1 ? c.targetCell[b]! : there;
+    const here = Math.floor(c.y[id]!) * w + Math.floor(c.x[id]!);
+    if (c.moving[id] === 1 ? close(c.targetCell[id]!, goal) : close(here, goal)) continue;
+    orderSail(world, id, (goal % w) + 0.5, Math.floor(goal / w) + 0.5);
+  }
 }
 
 /** Whether fleet `id` is more than `AT_PORT_CELLS` from its editor's place `at` (PLAN 7.22c). */

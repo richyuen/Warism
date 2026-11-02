@@ -17305,3 +17305,33 @@ Of 7.184 (open in PLAN.md):
       both looks; bench G T0 over 311 fps and p95 under 6.9 ms. Drawing done and its e2e green (`b3-sizes.txt`: 2.0 ×);
       bench G's T0 309 fps against 311: the bar read as heroes on ≥ 0.97 × heroes off on one build (0.977), ADR-790
       (the user's decision of 2026-11-02).
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.184 Heroes: a new-game option (off by default) giving each of 7 great powers of 1938 a named land and sea
+  unit, much stronger and drawn bigger than any other, that heals and comes back when destroyed (the user's request of
+  2026-11-01; the user's choices: heal and return, 2–3 × a normal formation, land and sea only, no China). Parts:
+  - [x] 7.184a Data and sim. `GameOptions.heroes` (`'off' | 'on'`, 1938 only, as `diplomacy`). The roster in […]
+  - [x] 7.184b Drawing: a hero twice the size of its kind at every zoom (T0 counter, T1 marker, T2 block, T3 figure), the […]
+  - [x] 7.184c Overview: a Heroes block first in a nation's Overview tab (`NationPanel.tsx`; the stats message carries […]
+  - [x] 7.184d The option in the new-game form and settings panel, `?heroes=on` in the URL (as 7.182: `gameUrl.ts`, […]
+  - [x] 7.184e (closed not done, ADR-793 a, the user's decision: the sea rule kept, the land rule dropped, PLAN 7.185) The AI uses its heroes: a land hero goes to its nation's main front and leads its attack, a sea hero
+    sails with its nation's largest fleet. AT (ADR-792 (a), the user's decision of 2026-11-02: 30 % of its days at war
+    is out of reach at sea, `docs/evidence/7.184e/head-read.md`): seeds 1461–1470 × 3 years with heroes on
+    (`tools/diag/heroBattle.ts`): each land hero in battle on ≥ 50 % of the days its nation's army is (where that army
+    fights on ≥ 10 % of its days at war); each sea hero with its nation's largest fleet (the same sea zone or within
+    `SORTIE_KM`) on ≥ 50 % of its days at war, and in ≥ 50 % of that fleet's days in a sea battle; `sweep:quick` with
+    heroes on and off, as a smoke test only: limits green both, the riser and faller reported in PROGRESS. Missed
+    (`docs/evidence/7.184e/at-run.md`: land 0.148, 1 of 69; sea with 25 of 35): BLOCKERS, ADR-793 waits on the user.

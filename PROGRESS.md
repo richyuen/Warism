@@ -25551,3 +25551,11 @@ No rule changed and nothing on screen changed. One task came out of it.
   0.161, ≥ 0.5 on 1 of 69 (HEAD on 1461–1465 0.158, the rules 0.148); sea `with` 0.711, 50 of 70 (HEAD 0.603 → 0.721
   on 1461–1465), `ofFleet` 0.828, 57 of 64. The sweep:quick smoke not run: the rules are not kept yet.
 - **Next:** ADR-793 waits on the user (keep the sea rule, drop the land one, a task for the cause: recommended).
+
+## 2026-11-02 — ADR-793 (a): the sea heroes' rule kept, the land rule dropped; 7.184e closed not done, PLAN 7.184 done
+
+- **Committed:** `naval.ts` `heroFleets` / `sailWith` (a sea hero at war sails after its nation's largest other fleet
+  every day, after the naval plans) and its unit test (red without). The land rule is not in (`operational.ts` as
+  HEAD). Pin unchanged (the gate).
+- **Filed:** PLAN 7.185, a land hero in its army's battles (read the cause first), with 7.184e's sweep:quick smoke.
+- **Next:** PLAN 7.185.

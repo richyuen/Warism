@@ -5,7 +5,7 @@ entries are kept and marked **RESOLVED** with the date and fix.
 
 ## Open
 
-### PLAN 7.184e: the AT missed: land heroes in 0.15 of their army's fighting days, bar 0.5 (ADR-793, waits on the user)
+### RESOLVED 2026-11-02 (option a, the user's decision: the sea rule kept, the land rule dropped, 7.184e closed not done, PLAN 7.185; ADR-793) · PLAN 7.184e: the AT missed: land heroes in 0.15 of their army's fighting days, bar 0.5
 - **The bar:** 1461–1470 × 3, heroes on: each land hero in battle on ≥ 50 % of its army's fighting days; each sea hero
   with its largest fleet on ≥ 50 % of its days at war and in ≥ 50 % of that fleet's battle days.
 - **What moved** (`docs/evidence/7.184e/at-run.md`; the rules uncommitted): land 0.158 → 0.148 (0 of 34 pass);

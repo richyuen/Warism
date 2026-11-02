@@ -9,6 +9,10 @@ import { assets1938 } from '../helpers/earth';
 import { elementIndex } from '../../src/sim/systems/elements';
 import { HERO_RETURN_HOURS, heroHealth } from '../../src/sim/systems/heroes';
 import { landFight, seaFight } from '../helpers/heroFight';
+import { fleetPower } from '../../src/sim/systems/seaControl';
+import { AT_PORT_CELLS } from '../../src/sim/systems/navalCombat';
+import { orderSail } from '../../src/sim/systems/sail';
+import { portSeaOf } from '../../src/sim/world';
 
 // PLAN 7.184a1: heroes, a new-game option of the 1938 world. With it off the world is as before;
 // on, 14 heroes at the start (sea at the water of its nation's first naval base, land at its
@@ -226,5 +230,54 @@ describe('a hero against standard forces (PLAN 7.184a3; tests/helpers/heroFight.
     expect(one.end).toBeLessThan((2 * one.start) / 3);
     const three = landFight(3, 3);
     expect(three.lost, three.days.join('\n')).toBe(true);
+  });
+});
+
+// PLAN 7.184e: the AI uses its heroes. At war a sea hero goes with its nation's largest fleet,
+// every day (ADR-793 a: the land hero's rule was dropped, PLAN 7.185).
+describe('heroes in the AI (PLAN 7.184e)', () => {
+  const nationOf = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
+  const heroNamed = (w: World, id: string): number => heroIds(w).find((f) => TEMPLATES_1938[w.formations.cols.template[f]!]!.id === id)!;
+  const day = (sim: Sim): void => {
+    sim.step(24, (w) => {
+      w.out.events.length = 0;
+      w.out.fires.length = 0;
+    });
+  };
+
+  it('at war the Bismarck goes with Germany’s largest fleet: sent to another port, the fleet has the Bismarck after it a day on', () => {
+    const sim = make('on');
+    const [GER, ENG] = [nationOf('GER'), nationOf('ENG')];
+    sim.command({ kind: 'declareWar', attacker: GER, defender: ENG });
+    const w = sim.world;
+    const f = w.formations.cols;
+    const W0 = w.cells.w;
+    const bismarck = heroNamed(w, 'hero_bismarck');
+    // Germany's largest fleet of power other than its hero, as the rule picks it.
+    let big = 0;
+    let bp = 0;
+    w.formations.forEach((id) => {
+      if (f.nation[id] !== GER || w.heroes.has(id) || !w.isFleet(id)) return;
+      const p = fleetPower(w, id);
+      if (p > bp || (p === bp && p > 0 && id < big)) [big, bp] = [id, p];
+    });
+    expect(big, 'Germany has a fleet of power').toBeGreaterThan(0);
+    // Sent to the water of Germany's naval base farthest from it (Kiel ↔ Wilhelmshaven or Königsberg).
+    const water = portSeaOf(w);
+    let goal = -1;
+    let far = 0;
+    w.ports.forEach((p, i) => {
+      if (p.navalBase < 1 || w.cells.controller[p.cell] !== GER || water[i]! < 0) return;
+      const d = Math.hypot((water[i]! % W0) - f.x[big]!, Math.floor(water[i]! / W0) - f.y[big]!);
+      if (d > far) [goal, far] = [water[i]!, d];
+    });
+    expect(far, 'cells to the farthest German base').toBeGreaterThan(3 * AT_PORT_CELLS);
+    orderSail(w, big, (goal % W0) + 0.5, Math.floor(goal / W0) + 0.5);
+    expect(f.moving[big]).toBe(1);
+    day(sim);
+    const target = f.targetCell[big]!;
+    const near = (a: number, b: number): boolean => Math.abs((a % W0) - (b % W0)) <= w.atSize(AT_PORT_CELLS) && Math.abs(Math.floor(a / W0) - Math.floor(b / W0)) <= w.atSize(AT_PORT_CELLS);
+    expect(f.moving[bismarck], 'the Bismarck under way').toBe(1);
+    expect(near(f.targetCell[bismarck]!, target), 'the Bismarck sails for where the fleet sails').toBe(true);
   });
 });

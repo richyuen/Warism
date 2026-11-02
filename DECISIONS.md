@@ -167,7 +167,7 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
-### ADR-793 · 2026-11-02 · proposed (the user's decision) — PLAN 7.184e: the AT missed; which of the heroes' rules to keep
+### ADR-793 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.184e: the AT missed; which of the heroes' rules to keep
 **Context.** 7.184e's rules (in the working tree, not committed): a land hero, out of the operational AI's allotment,
 ordered each plan onto the attack cell of its nation's most threatened own sector (up to 3 tried for a way); a sea
 hero, every day at war, sailed after its nation's largest other fleet (where it fights, sails or stands), after the
@@ -178,7 +178,9 @@ every hero.
 **Options.** (a) Keep the sea rule, drop the land rule; 7.184e closed not done; a numbered task to find why a land hero
 is in so few of its army's battles (it marches on the front's enemy cell and is rarely engaged), AT `ofArmy` ≥ 0.5 on
 unseen seeds (recommended); (b) keep both (the land rule is neutral) and the task; (c) drop both, close not done.
-**Until then.** The rules stay out of `main`; the probe and the evidence are committed.
+**Decided (a).** The sea rule committed (`naval.ts`: `heroFleets`, `sailWith`, its unit test); the land rule dropped;
+7.184e closed not done; PLAN 7.185 for the land hero's cause. The pin of seed 99 is unchanged (no hero without the
+option).
 
 ### ADR-792 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.184e: the AT's 30 % is out of reach at sea
 **Context.** 7.184e's AT: each AI hero of a nation at war in battle on ≥ 30 % of its days at war (1461–1470 × 3
