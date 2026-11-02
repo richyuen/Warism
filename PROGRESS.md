@@ -25667,3 +25667,11 @@ No rule changed and nothing on screen changed. One task came out of it.
   the rows' words in unit tests (red on e4386478); 1 of 1 lapse with its row on 1522–1531 to day 60. Unit 2041 of
   2041; e2e guarantees, history, nation panel, puppets 7 of 7; pin unchanged.
 - **Next:** PLAN 7.5 (the critic again: R25-B1 and diplomacy's dimension task done).
+
+## 2026-11-02 — Critic run 26 on 33c84306: diplomacy 6, one blocking; PLAN 7.191, 7.192
+- `npm run check:review` green (0 known red). Scores: mapVisuals 7, diplomacy 6, emergent 7, God 7, editor 7, stats 7,
+  UI 7, performance 7, stability 7; semantic zoom 8, naval 8, tanks 8, aircraft 8, AI nukes 8.
+  Blocking 1: R26-B1 (7.189's `Beside` refusal stops a puppet's or ally's break and a revolt's war of independence).
+- R25-B1 and run 25's non-blocking 1 and 9 verified fixed. PLAN 7.191 (R26-B1) and 7.192 (diplomacy: ticker rows,
+  the bond in the standing, the alliance proposal greyed) before 7.5.
+- **Next:** PLAN 7.191.

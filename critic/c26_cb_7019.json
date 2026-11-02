@@ -1,0 +1,489 @@
+{
+ "seed": 7019,
+ "views": [
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 6000,
+   "look": "balls",
+   "el": 0,
+   "ind": 0,
+   "mpp": 6000,
+   "shot": "critic/shots/c26cb_7019_arm_6000m_balls.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 6000,
+   "look": "classic",
+   "el": 0,
+   "ind": 0,
+   "mpp": 6000,
+   "shot": "critic/shots/c26cb_7019_arm_6000m_classic.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 3000,
+   "look": "balls",
+   "el": 0,
+   "ind": 0,
+   "mpp": 3000,
+   "shot": "critic/shots/c26cb_7019_arm_3000m_balls.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 3000,
+   "look": "classic",
+   "el": 0,
+   "ind": 0,
+   "mpp": 3000,
+   "shot": "critic/shots/c26cb_7019_arm_3000m_classic.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 1200,
+   "look": "balls",
+   "el": 4358,
+   "ind": 0,
+   "mpp": 1200,
+   "shot": "critic/shots/c26cb_7019_arm_1200m_balls.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 1200,
+   "look": "classic",
+   "el": 4358,
+   "ind": 0,
+   "mpp": 1200,
+   "shot": "critic/shots/c26cb_7019_arm_1200m_classic.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 600,
+   "look": "balls",
+   "el": 1813,
+   "ind": 0,
+   "mpp": 600,
+   "shot": "critic/shots/c26cb_7019_arm_0600m_balls.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 600,
+   "look": "classic",
+   "el": 1813,
+   "ind": 0,
+   "mpp": 600,
+   "shot": "critic/shots/c26cb_7019_arm_0600m_classic.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 250,
+   "look": "balls",
+   "el": 698,
+   "ind": 0,
+   "mpp": 250,
+   "shot": "critic/shots/c26cb_7019_arm_0250m_balls.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 250,
+   "look": "classic",
+   "el": 698,
+   "ind": 0,
+   "mpp": 250,
+   "shot": "critic/shots/c26cb_7019_arm_0250m_classic.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 120,
+   "look": "balls",
+   "el": 502,
+   "ind": 0,
+   "mpp": 120,
+   "shot": "critic/shots/c26cb_7019_arm_0120m_balls.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 120,
+   "look": "classic",
+   "el": 502,
+   "ind": 0,
+   "mpp": 120,
+   "shot": "critic/shots/c26cb_7019_arm_0120m_classic.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 60,
+   "look": "balls",
+   "el": 328,
+   "ind": 0,
+   "mpp": 60,
+   "shot": "critic/shots/c26cb_7019_arm_0060m_balls.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 60,
+   "look": "classic",
+   "el": 328,
+   "ind": 0,
+   "mpp": 60,
+   "shot": "critic/shots/c26cb_7019_arm_0060m_classic.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 25,
+   "look": "balls",
+   "el": 292,
+   "ind": 12696,
+   "mpp": 25,
+   "shot": "critic/shots/c26cb_7019_arm_0025m_balls.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 25,
+   "look": "classic",
+   "el": 292,
+   "ind": 12696,
+   "mpp": 25,
+   "shot": "critic/shots/c26cb_7019_arm_0025m_classic.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 12,
+   "look": "balls",
+   "el": 208,
+   "ind": 8073,
+   "mpp": 12,
+   "shot": "critic/shots/c26cb_7019_arm_0012m_balls.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 12,
+   "look": "classic",
+   "el": 208,
+   "ind": 8073,
+   "mpp": 12,
+   "shot": "critic/shots/c26cb_7019_arm_0012m_classic.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 5,
+   "look": "balls",
+   "el": 116,
+   "ind": 3138,
+   "mpp": 5,
+   "shot": "critic/shots/c26cb_7019_arm_0005m_balls.png"
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 5,
+   "look": "classic",
+   "el": 116,
+   "ind": 3138,
+   "mpp": 5,
+   "shot": "critic/shots/c26cb_7019_arm_0005m_classic.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 6000,
+   "look": "balls",
+   "el": 0,
+   "ind": 3138,
+   "mpp": 6000,
+   "shot": "critic/shots/c26cb_7019_inf_6000m_balls.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 6000,
+   "look": "classic",
+   "el": 0,
+   "ind": 3138,
+   "mpp": 6000,
+   "shot": "critic/shots/c26cb_7019_inf_6000m_classic.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 3000,
+   "look": "balls",
+   "el": 0,
+   "ind": 3138,
+   "mpp": 3000,
+   "shot": "critic/shots/c26cb_7019_inf_3000m_balls.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 3000,
+   "look": "classic",
+   "el": 0,
+   "ind": 3138,
+   "mpp": 3000,
+   "shot": "critic/shots/c26cb_7019_inf_3000m_classic.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 1200,
+   "look": "balls",
+   "el": 4314,
+   "ind": 3138,
+   "mpp": 1200,
+   "shot": "critic/shots/c26cb_7019_inf_1200m_balls.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 1200,
+   "look": "classic",
+   "el": 4314,
+   "ind": 3138,
+   "mpp": 1200,
+   "shot": "critic/shots/c26cb_7019_inf_1200m_classic.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 600,
+   "look": "balls",
+   "el": 1841,
+   "ind": 3138,
+   "mpp": 600,
+   "shot": "critic/shots/c26cb_7019_inf_0600m_balls.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 600,
+   "look": "classic",
+   "el": 1841,
+   "ind": 3138,
+   "mpp": 600,
+   "shot": "critic/shots/c26cb_7019_inf_0600m_classic.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 250,
+   "look": "balls",
+   "el": 698,
+   "ind": 3138,
+   "mpp": 250,
+   "shot": "critic/shots/c26cb_7019_inf_0250m_balls.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 250,
+   "look": "classic",
+   "el": 698,
+   "ind": 3138,
+   "mpp": 250,
+   "shot": "critic/shots/c26cb_7019_inf_0250m_classic.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 120,
+   "look": "balls",
+   "el": 546,
+   "ind": 3138,
+   "mpp": 120,
+   "shot": "critic/shots/c26cb_7019_inf_0120m_balls.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 120,
+   "look": "classic",
+   "el": 546,
+   "ind": 3138,
+   "mpp": 120,
+   "shot": "critic/shots/c26cb_7019_inf_0120m_classic.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 60,
+   "look": "balls",
+   "el": 328,
+   "ind": 3138,
+   "mpp": 60,
+   "shot": "critic/shots/c26cb_7019_inf_0060m_balls.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 60,
+   "look": "classic",
+   "el": 328,
+   "ind": 3138,
+   "mpp": 60,
+   "shot": "critic/shots/c26cb_7019_inf_0060m_classic.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 25,
+   "look": "balls",
+   "el": 292,
+   "ind": 12696,
+   "mpp": 25,
+   "shot": "critic/shots/c26cb_7019_inf_0025m_balls.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 25,
+   "look": "classic",
+   "el": 292,
+   "ind": 12696,
+   "mpp": 25,
+   "shot": "critic/shots/c26cb_7019_inf_0025m_classic.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 12,
+   "look": "balls",
+   "el": 200,
+   "ind": 7737,
+   "mpp": 12,
+   "shot": "critic/shots/c26cb_7019_inf_0012m_balls.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 12,
+   "look": "classic",
+   "el": 200,
+   "ind": 7737,
+   "mpp": 12,
+   "shot": "critic/shots/c26cb_7019_inf_0012m_classic.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 5,
+   "look": "balls",
+   "el": 112,
+   "ind": 6000,
+   "mpp": 5,
+   "shot": "critic/shots/c26cb_7019_inf_0005m_balls.png"
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 5,
+   "look": "classic",
+   "el": 112,
+   "ind": 6000,
+   "mpp": 5,
+   "shot": "critic/shots/c26cb_7019_inf_0005m_classic.png"
+  }
+ ],
+ "fps": [
+  {
+   "m": 3000,
+   "look": "balls",
+   "fps": 52.4,
+   "worstGapMs": 20
+  },
+  {
+   "m": 3000,
+   "look": "classic",
+   "fps": 60.2,
+   "worstGapMs": 19
+  },
+  {
+   "m": 600,
+   "look": "balls",
+   "fps": 60.1,
+   "worstGapMs": 19
+  },
+  {
+   "m": 600,
+   "look": "classic",
+   "fps": 60.1,
+   "worstGapMs": 18
+  },
+  {
+   "m": 120,
+   "look": "balls",
+   "fps": 60.1,
+   "worstGapMs": 18
+  },
+  {
+   "m": 120,
+   "look": "classic",
+   "fps": 60.1,
+   "worstGapMs": 18
+  },
+  {
+   "m": 25,
+   "look": "balls",
+   "fps": 59.5,
+   "worstGapMs": 73
+  },
+  {
+   "m": 25,
+   "look": "classic",
+   "fps": 60.1,
+   "worstGapMs": 20
+  }
+ ],
+ "defaultLook": "balls",
+ "storedLook": null,
+ "day": 4,
+ "picks": {
+  "inf": {
+   "f": 11,
+   "t": {
+    "name": "Infantry division 11",
+    "kind": "Infantry division",
+    "nation": 1
+   },
+   "pos": [
+    1118.291381264959,
+    273.5133912164615
+   ],
+   "e": true
+  },
+  "arm": {
+   "f": 40,
+   "t": {
+    "name": "Armoured division 40",
+    "kind": "Armoured division",
+    "nation": 1
+   },
+   "pos": [
+    1117.626007525019,
+    273.377050933266
+   ],
+   "e": true
+  }
+ },
+ "settingsText": "Unit look\nCountryballs\nClassic\nSound volume\n25%\n50%\n75%\n100%\nMute sound\nPause on a nuclear strike\nSave screenshot (F2)\nMain menu\n",
+ "settingsShot": "critic/shots/c26cb_7019_settings.png",
+ "errors": []
+}

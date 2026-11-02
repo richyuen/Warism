@@ -1,0 +1,129 @@
+{
+ "seed": 7019,
+ "days": 365,
+ "counts": {
+  "WarDeclared": 27,
+  "PeaceSigned": 19,
+  "WarEnded": 0,
+  "WarRejected": 0,
+  "GuaranteeLapsed": 0,
+  "WarLeft": 0,
+  "BondsBroken": 0
+ },
+ "rows": [],
+ "longest": {
+  "pair": "ENG-POR",
+  "days": 227
+ },
+ "pairDays": 344,
+ "nbPairDays": 39,
+ "daily": [
+  {
+   "d": 30,
+   "pairs": 0,
+   "neighbourPairs": 0,
+   "wars": 8,
+   "guarantees": 8,
+   "sample": []
+  },
+  {
+   "d": 60,
+   "pairs": 0,
+   "neighbourPairs": 0,
+   "wars": 8,
+   "guarantees": 8,
+   "sample": []
+  },
+  {
+   "d": 90,
+   "pairs": 0,
+   "neighbourPairs": 0,
+   "wars": 6,
+   "guarantees": 8,
+   "sample": []
+  },
+  {
+   "d": 120,
+   "pairs": 0,
+   "neighbourPairs": 0,
+   "wars": 6,
+   "guarantees": 8,
+   "sample": []
+  },
+  {
+   "d": 150,
+   "pairs": 1,
+   "neighbourPairs": 0,
+   "wars": 8,
+   "guarantees": 8,
+   "sample": []
+  },
+  {
+   "d": 180,
+   "pairs": 1,
+   "neighbourPairs": 0,
+   "wars": 8,
+   "guarantees": 8,
+   "sample": []
+  },
+  {
+   "d": 210,
+   "pairs": 1,
+   "neighbourPairs": 0,
+   "wars": 10,
+   "guarantees": 6,
+   "sample": []
+  },
+  {
+   "d": 240,
+   "pairs": 1,
+   "neighbourPairs": 0,
+   "wars": 10,
+   "guarantees": 6,
+   "sample": []
+  },
+  {
+   "d": 270,
+   "pairs": 1,
+   "neighbourPairs": 0,
+   "wars": 9,
+   "guarantees": 6,
+   "sample": []
+  },
+  {
+   "d": 300,
+   "pairs": 1,
+   "neighbourPairs": 0,
+   "wars": 9,
+   "guarantees": 6,
+   "sample": []
+  },
+  {
+   "d": 330,
+   "pairs": 1,
+   "neighbourPairs": 0,
+   "wars": 10,
+   "guarantees": 6,
+   "sample": []
+  },
+  {
+   "d": 360,
+   "pairs": 4,
+   "neighbourPairs": 1,
+   "wars": 10,
+   "guarantees": 4,
+   "sample": [
+    "ENG-BCO"
+   ]
+  }
+ ],
+ "hashes": [
+  "fe607d1d"
+ ],
+ "guaranteesEnd": [
+  "FRA>POL",
+  "ENG>POR",
+  "ENG>IRQ",
+  "SOV>CHI"
+ ]
+}

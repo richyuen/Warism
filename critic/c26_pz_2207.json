@@ -1,0 +1,776 @@
+{
+ "seed": 2207,
+ "days": 365,
+ "tot": {
+  "puppetDays": 14658,
+  "puppetBeside": 11388,
+  "allyDays": 10623,
+  "allyBeside": 6931
+ },
+ "puppets": {
+  "ALB>ITA": {
+   "days": 365,
+   "beside": 342,
+   "run": 170,
+   "longest": 170,
+   "why": {
+    "Subject": 23,
+    "Beside": 342
+   }
+  },
+  "IRE>ENG": {
+   "days": 31,
+   "beside": 0,
+   "run": 0,
+   "longest": 0,
+   "why": {
+    "Subject": 31
+   }
+  },
+  "ICE>DEN": {
+   "days": 31,
+   "beside": 18,
+   "run": 18,
+   "longest": 18,
+   "why": {
+    "Subject": 13,
+    "Beside": 18
+   }
+  },
+  "EGY>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "SUD>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "BEA>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "BCO>BEL": {
+   "days": 207,
+   "beside": 189,
+   "run": 157,
+   "longest": 157,
+   "why": {
+    "Subject": 18,
+    "Beside": 189
+   }
+  },
+  "ANG>POR": {
+   "days": 365,
+   "beside": 97,
+   "run": 0,
+   "longest": 65,
+   "why": {
+    "Subject": 268,
+    "Beside": 97
+   }
+  },
+  "MOZ>POR": {
+   "days": 365,
+   "beside": 97,
+   "run": 0,
+   "longest": 65,
+   "why": {
+    "Subject": 268,
+    "Beside": 97
+   }
+  },
+  "SAF>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "SRH>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "NIG>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "GCO>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "AOF>FRA": {
+   "days": 365,
+   "beside": 347,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 18,
+    "Beside": 347
+   }
+  },
+  "AEF>FRA": {
+   "days": 365,
+   "beside": 347,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 18,
+    "Beside": 347
+   }
+  },
+  "MAD>FRA": {
+   "days": 365,
+   "beside": 347,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 18,
+    "Beside": 347
+   }
+  },
+  "FMO>FRA": {
+   "days": 365,
+   "beside": 347,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 18,
+    "Beside": 347
+   }
+  },
+  "TUN>FRA": {
+   "days": 365,
+   "beside": 347,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 18,
+    "Beside": 347
+   }
+  },
+  "SYR>FRA": {
+   "days": 365,
+   "beside": 347,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 18,
+    "Beside": 347
+   }
+  },
+  "LEB>FRA": {
+   "days": 365,
+   "beside": 347,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 18,
+    "Beside": 347
+   }
+  },
+  "PAL>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "TRJ>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "OMN>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "RAJ>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "BUR>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "CEY>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "INC>FRA": {
+   "days": 365,
+   "beside": 347,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 18,
+    "Beside": 347
+   }
+  },
+  "MAL>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "SAR>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "DEI>NED": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "PHI>USA": {
+   "days": 365,
+   "beside": 251,
+   "run": 13,
+   "longest": 238,
+   "why": {
+    "Subject": 114,
+    "Beside": 251
+   }
+  },
+  "MAN>JAP": {
+   "days": 261,
+   "beside": 261,
+   "run": 261,
+   "longest": 261,
+   "why": {
+    "Beside": 261
+   }
+  },
+  "MEN>JAP": {
+   "days": 214,
+   "beside": 214,
+   "run": 214,
+   "longest": 214,
+   "why": {
+    "Beside": 214
+   }
+  },
+  "SIN>SOV": {
+   "days": 365,
+   "beside": 281,
+   "run": 186,
+   "longest": 186,
+   "why": {
+    "Subject": 84,
+    "Beside": 281
+   }
+  },
+  "MON>SOV": {
+   "days": 365,
+   "beside": 281,
+   "run": 186,
+   "longest": 186,
+   "why": {
+    "Subject": 84,
+    "Beside": 281
+   }
+  },
+  "TAN>SOV": {
+   "days": 365,
+   "beside": 281,
+   "run": 186,
+   "longest": 186,
+   "why": {
+    "Subject": 84,
+    "Beside": 281
+   }
+  },
+  "AST>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "NZL>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "CAN>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "NFL>ENG": {
+   "days": 365,
+   "beside": 315,
+   "run": 315,
+   "longest": 315,
+   "why": {
+    "Subject": 50,
+    "Beside": 315
+   }
+  },
+  "REP>NSP": {
+   "days": 324,
+   "beside": 0,
+   "run": 0,
+   "longest": 0,
+   "why": {
+    "Truce": 324
+   }
+  },
+  "BUL>TUR": {
+   "days": 271,
+   "beside": 0,
+   "run": 0,
+   "longest": 0,
+   "why": {
+    "Truce": 271
+   }
+  },
+  "ROM>SOV": {
+   "days": 246,
+   "beside": 0,
+   "run": 0,
+   "longest": 0,
+   "why": {
+    "Truce": 246
+   }
+  },
+  "LAT>SOV": {
+   "days": 224,
+   "beside": 0,
+   "run": 0,
+   "longest": 0,
+   "why": {
+    "Truce": 224
+   }
+  },
+  "COL>USA": {
+   "days": 1,
+   "beside": 0,
+   "run": 0,
+   "longest": 0,
+   "why": {
+    "Truce": 1
+   }
+  },
+  "COL>PRU": {
+   "days": 61,
+   "beside": 0,
+   "run": 0,
+   "longest": 0,
+   "why": {
+    "Truce": 61
+   }
+  },
+  "TUR>IRN": {
+   "days": 12,
+   "beside": 0,
+   "run": 0,
+   "longest": 0,
+   "why": {
+    "Truce": 12
+   }
+  }
+ },
+ "topPuppets": [
+  [
+   "AOF>FRA",
+   {
+    "days": 365,
+    "beside": 347,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 18,
+     "Beside": 347
+    }
+   }
+  ],
+  [
+   "AEF>FRA",
+   {
+    "days": 365,
+    "beside": 347,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 18,
+     "Beside": 347
+    }
+   }
+  ],
+  [
+   "MAD>FRA",
+   {
+    "days": 365,
+    "beside": 347,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 18,
+     "Beside": 347
+    }
+   }
+  ],
+  [
+   "FMO>FRA",
+   {
+    "days": 365,
+    "beside": 347,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 18,
+     "Beside": 347
+    }
+   }
+  ],
+  [
+   "TUN>FRA",
+   {
+    "days": 365,
+    "beside": 347,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 18,
+     "Beside": 347
+    }
+   }
+  ],
+  [
+   "SYR>FRA",
+   {
+    "days": 365,
+    "beside": 347,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 18,
+     "Beside": 347
+    }
+   }
+  ],
+  [
+   "LEB>FRA",
+   {
+    "days": 365,
+    "beside": 347,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 18,
+     "Beside": 347
+    }
+   }
+  ],
+  [
+   "INC>FRA",
+   {
+    "days": 365,
+    "beside": 347,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 18,
+     "Beside": 347
+    }
+   }
+  ],
+  [
+   "ALB>ITA",
+   {
+    "days": 365,
+    "beside": 342,
+    "run": 170,
+    "longest": 170,
+    "why": {
+     "Subject": 23,
+     "Beside": 342
+    }
+   }
+  ],
+  [
+   "EGY>ENG",
+   {
+    "days": 365,
+    "beside": 315,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 50,
+     "Beside": 315
+    }
+   }
+  ],
+  [
+   "SUD>ENG",
+   {
+    "days": 365,
+    "beside": 315,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 50,
+     "Beside": 315
+    }
+   }
+  ],
+  [
+   "BEA>ENG",
+   {
+    "days": 365,
+    "beside": 315,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 50,
+     "Beside": 315
+    }
+   }
+  ],
+  [
+   "SAF>ENG",
+   {
+    "days": 365,
+    "beside": 315,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 50,
+     "Beside": 315
+    }
+   }
+  ],
+  [
+   "SRH>ENG",
+   {
+    "days": 365,
+    "beside": 315,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 50,
+     "Beside": 315
+    }
+   }
+  ],
+  [
+   "NIG>ENG",
+   {
+    "days": 365,
+    "beside": 315,
+    "run": 315,
+    "longest": 315,
+    "why": {
+     "Subject": 50,
+     "Beside": 315
+    }
+   }
+  ]
+ ],
+ "allies": [
+  [
+   "CHI&CCP",
+   {
+    "days": 365,
+    "beside": 365
+   }
+  ],
+  [
+   "GER&ITA",
+   {
+    "days": 365,
+    "beside": 342
+   }
+  ],
+  [
+   "GER&JAP",
+   {
+    "days": 365,
+    "beside": 342
+   }
+  ],
+  [
+   "ITA&JAP",
+   {
+    "days": 365,
+    "beside": 342
+   }
+  ],
+  [
+   "FRA&ENG",
+   {
+    "days": 365,
+    "beside": 315
+   }
+  ],
+  [
+   "FRA&NED",
+   {
+    "days": 351,
+    "beside": 315
+   }
+  ],
+  [
+   "ENG&NED",
+   {
+    "days": 351,
+    "beside": 315
+   }
+  ],
+  [
+   "FRA&SWI",
+   {
+    "days": 349,
+    "beside": 315
+   }
+  ],
+  [
+   "ENG&SWI",
+   {
+    "days": 349,
+    "beside": 315
+   }
+  ],
+  [
+   "SWI&NED",
+   {
+    "days": 349,
+    "beside": 315
+   }
+  ],
+  [
+   "GER&POL",
+   {
+    "days": 362,
+    "beside": 223
+   }
+  ],
+  [
+   "POL&ITA",
+   {
+    "days": 362,
+    "beside": 223
+   }
+  ],
+  [
+   "POL&JAP",
+   {
+    "days": 362,
+    "beside": 223
+   }
+  ],
+  [
+   "GRE&TUR",
+   {
+    "days": 353,
+    "beside": 210
+   }
+  ],
+  [
+   "HUN&ENG",
+   {
+    "days": 252,
+    "beside": 194
+   }
+  ]
+ ]
+}

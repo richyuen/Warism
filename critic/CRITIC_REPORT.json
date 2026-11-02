@@ -1,5 +1,5 @@
 {
-  "commit": "e438647868ff15f829d3f4e5f92570e1b27471b3",
+  "commit": "33c84306e54134456989126a3b16d545d9a9153c",
   "scores": {
     "mapVisuals": 7,
     "diplomacyWarDepth": 6,
@@ -18,11 +18,11 @@
   },
   "blocking": [
     {
-      "id": "R25-B1",
-      "title": "A refused peace is escaped in one click: declaring war on one's partner in a war ends that war at once, all occupation undone, no peace, no truce, no log line",
-      "evidence": "critic/c25_es2_head_7019_d10.json, critic/c25_es2_head_2531_d10.json, critic/c25_es2_head_8467_d10.json (Poland, peace refused 'lead the war score by 25 (now +1)', declares on France; Germany 'Neutral' 2 h later; re-declaring on Germany accepted at once), critic/shots/c25es2_head_7019_germenu_refused.png, critic/shots/c25es2_head_7019_germenu_after.png; run 24's build: critic/c25_es2_c24_7019_d10.json, critic/shots/c25es2_c24_7019_d10_germenu_after.png (still at war, still refused); headless critic/c25_exit_head_{7019,2531,8467}.json (3 of 3: 377+60, 249+39, 342+42 held cells to 0 in an hour) vs critic/c25_exit_c24_*.json (0 of 3); attacker side critic/c25_cobel_head_GER_ITA_POL.json vs critic/c25_cobel_c24_GER_ITA_POL.json, critic/shots/c25es_head_7019_d61_before.png, critic/shots/c25es_head_7019_d61_after.png",
-      "fix": "A nation must not leave a war by declaring a new one (PLAN 7.188's leaveWarsWhere in declareWar). Where an attacker would stand against a nation it fights beside, refuse the declaration or keep that nation out of the new war, rather than pull the attacker out of the old one; if it must leave, leave as a peace would (the enemy's acceptance, a truce, and a log row 'X left the war with Y')."
+      "id": "R26-B1",
+      "title": "A puppet cannot break free of an overlord at war, and a puppet's revolt starts no war of independence; an ally's Force war on its ally is refused most of the time (ADR-780 and SPEC's war of independence contradicted by PLAN 7.189's Refusal.Beside)",
+      "evidence": "critic/c26_pz_{7019,2207,5113,9241}.json (puppet on overlord refused for Beside on 73/78/59/76 % of puppet-days; Manchukuo->Japan 365/365 on 7019, 5113, 9241; Albania->Italy 363/365; ally on ally 66/65/54/52 % of allied-pair days), critic/c26_pr_head_7019_MAN.json and critic/c26_pr_head_7019_ALB.json (Force war -> WarRejected; God's revolt -> PuppetRevolt then WarRejected, the rebel free and fighting beside Japan in all three of its wars) against critic/c26_pr_c25_7019_MAN.json and critic/c26_pr_c25_7019_ALB.json (e4386478: freed and at war with the overlord both ways), critic/shots/c26pp_head_7019_MAN_menu_before.png (playing Manchukuo: Japan 'Fights beside you', war greyed) against critic/shots/c26pp_c25_7019_MAN_menu_before.png and critic/shots/c26pp_c25_7019_MAN_menu_after.png ('Your overlord / Force war' -> war of independence), critic/c26_fw2_2207.json (Albania's war on Italy greyed) against critic/c25_fw2_2207.json (case B: Albania freed)",
+      "fix": "Keep R25-B1 closed for partners with no bond, but let a bond's break win over Beside: where forceWar frees a puppet or takes an ally out of its alliance, and where puppetSystem frees a rebel, the attacker first leaves the wars it fights beside the defender in (the leaveBondedWars way, with its WarLeft row, and a truce with those wars' enemies if the exit is not to be free), then declares. The new war against the overlord or ally is the cost, so this is not run 25's free exit."
     }
   ],
-  "timestamp": "2026-11-02T13:40:00Z"
+  "timestamp": "2026-11-02T15:45:00Z"
 }

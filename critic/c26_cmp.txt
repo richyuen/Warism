@@ -1,0 +1,407 @@
+c26_a_4219.json => 
+    .notes.francePanel: Warism
+World war simulator
+Resume
+−
+Speed ×5
++
+God Mode
+Map: Political
+Statistic != Warism
+World war simulator
+Resume
+−
+Speed ×5
++
+God Mode
+Map: Political
+Statistic
+    .notes.titleButtons[3]: 924367502 != 8375921
+c26_c_7019.json => identical
+c26_cb2_7019_GER_POL_10.json => identical
+c26_cb_7019.json => identical
+c26_cmp.json => 
+    .c25_a_4219.json: only in c25
+    .c25_c_7019.json: only in c25
+    .c25_cb2_7019_GER_POL_10.json: only in c25
+    .c25_cb_7019.json: only in c25
+    .c25_cmp.json: only in c25
+    .c25_dl_7019.json: only in c25
+    .c25_dp.json: only in c25
+    .c25_dr_rnd_8821.json: only in c25
+    .c25_ex2_4441.json: only in c25
+    .c25_fo_7019.json: only in c25
+    .c25_fp2_4877.json: only in c25
+    .c25_ft_5381_d21.json: only in c25
+    .c25_fw2_2207.json: only in c25
+    .c25_fw_2207.json: only in c25
+    .c25_g_4877.json: only in c25
+    .c25_gu_3739.json: only in c25
+    .c25_headless_7019.json: only in c25
+    .c25_hi_7019.json: only in c25
+    .c25_hs_3739.json: only in c25
+    .c25_hu_7019_d12.json: only in c25
+    .c25_hv_3739.json: only in c25
+    .c25_k2_2203.json: only in c25
+    .c25_k3_2203.json: only in c25
+    .c25_k_2203.json: only in c25
+    .c25_os2_c10.json: only in c25
+    .c25_os_c10fmt1.json: only in c25
+    .c25_os_scen.json: only in c25
+    .c25_p.json: only in c25
+    .c25_p2_phone_menu.json: only in c25
+    .c25_p3_widths.json: only in c25
+    .c25_ph.json: only in c25
+    .c25_pl_6011.json: only in c25
+    .c25_pt_touch.json: only in c25
+    .c25_q_6421.json: only in c25
+    .c25_sb_7019.json: only in c25
+    .c25_sx_4441.json: only in c25
+    .c25_sxg_3917_ITA.json: only in c25
+    .c25_sxg_6827_JAP.json: only in c25
+    .c25_sxt_4441.json: only in c25
+    .c25_td_3391.json: only in c25
+    .c25_tg_7019.json: only in c25
+    .c25_u_1600_5557.json: only in c25
+    .c25_w_5557.json: only in c25
+    .c25_ww_3301.json: only in c25
+    .c25_z_5861.json: only in c25
+    .c26_cb2_7019_GER_POL_10.json: only in c26
+    .c26_cb_7019.json: only in c26
+    .c26_cobel_head_GER_ITA_POL.json: only in c26
+    .c26_dr_rnd_8821.json: only in c26
+    .c26_dyn.json: only in c26
+    .c26_es2_head_2531_d10.json: only in c26
+    .c26_es2_head_7019_d10.json: only in c26
+    .c26_es2_head_8467_d10.json: only in c26
+    .c26_es_head_7019.json: only in c26
+    .c26_ex2_4441.json: only in c26
+    .c26_exit_head_2531.json: only in c26
+    .c26_exit_head_7019.json: only in c26
+    .c26_exit_head_8467.json: only in c26
+    .c26_fo_7019.json: only in c26
+    .c26_fw2_2207.json: only in c26
+    .c26_fw_2207.json: only in c26
+    .c26_g_4877.json: only in c26
+    .c26_gu_3739.json: only in c26
+    .c26_headless_2531.json: only in c26
+    .c26_headless_7019.json: only in c26
+    .c26_headless_8467.json: only in c26
+    .c26_hs_3739.json: only in c26
+    .c26_hu_7019_d12.json: only in c26
+    .c26_hv_3739.json: only in c26
+    .c26_k2_2203.json: only in c26
+    .c26_k3_2203.json: only in c26
+    .c26_k_2203.json: only in c26
+    .c26_os2_c10.json: only in c26
+    .c26_os_scen.json: only in c26
+    .c26_p.json: only in c26
+    .c26_p2_phone_menu.json: only in c26
+    .c26_p3_widths.json: only in c26
+    .c26_ph.json: only in c26
+    .c26_pl_6011.json: only in c26
+    .c26_pt_touch.json: only in c26
+    .c26_q_6421.json: only in c26
+    .c26_sb_7019.json: only in c26
+    .c26_sx_4441.json: only in c26
+    .c26_sxg_3917_ITA.json: only in c26
+    .c26_sxg_6827_JAP.json: only in c26
+    .c26_sxt_4441.json: only in c26
+    .c26_td_3391.json: only in c26
+    .c26_tg_7019.json: only in c26
+    .c26_u_1600_5557.json: only in c26
+    .c26_w_5557.json: only in c26
+c26_cobel_head_GER_ITA_POL.json => 
+    [3].GER holds POL: 0 != 133
+    [3].GER v ITA: True != False
+    [3].GER v POL: False != True
+    [3].POL holds GER: 0 != 250
+    [3].evs[0]: 61.08 WarDeclared GER ITA != 61.08 WarRejected GER ITA
+    [3].wars: len 7 != 6
+    [3].wars[1].a: len 5 != 6
+c26_dl_7019.json => 
+    .bin: critic/cXX_seed7019_y20.bin != critic/c26_seed7019_y20.bin
+    .count: 3596 of 3596 events != 3717 of 3717 events
+    .csv.bytes: 434007 != 449376
+    .csv.lines: 3598 != 3719
+    .json.bytes: 851862 != 881404
+    .json.lines: 35962 != 37172
+c26_dr_rnd_8821.json => 
+    .days[0].china: critic/shots/cXXdr_rnd_8821_d1_china.png != critic/shots/c26dr_rnd_8821_d1_china.png
+    .days[0].chinaPanel: China
+×
+Take control
+Overview
+Economy
+Land (km²)
+4,937,220
+Share of world land
+3 != China
+×
+Take control
+Overview
+Economy
+Land (km²)
+4,937,220
+Share of world land
+3
+    .days[0].world: critic/shots/cXXdr_rnd_8821_d1_world.png != critic/shots/c26dr_rnd_8821_d1_world.png
+    .days[1].china: critic/shots/cXXdr_rnd_8821_d180_china.png != critic/shots/c26dr_rnd_8821_d180_china.png
+    .days[1].chinaPanel: China
+×
+Take control
+Overview
+Economy
+Land (km²)
+4,936,713
+Share of world land
+3 != China
+×
+Take control
+Overview
+Economy
+Land (km²)
+4,936,713
+Share of world land
+3
+    .days[1].world: critic/shots/cXXdr_rnd_8821_d180_world.png != critic/shots/c26dr_rnd_8821_d180_world.png
+c26_dyn.json => 
+    .7019.rows[0].declared[0]: 30 != 27
+    .7019.rows[0].flipped[0]: 34759 != 30932
+    .7019.rows[0].sea[0]: 60 != 54
+    .7019.rows[0].tiny[0]: 24 != 20
+    .7019.rows[0].top3[0][0]: Soviet Union 28.8% != Soviet Union 27.4%
+    .7019.rows[0].wars[0]: 9 != 10
+    .7019.rows[1].annexed[0]: 10 != 7
+c26_es2_head_2531_d10.json => 
+    .error: only in c26
+    .menuFra.standing: Neutral != Fights beside you
+    .menuGerAfter: only in c25
+    .steps: len 4 != 2
+c26_es2_head_7019_d10.json => 
+    .error: only in c26
+    .menuFra.standing: Neutral != Fights beside you
+    .menuGerAfter: only in c25
+    .steps: len 4 != 2
+c26_es2_head_8467_d10.json => 
+    .error: only in c26
+    .menuFra.standing: Neutral != Fights beside you
+    .menuGerAfter: only in c25
+    .steps: len 4 != 2
+c26_es_head_7019.json => 
+    .error: only in c26
+    .menuIta.standing: Allied != Fights beside you
+    .menuPolAfter: only in c25
+    .polPanel: only in c25
+    .steps: len 3 != 2
+c26_ex2_4441.json => 
+    .fatal: locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByTest != locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByTest
+c26_exit_head_2531.json => 
+    .evs[6]: 45.04 WarDeclared POL FRA != 45.04 WarRejected POL FRA
+    .evs[7]: 45.08 WarDeclared POL GER != 45.08 WarRejected POL GER
+    .log[2].gerHoldsPol: 0 != 39
+    .log[2].polFra: True != False
+    .log[2].polGer: False != True
+    .log[2].polHoldsGer: 0 != 250
+    .log[2].wars: len 3 != 2
+c26_exit_head_7019.json => 
+    .evs[6]: 45.04 WarDeclared POL FRA != 45.04 WarRejected POL FRA
+    .evs[7]: 45.08 WarDeclared POL GER != 45.08 WarRejected POL GER
+    .log[2].gerHoldsPol: 0 != 60
+    .log[2].polFra: True != False
+    .log[2].polGer: False != True
+    .log[2].polHoldsGer: 0 != 377
+    .log[2].wars: len 4 != 3
+c26_exit_head_8467.json => 
+    .evs[8]: 45.04 WarDeclared POL FRA != 45.04 WarRejected POL FRA
+    .evs[9]: 45.08 WarDeclared POL GER != 45.08 WarRejected POL GER
+    .log[2].gerHoldsPol: 0 != 42
+    .log[2].polFra: True != False
+    .log[2].polGer: False != True
+    .log[2].polHoldsGer: 0 != 342
+    .log[2].wars: len 2 != 1
+c26_fo_7019.json => 
+    .steps[10].cam[0]: 929.91 != 928.98
+    .steps[10].distPx: 449.9 != 465.1
+    .steps[11].cam[0]: 929.91 != 928.98
+    .steps[11].distPx: 985.3 != 999.2
+c26_fp2_4877.json => identical
+c26_ft_5381_d21.json => identical
+c26_fw2_2207.json => 
+    .cases: len 2 != 1
+    .cases[0].after0.ger.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .cases[0].after0.ita.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .cases[0].after0.jap.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .cases[0].after30.ger.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .cases[0].after30.ita.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .cases[0].after30.jap.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .fatal: only in c26
+c26_fw_2207.json => 
+    .cases: len 2 != 1
+    .cases[0].after0.ger.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .cases[0].after0.ita.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .cases[0].after0.jap.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .cases[0].after30.ger.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .cases[0].after30.ita.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .cases[0].after30.jap.keys: id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man != id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,man
+    .fatal: only in c26
+c26_g_4877.json => 
+    .fatal: page.waitForFunction: Timeout 900000ms exceeded.
+    at C:\Git\Warism\critic\scr != page.waitForFunction: Timeout 900000ms exceeded.
+    at C:\Git\Warism\critic\scr
+    .marks[0].fleetsNear.ENG.within15: 2 != 3
+    .marks[0].histSea: len 0 != 1
+    .marks[0].sea: 0 != 2
+    .marks[0].tickerSea: len 0 != 1
+    .marks[1].histSea: len 2 != 1
+    .marks[2].fleetsNear.GER.afloat: 9 != 7
+c26_gu_3739.json => 
+    .czs: Czechoslovakia
+×
+Take control
+Overview
+Economy
+Land (km²)
+139,644
+Share of world != Czechoslovakia
+×
+Take control
+Overview
+Economy
+Land (km²)
+139,644
+Share of world
+    .sov: Soviet Union
+×
+Take control
+Overview
+Economy
+Land (km²)
+21,193,759
+Share of worl != Soviet Union
+×
+Take control
+Overview
+Economy
+Land (km²)
+21,193,759
+Share of worl
+c26_headless_2531.json => 
+    .nukeLog: len 175 != 120
+    .nukeLog[0].at[0]: 1076.5 != 1073.65
+    .nukeLog[0].at[1]: 458.5 != 343.82
+    .nukeLog[0].tick: 139393 != 140305
+    .nukeLog[0].year: 16 != 17
+    .nukeLog[1].at[0]: 1076.5 != 1073.65
+    .nukeLog[1].at[1]: 458.5 != 343.82
+c26_headless_7019.json => 
+    .nukeLog: len 71 != 51
+    .nukeLog[26].at[0]: 761.5 != 1414.5
+    .nukeLog[26].at[1]: 200.5 != 39.5
+    .nukeLog[26].by: Soviet Union != United Kingdom
+    .nukeLog[26].tick: 124849 != 137833
+    .nukeLog[26].year: 15 != 16
+    .nukeLog[27].at[0]: 761.5 != 1414.5
+c26_headless_8467.json => 
+    .nukeLog: len 65 != 298
+    .nukeLog[0].at[0]: 647.5 != 1174.5
+    .nukeLog[0].at[1]: 491.5 != 362.5
+    .nukeLog[0].by: Belgium != Soviet Union
+    .nukeLog[0].missile: 1 != 0
+    .nukeLog[0].tick: 117337 != 94945
+    .nukeLog[0].year: 14 != 11
+c26_hi_7019.json => 
+    .bin: critic/cXX_seed7019_y20.bin != critic/c26_seed7019_y20.bin
+    .byKind: len 25 != 27
+    .byKind[0].count: 300 of 3596 events != 320 of 3717 events
+    .byKind[1].count: 86 of 3596 events != 96 of 3717 events
+    .byKind[2].count: 254 of 3596 events != 265 of 3717 events
+    .byKind[3].count: 239 of 3596 events != 256 of 3717 events
+    .byKind[4].count: 62 of 3596 events != 70 of 3717 events
+c26_hs_3739.json => identical
+c26_hu_7019_d12.json => identical
+c26_hv_3739.json => 
+    .samples[5].rows[0][2]: 0 != 383
+    .samples[5].rows[0][3]: 0 != 1
+    .samples[5].rows[0][4]: 59 != None
+    .samples[5].rows[1][3]: 1 != 0.97
+    .samples[5].rows[3][3]: 0.96 != 1
+    .samples[5].rows[7][2]: 0 != 1479
+    .samples[5].rows[7][3]: 0 != 1
+c26_k2_2203.json => identical
+c26_k3_2203.json => identical
+c26_k_2203.json => identical
+c26_os2_c10.json => 
+    .fatal: page.waitForURL: Timeout 30000ms exceeded.
+=========================== logs ==== != page.waitForURL: Timeout 30000ms exceeded.
+=========================== logs ====
+c26_os_c10fmt1.json => 
+    .steps[0].text: Warism
+
+WORLD WAR SIMULATOR
+
+SAVED GAME
+World, 1938
+27 December 1957
+Saved 11/1/ != Warism
+
+WORLD WAR SIMULATOR
+
+SAVED GAME
+World, 1938
+27 December 1957
+Saved 11/1/
+    .steps[1].text: Warism
+
+WORLD WAR SIMULATOR
+
+SAVED GAME
+World, 1938
+27 December 1957
+Saved 11/1/ != Warism
+
+WORLD WAR SIMULATOR
+
+SAVED GAME
+World, 1938
+27 December 1957
+Saved 11/1/
+c26_os_scen.json => 
+    .fatal: page.waitForURL: Timeout 30000ms exceeded.
+=========================== logs ==== != page.waitForURL: Timeout 30000ms exceeded.
+=========================== logs ====
+c26_p.json => identical
+c26_p2_phone_menu.json => identical
+c26_p3_widths.json => identical
+c26_ph.json => identical
+c26_pl_6011.json => 
+    .tabs: len 5 != 6
+c26_pt_touch.json => 
+    .steps[2].cam[1]: 265.88 != 265.89
+c26_q_6421.json => identical
+c26_sb_7019.json => 
+    .views[1].tick: 291 != 290
+    .views[2].tick: 292 != 293
+    .views[3].tick: 295 != 294
+    .views[5].tick: 298 != 299
+c26_sx_4441.json => identical
+c26_sxg_3917_ITA.json => identical
+c26_sxg_6827_JAP.json => identical
+c26_sxt_4441.json => identical
+c26_td_3391.json => identical
+c26_tg_7019.json => identical
+c26_u_1600_5557.json => identical
+c26_w_5557.json => 
+    .raw_x1_250[8].tick: 10 != 9
+    .raw_x1_250[9].mark[1]: 151 != 150
+    .raw_x1_250[9].nearestSortiePx: 739 != 729
+    .raw_x1_250[10].nearestSortiePx: 291 != 281
+    .raw_x1_250[11].nearestSortiePx: 579 != 571
+    .raw_x1_250[12].nearestSortiePx: 231 != 224
+    .raw_x1_250[16].nearestSortiePx: 784 != 774
+c26_ww_3301.json => identical
+c26_z_5861.json => identical

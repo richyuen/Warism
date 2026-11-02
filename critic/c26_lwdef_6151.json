@@ -1,0 +1,241 @@
+{
+ "seed": 6151,
+ "years": [
+  {
+   "frames": 2232,
+   "maxGap": 55,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "28 November 1938 United States declared war on Italy 29 November 1938 Poland declared war on Free City of Danzig 1 December 1938 Japan and United States fought in the air this month: Japan lost 9 aircraft, United States 33 1 December 1938 Soviet Union's air force struck Turkey this month: 9,263 men, guns and vehicles lost 2 December 1938 Free City of Danzig made peace with Poland ⚓ Carrier strike ashore: United States on Japan ×3 ⚓ Carrier strike: United Kingdom on Germany's ships"
+   ],
+   "chips": [
+    "Japan +2 ⚔ China +1",
+    "Ecuador ⚔ Colombia",
+    "Nationalist Spain +35 ⚔ Italy +6",
+    "China +1 ⚔ Tibet",
+    "Soviet Union +5 ⚔ Turkey +2",
+    "Nationalist Spain +36 ⚔ Norway +1"
+   ],
+   "date": "1 January 1939",
+   "nations": 98,
+   "year": 1,
+   "wallS": 37.234,
+   "fps": 59.9,
+   "shot": "critic/shots/c26lwdef_6151_y01_world.png"
+  },
+  {
+   "frames": 1639,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "10 December 1939 United Kingdom captured Angola's capital 10 December 1939 Angola was destroyed 10 December 1939 Soviet Union captured Italy's capital 1 January 1940 China and Japan fought in the air this month: China lost 3 aircraft, Japan 3 1 January 1940 Soviet Union's air force struck Italy this month: 4,081 men, guns and vehicles lost ⚓ Carrier strike: United Kingdom on Germany's ships"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Nationalist Spain +36 ⚔ United States +1",
+    "Soviet Union +5 ⚔ Japan +1",
+    "Germany +3 ⚔ Ecuador",
+    "Nationalist Spain +36 ⚔ Germany +2",
+    "Brazil ⚔ Paraguay"
+   ],
+   "date": "5 January 1940",
+   "nations": 89,
+   "year": 2,
+   "wallS": 27.374,
+   "fps": 59.9,
+   "shot": "critic/shots/c26lwdef_6151_y02_world.png"
+  },
+  {
+   "frames": 1479,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1940 Argentina's air force struck Chile this month: 5,890 men, guns and vehicles lost ⚓ Carrier strike: United Kingdom on Finland's ships"
+   ],
+   "chips": [
+    "Nationalist Spain +35 ⚔ United States +1",
+    "Peru +7 ⚔ Chile",
+    "Iraq ⚔ Saudi Arabia",
+    "Poland +2 ⚔ Saudi Arabia",
+    "China +2 ⚔ South Africa",
+    "Poland +2 ⚔ New Zealand"
+   ],
+   "date": "5 January 1941",
+   "nations": 88,
+   "year": 3,
+   "wallS": 24.634,
+   "fps": 60,
+   "shot": "critic/shots/c26lwdef_6151_y03_world.png"
+  },
+  {
+   "frames": 1478,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "8 December 1941 Free Klaipėda was annexed by Soviet Union 9 December 1941 Czechoslovakia captured Poland's capital 10 December 1941 Free Cabinda made peace with Belgian Congo 14 December 1941 Soviet Union made peace with Poland 14 December 1941 Czechoslovakia made peace with Poland"
+   ],
+   "chips": [
+    "Nationalist Spain +35 ⚔ United States +1",
+    "China +2 ⚔ South Africa",
+    "Soviet Union +5 ⚔ South Africa",
+    "China +3 ⚔ Australia"
+   ],
+   "date": "10 January 1942",
+   "nations": 87,
+   "year": 4,
+   "wallS": 24.626,
+   "fps": 60,
+   "shot": "critic/shots/c26lwdef_6151_y04_world.png"
+  },
+  {
+   "frames": 1387,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1943 Soviet Union's air force struck China this month: 4,644 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "Nationalist Spain +35 ⚔ United States +1",
+    "China +2 ⚔ South Africa",
+    "China +3 ⚔ Australia",
+    "Mexico +6 ⚔ New Zealand",
+    "Brazil +3 ⚔ Venezuela +7",
+    "Soviet Union +8 ⚔ China +3"
+   ],
+   "date": "13 January 1943",
+   "nations": 88,
+   "year": 5,
+   "wallS": 23.159,
+   "fps": 59.9,
+   "shot": "critic/shots/c26lwdef_6151_y05_world.png"
+  },
+  {
+   "frames": 2020,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "20 December 1943 Nationalist Spain captured Turkey's capital 30 December 1943 Nationalist Spain captured Turkey's capital 1 January 1944 Japan's air force struck Soviet Union this month: 3,394 men, guns and vehicles lost ⚓ Carrier strike ashore: United States on Dutch East Indies"
+   ],
+   "chips": [
+    "Nationalist Spain +35 ⚔ United States +1",
+    "China +2 ⚔ South Africa",
+    "China +3 ⚔ Australia",
+    "Soviet Union +6 ⚔ China +3",
+    "Czechoslovakia +33 ⚔ Soviet Union +6",
+    "Argentina ⚔ Peru +7"
+   ],
+   "date": "16 January 1944",
+   "nations": 87,
+   "year": 6,
+   "wallS": 33.663,
+   "fps": 60,
+   "shot": "critic/shots/c26lwdef_6151_y06_world.png"
+  },
+  {
+   "frames": 1604,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "27 December 1944 Dominican Republic made peace with Haiti 1 January 1945 France and United Kingdom fought in the air this month: France lost 15 aircraft, United Kingdom 0 1 January 1945 Belgium's air force struck Free Homs this month: 5,819 men, guns and vehicles lost 1 January 1945 Free Homs was annexed by Nationalist Spain 6 January 1945 Soviet Union made peace with China"
+   ],
+   "chips": [
+    "Peru +6 ⚔ Brazil +3",
+    "Soviet Union +7 ⚔ France +8",
+    "Nationalist Spain +20 ⚔ France +8",
+    "Argentina ⚔ Brazil +3",
+    "United States ⚔ Austria +21",
+    "Chile ⚔ Brazil +3"
+   ],
+   "date": "16 January 1945",
+   "nations": 87,
+   "year": 7,
+   "wallS": 26.781,
+   "fps": 59.9,
+   "shot": "critic/shots/c26lwdef_6151_y07_world.png"
+  },
+  {
+   "frames": 2208,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1946 France and United States fought in the air this month: France lost 63 aircraft, United States 36 1 January 1946 France's air force struck United States this month: 3,898 men, guns and vehicles lost 1 January 1946 Free Astrakhan broke away from Soviet Union 12 January 1946 Mongolia captured Burma's capital 12 January 1946 Burma was destroyed ⚓ Carrier strike: United States on France's ships"
+   ],
+   "chips": [
+    "Soviet Union +6 ⚔ France +2",
+    "Nationalist Spain +16 ⚔ France +2",
+    "United States ⚔ Austria +16",
+    "Chile ⚔ Brazil +3",
+    "Soviet Union +7 ⚔ Nationalist Spain +15",
+    "Soviet Union +7 ⚔ Manchukuo"
+   ],
+   "date": "18 January 1946",
+   "nations": 76,
+   "year": 8,
+   "wallS": 36.786,
+   "fps": 60,
+   "shot": "critic/shots/c26lwdef_6151_y08_world.png"
+  },
+  {
+   "frames": 1773,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1947 United Kingdom's air force struck Soviet Union this month: 7,655 men, guns and vehicles lost 16 January 1947 United Kingdom struck Turkey with an atomic bomb near Corum: 3,000 civilians killed; 7,371 men, 26 guns and 15 tanks lost"
+   ],
+   "chips": [
+    "Nationalist Spain +16 ⚔ France +1",
+    "Soviet Union +7 ⚔ Nationalist Spain +15",
+    "Soviet Union +7 ⚔ Netherlands",
+    "Peru +9 ⚔ Argentina",
+    "Saudi Arabia +3 ⚔ Yemen",
+    "Brazil +3 ⚔ Mexico +8"
+   ],
+   "date": "19 January 1947",
+   "nations": 75,
+   "year": 9,
+   "wallS": 29.593,
+   "fps": 59.9,
+   "shot": "critic/shots/c26lwdef_6151_y09_world.png"
+  },
+  {
+   "frames": 2117,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "20 December 1947 Ireland captured Netherlands's capital 31 December 1947 Soviet Union captured Belgium's capital 1 January 1948 United Kingdom and United States fought in the air this month: United Kingdom lost 28 aircraft, United States 54 1 January 1948 United Kingdom's air force struck Soviet Union this month: 6,057 men, guns and vehicles lost 10 January 1948 France captured Liberia's capital"
+   ],
+   "chips": [
+    "Nationalist Spain +13 ⚔ France +1",
+    "Soviet Union +7 ⚔ Nationalist Spain +12",
+    "United States ⚔ United Kingdom +14",
+    "Mongolia ⚔ Communist China",
+    "Brazil +8 ⚔ Netherlands +7"
+   ],
+   "date": "20 January 1948",
+   "nations": 70,
+   "year": 10,
+   "wallS": 35.337,
+   "fps": 59.9,
+   "shot": "critic/shots/c26lwdef_6151_y10_world.png"
+  }
+ ],
+ "fight": {
+  "best": [
+   1050.25687570434,
+   270.17019923254924
+  ],
+  "bn": 11,
+  "engaged": 20
+ },
+ "errors": []
+}
