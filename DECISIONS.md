@@ -167,7 +167,7 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
-### ADR-795 · 2026-11-02 · proposed (the user's decision) — PLAN 7.185: the re-scoped AT missed by 3 points; the heroes overseas
+### ADR-795 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.185: the re-scoped AT missed by 3 points; the heroes overseas
 **Context.** ADR-794 (a)'s AT on 1481–1490 × 3 (`docs/evidence/7.185/at-run.md`), with `joinFights` and its fallback to
 the fights' own cells (uncommitted; the unit test red without): 110 of 172 hero lives at or above their nation's
 top-decile regular, 0.640 against 2/3. By nation (pass/miss): ENG 10/20, USA 2/9, FRA 23/8, GER 12/7, ITA 24/4, JAP
@@ -179,8 +179,9 @@ regulars (3–7) the top decile is its best one.
 overseas (by the lift, as a division of its nation is), AT the same bar on unseen seeds (recommended); (b) commit the
 rule and count the AT only where the hero's army fights on the hero's own land: ticked (0.75 on the lives so counted);
 (c) keep 7.185 open for the lift now; (d) drop the rule, close not done.
-**Until then.** The rule and its test stay out of `main`; the probes, the sweep's `--heroes on` and the evidence are
-committed.
+**Decided (a).** The rule committed (`joinFights`, `HERO_TRIES`, the fallback to the fights' cells) with its unit test;
+7.185 closed not done; PLAN 7.186 for the heroes overseas, which carries the sweep:quick smoke. The pin of seed 99 is
+unchanged (no hero without the option).
 
 ### ADR-794 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.185: the AT missed; the bar is above the regulars
 **Context.** 7.185's read (`docs/evidence/7.185/at-run.md`, `tools/diag/heroLandWhy.ts`): on its army's fighting days a

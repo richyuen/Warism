@@ -234,7 +234,7 @@ describe('a hero against standard forces (PLAN 7.184a3; tests/helpers/heroFight.
 });
 
 // PLAN 7.184e: the AI uses its heroes. At war a sea hero goes with its nation's largest fleet,
-// every day (ADR-793 a: the land hero's rule was dropped, PLAN 7.185).
+// every day (ADR-793 a); a land hero joins its army's nearest fight (PLAN 7.185).
 describe('heroes in the AI (PLAN 7.184e)', () => {
   const nationOf = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
   const heroNamed = (w: World, id: string): number => heroIds(w).find((f) => TEMPLATES_1938[w.formations.cols.template[f]!]!.id === id)!;
@@ -244,6 +244,36 @@ describe('heroes in the AI (PLAN 7.184e)', () => {
       w.out.fires.length = 0;
     });
   };
+
+  // PLAN 7.185: a land hero joins its army's nearest fight (`joinFights`, ADR-794 a).
+  it("at war with Poland the Maus's first march is on a Polish formation by a German fight, or on that fight", () => {
+    const sim = make('on');
+    const [GER, POL] = [nationOf('GER'), nationOf('POL')];
+    sim.command({ kind: 'declareWar', attacker: GER, defender: POL });
+    const w = sim.world;
+    const f = w.formations.cols;
+    const W0 = w.cells.w;
+    const maus = heroNamed(w, 'hero_maus');
+    const cellOf = (id: number): number => Math.floor(f.y[id]!) * W0 + Math.floor(f.x[id]!);
+    const near = (a: number, b: number): boolean => Math.abs((a % W0) - (b % W0)) <= 1 && Math.abs(Math.floor(a / W0) - Math.floor(b / W0)) <= 1;
+    let checked = false;
+    for (let d = 0; d < 20 && !checked; d++) {
+      // The fights of Germany and the Polish formations at the day's start, when the plan reads them.
+      const fights: number[] = [];
+      const poles: number[] = [];
+      w.formations.forEach((id) => {
+        if (w.isFleet(id) || w.isWing(id)) return;
+        if (f.nation[id] === GER && f.engaged[id] === 1 && id !== maus) fights.push(cellOf(id));
+        if (f.nation[id] === POL) poles.push(cellOf(id));
+      });
+      day(sim);
+      if (!w.formations.has(maus) || f.moving[maus] !== 1 || fights.length === 0) continue;
+      const t = f.targetCell[maus]!;
+      expect(fights.some((c) => near(c, t)) || poles.some((c) => near(c, t)), `day ${d + 1}: the Maus sent at a fight or a Polish formation`).toBe(true);
+      checked = true;
+    }
+    expect(checked, 'the Maus marched while Germany fought').toBe(true);
+  });
 
   it('at war the Bismarck goes with Germany’s largest fleet: sent to another port, the fleet has the Bismarck after it a day on', () => {
     const sim = make('on');

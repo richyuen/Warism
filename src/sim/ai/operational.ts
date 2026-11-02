@@ -75,6 +75,7 @@
  * its class within the range, by its own front cell, up to DIVERTS of them, and else holds.
  */
 import { atAnyPort, marchingToPort, transportPorts } from '../systems/amphibious';
+import { wrapDx } from '../systems/elements';
 import { orderMove, passageOf, snapTarget, wasLong } from '../systems/movement';
 import { frontierOf, frontNeighbours, GARRISON, PRESSURE_RADIUS } from '../systems/territory';
 import { pocketOf, type MobilityId, type Passage } from '../nav/grid';
@@ -142,6 +143,8 @@ export function takeMen(world: World): number {
 export const SPEARHEAD_ARMOUR = 0.5;
 /** How many other sectors a formation refused a long way is asked for (PLAN 1.42h), nearest first. */
 export const DIVERTS = 2;
+/** A land hero tries this many of its army's fights, the nearest first, for a way to join one (PLAN 7.185). */
+export const HERO_TRIES = 3;
 
 /**
  * A measure of the plans (PLAN 7.30, `tools/diag/opCalls.ts`): with a clock set, each plan is
@@ -847,6 +850,7 @@ function planNation(world: World, n: number, fighting: Set<number>, frontier: Ma
     if (f.strength[id]! > take) holds[k]!++;
     if (f.engaged[id] !== 1 && f.retreat[id] === 0 && f.home[id] === 0 && !playerHeld(world, id) && (ports.length === 0 || !marchingToPort(world, id, ports))) mine.push(id);
   }
+  if (world.heroes.size > 0) joinFights(world, mine, ownIds, enemyOf, passageOf(world, n, passages));
   if (mine.length === 0) return;
   const dist2 = (id: number, s: Sector): number => {
     let dx = Math.abs(f.x[id]! - s.cx);
@@ -1743,6 +1747,70 @@ function holdCell(s: Pick<Sector, 'cells' | 'cx' | 'cy'>, w: number): number {
     }
   }
   return best;
+}
+
+/**
+ * A land hero joins its army's fights (PLAN 7.185, ADR-794 a, ADR-795 a). Of n's free formations (`mine`), a land
+ * hero is ordered, on its nation's plan, onto the cell of the enemy formation nearest to one of n's
+ * formations in a fight: the fight nearest it first, up to HERO_TRIES of them, until an order has a
+ * way (`askMove`); refused at each, onto the cells of those fights themselves, over its own side's
+ * land. One already marching to within a cell of such a target keeps its march. So
+ * ordered, it is no free formation of the plan (taken out of `mine`); with no fight of n's on land,
+ * or none it has a way to, it stays one (overseas fights: PLAN 7.186). Before (7.184e's read, `tools/diag/heroLandWhy.ts`), a hero
+ * was in 17 % of its army's fighting days, 41 % of the others over 80 cells from the nearest fight:
+ * at the capital as a garrison, or on the march where nobody fought. Only the state is read (the
+ * formations' places, `engaged`, nations), not the derived `World.contacts`: a load clears those.
+ */
+function joinFights(world: World, mine: number[], ownIds: readonly number[], enemyOf: Uint8Array, pass: Passage): void {
+  const f = world.formations.cols;
+  const heroes = mine.filter((id) => world.heroes.has(id));
+  if (heroes.length === 0) return;
+  const fights = ownIds.filter((id) => f.engaged[id] === 1 && !world.heroes.has(id) && !world.offLand(id));
+  if (fights.length === 0) return;
+  const foes: number[] = [];
+  world.formations.forEach((id) => {
+    if (enemyOf[f.nation[id]!] === 1 && !world.isFleet(id) && !world.isWing(id) && !world.offLand(id)) foes.push(id);
+  });
+  if (foes.length === 0) return;
+  const w = world.cells.w;
+  const d2 = (a: number, b: number): number => {
+    const dx = wrapDx(world, f.x[a]!, f.x[b]!);
+    const dy = f.y[b]! - f.y[a]!;
+    return dx * dx + dy * dy;
+  };
+  const cellOf = (id: number): number => Math.floor(f.y[id]!) * w + Math.floor(f.x[id]!);
+  const sent = new Set<number>();
+  for (const hero of heroes) {
+    const near = fights.slice().sort((a, b) => d2(hero, a) - d2(hero, b) || a - b).slice(0, HERO_TRIES);
+    const targets: number[] = [];
+    for (const g of near) {
+      let best = -1;
+      let bd = Infinity;
+      for (const e of foes) {
+        const d = d2(g, e);
+        if (d < bd || (d === bd && e < best)) [best, bd] = [e, d];
+      }
+      if (best >= 0) targets.push(cellOf(best));
+    }
+    // Refused at every enemy, it goes to the fights' own cells (ADR-794 a): over its own side's land,
+    // a way the corridors of the front refuse less.
+    for (const g of near) targets.push(cellOf(g));
+    if (f.moving[hero] === 1 && targets.some((to) => cellDist(f.targetCell[hero]!, to, w, world.settings.loopingMap) <= 1)) {
+      sent.add(hero);
+      continue;
+    }
+    const here = cellOf(hero);
+    for (const to of targets) {
+      if (to === here || askMove(world, hero, to, pass) === 'ok') {
+        sent.add(hero);
+        break;
+      }
+    }
+  }
+  if (sent.size === 0) return;
+  const rest = mine.filter((id) => !sent.has(id));
+  mine.length = 0;
+  mine.push(...rest);
 }
 
 /** The enemy cell touching the sector's front nearest its centre (lowest id on ties); over a crossing too (`frontNeighbours`). */

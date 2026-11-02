@@ -17335,3 +17335,31 @@ Of 7.184 (open in PLAN.md):
     `SORTIE_KM`) on ≥ 50 % of its days at war, and in ≥ 50 % of that fleet's days in a sea battle; `sweep:quick` with
     heroes on and off, as a smoke test only: limits green both, the riser and faller reported in PROGRESS. Missed
     (`docs/evidence/7.184e/at-run.md`: land 0.148, 1 of 69; sea with 25 of 35): BLOCKERS, ADR-793 waits on the user.
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.185 (closed not done, ADR-795 a, the user's decision: the rule kept, 0.640 of 2/3; PLAN 7.186) A land hero in its army's battles (found at 7.184e's AT, ADR-793 a): a land hero of the AI is in battle on
+  0.16 of the days its nation's army is (1461–1470 × 3, `docs/evidence/7.184e/at-run.md`), and 7.184e's rule (onto the
+  attack cell of its nation's most threatened own sector, every plan) moved nothing (0.158 → 0.148). Read first why a
+  hero on the march to the front's enemy cell is rarely engaged (where it stands and goes on its days at war, against
+  where its army fights), then a rule for that cause. AT: seeds 1471–1480 × 3 years, heroes on
+  (`tools/diag/heroBattle.ts`): each land hero `ofArmy` ≥ 0.5 where its army's ceiling is ≥ 0.10; the sea columns not
+  below 7.184e's (`with` ≥ 0.5 on 50 of 70, `ofFleet` on 57 of 64, as counted there); `sweep:quick` with heroes on and
+  off as a smoke test only (limits green both, the riser and faller in PROGRESS). Missed (`docs/evidence/7.185/at-run.md`:
+  `joinFights` 0.201, 1 of 70; the regulars' best 0.29–0.72). Re-scoped (ADR-794 a, the user's decision): each land
+  hero life (30 or more of its army's fighting days) at or above its nation's top-decile ordinary land formation's share
+  on ≥ 2/3 of the lives counted, seeds 1481–1490 × 3 (`tools/diag/heroCeiling.ts`); a rule for the refused orders; the
+  sea columns and the smoke as above. Missed: 110 of 172 (0.640; Britain and the United States 12 of 41):
+  BLOCKERS, ADR-795 waits on the user.

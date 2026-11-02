@@ -33,19 +33,14 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.185 A land hero in its army's battles (found at 7.184e's AT, ADR-793 a): a land hero of the AI is in battle on
-  0.16 of the days its nation's army is (1461–1470 × 3, `docs/evidence/7.184e/at-run.md`), and 7.184e's rule (onto the
-  attack cell of its nation's most threatened own sector, every plan) moved nothing (0.158 → 0.148). Read first why a
-  hero on the march to the front's enemy cell is rarely engaged (where it stands and goes on its days at war, against
-  where its army fights), then a rule for that cause. AT: seeds 1471–1480 × 3 years, heroes on
-  (`tools/diag/heroBattle.ts`): each land hero `ofArmy` ≥ 0.5 where its army's ceiling is ≥ 0.10; the sea columns not
-  below 7.184e's (`with` ≥ 0.5 on 50 of 70, `ofFleet` on 57 of 64, as counted there); `sweep:quick` with heroes on and
-  off as a smoke test only (limits green both, the riser and faller in PROGRESS). Missed (`docs/evidence/7.185/at-run.md`:
-  `joinFights` 0.201, 1 of 70; the regulars' best 0.29–0.72). Re-scoped (ADR-794 a, the user's decision): each land
-  hero life (30 or more of its army's fighting days) at or above its nation's top-decile ordinary land formation's share
-  on ≥ 2/3 of the lives counted, seeds 1481–1490 × 3 (`tools/diag/heroCeiling.ts`); a rule for the refused orders; the
-  sea columns and the smoke as above. Missed: 110 of 172 (0.640; Britain and the United States 12 of 41):
-  BLOCKERS, ADR-795 waits on the user.
+- [ ] 7.186 A land hero overseas (found at 7.185's AT, ADR-795 a): a land hero is ordered over land only
+  (`joinFights` in `operational.ts`), and where its army fights overseas it stands or its orders are refused: Britain
+  10 of 30 hero lives at or above the top-decile regular, the United States 2 of 11 (1481–1490 × 3,
+  `docs/evidence/7.185/at-run.md`). A land hero whose army's fights are on no land its way reaches crosses by sea as a
+  division of its nation does (the lift). AT: seeds 1491–1500 × 3, heroes on (`tools/diag/heroCeiling.ts`): ≥ 2/3 of
+  the hero lives counted at or above the top decile, and Britain's and the United States' together ≥ 1/2; the sea
+  columns (`tools/diag/heroBattle.ts`) reported; `sweep:quick` with heroes on and off (`--heroes on`) as a smoke test
+  only (limits green both, the riser and faller in PROGRESS), 7.184e's and 7.185's too.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 
@@ -448,3 +443,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.182 A new-game option to draw the 1938 start's alliances, guarantees and wars by the seed (the user's request, […]
 - [x] 7.183 The camera follows any formation clicked, played or not (the user's request of 2026-11-01). Today a click […]
 - [x] 7.184 Heroes: a new-game option (off by default) giving each of 7 great powers of 1938 a named land and sea […]
+- [x] 7.185 (closed not done, ADR-795 a, the user's decision: the rule kept, 0.640 of 2/3; PLAN 7.186) A land hero in its army's battles (found at 7.184e's AT, ADR-793 a): a land hero of the AI is in battle on […]

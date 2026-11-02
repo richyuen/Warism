@@ -25578,3 +25578,10 @@ No rule changed and nothing on screen changed. One task came out of it.
   2/3); Britain 10 of 30, the United States 2 of 11, the rest 98 of 131. Sea `with` 57 of 70, `ofFleet` 49 of 59 (83 %).
 - **Tools:** the sweep takes `--heroes on` (`tools/sweep/run.ts`, `seed.ts`); the smoke not run yet.
 - **Next:** ADR-795 waits on the user (commit the rule, close not done, a task for the heroes overseas: recommended).
+
+## 2026-11-02 — ADR-795 (a): the land heroes' rule committed; 7.185 closed not done
+
+- **Committed:** `joinFights` (`operational.ts`): at war a land hero is ordered onto the enemy formation by its army's
+  nearest fight, 3 tried, and refused at each, onto the fights' own cells; its unit test (red without). Pin unchanged.
+- **Filed:** PLAN 7.186, a land hero overseas (Britain, the United States), with the sweep:quick smoke.
+- **Next:** PLAN 7.186.

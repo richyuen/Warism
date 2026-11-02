@@ -5,7 +5,7 @@ entries are kept and marked **RESOLVED** with the date and fix.
 
 ## Open
 
-### PLAN 7.185: the re-scoped AT missed: 110 of 172 hero lives at the top decile, bar 2/3 (ADR-795, waits on the user)
+### RESOLVED 2026-11-02 (option a, the user's decision: the rule kept, 7.185 closed not done, PLAN 7.186; ADR-795) · PLAN 7.185: the re-scoped AT missed: 110 of 172 hero lives at the top decile, bar 2/3
 - **Where:** Britain 10 of 30 lives pass, the United States 2 of 11 (armies overseas, the hero ordered over land only);
   the other five 98 of 131 (0.75). `docs/evidence/7.185/at-run.md`.
 - **Left:** ADR-795: (a) commit the rule, close not done, a task for the heroes overseas (recommended); (b) count only
