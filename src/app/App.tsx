@@ -223,6 +223,7 @@ export function App({
           sizes={SCENARIO_INFO[scenarioIdOf(base) ?? '1938'].sizes}
           defaultSize={SCENARIO_INFO[scenarioIdOf(base) ?? '1938'].defaultSize}
           diplomacy={SCENARIO_INFO[scenarioIdOf(base) ?? '1938'].diplomacy}
+          heroes={SCENARIO_INFO[scenarioIdOf(base) ?? '1938'].heroes}
           onUiScale={(v) => settings.setUiScale(v)}
           onUnitScale={(v) => settings.setUnitScale(v)}
           volume={settings.volume.value}

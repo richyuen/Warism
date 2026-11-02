@@ -25512,3 +25512,15 @@ No rule changed and nothing on screen changed. One task came out of it.
   no block for Poland, none for Japan with the option off.
 - **Specs by hand:** `nationPanel1938`, `followPicked1938` green.
 - **Next:** PLAN 7.184d (7.184b3 waits on ADR-790).
+
+## 2026-11-01 — PLAN 7.184d: the heroes option in the new-game form and the settings panel
+
+- **Built:** `ScenarioInfo.heroes` (1938: its roster is not empty), `NewGameForm`'s "Heroes" row (`opt-heroes`, Off by
+  default; its hint names the 14), passed by the settings panel and the title screen; off is no option and no URL
+  parameter (`?heroes=on` came with 7.184b1).
+- **AT:** `gameOptions1938` (3 of 3): `opt-heroes` Off at first, On → `heroes=on` in the URL and 14 heroes on the
+  page; the panel starts from On, Off → no `heroes` in the URL and none on the page. `gameOptions.test.ts` 6 of 6
+  (a new case: none by default or off, the same hash as no option; 14 on, the same per seed).
+  `docs/evidence/7.184d/settings-heroes.png`.
+- **Specs by hand:** `settings1938`, `title` (14 of 14).
+- **Next:** PLAN 7.184e (7.184b3 waits on ADR-790).

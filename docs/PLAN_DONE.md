@@ -17247,3 +17247,24 @@ Of 7.184 (open in PLAN.md):
     `panel-heroes` is the Overview's first block for Japan with 2 rows; a click on Yamato's row puts the view's centre
     within 2 px of it after 24 ticks; a destroyed hero's row reads "returns in 60 days"; no block with the option off
     or for Poland.
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+Of 7.184 (open in PLAN.md):
+
+  - [x] 7.184d The option in the new-game form and settings panel, `?heroes=on` in the URL (as 7.182: `gameUrl.ts`,
+    `scenarios.ts`, `NewGameForm.tsx`, `SettingsPanel.tsx`, `en.json` with the 14 names). AT:
+    `tests/e2e/gameOptions1938.spec.ts` (`opt-heroes` from the settings panel, `heroes=on` in the URL, back to off) and
+    `tests/unit/gameOptions.test.ts`.

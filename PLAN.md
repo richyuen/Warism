@@ -57,10 +57,7 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
       both looks; bench G T0 over 311 fps and p95 under 6.9 ms. Drawing done and its e2e green (`b3-sizes.txt`: 2.0 ×);
       bench G's T0 309 fps against 311 — BLOCKERS, ADR-790 waits on the user.
   - [x] 7.184c Overview: a Heroes block first in a nation's Overview tab (`NationPanel.tsx`; the stats message carries […]
-  - [ ] 7.184d The option in the new-game form and settings panel, `?heroes=on` in the URL (as 7.182: `gameUrl.ts`,
-    `scenarios.ts`, `NewGameForm.tsx`, `SettingsPanel.tsx`, `en.json` with the 14 names). AT:
-    `tests/e2e/gameOptions1938.spec.ts` (`opt-heroes` from the settings panel, `heroes=on` in the URL, back to off) and
-    `tests/unit/gameOptions.test.ts`.
+  - [x] 7.184d The option in the new-game form and settings panel, `?heroes=on` in the URL (as 7.182: `gameUrl.ts`, […]
   - [ ] 7.184e The AI uses its heroes: a land hero goes to its nation's main front and leads its attack, a sea hero
     sails with its nation's largest fleet. AT: seeds 1461–1470 × 3 years with heroes on: each AI hero of a nation at war
     is in battle on ≥ 30 % of its days at war (not idle at home); `sweep:quick` with heroes on and off, as a smoke test

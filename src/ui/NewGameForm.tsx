@@ -17,6 +17,8 @@ export interface NewGameFormProps {
   defaultSize?: string | undefined;
   /** The scenario starts with alliances or wars (PLAN 7.182): a choice to draw them by the seed. */
   diplomacy?: boolean | undefined;
+  /** The scenario has heroes (PLAN 7.184d): a choice to give the great powers theirs (off by default). */
+  heroes?: boolean | undefined;
   /** Label of the start button. */
   startLabel: string;
   onStart: (seed: number, options: GameOptions) => void;
@@ -37,7 +39,7 @@ function withCe(opts: GameOptions, v: string): GameOptions {
  * The seed (or a random one) and the new-game options of PLAN 1.39b1, with the button that starts
  * the game. Shared by the title screen (PLAN 1.43) and the settings panel.
  */
-export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', diplomacy = false, startLabel, onStart }: NewGameFormProps) {
+export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', diplomacy = false, heroes = false, startLabel, onStart }: NewGameFormProps) {
   const [next, setNext] = useState(String(seed));
   const [count, setCount] = useState(String(options.nations ?? nationsRange?.default ?? ''));
   const [opts, setOpts] = useState<GameOptions>(options);
@@ -53,10 +55,11 @@ export function NewGameForm({ seed, options, nationsRange, rangeHint = true, siz
   const seedValid = /^\d{1,10}$/.test(next.trim()) && Number(next) <= 0xffffffff;
   const countValid = !nationsRange || (/^\d{1,4}$/.test(count.trim()) && Number(count) >= nationsRange.min && Number(count) <= nationsRange.max);
   // The number of nations goes with the scenario that asks for it, and with no other.
-  // So does the diplomacy drawn by the seed (PLAN 7.182).
+  // So do the diplomacy drawn by the seed (PLAN 7.182) and the heroes (PLAN 7.184d; off is no option).
   const chosen = (): GameOptions => {
-    const { nations: _old, diplomacy: _d, ...rest } = opts;
-    const own = diplomacy && opts.diplomacy === 'random' ? { ...rest, diplomacy: 'random' as const } : rest;
+    const { nations: _old, diplomacy: _d, heroes: _h, ...rest } = opts;
+    const drawn = diplomacy && opts.diplomacy === 'random' ? { ...rest, diplomacy: 'random' as const } : rest;
+    const own = heroes && opts.heroes === 'on' ? { ...drawn, heroes: 'on' as const } : drawn;
     return nationsRange ? { ...own, nations: Number(count) } : own;
   };
   return (
@@ -127,6 +130,12 @@ export function NewGameForm({ seed, options, nationsRange, rangeHint = true, siz
         <label class="form-row">
           <span class="form-name">{t('settings.diplomacy')}</span>
           {sel('opt-diplomacy', opts.diplomacy ?? 'scenario', ['scenario', 'random'], (v) => `settings.choice.${v}` as MessageKey, (v) => setOpts({ ...opts, diplomacy: v as 'scenario' | 'random' }))}
+        </label>
+      ) : null}
+      {heroes ? (
+        <label class="form-row" title={t('settings.heroesHint')}>
+          <span class="form-name">{t('settings.heroes')}</span>
+          {sel('opt-heroes', opts.heroes === 'on' ? 'on' : 'off', ['off', 'on'], (v) => `settings.onOff.${v}` as MessageKey, (v) => setOpts({ ...opts, heroes: v as 'off' | 'on' }))}
         </label>
       ) : null}
       <label class="form-row">

@@ -27,6 +27,8 @@ export interface SettingsPanelProps {
   defaultSize?: string;
   /** The scenario starts with alliances or wars (PLAN 7.182). */
   diplomacy?: boolean;
+  /** The scenario has heroes (PLAN 7.184d). */
+  heroes?: boolean;
   onUiScale: (v: number) => void;
   onUnitScale: (v: number) => void;
   onVolume: (v: number) => void;
@@ -47,7 +49,7 @@ export interface SettingsPanelProps {
  * random seed). Speed and pause persist on their own
  * (bottom bar).
  */
-export function SettingsPanel({ uiScale, unitScale, uiScales, uiOffered, unitScales, volume, volumes, muted, nukePause, unitLook, seed, options, nationsRange, sizes, defaultSize, diplomacy, onUiScale, onUnitScale, onVolume, onMuted, onNukePause, onUnitLook, onScreenshot, onNewGame, onMenu, onClose }: SettingsPanelProps) {
+export function SettingsPanel({ uiScale, unitScale, uiScales, uiOffered, unitScales, volume, volumes, muted, nukePause, unitLook, seed, options, nationsRange, sizes, defaultSize, diplomacy, heroes, onUiScale, onUnitScale, onVolume, onMuted, onNukePause, onUnitLook, onScreenshot, onNewGame, onMenu, onClose }: SettingsPanelProps) {
   const pct = (v: number): string => `${Math.round(v * 100)}%`;
   return (
     <aside class="history-panel settings-panel" data-testid="settings-panel">
@@ -119,7 +121,7 @@ export function SettingsPanel({ uiScale, unitScale, uiScales, uiOffered, unitSca
           {t('settings.currentSeed', { seed })}
         </span>
       </div>
-      <NewGameForm seed={seed} options={options} nationsRange={nationsRange} sizes={sizes} defaultSize={defaultSize} diplomacy={diplomacy} startLabel={t('settings.newGame')} onStart={onNewGame} />
+      <NewGameForm seed={seed} options={options} nationsRange={nationsRange} sizes={sizes} defaultSize={defaultSize} diplomacy={diplomacy} heroes={heroes} startLabel={t('settings.newGame')} onStart={onNewGame} />
     </aside>
   );
 }

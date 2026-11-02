@@ -115,4 +115,14 @@ describe('new-game options (PLAN 1.39b1)', () => {
     expect(make(5, { diplomacy: 'random' }).hash()).toBe(a.hash());
     expect(make(6, { diplomacy: 'random' }).hash()).not.toBe(a.hash());
   }, 120_000);
+
+  // PLAN 7.184d: the heroes, off unless asked for; on, the 14 of the roster, the same per seed.
+  it('heroes: none by default or off, the 14 when on', () => {
+    expect(base.world.heroes.size).toBe(0);
+    expect(make(5, { heroes: 'off' }).hash()).toBe(base.hash());
+    const on = make(5, { heroes: 'on' });
+    expect(on.world.heroes.size).toBe(14);
+    expect(on.hash()).not.toBe(base.hash());
+    expect(make(5, { heroes: 'on' }).hash()).toBe(on.hash());
+  });
 });

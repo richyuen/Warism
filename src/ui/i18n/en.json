@@ -901,6 +901,8 @@
   "settings.traits": "Nation traits",
   "settings.gold": "Starting gold",
   "settings.diplomacy": "Alliances and wars",
+  "settings.heroes": "Heroes",
+  "settings.heroesHint": "A named land and sea unit for each of seven great powers, far stronger than any other: Yamato and O-I, USS Iowa and T28, Sovetsky Soyuz and T-42, Bismarck and Maus, HMS Hood and TOG II, Richelieu and Char 2C, Roma and P.100 Ercole. They heal, and come back 60 days after they are lost.",
   "settings.ce": "Combat efficiency",
   "settings.onOff.on": "On",
   "settings.onOff.off": "Off",

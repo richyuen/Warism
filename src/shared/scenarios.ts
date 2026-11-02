@@ -12,6 +12,7 @@ import scenario1938 from '../../data/scenarios/1938/scenario.json' with { type: 
 import scenarioRandom from '../../data/scenarios/random/scenario.json' with { type: 'json' };
 import nations1938 from '../../data/scenarios/1938/nations.json' with { type: 'json' };
 import diplomacy1938 from '../../data/scenarios/1938/diplomacy.json' with { type: 'json' };
+import heroes1938 from '../../data/scenarios/1938/heroes.json' with { type: 'json' };
 
 /** How many nations a random world may start with, and how many it has when none is asked for (PLAN 2.16). */
 export const RANDOM_NATIONS = { min: 2, max: 200, default: 60 } as const;
@@ -52,6 +53,8 @@ export interface ScenarioInfo {
   defaultSize: string;
   /** It starts with alliances or wars (PLAN 7.182): the new-game form offers to draw them by the seed. */
   diplomacy: boolean;
+  /** It has a roster of heroes (PLAN 7.184d, `data/scenarios/1938/heroes.json`): the new-game form offers them. */
+  heroes: boolean;
 }
 
 /** A size of a map: its id and its cells across and down. */
@@ -106,7 +109,7 @@ export const SCENARIO_GEOMETRY: Record<ScenarioId, ScenarioGeometry> = {
   random: geometry(earthMap, scenarioRandom),
 };
 
-function info(id: ScenarioId, map: MapJson, scenario: ScenarioJson, nations: number, nationTags: readonly string[] = [], diplomacy = false): ScenarioInfo {
+function info(id: ScenarioId, map: MapJson, scenario: ScenarioJson, nations: number, nationTags: readonly string[] = [], diplomacy = false, heroes = false): ScenarioInfo {
   return {
     geometry: SCENARIO_GEOMETRY[id],
     startDay: dayOfIso(scenario.startDate),
@@ -119,13 +122,14 @@ function info(id: ScenarioId, map: MapJson, scenario: ScenarioJson, nations: num
     sizes: map.sizes.map((s) => ({ id: s.id, w: s.w, h: s.h })),
     defaultSize: scenario.size ?? map.defaultSize,
     diplomacy,
+    heroes,
   };
 }
 
 export const SCENARIO_INFO: Record<ScenarioId, ScenarioInfo> = {
   // The toy world's two nations are code (src/sim/toy.ts), not a nations file.
   toy: info('toy', toyMap, toyScenario, 2),
-  '1938': info('1938', earthMap, scenario1938, (nations1938.nations as { alive?: boolean }[]).filter((n) => n.alive !== false).length, nations1938.nations.map((n) => n.tag), diplomacy1938.alliances.length + diplomacy1938.wars.length > 0),
+  '1938': info('1938', earthMap, scenario1938, (nations1938.nations as { alive?: boolean }[]).filter((n) => n.alive !== false).length, nations1938.nations.map((n) => n.tag), diplomacy1938.alliances.length + diplomacy1938.wars.length > 0, heroes1938.heroes.length > 0),
   // Its nations are made by the seed (src/sim/randomWorld.ts); this is how many when none is asked for.
   random: { ...info('random', earthMap, scenarioRandom, RANDOM_NATIONS.default), nationsRange: RANDOM_NATIONS },
 };
