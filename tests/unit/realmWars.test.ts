@@ -5,7 +5,7 @@ import { isDayStart } from '../../src/shared/calendar';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { canJoin, noWarAmong } from '../../src/sim/systems/alliances';
-import { annexNation, makePuppet } from '../../src/sim/systems/puppets';
+import { annexNation, makePuppet, puppetSystem, REVOLT_LOYALTY } from '../../src/sim/systems/puppets';
 import { declareWar, forceWar, whyNotWar } from '../../src/sim/systems/war';
 import { TICKER_KINDS } from '../../src/shared/history';
 import { cueOfKind } from '../../src/shared/sound';
@@ -123,18 +123,25 @@ describe('no war inside one realm or one alliance (PLAN 3.8)', () => {
 
   // PLAN 7.188 (critic run 24's 1, its case on 2207): Japan forces war on its ally Germany, Italy
   // and Albania with it; Albania, Italy's puppet, forces war on Italy. Freed, it fought Italy and
-  // stood with it against Japan. Since PLAN 7.189 (R25-B1) the war on its partner is refused, nothing
-  // broken: it fights on beside Italy, and no nation stands on one side with its enemy.
-  it('a puppet that forces war on its overlord beside it in a war is refused, and on one side of each war', () => {
+  // stood with it against Japan (PLAN 7.188). PLAN 7.189 refused it (R25-B1), against ADR-780 (critic
+  // run 26's R26-B1); since PLAN 7.191 the bond's break wins: Albania goes free, leaves the war it
+  // fought beside Italy in (its row), and fights Italy; no nation stands on one side with its enemy.
+  it('a puppet that forces war on its overlord beside it in a war goes free, leaves that war, and fights it', () => {
     const s = world1938(5);
     const w = s.world;
     const JAP = nationId('JAP');
     forceWar(w, JAP, GER);
     expect(w.wars.atWar(JAP, ALB)).toBe(true);
-    expect(forceWar(w, ALB, ITA)).toBe(Refusal.Beside);
-    expect(w.nations.cols.overlord[ALB]).toBe(ITA);
-    expect(w.wars.atWar(ALB, ITA)).toBe(false);
-    expect(w.wars.atWar(ALB, JAP)).toBe(true);
+    w.out.events.length = 0;
+    expect(forceWar(w, ALB, ITA)).toBe(Refusal.None);
+    expect(w.nations.cols.overlord[ALB]).toBe(0);
+    expect(w.wars.atWar(ALB, ITA)).toBe(true);
+    expect(w.wars.atWar(ALB, JAP)).toBe(false);
+    const ev = w.out.events;
+    const kinds: number[] = [];
+    for (let i = 0; i < ev.length; i += 6) kinds.push(ev[i + 1]!);
+    expect(kinds.indexOf(EventKind.WarLeft)).toBeGreaterThanOrEqual(0);
+    expect(kinds.indexOf(EventKind.WarLeft)).toBeLessThan(kinds.indexOf(EventKind.WarDeclared));
     const beside: string[] = [];
     for (const u of w.wars.list) for (const v of w.wars.list) {
       if (u === v) continue;
@@ -167,17 +174,45 @@ describe('no war inside one realm or one alliance (PLAN 3.8)', () => {
   });
 
   // The critic's COBEL: Germany, losing to Poland, forced war on its ally Italy, beside it in the
-  // war; the alliance broken, Germany was out of the Polish war an hour later. Refused, nothing broken.
-  it("God's Force war on a partner in a war is refused, its alliance kept", () => {
+  // war. PLAN 7.189 refused it; ADR-780 has the alliance broken (critic run 26's R26-B1): since PLAN
+  // 7.191 Germany leaves the alliance and the war it fought beside Italy in, and fights Italy. The
+  // exit costs that war: no free exit of a partner with no bond (the test above).
+  it("God's Force war on an ally beside it in a war: the alliance and that war left, war on the ally", () => {
     const w = world1938(5).world;
     const POL = nationId('POL');
     declareWar(w, GER, POL);
     expect(w.wars.list.some((x) => x.sides[0].includes(GER) && x.sides[0].includes(ITA))).toBe(true);
-    const ally = w.alliances.allied(GER, ITA);
-    expect(forceWar(w, GER, ITA)).toBe(Refusal.Beside);
-    expect(w.alliances.allied(GER, ITA)).toBe(ally);
-    expect(w.wars.atWar(GER, ITA)).toBe(false);
-    expect(w.wars.atWar(GER, POL)).toBe(true);
+    expect(w.alliances.allied(GER, ITA)).toBe(true);
+    expect(whyNotWar(w, GER, ITA)).toBe(Refusal.Allied);
+    expect(forceWar(w, GER, ITA)).toBe(Refusal.None);
+    expect(w.alliances.allied(GER, ITA)).toBe(false);
+    expect(w.wars.atWar(GER, ITA)).toBe(true);
+    expect(w.wars.atWar(GER, POL)).toBe(false);
+    expect(w.wars.atWar(ITA, POL)).toBe(true);
+  });
+
+  // R26-B1 (the critic's PR on 7019): God's loyalty 0 for Manchukuo made a revolt and no war: the
+  // rebel free, beside Japan in its war on China. A revolt is a war of independence (SPEC, puppets):
+  // the rebel leaves the wars it fought beside its overlord in, then declares on it.
+  it('a puppet that revolts beside its overlord in a war leaves that war and rises against it', () => {
+    const w = world1938(5).world;
+    const [JAP, MAN, CHI] = ['JAP', 'MAN', 'CHI'].map(nationId) as [number, number, number];
+    expect(w.nations.cols.overlord[MAN]).toBe(JAP);
+    expect(w.wars.atWar(MAN, CHI)).toBe(true);
+    expect(w.tick).toBe(0);
+    w.nations.cols.loyalty[MAN] = REVOLT_LOYALTY - 20;
+    w.out.events.length = 0;
+    puppetSystem(w);
+    const ev = w.out.events;
+    const rows: string[] = [];
+    for (let i = 0; i < ev.length; i += 6) if (ev[i + 2] === MAN) rows.push(`${ev[i + 1]} ${tag(ev[i + 3]!)}`);
+    expect(rows).toContain(`${EventKind.PuppetRevolt} JAP`);
+    expect(rows).toContain(`${EventKind.WarDeclared} JAP`);
+    expect(rows).not.toContain(`${EventKind.WarRejected} JAP`);
+    expect(w.nations.cols.overlord[MAN]).toBe(0);
+    expect(w.wars.atWar(MAN, JAP)).toBe(true);
+    expect(w.wars.atWar(MAN, CHI)).toBe(false);
+    expect(realmWars(w, tag)).toEqual([]);
   });
 
   // A nation called into a war against one it fights beside in another stays out of the new war.

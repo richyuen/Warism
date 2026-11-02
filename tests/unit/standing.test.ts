@@ -69,14 +69,15 @@ describe('a nation\'s standing with the played one (PLAN 7.175b)', () => {
   });
 
   // PLAN 7.189 (R25-B1): a partner in a war is no bond (`forceWar` breaks nothing of it) and no war
-  // is made on it; the standing names it where the sim refuses for it.
+  // is made on it; the standing names it where the sim refuses for it. A partner that is also an ally
+  // or the overlord stands by the bond (PLAN 7.191, R26-B1): Force war breaks it.
   it("names a partner in a war where whyNotWar refuses for it (Germany's war on Poland)", () => {
     const w = new Sim({ scenario: '1938', seed: 5, assets: assets1938(SIZE_1938.w) }).world;
     declareWar(w, GER, POL);
     const s = stats(w);
     const of = (a: number, b: number) => standingOf(a, b, (id) => s.get(id), warsOf(w));
     expect(of(POL, FRA)).toEqual({ kind: 'beside', days: 0, bond: false });
-    expect(of(GER, ITA)).toEqual({ kind: 'beside', days: 0, bond: false });
+    expect(of(GER, ITA)).toEqual({ kind: 'allied', days: 0, bond: true });
     const ids = [...new Set(w.wars.list.flatMap((x) => [...x.sides[0]!, ...x.sides[1]!]))].concat([ENG, SWI]);
     const wrong: string[] = [];
     for (const a of ids)

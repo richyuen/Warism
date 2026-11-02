@@ -25675,3 +25675,18 @@ No rule changed and nothing on screen changed. One task came out of it.
 - R25-B1 and run 25's non-blocking 1 and 9 verified fixed. PLAN 7.191 (R26-B1) and 7.192 (diplomacy: ticker rows,
   the bond in the standing, the alliance proposal greyed) before 7.5.
 - **Next:** PLAN 7.191.
+
+## 2026-11-02 — PLAN 7.191 (R26-B1, ADR-801): a bond's break wins over Beside; a rebel rises
+- Changes:
+  - `whyNotWarOn` names a bond before `Beside`.
+  - `forceWar` with a bond first leaves the wars fought beside the defender or its overlord (`leaveWarsBeside`, the
+    `leaveBondedWars` way, with `WarLeft` / `WarEnded` rows), then breaks the bond and declares.
+  - A partner with no bond is refused before a truce breaks.
+  - `puppetSystem`'s rebel leaves its overlord's wars, then declares.
+  - `standingOf` names the bond before "beside".
+- AT (`docs/evidence/7.191/at-run.md`):
+  - On 7019, 2207, 5113, 9241, every 30 days: 0 refused for `Beside` (was 52–78 %), 0 nations beside an enemy after.
+  - The critic's PR cases: Manchukuo and Albania freed and at war with their overlords, both by Force war and by revolt.
+  - Unit tests red on 33c84306 (4); Poland on France still refused.
+  - Unit 2042 of 2042; e2e 13 of 13; pin unchanged.
+- **Next:** PLAN 7.192.

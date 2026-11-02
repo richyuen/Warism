@@ -17489,3 +17489,32 @@ Of 7.184 (open in PLAN.md):
   AT: on 3739 day 0, each guarantee of the 1938 start named in both its nations' panels, the guarantor's and the
   target's (an e2e test, red on `e4386478`); on 1522–1531 to day 60, every pledge that lapses has its row (a unit test, red on
   `e4386478`).
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.191 R26-B1: a puppet cannot break free of an overlord at war, and a revolt starts no war of independence.
+  PLAN 7.189's `Refusal.Beside` is checked before the bonds and `forceWar` treats it as hard. A puppet joins each war of
+  its overlord, so Force war of a puppet on its overlord is refused on 59–78 % of puppet-days (Manchukuo → Japan
+  365 / 365 on 3 seeds, Albania → Italy 363 / 365), of an ally on its ally on 52–68 % of allied-pair days
+  (`critic/c26_pz_{7019,2207,5113,9241}.json`). God's revolt emits `PuppetRevolt` then `WarRejected`: the rebel free, at
+  peace with its old overlord, beside it in all its wars (`critic/c26_pr_head_7019_MAN.json` against
+  `critic/c26_pr_c25_7019_MAN.json`); playing Manchukuo, Japan "Fights beside you", war greyed
+  (`critic/shots/c26pp_head_7019_MAN_menu_before.png`). Contradicts ADR-780 and SPEC's war of independence.
+  Fix: R25-B1 stays closed for partners with no bond (Poland on France), but a bond's break wins over `Beside`: where
+  `forceWar` frees a puppet or takes an ally out of its alliance, and where `puppetSystem` frees a rebel, the attacker
+  first leaves the wars it fights beside the defender in (the `leaveBondedWars` way, its `WarLeft` row), then declares.
+  AT: on the critic's 4 seeds, Force war of a puppet on its overlord and of an ally on its ally refused for `Beside` on
+  0 % of days; God's revolt of Manchukuo on 7019 gives `WarDeclared MAN JAP`; Poland on France (and 7.189's cases)
+  still refused, the old war on; unit tests red on `33c84306`.

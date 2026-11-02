@@ -167,6 +167,35 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-801 · 2026-11-02 · accepted — PLAN 7.191 (R26-B1): a bond's break wins over `Beside`; a rebel leaves its overlord's wars
+
+- **Context.** Critic run 26's blocking issue: ADR-799's `Refusal.Beside` was checked before the bonds and `forceWar`
+  took it as hard. A puppet joins every war of its overlord, so a puppet's Force war on its overlord was refused on
+  59–78 % of puppet-days and an ally's on its ally on 52–68 % of allied-pair days. God's revolt freed the rebel and its
+  war was refused, so it stood free beside its old overlord. Both contradict ADR-780 and SPEC's war of independence.
+- **Decision.**
+  - `whyNotWarOn` names a bond first and `Beside` only for a partner with none.
+  - `forceWar` with a bond to the defender or its overlord first leaves, with its puppets, every war one of them
+    fights on its side (`leaveWarsBeside`, the same rows and land as `leaveBondedWars`: `WarLeft`, or `WarEnded`).
+    It then breaks the bond and declares. The new war is the cost of the exit.
+  - A partner with no bond (Poland on France) is refused as ADR-799 has it, before any truce is broken.
+  - `puppetSystem`'s rebel leaves the wars it fought beside its overlord in, then declares its war of independence.
+  - The menus' standing names the bond ("Allied", "Your overlord"), and Force war is live there. "Fights beside you"
+    is left for a partner with no bond.
+- **Consequences.**
+  - On the critic's 4 seeds (7019, 2207, 5113, 9241), every 30 days to day 365: 0 Force wars refused for `Beside`
+    (the critic measured 52–78 % on 33c84306), and no nation stood on one side with its enemy after.
+    - Puppet on overlord: 1587 of 1598 declared.
+    - Ally on ally: 1512 of 1548 declared.
+    - On 5113, the rest were refused for `Overrun`. Source: `tools/diag/bondExit.ts`, `docs/evidence/7.191/at-run.md`.
+  - A rebel freed with a truce or an alliance with its overlord is still refused, as before PLAN 7.189. The revolt
+    breaks neither.
+  - Poland on France: refused, the old war on (as ADR-799). Germany on Italy (COBEL): Germany leaves the alliance and
+    the Polish war and fights Italy.
+  - ADR-799's tests of the bonded cases now read the bond's break (Albania freed, fighting Italy, out of the Japanese
+    war; Germany out of the alliance).
+  - Seed 99's pin is unchanged (a7946f81).
+
 ### ADR-800 · 2026-11-02 · accepted — PLAN 7.190: the pledges in the nation panel; a lapse and a war left are rows
 
 - **Context.** Critic run 25 kept diplomacy at 6 with R25-B1 (7.189) and its non-blocking 1 and 9: guarantees were

@@ -95,8 +95,11 @@ describe('forceWar: the bond in the way is broken (PLAN 7.175a)', () => {
     // The same nation, and none.
     expect(forceWar(w, GER, GER)).toBe(Refusal.SameNation);
     expect(forceWar(w, GER, 9999)).toBe(Refusal.NoNation);
-    // Beside: Italy, called in, fights at Germany's side against Poland (PLAN 7.189, R25-B1).
-    expect(forceWar(w, GER, ITA)).toBe(Refusal.Beside);
+    // Beside, with no bond: France, Poland's guarantor, fights at its side against Germany (PLAN
+    // 7.189, R25-B1; an ally's or a puppet's partner is a bond, broken: PLAN 7.191).
+    expect(forceWar(w, POL, FRA)).toBe(Refusal.Beside);
+    expect(atWar(w, POL, FRA)).toBe(false);
+    expect(atWar(w, POL, GER)).toBe(true);
     expect(w.alliances.allied(GER, ITA)).toBe(true);
     // Overrun, in a world with no war of theirs: Italy's land all under Polish control; Germany, its
     // ally, is refused and stays allied.

@@ -167,11 +167,20 @@ export function whyNotWar(world: World, attacker: number, defender: number): Ref
  * alliance (it goes on without it). A war refused for anything else (no such nation, the same,
  * a dead one, already at war, overrun) is refused as `declareWar` refuses it, nothing broken.
  * The bonds broken are a `BondsBroken` row before the `WarDeclared`.
+ * A partner in a war (`Refusal.Beside`, PLAN 7.189) is refused, unless a bond ties the two (PLAN
+ * 7.191, R26-B1): then the bond's break wins, and the attacker first leaves the wars it fights
+ * beside the defender or its overlord in (`leaveWarsBeside`; the new war is the cost).
  */
 export function forceWar(world: World, attacker: number, defender: number): Refusal {
   const nc = world.nations.cols;
-  const hard = (why: Refusal): boolean => why !== Refusal.None && why !== Refusal.Truce && why !== Refusal.Subject && why !== Refusal.Allied && why !== Refusal.SameOverlord && why !== Refusal.AlliedRealm;
-  const first = whyNotWar(world, attacker, defender);
+  const known = world.nations.has(attacker) && world.nations.has(defender);
+  const o0 = known ? nc.overlord[defender]! : 0;
+  const partners = o0 !== 0 ? [defender, o0] : [defender];
+  const bonded = known && partners.some((p) => bond(world, attacker, p) !== Refusal.None);
+  const side = known && partners.some((p) => beside(world, attacker, p));
+  const hard = (why: Refusal): boolean => why !== Refusal.None && why !== Refusal.Truce && why !== Refusal.Subject && why !== Refusal.Allied && why !== Refusal.SameOverlord && why !== Refusal.AlliedRealm && !(why === Refusal.Beside && bonded);
+  // A partner with no bond: refused before anything (a truce among them) is broken.
+  const first = side && !bonded && whyNotWar(world, attacker, defender) === Refusal.Truce ? Refusal.Beside : whyNotWar(world, attacker, defender);
   // Overrun is judged only once the bonds pass: asked first of the leaders as they will stand.
   const lead = nc.overlord[defender] === attacker ? defender : nc.overlord[defender] || defender;
   const land = world.landCounts();
@@ -180,6 +189,7 @@ export function forceWar(world: World, attacker: number, defender: number): Refu
     declareWar(world, attacker, defender); // refused: its `WarRejected`
     return hard(first) ? first : overrunNow ? Refusal.Overrun : whyNotWarOn(world, attacker, lead);
   }
+  if (side && bonded) leaveWarsBeside(world, attacker, partners);
   let broke = 0;
   const al = world.alliances;
   for (let step = 0; step < 8; step++) {
@@ -222,10 +232,12 @@ function whyNotWarOn(world: World, attacker: number, defender: number): Refusal 
   if (nc.living[attacker] !== 1 || nc.living[defender] !== 1) return Refusal.DeadNation;
   if (world.wars.atWar(attacker, defender)) return Refusal.AtWar;
   if (world.wars.inTruce(attacker, defender, world.tick)) return Refusal.Truce;
-  // Before the bonds: a war on one's partner is refused, nothing broken (PLAN 7.189, R25-B1; God's
-  // Force war too: it would take the attacker out of its war with no peace).
-  if (beside(world, attacker, defender)) return Refusal.Beside;
-  return bond(world, attacker, defender);
+  // A bond first: `forceWar` breaks it, and leaves the wars fought beside (PLAN 7.191, R26-B1). A
+  // partner with none is refused, nothing broken (PLAN 7.189, R25-B1: the attacker would be out of
+  // its war with no peace).
+  const tie = bond(world, attacker, defender);
+  if (tie !== Refusal.None) return tie;
+  return beside(world, attacker, defender) ? Refusal.Beside : Refusal.None;
 }
 
 /** Whether `a` and `b` fight on one side in a war (PLAN 7.189). */
@@ -262,6 +274,20 @@ export function bond(world: World, a: number, b: number): Refusal {
  * side's men at the start are scaled to those who stay, so its losses read as before.
  */
 export function leaveBondedWars(world: World, n: number): void {
+  leaveWars(world, n, (_own, enemies) => enemies.some((o) => bond(world, n, o) !== Refusal.None));
+}
+
+/**
+ * `n` breaks a bond with a partner in its wars (PLAN 7.191, R26-B1: a puppet's Force war on its
+ * overlord, an ally's on its ally, a rebel's war of independence): it leaves, as `leaveBondedWars`
+ * leaves, every war in which one of `partners` fights on its side.
+ */
+export function leaveWarsBeside(world: World, n: number, partners: readonly number[]): void {
+  leaveWars(world, n, (own) => partners.some((p) => p !== n && own.includes(p)));
+}
+
+/** `n` and its puppets of a side leave each war `leaves(its side, the enemies)` names (`leaveBondedWars`). */
+function leaveWars(world: World, n: number, leaves: (own: readonly number[], enemies: readonly number[]) => boolean): void {
   const realm = withPuppets(world, n);
   const parted: [number, number][] = [];
   let men: Map<number, number> | null = null;
@@ -269,7 +295,7 @@ export function leaveBondedWars(world: World, n: number): void {
     const s: number = war.sides[ATTACKERS].includes(n) ? ATTACKERS : war.sides[DEFENDERS].includes(n) ? DEFENDERS : -1;
     if (s < 0) continue;
     const enemies = war.sides[1 - s]!;
-    if (!enemies.some((o) => bond(world, n, o) !== Refusal.None)) continue;
+    if (!leaves(war.sides[s]!, enemies)) continue;
     const leaving = war.sides[s]!.filter((m) => realm.includes(m));
     men ??= menOf(world);
     const of = (side: number[]): number => side.reduce((sum, m) => sum + (men!.get(m) ?? 0), 0);

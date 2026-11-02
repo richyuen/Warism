@@ -21,7 +21,7 @@ import { isMonthStart } from '../../shared/calendar';
 import { EventKind } from '../../shared/events';
 import { FlipCause, type World } from '../world';
 import { eliminateNation } from './capitals';
-import { declareWar, leaveBondedWars } from './war';
+import { declareWar, leaveBondedWars, leaveWarsBeside } from './war';
 
 export const SATELLITE_BELOW = 30;
 export const VASSAL_FROM = 70;
@@ -166,6 +166,8 @@ export function puppetSystem(world: World): void {
     }
     if (nc.loyalty[n]! < REVOLT_LOYALTY && nc.autonomy[n]! >= PROTEST_FROM) {
       releasePuppet(world, n, true);
+      // It leaves the wars it fought beside its overlord in, then rises (PLAN 7.191, R26-B1).
+      leaveWarsBeside(world, n, [o]);
       declareWar(world, n, o, true);
       return;
     }
