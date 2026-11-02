@@ -17438,3 +17438,31 @@ Of 7.184 (open in PLAN.md):
   AT: on the critic's cases, (1) the freed puppet on one side of each war, (6) no "Propose alliance" to a nation at
   war with the player, (9) on 1517, 3739, 8821 and unseen 1511–1520 to day 30, no nation at war with a nation it
   guarantees; a unit test red on `82d428c1` for each rule.
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.189 R25-B1: a refused peace is escaped in one click. Declaring war on one's partner in a war takes the
+  attacker out of that war at once (PLAN 7.188's `leaveWarsWhere` in `declareWar`): the occupation undone, no peace,
+  no truce, no log row. Poland, peace refused ("lead the war score by 25 (now +1)"), declares on France; Germany
+  "Neutral" 2 h later, re-declaring on Germany accepted at once; 3 of 3 seeds (7019, 2531, 8467) held cells to 0 in an
+  hour, 0 of 3 on run 24's build; God's Force war is the second door (COBEL). Evidence:
+  `critic/c25_es2_head_7019_d10.json`, `critic/c25_exit_head_{7019,2531,8467}.json`,
+  `critic/c25_cobel_head_GER_ITA_POL.json`, `critic/shots/c25es2_head_7019_germenu_after.png`.
+  Fix: no nation leaves a war by declaring a new one. Where an attacker would stand against a nation it fights beside,
+  refuse the declaration (a refusal the player is told), or keep that nation out of the new war; 7.188's case (the
+  freed Albania beside Italy against Japan) still on one side of each war.
+  AT: on the critic's cases (7019, 2531, 8467, the player's Poland and God's Force war), the old war still on and its
+  held cells unchanged an hour after the declaration (0 of 3 left, as run 24's build); 7.188's freed puppet on one
+  side of each war; a unit test red on `e4386478`.

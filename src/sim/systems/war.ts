@@ -222,7 +222,15 @@ function whyNotWarOn(world: World, attacker: number, defender: number): Refusal 
   if (nc.living[attacker] !== 1 || nc.living[defender] !== 1) return Refusal.DeadNation;
   if (world.wars.atWar(attacker, defender)) return Refusal.AtWar;
   if (world.wars.inTruce(attacker, defender, world.tick)) return Refusal.Truce;
+  // Before the bonds: a war on one's partner is refused, nothing broken (PLAN 7.189, R25-B1; God's
+  // Force war too: it would take the attacker out of its war with no peace).
+  if (beside(world, attacker, defender)) return Refusal.Beside;
   return bond(world, attacker, defender);
+}
+
+/** Whether `a` and `b` fight on one side in a war (PLAN 7.189). */
+export function beside(world: World, a: number, b: number): boolean {
+  return world.wars.list.some((w) => w.sides.some((side) => side.includes(a) && side.includes(b)));
 }
 
 /**
@@ -254,15 +262,6 @@ export function bond(world: World, a: number, b: number): Refusal {
  * side's men at the start are scaled to those who stay, so its losses read as before.
  */
 export function leaveBondedWars(world: World, n: number): void {
-  leaveWarsWhere(world, n, (war, s) => war.sides[1 - s]!.some((o) => bond(world, n, o) !== Refusal.None));
-}
-
-/**
- * `n` leaves, with its puppets of its side, each war `when` names (its side `s` in it), as
- * `leaveBondedWars` tells; between each that left and each nation it is no longer at war with,
- * the land held goes back to its owner.
- */
-function leaveWarsWhere(world: World, n: number, when: (war: War, s: number) => boolean): void {
   const realm = withPuppets(world, n);
   const parted: [number, number][] = [];
   let men: Map<number, number> | null = null;
@@ -270,7 +269,7 @@ function leaveWarsWhere(world: World, n: number, when: (war: War, s: number) => 
     const s: number = war.sides[ATTACKERS].includes(n) ? ATTACKERS : war.sides[DEFENDERS].includes(n) ? DEFENDERS : -1;
     if (s < 0) continue;
     const enemies = war.sides[1 - s]!;
-    if (!when(war, s)) continue;
+    if (!enemies.some((o) => bond(world, n, o) !== Refusal.None)) continue;
     const leaving = war.sides[s]!.filter((m) => realm.includes(m));
     men ??= menOf(world);
     const of = (side: number[]): number => side.reduce((sum, m) => sum + (men!.get(m) ?? 0), 0);
@@ -354,7 +353,9 @@ export function declareWar(world: World, attacker: number, target: number, alone
   // guarantees, or that guarantees it, stays out (the Soviet Union on Romania called in
   // Czechoslovakia, its own pledge, against it).
   const pledged = (x: number, o: number): boolean => al.guarantees.some((g) => (g.guarantor === x && g.target === o) || (g.guarantor === o && g.target === x));
-  const bound = (x: number, enemies: number[]): boolean => enemies.some((o) => world.wars.atWar(x, o) || bond(world, x, o) !== Refusal.None || pledged(x, o));
+  // Nor one called against a nation it fights beside in another war (PLAN 7.189, R25-B1): it stays
+  // out of the new war, and fights on in the old.
+  const bound = (x: number, enemies: number[]): boolean => enemies.some((o) => world.wars.atWar(x, o) || bond(world, x, o) !== Refusal.None || pledged(x, o) || beside(world, x, o));
   const without = (sides: [number[], number[]], asked: (x: number) => boolean, enemiesOf: (s: number, stand: Set<number>) => number[]): [number[], number[]] => {
     const out = new Set<number>();
     const stand = new Set<number>();
@@ -380,10 +381,6 @@ export function declareWar(world: World, attacker: number, target: number, alone
   const before = al.guarantees.length;
   al.guarantees = al.guarantees.filter((g) => !((a.includes(g.guarantor) && d.includes(g.target)) || (d.includes(g.guarantor) && a.includes(g.target))));
   if (al.guarantees.length !== before) al.changed();
-  // No nation fights beside its enemy (PLAN 7.188, critic run 24's 1): an attacker that is on one
-  // side with a defender in an older war leaves that war (Albania, freed to declare on Italy, had
-  // stayed on Italy's side against Japan).
-  for (const x of a) leaveWarsWhere(world, x, (w2, t) => w2 !== war && w2.sides[t]!.some((y) => d.includes(y)));
   world.out.emit(world.tick, EventKind.WarDeclared, attacker, defender, NaN, NaN);
   return war;
 }

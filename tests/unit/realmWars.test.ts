@@ -118,23 +118,76 @@ describe('no war inside one realm or one alliance (PLAN 3.8)', () => {
 
   // PLAN 7.188 (critic run 24's 1, its case on 2207): Japan forces war on its ally Germany, Italy
   // and Albania with it; Albania, Italy's puppet, forces war on Italy. Freed, it fought Italy and
-  // stood with it against Japan.
-  it('a freed puppet that declares on its overlord leaves the war it fought at its side', () => {
+  // stood with it against Japan. Since PLAN 7.189 (R25-B1) the war on its partner is refused, nothing
+  // broken: it fights on beside Italy, and no nation stands on one side with its enemy.
+  it('a puppet that forces war on its overlord beside it in a war is refused, and on one side of each war', () => {
     const s = world1938(5);
     const w = s.world;
     const JAP = nationId('JAP');
     forceWar(w, JAP, GER);
     expect(w.wars.atWar(JAP, ALB)).toBe(true);
-    forceWar(w, ALB, ITA);
-    expect(w.nations.cols.overlord[ALB]).toBe(0);
-    expect(w.wars.atWar(ALB, ITA)).toBe(true);
-    expect(w.wars.atWar(ALB, JAP)).toBe(false);
+    expect(forceWar(w, ALB, ITA)).toBe(Refusal.Beside);
+    expect(w.nations.cols.overlord[ALB]).toBe(ITA);
+    expect(w.wars.atWar(ALB, ITA)).toBe(false);
+    expect(w.wars.atWar(ALB, JAP)).toBe(true);
     const beside: string[] = [];
     for (const u of w.wars.list) for (const v of w.wars.list) {
       if (u === v) continue;
       for (const side of u.sides) for (const x of side) for (const y of side) if (x !== y && ((v.sides[0].includes(x) && v.sides[1].includes(y)) || (v.sides[1].includes(x) && v.sides[0].includes(y)))) beside.push(`${tag(x)} with ${tag(y)}`);
     }
     expect(beside).toEqual([]);
+  });
+
+  // PLAN 7.189 (R25-B1, the critic's ES2/EXIT on 7019, 2531, 8467): Poland, its peace with Germany
+  // refused, declared on France, its partner in that war: an hour later it was at peace with
+  // Germany, the land held both ways back, no peace, no truce. The war on a partner is refused.
+  it('a nation does not leave a war by declaring on its partner in it', () => {
+    const s = world1938(5);
+    const w = s.world;
+    const POL = nationId('POL');
+    const war = declareWar(w, GER, POL);
+    expect(war).not.toBeNull();
+    expect(war!.sides[1]).toContain(FRA);
+    const { owner, controller } = w.cells;
+    w.setController(owner.findIndex((o, c) => o === POL && controller[c] === POL), GER);
+    w.setController(owner.findIndex((o, c) => o === GER && controller[c] === GER), POL);
+    const held = (): number => controller.reduce((n, k, c) => n + ((k === GER && owner[c] === POL) || (k === POL && owner[c] === GER) ? 1 : 0), 0);
+    expect(held()).toBe(2);
+    expect(whyNotWar(w, POL, FRA)).toBe(Refusal.Beside);
+    expect(refused(s, { kind: 'forceWar', attacker: POL, defender: FRA })).toEqual([Refusal.Beside]);
+    expect(refused(s, { kind: 'declareWar', attacker: POL, defender: FRA })).toEqual([Refusal.Beside]);
+    expect(w.wars.atWar(POL, GER)).toBe(true);
+    expect(w.wars.atWar(POL, FRA)).toBe(false);
+    expect(held()).toBe(2);
+  });
+
+  // The critic's COBEL: Germany, losing to Poland, forced war on its ally Italy, beside it in the
+  // war; the alliance broken, Germany was out of the Polish war an hour later. Refused, nothing broken.
+  it("God's Force war on a partner in a war is refused, its alliance kept", () => {
+    const w = world1938(5).world;
+    const POL = nationId('POL');
+    declareWar(w, GER, POL);
+    expect(w.wars.list.some((x) => x.sides[0].includes(GER) && x.sides[0].includes(ITA))).toBe(true);
+    const ally = w.alliances.allied(GER, ITA);
+    expect(forceWar(w, GER, ITA)).toBe(Refusal.Beside);
+    expect(w.alliances.allied(GER, ITA)).toBe(ally);
+    expect(w.wars.atWar(GER, ITA)).toBe(false);
+    expect(w.wars.atWar(GER, POL)).toBe(true);
+  });
+
+  // A nation called into a war against one it fights beside in another stays out of the new war.
+  it('a nation called against its partner in a war stays out, and fights on in the old', () => {
+    const w = world1938(5).world;
+    const [ROM, CZS, TIB] = ['ROM', 'CZS', 'TIB'].map(nationId) as [number, number, number];
+    expect(w.alliances.allied(ROM, CZS)).toBe(true);
+    const old = w.wars.start([GER, CZS], [TIB], w.tick);
+    expect(whyNotWar(w, GER, ROM)).toBe(Refusal.None);
+    const war = declareWar(w, GER, ROM);
+    expect(war).not.toBeNull();
+    expect(war!.sides[1]).not.toContain(CZS);
+    expect(w.wars.atWar(GER, CZS)).toBe(false);
+    expect(w.wars.list).toContain(old);
+    expect(old.sides[0]).toEqual([GER, CZS]);
   });
 
   it('a nation made a puppet leaves its wars against its new realm, and the land held in them goes back', () => {

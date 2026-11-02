@@ -167,6 +167,23 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-799 · 2026-11-02 · accepted — PLAN 7.189 (R25-B1): a war on one's partner in a war is refused; 7.188's leave rule goes
+
+- **Context.** Critic run 25's blocking issue: PLAN 7.188 (ADR-797) took an attacker that stood on one side with a
+  defender in an older war out of that war. A player whose peace was refused declared on its partner (Poland on France)
+  and was out of the war at once, the land held both ways back, no peace, no truce, no row; God's Force war of Germany
+  on Italy the same (3 of 3 seeds each).
+- **Decision.** `whyNotWar` refuses a war between two that fight on one side in a war (`Refusal.Beside`, before the
+  bonds, so `forceWar` breaks nothing of it); a nation called into a war against one it fights beside stays out, as
+  one with a bond does, and fights on in the old. The leave in `declareWar` is gone (`leaveBondedWars` as before
+  7.188). The menus read the standing "Fights beside you" and grey the war, the refusal its title.
+- **Consequences.** On 7019, 2531, 8467, Poland on France (day 45) and Germany on Italy (day 61): 0 of 6 leave
+  (e4386478: 6 of 6, the land to 0; `tools/diag/partnerExit.ts`, `docs/evidence/7.189/at-run.md`). 7.188's freed
+  Albania: its war on Italy, beside it against Japan, is refused, and it stays Italy's puppet on one side of each
+  war (its test reads the refusal for the leave; no nation on one side with its enemy, as before). The forceWar
+  test's overrun case moved to a world with no war of Germany's (Italy is beside it in the Polish war). Seed 99's
+  pin unchanged (a7946f81).
+
 ### ADR-798 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — The ten-year runs' fleet guard after PLAN 7.188: seed 1 stands 24 of 197 after one year, floor 25 (ADR-633)
 
 - **Context** (`npm run check:review` before critic run 25, PLAN 7.5): `tests/sweep/aiSweep1` red twice, "fleets

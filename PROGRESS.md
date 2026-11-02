@@ -25649,3 +25649,12 @@ No rule changed and nothing on screen changed. One task came out of it.
 - R24-B1 and the run-24 diplomacy defects verified fixed. PLAN 7.189 (R25-B1) and 7.190 (diplomacy: guarantees shown,
   a war left logged) before 7.5. The report records ADR-798 as a design objection (no score moved).
 - **Next:** PLAN 7.189.
+
+## 2026-11-02 — PLAN 7.189 (R25-B1, ADR-799): no war on a partner in a war
+- `whyNotWar` refuses a war between two on one side of a war (`Refusal.Beside`; `forceWar` breaks nothing of it); a
+  nation called against its partner stays out. 7.188's leave in `declareWar` is gone. Menus: "Fights beside you",
+  the war greyed with the reason.
+- AT (`docs/evidence/7.189/at-run.md`): 0 of 6 of the critic's EXIT and COBEL cases leave (e4386478: 6 of 6). Four
+  unit tests red on e4386478, a standing test; the Albania test reads the refusal; the forceWar overrun case in its
+  own world. Unit 2041 of 2041 (the 1938 build-time test 2017 ms under the whole suite, green alone); pin unchanged.
+- **Next:** PLAN 7.190.

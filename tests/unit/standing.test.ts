@@ -68,6 +68,28 @@ describe('a nation\'s standing with the played one (PLAN 7.175b)', () => {
     expect(wrong).toEqual([]);
   });
 
+  // PLAN 7.189 (R25-B1): a partner in a war is no bond (`forceWar` breaks nothing of it) and no war
+  // is made on it; the standing names it where the sim refuses for it.
+  it("names a partner in a war where whyNotWar refuses for it (Germany's war on Poland)", () => {
+    const w = new Sim({ scenario: '1938', seed: 5, assets: assets1938(SIZE_1938.w) }).world;
+    declareWar(w, GER, POL);
+    const s = stats(w);
+    const of = (a: number, b: number) => standingOf(a, b, (id) => s.get(id), warsOf(w));
+    expect(of(POL, FRA)).toEqual({ kind: 'beside', days: 0, bond: false });
+    expect(of(GER, ITA)).toEqual({ kind: 'beside', days: 0, bond: false });
+    const ids = [...new Set(w.wars.list.flatMap((x) => [...x.sides[0]!, ...x.sides[1]!]))].concat([ENG, SWI]);
+    const wrong: string[] = [];
+    for (const a of ids)
+      for (const b of ids) {
+        if (a === b) continue;
+        const why = whyNotWar(w, a, b);
+        if (why === Refusal.Overrun) continue;
+        if ((of(a, b).kind === 'beside') !== (why === Refusal.Beside)) wrong.push(`${a}→${b}: ${of(a, b).kind} against refusal ${why}`);
+      }
+    expect(wrong).toEqual([]);
+    expect(standingText(of(POL, FRA))).toBe('Fights beside you');
+  });
+
   it('in words', () => {
     expect(standingText({ kind: 'truce', days: 12, bond: true })).toBe('Truce (12 days)');
     expect(standingText({ kind: 'truce', days: 1, bond: true })).toBe('Truce (1 day)');

@@ -2,13 +2,14 @@
  * A nation's standing with the played one (PLAN 7.175b, ADR-780): what the right-click menu and
  * the Actions tab say of it, and whether a war on it would break a bond (the button reads "Force
  * war"). Read from the statistics message as the sim's `whyNotWar` and `bond` read the world: at
- * war, one the other's puppet, allies, one overlord's puppets or allied realms, a truce.
+ * war, one the other's puppet, allies, one overlord's puppets or allied realms, a truce. Fighting
+ * on one side in a war (`beside`, PLAN 7.189) is no bond: no war on it, forced or not.
  */
 import { PEACE_ACCEPT_EXHAUSTION, PEACE_ACCEPT_SCORE, type PeaceVerdict } from '../shared/peace';
 import type { NationStat, WarStat } from '../shared/protocol';
 import { t } from './i18n';
 
-export type StandingKind = 'war' | 'puppet' | 'overlord' | 'allied' | 'realm' | 'truce' | 'neutral';
+export type StandingKind = 'war' | 'beside' | 'puppet' | 'overlord' | 'allied' | 'realm' | 'truce' | 'neutral';
 
 export interface Standing {
   kind: StandingKind;
@@ -27,6 +28,8 @@ export function standingOf(a: number, b: number, of: (id: number) => Who | undef
   const them = of(b);
   if (!me || !them) return at('neutral', false);
   if (wars.some((w) => (w.attackers.includes(a) && w.defenders.includes(b)) || (w.defenders.includes(a) && w.attackers.includes(b)))) return at('war', false);
+  const side = (x: number, y: number): boolean => wars.some((w) => (w.attackers.includes(x) && w.attackers.includes(y)) || (w.defenders.includes(x) && w.defenders.includes(y)));
+  if (side(a, b) || (them.overlord !== 0 && side(a, them.overlord))) return at('beside', false);
   if (them.overlord === a) return at('puppet', true);
   if (me.overlord === b) return at('overlord', true);
   const allied = (x: number, y: number): boolean => {

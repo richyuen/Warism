@@ -95,14 +95,21 @@ describe('forceWar: the bond in the way is broken (PLAN 7.175a)', () => {
     // The same nation, and none.
     expect(forceWar(w, GER, GER)).toBe(Refusal.SameNation);
     expect(forceWar(w, GER, 9999)).toBe(Refusal.NoNation);
-    // Overrun: Italy's land all under German control; Germany, its ally, is refused and stays allied.
-    const { owner } = w.cells;
-    for (let c = 0; c < owner.length; c++) if (owner[c] === ITA) w.setController(c, POL);
-    expect(forceWar(w, GER, ITA)).toBe(Refusal.Overrun);
+    // Beside: Italy, called in, fights at Germany's side against Poland (PLAN 7.189, R25-B1).
+    expect(forceWar(w, GER, ITA)).toBe(Refusal.Beside);
     expect(w.alliances.allied(GER, ITA)).toBe(true);
-    expect(atWar(w, GER, ITA)).toBe(false);
-    expect(emitted(w, EventKind.BondsBroken)).toEqual([]);
-    expect(emitted(w, EventKind.WarRejected).length).toBeGreaterThan(0);
+    // Overrun, in a world with no war of theirs: Italy's land all under Polish control; Germany, its
+    // ally, is refused and stays allied.
+    const v = world();
+    const { owner } = v.cells;
+    for (let c = 0; c < owner.length; c++) if (owner[c] === ITA) v.setController(c, POL);
+    expect(forceWar(v, GER, ITA)).toBe(Refusal.Overrun);
+    for (const x of [w, v]) {
+      expect(x.alliances.allied(GER, ITA)).toBe(true);
+      expect(atWar(x, GER, ITA)).toBe(false);
+      expect(emitted(x, EventKind.BondsBroken)).toEqual([]);
+      expect(emitted(x, EventKind.WarRejected).length).toBeGreaterThan(0);
+    }
   });
 
   it('the bonds broken are a history and ticker row: "the United Kingdom broke its alliance with France"', () => {

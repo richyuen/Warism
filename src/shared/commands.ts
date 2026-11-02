@@ -299,6 +299,8 @@ export const Refusal = {
   NoAirbase: 30,
   /** God Mode's Breakthrough for a nation at war with no one: there is no front to break (PLAN 7.165). */
   AtPeace: 31,
+  /** The two fight on one side in a war: a nation does not declare on its partner, nor leave its war so (PLAN 7.189, R25-B1). */
+  Beside: 32,
 } as const;
 export type Refusal = (typeof Refusal)[keyof typeof Refusal];
 
