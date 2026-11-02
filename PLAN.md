@@ -55,7 +55,7 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
     | GER | Bismarck (battleship) | Maus (super-heavy tank, 188 t) |
     | ENG | HMS Hood ("the Mighty Hood", battlecruiser) | TOG II (super-heavy tank, 80 t) |
     | FRA | Richelieu (battleship) | Char 2C (69 t, in service in 1938: the largest tank ever fielded) |
-    | ITA | Roma (Littorio-class battleship) | P26/40 (Italy's heavy tank) |
+    | ITA | Roma (Littorio-class battleship) | P.100 "Ercole" (hypothetical, the user's choice: an Ansaldo super-heavy of ~110 t, a 149/40 gun and two 47/32, 120 mm armour, crew 10, ~20 km/h) |
     A sea hero starts at its nation's first naval base of `fleets.json`, a land hero at its capital. A hero formation
     (a flag saved with the world) is never disbanded, laid up, folded or merged (`ai/economic.ts`: `foldHollow`, the
     disband and lay-up steps) and costs no upkeep. Out of battle it heals 5 % of its strength a day (a ship anywhere,
