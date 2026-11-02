@@ -1,0 +1,80 @@
+{
+ "seed": 7019,
+ "bin": "critic/c25_seed7019_y20.bin",
+ "samples": [
+  {
+   "frames": 91,
+   "paused": false,
+   "date": "1 January 1958",
+   "dialog": null
+  },
+  {
+   "frames": 151,
+   "paused": false,
+   "date": "11 January 1958",
+   "dialog": null
+  },
+  {
+   "frames": 212,
+   "paused": true,
+   "date": "16 January 1958 · Paused",
+   "dialog": null
+  },
+  {
+   "frames": 273,
+   "paused": true,
+   "date": "16 January 1958 · Paused",
+   "dialog": null
+  },
+  {
+   "frames": 334,
+   "paused": true,
+   "date": "16 January 1958 · Paused",
+   "dialog": null
+  },
+  {
+   "frames": 395,
+   "paused": true,
+   "date": "16 January 1958 · Paused",
+   "dialog": null
+  },
+  {
+   "frames": 456,
+   "paused": true,
+   "date": "16 January 1958 · Paused",
+   "dialog": null
+  },
+  {
+   "frames": 517,
+   "paused": true,
+   "date": "16 January 1958 · Paused",
+   "dialog": null
+  },
+  {
+   "frames": 578,
+   "paused": true,
+   "date": "16 January 1958 · Paused",
+   "dialog": null
+  },
+  {
+   "frames": 639,
+   "paused": true,
+   "date": "16 January 1958 · Paused",
+   "dialog": null
+  },
+  {
+   "frames": 699,
+   "paused": true,
+   "date": "16 January 1958 · Paused",
+   "dialog": null
+  },
+  {
+   "frames": 723,
+   "paused": true,
+   "date": "16 January 1958 · Paused",
+   "dialog": null
+  }
+ ],
+ "shot": "critic/shots/c25pfchk_7019_y20.png",
+ "errors": []
+}

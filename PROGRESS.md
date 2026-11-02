@@ -25641,3 +25641,11 @@ No rule changed and nothing on screen changed. One task came out of it.
 - `tests/helpers/aiSweep.ts`: fleets of the start standing after one year ≥ `ceil(start / 10)` (20 of 197), for 25.
   Seeds 1–3 stood 24, 70, 71 on the review of 5d7b214b. No sim change.
 - **Next:** PLAN 7.5: the review again, then critic run 25.
+
+## 2026-11-02 — Critic run 25 on e4386478: diplomacy 6, one blocking; PLAN 7.189, 7.190
+- `npm run check:review` green (seaRow's known red only). Scores: mapVisuals 7, diplomacy 6, emergent 7, God 7,
+  editor 7, stats 7, UI 7, performance 7, stability 7; semantic zoom 8, naval 8, tanks 8, aircraft 8, AI nukes 8.
+  Blocking 1: R25-B1 (declaring war on a war partner leaves the old war with no peace, 7.188's leave rule).
+- R24-B1 and the run-24 diplomacy defects verified fixed. PLAN 7.189 (R25-B1) and 7.190 (diplomacy: guarantees shown,
+  a war left logged) before 7.5. The report records ADR-798 as a design objection (no score moved).
+- **Next:** PLAN 7.189.

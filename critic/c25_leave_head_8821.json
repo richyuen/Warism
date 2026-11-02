@@ -1,0 +1,5821 @@
+{
+ "seed": 8821,
+ "random": false,
+ "days": 730,
+ "leftOnDeclaration": [
+  {
+   "day": 152.04,
+   "pair": "ROM-DEN",
+   "oldWar": 15,
+   "oldSides": [
+    [
+     "SOV",
+     "ROM",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "ROM of DEN": 0,
+    "DEN of ROM": 0
+   },
+   "heldAfter": {
+    "ROM of DEN": 0,
+    "DEN of ROM": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 152.04,
+   "pair": "DEN-SIN",
+   "oldWar": 15,
+   "oldSides": [
+    [
+     "SOV",
+     "ROM",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "DEN of SIN": 0,
+    "SIN of DEN": 0
+   },
+   "heldAfter": {
+    "DEN of SIN": 0,
+    "SIN of DEN": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 152.04,
+   "pair": "DEN-MON",
+   "oldWar": 15,
+   "oldSides": [
+    [
+     "SOV",
+     "ROM",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "DEN of MON": 0,
+    "MON of DEN": 0
+   },
+   "heldAfter": {
+    "DEN of MON": 0,
+    "MON of DEN": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 152.04,
+   "pair": "DEN-TAN",
+   "oldWar": 15,
+   "oldSides": [
+    [
+     "SOV",
+     "ROM",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "DEN of TAN": 0,
+    "TAN of DEN": 0
+   },
+   "heldAfter": {
+    "DEN of TAN": 0,
+    "TAN of DEN": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 152.04,
+   "pair": "EST-DEN",
+   "oldWar": 16,
+   "oldSides": [
+    [
+     "GER",
+     "EST",
+     "ITA",
+     "LIT",
+     "YUG",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "EST of DEN": 0,
+    "DEN of EST": 0
+   },
+   "heldAfter": {
+    "EST of DEN": 0,
+    "DEN of EST": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 152.04,
+   "pair": "ITA-DEN",
+   "oldWar": 16,
+   "oldSides": [
+    [
+     "GER",
+     "EST",
+     "ITA",
+     "LIT",
+     "YUG",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "ITA of DEN": 0,
+    "DEN of ITA": 0
+   },
+   "heldAfter": {
+    "ITA of DEN": 0,
+    "DEN of ITA": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 152.04,
+   "pair": "LIT-DEN",
+   "oldWar": 16,
+   "oldSides": [
+    [
+     "GER",
+     "EST",
+     "ITA",
+     "LIT",
+     "YUG",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "LIT of DEN": 0,
+    "DEN of LIT": 0
+   },
+   "heldAfter": {
+    "LIT of DEN": 0,
+    "DEN of LIT": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 152.04,
+   "pair": "YUG-DEN",
+   "oldWar": 16,
+   "oldSides": [
+    [
+     "GER",
+     "EST",
+     "ITA",
+     "LIT",
+     "YUG",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "YUG of DEN": 0,
+    "DEN of YUG": 0
+   },
+   "heldAfter": {
+    "YUG of DEN": 0,
+    "DEN of YUG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 152.04,
+   "pair": "ALB-DEN",
+   "oldWar": 16,
+   "oldSides": [
+    [
+     "GER",
+     "EST",
+     "ITA",
+     "LIT",
+     "YUG",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "ALB of DEN": 0,
+    "DEN of ALB": 0
+   },
+   "heldAfter": {
+    "ALB of DEN": 0,
+    "DEN of ALB": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 152.04,
+   "pair": "DEN-JAP",
+   "oldWar": 16,
+   "oldSides": [
+    [
+     "GER",
+     "EST",
+     "ITA",
+     "LIT",
+     "YUG",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "DEN of JAP": 0,
+    "JAP of DEN": 0
+   },
+   "heldAfter": {
+    "DEN of JAP": 0,
+    "JAP of DEN": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 152.04,
+   "pair": "DEN-MAN",
+   "oldWar": 16,
+   "oldSides": [
+    [
+     "GER",
+     "EST",
+     "ITA",
+     "LIT",
+     "YUG",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "DEN of MAN": 0,
+    "MAN of DEN": 0
+   },
+   "heldAfter": {
+    "DEN of MAN": 0,
+    "MAN of DEN": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 152.04,
+   "pair": "DEN-MEN",
+   "oldWar": 16,
+   "oldSides": [
+    [
+     "GER",
+     "EST",
+     "ITA",
+     "LIT",
+     "YUG",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    [
+     "HUN",
+     "DEN"
+    ]
+   ],
+   "declared": [
+    "NSP on POR"
+   ],
+   "heldBefore": {
+    "DEN of MEN": 0,
+    "MEN of DEN": 0
+   },
+   "heldAfter": {
+    "DEN of MEN": 0,
+    "MEN of DEN": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "IRE-ANG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "IRE of ANG": 0,
+    "ANG of IRE": 0
+   },
+   "heldAfter": {
+    "IRE of ANG": 0,
+    "ANG of IRE": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "IRE-MOZ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "IRE of MOZ": 0,
+    "MOZ of IRE": 0
+   },
+   "heldAfter": {
+    "IRE of MOZ": 0,
+    "MOZ of IRE": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "EGY-ANG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "EGY of ANG": 0,
+    "ANG of EGY": 0
+   },
+   "heldAfter": {
+    "EGY of ANG": 0,
+    "ANG of EGY": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "EGY-MOZ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "EGY of MOZ": 0,
+    "MOZ of EGY": 0
+   },
+   "heldAfter": {
+    "EGY of MOZ": 0,
+    "MOZ of EGY": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "SUD-ANG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "SUD of ANG": 0,
+    "ANG of SUD": 0
+   },
+   "heldAfter": {
+    "SUD of ANG": 0,
+    "ANG of SUD": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "SUD-MOZ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "SUD of MOZ": 0,
+    "MOZ of SUD": 0
+   },
+   "heldAfter": {
+    "SUD of MOZ": 0,
+    "MOZ of SUD": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "BEA-ANG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "BEA of ANG": 0,
+    "ANG of BEA": 0
+   },
+   "heldAfter": {
+    "BEA of ANG": 0,
+    "ANG of BEA": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "BEA-MOZ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "BEA of MOZ": 0,
+    "MOZ of BEA": 3
+   },
+   "heldAfter": {
+    "BEA of MOZ": 0,
+    "MOZ of BEA": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-SAF",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of SAF": 0,
+    "SAF of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of SAF": 0,
+    "SAF of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-SAF",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of SAF": 22,
+    "SAF of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of SAF": 0,
+    "SAF of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-SRH",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of SRH": 0,
+    "SRH of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of SRH": 0,
+    "SRH of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-SRH",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of SRH": 0,
+    "SRH of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of SRH": 0,
+    "SRH of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-NIG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of NIG": 0,
+    "NIG of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of NIG": 0,
+    "NIG of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-NIG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of NIG": 0,
+    "NIG of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of NIG": 0,
+    "NIG of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-GCO",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of GCO": 0,
+    "GCO of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of GCO": 0,
+    "GCO of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-GCO",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of GCO": 0,
+    "GCO of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of GCO": 0,
+    "GCO of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-PAL",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of PAL": 0,
+    "PAL of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of PAL": 0,
+    "PAL of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-PAL",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of PAL": 0,
+    "PAL of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of PAL": 0,
+    "PAL of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-TRJ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of TRJ": 0,
+    "TRJ of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of TRJ": 0,
+    "TRJ of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-TRJ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of TRJ": 0,
+    "TRJ of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of TRJ": 0,
+    "TRJ of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-OMN",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of OMN": 0,
+    "OMN of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of OMN": 0,
+    "OMN of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-OMN",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of OMN": 0,
+    "OMN of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of OMN": 0,
+    "OMN of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-RAJ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of RAJ": 0,
+    "RAJ of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of RAJ": 0,
+    "RAJ of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-RAJ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of RAJ": 0,
+    "RAJ of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of RAJ": 0,
+    "RAJ of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-BUR",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of BUR": 0,
+    "BUR of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of BUR": 0,
+    "BUR of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-BUR",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of BUR": 0,
+    "BUR of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of BUR": 0,
+    "BUR of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-CEY",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of CEY": 0,
+    "CEY of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of CEY": 0,
+    "CEY of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-CEY",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of CEY": 0,
+    "CEY of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of CEY": 0,
+    "CEY of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-MAL",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of MAL": 0,
+    "MAL of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of MAL": 0,
+    "MAL of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-MAL",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of MAL": 0,
+    "MAL of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of MAL": 0,
+    "MAL of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-SAR",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of SAR": 0,
+    "SAR of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of SAR": 0,
+    "SAR of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-SAR",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of SAR": 0,
+    "SAR of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of SAR": 0,
+    "SAR of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-AST",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of AST": 0,
+    "AST of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of AST": 0,
+    "AST of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-AST",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of AST": 0,
+    "AST of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of AST": 0,
+    "AST of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-NZL",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of NZL": 0,
+    "NZL of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of NZL": 0,
+    "NZL of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-NZL",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of NZL": 0,
+    "NZL of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of NZL": 0,
+    "NZL of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-CAN",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of CAN": 0,
+    "CAN of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of CAN": 0,
+    "CAN of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-CAN",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of CAN": 0,
+    "CAN of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of CAN": 0,
+    "CAN of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-NFL",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of NFL": 0,
+    "NFL of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of NFL": 0,
+    "NFL of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-NFL",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of NFL": 0,
+    "NFL of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of NFL": 0,
+    "NFL of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "FRA-ANG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "FRA of ANG": 0,
+    "ANG of FRA": 0
+   },
+   "heldAfter": {
+    "FRA of ANG": 0,
+    "ANG of FRA": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "FRA-MOZ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "FRA of MOZ": 0,
+    "MOZ of FRA": 0
+   },
+   "heldAfter": {
+    "FRA of MOZ": 0,
+    "MOZ of FRA": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-AOF",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of AOF": 0,
+    "AOF of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of AOF": 0,
+    "AOF of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-AOF",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of AOF": 0,
+    "AOF of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of AOF": 0,
+    "AOF of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-AEF",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of AEF": 0,
+    "AEF of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of AEF": 0,
+    "AEF of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-AEF",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of AEF": 0,
+    "AEF of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of AEF": 0,
+    "AEF of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-MAD",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of MAD": 0,
+    "MAD of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of MAD": 0,
+    "MAD of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-MAD",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of MAD": 0,
+    "MAD of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of MAD": 0,
+    "MAD of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-FMO",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of FMO": 0,
+    "FMO of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of FMO": 0,
+    "FMO of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-FMO",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of FMO": 0,
+    "FMO of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of FMO": 0,
+    "FMO of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-TUN",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of TUN": 0,
+    "TUN of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of TUN": 0,
+    "TUN of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-TUN",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of TUN": 0,
+    "TUN of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of TUN": 0,
+    "TUN of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-SYR",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of SYR": 0,
+    "SYR of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of SYR": 0,
+    "SYR of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-SYR",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of SYR": 0,
+    "SYR of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of SYR": 0,
+    "SYR of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-LEB",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of LEB": 0,
+    "LEB of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of LEB": 0,
+    "LEB of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-LEB",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of LEB": 0,
+    "LEB of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of LEB": 0,
+    "LEB of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-INC",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of INC": 0,
+    "INC of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of INC": 0,
+    "INC of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-INC",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of INC": 0,
+    "INC of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of INC": 0,
+    "INC of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "NED-ANG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "NED of ANG": 0,
+    "ANG of NED": 0
+   },
+   "heldAfter": {
+    "NED of ANG": 0,
+    "ANG of NED": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "NED-MOZ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "NED of MOZ": 0,
+    "MOZ of NED": 0
+   },
+   "heldAfter": {
+    "NED of MOZ": 0,
+    "MOZ of NED": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "ANG-DEI",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "ANG of DEI": 0,
+    "DEI of ANG": 0
+   },
+   "heldAfter": {
+    "ANG of DEI": 0,
+    "DEI of ANG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "MOZ-DEI",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "MOZ of DEI": 0,
+    "DEI of MOZ": 0
+   },
+   "heldAfter": {
+    "MOZ of DEI": 0,
+    "DEI of MOZ": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "LUX-ANG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "LUX of ANG": 0,
+    "ANG of LUX": 0
+   },
+   "heldAfter": {
+    "LUX of ANG": 0,
+    "ANG of LUX": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "LUX-MOZ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "LUX of MOZ": 0,
+    "MOZ of LUX": 0
+   },
+   "heldAfter": {
+    "LUX of MOZ": 0,
+    "MOZ of LUX": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "BEL-ANG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "BEL of ANG": 0,
+    "ANG of BEL": 0
+   },
+   "heldAfter": {
+    "BEL of ANG": 0,
+    "ANG of BEL": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "BEL-MOZ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "BEL of MOZ": 0,
+    "MOZ of BEL": 0
+   },
+   "heldAfter": {
+    "BEL of MOZ": 0,
+    "MOZ of BEL": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "BCO-ANG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "BCO of ANG": 0,
+    "ANG of BCO": 0
+   },
+   "heldAfter": {
+    "BCO of ANG": 0,
+    "ANG of BCO": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "BCO-MOZ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "BCO of MOZ": 0,
+    "MOZ of BCO": 0
+   },
+   "heldAfter": {
+    "BCO of MOZ": 0,
+    "MOZ of BCO": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "SWI-ANG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "SWI of ANG": 0,
+    "ANG of SWI": 0
+   },
+   "heldAfter": {
+    "SWI of ANG": 0,
+    "ANG of SWI": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "SWI-MOZ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "SWI of MOZ": 0,
+    "MOZ of SWI": 0
+   },
+   "heldAfter": {
+    "SWI of MOZ": 0,
+    "MOZ of SWI": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "AUT-ANG",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "AUT of ANG": 0,
+    "ANG of AUT": 0
+   },
+   "heldAfter": {
+    "AUT of ANG": 0,
+    "ANG of AUT": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 160.04,
+   "pair": "AUT-MOZ",
+   "oldWar": 12,
+   "oldSides": [
+    [
+     "ENG",
+     "IRE",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "LUX",
+     "BEL",
+     "BCO",
+     "SWI",
+     "AUT"
+    ],
+    [
+     "POR",
+     "ANG",
+     "MOZ"
+    ]
+   ],
+   "declared": [
+    "GER on POL"
+   ],
+   "heldBefore": {
+    "AUT of MOZ": 0,
+    "MOZ of AUT": 0
+   },
+   "heldAfter": {
+    "AUT of MOZ": 0,
+    "MOZ of AUT": 0
+   },
+   "oldWarStillOn": false
+  }
+ ],
+ "otherEnds": 258,
+ "declarations": 42,
+ "decl": [
+  {
+   "day": 4.04,
+   "by": "SOV",
+   "on": "ROM",
+   "a": [
+    "SOV",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "ROM",
+    "YUG"
+   ]
+  },
+  {
+   "day": 11.04,
+   "by": "SOV",
+   "on": "LIT",
+   "a": [
+    "SOV",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "LIT",
+    "LAT",
+    "EST"
+   ]
+  },
+  {
+   "day": 15.04,
+   "by": "CHI",
+   "on": "TIB",
+   "a": [
+    "CHI",
+    "CCP"
+   ],
+   "d": [
+    "TIB"
+   ]
+  },
+  {
+   "day": 27.04,
+   "by": "ITA",
+   "on": "YUG",
+   "a": [
+    "ITA",
+    "ALB",
+    "GER",
+    "JAP",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "YUG",
+    "CZS",
+    "ROM"
+   ]
+  },
+  {
+   "day": 30.04,
+   "by": "USA",
+   "on": "LIT",
+   "a": [
+    "USA",
+    "PHI"
+   ],
+   "d": [
+    "LIT",
+    "LAT",
+    "EST"
+   ]
+  },
+  {
+   "day": 34.04,
+   "by": "ITA",
+   "on": "LIT",
+   "a": [
+    "ITA",
+    "ALB",
+    "GER",
+    "JAP",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "LIT",
+    "LAT",
+    "EST"
+   ]
+  },
+  {
+   "day": 50.04,
+   "by": "ENG",
+   "on": "IRE",
+   "a": [
+    "ENG",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL",
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "NED",
+    "DEI",
+    "LUX",
+    "BEL",
+    "BCO",
+    "SWI",
+    "AUT"
+   ],
+   "d": [
+    "IRE"
+   ]
+  },
+  {
+   "day": 102.04,
+   "by": "SOV",
+   "on": "LAT",
+   "a": [
+    "SOV",
+    "ROM",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "LAT",
+    "EST"
+   ]
+  },
+  {
+   "day": 104.04,
+   "by": "GER",
+   "on": "LAT",
+   "a": [
+    "GER",
+    "ITA",
+    "YUG",
+    "ALB",
+    "JAP",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "LAT",
+    "EST"
+   ]
+  },
+  {
+   "day": 106.04,
+   "by": "ENG",
+   "on": "POR",
+   "a": [
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL",
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "NED",
+    "DEI",
+    "LUX",
+    "BEL",
+    "BCO",
+    "SWI",
+    "AUT"
+   ],
+   "d": [
+    "POR",
+    "ANG",
+    "MOZ"
+   ]
+  },
+  {
+   "day": 114.04,
+   "by": "JAP",
+   "on": "POR",
+   "a": [
+    "JAP",
+    "MAN",
+    "MEN",
+    "GER",
+    "EST",
+    "ITA",
+    "LIT",
+    "YUG",
+    "ALB"
+   ],
+   "d": [
+    "POR",
+    "ANG",
+    "MOZ"
+   ]
+  },
+  {
+   "day": 116.04,
+   "by": "SOV",
+   "on": "FIN",
+   "a": [
+    "SOV",
+    "ROM",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "FIN",
+    "POL",
+    "NOR"
+   ]
+  },
+  {
+   "day": 137.04,
+   "by": "SOV",
+   "on": "HUN",
+   "a": [
+    "SOV",
+    "ROM",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "HUN",
+    "DEN"
+   ]
+  },
+  {
+   "day": 139.04,
+   "by": "GER",
+   "on": "HUN",
+   "a": [
+    "GER",
+    "EST",
+    "ITA",
+    "LIT",
+    "YUG",
+    "ALB",
+    "JAP",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "HUN",
+    "DEN"
+   ]
+  },
+  {
+   "day": 152.04,
+   "by": "NSP",
+   "on": "POR",
+   "a": [
+    "NSP",
+    "REP"
+   ],
+   "d": [
+    "POR",
+    "ANG",
+    "MOZ"
+   ]
+  },
+  {
+   "day": 153.04,
+   "by": "ITA",
+   "on": "HUN",
+   "a": [
+    "ITA",
+    "LIT",
+    "YUG",
+    "ALB",
+    "EST",
+    "JAP",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "HUN",
+    "DEN"
+   ]
+  },
+  {
+   "day": 156.04,
+   "by": "USA",
+   "on": "POR",
+   "a": [
+    "USA",
+    "PHI"
+   ],
+   "d": [
+    "POR",
+    "ANG",
+    "MOZ"
+   ]
+  },
+  {
+   "day": 160.04,
+   "by": "GER",
+   "on": "POL",
+   "a": [
+    "GER",
+    "EST",
+    "ITA",
+    "LIT",
+    "YUG",
+    "ALB",
+    "JAP",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "POL",
+    "FIN",
+    "NOR",
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC"
+   ]
+  },
+  {
+   "day": 174.04,
+   "by": "ITA",
+   "on": "POR",
+   "a": [
+    "ITA",
+    "LIT",
+    "YUG",
+    "ALB",
+    "GER",
+    "EST",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "POR",
+    "ANG",
+    "MOZ",
+    "NSP",
+    "REP"
+   ]
+  },
+  {
+   "day": 176.04,
+   "by": "ENG",
+   "on": "LIB",
+   "a": [
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL",
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "NED",
+    "DEI",
+    "LUX",
+    "BEL",
+    "BCO",
+    "SWI",
+    "AUT"
+   ],
+   "d": [
+    "LIB"
+   ]
+  },
+  {
+   "day": 199.04,
+   "by": "TUR",
+   "on": "BUL",
+   "a": [
+    "TUR",
+    "GRE",
+    "IRN",
+    "AFG"
+   ],
+   "d": [
+    "BUL"
+   ]
+  },
+  {
+   "day": 207.04,
+   "by": "SOV",
+   "on": "TUR",
+   "a": [
+    "SOV",
+    "ROM",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "TUR",
+    "GRE",
+    "IRN",
+    "AFG"
+   ]
+  },
+  {
+   "day": 214.04,
+   "by": "SOV",
+   "on": "POL",
+   "a": [
+    "SOV",
+    "ROM",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "POL",
+    "NOR",
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC"
+   ]
+  },
+  {
+   "day": 232.04,
+   "by": "BRA",
+   "on": "COL",
+   "a": [
+    "BRA"
+   ],
+   "d": [
+    "COL"
+   ]
+  },
+  {
+   "day": 233.04,
+   "by": "PRU",
+   "on": "COL",
+   "a": [
+    "PRU"
+   ],
+   "d": [
+    "COL"
+   ]
+  },
+  {
+   "day": 240.04,
+   "by": "JAP",
+   "on": "NOR",
+   "a": [
+    "JAP",
+    "MAN",
+    "MEN",
+    "GER",
+    "EST",
+    "ITA",
+    "LIT",
+    "YUG",
+    "ALB"
+   ],
+   "d": [
+    "NOR",
+    "FIN"
+   ]
+  },
+  {
+   "day": 240.04,
+   "by": "USA",
+   "on": "FIN",
+   "a": [
+    "USA",
+    "PHI"
+   ],
+   "d": [
+    "FIN",
+    "NOR"
+   ]
+  },
+  {
+   "day": 306.04,
+   "by": "NSP",
+   "on": "FIN",
+   "a": [
+    "NSP",
+    "REP",
+    "POR",
+    "ANG",
+    "MOZ"
+   ],
+   "d": [
+    "FIN",
+    "NOR"
+   ]
+  },
+  {
+   "day": 342.04,
+   "by": "GER",
+   "on": "POR",
+   "a": [
+    "GER",
+    "EST",
+    "LIT",
+    "YUG",
+    "ALB"
+   ],
+   "d": [
+    "POR",
+    "ANG",
+    "MOZ",
+    "NSP",
+    "REP"
+   ]
+  },
+  {
+   "day": 365.04,
+   "by": "ENG",
+   "on": "BRA",
+   "a": [
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "LIB",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL",
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "NED",
+    "DEI",
+    "LUX",
+    "BEL",
+    "BCO",
+    "SWI",
+    "AUT"
+   ],
+   "d": [
+    "BRA"
+   ]
+  },
+  {
+   "day": 405.04,
+   "by": "GER",
+   "on": "NOR",
+   "a": [
+    "GER",
+    "EST",
+    "ITA",
+    "LIT",
+    "YUG",
+    "ALB"
+   ],
+   "d": [
+    "NOR",
+    "FIN",
+    "SWE"
+   ]
+  },
+  {
+   "day": 422.04,
+   "by": "JAP",
+   "on": "SWE",
+   "a": [
+    "JAP"
+   ],
+   "d": [
+    "SWE",
+    "FIN",
+    "USA",
+    "PHI"
+   ]
+  },
+  {
+   "day": 440.04,
+   "by": "ITA",
+   "on": "NSP",
+   "a": [
+    "ITA",
+    "JAP"
+   ],
+   "d": [
+    "NSP",
+    "REP",
+    "ANG",
+    "MOZ"
+   ]
+  },
+  {
+   "day": 445.04,
+   "by": "SOV",
+   "on": "IRN",
+   "a": [
+    "SOV",
+    "ROM",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "IRN",
+    "BUL",
+    "GRE",
+    "AFG"
+   ]
+  },
+  {
+   "day": 489.04,
+   "by": "ITA",
+   "on": "NOR",
+   "a": [
+    "ITA",
+    "LIT",
+    "YUG",
+    "ALB",
+    "EST"
+   ],
+   "d": [
+    "NOR",
+    "FIN",
+    "SWE",
+    "USA",
+    "PHI"
+   ]
+  },
+  {
+   "day": 501.04,
+   "by": "SOV",
+   "on": "AFG",
+   "a": [
+    "SOV",
+    "ROM",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "AFG",
+    "GRE"
+   ]
+  },
+  {
+   "day": 510.04,
+   "by": "GER",
+   "on": "SWE",
+   "a": [
+    "GER"
+   ],
+   "d": [
+    "SWE",
+    "FIN",
+    "USA",
+    "PHI"
+   ]
+  },
+  {
+   "day": 548.04,
+   "by": "SAU",
+   "on": "YEM",
+   "a": [
+    "SAU"
+   ],
+   "d": [
+    "YEM"
+   ]
+  },
+  {
+   "day": 584.04,
+   "by": "IRQ",
+   "on": "SAU",
+   "a": [
+    "IRQ",
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "LIB",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL",
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "NED",
+    "DEI",
+    "LUX",
+    "BEL",
+    "BCO",
+    "SWI",
+    "AUT"
+   ],
+   "d": [
+    "SAU"
+   ]
+  },
+  {
+   "day": 632.04,
+   "by": "PRU",
+   "on": "BOL",
+   "a": [
+    "PRU"
+   ],
+   "d": [
+    "BOL"
+   ]
+  },
+  {
+   "day": 687.04,
+   "by": "ENG",
+   "on": "NSP",
+   "a": [
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SRH",
+    "NIG",
+    "GCO",
+    "LIB",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "NFL",
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "NED",
+    "DEI",
+    "LUX",
+    "BEL",
+    "BCO",
+    "SWI",
+    "AUT",
+    "IRQ",
+    "SAU",
+    "SAF"
+   ],
+   "d": [
+    "NSP",
+    "REP",
+    "ANG"
+   ]
+  },
+  {
+   "day": 713.04,
+   "by": "PAR",
+   "on": "BOL",
+   "a": [
+    "PAR"
+   ],
+   "d": [
+    "BOL"
+   ]
+  }
+ ]
+}

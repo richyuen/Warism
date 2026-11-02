@@ -1,0 +1,329 @@
+{
+ "seed": 7019,
+ "day": 45,
+ "log": [
+  {
+   "k": "Germany on Poland",
+   "day": 1.04,
+   "polGer": true,
+   "polFra": false,
+   "gerFra": true,
+   "gerHoldsPol": 0,
+   "polHoldsGer": 0,
+   "truce": false,
+   "wars": [
+    {
+     "a": [
+      "GER",
+      "ITA",
+      "ALB",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "POL",
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC"
+     ]
+    }
+   ]
+  },
+  {
+   "k": "day 45",
+   "day": 45.04,
+   "polGer": true,
+   "polFra": false,
+   "gerFra": true,
+   "gerHoldsPol": 60,
+   "polHoldsGer": 377,
+   "truce": false,
+   "wars": [
+    {
+     "a": [
+      "GER",
+      "ITA",
+      "ALB",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "POL",
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC"
+     ]
+    },
+    {
+     "a": [
+      "ITA",
+      "ALB",
+      "GER",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "AUT"
+     ]
+    },
+    {
+     "a": [
+      "CZS",
+      "ROM",
+      "YUG",
+      "POL"
+     ],
+     "d": [
+      "AUT",
+      "DEN"
+     ]
+    }
+   ]
+  },
+  {
+   "k": "an hour after Poland declared on France",
+   "day": 45.08,
+   "polGer": false,
+   "polFra": true,
+   "gerFra": true,
+   "gerHoldsPol": 0,
+   "polHoldsGer": 0,
+   "truce": false,
+   "wars": [
+    {
+     "a": [
+      "GER",
+      "ITA",
+      "ALB",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC"
+     ]
+    },
+    {
+     "a": [
+      "ITA",
+      "ALB",
+      "GER",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "AUT"
+     ]
+    },
+    {
+     "a": [
+      "CZS",
+      "ROM",
+      "YUG",
+      "POL"
+     ],
+     "d": [
+      "AUT",
+      "DEN"
+     ]
+    },
+    {
+     "a": [
+      "POL",
+      "ROM",
+      "YUG"
+     ],
+     "d": [
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC",
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "NED",
+      "DEI",
+      "SWI",
+      "LUX",
+      "BEL",
+      "BCO"
+     ]
+    }
+   ]
+  },
+  {
+   "k": "an hour after Poland declared on Germany again",
+   "day": 45.13,
+   "polGer": true,
+   "polFra": true,
+   "gerFra": true,
+   "gerHoldsPol": 0,
+   "polHoldsGer": 0,
+   "truce": false,
+   "wars": [
+    {
+     "a": [
+      "GER",
+      "ITA",
+      "ALB",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC"
+     ]
+    },
+    {
+     "a": [
+      "ITA",
+      "ALB",
+      "GER",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "AUT"
+     ]
+    },
+    {
+     "a": [
+      "CZS",
+      "ROM",
+      "YUG",
+      "POL"
+     ],
+     "d": [
+      "AUT",
+      "DEN"
+     ]
+    },
+    {
+     "a": [
+      "POL",
+      "ROM",
+      "YUG"
+     ],
+     "d": [
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC",
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "NED",
+      "DEI",
+      "SWI",
+      "LUX",
+      "BEL",
+      "BCO"
+     ]
+    },
+    {
+     "a": [
+      "POL",
+      "CZS",
+      "ROM",
+      "YUG"
+     ],
+     "d": [
+      "GER",
+      "ITA",
+      "ALB",
+      "JAP",
+      "MAN",
+      "MEN"
+     ]
+    }
+   ]
+  }
+ ],
+ "evs": [
+  "1.00 WarDeclared GER POL",
+  "6.00 WarDeclared ITA AUT",
+  "15.00 WarDeclared CHI TIB",
+  "36.00 WarDeclared ENG IRE",
+  "38.00 WarDeclared TUR BUL",
+  "39.00 WarDeclared CZS AUT",
+  "45.04 WarDeclared POL FRA",
+  "45.08 WarDeclared POL GER"
+ ]
+}

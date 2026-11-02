@@ -1,0 +1,167 @@
+{
+ "seed": 8467,
+ "port": 5297,
+ "tg": "head",
+ "steps": [
+  {
+   "k": "Germany on Poland; playing Poland",
+   "day": 1.0833333333333333,
+   "wars": [
+    {
+     "att": [
+      "Germany",
+      "Italy",
+      "Albania",
+      "Japan",
+      "Manchukuo",
+      "Mengjiang"
+     ],
+     "def": [
+      "Poland",
+      "France",
+      "French West Africa",
+      "French Equatorial Africa",
+      "Madagascar",
+      "French Morocco",
+      "Tunisia",
+      "Syria",
+      "Lebanon",
+      "French Indochina"
+     ]
+    }
+   ],
+   "ticker": "2 January 1938 Germany declared war on Poland\n⚓ Carrier strike ashore: Japan on China",
+   "banners": [
+    "Nationalist Spain ⚔ Spanish Republic Japan +2 ⚔ China +1 Germany +5 ⚔ Poland +9",
+    "Nationalist Spain ⚔ Spanish Republic",
+    "Japan +2 ⚔ China +1",
+    "Germany +5 ⚔ Poland +9"
+   ],
+   "ger": {
+    "cells": 2626,
+    "occupied": null,
+    "wars": null
+   },
+   "pol": {
+    "cells": 2222,
+    "occupied": null,
+    "wars": null
+   }
+  }
+ ],
+ "reads": [
+  {
+   "d": 10,
+   "standing": "At war",
+   "peaceDisabled": true,
+   "peaceTitle": "They refuse: lead the war score by 25 (now +1), or wear them out (war weariness 3 of 40).",
+   "items": [
+    "Offer peace",
+    "Take control"
+   ]
+  },
+  {
+   "d": 20,
+   "standing": "At war",
+   "peaceDisabled": true,
+   "peaceTitle": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 10 of 40).",
+   "items": [
+    "Offer peace",
+    "Take control"
+   ]
+  },
+  {
+   "d": 30,
+   "standing": "At war",
+   "peaceDisabled": true,
+   "peaceTitle": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 17 of 40).",
+   "items": [
+    "Offer peace",
+    "Take control"
+   ]
+  },
+  {
+   "d": 40,
+   "standing": "At war",
+   "peaceDisabled": true,
+   "peaceTitle": "They refuse: lead the war score by 25 (now -1), or wear them out (war weariness 24 of 40).",
+   "items": [
+    "Offer peace",
+    "Take control"
+   ]
+  },
+  {
+   "d": 50,
+   "standing": "At war",
+   "peaceDisabled": true,
+   "peaceTitle": "They refuse: lead the war score by 25 (now -1), or wear them out (war weariness 29 of 40).",
+   "items": [
+    "Offer peace",
+    "Take control"
+   ]
+  },
+  {
+   "d": 60,
+   "standing": "At war",
+   "peaceDisabled": true,
+   "peaceTitle": "They refuse: lead the war score by 25 (now -2), or wear them out (war weariness 34 of 40).",
+   "items": [
+    "Offer peace",
+    "Take control"
+   ]
+  },
+  {
+   "d": 70,
+   "standing": "At war",
+   "peaceDisabled": true,
+   "peaceTitle": "They refuse: lead the war score by 25 (now -2), or wear them out (war weariness 38 of 40).",
+   "items": [
+    "Offer peace",
+    "Take control"
+   ]
+  },
+  {
+   "d": 80,
+   "standing": "At war",
+   "peaceDisabled": false,
+   "peaceTitle": null,
+   "items": [
+    "Offer peace",
+    "Take control"
+   ]
+  },
+  {
+   "d": 90,
+   "standing": "At war",
+   "peaceDisabled": false,
+   "peaceTitle": null,
+   "items": [
+    "Offer peace",
+    "Take control"
+   ]
+  },
+  {
+   "d": 100,
+   "standing": "At war",
+   "peaceDisabled": false,
+   "peaceTitle": null,
+   "items": [
+    "Offer peace",
+    "Take control"
+   ]
+  },
+  {
+   "d": 110,
+   "standing": "Truce (723 days)",
+   "peaceDisabled": null,
+   "peaceTitle": null,
+   "items": [
+    "Force war",
+    "Propose alliance",
+    "Take control"
+   ]
+  }
+ ],
+ "refusedAt": null,
+ "errors": []
+}

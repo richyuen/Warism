@@ -1,0 +1,146 @@
+{
+ "seed": 2207,
+ "cases": [
+  {
+   "case": "A Japan force war on ally Germany",
+   "before": {
+    "jap": {
+     "alliance": 1,
+     "allianceName": "alliance.anti_comintern",
+     "overlord": 0,
+     "puppetOf": null,
+     "keys": "id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,manpower,men,formations,aircraft,wings,airLost,bombed,nukeDead,fallout,efficiency,ceLocked,alliance,overlord,autonomy,loyalty,integration,puppets,enemies,truces,aiOff,nukesAllowed,warheads,canDeliver,means,restraint,aggression,incomeMult,living,queue,techs,shipyard,airRoom,research,lines"
+    },
+    "ger": {
+     "alliance": 1,
+     "allianceName": "alliance.anti_comintern",
+     "overlord": 0,
+     "puppetOf": null,
+     "keys": "id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,manpower,men,formations,aircraft,wings,airLost,bombed,nukeDead,fallout,efficiency,ceLocked,alliance,overlord,autonomy,loyalty,integration,puppets,enemies,truces,aiOff,nukesAllowed,warheads,canDeliver,means,restraint,aggression,incomeMult,living,queue,techs,shipyard,airRoom,research,lines"
+    },
+    "ita": {
+     "alliance": 1,
+     "allianceName": "alliance.anti_comintern",
+     "overlord": 0,
+     "puppetOf": null,
+     "keys": "id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,manpower,men,formations,aircraft,wings,airLost,bombed,nukeDead,fallout,efficiency,ceLocked,alliance,overlord,autonomy,loyalty,integration,puppets,enemies,truces,aiOff,nukesAllowed,warheads,canDeliver,means,restraint,aggression,incomeMult,living,queue,techs,shipyard,airRoom,research,lines"
+    }
+   },
+   "menu": {
+    "at": [
+     700,
+     400
+    ],
+    "name": "Germany",
+    "standing": "Allied",
+    "war": "Force war",
+    "items": [
+     "Force war",
+     "Propose alliance",
+     "Take control"
+    ],
+    "text": "Germany | Allied | Force war | Propose alliance | Take control"
+   },
+   "shotMenu": "critic/shots/c25fw_2207_A_menu.png",
+   "after0": {
+    "wars": [
+     {
+      "att": [
+       "Japan",
+       "Manchukuo",
+       "Mengjiang"
+      ],
+      "def": [
+       "China",
+       "Communist China"
+      ]
+     },
+     {
+      "att": [
+       "Japan",
+       "Manchukuo",
+       "Mengjiang"
+      ],
+      "def": [
+       "Germany",
+       "Italy",
+       "Albania"
+      ]
+     }
+    ],
+    "jap": {
+     "alliance": null,
+     "allianceName": null,
+     "overlord": 0,
+     "puppetOf": null,
+     "keys": "id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,manpower,men,formations,aircraft,wings,airLost,bombed,nukeDead,fallout,efficiency,ceLocked,alliance,overlord,autonomy,loyalty,integration,puppets,enemies,truces,aiOff,nukesAllowed,warheads,canDeliver,means,restraint,aggression,incomeMult,living,queue,techs,shipyard,airRoom,research,lines"
+    },
+    "ger": {
+     "alliance": 1,
+     "allianceName": "alliance.anti_comintern",
+     "overlord": 0,
+     "puppetOf": null,
+     "keys": "id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,manpower,men,formations,aircraft,wings,airLost,bombed,nukeDead,fallout,efficiency,ceLocked,alliance,overlord,autonomy,loyalty,integration,puppets,enemies,truces,aiOff,nukesAllowed,warheads,canDeliver,means,restraint,aggression,incomeMult,living,queue,techs,shipyard,airRoom,research,lines"
+    },
+    "ita": {
+     "alliance": 1,
+     "allianceName": "alliance.anti_comintern",
+     "overlord": 0,
+     "puppetOf": null,
+     "keys": "id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,manpower,men,formations,aircraft,wings,airLost,bombed,nukeDead,fallout,efficiency,ceLocked,alliance,overlord,autonomy,loyalty,integration,puppets,enemies,truces,aiOff,nukesAllowed,warheads,canDeliver,means,restraint,aggression,incomeMult,living,queue,techs,shipyard,airRoom,research,lines"
+    },
+    "ticker": "1 January 1938 Japan broke its alliance with Germany\n1 January 1938 Japan declared war on Germany\n⚓ Carrier strike ashore: Japan on China",
+    "banners": [
+     "Nationalist Spain ⚔ Spanish Republic Japan +2 ⚔ China +1 Japan +2 ⚔ Germany +2",
+     "Nationalist Spain ⚔ Spanish Republic",
+     "Japan +2 ⚔ China +1",
+     "Japan +2 ⚔ Germany +2"
+    ]
+   },
+   "shotAfter": "critic/shots/c25fw_2207_A_after.png",
+   "after30": {
+    "wars": [
+     {
+      "att": [
+       "Japan",
+       "Manchukuo",
+       "Mengjiang"
+      ],
+      "def": [
+       "China",
+       "Communist China"
+      ]
+     },
+     {
+      "att": [
+       "Japan",
+       "Manchukuo",
+       "Mengjiang"
+      ],
+      "def": [
+       "Germany",
+       "Italy",
+       "Albania"
+      ]
+     }
+    ],
+    "jap": {
+     "alliance": null,
+     "allianceName": null,
+     "overlord": 0,
+     "puppetOf": null,
+     "keys": "id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,manpower,men,formations,aircraft,wings,airLost,bombed,nukeDead,fallout,efficiency,ceLocked,alliance,overlord,autonomy,loyalty,integration,puppets,enemies,truces,aiOff,nukesAllowed,warheads,canDeliver,means,restraint,aggression,incomeMult,living,queue,techs,shipyard,airRoom,research,lines"
+    },
+    "ger": {
+     "alliance": 1,
+     "allianceName": "alliance.anti_comintern",
+     "overlord": 0,
+     "puppetOf": null,
+     "keys": "id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,manpower,men,formations,aircraft,wings,airLost,bombed,nukeDead,fallout,efficiency,ceLocked,alliance,overlord,autonomy,loyalty,integration,puppets,enemies,truces,aiOff,nukesAllowed,warheads,canDeliver,means,restraint,aggression,incomeMult,living,queue,techs,shipyard,airRoom,research,lines"
+    },
+    "ita": {
+     "alliance": 1,
+     "allianceName": "alliance.anti_comintern",
+     "overlord": 0,
+     "puppetOf": null,
+     "keys": "id,name,color,cells,area,landShare,gold,income,expenses,incomeBonus,bankrupt,manpower,men,formations,aircraft,wings,airLost,bombed,nukeDead,fallout,efficiency,ceLocked,alliance,overlord,autonomy,loyalty,

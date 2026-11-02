@@ -33,6 +33,27 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
+- [ ] 7.189 R25-B1: a refused peace is escaped in one click. Declaring war on one's partner in a war takes the
+  attacker out of that war at once (PLAN 7.188's `leaveWarsWhere` in `declareWar`): the occupation undone, no peace,
+  no truce, no log row. Poland, peace refused ("lead the war score by 25 (now +1)"), declares on France; Germany
+  "Neutral" 2 h later, re-declaring on Germany accepted at once; 3 of 3 seeds (7019, 2531, 8467) held cells to 0 in an
+  hour, 0 of 3 on run 24's build; God's Force war is the second door (COBEL). Evidence:
+  `critic/c25_es2_head_7019_d10.json`, `critic/c25_exit_head_{7019,2531,8467}.json`,
+  `critic/c25_cobel_head_GER_ITA_POL.json`, `critic/shots/c25es2_head_7019_germenu_after.png`.
+  Fix: no nation leaves a war by declaring a new one. Where an attacker would stand against a nation it fights beside,
+  refuse the declaration (a refusal the player is told), or keep that nation out of the new war; 7.188's case (the
+  freed Albania beside Italy against Japan) still on one side of each war.
+  AT: on the critic's cases (7019, 2531, 8467, the player's Poland and God's Force war), the old war still on and its
+  held cells unchanged an hour after the declaration (0 of 3 left, as run 24's build); 7.188's freed puppet on one
+  side of each war; a unit test red on `e4386478`.
+- [ ] 7.190 Diplomacy 6, needs 7 (critic run 25): what 7.189 leaves, the report's non-blocking 1 and 9. (9) Guarantees
+  are shown nowhere: the panels list allies, puppets and wars, so a pledge, its binding (ADR-797) and its lapse are
+  invisible (`critic/c25_gu_3739.json`). (1) A war a nation leaves gets no row (`critic/c25_es_head_7019.json`).
+  Fix: the nation panel lists its guarantees given and held; a pledge that lapses, and any war left, gets a ticker and
+  history row.
+  AT: on 3739 day 0, each guarantee of the 1938 start named in both its nations' panels, the guarantor's and the
+  target's (an e2e test, red on `e4386478`); on 1522–1531 to day 60, every pledge that lapses has its row (a unit test, red on
+  `e4386478`).
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 

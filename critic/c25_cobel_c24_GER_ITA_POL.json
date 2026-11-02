@@ -1,0 +1,483 @@
+[
+ {
+  "k": "start",
+  "day": 1,
+  "GER v POL": false,
+  "ITA v POL": false,
+  "GER v ITA": false,
+  "GER holds POL": 0,
+  "ITA holds POL": 0,
+  "POL holds GER": 0,
+  "wars": [
+   {
+    "id": 1,
+    "a": [
+     "NSP"
+    ],
+    "d": [
+     "REP"
+    ]
+   },
+   {
+    "id": 2,
+    "a": [
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    "d": [
+     "CHI",
+     "CCP"
+    ]
+   }
+  ]
+ },
+ {
+  "k": "both on C",
+  "day": 1.0833333333333333,
+  "GER v POL": true,
+  "ITA v POL": true,
+  "GER v ITA": false,
+  "GER holds POL": 0,
+  "ITA holds POL": 0,
+  "POL holds GER": 0,
+  "wars": [
+   {
+    "id": 1,
+    "a": [
+     "NSP"
+    ],
+    "d": [
+     "REP"
+    ]
+   },
+   {
+    "id": 2,
+    "a": [
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    "d": [
+     "CHI",
+     "CCP"
+    ]
+   },
+   {
+    "id": 3,
+    "a": [
+     "GER",
+     "ITA",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    "d": [
+     "POL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC"
+    ]
+   }
+  ],
+  "evs": [
+   "1.00 WarDeclared GER POL",
+   "1.04 WarRejected ITA POL"
+  ]
+ },
+ {
+  "k": "day 60 after",
+  "day": 61.083333333333336,
+  "GER v POL": true,
+  "ITA v POL": true,
+  "GER v ITA": false,
+  "GER holds POL": 133,
+  "ITA holds POL": 0,
+  "POL holds GER": 250,
+  "wars": [
+   {
+    "id": 2,
+    "a": [
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    "d": [
+     "CHI",
+     "CCP"
+    ]
+   },
+   {
+    "id": 3,
+    "a": [
+     "GER",
+     "ITA",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    "d": [
+     "POL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC"
+    ]
+   },
+   {
+    "id": 5,
+    "a": [
+     "CHI",
+     "CCP"
+    ],
+    "d": [
+     "TIB"
+    ]
+   },
+   {
+    "id": 6,
+    "a": [
+     "ENG",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "SWI",
+     "LUX",
+     "BEL",
+     "BCO"
+    ],
+    "d": [
+     "IRE"
+    ]
+   },
+   {
+    "id": 7,
+    "a": [
+     "TUR",
+     "GRE",
+     "IRN",
+     "AFG"
+    ],
+    "d": [
+     "BUL"
+    ]
+   },
+   {
+    "id": 9,
+    "a": [
+     "SOV",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    "d": [
+     "ROM",
+     "CZS",
+     "YUG",
+     "POL"
+    ]
+   }
+  ]
+ },
+ {
+  "k": "GER on ITA, an hour after",
+  "day": 61.125,
+  "GER v POL": true,
+  "ITA v POL": true,
+  "GER v ITA": true,
+  "GER holds POL": 133,
+  "ITA holds POL": 0,
+  "POL holds GER": 250,
+  "wars": [
+   {
+    "id": 2,
+    "a": [
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    "d": [
+     "CHI",
+     "CCP"
+    ]
+   },
+   {
+    "id": 3,
+    "a": [
+     "GER",
+     "ITA",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    "d": [
+     "POL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC"
+    ]
+   },
+   {
+    "id": 5,
+    "a": [
+     "CHI",
+     "CCP"
+    ],
+    "d": [
+     "TIB"
+    ]
+   },
+   {
+    "id": 6,
+    "a": [
+     "ENG",
+     "EGY",
+     "SUD",
+     "BEA",
+     "SAF",
+     "SRH",
+     "NIG",
+     "GCO",
+     "PAL",
+     "TRJ",
+     "OMN",
+     "RAJ",
+     "BUR",
+     "CEY",
+     "MAL",
+     "SAR",
+     "AST",
+     "NZL",
+     "CAN",
+     "NFL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC",
+     "NED",
+     "DEI",
+     "SWI",
+     "LUX",
+     "BEL",
+     "BCO"
+    ],
+    "d": [
+     "IRE"
+    ]
+   },
+   {
+    "id": 7,
+    "a": [
+     "TUR",
+     "GRE",
+     "IRN",
+     "AFG"
+    ],
+    "d": [
+     "BUL"
+    ]
+   },
+   {
+    "id": 9,
+    "a": [
+     "SOV",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    "d": [
+     "ROM",
+     "CZS",
+     "YUG",
+     "POL"
+    ]
+   },
+   {
+    "id": 10,
+    "a": [
+     "GER"
+    ],
+    "d": [
+     "ITA",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ]
+   }
+  ],
+  "evs": [
+   "61.08 WarDeclared GER ITA"
+  ]
+ },
+ {
+  "k": "30 days after",
+  "day": 91.125,
+  "GER v POL": true,
+  "ITA v POL": true,
+  "GER v ITA": true,
+  "GER holds POL": 111,
+  "ITA holds POL": 0,
+  "POL holds GER": 242,
+  "wars": [
+   {
+    "id": 2,
+    "a": [
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    "d": [
+     "CHI",
+     "CCP"
+    ]
+   },
+   {
+    "id": 3,
+    "a": [
+     "GER",
+     "ITA",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    "d": [
+     "POL",
+     "FRA",
+     "AOF",
+     "AEF",
+     "MAD",
+     "FMO",
+     "TUN",
+     "SYR",
+     "LEB",
+     "INC"
+    ]
+   },
+   {
+    "id": 5,
+    "a": [
+     "CHI",
+     "CCP"
+    ],
+    "d": [
+     "TIB"
+    ]
+   },
+   {
+    "id": 9,
+    "a": [
+     "SOV",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    "d": [
+     "ROM",
+     "CZS",
+     "YUG",
+     "POL"
+    ]
+   },
+   {
+    "id": 10,
+    "a": [
+     "GER"
+    ],
+    "d": [
+     "ITA",
+     "ALB",
+     "JAP",
+     "MAN",
+     "MEN"
+    ]
+   },
+   {
+    "id": 11,
+    "a": [
+     "SOV",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    "d": [
+     "TUR",
+     "GRE",
+     "IRN",
+     "AFG"
+    ]
+   },
+   {
+    "id": 12,
+    "a": [
+     "BRA"
+    ],
+    "d": [
+     "COL"
+    ]
+   }
+  ],
+  "evs": [
+   "67.00 WarDeclared SOV TUR",
+   "69.00 PeaceSigned ENG IRE",
+   "71.00 PeaceSigned TUR BUL",
+   "78.00 WarDeclared BRA COL",
+   "90.00 AirWar #983050 #983054",
+   "90.00 AirWar #3932170 #2162699",
+   "90.00 AirWar #4521987 #4390922"
+  ]
+ }
+]

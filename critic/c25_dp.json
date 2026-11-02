@@ -1,0 +1,4287 @@
+[
+ {
+  "seed": 3739,
+  "mode": "scenario",
+  "start": {
+   "alliances": [
+    {
+     "name": "alliance.anti_comintern",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "ITA",
+      "JAP"
+     ]
+    },
+    {
+     "name": "alliance.anglo_french",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "FRA"
+     ]
+    },
+    {
+     "name": "alliance.little_entente",
+     "leader": "CZS",
+     "members": [
+      "CZS",
+      "ROM",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.balkan_entente",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE"
+     ]
+    },
+    {
+     "name": "alliance.baltic_entente",
+     "leader": "LAT",
+     "members": [
+      "LAT",
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.comintern",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "MON",
+      "TAN"
+     ]
+    },
+    {
+     "name": "alliance.united_front",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "CCP"
+     ]
+    }
+   ],
+   "guarantees": [
+    "FRA->CZS",
+    "SOV->CZS",
+    "FRA->POL",
+    "FRA->BEL",
+    "ENG->BEL",
+    "ENG->POR",
+    "ENG->IRQ",
+    "SOV->CHI"
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      "NSP"
+     ],
+     "d": [
+      "REP"
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "CHI",
+      "CCP"
+     ]
+    }
+   ]
+  },
+  "at": {
+   "0": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "1": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "30": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "90": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "BCO in AEF": 3,
+     "SYR in PAL": 2,
+     "LEB in PAL": 1
+    },
+    "guestFormations": 6,
+    "odd": []
+   },
+   "180": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "POL in ROM": 31,
+     "GER in ROM": 19,
+     "POL in BUL": 6,
+     "GER in BUL": 4,
+     "ITA in BUL": 4,
+     "SYR in EGY": 3,
+     "BCO in SUD": 3,
+     "HUN in ROM": 2,
+     "NIG in FRA": 2,
+     "GER in ALB": 1,
+     "BUL in ROM": 1,
+     "ALB in HUN": 1,
+     "ROM in BUL": 1,
+     "EGY in AEF": 1,
+     "SUD in AEF": 1
+    },
+    "guestFormations": 84,
+    "odd": []
+   }
+  },
+  "d180": {
+   "alliances": [
+    {
+     "name": "alliance.anti_comintern",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "ITA",
+      "JAP",
+      "POL",
+      "HUN"
+     ]
+    },
+    {
+     "name": "alliance.anglo_french",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "FRA",
+      "SWI",
+      "BEL",
+      "AUT"
+     ]
+    },
+    {
+     "name": "alliance.little_entente",
+     "leader": "CZS",
+     "members": [
+      "CZS",
+      "ROM",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.balkan_entente",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE",
+      "IRN",
+      "AFG"
+     ]
+    },
+    {
+     "name": "alliance.baltic_entente",
+     "leader": "LAT",
+     "members": [
+      "LAT",
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.comintern",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "MON",
+      "TAN"
+     ]
+    },
+    {
+     "name": "alliance.united_front",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "CCP"
+     ]
+    },
+    {
+     "name": "alliance.coalition",
+     "leader": "MEX",
+     "members": [
+      "MEX",
+      "CUB"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "FIN",
+     "members": [
+      "FIN",
+      "NOR"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "DEN",
+     "members": [
+      "DEN",
+      "NED"
+     ]
+    }
+   ],
+   "guarantees": [
+    "FRA->CZS",
+    "SOV->CZS",
+    "FRA->POL",
+    "FRA->BEL",
+    "ENG->BEL",
+    "ENG->POR",
+    "ENG->IRQ",
+    "SOV->CHI"
+   ],
+   "wars": [
+    {
+     "id": 2,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "CHI",
+      "CCP"
+     ]
+    },
+    {
+     "id": 9,
+     "a": [
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC",
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "SWI",
+      "BEL",
+      "BCO",
+      "AUT"
+     ],
+     "d": [
+      "NED",
+      "DEI",
+      "DEN"
+     ]
+    },
+    {
+     "id": 13,
+     "a": [
+      "ITA",
+      "ROM",
+      "ALB",
+      "GER",
+      "JAP",
+      "BUL",
+      "MAN",
+      "MEN",
+      "POL",
+      "HUN"
+     ],
+     "d": [
+      "TUR",
+      "GRE",
+      "IRN",
+      "AFG"
+     ]
+    },
+    {
+     "id": 14,
+     "a": [
+      "NSP",
+      "REP"
+     ],
+     "d": [
+      "POR",
+      "ANG",
+      "MOZ",
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL"
+     ]
+    },
+    {
+     "id": 15,
+     "a": [
+      "CHI",
+      "CCP"
+     ],
+     "d": [
+      "TIB"
+     ]
+    },
+    {
+     "id": 16,
+     "a": [
+      "USA",
+      "PHI"
+     ],
+     "d": [
+      "DEN",
+      "NED",
+      "DEI"
+     ]
+    },
+    {
+     "id": 17,
+     "a": [
+      "SOV",
+      "SIN",
+      "MON",
+      "TAN"
+     ],
+     "d": [
+      "TUR",
+      "GRE",
+      "IRN",
+      "AFG"
+     ]
+    },
+    {
+     "id": 18,
+     "a": [
+      "SOV",
+      "SIN",
+      "MON",
+      "TAN"
+     ],
+     "d": [
+      "LIT",
+      "LAT",
+      "EST"
+     ]
+    },
+    {
+     "id": 19,
+     "a": [
+      "POL",
+      "GER",
+      "ITA",
+      "ROM",
+      "ALB",
+      "JAP",
+      "BUL",
+      "MAN",
+      "MEN",
+      "HUN"
+     ],
+     "d": [
+      "LIT",
+      "LAT",
+      "EST"
+     ]
+    },
+    {
+     "id": 20,
+     "a": [
+      "BRA"
+     ],
+     "d": [
+      "COL"
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seed": 3739,
+  "mode": "random",
+  "start": {
+   "alliances": [
+    {
+     "name": "alliance.defensive",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "NEP",
+      "TIB"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "COL",
+     "members": [
+      "COL",
+      "VEN"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "POL",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ITA",
+     "members": [
+      "ITA",
+      "SWI"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "IRN",
+     "members": [
+      "IRN",
+      "CCP",
+      "AFG"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "BOL",
+     "members": [
+      "BOL",
+      "SIA",
+      "PAR"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "FRA",
+     "members": [
+      "FRA",
+      "NSP"
+     ]
+    }
+   ],
+   "guarantees": [
+    "ITA->GER",
+    "SIA->NSP",
+    "FRA->BUL",
+    "ITA->HON",
+    "IRN->CHL",
+    "SIA->EST",
+    "NOR->DOM",
+    "SIA->PAN"
+   ],
+   "wars": [
+    {
+     "id": 3,
+     "a": [
+      "REP"
+     ],
+     "d": [
+      "NSP",
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC",
+      "SIA"
+     ]
+    },
+    {
+     "id": 4,
+     "a": [
+      "IRQ"
+     ],
+     "d": [
+      "TUR"
+     ]
+    }
+   ]
+  },
+  "at": {
+   "0": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 19
+    },
+    "guestFormations": 19,
+    "odd": []
+   },
+   "1": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 19
+    },
+    "guestFormations": 19,
+    "odd": []
+   },
+   "30": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 8,
+     "FMO in NSP": 4,
+     "SYR in PAL": 3,
+     "GCO in AOF": 1,
+     "LEB in PAL": 1
+    },
+    "guestFormations": 17,
+    "odd": []
+   },
+   "90": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "GER in CZS": 3,
+     "SYR in EGY": 3,
+     "INC in BUR": 3,
+     "ENG in AOF": 2,
+     "NIG in AEF": 2,
+     "IRQ in TUR": 2,
+     "SUD in AEF": 1,
+     "GCO in AOF": 1,
+     "LEB in EGY": 1
+    },
+    "guestFormations": 18,
+    "odd": []
+   },
+   "180": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "TUR in SOV": 7,
+     "SWI in ALB": 6,
+     "IRN in JAP": 1
+    },
+    "guestFormations": 14,
+    "odd": []
+   }
+  },
+  "d180": {
+   "alliances": [
+    {
+     "name": "alliance.defensive",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "NEP",
+      "TIB"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "COL",
+     "members": [
+      "COL",
+      "VEN"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "POL",
+      "LIT",
+      "ROM"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ITA",
+     "members": [
+      "ITA",
+      "SWI"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "IRN",
+     "members": [
+      "IRN",
+      "CCP",
+      "AFG",
+      "TUR"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "BOL",
+     "members": [
+      "BOL",
+      "SIA",
+      "PAR"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "FRA",
+     "members": [
+      "FRA",
+      "NSP",
+      "ENG",
+      "LUX",
+      "BEL"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "YUG",
+     "members": [
+      "YUG",
+      "AUT",
+      "CZS"
+     ]
+    },
+    {
+     "name": "alliance.coalition",
+     "leader": "MEX",
+     "members": [
+      "MEX",
+      "CUB"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "JAP",
+     "members": [
+      "JAP",
+      "LAT"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "FIN",
+     "members": [
+      "FIN",
+      "EST",
+      "NOR"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "DEN",
+     "members": [
+      "DEN",
+      "NED"
+     ]
+    }
+   ],
+   "guarantees": [
+    "ITA->GER",
+    "SIA->NSP",
+    "FRA->BUL",
+    "ITA->HON",
+    "IRN->CHL",
+    "SIA->EST",
+    "NOR->DOM",
+    "SIA->PAN"
+   ],
+   "wars": [
+    {
+     "id": 14,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN",
+      "LAT"
+     ],
+     "d": [
+      "IRQ"
+     ]
+    },
+    {
+     "id": 16,
+     "a": [
+      "CHI",
+      "NEP",
+      "TIB"
+     ],
+     "d": [
+      "JAP",
+      "MAN",
+      "MEN",
+      "LAT"
+     ]
+    },
+    {
+     "id": 19,
+     "a": [
+      "GER",
+      "CZS",
+      "POL",
+      "LIT",
+      "ROM"
+     ],
+     "d": [
+      "NED",
+      "DEI",
+      "DEN"
+     ]
+    },
+    {
+     "id": 20,
+     "a": [
+      "GER",
+      "CZS",
+      "POL",
+      "LIT",
+      "ROM"
+     ],
+     "d": [
+      "TUR"
+     ]
+    },
+    {
+     "id": 21,
+     "a": [
+      "GRE"
+     ],
+     "d": [
+      "YUG",
+      "AUT",
+      "CZS"
+     ]
+    },
+    {
+     "id": 23,
+     "a": [
+      "BRA"
+     ],
+     "d": [
+      "NED",
+      "DEI",
+      "DEN"
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seed": 8821,
+  "mode": "scenario",
+  "start": {
+   "alliances": [
+    {
+     "name": "alliance.anti_comintern",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "ITA",
+      "JAP"
+     ]
+    },
+    {
+     "name": "alliance.anglo_french",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "FRA"
+     ]
+    },
+    {
+     "name": "alliance.little_entente",
+     "leader": "CZS",
+     "members": [
+      "CZS",
+      "ROM",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.balkan_entente",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE"
+     ]
+    },
+    {
+     "name": "alliance.baltic_entente",
+     "leader": "LAT",
+     "members": [
+      "LAT",
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.comintern",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "MON",
+      "TAN"
+     ]
+    },
+    {
+     "name": "alliance.united_front",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "CCP"
+     ]
+    }
+   ],
+   "guarantees": [
+    "FRA->CZS",
+    "SOV->CZS",
+    "FRA->POL",
+    "FRA->BEL",
+    "ENG->BEL",
+    "ENG->POR",
+    "ENG->IRQ",
+    "SOV->CHI"
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      "NSP"
+     ],
+     "d": [
+      "REP"
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "CHI",
+      "CCP"
+     ]
+    }
+   ]
+  },
+  "at": {
+   "0": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "1": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "30": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "90": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "180": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "ENG in AOF": 5,
+     "POL in SOV": 3,
+     "YUG in GER": 3,
+     "EGY in AEF": 3,
+     "SYR in EGY": 3,
+     "INC in RAJ": 3,
+     "ALB in GER": 2,
+     "BEL in NSP": 2,
+     "NIG in AEF": 2,
+     "LIT in GER": 1,
+     "FIN in SOV": 1,
+     "REP in POR": 1,
+     "SUD in BCO": 1,
+     "GCO in AOF": 1,
+     "LEB in EGY": 1
+    },
+    "guestFormations": 32,
+    "odd": []
+   }
+  },
+  "d180": {
+   "alliances": [
+    {
+     "name": "alliance.anti_comintern",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "ITA",
+      "JAP"
+     ]
+    },
+    {
+     "name": "alliance.anglo_french",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "FRA",
+      "NED",
+      "LUX",
+      "BEL",
+      "SWI",
+      "AUT"
+     ]
+    },
+    {
+     "name": "alliance.little_entente",
+     "leader": "CZS",
+     "members": [
+      "CZS",
+      "ROM",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.balkan_entente",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE",
+      "IRN",
+      "AFG"
+     ]
+    },
+    {
+     "name": "alliance.baltic_entente",
+     "leader": "EST",
+     "members": [
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.comintern",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "MON",
+      "TAN"
+     ]
+    },
+    {
+     "name": "alliance.united_front",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "CCP"
+     ]
+    },
+    {
+     "name": "alliance.coalition",
+     "leader": "MEX",
+     "members": [
+      "MEX",
+      "CUB"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "FIN",
+     "members": [
+      "FIN",
+      "POL",
+      "NOR"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "POR",
+     "members": [
+      "POR",
+      "NSP"
+     ]
+    }
+   ],
+   "guarantees": [
+    "FRA->CZS",
+    "SOV->CZS",
+    "FRA->POL",
+    "FRA->BEL",
+    "ENG->BEL",
+    "ENG->IRQ",
+    "SOV->CHI"
+   ],
+   "wars": [
+    {
+     "id": 2,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "CHI",
+      "CCP"
+     ]
+    },
+    {
+     "id": 5,
+     "a": [
+      "CHI",
+      "CCP"
+     ],
+     "d": [
+      "TIB"
+     ]
+    },
+    {
+     "id": 20,
+     "a": [
+      "GER",
+      "EST",
+      "ITA",
+      "LIT",
+      "YUG",
+      "ALB",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "POL",
+      "FIN",
+      "NOR",
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC"
+     ]
+    },
+    {
+     "id": 21,
+     "a": [
+      "ITA",
+      "LIT",
+      "YUG",
+      "ALB",
+      "GER",
+      "EST",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "POR",
+      "ANG",
+      "MOZ",
+      "NSP",
+      "REP"
+     ]
+    },
+    {
+     "id": 22,
+     "a": [
+      "ENG",
+      "IRE",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC",
+      "NED",
+      "DEI",
+      "LUX",
+      "BEL",
+      "BCO",
+      "SWI",
+      "AUT"
+     ],
+     "d": [
+      "LIB"
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seed": 8821,
+  "mode": "random",
+  "start": {
+   "alliances": [
+    {
+     "name": "alliance.defensive",
+     "leader": "USA",
+     "members": [
+      "USA",
+      "CCP",
+      "MEX"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "POL"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ROM",
+     "members": [
+      "ROM",
+      "GRE",
+      "BUL"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "HON",
+     "members": [
+      "HON",
+      "GUA"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "BEL",
+      "AUT"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "PRU",
+     "members": [
+      "PRU",
+      "DOM",
+      "HAI"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "SAU",
+     "members": [
+      "SAU",
+      "YEM"
+     ]
+    }
+   ],
+   "guarantees": [
+    "SOV->POR",
+    "GER->EST",
+    "NSP->SWI",
+    "AFG->VEN",
+    "CHI->FIN",
+    "PRU->CZS",
+    "CHI->MEX",
+    "TIB->SOV"
+   ],
+   "wars": [
+    {
+     "id": 3,
+     "a": [
+      "CHL"
+     ],
+     "d": [
+      "ARG"
+     ]
+    },
+    {
+     "id": 4,
+     "a": [
+      "AUT",
+      "GER",
+      "BEL",
+      "BCO"
+     ],
+     "d": [
+      "CZS",
+      "PRU"
+     ]
+    }
+   ]
+  },
+  "at": {
+   "0": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 19
+    },
+    "guestFormations": 19,
+    "odd": []
+   },
+   "1": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 19
+    },
+    "guestFormations": 19,
+    "odd": []
+   },
+   "30": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 8
+    },
+    "guestFormations": 8,
+    "odd": []
+   },
+   "90": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "RAJ in TIB": 12,
+     "USA in ECU": 1
+    },
+    "guestFormations": 13,
+    "odd": []
+   },
+   "180": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "ROM in POL": 2,
+     "USA in ECU": 2,
+     "CHI in MON": 1
+    },
+    "guestFormations": 5,
+    "odd": []
+   }
+  },
+  "d180": {
+   "alliances": [
+    {
+     "name": "alliance.defensive",
+     "leader": "USA",
+     "members": [
+      "USA",
+      "CCP",
+      "MEX"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "POL",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ROM",
+     "members": [
+      "ROM",
+      "GRE",
+      "BUL",
+      "TUR"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "HON",
+     "members": [
+      "HON",
+      "GUA"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "BEL",
+      "AUT",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "SAU",
+     "members": [
+      "SAU",
+      "YEM"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "NED",
+     "members": [
+      "NED",
+      "CZS"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "FIN",
+     "members": [
+      "FIN",
+      "LAT",
+      "NOR"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "LUX",
+     "members": [
+      "LUX",
+      "FRA",
+      "SWI",
+      "REP"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "IRN",
+     "members": [
+      "IRN",
+      "EST"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "TIB",
+     "members": [
+      "TIB",
+      "ENG"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "JAP",
+     "members": [
+      "JAP",
+      "AFG"
+     ]
+    }
+   ],
+   "guarantees": [
+    "SOV->POR",
+    "GER->EST",
+    "NSP->SWI",
+    "AFG->VEN",
+    "CHI->FIN",
+    "PRU->CZS",
+    "CHI->MEX",
+    "TIB->SOV"
+   ],
+   "wars": [
+    {
+     "id": 3,
+     "a": [
+      "CHL"
+     ],
+     "d": [
+      "ARG"
+     ]
+    },
+    {
+     "id": 7,
+     "a": [
+      "CHI"
+     ],
+     "d": [
+      "TIB",
+      "ENG",
+      "IRE",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL"
+     ]
+    },
+    {
+     "id": 8,
+     "a": [
+      "ITA",
+      "ALB"
+     ],
+     "d": [
+      "ENG",
+      "IRE",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "TIB"
+     ]
+    },
+    {
+     "id": 9,
+     "a": [
+      "USA",
+      "PHI",
+      "CCP",
+      "MEX"
+     ],
+     "d": [
+      "PRU"
+     ]
+    },
+    {
+     "id": 10,
+     "a": [
+      "ITA",
+      "ALB"
+     ],
+     "d": [
+      "AUT",
+      "GER",
+      "BEL",
+      "BCO",
+      "YUG"
+     ]
+    },
+    {
+     "id": 12,
+     "a": [
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC",
+      "LUX",
+      "SWI",
+      "REP"
+     ],
+     "d": [
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "TIB"
+     ]
+    },
+    {
+     "id": 14,
+     "a": [
+      "GER",
+      "BEL",
+      "BCO",
+      "YUG"
+     ],
+     "d": [
+      "CZS",
+      "NED",
+      "DEI",
+      "PRU"
+     ]
+    },
+    {
+     "id": 16,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN",
+      "AFG"
+     ],
+     "d": [
+      "IRE"
+     ]
+    },
+    {
+     "id": 17,
+     "a": [
+      "SOV",
+      "LAT",
+      "ROM",
+      "SIN",
+      "MON",
+      "TAN",
+      "POL",
+      "LIT"
+     ],
+     "d": [
+      "AFG",
+      "JAP",
+      "MAN",
+      "MEN"
+     ]
+    },
+    {
+     "id": 18,
+     "a": [
+      "NSP"
+     ],
+     "d": [
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "TIB"
+     ]
+    },
+    {
+     "id": 19,
+     "a": [
+      "POL",
+      "SOV",
+      "LAT",
+      "ROM",
+      "SIN",
+      "MON",
+      "TAN",
+      "LIT"
+     ],
+     "d": [
+      "GER",
+      "BEL",
+      "BCO",
+      "AUT",
+      "YUG"
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seed": 1517,
+  "mode": "scenario",
+  "start": {
+   "alliances": [
+    {
+     "name": "alliance.anti_comintern",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "ITA",
+      "JAP"
+     ]
+    },
+    {
+     "name": "alliance.anglo_french",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "FRA"
+     ]
+    },
+    {
+     "name": "alliance.little_entente",
+     "leader": "CZS",
+     "members": [
+      "CZS",
+      "ROM",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.balkan_entente",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE"
+     ]
+    },
+    {
+     "name": "alliance.baltic_entente",
+     "leader": "LAT",
+     "members": [
+      "LAT",
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.comintern",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "MON",
+      "TAN"
+     ]
+    },
+    {
+     "name": "alliance.united_front",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "CCP"
+     ]
+    }
+   ],
+   "guarantees": [
+    "FRA->CZS",
+    "SOV->CZS",
+    "FRA->POL",
+    "FRA->BEL",
+    "ENG->BEL",
+    "ENG->POR",
+    "ENG->IRQ",
+    "SOV->CHI"
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      "NSP"
+     ],
+     "d": [
+      "REP"
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "CHI",
+      "CCP"
+     ]
+    }
+   ]
+  },
+  "at": {
+   "0": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "1": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "30": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "90": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "LAT in ITA": 1,
+     "EST in ITA": 1,
+     "NIG in AOF": 1
+    },
+    "guestFormations": 3,
+    "odd": []
+   },
+   "180": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "GER in YUG": 25,
+     "TUR in YUG": 5,
+     "EGY in AEF": 3,
+     "SAF in BCO": 3,
+     "GER in ALB": 2,
+     "GER in SOV": 1,
+     "GRE in YUG": 1,
+     "GRE in BUL": 1,
+     "SUD in AEF": 1,
+     "BEA in AEF": 1,
+     "NIG in FMO": 1,
+     "NIG in FRA": 1,
+     "GCO in FRA": 1,
+     "SRH in AEF": 1
+    },
+    "guestFormations": 47,
+    "odd": []
+   }
+  },
+  "d180": {
+   "alliances": [
+    {
+     "name": "alliance.anti_comintern",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "ITA",
+      "JAP"
+     ]
+    },
+    {
+     "name": "alliance.anglo_french",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "FRA",
+      "LUX",
+      "SWI",
+      "BEL",
+      "NED"
+     ]
+    },
+    {
+     "name": "alliance.little_entente",
+     "leader": "CZS",
+     "members": [
+      "CZS",
+      "ROM",
+      "YUG",
+      "HUN",
+      "BUL"
+     ]
+    },
+    {
+     "name": "alliance.balkan_entente",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE"
+     ]
+    },
+    {
+     "name": "alliance.baltic_entente",
+     "leader": "EST",
+     "members": [
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.comintern",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "MON",
+      "TAN"
+     ]
+    },
+    {
+     "name": "alliance.united_front",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "CCP"
+     ]
+    },
+    {
+     "name": "alliance.coalition",
+     "leader": "MEX",
+     "members": [
+      "MEX",
+      "CUB"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "NOR",
+     "members": [
+      "NOR",
+      "POL",
+      "FIN"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "POR",
+     "members": [
+      "POR",
+      "REP"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "AFG",
+     "members": [
+      "AFG",
+      "IRN"
+     ]
+    }
+   ],
+   "guarantees": [
+    "FRA->CZS",
+    "SOV->CZS",
+    "FRA->POL",
+    "FRA->BEL",
+    "ENG->BEL",
+    "ENG->POR",
+    "ENG->IRQ",
+    "SOV->CHI"
+   ],
+   "wars": [
+    {
+     "id": 2,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "CHI",
+      "CCP"
+     ]
+    },
+    {
+     "id": 9,
+     "a": [
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC",
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "LUX",
+      "SWI",
+      "BEL",
+      "BCO",
+      "NED",
+      "DEI"
+     ],
+     "d": [
+      "BRA"
+     ]
+    },
+    {
+     "id": 10,
+     "a": [
+      "NSP"
+     ],
+     "d": [
+      "POR",
+      "ANG",
+      "MOZ",
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL"
+     ]
+    },
+    {
+     "id": 16,
+     "a": [
+      "CHI",
+      "CCP"
+     ],
+     "d": [
+      "TIB"
+     ]
+    },
+    {
+     "id": 17,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN",
+      "GER",
+      "ITA",
+      "YUG",
+      "ALB"
+     ],
+     "d": [
+      "POR",
+      "ANG",
+      "MOZ",
+      "REP",
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL"
+     ]
+    },
+    {
+     "id": 18,
+     "a": [
+      "TUR",
+      "BUL",
+      "GRE"
+     ],
+     "d": [
+      "IRN",
+      "AFG"
+     ]
+    },
+    {
+     "id": 19,
+     "a": [
+      "ITA",
+      "ALB",
+      "GER",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "TUR",
+      "BUL",
+      "GRE",
+      "CZS",
+      "ROM",
+      "HUN"
+     ]
+    },
+    {
+     "id": 20,
+     "a": [
+      "SOV",
+      "LIT",
+      "SIN",
+      "MON",
+      "TAN"
+     ],
+     "d": [
+      "TUR",
+      "BUL",
+      "GRE",
+      "YUG",
+      "HUN"
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seed": 1517,
+  "mode": "random",
+  "start": {
+   "alliances": [
+    {
+     "name": "alliance.defensive",
+     "leader": "FRA",
+     "members": [
+      "FRA",
+      "REP",
+      "LUX"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "FIN"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "LAT",
+     "members": [
+      "LAT",
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ARG",
+     "members": [
+      "ARG",
+      "CCP"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "BRA",
+     "members": [
+      "BRA",
+      "PAR",
+      "PRU"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "SWE",
+     "members": [
+      "SWE",
+      "NOR",
+      "POR"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ROM",
+     "members": [
+      "ROM",
+      "YUG"
+     ]
+    }
+   ],
+   "guarantees": [
+    "TIB->GRE",
+    "CHL->HON",
+    "SAU->BEL",
+    "DEN->NIC",
+    "TIB->CUB",
+    "VEN->HAI",
+    "SIA->POL",
+    "ITA->HAI"
+   ],
+   "wars": [
+    {
+     "id": 3,
+     "a": [
+      "GRE"
+     ],
+     "d": [
+      "BUL"
+     ]
+    },
+    {
+     "id": 4,
+     "a": [
+      "IRN"
+     ],
+     "d": [
+      "SOV",
+      "SIN",
+      "MON",
+      "TAN",
+      "FIN"
+     ]
+    }
+   ]
+  },
+  "at": {
+   "0": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 19
+    },
+    "guestFormations": 19,
+    "odd": []
+   },
+   "1": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 19
+    },
+    "guestFormations": 19,
+    "odd": []
+   },
+   "30": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 8
+    },
+    "guestFormations": 8,
+    "odd": []
+   },
+   "90": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "BCO in AEF": 3,
+     "ITA in GER": 2
+    },
+    "guestFormations": 5,
+    "odd": []
+   },
+   "180": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "REP in FMO": 17,
+     "RAJ in TIB": 12,
+     "NSP in AOF": 8,
+     "BEL in FMO": 7,
+     "CZS in YUG": 6,
+     "SWI in FMO": 6,
+     "NSP in FMO": 5,
+     "POL in YUG": 3,
+     "BCO in AEF": 3,
+     "JAP in YUG": 2,
+     "REP in AOF": 2,
+     "HUN in YUG": 1,
+     "NED in FMO": 1,
+     "LUX in FMO": 1,
+     "TUN in REP": 1
+    },
+    "guestFormations": 75,
+    "odd": []
+   }
+  },
+  "d180": {
+   "alliances": [
+    {
+     "name": "alliance.defensive",
+     "leader": "FRA",
+     "members": [
+      "FRA",
+      "REP",
+      "LUX",
+      "SWI",
+      "BEL",
+      "NED",
+      "GER"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "FIN"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "LAT",
+     "members": [
+      "LAT",
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ARG",
+     "members": [
+      "ARG",
+      "CCP"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "BRA",
+     "members": [
+      "BRA",
+      "PAR",
+      "PRU"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "SWE",
+     "members": [
+      "SWE",
+      "NOR",
+      "POR"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ROM",
+     "members": [
+      "ROM",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.coalition",
+     "leader": "MEX",
+     "members": [
+      "MEX",
+      "CUB"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "DEN",
+     "members": [
+      "DEN",
+      "AUT"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "JAP",
+     "members": [
+      "JAP",
+      "POL",
+      "CZS",
+      "HUN",
+      "ITA"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "TIB",
+     "members": [
+      "TIB",
+      "ENG",
+      "IRQ"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "AFG",
+     "members": [
+      "AFG",
+      "TUR"
+     ]
+    }
+   ],
+   "guarantees": [
+    "TIB->GRE",
+    "CHL->HON",
+    "SAU->BEL",
+    "DEN->NIC",
+    "TIB->CUB",
+    "VEN->HAI",
+    "SIA->POL",
+    "ITA->HAI"
+   ],
+   "wars": [
+    {
+     "id": 6,
+     "a": [
+      "PRU",
+      "BRA",
+      "PAR"
+     ],
+     "d": [
+      "COL"
+     ]
+    },
+    {
+     "id": 11,
+     "a": [
+      "USA",
+      "PHI"
+     ],
+     "d": [
+      "ROM",
+      "YUG"
+     ]
+    },
+    {
+     "id": 17,
+     "a": [
+      "ITA",
+      "ALB"
+     ],
+     "d": [
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "TIB"
+     ]
+    },
+    {
+     "id": 19,
+     "a": [
+      "HUN",
+      "JAP",
+      "MAN",
+      "MEN",
+      "POL",
+      "CZS"
+     ],
+     "d": [
+      "AUT",
+      "DEN"
+     ]
+    },
+    {
+     "id": 22,
+     "a": [
+      "ITA",
+      "YUG",
+      "ALB",
+      "JAP",
+      "MAN",
+      "MEN",
+      "POL",
+      "CZS",
+      "HUN"
+     ],
+     "d": [
+      "TUR",
+      "AFG"
+     ]
+    },
+    {
+     "id": 23,
+     "a": [
+      "CHI"
+     ],
+     "d": [
+      "TIB",
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL"
+     ]
+    },
+    {
+     "id": 24,
+     "a": [
+      "REP",
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC",
+      "LUX",
+      "SWI",
+      "BEL",
+      "BCO",
+      "NED",
+      "DEI",
+      "GER"
+     ],
+     "d": [
+      "POR",
+      "ANG",
+      "MOZ",
+      "SWE",
+      "NOR"
+     ]
+    },
+    {
+     "id": 25,
+     "a": [
+      "SOV",
+      "LAT",
+      "ROM",
+      "IRN",
+      "SIN",
+      "MON",
+      "TAN",
+      "FIN"
+     ],
+     "d": [
+      "TUR",
+      "AFG"
+     ]
+    },
+    {
+     "id": 26,
+     "a": [
+      "REP",
+      "NSP",
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "LEB",
+      "INC",
+      "LUX",
+      "SWI",
+      "BEL",
+      "BCO",
+      "NED",
+      "DEI",
+      "GER"
+     ],
+     "d": [
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "TIB",
+      "IRQ"
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seed": 4402,
+  "mode": "scenario",
+  "start": {
+   "alliances": [
+    {
+     "name": "alliance.anti_comintern",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "ITA",
+      "JAP"
+     ]
+    },
+    {
+     "name": "alliance.anglo_french",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "FRA"
+     ]
+    },
+    {
+     "name": "alliance.little_entente",
+     "leader": "CZS",
+     "members": [
+      "CZS",
+      "ROM",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.balkan_entente",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE"
+     ]
+    },
+    {
+     "name": "alliance.baltic_entente",
+     "leader": "LAT",
+     "members": [
+      "LAT",
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.comintern",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "MON",
+      "TAN"
+     ]
+    },
+    {
+     "name": "alliance.united_front",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "CCP"
+     ]
+    }
+   ],
+   "guarantees": [
+    "FRA->CZS",
+    "SOV->CZS",
+    "FRA->POL",
+    "FRA->BEL",
+    "ENG->BEL",
+    "ENG->POR",
+    "ENG->IRQ",
+    "SOV->CHI"
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      "NSP"
+     ],
+     "d": [
+      "REP"
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "CHI",
+      "CCP"
+     ]
+    }
+   ]
+  },
+  "at": {
+   "0": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "1": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "30": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "90": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "AUT in HUN": 6,
+     "YUG in SOV": 3,
+     "ITA in LIT": 2,
+     "DEN in GER": 2,
+     "ITA in AUT": 1,
+     "YUG in HUN": 1
+    },
+    "guestFormations": 15,
+    "odd": []
+   },
+   "180": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "POL in ALB": 38,
+     "GER in ALB": 36,
+     "HUN in ALB": 7,
+     "GRE in BUL": 3,
+     "BUL in GRE": 2
+    },
+    "guestFormations": 86,
+    "odd": []
+   }
+  },
+  "d180": {
+   "alliances": [
+    {
+     "name": "alliance.anti_comintern",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "ITA",
+      "JAP",
+      "POL",
+      "HUN"
+     ]
+    },
+    {
+     "name": "alliance.anglo_french",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "FRA",
+      "NED",
+      "LUX",
+      "BEL"
+     ]
+    },
+    {
+     "name": "alliance.little_entente",
+     "leader": "CZS",
+     "members": [
+      "CZS",
+      "ROM",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.balkan_entente",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE"
+     ]
+    },
+    {
+     "name": "alliance.baltic_entente",
+     "leader": "EST",
+     "members": [
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.comintern",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "MON",
+      "TAN"
+     ]
+    },
+    {
+     "name": "alliance.united_front",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "CCP"
+     ]
+    },
+    {
+     "name": "alliance.coalition",
+     "leader": "MEX",
+     "members": [
+      "MEX",
+      "CUB"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "POR",
+     "members": [
+      "POR",
+      "REP"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "NOR",
+     "members": [
+      "NOR",
+      "FIN"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "AFG",
+     "members": [
+      "AFG",
+      "IRN"
+     ]
+    }
+   ],
+   "guarantees": [
+    "FRA->CZS",
+    "SOV->CZS",
+    "FRA->POL",
+    "FRA->BEL",
+    "ENG->BEL",
+    "ENG->POR",
+    "ENG->IRQ",
+    "SOV->CHI"
+   ],
+   "wars": [
+    {
+     "id": 2,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "CHI",
+      "CCP"
+     ]
+    },
+    {
+     "id": 8,
+     "a": [
+      "CHI",
+      "CCP"
+     ],
+     "d": [
+      "TIB"
+     ]
+    },
+    {
+     "id": 15,
+     "a": [
+      "NSP"
+     ],
+     "d": [
+      "POR",
+      "ANG",
+      "MOZ",
+      "ENG",
+      "IRE",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL"
+     ]
+    },
+    {
+     "id": 16,
+     "a": [
+      "GER",
+      "ITA",
+      "ALB",
+      "JAP",
+      "MAN",
+      "MEN",
+      "POL",
+      "HUN"
+     ],
+     "d": [
+      "BUL"
+     ]
+    },
+    {
+     "id": 19,
+     "a": [
+      "SOV",
+      "LIT",
+      "SIN",
+      "MON",
+      "TAN"
+     ],
+     "d": [
+      "YUG"
+     ]
+    },
+    {
+     "id": 20,
+     "a": [
+      "TUR",
+      "BUL",
+      "GRE"
+     ],
+     "d": [
+      "IRN",
+      "AFG"
+     ]
+    },
+    {
+     "id": 22,
+     "a": [
+      "ITA",
+      "ALB",
+      "GER",
+      "JAP",
+      "MAN",
+      "MEN",
+      "POL",
+      "HUN"
+     ],
+     "d": [
+      "GRE",
+      "TUR"
+     ]
+    },
+    {
+     "id": 23,
+     "a": [
+      "SOV",
+      "LIT",
+      "ROM",
+      "SIN",
+      "MON",
+      "TAN"
+     ],
+     "d": [
+      "TUR",
+      "BUL",
+      "GRE"
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seed": 4402,
+  "mode": "random",
+  "start": {
+   "alliances": [
+    {
+     "name": "alliance.defensive",
+     "leader": "ROM",
+     "members": [
+      "ROM",
+      "YUG",
+      "BUL"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "MEX",
+     "members": [
+      "MEX",
+      "GUA",
+      "ELS"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "LUX"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "USA",
+     "members": [
+      "USA",
+      "CUB",
+      "CHI"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "LIB",
+      "VEN"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "NIC",
+     "members": [
+      "NIC",
+      "HON"
+     ]
+    }
+   ],
+   "guarantees": [
+    "SAU->HUN",
+    "SAU->DAN",
+    "POL->EST",
+    "PRU->YEM",
+    "BRA->SWI",
+    "JAP->COS",
+    "DEN->ROM",
+    "SOV->POL"
+   ],
+   "wars": [
+    {
+     "id": 3,
+     "a": [
+      "EST"
+     ],
+     "d": [
+      "SOV",
+      "SIN",
+      "MON",
+      "TAN"
+     ]
+    },
+    {
+     "id": 4,
+     "a": [
+      "BEL",
+      "BCO"
+     ],
+     "d": [
+      "GER",
+      "LUX"
+     ]
+    }
+   ]
+  },
+  "at": {
+   "0": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 19
+    },
+    "guestFormations": 19,
+    "odd": []
+   },
+   "1": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 19
+    },
+    "guestFormations": 19,
+    "odd": []
+   },
+   "30": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 8
+    },
+    "guestFormations": 8,
+    "odd": []
+   },
+   "90": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "ITA in GER": 2,
+     "USA in ANG": 2,
+     "DEN in GER": 1
+    },
+    "guestFormations": 5,
+    "odd": []
+   },
+   "180": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "NED in ANG": 1
+    },
+    "guestFormations": 1,
+    "odd": []
+   }
+  },
+  "d180": {
+   "alliances": [
+    {
+     "name": "alliance.defensive",
+     "leader": "ROM",
+     "members": [
+      "ROM",
+      "YUG",
+      "BUL",
+      "POL",
+      "CZS",
+      "AUT",
+      "GER"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE",
+      "IRN"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "MEX",
+     "members": [
+      "MEX",
+      "GUA",
+      "ELS"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "USA",
+     "members": [
+      "USA",
+      "CUB",
+      "CHI"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "LIB",
+      "VEN",
+      "NED"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "NIC",
+     "members": [
+      "NIC",
+      "HON"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "POR",
+     "members": [
+      "POR",
+      "FRA"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "NOR",
+     "members": [
+      "NOR",
+      "LIT",
+      "FIN",
+      "SWE"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "AFG",
+     "members": [
+      "AFG",
+      "LAT"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "DEN",
+     "members": [
+      "DEN",
+      "SWI"
+     ]
+    }
+   ],
+   "guarantees": [
+    "SAU->HUN",
+    "SAU->DAN",
+    "POL->EST",
+    "PRU->YEM",
+    "BRA->SWI",
+    "JAP->COS",
+    "DEN->ROM",
+    "SOV->POL"
+   ],
+   "wars": [
+    {
+     "id": 13,
+     "a": [
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "LIB",
+      "VEN",
+      "NED",
+      "DEI"
+     ],
+     "d": [
+      "SAU"
+     ]
+    },
+    {
+     "id": 14,
+     "a": [
+      "CHI",
+      "USA",
+      "PHI",
+      "CUB"
+     ],
+     "d": [
+      "TIB"
+     ]
+    },
+    {
+     "id": 15,
+     "a": [
+      "SOV",
+      "EST",
+      "SIN",
+      "MON",
+      "TAN"
+     ],
+     "d": [
+      "ROM",
+      "YUG",
+      "BUL",
+      "CZS",
+      "AUT",
+      "DEN"
+     ]
+    },
+    {
+     "id": 16,
+     "a": [
+      "GER",
+      "BCO"
+     ],
+     "d": [
+      "NED",
+      "DEI",
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "LIB",
+      "VEN"
+     ]
+    },
+    {
+     "id": 19,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "DEN",
+      "SWI"
+     ]
+    },
+    {
+     "id": 20,
+     "a": [
+      "ITA",
+      "ALB"
+     ],
+     "d": [
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "LIB",
+      "VEN",
+      "NED",
+      "DEI"
+     ]
+    },
+    {
+     "id": 22,
+     "a": [
+      "YEM"
+     ],
+     "d": [
+      "SAU"
+     ]
+    },
+    {
+     "id": 23,
+     "a": [
+      "ITA",
+      "ALB"
+     ],
+     "d": [
+      "NOR",
+      "FIN",
+      "SWE"
+     ]
+    },
+    {
+     "id": 24,
+     "a": [
+      "POL",
+      "ROM",
+      "YUG",
+      "BUL",
+      "CZS",
+      "AUT",
+      "GER",
+      "BCO"
+     ],
+     "d": [
+      "LAT",
+      "AFG"
+     ]
+    },
+    {
+     "id": 25,
+     "a": [
+      "SOV",
+      "LIT",
+      "EST",
+      "SIN",
+      "MON",
+      "TAN"
+     ],
+     "d": [
+      "LAT",
+      "AFG"
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seed": 5113,
+  "mode": "scenario",
+  "start": {
+   "alliances": [
+    {
+     "name": "alliance.anti_comintern",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "ITA",
+      "JAP"
+     ]
+    },
+    {
+     "name": "alliance.anglo_french",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "FRA"
+     ]
+    },
+    {
+     "name": "alliance.little_entente",
+     "leader": "CZS",
+     "members": [
+      "CZS",
+      "ROM",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.balkan_entente",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE"
+     ]
+    },
+    {
+     "name": "alliance.baltic_entente",
+     "leader": "LAT",
+     "members": [
+      "LAT",
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.comintern",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "MON",
+      "TAN"
+     ]
+    },
+    {
+     "name": "alliance.united_front",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "CCP"
+     ]
+    }
+   ],
+   "guarantees": [
+    "FRA->CZS",
+    "SOV->CZS",
+    "FRA->POL",
+    "FRA->BEL",
+    "ENG->BEL",
+    "ENG->POR",
+    "ENG->IRQ",
+    "SOV->CHI"
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      "NSP"
+     ],
+     "d": [
+      "REP"
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "CHI",
+      "CCP"
+     ]
+    }
+   ]
+  },
+  "at": {
+   "0": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "1": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {},
+    "guestFormations": 0,
+    "odd": []
+   },
+   "30": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "SYR in PAL": 2,
+     "ENG in AOF": 1,
+     "GCO in AOF": 1,
+     "SYR in EGY": 1,
+     "LEB in EGY": 1
+    },
+    "guestFormations": 6,
+    "odd": []
+   },
+   "90": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "GER in ALB": 13,
+     "ENG in AOF": 5,
+     "EGY in AEF": 3,
+     "INC in RAJ": 3,
+     "ITA in ROM": 2,
+     "POR in NSP": 2,
+     "DEN in GER": 2,
+     "NIG in AEF": 2,
+     "SYR in SUD": 2,
+     "NSP in FRA": 1,
+     "GCO in AOF": 1,
+     "SYR in EGY": 1,
+     "LEB in SUD": 1
+    },
+    "guestFormations": 38,
+    "odd": []
+   },
+   "180": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "GER in ALB": 17,
+     "GER in ROM": 15,
+     "ITA in ROM": 15,
+     "EGY in AEF": 3,
+     "INC in RAJ": 3,
+     "SYR in ITA": 2,
+     "BUL in ROM": 1,
+     "ALB in GER": 1,
+     "ALB in ROM": 1
+    },
+    "guestFormations": 58,
+    "odd": []
+   }
+  },
+  "d180": {
+   "alliances": [
+    {
+     "name": "alliance.anti_comintern",
+     "leader": "GER",
+     "members": [
+      "GER",
+      "ITA",
+      "JAP"
+     ]
+    },
+    {
+     "name": "alliance.anglo_french",
+     "leader": "ENG",
+     "members": [
+      "ENG",
+      "FRA",
+      "LUX",
+      "NED",
+      "SWI",
+      "BEL"
+     ]
+    },
+    {
+     "name": "alliance.little_entente",
+     "leader": "CZS",
+     "members": [
+      "CZS",
+      "ROM",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.balkan_entente",
+     "leader": "TUR",
+     "members": [
+      "TUR",
+      "GRE"
+     ]
+    },
+    {
+     "name": "alliance.baltic_entente",
+     "leader": "LAT",
+     "members": [
+      "LAT",
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.comintern",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "MON",
+      "TAN"
+     ]
+    },
+    {
+     "name": "alliance.united_front",
+     "leader": "CHI",
+     "members": [
+      "CHI",
+      "CCP"
+     ]
+    },
+    {
+     "name": "alliance.coalition",
+     "leader": "MEX",
+     "members": [
+      "MEX",
+      "CUB"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "POR",
+     "members": [
+      "POR",
+      "REP"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "AFG",
+     "members": [
+      "AFG",
+      "POL",
+      "IRN",
+      "HUN"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "FIN",
+     "members": [
+      "FIN",
+      "NOR"
+     ]
+    }
+   ],
+   "guarantees": [
+    "FRA->CZS",
+    "SOV->CZS",
+    "FRA->POL",
+    "FRA->BEL",
+    "ENG->BEL",
+    "ENG->IRQ",
+    "SOV->CHI"
+   ],
+   "wars": [
+    {
+     "id": 2,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "CHI",
+      "CCP"
+     ]
+    },
+    {
+     "id": 8,
+     "a": [
+      "CHI",
+      "CCP"
+     ],
+     "d": [
+      "TIB"
+     ]
+    },
+    {
+     "id": 12,
+     "a": [
+      "BRA"
+     ],
+     "d": [
+      "COL"
+     ]
+    },
+    {
+     "id": 17,
+     "a": [
+      "ITA",
+      "HUN",
+      "ALB",
+      "GER",
+      "JAP",
+      "ROM",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "GRE",
+      "TUR"
+     ]
+    },
+    {
+     "id": 20,
+     "a": [
+      "SOV",
+      "SIN",
+      "MON",
+      "TAN"
+     ],
+     "d": [
+      "YUG"
+     ]
+    },
+    {
+     "id": 21,
+     "a": [
+      "SOV",
+      "LIT",
+      "SIN",
+      "MON",
+      "TAN"
+     ],
+     "d": [
+      "TUR",
+      "BUL",
+      "GRE"
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seed": 5113,
+  "mode": "random",
+  "start": {
+   "alliances": [
+    {
+     "name": "alliance.defensive",
+     "leader": "PRU",
+     "members": [
+      "PRU",
+      "PAR",
+      "BOL"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "JAP"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "COL",
+     "members": [
+      "COL",
+      "ECU",
+      "VEN"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "IRN",
+     "members": [
+      "IRN",
+      "TUR"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "LAT",
+     "members": [
+      "LAT",
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ROM",
+     "members": [
+      "ROM",
+      "HUN",
+      "YUG"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "NOR",
+     "members": [
+      "NOR",
+      "FIN"
+     ]
+    }
+   ],
+   "guarantees": [
+    "ENG->POR",
+    "GER->LIT",
+    "ARG->SWE",
+    "PRU->NSP",
+    "AFG->FIN",
+    "ITA->URU",
+    "SWE->REP",
+    "NSP->ITA"
+   ],
+   "wars": [
+    {
+     "id": 3,
+     "a": [
+      "SOV",
+      "SIN",
+      "MON",
+      "TAN",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "d": [
+      "NOR",
+      "FIN"
+     ]
+    },
+    {
+     "id": 4,
+     "a": [
+      "DEN",
+      "ICE"
+     ],
+     "d": [
+      "GER"
+     ]
+    }
+   ]
+  },
+  "at": {
+   "0": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 19
+    },
+    "guestFormations": 19,
+    "odd": []
+   },
+   "1": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 19
+    },
+    "guestFormations": 19,
+    "odd": []
+   },
+   "30": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "JAP in CHI": 8,
+     "MAN in SOV": 6,
+     "MEN in MON": 4,
+     "SOV in MAN": 2
+    },
+    "guestFormations": 20,
+    "odd": []
+   },
+   "90": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "GER in POL": 20,
+     "MAN in SOV": 10,
+     "JAP in MON": 7,
+     "MEN in SOV": 4,
+     "POL in GER": 2,
+     "LIT in POL": 2,
+     "LAT in POL": 2,
+     "EST in POL": 2,
+     "CZS in GER": 1
+    },
+    "guestFormations": 50,
+    "odd": []
+   },
+   "180": {
+    "occupiedAtPeace": {},
+    "occCells": 0,
+    "guestsAtPeace": {
+     "MAN in SOV": 10,
+     "IRN in PAL": 6,
+     "MEN in SOV": 4,
+     "POL in AUT": 1
+    },
+    "guestFormations": 21,
+    "odd": []
+   }
+  },
+  "d180": {
+   "alliances": [
+    {
+     "name": "alliance.defensive",
+     "leader": "PRU",
+     "members": [
+      "PRU",
+      "PAR",
+      "BOL"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "SOV",
+     "members": [
+      "SOV",
+      "JAP"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "COL",
+     "members": [
+      "COL",
+      "ECU",
+      "VEN",
+      "ENG",
+      "NED"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "IRN",
+     "members": [
+      "IRN",
+      "TUR",
+      "AFG"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "LAT",
+     "members": [
+      "LAT",
+      "EST",
+      "LIT"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "ROM",
+     "members": [
+      "ROM",
+      "HUN",
+      "YUG",
+      "CZS",
+      "POL"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "NOR",
+     "members": [
+      "NOR",
+      "FIN"
+     ]
+    },
+    {
+     "name": "alliance.coalition",
+     "leader": "MEX",
+     "members": [
+      "MEX",
+      "CUB"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "LUX",
+     "members": [
+      "LUX",
+      "AUT"
+     ]
+    },
+    {
+     "name": "alliance.defensive",
+     "leader": "POR",
+     "members": [
+      "POR",
+      "FRA",
+      "SWI",
+      "BEL",
+      "REP",
+      "GER"
+     ]
+    }
+   ],
+   "guarantees": [
+    "ENG->POR",
+    "GER->LIT",
+    "ARG->SWE",
+    "PRU->NSP",
+    "AFG->FIN",
+    "ITA->URU",
+    "SWE->REP",
+    "NSP->ITA"
+   ],
+   "wars": [
+    {
+     "id": 4,
+     "a": [
+      "DEN",
+      "ICE"
+     ],
+     "d": [
+      "GER"
+     ]
+    },
+    {
+     "id": 9,
+     "a": [
+      "FRA",
+      "AOF",
+      "AEF",
+      "MAD",
+      "FMO",
+      "TUN",
+      "SYR",
+      "INC"
+     ],
+     "d": [
+      "NED",
+      "DEI",
+      "COL",
+      "ECU",
+      "VEN",
+      "ENG",
+      "IRE",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL"
+     ]
+    },
+    {
+     "id": 11,
+     "a": [
+      "CHI"
+     ],
+     "d": [
+      "TIB"
+     ]
+    },
+    {
+     "id": 12,
+     "a": [
+      "CHI"
+     ],
+     "d": [
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "COL",
+      "ECU",
+      "VEN",
+      "NED",
+      "DEI"
+     ]
+    },
+    {
+     "id": 15,
+     "a": [
+      "ITA",
+      "ALB"
+     ],
+     "d": [
+      "ENG",
+      "EGY",
+      "SUD",
+      "BEA",
+      "SAF",
+      "SRH",
+      "NIG",
+      "GCO",
+      "PAL",
+      "TRJ",
+      "OMN",
+      "RAJ",
+      "BUR",
+      "CEY",
+      "MAL",
+      "SAR",
+      "AST",
+      "NZL",
+      "CAN",
+      "NFL",
+      "COL",
+      "ECU",
+      "VEN",
+      "NED",
+      "DEI"
+     ]
+    },
+    {
+     "id": 17,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN",
+      "SOV",
+      "SIN",
+      "MON",
+      "TAN"
+     ],
+     "d": [
+      "BUL"
+     ]
+    },
+    {
+     "id": 19,
+     "a": [
+      "JAP",
+      "MAN",
+      "MEN",
+      "SOV",
+      "SIN",
+      "MON",
+      "TAN"
+     ],
+     "d": [
+      "POL",
+      "ROM",
+      "HUN",
+      "YUG",
+      "CZS"
+     ]
+    }
+   ]
+  }
+ }
+]

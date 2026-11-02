@@ -1,0 +1,224 @@
+{
+ "seed": 7019,
+ "port": 5296,
+ "tg": "c24",
+ "steps": [
+  {
+   "k": "Germany on Poland; playing Poland",
+   "day": 1.0833333333333333,
+   "wars": [
+    {
+     "att": [
+      "Germany",
+      "Italy",
+      "Albania",
+      "Japan",
+      "Manchukuo",
+      "Mengjiang"
+     ],
+     "def": [
+      "Poland",
+      "France",
+      "French West Africa",
+      "French Equatorial Africa",
+      "Madagascar",
+      "French Morocco",
+      "Tunisia",
+      "Syria",
+      "Lebanon",
+      "French Indochina"
+     ]
+    }
+   ],
+   "ticker": "2 January 1938 Germany declared war on Poland\n⚓ Carrier strike ashore: Japan on China",
+   "banners": [
+    "Nationalist Spain ⚔ Spanish Republic Japan +2 ⚔ China +1 Germany +5 ⚔ Poland +9",
+    "Nationalist Spain ⚔ Spanish Republic",
+    "Japan +2 ⚔ China +1",
+    "Germany +5 ⚔ Poland +9"
+   ],
+   "ger": {
+    "cells": 2626,
+    "occupied": null,
+    "wars": null
+   },
+   "pol": {
+    "cells": 2222,
+    "occupied": null,
+    "wars": null
+   }
+  },
+  {
+   "k": "peace refused",
+   "day": 11.083333333333334,
+   "wars": [
+    {
+     "att": [
+      "Germany",
+      "Italy",
+      "Albania",
+      "Japan",
+      "Manchukuo",
+      "Mengjiang"
+     ],
+     "def": [
+      "Poland",
+      "France",
+      "French West Africa",
+      "French Equatorial Africa",
+      "Madagascar",
+      "French Morocco",
+      "Tunisia",
+      "Syria",
+      "Lebanon",
+      "French Indochina"
+     ]
+    },
+    {
+     "att": [
+      "Italy",
+      "Albania",
+      "Germany",
+      "Japan",
+      "Manchukuo",
+      "Mengjiang"
+     ],
+     "def": [
+      "Austria"
+     ]
+    }
+   ],
+   "ticker": "2 January 1938 Germany declared war on Poland\n7 January 1938 Italy declared war on Austria\n⚓ Carrier strike ashore: Japan on China ×3",
+   "banners": [
+    "Nationalist Spain ⚔ Spanish Republic Japan +2 ⚔ China +1 Germany +5 ⚔ Poland +9 Italy +5 ⚔ Austria",
+    "Nationalist Spain ⚔ Spanish Republic",
+    "Japan +2 ⚔ China +1",
+    "Germany +5 ⚔ Poland +9",
+    "Italy +5 ⚔ Austria"
+   ],
+   "ger": {
+    "cells": 2626,
+    "occupied": null,
+    "wars": null
+   },
+   "pol": {
+    "cells": 2222,
+    "occupied": null,
+    "wars": null
+   }
+  },
+  {
+   "k": "2 h after war on France",
+   "day": 11.166666666666666,
+   "wars": [
+    {
+     "att": [
+      "Germany",
+      "Italy",
+      "Albania",
+      "Japan",
+      "Manchukuo",
+      "Mengjiang"
+     ],
+     "def": [
+      "Poland",
+      "France",
+      "French West Africa",
+      "French Equatorial Africa",
+      "Madagascar",
+      "French Morocco",
+      "Tunisia",
+      "Syria",
+      "Lebanon",
+      "French Indochina"
+     ]
+    },
+    {
+     "att": [
+      "Italy",
+      "Albania",
+      "Germany",
+      "Japan",
+      "Manchukuo",
+      "Mengjiang"
+     ],
+     "def": [
+      "Austria"
+     ]
+    }
+   ],
+   "ticker": "2 January 1938 Germany declared war on Poland\n7 January 1938 Italy declared war on Austria\n12 January 1938 Poland declared war on France",
+   "banners": [
+    "Nationalist Spain ⚔ Spanish Republic Japan +2 ⚔ China +1 Germany +5 ⚔ Poland +9 Italy +5 ⚔ Austria Poland ⚔ France +32",
+    "Nationalist Spain ⚔ Spanish Republic",
+    "Japan +2 ⚔ China +1",
+    "Germany +5 ⚔ Poland +9",
+    "Italy +5 ⚔ Austria",
+    "Poland ⚔ France +32"
+   ],
+   "ger": {
+    "cells": 2626,
+    "occupied": null,
+    "wars": null
+   },
+   "pol": {
+    "cells": 2222,
+    "occupied": null,
+    "wars": null
+   }
+  }
+ ],
+ "reads": [
+  {
+   "d": 10,
+   "standing": "At war",
+   "peaceDisabled": true,
+   "peaceTitle": "They refuse: lead the war score by 25 (now +1), or wear them out (war weariness 3 of 40).",
+   "items": [
+    "Offer peace",
+    "Propose alliance",
+    "Take control"
+   ]
+  }
+ ],
+ "refusedAt": 10,
+ "shotBefore": "critic/shots/c25es2_c24_7019_d10_es2_d10_before.png",
+ "menuGerBefore": {
+  "name": "Germany",
+  "standing": "At war",
+  "items": [
+   "Offer peace",
+   "Propose alliance",
+   "Take control"
+  ],
+  "peaceDisabled": true,
+  "peaceTitle": "They refuse: lead the war score by 25 (now +1), or wear them out (war weariness 3 of 40)."
+ },
+ "shotGerMenu": "critic/shots/c25es2_c24_7019_d10_germenu_refused.png",
+ "menuFra": {
+  "name": "France",
+  "standing": "Neutral",
+  "items": [
+   "Declare war",
+   "Propose alliance",
+   "Take control"
+  ],
+  "peaceDisabled": null,
+  "peaceTitle": null
+ },
+ "shotFraMenu": "critic/shots/c25es2_c24_7019_d10_framenu.png",
+ "shotAfter": "critic/shots/c25es2_c24_7019_d10_es2_d10_after.png",
+ "menuGerAfter": {
+  "name": "Germany",
+  "standing": "At war",
+  "items": [
+   "Offer peace",
+   "Propose alliance",
+   "Take control"
+  ],
+  "peaceDisabled": true,
+  "peaceTitle": "They refuse: lead the war score by 25 (now +1), or wear them out (war weariness 3 of 40)."
+ },
+ "shotGerMenuAfter": "critic/shots/c25es2_c24_7019_d10_germenu_after.png",
+ "errors": []
+}

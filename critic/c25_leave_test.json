@@ -1,0 +1,236 @@
+{
+ "seed": 7019,
+ "random": false,
+ "days": 60,
+ "leftOnDeclaration": [],
+ "otherEnds": 0,
+ "declarations": 11,
+ "decl": [
+  {
+   "day": 2.04,
+   "by": "JAP",
+   "on": "REP",
+   "a": [
+    "JAP",
+    "MAN",
+    "MEN",
+    "GER",
+    "ITA",
+    "ALB"
+   ],
+   "d": [
+    "REP"
+   ]
+  },
+  {
+   "day": 3.04,
+   "by": "POL",
+   "on": "LIT",
+   "a": [
+    "POL"
+   ],
+   "d": [
+    "LIT",
+    "LAT",
+    "EST"
+   ]
+  },
+  {
+   "day": 6.04,
+   "by": "ITA",
+   "on": "AUT",
+   "a": [
+    "ITA",
+    "ALB",
+    "GER",
+    "JAP",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "AUT"
+   ]
+  },
+  {
+   "day": 9.04,
+   "by": "FRA",
+   "on": "REP",
+   "a": [
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL",
+    "NED",
+    "DEI"
+   ],
+   "d": [
+    "REP"
+   ]
+  },
+  {
+   "day": 9.04,
+   "by": "USA",
+   "on": "EST",
+   "a": [
+    "USA",
+    "PHI"
+   ],
+   "d": [
+    "EST",
+    "LAT",
+    "LIT"
+   ]
+  },
+  {
+   "day": 15.04,
+   "by": "CHI",
+   "on": "TIB",
+   "a": [
+    "CHI",
+    "CCP"
+   ],
+   "d": [
+    "TIB"
+   ]
+  },
+  {
+   "day": 27.04,
+   "by": "GER",
+   "on": "LIT",
+   "a": [
+    "GER",
+    "ITA",
+    "AUT",
+    "ALB",
+    "JAP",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "LIT",
+    "LAT",
+    "EST"
+   ]
+  },
+  {
+   "day": 36.04,
+   "by": "ENG",
+   "on": "IRE",
+   "a": [
+    "ENG",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL",
+    "FRA",
+    "REP",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "NED",
+    "DEI",
+    "SWI",
+    "LUX",
+    "BEL",
+    "BCO"
+   ],
+   "d": [
+    "IRE"
+   ]
+  },
+  {
+   "day": 38.04,
+   "by": "TUR",
+   "on": "BUL",
+   "a": [
+    "TUR",
+    "GRE",
+    "IRN",
+    "AFG"
+   ],
+   "d": [
+    "BUL"
+   ]
+  },
+  {
+   "day": 46.04,
+   "by": "SOV",
+   "on": "LAT",
+   "a": [
+    "SOV",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "LAT",
+    "EST",
+    "LIT"
+   ]
+  },
+  {
+   "day": 48.04,
+   "by": "GER",
+   "on": "DEN",
+   "a": [
+    "GER",
+    "ITA",
+    "ALB",
+    "JAP",
+    "MAN",
+    "MEN",
+    "POL",
+    "LIT"
+   ],
+   "d": [
+    "DEN"
+   ]
+  }
+ ]
+}

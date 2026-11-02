@@ -1,0 +1,1494 @@
+{
+ "seed": 7019,
+ "random": false,
+ "days": 730,
+ "leftOnDeclaration": [
+  {
+   "day": 608.04,
+   "pair": "LAT-BUL",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "LAT of BUL": 0,
+    "BUL of LAT": 0
+   },
+   "heldAfter": {
+    "LAT of BUL": 0,
+    "BUL of LAT": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "LAT-GRE",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "LAT of GRE": 0,
+    "GRE of LAT": 0
+   },
+   "heldAfter": {
+    "LAT of GRE": 0,
+    "GRE of LAT": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "LAT-AFG",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "LAT of AFG": 0,
+    "AFG of LAT": 0
+   },
+   "heldAfter": {
+    "LAT of AFG": 0,
+    "AFG of LAT": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "EST-BUL",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "EST of BUL": 0,
+    "BUL of EST": 0
+   },
+   "heldAfter": {
+    "EST of BUL": 0,
+    "BUL of EST": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "EST-GRE",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "EST of GRE": 0,
+    "GRE of EST": 0
+   },
+   "heldAfter": {
+    "EST of GRE": 0,
+    "GRE of EST": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "EST-AFG",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "EST of AFG": 0,
+    "AFG of EST": 0
+   },
+   "heldAfter": {
+    "EST of AFG": 0,
+    "AFG of EST": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "FIN-BUL",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "FIN of BUL": 0,
+    "BUL of FIN": 0
+   },
+   "heldAfter": {
+    "FIN of BUL": 0,
+    "BUL of FIN": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "FIN-GRE",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "FIN of GRE": 0,
+    "GRE of FIN": 0
+   },
+   "heldAfter": {
+    "FIN of GRE": 0,
+    "GRE of FIN": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "FIN-AFG",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "FIN of AFG": 0,
+    "AFG of FIN": 0
+   },
+   "heldAfter": {
+    "FIN of AFG": 0,
+    "AFG of FIN": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "BUL-SIN",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "BUL of SIN": 0,
+    "SIN of BUL": 0
+   },
+   "heldAfter": {
+    "BUL of SIN": 0,
+    "SIN of BUL": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "GRE-SIN",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "GRE of SIN": 0,
+    "SIN of GRE": 0
+   },
+   "heldAfter": {
+    "GRE of SIN": 0,
+    "SIN of GRE": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "AFG-SIN",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "AFG of SIN": 0,
+    "SIN of AFG": 0
+   },
+   "heldAfter": {
+    "AFG of SIN": 0,
+    "SIN of AFG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "BUL-MON",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "BUL of MON": 0,
+    "MON of BUL": 0
+   },
+   "heldAfter": {
+    "BUL of MON": 0,
+    "MON of BUL": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "GRE-MON",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "GRE of MON": 0,
+    "MON of GRE": 0
+   },
+   "heldAfter": {
+    "GRE of MON": 0,
+    "MON of GRE": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "AFG-MON",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "AFG of MON": 0,
+    "MON of AFG": 0
+   },
+   "heldAfter": {
+    "AFG of MON": 0,
+    "MON of AFG": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "BUL-TAN",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "BUL of TAN": 0,
+    "TAN of BUL": 0
+   },
+   "heldAfter": {
+    "BUL of TAN": 0,
+    "TAN of BUL": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "GRE-TAN",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "GRE of TAN": 0,
+    "TAN of GRE": 0
+   },
+   "heldAfter": {
+    "GRE of TAN": 0,
+    "TAN of GRE": 0
+   },
+   "oldWarStillOn": false
+  },
+  {
+   "day": 608.04,
+   "pair": "AFG-TAN",
+   "oldWar": 34,
+   "oldSides": [
+    [
+     "SOV",
+     "LAT",
+     "EST",
+     "FIN",
+     "SIN",
+     "MON",
+     "TAN"
+    ],
+    [
+     "IRN",
+     "BUL",
+     "GRE",
+     "AFG"
+    ]
+   ],
+   "declared": [
+    "SOV on #105"
+   ],
+   "heldBefore": {
+    "AFG of TAN": 0,
+    "TAN of AFG": 0
+   },
+   "heldAfter": {
+    "AFG of TAN": 0,
+    "TAN of AFG": 0
+   },
+   "oldWarStillOn": false
+  }
+ ],
+ "otherEnds": 539,
+ "declarations": 41,
+ "decl": [
+  {
+   "day": 2.04,
+   "by": "JAP",
+   "on": "REP",
+   "a": [
+    "JAP",
+    "MAN",
+    "MEN",
+    "GER",
+    "ITA",
+    "ALB"
+   ],
+   "d": [
+    "REP"
+   ]
+  },
+  {
+   "day": 3.04,
+   "by": "POL",
+   "on": "LIT",
+   "a": [
+    "POL"
+   ],
+   "d": [
+    "LIT",
+    "LAT",
+    "EST"
+   ]
+  },
+  {
+   "day": 6.04,
+   "by": "ITA",
+   "on": "AUT",
+   "a": [
+    "ITA",
+    "ALB",
+    "GER",
+    "JAP",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "AUT"
+   ]
+  },
+  {
+   "day": 9.04,
+   "by": "FRA",
+   "on": "REP",
+   "a": [
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL",
+    "NED",
+    "DEI"
+   ],
+   "d": [
+    "REP"
+   ]
+  },
+  {
+   "day": 9.04,
+   "by": "USA",
+   "on": "EST",
+   "a": [
+    "USA",
+    "PHI"
+   ],
+   "d": [
+    "EST",
+    "LAT",
+    "LIT"
+   ]
+  },
+  {
+   "day": 15.04,
+   "by": "CHI",
+   "on": "TIB",
+   "a": [
+    "CHI",
+    "CCP"
+   ],
+   "d": [
+    "TIB"
+   ]
+  },
+  {
+   "day": 27.04,
+   "by": "GER",
+   "on": "LIT",
+   "a": [
+    "GER",
+    "ITA",
+    "AUT",
+    "ALB",
+    "JAP",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "LIT",
+    "LAT",
+    "EST"
+   ]
+  },
+  {
+   "day": 36.04,
+   "by": "ENG",
+   "on": "IRE",
+   "a": [
+    "ENG",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL",
+    "FRA",
+    "REP",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "NED",
+    "DEI",
+    "SWI",
+    "LUX",
+    "BEL",
+    "BCO"
+   ],
+   "d": [
+    "IRE"
+   ]
+  },
+  {
+   "day": 38.04,
+   "by": "TUR",
+   "on": "BUL",
+   "a": [
+    "TUR",
+    "GRE",
+    "IRN",
+    "AFG"
+   ],
+   "d": [
+    "BUL"
+   ]
+  },
+  {
+   "day": 46.04,
+   "by": "SOV",
+   "on": "LAT",
+   "a": [
+    "SOV",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "LAT",
+    "EST",
+    "LIT"
+   ]
+  },
+  {
+   "day": 48.04,
+   "by": "GER",
+   "on": "DEN",
+   "a": [
+    "GER",
+    "ITA",
+    "ALB",
+    "JAP",
+    "MAN",
+    "MEN",
+    "POL",
+    "LIT"
+   ],
+   "d": [
+    "DEN"
+   ]
+  },
+  {
+   "day": 67.04,
+   "by": "SOV",
+   "on": "ROM",
+   "a": [
+    "SOV",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "ROM",
+    "YUG"
+   ]
+  },
+  {
+   "day": 76.04,
+   "by": "ITA",
+   "on": "YUG",
+   "a": [
+    "ITA",
+    "AUT",
+    "ALB",
+    "GER",
+    "JAP",
+    "MAN",
+    "MEN",
+    "POL",
+    "LIT"
+   ],
+   "d": [
+    "YUG",
+    "CZS",
+    "ROM"
+   ]
+  },
+  {
+   "day": 78.04,
+   "by": "BRA",
+   "on": "COL",
+   "a": [
+    "BRA"
+   ],
+   "d": [
+    "COL"
+   ]
+  },
+  {
+   "day": 106.04,
+   "by": "ENG",
+   "on": "BRA",
+   "a": [
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL",
+    "FRA",
+    "REP",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "NED",
+    "DEI",
+    "SWI",
+    "LUX",
+    "BEL",
+    "BCO"
+   ],
+   "d": [
+    "BRA"
+   ]
+  },
+  {
+   "day": 125.04,
+   "by": "ITA",
+   "on": "SWI",
+   "a": [
+    "ITA",
+    "AUT",
+    "ALB",
+    "GER",
+    "JAP",
+    "MAN",
+    "MEN"
+   ],
+   "d": [
+    "SWI",
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL",
+    "FRA",
+    "REP",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "NED",
+    "DEI",
+    "LUX",
+    "BEL",
+    "BCO"
+   ]
+  },
+  {
+   "day": 135.04,
+   "by": "PRU",
+   "on": "COL",
+   "a": [
+    "PRU"
+   ],
+   "d": [
+    "COL"
+   ]
+  },
+  {
+   "day": 138.04,
+   "by": "NSP",
+   "on": "POR",
+   "a": [
+    "NSP"
+   ],
+   "d": [
+    "POR",
+    "ANG",
+    "MOZ",
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL"
+   ]
+  },
+  {
+   "day": 151.04,
+   "by": "SOV",
+   "on": "EST",
+   "a": [
+    "SOV",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "EST",
+    "LIT"
+   ]
+  },
+  {
+   "day": 179.04,
+   "by": "SOV",
+   "on": "FIN",
+   "a": [
+    "SOV",
+    "LAT",
+    "EST",
+    "ROM",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "FIN",
+    "NOR"
+   ]
+  },
+  {
+   "day": 181.04,
+   "by": "ITA",
+   "on": "FIN",
+   "a": [
+    "ITA",
+    "AUT",
+    "ALB",
+    "GER",
+    "JAP",
+    "MAN",
+    "MEN",
+    "POL",
+    "LIT",
+    "HUN"
+   ],
+   "d": [
+    "FIN",
+    "NOR"
+   ]
+  },
+  {
+   "day": 183.04,
+   "by": "HUN",
+   "on": "YUG",
+   "a": [
+    "HUN",
+    "GER",
+    "AUT",
+    "ALB",
+    "JAP",
+    "MAN",
+    "MEN",
+    "POL",
+    "LIT"
+   ],
+   "d": [
+    "YUG",
+    "CZS",
+    "ROM"
+   ]
+  },
+  {
+   "day": 186.04,
+   "by": "SOV",
+   "on": "YUG",
+   "a": [
+    "SOV",
+    "LAT",
+    "EST",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "YUG"
+   ]
+  },
+  {
+   "day": 230.04,
+   "by": "ITA",
+   "on": "POR",
+   "a": [
+    "ITA",
+    "AUT",
+    "ALB",
+    "GER",
+    "JAP",
+    "MAN",
+    "MEN",
+    "POL",
+    "LIT",
+    "HUN"
+   ],
+   "d": [
+    "POR",
+    "ANG",
+    "MOZ",
+    "REP",
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SAF",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "AST",
+    "NZL",
+    "CAN",
+    "NFL"
+   ]
+  },
+  {
+   "day": 279.04,
+   "by": "GER",
+   "on": "NED",
+   "a": [
+    "GER",
+    "ITA",
+    "AUT",
+    "ALB",
+    "JAP",
+    "MAN",
+    "MEN",
+    "HUN",
+    "YUG"
+   ],
+   "d": [
+    "NED",
+    "DEI",
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "BEL",
+    "BCO"
+   ]
+  },
+  {
+   "day": 311.04,
+   "by": "POL",
+   "on": "COL",
+   "a": [
+    "POL",
+    "LIT",
+    "GER",
+    "ITA",
+    "AUT",
+    "ALB",
+    "JAP",
+    "MAN",
+    "HUN",
+    "YUG"
+   ],
+   "d": [
+    "COL"
+   ]
+  },
+  {
+   "day": 319.04,
+   "by": "SOV",
+   "on": "TUR",
+   "a": [
+    "SOV",
+    "LAT",
+    "EST",
+    "FIN",
+    "ROM",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "TUR",
+    "BUL",
+    "GRE",
+    "IRN",
+    "AFG"
+   ]
+  },
+  {
+   "day": 387.04,
+   "by": "USA",
+   "on": "BCO",
+   "a": [
+    "USA",
+    "PHI"
+   ],
+   "d": [
+    "BCO"
+   ]
+  },
+  {
+   "day": 418.04,
+   "by": "NSP",
+   "on": "GRE",
+   "a": [
+    "NSP"
+   ],
+   "d": [
+    "GRE",
+    "TUR",
+    "BUL",
+    "IRN",
+    "AFG"
+   ]
+  },
+  {
+   "day": 455.04,
+   "by": "BUL",
+   "on": "#104",
+   "a": [
+    "BUL"
+   ],
+   "d": [
+    "#104"
+   ]
+  },
+  {
+   "day": 534.04,
+   "by": "SAU",
+   "on": "YEM",
+   "a": [
+    "SAU"
+   ],
+   "d": [
+    "YEM"
+   ]
+  },
+  {
+   "day": 557.04,
+   "by": "SOV",
+   "on": "IRN",
+   "a": [
+    "SOV",
+    "LAT",
+    "EST",
+    "FIN",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "IRN",
+    "BUL",
+    "GRE",
+    "AFG"
+   ]
+  },
+  {
+   "day": 564.04,
+   "by": "SOV",
+   "on": "#104",
+   "a": [
+    "SOV",
+    "LAT",
+    "EST",
+    "FIN",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "#104"
+   ]
+  },
+  {
+   "day": 606.04,
+   "by": "SOV",
+   "on": "NOR",
+   "a": [
+    "SOV",
+    "LAT",
+    "EST",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "NOR",
+    "SWE"
+   ]
+  },
+  {
+   "day": 608.04,
+   "by": "SOV",
+   "on": "#105",
+   "a": [
+    "SOV",
+    "LAT",
+    "EST",
+    "FIN",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "#105"
+   ]
+  },
+  {
+   "day": 618.04,
+   "by": "PRU",
+   "on": "ECU",
+   "a": [
+    "PRU"
+   ],
+   "d": [
+    "ECU"
+   ]
+  },
+  {
+   "day": 619.04,
+   "by": "IRQ",
+   "on": "SAU",
+   "a": [
+    "IRQ"
+   ],
+   "d": [
+    "SAU"
+   ]
+  },
+  {
+   "day": 627.04,
+   "by": "SOV",
+   "on": "AFG",
+   "a": [
+    "SOV",
+    "LAT",
+    "EST",
+    "FIN",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "AFG",
+    "BUL",
+    "GRE"
+   ]
+  },
+  {
+   "day": 638.04,
+   "by": "SOV",
+   "on": "#106",
+   "a": [
+    "SOV",
+    "LAT",
+    "EST",
+    "FIN",
+    "SIN",
+    "MON",
+    "TAN"
+   ],
+   "d": [
+    "#106"
+   ]
+  },
+  {
+   "day": 639.04,
+   "by": "FRA",
+   "on": "NSP",
+   "a": [
+    "FRA",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "NED",
+    "DEI",
+    "BRA"
+   ],
+   "d": [
+    "NSP"
+   ]
+  },
+  {
+   "day": 678.04,
+   "by": "GER",
+   "on": "BRA",
+   "a": [
+    "GER",
+    "ITA",
+    "AUT",
+    "ALB",
+    "JAP",
+    "HUN",
+    "YUG"
+   ],
+   "d": [
+    "BRA",
+    "ENG",
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SRH",
+    "NIG",
+    "GCO",
+    "PAL",
+    "TRJ",
+    "OMN",
+    "RAJ",
+    "BUR",
+    "CEY",
+    "MAL",
+    "SAR",
+    "NFL",
+    "FRA",
+    "REP",
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "SYR",
+    "LEB",
+    "INC",
+    "DEI"
+   ]
+  }
+ ]
+}
