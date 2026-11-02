@@ -17363,3 +17363,28 @@ Of 7.184 (open in PLAN.md):
   on ≥ 2/3 of the lives counted, seeds 1481–1490 × 3 (`tools/diag/heroCeiling.ts`); a rule for the refused orders; the
   sea columns and the smoke as above. Missed: 110 of 172 (0.640; Britain and the United States 12 of 41):
   BLOCKERS, ADR-795 waits on the user.
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.186 (closed not done, ADR-796 a, the user's decision: the crossing dropped; the heroes' AI closed) A land hero overseas (found at 7.185's AT, ADR-795 a): a land hero is ordered over land only
+  (`joinFights` in `operational.ts`), and where its army fights overseas it stands or its orders are refused: Britain
+  10 of 30 hero lives at or above the top-decile regular, the United States 2 of 11 (1481–1490 × 3,
+  `docs/evidence/7.185/at-run.md`). A land hero whose army's fights are on no land its way reaches crosses by sea as a
+  division of its nation does (the lift). AT: seeds 1491–1500 × 3, heroes on (`tools/diag/heroCeiling.ts`): ≥ 2/3 of
+  the hero lives counted at or above the top decile, and Britain's and the United States' together ≥ 1/2; the sea
+  columns (`tools/diag/heroBattle.ts`) reported; `sweep:quick` with heroes on and off (`--heroes on`) as a smoke test
+  only (limits green both, the riser and faller in PROGRESS), 7.184e's and 7.185's too. Missed (`docs/evidence/7.186/
+  at-run.md`: 0.547, HEAD 0.579 on the same seeds; Britain and the United States 13 of 42): BLOCKERS, ADR-796 waits on
+  the user.

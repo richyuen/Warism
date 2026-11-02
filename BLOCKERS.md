@@ -5,7 +5,7 @@ entries are kept and marked **RESOLVED** with the date and fix.
 
 ## Open
 
-### PLAN 7.186: the crossing by sea moved nothing: 0.547 of the lives (HEAD 0.579), bar 2/3 (ADR-796, waits on the user)
+### RESOLVED 2026-11-02 (option a, the user's decision: the crossing dropped, 7.186 and the heroes' AI closed not done; ADR-796) · PLAN 7.186: the crossing by sea moved nothing: 0.547 of the lives (HEAD 0.579), bar 2/3
 - **Where:** Britain and the United States 13 of 42 (HEAD 20 of 55), bar 1/2. `docs/evidence/7.186/at-run.md`.
 - **Left:** ADR-796: (a) drop it, close 7.186 and the heroes' AI not done (recommended); (b) read whether heroes go
   aboard first; (c) commit it, close not done.

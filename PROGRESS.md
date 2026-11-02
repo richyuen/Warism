@@ -25593,3 +25593,9 @@ No rule changed and nothing on screen changed. One task came out of it.
 - **AT**, 1491–1500 × 3: 93 of 170 lives at or above the top decile (0.547); HEAD on the same seeds 113 of 195 (0.579).
   Britain and the United States 13 of 42 (HEAD 20 of 55). Sea `with` 45 of 70, `ofFleet` 54 of 61.
 - **Next:** ADR-796 waits on the user (drop it, close the heroes' AI not done: recommended); the smoke on HEAD.
+
+## 2026-11-02 — ADR-796 (a): the crossing dropped; 7.186 closed not done, the heroes' AI with it
+
+- **Kept:** the sea hero with its largest fleet (7.184e), the land hero to its army's nearest fight (7.185).
+- **Smoke:** sweep:quick with heroes off and on, running on HEAD; reported when done.
+- **Next:** PLAN 7.5 (the critic runs).

@@ -33,16 +33,6 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.186 A land hero overseas (found at 7.185's AT, ADR-795 a): a land hero is ordered over land only
-  (`joinFights` in `operational.ts`), and where its army fights overseas it stands or its orders are refused: Britain
-  10 of 30 hero lives at or above the top-decile regular, the United States 2 of 11 (1481–1490 × 3,
-  `docs/evidence/7.185/at-run.md`). A land hero whose army's fights are on no land its way reaches crosses by sea as a
-  division of its nation does (the lift). AT: seeds 1491–1500 × 3, heroes on (`tools/diag/heroCeiling.ts`): ≥ 2/3 of
-  the hero lives counted at or above the top decile, and Britain's and the United States' together ≥ 1/2; the sea
-  columns (`tools/diag/heroBattle.ts`) reported; `sweep:quick` with heroes on and off (`--heroes on`) as a smoke test
-  only (limits green both, the riser and faller in PROGRESS), 7.184e's and 7.185's too. Missed (`docs/evidence/7.186/
-  at-run.md`: 0.547, HEAD 0.579 on the same seeds; Britain and the United States 13 of 42): BLOCKERS, ADR-796 waits on
-  the user.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 
@@ -446,3 +436,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.183 The camera follows any formation clicked, played or not (the user's request of 2026-11-01). Today a click […]
 - [x] 7.184 Heroes: a new-game option (off by default) giving each of 7 great powers of 1938 a named land and sea […]
 - [x] 7.185 (closed not done, ADR-795 a, the user's decision: the rule kept, 0.640 of 2/3; PLAN 7.186) A land hero in its army's battles (found at 7.184e's AT, ADR-793 a): a land hero of the AI is in battle on […]
+- [x] 7.186 (closed not done, ADR-796 a, the user's decision: the crossing dropped; the heroes' AI closed) A land hero overseas (found at 7.185's AT, ADR-795 a): a land hero is ordered over land only […]

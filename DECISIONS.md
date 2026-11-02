@@ -167,7 +167,7 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
-### ADR-796 · 2026-11-02 · proposed (the user's decision) — PLAN 7.186: the crossing by sea moved nothing; the AT missed
+### ADR-796 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.186: the crossing by sea moved nothing; the AT missed
 **Context.** The rule (uncommitted): a land hero with no way over land to its army's nearest fights goes to the nearest
 on another land by sea, by a port of its land where its nation's transports wait (`orderMove`'s `byPort`, as a
 player's order). AT, 1491–1500 × 3 (`docs/evidence/7.186/at-run.md`): 93 of 170 lives at or above the top-decile
@@ -177,8 +177,9 @@ regular (0.547, bar 2/3); Britain and the United States 13 of 42 (bar 1/2). HEAD
 **Options.** (a) Drop the crossing; close 7.186 not done, and the heroes' AI with it (7.184e's sea rule and 7.185's
 `joinFights` stay; no further task) (recommended); (b) a task to read first whether a hero ever goes aboard, and why
 not, before another rule; (c) commit the crossing (neutral within noise), close not done.
-**Until then.** The crossing stays out of `main`. The sweep:quick smoke of the committed rules runs on HEAD (heroes on
-and off).
+**Decided (a).** The crossing dropped; 7.186 closed not done, and with it the heroes' AI: a sea hero sails with its
+nation's largest fleet (7.184e), a land hero joins its army's nearest fight (7.185). The sweep:quick smoke of those
+rules (heroes on and off) is reported in PROGRESS.
 
 ### ADR-795 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.185: the re-scoped AT missed by 3 points; the heroes overseas
 **Context.** ADR-794 (a)'s AT on 1481–1490 × 3 (`docs/evidence/7.185/at-run.md`), with `joinFights` and its fallback to
