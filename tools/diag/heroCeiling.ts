@@ -1,5 +1,6 @@
-// PLAN 7.185 (`npx tsx tools/diag/heroCeiling.ts <seed> <years>`): (1) the best ordinary land formation's share of its nation's land fighting
-// days, against the hero's; (2) the answers of the hero's orders (OP_PROBE.ask), and whether its
+// PLAN 7.185 (`npx tsx tools/diag/heroCeiling.ts <seed> <years>`): (1) the best ordinary land
+// formation's share of its nation's land fighting days, against the hero's (the AT of ADR-794 a:
+// the hero's life at or above its nation's top-decile regular, of those alive 90 % of the days); (2) the answers of the hero's orders (OP_PROBE.ask), and whether its
 // cell's land component holds any fight of its nation.
 import { SIZE_1938, NATIONS_1938, TEMPLATES_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
@@ -63,6 +64,8 @@ for (let d = 0; d < days; d++) {
 }
 const w = s.world;
 const fc = w.formations.cols;
+let lives = 0;
+let passed = 0;
 for (const h of heroIds) {
   if (!heroNat.has(h)) continue;
   const n = heroNat.get(h)!;
@@ -76,6 +79,16 @@ for (const h of heroIds) {
   const q = (p: number): string => (ratios.length ? ratios[Math.floor(p * (ratios.length - 1))]!.toFixed(3) : 'n/a');
   const tag = NATIONS_1938[n - 1]!.tag;
   const name = TEMPLATES_1938[heroTpl.get(h)!]!.id;
-  console.log(`seed ${seed} ${tag} ${name}: nation land fight days ${nf}; hero ${((formFight.get(h) ?? 0) / Math.max(1, formAlive.get(h) ?? 0)).toFixed(3)}; regulars (${ratios.length}, alive ≥ 90 %) best ${q(0)}, p10 ${q(0.1)}, median ${q(0.5)}; fights on its land ${sameComp.get(h) ?? 0} d; asks ${JSON.stringify(answers.get(h) ?? {})}`);
+  const lived = formAlive.get(h) ?? 0;
+  const p10 = ratios.length ? ratios[Math.floor(0.1 * (ratios.length - 1))]! : -1;
+  const mine = (formFight.get(h) ?? 0) / Math.max(1, lived);
+  // The AT (ADR-794 a): a life of 30 or more of its army's fighting days, of a nation with 3 or more regulars.
+  const counted = lived >= 30 && ratios.length >= 3;
+  if (counted) {
+    lives++;
+    if (mine >= p10) passed++;
+  }
+  console.log(`seed ${seed} ${tag} ${name}: life ${lived} d, ${counted ? (mine >= p10 ? 'PASS' : 'MISS') : 'not counted'}; nation land fight days ${nf}; hero ${((formFight.get(h) ?? 0) / Math.max(1, formAlive.get(h) ?? 0)).toFixed(3)}; regulars (${ratios.length}, alive ≥ 90 %) best ${q(0)}, p10 ${q(0.1)}, median ${q(0.5)}; fights on its land ${sameComp.get(h) ?? 0} d; asks ${JSON.stringify(answers.get(h) ?? {})}`);
 }
+console.log(`seed ${seed} AT: ${passed} of ${lives} lives at or above the top decile`);
 console.log('done:');

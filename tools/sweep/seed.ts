@@ -83,13 +83,14 @@ function realms(w: Sim['world'], area: Float64Array, living: readonly number[]):
 }
 
 function main(): void {
-  const [seedArg, yearsArg, out, size] = process.argv.slice(2);
+  const [seedArg, yearsArg, out, sized, heroes] = process.argv.slice(2);
+  const size = sized || undefined;
   const seed = Number(seedArg);
   const years = Number(yearsArg);
-  if (!Number.isFinite(seed) || !Number.isFinite(years) || !out) throw new Error('usage: seed.ts <seed> <years> <out.json>');
+  if (!Number.isFinite(seed) || !Number.isFinite(years) || !out) throw new Error('usage: seed.ts <seed> <years> <out.json> [size] [on|off]');
   const t0 = performance.now();
   // At the map size asked (PLAN 7.1b9): the scenario's own when none is.
-  const sim = new Sim({ scenario: '1938', seed, assets: loadAssets1938(size1938(size).w), ...(size ? { options: { size } } : {}) });
+  const sim = new Sim({ scenario: '1938', seed, assets: loadAssets1938(size1938(size).w), ...(size || heroes === 'on' ? { options: { ...(size ? { size } : {}), ...(heroes === 'on' ? { heroes: 'on' as const } : {}) } } : {}) });
   const w = sim.world;
   const land: number[] = [];
   for (let c = 0; c < w.cells.terrain.length; c++) if (isLand(w.cells.terrain[c]!)) land.push(c);

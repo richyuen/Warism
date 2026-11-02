@@ -25569,3 +25569,12 @@ No rule changed and nothing on screen changed. One task came out of it.
 - **Causes** (`tools/diag/heroCeiling.ts`): the regulars' best 0.29–0.72, top decile 0.05–0.56 (the hero at or above it
   in 13 of 30 lives); refused orders strand a hero (Japan's O-I, 1471: 698 refused, a year still).
 - **Next:** ADR-794 waits on the user (the bar to the top-decile regular, keep the rule, the refusals: recommended).
+
+## 2026-11-02 — PLAN 7.185 under ADR-794 (a): the refusals' fallback; the AT missed by 3 points (ADR-795, BLOCKERS)
+
+- **Rule** (not committed): `joinFights`, and refused at every enemy target, the cells of the fights themselves. Unit
+  test (`heroes.test.ts`, the Maus's first march at war with Poland) red without the rule.
+- **AT** (1481–1490 × 3, `tools/diag/heroCeiling.ts`): 110 of 172 lives at or above the top-decile regular (0.640, bar
+  2/3); Britain 10 of 30, the United States 2 of 11, the rest 98 of 131. Sea `with` 57 of 70, `ofFleet` 49 of 59 (83 %).
+- **Tools:** the sweep takes `--heroes on` (`tools/sweep/run.ts`, `seed.ts`); the smoke not run yet.
+- **Next:** ADR-795 waits on the user (commit the rule, close not done, a task for the heroes overseas: recommended).

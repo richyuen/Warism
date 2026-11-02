@@ -167,7 +167,22 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
-### ADR-794 · 2026-11-02 · proposed (the user's decision) — PLAN 7.185: the AT missed; the bar is above the regulars
+### ADR-795 · 2026-11-02 · proposed (the user's decision) — PLAN 7.185: the re-scoped AT missed by 3 points; the heroes overseas
+**Context.** ADR-794 (a)'s AT on 1481–1490 × 3 (`docs/evidence/7.185/at-run.md`), with `joinFights` and its fallback to
+the fights' own cells (uncommitted; the unit test red without): 110 of 172 hero lives at or above their nation's
+top-decile regular, 0.640 against 2/3. By nation (pass/miss): ENG 10/20, USA 2/9, FRA 23/8, GER 12/7, ITA 24/4, JAP
+22/8, SOV 17/6; without Britain and the United States 98 of 131 (0.75). Their armies fight overseas: a hero is ordered
+over land only, and many of its orders are refused (Britain's TOG II on 1487: 904 refused, its army fighting on no land
+of its). Sea: `with` ≥ 0.5 on 57 of 70, `ofFleet` on 49 of 59 (83 %; 7.184e 89 %, other seeds). Where a nation has few
+regulars (3–7) the top decile is its best one.
+**Options.** (a) Commit the rule; close 7.185 not done (0.640); a numbered task for a land hero whose army fights
+overseas (by the lift, as a division of its nation is), AT the same bar on unseen seeds (recommended); (b) commit the
+rule and count the AT only where the hero's army fights on the hero's own land: ticked (0.75 on the lives so counted);
+(c) keep 7.185 open for the lift now; (d) drop the rule, close not done.
+**Until then.** The rule and its test stay out of `main`; the probes, the sweep's `--heroes on` and the evidence are
+committed.
+
+### ADR-794 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.185: the AT missed; the bar is above the regulars
 **Context.** 7.185's read (`docs/evidence/7.185/at-run.md`, `tools/diag/heroLandWhy.ts`): on its army's fighting days a
 land hero fought on 17 %, stood on 38 % (most a week or more) and marched on 45 %; 41 % of the days out of a fight it
 was over 80 cells from the nearest. The rule (uncommitted): `joinFights`, the hero ordered onto the enemy formation
@@ -183,8 +198,11 @@ formation's, on ≥ 2/3 of the hero lives, unseen seeds; keep `joinFights`; with
 whose targets are refused tries the fights its way reaches) (recommended); (b) keep 0.5 and work on the refusals
 (the best regular reaches 0.5 in few nations: likely a miss again); (c) keep `joinFights`, close 7.185 not done; (d)
 drop it, close not done.
-**Until then.** The rule and its test stay out of `main` (the test is green without the rule too, so it is rewritten
-before any commit); the probes and the evidence are committed.
+**Decided (a).** The AT, counted by `tools/diag/heroCeiling.ts`: a hero life is counted with 30 or more of its army's
+fighting days, of a nation with 3 or more ordinary land formations alive 90 % of those days; it passes at or above the
+top-decile one's share; ≥ 2/3 of the counted lives pass, on unseen seeds 1481–1490 × 3. For the refusals: refused at
+every enemy target, the hero goes to the cells of the fights themselves (over its own side's land); on 1471/1474/1476 ×
+1 that brought the lives at or above the top decile from 13 of 30 to 19 of 29.
 
 ### ADR-793 · 2026-11-02 · accepted (option a, the user's decision of 2026-11-02) — PLAN 7.184e: the AT missed; which of the heroes' rules to keep
 **Context.** 7.184e's rules (in the working tree, not committed): a land hero, out of the operational AI's allotment,

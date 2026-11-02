@@ -3,7 +3,7 @@
  * processes, judged by tools/sweep/criteria.ts (ADR-54). Writes docs/sweeps/<date>-sweep.json
  * and .md and exits non-zero when the sweep fails.
  *
- *   npm run sweep -- [--seeds 10] [--years 50] [--parallel 10] [--first 1] [--tag name] [--scratch] [--size S|M|L]
+ *   npm run sweep -- [--seeds 10] [--years 50] [--parallel 10] [--first 1] [--tag name] [--scratch] [--size S|M|L] [--heroes on]
  *   npm run sweep -- --from docs/sweeps/<report>.json [--tag name] [--scratch]
  *
  * `--tag` names the report docs/sweeps/<date>-sweep-<tag>, so a second run on one day keeps the
@@ -35,6 +35,8 @@ const first = from ? Math.min(...from.results.map((r) => r.seed)) : arg('first',
 /** The map's size (PLAN 7.1b9): the scenario's own when not given. */
 const sizeAt = process.argv.indexOf('--size');
 const size = sizeAt >= 0 ? (process.argv[sizeAt + 1] ?? '') : '';
+/** The heroes option (PLAN 7.185's smoke): off when not given. */
+const heroes = process.argv[process.argv.indexOf('--heroes') + 1] === 'on' && process.argv.includes('--heroes');
 const tagAt = process.argv.indexOf('--tag');
 const tag = tagAt >= 0 ? `-${(process.argv[tagAt + 1] ?? '').replace(/[^a-z0-9-]/gi, '')}` : '';
 const parallel = Math.max(1, Math.min(arg('parallel', 10), os.cpus().length));
@@ -46,7 +48,7 @@ mkdirSync(tmp, { recursive: true });
 function runSeed(seed: number): Promise<SeedResult> {
   const out = path.join(tmp, `seed-${seed}.json`);
   return new Promise((resolve, reject) => {
-    const child = spawn(process.execPath, ['--import', 'tsx', path.join(ROOT, 'tools/sweep/seed.ts'), String(seed), String(years), out, ...(size ? [size] : [])], { cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
+    const child = spawn(process.execPath, ['--import', 'tsx', path.join(ROOT, 'tools/sweep/seed.ts'), String(seed), String(years), out, size, heroes ? 'on' : 'off'], { cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
     child.stdout.on('data', (d: Buffer) => {
       const lines = d.toString().trim().split('\n');
       const last = lines.at(-1);
@@ -105,7 +107,7 @@ async function main(): Promise<void> {
   ];
   const status = !sweep.limits ? 'FAILING (limits)' : !sweep.judged ? `LIMITS GREEN (dynamism not judged: runs shorter than ${DYNAMISM_YEARS} years)` : sweep.ok ? 'ALL GREEN' : 'FAILING (dynamism)';
   const md = [
-    `# Sweep ${date}: seeds ${first}–${first + seeds - 1} × ${years} years${size ? `, map size ${size}` : ''} — ${status}`,
+    `# Sweep ${date}: seeds ${first}–${first + seeds - 1} × ${years} years${size ? `, map size ${size}` : ''}${heroes ? ', heroes on' : ''} — ${status}`,
     ...(from ? ['', `Judged again from \`${path.relative(ROOT, fromPath).split(path.sep).join('/')}\` (no run).`] : []),
     '',
     `Criteria (SPEC §10, tools/sweep/criteria.ts, ADR-54; land by area in km², ADR-52). Limits, every seed: land changing controller in the last 5 years ≥ ${pct(MOVING_MIN)}; largest nation < ${pct(MAX_LAND)} of land and < ${pct(MAX_INCOME)} of income at the end; ${ALIVE_MIN}–${ALIVE_MAX} nations alive every year; a war active in ≥ ${pct(WAR_YEARS)} of the years. Dynamism, by realm (a nation with no overlord, with its puppets' land), each in ≥ ${pct(DYNAMISM_QUORUM)} of the seeds of runs of ≥ ${DYNAMISM_YEARS} years: a riser (a realm ending with ≥ ${pct(RISER_MIN_SHARE)} of the land and ≥ ${RISER_GROWTH} × its land after year 1) and a faller (one of the ten largest realms after year 1 ending with ≤ ${pct(FALLER_KEPT)} of its land then); no break-up (the living nations never more than ${BREAKUP_RISE} × the most they were ${BREAKUP_YEARS} years or more before; ADR-428). Reported, not judged: stasis (the longest run of the same five largest by land, as a set; ✓ under ${STASIS_YEARS} years; ADR-750) and the last two columns.`,
