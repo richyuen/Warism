@@ -17170,3 +17170,57 @@ Of 7.176 (open in PLAN.md):
   e2e `tests/e2e/followPicked1938.spec.ts`: with no nation played, a German division and a British fleet clicked in
   turn, the view's centre within 2 px of each one's drawn place after 48 ticks of its march, at T1 and T2; a pan ends
   it (the centre stays put the next 24 ticks); the specs of the player's own selection (`select*`, `follow*`) green.
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+Of 7.184 (open in PLAN.md):
+
+  - [x] 7.184a Data and sim. `GameOptions.heroes` (`'off' | 'on'`, 1938 only, as `diplomacy`). The roster in
+    `data/scenarios/1938/heroes.json` (tag, name key, domain, unit type, place), each hero its own unit type of
+    elementSize 1 in `data/units/*.json` (`hero: true`), one formation of one element:
+    | Nation | Sea | Land |
+    | --- | --- | --- |
+    | JAP | Yamato (battleship, 46 cm guns) | O-I (super-heavy tank project, ~120 t) |
+    | USA | USS Iowa (battleship) | T28 (super-heavy assault tank, 86 t) |
+    | SOV | Sovetsky Soyuz (battleship, laid down 1938, never finished) | T-42 (Grote's super-heavy project of 1930–32, never built: ~100 t, 107 mm and two 45 mm guns, 90 mm armour, crew 14–15, 20–27 km/h) |
+    | GER | Bismarck (battleship) | Maus (super-heavy tank, 188 t) |
+    | ENG | HMS Hood ("the Mighty Hood", battlecruiser) | TOG II (super-heavy tank, 80 t) |
+    | FRA | Richelieu (battleship) | Char 2C (69 t, in service in 1938: the largest tank ever fielded) |
+    | ITA | Roma (Littorio-class battleship) | P.100 "Ercole" (hypothetical, the user's choice: an Ansaldo super-heavy of ~110 t, a 149/40 gun and two 47/32, 120 mm armour, crew 10, ~20 km/h) |
+    A sea hero starts at its nation's first naval base of `fleets.json`, a land hero at its capital. A hero formation
+    (a flag saved with the world) is never disbanded, laid up, folded or merged (`ai/economic.ts`: `foldHollow`, the
+    disband and lay-up steps) and costs no upkeep. Out of battle it heals 5 % of its strength a day (a ship anywhere,
+    not only in port). Destroyed, it comes back whole 60 days later (by tick, seed-stable) at its start place, or the
+    capital / nearest naval base its nation holds; none while its nation is dead, again with a revival; never more than
+    one alive. AT: `tests/unit/heroes.test.ts`: with the option off, the pinned hash of seed 99 unchanged
+    (`tests/sweep/baselineHash.test.ts`); on, 14 heroes at tick 0 at their places; a hero emptied by hand is back at
+    full strength 60 days later to the tick, none for a dead nation; 20 days out of battle heal a hero at half
+    strength to full; save/load keeps a hero's flag and its return day; a month of an indebted nation disbands and lays
+    up none. Strength: a hero battleship against one standard battle squadron (4 BB) wins with over half its strength
+    left, against three loses; the land hero likewise against an armoured division and three (a probe in the test).
+    Split in three (one cause a commit), the AT's parts each in its own:
+    - [x] 7.184a1 Data, option, start. The 14 unit types and one-element templates in `data/units/heroes.json` and
+      `data/templates/heroes.json`, read after every other file (unit and template indices of saves unchanged), `hero`
+      in the schema and the rules; the names in `en.json`; no hero template queued, placed by God or offered in a build
+      list; `GameOptions.heroes`; the 14 placed at the start; `World.heroes` (formation → roster row) saved and in the
+      state hash; never disbanded, laid up, folded or merged; no upkeep. AT: `tests/unit/heroes.test.ts`: option off,
+      seed 99's pin unchanged and no hero; on, 14 at tick 0 (sea at the first base's water, land at the capital), save
+      and load keep them; a month of every nation at −1,000 gold disbands and lays up no hero.
+    - [x] 7.184a2 Healing and return (a hero's health is its one element's `1 − wound`: its men, `strength`, stay
+      whole until it is lost, ADR-787): 5 % a day out of battle anywhere; destroyed, back whole 60 days later at its
+      start place or its nation's capital / nearest naval base; none while the nation is dead; one alive. AT: the
+      test's heal, return (to the tick), dead-nation and save/load-of-a-return-day cases.
+    - [x] 7.184a3 Strength: the stats that make a hero battleship beat one battle squadron with over half left and lose
+      to three, the land hero likewise against one and three armoured divisions. AT: the test's probe cases.

@@ -167,6 +167,20 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-788 · 2026-11-01 · accepted — PLAN 7.184a3: the heroes' figures; a hero's tank carries its damage
+**Decision.** Every sea hero: `hard` 1,100 (a battleship of 2,000 hit points sunk in about an hour of its fire),
+`hpPerUnit` 25,000; every land hero: `soft` and `hard` 3,000, `hpPerUnit` 700; their other figures as ADR-787's.
+A land hero's tank takes its losses as a wound that carries (`applyLoss`), not by the draw on whole tanks of PLAN
+7.23a (`combat.ts`), which ended a hero of one tank on any hit.
+**Why.** The AT's cases (`tests/helpers/heroFight.ts`, seed 99, AI off): the Bismarck against one battle squadron
+sinks 9 of 16 and is left at 0.68, against three it is sunk on the first day; the Maus attacked by one armoured
+division puts it to flight with 35 % of its men lost and is left at 0.74, by three it is lost on the second day. One
+element fires at one target an hour (sea: torpedoes, which no armour stops, are most of the fire it takes), so the
+hero's weight is in its hit points and its single shot. Before (ADR-787's first figures) the Bismarck was sunk by
+one squadron in a day and the Maus did ~5 % of a division's men in six days.
+**Consequences.** The same figures for every hero of a domain: no hero is stronger than another. A Maus attacking
+a stack meets its front formation first: it beats three divisions one behind another, one at a time.
+
 ### ADR-787 · 2026-11-01 · accepted (the user's request) — PLAN 7.184a1: heroes' data stand last; a hero is a formation of one element
 **Decision.** The 14 heroes are unit types and one-element templates in `data/units/heroes.json` and
 `data/templates/heroes.json`, read after every other file of their kind (`UNITS`, `TEMPLATES_1938`), so that the

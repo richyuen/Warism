@@ -25451,3 +25451,15 @@ No rule changed and nothing on screen changed. One task came out of it.
   is gone until its hour and back whole at Berlin the tick after, a saved-and-loaded copy the same hash; Germany
   collapsed: no Maus or Bismarck 61 days on, the Maus back within two hours of the revival, one of a row.
 - **Next:** PLAN 7.184a3.
+
+## 2026-11-01 — PLAN 7.184a3: the heroes' strength (ADR-788); 7.184a done
+
+- **Cause found:** a land hero is one tank, and armour lost whole tanks by a draw (PLAN 7.23a): the Maus went from
+  full to lost on one hit. A hero's tank now carries its wound (`combat.ts`). At sea one element sinks at most one
+  target an hour, and eight destroyers' torpedoes ignore armour.
+- **Figures:** sea heroes `hard` 1,100, hp 25,000; land heroes `soft`/`hard` 3,000, hp 700.
+- **AT (`heroes.test.ts` 10 of 10, `tests/helpers/heroFight.ts`; probe `tools/diag/heroProbe.ts`):** Bismarck vs one
+  battle squadron: least health 0.68, the squadron broke off at 7 of 16 ships; vs three: sunk on day 1. Maus attacked
+  by one armoured division: least 0.74, the division on the retreat at 3,690 of 5,700 men; by three: lost on day 2.
+  The pin unchanged (no hero with the option off).
+- **Next:** PLAN 7.184b.

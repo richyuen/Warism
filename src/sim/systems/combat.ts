@@ -477,10 +477,12 @@ export function combatSystem(world: World): void {
       }
     }
     // Simultaneous volleys: apply every loss after all fire is computed, in id order. A tank is
-    // knocked out or it is not: armour loses whole tanks, by a draw on the rest (PLAN 7.23a).
+    // knocked out or it is not: armour loses whole tanks, by a draw on the rest (PLAN 7.23a). A
+    // hero's one tank (PLAN 7.184a3) carries its damage as any other unit's: a draw would end it
+    // at a hit of any size.
     const struck = hit.subarray(0, hits).sort();
     for (const t of struck) {
-      if ((units[ec.unit[t]!]!.arm & ARM_ARMOUR) !== 0) applyWholeLoss(world, t, hurt[t]!, hashToUnit(hash32(world.seed, world.tick, t, SALT_WHOLE)));
+      if ((units[ec.unit[t]!]!.arm & ARM_ARMOUR) !== 0 && !world.heroes.has(ec.formation[t]!)) applyWholeLoss(world, t, hurt[t]!, hashToUnit(hash32(world.seed, world.tick, t, SALT_WHOLE)));
       else applyLoss(world, t, hurt[t]!);
       hurt[t] = 0;
     }

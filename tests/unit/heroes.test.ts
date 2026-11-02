@@ -8,6 +8,7 @@ import { isMonthStart } from '../../src/shared/calendar';
 import { assets1938 } from '../helpers/earth';
 import { elementIndex } from '../../src/sim/systems/elements';
 import { HERO_RETURN_HOURS, heroHealth } from '../../src/sim/systems/heroes';
+import { landFight, seaFight } from '../helpers/heroFight';
 
 // PLAN 7.184a1: heroes, a new-game option of the 1938 world. With it off the world is as before;
 // on, 14 heroes at the start (sea at the water of its nation's first naval base, land at its
@@ -201,5 +202,29 @@ describe('heroes heal and come back (PLAN 7.184a2)', () => {
     // Never two of a row.
     const rows = [...w.heroes.values()];
     expect(new Set(rows).size).toBe(rows.length);
+  });
+});
+
+describe('a hero against standard forces (PLAN 7.184a3; tests/helpers/heroFight.ts)', () => {
+  it('the Bismarck beats one battle squadron (4 BB) with over half its health left, and is sunk by three', () => {
+    const one = seaFight(1, 3);
+    expect(one.lost, one.days.join('\n')).toBe(false);
+    expect(one.least, one.days.join('\n')).toBeGreaterThan(0.5);
+    // The squadron broke off with over half its ships lost.
+    expect(one.fighting).toBe(0);
+    expect(2 * one.end).toBeLessThan(one.start);
+    const three = seaFight(3, 3);
+    expect(three.lost, three.days.join('\n')).toBe(true);
+  });
+
+  it('the Maus beats one armoured division that attacks it with over half its health left, and is lost to three', () => {
+    const one = landFight(1, 3);
+    expect(one.lost, one.days.join('\n')).toBe(false);
+    expect(one.least, one.days.join('\n')).toBeGreaterThan(0.5);
+    // The division is out of the fight, on the retreat, with a third of its men lost.
+    expect(one.fighting).toBe(0);
+    expect(one.end).toBeLessThan((2 * one.start) / 3);
+    const three = landFight(3, 3);
+    expect(three.lost, three.days.join('\n')).toBe(true);
   });
 });
