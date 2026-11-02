@@ -5,6 +5,7 @@ import { navOf } from '../../src/sim/world';
 import { neighbourMap } from '../../src/sim/ai/strategic';
 import type { GameOptions } from '../../src/shared/gameOptions';
 import { assets1938 } from '../helpers/earth';
+import { nationId } from '../helpers/sim1938';
 
 // PLAN 1.39b1 (unit part): new-game options are deterministic per seed and have their effect.
 
@@ -114,6 +115,29 @@ describe('new-game options (PLAN 1.39b1)', () => {
     base.world.nations.forEach((n) => expect(nc.overlord[n]).toBe(base.world.nations.cols.overlord[n]));
     expect(make(5, { diplomacy: 'random' }).hash()).toBe(a.hash());
     expect(make(6, { diplomacy: 'random' }).hash()).not.toBe(a.hash());
+  }, 120_000);
+
+  // PLAN 7.187 (R24-B1): the scenario's wars end as a white peace would. The critic's seeds kept
+  // Japan on 1,345 cells of China at peace from the first day.
+  it('random diplomacy: no land held by a nation at peace with its owner', () => {
+    const peaceHeld = (s: Sim): number => {
+      const { owner, controller } = s.world.cells;
+      let n = 0;
+      for (let c = 0; c < owner.length; c++) {
+        const o = owner[c]!;
+        const k = controller[c]!;
+        if (o !== 0 && k !== 0 && k !== o && !s.world.wars.atWar(o, k)) n++;
+      }
+      return n;
+    };
+    const held = (s: Sim, a: string, b: string): number => {
+      const { owner, controller } = s.world.cells;
+      let n = 0;
+      for (let c = 0; c < owner.length; c++) if (owner[c] === nationId(b) && controller[c] === nationId(a)) n++;
+      return n;
+    };
+    expect(held(base, 'JAP', 'CHI'), 'the scenario: Japan holds Chinese land').toBeGreaterThan(0);
+    for (const seed of [1517, 3739, 8821]) expect(peaceHeld(make(seed, { diplomacy: 'random' })), `seed ${seed}`).toBe(0);
   }, 120_000);
 
   // PLAN 7.184d: the heroes, off unless asked for; on, the 14 of the roster, the same per seed.

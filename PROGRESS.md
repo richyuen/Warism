@@ -25614,4 +25614,9 @@ No rule changed and nothing on screen changed. One task came out of it.
   7, God 7, editor 7, stats 7, UI 7, performance 7, stability 7; zoom 8, naval 8, tanks 8, aircraft 8, nukes 8. Blocking 1
   (R24-B1: random diplomacy leaves Japan occupying China at peace). Filed PLAN 7.187 (R24-B1) and 7.188 (diplomacy 6).
   The default world unchanged (seed 7019's 20 yearly hashes equal run 23's).
-- **Next:** PLAN 7.187.
+- **2026-11-02 · PLAN 7.187 (R24-B1):** with "Alliances and wars: random" the scenario's wars now end as a white peace
+  would: `randomDiplomacy` gives the land a side holds of the other's back to its owner before it clears them; the
+  armies left in foreign land march home at the day's start (`repatriationSystem`). AT: land held at peace 0 at days
+  0, 30, 180 on 1517, 3739, 8821 and 1501–1510 (39 of 39; `docs/evidence/7.187/at-run.md`, `tools/diag/peaceHeld.ts`);
+  the unit test red without (1,345 cells on 1517). The default path is untouched (seed 99's pin unchanged).
+- **Next:** PLAN 7.188.

@@ -17388,3 +17388,29 @@ Of 7.184 (open in PLAN.md):
   only (limits green both, the riser and faller in PROGRESS), 7.184e's and 7.185's too. Missed (`docs/evidence/7.186/
   at-run.md`: 0.547, HEAD 0.579 on the same seeds; Britain and the United States 13 of 42): BLOCKERS, ADR-796 waits on
   the user.
+
+<!-- moved 2026-11-02 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.187 R24-B1: "Alliances and wars: random" (PLAN 7.182, ADR-785) leaves Japan occupying 1,345 cells of China
+  while the two are at peace, on all 3 seeds the critic tried (1517, 3739, 8821) from day 0, on 8821 still at day 900;
+  China's panel says "At peace" over the hatched land. SPEC: occupation changes owner only through a peace, and a
+  white peace returns it; ADR-785 says the scenario's diplomacy goes "without a trace".
+  Evidence: `critic/c24_dp.json`, `critic/c24_occ_8821.log`, `critic/shots/c24dr_rnd_8821_d1_china.png`,
+  `critic/shots/c24dr_rnd_8821_d180_china.png`.
+  Fix: when `randomDiplomacy` drops the scenario's wars, end them as a peace would: occupied land back to its owner
+  (controller = owner), foreign armies inside it out, before the drawn wars are declared.
+  AT: with the option random, on 1517, 3739, 8821 and unseen 1501–1510, at days 0, 30 and 180, no cell whose
+  controller is not its owner where the two are at peace; a unit test red on `82d428c1`; the default path's pin of
+  seed 99 unchanged.

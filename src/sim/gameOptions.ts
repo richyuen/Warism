@@ -16,6 +16,7 @@ import { hash32, hashToUnit } from './core/hash';
 import { neighbourMap } from './ai/strategic';
 import { declareWar, whyNotWar } from './systems/war';
 import { Refusal } from '../shared/commands';
+import { FlipCause } from './world';
 import type { GameOptions } from '../shared/gameOptions';
 
 export type { GameOptions };
@@ -88,7 +89,8 @@ export function applyGameOptions(world: World, o: GameOptions): void {
  * guarantee is between two independent nations that are not allies, its guarantor of the larger
  * half of them by land. A war is declared as any other (`declareWar`: puppets, allies and guarantors called,
  * a bond kept out of it) by an independent nation at peace on an independent land neighbour at
- * peace. Puppets stay the scenario's. The scenario's own diplomacy is let go of without a trace:
+ * peace. Puppets stay the scenario's. The scenario's wars end as a white peace would (its occupied
+ * land back to its owners, R24-B1). The scenario's own diplomacy is let go of without a trace:
  * no alliance of it goes into `past` (the history log would show it dissolved on the first day).
  */
 export function randomDiplomacy(world: World): void {
@@ -98,6 +100,15 @@ export function randomDiplomacy(world: World): void {
   const shape = al.list.map((a) => ({ size: a.members.length, unity: a.unity }));
   const guarantees = al.guarantees.length;
   const warCount = wars.list.length;
+  // The scenario's wars end as a white peace would (R24-B1): land a side holds of the other's goes
+  // back to its owner. The armies left in foreign land march home at the day's start
+  // (`repatriationSystem`), as after any peace.
+  const { owner, controller } = world.cells;
+  for (let c = 0; c < owner.length; c++) {
+    const o = owner[c]!;
+    const k = controller[c]!;
+    if (o !== 0 && k !== o && wars.atWar(o, k)) world.setController(c, o, false, FlipCause.peace);
+  }
   al.list = [];
   al.guarantees = [];
   al.changed();

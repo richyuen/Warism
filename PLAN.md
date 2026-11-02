@@ -33,17 +33,6 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.187 R24-B1: "Alliances and wars: random" (PLAN 7.182, ADR-785) leaves Japan occupying 1,345 cells of China
-  while the two are at peace, on all 3 seeds the critic tried (1517, 3739, 8821) from day 0, on 8821 still at day 900;
-  China's panel says "At peace" over the hatched land. SPEC: occupation changes owner only through a peace, and a
-  white peace returns it; ADR-785 says the scenario's diplomacy goes "without a trace".
-  Evidence: `critic/c24_dp.json`, `critic/c24_occ_8821.log`, `critic/shots/c24dr_rnd_8821_d1_china.png`,
-  `critic/shots/c24dr_rnd_8821_d180_china.png`.
-  Fix: when `randomDiplomacy` drops the scenario's wars, end them as a peace would: occupied land back to its owner
-  (controller = owner), foreign armies inside it out, before the drawn wars are declared.
-  AT: with the option random, on 1517, 3739, 8821 and unseen 1501–1510, at days 0, 30 and 180, no cell whose
-  controller is not its owner where the two are at peace; a unit test red on `82d428c1`; the default path's pin of
-  seed 99 unchanged.
 - [ ] 7.188 Diplomacy 6, needs 7 (critic run 24): what R24-B1 (7.187) leaves, the report's "Also non-blocking 1, 6, 9":
   (1) a freed puppet fights on both sides (`critic/c24_fw2_2207.json`); (6) "Propose alliance" offered to an enemy
   (`critic/c24_fw_2207.json`); (9) the Soviet Union declares on Romania on days 4–11 on 3 of 3 seeds, calling in
@@ -457,3 +446,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.184 Heroes: a new-game option (off by default) giving each of 7 great powers of 1938 a named land and sea […]
 - [x] 7.185 (closed not done, ADR-795 a, the user's decision: the rule kept, 0.640 of 2/3; PLAN 7.186) A land hero in its army's battles (found at 7.184e's AT, ADR-793 a): a land hero of the AI is in battle on […]
 - [x] 7.186 (closed not done, ADR-796 a, the user's decision: the crossing dropped; the heroes' AI closed) A land hero overseas (found at 7.185's AT, ADR-795 a): a land hero is ordered over land only […]
+- [x] 7.187 R24-B1: "Alliances and wars: random" (PLAN 7.182, ADR-785) leaves Japan occupying 1,345 cells of China […]
