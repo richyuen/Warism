@@ -1991,10 +1991,27 @@ export class MapView {
    */
   tagObstacles: () => TagObstacle[] = () => [];
 
-  /** A formation's name as it is shown: its kind and its number ("Infantry division 658"). The flag beside it says whose. */
+  /**
+   * A formation's name as it is shown: its kind and its number ("Infantry division 658"). The flag beside it says whose.
+   * A hero's (PLAN 7.184b1) is its name alone ("Yamato"): there is one of it.
+   */
   formationName(id: number, template: number): string {
-    const key = this.templates[template]?.nameKey;
+    const info = this.templates[template];
+    const key = info?.nameKey;
+    if (info?.hero && key) return t(key as MessageKey);
     return t('formation.name', { kind: key ? t(key as MessageKey) : t('formation.kind.unknown'), n: id });
+  }
+
+  /** Whether the formation at index `i` of the last snapshot is a hero (PLAN 7.184b): by its template, as the worker sent it. */
+  private heroAt(i: number): boolean {
+    return this.templates[this.formTemplate[i]!]?.hero === true;
+  }
+
+  /** The hero formations of the last snapshot (PLAN 7.184b; tests). */
+  heroFormations(): number[] {
+    const out: number[] = [];
+    for (let i = 0; i < this.formIds.length; i++) if (this.heroAt(i)) out.push(this.formIds[i]!);
+    return out;
   }
 
   /**

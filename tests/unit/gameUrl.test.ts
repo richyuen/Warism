@@ -19,6 +19,15 @@ describe('game URLs (PLAN 1.39b1, 1.43b)', () => {
     expect(query(newGameUrl('1938', 7, {}))).toEqual({ scenario: '1938', seed: '7', paused: '1' });
   });
 
+  // PLAN 7.184b1: the heroes, on in the URL; off is no parameter.
+  it('the heroes option goes into the URL and back', () => {
+    const url = newGameUrl('1938', 7, { heroes: 'on' });
+    expect(query(url)).toEqual({ scenario: '1938', seed: '7', paused: '1', heroes: 'on' });
+    expect(optionsFromUrl(new URLSearchParams(url.slice(1)))).toEqual({ heroes: 'on' });
+    expect(query(newGameUrl('1938', 7, { heroes: 'off' }))).toEqual({ scenario: '1938', seed: '7', paused: '1' });
+    expect(optionsFromUrl(new URLSearchParams({ scenario: '1938', heroes: 'yes' }))).toEqual({});
+  });
+
   // PLAN 2.16c: the random world's number of nations.
   it('a random world carries its number of nations, in a new game and in Continue', () => {
     const url = newGameUrl('random', 7, { nations: 24 });

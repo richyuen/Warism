@@ -1,5 +1,5 @@
 /**
- * New-game options in the URL (PLAN 1.39b1): ?looping=0, ?aggr=random, ?traits=random, ?diplo=random,
+ * New-game options in the URL (PLAN 1.39b1): ?looping=0, ?aggr=random, ?traits=random, ?diplo=random, ?heroes=on,
  * ?gold=random|equal, ?ce=<mode>, ?nations=N (the random world, PLAN 2.16c). Absent = the
  * scenario's own setting. And the URLs that load a
  * game (PLAN 1.43b): ?continue=1 (the autosave), ?load=scenario (the staged scenario file).
@@ -14,6 +14,7 @@ export function optionsFromUrl(params: URLSearchParams): GameOptions {
   if (params.get('aggr') === 'random') o.aggression = 'random';
   if (params.get('traits') === 'random') o.traits = 'random';
   if (params.get('diplo') === 'random') o.diplomacy = 'random';
+  if (params.get('heroes') === 'on') o.heroes = 'on';
   const gold = params.get('gold');
   if (gold === 'random' || gold === 'equal') o.gold = gold;
   const ce = params.get('ce') as (typeof CE)[number] | null;
@@ -34,6 +35,7 @@ export function newGameUrl(base: string, seed: number, o: GameOptions): string {
   if (o.aggression === 'random') q.set('aggr', 'random');
   if (o.traits === 'random') q.set('traits', 'random');
   if (o.diplomacy === 'random') q.set('diplo', 'random');
+  if (o.heroes === 'on') q.set('heroes', 'on');
   if (o.gold && o.gold !== 'scenario') q.set('gold', o.gold);
   if (o.ceMode) q.set('ce', o.ceMode);
   if (o.nations !== undefined) q.set('nations', String(o.nations));

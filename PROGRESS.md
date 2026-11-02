@@ -25463,3 +25463,13 @@ No rule changed and nothing on screen changed. One task came out of it.
   by one armoured division: least 0.74, the division on the retreat at 3,690 of 5,700 men; by three: lost on day 2.
   The pin unchanged (no hero with the option off).
 - **Next:** PLAN 7.184b.
+
+## 2026-11-01 — PLAN 7.184b1: `?heroes=on`, a hero's tag its name (ADR-789); 7.184b split in three
+
+- **Split:** 7.184b into b1 (URL, the view's heroes, the tag's name), b2 (T2/T3 sprites, both looks), b3 (T0
+  counter, T1 marker, bench G), one cause a commit.
+- **Built:** `optionsFromUrl` / `newGameUrl` carry `heroes=on`; `MapView.formationName` gives a hero's name alone;
+  `MapView.heroFormations()`.
+- **AT:** new e2e `heroes1938` (by hand, green): 14 hero formations with `heroes=on`; at 150 m/px Yamato's tag reads
+  "Yamato" and the Maus's "Maus" (`docs/evidence/7.184b/b1-tag-*.png`). `gameUrl.test.ts` 10 of 10 (a new case).
+- **Next:** PLAN 7.184b2.

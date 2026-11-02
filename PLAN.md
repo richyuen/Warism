@@ -41,6 +41,19 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
     same in Classic and Countryball (no ball of its own), with its name on its tag. AT: `tests/e2e/heroes1938.spec.ts`
     measures Yamato's and the Maus's drawn boxes against a normal battleship's and tank's: 1.9–2.1 × at T0–T3, both
     looks (evidence PNGs in `docs/evidence/7.184b/`); bench G with heroes on keeps T0 over 311 fps and p95 under 6.9 ms.
+    Split in three (one cause a commit), the AT's parts each in its own:
+    - [x] 7.184b1 `?heroes=on` read from the URL (`gameUrl.ts`: the e2e's way in; the form and settings stay 7.184d's),
+      the view's set of hero formations, a hero's tag its name alone ("Yamato", not "Yamato 12"). AT: `heroes1938`'s
+      first test: with `heroes=on`, 14 hero formations; at T2 Yamato's and the Maus's tags read "Yamato" and "Maus";
+      `tests/unit/gameUrl.test.ts` round-trips it, and no parameter (or another value) is no option.
+    - [ ] 7.184b2 T2 and T3: a hero's sprite (its element at T2, its figure at T3; its turret and wake with it) 2 × its
+      kind's after the size's clamp, in the classic and the ball shader (a bit of `aState`). AT: `heroes1938`: Yamato
+      against a lone Japanese battleship and the Maus against a lone German heavy tank company, drawn boxes of their
+      pixels on the sprite layer alone, 1.9–2.1 × at T2 (150 m/px) and T3 (15 m/px), Classic and Countryball.
+    - [ ] 7.184b3 T0 and T1: a hero its own counter (never folded into its nation's) and its own marker (never in a
+      stack), each 2 × (box, ball, flag chip); bench G with `heroes=on`. AT: `heroes1938`: the hero's counter at T0
+      (5,000 m/px) and marker at T1 (1,000 m/px) against its nation's normal one, drawn boxes on the overlay, 1.9–2.1 ×,
+      both looks; bench G T0 over 311 fps and p95 under 6.9 ms.
   - [ ] 7.184c Overview: a Heroes block first in a nation's Overview tab (`NationPanel.tsx`; the stats message carries
     each hero's name, domain, strength and return day): its name, a strength bar, or "returns in N days". A click selects
     it on the map, opens its panel and the camera follows it (7.183), the nation played or not. AT: the e2e of 7.184b:

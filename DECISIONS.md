@@ -167,6 +167,14 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-789 · 2026-11-01 · accepted — PLAN 7.184b: how a hero is drawn
+**Decision.** (b1) `?heroes=on` is read from the URL now (`gameUrl.ts`), the way the e2e of the drawing opens a
+world with heroes; the new-game form and the settings panel stay PLAN 7.184d's. A hero's name on its tag and panel
+is its name alone ("Yamato"), not its kind and number: there is one of it (`MapView.formationName`, by
+`TemplateInfo.hero`).
+**Why.** The drawing's AT needs heroes on a page; the URL is the game's own way to pass a new-game option.
+**Consequences.** `heroFormations()` on the view lists them (tests, and the parts after).
+
 ### ADR-788 · 2026-11-01 · accepted — PLAN 7.184a3: the heroes' figures; a hero's tank carries its damage
 **Decision.** Every sea hero: `hard` 1,100 (a battleship of 2,000 hit points sunk in about an hour of its fire),
 `hpPerUnit` 25,000; every land hero: `soft` and `hard` 3,000, `hpPerUnit` 700; their other figures as ADR-787's.
