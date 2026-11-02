@@ -40,7 +40,9 @@ of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: t
   division of its nation does (the lift). AT: seeds 1491–1500 × 3, heroes on (`tools/diag/heroCeiling.ts`): ≥ 2/3 of
   the hero lives counted at or above the top decile, and Britain's and the United States' together ≥ 1/2; the sea
   columns (`tools/diag/heroBattle.ts`) reported; `sweep:quick` with heroes on and off (`--heroes on`) as a smoke test
-  only (limits green both, the riser and faller in PROGRESS), 7.184e's and 7.185's too.
+  only (limits green both, the riser and faller in PROGRESS), 7.184e's and 7.185's too. Missed (`docs/evidence/7.186/
+  at-run.md`: 0.547, HEAD 0.579 on the same seeds; Britain and the United States 13 of 42): BLOCKERS, ADR-796 waits on
+  the user.
 - [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
   AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
 

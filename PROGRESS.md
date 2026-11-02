@@ -25585,3 +25585,11 @@ No rule changed and nothing on screen changed. One task came out of it.
   nearest fight, 3 tried, and refused at each, onto the fights' own cells; its unit test (red without). Pin unchanged.
 - **Filed:** PLAN 7.186, a land hero overseas (Britain, the United States), with the sweep:quick smoke.
 - **Next:** PLAN 7.186.
+
+## 2026-11-02 — PLAN 7.186: the crossing by sea tried; no better than HEAD (ADR-796, BLOCKERS)
+
+- **Rule** (not committed): a land hero with no way over land goes by sea to its army's nearest fight on another land
+  (`orderMove`'s `byPort`).
+- **AT**, 1491–1500 × 3: 93 of 170 lives at or above the top decile (0.547); HEAD on the same seeds 113 of 195 (0.579).
+  Britain and the United States 13 of 42 (HEAD 20 of 55). Sea `with` 45 of 70, `ofFleet` 54 of 61.
+- **Next:** ADR-796 waits on the user (drop it, close the heroes' AI not done: recommended); the smoke on HEAD.
