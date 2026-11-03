@@ -1,0 +1,23 @@
+== c31_df_default 7019 POL -800 220 pol 17:13:24
+   exit 0
+== c31_hf_herofold 1201 0 0 390 844 phone 17:13:51
+   exit 0
+== c31_hf_herofold 1201 0 0 1600 900 desk 17:14:06
+   exit 0
+== c31_hf_herofold 6977 365 0 390 844 phone 17:14:27
+   exit 0
+== c31_hft_foldtouch 1201 17:15:23
+   exit 0
+== c31_hft_foldtouch 6977 17:16:27
+   exit 0
+== c31_z_zoom 1201 17:17:33
+   exit 0
+== c31_c_battle 2417 17:17:56
+   exit 0
+== c31_hwp_waitport 4637 132000 19 fra 17:19:32
+   exit 0
+== c31_long_watch2 1201 10 &heroes=on hon 17:33:07
+   exit 0
+== c31_an_ainuke 6299 critic/c31_seed6299_y18.bin 6299y18 3 400 17:38:13
+   exit 0
+EXTRADONE

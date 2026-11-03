@@ -1,0 +1,8 @@
+npx tsx tools/diag/saveAt.ts 6299 157680 critic/c31_seed6299_y18.bin > critic/c31_saveat_6299.log 2>&1
+npx tsx critic/scripts/c31_hpos.ts 4637 SOV Sovetsky 2600 7300 150 critic/c31_hpos_4637_SOV.json > critic/c31_hpos_4637.log 2>&1
+npx tsx critic/scripts/c31_def.ts 7019 20 critic/c31_def_7019.json > critic/c31_def_7019.log 2>&1
+npx tsx critic/scripts/c31_def.ts 2531 20 critic/c31_def_2531.json > critic/c31_def_2531.log 2>&1
+npx tsx critic/scripts/c31_def.ts 8467 20 critic/c31_def_8467.json random > critic/c31_def_8467r.log 2>&1
+npx tsx critic/scripts/c31_def.ts 3739 20 critic/c31_def_3739.json heroes > critic/c31_def_3739.log 2>&1
+npx tsx critic/scripts/c31_def.ts 1201 20 critic/c31_def_1201.json > critic/c31_def_1201.log 2>&1
+npx tsx critic/scripts/c31_def.ts 6977 20 critic/c31_def_6977.json random > critic/c31_def_6977r.log 2>&1

@@ -1,0 +1,57 @@
+{
+ "seed": 4111,
+ "rows": [
+  {
+   "tag": "lost",
+   "text": "14 April 1938 Germany lost Bismarck near Cagliari",
+   "kind": "HeroLost",
+   "before": [
+    1024,
+    512,
+    19568
+   ],
+   "after": [
+    1075,
+    366,
+    19568
+   ],
+   "shot": "critic/shots/c31hg_4111_lost.png"
+  },
+  {
+   "tag": "back",
+   "text": "13 June 1938 Bismarck is back with Germany near Kiel",
+   "kind": "HeroReturned",
+   "before": [
+    1075,
+    366,
+    19568
+   ],
+   "after": [
+    1082.5,
+    252.5,
+    19568
+   ],
+   "shot": "critic/shots/c31hg_4111_back.png"
+  }
+ ],
+ "hero": null,
+ "kinds": [
+  "Hero lost",
+  "Hero back"
+ ],
+ "historyRow": "13 June 1938 Bismarck is back with Germany near Kiel",
+ "historyGoto": {
+  "before": [
+   1082.5,
+   252.5,
+   19568
+  ],
+  "after": [
+   1082.5,
+   252.5,
+   19568
+  ],
+  "shot": "critic/shots/c31hg_4111_history_back.png"
+ },
+ "errors": []
+}

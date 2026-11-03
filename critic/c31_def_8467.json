@@ -1,0 +1,10 @@
+{
+ "seed": 8467,
+ "years": 20,
+ "diplo": true,
+ "heroes": false,
+ "defaulted": 0,
+ "collapsed": 0,
+ "rows": [],
+ "monthsDeepInDebt": {}
+}

@@ -1,0 +1,31 @@
+== c31_hc_herocounters 5521 0 1600 900 desk 15:44:10
+   exit 0
+== c31_hc_herocounters 5521 0 390 844 phone 15:44:18
+   exit 0
+== c31_hcc_heroclick 5521 15:44:26
+   exit 0
+== c31_ht_herotitle 5521 1600 900 desk 15:44:39
+   exit 0
+== c31_ht_herotitle 5521 390 844 phone 15:45:14
+   exit 0
+== c31_hw_herowound 4111 2454 1 bismarck bis 15:45:47
+   exit 0
+== c31_hw_herowound 4111 2050 20 tog tog 15:46:04
+   exit 0
+== c31_hd_heroloss 4111 1 Bismarck 2485 3925 bis 15:46:20
+   exit 0
+== c31_hn_heroannex 4111 15:46:54
+   exit 0
+== c31_hsl_saveload 4111 2500 1500 1 15:47:05
+   exit 0
+== c31_rg_relations 4111 365 1600 900 desk &heroes=on 15:47:39
+   exit 0
+== c31_rg_relations 4111 365 390 844 phone &heroes=on 15:48:34
+   exit 0
+== c31_hv_heroview 3739 15:49:28
+   exit 0
+== c31_hs_herostack 3739 15:50:52
+   exit 0
+== c31_p3_widths  15:51:14
+   exit 0
+HEROPAGEDONE

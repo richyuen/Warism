@@ -1,0 +1,34 @@
+{
+ "seed": 4111,
+ "tick": 2454,
+ "nation": 1,
+ "re": "bismarck",
+ "block": "HEROES | Bismarck | 35% | Maus | 100%",
+ "rows": [
+  "Bismarck\n35%",
+  "Maus\n100%"
+ ],
+ "panel": "Bismarck | × | Kind | Bismarck | Nation | Germany | Health | 35% | Men | 2,200 of 2,200 | Supply | 100% | Org | 100% | Fuel on the march | 20 an hour | Status | In contact⚔ To its fight | ELEMENTS | 1×\tBismarck\t1 of 1",
+ "shotPanel": "critic/shots/c31hw_4111_bis_panel.png",
+ "heroStats": [
+  {
+   "formation": 1474,
+   "nameKey": "template.hero_bismarck",
+   "sea": true,
+   "health": 0.3470400000000001,
+   "returnDays": null
+  },
+  {
+   "formation": 1475,
+   "nameKey": "template.hero_maus",
+   "sea": false,
+   "health": 1,
+   "returnDays": null
+  }
+ ],
+ "shot3000": "critic/shots/c31hw_4111_bis_3000m.png",
+ "shot1200": "critic/shots/c31hw_4111_bis_1200m.png",
+ "shot250": "critic/shots/c31hw_4111_bis_250m.png",
+ "shot60": "critic/shots/c31hw_4111_bis_60m.png",
+ "errors": []
+}

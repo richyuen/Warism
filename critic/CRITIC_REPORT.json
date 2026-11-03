@@ -1,7 +1,7 @@
 {
- "commit": "d6e1bb1e52097b3d483e20c98b51b8e8ce906fc1",
- "mode": "focused",
- "run": "R5b run 30 (focused: last report blocked, every commit since is R8-R12 or the report's own; a full run must follow before the release)",
+ "commit": "4c546398c6ff623092ddf07c378ac18cf21ffae5",
+ "mode": "full",
+ "run": "R5b run 31 (full: 4c546398 R7 changes src/ and R7 was not filed by run 30's commit 8eb82001; judged after R13-R15 and R7)",
  "scores": {
   "mapVisuals": 7,
   "diplomacyWarDepth": 7,
@@ -18,64 +18,56 @@
   "aircraft": 8,
   "aiNukes": 8
  },
- "carried": [
-  "editorScenarios",
-  "performance",
-  "stability",
-  "aircraft",
-  "aiNukes"
- ],
- "blocking": [
-  {
-   "id": "R30-B2",
-   "title": "Sovetsky Soyuz comes back in the Caspian Sea or on Lake Onega (R10's any-port fallback) and never leaves: 4 of 13 seeds, 11,259 days to the run's end",
-   "evidence": "critic/c30_seareturns.txt, critic/c30_seareturns_hx.txt, critic/c30_hpos_4637_SOV.json, critic/c30_ho_on_4637.json, critic/c30_ho_on_7603.json, critic/c30_hx_on_9001.json; src/sim/systems/heroes.ts returnPlace/seaReturn",
-   "fix": "Only ports whose water reaches the ocean (or the hero's start sea) count; failing that it waits and its row says so; a checker rule that a sea hero stands in water it can sail out of."
-  },
+ "carried": [],
+ "blocking": [],
+ "resolved": [
   {
    "id": "R30-B1",
-   "title": "On a phone, folded hero counters hide HMS Hood, TOG II and Char 2C at the start view: the panel covers the fold and closing it restarts the cycle at its lead; folds carry another nation's flag (Hood in 'Sovetsky Soyuz +1', ~2,900 km off)",
-   "evidence": "critic/c30_hft_5521.json, critic/shots/c30hft2_5521_phone_start.png, critic/shots/c30hft2_5521_phone_tap2.png, critic/c30_hf_5521_desk_d0_0.json; src/app/MapView.ts formationPick, src/render/units/counters.ts",
-   "fix": "Keep the cycle across a closed panel or open a list of the fold's heroes; fold only one nation's heroes; keep the fold's label on screen."
+   "title": "Folded hero counters unreachable by touch on a phone",
+   "evidence": "critic/c31_hft_5521.json, critic/c31_hf_5521_phone_d0_0.json, critic/shots/c31hft_5521_Roma1.png"
+  },
+  {
+   "id": "R30-B2",
+   "title": "Sovetsky Soyuz back on the Caspian or Lake Onega and stays",
+   "evidence": "critic/c31_seareturns.txt, critic/c31_seareturns_hx.txt, critic/c31_hpos_4637.log, critic/c31_wi_4637_h20_hn.log, critic/c31_wi_7603_h20_hn.log, critic/c31_wi_4111_h20_hn.log"
   },
   {
    "id": "R30-B3",
-   "title": "The checker's air rules break with heroes on, on 2 of 7 new seeds (3373 random: 2; 5591: 2); 0 broken with heroes off on the same seeds",
-   "evidence": "critic/c30_wi_3373r_h.log, critic/c30_wi_3373r_noh.log, critic/c30_wi_5591_h10y.log, critic/c30_wi_5591_noh_air.log, critic/scripts/c30_wingbase.ts",
-   "fix": "Find what moves a carrier 6 cells in one hour in a heroes world (sea hero's sail-with-the-fleet order suspected, not shown) and move its wings with it."
+   "title": "Air rules broken with heroes on (carrier wings left behind)",
+   "evidence": "critic/c31_wingbase_3373.log, critic/c31_wi_3373r_h20_air.log, critic/c31_wi_5591_h20_air.log"
   }
  ],
  "nonBlocking": [
   {
-   "id": "R30-N1",
-   "title": "Land heroes starve in about half their losses (414 of 768); sea heroes lost 23-35 times in 20 years",
-   "evidence": "critic/c30_ho_sum.txt"
+   "id": "R31-N1",
+   "title": "Hero counters under the HUD at a desk: Japan's two at every start view, Sovetsky Soyuz on 7019 day 730; a click opens a ranking row or nothing",
+   "evidence": "critic/c31_hf_5521_desk_d0_0.json, critic/c31_hf_7019_desk_d730_0.json, critic/shots/c31hf_7019_desk_d730_0.png"
   },
   {
-   "id": "R30-N2",
-   "title": "Japan's heroes drawn under the Ranking panel at a desk's start view; a click opens a ranking row",
-   "evidence": "critic/c30_hf_5521_desk_d0_0.json"
+   "id": "R31-N2",
+   "title": "Two nations' hero counters overlap and cut a name ('Ma' under T-42, 4637, 1953), against ADR-817's 'every name reads'",
+   "evidence": "critic/shots/c31hwp_4637_fra_132000.png"
   },
   {
-   "id": "R30-N3",
-   "title": "Relations graph on a phone: the first tap after a drag selects nothing",
-   "evidence": "critic/c30_rgt_4111.json"
+   "id": "R31-N3",
+   "title": "No default or collapse in 6 seeds x 20 years of AI play, no nation below -100 gold at any 30-day sample: R7's default row is met only through God; the row omits the sum voided",
+   "evidence": "critic/c31_def_7019.json, critic/c31_def_1201.json, critic/c31_df_7019_pol.json"
   },
   {
-   "id": "R30-N4",
-   "title": "At T1 a hero hides the fleets stacked with it",
-   "evidence": "critic/c30_hs_3739.json"
+   "id": "R31-N4",
+   "title": "Sea heroes lost 7.6-36 times in 20 years; land heroes starve in about half their losses",
+   "evidence": "critic/c31_ho_sum.txt"
   },
   {
-   "id": "R30-N5",
-   "title": "The option's hint still promises a return in 60 days that a portless or dead nation's hero does not get",
-   "evidence": "critic/shots/c30ht_phone_01_form1938.png"
+   "id": "R31-N5",
+   "title": "The option's hint promises a return in 60 days; Richelieu waits 1,638 days on 4637 for a port on its sea (told in its row)",
+   "evidence": "critic/c31_herowaits_4637.log, critic/c31_hwp_4637_fra.json"
   },
   {
-   "id": "R30-N6",
-   "title": "Unchanged from run 29: bond's exit no truce; guarantees only the start's; five ticker rows a Force war; refused peace untold; phone clutter; live 'Propose alliance' refused",
-   "evidence": "critic/c30_cmp.txt"
+   "id": "R31-N6",
+   "title": "Unchanged: graph eats the first tap after a drag; a hero hides the fleets under it at T1; run 30's diplomacy list",
+   "evidence": "critic/c31_rgt_4111.json, critic/c31_hs_3739.json, critic/c31_cmp.txt"
   }
  ],
- "timestamp": "2026-11-03T19:20:34Z"
+ "timestamp": "2026-11-03T22:48:00Z"
 }

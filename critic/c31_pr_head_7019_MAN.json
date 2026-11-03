@@ -1,0 +1,93 @@
+{
+ "seed": 7019,
+ "day": 30,
+ "puppet": "MAN",
+ "overlord": "JAP",
+ "force": {
+  "kind": "force",
+  "before": {
+   "day": 30,
+   "overlord": "JAP",
+   "loyalty": 52,
+   "autonomy": 20.3,
+   "atWarWithOverlord": false,
+   "wars": [
+    "JAP+MAN+MEN v CHI+CCP",
+    "JAP+MAN+MEN+GER+ITA+ALB v REP",
+    "GER+ITA+AUT+ALB+JAP+MAN+MEN v LIT+LAT+EST"
+   ]
+  },
+  "hour": {
+   "day": 30.04,
+   "overlord": "#0",
+   "loyalty": 52,
+   "autonomy": 20.3,
+   "atWarWithOverlord": true,
+   "wars": [
+    "MAN v JAP+MEN+GER+ITA+AUT+ALB+POL"
+   ]
+  },
+  "later": {
+   "day": 33.04,
+   "overlord": "#0",
+   "loyalty": 52,
+   "autonomy": 20.3,
+   "atWarWithOverlord": true,
+   "wars": [
+    "MAN v JAP+MEN+GER+ITA+AUT+ALB+POL"
+   ]
+  },
+  "evs": [
+   "30.00 WarLeft MAN CHI",
+   "30.00 WarLeft MAN REP",
+   "30.00 WarLeft MAN LIT",
+   "30.00 PuppetReleased MAN JAP",
+   "30.00 BondsBroken MAN JAP",
+   "30.00 WarDeclared MAN JAP"
+  ]
+ },
+ "revolt": {
+  "kind": "revolt",
+  "before": {
+   "day": 30,
+   "overlord": "JAP",
+   "loyalty": 52,
+   "autonomy": 20.3,
+   "atWarWithOverlord": false,
+   "wars": [
+    "JAP+MAN+MEN v CHI+CCP",
+    "JAP+MAN+MEN+GER+ITA+ALB v REP",
+    "GER+ITA+AUT+ALB+JAP+MAN+MEN v LIT+LAT+EST"
+   ]
+  },
+  "hour": {
+   "day": 30.04,
+   "overlord": "JAP",
+   "loyalty": 0,
+   "autonomy": 60,
+   "atWarWithOverlord": false,
+   "wars": [
+    "JAP+MAN+MEN v CHI+CCP",
+    "JAP+MAN+MEN+GER+ITA+ALB v REP",
+    "GER+ITA+AUT+ALB+JAP+MAN+MEN v LIT+LAT+EST"
+   ]
+  },
+  "later": {
+   "day": 33.04,
+   "overlord": "#0",
+   "loyalty": 0,
+   "autonomy": 60,
+   "atWarWithOverlord": true,
+   "wars": [
+    "MAN v JAP+MEN"
+   ]
+  },
+  "evs": [
+   "31.00 PuppetRevolt MAN JAP",
+   "31.00 WarLeft MAN CHI",
+   "31.00 WarLeft MAN REP",
+   "31.00 WarLeft MAN LIT",
+   "31.00 WarDeclared MAN JAP"
+  ]
+ }
+}

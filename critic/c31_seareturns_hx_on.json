@@ -1,0 +1,745 @@
+[
+ {
+  "hero": "ENG hero_hood",
+  "lon": -3.1,
+  "lat": 58.9,
+  "n": 128,
+  "late": 0,
+  "seeds": [
+   1201,
+   2417,
+   8011,
+   8423,
+   9001
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": -3.1,
+  "lat": 56.1,
+  "n": 33,
+  "late": 0,
+  "seeds": [
+   2417,
+   8011
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": -1,
+  "lat": 50.7,
+  "n": 4,
+  "late": 0,
+  "seeds": [
+   1201
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -4.5,
+  "lat": 48.4,
+  "n": 32,
+  "late": 0,
+  "seeds": [
+   2417,
+   6977,
+   8423,
+   9001
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -0.6,
+  "lat": 35.8,
+  "n": 26,
+  "late": 0,
+  "seeds": [
+   1201,
+   2417,
+   8011
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 107.1,
+  "lat": 10.1,
+  "n": 16,
+  "late": 0,
+  "seeds": [
+   1201,
+   8011
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -17.5,
+  "lat": 14.6,
+  "n": 11,
+  "late": 0,
+  "seeds": [
+   1201,
+   8011
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 23.5,
+  "lat": 37.9,
+  "n": 10,
+  "late": 0,
+  "seeds": [
+   2417
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -1.7,
+  "lat": 49.7,
+  "n": 6,
+  "late": 0,
+  "seeds": [
+   2417,
+   6977,
+   9001
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -63.2,
+  "lat": 46.1,
+  "n": 4,
+  "late": 0,
+  "seeds": [
+   2417
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 3.1,
+  "lat": 36.9,
+  "n": 4,
+  "late": 0,
+  "seeds": [
+   2417
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -5.2,
+  "lat": 36.1,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   1201
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -52.3,
+  "lat": 5.1,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   1201
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 5.9,
+  "lat": 43,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   1201
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 23.6,
+  "lat": 37.9,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   2417
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 12,
+  "lat": 33,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   2417
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 4.9,
+  "lat": 53,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   6977
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -43.2,
+  "lat": -22.8,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   9001
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 8.2,
+  "lat": 53.6,
+  "n": 90,
+  "late": 1,
+  "seeds": [
+   1201,
+   2417,
+   6977,
+   8011,
+   8423,
+   9001
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 9.9,
+  "lat": 37.3,
+  "n": 13,
+  "late": 0,
+  "seeds": [
+   9001
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 132,
+  "lat": 42.9,
+  "n": 10,
+  "late": 0,
+  "seeds": [
+   9001
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 12.7,
+  "lat": 55.7,
+  "n": 6,
+  "late": 0,
+  "seeds": [
+   6977
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 10.3,
+  "lat": 54.4,
+  "n": 4,
+  "late": 0,
+  "seeds": [
+   6977,
+   8011
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 4.9,
+  "lat": 53,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   9001
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": -1,
+  "lat": 37.5,
+  "n": 1,
+  "late": 1,
+  "seeds": [
+   1201
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 13.1,
+  "lat": -8.8,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   8011
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 12,
+  "lat": -6,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   8011
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 17.1,
+  "lat": 40.5,
+  "n": 102,
+  "late": 0,
+  "seeds": [
+   1201,
+   2417,
+   6977,
+   8011,
+   8423,
+   9001
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 13.1,
+  "lat": 33,
+  "n": 6,
+  "late": 0,
+  "seeds": [
+   1201,
+   2417
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 13.8,
+  "lat": 44.9,
+  "n": 6,
+  "late": 1,
+  "seeds": [
+   1201,
+   2417
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 14.3,
+  "lat": 40.8,
+  "n": 6,
+  "late": 0,
+  "seeds": [
+   2417,
+   6977,
+   8423
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 39.5,
+  "lat": 15.7,
+  "n": 5,
+  "late": 0,
+  "seeds": [
+   1201,
+   2417
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 6.8,
+  "lat": 0.4,
+  "n": 5,
+  "late": 0,
+  "seeds": [
+   2417
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": -80.1,
+  "lat": -6.7,
+  "n": 5,
+  "late": 0,
+  "seeds": [
+   2417
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 42.8,
+  "lat": 13.1,
+  "n": 4,
+  "late": 0,
+  "seeds": [
+   1201,
+   2417,
+   8423
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 20.9,
+  "lat": 56.5,
+  "n": 3,
+  "late": 0,
+  "seeds": [
+   1201
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 15.2,
+  "lat": 37.5,
+  "n": 3,
+  "late": 0,
+  "seeds": [
+   2417
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 16.8,
+  "lat": 41.2,
+  "n": 2,
+  "late": 1,
+  "seeds": [
+   1201
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 23.5,
+  "lat": 37.9,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   1201,
+   8423
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 13.3,
+  "lat": 38.3,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   1201
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 12.5,
+  "lat": 45.4,
+  "n": 1,
+  "late": 1,
+  "seeds": [
+   1201
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 12.2,
+  "lat": 41.7,
+  "n": 1,
+  "late": 1,
+  "seeds": [
+   1201
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 28,
+  "lat": 43.1,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   1201
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 24,
+  "lat": 32.2,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   2417
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 139.7,
+  "lat": 35.1,
+  "n": 88,
+  "late": 0,
+  "seeds": [
+   1201,
+   2417,
+   6977,
+   8423,
+   9001
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 141.2,
+  "lat": 41.4,
+  "n": 24,
+  "late": 0,
+  "seeds": [
+   8011,
+   8423,
+   9001
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 128.6,
+  "lat": 35,
+  "n": 10,
+  "late": 0,
+  "seeds": [
+   8011
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 120.1,
+  "lat": 22.6,
+  "n": 7,
+  "late": 0,
+  "seeds": [
+   8011
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 135.4,
+  "lat": 35.7,
+  "n": 6,
+  "late": 0,
+  "seeds": [
+   8011,
+   9001
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 132.5,
+  "lat": 34.3,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   8011,
+   9001
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 140.7,
+  "lat": 41.7,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   8011
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 127.6,
+  "lat": 39.2,
+  "n": 1,
+  "late": 1,
+  "seeds": [
+   8011
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 129.8,
+  "lat": 41.7,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   8011
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 129.6,
+  "lat": 33.2,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   8011
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 29.8,
+  "lat": 60,
+  "n": 84,
+  "late": 0,
+  "seeds": [
+   1201,
+   2417,
+   6977,
+   8011,
+   8423,
+   9001
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 33.7,
+  "lat": 69.5,
+  "n": 38,
+  "late": 0,
+  "seeds": [
+   1201,
+   2417,
+   8011,
+   8423
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 33.5,
+  "lat": 44.7,
+  "n": 30,
+  "late": 0,
+  "seeds": [
+   1201,
+   2417,
+   8011,
+   9001
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 132,
+  "lat": 42.9,
+  "n": 14,
+  "late": 0,
+  "seeds": [
+   2417,
+   8011,
+   9001
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 121.2,
+  "lat": 38.7,
+  "n": 11,
+  "late": 0,
+  "seeds": [
+   2417
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 158.7,
+  "lat": 52.8,
+  "n": 11,
+  "late": 1,
+  "seeds": [
+   8011,
+   9001
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 143.2,
+  "lat": 59.2,
+  "n": 10,
+  "late": 0,
+  "seeds": [
+   2417
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 20.9,
+  "lat": 56.5,
+  "n": 8,
+  "late": 0,
+  "seeds": [
+   1201,
+   6977,
+   8011
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 18.7,
+  "lat": 54.6,
+  "n": 5,
+  "late": 0,
+  "seeds": [
+   8011
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 150.7,
+  "lat": 59.4,
+  "n": 4,
+  "late": 1,
+  "seeds": [
+   2417,
+   9001
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 24.6,
+  "lat": 59.5,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   6977
+  ]
+ },
+ {
+  "hero": "USA hero_iowa",
+  "lon": -117.3,
+  "lat": 32.7,
+  "n": 19,
+  "late": 0,
+  "seeds": [
+   1201,
+   2417,
+   6977,
+   8011,
+   8423,
+   9001
+  ]
+ },
+ {
+  "hero": "USA hero_iowa",
+  "lon": -122.6,
+  "lat": 37.8,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   8423
+  ]
+ },
+ {
+  "hero": "USA hero_iowa",
+  "lon": -96.1,
+  "lat": 19.2,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   8423
+  ]
+ }
+]

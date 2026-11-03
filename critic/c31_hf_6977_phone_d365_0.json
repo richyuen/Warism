@@ -1,0 +1,315 @@
+{
+ "seed": 6977,
+ "day": 365,
+ "mppWant": 0,
+ "W": 390,
+ "H": 844,
+ "counters": [
+  {
+   "key": "hero:7",
+   "text": "Maus",
+   "box": [
+    236.0642578125,
+    236.98417968750002,
+    88,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 7,
+     "name": "Maus",
+     "nation": 1,
+     "at": [
+      280,
+      251
+     ],
+     "pxFromBox": 0,
+     "inBox": true
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      280,
+      251
+     ],
+     "picked": 7,
+     "panel": "Maus | × | Kind | Maus | Nation | Germany"
+    },
+    {
+     "k": 1,
+     "at": [
+      280,
+      251
+     ],
+     "picked": 7,
+     "panel": "Maus | × | Kind | Maus | Nation | Germany"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:459",
+   "text": "Char 2C +1",
+   "box": [
+    135.16149199999998,
+    279.13704195680293,
+    140,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 459,
+     "name": "Char 2C",
+     "nation": 19,
+     "at": [
+      205,
+      261
+     ],
+     "pxFromBox": 32,
+     "inBox": false
+    },
+    {
+     "id": 1478,
+     "name": "Richelieu",
+     "nation": 19,
+     "at": [
+      226,
+      289
+     ],
+     "pxFromBox": 21,
+     "inBox": true
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      205,
+      293
+     ],
+     "picked": 459,
+     "panel": "Char 2C | × | Kind | Char 2C | Nation | France"
+    },
+    {
+     "k": 1,
+     "at": [
+      205,
+      293
+     ],
+     "picked": 1478,
+     "panel": "Richelieu | × | Kind | Richelieu | Nation | France"
+    },
+    {
+     "k": 2,
+     "at": [
+      205,
+      293
+     ],
+     "picked": 459,
+     "panel": "Char 2C | × | Kind | Char 2C | Nation | France"
+    }
+   ],
+   "reached": [
+    true,
+    true
+   ]
+  },
+  {
+   "key": "hero:461",
+   "text": "TOG II",
+   "box": [
+    141.8216796875,
+    203.7259765625,
+    96,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 461,
+     "name": "TOG II",
+     "nation": 20,
+     "at": [
+      190,
+      250
+     ],
+     "pxFromBox": 33,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      190,
+      218
+     ],
+     "picked": 461,
+     "panel": "TOG II | × | Kind | TOG II | Nation | United Kingdom"
+    },
+    {
+     "k": 1,
+     "at": [
+      190,
+      218
+     ],
+     "picked": 461,
+     "panel": "TOG II | × | Kind | TOG II | Nation | United Kingdom"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1404",
+   "text": "T-42",
+   "box": [
+    241.88667451371157,
+    209.7437942362884,
+    80,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1404,
+     "name": "T-42",
+     "nation": 10,
+     "at": [
+      282,
+      256
+     ],
+     "pxFromBox": 33,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      282,
+      224
+     ],
+     "picked": 1404,
+     "panel": "T-42 | × | Kind | T-42 | Nation | Soviet Union"
+    },
+    {
+     "k": 1,
+     "at": [
+      282,
+      224
+     ],
+     "picked": 1404,
+     "panel": "T-42 | × | Kind | T-42 | Nation | Soviet Union"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1472",
+   "text": "Sovetsky Soyuz",
+   "box": [
+    160.9943359375,
+    334.4478515625,
+    182,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1472,
+     "name": "Sovetsky Soyuz",
+     "nation": 10,
+     "at": [
+      251,
+      316
+     ],
+     "pxFromBox": 33,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      252,
+      348
+     ],
+     "picked": 1472,
+     "panel": "Sovetsky Soyuz | × | Kind | Sovetsky Soyuz | Nation | Soviet Union"
+    },
+    {
+     "k": 1,
+     "at": [
+      252,
+      348
+     ],
+     "picked": 1472,
+     "panel": "Sovetsky Soyuz | × | Kind | Sovetsky Soyuz | Nation | Soviet Union"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1476",
+   "text": "HMS Hood",
+   "box": [
+    205.2568359375,
+    313.7345703125,
+    140,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1476,
+     "name": "HMS Hood",
+     "nation": 20,
+     "at": [
+      275,
+      296
+     ],
+     "pxFromBox": 31,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      275,
+      328
+     ],
+     "picked": 1476,
+     "panel": "HMS Hood | × | Kind | HMS Hood | Nation | United Kingdom"
+    },
+    {
+     "k": 1,
+     "at": [
+      275,
+      328
+     ],
+     "picked": 1476,
+     "panel": "HMS Hood | × | Kind | HMS Hood | Nation | United Kingdom"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  }
+ ],
+ "mpp": 19567.87109375,
+ "shot": "critic/shots/c31hf_6977_phone_d365_0.png",
+ "errors": []
+}

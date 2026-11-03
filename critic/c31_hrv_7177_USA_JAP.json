@@ -1,0 +1,32 @@
+{
+ "seed": 7177,
+ "A": "USA",
+ "T": "JAP",
+ "rowsT": [
+  "hero_yamato",
+  "hero_o_i"
+ ],
+ "annexed": true,
+ "living": [
+  [
+   49,
+   0
+  ]
+ ],
+ "events": [],
+ "breaks": {},
+ "firstBreak": null,
+ "end": [
+  {
+   "row": "hero_yamato",
+   "alive": false,
+   "returnAt": 1488
+  },
+  {
+   "row": "hero_o_i",
+   "alive": false,
+   "returnAt": 1488
+  }
+ ],
+ "tick": 175248
+}

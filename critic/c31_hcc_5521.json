@@ -1,0 +1,62 @@
+{
+ "seed": 5521,
+ "clicks": [
+  {
+   "hero": "Maus",
+   "at": [
+    860,
+    289
+   ],
+   "panel": "Maus | × | Kind | Maus | Nation | Germany | Health | 100% | Men | 6 of 6 | Supply | 100% | Org | 100% | Fuel on the march | 15 an hour | Status | Holding | ELEM",
+   "cam": [
+    1100,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c31hcc_5521_Maus.png"
+  },
+  {
+   "hero": "TOG II",
+   "at": [
+    799,
+    231
+   ],
+   "panel": "TOG II | × | Kind | TOG II | Nation | United Kingdom | Health | 100% | Men | 8 of 8 | Supply | 100% | Org | 100% | Fuel on the march | 15 an hour | Status | Hol",
+   "cam": [
+    1023,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c31hcc_5521_TOGII.png"
+  },
+  {
+   "hero": "Richelieu +1",
+   "at": [
+    779,
+    313
+   ],
+   "panel": "Richelieu | × | Kind | Richelieu | Nation | France | Health | 100% | Men | 1,600 of 1,600 | Supply | 100% | Org | 100% | Fuel on the march | 20 an hour | Status",
+   "cam": [
+    999,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c31hcc_5521_Richelieu1.png"
+  },
+  {
+   "hero": "Roma +1",
+   "at": [
+    878,
+    357
+   ],
+   "panel": "Roma | × | Kind | Roma | Nation | Italy | Health | 100% | Men | 1,900 of 1,900 | Supply | 100% | Org | 100% | Fuel on the march | 20 an hour | Status | Holding ",
+   "cam": [
+    1121,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c31hcc_5521_Roma1.png"
+  }
+ ],
+ "errors": []
+}

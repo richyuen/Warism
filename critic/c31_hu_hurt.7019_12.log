@@ -1,0 +1,33 @@
+{
+ "seed": 7019,
+ "days": 12,
+ "f": {
+  "f": 5,
+  "pos": [
+   1118.9172136243058,
+   270.9172136243056
+  ],
+  "e": true
+ },
+ "stat": {
+  "count": 1007,
+  "levels": [
+   723,
+   221,
+   46,
+   17
+  ],
+  "worst": {
+   "i": 1006,
+   "q": 0.04,
+   "x": 1119.5450693588223,
+   "y": 265.5807612893948,
+   "n": 4
+  }
+ },
+ "shot_8_balls": "critic/shots/c31hu_7019_d12_8m_balls.png",
+ "shot_8_classic": "critic/shots/c31hu_7019_d12_8m_classic.png",
+ "shot_20_balls": "critic/shots/c31hu_7019_d12_20m_balls.png",
+ "shot_20_classic": "critic/shots/c31hu_7019_d12_20m_classic.png",
+ "errors": []
+}

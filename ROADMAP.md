@@ -186,6 +186,8 @@ Rules:
     Run 30 (focused, commit d6e1bb1e): R8–R12 hold; 3 blocking (R13–R15); `mapVisuals` and
     `uiUxPolish` back to 7, every score at its bar. A focused run does not close R5b: a full
     run with no blocking issue follows R13–R15 and R7.
+    Run 31 (full, commit 4c546398): R13–R15 and R7 hold; no blocking issue, every score at its bar
+    (none moved). The release checks follow.
 
 ## Later
 

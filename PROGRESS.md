@@ -658,3 +658,9 @@
   (`NationDefaulted`, b = the debt). The economy checker's exemption for a silent default is gone; red without the
   row on 7019 (Poland, day 151). `defaultRow1938.test.ts` 1 of 1 (red without). Seed 99's pin unchanged.
 - **Next:** R5b, the full critic run.
+
+## 2026-11-03 — ROADMAP R5b: critic run 31, full; no blocking issue
+- Commit 4c546398. R13–R15 fix R30-B1–B3 on the critic's own seeds; R7's row in the page. 0 blocking; scores
+  unchanged from run 30, every one at its bar (semanticZoom, naval, tanks, aircraft, aiNukes 8; the rest 7).
+  Non-blocking R31-N1–N6 (heroes under the Ranking panel at a desk, two nations' counters overlapping a name, …).
+- **Next:** the release checks (check:review, soak, sweep on unseen seeds, bench G).

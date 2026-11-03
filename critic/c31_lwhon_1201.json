@@ -1,0 +1,242 @@
+{
+ "seed": 1201,
+ "years": [
+  {
+   "frames": 2128,
+   "maxGap": 56,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "22 December 1938 Roma is back with Italy near Taranto 24 December 1938 Italy captured British East Africa's capital 26 December 1938 Germany captured Switzerland's capital 28 December 1938 Italy lost Roma near Taranto 29 December 1938 Bismarck is back with Germany near Bremerhaven"
+   ],
+   "chips": [
+    "Japan +2 ⚔ China +1",
+    "Brazil ⚔ Colombia",
+    "United States +2 ⚔ Iran +1",
+    "Italy +5 ⚔ Netherlands +1",
+    "Peru ⚔ Colombia",
+    "Soviet Union +4 ⚔ Finland +1"
+   ],
+   "date": "1 January 1939",
+   "nations": 93,
+   "year": 1,
+   "wallS": 35.531,
+   "fps": 59.9,
+   "shot": "critic/shots/c31lwhon_1201_y01_world.png"
+  },
+  {
+   "frames": 1853,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "9 December 1939 Soviet Union made peace with Japan 14 December 1939 Norway made peace with Soviet Union 20 December 1939 Soviet Union declared war on Sweden 1 January 1940 Italy and United Kingdom fought in the air this month: Italy lost 3 aircraft, United Kingdom 3 1 January 1940 Japan's air force struck China this month: 7,294 men, guns and vehicles lost ⚓ Carrier strike ashore: United Kingdom on Germany ×3"
+   ],
+   "chips": [
+    "Japan +1 ⚔ China +1",
+    "Iraq ⚔ Iran +1",
+    "Chile ⚔ Peru",
+    "Germany +4 ⚔ Norway +1",
+    "France +28 ⚔ Italy +4",
+    "Brazil ⚔ Peru"
+   ],
+   "date": "3 January 1940",
+   "nations": 89,
+   "year": 2,
+   "wallS": 30.955,
+   "fps": 59.9,
+   "shot": "critic/shots/c31lwhon_1201_y02_world.png"
+  },
+  {
+   "frames": 1631,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "23 December 1940 United States declared war on Germany 1 January 1941 Germany's air force struck Soviet Union this month: 3,608 men, guns and vehicles lost ⚓ Carrier strike: United States on Japan's ships ⚓ Carrier strike ashore: United Kingdom on Sweden ×3 ⚓ Carrier strike: United States on Italy's ships ×2"
+   ],
+   "chips": [
+    "Japan +1 ⚔ China +1",
+    "Chile ⚔ Peru",
+    "Brazil ⚔ Peru",
+    "South Africa ⚔ Sweden +2",
+    "Soviet Union +6 ⚔ Italy +2",
+    "France +28 ⚔ Norway +2"
+   ],
+   "date": "2 January 1941",
+   "nations": 88,
+   "year": 3,
+   "wallS": 27.17,
+   "fps": 60,
+   "shot": "critic/shots/c31lwhon_1201_y03_world.png"
+  },
+  {
+   "frames": 1780,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "19 December 1941 United States captured Denmark's capital 21 December 1941 Soviet Union captured Iraq's capital 21 December 1941 Iraq was destroyed 26 December 1941 Palestine was destroyed 27 December 1941 Soviet Union captured Transjordan's capital"
+   ],
+   "chips": [
+    "Japan +1 ⚔ China",
+    "Soviet Union +7 ⚔ France +25",
+    "Soviet Union +9 ⚔ Netherlands +2",
+    "Brazil ⚔ Venezuela",
+    "Colombia ⚔ Venezuela",
+    "Chile ⚔ Venezuela"
+   ],
+   "date": "3 January 1942",
+   "nations": 85,
+   "year": 4,
+   "wallS": 29.705,
+   "fps": 59.9,
+   "shot": "critic/shots/c31lwhon_1201_y04_world.png"
+  },
+  {
+   "frames": 1692,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "2 December 1942 South Africa captured Madagascar's capital 6 December 1942 Australia captured Nationalist Spain's capital 14 December 1942 Soviet Union lost T-42 near Birobidzhan 23 December 1942 Transjordan was destroyed 31 December 1942 Japan made peace with China ⚓ Carrier strike: United States on France's ships"
+   ],
+   "chips": [
+    "Soviet Union +9 ⚔ Netherlands +2",
+    "France +24 ⚔ Brazil",
+    "Soviet Union +9 ⚔ Saudi Arabia +16",
+    "South Africa +9 ⚔ France +7",
+    "China +1 ⚔ Mengjiang"
+   ],
+   "date": "6 January 1943",
+   "nations": 84,
+   "year": 5,
+   "wallS": 28.192,
+   "fps": 60,
+   "shot": "critic/shots/c31lwhon_1201_y05_world.png"
+  },
+  {
+   "frames": 1293,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1943 Hungary and Italy fought in the air this month: Hungary lost 3 aircraft, Italy 9 1 December 1943 Soviet Union's air force struck British India this month: 6,237 men, guns and vehicles lost 1 December 1943 Roma is back with Italy near Venice"
+   ],
+   "chips": [
+    "Soviet Union +10 ⚔ Italy +1",
+    "Mexico +10 ⚔ Italy +1",
+    "Colombia ⚔ Brazil",
+    "China +1 ⚔ Nepal",
+    "Soviet Union +10 ⚔ Yemen +15"
+   ],
+   "date": "7 January 1944",
+   "nations": 84,
+   "year": 6,
+   "wallS": 21.539,
+   "fps": 60,
+   "shot": "critic/shots/c31lwhon_1201_y06_world.png"
+  },
+  {
+   "frames": 1703,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1944 Soviet Union's air force struck Greece this month: 1,092 men, guns and vehicles lost 2 December 1944 Yamato is back with Japan near Tokyo 2 December 1944 Sovetsky Soyuz is back with Soviet Union near Leningrad 3 December 1944 United Kingdom declared war on Brazil 11 December 1944 Argentina made peace with Paraguay"
+   ],
+   "chips": [
+    "Brazil ⚔ Paraguay",
+    "Greece ⚔ Soviet Union +10",
+    "United States +3 ⚔ Philippines",
+    "Soviet Union +10 ⚔ French Morocco",
+    "France +9 ⚔ French Morocco",
+    "United Kingdom +13 ⚔ Brazil"
+   ],
+   "date": "10 January 1945",
+   "nations": 88,
+   "year": 7,
+   "wallS": 28.446,
+   "fps": 59.9,
+   "shot": "critic/shots/c31lwhon_1201_y07_world.png"
+  },
+  {
+   "frames": 1825,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1946 United States's air force struck Germany this month: 8,475 men, guns and vehicles lost 1 January 1946 Transjordan broke away from Soviet Union 1 January 1946 Transjordan returned 5 January 1946 Transjordan made peace with Soviet Union 6 January 1946 Germany lost Maus near Cologne ⚓ Carrier strike ashore: United States on Germany"
+   ],
+   "chips": [
+    "South Africa ⚔ France +3",
+    "United Kingdom +9 ⚔ France +3",
+    "Germany +1 ⚔ Czechoslovakia +2",
+    "Germany +1 ⚔ Denmark +1",
+    "Soviet Union +14 ⚔ Netherlands +1",
+    "Canada +15 ⚔ Germany +1"
+   ],
+   "date": "12 January 1946",
+   "nations": 82,
+   "year": 8,
+   "wallS": 30.404,
+   "fps": 60,
+   "shot": "critic/shots/c31lwhon_1201_y08_world.png"
+  },
+  {
+   "frames": 1531,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "30 December 1946 United States captured French Morocco's capital 30 December 1946 French Morocco was destroyed 31 December 1946 France made peace with Siam 1 January 1947 Soviet Union and Netherlands fought in the air this month: Soviet Union lost 25 aircraft, Netherlands 15 1 January 1947 Soviet Union's air force struck Sweden this month: 4,842 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "Soviet Union +14 ⚔ Netherlands +1",
+    "China +2 ⚔ Free City of Danzig",
+    "China +2 ⚔ Sweden +2",
+    "Soviet Union +13 ⚔ Egypt",
+    "United States +12 ⚔ France +4",
+    "United Kingdom +10 ⚔ South Africa +3"
+   ],
+   "date": "14 January 1947",
+   "nations": 81,
+   "year": 9,
+   "wallS": 25.573,
+   "fps": 59.9,
+   "shot": "critic/shots/c31lwhon_1201_y09_world.png"
+  },
+  {
+   "frames": 1828,
+   "maxGap": 33,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1948 United States's air force struck Sweden this month: 4,016 men, guns and vehicles lost 2 January 1948 Germany captured Poland's capital 4 January 1948 Sovetsky Soyuz is back with Soviet Union near Leningrad 4 January 1948 Bismarck is back with Germany near Bremerhaven 4 January 1948 Soviet Union struck Switzerland with an atomic bomb near Zürich: 0 civilians killed; 30,292 men and 108 guns lost"
+   ],
+   "chips": [
+    "China +2 ⚔ Sweden +2",
+    "Soviet Union +14 ⚔ South Africa +4",
+    "Soviet Union +14 ⚔ Canada +2",
+    "Transjordan +3 ⚔ United Kingdom +10",
+    "France +3 ⚔ Canada +3",
+    "United States +10 ⚔ Sweden +1"
+   ],
+   "date": "15 January 1948",
+   "nations": 78,
+   "year": 10,
+   "wallS": 30.48,
+   "fps": 60,
+   "shot": "critic/shots/c31lwhon_1201_y10_world.png"
+  }
+ ],
+ "fight": {
+  "best": [
+   1218.8990991161745,
+   577.9421699720481
+  ],
+  "bn": 2,
+  "engaged": 2
+ },
+ "errors": []
+}

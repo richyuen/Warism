@@ -1,0 +1,18 @@
+npx tsx tools/diag/worldInvariants.ts 3373 7300 --heroes --diplomacy random --rules air > critic/c31_wi_3373r_h20_air.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 5591 7300 --heroes --rules air > critic/c31_wi_5591_h20_air.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 4637 7300 --heroes --rules heroes,navy > critic/c31_wi_4637_h20_hn.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 7603 7300 --heroes --rules heroes,navy > critic/c31_wi_7603_h20_hn.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 4111 7300 --heroes --rules heroes,navy > critic/c31_wi_4111_h20_hn.log 2>&1
+npx tsx tools/diag/heroWaits.ts 9001 7300 > critic/c31_herowaits_9001.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 7019 3650 --rules economy > critic/c31_wi_7019_econ10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 1201 7300 --heroes > critic/c31_wi_1201_h20.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 2417 7300 --heroes --diplomacy random > critic/c31_wi_2417r_h20.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 8861 3650 > critic/c31_wi_8861_noh10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 5653 1825 --world random > critic/c31_wi_5653w_5y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 6977 7300 --heroes --bankrupt POL:-800,ROM:-300 > critic/c31_wi_6977_h20_bk.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 1201 scenario 400 60,200,350 20 --heroes > critic/c31_diploinv_1201s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 2417 random 400 60,200,350 20 --heroes > critic/c31_diploinv_2417r_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 8861 scenario 400 60,200,350 20 --world random > critic/c31_diploinv_8861w.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 1201 20 on critic/c31_hx_on_1201.json > critic/c31_hx_on_1201.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 2417 20 on critic/c31_hx_on_2417.json random > critic/c31_hx_on_2417.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 6977 20 on critic/c31_hx_on_6977.json > critic/c31_hx_on_6977.log 2>&1
