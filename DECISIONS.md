@@ -25,6 +25,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   part of a unit is carried, so whole units lag). A deep debt set at the start has the AI disband
   the whole army in an hour, so the bankrupt case is a debt just past the line (Poland, 800).
 - **Found.** A default with nothing to fragment voids the debt with no row (ROADMAP R7).
+- **The navy (R4b).** A fleet not under way stands on water (a passage's hours are drawn over its
+  land); a formation aboard rides a fleet of its own nation and stands where it stands; when its
+  transports are sunk (`destroyFormation` marks it `fleet` −1) it is lost by the next hour, when the
+  amphibious system runs; no fleet is a dead nation's. The roadmap's "a fleet in its own or a
+  partner's port" is not a rule of the game (a fleet stands at an enemy port to blockade it,
+  PLAN 7.35): replaced by these.
 
 ### ADR-808 · 2026-11-03 · accepted — A nation called beside one it is at war with stays out (ROADMAP R3, R27-N2)
 

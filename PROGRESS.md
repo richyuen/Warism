@@ -532,3 +532,12 @@
   151): ROADMAP R7. The rule's first form (whole men per formation) was wrong: desertion carries parts of units.
 - `worldInvariantsEconomy.test.ts` 8 of 8 (88 s).
 - **Next:** R4b, the navy.
+
+## 2026-11-03 — ROADMAP R4b (ADR-809): the navy's checker
+- Rule set `navy`: a fleet not under way on water; a formation aboard rides its own nation's fleet, where it is,
+  or is lost by the next hour after its transports sink (the first form flagged every sunk group's men: the
+  amphibious system loses them an hour later, by design); no fleet of a dead nation.
+- 730 days, 0 broken on 1938 7019, 2207, 3739, 1009 and random 7, 11, 23, 8821. Red: the formation aboard not moved
+  with its transports (7019 to day 400, 14 lines); kept afloat after they sank (England's 279, day 287).
+- `worldInvariantsNavy.test.ts` 8 of 8.
+- **Next:** R4c, air.

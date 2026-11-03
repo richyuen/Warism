@@ -1,5 +1,6 @@
 import { isMonthStart } from '../../src/shared/calendar';
 import { EventKind } from '../../src/shared/events';
+import { isLand } from '../../src/shared/terrain';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { DESERTION } from '../../src/sim/systems/economy';
@@ -17,10 +18,14 @@ import { assets1938 } from './earth';
 //            founded or returns, or in the hour it collapses or defaults after COLLAPSE_MONTHS
 //            bankrupt months (its debts void, PLAN 1.24); at a month's start by no more than the month's gross income and
 //            the tribute its puppets owe; a nation bankrupt after a month's start has each of its
-//            formations on land cut by the desertion share of its units (R4a).
+//            formations on land cut by the desertion share of its units (R4a);
+//   navy     a fleet not under way stands on water (a passage's hours are drawn over land); a land
+//            formation aboard (`World.embarked`) rides a fleet of its own nation that is there, and
+//            stands where it stands, or, its transports sunk (`fleet` −1), is lost with them by the
+//            next hour; no fleet is a dead nation's (R4b).
 
-export type RuleSet = 'economy';
-export const RULE_SETS: readonly RuleSet[] = ['economy'];
+export type RuleSet = 'economy' | 'navy';
+export const RULE_SETS: readonly RuleSet[] = ['economy', 'navy'];
 
 export interface WorldCase {
   seed: number;
@@ -124,6 +129,45 @@ function economyBreaks(w: World, b: Before, events: number[], tag: (n: number) =
   return out;
 }
 
+/**
+ * The lines of `navy` the world breaks now (the hour's systems have run). `sunk`: the formations
+ * aboard transports sunk an hour before; it is refilled with this hour's.
+ */
+function navyBreaks(w: World, sunk: Set<number>, tag: (n: number) => string): string[] {
+  const out: string[] = [];
+  const fc = w.formations.cols;
+  const nc = w.nations.cols;
+  const { w: W, h: H, terrain } = w.cells;
+  w.formations.forEach((id) => {
+    if (!w.isFleet(id)) return;
+    const n = fc.nation[id]!;
+    if (!w.nations.has(n) || nc.living[n] !== 1) out.push(`navy: fleet ${id} of ${tag(n)}, a dead nation`);
+    const x = Math.floor(fc.x[id]!);
+    const y = Math.floor(fc.y[id]!);
+    const cell = Math.min(H - 1, Math.max(0, y)) * W + ((x % W) + W) % W;
+    if (fc.moving[id] !== 1 && isLand(terrain[cell]!)) out.push(`navy: fleet ${id} of ${tag(n)} stands on land at (${x}, ${y}), not under way`);
+  });
+  const was = new Set(sunk);
+  sunk.clear();
+  for (const [id, e] of w.embarked) {
+    const n = fc.nation[id]!;
+    if (!w.formations.has(id)) {
+      out.push(`navy: a formation aboard (${id}) that is no more`);
+      continue;
+    }
+    // Its transports sunk in the hour (`destroyFormation`): the amphibious system loses it at its next hour.
+    if (e.fleet === -1) {
+      if (was.has(id)) out.push(`navy: ${tag(n)}'s formation ${id} aboard transports sunk an hour ago, still afloat`);
+      sunk.add(id);
+      continue;
+    }
+    if (!w.formations.has(e.fleet) || !w.isFleet(e.fleet)) out.push(`navy: ${tag(n)}'s formation ${id} aboard fleet ${e.fleet}, which is no fleet`);
+    else if (fc.nation[e.fleet] !== n) out.push(`navy: ${tag(n)}'s formation ${id} aboard ${tag(fc.nation[e.fleet]!)}'s fleet ${e.fleet}`);
+    else if (fc.x[id] !== fc.x[e.fleet] || fc.y[id] !== fc.y[e.fleet]) out.push(`navy: ${tag(n)}'s formation ${id} aboard fleet ${e.fleet} and not where it is`);
+  }
+  return out;
+}
+
 /** The broken lines of one run of `c.days` days, each rule set's checked every hour. */
 export function worldBreaks(c: WorldCase): string[] {
   const breaks = new Breaks();
@@ -142,9 +186,11 @@ export function worldBreaks(c: WorldCase): string[] {
     if (n > 0) s.world.nations.cols.gold[n] = gold;
   }
   let b = before(s.world);
+  const sunk = new Set<number>();
   s.step(24 * c.days, (w) => {
     const where = `${label} day ${Math.floor((w.tick - 1) / 24)}`;
     if (rules.has('economy')) breaks.add(where, economyBreaks(w, b, w.out.events, tag));
+    if (rules.has('navy')) breaks.add(where, navyBreaks(w, sunk, tag));
     w.out.events.length = 0;
     w.out.fires.length = 0;
     b = before(w);

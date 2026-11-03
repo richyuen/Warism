@@ -86,7 +86,12 @@ Rules:
     of their units. `worldInvariantsEconomy.test.ts` 8 of 8 (180 days; Poland 800 in debt on
     7019); 730 days on 7019, 2207, 3739, 1009 and random 7, 11, 23, 8821: 0 broken; red on a
     doubled income (21 lines) and with no desertion (Poland's formation 558).
-  - [ ] R4b The navy: a fleet at sea or in its own or a partner's port.
+  - [x] R4b The navy: a fleet not under way stands on water; a formation aboard rides its own
+    nation's fleet and stands where it stands, or is lost with sunk transports by the next hour; no
+    fleet is a dead nation's. (Restated: "in its own or a partner's port" is no rule of the game, as
+    a fleet may stand at an enemy's port to blockade it; ADR-809.) `worldInvariantsNavy.test.ts` 8
+    of 8; 730 days on the eight worlds: 0 broken; red with the formation left behind its
+    transports (14 lines, 7019) and kept afloat after they sank (England's 279, day 287).
   - [ ] R4c Air: a wing within range of its base.
   - [ ] R4d Nukes: a burst only by a nation with warheads and a means.
   - [ ] R4e The bonds: no puppet of a puppet, no alliance with an overlord.
