@@ -161,6 +161,10 @@ Rules:
   Find the move and keep the wings with it.
   AT: the checker's air rules red on HEAD on 3373 random and 5591 with heroes, green after; 0
   broken on both and on five more seeds with heroes, 20 years.
+- [ ] R7 **A default says so.** After COLLAPSE_MONTHS bankrupt months a nation with nothing to
+  fragment has its debts voided with no row (`collapseNation`'s early return): the history never
+  says why its gold went to 0 (found by R4a's checker, Poland on 7019, day 151). A row, or the
+  collapse's. Moved here from Later (the user's request, 2026-11-03), so run R5b's full run judges it.
 - [ ] R5 **The critic's runs and the release.** After R1–R4 (the user's request, 2026-11-03: the
   heroes feature gets a critic run of its own once the other items are resolved).
   - [x] R5a **A critic run on heroes** (PLAN 7.184, the heroes new-game option): the critic told to
@@ -174,14 +178,9 @@ Rules:
     the tag.
     Run 30 (focused, commit d6e1bb1e): R8–R12 hold; 3 blocking (R13–R15); `mapVisuals` and
     `uiUxPolish` back to 7, every score at its bar. A focused run does not close R5b: a full
-    run with no blocking issue follows R13–R15.
+    run with no blocking issue follows R13–R15 and R7.
 
 ## Later
-
-- [ ] R7 **A default says so.** After COLLAPSE_MONTHS bankrupt months a nation with nothing to
-  fragment has its debts voided with no row (`collapseNation`'s early return): the history never
-  says why its gold went to 0 (found by R4a's checker, Poland on 7019, day 151). A row, or the
-  collapse's.
 
 - [ ] R6 **SPEC.md as the game is.** The rest of SPEC.md after R0i: each section rewritten to what
   the code does now, the history left to DECISIONS.
