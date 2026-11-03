@@ -24,3 +24,5 @@ const lines = diploBreaks({ seed, diplomacy, days, probeDays, perKind, heroes, w
 for (const l of lines) console.log(l);
 console.log(`seed ${seed} ${diplomacy} to day ${days}: ${lines.length} broken, ${Math.round((performance.now() - t) / 1000)} s`);
 console.log('done:');
+// Red for CI (ADR-805): a broken rule fails the run.
+process.exitCode = lines.length > 0 ? 1 : 0;

@@ -23,7 +23,7 @@ Rules:
 - [x] R0e PROMPT.md, CLAUDE.md, CRITIC_PROMPT.md and the critic's agent rewritten for work after
   the release: our own goals, the batch flow, no DONE CONDITION.
 - [x] R0f Tracked `critic/` pruned to the last report and the files it and its scripts cite.
-- [ ] R0g CI: a nightly GitHub Actions run (typecheck, lint, unit, the ten-year tests, a soak, the
+- [x] R0g CI: a nightly GitHub Actions run (typecheck, lint, unit, the ten-year tests, a soak, the
   war-and-peace checker on new seeds, a small sweep) and a weekly full sweep.
 - [ ] R0h CHANGELOG.md with the `release-2026-11-03` entry.
 - [ ] R0i SPEC.md §1–§2 rewritten as the game is, with a contents list; the rest is R6.

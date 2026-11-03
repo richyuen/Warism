@@ -1,0 +1,130 @@
+# The health checks that take too long for a commit's gate (ADR-805): every night on main, and a
+# full sweep once a week. No e2e and no bench here: GitHub's runners have no GPU. Reports are kept
+# as artifacts for 30 days.
+name: Nightly health
+on:
+  schedule:
+    - cron: '17 3 * * *' # nightly
+    - cron: '17 5 * * 0' # weekly full sweep (Sunday)
+  workflow_dispatch:
+    inputs:
+      full_sweep:
+        description: Run the full 10 seeds x 50 years sweep too
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+env:
+  # New seeds every run, from the run's number: the checks see worlds no tuning has seen.
+  SEED_BASE: ${{ github.run_number }}
+
+jobs:
+  tests:
+    name: Typecheck, lint, unit tests, build
+    if: github.event.schedule != '17 5 * * 0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: The saved test worlds
+        uses: actions/cache@v4
+        with:
+          path: .cache/checkpoints
+          key: checkpoints-${{ hashFiles('src/sim/**', 'src/shared/**', 'data/**', 'public/data/**', 'tools/headless/**', 'package-lock.json') }}
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+  ten-year:
+    name: The ten-year tests (the pin, save and load, allies never at war, no bankruptcy in peace)
+    if: github.event.schedule != '17 5 * * 0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run test:sweep
+
+  soak:
+    name: Soak (1938, 30 min, saves and loads, twins compared)
+    if: github.event.schedule != '17 5 * * 0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run soak -- --scenario 1938 --seed $(( SEED_BASE % 9000 + 1000 )) --minutes 30 --out .cache/soak/nightly.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: soak
+          path: .cache/soak/
+          retention-days: 30
+
+  rules:
+    name: The rules of war and peace on new seeds
+    if: github.event.schedule != '17 5 * * 0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        run:
+          - { offset: 1, args: 'scenario' }
+          - { offset: 2, args: 'random' }
+          - { offset: 3, args: 'random --heroes' }
+          - { offset: 4, args: 'random --world random' }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx tsx tools/diag/diploInvariants.ts $(( (SEED_BASE * 4 + ${{ matrix.run.offset }}) % 9000 + 1000 )) ${{ matrix.run.args }}
+
+  sweep:
+    name: Sweep (4 seeds x 20 years; weekly 10 x 50)
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Sweep
+        run: |
+          first=$(( SEED_BASE * 10 % 9000 + 20000 ))
+          if [ "${{ github.event.schedule }}" = "17 5 * * 0" ] || [ "${{ inputs.full_sweep }}" = "true" ]; then
+            npm run sweep -- --first $first --seeds 10 --years 50 --scratch --tag weekly
+          else
+            npm run sweep -- --first $first --seeds 4 --years 20 --scratch --tag nightly
+          fi
+        # The sweep's own limits include the largest nation's share, which ADR-740 took out of the
+        # release condition: its report is read, its exit code is not judged.
+        continue-on-error: true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sweep
+          path: .cache/sweep/reports/
+          retention-days: 30
