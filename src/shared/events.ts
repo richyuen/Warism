@@ -215,6 +215,12 @@ export const EventKind = {
   HeroLost: 67,
   /** A hero back (ROADMAP R12): a = its nation, b = its roster row, (x, y) = where it is raised. */
   HeroReturned: 68,
+  /**
+   * A default (ROADMAP R7): after COLLAPSE_MONTHS bankrupt months a nation with nothing to fragment
+   * has its debts voided, and nothing else happens (a collapse that fragments it is
+   * `NationCollapsed`). a = the nation, b = the debt voided, gold rounded, x = y = NaN.
+   */
+  NationDefaulted: 69,
 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */

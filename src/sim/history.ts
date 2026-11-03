@@ -59,6 +59,8 @@ export const HISTORY_KINDS: ReadonlySet<number> = new Set<number>([
   // A hero lost and back (ROADMAP R12).
   EventKind.HeroLost,
   EventKind.HeroReturned,
+  // A default with nothing to fragment (ROADMAP R7).
+  EventKind.NationDefaulted,
 ]);
 
 export class History implements Stateful {

@@ -165,6 +165,7 @@ export function collapseNation(world: World, c: number, forced = false): void {
   if (!world.nations.has(c) || nc.living[c] !== 1) return;
   // A collapse is a default: debts are void afterwards (PLAN 1.24 review: without it a broke
   // nation re-collapsed every COLLAPSE_MONTHS forever).
+  const debt = Math.max(0, -nc.gold[c]!);
   nc.gold[c] = Math.max(0, nc.gold[c]!);
   nc.bankrupt[c] = 0;
   nc.brokeMonths[c] = 0;
@@ -175,12 +176,16 @@ export function collapseNation(world: World, c: number, forced = false): void {
     const cell = g.centre[p] ?? -1;
     if (cell >= 0 && world.cells.owner[cell] === c) held.push(p);
   }
-  // Nothing to fragment (no puppets, dead claimants or restless provinces): the default alone.
+  // Nothing to fragment (no puppets, dead claimants or restless provinces): the default alone, told
+  // (ROADMAP R7: the history never said why its gold went to 0; Poland on 7019, day 151).
   let puppets = false;
   world.nations.forEach((p) => {
     if (nc.overlord[p] === c && nc.living[p] === 1) puppets = true;
   });
-  if (!forced && !puppets && !held.some((p) => deadClaimant(world, p) !== 0 || pv.unrest[p]! >= REVOLT_FROM)) return;
+  if (!forced && !puppets && !held.some((p) => deadClaimant(world, p) !== 0 || pv.unrest[p]! >= REVOLT_FROM)) {
+    world.out.emit(world.tick, EventKind.NationDefaulted, c, Math.round(debt), NaN, NaN);
+    return;
+  }
   world.out.emit(world.tick, EventKind.NationCollapsed, c, 0, NaN, NaN);
   world.nations.forEach((p) => {
     if (nc.overlord[p] === c && nc.living[p] === 1) releasePuppet(world, p);

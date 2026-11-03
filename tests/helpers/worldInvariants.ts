@@ -13,7 +13,6 @@ import { isDayStart } from '../../src/shared/calendar';
 import type { NukeLaunch } from '../../src/sim/world';
 import { elementIndex } from '../../src/sim/systems/elements';
 import { TRIBUTE } from '../../src/sim/systems/puppets';
-import { COLLAPSE_MONTHS } from '../../src/sim/systems/revival';
 import { Domain, type World } from '../../src/sim/world';
 import { Breaks } from './diploInvariants';
 import { assets1938 } from './earth';
@@ -23,7 +22,7 @@ import { assets1938 } from './earth';
 // system:
 //   economy  gold rises only at a month's start (the accounts, tribute), in the hour a nation is
 //            founded or returns, or in the hour it collapses or defaults after COLLAPSE_MONTHS
-//            bankrupt months (its debts void, PLAN 1.24); at a month's start by no more than the month's gross income and
+//            bankrupt months (its debts void, PLAN 1.24), told by its row (R7); at a month's start by no more than the month's gross income and
 //            the tribute its puppets owe; a nation bankrupt after a month's start has each of its
 //            formations on land cut by the desertion share of its units (R4a);
 //   navy     a fleet not under way stands on water (a passage's hours are drawn over land); a land
@@ -136,14 +135,13 @@ function economyBreaks(w: World, b: Before, events: number[], tag: (n: number) =
   const out: string[] = [];
   const nc = w.nations.cols;
   const month = b.month;
-  // A collapse voids the nation's debts (PLAN 1.24): its gold may rise to 0 in that hour.
+  // A collapse voids the nation's debts (PLAN 1.24): its gold may rise to 0 in that hour; so does a
+  // default with nothing to fragment, told by its row (ROADMAP R7).
   const collapsed = new Set<number>();
-  for (let i = 0; i < events.length; i += 6) if (events[i + 1] === EventKind.NationCollapsed) collapsed.add(events[i + 2]!);
+  for (let i = 0; i < events.length; i += 6) if (events[i + 1] === EventKind.NationCollapsed || events[i + 1] === EventKind.NationDefaulted) collapsed.add(events[i + 2]!);
   for (let n = 1; n < b.gold.length; n++) {
     if (b.living[n] !== 1 || nc.living[n] !== 1) continue; // founded, returned or dead in the hour
     if (collapsed.has(n)) continue;
-    // So does a default after COLLAPSE_MONTHS bankrupt months, with nothing to fragment and no row.
-    if (month && month.bankrupt[n] === 1 && month.broke[n]! + 1 >= COLLAPSE_MONTHS && nc.gold[n]! === 0) continue;
     const rise = nc.gold[n]! - b.gold[n]!;
     if (rise <= EPS * Math.max(1, Math.abs(b.gold[n]!))) continue;
     if (!month) {

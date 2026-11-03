@@ -652,3 +652,9 @@
 - Red on HEAD on 5591 and 3373 random (heroes); 0 broken on seven seeds × 20 years with heroes. `carrierWingsMove1938`
   2 of 2 (red without the fix). Seed 99's pin unchanged.
 - **Next:** R7.
+
+## 2026-11-03 — ROADMAP R7 (ADR-819): a default says so
+- A nation that defaults with nothing to fragment now has a History row, "Poland defaulted: its debts were voided"
+  (`NationDefaulted`, b = the debt). The economy checker's exemption for a silent default is gone; red without the
+  row on 7019 (Poland, day 151). `defaultRow1938.test.ts` 1 of 1 (red without). Seed 99's pin unchanged.
+- **Next:** R5b, the full critic run.

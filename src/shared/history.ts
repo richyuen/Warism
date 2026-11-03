@@ -111,6 +111,8 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   // A hero lost and back (ROADMAP R12): its nation, its roster row (named by its template).
   [EventKind.HeroLost]: ['nation', 'hero'],
   [EventKind.HeroReturned]: ['nation', 'hero'],
+  // A default with nothing to fragment (ROADMAP R7): the nation, the debt voided.
+  [EventKind.NationDefaulted]: ['nation', 'number'],
 };
 
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */

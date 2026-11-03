@@ -7,6 +7,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-819 · 2026-11-03 · accepted — A default is a row of the history (ROADMAP R7)
+
+- **Context.** After COLLAPSE_MONTHS bankrupt months a nation with nothing to fragment (no
+  puppets, dead claimants or restless provinces) had its debts voided by `collapseNation`'s early
+  return, with no event: the history never said why its gold went to 0. R4a's checker let it pass
+  by a rule of its own (Poland on 7019, day 151).
+- **Decision.** A new kind, `NationDefaulted` (a = the nation, b = the debt voided, gold rounded),
+  logged in the History ("Poland defaulted: its debts were voided", type "Default"), not the ticker:
+  a bankruptcy is not either. A collapse that fragments the nation is told by `NationCollapsed` as
+  before.
+- **Checker.** The economy rules' "a default with no row" exemption is gone: a default's gold rise
+  is allowed in the hour of its row, as a collapse's.
+- **Evidence.** `worldInvariantsEconomy.test.ts` (7019, Poland 800 in debt) red without the row
+  ("POL's gold rose 251.45 … day 151"), green with it. `defaultRow1938.test.ts` 1 of 1 (red without
+  the row); `history.test.ts` (every kind has its roles and texts) green. Seed 99's pin unchanged.
+
 ### ADR-818 · 2026-11-03 · accepted — A fleet moved after the air hour takes its wings (ROADMAP R15, R30-B3)
 
 - **Context.** Critic run 30: with heroes on, the checker's air rules broke on 3373 (random

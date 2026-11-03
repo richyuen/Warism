@@ -719,6 +719,8 @@
   "history.HeroLost": "{a} lost {b}{near}",
   "history.type.HeroReturned": "Hero back",
   "history.HeroReturned": "{b} is back with {a}{near}",
+  "history.type.NationDefaulted": "Default",
+  "history.NationDefaulted": "{a} defaulted: its debts were voided",
   "history.bond.alliance": "alliance",
   "history.bond.puppet": "puppet bond",
   "history.bond.truce": "truce",

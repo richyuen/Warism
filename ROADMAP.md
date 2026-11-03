@@ -166,10 +166,12 @@ Rules:
   broken on both and on five more seeds with heroes, 20 years.
   Done (ADR-818): red on HEAD on both; 0 broken on 3373 random, 5591, 1009, 2207, 3739, 7019, 4637 ×
   20 years with heroes. The 5591 day-831 line was the checker's (another base lost the same hour).
-- [ ] R7 **A default says so.** After COLLAPSE_MONTHS bankrupt months a nation with nothing to
+- [x] R7 **A default says so.** After COLLAPSE_MONTHS bankrupt months a nation with nothing to
   fragment has its debts voided with no row (`collapseNation`'s early return): the history never
   says why its gold went to 0 (found by R4a's checker, Poland on 7019, day 151). A row, or the
   collapse's. Moved here from Later (the user's request, 2026-11-03), so run R5b's full run judges it.
+  Done (ADR-819): a `NationDefaulted` row in the History; the checker's no-row exemption removed,
+  red without the row on 7019; `defaultRow1938.test.ts`.
 - [ ] R5 **The critic's runs and the release.** After R1–R4 (the user's request, 2026-11-03: the
   heroes feature gets a critic run of its own once the other items are resolved).
   - [x] R5a **A critic run on heroes** (PLAN 7.184, the heroes new-game option): the critic told to
