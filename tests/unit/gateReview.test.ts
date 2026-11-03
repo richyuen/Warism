@@ -19,7 +19,7 @@ const record = (done: Record<string, string[]>, steps = ['lint', 'test', 'e2e:1'
 
 describe('npm run check:review (ADR-297)', () => {
   it('steps: the plain stages, the unit and sweep tests, a step a chunk of specs, the perf spec', () => {
-    expect(reviewSteps(2 * E2E_CHUNK + 1)).toEqual(['typecheck', 'lint', 'build', 'parity', 'test', 'test:sweep', 'e2e:1', 'e2e:2', 'e2e:3', 'e2e:perf']);
+    expect(reviewSteps(2 * E2E_CHUNK + 1)).toEqual(['typecheck', 'lint', 'build', 'test', 'test:sweep', 'e2e:1', 'e2e:2', 'e2e:3', 'e2e:perf']);
     expect(reviewSteps(E2E_CHUNK)).toContain('e2e:1');
     expect(reviewSteps(E2E_CHUNK)).not.toContain('e2e:2');
   });

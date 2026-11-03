@@ -14,8 +14,6 @@ row 0.3 "sim purity / module-boundary fixtures fail lint" "npx vitest run tests/
 row 0.4 "npm run check script exists; Playwright smoke finds the canvas" "grep -q '\"check\"' package.json && npx playwright test tests/e2e/smoke.spec.ts"
 row 0.5 "BLOCKERS/DATA_SOURCES exist; PROGRESS dated; NOTES.md-missing noted" "[ -f BLOCKERS.md ] && [ -f DATA_SOURCES.md ] && grep -q '^## 2026-' PROGRESS.md && grep -q 'NOTES.md' PROGRESS.md"
 row 0.6 "reference/frames has >= 30 PNGs; VISUAL observations logged" "[ \$(ls reference/frames/*.png | wc -l) -ge 30 ] && grep -q 'VISUAL, 2026-10-02' PROGRESS.md"
-row 0.7 "PARITY Table 1 rows all source-tagged and dated" "npm run parity"
-row 0.8 "parity checker fixtures (header mismatch / missing evidence fail)" "npx vitest run tests/unit/parity.test.ts"
 row 0.9 "dmath accuracy + golden bits in Node and Chromium" "npx vitest run tests/unit/dmath.test.ts && npx playwright test tests/e2e/dmath.spec.ts"
 row 0.10 "PCG32/xxHash known-answer vectors; stream independence" "npx vitest run tests/unit/rng-hash.test.ts"
 row 0.11 "table round trip identical bytes; hash changes on 1-byte mutation" "npx vitest run tests/unit/table.test.ts"

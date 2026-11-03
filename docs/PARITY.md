@@ -1,5 +1,11 @@
 # AoC Parity
 
+> **Frozen on 2026-11-03 (ADR-805, the user's decision).** This table was the loop's measure of the game against
+> Ages of Conflict until `release-2026-11-03`. It stopped at 48.1 % with 0 rows verified: a row is verified only
+> with a dated observation of AoC itself, and `reference/NOTES.md` was never provided, so the score could not move.
+> `npm run parity` and its gate stage are removed. The game is judged by its own goals (CRITIC_PROMPT.md); AoC is
+> a source of ideas. Kept as a record; not updated.
+
 Feature parity with *Ages of Conflict: World War Simulator* (AoC) v4.5.1, the latest version on 2026-10-02.
 Sources: the itch page, all 89 devlog posts, the Steam store page and 98 Steam news items (fetched 2026-10-02),
 plus `reference/screens/` and the trailer frames (PROGRESS, PLAN 0.6). `reference/NOTES.md` is missing, so

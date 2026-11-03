@@ -11,9 +11,9 @@ import { archive, LEDGER, MOVED } from '../../tools/plan/archive';
 // phase review has been ticked since its report (until then: every 5 commits, ADR-49).
 
 describe('gate plan (ADR-48, ADR-49)', () => {
-  it('documents only: parity alone', () => {
-    expect(planGate(['PROGRESS.md', 'docs/PARITY.md', 'docs/sweeps/2026-10-03-sweep-b1.json', 'docs/evidence/2.3/warsaw.png'])).toEqual(['parity']);
-    expect(planGate(['CLAUDE.md', 'critic/shots/s1.png'])).toEqual(['parity']); // critic/ is ignored
+  it('documents only: nothing to run (parity retired, ADR-805)', () => {
+    expect(planGate(['PROGRESS.md', 'docs/PARITY.md', 'docs/sweeps/2026-10-03-sweep-b1.json', 'docs/evidence/2.3/warsaw.png'])).toEqual([]);
+    expect(planGate(['CLAUDE.md', 'critic/shots/s1.png'])).toEqual([]); // critic/ is ignored
   });
 
   it('code outside the sim: everything but the sweep tests', () => {
@@ -38,7 +38,7 @@ describe('gate plan (ADR-48, ADR-49)', () => {
   it('a clean tree the gate has already passed runs nothing; any change runs as before (ADR-55)', () => {
     expect(planGate([], true)).toEqual([]);
     expect(planGate(['critic/CRITIC_REPORT.json'], true)).toEqual([]);
-    expect(planGate(['PROGRESS.md'], true)).toEqual(['parity']);
+    expect(planGate(['PROGRESS.md'], true)).toEqual([]);
     expect(planGate(['src/render/units/counters.ts'], true)).toEqual(ALL_STAGES.filter((s) => s !== 'test:sweep'));
     expect(planGate(['src/sim/systems/war.ts'], true)).toEqual([...ALL_STAGES]);
     expect(planGate(null, true)).toEqual([...ALL_STAGES]);
@@ -83,7 +83,7 @@ describe('gate plan (ADR-48, ADR-49)', () => {
     // A phase review ticked in a commit of documents alone runs every stage; a numbered task's
     // tick in one is a commit of documents (ADR-293).
     expect(planGate(['PLAN.md', 'PROGRESS.md', 'DECISIONS.md'], false, true)).toEqual([...ALL_STAGES]);
-    expect(planGate(['PLAN.md', 'PROGRESS.md'], false, false)).toEqual(['parity']);
+    expect(planGate(['PLAN.md', 'PROGRESS.md'], false, false)).toEqual([]);
     expect(planUnit(['PLAN.md', 'PROGRESS.md'], ['4.8'], on).mode).toBe('full');
     // No source and no unit test: none (a spec, a picture, the critic's output).
     expect(planUnit(['tests/e2e/fire1938.spec.ts', 'docs/evidence/4.7/a.png', 'critic/x.json'], [], on).mode).toBe('none');

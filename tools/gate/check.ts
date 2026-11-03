@@ -2,7 +2,7 @@
  * `npm run check`: the gate, sized to what changed since HEAD (ADR-48, ADR-49, ADR-55).
  *
  *   nothing changed, and the gate has passed this very tree           → nothing
- *   only documents changed (Markdown anywhere, anything under docs/)  → parity
+ *   only documents changed (Markdown anywhere, anything under docs/)  → nothing; the tree is recorded
  *   no sim input changed                                             → everything but the 10-year sweep tests
  *   otherwise                                                        → everything, the sweep stage the pin alone
  *   a phase review ticked (`- [x] 4.8 Phase 4 review`)               → everything, every sweep test
@@ -30,7 +30,7 @@
  * a different few each run, and pass alone; a known red is this machine's, with its BLOCKERS entry).
  * The perf specs run on their own project, after (`e2eRuns`).
  *
- * Nothing but `npm run parity` reads the documents, and nothing but a sim input can change what
+ * Nothing reads the documents (parity retired, ADR-805), and nothing but a sim input can change what
  * the sweep tests prove. `critic/` is the critic's own output and is ignored. The gate runs
  * before every commit, so the stages left out were proved by the gate of an earlier commit.
  * A green gate records the tree it passed (`.cache/gate/green.json`); a clean tree whose HEAD is
@@ -53,7 +53,7 @@ const STAMP_KEEP = 50;
 
 /** Everything the sim and the sweep tests are built from (a dependency change shows in the lock file). */
 export const SWEEP_INPUTS = ['src/sim/', 'src/shared/', 'data/', 'public/data/', 'tests/sweep/', 'tests/helpers/', 'tools/headless/', 'vitest.sweep.config.ts', 'package-lock.json'];
-export const ALL_STAGES = ['typecheck', 'lint', 'test', 'test:sweep', 'build', 'e2e', 'parity'] as const;
+export const ALL_STAGES = ['typecheck', 'lint', 'test', 'test:sweep', 'build', 'e2e'] as const;
 export type Stage = (typeof ALL_STAGES)[number];
 
 const ignored = (file: string): boolean => file.startsWith('critic/');
@@ -69,7 +69,7 @@ export function planGate(files: readonly string[] | null, gated = false, review 
   if (files === null || review) return [...ALL_STAGES];
   const changed = files.filter((f) => !ignored(f));
   if (changed.length === 0 && gated) return [];
-  if (changed.length > 0 && changed.every(isDocument)) return ['parity'];
+  if (changed.length > 0 && changed.every(isDocument)) return [];
   const sim = changed.some((f) => SWEEP_INPUTS.some((p) => (p.endsWith('/') ? f.startsWith(p) : f === p)));
   return ALL_STAGES.filter((s) => s !== 'test:sweep' || sim);
 }
@@ -247,7 +247,9 @@ function main(): void {
   const stages = planGate(files, head !== null && gatedTrees().includes(head), review);
   const sweep = planSweep(files, review);
   if (stages.length === 0) {
-    console.log('gate: nothing changed since HEAD, and the gate has passed this tree (npm run check:full runs everything)');
+    // Documents alone (or nothing) changed: record the tree, so the clean tree after the commit runs nothing.
+    recordGreen(worktreeTree());
+    console.log('gate: no code changed since a tree the gate passed (npm run check:full runs everything)');
     console.log('gate: green');
     return;
   }

@@ -50,7 +50,7 @@ export interface Verdict {
 /** The steps of a run: the plain stages, the unit and sweep tests, a chunk of specs each, the perf spec. */
 export function reviewSteps(specs: number): string[] {
   const e2e = Array.from({ length: Math.ceil(specs / E2E_CHUNK) }, (_, i) => `e2e:${i + 1}`);
-  return ['typecheck', 'lint', 'build', 'parity', 'test', 'test:sweep', ...e2e, 'e2e:perf'];
+  return ['typecheck', 'lint', 'build', 'test', 'test:sweep', ...e2e, 'e2e:perf'];
 }
 
 /** The verdict of `record` against the known reds `known` (ids of tests). */
@@ -278,7 +278,7 @@ export function splitKnown(red: readonly string[], known: readonly string[]): { 
 }
 
 function step(name: string, specs: string[]): string[] {
-  if (['typecheck', 'lint', 'build', 'parity'].includes(name)) return run(`npm run ${name}`) ? [] : [`stage:${name}`];
+  if (['typecheck', 'lint', 'build'].includes(name)) return run(`npm run ${name}`) ? [] : [`stage:${name}`];
   if (name === 'test' || name === 'test:sweep') {
     if (name === 'test') return unitRedTwice();
     const config = '--config vitest.sweep.config.ts';

@@ -167,6 +167,46 @@ level directly; hillshade at higher zoom adds procedural detail (SPEC §8 T2/T3)
 runtime. Regenerating assets is idempotent (`npm run data -- --check` fails on drift), and
 `tests/unit/data-manifest.test.ts` verifies sha256, sizes, known places and pyramid consistency.
 
+### ADR-805 · 2026-11-03 · accepted (the user's decision) — after the release: the loop's machinery retired; our own goals over AoC's; a roadmap, CI and a changelog; the relations graph first
+
+- **Context.** `release-2026-11-03` met the DONE CONDITION (critic run 28 full and clean, check:review, soak, sweep,
+  bench). The loop's machinery was built to reach that line:
+  - the parity score was 48.1 % with 0 rows verified, and could not move: a row is verified only with a dated
+    observation of AoC itself, and `reference/NOTES.md` was never provided;
+  - PROGRESS.md (1.9 MB) and DECISIONS.md (2.0 MB) are searched, never read;
+  - SPEC.md (290 KB) had become a design log;
+  - the gate, `critic:due` and `plan:archive` read PLAN's phase ticks, and every phase is done;
+  - the game has its own direction (semantic zoom, countryballs, heroes, the nuclear AI, the drawn diplomacy). The
+    critic's "what AoC does better" lines and design objections no longer lead to work.
+  - 12 GB of probe output sat untracked in `.cache/` and `critic/`.
+- **Decision.** All of these, one commit each:
+  1. **Cleanup.** The probe output in `.cache/` (kept: `data`, `checkpoints`, `gate`, `sweep`, `soak`, `runs`) and
+     `critic/`'s screenshots, builds and saved states are deleted. Tracked `critic/` keeps the last report and the
+     files it and its scripts cite; earlier runs leave the tree (git history keeps them).
+  2. **Parity retired.** `docs/PARITY.md` is frozen at 48.1 % as a record. `npm run parity`, its stage in the gate
+     and `check:full`, and its tests are removed. The tests go with the feature they test; nothing is weakened to
+     pass.
+  3. **The plan retired.** PLAN.md and `docs/PLAN_DONE.md` are frozen as a record. `ROADMAP.md` holds what is to do.
+     `critic:due`, `plan:archive` and the gate's phase-review trigger are removed. The whole unit and e2e suites run
+     in `check:full` and `check:review`, before a release.
+  4. **The logs archived by month** under `docs/history/`; PROGRESS.md and DECISIONS.md keep the current month.
+  5. **PROMPT.md, CLAUDE.md and CRITIC_PROMPT.md rewritten** for work after the release:
+     - "continue" is the next unchecked ROADMAP item;
+     - kept: the hard rules, the gate, ADR-803's rule check and checker, ADR-804's batch → critic → release tag;
+     - dropped: the DONE CONDITION and its string, the phases, step 10's opening list.
+     The critic scores against our own goals (fun to watch, readable, stable, fast, rules that agree), with AoC a
+     source of ideas only. The JSON keeps its shape.
+  6. **CI:** a nightly GitHub Actions run (typecheck, lint, unit, the ten-year tests, a soak, the war-and-peace
+     checker on new seeds, a small sweep), a weekly full sweep. No e2e or bench there: no GPU.
+  7. **CHANGELOG.md**, one entry a release tag.
+  8. **SPEC.md** becomes a description of the game as it is: §1–§2 and a contents list now, the rest a ROADMAP item.
+  9. **Checkers for every system** (economy, navy, air, nukes, bonds), as `diploInvariants` checks war and peace:
+     ROADMAP items.
+  10. **The relations graph** (the user's feature, 2026-11-03): a view of every war, alliance, guarantee, puppet bond
+      and truce, the first item of the next batch.
+- **Consequences.** The gate is shorter (no parity stage). A release still needs `check:review`, the soak, the
+  sweep (borders moving), the bench and a clean full critic run. No sim change; seed 99's pin is unchanged.
+
 ### ADR-804 · 2026-11-02 · accepted (the user's decision) — release before new features; focused critic runs; the checker over the options; less to read each iteration
 
 - **Context.** Across critic runs 18–26 every report had 0 or 1 blocking issue, almost always in the newest feature:
