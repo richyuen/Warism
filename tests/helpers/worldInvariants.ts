@@ -3,6 +3,7 @@ import { EventKind } from '../../src/shared/events';
 import { isLand } from '../../src/shared/terrain';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
+import { basePlace, inSeaBattle, kmFromBase, ofSide, wingRange } from '../../src/sim/systems/air';
 import { DESERTION } from '../../src/sim/systems/economy';
 import { elementIndex } from '../../src/sim/systems/elements';
 import { TRIBUTE } from '../../src/sim/systems/puppets';
@@ -22,10 +23,16 @@ import { assets1938 } from './earth';
 //   navy     a fleet not under way stands on water (a passage's hours are drawn over land); a land
 //            formation aboard (`World.embarked`) rides a fleet of its own nation that is there, and
 //            stands where it stands, or, its transports sunk (`fleet` −1), is lost with them by the
-//            next hour; no fleet is a dead nation's (R4b).
+//            next hour; no fleet is a dead nation's (R4b);
+//   air      every wing has a base: an airbase its side holds (one taken is left by the next hour),
+//            or a fleet of its nation's (one sunk, base 0, is lost with it by the next hour); a wing
+//            not ferrying stands at its base (a carrier's, at its fleet as the air system left it: a
+//            fleet in a sea battle this hour or the last moves after it); a sortie flies to a place within the wing's range of
+//            where it took off, and an airbase's wing's mission is within its range (a carrier's
+//            waits while its fleet is out of range) (R4c).
 
-export type RuleSet = 'economy' | 'navy';
-export const RULE_SETS: readonly RuleSet[] = ['economy', 'navy'];
+export type RuleSet = 'economy' | 'navy' | 'air';
+export const RULE_SETS: readonly RuleSet[] = ['economy', 'navy', 'air'];
 
 export interface WorldCase {
   seed: number;
@@ -168,6 +175,52 @@ function navyBreaks(w: World, sunk: Set<number>, tag: (n: number) => string): st
   return out;
 }
 
+/**
+ * The lines of `air` the world breaks now. `late`: the wings whose base was lost (taken, or its
+ * carrier sunk) an hour before; refilled with this hour's.
+ */
+function airBreaks(w: World, late: Set<number>, fought: Set<number>, tag: (n: number) => string): string[] {
+  const out: string[] = [];
+  const fc = w.formations.cols;
+  const was = new Set(late);
+  late.clear();
+  // The fleets in a sea battle this hour or the last (one that ended this hour moved in it, PLAN 4.3).
+  const battling = new Set([...fought, ...inSeaBattle(w)]);
+  fought.clear();
+  for (const f of inSeaBattle(w)) fought.add(f);
+  w.formations.forEach((id) => {
+    if (w.isWing(id) && !w.wingBase.has(id)) out.push(`air: ${tag(fc.nation[id]!)}'s wing ${id} has no base`);
+  });
+  for (const [id, base] of w.wingBase) {
+    if (!w.formations.has(id)) continue; // the air system forgets it at its hour
+    const n = fc.nation[id]!;
+    let lost = false;
+    if (base === 0) lost = true;
+    else if (base > 0) {
+      const ab = w.airbases[base - 1];
+      if (!ab) out.push(`air: ${tag(n)}'s wing ${id} at airbase ${base}, which is none`);
+      else if (!ofSide(w, n, w.cells.controller[ab.cell]!)) lost = true;
+    } else if (!w.formations.has(-base) || !w.isFleet(-base)) lost = true;
+    else if (fc.nation[-base] !== n) out.push(`air: ${tag(n)}'s wing ${id} on ${tag(fc.nation[-base]!)}'s fleet ${-base}`);
+    if (lost) {
+      if (was.has(id)) out.push(`air: ${tag(n)}'s wing ${id} kept a base lost an hour ago (${base})`);
+      late.add(id);
+      continue;
+    }
+    const at = basePlace(w, base);
+    if (at && !w.wingFerry.has(id) && (fc.x[id] !== at[0] || fc.y[id] !== at[1]) && !(base < 0 && battling.has(-base))) out.push(`air: ${tag(n)}'s wing ${id} not at its base (${base})`);
+    const sortie = w.sorties.get(id);
+    if (sortie && sortie.km > wingRange(w, id) * (1 + 1e-9)) out.push(`air: ${tag(n)}'s wing ${id} flies ${sortie.km.toFixed(0)} km out, range ${wingRange(w, id).toFixed(0)}`);
+    const m = base > 0 ? w.wingMission.get(id) : undefined;
+    if (m) {
+      const km = kmFromBase(w, id, m.x, m.y);
+      const range = wingRange(w, id);
+      if (km > range * (1 + 1e-9)) out.push(`air: ${tag(n)}'s wing ${id} on a ${m.kind} ${km.toFixed(0)} km from its base, range ${range.toFixed(0)}`);
+    }
+  }
+  return out;
+}
+
 /** The broken lines of one run of `c.days` days, each rule set's checked every hour. */
 export function worldBreaks(c: WorldCase): string[] {
   const breaks = new Breaks();
@@ -187,10 +240,13 @@ export function worldBreaks(c: WorldCase): string[] {
   }
   let b = before(s.world);
   const sunk = new Set<number>();
+  const late = new Set<number>();
+  const fought = new Set<number>();
   s.step(24 * c.days, (w) => {
     const where = `${label} day ${Math.floor((w.tick - 1) / 24)}`;
     if (rules.has('economy')) breaks.add(where, economyBreaks(w, b, w.out.events, tag));
     if (rules.has('navy')) breaks.add(where, navyBreaks(w, sunk, tag));
+    if (rules.has('air')) breaks.add(where, airBreaks(w, late, fought, tag));
     w.out.events.length = 0;
     w.out.fires.length = 0;
     b = before(w);

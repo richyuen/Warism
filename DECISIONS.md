@@ -31,6 +31,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   amphibious system runs; no fleet is a dead nation's. The roadmap's "a fleet in its own or a
   partner's port" is not a rule of the game (a fleet stands at an enemy port to blockade it,
   PLAN 7.35): replaced by these.
+- **Air (R4c).** Every wing has a base: an airbase its side holds, or a fleet of its nation's;
+  one lost (taken, its carrier sunk) is left or lost with it by the next hour, at the air system's
+  hour. A wing not ferrying stands at its base: a carrier's at its fleet as the air system left it,
+  and a fleet in a sea battle (this hour or the last, when it ended) moves after it. A sortie
+  flies to a place within the wing's range of where it took off; an airbase wing's mission is
+  within its range. A carrier wing's mission may lie beyond its range while the fleet has sailed
+  off: the scheduler waits ("its carrier sailed off"), so the rule is the sortie's.
 
 ### ADR-808 · 2026-11-03 · accepted — A nation called beside one it is at war with stays out (ROADMAP R3, R27-N2)
 

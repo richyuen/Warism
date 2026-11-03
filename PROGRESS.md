@@ -541,3 +541,13 @@
   with its transports (7019 to day 400, 14 lines); kept afloat after they sank (England's 279, day 287).
 - `worldInvariantsNavy.test.ts` 8 of 8.
 - **Next:** R4c, air.
+
+## 2026-11-03 — ROADMAP R4c (ADR-809): the air's checker
+- Rule set `air`: a base held by its side or its nation's fleet (lost ones gone by the next hour); at the base
+  unless ferrying; a sortie within range; an airbase wing's mission within range. First forms flagged carrier
+  wings by design: missions kept while the carrier is out of range (the scheduler waits), and a fleet moved by
+  the naval combat after the air system (in a battle, or in the hour one ends).
+- 730 days, 0 broken on the eight worlds. Red on 7019 to day 400: a launch out of range (2 lines), a carrier's
+  wing not moved (2), a taken airbase kept (19).
+- `worldInvariantsAir.test.ts` 8 of 8.
+- **Next:** R4d, nukes.

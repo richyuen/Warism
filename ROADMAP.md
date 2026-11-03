@@ -92,7 +92,11 @@ Rules:
     a fleet may stand at an enemy's port to blockade it; ADR-809.) `worldInvariantsNavy.test.ts` 8
     of 8; 730 days on the eight worlds: 0 broken; red with the formation left behind its
     transports (14 lines, 7019) and kept afloat after they sank (England's 279, day 287).
-  - [ ] R4c Air: a wing within range of its base.
+  - [x] R4c Air: every wing has a base its side holds (a taken one left by the next hour) or a
+    fleet of its nation's; it stands there unless ferrying; a sortie flies within its range; an
+    airbase wing's mission is within it (a carrier's waits while out of range, by design).
+    `worldInvariantsAir.test.ts` 8 of 8; 730 days on the eight worlds: 0 broken; red on 7019 with a
+    launch out of range, a carrier's wing left behind, a taken airbase kept.
   - [ ] R4d Nukes: a burst only by a nation with warheads and a means.
   - [ ] R4e The bonds: no puppet of a puppet, no alliance with an overlord.
 - [ ] R5 **The critic's runs and the release.** After R1–R4 (the user's request, 2026-11-03: the
