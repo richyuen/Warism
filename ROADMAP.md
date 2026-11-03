@@ -22,7 +22,7 @@ Rules:
 - [x] R0d PROGRESS.md and DECISIONS.md archived by month under `docs/history/`.
 - [x] R0e PROMPT.md, CLAUDE.md, CRITIC_PROMPT.md and the critic's agent rewritten for work after
   the release: our own goals, the batch flow, no DONE CONDITION.
-- [ ] R0f Tracked `critic/` pruned to the last report and the files it and its scripts cite.
+- [x] R0f Tracked `critic/` pruned to the last report and the files it and its scripts cite.
 - [ ] R0g CI: a nightly GitHub Actions run (typecheck, lint, unit, the ten-year tests, a soak, the
   war-and-peace checker on new seeds, a small sweep) and a weekly full sweep.
 - [ ] R0h CHANGELOG.md with the `release-2026-11-03` entry.

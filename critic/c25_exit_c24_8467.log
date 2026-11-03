@@ -1,2 +1,0 @@
-[{"k":"Germany on Poland","day":1.04,"polGer":true,"polFra":false,"gerFra":true,"gerHoldsPol":0,"polHoldsGer":0,"truce":false},{"k":"day 45","day":45.04,"polGer":true,"polFra":false,"gerFra":true,"gerHoldsPol":42,"polHoldsGer":342,"truce":false},{"k":"an hour after Poland declared on France","day":45.08,"polGer":true,"polFra":true,"gerFra":true,"gerHoldsPol":42,"polHoldsGer":342,"truce":false},{"k":"an hour after Poland declared on Germany again","day":45.13,"polGer":true,"polFra":true,"gerFra":true,"gerHoldsPol":43,"polHoldsGer":340,"truce":false}]
-done:
