@@ -1,424 +1,115 @@
 # MISSION
 
-Build a browser-based grand-strategy *world war simulator* that matches or
-beats "Ages of Conflict: World War Simulator" (AoC) in capability and feel
-(https://jokupelle.itch.io/ages-of-conflict), starting with a standard 1938
-world map, plus five major differentiators listed below. Write ALL code, art
-and data yourself or from permissively licensed sources. Do not copy AoC's
-assets or code.
+Warism is a browser-based grand-strategy world war simulator: a mostly AI-driven world from 1938
+(or a random world) that the player watches, steers with God Mode and edits, with five things at its
+heart: true semantic zoom down to single units, naval warfare, armour, air power and an AI that can
+build and use nuclear weapons. It was released on 2026-11-03 (`release-2026-11-03`).
 
-You are running in an autonomous loop with max effort. Each iteration starts
-with NO memory except the files in this repo. Files are your memory.
+This brief is for the work after that release (rewritten 2026-11-03, ADR-805, the user's decision).
+The build's earlier brief, its DONE CONDITION and its phased plan are in git history and in the
+frozen PLAN.md; Ages of Conflict, the game it was first measured against, is a source of ideas, not
+a yardstick.
 
-# PARITY PHILOSOPHY
+Write all code, art and data yourself or from permissively licensed sources. Never copy another
+game's assets or code.
 
-Match or beat AoC's capabilities and feel, not its implementation. Choose the
-best visual style and territory model yourself (per-pixel raster, vector
-provinces, hybrid, or something else) as long as zoom reaches unit level with
-real, increasing detail. Zooming into a fixed-resolution map until it is
-blocky is a failure: detail must be generated or loaded as you zoom. Any
-deliberate deviation from AoC must be logged in DECISIONS.md with a reason.
-The feature list below is the minimum capability set, not a spec of how to
-build it.
+# THE GOALS (what a change is judged by)
 
-# REFERENCE MATERIAL
+1. **Fun to watch.** The world keeps changing for decades: wars start and end, powers rise and
+   fall, alliances and puppets form and break, and something is always worth zooming into.
+2. **Readable.** At every zoom a player can tell what is happening and why: who fights whom,
+   what a panel's number means, why a button is greyed.
+3. **Rules that agree.** The sim's rules hold together: no state that two rules forbid between
+   them, checked by the checkers on many seeds (`tests/helpers/diploInvariants.ts` and its kin).
+4. **Stable.** No crash, no desync; save and load bit-identical; seeded runs deterministic.
+5. **Fast.** ≥ 60 fps at world zoom with 100+ nations, ≥ 30 fps at tactical zoom with 10,000+
+   unit sprites, on the machine the budgets were set on (`npm run bench`); a tick within its
+   budget (`npm run sim -- --affinity 0xFFFF`).
 
-- Fetch and read: the itch.io page, the full devlog index and posts
-  (https://jokupelle.itch.io/ages-of-conflict/devlog), the Steam page
-  (https://store.steampowered.com/app/2186320/).
-- `reference/` (user-provided, private; never commit, publish or ship it):
-  - `screens/`: AoC screenshots. View them.
-  - `video/`: gameplay clips. Extract frames with ffmpeg into
-    `reference/frames/` at about 1 frame per 2 seconds, then view them.
-  - `NOTES.md`: the user's own taste notes. Highest priority.
-- Observe behaviour only. Never decompile, extract or copy AoC assets, code
-  or data.
-- If `reference/` is missing, say so in PROGRESS.md, rely on text sources,
-  and mark every visual/feel claim as low confidence.
+# FILES
 
-# BASELINE CAPABILITIES (must all be present and good)
+- `ROADMAP.md`: what is to do, top-down, each item with its acceptance test. "continue", "next" or
+  "go" means: the first unchecked item.
+- `SPEC.md`: how the game works (§1 and §2 first, the rest by section; searched).
+- `DECISIONS.md`: this month's ADRs, newest first; earlier months in `docs/history/` (searched).
+  Every design choice and every change of process gets an ADR; the user's are marked so.
+- `PROGRESS.md`: this month's log, newest last (read the tail); earlier months in `docs/history/`.
+- `BLOCKERS.md`: open problems and the watch list; resolved ones in `docs/BLOCKERS_DONE.md`.
+- `CHANGELOG.md`: what each release brought, for players.
+- `critic/CRITIC_REPORT.md` and `.json`: the last critic run.
+- Frozen records, searched only: PLAN.md, `docs/PLAN_DONE.md`, `docs/PARITY.md`.
 
-World simulation:
-- Mostly-AI-driven free-for-all: nations expand, declare war, make peace,
-  ally, form and leave alliances/unions (with a unity value), create and
-  release puppets (with autonomy), revolt and collapse.
-- Cores/rightful owners, per-province or per-region revolts, revival of dead
-  nations from their core territory (finite, with cooldown), revolt-
-  suppression spending, optional winner-takes-all annexation on capital
-  capture, occupation vs rightful-territory layers.
-- Broke or exhausted nations sue for peace; "fight to the death" stance;
-  per-nation aggression/traits and income bonus (-100..100).
-- Economy (gold, income, expenses, production) on a regular economic tick.
-- Terrain types (water, mountains, forest, grassland, tundra, desert, etc.)
-  affecting movement and combat. Cities and capitals with names.
-- Major Battles that pierce frontlines; combat-efficiency modes (dynamic,
-  progressive, static, locked, random); temporary buffs/debuffs with timers.
-- Long-run dynamism: with sensible settings, the world keeps changing for
-  many simulated decades without freezing (no bar on the largest nation's
-  share: ADR-740, 2026-10-27, the user's decision).
+# EACH ITEM
 
-Player tools:
-- Observer-first play, plus God Mode: rename; force war/peace/alliance/
-  collapse; spawn nation/revolt/battle; grant buffs; take control of a nation;
-  disable AI globally or per nation.
-- Scenario/map editor: paint tools (brush, bucket, line), undo/redo, target
-  mask, cities, gold and core costs, alliances, puppets, annex, preset
-  revolts, map import. Flag editor with presets. Scenarios save/load as
-  shareable files.
-- Map modes: political, terrain, wars, diplomacy, alliances, puppets, income,
-  revolts.
-- Statistics (incl. military size) and a history log (wars, battles, cities,
-  revolts, nukes) that is filterable and exportable.
-- Quality of life: pan/zoom with keyboard, drag and touch; speeds up to max
-  plus pause (persisted); autosave; in-game screenshot key; UI-size setting;
-  i18n from day one (English first); looping-map option; selectable map sizes
-  up to very large; unit-size setting; good visual polish (flags, curved or
-  well-placed nation names, readable borders).
-- Seeded, deterministic runs and randomisation options.
+1. Read SPEC §1–§2 and the sections the item touches, the item in ROADMAP.md, the tail of
+   PROGRESS.md, BLOCKERS.md's open entries, and the last critic report's findings on the item.
+2. `npm run check` on the clean tree. If anything is broken, fixing it is the only task.
+3. If the item is too big for one sitting, split it in ROADMAP.md into lettered parts (one level).
+4. A change of a sim rule first checks the decisions it stands on (ADR-803): search DECISIONS.md,
+   `docs/history/` and SPEC.md for the functions and rules it touches, and list in the item's
+   evidence the accepted ADRs and SPEC lines it could contradict. Each gets a test that is green
+   before and after, or the change waits and the conflict goes to the user as a question in
+   DECISIONS.md.
+5. A feature that brings rules adds them to a checker run on several seeds, as
+   `tests/helpers/diploInvariants.ts` checks war and peace (ADR-804). A rule nothing checks together
+   with the others is the next critic run's finding.
+6. Implement it fully: no stubs, no TODOs, no faked features.
+7. Verify for real: unit tests; for anything drawn, the dev server and Playwright, screenshots at
+   several zooms, looked at. Run the specs of what you touch by hand (`npx playwright test <file>`)
+   and name them in PROGRESS.md.
+8. When touching the sim or rendering, check the budgets of goal 5 and log any change in tick or
+   frame time with numbers.
+9. `npm run check` green, then commit, tick the item in ROADMAP.md with its commit and evidence,
+   append to PROGRESS.md, push (`git push`: a push to `main` deploys to GitHub Pages).
+10. An item that fails three attempts, or whose run misses its AT's bar, gets a BLOCKERS.md entry
+    (the bar, what moved, what is left) and the loop takes the next item. The cause found becomes a
+    ROADMAP item of its own.
 
-Start scenario: standard 1938 world with historically plausible nations,
-borders, alliances and starting forces. Design data so other maps/years can be
-added without code changes.
+# RELEASES (ADR-804, ADR-805)
 
-# THE FIVE DIFFERENTIATORS (must all be excellent)
+Items come in batches (a ROADMAP section). After the last item of a batch:
+1. Spawn the `critic` subagent with no hints, wait for it, check that its report names HEAD, commit
+   `critic/` with a line in PROGRESS.md (scores, blocking count).
+2. Each blocking issue becomes a ROADMAP item before the release item; fix them, then the critic
+   runs again (it decides itself whether the run is full or focused).
+3. On a full report with no blocking issue and every score at its bar: `npm run check:review`, the
+   soak (`npm run soak -- --scenario 1938 --seed 99 --minutes 30 --affinity 0xFFFF`), the sweep on
+   unseen seeds (`npm run sweep -- --first <seed> --tag <name>`: borders still moving at the end
+   on every seed), and `npm run bench -- G` (budgets PASS). A check that fails becomes a ROADMAP item.
+4. When all hold: a CHANGELOG.md entry, then tag the commit `release-<YYYY-MM-DD>` (`git tag -a`,
+   `git push --tags`).
 
-1. TRUE SEMANTIC ZOOM. Zooming adds information and detail, not just scale.
-   Define at least 4 LOD tiers: strategic (nation colours, fronts), operational
-   (army/fleet/air-wing markers with strength), tactical (formations broken
-   into unit proxies, e.g. one sprite = N soldiers/tanks/ships/planes, with
-   real positions, facing, movement, firing, casualties), close (individual
-   units where feasible, otherwise the finest proxy). The same simulation state
-   must drive every tier: no fake per-zoom animation that disagrees with the
-   sim. Casualties seen at tactical zoom change the strength shown at strategic
-   zoom. Smooth LOD transitions, no popping.
-2. NAVAL WARFARE. Sea zones/lanes, ports and naval bases, fleets with ship
-   classes (destroyers, cruisers, battleships, carriers, submarines,
-   transports), fleet-vs-fleet battles, blockades, convoy/supply lines,
-   amphibious invasions, sea control affecting supply and movement.
-3. TANKS / ARMOR. Light/medium/heavy armour, production and upkeep, terrain and
-   supply effects, combined-arms interaction with infantry, artillery and air.
-4. AIRCRAFT. Fighters, bombers, ground attack, transports as needed; airbases,
-   range, air superiority, interception, strategic bombing of industry and
-   ports, air support for ground and naval battles, carrier air groups.
-5. AI NUCLEAR WEAPONS. AI nations can research, build, stockpile and USE
-   nuclear weapons. AI decisions consider capability, doctrine/aggression, war
-   state, retaliation risk, alliances, target value and escalation. Include
-   delivery (bombers/missiles), blast and fallout effects on territory and
-   units, diplomatic and economic consequences, and mutual-destruction
-   dynamics. God Mode can toggle nuclear availability globally and per nation.
-   Nukes are a visible, dramatic, logged event.
+A feature the user asks for during a batch joins the next batch, unless the user says it comes first.
+
+# KEEPING WORK SHORT
+
+- One cause per commit.
+- An acceptance test names a number and a stop: the figure, its bar and the run that reads it.
+- Tune on small runs: `npm run sweep:quick` (10 seeds × 20 years); the full sweep once per item,
+  on the final code, on seeds no tuning has seen.
+- Gate before a long run, never after.
+- Diagnose from checkpoints (`npm run sim -- --save` / `--load`); a checkpoint is valid only for
+  the code that wrote it.
+- No hand-run hashes: `tests/sweep/baselineHash.test.ts` pins seed 99 after a year. A rule change
+  moves the pin in its own commit, with the old and new hash and the reason in DECISIONS.md.
+- Simulation speed is iteration speed: a slower tick is logged with numbers.
 
 # TECH CONSTRAINTS
 
-- TypeScript + Vite, no server required, runs from static hosting.
-- Rendering: WebGL or a WebGL-backed library (e.g. PixiJS), or highly
-  optimised Canvas2D with instancing/culling. Choose after a quick prototype
-  benchmark in phase 0.
-- Simulation is a pure, deterministic, seeded engine separate from rendering,
-  run in a Web Worker. Fixed timestep, adjustable speed, pause.
-- Spatial indexing (quadtree/spatial hash) for unit queries.
-- Performance budget: >= 60 fps at strategic zoom with 100+ nations; >= 30 fps
-  at tactical zoom with 10,000+ visible unit proxies on a mid-range laptop.
-- Save/load full state, bit-identical round trip.
-- vitest for sim logic, Playwright for browser smoke and visual checks,
-  ESLint + tsc strict. All must pass before any commit.
-
-# FILES YOU MAINTAIN (create on iteration 1)
-
-- `SPEC.md`: spec, architecture, data schemas, LOD design, combat model, AI
-  design. Update when decisions change.
-- `PLAN.md`: phased checklist of small verifiable tasks (`- [ ]` / `- [x]`),
-  each with an acceptance test. Phases: 0 foundations and benchmarks;
-  1 baseline parity; 2 semantic zoom; 3 armor; 4 naval; 5 air; 6 nuclear AI;
-  7 balance, polish, soak tests.
-  It holds what is still to do (added 2026-10-09, ADR-231, the user's
-  decision; it had grown to 528 KB and was no longer read): a task that is
-  done keeps its first line there, marked `[…]`, and its text is in
-  `docs/PLAN_DONE.md`. The first lines of the numbered tasks are in the
-  plan's last section, "Done: the first lines" (ADR-235); those of the done
-  parts of an open task stay in it, so that the next part's letter is seen.
-  Never write a task's text back from there, never
-  delete a first line (the gate and `npm run critic:due` read the ticks),
-  and never edit that section or `docs/PLAN_DONE.md` by hand. What a done task leaves to be
-  done goes under the open task that will do it, not into the done one: as a numbered task of
-  its own or a part within the depth cap (KEEPING ITERATIONS SHORT, ADR-554), never a deeper
-  part of the task that found it.
-- `PROGRESS.md`: append-only log: what you did, learned, gotchas.
-- `BLOCKERS.md`: what you're stuck on and what you tried.
-- `DECISIONS.md`: key technical and design decisions and why, including every
-  deliberate deviation from AoC.
-- `DATA_SOURCES.md`: every data/art/font source with its license.
-- `docs/PARITY.md`: created on iteration 1 from the reference material.
-  Table 1 "AoC parity rows" (scored), columns:
-  `# | feature | AoC behaviour | our behaviour | status | evidence | notes`,
-  where status is verified / partial / not started. Table 2 "Our additions"
-  (unscored). Rows stay numbered and in order. Every row records whether AoC
-  behaviour is known from TEXT or VISUAL reference. A row is verified only
-  with a dated observation note of AoC's behaviour or intent AND our own
-  test/screenshot whose evidence paths exist.
-- `npm run parity`: script that computes the parity score, checks that every
-  verified row's evidence paths exist, and fails if the PARITY.md header
-  disagrees with the table. Never hand-edit the score.
-
-# EVERY ITERATION
-
-1. Read SPEC.md §1 and §2 and the sections the task touches, PLAN.md, the
-   tail of PROGRESS.md, BLOCKERS.md, and `critic/CRITIC_REPORT.md` if it
-   exists (changed 2026-11-02, ADR-804, the user's decision: SPEC.md is
-   290 KB; the rest of it is searched). BLOCKERS.md holds the open entries
-   and the watch list; an entry resolved is moved to
-   `docs/BLOCKERS_DONE.md`, which is searched, not read. PLAN.md is read from its top to
-   the heading `## Phase 7` (about 18 KB: the open task and the phases
-   ahead; changed 2026-10-09, ADR-235, the user's decision). Phase 7 is
-   read when the task is one of its own or a line is to be added under
-   PLAN 1.42; the last section, "Done: the first lines", is not read. Do
-   not read `docs/PLAN_DONE.md`: search it when a comment or an ADR names a
-   task that is done.
-2. Run the full test/lint/typecheck/build suite. If anything is broken,
-   fixing it is this iteration's only task.
-2a. Critic run. If `critic/CRITIC_REPORT.json` is missing, or a phase review
-    has been ticked in PLAN.md since the report (`npm run critic:due` checks
-    these two), or you believe the DONE CONDITION is otherwise met, then
-    running the critic is this iteration's only task: commit any pending
-    work first. No `npm run check:review` before the run (changed
-    2026-11-02, ADR-803, the user's decision: ADR-554's review took an hour
-    a lap and found no blocking issue); the gate each commit passed stands.
-    Then re-run the last report's probes on HEAD (ADR-803, the user's
-    decision): the scripts in `critic/scripts/` behind its blocking issues
-    and its scores under the bar, with the seeds and arguments the report
-    and its evidence name, and the war-and-peace checker's tests
-    (`npx vitest run tests/unit/diploInvariants`). Running them is not
-    acting as the critic. A probe that still shows its defect means the
-    task that fixed it did not: reopen that task (or file one before PLAN
-    7.5) and end the iteration without the critic. Then spawn the `critic` subagent
-    (Agent tool, subagent_type
-    `critic`) with no hints about what to look at, wait for it to finish,
-    and check that `critic/CRITIC_REPORT.json` now names HEAD. Commit the
-    critic's new files in `critic/` with the report (`git add critic/`;
-    `.gitignore` keeps its saved states, saves and build copies out),
-    since the report and later tasks cite them as evidence (added
-    2026-10-30, ADR-770, the user's decision). Append one
-    line to PROGRESS.md with the scores and blocking count. Then add a
-    PLAN.md task for every blocking issue that has none, placed before the
-    next feature task unless a later phase already covers it (a finding that
-    step 2b defers gets a line under PLAN 1.42 instead). Then add at least
-    one PLAN.md task of its own for every dimension the report scores under
-    its bar in the DONE CONDITION (a parity dimension under 7, a
-    differentiator under 8), whether or not a blocking issue's task touches
-    it, scoped to what the blocking issues' tasks leave uncovered: from its
-    "Fix" and "Still short" lines and evidence, the dimension and its score
-    in the task's first line, placed with the blocking issues' tasks before
-    PLAN 7.5 (added 2026-10-17, ADR-486, the user's decision). No finding may
-    depend on the report staying recent. Then end the iteration. Never act
-    as the critic yourself.
-    A clean report finishes first (added 2026-11-02, ADR-804, the user's
-    decision: runs 21 and 23 were clean, and each time new features came
-    before the release; runs 19, 20, 22 and 24 each blocked on the newest
-    feature). On a full report with no blocking issue and every dimension at
-    its bar, the next iteration runs the DONE CONDITION's other checks
-    (`npm run check:full`, the soak, the sweep, the scripted demo run, the
-    budgets). A check that fails is filed before PLAN 7.5 and fixed, then
-    the critic runs again. When every check holds, tag the commit
-    `release-<YYYY-MM-DD>` (`git tag`, `git push --tags`) and output the
-    DONE string. The critic decides for itself whether its run is full or
-    focused (`CRITIC_PROMPT.md`); a focused report never meets the DONE
-    CONDITION, so a clean one is followed by a full run.
-    New features wait for the release (ADR-804, the user's decision). A
-    feature the user asks for while PLAN 7.5 is open goes in a batch after
-    PLAN 7.5, unless the user says it comes first. After the release, the
-    loop builds the batch's tasks one after another, with no critic run
-    between them, then runs the critic once on the whole batch. Each
-    feature task adds the rules it brings to a checker run on several seeds,
-    as `tests/helpers/diploInvariants.ts` checks war and peace: a rule
-    nothing checks together with the others is the next critic run's
-    finding.
-    One run per phase (changed 2026-10-03, ADR-59, the user's decision). The
-    critic no longer returns every 5 commits, and the "Critic " prefix on
-    commit subjects no longer counts for anything. The user may ask for a
-    run at any time.
-2b. If `critic/CRITIC_REPORT.json` exists and its `commit` is not older than
-    the last 10 commits, fix its blocking issues first, highest severity
-    first. Critic findings override your own priorities. You may dispute a
-    finding only by writing evidence in DECISIONS.md. Never edit anything in
-    `critic/`.
-    Deferred to PLAN Phase 7 (added 2026-10-03, ADR-58, the user's decision):
-    findings about long-run balance and dynamics (a static world, the
-    leader's share of the land, risers and fallers, how many nations rise or
-    die). The balance will move with every feature of phases 2-6, so tuning
-    it now is wasted work. Log such a finding once per report in PROGRESS.md,
-    do not dispute it, do not fix it, and take the next blocking issue. A
-    crash, a desync or a mechanism that plainly does not work is not balance:
-    fix it.
-3. Pick the first unchecked PLAN.md task (or split it if too large, within
-   the depth cap of KEEPING ITERATIONS SHORT).
-4. Implement it fully. No stubs, no TODO placeholders, no faked features.
-5. Verify for real: run tests; start the dev server; use Playwright to load
-   the game, exercise the feature, take screenshots at multiple zoom levels,
-   and LOOK at them (view the image files). Compare against `reference/`
-   frames where relevant. Fix visible problems.
-6. Check performance against the budget when touching rendering or sim.
-7. Commit with a clear message; tick the task; append to PROGRESS.md; run
-   `npm run parity` and update PARITY.md rows you touched. After the tick,
-   `npm run plan:archive` (ADR-231, ADR-235): it moves what is done to
-   `docs/PLAN_DONE.md` and a done task's first line to the plan's last
-   section, in the same commit. Push every commit
-   (`git push`; added 2026-10-05, ADR-107, the user's decision): a push to
-   `main` builds the game and puts it on GitHub Pages.
-8. If a task fails 3 attempts, or its run misses its AT's bar (KEEPING
-   ITERATIONS SHORT, ADR-554), write it to BLOCKERS.md with details (the
-   bar, what moved, what is left) and move on.
-9. One review pass a phase, at its end: the phase review (4.8, 5.8, 6.9, ...)
-   is a comprehensive pass over the whole phase: refactor debt, delete dead
-   code, re-read SPEC.md for drift, add missing tests, besides its own items.
-   No review pass between (changed 2026-10-11, ADR-266, the user's decision:
-   before, one came every ~5 numbered tasks, ADR-74's count). A task that
-   comes out of the review belongs to the phase it reviews.
-10. The iteration's last message to the user starts with every decision
-    that waits on the user (an open BLOCKERS entry that waits on one, an ADR
-    marked proposed as the user's decision), one line each with the ADR's
-    number and the options, before the iteration's report; or says in one
-    line that none waits (added 2026-10-19, ADR-554, the user's decision:
-    ADR-525 waited a day, told in BLOCKERS alone).
-
-# KEEPING ITERATIONS SHORT
-
-Added 2026-10-03 after an iteration that took three hours, most of it waiting
-on simulation runs (DECISIONS ADR-48).
-
-- Balance sweeps are suspended until phases 2-6 are complete (added
-  2026-10-03, ADR-58, the user's decision). No `npm run sweep` and no
-  `npm run sweep:quick` after a rule change: the balance will change with
-  every feature, so a verdict on it now is wasted. What stays:
-  - the 10-year tests (`tests/sweep/`): the pinned hash, save and load, allies
-    never at war, no bankruptcy in peace. They test correctness, not balance.
-    The gate runs every one of them only at a phase review (the commit that
-    ticks it, and `npm run check:full`); any other commit with a sim input in
-    it runs the pin alone (added 2026-10-12, ADR-278, the user's decision);
-  - one `npm run sweep:quick` at each phase review (PLAN 2.11, 3.7, 4.8, 5.8,
-    6.9), as a smoke test. Report its five limits in PROGRESS.md. A limit
-    that fails is logged in BLOCKERS.md and waits for Phase 7, unless its
-    cause is a defect of the phase's feature (a crash, a desync, a mechanism
-    that does not work). Do not tune constants in answer to it.
-  The bullets below about tuning and the full sweep apply again from PLAN 6.8
-  (the sweep with nukes on) and in Phase 7.
-- One cause per commit. When a task or a critic finding has several causes,
-  split it in PLAN.md and fix, gate and commit them one at a time.
-- A rule change checks the decisions it stands on (added 2026-11-02,
-  ADR-803, the user's decision: critic runs 24–26 each found a blocking
-  issue made by the fix before, and R26-B1 was run 25's own "Fix" line
-  against ADR-780). Before changing a sim rule, for a task or a critic
-  finding: search DECISIONS.md and SPEC.md for the functions and rules the
-  change touches (`declareWar`, `forceWar`, "war of independence", ...) and
-  list in the task's evidence the accepted ADRs and SPEC lines it could
-  contradict. Each gets a test that is green before and after the change,
-  or the change is not made and the conflict goes to DECISIONS.md as a
-  question for the user. A critic's "Fix" line is a suggestion, not a
-  decision: it is checked the same way.
-- The rules of war and peace hold together
-  (`tests/helpers/diploInvariants.ts`, ADR-803): land held at peace, a
-  silent exit from a war, a war inside a realm, a bond's break refused.
-  A finding about war, peace or the bonds that the checker would not have
-  caught adds its rule to the checker, red on the commit the critic read,
-  in the task that fixes it.
-- An acceptance test names a number and a stop (added 2026-10-19, ADR-554,
-  the user's decision). "Measured, before and after" is a measure, not a
-  test: the AT says the figure, the bar it must reach (or the case that
-  must hold) and the run that reads it. A task whose run misses its bar is
-  not split again for the cause the run found: it gets a BLOCKERS entry
-  (the bar, what moved, what is left; step 8) and the loop takes the next
-  task. The cause found goes to PLAN.md as a numbered task with an AT of
-  its own, where the user sees it. A task that only measures ("measured
-  first") is a part whose parent holds the number, never a task of its own.
-- A task is split at most twice (ADR-554): a numbered task has parts
-  (7.35a), a part has parts (7.35a1), and no deeper. A third split means
-  the numbered task was mis-scoped: close it under the bullet above and
-  file what is left as a numbered task. The parts deeper than that on
-  2026-10-19 (PLAN 7.35d3b, 7.35d3c) are finished as they stand or closed
-  so; none of them is split again.
-- A dimension task (one step 2a files for a score under its bar, ADR-486)
-  has a budget of 20 commits, counted by the task's number in the commit
-  subjects, the critic's named cases taken first (ADR-554). At the budget
-  the loop writes in PROGRESS.md what moved against the critic's evidence,
-  case by case, closes the task (ticked if its AT holds, else step 8) and
-  takes the next; what is left waits for the next report, which judges it.
-  PLAN 7.35 is at 36 on this date: 7.35d3b and 7.35d3c are its last parts.
-- Tune on small runs. `npm run sweep:quick` (10 seeds × 20 years, report in
-  `.cache/`; seeds run side by side, and three seeds cannot tell a rule from
-  noise) while changing rules or constants. It is judged by the limits only
-  and reports the riser and faller numbers (ADR-54). Do not run the full
-  sweep to find out whether a mechanism works: run it once the quick sweep
-  shows the mechanism working with room to spare. The full sweep
-  (`npm run sweep -- --first <unseen> --tag <name>`) runs once per task, on
-  the final code, on seeds no tuning has seen.
-- Gate before the final sweep, never after. A gate failure changes the code,
-  and a sweep of code that then changes is wasted.
-- Diagnose from checkpoints. `npm run sim -- --save` / `--load` and
-  `npm run diag -- --load` start from a saved year instead of 1938. Save a
-  checkpoint once and reuse it for every question about later years. A
-  checkpoint is only valid for the code that wrote it: after changing sim
-  rules, rewrite it.
-- `npm run check` sizes the gate to what changed since HEAD: only
-  `npm run parity` for a commit of documents alone (Markdown, `docs/`), and
-  no 10-year sweep tests when nothing they depend on changed, and of those
-  only the pin unless the change ticks a phase review (ADR-278). On a clean
-  tree that the gate has already passed it runs nothing, so step 2 of an
-  iteration that starts on a gated commit costs seconds (ADR-55).
-  `npm run check:full` always runs everything: use it for the DONE CONDITION
-  and whenever the working tree was not gated commit by commit (after a pull
-  or a rebase).
-- The unit tests and the e2e suite run in full once a phase, at its review (`- [x] 4.8 Phase 4
-  review`) and in `npm run check:full` (changed 2026-10-12, ADR-293, the user's decision: until
-  then at every numbered task, ADR-87 and ADR-280). Any other commit, a numbered task's tick
-  among them, runs the unit test files whose imports reach a file that changed (`vitest
-  related`) and the spec files it changed; something every test stands on (the configs, the
-  helpers, the data and assets read from disk, the lock file) runs them all. So a task that
-  touches what is drawn runs the specs of that feature by hand before its commits and names
-  them in PROGRESS.md; what an earlier commit broke is found at the phase review, and fixed
-  there. The phase review and the DONE CONDITION use `npm run check:full`; on a machine where
-  some tests fail for the machine's sake (BLOCKERS), the phase review runs `npm run
-  check:review` instead, before its tick (ADR-297, the user's decision): every stage on its
-  own, a failed test run again alone, a run cut off resumed; green when every test red twice
-  is on `tools/gate/knownRed.json`. The tick's commit then runs parity alone on that code.
-- No hand-run hashes. `tests/sweep/baselineHash.test.ts` pins the state hash
-  of seed 99 after one year. A change meant to leave behaviour alone is
-  proved by that test in the gate. A change of rules moves the pin in the
-  same commit, with the old and new hash and the reason in DECISIONS.md
-  (ADR-55).
-- Simulation speed is iteration speed. A change that makes the tick slower
-  is logged with numbers in PROGRESS.md, and a tick over budget is fixed
-  before the next task that needs a full sweep.
+- TypeScript + Vite, static hosting, no server. WebGL rendering.
+- The sim is pure, deterministic and seeded, separate from rendering, run in a Web Worker; fixed
+  timestep. Save and load round-trip bit-identical.
+- Data-driven: units, nations, maps and techs in JSON.
+- vitest for sim logic, Playwright for the browser, ESLint and strict tsc.
 
 # RULES
 
-- Correctness over speed; never mark a task done unless verified.
-- Never weaken or delete a test to make it pass.
-- Keep the game always runnable on main.
-- Data-driven design (JSON for units, nations, maps, tech).
-- Use a real 1938 border dataset if you can find a permissively licensed one
-  (check the license); otherwise build the map procedurally from public-
-  domain geography and hand-assign 1938 ownership. Record sources in
-  DATA_SOURCES.md.
-- Never commit `reference/` or anything derived from AoC assets.
-- Ask no questions; make the best decision and record it in DECISIONS.md.
-
-# DONE CONDITION
-
-Only when ALL are true:
-- `critic/CRITIC_REPORT.json` exists for the current HEAD commit, from a full
-  run (`"mode": "full"`, or no `mode`; ADR-804), every parity
-  dimension scores >= 7, every differentiator dimension scores >= 8, and it
-  lists zero blocking issues;
-- every PLAN.md item is checked or has a documented blocker;
-- tests, lint, typecheck, build and `npm run parity` pass;
-- a headless 30-minute soak run of the 1938 scenario completes without crashes
-  or desyncs, and a seeded multi-decade sweep over 10+ seeds shows borders
-  still moving at the end ("no hegemon" struck 2026-10-27, ADR-740, the
-  user's decision);
-- a scripted Playwright run demonstrates seamless zoom from world view to
-  unit/proxy level, a naval battle, a tank battle, an air battle, and an AI
-  nuclear strike;
-- performance budgets are met.
-
-Then tag the commit `release-<YYYY-MM-DD>` and push the tag (ADR-804), and output exactly:
-<promise>WORLD_WAR_SIM_COMPLETE</promise>
-Do not output that string until it is fully true.
+- Correctness over speed; never tick an item that is not verified.
+- Never weaken or delete a test to make it pass. A test goes only with the feature it tests.
+- Keep `main` runnable; push every commit.
+- Never commit `reference/` or anything derived from another game's assets.
+- Record every data or art source and its licence in DATA_SOURCES.md.
+- Ask no questions during the work; make the best decision and record it in DECISIONS.md. A
+  decision that only the user can make (a change of goal, of process, or a missed bar) is written
+  as an ADR marked "proposed, the user's decision", and the next message to the user starts with it.
+- Never act as the critic, and never edit anything in `critic/` but by committing its output.

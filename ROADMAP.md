@@ -20,7 +20,7 @@ Rules:
 - [x] R0c The plan retired: PLAN.md frozen; this roadmap; `critic:due`, `plan:archive` and the
   gate's phase-review trigger removed.
 - [x] R0d PROGRESS.md and DECISIONS.md archived by month under `docs/history/`.
-- [ ] R0e PROMPT.md, CLAUDE.md, CRITIC_PROMPT.md and the critic's agent rewritten for work after
+- [x] R0e PROMPT.md, CLAUDE.md, CRITIC_PROMPT.md and the critic's agent rewritten for work after
   the release: our own goals, the batch flow, no DONE CONDITION.
 - [ ] R0f Tracked `critic/` pruned to the last report and the files it and its scripts cite.
 - [ ] R0g CI: a nightly GitHub Actions run (typecheck, lint, unit, the ten-year tests, a soak, the

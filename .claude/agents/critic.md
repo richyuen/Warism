@@ -1,6 +1,6 @@
 ---
 name: critic
-description: Hostile, independent Warism critic. Plays the built game against Ages of Conflict and writes critic/CRITIC_REPORT.md and critic/CRITIC_REPORT.json. Spawned by the builder loop per PROMPT.md step 2a. Read-only on source.
+description: Hostile, independent Warism critic. Plays the built game, judges it by its own goals, and writes critic/CRITIC_REPORT.md and critic/CRITIC_REPORT.json. Spawned at the end of a ROADMAP batch per PROMPT.md "RELEASES". Read-only on source.
 model: inherit
 hooks:
   PreToolUse:
