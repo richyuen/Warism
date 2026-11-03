@@ -41,7 +41,13 @@ Rules:
   AT: on seeds 7019, 2207 and 3739 at days 1, 60 and 365, the graph's edges equal the sim's
   relations on every pair of living nations (a unit test in the `allyWhy` way: 0 mismatches); an
   e2e spec opens the graph on the 1938 world, filters to one kind and clicks an edge, with
-  screenshots at the start and after a year.
+  screenshots at the start and after a year. Design: ADR-806.
+  - [x] R1a The graph and its layout (`src/ui/relationGraph.ts`, `relationLayout.ts`): the unit
+    test `tests/unit/relationGraph.test.ts`, 0 mismatches either way on 7019, 2207, 3739 at days
+    1, 60, 365 (the worker's own statistics message against `wars.list`, `overlord`,
+    `allianceOf`, `guarantees`, `truces`).
+  - [ ] R1b The panel: the bottom bar's Relations button, the drawing, the filters, the clicks; the
+    e2e spec and its screenshots.
 - [ ] R2 **AI puppets revolt** (critic run 28, non-blocking 1). In 3 seeds × 30 years no puppet
   with autonomy ≥ 10 fell below loyalty 30.5, and the revolt line is 20: the war of independence
   happens only through God's slider. Make the AI's puppets able to rise (the loyalty model's floor,

@@ -7,6 +7,35 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-806 · 2026-11-03 · accepted — The relations graph: what it draws and from what (ROADMAP R1, the user's feature)
+
+- **Context.** The user asked for a visual graph of every war, alliance, guarantee, puppet bond and
+  truce (2026-11-03). The map modes colour the land by one relation at a time, around one selected
+  nation; nothing shows the whole web at once.
+- **Decision.**
+  - A panel of its own ("Relations", a bottom-bar button beside Statistics and History, closed by
+    the others as they are). It reads only the statistics message (`nations`, `wars`); it computes
+    no relation of its own, so it can never disagree with the nation panel.
+  - Nodes: each living nation with a tie, its flag in a disc sized by the square root of its land
+    share; nations with no tie are left out, and counted in the footer. Each war is a small hub (⚔)
+    with an edge to each member, red for the attackers and orange for the defenders: a war of 7 on
+    3 is 10 lines, not 21, and a nation in two wars touches two hubs.
+  - Edges: an alliance is a star from its leader (`alliance.members[0]`) to each member; a
+    guarantee is directed, guarantor → target; a puppet bond is directed, overlord → puppet; a
+    truce joins its two nations, dashed. Each kind has its colour and can be switched off.
+  - The layout is a force layout with no random numbers: a new node starts at its neighbours'
+    centre (else at a place hashed from its id), and each update starts from the last positions,
+    so the same world draws the same graph and a change moves it a little.
+  - A click on a node selects that nation (as the ranking does); a click on an edge says what it is
+    in the footer ("Germany guarantees Poland"), which works on touch too.
+  - The code lives in `src/ui/` (`relationGraph.ts`, `relationLayout.ts`, `RelationsPanel.tsx`):
+    it is the page's alone, and a file in `src/shared/` would change the checkpoints' key and the
+    sweep's inputs for nothing.
+- **Consequences.** A unit test compares the graph built from the worker's own statistics message
+  with the relations read from the world directly (`wars.list`, `overlord`, `allianceOf`,
+  `guarantees`, `truces`), on three seeds and three days: no relation missing on either side.
+  No sim change; seed 99's pin is unchanged.
+
 ### ADR-805 · 2026-11-03 · accepted (the user's decision) — after the release: the loop's machinery retired; our own goals over AoC's; a roadmap, CI and a changelog; the relations graph first
 
 - **Context.** `release-2026-11-03` met the DONE CONDITION (critic run 28 full and clean, check:review, soak, sweep,

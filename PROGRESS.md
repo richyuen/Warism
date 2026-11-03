@@ -461,3 +461,21 @@
   0.51 / 1.10 ms, draw CPU p50 2.1 / 4.6 ms: PASS.
 - Evidence: `docs/evidence/7.5-done/release-2026-11-03/`.
 - Every PLAN item checked. Tag `release-2026-11-03`.
+
+## 2026-11-03 — ADR-805 (the user's decision): the loop's machinery retired after the release
+- Untracked probe output deleted (~10.5 GB of `.cache/` and `critic/`); tracked `critic/` pruned to runs 26–28
+  (3636 files of runs 1–25 leave the tree).
+- Parity retired: `docs/PARITY.md` frozen at 48.1 %; `npm run parity`, its gate stage and its tests removed.
+- The plan retired: PLAN.md frozen; `ROADMAP.md`; `critic:due`, `plan:archive`, `verify:phase0` and the gate's
+  phase-review trigger removed. Gate 2032 of 2032 unit tests.
+- PROGRESS and DECISIONS archived by month (`docs/history/`); PROMPT.md, CLAUDE.md, CRITIC_PROMPT.md rewritten;
+  CHANGELOG.md; SPEC.md 1.0 (§1, contents, §2.2).
+- Nightly GitHub Actions (`.github/workflows/nightly.yml`); first run started by hand (41612352441).
+
+## 2026-11-03 — ROADMAP R1a (ADR-806): the relations graph and its layout
+- `src/ui/relationGraph.ts`: nodes for the tied living nations and a hub per war; edges for war (by side),
+  alliance (a star from the leader), guarantee, puppet bond, truce. `relationLayout.ts`: a force layout with no
+  random numbers, warm-started from the last places.
+- AT: `tests/unit/relationGraph.test.ts`, the worker's statistics message against the world: 0 mismatches either
+  way on 7019, 2207, 3739 at days 1, 60, 365 (98 s with the checkpoints written).
+- **Next:** R1b, the panel.
