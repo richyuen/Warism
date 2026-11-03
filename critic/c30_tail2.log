@@ -1,0 +1,25 @@
+== c30_os2_scen  13:52:00
+   exit 0
+== c30_os2_scen critic/c26_critic_standoff.warsim-scenario c25 13:53:05
+   exit 0
+== c30_pup_panel 4583 60 13:53:14
+   exit 0
+== c30_phz 2671 40 13:53:27
+   exit 0
+== c30_rw 6143 80 3 13:53:46
+   exit 0
+== c30_an_ainuke 7019 critic/c30_seed7019_y20.bin 7019y20 13:55:56
+   exit 0
+== c30_pg2_played 4583 ITA YUG GER 24 rome 13:56:53
+   exit 0
+== c30_long_watch2 6151 10  def 13:59:03
+   exit 0
+== c30_long_watch2 6151 10 &heroes=on hon 14:04:14
+   exit 0
+== c30_long_watch2 4111 10 &heroes=on hon 14:08:38
+   exit 0
+== c30_long_watch2 4111 10  def 14:13:34
+   exit 0
+== c30_pf_lookfps 7019 critic/c30_seed7019_y20.bin 14:18:56
+   exit 0
+TAIL2DONE

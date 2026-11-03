@@ -138,6 +138,29 @@ Rules:
 - [x] R12 **A hero's loss and return are told** (R29-N1): ticker and History rows ("Bismarck was
   sunk near …", "Bismarck is back at Kiel") with Go to.
   AT: an e2e spec sinks a sea hero by God and sees both rows.
+- [ ] R13 **A sea hero comes back to the open sea** (critic run 30, R30-B2). R10's fallback (the
+  held port nearest the start) picks ports on landlocked water: Sovetsky Soyuz returns in the
+  Caspian (Baku 4637, Atyrau 7603, Makhachkala 9001) or on Lake Onega (Petrozavodsk 4111) and stays
+  there to the run's end, 11,259 days in 4 of 13 seeds. Only a port whose water reaches the hero's
+  start sea counts; failing that it waits, and its row says so. A checker rule: a sea hero stands in
+  water connected to its start sea.
+  AT: the checker's rule red on HEAD on 4637, green after; over the critic's seeds 4637, 7603, 9001,
+  4111 × 20 years no sea hero on water cut off from its start sea.
+- [ ] R14 **Every folded hero reachable by touch** (R30-B1). On a phone (5521, 390 × 844, touch)
+  the panel opened by the first tap covers "Sovetsky Soyuz +1" and "Bismarck +2", and closing it
+  starts the fold over at its lead: HMS Hood, TOG II and Char 2C are never opened. A fold also
+  puts a hero under another nation's flag (Hood in the Soviet counter, ~2,900 km off). Fold only
+  one nation's heroes, and reach each of a fold's heroes with the panel closed and reopened (or a
+  list of them); the fold's label on screen.
+  AT: on 5521's start view by touch at 390 × 844 and by mouse at 1600 × 900, each of the 14 heroes
+  opened by taps on its counter; no fold of two nations; screenshots looked at.
+- [ ] R15 **Carrier wings stay with a hero's fleet** (R30-B3). With heroes on, the checker's air
+  rules break on 3373 (random diplomacy: Japan's carrier group 1130 and Britain's 1057, days 581,
+  601) and 5591 (Japan's wing 1462 at day 158; Nationalist Spain's wing 932 keeping a base lost an
+  hour before, day 831); with heroes off, 0. A carrier moved 6 cells in one hour and left its wings.
+  Find the move and keep the wings with it.
+  AT: the checker's air rules red on HEAD on 3373 random and 5591 with heroes, green after; 0
+  broken on both and on five more seeds with heroes, 20 years.
 - [ ] R5 **The critic's runs and the release.** After R1–R4 (the user's request, 2026-11-03: the
   heroes feature gets a critic run of its own once the other items are resolved).
   - [x] R5a **A critic run on heroes** (PLAN 7.184, the heroes new-game option): the critic told to
@@ -149,6 +172,9 @@ Rules:
   - [ ] R5b **The batch's full critic run and the release.** A full critic run on the batch, the
     release checks (`npm run check:review`, the soak, the sweep with borders moving, the bench),
     the tag.
+    Run 30 (focused, commit d6e1bb1e): R8–R12 hold; 3 blocking (R13–R15); `mapVisuals` and
+    `uiUxPolish` back to 7, every score at its bar. A focused run does not close R5b: a full
+    run with no blocking issue follows R13–R15.
 
 ## Later
 

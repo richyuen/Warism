@@ -1,0 +1,865 @@
+[
+ {
+  "hero": "ENG hero_hood",
+  "lon": -3.1,
+  "lat": 58.9,
+  "n": 153,
+  "late": 0,
+  "seeds": [
+   4111,
+   4253,
+   4637,
+   5023,
+   5449,
+   5867,
+   6299,
+   6733,
+   7177,
+   7603
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": 14.6,
+  "lat": 35.7,
+  "n": 61,
+  "late": 1,
+  "seeds": [
+   4253,
+   5867,
+   6299,
+   7177
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": 45.1,
+  "lat": 12.7,
+  "n": 28,
+  "late": 1,
+  "seeds": [
+   4253,
+   7177
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": -43.2,
+  "lat": -22.8,
+  "n": 19,
+  "late": 0,
+  "seeds": [
+   4253
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": -3.1,
+  "lat": 56.1,
+  "n": 12,
+  "late": 0,
+  "seeds": [
+   4253,
+   5867
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": -5.2,
+  "lat": 36.1,
+  "n": 12,
+  "late": 0,
+  "seeds": [
+   4253,
+   7177
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": 1.1,
+  "lat": 51.5,
+  "n": 7,
+  "late": 0,
+  "seeds": [
+   4253,
+   5867
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": -64.8,
+  "lat": 32.2,
+  "n": 6,
+  "late": 0,
+  "seeds": [
+   4253,
+   7177
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": 24.6,
+  "lat": 59.5,
+  "n": 3,
+  "late": 0,
+  "seeds": [
+   6299
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": 20.9,
+  "lat": 56.5,
+  "n": 3,
+  "late": 0,
+  "seeds": [
+   6299
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": -1,
+  "lat": 50.7,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   4253,
+   6299
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": -4.1,
+  "lat": 50.3,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   4253,
+   6299
+  ]
+ },
+ {
+  "hero": "ENG hero_hood",
+  "lon": 39.5,
+  "lat": 15.7,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   4253
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -4.5,
+  "lat": 48.4,
+  "n": 108,
+  "late": 1,
+  "seeds": [
+   4111,
+   4253,
+   4637,
+   5023,
+   5449,
+   5867,
+   6299,
+   6733,
+   7177,
+   7603
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -0.6,
+  "lat": 35.8,
+  "n": 51,
+  "late": 5,
+  "seeds": [
+   4111,
+   4253,
+   4637,
+   5023,
+   5449,
+   5867,
+   6733,
+   7177,
+   7603
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 5.9,
+  "lat": 43,
+  "n": 18,
+  "late": 2,
+  "seeds": [
+   4111,
+   5023,
+   5449,
+   6733,
+   7177
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -1.7,
+  "lat": 49.7,
+  "n": 17,
+  "late": 4,
+  "seeds": [
+   4111,
+   5023,
+   5867,
+   6733,
+   7177
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 107.1,
+  "lat": 10.1,
+  "n": 17,
+  "late": 2,
+  "seeds": [
+   6299,
+   6733
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -17.5,
+  "lat": 14.6,
+  "n": 15,
+  "late": 4,
+  "seeds": [
+   4111,
+   4253,
+   5023,
+   6299,
+   6733
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 13.1,
+  "lat": 33,
+  "n": 10,
+  "late": 0,
+  "seeds": [
+   4253,
+   5449
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 39.5,
+  "lat": 15.7,
+  "n": 7,
+  "late": 2,
+  "seeds": [
+   5449,
+   7177
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -43.2,
+  "lat": -22.8,
+  "n": 6,
+  "late": 0,
+  "seeds": [
+   5023,
+   6299
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 33.5,
+  "lat": 44.7,
+  "n": 3,
+  "late": 1,
+  "seeds": [
+   4111
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 24,
+  "lat": 32.2,
+  "n": 2,
+  "late": 1,
+  "seeds": [
+   5867,
+   6733
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": 13.8,
+  "lat": 44.9,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   4111
+  ]
+ },
+ {
+  "hero": "FRA hero_richelieu",
+  "lon": -7.6,
+  "lat": 33.6,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   5449
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 8.2,
+  "lat": 53.6,
+  "n": 174,
+  "late": 1,
+  "seeds": [
+   4111,
+   4253,
+   4637,
+   5023,
+   5449,
+   5867,
+   6299,
+   6733,
+   7177,
+   7603
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 18.7,
+  "lat": 54.6,
+  "n": 19,
+  "late": 3,
+  "seeds": [
+   4111,
+   5023,
+   7603
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 10.3,
+  "lat": 54.4,
+  "n": 14,
+  "late": 1,
+  "seeds": [
+   4111,
+   5023,
+   5867,
+   6733
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 20.9,
+  "lat": 56.5,
+  "n": 8,
+  "late": 0,
+  "seeds": [
+   4111,
+   5023
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 9.8,
+  "lat": 44,
+  "n": 7,
+  "late": 1,
+  "seeds": [
+   5449,
+   7603
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 4.9,
+  "lat": 53,
+  "n": 6,
+  "late": 0,
+  "seeds": [
+   4637,
+   5449
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 14.3,
+  "lat": 40.8,
+  "n": 3,
+  "late": 0,
+  "seeds": [
+   5449
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 15.6,
+  "lat": 56.1,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   4111
+  ]
+ },
+ {
+  "hero": "GER hero_bismarck",
+  "lon": 24.6,
+  "lat": 59.5,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   5023
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 17.1,
+  "lat": 40.5,
+  "n": 125,
+  "late": 3,
+  "seeds": [
+   4111,
+   4253,
+   4637,
+   5023,
+   5449,
+   5867,
+   6299,
+   6733,
+   7177,
+   7603
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 13.1,
+  "lat": 33,
+  "n": 23,
+  "late": 2,
+  "seeds": [
+   4253,
+   5023,
+   5449,
+   5867,
+   7177
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 39.5,
+  "lat": 15.7,
+  "n": 18,
+  "late": 3,
+  "seeds": [
+   5449,
+   6299,
+   6733,
+   7177
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 24,
+  "lat": 32.2,
+  "n": 16,
+  "late": 2,
+  "seeds": [
+   5449,
+   5867,
+   7177,
+   7603
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 13.8,
+  "lat": 44.9,
+  "n": 14,
+  "late": 1,
+  "seeds": [
+   4111,
+   4637,
+   5867,
+   6299,
+   7603
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 9.8,
+  "lat": 44,
+  "n": 8,
+  "late": 4,
+  "seeds": [
+   4637,
+   6733,
+   7603
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 24.9,
+  "lat": 60.1,
+  "n": 8,
+  "late": 0,
+  "seeds": [
+   5867
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 14.3,
+  "lat": 40.8,
+  "n": 7,
+  "late": 1,
+  "seeds": [
+   5023,
+   5867,
+   6733,
+   7603
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 20.9,
+  "lat": 56.5,
+  "n": 6,
+  "late": 0,
+  "seeds": [
+   4637
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 107.1,
+  "lat": 10.1,
+  "n": 6,
+  "late": 0,
+  "seeds": [
+   7177
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 29.8,
+  "lat": 31.3,
+  "n": 4,
+  "late": 1,
+  "seeds": [
+   6299,
+   6733
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 23.5,
+  "lat": 37.9,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   5449
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 29.8,
+  "lat": 60,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   5867
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 9.9,
+  "lat": 37.3,
+  "n": 2,
+  "late": 0,
+  "seeds": [
+   7177
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": -8.3,
+  "lat": 43.4,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   5867
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": 28.9,
+  "lat": 40.8,
+  "n": 1,
+  "late": 1,
+  "seeds": [
+   6299
+  ]
+ },
+ {
+  "hero": "ITA hero_roma",
+  "lon": -1,
+  "lat": 37.5,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   7177
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 139.7,
+  "lat": 35.1,
+  "n": 191,
+  "late": 0,
+  "seeds": [
+   4111,
+   4253,
+   4637,
+   5023,
+   5449,
+   5867,
+   6299,
+   6733,
+   7177,
+   7603
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 135.4,
+  "lat": 35.7,
+  "n": 29,
+  "late": 1,
+  "seeds": [
+   4637,
+   5023,
+   5449,
+   6299,
+   7603
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 121.2,
+  "lat": 38.7,
+  "n": 12,
+  "late": 0,
+  "seeds": [
+   4637
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 128.6,
+  "lat": 35,
+  "n": 7,
+  "late": 0,
+  "seeds": [
+   6299
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 134.6,
+  "lat": 7.3,
+  "n": 6,
+  "late": 0,
+  "seeds": [
+   5023
+  ]
+ },
+ {
+  "hero": "JAP hero_yamato",
+  "lon": 141.2,
+  "lat": 41.4,
+  "n": 3,
+  "late": 0,
+  "seeds": [
+   4637,
+   7603
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 29.8,
+  "lat": 60,
+  "n": 160,
+  "late": 1,
+  "seeds": [
+   4111,
+   4253,
+   4637,
+   5023,
+   5449,
+   5867,
+   6299,
+   6733,
+   7177,
+   7603
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 33.7,
+  "lat": 69.5,
+  "n": 52,
+  "late": 0,
+  "seeds": [
+   4111,
+   4637,
+   5449,
+   6299,
+   7177
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 33.5,
+  "lat": 44.7,
+  "n": 23,
+  "late": 1,
+  "seeds": [
+   4111,
+   4253,
+   4637,
+   5449,
+   7177
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 132,
+  "lat": 42.9,
+  "n": 19,
+  "late": 0,
+  "seeds": [
+   4111,
+   5867,
+   6299,
+   7603
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 72.9,
+  "lat": 18.9,
+  "n": 9,
+  "late": 0,
+  "seeds": [
+   4637,
+   7177
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 24.6,
+  "lat": 59.5,
+  "n": 8,
+  "late": 0,
+  "seeds": [
+   6299,
+   7177
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 121.2,
+  "lat": 38.7,
+  "n": 5,
+  "late": 0,
+  "seeds": [
+   7177
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 9.9,
+  "lat": 37.3,
+  "n": 5,
+  "late": 0,
+  "seeds": [
+   7603
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 114.3,
+  "lat": 22.3,
+  "n": 4,
+  "late": 0,
+  "seeds": [
+   7177
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 139.7,
+  "lat": 35.1,
+  "n": 4,
+  "late": 0,
+  "seeds": [
+   7603
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 24.9,
+  "lat": 60.1,
+  "n": 3,
+  "late": 0,
+  "seeds": [
+   4253,
+   7603
+  ]
+ },
+ {
+  "hero": "SOV hero_sovetsky_soyuz",
+  "lon": 174.9,
+  "lat": -36.7,
+  "n": 1,
+  "late": 1,
+  "seeds": [
+   5449
+  ]
+ },
+ {
+  "hero": "USA hero_iowa",
+  "lon": -117.3,
+  "lat": 32.7,
+  "n": 38,
+  "late": 0,
+  "seeds": [
+   4111,
+   4637,
+   5023,
+   5449,
+   5867,
+   6299,
+   7177,
+   7603
+  ]
+ },
+ {
+  "hero": "USA hero_iowa",
+  "lon": -122.6,
+  "lat": 37.8,
+  "n": 1,
+  "late": 0,
+  "seeds": [
+   4637
+  ]
+ }
+]

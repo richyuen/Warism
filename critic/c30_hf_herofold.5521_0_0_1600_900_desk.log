@@ -1,0 +1,10 @@
+Yamato [["Yamato",1,true]] [false] ["Anglo-Egyptian Sudan","Anglo-Egyptian Sudan"]
+O-I [["O-I",32,false]] [false] ["Belgian Congo","Belgian Congo"]
+USS Iowa [["USS Iowa",0,true]] [true] ["USS Iowa","USS Iowa"]
+T28 [["T28",1,true]] [true] ["T28","T28"]
+Sovetsky Soyuz +1 [["Sovetsky Soyuz",0,true],["HMS Hood",148,false]] [true,true] ["Sovetsky Soyuz","HMS Hood","Sovetsky Soyuz"]
+T-42 [["T-42",33,false]] [true] ["T-42","T-42"]
+Bismarck +1 [["Bismarck",1,true],["TOG II",39,true]] [true,true] ["Bismarck","TOG II","Bismarck"]
+Maus +2 [["Maus",33,false],["Richelieu",81,false],["Char 2C",51,true]] [true,true,true] ["Maus","Richelieu","Char 2C","Maus"]
+Roma +1 [["Roma",1,true],["P.100 Ercole",23,true]] [true,true] ["Roma","P.100 Ercole","Roma"]
+ 0

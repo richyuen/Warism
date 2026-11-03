@@ -1,0 +1,55 @@
+{
+ "peaceWithPDay": 18,
+ "EbackAtWarDay": 1,
+ "before": {
+  "k": "before",
+  "day": 61.04,
+  "living": true,
+  "overlord": "#0",
+  "alliance": [
+   "FIN",
+   "POL",
+   "NOR"
+  ],
+  "AvE": true,
+  "truceAE": false,
+  "AvP": false,
+  "AownCells": 2222,
+  "EholdsA": 991,
+  "AholdsE": 0,
+  "PholdsA": 0,
+  "wars": [
+   "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+  ],
+  "allied": false,
+  "evs": []
+ },
+ "after": {
+  "k": "A on P, an hour after",
+  "day": 61.08,
+  "living": true,
+  "overlord": "#0",
+  "alliance": [
+   "FIN",
+   "POL",
+   "NOR"
+  ],
+  "AvE": true,
+  "truceAE": false,
+  "AvP": true,
+  "AownCells": 2222,
+  "EholdsA": 991,
+  "AholdsE": 0,
+  "PholdsA": 0,
+  "wars": [
+   "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+   "#10 POL+FIN+NOR v ROM+CZS+YUG+AUT"
+  ],
+  "evs": [
+   "61.04 WarDeclared POL ROM",
+   "61.04 FlakFired #1282 SOV",
+   "61.04 FlakFired #1305 SOV"
+  ]
+ }
+}
+done:

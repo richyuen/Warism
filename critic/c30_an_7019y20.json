@@ -1,0 +1,12 @@
+{
+ "seed": 7019,
+ "bin": "critic/c30_seed7019_y20.bin",
+ "strikes": [],
+ "nukePause": true,
+ "startDate": "27 December 1957",
+ "end": {
+  "a": 0,
+  "tick": 184819
+ },
+ "errors": []
+}

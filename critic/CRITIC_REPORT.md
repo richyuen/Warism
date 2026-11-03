@@ -1,367 +1,301 @@
-# Critic report, run 29 (full) — the R5a heroes run
+# Critic report, run 30 (focused) — ROADMAP R5b, after R8–R12
 
-**This is ROADMAP R5a: the critic run on the heroes feature** (PLAN 7.184, the new-game option `heroes`), asked for by
-the user on 2026-11-03 after R1–R4 of batch 1. Heroes get their own section (below "Verdict"); every dimension is also
-scored, as a full run requires.
+- **Mode: focused.** Decided from git before anything else (CRITIC_PROMPT, ADR-804). All three conditions hold:
+  1. the last report (run 29, full, `823cbf1b`) has blocking issues (R29-B1–B3) and two scores under the bar
+     (`mapVisuals` 6, `uiUxPolish` 6);
+  2. every commit since is either the commit that filed run 29 (`00b1751b`, nothing under `src/`, `data/`, `public/`)
+     or names a ROADMAP item that commit filed: `fdbd8a83` R8, `214e8edb` R9, `8f6ccffe` R10, `a8d4cd55` R11,
+     `d6e1bb1e` R12;
+  3. the last three reports were not all focused (runs 27 / 28 / 29: focused / full / full).
 
-- **Mode: full.** Decided from git before anything else (CRITIC_PROMPT, ADR-804): the last report (run 28, full, on
-  `73c531b6`) has **no blocking issue and no score under its bar**, so the first condition for a focused run fails,
-  whatever the commits since are. (They are R0a–R0i, R1a/R1b, R2, R3, R4a–R4e: `src/sim/systems/puppets.ts`,
-  `war.ts`, the relations panel, the checkers.) Every dimension is scored afresh; nothing is carried.
-- **Commit:** `823cbf1b668cdd349b958702af7bc50b1b1bf378` (HEAD at the start, `critic/c29_commit.txt`). **Date:** 2026-11-03.
-- **Build:** `vite build --outDir critic/c29_dist`, exit 0 (`critic/c29_build.log`), served by `vite preview` on
-  127.0.0.1:**5299**. Chromium through Playwright, headless, 1600 × 900 (390 × 844 touch for phones).
-- **Baseline:** run 28's own files (`critic/c28_*`, commit `73c531b6`) are the "before" of every re-run case; no
-  worktree was needed. The sim changed since (ADR-807 puppets, ADR-808 `declareWar`, ADR-810 no puppet of a puppet), so
-  every probe that runs a 1938 world for weeks differs from run 28 by construction; each difference below is attributed.
-- **Runs:** run 28's headless queue and page suites re-run on HEAD (`critic/scripts/c29_jobs1.txt` through
-  `c29_run_jobs.sh`, 8 at a time; `c29_pagesuites.sh`; `c29_tail2.sh`). New for heroes: `c29_ho.ts` (on vs off, 10 seeds
-  × 20 years each arm), `c29_hl_herolost.ts`, `c29_hw2_herowait.ts`, `c29_hd_heroloss.mjs`, `c29_hw_herowound.mjs`,
-  `c29_ht_herotitle.mjs`, `c29_hn_heroannex.mjs`, `c29_hc_herocounters.mjs`, `c29_hcc_heroclick.mjs`,
-  `c29_hsl_saveload.mjs`, `c29_hsc_heroscen.ts`; for R1 `c29_rg_relations.mjs`; the builder's checkers on new seeds
-  with `--heroes`. The comparison of every re-run JSON with run 28's: `critic/c29_cmp.txt`.
+  ROADMAP R5b asks for "the batch's full critic run"; the brief's rule decides the mode, not the item's wording.
+  **A release needs a full run with no blocking issue, so this run does not close R5b: a full run must follow.**
+- **Commit judged:** `d6e1bb1e52097b3d483e20c98b51b8e8ce906fc1` (HEAD at the start, `critic/c30_commit.txt`). **Date:** 2026-11-03.
+- **Build:** `vite build --outDir critic/c30_dist`, exit 0 (`critic/c30_build.log`), served by `vite preview` on
+  127.0.0.1:**5299**. Chromium through Playwright, headless, 1600 × 900; phones 390 × 844 (touch, DPR 2 for the new
+  probes).
+- **Baseline:** run 29's own files (`critic/c29_*`, commit `823cbf1b`) are the "before" of every re-run case; no worktree
+  was needed. With the heroes **off** the sim is unchanged by R8–R12: every heroes-off world probe re-run here is
+  identical to run 29 (below). With heroes **on**, R9/R10 change the world by design.
+- **Scope (focused):** scored afresh: `mapVisuals`, `uiUxPolish` (under the bar), `diplomacyWarDepth`, `naval`
+  (blocked on in run 29), and what the diff touches (`git diff --stat 823cbf1b HEAD`: `counters.ts`, `markers.ts`,
+  `MapView.ts` → `semanticZoom`; `heroes.ts`, `elements.ts` → `naval`, `tanks`, `emergentDynamics`; `puppets.ts`,
+  `server.ts` → `diplomacyWarDepth`, `godMode`; `events.ts`, `history.ts`, `historyRows.ts` → `statsHistory`;
+  `RelationsPanel.tsx`, `FormationPanel.tsx`, `NewGameForm.tsx`, `style.css` → `uiUxPolish`). **Carried:**
+  `editorScenarios`, `performance`, `stability`, `aircraft`, `aiNukes` (their cases still re-run; a defect met in passing
+  is filed).
+- **Runs:** run 29's headless queue (`critic/scripts/c30_jobs1.txt`, 78 jobs, 7 at a time) and second queue
+  (`c30_jobs2.txt`); run 29's page suites (`c30_pagesuites.sh`, `c30_tail2.sh`) and heroes page probes
+  (`c30_heroes_page.sh`). New this run: `c30_hf_herofold.mjs` (every folded hero counter, its members, a click
+  repeated), `c30_hft_foldtouch.mjs` and `c30_hft2_shot.mjs` (the same by touch on a phone), `c30_rgz_zoom.mjs` and
+  `c30_rgt_tap.mjs` (the relations graph's zoom by touch), `c30_hg_herogoto.mjs` (R12's rows and Go to),
+  `c30_hwp_waitport.mjs` (the "waits for a port" row), `c30_hrv.ts` (an annexed hero nation, 20 years, the checker's
+  hero rules hourly), `c30_seareturns.ts`, `c30_herotrace.ts`, `c30_hpos.ts` (where sea heroes come back and stay),
+  `c30_wingbase.ts` (a checker break). JSON comparison with run 29: `critic/c30_cmp.txt` (84 identical).
 
 ## Verdict
 
-**Three blocking issues, all in the heroes feature. `mapVisuals` and `uiUxPolish` fall under their bar (6).** The
-batch's other work holds up on my own counts: AI puppets now rise (R2), the bonded Force war calls no one in beside its
-enemy (R3: run 28's broken cases on 1777 and 8209 are gone), the new checkers report 0 broken on new seeds with heroes
-on, and every rule-level probe of runs 25–28 is identical or differs only where the sim was changed on purpose.
+**R8–R12 fixed what run 29 named. Three new blocking issues come out of the fixes and the checkers. `mapVisuals`
+and `uiUxPolish` are back to 7.**
 
-The heroes are a good idea carried out in a way a player cannot read:
+What was fixed, on my own counts:
+- **R29-B1 fixed.** At the opening view no hero counter is more than 33 px (one counter height) from its place, desk and
+  phone (run 29: P.100 Ercole 5,009 km off, six heroes over Africa). Overlapping heroes fold into one counter
+  ("Maus +2"), and on a desk repeated clicks open each hero in turn.
+- **R29-B2 fixed.** No hero served a nation other than its own in 13 seeds × 20 years with heroes on (run 29: Roma and
+  P.100 for Britain on 4637, the Maus for the USA on 7603). God's Annex of France takes Richelieu and Char 2C with France.
+- **R29-B3 largely fixed.** Sea heroes waited past their day 9,219 days over the ten seeds (run 29: 39,420). Every
+  remaining wait is a nation holding no port, and the Overview row says so ("waits for a port to return to").
+- **R29-N1, N2, N3, N6 (hint), N8 fixed**: ticker and History rows for a hero lost and back, with Go to; a Health row
+  in the formation panel; hero tags read health ("35%"); the option's hint is visible text; war lines name their side;
+  the graph zooms and pans by touch; the bottom bar is one row at 1024 px.
 
-1. **At the opening view the map puts six of the fourteen heroes on the wrong continent** — Roma in French Equatorial
-   Africa, P.100 Ercole 5,000 km from Rome, the TOG II in Morocco — and a click on those counters opens the nation
-   under them, not the hero.
-2. **A hero changes sides with its nation's land and drops out of every list.** Annexed or integrated, Italy's Roma and
-   P.100 fight for Britain, Germany's Maus for the United States (2 of 10 seeds in AI play), listed in no Overview; a
-   destroyed one never returns.
-3. **"They come back 60 days after they are lost" (the option's own hint) is false for the sea heroes in every seed:**
-   Richelieu, Roma, Bismarck, Sovetsky Soyuz and Yamato wait 2–12 years while their nations live, because a sea hero
-   returns only at a naval base its nation holds (the Soviet Union of seed 4253 holds 149,484 cells and 12 ports, none a
-   naval base).
-
-And the feature is silent: a hero's loss and return appear in no ticker row and no History row; the formation panel of
-a hero at 35 % health reads "Men 2,200 of 2,200"; the map tag of the Maus reads "6".
-
-## Heroes (R5a)
-
-### What it is, as built
-`heroes` is a 1938-only new-game option (`opt-heroes`, off by default; `?heroes=on`). Fourteen formations of one
-element each (`data/units/heroes.json`), raised at start (`addHeroes1938`): a sea hero at its nation's first naval base,
-a land hero at the capital. Never built, queued or placed (`tick.ts` refuses `spawnFormation`/`spawnFleet`/`queue`
-with a hero template; God's placing list and the editor's fleet list omit them, `PlaceSection.tsx:40`,
-`EditorPanel.tsx:197`, `critic/c29_ht_desk.json` editor templates). Never disbanded, laid up or folded. Heals 5 % a day
-out of battle; destroyed, returns whole 60 days later at its start place or the nearest held naval base / capital
-(`heroes.ts`). AI: a sea hero sails with its nation's largest fleet at war (ADR-793), a land hero joins its army's
-nearest fight (ADR-794/795); the rest of the land-hero AI was closed "not done" by the user (ADR-796).
-
-### How a player meets it (page)
-| Case | What happened | Evidence |
-|---|---|---|
-| Title screen | "Heroes Off / On" in the 1938 form between "Alliances and wars" and "Starting gold". Its explanation (the 14 names, "They heal, and come back 60 days after they are lost") is a `title` attribute only: hover on a desk, nothing on a phone. Not offered for the random world or a scenario file (by design: 1938 roster). Start with it on: URL `heroes=on`, 14 heroes, boot 3.6 s. | `critic/c29_ht_desk.json`, `critic/shots/c29ht_desk_01_form1938.png`, `critic/c29_ht_phone.json` |
-| Settings in game | Heroes row present, reads "On". | `critic/shots/c29ht_desk_06_settings.png` |
-| `?scenario=random&heroes=on` | 0 heroes; no row in the form or settings. Consistent. | `critic/c29_ht_desk.json` (`randomHeroes: 0`) |
-| **World zoom (start view, 19.6 km/px)** | Heroes drawn as large named counters, flag-ball and name — easy to spot. **But a hero whose counter would cover another's steps down below it, as often as it takes** (`counters.ts:491–504`): in Europe ten heroes within a few hundred px cascade south. Measured drawn box against the hero's place: **HMS Hood 2,485 km off, TOG II 2,524, Richelieu 3,131, Char 2C 3,757, Roma 3,777, P.100 Ercole 5,009 km**; O-I, T-42 and Maus ~630 km. Same on the phone. **A click on a displaced counter opens the nation underneath** (Roma → French Equatorial Africa, TOG II → France, Maus → Austria, Richelieu and Char 2C → French West Africa). At 6000 m/px only the Maus is off (33 px); at 3000 m/px all are in place. | `critic/c29_hc_5521_desk.json`, `critic/c29_hc_5521_phone.json`, `critic/c29_hcc_5521.json`, `critic/shots/c29ht_desk_05_start.png`, `critic/shots/c29ht_phone_05_start.png`, `critic/shots/c29hv_3739_1475_3000m.png` |
-| T1 (1200 m/px) | Yamato's counter in Tokyo Bay is twice the size of the fleets' and reads "2.5k" (its men); the Maus in Berlin reads **"6"** beside 12.5k divisions. Five clicks on the Bismarck's marker in Kiel open the Bismarck each time, never the three battle squadrons stacked with it (unchanged from runs 26–28, `c29_hs_3739.json` identical). | `critic/shots/c29hv_3739_1468_1200m.png`, `critic/shots/c29ht_desk_09_click_maus_1200.png`, `critic/c29_hs_3739.json` |
-| T2/T3 (250–25 m/px) | The Maus as a countryball tank about twice an infantry ball, its tag "6 Maus"; Bismarck "2.2k Bismarck" beside a "13.4k Battle squadron" — the strongest ship on the sea reads as a sixth of a squadron. Readable as special at 25 m/px. | `critic/shots/c29hv_3739_1475_25m.png`, `critic/shots/c29hd_4111_bis_before.png`, `critic/shots/c29ht_desk_09_click_maus_150.png` |
-| Overview's Heroes block | First block of Germany's Overview: names, health bars ("Bismarck 35 %"), "returns in 60 days" when gone, "waits to return"; a click selects and follows (HV: camera within 0 px after 1–3 days, a pan ends the follow). Good. | `critic/c29_hv_3739.json`, `critic/shots/c29hd_4111_bis_lost.png`, `critic/shots/c29hv_3739_gone_row.png` |
-| **Formation panel of a hero** | Bismarck at 35 % health (Overview): its panel reads **"Men 2,200 of 2,200 · Supply 100 % · Org 100 % · 1 of 1"** — nothing says it is hurt (health is the element's `wound`, men stay whole: ADR-787; the panel shows men only). The starving TOG II at 11 %: "Men 8 of 8 · Supply 0 % · Org 0 % · On the march". | `critic/c29_hw_4111_bis.json`, `critic/shots/c29hw_4111_bis_panel.png`, `critic/c29_hw_4111_tog.json`, `critic/shots/c29hw_4111_tog_250m.png` |
-| **A hero lost and back (Bismarck, seed 4111)** | Sunk on tick 2,485 (14 April 1938) by the Royal Navy, to the hour the headless run says (the page is the same world). **Ticker:** nothing about it (rows "Sea battle: United Kingdom against Germany", "Carrier strike: United Kingdom on Germany's ships"). **History:** 184 rows, none names Bismarck; the day's row reads "United Kingdom and Germany fought at sea: United Kingdom lost 0 ships, Germany 1". The Overview row: "returns in 60 days". Back on tick 3,925 at Kiel, whole: again no row anywhere. History has no hero kind in its filter. | `critic/c29_hd_4111_bis.json`, `critic/shots/c29hd_4111_bis_lost.png`, `critic/shots/c29hd_4111_bis_history.png`, `critic/shots/c29hd_4111_bis_returned.png` |
-| Save and load with a hero gone | Saved at tick 2,500 (Bismarck "returns in 60 days"), run 1,500 h, loaded, run again: the same hash (2299536962) and heroes both times; the block reads the same after loading. | `critic/c29_hsl_4111.json` |
-| Scenario file | A scenario exported from a heroes game carries the roster (state) into a game started with heroes off: 11 alive, 3 returning, and they return (headless). | `critic/c29_hsc_4111.log` |
-| **God's Annex (France into Germany, day 2)** | Richelieu and Char 2C become German formations (panel "Nation Germany"), sail and fight with Germany (day 60: Richelieu beside Bismarck). Germany's Heroes block still lists two; France's heroes are listed nowhere. God removes the Char 2C: it never returns (its roster nation, France, is dead), and nothing says so. | `critic/c29_hn_4111.json`, `critic/shots/c29hn_4111_ger_block.png`, `critic/shots/c29hn_4111_ger_block_d122.png` |
-| Relations graph | Shows no hero (none expected). | `critic/shots/c29rg_4111_desk_d365.png` |
-
-### What it does to the world (headless, 10 new seeds × 20 years, heroes on vs off on the same seed, HEAD)
-Seeds 4111, 4253, 4637, 5023, 5449, 5867, 6299, 6733, 7177, 7603; paired difference on − off, mean ± se over the 10
-seeds (`critic/c29_ho_sum.txt`, `critic/c29_ho_sum.json`, `critic/c29_ho_{on,off}_<seed>.json`). New seeds, not
-compared with run 28 (run 28 measured no heroes-off pair).
-
-| Over 20 years | Off | On | On − off |
-|---|---|---|---|
-| Sea battles | 180.8 | 338.1 | **+157 ± 15 (+87 %, every seed)** |
-| Ships sunk | 1,954 | 2,676 | **+722 ± 105 (+37 %)** |
-| Major land battles | 171.7 | 142.5 | **−29 ± 12 (−17 %)** |
-| Wars declared / peaces | 227 / 218 | 248 / 239 | +21 ± 9 each (borderline, 2.3 se) |
-| Capitals taken, eliminations, revolts, puppets, bursts | — | — | within noise (≤ 1.2 se) |
-| Living nations at year 20 | 75.6 | 79.4 | +3.8 ± 3.2 |
-| Land of the seven hero nations at year 10 / 20 | 50.2 % / 50.0 % | 55.5 % / 53.4 % | +5.3 ± 3.2 / +3.4 ± 2.6 |
-
-So the heroes make a busier sea and a slightly quieter land war; they do not tip the world to the great powers beyond
-noise. The Soviet Union is still first or second.
-
-| Hero (10 seeds × 20 years) | Alive | In battle, of its war days | Lost per 20 years | Lost out of battle (no fight in its last 24 h) | Days waiting past its hour, nation alive | Served another nation |
-|---|---|---|---|---|---|---|
-| Yamato / O-I | 78 % / 89 % | 1.1 % / 5.0 % | 25.2 / 13.9 | 3 of 252 / **84 of 139** | 831 / 0 | — |
-| USS Iowa / T28 | 97 % / 97 % | 0.5 % / 3.9 % | 3.9 / 3.9 | 0 of 39 / 25 of 39 | 0 / 0 | — |
-| Sovetsky Soyuz / T-42 | 68 % / 90 % | 1.5 % / 6.4 % | **30.0** / 12.0 | 1 of 300 / 60 of 120 | **5,551** / 0 | — |
-| Bismarck / Maus | 70 % / 88 % | 1.3 % / 7.0 % | 23.9 / 12.1 | 3 of 239 / 54 of 121 | **4,888** / 0 | Maus: USA 1,033 days (7603) |
-| HMS Hood / TOG II | 73 % / 90 % | 1.6 % / 3.0 % | **31.4** / 12.1 | 2 of 314 / 63 of 121 | 809 / 0 | — |
-| Richelieu / Char 2C | **57 %** / 87 % | 1.7 % / 4.5 % | 26.0 / 16.3 | 1 of 260 / 84 of 163 | **16,123** / 0 | — |
-| Roma / P.100 | **58 %** / 83 % | 1.6 % / 5.2 % | 24.9 / 12.1 | 0 of 249 / 67 of 121 | **11,218** / 0 | Both: UK 822 / 333 days (4637) |
-
-- **A sea hero is sunk about every eight months** (24–31 times in 20 years; Iowa 3.9, the United States fights little
-  at sea) and is in battle on ~1–2 % of its nation's war days: nearly every time it meets the enemy in force, it goes
-  down. All 38 sea-hero losses of `c29_hl_4111.json` and `c29_hl_6863r.json` came in a sea-battle or air-strike hour;
-  bombs fell on the hero itself in its last hour in 7 of the 38 — the mechanism (fire picked by hit points, ADR-605/606,
-  drawing the enemy's guns to the biggest ship) is my guess, **low confidence, not shown**. The AI's sail-with-the-fleet
-  rule is the user's decision (ADR-793); the record is the execution: a unit the option calls "far stronger than any
-  other" is lost more often than a battle squadron is.
-- **Land heroes die of hunger about half the time** (437 of 824 losses with no fight in the 24 h before; HL: all such
-  losses on 4111 and 6863 at supply 0, org 0). The TOG II marches into Nationalist Spain and starves there **three times
-  in a year** (days 87, 272, 439 on seed 4111), each time coming back to London and doing it again; the US T28 stood
-  its whole life since raising (326 days) in Greece without a fight and wasted away; Japan's O-I 121 days in Soviet
-  land. The 5 % daily heal meant for
-  a hero out of battle is outrun by attrition to death. The land hero's movement is the user's decision (ADR-796); its
-  dying of hunger on repeat, unseen, is execution. (`critic/c29_hl_4111.json`, `critic/c29_hl_6863r.json`.)
-- **Sea heroes wait years to return in every seed**: Richelieu 16,123 days over 10 seeds (4.4 years a seed, 22 % of the
-  run), Roma 11,218, Sovetsky Soyuz 5,551, Bismarck 4,888, Yamato 831, Hood 809, while their nations live. HWAIT: on
-  4253 at the hero's hour the Soviet Union holds 149,484 cells and 12 ports but **0 naval bases** (its four of the 1938
-  data, Kronstadt, Sevastopol, Vladivostok, Murmansk, are lost); on 4111 Germany holds one port and neither of its two
-  bases. The data gives France 4 naval bases, Germany 2, the Soviet Union 4, Italy 7; a sea hero returns only at one of
-  its own nation's held bases (`returnPlace`). The Overview says "waits to return" with no reason, for years.
-  (`critic/c29_hwait_4253_SOV.json`, `critic/c29_hwait_4111_GER.json`, `data/scenarios/1938/ports.json`.)
-- **Heroes change sides in AI play**: on 4637 Britain annexes Italy and fields Roma and P.100 for 822 / 333 days; on
-  7603 the United States fields the Maus 1,033 days. The roster row keeps the dead nation, so the stats list them under
-  no living nation (`server.ts:848–865`), the overlord's Overview omits them, and once destroyed they never return
-  (their nation is dead). Paths: `puppets.ts:170` (integration) and `annexNation`'s transfer (`puppets.ts:148`).
-
-### Whether its rules agree with the others (checkers)
-| Checker, new seeds, heroes on | Result | Evidence |
-|---|---|---|
-| `diploInvariants.ts 8209 random 400 60,200,350 20 --heroes` (run 28: 7 broken) | **0 broken** | `critic/c29_diploinv_8209r.log` |
-| `diploInvariants.ts 4421 random …--heroes`, `6863 scenario …--heroes`, `9907 random …--heroes`; `1777 scenario` | 0 / 0 / 0 / 0 broken | `critic/c29_diploinv_4421r_h.log`, `c29_diploinv_6863s_h.log`, `c29_diploinv_9907r_h.log`, `c29_diploinv_1777.log` |
-| `worldInvariants.ts 4421 730 --heroes`, `6863 730 --heroes --diplomacy random`, `9907 730 --heroes`, `3331 3650 --heroes` | 0 broken each (economy, navy, air, nukes, bonds) | `critic/c29_wi_*.log` |
-
-The checkers have **no rule for the heroes themselves** (one alive per row, serving its roster's nation, back within
-its hour when it has a place), so the side-changing hero (B2) and the years-long wait (B3) pass them green.
-
-### Heroes: blocking
-- **B1. The world view draws six heroes 2,500–5,000 km from where they are, and a click on a displaced counter opens the nation it was pushed onto.**
-- **B2. A hero changes nation with its land (annexation, integration) and disappears from every list; destroyed, it
-  never returns.**
-- **B3. Sea heroes "wait to return" for years while their nations live (10 of 10 seeds), against the option's promise
-  of 60 days.**
-
-### Heroes: non-blocking
-- H-N1. Loss and return are silent: no ticker row, no History row, no History kind; the sea-battle row counts the
-  Bismarck as "1 ship".
-- H-N2. The formation panel shows men, not health: a hero at 35 % reads whole.
-- H-N3. Map tags read men: "6" for the Maus, "2.2k" for Bismarck next to "13.4k" squadrons.
-- H-N4. Land heroes starve in about half their losses, on repeat, out of sight (TOG II in Spain thrice).
-- H-N5. Sea heroes are lost every ~8 months; "far stronger than any other" does not read in play.
-- H-N6. The option's explanation is a hover title only (nothing on a phone); in a stack at T1 the hero hides the fleets.
-- H-N7. No checker rule covers the heroes.
+What is new:
+1. **R30-B1. On a phone, three heroes at the opening view cannot be opened from the map.** HMS Hood is folded into
+   "Sovetsky Soyuz +1" (Soviet flag, about 2,800 km from the Hood, its "+1" off the screen's edge), and TOG II and
+   Char 2C into "Bismarck +2". A tap opens the lead; the panel then covers the counter, so the next tap lands on the
+   panel; closing the panel starts the fold over at its lead. R8's acceptance test says "a click on each opens that
+   hero, desk and phone".
+2. **R30-B2. The R10 fallback ("any port held") puts Sovetsky Soyuz into the Caspian Sea or Lake Onega, and it stays
+   there to the end of the run: 4 of 13 seeds, 11,259 days in all.** On 4637 it sits in the Caspian for 12.8 years,
+   with no Soviet fleet within 600 km, while the Soviet Union holds up to 17 ports elsewhere. A hero counted as back
+   that can never reach a war is B3 again by another route.
+3. **R30-B3. The checker's air rules break on two of seven new seeds, both with heroes on**: a carrier wing left one
+   hour behind its fleet (3373 random diplomacy: 2 broken; 5591: 2 broken). The same seeds with heroes off have
+   0 broken. The cause is not shown.
 
 ## Scores
 
-| Dimension | Run 28 | Run 29 | |
+| Dimension | Run 29 | Run 30 | |
 |---|---|---|---|
-| Map visuals and readability | 7 | **6** | down: B1 (the start view misplaces six heroes; clicks open the wrong nation), H-N3 |
-| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 | R2, R3 fixed on my counts; B2 new; BX, BS, AL unchanged |
-| Emergent world dynamics over long runs | 7 | 7 | rescored |
-| God Mode | 7 | 7 | rescored (God's Annex shows B2) |
-| Editor and scenarios | 7 | 7 | rescored |
-| Stats and history | 7 | 7 | rescored (H-N1) |
-| UI/UX and polish | 7 | **6** | down: H-N2, the relations graph's "X is at war beside X", the unreadable graph on a phone, the hint on hover only, the bar wrapping at 1024 px |
-| Performance | 7 | 7 | rescored |
-| Stability | 7 | 7 | rescored |
-| Semantic zoom to unit level (needs 8) | 8 | 8 | rescored; the hero's T2/T3 drawing is good |
-| Naval warfare (needs 8) | 8 | 8 | rescored; B3, H-N5 recorded |
-| Tanks (needs 8) | 8 | 8 | rescored; H-N4 recorded |
-| Aircraft (needs 8) | 8 | 8 | rescored |
-| AI nuclear use (needs 8) | 8 | 8 | rescored |
+| Map visuals and readability | 6 | **7** | up: B1's cascade is gone (no counter more than 33 px off, desk and phone); hero tags read health. Held at 7, not higher: folds put heroes under another nation's flag; at the phone's start view the hero counters cover Europe's own tags; Japan's two heroes are under the Ranking panel on a desk |
+| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 | rescored: R9 holds (0 days served for another nation, 13 seeds); graph war lines fixed; every heroes-off diplomacy probe identical to run 29 (BX, BS, AL, OR, PZ, PP, BOTH, EXIT, COBEL, LOY); the checker reports 0 broken on 7 seeds |
+| Emergent world dynamics over long runs | 7 | 7 | rescored: heroes on vs off, 10 seeds × 20 years: sea battles +92 %, ships sunk +41 %, major land battles −21 %; the rest within noise |
+| God Mode | 7 | 7 | rescored: Annex now takes a nation's heroes with it (ADR-812); Q, K, K2, K3, A identical or ticker-only |
+| Editor and scenarios | 7 | 7 | carried (G, OS2, OS, HSC re-run: as run 29) |
+| Stats and history | 7 | 7 | rescored: R12 rows in the ticker and History, kinds "Hero lost" / "Hero back", Go to moves the camera; nothing else changed |
+| UI/UX and polish | 6 | **7** | up: every R11 item read right on desk and phone (Health row, hint, war lines, zoomable graph with labels 6 → 15 px at 2.25×, bar one row at 1024). Held at 7: R30-B1 on the phone; the first tap after a drag in the graph is eaten; at T1 a hero still hides the fleets stacked with it |
+| Performance | 7 | 7 | carried; fresh evidence: four ten-year page watches 59.8–60 fps, longest frame gap 84 ms |
+| Stability | 7 | 7 | carried; no page error in any probe, no crash in 84 headless jobs, save and load reproduces the hash with a hero gone |
+| Semantic zoom to unit level (needs 8) | 8 | 8 | rescored: T1 marker and T2 tag read a hero's health; Z, C, PHZ as run 29 (timing only) |
+| Naval warfare (needs 8) | 8 | 8 | rescored: waits down by three quarters; R30-B2 filed blocking. Held at 8 as in run 29, where B3 was also filed and not scored down: the sea rules outside the heroes are unchanged (SB, G as run 29) |
+| Tanks (needs 8) | 8 | 8 | rescored: land heroes still starve in about half their losses (414 of 768 with no fight in the 24 h before); C, FT, FP2 as run 29 |
+| Aircraft (needs 8) | 8 | 8 | carried; R30-B3 (a checker break in the air rules with heroes on) filed |
+| AI nuclear use (needs 8) | 8 | 8 | carried; AI bursts in the headless runs as run 29 (heroes-off worlds identical) |
 
-## Run 28's cases re-run
+## Heroes: what R8–R12 did, case by case
 
-| Run 28 case | On HEAD (`823cbf1b`) | Evidence |
+### R8, counters at the world's zoom (R29-B1)
+| Case | Run 29 (`823cbf1b`) | Run 30 (HEAD) | Evidence |
+|---|---|---|---|
+| HC, 5521 start view, desk | 14 counters; Roma 3,777 km, P.100 5,009 km, Char 2C 3,757 km off | 9 counters (4 folded); **largest offset 33 px (one height)**, the Maus and T-42 one step below their places | `critic/c30_hc_5521_desk.json`, `critic/shots/c30hc_5521_desk_start.png` |
+| HC, 5521 start view, phone | 10 counters, the same cascade | 5 counters; largest offset 33 px | `critic/c30_hc_5521_phone.json`, `critic/shots/c30ht_phone_05_start.png` |
+| HC at 6000 / 3000 m/px | Maus 33 px off at 6000 | unchanged | same files |
+| HCC, a click on a displaced counter | opened Austria, France, French West / Equatorial Africa | "Maus +2" opens the Maus, "Roma +1" Roma | `critic/c30_hcc_5521.json` |
+| **HF (new): each folded counter, the heroes in it, a click repeated**, 5521 desk | — | "Sovetsky Soyuz +1" holds **HMS Hood, 148 px (~2,900 km) from the counter's centre, its place outside the box**; "Bismarck +1" holds TOG II (39 px); "Maus +2" holds Richelieu (81 px, outside the box) and Char 2C. Repeated clicks open each in turn (all 14 reached on a desk), but **Yamato and O-I are drawn under the Ranking panel: a click opens Anglo-Egyptian Sudan and Belgian Congo** (the panel's rows) | `critic/c30_hf_5521_desk_d0_0.json`, `critic/shots/c30hf_5521_desk_d0_0.png` |
+| HF, 5521 phone (mouse) | — | "Sovetsky Soyuz +1" (Hood) and "Bismarck +2" (TOG II, Char 2C) open only their leads | `critic/c30_hf_5521_phone_d0_0.json` |
+| **HFT (new): the same by touch on a phone** | — | Tap again: the formation panel (y 90–520) covers "Bismarck +2" and "Sovetsky Soyuz +1", the second tap lands on it. Close (×) or Escape, tap again: the lead again. **Reached: Sovetsky Soyuz +1 [yes, no], Bismarck +2 [yes, no, no]**; "Maus +2" (not covered) reaches all three only by tapping again with the panel open | `critic/c30_hft_5521.json`, `critic/shots/c30hft2_5521_phone_start.png`, `critic/shots/c30hft2_5521_phone_tap2.png` |
+| HF at 9000 m/px, desk | — | 10 counters; "Richelieu +1" holds Char 2C (85 px; same nation); all reached | `critic/c30_hf_5521_desk_d0_9000.json` |
+| HF at day 365 (4111) and day 730 (7019), start view | — | No counter more than 33 px off; P.100 folded into "Bismarck +1" on 7019. Japan's O-I again under the Ranking panel (a click opens Argentina / France) | `critic/c30_hf_4111_desk_d365_0.json`, `critic/c30_hf_7019_desk_d730_0.json` |
+
+### R9, a hero stays its nation's (R29-B2)
+| Case | Run 29 | Run 30 | Evidence |
+|---|---|---|---|
+| HO, 10 seeds × 20 years, days a hero served another nation | Roma 822, P.100 333 (4637, Britain); Maus 1,033 (7603, USA) | **0 for every hero on every seed**; also 0 on three new seeds (8011, 8423, 9001 random) | `critic/c30_ho_sum.txt`, `critic/c30_hx_on_*.json`, `critic/scripts/c30_hocmp.py` |
+| HN, God's Annex of France into Germany (4111, day 2) | Richelieu and Char 2C fought for Germany, listed nowhere | Both gone with France (ADR-812); Germany's block lists only its own two | `critic/c30_hn_4111.json`, `critic/shots/c30hn_4111_ger_block.png` |
+| HRV (new): annexed by God on day 2, then 20 years with the checker's hero rules hourly (4111 GER/FRA, 5023 GER/FRA, 6299 ENG/ITA, 7177 USA/JAP) | — | 0 broken; no annexed nation revived in any of the four runs, so **a hero's return at a revival was not met** | `critic/c30_hrv_*.json` |
+| heroWaits on 4637 and 7603 (the AT's seeds) | — | 0 broken each | `critic/c30_herowaits_4637.log`, `critic/c30_herowaits_7603.log` |
+
+### R10, sea heroes come back (R29-B3)
+| Case | Run 29 | Run 30 | Evidence |
+|---|---|---|---|
+| Days waiting past the hero's day, nation alive, 10 seeds | Richelieu 16,123, Roma 11,218, Sovetsky Soyuz 5,551, Bismarck 4,888, Yamato 831, Hood 809 | Bismarck 3,560, Roma 3,040, Yamato 2,078, Richelieu 541, the rest 0. heroWaits: **every remaining day is "no place"** (the nation holds no port: Japan 1,275 days on 4637, Germany 2,190 on 7603) | `critic/c30_ho_sum.txt`, `critic/c30_herowaits_*.log` |
+| The row while it waits (page, 4111 tick 15,600) | "waits to return" | **"Bismarck · waits for a port to return to"** | `critic/c30_hwp_4111_ger.json`, `critic/shots/c30hwp_4111_ger_15600.png` |
+| **Where sea heroes come back** (1,740 returns, 10 seeds; 400 on 3 new seeds) | (bases only) | Mostly their start ports. **Sovetsky Soyuz back at Baku (4637, day 2,640), Atyrau (7603, day 4,399), Makhachkala (9001, day 3,857), all in the Caspian Sea, and at Petrozavodsk on Lake Onega (4111, day 7,045). It is never lost again in any of the four runs: 4,660 + 2,901 + 3,443 + 255 = 11,259 days in landlocked water to the run's end** | `critic/c30_seareturns.txt`, `critic/c30_seareturns_hx.txt`, `critic/scripts/c30_herotrace.ts` |
+| HPOS (new): 4637, Sovetsky Soyuz every 150 days from day 2,600 to 7,300 | — | Always at 47–53° E, 37.5–40.2° N (Baku, Krasnovodsk, Bandar-e Anzali); **0 Soviet fleets within 600 km in any sample**, while the Soviet Union holds 7–17 ports through day 5,450 | `critic/c30_hpos_4637_SOV.json`, `critic/c30_hpos_4637.log` |
+
+### R11, what the heroes and the graph read
+| Case | Run 29 | Run 30 | Evidence |
+|---|---|---|---|
+| HW, Bismarck at 35 % (4111 tick 2,454): formation panel | "Men 2,200 of 2,200" | **"Health ▮▮ 35% · Men 2,200 of 2,200"**; its T1 tag "35%" | `critic/c30_hw_4111_bis.json`, `critic/shots/c30hw_4111_bis_panel.png`, `critic/shots/c30hw_4111_bis_1200m.png` |
+| HW, TOG II starving at 11 % | "Men 8 of 8" | "Health 11%"; its T2 tag "11% TOG II" | `critic/c30_hw_4111_tog.json`, `critic/shots/c30hw_4111_tog_250m.png` |
+| HT, the option's hint | `title` only | Visible text under the row on the phone form | `critic/c30_ht_phone.json`, `critic/shots/c30ht_phone_01_form1938.png` |
+| RG, war line text (4111 days 0 and 365, desk and phone) | "Japan is at war beside Japan" | "Japan leads its side, with Manchukuo and 1 more, against China"; "Nationalist Spain is at war alone on its side"; counts of nodes and edges identical to run 29 | `critic/c30_rg_4111_desk.json`, `critic/c30_rg_4111_phone.json` |
+| **RGZ (new): the graph's zoom by touch, phone, day 365** | (no zoom) | Label height 6 px whole, 10 px at 1.5×, 15 px at 2.25×, 34 px at 5×; a one-finger drag pans; a pinch zooms. Readable | `critic/c30_rgz_4111.json`, `critic/shots/c30rgz_4111_whole.png`, `critic/shots/c30rgz_4111_tapnode.png` |
+| RGT (new): a tap on a nation after a drag | — | **The first tap after a one-finger drag selects nothing; the second does** (no drag: one tap selects). A tap opens the nation's panel over the graph; closing it keeps the zoom | `critic/c30_rgt_4111.json` |
+| P3, bottom bar widths | wraps at 1024 (998 × 56) | one row at 1024 and 1180 (950 × 27) | `critic/c30_p3_widths.json` |
+| HS, a hero stacked with fleets at T1 (3739) | five clicks open the Bismarck | identical: the three squadrons with it still cannot be clicked | `critic/c30_hs_3739.json` |
+
+### R12, a hero's loss and return told (R29-N1)
+| Case | Run 30 | Evidence |
 |---|---|---|
-| R28-N1, LOY: no AI puppet revolts (7019, 3163, 1777 × 30 years) | **Fixed (ADR-807).** `PuppetRevolt` 2 / 0 / 5 (run 28: 0 / 0 / 0) for 72 / 61 / 107 puppets made; lowest loyalty at autonomy ≥ 10: 18.4 / 30.2 / 18.1 (run 28: 30.5 / 31.2 / 31.6). The R2 AT (risings in ≥ 2 of 3 seeds, ≤ 1 in 10 of puppets made) passes on my count. On 3163 I count 0 risings, the builder 2 (`tools/diag/puppetLoyalty.ts`); I count `PuppetRevolt` events. | `critic/c29_loy_{7019,3163,1777}.json` |
-| R28-N2, OR / OR2 / the checker: a bonded Force war calls a nation in beside its enemy | **Fixed (ADR-808).** OR on 7019, 2207, 5113, 9241 (days 30/120/300) and 1777, 8209 (60/200/350): **0 broken of 2,372 tried** (run 28: 1 on 7019, 3 on 1777). OR2, Mongolia on Romania (7019 day 300): no break (run 28: until day 60). The checker on 8209, random diplomacy, heroes: 0 broken (run 28: 7). | `critic/c29_or_*.json`, `critic/c29_or2_head_7019_MON_ROM.json`, `critic/c29_diploinv_8209r.log` |
-| R28-N3, BX: a bond's exit resets the front, no truce | **Unchanged** (JSON identical to run 28). | `critic/c29_bx_head_7019_GERatk_ITA.json` |
-| R28-N4: live "Propose alliance" the sim refuses (AL, every pair, days 30 and 120) | **Unchanged** (identical to run 28): every pair, 4 of 10,148 live buttons refused at day 30 (Poland, Switzerland, Belgium, Luxembourg > Spanish Republic), 1 of 10,178 at day 120 (Portugal > Brazil); none greyed but acceptable. | `critic/c29_al_7019_all.json` |
-| R28-N4: guarantees only the start's (BS, 4 seeds × 365 days) | **Unchanged**: no guarantee given in a year, the start's lapse; the hashes differ (the sim changed). | `critic/c29_bs_head_*.json` |
-| R28-N4: five ticker rows for one Force war (PP) | Unchanged (PP identical). | `critic/c29_pp_head_7019_MAN.json` |
-| R28-N5, PG2: refused peace untold in the Actions tab (Italy, 4583, 24 months) | The same game to its end (Italy 2.62 M km², at war with 32 nations), no page error; the Actions tab unchanged. | `critic/c29_pg2_4583_ITA.json` |
-| R28-N6, PHZ: phone clutter at 60 and 800 m/px | Identical. | `critic/c29_phz_2671.json` |
-| PR, PZ, PP, FW, FW2, EXIT ×3, ES, ES2 ×3, COBEL, BOTH ×5, GU, PG ×2, TD, K, K2, K3, DR, BT ×2, CB, CB2, HU, HS, SX, SXT, EX2, FT, FP2, PL, P2, PH | **Identical** to run 28 (52 JSONs in all, with AL, OS2 of run 10, PHZ and PUP). BOTH: 0 findings on 5113, 6151, 9241, 1777, 8209 × 730 days. | `critic/c29_cmp.txt` |
-| World dynamics, 7019 × 20, 1777 × 30, 8209 × 30 headless | Differ (the sim changed): 7019 144 war-years (run 28: 176), 182 sea battles (197), 4 bursts (9), 72 revolts (82), 1 puppet rising (0), 96 → 78 living; 1777 186 war-years (129), 15 bursts (3), 5 risings (0); 8209 232 war-years (194), 35 bursts (19), 118 revolts (120), 5 risings (0), 97 → 75 living. Mean tick 2.9–3.8 ms (eight sims at once, unpinned), longest 198–255 ms. | `critic/c29_headless_{7019,1777,8209}.json` |
-| HI, DL (7019's year-20 save) | Work as before on HEAD's world: 3,494 rows (run 28: 3,717, another world), CSV and JSON. | `critic/c29_hi_7019.json`, `critic/c29_dl_7019.json` |
-| AN: an AI strike met in the page (7019's year 20, 400 days) | **Not re-met**: HEAD's 7019 world has no strike in those 400 days (its 4 bursts come earlier). AI bursts headless: 4 / 15 / 33 (7019 / 1777 / 8209) and 6.5 per 20 years on the ten heroes seeds. | `critic/c29_an_7019y20.json`, `critic/c29_ho_sum.txt` |
-| RW: title screen → random world (6143, 80 nations), 3 years | As before: boot 2.4 s, 60 / 60 / 59.9 fps, longest gap 83 ms, no page error. | `critic/c29_rw_6143.json` |
-| LW: ten years in the page (6151) | Heroes off: **59.9–60 fps every year, longest frame gap 83 ms, none over 500 ms, no page error** (run 28: 59.8–60, 83 ms); another world (the sim changed): 70 nations at year 10 as run 28. Heroes on, same seed: 59.8–60 fps, 83 ms, no error. And 4111 off / on: 59.9 / 59.8 fps lowest, 83 ms, no error. | `critic/c29_lwdef_6151.json` |
-| PF: frame rates over a fight (7019's year 20) | **Not measured**: HEAD's 7019 year-20 world has no formation engaged at the saved hour, so the probe finds no fight to frame (`fatal` in the JSON). Not compared. | `critic/c29_pf_7019.json` |
-| OS (run 10's old save, `c10_seed4877_y20.bin`) | **Not re-runnable**: the file was deleted with the untracked probe output (ROADMAP R0a). OS2 (run 10's and 25's scenario files) and OS load as before. | `critic/c29_os_c10fmt1.json`, `critic/c29_os2_c10.json`, `critic/c29_os2_c25.json` |
-| Timing-only differences | C (one sortie fewer in three views), FO (1 px of camera), SB (ticks one later), W (a sample one tick off), Z (element counts ±1.5 % at speed), PT (0.01 cell), TG (one tag), WW, Q (the sim's ticker). | `critic/c29_cmp.txt` |
-| UI change from R1 | The bottom bar gained "Relations": at 1024 × 768 it now wraps to two rows (998 px wide, 56 px high; run 28: 956 / 27); 1180 px and wider stay one row. | `critic/c29_p3_widths.json` |
+| HD, Bismarck sunk (4111, tick 2,485) and back (3,925), page | Ticker "14 April 1938 Germany lost Bismarck near Cagliari" in the hour; "13 June 1938 Bismarck is back with Germany near Kiel"; History 187 rows (run 29: 184) with both, kinds "Hero lost", "Hero back" in the filter | `critic/c30_hd_4111_bis.json`, `critic/shots/c30hd_4111_bis_history.png` |
+| HG (new), Go to | Clicking either ticker row moves the camera to the place (to 1075, 366, then 1082.5, 252.5; the zoom is kept); History's row Go to as well | `critic/c30_hg_4111.json`, `critic/shots/c30hg_4111_lost.png`, `critic/shots/c30hg_4111_back.png` |
 
-## New in this run (besides heroes): the relations graph (R1)
+## Run 29's cases re-run
 
-| Case | What happened | Evidence |
+| Run 29 case | On HEAD (`d6e1bb1e`) | Evidence |
 |---|---|---|
-| RG, 4111 with heroes, days 0 and 365, desk | Opens in 0.2 s. Day 0: 67 nodes; 7 war, 11 alliance, 8 guarantee, 40 puppet edges — equal to my own count from the statistics message (wars' sides 7, puppets 40, guarantees 8). Day 365: 86 nodes; 107 war, 22 alliance, 8 guarantee, 44 puppet, 17 truce edges (my count of truce pairs: 18; likely one with a nation not drawn — not verified, not filed). Toggling a kind removes its edges and **moves no node**; focus on Germany: 24 nodes, 35 edges. | `critic/c29_rg_4111_desk.json`, `critic/shots/c29rg_4111_desk_d0.png`, `critic/shots/c29rg_4111_desk_d365.png`, `critic/shots/c29rg_4111_desk_d365_focus.png` |
-| A war line's text | **"Japan is at war beside Japan, against China"**, **"Nationalist Spain is at war beside Nationalist Spain, against Spanish Republic"**: a nation alone on its side fights beside itself. Alliance, guarantee, puppet and truce lines read right ("Germany and Austria are at truce, 401 days left"). | `critic/c29_rg_4111_desk.json` (`clicks`) |
-| Readability | At a year on a desk: a hairball around the United Kingdom and the Soviet Union, overlapping labels ("United States" over "Czechoslovakia"). On a phone (390 px) the graph is a 360 × 230 px box with labels about 5 px tall, unreadable, with no zoom or pan. | `critic/shots/c29rg_4111_desk_d365.png`, `critic/shots/c29rg_4111_phone_d365.png` |
+| R29-B1 (HC, HCC, HT, start view) | **Fixed** (above); new problem R30-B1 | `critic/c30_hc_5521_*.json`, `critic/c30_hft_5521.json` |
+| R29-B2 (HO servedOther, HN) | **Fixed** (0 days on 13 seeds) | `critic/c30_ho_sum.txt`, `critic/c30_hn_4111.json` |
+| R29-B3 (HO waitingPast, HWAIT) | **Largely fixed** (39,420 → 9,219 days, all with no port, the row says why); new problem R30-B2 | `critic/c30_ho_sum.txt`, `critic/c30_herowaits_*.log`, `critic/c30_hpos_4637_SOV.json` |
+| R29-N1 (silent loss) | **Fixed** (R12) | `critic/c30_hd_4111_bis.json`, `critic/c30_hg_4111.json` |
+| R29-N2, N3 (panel, tags read men) | **Fixed** | `critic/c30_hw_4111_*.json` |
+| R29-N4 (land heroes starve) | **Unchanged**: 414 of 768 land-hero losses with no fight in the 24 h before (run 29: 437 of 824 counted with 24 h before; same measure) | `critic/c30_ho_sum.txt` |
+| R29-N5 (sea heroes lost every ~8 months) | **Unchanged**: 22.9–35.1 losses per 20 years (Iowa 8.3) | `critic/c30_ho_sum.txt` |
+| R29-N6 (hint on hover; hero hides the stack at T1) | hint **fixed**; the stack **unchanged** (HS identical) | `critic/c30_ht_phone.json`, `critic/c30_hs_3739.json` |
+| R29-N7 (no checker rule for heroes) | **Fixed**: `heroBreaks` (row's nation, one formation a row, back within its hour with a place). It passes R30-B2 green: a hero back in the Caspian has a place | `critic/c30_wi_*.log` |
+| R29-N8 (graph text, phone, bar wrap) | **Fixed** (above) | `critic/c30_rg_*.json`, `critic/c30_rgz_4111.json`, `critic/c30_p3_widths.json` |
+| R29-N9 (bond's exit no truce, guarantees only the start's, five ticker rows a Force war, live "Propose alliance" refused, refused peace untold, phone clutter) | **Unchanged**: BX, BS ×4, PP, AL, PHZ identical; PG2 differs only in timing | `critic/c30_cmp.txt` |
+| HO world figures, 10 seeds × 20 years, on vs off | Off: identical to run 29 (all ten JSONs). On: sea battles 347.9 vs 180.8 (+167 ± 11), ships sunk +798 ± 104, major land battles −36 ± 15, the rest within noise (wars +9 ± 9, capitals +28 ± 23, seven powers' land at year 20 +6.2 ± 3.5) | `critic/c30_ho_sum.txt` |
+| LOY ×3, OR ×6, OR2, PR ×2, PZ ×4, EXIT ×3, ES, ES2 ×3, COBEL, BX ×3, BS ×4, BOTH ×5, AL, GU, PG ×2, TD, K, K2, K3, DR, BT ×2, CB, CB2, HU, HS, SX, SXT, EX2, FT, FP2, PL, P2, PH, PUP, PHZ, OS | **Identical** to run 29 (84 JSONs in all) | `critic/c30_cmp.txt` |
+| Headless 7019 × 20, 1777 × 30, 8209 × 30 | Identical but for wall time | `critic/c30_headless_*.json` |
+| Timing-only differences | A (a title button's id), AN (end tick, 18 h), C (one sortie), FO (1 px), G (fleet counts near a mark: the probe ran 16 min under load), Q (ticker), SB, U (one element), W, Z (±1 % elements), PG2 (one day), RW (the panel clicked) | `critic/c30_cmp.txt` |
+| AN (AI strike in the page, 7019 year 20) | Not met, as run 29 (no strike in the 400 days probed) | `critic/c30_an_7019y20.json` |
+| LW, ten years in the page | 6151 off / on, 4111 off / on: 59.8–60 fps every year, longest gap 84 ms, none over 500 ms, no page error | `critic/c30_lwdef_6151.json`, `critic/c30_lwhon_6151.json`, `critic/c30_lwhon_4111.json`, `critic/c30_lwdef_4111.json` |
+| HSL, a save with a hero gone, loaded | The same hash after loading both times (1,227,506,378 at tick 4,000; another number than run 29's because the hero events are logged) | `critic/c30_hsl_4111.json` |
+| HSC, heroes in a scenario file | As run 29 (11 alive, 3 returning, they return) | `critic/c30_hsc_4111.log` |
+| Checkers on run 29's seeds (4421, 6863, 9907, 3331 × 10 years, 8209, 1777) | 0 broken, now with the heroes rules | `critic/c30_wi_*_h*.log`, `critic/c30_diploinv_*.log` |
+
+## The checkers on new seeds
+
+| Checker | Result | Evidence |
+|---|---|---|
+| `diploInvariants.ts 2861 scenario … --heroes`, `3373 random … --heroes` | 0 / 0 broken | `critic/c30_diploinv_2861s_h.log`, `critic/c30_diploinv_3373r_h.log` |
+| `worldInvariants.ts 2861 730 --heroes` | 0 broken | `critic/c30_wi_2861_h.log` |
+| **`worldInvariants.ts 3373 730 --heroes --diplomacy random`** | **2 broken**: "day 581: air: JAP's wing 1372 not at its base (-1130)", "day 601: air: ENG's wing 958 not at its base (-1057)". The same with `--rules air` alone. **Heroes off on the same seed: 0 broken.** WB: at tick 13,955 the Japanese carrier group 1130 stands 6.0 cells from where it stood the hour before, not engaged, and three wings (1372, 537, 1053) are left at its old place | `critic/c30_wi_3373r_h.log`, `critic/c30_wi_3373r_h_air.log`, `critic/c30_wi_3373r_noh.log`, `critic/scripts/c30_wingbase.ts` |
+| **`worldInvariants.ts 5591 3650 --heroes`** | **2 broken**: "day 158: air: JAP's wing 1462 not at its base (-1130)", "day 831: air: NSP's wing 932 kept a base lost an hour ago (121)". **Heroes off, air rules, same seed: 0 broken** | `critic/c30_wi_5591_h10y.log`, `critic/c30_wi_5591_noh_air.log` |
+| `heroWaits.ts` 4111, 4253, 4637, 7603 × 20 years | 0 broken each | `critic/c30_herowaits_*.log` |
 
 ## Dimensions
 
-### Map visuals and readability: 6 (was 7)
-- **Tested:** HT, HC, HCC, HV, HS, HD, HW (heroes at every tier, desk and phone), Z, CB, CB2, TG, PHZ, RW, PG2.
-- **Why down:** the opening view of a heroes game puts Roma, P.100, Char 2C, Richelieu, TOG II and HMS Hood
-  2,500–5,000 km from their units, and a click on a displaced counter opens the country it was pushed onto (B1,
-  `critic/c29_hc_5521_desk.json`, `critic/c29_hcc_5521.json`, `critic/shots/c29ht_desk_05_start.png`). Tags read men:
-  the strongest tank on the map is "6" (`critic/shots/c29ht_desk_09_click_maus_1200.png`). Outside heroes the map is
-  run 28's (Z, CB, CB2, PHZ identical or timing only).
-- **Fix:** B1; a hero's tag shows its health (or its name only), not its men.
+### Map visuals and readability: 7 (was 6)
+- **Tested:** HC ×2, HCC, HF ×5, HFT, HT ×2, HW ×2, HV, HS, Z, CB, CB2, TG, PHZ, RW.
+- **Why up:** the world view now draws every hero next to its place (≤ 33 px, desk and phone, start view and years
+  later; `critic/c30_hc_5521_desk.json`, `critic/shots/c30hc_5521_desk_start.png`), and a hero's tag reads its health
+  (`critic/shots/c30hw_4111_bis_1200m.png`). The rest of the map is run 29's (identical probes).
+- **Not 8:** a fold carries the lead's flag and name only, so the Hood is a "+1" on a Soviet ball and Richelieu a "+2"
+  on a German one; on a phone the five hero counters cover Britain's, France's and Germany's own tags
+  (`critic/shots/c30hft2_5521_phone_start.png`); Japan's heroes sit under the Ranking panel at a desk's start view.
+- **Fix:** fold only a nation's own heroes, or draw the members' flags on the fold; keep counters clear of the HUD.
 
 ### Diplomacy, war, alliance, puppet, revolt depth: 7
-- **Tested:** LOY ×3, OR ×6 seeds, OR2, PR, PZ, PP, FW, FW2, EXIT ×3, ES, ES2 ×3, COBEL, BX ×3, BS ×4, BOTH ×5, GU, PG,
-  DR, AL, the checkers on five new seeds with heroes, HN, the relations graph.
-- **Better than run 28:** AI puppets rise (2 / 0 / 5), no bonded Force war breaks the war lists (0 of 2,372). **Not 8:**
-  B2 (a hero fights for whoever takes its nation, unlisted), guarantees still only the start's, the bond's exit still
-  costs no truce (BX identical), the relations graph's war text.
+- **Tested:** HO servedOther ×13 seeds, HN, HRV ×4, heroWaits ×4, RG ×2, the diplomacy queue (all identical), the
+  checkers on two new seeds.
+- **Held at 7:** the heroes no longer cross sides; the graph's war line reads right. Unchanged from run 29: the bond's
+  exit costs no truce, guarantees only the start's, live "Propose alliance" the sim refuses. A revived nation's heroes
+  were not met (no revival in four 20-year runs).
 
 ### Emergent world dynamics over long runs: 7
-- Heroes on vs off, 10 seeds × 20 years: sea battles +87 %, ships sunk +37 %, major land battles −17 %, the rest within
-  noise; the seven powers +3–5 points of land, not significant. The three long headless runs are busy (144–216
-  war-years, 4–33 bursts, 1–5 puppet risings). The Soviet Union or the United States leads everywhere, as in run 28.
+- Heroes on vs off, 10 seeds × 20 years (`critic/c30_ho_sum.txt`): a busier sea (+92 % battles), a quieter land war
+  (−21 % major battles), nothing else beyond noise. Heroes-off worlds identical to run 29.
 
 ### God Mode: 7
-- Q, K, K2, K3, A identical or ticker-only. God's Annex of France hands Germany two more heroes that no list shows, and
-  God's removal of one is permanent once its nation is dead (`critic/c29_hn_4111.json`, B2). Heroes are absent from
-  the placing list, as designed.
+- God's Annex now ends a nation's heroes with it, as ADR-812 decides; no hero row is told for them (the annexation row
+  is). Q, K, K2, K3, A identical or ticker-only.
 
-### Editor and scenarios: 7
-- G as run 28 (place, warheads, export, reload); OS2 and OS as before; heroes travel inside a scenario file and return
-  in a game started without the option (`critic/c29_hsc_4111.log`). Run 10's old save could not be re-run (deleted).
+### Editor and scenarios: 7 (carried)
+- G, OS, OS2, HSC as run 29.
 
 ### Stats and history: 7
-- HI, DL work on HEAD's world; PUP identical. Heroes are absent from History, the ticker and the charts: a hero sunk
-  thirty times in a game leaves no row (H-N1, `critic/c29_hd_4111_bis.json`). Held at 7: the Overview does tell
-  "returns in N days".
+- R12 works in the page: the ticker row in the hour, History with its two kinds, Go to (`critic/c30_hg_4111.json`). Not
+  8: the History and charts are otherwise run 29's.
 
-### UI/UX and polish: 6 (was 7)
-- **Why down:** both of the batch's features read wrong in their panels: a hero's formation panel says it is whole at
-  35 % (`critic/shots/c29hw_4111_bis_panel.png`); the relations graph says "Japan is at war beside Japan" and is
-  unreadable on a phone (`critic/shots/c29rg_4111_phone_d365.png`); the heroes option explains itself on hover only;
-  the bottom bar wraps at 1024 px since Relations. Unchanged from run 28: a refused peace untold in the Actions tab.
-- **Fix:** H-N2; the war line's text (the side's other members, or "alone"); a zoomable graph or a list on a phone; the
-  option's hint as visible text.
+### UI/UX and polish: 7 (was 6)
+- **Why up:** each R11 item reads right where run 29 found it wrong, desk and phone: the Health row
+  (`critic/shots/c30hw_4111_bis_panel.png`), the visible hint (`critic/shots/c30ht_phone_01_form1938.png`), the war
+  line, the graph zoomed by touch to 15 px labels (`critic/shots/c30rgz_4111_tapnode.png`), the bar one row at 1024.
+- **Not 8:** R30-B1 (phone folds unreachable); the first tap after a drag in the graph is eaten
+  (`critic/c30_rgt_4111.json`); at T1 a hero hides the fleets under it (HS identical); a refused peace is still untold in
+  the Actions tab.
 
-### Performance: 7
-- Four ten-year page watches (6151 and 4111, heroes off and on): 59.8–60 fps every year, longest frame gap 83 ms, none over 500 ms; heroes on cost nothing measurable. PF not measured this run (no fight in HEAD's 7019 year-20 save). RW 60 fps for three years. Headless 2.9–3.8 ms a tick with eight sims at once.
+### Performance: 7 (carried)
+- Fresh: LW ×4, 59.8–60 fps, longest gap 84 ms; RW 60 fps; the heroes' fold costs nothing measurable.
 
-### Stability: 7
-- No page error in any page probe (the 24-month played game, the ten-year watches, the heroes probes on desk and
-  phone). No crash in 65 headless jobs. Deterministic: 52 probe JSONs identical to run 28; the page's Bismarck sinks on
-  the hour the headless run says; a save loaded in the page reproduces the hash.
+### Stability: 7 (carried)
+- No page error in any probe; 84 headless jobs, none crashed; a save with a hero gone reloads to the same hash.
 
 ### Semantic zoom to unit level: 8
-- Z, C, PHZ as run 28; the heroes at T2/T3 are drawn twice their kind and read as special at 25 m/px
-  (`critic/shots/c29hv_3739_1475_25m.png`). The T0 misplacement is counted under map visuals (B1). Not 9: T1 tags, the
-  phone's deep-zoom clutter.
+- The hero's T1 marker and T2 tag read its health; Z, C, PHZ as run 29.
 
 ### Naval warfare: 8
-- SB and G's sea battles as run 28; heroes on nearly double the sea battles (338 vs 181 in 20 years, every seed). Held,
-  not lowered: the sea rules outside the heroes are run 28's, the heroes' sea AI is the user's decision (ADR-793), and
-  their broken return (B3) and silent losses (H-N1) are filed where they read.
+- Sea heroes' waits down three quarters, each told. R30-B2 (the Soviet hero landlocked for years) is filed blocking.
+  Held, as run 29 held it with B3: SB and G's sea battles as run 29, the rest of the navy's rules unchanged.
 
 ### Tanks: 8
-- C, FT, FP2 identical to run 28. Land heroes starve on repeat (H-N4): recorded, not scored down — their movement is the
-  user's decision (ADR-796), and their drawing at T2/T3 is good.
+- C, FT, FP2 identical; land heroes' starving unchanged (R29-N4).
 
-### Aircraft: 8
-- W (timing only), PL identical; monthly air wars in every ticker read. Evidence: `critic/c29_w_5557.json`,
-  `critic/c29_pl_6011.json`.
+### Aircraft: 8 (carried)
+- W timing-only, PL identical. R30-B3 (air rules broken in two heroes worlds) is filed; the score is carried.
 
-### AI nuclear use: 8
-- AI bursts in every long headless run (4 / 15 / 33 on 7019 / 1777 / 8209; 6.5 per 20 years on the heroes seeds); the
-  nukes checker 0 broken on four seeds. The page's strike alert was not re-met on HEAD's 7019 world (no strike in the
-  400 days probed); that evidence is run 28's (`critic/shots/c28an_7019y20_0_alert.png`).
+### AI nuclear use: 8 (carried)
+- Heroes-off headless worlds identical to run 29's (their bursts with them); AN not re-met in the page.
 
 ## Blocking issues, in priority order
 
-Ids as in `CRITIC_REPORT.json`: B1–B3 are R29-B1–R29-B3; H-N1–H-N7 are R29-N1–R29-N7, R1-N1 is R29-N8, the unchanged list is R29-N9.
-
-1. **B1. At the world's zoom six heroes are drawn 2,500–5,000 km from where they are, and a click on a displaced counter opens the
-   nation it was pushed onto.** (A click on a well-placed hero counter at this zoom was not tested.) `counters.ts:491–504` steps a hero's counter below any hero counter it would cover, "as many
-   times as it takes": at the start view (19.6 km/px) Europe's ten heroes cascade into Africa (Roma over French
-   Equatorial Africa, P.100 Ercole 5,009 km off, TOG II over Morocco). This is the view a heroes game opens on. Evidence:
-   `critic/c29_hc_5521_desk.json`, `critic/c29_hc_5521_phone.json`, `critic/c29_hcc_5521.json`,
-   `critic/shots/c29ht_desk_05_start.png`, `critic/shots/c29ht_phone_05_start.png`; ten years on, Bismarck still drawn over the Sahara (`critic/shots/c29lwhon_6151_y10_world.png`). **Fix:** fold heroes that would
-   overlap into one counter ("Bismarck +3", opening a list), or keep each at its place and drop the name at the world
-   zoom; never move a counter more than its own height from its place; a click on a hero counter opens the hero.
-2. **B2. A hero changes nation with its land and vanishes from every list; destroyed, it never returns.** Integration
-   (`puppets.ts:170`) and annexation (`annexNation`, `puppets.ts:148`) move every formation of the dead nation, heroes
-   included, while `world.heroes` keeps the dead nation's roster row: the taker fields up to four heroes, its Overview
-   lists two, the stats list the others under no living nation (`server.ts:848–865`), and once lost they wait for a
-   revival. AI play: Britain fields Roma and P.100 (seed 4637), the United States the Maus (7603, 1,033 days).
-   Contradicts ADR-791 (a nation's heroes in its Overview) and PLAN 7.184a (each power its one hero a row). Evidence:
-   `critic/c29_ho_on_4637.json`, `critic/c29_ho_on_7603.json`, `critic/c29_hn_4111.json`,
-   `critic/shots/c29hn_4111_ger_block.png`. **Fix:** a hero is not handed over (gone with its nation, its row waiting
-   for a revival, as now), or the roster row moves with it and the Overview lists it; and a checker rule: a hero's
-   formation is its roster nation's.
-3. **B3. Sea heroes wait years to return while their nations live, in every seed, against the option's promise of 60
-   days.** The hint (`en.json:934`): "They heal, and come back 60 days after they are lost." A sea hero returns only at
-   a naval base its nation holds (`returnPlace`); the 1938 data gives France 4, Germany 2, the Soviet Union 4, and
-   losing them is common: Richelieu waits 16,123 days over 10 seeds × 20 years, Roma 11,218, Sovetsky Soyuz 5,551,
-   Bismarck 4,888; the Soviet Union of 4253 holds 149,484 cells and 12 ports, none a base. ADR-791 names "waits to
-   return" as a state; the design did not foresee it as the usual one. Evidence: `critic/c29_ho_sum.txt`,
-   `critic/c29_hwait_4253_SOV.json`, `critic/c29_hwait_4111_GER.json`, `data/scenarios/1938/ports.json`. **Fix:**
-   with no naval base held, return at any port the nation holds (or its capital's nearest coast); say why in the row
-   while it waits.
+1. **R30-B2. Sovetsky Soyuz comes back in the Caspian Sea or on Lake Onega and never leaves.** `returnPlace`'s
+   fallback (ADR-813: the water of the held port nearest the start) picks a port on landlocked water: Baku (4637),
+   Atyrau (7603), Makhachkala (9001), Petrozavodsk (4111). The hero is never lost again and stays there to the run's
+   end, 11,259 days in 4 of 13 seeds (4637: 12.8 years, no Soviet fleet within 600 km at any of 32 samples, the Soviet
+   Union holding up to 17 ports). The checker's "back within its hour" passes it. Evidence:
+   `critic/c30_seareturns.txt`, `critic/c30_seareturns_hx.txt`, `critic/c30_hpos_4637_SOV.json`,
+   `critic/c30_ho_on_4637.json`, `critic/c30_ho_on_7603.json`, `critic/c30_hx_on_9001.json`. **Fix:** only ports whose
+   water reaches the ocean (or the hero's start sea) count; failing that it waits, and its row says so; a checker rule
+   that a sea hero stands in water it can sail out of.
+2. **R30-B1. On a phone the folded hero counters hide three heroes that a tap cannot open.** At the start view (5521,
+   390 × 844, touch) "Sovetsky Soyuz +1" holds HMS Hood and "Bismarck +2" holds TOG II and Char 2C; the panel opened by
+   the first tap covers the counter, and closing it (× or Escape) starts the fold over at its lead, so Hood, TOG II and
+   Char 2C are never reached. The fold also puts a hero under another nation's flag and name (the Hood ~2,900 km from
+   the Soviet counter's centre, its "+1" off the screen's edge). R8's AT claims "a click on each opens that hero, desk
+   and phone". Evidence: `critic/c30_hft_5521.json`, `critic/shots/c30hft2_5521_phone_start.png`,
+   `critic/shots/c30hft2_5521_phone_tap2.png`, `critic/c30_hf_5521_desk_d0_0.json`. **Fix:** keep the cycle when the
+   panel is closed and reopened by a tap on the same fold, or open a list of the fold's heroes; fold only one nation's
+   heroes; keep the fold's label on screen.
+3. **R30-B3. The checker's air rules break with heroes on, on two of seven new seeds.** 3373 (random diplomacy): wings
+   of Japan's carrier group 1130 and Britain's 1057 not at their fleets (days 581, 601); 5591: Japan's wing 1462 not at
+   carrier 1130 (day 158), Nationalist Spain's wing 932 kept a base lost an hour ago (day 831). The same seeds with
+   heroes off: 0 broken. At the first break the carrier moved 6.0 cells in one hour, not engaged, and left three wings
+   behind. Cause not shown. Evidence: `critic/c30_wi_3373r_h.log`, `critic/c30_wi_3373r_noh.log`,
+   `critic/c30_wi_5591_h10y.log`, `critic/c30_wi_5591_noh_air.log`, `critic/scripts/c30_wingbase.ts`. **Fix:** find
+   what moves a carrier six cells in an hour in a heroes world (the sea hero's sail-with-the-fleet order is the obvious
+   suspect, not shown) and move its wings with it.
 
 ## Non-blocking issues
-
-1. **H-N1. A hero's loss and return are told nowhere but its Overview row**: no ticker row, no History row or kind; the
-   day's sea battle reads "Germany lost 1 ship" (`critic/c29_hd_4111_bis.json`, `critic/shots/c29hd_4111_bis_history.png`).
-   Fix: ticker and History rows ("Bismarck was sunk near …", "Bismarck is back at Kiel") with Go to.
-2. **H-N2. A hero's formation panel shows men, not health** ("Men 2,200 of 2,200" at 35 %; ADR-787 keeps men whole;
-   the design covers the Overview's bar, not this panel): `critic/shots/c29hw_4111_bis_panel.png`. Fix: a health row.
-3. **H-N3. Hero tags read men** ("6", "2.2k") beside "12.5k" divisions and "13.4k" squadrons. Fix: name and a health pip.
-4. **H-N4. Land heroes starve in about half their losses** (437 of 824 with no fight in their last 24 h; supply 0, org
-   0 at the end): the TOG II dies in Nationalist Spain three times in a year (`critic/c29_hl_4111.json`). The march is
-   the AI's (ADR-796); the execution side: the 5 % daily heal is outrun by attrition to death, unseen. Fix: a hero out
-   of supply for days falls back to supply, or is told in the ticker.
-5. **H-N5. Sea heroes are lost about every eight months** (24–31 times in 20 years) and fight on 1–2 % of their war
-   days; "far stronger than any other" does not show in play (`critic/c29_ho_sum.txt`). Cause not shown (low
-   confidence: fire picked by hit points draws the enemy's guns to the biggest ship).
-6. **H-N6.** The option explains itself on hover only; at T1 a hero hides the fleets stacked with it
-   (`critic/c29_hs_3739.json`).
-7. **H-N7.** The checkers carry no rule for the heroes (one per row, its roster's nation, back within its hour when it
-   has a place); B2 and B3 pass them green.
-8. **R1-N1. The relations graph says "X is at war beside X"** for a nation alone on its side; it is unreadable on a
-   phone; the bottom bar wraps at 1024 px since its button (`critic/c29_rg_4111_desk.json`,
-   `critic/shots/c29rg_4111_phone_d365.png`, `critic/c29_p3_widths.json`).
-9. **Unchanged from run 28:** the bond's exit costs no truce (BX); guarantees only the start's (BS); five ticker rows for
-   one Force war; a refused peace untold in the Actions tab; phone clutter at 60 / 800 m/px; live "Propose alliance" refused by the sim (AL identical).
+1. **R30-N1.** Land heroes still starve in about half their losses (414 of 768), and sea heroes are lost 23–35 times in
+   20 years (R29-N4, N5 unchanged). `critic/c30_ho_sum.txt`.
+2. **R30-N2.** At a desk's start view Japan's two heroes are drawn under the Ranking panel; a click on them opens a
+   ranking row's nation. `critic/c30_hf_5521_desk_d0_0.json`.
+3. **R30-N3.** In the relations graph on a phone, the first tap after a one-finger drag selects nothing.
+   `critic/c30_rgt_4111.json`.
+4. **R30-N4.** At T1 a hero still hides the fleets stacked with it (R29-N6's second half). `critic/c30_hs_3739.json`.
+5. **R30-N5.** The option's hint still promises "come back 60 days after they are lost"; a sea hero with no port and a
+   hero of a dead nation do not (the row tells why). `critic/shots/c30ht_phone_01_form1938.png`.
+6. **R30-N6.** Unchanged from run 29 (R29-N9): the bond's exit costs no truce; guarantees only the start's; five ticker
+   rows for one Force war; a refused peace untold in the Actions tab; phone clutter at 60 / 800 m/px; live "Propose
+   alliance" the sim refuses. `critic/c30_cmp.txt`.
 
 ## Design objections (none blocking, no score lowered)
-- **The heroes' AI** (ADR-793–796, the user's decisions): a sea hero tied to the largest fleet goes wherever that fleet
-  meets the enemy in force, and dies there; a land hero marched toward the nearest fight with no regard to supply dies
-  of hunger. A unit "far stronger than any other" would read better spent like one: with the main force but out of
-  hopeless fights, brought home when cut off.
-- **Returns only at a naval base** is the plan's rule; with 2–4 bases a nation it makes a sea hero's absence the normal
-  state of a long war (B3 is the execution side).
-- Run 28's objections stand (the played nation's AI declares its own wars; a junior member's peace ends the whole war).
+- A hero gone with its annexed nation (ADR-812) waits for a revival that did not come in any of four 20-year runs: the
+  option's heroes are, in practice, lost with their nations. Defensible, but the player is told only "France was
+  annexed".
+- Run 29's objections stand (the heroes' AI tied to the largest fleet and to the nearest fight; the played nation's AI
+  declares its own wars; a junior member's peace ends the whole war).
 
 ## Ideas from other games (not scored)
-- Named units in grand-strategy games announce themselves: a news line when a named ship is sunk or a general falls,
-  the ship's name in the battle report. A "Heroes" list in Statistics (lives, losses, sinkings) would make them a story
-  rather than a block in an Overview.
+- Stacked named units in grand-strategy maps open a small list on click ("3 units here"), each with its flag, rather
+  than cycling; that also solves a covered stack on a phone.
 
 ## Notes
-- No 529x port was listening at the start; this run used only 5299 and stopped it at the end. No worktree.
-- The fps probes (LW ×4, PF, RW) ran while the last headless jobs (AL, 8209 × 30) were still running; run 28 found
-  such runs read the same as quiet ones.
-- `c29_ho.ts` counts a hero "in battle" on a day if `engaged` at any hour; "lost out of battle" = no `engaged` hour in
-  its last 24. HL's `sinceEng` starts at 9,999 for a hero never engaged since raised.
-- The heroes figures are HEAD only (on vs off, same seed): run 28 measured no heroes-off pair, "new seeds, not compared".
+- The heroes-on worlds of HEAD differ from run 29's by design (R9, R10), so run 29 → run 30 counts with heroes on
+  compare like for like only as aggregates over the same ten seeds; heroes-off worlds are identical.
+- The page probes ran while 7 headless sims were running; run 28 found such fps reads the same as quiet ones, and the
+  LW figures match run 29's.
+- PF (frame rates over a fight in 7019's year-20 save) was run last; as in run 29 the save holds no engaged formation at
+  its hour (`critic/c30_pf_7019.json`: `fatal`, no fight found), not compared.
+- No worktree was made; only port 5299 was used and stopped at the end.
 
 ## Strengths, verified
-- **The batch's rule fixes hold on my own counts:** 0 broken of 2,372 bonded Force wars on six seeds (run 28 found 4),
-  AI puppets rising on two of three seeds, the war checker clean on 8209 where run 28 counted 7.
-- **A hero is findable and followable from its nation:** the Overview's Heroes block with health and "returns in N
-  days", a click that selects and follows it (`critic/c29_hv_3739.json`), a save that keeps a hero's return to the tick
-  (`critic/c29_hsl_4111.json`).
+- **The fixes are real on the critic's own seeds:** 0 days served for another nation (13 seeds), sea-hero waits down
+  from 39,420 to 9,219 days, each told in its row, and no hero counter more than one height from its place.
+- **A hero's story is now told:** the ticker row in the hour it is sunk, its History kind, Go to to the place
+  (`critic/c30_hg_4111.json`), and the formation panel's health bar.

@@ -1,0 +1,234 @@
+{
+ "seed": 6151,
+ "years": [
+  {
+   "frames": 2099,
+   "maxGap": 39,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "14 December 1938 Yugoslavia captured Hungary's capital 15 December 1938 Hungary was annexed by Yugoslavia 15 December 1938 Germany captured Czechoslovakia's capital 15 December 1938 Germany captured Czechoslovakia's capital 17 December 1938 TOG II is back with United Kingdom near London ⚓ Carrier strike ashore: Japan on Communist China ×2"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "China +1 ⚔ Tibet",
+    "France +34 ⚔ Brazil",
+    "Soviet Union +4 ⚔ Norway +1",
+    "Germany +3 ⚔ Poland +10",
+    "Germany +2 ⚔ Yugoslavia +2"
+   ],
+   "date": "1 January 1939",
+   "nations": 92,
+   "year": 1,
+   "wallS": 35.015,
+   "fps": 59.9,
+   "shot": "critic/shots/c30lwhon_6151_y01_world.png"
+  },
+  {
+   "frames": 1581,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "26 December 1939 Soviet Union lost Sovetsky Soyuz near Venice 26 December 1939 Italy lost Roma near Venice 1 January 1940 Soviet Union and Italy fought in the air this month: Soviet Union lost 15 aircraft, Italy 27 1 January 1940 Soviet Union's air force struck Italy this month: 10,784 men, guns and vehicles lost 3 January 1940 Soviet Union declared war on Netherlands"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Nationalist Spain +24 ⚔ Italy +3",
+    "Italy +3 ⚔ Free Sousse",
+    "Soviet Union +4 ⚔ Italy +1",
+    "Soviet Union +4 ⚔ Netherlands +29"
+   ],
+   "date": "5 January 1940",
+   "nations": 92,
+   "year": 2,
+   "wallS": 26.409,
+   "fps": 59.9,
+   "shot": "critic/shots/c30lwhon_6151_y02_world.png"
+  },
+  {
+   "frames": 1297,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1940 Belgium's air force struck Soviet Union this month: 2,075 men, guns and vehicles lost 15 December 1940 O-I is back with Japan near Tokyo 18 December 1940 Romania captured Syria's capital 18 December 1940 Romania captured Lebanon's capital 23 December 1940 Lebanon was destroyed"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Soviet Union +4 ⚔ Netherlands +28",
+    "Iraq ⚔ Saudi Arabia",
+    "Japan +1 ⚔ Saudi Arabia",
+    "France +28 ⚔ Germany +1",
+    "Soviet Union +4 ⚔ Japan"
+   ],
+   "date": "4 January 1941",
+   "nations": 90,
+   "year": 3,
+   "wallS": 21.606,
+   "fps": 60,
+   "shot": "critic/shots/c30lwhon_6151_y03_world.png"
+  },
+  {
+   "frames": 1384,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "5 December 1941 Germany declared war on Poland 7 December 1941 Char 2C is back with France near Paris 11 December 1941 Yamato is back with Japan near Tokyo 20 December 1941 Soviet Union made peace with Belgium 22 December 1941 Italy lost Roma near Bizerte"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "United States +13 ⚔ Japan +2",
+    "Brazil +1 ⚔ Paraguay",
+    "Germany +2 ⚔ Poland +7"
+   ],
+   "date": "6 January 1942",
+   "nations": 87,
+   "year": 4,
+   "wallS": 23.061,
+   "fps": 60,
+   "shot": "critic/shots/c30lwhon_6151_y04_world.png"
+  },
+  {
+   "frames": 1414,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "7 December 1942 P.100 Ercole is back with Italy near Innsbruck 9 December 1942 Italy lost P.100 Ercole near Innsbruck 16 December 1942 United Kingdom captured Italy's capital 18 December 1942 Romania captured Tunisia's capital 26 December 1942 United Kingdom captured Nationalist Spain's capital"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "United States +13 ⚔ Japan +2",
+    "Nationalist Spain +1 ⚔ Free City of Danzig",
+    "United Kingdom +20 ⚔ Nationalist Spain +1",
+    "Soviet Union +5 ⚔ Germany +1",
+    "Soviet Union +5 ⚔ France +24"
+   ],
+   "date": "9 January 1943",
+   "nations": 86,
+   "year": 5,
+   "wallS": 23.602,
+   "fps": 59.9,
+   "shot": "critic/shots/c30lwhon_6151_y05_world.png"
+  },
+  {
+   "frames": 1398,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1943 United Kingdom's air force struck Soviet Union this month: 4,518 men, guns and vehicles lost 19 December 1943 Yemen declared war on Canada 19 December 1943 Iraq captured Turkey's capital 20 December 1943 Sovetsky Soyuz is back with Soviet Union near Leningrad 20 December 1943 Richelieu is back with France near Brest"
+   ],
+   "chips": [
+    "Soviet Union +4 ⚔ France +23",
+    "Iraq +14 ⚔ Turkey +3",
+    "Brazil +1 ⚔ Peru +1",
+    "Yemen ⚔ Canada +15"
+   ],
+   "date": "11 January 1944",
+   "nations": 83,
+   "year": 6,
+   "wallS": 23.301,
+   "fps": 60,
+   "shot": "critic/shots/c30lwhon_6151_y06_world.png"
+  },
+  {
+   "frames": 1188,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "29 December 1944 China captured French Indochina's capital 29 December 1944 Soviet Union lost Sovetsky Soyuz near Kalmar 31 December 1944 Soviet Union captured Iraq's capital 1 January 1945 Japan's air force struck France this month: 6,108 men, guns and vehicles lost 1 January 1945 Lithuania was annexed by Poland"
+   ],
+   "chips": [
+    "United States +17 ⚔ Denmark",
+    "Soviet Union +3 ⚔ Canada +15",
+    "China +3 ⚔ France +6",
+    "Soviet Union +4 ⚔ Haiti"
+   ],
+   "date": "13 January 1945",
+   "nations": 81,
+   "year": 7,
+   "wallS": 19.785,
+   "fps": 60,
+   "shot": "critic/shots/c30lwhon_6151_y07_world.png"
+  },
+  {
+   "frames": 1552,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "16 December 1945 France captured Anglo-Egyptian Sudan's capital 1 January 1946 Soviet Union and Netherlands fought in the air this month: Soviet Union lost 3 aircraft, Netherlands 39 1 January 1946 United Kingdom's air force struck France this month: 3,373 men, guns and vehicles lost 1 January 1946 China captured French Morocco's capital 1 January 1946 French Morocco was destroyed"
+   ],
+   "chips": [
+    "China +3 ⚔ France",
+    "United Kingdom +12 ⚔ France",
+    "Soviet Union +5 ⚔ Netherlands +1"
+   ],
+   "date": "15 January 1946",
+   "nations": 65,
+   "year": 8,
+   "wallS": 25.91,
+   "fps": 59.9,
+   "shot": "critic/shots/c30lwhon_6151_y08_world.png"
+  },
+  {
+   "frames": 1708,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "26 December 1946 Germany lost Maus near Meiganga 1 January 1947 Nationalist Spain's air force struck Netherlands this month: 3,356 men, guns and vehicles lost 1 January 1947 Free Sa'dah broke away from Soviet Union 6 January 1947 Char 2C is back with France near Tamanrasset 11 January 1947 Free Sa'dah made peace with Soviet Union ⚓ Sea battle: Germany against Soviet Union"
+   ],
+   "chips": [
+    "China +3 ⚔ France",
+    "Poland +4 ⚔ Netherlands +1",
+    "Canada +14 ⚔ France +1",
+    "Free Haut-Rhin +13 ⚔ Netherlands +1",
+    "Soviet Union +7 ⚔ Free Makkah",
+    "Soviet Union +7 ⚔ Free Vorarlberg +5"
+   ],
+   "date": "16 January 1947",
+   "nations": 75,
+   "year": 9,
+   "wallS": 28.467,
+   "fps": 60,
+   "shot": "critic/shots/c30lwhon_6151_y09_world.png"
+  },
+  {
+   "frames": 1504,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1948 United States and Brazil fought in the air this month: United States lost 3 aircraft, Brazil 0 1 January 1948 France's air force struck Japan this month: 3,487 men, guns and vehicles lost 9 January 1948 Soviet Union captured Spanish Republic's capital ⚓ Carrier strike ashore: United States on Uruguay"
+   ],
+   "chips": [
+    "China +3 ⚔ France",
+    "Poland +5 ⚔ Iran +1",
+    "Canada +13 ⚔ Brazil +1",
+    "Soviet Union +9 ⚔ Brazil +1",
+    "Netherlands ⚔ Spanish Republic",
+    "Soviet Union +9 ⚔ Spanish Republic"
+   ],
+   "date": "16 January 1948",
+   "nations": 75,
+   "year": 10,
+   "wallS": 25.128,
+   "fps": 59.9,
+   "shot": "critic/shots/c30lwhon_6151_y10_world.png"
+  }
+ ],
+ "fight": {
+  "best": [
+   801.5920362293916,
+   650.945447284474
+  ],
+  "bn": 3,
+  "engaged": 5
+ },
+ "errors": []
+}

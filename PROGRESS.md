@@ -619,3 +619,12 @@
   row's Go to moves the camera. `heroes.test.ts`: the log's rows at the hero's place, none at Germany's collapse.
   Shots `docs/evidence/R11/r12-*` looked at.
 - R8–R12 done: **Next:** R5b, the critic's full run and the release.
+
+## 2026-11-03 — ROADMAP R5b: critic run 30, focused
+- Commit d6e1bb1e. Focused by the brief's rule (run 29 blocking, every commit since R8–R12), so it does not close R5b.
+  Scores: mapVisuals 7 (up), uiUxPolish 7 (up), diplomacyWarDepth, emergentDynamics, godMode, editorScenarios,
+  statsHistory, performance, stability 7; semanticZoom, naval, tanks, aircraft, aiNukes 8. Every score at its bar.
+  R8–R12 hold on the critic's seeds (0 days served for another nation in 13 seeds; sea-hero waits 39,420 → 9,219 days).
+  3 blocking, filed as R13–R15: Sovetsky Soyuz back on the Caspian or Lake Onega for good (B2); folded heroes a tap
+  cannot reach on a phone, and folds across nations (B1); the checker's air rules break with heroes on (B3).
+- **Next:** R13.

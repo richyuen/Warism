@@ -1,0 +1,34 @@
+{
+ "seed": 5521,
+ "clicks": [
+  {
+   "hero": "Maus +2",
+   "at": [
+    861,
+    289
+   ],
+   "panel": "Maus | × | Kind | Maus | Nation | Germany | Health | 100% | Men | 6 of 6 | Supply | 100% | Org | 100% | Fuel on the march | 15 an hour | Status | Holding | ELEM",
+   "cam": [
+    1100,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c30hcc_5521_Maus2.png"
+  },
+  {
+   "hero": "Roma +1",
+   "at": [
+    878,
+    325
+   ],
+   "panel": "Roma | × | Kind | Roma | Nation | Italy | Health | 100% | Men | 1,900 of 1,900 | Supply | 100% | Org | 100% | Fuel on the march | 20 an hour | Status | Holding ",
+   "cam": [
+    1121,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c30hcc_5521_Roma1.png"
+  }
+ ],
+ "errors": []
+}

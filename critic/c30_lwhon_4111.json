@@ -1,0 +1,241 @@
+{
+ "seed": 4111,
+ "years": [
+  {
+   "frames": 2303,
+   "maxGap": 50,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "23 December 1938 Sovetsky Soyuz is back with Soviet Union near Leningrad 25 December 1938 Brazil declared war on Venezuela 30 December 1938 Germany declared war on Turkey 1 January 1939 China and Japan fought in the air this month: China lost 6 aircraft, Japan 48 1 January 1939 Soviet Union's air force struck Italy this month: 6,389 men, guns and vehicles lost ⚓ Carrier strike: Japan on Netherlands's ships"
+   ],
+   "chips": [
+    "Japan +2 ⚔ China +1",
+    "Nationalist Spain ⚔ Portugal +22",
+    "Peru ⚔ Colombia",
+    "Soviet Union +6 ⚔ Japan +7",
+    "United States +1 ⚔ Iran +2",
+    "Italy +6 ⚔ Switzerland +34"
+   ],
+   "date": "3 January 1939",
+   "nations": 100,
+   "year": 1,
+   "wallS": 38.445,
+   "fps": 59.9,
+   "shot": "critic/shots/c30lwhon_4111_y01_world.png"
+  },
+  {
+   "frames": 1638,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "29 December 1939 Soviet Union made peace with Norway 1 January 1940 Soviet Union and Italy fought in the air this month: Soviet Union lost 3 aircraft, Italy 6 1 January 1940 United Kingdom's air force struck Soviet Union this month: 4,374 men, guns and vehicles lost 1 January 1940 Free Balvi broke away from Soviet Union 1 January 1940 Sovetsky Soyuz is back with Soviet Union near Leningrad"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Nationalist Spain ⚔ Portugal +22",
+    "Saudi Arabia ⚔ Yemen",
+    "Japan +3 ⚔ South Africa",
+    "United States +1 ⚔ Canada",
+    "Soviet Union +7 ⚔ Netherlands +34"
+   ],
+   "date": "7 January 1940",
+   "nations": 98,
+   "year": 2,
+   "wallS": 27.343,
+   "fps": 59.9,
+   "shot": "critic/shots/c30lwhon_4111_y02_world.png"
+  },
+  {
+   "frames": 1628,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "23 December 1940 P.100 Ercole is back with Italy near Rome 1 January 1941 Norway and United States fought in the air this month: Norway lost 3 aircraft, United States 63 1 January 1941 United Kingdom's air force struck Nationalist Spain this month: 4,481 men, guns and vehicles lost 1 January 1941 Free Jūrmala broke away from Dutch East Indies 2 January 1941 Free Jūrmala made peace with Dutch East Indies"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Nationalist Spain ⚔ Portugal +22",
+    "Saudi Arabia ⚔ Yemen",
+    "Japan +3 ⚔ South Africa",
+    "Denmark ⚔ France +35",
+    "United States +1 ⚔ Finland +3"
+   ],
+   "date": "9 January 1941",
+   "nations": 98,
+   "year": 3,
+   "wallS": 27.121,
+   "fps": 60,
+   "shot": "critic/shots/c30lwhon_4111_y03_world.png"
+  },
+  {
+   "frames": 1368,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "29 December 1941 Sovetsky Soyuz is back with Soviet Union near Polyarnyy 29 December 1941 Roma is back with Italy near Taranto 1 January 1942 Czechoslovakia and France fought in the air this month: Czechoslovakia lost 27 aircraft, France 15 1 January 1942 Germany's air force struck Soviet Union this month: 3,944 men, guns and vehicles lost 1 January 1942 Italy lost P.100 Ercole near Linz ⚓ Carrier strike ashore: Japan on China ×3"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Nationalist Spain ⚔ Portugal +22",
+    "Soviet Union +8 ⚔ Turkey +1",
+    "Iraq ⚔ Saudi Arabia",
+    "Soviet Union +8 ⚔ Japan +2",
+    "France +10 ⚔ Switzerland +4"
+   ],
+   "date": "10 January 1942",
+   "nations": 96,
+   "year": 4,
+   "wallS": 22.79,
+   "fps": 60,
+   "shot": "critic/shots/c30lwhon_4111_y04_world.png"
+  },
+  {
+   "frames": 1685,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "31 December 1942 Japan made peace with China 1 January 1943 Soviet Union and United States fought in the air this month: Soviet Union lost 19 aircraft, United States 6 1 January 1943 United States's air force struck Soviet Union this month: 3,104 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "Nationalist Spain ⚔ Portugal +20",
+    "France +10 ⚔ Switzerland +4",
+    "Brazil +3 ⚔ Switzerland +3",
+    "Soviet Union +5 ⚔ Norway",
+    "United States +1 ⚔ Soviet Union +7"
+   ],
+   "date": "11 January 1943",
+   "nations": 92,
+   "year": 5,
+   "wallS": 28.125,
+   "fps": 59.9,
+   "shot": "critic/shots/c30lwhon_4111_y05_world.png"
+  },
+  {
+   "frames": 1463,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "26 December 1943 France lost Richelieu near Hammerfest 30 December 1943 Germany lost Maus near Krasnodar 31 December 1943 Italy lost P.100 Ercole near Vaasa 1 January 1944 Germany and Soviet Union fought in the air this month: Germany lost 78 aircraft, Soviet Union 9 1 January 1944 United Kingdom's air force struck South Africa this month: 5,270 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "Soviet Union +6 ⚔ Romania",
+    "France +14 ⚔ Soviet Union +5",
+    "United Kingdom +22 ⚔ South Africa",
+    "Australia ⚔ Romania",
+    "United States +3 ⚔ Denmark +13"
+   ],
+   "date": "11 January 1944",
+   "nations": 95,
+   "year": 6,
+   "wallS": 24.379,
+   "fps": 60,
+   "shot": "critic/shots/c30lwhon_4111_y06_world.png"
+  },
+  {
+   "frames": 2067,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "13 December 1944 Netherlands made peace with Brazil 31 December 1944 United Kingdom declared war on Saudi Arabia 31 December 1944 Richelieu is back with France near Brest 1 January 1945 United Kingdom and Brazil fought in the air this month: United Kingdom lost 15 aircraft, Brazil 3 1 January 1945 Germany's air force struck Soviet Union this month: 3,329 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "United States +3 ⚔ Denmark +12",
+    "Japan +4 ⚔ South Africa",
+    "Iraq ⚔ Saudi Arabia",
+    "Australia +1 ⚔ Saudi Arabia",
+    "Argentina +1 ⚔ Brazil +2",
+    "Japan +4 ⚔ Soviet Union +7"
+   ],
+   "date": "12 January 1945",
+   "nations": 93,
+   "year": 7,
+   "wallS": 34.482,
+   "fps": 59.9,
+   "shot": "critic/shots/c30lwhon_4111_y07_world.png"
+  },
+  {
+   "frames": 1586,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1946 Germany's air force struck Hungary this month: 3,977 men, guns and vehicles lost 5 January 1946 Guatemala made peace with Honduras 5 January 1946 Nicaragua made peace with Honduras 8 January 1946 United Kingdom captured Tunisia's capital 10 January 1946 France lost Char 2C near Strasbourg"
+   ],
+   "chips": [
+    "Japan +4 ⚔ South Africa",
+    "Germany ⚔ France +4",
+    "United Kingdom +14 ⚔ Mexico +9",
+    "Soviet Union +5 ⚔ Norway",
+    "Japan +5 ⚔ Argentina +1",
+    "Australia +1 ⚔ Norway +2"
+   ],
+   "date": "14 January 1946",
+   "nations": 81,
+   "year": 8,
+   "wallS": 26.434,
+   "fps": 60,
+   "shot": "critic/shots/c30lwhon_4111_y08_world.png"
+  },
+  {
+   "frames": 1260,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "24 December 1946 USS Iowa is back with United States near San Diego 25 December 1946 Italy lost Roma near San Diego 25 December 1946 United States lost USS Iowa near San Diego 29 December 1946 France lost Richelieu near Marseille 1 January 1947 United Kingdom's air force struck Hungary this month: 4,185 men, guns and vehicles lost ⚓ Carrier strike ashore: Japan on United States ×3"
+   ],
+   "chips": [
+    "Japan +5 ⚔ Argentina +1",
+    "Soviet Union +7 ⚔ Argentina +1",
+    "United States ⚔ Germany +3",
+    "Mexico +11 ⚔ Argentina +1",
+    "United Kingdom +13 ⚔ France +10",
+    "Soviet Union +6 ⚔ Turkey +1"
+   ],
+   "date": "14 January 1947",
+   "nations": 81,
+   "year": 9,
+   "wallS": 21.058,
+   "fps": 59.8,
+   "shot": "critic/shots/c30lwhon_4111_y09_world.png"
+  },
+  {
+   "frames": 1918,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "18 December 1947 Soviet Union lost Sovetsky Soyuz near Constanța 21 December 1947 France made peace with Australia 27 December 1947 Japan captured Syria's capital 1 January 1948 Germany's air force struck Syria this month: 2,592 men, guns and vehicles lost 4 January 1948 United Kingdom declared war on Nicaragua"
+   ],
+   "chips": [
+    "Soviet Union +7 ⚔ Argentina +1",
+    "United States ⚔ Germany +3",
+    "Soviet Union +7 ⚔ Philippines +9",
+    "Germany +3 ⚔ Philippines +8",
+    "United Kingdom +16 ⚔ Nicaragua +8"
+   ],
+   "date": "16 January 1948",
+   "nations": 76,
+   "year": 10,
+   "wallS": 31.963,
+   "fps": 60,
+   "shot": "critic/shots/c30lwhon_4111_y10_world.png"
+  }
+ ],
+ "fight": {
+  "best": [
+   1248.1523271341293,
+   365.816046726644
+  ],
+  "bn": 4,
+  "engaged": 4
+ },
+ "errors": []
+}

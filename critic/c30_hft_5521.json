@@ -1,0 +1,721 @@
+{
+ "seed": 5521,
+ "counters": [
+  {
+   "text": "Sovetsky Soyuz +1",
+   "ids": [
+    1472,
+    1476
+   ],
+   "ways": {
+    "again": {
+     "seen": [
+      {
+       "k": 0,
+       "at": [
+        321,
+        196
+       ],
+       "picked": 1472,
+       "title": "Sovetsky Soyuz",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 1,
+       "at": [
+        321,
+        196
+       ],
+       "picked": 1472,
+       "title": "Sovetsky Soyuz",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 2,
+       "at": [
+        321,
+        196
+       ],
+       "picked": 1472,
+       "title": "Sovetsky Soyuz",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      }
+     ],
+     "reached": [
+      true,
+      false
+     ]
+    },
+    "close": {
+     "seen": [
+      {
+       "k": 0,
+       "at": [
+        321,
+        196
+       ],
+       "picked": 1472,
+       "title": "Sovetsky Soyuz",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 1,
+       "at": [
+        321,
+        196
+       ],
+       "picked": 1472,
+       "title": "Sovetsky Soyuz",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 2,
+       "at": [
+        321,
+        196
+       ],
+       "picked": 1472,
+       "title": "Sovetsky Soyuz",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      }
+     ],
+     "reached": [
+      true,
+      false
+     ]
+    },
+    "escape": {
+     "seen": [
+      {
+       "k": 0,
+       "at": [
+        321,
+        196
+       ],
+       "picked": 1472,
+       "title": "Sovetsky Soyuz",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 1,
+       "at": [
+        321,
+        196
+       ],
+       "picked": 1472,
+       "title": "Sovetsky Soyuz",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 2,
+       "at": [
+        321,
+        196
+       ],
+       "picked": 1472,
+       "title": "Sovetsky Soyuz",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      }
+     ],
+     "reached": [
+      true,
+      false
+     ]
+    }
+   },
+   "shot": "critic/shots/c30hft_5521_SovetskySoyuz1.png"
+  },
+  {
+   "text": "Bismarck +2",
+   "ids": [
+    1474,
+    1477,
+    1479
+   ],
+   "ways": {
+    "again": {
+     "seen": [
+      {
+       "k": 0,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 1,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 2,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 3,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      }
+     ],
+     "reached": [
+      true,
+      false,
+      false
+     ]
+    },
+    "close": {
+     "seen": [
+      {
+       "k": 0,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 1,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 2,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 3,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      }
+     ],
+     "reached": [
+      true,
+      false,
+      false
+     ]
+    },
+    "escape": {
+     "seen": [
+      {
+       "k": 0,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 1,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 2,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      },
+      {
+       "k": 3,
+       "at": [
+        229,
+        234
+       ],
+       "picked": 1474,
+       "title": "Bismarck",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": true
+      }
+     ],
+     "reached": [
+      true,
+      false,
+      false
+     ]
+    }
+   },
+   "shot": "critic/shots/c30hft_5521_Bismarck2.png"
+  },
+  {
+   "text": "Maus +2",
+   "ids": [
+    1475,
+    1478,
+    1481
+   ],
+   "ways": {
+    "again": {
+     "seen": [
+      {
+       "k": 0,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1475,
+       "title": "Maus",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      },
+      {
+       "k": 1,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1478,
+       "title": "Richelieu",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      },
+      {
+       "k": 2,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1481,
+       "title": "P.100 Ercole",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      },
+      {
+       "k": 3,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1475,
+       "title": "Maus",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      }
+     ],
+     "reached": [
+      true,
+      true,
+      true
+     ]
+    },
+    "close": {
+     "seen": [
+      {
+       "k": 0,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1475,
+       "title": "Maus",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      },
+      {
+       "k": 1,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1475,
+       "title": "Maus",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      },
+      {
+       "k": 2,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1475,
+       "title": "Maus",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      },
+      {
+       "k": 3,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1475,
+       "title": "Maus",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      }
+     ],
+     "reached": [
+      true,
+      false,
+      false
+     ]
+    },
+    "escape": {
+     "seen": [
+      {
+       "k": 0,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1475,
+       "title": "Maus",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      },
+      {
+       "k": 1,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1475,
+       "title": "Maus",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      },
+      {
+       "k": 2,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1475,
+       "title": "Maus",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      },
+      {
+       "k": 3,
+       "at": [
+        251,
+        273
+       ],
+       "picked": 1475,
+       "title": "Maus",
+       "panel": [
+        7,
+        46,
+        376,
+        226
+       ],
+       "panelCoversCounter": false
+      }
+     ],
+     "reached": [
+      true,
+      false,
+      false
+     ]
+    }
+   },
+   "shot": "critic/shots/c30hft_5521_Maus2.png"
+  }
+ ],
+ "all": [
+  {
+   "key": "hero:1472",
+   "text": "Sovetsky Soyuz +1",
+   "box": [
+    215.2654296875,
+    181.8771484375,
+    212,
+    28
+   ],
+   "n": 2,
+   "ids": [
+    1472,
+    1476
+   ]
+  },
+  {
+   "key": "hero:1473",
+   "text": "T-42",
+   "box": [
+    314.27060800000015,
+    240.1836562824568,
+    80,
+    28
+   ],
+   "n": 1,
+   "ids": [
+    1473
+   ]
+  },
+  {
+   "key": "hero:1474",
+   "text": "Bismarck +2",
+   "box": [
+    152.4600830078125,
+    219.6282470703125,
+    154,
+    28
+   ],
+   "n": 3,
+   "ids": [
+    1474,
+    1477,
+    1479
+   ]
+  },
+  {
+   "key": "hero:1475",
+   "text": "Maus +2",
+   "box": [
+    192.4536880000001,
+    259.44486724952634,
+    118,
+    28
+   ],
+   "n": 3,
+   "ids": [
+    1475,
+    1478,
+    1481
+   ]
+  },
+  {
+   "key": "hero:1480",
+   "text": "Roma",
+   "box": [
+    222.6748046875,
+    289.5748046875,
+    90,
+    28
+   ],
+   "n": 1,
+   "ids": [
+    1480
+   ]
+  }
+ ],
+ "errors": []
+}

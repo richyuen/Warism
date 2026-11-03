@@ -1,0 +1,12 @@
+Bismarck +1 [["Bismarck",1,true],["P.100 Ercole",48,true]] [true,true] ["Bismarck","P.100 Ercole","Bismarck"]
+O-I [["O-I",1,true]] [false] ["France","France"]
+Char 2C [["Char 2C",1,true]] [true] ["Char 2C","Char 2C"]
+USS Iowa [["USS Iowa",0,true]] [true] ["USS Iowa","USS Iowa"]
+T28 [["T28",0,true]] [true] ["T28","T28"]
+Sovetsky Soyuz [["Sovetsky Soyuz",0,true]] [false] [null,null]
+T-42 [["T-42",33,false]] [true] ["T-42","T-42"]
+Maus [["Maus",1,true]] [true] ["Maus","Maus"]
+HMS Hood [["HMS Hood",32,false]] [true] ["HMS Hood","HMS Hood"]
+TOG II [["TOG II",31,false]] [true] ["TOG II","TOG II"]
+Richelieu [["Richelieu",32,false]] [true] ["Richelieu","Richelieu"]
+ 0

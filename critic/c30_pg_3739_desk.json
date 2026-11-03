@@ -1,0 +1,148 @@
+{
+ "seed": 3739,
+ "W": 1600,
+ "H": 900,
+ "panels": {
+  "ENG": {
+   "guarantees": "GUARANTEES\nBelgium\nPortugal\nIraq",
+   "guaranteesBox": [
+    20,
+    676,
+    272,
+    41
+   ],
+   "guarantors": null,
+   "guarantorsBox": null,
+   "wars": "AT WAR WITH\nAt peace",
+   "panelBox": [
+    8,
+    54,
+    296,
+    671
+   ],
+   "panelScroll": [
+    706,
+    661
+   ],
+   "overflowX": false,
+   "shot": "critic/shots/c30pg_3739_desk_d0_ENG.png"
+  },
+  "FRA": {
+   "guarantees": "GUARANTEES\nCzechoslovakia\nPoland\nBelgium",
+   "guaranteesBox": [
+    20,
+    582,
+    272,
+    41
+   ],
+   "guarantors": null,
+   "guarantorsBox": null,
+   "wars": "AT WAR WITH\nAt peace",
+   "panelBox": [
+    8,
+    54,
+    296,
+    623
+   ],
+   "panelScroll": [
+    613,
+    613
+   ],
+   "overflowX": false,
+   "shot": "critic/shots/c30pg_3739_desk_d0_FRA.png"
+  },
+  "POL": {
+   "guarantees": null,
+   "guaranteesBox": null,
+   "guarantors": "GUARANTEED BY\nFrance",
+   "guarantorsBox": [
+    20,
+    352,
+    272,
+    41
+   ],
+   "wars": "AT WAR WITH\nAt peace",
+   "panelBox": [
+    8,
+    54,
+    296,
+    392
+   ],
+   "panelScroll": [
+    382,
+    382
+   ],
+   "overflowX": false,
+   "shot": "critic/shots/c30pg_3739_desk_d0_POL.png"
+  },
+  "ROM": {
+   "guarantees": null,
+   "guaranteesBox": null,
+   "guarantors": null,
+   "guarantorsBox": null,
+   "wars": "AT WAR WITH\nAt peace",
+   "panelBox": [
+    8,
+    54,
+    296,
+    458
+   ],
+   "panelScroll": [
+    448,
+    448
+   ],
+   "overflowX": false,
+   "shot": "critic/shots/c30pg_3739_desk_d0_ROM.png"
+  },
+  "CZS": {
+   "guarantees": null,
+   "guaranteesBox": null,
+   "guarantors": "GUARANTEED BY\nFrance\nSoviet Union",
+   "guarantorsBox": [
+    20,
+    443,
+    272,
+    41
+   ],
+   "wars": "AT WAR WITH\nAt peace",
+   "panelBox": [
+    8,
+    54,
+    296,
+    483
+   ],
+   "panelScroll": [
+    473,
+    473
+   ],
+   "overflowX": false,
+   "shot": "critic/shots/c30pg_3739_desk_d0_CZS.png"
+  },
+  "SOV": {
+   "guarantees": "GUARANTEES\nCzechoslovakia\nChina",
+   "guaranteesBox": [
+    20,
+    490,
+    272,
+    41
+   ],
+   "guarantors": null,
+   "guarantorsBox": null,
+   "wars": "AT WAR WITH\nAt peace",
+   "panelBox": [
+    8,
+    54,
+    296,
+    531
+   ],
+   "panelScroll": [
+    521,
+    521
+   ],
+   "overflowX": false,
+   "shot": "critic/shots/c30pg_3739_desk_d0_SOV.png"
+  }
+ },
+ "lapse": null,
+ "errors": []
+}

@@ -1,0 +1,6 @@
+npx tsx tools/diag/heroWaits.ts 4637 7300 > critic/c30_herowaits_4637.log 2>&1
+npx tsx tools/diag/heroWaits.ts 7603 7300 > critic/c30_herowaits_7603.log 2>&1
+npx tsx critic/scripts/c30_hrv.ts 4111 GER FRA 20 critic/c30_hrv_4111_GER_FRA.json > critic/c30_hrv_4111.log 2>&1
+npx tsx critic/scripts/c30_hrv.ts 5023 GER FRA 20 critic/c30_hrv_5023_GER_FRA.json > critic/c30_hrv_5023.log 2>&1
+npx tsx critic/scripts/c30_hrv.ts 6299 ENG ITA 20 critic/c30_hrv_6299_ENG_ITA.json > critic/c30_hrv_6299.log 2>&1
+npx tsx critic/scripts/c30_hrv.ts 7177 USA JAP 20 critic/c30_hrv_7177_USA_JAP.json > critic/c30_hrv_7177.log 2>&1

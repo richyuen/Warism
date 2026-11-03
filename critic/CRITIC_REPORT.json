@@ -1,15 +1,15 @@
 {
- "commit": "823cbf1b668cdd349b958702af7bc50b1b1bf378",
- "mode": "full",
- "run": "R5a heroes run (run 29)",
+ "commit": "d6e1bb1e52097b3d483e20c98b51b8e8ce906fc1",
+ "mode": "focused",
+ "run": "R5b run 30 (focused: last report blocked, every commit since is R8-R12 or the report's own; a full run must follow before the release)",
  "scores": {
-  "mapVisuals": 6,
+  "mapVisuals": 7,
   "diplomacyWarDepth": 7,
   "emergentDynamics": 7,
   "godMode": 7,
   "editorScenarios": 7,
   "statsHistory": 7,
-  "uiUxPolish": 6,
+  "uiUxPolish": 7,
   "performance": 7,
   "stability": 7,
   "semanticZoom": 8,
@@ -18,37 +18,64 @@
   "aircraft": 8,
   "aiNukes": 8
  },
- "carried": [],
+ "carried": [
+  "editorScenarios",
+  "performance",
+  "stability",
+  "aircraft",
+  "aiNukes"
+ ],
  "blocking": [
   {
-   "id": "R29-B1",
-   "title": "At the world's zoom six heroes are drawn 2,500-5,000 km from where they are (Roma over French Equatorial Africa, P.100 5,009 km off), and a click on them opens the nation it was pushed onto",
-   "evidence": "critic/c29_hc_5521_desk.json, critic/c29_hc_5521_phone.json, critic/c29_hcc_5521.json, critic/shots/c29ht_desk_05_start.png, critic/shots/c29ht_phone_05_start.png, critic/shots/c29lwhon_6151_y10_world.png; src/render/units/counters.ts:491-504",
-   "fix": "Fold heroes that would overlap into one counter (opening a list), or keep each at its place and drop the name at the world zoom; never move a counter more than its own height from its place; a click on a hero counter opens the hero."
+   "id": "R30-B2",
+   "title": "Sovetsky Soyuz comes back in the Caspian Sea or on Lake Onega (R10's any-port fallback) and never leaves: 4 of 13 seeds, 11,259 days to the run's end",
+   "evidence": "critic/c30_seareturns.txt, critic/c30_seareturns_hx.txt, critic/c30_hpos_4637_SOV.json, critic/c30_ho_on_4637.json, critic/c30_ho_on_7603.json, critic/c30_hx_on_9001.json; src/sim/systems/heroes.ts returnPlace/seaReturn",
+   "fix": "Only ports whose water reaches the ocean (or the hero's start sea) count; failing that it waits and its row says so; a checker rule that a sea hero stands in water it can sail out of."
   },
   {
-   "id": "R29-B2",
-   "title": "A hero changes nation with its land (annexation, integration) and vanishes from every list; destroyed, it never returns (AI play: Britain fields Roma and P.100 on 4637, the USA the Maus on 7603)",
-   "evidence": "critic/c29_ho_on_4637.json, critic/c29_ho_on_7603.json, critic/c29_hn_4111.json, critic/shots/c29hn_4111_ger_block.png; src/sim/systems/puppets.ts:148,170, src/worker/server.ts:848-865",
-   "fix": "A hero is not handed over (gone with its nation, its row waiting for a revival), or its roster row moves with it and the taker's Overview lists it; a checker rule: a hero's formation is its roster nation's."
+   "id": "R30-B1",
+   "title": "On a phone, folded hero counters hide HMS Hood, TOG II and Char 2C at the start view: the panel covers the fold and closing it restarts the cycle at its lead; folds carry another nation's flag (Hood in 'Sovetsky Soyuz +1', ~2,900 km off)",
+   "evidence": "critic/c30_hft_5521.json, critic/shots/c30hft2_5521_phone_start.png, critic/shots/c30hft2_5521_phone_tap2.png, critic/c30_hf_5521_desk_d0_0.json; src/app/MapView.ts formationPick, src/render/units/counters.ts",
+   "fix": "Keep the cycle across a closed panel or open a list of the fold's heroes; fold only one nation's heroes; keep the fold's label on screen."
   },
   {
-   "id": "R29-B3",
-   "title": "Sea heroes 'wait to return' for years while their nations live, in 10 of 10 seeds (Richelieu 16,123 days over 10 x 20 years), against the option's promise of 60 days: they return only at a held naval base",
-   "evidence": "critic/c29_ho_sum.txt, critic/c29_hwait_4253_SOV.json, critic/c29_hwait_4111_GER.json, data/scenarios/1938/ports.json, src/ui/i18n/en.json:934, src/sim/systems/heroes.ts returnPlace",
-   "fix": "With no naval base held, return at any port the nation holds (or its capital's nearest coast); say why in the Overview row while it waits."
+   "id": "R30-B3",
+   "title": "The checker's air rules break with heroes on, on 2 of 7 new seeds (3373 random: 2; 5591: 2); 0 broken with heroes off on the same seeds",
+   "evidence": "critic/c30_wi_3373r_h.log, critic/c30_wi_3373r_noh.log, critic/c30_wi_5591_h10y.log, critic/c30_wi_5591_noh_air.log, critic/scripts/c30_wingbase.ts",
+   "fix": "Find what moves a carrier 6 cells in one hour in a heroes world (sea hero's sail-with-the-fleet order suspected, not shown) and move its wings with it."
   }
  ],
  "nonBlocking": [
-  {"id": "R29-N1", "title": "A hero's loss and return are told nowhere but its Overview row (no ticker or History row; the sea battle counts Bismarck as '1 ship')", "evidence": "critic/c29_hd_4111_bis.json, critic/shots/c29hd_4111_bis_history.png", "fix": "Ticker and History rows for a hero sunk / back, with Go to."},
-  {"id": "R29-N2", "title": "A hero's formation panel shows men, not health ('Men 2,200 of 2,200' at 35 %)", "evidence": "critic/c29_hw_4111_bis.json, critic/shots/c29hw_4111_bis_panel.png", "fix": "A health row in the formation panel."},
-  {"id": "R29-N3", "title": "Hero tags read men ('6' for the Maus, '2.2k' for Bismarck beside 13.4k squadrons)", "evidence": "critic/shots/c29ht_desk_09_click_maus_1200.png, critic/shots/c29hd_4111_bis_before.png", "fix": "Name and a health pip on a hero's tag."},
-  {"id": "R29-N4", "title": "Land heroes starve in about half their losses (437 of 824); TOG II dies in Nationalist Spain three times in a year", "evidence": "critic/c29_ho_sum.txt, critic/c29_hl_4111.json, critic/shots/c29hw_4111_tog_250m.png", "fix": "A hero out of supply for days falls back to supply, or the loss is told."},
-  {"id": "R29-N5", "title": "Sea heroes are lost about every eight months (24-31 times in 20 years), in battle on 1-2 % of war days", "evidence": "critic/c29_ho_sum.txt, critic/c29_hl_4111.json", "fix": "Find why (low confidence: fire picked by hit points)."},
-  {"id": "R29-N6", "title": "Heroes option explained on hover only; at T1 a hero hides the fleets stacked with it", "evidence": "critic/c29_ht_desk.json, critic/c29_hs_3739.json", "fix": "Visible hint text; a stacked marker opens the stack."},
-  {"id": "R29-N7", "title": "No checker rule covers the heroes; B2 and B3 pass the checkers green", "evidence": "critic/c29_wi_*.log, critic/c29_diploinv_*_h.log", "fix": "Rules: one per row, its roster nation's, back within its hour when it has a place."},
-  {"id": "R29-N8", "title": "Relations graph: 'Japan is at war beside Japan'; unreadable on a phone; the bottom bar wraps at 1024 px since its button", "evidence": "critic/c29_rg_4111_desk.json, critic/shots/c29rg_4111_phone_d365.png, critic/c29_p3_widths.json", "fix": "Name the side's other members or 'alone'; zoom or a list on a phone."},
-  {"id": "R29-N9", "title": "Unchanged from run 28: bond's exit costs no truce; guarantees only the start's; five ticker rows for one Force war; live 'Propose alliance' the sim refuses (4 at day 30, 1 at day 120); refused peace untold in the Actions tab; phone clutter at deep zoom", "evidence": "critic/c29_bx_head_7019_GERatk_ITA.json, critic/c29_bs_head_*.json, critic/c29_al_7019_all.json, critic/c29_pg2_4583_ITA.json, critic/c29_phz_2671.json", "fix": "As run 28."}
+  {
+   "id": "R30-N1",
+   "title": "Land heroes starve in about half their losses (414 of 768); sea heroes lost 23-35 times in 20 years",
+   "evidence": "critic/c30_ho_sum.txt"
+  },
+  {
+   "id": "R30-N2",
+   "title": "Japan's heroes drawn under the Ranking panel at a desk's start view; a click opens a ranking row",
+   "evidence": "critic/c30_hf_5521_desk_d0_0.json"
+  },
+  {
+   "id": "R30-N3",
+   "title": "Relations graph on a phone: the first tap after a drag selects nothing",
+   "evidence": "critic/c30_rgt_4111.json"
+  },
+  {
+   "id": "R30-N4",
+   "title": "At T1 a hero hides the fleets stacked with it",
+   "evidence": "critic/c30_hs_3739.json"
+  },
+  {
+   "id": "R30-N5",
+   "title": "The option's hint still promises a return in 60 days that a portless or dead nation's hero does not get",
+   "evidence": "critic/shots/c30ht_phone_01_form1938.png"
+  },
+  {
+   "id": "R30-N6",
+   "title": "Unchanged from run 29: bond's exit no truce; guarantees only the start's; five ticker rows a Force war; refused peace untold; phone clutter; live 'Propose alliance' refused",
+   "evidence": "critic/c30_cmp.txt"
+  }
  ],
- "timestamp": "2026-11-03T15:57:39Z"
+ "timestamp": "2026-11-03T19:20:34Z"
 }
