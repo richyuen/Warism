@@ -574,3 +574,11 @@
   scores under the bar and the heroes' silent rows. Heroes on vs off, 10 seeds × 20 years: sea battles +87 %.
   R2 and R3 hold on the critic's counts (puppets rose on 7019 and 1777, 0 on 3163; 0 broken of 2,372 Force wars).
 - **Next:** R8.
+
+## 2026-11-03 — ROADMAP R8 (ADR-811): heroes drawn where they are
+- `counters.ts`: a hero counter steps at most one height down or up; else it folds into the hero counter it
+  covers ("Maus +2"). `MapView.formationPick`: hero counters first, a folded one opens its heroes in turn.
+- AT: `heroes1938.spec.ts` R8 on 5521 at the start view, desk 1600×900 and phone 390×844: every hero counter
+  within a step of its place (red before: 8 off), every hero in view on a counter, a click opens each, a second
+  click on a folded one the next. Shots `docs/evidence/R8/` looked at: no counter off Europe. Spec 6 of 6.
+- **Next:** R9.

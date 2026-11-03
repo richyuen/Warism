@@ -109,7 +109,7 @@ Rules:
     is no rule: 1938's Tannu Tuva is in the Soviet alliance.) Red on HEAD: puppets of puppets on
     1009, 2207, 3739 and random 11 within two years; fixed (ADR-810: a realm has one head).
     `worldInvariantsBonds.test.ts` 8 of 8; the six worlds 730 days: 0 broken.
-- [ ] R8 **Heroes drawn where they are** (critic run 29, R29-B1). At the world's zoom (the view a
+- [x] R8 **Heroes drawn where they are** (critic run 29, R29-B1). At the world's zoom (the view a
   heroes game opens on) `counters.ts` steps a hero's counter below any it would cover, as often
   as it takes: Europe's ten heroes cascade into Africa (P.100 Ercole 5,009 km off), and a click on
   a displaced counter opens the nation under it.

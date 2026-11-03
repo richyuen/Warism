@@ -74,8 +74,10 @@ export interface DrawnCounter {
   y: number;
   w: number;
   h: number;
-  /** A hero's own counter (PLAN 7.184b3): its formation. */
+  /** A hero's own counter (PLAN 7.184b3): its formation, the first of those folded into it. */
   hero?: number;
+  /** The heroes a hero's counter stands for (ROADMAP R8), in the order a click opens them. */
+  heroes?: number[];
 }
 
 /** A hero at T0 (PLAN 7.184b3): its own counter, HERO_SCALE × a nation's, with its name. */
@@ -490,27 +492,42 @@ export class CounterLayer {
     }
     // The heroes (PLAN 7.184b3): each its own counter about its place, HERO_SCALE × the size, its name for
     // its strength; never folded into its nation's, and above them. One that would cover another hero's
-    // (Japan's two, at Yokosuka and Tokyo) steps down below it, as many times as it takes.
+    // (Japan's two, at Yokosuka and Tokyo) steps one height down, else one up; else it is folded into the
+    // hero counter it covers, which reads "Char 2C +2" and opens its heroes in turn (ROADMAP R8, R29-B1).
+    // Stepped down as often as it took, Europe's ten heroes at the world's zoom cascaded into Africa,
+    // P.100 Ercole drawn 5,009 km from itself. Laid out once, on the first copy; each copy drawn.
     const hs = size * HERO_SCALE;
     if (alpha > 0.01) {
-      const taken: [number, number, number, number][] = [];
-      const clear = (x: number, y: number, w: number, hh: number): boolean => taken.every(([tx, ty, tw, th]) => x >= tx + tw || x + w <= tx || y >= ty + th || y + hh <= ty);
+      const step = (h + 2) * hs;
+      const groups: { lead: HeroCounter; members: number[]; dy: number; box: [number, number, number, number] }[] = [];
+      const over = (a: [number, number, number, number], x: number, y: number, w: number, hh: number): boolean => !(x >= a[0] + a[2] || x + w <= a[0] || y >= a[1] + a[3] || y + hh <= a[1]);
       for (const hero of heroes) {
         const w = widthOf(hero.name) + 18;
+        const [sx, sy0] = worldToScreen(cam, hero.x, hero.y, vw, vh);
+        const boxAt = (dy: number): [number, number, number, number] => [sx - (w / 2) * hs, sy0 + dy - (h / 2) * hs, w * hs, h * hs];
+        const dy = [0, step, -step].find((d) => groups.every((g) => !over(g.box, ...boxAt(d))));
+        if (dy !== undefined) {
+          groups.push({ lead: hero, members: [hero.id], dy, box: boxAt(dy) });
+          continue;
+        }
+        const host = groups.find((g) => over(g.box, ...boxAt(0))) ?? groups.find((g) => over(g.box, ...boxAt(step)))!;
+        host.members.push(hero.id);
+      }
+      for (const g of groups) {
+        const name = g.members.length > 1 ? `${g.lead.name} +${g.members.length - 1}` : g.lead.name;
+        const w = widthOf(name) + 18;
         let box: [number, number] | null = null;
         for (const off of offs) {
-          const [sx, sy0] = worldToScreen(cam, hero.x + off, hero.y, vw, vh);
-          let sy = sy0;
-          for (let k = 0; k < heroes.length && !clear(sx - (w / 2) * hs, sy - (h / 2) * hs, w * hs, h * hs); k++) sy += (h + 2) * hs;
-          taken.push([sx - (w / 2) * hs, sy - (h / 2) * hs, w * hs, h * hs]);
+          const [sx, sy0] = worldToScreen(cam, g.lead.x + off, g.lead.y, vw, vh);
+          const sy = sy0 + g.dy;
           const x = Math.round(sx - w / 2);
           const y = Math.round(sy - h / 2);
           if (sx - (w / 2) * hs > vw || sy - (h / 2) * hs > vh || sx + (w / 2) * hs < 0 || sy + (h / 2) * hs < 0) continue;
           box ??= [sx + (x - sx) * hs, sy + (y - sy) * hs];
           this.boxes.push({ x: sx + (x - sx) * hs, y: sy + (y - sy) * hs, w: w * hs, h: h * hs, alpha, own: 1 });
-          this.paintHero(ctx, sx + (x - sx) * hs, sy + (y - sy) * hs, w, h, hs, alpha, hero, widthOf, colorOf, flagOf, balls);
+          this.paintHero(ctx, sx + (x - sx) * hs, sy + (y - sy) * hs, w, h, hs, alpha, { ...g.lead, name }, widthOf, colorOf, flagOf, balls);
         }
-        if (box) this.drawn.push({ key: `hero:${hero.id}`, nation: hero.nation, naval: hero.naval, wx: hero.x, wy: hero.y, alpha, strength: 0, text: hero.name, others: 0, folded: false, x: box[0], y: box[1], w: w * hs, h: h * hs, hero: hero.id });
+        if (box) this.drawn.push({ key: `hero:${g.lead.id}`, nation: g.lead.nation, naval: g.lead.naval, wx: g.lead.x, wy: g.lead.y, alpha, strength: 0, text: name, others: g.members.length - 1, folded: false, x: box[0], y: box[1], w: w * hs, h: h * hs, hero: g.lead.id, heroes: g.members });
       }
     }
     ctx.restore();

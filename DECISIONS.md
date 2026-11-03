@@ -7,6 +7,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-811 · 2026-11-03 · accepted — Heroes' counters at T0 stay at their place; crowded ones fold (ROADMAP R8, R29-B1)
+
+- **Context.** Critic run 29: at the world's zoom, the view a heroes game opens on, a hero counter
+  that would cover another's stepped down as many times as it took (PLAN 7.184b3). Europe's ten
+  cascaded into Africa (seed 5521: P.100 Ercole drawn 5,009 km from itself), and a click on one
+  opened the nation under it: the pick never looked at the hero counters.
+- **Decision.** A hero counter that would cover another steps one height down, else one up; else
+  it is folded into the hero counter it covers, which reads "Char 2C +2". A click on a hero counter
+  (the topmost under it) opens its first hero; a click again opens the next, round to the first,
+  as a T1 marker's stack does (PLAN 7.4f20). Heroes are still never folded into a nation's counter.
+- **Why fold, not hide the name.** Every hero stays on the map and in reach of a click; the "+n"
+  reads as a nation counter's does (PLAN 1.45b). At closer zooms (5,000 m/px and nearer) they no
+  longer crowd and each is its own, as before (PLAN 7.184b3's test unchanged).
+- **Decisions checked (ADR-803).** PLAN 7.184b3 (each its own counter, never folded into its
+  nation's): kept but for heroes that cannot find room within a step, which fold among themselves.
+  `heroes1938.spec.ts` 6 of 6 (R8's two red before: 8 counters drawn more than a step off).
+
 ### ADR-810 · 2026-11-03 · accepted — A realm has one head: no puppet of a puppet (ROADMAP R4e)
 
 - **Context.** The bonds' checker (ADR-809) on its first runs: a puppet of a puppet on 1009 (day

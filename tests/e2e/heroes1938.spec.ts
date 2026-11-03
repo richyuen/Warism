@@ -359,3 +359,81 @@ test('PLAN 7.184c: a nation’s heroes first in its Overview; a row opens and fo
   await expect(page.getByTestId('panel-overview')).toBeVisible();
   await expect(page.getByTestId('panel-heroes')).toHaveCount(0);
 });
+
+// ROADMAP R8 (critic run 29, R29-B1): at the world's zoom, the view a heroes game opens on, a hero's
+// counter that would cover another's stepped down as often as it took: Europe's ten cascaded into
+// Africa (seed 5521: P.100 Ercole drawn 5,009 km from itself), and a click on one opened the nation
+// under it. Now each counter is drawn within a step (its height and 2 px) of its place; a hero that
+// finds no room within a step is folded into the counter it covers ("Char 2C +2"); every hero is on
+// a counter; a click on one opens its first hero, and a click again the next.
+for (const [label, width, height] of [['desk', 1600, 900], ['phone', 390, 844]] as const) {
+  test(`ROADMAP R8: at the start view (${label}), every hero's counter near its place, and a click opens it`, async ({ page }) => {
+    test.setTimeout(180_000);
+    await page.setViewportSize({ width, height });
+    await page.goto('/?scenario=1938&paused=1&seed=5521&heroes=on');
+    await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.view!.counters.drawn.some((d) => d.hero !== undefined && d.alpha > 0.99), null, { timeout: 60_000 });
+    await page.waitForTimeout(800);
+    const read = (): Promise<{ id: number; heroes: number[]; name: string; dy: number; x: number; y: number; w: number; h: number }[]> =>
+      page.evaluate(() => {
+        const v = window.__warsim!.view!;
+        const c = v.controller.cam;
+        return v.counters.drawn
+          .filter((d) => d.hero !== undefined)
+          .map((d) => ({ id: d.hero!, heroes: d.heroes ?? [d.hero!], name: d.text, dy: d.y + d.h / 2 - ((d.wy - c.cy) * c.scale + innerHeight / 2), x: d.x, y: d.y, w: d.w, h: d.h }));
+      });
+    const drawn = await read();
+    expect(drawn.length, 'hero counters drawn at the start view').toBeGreaterThan(0);
+    const far = drawn.filter((d) => Math.abs(d.dy) > d.h * 1.2 + 0.5).map((d) => `${d.name} ${d.dy.toFixed(0)} px`);
+    expect(far, 'hero counters drawn more than a step from their place').toEqual([]);
+    const shown = new Set(drawn.flatMap((d) => d.heroes));
+    const inView = await page.evaluate(() => {
+      const v = window.__warsim!.view!;
+      const c = v.controller.cam;
+      return v.heroFormations().filter((f) => {
+        const [x, y] = v.formationPos(f)!;
+        const sx = (x - c.cx) * c.scale + innerWidth / 2;
+        const sy = (y - c.cy) * c.scale + innerHeight / 2;
+        return sx > 0 && sx < innerWidth && sy > 0 && sy < innerHeight;
+      }).length;
+    });
+    expect(shown.size, 'heroes on a counter, of those whose place is in the view').toBeGreaterThanOrEqual(inView);
+    await page.screenshot({ path: test.info().outputPath(`r8-${label}-start.png`) });
+    // Each counter clicked at a point no later hero counter covers, where the map is on top (the
+    // page's panels take their own clicks), the view at the start view again each time (a click
+    // opens the hero, and the camera follows it); then once more for one with heroes folded in.
+    const start = await page.evaluate(() => ({ ...window.__warsim!.view!.controller.cam }));
+    const pointOf = (lead: number): Promise<readonly [number, number] | null> =>
+      page.evaluate(({ lead, width, height }) => {
+        const all = window.__warsim!.view!.counters.drawn.filter((d) => d.hero !== undefined);
+        const k = all.findIndex((d) => (d.heroes ?? [d.hero]).includes(lead));
+        if (k < 0) return null;
+        const d = all[k]!;
+        const later = all.slice(k + 1);
+        const pts = [0.5, 0.2, 0.8].flatMap((fx) => [0.5, 0.25, 0.75].map((fy) => [d.x + d.w * fx, d.y + d.h * fy] as const));
+        return pts.find(([x, y]) => x > 0 && y > 0 && x < width && y < height && !later.some((o) => x >= o.x && x <= o.x + o.w && y >= o.y && y <= o.y + o.h) && document.elementFromPoint(x, y)?.tagName === 'CANVAS') ?? null;
+      }, { lead, width, height });
+    const tried: string[] = [];
+    let cycled = 0;
+    for (const { id, heroes, name } of drawn) {
+      await page.evaluate((cam) => {
+        window.__warsim!.hud.selectFormation(0);
+        window.__warsim!.view!.controller.set(cam);
+      }, start);
+      await page.waitForTimeout(400);
+      const at = await pointOf(id);
+      if (!at) continue;
+      await page.mouse.click(at[0], at[1]);
+      await expect.poll(() => page.evaluate(() => window.__warsim!.hud.formation.value), { message: `a click on ${name}`, timeout: 5_000 }).toBe(id);
+      tried.push(name);
+      if (heroes.length < 2) continue;
+      await page.waitForTimeout(400);
+      const again = await pointOf(id);
+      if (!again) continue;
+      await page.mouse.click(again[0], again[1]);
+      await expect.poll(() => page.evaluate(() => window.__warsim!.hud.formation.value), { message: `a second click on ${name}`, timeout: 5_000 }).toBe(heroes[1]);
+      cycled++;
+    }
+    expect(tried.length, 'hero counters clicked').toBeGreaterThan(Math.min(3, drawn.length - 1));
+    if (drawn.some((d) => d.heroes.length > 1)) expect(cycled, 'folded counters clicked twice').toBeGreaterThan(0);
+  });
+}

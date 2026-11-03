@@ -2143,6 +2143,16 @@ export class MapView {
    */
   formationPick(sx: number, sy: number): number {
     const inside = (r: { x: number; y: number; w: number; h: number }): boolean => sx >= r.x && sx <= r.x + r.w && sy >= r.y && sy <= r.y + r.h;
+    // A hero's counter (ROADMAP R8, R29-B1): drawn above the others, so the last drawn under the
+    // click wins; one with heroes folded into it opens the one after the open one, round to the
+    // first, as a marker's stack does. Before, a click on one at the world's zoom went to the nation under it.
+    for (let i = this.counters.drawn.length - 1; i >= 0; i--) {
+      const d = this.counters.drawn[i]!;
+      if (d.hero === undefined || d.alpha < 0.5 || !inside(d)) continue;
+      const all = d.heroes ?? [d.hero];
+      const k = all.indexOf(this.picked);
+      return k >= 0 && all.length > 1 ? all[(k + 1) % all.length]! : d.hero;
+    }
     if (this.tagOpacity > 0.5) for (const g of this.tagRects) if (inside(g)) return g.id;
     if (this.markerOpacity > 0.5) {
       for (let i = this.markerRects.length - 1; i >= 0; i--) {
