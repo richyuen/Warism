@@ -46,6 +46,8 @@ export interface MarkerInput {
   way?: ArrayLike<number> | null;
   /** A hero's (PLAN 7.184b3): its marker HERO_SCALE × the others' about its place, never in a stack. */
   hero?: boolean;
+  /** A hero's health 0..1 (ROADMAP R11): its number and bar read it, not its men, which stay whole. */
+  health?: number;
 }
 
 /**
@@ -451,7 +453,7 @@ export function drawMarkers(
       // The pips (or the strength bar) and the number under the box, on their dark backing. They
       // have an opacity of their own: on the way to T2 they stay while the box goes (PLAN 2.7c).
       // A stack shows its lead's pips; its tag says how many it stands for (ADR-498).
-      const text = strengthText(stack?.strength ?? m.strength);
+      const text = m.health !== undefined ? `${Math.round(m.health * 100)}%` : strengthText(stack?.strength ?? m.strength);
       // Not those of a formation in contact (PLAN 2.14f4, ADR-92): its elements come in at the
       // block deployed against the enemy, up to 43 px from here at the boundary, and the bar
       // would linger beside the group and not on it. They go with the box.
@@ -468,7 +470,7 @@ export function drawMarkers(
           // No elements in hand (a wing's are never sent; a formation's come a snapshot after the
           // tier): the strength bar in the panel's middle.
           ctx.globalAlpha = bar * (1 - pipsIn);
-          const f = m.full > 0 ? Math.max(0, Math.min(1, m.strength / m.full)) : 1;
+          const f = m.health ?? (m.full > 0 ? Math.max(0, Math.min(1, m.strength / m.full)) : 1);
           const by = y + BOX_H + Math.floor(PIP_PANEL_H / 2);
           ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
           ctx.fillRect(x, by, BOX_W, 2);

@@ -600,3 +600,13 @@
   unit-tested through `heroWaits`, not in a page.
 - Seen on the way (R29-N5, non-blocking): sea heroes lost 83–351 times in the ten runs.
 - **Next:** R11.
+
+## 2026-11-03 — ROADMAP R11 (ADR-814): what the heroes and the graph read
+- Snapshot column `health` (a hero's percent); the formation panel's Health row; a hero's T1 marker and T2 tag
+  read its health. The heroes option's hint as text. War lines name their side ("leads its side, with …",
+  "alone on its side"). The graph zooms and pans (wheel, pinch, drag, −/+). The bar one row from 1024 px.
+- AT: `heroesRead1938.spec.ts` (5): the Maus at 77 % after God's bomb reads 77 % in its panel (men 6 of 6),
+  its marker and its tag, desk and phone; the hint visible on a phone; 60 war lines on 4111 at day 120, none
+  "beside itself"; zoomed 2.25×, more names and twice the size; the bar one row at 1024, 1180, 1280, 1600.
+  Shots `docs/evidence/R11/` looked at.
+- **Next:** R12.

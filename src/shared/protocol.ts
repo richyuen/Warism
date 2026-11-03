@@ -148,6 +148,8 @@ export interface SnapshotTiles {
 
 /** Numbers a formation in `SnapshotFormations.block`: x, y, and x, y a tick before. */
 export const BLOCK_STRIDE = 4;
+/** `SnapshotFormations.health` of a formation that is no hero's. */
+export const NO_HEALTH = 255;
 
 export interface SnapshotFormations {
   count: number;
@@ -183,6 +185,8 @@ export interface SnapshotFormations {
   target: Uint32Array;
   /** The formation it is in contact with, its nearest enemy in contact (`contactsOf`, PLAN 7.34d), else 0. */
   enemy: Uint32Array;
+  /** A hero's health in percent (`heroHealth`, ROADMAP R11: its men stay whole); NO_HEALTH for any other. */
+  health: Uint8Array;
   /**
    * The way left of a fleet under way (PLAN 4.7d, `wayLine`): the points its order line turns
    * at, `x, y` in cells by twos, formation i's from `wayStart[i]` to `wayStart[i + 1]` (in
@@ -676,6 +680,8 @@ export interface FormationDetail {
   full: number;
   /** Men now. */
   strength: number;
+  /** A hero's health 0..1 (`heroHealth`, ROADMAP R11: its men stay whole while it is hurt); absent for any other. */
+  health?: number;
   /** Supply 0..1. */
   supply: number;
   /** Org 0..1 (PLAN 3.2c), and the fuel its template burns in an hour on the march (0 = none, or no template). */

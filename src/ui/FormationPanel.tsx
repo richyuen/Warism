@@ -79,6 +79,18 @@ export function FormationPanel({
       </div>
       {info ? (
         <>
+          {/* A hero's health (ROADMAP R11): its men stay whole while it is hurt (ADR-787). */}
+          {info.health !== undefined ? (
+            <div class="panel-row">
+              <span>{t('formation.health')}</span>
+              <span class="hero-health" data-testid="formation-health">
+                <span class="hero-bar">
+                  <span class={info.health > 0.5 ? 'hero-fill' : info.health > 0.25 ? 'hero-fill warn' : 'hero-fill low'} style={{ width: `${Math.round(info.health * 100)}%` }} />
+                </span>
+                {Math.round(info.health * 100)}%
+              </span>
+            </div>
+          ) : null}
           {row('formation.strength', info.full > 0 ? t('formation.strengthOf', { n: num(info.strength), full: num(info.full) }) : num(info.strength), 'formation-strength')}
           {row('formation.supply', `${Math.round(info.supply * 100)}%`, 'formation-supply')}
           {row('formation.org', `${Math.round(info.org * 100)}%`, 'formation-org')}

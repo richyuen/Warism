@@ -37,7 +37,7 @@ import { Refusal } from '../shared/commands';
 import { sortieAt, sortieEnd } from '../shared/sorties';
 import { carrierRaids } from './carrierRaids';
 import {
-  BLOCK_STRIDE,
+  BLOCK_STRIDE, NO_HEALTH,
   FormationFlag,
   MAX_SNAPSHOT_ELEMENTS,
   type SnapshotElements,
@@ -1018,6 +1018,7 @@ export class SimServer {
       template,
       full: rules?.templates[template] ? (ECONOMY_TABLES_1938.templateStrength[template] ?? 0) : 0,
       strength: fc.strength[id]!,
+      ...(world.heroes.has(id) ? { health: heroHealth(world, id) } : {}),
       supply: fc.supply[id]!,
       org: fc.org[id]!,
       fuel: rules?.templates[template]?.fuel ?? 0,
@@ -1592,6 +1593,7 @@ export class SimServer {
     const fflags = this.view(Uint8Array, fc, buffers);
     const ftarget = this.view(Uint32Array, fc, buffers);
     const fenemy = this.view(Uint32Array, fc, buffers);
+    const fhealth = this.view(Uint8Array, fc, buffers);
     // The ways left of the fleets under way (PLAN 4.7d): the points their order lines turn at.
     const ways: number[][] = [];
     const fwayStart = this.view(Uint32Array, fc + 1, buffers);
@@ -1622,6 +1624,7 @@ export class SimServer {
       ftarget[j] = moving ? ft.cols.targetCell[id]! : 0;
       // The enemy it is in contact with (PLAN 7.34d), as the panel's fight has it (`enemyOf`).
       fenemy[j] = this.enemyOf(world, id);
+      fhealth[j] = world.heroes.has(id) ? Math.round(heroHealth(world, id) * 100) : NO_HEALTH;
       const path = moving && world.afloat(id) ? world.paths.get(id) : undefined;
       let way: number[] = path ? wayLine(fx[j]!, fy[j]!, path, ft.cols.pathStep[id]!, world.cells.w, world.settings.loopingMap) : [];
       // A march on land (PLAN 7.4g3): from its place to where it will stand, the target cell's
@@ -1746,7 +1749,7 @@ export class SimServer {
       tiles: { size: TILE, tilesX: out.tilesX, tilesY: out.tilesY, count: tileCount, ids, owner, controller },
       nations: { count: n, data: nations },
       wars,
-      formations: { count: fc, id: fid, generation: fgen, nation: fnat, x: fx, y: fy, prevX: fpx, prevY: fpy, block: fblock, facing: ffacing, strength: fstr, template: ftpl, flags: fflags, target: ftarget, enemy: fenemy, wayStart: fwayStart, way: fway },
+      formations: { count: fc, id: fid, generation: fgen, nation: fnat, x: fx, y: fy, prevX: fpx, prevY: fpy, block: fblock, facing: ffacing, strength: fstr, template: ftpl, flags: fflags, target: ftarget, enemy: fenemy, health: fhealth, wayStart: fwayStart, way: fway },
       majors,
       seas,
       raids: Float32Array.from(carrierRaids(world)),

@@ -129,7 +129,7 @@ Rules:
   (or the coast nearest its capital); the row says why while it waits.
   AT: over the critic's 10 seeds × 20 years, a living nation's sea hero back within 60 days of its
   loss wherever its nation holds a port; the checker's rule green.
-- [ ] R11 **What the heroes and the graph read** (run 29: `mapVisuals` and `uiUxPolish` 6, bar 7).
+- [x] R11 **What the heroes and the graph read** (run 29: `mapVisuals` and `uiUxPolish` 6, bar 7).
   A hero's formation panel and its map tag show its health, not its men (R29-N2, N3: "Men 2,200
   of 2,200" at 35 %, the Maus tagged "6"); the heroes option's hint as visible text, not a hover
   title (N6); the relations graph names a war line's side ("X is at war beside X" for one alone),

@@ -23,6 +23,27 @@ export interface RelationsPanelProps {
   onClose: () => void;
 }
 
+/** How far the graph zooms in (ROADMAP R11: on a phone the whole world's graph is too small to read). */
+const MAX_ZOOM = 6;
+/** From this zoom every nation is named. */
+const NAME_ALL_ZOOM = 2;
+
+/** The part of the drawing in view: its middle and zoom (1: all of it). */
+interface Zoom {
+  z: number;
+  cx: number;
+  cy: number;
+}
+const WHOLE: Zoom = { z: 1, cx: W / 2, cy: H / 2 };
+
+/** `zoom` kept inside the drawing: never further out than all of it, never past its edges. */
+function clampZoom(zoom: Zoom): Zoom {
+  const z = Math.max(1, Math.min(MAX_ZOOM, zoom.z));
+  const hw = W / z / 2;
+  const hh = H / z / 2;
+  return { z, cx: Math.max(hw, Math.min(W - hw, zoom.cx)), cy: Math.max(hh, Math.min(H - hh, zoom.cy)) };
+}
+
 const nodeRadius = (landShare: number): number => Math.min(22, 7 + 60 * Math.sqrt(landShare) * 0.5);
 const idOf = (key: string): number => Number(key.slice(1));
 
@@ -35,6 +56,62 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
   const [kinds, setKinds] = useState<ReadonlySet<EdgeKind>>(new Set(EDGE_KINDS));
   const [focus, setFocus] = useState(0);
   const [said, setSaid] = useState<string | null>(null);
+  // Zoom and pan (ROADMAP R11, R29-N8): the wheel, a pinch, a drag, and the buttons for a tap.
+  const [zoom, setZoom] = useState<Zoom>(WHOLE);
+  const svg = useRef<SVGSVGElement>(null);
+  const pointers = useRef(new Map<number, { x: number; y: number }>());
+  const dragged = useRef(false);
+  /** Drawing units in a CSS px of the SVG, at the zoom now. */
+  const unitsPerPx = (): number => {
+    const r = svg.current?.getBoundingClientRect();
+    return r && r.width > 0 ? W / zoom.z / r.width : 1;
+  };
+  /** The drawing's point under a client point, at the zoom now. */
+  const pointAt = (clientX: number, clientY: number): { x: number; y: number } => {
+    const r = svg.current?.getBoundingClientRect();
+    if (!r || r.width <= 0) return { x: zoom.cx, y: zoom.cy };
+    const k = unitsPerPx();
+    return { x: zoom.cx + (clientX - r.left - r.width / 2) * k, y: zoom.cy + (clientY - r.top - r.height / 2) * k };
+  };
+  /** Zooms by `f` about the drawing's point `p` (it stays under the pointer). */
+  const zoomBy = (f: number, p: { x: number; y: number } = { x: zoom.cx, y: zoom.cy }): void => {
+    const z = Math.max(1, Math.min(MAX_ZOOM, zoom.z * f));
+    const s = zoom.z / z;
+    setZoom(clampZoom({ z, cx: p.x + (zoom.cx - p.x) * s, cy: p.y + (zoom.cy - p.y) * s }));
+  };
+  const onWheel = (e: WheelEvent): void => {
+    e.preventDefault();
+    zoomBy(e.deltaY < 0 ? 1.25 : 0.8, pointAt(e.clientX, e.clientY));
+  };
+  const onPointerDown = (e: PointerEvent): void => {
+    pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.current.size === 1) dragged.current = false;
+  };
+  const onPointerMove = (e: PointerEvent): void => {
+    const was = pointers.current.get(e.pointerId);
+    if (!was) return;
+    const all = [...pointers.current.values()];
+    if (pointers.current.size === 2) {
+      // A pinch: the zoom by the change of the two fingers' distance, about their middle.
+      const other = all.find((q) => q !== was)!;
+      const before = Math.hypot(was.x - other.x, was.y - other.y);
+      const after = Math.hypot(e.clientX - other.x, e.clientY - other.y);
+      if (before > 0 && after > 0) zoomBy(after / before, pointAt((e.clientX + other.x) / 2, (e.clientY + other.y) / 2));
+      dragged.current = true;
+    } else if (zoom.z > 1) {
+      const dx = e.clientX - was.x;
+      const dy = e.clientY - was.y;
+      if (Math.abs(dx) + Math.abs(dy) > 3) dragged.current = true;
+      if (dragged.current) {
+        const k = unitsPerPx();
+        setZoom(clampZoom({ ...zoom, cx: zoom.cx - dx * k, cy: zoom.cy - dy * k }));
+      }
+    }
+    if (dragged.current || pointers.current.size === 2) pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  };
+  const onPointerUp = (e: PointerEvent): void => {
+    pointers.current.delete(e.pointerId);
+  };
   const places = useRef<Map<string, Pos>>(new Map());
   const byId = useMemo(() => new Map(nations.map((n) => [n.id, n])), [nations]);
   const name = (id: number): string => {
@@ -72,7 +149,13 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
       const w = warById.get(b);
       if (!w) return '';
       const [own, other] = e.side === 1 ? [w.defenders, w.attackers] : [w.attackers, w.defenders];
-      return t('relations.edge.war', { a: name(a), leader: name(own[0] ?? a), enemy: name(other[0] ?? 0) });
+      // Its side's other members (ROADMAP R11, R29-N8): "X is at war beside X" read for one leading it,
+      // or alone on it.
+      const enemy = name(other[0] ?? 0);
+      const beside = own.filter((x) => x !== a);
+      if (beside.length === 0) return t('relations.edge.warAlone', { a: name(a), enemy });
+      if (own[0] !== a) return t('relations.edge.war', { a: name(a), leader: name(own[0]!), enemy });
+      return beside.length === 1 ? t('relations.edge.warLeadsOne', { a: name(a), b: name(beside[0]!), enemy }) : t('relations.edge.warLeads', { a: name(a), b: name(beside[0]!), n: beside.length - 1, enemy });
     }
     if (e.kind === 'truce') {
       const days = byId.get(a)?.truces.find((x) => x.with === b)?.days ?? 0;
@@ -119,7 +202,39 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
           ))}
         </select>
       </div>
-      <svg class="relations-graph" data-testid="relations-graph" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t('relations.title')}>
+      <div class="relations-zoom">
+        <button type="button" class="bar-btn" data-testid="relations-zoom-out" aria-label={t('relations.zoomOut')} title={t('relations.zoomOut')} disabled={zoom.z <= 1} onClick={() => zoomBy(1 / 1.5)}>
+          −
+        </button>
+        <button type="button" class="bar-btn" data-testid="relations-zoom-in" aria-label={t('relations.zoomIn')} title={t('relations.zoomIn')} disabled={zoom.z >= MAX_ZOOM} onClick={() => zoomBy(1.5)}>
+          +
+        </button>
+        <button type="button" class="bar-btn" data-testid="relations-zoom-reset" title={t('relations.zoomReset')} disabled={zoom.z <= 1} onClick={() => setZoom(WHOLE)}>
+          {t('relations.zoomReset')}
+        </button>
+        <span class="relations-zoom-hint">{t('relations.zoomHint')}</span>
+      </div>
+      <svg
+        ref={svg}
+        class="relations-graph"
+        data-testid="relations-graph"
+        data-zoom={zoom.z.toFixed(2)}
+        viewBox={`${zoom.cx - W / zoom.z / 2} ${zoom.cy - H / zoom.z / 2} ${W / zoom.z} ${H / zoom.z}`}
+        role="img"
+        aria-label={t('relations.title')}
+        onWheel={onWheel}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        onClickCapture={(e) => {
+          // A drag or a pinch is not a click on what it ended over.
+          if (dragged.current) {
+            e.stopPropagation();
+            dragged.current = false;
+          }
+        }}
+      >
         <defs>
           {(['guarantee', 'puppet'] as const).map((k) => (
             <marker key={k} id={`rg-arrow-${k}`} viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -184,7 +299,7 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
                 <circle cx={p.x} cy={p.y} r={r} fill={fill} />
                 {url ? <image href={url} x={p.x - r * 1.5} y={p.y - r} width={r * 3} height={r * 2} preserveAspectRatio="xMidYMid slice" clip-path={`url(#rg-clip-${n.id})`} /> : null}
                 <circle cx={p.x} cy={p.y} r={r} fill="none" stroke={n.id === selected ? '#f1c40f' : 'rgba(0,0,0,0.6)'} stroke-width={n.id === selected ? 3 : 1} />
-                {r >= 12 || (degree.get(n.key) ?? 0) >= 4 || n.id === selected || n.id === focus ? (
+                {zoom.z >= NAME_ALL_ZOOM || r >= 12 || (degree.get(n.key) ?? 0) >= 4 || n.id === selected || n.id === focus ? (
                   <text class="relations-label" x={p.x} y={p.y + r + 11} text-anchor="middle">
                     {name(n.id)}
                   </text>

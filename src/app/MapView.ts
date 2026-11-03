@@ -26,7 +26,7 @@ import { HullFx } from '../render/fx/hulls';
 import { WreckFx } from '../render/fx/wrecks';
 import { drawRuins, type Ruin } from '../render/fx/ruins';
 import { FADE_MS, progress, running, smooth, SwitchBank, TimedSwitch, ZOOM_HYSTERESIS } from '../render/timing';
-import { BLOCK_STRIDE, FormationFlag, marching, type SnapshotElements, type Subscription, type TemplateInfo } from '../shared/protocol';
+import { BLOCK_STRIDE, NO_HEALTH, FormationFlag, marching, type SnapshotElements, type Subscription, type TemplateInfo } from '../shared/protocol';
 import { viewSubscription } from './subscription';
 import { battleViewM, SEA_VIEW_MAX_M } from './battleView';
 
@@ -699,6 +699,7 @@ export class MapView {
     this.formFacing = f.facing.slice(0, f.count);
     this.formTarget = f.target.slice(0, f.count);
     this.formEnemy = f.enemy.slice(0, f.count);
+    this.formHealth = f.health.slice(0, f.count);
     this.formWayStart = f.wayStart.slice(0, f.count + 1);
     this.formWay = f.way.slice(0, f.wayStart[f.count] ?? 0);
     this.majors = s.majors.slice();
@@ -959,6 +960,8 @@ export class MapView {
   private blockPrevY = new Float64Array(0);
   private formStrength = new Uint32Array(0);
   private formTemplate = new Uint16Array(0);
+  /** A hero's health in percent, NO_HEALTH for any other formation (ROADMAP R11). */
+  private formHealth = new Uint8Array(0);
   private formFlags = new Uint8Array(0);
   /** What each formation's block faces, radians (PLAN 7.11a: the line of contact). */
   private formFacing = new Float32Array(0);
@@ -1988,6 +1991,7 @@ export class MapView {
         pips: this.pipsOf.get(this.formIds[i]!) ?? null,
         pipsIn: this.pipStates.value(this.formIds[i]!, this.pipsOf.has(this.formIds[i]!)),
         hero,
+        ...(hero && this.formHealth[i] !== undefined && this.formHealth[i] !== NO_HEALTH ? { health: this.formHealth[i]! / 100 } : {}),
       });
     }
     this.pipStates.end();
@@ -2110,7 +2114,8 @@ export class MapView {
         id,
         nation: this.formNation[i]!,
         strength: this.formStrength[i]!,
-        text: strengthText(this.formStrength[i]!),
+        // A hero's tag reads its health (ROADMAP R11): its men stay whole while it is hurt.
+        text: this.formHealth[i] !== undefined && this.formHealth[i] !== NO_HEALTH ? `${this.formHealth[i]}%` : strengthText(this.formStrength[i]!),
         name: this.formationName(id, this.formTemplate[i]!),
         engaged: (this.formFlags[i]! & FormationFlag.engaged) !== 0,
         picked: id === this.picked,

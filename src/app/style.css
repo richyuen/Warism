@@ -199,6 +199,16 @@ textarea,
   opacity: 0.4;
   cursor: default;
 }
+/* Between a phone and a wide desk (ROADMAP R11, R29-N8): the bar's buttons closer and narrower, so
+   that it stays one row at 1024 px (1,045 px wide since Relations, it wrapped there). */
+@media (min-width: 601px) and (max-width: 1180px) {
+  .bottombar {
+    gap: 0.2rem 0.25rem;
+  }
+  .bar-btn {
+    padding: 0.2rem 0.4rem;
+  }
+}
 
 .bar-speed {
   /* As wide as its longest label, "Speed Max" (the user's request, ADR-763; `data-reserve`). */
@@ -742,7 +752,20 @@ textarea,
   height: 0.25rem;
   border-radius: 2px;
 }
+.relations-zoom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+.relations-zoom-hint {
+  opacity: 0.7;
+  font-size: 0.8em;
+}
 .relations-graph {
+  /* The graph's own pinch and drag (ROADMAP R11), not the page's. */
+  touch-action: none;
   width: 100%;
   height: auto;
   min-height: 0;
@@ -881,6 +904,11 @@ textarea,
 }
 .form-hint {
   opacity: 0.7;
+}
+.form-note {
+  margin: 0 0 0.4rem;
+  font-size: 0.8em;
+  line-height: 1.3;
 }
 .start-btn {
   width: 100%;
@@ -2053,12 +2081,14 @@ button.unit-icon.on {
 .panel-heroes .hero-name {
   font-weight: 700;
 }
-.panel-heroes .hero-health {
+.panel-heroes .hero-health,
+.formation-panel .hero-health {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
 }
-.panel-heroes .hero-bar {
+.panel-heroes .hero-bar,
+.formation-panel .hero-bar {
   display: inline-block;
   width: 4.5rem;
   height: 0.4rem;
@@ -2066,15 +2096,18 @@ button.unit-icon.on {
   background: rgba(255, 255, 255, 0.15);
   overflow: hidden;
 }
-.panel-heroes .hero-fill {
+.panel-heroes .hero-fill,
+.formation-panel .hero-fill {
   display: block;
   height: 100%;
   background: #8bd17c;
 }
-.panel-heroes .hero-fill.warn {
+.panel-heroes .hero-fill.warn,
+.formation-panel .hero-fill.warn {
   background: #f1c40f;
 }
-.panel-heroes .hero-fill.low {
+.panel-heroes .hero-fill.low,
+.formation-panel .hero-fill.low {
   background: #e74c3c;
 }
 .panel-heroes .hero-return {

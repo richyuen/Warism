@@ -7,6 +7,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-814 · 2026-11-03 · accepted — A hero reads its health; the graph zooms; the bar fits 1024 px (ROADMAP R11)
+
+- **Context.** Critic run 29 put `mapVisuals` and `uiUxPolish` at 6 (bar 7): a hero's men stay
+  whole while it is hurt (ADR-787), so its formation panel said "Men 2,200 of 2,200" at 35 % and its
+  T1 marker read "6" for the Maus; the heroes option explained itself on hover only; the relations
+  graph said "X is at war beside X" for a side's leader or a lone nation, could not be read on a
+  phone, and its button made the bottom bar wrap at 1024 px.
+- **Decision.** The snapshot carries a hero's health (`SnapshotFormations.health`, percent;
+  `NO_HEALTH` for any other formation) and the formation detail its `health`: the panel shows a
+  Health row with a bar above the men, a hero's T1 marker its health as its number and bar, its T2
+  tag its health beside its name. The new-game form shows the option's hint as a line of text. A
+  war line names its side: beside its leader, leading it with whom, or alone on it. The graph
+  zooms (wheel, pinch, buttons) and pans (drag) up to 6×, naming every nation from 2×. Between 601
+  and 1,180 px the bar's buttons are closer and narrower.
+- **Why a column, not the men.** A hero's men are its whole crew (ADR-787: no refill, a heal);
+  health is what its loss turns on. A byte a formation is the snapshot's smallest column.
+- **Decisions checked (ADR-803).** ADR-787 (a hero's men stay whole): kept, shown beside its
+  health. ADR-806 (the graph): its layout and kinds unchanged. `heroesRead1938.spec.ts` 5 of 5,
+  `heroes1938.spec.ts` and `relations1938.spec.ts` 8 of 8.
+
 ### ADR-813 · 2026-11-03 · accepted — A sea hero comes back at any port its nation holds (ROADMAP R10, R29-B3)
 
 - **Context.** Critic run 29: a sea hero came back only at the water of a naval base its nation

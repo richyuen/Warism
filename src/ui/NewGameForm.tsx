@@ -138,6 +138,12 @@ export function NewGameForm({ seed, options, nationsRange, rangeHint = true, siz
           {sel('opt-heroes', opts.heroes === 'on' ? 'on' : 'off', ['off', 'on'], (v) => `settings.onOff.${v}` as MessageKey, (v) => setOpts({ ...opts, heroes: v as 'off' | 'on' }))}
         </label>
       ) : null}
+      {/* What the option is, as text (ROADMAP R11, R29-N6): a hover title alone says nothing on a phone. */}
+      {heroes ? (
+        <p class="form-hint form-note" data-testid="opt-heroes-hint">
+          {t('settings.heroesShort')}
+        </p>
+      ) : null}
       <label class="form-row">
         <span class="form-name">{t('settings.gold')}</span>
         {sel('opt-gold', opts.gold ?? 'scenario', ['scenario', 'random', 'equal'], (v) => `settings.choice.${v}` as MessageKey, (v) => setOpts({ ...opts, gold: v as 'scenario' | 'random' | 'equal' }))}
