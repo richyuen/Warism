@@ -1,0 +1,8 @@
+pinned to CPUs 0xffff
+soak: 1938 seed 99, 30 min, a save and load every 5 min, the twins compared every 30 days
+save  1  tick 59904  year 6.84  hash ffcaee93  4.2 MB → 1.1 MB gzip  1.6 s
+save  2  tick 113040  year 12.90  hash 4ac35f27  4.8 MB → 1.2 MB gzip  1.6 s
+save  3  tick 175464  year 20.03  hash 6361a2cd  5.0 MB → 1.3 MB gzip  1.5 s
+save  4  tick 242448  year 27.68  hash 59d18977  5.5 MB → 1.4 MB gzip  1.5 s
+save  5  tick 304464  year 34.76  hash 58f3e89e  5.6 MB → 1.5 MB gzip  1.5 s
+done: green, 40.49 years (354696 ticks) in 30.0 min, 5 saves and loads, final hash 6ef7972d → .cache/soak/1938-seed99-30min.json

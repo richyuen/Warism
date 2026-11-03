@@ -1,0 +1,4 @@
+gpu T2: 176.5 fps (budget 30), p95 8.8 ms, 10752 sprites on screen, 102 nations: PASS | SPEC gpu 1.099 <= 2 (30 whole draws 1.067), draw cpu p50 4.60 <= 6
+swiftshader T0: 2.7 fps (budget 60), p95 1387.1 ms, 0 sprites on screen, 101 nations: reported | SPEC gpu 223.839 > 1 (30 whole draws 186.475), draw cpu p50 5.50 <= 6
+swiftshader T2: 1.0 fps (budget 30), p95 6376.7 ms, 0 sprites on screen, 91 nations: reported | SPEC gpu 448.998 > 2 (30 whole draws 382.998), draw cpu p50 8.70 > 6
+EXIT 0

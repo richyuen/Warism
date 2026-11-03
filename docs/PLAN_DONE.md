@@ -17543,3 +17543,20 @@ Of 7.184 (open in PLAN.md):
   AT: on 7019 a war left and a revolt each with a ticker row (e2e); Italy from Germany at day 61 reads its alliance and
   the shared war, Japan from Manchukuo its overlordship; Propose alliance disabled to the overlord and to France from
   Poland; tests red on `33c84306`.
+
+<!-- moved 2026-11-03 -->
+
+## Phase 0 — Foundations & benchmarks
+## Phase 1 — Baseline parity
+### 1A Data & scenario
+### 1B Core sim
+### 1C Presentation & tools
+## Phase 2 — Semantic zoom
+## Phase 3 — Armour
+## Phase 4 — Naval
+## Phase 5 — Air
+## Phase 6 — Nuclear AI
+## Phase 7 — Balance, polish, soak
+
+- [x] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
+  AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.

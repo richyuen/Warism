@@ -33,9 +33,6 @@ Balance sweeps were suspended while phases 2–6 were built (ADR-58); in Phase 7
 Unseen seeds: 1461 on, ten a task, none reused, none a seed the critic has run (`critic/c*_seed*`). The notes
 of critic runs 11–17 and their reviews are in `docs/PLAN_DONE.md` ("Phase 7: the critic runs' notes").
 
-- [ ] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition.
-  AT: `critic/CRITIC_REPORT.json` for HEAD: parity dims ≥ 7, differentiators ≥ 8, zero blocking.
-
 ---
 
 ## Cross-reference: PROMPT.md requirement → SPEC § / PLAN task
@@ -443,3 +440,4 @@ Not read at the start of an iteration. The gate and `npm run critic:due` read th
 - [x] 7.190 Diplomacy 6, needs 7 (critic run 25): what 7.189 leaves, the report's non-blocking 1 and 9. (9) Guarantees […]
 - [x] 7.191 R26-B1: a puppet cannot break free of an overlord at war, and a revolt starts no war of independence. […]
 - [x] 7.192 Diplomacy 6, needs 7 (critic run 26): what 7.191 leaves, the report's non-blocking 1–3. (1) The ticker […]
+- [x] 7.5 Run the critic (`CRITIC_PROMPT.md`), fix blocking issues, repeat until the DONE condition. […]

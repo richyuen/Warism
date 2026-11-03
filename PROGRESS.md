@@ -25742,3 +25742,20 @@ No rule changed and nothing on screen changed. One task came out of it.
   revolt line 20); (2) R27-N2, a bonded Force war calls a nation in beside its enemy: 3 cases on seed 1777, and
   `tools/diag/diploInvariants.ts` reports 7 broken pairs on seed 8209 (random diplomacy, heroes). God or player only.
 - **Next:** PROMPT 2a's DONE checks: `npm run check:full`, the soak, the sweep, the scripted demo run, the budgets.
+
+## 2026-11-03 — PLAN 7.5: the DONE CONDITION met on e57b5b98; release-2026-11-03
+- **Critic:** run 28 (full) on 73c531b6: every parity dimension 7, every differentiator 8, blocking 0. e57b5b98 differs
+  from 73c531b6 only in `critic/` and PROGRESS.md.
+- **check:full** (`npm run check:review`): green, 0 red twice. Red once, green alone: `snapshot-perf`, `cityNames1938`,
+  `fightCamera1938`, `nukeAlertTwo1938`, `nukeFx1938`. The scripted demos (zoom, sea, tank, air, nuclear specs) in it.
+- **Soak** (1938, seed 99, 30 min, P-cores): green, 40.49 years (354,696 ticks), 5 saves and loads, no desync; final
+  hash 6ef7972d.
+- **Sweep** (`--first 1511 --tag done28`, 1511–1520 × 50 years, unseen): land changing controller in the last 5 years
+  32.2–67.9 %, ≥ 1 % on 10 of 10 (the condition). Its own limits 6 of 10 (largest income over 40 % on 1514, 1516,
+  1519, 1520; 1519's land 40.2 %): "no hegemon" struck, ADR-740, reported. Riser, faller, no break-up 10 of 10; nukes
+  in 10 of 10. `docs/sweeps/2026-11-03-sweep-done28.md`.
+- **Bench** (`bench -- G` alone; the full `bench` run's unjudged swiftshader setting timed out on a screenshot at
+  1.5 fps): T0 321.7 fps (budget 60), p95 4.7 ms; T2 176.5 fps with 10,752 sprites (budget 30), p95 8.8 ms; SPEC GPU
+  0.51 / 1.10 ms, draw CPU p50 2.1 / 4.6 ms: PASS.
+- Evidence: `docs/evidence/7.5-done/release-2026-11-03/`.
+- Every PLAN item checked. Tag `release-2026-11-03`.
