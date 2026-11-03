@@ -72,7 +72,7 @@ Rules:
   other side only; one at war with a nation of its own side now stays out. The checker, every pair
   on days 60/200/350: at the critic's commit 1777 21 broken → 0 (8209 0 either way: HEAD's and the
   critic's worlds no longer reach it); HEAD 1009 2 → 0; the checker's seeds green in the suite.
-- [ ] R4 **Checkers for the other systems**, as `tests/helpers/diploInvariants.ts` checks war and
+- [x] R4 **Checkers for the other systems**, as `tests/helpers/diploInvariants.ts` checks war and
   peace (ADR-803): the economy (no gold from nowhere, upkeep paid or units cut), the navy (a fleet
   at sea or in its own or a partner's port), air (a wing within range of its base), nukes (a burst
   only by a nation with warheads and a means), the bonds (no puppet of a puppet, no alliance with
@@ -97,8 +97,18 @@ Rules:
     airbase wing's mission is within it (a carrier's waits while out of range, by design).
     `worldInvariantsAir.test.ts` 8 of 8; 730 days on the eight worlds: 0 broken; red on 7019 with a
     launch out of range, a carrier's wing left behind, a taken airbase kept.
-  - [ ] R4d Nukes: a burst only by a nation with warheads and a means.
-  - [ ] R4e The bonds: no puppet of a puppet, no alliance with an overlord.
+  - [x] R4d Nukes: a launch needs nukes allowed, a warhead and a means (a strategic bomber at
+    its airbase in range, or missiles within MISSILE_KM); its yield what the nation builds; every
+    launch that ends is told; a stockpile grows only by one built at the day's pass, to
+    WARHEAD_MAX, and is no dead nation's. `worldInvariantsNukes.test.ts` 8 of 8 (God arms the
+    Soviet Union on 7019 and it strikes by bomber); 20 years on 7019 and 8209: 0 broken; red with
+    a launch that spends no warhead and a missile without the tech.
+  - [x] R4e The bonds: no puppet of a puppet (ADR-148), none of a dead nation, never at war with
+    its overlord; values within 0..100; alliances of two living members or more with their leader,
+    one a nation; guarantees between two living nations at peace. ("No alliance with an overlord"
+    is no rule: 1938's Tannu Tuva is in the Soviet alliance.) Red on HEAD: puppets of puppets on
+    1009, 2207, 3739 and random 11 within two years; fixed (ADR-810: a realm has one head).
+    `worldInvariantsBonds.test.ts` 8 of 8; the six worlds 730 days: 0 broken.
 - [ ] R5 **The critic's runs and the release.** After R1–R4 (the user's request, 2026-11-03: the
   heroes feature gets a critic run of its own once the other items are resolved).
   - [ ] R5a **A critic run on heroes** (PLAN 7.184, the heroes new-game option): the critic told to

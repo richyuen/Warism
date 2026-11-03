@@ -7,6 +7,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-810 · 2026-11-03 · accepted — A realm has one head: no puppet of a puppet (ROADMAP R4e)
+
+- **Context.** The bonds' checker (ADR-809) on its first runs: a puppet of a puppet on 1009 (day
+  235: Turkey, Bulgaria's overlord, made a Soviet puppet), 2207, 3739 and the random world 11.
+  The scenario's schema refuses one (ADR-148), and the game made one: `makePuppet` left the
+  subject's puppets under it and took a puppet as an overlord; `annexNation` handed the annexed
+  nation's puppets to an annexer that was a puppet itself.
+- **Decision.** A bond is made to the head of the overlord's realm (its overlord, if it has one),
+  and the subject's own puppets pass to that head with it, leaving the wars they fought against
+  its realm (PLAN 3.8d), as an annexation's do (no row of their own, as there). An annexation hands
+  the target's puppets to the head of the annexer's realm.
+- **Why the head, not a refusal.** A puppet's victory then still has its peace terms; a refusal
+  left the beaten nation free at a crushing peace. The head is who the bond serves: the tribute and
+  integration go there already through the realm's wars.
+- **Decisions checked (ADR-803).** ADR-148 (a dead nation is nobody's puppet; the schema refuses a
+  chain): now held in play. ADR-181 (an annexation's puppets go with it): kept, to the head.
+  PLAN 3.8d (a new puppet leaves the wars against its realm): applied to the handed puppets too.
+  `puppets.test.ts` 18 of 18 (3 new, red before), `npm test` 2086 of 2086, seed 99's pin unchanged.
+
 ### ADR-809 · 2026-11-03 · accepted — One checker for the other systems' rules, a rule set a system (ROADMAP R4)
 
 - **Context.** ADR-804: a feature's rules go to a checker run on several seeds, as the rules of war
@@ -38,6 +57,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   flies to a place within the wing's range of where it took off; an airbase wing's mission is
   within its range. A carrier wing's mission may lie beyond its range while the fleet has sailed
   off: the scheduler waits ("its carrier sailed off"), so the rule is the sortie's.
+- **Nukes (R4d).** A launch needs nukes allowed, a warhead the hour before and a means (a strategic
+  bomber of its nation's at its airbase with the target in range; or missiles known and the target
+  within MISSILE_KM); its yield is at most what the nation builds; launches are counted by their
+  rows, as a missile may burst in the hour it rose; every launch that ends is told as a burst or
+  an interception, and none is told without one; a stockpile grows only by one built at the day's
+  pass (what was paid toward it starts anew), to WARHEAD_MAX, and is no dead nation's after it.
+- **The bonds (R4e).** As ADR-148 and the scenario's schema have them: an overlord is a living
+  nation other than its puppet and no puppet itself; a dead nation has none; a puppet is never at
+  war with its overlord; autonomy, loyalty, integration and unity within 0..100; an alliance has
+  two living members or more and its leader among them, and a nation is in one at most; a
+  guarantee binds two living nations at peace with each other. The roadmap's "no alliance with an
+  overlord" is no rule of the game (1938's data puts Tannu Tuva in the Soviet alliance).
 
 ### ADR-808 · 2026-11-03 · accepted — A nation called beside one it is at war with stays out (ROADMAP R3, R27-N2)
 

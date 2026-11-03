@@ -66,19 +66,31 @@ export function puppetTier(autonomy: number): PuppetTier {
   return autonomy < SATELLITE_BELOW ? 'satellite' : autonomy < VASSAL_FROM ? 'puppet' : 'vassal';
 }
 
-/** Makes `subject` a puppet of `overlord` (peace terms, God Mode). Returns false if invalid. */
+/**
+ * Makes `subject` a puppet of `overlord` (peace terms, God Mode). Returns false if invalid. A realm
+ * has one head (ADR-810; the scenario refuses a puppet of a puppet, ADR-148): a puppet's peace makes
+ * the loser its overlord's puppet, and the subject's own puppets pass to that overlord with it, as
+ * an annexation's do. Before, Turkey made a Soviet puppet kept Bulgaria under it (seed 1009).
+ */
 export function makePuppet(world: World, overlord: number, subject: number, autonomy: number): boolean {
   const nc = world.nations.cols;
   if (overlord === subject || !world.nations.has(overlord) || !world.nations.has(subject)) return false;
   if (nc.living[overlord] !== 1 || nc.living[subject] !== 1 || nc.overlord[overlord] === subject) return false;
+  overlord = nc.overlord[overlord] || overlord;
+  const handed: number[] = [];
+  world.nations.forEach((p) => {
+    if (nc.overlord[p] === subject && p !== overlord) handed.push(p);
+  });
+  for (const p of handed) nc.overlord[p] = overlord;
   nc.overlord[subject] = overlord;
   nc.autonomy[subject] = Math.max(0, Math.min(100, autonomy));
   nc.loyalty[subject] = LOYALTY_BASE + LOYALTY_PER_AUTONOMY * nc.autonomy[subject]!;
   nc.integration[subject] = 0;
   world.supplyDirty = true;
   world.out.emit(world.tick, EventKind.PuppetCreated, subject, overlord, NaN, NaN);
-  // It does not go on fighting its overlord's realm or allies in another war (PLAN 3.8d).
+  // It does not go on fighting its overlord's realm or allies in another war (PLAN 3.8d); nor do its puppets.
   leaveBondedWars(world, subject);
+  for (const p of handed) if (nc.living[p] === 1) leaveBondedWars(world, p);
   return true;
 }
 
@@ -113,11 +125,13 @@ export function annexNation(world: World, annexer: number, target: number): bool
   const nc = world.nations.cols;
   if (annexer === target || !world.nations.has(annexer) || !world.nations.has(target) || nc.living[annexer] !== 1 || nc.living[target] !== 1) return false;
   annexInto(world, annexer, target);
+  // To the head of the annexer's realm (ADR-810): a puppet that annexes holds no puppets of its own.
+  const head = nc.overlord[annexer] || annexer;
   const handed: number[] = [];
   world.nations.forEach((p) => {
     if (nc.overlord[p] !== target) return;
-    nc.overlord[p] = p === annexer ? 0 : annexer;
-    if (p !== annexer) handed.push(p);
+    nc.overlord[p] = p === head ? 0 : head;
+    if (p !== head) handed.push(p);
   });
   if (nc.overlord[target] !== 0) nc.overlord[target] = 0;
   // The blocs changed with no cell of the puppets changed (PLAN 3.12Rl): their land bore the mark

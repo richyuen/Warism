@@ -5,6 +5,11 @@ import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { basePlace, inSeaBattle, kmFromBase, ofSide, wingRange } from '../../src/sim/systems/air';
 import { DESERTION } from '../../src/sim/systems/economy';
+import { largestYield, MISSILE_KM, nukesAllowed, WARHEAD_MAX } from '../../src/sim/systems/nuclear';
+import { seaKm } from '../../src/sim/systems/navalCombat';
+import { knowsTechs, techMask } from '../../src/sim/tech';
+import { isDayStart } from '../../src/shared/calendar';
+import type { NukeLaunch } from '../../src/sim/world';
 import { elementIndex } from '../../src/sim/systems/elements';
 import { TRIBUTE } from '../../src/sim/systems/puppets';
 import { COLLAPSE_MONTHS } from '../../src/sim/systems/revival';
@@ -29,10 +34,22 @@ import { assets1938 } from './earth';
 //            not ferrying stands at its base (a carrier's, at its fleet as the air system left it: a
 //            fleet in a sea battle this hour or the last moves after it); a sortie flies to a place within the wing's range of
 //            where it took off, and an airbase's wing's mission is within its range (a carrier's
-//            waits while its fleet is out of range) (R4c).
+//            waits while its fleet is out of range) (R4c);
+//   nukes    a launch needs nukes allowed, a warhead the hour before and a means: a strategic bomber
+//            of its nation's at its airbase with the target in range, or missiles known and the
+//            target within MISSILE_KM of where it rose; its yield at most what the nation builds;
+//            each launch that ends has its burst or its interception, and no burst or interception
+//            comes without one; a stockpile grows only by one built at the day's pass (what was paid
+//            toward it starts anew), holds WARHEAD_MAX at most,
+//            and is no dead nation's after the day's pass (R4d);
+//   bonds    an overlord is a living nation other than its puppet and no puppet itself; a dead
+//            nation has none; a puppet and its overlord are never at war; autonomy, loyalty and
+//            integration within 0..100; an alliance has two living members or more, a leader among
+//            them, unity within 0..100, a loyalty per member; a nation in one alliance at most; a
+//            guarantee binds two living nations, not at war with each other (R4e).
 
-export type RuleSet = 'economy' | 'navy' | 'air';
-export const RULE_SETS: readonly RuleSet[] = ['economy', 'navy', 'air'];
+export type RuleSet = 'economy' | 'navy' | 'air' | 'nukes' | 'bonds';
+export const RULE_SETS: readonly RuleSet[] = ['economy', 'navy', 'air', 'nukes', 'bonds'];
 
 export interface WorldCase {
   seed: number;
@@ -49,6 +66,8 @@ export interface WorldCase {
    * the whole army in the first hour.
    */
   bankrupt?: readonly (readonly [string, number])[];
+  /** What a player or God does, at the start of a day (commands queue for the next hour): checked as the AI's acts are. */
+  acts?: readonly { day: number; act: (s: Sim) => void }[];
 }
 
 /** A unit of slack for sums of gold and of units: rounding, never a month's income. */
@@ -58,6 +77,10 @@ const EPS = 1e-6;
 interface Before {
   living: number[];
   gold: number[];
+  /** The warheads each nation held, what it had paid toward the next, and the launches in flight, by id. */
+  stock: Map<number, number>;
+  paid: Map<number, number>;
+  launches: Map<number, NukeLaunch>;
   month: null | {
     overlord: number[];
     autonomy: number[];
@@ -87,7 +110,14 @@ function unitsOf(w: World, els: number[] | undefined): { units: number; whole: n
 
 function before(w: World): Before {
   const nc = w.nations.cols;
-  const b: Before = { living: Array.from(nc.living), gold: Array.from(nc.gold), month: null };
+  const b: Before = {
+    living: Array.from(nc.living),
+    gold: Array.from(nc.gold),
+    stock: new Map([...w.warheads].map(([n, h]) => [n, h.stock])),
+    paid: new Map([...w.warheads].map(([n, h]) => [n, h.paid])),
+    launches: new Map(w.nukeLaunches.map((l) => [l.id, { ...l }])),
+    month: null,
+  };
   if (isMonthStart(w.startDay, w.tick)) {
     const land = new Map<number, { nation: number; units: number; whole: number }>();
     const fc = w.formations.cols;
@@ -221,6 +251,108 @@ function airBreaks(w: World, late: Set<number>, fought: Set<number>, tag: (n: nu
   return out;
 }
 
+const knows = (w: World, n: number, id: string): boolean => {
+  const i = w.rules?.techs.findIndex((t) => t.id === id) ?? -1;
+  return i >= 0 && knowsTechs(w, n, techMask([i]));
+};
+
+/** The lines of `nukes` the hour from `b` broke. */
+function nukeBreaks(w: World, b: Before, events: number[], tag: (n: number) => string): string[] {
+  const out: string[] = [];
+  const fc = w.formations.cols;
+  const nc = w.nations.cols;
+  const rules = w.rules!;
+  // Launched in the hour, by nation: by the rows, as a missile may burst within the hour it rose.
+  const launched = new Map<number, number>();
+  let rows = 0;
+  for (let i = 0; i < events.length; i += 6) {
+    if (events[i + 1] !== EventKind.NukeLaunched) continue;
+    rows++;
+    launched.set(events[i + 2]!, (launched.get(events[i + 2]!) ?? 0) + 1);
+  }
+  let fresh = 0;
+  for (const l of w.nukeLaunches) {
+    if (b.launches.has(l.id)) continue;
+    fresh++;
+    const n = l.nation;
+    if (!nukesAllowed(w, n)) out.push(`nukes: ${tag(n)} launched with nukes barred`);
+    if (l.yieldN > largestYield(w, n)) out.push(`nukes: ${tag(n)} launched a warhead of class ${l.yieldN}, beyond what it builds`);
+    const km = seaKm(w, l.bx, l.by, l.tx, l.ty);
+    if (l.missile === 1) {
+      if (!knows(w, n, 'ballistic_missiles')) out.push(`nukes: ${tag(n)} launched a missile without the tech`);
+      if (km > MISSILE_KM * (1 + 1e-9)) out.push(`nukes: ${tag(n)}'s missile flies ${km.toFixed(0)} km, beyond ${MISSILE_KM}`);
+    } else {
+      const wing = l.wing;
+      const first = w.formations.has(wing) ? rules.templates[fc.template[wing]!]?.elements[0] : undefined;
+      if (!w.formations.has(wing) || !w.isWing(wing) || fc.nation[wing] !== n) out.push(`nukes: ${tag(n)}'s bomber ${wing} is no wing of its own`);
+      else if (!first || rules.units[first.unit]!.cls !== 'bomber_str') out.push(`nukes: ${tag(n)}'s warhead on wing ${wing}, no strategic bomber`);
+      else if ((w.wingBase.get(wing) ?? 0) <= 0) out.push(`nukes: ${tag(n)}'s bomber ${wing} at no airbase`);
+      else if (km > wingRange(w, wing) * (1 + 1e-9)) out.push(`nukes: ${tag(n)}'s bomber ${wing} flies ${km.toFixed(0)} km, range ${wingRange(w, wing).toFixed(0)}`);
+    }
+  }
+  for (const [n, k] of launched) if ((b.stock.get(n) ?? 0) < k) out.push(`nukes: ${tag(n)} launched ${k} with ${b.stock.get(n) ?? 0} warheads`);
+  // Ended launches and the rows that end them.
+  const now = new Set(w.nukeLaunches.map((l) => l.id));
+  let ended = 0;
+  for (const id of b.launches.keys()) if (!now.has(id)) ended++;
+  let told = 0;
+  for (let i = 0; i < events.length; i += 6) if (events[i + 1] === EventKind.NukeDetonated || events[i + 1] === EventKind.NukeIntercepted) told++;
+  // A launch made and ended in the same hour was in flight neither before nor after.
+  const madeAndEnded = rows - fresh;
+  if (fresh > rows) out.push(`nukes: ${fresh - rows} launches in flight with no row`);
+  if (told !== ended + madeAndEnded) out.push(`nukes: ${ended + madeAndEnded} launches ended and ${told} bursts or interceptions told`);
+  // The stockpiles.
+  const day = isDayStart(w.tick - 1);
+  for (const [n, h] of w.warheads) {
+    if (h.stock > WARHEAD_MAX) out.push(`nukes: ${tag(n)} holds ${h.stock} warheads, over ${WARHEAD_MAX}`);
+    if (h.stock < 0) out.push(`nukes: ${tag(n)} holds ${h.stock} warheads`);
+    // One is built at the day's pass when its price is paid: what was paid toward it starts anew.
+    const grew = h.stock + (launched.get(n) ?? 0) - (b.stock.get(n) ?? 0);
+    const built = day && (b.paid.get(n) ?? 0) > 0 && h.paid < (b.paid.get(n) ?? 0) ? 1 : 0;
+    if (grew > built) out.push(`nukes: ${tag(n)}'s stockpile grew by ${grew}, ${built} built`);
+    if (day && (!w.nations.has(n) || nc.living[n] !== 1) && h.stock > 0) out.push(`nukes: ${tag(n)}, dead, holds ${h.stock} warheads after the day's pass`);
+  }
+  return out;
+}
+
+/** The lines of `bonds` the world breaks now. */
+function bondBreaks(w: World, tag: (n: number) => string): string[] {
+  const out: string[] = [];
+  const nc = w.nations.cols;
+  const alive = (n: number): boolean => n > 0 && w.nations.has(n) && nc.living[n] === 1;
+  const inRange = (v: number): boolean => v >= 0 && v <= 100;
+  w.nations.forEach((n) => {
+    const o = nc.overlord[n]!;
+    if (o === 0) return;
+    if (!alive(n)) {
+      out.push(`bonds: ${tag(n)}, dead, has an overlord (${tag(o)})`);
+      return;
+    }
+    if (o === n || !alive(o)) out.push(`bonds: ${tag(n)}'s overlord ${tag(o)} is ${o === n ? 'itself' : 'dead'}`);
+    else if (nc.overlord[o] !== 0) out.push(`bonds: ${tag(n)} is a puppet of ${tag(o)}, a puppet of ${tag(nc.overlord[o]!)}`);
+    if (w.wars.atWar(n, o)) out.push(`bonds: ${tag(n)} at war with its overlord ${tag(o)}`);
+    for (const [k, v] of [['autonomy', nc.autonomy[n]!], ['loyalty', nc.loyalty[n]!], ['integration', nc.integration[n]!]] as const) if (!inRange(v)) out.push(`bonds: ${tag(n)}'s ${k} ${v}`);
+  });
+  const seen = new Map<number, number>();
+  for (const a of w.alliances.list) {
+    const living = a.members.filter(alive);
+    if (living.length !== a.members.length) out.push(`bonds: alliance ${a.id} has dead members (${a.members.filter((m) => !alive(m)).map(tag).join(' ')})`);
+    if (a.members.length < 2) out.push(`bonds: alliance ${a.id} of ${a.members.length}`);
+    if (!a.members.includes(a.leader)) out.push(`bonds: alliance ${a.id}'s leader ${tag(a.leader)} not a member`);
+    if (a.loyalty.length !== a.members.length) out.push(`bonds: alliance ${a.id} has ${a.loyalty.length} loyalties for ${a.members.length} members`);
+    if (!inRange(a.unity)) out.push(`bonds: alliance ${a.id}'s unity ${a.unity}`);
+    for (const m of a.members) {
+      if (seen.has(m)) out.push(`bonds: ${tag(m)} in alliances ${seen.get(m)} and ${a.id}`);
+      seen.set(m, a.id);
+    }
+  }
+  for (const g of w.alliances.guarantees) {
+    if (!alive(g.guarantor) || !alive(g.target) || g.guarantor === g.target) out.push(`bonds: a guarantee of ${tag(g.guarantor)} to ${tag(g.target)}, not two living nations`);
+    else if (w.wars.atWar(g.guarantor, g.target)) out.push(`bonds: ${tag(g.guarantor)} guarantees ${tag(g.target)} and is at war with it`);
+  }
+  return out;
+}
+
 /** The broken lines of one run of `c.days` days, each rule set's checked every hour. */
 export function worldBreaks(c: WorldCase): string[] {
   const breaks = new Breaks();
@@ -242,14 +374,25 @@ export function worldBreaks(c: WorldCase): string[] {
   const sunk = new Set<number>();
   const late = new Set<number>();
   const fought = new Set<number>();
-  s.step(24 * c.days, (w) => {
+  const check = (w: World): void => {
     const where = `${label} day ${Math.floor((w.tick - 1) / 24)}`;
     if (rules.has('economy')) breaks.add(where, economyBreaks(w, b, w.out.events, tag));
     if (rules.has('navy')) breaks.add(where, navyBreaks(w, sunk, tag));
     if (rules.has('air')) breaks.add(where, airBreaks(w, late, fought, tag));
+    if (rules.has('nukes')) breaks.add(where, nukeBreaks(w, b, w.out.events, tag));
+    if (rules.has('bonds')) breaks.add(where, bondBreaks(w, tag));
     w.out.events.length = 0;
     w.out.fires.length = 0;
     b = before(w);
-  });
+  };
+  let day = 0;
+  for (const { day: at, act } of [...(c.acts ?? [])].sort((p, q) => p.day - q.day)) {
+    if (at > c.days) break;
+    s.step(24 * (at - day), check);
+    day = at;
+    act(s);
+    b = before(s.world);
+  }
+  s.step(24 * (c.days - day), check);
   return breaks.lines;
 }

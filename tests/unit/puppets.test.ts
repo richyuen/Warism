@@ -3,7 +3,7 @@ import { EventKind } from '../../src/shared/events';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { eliminateNation } from '../../src/sim/systems/capitals';
-import { FREE_ABOVE, INTEGRATION_RATE, LOSING_PENALTY, LOYALTY_BASE, LOYALTY_PER_AUTONOMY, loyaltyTarget, puppetSystem, puppetTier, SIZE_PENALTY, TRIBUTE } from '../../src/sim/systems/puppets';
+import { annexNation, FREE_ABOVE, INTEGRATION_RATE, makePuppet, LOSING_PENALTY, LOYALTY_BASE, LOYALTY_PER_AUTONOMY, loyaltyTarget, puppetSystem, puppetTier, SIZE_PENALTY, TRIBUTE } from '../../src/sim/systems/puppets';
 import { declareWar } from '../../src/sim/systems/war';
 import { blocOf } from '../../src/sim/systems/supply';
 import { navOf, type World } from '../../src/sim/world';
@@ -223,6 +223,32 @@ describe('a beaten overlord and a great subject (ROADMAP R2, ADR-807)', () => {
     expect(kinds(ev, EventKind.WarDeclared)).toContainEqual([TAN, SOV]);
     expect(w.alliances.allied(TAN, SOV)).toBe(false);
     expect(w.wars.atWar(TAN, SOV)).toBe(true);
+  });
+});
+
+// ADR-810: a realm has one head (the scenario refuses a puppet of a puppet, ADR-148). Seed 1009,
+// day 235: Turkey, Bulgaria's overlord, made a Soviet puppet, kept Bulgaria under it.
+describe('a realm has one head (ADR-810)', () => {
+  const [JAP, MAN, SOV] = ['JAP', 'MAN', 'SOV'].map(nationId) as [number, number, number];
+  it('an overlord made a puppet hands its puppets to its new overlord', () => {
+    const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
+    const nc = s.world.nations.cols;
+    expect(nc.overlord[ALB]).toBe(ITA);
+    expect(makePuppet(s.world, GER, ITA, 40)).toBe(true);
+    expect([nc.overlord[ITA], nc.overlord[ALB]]).toEqual([GER, GER]);
+  });
+  it('a puppet’s puppet is its overlord’s', () => {
+    const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
+    const nc = s.world.nations.cols;
+    expect(nc.overlord[MAN]).toBe(JAP);
+    expect(makePuppet(s.world, MAN, SOV, 40)).toBe(true);
+    expect([nc.overlord[SOV], nc.overlord[MAN]]).toEqual([JAP, JAP]);
+  });
+  it('a puppet that annexes hands the annexed nation’s puppets to its overlord', () => {
+    const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
+    const nc = s.world.nations.cols;
+    expect(annexNation(s.world, MAN, ITA)).toBe(true);
+    expect(nc.overlord[ALB]).toBe(JAP);
   });
 });
 

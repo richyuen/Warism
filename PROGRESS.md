@@ -551,3 +551,17 @@
   wing not moved (2), a taken airbase kept (19).
 - `worldInvariantsAir.test.ts` 8 of 8.
 - **Next:** R4d, nukes.
+
+## 2026-11-03 — ROADMAP R4d, R4e (ADR-809, ADR-810): the nukes' and the bonds' checkers; R4 done
+- Rule set `nukes`: launches need nukes allowed, a warhead, a means in range; the yield built; launches counted by
+  rows; each end told; a stockpile grows only by a build at the day's pass. The checker's `acts` let a case script
+  God's and a player's acts: on 7019 God arms the Soviet Union and it strikes by bomber (2 warheads left).
+  20 years on 7019 and 8209 (and every rule set at once on 8209, random diplomacy, heroes): 0 broken. Red with a
+  launch that spends no warhead and a missile without the tech (first form missed the first: a launch at 00:00
+  passed as the day's build; a build now resets what was paid).
+- Rule set `bonds`: red on HEAD, puppets of puppets on 1009, 2207, 3739 and random 11 within two years, which
+  ADR-148's schema refuses. Fixed in `makePuppet` and `annexNation` (ADR-810: a realm has one head); the six
+  worlds then 0 broken. "No alliance with an overlord" dropped as no rule (Tannu Tuva).
+- Tests: `worldInvariantsNukes.test.ts`, `worldInvariantsBonds.test.ts` 8 of 8 each; `puppets.test.ts` 18 of 18
+  (3 new, red before); `npm test` 2086 of 2086; `test:sweep` 18 of 18, the pin unchanged.
+- **Next:** R5a, a critic run on heroes.
