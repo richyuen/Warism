@@ -1,4 +1,4 @@
-import { returnPlace } from '../../src/sim/systems/heroes';
+import { heroBasin, returnPlace } from '../../src/sim/systems/heroes';
 import { isMonthStart } from '../../src/shared/calendar';
 import { EventKind } from '../../src/shared/events';
 import { isLand } from '../../src/shared/terrain';
@@ -14,7 +14,7 @@ import type { NukeLaunch } from '../../src/sim/world';
 import { elementIndex } from '../../src/sim/systems/elements';
 import { TRIBUTE } from '../../src/sim/systems/puppets';
 import { COLLAPSE_MONTHS } from '../../src/sim/systems/revival';
-import type { World } from '../../src/sim/world';
+import { Domain, type World } from '../../src/sim/world';
 import { Breaks } from './diploInvariants';
 import { assets1938 } from './earth';
 
@@ -374,6 +374,15 @@ export function heroBreaks(w: World, tag: (n: number) => string): string[] {
     else if (f.nation[id] !== r.nation) out.push(`heroes: row ${row}'s hero (${tag(r.nation)}) is ${tag(f.nation[id]!)}'s`);
     if (rows.has(row)) out.push(`heroes: row ${row} (${tag(r.nation)}) on formations ${rows.get(row)} and ${id}`);
     rows.set(row, id);
+    // A sea hero on water is on water it can sail out of (ROADMAP R13): its start's basin, not the
+    // Caspian or a lake (basin 0: no zone). On land it is on a passage (Suez), sailing through.
+    if (w.formations.has(id) && w.rules?.templates[r.template]?.domain === Domain.sea) {
+      const x = f.x[id]!;
+      const y = f.y[id]!;
+      const cell = Math.floor(y) * w.cells.w + (((Math.floor(x) % w.cells.w) + w.cells.w) % w.cells.w);
+      const here = heroBasin(w, x, y);
+      if (!isLand(w.cells.terrain[cell]!) && here !== heroBasin(w, r.x, r.y)) out.push(`heroes: row ${row}'s hero (${tag(r.nation)}) in basin ${here}, not its start's`);
+    }
   }
   w.heroRoster.forEach((r, row) => {
     if (!rows.has(row) && !w.heroReturn.has(row)) out.push(`heroes: row ${row} (${tag(r.nation)}) has no hero and no return`);

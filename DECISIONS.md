@@ -7,6 +7,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-816 · 2026-11-03 · accepted — A sea hero comes back only on its start's basin (ROADMAP R13, R30-B2)
+
+- **Context.** Critic run 30: R10's fallback (ADR-813, the held port nearest the start) took ports
+  on cut-off water. Sovetsky Soyuz came back at Baku, Atyrau or Makhachkala (the Caspian) or at
+  Petrozavodsk (Lake Onega) and stayed there to the run's end: 11,259 days in 4 of 13 seeds.
+- **Decision.** A sea hero's return port must have water of the lane graph (`portSeaOf`; a lake's
+  port has none) in the basin of its start (`heroBasin`: the basin of the zone at a place, 0 off
+  every zone). With no such port held it waits, and its row says "waits for a port on its sea".
+- **Checker.** The heroes rules add: a sea hero on water is in its start's basin. On land it is on
+  a passage (Suez is drawn over land cells) and is not judged.
+- **Evidence.** The rule on HEAD's return (the filter off), 4 critic seeds × 20 years, heroes on:
+  red on 4637 (Soviet hero in the Caspian, day 2640; French on a lake, day 6048), 7603 (Caspian,
+  day 4399), 4111 (lake, day 7045); 9001 green. With the fix: 0 broken on all four.
+  `heroes.test.ts` 17 of 17 (1 new, red with the filter off). Heroes off: no change, seed 99's pin
+  as it was.
+
 ### ADR-815 · 2026-11-03 · accepted — A hero's loss and return are rows of the history (ROADMAP R12, R29-N1)
 
 - **Context.** Critic run 29: a hero lost or back was told nowhere but its Overview row: no ticker

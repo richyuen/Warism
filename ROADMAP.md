@@ -138,7 +138,7 @@ Rules:
 - [x] R12 **A hero's loss and return are told** (R29-N1): ticker and History rows ("Bismarck was
   sunk near …", "Bismarck is back at Kiel") with Go to.
   AT: an e2e spec sinks a sea hero by God and sees both rows.
-- [ ] R13 **A sea hero comes back to the open sea** (critic run 30, R30-B2). R10's fallback (the
+- [x] R13 **A sea hero comes back to the open sea** (critic run 30, R30-B2). R10's fallback (the
   held port nearest the start) picks ports on landlocked water: Sovetsky Soyuz returns in the
   Caspian (Baku 4637, Atyrau 7603, Makhachkala 9001) or on Lake Onega (Petrozavodsk 4111) and stays
   there to the run's end, 11,259 days in 4 of 13 seeds. Only a port whose water reaches the hero's
@@ -146,6 +146,7 @@ Rules:
   water connected to its start sea.
   AT: the checker's rule red on HEAD on 4637, green after; over the critic's seeds 4637, 7603, 9001,
   4111 × 20 years no sea hero on water cut off from its start sea.
+  Done (ADR-816): red with HEAD's return on 4637, 7603, 4111; 0 broken on all four with the fix.
 - [ ] R14 **Every folded hero reachable by touch** (R30-B1). On a phone (5521, 390 × 844, touch)
   the panel opened by the first tap covers "Sovetsky Soyuz +1" and "Bismarck +2", and closing it
   starts the fold over at its lead: HMS Hood, TOG II and Char 2C are never opened. A fold also

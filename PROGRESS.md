@@ -628,3 +628,11 @@
   3 blocking, filed as R13–R15: Sovetsky Soyuz back on the Caspian or Lake Onega for good (B2); folded heroes a tap
   cannot reach on a phone, and folds across nations (B1); the checker's air rules break with heroes on (B3).
 - **Next:** R13.
+
+## 2026-11-03 — ROADMAP R13 (ADR-816): a sea hero comes back to the open sea
+- A sea hero's return port must be on its start's basin, with water of the lane graph (no lake's); else it waits
+  ("waits for a port on its sea"). Checker: a sea hero on water is in its start's basin (a passage over land is not
+  judged: Suez gave every sea hero a false "basin 0" on the first try).
+- Red with HEAD's return on 4637, 7603 (Caspian), 4111 (lake); with the fix 0 broken on 4637, 7603, 9001, 4111 × 20
+  years. `heroes.test.ts` 17 of 17 (1 new). R7 moved into the batch after R15 (the user's request).
+- **Next:** R14.

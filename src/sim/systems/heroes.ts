@@ -13,8 +13,9 @@
 import { isDayStart } from '../../shared/calendar';
 import { portWater } from '../data/ports';
 import { EventKind } from '../../shared/events';
-import { Domain, type World } from '../world';
+import { basinOf, Domain, portSeaOf, seaOf, type World } from '../world';
 import { cellX, elementIndex, equipFormation, wrapDx } from './elements';
+import { zoneAt } from './navalCombat';
 
 /** A hero of the roster: its nation, its template (index of the rules) and its start place (cells). */
 export interface HeroRow {
@@ -93,7 +94,9 @@ export function heroHealth(world: World, id: number): number {
  * nation holds it (a sea hero's, the port it was raised at); else, on land, its nation's capital;
  * at sea, the water of the naval base its nation holds nearest its start, else of any port it holds
  * nearest its start (ROADMAP R10, ADR-813: with naval bases only, Richelieu waited 16,123 days in
- * ten 20-year runs, the Soviet Union of 4253 holding 12 ports, none a base).
+ * ten 20-year runs, the Soviet Union of 4253 holding 12 ports, none a base). A sea hero's port is
+ * on its start's basin (ROADMAP R13, ADR-816): Baku's water is the Caspian, and Sovetsky Soyuz came
+ * back there and stayed for the rest of the run.
  */
 export function returnPlace(world: World, row: number): [number, number] | null {
   const r = world.heroRoster[row]!;
@@ -107,7 +110,7 @@ export function returnPlace(world: World, row: number): [number, number] | null 
     return world.standPoint(nc.capitalX[r.nation]!, nc.capitalY[r.nation]!);
   }
   // At sea: the naval base by its start (the one it was raised at) while held, else the nearest held;
-  // with none, the nearest port held.
+  // with none, the nearest port held; either on its start's basin (ROADMAP R13).
   return seaReturn(world, r, true) ?? seaReturn(world, r, false);
 }
 
@@ -115,8 +118,15 @@ function seaReturn(world: World, r: HeroRow, bases: boolean): [number, number] |
   const { w, h, controller, terrain } = world.cells;
   let best: [number, number] | null = null;
   let bestD = Infinity;
-  for (const p of world.ports) {
+  const home = heroBasin(world, r.x, r.y);
+  const sea = portSeaOf(world);
+  const { zoneOf } = seaOf(world);
+  const { basin } = basinOf(world);
+  for (let i = 0; i < world.ports.length; i++) {
+    const p = world.ports[i]!;
     if ((bases && p.navalBase < 1) || controller[p.cell] !== r.nation) continue;
+    // On the start's basin (ROADMAP R13): a lake's port (Petrozavodsk) has no water of the lane graph.
+    if (sea[i]! < 0 || basin[zoneOf[sea[i]!]!] !== home) continue;
     // Squared (no root: the comparison is exact on every engine).
     const dx = wrapDx(world, r.x, p.x);
     const d = dx * dx + (p.y - r.y) * (p.y - r.y);
@@ -128,6 +138,15 @@ function seaReturn(world: World, r: HeroRow, bases: boolean): [number, number] |
     best = at;
   }
   return best;
+}
+
+/**
+ * The basin of the sea zone at (x, y) (`zoneAt`: the nearest zone's water within AT_PORT_CELLS),
+ * or 0 off every zone (a lake no zone covers) or on one ice closes. A sea hero's is its start's
+ * (ROADMAP R13, the checker's heroes rules).
+ */
+export function heroBasin(world: World, x: number, y: number): number {
+  return basinOf(world).basin[zoneAt(world, x, y)] ?? 0;
 }
 
 /**

@@ -7,12 +7,12 @@ import { Domain, type World } from '../../src/sim/world';
 import { isMonthStart } from '../../src/shared/calendar';
 import { assets1938 } from '../helpers/earth';
 import { elementIndex } from '../../src/sim/systems/elements';
-import { HERO_RETURN_HOURS, heroHealth, heroWaits } from '../../src/sim/systems/heroes';
+import { HERO_RETURN_HOURS, heroBasin, heroHealth, heroWaits } from '../../src/sim/systems/heroes';
 import { landFight, seaFight } from '../helpers/heroFight';
 import { fleetPower } from '../../src/sim/systems/seaControl';
 import { AT_PORT_CELLS } from '../../src/sim/systems/navalCombat';
 import { orderSail } from '../../src/sim/systems/sail';
-import { portSeaOf } from '../../src/sim/world';
+import { basinOf, portSeaOf, seaOf } from '../../src/sim/world';
 import { annexNation, integratePuppet, makePuppet } from '../../src/sim/systems/puppets';
 import { heroBreaks } from '../helpers/worldInvariants';
 
@@ -278,6 +278,48 @@ describe('heroes heal and come back (PLAN 7.184a2)', () => {
     } finally {
       held.forEach((p, k) => (p.navalBase = bases[k]!));
     }
+  });
+
+  // ROADMAP R13 (critic run 30, R30-B2; ADR-816): R10's fallback took the held port nearest the
+  // start whatever its water, and Sovetsky Soyuz came back on the Caspian (Baku) and stayed there
+  // to the run's end. A port counts only on the start's basin; with the Soviet Union holding only
+  // Caspian ports the hero waits, and its row says why; given a Baltic port back, it returns there.
+  it('a sea hero comes back only on its start basin: the Caspian is no return for Sovetsky Soyuz', () => {
+    const sim = make('on');
+    const w = sim.world;
+    const sov = NATIONS_1938.findIndex((n) => n.tag === 'SOV') + 1;
+    const fin = NATIONS_1938.findIndex((n) => n.tag === 'FIN') + 1;
+    const row = rowOf(w, 'hero_sovetsky_soyuz');
+    const r = w.heroRoster[row]!;
+    const home = heroBasin(w, r.x, r.y);
+    const water = portSeaOf(w);
+    // A port's basin by the lane graph's water; -1 with none (a lake's: Petrozavodsk on Onega).
+    const basinOfPort = (i: number): number => (water[i]! < 0 ? -1 : basinOf(w).basin[seaOf(w).zoneOf[water[i]!]!]!);
+    const held = w.ports.map((p, i) => ({ p, i })).filter(({ p }) => w.cells.controller[p.cell] === sov);
+    const off = held.filter(({ i }) => basinOfPort(i) !== home);
+    const open = held.filter(({ i }) => basinOfPort(i) === home);
+    expect(off.length, 'the Soviet Union holds ports off its start basin (the Caspian, Onega)').toBeGreaterThan(0);
+    expect(open.length).toBeGreaterThan(0);
+    for (const { p } of open) {
+      w.setOwner(p.cell, fin);
+      w.setController(p.cell, fin);
+    }
+    sim.command({ kind: 'removeFormation', id: heroOf(w, 'hero_sovetsky_soyuz') });
+    sim.step(1, quiet);
+    const due = w.heroReturn.get(row)!;
+    while (w.tick <= due + 48) sim.step(1, quiet);
+    expect(heroOf(w, 'hero_sovetsky_soyuz'), 'only Caspian and lake ports held: it waits').toBe(0);
+    expect(heroWaits(w, row)).toBe('port');
+    expect(heroBreaks(w, tagOf)).toEqual([]);
+    // A Baltic (or Black Sea, Pacific) port back: it returns there, on its start basin.
+    const back = open[0]!.p;
+    w.setOwner(back.cell, sov);
+    w.setController(back.cell, sov);
+    sim.step(2, quiet);
+    const id = heroOf(w, 'hero_sovetsky_soyuz');
+    expect(id, 'a port on its sea: back').not.toBe(0);
+    expect(heroBasin(w, w.formations.cols.x[id]!, w.formations.cols.y[id]!)).toBe(home);
+    expect(heroBreaks(w, tagOf)).toEqual([]);
   });
 
   // ROADMAP R9 (critic run 29, R29-B2; ADR-812): an annexation or an integration moved every
