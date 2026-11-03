@@ -300,7 +300,7 @@ export class Hud {
    */
   escape(): boolean {
     if (this.godTool.value !== null) this.setGodTool(null);
-    else if (this.showEditor.value || this.showCharts.value || this.showHistory.value || this.showSettings.value) {
+    else if (this.showEditor.value || this.showCharts.value || this.showHistory.value || this.showRelations.value || this.showSettings.value) {
       this.closeCentre('none');
       this.lineStart.value = null;
     } else if (this.nukeAlerts.value.length > 0) this.nukeAlerts.value = this.nukeAlerts.value.slice(0, -1);
@@ -310,11 +310,12 @@ export class Hud {
     return true;
   }
 
-  /** Opening one top-centre panel (editor, charts, history, settings) closes the others. */
-  private closeCentre(except: 'editor' | 'charts' | 'history' | 'settings' | 'none'): void {
+  /** Opening one top-centre panel (editor, charts, history, relations, settings) closes the others. */
+  private closeCentre(except: 'editor' | 'charts' | 'history' | 'relations' | 'settings' | 'none'): void {
     if (except !== 'editor') this.showEditor.value = false;
     if (except !== 'charts') this.showCharts.value = false;
     if (except !== 'history') this.showHistory.value = false;
+    if (except !== 'relations') this.showRelations.value = false;
     if (except !== 'settings') this.showSettings.value = false;
   }
 
@@ -470,6 +471,14 @@ export class Hud {
   toggleHistory(): void {
     if (!this.showHistory.value) this.closeCentre('history');
     this.showHistory.value = !this.showHistory.value;
+  }
+
+  /** The relations graph (ROADMAP R1, ADR-806). */
+  readonly showRelations = signal(false);
+
+  toggleRelations(): void {
+    if (!this.showRelations.value) this.closeCentre('relations');
+    this.showRelations.value = !this.showRelations.value;
   }
 
   toggleStats(): void {

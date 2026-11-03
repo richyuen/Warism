@@ -719,6 +719,64 @@ textarea,
   border-radius: 0.4rem;
   font-size: 0.8rem;
 }
+/* The relations graph (ROADMAP R1, ADR-806): the history panel's box, wider for the drawing. */
+.relations-panel {
+  width: min(46rem, calc(100% - 40rem));
+}
+.relations-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.7rem;
+  align-items: center;
+  margin: 0.3rem 0;
+}
+.relations-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+.relations-swatch {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.25rem;
+  border-radius: 2px;
+}
+.relations-graph {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  flex: 1 1 auto;
+  background: rgba(8, 12, 18, 0.55);
+  border-radius: 0.3rem;
+}
+.relations-edge,
+.relations-nation,
+.relations-war {
+  cursor: pointer;
+}
+.relations-edge:hover line:first-child {
+  stroke-width: 4;
+}
+.relations-war text {
+  fill: #f3d9a4;
+  pointer-events: none;
+}
+.relations-label {
+  fill: var(--ui-text, #eee);
+  font-size: 10px;
+  paint-order: stroke;
+  stroke: rgba(0, 0, 0, 0.85);
+  stroke-width: 3px;
+  pointer-events: none;
+}
+.relations-footer {
+  margin-top: 0.35rem;
+  min-height: 1.2em;
+}
+.relations-untied {
+  opacity: 0.7;
+}
 /* Its rows do not shrink: in a low view the panel scrolls them in its box (PLAN 3.12Rh5). */
 .settings-panel {
   overflow-y: auto;

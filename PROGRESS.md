@@ -479,3 +479,14 @@
 - AT: `tests/unit/relationGraph.test.ts`, the worker's statistics message against the world: 0 mismatches either
   way on 7019, 2207, 3739 at days 1, 60, 365 (98 s with the checkpoints written).
 - **Next:** R1b, the panel.
+
+## 2026-11-03 — ROADMAP R1b (ADR-806): the relations panel
+- The bottom bar's Relations button opens a centre panel (closed by the others, and by Escape): the graph in SVG,
+  each nation its flag in a disc sized by its land, a ⚔ hub per war; a checkbox per kind, a nation's ties alone,
+  a click on a line read in the footer, a click on a nation selects it. A nation with 4 or more lines is named.
+- AT: `tests/e2e/relations1938.spec.ts` 2 of 2 (7019: puppet and guarantee lines equal the statistics message's;
+  guarantees off, Japan's node unmoved; puppets alone; "Manchukuo is a puppet of Japan"; Japan selected; a year
+  on, puppet lines and war hubs as the message; at 390 × 844 the panel inside the view). Screenshots in
+  `docs/evidence/R1/`, looked at: the British and French empires as purple stars, Japan's and Spain's wars as hubs.
+- Specs run by hand: phoneLayout1938, barNarrow1938, history1938, charts1938, hotkeys1938: 19 of 19.
+- **Next:** R2, AI puppets revolt.

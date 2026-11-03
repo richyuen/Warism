@@ -30,6 +30,9 @@ export interface BottomBarProps {
   /** History log toggle (PLAN 1.34a). */
   showHistory?: boolean;
   onToggleHistory?: (() => void) | undefined;
+  /** The relations graph toggle (ROADMAP R1, ADR-806). */
+  showRelations?: boolean;
+  onToggleRelations?: (() => void) | undefined;
   /** God Mode's map tools, a row of the bar's own while God Mode is on (PLAN 7.16b). */
   godTools?: ComponentChildren;
   /**
@@ -60,7 +63,7 @@ function speedLabels(): string {
  * Bottom bar (PLAN 1.8), in the user's order (ADR-763): Cancel when there is something to cancel,
  * Pause/Resume, speed, God Mode, map, Statistics, History, Editor, the date, Settings.
  */
-export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, mapMode, onMapMode, showStats, onToggleStats, godMode, onToggleGod, showHistory, onToggleHistory, showEditor, onToggleEditor, showSettings, onToggleSettings, godTools, onCancel, diplomacy }: BottomBarProps) {
+export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, mapMode, onMapMode, showStats, onToggleStats, godMode, onToggleGod, showHistory, onToggleHistory, showRelations, onToggleRelations, showEditor, onToggleEditor, showSettings, onToggleSettings, godTools, onCancel, diplomacy }: BottomBarProps) {
   const isMax = SPEED_LEVELS[speedLevel] === 'max';
   // How far the bar's top is from the view's bottom, for what stands above it (PLAN 7.4f25): the
   // bar wraps onto rows where it is narrow.
@@ -126,6 +129,11 @@ export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, ma
       {onToggleHistory ? (
         <button type="button" class="bar-btn" data-testid="history-btn" aria-pressed={showHistory} onClick={onToggleHistory}>
           {t('bar.history')}
+        </button>
+      ) : null}
+      {onToggleRelations ? (
+        <button type="button" class="bar-btn" data-testid="relations-btn" aria-pressed={showRelations} onClick={onToggleRelations}>
+          {t('bar.relations')}
         </button>
       ) : null}
       {onToggleEditor ? (

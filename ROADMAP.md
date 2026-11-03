@@ -30,7 +30,7 @@ Rules:
 
 ## Batch 1
 
-- [ ] R1 **The relations graph** (the user's feature, 2026-11-03). A view of the world's diplomacy
+- [x] R1 **The relations graph** (the user's feature, 2026-11-03). A view of the world's diplomacy
   as a graph: every living nation a node (its flag, sized by land), and an edge for each war (by
   side), alliance, guarantee (guarantor → target), puppet bond (overlord → puppet) and truce, each
   kind its own colour and line. Filters by kind and by nation; a click on a node or an edge says
@@ -46,8 +46,10 @@ Rules:
     test `tests/unit/relationGraph.test.ts`, 0 mismatches either way on 7019, 2207, 3739 at days
     1, 60, 365 (the worker's own statistics message against `wars.list`, `overlord`,
     `allianceOf`, `guarantees`, `truces`).
-  - [ ] R1b The panel: the bottom bar's Relations button, the drawing, the filters, the clicks; the
-    e2e spec and its screenshots.
+  - [x] R1b The panel: the bottom bar's Relations button, the drawing, the filters, the clicks; the
+    e2e spec `tests/e2e/relations1938.spec.ts` (2 of 2: the start's ties by kind against the
+    statistics message, a kind off with the nodes unmoved, Manchukuo's line read, Japan selected,
+    Japan's ties alone, a year on; a phone's width), screenshots in `docs/evidence/R1/`.
 - [ ] R2 **AI puppets revolt** (critic run 28, non-blocking 1). In 3 seeds × 30 years no puppet
   with autonomy ≥ 10 fell below loyalty 30.5, and the revolt line is 20: the war of independence
   happens only through God's slider. Make the AI's puppets able to rise (the loyalty model's floor,

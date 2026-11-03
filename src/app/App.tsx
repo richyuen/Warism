@@ -7,6 +7,7 @@ import { allyWhy, standingOf } from '../ui/standing';
 import { peaceVerdict } from '../shared/peace';
 import { FormationPanel } from '../ui/FormationPanel';
 import { HistoryPanel } from '../ui/HistoryPanel';
+import { RelationsPanel } from '../ui/RelationsPanel';
 import { StatsChart } from '../ui/StatsChart';
 import { EditorPanel } from '../ui/EditorPanel';
 import { dateOfTick } from '../shared/calendar';
@@ -158,6 +159,8 @@ export function App({
         }
         showHistory={hud.showHistory.value}
         onToggleHistory={stats ? () => hud.toggleHistory() : undefined}
+        showRelations={hud.showRelations.value}
+        onToggleRelations={stats ? () => hud.toggleRelations() : undefined}
         showSettings={hud.showSettings.value}
         onToggleSettings={() => hud.toggleSettings()}
         showEditor={hud.showEditor.value}
@@ -317,6 +320,16 @@ export function App({
           startDay={hud.startDay}
           nations={[...stats.nations.map((n) => ({ id: n.id, name: n.name })), ...stats.dead]}
           onClose={() => hud.toggleHistory()}
+        />
+      ) : null}
+      {stats && hud.showRelations.value ? (
+        <RelationsPanel
+          nations={stats.nations}
+          wars={stats.wars}
+          selected={hud.selected.value}
+          onSelect={(id) => hud.onSelectNation(id)}
+          flagUrlOf={(id) => (view && flagVersion >= 0 ? view.flags.urlOf(id) : null)}
+          onClose={() => hud.toggleRelations()}
         />
       ) : null}
       {stats && hud.showStats.value && !hud.showEditor.value ? (
