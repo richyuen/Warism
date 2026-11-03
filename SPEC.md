@@ -1,37 +1,41 @@
 # Warism — Specification & Architecture
 
-Status: v0.2 (2026-10-02, Phase 0 review: §2, §5.3, §8, §9, §10 synced with the implementation). Living document: update when decisions change and
-record the *why* in `DECISIONS.md` (ADR numbers referenced as `[ADR-n]`).
+Status: v1.0 (2026-11-03, after `release-2026-11-03`; ADR-805). This document says how the game works
+now. The *why* of each choice is in `DECISIONS.md` and `docs/history/DECISIONS-<YYYY-MM>.md` (cited as
+`[ADR-n]`). §1, §2 and the contents list are current as of 1.0; the other sections are being brought
+up to date one by one (ROADMAP R6), and where one disagrees with the code, the code and the newest ADR
+win.
+
+**Contents.** 1 Goals · 2 Architecture (2.1 module rules, 2.2 repo layout, 2.3 worker protocol,
+2.4 snapshot layout, 2.5 tick order, 2.6 determinism, 2.7 persistence) · 3 World model and data
+schemas (map, cells, provinces and zones, nations, diplomacy, military, tech and production) ·
+4 Territory, fronts and the strategic layer · 5 Combat (engagement, element combat, combat
+efficiency, Major Battles) · 6 Armour, naval, aircraft, nuclear weapons · 7 AI · 8 Semantic zoom ·
+9 UI and UX · 10 Testing and verification.
 
 ---
 
-## 1. Goals, non-goals, confidence
+## 1. Goals, non-goals
 
-**Goal.** A browser grand-strategy world-war simulator that matches or beats
-*Ages of Conflict: World War Simulator* (AoC) in capability and feel, starting
-from a 1938 world, plus five differentiators: true semantic zoom, naval
-warfare, armour, aircraft, AI nuclear weapons. Everything is original or permissively licensed.
+**What it is.** A browser grand-strategy world war simulator. A mostly AI-driven world, the 1938
+world or a random one, fights for decades: nations expand, make war and peace, ally, guarantee,
+make and free puppets, revolt, collapse and come back. The player watches, steers with God Mode,
+takes control of a nation, or builds a scenario in the editor. Five things are at its heart: true
+semantic zoom from the world down to single units, naval warfare, armour, air power, and an AI that
+builds and uses nuclear weapons. Everything is original or permissively licensed (DATA_SOURCES.md).
 
-**Non-goals.** Multiplayer networking (although deterministic replay makes lockstep
-possible later). A server. Historical railroading (the 1938 start is plausible, and history
-then diverges freely). Copying AoC assets, code or data.
+**Goals** (PROMPT.md "THE GOALS"): fun to watch for decades; readable at every zoom; rules that
+agree with each other, checked together on many seeds; stable (no crash, no desync, bit-identical
+save and load, deterministic seeds); fast (≥ 60 fps at world zoom with 100+ nations, ≥ 30 fps at
+tactical zoom with 10,000+ unit sprites).
 
-**Reference confidence.** Every AoC claim is tagged **TEXT** (itch, devlog or
-Steam text) or **VISUAL** (`reference/screens`, trailer frames). `reference/NOTES.md`
-(the user's taste notes) **does not exist** as of 2026-10-02, so taste-sensitive
-claims are lower confidence. Observations from the screenshots (VISUAL, 2026-10-02):
-- The map is a per-pixel raster (the editor shot shows about 100k land tiles). Terrain classes:
-  Basic Land, Forest, Hills, Grassland, Desert, Tundra, Mountains, **Crossing**
-  (painted pale-blue sea lanes that land units can walk), Water.
-- Flat nation fills with a slightly lighter or desaturated tint over occupied land.
-  Diagonal hatching shows a selected nation's alliance or puppets. Large semi-transparent
-  nation names are curved along the territory and sized by area.
-- Units are dots of a few pixels with small gold numbers. Fronts read as dotted
-  clusters along borders. Battles show crossed-swords war banners at the bottom.
-- UI: a nation panel (flag, alliance with unity/loyalty, puppet master and integration,
-  statistics, diplomacy icons), an Actions/Economy tabbed panel (income/expenses,
-  bonus −/+), a Statistics ranking list with a dropdown, and a bottom bar with map-mode
-  toggles, PAUSE, God Mode, Statistics, speed `1x` with arrows, date, and event count.
+**Non-goals.** Multiplayer networking (deterministic replay would make lockstep possible later). A
+server: the game is static files. Historical railroading: the 1938 start is plausible, and history
+then diverges freely.
+
+**Origins.** The game was first built to match *Ages of Conflict: World War Simulator* and go
+beyond it; its observations of that game and the measure kept against it are frozen in
+`docs/PARITY.md`. It is now judged by its own goals [ADR-805].
 
 ---
 
@@ -69,48 +73,44 @@ fixture paths). Sim purity uses `no-restricted-globals`, `no-restricted-properti
 
 ### 2.2 Repo layout
 ```
-src/sim/core/      table.ts (SoA + free lists), sections.ts (typed-array sections codec), state.ts
-                   (save/hash over sections), rng.ts (PCG32 streams), hash.ts (xxHash32), dmath.ts
-src/sim/systems/   economy.ts (PLAN 1.9); later production, supply, movement, engagement, combat,
-                   territory, diplomacy, revolts, naval, air, nuclear, buffs, history
-src/sim/ai/        strategic, operational, economic, nuclear
-src/sim/data/      projection.ts (Miller), provinces.ts, schemas.ts (zod, DATA_FILES, validateDataSet),
-                   terrain.ts (crossings), ownership.ts, cities.ts, oob.ts, politicalMap.ts (the whole map build chain)
-src/sim/scenario1938.ts  the 1938 world builder (map inputs, cells, nations, cities, OOB, economy values)
-src/sim/randomWorld.ts   the random world builder (the earth map shared out by the seed, §3.4)
-src/sim/toy.ts     the Phase 0 toy world (determinism suites)
-src/sim/tick.ts    tick orchestration (fixed order, §2.5)
-src/sim/sim.ts     Sim facade (init/step/command/hash/save/load) used by worker, Node and tests
-src/sim/world.ts   World: cell layers, entity tables, RNG, command log (all serialized)
-src/shared/        protocol.ts (messages, snapshot layout), commands.ts (Command union), events.ts (event kinds,
-                   fire records), unitLooks.ts (a unit class's sprite, fire and wreck), constants, enums,
-                   rasterize.ts (scanline fill, shared by sim, tools and flags), terrain.ts, color.ts, flags.ts,
-                   calendar.ts (Gregorian hourly), speed.ts (speed levels), scenarios.ts (geometry, start day,
-                   the scenario list, a scenario's nation tags), nationNames.ts (the names of founded nations),
-                   gameOptions.ts (the new-game options), landMask.ts (sure land)
-src/worker/        entry.ts, server.ts (scheduler, requests, snapshot builder), pool.ts, assets.ts, deriveLabels.ts
-src/render/        camera.ts, timing.ts (the animations' clock; TimedSwitch and SwitchBank: what shows at a
-                   zoom as states with timed fades), gl/ (gpuTimer), map/ (MapRenderer), labels/,
-                   hash.ts (placement noise), units/ (ProxyRenderer, atlas, counters, markers, handover,
-                   individuals, turrets, formationDots, tags), fx/ (fire: tracers, flashes, impacts; wrecks: the
-                   ends of elements; hulls: the tanks an element loses at T3); later lod/
-src/ui/            TitleScreen, NewGameForm, TopBar, BottomBar (date/pause/speed), the panels (NationPanel with
-                   Actions and God tabs, FormationPanel, StatsRanking, StatsChart, HistoryPanel, SettingsPanel, EditorPanel,
-                   FlagEditor, WarBanners, MapLegend), i18n/{index.ts: t(), locale signal, pseudo-locale 'qps';
-                   en.json = source of truth}
-                   (no src/editor/: the editor is src/sim/editor.ts and scenarioEdit.ts, src/ui/EditorPanel.tsx
-                   and FlagEditor.tsx, and src/app/scenarioFiles.ts)
-src/app/           main.tsx (no ?scenario → title screen; ?scenario=1938|random|toy → game.tsx), MapView.ts, simClient.ts,
-                   hud.ts (persisted speed/pause, editor and God tools, drag painting), input/ (CameraController),
-                   settings.ts, autosave.ts and saveDb.ts (IndexedDB), scenarioFiles.ts, gameUrl.ts, player.ts,
-                   flagStore.ts, testApi.ts (__warsim), bench/ (bench.html pages: A B BP P R T W F)
-tools/             data/ (pipeline, scenario previews), headless/ (runner, asset loader), sweep/, diag/, gate/,
-                   parity/, bench/, dmath/, eslint/, soak/
-data/              terrain.json, units/, templates/, tech/, traits/, buildings/, flags/presets.json, maps/<id>/{map,straits}.json,
-                   scenarios/<id>/{scenario,nations,ownership,diplomacy,cities,city-rules,flags,oob,economy}.json
-                   (every file validated by tests/unit/data-schemas.test.ts; unknown paths are rejected)
+src/sim/           the pure engine: world.ts (cell layers, entity tables, RNG, command log), tick.ts (the
+                   fixed tick order, §2.5), sim.ts (the facade: init, step, command, hash, save, load),
+                   scenario1938.ts, randomWorld.ts, toy.ts (the worlds), editor.ts and scenarioEdit.ts (the
+                   editor's commands), wars.ts, alliances.ts, battles.ts, buffs.ts, history.ts, stats.ts,
+                   tech.ts, provinces.ts, placeForces.ts, landArea.ts, landCounts.ts, border.ts, gameOptions.ts
+  core/            table.ts (SoA + free lists), sections.ts, state.ts (save and hash), rng.ts (PCG32 streams),
+                   hash.ts (xxHash32), dmath.ts (exact maths)
+  systems/         the tick's systems: economy, production, research, supply, movement, elements, combat,
+                   retreat, territory, war, warFront, warBattle, majorBattles, efficiency, capitals, revolts,
+                   revival, puppets, alliances, buffs, heroes, playerOrders; at sea: sail, navalCombat,
+                   seaControl, seaSupply, convoys, amphibious, bombardment; in the air: air, airCombat,
+                   airSuperiority, airLift, sorties, bombing; nuclear
+  ai/              strategic, operational, economic, naval, invasion, air, hollow, layers
+  data/            the map build chain (projection, provinces, terrain, ownership, cities, oob,
+                   politicalMap) and the data schemas (zod)
+  nav/             the movement grid, crossings and air zones
+src/shared/        what the sim, the worker and the page share: protocol.ts (messages, snapshots),
+                   commands.ts, events.ts, history.ts, peace.ts, nuclear.ts, mapModes.ts, saveFormat.ts and
+                   saveCodec.ts, scenarioFile.ts, calendar.ts, speed.ts, terrain.ts, flags.ts, unitLooks.ts …
+src/worker/        entry.ts, server.ts (scheduler, requests, snapshot builder), pool.ts, assets.ts,
+                   deriveLabels.ts
+src/render/        camera.ts, timing.ts; map/ (MapRenderer, the ground, its scatter); labels/; units/ (the
+                   unit sprites, counters, markers and their stacks, countryballs, ships, sorties, contact
+                   lines, handover between zoom tiers); fx/ (fire, wrecks, hulls, air, nukes, ruins)
+src/ui/            Preact + signals: the title screen and new-game form, the bars, the nation panel with its
+                   Actions and God tabs, the nation menu, the formation panel, statistics and charts, history
+                   and the ticker, war banners, the map legend and tooltip, the editor and flag editor, the
+                   nuke alert, settings; i18n/ (en.json the source of truth)
+src/app/           main.tsx (no ?scenario: the title screen; ?scenario=1938|random|toy: game.tsx), MapView.ts,
+                   simClient.ts, hud.ts, battleView.ts, input/, settings, autosave and saveDb (IndexedDB),
+                   scenarioFiles.ts, sound.ts, testApi.ts (`__warsim`), bench/ (the bench pages)
+tools/             data/ (the data pipeline), headless/ (runner, asset loader), soak/, sweep/, diag/ (probes and
+                   the rule checkers), gate/ (`npm run check`, `check:review`), bench/, dmath/, eslint/
+data/              terrain, units, templates, tech, traits, buildings, flags, maps/<id>/, scenarios/<id>/
+                   (every file validated by tests/unit/data-schemas.test.ts)
 public/data/       generated map assets + manifest.json (sha256)
-tests/unit, tests/e2e (timing specs: *.perf.spec.ts, run after the parallel suite), tests/helpers (shared Node asset/map access), tests/fixtures
+tests/             unit/, e2e/ (timing specs: *.perf.spec.ts), sweep/ (the ten-year tests), helpers/ (shared
+                   asset access, checkpoints, the rule checkers such as diploInvariants.ts), fixtures/
 ```
 
 ### 2.3 Worker protocol (`src/shared/protocol.ts`) [ADR-2]

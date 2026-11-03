@@ -26,7 +26,7 @@ Rules:
 - [x] R0g CI: a nightly GitHub Actions run (typecheck, lint, unit, the ten-year tests, a soak, the
   war-and-peace checker on new seeds, a small sweep) and a weekly full sweep.
 - [x] R0h CHANGELOG.md with the `release-2026-11-03` entry.
-- [ ] R0i SPEC.md §1–§2 rewritten as the game is, with a contents list; the rest is R6.
+- [x] R0i SPEC.md §1–§2 rewritten as the game is, with a contents list; the rest is R6.
 
 ## Batch 1
 
