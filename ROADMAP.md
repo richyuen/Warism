@@ -19,7 +19,7 @@ Rules:
 - [x] R0b Parity retired: `docs/PARITY.md` frozen, `npm run parity` and its gate stage removed.
 - [x] R0c The plan retired: PLAN.md frozen; this roadmap; `critic:due`, `plan:archive` and the
   gate's phase-review trigger removed.
-- [ ] R0d PROGRESS.md and DECISIONS.md archived by month under `docs/history/`.
+- [x] R0d PROGRESS.md and DECISIONS.md archived by month under `docs/history/`.
 - [ ] R0e PROMPT.md, CLAUDE.md, CRITIC_PROMPT.md and the critic's agent rewritten for work after
   the release: our own goals, the batch flow, no DONE CONDITION.
 - [ ] R0f Tracked `critic/` pruned to the last report and the files it and its scripts cite.
