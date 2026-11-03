@@ -384,6 +384,11 @@ export function declareWar(world: World, attacker: number, target: number, alone
   // Nor one called against a nation it fights beside in another war (PLAN 7.189, R25-B1): it stays
   // out of the new war, and fights on in the old.
   const bound = (x: number, enemies: number[]): boolean => enemies.some((o) => world.wars.atWar(x, o) || bond(world, x, o) !== Refusal.None || pledged(x, o) || beside(world, x, o));
+  // Nor one called beside a nation it is at war with in another war (ROADMAP R3, R27-N2): seed
+  // 1009, Czechoslovakia, at war with Turkey and Iran, was called to Turkey's side as a guarantor.
+  const foe = (x: number, friends: number[]): boolean => friends.some((o) => world.wars.atWar(x, o));
+  // `enemiesOf(s, stand)`: the nations of side `s` a nation is judged against (its enemies, of the
+  // other side; and, for `foe`, those it would stand beside, of its own).
   const without = (sides: [number[], number[]], asked: (x: number) => boolean, enemiesOf: (s: number, stand: Set<number>) => number[]): [number[], number[]] => {
     const out = new Set<number>();
     const stand = new Set<number>();
@@ -391,7 +396,7 @@ export function declareWar(world: World, attacker: number, target: number, alone
     for (const x of order) {
       const s = sides[ATTACKERS].includes(x) ? ATTACKERS : sides[DEFENDERS].includes(x) ? DEFENDERS : -1;
       if (s < 0 || stand.has(x)) continue;
-      if (bound(x, enemiesOf(1 - s, stand))) out.add(x);
+      if (bound(x, enemiesOf(1 - s, stand)) || foe(x, enemiesOf(s, stand))) out.add(x);
       else stand.add(x);
     }
     const keep = (x: number): boolean => leader(x) || (!out.has(x) && !out.has(nc.overlord[x]!));

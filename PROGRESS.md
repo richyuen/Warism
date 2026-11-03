@@ -511,3 +511,13 @@
   suite at once, green alone); `test:sweep` with the pin a7946f81 → 614c24dd. Tick cost: one division a puppet a
   month, not measurable.
 - **Next:** R3, a bond's Force war calls no one in beside its enemy.
+
+## 2026-11-03 — ROADMAP R3 (ADR-808): a nation called beside one it is at war with stays out
+- Seed 1009 (the nightly's, day 91): Italy's AI on Turkey called Czechoslovakia, at war with Turkey and Iran, to
+  Turkey's side as its guarantor. `declareWar`'s call judged a called nation against the other side only; now
+  also against its own (`war.ts`, `foe`).
+- Checker, every pair tried on days 60/200/350 to day 351: at 73c531b6 (critic run 28) 1777 21 → 0 with the fix
+  patched in, 8209 0 → 0; HEAD 1009 2 → 0 (default run) and 0 with every pair, 1777 0.
+- Tests: `calledBesideFoe.test.ts` (red without the fix); `npm test` 2043 of 2043; `test:sweep` 18 of 18, pin
+  unchanged.
+- **Next:** R4, checkers for the other systems.

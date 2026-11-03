@@ -7,6 +7,27 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-808 · 2026-11-03 · accepted — A nation called beside one it is at war with stays out (ROADMAP R3, R27-N2)
+
+- **Context.** Critic runs 27–28 (R27-N2): a bonded Force war "calls a nation in beside its enemy"
+  (1777: 3 cases; 8209: 7 pairs), and the nightly's checker on new seed 1009 (run 41624512914):
+  a day after Greece's Force war on Turkey, Italy's AI declared on Turkey, and Czechoslovakia, at
+  war with Turkey and Iran, was called to their side as Turkey's guarantor. The Force war only made
+  the state; the hole was `declareWar`'s call: a nation called to a side was judged against the
+  other side (ADR-230, ADR-797, R25-B1) and never against its own.
+- **Decision.** In each of the call's three steps, a called nation stays out (with its puppets) when
+  it is at war with a nation already standing on the side it is called to. As with the other
+  checks, of two at war the one called first fights; the leaders, and the puppet a declaration
+  names, always stand.
+- **Evidence.** The checker (`tools/diag/diploInvariants.ts`, rule `realm`): at the critic's commit
+  73c531b6, 1777 to day 351 with every pair tried on days 60, 200, 350: **21 broken → 0** with the
+  fix patched in; 8209 (random, heroes) 0 either way. On HEAD: 1009 (the nightly's) 2 → 0; 1777 and
+  1009 every pair to day 351: 0. `tests/unit/calledBesideFoe.test.ts` red before, green after.
+- **Decisions checked (ADR-803).** ADR-230 (one at war with the enemy stays out), ADR-797 (pledges),
+  R25-B1 (one fighting beside the enemy stays out), ADR-184 (`alone` calls nobody): the change only
+  keeps nations out, and they are held by `realmWars.test.ts`, `diploInvariants*.test.ts` and the
+  whole suite, green. Seed 99's pin is unchanged.
+
 ### ADR-807 · 2026-11-03 · accepted — A beaten overlord's great subjects turn on it; a rising leaves the shared alliance (ROADMAP R2)
 
 - **Context.** Critic run 28, non-blocking 1: in 3 seeds × 30 years no AI puppet rose. Loyalty

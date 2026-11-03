@@ -60,7 +60,7 @@ Rules:
   lower; a rising leaves an alliance shared with its overlord. `tools/diag/puppetLoyalty.ts`, 7019 /
   3163 / 1777 × 30 years: 3 / 81, 2 / 72, 5 / 84 risings for puppets made (7 of the 10 by 1938's
   colonial bonds); the checker's new rule `rise` red on two patched rules, green on its seeds.
-- [ ] R3 **A bond's Force war calls no one in beside its enemy** (critic R27-N2). A forced war that
+- [x] R3 **A bond's Force war calls no one in beside its enemy** (critic R27-N2). A forced war that
   breaks an alliance or a puppet bond can call a nation into the war on the side of its own enemy:
   3 cases on seed 1777; `tools/diag/diploInvariants.ts` reports 7 broken pairs on 8209 (random
   diplomacy, heroes), and the nightly's checker 2 on 1009 (scenario, day 90: Greece's Force war on
@@ -68,6 +68,10 @@ Rules:
   Commands only (God, the player).
   AT: the checker's rule for it red on HEAD and green after on 1777 and 8209; 0 broken pairs on
   the checker's own seeds.
+  Done (ADR-808): the hole was `declareWar`'s call, which judged a called nation against the
+  other side only; one at war with a nation of its own side now stays out. The checker, every pair
+  on days 60/200/350: at the critic's commit 1777 21 broken → 0 (8209 0 either way: HEAD's and the
+  critic's worlds no longer reach it); HEAD 1009 2 → 0; the checker's seeds green in the suite.
 - [ ] R4 **Checkers for the other systems**, as `tests/helpers/diploInvariants.ts` checks war and
   peace (ADR-803): the economy (no gold from nowhere, upkeep paid or units cut), the navy (a fleet
   at sea or in its own or a partner's port), air (a wing within range of its base), nukes (a burst
