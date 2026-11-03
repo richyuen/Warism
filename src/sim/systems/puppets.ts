@@ -5,23 +5,29 @@
  *
  * Monthly (00:00 of day 1), for every living puppet, in nation-id order:
  *  1. Leaves freely when autonomy > FREE_ABOVE (`PuppetReleased`).
- *  2. Revolts when loyalty < REVOLT_LOYALTY and autonomy ≥ PROTEST_FROM: the bond is cut and
- *     it declares a war of independence on its overlord (`PuppetRevolt`).
+ *  2. Revolts when loyalty < REVOLT_LOYALTY and autonomy ≥ PROTEST_FROM: the bond is cut, it
+ *     leaves the wars it fought beside its overlord and, if it shares an alliance with its
+ *     overlord's realm, that alliance; then it declares a war of independence on its overlord
+ *     (`PuppetRevolt`).
  *  3. Pays tribute: TRIBUTE × (1 − autonomy/100) × last month's gross income, in gold.
  *  4. Integrates when autonomy < INTEGRATE_BELOW: progress += INTEGRATION_RATE ×
  *     (INTEGRATE_BELOW − autonomy)/INTEGRATE_BELOW; at 100 the overlord annexes all its land,
  *     takes its formations and cores, and the puppet ends (`PuppetIntegrated`).
  *  5. Autonomy drifts up by AUTONOMY_DRIFT (puppets drift toward independence), and loyalty
  *     relaxes by LOYALTY_PULL toward loyaltyTarget: LOYALTY_BASE + LOYALTY_PER_AUTONOMY ×
- *     autonomy (freer subjects are content), minus LOSING_PENALTY while the overlord is losing a
- *     war (its side's score ≤ −LOSING_SCORE). Revolts therefore need a push: a losing overlord,
- *     or God Mode.
+ *     autonomy (freer subjects are content), minus, while the overlord is losing a war (its
+ *     side's score ≤ −LOSING_SCORE), LOSING_PENALTY + SIZE_PENALTY × min(1, the puppet's gross
+ *     income ÷ its overlord's): a beaten master is despised most by the subjects as rich as
+ *     itself (ROADMAP R2, ADR-807). Revolts therefore need a push: a losing overlord with a
+ *     great subject, or God Mode. At peace the target is ADR-31's alone.
  */
 import { isMonthStart } from '../../shared/calendar';
 import { EventKind } from '../../shared/events';
 import { FlipCause, type World } from '../world';
 import { eliminateNation } from './capitals';
-import { declareWar, leaveBondedWars, leaveWarsBeside } from './war';
+import { Refusal } from '../../shared/commands';
+import { leaveAlliance } from './alliances';
+import { declareWar, leaveBondedWars, leaveWarsBeside, whyNotWar } from './war';
 
 export const SATELLITE_BELOW = 30;
 export const VASSAL_FROM = 70;
@@ -37,6 +43,7 @@ export const LOYALTY_BASE = 40;
 export const LOYALTY_PER_AUTONOMY = 0.6;
 export const LOSING_PENALTY = 25;
 export const LOSING_SCORE = 30;
+export const SIZE_PENALTY = 25;
 
 /** Loyalty a puppet relaxes toward (see the module comment). */
 export function loyaltyTarget(world: World, puppet: number): number {
@@ -47,7 +54,11 @@ export function loyaltyTarget(world: World, puppet: number): number {
     const side = war.sides[0].includes(o) ? 1 : war.sides[1].includes(o) ? -1 : 0;
     if (side !== 0 && side * war.score <= -LOSING_SCORE) losing = true;
   }
-  return LOYALTY_BASE + LOYALTY_PER_AUTONOMY * nc.autonomy[puppet]! - (losing ? LOSING_PENALTY : 0);
+  const base = LOYALTY_BASE + LOYALTY_PER_AUTONOMY * nc.autonomy[puppet]!;
+  if (!losing) return base;
+  // The subject's weight beside its master's, by last month's gross income (as tribute reads it).
+  const size = Math.min(1, Math.max(0, nc.income[puppet]!) / Math.max(1, nc.income[o]!));
+  return base - LOSING_PENALTY - SIZE_PENALTY * size;
 }
 
 export type PuppetTier = 'satellite' | 'puppet' | 'vassal';
@@ -168,6 +179,10 @@ export function puppetSystem(world: World): void {
       releasePuppet(world, n, true);
       // It leaves the wars it fought beside its overlord in, then rises (PLAN 7.191, R26-B1).
       leaveWarsBeside(world, n, [o]);
+      // A puppet in its overlord's alliance (Tannu Tuva in the Soviet one) leaves it too: else the
+      // war was refused as between allies, and the rising only freed it (ROADMAP R2, ADR-807).
+      const why = whyNotWar(world, n, o);
+      if (why === Refusal.Allied || why === Refusal.AlliedRealm) leaveAlliance(world, n);
       declareWar(world, n, o, true);
       return;
     }

@@ -7,6 +7,48 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-807 · 2026-11-03 · accepted — A beaten overlord's great subjects turn on it; a rising leaves the shared alliance (ROADMAP R2)
+
+- **Context.** Critic run 28, non-blocking 1: in 3 seeds × 30 years no AI puppet rose. Loyalty
+  relaxes toward 40 + 0.6 × autonomy, 25 lower while the overlord is losing (ADR-31); at autonomy
+  ≥ 10, the voice a rising needs, that target is never under 21, and the line is 20. The war of
+  independence happened only by God's hand.
+- **Decision.**
+  - While the overlord is losing a war (its side's score ≤ −30), the target falls by a further
+    `SIZE_PENALTY` (25) × min(1, the puppet's gross income ÷ its overlord's). A beaten master is
+    turned on by the subjects as rich as itself; a poor one is held. At peace, and at war but not
+    losing, the target is ADR-31's alone: the loyalty the panel shows does not move with no war to
+    explain it. Income, as tribute reads it: land made the great colonies (the Congo, French West
+    Africa) larger than their metropoles at once, and the men under arms read 0 for most colonies.
+    The share is capped at 1, so in effect the term is "a subject as great as its master".
+  - A puppet that rises and shares an alliance with its overlord's realm (Tannu Tuva in the Soviet
+    one) leaves it first (`AllianceLeft`). Before, the war was refused as between allies
+    (`WarRejected`): the rising only freed it. Found by the checker's new rule.
+  - No shock to loyalty on a lost peace: a replay of 30 such drops counted 500–1,200 wars ended on
+    the losing side a seed (white peaces among them), and every variant made a wave.
+- **Why these numbers.** `tools/diag/puppetLoyalty.ts`, 3 seeds (7019, 3163, 1777) × 30 years
+  each, the risings (`PuppetRevolt`) against the puppets made (`PuppetCreated`); bar ≥ 1 rising
+  on 2 of 3 seeds, at most 1 in 10:
+  - 35: 11 / 87, 5 / 64, 4 / 97 (7019 over); 30: 10 / 75, 5 / 82, 7 / 114 (7019 over);
+  - **25: 3 / 81, 2 / 72, 5 / 84**; 20: 1 / 85, 0 / 76, 3 / 74 (one seed with none).
+  At 25 a rising needs about autonomy ≤ 46 and a long losing war: a peace's puppet (autonomy 30,
+  +0.25 a month) can rise in its first five years or so, which keeps the risings few.
+  Of the 10 risings at 25, 7 are 1938's colonial bonds (the Dutch East Indies, French West and
+  Equatorial Africa, the Belgian Congo) and 3 puppets made in play (Italy and French West Africa
+  under Nationalist Spain, Poland under China; seed 1777).
+- **Decisions checked (ADR-803).** ADR-31 (loyalty rises with autonomy; revolts need a push): kept,
+  the push is a losing overlord as before, now with a great subject; held by `puppets.test.ts`
+  "no revolt or release in the first months of 1938". ADR-184 (a war of independence is the two
+  realms'): kept, the rising still declares `alone`, and leaving the alliance is what lets it;
+  held by `realmWars.test.ts` and `rebelWars.test.ts`. R26-B1 / PLAN 7.191 (the rebel leaves the
+  wars beside its overlord first): unchanged, held by the checker's revolt probes.
+- **Consequences.** The checker (`tests/helpers/diploInvariants.ts`) has a rule `rise`: a puppet
+  rises only at a month's start, with a voice and loyalty under 20 the hour before, and is then at
+  war with its old overlord; every puppet so placed at a month's start rises, is freed or ends. It
+  was red on two patched rules (a rising at loyalty under 60; none at all) and green on its seeds.
+  SPEC § puppets, step 5. The tick cost is one division a puppet a month.
+  Seed 99's pin after one year: a7946f81 → 614c24dd.
+
 ### ADR-806 · 2026-11-03 · accepted — The relations graph: what it draws and from what (ROADMAP R1, the user's feature)
 
 - **Context.** The user asked for a visual graph of every war, alliance, guarantee, puppet bond and

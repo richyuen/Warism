@@ -3,7 +3,7 @@ import { Refusal } from '../../src/shared/commands';
 import { EventKind } from '../../src/shared/events';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { puppetSystem, REVOLT_LOYALTY } from '../../src/sim/systems/puppets';
+import { PROTEST_FROM, puppetSystem, REVOLT_LOYALTY } from '../../src/sim/systems/puppets';
 import { declareWar, forceWar, whyNotWar } from '../../src/sim/systems/war';
 import type { World } from '../../src/sim/world';
 import { assets1938 } from './earth';
@@ -17,7 +17,11 @@ import { realmWars } from './realmWars';
 //   realm   no war inside one realm or alliance, and no nation at war with one it fights beside
 //           (PLAN 3.8, 7.188);
 //   bond    a puppet's or ally's Force war on its partner, and a puppet's revolt, never refused
-//           because the two fight beside each other (ADR-780, R26-B1).
+//           because the two fight beside each other (ADR-780, R26-B1);
+//   rise    a puppet rises (`PuppetRevolt`) only at a month's start, with a voice (autonomy ≥
+//           PROTEST_FROM) and loyalty under REVOLT_LOYALTY the hour before, and is then at war with
+//           its old overlord; and every puppet so placed at a month's start rises, is freed or
+//           ends in that hour (ROADMAP R2, ADR-807).
 
 const tag1938 = (n: number): string => TAGS_1938[n - 1] ?? `#${n}`;
 /** The names in the lines: the 1938 tags, or the ids of a random world's nations (set per case). */
@@ -53,6 +57,43 @@ function silentExits(w: World, before: Map<number, number[]>, overlordBefore: In
       const heads = [m, overlordBefore[m] ?? 0, nc.overlord[m] ?? 0].filter((n) => n !== 0);
       if (!heads.some((h) => has(EventKind.WarLeft, h) || has(EventKind.WarEnded, h, true))) out.push(`exit: ${tag(m)} out of war ${id} with no row`);
     }
+  }
+  return out;
+}
+
+/** A puppet's bond, voice and loyalty, as they were the hour before. */
+interface Bonds {
+  overlord: number[];
+  autonomy: number[];
+  loyalty: number[];
+}
+const bondsOf = (w: World): Bonds => ({ overlord: Array.from(w.nations.cols.overlord), autonomy: Array.from(w.nations.cols.autonomy), loyalty: Array.from(w.nations.cols.loyalty) });
+
+/** The lines of `rise` an hour broke: `was` the bonds before it, `events` its rows (the tick has moved on). */
+function riseBreaks(w: World, was: Bonds, events: number[]): string[] {
+  const out: string[] = [];
+  const nc = w.nations.cols;
+  const alive = (n: number): boolean => w.nations.has(n) && nc.living[n] === 1;
+  const monthStart = isMonthStart(w.startDay, w.tick - 1);
+  const rose = new Set<number>();
+  for (let i = 0; i < events.length; i += 6) {
+    if (events[i + 1] !== EventKind.PuppetRevolt) continue;
+    const p = events[i + 2]!;
+    const o = events[i + 3]!;
+    rose.add(p);
+    if (!monthStart) out.push(`rise: ${tag(p)} rose on ${tag(o)} outside a month's start`);
+    if (was.overlord[p] !== o) out.push(`rise: ${tag(p)} rose on ${tag(o)}, not its overlord`);
+    if ((was.autonomy[p] ?? 0) < PROTEST_FROM) out.push(`rise: ${tag(p)} rose on ${tag(o)} with no voice (autonomy ${was.autonomy[p]})`);
+    if ((was.loyalty[p] ?? 100) >= REVOLT_LOYALTY) out.push(`rise: ${tag(p)} rose on ${tag(o)} at loyalty ${was.loyalty[p]?.toFixed(1)}`);
+    if (alive(p) && alive(o) && !w.wars.atWar(p, o)) out.push(`rise: ${tag(p)} rose on ${tag(o)} and is not at war with it`);
+  }
+  if (!monthStart) return out;
+  for (let p = 1; p < was.overlord.length; p++) {
+    const o = was.overlord[p]!;
+    if (o === 0 || rose.has(p) || (was.autonomy[p] ?? 0) < PROTEST_FROM || (was.loyalty[p] ?? 100) >= REVOLT_LOYALTY) continue;
+    // Freed (above autonomy 90, its overlord gone), integrated, or dead in the hour: no rising owed.
+    if (!alive(p) || !alive(o) || nc.overlord[p] !== o) continue;
+    out.push(`rise: ${tag(p)} under ${tag(o)} at loyalty ${was.loyalty[p]!.toFixed(1)} with a voice and did not rise`);
   }
   return out;
 }
@@ -99,18 +140,19 @@ class Breaks {
   }
 }
 
-/** Steps `s` by `ticks` hours, checking `exit` every hour and `held` and `realm` each day. */
+/** Steps `s` by `ticks` hours, checking `exit` and `rise` every hour and `held` and `realm` each day. */
 function stepChecked(s: Sim, ticks: number, breaks: Breaks, label: string): void {
   let before = membersOf(s.world);
-  let overlords = Array.from(s.world.nations.cols.overlord);
+  let bonds = bondsOf(s.world);
   s.step(ticks, (w) => {
     const where = `${label} day ${Math.floor(w.tick / 24)}`;
-    breaks.add(where, silentExits(w, before, overlords, w.out.events));
+    breaks.add(where, silentExits(w, before, bonds.overlord, w.out.events));
+    breaks.add(where, riseBreaks(w, bonds, w.out.events));
     if (w.tick % 24 === 0) breaks.add(where, worldBreaks(w));
     w.out.events.length = 0;
     w.out.fires.length = 0;
     before = membersOf(w);
-    overlords = Array.from(w.nations.cols.overlord);
+    bonds = bondsOf(w);
   });
 }
 

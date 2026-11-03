@@ -3,7 +3,8 @@ import { EventKind } from '../../src/shared/events';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { eliminateNation } from '../../src/sim/systems/capitals';
-import { FREE_ABOVE, INTEGRATION_RATE, puppetTier, TRIBUTE } from '../../src/sim/systems/puppets';
+import { FREE_ABOVE, INTEGRATION_RATE, LOSING_PENALTY, LOYALTY_BASE, LOYALTY_PER_AUTONOMY, loyaltyTarget, puppetSystem, puppetTier, SIZE_PENALTY, TRIBUTE } from '../../src/sim/systems/puppets';
+import { declareWar } from '../../src/sim/systems/war';
 import { blocOf } from '../../src/sim/systems/supply';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
@@ -136,6 +137,101 @@ describe('puppets (PLAN 1.18)', () => {
     for (const [p] of kinds(ev, EventKind.PuppetReleased)) expect(NATIONS_1938[p! - 1]!.overlord!.autonomy).toBeGreaterThanOrEqual(FREE_ABOVE);
   });
 });
+
+// ROADMAP R2, ADR-807: a beaten overlord's great subjects turn on it. While the overlord is losing a
+// war, the loyalty a puppet relaxes toward falls by LOSING_PENALTY and SIZE_PENALTY × min(1, the
+// puppet's income ÷ its overlord's); at peace it is ADR-31's alone. The Dutch East Indies under
+// the Netherlands, Germany at war with the Netherlands, its score set (`loyaltyTarget` reads it).
+describe('a beaten overlord and a great subject (ROADMAP R2, ADR-807)', () => {
+  const [NED, DEI] = ['NED', 'DEI'].map(nationId) as [number, number];
+  /** The 1938 world at tick 0 (a month's start), Germany at war with the Netherlands alone. */
+  function beaten(): { s: Sim; war: NonNullable<ReturnType<typeof declareWar>> } {
+    const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
+    const war = declareWar(s.world, GER, NED, true)!;
+    expect(war).not.toBeNull();
+    expect(war.sides[1]).toContain(NED);
+    return { s, war };
+  }
+  const base = (w: World, p: number): number => LOYALTY_BASE + LOYALTY_PER_AUTONOMY * w.nations.cols.autonomy[p]!;
+
+  it('the target: ADR-31 at peace whatever the incomes; losing, 25 and 35 × the income share (at most 1) lower', () => {
+    const { s, war } = beaten();
+    const w = s.world;
+    const nc = w.nations.cols;
+    expect(nc.overlord[DEI]).toBe(NED);
+    nc.income[NED] = 100;
+    for (const [score, mine, want] of [
+      [0, 100, base(w, DEI)], // at war, not losing
+      [29, 100, base(w, DEI)], // the defenders' score −29: not yet losing
+      [30, 0, base(w, DEI) - LOSING_PENALTY], // losing, a poor subject: ADR-31's push alone
+      [30, 50, base(w, DEI) - LOSING_PENALTY - SIZE_PENALTY * 0.5],
+      [60, 100, base(w, DEI) - LOSING_PENALTY - SIZE_PENALTY],
+      [60, 400, base(w, DEI) - LOSING_PENALTY - SIZE_PENALTY], // richer than its master: as much as an equal
+    ] as const) {
+      war.score = score;
+      nc.income[DEI] = mine;
+      expect(loyaltyTarget(w, DEI), `score ${score}, income ${mine}`).toBeCloseTo(want, 9);
+    }
+    // The war over: ADR-31's target, rich or not.
+    w.wars.end(war);
+    nc.income[DEI] = 400;
+    expect(loyaltyTarget(w, DEI)).toBeCloseTo(base(w, DEI), 9);
+  });
+
+  it('month by month: a subject as rich as its losing master rises within a year; a poor one, or one of a master at peace, never', () => {
+    // The monthly pass run at tick 0 (a month's start) again and again, the war's score and the incomes held.
+    const months = (rich: boolean, losing: boolean, n: number): { rose: number; at: number } => {
+      const { s, war } = beaten();
+      const w = s.world;
+      const nc = w.nations.cols;
+      for (let m = 1; m <= n; m++) {
+        war.score = losing ? 60 : 0;
+        nc.income[NED] = 100;
+        nc.income[DEI] = rich ? 100 : 5;
+        nc.integration[DEI] = 0; // held: at autonomy 27 its master would absorb it in some years
+        w.out.events.length = 0;
+        puppetSystem(w);
+        const ev = kinds(runEventsOf(w), EventKind.PuppetRevolt);
+        if (ev.length > 0) {
+          expect(ev).toEqual([[DEI, NED]]);
+          expect(nc.overlord[DEI]).toBe(0);
+          expect(w.wars.atWar(DEI, NED)).toBe(true);
+          return { rose: 1, at: m };
+        }
+        expect(nc.overlord[DEI]).toBe(NED);
+      }
+      return { rose: 0, at: 0 };
+    };
+    const rich = months(true, true, 12);
+    expect(rich.rose).toBe(1);
+    expect(rich.at).toBeGreaterThan(3); // not at once: loyalty falls a fifth of the way a month
+    expect(months(false, true, 120).rose).toBe(0);
+    expect(months(true, false, 120).rose).toBe(0);
+  });
+
+  it('a puppet in its overlord’s alliance leaves it to rise, and is at war with it (Tannu Tuva, the Soviet Union)', () => {
+    // Before, the war was refused as between allies (`WarRejected`, `Allied`): the rising only freed it.
+    const [SOV, TAN] = ['SOV', 'TAN'].map(nationId) as [number, number];
+    const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
+    const w = s.world;
+    expect(w.nations.cols.overlord[TAN]).toBe(SOV);
+    expect(w.alliances.allied(TAN, SOV)).toBe(true);
+    s.command({ kind: 'setPuppetLoyalty', subject: TAN, value: 5 });
+    const ev = run(s, 1);
+    expect(kinds(ev, EventKind.PuppetRevolt)).toEqual([[TAN, SOV]]);
+    expect(kinds(ev, EventKind.WarRejected)).toEqual([]);
+    expect(kinds(ev, EventKind.WarDeclared)).toContainEqual([TAN, SOV]);
+    expect(w.alliances.allied(TAN, SOV)).toBe(false);
+    expect(w.wars.atWar(TAN, SOV)).toBe(true);
+  });
+});
+
+/** The rows on the world's event list, as `runEvents` gives them. */
+function runEventsOf(w: World): number[][] {
+  const out: number[][] = [];
+  for (let i = 0; i < w.out.events.length; i += 6) out.push(w.out.events.slice(i, i + 6));
+  return out;
+}
 
 // PLAN 3.4Rk (the seventh read, finding 5): `eliminateNation` left `overlord`, so a puppet that
 // died was its overlord's again when it returned, and the war of independence of a revival on

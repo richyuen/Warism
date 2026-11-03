@@ -785,17 +785,19 @@ not say `founded`), the made one; a cached flag is made again when what it was m
     colour; non-aligned nations are grey.
 - **Puppet** relation {overlord, subject, autonomy 0..100, integration progress}.
   Puppets can be created (peace term or God Mode), released, integrated, or revolt.
-  *Implemented v1 (PLAN 1.18, ADR-31; `src/sim/systems/puppets.ts`):*
+  *Implemented v1 (PLAN 1.18, ADR-31, ADR-807; `src/sim/systems/puppets.ts`):*
   - *State:* nation columns autonomy, loyalty and integration. Tiers: satellite < 30 ≤ puppet
     < 70 ≤ vassal.
   - *Monthly, in this order:*
     1. A puppet above autonomy 90 leaves freely.
-    2. Loyalty < 20 with autonomy ≥ 10 means a revolt and a war of independence (the two realms', ADR-184).
+    2. Loyalty < 20 with autonomy ≥ 10 means a revolt and a war of independence (the two realms', ADR-184);
+       a puppet sharing an alliance with its overlord's realm leaves it to rise (ADR-807).
     3. Tribute: 25% × (1 − autonomy/100) × gross income goes to the overlord.
     4. Below autonomy 50, integration grows by 4 × (50 − autonomy)/50 a month; at 100 the
        overlord annexes the puppet's land and formations.
-    5. Autonomy drifts up 0.25, and loyalty relaxes toward 40 + 0.6 × autonomy, or 25 lower while
-       the overlord is losing a war (side score ≤ −30).
+    5. Autonomy drifts up 0.25, and loyalty relaxes 0.2 of the way toward 40 + 0.6 × autonomy; while
+       the overlord is losing a war (side score ≤ −30), 25 + 25 × min(1, the puppet's gross income ÷
+       its overlord's) lower: a beaten master's great subjects turn on it (ADR-807).
   - *Peace:* a crushing peace creates a puppet at autonomy 30.
   - *Death:* a nation that dies is nobody's puppet (`eliminateNation`, ADR-148). It returns
     free, and a revival on its old overlord's land is at war with it as with any holder. Its

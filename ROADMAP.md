@@ -50,16 +50,22 @@ Rules:
     e2e spec `tests/e2e/relations1938.spec.ts` (2 of 2: the start's ties by kind against the
     statistics message, a kind off with the nodes unmoved, Manchukuo's line read, Japan selected,
     Japan's ties alone, a year on; a phone's width), screenshots in `docs/evidence/R1/`.
-- [ ] R2 **AI puppets revolt** (critic run 28, non-blocking 1). In 3 seeds × 30 years no puppet
+- [x] R2 **AI puppets revolt** (critic run 28, non-blocking 1). In 3 seeds × 30 years no puppet
   with autonomy ≥ 10 fell below loyalty 30.5, and the revolt line is 20: the war of independence
   happens only through God's slider. Make the AI's puppets able to rise (the loyalty model's floor,
   the overlord's losses, a lost war), without a wave of revolts.
   AT: puppets revolting on their own in at least 2 of 3 seeds × 30 years, at most 1 in 10 of the
   puppets made; the war-and-peace checker green on its seeds.
+  Done (ADR-807): losing, a puppet's loyalty target is 25 × min(1, its income ÷ its overlord's)
+  lower; a rising leaves an alliance shared with its overlord. `tools/diag/puppetLoyalty.ts`, 7019 /
+  3163 / 1777 × 30 years: 3 / 81, 2 / 72, 5 / 84 risings for puppets made (7 of the 10 by 1938's
+  colonial bonds); the checker's new rule `rise` red on two patched rules, green on its seeds.
 - [ ] R3 **A bond's Force war calls no one in beside its enemy** (critic R27-N2). A forced war that
   breaks an alliance or a puppet bond can call a nation into the war on the side of its own enemy:
   3 cases on seed 1777; `tools/diag/diploInvariants.ts` reports 7 broken pairs on 8209 (random
-  diplomacy, heroes). Commands only (God, the player).
+  diplomacy, heroes), and the nightly's checker 2 on 1009 (scenario, day 90: Greece's Force war on
+  Turkey puts Czechoslovakia beside Turkey while at war with it and with Iran; run 41624512914).
+  Commands only (God, the player).
   AT: the checker's rule for it red on HEAD and green after on 1777 and 8209; 0 broken pairs on
   the checker's own seeds.
 - [ ] R4 **Checkers for the other systems**, as `tests/helpers/diploInvariants.ts` checks war and
@@ -69,8 +75,15 @@ Rules:
   an overlord). One part per system.
   AT: each checker green on 4 seeds of the 1938 world and the random world, and red on a commit
   (or a patched rule) that breaks it.
-- [ ] R5 **The critic's batch run and the release.** A full critic run on the batch, the release
-  checks (`npm run check:review`, the soak, the sweep with borders moving, the bench), the tag.
+- [ ] R5 **The critic's runs and the release.** After R1–R4 (the user's request, 2026-11-03: the
+  heroes feature gets a critic run of its own once the other items are resolved).
+  - [ ] R5a **A critic run on heroes** (PLAN 7.184, the heroes new-game option): the critic told to
+    judge the heroes feature in depth (what a hero is and does, how the player reads it, its effect
+    on wars over long runs with the option on and off, its rules beside the others), with its usual
+    scores. Each blocking issue becomes an item before R5b.
+  - [ ] R5b **The batch's full critic run and the release.** A full critic run on the batch, the
+    release checks (`npm run check:review`, the soak, the sweep with borders moving, the bench),
+    the tag.
 
 ## Later
 

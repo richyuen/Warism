@@ -490,3 +490,24 @@
   `docs/evidence/R1/`, looked at: the British and French empires as purple stars, Japan's and Spain's wars as hubs.
 - Specs run by hand: phoneLayout1938, barNarrow1938, history1938, charts1938, hotkeys1938: 19 of 19.
 - **Next:** R2, AI puppets revolt.
+
+## 2026-11-03 — The nightly's unit job; ROADMAP R5 split for the heroes critic run
+- Nightly run 41612352441: all green but two unit tests that time the runner (the 1938 build 2,151 ms against
+  2,000; a snapshot 2.80 ms against 2). `tools/ci/unit.ts` judges the unit job as the gate does, with
+  `tools/ci/runnerRed.json` as warnings. Re-run 41624512914: unit job green; the checker red on new seed 1009
+  (scenario): R3's case (Greece's Force war on Turkey), added to R3.
+- The user asked for a critic run on the heroes feature once the items are resolved: R5a, before the batch's run.
+
+## 2026-11-03 — ROADMAP R2 (ADR-807): AI puppets revolt
+- `src/sim/systems/puppets.ts`: while the overlord is losing, the loyalty target falls by SIZE_PENALTY (25) ×
+  min(1, the puppet's income ÷ its overlord's); at peace ADR-31's. A rising puppet in its overlord's alliance leaves
+  it before declaring (Tannu Tuva's rising on the Soviet Union was refused as between allies and only freed it).
+- `tools/diag/puppetLoyalty.ts` (3 seeds × 30 years, risings against puppets made): SIZE_PENALTY 35: 11/87 (over),
+  5/64, 4/97; 30: 10/75 (over), 5/82, 7/114; **25: 3/81, 2/72, 5/84**; 20: 1/85, 0/76, 3/74. A replayed loyalty
+  drop on lost peaces made waves at every size, so none. 7 of the 10 risings at 25 are 1938's colonial bonds.
+- Checker rule `rise` (`tests/helpers/diploInvariants.ts`): red on 7019 with a rising at loyalty < 60 and with none
+  at all (21 broken lines each); green on the checker's seeds in the suite.
+- Tests: `puppets.test.ts` 15 of 15 (3 new); `npm test` 2041 of 2042 (the build-time budget at 2,047 ms with the
+  suite at once, green alone); `test:sweep` with the pin a7946f81 → 614c24dd. Tick cost: one division a puppet a
+  month, not measurable.
+- **Next:** R3, a bond's Force war calls no one in beside its enemy.
