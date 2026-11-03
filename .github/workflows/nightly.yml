@@ -26,7 +26,7 @@ jobs:
     name: Typecheck, lint, unit tests, build
     if: github.event.schedule != '17 5 * * 0'
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -41,14 +41,15 @@ jobs:
           key: checkpoints-${{ hashFiles('src/sim/**', 'src/shared/**', 'data/**', 'public/data/**', 'tools/headless/**', 'package-lock.json') }}
       - run: npm run typecheck
       - run: npm run lint
-      - run: npm test
+      # The whole suite, a red file again alone; the runner's speed reds (tools/ci/runnerRed.json) warn.
+      - run: npx tsx tools/ci/unit.ts
       - run: npm run build
 
   ten-year:
     name: The ten-year tests (the pin, save and load, allies never at war, no bankruptcy in peace)
     if: github.event.schedule != '17 5 * * 0'
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

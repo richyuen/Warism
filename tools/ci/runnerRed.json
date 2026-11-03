@@ -1,0 +1,13 @@
+{
+ "about": "Unit tests that time this machine's speed against a budget set on the development PC, and fail on a GitHub-hosted runner (2 slow cores) for that alone. The nightly run (tools/ci/unit.ts) reports them as warnings and fails on any other red. Their budgets are judged on the development PC by npm run check and the release checks; the bench (npm run bench -- G) judges the game's frame budgets. A test joins this list only with the runner's figure against its budget.",
+ "tests": [
+  {
+   "id": "tests/unit/scenario1938.test.ts › 1938 world (PLAN 1.9a) builds in well under a second at M and starts on 1 January 1938",
+   "why": "The world's build against 2,000 ms: 2,151 ms on the runner (nightly run 41612352441, 2026-11-03)."
+  },
+  {
+   "id": "tests/unit/snapshot-perf.test.ts › snapshot build time (M size) stays within 2 ms for a steady-state snapshot",
+   "why": "A snapshot's build against 2 ms: 2.80 ms on the runner (nightly run 41612352441, 2026-11-03)."
+  }
+ ]
+}
