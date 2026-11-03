@@ -1,5 +1,9 @@
 # Warism — Phased Plan
 
+> **Frozen on 2026-11-03 (ADR-805, the user's decision).** The build's plan up to `release-2026-11-03`;
+> every task in it is done or closed with a BLOCKERS entry. What is still to do is in `ROADMAP.md`. Kept as
+> a record; not updated.
+
 Rules: each task is small and verifiable. `AT:` is the acceptance test that must
 pass before ticking; it names a number and a stop (a figure, its bar, the run that reads it;
 ADR-554). Work top-down, and split a task if it grows past one iteration, at most twice (7.35a,

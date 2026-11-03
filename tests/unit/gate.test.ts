@@ -2,13 +2,11 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { e2eRuns, splitKnown } from '../../tools/gate/review';
-import { ALL_STAGES, changedFiles, gatedTrees, newTicks, PIN_TEST, planE2e, planGate, planSweep, planUnit, reviewTicked, tickedTasks, worktreeTree } from '../../tools/gate/check';
-import { criticDue, tickedReviews } from '../../tools/gate/criticDue';
-import { archive, LEDGER, MOVED } from '../../tools/plan/archive';
+import { ALL_STAGES, changedFiles, gatedTrees, PIN_TEST, planE2e, planGate, planSweep, planUnit, worktreeTree } from '../../tools/gate/check';
 
 // ADR-48, ADR-49: the gate is sized to what changed since HEAD. ADR-55: a clean tree that the
-// gate has already passed runs nothing. ADR-59: the critic comes back once per phase, when a
-// phase review has been ticked since its report (until then: every 5 commits, ADR-49).
+// gate has already passed runs nothing. ADR-805: the plan's phase reviews no longer widen it; the
+// whole suites run in check:full and check:review, before a release.
 
 describe('gate plan (ADR-48, ADR-49)', () => {
   it('documents only: nothing to run (parity retired, ADR-805)', () => {
@@ -44,49 +42,28 @@ describe('gate plan (ADR-48, ADR-49)', () => {
     expect(planGate(null, true)).toEqual([...ALL_STAGES]);
   });
 
-  // ADR-278 (the user's decision, 2026-10-12): every 10-year sweep test only at a phase review.
-  it('the sweep stage: the pin alone, every sweep test when a phase review is ticked or what changed is not known', () => {
-    const head = ['- [x] 4.7 A task', '- [ ] 4.8 Phase 4 review, the phase\'s one review pass'].join('\n');
-    const ticked = head.replace('- [ ] 4.8', '- [x] 4.8');
-    expect(reviewTicked(head, head)).toBe(false);
-    expect(reviewTicked(ticked, head)).toBe(true);
-    expect(reviewTicked(ticked, ticked)).toBe(false);
-    expect(reviewTicked(ticked, null)).toBe(false);
-    expect(reviewTicked(head.replace('- [ ] 4.8', '- [x] 4.8') + '\n- [x] 4.7c a part', head.replace('- [x] 4.7', '- [ ] 4.7'))).toBe(true);
-    expect(planSweep(['src/sim/systems/war.ts'], false)).toBe('pin');
-    expect(planSweep(['src/sim/systems/war.ts'], true)).toBe('full');
-    expect(planSweep(null, false)).toBe('full');
-    // The phase review's gate is every stage, even for a commit of documents alone.
-    expect(planGate(['PLAN.md', 'PROGRESS.md'], true, true)).toEqual([...ALL_STAGES]);
+  // ADR-278 (the user's decision, 2026-10-12): the pin alone; every 10-year test in check:full.
+  it('the sweep stage: the pin alone, every sweep test when what changed is not known', () => {
+    expect(planSweep(['src/sim/systems/war.ts'])).toBe('pin');
+    expect(planSweep(null)).toBe('full');
     expect(readFileSync(path.resolve(import.meta.dirname, '../..', PIN_TEST), 'utf8')).toContain('BASELINE');
   });
 
-  // ADR-280 (the user's decision, 2026-10-12): the whole unit stage when a numbered task is
-  // ticked; for a part, the test files whose imports reach what changed.
-  // ADR-293 (the user's decision, 2026-10-12): in full at a phase review, not at a numbered task.
-  it('the unit stage: in full when a phase review is ticked or a shared file changed; otherwise the related tests', () => {
+  // ADR-280 (the user's decision, 2026-10-12): the test files whose imports reach what changed;
+  // all of them when something every test stands on changed.
+  it('the unit stage: in full when a shared file changed or what changed is not known; otherwise the related tests', () => {
     const on = (): boolean => true;
-    const head = ['- [x] 4.7 A task', '  - [x] 4.7c a part', '- [ ] 4.8 Phase 4 review'].join('\n');
-    expect(newTicks(head, head)).toEqual([]);
-    expect(newTicks(head.replace('- [ ] 4.8', '- [x] 4.8'), head)).toEqual(['4.8']);
-    // A numbered task ticked is no phase review (ADR-293).
-    expect(newTicks(head, head.replace('- [x] 4.7 A task', '- [ ] 4.7 A task'))).toEqual([]);
-    expect(newTicks(head, null)).toBeNull();
-    expect(planUnit(['src/render/fx/wrecks.ts', 'PROGRESS.md'], [], on)).toEqual({ mode: 'related', files: ['src/render/fx/wrecks.ts'], why: expect.any(String) });
-    expect(planUnit(['src/sim/world.ts', 'tests/unit/war.test.ts'], [], on).files).toEqual(['src/sim/world.ts', 'tests/unit/war.test.ts']);
-    expect(planUnit(['src/render/fx/wrecks.ts'], ['4.8'], on).mode).toBe('full');
-    expect(planUnit(['src/render/fx/wrecks.ts'], null, on).mode).toBe('full');
-    expect(planUnit(null, [], on).mode).toBe('full');
-    for (const f of ['vitest.config.ts', 'tests/helpers/earth.ts', 'package-lock.json', 'data/scenarios/1938/oob.json', 'public/data/earth/manifest.json', 'tools/headless/assets.ts']) expect(planUnit([f], [], on).mode, f).toBe('full');
+    expect(planUnit(['src/render/fx/wrecks.ts', 'PROGRESS.md'], on)).toEqual({ mode: 'related', files: ['src/render/fx/wrecks.ts'], why: expect.any(String) });
+    expect(planUnit(['src/sim/world.ts', 'tests/unit/war.test.ts'], on).files).toEqual(['src/sim/world.ts', 'tests/unit/war.test.ts']);
+    expect(planUnit(null, on).mode).toBe('full');
+    for (const f of ['vitest.config.ts', 'tests/helpers/earth.ts', 'package-lock.json', 'data/scenarios/1938/oob.json', 'public/data/earth/manifest.json', 'tools/headless/assets.ts']) expect(planUnit([f], on).mode, f).toBe('full');
     // A file removed: what imported it is not known any more.
-    expect(planUnit(['src/sim/gone.ts'], [], (f) => f !== 'src/sim/gone.ts').mode).toBe('full');
-    // A phase review ticked in a commit of documents alone runs every stage; a numbered task's
-    // tick in one is a commit of documents (ADR-293).
-    expect(planGate(['PLAN.md', 'PROGRESS.md', 'DECISIONS.md'], false, true)).toEqual([...ALL_STAGES]);
-    expect(planGate(['PLAN.md', 'PROGRESS.md'], false, false)).toEqual([]);
-    expect(planUnit(['PLAN.md', 'PROGRESS.md'], ['4.8'], on).mode).toBe('full');
+    expect(planUnit(['src/sim/gone.ts'], (f) => f !== 'src/sim/gone.ts').mode).toBe('full');
+    // A commit of documents alone runs nothing (ADR-805).
+    expect(planGate(['PLAN.md', 'PROGRESS.md'])).toEqual([]);
+    expect(planUnit(['PLAN.md', 'PROGRESS.md'], on).mode).toBe('none');
     // No source and no unit test: none (a spec, a picture, the critic's output).
-    expect(planUnit(['tests/e2e/fire1938.spec.ts', 'docs/evidence/4.7/a.png', 'critic/x.json'], [], on).mode).toBe('none');
+    expect(planUnit(['tests/e2e/fire1938.spec.ts', 'docs/evidence/4.7/a.png', 'critic/x.json'], on).mode).toBe('none');
   });
 
   it('the working tree has a tree id, the same when asked twice; the record of passed trees is a list of ids', () => {
@@ -96,31 +73,18 @@ describe('gate plan (ADR-48, ADR-49)', () => {
     for (const t of gatedTrees()) expect(t).toMatch(/^[0-9a-f]{40,64}$/);
   });
 
-  // ADR-87, ADR-293 (the user's decisions): the e2e stage in full when a phase review is ticked;
-  // a numbered task or a review pass ticked is a commit as any other: the specs it changed.
-  it('e2e: in full when the change ticks a phase review; otherwise the changed specs or none', () => {
-    const head = ['- [x] 2.12 A task', '  - [x] 2.12a its part', '- [ ] 2.14 Another', '  - [ ] 2.14a its part', '- [ ] 2.15 Phase 2 review: drift'].join('\n');
+  // ADR-87 (the user's decision): the specs that changed, or all when what they stand on changed.
+  it('e2e: the changed specs, or none; in full when what every spec stands on changed', () => {
     const code = ['src/render/units/markers.ts', 'PLAN.md'];
-    expect(tickedTasks(head)).toEqual(['2.12']);
-    // Nothing ticked, no spec touched: left out.
-    expect(planE2e(code, head, head)).toMatchObject({ mode: 'none' });
-    // A part ticked, and a numbered task ticked: not a phase review.
-    const part = head.replace('  - [ ] 2.14a', '  - [x] 2.14a');
-    expect(planE2e(code, part, head)).toMatchObject({ mode: 'none' });
-    const whole = part.replace('- [ ] 2.14 ', '- [x] 2.14 ');
-    expect(planE2e(code, whole, head)).toMatchObject({ mode: 'none' });
+    expect(planE2e(code)).toMatchObject({ mode: 'none' });
     // With a spec written or edited: that spec is run.
-    expect(planE2e([...code, 'tests/e2e/tags1938.spec.ts', 'tests/unit/tags.test.ts'], whole, head)).toMatchObject({ mode: 'changed', specs: ['tests/e2e/tags1938.spec.ts'] });
-    // The phase review ticked: everything.
-    const reviewed = whole.replace('- [ ] 2.15 Phase 2 review', '- [x] 2.15 Phase 2 review');
-    expect(planE2e(code, reviewed, whole)).toMatchObject({ mode: 'full', why: 'PLAN 2.15 ticked (a phase review)' });
+    expect(planE2e([...code, 'tests/e2e/tags1938.spec.ts', 'tests/unit/tags.test.ts'])).toMatchObject({ mode: 'changed', specs: ['tests/e2e/tags1938.spec.ts'] });
     // What every spec stands on, or an unknown change: everything.
-    expect(planE2e([...code, 'tests/e2e/settle.ts'], head, head)).toMatchObject({ mode: 'full' });
-    expect(planE2e([...code, 'playwright.config.ts'], head, head)).toMatchObject({ mode: 'full' });
-    expect(planE2e(null, head, head)).toMatchObject({ mode: 'full' });
-    expect(planE2e(code, head, null)).toMatchObject({ mode: 'full' });
+    expect(planE2e([...code, 'tests/e2e/settle.ts'])).toMatchObject({ mode: 'full' });
+    expect(planE2e([...code, 'playwright.config.ts'])).toMatchObject({ mode: 'full' });
+    expect(planE2e(null)).toMatchObject({ mode: 'full' });
     // The critic's own files are not a change.
-    expect(planE2e(['critic/scripts/x.spec.ts', 'src/app/hud.ts'], head, head)).toMatchObject({ mode: 'none' });
+    expect(planE2e(['critic/scripts/x.spec.ts', 'src/app/hud.ts'])).toMatchObject({ mode: 'none' });
   });
 
   // A perf spec named alone ran the whole suite: the perf project depends on chromium (PLAN 4.7's tick).
@@ -153,119 +117,5 @@ describe('gate plan (ADR-48, ADR-49)', () => {
     const files = changedFiles();
     expect(files).not.toBeNull();
     for (const f of files!) expect(f).not.toMatch(/^.. /); // paths, not status lines
-  });
-});
-
-describe('critic cadence (ADR-59)', () => {
-  const plan = (...lines: string[]): string => ['# Plan', '', ...lines, ''].join('\n');
-  const DONE = '- [x] 1.41 Phase 1 review + PARITY rows updated with evidence.';
-
-  it('no report: due', () => {
-    expect(criticDue(plan(DONE), null)).toEqual({ due: true, reviews: [] });
-  });
-
-  it('not due while no phase review has been ticked since the report, whatever else was', () => {
-    const then = plan(DONE, '- [ ] 2.4 FireEvent visuals', '- [ ] 2.11 Phase 2 review: SPEC drift');
-    const now = plan(DONE, '- [x] 2.4 FireEvent visuals', '- [x] 2.5 Casualty consistency', '- [ ] 2.11 Phase 2 review: SPEC drift');
-    expect(criticDue(now, then)).toEqual({ due: false, reviews: [] });
-  });
-
-  it('due once a phase review is ticked, and it names the review', () => {
-    const then = plan(DONE, '- [ ] 2.11 Phase 2 review: SPEC drift');
-    const now = plan(DONE, '- [x] 2.11 Phase 2 review: SPEC drift');
-    expect(criticDue(now, then)).toEqual({ due: true, reviews: ['2.11'] });
-    // The report made after it names a commit in which the review is ticked: not due again.
-    expect(criticDue(now, now).due).toBe(false);
-  });
-
-  it('only a ticked task named "Phase N review" counts', () => {
-    const now = plan('- [x] 0.6 Screenshot of a flag grid reviewed', '- [x] 1.9 Economy (Phase 1 review notes)', '  Phase 3 review happens later', '- [ ] 3.7 Phase 3 review');
-    expect(tickedReviews(now)).toEqual([]);
-    expect(tickedReviews(plan('- [x] 0.22 Phase 0 review: re-read SPEC', DONE))).toEqual(['0.22', '1.41']);
-  });
-
-  // The Phase 2 review was ticked on 2026-10-05 (`3d6a2b2`, a commit of documents, whose gate is
-  // parity alone): this test then named a PLAN.md that was no more (ADR-85). It now holds every
-  // state the plan passes through: the reviews are ticked in the order of the phases, none out
-  // of turn, and those of phases 0 to 2 are done.
-  it('PLAN.md itself: the seven phase reviews exist, those of phases 0 to 2 are ticked, and the ticked ones are the first ones', () => {
-    const text = readFileSync(path.resolve(import.meta.dirname, '../../PLAN.md'), 'utf8');
-    const all = ['0.22', '1.41', '2.11', '3.7', '4.8', '5.8', '6.9'];
-    const ticked = tickedReviews(text);
-    expect(ticked.length).toBeGreaterThanOrEqual(3);
-    expect(ticked).toEqual(all.slice(0, ticked.length));
-    for (const id of all.slice(ticked.length)) expect(text).toMatch(new RegExp(`^- \\[ \\] ${id.replace('.', '\\.')} Phase \\d review`, 'm'));
-  });
-});
-
-// ADR-231: PLAN.md holds what is still to do. `npm run plan:archive` moves the text of a task
-// that is done to docs/PLAN_DONE.md and leaves its first line, which the gate and the critic's
-// count read.
-describe('the archive of the plan (ADR-231)', () => {
-  const plan = [
-    '## Phase 3',
-    '',
-    '- [x] 3.1 Tanks.',
-    '  AT: a test.',
-    '  - [x] 3.1a A part.',
-    '',
-    '- [x] 3.2 One line.',
-    '- [x] 3.3 Phase 3 review: all of it,',
-    '  on two lines.',
-    '- [ ] 3.4R Review pass.',
-    '  Its text.',
-    '  - [x] 3.4Ra Done part.',
-    '    *Done.*',
-    '  - [ ] 3.4Rb Open part.',
-    '    - [x] 3.4Rb1 Done under an open part.',
-    '      Stays.',
-    '  - [x] 3.4Rc A part with an open one under it.',
-    '    - [ ] 3.4Rc1 Open.',
-    '',
-    '## Phase 4',
-    '',
-    '- [ ] 4.1 Sea zones.',
-    '  AT: a test.',
-  ];
-
-  // ADR-235: the first line of a numbered task that is done goes to the plan's last section,
-  // which an iteration does not read; that of a done part stays in its open task.
-  it('moves the done tasks and the done parts of an open task; the first lines of the tasks to the last section', () => {
-    const r = archive(plan);
-    expect(r.moved).toBe(3);
-    expect(r.listed).toBe(3);
-    expect(r.plan).toEqual([
-      '## Phase 3',
-      '',
-      '- [ ] 3.4R Review pass.',
-      '  Its text.',
-      `  - [x] 3.4Ra Done part.${MOVED}`,
-      ...plan.slice(13),
-      '',
-      LEDGER,
-      '',
-      expect.stringContaining('Not read at the start of an iteration'),
-      '',
-      `- [x] 3.1 Tanks.${MOVED}`,
-      '- [x] 3.2 One line.',
-      `- [x] 3.3 Phase 3 review: all of it,${MOVED}`,
-      '',
-    ]);
-    expect(r.done).toEqual(['## Phase 3', '', ...plan.slice(2, 5), '', ...plan.slice(7, 9), '', 'Of 3.4R (open in PLAN.md):', '', ...plan.slice(11, 13), '']);
-    // What the gate and the critic's count read is as it was, and a second run moves nothing.
-    expect(tickedTasks(r.plan.join('\n'))).toEqual(tickedTasks(plan.join('\n')));
-    expect(tickedReviews(r.plan.join('\n'))).toEqual(['3.3']);
-    expect(archive(r.plan)).toEqual({ plan: r.plan, done: [], moved: 0, listed: 0 });
-    // A task ticked later joins the section at its end.
-    const later = archive(r.plan.map((l) => (l === '- [ ] 4.1 Sea zones.' ? '- [x] 4.1 Sea zones.' : l)));
-    expect([later.moved, later.listed]).toEqual([1, 1]);
-    expect(later.plan.slice(-5)).toEqual([`- [x] 3.1 Tanks.${MOVED}`, '- [x] 3.2 One line.', `- [x] 3.3 Phase 3 review: all of it,${MOVED}`, `- [x] 4.1 Sea zones.${MOVED}`, '']);
-    expect(later.plan).not.toContain('  AT: a test.');
-  });
-
-  it('PLAN.md itself has nothing left to move: run `npm run plan:archive` after a tick', () => {
-    const text = readFileSync(path.resolve(import.meta.dirname, '../../PLAN.md'), 'utf8');
-    const r = archive(text.split(/\r?\n/));
-    expect([r.moved, r.listed]).toEqual([0, 0]);
   });
 });

@@ -14,7 +14,6 @@
  * those is proved by the record. The verdict (`judge`) is taken against the list of known reds
  * as it is when it is read (`tools/gate/knownRed.json`, the failures of BLOCKERS that are this
  * machine's and not the code's): green when every step is done and every red test is on it.
- * `npm run check` reads it for a commit that ticks a phase review (`reviewProven`).
  */
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -158,16 +157,6 @@ export function knownRed(): string[] {
   } catch {
     return [];
   }
-}
-
-/** Whether a green run of `check:review` proves the code of the working tree (for `npm run check`). */
-export function reviewProven(): { proven: boolean; why: string } {
-  const record = readRecord();
-  const key = codeTree();
-  if (record === null || key === null || record.key !== key) return { proven: false, why: 'no run of npm run check:review on this code' };
-  const v = judge(record, knownRed());
-  if (!v.green) return { proven: false, why: v.missing.length > 0 ? `npm run check:review not finished (${v.missing.join(', ')})` : `red not on ${KNOWN}: ${v.unknown.join('; ')}` };
-  return { proven: true, why: `npm run check:review green on this code (${v.known.length} known red)` };
 }
 
 const specFiles = (): string[] =>

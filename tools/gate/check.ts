@@ -5,11 +5,12 @@
  *   only documents changed (Markdown anywhere, anything under docs/)  → nothing; the tree is recorded
  *   no sim input changed                                             → everything but the 10-year sweep tests
  *   otherwise                                                        → everything, the sweep stage the pin alone
- *   a phase review ticked (`- [x] 4.8 Phase 4 review`)               → everything, every sweep test
- *   … on code a green `npm run check:review` ran on (ADR-297)          → as if none were ticked
  *
- * Of the unit stage (ADR-280, ADR-293, the user's decisions): all of it when the change ticks a
- * phase review (not a numbered task: ADR-293), when git cannot tell what changed, under FULL, or when
+ * The phase reviews that ran every stage are gone with the plan (ADR-805): the whole suites run in
+ * `npm run check:full` and `npm run check:review`, before a release.
+ *
+ * Of the unit stage (ADR-280, ADR-293, the user's decisions): all of it when git cannot tell what
+ * changed, under FULL, or when
  * something every test stands on changed (`UNIT_SHARED`); otherwise only the test files whose
  * imports reach a file that changed (`vitest related`), or none (`planUnit`). In full and related
  * alike, a test red in the parallel run is run again alone (its file), and red is what fails both
@@ -17,14 +18,13 @@
  * load (a change of `shared/` relates most of the files), and the timing tests of BLOCKERS fail in
  * it one or two at a time, a different one each run, and pass alone.
  *
- * Of the sweep stage (ADR-278, the user's decision): every 10-year test only when the change ticks
- * a phase review, git cannot tell what changed, or FULL is set; otherwise only the pinned state
+ * Of the sweep stage (ADR-278, the user's decision): every 10-year test only when git cannot tell
+ * what changed, or FULL is set; otherwise only the pinned state
  * hash of seed 99 (`tests/sweep/baselineHash.test.ts`, 81 s), so a rule change still moves the
  * pin in its own commit (`planSweep`).
  *
- * And of the e2e stage (ADR-87, ADR-293): all of it when the change ticks a phase review
- * (`- [x] 4.8 Phase 4 review`; until ADR-293 every numbered task); otherwise only the spec files that
- * changed, or none (`planE2e`). As the unit stage, a test red in it is run again alone (its file,
+ * And of the e2e stage (ADR-87, ADR-293): all of it when something every spec stands on changed;
+ * otherwise only the spec files that changed, or none (`planE2e`). As the unit stage, a test red in it is run again alone (its file,
  * one worker), and red is what fails both times and is not on `tools/gate/knownRed.json`
  * (ADR-779, the user's decision: the timing specs of BLOCKERS fail under the parallel run's load,
  * a different few each run, and pass alone; a known red is this machine's, with its BLOCKERS entry).
@@ -36,14 +36,13 @@
  * A green gate records the tree it passed (`.cache/gate/green.json`); a clean tree whose HEAD is
  * one of those trees has nothing left to prove (the gate at the start of an iteration). A HEAD
  * the gate has not seen (a pull, a rebase, a fresh clone) still gets the code stages.
- * `npm run check:full` (or FULL=1) always runs everything: use it for the DONE condition, after
+ * `npm run check:full` (or FULL=1) always runs everything: use it before a release, after
  * a pull or rebase, and whenever in doubt. If git cannot tell what changed, everything runs.
  */
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { tickedReviews } from './criticDue';
-import { e2eRedTwice, e2eRuns, KNOWN, knownRed, reviewProven, splitKnown, unitRedTwice } from './review';
+import { e2eRedTwice, e2eRuns, KNOWN, knownRed, splitKnown, unitRedTwice } from './review';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const STAMP_DIR = path.join(ROOT, '.cache/gate');
@@ -61,12 +60,10 @@ const isDocument = (file: string): boolean => file.endsWith('.md') || file.start
 
 /**
  * The stages to run for `files` changed since HEAD (repo-relative, `/`-separated); null = unknown.
- * `gated`: the gate has already passed the tree of HEAD. `review`: the change ticks a phase review
- * (`reviewTicked`), whose gate runs every stage whatever changed: a commit of documents alone too
- * (ADR-286; since ADR-293 the tick of a numbered task is a commit as any other).
+ * `gated`: the gate has already passed the tree of HEAD.
  */
-export function planGate(files: readonly string[] | null, gated = false, review = false): Stage[] {
-  if (files === null || review) return [...ALL_STAGES];
+export function planGate(files: readonly string[] | null, gated = false): Stage[] {
+  if (files === null) return [...ALL_STAGES];
   const changed = files.filter((f) => !ignored(f));
   if (changed.length === 0 && gated) return [];
   if (changed.length > 0 && changed.every(isDocument)) return [];
@@ -74,22 +71,15 @@ export function planGate(files: readonly string[] | null, gated = false, review 
   return ALL_STAGES.filter((s) => s !== 'test:sweep' || sim);
 }
 
-/** Whether `planNow` ticks a phase review that `planAtHead` had not (null = unknown: no). */
-export function reviewTicked(planNow: string, planAtHead: string | null): boolean {
-  if (planAtHead === null) return false;
-  const before = new Set(tickedReviews(planAtHead));
-  return tickedReviews(planNow).some((id) => !before.has(id));
-}
-
-/** The pinned state hash: the one sweep test of a commit that ticks no phase review (ADR-278). */
+/** The pinned state hash: the one sweep test of a commit (ADR-278). */
 export const PIN_TEST = 'tests/sweep/baselineHash.test.ts';
 
 /**
  * How much of the sweep stage a gate with a sim input in it runs (ADR-278, the user's decision):
- * every test when the change ticks a phase review or what changed is not known; otherwise the pin.
+ * every test when what changed is not known; otherwise the pin.
  */
-export function planSweep(files: readonly string[] | null, review: boolean): 'full' | 'pin' {
-  return files === null || review ? 'full' : 'pin';
+export function planSweep(files: readonly string[] | null): 'full' | 'pin' {
+  return files === null ? 'full' : 'pin';
 }
 
 /**
@@ -106,13 +96,11 @@ export interface UnitPlan {
 }
 
 /**
- * How much of the unit stage a gate with code in it runs (ADR-280). `ticked`: the numbered tasks
- * and reviews the change ticks (`newTicks`), null when unknown. `exists`: whether a path is on disk
- * (a file removed runs everything: what imported it is not known any more).
+ * How much of the unit stage a gate with code in it runs (ADR-280). `exists`: whether a path is on
+ * disk (a file removed runs everything: what imported it is not known any more).
  */
-export function planUnit(files: readonly string[] | null, ticked: readonly string[] | null, exists: (f: string) => boolean): UnitPlan {
-  if (files === null || ticked === null) return { mode: 'full', files: [], why: 'what changed is not known' };
-  if (ticked.length > 0) return { mode: 'full', files: [], why: `PLAN ${ticked.join(', ')} ticked (a phase review)` };
+export function planUnit(files: readonly string[] | null, exists: (f: string) => boolean): UnitPlan {
+  if (files === null) return { mode: 'full', files: [], why: 'what changed is not known' };
   const changed = files.filter((f) => !ignored(f) && !isDocument(f));
   const shared = changed.find((f) => UNIT_SHARED.some((p) => (p.endsWith('/') ? f.startsWith(p) : f === p)));
   if (shared !== undefined) return { mode: 'full', files: [], why: `${shared} changed` };
@@ -120,22 +108,7 @@ export function planUnit(files: readonly string[] | null, ticked: readonly strin
   const gone = code.find((f) => !exists(f));
   if (gone !== undefined) return { mode: 'full', files: [], why: `${gone} removed` };
   if (code.length === 0) return { mode: 'none', files: [], why: 'no source or unit test changed' };
-  return { mode: 'related', files: code, why: 'no phase review ticked: the tests that import what changed' };
-}
-
-/** The phase reviews ticked in `planNow` and not in `planAtHead` (null = unknown; ADR-293: a numbered task is not one). */
-export function newTicks(planNow: string, planAtHead: string | null): string[] | null {
-  if (planAtHead === null) return null;
-  const before = new Set(tickedReviews(planAtHead));
-  return tickedReviews(planNow).filter((id) => !before.has(id));
-}
-
-/**
- * The ids of the numbered tasks ticked in a PLAN.md text (`- [x] 2.13 …`) and of the review passes
- * (`- [x] 3.4R …`, PROMPT step 9): not the parts either is split into (`2.13a`, `3.4Ra`).
- */
-export function tickedTasks(plan: string): string[] {
-  return [...plan.matchAll(/^- \[x\] (\d+\.\d+R?)(?=\s)/gm)].map((m) => m[1]!);
+  return { mode: 'related', files: code, why: 'the tests that import what changed' };
 }
 
 export interface E2ePlan {
@@ -147,22 +120,18 @@ export interface E2ePlan {
 
 /**
  * How much of the e2e stage a gate with code in it runs (ADR-87, the user's decision): all of it
- * when the change ticks a numbered task of PLAN.md or a review pass (3.4R; a part such as 2.14a
- * or 3.4Ra does not), when git
- * cannot tell what changed, or when something every spec stands on changed (a helper under
+ * when git cannot tell what changed, or when something every spec stands on changed (a helper under
  * tests/e2e, the Playwright config). Otherwise only the spec files that changed: a new or an
- * edited spec is never committed unrun. `planAtHead`: PLAN.md as of HEAD, null when unknown.
+ * edited spec is never committed unrun.
  */
-export function planE2e(files: readonly string[] | null, planNow: string, planAtHead: string | null): E2ePlan {
-  if (files === null || planAtHead === null) return { mode: 'full', specs: [], why: 'what changed is not known' };
-  const ticked = newTicks(planNow, planAtHead) ?? [];
-  if (ticked.length > 0) return { mode: 'full', specs: [], why: `PLAN ${ticked.join(', ')} ticked (a phase review)` };
+export function planE2e(files: readonly string[] | null): E2ePlan {
+  if (files === null) return { mode: 'full', specs: [], why: 'what changed is not known' };
   const changed = files.filter((f) => !ignored(f));
   const shared = changed.filter((f) => f === 'playwright.config.ts' || (f.startsWith('tests/e2e/') && !f.endsWith('.spec.ts')));
   if (shared.length > 0) return { mode: 'full', specs: [], why: `${shared[0]} changed` };
   const specs = changed.filter((f) => f.startsWith('tests/e2e/') && f.endsWith('.spec.ts'));
-  if (specs.length > 0) return { mode: 'changed', specs, why: 'no phase review ticked: the changed specs only' };
-  return { mode: 'none', specs: [], why: 'no phase review ticked and no spec changed' };
+  if (specs.length > 0) return { mode: 'changed', specs, why: 'the changed specs only' };
+  return { mode: 'none', specs: [], why: 'no spec changed' };
 }
 
 /** Files that differ from HEAD (modified, staged, untracked, both ends of a rename), or null when git cannot tell. */
@@ -228,24 +197,8 @@ function recordGreen(tree: string | null): void {
 function main(): void {
   const files = process.env['FULL'] ? null : changedFiles();
   const head = git(['rev-parse', 'HEAD^{tree}']);
-  let planNow = '';
-  try {
-    planNow = readFileSync(path.join(ROOT, 'PLAN.md'), 'utf8');
-  } catch {
-    // No plan: everything runs.
-  }
-  const atHead = spawnSync('git', ['show', 'HEAD:PLAN.md'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 26 });
-  const planAtHead = atHead.status === 0 && !atHead.error && planNow !== '' ? atHead.stdout : null;
-  // A phase review's tick whose code a green `npm run check:review` proved (ADR-297): a commit as
-  // any other, its full run already done on this code.
-  const ticked = reviewTicked(planNow, planAtHead);
-  const proof = ticked && !process.env['FULL'] ? reviewProven() : null;
-  if (proof) console.log(`gate: a phase review ticked: ${proof.why}`);
-  const review = ticked && !proof?.proven;
-  const planBefore = proof?.proven ? planNow : planAtHead;
-  const ticks = newTicks(planNow, planBefore);
-  const stages = planGate(files, head !== null && gatedTrees().includes(head), review);
-  const sweep = planSweep(files, review);
+  const stages = planGate(files, head !== null && gatedTrees().includes(head));
+  const sweep = planSweep(files);
   if (stages.length === 0) {
     // Documents alone (or nothing) changed: record the tree, so the clean tree after the commit runs nothing.
     recordGreen(worktreeTree());
@@ -255,23 +208,23 @@ function main(): void {
   }
   // The tree as it is now: what the stages below prove. A file edited while they run is not in it.
   const tree = worktreeTree();
-  // The e2e stage in full only when a numbered task is ticked (ADR-87); a spec that changed is run.
+  // The e2e stage: the specs that changed, or all when what they stand on changed (ADR-87).
   let e2e: E2ePlan = { mode: 'full', specs: [], why: '' };
   if (stages.includes('e2e') && !process.env['FULL']) {
-    e2e = planE2e(files, planNow, planBefore);
+    e2e = planE2e(files);
     e2e.specs = e2e.specs.filter((f) => existsSync(path.join(ROOT, f)));
     if (e2e.mode === 'changed' && e2e.specs.length === 0) e2e.mode = 'none';
     if (e2e.mode === 'none') stages.splice(stages.indexOf('e2e'), 1);
   }
-  // The unit stage in full only when a numbered task is ticked (ADR-280); else the tests related to what changed.
-  const unit: UnitPlan = process.env['FULL'] ? { mode: 'full', files: [], why: '' } : planUnit(files, ticks, (f) => existsSync(path.join(ROOT, f)));
+  // The unit stage: the tests related to what changed, or all when what they stand on changed (ADR-280).
+  const unit: UnitPlan = process.env['FULL'] ? { mode: 'full', files: [], why: '' } : planUnit(files, (f) => existsSync(path.join(ROOT, f)));
   const unitWhy = unit.why !== '' && stages.includes('test');
   if (stages.includes('test') && unit.mode === 'none') stages.splice(stages.indexOf('test'), 1);
   const skipped = ALL_STAGES.filter((s) => !stages.includes(s));
   console.log(`gate: ${stages.join(' → ')}${skipped.length > 0 ? `   (skipped: ${skipped.join(', ')}; npm run check:full runs everything)` : ''}`);
   if (unitWhy) console.log(`gate: unit ${unit.mode === 'full' ? 'in full' : unit.mode === 'related' ? `the tests related to ${unit.files.length} file(s)` : 'left out'}: ${unit.why}`);
   if (e2e.why !== '') console.log(`gate: e2e ${e2e.mode === 'full' ? 'in full' : e2e.mode === 'changed' ? `of ${e2e.specs.length} spec file(s)` : 'left out'}: ${e2e.why}`);
-  if (stages.includes('test:sweep')) console.log(`gate: sweep ${sweep === 'full' ? 'in full' : `the pin alone (${PIN_TEST}); every sweep test at a phase review`}`);
+  if (stages.includes('test:sweep')) console.log(`gate: sweep ${sweep === 'full' ? 'in full' : `the pin alone (${PIN_TEST}); every sweep test in npm run check:full`}`);
   for (const stage of stages) {
     if (stage === 'test') {
       const red = unitRedTwice(unit.mode === 'related' ? unit.files : undefined);
