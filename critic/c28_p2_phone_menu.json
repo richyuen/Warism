@@ -1,0 +1,162 @@
+{
+ "btn": [
+  120.4140625,
+  784.53125,
+  211.5234375,
+  806.96875
+ ],
+ "menu": {
+  "r": [
+   120,
+   535,
+   297,
+   777
+  ],
+  "display": "flex",
+  "visibility": "visible",
+  "z": "8",
+  "opts": [
+   {
+    "id": "mapmode-opt-political",
+    "r": [
+     125,
+     540,
+     292,
+     562
+    ],
+    "hitIsIt": true,
+    "hit": "mapmode-name"
+   },
+   {
+    "id": "mapmode-opt-alliances",
+    "r": [
+     125,
+     562,
+     292,
+     583
+    ],
+    "hitIsIt": true,
+    "hit": "mapmode-name"
+   },
+   {
+    "id": "mapmode-opt-puppets",
+    "r": [
+     125,
+     583,
+     292,
+     604
+    ],
+    "hitIsIt": true,
+    "hit": "mapmode-name"
+   },
+   {
+    "id": "mapmode-opt-terrain",
+    "r": [
+     125,
+     604,
+     292,
+     625
+    ],
+    "hitIsIt": true,
+    "hit": "mapmode-name"
+   },
+   {
+    "id": "mapmode-opt-wars",
+    "r": [
+     125,
+     625,
+     292,
+     646
+    ],
+    "hitIsIt": true,
+    "hit": "mapmode-name"
+   },
+   {
+    "id": "mapmode-opt-diplomacy",
+    "r": [
+     125,
+     646,
+     292,
+     667
+    ],
+    "hitIsIt": true,
+    "hit": "mapmode-name"
+   },
+   {
+    "id": "mapmode-opt-income",
+    "r": [
+     125,
+     667,
+     292,
+     688
+    ],
+    "hitIsIt": true,
+    "hit": "mapmode-name"
+   },
+   {
+    "id": "mapmode-opt-revolts",
+    "r": [
+     125,
+     688,
+     292,
+     709
+    ],
+    "hitIsIt": true,
+    "hit": "mapmode-name"
+   },
+   {
+    "id": "mapmode-opt-seaControl",
+    "r": [
+     125,
+     709,
+     292,
+     730
+    ],
+    "hitIsIt": true,
+    "hit": "mapmode-name"
+   },
+   {
+    "id": "mapmode-opt-airControl",
+    "r": [
+     125,
+     730,
+     292,
+     751
+    ],
+    "hitIsIt": true,
+    "hit": "mapmode-name"
+   },
+   {
+    "id": "mapmode-opt-fallout",
+    "r": [
+     125,
+     751,
+     292,
+     772
+    ],
+    "hitIsIt": true,
+    "hit": "mapmode-name"
+   }
+  ],
+  "anc": [
+   {
+    "cls": "",
+    "overflowX": "visible",
+    "overflowY": "visible"
+   },
+   {
+    "cls": "",
+    "overflowX": "hidden",
+    "overflowY": "hidden"
+   },
+   {
+    "cls": "",
+    "overflowX": "hidden",
+    "overflowY": "hidden"
+   }
+  ]
+ },
+ "tapTerrain": "clicked",
+ "modeAfter": "terrain",
+ "errors": []
+}

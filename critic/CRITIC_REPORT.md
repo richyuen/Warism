@@ -1,201 +1,245 @@
-# Critic report, run 27 (focused)
+# Critic report, run 28 (full)
 
-- **Mode: focused.** Decided from git before anything else (CRITIC_PROMPT, ADR-804): run 26 had a blocking issue
-  (R26-B1) and a score under its bar (diplomacy 6); every commit since run 26's `33c84306` is either a PLAN task that run
-  26's commit filed (`675408e7` "Critic run 26 ...; PLAN 7.191, 7.192" → `223cfcdf` PLAN 7.191, `60d1ef05` PLAN 7.192)
-  or changes nothing under `src/`, `data/`, `public/` (`89170c03` ADR-803, `15b7b08b` ADR-804); run 26's JSON has no
-  `mode`, so it counts as full. Scored afresh: **Diplomacy** (under bar, blocking), and what the diff touches:
-  `war.ts`, `puppets.ts`, `alliances.ts` (Emergent dynamics, Stability, God Mode), `standing.ts`, `NationMenu.tsx`,
-  `ActionsTab.tsx`, `App.tsx`, `en.json` (UI/UX), `history.ts`, `sound.ts` (Stats and history). **Carried** from run 26:
-  Map visuals, Editor, Performance, Semantic zoom, Naval, Tanks, Aircraft, AI nukes. A clean focused run is to be
-  followed by a full run (the DONE CONDITION needs a full run with no blocking issue).
-- **Commit:** `15b7b08b127551faeb7b503fdc9ee0b4a1fd9e78` (HEAD at the start, `critic/c27_commit.txt`).
+- **Mode: full.** Decided from git before anything else (CRITIC_PROMPT, ADR-804): the last report (run 27, focused, on
+  `15b7b08b`) has **no blocking issue and no score under its bar**, so the first condition for a focused run fails. (The
+  only commit since is `73c531b6`, run 27's own report, which changes nothing under `src/`, `data/`, `public/`.) Every
+  dimension is scored afresh; nothing is carried.
+- **Commit:** `73c531b65d1cdd43e2150c8dbf6647155cac52b7` (HEAD at the start, `critic/c28_commit.txt`).
 - **Date:** 2026-11-02.
-- **Build:** `vite build --outDir critic/c27_dist`, exit 0 (`critic/c27_build.log`), served by `vite preview` on
-  127.0.0.1:**5299**; run 26's build (`critic/c26_dist`, `33c84306`) on **5298** for before/after. Run 26's commit in
-  `critic/wt` for the headless before/after (junction removed before `git worktree remove`). Chromium through
-  Playwright, headless, 1400 × 800 / 1600 × 900; 390 × 844 for the phone probe.
-- Every path below was made in this run (`c27`) unless it names `c26`. Scripts: `critic/scripts/c27_*` (run 26's
-  re-run probes copied with the ports and labels changed; new: `c27_bx.ts`, `c27_or.ts`, `c27_or1.ts`, `c27_or2.ts`,
-  `c27_rj.ts`, `c27_al.ts`, `c27_rv.mjs`, `c27_ppr.mjs`). JSON comparison of every re-run probe: `critic/c27_cmp.txt`.
+- **Build:** `vite build --outDir critic/c28_dist`, exit 0 (`critic/c28_build.log`); **byte-identical to run 27's build**
+  (`diff -rq critic/c27_dist critic/c28_dist`: no difference). Served by `vite preview` on 127.0.0.1:**5299**. Because
+  HEAD's source equals run 27's commit, the "before" of every re-run case is run 27's own file (`critic/c27_*`), or run
+  26's (`critic/c26_*`, commit `33c84306`) for the probes run 27 did not re-run; no worktree was needed. Chromium through
+  Playwright, headless, 1600 × 900 (1400 × 800 for menus), 390 × 844 touch for the phones.
+- **Runs:** run 27's and run 26's probe suites re-run on HEAD (`critic/scripts/c28_suite1.sh`, `c28_suite2.sh`,
+  `c28_clicks.sh`, `c28_misc.sh`, `c28_new.sh`, `c28_page.sh`, `c28_tail.sh`; headless `c28_hq.sh`). The JSON of each
+  re-run probe against the last run that had it: `critic/c28_cmp.txt` (**69 identical**; the rest differ only in
+  live-speed timing, below). New this run (`c28_hq2.sh`, `c28_loy.ts`, `c28_pg2_played.mjs`, `c28_rw.mjs`,
+  `c28_an_ainuke.mjs`, `c28_phz.mjs`, `c28_pup_panel.mjs`, the builder's `tools/diag/diploInvariants.ts` on three new
+  seeds): a played game, the title-screen path into the random world, an AI hydrogen bomb met in the page, every zoom
+  tier on a phone, puppet loyalty over 3 × 30 years, two new seeds × 30 years, integrity and bonded Force wars on new
+  seeds.
+- Every path below was made in this run (`c28`) unless it names `c26` / `c27`.
 
 ## Verdict
 
-**R26-B1 is fixed, cleanly, and R25-B1 stays closed.** A puppet's Force war on its overlord, an ally's on its ally and a
-puppet's revolt now go through: Manchukuo and Albania leave their overlords' wars (`WarLeft` rows), break the bond and
-declare, headless and in the page; God's revolt makes "Manchukuo rose against Japan" and a war of independence; refusals
-for `Beside` fall from 52–78 % of puppet / ally days to **0 on all 4 seeds**. Poland's war on France (no bond) is still
-refused 3 of 3 in the page and 3 of 3 headless, and the AI world is **bit-identical** to run 26's (7019 × 20 years: 20 of
-20 yearly hashes equal; 4 seeds × 365 days identical). Run 26's non-blocking 1–3 (ticker, the bond hidden by "Fights
-beside you", "Propose alliance" live where refused) are fixed and visible. Diplomacy goes back to **7**.
+**No blocking issue. Every dimension at its bar; no score moves.** The game is the same game as run 27 (byte-identical
+build), and it reproduces: 7019 × 20 years headless **20 of 20 yearly hashes equal** to run 27's, every deterministic
+probe identical, the ten-year page watch the same world at 59.8–60 fps. The new seeds and the new probes found no new
+blocking fault. They did find two things the last reports under-weighted, both non-blocking:
 
-What the new door opened, found by trying **all 1,602 bonded Force wars** on 4 seeds × 3 days: 1,592 clean wars, 9
-legitimate `Overrun` refusals, and **one** that leaves a nation on both sides of the Soviet Union's wars for 60+ days
-(non-blocking 2; the builder's own ADR-803 checker, sampling 6 a kind, reports 0 broken on the same seed and days). And
-the exit sets no truce: an hour after Germany's Force war on Italy took it out of the Polish war with every cell back,
-its declaration on Poland is accepted, from a clean border (non-blocking 1). No
-blocking issue in this focused run.
+1. **No AI puppet ever revolts.** Over 3 seeds × 30 years (43,101 puppet-months, 242 puppets made), the lowest loyalty a
+   puppet with autonomy ≥ 10 ever had was **30.5**; the SPEC's revolt line is 20; **0 revolts**. By the SPEC's own
+   numbers it cannot happen: loyalty relaxes toward 40 + 0.6 × autonomy, at most 25 lower while the overlord loses, so
+   at autonomy ≥ 10 the floor is 21. The war of independence that runs 26–27 fought over exists only through God's
+   loyalty slider.
+2. **R27-N2 (a bonded Force war calling a nation in beside its enemy) is not one-in-1,602:** on new seed 1777 it shows
+   in 3 of the bonded Force wars tried (days 200 and 350), and the builder's own ADR-803 checker reports **7 broken
+   pairs** on new seed 8209 (random diplomacy, heroes). Still a command's (God / player) only: the AI reaches no
+   such state in 5 seeds × 730 days (BOTH: 0 findings).
 
 ## Scores
 
-| Dimension | Run 26 | Run 27 | |
+| Dimension | Run 27 | Run 28 | |
 |---|---|---|---|
-| Map visuals and readability | 7 | 7 | carried |
-| Diplomacy, war, alliance, puppet, revolt depth | 6 | **7** | rescored |
+| Map visuals and readability | 7 | 7 | rescored |
+| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 | rescored |
 | Emergent world dynamics over long runs | 7 | 7 | rescored |
 | God Mode | 7 | 7 | rescored |
-| Editor and scenarios | 7 | 7 | carried |
+| Editor and scenarios | 7 | 7 | rescored |
 | Stats and history | 7 | 7 | rescored |
 | UI/UX and polish | 7 | 7 | rescored |
-| Performance | 7 | 7 | carried |
+| Performance | 7 | 7 | rescored |
 | Stability | 7 | 7 | rescored |
-| Semantic zoom to unit level (needs 8) | 8 | 8 | carried |
-| Naval warfare (needs 8) | 8 | 8 | carried |
-| Tanks (needs 8) | 8 | 8 | carried |
-| Aircraft (needs 8) | 8 | 8 | carried |
-| AI nuclear use (needs 8) | 8 | 8 | carried |
+| Semantic zoom to unit level (needs 8) | 8 | 8 | rescored |
+| Naval warfare (needs 8) | 8 | 8 | rescored |
+| Tanks (needs 8) | 8 | 8 | rescored |
+| Aircraft (needs 8) | 8 | 8 | rescored |
+| AI nuclear use (needs 8) | 8 | 8 | rescored |
 
-**One score moves: Diplomacy 6 → 7**, because R26-B1's cases now pass on the same seeds and days where they failed on
-run 26's build (table below), with run 26's non-blocking 1–3 fixed and R25-B1 still closed. Not 8: nothing here shows
-diplomacy deeper than AoC's; guarantees still only shrink (non-blocking 5) and the bond's exit resets a front with no
-truce (non-blocking 1).
+**No score moves**: the build is byte-identical to run 27's and every case that scored it reproduces on the same seeds
+(table below). The two findings above are counted on new seeds (or by a new measure, LOY) and are "new seeds, not
+compared" in the sense of the brief; they hold Diplomacy at 7 (not 8) rather than move it.
 
-## Run 26's cases re-run
+## Run 27's cases re-run
 
-| Run 26 case | On HEAD | Evidence |
+| Run 27 case | On HEAD | Evidence |
 |---|---|---|
-| **R26-B1, PR: Manchukuo / Albania Force war on the overlord (7019, day 30), headless, both commits** | **Fixed.** HEAD: `WarLeft MAN CHI`, `WarLeft MAN REP`, `WarLeft MAN LIT`, `PuppetReleased`, `BondsBroken`, `WarDeclared MAN JAP`; free, at war with Japan. Albania the same (left the Spanish Republic's and Lithuania's wars, declared on Italy). Run 26's commit, same run: `WarRejected`, still a puppet. | `critic/c27_pr_head_7019_{MAN,ALB}.json` against `critic/c27_pr_c26_7019_{MAN,ALB}.json` |
-| **R26-B1, PR: God's revolt (loyalty 0, autonomy 60)** | **Fixed.** `PuppetRevolt MAN JAP`, three `WarLeft`, `WarDeclared MAN JAP`: a war of independence against Japan and Mengjiang. Run 26's commit: `PuppetRevolt` then `WarRejected`, the rebel free and still fighting beside Japan. | same files, `revolt` |
-| **R26-B1, PZ: how often a puppet's / ally's Force war is refused for Beside, 4 seeds × 365 days** | **Fixed: 0 of 16,320 / 14,658 / 15,686 / 15,118 puppet-days and 0 of 10,153 / 10,623 / 9,588 / 7,786 allied-pair days** (run 26: 73 / 78 / 59 / 76 % and 66 / 65 / 54 / 52 %). What is left is `Subject` (the bond `forceWar` breaks) and `Truce`. | `critic/c27_pz_{7019,2207,5113,9241}.json` against `critic/c26_pz_*.json` |
-| **R26-B1, PP in the page: playing Manchukuo, both builds** | **Fixed.** HEAD: Japan's menu "Your overlord · fights beside you", **Force war** live, Propose alliance greyed; after it: "Manchukuo left its war with China / Spanish Republic / Lithuania", "broke its puppet bond with Japan", "declared war on Japan"; Japan "At war / Offer peace". Run 26's build (5298), same day: "Fights beside you", "Declare war" greyed. Albania on Italy: the same on HEAD. | `critic/shots/c27pp_head_7019_MAN_menu_before.png`, `critic/shots/c27pp_head_7019_MAN_menu_after.png`, `critic/shots/c27pp_c26_7019_MAN_menu_before.png`, `critic/c27_pp_head_7019_ALB.json` |
-| **R26-B1, FW2 (2207): Albania's war on Italy** | **Fixed.** Italy "Your overlord · fights beside you", "Force war" (run 26: greyed, the probe's `fatal`). Both cases now run. | `critic/c27_fw2_2207.json` against `critic/c26_fw2_2207.json`, `critic/shots/c27fw_2207_B_menu.png` |
-| **R25-B1, EXIT (Poland on France, day 45, 3 seeds) and ES2 in the page** | **Still closed.** EXIT identical to run 26 (refused, Poland in its war, the hold unchanged); ES2 3 of 3: France "Fights beside you", "Declare war" greyed with the reason as its title. | `critic/c27_exit_head_{7019,2531,8467}.json` (identical), `critic/shots/c27es2_head_7019_d10_framenu.png` |
-| **COBEL: Germany Force-wars its ally Italy at day 61, both at war with Poland** | **Now allowed, as R26-B1's fix asked:** `WarLeft GER POL`, `WarDeclared GER ITA`; Germany out of the Polish war, every held cell back both ways (Poland's 250 German, Germany's 133 Polish). Run 26: refused. See non-blocking 1. | `critic/c27_cobel_head_GER_ITA_POL.json` against `critic/c26_cobel_head_GER_ITA_POL.json` |
-| **ES (playing Germany, Force war on Italy at day 61)** | Italy's menu "**Allied · fights beside you**" (run 26: "Fights beside you"); after it the ticker reads "Germany left its war with Poland", "broke its alliance with Italy", "declared war on Italy"; Poland "Neutral", its land unhatched. | `critic/shots/c27es_head_7019_d61_itamenu.png`, `critic/shots/c27es_head_7019_d61_polmenu_after.png` |
-| **Non-blocking 1: the ticker tells neither a war left nor a revolt** | **Fixed.** Watching 7019, God's revolt of Manchukuo: "1 February 1938 Manchukuo rose against Japan", three "left its war with …", "declared war on Japan" in the ticker. | `critic/shots/c27rv_head_7019_MAN_watch_ticker.png`, `critic/c27_rv_head_7019_MAN_watch.json` |
-| **Non-blocking 2: "Fights beside you" hides the bond** | **Fixed.** "Your overlord · fights beside you", "Allied · fights beside you". | shots above |
-| **Non-blocking 3: "Propose alliance" live to one's overlord or a partner** | **Fixed, nearly everywhere.** Greyed to Japan from Manchukuo, to France from Poland. Against the sim's own verdict on 7019 (≈1,450 sampled pairs a day, days 30 and 120): 996 + 1,016 greyed and refused, 452 + 438 live and accepted, **0** greyed but acceptable, **2** live but refused (non-blocking 3). | `critic/c27_al_7019.json` |
-| **Non-blocking 4: guarantees only the start's** | **Unchanged.** BS identical to run 26 on 4 seeds; 7019 ends the year with 4 (FRA>POL, ENG>POR, ENG>IRQ, SOV>CHI). | `critic/c27_bs_head_7019.json` |
-| **BS: the AI's year one, 4 seeds × 365 days, both commits** | **Identical**: every count, row, daily hash and guarantee on 7019, 2531, 8467, 3739. The AI never calls `forceWar` (`src/sim/tick.ts:260` is its only caller, a command). | `critic/c27_bs_head_*.json` against `critic/c27_bs_c26_*.json` |
-| **BOTH: war-list integrity in AI play, 3 seeds × 730 days** | 0 findings on 5113, 6151, 9241, identical to run 26. | `critic/c27_both_head_{5113,6151,9241}.json` |
-| **World dynamics, 7019 × 20 headless** | **Bit-identical to run 26: 20 of 20 yearly hashes equal**; 176 war-years, 197 sea battles, 9 bursts, 83 living at y20; no AI puppet revolt in 20 years (so the new revolt path is not reached by the AI on this seed). | `critic/c27_dyn.json`, `critic/c27_headless_7019.json` |
-| **LW: 10 years in the page (6151)** | Same world as run 26 (the war chips equal 9 of 10 years); 59.9–60 fps every year, longest frame gap 83 ms, none over 500 ms, no page error. | `critic/c27_lwdef_6151.json`, `critic/c27_lw_6151.log` |
-| BT (desktop, phone), GU, K2, K3, DR | Identical to run 26. | `critic/c27_cmp.txt` |
-| PG (3739 panels; 7019 day 33) | 3739's panels as run 26 (GRE / TUR not re-asked: my argument list differed). 7019 day 33: Poland "Guaranteed by France"; History type "War left" in the filter. | `critic/c27_pg_3739_desk.json`, `critic/c27_pg_7019_wl.json` |
-| Not re-run in this focused run | The carried dimensions' probes (Q, A, Z, C, CB, CB2, WW, SB, W, PL, FO, HV, HS, SX, SXG, SXT, HU, PF, G, OS, the 30-year seeds). Their issues stand as run 26 wrote them. | run 26's report |
+| R26-B1, PR: Manchukuo / Albania Force war on the overlord; God's revolt (7019, day 30) | **Identical** to run 27: `WarLeft` rows, `PuppetReleased`, `BondsBroken`, `WarDeclared MAN JAP`; the revolt's war of independence. Still fixed. | `critic/c28_pr_head_7019_{MAN,ALB}.json` (identical to `c27_`) |
+| R26-B1, PZ (4 seeds × 365 days) | **Identical**: 0 refusals for `Beside` on 7019, 2207, 5113, 9241. | `critic/c28_pz_{7019,2207,5113,9241}.json` |
+| R26-B1, PP / FW / FW2 in the page | **Identical** (menus, ticker rows, "Your overlord · fights beside you", Force war live). | `critic/c28_pp_head_7019_{MAN,ALB}.json`, `critic/c28_fw2_2207.json`, `critic/shots/c28pp_head_7019_MAN_menu_after.png` |
+| R25-B1, EXIT (3 seeds), ES, ES2 (3 seeds), COBEL | **Identical**; Poland's war on France still refused, menus as run 27. | `critic/c28_exit_head_{7019,2531,8467}.json`, `critic/c28_es2_head_*_d10.json`, `critic/c28_cobel_head_GER_ITA_POL.json` |
+| R27-N1, BX: the bond's exit resets a front, no truce | **Identical** (Germany out of the Polish war with 383 cells back both ways; Italy's peace on day 37; Poland on Romania stays in its other war). Unchanged. | `critic/c28_bx_head_7019_GERatk_ITA.json`, `critic/c28_bx_head_7019_POL_ROM.json`, `critic/c28_bx_head_2531_POL_ROM.json` |
+| R27-N2, OR / OR2: Mongolia on Romania (7019 day 300); every bonded Force war on 4 seeds | **Identical**: 1,602 tried, 1,592 clean, 9 `Overrun`, 1 broken; OR2 the same war lists for 60 days. **New seeds: worse** (next table). | `critic/c28_or_{7019,2207,5113,9241}.json`, `critic/c28_or2_head_7019_MON_ROM.json` |
+| R27-N3, AL: live "Propose alliance" the sim refuses | **Identical at run 27's stride (7)**: POL>REP and SWI>REP at day 30. **Every pair (stride 1): 4 of 10,148 at day 30 (POL, SWI, BEL, LUX > Spanish Republic) and 1 of 10,178 at day 120 (Portugal > Brazil)**; 0 greyed but acceptable. | `critic/c28_al_7019_s7.json`, `critic/c28_al_7019_all.json` |
+| R27-N4: one Force war floods the ticker | Unchanged (PP identical, five rows at once). | `critic/shots/c28pp_head_7019_MAN_menu_after.png` |
+| R27-N5, BS: guarantees only the start's (4 seeds × 365 days) | **Identical** on 7019, 2531, 8467, 3739. | `critic/c28_bs_head_*.json` |
+| BOTH: war-list integrity in AI play (5113, 6151, 9241 × 730 days) | **Identical**: 0 findings. | `critic/c28_both_head_*.json` |
+| World dynamics, 7019 × 20 headless | **Bit-identical: 20 of 20 yearly hashes equal**; 176 war-years, 197 sea battles, 9 bursts, 82 revolts, 96 → 83 living. | `critic/c28_dyn.json`, `critic/c28_headless_7019.json` |
+| LW: 10 years in the page (6151) | Same world (nation counts equal in 9 of 10 years, the closing fight at the same spot within 0.2 cells); **59.8–60 fps every year, longest frame gap 83 ms, none over 500 ms, no page error**, beside headless runs. | `critic/c28_lwdef_6151.json`, `critic/shots/c28lwdef_6151_y10_world.png` |
+| BT, GU, K2, K3, DR, PG, TD | Identical. | `critic/c28_cmp.txt` |
+| Run 26's probes run 27 carried (Q, A, K, Z, C, CB, CB2, WW, SB, W, PL, FO, HV, HS, SX, SXG ×2, SXT, HU, P, P2, P3, PH, TG, U, OS, OS2, FT, FP2, EX2, DL, HI, PF) | **Identical** to run 26 for Q, K, CB, CB2, SX, SXG, SXT, HU, HS, P, P2, P3, PH, TG, PL, PT, OS2 (c10), DL, HI, EX2, FT, FP2. **Live-speed timing only** for A (a random seed number on the title), C (one sortie more in two views), Z (one camera rounding), FO (0.2 px), SB (ticks one later), W (the 250 m/px samples one tick later), HV (samples at speed), OS2 (load time). G ends in the same 900 s wait at its 120-day mark as run 26 (likely the default pause on a nuclear strike, since the probe gives Poland warheads; not verified, and the same on run 26's build). PF: the same save and fight as run 26, the same frame rates within noise (120 m/px 38.9 / 36.9, 30 m/px 37.9 / 39.5 balls / Classic; run 26: 40.5 / 37.5, 38.9 / 39.9; 3000–600 m/px 60). | `critic/c28_cmp.txt`, `critic/c28_pf_7019.json` against `critic/c26_pf_7019.json`, `critic/c28_g_4877.json` |
 
 ## New in this run
 
 | Case | What happened | Evidence |
 |---|---|---|
-| **OR: every bonded Force war the fix lets through, 4 seeds × days 30 / 120 / 300** | From one saved state per day, every pair (a, b) where a fights beside b (or b's overlord) and a bond ties them (up to 150 a day, evenly sampled): **1,602 tried, 1,592 clean wars** (a at war with b, out of every war beside it, no integrity break); 9 refused for `Overrun` (France, England and Dutch colonies on the overrun Netherlands, 2207 day 300; checked: `overrun` true, a rule older than this change); **1 broken** (next row). | `critic/c27_or_{7019,2207,5113,9241}.json`, `critic/c27_rj_2207.log` |
-| **OR2: Mongolia (Soviet puppet) Force-wars Romania (Soviet puppet), 7019 day 300** | Mongolia leaves the Soviet war on Yugoslavia, goes free, declares; the war it starts is `MON v SOV+LAT+EST+FIN+ROM+SIN+TAN+YUG`: **Yugoslavia is called in beside the Soviet Union while at war with it in war #25.** Five pairs (SOV, LAT, EST, SIN, TAN with YUG) are allies in one war and enemies in another **for all 60 days followed**. Run 26's commit: `WarRejected`. | `critic/c27_or2_head_7019_MON_ROM.json` against `critic/c27_or2_c26_7019_MON_ROM.json` |
-| **The builder's ADR-803 checker on the same seed and days** | `tools/diag/diploInvariants.ts 7019 scenario 310 30,120,300 6`: "0 broken". Its `realm` rule names this case ("no nation at war with one it fights beside"), but at 6 a kind it did not try Mongolia on Romania. | `critic/c27_diploinv_7019.log` |
-| **BX: what the bond's exit costs** | Germany (attacker on Poland, Italy called in) Force-wars Italy at day 61 of its Polish war, offering Italy peace every day: out of the Polish war with all land back (Poland held 250 German cells, Germany 133 Polish), no truce with Poland (the AI's Poland does not re-declare in 60 days; Germany's own re-declaration an hour later is accepted, 0 / 0 held, `critic/c27_bx_head_7019_GERatk_ITA_redecl.json`); Italy takes at most 11 German cells and **signs peace on day 37**; Germany is in the Anglo-French alliance by day 50. On run 26's commit the same Germany stays in and ends the war annexing Polish land (3,606 cells at day 101). Poland on Romania (allies, 7019): Romania not beside it against the Soviet Union, so Poland stays in that war (907 cells held, rising): the exit is only from wars the partner is in. | `critic/c27_bx_head_7019_GERatk_ITA.json` against `critic/c27_bx_c26_7019_GERatk_ITA.json`, `critic/c27_bx_head_7019_POL_ROM.json`, `critic/c27_bx_head_2531_POL_ROM.json` |
-| **RV / PPR: the revolt in the page, watching and playing** | Watching: the five rows above in the ticker. Playing Manchukuo: Manchukuo "AT WAR WITH Japan, Mengjiang"; the rows are in the ticker (the panel covers half of it in the shot). | `critic/shots/c27rv_head_7019_MAN_watch_ticker.png`, `critic/shots/c27pp_headrev_7019_MAN_panel_after.png` |
+| **LOY: can an AI puppet revolt? 3 seeds (7019, 3163, 1777) × 30 years, every month** | 12,249 / 13,418 / 17,434 puppet-months; **0 months with loyalty under 20; lowest loyalty at autonomy ≥ 10: 30.5 / 31.2 / 31.6** (Manchukuo under Japan each time); `PuppetCreated` 64 / 76 / 102, `PuppetReleased` 42 / 38 / 46, `PuppetIntegrated` 10 / 8 / 6, **`PuppetRevolt` 0 / 0 / 0**. `src/sim/systems/puppets.ts`: loyalty changes only by relaxing 0.2 a month toward `40 + 0.6 × autonomy − (25 if the overlord is losing)`, so at autonomy ≥ 10 it never goes under 21. | `critic/c28_loy_{7019,3163,1777}.json` |
+| **OR on new seeds: every bonded Force war, 1777 and 8209, days 60 / 200 / 350** | 1777: **3 broken** (day 200: Turkey on Yugoslavia leaves Bulgaria + Romania and Greece + Romania on both sides; day 350: Romania on Finland and Mongolia on Finland, both Soviet puppets, call Norway and Poland in beside the Soviet Union while at war with it, 8 pairs each). 8209: 0 broken. | `critic/c28_or_new_1777.json`, `critic/c28_or_new_8209.json` |
+| **The builder's ADR-803 checker on 3 new seeds, 400 days, 20 a kind** | 1777 (scenario diplomacy): 0 broken. 5521 (random world): 0 broken. **8209 (random diplomacy, heroes): 7 broken**: "HUN forceWar on POL: realm: SOV and NOR beside each other in war 27 and at war" (and ROM, CZS, YUG, SIN, MON, TAN with NOR). | `critic/c28_diploinv_8209r.log`, `critic/c28_diploinv_1777.log`, `critic/c28_diploinv_5521w.log` |
+| **BOTH on new seeds: 1777, 8209 × 730 days, AI only** | 0 findings on both. The AI does not reach R27-N2's state. | `critic/c28_both_new_{1777,8209}.json` |
+| **New seeds 1777 and 8209 × 30 years (new seeds, not compared)** | 1777: 97 → 72 nations, 1–13 wars a year, 248 sea battles, 3 bursts, 75 revolts, 300 declarations. 8209: 96 → 86, 2–12 wars, 180 sea battles, **19 bursts**, 120 revolts, 337 declarations; Czechoslovakia 9.2 % of the land at year 20, Germany 14.8 % at 30. The Soviet Union first or second on every seed at years 10, 20, 30 (33.6 % on 1777 at the end). Mean tick 3.1–3.3 ms (several runs at once, unpinned), longest 209–227 ms. | `critic/c28_headless_{1777,8209}.json` |
+| **PG2: a played game. Italy on new seed 4583, war on Yugoslavia from the Actions tab, 24 months at Max** | The war button and standing work ("Neutral" → war; Germany "Allied · fights beside you", alliance greyed "they are allies."). With every AI box ticked (ADR-759), Italy's own AI then declares on Colombia (June 1938), and its alliance drags it into the Soviet–German war; **Italy's men fall from 958,706 to 21,048**, the Soviet Union takes Rome on 1 May 1939, its land falls from 3.66 M to 2.62 M km²; at war with 32 nations at the end. Peace offered on months 8, 12, 16, 20, 24 (the first war row each time, Italy's own or its alliance's): never accepted, and no refusal line in the Actions tab in the shot taken seconds after (`c28pg2_4583_ITA_m12_panel.png`; the war row stays). No page error in 24 months. | `critic/c28_pg2_4583_ITA.json`, `critic/shots/c28pg2_4583_ITA_00_actions.png`, `critic/shots/c28pg2_4583_ITA_m12_panel.png`, `critic/shots/c28pg2_4583_ITA_end_region.png` |
+| **RW: the first-run path, title screen → random world (6143, 80 nations), 3 years at Max** | Title shows "World, 1938", "Random world", "Scenario file"; the random world's form (seed, nations, size, looping, aggression…) and Start; boot **3.1 s**; 80 nations, 78 after 3 years; **59.9–60 fps** each year (longest gap 17–100 ms); the zoom series down to 25 m/px over a fight shows countryballs in the random nations' flags; a click opens the formation panel. No page error. The form's options read "As in the scenario" on a world that has no scenario. | `critic/c28_rw_6143.json`, `critic/shots/c28rw_6143_01_random_detail.png`, `critic/shots/c28rw_6143_y1_world.png`, `critic/shots/c28rw_6143_zoom_00025.png` |
+| **AN: an AI nuclear strike met in the page (7019's year-20 save, default "pause on a strike")** | On 8 December 1958 the game pauses itself: "**United Kingdom struck United States with a hydrogen bomb near Suez: 7,000 civilians killed; 79,348 men and 289 guns lost**", Go to / ×; Go to flies to the Gulf of Suez, the scorched area and its ash over a 146.9 k American stack; the ticker carries the same row. One strike in the 400 days run. | `critic/c28_an_7019y20.json`, `critic/shots/c28an_7019y20_0_alert.png`, `critic/shots/c28an_7019y20_0_goto.png`, `critic/shots/c28an_7019y20_0_z00600.png` |
+| **PHZ: every zoom tier on a phone (2671, day 40, the China front)** | 30,000 → 25 m/px: no horizontal overflow at any tier; elements drawn from 800 m/px (1,095) down; a tap at the centre opens the formation panel (Chinese Light infantry division 447, "In contact ⚔ To its fight"). At 60 m/px the formation tags stack over each other down the screen; at 800 m/px counters' numbers are clipped by their neighbours. | `critic/c28_phz_2671.json`, `critic/shots/c28phz_2671_00060.png`, `critic/shots/c28phz_2671_tap.png` |
+| **PUP: what the player reads of a puppet bond (4583, day 60)** | Manchukuo: "PUPPET OF Japan · Autonomy 21 · Loyalty 52 · Integration 7 %"; Japan: "PUPPETS Manchukuo, Mengjiang". Clear, as AoC's integration bar. | `critic/c28_pup_4583.json`, `critic/shots/c28pup_4583_MAN_panel.png` |
 
 ## Dimensions
 
-### Diplomacy, war, alliance, puppet, revolt depth: 7 (was 6; rescored)
-- **Tested:** PR, PZ (4 seeds), PP, PPR, RV, FW, FW2, EXIT, COBEL, ES, ES2 (3 seeds), BT, GU, DR, BS (4 seeds, both
-  commits), BOTH (3 seeds), OR (1,602 bonded Force wars), OR2, BX (3 cases, both commits), AL (2,904 alliance
-  proposals against `allyWhy`).
-- **Evidence:** `critic/c27_pz_7019.json`, `critic/c27_pr_head_7019_MAN.json`,
-  `critic/shots/c27pp_head_7019_MAN_menu_before.png`, `critic/shots/c27rv_head_7019_MAN_watch_ticker.png`,
-  `critic/c27_or_7019.json`, `critic/c27_al_7019.json`.
-- **Why 7:** ADR-780's "war can be declared no matter what" holds again for puppets and allies, the SPEC's war of
-  independence happens, and the partner with no bond is still refused (R25-B1). The menus say what ties the two.
-- **What AoC does better** (text only, lower confidence): nothing new measured; AoC's diplomacy is shallower, but its
-  guarantees and alliances are not frozen at the start (non-blocking 5).
-- **Fix:** non-blocking 1, 2, 3, 5.
+### Map visuals and readability: 7
+- **Tested:** Z, CB, CB2, TG, HV, HS, SX, SXG (identical or timing only), RW's random world, PG2's played map, AN's strike,
+  PHZ. **Evidence:** `critic/c28_z_5861.json`, `critic/shots/c28rw_6143_y1_world.png`,
+  `critic/shots/c28pg2_4583_ITA_end_region.png`, `critic/shots/c28phz_2671_00060.png`.
+- Readable political map with curved names, flags, hatched occupation, a legend; the random world as clean as 1938.
+- **What AoC does better:** its pixel map reads at a glance with fewer overlaps (`reference/screens/steam-screenshot-03.jpg`);
+  here the phone's 60 m/px tags pile up and counters clip each other at 800 m/px (PHZ); the United States' light blue in
+  the Sinai sits close to the sea's colour (`c28an_7019y20_0_z00600.png`). **Fix:** collision-avoid formation tags on
+  narrow screens.
 
-### Emergent world dynamics over long runs: 7 (rescored, unchanged)
-- 7019 × 20 bit-identical to run 26; BS identical on 4 seeds; LW 6151 the same world. The change touches commands and
-  the revolt path only, and no AI puppet revolted in 20 years. No new seeds × 30 years in this focused run.
+### Diplomacy, war, alliance, puppet, revolt depth: 7
+- **Tested:** PR, PZ, PP, FW, FW2, EXIT, ES, ES2, COBEL, BX, OR (4 + 2 seeds), OR2, AL (two strides), BS, BOTH (5 seeds),
+  GU, PG, DR, the builder's checker (3 new seeds), LOY (3 × 30 years), PG2, PUP.
+- **Why 7:** every case of runs 25–27 holds (bonds break into wars, the partner with no bond is refused, menus name the
+  bond). Not 8: no AI puppet revolts in 30 years (LOY), guarantees only shrink (BS), the bond's exit costs no truce (BX),
+  and a bonded Force war can still put a nation on both sides (OR, the checker).
+- **What AoC does better** (text only, lower confidence: `reference/text/AOC_TEXT_NOTES.md` §1.8): its puppets rebel when
+  disloyal or when land is demanded, and are released if they win; here that only happens by God's hand.
+- **Fix:** non-blocking 1–5.
 
-### God Mode: 7 (rescored, unchanged)
-- God's Force war of a puppet on its overlord or an ally on its ally now breaks the bond and declares (PR, PP); God's
-  loyalty 0 makes a revolt with its war (RV). One bonded Force war in 1,602 breaks the war lists (non-blocking 2).
-  God's Force war between partners with no bond: refused as in run 26 (BT, identical).
+### Emergent world dynamics over long runs: 7
+- 7019 × 20 bit-identical; two new seeds × 30 years: busy (1–13 wars a year, 180–248 sea battles, 75–120 revolts, 3–19
+  bursts) and different (Czechoslovakia and Germany rise on 8209; a single peace hands the United States ~7 % of the
+  world from the Soviet Union in 7019's year 20). LW and RW watched in the page.
+- **What AoC does better:** the Soviet Union is first or second on every seed (1777, 8209, 7019 at 10, 20, 30 years) and
+  swallowed Europe in 16 months in the played game (PG2); in AoC no nation is privileged by the map. No score change: the
+  same was true in runs 25–27.
 
-### Stats and history: 7 (rescored, unchanged)
-- `WarLeft` and `PuppetRevolt` are in the ticker now (RV, PP), and "War left" in the History filter (PG). A single Force
-  war writes five ticker rows at once (non-blocking 4).
+### God Mode: 7
+- Q (raze, revolt, found city, spawn, all identical to run 26), A (God's A- and H-bomb, identical but a title seed), K,
+  K2, K3, PUP's God tab (place, rename, treasury, CE lock, AI switch, nukes, revolts mode, diplomacy). God's Force war
+  between bonded partners breaks the war lists on 1777 and 8209 (non-blocking 2).
 
-### UI/UX and polish: 7 (rescored, unchanged)
-- "Your overlord · fights beside you", "Allied · fights beside you" read clearly; the greyed "Propose alliance" matches
-  the sim on 2,902 of 2,904 sampled pairs. The reason is still only a `title` (no hover on a phone; BT phone identical
-  to run 26).
+### Editor and scenarios: 7
+- G (place, warheads, export, reload, play) as run 26, ending in the same probe wait; OS / OS2 / old-save as before; RW:
+  the random world from the title screen boots in 3.1 s and plays clean for 3 years. **What AoC does better:** its
+  scenario editor has more painting and city tools (text, lower confidence). Minor: "As in the scenario" on the random
+  world's form.
 
-### Stability: 7 (rescored, unchanged)
-- No page error in any of 21 page runs (LW's ten years included); no crash in any headless run. One command reaches a
-  state the rules forbid and holds it for 60 days (non-blocking 2); not reached by the AI on 3 seeds × 2 years (BOTH)
-  or 7019 × 20 years.
+### Stats and history: 7
+- HI and DL identical to run 26 (3,717 rows, CSV and JSON); the land chart of 7019 shows the year-20 swing
+  (`critic/shots/c28hi_7019_charts.png`); PUP's panel shows autonomy, loyalty, integration. Non-blocking 4 (five rows for
+  one Force war) unchanged.
 
-### Carried from run 26 (not rescored)
-- **Map visuals 7, Editor 7, Performance 7, Semantic zoom 8, Naval 8, Tanks 8, Aircraft 8, AI nukes 8**: no file of
-  theirs changed. Seen in passing: LW 6151 at 59.9–60 fps for ten years (as run 26), the zoomed map and counters in the
-  PP / ES shots as before. Their run-26 evidence and issues stand.
+### UI/UX and polish: 7
+- U, P, P2, P3, PH, PT, TD, BT identical; PG2's played game and RW's first-run path new; PHZ on a phone. Clear: the
+  Actions tab, the standing line, the AI boxes. Weak: a refused peace offer says nothing in the Actions tab (PG2), a
+  greyed button's reason is a title only (no hover on a phone), the phone's overlapping tags.
+
+### Performance: 7
+- LW 59.8–60 fps for ten years beside headless runs; RW 59.9–60 fps for three; PF identical to run 26 within noise (60 fps
+  at 3000–600 m/px, 37–39 at 120 and 30 m/px over a fight); headless 2.3–4.4 ms a tick. **What AoC does better:** nothing
+  measured; the unit-level zooms stay under 60 over a fight.
+
+### Stability: 7
+- No page error in any of the page runs (24 months played, 10 + 3 years watched, the strike, the phone tiers); no crash in
+  any headless run (3 × 30 years twice, 20 years, 1–2-year probes). Deterministic: 69 probe JSONs identical, 20 of 20
+  hashes equal. A God / player command still reaches a forbidden war list (non-blocking 2); the AI does not (BOTH, 5
+  seeds × 2 years).
+
+### Semantic zoom to unit level: 8
+- **Evidence of superiority:** one continuous zoom from the world to men on the ground: Z identical to run 26
+  (`critic/c28_z_5861.json`); C's armour and infantry at 3000 → 10 m/px with tracers and aircraft
+  (`critic/shots/c28c_7019_arm_0025m.png`); the same in the random world (`critic/shots/c28rw_6143_zoom_00025.png`) and on
+  a phone (`critic/shots/c28phz_2671_00060.png`). AoC's unit visuals are cosmetic markers on a tile map
+  (`AOC_TEXT_NOTES.md`: "Unit visuals were added in v4.5.0 and are cosmetic only"). Not 9: tag clutter at the deepest
+  zooms on a phone.
+
+### Naval warfare: 8
+- SB (ships at 250 / 60 / 25 m/px in both looks; ticks one later than run 26), 180–248 sea battles in 30 years on the new
+  seeds, carrier strikes ashore and on ships in every ticker watched. AoC has no navy (text). **Evidence:**
+  `critic/shots/c28sb_7019_60m_balls.png`, `critic/c28_headless_{1777,8209}.json`.
+
+### Tanks: 8
+- C (armoured division at every zoom), FT / FP2 identical to run 26. **Evidence:** `critic/shots/c28c_7019_arm_0025m.png`.
+
+### Aircraft: 8
+- W (wings, sorties, missions from the Actions tab; timing only), PL identical; air battles monthly in every ticker
+  ("Germany and Soviet Union fought in the air this month: Germany lost 106 aircraft", PG2). **Evidence:**
+  `critic/c28_w_5557.json`, `critic/shots/c28w_5557_x1_250_1.png`, `critic/c28_pg2_4583_ITA.json`.
+
+### AI nuclear use: 8
+- **Fresh evidence this run:** the AI's hydrogen bomb met in the page, with the pause, the alert, Go to, and the strike's
+  scar (AN); 3 and 19 bursts in 30 years on the new seeds; God's bombs (A) identical. AoC has no nuclear weapons
+  (text). **Evidence:** `critic/shots/c28an_7019y20_0_alert.png`, `critic/shots/c28an_7019y20_0_goto.png`.
 
 ## Blocking issues, in priority order
 
-None in this focused run. R26-B1 is fixed (cases above). The next run must be full (the DONE CONDITION).
+None. This is a full run with no blocking issue.
 
 ## Non-blocking issues
 
-1. **The bond's exit is a one-click front reset** (new, PLAN 7.191). `leaveWarsBeside` hands every held cell back both
-   ways "as at a white peace" and sets **no truce** with the old enemy. COBEL / BX, 7019: Germany (Poland holding 250
-   German cells, Germany 133 Polish) Force-wars its ally Italy at day 61: out of the Polish war, all 383 cells back;
-   **an hour later Germany's "Declare war" on Poland is accepted** and the new war starts from a clean border (0 / 0
-   held) (`critic/c27_bx_head_7019_GERatk_ITA_redecl.json`). Without the re-declaration, Italy took at most 11 German
-   cells and signed peace on day 37 of Germany's daily offers (`critic/c27_bx_head_7019_GERatk_ITA.json`); the ES shot
-   shows the player's Poland "Neutral" with "Declare war" live right after (`critic/shots/c27es_head_7019_d61_polmenu_after.png`).
-   ADR-801 records the land rows ("the same rows and land as `leaveBondedWars`") and "the new war is the cost of the
-   exit", and is silent on a truce; run 26's fix text asked for "a truce with those wars' enemies if the exit is not to
-   be free". Not blocking: it needs a bonded partner in the same war, and the exit has a cost (a new war, the alliance
-   gone). Fix: a truce between the leaver and the enemies of each war it leaves (so no same-hour re-declaration), and
-   either the leaver's own land held by the old enemy stays held until a peace, or the exit counts as a lost peace.
-2. **A bonded Force war can call a nation in beside its enemy** (new, reached through PLAN 7.191). 7019 day 300:
-   Mongolia (a Soviet puppet) Force-wars Romania (a Soviet puppet): `declareWar` calls Yugoslavia, on Romania's account
-   (its ally or guarantor; not checked which), to the Soviet side although Yugoslavia is at war with the Soviet Union in war #25; five pairs are allies in one war and
-   enemies in another for 60+ days (`critic/c27_or2_head_7019_MON_ROM.json`; run 26's commit: refused,
-   `critic/c27_or2_c26_7019_MON_ROM.json`). 1 of 1,602 bonded Force wars (`critic/c27_or_*.json`); the ADR-803 checker
-   misses it at 6 a kind (`critic/c27_diploinv_7019.log`). Fix: in `declareWar`'s `add`, skip a nation already at war
-   with the leader (or a member) of the side it would join, as a truce partner is skipped; give the checker this case.
-3. **Two live "Propose alliance" buttons the sim refuses:** 7019 day 30, Poland → Spanish Republic and Switzerland →
-   Spanish Republic: live in the menu (`allyWhy` says nothing) but `AllianceRejected`, because a member of the
-   proposer's alliance is at war with the target (`canJoin`) (`critic/c27_al_7019.json`, `deadButtons`). Fix: `allyWhy`
-   applies `canJoin`'s rule (the NationStat already lists each nation's enemies).
-4. **One Force war floods the ticker:** Manchukuo's Force war writes five rows at once (three "left its war", "broke its
-   puppet bond", "declared war"), pushing every other row out (`critic/shots/c27pp_head_7019_MAN_menu_after.png`).
-   Fix: one row ("Manchukuo left its wars with China, Spanish Republic and Lithuania and declared war on Japan").
-5. **Guarantees are only the start's** (run 26's 4, unchanged: `critic/c27_bs_head_*.json` identical to run 26's).
-6. **A greyed button's reason is a title only**, unseen on a phone (run 26's BT, unchanged; now also the alliance's).
-7. **Unchanged from run 26, not re-run in this focused run:** Japan's armies at peace in China after random
-   diplomacy's white peace; Breakthrough's refusal only in God's tab; own counters in mixed stacks; level-3 plasters read
-   as ✕; the player's war behind "+1" on the phone; land "To its fight" off its formation; hero markers at T1.
+1. **No AI puppet ever revolts (new measure, LOY).** SPEC § puppets: "Loyalty < 20 with autonomy ≥ 10 means a revolt and
+   a war of independence"; "Puppets can be … integrated, or revolt". Over 3 seeds × 30 years, 43,101 puppet-months: the
+   lowest loyalty at autonomy ≥ 10 is 30.5; 0 revolts (`critic/c28_loy_*.json`). The relaxation rule (`loyaltyTarget`,
+   pull 0.2) cannot take loyalty under 21 at autonomy ≥ 10, so the rule is reachable only by God's slider. Not blocking:
+   `docs/PARITY.md` rows 9 and 10 are both "partial", and row 10 names the gap ("Missing: loyalty from donations and
+   lost land"); row 9's "revolt by low loyalty → war of independence" is a mechanism the AI never reaches. Fix: something
+   in AI play that lowers a puppet's loyalty (tribute paid, land lost, the overlord's defeats counted, a long war), so
+   that a puppet of a beaten overlord rises now and then.
+2. **R27-N2, a bonded Force war can call a nation in beside its enemy: more often than run 27 counted.** 1777: 3 broken
+   in the bonded Force wars tried on days 200 and 350 (`critic/c28_or_new_1777.json`); the builder's ADR-803 checker: 7
+   broken pairs on 8209 random diplomacy, day 200, Hungary on Poland (`critic/c28_diploinv_8209r.log`). Command only;
+   the AI reaches no such state (BOTH, 5 seeds × 730 days). Fix: as run 27 (in `declareWar`'s `add`, skip a nation at
+   war with a member of the side it would join).
+3. **R27-N1, the bond's exit is a front reset with no truce** (unchanged, `critic/c28_bx_head_7019_GERatk_ITA.json`).
+4. **R27-N3, live "Propose alliance" buttons the sim refuses** (unchanged; counted over every pair this time: 4 of
+   10,148 at day 30, 1 of 10,178 at day 120, `critic/c28_al_7019_all.json`). **R27-N4**, five ticker rows for one Force war
+   (unchanged). **R27-N5**, guarantees only the start's (unchanged, `critic/c28_bs_head_*.json`).
+5. **A refused peace offer is not told in the Actions tab** (new, PG2; medium confidence: one shot seconds after, not a
+   frame-by-frame watch): offered on months 8, 12, 16, 20, 24 of Italy's wars; the war row stays and no line says why in
+   `critic/shots/c28pg2_4583_ITA_m12_panel.png` (the SPEC's "told in words" is for the nation menu). Fix: the menu's
+   refusal line in the Actions tab too.
+6. **Phone clutter at deep zoom** (new, PHZ): at 60 m/px the formation tags of a front stack down the screen; at
+   800 m/px counters' numbers are cut by their neighbours.
+7. **Unchanged from runs 25–26** (identical probes): Japan's armies at peace in China after random diplomacy's white
+   peace; Breakthrough's refusal only in God's tab; own counters in mixed stacks; level-3 plasters read as ✕; the
+   player's war behind "+1" on the phone; land "To its fight" off its formation; hero markers at T1; a greyed button's
+   reason a title only.
 
 ## Design objections (none blocking, no score lowered)
 
-- **A junior member's peace ends the whole war** (run 26's, unchanged), and run 25's objections stand.
+- **The puppet numbers make the SPEC's revolt unreachable** (non-blocking 1 is the execution; the cause is the SPEC's own
+  constants: base 40, 0.6 per autonomy, −25 when losing, revolt under 20 from autonomy 10).
+- **The played nation's AI declares its own wars** (ADR-759, the user's decision): Italy, played, declared on Colombia
+  by itself and was ground down in a war it did not choose (PG2). Readable with the Diplomacy box, but a new player will
+  not know to untick it.
+- **A junior member's peace ends the whole war** (run 26's), and run 25's objections stand.
 
 ## Notes
 
-- A `vite preview` on **5297** (PID 7464, run 26's port) was already listening at the start, although run 26's notes
-  say both its servers were stopped. Not started by this run and not stopped by it (the stop matched 5298 / 5299
-  only); it was no longer listening at the end.
-- This run used 5298 (`c26_dist`) and 5299 (`c27_dist`) and stopped both at the end; the worktree `critic/wt`
-  (`33c84306`) had its `node_modules` junction removed before `git worktree remove`.
-- OR's first version read `nations.cols` once and went stale after `sim.load` (false "puppet at war with overlord"
-  rows); fixed (`fresh()` in `critic/scripts/c27_or.ts`) and every OR result above is from the fixed script. The PPR
-  ticker text was read before the ticker re-rendered; RV reads it after a settle.
-- PG's 7019 call used other tags than run 26's (`ENG,POL 33 LIT,POL`), so its diff with run 26 is in the asked panels,
-  not the game.
+- No 529x port was listening at the start. This run used only 5299 (`critic/c28_dist`) and stopped it at the end. No
+  worktree was made.
+- The first LOY run read the event stride wrong (kind at offset 0; it is offset 1) and was stopped; every LOY figure
+  above is from the corrected `critic/scripts/c28_loy.ts`.
+- AL's first HEAD run used stride 4 (`c28_al_7019.json`); the re-run at run 27's stride 7 (`c28_al_7019_s7.json`) is the
+  one compared with run 27, and `c28_al_7019_all.json` tries every pair.
+- Fps-measuring probes ran beside headless sims (LW, RW, PF); all read the same as runs 26–27, so no re-run alone was
+  needed.
 
 ## Strengths, verified
 
-- **The fix touched exactly what it meant to:** 0 refusals for `Beside` left on 4 seeds where there were 52–78 %, the
-  partner with no bond still refused, and the AI world bit-identical to run 26's for 20 years on 7019 and a year on 4
-  seeds.
-- **The new rows read well where the player looks:** "Manchukuo rose against Japan" and its war in the ticker, the
-  bond and the shared war in one standing line, the greyed alliance agreeing with the sim on 2,902 of 2,904 pairs.
+- **Determinism you can bisect against:** a byte-identical build reproduced 69 probe JSONs and 20 of 20 yearly hashes of
+  a 20-year world, and the ten-year page watch is the same world.
+- **The nuclear moment is well told:** the AI's H-bomb pauses the game, names who, where and the toll in one line, and
+  Go to lands on the scar (`critic/shots/c28an_7019y20_0_goto.png`).

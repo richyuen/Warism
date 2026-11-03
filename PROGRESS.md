@@ -25733,3 +25733,12 @@ No rule changed and nothing on screen changed. One task came out of it.
   performance 7 (carried), stability 7; semantic zoom, naval, tanks, aircraft, AI nukes 8 (carried). Blocking 0.
 - No task filed. A focused report does not meet the DONE CONDITION (ADR-804).
 - **Next:** PLAN 7.5: a full critic run.
+
+## 2026-11-02 — Critic run 28 on 73c531b6 (full): no blocking issue, every dimension at its bar
+- Scores: mapVisuals 7, diplomacy 7, emergent 7, God 7, editor 7, stats 7, UI 7, performance 7, stability 7; semantic
+  zoom, naval, tanks, aircraft, AI nukes 8. Blocking 0. The build is byte-identical to run 27's; 7019 × 20 years, 20 of
+  20 yearly hashes equal.
+- Non-blocking, noted (no task filed): (1) no AI puppet revolts in 3 seeds × 30 years (loyalty floor 30.5 against the
+  revolt line 20); (2) R27-N2, a bonded Force war calls a nation in beside its enemy: 3 cases on seed 1777, and
+  `tools/diag/diploInvariants.ts` reports 7 broken pairs on seed 8209 (random diplomacy, heroes). God or player only.
+- **Next:** PROMPT 2a's DONE checks: `npm run check:full`, the soak, the sweep, the scripted demo run, the budgets.

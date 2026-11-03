@@ -1,0 +1,58 @@
+{
+ "peaceWithPDay": 37,
+ "EbackAtWarDay": null,
+ "before": {
+  "k": "before",
+  "day": 61.04,
+  "living": true,
+  "overlord": "#0",
+  "alliance": [
+   "GER",
+   "ITA",
+   "JAP"
+  ],
+  "AvE": true,
+  "truceAE": false,
+  "AvP": false,
+  "AownCells": 2632,
+  "EholdsA": 250,
+  "AholdsE": 133,
+  "PholdsA": 0,
+  "wars": [
+   "#3 GER+ITA+ALB+JAP+MAN+MEN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+  ],
+  "allied": true,
+  "evs": []
+ },
+ "after": {
+  "k": "A on P, an hour after",
+  "day": 61.08,
+  "living": true,
+  "overlord": "#0",
+  "alliance": null,
+  "AvE": false,
+  "truceAE": false,
+  "AvP": true,
+  "AownCells": 2632,
+  "EholdsA": 0,
+  "AholdsE": 0,
+  "PholdsA": 0,
+  "wars": [
+   "#10 GER v ITA+ALB+JAP+MAN+MEN"
+  ],
+  "evs": [
+   "61.04 WarLeft GER POL",
+   "61.04 AllianceLeft GER GER",
+   "61.04 BondsBroken GER ITA",
+   "61.04 WarDeclared GER ITA",
+   "61.04 CommandApplied GER #0",
+   "61.04 MoveRejected SYR GER",
+   "61.04 FlakFired #1276 GER",
+   "61.04 FormationDestroyed #1199 GER",
+   "61.04 ElementDestroyed #24589 ITA",
+   "61.04 ElementDestroyed #24590 ITA",
+   "61.04 FormationDestroyed #1203 GER"
+  ]
+ }
+}
+done:

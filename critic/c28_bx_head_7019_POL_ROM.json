@@ -1,0 +1,297 @@
+{
+ "seed": 7019,
+ "E": "SOV",
+ "A": "POL",
+ "P": "ROM",
+ "day": 60,
+ "mode": "",
+ "peaceWithPDay": 27,
+ "EbackAtWarDay": 1,
+ "log": [
+  {
+   "k": "E on A",
+   "day": 1.04,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2222,
+   "EholdsA": 0,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [
+    "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "1.00 WarDeclared SOV POL"
+   ]
+  },
+  {
+   "k": "before",
+   "day": 61.04,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "CZS",
+    "ROM",
+    "YUG",
+    "POL"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2222,
+   "EholdsA": 907,
+   "AholdsE": 5,
+   "PholdsA": 0,
+   "wars": [
+    "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+    "#8 POL+CZS+ROM+YUG v LIT+LAT+EST"
+   ],
+   "allied": true,
+   "evs": []
+  },
+  {
+   "k": "A on P, an hour after",
+   "day": 61.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": true,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2222,
+   "EholdsA": 907,
+   "AholdsE": 5,
+   "PholdsA": 0,
+   "wars": [
+    "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+    "#13 POL v ROM+CZS+YUG"
+   ],
+   "evs": [
+    "61.04 WarLeft POL LIT",
+    "61.04 AllianceLeft POL CZS",
+    "61.04 BondsBroken POL ROM",
+    "61.04 WarDeclared POL ROM",
+    "61.04 AirStrike #1358 POL",
+    "61.04 FlakFired #1283 SOV"
+   ]
+  },
+  {
+   "k": "day +1",
+   "day": 62.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": true,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2222,
+   "EholdsA": 921,
+   "AholdsE": 1,
+   "PholdsA": 8,
+   "wars": [
+    "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+    "#13 POL v ROM+CZS+YUG"
+   ],
+   "evs": [
+    "61.08 PeaceRejected HUN POL"
+   ]
+  },
+  {
+   "k": "day +3",
+   "day": 64.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": true,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2222,
+   "EholdsA": 934,
+   "AholdsE": 1,
+   "PholdsA": 34,
+   "wars": [
+    "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+    "#13 POL v ROM+CZS+YUG"
+   ],
+   "evs": [
+    "62.08 PeaceRejected HUN POL",
+    "63.08 PeaceRejected HUN POL"
+   ]
+  },
+  {
+   "k": "day +10",
+   "day": 71.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "LAT",
+    "EST",
+    "LIT",
+    "POL"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2222,
+   "EholdsA": 917,
+   "AholdsE": 0,
+   "PholdsA": 55,
+   "wars": [
+    "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+    "#13 POL v ROM+CZS+YUG"
+   ],
+   "evs": [
+    "64.08 PeaceRejected HUN POL",
+    "65.08 PeaceRejected HUN POL",
+    "66.08 PeaceRejected HUN POL",
+    "67.08 PeaceRejected HUN POL",
+    "68.08 PeaceRejected HUN POL",
+    "69.08 PeaceRejected HUN POL",
+    "70.08 PeaceRejected HUN POL"
+   ]
+  },
+  {
+   "k": "day +20",
+   "day": 81.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "LAT",
+    "EST",
+    "LIT",
+    "POL"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2222,
+   "EholdsA": 1010,
+   "AholdsE": 0,
+   "PholdsA": 54,
+   "wars": [
+    "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+    "#13 POL v ROM+CZS+YUG"
+   ],
+   "evs": [
+    "71.08 PeaceRejected HUN POL",
+    "72.08 PeaceRejected HUN POL",
+    "73.08 PeaceRejected HUN POL",
+    "74.08 PeaceRejected HUN POL",
+    "75.08 PeaceRejected HUN POL",
+    "76.08 PeaceRejected HUN POL",
+    "77.08 PeaceRejected HUN POL",
+    "78.08 PeaceRejected HUN POL",
+    "79.08 PeaceRejected HUN POL",
+    "80.08 PeaceRejected HUN POL"
+   ]
+  },
+  {
+   "k": "day +30",
+   "day": 91.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "LAT",
+    "EST",
+    "LIT",
+    "POL"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 1910,
+   "EholdsA": 1098,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [
+    "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "81.08 PeaceRejected HUN POL",
+    "82.08 PeaceRejected HUN POL",
+    "83.08 PeaceRejected HUN POL",
+    "84.08 PeaceRejected HUN POL",
+    "85.08 PeaceRejected HUN POL",
+    "86.08 PeaceRejected HUN POL",
+    "87.08 PeaceSigned ROM POL",
+    "90.00 AirWar #196618 ROM"
+   ]
+  },
+  {
+   "k": "day +40",
+   "day": 101.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "LAT",
+    "EST",
+    "LIT",
+    "POL"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 1910,
+   "EholdsA": 1145,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [
+    "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": []
+  },
+  {
+   "k": "day +50",
+   "day": 111.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "LAT",
+    "EST",
+    "LIT",
+    "POL"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 1910,
+   "EholdsA": 1218,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [
+    "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": []
+  },
+  {
+   "k": "day +60",
+   "day": 121.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "LAT",
+    "EST",
+    "LIT",
+    "POL"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 1910,
+   "EholdsA": 1328,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [
+    "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "120.00 PeaceSigned SOV ROM",
+    "120.00 PuppetCreated ROM SOV"
+   ]
+  }
+ ]
+}

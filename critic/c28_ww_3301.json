@@ -1,0 +1,136 @@
+{
+ "seed": 3301,
+ "samples": [
+  {
+   "d": 0,
+   "engaged": 0,
+   "land": 1270,
+   "ticker": [
+    ""
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d000_europe.png"
+  },
+  {
+   "d": 60,
+   "engaged": 62,
+   "land": 1218,
+   "ticker": [
+    "24 February 1938 Nationalist Spain declared war on Portugal 25 February 1938 Germany declared war on Lithuania 1 March 1938 Poland declared war on Romania 1 March 1938 Soviet Union and Romania fought in the air this month: Soviet Union lost 93 aircraft, Romania 39 1 March 1938 Japan's air force struck China this month: 13,266 men, guns and vehicles lost ⚓ Carrier strike ashore: United Kingdom on Nationalist Spain"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d060_europe.png"
+  },
+  {
+   "d": 120,
+   "engaged": 40,
+   "land": 1126,
+   "ticker": [
+    "24 April 1938 Soviet Union made peace with Romania 27 April 1938 Soviet Union declared war on Lithuania 29 April 1938 Germany declared war on Latvia 29 April 1938 Greece captured Bulgaria's capital 30 April 1938 Turkey made peace with Bulgaria ⚓ Carrier strike ashore: United Kingdom on Nationalist Spain"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d120_europe.png"
+  },
+  {
+   "d": 180,
+   "engaged": 37,
+   "land": 1075,
+   "ticker": [
+    "1 June 1938 Japan's air force struck China this month: 6,960 men, guns and vehicles lost 1 June 1938 Nationalist Spain captured French Morocco's capital 10 June 1938 Soviet Union captured Estonia's capital 15 June 1938 Soviet Union made peace with Lithuania 20 June 1938 Soviet Union captured Iran's capital ⚓ Carrier strike ashore: United Kingdom on Nationalist Spain ×2 ⚓ Carrier strike ashore: Japan on China ×2"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d180_europe.png"
+  },
+  {
+   "d": 240,
+   "engaged": 60,
+   "land": 1044,
+   "ticker": [
+    "13 August 1938 China captured Tibet's capital 15 August 1938 France declared war on Portugal 21 August 1938 United Kingdom declared war on Portugal 22 August 1938 China captured Mengjiang's capital 24 August 1938 Austria captured Hungary's capital ⚓ Carrier strike ashore: United Kingdom on Portugal ×3 ⚓ Carrier strike ashore: Japan on China ×3"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d240_europe.png"
+  },
+  {
+   "d": 300,
+   "engaged": 21,
+   "land": 1019,
+   "ticker": [
+    "10 October 1938 France made peace with Portugal 10 October 1938 United Kingdom made peace with Portugal 10 October 1938 Germany made peace with Portugal 21 October 1938 Germany declared war on United States 23 October 1938 United Kingdom declared war on Mexico"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d300_europe.png"
+  },
+  {
+   "d": 360,
+   "engaged": 8,
+   "land": 1010,
+   "ticker": [
+    "1 December 1938 Finland and Soviet Union fought in the air this month: Finland lost 63 aircraft, Soviet Union 21 1 December 1938 Soviet Union's air force struck Finland this month: 6,945 men, guns and vehicles lost 7 December 1938 Soviet Union declared war on Hungary ⚓ Carrier strike: United Kingdom on United States's ships ×2"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d360_europe.png"
+  },
+  {
+   "d": 420,
+   "engaged": 14,
+   "land": 999,
+   "ticker": [
+    "1 February 1939 United Kingdom's air force struck United States this month: 8,524 men, guns and vehicles lost 13 February 1939 Peru declared war on Bolivia 13 February 1939 Mengjiang was destroyed 21 February 1939 Hungary made peace with Soviet Union 23 February 1939 Chile declared war on Bolivia"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d420_europe.png"
+  },
+  {
+   "d": 480,
+   "engaged": 27,
+   "land": 988,
+   "ticker": [
+    "29 March 1939 Greece declared war on Yugoslavia 1 April 1939 France and United States fought in the air this month: France lost 9 aircraft, United States 30 1 April 1939 United Kingdom's air force struck United States this month: 8,607 men, guns and vehicles lost 14 April 1939 Soviet Union made peace with Finland 15 April 1939 China made peace with Tibet"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d480_europe.png"
+  },
+  {
+   "d": 540,
+   "engaged": 15,
+   "land": 993,
+   "ticker": [
+    "29 May 1939 Saudi Arabia declared war on Yemen 1 June 1939 Soviet Union and Greece fought in the air this month: Soviet Union lost 15 aircraft, Greece 6 1 June 1939 United States's air force struck United Kingdom this month: 8,380 men, guns and vehicles lost 18 June 1939 Brazil declared war on Bolivia 20 June 1939 Chile captured Bolivia's capital"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d540_europe.png"
+  },
+  {
+   "d": 600,
+   "engaged": 28,
+   "land": 967,
+   "ticker": [
+    "1 August 1939 Germany and United States fought in the air this month: Germany lost 15 aircraft, United States 0 1 August 1939 Soviet Union's air force struck Iran this month: 5,961 men, guns and vehicles lost 1 August 1939 Saudi Arabia made peace with Yemen 6 August 1939 Brazil declared war on Colombia 8 August 1939 Soviet Union captured Greece's capital"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d600_europe.png"
+  },
+  {
+   "d": 660,
+   "engaged": 8,
+   "land": 987,
+   "ticker": [
+    "1 October 1939 Belgium and United States fought in the air this month: Belgium lost 15 aircraft, United States 36 1 October 1939 Soviet Union's air force struck Sweden this month: 4,608 men, guns and vehicles lost"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d660_europe.png"
+  },
+  {
+   "d": 720,
+   "engaged": 22,
+   "land": 969,
+   "ticker": [
+    "27 November 1939 Cuba was destroyed 1 December 1939 Soviet Union and Norway fought in the air this month: Soviet Union lost 27 aircraft, Norway 0 1 December 1939 United States's air force struck United Kingdom this month: 4,162 men, guns and vehicles lost 4 December 1939 Free Sofia was annexed by Soviet Union 20 December 1939 Soviet Union declared war on Greece"
+   ],
+   "chips": [],
+   "shot": "critic/shots/c28ww_3301_d720_europe.png"
+  }
+ ],
+ "errors": []
+}

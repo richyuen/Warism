@@ -1,6 +1,6 @@
 {
- "commit": "15b7b08b127551faeb7b503fdc9ee0b4a1fd9e78",
- "mode": "focused",
+ "commit": "73c531b65d1cdd43e2150c8dbf6647155cac52b7",
+ "mode": "full",
  "scores": {
   "mapVisuals": 7,
   "diplomacyWarDepth": 7,
@@ -17,48 +17,45 @@
   "aircraft": 8,
   "aiNukes": 8
  },
- "carried": [
-  "mapVisuals",
-  "editorScenarios",
-  "performance",
-  "semanticZoom",
-  "naval",
-  "tanks",
-  "aircraft",
-  "aiNukes"
- ],
+ "carried": [],
  "blocking": [],
  "nonBlocking": [
   {
-   "id": "R27-N1",
-   "title": "The bond's exit is a one-click front reset: every held cell back both ways and no truce, so the leaver re-declares on its old enemy the same hour from a clean border",
-   "evidence": "critic/c27_bx_head_7019_GERatk_ITA_redecl.json (Germany Force-wars ally Italy at day 61: out of the Polish war, 250 + 133 cells back; its declaration on Poland an hour later accepted, 0 / 0 held), critic/c27_bx_head_7019_GERatk_ITA.json (Italy's war: at most 11 cells, peace on day 37), critic/shots/c27es_head_7019_d61_polmenu_after.png (Poland 'Neutral', 'Declare war' live)",
-   "fix": "A truce between the leaver and the enemies of each war it leaves; and either the leaver's land held by the old enemy stays held until a peace, or the exit counts as a lost peace."
+   "id": "R28-N1",
+   "title": "No AI puppet ever revolts: 0 revolts and lowest loyalty 30.5 at autonomy >= 10 in 3 seeds x 30 years (43,101 puppet-months); the relaxation rule cannot go under 21",
+   "evidence": "critic/c28_loy_7019.json, critic/c28_loy_3163.json, critic/c28_loy_1777.json; src/sim/systems/puppets.ts loyaltyTarget",
+   "fix": "Something in AI play that lowers a puppet's loyalty (tribute paid, land lost, the overlord's defeats, a long war), so a puppet of a beaten overlord rises now and then."
   },
   {
-   "id": "R27-N2",
-   "title": "A bonded Force war can call a nation in beside its enemy (Mongolia on Romania, 7019 day 300: Yugoslavia, called on Romania's account, joins the Soviet side while at war with the Soviet Union, 60+ days)",
-   "evidence": "critic/c27_or2_head_7019_MON_ROM.json against critic/c27_or2_c26_7019_MON_ROM.json; critic/c27_or_7019.json (1 of 1,602 bonded Force wars on 4 seeds); critic/c27_diploinv_7019.log (the ADR-803 checker: 0 broken)",
-   "fix": "In declareWar's add, skip a nation already at war with the leader or a member of the side it would join; add the case to the checker."
+   "id": "R28-N2",
+   "title": "R27-N2 more often than counted: a bonded Force war calls a nation in beside its enemy (3 broken on new seed 1777; the builder's ADR-803 checker: 7 broken pairs on 8209 random diplomacy); command only, not reached by the AI",
+   "evidence": "critic/c28_or_new_1777.json, critic/c28_diploinv_8209r.log, critic/c28_both_new_1777.json, critic/c28_both_new_8209.json (0 AI findings)",
+   "fix": "In declareWar's add, skip a nation already at war with a member of the side it would join; the checker then reports 0 on 8209."
   },
   {
-   "id": "R27-N3",
-   "title": "Two live 'Propose alliance' buttons the sim refuses (a member of the proposer's alliance at war with the target)",
-   "evidence": "critic/c27_al_7019.json (deadButtons: POL>REP, SWI>REP at day 30)",
-   "fix": "allyWhy applies canJoin's realm-war rule."
+   "id": "R28-N3",
+   "title": "R27-N1 unchanged: the bond's exit resets the front with no truce",
+   "evidence": "critic/c28_bx_head_7019_GERatk_ITA.json (identical to critic/c27_bx_head_7019_GERatk_ITA.json)",
+   "fix": "As run 27: a truce with the enemies of each war left; the leaver's land held by the old enemy stays held, or the exit counts as a lost peace."
   },
   {
-   "id": "R27-N4",
-   "title": "One Force war writes five ticker rows at once",
-   "evidence": "critic/shots/c27pp_head_7019_MAN_menu_after.png",
-   "fix": "Fold the WarLeft rows of one exit into one row."
+   "id": "R28-N4",
+   "title": "R27-N3, N4, N5 unchanged: live 'Propose alliance' the sim refuses (every pair: 4 of 10,148 at day 30, 1 of 10,178 at day 120); five ticker rows for one Force war; guarantees only the start's",
+   "evidence": "critic/c28_al_7019_s7.json, critic/c28_al_7019_all.json, critic/shots/c28pp_head_7019_MAN_menu_after.png, critic/c28_bs_head_7019.json",
+   "fix": "As run 27."
   },
   {
-   "id": "R27-N5",
-   "title": "Guarantees are only the start's (unchanged)",
-   "evidence": "critic/c27_bs_head_7019.json (identical to run 26)",
-   "fix": "As run 26's non-blocking 4."
+   "id": "R28-N5",
+   "title": "A refused peace offer is not told in the Actions tab (played Italy, 5 offers in 24 months)",
+   "evidence": "critic/c28_pg2_4583_ITA.json, critic/shots/c28pg2_4583_ITA_m12_panel.png",
+   "fix": "The nation menu's refusal line in the Actions tab as well."
+  },
+  {
+   "id": "R28-N6",
+   "title": "Phone clutter at deep zoom: formation tags stack at 60 m/px, counters' numbers clipped at 800 m/px",
+   "evidence": "critic/shots/c28phz_2671_00060.png, critic/shots/c28phz_2671_tap.png",
+   "fix": "Collision-avoid formation tags and counter labels on narrow screens."
   }
  ],
- "timestamp": "2026-11-03T03:08:33Z"
+ "timestamp": "2026-11-03T04:03:40Z"
 }
