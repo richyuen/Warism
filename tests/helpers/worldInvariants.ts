@@ -48,8 +48,8 @@ import { assets1938 } from './earth';
 //            them, unity within 0..100, a loyalty per member; a nation in one alliance at most; a
 //            guarantee binds two living nations, not at war with each other (R4e).
 
-export type RuleSet = 'economy' | 'navy' | 'air' | 'nukes' | 'bonds';
-export const RULE_SETS: readonly RuleSet[] = ['economy', 'navy', 'air', 'nukes', 'bonds'];
+export type RuleSet = 'economy' | 'navy' | 'air' | 'nukes' | 'bonds' | 'heroes';
+export const RULE_SETS: readonly RuleSet[] = ['economy', 'navy', 'air', 'nukes', 'bonds', 'heroes'];
 
 export interface WorldCase {
   seed: number;
@@ -353,6 +353,34 @@ function bondBreaks(w: World, tag: (n: number) => string): string[] {
   return out;
 }
 
+/**
+ * The heroes' rules (ROADMAP R9, ADR-812), each hour: a hero's formation is its roster row's
+ * nation's, a living formation; no row has two; a row with no hero waits to return
+ * (`heroReturn`), else it is lost for good.
+ */
+export function heroBreaks(w: World, tag: (n: number) => string): string[] {
+  const out: string[] = [];
+  if (w.heroRoster.length === 0) return out;
+  const f = w.formations.cols;
+  const rows = new Map<number, number>();
+  for (const [id, row] of w.heroes) {
+    const r = w.heroRoster[row];
+    if (!r) {
+      out.push(`heroes: formation ${id} of no row (${row})`);
+      continue;
+    }
+    if (!w.formations.has(id)) out.push(`heroes: row ${row} (${tag(r.nation)}) on formation ${id}, which is gone`);
+    else if (f.nation[id] !== r.nation) out.push(`heroes: row ${row}'s hero (${tag(r.nation)}) is ${tag(f.nation[id]!)}'s`);
+    if (rows.has(row)) out.push(`heroes: row ${row} (${tag(r.nation)}) on formations ${rows.get(row)} and ${id}`);
+    rows.set(row, id);
+  }
+  w.heroRoster.forEach((r, row) => {
+    if (!rows.has(row) && !w.heroReturn.has(row)) out.push(`heroes: row ${row} (${tag(r.nation)}) has no hero and no return`);
+    if (rows.has(row) && w.heroReturn.has(row)) out.push(`heroes: row ${row} (${tag(r.nation)}) has a hero and a return`);
+  });
+  return out;
+}
+
 /** The broken lines of one run of `c.days` days, each rule set's checked every hour. */
 export function worldBreaks(c: WorldCase): string[] {
   const breaks = new Breaks();
@@ -381,6 +409,7 @@ export function worldBreaks(c: WorldCase): string[] {
     if (rules.has('air')) breaks.add(where, airBreaks(w, late, fought, tag));
     if (rules.has('nukes')) breaks.add(where, nukeBreaks(w, b, w.out.events, tag));
     if (rules.has('bonds')) breaks.add(where, bondBreaks(w, tag));
+    if (rules.has('heroes')) breaks.add(where, heroBreaks(w, tag));
     w.out.events.length = 0;
     w.out.fires.length = 0;
     b = before(w);

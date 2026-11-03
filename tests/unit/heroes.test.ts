@@ -13,6 +13,8 @@ import { fleetPower } from '../../src/sim/systems/seaControl';
 import { AT_PORT_CELLS } from '../../src/sim/systems/navalCombat';
 import { orderSail } from '../../src/sim/systems/sail';
 import { portSeaOf } from '../../src/sim/world';
+import { annexNation, integratePuppet, makePuppet } from '../../src/sim/systems/puppets';
+import { heroBreaks } from '../helpers/worldInvariants';
 
 // PLAN 7.184a1: heroes, a new-game option of the 1938 world. With it off the world is as before;
 // on, 14 heroes at the start (sea at the water of its nation's first naval base, land at its
@@ -207,6 +209,38 @@ describe('heroes heal and come back (PLAN 7.184a2)', () => {
     const rows = [...w.heroes.values()];
     expect(new Set(rows).size).toBe(rows.length);
   });
+  // ROADMAP R9 (critic run 29, R29-B2; ADR-812): an annexation or an integration moved every
+  // formation of the dead nation to the taker, heroes too, while the roster row stayed the dead
+  // nation's (Britain fielded Roma and P.100 on 4637). A hero goes with its nation instead, and
+  // waits for its revival, as at a conquest; the checker's heroes rules hold.
+  for (const how of ['annexed', 'integrated'] as const) {
+    it(`a nation ${how}: its heroes go with it, not to the taker, and wait for its revival`, () => {
+      const sim = make('on');
+      const w = sim.world;
+      const ita = NATIONS_1938.findIndex((n) => n.tag === 'ITA') + 1;
+      const eng = NATIONS_1938.findIndex((n) => n.tag === 'ENG') + 1;
+      const roma = heroOf(w, 'hero_roma');
+      expect(roma).not.toBe(0);
+      if (how === 'annexed') expect(annexNation(w, eng, ita)).toBe(true);
+      else {
+        expect(makePuppet(w, eng, ita, 0.5)).toBe(true);
+        expect(w.nations.cols.overlord[ita]).toBe(eng);
+        integratePuppet(w, ita);
+      }
+      expect(w.nations.cols.living[ita]).toBe(0);
+      expect(w.formations.has(roma), 'Roma not handed to Britain').toBe(false);
+      expect(heroOf(w, 'hero_roma')).toBe(0);
+      expect(heroOf(w, 'hero_p100')).toBe(0);
+      expect(w.heroReturn.has(rowOf(w, 'hero_roma'))).toBe(true);
+      expect(heroBreaks(w, tagOf)).toEqual([]);
+      // Past its 60 days: still waiting, for Italy is dead (a revival's return: the test above);
+      // and nowhere a hero of a nation other than its row's.
+      sim.step(HERO_RETURN_HOURS + 24, quiet);
+      expect(heroOf(w, 'hero_roma'), 'none while Italy is dead').toBe(0);
+      expect(w.heroReturn.has(rowOf(w, 'hero_p100'))).toBe(true);
+      expect(heroBreaks(w, tagOf)).toEqual([]);
+    });
+  }
 });
 
 describe('a hero against standard forces (PLAN 7.184a3; tests/helpers/heroFight.ts)', () => {

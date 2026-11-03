@@ -582,3 +582,11 @@
   within a step of its place (red before: 8 off), every hero in view on a counter, a click opens each, a second
   click on a folded one the next. Shots `docs/evidence/R8/` looked at: no counter off Europe. Spec 6 of 6.
 - **Next:** R9.
+
+## 2026-11-03 — ROADMAP R9 (ADR-812): a hero stays its nation's
+- `annexInto` hands over no hero; `eliminateNation` takes it with its nation, its row waiting for a revival.
+  Checker: a `heroes` rule set (its row's nation's, one formation a row, a row with no hero waiting to return);
+  `worldInvariantsHeroes.test.ts` (4 seeds, 180 days), `heroes.test.ts` 2 new (red before).
+- AT: the checker's heroes rules, 20 years, heroes on: red on HEAD on 4637 (day 1591: ITA's hero ENG's) and
+  7603 (day 6044: GER's USA's); 0 broken on the critic's ten seeds (4111 … 7603) after.
+- **Next:** R10.

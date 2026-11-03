@@ -7,6 +7,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-812 · 2026-11-03 · accepted — A hero is its roster nation's: it goes with its nation, not with its land (ROADMAP R9, R29-B2)
+
+- **Context.** Critic run 29: an annexation or an integration (`annexInto`) moved every formation
+  of the dead nation to the taker, heroes too, while the roster row stayed the dead nation's.
+  Britain fielded Roma and P.100 (4637), the United States the Maus (7603, 1,033 days); the
+  Overview listed them under no nation, and once lost they waited for a revival of a nation that
+  no longer owned them. A conquest (`eliminateNation`) already destroyed a dead nation's heroes.
+- **Decision.** `annexInto` hands over no hero; `eliminateNation`, which follows it on both paths,
+  takes the hero with its nation, and its row waits for the revival (PLAN 7.184a2), as at a
+  conquest. The checker (ADR-809) gains a heroes rule set: a hero's formation is its row's
+  nation's and living, no row on two formations, a row with no hero waiting to return.
+- **Why not move the row.** Each great power has its own one hero of each kind (PLAN 7.184a); a
+  taker with five breaks the roster's one-a-row, the Overview's "its nation's heroes" (ADR-791)
+  and the stats' rows. A revival brings its heroes back with it.
+- **Decisions checked (ADR-803).** ADR-181 (an annexation's formations go to the annexer): kept for
+  all but heroes. PLAN 7.184a2 (a dead nation's heroes wait for its revival): now on every death.
+  `heroes.test.ts` 14 of 14 (2 new, red before: "Roma not handed to Britain"). The checker's
+  heroes rules over 20 years: red on the old rule on 4637 (day 1591, Italy's hero Britain's) and
+  7603 (day 6044, Germany's the United States'); 0 broken on the critic's ten seeds after.
+
 ### ADR-811 · 2026-11-03 · accepted — Heroes' counters at T0 stay at their place; crowded ones fold (ROADMAP R8, R29-B1)
 
 - **Context.** Critic run 29: at the world's zoom, the view a heroes game opens on, a hero counter

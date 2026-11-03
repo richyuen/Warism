@@ -115,7 +115,7 @@ Rules:
   a displaced counter opens the nation under it.
   AT: on the critic's seed 5521 at the start view (desk and phone), every hero's counter within
   its own height of its place, and a click on each opens that hero; screenshots looked at.
-- [ ] R9 **A hero stays its nation's** (R29-B2). An annexation or integration moves every
+- [x] R9 **A hero stays its nation's** (R29-B2). An annexation or integration moves every
   formation of the dead nation to the taker, heroes too, while the roster row stays the dead
   nation's: Britain fields Roma and P.100 (4637), the United States the Maus (7603); lost, they
   never return. Decide (ADR) between "gone with its nation, its row waiting for a revival" and

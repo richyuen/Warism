@@ -165,9 +165,11 @@ function annexInto(world: World, to: number, from: number): void {
       world.setController(c, o === 0 || o === overlord || world.wars.atWar(overlord, o) ? overlord : o, false, FlipCause.puppet);
     }
   }
+  // A hero is its roster nation's (ROADMAP R9, ADR-812): it is not handed over, and goes with its
+  // nation (`eliminateNation`, next), its row waiting for a revival, as at a conquest.
   const f = world.formations.cols;
   world.formations.forEach((id) => {
-    if (f.nation[id] === subject) f.nation[id] = overlord;
+    if (f.nation[id] === subject && !world.heroes.has(id)) f.nation[id] = overlord;
   });
   // Integration makes the land rightfully the overlord's: its cores pass on (PLAN 1.24 review:
   // otherwise whole integrated colonies turned non-core and revolted together).
