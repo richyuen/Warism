@@ -1,0 +1,58 @@
+{
+ "peaceWithPDay": 1,
+ "EbackAtWarDay": 1,
+ "before": {
+  "k": "before",
+  "day": 61.04,
+  "living": true,
+  "overlord": "#0",
+  "alliance": [
+   "CZS",
+   "ROM",
+   "YUG",
+   "POL"
+  ],
+  "AvE": true,
+  "truceAE": false,
+  "AvP": false,
+  "AownCells": 2222,
+  "EholdsA": 907,
+  "AholdsE": 5,
+  "PholdsA": 0,
+  "wars": [
+   "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+   "#8 POL+CZS+ROM+YUG v LIT+LAT+EST"
+  ],
+  "allied": true,
+  "evs": []
+ },
+ "after": {
+  "k": "A on P, an hour after",
+  "day": 61.08,
+  "living": true,
+  "overlord": "#0",
+  "alliance": [
+   "CZS",
+   "ROM",
+   "YUG",
+   "POL"
+  ],
+  "AvE": true,
+  "truceAE": false,
+  "AvP": false,
+  "AownCells": 2222,
+  "EholdsA": 907,
+  "AholdsE": 5,
+  "PholdsA": 0,
+  "wars": [
+   "#3 SOV+SIN+MON+TAN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+   "#8 POL+CZS+ROM+YUG v LIT+LAT+EST"
+  ],
+  "evs": [
+   "61.04 WarRejected POL ROM",
+   "61.04 AirStrike #1358 POL",
+   "61.04 FlakFired #1283 SOV"
+  ]
+ }
+}
+done:

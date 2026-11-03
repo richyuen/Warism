@@ -1,0 +1,122 @@
+{
+ "c27_bt_5113_desk.json": "identical",
+ "c27_bt_5113_phone.json": "identical",
+ "c27_cobel_head_GER_ITA_POL.json": [
+  "[3].GER holds POL: 133 != 0",
+  "[3].GER v ITA: False != True",
+  "[3].GER v POL: True != False",
+  "[3].POL holds GER: 250 != 0",
+  "[3].evs: len 1 != 2",
+  "[3].evs[0]: 61.08 WarRejected GER ITA != 61.08 WarLeft GER POL",
+  "[3].wars: len 6 != 7"
+ ],
+ "c27_dr_rnd_8821.json": "identical",
+ "c27_es2_head_2531_d10.json": [
+  ".port: 5297 != 5299"
+ ],
+ "c27_es2_head_7019_d10.json": [
+  ".port: 5297 != 5299"
+ ],
+ "c27_es2_head_8467_d10.json": [
+  ".port: 5297 != 5299"
+ ],
+ "c27_es_head_7019.json": [
+  ".error: only in c25",
+  ".menuIta.standing: Fights beside you != Allied \u00b7 fights beside you",
+  ".menuPolAfter: only in c26",
+  ".polPanel: only in c26",
+  ".port: 5297 != 5299",
+  ".steps: len 2 != 3"
+ ],
+ "c27_exit_head_2531.json": "identical",
+ "c27_exit_head_7019.json": "identical",
+ "c27_exit_head_8467.json": "identical",
+ "c27_fw2_2207.json": [
+  ".cases: len 1 != 2",
+  ".fatal: only in c25"
+ ],
+ "c27_fw_2207.json": [
+  ".cases: len 1 != 2",
+  ".fatal: only in c25"
+ ],
+ "c27_gu_3739.json": "identical",
+ "c27_k2_2203.json": "identical",
+ "c27_k3_2203.json": "identical",
+ "c27_pg_3739_desk.json": [
+  ".panels.GRE: only in c25",
+  ".panels.TUR: only in c25"
+ ],
+ "c27_pg_7019_wl.json": [
+  ".lapse.panels.GER: only in c25",
+  ".lapse.panels.POL: only in c26",
+  ".lapse.panels.SOV: only in c25",
+  ".panels.ENG: only in c26",
+  ".panels.LIT: only in c25",
+  ".panels.POL: only in c26"
+ ],
+ "c27_pp_head_7019_MAN.json": [
+  ".forced: only in c26",
+  ".menuAfter.standing: Fights beside you != At war",
+  ".menuAfter.warDisabled: True != None",
+  ".menuAfter.warTitle: they fight on one side in a war: a nation does not turn on its partner, nor leav != None",
+  ".menuBefore.standing: Fights beside you != Your overlord \u00b7 fights beside you",
+  ".menuBefore.warDisabled: True != False",
+  ".menuBefore.warTitle: they fight on one side in a war: a nation does not turn on its partner, nor leav != None",
+  ".revolted: only in c25"
+ ],
+ "c27_pr_head_7019_ALB.json": [
+  ".force.evs: len 1 != 5",
+  ".force.evs[0]: 30.00 WarRejected ALB ITA != 30.00 WarLeft ALB REP",
+  ".force.hour.atWarWithOverlord: False != True",
+  ".force.hour.overlord: ITA != #0",
+  ".force.hour.wars: len 2 != 1",
+  ".force.hour.wars[0]: JAP+MAN+MEN+GER+ITA+ALB v REP != ALB v ITA+AUT+GER+JAP+MAN+MEN+POL",
+  ".force.later.atWarWithOverlord: False != True"
+ ],
+ "c27_pr_head_7019_MAN.json": [
+  ".force.evs: len 1 != 6",
+  ".force.evs[0]: 30.00 WarRejected MAN JAP != 30.00 WarLeft MAN CHI",
+  ".force.hour.atWarWithOverlord: False != True",
+  ".force.hour.overlord: JAP != #0",
+  ".force.hour.wars: len 3 != 1",
+  ".force.hour.wars[0]: JAP+MAN+MEN v CHI+CCP != MAN v JAP+MEN+GER+ITA+AUT+ALB+POL",
+  ".force.later.atWarWithOverlord: False != True"
+ ],
+ "c27_pz_2207.json": [
+  ".allies[0][0]: CHI&CCP != GER&ITA",
+  ".allies[0][1].beside: 365 != 0",
+  ".allies[1][0]: GER&ITA != GER&JAP",
+  ".allies[1][1].beside: 342 != 0",
+  ".allies[2][0]: GER&JAP != CZS&ROM",
+  ".allies[2][1].beside: 342 != 0",
+  ".allies[2][1].days: 365 != 119"
+ ],
+ "c27_pz_5113.json": [
+  ".allies[0][0]: CHI&CCP != GER&ITA",
+  ".allies[0][1].beside: 365 != 0",
+  ".allies[1][1].beside: 308 != 0",
+  ".allies[2][0]: GER&ITA != CZS&ROM",
+  ".allies[2][1].beside: 273 != 0",
+  ".allies[2][1].days: 365 != 73",
+  ".allies[3][0]: ITA&JAP != CZS&YUG"
+ ],
+ "c27_pz_7019.json": [
+  ".allies[0][0]: CHI&CCP != GER&ITA",
+  ".allies[0][1].beside: 365 != 0",
+  ".allies[1][0]: GER&ITA != GER&JAP",
+  ".allies[1][1].beside: 363 != 0",
+  ".allies[2][0]: GER&JAP != CZS&ROM",
+  ".allies[2][1].beside: 363 != 0",
+  ".allies[2][1].days: 365 != 161"
+ ],
+ "c27_pz_9241.json": [
+  ".allies[0][0]: CHI&CCP != GER&ITA",
+  ".allies[0][1].beside: 365 != 0",
+  ".allies[1][1].beside: 343 != 0",
+  ".allies[2][0]: GER&ITA != CZS&ROM",
+  ".allies[2][1].beside: 315 != 0",
+  ".allies[2][1].days: 365 != 164",
+  ".allies[3][0]: ITA&JAP != CZS&YUG"
+ ],
+ "c27_td_3391.json": "identical"
+}

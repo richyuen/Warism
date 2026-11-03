@@ -1,0 +1,37 @@
+== c27_pp 7019 30 MAN JAP 5299 head 21:42:42
+   exit 0
+== c27_pp 7019 30 MAN JAP 5298 c26 21:42:51
+   exit 0
+== c27_pp 7019 30 ALB ITA 5299 head 21:42:59
+   exit 0
+== c27_fw2_forcewar 2207 21:43:08
+   exit 0
+== c27_fw_forcewar 2207 21:43:55
+   exit 0
+== c27_es2_exit 7019 5299 head 10 21:44:36
+   exit 0
+== c27_es_escape 7019 5299 head 21:45:17
+   exit 0
+== c27_es2_exit 2531 5299 head 10 21:45:34
+   exit 0
+== c27_es2_exit 8467 5299 head 10 21:46:14
+   exit 0
+== c27_bt 5113 1600 900 desk 21:46:55
+   exit 0
+== c27_bt 5113 390 844 phone 21:47:04
+   exit 0
+== c27_pg 3739 1600 900 desk 21:47:12
+   exit 0
+== c27_pg 7019 1600 900 wl ENG,POL 33 LIT,POL 21:47:21
+   exit 0
+== c27_gu_guarantee 3739 21:47:32
+   exit 0
+== c27_k2_refusal 2203 21:47:37
+   exit 0
+== c27_k3_godtab 2203 21:48:17
+   exit 0
+== c27_td_touchdiplo 3391 21:48:23
+   exit 0
+== c27_dr_diplo 8821 21:48:32
+   exit 0
+PAGEDONE

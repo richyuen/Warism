@@ -1,0 +1,340 @@
+{
+ "seed": 9241,
+ "days": [
+  30,
+  120,
+  300
+ ],
+ "day30": {
+  "pairs": 916,
+  "tried": 131,
+  "stride": 7,
+  "baseBroken": [],
+  "kinds": {
+   "Allied:war": 6,
+   "AlliedRealm:war": 53,
+   "Subject:war": 9,
+   "SameOverlord:war": 63
+  },
+  "rows": [
+   {
+    "a": "GER",
+    "b": "ITA",
+    "bond": "Allied",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft GER NED",
+     "WarLeft GER AUT",
+     "AllianceLeft GER GER",
+     "BondsBroken GER ITA",
+     "WarDeclared GER ITA"
+    ]
+   },
+   {
+    "a": "AUT",
+    "b": "YUG",
+    "bond": "Allied",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft AUT ITA",
+     "AllianceLeft AUT CZS",
+     "BondsBroken AUT YUG",
+     "WarDeclared AUT YUG"
+    ]
+   },
+   {
+    "a": "YUG",
+    "b": "AUT",
+    "bond": "Allied",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft YUG ITA",
+     "AllianceLeft YUG CZS",
+     "BondsBroken YUG AUT",
+     "WarDeclared YUG AUT"
+    ]
+   },
+   {
+    "a": "ITA",
+    "b": "JAP",
+    "bond": "Allied",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft ITA NED",
+     "WarLeft ITA AUT",
+     "AllianceLeft ITA GER",
+     "BondsBroken ITA JAP",
+     "WarDeclared ITA JAP"
+    ]
+   },
+   {
+    "a": "FRA",
+    "b": "IRE",
+    "bond": "AlliedRealm",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft FRA NED",
+     "AllianceLeft FRA AUT",
+     "BondsBroken FRA IRE",
+     "WarDeclared FRA ENG"
+    ]
+   },
+   {
+    "a": "FRA",
+    "b": "GCO",
+    "bond": "AlliedRealm",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft FRA NED",
+     "AllianceLeft FRA AUT",
+     "BondsBroken FRA GCO",
+     "WarDeclared FRA ENG"
+    ]
+   }
+  ]
+ },
+ "day120": {
+  "pairs": 429,
+  "tried": 143,
+  "stride": 3,
+  "baseBroken": [],
+  "kinds": {
+   "AlliedRealm:war": 6,
+   "Allied:war": 6,
+   "Subject:war": 16,
+   "SameOverlord:war": 115
+  },
+  "rows": [
+   {
+    "a": "GER",
+    "b": "ALB",
+    "bond": "AlliedRealm",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft GER AUT",
+     "AllianceLeft GER GER",
+     "BondsBroken GER ALB",
+     "WarDeclared GER ITA",
+     "AirWar #196628 #196631",
+     "AirWar #393217 #983053",
+     "AirWar #1179649 #2162699"
+    ]
+   },
+   {
+    "a": "GER",
+    "b": "JAP",
+    "bond": "Allied",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft GER AUT",
+     "AllianceLeft GER GER",
+     "BondsBroken GER JAP",
+     "WarDeclared GER JAP",
+     "AirWar #196628 #196631",
+     "AirWar #393217 #983053",
+     "AirWar #1179649 #2162699"
+    ]
+   },
+   {
+    "a": "AUT",
+    "b": "HUN",
+    "bond": "AlliedRealm",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft AUT GER",
+     "AllianceLeft AUT CZS",
+     "BondsBroken AUT HUN",
+     "WarDeclared AUT ROM",
+     "AirWar #196628 #196631",
+     "AirWar #393217 #983053",
+     "AirWar #1179649 #2162699"
+    ]
+   },
+   {
+    "a": "CZS",
+    "b": "ROM",
+    "bond": "Allied",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft CZS GER",
+     "AllianceLeft CZS CZS",
+     "BondsBroken CZS ROM",
+     "WarDeclared CZS ROM",
+     "AirWar #196628 #196631",
+     "AirWar #393217 #983053",
+     "AirWar #1179649 #2162699"
+    ]
+   },
+   {
+    "a": "ROM",
+    "b": "AUT",
+    "bond": "Allied",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft ROM GER",
+     "AllianceLeft ROM CZS",
+     "BondsBroken ROM AUT",
+     "WarDeclared ROM AUT",
+     "AirWar #196628 #196631",
+     "AirWar #393217 #983053",
+     "AirWar #1179649 #2162699"
+    ]
+   },
+   {
+    "a": "ROM",
+    "b": "YUG",
+    "bond": "Allied",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft ROM GER",
+     "AllianceLeft ROM CZS",
+     "BondsBroken ROM YUG",
+     "WarDeclared ROM YUG",
+     "AirWar #196628 #196631",
+     "AirWar #393217 #983053",
+     "AirWar #1179649 #2162699"
+    ]
+   }
+  ]
+ },
+ "day300": {
+  "pairs": 1019,
+  "tried": 146,
+  "stride": 7,
+  "baseBroken": [],
+  "kinds": {
+   "Allied:war": 6,
+   "SameOverlord:war": 59,
+   "Subject:war": 9,
+   "AlliedRealm:war": 71,
+   "AlliedRealm:nowar:stillBeside": 1
+  },
+  "rows": [
+   {
+    "a": "GER",
+    "b": "ITA",
+    "bond": "Allied",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft GER DEN",
+     "WarLeft GER POR",
+     "AllianceLeft GER GER",
+     "BondsBroken GER ITA",
+     "WarDeclared GER ITA"
+    ]
+   },
+   {
+    "a": "LAT",
+    "b": "EST",
+    "bond": "Allied",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft LAT FIN",
+     "AllianceLeft LAT DAN",
+     "AllianceDissolved DAN EST",
+     "PuppetReleased LAT SOV",
+     "BondsBroken LAT EST",
+     "WarDeclared LAT SOV"
+    ]
+   },
+   {
+    "a": "FIN",
+    "b": "NOR",
+    "bond": "Allied",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft FIN EST",
+     "WarLeft FIN SOV",
+     "AllianceLeft FIN SOV",
+     "BondsBroken FIN NOR",
+     "WarDeclared FIN NOR"
+    ]
+   },
+   {
+    "a": "YUG",
+    "b": "LAT",
+    "bond": "SameOverlord",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft YUG FIN",
+     "PuppetReleased YUG SOV",
+     "BondsBroken YUG LAT",
+     "WarDeclared YUG SOV"
+    ]
+   },
+   {
+    "a": "ITA",
+    "b": "ALB",
+    "bond": "Subject",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft ITA DEN",
+     "WarLeft ITA POR",
+     "PuppetReleased ALB ITA",
+     "BondsBroken ITA ALB",
+     "WarDeclared ITA ALB"
+    ]
+   },
+   {
+    "a": "ALB",
+    "b": "MEN",
+    "bond": "AlliedRealm",
+    "atWar": true,
+    "stillBeside": false,
+    "broken": [],
+    "evs": [
+     "WarLeft ALB DEN",
+     "WarLeft ALB POR",
+     "PuppetReleased ALB ITA",
+     "BondsBroken ALB MEN",
+     "WarDeclared ALB JAP"
+    ]
+   },
+   {
+    "a": "MOZ",
+    "b": "REP",
+    "bond": "AlliedRealm",
+    "atWar": false,
+    "stillBeside": true,
+    "broken": [],
+    "evs": [
+     "WarRejected MOZ REP"
+    ]
+   }
+  ]
+ }
+}

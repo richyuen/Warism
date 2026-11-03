@@ -1,0 +1,310 @@
+{
+ "seed": 7019,
+ "E": "POL",
+ "A": "GER",
+ "P": "ITA",
+ "day": 60,
+ "mode": "attack",
+ "peaceWithPDay": 44,
+ "EbackAtWarDay": 1,
+ "log": [
+  {
+   "k": "E on A",
+   "day": 1.04,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2626,
+   "EholdsA": 0,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [
+    "#3 GER+ITA+ALB+JAP+MAN+MEN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "1.00 WarDeclared GER POL"
+   ]
+  },
+  {
+   "k": "before",
+   "day": 61.04,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2632,
+   "EholdsA": 250,
+   "AholdsE": 133,
+   "PholdsA": 0,
+   "wars": [
+    "#3 GER+ITA+ALB+JAP+MAN+MEN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "allied": true,
+   "evs": []
+  },
+  {
+   "k": "A on P, an hour after",
+   "day": 61.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": false,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2632,
+   "EholdsA": 0,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [
+    "#10 GER v ITA+ALB+JAP+MAN+MEN"
+   ],
+   "evs": [
+    "61.04 WarLeft GER POL",
+    "61.04 AllianceLeft GER GER",
+    "61.04 BondsBroken GER ITA",
+    "61.04 WarDeclared GER ITA",
+    "61.04 CommandApplied GER #0",
+    "61.04 MoveRejected SYR GER",
+    "61.04 FlakFired #1276 GER",
+    "61.04 FormationDestroyed #1199 GER",
+    "61.04 ElementDestroyed #24589 ITA",
+    "61.04 ElementDestroyed #24590 ITA",
+    "61.04 FormationDestroyed #1203 GER"
+   ]
+  },
+  {
+   "k": "A re-declares on E, an hour after",
+   "day": 61.13,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": true,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2632,
+   "EholdsA": 0,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [
+    "#10 GER v ITA+ALB+JAP+MAN+MEN",
+    "#11 GER v POL+CZS+ROM+YUG+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "61.08 WarDeclared GER POL"
+   ]
+  },
+  {
+   "k": "day +1",
+   "day": 62.13,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": true,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2632,
+   "EholdsA": 5,
+   "AholdsE": 4,
+   "PholdsA": 0,
+   "wars": [
+    "#10 GER v ITA+ALB+JAP+MAN+MEN",
+    "#11 GER v POL+CZS+ROM+YUG+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "61.13 PeaceRejected SOV GER"
+   ]
+  },
+  {
+   "k": "day +3",
+   "day": 64.13,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": true,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2632,
+   "EholdsA": 17,
+   "AholdsE": 6,
+   "PholdsA": 2,
+   "wars": [
+    "#10 GER v ITA+ALB+JAP+MAN+MEN",
+    "#11 GER v POL+CZS+ROM+YUG+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "62.13 PeaceRejected SOV GER",
+    "63.13 PeaceRejected SOV GER"
+   ]
+  },
+  {
+   "k": "day +10",
+   "day": 71.13,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": true,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2632,
+   "EholdsA": 17,
+   "AholdsE": 6,
+   "PholdsA": 28,
+   "wars": [
+    "#10 GER v ITA+ALB+JAP+MAN+MEN",
+    "#11 GER v POL+CZS+ROM+YUG+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "64.13 PeaceRejected SOV GER",
+    "65.13 PeaceRejected SOV GER",
+    "66.13 PeaceRejected SOV GER",
+    "67.13 PeaceRejected SOV GER",
+    "68.13 PeaceRejected SOV GER",
+    "69.13 PeaceRejected SOV GER",
+    "70.13 PeaceRejected SOV GER"
+   ]
+  },
+  {
+   "k": "day +20",
+   "day": 81.13,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": true,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2632,
+   "EholdsA": 25,
+   "AholdsE": 5,
+   "PholdsA": 81,
+   "wars": [
+    "#10 GER v ITA+ALB+JAP+MAN+MEN",
+    "#11 GER v POL+CZS+ROM+YUG+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "71.13 PeaceRejected SOV GER",
+    "72.13 PeaceRejected SOV GER",
+    "73.13 PeaceRejected SOV GER",
+    "74.13 PeaceRejected SOV GER",
+    "75.13 PeaceRejected SOV GER",
+    "76.13 PeaceRejected SOV GER",
+    "77.13 PeaceRejected SOV GER",
+    "78.13 PeaceRejected SOV GER",
+    "79.13 PeaceRejected SOV GER",
+    "80.13 PeaceRejected SOV GER"
+   ]
+  },
+  {
+   "k": "day +30",
+   "day": 91.13,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": true,
+   "truceAE": false,
+   "AvP": true,
+   "AownCells": 2632,
+   "EholdsA": 30,
+   "AholdsE": 0,
+   "PholdsA": 84,
+   "wars": [
+    "#10 GER v ITA+ALB+JAP+MAN+MEN",
+    "#11 GER v POL+CZS+ROM+YUG+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "81.13 PeaceRejected SOV GER",
+    "82.13 PeaceRejected SOV GER",
+    "83.13 PeaceRejected SOV GER",
+    "84.13 PeaceRejected SOV GER",
+    "85.13 PeaceRejected SOV GER",
+    "86.13 PeaceRejected SOV GER",
+    "87.13 PeaceRejected SOV GER",
+    "88.13 PeaceRejected SOV GER",
+    "89.13 PeaceRejected SOV GER",
+    "90.13 PeaceRejected SOV GER"
+   ]
+  },
+  {
+   "k": "day +40",
+   "day": 101.13,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": false,
+   "truceAE": true,
+   "AvP": true,
+   "AownCells": 1624,
+   "EholdsA": 0,
+   "AholdsE": 0,
+   "PholdsA": 113,
+   "wars": [
+    "#10 GER v ITA+ALB+JAP+MAN+MEN"
+   ],
+   "evs": [
+    "91.13 PeaceRejected SOV GER",
+    "92.13 PeaceRejected SOV GER",
+    "93.13 PeaceRejected SOV GER",
+    "94.13 PeaceRejected SOV GER",
+    "95.13 PeaceRejected SOV GER",
+    "96.13 PeaceRejected SOV GER",
+    "97.13 PeaceRejected SOV GER",
+    "98.13 PeaceRejected SOV GER",
+    "99.13 PeaceRejected SOV GER",
+    "100.13 PeaceRejected SOV GER",
+    "101.00 PeaceSigned POL GER"
+   ]
+  },
+  {
+   "k": "day +50",
+   "day": 111.13,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": false,
+   "truceAE": true,
+   "AvP": false,
+   "AownCells": 1496,
+   "EholdsA": 0,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [],
+   "evs": [
+    "101.13 PeaceRejected SOV GER",
+    "102.13 PeaceRejected SOV GER",
+    "103.13 PeaceRejected SOV GER",
+    "104.13 PeaceSigned ITA GER"
+   ]
+  },
+  {
+   "k": "day +60",
+   "day": 121.13,
+   "living": true,
+   "overlord": "#0",
+   "alliance": null,
+   "AvE": false,
+   "truceAE": true,
+   "AvP": false,
+   "AownCells": 1496,
+   "EholdsA": 0,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [],
+   "evs": [
+    "116.00 PeaceSigned ITA POL",
+    "120.00 AirWar GER #262163"
+   ]
+  }
+ ]
+}

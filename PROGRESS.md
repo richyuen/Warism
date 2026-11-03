@@ -25723,3 +25723,13 @@ No rule changed and nothing on screen changed. One task came out of it.
 - BLOCKERS.md 187 → 57 KB: the resolved entries in `docs/BLOCKERS_DONE.md`. SPEC, DECISIONS and PARITY are read by
   section, the rest searched.
 - **Next:** PLAN 7.5: run 26's probes and the checker on HEAD, then critic run 27 (focused).
+
+## 2026-11-02 — Critic run 27 on 15b7b08b (focused): no blocking issue, every dimension at its bar
+- Before the run (ADR-803): run 26's probes on HEAD, outputs in `.cache/p27/`: PZ on 7019, 2207, 5113, 9241 × 365 days,
+  0 refused for `Beside` (was 52–78 %); PR Manchukuo and Albania freed and at war with their overlords by Force war and
+  by revolt; PP Manchukuo's menu "Your overlord · fights beside you", Force war live, at war after; FW2 2207 case B
+  Albania freed. `tests/unit/diploInvariants*` 6 of 6.
+- Scores: mapVisuals 7 (carried), diplomacy 7 (was 6), emergent 7, God 7, editor 7 (carried), stats 7, UI 7,
+  performance 7 (carried), stability 7; semantic zoom, naval, tanks, aircraft, AI nukes 8 (carried). Blocking 0.
+- No task filed. A focused report does not meet the DONE CONDITION (ADR-804).
+- **Next:** PLAN 7.5: a full critic run.

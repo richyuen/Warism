@@ -1,0 +1,271 @@
+{
+ "seed": 7019,
+ "E": "POL",
+ "A": "GER",
+ "P": "ITA",
+ "day": 60,
+ "mode": "attack",
+ "peaceWithPDay": 1,
+ "EbackAtWarDay": 1,
+ "log": [
+  {
+   "k": "E on A",
+   "day": 1.04,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2626,
+   "EholdsA": 0,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [
+    "#3 GER+ITA+ALB+JAP+MAN+MEN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "1.00 WarDeclared GER POL"
+   ]
+  },
+  {
+   "k": "before",
+   "day": 61.04,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2632,
+   "EholdsA": 250,
+   "AholdsE": 133,
+   "PholdsA": 0,
+   "wars": [
+    "#3 GER+ITA+ALB+JAP+MAN+MEN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "allied": true,
+   "evs": []
+  },
+  {
+   "k": "A on P, an hour after",
+   "day": 61.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2632,
+   "EholdsA": 250,
+   "AholdsE": 133,
+   "PholdsA": 0,
+   "wars": [
+    "#3 GER+ITA+ALB+JAP+MAN+MEN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC"
+   ],
+   "evs": [
+    "61.04 WarRejected GER ITA",
+    "61.04 CommandRefused GER SWE"
+   ]
+  },
+  {
+   "k": "day +1",
+   "day": 62.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2632,
+   "EholdsA": 240,
+   "AholdsE": 133,
+   "PholdsA": 0,
+   "wars": [
+    "#3 GER+ITA+ALB+JAP+MAN+MEN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+    "#10 GER+ITA+ALB+JAP+MAN+MEN v LIT+LAT+EST"
+   ],
+   "evs": [
+    "62.00 WarDeclared GER LIT"
+   ]
+  },
+  {
+   "k": "day +3",
+   "day": 64.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2632,
+   "EholdsA": 225,
+   "AholdsE": 133,
+   "PholdsA": 0,
+   "wars": [
+    "#3 GER+ITA+ALB+JAP+MAN+MEN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+    "#10 GER+ITA+ALB+JAP+MAN+MEN v LIT+LAT+EST"
+   ],
+   "evs": []
+  },
+  {
+   "k": "day +10",
+   "day": 71.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2632,
+   "EholdsA": 191,
+   "AholdsE": 145,
+   "PholdsA": 0,
+   "wars": [
+    "#3 GER+ITA+ALB+JAP+MAN+MEN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+    "#10 GER+ITA+ALB+JAP+MAN+MEN v LIT+LAT+EST"
+   ],
+   "evs": []
+  },
+  {
+   "k": "day +20",
+   "day": 81.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2632,
+   "EholdsA": 101,
+   "AholdsE": 260,
+   "PholdsA": 0,
+   "wars": [
+    "#3 GER+ITA+ALB+JAP+MAN+MEN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+    "#10 GER+ITA+ALB+JAP+MAN+MEN v LIT+LAT+EST"
+   ],
+   "evs": []
+  },
+  {
+   "k": "day +30",
+   "day": 91.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": true,
+   "truceAE": false,
+   "AvP": false,
+   "AownCells": 2632,
+   "EholdsA": 78,
+   "AholdsE": 420,
+   "PholdsA": 0,
+   "wars": [
+    "#3 GER+ITA+ALB+JAP+MAN+MEN v POL+FRA+AOF+AEF+MAD+FMO+TUN+SYR+LEB+INC",
+    "#10 GER+ITA+ALB+JAP+MAN+MEN v LIT+LAT+EST"
+   ],
+   "evs": []
+  },
+  {
+   "k": "day +40",
+   "day": 101.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": false,
+   "truceAE": true,
+   "AvP": false,
+   "AownCells": 3606,
+   "EholdsA": 0,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [
+    "#10 GER+ITA+ALB+JAP+MAN+MEN v LIT+LAT+EST"
+   ],
+   "evs": [
+    "99.00 PeaceSigned GER POL"
+   ]
+  },
+  {
+   "k": "day +50",
+   "day": 111.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": false,
+   "truceAE": true,
+   "AvP": false,
+   "AownCells": 3606,
+   "EholdsA": 0,
+   "AholdsE": 0,
+   "PholdsA": 0,
+   "wars": [
+    "#10 GER+ITA+ALB+JAP+MAN+MEN v LIT+LAT+EST"
+   ],
+   "evs": []
+  },
+  {
+   "k": "day +60",
+   "day": 121.08,
+   "living": true,
+   "overlord": "#0",
+   "alliance": [
+    "GER",
+    "ITA",
+    "JAP"
+   ],
+   "AvE": true,
+   "truceAE": true,
+   "AvP": false,
+   "AownCells": 3821,
+   "EholdsA": 0,
+   "AholdsE": 39,
+   "PholdsA": 0,
+   "wars": [
+    "#15 JAP+MAN+MEN+GER+ITA+ALB v ROM+CZS+YUG+POL"
+   ],
+   "evs": [
+    "112.00 PeaceSigned GER LIT"
+   ]
+  }
+ ]
+}

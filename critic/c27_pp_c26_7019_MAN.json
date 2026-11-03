@@ -1,0 +1,79 @@
+{
+ "seed": 7019,
+ "day": 30,
+ "PT": "MAN",
+ "OT": "JAP",
+ "port": 5298,
+ "tg": "c26",
+ "menuBefore": {
+  "name": "Japan",
+  "standing": "Fights beside you",
+  "items": [
+   "Declare war",
+   "Propose alliance",
+   "Take control"
+  ],
+  "warDisabled": true,
+  "warTitle": "they fight on one side in a war: a nation does not turn on its partner, nor leave its war so."
+ },
+ "shotMenuBefore": "critic/shots/c27pp_c26_7019_MAN_menu_before.png",
+ "revolted": true,
+ "ticker": "12 January 1938 Poland captured Lithuania's capital\n16 January 1938 China declared war on Tibet\n23 January 1938 Italy made peace with Austria\n25 January 1938 United Kingdom captured Spanish Republic's capital\n28 January 1938 Germany declared war on Lithuania\n⚓ Carrier strike ashore: Japan on Spanish Republic ×3",
+ "wars": [
+  [
+   [
+    75,
+    71,
+    72
+   ],
+   [
+    69,
+    70
+   ]
+  ],
+  [
+   [
+    75,
+    71,
+    72,
+    1,
+    15,
+    16
+   ],
+   [
+    24
+   ]
+  ],
+  [
+   [
+    1,
+    15,
+    2,
+    16,
+    75,
+    71,
+    72
+   ],
+   [
+    6,
+    7,
+    8
+   ]
+  ]
+ ],
+ "panelAfter": "Manchukuo\n×\nRelease control\nOverview\nEconomy\nActions\nLand (km²)\n1,273,738\nShare of world land\n1.0%\nArmy (men)\n71,253 (11)\nAIR WAR\nAircraft (wings)\n21 (1)\nAircraft lost\n15\nLost to air strikes\n0\nCombat efficiency\n101%\nAT WAR WITH\nChina\nCommunist China\nSpanish Republic\nLithuania\nLatvia\nEstonia",
+ "shotPanelAfter": "critic/shots/c27pp_c26_7019_MAN_panel_after.png",
+ "menuAfter": {
+  "name": "Japan",
+  "standing": "Fights beside you",
+  "items": [
+   "Declare war",
+   "Propose alliance",
+   "Take control"
+  ],
+  "warDisabled": true,
+  "warTitle": "they fight on one side in a war: a nation does not turn on its partner, nor leave its war so."
+ },
+ "shotMenuAfter": "critic/shots/c27pp_c26_7019_MAN_menu_after.png",
+ "errors": []
+}
