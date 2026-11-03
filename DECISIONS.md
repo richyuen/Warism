@@ -7,6 +7,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-809 · 2026-11-03 · accepted — One checker for the other systems' rules, a rule set a system (ROADMAP R4)
+
+- **Context.** ADR-804: a feature's rules go to a checker run on several seeds, as the rules of war
+  and peace do (ADR-803). Only war and peace had one.
+- **Decision.** `tests/helpers/worldInvariants.ts` steps one run hour by hour and checks every rule
+  set at once (`economy`, then the navy, air, nukes and the bonds, ROADMAP R4b–e), as
+  `diploInvariants.ts` does; the same line kinds kept once a case. It runs in the unit suite (180
+  days, four 1938 seeds and four random worlds, a file a rule set), by hand
+  (`tools/diag/worldInvariants.ts <seed> [days]`), and every night on new seeds for two years (the
+  `systems` job). A rule is a statement of the code as it should be, read from the system's own
+  comment and SPEC; each is shown red on a patched rule before it is trusted.
+- **The economy (R4a).** Gold rises only at a month's start, at a founding or return, or at a
+  collapse or default (debts void, PLAN 1.24); at a month's start by no more than the month's gross
+  income and the tribute owed by its puppets; a nation bankrupt after a month's start has each
+  formation on land lose DESERTION of its elements' units (the units less their carried damage: a
+  part of a unit is carried, so whole units lag). A deep debt set at the start has the AI disband
+  the whole army in an hour, so the bankrupt case is a debt just past the line (Poland, 800).
+- **Found.** A default with nothing to fragment voids the debt with no row (ROADMAP R7).
+
 ### ADR-808 · 2026-11-03 · accepted — A nation called beside one it is at war with stays out (ROADMAP R3, R27-N2)
 
 - **Context.** Critic runs 27–28 (R27-N2): a bonded Force war "calls a nation in beside its enemy"

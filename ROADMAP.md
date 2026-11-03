@@ -79,6 +79,17 @@ Rules:
   an overlord). One part per system.
   AT: each checker green on 4 seeds of the 1938 world and the random world, and red on a commit
   (or a patched rule) that breaks it.
+  One checker, `tests/helpers/worldInvariants.ts` (`tools/diag/worldInvariants.ts`, the nightly's
+  `systems` job), a rule set a part (ADR-809):
+  - [x] R4a The economy: gold rises only at a month's start, at a founding or a default; by no more
+    than income and tribute owed; a bankrupt nation's formations on land lose the desertion share
+    of their units. `worldInvariantsEconomy.test.ts` 8 of 8 (180 days; Poland 800 in debt on
+    7019); 730 days on 7019, 2207, 3739, 1009 and random 7, 11, 23, 8821: 0 broken; red on a
+    doubled income (21 lines) and with no desertion (Poland's formation 558).
+  - [ ] R4b The navy: a fleet at sea or in its own or a partner's port.
+  - [ ] R4c Air: a wing within range of its base.
+  - [ ] R4d Nukes: a burst only by a nation with warheads and a means.
+  - [ ] R4e The bonds: no puppet of a puppet, no alliance with an overlord.
 - [ ] R5 **The critic's runs and the release.** After R1–R4 (the user's request, 2026-11-03: the
   heroes feature gets a critic run of its own once the other items are resolved).
   - [ ] R5a **A critic run on heroes** (PLAN 7.184, the heroes new-game option): the critic told to
@@ -90,6 +101,11 @@ Rules:
     the tag.
 
 ## Later
+
+- [ ] R7 **A default says so.** After COLLAPSE_MONTHS bankrupt months a nation with nothing to
+  fragment has its debts voided with no row (`collapseNation`'s early return): the history never
+  says why its gold went to 0 (found by R4a's checker, Poland on 7019, day 151). A row, or the
+  collapse's.
 
 - [ ] R6 **SPEC.md as the game is.** The rest of SPEC.md after R0i: each section rewritten to what
   the code does now, the history left to DECISIONS.

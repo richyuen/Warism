@@ -521,3 +521,14 @@
 - Tests: `calledBesideFoe.test.ts` (red without the fix); `npm test` 2043 of 2043; `test:sweep` 18 of 18, pin
   unchanged.
 - **Next:** R4, checkers for the other systems.
+
+## 2026-11-03 — ROADMAP R4a (ADR-809): the economy's checker
+- `tests/helpers/worldInvariants.ts` and `tools/diag/worldInvariants.ts`: rule sets checked every hour of a run;
+  `economy` first. The nightly gains a `systems` job (4 new seeds × 730 days).
+- 730 days, 0 broken: 1938 7019, 2207, 3739, 1009; random 7, 11, 23, 8821 (38–57 s each). Red on two patched
+  rules: income doubled (7019, 21 lines), no desertion (Poland 800 in debt: formation 558 kept 12,048 of 12,048
+  units, at most 11,445.6).
+- Found: a default after 6 bankrupt months with nothing to fragment voids the debt with no row (Poland, 7019 day
+  151): ROADMAP R7. The rule's first form (whole men per formation) was wrong: desertion carries parts of units.
+- `worldInvariantsEconomy.test.ts` 8 of 8 (88 s).
+- **Next:** R4b, the navy.

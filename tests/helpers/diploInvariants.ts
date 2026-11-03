@@ -122,7 +122,7 @@ function worldBreaks(w: World): string[] {
 const MAX_LINES = 20;
 
 /** Collects broken lines, each line once per case (the first day it breaks). */
-class Breaks {
+export class Breaks {
   private readonly kept: string[] = [];
   private more = 0;
   private readonly seen = new Set<string>();

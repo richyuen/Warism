@@ -101,6 +101,29 @@ jobs:
       - run: npm ci
       - run: npx tsx tools/diag/diploInvariants.ts $(( (SEED_BASE * 4 + ${{ matrix.run.offset }}) % 9000 + 1000 )) ${{ matrix.run.args }}
 
+  systems:
+    name: The rules of the other systems on new seeds (two years)
+    if: github.event.schedule != '17 5 * * 0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        run:
+          - { offset: 1, args: '' }
+          - { offset: 2, args: '--world random' }
+          - { offset: 3, args: '--heroes' }
+          - { offset: 4, args: '--diplomacy random' }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # ROADMAP R4: tests/helpers/worldInvariants.ts, every rule set, 730 days.
+      - run: npx tsx tools/diag/worldInvariants.ts $(( (SEED_BASE * 4 + ${{ matrix.run.offset }}) % 9000 + 1000 )) 730 ${{ matrix.run.args }}
+
   sweep:
     name: Sweep (4 seeds x 20 years; weekly 10 x 50)
     runs-on: ubuntu-latest
