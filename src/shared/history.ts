@@ -8,7 +8,7 @@ import { dateOfTick } from './calendar';
 import { EventKind } from './events';
 
 /** 'town': a city founded or razed (PLAN 7.33b), named as the log keeps it, not as the city table has it now. */
-export type HistoryRole = 'nation' | 'alliance' | 'battle' | 'city' | 'number' | 'side' | 'strike' | 'town';
+export type HistoryRole = 'nation' | 'alliance' | 'battle' | 'city' | 'number' | 'side' | 'strike' | 'town' | 'hero';
 
 /** A side of a sea battle in a row (PLAN 4.3c): its nation and the ships it lost, as nation + SIDE_SHIPS × ships. */
 export const SIDE_SHIPS = 65536;
@@ -108,6 +108,9 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.GuaranteeLapsed]: ['nation', 'nation'],
   // A nation out of a war that goes on (PLAN 7.190): it, the enemy's leader.
   [EventKind.WarLeft]: ['nation', 'nation'],
+  // A hero lost and back (ROADMAP R12): its nation, its roster row (named by its template).
+  [EventKind.HeroLost]: ['nation', 'hero'],
+  [EventKind.HeroReturned]: ['nation', 'hero'],
 };
 
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */
@@ -182,6 +185,9 @@ export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([
   // A war a nation left while it goes on, and a puppet's revolt (PLAN 7.192, critic run 26's 1).
   EventKind.WarLeft,
   EventKind.PuppetRevolt,
+  // A hero lost and back (ROADMAP R12).
+  EventKind.HeroLost,
+  EventKind.HeroReturned,
 ]);
 /** Kinds of which the ticker takes one row an hour, the last logged: a month's air rows, logged the largest last. */
 export const TICKER_ONE_AN_HOUR: ReadonlySet<number> = new Set<number>([EventKind.AirWar, EventKind.AirRaids]);

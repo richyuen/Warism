@@ -12,6 +12,7 @@
  */
 import { isDayStart } from '../../shared/calendar';
 import { portWater } from '../data/ports';
+import { EventKind } from '../../shared/events';
 import { Domain, type World } from '../world';
 import { cellX, elementIndex, equipFormation, wrapDx } from './elements';
 
@@ -69,11 +70,14 @@ export const HERO_HEAL_PER_DAY = 0.05;
  * A hero's formation destroyed (`destroyFormation`): its row comes back at the tick
  * HERO_RETURN_HOURS on (`heroSystem`).
  */
-export function heroLost(world: World, id: number): void {
+export function heroLost(world: World, id: number, x: number, y: number): void {
   const row = world.heroes.get(id);
   if (row === undefined) return;
   world.heroes.delete(id);
   world.heroReturn.set(row, world.tick + HERO_RETURN_HOURS);
+  // Told (ROADMAP R12), but not with its nation's death, which tells itself.
+  const nation = world.heroRoster[row]!.nation;
+  if (world.nations.cols.living[nation] === 1) world.out.emit(world.tick, EventKind.HeroLost, nation, row, x, y);
 }
 
 /** A hero's health, 0..1: its one element's `1 − wound`; 0 when it is gone. */
@@ -169,5 +173,6 @@ export function heroSystem(world: World): void {
     if (!place) continue;
     world.heroReturn.delete(row);
     raiseHero(world, row, place[0], place[1]);
+    world.out.emit(world.tick, EventKind.HeroReturned, r.nation, row, place[0], place[1]);
   }
 }

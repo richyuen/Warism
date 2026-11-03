@@ -209,6 +209,36 @@ describe('heroes heal and come back (PLAN 7.184a2)', () => {
     const rows = [...w.heroes.values()];
     expect(new Set(rows).size).toBe(rows.length);
   });
+  // ROADMAP R12 (critic run 29, R29-N1): a hero's loss and return were told nowhere but its
+  // Overview row. Each is a row of the history log (and so of the ticker and History), with its
+  // place; a hero gone with its nation's death is told by the death, not by a row of its own.
+  it("a hero lost and back are rows of the history log, at its place; not with its nation's death", () => {
+    const sim = make('on');
+    const w = sim.world;
+    const ger = NATIONS_1938.findIndex((n) => n.tag === 'GER') + 1;
+    const row = rowOf(w, 'hero_bismarck');
+    const id = heroOf(w, 'hero_bismarck');
+    const at = [w.formations.cols.x[id]!, w.formations.cols.y[id]!];
+    const rows = (kind: number): number[][] => {
+      const out: number[][] = [];
+      const h = w.history.rows;
+      for (let i = 0; i < h.length; i += 6) if (h[i + 1] === kind) out.push([h[i]!, h[i + 2]!, h[i + 3]!, h[i + 4]!, h[i + 5]!]);
+      return out;
+    };
+    sim.command({ kind: 'removeFormation', id });
+    sim.step(1, quiet);
+    expect(rows(EventKind.HeroLost)).toEqual([[w.tick - 1, ger, row, at[0], at[1]]]);
+    const due = w.heroReturn.get(row)!;
+    while (w.tick <= due) sim.step(1, quiet);
+    const back = heroOf(w, 'hero_bismarck');
+    expect(rows(EventKind.HeroReturned)).toEqual([[due, ger, row, w.formations.cols.x[back]!, w.formations.cols.y[back]!]]);
+    // Germany's death: its heroes go, untold by rows of their own.
+    sim.command({ kind: 'collapseNation', nation: ger });
+    sim.step(1, quiet);
+    expect(w.nations.cols.living[ger]).toBe(0);
+    expect(rows(EventKind.HeroLost).length, 'still the one loss').toBe(1);
+  });
+
   // ROADMAP R10 (critic run 29, R29-B3; ADR-813): a sea hero came back only at a naval base its
   // nation held, and losing them is common (Richelieu waited 16,123 days over ten 20-year runs).
   // With no naval base held it comes back at the nearest port held, on its day; with no port at

@@ -610,3 +610,12 @@
   "beside itself"; zoomed 2.25×, more names and twice the size; the bar one row at 1024, 1180, 1280, 1600.
   Shots `docs/evidence/R11/` looked at.
 - **Next:** R12.
+
+## 2026-11-03 — ROADMAP R12 (ADR-815): a hero's loss and return are told
+- `HeroLost`, `HeroReturned`: history log and ticker kinds, a hero named by its roster row, the city near it;
+  none on its nation's death.
+- AT: `heroesRead1938.spec.ts` R12: the Bismarck removed by God on 1938, its ticker row "Germany lost Bismarck
+  near …", 60 days on "Bismarck is back with Germany near Bremerhaven", both in History with their kinds, the
+  row's Go to moves the camera. `heroes.test.ts`: the log's rows at the hero's place, none at Germany's collapse.
+  Shots `docs/evidence/R11/r12-*` looked at.
+- R8–R12 done: **Next:** R5b, the critic's full run and the release.

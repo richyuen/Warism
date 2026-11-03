@@ -208,6 +208,13 @@ export const EventKind = {
    * the side it fought, x = y = NaN. A war that ends so is `WarEnded`.
    */
   WarLeft: 66,
+  /**
+   * A hero lost (ROADMAP R12, critic run 29's N1: told nowhere but its Overview row): a = its nation,
+   * b = its roster row (`World.heroRoster`), (x, y) = where. Not on its nation's death (told by it).
+   */
+  HeroLost: 67,
+  /** A hero back (ROADMAP R12): a = its nation, b = its roster row, (x, y) = where it is raised. */
+  HeroReturned: 68,
 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */

@@ -165,3 +165,41 @@ test('ROADMAP R11: the relations graph names a war line\'s side, and zooms on a 
   await page.getByTestId('relations-zoom-reset').click();
   await expect(graph).toHaveAttribute('data-zoom', '1.00');
 });
+
+// ROADMAP R12 (critic run 29, R29-N1): a hero's loss and return were told nowhere but its Overview row.
+// The Bismarck sunk by God: a ticker row and a History row of each, with Go to.
+test('ROADMAP R12: a sea hero sunk by God, and back 60 days on: told in the ticker and History', async ({ page }, info) => {
+  test.setTimeout(300_000);
+  const out = outDir(info);
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await ready(page, '/?scenario=1938&paused=1&seed=1938&heroes=on');
+  const bismarck = await page.evaluate(() => {
+    const v = window.__warsim!.view!;
+    return v.heroFormations().find((f) => v.formationTitle(f)?.name === 'Bismarck') ?? 0;
+  });
+  expect(bismarck).toBeGreaterThan(0);
+  await page.evaluate((id) => window.__warsim!.sim.command({ kind: 'removeFormation', id }), bismarck);
+  await step(page, 1);
+  const lost = page.locator('[data-testid=ticker-row][data-kind-name=HeroLost]');
+  await expect(lost).toHaveCount(1, { timeout: 15_000 });
+  await expect(lost).toContainText('Germany lost Bismarck near');
+  await page.screenshot({ path: path.join(out, 'r12-ticker-lost.png') });
+  // 60 days on: back.
+  await step(page, 24 * 60 + 1);
+  const back = page.locator('[data-testid=ticker-row][data-kind-name=HeroReturned]');
+  await expect(back).toHaveCount(1, { timeout: 15_000 });
+  await expect(back).toContainText('Bismarck is back with Germany near');
+  await page.screenshot({ path: path.join(out, 'r12-ticker-back.png') });
+  // History: both rows, and the kind among its filters.
+  await page.getByTestId('history-btn').click();
+  const kinds = await page.getByTestId('history-kind').locator('option').allTextContents();
+  expect(kinds).toEqual(expect.arrayContaining(['Hero lost', 'Hero back']));
+  await expect(page.locator('[data-testid=history-row]', { hasText: 'Germany lost Bismarck' })).toHaveCount(1);
+  await expect(page.locator('[data-testid=history-row]', { hasText: 'Bismarck is back with Germany' })).toHaveCount(1);
+  await page.screenshot({ path: path.join(out, 'r12-history.png') });
+  // Go to (the loss's row is past the ticker's 30 days by now): the camera to the return's place.
+  await page.getByTestId('history-close').click();
+  const at = await page.evaluate(() => ({ ...window.__warsim!.view!.controller.cam }));
+  await back.click();
+  await expect.poll(() => page.evaluate(() => window.__warsim!.view!.controller.cam.cx)).not.toBe(at.cx);
+});

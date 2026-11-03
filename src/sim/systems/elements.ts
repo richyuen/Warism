@@ -741,6 +741,7 @@ export function destroyFormation(world: World, fid: number): void {
   const list = elementIndex(world).get(fid) ?? [];
   for (const id of list) world.elements.remove(id);
   world.elementIndex!.delete(fid);
+  const [fx, fy] = [f.cols.x[fid]!, f.cols.y[fid]!];
   world.out.emit(world.tick, EventKind.FormationDestroyed, fid, f.cols.nation[fid]!, f.cols.x[fid]!, f.cols.y[fid]!);
   f.remove(fid);
   world.paths.delete(fid);
@@ -754,7 +755,7 @@ export function destroyFormation(world: World, fid: number): void {
   world.playerOrders.delete(fid);
   world.farWait.delete(fid);
   // A hero's mark goes with it, and its return is set (PLAN 7.184): a formation given the id again is none.
-  heroLost(world, fid);
+  heroLost(world, fid, fx, fy);
   // A wing's base goes with it; the wings a carrier's fleet carried are lost with it at the air
   // system's hour (PLAN 5.1d), and a formation given the id again carries none.
   world.wingBase.delete(fid);

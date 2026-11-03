@@ -56,6 +56,9 @@ export const HISTORY_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.GuaranteeLapsed,
   // A nation out of a war that goes on (PLAN 7.190).
   EventKind.WarLeft,
+  // A hero lost and back (ROADMAP R12).
+  EventKind.HeroLost,
+  EventKind.HeroReturned,
 ]);
 
 export class History implements Stateful {

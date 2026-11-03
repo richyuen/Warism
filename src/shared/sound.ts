@@ -38,6 +38,9 @@ const CUE_OF_KIND: Readonly<Record<number, Cue>> = {
   // A war left (PLAN 7.192): out of a war, as a peace; a revolt: a war of independence, the war's.
   [EventKind.WarLeft]: 'peace',
   [EventKind.PuppetRevolt]: 'war',
+  // A hero lost (ROADMAP R12): a fall, as a capital's; back: a return.
+  [EventKind.HeroLost]: 'capital',
+  [EventKind.HeroReturned]: 'return',
 };
 
 /** The cue of an event kind (null: the event is silent). Every kind of the ticker has one. */

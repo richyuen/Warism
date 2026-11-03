@@ -117,7 +117,9 @@ export function historyText(r: HistoryRow): string {
   const power = r.kind === EventKind.NuclearPower ? { rank: incomeRank(r.b) } : {};
   // A forced war's bonds broken (PLAN 7.175a): "alliance and truce".
   const broke = r.kind === EventKind.BondsBroken ? { bonds: bondsText(r.bonds ?? 0) } : {};
+  // A hero lost or back (ROADMAP R12): the city nearest it.
+  const hero = r.kind === EventKind.HeroLost || r.kind === EventKind.HeroReturned ? { near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '' } : {};
   const decided = r.kind === EventKind.NukeDecided ?{ near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '', weighed: t(nukeWeighed(r.b / 1000)) } : {};
-  const s = t((!r.bn && rb !== 'number' && rb !== 'side' && none in en ? none : key) as MessageKey, { a: part(ra, r.a, r.an), b: part(rb, r.b, r.bn), c: r.cn ? displayName(r.cn) : '', ...ships, ...strike, ...lost, ...decided, ...means, ...power, ...broke, gold: gold(took) });
+  const s = t((!r.bn && rb !== 'number' && rb !== 'side' && none in en ? none : key) as MessageKey, { a: part(ra, r.a, r.an), b: part(rb, r.b, r.bn), c: r.cn ? displayName(r.cn) : '', ...ships, ...strike, ...lost, ...decided, ...hero, ...means, ...power, ...broke, gold: gold(took) });
   return s.charAt(0).toLocaleUpperCase() + s.slice(1);
 }

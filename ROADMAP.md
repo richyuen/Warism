@@ -135,7 +135,7 @@ Rules:
   title (N6); the relations graph names a war line's side ("X is at war beside X" for one alone),
   reads on a phone, and the bottom bar does not wrap at 1024 px (N8).
   AT: the critic's shots retaken on their seeds, each reading right, at desk and phone widths.
-- [ ] R12 **A hero's loss and return are told** (R29-N1): ticker and History rows ("Bismarck was
+- [x] R12 **A hero's loss and return are told** (R29-N1): ticker and History rows ("Bismarck was
   sunk near …", "Bismarck is back at Kiel") with Go to.
   AT: an e2e spec sinks a sea hero by God and sees both rows.
 - [ ] R5 **The critic's runs and the release.** After R1–R4 (the user's request, 2026-11-03: the

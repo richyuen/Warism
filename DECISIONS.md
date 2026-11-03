@@ -7,6 +7,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-815 · 2026-11-03 · accepted — A hero's loss and return are rows of the history (ROADMAP R12, R29-N1)
+
+- **Context.** Critic run 29: a hero lost or back was told nowhere but its Overview row: no ticker
+  row, no History row or kind.
+- **Decision.** Two event kinds, `HeroLost` and `HeroReturned` (a = its nation, b = its roster
+  row, x, y = its place), kept in the history log and told in the ticker: "Germany lost Bismarck
+  near Kiel", "Bismarck is back with Germany near Bremerhaven", each with Go to and a History
+  kind. A hero gone with its nation's death has no row: the death tells it.
+- **Why the log.** The ticker and History both read it (PLAN 3.12c); its rows are state, saved
+  and hashed, and come only with the heroes on: seed 99's pin (heroes off) is unchanged.
+- **Decisions checked (ADR-803).** PLAN 3.12c (the ticker's major events): a hero's loss is one,
+  as a capital's. `heroes.test.ts` 16 of 16 (1 new), `heroesRead1938.spec.ts` 6 of 6 (1 new).
+
 ### ADR-814 · 2026-11-03 · accepted — A hero reads its health; the graph zooms; the bar fits 1024 px (ROADMAP R11)
 
 - **Context.** Critic run 29 put `mapVisuals` and `uiUxPolish` at 6 (bar 7): a hero's men stay

@@ -38,6 +38,7 @@ import { EventKind } from '../shared/events';
 import { HISTORY_ROLES, nukeStrike, nukeToll, seaSide, TICKER_HOURS, TICKER_KINDS, TICKER_ONE_AN_HOUR, TICKER_ROWS, type HistoryAs, type HistoryRole, type HistoryRow, type TickerRow } from '../shared/history';
 import { HISTORY_STRIDE } from '../sim/history';
 import type { World } from '../sim/world';
+import { TEMPLATES_1938 } from '../sim/scenario1938';
 
 /** More than any nation id: a tick and a nation as one key. */
 const NATION_KEY = 65536;
@@ -101,7 +102,14 @@ function townName(world: World, i: number, kind: number, a: number, defName: (de
 }
 
 /** The kinds whose row names the city nearest its place: a strike (PLAN 6.11c), a decision to strike (PLAN 7.25c), a toll without its strike (PLAN 7.32b), a holder's last means lost (PLAN 7.37b3). */
-const NEAR_KINDS: ReadonlySet<number> = new Set([EventKind.NukeCasualties, EventKind.NukeDecided, EventKind.NukeToll, EventKind.NukeMeansLost]);
+const NEAR_KINDS: ReadonlySet<number> = new Set([EventKind.NukeCasualties, EventKind.NukeDecided, EventKind.NukeToll, EventKind.NukeMeansLost, EventKind.HeroLost, EventKind.HeroReturned]);
+
+/** A hero's name, by its roster row (ROADMAP R12): its template's i18n key, '' for a row the roster has not. */
+function heroName(world: World, row: number): string {
+  const r = world.heroRoster[row];
+  const id = r ? TEMPLATES_1938[r.template]?.id : undefined;
+  return id ? `template.${id}` : '';
+}
 
 /**
  * `nationName` gives a nation's name (an i18n key or '=' + literal), `cityName` a city row's
@@ -126,6 +134,7 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     if (role === 'alliance') return alliances.get(v)?.nameKey ?? '';
     if (role === 'city') return city(v);
     if (role === 'battle') return battleCity.get(v) ?? '';
+    if (role === 'hero') return heroName(world, v);
     return '';
   };
   /** tick * NATION_KEY + nation of every `NationRevived`: it follows the revolts of its hour. */
@@ -245,7 +254,7 @@ function tickerRowAt(world: World, i: number, nation: (v: number) => string, cit
   const placed = !Number.isNaN(x) && !Number.isNaN(y);
   const [ra, rb] = HISTORY_ROLES[kind] ?? ['number', 'number'];
   // A side is its nation and a count (PLAN 5.11a: the air's rows); a strike the nation struck (PLAN 6.6a).
-  const who = (role: HistoryRole, v: number): string => (role === 'nation' ? nation(v) : role === 'side' ? nation(seaSide(v).nation) : role === 'strike' ? nation(nukeStrike(v).nation) : '');
+  const who = (role: HistoryRole, v: number): string => (role === 'nation' ? nation(v) : role === 'side' ? nation(seaSide(v).nation) : role === 'strike' ? nation(nukeStrike(v).nation) : role === 'hero' ? heroName(world, v) : '');
   const row: TickerRow = { i: i / HISTORY_STRIDE, tick, kind, a, b, x: placed ? x : (nc.capitalX[at] ?? 0), y: placed ? y : (nc.capitalY[at] ?? 0), an: ra === 'side' ? who(ra, a) : ra === 'town' ? townName(world, i, kind, a, defName) : nation(a), bn: who(rb, b), of: '' };
   const over = kind === EventKind.WarEnded ? nation(overlordThen(rows, i)) : '';
   if (over) [row.as, row.cn] = ['puppet', over];
