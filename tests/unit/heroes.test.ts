@@ -7,7 +7,7 @@ import { Domain, type World } from '../../src/sim/world';
 import { isMonthStart } from '../../src/shared/calendar';
 import { assets1938 } from '../helpers/earth';
 import { elementIndex } from '../../src/sim/systems/elements';
-import { HERO_RETURN_HOURS, heroHealth } from '../../src/sim/systems/heroes';
+import { HERO_RETURN_HOURS, heroHealth, heroWaits } from '../../src/sim/systems/heroes';
 import { landFight, seaFight } from '../helpers/heroFight';
 import { fleetPower } from '../../src/sim/systems/seaControl';
 import { AT_PORT_CELLS } from '../../src/sim/systems/navalCombat';
@@ -209,6 +209,47 @@ describe('heroes heal and come back (PLAN 7.184a2)', () => {
     const rows = [...w.heroes.values()];
     expect(new Set(rows).size).toBe(rows.length);
   });
+  // ROADMAP R10 (critic run 29, R29-B3; ADR-813): a sea hero came back only at a naval base its
+  // nation held, and losing them is common (Richelieu waited 16,123 days over ten 20-year runs).
+  // With no naval base held it comes back at the nearest port held, on its day; with no port at
+  // all it waits, past its day, and its row says why.
+  it('a sea hero with no naval base held is back at a port on its day; with no port it waits, and says why', () => {
+    const sim = make('on');
+    const w = sim.world;
+    const ger = NATIONS_1938.findIndex((n) => n.tag === 'GER') + 1;
+    const pol = NATIONS_1938.findIndex((n) => n.tag === 'POL') + 1;
+    const row = rowOf(w, 'hero_bismarck');
+    const held = w.ports.filter((p) => w.cells.controller[p.cell] === ger);
+    expect(held.some((p) => p.navalBase >= 1)).toBe(true);
+    expect(held.some((p) => p.navalBase < 1), 'Germany holds a port that is no base').toBe(true);
+    // The ports are the scenario's, shared by every world made from it: put back at the end.
+    const bases = held.map((p) => p.navalBase);
+    for (const p of held) p.navalBase = 0;
+    try {
+      sim.command({ kind: 'removeFormation', id: heroOf(w, 'hero_bismarck') });
+      sim.step(1, quiet);
+      const due = w.heroReturn.get(row)!;
+      while (w.tick <= due) sim.step(1, quiet);
+      const back = heroOf(w, 'hero_bismarck');
+      expect(back, 'back on its day at a port that is no base').not.toBe(0);
+      expect(heroBreaks(w, tagOf)).toEqual([]);
+      // No port held: it waits past its day; the rule (a place, so back in its hour) is not broken.
+      for (const p of held) {
+        w.setOwner(p.cell, pol);
+        w.setController(p.cell, pol);
+      }
+      sim.command({ kind: 'removeFormation', id: back });
+      sim.step(1, quiet);
+      const due2 = w.heroReturn.get(row)!;
+      while (w.tick <= due2 + 48) sim.step(1, quiet);
+      expect(heroOf(w, 'hero_bismarck'), 'no port: it waits').toBe(0);
+      expect(heroWaits(w, row), 'and its row says why').toBe('port');
+      expect(heroBreaks(w, tagOf)).toEqual([]);
+    } finally {
+      held.forEach((p, k) => (p.navalBase = bases[k]!));
+    }
+  });
+
   // ROADMAP R9 (critic run 29, R29-B2; ADR-812): an annexation or an integration moved every
   // formation of the dead nation to the taker, heroes too, while the roster row stayed the dead
   // nation's (Britain fielded Roma and P.100 on 4637). A hero goes with its nation instead, and
@@ -238,6 +279,7 @@ describe('heroes heal and come back (PLAN 7.184a2)', () => {
       sim.step(HERO_RETURN_HOURS + 24, quiet);
       expect(heroOf(w, 'hero_roma'), 'none while Italy is dead').toBe(0);
       expect(w.heroReturn.has(rowOf(w, 'hero_p100'))).toBe(true);
+      expect(heroWaits(w, rowOf(w, 'hero_p100')), 'its row says why').toBe('revival');
       expect(heroBreaks(w, tagOf)).toEqual([]);
     });
   }

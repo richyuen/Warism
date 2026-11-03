@@ -25,7 +25,7 @@ import { economyBreakdown } from '../sim/systems/economy';
 import { largestBattle, warsWithBattle } from '../sim/systems/warBattle';
 import { DAYS_PER_MONTH } from '../sim/systems/research';
 import { shipyard } from '../sim/systems/production';
-import { heroHealth } from '../sim/systems/heroes';
+import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { AT_PORT_CELLS, carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
@@ -861,6 +861,7 @@ export class SimServer {
           sea: world.rules?.templates[r.template]?.domain === Domain.sea,
           health: f !== 0 ? heroHealth(world, f) : 0,
           returnDays: f !== 0 ? null : back === undefined ? 0 : Math.max(0, Math.ceil((back - world.tick) / 24)),
+          ...(f === 0 && heroWaits(world, row) ? { waits: heroWaits(world, row)! } : {}),
         });
         heroes.set(r.nation, list);
       });

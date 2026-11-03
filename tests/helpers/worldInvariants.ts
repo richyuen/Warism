@@ -1,3 +1,4 @@
+import { returnPlace } from '../../src/sim/systems/heroes';
 import { isMonthStart } from '../../src/shared/calendar';
 import { EventKind } from '../../src/shared/events';
 import { isLand } from '../../src/shared/terrain';
@@ -376,6 +377,12 @@ export function heroBreaks(w: World, tag: (n: number) => string): string[] {
   }
   w.heroRoster.forEach((r, row) => {
     if (!rows.has(row) && !w.heroReturn.has(row)) out.push(`heroes: row ${row} (${tag(r.nation)}) has no hero and no return`);
+    // Back within its hour (ROADMAP R10): past its days, its nation living and a place for it, it is
+    // raised in the hour (the systems ran at tick − 1; an hour of slack for a place just taken).
+    const at = w.heroReturn.get(row);
+    if (at !== undefined && at < w.tick - 1 && w.nations.cols.living[r.nation] === 1 && returnPlace(w, row) !== null) {
+      out.push(`heroes: row ${row} (${tag(r.nation)}) ${Math.floor((w.tick - at) / 24)} days past its return with a place`);
+    }
     if (rows.has(row) && w.heroReturn.has(row)) out.push(`heroes: row ${row} (${tag(r.nation)}) has a hero and a return`);
   });
   return out;

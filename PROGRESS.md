@@ -590,3 +590,13 @@
 - AT: the checker's heroes rules, 20 years, heroes on: red on HEAD on 4637 (day 1591: ITA's hero ENG's) and
   7603 (day 6044: GER's USA's); 0 broken on the critic's ten seeds (4111 … 7603) after.
 - **Next:** R10.
+
+## 2026-11-03 — ROADMAP R10 (ADR-813): sea heroes come back
+- `returnPlace`: with no naval base held, the water of the nearest port held. `heroWaits`: why one past its day
+  waits ('port', 'revival'), shown in its Overview row. Checker: a row past its day with a place is back in the hour.
+- AT: `tools/diag/heroWaits.ts`, the critic's ten seeds × 20 years, heroes on: 0 broken, 0 days past a return
+  with a place. Days waiting past 60 (10 seeds): Richelieu 542 (critic: 16,123), Sovetsky Soyuz 0 (5,551),
+  Bismarck 3,568 and Roma 3,050 with no port held, 5,753 and 5,649 with the nation dead. The row's text is
+  unit-tested through `heroWaits`, not in a page.
+- Seen on the way (R29-N5, non-blocking): sea heroes lost 83–351 times in the ten runs.
+- **Next:** R11.

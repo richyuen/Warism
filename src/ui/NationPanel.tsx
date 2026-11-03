@@ -157,7 +157,7 @@ export function NationPanel({
                       </span>
                     ) : (
                       <span class="hero-return" data-testid="hero-return">
-                        {h.returnDays === 0 ? t('panel.heroWaits') : h.returnDays === 1 ? t('panel.heroReturnsOne') : t('panel.heroReturns', { n: h.returnDays })}
+                        {h.returnDays === 0 ? t(h.waits === 'revival' ? 'panel.heroWaitsRevival' : h.waits === 'port' ? 'panel.heroWaitsPort' : 'panel.heroWaits') : h.returnDays === 1 ? t('panel.heroReturnsOne') : t('panel.heroReturns', { n: h.returnDays })}
                       </span>
                     )}
                   </button>

@@ -7,6 +7,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-813 · 2026-11-03 · accepted — A sea hero comes back at any port its nation holds (ROADMAP R10, R29-B3)
+
+- **Context.** Critic run 29: a sea hero came back only at the water of a naval base its nation
+  held (PLAN 7.184a2); the 1938 data gives France 4, Germany 2, the Soviet Union 4, and losing them
+  is common. Over ten 20-year runs Richelieu waited 16,123 days past its 60, Roma 11,218, Sovetsky
+  Soyuz 5,551, Bismarck 4,888; the Soviet Union of 4253 held 12 ports, none a base. The option
+  says "they come back 60 days after they are lost".
+- **Decision.** With no naval base held, at the water of the port it holds nearest the hero's
+  start (`returnPlace`). With no port at all it waits, and its Overview row says why: "waits for
+  a port to return to", or, its nation dead, "waits for its nation's revival" (`heroWaits`). The
+  checker's heroes rules (ADR-812) gain one: a row past its day, its nation living and a place
+  for it, is back within the hour.
+- **Why not the coast by the capital.** The ports' water is the place the navy's rules already
+  know (`portWater`); a nation with none waits, and its row now says so.
+- **Decisions checked (ADR-803).** PLAN 7.184a2 (back at its start, else the nearest naval base
+  held): kept first; the port a fallback. `heroes.test.ts` 15 of 15 (1 new, red with bases only).
+  `tools/diag/heroWaits.ts` on the critic's ten seeds × 20 years: 0 days past a return with a
+  place; Richelieu's 16,123 days waiting now 542, all while France held no port; Sovetsky Soyuz 0.
+
 ### ADR-812 · 2026-11-03 · accepted — A hero is its roster nation's: it goes with its nation, not with its land (ROADMAP R9, R29-B2)
 
 - **Context.** Critic run 29: an annexation or an integration (`annexInto`) moved every formation

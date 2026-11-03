@@ -87,12 +87,14 @@ export function heroHealth(world: World, id: number): number {
 /**
  * Where row `row`'s hero comes back, cells, or null while it cannot: its start place while its
  * nation holds it (a sea hero's, the port it was raised at); else, on land, its nation's capital;
- * at sea, the water of the naval base its nation holds nearest its start.
+ * at sea, the water of the naval base its nation holds nearest its start, else of any port it holds
+ * nearest its start (ROADMAP R10, ADR-813: with naval bases only, Richelieu waited 16,123 days in
+ * ten 20-year runs, the Soviet Union of 4253 holding 12 ports, none a base).
  */
-function returnPlace(world: World, row: number): [number, number] | null {
+export function returnPlace(world: World, row: number): [number, number] | null {
   const r = world.heroRoster[row]!;
   const nc = world.nations.cols;
-  const { w, h, controller, terrain } = world.cells;
+  const { w, h, controller } = world.cells;
   const sea = world.rules?.templates[r.template]?.domain === Domain.sea;
   if (!sea) {
     const cx = cellX(world, Math.floor(r.x));
@@ -100,11 +102,17 @@ function returnPlace(world: World, row: number): [number, number] | null {
     if (cx !== null && cy >= 0 && cy < h && controller[cy * w + cx] === r.nation) return [r.x, r.y];
     return world.standPoint(nc.capitalX[r.nation]!, nc.capitalY[r.nation]!);
   }
-  // At sea: the naval base by its start (the one it was raised at) while held, else the nearest held.
+  // At sea: the naval base by its start (the one it was raised at) while held, else the nearest held;
+  // with none, the nearest port held.
+  return seaReturn(world, r, true) ?? seaReturn(world, r, false);
+}
+
+function seaReturn(world: World, r: HeroRow, bases: boolean): [number, number] | null {
+  const { w, h, controller, terrain } = world.cells;
   let best: [number, number] | null = null;
   let bestD = Infinity;
   for (const p of world.ports) {
-    if (p.navalBase < 1 || controller[p.cell] !== r.nation) continue;
+    if ((bases && p.navalBase < 1) || controller[p.cell] !== r.nation) continue;
     // Squared (no root: the comparison is exact on every engine).
     const dx = wrapDx(world, r.x, p.x);
     const d = dx * dx + (p.y - r.y) * (p.y - r.y);
@@ -116,6 +124,18 @@ function returnPlace(world: World, row: number): [number, number] | null {
     best = at;
   }
   return best;
+}
+
+/**
+ * Why row `row`'s hero, gone and past its day, has not come back (ROADMAP R10): its nation is dead
+ * ('revival'), or it has no place (`returnPlace`: a sea hero's nation holds no port: 'port'); null
+ * while it lives, before its day, or with a place (it is back within the hour).
+ */
+export function heroWaits(world: World, row: number): 'revival' | 'port' | null {
+  const at = world.heroReturn.get(row);
+  if (at === undefined || world.tick < at) return null;
+  if (world.nations.cols.living[world.heroRoster[row]!.nation] !== 1) return 'revival';
+  return returnPlace(world, row) === null ? 'port' : null;
 }
 
 /**

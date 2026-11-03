@@ -123,7 +123,7 @@ Rules:
   roster nation's; back within its hour when it has a place: R29-N7).
   AT: the checker's hero rules red on HEAD on 4637 and 7603, green after; no hero of a nation
   other than its row's in 10 seeds × 20 years.
-- [ ] R10 **Sea heroes come back** (R29-B3). A sea hero returns only at a naval base its nation
+- [x] R10 **Sea heroes come back** (R29-B3). A sea hero returns only at a naval base its nation
   holds; losing them is common, and Richelieu waited 16,123 days over 10 seeds × 20 years against
   the option's "back 60 days after they are lost". With no naval base, any port its nation holds
   (or the coast nearest its capital); the row says why while it waits.

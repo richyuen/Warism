@@ -653,6 +653,8 @@ export interface HeroStat {
   health: number;
   /** While it is gone, the days until it is back (0: it waits for a place, or for its nation's revival); null while it lives. */
   returnDays: number | null;
+  /** Why one past its day waits (ROADMAP R10, `heroWaits`): its nation is dead, or holds no port (a sea hero's). */
+  waits?: 'revival' | 'port';
 }
 
 /**
