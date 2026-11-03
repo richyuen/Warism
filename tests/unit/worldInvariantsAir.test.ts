@@ -19,4 +19,9 @@ describe('the air’s rules (ROADMAP R4c)', () => {
       expect(worldBreaks({ seed, days: 180, world: 'random', nations: 60, rules: ['air'] })).toEqual([]);
     });
   }
+  // ROADMAP R15 (critic run 30, R30-B3): with heroes on, Japan's carrier group closed in a sea battle
+  // it came into and left in one hour, after the air system's, and left its wings behind (day 158).
+  it('1938 with heroes, seed 5591 (a carrier closing in a battle of one hour)', () => {
+    expect(worldBreaks({ seed: 5591, days: 170, heroes: true, rules: ['air'] })).toEqual([]);
+  });
 });

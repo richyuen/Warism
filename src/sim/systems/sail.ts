@@ -26,6 +26,7 @@ import { isLand } from '../../shared/terrain';
 import { atan2 } from '../core/dmath';
 import { sailRoute, sailStepKm } from '../nav/sailRoute';
 import { Domain, laneOf, navOf, seaOf, type World } from '../world';
+import { carryWings } from './air';
 import { noteMove } from './elements';
 import { passageShut } from './seaSupply';
 
@@ -127,6 +128,9 @@ export function orderSail(world: World, id: number, x: number, y: number): boole
   c.stepFrac[id] = 0;
   world.paths.set(id, route.cells);
   [c.x[id], c.y[id]] = waterOf(world, origin);
+  // Set on its cell's water: its carrier wings with it (ROADMAP R15; an order after the air system's hour,
+  // a fleet at a lost base sent home by sea control, left them where it stood).
+  carryWings(world, id);
   return true;
 }
 

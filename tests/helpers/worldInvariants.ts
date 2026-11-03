@@ -208,12 +208,14 @@ function navyBreaks(w: World, sunk: Set<number>, tag: (n: number) => string): st
 
 /**
  * The lines of `air` the world breaks now. `late`: the wings whose base was lost (taken, or its
- * carrier sunk) an hour before; refilled with this hour's.
+ * carrier sunk) an hour before, with that base; refilled with this hour's. A wing breaks the rule
+ * when it still has that base: one fallen back to an airbase taken in the same hour has another
+ * (ROADMAP R15: Nationalist Spain's wing 932 on 5591, airbase 23 then 121 lost to Germany in two hours).
  */
-function airBreaks(w: World, late: Set<number>, fought: Set<number>, tag: (n: number) => string): string[] {
+function airBreaks(w: World, late: Map<number, number>, fought: Set<number>, tag: (n: number) => string): string[] {
   const out: string[] = [];
   const fc = w.formations.cols;
-  const was = new Set(late);
+  const was = new Map(late);
   late.clear();
   // The fleets in a sea battle this hour or the last (one that ended this hour moved in it, PLAN 4.3).
   const battling = new Set([...fought, ...inSeaBattle(w)]);
@@ -234,8 +236,8 @@ function airBreaks(w: World, late: Set<number>, fought: Set<number>, tag: (n: nu
     } else if (!w.formations.has(-base) || !w.isFleet(-base)) lost = true;
     else if (fc.nation[-base] !== n) out.push(`air: ${tag(n)}'s wing ${id} on ${tag(fc.nation[-base]!)}'s fleet ${-base}`);
     if (lost) {
-      if (was.has(id)) out.push(`air: ${tag(n)}'s wing ${id} kept a base lost an hour ago (${base})`);
-      late.add(id);
+      if (was.get(id) === base) out.push(`air: ${tag(n)}'s wing ${id} kept a base lost an hour ago (${base})`);
+      late.set(id, base);
       continue;
     }
     const at = basePlace(w, base);
@@ -416,7 +418,7 @@ export function worldBreaks(c: WorldCase): string[] {
   }
   let b = before(s.world);
   const sunk = new Set<number>();
-  const late = new Set<number>();
+  const late = new Map<number, number>();
   const fought = new Set<number>();
   const check = (w: World): void => {
     const where = `${label} day ${Math.floor((w.tick - 1) / 24)}`;

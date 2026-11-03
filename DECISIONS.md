@@ -7,6 +7,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-818 · 2026-11-03 · accepted — A fleet moved after the air hour takes its wings (ROADMAP R15, R30-B3)
+
+- **Context.** Critic run 30: with heroes on, the checker's air rules broke on 3373 (random
+  diplomacy) and 5591, and never with heroes off. Traced per system: Japan's carrier group closed in
+  a sea battle (`closeOn`, in `navalCombat`, after `air`) that it came into and left in the same hour,
+  so no battle excused its wings standing behind (5591, day 158); Britain's was set on its cell's
+  water by sea control's order home from a lost base (`orderSail`, 3373, day 601). The heroes change
+  the wars, not the rule: both moves exist with them off.
+- **Decision.** `carryWings` (air.ts): a fleet's carrier wings (not one ferrying to it) are set where
+  it is; `closeOn` and `orderSail` call it after they move the fleet. A wing's place is its base's
+  (the air system sets it each hour), so nothing else reads differently.
+- **Checker.** "Kept a base lost an hour ago" now means the same base: Nationalist Spain's wing 932
+  (5591, day 831) fell back from airbase 23, taken by Germany, to 121, taken in the same hour, and
+  fell back again the next; it kept neither. The air system does as its rule says; the line was the
+  checker's.
+- **Evidence.** HEAD: 5591 (heroes, 170 days) 1 broken, 3373 random (heroes, 610 days) 2. With the fix,
+  20 years with heroes, air rules: 0 broken on 3373 random, 5591, 1009, 2207, 3739, 7019, 4637.
+  `carrierWingsMove1938.test.ts` 2 of 2, both red without the fix; `worldInvariantsAir.test.ts` adds
+  5591 with heroes. Seed 99's pin unchanged.
+
 ### ADR-817 · 2026-11-03 · accepted — A hero fold is one nation's, and its round outlives the panel (ROADMAP R14, R30-B1)
 
 - **Context.** Critic run 30, seed 5521's start view on a phone: the panel the first tap on a

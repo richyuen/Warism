@@ -74,7 +74,7 @@ import { seaNeighbours } from '../nav/sailRoute';
 import { orderSail, sailStep } from './sail';
 import { applyLoss, applyWholeLoss, elementIndex, elementPlace, loopW, noteMove, settleFormation, slotCount } from './elements';
 import { ARMOR_PEN, COOLDOWN } from './combat';
-import { wingRange } from './air';
+import { carryWings, wingRange } from './air';
 import { NAVAL_STRIKE_FIRE, shipEffectiveness } from './airCombat';
 import { AIR_DETECTION, airSuperiority } from './airSuperiority';
 import { Leg, sortieAt, type Sortie } from './sorties';
@@ -202,10 +202,12 @@ export function closeOn(world: World, id: number, tx: number, ty: number, km: nu
     c.x[id] = x < 0 ? x + w : x >= w ? x - w : x;
     c.y[id] = y0 + dy * t;
     c.facing[id] = atan2(dy, dx);
+    carryWings(world, id); // after the air system's hour: its wings with it (ROADMAP R15)
     return;
   }
   if (!orderSail(world, id, tx, ty)) return;
   sailStep(world, id, km);
+  carryWings(world, id);
   if (inPassage(world, id)) return;
   c.moving[id] = 0;
   world.paths.delete(id);

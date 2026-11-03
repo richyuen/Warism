@@ -157,13 +157,15 @@ Rules:
   opened by taps on its counter; no fold of two nations; screenshots looked at.
   Done (ADR-817): `heroes1938.spec.ts` R14 desk and phone, red on HEAD; every hero of a counter the
   map takes reached (Japan's two under the desk's Ranking panel are R30-N2); `docs/evidence/R14/`.
-- [ ] R15 **Carrier wings stay with a hero's fleet** (R30-B3). With heroes on, the checker's air
+- [x] R15 **Carrier wings stay with a hero's fleet** (R30-B3). With heroes on, the checker's air
   rules break on 3373 (random diplomacy: Japan's carrier group 1130 and Britain's 1057, days 581,
   601) and 5591 (Japan's wing 1462 at day 158; Nationalist Spain's wing 932 keeping a base lost an
   hour before, day 831); with heroes off, 0. A carrier moved 6 cells in one hour and left its wings.
   Find the move and keep the wings with it.
   AT: the checker's air rules red on HEAD on 3373 random and 5591 with heroes, green after; 0
   broken on both and on five more seeds with heroes, 20 years.
+  Done (ADR-818): red on HEAD on both; 0 broken on 3373 random, 5591, 1009, 2207, 3739, 7019, 4637 ×
+  20 years with heroes. The 5591 day-831 line was the checker's (another base lost the same hour).
 - [ ] R7 **A default says so.** After COLLAPSE_MONTHS bankrupt months a nation with nothing to
   fragment has its debts voided with no row (`collapseNation`'s early return): the history never
   says why its gold went to 0 (found by R4a's checker, Poland on 7019, day 151). A row, or the

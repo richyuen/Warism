@@ -294,6 +294,21 @@ export function wingAircraft(world: World, t: number): number {
   return rules.templates[t]!.elements.reduce((s, e) => s + e.count * rules.units[e.unit]!.size, 0);
 }
 
+/**
+ * Fleet `fleet`'s carrier wings to where it is now (ROADMAP R15, R30-B3): a fleet moved after the air
+ * system's hour took its wings only at the next. Closing in a sea battle it came into and left in the
+ * hour (`closeOn`), or set on its cell's water by a sail order (`orderSail`: sea control's for a fleet
+ * at a lost base), it left them where no battle explained it. A wing ferrying to it is not on it.
+ */
+export function carryWings(world: World, fleet: number): void {
+  const c = world.formations.cols;
+  for (const [id, base] of world.wingBase) {
+    if (base !== -fleet || world.wingFerry.has(id) || !world.formations.has(id)) continue;
+    c.x[id] = c.x[fleet]!;
+    c.y[id] = c.y[fleet]!;
+  }
+}
+
 /** Where base `base` (`world.wingBase`'s code) is: an airbase's land cell, or its carrier fleet's place; null for none. */
 export function basePlace(world: World, base: number): [number, number] | null {
   if (base > 0) return world.cellPoint(world.airbases[base - 1]!.cell);

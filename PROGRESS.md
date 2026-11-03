@@ -644,3 +644,11 @@
 - `heroes1938.spec.ts` R14 (desk by mouse, phone by touch) red on HEAD, and red with only the layout fixed; green
   after; R8's test green. Shots looked at: every name reads, TOG II over the top of "Bismarck" on 5521.
 - **Next:** R15.
+
+## 2026-11-03 — ROADMAP R15 (ADR-818): carrier wings stay with their fleet
+- A fleet moved after the air system's hour (closing in a sea battle of one hour, `closeOn`; set on its cell's water by
+  a sail order, `orderSail`) left its carrier wings behind; `carryWings` now moves them. The checker's "kept a base
+  lost an hour ago" compares the base (a wing fallen back to an airbase taken in the same hour had another).
+- Red on HEAD on 5591 and 3373 random (heroes); 0 broken on seven seeds × 20 years with heroes. `carrierWingsMove1938`
+  2 of 2 (red without the fix). Seed 99's pin unchanged.
+- **Next:** R7.
