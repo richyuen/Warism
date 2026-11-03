@@ -493,9 +493,13 @@ export class CounterLayer {
     // The heroes (PLAN 7.184b3): each its own counter about its place, HERO_SCALE × the size, its name for
     // its strength; never folded into its nation's, and above them. One that would cover another hero's
     // (Japan's two, at Yokosuka and Tokyo) steps one height down, else one up; else it is folded into the
-    // hero counter it covers, which reads "Char 2C +2" and opens its heroes in turn (ROADMAP R8, R29-B1).
+    // hero counter of its nation it covers, which reads "Char 2C +2" and opens its heroes in turn (ROADMAP
+    // R8, R29-B1); with none of its nation, at the one of those three steps that covers the least of the
+    // others (ROADMAP R14, R30-B1:
+    // HMS Hood was folded into "Sovetsky Soyuz +1", under the Soviet flag ~2,900 km from itself).
     // Stepped down as often as it took, Europe's ten heroes at the world's zoom cascaded into Africa,
-    // P.100 Ercole drawn 5,009 km from itself. Laid out once, on the first copy; each copy drawn.
+    // P.100 Ercole drawn 5,009 km from itself. Laid out once, on the first copy; each copy drawn, a
+    // counter whose place is in the view kept whole in it ("+1" was cut by the screen's edge).
     const hs = size * HERO_SCALE;
     if (alpha > 0.01) {
       const step = (h + 2) * hs;
@@ -510,8 +514,21 @@ export class CounterLayer {
           groups.push({ lead: hero, members: [hero.id], dy, box: boxAt(dy) });
           continue;
         }
-        const host = groups.find((g) => over(g.box, ...boxAt(0))) ?? groups.find((g) => over(g.box, ...boxAt(step)))!;
-        host.members.push(hero.id);
+        const mine = (g: (typeof groups)[number]): boolean => g.lead.nation === hero.nation;
+        const host = groups.find((g) => mine(g) && over(g.box, ...boxAt(0))) ?? groups.find((g) => mine(g) && over(g.box, ...boxAt(step)));
+        if (host) {
+          host.members.push(hero.id);
+          continue;
+        }
+        // None of its nation: at the step of the three that covers the least of the others.
+        const cover = (d: number): number => {
+          const [x, y, bw, bh] = boxAt(d);
+          let sum = 0;
+          for (const g of groups) sum += Math.max(0, Math.min(x + bw, g.box[0] + g.box[2]) - Math.max(x, g.box[0])) * Math.max(0, Math.min(y + bh, g.box[1] + g.box[3]) - Math.max(y, g.box[1]));
+          return sum;
+        };
+        const least = [0, step, -step].reduce((a, d) => (cover(d) < cover(a) ? d : a));
+        groups.push({ lead: hero, members: [hero.id], dy: least, box: boxAt(least) });
       }
       for (const g of groups) {
         const name = g.members.length > 1 ? `${g.lead.name} +${g.members.length - 1}` : g.lead.name;
@@ -519,13 +536,16 @@ export class CounterLayer {
         let box: [number, number] | null = null;
         for (const off of offs) {
           const [sx, sy0] = worldToScreen(cam, g.lead.x + off, g.lead.y, vw, vh);
+          let sx1 = sx;
           const sy = sy0 + g.dy;
-          const x = Math.round(sx - w / 2);
-          const y = Math.round(sy - h / 2);
           if (sx - (w / 2) * hs > vw || sy - (h / 2) * hs > vh || sx + (w / 2) * hs < 0 || sy + (h / 2) * hs < 0) continue;
-          box ??= [sx + (x - sx) * hs, sy + (y - sy) * hs];
-          this.boxes.push({ x: sx + (x - sx) * hs, y: sy + (y - sy) * hs, w: w * hs, h: h * hs, alpha, own: 1 });
-          this.paintHero(ctx, sx + (x - sx) * hs, sy + (y - sy) * hs, w, h, hs, alpha, { ...g.lead, name }, widthOf, colorOf, flagOf, balls);
+          // The box is rounded before it is scaled: a margin of `hs` keeps the rounding inside the view.
+          if (sx >= 0 && sx <= vw) sx1 = Math.min(Math.max(sx, (w / 2 + 1) * hs), vw - (w / 2 + 1) * hs);
+          const x = Math.round(sx1 - w / 2);
+          const y = Math.round(sy - h / 2);
+          box ??= [sx1 + (x - sx1) * hs, sy + (y - sy) * hs];
+          this.boxes.push({ x: sx1 + (x - sx1) * hs, y: sy + (y - sy) * hs, w: w * hs, h: h * hs, alpha, own: 1 });
+          this.paintHero(ctx, sx1 + (x - sx1) * hs, sy + (y - sy) * hs, w, h, hs, alpha, { ...g.lead, name }, widthOf, colorOf, flagOf, balls);
         }
         if (box) this.drawn.push({ key: `hero:${g.lead.id}`, nation: g.lead.nation, naval: g.lead.naval, wx: g.lead.x, wy: g.lead.y, alpha, strength: 0, text: name, others: g.members.length - 1, folded: false, x: box[0], y: box[1], w: w * hs, h: h * hs, hero: g.lead.id, heroes: g.members });
       }

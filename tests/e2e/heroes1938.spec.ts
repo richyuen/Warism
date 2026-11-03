@@ -437,3 +437,79 @@ for (const [label, width, height] of [['desk', 1600, 900], ['phone', 390, 844]] 
     if (drawn.some((d) => d.heroes.length > 1)) expect(cycled, 'folded counters clicked twice').toBeGreaterThan(0);
   });
 }
+
+// ROADMAP R14 (critic run 30, R30-B1): on a phone the panel a tap on a folded hero counter opens
+// covers the counter, and closing it (× or Escape) started the fold's round at its lead again: HMS
+// Hood, TOG II and Char 2C were never opened on 5521. And a fold took another nation's hero (Hood
+// in "Sovetsky Soyuz +1", under the Soviet flag). Now a fold is of one nation, and its round is kept
+// with the panel closed: tapped once per hero, the panel closed before each tap, a fold opens each.
+for (const [label, width, height, touch] of [['desk', 1600, 900, false], ['phone', 390, 844, true]] as const) {
+  test.describe(`ROADMAP R14 (${label})`, () => {
+    test.use({ hasTouch: touch });
+    test(`ROADMAP R14: at the start view (${label}), every hero on a counter of its nation, each opened by taps on it`, async ({ page }) => {
+      test.setTimeout(240_000);
+      await page.setViewportSize({ width, height });
+      await page.goto('/?scenario=1938&paused=1&seed=5521&heroes=on');
+      await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.view!.counters.drawn.some((d) => d.hero !== undefined && d.alpha > 0.99), null, { timeout: 60_000 });
+      await page.waitForTimeout(800);
+      const start = await page.evaluate(() => ({ ...window.__warsim!.view!.controller.cam }));
+      const folds = await page.evaluate(() => {
+        const v = window.__warsim!.view!;
+        const c = v.controller.cam;
+        return v.counters.drawn
+          .filter((d) => d.hero !== undefined)
+          .map((d) => ({ name: d.text, heroes: d.heroes ?? [d.hero!], nations: (d.heroes ?? [d.hero!]).map((id) => v.formationNation(id)), x: d.x, w: d.w, px: (d.wx - c.cx) * c.scale + innerWidth / 2 }));
+      });
+      const mixed = folds.filter((f) => new Set(f.nations).size > 1).map((f) => f.name);
+      expect(mixed, 'folds of two nations').toEqual([]);
+      // A counter whose place is in the view is whole in it (a "+1" was cut by the edge).
+      const cut = folds.filter((f) => f.px >= 0 && f.px <= width && (f.x < -0.5 || f.x + f.w > width + 0.5)).map((f) => f.name);
+      expect(cut, 'hero counters of a place in view cut by the screen edge').toEqual([]);
+      await page.screenshot({ path: test.info().outputPath(`r14-${label}-start.png`) });
+      // A point of the counter the map takes (no panel over it, no later hero counter), at the start view.
+      const pointOf = (lead: number): Promise<readonly [number, number] | null> =>
+        page.evaluate(({ lead, width, height }) => {
+          const all = window.__warsim!.view!.counters.drawn.filter((d) => d.hero !== undefined);
+          const k = all.findIndex((d) => (d.heroes ?? [d.hero]).includes(lead));
+          if (k < 0) return null;
+          const d = all[k]!;
+          const later = all.slice(k + 1);
+          const pts = [0.5, 0.2, 0.8].flatMap((fx) => [0.5, 0.25, 0.75].map((fy) => [d.x + d.w * fx, d.y + d.h * fy] as const));
+          return pts.find(([x, y]) => x > 0 && y > 0 && x < width && y < height && !later.some((o) => x >= o.x && x <= o.x + o.w && y >= o.y && y <= o.y + o.h) && document.elementFromPoint(x, y)?.tagName === 'CANVAS') ?? null;
+        }, { lead, width, height });
+      const reached = new Set<number>();
+      let tapped = 0;
+      for (const f of folds) {
+        for (let j = 0; j < f.heroes.length; j++) {
+          // The panel closed (as its × closes it; Escape with none open would close the Ranking), the view
+          // at the start view again (a pick follows).
+          await page.evaluate((cam) => {
+            window.__warsim!.hud.selectFormation(0);
+            window.__warsim!.view!.controller.set(cam);
+          }, start);
+          await page.waitForTimeout(400);
+          await expect.poll(() => page.evaluate(() => window.__warsim!.hud.formation.value), { timeout: 5_000 }).toBe(0);
+          const at = await pointOf(f.heroes[0]!);
+          if (!at) break;
+          if (touch) await page.touchscreen.tap(at[0], at[1]);
+          else await page.mouse.click(at[0], at[1]);
+          await expect.poll(() => page.evaluate(() => window.__warsim!.hud.formation.value), { message: `tap ${j + 1} on ${f.name}`, timeout: 5_000 }).toBe(f.heroes[j]);
+          reached.add(f.heroes[j]!);
+          tapped++;
+        }
+      }
+      const onCounters = folds.flatMap((f) => f.heroes);
+      await page.evaluate((cam) => {
+        window.__warsim!.hud.selectFormation(0);
+        window.__warsim!.view!.controller.set(cam);
+      }, start);
+      await page.waitForTimeout(400);
+      expect(tapped, 'taps made').toBeGreaterThan(3);
+      // Every hero of a counter the map takes is reached (Japan's two under the desk's Ranking panel are R30-N2's).
+      const open = [];
+      for (const f of folds) if (await pointOf(f.heroes[0]!)) open.push(...f.heroes);
+      expect([...reached].sort(), `heroes reached of ${onCounters.length} on counters`).toEqual([...new Set(open)].sort());
+      await page.screenshot({ path: test.info().outputPath(`r14-${label}-last.png`) });
+    });
+  });
+}

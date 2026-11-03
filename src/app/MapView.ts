@@ -916,6 +916,8 @@ export class MapView {
 
   /** The formation whose panel is open, or 0 (PLAN 2.14f3): its marker at T1 and its tag at T2 and T3 have a frame. */
   private picked = 0;
+  /** The hero counter last clicked and the place in its fold of the hero it opened (`formationPick`). */
+  private foldRound: { key: string; at: number } | null = null;
   get pickedFormation(): number {
     return this.picked;
   }
@@ -2151,12 +2153,17 @@ export class MapView {
     // A hero's counter (ROADMAP R8, R29-B1): drawn above the others, so the last drawn under the
     // click wins; one with heroes folded into it opens the one after the open one, round to the
     // first, as a marker's stack does. Before, a click on one at the world's zoom went to the nation under it.
+    // The fold's place in its round is kept with the panel closed (ROADMAP R14, R30-B1): on a phone the
+    // panel the first tap opens covers the counter, and closing it started the round at its lead again.
     for (let i = this.counters.drawn.length - 1; i >= 0; i--) {
       const d = this.counters.drawn[i]!;
       if (d.hero === undefined || d.alpha < 0.5 || !inside(d)) continue;
       const all = d.heroes ?? [d.hero];
-      const k = all.indexOf(this.picked);
-      return k >= 0 && all.length > 1 ? all[(k + 1) % all.length]! : d.hero;
+      let k = all.indexOf(this.picked);
+      if (k < 0 && this.foldRound?.key === d.key) k = this.foldRound.at;
+      const id = k >= 0 && all.length > 1 ? all[(k + 1) % all.length]! : d.hero;
+      this.foldRound = { key: d.key, at: all.indexOf(id) };
+      return id;
     }
     if (this.tagOpacity > 0.5) for (const g of this.tagRects) if (inside(g)) return g.id;
     if (this.markerOpacity > 0.5) {

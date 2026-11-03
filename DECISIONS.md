@@ -7,6 +7,27 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-817 · 2026-11-03 · accepted — A hero fold is one nation's, and its round outlives the panel (ROADMAP R14, R30-B1)
+
+- **Context.** Critic run 30, seed 5521's start view on a phone: the panel the first tap on a
+  folded hero counter opens covers the counter, and closing it started the fold's round at its lead
+  again, so HMS Hood, TOG II and Char 2C were never opened. A fold also took another nation's hero
+  (Hood in "Sovetsky Soyuz +1", under the Soviet flag ~2,900 km from itself), and a "+1" was cut by
+  the screen's edge.
+- **Decision.** A hero with no free step (its place, one height down, one up) folds only into a
+  hero counter of its own nation; with none, it is drawn at the step of the three that covers the
+  least of the others. `formationPick` keeps the last clicked fold and the place in its round, so
+  a tap after the panel is closed opens the next hero. A hero counter whose place is in the view is
+  drawn whole in it.
+- **Trade.** Where Europe is crowded at the world's zoom, counters of two nations now overlap a
+  little (on 5521, TOG II over the top of "Bismarck"), where before one was hidden under the other's
+  flag. Every name reads and every hero is reached.
+- **Evidence.** `heroes1938.spec.ts` "ROADMAP R14", desk 1600 × 900 by mouse and phone 390 × 844 by
+  touch: no fold of two nations, none cut, each hero of a counter the map takes opened by taps on
+  it. Red on HEAD (folds of two nations: "Sovetsky Soyuz +1", "Bismarck +2", "Maus +2"), and with
+  only the layout fixed (tap 2 on "Richelieu +1" opened Richelieu again). R8's test still green.
+  Shots: `docs/evidence/R14/`.
+
 ### ADR-816 · 2026-11-03 · accepted — A sea hero comes back only on its start's basin (ROADMAP R13, R30-B2)
 
 - **Context.** Critic run 30: R10's fallback (ADR-813, the held port nearest the start) took ports

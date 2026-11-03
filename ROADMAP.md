@@ -147,7 +147,7 @@ Rules:
   AT: the checker's rule red on HEAD on 4637, green after; over the critic's seeds 4637, 7603, 9001,
   4111 × 20 years no sea hero on water cut off from its start sea.
   Done (ADR-816): red with HEAD's return on 4637, 7603, 4111; 0 broken on all four with the fix.
-- [ ] R14 **Every folded hero reachable by touch** (R30-B1). On a phone (5521, 390 × 844, touch)
+- [x] R14 **Every folded hero reachable by touch** (R30-B1). On a phone (5521, 390 × 844, touch)
   the panel opened by the first tap covers "Sovetsky Soyuz +1" and "Bismarck +2", and closing it
   starts the fold over at its lead: HMS Hood, TOG II and Char 2C are never opened. A fold also
   puts a hero under another nation's flag (Hood in the Soviet counter, ~2,900 km off). Fold only
@@ -155,6 +155,8 @@ Rules:
   list of them); the fold's label on screen.
   AT: on 5521's start view by touch at 390 × 844 and by mouse at 1600 × 900, each of the 14 heroes
   opened by taps on its counter; no fold of two nations; screenshots looked at.
+  Done (ADR-817): `heroes1938.spec.ts` R14 desk and phone, red on HEAD; every hero of a counter the
+  map takes reached (Japan's two under the desk's Ranking panel are R30-N2); `docs/evidence/R14/`.
 - [ ] R15 **Carrier wings stay with a hero's fleet** (R30-B3). With heroes on, the checker's air
   rules break on 3373 (random diplomacy: Japan's carrier group 1130 and Britain's 1057, days 581,
   601) and 5591 (Japan's wing 1462 at day 158; Nationalist Spain's wing 932 keeping a base lost an

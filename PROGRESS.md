@@ -636,3 +636,11 @@
 - Red with HEAD's return on 4637, 7603 (Caspian), 4111 (lake); with the fix 0 broken on 4637, 7603, 9001, 4111 × 20
   years. `heroes.test.ts` 17 of 17 (1 new). R7 moved into the batch after R15 (the user's request).
 - **Next:** R14.
+
+## 2026-11-03 — ROADMAP R14 (ADR-817): every folded hero reachable by touch
+- A hero folds only into its own nation's hero counter; with none and no free step, it takes the step that covers the
+  least. A fold's round is kept with the panel closed, so taps after closing open each hero in turn. A hero counter
+  whose place is in view is drawn whole.
+- `heroes1938.spec.ts` R14 (desk by mouse, phone by touch) red on HEAD, and red with only the layout fixed; green
+  after; R8's test green. Shots looked at: every name reads, TOG II over the top of "Bismarck" on 5521.
+- **Next:** R15.
