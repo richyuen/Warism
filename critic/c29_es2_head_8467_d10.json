@@ -1,0 +1,151 @@
+{
+ "seed": 8467,
+ "port": 5299,
+ "tg": "head",
+ "steps": [
+  {
+   "k": "Germany on Poland; playing Poland",
+   "day": 1.0833333333333333,
+   "wars": [
+    {
+     "att": [
+      "Germany",
+      "Italy",
+      "Albania",
+      "Japan",
+      "Manchukuo",
+      "Mengjiang"
+     ],
+     "def": [
+      "Poland",
+      "France",
+      "French West Africa",
+      "French Equatorial Africa",
+      "Madagascar",
+      "French Morocco",
+      "Tunisia",
+      "Syria",
+      "Lebanon",
+      "French Indochina"
+     ]
+    }
+   ],
+   "ticker": "2 January 1938 Germany declared war on Poland\n⚓ Carrier strike ashore: Japan on China",
+   "banners": [
+    "Nationalist Spain ⚔ Spanish Republic Japan +2 ⚔ China +1 Germany +5 ⚔ Poland +9",
+    "Nationalist Spain ⚔ Spanish Republic",
+    "Japan +2 ⚔ China +1",
+    "Germany +5 ⚔ Poland +9"
+   ],
+   "ger": {
+    "cells": 2626,
+    "occupied": null,
+    "wars": null
+   },
+   "pol": {
+    "cells": 2222,
+    "occupied": null,
+    "wars": null
+   }
+  },
+  {
+   "k": "peace refused",
+   "day": 11.083333333333334,
+   "wars": [
+    {
+     "att": [
+      "Germany",
+      "Italy",
+      "Albania",
+      "Japan",
+      "Manchukuo",
+      "Mengjiang"
+     ],
+     "def": [
+      "Poland",
+      "France",
+      "French West Africa",
+      "French Equatorial Africa",
+      "Madagascar",
+      "French Morocco",
+      "Tunisia",
+      "Syria",
+      "Lebanon",
+      "French Indochina"
+     ]
+    },
+    {
+     "att": [
+      "Italy",
+      "Albania",
+      "Germany",
+      "Japan",
+      "Manchukuo",
+      "Mengjiang"
+     ],
+     "def": [
+      "Austria"
+     ]
+    }
+   ],
+   "ticker": "2 January 1938 Germany declared war on Poland\n7 January 1938 Italy declared war on Austria\n11 January 1938 Turkey declared war on Bulgaria\n⚓ Carrier strike ashore: Japan on China ×3",
+   "banners": [
+    "Nationalist Spain ⚔ Spanish Republic Japan +2 ⚔ China +1 Germany +5 ⚔ Poland +9 Italy +5 ⚔ Austria Turkey +1 ⚔ Bulgaria",
+    "Nationalist Spain ⚔ Spanish Republic",
+    "Japan +2 ⚔ China +1",
+    "Germany +5 ⚔ Poland +9",
+    "Italy +5 ⚔ Austria",
+    "Turkey +1 ⚔ Bulgaria"
+   ],
+   "ger": {
+    "cells": 2626,
+    "occupied": null,
+    "wars": null
+   },
+   "pol": {
+    "cells": 2222,
+    "occupied": null,
+    "wars": null
+   }
+  }
+ ],
+ "reads": [
+  {
+   "d": 10,
+   "standing": "At war",
+   "peaceDisabled": true,
+   "peaceTitle": "They refuse: lead the war score by 25 (now +1), or wear them out (war weariness 3 of 40).",
+   "items": [
+    "Offer peace",
+    "Take control"
+   ]
+  }
+ ],
+ "refusedAt": 10,
+ "shotBefore": "critic/shots/c29es2_head_8467_d10_es2_d10_before.png",
+ "menuGerBefore": {
+  "name": "Germany",
+  "standing": "At war",
+  "items": [
+   "Offer peace",
+   "Take control"
+  ],
+  "peaceDisabled": true,
+  "peaceTitle": "They refuse: lead the war score by 25 (now +1), or wear them out (war weariness 3 of 40)."
+ },
+ "shotGerMenu": "critic/shots/c29es2_head_8467_d10_germenu_refused.png",
+ "menuFra": {
+  "name": "France",
+  "standing": "Fights beside you",
+  "items": [
+   "Declare war",
+   "Propose alliance",
+   "Take control"
+  ],
+  "peaceDisabled": null,
+  "peaceTitle": null
+ },
+ "shotFraMenu": "critic/shots/c29es2_head_8467_d10_framenu.png",
+ "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('nation-menu-war')\u001b[22m\n\u001b[2m    - locator resolved to <button disabled type=\"button\" data-force=\"0\" role=\"menuitem\" class=\"god-btn\" data-testid=\"nation-menu-war\" title=\"they fight on one side in a war: a nation does not turn on its partner, nor leave its war so.\">Declare war</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    56 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not enabled\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at C:\\Git\\Warism\\critic\\scripts\\c29_es2_exit.mjs:111:47",
+ "errors": []
+}

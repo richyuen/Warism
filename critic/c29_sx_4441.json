@@ -1,0 +1,132 @@
+{
+ "seed": 4441,
+ "clicks": [
+  {
+   "sel": [
+    1
+   ],
+   "panelId": 1,
+   "panel": "Infantry division 1 | × | Kind | Infantry division | Nation | Germany",
+   "id": 1,
+   "selGerman": [
+    true
+   ],
+   "panelPolish": false
+  },
+  {
+   "sel": [],
+   "panelId": 562,
+   "panel": "Infantry division 562 | × | Kind | Infantry division | Nation | Poland",
+   "id": 4,
+   "selGerman": [],
+   "panelPolish": true
+  },
+  {
+   "sel": [
+    6
+   ],
+   "panelId": 6,
+   "panel": "Infantry division 6 | × | Kind | Infantry division | Nation | Germany",
+   "id": 7,
+   "selGerman": [
+    true
+   ],
+   "panelPolish": false
+  },
+  {
+   "sel": [],
+   "panelId": 562,
+   "panel": "Infantry division 562 | × | Kind | Infantry division | Nation | Poland",
+   "id": 10,
+   "selGerman": [],
+   "panelPolish": true
+  },
+  {
+   "sel": [],
+   "panelId": 557,
+   "panel": "Infantry division 557 | × | Kind | Infantry division | Nation | Poland",
+   "id": 13,
+   "selGerman": [],
+   "panelPolish": true
+  },
+  {
+   "sel": [
+    16
+   ],
+   "panelId": 16,
+   "panel": "Infantry division 16 | × | Kind | Infantry division | Nation | Germany",
+   "id": 16,
+   "selGerman": [
+    true
+   ],
+   "panelPolish": false
+  },
+  {
+   "sel": [],
+   "panelId": 301,
+   "panel": "Infantry division 301 | × | Kind | Infantry division | Nation | Italy",
+   "id": 19,
+   "selGerman": [],
+   "panelPolish": false
+  },
+  {
+   "sel": [
+    22
+   ],
+   "panelId": 22,
+   "panel": "Infantry division 22 | × | Kind | Infantry division | Nation | Germany",
+   "id": 22,
+   "selGerman": [
+    true
+   ],
+   "panelPolish": false
+  },
+  {
+   "sel": [
+    25
+   ],
+   "panelId": 25,
+   "panel": "Infantry division 25 | × | Kind | Infantry division | Nation | Germany",
+   "id": 25,
+   "selGerman": [
+    true
+   ],
+   "panelPolish": false
+  },
+  {
+   "sel": [
+    28
+   ],
+   "panelId": 28,
+   "panel": "Infantry division 28 | × | Kind | Infantry division | Nation | Germany",
+   "id": 28,
+   "selGerman": [
+    true
+   ],
+   "panelPolish": false
+  },
+  {
+   "sel": [
+    34
+   ],
+   "panelId": 34,
+   "panel": "Infantry division 34 | × | Kind | Infantry division | Nation | Germany",
+   "id": 31,
+   "selGerman": [
+    true
+   ],
+   "panelPolish": false
+  },
+  {
+   "sel": [],
+   "panelId": 344,
+   "panel": "Motorised division 344 | × | Kind | Motorised division | Nation | Italy",
+   "id": 34,
+   "selGerman": [],
+   "panelPolish": false
+  }
+ ],
+ "mismatch": 0,
+ "idMismatch": 0,
+ "errors": []
+}

@@ -565,3 +565,12 @@
 - Tests: `worldInvariantsNukes.test.ts`, `worldInvariantsBonds.test.ts` 8 of 8 each; `puppets.test.ts` 18 of 18
   (3 new, red before); `npm test` 2086 of 2086; `test:sweep` 18 of 18, the pin unchanged.
 - **Next:** R5a, a critic run on heroes.
+
+## 2026-11-03 — ROADMAP R5a: critic run 29 (heroes), full
+- Commit 823cbf1b. Scores: mapVisuals 6, diplomacyWarDepth 7, emergentDynamics 7, godMode 7, editorScenarios 7,
+  statsHistory 7, uiUxPolish 6, performance 7, stability 7; semanticZoom, naval, tanks, aircraft, aiNukes 8.
+  3 blocking, all heroes': R29-B1 counters drawn up to 5,000 km off at the world zoom; B2 a hero handed over with
+  its nation's land, never to return; B3 sea heroes wait years for a naval base. Filed as ROADMAP R8–R12 with the
+  scores under the bar and the heroes' silent rows. Heroes on vs off, 10 seeds × 20 years: sea battles +87 %.
+  R2 and R3 hold on the critic's counts (puppets rose on 7019 and 1777, 0 on 3163; 0 broken of 2,372 Force wars).
+- **Next:** R8.

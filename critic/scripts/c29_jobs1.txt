@@ -1,0 +1,65 @@
+npx tsx critic/scripts/c29_headless.ts 7019 20 critic/c29_headless_7019.json 20 critic/c29_seed7019_y20.bin > critic/c29_headless_7019.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 4111 20 on critic/c29_ho_on_4111.json > critic/c29_ho_on_4111.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 4111 20 off critic/c29_ho_off_4111.json > critic/c29_ho_off_4111.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 4253 20 on critic/c29_ho_on_4253.json > critic/c29_ho_on_4253.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 4253 20 off critic/c29_ho_off_4253.json > critic/c29_ho_off_4253.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 4637 20 on critic/c29_ho_on_4637.json > critic/c29_ho_on_4637.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 4637 20 off critic/c29_ho_off_4637.json > critic/c29_ho_off_4637.log 2>&1
+npx tsx critic/scripts/c29_loy.ts 7019 30 critic/c29_loy_7019.json > critic/c29_loy_7019.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 5023 20 on critic/c29_ho_on_5023.json > critic/c29_ho_on_5023.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 5023 20 off critic/c29_ho_off_5023.json > critic/c29_ho_off_5023.log 2>&1
+npx tsx critic/scripts/c29_loy.ts 3163 30 critic/c29_loy_3163.json > critic/c29_loy_3163.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 5449 20 on critic/c29_ho_on_5449.json > critic/c29_ho_on_5449.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 5449 20 off critic/c29_ho_off_5449.json > critic/c29_ho_off_5449.log 2>&1
+npx tsx critic/scripts/c29_loy.ts 1777 30 critic/c29_loy_1777.json > critic/c29_loy_1777.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 8209 random 400 60,200,350 20 --heroes > critic/c29_diploinv_8209r.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 5867 20 on critic/c29_ho_on_5867.json > critic/c29_ho_on_5867.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 5867 20 off critic/c29_ho_off_5867.json > critic/c29_ho_off_5867.log 2>&1
+npx tsx critic/scripts/c29_or.ts 1777 60,200,350 critic/c29_or_new_1777.json 150 > critic/c29_or_new_1777.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 6299 20 on critic/c29_ho_on_6299.json > critic/c29_ho_on_6299.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 6299 20 off critic/c29_ho_off_6299.json > critic/c29_ho_off_6299.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 4421 random 400 60,200,350 20 --heroes > critic/c29_diploinv_4421r_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 6863 scenario 400 60,200,350 20 --heroes > critic/c29_diploinv_6863s_h.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 6733 20 on critic/c29_ho_on_6733.json > critic/c29_ho_on_6733.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 6733 20 off critic/c29_ho_off_6733.json > critic/c29_ho_off_6733.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 4421 730 --heroes > critic/c29_wi_4421_h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 6863 730 --heroes --diplomacy random > critic/c29_wi_6863r_h.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 7177 20 on critic/c29_ho_on_7177.json > critic/c29_ho_on_7177.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 7177 20 off critic/c29_ho_off_7177.json > critic/c29_ho_off_7177.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 9907 730 --heroes > critic/c29_wi_9907_h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 3331 3650 --heroes > critic/c29_wi_3331_h10y.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 7603 20 on critic/c29_ho_on_7603.json > critic/c29_ho_on_7603.log 2>&1
+npx tsx critic/scripts/c29_ho.ts 7603 20 off critic/c29_ho_off_7603.json > critic/c29_ho_off_7603.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 9907 random 400 60,200,350 20 --heroes > critic/c29_diploinv_9907r_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 1777 scenario 400 60,200,350 20 > critic/c29_diploinv_1777.log 2>&1
+npx tsx critic/scripts/c29_headless.ts 1777 30 critic/c29_headless_1777.json > critic/c29_headless_1777.log 2>&1
+npx tsx critic/scripts/c29_headless.ts 8209 30 critic/c29_headless_8209.json > critic/c29_headless_8209.log 2>&1
+npx tsx critic/scripts/c29_or2.ts 7019 300 MON ROM 60 critic/c29_or2_head_7019_MON_ROM.json > critic/c29_or2_head.log 2>&1
+npx tsx critic/scripts/c29_pr.ts 7019 30 MAN JAP critic/c29_pr_head_7019_MAN.json > critic/c29_pr_head_MAN.log 2>&1
+npx tsx critic/scripts/c29_pr.ts 7019 30 ALB ITA critic/c29_pr_head_7019_ALB.json > critic/c29_pr_head_ALB.log 2>&1
+npx tsx critic/scripts/c29_or.ts 8209 60,200,350 critic/c29_or_new_8209.json 150 > critic/c29_or_new_8209.log 2>&1
+npx tsx critic/scripts/c29_exit.ts 7019 45 critic/c29_exit_head_7019.json > critic/c29_exit_head_7019.log 2>&1
+npx tsx critic/scripts/c29_exit.ts 2531 45 critic/c29_exit_head_2531.json > critic/c29_exit_head_2531.log 2>&1
+npx tsx critic/scripts/c29_exit.ts 8467 45 critic/c29_exit_head_8467.json > critic/c29_exit_head_8467.log 2>&1
+npx tsx critic/scripts/c29_cobel.ts 7019 critic/c29_cobel_head_GER_ITA_POL.json GER ITA POL > critic/c29_cobel_head.log 2>&1
+npx tsx critic/scripts/c29_bs.ts 7019 365 critic/c29_bs_head_7019.json > critic/c29_bs_head_7019.log 2>&1
+npx tsx critic/scripts/c29_bs.ts 2531 365 critic/c29_bs_head_2531.json > critic/c29_bs_head_2531.log 2>&1
+npx tsx critic/scripts/c29_bs.ts 8467 365 critic/c29_bs_head_8467.json > critic/c29_bs_head_8467.log 2>&1
+npx tsx critic/scripts/c29_bs.ts 3739 365 critic/c29_bs_head_3739.json > critic/c29_bs_head_3739.log 2>&1
+npx tsx critic/scripts/c29_pz.ts 7019 365 critic/c29_pz_7019.json > critic/c29_pz_7019.log 2>&1
+npx tsx critic/scripts/c29_pz.ts 2207 365 critic/c29_pz_2207.json > critic/c29_pz_2207.log 2>&1
+npx tsx critic/scripts/c29_pz.ts 5113 365 critic/c29_pz_5113.json > critic/c29_pz_5113.log 2>&1
+npx tsx critic/scripts/c29_pz.ts 9241 365 critic/c29_pz_9241.json > critic/c29_pz_9241.log 2>&1
+npx tsx critic/scripts/c29_bx.ts 7019 POL GER ITA 60 critic/c29_bx_head_7019_GERatk_ITA.json attack > critic/c29_bx_head_a.log 2>&1
+npx tsx critic/scripts/c29_bx.ts 7019 SOV POL ROM 60 critic/c29_bx_head_7019_POL_ROM.json > critic/c29_bx_head_b.log 2>&1
+npx tsx critic/scripts/c29_bx.ts 2531 SOV POL ROM 60 critic/c29_bx_head_2531_POL_ROM.json > critic/c29_bx_head_c.log 2>&1
+npx tsx critic/scripts/c29_al.ts 7019 30,120 critic/c29_al_7019_all.json 100000 > critic/c29_al_7019_all.log 2>&1
+npx tsx critic/scripts/c29_both.ts 5113 730 critic/c29_both_head_5113.json > critic/c29_both_head_5113.log 2>&1
+npx tsx critic/scripts/c29_both.ts 6151 730 critic/c29_both_head_6151.json > critic/c29_both_head_6151.log 2>&1
+npx tsx critic/scripts/c29_both.ts 9241 730 critic/c29_both_head_9241.json > critic/c29_both_head_9241.log 2>&1
+npx tsx critic/scripts/c29_both.ts 1777 730 critic/c29_both_new_1777.json > critic/c29_both_new_1777.log 2>&1
+npx tsx critic/scripts/c29_both.ts 8209 730 critic/c29_both_new_8209.json > critic/c29_both_new_8209.log 2>&1
+npx tsx critic/scripts/c29_or.ts 7019 30,120,300 critic/c29_or_7019.json 150 > critic/c29_or_7019.log 2>&1
+npx tsx critic/scripts/c29_or.ts 2207 30,120,300 critic/c29_or_2207.json 150 > critic/c29_or_2207.log 2>&1
+npx tsx critic/scripts/c29_or.ts 5113 30,120,300 critic/c29_or_5113.json 150 > critic/c29_or_5113.log 2>&1
+npx tsx critic/scripts/c29_or.ts 9241 30,120,300 critic/c29_or_9241.json 150 > critic/c29_or_9241.log 2>&1

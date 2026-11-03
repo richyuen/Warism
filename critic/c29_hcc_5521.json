@@ -1,0 +1,90 @@
+{
+ "seed": 5521,
+ "clicks": [
+  {
+   "hero": "Maus",
+   "at": [
+    860,
+    289
+   ],
+   "panel": "Austria | × | Take control | Overview | Economy | Land (km²) | 82,344 | Share of world land | 0.1% | Army (men) | 87,220 (7) | Combat efficiency | 100% | AT WAR",
+   "cam": [
+    1024,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c29hcc_5521_Maus.png"
+  },
+  {
+   "hero": "TOG II",
+   "at": [
+    799,
+    391
+   ],
+   "panel": "France | × | Take control | Overview | Economy | HEROES | Richelieu | 100% | Char 2C | 100% | Land (km²) | 2,995,681 | Share of world land | 2.2% | Army (men) |",
+   "cam": [
+    1024,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c29hcc_5521_TOGII.png"
+  },
+  {
+   "hero": "Richelieu",
+   "at": [
+    779,
+    441
+   ],
+   "panel": "French West Africa | × | Take control | Overview | Economy | Land (km²) | 4,691,721 | Share of world land | 3.5% | Army (men) | 48,720 (6) | Combat efficiency |",
+   "cam": [
+    1024,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c29hcc_5521_Richelieu.png"
+  },
+  {
+   "hero": "Char 2C",
+   "at": [
+    811,
+    470
+   ],
+   "panel": "French West Africa | × | Take control | Overview | Economy | Land (km²) | 4,691,721 | Share of world land | 3.5% | Army (men) | 48,720 (6) | Combat efficiency |",
+   "cam": [
+    1024,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c29hcc_5521_Char2C.png"
+  },
+  {
+   "hero": "Roma",
+   "at": [
+    878,
+    517
+   ],
+   "panel": "French Equatorial Africa | × | Take control | Overview | Economy | Land (km²) | 2,917,557 | Share of world land | 2.2% | Army (men) | 16,240 (2) | Combat effici",
+   "cam": [
+    1024,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c29hcc_5521_Roma.png"
+  },
+  {
+   "hero": "P.100 Ercole",
+   "at": [
+    856,
+    573
+   ],
+   "panel": null,
+   "cam": [
+    1024,
+    512,
+    19568
+   ],
+   "shot": "critic/shots/c29hcc_5521_P100Ercole.png"
+  }
+ ],
+ "errors": []
+}

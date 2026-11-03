@@ -1,0 +1,111 @@
+{
+ "seed": 7019,
+ "W": 1600,
+ "H": 900,
+ "panels": {
+  "ENG": {
+   "guarantees": "GUARANTEES\nBelgium\nPortugal\nIraq",
+   "guaranteesBox": [
+    20,
+    676,
+    272,
+    41
+   ],
+   "guarantors": null,
+   "guarantorsBox": null,
+   "wars": "AT WAR WITH\nAt peace",
+   "panelBox": [
+    8,
+    54,
+    296,
+    671
+   ],
+   "panelScroll": [
+    706,
+    661
+   ],
+   "overflowX": false,
+   "shot": "critic/shots/c29pg_7019_wl_d0_ENG.png"
+  },
+  "POL": {
+   "guarantees": null,
+   "guaranteesBox": null,
+   "guarantors": "GUARANTEED BY\nFrance",
+   "guarantorsBox": [
+    20,
+    352,
+    272,
+    41
+   ],
+   "wars": "AT WAR WITH\nAt peace",
+   "panelBox": [
+    8,
+    54,
+    296,
+    392
+   ],
+   "panelScroll": [
+    382,
+    382
+   ],
+   "overflowX": false,
+   "shot": "critic/shots/c29pg_7019_wl_d0_POL.png"
+  }
+ },
+ "lapse": {
+  "day": 33,
+  "ticker": "⚓ Carrier strike ashore: United Kingdom on Spanish Republic ×3\n⚓ Carrier strike ashore: Japan on Spanish Republic",
+  "tickerShot": "critic/shots/c29pg_7019_wl_d33_ticker.png",
+  "panels": {
+   "LIT": {
+    "guarantees": null,
+    "guaranteesBox": null,
+    "guarantors": null,
+    "guarantorsBox": null,
+    "wars": "AT WAR WITH\nUnited States\nPhilippines",
+    "panelBox": [
+     8,
+     54,
+     296,
+     576
+    ],
+    "panelScroll": [
+     566,
+     566
+    ],
+    "overflowX": false,
+    "shot": "critic/shots/c29pg_7019_wl_d33_LIT.png"
+   },
+   "POL": {
+    "guarantees": null,
+    "guaranteesBox": null,
+    "guarantors": "GUARANTEED BY\nFrance",
+    "guarantorsBox": [
+     20,
+     513,
+     272,
+     41
+    ],
+    "wars": "AT WAR WITH\nAt peace",
+    "panelBox": [
+     8,
+     54,
+     296,
+     553
+    ],
+    "panelScroll": [
+     543,
+     543
+    ],
+    "overflowX": false,
+    "shot": "critic/shots/c29pg_7019_wl_d33_POL.png"
+   }
+  },
+  "historyText": [],
+  "historyTypes": [
+   "War left"
+  ],
+  "historyShot": "critic/shots/c29pg_7019_wl_d33_history.png"
+ },
+ "errors": []
+}

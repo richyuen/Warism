@@ -1,0 +1,1837 @@
+{
+ "seed": 4111,
+ "days": 730,
+ "summary": {
+  "land:outOfSupply": 7,
+  "land:inBattle": 15,
+  "sea:inBattle": 23
+ },
+ "losses": [
+  {
+   "hero": "ENG hero_tog2",
+   "day": 86.75,
+   "last": {
+    "f": 1477,
+    "x": 986.47,
+    "y": 368.5,
+    "hp": 0.002,
+    "supply": 0,
+    "org": 0,
+    "engaged": 0,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "NSP",
+    "sinceEng": 78,
+    "men": 8
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     1477,
+     20,
+     986.4688829237774,
+     368.5
+    ]
+   ],
+   "kindsThisHour": {
+    "ElementDestroyed": 4,
+    "FormationDestroyed": 1,
+    "FormationArrived": 2,
+    "StrikeHit": 73,
+    "AirStrike": 13,
+    "FlakFired": 9
+   }
+  },
+  {
+   "hero": "JAP hero_o_i",
+   "day": 90.79,
+   "last": {
+    "f": 1469,
+    "x": 1687.5,
+    "y": 371.5,
+    "hp": 0.001,
+    "supply": 0,
+    "org": 0,
+    "engaged": 1,
+    "moving": 0,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "CHI",
+    "sinceEng": 0,
+    "men": 11
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     1469,
+     75,
+     1687.5,
+     371.5
+    ]
+   ],
+   "kindsThisHour": {
+    "ElementDestroyed": 3,
+    "FormationDestroyed": 1,
+    "FormationArrived": 2,
+    "StrikeHit": 27,
+    "AirStrike": 7,
+    "FlakFired": 8
+   }
+  },
+  {
+   "hero": "GER hero_bismarck",
+   "day": 103.54,
+   "last": {
+    "f": 1474,
+    "x": 1075.04,
+    "y": 366.04,
+    "hp": 0.023,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 0,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 2200
+   },
+   "eventsNamingIt": [
+    [
+     "StrikeHit",
+     1474,
+     1328,
+     1075.0439037108235,
+     366.0439037108588
+    ],
+    [
+     "StrikeHit",
+     1474,
+     1452,
+     1075.0439037108233,
+     366.0439037108588
+    ],
+    [
+     "StrikeHit",
+     1474,
+     1453,
+     1075.0439037108233,
+     366.0439037108588
+    ],
+    [
+     "StrikeHit",
+     1474,
+     1454,
+     1075.0439037108233,
+     366.0439037108588
+    ],
+    [
+     "StrikeHit",
+     1474,
+     1455,
+     1075.0439037108233,
+     366.0439037108588
+    ],
+    [
+     "FormationDestroyed",
+     1474,
+     1,
+     1075.0439037108233,
+     366.0439037108588
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 4,
+    "StrikeHit": 22,
+    "AirStrike": 19,
+    "AirBattle": 1,
+    "FlakFired": 10,
+    "CarrierSunk": 1,
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1
+   }
+  },
+  {
+   "hero": "ITA hero_roma",
+   "day": 107.5,
+   "last": {
+    "f": 1480,
+    "x": 1065.5,
+    "y": 332.5,
+    "hp": 0.02,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 0,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1900
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     1480,
+     15,
+     1065.5,
+     332.5
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 1,
+    "StrikeHit": 14,
+    "AirStrike": 11,
+    "FlakFired": 7,
+    "ElementDestroyed": 3,
+    "FormationDestroyed": 1
+   }
+  },
+  {
+   "hero": "GER hero_maus",
+   "day": 112.67,
+   "last": {
+    "f": 1475,
+    "x": 1073.5,
+    "y": 269.4,
+    "hp": 0.015,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "NED",
+    "sinceEng": 0,
+    "men": 6
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     1475,
+     1,
+     1073.5,
+     269.40027765615713
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 2,
+    "StrikeHit": 33,
+    "AirStrike": 6,
+    "AirBattle": 1,
+    "FlakFired": 11,
+    "ElementDestroyed": 5,
+    "FormationDestroyed": 1
+   }
+  },
+  {
+   "hero": "GER hero_bismarck",
+   "day": 170.58,
+   "last": {
+    "f": 591,
+    "x": 1013.58,
+    "y": 287.42,
+    "hp": 0.028,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 2200
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     591,
+     1,
+     1013.5828952465538,
+     287.4171047534462
+    ]
+   ],
+   "kindsThisHour": {
+    "ElementDestroyed": 2,
+    "FormationArrived": 4,
+    "StrikeHit": 31,
+    "AirStrike": 8,
+    "FlakFired": 3,
+    "FormationRetreated": 1,
+    "FormationDestroyed": 1,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "ITA hero_roma",
+   "day": 188.75,
+   "last": {
+    "f": 272,
+    "x": 1056.92,
+    "y": 338.08,
+    "hp": 0.027,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1900
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     272,
+     15,
+     1056.922388414349,
+     338.07761158565097
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 7,
+    "AirStrike": 4,
+    "FlakFired": 2,
+    "FormationRetreated": 1,
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "FRA hero_char2c",
+   "day": 189.92,
+   "last": {
+    "f": 1479,
+    "x": 1087.14,
+    "y": 309.5,
+    "hp": 0.004,
+    "supply": 0,
+    "org": 0,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "SWI",
+    "sinceEng": 0,
+    "men": 12
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     1479,
+     19,
+     1087.1365332130028,
+     309.5
+    ]
+   ],
+   "kindsThisHour": {
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 1,
+    "FormationArrived": 1,
+    "StrikeHit": 25,
+    "AirStrike": 7,
+    "FlakFired": 4,
+    "FormationRetreated": 1
+   }
+  },
+  {
+   "hero": "JAP hero_o_i",
+   "day": 204.63,
+   "last": {
+    "f": 589,
+    "x": 1707.5,
+    "y": 348.5,
+    "hp": 0.001,
+    "supply": 0,
+    "org": 0,
+    "engaged": 0,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "CHI",
+    "sinceEng": 391,
+    "men": 11
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     589,
+     75,
+     1707.5,
+     348.5
+    ]
+   ],
+   "kindsThisHour": {
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1,
+    "FormationArrived": 2,
+    "AirStrike": 5,
+    "StrikeHit": 13,
+    "AirBattle": 1,
+    "FlakFired": 11,
+    "FormationRetreated": 3
+   }
+  },
+  {
+   "hero": "FRA hero_richelieu",
+   "day": 218.38,
+   "last": {
+    "f": 1478,
+    "x": 1712.28,
+    "y": 368.68,
+    "hp": 0.004,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 0,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1600
+   },
+   "eventsNamingIt": [
+    [
+     "StrikeHit",
+     1478,
+     1462,
+     1712.283906112788,
+     368.6790705924078
+    ],
+    [
+     "StrikeHit",
+     1478,
+     1463,
+     1712.283906112788,
+     368.6790705924078
+    ],
+    [
+     "StrikeHit",
+     1478,
+     1464,
+     1712.283906112788,
+     368.6790705924078
+    ],
+    [
+     "StrikeHit",
+     1478,
+     1465,
+     1712.283906112788,
+     368.6790705924078
+    ],
+    [
+     "StrikeHit",
+     1478,
+     1466,
+     1712.283906112788,
+     368.6790705924078
+    ],
+    [
+     "StrikeHit",
+     1478,
+     1467,
+     1712.283906112788,
+     368.6790705924078
+    ],
+    [
+     "FormationDestroyed",
+     1478,
+     19,
+     1712.283906112788,
+     368.6790705924078
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 4,
+    "StrikeHit": 17,
+    "AirStrike": 14,
+    "AirBattle": 1,
+    "FlakFired": 10,
+    "FormationRetreated": 3,
+    "ElementDestroyed": 3,
+    "CarrierSunk": 1,
+    "FormationDestroyed": 1,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "GER hero_bismarck",
+   "day": 252.38,
+   "last": {
+    "f": 244,
+    "x": 1050.18,
+    "y": 262.5,
+    "hp": 0.004,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 2200
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     244,
+     1,
+     1050.1790005998698,
+     262.5
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 1,
+    "StrikeHit": 15,
+    "AirStrike": 3,
+    "FlakFired": 12,
+    "FormationRetreated": 1,
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "GER hero_maus",
+   "day": 254.25,
+   "last": {
+    "f": 1274,
+    "x": 1060.5,
+    "y": 291.5,
+    "hp": 0.194,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "GER",
+    "sinceEng": 0,
+    "men": 6
+   },
+   "eventsNamingIt": [
+    [
+     "StrikeHit",
+     1274,
+     1319,
+     1060.5,
+     291.5
+    ],
+    [
+     "FormationDestroyed",
+     1274,
+     1,
+     1060.5,
+     291.5
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 13,
+    "AirStrike": 5,
+    "FlakFired": 1,
+    "FormationRetreated": 1,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2
+   }
+  },
+  {
+   "hero": "FRA hero_char2c",
+   "day": 254.25,
+   "last": {
+    "f": 1310,
+    "x": 1059.5,
+    "y": 290.5,
+    "hp": 0.112,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "FRA",
+    "sinceEng": 0,
+    "men": 12
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     1310,
+     19,
+     1059.5,
+     290.5
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 13,
+    "AirStrike": 5,
+    "FlakFired": 1,
+    "FormationRetreated": 1,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2
+   }
+  },
+  {
+   "hero": "ITA hero_roma",
+   "day": 269.63,
+   "last": {
+    "f": 1064,
+    "x": 1043.56,
+    "y": 372.5,
+    "hp": 0.037,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1900
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     1064,
+     15,
+     1043.560688986007,
+     372.5
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 31,
+    "AirStrike": 5,
+    "FlakFired": 3,
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "ENG hero_tog2",
+   "day": 271.75,
+   "last": {
+    "f": 378,
+    "x": 1014.08,
+    "y": 334.5,
+    "hp": 0.003,
+    "supply": 0,
+    "org": 0,
+    "engaged": 0,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "NSP",
+    "sinceEng": 1451,
+    "men": 8
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     378,
+     20,
+     1014.0751222514116,
+     334.5
+    ]
+   ],
+   "kindsThisHour": {
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1,
+    "FormationArrived": 2,
+    "StrikeHit": 20,
+    "AirStrike": 6,
+    "FlakFired": 4
+   }
+  },
+  {
+   "hero": "ENG hero_hood",
+   "day": 292.71,
+   "last": {
+    "f": 1476,
+    "x": 1637.36,
+    "y": 561.64,
+    "hp": 0.005,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1400
+   },
+   "eventsNamingIt": [
+    [
+     "StrikeHit",
+     1476,
+     1462,
+     1637.3571124410391,
+     561.642887558961
+    ],
+    [
+     "StrikeHit",
+     1476,
+     1463,
+     1637.3571124410391,
+     561.642887558961
+    ],
+    [
+     "StrikeHit",
+     1476,
+     1466,
+     1637.3571124410391,
+     561.642887558961
+    ],
+    [
+     "StrikeHit",
+     1476,
+     1467,
+     1637.3571124410391,
+     561.642887558961
+    ],
+    [
+     "FormationDestroyed",
+     1476,
+     20,
+     1637.3571124410391,
+     561.642887558961
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 5,
+    "StrikeHit": 6,
+    "AirStrike": 6,
+    "FlakFired": 2,
+    "ElementDestroyed": 5,
+    "FormationDestroyed": 2,
+    "SeaBattle": 2,
+    "CarrierSunk": 1
+   }
+  },
+  {
+   "hero": "FRA hero_richelieu",
+   "day": 292.71,
+   "last": {
+    "f": 373,
+    "x": 1270.33,
+    "y": 524.33,
+    "hp": 0.074,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1600
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     373,
+     19,
+     1270.3277223100072,
+     524.3277223100073
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 5,
+    "StrikeHit": 6,
+    "AirStrike": 6,
+    "FlakFired": 2,
+    "ElementDestroyed": 5,
+    "FormationDestroyed": 2,
+    "SeaBattle": 2,
+    "CarrierSunk": 1
+   }
+  },
+  {
+   "hero": "SOV hero_sovetsky_soyuz",
+   "day": 297,
+   "last": {
+    "f": 1472,
+    "x": 1211.5,
+    "y": 428.55,
+    "hp": 0.032,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1800
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     1472,
+     10,
+     1211.5,
+     428.55394273089297
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 3,
+    "StrikeHit": 11,
+    "AirStrike": 9,
+    "FlakFired": 1,
+    "ElementDestroyed": 3,
+    "FormationDestroyed": 1,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "GER hero_bismarck",
+   "day": 318.04,
+   "last": {
+    "f": 560,
+    "x": 1192.54,
+    "y": 206.54,
+    "hp": 0.004,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 2200
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     560,
+     1,
+     1192.5419315772274,
+     206.5419315772274
+    ]
+   ],
+   "kindsThisHour": {
+    "MoveRejected": 2,
+    "TechResearched": 2,
+    "FlakFired": 3,
+    "FormationRetreated": 1,
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "USA hero_t28",
+   "day": 326,
+   "last": {
+    "f": 1471,
+    "x": 1166.06,
+    "y": 387.94,
+    "hp": 0.001,
+    "supply": 0,
+    "org": 0,
+    "engaged": 0,
+    "moving": 0,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "GRE",
+    "sinceEng": 17821,
+    "men": 4
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     1471,
+     82,
+     1166.0625,
+     387.9375
+    ]
+   ],
+   "kindsThisHour": {
+    "ElementDestroyed": 3,
+    "FormationDestroyed": 1,
+    "FormationArrived": 2,
+    "StrikeHit": 17,
+    "AirStrike": 3,
+    "FlakFired": 5
+   }
+  },
+  {
+   "hero": "SOV hero_t42",
+   "day": 341.21,
+   "last": {
+    "f": 1473,
+    "x": 1185.5,
+    "y": 308.5,
+    "hp": 0.28,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "ITA",
+    "sinceEng": 0,
+    "men": 15
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     1473,
+     10,
+     1185.5,
+     308.5
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 4,
+    "AirStrike": 2,
+    "FlakFired": 3,
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1
+   }
+  },
+  {
+   "hero": "ITA hero_roma",
+   "day": 352.33,
+   "last": {
+    "f": 1320,
+    "x": 1019.97,
+    "y": 383.03,
+    "hp": 0.014,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1900
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     1320,
+     15,
+     1019.9651413140906,
+     383.0348586859094
+    ]
+   ],
+   "kindsThisHour": {
+    "FlakFired": 7,
+    "FormationRetreated": 1,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 1,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "ENG hero_tog2",
+   "day": 355.13,
+   "last": {
+    "f": 901,
+    "x": 1007.5,
+    "y": 333.5,
+    "hp": 0.088,
+    "supply": 0.5,
+    "org": 0.5,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "NSP",
+    "sinceEng": 0,
+    "men": 8
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     901,
+     20,
+     1007.5,
+     333.5
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 11,
+    "AirStrike": 8,
+    "FlakFired": 16,
+    "FormationRetreated": 1,
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1
+   }
+  },
+  {
+   "hero": "ITA hero_p100",
+   "day": 356.13,
+   "last": {
+    "f": 1481,
+    "x": 1189.5,
+    "y": 304.17,
+    "hp": 0.007,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "ITA",
+    "sinceEng": 0,
+    "men": 10
+   },
+   "eventsNamingIt": [
+    [
+     "StrikeHit",
+     1481,
+     1297,
+     1189.5,
+     304.1665484883612
+    ],
+    [
+     "StrikeHit",
+     1481,
+     1298,
+     1189.5,
+     304.1665484883612
+    ],
+    [
+     "FormationDestroyed",
+     1481,
+     15,
+     1189.5,
+     304.1665484883612
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 7,
+    "AirStrike": 6,
+    "FlakFired": 12,
+    "FormationRetreated": 3,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 1
+   }
+  },
+  {
+   "hero": "JAP hero_o_i",
+   "day": 385.58,
+   "last": {
+    "f": 441,
+    "x": 1767.5,
+    "y": 338.5,
+    "hp": 0.002,
+    "supply": 0,
+    "org": 0,
+    "engaged": 0,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "SOV",
+    "sinceEng": 12901,
+    "men": 11
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     441,
+     75,
+     1767.5,
+     338.5
+    ]
+   ],
+   "kindsThisHour": {
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 1,
+    "StrikeHit": 5,
+    "AirStrike": 3,
+    "FlakFired": 5,
+    "FormationRetreated": 1
+   }
+  },
+  {
+   "hero": "FRA hero_richelieu",
+   "day": 399.04,
+   "last": {
+    "f": 344,
+    "x": 1756.81,
+    "y": 356.17,
+    "hp": 0.015,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 0,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1600
+   },
+   "eventsNamingIt": [
+    [
+     "StrikeHit",
+     344,
+     1462,
+     1756.8109397779176,
+     356.1652958746257
+    ],
+    [
+     "StrikeHit",
+     344,
+     1463,
+     1756.8109397779176,
+     356.1652958746257
+    ],
+    [
+     "StrikeHit",
+     344,
+     900,
+     1756.8109397779176,
+     356.1652958746257
+    ],
+    [
+     "StrikeHit",
+     344,
+     917,
+     1756.8109397779176,
+     356.1652958746257
+    ],
+    [
+     "StrikeHit",
+     344,
+     1466,
+     1756.8109397779176,
+     356.1652958746257
+    ],
+    [
+     "StrikeHit",
+     344,
+     1467,
+     1756.8109397779176,
+     356.1652958746257
+    ],
+    [
+     "FormationDestroyed",
+     344,
+     19,
+     1756.8109397779176,
+     356.1652958746257
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationDestroyed": 4,
+    "FormationArrived": 2,
+    "StrikeHit": 8,
+    "AirStrike": 8,
+    "FlakFired": 3,
+    "FormationRetreated": 2,
+    "CarrierSunk": 1,
+    "ElementDestroyed": 1,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "GER hero_maus",
+   "day": 402.25,
+   "last": {
+    "f": 580,
+    "x": 1201.5,
+    "y": 274.75,
+    "hp": 0.001,
+    "supply": 0,
+    "org": 0,
+    "engaged": 0,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "ITA",
+    "sinceEng": 3,
+    "men": 6
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     580,
+     1,
+     1201.5,
+     274.75170706427764
+    ]
+   ],
+   "kindsThisHour": {
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1,
+    "FormationArrived": 3,
+    "AirStrike": 6,
+    "StrikeHit": 10,
+    "FlakFired": 1
+   }
+  },
+  {
+   "hero": "SOV hero_sovetsky_soyuz",
+   "day": 413.92,
+   "last": {
+    "f": 1137,
+    "x": 1764.21,
+    "y": 369.58,
+    "hp": 0.014,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 0,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1800
+   },
+   "eventsNamingIt": [
+    [
+     "StrikeHit",
+     1137,
+     1374,
+     1764.2123745100523,
+     369.58282129919706
+    ],
+    [
+     "StrikeHit",
+     1137,
+     1375,
+     1764.2123745100523,
+     369.58282129919706
+    ],
+    [
+     "FormationDestroyed",
+     1137,
+     10,
+     1764.2123745100523,
+     369.58282129919706
+    ]
+   ],
+   "kindsThisHour": {
+    "AirStrike": 5,
+    "StrikeHit": 23,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 1,
+    "FlakFired": 4,
+    "SeaBattle": 1,
+    "CapitalCaptured": 1,
+    "CapitalMoved": 1
+   }
+  },
+  {
+   "hero": "ENG hero_tog2",
+   "day": 438.71,
+   "last": {
+    "f": 295,
+    "x": 1009.6,
+    "y": 334.5,
+    "hp": 0.003,
+    "supply": 0,
+    "org": 0,
+    "engaged": 0,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "NSP",
+    "sinceEng": 137,
+    "men": 8
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     295,
+     20,
+     1009.6036672725035,
+     334.5
+    ]
+   ],
+   "kindsThisHour": {
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1,
+    "StrikeHit": 10,
+    "AirStrike": 5,
+    "FlakFired": 1
+   }
+  },
+  {
+   "hero": "GER hero_bismarck",
+   "day": 472,
+   "last": {
+    "f": 491,
+    "x": 1047.5,
+    "y": 245.78,
+    "hp": 0.032,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 2200
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     491,
+     1,
+     1047.5,
+     245.78094884227036
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 70,
+    "AirStrike": 8,
+    "FlakFired": 9,
+    "FormationRetreated": 1,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "FRA hero_richelieu",
+   "day": 472,
+   "last": {
+    "f": 218,
+    "x": 1047.5,
+    "y": 244.45,
+    "hp": 0.032,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1600
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     218,
+     19,
+     1047.5,
+     244.44876296991842
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 70,
+    "AirStrike": 8,
+    "FlakFired": 9,
+    "FormationRetreated": 1,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "GER hero_maus",
+   "day": 481.38,
+   "last": {
+    "f": 27,
+    "x": 1180.5,
+    "y": 277.5,
+    "hp": 0.321,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "SOV",
+    "sinceEng": 0,
+    "men": 6
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     27,
+     1,
+     1180.5,
+     277.5
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 13,
+    "AirStrike": 10,
+    "FlakFired": 19,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 1
+   }
+  },
+  {
+   "hero": "SOV hero_sovetsky_soyuz",
+   "day": 499.83,
+   "last": {
+    "f": 217,
+    "x": 1102.5,
+    "y": 324.19,
+    "hp": 0.032,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1800
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     217,
+     10,
+     1102.5,
+     324.1867049583786
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 3,
+    "StrikeHit": 1,
+    "AirStrike": 3,
+    "FlakFired": 11,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "ITA hero_roma",
+   "day": 499.83,
+   "last": {
+    "f": 553,
+    "x": 1102.5,
+    "y": 323.5,
+    "hp": 0.032,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 0,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1900
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     553,
+     15,
+     1102.5,
+     323.5
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 3,
+    "StrikeHit": 1,
+    "AirStrike": 3,
+    "FlakFired": 11,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "ITA hero_p100",
+   "day": 512.08,
+   "last": {
+    "f": 565,
+    "x": 1151.57,
+    "y": 282.43,
+    "hp": 0.402,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "POL",
+    "sinceEng": 0,
+    "men": 10
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     565,
+     15,
+     1151.5677855832178,
+     282.43221441678224
+    ]
+   ],
+   "kindsThisHour": {
+    "AirStrike": 3,
+    "StrikeHit": 11,
+    "FlakFired": 10,
+    "FormationRetreated": 1,
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1
+   }
+  },
+  {
+   "hero": "FRA hero_char2c",
+   "day": 519.83,
+   "last": {
+    "f": 725,
+    "x": 1092.14,
+    "y": 319.86,
+    "hp": 0,
+    "supply": 0,
+    "org": 0,
+    "engaged": 0,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "SWI",
+    "sinceEng": 369,
+    "men": 12
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     725,
+     19,
+     1092.1443032580228,
+     319.85569674197734
+    ]
+   ],
+   "kindsThisHour": {
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1,
+    "StrikeHit": 37,
+    "AirStrike": 6,
+    "FlakFired": 9
+   }
+  },
+  {
+   "hero": "GER hero_bismarck",
+   "day": 539.83,
+   "last": {
+    "f": 12,
+    "x": 1070.5,
+    "y": 254.89,
+    "hp": 0.032,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 2200
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     12,
+     1,
+     1070.5,
+     254.89222687103316
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 2,
+    "StrikeHit": 17,
+    "AirStrike": 8,
+    "FlakFired": 11,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "FRA hero_richelieu",
+   "day": 539.83,
+   "last": {
+    "f": 725,
+    "x": 1070.5,
+    "y": 256.5,
+    "hp": 0.032,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 0,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1600
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     725,
+     19,
+     1070.5,
+     256.5
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 2,
+    "StrikeHit": 17,
+    "AirStrike": 8,
+    "FlakFired": 11,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "SOV hero_t42",
+   "day": 548.33,
+   "last": {
+    "f": 554,
+    "x": 1126.5,
+    "y": 270.79,
+    "hp": 0.106,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "SOV",
+    "sinceEng": 0,
+    "men": 15
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     554,
+     10,
+     1126.5,
+     270.7870999269182
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 1,
+    "StrikeHit": 8,
+    "AirStrike": 5,
+    "FlakFired": 13,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2
+   }
+  },
+  {
+   "hero": "GER hero_maus",
+   "day": 548.33,
+   "last": {
+    "f": 26,
+    "x": 1126.5,
+    "y": 269.5,
+    "hp": 0.218,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "POL",
+    "sinceEng": 0,
+    "men": 6
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     26,
+     1,
+     1126.5,
+     269.5
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 1,
+    "StrikeHit": 8,
+    "AirStrike": 5,
+    "FlakFired": 13,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2
+   }
+  },
+  {
+   "hero": "SOV hero_sovetsky_soyuz",
+   "day": 587.96,
+   "last": {
+    "f": 460,
+    "x": 1160.5,
+    "y": 231.5,
+    "hp": 0.032,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 0,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1800
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     460,
+     10,
+     1160.5,
+     231.5
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 8,
+    "AirStrike": 4,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "ITA hero_roma",
+   "day": 587.96,
+   "last": {
+    "f": 157,
+    "x": 1159.53,
+    "y": 230.53,
+    "hp": 0.032,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1900
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     157,
+     15,
+     1159.5341642181609,
+     230.53416421816078
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 8,
+    "AirStrike": 4,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 2,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "GER hero_maus",
+   "day": 610.58,
+   "last": {
+    "f": 430,
+    "x": 1094.5,
+    "y": 263.5,
+    "hp": 0.054,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 0,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "ENG",
+    "sinceEng": 0,
+    "men": 6
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     430,
+     1,
+     1094.5,
+     263.5
+    ]
+   ],
+   "kindsThisHour": {
+    "FormationArrived": 1,
+    "StrikeHit": 22,
+    "AirStrike": 8,
+    "FlakFired": 9,
+    "ElementDestroyed": 1,
+    "FormationDestroyed": 1
+   }
+  },
+  {
+   "hero": "SOV hero_sovetsky_soyuz",
+   "day": 670.33,
+   "last": {
+    "f": 232,
+    "x": 1011.6,
+    "y": 380.5,
+    "hp": 0.014,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": true,
+    "cellOwner": "sea",
+    "sinceEng": 0,
+    "men": 1800
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     232,
+     10,
+     1011.5971883574462,
+     380.5
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 4,
+    "AirStrike": 3,
+    "FlakFired": 11,
+    "ElementDestroyed": 3,
+    "FormationDestroyed": 1,
+    "SeaBattle": 1
+   }
+  },
+  {
+   "hero": "SOV hero_t42",
+   "day": 708.33,
+   "last": {
+    "f": 529,
+    "x": 1114.7,
+    "y": 267.5,
+    "hp": 0.405,
+    "supply": 1,
+    "org": 1,
+    "engaged": 1,
+    "moving": 1,
+    "aboard": false,
+    "fleet": false,
+    "cellOwner": "POL",
+    "sinceEng": 0,
+    "men": 15
+   },
+   "eventsNamingIt": [
+    [
+     "FormationDestroyed",
+     529,
+     10,
+     1114.697561925573,
+     267.5
+    ]
+   ],
+   "kindsThisHour": {
+    "StrikeHit": 33,
+    "AirStrike": 6,
+    "FlakFired": 12,
+    "ElementDestroyed": 2,
+    "FormationDestroyed": 1
+   }
+  }
+ ]
+}

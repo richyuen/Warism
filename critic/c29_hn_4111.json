@@ -1,0 +1,808 @@
+{
+ "seed": 4111,
+ "steps": [
+  {
+   "hero": "f1478",
+   "panel": "Richelieu | × | Kind | Richelieu | Nation | Germany | Men | 1,600 of 1,600 | Supply | 100% | Org | 100% | Fuel on the march | 20 an hour | Status | Holding | ELEMENTS | 1×\tRichelieu\t1 of 1",
+   "shot": "critic/shots/c29hn_4111_f1478.png"
+  },
+  {
+   "hero": "f1479",
+   "panel": "Char 2C | × | Kind | Char 2C | Nation | Germany | Men | 12 of 12 | Supply | 100% | Org | 100% | Fuel on the march | 15 an hour | Status | Holding | ELEMENTS | 1×\tChar 2C\t1 of 1",
+   "shot": "critic/shots/c29hn_4111_f1479.png"
+  }
+ ],
+ "T": {
+  "GER": 1,
+  "FRA": 19
+ },
+ "before": {
+  "heroes": [
+   {
+    "id": 1468,
+    "name": "Formation 1468",
+    "nation": 75,
+    "x": 1818.9375,
+    "y": 388.9375
+   },
+   {
+    "id": 1469,
+    "name": "Formation 1469",
+    "nation": 75,
+    "x": 1819.019377777778,
+    "y": 385.2819169650518
+   },
+   {
+    "id": 1470,
+    "name": "Formation 1470",
+    "nation": 82,
+    "x": 356.5,
+    "y": 404.5
+   },
+   {
+    "id": 1471,
+    "name": "Formation 1471",
+    "nation": 82,
+    "x": 585.8907022222222,
+    "y": 364.19792930379083
+   },
+   {
+    "id": 1472,
+    "name": "Formation 1472",
+    "nation": 10,
+    "x": 1193.5,
+    "y": 207.5
+   },
+   {
+    "id": 1473,
+    "name": "Formation 1473",
+    "nation": 10,
+    "x": 1237.979591111111,
+    "y": 242.1368298667249
+   },
+   {
+    "id": 1474,
+    "name": "Formation 1474",
+    "nation": 1,
+    "x": 1070.5625,
+    "y": 259.0625
+   },
+   {
+    "id": 1475,
+    "name": "Formation 1475",
+    "nation": 1,
+    "x": 1100.2288355555554,
+    "y": 267.3981779047986
+   },
+   {
+    "id": 1476,
+    "name": "Formation 1476",
+    "nation": 20,
+    "x": 1006.5,
+    "y": 216.5
+   },
+   {
+    "id": 1477,
+    "name": "Formation 1477",
+    "nation": 20,
+    "x": 1023.3247288888889,
+    "y": 275.1737112720215
+   },
+   {
+    "id": 1478,
+    "name": "Formation 1478",
+    "nation": 19,
+    "x": 998.5,
+    "y": 298.5
+   },
+   {
+    "id": 1479,
+    "name": "Formation 1479",
+    "nation": 19,
+    "x": 1037.2630755555556,
+    "y": 294.7747091050998
+   },
+   {
+    "id": 1480,
+    "name": "Formation 1480",
+    "nation": 15,
+    "x": 1121.5,
+    "y": 353.5
+   },
+   {
+    "id": 1481,
+    "name": "Formation 1481",
+    "nation": 15,
+    "x": 1095.0047288888888,
+    "y": 344.024127834463
+   }
+  ],
+  "stats": [
+   [
+    "nation.GER",
+    [
+     [
+      "bismarck",
+      1474,
+      null
+     ],
+     [
+      "maus",
+      1475,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.SOV",
+    [
+     [
+      "sovetsky_soyuz",
+      1472,
+      null
+     ],
+     [
+      "t42",
+      1473,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.ITA",
+    [
+     [
+      "roma",
+      1480,
+      null
+     ],
+     [
+      "p100",
+      1481,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.FRA",
+    [
+     [
+      "richelieu",
+      1478,
+      null
+     ],
+     [
+      "char2c",
+      1479,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.ENG",
+    [
+     [
+      "hood",
+      1476,
+      null
+     ],
+     [
+      "tog2",
+      1477,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.JAP",
+    [
+     [
+      "yamato",
+      1468,
+      null
+     ],
+     [
+      "o_i",
+      1469,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.USA",
+    [
+     [
+      "iowa",
+      1470,
+      null
+     ],
+     [
+      "t28",
+      1471,
+      null
+     ]
+    ]
+   ]
+  ]
+ },
+ "cmdResult": null,
+ "after": {
+  "heroes": [
+   {
+    "id": 1468,
+    "name": "Formation 1468",
+    "nation": 75,
+    "x": 1817.536337260861,
+    "y": 391.46366273913884
+   },
+   {
+    "id": 1469,
+    "name": "Formation 1469",
+    "nation": 75,
+    "x": 1818.93897011255,
+    "y": 388.9375
+   },
+   {
+    "id": 1470,
+    "name": "Formation 1470",
+    "nation": 82,
+    "x": 356.5,
+    "y": 404.5
+   },
+   {
+    "id": 1471,
+    "name": "Formation 1471",
+    "nation": 82,
+    "x": 585.8907022222222,
+    "y": 364.19792930379083
+   },
+   {
+    "id": 1472,
+    "name": "Formation 1472",
+    "nation": 10,
+    "x": 1193.5,
+    "y": 207.5
+   },
+   {
+    "id": 1473,
+    "name": "Formation 1473",
+    "nation": 10,
+    "x": 1237.979591111111,
+    "y": 242.1368298667249
+   },
+   {
+    "id": 1474,
+    "name": "Formation 1474",
+    "nation": 1,
+    "x": 1070.5625,
+    "y": 259.0625
+   },
+   {
+    "id": 1475,
+    "name": "Formation 1475",
+    "nation": 1,
+    "x": 1100.2288355555554,
+    "y": 267.3981779047986
+   },
+   {
+    "id": 1476,
+    "name": "Formation 1476",
+    "nation": 20,
+    "x": 1006.5,
+    "y": 216.5
+   },
+   {
+    "id": 1477,
+    "name": "Formation 1477",
+    "nation": 20,
+    "x": 1023.3247288888889,
+    "y": 275.1737112720215
+   },
+   {
+    "id": 1478,
+    "name": "Formation 1478",
+    "nation": 1,
+    "x": 998.5,
+    "y": 298.5
+   },
+   {
+    "id": 1479,
+    "name": "Formation 1479",
+    "nation": 1,
+    "x": 1037.2630755555556,
+    "y": 294.7747091050998
+   },
+   {
+    "id": 1480,
+    "name": "Formation 1480",
+    "nation": 15,
+    "x": 1121.5,
+    "y": 353.5
+   },
+   {
+    "id": 1481,
+    "name": "Formation 1481",
+    "nation": 15,
+    "x": 1095.0047288888888,
+    "y": 344.024127834463
+   }
+  ],
+  "stats": [
+   [
+    "nation.GER",
+    [
+     [
+      "bismarck",
+      1474,
+      null
+     ],
+     [
+      "maus",
+      1475,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.SOV",
+    [
+     [
+      "sovetsky_soyuz",
+      1472,
+      null
+     ],
+     [
+      "t42",
+      1473,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.ITA",
+    [
+     [
+      "roma",
+      1480,
+      null
+     ],
+     [
+      "p100",
+      1481,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.ENG",
+    [
+     [
+      "hood",
+      1476,
+      null
+     ],
+     [
+      "tog2",
+      1477,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.JAP",
+    [
+     [
+      "yamato",
+      1468,
+      null
+     ],
+     [
+      "o_i",
+      1469,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.USA",
+    [
+     [
+      "iowa",
+      1470,
+      null
+     ],
+     [
+      "t28",
+      1471,
+      null
+     ]
+    ]
+   ]
+  ],
+  "gerBlock": "HEROES | Bismarck | 100% | Maus | 100%",
+  "fraLiving": false,
+  "gerShot": "critic/shots/c29hn_4111_ger_block.png"
+ },
+ "frIds": [
+  1478,
+  1479
+ ],
+ "d60": {
+  "heroes": [
+   {
+    "id": 1468,
+    "name": "Formation 1468",
+    "nation": 75,
+    "x": 1352.4932734308236,
+    "y": 524.5
+   },
+   {
+    "id": 1469,
+    "name": "Formation 1469",
+    "nation": 75,
+    "x": 1701.5,
+    "y": 378.5
+   },
+   {
+    "id": 1470,
+    "name": "Formation 1470",
+    "nation": 82,
+    "x": 356.5,
+    "y": 404.5
+   },
+   {
+    "id": 1471,
+    "name": "Formation 1471",
+    "nation": 82,
+    "x": 1066.006131181051,
+    "y": 224.5
+   },
+   {
+    "id": 1472,
+    "name": "Formation 1472",
+    "nation": 10,
+    "x": 1187.5,
+    "y": 328.5
+   },
+   {
+    "id": 1473,
+    "name": "Formation 1473",
+    "nation": 10,
+    "x": 1206.2210694238383,
+    "y": 274.5
+   },
+   {
+    "id": 1474,
+    "name": "Formation 1474",
+    "nation": 1,
+    "x": 1130.5,
+    "y": 341.5
+   },
+   {
+    "id": 1475,
+    "name": "Formation 1475",
+    "nation": 1,
+    "x": 1039.5,
+    "y": 344.5
+   },
+   {
+    "id": 1476,
+    "name": "Formation 1476",
+    "nation": 20,
+    "x": 1006.5,
+    "y": 216.5
+   },
+   {
+    "id": 1477,
+    "name": "Formation 1477",
+    "nation": 20,
+    "x": 1023.3247288888889,
+    "y": 275.1737112720215
+   },
+   {
+    "id": 1478,
+    "name": "Formation 1478",
+    "nation": 1,
+    "x": 1130.5,
+    "y": 341.5
+   },
+   {
+    "id": 1479,
+    "name": "Formation 1479",
+    "nation": 1,
+    "x": 1061.2463669236192,
+    "y": 327.7536330763808
+   },
+   {
+    "id": 1480,
+    "name": "Formation 1480",
+    "nation": 15,
+    "x": 1130.5,
+    "y": 345.0160056213847
+   },
+   {
+    "id": 1481,
+    "name": "Formation 1481",
+    "nation": 15,
+    "x": 1066.2424871143987,
+    "y": 303.5
+   }
+  ],
+  "stats": [
+   [
+    "nation.GER",
+    [
+     [
+      "bismarck",
+      1474,
+      null
+     ],
+     [
+      "maus",
+      1475,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.SOV",
+    [
+     [
+      "sovetsky_soyuz",
+      1472,
+      null
+     ],
+     [
+      "t42",
+      1473,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.ITA",
+    [
+     [
+      "roma",
+      1480,
+      null
+     ],
+     [
+      "p100",
+      1481,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.ENG",
+    [
+     [
+      "hood",
+      1476,
+      null
+     ],
+     [
+      "tog2",
+      1477,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.JAP",
+    [
+     [
+      "yamato",
+      1468,
+      null
+     ],
+     [
+      "o_i",
+      1469,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.USA",
+    [
+     [
+      "iowa",
+      1470,
+      null
+     ],
+     [
+      "t28",
+      1471,
+      null
+     ]
+    ]
+   ]
+  ]
+ },
+ "removed": null,
+ "d122": {
+  "heroes": [
+   {
+    "id": 1468,
+    "name": "Formation 1468",
+    "nation": 75,
+    "x": 1695.5,
+    "y": 364.5
+   },
+   {
+    "id": 1470,
+    "name": "Formation 1470",
+    "nation": 82,
+    "x": 356.5,
+    "y": 404.5
+   },
+   {
+    "id": 1471,
+    "name": "Formation 1471",
+    "nation": 82,
+    "x": 585.8907022222222,
+    "y": 364.19792930379083
+   },
+   {
+    "id": 1472,
+    "name": "Formation 1472",
+    "nation": 10,
+    "x": 1069.5,
+    "y": 223.5
+   },
+   {
+    "id": 1473,
+    "name": "Formation 1473",
+    "nation": 10,
+    "x": 1237.6307829520863,
+    "y": 272.5
+   },
+   {
+    "id": 1474,
+    "name": "Formation 1474",
+    "nation": 1,
+    "x": 1143.0625,
+    "y": 236.4375
+   },
+   {
+    "id": 1475,
+    "name": "Formation 1475",
+    "nation": 1,
+    "x": 1135.5,
+    "y": 293.5
+   },
+   {
+    "id": 1476,
+    "name": "Formation 1476",
+    "nation": 20,
+    "x": 1006.5,
+    "y": 216.5
+   },
+   {
+    "id": 1477,
+    "name": "Formation 1477",
+    "nation": 20,
+    "x": 1023.3247288888889,
+    "y": 275.1737112720215
+   },
+   {
+    "id": 1478,
+    "name": "Formation 1478",
+    "nation": 1,
+    "x": 1143.0625,
+    "y": 236.4375
+   },
+   {
+    "id": 1480,
+    "name": "Formation 1480",
+    "nation": 15,
+    "x": 1094.9375,
+    "y": 319.9375
+   },
+   {
+    "id": 1481,
+    "name": "Formation 1481",
+    "nation": 15,
+    "x": 1147.5,
+    "y": 308.5
+   }
+  ],
+  "stats": [
+   [
+    "nation.GER",
+    [
+     [
+      "bismarck",
+      1474,
+      null
+     ],
+     [
+      "maus",
+      1475,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.SOV",
+    [
+     [
+      "sovetsky_soyuz",
+      1472,
+      null
+     ],
+     [
+      "t42",
+      1473,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.ITA",
+    [
+     [
+      "roma",
+      1480,
+      null
+     ],
+     [
+      "p100",
+      1481,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.ENG",
+    [
+     [
+      "hood",
+      1476,
+      null
+     ],
+     [
+      "tog2",
+      1477,
+      null
+     ]
+    ]
+   ],
+   [
+    "nation.JAP",
+    [
+     [
+      "yamato",
+      1468,
+      null
+     ],
+     [
+      "o_i",
+      0,
+      38
+     ]
+    ]
+   ],
+   [
+    "nation.USA",
+    [
+     [
+      "iowa",
+      1470,
+      null
+     ],
+     [
+      "t28",
+      1471,
+      null
+     ]
+    ]
+   ]
+  ],
+  "gerBlock": "HEROES | Bismarck | 100% | Maus | 100%",
+  "gerShot": "critic/shots/c29hn_4111_ger_block_d122.png"
+ },
+ "errors": []
+}

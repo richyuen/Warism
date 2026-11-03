@@ -1,0 +1,25 @@
+1 1 February 1938 {"area":3683810,"men":951469,"formations":119,"gold":3249,"overlord":0,"alliance":"alliance.anti_comintern","wars":[14,3,11]} 1 6
+2 3 March 1938 {"area":3739071,"men":907299,"formations":119,"gold":3243,"overlord":0,"alliance":"alliance.anti_comintern","wars":[13,3,11]} 1 5
+3 2 April 1938 {"area":3790596,"men":881769,"formations":119,"gold":3317,"overlord":0,"alliance":"alliance.anti_comintern","wars":[11,3]} 1 6
+4 6 May 1938 {"area":3808481,"men":867165,"formations":120,"gold":2624,"overlord":0,"alliance":"alliance.anti_comintern","wars":[]} 0 5
+5 4 June 1938 {"area":3808481,"men":867165,"formations":120,"gold":2985,"overlord":0,"alliance":"alliance.anti_comintern","wars":[]} 0 4
+6 2 July 1938 {"area":3808481,"men":863330,"formations":118,"gold":2962,"overlord":0,"alliance":"alliance.anti_comintern","wars":[26,30,93]} 2 6
+7 3 August 1938 {"area":3811642,"men":824582,"formations":119,"gold":2509,"overlord":0,"alliance":"alliance.anti_comintern","wars":[93,10,6,7,74,76,77]} 2 5
+8 1 September 1938 {"area":3811642,"men":591422,"formations":108,"gold":2495,"overlord":0,"alliance":"alliance.anti_comintern","wars":[93,10,6,7,74,76,77]} 2 6
+9 1 October 1938 {"area":3811642,"men":296242,"formations":90,"gold":1324,"overlord":0,"alliance":"alliance.anti_comintern","wars":[93,10,6,7,74,76,77]} 2 6
+10 2 November 1938 {"area":3811642,"men":189155,"formations":69,"gold":1761,"overlord":0,"alliance":"alliance.anti_comintern","wars":[93,10,6,7,74,76,77]} 2 6
+11 3 December 1938 {"area":3811642,"men":154056,"formations":48,"gold":2180,"overlord":0,"alliance":"alliance.anti_comintern","wars":[93,10,6,7,74,76,77]} 1 6
+12 1 January 1939 {"area":3755942,"men":149478,"formations":49,"gold":2541,"overlord":0,"alliance":"alliance.anti_comintern","wars":[10,6,7,74,76,77,4,31,32]} 2 6
+13 31 January 1939 {"area":3755942,"men":127012,"formations":46,"gold":2314,"overlord":0,"alliance":"alliance.anti_comintern","wars":[10,6,7,74,76,77,4,31,32]} 2 6
+14 4 March 1939 {"area":3644137,"men":108747,"formations":49,"gold":2433,"overlord":0,"alliance":"alliance.anti_comintern","wars":[10,6,7,74,76,77,20,33,34,35,39,40,41,42,51,52,56,59,60,61,65,66,78,79,80,81,19,44,45,46,47,48,49,50,64,97,28,67,27,36,82,68]} 3 6
+15 2 April 1939 {"area":3644137,"men":64003,"formations":33,"gold":2409,"overlord":0,"alliance":"alliance.anti_comintern","wars":[10,6,7,74,76,77,20,33,34,35,39,40,41,42,51,52,56,59,60,61,65,66,78,79,80,81,19,44,45,46,47,48,49,50,64,97,28,67,27,36,82,68]} 3 6
+16 3 May 1939 {"area":3644137,"men":25760,"formations":17,"gold":1856,"overlord":0,"alliance":"alliance.anti_comintern","wars":[10,6,7,74,76,77,20,33,34,35,39,40,41,42,51,52,56,59,60,61,65,66,78,79,80,81,19,44,45,46,47,48,49,50,64,97,28,67,27,36]} 2 6
+17 2 June 1939 {"area":2861064,"men":37543,"formations":19,"gold":1912,"overlord":0,"alliance":"alliance.anti_comintern","wars":[10,6,7,74,76,77,82,68]} 2 6
+18 4 July 1939 {"area":2861064,"men":49090,"formations":21,"gold":717,"overlord":0,"alliance":"alliance.anti_comintern","wars":[10,6,7,74,76,77,82,68]} 2 6
+19 3 August 1939 {"area":2861064,"men":56129,"formations":20,"gold":690,"overlord":0,"alliance":"alliance.anti_comintern","wars":[10,6,7,74,76,77,82,68]} 2 6
+20 1 September 1939 {"area":2861064,"men":67641,"formations":23,"gold":662,"overlord":0,"alliance":"alliance.anti_comintern","wars":[10,6,7,74,76,77,82,68]} 2 6
+21 2 October 1939 {"area":2861064,"men":78086,"formations":23,"gold":628,"overlord":0,"alliance":"alliance.anti_comintern","wars":[10,6,7,74,76,77,82,68]} 2 6
+22 3 November 1939 {"area":2621484,"men":43962,"formations":24,"gold":599,"overlord":0,"alliance":"alliance.anti_comintern","wars":[82,68,19,44,45,46,47,48,49,50,64,97,33,34,35,40,41,42,51,52,53,56,59,60,61,65,66,81,28,67,27,36]} 2 4
+23 3 December 1939 {"area":2621484,"men":27766,"formations":16,"gold":587,"overlord":0,"alliance":"alliance.anti_comintern","wars":[82,68,19,44,45,46,47,48,49,50,64,97,33,34,35,40,41,42,51,52,53,56,59,60,61,65,66,81,28,67,27,36]} 2 5
+24 1 January 1940 {"area":2621484,"men":24428,"formations":14,"gold":582,"overlord":0,"alliance":"alliance.anti_comintern","wars":[82,68,19,44,45,46,47,48,49,50,64,97,33,34,35,40,41,42,51,52,53,56,59,60,61,65,66,81,28,67,27,36]} 2 4
+ok []

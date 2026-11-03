@@ -1,0 +1,1078 @@
+{
+ "seed": 4111,
+ "years": 1,
+ "heroes": true,
+ "diplomacy": "scenario",
+ "perYear": [
+  {
+   "year": 1,
+   "living": 100,
+   "wars": 8,
+   "declared": 26,
+   "peace": 19,
+   "capitals": 29,
+   "eliminated": 2,
+   "annexed": 1,
+   "revolts": 0,
+   "puppetCreated": 6,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 69,
+   "shipsSunk": 675,
+   "bursts": 0,
+   "majorBattles": 66,
+   "gpShare": {
+    "GER": 0.68,
+    "ENG": 1.44,
+    "FRA": 1.63,
+    "ITA": 1.78,
+    "JAP": 0.41,
+    "SOV": 27.33,
+    "USA": 7.29
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 27.3%",
+   "hash": 4255771433
+  }
+ ],
+ "heroRows": [
+  {
+   "name": "JAP hero_yamato",
+   "alive": 365,
+   "war": 365,
+   "engaged": 3,
+   "moved": 0,
+   "lost": [],
+   "returns": [],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.20800000000000018,
+   "healthWarSum": 356.1390400000001,
+   "healthWarDays": 365
+  },
+  {
+   "name": "JAP hero_o_i",
+   "alive": 245,
+   "war": 245,
+   "engaged": 38,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 2179,
+     "x": 1687.5,
+     "y": 371.5,
+     "foes": [
+      "AUT",
+      "BUL",
+      "CCP",
+      "CHI",
+      "CZS",
+      "DEN",
+      "ROM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 4911,
+     "x": 1707.5,
+     "y": 348.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "AUT",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CCP",
+      "CEY",
+      "CHI",
+      "DEI",
+      "DEN",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": false
+    }
+   ],
+   "returns": [
+    {
+     "tick": 3619,
+     "x": 1819,
+     "y": 385.3,
+     "lateDays": 0
+    },
+    {
+     "tick": 6351,
+     "x": 1819,
+     "y": 385.3,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.02083333333333226,
+   "healthWarSum": 230.68090899215795,
+   "healthWarDays": 245
+  },
+  {
+   "name": "USA hero_iowa",
+   "alive": 365,
+   "war": 81,
+   "engaged": 0,
+   "moved": 0,
+   "lost": [],
+   "returns": [],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 1,
+   "healthWarSum": 81,
+   "healthWarDays": 81
+  },
+  {
+   "name": "USA hero_t28",
+   "alive": 325,
+   "war": 41,
+   "engaged": 0,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 7824,
+     "x": 1166.1,
+     "y": 387.9,
+     "foes": [
+      "GRE",
+      "IRN",
+      "TUR"
+     ],
+     "engagedLast24": false
+    }
+   ],
+   "returns": [],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.07541666666667446,
+   "healthWarSum": 35.2054166666667,
+   "healthWarDays": 41
+  },
+  {
+   "name": "SOV hero_sovetsky_soyuz",
+   "alive": 305,
+   "war": 259,
+   "engaged": 1,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 7128,
+     "x": 1211.5,
+     "y": 428.6,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "HUN",
+      "IRN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "POL",
+      "TUR"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 8568,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.03200000000000025,
+   "healthWarSum": 249.14,
+   "healthWarDays": 259
+  },
+  {
+   "name": "SOV hero_t42",
+   "alive": 341,
+   "war": 295,
+   "engaged": 40,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 8189,
+     "x": 1185.5,
+     "y": 308.5,
+     "foes": [
+      "ALB",
+      "GER",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "POL"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.4905385059930698,
+   "healthWarSum": 288.08300946579726,
+   "healthWarDays": 295
+  },
+  {
+   "name": "GER hero_bismarck",
+   "alive": 138,
+   "war": 129,
+   "engaged": 6,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 2485,
+     "x": 1075,
+     "y": 366,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 4094,
+     "x": 1013.6,
+     "y": 287.4,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 6057,
+     "x": 1050.2,
+     "y": 262.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 7633,
+     "x": 1192.5,
+     "y": 206.5,
+     "foes": [
+      "BUL",
+      "LAT",
+      "MON",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 3925,
+     "x": 1082.5,
+     "y": 252.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 5534,
+     "x": 1082.5,
+     "y": 252.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 7497,
+     "x": 1070.6,
+     "y": 259.1,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.0038400000000003987,
+   "healthWarSum": 124.90207999999998,
+   "healthWarDays": 129
+  },
+  {
+   "name": "GER hero_maus",
+   "alive": 245,
+   "war": 236,
+   "engaged": 126,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 2704,
+     "x": 1073.5,
+     "y": 269.4,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 6102,
+     "x": 1060.5,
+     "y": 291.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 4144,
+     "x": 1100.2,
+     "y": 267.4,
+     "lateDays": 0
+    },
+    {
+     "tick": 7542,
+     "x": 1100.2,
+     "y": 267.4,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.4966148380580202,
+   "healthWarSum": 234.9106825944968,
+   "healthWarDays": 236
+  },
+  {
+   "name": "ENG hero_hood",
+   "alive": 305,
+   "war": 258,
+   "engaged": 15,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 7025,
+     "x": 1637.4,
+     "y": 561.6,
+     "foes": [
+      "ALB",
+      "GER",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "NSP",
+      "YUG"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 8465,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.07679999999999954,
+   "healthWarSum": 251.06259999999997,
+   "healthWarDays": 258
+  },
+  {
+   "name": "ENG hero_tog2",
+   "alive": 235,
+   "war": 188,
+   "engaged": 24,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 2082,
+     "x": 986.5,
+     "y": 368.5,
+     "foes": [
+      "NSP"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 6522,
+     "x": 1014.1,
+     "y": 334.5,
+     "foes": [
+      "NSP"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 8523,
+     "x": 1007.5,
+     "y": 333.5,
+     "foes": [
+      "ALB",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "NSP",
+      "YUG"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 3522,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 7962,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.03666092709724966,
+   "healthWarSum": 166.7694864293047,
+   "healthWarDays": 188
+  },
+  {
+   "name": "FRA hero_richelieu",
+   "alive": 245,
+   "war": 147,
+   "engaged": 11,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 5241,
+     "x": 1712.3,
+     "y": 368.7,
+     "foes": [
+      "ALB",
+      "GER",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 7025,
+     "x": 1270.3,
+     "y": 524.3,
+     "foes": [
+      "ALB",
+      "GER",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YUG"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 6681,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 8465,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.06650000000000067,
+   "healthWarSum": 138.82650058928135,
+   "healthWarDays": 147
+  },
+  {
+   "name": "FRA hero_char2c",
+   "alive": 245,
+   "war": 141,
+   "engaged": 69,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 4558,
+     "x": 1087.1,
+     "y": 309.5,
+     "foes": [
+      "ALB",
+      "GER",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 6102,
+     "x": 1059.5,
+     "y": 290.5,
+     "foes": [
+      "ALB",
+      "GER",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 5998,
+     "x": 1037.3,
+     "y": 294.8,
+     "lateDays": 0
+    },
+    {
+     "tick": 7542,
+     "x": 1037.3,
+     "y": 294.8,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.08541666666666992,
+   "healthWarSum": 134.5473083524109,
+   "healthWarDays": 141
+  },
+  {
+   "name": "ITA hero_roma",
+   "alive": 172,
+   "war": 166,
+   "engaged": 6,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 2580,
+     "x": 1065.5,
+     "y": 332.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "AUT",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "DEN",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 4530,
+     "x": 1056.9,
+     "y": 338.1,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "AUT",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "DEN",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 6471,
+     "x": 1043.6,
+     "y": 372.5,
+     "foes": [
+      "AUT",
+      "BUL",
+      "DEN",
+      "LAT",
+      "MON",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 8456,
+     "x": 1020,
+     "y": 383,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LAT",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "MON",
+      "NED",
+      "NFL",
+      "NIG",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "ROM",
+      "SAF",
+      "SAR",
+      "SIN",
+      "SOV",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TAN",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 4020,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 5970,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 7911,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.3280000000000002,
+   "healthWarSum": 162.84810568892675,
+   "healthWarDays": 166
+  },
+  {
+   "name": "ITA hero_p100",
+   "alive": 356,
+   "war": 350,
+   "engaged": 84,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 8547,
+     "x": 1189.5,
+     "y": 304.2,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LAT",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "MON",
+      "NED",
+      "NFL",
+      "NIG",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "ROM",
+      "SAF",
+      "SAR",
+      "SIN",
+      "SOV",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TAN",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.04709802459997081,
+   "healthWarSum": 328.2606180515596,
+   "healthWarDays": 350
+  }
+ ],
+ "alsoGone": [
+  {
+   "hero": "GER hero_bismarck",
+   "at": 9072,
+   "living": 1
+  },
+  {
+   "hero": "USA hero_t28",
+   "at": 9263,
+   "living": 1
+  },
+  {
+   "hero": "SOV hero_t42",
+   "at": 9628,
+   "living": 1
+  },
+  {
+   "hero": "ITA hero_roma",
+   "at": 9895,
+   "living": 1
+  },
+  {
+   "hero": "ENG hero_tog2",
+   "at": 9962,
+   "living": 1
+  },
+  {
+   "hero": "ITA hero_p100",
+   "at": 9986,
+   "living": 1
+  }
+ ],
+ "ms": 30845.7604
+}

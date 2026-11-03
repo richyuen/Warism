@@ -1,0 +1,239 @@
+{
+ "seed": 4111,
+ "years": [
+  {
+   "frames": 2246,
+   "maxGap": 44,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1938 Japan's air force struck China this month: 8,051 men, guns and vehicles lost 1 December 1938 United States captured Greece's capital 15 December 1938 United States captured Greece's capital 25 December 1938 Brazil declared war on Venezuela 30 December 1938 Germany declared war on Turkey ⚓ Carrier strike: Japan on Netherlands's ships"
+   ],
+   "chips": [
+    "Japan +2 ⚔ China +1",
+    "Nationalist Spain ⚔ Portugal +22",
+    "Peru ⚔ Colombia",
+    "Soviet Union +6 ⚔ Japan +7",
+    "United States +1 ⚔ Iran +2",
+    "Italy +6 ⚔ Switzerland +34"
+   ],
+   "date": "3 January 1939",
+   "nations": 100,
+   "year": 1,
+   "wallS": 37.471,
+   "fps": 59.9,
+   "shot": "critic/shots/c29lwhon_4111_y01_world.png"
+  },
+  {
+   "frames": 1607,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1939 Soviet Union and Norway fought in the air this month: Soviet Union lost 0 aircraft, Norway 9 1 December 1939 United Kingdom's air force struck Soviet Union this month: 3,582 men, guns and vehicles lost ⚓ Carrier strike ashore: United States on Canada ×3"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Nationalist Spain ⚔ Portugal +22",
+    "Soviet Union +7 ⚔ Norway +2",
+    "Saudi Arabia ⚔ Yemen",
+    "Japan +3 ⚔ South Africa",
+    "United States +1 ⚔ Canada"
+   ],
+   "date": "4 January 1940",
+   "nations": 97,
+   "year": 2,
+   "wallS": 26.871,
+   "fps": 59.8,
+   "shot": "critic/shots/c29lwhon_4111_y02_world.png"
+  },
+  {
+   "frames": 1600,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1940 Norway and United States fought in the air this month: Norway lost 9 aircraft, United States 36 1 December 1940 Germany's air force struck South Africa this month: 3,370 men, guns and vehicles lost 10 December 1940 Soviet Union captured Afghanistan's capital 11 December 1940 Soviet Union made peace with Afghanistan ⚓ Carrier strike ashore: Japan on China ×3 ⚓ Carrier strike ashore: United States on Sweden"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Nationalist Spain ⚔ Portugal +22",
+    "Saudi Arabia ⚔ Yemen",
+    "Japan +3 ⚔ South Africa",
+    "Denmark ⚔ France +35",
+    "United States +1 ⚔ Finland +3"
+   ],
+   "date": "4 January 1941",
+   "nations": 97,
+   "year": 3,
+   "wallS": 26.657,
+   "fps": 60,
+   "shot": "critic/shots/c29lwhon_4111_y03_world.png"
+  },
+  {
+   "frames": 1371,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "17 December 1941 Germany captured Czechoslovakia's capital 18 December 1941 Czechoslovakia was annexed by France 24 December 1941 France captured Albania's capital 1 January 1942 Czechoslovakia and France fought in the air this month: Czechoslovakia lost 27 aircraft, France 15 1 January 1942 Germany's air force struck Soviet Union this month: 3,944 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Nationalist Spain ⚔ Portugal +22",
+    "Soviet Union +8 ⚔ Turkey +1",
+    "Iraq ⚔ Saudi Arabia",
+    "Soviet Union +8 ⚔ Japan +2",
+    "France +10 ⚔ Switzerland +4"
+   ],
+   "date": "8 January 1942",
+   "nations": 96,
+   "year": 4,
+   "wallS": 22.843,
+   "fps": 60,
+   "shot": "critic/shots/c29lwhon_4111_y04_world.png"
+  },
+  {
+   "frames": 1657,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "31 December 1942 Japan made peace with China 1 January 1943 Soviet Union and United States fought in the air this month: Soviet Union lost 19 aircraft, United States 6 1 January 1943 United States's air force struck Soviet Union this month: 3,104 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "Nationalist Spain ⚔ Portugal +20",
+    "France +10 ⚔ Switzerland +4",
+    "Brazil +3 ⚔ Switzerland +3",
+    "Soviet Union +5 ⚔ Norway",
+    "United States +1 ⚔ Soviet Union +7"
+   ],
+   "date": "8 January 1943",
+   "nations": 92,
+   "year": 5,
+   "wallS": 27.66,
+   "fps": 59.9,
+   "shot": "critic/shots/c29lwhon_4111_y05_world.png"
+  },
+  {
+   "frames": 1431,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "18 December 1943 Japan made peace with Norway 1 January 1944 Germany and Soviet Union fought in the air this month: Germany lost 78 aircraft, Soviet Union 9 1 January 1944 United Kingdom's air force struck South Africa this month: 5,270 men, guns and vehicles lost 6 January 1944 United States captured Lebanon's capital 9 January 1944 Brazil declared war on Netherlands"
+   ],
+   "chips": [
+    "Soviet Union +6 ⚔ Romania",
+    "France +14 ⚔ Soviet Union +5",
+    "United Kingdom +22 ⚔ South Africa",
+    "Australia ⚔ Romania",
+    "United States +3 ⚔ Denmark +13",
+    "Brazil +3 ⚔ Netherlands +22"
+   ],
+   "date": "11 January 1944",
+   "nations": 95,
+   "year": 6,
+   "wallS": 23.844,
+   "fps": 60,
+   "shot": "critic/shots/c29lwhon_4111_y06_world.png"
+  },
+  {
+   "frames": 2036,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "7 December 1944 United States captured Mexico's capital 13 December 1944 Netherlands made peace with Brazil 31 December 1944 United Kingdom declared war on Saudi Arabia 1 January 1945 United Kingdom and Brazil fought in the air this month: United Kingdom lost 15 aircraft, Brazil 3 1 January 1945 Germany's air force struck Soviet Union this month: 3,329 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "United States +3 ⚔ Denmark +12",
+    "Japan +4 ⚔ South Africa",
+    "Iraq ⚔ Saudi Arabia",
+    "Australia +1 ⚔ Saudi Arabia",
+    "Argentina +1 ⚔ Brazil +2",
+    "Japan +4 ⚔ Soviet Union +7"
+   ],
+   "date": "11 January 1945",
+   "nations": 93,
+   "year": 7,
+   "wallS": 33.988,
+   "fps": 59.9,
+   "shot": "critic/shots/c29lwhon_4111_y07_world.png"
+  },
+  {
+   "frames": 1631,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "30 December 1945 United Kingdom captured Tunisia's capital 1 January 1946 Germany and France fought in the air this month: Germany lost 3 aircraft, France 18 1 January 1946 Germany's air force struck Hungary this month: 3,977 men, guns and vehicles lost 5 January 1946 Guatemala made peace with Honduras 5 January 1946 Nicaragua made peace with Honduras"
+   ],
+   "chips": [
+    "Japan +4 ⚔ South Africa",
+    "Germany ⚔ France +4",
+    "United Kingdom +14 ⚔ Mexico +9",
+    "Soviet Union +5 ⚔ Norway",
+    "Japan +5 ⚔ Argentina +1",
+    "Australia +1 ⚔ Norway +2"
+   ],
+   "date": "14 January 1946",
+   "nations": 81,
+   "year": 8,
+   "wallS": 27.17,
+   "fps": 60,
+   "shot": "critic/shots/c29lwhon_4111_y08_world.png"
+  },
+  {
+   "frames": 1288,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1947 United Kingdom's air force struck Hungary this month: 4,185 men, guns and vehicles lost 10 January 1947 Australia declared war on France ⚓ Carrier strike ashore: Japan on United States ×3"
+   ],
+   "chips": [
+    "Japan +5 ⚔ Argentina +1",
+    "Soviet Union +7 ⚔ Argentina +1",
+    "United States ⚔ Germany +3",
+    "Mexico +11 ⚔ Argentina +1",
+    "United Kingdom +13 ⚔ France +10",
+    "Soviet Union +6 ⚔ Turkey +1"
+   ],
+   "date": "17 January 1947",
+   "nations": 81,
+   "year": 9,
+   "wallS": 21.527,
+   "fps": 59.8,
+   "shot": "critic/shots/c29lwhon_4111_y09_world.png"
+  },
+  {
+   "frames": 1922,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "27 December 1947 Japan captured Syria's capital 1 January 1948 Germany's air force struck Syria this month: 2,592 men, guns and vehicles lost 4 January 1948 United Kingdom declared war on Nicaragua 13 January 1948 Soviet Union made peace with Argentina 13 January 1948 South Africa declared war on France"
+   ],
+   "chips": [
+    "United States ⚔ Germany +3",
+    "Soviet Union +7 ⚔ Philippines +9",
+    "Germany +3 ⚔ Philippines +8",
+    "United Kingdom +16 ⚔ Nicaragua +8",
+    "South Africa +3 ⚔ France +9"
+   ],
+   "date": "20 January 1948",
+   "nations": 76,
+   "year": 10,
+   "wallS": 32.024,
+   "fps": 60,
+   "shot": "critic/shots/c29lwhon_4111_y10_world.png"
+  }
+ ],
+ "fight": {
+  "best": null,
+  "bn": -1,
+  "engaged": 0
+ },
+ "errors": []
+}

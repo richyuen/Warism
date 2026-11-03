@@ -109,12 +109,43 @@ Rules:
     is no rule: 1938's Tannu Tuva is in the Soviet alliance.) Red on HEAD: puppets of puppets on
     1009, 2207, 3739 and random 11 within two years; fixed (ADR-810: a realm has one head).
     `worldInvariantsBonds.test.ts` 8 of 8; the six worlds 730 days: 0 broken.
+- [ ] R8 **Heroes drawn where they are** (critic run 29, R29-B1). At the world's zoom (the view a
+  heroes game opens on) `counters.ts` steps a hero's counter below any it would cover, as often
+  as it takes: Europe's ten heroes cascade into Africa (P.100 Ercole 5,009 km off), and a click on
+  a displaced counter opens the nation under it.
+  AT: on the critic's seed 5521 at the start view (desk and phone), every hero's counter within
+  its own height of its place, and a click on each opens that hero; screenshots looked at.
+- [ ] R9 **A hero stays its nation's** (R29-B2). An annexation or integration moves every
+  formation of the dead nation to the taker, heroes too, while the roster row stays the dead
+  nation's: Britain fields Roma and P.100 (4637), the United States the Maus (7603); lost, they
+  never return. Decide (ADR) between "gone with its nation, its row waiting for a revival" and
+  "the row moves with it", and add the heroes' rules to the checker (one formation a row, its
+  roster nation's; back within its hour when it has a place: R29-N7).
+  AT: the checker's hero rules red on HEAD on 4637 and 7603, green after; no hero of a nation
+  other than its row's in 10 seeds × 20 years.
+- [ ] R10 **Sea heroes come back** (R29-B3). A sea hero returns only at a naval base its nation
+  holds; losing them is common, and Richelieu waited 16,123 days over 10 seeds × 20 years against
+  the option's "back 60 days after they are lost". With no naval base, any port its nation holds
+  (or the coast nearest its capital); the row says why while it waits.
+  AT: over the critic's 10 seeds × 20 years, a living nation's sea hero back within 60 days of its
+  loss wherever its nation holds a port; the checker's rule green.
+- [ ] R11 **What the heroes and the graph read** (run 29: `mapVisuals` and `uiUxPolish` 6, bar 7).
+  A hero's formation panel and its map tag show its health, not its men (R29-N2, N3: "Men 2,200
+  of 2,200" at 35 %, the Maus tagged "6"); the heroes option's hint as visible text, not a hover
+  title (N6); the relations graph names a war line's side ("X is at war beside X" for one alone),
+  reads on a phone, and the bottom bar does not wrap at 1024 px (N8).
+  AT: the critic's shots retaken on their seeds, each reading right, at desk and phone widths.
+- [ ] R12 **A hero's loss and return are told** (R29-N1): ticker and History rows ("Bismarck was
+  sunk near …", "Bismarck is back at Kiel") with Go to.
+  AT: an e2e spec sinks a sea hero by God and sees both rows.
 - [ ] R5 **The critic's runs and the release.** After R1–R4 (the user's request, 2026-11-03: the
   heroes feature gets a critic run of its own once the other items are resolved).
-  - [ ] R5a **A critic run on heroes** (PLAN 7.184, the heroes new-game option): the critic told to
+  - [x] R5a **A critic run on heroes** (PLAN 7.184, the heroes new-game option): the critic told to
     judge the heroes feature in depth (what a hero is and does, how the player reads it, its effect
     on wars over long runs with the option on and off, its rules beside the others), with its usual
     scores. Each blocking issue becomes an item before R5b.
+    Run 29 (full, commit 823cbf1b): 3 blocking (R8–R10), `mapVisuals` and `uiUxPolish` 6 (R11),
+    heroes' rows (R12); every other score at its bar. R5b follows R8–R12.
   - [ ] R5b **The batch's full critic run and the release.** A full critic run on the batch, the
     release checks (`npm run check:review`, the soak, the sweep with borders moving, the bench),
     the tag.
