@@ -23,6 +23,8 @@ const ROOT = path.resolve(import.meta.dirname, '../..');
 
 /** Text files of the code, data and config: what a SPEC name may stand for. */
 const CODE_EXT = /\.(ts|tsx|js|mjs|json|yml|yaml|html|css|glsl|frag|vert)$/;
+/** The checker's own files: their words are examples of stale names, not code. */
+const OWN = new Set(['tools/spec/refs.ts', 'tests/unit/specRefs.test.ts']);
 
 export interface Corpus {
   files: string[];
@@ -48,7 +50,7 @@ export function loadCorpus(root = ROOT): Corpus {
   }
   const words = new Set<string>();
   for (const f of files) {
-    if (!CODE_EXT.test(f) || f.startsWith('docs/') || f.startsWith('critic/')) continue;
+    if (!CODE_EXT.test(f) || f.startsWith('docs/') || f.startsWith('critic/') || OWN.has(f)) continue;
     let text: string;
     try {
       text = readFileSync(path.join(root, f), 'utf8');

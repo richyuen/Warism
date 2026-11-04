@@ -703,3 +703,6 @@
 - After the commit, two §10 lines read against the code: `zoomTo` is the `CameraController`'s (`controller`), not the
   view's; the headless year record (`YearMetrics`, `tools/headless/runner.ts:55`) has cells controlled and owned, not land.
   Fixed. ROADMAP: R6b and R6f say how a split section enters the test.
+- Fix: `specRefs.test.ts` red on main from 7f7320d2 to cb52f5b5. Once committed, the test's own example of a stale name
+  (`isCapitalOfNowhere`) was a word of the tracked code it searches; green before only because the file was untracked.
+  The checker's own two files are left out of its corpus. 4 of 4.
