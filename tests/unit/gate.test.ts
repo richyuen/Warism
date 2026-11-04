@@ -83,6 +83,9 @@ describe('gate plan (ADR-48, ADR-49)', () => {
     expect(planE2e([...code, 'tests/e2e/settle.ts'])).toMatchObject({ mode: 'full' });
     expect(planE2e([...code, 'playwright.config.ts'])).toMatchObject({ mode: 'full' });
     expect(planE2e(null)).toMatchObject({ mode: 'full' });
+    // ADR-825 (ROADMAP R19): the pin of seed 99 moved, with the rule that moved it: everything.
+    expect(planE2e(['src/sim/systems/elements.ts', PIN_TEST])).toMatchObject({ mode: 'full' });
+    expect(planE2e(['src/sim/systems/elements.ts'])).toMatchObject({ mode: 'none' });
     // The critic's own files are not a change.
     expect(planE2e(['critic/scripts/x.spec.ts', 'src/app/hud.ts'])).toMatchObject({ mode: 'none' });
   });

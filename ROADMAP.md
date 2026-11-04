@@ -124,10 +124,12 @@ Rules:
   march only off the water; `afloat` holds for any fleet), though the header says on arrival. R17a
   relies on it: a called group stays the player's from the call through the landing. Ending it on
   arrival needs the called group kept another way first (R17b's convoy).
-- [ ] R19 **A rule change runs the seeded e2e specs** (found 2026-11-04). R16b changed the sim's rules and
+- [x] R19 **A rule change runs the seeded e2e specs** (found 2026-11-04). R16b changed the sim's rules and
   passed the gate, which ran the specs whose files changed; ten specs that set up a scene in a seeded
   1938 world (a battle on a day, a fall of a capital) were red, found only by a full run of the suite.
   The gate: when a sim input changes (as for the pin of seed 99), the e2e specs that step a seeded
   world too, or all of them. AT: a changed sim rule makes the gate run them (`gate.test.ts`).
   And a full-suite run at four workers turned six or seven specs red by load in each of two runs
   (green alone): such a run needs the gate's rule of a red run again alone, or its reds are noise.
+  Done: a moved pin (its file changed) runs the e2e stage in full, with the gate's rerun-alone rule
+  (ADR-825); `gate.test.ts`.

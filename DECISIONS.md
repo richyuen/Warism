@@ -7,6 +7,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-825 · 2026-11-04 · accepted — A moved pin runs the whole e2e suite (ROADMAP R19)
+
+- **Context.** The gate runs the e2e specs whose files changed (ADR-87; its full run at each
+  numbered tick went with the plan, ADR-805). R16b changed rules, moved the pin and passed; nine
+  specs that find a scene in a seeded 1938 world (a battle, a fall, a fleet on a day) were red,
+  found by a full run by hand. R18 moved the pin again and turned `declutter1938` red. ADR-87's own
+  amendment (PLAN 3.4Rn) had found the same: rule changes that moved the pin broke `wrecks1938`.
+- **Decision.** `planE2e` runs every spec when the pin's file (`tests/sweep/baselineHash.test.ts`)
+  changed. A rule that moves the history must move the pin in the same commit, so that file is the
+  mark of a moved history; a sim change that leaves the history alone runs what it ran before. The
+  whole run goes through the gate's rule of a red run again alone (ADR-779), which the hand-run
+  full suites lacked: six or seven specs red by load in each, green alone.
+- **What it costs.** About fifty minutes on a commit that moves the pin, a few a batch. Narrower
+  than ADR-87's rule of a full run at every numbered tick, which the user found too often; a
+  spec that steps a seeded world cannot be told from one that does not without running it.
+- **Test.** `gate.test.ts`: a change with the pin's file plans the e2e stage in full; the same
+  sim change without it plans none.
+
 ### ADR-824 · 2026-11-04 · accepted — A block keeps clear of its own side's other stacks (ROADMAP R18)
 
 - **Context.** `stackBlocks1938.spec.ts` went red after R16b moved its scene: on seed 1212 (the

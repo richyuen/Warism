@@ -23,8 +23,9 @@
  * hash of seed 99 (`tests/sweep/baselineHash.test.ts`, 81 s), so a rule change still moves the
  * pin in its own commit (`planSweep`).
  *
- * And of the e2e stage (ADR-87, ADR-293): all of it when something every spec stands on changed;
- * otherwise only the spec files that changed, or none (`planE2e`). As the unit stage, a test red in it is run again alone (its file,
+ * And of the e2e stage (ADR-87, ADR-293): all of it when something every spec stands on changed,
+ * or when the pin of seed 99 moved (ADR-825: a rule that moves the history moves the scenes the
+ * seeded specs set up); otherwise only the spec files that changed, or none (`planE2e`). As the unit stage, a test red in it is run again alone (its file,
  * one worker), and red is what fails both times and is not on `tools/gate/knownRed.json`
  * (ADR-779, the user's decision: the timing specs of BLOCKERS fail under the parallel run's load,
  * a different few each run, and pass alone; a known red is this machine's, with its BLOCKERS entry).
@@ -121,12 +122,15 @@ export interface E2ePlan {
 /**
  * How much of the e2e stage a gate with code in it runs (ADR-87, the user's decision): all of it
  * when git cannot tell what changed, or when something every spec stands on changed (a helper under
- * tests/e2e, the Playwright config). Otherwise only the spec files that changed: a new or an
- * edited spec is never committed unrun.
+ * tests/e2e, the Playwright config). And when the pin of seed 99 moved (ROADMAP R19, ADR-825): a
+ * rule change that moves the history moves the battles, falls and fleets that seeded specs find on
+ * a day (R16b and R18 each broke specs no gate ran). Otherwise only the spec files that changed: a
+ * new or an edited spec is never committed unrun.
  */
 export function planE2e(files: readonly string[] | null): E2ePlan {
   if (files === null) return { mode: 'full', specs: [], why: 'what changed is not known' };
   const changed = files.filter((f) => !ignored(f));
+  if (changed.includes(PIN_TEST)) return { mode: 'full', specs: [], why: 'the pin of seed 99 moved: the seeded scenes may have too' };
   const shared = changed.filter((f) => f === 'playwright.config.ts' || (f.startsWith('tests/e2e/') && !f.endsWith('.spec.ts')));
   if (shared.length > 0) return { mode: 'full', specs: [], why: `${shared[0]} changed` };
   const specs = changed.filter((f) => f.startsWith('tests/e2e/') && f.endsWith('.spec.ts'));

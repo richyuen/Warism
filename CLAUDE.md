@@ -28,8 +28,8 @@ Frozen records, searched and never edited: `PLAN.md`, `docs/PLAN_DONE.md`, `docs
   - Code: typecheck, lint, the unit tests whose imports reach a changed file (`vitest related`; all of
     them when something they stand on changed: `vitest.config.ts`, `tests/helpers/`, `data/`,
     `public/data/`, `tools/headless/`, `package.json`, the lock file), build, the e2e specs that
-    changed (all when a helper or the config changed), and the pinned hash of seed 99 when a sim input
-    changed. A test red in a run is run again alone; red twice fails, unless it is on
+    changed (all when a helper or the config changed, or the pin of seed 99 moved, ADR-825), and the
+    pinned hash of seed 99 when a sim input changed. A test red in a run is run again alone; red twice fails, unless it is on
     `tools/gate/knownRed.json` (machine-only reds, each with a BLOCKERS entry).
   - Run the whole unit suite by hand (`npm test`) when in doubt that the import graph covers a change.
   - Run the specs of what you touch by hand (`npx playwright test <file>`; a perf spec with

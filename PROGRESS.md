@@ -980,3 +980,10 @@
   every warfleet the player's own: alone and told; no box: none; a save keeps the escort), `landingEscort1938.spec.ts`
   (ticked by default, a click over the sea with no warfleet told, unticked after a reload). Pin unmoved.
 - **Next:** R19, then the batch's release (critic run, sweeps, tag).
+
+## 2026-11-04 — ROADMAP R19: a moved pin runs the whole e2e suite (ADR-825)
+- `planE2e` plans every spec when `tests/sweep/baselineHash.test.ts` changed: a rule that moves the history moves the
+  pin in its commit, and the seeded specs' scenes with it (R16b: nine red, R18: one, none run by the gate). A sim change
+  that leaves the history alone runs only its changed specs, as before. The full run keeps the gate's rerun-alone rule.
+- AT: `gate.test.ts` (the pin's file plans the stage in full; the same change without it, none). CLAUDE.md says so.
+- **Next:** the batch's release (R16–R19): critic run, unseen-seed sweeps, CHANGELOG, tag.
