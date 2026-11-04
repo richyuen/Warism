@@ -518,6 +518,7 @@ export function spawnRebels(world: World, area: number[], holder: number, revive
     nc.color[id] = rebelColor(world, id);
     nc.incomeMult[id] = 1;
     nc.manpowerMult[id] = 1;
+    nc.traits[id] = 0; // a rebel starts with no traits; a reused id does not keep the dead nation's
     nc.aggression[id] = REBEL_AGGRESSION;
     // It knows what the nation it leaves knew (PLAN 3.1a); a reused id does not keep the dead nation's.
     // Not the nuclear techs (PLAN 6.12c, critic R6-B2: "Free Liège II", holding Berlin, knew the

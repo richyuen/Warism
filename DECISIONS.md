@@ -7,6 +7,32 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-822 · 2026-11-03 · accepted — A nation's traits are state, shown and set by God (ROADMAP R16a)
+
+- **Context.** Of a trait's 18 modifier kinds only `income` and `manpower` acted, folded into two
+  multipliers at the start; the nation's traits themselves were kept nowhere, no screen showed
+  them, and nothing could set them. The user chose (2026-11-03) to make the modifiers act where the
+  game has a rule for them, drop the rest, and let God set a nation's traits; old saves need not
+  load.
+- **Decision (R16a, no rule change).** `nations.traits` (u16, saved) holds a nation's traits as a
+  bit mask of `data/traits/traits.json`'s order (`src/shared/traits.ts`). The scenario, random
+  traits and the new command `setTraits` (refused `TraitsClash`, `OutOfRange` past the 14 bits, for
+  a dead or absent nation) set it; `applyTraits` sets the income and manpower multipliers with it.
+  Rebels, spawned nations and reused ids start with none; a revived nation keeps its own. Setting
+  traits leaves aggression alone: a scenario's aggression is set with its traits in mind (Germany
+  90), and adding the bias again would count them twice; the bias stays the random option's. The
+  nation panel's Overview shows the traits, each with its description; the God tab has a box a
+  trait, one that would clash greyed. God's edits of a nation (rename, colour, bonus, gold) make no
+  row of the history, and traits are among them.
+- **Save format** 1 → 2 (`STATE_FORMAT`): a save from before loads no more; the title screen says
+  it is from an older version.
+- **Pin** (`tests/sweep/baselineHash.test.ts`): 614c24dd → f7089e32, a new column only. Seed 99's
+  state after one year, hashed without `nations.traits`, is 614c24dd: no rule moved.
+- **Next (R16b).** The modifiers act: land, armour, naval and air attack and defence in their
+  combat; war exhaustion by a side's leader; stability as unrest; revolt suppression; research;
+  training time; org regained; `fortStrength` as the defence of the nation's cells against a flip;
+  `industry` as cheaper production. Judged by the checkers and a sweep.
+
 ### ADR-821 · 2026-11-03 · accepted — SPEC.md rewritten from the code, its references checked (ROADMAP R6)
 
 - **Context.** SPEC.md §3–§10 (260 KB) is a design log: PLAN references, "as built" and "before it

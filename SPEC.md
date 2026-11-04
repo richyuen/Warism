@@ -567,7 +567,7 @@ world with `createWorld1938` (`src/sim/scenario1938.ts`), which runs `buildPolit
 province raster, `reconcileIslands`, then `buildOwnership`; then nations (id = index + 1, colour,
 `living`, the capital's place `capitalX`, `capitalY`), cities, and formations from the order of
 battle (`equipFormation`). The first world built is kept as a template and later ones are loaded
-from its bytes. Static facts (names, traits, templates) are looked up by id and are not state. The
+from its bytes. Static facts (names, templates) are looked up by id and are not state. The
 worker fetches the assets from `data/earth/`, checks their sha256 (`src/worker/assets.ts`) and builds
 the Sim; the page opens it with `?scenario=1938`.
 
@@ -599,9 +599,12 @@ the Sim; the page opens it with `?scenario=1938`.
   columns: names (`world.names`), painted flags (`world.flags`), `world.nukesBanned`,
   `world.unionBarred`, warheads and the air totals. A capital is the city whose `capitalOf` names
   the nation (§3.3).
-- **Traits** (`data/traits/traits.json`, 14): of their modifiers only `income` and `manpower` act
-  (`incomeMult`, `manpowerMult`); `aggressionBias` acts only when the game's traits are random (1–3
-  compatible traits a nation, `src/sim/gameOptions.ts`). The game options can also make aggression
+- **Traits** (`data/traits/traits.json`, 14; `src/shared/traits.ts`) [ADR-822]: a nation's are the
+  bit mask `nations.traits` (saved), set by the scenario, by random traits (1–3 compatible a nation,
+  `src/sim/gameOptions.ts`) or by `setTraits` (refused `TraitsClash` for two that exclude each
+  other); a rebel, a spawned nation or a reused id has none, a revived nation keeps its own. Of
+  their modifiers only `income` and `manpower` act (`incomeMult`, `manpowerMult`, set with the mask
+  by `applyTraits`); `aggressionBias` acts only when the traits are random. The game options can also make aggression
   random (0–100), gold random (× 0.25–2) or equal (the median), and diplomacy random (§3.5).
 - **Cores:** each province's core is the owner of its centre cell at the start, plus `extraCores`
   (`src/sim/systems/revolts.ts`; §4).
@@ -1673,7 +1676,7 @@ builds).
   sea control (`SEA_HOLDERS_SHOWN` 8 in the legend), air control (held at `AIR_HELD`, contested striped),
   fallout.
 - **Nation panel** (`src/ui/NationPanel.tsx`): opens on a map click, figures from `nationStats` at most
-  every `STATS_INTERVAL_MS` (1 s). Take or Release control. *Overview:* heroes, land and its share, army,
+  every `STATS_INTERVAL_MS` (1 s). Take or Release control. *Overview:* traits (each its description on hover), heroes, land and its share, army,
   warheads and nuclear restraint, air war, efficiency, alliance, overlord, puppets, guarantees, enemies.
   *Economy:* income, expenses, balance, gold, manpower, bankruptcy, the month in parts, research. *Actions*
   for the played nation; *God* with God Mode on. A nation chip opens the nation menu.
@@ -1718,7 +1721,8 @@ God's commands apply at once (`applyNow`), refused like any command (`inRange`, 
 - **Tools** (`src/ui/GodToolbar.tsx`, a row on the bottom bar): revolt (`spawnRevolt`), nation
   (`spawnNation`, size 1–`SPAWN_NATION_MAX` 24), battle (`forceBreakthrough`, two clicks), brush
   (`editPaint`, radius `BRUSH_RADIUS` 5), nuke (`godNuke`), city (`spawnCity`), raze (`removeCity`).
-- **God tab** (`src/ui/GodTab.tsx`): rename (`renameNation`), gold, colour, income bonus (±10), efficiency
+- **God tab** (`src/ui/GodTab.tsx`): rename (`renameNation`), traits (`setTraits`, a clashing one
+  greyed), gold, colour, income bonus (±10), efficiency
   and its lock, unity, the nation's and the world's AI (`setAi`, `aiEnabled`), nukes (`setNukes`,
   `nukesEnabled`, `grantWarheads`), winner takes all, revolt mode, efficiency mode; force war, ally,
   puppet, leave, annex, donate; peace or to the death in each war; buffs (`BUFF_MAGNITUDE` 0.25 for

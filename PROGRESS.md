@@ -870,3 +870,16 @@
   `flagPixels.ts:7–8`; `scenarioFile.ts:16`; `history.ts:12`; `HistoryPanel.tsx:8`.
 - `specRefs.test.ts` 11 of 11: every section of SPEC.md at 0 misses. R6 done.
 - **Next:** R16 is the first open item, and it is the user's decision (make the traits act or drop them).
+
+## 2026-11-03 — ROADMAP R16a: traits are state, shown and set by God (ADR-822)
+- The user's decision on R16: make the trait modifiers act where the game has a rule, drop the rest, let God set a
+  nation's traits; old saves need not load. Split into R16a (the store, no rule change) and R16b (the effects).
+- Found while planning: no screen showed traits (their descriptions in `en.json` were unused), and the game kept no
+  nation's traits after the start, only the two multipliers. Corrected what I had told the user.
+- `nations.traits` (u16 mask, `src/shared/traits.ts`), set by the 1938 scenario, random traits and `setTraits`
+  (`TraitsClash` refusal; `applyTraits` sets the multipliers); rebels and reused ids none; aggression untouched.
+  Nation panel Overview chips; God tab boxes, a clashing one greyed. No history row: God's nation edits make none.
+- Save format 2 (`STATE_FORMAT`), pins by `SAVE_FORMAT_PIN=1`.
+- AT: seed 99's year hashed without `nations.traits` is 614c24dd, the old pin; the new pin f7089e32 (ADR-822).
+- `traits.test.ts` 4 of 4; whole unit suite green; `godUi1938.spec.ts` 7 of 7 with the trait steps.
+- **Next:** R16b.

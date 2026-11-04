@@ -575,6 +575,8 @@ export interface NationStat {
   income: number;
   expenses: number;
   incomeBonus: number;
+  /** Its traits, a mask of `src/shared/traits.ts` (ROADMAP R16). */
+  traits: number;
   bankrupt: boolean;
   manpower: number;
   /** Men in its formations, and their count. */

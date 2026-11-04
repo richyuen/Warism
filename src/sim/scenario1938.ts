@@ -41,6 +41,7 @@ import heroes1938 from '../../data/scenarios/1938/heroes.json' with { type: 'jso
 import diplomacy1938 from '../../data/scenarios/1938/diplomacy.json' with { type: 'json' };
 import economy1938 from '../../data/scenarios/1938/economy.json' with { type: 'json' };
 import traitsJson from '../../data/traits/traits.json' with { type: 'json' };
+import { traitMask } from '../shared/traits';
 import { decodeAdmin1, type Admin1Meta } from '../shared/admin1';
 import { addIslet } from '../shared/landMask';
 import type { ScenarioAssets } from '../shared/protocol';
@@ -632,6 +633,7 @@ function buildWorld1938(seed: number, assets: ScenarioAssets, size = SIZE_1938):
     n.incomeBonus[id] = def.incomeBonus;
     n.incomeMult[id] = 1 + def.traits.reduce((s, t) => s + (traitIncome.get(t) ?? 0), 0);
     n.manpowerMult[id] = 1 + def.traits.reduce((s, t) => s + (traitManpower.get(t) ?? 0), 0);
+    n.traits[id] = traitMask(def.traits);
     if (def.overlord) {
       n.overlord[id] = tags.indexOf(def.overlord.tag) + 1;
       n.autonomy[id] = def.overlord.autonomy;

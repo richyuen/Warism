@@ -12,7 +12,7 @@
  * not count. The section bytes' own layout version (`sections.ts`) is another matter: it changes
  * with the codec, not with the state.
  */
-export const STATE_FORMAT = 1;
+export const STATE_FORMAT = 2;
 
 /** Whether a save written in `format` (absent: before the field) loads in this version. */
 export function sameStateFormat(format: number | undefined): boolean {

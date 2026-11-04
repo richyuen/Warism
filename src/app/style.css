@@ -631,6 +631,33 @@ textarea,
   background: rgba(233, 196, 106, 0.35);
   color: #fff3c4;
 }
+.god-tab .god-traits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.15rem 0.5rem;
+  margin: 0.25rem 0;
+}
+.god-tab .god-traits > span {
+  grid-column: 1 / -1;
+}
+.god-tab .god-trait {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.panel-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0.25rem 0 0.4rem;
+}
+.trait-chip {
+  padding: 0.05rem 0.4rem;
+  border-radius: 0.6rem;
+  background: rgba(233, 196, 106, 0.18);
+  font-size: 0.85em;
+  cursor: help;
+}
 .god-tab .god-row {
   display: flex;
   flex-wrap: wrap;

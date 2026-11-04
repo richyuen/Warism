@@ -49,10 +49,17 @@ Rules:
     Done: rewritten from three read-throughs of the code (39 → 11 KB); `specRefs.test.ts` 11 of 11, every
     section at 0 misses (SPEC.md now 1,878 lines).
 - [ ] R16 **Traits that do nothing** (found by R6c). Of a trait's modifiers only `income` and
-  `manpower` act; `landAttack`, `org`, `stability` and the rest are validated and read by nothing,
-  and a scenario trait's `aggressionBias` acts only when traits are random. Either make them act
-  (a rule change, with the checkers and the sweep) or drop them from the data and the panel; the
-  user's decision. Also: `src/sim/systems/war.ts`'s header says a side fights to the death by any
+  `manpower` act; `landAttack`, `org`, `stability` and the rest are validated and read by nothing.
+  The user's decision (2026-11-03, ADR-822): make them act where the game has a rule, drop the rest,
+  let God set a nation's traits.
+  - [x] R16a Traits are state (`nations.traits`), shown in the nation panel, set by `setTraits` and
+    the God tab; save format 2. AT: seed 99's year hashed without the new column equals the old pin.
+    Done: 614c24dd without the column; pin f7089e32; `traits.test.ts` 4 of 4.
+  - [ ] R16b The modifiers act (ADR-822's list); `fortStrength` and `industry` as there; the others
+    dropped from the data. AT: a test a modifier that its system moves the right way for a nation
+    given the trait; `diploInvariants` and a ten-seed sweep within the sweep's bars; the pin moved
+    and logged.
+  Also: `src/sim/systems/war.ts`'s header says a side fights to the death by any
   member's flag, the code by its leader's. And the scenario's `revival.cooldownDays` is read by
   nothing (the cooldown is `REVIVAL_COOLDOWN`); found by R6d. `retreat.ts`'s header puts the retreat
   point 3 cells from the enemy, the code 3 cells beyond the formation; the snapshot's `majors` is read

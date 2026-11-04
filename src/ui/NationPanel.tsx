@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'preact/hooks';
+import { traitsOf } from '../shared/traits';
 import type { EconomyBreakdown } from '../shared/protocol';
 import type { NationStat, TechInfo } from '../shared/protocol';
 import { ActionsTab, type ActionsTabProps } from './ActionsTab';
@@ -163,6 +164,16 @@ export function NationPanel({
                   </button>
                 );
               })}
+            </div>
+          ) : null}
+          {nation.traits !== 0 ? (
+            // Its traits (ROADMAP R16), each with what it does on hover.
+            <div class="panel-traits" data-testid="panel-traits">
+              {traitsOf(nation.traits).map((tr) => (
+                <span key={tr.id} class="trait-chip" data-testid="trait-chip" data-trait={tr.id} title={t(tr.descKey as MessageKey)}>
+                  {t(tr.nameKey as MessageKey)}
+                </span>
+              ))}
             </div>
           ) : null}
           {row('panel.land', num(nation.area), 'stat-land')}

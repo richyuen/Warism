@@ -55,6 +55,19 @@ test('God Mode through the UI: every action reaches the sim', async ({ page }, i
   await expect.poll(async () => nation(await inspect(page), GER).incomeBonus).toBe(bonus + 10);
   await expect(page.getByTestId('god-bonus')).toHaveText(`${bonus + 10}%`);
 
+  // Traits (ROADMAP R16a): Germany is militarist, so pacifist is greyed; mercantile is added, then
+  // taken away, and the Overview's chips follow.
+  await expect(page.getByTestId('god-trait-militarist')).toBeChecked();
+  await expect(page.getByTestId('god-trait-pacifist')).toBeDisabled();
+  const traits = nation(await inspect(page), GER).traits;
+  await page.getByTestId('god-trait-mercantile').check();
+  await expect.poll(async () => nation(await inspect(page), GER).traits).toBe(traits | (1 << 5));
+  await page.getByTestId('tab-overview').click();
+  await expect(page.locator('[data-testid="trait-chip"][data-trait="mercantile"]')).toBeVisible();
+  await page.getByTestId('tab-god').click();
+  await page.getByTestId('god-trait-mercantile').uncheck();
+  await expect.poll(async () => nation(await inspect(page), GER).traits).toBe(traits);
+
   // AI per nation and world AI.
   await page.getByTestId('god-ai').uncheck();
   await expect.poll(async () => nation(await inspect(page), GER).aiOff).toBe(true);

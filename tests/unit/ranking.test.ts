@@ -13,6 +13,7 @@ const nation = (id: number, v: number): NationStat => ({
   income: v * 3,
   expenses: 0,
   incomeBonus: 0,
+  traits: 0,
   bankrupt: false,
   manpower: v * 4,
   men: v * 5,

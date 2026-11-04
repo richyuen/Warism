@@ -456,6 +456,8 @@
   "refusal.notAtSea": "no water of a sea is near the place.",
   "refusal.noAirbase": "no airbase of its with room is near the place.",
   "refusal.atPeace": "it is at war with no one: there is no front to break through.",
+  "god.traits": "Traits",
+  "refusal.traitsClash": "those traits exclude each other.",
   "refusal.beside": "they fight on one side in a war: a nation does not turn on its partner, nor leave its war so.",
   "god.peace": "Peace",
   "god.buffs": "Buffs",

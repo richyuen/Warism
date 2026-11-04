@@ -3,6 +3,7 @@
  * A command is queued, applied at the next tick boundary in arrival order, stamped with that
  * tick and appended to the command log, so a save + log replays bit-identically.
  */
+import { TRAIT_MASK_END } from './traits';
 
 export type Command =
   /**
@@ -108,6 +109,8 @@ export type Command =
   | { kind: 'spawnNation'; province: number; size: number }
   /** PLAN 1.32 God Mode: AoC-style income bonus, percent −100..100. */
   | { kind: 'setIncomeBonus'; nation: number; value: number }
+  /** God Mode / editor (ROADMAP R16): a nation's traits, a mask of `src/shared/traits.ts`. */
+  | { kind: 'setTraits'; nation: number; mask: number }
   /** PLAN 1.33b player diplomacy: offers that the other side may refuse. */
   | { kind: 'offerPeace'; war: number; from: number }
   | { kind: 'proposeAlliance'; from: number; to: number }
@@ -201,6 +204,7 @@ export const COMMAND_KINDS: Record<Command['kind'], true> = {
   spawnRevolt: true,
   spawnNation: true,
   setIncomeBonus: true,
+  setTraits: true,
   offerPeace: true,
   proposeAlliance: true,
   setPlayer: true,
@@ -301,6 +305,8 @@ export const Refusal = {
   AtPeace: 31,
   /** The two fight on one side in a war: a nation does not declare on its partner, nor leave its war so (PLAN 7.189, R25-B1). */
   Beside: 32,
+  /** Traits that exclude each other, as militarist and pacifist (ROADMAP R16). */
+  TraitsClash: 33,
 } as const;
 export type Refusal = (typeof Refusal)[keyof typeof Refusal];
 
@@ -355,6 +361,8 @@ export function inRange(cmd: Command, w: number, h: number): boolean {
       return cmd.amount >= 0;
     case 'spawnNation':
       return Number.isInteger(cmd.size) && cmd.size >= 1 && cmd.size <= SPAWN_NATION_MAX;
+    case 'setTraits':
+      return Number.isInteger(cmd.mask) && cmd.mask >= 0 && cmd.mask < TRAIT_MASK_END;
     case 'setPlayerAi':
       return Number.isInteger(cmd.layers) && cmd.layers >= 0 && cmd.layers <= 63;
     case 'createAlliance':

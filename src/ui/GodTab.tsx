@@ -4,6 +4,7 @@ import type { NationStat, TemplateInfo, WarStat, WorldRules } from '../shared/pr
 import { t, type MessageKey } from './i18n';
 import { displayName } from './NationPanel';
 import { PlaceSection } from './PlaceSection';
+import { TRAITS, traitsClash } from '../shared/traits';
 
 export type GodToolId = 'revolt' | 'nation' | 'battle' | 'brush' | 'nuke' | 'city' | 'raze';
 const BUFFS = ['attack', 'defense', 'speed', 'income', 'manpower', 'unrest'] as const;
@@ -44,6 +45,7 @@ export const REFUSAL_KEY: Record<Exclude<Refusal, 0>, MessageKey> = {
   [Refusal.OutOfRange]: 'refusal.outOfRange',
   [Refusal.AtPeace]: 'refusal.atPeace',
   [Refusal.Beside]: 'refusal.beside',
+  [Refusal.TraitsClash]: 'refusal.traitsClash',
 };
 
 export interface GodTabProps {
@@ -136,6 +138,21 @@ export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, r
       <div class="god-row">
         <input ref={colorField} type="color" data-testid="god-color-input" aria-label={t('god.recolor')} value={colorText} onInput={(e) => setColorPicked({ nation: n, value: (e.currentTarget as HTMLInputElement).value })} />
         {btn('god-recolor', t('god.recolor'), () => onCommand({ kind: 'recolorNation', nation: n, color: parseInt((colorField.current?.value ?? colorText).slice(1), 16) }))}
+      </div>
+      <div class="god-traits" data-testid="god-traits">
+        <span>{t('god.traits')}</span>
+        {TRAITS.map((tr, i) => {
+          const bit = 1 << i;
+          const held = (nation.traits & bit) !== 0;
+          // A trait that would clash with one held is greyed: militarist beside pacifist.
+          const clash = !held && traitsClash(nation.traits | bit);
+          return (
+            <label key={tr.id} class="god-trait" title={t(tr.descKey as MessageKey)}>
+              <input type="checkbox" data-testid={`god-trait-${tr.id}`} checked={held} disabled={clash} onChange={() => onCommand({ kind: 'setTraits', nation: n, mask: nation.traits ^ bit })} />
+              {t(tr.nameKey as MessageKey)}
+            </label>
+          );
+        })}
       </div>
       <div class="god-row">
         <span>{t('panel.incomeBonus')}</span>

@@ -63,6 +63,8 @@ export const NATION_SCHEMA = {
   manpower: 'f64',
   /** Multiplier on manpower growth from traits (1 = none). */
   manpowerMult: 'f64',
+  /** The nation's traits, bit i the i-th of `data/traits/traits.json` (`src/shared/traits.ts`, ROADMAP R16). */
+  traits: 'u16',
   /** 1 = never accepts peace (scenario flag; sides inherit it at declaration). */
   fightToDeath: 'u8',
   /** Overlord nation id (0 = independent); puppets share their overlord's supply bloc. */

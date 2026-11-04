@@ -26,6 +26,8 @@ import { PLAYER_MISSION_HOURS } from './systems/playerOrders';
 import { launchNuke, meansHeld, tellMeansLost, WARHEAD_MAX, detonate } from './systems/nuclear';
 import { grantTechs, techClosure } from './tech';
 import { placeFleet, placeWing } from './placeForces';
+import { applyTraits } from './traits';
+import { traitsClash } from '../shared/traits';
 
 export type System = (world: World) => void;
 
@@ -345,6 +347,13 @@ function applyCommand(world: World, cmd: Command): Refusal {
       const why = whyNoNation(world, cmd.nation);
       if (!why) world.nations.cols.incomeBonus[cmd.nation] = Math.round(Math.max(-100, Math.min(100, cmd.value)));
       return why;
+    }
+    case 'setTraits': {
+      const why = whyNotNation(world, cmd.nation);
+      if (why) return why;
+      if (traitsClash(cmd.mask)) return Refusal.TraitsClash;
+      applyTraits(world, cmd.nation, cmd.mask);
+      return Refusal.None;
     }
     case 'setPlayer': {
       const nc = world.nations.cols;

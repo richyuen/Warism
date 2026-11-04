@@ -13,6 +13,7 @@
  */
 import traitsJson from '../../data/traits/traits.json' with { type: 'json' };
 import { hash32, hashToUnit } from './core/hash';
+import { traitMask } from '../shared/traits';
 import { neighbourMap } from './ai/strategic';
 import { declareWar, whyNotWar } from './systems/war';
 import { Refusal } from '../shared/commands';
@@ -64,6 +65,7 @@ export function applyGameOptions(world: World, o: GameOptions): void {
       }
       nc.incomeMult[n] = 1 + chosen.reduce((s, t) => s + (t.modifiers.income ?? 0), 0);
       nc.manpowerMult[n] = 1 + chosen.reduce((s, t) => s + (t.modifiers.manpower ?? 0), 0);
+      nc.traits[n] = traitMask(chosen.map((t) => t.id));
       nc.aggression[n] = Math.max(0, Math.min(100, nc.aggression[n]! + chosen.reduce((s, t) => s + (t.aggressionBias ?? 0), 0)));
     }
     if (o.gold === 'random') nc.gold[n] = nc.gold[n]! * (0.25 + 1.75 * u(n, SALT_GOLD));

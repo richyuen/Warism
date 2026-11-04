@@ -882,6 +882,7 @@ export class SimServer {
         income: nc.income[id]!,
         expenses: nc.expenses[id]!,
         incomeBonus: nc.incomeBonus[id]!,
+        traits: nc.traits[id]!,
         bankrupt: nc.bankrupt[id] === 1,
         manpower: nc.manpower[id]!,
         men: men.get(id) ?? 0,
