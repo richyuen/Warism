@@ -2,6 +2,7 @@ import { cellOf } from '../../src/sim/data/terrain';
 import { NATIONS_1938, SIZE_1938, TEMPLATES_LAND } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { destroyFormation, equipFormation } from '../../src/sim/systems/elements';
+import { applyTraits } from '../../src/sim/traits';
 import type { World } from '../../src/sim/world';
 import { assets1938 } from './earth';
 
@@ -9,6 +10,14 @@ import { assets1938 } from './earth';
 
 /** Nation id of a 1938 tag (1-based table id). */
 export const nationId = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
+
+/**
+ * Clears the nations' traits (ROADMAP R16b), so a test of a base rule (a price, a buff, a gun) reads
+ * it bare; `traitEffects1938.test.ts` pins each trait's own factor.
+ */
+export function withoutTraits(world: World, ...nations: number[]): void {
+  for (const n of nations) applyTraits(world, n, 0);
+}
 
 export const INF_DIV = TEMPLATES_LAND.findIndex((t) => t.id === 'infantry_div');
 

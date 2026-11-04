@@ -55,7 +55,7 @@ export const NATION_SCHEMA = {
   expenses: 'f64',
   /** AoC-style income bonus, percent −100..100 (scenario / God Mode). */
   incomeBonus: 'i16',
-  /** Multiplier from traits and techs (1 = none). */
+  /** Multiplier on gross income from traits (1 = none; `applyTraits`). */
   incomeMult: 'f64',
   /** 1 while bankrupt (gold below −BANKRUPT_MONTHS × gross income). */
   bankrupt: 'u8',

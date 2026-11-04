@@ -8,7 +8,7 @@ import { ORG_RATE } from '../../src/sim/systems/supply';
 import { FIRE_STRIDE } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
 import { PZ, setUp } from '../helpers/pocket';
-import { addDivision, nationId } from '../helpers/sim1938';
+import { addDivision, nationId, withoutTraits } from '../helpers/sim1938';
 
 // PLAN 3.2c: org. A formation that moves on engines and has no supply left loses its order,
 // and gets it back on its network; its fire falls with it.
@@ -49,6 +49,7 @@ describe('org (PLAN 3.2c)', () => {
 
   it('on its network a formation gets its org back; off it with supply left the org stands', () => {
     const fed = setUp(false);
+    withoutTraits(fed.s.world, nationId('SOV')); // the pocket's formations regain ORG_RATE bare (R16b)
     const f = fed.s.world.formations.cols;
     f.org[fed.pz] = 0.5;
     f.org[fed.idle] = 0;

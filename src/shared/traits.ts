@@ -43,3 +43,27 @@ export function traitsClash(mask: number): boolean {
 export function traitSum(traits: readonly TraitInfo[], key: string): number {
   return traits.reduce((s, t) => s + (t.modifiers[key] ?? 0), 0);
 }
+
+const sums = new Map<number, Readonly<Record<string, number>>>();
+
+/** Every modifier of a mask summed (cached by mask; the traits are fixed data). */
+export function traitMods(mask: number): Readonly<Record<string, number>> {
+  let m = sums.get(mask);
+  if (!m) {
+    const held = traitsOf(mask);
+    const out: Record<string, number> = {};
+    for (const t of held) for (const k of Object.keys(t.modifiers)) out[k] = traitSum(held, k);
+    sums.set(mask, (m = out));
+  }
+  return m;
+}
+
+/** What an order priced `gold` costs a nation of these traits: ÷ (1 + industry) (ROADMAP R16b). */
+export function priceWith(mask: number, gold: number): number {
+  return gold / Math.max(0.05, 1 + (traitMods(mask).industry ?? 0));
+}
+
+/** An order's training days for a nation of these traits: ÷ (1 + buildSpeed), at least a day (ROADMAP R16b). */
+export function daysWith(mask: number, days: number): number {
+  return Math.max(1, Math.ceil(days / Math.max(0.05, 1 + (traitMods(mask).buildSpeed ?? 0))));
+}

@@ -7,6 +7,7 @@
  * quarter of its aircraft in the hour turns home from where it is. Then AA (PLAN 5.3b,
  * `antiAir`): what is below a sortie of an enemy's fires on it.
  */
+import { traitMod } from '../traits';
 import { EventKind } from '../../shared/events';
 import { addAirTotal, Domain, tallyAir, type UnitRule, type World } from '../world';
 import { applyLoss, cellX, elementIndex, loopW, settleFormation, wrapDx } from './elements';
@@ -76,11 +77,13 @@ export function airCombat(world: World, byZone: Map<number, number[]>): void {
       const foeAircraft = foes.map((b) => aircraftOf(world, b));
       const total = foeAircraft.reduce((s, n) => s + n, 0);
       if (total === 0) return;
+      // Its nation's air doctrine (ROADMAP R16b): its fire × (1 + airAttack), each foe's taken ÷ (1 + airDefense).
+      const doctrine = 1 + traitMod(world, fc.nation[a]!, 'airAttack');
       for (const e of index.get(a) ?? []) {
-        const fire = ec.strength[e]! * rules.units[ec.unit[e]!]!.aa * AIR_FIRE;
+        const fire = ec.strength[e]! * rules.units[ec.unit[e]!]!.aa * AIR_FIRE * doctrine;
         if (fire === 0) continue;
         foes.forEach((b, k) => {
-          const share = (fire * foeAircraft[k]!) / total;
+          const share = (fire * foeAircraft[k]!) / total / (1 + traitMod(world, fc.nation[b]!, 'airDefense'));
           for (const t of index.get(b) ?? []) {
             if (ec.strength[t] === 0) continue;
             const u = rules.units[ec.unit[t]!]!;
@@ -474,7 +477,7 @@ export function strikes(world: World): void {
     const health = targets.map((t) => ec.strength[t]! * rules.units[ec.unit[t]!]!.hpPerUnit);
     const total = health.reduce((a, b) => a + b, 0);
     const loss = new Map<number, number>();
-    const air = strikeFactor(world, id, s.tx, s.ty);
+    const air = strikeFactor(world, id, s.tx, s.ty) * (1 + traitMod(world, fc.nation[id]!, 'airAttack'));
     // The ships among the targets by health (PLAN 7.61, ADR-606): a squadron's share of its fire on
     // ships (their health of the whole) goes on one ship, picked by hit points as a gun picks; spread
     // over every ship, alike ships took the same wound and a fleet went down whole in one strike.

@@ -4,7 +4,7 @@
  * traits in mind, and God Mode has its own control of it (the random traits option alone adds the
  * traits' bias).
  */
-import { traitsOf, traitSum } from '../shared/traits';
+import { traitMods, traitsOf, traitSum } from '../shared/traits';
 import type { World } from './world';
 
 export function applyTraits(world: World, n: number, mask: number): void {
@@ -14,3 +14,25 @@ export function applyTraits(world: World, n: number, mask: number): void {
   nc.incomeMult[n] = 1 + traitSum(held, 'income');
   nc.manpowerMult[n] = 1 + traitSum(held, 'manpower');
 }
+
+/** A modifier of nation `n`'s traits (0 when none has it; ROADMAP R16b). */
+export function traitMod(world: World, n: number, key: TraitKey): number {
+  return traitMods(world.nations.cols.traits[n] ?? 0)[key] ?? 0;
+}
+
+/** The modifiers that act (ADR-822): each read where its rule is. */
+export type TraitKey =
+  | 'landAttack'
+  | 'landDefense'
+  | 'armorAttack'
+  | 'navalAttack'
+  | 'airAttack'
+  | 'airDefense'
+  | 'warExhaustion'
+  | 'stability'
+  | 'revoltSuppression'
+  | 'research'
+  | 'buildSpeed'
+  | 'org'
+  | 'fortStrength'
+  | 'industry';

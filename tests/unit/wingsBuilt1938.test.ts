@@ -7,6 +7,7 @@ import { wingAircraft } from '../../src/sim/systems/air';
 import { airfield, productionSystem, queueFormation } from '../../src/sim/systems/production';
 import type { World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { withoutTraits } from '../helpers/sim1938';
 
 // PLAN 5.8s1: a wing is ordered as a land formation is, and delivered on its ready day at its
 // nation's airbase with room for its aircraft nearest its capital, its base; with none, refused,
@@ -21,6 +22,7 @@ function sim(): { s: Sim; w: World } {
   w.settings.aiEnabled = false;
   const nc = w.nations.cols;
   [nc.gold[GER], nc.manpower[GER], nc.tech0[GER], nc.tech1[GER]] = [1e7, 1e7, 0xffffffff, 0xffffffff];
+  withoutTraits(w, GER); // the template's price and days (R16b)
   return { s, w };
 }
 const rejected = (w: World): number => w.out.events.filter((v, i) => i % 6 === 1 && v === EventKind.ProductionRejected).length;

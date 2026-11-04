@@ -9,16 +9,19 @@ import { elementIndex, slotCount, slotPlace } from '../../src/sim/systems/elemen
 import { cityStand, musterPoint, productionSystem, queueFormation, spawnPoint } from '../../src/sim/systems/production';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { withoutTraits } from '../helpers/sim1938';
 
 // PLAN 1.10: production queue, recruitment and manpower. AT: a queued division appears after N
 // days at the capital, with its cost deducted.
 
 const GER = NATIONS_1938.findIndex((n) => n.tag === 'GER') + 1;
 const INF = TEMPLATES_LAND.findIndex((t) => t.id === 'infantry_div');
-/** A 1938 sim with the AI off, so only production changes the formations (PLAN 1.24–1.25). */
+/** A 1938 sim with the AI off, so only production changes the formations (PLAN 1.24–1.25); Germany's
+ * traits apart, so an order costs the template's price and days (R16b). */
 const sim1938 = (): Sim => {
   const s = new Sim({ scenario: '1938', seed: 1938, assets: assets1938(SIZE_1938.w) });
   s.world.settings.aiEnabled = false;
+  withoutTraits(s.world, GER);
   return s;
 };
 

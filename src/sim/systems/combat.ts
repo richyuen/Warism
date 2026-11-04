@@ -30,6 +30,7 @@
  * What the hour took of each formation is left in `world.battleLosses` for the org that goes
  * with it (`orgLossSystem` of `systems/retreat.ts`, PLAN 3.5a).
  */
+import { traitMod } from '../traits';
 import combatJson from '../../../data/combat.json' with { type: 'json' };
 import terrainJson from '../../../data/terrain.json' with { type: 'json' };
 import { hash32, hashToUnit } from '../core/hash';
@@ -360,7 +361,7 @@ export function combatSystem(world: World): void {
   // The buffs on formation `tf`'s defence (they hold for the hour).
   const guardOf = (tf: number): number => {
     if (guarded[tf] !== stamp) {
-      guard[tf] = Math.max(0.05, 1 + bf.sum('defense', 'nation', f.nation[tf]!) + bf.sum('defense', 'formation', tf));
+      guard[tf] = Math.max(0.05, 1 + bf.sum('defense', 'nation', f.nation[tf]!) + bf.sum('defense', 'formation', tf) + traitMod(world, f.nation[tf]!, 'landDefense'));
       guarded[tf] = stamp;
     }
     return guard[tf]!;
@@ -402,7 +403,9 @@ export function combatSystem(world: World): void {
       const atFire = (enemyArms & ARM_ARTILLERY) !== 0 ? SUPPRESSED : 1;
       // Combat efficiency (PLAN 1.22; 0 = unset, e.g. toy nations, counts as 1) and the buffs on its attack.
       const ce = world.nations.cols.efficiency[f.nation[sf]!] || 1;
-      const buffAtk = ce * Math.max(0, 1 + bf.sum('attack', 'nation', f.nation[sf]!) + bf.sum('attack', 'formation', sf));
+      const buffAtk = ce * Math.max(0, 1 + bf.sum('attack', 'nation', f.nation[sf]!) + bf.sum('attack', 'formation', sf) + traitMod(world, f.nation[sf]!, 'landAttack'));
+      // Armour's own doctrine (ROADMAP R16b): its tanks' fire, not the rest of the formation's.
+      const armourAtk = 1 + traitMod(world, f.nation[sf]!, 'armorAttack');
       const tables = new Map<number, { cand: number[]; cum: number[]; total: number }>();
       for (const s of idx.get(sf) ?? []) {
         const us = units[ec.unit[s]!]!;
@@ -466,7 +469,7 @@ export function combatSystem(world: World): void {
         const guns = (us.arm & ARM_AT) !== 0 ? atFire : 1;
         // Armour at what has no armour, on open ground, with no AT gun of the target's side in the battle (PLAN 3.4d).
         const open = (us.arm & ARM_ARMOUR) !== 0 && ut.armor === 0 && OPEN[terrain] && (sideArmsOf(tf) & ARM_AT) === 0 ? IN_THE_OPEN : 1;
-        const dmg = (eff(t) * fullness * FIRE_SCALE * atk * shooterFactor * buffAtk * lossMult * screen * guns * open) / def / buffDef / ut.hpPerUnit;
+        const dmg = (eff(t) * fullness * FIRE_SCALE * atk * shooterFactor * buffAtk * ((us.arm & ARM_ARMOUR) !== 0 ? armourAtk : 1) * lossMult * screen * guns * open) / def / buffDef / ut.hpPerUnit;
         if (dmg <= 0) continue;
         if (hurt[t] === 0) hit[hits++] = t;
         hurt[t] = hurt[t]! + dmg;

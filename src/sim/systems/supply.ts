@@ -30,6 +30,7 @@
  * With no org left there its vehicles and towed guns break down: BREAKDOWN_PER_DAY of them a
  * day besides (PLAN 3.2d).
  */
+import { traitMod } from '../traits';
 import terrainJson from '../../../data/terrain.json' with { type: 'json' };
 import { Terrain } from '../../shared/terrain';
 import { Mobility } from '../nav/grid';
@@ -773,7 +774,8 @@ export function supplySystem(world: World): void {
     const gain = inSupply && s < cap && world.airPower.size > 0 ? rate * (1 + AIR_SUPPLY * (2 * airOver(nation, cell) - 1)) : rate;
     c.supply[id] = !inSupply ? Math.max(0, s - SUPPLY_RATE - burn) : s > cap ? Math.max(cap, s - SUPPLY_RATE) : Math.min(cap, s + gain);
     // Not in contact (PLAN 3.5a): a formation gets its order back out of the fight.
-    if (inSupply && c.engaged[id] !== 1) c.org[id] = Math.min(1, c.org[id]! + ORG_RATE);
+    // × its nation's drill (ROADMAP R16b): a militarist's comes back sooner, a mass levy's later.
+    if (inSupply && c.engaged[id] !== 1) c.org[id] = Math.min(1, c.org[id]! + ORG_RATE * Math.max(0.05, 1 + traitMod(world, nation, 'org')));
     if (c.supply[id] === 0) {
       // As the speed rule has it (movement.ts): a formation with a manoeuvre element on foot is not one on engines.
       if (rule && rule.mobility !== Mobility.foot) {

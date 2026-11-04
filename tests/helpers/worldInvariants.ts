@@ -13,7 +13,7 @@ import { isDayStart } from '../../src/shared/calendar';
 import type { NukeLaunch } from '../../src/sim/world';
 import { elementIndex } from '../../src/sim/systems/elements';
 import { TRIBUTE } from '../../src/sim/systems/puppets';
-import { Domain, type World } from '../../src/sim/world';
+import { ARM_ARMOUR, Domain, type World } from '../../src/sim/world';
 import { Breaks } from './diploInvariants';
 import { assets1938 } from './earth';
 
@@ -90,22 +90,34 @@ interface Before {
     /**
      * Each formation on land: its nation, its elements' units, and their units less the damage
      * they carry (desertion takes DESERTION of an element's units from the second, exactly: a
-     * part of a unit is carried as damage, so the units themselves can lag).
+     * part of a unit is carried as damage, so the units themselves can lag). `whole` and `desert`
+     * (what desertion takes: DESERTION of each element's units, no more than it has left) are of
+     * the elements other than armour; `tanks` the armour elements' units. Armour under fire in the
+     * same hour loses whole tanks on a seeded roll and drops the damage it carried (`applyWholeLoss`),
+     * desertion's share with it: its bound is only that it gains none.
      */
-    land: Map<number, { nation: number; units: number; whole: number }>;
+    land: Map<number, { nation: number; units: number; whole: number; desert: number; tanks: Map<number, number> }>;
   };
 }
 
-/** The units of a formation's elements, and those units less the damage they carry. */
-function unitsOf(w: World, els: number[] | undefined): { units: number; whole: number } {
+/** A formation's units, and of its elements other than armour those units less their damage and what desertion takes of them; its armour elements' units. */
+function unitsOf(w: World, els: number[] | undefined): { units: number; whole: number; desert: number; tanks: Map<number, number> } {
   const ec = w.elements.cols;
+  const types = w.rules!.units;
   let units = 0;
   let whole = 0;
+  let desert = 0;
+  const tanks = new Map<number, number>();
   for (const e of els ?? []) {
     units += ec.strength[e]!;
+    if ((types[ec.unit[e]!]!.arm & ARM_ARMOUR) !== 0) {
+      tanks.set(e, ec.strength[e]!);
+      continue;
+    }
     whole += ec.strength[e]! - ec.wound[e]!;
+    desert += Math.min(DESERTION * ec.strength[e]!, ec.strength[e]! - ec.wound[e]!);
   }
-  return { units, whole };
+  return { units, whole, desert, tanks };
 }
 
 function before(w: World): Before {
@@ -119,7 +131,7 @@ function before(w: World): Before {
     month: null,
   };
   if (isMonthStart(w.startDay, w.tick)) {
-    const land = new Map<number, { nation: number; units: number; whole: number }>();
+    const land = new Map<number, { nation: number; units: number; whole: number; desert: number; tanks: Map<number, number> }>();
     const fc = w.formations.cols;
     const idx = elementIndex(w);
     w.formations.forEach((id) => {
@@ -157,9 +169,10 @@ function economyBreaks(w: World, b: Before, events: number[], tag: (n: number) =
     const idx = elementIndex(w);
     for (const [id, was] of month.land) {
       if (was.units === 0 || nc.bankrupt[was.nation] !== 1 || !w.formations.has(id) || fc.nation[id] !== was.nation || w.offLand(id)) continue;
-      const now = unitsOf(w, idx.get(id)).whole;
-      const most = was.whole - DESERTION * was.units;
-      if (now > most + EPS * was.units) out.push(`economy: ${tag(was.nation)} bankrupt and its formation ${id} kept ${now.toFixed(2)} of ${was.whole.toFixed(2)} units, more than ${most.toFixed(2)}`);
+      const now = unitsOf(w, idx.get(id));
+      const most = was.whole - was.desert;
+      if (now.whole > most + EPS * was.units) out.push(`economy: ${tag(was.nation)} bankrupt and its formation ${id} kept ${now.whole.toFixed(2)} of ${was.whole.toFixed(2)} units, more than ${most.toFixed(2)}`);
+      for (const [e, had] of was.tanks) if ((now.tanks.get(e) ?? 0) > had) out.push(`economy: ${tag(was.nation)} bankrupt and its formation ${id}'s armour element ${e} rose from ${had} to ${now.tanks.get(e)} units`);
     }
   }
   return out;

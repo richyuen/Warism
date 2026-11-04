@@ -8,7 +8,7 @@ import { destroyFormation } from '../../src/sim/systems/elements';
 import { FIRE_STRIDE, navOf } from '../../src/sim/world';
 import { GARRISON_CELLS } from '../../src/sim/systems/revolts';
 import { assets1938 } from '../helpers/earth';
-import { addDivision, eventKinds, nationId, runEvents } from '../helpers/sim1938';
+import { addDivision, eventKinds, nationId, runEvents, withoutTraits } from '../helpers/sim1938';
 
 // PLAN 1.21: buffs/debuffs with timers. AT: the buff applies and expires exactly at expiresTick.
 
@@ -48,6 +48,7 @@ describe('buffs and debuffs (PLAN 1.21)', () => {
       const w = s.world;
       w.formations.ids().forEach((f) => destroyFormation(w, f));
       w.wars.set(GER, POL, true);
+      withoutTraits(w, GER, POL); // the buffs alone (R16b)
       const [x, y] = cellOf(30, 50, W, H).map(Math.floor) as [number, number];
       const a = addDivision(w, GER, x + 0.5, y + 0.5);
       addDivision(w, POL, x + 1.5, y + 0.5);
@@ -101,6 +102,7 @@ describe('buffs and debuffs (PLAN 1.21)', () => {
         break;
       }
     }
+    withoutTraits(s.world, s.world.cells.owner[g.centre[p]!]!); // the buff alone, not the holder's stability (R16b)
     s.command({ kind: 'grantBuff', targetKind: 'province', target: p, buff: 'unrest', magnitude: 0.5, hours: 24 * 400, nameKey: 'buff.harsh_winter' });
     runEvents(s, 1);
     expect(s.world.provinces.unrest[p]).toBe(Math.max(0, 5 - 2)); // +10 × 0.5, −2 decay

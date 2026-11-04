@@ -56,6 +56,7 @@
  * A peace starts a TRUCE_TICKS truce between the leaders. Capital captures add ±CAPITAL_SCORE,
  * at most ±CAPITAL_BONUS_MAX per war (field capitals fall again and again).
  */
+import { traitMod } from '../traits';
 import { isDayStart } from '../../shared/calendar';
 import { Refusal } from '../../shared/commands';
 import { Bond, EventKind } from '../../shared/events';
@@ -554,7 +555,8 @@ export function warSystem(world: World): void {
       if (war.startMen[s] === 0) war.startMen[s] = m;
       const lost = war.startMen[s]! > 0 ? Math.max(0, 1 - m / war.startMen[s]!) : 0;
       const occ = s === ATTACKERS ? oDA.share : oAD.share;
-      war.exhaustion[s] = Math.min(100, 0.1 * days + 80 * lost + 60 * occ);
+      // × the side leader's war weariness (ROADMAP R16b): a pacifist tires sooner, an expansionist later.
+      war.exhaustion[s] = Math.min(100, (0.1 * days + 80 * lost + 60 * occ) * Math.max(0, 1 + traitMod(world, war.sides[s]![0]!, 'warExhaustion')));
       // A nuclear strike's shock on a nation of the side (PLAN 6.5a), the most of them.
       const shock = world.nukeShock.size > 0 ? Math.max(0, ...war.sides[s]!.map((m) => world.nukeShock.get(m) ?? 0)) : 0;
       if (shock > 0) {

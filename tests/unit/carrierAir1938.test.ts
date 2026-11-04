@@ -8,7 +8,7 @@ import { hash32, hashToUnit } from '../../src/sim/core/hash';
 import { CARRIER_CYCLE, CARRIER_SPOT_SHARE, findSeaBattles, navalCombatSystem, SALT_CARRIER, seaKm } from '../../src/sim/systems/navalCombat';
 import type { World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
-import { nationId } from '../helpers/sim1938';
+import { nationId, withoutTraits } from '../helpers/sim1938';
 
 // PLAN 5.4d: a carrier's wings see for its fleet and strike the fleets it is in battle with.
 
@@ -20,6 +20,7 @@ const fleetOf = (w: World, nation: number, t: string): number => [...w.formation
 function sea(km: number): { w: World; cv: number; bb: number; wings: number[] } {
   const w = new Sim({ scenario: '1938', seed: 1, assets: assets1938(SIZE_1938.w) }).world;
   w.wars.start([JAP], [USA], 0);
+  withoutTraits(w, JAP, USA); // the strike's rule bare (R16b)
   const c = w.formations.cols;
   const cv = fleetOf(w, JAP, 'carrier_group');
   const bb = fleetOf(w, USA, 'battle_squadron');

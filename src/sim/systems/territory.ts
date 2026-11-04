@@ -32,6 +32,7 @@
  * before, such a cell stayed the taker's, and no peace gave it back (`makePeace` returns what
  * the two sides own).
  */
+import { traitMod } from '../traits';
 import terrainJson from '../../../data/terrain.json' with { type: 'json' };
 import { acrossOf } from '../nav/crossings';
 import { neighbours4 } from '../nav/grid';
@@ -352,7 +353,8 @@ export function territorySystem(world: World): void {
         }
       }
     }
-    if (bestNation !== 0 && best > defence) {
+    // A fortifier's land (ROADMAP R16b): its holder's defence × (1 + fortStrength), the garrison's too.
+    if (bestNation !== 0 && best > defence * (1 + traitMod(world, d, 'fortStrength'))) {
       flip[c] = Math.min(255, flip[c]! + (inCorridor(world, bestNation, c) ? CORRIDOR_RATE : 1));
       flipping.add(c);
       if (flip[c]! >= hold) flips.push([c, bestNation, defence > GARRISON ? FlipCause.battle : FlipCause.walkIn]);

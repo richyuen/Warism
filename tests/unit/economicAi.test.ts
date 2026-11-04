@@ -10,7 +10,7 @@ import { destroyFormation } from '../../src/sim/systems/elements';
 import { queueFormation } from '../../src/sim/systems/production';
 import { Domain, navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
-import { addDivision, eventKinds, nationId, runEvents } from '../helpers/sim1938';
+import { addDivision, eventKinds, nationId, runEvents, withoutTraits } from '../helpers/sim1938';
 
 /** An order of the army: a fleet's (PLAN 4.6e1, the navy's share) is no part of the army's mix. */
 const land = (w: { rules: { templates: readonly { domain: number }[] } | null; production: { cols: { template: ArrayLike<number> } } }, id: number): boolean => w.rules!.templates[w.production.cols.template[id]!]!.domain === Domain.land;
@@ -264,6 +264,7 @@ describe('the mix (PLAN 3.5d)', () => {
     w.nations.forEach((n) => (nc.aiOff[n] = n === GER! ? 0 : 1));
     w.wars.set(GER!, LUX!, true);
     clear(w, GER!);
+    withoutTraits(w, GER!); // orders at the template's price, as the AI weighs them (R16b)
     // Luxembourg's land army gone: Germany not outnumbered on land, no levy (PLAN 7.150, ADR-745).
     for (const id of w.formations.ids()) if (w.formations.cols.nation[id] === LUX! && !w.isFleet(id) && !w.isWing(id)) destroyFormation(w, id);
     rich(w, GER!);

@@ -28,10 +28,47 @@ from AoC are tagged **[AoC-DEVIATION]**.
   it is from an older version.
 - **Pin** (`tests/sweep/baselineHash.test.ts`): 614c24dd → f7089e32, a new column only. Seed 99's
   state after one year, hashed without `nations.traits`, is 614c24dd: no rule moved.
-- **Next (R16b).** The modifiers act: land, armour, naval and air attack and defence in their
-  combat; war exhaustion by a side's leader; stability as unrest; revolt suppression; research;
-  training time; org regained; `fortStrength` as the defence of the nation's cells against a flip;
-  `industry` as cheaper production. Judged by the checkers and a sweep.
+- **R16b: the modifiers act** (`traitMod`, summed over the mask, cached by mask), each where the
+  game has its rule, all 16 kinds of the data used (none dropped):
+  - `landAttack` and `landDefense` beside the land attack and defence buffs; `armorAttack` on the
+    fire of armour elements alone; `navalAttack` beside the naval attack buff; `airAttack` on air
+    fire and strikes (not bomb tons), `airDefense` dividing the air fire a wing takes;
+  - `warExhaustion` × a war side's exhaustion before a nuclear shock, by the side's leader (the
+    side's first nation, as the suing rule reads it);
+  - `stability` as −10 × it unrest a month (the unrest buff's scale) on the holder's core land
+    only, `revoltSuppression` × suppression's unrest taken off;
+  - `research`: each gold paid counts 1 + it, so a tech is both sooner and cheaper;
+  - `industry`: an order's gold ÷ (1 + it); `buildSpeed`: its training days ÷ (1 + it), rounded up,
+    at least a day (`priceWith`, `daysWith`, shared with the production list, which shows the
+    nation's own price and days). The economic AI still weighs an order at the template's price:
+    an industrial nation keeps a little more than it plans to;
+  - `org`: org regained fed and out of contact × (1 + it);
+  - `fortStrength`: the defence of a cell the nation holds against a flip × (1 + it); this is the
+    game's fortification, with no new system.
+  Magnitudes as the data had them. Judged by a ten-seed sweep against the last one on the same
+  seeds (2026-11-04 done31, no rule change since) and the rules of war and peace.
+- **R16b: stability on core land only.** With `stability` on every province a nation held, the
+  sweep of seeds 1551–1560 broke: the largest realm's land 34% on the mean (done31 17%), the
+  United States' 44% (20%), limits 4 of 10 (7). Sweeps that zeroed one family of modifiers each
+  (scratch, `.cache/sweep/reports/2026-11-04-sweep-z*.md`), the mean largest land: defence and
+  fortification off 26%, production off 28%, war exhaustion off 36%, stability and suppression off
+  20% (9 of 10). Stability had calmed the conquests of the isolationist United States and stirred
+  those of the militarist and revolutionary empires that hold it in check. A nation's mood is its
+  own land's: conquests breed unrest as before. A no-industry run was set aside: Germany and the
+  Soviet Union are industrial too.
+- **R16b sweep** (`docs/sweeps/2026-11-04-sweep-traits16b.md`): limits 7 of 10, riser and faller 10
+  of 10, no stasis 9 of 10 (reported), no break-up 10 of 10; the largest land 22% on the mean, the
+  United States' 29%. Limits are done31's 7, under the bar of 8 as done31's were; the United
+  States still leans larger than before (its defence and production traits), a watch for the next
+  balance item.
+- **R16b tests.** Tests that pin a base rule on a nation now given traits read it bare
+  (`withoutTraits`, `tests/helpers/sim1938.ts`): production, wings, the heavy division, buffs, org,
+  carrier strikes, naval guns, the economic AI's reserve; `traitEffects1938.test.ts` pins each
+  trait's own factor. `nukeMeansLost1938`: the fortifier holds Prague to day 50, the window 40 → 80
+  days. The economy invariant's desertion bound now leaves armour out (under fire in the same hour
+  it loses whole tanks on a roll and drops desertion's share; Poland's armour on 7019, day 59) and
+  holds that its tanks rise not; still red with no desertion.
+- **Pin**: f7089e32 → aa1a5dbb. `diploInvariants` 99: 0 broken.
 
 ### ADR-821 · 2026-11-03 · accepted — SPEC.md rewritten from the code, its references checked (ROADMAP R6)
 

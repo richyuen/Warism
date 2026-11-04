@@ -19,7 +19,8 @@ import { nationId } from '../helpers/sim1938';
 // (`docs/evidence/7.37/wingsLost-5309-CZS.jsonl`): the history says so, once, naming Germany and
 // Prague. Restated by PLAN 7.79b (ADR-634): the day Prague's airbase falls moves with the land
 // war's rules (day 10.8, then 13.4 and later as the allotment changed); the row is told on the
-// day the means are lost, whichever it is, within 40 days.
+// day the means are lost, whichever it is, within 80 days (40 until ROADMAP R16b: Czechoslovakia's
+// fortifier trait now holds Prague to day 50).
 
 const { w: W } = SIZE_1938;
 const [CZS, GER] = ['CZS', 'GER'].map(nationId) as [number, number];
@@ -44,13 +45,13 @@ describe("a holder's last means of delivery lost is told (PLAN 7.37b3)", () => {
     s.step(24);
     expect(canDeliver(s.world, CZS), 'it can deliver at first').toBe(true);
     let lost = -1;
-    for (let d = 1; d < 40 && lost < 0; d++) {
+    for (let d = 1; d < 80 && lost < 0; d++) {
       s.step(24);
       if (!canDeliver(s.world, CZS)) lost = d;
     }
     process.stderr.write(`Czechoslovakia's means lost on day ${lost}
 `);
-    expect(lost, 'the means lost within 40 days').toBeGreaterThan(0);
+    expect(lost, 'the means lost within 80 days').toBeGreaterThan(0);
     const rows = historyRows(s.world, nationName, cityName(s.world), defName).filter((r) => r.kind === EventKind.NukeMeansLost);
     expect(rows).toHaveLength(1);
     const r = rows[0]!;

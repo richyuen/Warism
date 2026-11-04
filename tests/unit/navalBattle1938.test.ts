@@ -12,6 +12,7 @@ import { declareWar } from '../../src/sim/systems/war';
 import { blocOf } from '../../src/sim/systems/supply';
 import { navOf, portSeaOf, seaRangeOf, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { withoutTraits } from '../helpers/sim1938';
 
 // PLAN 4.3a: detection, contact and gunnery by range. AT: a battleship line beats a light
 // cruiser line at range: it sinks them, and takes no hit while the range is beyond theirs.
@@ -30,6 +31,7 @@ function atWar(): Sim {
   // from 4 destroyers to none in an hour and a submarine flotilla lost none in 3 (4302 to 4306 all pass).
   const s = new Sim({ scenario: '1938', seed: 4302, assets: assets1938(W) });
   s.world.settings.aiEnabled = false;
+  withoutTraits(s.world, GER, ENG); // the guns bare (R16b)
   expect(declareWar(s.world, GER, ENG, true)).not.toBeNull();
   return s;
 }

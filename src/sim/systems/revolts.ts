@@ -50,6 +50,7 @@
  * periphery, and one that cannot pay for suppression or is worn down by war loses it in large
  * pieces over the years.
  */
+import { traitMod } from '../traits';
 import { isMonthStart } from '../../shared/calendar';
 import { EventKind } from '../../shared/events';
 import { hash32, hashToUnit } from '../core/hash';
@@ -210,7 +211,7 @@ export function revoltSystem(world: World): void {
     const nonCore = o !== pv.core[p];
     const guard = garrisoned(c, o);
     const strain = overext(o) > 0 && farFromCapital(c, o) ? OVEREXT_UNREST * overext(o) + (!nonCore && worn.has(o) ? AT_WAR : 0) : 0;
-    const delta = strain + (guard ? -GARRISON_UNREST : 0) + (nonCore ? NON_CORE : 0) + (occupied ? OCCUPIED : 0) + (nonCore && atWar(world, o) ? AT_WAR : 0) + (nonCore && nc.bankrupt[o] === 1 ? BANKRUPT : 0) - DECAY - SUPPRESS * supp + 10 * (world.buffs.sum('unrest', 'nation', o) + world.buffs.sum('unrest', 'province', p));
+    const delta = strain + (guard ? -GARRISON_UNREST : 0) + (nonCore ? NON_CORE : 0) + (occupied ? OCCUPIED : 0) + (nonCore && atWar(world, o) ? AT_WAR : 0) + (nonCore && nc.bankrupt[o] === 1 ? BANKRUPT : 0) - DECAY - SUPPRESS * supp * (1 + traitMod(world, o, 'revoltSuppression')) + 10 * (world.buffs.sum('unrest', 'nation', o) + world.buffs.sum('unrest', 'province', p) - (nonCore ? 0 : traitMod(world, o, 'stability')));
     pv.unrest[p] = Math.max(0, Math.min(100, pv.unrest[p]! + delta));
     if (revolted[p] || occupied || pv.unrest[p]! < REVOLT_FROM) continue;
     const chance = (MAX_P * (pv.unrest[p]! - REVOLT_FROM)) / (100 - REVOLT_FROM) * (1 - SUPPRESS_P * supp) * (guard ? 1 - GARRISON_P : 1);

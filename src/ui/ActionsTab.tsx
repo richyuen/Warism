@@ -1,4 +1,5 @@
 import { useState } from 'preact/hooks';
+import { daysWith, priceWith } from '../shared/traits';
 import type { Command } from '../shared/commands';
 import type { NationStat, PlayerWing, TemplateInfo, WarStat } from '../shared/protocol';
 import { t, type MessageKey } from './i18n';
@@ -218,7 +219,10 @@ export function ActionsTab({ nation, nations, wars, templates, day, onCommand, w
       {templates.map((tp, i) => {
         // Every template, the land's, the sea's and the air's (PLAN 5.8v4), but a hero's (PLAN 7.184). `i` stays the template's index.
         if (tp.hero) return null;
-        const affordable = nation.gold >= tp.gold && nation.manpower >= tp.manpower;
+        // Its own price and days (ROADMAP R16b): industry and build speed of its traits.
+        const gold = priceWith(nation.traits, tp.gold);
+        const days = daysWith(nation.traits, tp.days);
+        const affordable = nation.gold >= gold && nation.manpower >= tp.manpower;
         // The sim refuses a template whose techs the nation does not know (PLAN 3.1a), a fleet of a
         // nation with no port (PLAN 4.2e), and a wing of one with no airbase with room for it (PLAN 5.8s1).
         const known = (nation.techs[0] & tp.techs[0]) >>> 0 === tp.techs[0] && (nation.techs[1] & tp.techs[1]) >>> 0 === tp.techs[1];
@@ -226,9 +230,9 @@ export function ActionsTab({ nation, nations, wars, templates, day, onCommand, w
         return (
           <div class="god-row act-template" key={i}>
             <UnitIcon template={tp} />
-            <span class="god-war-name" title={t('act.templateInfo', { men: num(tp.men), gold: num(tp.gold), manpower: num(tp.manpower), days: tp.days })}>
+            <span class="god-war-name" title={t('act.templateInfo', { men: num(tp.men), gold: num(gold), manpower: num(tp.manpower), days })}>
               {t(tp.nameKey as MessageKey)}
-              <span class="act-cost"> {!known ? t('act.needsResearch') : !port ? t(tp.domain === 1 ? 'act.needsPort' : 'act.needsAirfield') : t('act.cost', { gold: num(tp.gold), days: tp.days })}</span>
+              <span class="act-cost"> {!known ? t('act.needsResearch') : !port ? t(tp.domain === 1 ? 'act.needsPort' : 'act.needsAirfield') : t('act.cost', { gold: num(gold), days })}</span>
             </span>
             <button type="button" class="god-btn" data-testid={`act-build-${i}`} disabled={!affordable || !known || !port} onClick={() => onCommand({ kind: 'queueFormation', nation: n, template: i })}>
               {t('act.build')}

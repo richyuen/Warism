@@ -11,6 +11,7 @@ import { PRODUCTION_COST_SCALE, queueFormation, TRAIN_TIME_SCALE } from '../../s
 import { grantTechs, knowsTechs, techMask } from '../../src/sim/tech';
 import { Mobility } from '../../src/sim/nav/grid';
 import { assets1938 } from '../helpers/earth';
+import { withoutTraits } from '../helpers/sim1938';
 
 // PLAN 3.1c: templates for what the tech gate holds back. AT: the heavy template is refused in
 // 1938 and built once `armor_heavy_1` is known (the AT of PLAN 3.1); its cost, days and upkeep.
@@ -87,6 +88,7 @@ describe('armour templates (PLAN 3.1c)', () => {
     for (const s of [sim, twin]) {
       s.world.nations.cols.gold[GER] = 1e6;
       s.world.nations.cols.manpower[GER] = 1e7;
+      withoutTraits(s.world, GER); // the template's price (R16b)
     }
     w.out.events.length = 0;
     expect(queueFormation(w, GER, HEAVY)).toBe(0);

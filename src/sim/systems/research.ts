@@ -22,6 +22,7 @@
  *
  * A dead nation's lines are dropped (`eliminateNation`); what it knew it knows when it returns.
  */
+import { traitMod } from '../traits';
 import { civilFromDays, isDayStart } from '../../shared/calendar';
 import { EventKind } from '../../shared/events';
 import { grantTechs, knowsTechs, techMask } from '../tech';
@@ -88,6 +89,8 @@ export function researchSystem(world: World): void {
   world.nations.forEach((n) => {
     if (nc.living[n] !== 1 || nc.bankrupt[n] === 1) return;
     let left = nc.research[n]!;
+    // Its research tradition (ROADMAP R16b): each gold paid counts 1 + research towards the tech.
+    const worth = Math.max(0.05, 1 + traitMod(world, n, 'research'));
     const own = lines.get(n) ?? [];
     const busy = own.map((id) => r.cols.tech[id]!);
     for (let i = 0; i < MAX_LINES && left > 0; i++) {
@@ -104,10 +107,10 @@ export function researchSystem(world: World): void {
       const rule = rules.techs[t]!;
       // A nuclear line of a nation no longer allowed nukes (PLAN 6.1a): kept, not paid.
       if (rule.category === 'nuclear' && !nukesAllowed(world, n)) continue;
-      const pay = Math.min(rule.gold / rule.days, rule.gold - r.cols.paid[id]!, left);
+      const pay = Math.min(rule.gold / rule.days, (rule.gold - r.cols.paid[id]!) / worth, left);
       if (nc.gold[n]! < pay) return;
       nc.gold[n] = nc.gold[n]! - pay;
-      r.cols.paid[id] = r.cols.paid[id]! + pay;
+      r.cols.paid[id] = r.cols.paid[id]! + pay * worth;
       left -= pay;
       if (rule.gold - r.cols.paid[id]! > PAID) continue;
       r.remove(id);

@@ -62,6 +62,7 @@
  *
  * Not here: sea control (PLAN 4.4); the AI's orders (PLAN 4.6).
  */
+import { traitMod } from '../traits';
 import { hash32, hashToUnit } from '../core/hash';
 import { pickByHealth, type HealthTable } from './pickByHealth';
 import { atan2, hypot } from '../core/dmath';
@@ -722,7 +723,7 @@ export function navalCombatSystem(world: World): void {
     for (const sf of battle.fleets) {
       const n = f.nation[sf]!;
       const enemies = battle.fleets.filter((o) => world.wars.atWar(n, f.nation[o]!));
-      const buffAtk = Math.max(0, 1 + bf.sum('attack', 'nation', n) + bf.sum('attack', 'formation', sf));
+      const buffAtk = Math.max(0, 1 + bf.sum('attack', 'nation', n) + bf.sum('attack', 'formation', sf) + traitMod(world, n, 'navalAttack'));
       // The enemy's ships by weight (hit points), on the surface or under water, in the fleets
       // within `reach` km of this one (PLAN 7.19a: a weapon reaches the fleet it fires at).
       const tables = new Map<number, { cand: number[]; cum: number[]; total: number }>();

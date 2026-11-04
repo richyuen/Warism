@@ -602,9 +602,24 @@ the Sim; the page opens it with `?scenario=1938`.
 - **Traits** (`data/traits/traits.json`, 14; `src/shared/traits.ts`) [ADR-822]: a nation's are the
   bit mask `nations.traits` (saved), set by the scenario, by random traits (1–3 compatible a nation,
   `src/sim/gameOptions.ts`) or by `setTraits` (refused `TraitsClash` for two that exclude each
-  other); a rebel, a spawned nation or a reused id has none, a revived nation keeps its own. Of
-  their modifiers only `income` and `manpower` act (`incomeMult`, `manpowerMult`, set with the mask
-  by `applyTraits`); `aggressionBias` acts only when the traits are random. The game options can also make aggression
+  other); a rebel, a spawned nation or a reused id has none, a revived nation keeps its own.
+  `aggressionBias` acts only when the traits are random. The modifiers, summed over a nation's
+  traits (`traitMod`, `src/sim/traits.ts`), each act in one rule:
+
+  | modifier | acts on |
+  |---|---|
+  | `income`, `manpower` | gross income, manpower growth (`incomeMult`, `manpowerMult`, set by `applyTraits`) |
+  | `landAttack`, `landDefense` | land fire given, and taken ÷ (§5.2) |
+  | `armorAttack` | the fire of its armour elements alone (§5.2) |
+  | `navalAttack` | its ships' fire (§6.2) |
+  | `airAttack`, `airDefense` | its wings' air fire and strikes; air fire taken ÷ (§6.3) |
+  | `warExhaustion` | a war side's exhaustion, by its leader's (§3.5) |
+  | `stability` | unrest − 10 × it a month on its own core land, not on conquests (§4.6) |
+  | `revoltSuppression` | suppression's unrest taken off × (1 + it) (§4.6) |
+  | `research` | each gold paid counts 1 + it towards a tech (§3.7) |
+  | `industry`, `buildSpeed` | an order's price ÷ (1 + it), its training days ÷ (1 + it), at least a day (`priceWith`, `daysWith`; §3.7) |
+  | `org` | org regained, fed and out of contact (§4.1) |
+  | `fortStrength` | the defence of a cell it holds against a flip × (1 + it) (§4.3) | The game options can also make aggression
   random (0–100), gold random (× 0.25–2) or equal (the median), and diplomacy random (§3.5).
 - **Cores:** each province's core is the owner of its centre cell at the start, plus `extraCores`
   (`src/sim/systems/revolts.ts`; §4).
@@ -709,8 +724,9 @@ km², integers). A realm has one head: a puppet's overlord is never a puppet [AD
   capital taken (at most `CAPITAL_BONUS_MAX`, 50), rounded and clamped to ±100 [ADR-47]. occ(X → Y) =
   Y's land X holds ÷ min(Y's land, `REL_CAP` (2) × X's land), at most 1: a small nation can win
   against a large one. Every land figure is km².
-- *Exhaustion* = 0.1 a day + 80 × the share of men lost (the navy weighed in men) + 60 × the true
-  share of own land occupied, plus a nuclear strike's shock; at most 100.
+- *Exhaustion* = (0.1 a day + 80 × the share of men lost (the navy weighed in men) + 60 × the true
+  share of own land occupied) × (1 + the side leader's `warExhaustion`, §3.4), plus a nuclear
+  strike's shock; at most 100.
 - *Suing:* a side sues when its leader is broke, it is exhausted (≥ `EXHAUSTED`, 80) or crushed
   (score ≤ −`CRUSHED`, 90); never when either side fights to the death (the leader's flag). The
   winning side refuses a suit for exhaustion alone while its own exhaustion is ≤ 40 and it reached a
@@ -859,7 +875,7 @@ nations only the first. God grants a tech with its prerequisites (`grantTech`).
   treasury under 3 months of the shortfall, at most `researchCap` (3 × the dearest tech's gold a day,
   4.0); the build balance counts it;
 - at most `MAX_LINES` (3) lines a nation (research rows: nation, tech, paid), each paid its share of
-  the budget until its gold is in, then `TechResearched` (and `NuclearPower` for the atomic bomb); a
+  the budget until its gold is in (each gold counted 1 + the nation's `research`, §3.4), then `TechResearched` (and `NuclearPower` for the atomic bomb); a
   short treasury stops all the nation's lines for the day, never into debt;
 - the next tech (`nextTech`): of those with prerequisites known and year reached (a floor), the
   earliest, the first on a tie. The nuclear chain (`HELD_CATEGORIES`) is researched only by a nation
@@ -869,10 +885,11 @@ nations only the first. God grants a tech with its prerequisites (`grantTech`).
 
 **Production** (`src/sim/systems/production.ts`):
 - `queueFormation` (the player's command and the AI's order) pays at once `PRODUCTION_COST_SCALE`
-  (3.5) × the template's element gold (a carrier group with its air groups) and its manpower, and
+  (3.5) × the template's element gold (a carrier group with its air groups; ÷ (1 + `industry`), §3.4)
+  and its manpower, and
   adds a row (nation, template, `readyDay`) ready after `TRAIN_TIME_SCALE` (3) × the slowest
   element's days for land and air, `SHIP_TIME_SCALE` (1) × for ships (an infantry division 90 days, a
-  panzer division 225, a battle squadron 900). Refused (`ProductionRejected`) without gold, manpower
+  panzer division 225, a battle squadron 900; ÷ (1 + `buildSpeed`), §3.4). Refused (`ProductionRejected`) without gold, manpower
   or the techs, for a dead nation, a fleet with no shipyard, a wing with no airfield with room. The
   orders train in parallel; a bankrupt nation's slip a day each day.
 - *Delivery:* land at the capital or the nearest controlled cell within `SPAWN_REACH_CELLS` (40,
@@ -931,7 +948,8 @@ month's start only).
 - **At supply 0:** attrition of `BASE_ATTRITION_PER_DAY` (0.02) + the terrain's, applied hourly; a
   formation that is not on foot moves at `DRY_SPEED` (0.25) + 0.75 × supply, loses `ORG_RATE` (1/32)
   of org an hour, and at org 0 breaks down: `BREAKDOWN_PER_DAY` (0.1) of its vehicles and towed guns.
-- **Org** starts at 1 and regains 1/32 an hour when fed and out of contact; fire is × (`ORG_FIRE` 0.25
+- **Org** starts at 1 and regains 1/32 an hour (× (1 + its nation's `org`), §3.4) when fed and out of
+  contact; fire is × (`ORG_FIRE` 0.25
   + 0.75 × org) (§5).
 
 ### 4.2 Land movement [ADR-24]
@@ -970,7 +988,8 @@ month's start only).
 - **Pressure:** every land formation of a nation at war (not on retreat) puts strength ÷ 1000 × (0.5 +
   0.5 × supply) × (1 − d ÷ (R + 1)) on the frontier cells within `PRESSURE_RADIUS` R (2, scaled;
   Chebyshev d), kept per nation.
-- **A frontier cell held by D:** its defence is `GARRISON` (1) + the pressure of D's bloc and of D's side.
+- **A frontier cell held by D:** its defence is (`GARRISON` (1) + the pressure of D's bloc and of D's
+  side) × (1 + D's `fortStrength`, §3.4).
   Each nation A at war with D that controls a 4-neighbour scores the pressure of A and those beside it
   (× `CORRIDOR_PRESSURE` (2) in its breakthrough corridor, §5.4) ÷ the cell's terrain defence; the best
   (ties: its own share, then the lower id) contests. While it beats the defence the cell's `flip`
@@ -1015,8 +1034,8 @@ month's start only).
   capital, core or not, for a nation holding more than `OVEREXT_SHARE` (0.04) of the owned land:
   `OVEREXT_UNREST` (1.25) × min(`OVEREXT_MAX` (2), share ÷ 0.04 − 1), and `AT_WAR` on core land too while
   a war has worn its side to `OVEREXT_EXHAUSTION` (60); +
-  10 × the unrest buff; + `NUKE_UNREST` (40) under a burst (§6.4); − `DECAY` (2); − `SUPPRESS` (5) with
-  suppression; − `GARRISON_UNREST` (3) with a land formation of the holder within `GARRISON_CELLS` (3) of
+  10 × (the unrest buff − the holder's `stability` on its core land, §3.4); + `NUKE_UNREST` (40) under a burst (§6.4); −
+  `DECAY` (2); − `SUPPRESS` (5) × (1 + `revoltSuppression`) with suppression; − `GARRISON_UNREST` (3) with a land formation of the holder within `GARRISON_CELLS` (3) of
   its centre.
 - **Revolt:** from `REVOLT_FROM` (50), with a chance rising to `MAX_P` (0.5), × `SUPPRESS_P` (0.7) with
   suppression (costing `SUPPRESSION_COST` (0.15) × its level of gross income) and × `GARRISON_P` (0.7)
@@ -1064,8 +1083,9 @@ org loss, territory. `src/sim/systems/combat.ts` unless named.
   - *defence* is the ground's figure × the unit's, only for a target not moving;
   - *the shooter's factor* = (0.5 + 0.5 × supply) × (`ORG_FIRE` (0.25) + 0.75 × org) × combined arms ×
     air (1 + `AIR_SUPERIORITY` (0.2) × (2s − 1), s its nation's superiority, §6.3);
-  - *attack buffs* = combat efficiency (§5.3) × (1 + attack buffs, at least 0); defence buffs at least
-    0.05; × `MAJOR_LOSS_MULT` (1.5) in a Major Battle;
+  - *attack buffs* = combat efficiency (§5.3) × (1 + attack buffs + the nation's `landAttack`, at
+    least 0), × (1 + `armorAttack`) for an armour element; defence buffs (+ `landDefense`) at least
+    0.05 (§3.4); × `MAJOR_LOSS_MULT` (1.5) in a Major Battle;
   - *arms* (`data/combat.json`; arms of each side taken at the hour's start: infantry, artillery,
     armour, AT): `COMBINED_ARMS` (1.15) for a side with infantry, artillery and armour together;
     `UNSCREENED` (1.3) on armour in forest or urban terrain when the target's side has no infantry;
@@ -1182,7 +1202,7 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
 - **Fire:** each ship fires at an enemy ship weighed by hit points (kept `COOLDOWN` 4 hours while in
   reach), in the fleets its weapon reaches: guns (battleship 32 km > heavy cruiser 25 > light cruiser 18 >
   destroyer 12) `hard` × `ARMOR_PEN` where armour beats piercing × `SEA_FIRE_SCALE` (2) × its
-  strength ÷ size × buffs ÷ the target's defence buffs (at least 0.05) ÷ its hit points, in ships.
+  strength ÷ size × buffs (+ `navalAttack`, §3.4) ÷ the target's defence buffs (at least 0.05) ÷ its hit points, in ships.
   Torpedoes (`torpedo`, `torpedo_km`: destroyer 40 at 10 km, light cruiser 20 at 8, submarine 70 at 6)
   ignore armour and are × the screen of a target that is no destroyer: 1 − `SCREEN` (0.6) × min(1, its
   side's destroyers ÷ its other surface ships, by element at the hour's start). A submarine is hit only
@@ -1282,7 +1302,8 @@ combat, AA.
   target out of range (its carrier moved) waits.
 - **Air combat** (`src/sim/systems/airCombat.ts`): sorties of nations at war within `INTERCEPT_KM`
   (150) meet (linked meetings are one `AirBattle` at the nearest pair); each fires strength × aa ×
-  `AIR_FIRE` (0.05) ÷ max(1, the target's defence) ÷ `hpPerUnit`, spread over its foes by aircraft. A
+  `AIR_FIRE` (0.05) × (1 + `airAttack`) ÷ max(1, the target's defence) ÷ (1 + its `airDefense`) ÷
+  `hpPerUnit` (§3.4), spread over its foes by aircraft. A
   wing with no aircraft left is lost; one that lost `BREAK_OFF` (0.25) of its aircraft turns home (unless
   already on its way back).
 - **AA:** land and sea elements (not wings or troops aboard) fire `AA_FIRE` (0.2) × aa × strength ÷ size
@@ -1296,7 +1317,8 @@ combat, AA.
   (`AIR_STRIKE`, 0.25: `strikeFactor`), the air AI (`AIR_HELD`, 0.6), a nuclear bomber's chance of being
   stopped (§6.4), and the air map mode (`airHolders`).
 - **Strikes** (a strike mission's sortie at its target): each element fires effectiveness (§5.2) ×
-  `STRIKE_FIRE` (0.2) × its health share ÷ `hpPerUnit` at enemy elements within 1 cell, × the strike
+  `STRIKE_FIRE` (0.2) × its health share ÷ `hpPerUnit` at enemy elements within 1 cell, × (1 +
+  `airAttack`, §3.4), × the strike
   factor, × `DISPERSED_STRIKE` (0.25) on formations out of contact, and the k-th strike of a day on a
   formation at 1 ÷ (1 + k) (`formations.struck`, cleared at 00:00); fleets in the area are hit too (no
   submarine), hard attack × `NAVAL_STRIKE_FIRE` (1), each squadron's share on one ship by health

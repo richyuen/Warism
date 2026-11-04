@@ -36,6 +36,7 @@
  * for the wing's aircraft beside the wings based there (`airfield`), and is delivered there, its
  * base, on its ready day; with none then, the order waits.
  */
+import { daysWith, priceWith } from '../../shared/traits';
 import { airbaseRoom } from '../data/airbases';
 import { manDecks, wingAircraft } from './air';
 import { cellX, elementIndex, equipFormation, recomputeStrength, wrapDx } from './elements';
@@ -94,6 +95,16 @@ export function shipyard(world: World, nation: number): number {
   return best;
 }
 
+/** What an order of a template with price `gold` costs nation `n`: ÷ (1 + its industry) (ROADMAP R16b). */
+export function priceFor(world: World, n: number, gold: number): number {
+  return priceWith(world.nations.cols.traits[n] ?? 0, gold);
+}
+
+/** An order's training days for nation `n`: ÷ (1 + its build speed), at least a day (ROADMAP R16b). */
+export function trainDaysFor(world: World, n: number, days: number): number {
+  return daysWith(world.nations.cols.traits[n] ?? 0, days);
+}
+
 /** Applies a queue order; returns the production row id, or 0 when rejected. */
 export function queueFormation(world: World, nation: number, template: number): number {
   const rule = world.rules?.templates[template];
@@ -104,17 +115,18 @@ export function queueFormation(world: World, nation: number, template: number): 
     (rule.domain === Domain.land ||
       (rule.domain === Domain.sea && world.nations.has(nation) && shipyard(world, nation) >= 0) ||
       (rule.domain === Domain.air && world.nations.has(nation) && airfield(world, nation, template) >= 0));
-  if (!rule || !ok || !world.nations.has(nation) || nc.living[nation] !== 1 || nc.gold[nation]! < rule.gold || nc.manpower[nation]! < rule.manpower || !knowsTechs(world, nation, rule.techs)) {
+  const price = rule && world.nations.has(nation) ? priceFor(world, nation, rule.gold) : Infinity;
+  if (!rule || !ok || !world.nations.has(nation) || nc.living[nation] !== 1 || nc.gold[nation]! < price || nc.manpower[nation]! < rule.manpower || !knowsTechs(world, nation, rule.techs)) {
     world.out.emit(world.tick, EventKind.ProductionRejected, template, nation, NaN, NaN);
     return 0;
   }
-  nc.gold[nation] = nc.gold[nation]! - rule.gold;
+  nc.gold[nation] = nc.gold[nation]! - price;
   nc.manpower[nation] = nc.manpower[nation]! - rule.manpower;
   const p = world.production;
   const id = p.create();
   p.cols.nation[id] = nation;
   p.cols.template[id] = template;
-  p.cols.readyDay[id] = Math.floor(world.tick / 24) + Math.max(1, rule.days);
+  p.cols.readyDay[id] = Math.floor(world.tick / 24) + trainDaysFor(world, nation, rule.days);
   world.out.emit(world.tick, EventKind.ProductionQueued, id, nation, NaN, NaN);
   return id;
 }
@@ -133,7 +145,7 @@ export function levyFormation(world: World, nation: number, template: number): n
   const id = p.create();
   p.cols.nation[id] = nation;
   p.cols.template[id] = template;
-  p.cols.readyDay[id] = Math.floor(world.tick / 24) + Math.max(1, rule.days);
+  p.cols.readyDay[id] = Math.floor(world.tick / 24) + trainDaysFor(world, nation, rule.days);
   world.out.emit(world.tick, EventKind.ProductionQueued, id, nation, NaN, NaN);
   return id;
 }

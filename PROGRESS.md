@@ -883,3 +883,19 @@
 - AT: seed 99's year hashed without `nations.traits` is 614c24dd, the old pin; the new pin f7089e32 (ADR-822).
 - `traits.test.ts` 4 of 4; whole unit suite green; `godUi1938.spec.ts` 7 of 7 with the trait steps.
 - **Next:** R16b.
+
+## 2026-11-04 — ROADMAP R16b: the trait modifiers act (ADR-822)
+- Every modifier kind of the data acts where the game has its rule (`traitMod`): land, armour, naval and air fire;
+  war exhaustion; unrest and suppression; research; order price and days (`priceWith`, `daysWith`, the production
+  list shows them); org regained; `fortStrength` as a held cell's defence against a flip. Trait descriptions give the
+  numbers.
+- First sweep (seeds 1551–1560, `.cache/sweep/reports/2026-11-04-sweep-traits16b.md`): limits 4 of 10, the United
+  States 44% of the land on the mean (done31: 7 of 10, 20%). Zeroing one family a sweep found stability: it calmed
+  the United States' conquests and stirred the Axis and Soviet ones. Stability now acts on core land only.
+- Final sweep (`docs/sweeps/2026-11-04-sweep-traits16b.md`): limits 7 of 10 (done31's 7; bar 8), riser, faller and
+  break-up 10 of 10, stasis 9 (reported); the United States 29% on the mean, still above done31's 20%: a watch.
+- Tests: `traitEffects1938.test.ts` 11 of 11. Base-rule tests on nations now with traits read the rule bare
+  (`withoutTraits`); `nukeMeansLost1938`'s window 40 → 80 days (the fortifier holds Prague to day 50); the economy
+  invariant's desertion bound leaves out armour that fought in the hour (a hole of its own, found on 7019).
+  Whole unit suite 2,125 green; `diploInvariants` 99 0 broken; pin f7089e32 → aa1a5dbb.
+- **Next:** R16's remaining notes (war.ts header, `revival.cooldownDays`, retreat.ts header), then the next item.
