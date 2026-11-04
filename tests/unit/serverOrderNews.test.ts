@@ -34,6 +34,9 @@ describe('the page is told what became of a player\'s order (PLAN 4.9c)', () => 
     const w = s.sim!.world;
     for (const f of [...w.formations.ids()]) if (w.isFleet(f) && w.formations.cols.nation[f] === ENG) destroyFormation(w, f);
     const div = addDivision(w, ENG, ...(cellOf(-1.9, 52.48, W, H).map((v) => Math.floor(v) + 0.5) as [number, number]));
+    // At war with Germany: Cuxhaven at peace is refused before the transports are sought (ROADMAP R20, `Neutral`).
+    s.handle({ type: 'cmd', cmd: { kind: 'declareWar', attacker: GER, defender: ENG } }, 1);
+    run(1);
     // Not a player's (no nation named): no news.
     s.handle({ type: 'cmd', cmd: { kind: 'moveFormation', id: div, x: CUXHAVEN[0], y: CUXHAVEN[1] } }, 1);
     run(1);

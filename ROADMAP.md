@@ -133,3 +133,10 @@ Rules:
   (green alone): such a run needs the gate's rule of a red run again alone, or its reds are noise.
   Done: a moved pin (its file changed) runs the e2e stage in full, with the gate's rerun-alone rule
   (ADR-825); `gate.test.ts`.
+- [x] R20 **A landing on a neutral coast is undone overnight** (critic run 32, R32-B1, blocking). A
+  player's order over the sea onto the ground of a nation outside its wars sailed and landed; the next
+  day start's march home set the division back at its spawn point across the sea, untold. AT: such an
+  order is refused, with the reason; the same order onto an enemy's ground goes; a jump home is told.
+  Done: `seaConvoy` refuses `Neutral` (15) by `foreignTo` of the target's and the landing's holders;
+  `FormationSentHome` (71), a row below the ticker (ADR-826); `landingNeutral1938.test.ts` 3 of 3,
+  `landingNeutral1938.spec.ts`. Pin unmoved.

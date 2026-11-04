@@ -1337,6 +1337,12 @@ export class SimServer {
       // command says why (PLAN 2.17a).
       if (ev[i + 1] === EventKind.CommandRefused) this.post({ type: 'refused', reason: b, base: this.baseFor(world, ev[i + 2]!, b) }, []);
       if (this.ordered.size > 0) this.orderNews(world, ev, i);
+      // A player's formation set home across the sea (ROADMAP R20): told, ordered or not.
+      if (ev[i + 1] === EventKind.FormationSentHome && b !== 0 && b === world.settings.player) {
+        const id = ev[i + 2]!;
+        const c = world.formations.cols;
+        this.post({ type: 'orderNews', news: { kind: 'sentHome', id, nation: b, reason: 0, x: c.x[id]!, y: c.y[id]!, tick: ev[i]! } }, []);
+      }
       if (ev[i + 1] === EventKind.ElementDestroyed) {
         // The end of an element is for a view that draws elements (PLAN 2.4b); it gets what the
         // unit leaves behind in place of the unit.

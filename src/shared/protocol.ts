@@ -826,7 +826,7 @@ export interface WarStat {
 
 /** What became of a player's order (PLAN 4.9c; `orderNews`). */
 export interface OrderNews {
-  kind: 'refused' | 'repulsed' | 'landedAway' | 'unescorted';
+  kind: 'refused' | 'repulsed' | 'landedAway' | 'unescorted' | 'sentHome';
   id: number;
   nation: number;
   /** A `RejectReason` for `refused`, else 0. */

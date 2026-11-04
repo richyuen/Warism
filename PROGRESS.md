@@ -994,3 +994,12 @@
   its bar; every other score at its bar (semanticZoom, tanks, aircraft, aiNukes 8; the rest 7). Non-blocking R32-N1–N5
   (one click's divisions land weeks apart, trait text hover-only, refusal toasts cut, run 31's items, sea heroes lost more).
 - **Next:** R20 (R32-B1), then the critic again.
+
+## 2026-11-04 — ROADMAP R20: no landing on a neutral's ground (R32-B1, ADR-826)
+- A player's order over the sea onto ground of a nation outside its wars is refused (`Neutral`: "it would land on the
+  ground of a nation outside its wars"), as a march by land there is; onto an enemy's ground it goes as before. A
+  formation the march home sets on its spawn point (a peace while at sea) is now an event, and the player's is told
+  below the ticker.
+- AT: `landingNeutral1938.test.ts` 3 of 3 (Calais at peace refused; held by an enemy, by sea; idle there, sent home with
+  the event; two red without the rule), `landingNeutral1938.spec.ts` (the panel's reason, the ticker's row). Pin unmoved.
+- **Next:** critic run 33 (focused on R32-B1).

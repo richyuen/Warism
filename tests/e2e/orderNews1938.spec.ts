@@ -9,6 +9,7 @@ import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 
 const { w: W, h: H } = SIZE_1938;
 const SWI = NATIONS_1938.findIndex((n) => n.tag === 'SWI') + 1;
+const ENG = NATIONS_1938.findIndex((n) => n.tag === 'ENG') + 1;
 
 test('a refused order says why, in the ticker and in the formation\'s panel', async ({ page }) => {
   test.setTimeout(150_000);
@@ -22,6 +23,9 @@ test('a refused order says why, in the ticker and in the formation\'s panel', as
 
   const div = await page.evaluate((n) => window.__warsim!.view!.formationsOf(n)[0]!, SWI);
   const [lx, ly] = cellOf(-0.12, 51.5, W, H);
+  // At war with Britain: London at peace is refused before the port is sought (ROADMAP R20, `Neutral`).
+  await page.evaluate(({ a, d }) => window.__warsim!.hud.command({ kind: 'declareWar', attacker: a, defender: d }), { a: SWI, d: ENG });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
   await expect(page.getByTestId('order-news')).toHaveCount(0);
   await page.evaluate(({ div, x, y, n }) => window.__warsim!.hud.command({ kind: 'moveFormation', id: div, x, y, nation: n }), { div, x: Math.floor(lx) + 0.5, y: Math.floor(ly) + 0.5, n: SWI });
   const row = page.getByTestId('order-news');

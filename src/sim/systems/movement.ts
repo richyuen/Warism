@@ -71,7 +71,7 @@ import { nearestCellWhere } from '../data/ownership';
 import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroups, type ProvinceGraph } from '../nav/provinceGraph';
 import { isDayStart } from '../../shared/calendar';
 import { Domain, navOf, PlayerOrderKind, portSeaOf, type TemplateRule, type World } from '../world';
-import { assignTransports, carrying, escortConvoy, hasLanding, near, transportsPort, tryLanding } from './amphibious';
+import { assignTransports, carrying, escortConvoy, landingOf, near, transportsPort, tryLanding } from './amphibious';
 import { AT_PORT_CELLS } from './navalCombat';
 import { noteMove } from './elements';
 import { spawnPoint } from './production';
@@ -491,14 +491,23 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
  * a convoy for the same target with room, a group at a port of its land, one called there, or a
  * full convoy's next voyage); it marches to the port, or stands there already, and is bound for
  * the group (`world.seaBound`, `world.seaFetch`, `world.convoyPort`), which is the player's. With
- * no landing at the target, or no transports, refused as before.
+ * no landing at the target, or no transports, refused as before; and where the target or the
+ * landing is the ground of a nation outside its wars (`RejectReason.Neutral`, ROADMAP R20).
  */
 function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage | undefined, escort: boolean): boolean {
   const c = world.formations.cols;
   const w = world.cells.w;
   const target = Math.floor(y) * w + Math.floor(x);
-  if (!hasLanding(world, x, y)) {
+  const landing = landingOf(world, target);
+  if (!landing) {
     world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.NoLanding, NaN);
+    return false;
+  }
+  // Not onto the ground of a nation outside its wars (ROADMAP R20): a land march is refused there,
+  // and a division landed there would be sent home at the next day start (`repatriationSystem`).
+  const ctl = world.cells.controller;
+  if (foreignTo(world, c.nation[id]!, ctl[target]!) || foreignTo(world, c.nation[id]!, ctl[landing.land]!)) {
+    world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.Neutral, NaN);
     return false;
   }
   const a = assignTransports(world, id, target);
@@ -634,6 +643,7 @@ export function repatriationSystem(world: World): void {
       // A war bars the way (ADR-222): it stands where it is, and is asked again tomorrow.
       if (way.open !== undefined) return;
     }
+    world.out.emit(world.tick, EventKind.FormationSentHome, id, nation, c.x[id]!, c.y[id]!);
     c.x[id] = at[0];
     c.y[id] = at[1];
   });

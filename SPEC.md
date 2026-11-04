@@ -754,7 +754,8 @@ km², integers). A realm has one head: a puppet's overlord is never a puppet [AD
   in on a crossing, march to their nation's nearest cell within `REPATRIATE_CELLS` (80, scaled), else
   to their spawn point. That march alone crosses a neutral's ground (`formations.home`) [ADR-169],
   unfed there, the operational AI leaving it be; it keeps off enemies' ground and is ordered round it
-  [ADR-222]; a formation is set on its spawn point only where no land leads there.
+  [ADR-222]; a formation is set on its spawn point only where no land leads there
+  (`FormationSentHome`: the player is told of one of theirs below the ticker, ROADMAP R20).
 - *God commands:* `forceWar`, `forcePeace`, `setWarFightToDeath`.
 
 **Alliances** [ADR-30] (`src/sim/systems/alliances.ts`, monthly):
@@ -1252,7 +1253,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   goes back to its owner. With no port or room, an order is a march (`seaBound`, an order given
   through `moveFormation`: to the nearest port of its land with transports that have room).
 - **The player's landings** (ROADMAP R17a, R17b): a player's order over the sea goes by convoy
-  (`seaConvoy`, `assignTransports`). Refused at once with no landing at the target (`hasLanding`).
+  (`seaConvoy`, `assignTransports`). Refused at once with no landing at the target (`landingOf`),
+  and where the target's or the landing's holder is foreign to it (`foreignTo`: `Neutral`, ROADMAP
+  R20), as a march by land onto that ground is; landed there, the march home would set it back.
   Its transports, in turn: a convoy of its nation loading for the same target cell at a port of its
   land with room for it (so a click's divisions, or a later click's to the same cell, go together);
   a group standing at a port of its land with room, not another's convoy, at the port nearest it; a

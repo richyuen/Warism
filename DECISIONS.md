@@ -7,6 +7,29 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-826 · 2026-11-04 · accepted — No landing on a neutral's ground (ROADMAP R20, R32-B1)
+
+- **Context.** Critic run 32 (R32-B1): a player's order over the sea (R17, `seaConvoy`) checked only
+  that a landing exists. A division landed at Calais (France at peace with Britain) stood there until
+  the day start, when the march home (`repatriationSystem`, ADR-169) found it on foreign ground with
+  no land way home and set it on Britain's spawn point, untold. A march by land onto such ground is
+  refused (`NoRoute`); the two orders disagreed.
+- **Decision.** The sea order is refused as the march is: where the target cell's holder or the
+  landing cell's is `foreignTo` the nation, `MoveRejected` with a reason of its own, `Neutral` (15:
+  "it would land on the ground of a nation outside its wars"; `NoRoute`'s words speak of the land).
+  The march home keeps its jump, which a peace made while a convoy is at sea still brings about, and
+  says it: `FormationSentHome` (71), a row below the ticker for a formation of the player's.
+- **Not chosen.** Keeping a landed division where it is: it would stand idle on a neutral's ground,
+  the state ADR-169 exists to end; a landing to make war on a neutral is a declaration of war first.
+- **Pin.** Unmoved: the AI never gives a player's sea order, and an event is no state.
+- **Tests restated.** `serverOrderNews.test.ts` (Britain on Cuxhaven) and `orderNews1938.spec.ts`
+  (Switzerland on London) each order a landing at peace to see a refusal told with its reason (no
+  port, no transports); `Neutral` now comes first. Each now makes that war first, and its assertions
+  stand unchanged: a neutral's coast is refused whatever ports there are, so `Neutral` comes first.
+- **Test.** `landingNeutral1938.test.ts` (Calais at peace refused `Neutral`; held by an enemy, by
+  sea; idle there, sent home with the event; the first and last red without the rule),
+  `landingNeutral1938.spec.ts` (the panel's reason; the ticker's row).
+
 ### ADR-825 · 2026-11-04 · accepted — A moved pin runs the whole e2e suite (ROADMAP R19)
 
 - **Context.** The gate runs the e2e specs whose files changed (ADR-87; its full run at each

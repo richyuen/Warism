@@ -226,6 +226,12 @@ export const EventKind = {
    * transports sail alone. a = the formation ordered, b = its nation, (x, y) = where it stands.
    */
   ConvoyUnescorted: 70,
+  /**
+   * A land formation idle on ground foreign to it (`foreignTo`) with no way home by land is set
+   * on its nation's spawn point at the day start (`repatriationSystem`; ROADMAP R20 tells it).
+   * a = the formation, b = its nation, (x, y) = where it stood.
+   */
+  FormationSentHome: 71,
 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */
@@ -262,6 +268,8 @@ export const RejectReason = {
   LongWay: 13,
   /** A player's march that met the enemy on its way (ADR-759): cancelled, and the formation stands and fights. */
   Contact: 14,
+  /** A player's order over the sea (ROADMAP R20): the landing or the target is the ground of a nation outside its wars. */
+  Neutral: 15,
 } as const;
 export type RejectReason = (typeof RejectReason)[keyof typeof RejectReason];
 
