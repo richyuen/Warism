@@ -270,6 +270,8 @@ export const RejectReason = {
   Contact: 14,
   /** A player's order over the sea (ROADMAP R20): the landing or the target is the ground of a nation outside its wars. */
   Neutral: 15,
+  /** Over the sea (ROADMAP R21b): the port of its nation it stands at is bombed shut. */
+  PortShut: 16,
 } as const;
 export type RejectReason = (typeof RejectReason)[keyof typeof RejectReason];
 

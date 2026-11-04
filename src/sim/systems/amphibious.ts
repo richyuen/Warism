@@ -185,10 +185,14 @@ export function tryLanding(world: World, id: number, x: number, y: number, via =
   // At the port: by its land cell or by its water (PLAN 4.9b: London's water is 7.5 cells down
   // the Thames). Of the ports it stands at, the first with transports for it.
   const at: number[] = [];
+  // At a port of its nation bombed shut (ROADMAP R21b): that is why, not "no port".
+  let shut = false;
   world.ports.forEach((p, i) => {
-    if (water[i]! >= 0 && world.cells.controller[p.cell] === nation && !portShut(world, i) && (near(world, here, p.cell, world.atSize(AT_PORT_CELLS)) || near(world, here, water[i]!, world.atSize(AT_PORT_CELLS)))) at.push(i);
+    if (water[i]! < 0 || world.cells.controller[p.cell] !== nation || !(near(world, here, p.cell, world.atSize(AT_PORT_CELLS)) || near(world, here, water[i]!, world.atSize(AT_PORT_CELLS)))) return;
+    if (portShut(world, i)) shut = true;
+    else at.push(i);
   });
-  if (at.length === 0) return RejectReason.NoPort;
+  if (at.length === 0) return shut ? RejectReason.PortShut : RejectReason.NoPort;
   // Transports of its nation there, standing, with room.
   const men = c.strength[id]!;
   let fleet = 0;

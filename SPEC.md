@@ -1259,6 +1259,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   So too after the order (`neutralLanding`, ROADMAP R21a): hourly, a division bound for its convoy
   whose landing a peace made such ground is stopped where it stands, told `Neutral`; a convoy loading
   for it does not sail, those aboard told and ashore at the port. One at sea lands and is sent home.
+  A division at a port of its nation that is bombed shut (`portShut`) is refused `PortShut` (16, "its
+  port is bombed shut"), not `NoPort` (ROADMAP R21b).
   Its transports, in turn: a convoy of its nation loading for the same target cell at a port of its
   land with room for it (so a click's divisions, or a later click's to the same cell, go together);
   a group standing at a port of its land with room, not another's convoy, at the port nearest it; a

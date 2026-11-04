@@ -27,6 +27,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   the border (`Barred`); a loading convoy with its landing a neutral's ends, those aboard ashore at
   the port. A convoy at sea goes on: turning it back is a voyage of its own, and the landing is told.
   `landingPeace1938.test.ts` (bound at the peace; aboard a loading convoy at the peace), red without.
+- **R21b (R33-N2).** A port of its nation that it stands at, bombed shut, is `PortShut` (16), not
+  `NoPort`: a reason only, for the player's order and the AI's alike (no state, the pin unmoved).
+  `portBombing1938.test.ts` asserted `NoPort` for that case; it now asserts the new reason.
+  `landingPortShut1938.test.ts`: the critic's case through a player's convoy.
 - **Tests restated.** `serverOrderNews.test.ts` (Britain on Cuxhaven) and `orderNews1938.spec.ts`
   (Switzerland on London) each order a landing at peace to see a refusal told with its reason (no
   port, no transports); `Neutral` now comes first. Each now makes that war first, and its assertions

@@ -148,8 +148,10 @@ Rules:
     boards, and is told; red without the rule.
     Done: `neutralLanding`, checked hourly for the bound and before a loading convoy sails (ADR-826);
     `landingPeace1938.test.ts` 2 of 2 (Britain on German-held Calais, peace before boarding and while loading).
-  - [ ] R21b A port bombed shut says so (R33-N2): a division refused at its own shut port is told that the
+  - [x] R21b A port bombed shut says so (R33-N2): a division refused at its own shut port is told that the
     port is shut, not "no port of its nation". AT: Britain at Portsmouth, the port shut: the reason is the new one.
+    Done: `tryLanding` tells `PortShut` (16) where the only ports it stands at are shut;
+    `landingPortShut1938.test.ts` (red without: `NoPort`).
   - [ ] R21c A refusal is read in full (R33-N3): a refused order keeps the formation panel open with the
     reason in it; the tooltip over a neutral's coast says the landing would be refused, not "go by sea". AT: an
     e2e spec with a real mouse click over Calais at peace: panel open with the reason; the tooltip's line.

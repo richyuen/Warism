@@ -51,7 +51,7 @@ describe('ports bombed (PLAN 5.5b)', () => {
     expect(v.w.portDamage.size).toBe(0);
   });
 
-  it('shut, its transports embark no one: the division at Portsmouth is refused for want of a port; repaired under a half, it embarks', () => {
+  it('shut, its transports embark no one: the division at Portsmouth is refused, its port shut; repaired under a half, it embarks', () => {
     const before = setup();
     expect(tryLanding(before.w, before.div, ...calais)).toBe(0);
     const { w, div, port } = setup();
@@ -59,7 +59,7 @@ describe('ports bombed (PLAN 5.5b)', () => {
     w.portDamage.set(port, PORT_SHUT);
     expect(portShut(w, port)).toBe(true);
     expect(transportsPort(w, div)).not.toBe(port);
-    expect(tryLanding(w, div, ...calais)).toBe(RejectReason.NoPort);
+    expect(tryLanding(w, div, ...calais)).toBe(RejectReason.PortShut); // ROADMAP R21b: its own reason, once NoPort
     expect(w.embarked.has(div)).toBe(false);
     // A day's repair takes it under a half.
     w.tick = 24;

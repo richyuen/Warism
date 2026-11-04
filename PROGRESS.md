@@ -1017,3 +1017,10 @@
 - AT: `landingPeace1938.test.ts` 2 of 2 (Britain on German-held Calais: peace while bound; peace with one aboard a
   loading convoy), both red without the rule. Pin unmoved.
 - **Next:** R21b.
+
+## 2026-11-04 — ROADMAP R21b: a port bombed shut says so (R33-N2)
+- A division refused at a port of its nation that is bombed shut is told "its port is bombed shut" (`PortShut`, 16),
+  not "it stands at no port of its nation". A reason only: the pin unmoved.
+- AT: `landingPortShut1938.test.ts` (Britain's division for Belfast, Portsmouth shut while it marches: `PortShut`; red
+  without, `NoPort`).
+- **Next:** R21c.
