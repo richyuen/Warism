@@ -3,6 +3,29 @@
 The resolved entries of BLOCKERS.md, moved here on 2026-11-02 (ADR-804) in the order they stood. Searched, not
 read. New resolved entries are moved here when they are resolved.
 
+### RESOLVED 2026-11-03 (passed in the release review of 4c546398, 18 px against 17; off `knownRed.json`) · shipMarks1938's T3 test (the review before critic run 19): red twice in the review, green in 8 of 8 by hand; on `tools/gate/knownRed.json`
+- **The bar:** at 20 m/px on the fleets of seed 2251's first Italy–UK sea battle, a destroyer's median hull length
+  over 17 px (`shipMarks1938.spec.ts`, PLAN 7.35c; about 19 by the rule).
+- **What was read** (2026-11-02): red in `npm run check:review` on `942da00a`, in chunk 8 and again alone, 16.5 px both
+  times (7 destroyers). By hand on the same code: T3 alone 4 of 4 (17.5–18), the file as the review's retry runs it
+  (`--workers=1`) 17.5, T3 beside six headless sims 18, the review's whole chunk 8 (20 files, parallel) 17.5. The world
+  is the same each run (paused, stepped by hand); the per-ship lengths are not (15.5–20 px, the camera's spots seeing
+  6 to 49 figures), so the measure moves with the frames' timing and sits 0.5–1 px over its bar. The T3 view was
+  reached at every spot (logged). No drawing of ships changed since critic run 18 (`81beca1`): 7.184b2's wakes take a
+  hero's size only. The test is not changed.
+- **Left:** the test leaves the list when it passes in a review here. Nothing waits on the user.
+
+### RESOLVED 2026-11-03 (red once in the release review of 4c546398, green alone as the review judges a pass; off `knownRed.json`) · seaRow1938's Speed x1 test (critic run 18's review): red on this machine, the code not its cause; on `tools/gate/knownRed.json`
+- **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
+  with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a).
+- **What was read** (2026-10-28): red in `npm run check:review` on `7819d86e` and again alone, alone by hand on
+  `0488d64a`, and alone at `cfedb50a`, the commit whose review was green the day before: 4 of 4. Each read: hour 45, 26–27
+  frames in 6 s (SwiftShader, the renderer the config gives the page), 6 ticks; at most 1 German tracer and 3–4
+  British at once, never both in one frame. The machine idle (no process over 10 %), the High performance plan, the
+  same Playwright and Chromium (1243, of 2026-09-29). Thin before: PLAN 7.31 ("thin margins on this machine"), PLAN
+  7.35c (missed in a parallel run, green alone).
+- **Left:** the test leaves the list when it passes here. The test is not changed. Nothing waits on the user.
+
 ### RESOLVED 2026-11-02 (option a, the user's decision: the floor a tenth of the start's fleets; ADR-798) · PLAN 7.5: the review before critic run 25 red on `aiSweep1`: 24 of 197 fleets of the start stand after one year, floor 25 (ADR-633)
 - **The red** (`npm run check:review` on 5d7b214b, twice, deterministic): seed 1 stood 54 after one year on the
   review of 82d428c1, 24 now; seeds 2 and 3 stand 70 and 71 (were 56 and 64).

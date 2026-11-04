@@ -2,6 +2,33 @@
 
 What each release of Warism brought, for players. Play it at https://richyuen.github.io/Warism/
 
+## release-2026-11-03b — the relations graph, and heroes you can follow
+
+**New**
+- The relations graph (Relations, in the bottom bar): every living nation a node sized by its
+  land, and a line for each war, alliance, guarantee, puppet bond and truce, each its own colour.
+  Filter by kind or by nation, click a line to read it ("X is at war beside Y"), zoom and pan with
+  the wheel, a pinch or −/+. It reads on a phone too.
+- Puppets rise against an overlord that is losing: the AI's puppets now fight wars of
+  independence on their own, not only when God moves the loyalty slider.
+- The History says when a nation defaults on its debts.
+
+**Heroes** (the new-game option)
+- A hero's counter is drawn at its place on the map, never pushed across a continent, and only a
+  nation's own heroes fold together; tapping a folded counter again opens each of its heroes in
+  turn, on a phone as on a desk.
+- A hero stays its nation's: when its nation is annexed it does not change flags.
+- A sunk sea hero comes back at a port on its own sea, never on the Caspian or a lake; while it
+  waits, its row says why.
+- The ticker and the History tell when a hero is lost and when it is back, with Go to.
+- A hero's panel and map tag show its health; the option's hint is shown as text.
+- Carrier wings stay with their carrier when it moves in a battle or is sent home.
+
+**Fixes**
+- A Force war that breaks a bond no longer calls a nation in on its enemy's side.
+- A puppet never has puppets of its own.
+- The bottom bar fits on one row from 1024 px.
+
 ## release-2026-11-03 — the first release
 
 A browser world war simulator: watch the world of 1938 (or a random world) fight it out for

@@ -1,0 +1,14 @@
+
+> warism@0.0.1 soak
+> tsx tools/soak/cli.ts --scenario 1938 --seed 99 --minutes 30 --affinity 0xFFFF
+
+pinned to CPUs 0xffff
+soak: 1938 seed 99, 30 min, a save and load every 5 min, the twins compared every 30 days
+save  1  tick 58896  year 6.72  hash 1b9fe307  4.3 MB → 1.0 MB gzip  1.6 s
+save  2  tick 111528  year 12.73  hash 94fd2733  4.6 MB → 1.2 MB gzip  1.7 s
+save  3  tick 160248  year 18.29  hash ee6bd4e6  4.9 MB → 1.2 MB gzip  1.6 s
+save  4  tick 215880  year 24.64  hash bb5131c1  5.2 MB → 1.4 MB gzip  1.6 s
+save  5  tick 264528  year 30.20  hash 5ff3d3bf  5.7 MB → 1.5 MB gzip  1.7 s
+done: green, 36.45 years (319344 ticks) in 30.0 min, 5 saves and loads, final hash bc135d38 → .cache/soak/1938-seed99-30min.json
+soak exit 0
+done:

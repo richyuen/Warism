@@ -38,14 +38,6 @@
    "why": "Fails alone in a cloud container with a software GPU (frames and ticks counted against wall time); green on the machine the budgets were set on. BLOCKERS: the browser suite at PLAN 4.2f, 4.7 and 4.8."
   },
   {
-   "id": "tests/e2e/seaRow1938.spec.ts › from the row of the critic's battle, both fleets' fire on the screen within seconds at Speed x1 (PLAN 7.22a)",
-   "why": "Red alone on this machine at 26-27 frames in 6 s under SwiftShader (the page's CPU renderer): its two sides' tracers never in one frame; the same code at cfedb50a, green in critic run 17's review, red here 2026-10-28 too, the machine idle, no browser changed. BLOCKERS: seaRow1938's Speed x1 test (critic run 18's review)."
-  },
-  {
-   "id": "tests/e2e/shipMarks1938.spec.ts › T3: at 20 m/px every class of ship is drawn long and broad enough to read (PLAN 7.35c)",
-   "why": "Red twice in check:review on 942da00a at 16.5 px (bar 17); green in 8 of 8 by hand on the same code, its measure moving 15.5-20 px a ship with the frames' timing. BLOCKERS: shipMarks1938's T3 test (the review before critic run 19)."
-  },
-  {
    "id": "tests/e2e/tickClock.spec.ts › a snapshot of the tick in hand does not send the sprites back",
    "why": "Fails alone in a cloud container with a software GPU (frames and ticks counted against wall time); green on the machine the budgets were set on. BLOCKERS: the browser suite at PLAN 4.2f, 4.7 and 4.8."
   },

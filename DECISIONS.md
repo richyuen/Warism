@@ -7,6 +7,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-820 · 2026-11-03 · accepted — A second release on one day is tagged with a letter (ROADMAP R5b)
+
+- **Context.** Batch 1's release falls on the day of the first (`release-2026-11-03`), and PROMPT.md's
+  tag is `release-<YYYY-MM-DD>`: the name is taken.
+- **Decision.** A later release on a day already tagged takes the next letter: `release-2026-11-03b`
+  (then `c`, …). The CHANGELOG heading is the tag.
+- **Also.** Two known reds passed in this release's review and leave `tools/gate/knownRed.json` as
+  their BLOCKERS entries say (moved to `docs/BLOCKERS_DONE.md`): `shipMarks1938`'s T3 (18 px, bar 17)
+  and `seaRow1938`'s Speed x1 (red once in its chunk, green alone, which the review counts a pass).
+
 ### ADR-819 · 2026-11-03 · accepted — A default is a row of the history (ROADMAP R7)
 
 - **Context.** After COLLAPSE_MONTHS bankrupt months a nation with nothing to fragment (no

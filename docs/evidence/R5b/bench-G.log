@@ -1,0 +1,260 @@
+
+> warism@0.0.1 bench
+> tsx tools/bench/run.ts G
+
+
+> warism@0.0.1 build
+> tsc -b && vite build
+
+[36mvite v8.3.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+✓ 877 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/bench.html                                         0.63 kB │ gzip:  0.38 kB
+dist/index.html                                         1.31 kB │ gzip:  0.46 kB
+dist/assets/lato-latin-ext-700-normal-C6gwlRgY.woff2    5.55 kB
+dist/assets/lato-latin-ext-400-normal-CK4GAP86.woff2    5.61 kB
+dist/assets/lato-latin-ext-900-normal-BhetttCG.woff2    5.64 kB
+dist/assets/lato-latin-900-normal-CZBfLiEO.woff        17.18 kB
+dist/assets/lato-latin-400-normal-B11PyLys.woff        17.45 kB
+dist/assets/lato-latin-700-normal-DAdL7O4w.woff        17.62 kB
+dist/assets/lato-latin-900-normal-C3uaq3BA.woff2       22.50 kB
+dist/assets/lato-latin-700-normal-BUGMgin4.woff2       23.04 kB
+dist/assets/lato-latin-400-normal-BEhtfm5r.woff2       23.58 kB
+dist/assets/entry-3189kCG6.js                         899.15 kB
+dist/assets/main-D1Paw7Bi.css                          49.02 kB │ gzip: 19.31 kB
+dist/assets/webworkerAll-D9ofPBVB.js                    0.05 kB │ gzip:  0.06 kB
+dist/assets/WebGLRenderer-DSNEf6Mr.js                   0.07 kB │ gzip:  0.07 kB
+dist/assets/CanvasRenderer-34zQxQdn.js                  0.07 kB │ gzip:  0.08 kB
+dist/assets/WebGPURenderer-BDAW1ZX3.js                  0.07 kB │ gzip:  0.08 kB
+dist/assets/hash-VYJsGXV-.js                            0.25 kB │ gzip:  0.21 kB │ map:     1.20 kB
+dist/assets/getTextureBatchBindGroup-BrlgokzH.js        0.40 kB │ gzip:  0.31 kB │ map:     2.01 kB
+dist/assets/lib-DtnxXbSE.js                             0.48 kB │ gzip:  0.29 kB
+dist/assets/modulepreload-polyfill-P2Xu9kJm.js          0.67 kB │ gzip:  0.38 kB
+dist/assets/lib-DbCLpB2p.js                             0.85 kB │ gzip:  0.46 kB │ map:    56.45 kB
+dist/assets/provincesView-XFIN2RVk.js                   0.91 kB │ gzip:  0.61 kB │ map:     2.97 kB
+dist/assets/benchUtil-BJEkoupA.js                       1.15 kB │ gzip:  0.66 kB │ map:     4.95 kB
+dist/assets/flagGrid-DAa21pVo.js                        1.18 kB │ gzip:  0.72 kB │ map:     3.97 kB
+dist/assets/proxyScene-CQ4tytK9.js                      1.26 kB │ gzip:  0.59 kB │ map:     4.74 kB
+dist/assets/preload-helper-BaNbYf_w.js                  1.39 kB │ gzip:  0.75 kB
+dist/assets/precision-JNrtyTOs.js                       1.53 kB │ gzip:  0.94 kB │ map:     6.72 kB
+dist/assets/bench-DRgJFWnq.js                           1.81 kB │ gzip:  0.83 kB │ map:     1.13 kB
+dist/assets/synthetic-BocosXmq.js                       2.32 kB │ gzip:  1.19 kB │ map:    10.85 kB
+dist/assets/benchB-BnWYDuCB.js                          2.55 kB │ gzip:  1.42 kB │ map:     9.35 kB
+dist/assets/politicalView-Bi4uWsSO.js                   2.55 kB │ gzip:  1.30 kB │ map:     8.81 kB
+dist/assets/terrainView-DLKqBMm_.js                     3.24 kB │ gzip:  1.24 kB │ map:     7.57 kB
+dist/assets/benchA-Dkbm_RfB.js                          3.67 kB │ gzip:  1.86 kB │ map:    14.67 kB
+dist/assets/flags-CMfHqXnG.js                           4.12 kB │ gzip:  2.01 kB │ map:    23.73 kB
+dist/assets/canvasUtils-BlZ1xmP9.js                     6.10 kB │ gzip:  2.09 kB │ map:    23.28 kB
+dist/assets/cityLabels-BynliB05.js                      6.81 kB │ gzip:  3.06 kB │ map:    39.48 kB
+dist/assets/atlas-Ci7QJNxe.js                           7.16 kB │ gzip:  2.52 kB │ map:    38.29 kB
+dist/assets/simClient-DSHckw2J.js                       8.41 kB │ gzip:  2.25 kB │ map:    29.27 kB
+dist/assets/GroundInstances-DzgV1A42.js                 9.12 kB │ gzip:  4.20 kB │ map:    30.83 kB
+dist/assets/getTexelRangeRects-MBtImDLS.js             11.37 kB │ gzip:  3.01 kB │ map:    29.21 kB
+dist/assets/init-D4uv2SHD.js                           15.34 kB │ gzip:  4.81 kB │ map:    55.02 kB
+dist/assets/nations-8MCbRKIb.js                        23.69 kB │ gzip:  4.54 kB │ map:    34.62 kB
+dist/assets/benchBP-BsEFz9FL.js                        24.13 kB │ gzip:  8.03 kB │ map:    90.40 kB
+dist/assets/init-BCwhXt3x.js                           24.87 kB │ gzip:  8.59 kB │ map:   110.39 kB
+dist/assets/ProxyRenderer-CX0fYlVS.js                  26.19 kB │ gzip:  9.58 kB │ map:    76.84 kB
+dist/assets/browserAll-BeoXm1ev.js                     43.64 kB │ gzip: 11.37 kB │ map:   163.54 kB
+dist/assets/WebGPURenderer-CbPCKE_y.js                 55.51 kB │ gzip: 15.94 kB │ map:   190.88 kB
+dist/assets/WebGLRenderer-B6tRmjsE.js                  73.35 kB │ gzip: 20.17 kB │ map:   245.27 kB
+dist/assets/RenderTargetSystem-Ca9gn23k.js             78.69 kB │ gzip: 22.40 kB │ map:   297.76 kB
+dist/assets/MapRenderer-DUzrLcZT.js                    81.88 kB │ gzip: 25.57 kB │ map:   592.78 kB
+dist/assets/CanvasRenderer-BmWdQc2j.js                 89.08 kB │ gzip: 28.10 kB │ map:   493.68 kB
+dist/assets/flags-D37jEq87.js                          96.82 kB │ gzip: 29.36 kB │ map:   162.32 kB
+dist/assets/Geometry-BXYIVPra.js                      113.45 kB │ gzip: 34.41 kB │ map:   562.60 kB
+dist/assets/main-CWmWo6yi.js                          298.22 kB │ gzip: 97.25 kB │ map: 1,386.72 kB
+
+[32m✓ built in 421ms[39m
+gpu T0: 322.3 fps, 102 nations
+gpu T2: 173.4 fps, 10752 of 10752 sprites on screen
+swiftshader T0: 2.7 fps, 101 nations
+swiftshader T2: 1.7 fps, 150 of 165 sprites on screen
+{
+  "bench": "G",
+  "date": "2026-11-04T00:50:41.723Z",
+  "heroes": false,
+  "budgets": {
+    "t0Fps": 60,
+    "t2Fps": 30,
+    "t2Proxies": 10000,
+    "specT0GpuMs": 1,
+    "specT2GpuMs": 2,
+    "specFrameCpuMs": 6,
+    "judgedBy": [
+      "gpu"
+    ]
+  },
+  "pass": true,
+  "settings": [
+    {
+      "setting": "gpu",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Ti (0x00002782) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "cases": [
+        {
+          "tier": "T0",
+          "proxiesOnScreen": 0,
+          "elements": 0,
+          "nations": 102,
+          "metresPerPx": 20614.711934156378,
+          "frames": 2580,
+          "seconds": 8.004099999999628,
+          "fps": 322.33480341326566,
+          "rafFps": 322.20986744295044,
+          "frameMsP50": 2.7999999999992724,
+          "frameMsP95": 4.699999999998909,
+          "frameMsMax": 15.5,
+          "cpuMsP50": 2.1000000005587935,
+          "cpuMsP95": 2.6000000005587935,
+          "gpuFrameMs": 0.5174954666666667,
+          "gpuDrawsMs": 0.5147648,
+          "gpuPasses": 60,
+          "budgetFps": 60,
+          "specGpuMs": {
+            "budget": 1,
+            "value": 0.5174954666666667,
+            "within": true
+          },
+          "specCpuMs": {
+            "budget": 6,
+            "value": 2.1000000005587935,
+            "within": true
+          },
+          "pass": true
+        },
+        {
+          "tier": "T2",
+          "proxiesOnScreen": 10752,
+          "elements": 10752,
+          "nations": 102,
+          "metresPerPx": 200,
+          "frames": 1390,
+          "seconds": 8.014299999999814,
+          "fps": 173.43997604282748,
+          "rafFps": 173.3151990816456,
+          "frameMsP50": 5.100000000002183,
+          "frameMsP95": 9,
+          "frameMsMax": 14.400000000001455,
+          "cpuMsP50": 4.6000000005587935,
+          "cpuMsP95": 5.400000000372529,
+          "gpuFrameMs": 1.0831644444444446,
+          "gpuDrawsMs": 1.0670762666666667,
+          "gpuPasses": 45,
+          "budgetFps": 30,
+          "specGpuMs": {
+            "budget": 2,
+            "value": 1.0831644444444446,
+            "within": true
+          },
+          "specCpuMs": {
+            "budget": 6,
+            "value": 4.6000000005587935,
+            "within": true
+          },
+          "stage": {
+            "nation": "JAP",
+            "template": "infantry_div",
+            "divisions": 384,
+            "grid": [
+              24,
+              16
+            ],
+            "site": [
+              1578.5,
+              338.5
+            ]
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "setting": "swiftshader",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "cases": [
+        {
+          "tier": "T0",
+          "proxiesOnScreen": 0,
+          "elements": 0,
+          "nations": 101,
+          "metresPerPx": 20614.711934156378,
+          "frames": 24,
+          "seconds": 8.8565,
+          "fps": 2.709874103765596,
+          "rafFps": 2.5969626827753625,
+          "frameMsP50": 13.899999999999636,
+          "frameMsP95": 1620.3000000000002,
+          "frameMsMax": 1635,
+          "cpuMsP50": 5.2000000001862645,
+          "cpuMsP95": 8.799999999813735,
+          "gpuFrameMs": 224.518,
+          "gpuDrawsMs": 188.92135333333331,
+          "gpuPasses": 2,
+          "budgetFps": 60,
+          "specGpuMs": {
+            "budget": 1,
+            "value": 224.518,
+            "within": false
+          },
+          "specCpuMs": {
+            "budget": 6,
+            "value": 5.2000000001862645,
+            "within": true
+          },
+          "pass": null
+        },
+        {
+          "tier": "T2",
+          "proxiesOnScreen": 150,
+          "elements": 165,
+          "nations": 89,
+          "metresPerPx": 200,
+          "frames": 15,
+          "seconds": 8.784300000000744,
+          "fps": 1.707591953826569,
+          "rafFps": 1.593752490238131,
+          "frameMsP50": 18.10000000000582,
+          "frameMsP95": 1994.1999999999825,
+          "frameMsMax": 1994.1999999999825,
+          "cpuMsP50": 7.2999999998137355,
+          "cpuMsP95": 911.7000000001863,
+          "gpuFrameMs": 424.84605,
+          "gpuDrawsMs": 397.96119,
+          "gpuPasses": 2,
+          "budgetFps": 30,
+          "specGpuMs": {
+            "budget": 2,
+            "value": 424.84605,
+            "within": false
+          },
+          "specCpuMs": {
+            "budget": 6,
+            "value": 7.2999999998137355,
+            "within": false
+          },
+          "stage": {
+            "nation": "JAP",
+            "template": "infantry_div",
+            "divisions": 384,
+            "grid": [
+              24,
+              16
+            ],
+            "site": [
+              1578.5,
+              338.5
+            ]
+          },
+          "pass": null
+        }
+      ]
+    }
+  ]
+}
+gpu T0: 322.3 fps (budget 60), p95 4.7 ms, 0 sprites on screen, 102 nations: PASS | SPEC gpu 0.517 <= 1 (30 whole draws 0.515), draw cpu p50 2.10 <= 6
+gpu T2: 173.4 fps (budget 30), p95 9.0 ms, 10752 sprites on screen, 102 nations: PASS | SPEC gpu 1.083 <= 2 (30 whole draws 1.067), draw cpu p50 4.60 <= 6
+swiftshader T0: 2.7 fps (budget 60), p95 1620.3 ms, 0 sprites on screen, 101 nations: reported | SPEC gpu 224.518 > 1 (30 whole draws 188.921), draw cpu p50 5.20 <= 6
+swiftshader T2: 1.7 fps (budget 30), p95 1994.2 ms, 150 sprites on screen, 89 nations: reported | SPEC gpu 424.846 > 2 (30 whole draws 397.961), draw cpu p50 7.30 > 6
+bench exit 0

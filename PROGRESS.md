@@ -664,3 +664,24 @@
   unchanged from run 30, every one at its bar (semanticZoom, naval, tanks, aircraft, aiNukes 8; the rest 7).
   Non-blocking R31-N1–N6 (heroes under the Ranking panel at a desk, two nations' counters overlapping a name, …).
 - **Next:** the release checks (check:review, soak, sweep on unseen seeds, bench G).
+
+## 2026-11-03 — ROADMAP R5b: the release checks on 4c546398; release-2026-11-03b (ADR-820)
+- **Critic:** run 31 (full) on 4c546398: no blocking issue, every score at its bar. The release commit differs from it
+  only in documents and `tools/gate/knownRed.json`.
+- **Unit by hand first:** 2099 of 2099; sweep config 18 of 18.
+- **check:review** (4c546398): green, 0 known red, 0 not known. Red once, green alone: `cityNames1938`,
+  `fightCamera1938`, `nukeFx1938`, `seaRow1938` (Speed x1). shipMarks1938's T3 passed (destroyers 18 px, bar 17):
+  it and seaRow's Speed x1 leave `knownRed.json` as their BLOCKERS entries say (moved to `docs/BLOCKERS_DONE.md`).
+  The review's specs rewrote old evidence PNGs; restored.
+- **Bench** (`bench -- G` alone): T0 322.3 fps (budget 60; last release 321.7), p95 4.7 ms; T2 173.4 fps with 10,752
+  sprites (budget 30; last 176.5), p95 9.0 ms; SPEC GPU 0.52 / 1.08 ms, draw CPU p50 2.1 / 4.6 ms: PASS.
+- **Soak** (1938, seed 99, 30 min, P-cores, heroes off): green, 36.45 years (319,344 ticks), 5 saves and loads, no
+  desync; final hash bc135d38. Last release 40.49 years, the one before 34.24: within this machine's spread run to
+  run (sequential timings drift ±10 %); critic run 31's headless ticks 4.1–5.8 ms against run 30's 3.7–5.7.
+- **Sweep** (`--first 1551 --tag done31`, 1551–1560 × 50 years, unseen, heroes off): land changing controller in the
+  last 5 years 24.3–53.3 %, ≥ 1 % on 10 of 10 (the release's condition). Its own limits 7 of 10 (largest income over
+  40 % on 1551, 1553, 1556; "no hegemon" struck, ADR-740); riser, faller, no break-up 10 of 10; nukes in 10 of 10,
+  fallout at most 1.85 %. `docs/sweeps/2026-11-04-sweep-done31.md`.
+- CHANGELOG entry; Batch 1's items moved to `docs/history/ROADMAP-release-2026-11-03b.md`. Evidence
+  `docs/evidence/R5b/`. Tag `release-2026-11-03b`.
+- **Next:** R6 (Later), or a new batch from the user.
