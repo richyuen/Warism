@@ -835,7 +835,9 @@ take no diplomatic turn). The checkers hold these rules together (§10.1).
   slot (`slotPose`: a block about 2:1, `cols` = ⌈√(2n)⌉, `SLOT_SPACING` 0.03 cells, scaled; slots set
   when the formation is equipped), in contact the hour's deployment (`deployOf`: on the line to the
   nearest enemy in contact within `DEPLOY_REACH` (1.5 cells), `DEPLOY_GAP`, `DEPLOY_LINES` (2),
-  `DEPLOY_ABREAST`, with a seeded scatter and turn); on land, `slotPlace` (§3.1). `applyLoss`
+  `DEPLOY_ABREAST`, with a seeded scatter and turn; short of, or in a file beside, the blocks in its way
+  before it in the hour's order: an enemy's, and its own side's of other stacks (ROADMAP R18)); on land,
+  `slotPlace` (§3.1). `applyLoss`
   carries wounds; `settleFormation` removes a dead element (`ElementDestroyed`) and a formation with
   none.
 - **The order of battle** (`data/scenarios/1938/oob.json`, `placeOob`, `src/sim/data/oob.ts`): 225
@@ -1065,7 +1067,8 @@ org loss, territory. `src/sim/systems/combat.ts` unless named.
   a derived list of formations, made again each hour; only Major Battles are records (§5.4). Air
   strikes and bombardment are their own systems (§6.2, §6.3) and are not members of a battle.
 - **In contact** a formation's march pauses (an enemy's ground is entered only once it flips, §4.3);
-  each block deploys towards its nearest enemy in contact (`deployOf`, §3.6, drawn only). A player's
+  each block deploys towards its nearest enemy in contact (`deployOf`, §3.6: drawn, and read by the air
+  AI's patrols, so a change of it moves a game). A player's
   march that meets an enemy is cancelled (`RejectReason.Contact`); one given in contact (`through`)
   goes on at `WITHDRAW_SPEED` (0.5) until first out of contact.
 - Contact ends when no enemy is within 1.5 cells, or when the formation retreats.

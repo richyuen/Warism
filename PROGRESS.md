@@ -961,3 +961,12 @@
 - `stackBlocks1938` stays red: a layout bug the new history shows (R18, before R17's rest). The gate ran none of
   these on R16b (R19).
 - **Next:** R18.
+
+## 2026-11-04 — ROADMAP R18: a block keeps clear of its own side's other stacks (ADR-824)
+- `deployOf` read no friendly block of another stack: on seed 1212 day 20 Soviet blocks on two neighbouring Polish
+  divisions stood in one another. It now reads its own side's blocks before it in the hour's order as an enemy's.
+- AT: `deployStacks1938.test.ts` (red without: 66/164, 153/156, 153/164, 156/200), `stackBlocks1938.spec.ts` 2 of 2
+  unchanged. The air AI reads block places, so the pin moved: aa1a5dbb → 6012d9d2; `diploInvariants` 99 0 broken.
+- Full e2e: 330 passed, 7 red; six green alone (load); `declutter1938` a tie of clusters the nested grids allow (a
+  probe of the keys), restated with stricter whole-view and whole-way checks (seventh addendum).
+- **Next:** R17d.

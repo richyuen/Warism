@@ -7,6 +7,28 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-824 · 2026-11-04 · accepted — A block keeps clear of its own side's other stacks (ROADMAP R18)
+
+- **Context.** `stackBlocks1938.spec.ts` went red after R16b moved its scene: on seed 1212 (the
+  Soviet Union at war with Poland from the start, day 20) Soviet blocks on two neighbouring Polish
+  divisions stood in one another (66/164, 153/164, 156/200, 153/156; up to 0.036 cells deep).
+  `deployOf` kept a block clear of the enemy's blocks before it in the hour's order and of its own
+  stack's lines, but read no block of its own side's other stacks. The rule was always so.
+- **Decision.** Of the blocks near it in contact and before it in the hour's order (`orderOf`), a
+  block reads its own nation's and its side's (`sameSide`) as it reads an enemy's: it stops the gap
+  short of one in its way, or takes the next file out with room.
+- **Consequences.** The deployment is read by the air AI's patrols, so a game moves: pin aa1a5dbb →
+  6012d9d2. `deployStacks1938.test.ts` (red without: the four pairs), `stackBlocks1938.spec.ts`
+  green unchanged; `diploInvariants` 99 0 broken; the whole e2e suite run (ROADMAP R19's lesson).
+  The sim reads a block's place in the air AI's missions (`air.ts`: `deployOf`, `withFreshDeployments`);
+  land combat reads it only for the fire events it tells.
+- **The full suite on it:** 330 passed, 7 red; six green alone (load), one of the history:
+  `declutter1938.spec.ts`'s "more clusters in the box at each finer level" fell to a tie (5 → 3 at
+  6 px per cell, 6 → 6). A probe of the cluster keys showed each of the six with its formations in
+  one fine cell and one child, the whole view 223 → 328: a tie the nested grids allow. Restated
+  (ADR-79, seventh addendum in the spec): at a level change no fewer clusters in the box and more in
+  the whole view; over the whole way in more clusters in the box, and more than twice the counters.
+
 ### ADR-823 · 2026-11-04 · accepted — The player orders landings overseas, with escort (ROADMAP R17)
 
 - **Context.** A left-click on land over the sea with divisions selected lands them (PLAN 4.5a,

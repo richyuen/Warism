@@ -320,11 +320,16 @@ export function deployOf(world: World, f: number, count: number): Deployment | n
         // block's stack which faced another German). Those that can reach where it can: a
         // block goes `DEPLOY_REACH` from its formation's place at most.
         // The distance is asked first: most of an hour's contacts are in other wars.
+        // And the blocks of its own side's other stacks before it in the order (ROADMAP R18: on
+        // seed 1212 Soviet blocks on two neighbouring Polish divisions stood in one another,
+        // 0.024 slot apart): it stops short of them, or takes a file with room, as of an enemy's.
         const mine = turns.get(f)!;
         const known = new Set<number>([enemy, faced, ...ahead]);
+        const own = c.nation[f]!;
         for (const h of contacts.keys()) {
           if (h === f || !world.formations.has(h) || cellDist(world, fx, fy, c.x[h]!, c.y[h]!) > 2 * world.atSize(DEPLOY_REACH) + world.atSize(BLOCK_REACH)) continue;
-          if (known.has(h) || !world.wars.atWar(c.nation[f]!, c.nation[h]!)) continue;
+          const theirSide = c.nation[h]!;
+          if (known.has(h) || !(world.wars.atWar(own, theirSide) || theirSide === own || world.wars.sameSide(own, theirSide))) continue;
           const its = turns.get(h)!;
           if (its > mine || (its === mine && h > f)) continue;
           const slots = slotCount(world, h, idx.get(h)?.length ?? 0);

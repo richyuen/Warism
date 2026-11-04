@@ -74,7 +74,7 @@ Rules:
   code does; `exportScenario` drops `stats.nuke` too (`scenarioFile.test.ts`, red without it).
   `revival.cooldownDays` stays: `scenario1938.test.ts` pins the files to `REVIVAL_COOLDOWN`. The
   `majors` of `inspect` stays: that reply is for tests and the critic, not the UI.
-- [ ] R18 **Blocks of two stacks stand in one another** (found 2026-11-04 by `stackBlocks1938.spec.ts`, red
+- [x] R18 **Blocks of two stacks stand in one another** (found 2026-11-04 by `stackBlocks1938.spec.ts`, red
   since R16b's new history). Seed 1212, the Soviet Union at war with Poland from tick 0, day 20: Soviet
   blocks of two stacks, attacking two neighbouring Polish divisions, overlap (66/164 0.024, 153/164
   0.027, 156/200 0.024 slot apart, under the 0.05 gap). `deployOf` (`src/sim/systems/elements.ts`) keeps a
@@ -82,6 +82,9 @@ Rules:
   block of another stack. The rule was always so; R16b's history made the scene. AT:
   `stackBlocks1938.spec.ts` green unchanged (its scene now on day 20), and a unit case of two stacks of
   one side on neighbouring enemies whose blocks keep the gap.
+  Done: `deployOf` reads its own side's blocks of other stacks before it in the order (ADR-824);
+  `deployStacks1938.test.ts` (seed 1212 day 20, no two Soviet blocks in one another; red without: four
+  pairs), `stackBlocks1938.spec.ts` 2 of 2 unchanged; pin 6012d9d2.
 - [ ] R17 **Landings the player can order** (the user's decision, 2026-11-04, ADR-823). A left-click on
   land over the sea with divisions selected already lands them, but only when the player's transports
   wait at a port of their land; else it is refused. Nothing shows a division bound for a port, waiting
@@ -123,3 +126,5 @@ Rules:
   1938 world (a battle on a day, a fall of a capital) were red, found only by a full run of the suite.
   The gate: when a sim input changes (as for the pin of seed 99), the e2e specs that step a seeded
   world too, or all of them. AT: a changed sim rule makes the gate run them (`gate.test.ts`).
+  And a full-suite run at four workers turned six or seven specs red by load in each of two runs
+  (green alone): such a run needs the gate's rule of a red run again alone, or its reds are noise.

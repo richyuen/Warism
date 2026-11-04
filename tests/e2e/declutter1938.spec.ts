@@ -89,14 +89,24 @@ test('T0 counters never overlap: what does not fit is folded into a neighbour, a
     // after ADR-699, 5 → 3 at 6 px per cell: 8 → 9 clusters, 7 and 7 counters, nation 4's two
     // folded into the German armies they are in contact with. So at a finer level: more
     // clusters (shown or folded), and never fewer counters.
+    //
+    // Restated with ROADMAP R18 (ADR-824, seventh addendum). "More clusters" in the box at each
+    // level change was of the world, not of the grids: a coarse cluster whose formations all
+    // stand in one fine cell has one child. A year into seed 1938 after ADR-824, 5 → 3 at 6 px
+    // per cell: 6 → 6 clusters in the box, each of the six with its formations in one fine cell
+    // and one child (a probe of the keys), while the whole view went 223 → 328. What the nested
+    // grids hold: at a level change no fewer clusters in the box (a child's middle may cross the
+    // box's edge, which no step here showed) and more in the whole view; within a level no fewer
+    // counters; over the whole way in, more clusters in the box and more than twice the counters.
     const [x0, y0] = cellOf(5, 55, W, H);
     const [x1, y1] = cellOf(25, 45, W, H);
-    const central = (): Promise<{ n: number; clusters: number; level: number | null }> =>
+    const central = (): Promise<{ n: number; clusters: number; all: number; level: number | null }> =>
       page.evaluate(({ x0, y0, x1, y1 }) => {
         const c = window.__warsim!.view!.counters;
         return {
           n: c.drawn.filter((d) => d.wx >= x0 && d.wx <= x1 && d.wy >= y0 && d.wy <= y1).length,
           clusters: c.laidOut.filter((d) => d.x >= x0 && d.x <= x1 && d.y >= y0 && d.y <= y1).length,
+          all: c.laidOut.length,
           level: c.level,
         };
       }, { x0, y0, x1, y1 });
@@ -110,7 +120,8 @@ test('T0 counters never overlap: what does not fit is folded into a neighbour, a
       const now = await central();
       if (now.level !== before.level) {
         finer++;
-        expect(now.clusters, `${when}, ${scale} px per cell, a finer level of clusters (${before.level} → ${now.level})`).toBeGreaterThan(before.clusters);
+        expect(now.clusters, `${when}, ${scale} px per cell, a finer level of clusters (${before.level} → ${now.level})`).toBeGreaterThanOrEqual(before.clusters);
+        expect(now.all, `${when}, ${scale} px per cell, a finer level of clusters (${before.level} → ${now.level}), the whole view`).toBeGreaterThan(before.all);
         expect(now.n, `${when}, ${scale} px per cell, a finer level of clusters (${before.level} → ${now.level}), counters`).toBeGreaterThanOrEqual(before.n);
       } else expect(now.n, `${when}, ${scale} px per cell, the same level of clusters (${now.level})`).toBeGreaterThanOrEqual(before.n);
       before = now;
@@ -118,6 +129,7 @@ test('T0 counters never overlap: what does not fit is folded into a neighbour, a
     }
     // The four steps go through finer levels more than once, and end with several times the counters.
     expect(finer, when).toBeGreaterThanOrEqual(2);
+    expect(before.clusters, `${when}, clusters in the box over the whole way in`).toBeGreaterThan(first.clusters);
     expect(before.n, when).toBeGreaterThan(2 * first.n);
   }
 
