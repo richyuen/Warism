@@ -782,3 +782,18 @@
   `CONTACT_CELLS` `elements.ts:90`; `WITHDRAW_SPEED` `movement.ts:603`.
 - `specRefs.test.ts` 7 of 7.
 - **Next:** R6f.
+
+## 2026-11-03 — ROADMAP R6f: SPEC §6.1–6.2 as the code is
+- Two read-only read-throughs (armour; the navy); rewritten from them, 21 → 11 KB.
+- Wrong or gone in the old text: tank years (heavy 1942, not 1943; medium-2 1941 and the MBT 1950 missing); armour
+  "industry heavy" (industry is read by nothing); burning wrecks "not yet" (built); ports that repair ships (none do);
+  detection by zone search (fleet to fleet); sea control by "recent wins" (hit points alone; carriers add none); a broken
+  fleet sailing to its nation's port (its bloc's, by `waterKeys`); submarines sinking convoys (raids take gold); landings
+  needing an escort and sea control (a zone no enemy holds), 2,000 men a transport (2,100), a repulsed landing landing
+  there; bombardment by soft attack × 2.5 (effectiveness × 2.5); "air not yet".
+- Constants stated, read from: `data/units/land.json`, `data/tech/armor.json`; `economic.ts:219–234`;
+  `SPEARHEAD_ARMOUR` `operational.ts:143`; `navalCombat.ts:85–105,563`; `AIR_DETECTION` `airSuperiority.ts:75`;
+  `seaControl.ts:28–66`; `RAID_PER_BOAT` `convoys.ts:22`; `CONVOY_ROWS` `economy.ts:241`; `BANK_REACH` `seaSupply.ts:74`;
+  `amphibious.ts:51–55`; `BOMBARD_FIRE` `bombardment.ts:27`; `bombing.ts:23–33`; `naval.ts:74–78`.
+- `specRefs.test.ts` 8 of 8 (§6 at 0 misses).
+- **Next:** R6g.

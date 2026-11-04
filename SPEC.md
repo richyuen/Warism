@@ -2,7 +2,7 @@
 
 Status: v1.0 (2026-11-03, after `release-2026-11-03`; ADR-805). This document says how the game works
 now. The *why* of each choice is in `DECISIONS.md` and `docs/history/DECISIONS-<YYYY-MM>.md` (cited as
-`[ADR-n]`). §1–§5 and §10 are current; the other sections are being brought up to date one by one
+`[ADR-n]`). §1–§5, §6.1–6.2 and §10 are current; the other sections are being brought up to date one by one
 (ROADMAP R6), and where one disagrees with the code, the code and the newest ADR win. A current
 section names only files, code and scripts that exist (`tests/unit/specRefs.test.ts`, ADR-821).
 
@@ -1117,243 +1117,130 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
 ## 6. Differentiators
 
 ### 6.1 Armour
-- Classes light/medium/heavy (+ mechanised/motorised infantry). Generations are gated by tech
-  (1938 light/medium → 1943 heavy → post-war MBT).
-- Production cost and time (industry heavy), monthly upkeep, and **fuel per hour moving**.
-  Unsupplied armour loses speed, then org, then strength (breakdowns).
-  *Implemented (PLAN 3.2b, ADR-134):* the fuel figure, the burn on the march off the network and
-  the speed (§4, Supply v1). *(PLAN 3.2c, ADR-135):* the org, lost with no supply and read by
-  combat. *(PLAN 3.2d, ADR-136):* breakdowns. With no supply and no org a formation on engines
-  loses a tenth a day of its vehicles and towed guns (the elements that burn fuel and are not
-  counted in men), besides the attrition of every formation without supply; its men go at
-  that attrition alone. The formation panel has the org and the fuel the template burns.
-- Terrain: a small bonus on grassland and in the desert, heavy penalties in forest, marsh,
-  mountains and urban. Tracked mobility costs from the terrain table.
-  *Implemented:* the move cost by mobility class (PLAN 1.11) and the fire by unit class
-  (PLAN 1.13), both of `data/terrain.json`: a light tank's fire is × 1.1 on grassland, 0.8 in
-  forest, 0.65 in a city, 0.55 in a marsh, 0.5 in mountains, and tracks cross a forest at
-  half their pace. *(PLAN 3.3a, ADR-137):* a unit type's own `terrainMods.atk` and `.def`
-  multiply those in a volley (infantry holding a forest takes ÷ 1.1 more, the heavy tank's
-  fire in a marsh is × 0.8 more). *(PLAN 3.3b, ADR-138):* a template crosses a cell at the
-  least `terrainMods.speed` of its manoeuvre elements for that ground, × the pace the move
-  cost gives (cavalry in a forest 0.8, the heavy tank in a marsh 0.7, motorised infantry in
-  a marsh or mountains 0.6, and with it every division that has some).
-- Combined arms: armour is vulnerable to AT guns, CAS and heavy armour, and is strong vs
-  infantry in the open. Infantry screens armour in urban/forest terrain. Artillery suppresses AT.
-  Bonuses apply only when the elements are actually present in the battle.
-  *The design table (PLAN 3.4, ADR-139).* Each rule is a factor on a volley's damage and
-  never on the choice of target. A formation's *side* is the formations of its battle that
-  its nation is not at war with, itself among them; an arm is *present* on a side while an
-  element of it there has strength left. The classes of an arm and the figures are in
-  `data/combat.json` from the part that reads them.
+- **Units** (`data/units/land.json`, a tank element 10 tanks):
 
-  | # | rule | when | factor | part |
-  |---|------|------|--------|------|
-  | 1 | The three arms | the shooter's side has infantry (`inf`, `mot`, `mech`), artillery (`art`) and armour (`armor_l/m/h`) present | fire × 1.15 | 3.4a, implemented |
-  | 2 | The screen | the target is armour (by its arm, not its `armor` figure) on forest or urban ground and its side has no infantry present; holding or moving | damage taken × 1.3 | 3.4b, implemented (ADR-140) |
-  | 3 | Guns on guns | the shooter is an AT gun (class `at`) and its enemy (the battle's formations its nation is at war with) has artillery present | fire × 0.7 | 3.4c, implemented (ADR-141) |
-  | 4 | The open | the shooter is armour (by its arm), the target has no armour (its `armor` figure is 0: not a tank, not mechanised infantry) and stands on plains, grassland or desert, and the target's side has no AT gun (class `at`) present | fire × 1.25 | 3.4d, implemented (ADR-142) |
+  | unit | class | soft / hard | armour / piercing | hp | km/h | fuel/h | tech (year) |
+  |---|---|---|---|---|---|---|---|
+  | `tank_light` | armor_l | 14 / 6 | 15 / 18 | 30 | 16 | 1 | armor_light_1 (1936) |
+  | `tank_medium` | armor_m | 20 / 14 | 45 / 50 | 45 | 13 | 1.5 | armor_medium_1 (1938) |
+  | `tank_medium_2` | armor_m | 24 / 20 | 70 / 80 | 55 | 14 | 1.6 | armor_medium_2 (1941) |
+  | `tank_heavy` | armor_h | 22 / 26 | 110 / 120 | 70 | 9 | 2.5 | armor_heavy_1 (1942) |
+  | `tank_mbt` | armor_m | 30 / 34 | 140 / 160 | 80 | 16 | 2 | armor_mbt (1950) |
 
-  Beside the table, in since PLAN 1.13 (§5.2): a shooter's `hard` against an armoured target
-  and its `soft` against another, × 0.5 when the armour beats its piercing. That is "AT vs
-  armour": the AT gun of 1938 (hard 18, piercing 45) hits every tank of 1938 in full.
-  Measured before rule 3 (PLAN 3.4c; 48 hours on plains, three seeds): of the tanks an
-  infantry division (24 battalions, 3 batteries, 1 AT battery) takes from a tank brigade,
-  its one AT battery takes 73 to 76 % (75 to 77 % in a forest), its battalions 21 to 22 %,
-  its howitzers 3 to 5 %; from a panzer division 85 to 89 %.
-  Measured before rule 4 (PLAN 3.4d; one volley of a light tank company at a holding
-  battalion, plains = 1): grassland 1.16 (the tank's 1.1 ÷ the ground's 0.95), desert 1.05,
-  forest 0.58 (0.8 ÷ 1.25 ÷ the battalion's own 1.1). So the terrain table already tells
-  open ground from close, for every target and whoever is beside it. What it did not do:
-  a division's AT gun changed what it took from the tanks (3.5 to 3.8 tanks in 48 hours
-  against 0.5 for a division with none) and nothing of what the tanks took from it
-  (1,312 men from either). Rule 4 is that.
-
-  *The matrix* (`tests/unit/combinedArmsMatrix.test.ts`, the AT of PLAN 3.4; seed 5, 48
-  hours, both holding, an attacker against an `infantry_div`; "men" are the battalions' men
-  lost, "to tanks" those the tanks' fire took, "by AT" the tanks the AT battery took):
-
-  | ground | attacker | defender | men | to tanks | tanks lost | by AT |
-  |--------|----------|----------|-----|----------|------------|-------|
-  | plains | tank brigade | the division | 1,356 | 1,319 | 3.76 | 2.73 |
-  | plains | tank brigade | no AT gun | 1,685 | 1,649 | 1.01 | 0 |
-  | plains | tank brigade | no howitzers | 1,372 | 1,326 | 3.48 | 2.73 |
-  | plains | tank brigade | rifles alone | 1,727 | 1,680 | 0.74 | 0 |
-  | plains | panzer division | the division | 3,261 | 2,684 | 1.96 | 1.63 |
-  | plains | panzer division | no AT gun | 3,944 | 3,363 | 0.30 | 0 |
-  | plains | panzer division | no howitzers | 3,330 | 2,739 | 1.89 | 1.63 |
-  | plains | panzer division | rifles alone | 4,041 | 3,450 | 0.25 | 0 |
-  | plains | tank brigade, its infantry destroyed | the division | 1,319 | 1,319 | 5.26 | 2.73 |
-  | plains | panzer division, its howitzers destroyed | the division | 2,538 | 2,334 | 2.70 | 2.34 |
-  | forest | tank brigade | the division | 797 | 767 | 3.17 | 2.39 |
-  | forest | tank brigade | no AT gun | 797 | 767 | 0.78 | 0 |
-  | forest | tank brigade | no howitzers | 807 | 771 | 3.00 | 2.39 |
-  | forest | tank brigade | rifles alone | 817 | 782 | 0.60 | 0 |
-  | forest | panzer division | the division | 1,952 | 1,546 | 1.70 | 1.43 |
-  | forest | panzer division | no AT gun | 1,952 | 1,546 | 0.26 | 0 |
-  | forest | panzer division | no howitzers | 1,992 | 1,578 | 1.66 | 1.43 |
-  | forest | panzer division | rifles alone | 2,004 | 1,590 | 0.22 | 0 |
-  | forest | tank brigade, its infantry destroyed | the division | 767 | 767 | 5.72 | 3.11 |
-  | forest | panzer division, its howitzers destroyed | the division | 1,496 | 1,344 | 2.35 | 2.06 |
-
-  What the test asks of it, each ratio to 3 % (48 hours cost a formation so little that the
-  dead hardly move it). Rule 1: the panzer division's tanks take × 1.15 of what they take
-  with its howitzers destroyed. Rule 2: in a forest the AT battery takes × 1.3 of tanks from
-  the brigade with no infantry (3.11 for 2.39), on plains × 1. Rule 3: the health the AT
-  battery takes off the panzer division's tanks is × 0.7 of that with the division's
-  howitzers destroyed. Rule 4: on plains the tanks take × 1.25 of men from the division with
-  no AT gun, in a forest × 1. "AT vs armour": the battery takes over 0.7 of the tanks lost,
-  and a division without it under 0.3 of what the whole one takes.
-- Tactical view: tank sprites with turret facing their target, muzzle flash, burning wrecks.
-  *As built so far (PLAN 3.6a to 3.6c):* the hulls and the turrets, a turret that turns
-  to its target as its shot leaves, and the shot from its muzzle (§8, "Tanks").
+  Beside them motorised infantry (motorisation, 1936; 12 km/h) and mechanised (mechanisation, 1940;
+  tracked, armour 4, 14 km/h), and the AT gun (piercing 45: light and medium tanks in full, later ones
+  halved). In 1938 every nation knows light tanks; the Soviet Union, France, Britain and Japan medium
+  ones by `nations.json`, Germany by its panzer divisions (§3.7).
+- **Templates** (`data/templates/land.json`): tank brigade, panzer division (30 light, 4 medium, 8
+  motorised, 2 heavy artillery), light mechanised division, tank corps, mechanised division, and the
+  later panzer division 2, heavy panzer division and MBT division. Price 3.5 × the elements' gold,
+  training 3 × the slowest element's days (§3.7); upkeep in gold; fuel the sum of the elements' fuel an
+  hour (`scenario1938.ts`).
+- **In battle** (§5.2): hard attack against armour, × `ARMOR_PEN` (0.5) where armour beats piercing;
+  armour loses whole tanks (heroes, air strikes and bombardment carry wounds instead). The arms rules
+  favour armour with infantry and artillery beside it (`COMBINED_ARMS`), on open ground against a side
+  with no AT gun (`IN_THE_OPEN`), and punish it unscreened in forest and towns (`UNSCREENED`); artillery
+  suppresses AT guns (`SUPPRESSED`). CAS (hard 12, piercing 30) is halved against medium tanks and
+  heavier.
+- **Terrain** (`data/terrain.json` and the units' `terrainMods`): light tanks fire × 1.1 on grassland,
+  0.8 in forest, 0.65 in towns, 0.55 in marsh, 0.5 in mountains, 1.05 in desert (light and medium); a
+  tracked formation pays move cost 2 in forest. A formation's terrain speed is its slowest manoeuvre
+  element's (§3.6).
+- **Unsupplied** (§4.1): an armoured formation burns its fuel on the march off the network, slows to
+  `DRY_SPEED`, loses org, and at org 0 breaks down `BREAKDOWN_PER_DAY` (0.1) of its tanks and its heavy
+  guns (land elements with fuel and more than one man a unit). Supply over a beach caps it at
+  `BEACH_SUPPLY`. The formation panel shows org and fuel.
+- **The AI** (§7): the economic AI wants a share of its army's upkeep in tanks rising from 0 at income
+  `RICH_INCOME` (200) to `ARMOUR_SHARE_MAX` (0.3) at `ARMOUR_FULL_INCOME` (1000), orders the best
+  armoured division it knows (MBT > heavy panzer > panzer 2 > panzer) and saves for one; at war against
+  enemies whose elements are ≥ `ARMOUR_HEAVY` (0.2) tanks it orders motorised divisions; disbanding, it
+  keeps its armour longest. The operational AI sends a template with ≥ `SPEARHEAD_ARMOUR` (0.5) of its
+  upkeep in tanks onto the enemy's cell in an attacking sector while the rest hold the front.
+- **Drawn** (§8): hull and turret by weight (`src/shared/unitLooks.ts`); the turret turns to its target
+  and back (`src/render/units/turrets.ts`); a muzzle flash; a tank lost under fire burns and smokes, one
+  lost to breakdown leaves a cold hull (`src/render/fx/hulls.ts`, `wrecks.ts`). Small sprites draw one
+  tank mark.
 
 ### 6.2 Naval
-- Sea zones + lane graph (§3.3). Ports and naval bases are province buildings that
-  repair, rebase and enable supply. *As built (PLAN 4.1c):* a list of the scenario with the
-  two levels, each a node of the lane graph (§3.3). Read since by a fleet's orders and its
-  lost base (4.2c, 4.4e), the shipyard (4.2e), the blockade, supply over sea and convoys
-  (4.4b–d) and the landings (4.5).
-- Fleets are formations of ship elements: DD, CL, CA, BB, CV, SS, TP. *As built (PLAN 4.2a):*
-  the six templates and the seven ship types are in the rules (§3.6). *As built (PLAN 4.2b):*
-  197 fleets stand at the water of their bases in 1938 (§3.6), paid for. *As built (PLAN
-  4.2c):* a fleet sails by an order, over the lanes' way drawn tight, at a cruising share of
-  its slowest ship's speed (§3.3, §3.6); the naval and invasion AIs order them since PLAN 4.6
-  (§7), and a fleet weighs in a declaration and a war's exhaustion (ADR-274). Pack ice
-  closes 21 seas to a fleet (4.2d, ADR-251); a fleet is built at its nation's shipyard
-  (4.2e, ADR-252). Movement runs along
-  lanes with continuous positions. Detection uses zone-level search plus element-level
-  range.
-- **Fleet battles** at element level: gunnery ranges (BB > CA > CL > DD), torpedoes
-  (DD and SS, short range, high damage), carrier air groups (strikes from the CV's air
-  wing at long range), screening (DDs protect capitals from subs and torpedoes).
-  *As built (PLAN 4.3a, ADR-254; `src/sim/systems/navalCombat.ts`, after the land's combat):*
-  - *Detection:* a fleet of a nation at war sees an enemy fleet within its best ship's
-    `detection` km × (1 − the enemy's least stealthy ship's `stealth` / 100): destroyers
-    see a battle squadron at 29 km and a submarine flotilla at 18.
-  - *Contact:* two fleets of nations at war of which either sees the other and one has a
-    weapon a ship of the other can be hit by: a gun or torpedoes for a surface ship, depth
-    charges for a submarine (`canHit`, PLAN 4.8k, ADR-290); joined, a sea battle. A fleet in one is
-    `engaged`: the movement system leaves it; it moves only to close.
-  - *The closing* (PLAN 7.19a, ADR-493): from a battle's second hour a fleet with no enemy
-    fleet of the battle within its reach (against a surface ship its longest gun, torpedo or
-    carrier wings' quarter range; against a submarine its depth charges', its guns' reach)
-    closes on the nearest it can hit, on the water (the straight line where it is water, else
-    its sea way), by `closeBy` (its template's top speed): beyond both reaches the two close
-    together to the longer reach, each its share by its pace; between the two the fleet of the
-    shorter reach closes by what its pace has over the other's, to its reach, and the other
-    holds it off; a fleet of submarines closes at its pace whatever the other's (under water).
-    The record's range is the distance of its nearest two fleets at war with each other.
-    Until 7.19a one range for the whole battle closed so while every fleet stood still, and
-    ships fired at fleets up to 292 km off (seed 5591).
-  - *Fire:* each ship fires at an enemy ship weighed by hit points (kept 4 hours, while
-    within its reach) in the fleets its weapon reaches, by the distance of the two fleets: `hard` × (0.5 where the target's armour beats its piercing) ×
-    `SEA_FIRE_SCALE` 2 × the buffs ÷ the target's hit points, in ships; simultaneous;
-    FireEvents. Four battleships sink four light cruisers from 24 km in 5 hours, losing
-    140 of 8,000 hit points and none in the first hour.
-  - *Torpedoes and the screen* (PLAN 4.3b, ADR-255; `torpedo`, `torpedo_km`, `asw` of
-    the units' data: destroyer 40 at 10 km and depth charges 10, light cruiser 20 at 8,
-    submarine 70 at 6, its gun a deck gun of 3 at 4 km): a ship fires its torpedoes at its
-    target where their reach covers the two fleets' distance, a submarine too (PLAN 7.19a:
-    before, whatever the range); no armour against a torpedo; × the screen of a target that is no
-    destroyer: 1 − `SCREEN` 0.6 × min(1, its side's destroyers ÷ its side's other surface
-    ships). A submarine is no target of a gun or a torpedo: only of depth charges, within the
-    reach of the hunter's guns (PLAN 7.19a: before, at any range). A submarine flotilla on a battle squadron for 3 hours: its larger ships lose
-    1,323 hit points with its 8 destroyers, 3,200 with none.
-  - *The battle's record and its end* (PLAN 4.3c, ADR-256; `world.seaBattles`, state,
-    saved while there is one): its fleets with the ships each came in with, its range,
-    its sides' first nations and the ships each lost, where it began. An hour's battle
-    takes the record with one of its fleets (two such merge). A fleet under half the ships
-    it came in with, or with no weapon against an armed enemy once under fire (a volley or a
-    carrier strike on it that hour; until then it stands and the enemy closes, PLAN 7.31,
-    ADR-526), breaks off unless it stands at the port it would sail for (`atOwnPort`: it
-    fights there). A distance is within a reach with 1e-9 km over it (`inReach`). It breaks off: first each holed ship
-    of it is lost or healed on a seeded roll whose chance is its wound, counted to its side's losses (PLAN 7.107, ADR-682); `BREAK_HOURS`
-    24 out of every sea battle (its `retreat`: the contact search leaves it out, PLAN 4.8l), `FormationRetreated`, and sails for its
-    nation's nearest port a ship reaches (in the basin of the water it stands on: zones that
-    touch, a passage's ends, a strait's zones, PLAN 4.8o). With no fleet of one side left, or no contact in
-    an hour, the battle is over: one row of the history log, `SeaBattle` (each side its
-    nation and ships lost, packed as nation + 65,536 × ships; where it began): "Germany
-    and United Kingdom fought at sea: Germany lost 0 ships, United Kingdom 7".
-  - *Not yet:* air (5.4). The AI sails for a battle it can win and turns home outgunned
-    (PLAN 4.6c, §7).
-- **Sea control** per zone per side = Σ naval power present and recent wins. It decays.
-  *As built (PLAN 4.4a, ADR-257; `src/sim/systems/seaControl.ts`, daily at 00:00):* a
-  zone's power by bloc is the hit points of the live armed ships (a gun or torpedoes) of
-  the fleets in it; the bloc of the most holds it unless a bloc at war with it has half its
-  power there or more (`CONTEST_SHARE`), then nobody; with none of its ships there it keeps
-  it 14 days (`CONTROL_DAYS`). State (`world.seaControl`, per zone holder and days), saved
-  while a zone is held. 45 of 428 zones are held on the first day of 1938.
-  *The blockade (PLAN 4.4b, ADR-258):* a port is blockaded when the zone of its water is
-  held by a nation at war with the port cell's controller (`blockadedPorts`); a province
-  whose every port a ship reaches is blockaded, and the cell of a blockaded port in no
-  province, pay `BLOCKADE_SHARE` 0.5 of their land's income in the economy's month
-  (`blockadedCells`). On seed 99 Japan blockades 6 Chinese ports in the first month, 19 by
-  the twelfth; 24 provinces of 8 nations are blockaded then.
-  *Supply over sea (PLAN 4.4c, ADR-259; `src/sim/systems/seaSupply.ts`):* a bloc's home is
-  every land component holding a living member's capital and the one holding most of its
-  cities. Another land with a port of the bloc (owned and held, water a ship reaches) is
-  joined when a way from zone to zone (touching zones and the passages, `zoneLinks`) from a
-  home port's zone reaches its port's zone through no zone held by an enemy of the bloc. A
-  city is a source of the supply network only on a land that is home, joined, or has no port
-  of the bloc (`seaLinkedAll`); at each refresh hour a bloc whose joined lands changed is
-  refreshed whole (`markSeaLinks`; ADR-272). (At war with Italy Malta was cut at once while Italy's
-  submarines held the zones about it; since PLAN 4.4d a submarine holds no sea.)
-  *Supply over the beach (PLAN 7.70a, ADR-622; PLAN 7.75, ADR-630, the user's decision):* a coast
-  cell the bloc controls that its cities' network does not reach is a beach source (`seaBeaches`)
-  while a zone of the water beside it, not iced, is reached by such a way from a home port's zone
-  (so no enemy holds it), on any land. The beaches feed a layer of their own
-  (`World.supplyBeach`, saved): at each refresh hour, after the network's refresh, it is made
-  whole, each bloc in ascending order flooding from its beach sources over the cells it controls
-  that are in no network (`refreshBeaches`). A formation no network feeds (on its cell, or within
-  `SUPPLY_REACH` off its side's ground) is fed by that layer at `BEACH_RATE` (1/16 an hour) to
-  `BEACH_SUPPLY` (0.75) and no higher. A beachhead is fed from the refresh after its landing (up
-  to 12 h on), a landing in France by a Britain whose bloc holds cities in Asia as well (from
-  7.70a to 7.75 a beach was a source only on a land where the bloc owned and controlled no city,
-  and of the network itself).
-  *Convoys and raiding (PLAN 4.4d, ADR-260; `src/sim/systems/convoys.ts`):* the income of a
-  land joined to home by sea goes by convoy along its way (`convoyWays`, the zones from a home
-  port's to the land's port). In each zone of it the boats (S) of the nations at war with
-  the bloc take min(1, `RAID_PER_BOAT` 0.05 × S) of what passes, × (1 − 0.6 × min(1, D / S))
-  for the bloc's destroyers there (D); the land's cells pay the product of what each zone
-  leaves (`monthlyAccounts`). The raids are told a quarter at a time (PLAN 7.33a, ADR-530): a
-  zone's take is split among its raiders by their boats, each nation's gold taken of each bloc
-  is added up over the quarter (`World.convoyQuarter`, state), and at the next quarter's start
-  the `CONVOY_ROWS` = 3 largest are history rows (`ConvoyRaided`, b = the bloc and the gold in
-  tenths), at the zone the raiders took most in. A
-  submarine holds no sea (it counts for no zone's control). On seed 99 Italy raids British
-  convoys in 5 months of the first year.
-  *A fleet's loose ends (PLAN 4.4e, ADR-261):* a passage's bank is the land cell nearest the
-  middle of its ends (`passageBank`); a passage whose bank a nation at war with a fleet holds
-  is shut to its way (`orderSail`) and to its bloc's ways by sea (`passageShut`). Daily, a
-  fleet that stands with a port its nation owns held by an enemy within 3 cells of it and
-  none it holds there sails for its nation's nearest port (`rebaseFleets`); an enemy's own
-  port is no lost base (ADR-264). A fleet in a passage's step is kept by a
-  map import (its cell is the canal's land, its step's ends are water).
-  It controls **supply over sea** (overseas formations and colonies), **convoys**
-  (income from overseas provinces and trade), and **blockade** (an enemy-controlled
-  zone adjacent to a port reduces its income and supply). **Submarines** raid convoys
-  (sinkings logged).
-- **Amphibious invasion**: formations embark on transports at a port, move with an
-  escorting fleet, land on a coast cell (landing penalty, needs sea control or
-  surprise), and receive naval bombardment support. A land formation ordered to another land
-  (another component of the land grid) at a port its nation holds, where a transport group
-  of its nation stands with room for it (2,000 men a transport), goes aboard: it is where
-  its transports are, and no rule of the land reads it. They sail for the zoned water nearest
-  the target (within 8 cells) and it lands at the nearest cell of the target's land, its org
-  at most 0.5, then marches on to the target. Transports that stop elsewhere land it at the
-  land within 3 cells of its side (its nation's, its bloc's, an ally's in the war) or no one's,
-  no one's not where an enemy holds the sea there; else it stays aboard (PLAN 4.8n, ADR-294); sunk, they take it with them. With no port or no room the order
-  is a march as before (PLAN 4.5a, ADR-262). A place aboard ends with its formation, and the troops its transports carried are lost with them (`destroyFormation`, PLAN 4.8m, ADR-292): a formation given a freed id is not aboard and carries nothing. A formation is at a port within 3 cells of its land cell or of its water (London's water is 7.5 cells down the Thames), and embarks at the first such port with transports for it (PLAN 4.9b, ADR-299). A player's order over the sea from where no transports wait marches to the nearest port of its land whose transports have room, and the order is kept (`world.seaBound`, saved) until the march ends: it embarks there and sails, or is refused with its reason; any order ends it. The AI's orders do not do this (its landings are its own, PLAN 4.6b). When the transports reach the landing water and its zone
-  is held by a nation at war with the formation's, the landing is thrown back: they sail for
-  their nation's nearest port and it lands there. A landing on an enemy's cell takes that
-  cell (the beachhead), from which the front spreads; its disorder (org 0.5, fire 0.625) is
-  the landing's penalty (PLAN 4.5b, ADR-263). A fleet that stands off a coast fires each ship with a
-  gun (not a submarine) at the nearest enemy land formation in a fight within its reach
-  (a destroyer 12 km, a battleship 32 km), at the element with the most hit points, with a
-  land volley of its soft attack × 2.5 (a ship is many guns); the losses take org as a
-  fight's do (PLAN 4.5c, ADR-265). **Crossings** remain for AoC-parity
-  walkable straits.
+- **Ships and fleets** (§3.3, §3.6): seven ship types and six fleet templates; a fleet sails its way
+  at `CRUISE_SHARE` of its slowest ship, is built at a shipyard, and weighs `NAVY_WEIGHT` (0.5) × its
+  power in a war's men (§3.5). Fleets are never refilled; a sea hero heals (§3.6).
+- **Detection and contact** (`src/sim/systems/navalCombat.ts`, hourly after land combat): a fleet of a
+  nation at war sees an enemy fleet within its best ship's `detection` km × (1 − the enemy's least
+  stealthy ship's `stealth` ÷ 100), × the air superiority term (`AIR_DETECTION`, 0.25), or its carrier
+  wings' quarter range (`CARRIER_SPOT_SHARE`). Two fleets are in contact when one sees the other and
+  has a weapon that can hit it (`canHit`: a gun or torpedoes against a surface ship, depth charges
+  against a submarine, or carrier wings); contacts join by union-find into sea battles.
+- **Closing:** an engaged fleet does not sail (a player's order excepted). From the second hour each
+  fleet takes the nearest enemy fleet as its range; beyond both reaches the two close to the longer
+  reach, each by its pace (`closeBy`: the template's top speed); between the reaches the fleet of the
+  shorter closes by what its pace has over the other's.
+- **Fire:** each ship fires at an enemy ship weighed by hit points (kept `COOLDOWN` 4 hours while in
+  reach), in the fleets its weapon reaches: guns (battleship 32 km > heavy cruiser 25 > light cruiser 18 >
+  destroyer 12) `hard` × `ARMOR_PEN` where armour beats piercing × `SEA_FIRE_SCALE` (2) × its
+  strength ÷ size × buffs ÷ the target's defence buffs (at least 0.05) ÷ its hit points, in ships.
+  Torpedoes (`torpedo`, `torpedo_km`: destroyer 40 at 10 km, light cruiser 20 at 8, submarine 70 at 6)
+  ignore armour and are × the screen of a target that is no destroyer: 1 − `SCREEN` (0.6) × min(1, its
+  side's destroyers ÷ its other surface ships, by element at the hour's start). A submarine is hit only
+  by depth charges (`asw`), within the hunter's gun reach, the target picked each hour. Carrier wings
+  strike every `CARRIER_CYCLE` (4) hours, a ship a squadron by hit points (`CarrierSunk`, `StrikeHit`);
+  a battle may be fought by wings alone. Losses apply together after all fire; `FireEvent`s are drawn.
+- **The end** (`world.seaBattles`, saved): a battle's record holds its fleets and the ships each came
+  with, its range, its sides' first nations and losses, its start. A fleet under half its ships, or
+  with no weapon against an armed enemy once under fire, breaks off unless it stands at the port it
+  would sail for (`atOwnPort`): each holed ship is lost or healed on a seeded roll whose chance is its
+  wound; for `BREAK_HOURS` (24) it is out of every sea battle (`FormationRetreated`), sailing for the
+  nearest port of its bloc its ships reach (`waterKeys`: the lane graph without the passages shut to it,
+  the ice counted as ocean; a fleet with a transport its own nation's ports). A distance is in reach
+  with 1e-9 km over (`inReach`). With one side gone or no contact for an hour the battle ends: one
+  history row, `SeaBattle` (each side's nation and ships lost, packed nation + 65,536 × ships).
+- **Rebasing** (`rebaseFleets`, daily): a fleet with no port of its bloc within `AT_PORT_CELLS` (3)
+  that is not at sea on an order sails for one; an editor's stationed fleet (`world.station`) stays
+  and holds its zone.
+- **Sea control** (`src/sim/systems/seaControl.ts`, daily): a zone's power by bloc is the hit points
+  (wounds ignored) of the live non-submarine ships with a gun or torpedoes in it (carriers add none).
+  The strongest bloc holds the zone unless an enemy bloc has ≥ `CONTEST_SHARE` (0.5) of its power (then
+  nobody does; a tie to the lower bloc); with none of its ships there the hold lasts `CONTROL_DAYS` (14).
+  A holder no longer a living bloc head loses its zones. `world.seaControl` is saved.
+- **Blockade:** a province whose every port a ship reaches has its water in a zone an enemy holds
+  (iced ports aside) yields × `BLOCKADE_SHARE` (0.5) (§3.4).
+- **Supply over sea** (`src/sim/systems/seaSupply.ts`): a land of the bloc joins its network across the
+  sea when a port of it (owned and held) reaches a home port by zones no enemy holds and passages whose
+  banks (within `BANK_REACH`, 4 cells) no enemy holds (`passageShut`). Cells it controls that its
+  network does not reach, beside water such a way reaches, are beach sources: the beach layer (§4.1).
+- **Convoys** (`src/sim/systems/convoys.ts`): a land joined by sea sends its income along its way's
+  zones (`convoyWays`, breadth-first from a home port's zone); it keeps Π (1 − t) over them, t = min(1,
+  `RAID_PER_BOAT` (0.05) × S) × (1 − 0.6 × min(1, D ÷ S)), S the enemies' submarines and D the bloc's
+  destroyer strength there, of nations at war. The gold taken is added up by quarter
+  (`world.convoyQuarter`, saved) and the `CONVOY_ROWS` (3) largest are history rows (`ConvoyRaided`).
+  Raids sink no ships.
+- **Landings** (`src/sim/systems/amphibious.ts`): a land formation boards transports (`TRANSPORT_MEN`
+  2,100 men a transport) at a port of its nation within 3 cells of it (not shut by bombing; the group
+  not engaged), sails alone (an escort is the AI's choice), and lands within `LANDING_REACH` (8 cells,
+  not iced) of its target in a zone no enemy holds, an owned cell first, at org `LANDING_ORG` (0.5),
+  then marches on. Repulsed, its transports sail home and it lands where they next stand, or stays
+  aboard. Sunk transports take it with them. A beachhead on a cell of a living nation not at war with it
+  goes back to its owner. With no port or room, an order is a march (`seaBound` for a player's).
+  `world.embarked` and `world.seaBound` are saved.
+- **Bombardment** (`src/sim/systems/bombardment.ts`): a fleet not under way and not in a sea battle
+  fires on land formations within its guns' reach (12–32 km) at the element of most hit points:
+  effectiveness (§5.2) × strength ÷ size × `FIRE_SCALE` × `BOMBARD_FIRE` (2.5); its losses count to org.
+- **Port damage** (`src/sim/systems/bombing.ts`): bomb tons ÷ (`PORT_TONS` (60) × the port's level), up
+  to `MAX_DAMAGE` (0.9), repaired `REPAIR_DAILY` (0.02) a day; at `PORT_SHUT` (0.5) no embarking and no
+  delivery.
+- **Carriers:** their wings are based on the fleet (`wingBase` −fleet), move with it (`carryWings`),
+  and are lost with it or when the fleet has more wings than live carriers; `manDecks` crews empty
+  decks (§6.3).
+- **The naval AI** (`src/sim/ai/naval.ts`, daily on each nation's turn): at peace fleets go home; at
+  war warfleets in port sortie, within `SORTIE_KM` (2,500), to their own landing's water, else the
+  nearest enemy port or fleet whose zone's enemy power their combined power matches, else to a forward
+  base; away, a fleet goes home outnumbered `AVOID_RATIO` (1.5) or under enemy naval bombers unescorted,
+  else battle, chase, station or home. Submarines raid convoy ways within `RAID_KM` (4,000); sea heroes
+  follow their nation's strongest fleet.
+- **The invasion AI** (`src/sim/ai/invasion.ts`): for a war with no land front, a landing on the
+  nearest enemy port or coastal capital in the same waters (`planLanding`); with its own front held, a
+  landing of the free army far from it scored by city worth (`planNormandy`); island armies ferried to
+  a front's port (`planFerry`). A nation with a landing at sea plans no other landing.
 
 ### 6.3 Aircraft
 - Air wings of fighter, tactical bomber, strategic bomber, CAS, naval bomber and transport,

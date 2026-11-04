@@ -5,7 +5,7 @@ import { judge, loadCorpus, specMisses } from '../../tools/spec/refs';
  * ROADMAP R6, ADR-821: a section of SPEC.md rewritten as the game is names only files, code and
  * scripts that exist. Each part of R6 adds its section here.
  */
-const REWRITTEN = ['1', '2', '3', '4', '5', '10'];
+const REWRITTEN = ['1', '2', '3', '4', '5', '6', '10'];
 
 describe('SPEC.md names what exists', () => {
   const corpus = loadCorpus();
