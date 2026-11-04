@@ -433,6 +433,8 @@ class WorldCore implements Stateful {
       ...(w.wingFerry.size === 0 ? [] : [{ name: 'world.wingFerry', dtype: 'f64' as const, data: Float64Array.from([...w.wingFerry].sort((a, b) => a[0] - b[0]).flat()) }]),
       // A player's order over the sea marching to its port (PLAN 4.9b): [id, target] each, only while there is one.
       ...(w.seaBound.size === 0 ? [] : [{ name: 'world.seaBound', dtype: 'f64' as const, data: Float64Array.from([...w.seaBound].sort((a, b) => a[0] - b[0]).flat()) }]),
+      // The transports called to such a formation's port (ROADMAP R17a): [id, fleet] each, only while there is one.
+      ...(w.seaFetch.size === 0 ? [] : [{ name: 'world.seaFetch', dtype: 'f64' as const, data: Float64Array.from([...w.seaFetch].sort((a, b) => a[0] - b[0]).flat()) }]),
       // The fleets placed by the editor that hold their place (PLAN 7.22c): [id, x, y] each, only while there is one.
       // The beach's supply layer (PLAN 7.75): [cell, bloc] each, only while there is one.
       ...(w.supplyBeach.size === 0 ? [] : [{ name: 'world.supplyBeach', dtype: 'i32' as const, data: Int32Array.from([...w.supplyBeach].sort((a, b) => a[0] - b[0]).flat()) }]),
@@ -524,6 +526,7 @@ class WorldCore implements Stateful {
     w.seaControl = control ? { holder: Uint16Array.from(control.subarray(1, 1 + control[0]!)), days: Uint8Array.from(control.subarray(1 + control[0]!, 1 + 2 * control[0]!)) } : null;
     w.seaLinks = new Map();
     w.seaBound = new Map();
+    w.seaFetch = new Map();
     w.wingBase = new Map();
     w.bombDamage = new Map();
     const damage = sections.find((s) => s.name === 'world.bombDamage')?.data as Float64Array | undefined;
@@ -557,6 +560,8 @@ class WorldCore implements Stateful {
     for (let at = 0; ferries && at < ferries.length; at += 2) w.wingFerry.set(ferries[at]!, ferries[at + 1]!);
     const bound = sections.find((s) => s.name === 'world.seaBound')?.data as Float64Array | undefined;
     for (let at = 0; bound && at < bound.length; at += 2) w.seaBound.set(bound[at]!, bound[at + 1]!);
+    const fetch = sections.find((s) => s.name === 'world.seaFetch')?.data as Float64Array | undefined;
+    for (let at = 0; fetch && at < fetch.length; at += 2) w.seaFetch.set(fetch[at]!, fetch[at + 1]!);
     w.station = new Map();
     w.farWait = new Map();
     const waits = sections.find((s) => s.name === 'world.farWait')?.data as Int32Array | undefined;
@@ -1322,6 +1327,12 @@ export class World {
    * of the march.
    */
   seaBound = new Map<number, number>();
+  /**
+   * Of those formations, the ones whose port had no transports for them (ROADMAP R17a), by id: the
+   * transport group called there for them, sailing to it under the player's order. State, saved
+   * while not empty; the formation waits at the port for it.
+   */
+  seaFetch = new Map<number, number>();
   /**
    * Fleets placed by the editor (PLAN 7.22c), by id: the place (cells) each holds. The naval AI
    * keeps such a fleet there, and brings it back after a battle, until a player orders it away or

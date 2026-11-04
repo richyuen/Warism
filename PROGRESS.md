@@ -917,3 +917,14 @@
 - Kept, as by design: `revival.cooldownDays` (pinned to `REVIVAL_COOLDOWN` by `scenario1938.test.ts`); `majors` in
   `inspect` (a reply for tests and the critic).
 - **Next:** R17a.
+
+## 2026-11-04 — ROADMAP R17a: transports come to the troops (ADR-823)
+- A player's order over the sea from a land with no transports at its ports calls the nearest idle transport group
+  of its nation to the nearest port of that land (`callTransports`); the division marches there, waits, boards that
+  group (`world.seaFetch`, saved as an optional section, no new save format).
+- AT (`landingCall1938.test.ts`, 3 of 3): Britain played, its four groups moved to Gibraltar, a division by London
+  ordered to Belfast: group called, under the player's order, kept over a save; boards on day 6, lands in Ulster on
+  day 8.5 on the called group. No transports anywhere: refused `NoTransports`. A God order calls none. Red with the
+  call switched off.
+- Pin unmoved. Found: a fleet's player order never ends while it lives (relied on; filed under R17).
+- **Next:** R17b.

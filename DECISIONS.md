@@ -19,6 +19,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   sea leg are shown (R17c); an "Escort with warships" box, ticked by default and remembered, sends
   the nearest idle warfleet not under the player's own order with the landing (R17d). A fleet the
   player orders is never taken; ordering a fleet to the landing water stays the way to pick one.
+- **R17a.** Only a player's order calls (`moveFormation` naming its nation; God's and the AI's
+  orders never take this path, so the pin holds). The group called is the nearest idle one by
+  straight cells that has a sea way (4 tried), never one under way, fighting, carrying, held by the
+  editor, or called already; it sails under the player's order, which the naval, invasion and
+  economic AIs leave alone, and which lasts while the fleet lives (a fleet's player order never ends
+  on arrival today; relied on here, filed under R17). The formation waits at the port while the
+  group is under way; sunk or stopped elsewhere, the order ends refused (`NoTransports`). The call is
+  saved as an optional section (`world.seaFetch`): no new save format.
 - **Also (the user's, 2026-11-04).** The United States' lean after R16b (29% of the land on the
   mean, done31 20%) stays a watch for the critic and the release sweeps, not an item.
 

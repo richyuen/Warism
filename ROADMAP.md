@@ -78,12 +78,15 @@ Rules:
   land over the sea with divisions selected already lands them, but only when the player's transports
   wait at a port of their land; else it is refused. Nothing shows a division bound for a port, waiting
   or at sea; divisions land one by one; the player's transports sail unescorted.
-  - [ ] R17a Transports come to the troops: with none at a port of the division's land, the nearest
+  - [x] R17a Transports come to the troops: with none at a port of the division's land, the nearest
     idle transport group of its nation (not under the player's own order) sails to the port of that
     land nearest the division; the division marches there and boards when both are in. AT: a 1938
     case, a British division in England and Britain's only transports at Gibraltar, ordered to land
     in France: it boards at an English port and lands within the days the voyage takes; with no
     transports at all, the refusal says so.
+    Done: `callTransports`, `world.seaFetch` (saved, optional); `landingCall1938.test.ts` 3 of 3 (Ulster
+    from London, the group from Gibraltar boards on day 6 and lands on 8.5; red without the call);
+    pin unmoved (no player in the pinned run).
   - [ ] R17b Landings together: divisions ordered over the sea in one click share the transports,
     sail as one convoy and land on the same stretch of coast; those that do not fit wait for the next
     voyage. AT: three divisions, room for two: two land together, the third on the return trip.
@@ -96,3 +99,7 @@ Rules:
     the divisions are ashore, then goes home or back to its station. None free: the transports sail
     alone and the message says so. AT: a case with a free warfleet (escorted, at the water before the
     transports) and one without (alone, told); the box's state survives a reload.
+  Also: a fleet the player orders stays the player's while it lives (`playerOrderSystem` ends a
+  march only off the water; `afloat` holds for any fleet), though the header says on arrival. R17a
+  relies on it: a called group stays the player's from the call through the landing. Ending it on
+  arrival needs the called group kept another way first (R17b's convoy).

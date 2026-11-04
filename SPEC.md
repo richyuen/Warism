@@ -1244,8 +1244,15 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   not iced) of its target in a zone no enemy holds, an owned cell first, at org `LANDING_ORG` (0.5),
   then marches on. Repulsed, its transports sail home and it lands where they next stand, or stays
   aboard. Sunk transports take it with them. A beachhead on a cell of a living nation not at war with it
-  goes back to its owner. With no port or room, an order is a march (`seaBound` for a player's).
-  `world.embarked` and `world.seaBound` are saved.
+  goes back to its owner. With no port or room, an order is a march (`seaBound`, an order given
+  through `moveFormation`: to the nearest port of its land with transports that have room). A
+  player's order whose land has no such port calls transports (`callTransports`, ROADMAP R17a): of
+  its nation's groups standing idle (not under way, in no battle, carrying nobody, not held by the
+  editor, not called already) with room for it, the nearest by straight cells to the nearest port of
+  its land (at most `CALL_TRIES`, 4, tried for a sea way) sails there under the player's order; the
+  formation marches there, waits while the group is under way, and boards it (`seaFetch`). With
+  none, the order is refused as before. `world.embarked`, `world.seaBound` and `world.seaFetch` are
+  saved.
 - **Bombardment** (`src/sim/systems/bombardment.ts`): a fleet not under way and not in a sea battle
   fires on land formations within its guns' reach (12–32 km) at the element of most hit points:
   effectiveness (§5.2) × strength ÷ size × `FIRE_SCALE` × `BOMBARD_FIRE` (2.5); its losses count to org.

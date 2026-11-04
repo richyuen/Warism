@@ -71,7 +71,7 @@ import { nearestCellWhere } from '../data/ownership';
 import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroups, type ProvinceGraph } from '../nav/provinceGraph';
 import { isDayStart } from '../../shared/calendar';
 import { Domain, navOf, type TemplateRule, type World } from '../world';
-import { transportsPort, tryLanding } from './amphibious';
+import { callTransports, transportsPort, tryLanding } from './amphibious';
 import { noteMove } from './elements';
 import { spawnPoint } from './production';
 import { orderSail, sailStep } from './sail';
@@ -443,13 +443,16 @@ let refusedLong = false;
 export const wasLong = (): boolean => refusedLong;
 
 /**
- * `byPort` (a player's order, PLAN 4.9b): an order over the sea from where no transports wait
- * marches to the nearest port of its land with transports that have room (`transportsPort`), and
- * the order is kept (`world.seaBound`) for the amphibious system to embark it there. Any order
- * ends an order kept so.
+ * `byPort` (PLAN 4.9b): an order over the sea from where no transports wait marches to the nearest
+ * port of its land with transports that have room (`transportsPort`), and the order is kept
+ * (`world.seaBound`) for the amphibious system to embark it there. `call` (a player's order,
+ * ROADMAP R17a): with no port of its land so served, the nearest port of its land its nation holds,
+ * and the nearest idle transports of its nation called there (`callTransports`, `world.seaFetch`);
+ * it waits for them at the port. Any order ends an order kept so.
  */
-export function orderMove(world: World, id: number, x: number, y: number, pass?: Passage, byPort = false, direct = false): boolean {
+export function orderMove(world: World, id: number, x: number, y: number, pass?: Passage, byPort = false, direct = false, call = false): boolean {
   world.seaBound.delete(id);
+  world.seaFetch.delete(id);
   refusedLong = false;
   // A fleet sails (PLAN 4.2c): its order is its own.
   if (world.formations.has(id) && world.isFleet(id)) return orderSail(world, id, x, y);
@@ -468,6 +471,7 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
     const w = world.cells.w;
     const tx = Math.floor(x);
     const ty = Math.floor(y);
+    if (port < 0 && call && callPort(world, id, tx, ty, pass, sea)) return true;
     if (port >= 0) {
       const at = world.ports[port]!.cell;
       if (order(world, id, (at % w) + 0.5, Math.floor(at / w) + 0.5, pass, 0, sea)) {
@@ -480,6 +484,37 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
     return order(world, id, x, y, pass, 0, transportsPort(world, id, false) >= 0 ? RejectReason.NoTransports : RejectReason.NoPort);
   }
   return order(world, id, x, y, pass, 0, sea, direct);
+}
+
+/**
+ * The player's order over the sea from a land with no transports at its ports (ROADMAP R17a): to
+ * the nearest port of its land its nation holds, transports called there; the formation marches
+ * to it, or stands there already and waits. False, nothing changed, where it has no such port, the
+ * march is refused, or no transports can come.
+ */
+function callPort(world: World, id: number, tx: number, ty: number, pass: Passage | undefined, why: RejectReason): boolean {
+  const port = transportsPort(world, id, false);
+  if (port < 0) return false;
+  const w = world.cells.w;
+  const c = world.formations.cols;
+  const at = world.ports[port]!.cell;
+  // At that port already (as the landing reads it): no march; else the march first, undone when no
+  // transports can come.
+  const there = why === RejectReason.NoTransports;
+  if (!there && !order(world, id, (at % w) + 0.5, Math.floor(at / w) + 0.5, pass, 0, why)) return false;
+  const fleet = callTransports(world, id, port);
+  if (fleet === 0) {
+    c.moving[id] = 0;
+    world.paths.delete(id);
+    return false;
+  }
+  if (there) {
+    c.moving[id] = 0;
+    world.paths.delete(id);
+  }
+  world.seaBound.set(id, ty * w + tx);
+  world.seaFetch.set(id, fleet);
+  return true;
 }
 
 /**

@@ -1632,6 +1632,7 @@ function asked(world: World, id: number, to: number, pass: Passage): 'ok' | 'ref
   // A refusal by the cells of a corridor holds while what it read does (PLAN 7.30b).
   if ((same && (was!.to === to || was!.long.includes(to))) || (base && was!.to === to && corridorHolds(world, was!, from, to, pass))) {
     world.seaBound.delete(id);
+    world.seaFetch.delete(id);
     return was!.to === to ? 'refused' : 'long';
   }
   const searches = CORRIDOR_REFUSAL.searches;

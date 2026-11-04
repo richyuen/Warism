@@ -47,6 +47,7 @@ export function playerOrderSystem(world: World): void {
       c.home[id] = 0;
       world.paths.delete(id);
       world.seaBound.delete(id);
+      world.seaFetch.delete(id);
       world.playerOrders.delete(id);
       world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.Contact, NaN);
     }

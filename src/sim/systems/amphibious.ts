@@ -34,7 +34,7 @@
 import { EventKind, RejectReason } from '../../shared/events';
 import { isLand } from '../../shared/terrain';
 import { nearestCellWhere } from '../data/ownership';
-import { FlipCause, navOf, portSeaOf, seaOf, seaRangeOf, type World } from '../world';
+import { FlipCause, navOf, PlayerOrderKind, portSeaOf, seaOf, seaRangeOf, type World } from '../world';
 import { destroyFormation, elementIndex } from './elements';
 import { AT_PORT_CELLS, sailHome } from './navalCombat';
 import { orderMove } from './movement';
@@ -271,6 +271,47 @@ export function transportsPort(world: World, id: number, withTransports = true):
   return best;
 }
 
+/** How many of the nearest idle transport groups a call tries to send (each a sea route searched). */
+const CALL_TRIES = 4;
+
+/**
+ * Calls transports to port `port` (index in `world.ports`) for a player's land formation `id`
+ * whose land has none for it (ROADMAP R17a): of its nation's transport groups standing idle
+ * anywhere (not under way, in no battle, carrying nobody, not held in place by the editor, not
+ * called for another), with room for it, the nearest to the port's water by straight cells that
+ * has a way there (at most CALL_TRIES tried) sails there under the player's order, so the AI
+ * leaves it be. Returns the group, or 0 for none.
+ */
+export function callTransports(world: World, id: number, port: number): number {
+  const f = world.formations;
+  const c = f.cols;
+  const nation = c.nation[id]!;
+  const men = c.strength[id]!;
+  const water = portSeaOf(world)[port]!;
+  if (water < 0) return 0;
+  const w = world.cells.w;
+  const called = new Set(world.seaFetch.values());
+  const dist = (o: number): number => {
+    const at = cellOfPlace(world, o);
+    let dx = Math.abs((at % w) - (water % w));
+    if (world.settings.loopingMap && dx > w / 2) dx = w - dx;
+    const dy = Math.floor(at / w) - Math.floor(water / w);
+    return dx * dx + dy * dy;
+  };
+  const idle: number[] = [];
+  f.forEach((o) => {
+    if (!world.isFleet(o) || c.nation[o] !== nation || c.moving[o] === 1 || c.engaged[o] === 1 || carrying(world, o) || world.station.has(o) || called.has(o)) return;
+    if (transportRoom(world, o) >= men) idle.push(o);
+  });
+  idle.sort((a, b) => dist(a) - dist(b) || a - b);
+  for (const o of idle.slice(0, CALL_TRIES)) {
+    if (!orderSail(world, o, (water % w) + 0.5, Math.floor(water / w) + 0.5)) continue;
+    world.playerOrders.set(o, { kind: PlayerOrderKind.march, until: 0, through: false });
+    return o;
+  }
+  return 0;
+}
+
 /** Lands embarked formation `id` at land cell `cell`. */
 function land(world: World, id: number, cell: number, target: number): void {
   const c = world.formations.cols;
@@ -328,8 +369,13 @@ export function amphibiousSystem(world: World): void {
         continue;
       }
       if (c.moving[id] === 1) continue;
+      // Its transports called (ROADMAP R17a): it waits at the port while they are under way, then
+      // boards them and no other.
+      const called = world.seaFetch.get(id);
+      if (called !== undefined && f.has(called) && c.moving[called] === 1) continue;
+      world.seaFetch.delete(id);
       world.seaBound.delete(id);
-      const why = tryLanding(world, id, (target % w) + 0.5, Math.floor(target / w) + 0.5);
+      const why = tryLanding(world, id, (target % w) + 0.5, Math.floor(target / w) + 0.5, called !== undefined && f.has(called) ? called : 0);
       if (why !== 0) world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, why, NaN);
     }
   }

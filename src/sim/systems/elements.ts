@@ -751,6 +751,7 @@ export function destroyFormation(world: World, fid: number): void {
   world.embarked.delete(fid);
   for (const e of world.embarked.values()) if (e.fleet === fid) e.fleet = -1;
   world.seaBound.delete(fid);
+  world.seaFetch.delete(fid);
   world.station.delete(fid);
   world.playerOrders.delete(fid);
   world.farWait.delete(fid);
