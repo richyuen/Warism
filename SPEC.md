@@ -2,7 +2,7 @@
 
 Status: v1.0 (2026-11-03, after `release-2026-11-03`; ADR-805). This document says how the game works
 now. The *why* of each choice is in `DECISIONS.md` and `docs/history/DECISIONS-<YYYY-MM>.md` (cited as
-`[ADR-n]`). §1, §2, §3.1–3.3 and §10 are current; the other sections are being brought up to date one by one
+`[ADR-n]`). §1, §2, §3 and §10 are current; the other sections are being brought up to date one by one
 (ROADMAP R6), and where one disagrees with the code, the code and the newest ADR win. A current
 section names only files, code and scripts that exist (`tests/unit/specRefs.test.ts`, ADR-821).
 
@@ -580,487 +580,320 @@ the Sim; the page opens it with `?scenario=1938`.
 - `occupation` rings set the controller, on cells the occupied nation owns.
 
 ### 3.4 Nations
-```ts
-Nation {
-  id u16; tag string; nameKey; adjectiveKey; color rgb; flag FlagSpec;
-  government enum; traits TraitId[]; aggression 0..100; incomeBonus -100..100;
-  fightToDeath bool; aiEnabled bool; nukesAllowed bool; alive bool;
-  capitalCity; gold f64; income f64; expenses f64; manpower; industry;
-  warExhaustion 0..100; stability 0..100; tech {[techId]: researched};
-  doctrine {nuclear: 'none'|'retaliation'|'flexible'|'first-use', ...};
-  revival {remaining u8, cooldownUntilTick}; overlord?; autonomy 0..100;
-  allianceId?; relations i8[nations] (−100..100); opinionModifiers[]
-}
-```
-**Scenario nation data (PLAN 1.4, ADR-17).** `data/scenarios/1938/nations.json` holds 103 nations
-(102 alive, plus Ethiopia as a dead nation with cores). Fields: tag, name/adjective keys, colour,
-government, traits, aggression, incomeBonus, fightToDeath, capital {name, lonLat}, optional
-overlord {tag, autonomy}, extraCores {countries, provinces} and alive. Cores = start territory +
-extraCores. The capital snaps to the nearest owned cell within 2 cells (coastal capitals);
-PLAN 1.5 binds it to a city. `diplomacy.json` holds alliances (one per nation, unity), guarantees
-and wars in progress. Neighbouring nations differ in colour by ΔE*ab > 15 (`src/shared/color.ts`).
+- **Static** (`NationDef`, `src/sim/data/schemas.ts`; `data/scenarios/1938/nations.json`, id = index
+  + 1): `tag` (three capitals), `nameKey`, `adjectiveKey`, `color`, `government`, `traits` (at most 4),
+  `aggression` 0–100, `incomeBonus` −100–100, `fightToDeath`, `capital` {name, lonLat}, optional
+  `overlord` {tag, autonomy}, `extraCores` {countries, provinces}, `alive` and `techs`. The validator
+  checks traits and their `excludes`, puppets one level deep with both alive, and one capital city in
+  `cities.json` and a flag for each living nation. `adjectiveKey` and `government` are read by
+  nothing. 1938 has 103 nations, 102 alive (Ethiopia dead, with cores); a unit test holds
+  neighbours' colours apart (ΔE*ab > 15).
+- **State** (`NATION_SCHEMA`, `src/sim/world.ts`, a saved table, id = row): `color`; the capital's
+  place `capitalX`, `capitalY`; `cells` (owned, kept by `setOwner`); `living`; `gold`, `income`,
+  `expenses` (last month's); `incomeBonus`, `incomeMult`; `bankrupt`, `brokeMonths`; `manpower`,
+  `manpowerMult`; `fightToDeath`; `overlord`, `autonomy`, `loyalty`, `integration`; `suppression`;
+  `origin` and `people` (a founded nation's province and core people); `revivalsLeft`, `revivalAt`;
+  `aggression`; `aiOff`; `builds`; `efficiency`, `ceStatic`, `ceLocked` (§5.3); `casualties`;
+  `tech0`, `tech1` (known techs, a bit each); `research` (gold a day). Kept on the world, not as
+  columns: names (`world.names`), painted flags (`world.flags`), `world.nukesBanned`,
+  `world.unionBarred`, warheads and the air totals. A capital is the city whose `capitalOf` names
+  the nation (§3.3).
+- **Traits** (`data/traits/traits.json`, 14): of their modifiers only `income` and `manpower` act
+  (`incomeMult`, `manpowerMult`); `aggressionBias` acts only when the game's traits are random (1–3
+  compatible traits a nation, `src/sim/gameOptions.ts`). The game options can also make aggression
+  random (0–100), gold random (× 0.25–2) or equal (the median), and diplomacy random (§3.5).
+- **Cores:** each province's core is the owner of its centre cell at the start, plus `extraCores`
+  (`src/sim/systems/revolts.ts`; §4).
 
-**The random world (PLAN 2.16a, ADR-108; `src/sim/randomWorld.ts`).** Scenario `random`: the
-earth map, terrain, cities, economy tables, units, templates, rules and start date of the 1938
-world, with nations made by the seed. Its data is `data/scenarios/random/scenario.json` alone.
-- *Count:* the new-game option `nations`, brought into 2 to 200, 60 when none is asked for
-  (`RANDOM_NATIONS`, `src/shared/scenarios.ts`).
-- *Capitals:* drawn from the map's cities: of 12 cities drawn, the one farthest from the
-  capitals there are. One to a province, none on a piece of land under 12 cells.
-- *Land:* a province goes to the nation that reaches it first over the province graph (the
-  crossings are nodes); a nation's kilometre costs 0.6 to 1.8 by the seed, so the nations
-  differ in size. A province no road reaches goes to the nearest capital by the same measure.
-- *Nations:* named after the province of the capital (`provinceLabel`), the name in
-  `world.names` (state, saved); no `origin` (that marks a nation founded in a game); a colour by
-  golden-angle hue; aggression 15 to 85; no traits, alliances, wars or puppets.
-- *Armies:* infantry divisions for half the income, one in eight armoured and one in eight
-  motorised where there are eight, round the nation's six largest cities; 900 at most.
-- *Seeded* by `hash32(seed, …)`, not by the world's streams. The same seed and count give the
-  same world (`tests/unit/randomWorld.test.ts`).
+**The random world** [ADR-108] (`src/sim/randomWorld.ts`): scenario `random`, the earth map with the
+1938 terrain, cities, ports, airbases, economy, units, templates, rules and start date, and nations
+made by the seed (`hash32(seed, …)`, not the world's streams; the same seed and count give the same
+world):
+- *count:* the option `nations`, 2 to 200, 60 when none is asked (`RANDOM_NATIONS`);
+- *capitals:* of `CAPITAL_TRIES` (12) cities drawn, the one farthest from the capitals so far; one a
+  province, none on land under `HOME_CELLS` (12, scaled);
+- *land:* a province goes to the nation that reaches it first over the province graph, each
+  nation's km costing 0.6–1.8 by the seed; a province no road reaches goes to the nearest capital;
+- *nations:* named by `randomNationName` (the capital's province without its kind word, or the
+  capital's name when that is generic or taken, then II, III…), the name in `world.names`; a
+  golden-angle hue; aggression 15–85; no traits, techs, alliances, wars or puppets;
+- *armies:* infantry divisions for `ARMY_SHARE` (0.5) of the income after the margin, one in eight
+  armoured and one in eight motorised, round up to `ARMY_ANCHORS` (6) cities, at most about
+  `ARMY_TOTAL` (900).
 
-**A nation's name and flag by scenario (PLAN 2.16b, ADR-109).** `ScenarioInfo.nationTags`
-(`src/shared/scenarios.ts`) holds the tags of a scenario's nation table by nation id: the 103
-of 1938, none for the random and the toy world. A nation's name is, in this order: its entry in
-`world.names` (a God Mode rename, the names of the random and the toy world), the name key of
-its tag, the name of a founded nation (`foundedName`, `src/shared/nationNames.ts`: "Free
-<province>", the province being its `origin`, called by its own name or else its country's;
-PLAN 2.15b, ADR-100; a later nation called after the same province is "Free <province> II",
-"III", …: `foundedNth` counts the nations of a lower id whose origin has that label, the dead
-too, so no two living nations have one name and a name never changes; PLAN 3.12Rh3, ADR-219).
-The worker's `nameOf` resolves it; a literal name travels with a leading
-`=`. The flag follows the same rule (below).
+**Names and flags** [ADR-109, ADR-19]. `ScenarioInfo.nationTags` (`src/shared/scenarios.ts`) holds a
+scenario's tags by id (none for the random and toy worlds). A nation's name is, in order: its entry
+in `world.names` (a rename, a random or toy world's), its tag's name key, or a founded nation's
+`foundedName` ("Free <province>", then "II", "III" by `foundedNth`, so no two living nations share a
+name and none changes) (`src/shared/nationNames.ts`); the worker's `nameOf` resolves it, a literal
+name with a leading `=`. A flag is a `FlagSpec` {aspect, layers} (`src/shared/flags.ts`: stripes,
+rect, cross, saltire, hoist triangle, disc, star, crescent, poly, canton, preset from
+`data/flags/presets.json`), expanded by `flagShapes` into polygons for `flagSvg` and `rasterizeFlag`
+(4×4 supersampled), packed by `buildFlagAtlas` into 48×32 cells; `data/scenarios/1938/flags.json`
+maps tag → spec. A nation without one flies `foundedFlag` (one of 11 presets by a hash of its id and
+colour; `src/shared/flagPixels.ts`), the view's and not state. `FlagStore` (`src/app/flagStore.ts`)
+gives the painted flag, else the scenario's (a tagged nation not `founded`), else the made one.
 
-**Flags (PLAN 1.6, ADR-19).** `FlagSpec = {aspect, layers}` (`src/shared/flags.ts`), with layers:
-stripes, rect, cross (Nordic/Greek), saltire, hoist triangle, disc, star, crescent, poly, canton
-(nested layers) and preset (`data/flags/presets.json`, `$n` colour parameters). `flagShapes`
-expands a spec into coloured polygons, which feed `flagSvg` (UI) and `rasterizeFlag` (4×4
-supersampled scanline fill, deterministic). `buildFlagAtlas` packs 48×32 cells (1 px gutter,
-aspect kept, transparent letterbox): 103 flags in 20 ms. `data/scenarios/1938/flags.json` maps
-tag → spec.
+**Economy** [ADR-22] (`src/sim/systems/economy.ts`, monthly at 00:00 of day 1):
+- *Cell values* (`cells.econ`, $M a year): each country's capacity, GDP × (GDP per head ÷ the US's)^
+  `INDUSTRY_EXP` (0.5) from `data/scenarios/1938/economy.json`, spread over its land cells by weight:
+  `CITY_WEIGHT` by city size [0, 1, 2.5, 6, 15, 35] + `LAND_WEIGHT` (0.05) × the terrain's econ weight
+  × true area. Population (`cells.pop`) is spread the same way (§3.7).
+- *Gross* = Σ cells controlled ÷ `ECON_PER_BN` (1000) × `INCOME_PER_BN` (6) × `incomeMult` × (1 +
+  `incomeBonus` %) × (1 + income buffs); an occupied cell counts `OCCUPIED_SHARE` (0.5), and a cell's
+  value is cut by blockade (× `BLOCKADE_SHARE` 0.5), convoy losses, bomb damage and fallout (× (1 −
+  0.8 × fallout)).
+- *Upkeep* = `UPKEEP_SCALE` (0.35) × each formation's template upkeep × its strength ÷ full strength,
+  plus `WARHEAD_UPKEEP` (10) a warhead. *Admin* = `ADMIN_BASE` (0.25) × (km² held ÷ `ADMIN_KM2`
+  212,000)^`ADMIN_EXP` (1.35), at most `ADMIN_CAP_SHARE` (0.5) of gross. Gold += gross − upkeep −
+  admin; tribute moves between puppets and overlords (§3.5). `economyBreakdown` gives the panel's
+  lines.
+- *Bankruptcy:* gold < −`BANKRUPT_MONTHS` (3) × gross. A bankrupt nation's formations on land lose
+  `DESERTION` (0.05) of their units a month; recovery at gold ≥ 0; both turns are a `Bankruptcy` row.
+- *Start gold:* the larger of `START_GOLD_MONTHS` (6) × gross and `START_ARMY_MONTHS` (12) × the
+  monthly shortfall (`src/sim/scenario1938.ts`).
 
-**Flags of founded nations (PLAN 2.15c, ADR-101).** A nation no scenario gives a flag flies
-`foundedFlag(id, colour)` (`src/shared/flagPixels.ts`): one of the editor's 11 presets by a hash
-of the two, in the nation's colour, a dark or pale second and an accent. It is the view's and
-not in the state. `FlagStore` (`src/app/flagStore.ts`) gives, in this order: the painted flag
-(`world.flags`), the scenario's (for a nation with a tag in `nationTags` whose snapshot row does
-not say `founded`), the made one; a cached flag is made again when what it was made from changes (the colour, `founded`).
-
-**Economy (PLAN 1.9, ADR-22; `src/sim/systems/economy.ts`).**
-- *Cell values* (`cells.econ`, u32, $M/yr, saved): each NE admin-0 unit's industrial capacity is
-  spread over its land cells by weight. Capacity = GDP × (GDP per head / US)^0.5, from
-  `data/scenarios/1938/economy.json`. Weight = size-1..5 city weight 1/2.5/6/15/35 + 0.05 ×
-  terrain econWeight × true area.
-- *Monthly* (00:00 of day 1):
-  - gross = Σ controlled cells (occupied at 50%) / 1000 × 6 gold per bn × trait income ×
-    (1 + incomeBonus %);
-  - upkeep = 0.35 × template unit upkeep × strength / full strength;
-  - admin = 0.25 × (km² held / 212,000)^1.35, capped at 50% of gross (since PLAN 1.26). The
-    land is km², not cells (ADR-57); 212,000 km² is 1,000 cells of the mean owned cell of 1938;
-  - gold += gross − upkeep − admin.
-- *Bankruptcy*: gold < −3 × gross. Formations then lose 5% strength per month; recovery at gold
-  ≥ 0. Both transitions emit a `Bankruptcy` event.
-- Nations start with 6 months of gross. One economic month costs 2.4 ms at M (Node).
+**Death, collapse and revival** (`src/sim/systems/capitals.ts`, `src/sim/systems/revival.ts`):
+- *Capitals:* a nation that loses its capital moves it to its safest city up to
+  `CAPITAL_SAFE_STEPS` (20) steps from the enemy, else its largest, else a field capital; with no core
+  held it dies (`holdsCore`). A winner-takes-all war annexes on the capital's fall.
+- *Death* (`eliminateNation`): its wars, truces, guarantees, alliance places, research and production
+  orders end; its puppets go free; its land goes to the holders.
+- *Collapse:* after `COLLAPSE_MONTHS` (6) bankrupt months a nation's debts are voided, its puppets go
+  free, its provinces go to their dead claimants and its restless provinces revolt (`NationCollapsed`).
+  With nothing to break away, the history says it defaulted (`NationDefaulted`, b = the debt voided)
+  [ADR-819].
+- *Revival:* a dead nation with `revivalsLeft` (the scenario's `revival.maxPerNation`, 2) and past
+  `revivalAt` (`REVIVAL_COOLDOWN`, 2 years after its death) rises on its cores (`canRevive`,
+  `reviveNation`, `reviveOnCores`). God's Kill hands its land out by city weight (`KILL_STATES`,
+  `KILL_CELLS_PER_STATE`), and God's refusals say why (`whyNotRevive`, `whyNotKill`).
+- *Founded nations* (a revolt's, §4): a colour, the parent's techs but the nuclear ones, `people` and
+  `origin`, militia, `START_GOLD` (150), `REBEL_AGGRESSION` (40), no revivals.
 
 ### 3.5 Diplomacy
-- **War** {id, attackers[], defenders[], leaders, goal, startTick, warScore,
-  exhaustion per side, fightToDeath per side}
-  *Implemented v1 (PLAN 1.16, ADR-29; `src/sim/wars.ts`, `src/sim/systems/war.ts`):*
-  - *Records:* war records are saved as JSON. `atWar` is a derived pair set.
-  - *Declaration* (`declareWar`): each leader brings its puppets. It is rejected for self, dead
-    nations, an existing war, a truce, or an overlord–puppet pair.
-  - *No war inside a realm (PLAN 3.8b, ADR-178):* nor for a `bond` between the two: allies, two
-    puppets of one overlord, or one of them (or its overlord) the ally of the other (or of its
-    overlord). The AI's choice of a target and the neighbour a revolt rises with use the same
-    test. Who *joins* a war is held to it too (PLAN 3.8c, ADR-179): of the nations a
-    declaration calls, those torn between the sides stay out, each with its puppets. First who
-    has a bond with the enemy's leader (a guarantor of the defender that is the attacker's
-    ally), then the puppets with a bond to anyone of the other side (a puppet in another
-    alliance than its overlord; its overlord fights on), then the other nations with one.
-    Within a step they are asked in the order of the call, against those of the other side
-    let stand so far: of two torn by each other alone, the one called first fights. The two
-    leaders always stand. A called nation that is at war already with one of the other side
-    is torn as one with a bond is, and stays out by the same steps (PLAN 3.12Rr2, ADR-230): no
-    declaration puts a pair into a second war. A nation that gets an overlord while at war leaves the wars against
-    its new realm (ADR-180, ADR-181); nobody joins or founds an alliance while it or a puppet of it is at war with a member or a member's puppet (`realmsAtWar`, ADR-182).
-  - *A puppet is defended (PLAN 3.8e, ADR-183):* a declaration on a puppet is one on its
-    overlord, which leads the defenders; the event names it. The puppet's own allies and
-    guarantors are called too. What refuses a war with the overlord (a war, a truce, a bond)
-    refuses the declaration on the puppet. One level: an overlord's own overlord is not asked.
-    The puppet named stands as the leaders do: it is never struck as torn.
-  - *A war of independence (PLAN 3.8f, ADR-184):* the holder's declaration on the rebels of a
-    revolt (a new nation, a revived one, the rebel state an area joins) and a risen puppet's on
-    its overlord call no alliance and no guarantor: each leader comes with its puppets only.
-  - *Daily score:* 200 × (occ(attackers→defenders) − occ(defenders→attackers)) ± 25 per capital
-    capture (at most ± 50 per war), clamped to ±100. occ(X→Y) = Y's land held by X ÷ min(Y's
-    land, 2 × X's land), at most 1: the score is relative to the smaller party, so a war against
-    a much larger nation can be won (ADR-47). The true share (÷ Y's land) drives exhaustion,
-    puppets and capitulation.
-  - *Land is km², not cells (ADR-57):* every land figure of a war (the score, the true share,
-    capitulation, the puppet share, the small-state limit) is an area. A cell counts the true
-    area of its row rounded to a whole km² (29 km² at 80°N, 382 km² at the equator), so the
-    tallies (`src/sim/landCounts.ts`) are integers: the ones the cell setters keep equal the
-    scan a load makes. By cells land at 60°N weighed 1.7 times its area against the mean owned
-    cell (212 km²), and land at 72°N 3.4 times.
-  - *Exhaustion:* 0.1 per day + 80 × share of men lost since the war's first assessment +
-    60 × occupied true share of own land.
-  - *Suing:* a side sues when broke (gold < 0 or bankrupt), exhausted (≥ 80) or crushed
-    (≤ −90). Neither side sues if either fights to the death.
-  - *Terms by |score|:* below 10 a white peace (all occupation reverts). Otherwise the winner
-    annexes all of the losers' land it occupies, and the losers' occupations of the winners
-    revert (ADR-51; until then round(|score|% of the occupied land), nearest first); a cell of the
-    annexed that a third nation holds stays that nation's, in an annexation or an integration
-    (ADR-269, as at a death: ADR-112). Then the settlement's pockets go with the land round
-    them (PLAN 7.80b, ADR-644): a piece (4-connected cells of one holder) of a loser's own land
-    of at most 400 cells whose land rim, water aside, is the winners' own land alone goes to the
-    winner holding most of that rim; a piece of a winner's made only of land this peace annexed,
-    so inside the losers' land, goes back to the loser holding most of its rim. Never a piece
-    with the nation's capital, nor its largest. At ≥ 90
-    the loser's leader also becomes a puppet when the annexed land is ≥ 30% of the losers' land.
-    A nation made a puppet leaves, with its own puppets, every other war in which it stands
-    against a nation it now has a bond with; the land held between them goes back (ADR-180).
-    A war that this leaves with nobody on one side is over, with no peace and no truce, and
-    the log has its `WarEnded` (PLAN 3.12Rn, ADR-225).
-    A losing leader left with less than 8,500 km² is annexed whole instead (PLAN 1.40; 40 cells
-    until ADR-57). Its puppets become the winner's, and each leaves its wars in the same way
-    (ADR-181). So is a losing leader founded in play (a rebel state: its `people` is another
-    nation's; not a nation of the scenario, nor a revived one) left with less than 50,000 km²
-    (`STATELET_KM2`; PLAN 7.3d2, ADR-432).
-  - *Capitulation (ADR-47):* a side that has lost ≥ 75% of its land to the other side, or whose
-    leader has lost ≥ 75% of its own land to occupiers of any war, loses at ±100 at once, fight
-    to the death or not. No war is declared when one of the two that would lead its sides is
-    overrun so (`Refusal.Overrun`; PLAN 3.12Rr1, ADR-229): it was over in the hour. A war
-    may be declared on a nation that another war is about to end (crushed, and annexed whole
-    as a small state): it ends with its nation, with no peace and no truce (ADR-232).
-  - *Deadlock (ADR-47):* a war older than 5 years ends on its score, fight to the death or not.
-  - *After peace:* a 2-year truce between the leaders. Idle formations left on land of a nation
-    they are not at war with march home (`repatriationSystem`, daily): to the nearest cell of
-    their nation within 80 cells, or to its spawn point. So do idle formations shut in on a
-    crossing, every land cell beside its lane held by such a nation (PLAN 7.49b2, ADR-589): to
-    the spawn point, the nearest own cell on a strait being an enclave as shut in. The march home, and no other order,
-    crosses the ground of any nation at peace with its own (`formations.home`, ADR-169); it
-    is not fed there, and the operational AI leaves it alone until it arrives.
-    A formation is set on the spawn point only where no land leads there.
-    The march home and an enemy (PLAN 3.12Rk, ADR-222): its route keeps off the ground of
-    the nations its own is at war with. Where the war began while it crossed that nation,
-    it walks on over that enemy's cells and out of them, and takes none. Before an enemy's
-    cell that it would walk into it is ordered home again from where it stands, round that
-    ground; with no way round the march ends there and the mark with it (the formation is
-    its nation's to order as any other; the midnights after ask for a way again, and it is
-    not set on its spawn point across a war). No mark waits before an enemy's cell: the
-    walk back of ADR-172 loses its own there and waits as any march.
-  - *God commands:* `forcePeace`, `setWarFightToDeath`.
-- **Alliance / union** {id, nameKey, members[], leader, unity 0..100, loyalty per
-  member}. Low unity → members leave and the alliance can dissolve.
-  *Implemented v1 (PLAN 1.17, ADR-30; `src/sim/alliances.ts`, `src/sim/systems/alliances.ts`):*
-  - *Records:* alliances and guarantees are saved as JSON, seeded from `diplomacy.json`.
-  - *Monthly:* unity += 3 × (wars with ≥ 2 members on one side) + 0.25 × (members − 1) − 1, and
-    loyalty += 0.25 × (unity − loyalty).
-  - *Leaving:* a non-leader below loyalty 25 leaves; under two members, the alliance dissolves.
-    When the leader leaves, the lead passes on. A nation that dies leaves the same way, with the
-    same rows in the log (`AllianceLeft`, then `AllianceDissolved` when one member is left;
-    PLAN 3.12Rf, ADR-213): every alliance in `past` has its `AllianceDissolved`.
-  - *Union:* at unity ≥ 80, kept until it drops below 70.
-  - *Wars:* a declaration brings each leader's alliance and puppets, and the defender's
-    guarantors (not chained further). Allies cannot declare on each other. A nation with a
-    bond to the other side stays out (§3.5, PLAN 3.8c).
-  - *Commands:* create, join and leave alliances; setUnity, setLoyalty.
-  - *Alliance map mode:* a palette swap in the bottom bar, persisted. Members take their leader's
-    colour; non-aligned nations are grey.
-- **Puppet** relation {overlord, subject, autonomy 0..100, integration progress}.
-  Puppets can be created (peace term or God Mode), released, integrated, or revolt.
-  *Implemented v1 (PLAN 1.18, ADR-31, ADR-807; `src/sim/systems/puppets.ts`):*
-  - *State:* nation columns autonomy, loyalty and integration. Tiers: satellite < 30 ≤ puppet
-    < 70 ≤ vassal.
-  - *Monthly, in this order:*
-    1. A puppet above autonomy 90 leaves freely.
-    2. Loyalty < 20 with autonomy ≥ 10 means a revolt and a war of independence (the two realms', ADR-184);
-       a puppet sharing an alliance with its overlord's realm leaves it to rise (ADR-807).
-    3. Tribute: 25% × (1 − autonomy/100) × gross income goes to the overlord.
-    4. Below autonomy 50, integration grows by 4 × (50 − autonomy)/50 a month; at 100 the
-       overlord annexes the puppet's land and formations.
-    5. Autonomy drifts up 0.25, and loyalty relaxes 0.2 of the way toward 40 + 0.6 × autonomy; while
-       the overlord is losing a war (side score ≤ −30), 25 + 25 × min(1, the puppet's gross income ÷
-       its overlord's) lower: a beaten master's great subjects turn on it (ADR-807).
-  - *Peace:* a crushing peace creates a puppet at autonomy 30.
-  - *Death:* a nation that dies is nobody's puppet (`eliminateNation`, ADR-148). It returns
-    free, and a revival on its old overlord's land is at war with it as with any holder. Its
-    own puppets are free in the tick of its death, however it dies (`PuppetReleased`, ADR-174).
-  - *Commands:* createPuppet, releasePuppet, setAutonomy, setPuppetLoyalty.
-  - *Puppet map mode:* overlords keep their colour, puppets take it lightened 45%, others are
-    grey.
-- **Buff** {id, target (nation|formation|province), kind, magnitude, expiresTick}.
-  *Implemented v1 (PLAN 1.21; `src/sim/buffs.ts`, `src/sim/systems/buffs.ts`):*
-  - *Timing:* active on ticks [grant, expiresTick). The expiry system runs first in each tick.
-  - *Kinds and effects* (m is the magnitude, a fraction):
-    - income: gross × (1 + m);
-    - manpower: growth × (1 + m);
-    - attack: damage dealt × (1 + m);
-    - defense: damage taken ÷ (1 + m);
-    - speed: march speed × (1 + m);
-    - unrest: +10m per month.
-  - *Targets and storage:* nation and formation (attack, defense, speed), nation or province
-    (unrest). Saved as JSON; per-target sums are cached.
-  - *Commands:* `grantBuff {targetKind, target, buff, magnitude, hours, nameKey}`, `removeBuff`.
+**State.** Saved: `world.wars` (`src/sim/wars.ts`: each war's `id`, `sides` (two lists, the leader
+first), `startTick`, `score`, `capitalBonus`, `exhaustion`, `fightToDeath` and `startMen` by side,
+and its strike, frontless and peak records; the truces {a, b, untilTick}; `lastFought`);
+`world.alliances` (`src/sim/alliances.ts`: each alliance's `id`, `nameKey`, `leader`, `founder`,
+`members`, `loyalty` by member, `unity`, `union`; the `past` alliances; the one-way `guarantees`
+{guarantor, target}); the nation columns `overlord`, `autonomy`, `loyalty`, `integration` and
+`fightToDeath`; `world.nukeShock`. Derived: `atWar` and `sameSide` (pair sets), `allianceOf`, a
+nation's realm (itself or its overlord: `blocOf`) and the land tallies (`src/sim/landCounts.ts`,
+km², integers). A realm has one head: a puppet's overlord is never a puppet [ADR-810].
+
+**Declaring war** (`src/sim/systems/war.ts`):
+- *Refusals* (`whyNotWarOn`, `whyNotWar`): no nation, itself, already at war, a truce, a bond (the
+  target is its subject, ally, fellow puppet or of an allied realm), `Beside` (the two fight on one
+  side elsewhere), `Overrun` (a capitulating side). The AI's choice of target asks the same.
+- *War on a puppet is war on its overlord.* The call (in order): the attacker's realm, the
+  defender's realm, the defender's allies, its guarantors, a target puppet's allies and guarantors,
+  the attacker's allies, each with its puppets. A nation then stays out when it is `bound` to the
+  other side (at war with an enemy, a bond with it, a pledge either way, fighting beside it
+  elsewhere) or is a `foe` of its own side (at war with one already on it) [ADR-808]; one in truce
+  with the enemy leader is never called. The two leaders and a named puppet stand. A guarantee
+  between the two sides lapses (`GuaranteeLapsed`). Wars of independence call no ally or
+  guarantor (`alone`).
+- *Force war* (`forceWar`, God and player) [ADR-780]: breaks the truce, puppet bond or alliance
+  between the two (up to 8 steps; `BondsBroken`); a bonded partner first leaves the wars it fights
+  beside its target (`leaveWarsBeside`), then declares.
+- `realmsAtWar`, `canJoin` and `noWarAmong` (`src/sim/systems/alliances.ts`) keep a realm and an
+  alliance out of war with themselves; a new puppet leaves its wars against its new realm
+  (`leaveBondedWars`).
+
+**Score, exhaustion and peace** (daily):
+- *Score* = 200 × (occ(attackers → defenders) − occ(defenders → attackers)) ± `CAPITAL_SCORE` (25) a
+  capital taken (at most `CAPITAL_BONUS_MAX`, 50), rounded and clamped to ±100 [ADR-47]. occ(X → Y) =
+  Y's land X holds ÷ min(Y's land, `REL_CAP` (2) × X's land), at most 1: a small nation can win
+  against a large one. Every land figure is km².
+- *Exhaustion* = 0.1 a day + 80 × the share of men lost (the navy weighed in men) + 60 × the true
+  share of own land occupied, plus a nuclear strike's shock; at most 100.
+- *Suing:* a side sues when its leader is broke, it is exhausted (≥ `EXHAUSTED`, 80) or crushed
+  (score ≤ −`CRUSHED`, 90); never when either side fights to the death (the leader's flag). The
+  winning side refuses a suit for exhaustion alone while its own exhaustion is ≤ 40 and it reached a
+  new peak of the other's land within `GAIN_DAYS` (30), unless the loser is nuke-shocked
+  (`refusesSuit`) [ADR-521].
+- *Terms* (the winner is the higher score, the attackers on a tie): under `WHITE_PEACE` (10) a white
+  peace; otherwise the winner annexes what it holds, third parties' cells and pockets under
+  `POCKET_CELLS` (400) resolved. A loser under `SMALL_STATE_KM2` (8,500 km²) is annexed whole; at ≥
+  `PUPPET_SCORE` (90) with ≥ `PUPPET_SHARE` (0.3) of the losers' land taken, the loser becomes a
+  puppet of the head of the winner's realm at `PEACE_PUPPET_AUTONOMY` (30); a founded nation left
+  under `STATELET_KM2` (50,000 km²) is annexed. An annexed nation's puppets go to the annexer's head.
+  The two leaders take a truce of `TRUCE_TICKS` (2 years).
+- *Other endings:* a side holding ≥ `CAPITULATE` (0.75) of the other's land takes its capitulation
+  (`Overrun` refuses new wars on it); a war ends on its score after `MAX_WAR_DAYS` (1,825) or
+  `FRONTLESS_DAYS` (365) without a land front [ADR-480]. A nation leaving a war that goes on is a
+  `WarLeft` row, its occupations returned; a war left with one side empty ends with `WarEnded`, no
+  peace or truce. A war on a dying nation ends with it [ADR-232].
+- *Peace offers* (`offerPeace`, the player): accepted on a lead of ≥ `PEACE_ACCEPT_SCORE` (25) or
+  the enemy's exhaustion over `PEACE_ACCEPT_EXHAUSTION` (40), never by one fighting to the death
+  (`peaceVerdict`, `src/shared/peace.ts`); else `PeaceRejected`.
+- *The march home* (`repatriationSystem`, daily; `src/sim/systems/movement.ts`): formations on the
+  land of a nation not of their realm, not at war with them and not beside them in a war, or shut
+  in on a crossing, march to their nation's nearest cell within `REPATRIATE_CELLS` (80, scaled), else
+  to their spawn point. That march alone crosses a neutral's ground (`formations.home`) [ADR-169],
+  unfed there, the operational AI leaving it be; it keeps off enemies' ground and is ordered round it
+  [ADR-222]; a formation is set on its spawn point only where no land leads there.
+- *God commands:* `forceWar`, `forcePeace`, `setWarFightToDeath`.
+
+**Alliances** [ADR-30] (`src/sim/systems/alliances.ts`, monthly):
+- unity += `SHARED_WAR_UNITY` (3) × wars with two members on one side + `MEMBER_UNITY` (0.25) × (members
+  − 1) − `UNITY_DECAY` (1), within 0–100; each member's loyalty moves `LOYALTY_PULL` (0.25) of the way
+  to unity. A new alliance starts at unity 50 (40 for an AI threat pact), members at loyalty 60.
+- A member under `LEAVE_LOYALTY` (25) leaves (the lead passes on if it led); under two members the
+  alliance dissolves. A dead nation leaves the same way, with the same rows (`AllianceLeft`,
+  `AllianceDissolved`) [ADR-213]. A union from unity `UNION_AT` (80), lost below `UNION_LOST` (70).
+- `proposeAlliance`: to an unaligned nation that is no puppet, and no puppet to its own overlord;
+  else `AllianceRejected`. Guarantees come only from the scenario's `diplomacy.json` (7 alliances, 8
+  guarantees, 2 wars in 1938) or random diplomacy (`randomDiplomacy`, the same shapes made by the
+  seed).
+- Commands: create, join, leave, `proposeAlliance`, `setUnity`, `setLoyalty`. The alliance map mode
+  gives members their leader's colour, others grey.
+
+**Puppets** [ADR-31] (`src/sim/systems/puppets.ts`, monthly). Tiers: satellite under
+`SATELLITE_BELOW` (30) ≤ puppet < `VASSAL_FROM` (70) ≤ vassal. In order:
+0. A puppet of a dead overlord is free.
+1. Above `FREE_ABOVE` (90) autonomy it leaves freely.
+2. With autonomy ≥ `PROTEST_FROM` (10) and loyalty under `REVOLT_LOYALTY` (20) it rises: it leaves
+   the wars it fought beside its overlord and an alliance it shares with it, and fights a war of
+   independence, the two realms' [ADR-184, ADR-807].
+3. Tribute: `TRIBUTE` (0.25) × (1 − autonomy/100) × its gross to the overlord.
+4. Below `INTEGRATE_BELOW` (50) autonomy, integration grows `INTEGRATION_RATE` (4) × (50 −
+   autonomy)/50 a month; at 100 the overlord annexes it.
+5. Autonomy drifts up `AUTONOMY_DRIFT` (0.25); loyalty moves `LOYALTY_PULL` (0.2) of the way to
+   `LOYALTY_BASE` (40) + `LOYALTY_PER_AUTONOMY` (0.6) × autonomy, and while the overlord's side is
+   losing (score ≤ −`LOSING_SCORE`, 30) to `LOSING_PENALTY` (25) + `SIZE_PENALTY` (25) × min(1, its
+   gross ÷ its overlord's) lower [ADR-807].
+- A puppet made of a puppet's subject is its realm head's; the subject's own puppets go up with it
+  [ADR-810]. A nation that dies is nobody's puppet, and its puppets go free in that tick
+  (`PuppetReleased`) [ADR-148, ADR-174].
+- Commands: `createPuppet` (to the head of the overlord's realm), `releasePuppet`, `setAutonomy`,
+  `setPuppetLoyalty`. The puppet map mode gives puppets their overlord's colour lightened 45 %.
+
+**Buffs** (`src/sim/buffs.ts`, `src/sim/systems/buffs.ts`): {target (nation, formation or province),
+kind, magnitude m, expiry}, active on ticks [grant, expiry); the expiry system runs first in a tick.
+Kinds: income (gross × (1 + m)), manpower (growth × (1 + m)), attack (damage dealt × (1 + m)),
+defense (damage taken ÷ (1 + m)), speed (march × (1 + m)), unrest (+10m a month). God grants them.
+
+**The AI's diplomacy** is §7 (`src/sim/ai/strategic.ts`: at most `MAX_WARS` (2), stalemate peace
+after `STALEMATE_DAYS` (720), threat pacts, a coalition against a hegemon, rivals kept apart; puppets
+take no diplomatic turn). The checkers hold these rules together (§10.1).
 
 ### 3.6 Military
-```ts
-UnitType (data/units/*.json) {
-  id; class: 'inf'|'art'|'at'|'aa'|'armor_l'|'armor_m'|'armor_h'|'mech'|'mot'
-       |'dd'|'cl'|'ca'|'bb'|'cv'|'ss'|'tp'|'fighter'|'bomber_tac'|'bomber_str'
-       |'cas'|'naval_bomber'|'transport_air'|'nuke_missile';
-  domain: 'land'|'sea'|'air'; elementSize: int (men/vehicles/ships/planes per element);
-  mobility: 'foot'|'motor'|'tracked'|'ship'|'air';
-  stats {soft, hard, defense, breakthrough, armor, piercing, aa, range_km,
-         speed_kmh, org, hpPerUnit, detection, stealth, fuelPerHour, supplyPerHour};
-  cost {gold, industry, manpower, days}; upkeep {gold, supply};
-  terrainMods {[terrain]: {atk, def, speed}}; techReq?
-  // sprite {atlas, frames} is added with the unit atlas (Phase 2); schemas are strict, so the
-  // field must land in schemas.ts and the data together.
-}
-Formation {
-  id u32; nation; kind: 'land'|'fleet'|'airwing'; templateId; x,y f64; facing f32;
-  order {type, target, path[]}; posture: 'hold'|'attack'|'move'|'retreat'|'embarked';
-  org 0..1; supply 0..1; entrench 0..1; experience 0..1; efficiency f32;
-  elementStart u32; elementCount u16; baseId? (airwing/fleet home); battleId?
-}
-Element (authoritative unit proxy) {
-  id u32; formation u32; slot u16; type u16; strength u16; hp f32 (of current
-  strength's top unit); x,y f64 (valid only when posed='engaged'); facing f32;
-  posed: 'slotted'|'engaged'|'dead'; target u32?; cooldown u8
-}
-```
-- Element sizes (initial): infantry/mot/mech 500 men, artillery/AT/AA 12 guns,
-  armour 10 tanks, each ship 1, air 4–12 planes. Typical division: 20–30 elements.
-- **Templates and starting OOB (PLAN 1.7, ADR-20).**
-  - `data/templates/land.json`: 15 land templates of 1938, from infantry (12.5k men) and square (20.9k)
-    divisions to panzer (340 tanks), Soviet tank corps (450), cavalry and garrison units.
-    Four more that no 1938 army fields and the tech gate holds back (PLAN 3.1c, ADR-129): the
-    medium armoured division (`armor_medium_2`, 1941), the heavy armoured division
-    (`armor_heavy_1`, 1942, and `mechanisation`), the mechanised division (`mechanisation`,
-    1940) and the main battle tank division (`armor_mbt`, 1950). A formation is saved with
-    the index of its template: a new template goes at the end.
-  - `data/scenarios/1938/oob.json`: 225 groups, 1054 formations.
-  - `placeOob` (`src/sim/data/oob.ts`, part of `buildPoliticalMap`) floods each group out from its
-    anchor over land the nation controls, or that its puppets own and control, keeping formations
-    one cell apart; it places all of them in 8 ms at M.
-  - Strength = Σ element manpower / tanks / guns (`templateStrength`); a fleet's is its crews. Air wings start in
-    Phase 5.
-  - **Fleet templates (PLAN 4.2a, ADR-247).** `data/templates/sea.json`, six: battle squadron
-    (4 BB, 2 CA, 2 CL, 8 DD), carrier group (2 CV, 2 CA, 6 DD), cruiser squadron (2 CA, 2 CL,
-    4 DD), destroyer flotilla (8 DD), submarine flotilla (8 SS), transport group (12 TP); an
-    element is one ship. A fleet is a formation of such a template: `TemplateRule.domain`
-    (`Domain`: land 0, sea 1, air 2) is the `kind` of the schema above, read by the
-    template's index, not a column. The rules hold the land templates and then the sea's
-    (`TEMPLATES_1938`), the land units and then the sea's: no land index moved, and a new land
-    template would move the sea's. A template is of one domain (`validateDataSet`). A fleet
-    has the pace of its slowest ship and the cost, days, crew and upkeep of its ships, by the
-    land's scales. *Until PLAN 4.2e* nothing made one: the queue rejected a sea template, and
-    the spawn command refuses it still (`Refusal.NotOfLand`); a fleet is built at a shipyard
-    (below). *Since PLAN 4.2b* the start has fleets (below), and the page is sent
-    every template with its domain: it names and draws a formation by its template's index,
-    and its build list leaves the fleets out.
-  - **The fleets of the start (PLAN 4.2b, ADR-248).** `data/scenarios/1938/fleets.json`: 145
-    groups, 197 fleets, 1,786 ships, each group so many formations of a sea template at a
-    naval base of `ports.json`, by the base's name (`validateDataSet`: a sea template, a port
-    of that name with a naval base, held by the group's nation or by a puppet of it). 27
-    nations have one; the United Kingdom and the United States 36 each, Japan 29, France 21,
-    Italy 20, the Soviet Union 16, Germany 9. Round figures to the templates' ships, not a
-    navy's list. `placeFleets` (`src/sim/data/fleets.ts`) puts a group's first fleet in its
-    base's water (`portWater`: the water nearest the port by the terrain alone, which is the
-    cell of the port's lane node for all 61 bases used) and the others in the water about it
-    (a flood over water, 4-way, one fleet to a cell, no cell twice; at most 3 cells from the
-    base's water in 1938). A fleet stands at `World.seaPoint` of its cell: the middle, or
-    where the fine mask has land there the cell's water point (`waterPoint`, `landPoint`'s
-    twin). The fleets are the rows after the land's formations (1,055 to 1,251): no land id
-    moved. A world that is not the 1938 one has none (the toy world, the random world).
-  - **What reads a fleet, and what leaves it alone** (`World.afloat(id)`: its template is of
-    the sea).
-    - *Read:* the economy's upkeep (a navy is paid from the first month, with
-      `UPKEEP_SCALE`; `startTreasury` counts it); the techs of the start (a nation knows
-      what its ships need); a nation's death (its fleets go with it, `eliminateNation`) and
-      its integration by its overlord (they are the overlord's); the save, the hash, the
-      snapshot and the tiers (a marker with a hull at T1, the ships as elements at T2 and
-      T3); the editor (a fleet whose water is made land, by a brush or a map import, is
-      removed; on water it stays).
-    - *Left alone:* supply over land (a fleet keeps what it has: the sea's supply is PLAN
-      4.4); the march (`order` rejects it, the march home skips it: it sails, below);
-      contact and fire (`findBattles`: the sea's battles are PLAN 4.3); retreat (no enemy
-      on the ground); the pressure on the frontier (it holds no ground); the garrison of a
-      province against a revolt; the men at a major battle and a camp's strongest nation;
-      a nation's combat efficiency (its army's mean supply); the men of a war's sides
-      (`menOf`) and of the strategic AI's strengths; the operational AI's fronts and
-      sectors (neither one of its own to send nor an enemy's strength); the economic AI
-      (not sent home, and its upkeep no part of the army's share of the income: a nation
-      short of money by its navy cuts its army); desertion in bankruptcy (a rule of men);
-      the statistics' men (the army's).
-    - *Since:* a fleet fights (4.3, §6.2); the economic AI builds fleets under its navy's share
-      of the income and lays them up over it (4.6e1, §7). A player builds one from the Actions
-      tab (§ the page, production; PLAN 4.2f).
-  - **A fleet is built** (PLAN 4.2e, ADR-252; `src/sim/systems/production.ts`).
-    - *The order* (`queueFormation`): of a sea template, only by a nation with a shipyard;
-      else `ProductionRejected`, nothing paid. Gold by the land's scale (3.5 × its ships'),
-      its crews as manpower.
-    - *The days:* its slowest ship's own (`SHIP_TIME_SCALE` 1): a battle squadron 900, a
-      carrier group 800, a cruiser squadron 400, a destroyer flotilla 180, a submarine
-      flotilla 150, a transport group 90 (the land's are 3 × their slowest element's).
-    - *The shipyard* (`shipyard`): of the ports whose land cell the nation controls and
-      whose water a ship reaches (`portSeaOf`: the cell of its node of the lane graph, found
-      by the zones alone, `portWaters`; in a zone of the world's seas, `seaBasins`' ocean:
-      not a lake, the Caspian or a sea ice closes, PLAN 4.8o, ADR-295),
-      the highest naval base, then the nearest to the capital. In 1938: Portsmouth, Norfolk,
-      Yokosuka, Brest, La Spezia, Kiel, Kronstadt.
-    - *The delivery* (`productionSystem`, `dockPoint`): on its ready day at the shipyard's
-      water (`portSeaOf`, at the cell's water point), chosen then; with no shipyard then
-      the order waits, as a land order with no land does. Bankruptcy stalls it as any.
-  - **A wing is built** (PLAN 5.8s1, ADR-343; `src/sim/systems/production.ts`).
-    - *The order* (`queueFormation`): of an air template, only by a nation with an airfield;
-      else `ProductionRejected`, nothing paid. Gold, manpower and days as a land formation's.
-    - *The airfield* (`airfield`): of the airbases whose cell the nation holds, with room for
-      the wing's aircraft beside those of the wings based there (`airbaseRoom`), the nearest
-      its capital, then the first.
-    - *The delivery* (`productionSystem`): on its ready day at the airfield, chosen then, its
-      base (`wingBase`); with none then the order waits. The spawn command refuses a wing
-      still. The economic AI keeps its air force (5.8s2, ADR-344, `AIR_SHARE`): a nation not
-      poor, with an airfield and no wing in training, orders one while its wings' upkeep is
-      under a tenth of its army's (with the orders in training), if its balance stays above
-      the need and its gold covers the price and three months of income: a fighter group while
-      fighters are under half its wings (those in training with them), else a tactical bomber
-      group. After the army's orders and a fleet's. Under its start's wings (PLAN 7.113a,
-      ADR-689; `world.airStart`, each nation's wings as the world was made, saved) it rebuilds:
-      as many wings in training as the army's order slots, while its air force with them costs
-      under `AIR_REBUILD_SHARE` (0.035) of its income, their upkeep counted against the balance.
-      At war it keeps the war's reserve past a wing's price (`WAR_RESERVE_MONTHS`, none; PLAN 7.142,
-      ADR-736), at peace `RESERVE_MONTHS`.
-  - **A fleet sails** (PLAN 4.2c, ADR-250; `src/sim/systems/sail.ts`).
-    - *The order* (`orderSail`; `orderMove` and so the `moveFormation` command hand a fleet
-      to it): to water with a zone, or to a port by its land cell (the port's water, its
-      node's cell). Rejected (`MoveRejected`): land that is no port, water with no zone,
-      water no lane leads to, water in the ice (§3.3, ice). The way is found once, at the
-      order (§3.3, a fleet's way).
-    - *The state* is the march's: `moving`, `originCell`, `targetCell`, `pathStep`,
-      `stepFrac`, and the way in `world.paths`. Saved and hashed as a march.
-    - *The hour* (`sailStep`, called by the movement system for a formation afloat): the
-      pace is the slowest ship's top speed × `CRUISE_SHARE` (0.55: a battle squadron
-      27.5 km/h, destroyers 36, submarines and transports 16.5), × the speed buffs, every
-      hour of the day; a step's time is its km over the pace. No terrain, no holder, no
-      supply. The place is on the line between the two cells' water points
-      (`World.seaPoint`; a cell's middle where the mask has no water in it), facing along
-      it. A passage is one step and the fleet is over its land for those hours.
-    - *The end:* at the last cell's water point, `FormationArrived`.
-    - *An order in the middle of a step* leaves the fleet where it is (as PLAN 3.5a1).
-    - *Water made land ahead:* it stops in the cell before and is ordered to its target
-      again.
-    - *Not yet:* nobody's water or canal is closed (4.4), no ice (4.2d), no enemy stops
-      it (4.3), no AI orders it (4.6); the line of its course on the page is straight to
-      its target (4.7).
-- **Slotted pose** is `slotPose(formation, slot, aliveMask)`, a pure function. It is the same
-  code in the sim (for engagement start positions) and in the snapshot builder.
-  *As built (`sim/core/pose`, PLAN 2.7a, ADR-70):* `slotPose(x, y, facing, slot, slots, spacing)`, where
-  `slots` is the element count of the formation's template. Slots are numbered when the formation is
-  equipped and never reassigned, so an element's place does not depend on which others are alive: the
-  block keeps its shape and shows the gaps. Fire records, `ElementDestroyed` and the snapshot use it.
-- **Engaged pose** is integrated per tick inside a battle (advance or withdraw toward
-  a target or cover, clamped to passable fine-mask terrain).
+- **Unit types** (`UnitTypeDef`, `data/units/*.json`: land 13, sea 7, air 9, heroes 14): `id`,
+  `nameKey`, `class`, `domain` (land, sea, air; the class must fit), `elementSize` (units an element:
+  infantry and cavalry 500 men, guns 12, tanks 10, ships 1, aircraft 6–12, a missile 1), `mobility`
+  (foot, motor, tracked; fitting the domain), `stats` (soft and hard attack, armour, piercing, hp,
+  defence, AA, speed, range, detection, stealth, fuel; optional `torpedo`, `torpedo_km`, `asw`,
+  `bomb_t`), `cost` {gold, manpower, days}, `upkeep` {gold}, `terrainMods`, optional `techReq` and
+  `hero`. Validated but read by nothing: `stats.breakthrough`, `stats.org`, `stats.supplyPerHour`,
+  `cost.industry`, `upkeep.supply`.
+- **Unit rules** (`UnitRule`, `src/sim/world.ts`, built by `RULES_1938` from the data, not state):
+  class, domain, size, `menPerUnit` (manpower ÷ element size), soft, hard, armour, piercing,
+  `hpPerUnit`, AA, defence, `bombT`, fuel, `rangeKm`, detection, stealth, torpedo, `torpedoKm`, `asw`,
+  terrain attack and defence by terrain, and the combined-arms bit (`arm`).
+- **Templates** (`TemplateDef`, `data/templates/*.json`: land 19, sea 6, air 6, heroes 14): `id`,
+  `nameKey`, `elements` [{type, count}], of one domain (its first element's). Land: the 15 of 1938
+  (an infantry division 28 elements, 12,460 men; the square division 20,580; a panzer division 340
+  tanks; a tank corps 450) and 4 gated by tech (`armor_medium_2`, `armor_heavy_1`, `mechanisation`,
+  `armor_mbt`). Sea: destroyer flotilla, cruiser squadron, battle squadron, carrier group, submarine
+  flotilla, transport flotilla. Air: fighter (3 × 12), tactical bomber (3 × 8), strategic bomber
+  (4 × 6), close support (3 × 10), naval bomber (3 × 8), transport (4 × 6) groups. A template's rule
+  (`TemplateRule`): domain, gold, manpower, days, mobility and speed (of its manoeuvre elements: foot
+  if any walks, else tracked if any is, else motor; guns not counted), terrain speeds, fuel, its
+  elements and its tech mask. Templates are indexed land, sea, air, then heroes (`scenario1938.ts`),
+  and a formation is saved with its index.
+- **Formations** (`FORMATION_SCHEMA`, saved): `nation`, `x`, `y`, `facing`, `strength` (men: Σ
+  element units × `menPerUnit`), `template`, `moving`, `originCell`, `targetCell`, `pathStep`,
+  `stepFrac`, `supply`, `org`, `engaged`, `struck`, `retreat`, `home`. Its domain is its template's.
+  On the world: `paths`, `battles` and `seaBattles`, `embarked` and `seaBound` (§6.2),
+  `station` (an editor's), `wingBase` (an airbase + 1, or −fleet for a carrier), `wingFerry`,
+  `wingMission`, sorties, `playerOrders`.
+- **Elements** (saved): `formation`, `slot`, `unit`, `strength` (units), `wound` (damage carried to
+  the next unit lost), `target`, `cooldown`. An element's place is derived, never saved: at rest its
+  slot (`slotPose`: a block about 2:1, `cols` = ⌈√(2n)⌉, `SLOT_SPACING` 0.03 cells, scaled; slots set
+  when the formation is equipped), in contact the hour's deployment (`deployOf`: on the line to the
+  nearest enemy in contact within `DEPLOY_REACH` (1.5 cells), `DEPLOY_GAP`, `DEPLOY_LINES` (2),
+  `DEPLOY_ABREAST`, with a seeded scatter and turn); on land, `slotPlace` (§3.1). `applyLoss`
+  carries wounds; `settleFormation` removes a dead element (`ElementDestroyed`) and a formation with
+  none.
+- **The order of battle** (`data/scenarios/1938/oob.json`, `placeOob`, `src/sim/data/oob.ts`): 225
+  groups, 1,054 formations, each group flooding 4-way from its anchor (within `ANCHOR_REACH_CELLS`,
+  12), a formation a cell not beside another, stacking when the room runs out; `templateStrength`
+  gives a template's men, tanks, guns and elements. Fleets (`src/sim/data/fleets.ts`): 145 groups,
+  197 fleets, 1,786 ships of 27 nations, at 61 bases, one fleet a cell. Air: 198 wings at the start,
+  and a naval bomber group a carrier (`CARRIER_WING`). Formation ids run land, fleets, wings, heroes.
+  The random and toy worlds have no fleets at the start.
+- **What a fleet or wing is to the land rules:** `afloat` (a fleet, or land formations aboard) and
+  `offLand` (afloat or a wing). Land rules ask `offLand`: desertion, stats, the editor's checks.
+- **Building** (§3.7): a fleet at a shipyard (`shipyard`: a held port on an ocean basin, not shut by
+  bombing, the highest naval base then the nearest the capital; in 1938 Portsmouth to Kronstadt), a
+  wing at an airfield with room (`airfield`, §6.3). God and the editor place fleets and wings
+  (`spawnFleet`, `spawnWing`, `src/sim/placeForces.ts`); `spawnFormation` refuses a template not of
+  land (`NotOfLand`).
+- **Sailing** (`src/sim/systems/sail.ts`): a fleet sails its way (§3.3) at `CRUISE_SHARE` (0.55) of its
+  slowest ship's speed, with the speed buffs, never under × 0.05.
+- **Heroes** (the new-game option `heroes`; `src/sim/systems/heroes.ts`): `world.heroRoster` {nation,
+  template, x, y} from `data/scenarios/1938/heroes.json` (14: a land and a sea hero for each of seven
+  powers), placed after every other formation; `world.heroes` (formation → row) and
+  `world.heroReturn` (row → tick). A hero is one element; never built, refilled or paid for; it heals
+  `HERO_HEAL_PER_DAY` (0.05) a day and returns `HERO_RETURN_HOURS` (1,440) after it is lost, a sea
+  hero at a port on its start's basin. Its rules are a checker's (§10.1).
 
 ### 3.7 Tech & production
-`data/tech/*.json`: tree with eras 1936–1990+. Research is per nation, daily, funded
-by gold and industry. Tech gates unit types (tank generations, jets, radar, missiles,
-nuclear programme stages). Production queue per nation (AI-managed or player):
-items take days and draw gold, industry and manpower. Upkeep runs monthly.
+**Techs** (`data/tech/*.json`: 7 files, 43 techs, 1936–1952; `src/sim/tech.ts`): a rule
+`TechRule` {id, year, prereqs, category, gold, days}, indexed by the schema's categories (industry,
+land, armor, naval, air, electronics, nuclear), the index a bit of `tech0`/`tech1` (64 at most).
+Techs gate templates (a template needs its units' `techReq` and their prerequisites: tank
+generations, mechanisation, jets), missile delivery (`ballistic_missiles`) and warheads
+(`atomic_bomb`). Tech modifiers and `cost.industry` are read by nothing. A nation knows at the start
+the techs dated before 1938, those its starting formations need, and its `techs`; the random world's
+nations only the first. God grants a tech with its prerequisites (`grantTech`).
 
-**Implemented (PLAN 1.10, ADR-23; `src/sim/systems/production.ts`).**
-- Command `queueFormation {nation, template}`: pays the template's gold
-  (3.5 × Σ element unit gold) and manpower (Σ element manpower) at once. It is rejected (event
-  `ProductionRejected`) without funds.
-- Rows (`world.production`: nation, template, readyDay) are ready 3 × the slowest element's days
-  later (infantry division 90 days, panzer division 225). All orders train in parallel.
-- Daily at 00:00: bankrupt nations' orders slip a day. Ready ones appear at full strength at the
-  capital, or the nearest held cell within 40 if it is lost (`FormationSpawned`).
-- Manpower: `cells.pop` (thousands) is each country's 1938 population (GDP ÷ GDP per head),
-  spread like the economy. Monthly gain = 0.05% × trait manpower multiplier × owned and
-  controlled population, capped at 3% of it. Nations start with 1%.
-- Command rules (template cost and time) reach the sim as `world.rules`, set by the Sim and not
-  state. Industry as a production input arrives with tech/research.
-- Refills (PLAN 7.3e1, ADR-435; `refillable` and `refillFormation` in `systems/production.ts`,
-  step 3a of the economic AI; AoC reinforces its soldiers from the cores): monthly, after the
-  army's new orders of the month and before its fleet and wing, a nation's land formations that
-  may be refilled get men back, in the order of their ids: of a land template with elements, below its strength, not engaged, not
-  retreating, not on a march home, with supply ≥ REFILL_SUPPLY (0.5), on a cell its nation
-  controls. Each gets up to REFILL_MONTH (30%) of its template's men, a man of the pool for a man
-  and gold at the template's price a man (its gold ÷ its manpower), under the bounds of a new
-  order: the treasury keeps RESERVE_MONTHS of income, the balance stays above the need with the
-  men's upkeep, and the army's upkeep stays under its share of the income (peace or war). The men
-  go to the elements in slot order, a living one to its full size first; a slot whose element
-  died gets a new element of the template's unit. A rule of the economy, as the research budget:
-  a nation without AI is refilled on it too (it has no orders of the AI before it). The refills
-  take what the orders leave: taken first, they held every treasury at the reserve and no new
-  formation was raised (ADR-435). With no army order in training and room for one (a slot, the
-  army's upkeep under its share), they keep the price of the next one over the reserve as well:
-  the infantry division's, a poor nation's cadre one (PLAN 7.3e3, ADR-437: else they spent each
-  month's surplus to the reserve and an order was never paid for). Only in peace: at war the
-  refills take what is over the reserve (PLAN 7.26c2b, ADR-514: a nation saving for a division
-  refilled nothing through a war of six months). Fleets and wings are not refilled.
-- Hollow divisions (PLAN 7.116a, ADR-701; `ai/hollow.ts`, step 0 of the economic AI): daily at
-  00:00, a land formation of a living AI nation with fewer than HOLLOW_MEN (500) men and fewer than
-  its template's, not engaged and not retreating, on land, is folded: its men go to the nearest
-  land formation of its nation on the same landmass within MERGE_KM (50 km on the map) below its
-  template's strength (`refillFormation`, so they become that formation's units), and it is
-  removed; the men no such formation takes go back to the pool at DISBAND_MANPOWER. In the order
-  of the ids. A nation without AI keeps its remnants (which to merge is the player's choice).
+**Research** (`src/sim/systems/research.ts`, daily):
+- the budget (`nations.research`, gold a day) is set monthly for every living nation:
+  `RESEARCH_SHARE` (0.05) of income ÷ `DAYS_PER_MONTH` (365/12), 0 when gold ≤ 0 or when short with a
+  treasury under 3 months of the shortfall, at most `researchCap` (3 × the dearest tech's gold a day,
+  4.0); the build balance counts it;
+- at most `MAX_LINES` (3) lines a nation (research rows: nation, tech, paid), each paid its share of
+  the budget until its gold is in, then `TechResearched` (and `NuclearPower` for the atomic bomb); a
+  short treasury stops all the nation's lines for the day, never into debt;
+- the next tech (`nextTech`): of those with prerequisites known and year reached (a floor), the
+  earliest, the first on a tie. The nuclear chain (`HELD_CATEGORIES`) is researched only by a nation
+  that goes for the bomb (nukes allowed, income ≥ `NUKE_PROGRAMME_INCOME`, 1000); a line of a nation
+  no longer allowed is kept unpaid. A dead nation's lines go; a founded nation's budget is 0 until
+  the month's turn.
 
-**Techs v1: what a nation knows, and the gate (PLAN 3.1a, ADR-127; `src/sim/tech.ts`).**
-- *The tree* reaches the sim as `ScenarioRules.techs` (id, year, prerequisites), the tech files
-  in the order of the schema's categories. A tech's index is its bit.
-- *State:* the nation columns `tech0` and `tech1` (bits 0..31 and 32..63; 43 techs today, 64 at
-  most). Saved and hashed with the nation table.
-- *A template's techs* (`TemplateRule.techs`): the `techReq` of its unit types and all their
-  prerequisites.
-- *The gate:* `queueFormation` rejects (`ProductionRejected`) a template whose techs the nation
-  does not know. The economic AI then orders the infantry division, or the cadre division,
-  which asks for none. The build list shows such a template as "not researched", its button
-  off.
-- *The start* (`grantStartTechs`): every nation knows the techs dated before the scenario's
-  first year; the techs of the templates its own formations have; and the `techs` of its row
-  in `nations.json` (1938: the medium tank for SOV, FRA, ENG and JAP; Germany fields it).
-- *A nation founded in a revolt or by a Kill* knows what the nation it left knew. A nation
-  that returns knows what it knew.
-- *Not yet:* tech modifiers (`armorAttack` and the others) are not read.
-
-**Research v1 (PLAN 3.1b, ADR-128; `src/sim/systems/research.ts`).**
-- *The budget:* `nations.research`, gold per day. A rule of the economy, not a choice of the
-  AI (`researchBudget`; PLAN 3.4Rg, ADR-144): it is set monthly, in the economic AI's system,
-  for every living nation, with AI or without (a played nation, one whose AI is off, every
-  nation when the AI is off for the world):
-  RESEARCH_SHARE (5%) of the month's income, at most `researchCap` (MAX_LINES lines of the
-  dearest tech by the day, 2.44 gold a day); 0 for a nation in debt, and for one short of
-  money whose treasury holds less than RUNWAY_MONTHS of what is short (it would disband:
-  research is cut before the army). The month's research counts against the balance the build
-  step works with. For a nation without AI nothing is disbanded first, so it has no budget
-  while it is short with a treasury below RUNWAY_MONTHS of what is short, and has one again
-  the month after that ends.
-- *Lines:* `world.research` (nation, tech, gold paid), saved and hashed; at most MAX_LINES (3) a
-  nation. Daily at 00:00, line by line in the order opened: pay min(the tech's gold ÷ its
-  days, what is left to pay, what is left of the day's budget) from the treasury. A paid tech
-  is known (`TechResearched`) and its line closed. A line is opened only with budget left.
-  So a tech takes its days at least; a nation with a tenth of the pace takes ten times as long.
-- *Never into debt:* a bankrupt nation pays nothing, and nothing is paid out of a treasury that
-  does not hold the day's payment.
-- *What is next* (`nextTech`): not known, not in a line, prerequisites known, year come; the
-  earliest, the first in the scenario's order on ties. **The year is a floor**: nobody
-  researches ahead of the calendar (the schema's comment once said "costs extra").
-- *Held back:* the `nuclear` category is nobody's next tech. Who goes for the bomb is decided
-  in Phase 6.
-- *A dead nation's* lines are dropped. A founded nation starts with no budget until the
-  next month's start.
-- *Not yet:* `cost.industry` is read by nothing (industry is not a sim input). No command sets
-  a budget or picks a tech: a player's nation researches on the rule's budget and takes its
-  techs in the rule's order (ADR-144).
-- *On the page* (PLAN 3.1e, ADR-130): the Economy tab of the nation panel has a Research block:
-  the budget per month (the day's budget × 365 ÷ 12, like the income above it) and one row per
-  line, in the order the lines were opened: the tech's name (`tech.<id>` of the i18n catalog)
-  and the share of its gold that is paid, rounded down. The worker sends the scenario's techs
-  once (`mapLayers.techs`: name key, gold, days) and each nation's budget and lines with the
-  nation statistics (`NationStat.research`, `.lines`).
+**Production** (`src/sim/systems/production.ts`):
+- `queueFormation` (the player's command and the AI's order) pays at once `PRODUCTION_COST_SCALE`
+  (3.5) × the template's element gold (a carrier group with its air groups) and its manpower, and
+  adds a row (nation, template, `readyDay`) ready after `TRAIN_TIME_SCALE` (3) × the slowest
+  element's days for land and air, `SHIP_TIME_SCALE` (1) × for ships (an infantry division 90 days, a
+  panzer division 225, a battle squadron 900). Refused (`ProductionRejected`) without gold, manpower
+  or the techs, for a dead nation, a fleet with no shipyard, a wing with no airfield with room. The
+  orders train in parallel; a bankrupt nation's slip a day each day.
+- *Delivery:* land at the capital or the nearest controlled cell within `SPAWN_REACH_CELLS` (40,
+  scaled), or at the front overseas or an ally's theatre (`musterPoint`, `allyTheatre`); a fleet at its
+  shipyard's water, a wing at its airfield; with no place, it waits. New formations have full
+  elements, supply and org 1; a carrier group comes with its wings (`manDecks`).
+- *Levy* (`levyFormation`): cadre divisions for manpower alone, for a nation outnumbered on a land
+  front (§7).
+- *Manpower* (`economy.ts`): monthly + `MANPOWER_MONTHLY_RATE` (0.0005) × `manpowerMult` × (1 +
+  manpower buffs) × the population of land owned and controlled (`cells.pop`, thousands: GDP ÷ GDP a
+  head, spread like `econ`), up to `MANPOWER_CAP_SHARE` (0.03) of it (a pool above the cap is kept);
+  start `MANPOWER_START_SHARE` (0.01).
+- *Refills* (`refillable`, `refillFormation`; the economic AI's monthly turn, §7): a land formation
+  not aboard, not a hero, short of men, gets up to `REFILL_MONTH` (0.3) of its template a month, a man
+  of the pool a man and gold at the template's gold ÷ its manpower a man, slot by slot, dead slots
+  made again; a nation without AI is refilled too. In peace the refills keep the next order's price,
+  at war a warship's while the nation saves for one. Fleets and wings are not refilled; carrier decks
+  are manned again (`manDecks`).
+- *Hollow formations* (`src/sim/ai/hollow.ts`): a remnant under `HOLLOW_MEN` (500, or its template's
+  men) merges into a formation of its nation within `MERGE_KM` (50), for a nation whose army AI runs;
+  not a player's or a hero.
+- No building is built: `data/buildings` costs and `buildSpeed` are read by nothing; an airbase's room
+  is `AIR_PER_LEVEL` (50) × its level.
+- The rules (`world.rules`: units, templates, techs) are set by the Sim from the data and are not
+  state.
 
 ---
 

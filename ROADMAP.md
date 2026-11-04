@@ -31,7 +31,8 @@ Rules:
   - [x] R6b §3.1–3.3: map, cells, provinces, cities and zones. The test judges whole sections: add
     `'3'` (§3.4–3.7 have no miss now) and call §3.1–3.3 current in SPEC's header until R6c.
     Done: §3.1–3.3 rewritten from three read-throughs of the code (22 → 21 KB: the history and measurements out, the cell layer, air zones, basins and port state in); `specRefs.test.ts` 5 of 5.
-  - [ ] R6c §3.4–3.7: nations, diplomacy, military, tech and production.
+  - [x] R6c §3.4–3.7: nations, diplomacy, military, tech and production.
+    Done: rewritten from four read-throughs of the code (38 → 26 KB); `specRefs.test.ts` 5 of 5.
   - [ ] R6d §4: territory, fronts and the strategic layer.
   - [ ] R6e §5: combat.
   - [ ] R6f §6.1–6.2: armour and the navy. As R6b: add `'6'`; §6.1–6.2 current until R6g.
@@ -39,3 +40,9 @@ Rules:
   - [ ] R6h §7: the AI.
   - [ ] R6i §8: semantic zoom.
   - [ ] R6j §9: UI and UX.
+- [ ] R16 **Traits that do nothing** (found by R6c). Of a trait's modifiers only `income` and
+  `manpower` act; `landAttack`, `org`, `stability` and the rest are validated and read by nothing,
+  and a scenario trait's `aggressionBias` acts only when traits are random. Either make them act
+  (a rule change, with the checkers and the sweep) or drop them from the data and the panel; the
+  user's decision. Also: `src/sim/systems/war.ts`'s header says a side fights to the death by any
+  member's flag, the code by its leader's.

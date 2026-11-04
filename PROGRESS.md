@@ -726,3 +726,25 @@
   `DISPLACED_CELLS` 2, `ISLET_REACH` 16 `ownership.ts:291,294`; `passageShut` `seaSupply.ts:95`.
 - `specRefs.test.ts` 5 of 5 (§3 at 0 misses; 2 before, in the old §3.3).
 - **Next:** R6c.
+
+## 2026-11-03 — ROADMAP R6c: SPEC §3.4–3.7 as the code is
+- Four read-only read-throughs (nations; diplomacy; military; tech and production), each claim marked against the code.
+  Rewritten from them, 38 → 26 KB.
+- Wrong or gone in the old text: the nation record (half its fields gone: industry, stability, relations, doctrine,
+  allianceId; tech is a bit mask); the war record (`sides`, no `goal` or `leaders`); a revolt's neighbour is not chosen by
+  the war test; puppets of an annexed nation go to the annexer's realm head (ADR-810); the march home's test; the
+  formation and element records; air wings "from Phase 5" (198 at the start); research's cap 4.0, not 2.44; nuclear
+  research no longer held back from everyone; a founded nation without its parent's nuclear techs; no industry input.
+- Added: Force war, `foe`, pledges, `Beside`, `refusesSuit`, frontless wars, peace offers, `WarLeft`, `GuaranteeLapsed`,
+  collapse and `NationDefaulted`, revival, the levy, muster points, shipyards and airfields, heroes.
+- Found, filed as R16 (Later): traits' modifiers other than income and manpower act on nothing.
+- Constants stated, read from: economy `src/sim/systems/economy.ts:38–63`; start gold `scenario1938.ts:93,102`; collapse and
+  revival `systems/revival.ts:53–59`; `CAPITAL_SAFE_STEPS` `capitals.ts:284`; `START_GOLD`, `REBEL_AGGRESSION`
+  `revolts.ts:96,98`; random world `randomWorld.ts:52–57`; war and peace `systems/war.ts:73–114,672`; peace offers
+  `src/shared/peace.ts`; puppets `puppets.ts:32–46`; alliances `systems/alliances.ts:16–22`; strategic AI
+  `ai/strategic.ts:47–62`; `REPATRIATE_CELLS` `movement.ts:92`; production `production.ts:53–64`; research
+  `research.ts:28–34`; `NUKE_PROGRAMME_INCOME` `nuclear.ts:178`; `REFILL_MONTH` `ai/economic.ts`; `HOLLOW_MEN`, `MERGE_KM`
+  `ai/hollow.ts:26–28`; `SLOT_SPACING` `core/pose.ts:14`; `ANCHOR_REACH_CELLS` `oob.ts:57`; `CRUISE_SHARE` `sail.ts:38`;
+  `HERO_RETURN_HOURS`, `HERO_HEAL_PER_DAY` `heroes.ts:66,68`.
+- `specRefs.test.ts` 5 of 5 (§3 whole at 0 misses).
+- **Next:** R6d.
