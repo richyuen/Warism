@@ -70,8 +70,9 @@ import { exitsOf } from '../nav/crossings';
 import { nearestCellWhere } from '../data/ownership';
 import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroups, type ProvinceGraph } from '../nav/provinceGraph';
 import { isDayStart } from '../../shared/calendar';
-import { Domain, navOf, type TemplateRule, type World } from '../world';
-import { callTransports, transportsPort, tryLanding } from './amphibious';
+import { Domain, navOf, PlayerOrderKind, portSeaOf, type TemplateRule, type World } from '../world';
+import { assignTransports, hasLanding, near, transportsPort, tryLanding } from './amphibious';
+import { AT_PORT_CELLS } from './navalCombat';
 import { noteMove } from './elements';
 import { spawnPoint } from './production';
 import { orderSail, sailStep } from './sail';
@@ -446,9 +447,7 @@ export const wasLong = (): boolean => refusedLong;
  * `byPort` (PLAN 4.9b): an order over the sea from where no transports wait marches to the nearest
  * port of its land with transports that have room (`transportsPort`), and the order is kept
  * (`world.seaBound`) for the amphibious system to embark it there. `call` (a player's order,
- * ROADMAP R17a): with no port of its land so served, the nearest port of its land its nation holds,
- * and the nearest idle transports of its nation called there (`callTransports`, `world.seaFetch`);
- * it waits for them at the port. Any order ends an order kept so.
+ * ROADMAP R17): the order goes by a convoy instead (`seaConvoy`). Any order ends an order kept so.
  */
 export function orderMove(world: World, id: number, x: number, y: number, pass?: Passage, byPort = false, direct = false, call = false): boolean {
   world.seaBound.delete(id);
@@ -461,17 +460,18 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
     world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Aboard, NaN);
     return false;
   }
+  const over = world.formations.has(id) && overSea(world, id, x, y);
+  if (call && over) return seaConvoy(world, id, x, y, pass);
   // To another land: by sea, from a port its nation holds with transports there (PLAN 4.5a). With
   // none, a march as before (a target by the coast may snap to this land); refused, it says why
   // the sea was refused (PLAN 4.9a).
-  const sea = world.formations.has(id) && overSea(world, id, x, y) ? tryLanding(world, id, x, y) : RejectReason.NoRoute;
+  const sea = over ? tryLanding(world, id, x, y) : RejectReason.NoRoute;
   if (sea === 0) return true;
   if (byPort && (sea === RejectReason.NoPort || sea === RejectReason.NoTransports)) {
     const port = transportsPort(world, id);
     const w = world.cells.w;
     const tx = Math.floor(x);
     const ty = Math.floor(y);
-    if (port < 0 && call && callPort(world, id, tx, ty, pass, sea)) return true;
     if (port >= 0) {
       const at = world.ports[port]!.cell;
       if (order(world, id, (at % w) + 0.5, Math.floor(at / w) + 0.5, pass, 0, sea)) {
@@ -487,33 +487,35 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
 }
 
 /**
- * The player's order over the sea from a land with no transports at its ports (ROADMAP R17a): to
- * the nearest port of its land its nation holds, transports called there; the formation marches
- * to it, or stands there already and waits. False, nothing changed, where it has no such port, the
- * march is refused, or no transports can come.
+ * A player's order over the sea (ROADMAP R17a, R17b): its transports and port (`assignTransports`:
+ * a convoy for the same target with room, a group at a port of its land, one called there, or a
+ * full convoy's next voyage); it marches to the port, or stands there already, and is bound for
+ * the group (`world.seaBound`, `world.seaFetch`, `world.convoyPort`), which is the player's. With
+ * no landing at the target, or no transports, refused as before.
  */
-function callPort(world: World, id: number, tx: number, ty: number, pass: Passage | undefined, why: RejectReason): boolean {
-  const port = transportsPort(world, id, false);
-  if (port < 0) return false;
-  const w = world.cells.w;
+function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage | undefined): boolean {
   const c = world.formations.cols;
-  const at = world.ports[port]!.cell;
-  // At that port already (as the landing reads it): no march; else the march first, undone when no
-  // transports can come.
-  const there = why === RejectReason.NoTransports;
-  if (!there && !order(world, id, (at % w) + 0.5, Math.floor(at / w) + 0.5, pass, 0, why)) return false;
-  const fleet = callTransports(world, id, port);
-  if (fleet === 0) {
-    c.moving[id] = 0;
-    world.paths.delete(id);
+  const w = world.cells.w;
+  const target = Math.floor(y) * w + Math.floor(x);
+  if (!hasLanding(world, x, y)) {
+    world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.NoLanding, NaN);
     return false;
   }
-  if (there) {
+  const a = assignTransports(world, id, target);
+  if (!a) return order(world, id, x, y, pass, 0, transportsPort(world, id, false) >= 0 ? RejectReason.NoTransports : RejectReason.NoPort);
+  const port = world.ports[a.port]!;
+  const here = Math.floor(c.y[id]!) * w + Math.floor(c.x[id]!);
+  const r = world.atSize(AT_PORT_CELLS);
+  if (near(world, here, port.cell, r) || near(world, here, portSeaOf(world)[a.port]!, r)) {
     c.moving[id] = 0;
+    c.home[id] = 0;
     world.paths.delete(id);
-  }
-  world.seaBound.set(id, ty * w + tx);
-  world.seaFetch.set(id, fleet);
+  } else if (!order(world, id, (port.cell % w) + 0.5, Math.floor(port.cell / w) + 0.5, pass, 0, RejectReason.NoRoute)) return false;
+  world.seaBound.set(id, target);
+  world.seaFetch.set(id, a.fleet);
+  world.convoyPort.set(a.fleet, a.port);
+  world.playerOrders.set(a.fleet, { kind: PlayerOrderKind.march, until: 0, through: false });
+  world.station.delete(a.fleet);
   return true;
 }
 

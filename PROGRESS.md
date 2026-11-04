@@ -928,3 +928,14 @@
   call switched off.
 - Pin unmoved. Found: a fleet's player order never ends while it lives (relied on; filed under R17).
 - **Next:** R17b.
+
+## 2026-11-04 — ROADMAP R17b: landings together (ADR-823)
+- A player's order over the sea goes by convoy: divisions bound for one target share a transport group, board it at
+  the port without sailing, and it sails once no division that would fit is still to come; the rest wait for its
+  voyage back (`assignTransports`, `convoySystem`, `world.convoyPort`).
+- Guarded: a loading group stays aboard at its port (the stray-landing rule skipped), no other order takes it, a
+  full group keeps the leftovers waiting, a repulse ends the convoy, a stalled division is not waited for.
+- AT (`landingCall1938.test.ts` 4 of 4): one group at Portsmouth, three full divisions from London to Belfast: two
+  land in the same hour, the third boards after their landing and lands later; red with the hold off. R17a's
+  case unchanged. Pin unmoved; landing and invasion tests (26) green.
+- **Next:** R17c.

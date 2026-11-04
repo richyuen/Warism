@@ -1245,14 +1245,26 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   then marches on. Repulsed, its transports sail home and it lands where they next stand, or stays
   aboard. Sunk transports take it with them. A beachhead on a cell of a living nation not at war with it
   goes back to its owner. With no port or room, an order is a march (`seaBound`, an order given
-  through `moveFormation`: to the nearest port of its land with transports that have room). A
-  player's order whose land has no such port calls transports (`callTransports`, ROADMAP R17a): of
-  its nation's groups standing idle (not under way, in no battle, carrying nobody, not held by the
-  editor, not called already) with room for it, the nearest by straight cells to the nearest port of
-  its land (at most `CALL_TRIES`, 4, tried for a sea way) sails there under the player's order; the
-  formation marches there, waits while the group is under way, and boards it (`seaFetch`). With
-  none, the order is refused as before. `world.embarked`, `world.seaBound` and `world.seaFetch` are
-  saved.
+  through `moveFormation`: to the nearest port of its land with transports that have room).
+- **The player's landings** (ROADMAP R17a, R17b): a player's order over the sea goes by convoy
+  (`seaConvoy`, `assignTransports`). Refused at once with no landing at the target (`hasLanding`).
+  Its transports, in turn: a convoy of its nation loading for the same target cell at a port of its
+  land with room for it (so a click's divisions, or a later click's to the same cell, go together);
+  a group standing at a port of its land with room, not another's convoy, at the port nearest it; a
+  group called to the nearest port of its land (`callTransports`: of its nation's groups standing
+  idle, not under way, in no battle, carrying nobody, not held by the editor, not another convoy's,
+  with room for it, the nearest by straight cells to the port's water that has a sea way, at most
+  `CALL_TRIES` (4) tried); a full convoy for the same target, for its next voyage. None: refused as
+  before. The group is the player's (`playerOrders`; the AI leaves it). The division marches to the
+  port, or stands there, bound for the group (`seaFetch`; the group's port `convoyPort`); it boards
+  when the group stands at that port with room (aboard, not sailing), waits while the group is under
+  way, fighting, away or full, and is refused (`NoTransports`) if its march ends short of the port.
+  Hourly after the boarding (`convoySystem`): a loading group with someone aboard sails for the
+  landing of the first aboard once no division bound for it that would fit is still to come (no
+  sea way: refused `NoSeaWay`, ashore at the port); away from its port with nobody aboard, it sails
+  back for those still bound for it; with nobody bound or aboard, the convoy is over. A repulsed
+  landing ends its convoy (those still bound are told). No other order takes a loading group.
+  `world.embarked`, `world.seaBound`, `world.seaFetch` and `world.convoyPort` are saved.
 - **Bombardment** (`src/sim/systems/bombardment.ts`): a fleet not under way and not in a sea battle
   fires on land formations within its guns' reach (12–32 km) at the element of most hit points:
   effectiveness (§5.2) × strength ÷ size × `FIRE_SCALE` × `BOMBARD_FIRE` (2.5); its losses count to org.

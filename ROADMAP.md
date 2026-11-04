@@ -87,9 +87,13 @@ Rules:
     Done: `callTransports`, `world.seaFetch` (saved, optional); `landingCall1938.test.ts` 3 of 3 (Ulster
     from London, the group from Gibraltar boards on day 6 and lands on 8.5; red without the call);
     pin unmoved (no player in the pinned run).
-  - [ ] R17b Landings together: divisions ordered over the sea in one click share the transports,
+  - [x] R17b Landings together: divisions ordered over the sea in one click share the transports,
     sail as one convoy and land on the same stretch of coast; those that do not fit wait for the next
     voyage. AT: three divisions, room for two: two land together, the third on the return trip.
+    Done: `assignTransports`, `convoySystem`, `world.convoyPort` (saved, optional);
+    `landingCall1938.test.ts` 4 of 4: one group at Portsmouth (room 25,200), three full divisions
+    (12,460): two land in the same hour, the group returns, the third boards after they landed and
+    lands later; red with the hold off (hours 111 and 228). Pin unmoved.
   - [ ] R17c Shown: the formation panel says marching to port, waiting for transports, at sea, or
     landed; the map draws the sea leg and the landing point; the cursor over land across the sea
     says the order goes by sea. AT: an e2e spec of an order over the sea, each state in turn.

@@ -27,6 +27,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   on arrival today; relied on here, filed under R17). The formation waits at the port while the
   group is under way; sunk or stopped elsewhere, the order ends refused (`NoTransports`). The call is
   saved as an optional section (`world.seaFetch`): no new save format.
+- **R17b.** A convoy is a transport group bound for one target cell (`world.convoyPort`, the
+  group's port; `world.seaFetch`, the divisions bound for it); a later order to the same cell joins
+  it while it loads. The group waits at the port until no division bound for it that would fit is
+  still to come, then sails; one left over waits for the voyage back. No timer: a division whose
+  march ends short of the port is not waited for (refused `NoTransports`), and a contact cancels as
+  any player's march. A repulse ends the convoy. Every player's order over the sea goes this way,
+  transports at the port or not; the AI's and God's orders keep the old path (`tryLanding` sails on
+  boarding), so the pin holds. `Embarked` is not widened (its saved stride stays).
 - **Also (the user's, 2026-11-04).** The United States' lean after R16b (29% of the land on the
   mean, done31 20%) stays a watch for the critic and the release sweeps, not an item.
 

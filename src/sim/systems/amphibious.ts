@@ -167,7 +167,7 @@ export function orderLanding(world: World, id: number, x: number, y: number, via
  * run 12, 1129 year 10: four divisions at Norfolk aboard three groups, 2 / 1 / 1; 6421 year 20: 21
  * groups at Norfolk sailed with one each on one turn).
  */
-export function tryLanding(world: World, id: number, x: number, y: number, via = 0): 0 | RejectReason {
+export function tryLanding(world: World, id: number, x: number, y: number, via = 0, hold = false): 0 | RejectReason {
   const f = world.formations;
   const c = f.cols;
   if (!f.has(id) || world.afloat(id) || !world.rules) return world.afloat(id) ? RejectReason.Aboard : RejectReason.NotLand;
@@ -197,6 +197,8 @@ export function tryLanding(world: World, id: number, x: number, y: number, via =
       // `via` named: that group alone (PLAN 7.90g, ADR-649).
       if (fleet !== 0 || (via !== 0 && o !== via) || !world.isFleet(o) || c.nation[o] !== nation || c.engaged[o] === 1) return;
       if (c.moving[o] === 1 && !(o === via && carrying(world, o))) return;
+      // A player's convoy loading (ROADMAP R17b) takes those bound for it alone.
+      if (o !== via && world.convoyPort.has(o)) return;
       if (!near(world, cellOfPlace(world, o), water[i]!, world.atSize(AT_PORT_CELLS))) return;
       if (transportRoom(world, o) - aboard(world, o) >= men) fleet = o;
     });
@@ -217,7 +219,8 @@ export function tryLanding(world: World, id: number, x: number, y: number, via =
   let land = owned ? nearestCellWhere((k) => comp[k] === targetComp && owner[k] !== 0, (sea % w) + 0.5, Math.floor(sea / w) + 0.5, w, h, world.atSize(LANDING_REACH), world.settings.loopingMap) : -1;
   if (land < 0) land = nearestCellWhere((k) => comp[k] === targetComp, (sea % w) + 0.5, Math.floor(sea / w) + 0.5, w, h, world.atSize(LANDING_REACH), world.settings.loopingMap);
   if (land < 0) return RejectReason.NoLanding;
-  if (!orderSail(world, fleet, (sea % w) + 0.5, Math.floor(sea / w) + 0.5)) return RejectReason.NoSeaWay;
+  // `hold` (a player's convoy, ROADMAP R17b): aboard, the group sails when its convoy is in (`convoySystem`).
+  if (!hold && !orderSail(world, fleet, (sea % w) + 0.5, Math.floor(sea / w) + 0.5)) return RejectReason.NoSeaWay;
   world.embarked.set(id, { fleet, land, water: sea, target });
   c.moving[id] = 0;
   c.home[id] = 0;
@@ -252,7 +255,7 @@ export function transportsPort(world: World, id: number, withTransports = true):
   const here = cellOfPlace(world, id);
   const fleets: number[] = [];
   f.forEach((o) => {
-    if (world.isFleet(o) && c.nation[o] === nation && c.moving[o] !== 1 && c.engaged[o] !== 1 && transportRoom(world, o) - aboard(world, o) >= men) fleets.push(o);
+    if (world.isFleet(o) && c.nation[o] === nation && c.moving[o] !== 1 && c.engaged[o] !== 1 && !world.convoyPort.has(o) && transportRoom(world, o) - aboard(world, o) >= men) fleets.push(o);
   });
   let best = -1;
   let bd = Infinity;
@@ -290,7 +293,7 @@ export function callTransports(world: World, id: number, port: number): number {
   const water = portSeaOf(world)[port]!;
   if (water < 0) return 0;
   const w = world.cells.w;
-  const called = new Set(world.seaFetch.values());
+  const called = new Set([...world.seaFetch.values(), ...world.convoyPort.keys()]);
   const dist = (o: number): number => {
     const at = cellOfPlace(world, o);
     let dx = Math.abs((at % w) - (water % w));
@@ -310,6 +313,160 @@ export function callTransports(world: World, id: number, port: number): number {
     return o;
   }
   return 0;
+}
+
+/** Whether a landing for a target at (`x`, `y`) can be found (`tryLanding`'s): land, and zoned open water within LANDING_REACH. */
+export function hasLanding(world: World, x: number, y: number): boolean {
+  const { w, h, terrain } = world.cells;
+  const tx = Math.floor(x);
+  const ty = Math.floor(y);
+  if (tx < 0 || tx >= w || ty < 0 || ty >= h) return false;
+  const target = ty * w + tx;
+  if (!isLand(terrain[target]!) || navOf(world).grid.component[target] === 0) return false;
+  const z = seaOf(world);
+  return nearestCellWhere((k) => z.zoneOf[k] !== 0 && z.closed[z.zoneOf[k]!] !== 1, tx + 0.5, ty + 0.5, w, h, world.atSize(LANDING_REACH), world.settings.loopingMap) >= 0;
+}
+
+/** Men of the player's formations bound for group `fleet` (`world.seaFetch`) and not yet aboard. */
+function promised(world: World, fleet: number): number {
+  let men = 0;
+  for (const [id, o] of world.seaFetch) if (o === fleet && world.formations.has(id)) men += world.formations.cols.strength[id]!;
+  return men;
+}
+
+/** The cell a player's convoy on group `fleet` is for: of a formation bound for it, else of one aboard; -1 for none. */
+function convoyTarget(world: World, fleet: number): number {
+  for (const [id, o] of [...world.seaFetch].sort((a, b) => a[0] - b[0])) if (o === fleet) return world.seaBound.get(id) ?? -1;
+  for (const [, e] of [...world.embarked].sort((a, b) => a[0] - b[0])) if (e.fleet === fleet) return e.target;
+  return -1;
+}
+
+/** Whether group `fleet` of a player's convoy stands at its port, not under way and in no battle (ROADMAP R17b). */
+export function loading(world: World, fleet: number): boolean {
+  const port = world.convoyPort.get(fleet);
+  const c = world.formations.cols;
+  if (port === undefined || !world.formations.has(fleet) || c.moving[fleet] === 1 || c.engaged[fleet] === 1) return false;
+  return near(world, cellOfPlace(world, fleet), portSeaOf(world)[port]!, world.atSize(AT_PORT_CELLS));
+}
+
+/** Ends the player's convoy on group `fleet`: the formations still bound for it are told (`NoTransports`). */
+function endConvoy(world: World, fleet: number): void {
+  world.convoyPort.delete(fleet);
+  for (const [id, o] of [...world.seaFetch].sort((a, b) => a[0] - b[0])) {
+    if (o !== fleet) continue;
+    world.seaFetch.delete(id);
+    world.seaBound.delete(id);
+    if (world.formations.has(id)) world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.NoTransports, NaN);
+  }
+}
+
+/**
+ * The transports for a player's land formation `id` ordered over the sea to cell `target` (ROADMAP
+ * R17a, R17b), and the port of its land where it boards them; null for none. In turn: a convoy of
+ * its nation loading for the same target at a port of its land with room for it (a click's
+ * divisions go together); a group standing at a port of its land with room, not another's convoy,
+ * at the port nearest the formation; a group called to the nearest port of its land
+ * (`callTransports`); a convoy for the same target that is full, for its next voyage.
+ */
+export function assignTransports(world: World, id: number, target: number): { port: number; fleet: number } | null {
+  const f = world.formations;
+  const c = f.cols;
+  const nation = c.nation[id]!;
+  const men = c.strength[id]!;
+  const w = world.cells.w;
+  const water = portSeaOf(world);
+  const comp = navOf(world).grid.component;
+  const here = cellOfPlace(world, id);
+  const own = (i: number): boolean => water[i]! >= 0 && world.cells.controller[world.ports[i]!.cell] === nation && comp[world.ports[i]!.cell] === comp[here] && !portShut(world, i);
+  const convoys = [...world.convoyPort].filter(([o, p]) => f.has(o) && c.nation[o] === nation && own(p) && convoyTarget(world, o) === target).sort((a, b) => a[0] - b[0]);
+  for (const [o, p] of convoys) if (transportRoom(world, o) - aboard(world, o) - promised(world, o) >= men) return { port: p, fleet: o };
+  let best: { port: number; fleet: number } | null = null;
+  let bd = Infinity;
+  const dist = (k: number): number => {
+    let dx = Math.abs((k % w) - (here % w));
+    if (world.settings.loopingMap && dx > w / 2) dx = w - dx;
+    const dy = Math.floor(k / w) - Math.floor(here / w);
+    return dx * dx + dy * dy;
+  };
+  f.forEach((o) => {
+    if (!world.isFleet(o) || c.nation[o] !== nation || c.moving[o] === 1 || c.engaged[o] === 1 || world.convoyPort.has(o) || carrying(world, o)) return;
+    if (transportRoom(world, o) - promised(world, o) < men) return;
+    const at = cellOfPlace(world, o);
+    world.ports.forEach((p, i) => {
+      if (!own(i) || !near(world, at, water[i]!, world.atSize(AT_PORT_CELLS))) return;
+      const d = dist(p.cell);
+      if (d < bd || (d === bd && best !== null && o < best.fleet)) [bd, best] = [d, { port: i, fleet: o }];
+    });
+  });
+  if (best) return best;
+  const port = transportsPort(world, id, false);
+  if (port >= 0) {
+    const o = callTransports(world, id, port);
+    if (o !== 0) return { port, fleet: o };
+  }
+  for (const [o, p] of convoys) if (transportRoom(world, o) >= men) return { port: p, fleet: o };
+  return null;
+}
+
+/** `boardConvoy`: not yet; it waits. */
+const WAIT = -1;
+
+/** A player's formation `id` bound for group `fleet` boards it for `target` (ROADMAP R17b): 0 aboard, WAIT, or why not. */
+function boardConvoy(world: World, id: number, target: number, fleet: number): number {
+  const f = world.formations;
+  const c = f.cols;
+  const port = world.convoyPort.get(fleet);
+  if (!f.has(fleet) || port === undefined) return RejectReason.NoTransports;
+  const p = world.ports[port]!;
+  const here = cellOfPlace(world, id);
+  const r = world.atSize(AT_PORT_CELLS);
+  // Its march ended short of the port (stalled): not waited for.
+  if (!near(world, here, p.cell, r) && !near(world, here, portSeaOf(world)[port]!, r)) return RejectReason.NoTransports;
+  // Under way (called, or on the next voyage), in a battle, away, or full: it waits.
+  if (!loading(world, fleet)) return WAIT;
+  if (transportRoom(world, fleet) - aboard(world, fleet) < c.strength[id]!) return WAIT;
+  const w = world.cells.w;
+  return tryLanding(world, id, (target % w) + 0.5, Math.floor(target / w) + 0.5, fleet, true);
+}
+
+/**
+ * The player's convoys (ROADMAP R17b), hourly after the boarding: a group loading at its port with
+ * a formation aboard sails for the landing (the first aboard's) once no formation bound for it that
+ * would fit is still to come; with no way there, the convoy ends and those aboard go ashore at the
+ * port. Standing away from its port with nobody aboard, it sails back for those still bound for it
+ * (the next voyage). A convoy with nobody bound for it or aboard is over.
+ */
+function convoySystem(world: World): void {
+  if (world.convoyPort.size === 0) return;
+  const f = world.formations;
+  const c = f.cols;
+  const w = world.cells.w;
+  const water = portSeaOf(world);
+  for (const [fleet, port] of [...world.convoyPort].sort((a, b) => a[0] - b[0])) {
+    if (!f.has(fleet)) {
+      endConvoy(world, fleet);
+      continue;
+    }
+    if (c.moving[fleet] === 1 || c.engaged[fleet] === 1) continue;
+    const pending = [...world.seaFetch].filter(([id, o]) => o === fleet && f.has(id)).map(([id]) => id);
+    const load = carrying(world, fleet);
+    if (loading(world, fleet)) {
+      const room = transportRoom(world, fleet) - aboard(world, fleet);
+      if (load && !pending.some((id) => c.strength[id]! <= room)) {
+        const first = [...world.embarked].filter(([, e]) => e.fleet === fleet).sort((a, b) => a[0] - b[0])[0]![1];
+        if (!orderSail(world, fleet, (first.water % w) + 0.5, Math.floor(first.water / w) + 0.5)) {
+          for (const [id, e] of world.embarked) if (e.fleet === fleet) world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.NoSeaWay, NaN);
+          endConvoy(world, fleet);
+          continue;
+        }
+        if (pending.length === 0) world.convoyPort.delete(fleet);
+      } else if (!load && pending.length === 0) world.convoyPort.delete(fleet);
+      continue;
+    }
+    if (load) continue;
+    if (pending.length === 0) world.convoyPort.delete(fleet);
+    else if (!orderSail(world, fleet, (water[port]! % w) + 0.5, Math.floor(water[port]! / w) + 0.5)) endConvoy(world, fleet);
+  }
 }
 
 /** Lands embarked formation `id` at land cell `cell`. */
@@ -369,16 +526,23 @@ export function amphibiousSystem(world: World): void {
         continue;
       }
       if (c.moving[id] === 1) continue;
-      // Its transports called (ROADMAP R17a): it waits at the port while they are under way, then
-      // boards them and no other.
-      const called = world.seaFetch.get(id);
-      if (called !== undefined && f.has(called) && c.moving[called] === 1) continue;
-      world.seaFetch.delete(id);
+      // A player's, bound for its convoy's group (ROADMAP R17a, R17b): it boards when the group
+      // stands loading at the port with room, and waits while it is under way or full.
+      const bound = world.seaFetch.get(id);
+      if (bound !== undefined) {
+        const step = boardConvoy(world, id, target, bound);
+        if (step === WAIT) continue;
+        world.seaFetch.delete(id);
+        world.seaBound.delete(id);
+        if (step !== 0) world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, step, NaN);
+        continue;
+      }
       world.seaBound.delete(id);
-      const why = tryLanding(world, id, (target % w) + 0.5, Math.floor(target / w) + 0.5, called !== undefined && f.has(called) ? called : 0);
+      const why = tryLanding(world, id, (target % w) + 0.5, Math.floor(target / w) + 0.5);
       if (why !== 0) world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, why, NaN);
     }
   }
+  convoySystem(world);
   if (world.embarked.size === 0) return;
   for (const [id, e] of [...world.embarked].sort((a, b) => a[0] - b[0])) {
     if (!f.has(id)) {
@@ -394,11 +558,15 @@ export function amphibiousSystem(world: World): void {
     c.x[id] = c.x[e.fleet]!;
     c.y[id] = c.y[e.fleet]!;
     if (c.moving[e.fleet] === 1 || c.engaged[e.fleet] === 1) continue;
+    // Loading at its convoy's port (ROADMAP R17b): aboard until the convoy sails.
+    if (loading(world, e.fleet)) continue;
     const at = cellOfPlace(world, e.fleet);
     if (at === e.water) {
       // The sea about the landing held by an enemy (PLAN 4.5b): thrown back, home with the transports.
       const holder = seaHolder(world, seaOf(world).zoneOf[e.water]!);
       if (holder !== 0 && world.wars.atWar(holder, c.nation[id]!)) {
+        // A player's convoy ends with it: those still bound for it are told (ROADMAP R17b).
+        endConvoy(world, e.fleet);
         e.water = -1;
         e.land = -1;
         world.out.emit(world.tick, EventKind.LandingRepulsed, id, holder, c.x[id]!, c.y[id]!);

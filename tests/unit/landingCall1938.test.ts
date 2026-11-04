@@ -124,3 +124,63 @@ describe('transports called to a landing (ROADMAP R17a)', () => {
     expect(w.seaFetch.size).toBe(0);
   });
 });
+
+describe('landings together (ROADMAP R17b)', () => {
+  it('three divisions in one click, room for two: two board, sail and land together; the group comes back for the third', () => {
+    const { s, w, transports, belfast } = britain();
+    const c = w.formations.cols;
+    // One group left, at Portsmouth (a port of their land): room for two full infantry divisions.
+    const keep = transports[0]!;
+    for (const id of transports.slice(1)) destroyFormation(w, id);
+    const water = portSeaOf(w);
+    const ports = w.ports.findIndex((p) => p.name === 'Portsmouth');
+    [c.x[keep], c.y[keep]] = [(water[ports]! % W) + 0.5, Math.floor(water[ports]! / W) + 0.5];
+    const room = transportRoom(w, keep);
+    // Three full divisions of England's, nearest London.
+    const comp = navOf(w).grid.component;
+    const [lx, ly] = cellOf(-0.12, 51.5, W, H);
+    const england = comp[Math.floor(ly) * W + Math.floor(lx)];
+    const divs: number[] = [];
+    w.formations.forEach((id) => {
+      if (c.nation[id] === ENG && !w.offLand(id) && comp[Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!)] === england && c.strength[id] === 12460) divs.push(id);
+    });
+    divs.sort((a, b) => (c.x[a]! - lx) ** 2 + (c.y[a]! - ly) ** 2 - ((c.x[b]! - lx) ** 2 + (c.y[b]! - ly) ** 2) || a - b);
+    const three = divs.slice(0, 3);
+    expect(three).toHaveLength(3);
+    expect(2 * 12460).toBeLessThanOrEqual(room);
+    expect(3 * 12460).toBeGreaterThan(room);
+    for (const id of three) s.command({ kind: 'moveFormation', id, x: belfast[0], y: belfast[1], nation: ENG });
+    s.step(1);
+    for (const id of three) expect(w.seaFetch.get(id), `division ${id} bound for the group`).toBe(keep);
+    // Each division's boardings and landings, by the hour.
+    const embarked = new Map<number, number[]>();
+    const landed = new Map<number, number[]>();
+    const ulster = comp[Math.floor(belfast[1]) * W + Math.floor(belfast[0])];
+    const done = (): boolean => three.every((id) => (landed.get(id)?.length ?? 0) > 0 && !w.embarked.has(id) && comp[Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!)] === ulster);
+    for (let h = 0; h < 24 * 60 && !done(); h++) {
+      s.step(1, (wd) => {
+        const ev = wd.out.events;
+        for (let i = 0; i < ev.length; i += 6) {
+          const id = ev[i + 2]!;
+          if (!three.includes(id)) continue;
+          expect(ev[i + 1], `division ${id} refused`).not.toBe(EventKind.MoveRejected);
+          if (ev[i + 1] === EventKind.FormationEmbarked) embarked.set(id, [...(embarked.get(id) ?? []), wd.tick]);
+          if (ev[i + 1] === EventKind.FormationLanded) landed.set(id, [...(landed.get(id) ?? []), wd.tick]);
+        }
+        for (const [id, e] of wd.embarked) if (three.includes(id)) expect(e.fleet).toBe(keep);
+        wd.out.events.length = 0;
+        wd.out.fires.length = 0;
+      });
+    }
+    expect(done(), 'all three in Ulster').toBe(true);
+    const at = three.map((id) => landed.get(id)![0]!).sort((a, b) => a - b);
+    // Two together, the third after the voyage back.
+    expect(at[1]).toBe(at[0]);
+    expect(at[2]).toBeGreaterThan(at[1]! + 24);
+    const third = three.find((id) => landed.get(id)![0] === at[2])!;
+    const second = three.find((id) => id !== third && landed.get(id)![0] === at[0])!;
+    expect(embarked.get(third)![0]!).toBeGreaterThan(landed.get(second)![0]!);
+    expect(w.convoyPort.size).toBe(0);
+    expect(w.seaFetch.size).toBe(0);
+  });
+});
