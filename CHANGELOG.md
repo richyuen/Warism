@@ -14,6 +14,9 @@ What each release of Warism brought, for players. Play it at https://richyuen.gi
 - The History says when a nation defaults on its debts.
 
 **Heroes** (the new-game option)
+- Heroes are famous ships and tanks of the era, such as Bismarck, Yamato and the Maus, that a new
+  game can give their nations. Each is a single unit with its own name that fights, is lost and
+  comes back.
 - A hero's counter is drawn at its place on the map, never pushed across a continent, and only a
   nation's own heroes fold together; tapping a folded counter again opens each of its heroes in
   turn, on a phone as on a desk.
