@@ -48,7 +48,7 @@ Rules:
   - [x] R6j §9: UI and UX.
     Done: rewritten from three read-throughs of the code (39 → 11 KB); `specRefs.test.ts` 11 of 11, every
     section at 0 misses (SPEC.md now 1,878 lines).
-- [ ] R16 **Traits that do nothing** (found by R6c). Of a trait's modifiers only `income` and
+- [x] R16 **Traits that do nothing** (found by R6c). Of a trait's modifiers only `income` and
   `manpower` act; `landAttack`, `org`, `stability` and the rest are validated and read by nothing.
   The user's decision (2026-11-03, ADR-822): make them act where the game has a rule, drop the rest,
   let God set a nation's traits.
@@ -70,6 +70,10 @@ Rules:
   says taking control switches the nation's AI off (ADR-759: its layers but nukes stay on), and
   `exportScenario` clears every statistic but `stats.nuke` (R6j). SPEC §9.3 says a right-click orders
   a march; it is a left-click with formations selected (the right-click is the nation menu).
+  Done: the headers of `war.ts`, `retreat.ts`, `air.ts` and `player.ts` and SPEC §9.3 say what the
+  code does; `exportScenario` drops `stats.nuke` too (`scenarioFile.test.ts`, red without it).
+  `revival.cooldownDays` stays: `scenario1938.test.ts` pins the files to `REVIVAL_COOLDOWN`. The
+  `majors` of `inspect` stays: that reply is for tests and the critic, not the UI.
 - [ ] R17 **Landings the player can order** (the user's decision, 2026-11-04, ADR-823). A left-click on
   land over the sea with divisions selected already lands them, but only when the player's transports
   wait at a port of their land; else it is refused. Nothing shows a division bound for a port, waiting

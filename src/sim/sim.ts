@@ -167,18 +167,19 @@ export class Sim {
 
   /**
    * The world as a scenario (PLAN 1.38): the same state with its run history dropped (command log
-   * and pending commands, history log, statistics, editor undo stack), so a shared scenario starts
+   * and pending commands, history log, statistics with the air's and the nuclear ones, editor undo stack), so a shared scenario starts
    * clean at its date. The running game is left as it was. Returns the state bytes and their hash.
    */
   exportScenario(): { bytes: Uint8Array; hash: number } {
     const w = this.world;
-    const keep = { log: w.commandLog, pending: w.pending, history: w.history.rows, towns: w.history.towns, stats: w.stats.rows, air: w.stats.air, undo: w.edits.undo, redo: w.edits.redo };
+    const keep = { log: w.commandLog, pending: w.pending, history: w.history.rows, towns: w.history.towns, stats: w.stats.rows, air: w.stats.air, nuke: w.stats.nuke, undo: w.edits.undo, redo: w.edits.redo };
     w.commandLog = [];
     w.pending = [];
     w.history.rows = [];
     w.history.towns = new Map();
     w.stats.rows = [];
     w.stats.air = [];
+    w.stats.nuke = [];
     w.edits.undo = [];
     w.edits.redo = [];
     try {
@@ -190,6 +191,7 @@ export class Sim {
       w.history.towns = keep.towns;
       w.stats.rows = keep.stats;
       w.stats.air = keep.air;
+      w.stats.nuke = keep.nuke;
       w.edits.undo = keep.undo;
       w.edits.redo = keep.redo;
     }

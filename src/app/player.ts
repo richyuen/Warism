@@ -1,8 +1,10 @@
 /**
  * Player control of a nation (PLAN 1.33a). Taking control (`setPlayer`, sim state saved with
- * the world) switches the nation's AI off (all three AI layers skip it) and lets map clicks
- * select its formations and order them to move. Moving into enemy land is the attack order:
- * movement stops at enemy cells and combat starts. Releasing control switches its AI back on.
+ * the world) keeps its AI layers on, its nuclear decisions excepted (ADR-759; the Actions tab's
+ * assist boxes set the mask, `setPlayerAi`; a formation the player orders is left to the player
+ * until it arrives). A left click selects its formations and, with some selected, orders them
+ * there (the right click is the nation menu). Moving into enemy land is the attack order:
+ * movement stops at enemy cells and combat starts. Releasing control gives it all back to its AI.
  * The controlled nation follows the sim (stats), so a load or resumed autosave keeps it.
  *
  * A wing's order (PLAN 5.8v1): its mission or rebase, chosen in the Actions tab, is armed

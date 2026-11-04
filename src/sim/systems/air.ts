@@ -6,8 +6,9 @@
  * whose airbase a nation not of its side took falls back to its nation's nearest, or is lost
  * (PLAN 5.8m). Then the scheduler (PLAN 5.2b): a wing with a mission and no sortie,
  * ready on its base, launches one; then the air power flown by zone (`airPowerSystem`, PLAN 5.3c)
- * and the hour's air fights (`airCombat`, PLAN 5.3a). No rule
- * of the land reads a wing yet (`World.offLand`).
+ * and the hour's air fights (`airCombat`, PLAN 5.3a). A wing is off the land (`World.offLand`): no
+ * land rule counts it as a formation; it acts on the land through its missions (close support,
+ * bombing, air supply, paradrop).
  */
 import { EventKind, RejectReason } from '../../shared/events';
 import { isDayStart } from '../../shared/calendar';

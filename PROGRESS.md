@@ -907,3 +907,13 @@
 - The user's decisions: real transports; R17a transports come, R17b landings together, R17c shown, R17d an escort
   box ticked by default. The United States' lean stays a watch.
 - **Next:** R16's notes, then R17a.
+
+## 2026-11-04 — ROADMAP R16: the notes; R16 done
+- Headers to the code: `war.ts` (a side fights to the death by its leader's flag), `retreat.ts` (the point
+  RETREAT_CELLS beyond the formation), `air.ts` (wings act on the land by their missions), `player.ts` (AI layers
+  on but nukes; left click orders). SPEC §9.3: a left click orders a march.
+- Bug: `exportScenario` kept `stats.nuke`, so a scenario's file carried the run's nuclear statistics and a reload
+  hashed apart from its header. Now dropped; `scenarioFile.test.ts` grants warheads and checks it (red without).
+- Kept, as by design: `revival.cooldownDays` (pinned to `REVIVAL_COOLDOWN` by `scenario1938.test.ts`); `majors` in
+  `inspect` (a reply for tests and the critic).
+- **Next:** R17a.

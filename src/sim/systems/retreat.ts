@@ -9,8 +9,8 @@
  * A formation in contact (`engaged`, of the hour before) whose org is under RETREAT_ORG breaks
  * off. Its enemies are the formations of nations it is at war with that are not themselves on
  * the retreat; the nearest of them within CONTACT_CELLS (the lower id on a tie) is the one it
- * goes from. It is ordered to the cell nearest the point RETREAT_CELLS away from that enemy, on
- * the far side of itself, among the cells within RETREAT_SNAP of that point that its side
+ * goes from. It is ordered to the cell nearest the point RETREAT_CELLS beyond itself, straight away
+ * from that enemy, among the cells within RETREAT_SNAP of that point that its side
  * holds (its nation, its supply bloc, a nation fighting beside it), that are on its landmass
  * and that are out of the contact of every enemy about it; with no such cell there (the enemy
  * has taken the ground behind it), to the nearest such cell within RETREAT_REACH of itself.

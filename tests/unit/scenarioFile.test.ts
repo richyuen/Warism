@@ -17,19 +17,24 @@ describe('scenario files (PLAN 1.38)', () => {
     const s = new Sim({ scenario: '1938', seed: 3, assets: assets1938(W) });
     s.command({ kind: 'declareWar', attacker: GER!, defender: POL! });
     s.command({ kind: 'renameNation', nation: POL!, name: 'Rzeczpospolita' });
+    s.command({ kind: 'grantWarheads', nation: GER!, count: 3 }); // a nuclear statistic not 0 (ROADMAP R16)
     s.step(24 * 40);
     const before = { hash: s.hash(), log: s.world.commandLog.length, history: s.world.history.length, stats: s.world.stats.length };
-    expect(before.log).toBe(2);
+    expect(before.log).toBe(3);
+    const nuke = s.world.stats.nuke.slice();
+    expect(nuke.some((v) => v !== 0)).toBe(true);
     expect(before.history).toBeGreaterThan(0);
     const { bytes, hash } = s.exportScenario();
     // The running game is untouched.
     expect(s.hash()).toBe(before.hash);
     expect([s.world.commandLog.length, s.world.history.length, s.world.stats.length]).toEqual([before.log, before.history, before.stats]);
+    expect(s.world.stats.nuke).toEqual(nuke);
     // The scenario: same world, no run history; loading it gives its hash.
     const t = new Sim({ scenario: '1938', seed: 9, assets: assets1938(W) });
     t.load(bytes);
     expect(t.hash()).toBe(hash);
     expect([t.world.commandLog.length, t.world.history.length, t.world.stats.length, t.world.edits.undo.length]).toEqual([0, 0, 0, 0]);
+    expect(t.world.stats.nuke.every((v) => v === 0)).toBe(true); // the nuclear statistics dropped too (they were kept before R16)
     expect(t.world.names.get(POL!)).toBe('Rzeczpospolita');
     expect(t.world.wars.atWar(GER!, POL!)).toBe(true);
     expect(t.tick).toBe(s.tick);

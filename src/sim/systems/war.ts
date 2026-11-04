@@ -6,8 +6,8 @@
  * ally (`bond`, PLAN 3.8), or when one of the two that would lead the sides is overrun (see
  * Capitulation; PLAN 3.12Rr1). Each leader brings its puppets and its alliance (PLAN 1.17);
  * the defender also gains its guarantors (each with its puppets). Of those, a nation with a bond
- * to a nation of the other side stays out, with its puppets (PLAN 3.8c). A side fights to the death when any
- * member's nation flag is set (God Mode can change it per war with `setWarFightToDeath`).
+ * to a nation of the other side stays out, with its puppets (PLAN 3.8c). A side fights to the death when its
+ * leader's (its first nation's) flag is set (God Mode can change it per war with `setWarFightToDeath`).
  *
  * Daily (00:00), when any war exists, the day's land tallies (`LandCounts`) give the land owned
  * per nation and the land occupied per (owner, controller) pair. Land is km², not cells (ADR-57):

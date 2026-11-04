@@ -1730,7 +1730,8 @@ builds).
 Actions tab's assist boxes set the mask (`setPlayerAi`).
 - **Selection:** a click on a formation of the played nation, Shift to add, the box, Ctrl+A; land
   formations first, never wings; drawn in gold, the camera following it until a pan of more than
-  `FOLLOW_SLACK_PX` (5). A right-click orders a march (`moveFormation`, at sea by transport); a march
+  `FOLLOW_SLACK_PX` (5). With formations selected, a left click elsewhere orders a march there
+  (`moveFormation`, at sea by transport; the right click is the nation menu); a march
   that meets a fight it was not given in is cancelled; an order keeps the AI off the formation (§7.1).
 - **Actions tab** (`src/ui/ActionsTab.tsx`): force war (breaking a bond in the way), offer peace (taken at
   score ≥ `PEACE_ACCEPT_SCORE` 25 or exhaustion ≥ `PEACE_ACCEPT_EXHAUSTION` 40, `src/shared/peace.ts`),
