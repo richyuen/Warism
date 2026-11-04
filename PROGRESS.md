@@ -797,3 +797,19 @@
   `amphibious.ts:51–55`; `BOMBARD_FIRE` `bombardment.ts:27`; `bombing.ts:23–33`; `naval.ts:74–78`.
 - `specRefs.test.ts` 8 of 8 (§6 at 0 misses).
 - **Next:** R6g.
+
+## 2026-11-03 — ROADMAP R6g: SPEC §6.3–6.4 as the code is
+- Two read-only read-throughs (aircraft; nuclear weapons); rewritten from them, 24 → 13 KB.
+- Wrong or gone in the old text: missions beyond patrol, strike and supply (interception is no mission; strategic
+  bombing is a strike's bombs); AA from buildings (elements only); wings "not built" (queued and bought by the AI);
+  "33 more nations" (34); a rebase within range (twice the range); superiority "read by nothing" for supply, detection,
+  bombing; missiles "hard to stop" (nothing stops one); the target value's fleets-in-port and Major Battle terms (none);
+  retaliation summed (it is the largest); doctrine "from traits" (from aggression); fallout drifting (laid once, by the
+  day's wind); relations hit with every nation (outrage and pariah rules in the strategic AI).
+- The checker caught two names abbreviated in the draft (`FALLOUT_WIDTH_KM`, `NUKE_WEIGHED_LONG`/`_NONE`).
+- Constants stated, read from: `airbases.ts:46`; `air.ts:186,281,358,420`; `airCombat.ts:21–28,181–183,326–354`;
+  `airSuperiority.ts:13–94`; `bombing.ts:21–33`; `airLift.ts:28–62`; `ai/air.ts:66–69`; `PLAYER_MISSION_HOURS`
+  `playerOrders.ts:19`; `economic.ts:265,276`; `nuclear.ts:178–216,426–434,530–543,632–692,1084–1134,1536,1734–1810`;
+  `THERMO_YIELD`, `BLAST_KM` `src/shared/nuclear.ts`; `historyText.ts:19,21`.
+- `specRefs.test.ts` 8 of 8 (§6 whole at 0 misses).
+- **Next:** R6h.

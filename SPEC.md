@@ -2,7 +2,7 @@
 
 Status: v1.0 (2026-11-03, after `release-2026-11-03`; ADR-805). This document says how the game works
 now. The *why* of each choice is in `DECISIONS.md` and `docs/history/DECISIONS-<YYYY-MM>.md` (cited as
-`[ADR-n]`). §1–§5, §6.1–6.2 and §10 are current; the other sections are being brought up to date one by one
+`[ADR-n]`). §1–§6 and §10 are current; the other sections are being brought up to date one by one
 (ROADMAP R6), and where one disagrees with the code, the code and the newest ADR win. A current
 section names only files, code and scripts that exist (`tests/unit/specRefs.test.ts`, ADR-821).
 
@@ -1243,278 +1243,145 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   a front's port (`planFerry`). A nation with a landing at sea plans no other landing.
 
 ### 6.3 Aircraft
-- Air wings of fighter, tactical bomber, strategic bomber, CAS, naval bomber and transport,
-  based at airbases (province building) or carriers. Range is limited from the base.
-- Missions (per wing, set by AI or player): air superiority (zone patrol),
-  interception, CAS, tactical bombing, **strategic bombing** (industry, ports, cities,
-  then income and production), naval strike, paradrop/air supply.
-- Each hour per zone: the scheduler launches **sorties**. A sortie flight path is
-  derived kinematics `(base, target, launchTick, speed)`, so its position is never stored.
-  A nation's patrols over one place take off in turn, an n-th of a wing's cycle apart, the
-  launch within the hour where that falls (PLAN 7.36a, ADR-558).
-  Air combat is at element level between sorties in the same zone. AA from ground
-  elements, buildings and ships shoots down planes.
-- *As built (PLAN 5.1a, ADR-306; `src/sim/nav/airZones.ts`, `airOf(world)`):* the air zones are
-  the sea zones over water (428 on the 1938 map) and, over land, regions of whole nodes of the
-  province graph of about 300,000 km² (`AIR_ZONE_KM2`; 1.5 M until PLAN 7.36b, ADR-560, when
-  London, Paris and Berlin were one zone 4,000 km across), 405 in 1938, 85 of them islands
-  alone (the others 82,000 km² to 3.1 M, the largest a province of Siberia, Canada or Australia
-  alone): seeds on a lattice of that side in km, each region grown from its seed over the graph
-  by the km between the nodes' centres; a land mass under a third of the target (an island) joins
-  whole the zone of the nearest seed if that seed is within 450 km (`ISLAND_REACH_KM`), else it is
-  a zone of its own that later islands within reach of it join (PLAN 7.36b2, ADR-562: the Azores
-  were in a zone of the Sahara); a region under a quarter of the target joins its neighbour of
-  least area. Derived, not saved; the sorties' zones (`airborne`), air superiority and the air AI
-  read it.
-- *As built (PLAN 5.1b, ADR-307):* the nine aircraft types of `data/units/air.json` are in the
-  rules after the ships, and six wing templates (`data/templates/air.json`) after the fleets: a
-  fighter group (3 squadrons of 12), a tactical bomber group (3 × 8), a strategic bomber group
-  (4 × 6), a close support group (3 × 10), a naval bomber group (3 × 8) and an air transport
-  group (4 × 6). A wing is a formation of an air template. The 1938 start has its wings (5.1d);
-  none is built yet: the order to build one is refused (no domain but the land's and, with a
-  shipyard, the sea's), as is the spawn (`NotOfLand`); the build list leaves them out (PLAN 5.8s).
-- *As built (PLAN 5.1c, ADR-308; `src/sim/data/airbases.ts`, `data/scenarios/1938/airbases.json`):*
-  every capital city is an airbase of level 4, a city of size 5 one of level 3, and 27 main air
-  stations of 1938 are listed by hand (Mildenhall, Le Bourget, Tempelhof, Guidonia, Monino,
-  Kasumigaura, Langley Field…, levels 4 and 5; the levels raised at 5.1d to hold the start's air
-  forces): every living nation holds one. Who
-  holds the cell holds the base; its room is the airbase building's 50 aircraft a level. Static
-  data of the scenario (`world.airbases`), as the ports are; the random world has them too.
-- *As built (PLAN 5.1d, ADR-309; `data/scenarios/1938/air.json`, `addWings`, `src/sim/systems/air.ts`):*
-  the 1938 start has 216 air wings: 198 of the nations' air forces by template at their airbases
-  (the base with the most room left that holds the wing; Germany 28, the Soviet Union 30, Britain
-  20, Italy 17, Japan 16, France 15, the United States 15, a few for 33 more nations; a wing of
-  the start stands for about three first-line groups of the record) and a naval bomber group on
-  each of the 18 carriers. A wing's base is state (`world.wingBase`: an airbase, or a carrier's
-  fleet, which it follows hourly, `airSystem`; it is lost with its carrier: a fleet keeps a wing to
-  each of its live carriers, the lowest ids, and a rebase to it counts them, PLAN 5.8l, ADR-335;
-  one whose airbase a nation not of its side took falls back to its nation's nearest airbase with
-  room, its mission ended, or is lost with none, PLAN 5.8m, ADR-336). It is paid; it weighs
-  nothing in a reckoning of forces; no rule of the land's march, supply or fire reads it
-  (`World.offLand`: afloat or a wing); a wing at its base is not drawn (left out of the
-  snapshot's formations), its sorties are (5.7a).
-- *As built (PLAN 5.1e, ADR-310; `orderMission`, `orderRebase`):* a wing's range is the least
-  `range_km` of its aircraft, from its base (a carrier's moves with its fleet). A mission (patrol
-  about a place, strike a place; `world.wingMission`, saved) beyond it is refused with its reason
-  (`OutOfRange`). A wing rebases at once to an airbase of its side (its nation, bloc or allies at
-  war) within range with room for its aircraft, or to a carrier of its nation's with a free deck;
-  else `OutOfRange` or `NoBase`.
-- *As built (PLAN 5.2a, ADR-311; `src/shared/sorties.ts` since 5.7a):* a sortie is its launch (base,
-  target, launch tick, speed, km, hours over the target); `sortieAt` gives its place and leg at
-  any time by a straight line between base and target at its speed. A strike turns at once; a
-  patrol stays over its zone for the fuel its range leaves it (2 × (range − km) ÷ speed), at
-  most 4 hours.
-- *As built (PLAN 5.2b, ADR-312; `airSystem`, `airborne`):* each hour a wing with a mission and
-  no sortie launches one from its base (state: `world.sorties`, saved; the wing's row stays at
-  its base); home, it turns round 2 hours. `airborne` gives the sorties in the air at a time by
-  air zone, from `sortieAt`: where interception is reckoned (PLAN 5.3).
-- *As built (PLAN 5.3a, ADR-313; `airCombat`):* each hour the sorties in one air zone of nations
-  at war fire on each other (since 5.7d those within 150 km of each other): a squadron's aircraft × its air attack × 0.05 over the target's
-  defence, in hit points, the losses in aircraft carried as on the land (× 0.25 until PLAN 7.24a0,
-  ADR-502: an even fighter fight 2.6 % an hour each side, 13 % before; the air forces of 1938
-  were gone in three weeks of war). A wing with none left is
-  lost; a sortie that lost a quarter in the hour turns home. Fighters beat bombers by the data.
-- *As built (PLAN 5.3b, ADR-314; `antiAir`):* a sortie in the air is fired on by the formations of
-  its enemies within a cell of its place, land and fleets: each element's `aa` per full element
-  × 0.2, over the aircraft's defence; a tactical bomber group over an infantry division loses
-  0.13 % an hour (× 2 and 1.25 % until PLAN 7.24a0, ADR-502).
-- *As built (PLAN 5.3c, ADR-315; `airSuperiority`):* per air zone per nation the air power flown
-  there (a sortie's aircraft × air attack an hour, half-life a day; `world.airPower`, saved); a
-  nation's superiority there is its side's share of its side's and its enemies' power, a half
-  where neither flew.
-- *As built (PLAN 5.4a, ADR-316; `airFactor` in `combat.ts`):* a formation's fire in a land battle ×
-  (1 + 0.2 × (2s − 1)), s its nation's air superiority in its zone: 1.2 with the air, 0.8
-  without, 1 at a half.
-- *As built (PLAN 5.8t1, ADR-345; `supplySystem`):* a formation fed gains its supply × (1 + 0.5
-  × (2s − 1)) an hour: half the rate under the enemy's air, one and a half under its own.
-- *As built (PLAN 5.8t2, ADR-346; `factsOf` in `navalCombat.ts`):* a fleet's detection (its
-  carriers' wings with it) × (1 + 0.25 × (2s − 1)): 1.25 under its side's air, 0.75 under the
-  enemy's.
-- *As built (PLAN 5.8t3, ADR-347; `strikeFactor`):* a strike's fire on the enemy's elements and
-  its tons on industry and ports × (1 + 0.25 × (2s − 1)), s the striker's superiority over its
-  target: 1.25 under its side's air, 0.75 under the enemy's.
-- *As built (PLAN 5.8u1, ADR-348; `airLift`):* a transport wing's mission may be `supply` (a
-  wing not of transports is refused it, `NotLand`). Its sortie, at the target in the hour it
-  arrives, lifts 1/48 of a formation's supply an aircraft (a group of 24: a half) to its side's
-  formations on the land within a cell that are short of it, the same share each, none past
-  full. The air AI's transports fly it (5.8u3a, ADR-350): daily, to the nation's own land
-  formation under half its supply nearest their base within range.
-- *As built (PLAN 5.8u2, ADR-349; `orderParadrop`, the `paradrop` command):* a formation of
-  infantry alone, not in contact, at an airbase its nation holds, is flown by its nation's
-  transport wings based there and on the ground (the fewest by id whose 64 men a plane lift its
-  men) to a land cell in their range held by its side, an enemy or no one. It stands there at
-  once, its org at most 0.5, an enemy's cell its (a beachhead's rule); the wings fly the sortie
-  out and home. Else refused: `NotLand`, `NoLanding` (water), `NoRoute` (a nation at peace),
-  `OutOfRange`, `NoAirlift` (no lift there, or in contact). The air AI drops (5.8u3b, ADR-351):
-  daily, before its wings' missions, a formation that can be dropped, not on the front, on its
-  nation's front formation nearest it.
-- *As built (PLAN 5.4b, ADR-317; `strikes`):* a strike sortie at its target fires once on the
-  enemy's land elements within a cell: its aircraft × soft or hard attack × 0.2, in units over
-  their hp, spread by their health; carried as on the land. A close support group takes about
-  117 men of an infantry division a strike. On a formation not in contact, a quarter of it
-  (PLAN 7.110b, ADR-692). The k-th strike in a day that hits one land formation fires at
-  1 / (1 + k) on it (PLAN 7.144, ADR-737; `formations.struck`, cleared at 00:00): what the first
-  left is dug in or scattered. Without it, the larger air forces of ADR-736 wore the few
-  formations of a war away from the air before they met the enemy's; ships are not dimmed.
-- *As built (PLAN 5.4c, ADR-318):* a strike on enemy ships fires its aircraft's hard attack
-  (halved on armour beyond its piercing) × 1 in hit points; each squadron's share on the ships
-  (their health of the whole) goes on one ship, picked by hit points (PLAN 7.61, ADR-606: spread
-  over all, alike ships sank together); what is aboard is not struck.
-- *As built (PLAN 5.4d, ADR-319):* a carrier's wings on board see and strike for its fleet as far
-  as a quarter of their range (250 km): its detection and its reach in a sea battle; once in 4
-  hours they strike the enemy's surface ships of the battle as a naval strike does, but each
-  squadron puts its whole fire on one ship, picked by hit points as a gun picks (PLAN 7.60, ADR-605):
-  spread over all, alike ships sank together, a whole fleet in one strike.
-  Out of a sea battle (PLAN 7.145, ADR-738; `airAi`): an AI nation's carrier wings, their fleet at
-  war, take a naval bomber's missions from the deck, as land-based wings do: the enemy's fleet
-  nearest in range, else its front, else its land forces in range; they never rebase. When their
-  fleet is in a sea battle, an AI's carrier wing ends its mission in that hour (`airSystem`; one
-  aloft flies its sortie out) and strikes for the fleet. Until then they struck only in a sea
-  battle, and the carriers at war stood by ports of enemies with no fleet afloat (PLAN 7.141).
-  A deck whose wing is lost is re-manned (PLAN 7.151, ADR-746; `economicAi` 3c0): monthly, an AI
-  nation puts a carrier wing aboard a carrier afloat with none, a deck a fleet a month, at the
-  wing's gold and men under the wing rebuild's reserve; aboard at once, wherever the fleet is.
-  The formation panel of a fleet with carriers lists the wings aboard and their missions.
-- *As built (PLAN 5.5a, ADR-320; `bombIndustry`, `repairSystem`):* a strike on land drops its
-  aircraft's bombs (`bomb_t`) on the enemy's industry within a cell of its target: each cell
-  there out of work by tons × 2 $M over their industry together (at most 0.9); the monthly income
-  takes it off; repaired 2% a day.
-- *As built (PLAN 5.5b, ADR-321; `portShut`):* the bombs damage the enemy's ports within reach by
-  tons over 60 × the port's level; repaired as industry; a port damaged by a half or more embarks
-  no one and its yard delivers no fleet.
-- *As built (PLAN 5.6, ADR-322; `airAi`):* daily, a nation at war sends its fighters to patrol
-  over its front, its close support and tactical bombers to strike the enemy's, its naval bombers
-  at the enemy's fleets, and its strategic bombers at the enemy's richest industry in range where
-  its side holds the air (superiority 0.6 or more), but for one group a nation holding a warhead
-  and no missiles keeps home for it (its lowest id, `nuclearReserve`; PLAN 7.37a, ADR-561); at
-  peace, no missions. Spread (PLAN 7.24a,
-  ADR-503): of a nation's wings, by id, each takes of the formations its role and range allow the
-  one with the fewest of its wings of its kind sent there that day, the nearest of equals. Over
-  the men (PLAN 7.24d, ADR-504): a fighter's patrol over its formation in contact is set on the
-  middle of that formation's deployed block (`deployOf`, worked out afresh from the state,
-  `withFreshDeployments`), where that is in its range; else on the formation's place.
-- *As built (PLAN 5.7a, ADR-323; `render/units/sorties.ts`):* the snapshot carries the sorties in
-  the air; the page draws each as planes of its nation's colour where `sortieAt` (in `shared/`)
-  has it at the frame's time (in the hour the snapshot ends, as the formations are played: 5.7d),
-  a patrol circling over its target, T0 to T2 (every tier since PLAN 5.9; its circle at most 0.6 × its
-  share of the view's smaller half side on the screen since PLAN 7.24c, so at T3 it stays over the
-  fight the camera is on; the circle is the page's, the sim's place its middle). A plane is its
-  nation's sprite tint, its edge under its fill (dark at T3, light further out), and at T3 at least
-  PLANE_MEN = 5 figures of a man wide, the air's marks scaled with it (PLAN 7.51a, ADR-609). From 8 m/px in
-  that symbol crossfades into the plane at its wingspan (`WINGSPAN_M` by role), all of it from 4 m/px: a
-  fighter some 3 px at 3 m/px, under 12 px with no edge and its shadow cast to the side (PLAN 7.108a,
-  ADR-684); the air's marks keep their size.
-- *As built (PLAN 5.7b, ADR-324; `render/fx/air.ts`):* an hour's air fight is tracers and flak with
-  smoke trails for the aircraft lost; a strike, bombs bursting about its target; a sortie under
-  AA (`FlakFired`), flak puffs about it; on the render clock, T0 to T2.
-- *As built (PLAN 5.7c, ADR-325):* the air-superiority map mode tints each air zone whose air a
-  nation holds (superiority 0.6 or more) with its colour, stripes a contested one, and fades the
-  rest; daily from the worker.
-- *As built (PLAN 5.7d, ADR-326):* a sortie fights the enemy's sorties of its zone within 150 km of
-  it (an air zone is too wide to be one fight); each meeting is a fight of its own, told between
-  its nearest foes. The air battle demo: `tests/e2e/airDemo1938.spec.ts`.
-- **Air superiority** per zone per side (0–1) modifies ground combat, supply,
-  naval detection and bombing accuracy. *As built:* ground combat (5.4a); supply, naval
-  detection and bombing accuracy not yet (PLAN 5.8t).
-- *As built since* (PLAN 5.8u, ADR-348 to ADR-351): the transports' missions, air supply and the
-  paradrop, above. Interception is no mission of its own: a patrol meets what comes within 150 km
-  of it (5.7d).
-- Tactical view: plane sprites flying sortie paths, dogfight tracers, bomb impacts,
-  flak. *As built:* 5.7a and 5.7b, at T0 to T2.
+`src/sim/systems/air.ts` and its neighbours; hourly in the air system: repairs (at 00:00), the day's
+strike counts cleared, bases and sorties, the airborne by zone, air power, strikes, air lift, air
+combat, AA.
+- **Types and templates** (`data/units/air.json`, `data/templates/air.json`): fighters, tactical,
+  strategic and naval bombers, close support, transports and the ballistic missile (§6.4); groups of
+  3–4 squadrons (§3.6). A wing is a formation of an air template; `offLand` (no land rule reads it); it
+  is paid upkeep and not drawn at its base.
+- **Bases** (`src/sim/data/airbases.ts`, `world.airbases`, static): every capital at level 4, a city of
+  size 5 at level 3 (`airbases.json`), and bases by hand at 4 or 5; held by its cell's controller; room
+  `AIR_PER_LEVEL` (50) aircraft a level (`wingAircraft` = Σ count × size). A carrier holds a wing a live
+  carrier. `world.wingBase` (saved): an airbase + 1, or −fleet. The random world has the same bases.
+- **At the start** (`data/scenarios/1938/air.json`, `src/sim/data/wings.ts`): 198 wings of 41 nations at
+  the base of their nation with most room, and a naval bomber group a carrier.
+- **Building:** a wing is queued like any formation and delivered at the nation's airbase with room
+  nearest its capital (`airfield`, §3.7); the economic AI buys wings while air upkeep is under
+  `AIR_SHARE` (0.1) of the army's, rebuilds towards its start count (`world.airStart`) under
+  `AIR_REBUILD_SHARE` (0.035) of income, a fighter while fighters are under half its wings else a
+  tactical bomber (`pickWing`), and a strategic bomber group for warheads without one.
+- **Losing a base:** a wing whose airbase is taken falls back to one its nation holds with room
+  (`fallBack`), its mission ended, or is lost; a carrier's wings move with it (`carryWings`), are lost
+  with it, or when the fleet has more wings than live carriers; `manDecks` crews empty decks (on delivery
+  and at most one deck a month by the economic AI).
+- **Missions** (`world.wingMission`, saved): patrol, strike or supply, at a place within the wing's range
+  (its least `rangeKm`); refused `OutOfRange`, `NoBase` (also while ferrying), `NotLand`. A rebase reaches
+  `FERRY_RANGE` (2) × range, to a base of its side with room within `BASE_PICK_CELLS` (2) of the point
+  given, and clears the mission. Across the sea the AI ferries a wing (`orderFerry`, `world.wingFerry`,
+  saved: arrival at the slowest transport's pace, else `SEA_FERRY_KMH` 30); a ferrying wing flies
+  nothing.
+- **Sorties** (`world.sorties`, saved; `src/shared/sorties.ts`, `sortieAt`): derived kinematics from
+  base, target, launch and speed. A wing with a mission and no sortie launches each hour, with
+  `TURNAROUND_HOURS` (2) between; a strike turns back at once, a patrol stays min(`PATROL_MAX_HOURS` (4),
+  2 × (range − km) ÷ speed). Patrols of one nation over one place relay, launched a cycle ÷ n apart. A
+  target out of range (its carrier moved) waits.
+- **Air combat** (`src/sim/systems/airCombat.ts`): sorties of nations at war within `INTERCEPT_KM`
+  (150) meet (linked meetings are one `AirBattle` at the nearest pair); each fires strength × aa ×
+  `AIR_FIRE` (0.05) ÷ max(1, the target's defence) ÷ `hpPerUnit`, spread over its foes by aircraft. A
+  wing with no aircraft left is lost; one that lost `BREAK_OFF` (0.25) of its aircraft turns home (unless
+  already on its way back).
+- **AA:** land and sea elements (not wings or troops aboard) fire `AA_FIRE` (0.2) × aa × strength ÷ size
+  at sorties within `AA_CELLS` (1) of them, not at those flying home.
+- **Air superiority** (`src/sim/systems/airSuperiority.ts`; `world.airPower`, saved): each hour a zone's
+  power by nation decays × `AIR_POWER_DECAY` (0.97153: a day's half-life), entries under
+  `AIR_POWER_FLOOR` (0.5) dropped, and gains Σ strength × aa of each sortie airborne there (not flying
+  home). A nation's superiority s in a zone = its and its side's power ÷ (that + its enemies'), 0.5 in an
+  empty zone. Read by: land fire (× 1 + `AIR_SUPERIORITY` (0.2) × (2s − 1), §5.2), supply gain
+  (`AIR_SUPPLY`, 0.5), fleet detection (`AIR_DETECTION`, 0.25), strike fire and bomb tons
+  (`AIR_STRIKE`, 0.25: `strikeFactor`), the air AI (`AIR_HELD`, 0.6), a nuclear bomber's chance of being
+  stopped (§6.4), and the air map mode (`airHolders`).
+- **Strikes** (a strike mission's sortie at its target): each element fires effectiveness (§5.2) ×
+  `STRIKE_FIRE` (0.2) × its health share ÷ `hpPerUnit` at enemy elements within 1 cell, × the strike
+  factor, × `DISPERSED_STRIKE` (0.25) on formations out of contact, and the k-th strike of a day on a
+  formation at 1 ÷ (1 + k) (`formations.struck`, cleared at 00:00); fleets in the area are hit too (no
+  submarine), hard attack × `NAVAL_STRIKE_FIRE` (1), each squadron's share on one ship by health
+  (`StrikeHit`, `CarrierSunk`). In a sea battle a carrier's wings strike every 4 hours instead (§6.2).
+- **Bombing** (`src/sim/systems/bombing.ts`): a strike's `bomb_t` × the strike factor falls on the cells
+  within `BOMB_CELLS` (1): damage += tons × `BOMB_DAMAGE` (2) ÷ the enemy industry there, at most
+  `MAX_DAMAGE` (0.9) (`world.bombDamage`, saved; income reads it), and on ports (§6.2); repaired
+  `REPAIR_DAILY` (0.02) a day.
+- **Air supply and paradrop** (`src/sim/systems/airLift.ts`): a supply mission's transports give
+  `AIR_LIFT` (1/48) of supply an aircraft, in equal shares, to the formations of their nation or side
+  short of supply within 1 cell. A paradrop: an infantry formation not engaged or aboard, at its
+  nation's airbase within 2 cells, with enough of its transports there not flying (`PARA_MEN` 64 men a
+  plane, first by id), lands at org `PARA_ORG` (0.5) and takes an enemy cell (or frees it to its owner).
+- **The air AI** (`src/sim/ai/air.ts`, daily, with the AI on): leaves wings ferrying, carrying a warhead,
+  held by a player's order (`PLAYER_MISSION_HOURS`, 24), or whose carrier is in battle. A wing's role is
+  its first squadron's: fighters patrol over the fronts, bombers strike massed enemy forces or, where
+  superiority ≥ `AIR_HELD`, industry; carrier wings take the naval role (fleets, then the front, then
+  land forces) and never rebase; transports lift formations under `LIFT_BELOW` (0.5) supply and drop
+  paratroops. At peace missions are cleared. A wing with nothing in range moves a base towards its goal
+  (`toward`, at most 2 ranges a day) or across the sea (`overSea`).
+- **Drawn** (§8): sorties at T0–T2, air battles, strikes and bursts; the air map mode.
 
 ### 6.4 AI nuclear weapons
-- **Programme**: tech chain (fission research → enrichment → bomb → thermonuclear →
-  ballistic missiles; as built, `data/tech/nuclear.json`: atomic research → reactor → bomb →
-  thermonuclear, rocketry → ballistic missiles; no SLBM, ADR-434). It is expensive in industry and gold, and gated by
-  `nukesAllowed` (global and per nation).
-- **Stockpile**: warheads are built over time with upkeep, while the stockpile's upkeep stays
-  under STOCKPILE_SHARE (0.1) of the nation's income; a nation short of money scraps the warheads
-  over that share before its fleets and its army (PLAN 7.3g, ADR-439). **Delivery**: bombers (can be
-  intercepted by fighters and AA, need range) or missiles (later tech, hard to stop).
-- **Use decision** (nuclear AI, daily, at war only). Utility:
-  `U = targetValue·desperation·doctrine − through·(retaliationRisk + allianceCost +
-  globalOutrage + tabooBarrier + deadCost)`, with targetValue already × through, the chance the warhead gets
-  there: U is through × the utility of a burst, whose costs fall only on a burst; a launch stopped
-  short spends its warhead and nothing more (PLAN 7.18i, ADR-491).
-  - targetValue: enemy capital, industry, fleets in port, massed formations, Major-Battle
-    fronts. Uses expected damage from blast radius × local value. An enemy capital counts on a
-    first strike only with an army in the blast (at least a hundredth of the theatre's men); on a
-    strike back it counts whole (PLAN 7.62, ADR-629, the user's decision: an empty capital is no
-    first strike's target). Men are weighed as a share
-    of the enemy side's men in the place's theatre (within 1,000 km), and that theatre counts
-    for at least a quarter of all the side's men: a lone garrison is not the whole of its
-    theatre (PLAN 7.18c, 7.18j, ADR-492). It counts for at least 250,000 men too: a burst is
-    weighed by what it destroys, whole at 25,000 men, not by its share of a beaten side's last
-    men (PLAN 7.32a, ADR-528).
-    Only an enemy that can threaten the striker is struck first: it holds a warhead, its income
-    is a quarter of the striker's, or its land forces stand near the striker's capital (PLAN
-    6.12a, 6.12f, ADR-394). A puppet counts its overlord's warheads and income only while the
-    overlord fights beside it in that war (PLAN 7.37d, ADR-564).
-    A place within a hydrogen bomb's blast of a burst of the side's in the war: no capital for the
-    rest of the war; a place of massed men only with more men than the burst found (PLAN 7.38d,
-    ADR-569), twice them within a year of the burst (PLAN 7.50b, ADR-600).
-  - desperation: rises with losing war score, capital threatened or taken in the war (PLAN
-    7.76, ADR-631: the capital moves after its fall, with no enemy near the new one), core
-    loss, and fightToDeath.
-    A holder winning or holding its own in a war of a year or more, against enemies that
-    cannot strike back, weighs as at a desperation rising to 2 at two years (resolve to end
-    the war; one such strike a side every 90 days, three in a war at most; places anywhere on
-    the land of enemies holding a tenth of their side's output; PLAN 7.18e, 7.18h, ADR-488 to
-    ADR-490).
-  - retaliationRisk: the enemy's *and its allies'* deliverable second-strike capacity ×
-    their doctrine, plus survivable assets (dispersed bombers: a bomber flying counts, ADR-385;
-    submarines carry no warhead, ADR-434). A puppet's warheads answer no strike: it weighs none
-    and no one launches them, so they count neither here nor for MAD, and the panel's deterrent is
-    the nation of most of this capacity (PLAN 7.52a, ADR-610).
-  - taboo: a global value that starts high, drops sharply after the first use worldwide,
-    and recovers slowly. When both sides have assured second strike (**MAD**), the
-    utility of first use is ≤ 0 unless desperation is extreme (fightToDeath or capital falling).
-    In extreme desperation the taboo weighs half (PLAN 6.7).
-    After a burst a side waits STRIKE_GAP_DAYS for the answer before its next first use in that
-    war (PLAN 7.25b, a week; two months since PLAN 7.96c, ADR-660 a: the broken taboo made a week's
-    wait a volley), a nation fighting for its life as well. A strike back is not held.
-  - allianceCost: 0.05 for each ally not at the striker's side in that war, to 0.3; half of it in
-    extreme desperation, as the taboo (PLAN 7.48, ADR-581: the critic's overrun France, three
-    allies apart, its bomber's strike on Berlin 0.017–0.020 under the floor for 15 days).
-  - doctrine and aggression come from traits. Retaliation-doctrine nations strike back after
-    being hit.
-  - deadCost: 0.1 for each million people (anyone's) the burst is expected to kill at the yield
-    weighed, × (2 − doctrine) and at least × 1, so a high doctrine does not ease it (PLAN 7.45,
-    ADR-572): a strike back weighs it too, its bonus as it was (PLAN 7.38c, ADR-568). A holder of the hydrogen bomb weighs each place at both yields (PLAN 7.38b,
-    ADR-567) and uses the yield of the higher utility, each with its own dead (PLAN 7.44,
-    ADR-571); a tie goes to fission.
-  - The floor: a strike is decided above NUKE_FLOOR (0.025, PLAN 7.25a), and above 0.1 for each
-    million people it is expected to kill (× the chance through), to 0.1 at a million (PLAN 7.50a,
-    ADR-599: in extreme desperation gain and costs of 1.5 to 1.9 each made a million dead a near-tie
-    at 0.026). Each yield is weighed by its utility above its own floor.
-- **Effects**: blast radius (by yield) kills elements by distance falloff and
-  destroys city industry and population. A thermonuclear warhead is THERMO_YIELD (50) fission
-  ones (PLAN 7.20, ADR-495): its blast and its fallout plume the yield's cube root wider and
-  longer, the people killed of the blast's share the yield's ⅔ power more (a fission bomb's
-  BLAST_PEOPLE 0.05: about 190,000 dead at Paris, 350,000 at Berlin; a hydrogen bomb's 15 to 21
-  times that), and its ruin on the map its blast's size. Cells get FALLOUT (attrition, income loss,
-  movement penalty) that drifts with a deterministic seasonal wind field and decays over
-  years. Plus a stability shock and a war-exhaustion jump.
-- **Consequences**: relations hit with every nation (scaled by distance and alliance),
-  the striker's alliance unity drops, the target may sue for peace or retaliate, global
-  outrage persists, and economic shocks follow.
-- **Presentation**: flash, shockwave ring and mushroom cloud at every tier (scaled), an
-  alert banner, an auto-pause option, a camera "go to" button, a history-log entry and a
-  fallout map mode. An AI's decision to strike is a history row of its own, told by the city
-  nearest its place and its utility in words, never as a number: "after long hesitation" under
-  0.1, "after weighing it" under 0.5, "without hesitation" from there (PLAN 7.25c).
-  A strike's row and its alert tell the civilians killed and the men, guns (artillery,
-  anti-tank, anti-air) and tanks lost, or that no troops were in the blast: the forces lost are
-  a companion history row (`NukeToll`) read into the strike's row, and a game saved before it
-  tells the dead alone (PLAN 7.32b, ADR-529).
-  The alert goes once its strike is 72 hours of the game old and it has been shown 8 seconds (a
-  paused game's stands), and the panels of the centre stand below it (PLAN 7.25d).
-  The nation panel of a holder at war says why it does not strike, in its war whose best place
-  weighs most (`restraintOf`, read and never a rule): a puppet, its AI off, barred, avenging,
-  waiting for the answer, no threat, no target, deterred by a named enemy (or mutual
-  destruction), its allies, the world's outrage, the taboo, the people it would kill, no value, not desperate, its doctrine;
-  or that it would strike but has no means, or none in range (PLAN 7.37f, ADR-565).
-- **God Mode**: toggle nukes globally and per nation, grant warheads, force a strike.
+`src/sim/systems/nuclear.ts` (daily, its launches' arrivals hourly).
+- **Programme:** the techs (`data/tech/nuclear.json`): `atomic_bomb` (with computing), `thermonuclear`
+  (×`THERMO_YIELD` 50), `ballistic_missiles` (rocketry and the bomb). Only a nation that goes for the
+  bomb (`goesForBomb`: nukes allowed in the world's setting and not barred for it, `world.nukesBanned`,
+  and income ≥ `NUKE_PROGRAMME_INCOME` 1000) researches the nuclear chain (§3.7); one barred later keeps
+  its techs, its lines unpaid. `NuclearPower` is a history row.
+- **Warheads** (`world.warheads` {stock, paid}, saved): paid daily from the treasury, never into debt,
+  `WARHEAD_GOLD` (400) over `WARHEAD_DAYS` (90) each, while 10 × (stock + 1) ≤ `STOCKPILE_SHARE` (0.1) ×
+  income, not bankrupt, up to `WARHEAD_MAX` (100); upkeep `WARHEAD_UPKEEP` (10) a month (§3.4); the
+  economic AI scraps warheads before fleets and army when it cannot balance its books. A dead nation
+  loses its stockpile.
+- **Means:** a strategic bomber group at its base with the target in range flies a real sortie (a free
+  one, or one taken from its raids; the lowest-id group is kept off raids as a reserve); on arrival it
+  is stopped short by a hashed roll under `BOMBER_INTERCEPT` (0.8) × (1 − the defender's superiority),
+  or if lost. A missile flies from the capital, at most `MISSILE_KM` (10,000 km) at `MISSILE_KMH`
+  (20,000 km/h), and nothing stops it. Missile first, then bomber. `NukeMeansLost` when the last means
+  goes.
+- **The decision** (`nukeDecisions`, daily, at war; a living nation with a warhead, its nukes AI layer
+  on, no overlord, nukes allowed): it weighs, in each war, strikes on the enemy's capitals and up to
+  `NUKE_TARGETS` (6) places where enemy land formations are most massed, on land the enemy owns and
+  controls, within `FRONT_KM` (1000) of its side's formations or capitals (anywhere when avenging, in
+  extreme desperation or by resolve), not within 4 blast radii of a burst of the last 7 days or a
+  warhead in flight, nor at a capital struck within a year. Each with each yield:
+  - value = clamp01(`TARGET_SCALE` (10) × (enemy output share in the blast + enemy men share − own men
+    share) + `TARGET_CAPITAL` (0.3) at a capital) × through (the chance it gets through); on a first
+    strike a capital counts only with ≥ `CAPITAL_MEN_MIN` (0.01) of the theatre's men in the blast and
+    its nation ≥ `CAPITAL_WEIGHT` (0.1) of its side's output; a theatre is the men within 1000 km, at
+    least `THEATRE_FLOOR` (0.25) of a side's and `THEATRE_MEN_MIN` (250,000);
+  - U = value × desperation × doctrine + through × (bonus − `RETALIATION_WEIGHT` (0.8) × retaliation −
+    alliance cost − outrage − `TABOO_WEIGHT` (0.6) × taboo (halved when extreme) − dead cost), the bonus
+    `RETALIATION_BONUS` (1) when striking back (and retaliation then not weighed);
+  - doctrine = 0.5 + aggression ÷ 100; desperation (at most 2) from its land held by others, its men
+    lost, its capital threatened (land forces within `CAPITAL_THREAT_KM`, 150) or taken, fighting to the
+    death; extreme = ≥ 1 with the last three;
+  - retaliation = the most any enemy or its ally (not a puppet) could answer: min(1, warheads ÷
+    `RETALIATION_FULL` (5)) × doctrine, a bomber in flight counted; with `MAD_WARHEADS` (2) a side, U is
+    capped at 0 unless extreme or striking back;
+  - alliance cost `ALLIANCE_COST` (0.05) an ally not beside it, at most 0.3, halved when extreme; dead cost
+    `DEAD_COST` (0.1) a million civilians × max(1, 2 − doctrine);
+  - a strike is taken above its floor max(`NUKE_FLOOR` 0.025, 0.1 × min(1, through × people ÷ 1e6)), the
+    best first, at most one a day; a first strike only on an enemy that threatens (a warhead, a quarter
+    of its income realm to realm, or forces near its capital); none within `STRIKE_GAP_DAYS` (60) of its
+    last unless striking back (a launch stopped short starts no gap).
+  - *Resolve:* a long war won (score ≥ 0, no enemy able to answer, no MAD) builds a resolve to 2 at 2
+    years, one strike in 90 days, at most 3 a war, on nations of ≥ a tenth of the side's output.
+  - *Grievance:* the struck realm may answer the striker within `RETALIATION_DAYS` (90) from any
+    distance; a strike on forces is answered at forces only.
+  - `NukeDecided` with its utility; `restraintOf` gives the panel the reasons a nation holds back.
+- **The burst** (`detonate`): blast radius `BLAST_KM` (25) × yield^⅓ kills `BLAST_KILL` (0.9) of the
+  elements by falloff, `BLAST_PEOPLE` (0.05) × yield^⅔ of the people, and sets industry damage up to
+  `BLAST_DAMAGE_MAX` (0.95); fallout laid downwind by the day's wind (`FALLOUT_KM` 200 long, `FALLOUT_WIDTH_KM`
+  20) on `world.fallout` (saved), halving in `FALLOUT_HALF_LIFE` (365) days, costing formations 0.02 × f a
+  day, output × (1 − 0.8f), march time ÷ (1 − 0.5f). The taboo (`world.nukeTaboo`) drops to
+  `TABOO_AFTER` (0.3) and recovers `TABOO_RECOVERY` (0.0005) a day. On a nation struck by another: outrage
+  against the striker (+`OUTRAGE_STRIKE` 40, decaying), shock (`NUKE_SHOCK` 30, at most 60, into its war
+  exhaustion; a shocked side sues at 80 even where refused), − `NUKE_GOLD` (0.1) of its treasury,
+  + `NUKE_UNREST` (40) round the burst; the striker's alliance loses `NUKE_UNITY` (20) unity. Rows:
+  `NukeCasualties`, `NukeToll`. The strategic AI's pariah rules read the outrage (`PARIAH_WAR`, a
+  coalition from `PARIAH_COALITION`).
+- **Shown** (§9): flash, ring and cloud at every tier; an alert with Go to (`nukeAlert.ts`, at most 3,
+  72 hours of game time and 8 s on screen), the game paused on a burst (`nukePause`, on by default); the
+  fallout map mode; ruins that darken; the decision's row worded by its utility (`NUKE_WEIGHED_LONG` 0.1, `NUKE_WEIGHED_NONE` 0.5).
+- **God** (`tick.ts`): nukes on or off (`nukesEnabled`, `setNukes` a nation), `grantWarheads` (0–100), a
+  strike by any nation (`launchNuke`), or God's own burst (`godNuke`: no outrage, grievance or war
+  memory). For the nation a player takes, the nukes AI layer is off.
+- **Checked** by the checker's `nukes` rules (§10.1).
 
 ---
 

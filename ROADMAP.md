@@ -39,7 +39,8 @@ Rules:
     Done: rewritten from a read-through of the code (11 → 7 KB); `specRefs.test.ts` 7 of 7.
   - [x] R6f §6.1–6.2: armour and the navy. As R6b: add `'6'`; §6.1–6.2 current until R6g.
     Done: rewritten from two read-throughs of the code (21 → 11 KB); `specRefs.test.ts` 8 of 8.
-  - [ ] R6g §6.3–6.4: aircraft and nuclear weapons.
+  - [x] R6g §6.3–6.4: aircraft and nuclear weapons.
+    Done: rewritten from two read-throughs of the code (24 → 13 KB); `specRefs.test.ts` 8 of 8.
   - [ ] R6h §7: the AI.
   - [ ] R6i §8: semantic zoom.
   - [ ] R6j §9: UI and UX.
