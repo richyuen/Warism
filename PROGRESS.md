@@ -685,3 +685,18 @@
 - CHANGELOG entry; Batch 1's items moved to `docs/history/ROADMAP-release-2026-11-03b.md`. Evidence
   `docs/evidence/R5b/`. Tag `release-2026-11-03b`.
 - **Next:** R6 (Later), or a new batch from the user.
+
+## 2026-11-03 — ROADMAP R6a (ADR-821): SPEC's references checked; §10 rewritten
+- R6 split in ten parts by size (R6a–R6j). ADR-821 sets the rules of the rewrite: from the code outward, ADR cites kept,
+  PLAN references and histories out, numbers only a rule's constants.
+- `tools/spec/refs.ts`: every backticked path, `npm run` script and code name of a SPEC section must exist. Dry run on HEAD:
+  17 misses over §2–§10 (§10: `npm run parity`, `critic:due`, `tools/gate/criticDue.ts`, `tools/parity`).
+- §10 rewritten from `tools/gate/check.ts`, `review.ts`, `tools/headless/cli.ts`, `tools/soak/cli.ts`, `tools/sweep/`,
+  `tools/bench/run.ts`, `src/app/testApi.ts`, `.github/workflows/nightly.yml`: the checkers, the nightly and the release
+  added; parity, the critic's cadence and the phase reviews gone. §2.1: the editor's row (no `src/editor/`).
+- Constants stated, read from: sweep limits `tools/sweep/criteria.ts:45–61` (MOVING_MIN 0.01, MAX_LAND 0.35, MAX_INCOME
+  0.4, ALIVE 20–250, WAR_YEARS 0.8, RISER 1.5 and 0.01, FALLER 2/3, quorum 0.8, 50 years, BREAKUP 1.1 over 20, fallout
+  0.5), sweep defaults `tools/sweep/run.ts:32–33` (50 years, 10 seeds), soak `tools/soak/cli.ts:19–21` (30 min, 5 min,
+  COMPARE_DAYS 30), `E2E_CHUNK` 20 `tools/gate/review.ts:27`, reports kept 30 days `nightly.yml:80,154`.
+- `tests/unit/specRefs.test.ts` 4 of 4 (§1, §2, §10 at 0 misses; red on HEAD's §10 with 6).
+- **Next:** R6b.

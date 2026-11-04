@@ -22,4 +22,18 @@ Rules:
 ## Later
 
 - [ ] R6 **SPEC.md as the game is.** The rest of SPEC.md after R0i: each section rewritten to what
-  the code does now, the history left to DECISIONS.
+  the code does now, the history left to DECISIONS. Rules of the rewrite: ADR-821. Each part's AT:
+  its section added to `tests/unit/specRefs.test.ts` at 0 misses, and every constant it states read
+  from the code, listed with file and line in PROGRESS.
+  - [x] R6a The references checker (`tools/spec/refs.ts`) and §10, testing and verification (§2's
+    three stale names fixed).
+    Done (ADR-821): `specRefs.test.ts` 4 of 4; §10 had 6 misses at HEAD (parity, critic:due), 0 now.
+  - [ ] R6b §3.1–3.3: map, cells, provinces, cities and zones.
+  - [ ] R6c §3.4–3.7: nations, diplomacy, military, tech and production.
+  - [ ] R6d §4: territory, fronts and the strategic layer.
+  - [ ] R6e §5: combat.
+  - [ ] R6f §6.1–6.2: armour and the navy.
+  - [ ] R6g §6.3–6.4: aircraft and nuclear weapons.
+  - [ ] R6h §7: the AI.
+  - [ ] R6i §8: semantic zoom.
+  - [ ] R6j §9: UI and UX.

@@ -7,6 +7,27 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-821 · 2026-11-03 · accepted — SPEC.md rewritten from the code, its references checked (ROADMAP R6)
+
+- **Context.** SPEC.md §3–§10 (260 KB) is a design log: PLAN references, "as built" and "before it
+  was" narratives, measurements, and names gone from the code (§10 still described `npm run parity`,
+  `critic:due` and the phase reviews). R6 is too big for one sitting.
+- **Decision.** R6 in ten parts by size (R6a–R6j, about 30 KB each). The rules of every part:
+  - written from the code outward: for each subsection, read the files it covers and keep only
+    what they do; prose is not reformatted into place;
+  - `[ADR-n]` cites stay; PLAN references and the history of a rule go (DECISIONS has them);
+  - a number is a rule's constant, a budget, a schema's field or a data size, never a measurement;
+  - what was dropped is removed, not narrated;
+  - the part updates the header's list of current sections and the contents list.
+- **The checker.** `tools/spec/refs.ts` judges each backticked path (the tail of a tracked path,
+  `<x>` and `*` for any part, `.cache/` not judged), `npm run` script and code name (each dotted
+  part a word of the code, data or config) of a section; `tests/unit/specRefs.test.ts` holds the
+  current sections at 0 misses, each part adding its own. It is a floor: a name that exists may
+  still be described wrong, so each part lists the constants it states with the file and line read.
+- **Gate.** A commit of SPEC.md alone runs nothing (documents), and a code change that removes a
+  name SPEC cites does not reach the test by its imports. The test runs by hand in each part (named
+  in PROGRESS) and every night in the whole unit suite; no gate change.
+
 ### ADR-820 · 2026-11-03 · accepted — A second release on one day is tagged with a letter (ROADMAP R5b)
 
 - **Context.** Batch 1's release falls on the day of the first (`release-2026-11-03`), and PROMPT.md's

@@ -2,16 +2,17 @@
 
 Status: v1.0 (2026-11-03, after `release-2026-11-03`; ADR-805). This document says how the game works
 now. The *why* of each choice is in `DECISIONS.md` and `docs/history/DECISIONS-<YYYY-MM>.md` (cited as
-`[ADR-n]`). §1, §2 and the contents list are current as of 1.0; the other sections are being brought
-up to date one by one (ROADMAP R6), and where one disagrees with the code, the code and the newest ADR
-win.
+`[ADR-n]`). §1, §2 and §10 are current; the other sections are being brought up to date one by one
+(ROADMAP R6), and where one disagrees with the code, the code and the newest ADR win. A current
+section names only files, code and scripts that exist (`tests/unit/specRefs.test.ts`, ADR-821).
 
 **Contents.** 1 Goals · 2 Architecture (2.1 module rules, 2.2 repo layout, 2.3 worker protocol,
 2.4 snapshot layout, 2.5 tick order, 2.6 determinism, 2.7 persistence) · 3 World model and data
 schemas (map, cells, provinces and zones, nations, diplomacy, military, tech and production) ·
 4 Territory, fronts and the strategic layer · 5 Combat (engagement, element combat, combat
 efficiency, Major Battles) · 6 Armour, naval, aircraft, nuclear weapons · 7 AI · 8 Semantic zoom ·
-9 UI and UX · 10 Testing and verification.
+9 UI and UX · 10 Testing and verification (10.1 suites and checkers, 10.2 test API, 10.3 gate,
+10.4 long runs, 10.5 nightly, 10.6 critic and release).
 
 ---
 
@@ -56,15 +57,17 @@ beyond it; its observations of that game and the measure kept against it are fro
 ### 2.1 Module rules (enforced by ESLint) [ADR-2]
 | Module | May import | Forbidden |
 |---|---|---|
-| `src/sim/**` | `src/sim/**`, `src/shared/**`, `data/**` (JSON), package `zod` | other packages, Node builtins, DOM, `window`, `self`, `Math.random`, `Date`, `performance`, `Math.sin/cos/tan/exp/log/pow/atan2/...` (use `sim/core/dmath`), `setTimeout`, iteration over unordered keys |
+| `src/sim/**` | `src/sim/**`, `src/shared/**`, `data/**` (JSON), package `zod` | other packages, Node builtins, DOM, `window`, `self`, `Math.random`, `Date`, `performance`, inexact `Math` functions such as `Math.sin` or `Math.pow` (use `sim/core/dmath`), `setTimeout`, iteration over unordered keys |
 | `src/shared/**` | itself, `data/**` | everything else (incl. all packages) |
 | `src/worker/**` | sim, shared | render, ui |
 | `src/render/**` | shared | sim internals (types come via `shared/protocol`) |
-| `src/ui/**` | shared, render | sim, worker, editor, app |
-| `src/editor/**` | shared, render, ui | sim, worker, app |
-| `src/app/**` | shared, render, ui, editor (worker only via `new Worker(new URL(...))`) | sim |
+| `src/ui/**` | shared, render | sim, worker, app |
+| `src/app/**` | shared, render, ui (worker only via `new Worker(new URL(...))`) | sim |
 
-Enforcement (`eslint.config.js`): the layer table is the local rule `warism/module-boundaries`
+The editor has no layer of its own: its panel is `src/ui/EditorPanel.tsx` and its commands
+`src/sim/editor.ts` (the rule still names a layer `editor`, which no folder fills).
+
+Enforcement (`eslint.config.js`): the layer table is the local rule `module-boundaries` of the plugin `warism`
 (`tools/eslint/warism-plugin.js`, lexical path resolution, so it also works on virtual
 fixture paths). Sim purity uses `no-restricted-globals`, `no-restricted-properties`
 (`Math.random`, non-exact `Math.*`, `localeCompare`, `toLocaleString`) and
@@ -3397,96 +3400,117 @@ on screen.
 
 ## 10. Testing & verification
 
-- **Unit (vitest)**: dmath accuracy and determinism, RNG, hash, every system's rules,
-  data schema validation of all JSON, save/load round trip, determinism invariants
-  I1–I5.
-- **Headless runner** (`tools/headless`): `npm run sim -- --scenario <id> --seed 7
-  --years 30 --out run.json` (metrics per year: hash, per-nation controlled/owned cells,
-  formations, flipped cells, events, tick ms mean/p95/max). Phase 0 scenario: `toy`.
-- **Soak** (`npm run soak`, `tools/soak/`): 30 min wall-clock at headless speed (uncapped, not
-  the page's top speed) with a gzip save and a load into a fresh Sim every 5 min, comparing
-  hashes against an uninterrupted twin after each load, every 30 days and at the end
-  [ADR-424]. Each day, before the hashes, both twins are looked at for a NaN or an infinity in
-  any float section of the save and a NaN or `undefined` in the history's rows (a global event's
-  NaN place excepted) [ADR-425]. Fails on any exception, desync or such value.
-- **Sweep** (`npm run sweep`): ≥ 10 seeds × ≥ 50 sim-years, on seeds the tuning never saw
-  (`--first <unseen> --tag <name>`). Criteria since 2026-10-03 [ADR-54]:
-  - *Limits, every seed:* land changing controller in the last 5 years ≥ 1%, largest nation
-    < 35% of land and < 40% of income, alive nations stay in [20, 250], no permanent freeze
-    (≥ 1 war active in ≥ 80% of the years).
-  - *Dynamism, each in ≥ 80% of the seeds,* measured on realms (a nation with no overlord,
-    with its puppets' land, so integrating a colony is not growth): a riser (a realm that
-    ends with ≥ 1% of the owned land and ≥ 1.5 × the land it held after year 1; a realm
-    that did not exist then does not count) and a faller (one of the ten largest realms
-    after year 1 that ends with ≤ 2/3 of its land of then; dead or a puppet counts). Since
-    2026-10-16 [ADR-428], the critic's ask, on nations: no break-up (the living never
-    more than 1.1 × the most they were in any year 20 or more years before). Only runs of
-    ≥ 50 years are judged by these three. `npm run sweep -- --from <report.json>` judges a
-    written report again.
-  - *Reported, not judged:* new nations in the top ten and the leader's share range (the
-    two criteria of critic B1 that riser and faller replace); stasis, the longest run of the
-    same five largest by land as a set (judged from ADR-428 to ADR-750, the user's decision:
-    a stable top is a valid world, §7).
-  - *Suspended until phases 2–6 are complete* [ADR-58]: no sweep after a rule change, since
-    every feature still to come moves the balance. One quick sweep at each phase review is a
-    smoke test (its five limits are reported; nothing is tuned for it). The criteria judge
-    again from PLAN 6.8 and in Phase 7. The 10-year tests of the gate are not sweeps in this
-    sense: they test correctness and stay.
-  Implemented as `npm run sweep` (PLAN 1.40, `tools/sweep/`): the movement threshold is 1% of the land
-  over the last 5 years. Land is measured in km² of true area in all four land criteria, in the
-  ranking and in the nation panel, never in cells: the map is a Miller projection
-  (`src/sim/landArea.ts`, [ADR-52]); reports in `docs/sweeps/` (docs/sweeps/2026-10-03-sweep.md all green).
-- **Playwright e2e**: boot, start 1938, run 1 year, screenshot every map mode;
-  scripted seamless zoom world → close (8 stops) on a battle of the scenario's own
-  (`zoomDemo1938.spec.ts`, PLAN 2.10a; the spawned battle is `tiers1938.spec.ts`); tank, naval and air
-  battle scenes; AI nuclear strike scene (seeded scenario with forced escalation
-  conditions, AI-decided rather than God-forced); editor round trip; save/load.
-  The test API is `window.__warsim` (also `window.__warism`, the same object; ADR-761): now `sim` (SimClient: init/step/command/hash/save/load/
-  speed/pause/subscribe/buildProvinces) and `view` (camera, controller.set/zoomTo, frames,
-  draw); later `god(cmd)`, `fps()`. It exists only in a game, not on the title screen. URL
-  options: `?scenario=1938|random|toy` (none = the title screen), `?seed=`, `?paused=1`,
-  `?view=0`, `?continue=1`, `?load=scenario`, and the new-game options of §9 (`?looping=0`,
-  `?aggr=`, `?traits=`, `?gold=`, `?ce=`, `?nations=N` for the random world).
-- **Bench** (`npm run bench [-- A B BP R]`): Chromium on the real GPU (headless with
-  `--use-angle=d3d11 --enable-gpu --ignore-gpu-blocklist`; without them it is SwiftShader).
-  GPU time comes from EXT_disjoint_timer_query_webgl2 (gl.finish does not block under ANGLE).
-  Pages: `bench.html?b=A` (map), `B`/`BP` (proxies raw/Pixi), `P` (precision probe, e2e),
-  `R` (province raster). Results and screenshots go to `docs/bench/`.
-- **Gate** (`npm run check`, `tools/gate/check.ts`): `tsc -b` → `eslint .` → `vitest run` → the
-  10-year sweep tests (`tests/sweep/`) → `vite build` → `playwright test` (against
-  `vite preview` of the build) → `npm run parity`. Must be green before every commit. It is
-  sized to what changed since HEAD (ADR-48, ADR-49): documents only (Markdown, `docs/`) run
-  parity alone, unless they tick a phase review (ADR-286, ADR-293); a clean tree that the
-  gate has already passed runs nothing (the passed trees are recorded in `.cache/gate/`, ADR-55).
-  `npm run check:full` runs every stage. A phase review's tick on code that a green
-  `npm run check:review` ran on is a commit as any other (ADR-297): that command runs every
-  stage on its own, the browser suite in chunks of 20 spec files, a failed test again alone
-  (red is red twice), records each step under the code's tree without the documents
-  (`.cache/gate/review.json`, resumed where a run stopped), and is green when every red test is
-  on `tools/gate/knownRed.json`, each with why and its BLOCKERS entry. Of the stages:
-  - *unit:* in full when the change ticks a phase review (ADR-293: not a numbered task), or
-    something every test stands on changed (the vitest config, `tests/helpers/`, the data and
-    assets read from disk, the lock file); otherwise `vitest related` over what changed (ADR-280).
-    A 1938 world after a test file's first is made from its template (`keepWorldTemplates`,
-    the tests' setup), and pure runs are loaded from shared checkpoints in `.cache/checkpoints/`
-    (ADR-279).
-  - *sweep tests:* every one only at a phase review (and in `check:full`); a change to a sim
-    input runs the pinned state hash of seed 99 after one year alone
-    (`tests/sweep/baselineHash.test.ts`, ADR-278): a change of rules moves the pin and logs it
-    in DECISIONS.
-  - *e2e:* in full at a phase review (ADR-87, ADR-293); otherwise the specs a commit changed, a perf spec with
-    `--project=perf --no-deps` (ADR-287).
-- **Critic cadence** (`npm run critic:due`, `tools/gate/criticDue.ts`, ADR-59): due when there
-  is no report, or when a phase review has been ticked in PLAN.md since the commit the report
-  names. One run per phase, and one for the DONE condition. Each blocking issue of a report
-  becomes a PLAN task. (Until ADR-59: every 5 commits that fixed no critic finding, ADR-49.)
-- **Checkpoints and diagnostics** (ADR-48): `npm run sim -- --save f` writes the final state and
-  `--load f` continues from it (bit-identical saves: tested on the toy world, and late in 1938 games: PLAN 2.12). `npm run diag`
-  prints wars and great-power state at chosen years, from 1938 or from a checkpoint.
-  `npm run sweep:quick` (10 seeds × 20 years, report in `.cache/sweep/reports`) is for tuning:
-  it is judged by the limits and reports riser and faller without a verdict (ADR-54).
-- **Parity** (`npm run parity`, `tools/parity`): parses `docs/PARITY.md` (Table 1 scored: verified 1,
-  partial 0.5; Table 2 validated), checks the column layout, consecutive row numbers, a dated
-  `[TEXT|VISUAL|TEXT+VISUAL YYYY-MM-DD]` tag on every AoC behaviour, and that every backticked
-  evidence path of a verified row exists. Fails if the generated header score line disagrees;
-  `npm run parity -- --write` regenerates it. Tools run TypeScript through `tsx`.
+Every check runs the same `src/sim/` as the page. Tools run TypeScript through `tsx`.
+
+### 10.1 The suites
+- **Unit** (`npm test`, vitest, `tests/unit/`): dmath's accuracy and determinism, the RNG, the
+  hash, each system's rules, every JSON file against its schema, save and load round trips. A 1938
+  world after a test file's first is made from its template (`keepWorldTemplates`, the tests'
+  setup), and pure runs are loaded from shared checkpoints in `.cache/checkpoints/`
+  (`tests/helpers/checkpoint.ts`; `NOTEMPLATES=1` builds every world) [ADR-279].
+- **Ten-year tests** (`npm run test:sweep`, `vitest.sweep.config.ts`, `tests/sweep/`): long runs
+  that test correctness, not balance: allies never at war, no bankruptcy in peace, saves across
+  years, research, the AI's year. `baselineHash.test.ts` pins the state hash of seed 99 after one
+  year; a change of rules moves the pin in its own commit, with the old and new hash in DECISIONS
+  [ADR-278].
+- **Browser** (`npm run e2e`, Playwright, `tests/e2e/`, against `vite preview` of the build): the
+  project `chromium` runs every spec but `*.perf.spec.ts`, which run on the project `perf`
+  (`--project=perf --no-deps` alone). The scripted demos are specs: the seamless zoom from the
+  world to the men of a battle (`zoomDemo1938.spec.ts`), sea, tank and air battles, an AI nuclear
+  strike, the editor's round trip, save and load.
+- **The checkers** [ADR-803, ADR-804]: the rules of several systems judged together, every hour
+  or day of a run, on many seeds. `tests/helpers/diploInvariants.ts` holds war and peace (`held`,
+  `exit`, `realm`, `bond`, `rise`), on the days of a run and on the wars a player or God could
+  declare in it; `tests/helpers/worldInvariants.ts` holds the other systems by rule set
+  (`RULE_SETS`: economy, navy, air, nukes, bonds, heroes). Unit tests run them on fixed seeds of
+  the 1938 and the random world (`diploInvariants*.test.ts`, `worldInvariants*.test.ts`), each red
+  on a rule patched to break it; `tools/diag/diploInvariants.ts` and `tools/diag/worldInvariants.ts`
+  run them on any seed. A feature that adds rules adds them to a checker.
+
+### 10.2 The test API and the page's options
+`window.__warsim` (also `window.__warism`, the same object; `src/app/testApi.ts`) is the surface
+for Playwright and the critic, present only in a game: `sim` (the `SimClient`: init, step, command,
+hash, save, load, speed, pause, subscribe), `view` (the `MapView`: camera, `controller.set`,
+`zoomTo`, frames; null with `?view=0`), `hud`, `autosave`, `player`, `settings` and `sound`.
+
+URL options: `?scenario=1938|random|toy` (none: the title screen), `?seed=`, `?paused=1`, `?view=0`,
+`?continue=1`, `?load=scenario`, `?size=`, and the new-game options of §9: `?looping=`, `?aggr=`,
+`?traits=`, `?gold=`, `?ce=`, `?diplo=`, `?heroes=`, `?nations=` (the random world).
+
+### 10.3 The gate
+`npm run check` (`tools/gate/check.ts`) must be green before every commit. It is sized to what
+changed since HEAD [ADR-48, ADR-55]:
+- a clean tree the gate has passed, or documents only (Markdown, `docs/`): nothing runs; the tree
+  is recorded (`.cache/gate/green.json`);
+- code: typecheck (`tsc -b`), lint (`eslint .`), the unit tests whose imports reach a changed file
+  (`vitest related`; all of them when something they all stand on changed: the vitest config,
+  `tests/helpers/`, `data/`, `public/data/`, `tools/headless/`, `package.json`, the lock file)
+  [ADR-280], the build, the e2e specs that changed (all when a helper or the config changed), and,
+  when a sim input changed (`SWEEP_INPUTS`), the pin alone.
+- A test red in a run is run again alone; red twice fails, unless it is on
+  `tools/gate/knownRed.json`: a failure of this machine, not of the code, each with why and its
+  BLOCKERS entry. A test leaves the list when it passes here [ADR-297, ADR-779].
+
+`npm run check:full` runs every stage whatever changed. `npm run check:review` (`tools/gate/review.ts`)
+runs every stage on its own, the browser suite in chunks of 20 spec files, a failed test again alone,
+and records each step under the code's tree without the documents (`.cache/gate/review.json`), so a
+run cut off resumes where it stopped and a commit of documents is proved by it; it is green when
+every test red twice is on the known reds [ADR-297].
+
+### 10.4 Long runs
+- **Headless** (`npm run sim`, `tools/headless/`): `--scenario toy|1938|random`, `--nations`,
+  `--size`, `--seed`, `--years`, `--out` (per-year metrics: hash, land by nation, formations, events,
+  tick ms mean, p95 and max). `--save` writes the final state and `--load` continues from it,
+  bit-identically. `--affinity <mask>` pins the run to those CPUs: a tick time for a budget is
+  measured so. `--profile` prints the tick by system.
+- **Diagnostics** (`npm run diag`, `tools/diag/`): wars and great-power state at chosen years, from
+  1938 or a checkpoint; the other diagnostics are run as `npx tsx tools/diag/<name>.ts`.
+- **Soak** (`npm run soak`, `tools/soak/`): two twins of one game for `--minutes` (30) of the wall
+  at headless speed; one is saved, gzipped and loaded into a fresh sim every `--interval` (5)
+  minutes, and the hashes compared after each load, every `--compare` (30) days and at the end
+  [ADR-424]. Each day both twins are searched for a NaN or an infinity in a float section of the
+  save and a NaN or `undefined` in the history's rows [ADR-425]. It fails on an exception, a desync
+  or such a value.
+- **Sweep** (`npm run sweep`, `tools/sweep/`, criteria in `tools/sweep/criteria.ts`): 10 seeds × 50
+  years by default, `--first <seed>` on seeds no tuning has seen, `--tag`, `--size`, `--heroes on`;
+  `--from <report.json>` judges a written report again; reports in `docs/sweeps/` (`--scratch`:
+  `.cache/`). Land is km² of true area, never cells (`src/sim/landArea.ts`) [ADR-52]. Criteria
+  [ADR-54]:
+  - *Limits, every seed* (`MOVING_MIN`, `MAX_LAND`, `MAX_INCOME`, `ALIVE_MIN`, `ALIVE_MAX`,
+    `WAR_YEARS`): land changing controller in the last 5 years ≥ 1 %; the largest nation < 35 % of
+    the land and < 40 % of the income at the end; 20 to 250 nations alive every year; a war in
+    ≥ 80 % of the years.
+  - *Dynamism, each in ≥ 80 % of the seeds of runs of ≥ 50 years* (`DYNAMISM_QUORUM`), on realms (a
+    nation with no overlord, with its puppets' land): a riser (ends with ≥ 1 % of the land and
+    ≥ 1.5 × its land after year 1), a faller (one of the ten largest after year 1 ending with ≤ 2/3
+    of its land then), and no break-up (the living nations never more than 1.1 × the most they were
+    20 or more years before) [ADR-428].
+  - *Nuclear weapons* (`NUKES_USED_SEEDS`, `FALLOUT_MAX_LAND`): used in at least one seed, and on
+    no day of any seed fallout on more than 50 % of the land.
+  - *Reported, not judged:* stasis (the longest run of the same five largest by land; ADR-750), new
+    nations in the top ten, and the leader's share range.
+  A release needs land moving on every seed; the largest nation's share is reported, not a
+  release's condition [ADR-740]. `npm run sweep:quick` (10 × 20 years, report in `.cache/`) is for
+  tuning.
+- **Bench** (`npm run bench [-- A B BP R G]`, `tools/bench/`): the production build in Chromium on
+  the real GPU (ANGLE with `--enable-gpu --ignore-gpu-blocklist`; without them SwiftShader). Pages
+  `bench.html?b=A` (map), `B` and `BP` (proxies), `P` (precision, run by an e2e spec), `R` (the
+  province raster). `G` is the game itself, judged against the frame budgets of §1 on this
+  machine's GPU, with the software rasteriser reported beside it (`tools/bench/game.ts`); it exits 1
+  when a judged budget is missed. Results and screenshots go to `docs/bench/`.
+
+### 10.5 The nightly run
+`.github/workflows/nightly.yml`, every night on `main` (no GPU, so no e2e or bench): typecheck, lint,
+the whole unit suite (`tools/ci/unit.ts`: red twice fails, except a test on `tools/ci/runnerRed.json`,
+a time budget of the development PC, or on the known reds, shown as warnings), build, the ten-year
+tests, a 30-minute soak, both checkers on four new seeds each (seeds from the run's number; the 1938
+and random worlds, random diplomacy, heroes), and a 4 × 20-year sweep; on Sundays the 10 × 50-year
+sweep. Its reports are kept 30 days.
+
+### 10.6 The critic and the release
+A batch of ROADMAP ends with the critic (`.claude/agents/critic.md`, `CRITIC_PROMPT.md`): an
+independent agent that plays the built game, judges it by the goals, scores each dimension and
+writes `critic/CRITIC_REPORT.md` and `.json`; each blocking issue becomes a ROADMAP item. On a full
+report with no blocking issue: `npm run check:review`, the soak (1938, seed 99, 30 minutes), the
+sweep on unseen seeds, and `npm run bench -- G`; then a CHANGELOG entry and the tag
+`release-<YYYY-MM-DD>` [ADR-804, ADR-805, ADR-820].
