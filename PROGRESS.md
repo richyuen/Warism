@@ -767,3 +767,18 @@
   system order `sim.ts` (`SYSTEM_NAMES_1938`).
 - `specRefs.test.ts` 6 of 6.
 - **Next:** R6e.
+
+## 2026-11-03 — ROADMAP R6e: SPEC §5 as the code is
+- One read-only read-through of combat, retreat, efficiency and Major Battles; rewritten from it, 11 → 7 KB.
+- Wrong or gone in the old text: a battle record (battles are derived each hour; only Major Battles are records); air
+  and naval units joining battles; a target held 4 h (the pick hour and 4 more); the old steps 1–5 (rate of fire,
+  posture, surrender, entrenchment); the retreat point "3 cells from the enemy" (3 beyond the formation); "a quarter of
+  its fire" in retreat; air superiority "read by nothing" (it is a fire factor); efficiency drifting by experience;
+  the Major Battle threshold relative to the front (120,000 men), its corridor towards the loser's centroid (along
+  loser − winner), a pulsing marker, a war-banner entry.
+- Found, added to R16: `retreat.ts`'s header on the retreat point; the snapshot's `majors` read by no UI.
+- Constants stated, read from: `combat.ts:43–47,282` and `data/combat.json` (`COMBINED_ARMS`, `AIR_SUPERIORITY`,
+  `UNSCREENED`, `SUPPRESSED`, `IN_THE_OPEN`, retreat); `retreat.ts:67`; `efficiency.ts:27–36`; `majorBattles.ts:19–28`;
+  `CONTACT_CELLS` `elements.ts:90`; `WITHDRAW_SPEED` `movement.ts:603`.
+- `specRefs.test.ts` 7 of 7.
+- **Next:** R6f.

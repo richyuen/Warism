@@ -2,7 +2,7 @@
 
 Status: v1.0 (2026-11-03, after `release-2026-11-03`; ADR-805). This document says how the game works
 now. The *why* of each choice is in `DECISIONS.md` and `docs/history/DECISIONS-<YYYY-MM>.md` (cited as
-`[ADR-n]`). §1–§4 and §10 are current; the other sections are being brought up to date one by one
+`[ADR-n]`). §1–§5 and §10 are current; the other sections are being brought up to date one by one
 (ROADMAP R6), and where one disagrees with the code, the code and the newest ADR win. A current
 section names only files, code and scripts that exist (`tests/unit/specRefs.test.ts`, ADR-821).
 
@@ -1030,156 +1030,87 @@ month's start only).
 
 ## 5. Combat model
 
+Hourly, in order (§2.5): supply, movement, retreat, combat (with the Major Battles), player orders, …,
+org loss, territory. `src/sim/systems/combat.ts` unless named.
+
 ### 5.1 Engagement
-Engagement detection runs each tick over a spatial hash (cell size = 50 km): opposing land
-formations within contact range form or join a **Battle** {id, cells, sides,
-participants, startTick, kind: normal|major}. Air (CAS) and naval (shore
-bombardment) participants join through their missions.
+- **Contact** (`findBattles`): formations of nations at war, on land, with elements and not on the
+  retreat, are bucketed (`BUCKET_CELLS`, 2 cells, scaled); two at war whose centres are within
+  `CONTACT_CELLS` (1.5) are in contact, set `engaged`, and joined by union-find into battles. A battle is
+  a derived list of formations, made again each hour; only Major Battles are records (§5.4). Air
+  strikes and bombardment are their own systems (§6.2, §6.3) and are not members of a battle.
+- **In contact** a formation's march pauses (an enemy's ground is entered only once it flips, §4.3);
+  each block deploys towards its nearest enemy in contact (`deployOf`, §3.6, drawn only). A player's
+  march that meets an enemy is cancelled (`RejectReason.Contact`); one given in contact (`through`)
+  goes on at `WITHDRAW_SPEED` (0.5) until first out of contact.
+- Contact ends when no enemy is within 1.5 cells, or when the formation retreats.
 
-### 5.2 Element combat (per tick = 1 h, per battle)
-*Implemented v1 (PLAN 1.13, ADR-26; `src/sim/systems/{elements,combat}.ts`):*
-- *Elements and engagement:*
-  - Elements are a saved table: formation, slot, unit, strength, wound carry, target, cooldown.
-  - Formation strength (men) is Σ element strength × men per unit.
-  - Engagement: formations of nations at war within 1.5 cells are in contact. Contacts are joined
-    into battles each tick (derived), and engaged formations pause their march. But a player's
-    (ADR-759, `systems/playerOrders.ts`): a march of the player's that comes into contact is
-    cancelled (`MoveRejected`, `RejectReason.Contact`: told in the ticker), and the formation
-    stands and fights; a march ordered by the player to a formation in contact goes on in the
-    fight at WITHDRAW_SPEED (0.5) of its pace, firing and fired on (a fighting withdrawal, or a
-    push on: enemy-held ground is still entered only once it flips), until it is first out of
-    contact, after which a new contact cancels it as any.
-  - Wars are a saved pair set, seeded from `diplomacy.json`.
-- *Targeting:*
-  - Weight = eff × target health (strength × hpPerUnit) × proximity, drawn by
-    `hash32(seed, tick, element)` and held for 4 h.
-  - Weighting by health makes every element type bleed at the same rate.
-  - Weights are tabled per (formation, unit type), and the draw is a binary search.
-- *Damage* (target units) = eff × fullness × 0.1 × terrain attack × (0.5 + 0.5 supply) ×
-  (0.25 + 0.75 org) (PLAN 3.2c, ADR-135; §4, Supply v1) ÷ terrain defence (when the target
-  holds) ÷ hpPerUnit. Losses apply after all of the hour's volleys, in id order: an element
-  carries the fraction of a unit to the next loss, except an element of armour, which loses the
-  whole tanks of its hour's damage and one more by a seeded draw on the rest, and carries none
-  (PLAN 7.23a, ADR-501: carried, a division's tanks took weeks to lose one). Besides: × the shooter's
-  nation's combat efficiency (§5.3) and its attack buffs, ÷ the target's defence buffs, × 1.5
-  in a Major Battle (§5.4).
-  The terrain is the target's cell. Attack is the shooter's class figure of `terrain.json` ×
-  its unit type's `terrainMods.atk`; defence is the ground's figure × the target's unit
-  type's `terrainMods.def` (PLAN 3.3a, ADR-137). × 1.15 for a shooter whose side has
-  infantry, artillery and armour alive in the battle (PLAN 3.4a, ADR-139; the table of §6.1).
-  × 1.3 on a volley at armour on forest or urban ground whose side has no infantry alive in
-  the battle (PLAN 3.4b, ADR-140). × 0.7 for an AT gun whose enemy has artillery alive in the
-  battle (PLAN 3.4c, ADR-141). × 1.25 for armour at a target with no armour on plains,
-  grassland or desert whose side has no AT gun alive in the battle (PLAN 3.4d, ADR-142).
-- *Death:* an element at 0 is removed when its formation settles, and emits `ElementDestroyed`
-  (element, unit, the slot it stood in; PLAN 2.4b). The event is a tick output, not state.
-- *Measured:*
-  - A 2:1 fight ends in 12.5 days, with the winner losing 0.263 of the loser's strength
-    (square law: 0.268).
-  - An 80-division battle costs 3.2 ms per tick.
-- *Org and the retreat* (step 4; PLAN 3.5a, ADR-150; `systems/retreat.ts`,
-  `retreat` of `data/combat.json`):
-  - *Org:* after the hour's volleys a formation loses (1 ÷ 0.3) × the share of its strength
-    that the hour took: a battle that takes three tenths of it takes all its org. In contact
-    it gets none back (§4).
-  - *The retreat:* a formation in contact with org under 0.15 breaks off. It is ordered to
-    the ground of its side (its nation, its supply bloc, a nation fighting beside it) nearest
-    the point 3 cells from its nearest enemy on its own far side, within 2 cells of that
-    point, on its landmass and out of the contact of every enemy about; with none there, to
-    the nearest such ground within 8 cells of itself. For 24 hours (`formations.retreat`,
-    state) it is in no contact and no battle: it does not fire and is not fired on, its march
-    is held neither by contact nor by cells the enemy holds, it presses no cell (§5.1), and
-    the operational AI gives it no order. On its network it has 0.75 of its org back by then.
-    A `moveFormation` command to it (a player's click, God Mode) is refused for those hours
-    (`Refusal.OnRetreat`; PLAN 3.7m, ADR-173): with its march held by no enemy's ground and
-    no battle to stop it, an order sent a broken division over the enemy's cells and past his
-    formations. The formation panel's status says "On the retreat: no orders for N h".
-    `FormationRetreated` is the event (not in the history).
-  - *Barred in the middle of a step* (PLAN 3.12Ro, ADR-226): the cell ahead has turned a
-    third nation's and the march walks back to the cell behind it (§4, Land movement), the cell it left,
-    on its enemy's side. With an enemy within 3 cells it is ordered again in that hour by
-    the same rule, from that enemy: back to the cell behind it (the one way out of the
-    step) and on from there, and its 24 hours begin again; no second event. With no such
-    ground or no route, or the cell behind it a third nation's too, it walks back as any
-    march, asked again each hour of the walk. From further off the walk back ends out of
-    contact (3 cells less a step of 1.42).
-  - *No ground within reach:* it holds and fights, with a quarter of its fire, and tries
-    again every 6 hours (when (tick + id) mod 6 = 0; the first try waits for that hour too).
-    The surrender of the encircled is not modelled.
-  - *Where two enemies stand on one point* (a formation on the retreat is in no contact, and
-    may halt where an enemy stands or be marched over): their blocks stand front to front,
-    the lower id facing east (`deployOf`).
-  - *Measured* (the first 360 days, every hour; seed 99 and seed 7; before → after):
-    retreats 0 → 2,318 and 2,720, by 336 and 367 formations; formations destroyed 337 → 105
-    and 312 → 123; elements destroyed 7,904 → 2,975 and 7,196 → 3,361; formation-hours in
-    contact 384,187 → 249,559 and 339,910 → 265,924, of them with org under 0.15: 2,185 →
-    15,731 and 2,929 → 17,151 (the wait for the sixth hour, and those with no ground within
-    reach: the longest 423 and 537 h); formations at the year's end 798 → 1,026 and 823 →
-    1,010. Armour with no infantry alive: 38 → 13 and 34 → 13 formations, in contact for
-    12,511 → 3,235 and 6,973 → 2,720 hours. Cells flipped in each of five years of seed 99:
-    25,592, 28,368, 20,856, 17,270, 15,644 → 22,767, 22,016, 15,720, 13,776, 25,834.
-  - *Not done:* nothing fires on a formation that retreats; no surrender; nothing of it on
-    the map (a retreat looks like a march; the formation panel says it, PLAN 3.7m); the 2:1 fight below is the fire's alone (`combatSystem`
-    without the org's system), and what a 2:1 fight is with the retreat was not measured.
-- *Deferred:* entrenchment, experience, night and weather. Of the modifiers of step 2
-  below, entrenchment, river crossing, experience, air superiority and night/weather are
-  read by nothing yet.
-1. **Target selection** (deterministic): each element scores enemy elements in range
-   by `typeMatch(weapon, targetArmor) × proximity × threat` and picks a target with
-   `hash32(seed, tick, element.id)` (weighted). Targets are cached for `cooldown` ticks.
-2. **Fire**: shots per hour = `rate(type) × strength`. Damage =
-   `(target.armor > shooter.piercing ? hard·armorPen : soft|hard) × mods`.
-   Modifiers: terrain (attacker and defender), entrenchment, river crossing, supply,
-   org, experience, air superiority in the zone, **combined arms** (inf + art + armour
-   present on the same side), night/weather (deterministic seasonal), buffs,
-   efficiency.
-3. **Casualties** reduce `target.strength` (integer, with hp carry-over for partial
-   units). An element at 0 becomes `dead`, a wreck event is emitted, and the formation's strength is recomputed.
-4. **Org** drains with damage taken. At org < 0.15 the formation retreats (posture
-   → retreat, path away from the enemy). Encircled formations (no path to friendly
-   supply) surrender over time.
-5. Each fire volley emits `FireEvent {tick, subtick u8, shooter, target, weapon,
-   dmg, x0,y0,x1,y1}` into the events ring (not sim state).
+### 5.2 Element combat (an hour, a battle)
+- **Elements** (§3.6): a formation's strength is Σ element units × `menPerUnit`, rounded.
+- **Target:** an element keeps its target while it lives and is hostile, for `COOLDOWN` (4) hours after
+  the pick; else it picks among the enemy elements of its battle by weight eff × health × 1/(1 +
+  the distance between the formations), drawn by `hash32(seed, tick, element)`, by binary search in
+  tables kept per formation and unit type.
+- **Damage** of an element's volley on its target:
+  eff × fullness × `FIRE_SCALE` (0.1) × attack × the shooter's factor × attack buffs × Major Battle ×
+  the arms factors ÷ defence ÷ defence buffs ÷ `hpPerUnit`, where
+  - *attack* is hard attack on a target with armour, soft otherwise, × `ARMOR_PEN` (0.5) when its armour
+    exceeds the shooter's piercing; × the terrain's attack figure for the shooter's class × the unit's
+    `terrainMods`; the terrain is the target formation's cell;
+  - *defence* is the ground's figure × the unit's, only for a target not moving;
+  - *the shooter's factor* = (0.5 + 0.5 × supply) × (`ORG_FIRE` (0.25) + 0.75 × org) × combined arms ×
+    air (1 + `AIR_SUPERIORITY` (0.2) × (2s − 1), s its nation's superiority, §6.3);
+  - *attack buffs* = combat efficiency (§5.3) × (1 + attack buffs, at least 0); defence buffs at least
+    0.05; × `MAJOR_LOSS_MULT` (1.5) in a Major Battle;
+  - *arms* (`data/combat.json`; arms of each side taken at the hour's start: infantry, artillery,
+    armour, AT): `COMBINED_ARMS` (1.15) for a side with infantry, artillery and armour together;
+    `UNSCREENED` (1.3) on armour in forest or urban terrain when the target's side has no infantry;
+    `SUPPRESSED` (0.7) on AT guns when the enemy has artillery; `IN_THE_OPEN` (1.25) for armour firing
+    at unarmoured elements on plains, grassland or desert whose side has no AT gun.
+- **Losses** are summed by target and applied after all volleys, in id order: wounds carry towards the
+  next unit (`applyLoss`), armour loses whole tanks and one more by a seeded draw with no carry
+  (`applyWholeLoss`; a hero's armour carries as the rest). `settleFormation` removes dead elements
+  (`ElementDestroyed`: the element, its unit and where it stood), adds to the nation's casualties, and
+  destroys a formation with none (`FormationDestroyed`).
+- **Fire events** (`FireEvent`, 10 fields, a second of the hour by hash, the shooter's unit as the
+  weapon) for every volley that does damage: the renderer's tracers (§8). Not state.
+- **Org and retreat** (`src/sim/systems/retreat.ts`, `orgLoss`): a formation loses org 1 ÷
+  `lossToBreak` (0.3) × the share of its strength lost in the hour, and regains none in contact (§4.1).
+  Engaged with org under `RETREAT_ORG` (0.15), it retreats: to a point `RETREAT_CELLS` (3) beyond itself
+  away from the enemy, snapped within `RETREAT_SNAP` (2) to ground of its nation, bloc or side on its
+  landmass out of every enemy's contact, else within `RETREAT_REACH` (8) of itself; with none it tries
+  again when (tick + id) mod `RETREAT_RETRY_HOURS` (6) is 0. For `RETREAT_HOURS` (24) it is out of
+  contact and battles, its march held by neither contact nor enemy cells, pressing no cell, given no AI
+  order; a player's orders to it are refused (`OnRetreat`) or dropped. It regains 0.75 org fed.
+  `FormationRetreated` is an event, not a history row. Encircled formations do not surrender.
+- **Not modelled:** entrenchment, experience, night, weather, river crossings.
 
-### 5.3 Combat-efficiency modes (global setting, AoC parity; TEXT 2026-10-02, AoC v4.3)
-- **dynamic** (default, as in AoC): low and cheap in peace, high and costly at war (cost
-  scales with nation size), plus drift from experience, supply and recent wins/losses.
-- **progressive** (as AoC v4.3): moves toward the dynamic target by one step per economic
-  tick instead of jumping.
-- **static**: per-nation value from the scenario, constant (cost still follows the
-  dynamic formula, as in AoC).
-- **locked**: all nations at 1.0. Separately, any nation's efficiency can be locked in God
-  Mode (the AoC per-nation CE lock).
-- **random**: per-nation value re-rolled (hash-seeded) every economic tick, the original AoC
-  behaviour.
-
-*Implemented v1 (PLAN 1.22, ADR-34; `src/sim/systems/efficiency.ts`):*
-- *Effect and timing:* CE multiplies damage dealt and is re-evaluated monthly after the economy.
-- *Dynamic target:* 0.7 in peace, 1.0 at war, + 0.15 × mean war score/100 − 0.1 × (1 − mean
-  supply), clamped to 0.5–1.5.
-- *Modes:* progressive steps 0.05 a month toward the target; static = 0.8 + aggression/250 (the
-  scenario has no CE field); random re-rolls 0.6–1.4 by hash; locked = 1.
-- *Commands:* God `setEfficiency`/`lockEfficiency`; setting `ceMode` is saved.
-- *Cost:* in every mode, 20% × (CE − 0.7)/0.3 of gross income per month.
+### 5.3 Combat efficiency
+`src/sim/systems/efficiency.ts`, at a month's start after the economy; a nation's `efficiency`
+multiplies its fire (0 counts as 1). The mode (`settings.ceMode`, saved; the game option, default
+dynamic):
+- *dynamic:* towards `PEACE_CE` (0.7) at peace, `WAR_CE` (1) at war, ± `WIN_SWING` (0.15) by its mean war
+  score, − `SUPPLY_PENALTY` (0.1) by its land formations' mean shortfall of supply, within `MIN_CE`–
+  `MAX_CE` (0.5–1.5);
+- *progressive:* the same target, `PROGRESSIVE_STEP` (0.05) a month;
+- *static:* `ceStatic` = 0.8 + aggression ÷ 250;
+- *locked:* 1; *random:* `RANDOM_MIN`–`RANDOM_MAX` (0.6–1.4) by the seed.
+A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `setEfficiency` sets it
+(0.5–1.5). Efficiency costs `COST_SHARE` (0.2) × max(0, CE − 0.7) ÷ 0.3 × its income a month.
 
 ### 5.4 Major Battles
-When total committed strength in a battle exceeds a threshold (relative to the
-local front), the battle becomes **Major**. It gets a name (nearest city), a war-banner UI entry
-and a history-log entry. The winner gets a **breakthrough corridor**: a temporary pressure
-multiplier along the attack axis for D days that pierces the front. Losses on both sides
-are amplified. At strategic zoom this shows as a pulsing marker with crossed swords.
-
-*Implemented v1 (PLAN 1.23, ADR-35; `src/sim/systems/majorBattles.ts`, `src/sim/battles.ts`):*
-- *Trigger:* a derived battle group with ≥ 120,000 men becomes a saved Major Battle, named after
-  the nearest city. Later groups within 3 cells continue it, and its losses are amplified 1.5×.
-- *End:* when no group matches, it ends. The winner is the camp with more men still within 5 cells
-  (ties use the last observation); its strongest nation gets a corridor.
-- *Corridor:* from the battle toward the loser's centroid, 10 days, cells −1…8 along the axis and
-  ±2.5 across. Inside it the winner's pressure is ×2 and flip progress ×4.
-- *History:* start and end entries go to the saved history log. God `forceBreakthrough` creates a
-  won battle and its corridor.
-- *Absolute threshold:* the trigger is a fixed men count for now; the "relative to the local
-  front" refinement waits for the front model.
+`src/sim/systems/majorBattles.ts`; its records (majors, corridors, history) are saved with the world.
+- A battle whose two camps hold ≥ `MAJOR_MEN` (120,000) men is a Major Battle, named after the nearest
+  city; a later group within `MATCH_CELLS` (3) of its starting place continues it (one group a battle
+  an hour). Its losses are × 1.5 (§5.2). It ends when no group continues it: the winner is the camp with
+  more men within `END_CELLS` (5), the last count breaking a tie.
+- The winning side's strongest nation (most men in its army) gets a breakthrough corridor for
+  `CORRIDOR_DAYS` (10): from the battle's place along (the loser's centroid − the winner's), −1 to
+  `CORRIDOR_LEN` (8) cells long and ± `CORRIDOR_HALF_WIDTH` (2) + 0.5 wide, scaled; inside it the
+  nation's pressure is × `CORRIDOR_PRESSURE` (2) and its flips count × `CORRIDOR_RATE` (4) (§4.3).
+- Its start and end are events and History rows (`MajorBattleStarted`, `MajorBattleEnded`); the map marks it with a crossed
+  swords disc (§8). God's `forceBreakthrough` makes a corridor and its row, refused at peace
+  (`AtPeace`).
 
 ---
 

@@ -35,7 +35,8 @@ Rules:
     Done: rewritten from four read-throughs of the code (38 → 26 KB); `specRefs.test.ts` 5 of 5.
   - [x] R6d §4: territory, fronts and the strategic layer.
     Done: rewritten from two read-throughs of the code (29 → 11 KB), in six subsections; `specRefs.test.ts` 6 of 6.
-  - [ ] R6e §5: combat.
+  - [x] R6e §5: combat.
+    Done: rewritten from a read-through of the code (11 → 7 KB); `specRefs.test.ts` 7 of 7.
   - [ ] R6f §6.1–6.2: armour and the navy. As R6b: add `'6'`; §6.1–6.2 current until R6g.
   - [ ] R6g §6.3–6.4: aircraft and nuclear weapons.
   - [ ] R6h §7: the AI.
@@ -47,4 +48,6 @@ Rules:
   (a rule change, with the checkers and the sweep) or drop them from the data and the panel; the
   user's decision. Also: `src/sim/systems/war.ts`'s header says a side fights to the death by any
   member's flag, the code by its leader's. And the scenario's `revival.cooldownDays` is read by
-  nothing (the cooldown is `REVIVAL_COOLDOWN`); found by R6d.
+  nothing (the cooldown is `REVIVAL_COOLDOWN`); found by R6d. `retreat.ts`'s header puts the retreat
+  point 3 cells from the enemy, the code 3 cells beyond the formation; the snapshot's `majors` is read
+  by no UI (R6e).
