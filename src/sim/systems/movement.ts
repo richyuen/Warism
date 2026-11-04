@@ -418,7 +418,7 @@ const SNAPS = new WeakMap<object, Map<number, Map<number, number>>>();
  * keeps off the ground of nations outside the formation's wars.
  */
 /** Whether (`x`, `y`) is land of another land component than land formation `id` stands on (PLAN 4.5a). */
-function overSea(world: World, id: number, x: number, y: number): boolean {
+export function overSea(world: World, id: number, x: number, y: number): boolean {
   const { w, h } = world.cells;
   const tx = Math.floor(x);
   const ty = Math.floor(y);

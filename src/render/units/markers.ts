@@ -607,3 +607,45 @@ export function drawMarkers(
   ctx.restore();
   return placed;
 }
+
+/**
+ * The voyages over the sea (ROADMAP R17c; `Snapshot.voyages`, VOYAGE_STRIDE each): for each
+ * formation `shown` says, a dashed line from where the sea leg starts (its port's water, or its
+ * transports at sea) to the landing's water and on to the land it lands on, and a ring on that
+ * land, the landing point.
+ */
+export function drawVoyages(ctx: CanvasRenderingContext2D, voyages: Float32Array, stride: number, shown: (id: number) => boolean, cam: Camera, geo: MapGeometry, vw: number, vh: number, scale = 1): void {
+  if (voyages.length === 0) return;
+  const offs = itemOffsets(cam, geo, vw);
+  ctx.save();
+  ctx.lineWidth = 1.5 * scale;
+  ctx.strokeStyle = 'rgba(232, 244, 255, 0.9)';
+  for (let i = 0; i + stride <= voyages.length; i += stride) {
+    if (!shown(voyages[i]!)) continue;
+    const line = [voyages[i + 2]!, voyages[i + 3]!, voyages[i + 4]!, voyages[i + 5]!, voyages[i + 6]!, voyages[i + 7]!];
+    // Unwrapped on a looping map: each point on the near side of the one before.
+    for (let k = 2; k < line.length; k += 2) if (geo.wrapX && Math.abs(line[k]! - line[k - 2]!) > geo.w / 2) line[k] = line[k]! + (line[k]! < line[k - 2]! ? geo.w : -geo.w);
+    for (const off of offs) {
+      const pts: [number, number][] = [];
+      for (let k = 0; k < line.length; k += 2) pts.push(worldToScreen(cam, line[k]! + off, line[k + 1]!, vw, vh));
+      const xs = pts.map((p) => p[0]);
+      const ys = pts.map((p) => p[1]);
+      if (Math.max(...xs) < 0 || Math.min(...xs) > vw || Math.max(...ys) < 0 || Math.min(...ys) > vh) continue;
+      ctx.setLineDash([6 * scale, 4 * scale]);
+      ctx.beginPath();
+      ctx.moveTo(pts[0]![0], pts[0]![1]);
+      for (const p of pts.slice(1)) ctx.lineTo(p[0], p[1]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      const [lx, ly] = pts[pts.length - 1]!;
+      ctx.beginPath();
+      ctx.arc(lx, ly, 5 * scale, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(lx, ly, 1.5 * scale, 0, Math.PI * 2);
+      ctx.fillStyle = ctx.strokeStyle;
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+}

@@ -173,7 +173,7 @@ export function tryLanding(world: World, id: number, x: number, y: number, via =
   if (!f.has(id) || world.afloat(id) || !world.rules) return world.afloat(id) ? RejectReason.Aboard : RejectReason.NotLand;
   // Transports carry the land's formations alone: no air wing (PLAN 5.8o).
   if (world.isWing(id)) return RejectReason.NotLand;
-  const { w, h, terrain } = world.cells;
+  const { w, h } = world.cells;
   const tx = Math.floor(x);
   const ty = Math.floor(y);
   if (tx < 0 || tx >= w || ty < 0 || ty >= h) return RejectReason.NotLand;
@@ -205,20 +205,9 @@ export function tryLanding(world: World, id: number, x: number, y: number, via =
     if (fleet !== 0) break;
   }
   if (fleet === 0) return RejectReason.NoTransports;
-  // The landing: the zoned water nearest the target, and the land of the target's nearest to it.
-  const z = seaOf(world);
-  const comp = navOf(world).grid.component;
-  const targetComp = comp[target]!;
-  if (!isLand(terrain[target]!) || targetComp === 0) return RejectReason.NoLanding;
-  const sea = nearestCellWhere((k) => z.zoneOf[k] !== 0 && z.closed[z.zoneOf[k]!] !== 1, tx + 0.5, ty + 0.5, w, h, world.atSize(LANDING_REACH), world.settings.loopingMap);
-  if (sea < 0) return RejectReason.NoLanding;
-  // A cell of a nation's where the target is one's (PLAN 4.6b: a speck of no one's by the water
-  // took no beachhead), else any.
-  const owner = world.cells.owner;
-  const owned = owner[target] !== 0;
-  let land = owned ? nearestCellWhere((k) => comp[k] === targetComp && owner[k] !== 0, (sea % w) + 0.5, Math.floor(sea / w) + 0.5, w, h, world.atSize(LANDING_REACH), world.settings.loopingMap) : -1;
-  if (land < 0) land = nearestCellWhere((k) => comp[k] === targetComp, (sea % w) + 0.5, Math.floor(sea / w) + 0.5, w, h, world.atSize(LANDING_REACH), world.settings.loopingMap);
-  if (land < 0) return RejectReason.NoLanding;
+  const landing = landingOf(world, target);
+  if (!landing) return RejectReason.NoLanding;
+  const { water: sea, land } = landing;
   // `hold` (a player's convoy, ROADMAP R17b): aboard, the group sails when its convoy is in (`convoySystem`).
   if (!hold && !orderSail(world, fleet, (sea % w) + 0.5, Math.floor(sea / w) + 0.5)) return RejectReason.NoSeaWay;
   world.embarked.set(id, { fleet, land, water: sea, target });
@@ -315,16 +304,36 @@ export function callTransports(world: World, id: number, port: number): number {
   return 0;
 }
 
-/** Whether a landing for a target at (`x`, `y`) can be found (`tryLanding`'s): land, and zoned open water within LANDING_REACH. */
-export function hasLanding(world: World, x: number, y: number): boolean {
+/**
+ * The landing for a target at cell `target` (`tryLanding`'s, PLAN 4.5a): the zoned open water
+ * nearest it within LANDING_REACH, and the land of the target's nearest to that water, a nation's
+ * where the target is a nation's (PLAN 4.6b: a speck of no one's by the water took no beachhead),
+ * else any; null for none (not land, or no such water).
+ */
+export function landingOf(world: World, target: number): { water: number; land: number } | null {
   const { w, h, terrain } = world.cells;
+  if (target < 0 || target >= w * h) return null;
+  const comp = navOf(world).grid.component;
+  const targetComp = comp[target]!;
+  if (!isLand(terrain[target]!) || targetComp === 0) return null;
+  const z = seaOf(world);
+  const reach = world.atSize(LANDING_REACH);
+  const loop = world.settings.loopingMap;
+  const water = nearestCellWhere((k) => z.zoneOf[k] !== 0 && z.closed[z.zoneOf[k]!] !== 1, (target % w) + 0.5, Math.floor(target / w) + 0.5, w, h, reach, loop);
+  if (water < 0) return null;
+  const owner = world.cells.owner;
+  const [sx, sy] = [(water % w) + 0.5, Math.floor(water / w) + 0.5];
+  let land = owner[target] !== 0 ? nearestCellWhere((k) => comp[k] === targetComp && owner[k] !== 0, sx, sy, w, h, reach, loop) : -1;
+  if (land < 0) land = nearestCellWhere((k) => comp[k] === targetComp, sx, sy, w, h, reach, loop);
+  return land < 0 ? null : { water, land };
+}
+
+/** Whether a landing for a target at (`x`, `y`) can be found (`landingOf`). */
+export function hasLanding(world: World, x: number, y: number): boolean {
+  const { w, h } = world.cells;
   const tx = Math.floor(x);
   const ty = Math.floor(y);
-  if (tx < 0 || tx >= w || ty < 0 || ty >= h) return false;
-  const target = ty * w + tx;
-  if (!isLand(terrain[target]!) || navOf(world).grid.component[target] === 0) return false;
-  const z = seaOf(world);
-  return nearestCellWhere((k) => z.zoneOf[k] !== 0 && z.closed[z.zoneOf[k]!] !== 1, tx + 0.5, ty + 0.5, w, h, world.atSize(LANDING_REACH), world.settings.loopingMap) >= 0;
+  return tx >= 0 && tx < w && ty >= 0 && ty < h && landingOf(world, ty * w + tx) !== null;
 }
 
 /** Men of the player's formations bound for group `fleet` (`world.seaFetch`) and not yet aboard. */

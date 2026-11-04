@@ -62,6 +62,8 @@ export class Hud {
   readonly groundShown = signal(false);
   /** The nation under the mouse (PLAN 7.4f7): owner, holder and the client point, or null. */
   readonly hover = signal<MapHover | null>(null);
+  /** The hovered cell an order of the selected land formations would reach over the sea (ROADMAP R17c), -1 for none. */
+  readonly hoverBySea = signal(-1);
   onMapMode: (mode: MapMode) => void = () => {};
   /** Selected nation id (0 = none; PLAN 1.30), set by map clicks. */
   readonly selected = signal(0);

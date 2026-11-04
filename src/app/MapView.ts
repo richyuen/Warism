@@ -7,7 +7,7 @@ import { CityLabelLayer, NAME_CLEAR_PX, type NameObstacle } from '../render/labe
 import { LABEL_STRIDE } from '../shared/nationLabels';
 import { FlagStore } from './flagStore';
 import { formationPips, type Pips } from '../render/units/pips';
-import { AT_REST, drawMarkers, drawOrderArrows, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
+import { AT_REST, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, type StackItem } from '../render/units/markerStacks';
 import { CounterLayer, counterNation, type CounterSource, type HeroCounter } from '../render/units/counters';
@@ -43,7 +43,7 @@ import { drawNationLabels, fadeNationLabels, GlyphSprites, layoutNationLabels, t
 import { t, type MessageKey } from '../ui/i18n';
 import { DEFAULT_UNIT_LOOK, Frame, isShipFrame, shownFrame, smallFrameOf, turretOf, type UnitLook } from '../shared/unitLooks';
 import { modeColor, type MapMode, type Relation } from '../shared/mapModes';
-import { NATION_STRIDE, NationField, RAID_STRIDE, SEA_STRIDE, type Snapshot } from '../shared/protocol';
+import { NATION_STRIDE, NationField, RAID_STRIDE, SEA_STRIDE, VOYAGE_STRIDE, type Snapshot } from '../shared/protocol';
 import { SEAM_MARGIN, cellOfPoint, itemOffsets, screenToWorld, worldToScreen, wrapOffsets, type Camera, type MapGeometry } from '../render/camera';
 import { groundShareAt } from '../render/map/ground';
 import { GROUND_CAP, GroundInstances } from '../render/map/GroundInstances';
@@ -703,6 +703,7 @@ export class MapView {
     this.formWayStart = f.wayStart.slice(0, f.count + 1);
     this.formWay = f.way.slice(0, f.wayStart[f.count] ?? 0);
     this.majors = s.majors.slice();
+    this.voyages = s.voyages.slice();
     this.seas = s.seas.slice();
     this.sorties = s.sorties.slice();
     // The sea battles going on, for the ticker (PLAN 4.10b): told when the set changes.
@@ -974,6 +975,8 @@ export class MapView {
   private formWayStart = new Uint32Array(1);
   private formWay = new Float32Array(0);
   private majors = new Float32Array(0);
+  /** The voyages over the sea (ROADMAP R17c; `Snapshot.voyages`). */
+  private voyages = new Float32Array(0);
   private seas = new Float32Array(0);
   private raids = new Float32Array(0);
   private raidKey = '';
@@ -1951,6 +1954,11 @@ export class MapView {
     // the men it hit, its formation's drawn elements (PLAN 5.9).
     this.airFx.draw(ctx, cam, this.geo, vw, vh, now, airFxSize(cam.scale, this.unitScale), this.shares.individuals, (f) => this.elementPlaces(f));
     this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls, heroes);
+    // The voyages over the sea of the formations whose orders are shown (ROADMAP R17c), at every tier.
+    const shownTo: OrderViewer = { picked: this.picked, selected: this.selectedFormations, player: this.selectionNation, nation: this.selected };
+    const nationOf = new Map<number, number>();
+    for (let i = 0; i < this.formIds.length; i++) nationOf.set(this.formIds[i]!, this.formNation[i]!);
+    drawVoyages(ctx, this.voyages, VOYAGE_STRIDE, (id) => orderShown(id, nationOf.get(id) ?? 0, shownTo), cam, this.geo, vw, vh, this.unitScale);
     // The sea battles going on (PLAN 4.10b), at T0 to T2: gone with the figures of T3.
     this.seaMarks = drawSeaBattles(ctx, this.seas, cam, this.geo, vw, vh, 1 - this.shares.individuals, this.unitScale);
     if (share * Math.max(this.morph.box, this.morph.bar) <= 0.01) {
@@ -2230,6 +2238,12 @@ export class MapView {
   }
 
   /** Whether formation `id` of the last snapshot is a fleet (PLAN 4.2b): by its template's domain, as the worker sent it. */
+  /** Formation `id`'s voyage in the last snapshot (ROADMAP R17c; `VoyageState`), null for none (tests). */
+  voyageState(id: number): number | null {
+    for (let i = 0; i + VOYAGE_STRIDE <= this.voyages.length; i += VOYAGE_STRIDE) if (this.voyages[i] === id) return this.voyages[i + 1]!;
+    return null;
+  }
+
   formationAfloat(id: number): boolean {
     const i = this.formIds.indexOf(id);
     return i >= 0 && this.templates[this.formTemplate[i]!]?.domain === 1;
@@ -2743,7 +2757,7 @@ export class MapView {
       const c = this.cityLabels.dotAt(sx, sy);
       const city = c ? { name: c.name, capital: c.capital, size: c.size } : null;
       const province = cell ? this.provinceAt(cell[0], cell[1]) : 0;
-      if (owner !== 0 || holder !== 0 || city) hover = { owner, holder, city, province, x: m.x, y: m.y };
+      if (owner !== 0 || holder !== 0 || city) hover = { owner, holder, city, province, cell: k, x: m.x, y: m.y };
     }
     const key = hover ? `${hover.owner}|${hover.holder}|${hover.city ? `${hover.city.name}|${hover.city.capital}` : ''}|${hover.province}|${hover.x}|${hover.y}|${this.snapArrival}` : '';
     if (key === this.hoverKey) return;

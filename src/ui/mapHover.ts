@@ -4,6 +4,8 @@ export interface MapHover {
   holder: number;
   city: { name: string; capital: boolean; size: number } | null;
   province: number;
+  /** The cell's index (row-major; ROADMAP R17c: the hint of an order over the sea), -1 for none. */
+  cell: number;
   x: number;
   y: number;
 }

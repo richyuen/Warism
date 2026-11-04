@@ -939,3 +939,13 @@
   land in the same hour, the third boards after their landing and lands later; red with the hold off. R17a's
   case unchanged. Pin unmoved; landing and invasion tests (26) green.
 - **Next:** R17c.
+
+## 2026-11-04 — ROADMAP R17c: the voyage shown (ADR-823)
+- The formation panel's status says marching to the port (named), waiting there for transports, at sea, or landed
+  (`FormationDetail.voyage`); the map draws a bound formation's sea leg and landing ring (`Snapshot.voyages`,
+  `drawVoyages`); over land across the sea, the tooltip says the selected forces go by sea (`overSea` request).
+- AT (`landingVoyage1938.spec.ts`): Britain played, its transports sent to Gibraltar, a division from London ordered to
+  Belfast: the tooltip line, then toPort, waiting, atSea, landed in turn, the leg drawn while bound. Screenshot read:
+  "Waiting at Portsmouth for transports", the leg to a ring at Belfast.
+- `landingOf` shared by the landing and the drawing; pin unmoved.
+- **Next:** R17d.

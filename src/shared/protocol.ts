@@ -77,6 +77,8 @@ export type ToWorker =
    * when another has taken its id since (PLAN 2.16Ri).
    */
   | { type: 'formation'; reqId: number; id: number; generation?: number }
+  /** ROADMAP R17c: whether an order of formation `id` to (`x`, `y`) goes over the sea, as JSON `boolean` in the reply bytes. */
+  | { type: 'overSea'; reqId: number; id: number; x: number; y: number }
   /** PLAN 7.4f34: nation `nation`'s month in parts as JSON `EconomyBreakdown` in the reply bytes (`null` with no economy). */
   | { type: 'economy'; reqId: number; nation: number }
   /** PLAN 2.14e: the largest battle of war `war` as JSON `WarBattle` in the reply bytes (`null` when it has none). */
@@ -287,6 +289,14 @@ export interface Snapshot {
   elements: SnapshotElements;
   /** Active Major Battles as flat [x, y, …] (battle markers, PLAN 2.1). */
   majors: Float32Array;
+  /**
+   * Land formations on a voyage (ROADMAP R17c), VOYAGE_STRIDE each: [id, state, fromX, fromY, waterX,
+   * waterY, landX, landY]: `VoyageState`; where the sea leg starts (its port's water while it goes to
+   * the port or waits there, its transports at sea), the landing's water and the land cell it lands
+   * on, cell centres. A player's sea-bound formations with a convoy, and every one aboard bound for
+   * a landing (not one thrown back).
+   */
+  voyages: Float32Array;
   /**
    * The sea battles going on (PLAN 4.10b), SEA_STRIDE each: [x, y, r, a, b, cx, cy, sx, sy, px,
    * py, pw, ph]: its place, the cells from it to its furthest fleet, and its two sides' leaders; the
@@ -668,6 +678,11 @@ export interface HeroStat {
  * view's snapshot has a formation's place and strength, and its elements only at close zoom:
  * the panel asks, so that it says the same at every zoom.
  */
+/** A land formation's voyage (ROADMAP R17c): to its port, waiting there for its transports, at sea; `landed` the day after. */
+export const VoyageState = { toPort: 0, waiting: 1, atSea: 2 } as const;
+export type VoyageState = (typeof VoyageState)[keyof typeof VoyageState];
+export const VOYAGE_STRIDE = 8;
+
 export interface FormationDetail {
   id: number;
   /**
@@ -714,6 +729,12 @@ export interface FormationDetail {
    * battle) and whether it is in the air. Null for any other formation.
    */
   deck: { carriers: number; wings: { id: number; nameKey: string; aircraft: number; mission: 'patrol' | 'strike' | 'supply' | null; flying: boolean }[] } | null;
+  /**
+   * A land formation's voyage (ROADMAP R17c): marching to its port, waiting there for its transports,
+   * at sea, or landed (a player's order, for a day after); the port's name where it has one. Null
+   * for none.
+   */
+  voyage: { state: 'toPort' | 'waiting' | 'atSea' | 'landed'; port: string | null } | null;
 }
 
 /**

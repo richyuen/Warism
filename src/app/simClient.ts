@@ -416,6 +416,12 @@ export class SimClient {
     return JSON.parse(new TextDecoder().decode(r.bytes)) as FormationDetail | null;
   }
 
+  /** Whether an order of formation `id` to (`x`, `y`) goes over the sea (ROADMAP R17c: the cursor's hint). */
+  async overSea(id: number, x: number, y: number): Promise<boolean> {
+    const r = await this.status({ type: 'overSea', id, x, y });
+    return r.bytes ? (JSON.parse(new TextDecoder().decode(r.bytes)) as boolean) : false;
+  }
+
   /** Nation `nation`'s month in parts as the sim has it now (PLAN 7.4f34), or null in a world without an economy. */
   async economy(nation: number): Promise<EconomyBreakdown | null> {
     const r = await this.status({ type: 'economy', nation });

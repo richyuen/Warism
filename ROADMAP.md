@@ -94,9 +94,12 @@ Rules:
     `landingCall1938.test.ts` 4 of 4: one group at Portsmouth (room 25,200), three full divisions
     (12,460): two land in the same hour, the group returns, the third boards after they landed and
     lands later; red with the hold off (hours 111 and 228). Pin unmoved.
-  - [ ] R17c Shown: the formation panel says marching to port, waiting for transports, at sea, or
+  - [x] R17c Shown: the formation panel says marching to port, waiting for transports, at sea, or
     landed; the map draws the sea leg and the landing point; the cursor over land across the sea
     says the order goes by sea. AT: an e2e spec of an order over the sea, each state in turn.
+    Done: `FormationDetail.voyage`, `Snapshot.voyages` (`drawVoyages`), the `overSea` request and the
+    tooltip's line; `landingVoyage1938.spec.ts` 1 of 1 (Britain's transports at Gibraltar, a division
+    from London to Belfast: tooltip by sea, then to port, waiting, at sea, landed, the leg drawn).
   - [ ] R17d Escort: an "Escort with warships" box in the panel of the selected divisions, ticked by
     default and remembered. Ticked, the order takes the nearest idle warfleet of the nation (never
     one under the player's own order) to the landing water ahead of the transports; it stays until

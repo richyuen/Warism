@@ -137,9 +137,11 @@ ack, buildProvinces, buildTerrain, buildPolitical; requests carry a `reqId` and 
   1.32a). Read-only replies (inspect, history, stats) report `status.hash` NaN: not computed.
 - `formation {id, generation?}`: one formation as JSON (`FormationDetail`: the count of its id
   (`Table.generation`), nation, template, men now and when whole, supply, engaged, moving, its
-  elements by unit type) for the formation panel, or `null` (PLAN 2.14b). With `generation`,
+  elements by unit type, its voyage over the sea) for the formation panel, or `null` (PLAN 2.14b). With `generation`,
   `null` also when the id's count is another: ids are given out again, and the formation asked
   for is gone (ADR-115). Read-only, as `inspect`.
+- `overSea {id, x, y}`: whether formation `id`'s order to (x, y) goes over the sea, JSON `boolean`
+  (ROADMAP R17c, the map tooltip's hint). Read-only.
 - `warBattle {war}`: the largest battle of a war as JSON (`WarBattle`: where to look, the pair
   of formations there, formations and men of each side), or `null` when the war has none (PLAN
   2.14e; `largestBattle`, `src/sim/systems/warBattle.ts`). Worked out from the state when
@@ -1752,6 +1754,14 @@ Actions tab's assist boxes set the mask (`setPlayerAi`).
   `FOLLOW_SLACK_PX` (5). With formations selected, a left click elsewhere orders a march there
   (`moveFormation`, at sea by transport; the right click is the nation menu); a march
   that meets a fight it was not given in is cancelled; an order keeps the AI off the formation (§7.1).
+- **Orders over the sea** (ROADMAP R17c; the rules in §6.2): with land formations selected, the map
+  tooltip over land across the sea says the order goes by sea (`overSea`, asked of the worker once a
+  cell and selection). The formation panel's status says marching to the port (named) to board
+  transports, waiting at it for them, at sea, or landed (for a day after a player's order lands;
+  `FormationDetail.voyage`). While bound for a landing, a formation whose order lines are shown has
+  its sea leg drawn (`drawVoyages`, `Snapshot.voyages`): a dashed line from its port's water, or its
+  transports at sea, to the landing's water and the land it lands on, and a ring there; straight,
+  not the way the transports sail (their own order line shows that).
 - **Actions tab** (`src/ui/ActionsTab.tsx`): force war (breaking a bond in the way), offer peace (taken at
   score ≥ `PEACE_ACCEPT_SCORE` 25 or exhaustion ≥ `PEACE_ACCEPT_EXHAUSTION` 40, `src/shared/peace.ts`),
   propose an alliance; production of land, sea and air templates (`queueFormation`; no port, no airfield

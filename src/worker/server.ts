@@ -27,6 +27,8 @@ import { DAYS_PER_MONTH } from '../sim/systems/research';
 import { shipyard } from '../sim/systems/production';
 import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { AT_PORT_CELLS, carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
+import { landingOf } from '../sim/systems/amphibious';
+import { overSea } from '../sim/systems/movement';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -59,6 +61,7 @@ import {
   type WarStat,
   type OrderNews,
   type PlayerWing,
+  VoyageState,
 } from '../shared/protocol';
 import { geometryOf, SCENARIO_INFO } from '../shared/scenarios';
 import { decodeAdmin1, type Admin1Meta } from '../shared/admin1';
@@ -74,7 +77,7 @@ import { Sim } from '../sim/sim';
 import { CONTACT_CELLS, cellDist, contactsOf, deployOf, elementFacing, elementIndex, slotCount, slotPlace, wrapDx } from '../sim/systems/elements';
 import { blockReach, SLOT_SPACING } from '../sim/core/pose';
 import { AssetStore } from './assets';
-import { airOf, buildMapCaches, Domain, seaOf, TILE, type World } from '../sim/world';
+import { airOf, buildMapCaches, Domain, portSeaOf, seaOf, TILE, type World } from '../sim/world';
 import { airHolders } from '../sim/systems/airSuperiority';
 import type { AirZones } from '../sim/nav/airZones';
 import { BufferPool } from './pool';
@@ -190,6 +193,8 @@ export class SimServer {
    * told. `before`: the order it replaced, which stands again if this one is refused.
    */
   private ordered = new Map<number, { target: number; before: number | undefined; once?: number }>();
+  /** When a formation of a player's order last landed (ROADMAP R17c: its panel says so for a day). */
+  private landedAt = new Map<number, number>();
   private labelNames = -1;
   private terrainSent = -1;
   private citiesSent = -1;
@@ -289,6 +294,13 @@ export class SimServer {
       case 'formation':
         this.reply(msg.reqId, new TextEncoder().encode(JSON.stringify(this.formationInfo(msg.id, msg.generation))), false);
         break;
+      case 'overSea': {
+        // ROADMAP R17c: the cursor's hint for the player's selection.
+        const world = this.requireSim().world;
+        const yes = world.formations.has(msg.id) && !world.offLand(msg.id) && overSea(world, msg.id, msg.x, msg.y);
+        this.reply(msg.reqId, new TextEncoder().encode(JSON.stringify(yes)), false);
+        break;
+      }
       case 'economy': {
         // A nation's month in parts (PLAN 7.4f34): read off the state now, as the month's tick would.
         const world = this.requireSim().world;
@@ -1030,7 +1042,40 @@ export class SimServer {
       fight,
       units: [...units.values()],
       deck: fleet ? this.deckOf(world, id) : null,
+      voyage: this.voyageOf(world, id),
     };
+  }
+
+  /** Formation `id`'s voyage for its panel (ROADMAP R17c; `FormationDetail.voyage`). */
+  private voyageOf(world: World, id: number): FormationDetail['voyage'] {
+    const fleet = world.seaFetch.get(id);
+    const port = fleet === undefined ? undefined : world.convoyPort.get(fleet);
+    const name = port === undefined ? null : (world.ports[port]?.name ?? null);
+    if (world.embarked.has(id)) return { state: 'atSea', port: null };
+    if (world.seaBound.has(id)) return { state: world.formations.cols.moving[id] === 1 ? 'toPort' : 'waiting', port: name };
+    const at = this.landedAt.get(id);
+    return at !== undefined && world.tick - at < 24 ? { state: 'landed', port: null } : null;
+  }
+
+  /** The snapshot's voyages (ROADMAP R17c; `Snapshot.voyages`). */
+  private voyages(world: World): number[] {
+    const out: number[] = [];
+    const w = world.cells.w;
+    const c = world.formations.cols;
+    const water = portSeaOf(world);
+    const at = (k: number): [number, number] => [(k % w) + 0.5, Math.floor(k / w) + 0.5];
+    for (const [id, target] of [...world.seaBound].sort((a, b) => a[0] - b[0])) {
+      const fleet = world.seaFetch.get(id);
+      const port = fleet === undefined ? undefined : world.convoyPort.get(fleet);
+      const landing = landingOf(world, target);
+      if (!world.formations.has(id) || port === undefined || water[port]! < 0 || !landing) continue;
+      out.push(id, c.moving[id] === 1 ? VoyageState.toPort : VoyageState.waiting, ...at(water[port]!), ...at(landing.water), ...at(landing.land));
+    }
+    for (const [id, e] of [...world.embarked].sort((a, b) => a[0] - b[0])) {
+      if (e.water < 0 || !world.formations.has(e.fleet)) continue;
+      out.push(id, VoyageState.atSea, c.x[e.fleet]!, c.y[e.fleet]!, ...at(e.water), ...at(e.land));
+    }
+    return out;
   }
 
   /** A fleet's carriers afloat and the wings based on them (PLAN 7.151; `FormationDetail.deck`), null with none. */
@@ -1342,6 +1387,7 @@ export class SimServer {
     } else if (kind === EventKind.LandingRepulsed) {
       tell('repulsed', 0);
     } else if (kind === EventKind.FormationLanded) {
+      this.landedAt.set(id, ev[i]!);
       const dx = Math.abs(Math.floor(ev[i + 4]!) - (target % w));
       const dy = Math.abs(Math.floor(ev[i + 5]!) - Math.floor(target / w));
       if (Math.min(dx, w - dx) > world.atSize(AT_PORT_CELLS) || dy > world.atSize(AT_PORT_CELLS)) tell('landedAway', 0);
@@ -1752,6 +1798,7 @@ export class SimServer {
       wars,
       formations: { count: fc, id: fid, generation: fgen, nation: fnat, x: fx, y: fy, prevX: fpx, prevY: fpy, block: fblock, facing: ffacing, strength: fstr, template: ftpl, flags: fflags, target: ftarget, enemy: fenemy, health: fhealth, wayStart: fwayStart, way: fway },
       majors,
+      voyages: Float32Array.from(this.voyages(world)),
       seas,
       raids: Float32Array.from(carrierRaids(world)),
       sorties,

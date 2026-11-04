@@ -57,7 +57,22 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     view.onSelect = (id) => (hud.selected.value = id);
     hud.onSelectNation = (id) => view.select(id);
     view.onGroundShown = (shown) => (hud.groundShown.value = shown);
-    view.onHover = (h) => (hud.hover.value = h);
+    // Over land across the sea with land formations selected, the tooltip says the order goes by
+    // sea (ROADMAP R17c): asked of the worker once a cell and selection.
+    let asked = '';
+    view.onHover = (h) => {
+      hud.hover.value = h;
+      const id = [...view.selectedFormations].sort((a, b) => a - b).find((f) => !view.formationAfloat(f));
+      const key = h && h.cell >= 0 && id !== undefined ? `${h.cell}|${id}` : '';
+      if (key === asked) return;
+      asked = key;
+      hud.hoverBySea.value = -1;
+      if (!h || key === '') return;
+      const cell = h.cell;
+      void sim.overSea(id!, (cell % geometry.w) + 0.5, Math.floor(cell / geometry.w) + 0.5).then((yes) => {
+        if (asked === key) hud.hoverBySea.value = yes ? cell : -1;
+      });
+    };
     hud.onShowBattle = (x, y, span, fight) => view.showBattle(x, y, span, fight);
     hud.onShowSeaBattle = (x, y, span) => view.showSeaBattle(x, y, span);
     // A sea battle's view keeps its fleets clear of the panels at the view's sides (PLAN 4.12a).

@@ -10,8 +10,9 @@ import { t } from './i18n';
  * unrest. No pointer events: it never takes a click. Given the signal, not its value: a mouse
  * move re-renders this, not the whole HUD.
  */
-export function MapTooltip({ hover: signal, nameOf, unrestOf }: { hover: ReadonlySignal<MapHover | null>; nameOf: (id: number) => string | null; unrestOf: (province: number) => number | null }) {
+export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea }: { hover: ReadonlySignal<MapHover | null>; nameOf: (id: number) => string | null; unrestOf: (province: number) => number | null; bySea?: ReadonlySignal<number> }) {
   const hover = signal.value;
+  const sea = bySea !== undefined && hover !== null && hover.cell >= 0 && bySea.value === hover.cell;
   if (!hover) return null;
   const owner = hover.owner !== 0 ? nameOf(hover.owner) : null;
   const holder = hover.holder !== 0 ? nameOf(hover.holder) : null;
@@ -29,6 +30,11 @@ export function MapTooltip({ hover: signal, nameOf, unrestOf }: { hover: Readonl
       {name ? <div class={hover.city ? 'map-tooltip-nation' : 'map-tooltip-name'}>{displayName(name)}</div> : null}
       {owner && holder && hover.holder !== hover.owner ? <div class="map-tooltip-note">{t('tooltip.occupiedBy', { name: displayName(holder) })}</div> : null}
       {unrest !== null ? <div class="map-tooltip-nation" data-testid="tooltip-unrest">{t('tooltip.unrest', { n: Math.round(unrest) })}</div> : null}
+      {sea ? (
+        <div class="map-tooltip-note" data-testid="tooltip-by-sea">
+          {t('tooltip.bySea')}
+        </div>
+      ) : null}
     </div>
   );
 }

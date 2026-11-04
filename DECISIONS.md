@@ -35,6 +35,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
   any player's march. A repulse ends the convoy. Every player's order over the sea goes this way,
   transports at the port or not; the AI's and God's orders keep the old path (`tryLanding` sails on
   boarding), so the pin holds. `Embarked` is not widened (its saved stride stays).
+- **R17c.** Shown, not simulated: the sea leg is a straight dashed line (port's water or the
+  transports, to the landing's water and the land), drawn for the formations whose order lines are
+  shown; the transports' own order line shows their way. "Landed" is the worker's (a day after a
+  player's order lands), not the sim's. The tooltip's hint asks the worker (`overSea`), as the
+  client has no land components.
 - **Also (the user's, 2026-11-04).** The United States' lean after R16b (29% of the land on the
   mean, done31 20%) stays a watch for the critic and the release sweeps, not an item.
 

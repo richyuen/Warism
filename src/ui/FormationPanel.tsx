@@ -50,7 +50,14 @@ export function FormationPanel({
     </div>
   );
   // On the retreat it takes no order (PLAN 3.7m): the status says so, and for how long.
-  const status = info && info.retreat > 0 ? t('formation.status.retreat', { n: info.retreat }) : t(info?.engaged ? 'formation.status.engaged' : info?.moving ? 'formation.status.moving' : 'formation.status.holding');
+  // A voyage over the sea (ROADMAP R17c): to its port, waiting there for its transports, at sea, landed.
+  const voyage = info?.voyage ?? null;
+  const status =
+    info && info.retreat > 0
+      ? t('formation.status.retreat', { n: info.retreat })
+      : voyage && !info?.engaged
+        ? t(voyage.port ? `formation.voyage.${voyage.state}.port` : `formation.voyage.${voyage.state}`, { port: voyage.port ?? '' })
+        : t(info?.engaged ? 'formation.status.engaged' : info?.moving ? 'formation.status.moving' : 'formation.status.holding');
   return (
     <aside class="nation-panel formation-panel" data-testid="formation-panel" data-formation={info?.id ?? 0}>
       <div class="panel-head">
@@ -98,7 +105,9 @@ export function FormationPanel({
           <div class="panel-row">
             <span>{t('formation.status')}</span>
             <span>
-              <span data-testid="formation-status">{status}</span>
+              <span data-testid="formation-status" data-voyage={voyage?.state ?? ''}>
+                {status}
+              </span>
               {info.fight ? (
                 <button class="nation-chip formation-fight" data-testid="formation-fight" title={t('formation.toFight.title')} onClick={onFight}>
                   {'⚔'} {t('formation.toFight')}
