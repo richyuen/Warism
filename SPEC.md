@@ -2,7 +2,7 @@
 
 Status: v1.0 (2026-11-03, after `release-2026-11-03`; ADR-805). This document says how the game works
 now. The *why* of each choice is in `DECISIONS.md` and `docs/history/DECISIONS-<YYYY-MM>.md` (cited as
-`[ADR-n]`). §1, §2 and §10 are current; the other sections are being brought up to date one by one
+`[ADR-n]`). §1, §2, §3.1–3.3 and §10 are current; the other sections are being brought up to date one by one
 (ROADMAP R6), and where one disagrees with the code, the code and the newest ADR win. A current
 section names only files, code and scripts that exist (`tests/unit/specRefs.test.ts`, ADR-821).
 
@@ -324,280 +324,260 @@ As built (reviewed 2026-10-04; §2.5 has the details of saves and autosave):
 ## 3. World model & data schemas
 
 ### 3.1 Coordinates & map [ADR-1, ADR-7]
-- Projection: **Miller cylindrical**, latitude cropped to 80°N … 64.165°S (exactly 2:1, square cells;
-  `src/sim/data/projection.ts`, ADR-7). World units
-  are projected km at the equator (`W_km ≈ 40 075`). `x` wraps when `loopingMap` is on.
-- The grid has `W×H` cells. Sizes: S 1024×512, **M 2048×1024 (default)**, L 4096×2048 (XL
-  6144×3072 dropped, ADR-419: its tick and memory, and the land mask at 2.67 px a cell). A first
-  year of seed 99 holds 192 MB of typed arrays at M and 642 MB at L (ADR-419; the budget of 160 MB
-  at XL this line had was never measured). Reaches, areas and the hold of a cell are given at the
-  default size and scaled to a game's (ADR-417).
-- Per-row scale table `kx[y]` and `ky[y]` (projected → true km) is used for movement speed,
-  ranges, blast radii and per-cell area (economy weight).
-- **Fine land mask** (static): 1-bit 16384×8192 from Natural Earth 10m land, minus natural lakes
-  (NE 10m lakes, scalerank ≤ 7, no reservoirs; PLAN 1.2). It is used by
-  the sim for element placement and naval passability at sub-cell scale, and by the
-  renderer for coastlines. Both read the same bytes, so they never disagree.
-  *Islets (PLAN 2.15e2b, ADR-105):* a territory smaller than a cell is given a land cell
-  (`reconcileIslands`); where the mask has no land pixel in that cell (9 of the 44 in 1938), the
-  world's build sets one in the mask, the cell without its corners (`addIslet`).
-  *As built (PLAN 2.9a and 2.9b1, ADR-79; `src/shared/landMask.ts`):* a point is on land when
-  the bit of the mask pixel that holds it is set (`maskLand`). A place to stand on is *surely
-  land* (`maskSure`): the four mask pixels round it, blended by how near each one's middle is
-  (`maskField`, 0–1, a half on a straight coast), make 0.85 or more. Such a place is in a land
-  pixel, and is land in the picture drawn from the mask, whose shore is moved inside a pixel
-  by a noise of at most 0.35 × 4f(1 − f) (`SHORE_NOISE`; the shader takes it from the module).
-  The world has the mask as static data (`World.landMask`: not saved, not hashed; from
-  `ScenarioAssets.landMask`, which the worker and the Node loader both give). A formation at
-  rest stands on sure land by it:
-  - *In a cell* (a path's cells, a spawn, a move by the editor) it stands at the middle when
-    that is surely land (the four mask pixels round the middle are land), and else at the
-    cell's land point: the middle of the cell's pixel furthest from water (`World.cellPoint`).
-  - *On the march* (PLAN 4.1d2, ADR-246) it is on the straight line between the points of
-    the step's two cells where that line is clear of water (`lineClear`: every square between
-    four pixels' middles that it passes has four land pixels), and else on the step's way
-    over land (`landWay`, `World.stepWay`: over land pixels, 8-way, no corner of water cut,
-    in the box of the two cells and the cells beside it of the same land on the cell grid),
-    as far along its length as the share of the step done, facing along its piece
-    (`stepPlace`). The step's time is that of the cell grid
-    either way. Derived from the mask, not state. 12,999 of the 2,437,895 steps of the 1938
-    map at M have a way; 4,645 are not clear and have none (a river of the mask, a long bay)
-    and keep the line.
-  - *At a given place* (the order of battle's, a capital's, a command's) it stands there when
-    that is surely land, and else at its cell's point (`World.standPoint`).
-  - *By a city* (a division mustered in a theatre: PLAN 2.11k) it stands at the city's own
-    place where that is in the city's cell and surely land, and else at the point of the
-    city's cell (`cityStand`, PLAN 3.12Rm, ADR-224). A city's place may lie over the cell
-    beside its own, which is water on the grid (436 of the 5,757 of 1938): no route begins
-    there.
-  - *An element* stands at its slot in the block; where that is not surely land, at the first
-    sure land on the way from the slot to its formation (`slotPlace`: the snapshot, the fire
-    events and the event of its end ask there). Not state.
-  - *Asked often:* a cell whose pixels and the ring round them are all land is inland, every
-    place in it is surely land, and the world keeps that answer (`World.onLand`).
-  - A cell with no land in the mask (a crossing, land painted in the editor) keeps its middle.
-    A march goes straight from one cell's point to the next and can cross a bay. Two
-    neighbouring cells' points can be up to 1.9 apart in x; a step is across the map's seam
-    when its ends are more than half the map apart, and then goes the short way (PLAN
-    2.11i). The coast of T2 and T3 is drawn from the same mask (§ the map's coastline, PLAN
-    2.9b2).
-- Elevation: ETOPO 2022 60″ box-averaged into Miller cells. The 4096×2048 int16 level is a derived
-  product for offline tools. 2048/1024/512 levels ship in `public/data/earth/` (ADR-13 codec), and
-  `manifest.json` lists sizes and sha256 for all assets and sources (`npm run data`).
+- **Projection:** Miller cylindrical, latitude cropped to 80° N … 64.165° S (`LAT_TOP_DEG`,
+  `LAT_BOTTOM_DEG`), so the map is exactly 2:1 and its cells are square (`src/sim/data/projection.ts`;
+  the schema checks the 2:1). The map meta is `data/maps/<id>/map.json`: `widthKm` 40,075, `wrapX`,
+  the sizes and `defaultSize`.
+- **Units:** every place in the sim (a formation, a city, an element) is in cells, as fractional
+  x and y. A cell is `kmPerCell` = 40,075.017 / W km wide at the equator. `x` wraps when the game's
+  `loopingMap` is on (the default; the schema refuses it on a map that does not wrap).
+- **Sizes:** S 1024×512, **M 2048×1024 (the default, `DEFAULT_W`)**, L 4096×2048 [ADR-419]. Reaches,
+  areas and holds are given at M and scaled to a game's size (`World.atSize`, `atSizeWhole`,
+  `atSizeSnap`, `atSizeArea`; `atWidth`, `atWidthSnap`) [ADR-417].
+- **True distances:** the nav grid keeps, per row, the true km of a step across, down and
+  diagonally (`NavGrid.kx`, `ky`, `kd`, earth radius `EARTH_R` 6371.0088 km) and each row's cell area
+  (`cellAreaByRow`). Movement (`stepKm`), path search, air and sea ranges, fallout and land areas
+  (`src/sim/landArea.ts`) read them; the economy's cell weights have their own row areas.
+- **Fine land mask** (static): 1 bit a pixel, 16384×8192 (8 px a cell at M), from Natural Earth 10m
+  land minus its lakes of scalerank ≤ 7 (`LAKE_MAX_SCALERANK`), not reservoirs; islands in lakes
+  stay land. The sim (placing, naval passability below a cell) and the renderer (coastlines) read
+  the same bits; the page keeps them packed by cell (`CoastMask`). `World.landMask` comes from
+  `ScenarioAssets.landMask` (the worker's and the Node loader's alike) and is neither saved nor
+  hashed. In `src/shared/landMask.ts`:
+  - a point is on land when its pixel's bit is set (`maskLand`); it is *surely land* (`maskSure`)
+    when the four pixels round it, blended by nearness (`maskField`, 0–1, a half on a straight
+    coast), make `SURE_LAND` (0.85) or more. The drawn shore moves inside a pixel by a noise of at
+    most `SHORE_NOISE` (0.35) × 4f(1 − f), which the map shader takes from the module, so surely
+    land is land in the picture too.
+  - *Islets:* a territory with no land cell is given one (`reconcileIslands`, the cell set to
+    Plains), and where the mask has no land there the world sets the cell's pixels but its corners
+    (`addIslet`).
+- **Where a thing stands on land** (formations at rest stand on sure land):
+  - *in a cell:* at its middle when that is surely land, else at its land point, the middle of the
+    pixel furthest from water (`World.cellPoint`, `landPoint`); a cell with no land in the mask
+    keeps its middle;
+  - *on the march* [ADR-246]: on the straight line between the two cells' points where it is clear
+    of water (`lineClear`), else on the step's way over land (`landWay`, cached by `World.stepWay`:
+    land pixels, 8-way, no corner of water cut, within the two cells' box and `WAY_MARGIN_CELLS` (1)
+    round it, in one land body of the nav grid), as far along as the share of the step done
+    (`stepPlace`); where neither exists, the straight line. Two cells' points may be up to 1.9
+    cells apart; a step across the map's seam goes the short way. The step's time is the cell
+    grid's either way.
+  - *at a given place* (the order of battle's, a capital's, a command's): there when surely land,
+    else at its cell's point (`World.standPoint`);
+  - *by a city* (a division mustered in a theatre): at the city's place when that is in its cell and
+    surely land, else at the cell's point (`cityStand`) [ADR-224];
+  - *an element:* at its slot in the block, else at the first sure land on the way from the slot to
+    its formation, searched in eighths (`slotPlace`); a formation on water keeps its slots;
+  - *a fleet:* at its water cell's sea point (`seaPoint`, `waterPoint`).
+  - Inland cells (their pixels and the ring round them all land) answer at once (`World.onLand`).
+- **Elevation:** ETOPO 2022 60″, box-averaged into Miller cells; levels 4096, 2048, 1024 and 512
+  wide ship in `public/data/earth/` (`SHIP_MAX_W`) [ADR-13]. `manifest.json` lists every asset and
+  source with its size and sha256 (`npm run data`).
 
 ### 3.2 Cell layer (SoA, length W·H)
+`CellLayers` (`src/sim/world.ts`), row-major, every array saved (`cells.*` sections):
+
 | field | type | meaning |
 |---|---|---|
-| owner | u16 | rightful owner (nation id, 0 = none/water) |
+| owner | u16 | rightful owner (nation id; 0 = none) |
 | controller | u16 | current controller (occupation when ≠ owner) |
-| terrain | u8 | enum: WATER, CROSSING, PLAINS(basic), GRASSLAND, FOREST, HILLS, MOUNTAINS, DESERT, TUNDRA, MARSH, URBAN, ICE |
-| province | u16 | province id (0 = water) |
-| flags | u8 | COAST, RIVER, FALLOUT(level 0–3 in 2 bits), FORT, ... |
-| pressure | i16 | transient, frontier cells only (stored in a sparse frontier table, not a full array) |
+| terrain | u8 | terrain class (below) |
+| province | u16 | admin-1 province (0 = none; from polygons, so a coastal water cell may have one) |
+| econ | u32 | industrial output, $M a year |
+| pop | u32 | population, thousands |
+| supply | u16 | the supply bloc that reaches the cell (0 = none; refreshed every 6 hours) |
+| flip | u8 | hours running an attacker has out-pressed the holder (§4) |
 
-**Terrain raster (PLAN 1.2, ADR-15).** `terrain-<w>x<h>.u8.wsz` (M and S shipped) is derived
-offline by `tools/data/terrain.ts`:
-- land/water from land-mask coverage ≥ 50%;
-- biome from the cell's mean Natural Earth I land-cover colour, matched to the nearest of 30
-  labelled reference sites (forest, plains, grassland, desert, tundra, ice), with plausibility rules
-  (no desert poleward of 52°, ice only poleward of 58°) and a forest-pixel-majority override;
-- relief from the ETOPO elevation standard deviation inside the cell (mountains ≥ 280 m,
-  hills ≥ 110 m or mean ≥ 3000 m);
-- marsh from NE wetland/delta polygons plus `tools/data/wetlands.json`, on flat ground only;
-- priority: ice > mountains > hills > marsh > biome; S is the 2×2 mode of M.
+Sparse cell state, saved: `world.fallout` (cell → 0..1) and `world.bombDamage` (cell → share).
+Derived and not saved: the inland cache, the frontier mask, borders, cell points, step ways. A
+frontier cell's pressure is the hour's scratch of the territory system, not state.
 
-URBAN is assigned to city cells in PLAN 1.5. Crossings are not baked in: `data/maps/<map>/straits.json`
-lists land-to-land segments, and `applyCrossings` (`src/sim/data/terrain.ts`) paints the water cells
-between the first and last land cell of each segment (extended 4 cells past both shores) at load time.
-Cells that have a province but water terrain (or the reverse) are reconciled when ownership is built
-(PLAN 1.3).
+**Terrain classes** (`src/shared/terrain.ts`, in order): Water, Crossing, Plains, Grassland, Forest,
+Hills, Mountains, Desert, Tundra, Marsh, Urban, Ice. `isLand` is Plains and above; a crossing is
+sea that land units walk. The sim never paints Urban; only the renderer names it.
 
-Terrain table (`data/terrain.json`, in enum order): moveCost per mobility class (foot, motor,
-tracked; null = impassable), defence modifier, attack modifiers per unit class, supply attrition,
-econ weight, colour.
+**Terrain raster** [ADR-15]: `terrain-<w>x<h>.u8.wsz` for S, M and L, made offline by
+`tools/data/terrain.ts` (`npm run data`):
+- land where the land mask covers ≥ 50 % of the cell;
+- the biome from the cell's mean Natural Earth I land-cover colour, matched to the nearest of 30
+  labelled sites (forest, plains, grassland, desert, tundra, ice), with no desert poleward of 52°
+  (`DESERT_MAX_ABS_LAT`) and ice only poleward of 58° (`ICE_MIN_ABS_LAT`), and forest where its
+  pixels are the majority of a plains or grassland match; a land cell with no land-cover pixel takes
+  its neighbours' commonest class, else Plains;
+- relief from the elevation's standard deviation in the cell: mountains ≥ 280 m
+  (`MOUNTAIN_STD_M`), hills ≥ 110 m (`HILLS_STD_M`) or a mean ≥ 3000 m (`HIGH_PLATEAU_M`);
+- marsh from Natural Earth's wetlands and deltas and `tools/data/wetlands.json`, on flat ground
+  (deviation < 40 m, `MARSH_MAX_STD_M`), never desert;
+- priority ice > mountains > hills > marsh > biome. S is the 2×2 mode of M (land from the mask); L is
+  built at its own size.
 
-**Data files (PLAN 1.1).** zod schemas in `src/sim/data/schemas.ts`, strict objects (unknown keys
-are errors). Cross-file checks: unique ids per kind, `techReq`/`prereqs`/`excludes` references,
-prereq years ≤ tech year, acyclic tech graph, scenario → map/size, `loopingMap` only on wrapping maps,
-and every `nameKey`/`descKey` present in `en.json`. Map meta: `data/maps/<id>/map.json` (projection,
-widthKm, sizes, defaultSize, wrapX, assets manifest). Scenario meta: `data/scenarios/<id>/scenario.json`
-(map, size, startDate, settings). Nations, ownership, cities and OOB files join the scenario in
-PLAN 1.3–1.7. Errors read `<file>: <path>: <message>`.
+**Crossings** are not baked in: `data/maps/<map>/straits.json` lists land-to-land segments, and
+`applyCrossings` (`src/sim/data/terrain.ts`) paints the water cells between each segment's first and
+last land cell, extended `STRAIT_EXTEND_CELLS` (4, scaled) past both shores, at load; a segment
+without land on both halves is not painted.
+
+**The terrain table** (`data/terrain.json`, one row a class in enum order, which the validator
+checks): `nameKey`, move cost by mobility (foot, motor, tracked; null = impassable), defence, attack
+modifiers by unit class, supply attrition, economic weight, colour.
+
+**Data files.** zod schemas in `src/sim/data/schemas.ts`, strict objects (an unknown key is an
+error). `validateDataSet`'s cross-file checks: unique ids by kind; `techReq`, `prereqs` and
+`excludes` refer to real ids, `excludes` both ways; a prereq's year ≤ its tech's; an acyclic tech
+graph; a scenario's map and size exist; `loopingMap` only on a map that wraps. Errors read
+`<file>: <path>: <message>`. That every `nameKey` and `descKey` is in `en.json` is a unit test
+(`tests/unit/data-schemas.test.ts`). Map meta: `data/maps/<id>/map.json` (projection, `widthKm`,
+sizes, `defaultSize`, `wrapX`, optional assets). Scenario meta: `data/scenarios/<id>/scenario.json`
+(map, optional size, `startDate`, settings, optional `hidden`).
 
 ### 3.3 Provinces, cities, sea zones, air zones
-- **Province raster** (PLAN 0.19): built at load time in the worker from `admin1-geometry.wsz` +
-  `admin1-meta.json.wsz` (`src/sim/data/provinces.ts`). Every NE admin-1 province gets ≥ 1 cell: sub-cell
-  provinces are force-placed near their label point (same-country donor cell, else free water as an
-  island, else any donor). Province id = NE feature index + 1. Builds in ~70 ms at M in Chromium.
-- **Province** (`data/maps/earth/provinces.json` + raster): id, name key, admin-1
-  source id, centroid, cell count, area km², terrain mix, `cores: nationId[]`,
-  `buildings {industry, fort, airbase, port, navalBase, aa}`, population, unrest,
-  revolt state, devastation.
-- **City**: id, name key, province, position, size, `isCapitalOf`, industry,
-  population. It counts as a victory point, and capture events are logged.
-  1938 list (PLAN 1.5, ADR-18): `data/scenarios/1938/cities.json` (5774 cities) is generated by
-  `npm run data` (`tools/data/cities.ts`) from NE populated places + `city-rules.json`.
-  The rules hold 1938 renames, post-1938 exclusions and forced includes; capitals are bound from
-  nations.json. Size 1–5 = max(scalerank tier, population tier). At load, `placeCities`
-  (`src/sim/data/cities.ts`) gives each city its land cell (a coastal city snaps ≤ 2 cells; a
-  capital snaps to its own nation) and owner. Rendering: `src/render/labels/cityLabels.ts` on a
-  Canvas2D overlay. Dots appear from T0 (capitals and size ≥ 4); names fade in by size through
-  T1 (capitals at 5 km/px, size 4 at 2 km/px, size 3 at 1.4 km/px, size 2 at 800 m/px, size 1 at
-  450 m/px); greedy collision runs in priority order.
-  *Where a name stands (PLAN 2.7r, ADR-76):* at the first place by its dot where no name placed
-  before it, no T0 counter and no capital flag is on its letters: to the right, to the left, below
-  right, below left, below; then past the counter or flag that stands beside the dot (to the right,
-  to the left or below it, at most 40 px to the side and 26 px down); then above. With no place it
-  is left out. It keeps its place to the pixel, as an offset from its dot, for as long as nothing
-  stands on it; when something does, it takes the first free place at once and cross-fades from
-  the old one over 250 ms. A new place must be clear of a counter by 2 px; a place held only has
-  to be untouched. The names are laid out after the frame's counters and flags.
-  *At T1 (PLAN 2.7u):* the names keep clear of the markers in the same way: of each marker's box
-  with the bar and the number under it, of a stack's tag, and of the Major Battles; not of the
-  order arrows. Which unit layer counts is the one that is shown or coming in, from the first
-  frame in which the coming layer is drawn (one frame after the camera's step: in that of the
-  step neither layer counts), so that the names change places with the handover and not after
-  it.
-  *The order of the label layers (PLAN 2.7t):* on one canvas under the overlay, the curved
-  nation names and over them the city dots and names: a small name over a large one reads. On
-  the overlay above: the unit layers, then the capital flags.
-- **Sea zone**: id, name key, polygon (cells), lane graph nodes, adjacency, control per side.
-  Built as a Voronoi over water seeded by named seas (Natural Earth marine
-  polygons) and then subdivided.
-  *As built (PLAN 4.1a, ADR-242; `src/sim/nav/seaZones.ts`, `seaOf(world)`):* a zone is the
-  water and crossing cells nearest to its seed, in steps over water (4-way, the earlier seed
-  on a tie), so it is in one piece and no land is crossed. Derived from the terrain and the
-  map's seeds: not saved, not hashed, dropped where the nav grid is. 0.2 s at M.
-  - *The seeds* (`data/maps/earth/seas.json`, 415 of 170 named seas; `npm run data`, or
-    `npm run data -- --seas` from the cached polygons, `tools/data/seas.ts`): each named polygon
-    is drawn on the M map; one under 10,000 km² of water is left out; a cell in several is of
-    the smallest. A sea is given a seed for each 1.5 M km² of its area (`ZONE_KM2`), or for
-    each 1,500 km of its length when that asks for more (`ZONE_SPAN_KM`: the Mediterranean
-    has 5), spread over it (`spreadSeeds`: the deepest cell, the furthest from the seeds so
-    far, then each to the middle of its part by area). A seed has the sea's name and its
-    part (0, or 1…k). The names are English and in the file, as the cities' are.
+- **Provinces.** The raster is built at load in the worker from `admin1-geometry.wsz` and
+  `admin1-meta.json.wsz` (`buildProvinceRaster`, `src/sim/data/provinces.ts`, called by
+  `buildPoliticalMap`); province id = Natural Earth admin-1 feature index + 1. Every province gets
+  a cell: those smaller than a cell are placed largest first, at their label point when that is
+  free water, else in rings out to `MAX_RADIUS` (scaled), taking a cell of their own country that
+  leaves its donor one, else free water, else any donor.
+  - *Static* (`Admin1Meta`, `src/shared/admin1.ts`): id, adm1, name, adm0, admin, iso2, type, the
+    label point, `areaKm2`.
+  - *State* (`src/sim/provinces.ts`, saved): `unrest`, `core` (the nation whose core it is),
+    `heldBy` and `heldSince`, and `claims` (extra cores). Cores start as the owner of each
+    province's centre cell plus the scenario's extra cores (§4). A province has no buildings:
+    ports and airbases are the scenario's (below; `src/sim/data/airbases.ts`).
+- **Cities.**
+  - *Static* (`CityDef`, `src/sim/data/cities.ts`, from `data/scenarios/1938/cities.json`): name
+    (English), longitude and latitude, size 1–5, `capitalOf` (a nation's tag). The file (5,774
+    cities) is made by `npm run data` (`tools/data/cities.ts`) from Natural Earth's populated places
+    and `city-rules.json` (renames, exclusions, inclusions, `maxScalerank` 8, `minSpacingCells`
+    2.5). Size = the larger of the scalerank tier (≤ 1 → 5, ≤ 3 → 4, ≤ 4 → 3, ≤ 6 → 2, else 1) and
+    the population tier (≥ 5 M → 5, ≥ 1.5 M → 4, ≥ 500 k → 3, ≥ 150 k → 2, else 1); a capital is at
+    least 3, bound to the nearest place within `CAPITAL_BIND_KM` (40) of its nation's capital or
+    made there.
+  - *Placed at load* (`placeCities`): each city takes a land cell within `CITY_SNAP_CELLS` (2,
+    scaled), a capital one of its own nation, and is left out with none; its owner is its cell's.
+  - *State* (`world.cities`, saved): def, x, y, cell, size, `capitalOf` (nation id) and econ (the
+    editor's); an editor's city's name is in `world.cityNames`. Industry and population are the
+    cells' (`econ`, `pop`), filled by city size (`fillEconomy`). A capital's capture is a history
+    row (`CapitalCaptured`); God's spawned and razed cities are too.
+  - *Drawn* (`src/render/labels/cityLabels.ts`, on a canvas of its own under the overlay; dots moved
+    onto sure land of the fine coast): a dot shows from 12,000 m/px for size 4, 6,000 size 3, 3,000
+    size 2 and 1,500 size 1, and always for capitals and size 5; a name from 5,000 m/px for a
+    capital, 3,500 size 5, 2,000 size 4, 1,400 size 3, 800 size 2 and 450 size 1. Each turns on and
+    off with a hysteresis of ×1.15 (`ZOOM_HYSTERESIS`) and fades over 250 ms (`FADE_MS`). Font
+    10 + size px, 2 more for a capital; a capital's dot and name are yellow.
+  - *Where a name stands* [ADR-76]: names are laid out after the frame's counters and flags,
+    capitals first, then by size, then in the file's order. A name takes the first place by its dot
+    (`NAME_SIDES`: right, left, below right, below left, below; then past the counter or flag beside
+    the dot, at most 40 px to the side and 26 px down, a capital's reach ×1.6 (`CAPITAL_REACH`); then
+    above, right, left or centred) where its letters cross no name placed before it and no
+    obstacle; with none it is left out. A new place must clear an obstacle by 2 px (`NAME_CLEAR_PX`);
+    a place held need only be untouched, and is kept to the pixel as an offset from the dot; when
+    something stands on it, the name takes the first free place at once and cross-fades from the
+    old over 250 ms. The obstacles: T0 counters and capital flags; at T1 each marker's box with its
+    bar and number, a stack's tag and the Major Battles (not the order arrows); at T2 and T3 the
+    formations' tags. The unit layer that counts is the one shown or coming in, from the first
+    frame in which the coming one is drawn.
+  - *Label layers:* on the city canvas, the curved nation names and over them the city dots and
+    names; on the overlay above, the unit layers, then the capital flags.
+- **Sea zones** [ADR-242] (`src/sim/nav/seaZones.ts`, `seaOf(world)`; derived from terrain and the
+  map's seeds, neither saved nor hashed, dropped with the nav grid): a zone is the water and
+  crossing cells nearest its seed in 4-way steps over water (the earlier seed on a tie), so it is one
+  piece and crosses no land. `SeaZones`: `zoneOf`, `count`, `seedCell`, `seed` (−1 for an unnamed
+  zone), `cells`, `areaKm2`, `closed`, `adj`, `dropped`. A zone's name is its seed's.
+  - *Seeds* (`data/maps/earth/seas.json`, made by `npm run data -- --seas`, `tools/data/seas.ts`): each
+    named marine polygon of Natural Earth drawn on the M map; one under 10,000 km² of water
+    (`MIN_NAMED_KM2`) is left out, a cell in several goes to the smallest, and water in none to the
+    sea nearest over water. A sea is given a seed for each `ZONE_KM2` (1.5 M km²) of its area, or
+    each `ZONE_SPAN_KM` (1,500 km) of its length when that asks for more, spread over each piece of
+    it (`spreadSeeds`: the deepest cell, then each furthest from the seeds so far, then each moved to
+    the middle of its part, at most 16 rounds). A seed has the sea's English name and its part (0 for
+    a sea of one seed, else 1…k).
   - *Water no seed reaches* (a lake, the toy world, a map with no seas file): a body of
-    10,000 km² or more (`MIN_WATER_KM2`) is given seeds by the same spread and its zones
-    have no name; a smaller one has no zone (zone 0).
-  - *A seed on land* (the map at S, ground painted in the editor) takes the nearest water
-    within 2 cells that no seed has, and is left out with none (`dropped`).
-  - *The count* on the 1938 map at M is 428 (415 named, 13 lakes); the test holds it to
-    300–450. The largest is 2.3 M km², the median 0.67 M.
-  - *Not as the polygons:* a zone's edge is where two seeds are as near, not on the
-    polygon's line, and a step is a cell, so a zone in the open sea is a diamond on the map
-    and is smaller in km near the poles than its cells say. Bodies the cell grid closes are
-    not joined (the Black Sea with the Sea of Azov, the Sea of Marmara, the Caspian, the
-    Strait of Magellan's inner water, each lake): the lane graph joins what a ship passes
-    (PLAN 4.1b).
-- **Lane graph**: nodes at sea-zone centres, ports and straits. Edges carry distance and
-  `crossing` (AoC-style land-unit-walkable lanes, editable).
-  *As built (PLAN 4.1b, ADR-243; `src/sim/nav/lanes.ts`, `laneOf(world)`):* derived from the
-  zones and the map's passages, as the zones are: not saved, not hashed, dropped where they
-  are. 0.37 s at M. With the world's ports (PLAN 4.1c, below) 0.38 s. The worker builds it
-  after it answers an init or a load (`warmLanes`, PLAN 4.8e, ADR-288): not in the tick of the
-  game's first sail (1,960 ms there before).
-  - *Nodes:* one for each zone, at its seed's cell (node `zone - 1`), then one for each
-    strait: a body of crossing cells (4-way) with a cell in a zone, at the middle one of
-    those cells. On the 1938 map at M 456: 428 zones and 28 straits (of 29 bodies; the Strait
-    of Canso's is in water with no zone, and the Little Belt has no crossing cell).
-  - *Edges* (968): between two zones that touch (930, the pairs of the zones' `adj`); from a
-    strait to each zone it has a cell in (31, `crossing`); one for each passage (7). An edge
-    holds its km and its cells, from its lower node's cell to the other's, each a neighbour
-    of the one before, all zoned water.
-  - *The length:* from every seed at once, the distance in km to each cell of its own zone
-    (8-way, `stepKm`; a diagonal step only where both cells beside it are sea, so no corner
-    of land is cut). An edge between two zones is the least of seed to cell, the step, cell
-    to seed over the pairs of cells where they touch, so it changes zone once.
-  - *Passages* (`data/maps/<map>/passages.json`, by hand: id, name, the water at each end):
-    what a ship passes and the cell grid closes or has as land. On the earth: the Bosporus,
-    the Dardanelles, the Suez, Panama and Kiel canals, and the two arms of the Strait of
-    Magellan. An end takes the nearest zoned water within 2 cells (`PASSAGE_SNAP`); a passage
-    with an end that finds none, or with both ends in one zone, is left out (`dropped`). Its
-    edge joins the two zones' nodes: seed to the end, the great circle between the ends
-    (`greatCircleKm`), the other end to its seed; `landAt` is where its cells jump.
-  - *The route* (`laneRoute`): the shortest over the edges, the lower node on a tie. It goes
-    by the zones' middles, so it is longer than the sea's own way: the Alboran Sea to the
-    north of the Red Sea is 4,941 km, 4,024 by great-circle legs (PLAN 4.2 moves ships).
-  - *A fleet's way* (`sailRoute`, `src/sim/nav/sailRoute.ts`; PLAN 4.2c, ADR-250): from a
-    water cell to another. To the first cell's seed by the seeds' tree (`toSeed`: per cell,
-    the next cell towards its zone's seed), the route's edges between the two zones' nodes,
-    and from the last seed to the last cell; then drawn tight. From a cell of the way a
-    straight walk (`seaWalk`: Bresenham's line over zoned water, no corner of land cut,
-    over the seam of a map that loops) to the furthest cell in a row that it reaches, and
-    on from there, until no cell more can be left out; a second time with only the walks
-    that are no longer in km than what they replace (a line of the map is not the shortest
-    far from the equator); the shorter of the two. A passage stays, each side of it drawn
-    tight by itself. The result: cells, each a neighbour of the one before but at a
-    passage's one step; its km (`sailStepKm`: a neighbour's `stepKm`, a passage's great
-    circle between its ends' cells); the cells it turns at. Gibraltar to the Gulf of Suez:
-    5,785 km by the seeds, 4,115 drawn tight, 3,856 by great circles between its 7 turns.
-    About 2 ms a way.
-  - *Ice* (PLAN 4.2d, ADR-251; `data/maps/<map>/ice.json`, by hand, `World.seaIce`): the
-    seas of `seas.json`, by name, that pack ice closes to a fleet. On the earth 21 (29 zones
-    of 428): the Arctic Ocean, the Kara Sea to the Chukchi Sea, the Beaufort Sea to Baffin
-    Bay. Their zones are `closed` (`SeaZones.closed`); the lane graph has no edge with a
-    closed zone at an end (62 of 1,547 left out), a straight walk does not cross one, and a
-    fleet's way neither begins nor ends in one. All the year: the map has no seasons. Scapa
-    Flow to Pearl Harbor goes by Panama, 18,531 km.
-  - *Joined and not:* 16 groups of nodes where the zones had 19. One of 438 (every sea, the
-    Black Sea and the Sea of Marmara with them, and the Strait of Magellan's inner water);
-    the Caspian with Garabogaz Bay (3); Lake Maracaibo (its bar was not dredged until the
-    1950s); 13 lakes.
-- **Ports and naval bases** (PLAN 4.1c, ADR-244; `src/sim/data/ports.ts`, `world.ports`):
-  static data of the scenario, as the seeds and the passages are: not saved, not hashed.
-  Who holds a port is who holds its land cell. A port has the levels of the two buildings
-  (`port` 1 to 5, `navalBase` 0 to 5); they become state with the task that builds, damages
-  or blockades them (PLAN 4.4), and the province buildings of the list above are not built.
-  - *The file* (`data/scenarios/<id>/ports.json`): `minCitySize` (3), `reachCells` (2),
-    `levelBySize` ([1, 2, 3]) and `ports`, a list by hand: name, place, `nation` (who holds
-    it at the start: it takes that nation's land within 2 cells, and the world's build
-    fails with none), `port`, `navalBase`, and `water` where the sea is further than the
-    reach (the mouth of the river).
-  - *A city's port* (`placePorts`): a placed city of the size or more whose cell has water
-    within the reach, by the terrain alone (the zones are not built at a load); its level by
-    its size; one port to a cell. *By hand* (105 in 1938): 87 naval bases (20 main fleet
-    bases at level 3, 27 at 2, 40 stations at 1) and 18 ports, of rivers (London, Hamburg,
-    Calcutta) and of nations that had none (Memel, Aqaba, Matadi, Puerto Barrios). One by
-    hand in a city port's cell takes its place and keeps its city (Pearl Harbor is
-    Honolulu's). Truk has no land on the M map: Palau stands for the mandate.
-  - *Its node* (`buildLaneGraph(…, ports, reach)`, `LaneNode.port`, `portNode`): after the
-    straits, in the ports' order, at the port's water: the zoned water cell nearest to the
-    port's place within the reach of its land cell, or nearest to the water given by hand
-    (within `PASSAGE_SNAP`). One edge, from the node of that water's zone: the way from the
-    seed, its km. A port whose cell is no land any more, or with no zoned water in reach (a
-    lake under 10,000 km²: Geneva), has no node (`portNode` -1) and is no port to a ship.
-  - *The count* in 1938 at M: 615 ports, 579 with a node (the test holds 500–700), 557 of
-    them on the seas (reached from Gibraltar), the others on lakes and the Caspian; in 421
-    provinces. Every nation with a coast on the seas has one. The graph has 1,035 nodes and
-    1,547 edges (1,485 with the ice, PLAN 4.2d).
-  - *The random world* has the same ports, the nations of the file not read.
-  - *Not done:* a port of a city placed in the editor, or one moved with a city; a port in
-    a scenario file (it has those of its base). A port whose water is in the ice keeps its
-    node, with no edge (16 in 1938: Tiksi, Dikson, Resolute, Qaanaaq).
-- **Air zone**: a cluster of about 8–20 provinces. Air superiority is tracked per side per zone.
+    `MIN_WATER_KM2` (10,000 km²) or more is given unnamed seeds by the same spread; a smaller one has
+    zone 0. A seed on land takes the nearest water no seed has within `SEED_SNAP` (2 cells), or is
+    dropped.
+  - The tests hold the 1938 map at M to 300–450 zones, none dropped, none over twice `ZONE_KM2`. A
+    zone's edge is where two seeds are as near, not the polygon's line; bodies the grid closes are
+    joined only by the lane graph.
+- **Lane graph** [ADR-243] (`src/sim/nav/lanes.ts`, `laneOf(world)`; derived, not saved). The worker
+  builds it with the other map caches (air zones, basins, port waters: `buildMapCaches`) after an
+  init or a load, as `Sim.load` and the world template do.
+  - *Nodes* (`LaneNode`: zone, strait or port): one a zone at its seed (node `zone − 1`); then one
+    a strait, a 4-way body of crossing cells with a zoned cell, at the middle of those cells; then
+    one a port.
+  - *Edges:* between zones that touch, from a strait to each zone it has a cell in (`crossing`), one
+    a passage, one a port. An edge holds its km and its cells, from its lower node's to the other's,
+    each an 8-way neighbour of the one before, all zoned water. Its length: one 8-way search from
+    every seed over its own zone (`stepKm`; a diagonal only between two sea cells), and between two
+    zones the least of seed to cell, step, cell to seed over the cells where they touch.
+  - *Passages* (`data/maps/<map>/passages.json`, by hand: id, name, the water at each end): what a
+    ship passes and the grid closes. On the earth 7: the Bosporus, the Dardanelles, the Suez, Panama
+    and Kiel canals, and the Strait of Magellan's First Narrows and western arm. An end takes the
+    nearest zoned water within `PASSAGE_SNAP` (2 cells); a passage with an end that finds none, or
+    both ends in one zone, is dropped. Its km: seed to end, the great circle between the ends
+    (`greatCircleKm`), end to seed; `landAt` is where its cells jump. A passage is shut while its
+    bank's controller is at war with the ship's nation (`passageShut`).
+  - *Ice* [ADR-251] (`data/maps/<map>/ice.json`, by hand; `World.seaIce`): the seas, by name, that
+    pack ice closes all year. On the earth 21 (the Arctic Ocean, the Kara Sea to the Chukchi Sea, the
+    Beaufort Sea to Baffin Bay). Their zones are `closed`: no lane edge has one at an end, no walk
+    crosses one, no way begins or ends in one. The validator refuses a name not in `seas.json`.
+  - *Basins* (`seaBasins`, `basinOf`): the zones the lanes join; `ocean` is the largest. The shipyard,
+    a sea hero's return, the invasion AI and sea battles read them.
+  - *The route* (`laneRoute`): the shortest over the edges (Dijkstra, the lower node on a tie),
+    leaving out the edges `shut` names (an enemy's passage).
+  - *A fleet's way* (`sailRoute`, `src/sim/nav/sailRoute.ts`) [ADR-250]: from a water cell to
+    another: to its zone's seed by the seeds' tree (`toSeed`), the route's edges, and from the last
+    seed to the cell; then drawn tight, twice (from each cell a straight walk, `seaWalk`, Bresenham
+    over zoned water with no corner of land cut, across the seam of a looping map and never through
+    a closed zone, to the furthest cell of a row it reaches; the second time only walks no longer in
+    km than what they replace), the shorter kept. Each side of a passage is drawn tight by itself.
+    The way: its cells, its km (`sailStepKm`: a neighbour's `stepKm`, a passage's great circle), its
+    lane km (`laneKm`) and the cells it turns at.
+- **Ports and naval bases** [ADR-244] (`src/sim/data/ports.ts`, `world.ports`): static data of the
+  scenario, not saved. Who holds a port is who holds its land cell. A port has a `port` level 1–5
+  and a `navalBase` level 0–5; levels never change. Its state is elsewhere: bomb damage
+  (`world.portDamage`, saved, repaired daily; a port damaged `PORT_SHUT` or more is shut), and
+  blockade, when an enemy holds the sea zone of its water (`world.seaControl`, §6.2).
+  - *The file* (`data/scenarios/<id>/ports.json`): `minCitySize` (3), `reachCells` (2, scaled),
+    `levelBySize` ([1, 2, 3]) and `ports`, by hand: name, place, `nation` (who holds it at the start;
+    it takes that nation's land within `PORT_SNAP_CELLS`, and the world's build fails without),
+    `port`, `navalBase`, and `water` where the sea is further than the reach (a river's mouth).
+  - *A city's port* (`placePorts`): a placed city of `minCitySize` or more with water in reach, by
+    terrain alone, its level by its size; one port a cell. A port by hand in a city port's cell takes
+    its place, keeps its city and takes the higher level. In 1938: 105 by hand, 87 of them naval
+    bases.
+  - *Its node:* after the straits, in the ports' order, at the zoned water nearest its place within
+    reach of its cell (or the `water` given, within `PASSAGE_SNAP`), with one edge from that zone's
+    seed. A port whose cell is no longer land, or with no zoned water in reach (a lake under
+    10,000 km²), has no node (`portNode` −1) and no ship uses it; one in the ice keeps a node with no
+    edge. `portWaters` and `portSeaOf` give a port's water without the edges; `portWater` (by
+    terrain) is where fleets stand.
+  - The tests hold the 1938 map at M to 500–700 ports with a node, in 400 or more provinces, and a
+    port on the seas for every nation with a coast on them. The random world has the same ports, the
+    file's nations not read; the toy world has none. A port of a city placed in the editor, or in a
+    scenario file, does not exist.
+- **Air zones** (`src/sim/nav/airZones.ts`, `buildAirZones`, `airOf(world)`; derived, not saved): on
+  land, regions of whole provinces of about `AIR_ZONE_KM2` (300,000 km²) each; over water, the sea
+  zones. Air superiority is a nation's, not a zone's: its side's share of the air power of it and
+  its enemies, 0–1, a half when neither flew (`src/sim/systems/airSuperiority.ts`; `world.airPower`,
+  saved; §6.3).
 
-**Sim boot (PLAN 1.9a).** `Sim({scenario: '1938', seed, assets})` builds the world with
-`createWorld1938` (`src/sim/scenario1938.ts`), which runs `buildPoliticalMap`:
-- cells: owner, controller, terrain and province (saved);
-- nations: id = index + 1, with colour, cells, capital and `living`;
-- cities: `def` → cities.json, plus position, cell, size and capitalOf;
-- formations: from the OOB, with template index and divisional strength.
+**The world's build.** `Sim({scenario, seed, assets, options})` (`src/sim/sim.ts`) builds the 1938
+world with `createWorld1938` (`src/sim/scenario1938.ts`), which runs `buildPoliticalMap`: the
+province raster, `reconcileIslands`, then `buildOwnership`; then nations (id = index + 1, colour,
+`living`, the capital's place `capitalX`, `capitalY`), cities, and formations from the order of
+battle (`equipFormation`). The first world built is kept as a template and later ones are loaded
+from its bytes. Static facts (names, traits, templates) are looked up by id and are not state. The
+worker fetches the assets from `data/earth/`, checks their sha256 (`src/worker/assets.ts`) and builds
+the Sim; the page opens it with `?scenario=1938`.
 
-Static facts (names, traits, templates) are looked up by id from scenario data and are not state.
-The worker fetches and sha256-checks the assets before constructing the Sim (`init {assetBase}`),
-and the app boots it with `?scenario=1938`. The world builds in ~0.2 s at M, saves in 2 ms
-(14.9 MB raw; gzip in PLAN 1.27) and loads in 5 ms.
-
-**Scenario ownership (PLAN 1.3, ADR-16).** `data/scenarios/1938/nations.json` (id = index + 1)
-and `ownership.json` drive `buildOwnership` (`src/sim/data/ownership.ts`), run at load in the worker:
+**Scenario ownership** [ADR-16] (`data/scenarios/1938/nations.json`, id = index + 1, and
+`ownership.json`; `buildOwnership`, `src/sim/data/ownership.ts`):
 - each province takes `byProvince[adm1] ?? byCountry[adm0]`;
-- land cells (terrain ≥ Plains) take their province's owner, and province-less land takes its
-  neighbours' majority;
-- polygon `regions` are applied in order, each only to cells owned by its `onlyFrom` tags;
-- `occupation` rings set the controller.
-
-`reconcileIslands` first gives each landless island territory one land cell (Malta, Bermuda, …).
-Builds in ~230 ms at M in Chromium (province raster included).
+- land cells take their province's owner; land with no province, or a displaced province of
+  `DISPLACED_CELLS` (2) cells or fewer, takes its neighbours' majority; an islet nothing reaches
+  takes the nearest owned land within `ISLET_REACH` (16 cells);
+- polygon `regions` apply in order, each only to cells owned by its `onlyFrom` tags;
+- `occupation` rings set the controller, on cells the occupied nation owns.
 
 ### 3.4 Nations
 ```ts

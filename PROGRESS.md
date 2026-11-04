@@ -706,3 +706,23 @@
 - Fix: `specRefs.test.ts` red on main from 7f7320d2 to cb52f5b5. Once committed, the test's own example of a stale name
   (`isCapitalOfNowhere`) was a word of the tracked code it searches; green before only because the file was untracked.
   The checker's own two files are left out of its corpus. 4 of 4.
+
+## 2026-11-03 — ROADMAP R6b: SPEC §3.1–3.3 as the code is
+- Three read-only read-throughs of the code against the old text (map and cells; provinces, cities, boot and ownership;
+  sea zones, lanes and ports), each claim marked holds, wrong, gone or a measurement. Rewritten from them.
+- Wrong or gone in the old text: world units are cells, not km; the cell layer had `flags` and `pressure` and lacked
+  `econ`, `pop`, `supply`, `flip`; the sim never paints Urban; L terrain and all four elevation levels ship; no province
+  file, buildings, city industry or victory points; air zones are ~300,000 km² regions (sea zones over water) and air
+  superiority is a nation's; port levels are static, their state is bomb damage and blockade; lanes are built with the
+  other map caches (`buildMapCaches`). Measured counts and timings out; the tests' held ranges kept.
+- Constants stated, read from: `LAT_TOP_DEG` 80, `DEFAULT_W` 2048, `kmPerCell` `projection.ts:23–61`; `SHORE_NOISE` 0.35,
+  `SURE_LAND` 0.85, `WAY_MARGIN_CELLS` 1 `landMask.ts:50,52,349`; `EARTH_R` `nav/grid.ts:21`; `STRAIT_EXTEND_CELLS` 4
+  `sim/data/terrain.ts:61`; terrain thresholds `tools/data/terrain.ts:59–70`; `LAKE_MAX_SCALERANK` 7, `SHIP_MAX_W`
+  `tools/data/run.ts:52,121`; `CITY_SNAP_CELLS` 2 `sim/data/cities.ts:34`; `CAPITAL_BIND_KM` 40 and the size tiers
+  `tools/data/cities.ts:43,53–65`; label limits, `NAME_SIDES`, reach 40/26, `CAPITAL_REACH` 1.6, `NAME_CLEAR_PX` 2
+  `cityLabels.ts:89–122`; `ZOOM_HYSTERESIS` 1.15, `FADE_MS` 250 `render/timing.ts:14,16`; `ZONE_KM2`, `ZONE_SPAN_KM`,
+  `MIN_WATER_KM2`, `SEED_SNAP`, 16 rounds `seaZones.ts:42–54`; `MIN_NAMED_KM2` `tools/data/seas.ts:26`; `PASSAGE_SNAP`
+  `lanes.ts:74`; `PORT_SNAP_CELLS` `ports.ts:58`; port levels `schemas.ts:269–284`; `AIR_ZONE_KM2` `airZones.ts:29`;
+  `DISPLACED_CELLS` 2, `ISLET_REACH` 16 `ownership.ts:291,294`; `passageShut` `seaSupply.ts:95`.
+- `specRefs.test.ts` 5 of 5 (§3 at 0 misses; 2 before, in the old §3.3).
+- **Next:** R6c.
