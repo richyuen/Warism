@@ -73,6 +73,8 @@ export class PlayerControl {
   readonly diplomacy = signal(false);
   readonly menuNotice = signal<(NationMenu & { reason: number }) | null>(null);
   private menuSent: { at: number; menu: NationMenu } | null = null;
+  /** Whether an order over the sea asks for an escort (ROADMAP R17d): the setting's, set by the page. */
+  escort: () => boolean = () => true;
   private noticeTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
@@ -327,7 +329,8 @@ export class PlayerControl {
       return true;
     }
     if (sel.size === 0) return false;
-    for (const id of [...sel].sort((a, b) => a - b)) this.hud.command({ kind: 'moveFormation', id, x: x + 0.5, y: y + 0.5, nation: n });
+    const escort = this.escort();
+    for (const id of [...sel].sort((a, b) => a - b)) this.hud.command({ kind: 'moveFormation', id, x: x + 0.5, y: y + 0.5, nation: n, escort });
     return true;
   }
 }

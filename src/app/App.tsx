@@ -349,6 +349,11 @@ export function App({
           onFight={() => hud.toFight()}
           onClose={() => hud.selectFormation(0)}
           notice={lastOrder ? orderNewsText(lastOrder, formationTitle.name) : null}
+          escort={
+            player && formationTitle.nation === player.nation.value && hud.formationInfo.value && hud.templates.value[hud.formationInfo.value.template]?.domain === 0
+              ? { on: settings.escort.value, onChange: (on) => settings.setEscort(on) }
+              : null
+          }
         />
       ) : nation ? (
         <NationPanel

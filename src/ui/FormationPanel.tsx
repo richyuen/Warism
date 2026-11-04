@@ -28,6 +28,7 @@ export function FormationPanel({
   onFight,
   onClose,
   notice = null,
+  escort = null,
 }: {
   /** Null while the first answer is on its way. */
   info: FormationDetail | null;
@@ -42,6 +43,8 @@ export function FormationPanel({
   onClose: () => void;
   /** What became of the player's last order of it (PLAN 4.9c), or null. */
   notice?: string | null;
+  /** The player's land formation (ROADMAP R17d): whether its orders over the sea take an escort, and the change; the setting's, remembered. */
+  escort?: { on: boolean; onChange: (on: boolean) => void } | null;
 }) {
   const row = (label: MessageKey, value: string, testid: string) => (
     <div class="panel-row">
@@ -115,6 +118,12 @@ export function FormationPanel({
               ) : null}
             </span>
           </div>
+          {escort ? (
+            <label class="panel-row formation-escort" title={t('formation.escort.title')}>
+              <span>{t('formation.escort')}</span>
+              <input type="checkbox" data-testid="formation-escort" checked={escort.on} onChange={(e) => escort.onChange((e.currentTarget as HTMLInputElement).checked)} />
+            </label>
+          ) : null}
           {notice ? (
             <div class="panel-row formation-notice" data-testid="formation-notice" role="status">
               {notice}

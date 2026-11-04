@@ -85,7 +85,7 @@ Rules:
   Done: `deployOf` reads its own side's blocks of other stacks before it in the order (ADR-824);
   `deployStacks1938.test.ts` (seed 1212 day 20, no two Soviet blocks in one another; red without: four
   pairs), `stackBlocks1938.spec.ts` 2 of 2 unchanged; pin 6012d9d2.
-- [ ] R17 **Landings the player can order** (the user's decision, 2026-11-04, ADR-823). A left-click on
+- [x] R17 **Landings the player can order** (the user's decision, 2026-11-04, ADR-823). A left-click on
   land over the sea with divisions selected already lands them, but only when the player's transports
   wait at a port of their land; else it is refused. Nothing shows a division bound for a port, waiting
   or at sea; divisions land one by one; the player's transports sail unescorted.
@@ -111,12 +111,15 @@ Rules:
     Done: `FormationDetail.voyage`, `Snapshot.voyages` (`drawVoyages`), the `overSea` request and the
     tooltip's line; `landingVoyage1938.spec.ts` 1 of 1 (Britain's transports at Gibraltar, a division
     from London to Belfast: tooltip by sea, then to port, waiting, at sea, landed, the leg drawn).
-  - [ ] R17d Escort: an "Escort with warships" box in the panel of the selected divisions, ticked by
+  - [x] R17d Escort: an "Escort with warships" box in the panel of the selected divisions, ticked by
     default and remembered. Ticked, the order takes the nearest idle warfleet of the nation (never
     one under the player's own order) to the landing water ahead of the transports; it stays until
     the divisions are ashore, then goes home or back to its station. None free: the transports sail
     alone and the message says so. AT: a case with a free warfleet (escorted, at the water before the
     transports) and one without (alone, told); the box's state survives a reload.
+    Done: `escortConvoy`, `escortSystem`, `world.escorts`, the panel's box (`Settings.escort`);
+    `landingEscort1938.test.ts` 3 of 3 (escorted, there first, back once ashore; none free: alone,
+    `ConvoyUnescorted`; no box: none), `landingEscort1938.spec.ts` (the box, the told notice, a reload).
   Also: a fleet the player orders stays the player's while it lives (`playerOrderSystem` ends a
   march only off the water; `afloat` holds for any fleet), though the header says on arrival. R17a
   relies on it: a called group stays the player's from the call through the landing. Ending it on

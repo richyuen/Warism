@@ -1386,6 +1386,8 @@ export class SimServer {
       else this.ordered.set(id, { target: kept.before, before: undefined });
     } else if (kind === EventKind.LandingRepulsed) {
       tell('repulsed', 0);
+    } else if (kind === EventKind.ConvoyUnescorted) {
+      tell('unescorted', 0);
     } else if (kind === EventKind.FormationLanded) {
       this.landedAt.set(id, ev[i]!);
       const dx = Math.abs(Math.floor(ev[i + 4]!) - (target % w));

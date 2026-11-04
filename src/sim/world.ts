@@ -437,6 +437,7 @@ class WorldCore implements Stateful {
       ...(w.seaFetch.size === 0 ? [] : [{ name: 'world.seaFetch', dtype: 'f64' as const, data: Float64Array.from([...w.seaFetch].sort((a, b) => a[0] - b[0]).flat()) }]),
       // A player's convoys (ROADMAP R17b): [fleet, port] each, only while there is one.
       ...(w.convoyPort.size === 0 ? [] : [{ name: 'world.convoyPort', dtype: 'f64' as const, data: Float64Array.from([...w.convoyPort].sort((a, b) => a[0] - b[0]).flat()) }]),
+      ...(w.escorts.size === 0 ? [] : [{ name: 'world.escorts', dtype: 'f64' as const, data: Float64Array.from([...w.escorts].sort((a, b) => a[0] - b[0]).flatMap(([k, e]) => [k, e.convoy, e.from])) }]),
       // The fleets placed by the editor that hold their place (PLAN 7.22c): [id, x, y] each, only while there is one.
       // The beach's supply layer (PLAN 7.75): [cell, bloc] each, only while there is one.
       ...(w.supplyBeach.size === 0 ? [] : [{ name: 'world.supplyBeach', dtype: 'i32' as const, data: Int32Array.from([...w.supplyBeach].sort((a, b) => a[0] - b[0]).flat()) }]),
@@ -530,6 +531,7 @@ class WorldCore implements Stateful {
     w.seaBound = new Map();
     w.seaFetch = new Map();
     w.convoyPort = new Map();
+    w.escorts = new Map();
     w.wingBase = new Map();
     w.bombDamage = new Map();
     const damage = sections.find((s) => s.name === 'world.bombDamage')?.data as Float64Array | undefined;
@@ -567,6 +569,8 @@ class WorldCore implements Stateful {
     for (let at = 0; fetch && at < fetch.length; at += 2) w.seaFetch.set(fetch[at]!, fetch[at + 1]!);
     const convoys = sections.find((s) => s.name === 'world.convoyPort')?.data as Float64Array | undefined;
     for (let at = 0; convoys && at < convoys.length; at += 2) w.convoyPort.set(convoys[at]!, convoys[at + 1]!);
+    const escorts = sections.find((s) => s.name === 'world.escorts')?.data as Float64Array | undefined;
+    for (let at = 0; escorts && at < escorts.length; at += 3) w.escorts.set(escorts[at]!, { convoy: escorts[at + 1]!, from: escorts[at + 2]! });
     w.station = new Map();
     w.farWait = new Map();
     const waits = sections.find((s) => s.name === 'world.farWait')?.data as Int32Array | undefined;
@@ -1344,6 +1348,12 @@ export class World {
    * (`convoySystem`), and comes back for those left over.
    */
   convoyPort = new Map<number, number>();
+  /**
+   * The escorts of a player's convoys (ROADMAP R17d), by warfleet: the transport group it guards and
+   * the cell it came from, where it sails back once the group has put everyone ashore
+   * (`escortSystem`). State, saved while not empty.
+   */
+  escorts = new Map<number, { convoy: number; from: number }>();
   /**
    * Fleets placed by the editor (PLAN 7.22c), by id: the place (cells) each holds. The naval AI
    * keeps such a fleet there, and brings it back after a battle, until a player orders it away or

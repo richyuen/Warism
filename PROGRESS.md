@@ -970,3 +970,13 @@
 - Full e2e: 330 passed, 7 red; six green alone (load); `declutter1938` a tie of clusters the nested grids allow (a
   probe of the keys), restated with stricter whole-view and whole-way checks (seventh addendum).
 - **Next:** R17d.
+
+## 2026-11-04 — ROADMAP R17d: the escort; R17 done (ADR-823)
+- The panel of the player's land formation has an "Escort with warships" box, ticked by default and kept in the
+  browser; each click's order carries it. A new convoy with it takes the nearest idle warfleet of the nation (not under
+  the player's own order), which sails at once to the landing's water as the player's, and goes back where it came
+  from once the transports are empty. None free: the transports sail alone, and the panel says so.
+- AT: `landingEscort1938.test.ts` (Britain, London to Belfast: escorted and there first, held until ashore, then back;
+  every warfleet the player's own: alone and told; no box: none; a save keeps the escort), `landingEscort1938.spec.ts`
+  (ticked by default, a click over the sea with no warfleet told, unticked after a reload). Pin unmoved.
+- **Next:** R19, then the batch's release (critic run, sweeps, tag).

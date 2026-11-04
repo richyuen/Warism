@@ -148,8 +148,10 @@ function applyCommand(world: World, cmd: Command): Refusal {
       // A player's order: over the sea from inland by way of a port with transports (PLAN 4.9b);
       // the player's (it names its nation) calls transports to its land's port when none wait
       // there (ROADMAP R17a). A fleet the editor placed holds its place until so ordered away (PLAN 7.22c).
-      if (orderMove(world, cmd.id, cmd.x, cmd.y, undefined, true, false, cmd.nation !== undefined)) {
+      if (orderMove(world, cmd.id, cmd.x, cmd.y, undefined, true, false, cmd.nation !== undefined, cmd.nation !== undefined && cmd.escort === true)) {
         world.station.delete(cmd.id);
+        // An escort the player orders elsewhere is the player's own from then (ROADMAP R17d).
+        if (cmd.nation !== undefined) world.escorts.delete(cmd.id);
         // The player's (ADR-759): the AI leaves it alone until it arrives. Given in a fight, it
         // marches in contact (a fighting withdrawal, or a push on) until it is first out of it.
         if (cmd.nation !== undefined) world.playerOrders.set(cmd.id, { kind: PlayerOrderKind.march, until: 0, through: world.formations.cols.engaged[cmd.id] === 1 });

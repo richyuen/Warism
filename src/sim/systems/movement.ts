@@ -71,7 +71,7 @@ import { nearestCellWhere } from '../data/ownership';
 import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroups, type ProvinceGraph } from '../nav/provinceGraph';
 import { isDayStart } from '../../shared/calendar';
 import { Domain, navOf, PlayerOrderKind, portSeaOf, type TemplateRule, type World } from '../world';
-import { assignTransports, hasLanding, near, transportsPort, tryLanding } from './amphibious';
+import { assignTransports, carrying, escortConvoy, hasLanding, near, transportsPort, tryLanding } from './amphibious';
 import { AT_PORT_CELLS } from './navalCombat';
 import { noteMove } from './elements';
 import { spawnPoint } from './production';
@@ -449,7 +449,7 @@ export const wasLong = (): boolean => refusedLong;
  * (`world.seaBound`) for the amphibious system to embark it there. `call` (a player's order,
  * ROADMAP R17): the order goes by a convoy instead (`seaConvoy`). Any order ends an order kept so.
  */
-export function orderMove(world: World, id: number, x: number, y: number, pass?: Passage, byPort = false, direct = false, call = false): boolean {
+export function orderMove(world: World, id: number, x: number, y: number, pass?: Passage, byPort = false, direct = false, call = false, escort = false): boolean {
   world.seaBound.delete(id);
   world.seaFetch.delete(id);
   refusedLong = false;
@@ -461,7 +461,7 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
     return false;
   }
   const over = world.formations.has(id) && overSea(world, id, x, y);
-  if (call && over) return seaConvoy(world, id, x, y, pass);
+  if (call && over) return seaConvoy(world, id, x, y, pass, escort);
   // To another land: by sea, from a port its nation holds with transports there (PLAN 4.5a). With
   // none, a march as before (a target by the coast may snap to this land); refused, it says why
   // the sea was refused (PLAN 4.9a).
@@ -493,7 +493,7 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
  * the group (`world.seaBound`, `world.seaFetch`, `world.convoyPort`), which is the player's. With
  * no landing at the target, or no transports, refused as before.
  */
-function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage | undefined): boolean {
+function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage | undefined, escort: boolean): boolean {
   const c = world.formations.cols;
   const w = world.cells.w;
   const target = Math.floor(y) * w + Math.floor(x);
@@ -511,11 +511,14 @@ function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage
     c.home[id] = 0;
     world.paths.delete(id);
   } else if (!order(world, id, (port.cell % w) + 0.5, Math.floor(port.cell / w) + 0.5, pass, 0, RejectReason.NoRoute)) return false;
+  // A new convoy takes its escort (ROADMAP R17d); one that a division joins has its own already.
+  const fresh = !world.convoyPort.has(a.fleet) && !carrying(world, a.fleet);
   world.seaBound.set(id, target);
   world.seaFetch.set(id, a.fleet);
   world.convoyPort.set(a.fleet, a.port);
   world.playerOrders.set(a.fleet, { kind: PlayerOrderKind.march, until: 0, through: false });
   world.station.delete(a.fleet);
+  if (escort && fresh) escortConvoy(world, a.fleet, target, id);
   return true;
 }
 

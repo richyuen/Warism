@@ -190,6 +190,7 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
   for (const type of ['pointerdown', 'keydown'] as const) window.addEventListener(type, () => sound.unlock(), { capture: true });
   sim.onStats((m) => sound.onTicker(m.ticker, m.world, m.news));
   const settings = new Settings(view, sound);
+  if (player) player.escort = () => settings.escort.peek();
   // The nuclear alert (PLAN 6.6a): each new strike's banner (PLAN 7.109a), and a pause when the
   // setting asks. The worker pauses itself on the strike's tick (PLAN 7.109a); the host follows.
   let seenStrikes: Heard | null = null;

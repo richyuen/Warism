@@ -24,7 +24,7 @@ export type Command =
    * Order formation `id` to march to cell (x, y) over land (PLAN 1.11). With `nation`: only
    * when the formation is that nation's (a player's order; an id is given out again, PLAN 2.16Rk).
    */
-  | { kind: 'moveFormation'; id: number; x: number; y: number; nation?: number }
+  | { kind: 'moveFormation'; id: number; x: number; y: number; nation?: number; /** A player's order over the sea: a warfleet escorts its convoy (ROADMAP R17d). */ escort?: boolean }
   /** An air wing's mission (PLAN 5.1e): patrol about (x, y) or strike it; refused beyond its range from its base. */
   | { kind: 'wingMission'; id: number; mission: 'patrol' | 'strike' | 'supply'; x: number; y: number; nation?: number }
   /** A paradrop (PLAN 5.8u2): formation `id`, of infantry at an airbase, flown by its transport wings there to (x, y). */

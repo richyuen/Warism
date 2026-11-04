@@ -22,6 +22,8 @@ const KEY_VOLUME = 'warsim.volume';
 const KEY_MUTED = 'warsim.muted';
 /** '0' when a nuclear strike does not pause the game (PLAN 6.6a); it does by default. */
 const KEY_NUKE_PAUSE = 'warsim.nukePause';
+/** '0' when a player's order over the sea goes without an escort (ROADMAP R17d); it has one by default. */
+const KEY_ESCORT = 'warsim.escort';
 /** 'balls' or 'classic' (PLAN 7.174, ADR-777); anything else is the default (`DEFAULT_UNIT_LOOK`). */
 export const KEY_UNIT_LOOK = 'warsim.unitLook';
 
@@ -86,6 +88,8 @@ export class Settings {
   readonly muted = signal(loadFlag(KEY_MUTED));
   /** A nuclear strike pauses the game (PLAN 6.6a). */
   readonly nukePause = signal(loadText(KEY_NUKE_PAUSE) !== '0');
+  /** A player's order over the sea takes a warfleet to escort its transports (ROADMAP R17d). */
+  readonly escort = signal(loadText(KEY_ESCORT) !== '0');
   /** How units are drawn (PLAN 7.174): countryballs or classic. */
   readonly unitLook = signal<UnitLook>(parseUnitLook(loadText(KEY_UNIT_LOOK)));
 
@@ -126,6 +130,11 @@ export class Settings {
   setNukePause(v: boolean): void {
     this.nukePause.value = v;
     store(KEY_NUKE_PAUSE, v ? '1' : '0');
+  }
+
+  setEscort(v: boolean): void {
+    this.escort.value = v;
+    store(KEY_ESCORT, v ? '1' : '0');
   }
 
   setUnitLook(v: UnitLook): void {

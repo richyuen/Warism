@@ -221,6 +221,11 @@ export const EventKind = {
    * `NationCollapsed`). a = the nation, b = the debt voided, gold rounded, x = y = NaN.
    */
   NationDefaulted: 69,
+  /**
+   * A player's order over the sea asked for an escort and found no warfleet free (ROADMAP R17d): the
+   * transports sail alone. a = the formation ordered, b = its nation, (x, y) = where it stands.
+   */
+  ConvoyUnescorted: 70,
 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */

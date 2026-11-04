@@ -221,7 +221,7 @@ export function tryLanding(world: World, id: number, x: number, y: number, via =
 }
 
 /** Whether transport group `fleet` carries a formation embarked on it. */
-function carrying(world: World, fleet: number): boolean {
+export function carrying(world: World, fleet: number): boolean {
   for (const e of world.embarked.values()) if (e.fleet === fleet) return true;
   return false;
 }
@@ -478,6 +478,67 @@ function convoySystem(world: World): void {
   }
 }
 
+/**
+ * The escort of a player's new convoy on transport group `convoy` for cell `target` (ROADMAP R17d),
+ * asked for by the order of formation `id`: of its nation's warfleets (no transports) standing idle
+ * (not under way, in no battle, not under the player's own order, not held in place by the editor,
+ * no other convoy's escort), the nearest to the landing's water by straight cells with a way there
+ * (at most CALL_TRIES tried) sails there now, ahead of the transports, which wait at their port
+ * for the convoy to come in. It sails under the player's order, so the AI leaves it be, until the
+ * transports have put everyone ashore (`escortSystem`). None free: `ConvoyUnescorted`, and the
+ * transports sail alone.
+ */
+export function escortConvoy(world: World, convoy: number, target: number, id: number): void {
+  const f = world.formations;
+  const c = f.cols;
+  const nation = c.nation[id]!;
+  const landing = landingOf(world, target);
+  const w = world.cells.w;
+  const guarding = new Set([...world.escorts.keys()]);
+  const idle: [number, number][] = [];
+  if (landing) {
+    f.forEach((o) => {
+      if (!world.isFleet(o) || c.nation[o] !== nation || transportRoom(world, o) > 0 || c.moving[o] === 1 || c.engaged[o] === 1) return;
+      if (world.playerOrders.has(o) || world.station.has(o) || world.convoyPort.has(o) || guarding.has(o)) return;
+      const at = cellOfPlace(world, o);
+      let dx = Math.abs((at % w) - (landing.water % w));
+      if (world.settings.loopingMap && dx > w / 2) dx = w - dx;
+      const dy = Math.floor(at / w) - Math.floor(landing.water / w);
+      idle.push([o, dx * dx + dy * dy]);
+    });
+    idle.sort((a, b) => a[1] - b[1] || a[0] - b[0]);
+  }
+  for (const [o] of idle.slice(0, CALL_TRIES)) {
+    const from = cellOfPlace(world, o);
+    if (!orderSail(world, o, (landing!.water % w) + 0.5, Math.floor(landing!.water / w) + 0.5)) continue;
+    world.playerOrders.set(o, { kind: PlayerOrderKind.march, until: 0, through: false });
+    world.escorts.set(o, { convoy, from });
+    return;
+  }
+  world.out.emit(world.tick, EventKind.ConvoyUnescorted, id, nation, c.x[id]!, c.y[id]!);
+}
+
+/**
+ * The escorts (ROADMAP R17d), hourly after the convoys: one whose transports are gone, or have no
+ * convoy left and nobody aboard (all ashore, or the convoy over), is done. It is the AI's again and
+ * sails back to where it came from (its port, or its place at sea), or home where it has no way there.
+ */
+function escortSystem(world: World): void {
+  if (world.escorts.size === 0) return;
+  const f = world.formations;
+  const w = world.cells.w;
+  for (const [o, e] of [...world.escorts].sort((a, b) => a[0] - b[0])) {
+    if (!f.has(o)) {
+      world.escorts.delete(o);
+      continue;
+    }
+    if (f.has(e.convoy) && (world.convoyPort.has(e.convoy) || carrying(world, e.convoy))) continue;
+    world.escorts.delete(o);
+    world.playerOrders.delete(o);
+    if (!orderSail(world, o, (e.from % w) + 0.5, Math.floor(e.from / w) + 0.5)) sailHome(world, o);
+  }
+}
+
 /** Lands embarked formation `id` at land cell `cell`. */
 function land(world: World, id: number, cell: number, target: number): void {
   const c = world.formations.cols;
@@ -552,6 +613,7 @@ export function amphibiousSystem(world: World): void {
     }
   }
   convoySystem(world);
+  escortSystem(world);
   if (world.embarked.size === 0) return;
   for (const [id, e] of [...world.embarked].sort((a, b) => a[0] - b[0])) {
     if (!f.has(id)) {

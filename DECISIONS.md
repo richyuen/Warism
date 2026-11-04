@@ -62,6 +62,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   shown; the transports' own order line shows their way. "Landed" is the worker's (a day after a
   player's order lands), not the sim's. The tooltip's hint asks the worker (`overSea`), as the
   client has no land components.
+- **R17d.** The box is the page's setting, not the world's (`Settings.escort`, localStorage, as
+  the nuclear pause): it travels on each order (`moveFormation.escort`, absent = none, so a God
+  order or an old script takes no escort), and the world keeps only the escorts under way
+  (`world.escorts`, an optional section: no format change, the pin unmoved). A convoy's escort is
+  picked when the convoy is made; a division that joins it adds none. A warfleet is a fleet with no
+  transport room. It sails at once to the landing's water, so it is there first while the
+  transports load; "its station" is the cell it came from (a port's water, or its place at sea).
 - **Also (the user's, 2026-11-04).** The United States' lean after R16b (29% of the land on the
   mean, done31 20%) stays a watch for the critic and the release sweeps, not an item.
 

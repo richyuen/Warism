@@ -1269,7 +1269,15 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   sea way: refused `NoSeaWay`, ashore at the port); away from its port with nobody aboard, it sails
   back for those still bound for it; with nobody bound or aboard, the convoy is over. A repulsed
   landing ends its convoy (those still bound are told). No other order takes a loading group.
-  `world.embarked`, `world.seaBound`, `world.seaFetch` and `world.convoyPort` are saved.
+  The escort (ROADMAP R17d): an order with `escort` (the panel's box) that makes a new convoy sends
+  a warfleet with it (`escortConvoy`): of its nation's fleets with no transports standing idle (not
+  under way, in no battle, not under the player's own order, not held by the editor, no other
+  convoy's escort), the nearest by straight cells to the landing's water with a sea way (at most
+  `CALL_TRIES`), which sails there at once, ahead of the loading transports, as the player's. None:
+  `ConvoyUnescorted`, and the transports sail alone. Hourly after the convoys (`escortSystem`), an
+  escort whose group is gone, or has no convoy and nobody aboard, is the AI's again and sails back
+  to the cell it came from (else home). A player's own order of it makes it theirs.
+  `world.embarked`, `world.seaBound`, `world.seaFetch`, `world.convoyPort` and `world.escorts` are saved.
 - **Bombardment** (`src/sim/systems/bombardment.ts`): a fleet not under way and not in a sea battle
   fires on land formations within its guns' reach (12–32 km) at the element of most hit points:
   effectiveness (§5.2) × strength ÷ size × `FIRE_SCALE` × `BOMBARD_FIRE` (2.5); its losses count to org.
@@ -1764,7 +1772,10 @@ Actions tab's assist boxes set the mask (`setPlayerAi`).
   `FormationDetail.voyage`). While bound for a landing, a formation whose order lines are shown has
   its sea leg drawn (`drawVoyages`, `Snapshot.voyages`): a dashed line from its port's water, or its
   transports at sea, to the landing's water and the land it lands on, and a ring there; straight,
-  not the way the transports sail (their own order line shows that).
+  not the way the transports sail (their own order line shows that). The panel of the player's land
+  formation has an "Escort with warships" box (ROADMAP R17d): ticked by default, kept in the
+  browser (`warsim.escort`), and sent with each click's order (`moveFormation.escort`); no escort
+  free is the order's news ("unescorted").
 - **Actions tab** (`src/ui/ActionsTab.tsx`): force war (breaking a bond in the way), offer peace (taken at
   score ≥ `PEACE_ACCEPT_SCORE` 25 or exhaustion ≥ `PEACE_ACCEPT_EXHAUSTION` 40, `src/shared/peace.ts`),
   propose an alliance; production of land, sea and air templates (`queueFormation`; no port, no airfield
