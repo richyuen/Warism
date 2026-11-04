@@ -1,0 +1,31 @@
+start 15:36:47 npx tsx critic/scripts/c32_trab.ts 3517 GER POL base 90 critic/c32_trab_3517_GERPOL_base.json > critic/c32_trab_3517_GERPOL_base.log 2>&1
+start 15:36:47 npx tsx critic/scripts/c32_trab.ts 3517 GER POL defFort 90 critic/c32_trab_3517_GERPOL_defFort.json > critic/c32_trab_3517_GERPOL_defFort.log 2>&
+exit 0 15:37:04 npx tsx critic/scripts/c32_trab.ts 3517 GER POL defFort 90 critic/c32_trab_3517_GERPOL_defFort.json > critic/c32_trab_3517_GERPOL_defFort.log 2>
+start 15:37:04 npx tsx critic/scripts/c32_trab.ts 3517 GER POL defNone 90 critic/c32_trab_3517_GERPOL_defNone.json > critic/c32_trab_3517_GERPOL_defNone.log 2>&
+exit 0 15:37:04 npx tsx critic/scripts/c32_trab.ts 3517 GER POL base 90 critic/c32_trab_3517_GERPOL_base.json > critic/c32_trab_3517_GERPOL_base.log 2>&1
+start 15:37:04 npx tsx critic/scripts/c32_trab.ts 3517 GER FRA base 120 critic/c32_trab_3517_GERFRA_base.json > critic/c32_trab_3517_GERFRA_base.log 2>&1
+exit 0 15:37:21 npx tsx critic/scripts/c32_trab.ts 3517 GER POL defNone 90 critic/c32_trab_3517_GERPOL_defNone.json > critic/c32_trab_3517_GERPOL_defNone.log 2>
+start 15:37:21 npx tsx critic/scripts/c32_trab.ts 3517 GER FRA attNone 120 critic/c32_trab_3517_GERFRA_attNone.json > critic/c32_trab_3517_GERFRA_attNone.log 2>
+exit 0 15:37:26 npx tsx critic/scripts/c32_trab.ts 3517 GER FRA base 120 critic/c32_trab_3517_GERFRA_base.json > critic/c32_trab_3517_GERFRA_base.log 2>&1
+start 15:37:26 npx tsx critic/scripts/c32_trab.ts 6421 GER POL base 90 critic/c32_trab_6421_GERPOL_base.json > critic/c32_trab_6421_GERPOL_base.log 2>&1
+exit 0 15:37:43 npx tsx critic/scripts/c32_trab.ts 3517 GER FRA attNone 120 critic/c32_trab_3517_GERFRA_attNone.json > critic/c32_trab_3517_GERFRA_attNone.log 2
+start 15:37:43 npx tsx critic/scripts/c32_trab.ts 6421 GER POL defFort 90 critic/c32_trab_6421_GERPOL_defFort.json > critic/c32_trab_6421_GERPOL_defFort.log 2>&
+exit 0 15:37:45 npx tsx critic/scripts/c32_trab.ts 6421 GER POL base 90 critic/c32_trab_6421_GERPOL_base.json > critic/c32_trab_6421_GERPOL_base.log 2>&1
+start 15:37:45 npx tsx critic/scripts/c32_trab.ts 6421 GER POL defNone 90 critic/c32_trab_6421_GERPOL_defNone.json > critic/c32_trab_6421_GERPOL_defNone.log 2>&
+exit 0 15:38:02 npx tsx critic/scripts/c32_trab.ts 6421 GER POL defFort 90 critic/c32_trab_6421_GERPOL_defFort.json > critic/c32_trab_6421_GERPOL_defFort.log 2>
+start 15:38:02 npx tsx critic/scripts/c32_trab.ts 6421 GER FRA base 120 critic/c32_trab_6421_GERFRA_base.json > critic/c32_trab_6421_GERFRA_base.log 2>&1
+exit 0 15:38:06 npx tsx critic/scripts/c32_trab.ts 6421 GER POL defNone 90 critic/c32_trab_6421_GERPOL_defNone.json > critic/c32_trab_6421_GERPOL_defNone.log 2>
+start 15:38:06 npx tsx critic/scripts/c32_trab.ts 6421 GER FRA attNone 120 critic/c32_trab_6421_GERFRA_attNone.json > critic/c32_trab_6421_GERFRA_attNone.log 2>
+exit 0 15:38:28 npx tsx critic/scripts/c32_trab.ts 6421 GER FRA base 120 critic/c32_trab_6421_GERFRA_base.json > critic/c32_trab_6421_GERFRA_base.log 2>&1
+start 15:38:28 npx tsx critic/scripts/c32_trab.ts 8803 GER POL base 90 critic/c32_trab_8803_GERPOL_base.json > critic/c32_trab_8803_GERPOL_base.log 2>&1
+exit 0 15:38:31 npx tsx critic/scripts/c32_trab.ts 6421 GER FRA attNone 120 critic/c32_trab_6421_GERFRA_attNone.json > critic/c32_trab_6421_GERFRA_attNone.log 2
+start 15:38:31 npx tsx critic/scripts/c32_trab.ts 8803 GER POL defFort 90 critic/c32_trab_8803_GERPOL_defFort.json > critic/c32_trab_8803_GERPOL_defFort.log 2>&
+exit 0 15:38:45 npx tsx critic/scripts/c32_trab.ts 8803 GER POL base 90 critic/c32_trab_8803_GERPOL_base.json > critic/c32_trab_8803_GERPOL_base.log 2>&1
+start 15:38:45 npx tsx critic/scripts/c32_trab.ts 8803 GER POL defNone 90 critic/c32_trab_8803_GERPOL_defNone.json > critic/c32_trab_8803_GERPOL_defNone.log 2>&
+exit 0 15:38:48 npx tsx critic/scripts/c32_trab.ts 8803 GER POL defFort 90 critic/c32_trab_8803_GERPOL_defFort.json > critic/c32_trab_8803_GERPOL_defFort.log 2>
+start 15:38:48 npx tsx critic/scripts/c32_trab.ts 8803 GER FRA base 120 critic/c32_trab_8803_GERFRA_base.json > critic/c32_trab_8803_GERFRA_base.log 2>&1
+exit 0 15:39:02 npx tsx critic/scripts/c32_trab.ts 8803 GER POL defNone 90 critic/c32_trab_8803_GERPOL_defNone.json > critic/c32_trab_8803_GERPOL_defNone.log 2>
+start 15:39:02 npx tsx critic/scripts/c32_trab.ts 8803 GER FRA attNone 120 critic/c32_trab_8803_GERFRA_attNone.json > critic/c32_trab_8803_GERFRA_attNone.log 2>
+exit 0 15:39:09 npx tsx critic/scripts/c32_trab.ts 8803 GER FRA base 120 critic/c32_trab_8803_GERFRA_base.json > critic/c32_trab_8803_GERFRA_base.log 2>&1
+exit 0 15:39:21 npx tsx critic/scripts/c32_trab.ts 8803 GER FRA attNone 120 critic/c32_trab_8803_GERFRA_attNone.json > critic/c32_trab_8803_GERFRA_attNone.log 2
+ALLJOBSDONE

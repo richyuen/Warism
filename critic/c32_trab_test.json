@@ -1,0 +1,25 @@
+{
+ "seed": 3517,
+ "ATT": "GER",
+ "DEF": "POL",
+ "variant": "base",
+ "before": {
+  "att": 273,
+  "def": 512
+ },
+ "after": {
+  "att": 273,
+  "def": 512
+ },
+ "rows": [
+  {
+   "d": 10,
+   "defHolds": 2099,
+   "attTook": 123,
+   "attMen": 561186,
+   "defMen": 382935,
+   "atWar": true,
+   "defAlive": 1
+  }
+ ]
+}

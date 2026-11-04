@@ -1,0 +1,292 @@
+{
+ "seed": 5521,
+ "W": 390,
+ "H": 844,
+ "cards": [
+  "title-scenario-1938",
+  "title-scenario-random",
+  "title-scenario-file"
+ ],
+ "form1938": {
+  "present": true,
+  "label": "Heroes | Off | On",
+  "title": "A named land and sea unit for each of seven great powers, far stronger than any other: Yamato and O-I, USS Iowa and T28, Sovetsky Soyuz and T-42, Bismarck and Maus, HMS Hood and TOG II, Richelieu and Char 2C, Roma and P.100 Ercole. They heal, and come back 60 days after they are lost.",
+  "value": "off",
+  "options": [
+   "Off",
+   "On"
+  ],
+  "formRows": [
+   "Start date | 1 January 1938",
+   "Map | Earth · 2048 × 1024",
+   "Nations | 102",
+   "Seed | Random",
+   "Map size | Small, 1024 × 512 | Medium, 2048 × 1024 | Large, ",
+   "Looping map | On | Off",
+   "Nation aggression | As in the scenario | Random",
+   "Nation traits | As in the scenario | Random",
+   "Alliances and wars | As in the scenario | Random",
+   "Heroes | Off | On",
+   "Starting gold | As in the scenario | Random | Equal for all",
+   "Combat efficiency | As in the scenario | Dynamic | Progressi"
+  ]
+ },
+ "shotForm": "critic/shots/c32ht_phone_01_form1938.png",
+ "shotHover": "critic/shots/c32ht_phone_02_hover.png",
+ "form_random": {
+  "heroes": false,
+  "rows": [
+   "Start date | 1 January 1938",
+   "Map | Earth · 2048 × 1024",
+   "Nations | 2 to 200",
+   "Seed | Random",
+   "Nations",
+   "Map size | Small, 1024 × 512 | Medium, 2048 × 1024 | Large, ",
+   "Looping map | On | Off",
+   "Nation aggression | As in the scenario | Random",
+   "Nation traits | As in the scenario | Random",
+   "Starting gold | As in the scenario | Random | Equal for all",
+   "Combat efficiency | As in the scenario | Dynamic | Progressi"
+  ]
+ },
+ "form_file": {
+  "heroes": false,
+  "rows": [
+   "Start date | 1 January 1938",
+   "Map | Earth · 2048 × 1024",
+   "Nations | 2 to 200",
+   "Seed | Random",
+   "Nations",
+   "Map size | Small, 1024 × 512 | Medium, 2048 × 1024 | Large, ",
+   "Looping map | On | Off",
+   "Nation aggression | As in the scenario | Random",
+   "Nation traits | As in the scenario | Random",
+   "Starting gold | As in the scenario | Random | Equal for all",
+   "Combat efficiency | As in the scenario | Dynamic | Progressi"
+  ]
+ },
+ "shotSet": "critic/shots/c32ht_phone_04_set.png",
+ "bootS": 3.453,
+ "url": "http://127.0.0.1:5299/?scenario=1938&seed=5521&paused=1&heroes=on",
+ "heroCount": 14,
+ "shotStart": "critic/shots/c32ht_phone_05_start.png",
+ "settings": {
+  "present": true,
+  "value": "on",
+  "row": "Heroes | Off | On"
+ },
+ "shotSettings": "critic/shots/c32ht_phone_06_settings.png",
+ "god": {
+  "mentions": [],
+  "placeButtons": []
+ },
+ "shotGod": "critic/shots/c32ht_phone_07_god.png",
+ "editor": {
+  "tools": [
+   "editor-tool-brush",
+   "editor-tool-line",
+   "editor-tool-bucket",
+   "editor-tool-city",
+   "editor-tool-removeCity",
+   "editor-tool-capital",
+   "editor-tool-core",
+   "editor-tool-uncore",
+   "editor-tool-fleet",
+   "editor-tool-wing"
+  ],
+  "templates": [
+   "Battle squadron",
+   "Carrier group",
+   "Cruiser squadron",
+   "Destroyer flotilla",
+   "Submarine flotilla",
+   "Transport group"
+  ]
+ },
+ "shotEditor": "critic/shots/c32ht_phone_08_editor.png",
+ "clicks": [
+  {
+   "hero": "template.hero_maus",
+   "m": 1200,
+   "at": [
+    194.9999999999963,
+    422
+   ],
+   "panel": "Maus | × | Kind | Maus | Nation | Germany | Health | 100% | Men | 6 of 6 | Supply | 100% | Org | 100% | Fuel on the march | 15 an hour | Status | Holding | ELEMENTS | 1×\tMaus\t1 of 1",
+   "shot": "critic/shots/c32ht_phone_09_click_maus_1200.png"
+  },
+  {
+   "hero": "template.hero_maus",
+   "m": 150,
+   "at": [
+    194.99999999997033,
+    422
+   ],
+   "panel": "Maus | × | Kind | Maus | Nation | Germany | Health | 100% | Men | 6 of 6 | Supply | 100% | Org | 100% | Fuel on the march | 15 an hour | Status | Holding | ELEMENTS | 1×\tMaus\t1 of 1",
+   "shot": "critic/shots/c32ht_phone_09_click_maus_150.png"
+  },
+  {
+   "hero": "template.hero_hood",
+   "m": 1200,
+   "at": [
+    195,
+    422
+   ],
+   "panel": "HMS Hood | × | Kind | HMS Hood | Nation | United Kingdom | Health | 100% | Men | 1,400 of 1,400 | Supply | 100% | Org | 100% | Fuel on the march | 20 an hour | Status | Holding | ELEMENTS | 1×\tHMS Hood\t1 of 1",
+   "shot": "critic/shots/c32ht_phone_09_click_hood_1200.png"
+  },
+  {
+   "hero": "template.hero_hood",
+   "m": 150,
+   "at": [
+    195,
+    422
+   ],
+   "panel": "Battle squadron 1055 | × | Kind | Battle squadron | Nation | United Kingdom | Men | 13,400 of 13,400 | Supply | 100% | Org | 100% | Fuel on the march | 104 an hour | Status | Holding | ELEMENTS | 4×\tBattleship\t4 of 4 | 2×\tHeavy cruiser\t2 of 2 | 2×\tLight cruiser\t2 of 2 | 8×\tDestroyer\t8 of 8",
+   "shot": "critic/shots/c32ht_phone_09_click_hood_150.png"
+  },
+  {
+   "hero": "template.hero_yamato",
+   "m": 1200,
+   "at": [
+    195,
+    422
+   ],
+   "panel": "Yamato | × | Kind | Yamato | Nation | Japan | Health | 100% | Men | 2,500 of 2,500 | Supply | 100% | Org | 100% | Fuel on the march | 20 an hour | Status | Holding | ELEMENTS | 1×\tYamato\t1 of 1",
+   "shot": "critic/shots/c32ht_phone_09_click_yamato_1200.png"
+  },
+  {
+   "hero": "template.hero_yamato",
+   "m": 150,
+   "at": [
+    195,
+    422
+   ],
+   "panel": "Battle squadron 1129 | × | Kind | Battle squadron | Nation | Japan | Men | 13,400 of 13,400 | Supply | 100% | Org | 100% | Fuel on the march | 104 an hour | Status | Holding | ELEMENTS | 4×\tBattleship\t4 of 4 | 2×\tHeavy cruiser\t2 of 2 | 2×\tLight cruiser\t2 of 2 | 8×\tDestroyer\t8 of 8",
+   "shot": "critic/shots/c32ht_phone_09_click_yamato_150.png"
+  },
+  {
+   "hero": "template.hero_t28",
+   "m": 1200,
+   "at": [
+    195.0000000000037,
+    422
+   ],
+   "panel": "T28 | × | Kind | T28 | Nation | United States | Health | 100% | Men | 4 of 4 | Supply | 100% | Org | 100% | Fuel on the march | 15 an hour | Status | Holding | ELEMENTS | 1×\tT28\t1 of 1",
+   "shot": "critic/shots/c32ht_phone_09_click_t28_1200.png"
+  },
+  {
+   "hero": "template.hero_t28",
+   "m": 150,
+   "at": [
+    195.00000000002967,
+    422
+   ],
+   "panel": "T28 | × | Kind | T28 | Nation | United States | Health | 100% | Men | 4 of 4 | Supply | 100% | Org | 100% | Fuel on the march | 15 an hour | Status | Holding | ELEMENTS | 1×\tT28\t1 of 1",
+   "shot": "critic/shots/c32ht_phone_09_click_t28_150.png"
+  }
+ ],
+ "heroes": [
+  {
+   "nation": "nation.GER",
+   "key": "template.hero_bismarck",
+   "id": 1474,
+   "x": 1070.5625,
+   "y": 259.0625
+  },
+  {
+   "nation": "nation.GER",
+   "key": "template.hero_maus",
+   "id": 1475,
+   "x": 1100.2288355555554,
+   "y": 267.3981779047986
+  },
+  {
+   "nation": "nation.SOV",
+   "key": "template.hero_sovetsky_soyuz",
+   "id": 1472,
+   "x": 1193.5,
+   "y": 207.5
+  },
+  {
+   "nation": "nation.SOV",
+   "key": "template.hero_t42",
+   "id": 1473,
+   "x": 1237.979591111111,
+   "y": 242.1368298667249
+  },
+  {
+   "nation": "nation.ITA",
+   "key": "template.hero_roma",
+   "id": 1480,
+   "x": 1121.5,
+   "y": 353.5
+  },
+  {
+   "nation": "nation.ITA",
+   "key": "template.hero_p100",
+   "id": 1481,
+   "x": 1095.0047288888888,
+   "y": 344.024127834463
+  },
+  {
+   "nation": "nation.FRA",
+   "key": "template.hero_richelieu",
+   "id": 1478,
+   "x": 998.5,
+   "y": 298.5
+  },
+  {
+   "nation": "nation.FRA",
+   "key": "template.hero_char2c",
+   "id": 1479,
+   "x": 1037.2630755555556,
+   "y": 294.7747091050998
+  },
+  {
+   "nation": "nation.ENG",
+   "key": "template.hero_hood",
+   "id": 1476,
+   "x": 1006.5,
+   "y": 216.5
+  },
+  {
+   "nation": "nation.ENG",
+   "key": "template.hero_tog2",
+   "id": 1477,
+   "x": 1023.3247288888889,
+   "y": 275.1737112720215
+  },
+  {
+   "nation": "nation.JAP",
+   "key": "template.hero_yamato",
+   "id": 1468,
+   "x": 1818.9375,
+   "y": 388.9375
+  },
+  {
+   "nation": "nation.JAP",
+   "key": "template.hero_o_i",
+   "id": 1469,
+   "x": 1819.019377777778,
+   "y": 385.2819169650518
+  },
+  {
+   "nation": "nation.USA",
+   "key": "template.hero_iowa",
+   "id": 1470,
+   "x": 356.5,
+   "y": 404.5
+  },
+  {
+   "nation": "nation.USA",
+   "key": "template.hero_t28",
+   "id": 1471,
+   "x": 585.8907022222222,
+   "y": 364.19792930379083
+  }
+ ],
+ "randomHeroes": 0,
+ "randomSettings": false,
+ "errors": []
+}

@@ -1,7 +1,6 @@
 {
- "commit": "4c546398c6ff623092ddf07c378ac18cf21ffae5",
+ "commit": "e7437a5744d70ec34ca653b93108ffde5927b51f",
  "mode": "full",
- "run": "R5b run 31 (full: 4c546398 R7 changes src/ and R7 was not filed by run 30's commit 8eb82001; judged after R13-R15 and R7)",
  "scores": {
   "mapVisuals": 7,
   "diplomacyWarDepth": 7,
@@ -13,61 +12,18 @@
   "performance": 7,
   "stability": 7,
   "semanticZoom": 8,
-  "naval": 8,
+  "naval": 7,
   "tanks": 8,
   "aircraft": 8,
   "aiNukes": 8
  },
- "carried": [],
- "blocking": [],
- "resolved": [
+ "blocking": [
   {
-   "id": "R30-B1",
-   "title": "Folded hero counters unreachable by touch on a phone",
-   "evidence": "critic/c31_hft_5521.json, critic/c31_hf_5521_phone_d0_0.json, critic/shots/c31hft_5521_Roma1.png"
-  },
-  {
-   "id": "R30-B2",
-   "title": "Sovetsky Soyuz back on the Caspian or Lake Onega and stays",
-   "evidence": "critic/c31_seareturns.txt, critic/c31_seareturns_hx.txt, critic/c31_hpos_4637.log, critic/c31_wi_4637_h20_hn.log, critic/c31_wi_7603_h20_hn.log, critic/c31_wi_4111_h20_hn.log"
-  },
-  {
-   "id": "R30-B3",
-   "title": "Air rules broken with heroes on (carrier wings left behind)",
-   "evidence": "critic/c31_wingbase_3373.log, critic/c31_wi_3373r_h20_air.log, critic/c31_wi_5591_h20_air.log"
+   "id": "R32-B1",
+   "title": "A player's landing on a non-enemy coast (an ally's, a neutral's) is carried out, told 'Landed', and the next day the division is put back at its capital across the sea, untold",
+   "evidence": "critic/shots/c32lp_eng_calais_h66.png, critic/shots/c32lp_eng_calais_h84.png, critic/shots/c32lp_eng_calais_quiet_h120.png, critic/c32_lp_eng_calais_quiet.json, critic/c32_lh_3517.json (Calais t74 -> London t98), critic/c32_lh2_usa_calais.log (US division landed at Calais t730, at its spawn t745), critic/c32_lh2_eng_bergen.log (Bergen t180 -> London t193), critic/scripts/c32_cellwho.ts (foreignTo ENG/FRA true); src/sim/systems/movement.ts repatriationSystem (c.x = spawnPoint) vs seaConvoy (hasLanding only)",
+   "fix": "Refuse a player's order over the sea whose landing is on ground foreignTo the nation, with the reason the land march gives; or keep a division where its player's landing put it; never move a land formation across the sea without transports, and tell any repatriation in the formation's panel and the ticker."
   }
  ],
- "nonBlocking": [
-  {
-   "id": "R31-N1",
-   "title": "Hero counters under the HUD at a desk: Japan's two at every start view, Sovetsky Soyuz on 7019 day 730; a click opens a ranking row or nothing",
-   "evidence": "critic/c31_hf_5521_desk_d0_0.json, critic/c31_hf_7019_desk_d730_0.json, critic/shots/c31hf_7019_desk_d730_0.png"
-  },
-  {
-   "id": "R31-N2",
-   "title": "Two nations' hero counters overlap and cut a name ('Ma' under T-42, 4637, 1953), against ADR-817's 'every name reads'",
-   "evidence": "critic/shots/c31hwp_4637_fra_132000.png"
-  },
-  {
-   "id": "R31-N3",
-   "title": "No default or collapse in 6 seeds x 20 years of AI play, no nation below -100 gold at any 30-day sample: R7's default row is met only through God; the row omits the sum voided",
-   "evidence": "critic/c31_def_7019.json, critic/c31_def_1201.json, critic/c31_df_7019_pol.json"
-  },
-  {
-   "id": "R31-N4",
-   "title": "Sea heroes lost 7.6-36 times in 20 years; land heroes starve in about half their losses",
-   "evidence": "critic/c31_ho_sum.txt"
-  },
-  {
-   "id": "R31-N5",
-   "title": "The option's hint promises a return in 60 days; Richelieu waits 1,638 days on 4637 for a port on its sea (told in its row)",
-   "evidence": "critic/c31_herowaits_4637.log, critic/c31_hwp_4637_fra.json"
-  },
-  {
-   "id": "R31-N6",
-   "title": "Unchanged: graph eats the first tap after a drag; a hero hides the fleets under it at T1; run 30's diplomacy list",
-   "evidence": "critic/c31_rgt_4111.json, critic/c31_hs_3739.json, critic/c31_cmp.txt"
-  }
- ],
- "timestamp": "2026-11-03T22:48:00Z"
+ "timestamp": "2026-11-04T21:39:00Z"
 }

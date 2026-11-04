@@ -1,0 +1,124 @@
+{
+ "seed": 3517,
+ "ATT": "GER",
+ "DEF": "FRA",
+ "variant": "attNone",
+ "before": {
+  "att": 273,
+  "def": 5120
+ },
+ "after": {
+  "att": 0,
+  "def": 5120
+ },
+ "rows": [
+  {
+   "d": 10,
+   "defHolds": 10423,
+   "attTook": 36,
+   "attMen": 557315,
+   "defMen": 568424,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 20,
+   "defHolds": 10258,
+   "attTook": 151,
+   "attMen": 546105,
+   "defMen": 486623,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 30,
+   "defHolds": 10058,
+   "attTook": 263,
+   "attMen": 530005,
+   "defMen": 347087,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 40,
+   "defHolds": 9986,
+   "attTook": 274,
+   "attMen": 528874,
+   "defMen": 217593,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 50,
+   "defHolds": 9923,
+   "attTook": 281,
+   "attMen": 513107,
+   "defMen": 190601,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 60,
+   "defHolds": 9845,
+   "attTook": 312,
+   "attMen": 504571,
+   "defMen": 161510,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 70,
+   "defHolds": 9719,
+   "attTook": 346,
+   "attMen": 488376,
+   "defMen": 128676,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 80,
+   "defHolds": 9721,
+   "attTook": 329,
+   "attMen": 476032,
+   "defMen": 113030,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 90,
+   "defHolds": 9682,
+   "attTook": 336,
+   "attMen": 497621,
+   "defMen": 98454,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 100,
+   "defHolds": 9577,
+   "attTook": 349,
+   "attMen": 496851,
+   "defMen": 60320,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 110,
+   "defHolds": 9377,
+   "attTook": 389,
+   "attMen": 496018,
+   "defMen": 53360,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 120,
+   "defHolds": 8933,
+   "attTook": 448,
+   "attMen": 494827,
+   "defMen": 51011,
+   "atWar": true,
+   "defAlive": 1
+  }
+ ]
+}

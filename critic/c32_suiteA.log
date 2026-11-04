@@ -1,0 +1,41 @@
+== c32_hf_herofold 5521 0 0 1600 900 desk 15:37:32
+   exit 0
+== c32_hf_herofold 5521 0 0 390 844 phone 15:37:53
+   exit 0
+== c32_hf_herofold 7019 730 0 1600 900 desk 15:38:09
+   exit 0
+== c32_hft_foldtouch 5521 15:39:33
+   exit 0
+== c32_rgt_tap 4111 365 15:40:29
+   exit 0
+== c32_hs_herostack 3739 15:41:09
+   exit 0
+== c32_ht_herotitle 5521 390 844 phone 15:41:31
+   exit 0
+== c32_hwp_waitport 4637 132000 19 fra 15:42:04
+   exit 0
+== c32_df_default 7019 POL -800 220 pol 15:56:23
+   exit 0
+== c32_a_god_nuke 4219 15:57:08
+   exit 0
+== c32_q_god_tools 6421 15:57:54
+   exit 0
+== c32_k_breakthrough 2203 15:58:13
+   exit 0
+== c32_k2_refusal 2203 15:58:32
+   exit 0
+== c32_k3_godtab 2203 15:59:13
+   exit 0
+== c32_z_zoom 3517 15:59:19
+   exit 0
+== c32_c_battle 6421 15:59:41
+   exit 0
+== c32_c_battle 7019 16:01:17
+   exit 0
+== c32_phz 2671 40 16:02:52
+   exit 0
+== c32_hist2 7019 critic/c31_seed7019_y20.bin c31save 16:03:11
+   exit 0
+== c32_an_ainuke 6299 critic/c31_seed6299_y18.bin 6299y18c31 3 400 16:03:15
+   exit 0
+SUITEADONE

@@ -1,0 +1,10 @@
+{
+ "seed": 3517,
+ "pacifistDisabled": true,
+ "militaristChecked": true,
+ "shot": "critic/shots/c32tc_3517_clash.png",
+ "toasts": [
+  "Not done: those traits exclude each other."
+ ],
+ "errors": []
+}

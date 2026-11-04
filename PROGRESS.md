@@ -987,3 +987,10 @@
   that leaves the history alone runs only its changed specs, as before. The full run keeps the gate's rerun-alone rule.
 - AT: `gate.test.ts` (the pin's file plans the stage in full; the same change without it, none). CLAUDE.md says so.
 - **Next:** the batch's release (R16–R19): critic run, unseen-seed sweeps, CHANGELOG, tag.
+
+## 2026-11-04 — critic run 32, full, on e7437a57: one blocking issue (R32-B1)
+- After R16–R19. 1 blocking: **R32-B1**, a player's landing on a coast it is not at war with is undone at the next day
+  start (`repatriationSystem` moves the division to its spawn point: no land way home; no notice). Naval 8 → **7**, under
+  its bar; every other score at its bar (semanticZoom, tanks, aircraft, aiNukes 8; the rest 7). Non-blocking R32-N1–N5
+  (one click's divisions land weeks apart, trait text hover-only, refusal toasts cut, run 31's items, sea heroes lost more).
+- **Next:** R20 (R32-B1), then the critic again.

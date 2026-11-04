@@ -1,0 +1,6 @@
+{
+ "seed": 7019,
+ "bin": "critic/c31_seed7019_y20.bin",
+ "fatal": "page.evaluate: Error: missing section nations.traits\n    at xi (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:499803)\n    at e.deserialize (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:502178)\n    at P_ (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:792192)\n    at px.load (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:868216)\n    at wx.handleInner (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:874360)\n    at wx.handle (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:871715)\n    at self.onmessage (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:908782)\n    at C:\\Git\\Warism\\critic\\scripts\\c32_hist2.mjs:14:14",
+ "errors": []
+}
