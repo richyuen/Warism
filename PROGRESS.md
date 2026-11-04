@@ -829,3 +829,22 @@
   `:135`; `ai/economic.ts:149–297,564`; `NAVY_WEIGHT` `seaControl.ts:66`; `POCKET_CELLS` `nav/grid.ts:401`.
 - `specRefs.test.ts` 9 of 9.
 - **Next:** R6i.
+
+## 2026-11-03 — ROADMAP R6i: SPEC §8 as the code is
+- Three read-only read-throughs (tiers and looks; handovers and effects; interest management, precision, map, budgets);
+  rewritten from them, 43 → 10 KB, as 8.1 tiers, 8.2 forces by tier, 8.3 effects, 8.4 the map, 8.5 interest
+  management, 8.6 budgets.
+- Wrong or gone in the old text: tiers as overlapping bands (a step function; the 1.5 band unlisted); fronts glowing,
+  province borders, supply lanes (none drawn); sea and air zones as a T1 layer (map modes); a plane as a ball with
+  wings (a plane with a ball on it); `GROUND_CAP` 12,000 (24,000); stack nudge 6 px (10); wrecks 12 s (or 72 game
+  hours, the later); "the count is always exact" (64 figures a whole battalion); T2 → T3 figures in the default look
+  (balls have none); border width constant (grows with zoom); an origin per frame (one per upload); owner textures
+  tiled (dirty tiles); `d / fwidth(d)` (analytic); coasts with the handover (with zoom); `spriteTint` one factor
+  (lightness kept by HSL).
+- Constants stated, read from: `timing.ts:12–16`; `markers.ts:101–110,156–157,234`; `individuals.ts:27–44,94–133,291`;
+  `counters.ts:36,93–96,155–159`; `markerStacks.ts:49–113`; `MapView.ts:34–41,104–153`; `ballShader.ts:54–55,219–222`;
+  `sorties.ts:218`; `ships.ts:66,98`; `elementSprite.ts:17–27`; `turrets.ts:40–44`; `fire.ts:33–40`; `wrecks.ts:17–40`;
+  `hulls.ts:30–39`; `ground.ts:49–89`; `GroundInstances.ts:113`; `scatter.ts:28`; `MapRenderer.ts:95`; `landMask.ts:50`;
+  `tags.ts:74–90`; `subscription.ts:5`; `server.ts:90,98`; `protocol.ts:234–239`; `tools/bench/game.ts:16–22`.
+- `specRefs.test.ts` 10 of 10.
+- **Next:** R6j.

@@ -2,7 +2,7 @@
 
 Status: v1.0 (2026-11-03, after `release-2026-11-03`; ADR-805). This document says how the game works
 now. The *why* of each choice is in `DECISIONS.md` and `docs/history/DECISIONS-<YYYY-MM>.md` (cited as
-`[ADR-n]`). §1–§7 and §10 are current; the other sections are being brought up to date one by one
+`[ADR-n]`). §1–§8 and §10 are current; the other sections are being brought up to date one by one
 (ROADMAP R6), and where one disagrees with the code, the code and the newest ADR win. A current
 section names only files, code and scripts that exist (`tests/unit/specRefs.test.ts`, ADR-821).
 
@@ -10,8 +10,9 @@ section names only files, code and scripts that exist (`tests/unit/specRefs.test
 2.4 snapshot layout, 2.5 tick order, 2.6 determinism, 2.7 persistence) · 3 World model and data
 schemas (map, cells, provinces and zones, nations, diplomacy, military, tech and production) ·
 4 Territory, fronts and the strategic layer · 5 Combat (engagement, element combat, combat
-efficiency, Major Battles) · 6 Armour, naval, aircraft, nuclear weapons · 7 AI · 8 Semantic zoom ·
-9 UI and UX · 10 Testing and verification (10.1 suites and checkers, 10.2 test API, 10.3 gate,
+efficiency, Major Battles) · 6 Armour, naval, aircraft, nuclear weapons · 7 AI (layers, strategic,
+operational, economic) · 8 Semantic zoom (tiers, forces by tier, effects, the map, interest
+management, budgets) · 9 UI and UX · 10 Testing and verification (10.1 suites and checkers, 10.2 test API, 10.3 gate,
 10.4 long runs, 10.5 nightly, 10.6 critic and release).
 
 ---
@@ -1499,501 +1500,124 @@ months. The sweep judges the result (§10.4).
 
 ## 8. Semantic zoom / LOD design [ADR-3, ADR-4]
 
-Continuous zoom `z = log2(screen px per world km)`. Tiers are bands with overlap.
+The renderer draws the snapshot the worker sends (§2.2); nothing it draws is sim state. `src/render/`,
+`src/app/MapView.ts`.
 
-**What shows at a zoom is a state, not a function of the zoom** (as built, PLAN 1.45a and
-2.7; ADR-64, ADR-71, ADR-73). The first design gave every layer an opacity curve `α_layer(z)`.
-It was dropped: a camera resting on a curve showed two layers half there.
-- A thing (a tier's unit layer, the capital flags, a city's dot, a city's name, a nation's name)
-  comes in when the zoom reaches its threshold and stays until the zoom is 1.15 × beyond it.
-- A change is a fade of 250 ms of real time, the same when a name finds room because its
-  neighbour went. At rest everything is in full or absent.
-- `src/render/timing.ts` has the pieces: `TimedSwitch` (one thing), `SwitchBank` (a layer's
-  things, by key), `ZOOM_HYSTERESIS`, `FADE_MS`. Layouts stay pure functions: they are told what
-  is on and what still fades out (`SwitchState`).
-- Not zoom, and at once: a change of map mode takes the nation names away with the mode; new
-  label curves from the worker move a name. The counters' cluster level has its own hysteresis
-  (± 0.15 of a level) and a split or merge of 250 ms.
+### 8.1 Tiers
+- **Zoom** is metres a screen pixel (m/px); the tier (`tierOf`, `src/shared/protocol.ts`) is a step
+  function of it: T0 above 2000, T1 to 450, T1.5 to 300, T2 to 30, T3 at 30 and below. The tier decides
+  what the worker sends (§8.5); what is drawn is a state, not a function of zoom: a layer comes in at its
+  threshold and goes out only `ZOOM_HYSTERESIS` (1.15) beyond it, fading over `FADE_MS` (250 ms)
+  (`TimedSwitch`, `SwitchBank`, `src/render/timing.ts`), a reversal in mid-fade going back from where it
+  is. A change of map mode takes the nation names away at once.
+- **The forces' handovers** (`TierHandover`, `src/render/units/handover.ts`):
 
-| Tier | m/px | Map | Forces |
-|---|---|---|---|
-| **T0 Strategic** | > 2000 | fills, smooth borders, occupation tint/hatch, fronts glow, curved names, cities as dots | aggregated counters per nation per screen cluster (stable multi-level grid clustering), strength numbers |
-| **T1 Operational** | 300–2000 | + province borders, from 750 m/px in the ground of T2 coming in with the zoom (PLAN 7.34a), city names, sea-zone and air-zone overlays, supply/convoy lanes; the coast from the fine land mask from where a mask pixel is a device pixel (about 1,200 m/px on the 1938 map, all of it from there, none above 2,400: PLAN 4.7g, ADR-284), so a lake the coarse coverage averages away is drawn as at T2 | formation/fleet/wing markers: type symbol, flag chip, a pip for each element by class, a lost one an empty socket (PLAN 7.21c2, ADR-498; the strength bar while its elements are not in hand) + number, order arrows (a fleet's along its way by the points it turns at: PLAN 4.7d, ADR-281), battle markers |
-| **T2 Tactical** | 30–300 | + hillshade, procedural ground texture, tree, rock and building instances, the coast from the fine land mask, the sea shaded by its depth (the elevation's sea floor, lighter over shallows: PLAN 4.7f, ADR-283) (roads near cities: not built, a line under PLAN 7.4) | element sprites (facing, walk/drive animation, firing, tracers, impacts, wrecks, casualties), sorties in flight (and at T0 and T1, smaller: PLAN 5.7a), ships by class with wakes under way (PLAN 4.7b, ADR-276), a sea battle's gunfire on a long arc, torpedo tracks and a ship going down into its slick (PLAN 4.7c, ADR-277) |
-| **T3 Close** | < 30 | the same ground, worked out for each pixel with finer octaves down to 1 m/px, and the things on it at their own size (not tiles kept in textures: ADR-78) | element → individuals: where an element holds up to 64 units (vehicles, guns, ships and planes: 1 to 12), one figure for each unit it has; a battalion of 500 has 64 figures when whole and its share of them while it loses men, rounded up [ADR-80, in place of ADR-69's cap]; a battalion in contact lies in 4 ranks of 16 across the front of its ground, facing the enemy, the front rank first, a loss a man of the rear rank (PLAN 7.21a, ADR-496); a ship its own length, at least 26 px for a battleship and up to 0.9 of the gap between two slots on the screen (40 px at most), the other classes in proportion to their length or at their class's share of it where more (a cruiser 0.88, a transport 0.85, a destroyer 0.8, a submarine 0.65), each its own length again once that is more (PLAN 4.12c, 7.22b, 7.35c, ADR-499, ADR-548) |
+  | handover | in at (m/px) | out above | fade |
+  |---|---|---|---|
+  | T0 counters ↔ T1 markers | `T1_MAX_M` 2000 | 2300 | 250 ms |
+  | T1 markers ↔ T2 element sprites | `T1_MIN_M` 300 | 345 | `MORPH_MS` 470 ms |
+  | T2 sprites ↔ T3 figures | `T3_MAX_M` 30 | 34.5 | 250 ms |
 
-*The look of the forces (PLAN 7.174, ADR-777, ADR-778):* two looks, chosen in the settings
-("Unit look"). The table's Forces column is Classic. The countryballs ('balls'), the default from
-PLAN 7.174h, draw every unit as a ball of its nation's flag with two eyes, wearing a prop for its
-class, at each tier:
-- T0: a counter's flag chip a ball over its box's left end (`COUNTER_BALL_R` 8 px); its strength
-  and "+n" as before (`counters.ts`, `ball2d.ts`).
-- T1: a marker's box a ball (radius 9.5 px) wearing its symbol's prop (`markerProp`: armour
-  treads, motorised wheels, a fleet a hull, the rest a helmet), its eyes the way of its order, a
-  red ring while engaged; its pips, number, "×n" and the click as Classic's (`markers.ts`).
-- Sorties at every tier: each plane a ball with wings, its radius half the plane's span
-  (`PLANE_BALL`, `sorties.ts`). The sea battles' marks are as Classic's.
-- T2 and T3: one ball an element (a battalion, a tank company, a battery, a ship), at T3 too and
-  no figures, by a second program of the proxy renderer (`ballShader.ts`): the flag from one
-  texture of every living nation's flag (`flagAtlas.ts`, 38 × 26 slots), shaded round, a dark
-  outline, eyes toward the facing (the flag never mirrored), from 6 px faded in by 11; props by
-  class (a helmet, treads and barrel, a gun's barrel and wheel, a hull, wings; a turret's barrel
-  over its hull's ball). They move on the render clock: a bob on the march, a blink every few
-  seconds, slanted eyes in contact, a flinch when hit; a destroyed element's ball fades with ✕
-  eyes (`deadBalls.ts`). The same number of draws as Classic.
-- Held to the performance budget's GPU line (§8, "Performance budgets": T2 with 10k proxies ≤ 2.0 ms GPU; ADR-778), not to Classic's time:
-  0.39 ms at 10k on bench B (`&look=balls`) against Classic's 0.35.
+  The morph: over the first 250 ms the sprites come in while the marker's box fades and shrinks by
+  `MARKER_SHRINK` (0.13); its bar and number linger `BAR_LINGER_MS` (220 ms) more. Fire, wrecks, contact
+  lines, pointers and dead balls are drawn with the sprites' share.
+- **The map by zoom:** fills, borders (wider with zoom, to 3.5 px; `borderWidthPx`) and the occupation
+  hatch at every zoom; the fine coast as a mask pixel grows past a device pixel (`fineCoastShare`); the
+  ground (§8.4) from `GROUND_NONE_M` (750) to `GROUND_FULL_M` (300) m/px; capital flags from
+  `FLAG_MIN_SCALE` (3 px a cell), rising at most `FLAG_MAX_RISE` (40 px); city dots from T0, city names
+  through T1. Map modes (`fillMode`): political, terrain, unrest, sea control, air control, fallout, at
+  any zoom.
 
-*How far the ground reaches (PLAN 7.34a, ADR-532):* the ground and what stands on it come and
-go with the zoom alone, the same in and out: none from 750 m/px, all of it from 300 (T2's
-edge), linear in the zoom's log between (`groundShareAt`, 1.32 octaves). It is the one change
-of T1 → T2 that is a blend by the zoom and not a state: the fill giving way to the terrain's
-colour, the relief and the trees are a matter of degree, and a camera resting at 500 m/px shows
-the T1 markers on ground half come in. A step of the wheel of 1.5625× changes the share by
-0.49 at most; the unit layers' change at 300 m/px stays the handover's morph by time. Until
-PLAN 7.34a the ground came with the element sprites' share of the handover, so that one step
-of the critic's wheel went from none of it to all of it (412 to 264 m/px); and beyond T2 it
-went with the zoom too (PLAN 2.11l, `groundReach`: to none at 690 m/px). A camera far out has
-no ground made for T2 from its first frame.
+### 8.2 Forces by tier
+Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e specs `classic`).
+- **T0 counters** (`src/render/units/counters.ts`): a counter a formation, clustered by screen distance
+  (`CLUSTER_PX` 64, levels to `MAX_LEVEL` 14, ± `HYSTERESIS` 0.15 of a level, split or merge over
+  `SPLIT_MS` 250 ms), overlapping ones folded (`FOLD_GAP_PX` 2, `FOLD_HOLD_PX` 6, `FOLD_MS` 250); the
+  number is the men (`1.54M`, `12.3k`), a hero's its health; a hero has a counter of its own. Balls: the
+  flag chip a ball of `COUNTER_BALL_R` (8 px) over the box's left end.
+- **T1 markers** (`src/render/units/markers.ts`, from `T1_MAX_M` to `T1_MIN_M`): a box with the NATO
+  symbol, pips for its elements (fading in and out each; the strength bar only while no elements came),
+  order arrows (a fleet's along its turning points), crossed swords while engaged. Markers that overlap
+  stack (`STACK_UNDER` 0.25, `STACK_HOLD` 0.1), nudged at most `NUDGE_MAX_PX` (10) over `NUDGE_MS` (150
+  ms). Balls: the box a ball of `MARKER_BALL_R` (9.5 px) wearing its symbol's prop (`markerProp`:
+  treads, wheels, hull, helmet), eyes left or right to its order, a red ring while engaged.
+- **T2 element sprites:** one sprite an element at its slot (`slotPlace`, the sim's own pose), its
+  facing and frame (`src/shared/unitLooks.ts`), tinted by its nation (`spriteTint`: hue and saturation
+  kept at least `SPRITE_LIGHT` lightness, greys to `GREY_LIGHT` or, on light ground, `GREY_DARK`; ships
+  `shipTint` against the sea). At least `ELEMENT_MIN_PX` (5) wide, a tank `TANK_ELEMENT_MIN_PX` (8), a
+  ship's hull `SHIP_ELEMENT_MIN_HULL_PX` (13); small sprites swap to one mark between `SMALL_FULL_PX`
+  (5.5) and `SMALL_NONE_PX` (8). A formation on the march is drawn at `SPRITE_ALPHA_MIN` (0.45) to 1. Tags
+  (flag, strength, name; `src/render/units/tags.ts`) stand clear of others' elements within `TAG_FAR`
+  (120 px), `TAG_TRIES` (5) places tried; contact lines join engaged formations; pointers show an
+  enemy off screen. Tank turrets turn to their shot (`TURN_MS` 180, held `HOLD_MS` 1500 or 1.5 ticks,
+  back over `RETURN_MS` 600; `src/render/units/turrets.ts`), uploaded only when a facing changed; ships
+  draw wakes.
+- **T3 figures** (`src/render/units/individuals.ts`, classic only): guns, tanks, planes and ships one
+  figure a unit; a battalion of men `MAX_FIGURES` (64) whole, then its share rounded up, at most
+  `MAX_INDIVIDUALS` (60,000) in the view. Figures stand in a square of `FOOTPRINT_CELLS` (0.024) about
+  their slot (`SLOT_SPACING` 0.03 between slots), 8 × 8 or 4 × 4 with jitter, tanks in ranks of
+  `TANK_ABREAST` (4) × `TANK_RANKS` (3) fitted to the slot (`FIT` 0.97, in `FIT_STEPS` of 32), infantry in
+  contact prone in a firing line of `LINE_ABREAST` (16) × `LINE_RANKS` (4); a loss takes the last figure.
+  Built in the frame the tier comes in, from a copy of the elements kept below `T3_KEEP_M` (60 m/px);
+  with none kept, or over the cap, the sprites stay. Ships are drawn at their length (`SHIP_MIN_PX` 26).
+- **Balls at T2 and T3:** one ball an element from the flag atlas (`src/render/units/flagAtlas.ts`),
+  eyes from `EYES_NONE_PX` (6) to `EYES_FULL_PX` (11), props, bob and blink, angry eyes in battle, a
+  flinch when hit, cracks and plaster at `HURT_AT` 0.75, 0.5, 0.25 strength, a hero at `HERO_SCALE`
+  (2); a dead ball shows ✕ eyes (`src/render/units/deadBalls.ts`). No figures and no wakes.
+- **Sorties** at every tier (`src/render/units/sorties.ts`): one to three planes, a symbol far out and
+  the true wingspan close in, a small ball on each in the balls look (`PLANE_BALL` 0.17 of the span).
 
-*The ground of T2 and T3, as built so far (PLAN 2.8a, ADR-78):* hillshade in the map pass
-(`mapShader.ts`). The worker sends the elevation level of the map's size after the map layers
-(`elevation`: int16 metres, one value a cell); the pass smooths it over the 4×4 cells around by
-the borders' cubic B-spline, takes the slope from the spline's derivative, steepens it 12
-times, and lights it from the north-west, 41° up: level ground is unchanged, a slope is from
-0.58 to 1.28 of its fill, by a soft limit. The sea is level. It comes in by the ground's share
-(the zoom's, above) and shows in every map mode. A map without elevation of its size (the
-toy world) is drawn flat: the one switch is for the ground as a whole.
-*The ground's colour (PLAN 2.14d, ADR-90):* with the ground's share the fill gives way to the
-terrain's colour (the terrain mode's blend of the four cells around) and stays as a cast on
-it: 0.14 of the fill away from borders, 0.62 on a border falling over about half a cell, at
-least 0.3 on occupied land (ADR-82's tint, 0.42 until PLAN 7.4f14, ADR-449; an eighth of the hatching is left in the picture).
-Only where the land is coloured by a palette (not in the terrain and unrest modes), and not
-at T0 and T1 beyond the ground's band. Plains in two nations are 14 apart in RGB where the fills are 103 apart.
+### 8.3 Effects
+- **Shots** (`src/render/fx/fire.ts`, Canvas2D): each `FireEvent` (§5.2) in the view becomes a muzzle
+  flash, a tracer and an impact, its flight and impact by weapon (small arms, cannon, shell, naval,
+  torpedo); spread over the tick between `MIN_SPREAD_MS` and `MAX_SPREAD_MS` (250–1000 ms), one shot at a
+  time a shooter, at most `MAX_SHOTS` (3000), landing within `SCATTER_CELLS` (0.012) of the target's slot.
+  A tank's shot leaves its barrel.
+- **Wrecks** (`src/render/fx/wrecks.ts`): an element's end (`ElementDestroyed`, its place before it fell)
+  bursts over `BURST_MS` (400), stays until the later of `WRECK_HOLD_MS` (12 s) and `WRECK_HOLD_HOURS`
+  (72 game hours), and fades over `WRECK_OUT_MS` (3 s); all but men smoke; a ship sinks over `SINK_MS`
+  (5 s) with an oil slick; at most `MAX_WRECKS` (1500). A formation removed whole leaves none.
+- **Hulls and the fallen** (`src/render/fx/hulls.ts`): comparing snapshots, a tank lost under fire burns
+  `FLAME_MS` (6 s) and smokes `SMOKE_MS` (9 s), one lost otherwise is a cold grey hull; men lost under fire
+  leave fallen figures; held the same 72 game hours, at most `MAX_HULLS` (2000) and `MAX_FALLEN` (1200).
+- Air strikes, bursts and ruins: §6.3, §6.4. A load clears every effect.
 
-*Ground texture (PLAN 2.8b):* the same pass adds small relief and grain from noise seeded by
-the place. Gradient noise in octaves, 2^k lattice points to a cell, the lattice points named
-and hashed as integers (a float that held the cell and the place in it is too coarse at 1 m/px)
-and periodic over the map's width (no line at the seam). An octave counts by its wavelength on
-screen: from 256 px down to 16 px at the far end of T2 and to 2.5 px from 20 m/px in, so the
-ground is finer the nearer the camera. The slope of the octaves is added to the data's slope
-before the lighting, by the terrain class of the four cells around (`ground.ts`: 1 for
-mountains, 0.55 hills, 0.14 plains); their value varies the fill's brightness by a few
-hundredths, and woods are a little darker, sand and ice a little lighter. The fill keeps its
-colour.
-*Two programs:* the pass of T0 and T1 is compiled without any of this, and the pass with the
-ground is used while any of it shows (PLAN 2.8b: a branch in one program made T0 half as dear
-again).
-*Trees, rocks and buildings, drawn (PLAN 2.8c2, `GroundInstances.ts`):* one instanced draw
-between the map and the unit sprites, of at most 12,000 instances, by the ground's share
-(the zoom's: they fade in with it through the band) and under its one switch. The fragment shader draws each in its square:
-a crown with a lobed edge, a block of rock with cut corners, a roof of two slopes (tile or
-slate, along one of two directions that cross), each lit from the north-west with its shadow to
-the south-east. In natural colours on the nation's fill. The view scatters again only when the
-camera, its size, or the world's terrain or cities change.
-*Where they stand (PLAN 2.8c1, `scatter.ts`):* a
-nested lattice, 2^l points to a cell at level l, each point of a level a point of every finer
-one. An instance belongs to the coarsest level its point is on and stands near it, moved by a
-hash of the point: one place whatever the zoom. A view shows the levels whose points are 14 px
-apart or more, and the next finer level comes in by its opacity through the upper half of the
-octave of zoom before that. Further out than level 0 the levels go on, coarser: level −k is
-every 2^k-th point of level 0 each way (PLAN 2.11l), so a view is never denser than that. At a point: a building by how near a city is and how large (reach
-3 to 18 km by size, densest at the middle); else a tree or a rock by the terrain class of the
-cell (forest 0.75 trees; mountains 0.42 rocks; plains 0.05 trees; ice nothing). Nothing on
-water: by the cell's class, and where the fine land mask is there only on sure land
-(`maskSure`, since PLAN 2.9b2; the coverage before). Size: a symbol of 6 or 7 px at
-T2, the thing's own (a crown of 9 m, a house of 14 m) once the zoom shows it larger.
+### 8.4 The map
+`src/render/map/`; one full-screen pass.
+- **Owner and controller** are R16UI textures of the grid, uploaded in dirty 64 × 64 tiles; the palette a
+  256 × 256 RGBA8 texture. Borders and fills come from a 4 × 4 B-spline over the cells (the best and second
+  weight), the edge warped by noise (at most 0.32 of a cell); a border is drawn where the analytic
+  distance gives d × scale under its half width.
+- **The coast:** the coverage grid at T0, and the fine land mask (`src/shared/landMask.ts`, 16384 × 8192,
+  an R8UI texture array in row bands) closer in, its shore roughened by `SHORE_NOISE` (0.35).
+- **Ground** (`src/render/map/ground.ts`): relief from the heights (× `reliefScale` 12), light from the
+  north-west, texture octaves, bump by terrain, colour casts (`GROUND_CAST`, `BORDER_CAST`,
+  `OCCUPIED_CAST`; the hatch yields to `HATCH_AT_GROUND`), sea depth; trees, rocks and houses as instances
+  (`src/render/map/scatter.ts`, `SPACING_PX` 14; at most `GROUND_CAP` 24,000).
+- **Labels:** nation names placed by the worker (`deriveLabels`: the principal axis of a nation's main
+  mass, at least `MIN_CELLS` 24), sent every `LABEL_INTERVAL_MS` (2 s) when changed, drawn in Canvas2D at
+  9–64 px with tracking 0.1 (`src/render/labels/nationLabels.ts`); city names (`cityLabels.ts`).
 
-*T1 implemented (PLAN 2.1, `src/render/units/markers.ts`):* Canvas2D markers, the unit layer
-from 2000 m/px down to 300 (see the handovers below). Each
-shows a type symbol (from the template's
-elements), a flag chip, under the box a pip for each of its elements (PLAN 7.21c2, ADR-498,
-`pips.ts`: by the template's parts, coloured by class, fainter by the men lost, a lost element an
-empty socket; the elements are sent from T1; a strength bar, strength / template men, where they
-are not in hand), the strength number, a dashed
-order arrow to the target, and a red outline while engaged; Major Battles get crossed swords.
-Since PLAN 7.4b (ADR-441) the arrow is drawn only for what is looked at: the formation whose
-panel is open, the player's selection and own nation, and the nation whose panel is open.
-The same arrows are drawn at T2 and T3 (the user's request of 2026-10-29, `drawOrderArrows`,
-`MapView.drawCloseOrders`), faded in as the markers go: from where the formation is drawn
-(between ticks, its block), along its way, with a dark edge under the line and a larger head.
-*Stacks (PLAN 2.7s1, `markerStacks.ts`, ADR-77):* a marker that is more than a quarter of its
-box under a stronger marker of its own nation goes into that one, which then shows the men of
-all it stands for and "×n". It stays in until it is under its lead by less than a tenth; a
-change is a fade in place over 250 ms. Markers of two nations are never one marker: where two
-shown boxes are still more than a quarter on each other (across a front at the far end of T1)
-they move apart by half each, at most 6 px from their formations, by an ease of 150 ms (PLAN
-2.7s2). Where the boxes stand is a function of where the formations stand, with no memory of
-the frame before (PLAN 2.7v); where the 6 px cannot part them they are left on each other. A
-pair moves apart along x or y, whichever is the shorter way; where that leaves boxes on each
-other, the group of markers within reach of each other is parted along the lines between the
-centres instead, if that leaves less on each other (PLAN 3.5h, ADR-157). A
-box that goes into a stack fades at the place it is drawn at, and one that comes out again in
-mid-fade eases from there (PLAN 2.7w). The order arrow starts at the formation. The boxes do
-not move during the morph into T2; on the way back from T2 they grow where they will rest
-(PLAN 2.7z).
-The snapshot carries template, flags and target per formation, plus Major Battle positions. T0
-sprites stop once markers are fully in; capital flags draw above the markers. At T0 a capital
-flag that would cover a counter stands just above it instead (up to 40 px from its usual place,
-else it is left out), so no counter's number is hidden (PLAN 1.45c). A nation's fleets are
-counters of their own (PLAN 4.10a, ADR-302): clustered and folded among themselves apart from
-its armies (as another nation's would be, `NAVAL` added to the nation), and drawn as a navy's,
-a sea-blue box and frame with a hull under the strength, the nation's flag in the chip. A sea
-battle going on is marked at its place at T0 to T2 (PLAN 4.10b, ADR-303; `seas` of the snapshot:
-place, cells to its furthest fleet, its sides): a navy-blue disc with crossed guns over a wave,
-and a dashed ring round the water its fleets are on; it is gone with the figures of T3. A destroyed nation has no
-flag: the snapshot says which nations live (PLAN 2.7g).
+### 8.5 Interest management
+- The view subscribes (`src/app/subscription.ts`) at most every 100 ms and only when its key changes: the
+  box padded × `SUBSCRIPTION_PAD` (1.25), the zoom and the tier. The worker sends a snapshot on each tick,
+  event or new subscription, one in flight until acked (§2.2).
+- Formations, nations, wars and dirty tiles go whole; spatial events in the box (global ones always);
+  elements from T1 for the formations whose block reaches the box, a formation whole or not at all, never
+  wings, at most `MAX_SNAPSHOT_ELEMENTS` (40,000; then `truncated`); fire and element ends from T1.5 where
+  either end is in the box (`FIRE_QUEUE_CAP` 8192 queued).
+- **Precision:** the camera is f64; proxies are uploaded relative to an origin at the grid's middle
+  column and the shader gets camera − origin; the map pass gets the camera as a whole cell and a fraction
+  (`splitCoord`). No shader sees an absolute coordinate.
+- **Units on the GPU** (`src/render/units/ProxyRenderer.ts`): instanced, each with its place before and
+  now, facing, frame, tint and alpha, interpolated by `tickProgress` (the tick's length from the speed;
+  none when paused or at the fastest); premultiplied atlas. The view redraws only on a change, and once
+  more after an animation ends (`ANIM_TAIL_MS`).
 
-*T0 implemented (PLAN 2.2, `src/render/units/counters.ts`, ADR-45):* counters per nation per
-cell of a nested 2^L-cell grid (~64 px), showing Σ strength. Splits and merges animate the child
-level for 250 ms. The level wanted is judged against the level held, and a change that has
-finished is taken over first: a camera at rest holds one level (PLAN 2.7f). The unit-size
-setting scales counters and markers.
-
-*T0 declutter (PLAN 1.45b, `foldOverlaps` in `counters.ts`, ADR-65):* no two counter boxes
-overlap. In screen space, a counter whose box would come within 2 px of a stronger one's is
-folded into it: first a nation's own counters into each other, then across nations in the
-order of what they hold. The stronger counter shows the sum and "+n" for the other nations
-folded in; nothing is dropped, so the shown counters still add up to every formation's
-strength. A change is a fade in place over 250 ms; a folded counter comes out only once it
-clears its neighbour by 6 px more. That hold is a memory of the layer at rest: a split or merge
-on its way is folded without it and leaves none, so the counters land as a view opened at that
-zoom shows them, whatever frames were drawn on the way (PLAN 2.7l, ADR-75). It is a memory of
-one zoom too: the first frame at another zoom is folded without it, and folds on with the hold
-of each fold until the fold stands, so a step of the zoom inside a level also ends as a view
-opened there, in the frame of the step (PLAN 3.5i, ADR-158). The result depends
-on the zoom, not on where the camera is. Strengths from a million on read "1.54M".
-
-*Tier handovers (PLAN 1.45a and 2.7b, `src/render/units/handover.ts`, ADR-64, ADR-71):* at each
-of the three boundaries which of the two unit layers shows is a state. The nearer layer comes
-in when the zoom reaches the boundary and goes out above it by the hysteresis (× 1.15); a
-change is a cross-fade over 250 ms of real time. At rest one layer is drawn at full opacity and
-the other not at all, wherever the camera stops.
-
-| Boundary | Nearer layer in at | out above |
-|---|---|---|
-| T0 counters ↔ T1 markers | 2000 m/px | 2300 |
-| T1 markers ↔ T2 element sprites (470 ms: see the morph below) | 300 | 345 |
-| T2 sprites ↔ T3 individuals | 30 | 34.5 |
-
-- The elements are in the view before the sprites come in: they are sent from T1 (2,000 m/px,
-  ADR-498; from 450 m/px before), where a marker's pips are drawn from them; their fire and ends
-  are sent from 450 m/px. At 900 m/px an element is its pip: the elements of a division stand
-  0.65 px apart there (PLAN 7.34b, ADR-535), and the view counts the pips drawn
-  (`elementsAtT1`).
-- The figures of T3 are built in the frame the close tier comes in, from a copy of the last
-  element section that the view keeps below 60 m/px. A snapshot subscribed at T3 is a frame or
-  two away, and the cross-fade needs both layers. They are built from each snapshot for as long
-  as they are drawn: while the close tier is on, and while its fade out runs (PLAN 2.7j).
-- Elements whose figures cannot be drawn keep their sprites at T3 (their section not kept yet,
-  or more figures than the renderer's cap). A view with no elements at all keeps the close
-  tier as the zoom has it, so that the figures of a formation panned to are there in its first
-  frame (PLAN 2.7p).
-- Fire and wrecks are drawn with the sprites' share, at T2 and T3 alike.
-- *Before:* T0 ↔ T1 cross-faded by zoom over 2000–2600 m/px and T1 → T2 over 210–300 m/px, so
-  a camera resting in either band showed two layers half-faded; T2 → T3 was a switch in one
-  frame.
-- *Checked (PLAN 2.7b, `tests/e2e/fades1938.spec.ts`):* the camera steps across each boundary
-  in both directions and stays; of the frames that follow, 16 ms apart, no pixel of the unit
-  layers changes by more than 48 of 255 between two frames (measured: 31–39; the whole change
-  is about 250).
-
-*T2 elements implemented (PLAN 2.3, ADR-46):* the view subscribes with its padded bbox
-and tier at most 10 Hz. The worker sends the elements of the formations whose block reaches
-into the box (by the block, not the centre: at the closest zooms the box is smaller than a
-division; PLAN 2.7n1), a formation whole or not at all, at their slot
-poses (`sim/core/pose`, shared with the sim). They are drawn as instanced sprites, interpolated
-on the GPU, with facing and a procedural walk/drive animation, fading in as the markers fade out.
-The walk is for a formation on the march: one that has a march and holds in contact stands, as
-the sim holds it (`marching` in `src/shared/protocol.ts`, PLAN 2.11e). A sprite's opacity is
-what is left of its element: its share of its size, from 0.45 to 1 (`spriteAlpha`, PLAN 2.11g).
-Where a snapshot has no elements, each formation is one stand-in sprite of 0.9 cells and at most
-48 px (PLAN 2.7n3): the toy world's formations, which have no elements, and any world for the
-moment before its first elements arrive.
-
-*T2 fire implemented (PLAN 2.4a, `src/render/fx/fire.ts`, ADR-66):*
-- *Transport:* a view that draws elements also gets the FireEvents (§5.2 step 5) with an end
-  inside its subscribed box, in the snapshot's `fires` section (shooter, target, the two slot
-  poses, the minute of the hour, and the weapon kind of the shooter's class: small arms, cannon
-  or shell). Any other view gets none. The queue is capped at 8,192 events; the oldest are
-  dropped and counted.
-- *A shot* is a muzzle flash at the shooter, a tracer that flies to the target (shells on an arc)
-  and an impact there, 310–880 ms in all, on the render clock. The shots of a tick start spread
-  over its wall time by their minute (250–1000 ms; 400 ms for a tick stepped while paused).
-- *One at a time:* a shooter shows one shot at a time. Within a tick every FireEvent is a shot
-  (an element fires once an hour); from tick to tick the events that find their shooter's shot
-  still on screen are not drawn, and are counted. So the fire on screen grows with the elements
-  that fight, not with the game speed.
-- *Presentational freedom:* a shot lands up to 0.012 cells from its target's slot. Nothing of
-  it is sim state; a reload starts with no shots.
-- *Not built:* GPU particle pools (the layer is Canvas2D: 0.12–0.22 ms a frame for the fire of
-  three divisions).
-
-*T2 casualty removal and wrecks implemented (PLAN 2.4b, `src/render/fx/wrecks.ts`, ADR-67):*
-- *The event:* an element whose strength reaches 0 (combat, attrition, desertion) is removed
-  and emits `ElementDestroyed` with the slot it stood in (§5.2 step 3). It is a tick output,
-  not state. Elements that go with a formation removed whole (disbanded, annexed, by God or the
-  editor) emit none. Only a view that draws elements gets the event, with what the unit's class
-  leaves in place of the unit: the fallen, a broken gun, a burnt-out vehicle.
-- *The visible end:* the snapshot that no longer has the sprite brings the event. In that frame
-  a burst (a flash and an expanding ring, 400 ms) is drawn where the sprite stood, and the
-  wreck comes in under it.
-- *The wreck* stays for 12 s of real time and fades over 3 s; guns and vehicles smoke. It stays
-  where the element died while its formation moves on. At most 1,500 are held.
-- Nothing of it is sim state; a reload starts with no wrecks.
-
-*T3 individuals implemented (PLAN 2.6 and 2.10b, `src/render/units/individuals.ts`, ADR-69 and ADR-80):*
-- *Count:* an element whose unit type has up to 64 units to an element (guns 12, tanks 10,
-  planes 6 to 12, ships 1) has a figure for each unit it has. A battalion (500) has 64 when
-  whole and `ceil(64 × strength ÷ size)` while it loses men: 20 figures at 150 men. An element
-  with men has a figure, and all 64 only when it lacks less than a figure's worth. The
-  snapshot's element section carries the element's size besides its strength and atlas frame
-  (PLAN 2.10b; until then the count was `min(strength, 64)`, and a battalion showed its losses
-  only when fewer than 64 men were left).
-- *Place:* the footprint is a square of 0.024 cells around the element's slot pose (slots are
-  0.03 apart), turned with the formation and divided into sub-slots: 8 × 8 for men and for
-  anything that has more than 16 figures when whole, 4 × 4 for vehicles and guns. The grid is
-  the whole element's and does not change as it loses. An element's figures take the sub-slots
-  in an order of its own (a shuffle by its id), each a little off its sub-slot's centre.
-- *Casualties:* a loss takes the last figure of that order away; the others stand where they
-  stood. So a battalion thins out across its block as it loses men (ADR-80).
-- *Drawing:* the view expands the elements of a snapshot that arrives at T3 into instances of
-  the same instanced renderer as the element sprites, previous and current place alike, so the
-  GPU still interpolates. The origin is the camera's cell (f32 offsets from the middle of the
-  map would step by 2.4 m). A figure is at least 2.5 px.
-- *Guns* have a frame of their own in the procedural atlas (artillery, anti-tank, anti-air), at
-  T2 and T3; they were drawn as infantry.
-- *Tanks* (PLAN 3.6a, ADR-159) are two sprites: a hull frame for each weight (light, medium,
-  heavy) and its turret with the gun as a frame of its own, a second instance at the hull's
-  place written after all the others of the layer (`render/units/turrets.ts`), at T2 and T3.
-  The turret's ring is the middle of both frames. Mechanised infantry is a half-track, with no
-  turret. The snapshot carries the hull's frame alone.
-  *At T3 an element of tanks is ranks* (PLAN 7.9c, 7.34c1; ADR-469, ADR-536): four abreast
-  across its facing, the front rank first, straight; two tanks of a rank the turret's reach and
-  half a hull apart (and 0.04 of a figure more), so a turned turret's muzzle is off the next
-  hull. The element's hulls fit its slot's square, so no hull of a block at rest is on another:
-  a light tank at its full figure (`TANK_CELLS`, a 14 px hull at 10 m/px), a medium and a heavy
-  by a scale of their class, the heavy hull still the longest.
-  *Vehicles fitted to their room* (PLAN 7.34c2, ADR-540): in a block in contact the elements
-  stand off their slots (`DEPLOY_SCATTER`), nearer than a slot. An element of vehicles (tanks,
-  half-tracks) is drawn at its fit (`fitScales`), figures and places alike: the least, over the
-  vehicles near it, of the scale two keep so that an axis parts their drawn boxes, of the place
-  before and now, in 32nds. A block at rest has fit 1. Turrets, muzzles and wrecks take it too.
-  *The small mark* (PLAN 3.6e3b, ADR-165): where an element sprite is drawn 5.5 px wide or
-  less (from about 92 m/px outward at the default size setting; the least size is 5 px, from
-  102), a hull of any weight is one frame made for that size, a solid slab along the facing
-  (`Frame.tankSmall`, `smallFrameOf`), and its turret is not drawn. From 5.5 to 8 px (92 to
-  64 m/px) the shader mixes the two frames by `smallShare` of the sprite's size and fades the
-  turret in: a matter of the zoom alone, with no clock. From 8 px in a tank is hull and turret.
-  No other class has a small frame.
-  *The turret turns* (PLAN 3.6b, ADR-160): `TurretAims` has an aim for every element whose
-  cannon shot the view draws, the angle of the fire record's line. The turret turns there in
-  180 ms before the shot starts (a cannon's shot starts 180 ms after its minute of the tick,
-  so the turn is over as it leaves: PLAN 3.6e1, ADR-163), stays for 1.5 s (or 1.5 ticks), and turns back to its hull's
-  facing in 0.6 s. View state on the render clock; while an aim is live the turrets' facings
-  are written and uploaded again each frame. The tanks of an element have one angle.
-  *The shot leaves a barrel* (PLAN 3.6c, ADR-161): at T3 a shot starts at the muzzle of one
-  of its shooter's figures (`firingFigure`: by the element and the tick; `originOf`), a
-  tank's along its turret of the frame, a gun's and a rifle's along the figure's facing, and
-  a cannon's flash is a tongue along the barrel. From the slot to the muzzle with the close
-  tier's share. A shooter outside the view's box fires from its slot.
-  *A tank that is lost leaves its hull* (PLAN 3.6d, ADR-162, `render/fx/hulls.ts`): the view
-  compares the elements of a snapshot with those of the snapshot before, and a figure that an
-  element of tanks had and has no more leaves a hull on its place, at the old pose. If the
-  snapshot says the element was fired at since the one before (`SnapshotElements.hit`: by
-  anything, from anywhere; not the fire records, which are only of the shots with an end in
-  the view's box, while a formation is sent whole: PLAN 3.6e5, ADR-167), the hull burns:
-  flame for 6 s of real time, smoke for 9 s more, a fade of 2.5 s. If not (a breakdown,
-  attrition: PLAN 3.2d),
-  the tank was left behind: a grey hull with its gun in line, for as long, without flame or
-  smoke. None for an element first seen, and none for one that is gone: the last tank of an
-  element ends with it and leaves the element's wreck (PLAN 2.4b). Drawn with the figures'
-  share, at a figure's size, also where the view holds no element any more (the fight moved
-  off: PLAN 7.23a0); at T2 a loss is the sprite's opacity, as for every element. At
-  most 2,000 are held. View state on the render clock: a reload starts with none.
-  *What else is lost lies there too* (PLAN 3.11d, ADR-205, `fallenLost` in the same file): a
-  figure that an element of infantry, of guns or of half-tracks had and has no more leaves a
-  mark where it was drawn, by the same comparison of two snapshots. The fallen: a man down on
-  a dark stain, lying his own way; only for a loss in an hour in which the element was fired
-  at (men lost to attrition or desertion are gone, not fallen). A gun and a half-track:
-  broken and smoking if fired at, grey and left behind if not. A figure of a battalion is 8
-  men, and a battalion in contact loses about 15 men a day: two in three show a loss within
-  a day. The marks have the hulls' time and share and go at a load; at most 1,200 are held,
-  each a stamp of its kind's picture (5.7 ms a frame for all 1,200). None at T2.
-  A game loaded into a running one (PLAN 3.7n, ADR-175) takes the hulls, the wrecks, the shots
-  and the turrets' aims of the game before with it, and its first snapshot makes no hull: the
-  view is told of the load (`SimClient.onLoad`), it does not read it off the clock.
-- *The T2 ↔ T3 change* is a handover like the others (see above), since PLAN 2.7b.
-- *Measured:* 3,345 figures of 89 elements (three divisions at 28 m/px): 0.7 ms to build per
-  snapshot, 0.5 ms of CPU to draw a frame.
-
-**One truth.** Every number or sprite derives from sim state: counter strength =
-Σ formation strength = Σ element strength. Sprites are at element positions, and tracers
-come from FireEvents. Close-tier positions inside an element footprint are the only
-presentational freedom, and the count is always exact.
-
-*Checked (PLAN 2.5, `tests/e2e/tiers1938.spec.ts`):* in a battle spawned by God where nothing
-else stands, the element sprites read at T2 and the counter read at T0 give the same men before
-the fight, when the first elements have died and when one division is gone: what the counter
-loses is what the elements lost, to the man. Men are units × the men per unit of the element's
-type, summed over a formation's elements and rounded, as the sim does: a gun crew is not a whole
-number of men (12.5 or 8.33 per gun). No mechanism was needed for it: the number at every tier
-is the formation's strength, which the sim recomputes from its elements at each settle.
-
-**Transitions without popping.**
-- T0→T1: clusters split by animating from the cluster centroid to member positions
-  over 250 ms (positions are real). They merge in reverse.
-  (As built: that is the change between two cluster levels inside T0, PLAN 2.2. T0 ↔ T1
-  itself is a handover, a cross-fade of counters and markers over 250 ms: see the table above.)
-- T1→T2: the marker scales down and fades into the formation centroid while elements fade
-  in at their real positions. The strength bar lingers above the group until T2 is fully in.
-  (As built, PLAN 2.7c, ADR-72: over 250 ms the box fades and shrinks by 13% about its centre
-  while the sprites fade in; the strength bar and the number stay for that time and fade over
-  the 220 ms after it. Out of T2 the same, backwards: the bar first, then the box. Of a
-  formation in contact the bar goes and comes with the box, PLAN 2.14f4, ADR-92: its elements
-  stand at the block deployed against the enemy, up to 43 px from the marker. The box does
-  not move: a marker stands on its formation's centre already. It shrinks by 13% and no more:
-  see the ADR.)
-- T2→T3: an element sprite cross-fades into its individual expansion, which is laid out inside
-  the element footprint. (As built, PLAN 2.7b: a cross-fade over 250 ms.)
-- *Formation tags at T2 and T3 (PLAN 2.14a, ADR-88; `src/render/units/tags.ts`, drawn on the
-  overlay by `MapView`):* where the marker's box has given way to the elements, every formation
-  with something in the view has a tag: its nation's flag, its strength, its name ("Infantry
-  division 658": the template's name and the formation's id, derived in the view, not state).
-  A tag stands by the part of its formation that is on the screen: above it, below it, left
-  or right of it, in that order, then a step further out on each side, five rings of places
-  (`TAG_TRIES`). Stronger formations are placed first; one that finds no place is left out
-  and counted (`tagsLeft`). It is tied to its elements, in three passes over those places
-  (`layoutTags`). First a place by the block (the first on each side) that is clear of
-  every other formation's elements and not nearer to the middle of another block than that
-  block's own tag, placed before it (PLAN 3.11f1, ADR-207), nor further from its own
-  block's middle than a tag placed before it is (PLAN 4.2b1, ADR-249: it would have the
-  line of ADR-188 where a place beside the block has none). Then the nearest place clear of
-  other formations' elements (PLAN 3.7g, ADR-168). With none, any place free of tags. A tag
-  has a thin line in its nation's colour to the middle of its elements in the view when it
-  stands more than `TAG_GAP` + 1 px (5) from their box (ADR-168), and when another placed
-  tag is nearer to that middle than it is (PLAN 3.10c1b, ADR-188). It does not stand under the war banners or the bottom bar (PLAN 2.14f2). The
-  tag of the formation whose panel is open is framed and placed before any other (PLAN
-  2.14f3). A click on a tag or on a formation opens the formation panel (§9).
-- The map shader blends the detail layers by `z`, and border width is constant in screen px.
-
-**Interest management.** Main sends `subscribe` whenever the camera moves (throttled to
-10 Hz) with the bbox padded by 25%. The worker only includes elements/events inside it.
-This never affects sim state (invariant I4).
-*As built (`src/app/subscription.ts`, PLAN 2.7n2):* "moves" is judged by a key: the box rounded
-to a step that is a part of the box itself (a 32nd to a 16th of its smaller half-size, less
-than a third of the pad). While the key stands, the view is inside the box the worker has. The
-step was a quarter cell at every zoom, which at 1 m/px is two and a half screens.
-
-**Precision.** The CPU camera is in f64. Per frame (or per tile batch), choose an origin
-and upload f32 positions relative to it. The vertex shader never sees absolute world coordinates.
-
-**Rendering techniques.**
-- Ownership: `R16UI` textures (owner, controller; tiled only if a size exceeds
-  MAX_TEXTURE_SIZE) + a 256×256 palette `RGBA8` texture (nation and map-mode colours).
-  Smooth borders (`src/render/map/mapShader.ts`): every distinct id in the 4×4 cell
-  neighbourhood accumulates cubic B-spline weight (a C2-smooth indicator field). The max
-  wins; the border is where the best and second weights meet, at a constant screen-px width
-  (d / fwidth(d)). A bounded value-noise domain warp (≤ 0.32 cell) makes borders organic.
-  Occupation hatching uses the same weights. With the ground of T2 and T3 the hatching gives
-  way to it (PLAN 2.11f, ADR-82): by the ground's share the two stripes close on the tint
-  between them, and an eighth of the hatching stays (`HATCH_AT_GROUND`).
-  Since PLAN 1.28b the coastline comes from the 16384 × 8192 land mask:
-  - The worker reduces it once to a 4096 × 2048 coverage texture (land fraction of each 4×4-bit
-    block; `src/shared/landCoverage.ts`) and posts it with the terrain layer (`mapLayers`).
-  - The shader samples coverage bilinearly: water at ≤ 0.5. Land the cell rule called water takes
-    the strongest land id nearby (unclaimed land is neutral grey).
-  - The coast line uses the coverage gradient; the cell-based coast lines are off once the fine
-    layer is present.
-  - *The coast of T2 and T3 (PLAN 2.9b2, ADR-79)* is the mask's own, four times as fine as the
-    coverage. The mask's bits are a texture (R8UI, 2048 × 8192, eight pixels to a texel). The
-    pass with the ground blends the four mask pixels round a fragment (the rule of
-    `maskField`, `src/shared/landMask.ts`) and draws land over a half. Where the four differ, a
-    noise of at most 0.35 × 4f(1 − f) moves the line (`SHORE_NOISE`; the ground's noise from
-    its third octave down to a wavelength of 4 px): a shore at 1 m/px is not a ruler's edge.
-    The picture can differ from the mask's bit only between four pixels that differ.
-    - The two coasts cross-fade with the T1 ↔ T2 handover: each says land or sea, a pixel is
-      land by as much as the two say by their shares, and each has its coast line by its share.
-    - At T0 and T1 the coast is the coverage's, pixel for pixel as before.
-    - The mask has lakes that the coverage has not; they are drawn at T2 and T3.
-    - What stands on the ground (PLAN 2.8c) stands on sure land (`maskSure`), read on the CPU.
-    - Without the texture (a GPU that takes none of 8192 px; land painted in the editor) the
-      coast stays the coverage's, or the cells'.
-  - Terrain map mode (`fillMode` 1) bilinearly blends the terrain colours of the 4 nearest cells
-    and keeps national borders.
-  Since PLAN 1.28a the border distance is d/|∇d| with the gradient from the analytic B-spline
-  derivatives, not d/fwidth(d). fwidth spiked where the second-strongest id changed between
-  pixels, and is undefined inside the n > 1 branch; that drew dashed stair lines about 2 cells
-  inside every border. The gradient pass runs only where d·scale < (halfW + 1)·2√2
-  (|∇d| ≤ 2√2 per cell).
-  GPU at 1080p on the bench machine: 0.54 ms T0 world, 0.50 Europe, 0.46 close (was 0.47; a
-  full per-id gradient cost 1.30 ms).
-- Map modes are palette swaps or derived per-province textures (no reupload of the cell grid).
-- Labels (implemented PLAN 1.29, ADR-40):
-  - *Derivation:* the worker derives a quadratic Bézier per nation from control
-    (`src/worker/deriveLabels.ts`). It takes the capital's 4-connected component (else the
-    largest), with x unwrapped at the date line; finds the PCA axis; takes the mid-line at
-    10/50/90% of the robust extent; and records half-thickness = 1.2σ.
-  - *Delivery:* it posts `labels` (with i18n keys, or literal names for spawned nations) at most
-    every 2 s, when control changed.
-  - *Drawing:* the app lays the glyphs out along the curve on a Canvas2D overlay
-    (`src/render/labels/nationLabels.ts`). Font ≤ 2 × half-thickness and fits the curve length,
-    9–64 px; greedy glyph-circle collision runs largest first. Since PLAN 7.4a (ADR-440) the
-    glyphs are the name's capitals spaced by 0.1 of the size, in a darker shade of the nation's
-    colour with a lighter edge (over a dark nation the other way round), as AoC's; since PLAN 7.4e
-    (ADR-444) in Lato Black, the city names in Lato Bold and the UI in Lato (`render/labels/fonts.ts`).
-  - *Coming and going:* a name is a switch like the others (the list at the head of this
-    section), one for each nation. On a looping map the copies of a name either side of the
-    seam share it: it is on when any copy is wanted (PLAN 2.7k, `fadeNationLabels`).
-- Labels (original plan): MSDF font atlas. The curve comes from the worker's `derive/labels` (largest
-  connected component → skeleton/PCA → quadratic Bézier, size by area), throttled
-  and cross-faded on change.
-- Units: one instanced draw per sprite atlas. Instance attributes are prev/cur pos,
-  facing, frame, tint and alpha. The interpolation alpha is a uniform.
-  *The atlas is premultiplied (PLAN 7.21b, ADR-497):* uploaded with its colour multiplied by its
-  alpha, so that its mipmaps average colour by coverage, and blended `ONE, ONE_MINUS_SRC_ALPHA`;
-  the shader scales the tinted colour by the instance's alpha. A sprite of a few px keeps its
-  nation's colour (straight, the clear texels' black darkened every small sprite alike).
-  *As built (PLAN 2.7h):* it is the time since the tick in hand arrived over the tick length,
-  0–1 (`MapView.tickProgress`). Its clock starts with a new tick only: a snapshot that repeats
-  the tick (a new subscription, a pause, another speed) goes on from the progress reached.
-  A pause in a tick lets the sprites finish the step they are on, at the length the tick had,
-  and then they stand where the tick has them (PLAN 2.7y: put there at once, every marching
-  sprite jumped by the rest of its step). A tick that comes while the game is paused (a single
-  step) or at full speed has no length: its progress is 1.
-  The tint is the nation's own colour in every map mode (PLAN 2.7i): the map's palette
-  carries the mode's colours, the units do not, at any tier. For the stand-in sprite, the
-  elements and the figures (`spriteTint`, `src/render/units/tint.ts`; PLAN 3.11e, ADR-206)
-  a colour whose lightness (HSL) is under 0.42 (`SPRITE_LIGHT`) is made lighter up to it,
-  every channel times one factor, which keeps its hue and saturation; black is a grey of
-  that lightness. Any other colour is drawn as it is (until then every colour was mixed
-  45% toward white, and a dark red and a rose came out two pale reds).
-  A ship is the exception (PLAN 7.41b, ADR-602): its atlas frame holds the hull's fill in red
-  and its marks and outline in green (`splitShipTint`), the shader tints the fill alone and
-  draws the marks grey, and a ship of a hue within 25° of the sea's is at least 0.6 light
-  (`shipTint`): a blue nation's tinted marks were the sea's colour at 20 m/px. The Pixi bench
-  (`benchBP.ts`) multiplies the atlas by the tint as before; its ship frames are not decoded.
-- Effects: GPU particle pools (muzzle, impacts, smoke, explosions, nukes). *As built (PLAN
-  2.4a):* tracers, muzzle flashes and impacts are drawn with Canvas2D on the overlay; no pools yet.
-
-**Performance budgets.** T0 ≥ 60 fps with 100+ nations at M size. T2 ≥ 30 fps with
-10 000 visible proxies. Snapshot build ≤ 2 ms. Main-thread frame CPU ≤ 6 ms.
-Sim tick ≤ 6.5 ms in any year, the late game's busiest among them (headless, pinned, M, 1938: at least 150 game hours
-a second; ADR-757, 2026-10-29, the user's decision; ADR-709's 5.5 ms before, ADR-698's 5.0 ms before that; before
-those, ≤ 1.5 ms average). *Since ADR-654 a (2026-10-23, the user's decision):* the
-1.5 ms stands for the 1938 world as first measured; the busier land war since R11-B1/R12-B1 reads
-1.94–1.97 ms on seed 99 × 5 years, and a rule change is judged instead by its cost on one world:
-HEAD's rules at most +0.2 ms a tick over `dd3b730`'s on HEAD's year-4 world of seed 99 (+0.145 at
-PLAN 7.83). Dev-GPU translation (ADR-4): T0 frame ≤ 1.0 ms
-GPU and T2 frame with 10k proxies ≤ 2.0 ms GPU at 1080p on the bench machine (Phase 0:
-0.46 and 0.41 ms). *As built (PLAN 7.1j, ADR-402):* `npm run bench -- G` measures the game
-itself, the 1938 world at 1080p with the game running: T0 190.6 fps, T2 108.9 fps with 10,752
-element sprites in the view (RTX 4070 Ti); the software rasteriser 2.8 and 2.3 fps, reported. The
-GPU and main-thread translations above were missed there (GPU T0 1.58 ms, T2 2.57; draw at T2
-7.8 ms) and are PLAN 7.1l's. The map view redraws only when the camera, a snapshot or an
-interpolation changes something, and once more after any frame that left a unit animation
-unfinished, however late that frame comes (PLAN 2.7m): the end of an animation is what stays
-on screen.
+### 8.6 Performance budgets
+`npm run bench -- G` (`tools/bench/game.ts`): T0 ≥ `T0_FPS` (60) panning the 1938 world, T2 ≥ `T2_FPS`
+(30) with `T2_PROXIES` (10,000) at 200 m/px, judged; GPU (`T0_GPU_MS` 1.0, `T2_GPU_MS` 2.0) and CPU
+(`FRAME_CPU_MS` 6) reported. A snapshot builds in under 2 ms (`tests/unit/snapshot-perf.test.ts`).
 
 ---
 
