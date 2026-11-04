@@ -35,16 +35,17 @@ test("a holder's last means of delivery lost is in the history: Czechoslovakia's
   await page.getByTestId('editor-btn').click();
   await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }, true), { a: GER, d: CZS });
   // The day the airbase falls moves with the world's rules (13 days at 7.37b3, 14 at ADR-634, 15 at `9ffb0274`):
-  // the war is stepped a day at a time until the row is in the history, within 30 days.
+  // the war is stepped a day at a time until the row is in the history, within 80 days (40/30 until
+  // ROADMAP R16b: Czechoslovakia's fortifier trait holds Prague to day 50).
   const day = await page.evaluate(async (KIND) => {
     const sim = window.__warsim!.sim;
-    for (let d = 1; d <= 30; d++) {
+    for (let d = 1; d <= 80; d++) {
       await sim.step(24);
       if ((await sim.history()).some((r) => r.kind === KIND)) return d;
     }
     return -1;
   }, EventKind.NukeMeansLost);
-  expect(day, "the day Czechoslovakia's means are lost, within 30 days of the war").toBeGreaterThan(0);
+  expect(day, "the day Czechoslovakia's means are lost, within 80 days of the war").toBeGreaterThan(0);
   await page.getByTestId('history-btn').click();
   await page.getByTestId('history-kind').selectOption({ label: 'Nuclear means lost' });
   await expect(page.getByTestId('history-row')).toHaveCount(1);

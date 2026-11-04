@@ -38,7 +38,9 @@ const { w: W } = SIZE_1938;
 // such four hours from day 14 to 120 (nor seed 3's); seed 1 has them on day 35, in China.
 // Seed 2 again since the rules of PLAN 7.139–7.146 (ADR-743): seed 1 then had none from day 14 to
 // 120, nor seeds 3–6; seed 2 has them on day 24.
-const SEED = 2;
+// Seed 1 again since ROADMAP R16b (ADR-822: nation traits act in the sim): seed 2 then had none
+// from day 14 to 120, nor seeds 3 and 4; seed 1 has them on day 23 (seed 5 on day 77).
+const SEED = 1;
 const FIRST_DAY = 14;
 const LAST_DAY = 120;
 /** Elements of tanks that fire in the view of the first stepped stop. */

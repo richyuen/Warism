@@ -72,6 +72,11 @@ import { leg, steps, type LegResult } from './flight';
 // half its men and over 64, two batteries or more with guns lost, it fits the picture, and in
 // each of the four close hours it lives, has a march, is in contact and has more than 10 shots by
 // or at it. A rule change now moves the day, not the test. Seed 1943 is kept.
+// And since ROADMAP R16b (ADR-822: nation traits act in the sim) the search asks one thing more of
+// the battle, which the picture at T2 asks below: at each stop of T2, a sprite within 200 px of
+// the anchor more than 0.15 stronger than the division's battalions'. The day the search found
+// first then (36, an Austrian division) had none in the view at 50 m/px (0.77 against 0.66);
+// the search now finds that division on day 38, with one at 1.00 beside it.
 //
 // The clock is the test's. The game is paused and stepped; the view's own loop is stopped and
 // its turns (`frameAt`: the camera eases, the view subscribes, the frame is drawn) are given
@@ -119,7 +124,10 @@ const STOPS: Stop[] = [
   { name: 'men', m: 3, tier: 3, shares: [1, 1, 1] },
 ];
 /** The stops at which an hour is stepped, so that the battle is seen to fight. */
-const CLOSE = STOPS.filter((s) => s.tier >= 2).length;
+const CLOSE_STOPS = STOPS.filter((s) => s.tier >= 2);
+const CLOSE = CLOSE_STOPS.length;
+/** The least the zoom holds a battle in from the top of the screen, CSS px (a third of the way down in Europe: 247 in seed 1943's). */
+const HELD_FROM_TOP = 200;
 
 interface El {
   id: number;
@@ -208,6 +216,23 @@ function nodeBattle(): Battle {
     const first = read(formation);
     const anchor = anchorOf(first);
 
+    /** Whether an element in the box around the anchor at `m` m/px has a sprite more than 0.15 above the division's battalions'. */
+    const stronger = (els: El[], [ax, ay]: [number, number], m: number): boolean => {
+      const pale = Math.max(...els.filter((e) => e.size > 64).map((e) => alphaOf(e.strength, e.size)));
+      const px = (SCENARIO_GEOMETRY['1938'].kmPerCell * 1000) / m;
+      const reach = HELD_FROM_TOP / px;
+      const all = elementIndex(w);
+      for (const [f, list] of all) {
+        if (!w.formations.has(f)) continue;
+        const count = w.rules!.templates[fc.template[f]!]!.elements.reduce((s, x) => s + x.count, 0);
+        for (const e of list) {
+          if (alphaOf(ec.strength[e]!, size(e)) <= pale + 0.15) continue;
+          const [x, y] = elementPlace(w, f, ec.slot[e]!, count, e);
+          if (Math.abs(x - ax) < reach && Math.abs(y - ay) < reach) return true;
+        }
+      }
+      return false;
+    };
     const own = new Set(first.map((e) => e.id));
     const out: Battle = { start: day * 24, formation, nation: fc.nation[formation]!, x: fc.x[formation]!, y: fc.y[formation]!, anchor, elements: [first], men: [fc.strength[formation]!], hashes: [sim.hash()], shots: [0], moving: [fc.moving[formation] === 1], engaged: [fc.engaged[formation] === 1] };
     for (let k = 0; k < CLOSE; k++) {
@@ -222,7 +247,15 @@ function nodeBattle(): Battle {
         sim.step(24 - (k + 1), clear);
         return 'failed';
       }
-      out.elements.push(read(formation));
+      // At a close stop of T2: a sprite in the view is stronger than the division's palest
+      // battalions by more than 0.15 (the picture asks for it below). Read in a box the zoom
+      // surely shows: as far each way from the anchor as it is from the top of the screen.
+      const els = read(formation);
+      if (CLOSE_STOPS[k]!.tier === 2 && !stronger(els, anchor, CLOSE_STOPS[k]!.m!)) {
+        sim.step(24 - (k + 1), clear);
+        return 'failed';
+      }
+      out.elements.push(els);
       out.men.push(fc.strength[formation]!);
       out.hashes.push(sim.hash());
       out.shots.push(n);

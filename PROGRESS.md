@@ -949,3 +949,15 @@
   "Waiting at Portsmouth for transports", the leg to a ring at Belfast.
 - `landingOf` shared by the landing and the drawing; pin unmoved.
 - **Next:** R17d.
+
+## 2026-11-04 — R16b's e2e fallout fixed; R18 and R19 filed
+- A full e2e run (186 specs) after R17c: 11 red. Two were load (`fire1938`, `seaRow1938`, green alone). Nine were
+  R16b's (ADR-822): its rules moved seeded scenes. Fixed by finding each scene again, every assertion kept:
+  `buildArmour1938` (Germany's own price and days, `priceWith`/`daysWith`), `nukeMeansLost1938` (window 30 → 80
+  days: the fortifier holds Prague to day 50), `fightCamera1938` (three of the critic's eight re-picked by contact on
+  day 21), `fallen1938` (division 556 by `contactPick.ts`), `enemyClickPanel1938` (seed 4441 → 3: Poland's counters
+  stacked under a German one), `seaClose1938` (three rows from a new `seaPairs.ts` scan; evidence PNGs swapped),
+  `tankBattle1938` (seed 2 → 1, the spec's own search), `zoomDemo1938` (the search asks the T2 picture's sprite too).
+- `stackBlocks1938` stays red: a layout bug the new history shows (R18, before R17's rest). The gate ran none of
+  these on R16b (R19).
+- **Next:** R18.

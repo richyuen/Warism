@@ -13,8 +13,12 @@ import type {} from '../../src/app/testApi';
 // formation's anchor, about half a cell from where its block is drawn (`blockPose`): at 20 m/px half
 // a cell is some 490 px, off the view, while the block it frames is in the middle (its shots show
 // it). This counts what is drawn (`formationsInBox`, the box select's own test).
+//
+// Since ROADMAP R16b (ADR-822, nation traits in the sim) three of the critic's 8 are no longer in
+// contact on day 21 (376, 475 and 487); each is replaced by the next formation of its nation and
+// template that is (380, 474 and 488), so the 8 are still 8 in contact.
 
-const IDS = [376, 389, 408, 427, 442, 475, 487, 746];
+const IDS = [380, 389, 408, 427, 442, 474, 488, 746];
 
 test("a land formation's \"To its fight\": it and the enemy it faces drawn in the view, the critic's 8 of 8", async ({ page }, info) => {
   test.setTimeout(600_000);

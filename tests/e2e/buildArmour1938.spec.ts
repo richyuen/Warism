@@ -3,6 +3,7 @@ import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
 import type { Inspection } from '../../src/shared/protocol';
+import { daysWith, priceWith, traitMask } from '../../src/shared/traits';
 import { NATIONS_1938 } from '../../src/sim/scenario1938';
 
 // PLAN 7.4f33 (the critic of 2026-10-07: "a player building an armoured division" was not tested;
@@ -13,6 +14,8 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 
 const id = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
 const GER = id('GER');
+// Germany's traits (ROADMAP R16b): an industrial nation's orders cost less and train sooner.
+const TRAITS = traitMask(NATIONS_1938[GER - 1]!.traits);
 const inspect = (page: Page): Promise<Inspection> => page.evaluate(() => window.__warsim!.sim.inspect(true));
 
 test('a player builds an armoured division from the Actions tab, and it takes the field', async ({ page }) => {
@@ -41,10 +44,10 @@ test('a player builds an armoured division from the Actions tab, and it takes th
   await build.click();
   await expect(page.getByTestId('act-queue-row')).toHaveCount(1);
   await expect(page.getByTestId('act-queue-row')).toContainText('Armoured division');
-  await expect.poll(async () => (await inspect(page)).nations.find((n) => n.id === GER)!.gold).toBeCloseTo(gold - templates[panzer]!.gold, 3);
+  await expect.poll(async () => (await inspect(page)).nations.find((n) => n.id === GER)!.gold).toBeCloseTo(gold - priceWith(TRAITS, templates[panzer]!.gold), 3);
 
   // Ready after its days: a new German formation of the template.
-  await page.evaluate((d) => window.__warsim!.sim.step(24 * (d + 1)), templates[panzer]!.days);
+  await page.evaluate((d) => window.__warsim!.sim.step(24 * (d + 1)), daysWith(TRAITS, templates[panzer]!.days));
   await expect(page.getByTestId('act-queue-row')).toHaveCount(0);
   const raised = (await inspect(page)).formations.filter((f) => f.nation === GER && !had.has(f.id));
   expect(raised).toHaveLength(1);

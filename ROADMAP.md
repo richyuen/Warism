@@ -74,6 +74,14 @@ Rules:
   code does; `exportScenario` drops `stats.nuke` too (`scenarioFile.test.ts`, red without it).
   `revival.cooldownDays` stays: `scenario1938.test.ts` pins the files to `REVIVAL_COOLDOWN`. The
   `majors` of `inspect` stays: that reply is for tests and the critic, not the UI.
+- [ ] R18 **Blocks of two stacks stand in one another** (found 2026-11-04 by `stackBlocks1938.spec.ts`, red
+  since R16b's new history). Seed 1212, the Soviet Union at war with Poland from tick 0, day 20: Soviet
+  blocks of two stacks, attacking two neighbouring Polish divisions, overlap (66/164 0.024, 153/164
+  0.027, 156/200 0.024 slot apart, under the 0.05 gap). `deployOf` (`src/sim/systems/elements.ts`) keeps a
+  block clear of enemy blocks in its way and stacks the lines of one stack, but not clear of a friendly
+  block of another stack. The rule was always so; R16b's history made the scene. AT:
+  `stackBlocks1938.spec.ts` green unchanged (its scene now on day 20), and a unit case of two stacks of
+  one side on neighbouring enemies whose blocks keep the gap.
 - [ ] R17 **Landings the player can order** (the user's decision, 2026-11-04, ADR-823). A left-click on
   land over the sea with divisions selected already lands them, but only when the player's transports
   wait at a port of their land; else it is refused. Nothing shows a division bound for a port, waiting
@@ -110,3 +118,8 @@ Rules:
   march only off the water; `afloat` holds for any fleet), though the header says on arrival. R17a
   relies on it: a called group stays the player's from the call through the landing. Ending it on
   arrival needs the called group kept another way first (R17b's convoy).
+- [ ] R19 **A rule change runs the seeded e2e specs** (found 2026-11-04). R16b changed the sim's rules and
+  passed the gate, which ran the specs whose files changed; ten specs that set up a scene in a seeded
+  1938 world (a battle on a day, a fall of a capital) were red, found only by a full run of the suite.
+  The gate: when a sim input changes (as for the pin of seed 99), the e2e specs that step a seeded
+  world too, or all of them. AT: a changed sim rule makes the gate run them (`gate.test.ts`).

@@ -13,16 +13,20 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // from stern to bow (`MapView.shipHullPx`, the shader's rule of the layer that draws it).
 // Picked again since the rules of PLAN 7.139–7.146 (ADR-743): the critic's battle and two others no
 // longer happen in this game. The same scan on HEAD; a transport group's row stands for the critic's.
+// Picked again since ROADMAP R16b (nation traits act, ADR-822): the rows of hours 979 (ENG/JAP
+// transports), 1100 (ENG/JAP battle fleet) and 1664 (FRA/SOV cruisers) no longer happen; the same
+// scan (70 and 80 days) on HEAD gives a French transport group against Italian destroyers at hour 156,
+// British and Nationalist Spanish cruiser squadrons at 1230 and French and Soviet destroyers at 1465.
 
 const id = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
 
 /** The game's rows: about the hour the row has stood two hours running (`seaPairs`), its two sides, and what fights. */
 const CASES = [
   { hour: 45, a: 'ENG', b: 'GER', what: 'destroyers against a battle fleet, 32 km' },
+  { hour: 156, a: 'FRA', b: 'ITA', what: 'transports against destroyers, 12 km' },
   { hour: 164, a: 'ENG', b: 'ITA', what: 'a carrier group against submarines, 12 km' },
-  { hour: 979, a: 'ENG', b: 'JAP', what: 'transports against destroyers, 12 km' },
-  { hour: 1100, a: 'ENG', b: 'JAP', what: 'a battle fleet against a cruiser squadron, 18 km' },
-  { hour: 1664, a: 'FRA', b: 'SOV', what: 'a cruiser squadron against a cruiser squadron, 20 km' },
+  { hour: 1230, a: 'ENG', b: 'NSP', what: 'a cruiser squadron against a cruiser squadron, 12 km' },
+  { hour: 1465, a: 'FRA', b: 'SOV', what: 'destroyers against destroyers, 12 km' },
 ] as const;
 
 /** After a flight of the camera: until it is over, and a snapshot of the new view. */

@@ -22,12 +22,13 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // divisions (`1cbc0bf3`; 558 no longer in contact on day 21; 540 loses 1,823 on day 22, in contact 18
 // of its hours; `tools/diag/contactPick.ts`); after ADR-711's deploy rule 2,175, in contact all of it.
 // Division 569 since the rules of PLAN 7.139–7.146 (ADR-743; 540 no longer in contact on day 21; 569
-// loses 1,518 on day 22, in contact all of it).
+// loses 1,518 on day 22, in contact all of it). Division 556 since ROADMAP R16b (ADR-822, nation
+// traits in the sim; 569 no longer in contact on day 21; 556 loses 929 on day 22, in contact all of it).
 
 const nation = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
 const GER = nation('GER');
 const POL = nation('POL');
-const POLE = 569;
+const POLE = 556;
 const VIEW = { width: 1600, height: 900 };
 const HOURS = 24;
 const key = (h: { element: number; figure: number }): string => `${h.element}:${h.figure}`;
