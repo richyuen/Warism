@@ -28,11 +28,12 @@ Rules:
   - [x] R6a The references checker (`tools/spec/refs.ts`) and §10, testing and verification (§2's
     three stale names fixed).
     Done (ADR-821): `specRefs.test.ts` 4 of 4; §10 had 6 misses at HEAD (parity, critic:due), 0 now.
-  - [ ] R6b §3.1–3.3: map, cells, provinces, cities and zones.
+  - [ ] R6b §3.1–3.3: map, cells, provinces, cities and zones. The test judges whole sections: add
+    `'3'` (§3.4–3.7 have no miss now) and call §3.1–3.3 current in SPEC's header until R6c.
   - [ ] R6c §3.4–3.7: nations, diplomacy, military, tech and production.
   - [ ] R6d §4: territory, fronts and the strategic layer.
   - [ ] R6e §5: combat.
-  - [ ] R6f §6.1–6.2: armour and the navy.
+  - [ ] R6f §6.1–6.2: armour and the navy. As R6b: add `'6'`; §6.1–6.2 current until R6g.
   - [ ] R6g §6.3–6.4: aircraft and nuclear weapons.
   - [ ] R6h §7: the AI.
   - [ ] R6i §8: semantic zoom.

@@ -3430,8 +3430,8 @@ Every check runs the same `src/sim/` as the page. Tools run TypeScript through `
 ### 10.2 The test API and the page's options
 `window.__warsim` (also `window.__warism`, the same object; `src/app/testApi.ts`) is the surface
 for Playwright and the critic, present only in a game: `sim` (the `SimClient`: init, step, command,
-hash, save, load, speed, pause, subscribe), `view` (the `MapView`: camera, `controller.set`,
-`zoomTo`, frames; null with `?view=0`), `hud`, `autosave`, `player`, `settings` and `sound`.
+hash, save, load, speed, pause, subscribe), `view` (the `MapView`: its `controller`, the
+`CameraController`, with `set` and `zoomTo`; null with `?view=0`), `hud`, `autosave`, `player`, `settings` and `sound`.
 
 URL options: `?scenario=1938|random|toy` (none: the title screen), `?seed=`, `?paused=1`, `?view=0`,
 `?continue=1`, `?load=scenario`, `?size=`, and the new-game options of §9: `?looping=`, `?aggr=`,
@@ -3459,8 +3459,8 @@ every test red twice is on the known reds [ADR-297].
 
 ### 10.4 Long runs
 - **Headless** (`npm run sim`, `tools/headless/`): `--scenario toy|1938|random`, `--nations`,
-  `--size`, `--seed`, `--years`, `--out` (per-year metrics: hash, land by nation, formations, events,
-  tick ms mean, p95 and max). `--save` writes the final state and `--load` continues from it,
+  `--size`, `--seed`, `--years`, `--out` (per-year metrics, `YearMetrics`: hash, cells controlled and
+  owned by nation, formations, cells flipped, events by kind, tick ms mean, p95 and max). `--save` writes the final state and `--load` continues from it,
   bit-identically. `--affinity <mask>` pins the run to those CPUs: a tick time for a budget is
   measured so. `--profile` prints the tick by system.
 - **Diagnostics** (`npm run diag`, `tools/diag/`): wars and great-power state at chosen years, from

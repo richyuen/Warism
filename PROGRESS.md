@@ -700,3 +700,6 @@
   COMPARE_DAYS 30), `E2E_CHUNK` 20 `tools/gate/review.ts:27`, reports kept 30 days `nightly.yml:80,154`.
 - `tests/unit/specRefs.test.ts` 4 of 4 (§1, §2, §10 at 0 misses; red on HEAD's §10 with 6).
 - **Next:** R6b.
+- After the commit, two §10 lines read against the code: `zoomTo` is the `CameraController`'s (`controller`), not the
+  view's; the headless year record (`YearMetrics`, `tools/headless/runner.ts:55`) has cells controlled and owned, not land.
+  Fixed. ROADMAP: R6b and R6f say how a split section enters the test.
