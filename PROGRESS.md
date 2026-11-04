@@ -748,3 +748,22 @@
   `HERO_RETURN_HOURS`, `HERO_HEAL_PER_DAY` `heroes.ts:66,68`.
 - `specRefs.test.ts` 5 of 5 (§3 whole at 0 misses).
 - **Next:** R6d.
+
+## 2026-11-03 — ROADMAP R6d: SPEC §4 as the code is
+- Two read-only read-throughs (supply and movement; territory, capitals, cores, revolts), each claim marked against the
+  code. Rewritten from them, 29 → 11 KB, as 4.1 supply, 4.2 land movement, 4.3 territory, 4.4 capitals, 4.5 cores,
+  4.6 revolts.
+- Wrong or gone in the old text: pressure's radius by type and org (it is a fixed 2, scaled); a garrison per province
+  from spending (a flat 1 of defence; for revolts, a formation within 3 cells); stability (none); the capital moves to the
+  largest city (the safest first); the owner changing only by peace (also revolts, revival, kin, capture, God); a small
+  state "under 40 cells" (8,500 km²); rebels' 50 gold (150); an encircled division dry in 8–14 h (8–20); the supply
+  network's whole-flood rules (since the part search); the march along cell centres (land points and ways).
+- Added: sea-linked sources, the beach layer, air superiority's supply term, breakdown, liberation of cells, corridors,
+  the hold scaled by map size, the field capital at war, overextension, nuclear unrest, God's revolts.
+- Found, added to R16: the scenario's `revival.cooldownDays` is read by nothing.
+- Constants stated, read from: `supply.ts:42–78,163`; `movement.ts:82–95,438–440,603`; `grid.ts:498–502`;
+  `provinceGraph.ts:127,900`; `ORG_FIRE` `combat.ts:282`; `FALLOUT_SLOW` `nuclear.ts:541`; `territory.ts:42–45`;
+  `CORRIDOR_PRESSURE`, `CORRIDOR_RATE` `majorBattles.ts:27–28`; `revolts.ts:66–98`; `NUKE_UNREST` `nuclear.ts:1738`; the
+  system order `sim.ts` (`SYSTEM_NAMES_1938`).
+- `specRefs.test.ts` 6 of 6.
+- **Next:** R6e.

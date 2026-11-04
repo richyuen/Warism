@@ -2,7 +2,7 @@
 
 Status: v1.0 (2026-11-03, after `release-2026-11-03`; ADR-805). This document says how the game works
 now. The *why* of each choice is in `DECISIONS.md` and `docs/history/DECISIONS-<YYYY-MM>.md` (cited as
-`[ADR-n]`). §1, §2, §3 and §10 are current; the other sections are being brought up to date one by one
+`[ADR-n]`). §1–§4 and §10 are current; the other sections are being brought up to date one by one
 (ROADMAP R6), and where one disagrees with the code, the code and the newest ADR win. A current
 section names only files, code and scripts that exist (`tests/unit/specRefs.test.ts`, ADR-821).
 
@@ -899,345 +899,132 @@ nations only the first. God grants a tech with its prerequisites (`grantTech`).
 
 ## 4. Territory, fronts and the strategic layer
 
-**Supply v1 (PLAN 1.12, ADR-25; `src/sim/systems/supply.ts`; refresh 12 h since PLAN 1.25).**
-- *Blocs:* a nation and its puppets (`nations.overlord`) share one supply bloc, the overlord's id.
-- *Network* (every 12 h since PLAN 1.25): sources are cities a bloc member owns and controls.
-  Since the review after 1.25, a refresh after cell-level changes refloods only the blocs of the
-  nations whose cells changed. Load, overlord changes and raw layer writes force a full refresh
-  (since PLAN 3.12Rl an annexation that hands the target's puppets to the annexer too: no cell
-  of theirs changes, and their land kept the mark of the target's bloc).
-  A refresh of some blocs gives the network a full one gives (PLAN 2.11j, ADR-81): the layer is
-  a function of the cities, the control of the cells and the blocs, the marks of what to
-  refresh are not state, and a loaded game, which refreshes in full, goes on as the game that
-  was saved (I2). For that, a changed cell marks its old and new nation and the bloc in whose
-  network it lay; and a refresh is done again in full when a lane that a refreshed bloc held
-  is no longer its own, or when its flood comes to a cell that is its own to take and lies in
-  another network (a cell it controls; a lane a higher bloc holds). A 4-connected flood
-  spreads over cells the bloc controls and over unclaimed crossing lanes. `cells.supply` holds the
-  bloc that reached each cell. The layer is state, so a load between refreshes is exact. A refresh
-  takes well under 60 ms at M.
-  Since PLAN 1.42a the flood fills row spans (a scanline fill: same network, about twice as fast)
-  and remembers each bloc's spans (`World.supplySpans`, derived), so a partial refresh clears a
-  bloc without scanning the grid. A full refresh takes 6 ms at M.
-  Since PLAN 3.10d1b (ADR-196) a partial refresh mends: the cells that changed hands are kept
-  (`World.supplyChanged`, derived), a lost cell's mark is cleared, and a gained cell beside its
-  bloc's network is flooded from. A bloc is cleared and flooded whole only when the bloc's cells
-  about a lost cell are not joined in the ring of eight, when a lane is in that ring, when a
-  city's being a source changed, or when it is marked with no changed cell. The network is the
-  same to the cell. A bloc's spans cover its network and may cover more.
-- *Formations* (hourly): on their own bloc's network, supply rises by 1/8 per hour towards 1;
-  off it, it falls by 1/8 towards 0. At 0 a formation loses (2% + terrain `supplyAttrition`) of its
-  strength per day, applied hourly. An encircled division is dry within 8–14 h. Fed by the
-  beach's layer (§6.2 supply over the beach, PLAN 7.70a, 7.75) it rises by 1/16 towards 0.75.
-- *Reach* (PLAN 3.4Rf, ADR-143): a formation on a cell that is not its side's (an enemy's, a
-  third nation's, nobody's) is fed as on its network when a cell of a network that feeds it
-  lies within `SUPPLY_REACH` = 2 cells (Chebyshev, the distance of the pressure below): the
-  cell under an attacker is the enemy's until it turns. On its own side's ground with no
-  network (a pocket) nothing reaches it. Measured over the first year of seeds 99 and 7: a
-  formation on engines in contact has no supply for 12 % of its hours (47 % and 41 % before
-  the rule), one on foot for 12 % and 10 % (22 % and 27 %).
-- *Fuel* (PLAN 3.2b, ADR-134): a template's fuel is Σ `fuelPerHour` × count of its elements (0 on
-  foot, 38 for the panzer division of 1938). Off the network a formation on the march loses
-  fuel/320 an hour more: that panzer division is dry in 4.1 h. On the network nothing changes.
-  A formation with no manoeuvre element on foot moves at 0.25 + 0.75 × supply of its speed.
-- *Org* (PLAN 3.2c, ADR-135): a formation column, 0 to 1, 1 when made. A formation with no
-  manoeuvre element on foot loses 1/32 an hour while its supply is 0; every formation on a
-  network that feeds it gains 1/32 an hour while it is not in contact (PLAN 3.5a). Its fire
-  is × (0.25 + 0.75 × org). Org is also lost to the losses of a battle, and a formation with
-  little of it retreats: §5.2 step 4.
+The hour's systems run in a fixed order (§2.5): … supply, repatriation, movement, …, combat, …, sea
+control, then territory, capitals, war, alliances, puppets, revolts and collapse (the last two at a
+month's start only).
 
-**Land movement (PLAN 1.11, ADR-24; `src/sim/nav/`, `src/sim/systems/movement.ts`).**
-- *Grid:* the true km per cell row comes from the Miller geometry. Move cost per [mobility][terrain]
-  comes from `terrain.json` (water = ∞; crossings walkable).
-- *Components:* 4-connected land components make unreachable targets an O(1) reject.
-- *Province graph:* admin-1 provinces plus one virtual node per crossing group and one per
-  connected run of walkable land that no province has (2,310 on the 1938 map, of 1 to 9 cells:
-  PLAN 3.7j, ADR-170), so every walkable cell has a node; the ids of both kinds begin above the
-  highest province of any cell. Built in 80 ms at M (measured before
-  ADR-170, not again). It is derived, never saved.
-- *Routes:* `findRoute` uses straight cell A* below 500 km (not from open ground under a `Passage`: there every route is as one above 500 km, PLAN 3.10c1c, ADR-189). Above that, it runs coarse A* on the
-  province graph, then cell A* inside the corridor of route provinces and their neighbours, with a
-  flat fallback (none for a march: see *No march across a third nation* below). Cell A* is 8-connected with no corner cutting. Its heuristic is the octile walk
-  (min(dx, dy) diagonal steps, the rest straight) × min cost, with the km scales of the smaller of
-  the two rows' cell sizes (ADR-56; straight km before, which is never larger). That is not a
-  strict lower bound (a route may swing poleward of both ends, where cells are narrower) and the
-  search closes a cell when it first pops it, so a route can be longer than the cheapest one.
-  Between two ends over 120 cells apart (the larger of dx and dy) the heuristic is taken × 1.5,
-  and over 300 cells × 2 (`boundWeight`; PLAN 3.10c2d1b, ADR-195): the search runs at the goal
-  and closes a fifth to a third of the cells, and the way costs at most that many times the
-  cheapest in its corridor (on the map × 1.03 and × 1.09 to 1.13 in the mean, × 1.24 at the
-  most). A far march of 530 to 595 cells was 12 to 17 ms a search, and ten of them a day's plan.
-  Measured 2026-10-03 against Dijkstra on 30 random grids of 16–64 rows, where rows differ far
-  more than on the map: 21,042 of 84,575 routes dearer, by up to 15.1% (straight km: 22,037, up
-  to 15.2%). On the 1938 map the octile bound made 221 of year 1's 5,868 routes cheaper and none
-  dearer. Left as it is, because a strict bound would widen every search. Berlin → Moscow takes 9 ms, Lisbon → Khabarovsk (840 cells)
-  83 ms (before PLAN 1.42a, which made the same search about 40% faster: a typed-array heap
-  reused across searches, the step and bound arithmetic inlined).
-- *Orders:* `moveFormation {id, x, y, nation?}`. With `nation` the order is refused (`NoSuch`) when
-  the formation is gone or is not that nation's (ADR-116): a player's click names the nation it plays, and
-  a freed id that another nation's formation has taken is not ordered by it.
-  - A target unreachable from the formation snaps to the nearest reachable cell within 3;
-    otherwise the order is rejected (`MoveRejected`).
-  - Every `MoveRejected` says why in its x (`RejectReason`, PLAN 4.9a, ADR-298; y stays NaN):
-    aboard, no formation of the order's kind or a target off the map, no way by land, a march
-    barred on its way; over the sea: at no port of its nation, no transports there with room,
-    no landing by the target, no way over the water; a fleet's: no water and no port there.
-    An order over the sea that is refused and whose target snaps to this land is a march to
-    that coast (Calais from Portsmouth with no transports: Dover).
-  - An order to a formation in the middle of a step leaves it where it stands (PLAN 3.5a1,
-    ADR-151): the route begins at the nearer of the step's two cells, and the path with the
-    step itself, on along it or back.
-  - Order state is moving, originCell, targetCell, pathStep and stepFrac, and the path
-    (`world.paths`, saved with the core since PLAN 3.4Rl: it is found on the holders of the
-    hour of the order). A save from before has no paths; each is found again at the next
-    step, from the cell the formation stands in, and its steps are counted anew.
-  - A path outlives a change of the ground (PLAN 3.7k, ADR-171): a paint of terrain, a map
-    import and a change of `loopingMap` drop the navigation graph and no path. A step that
-    the ground of now does not allow (water, a corner cut past water, the seam of a map
-    with edges) is not taken: the formation is ordered to its target again from the cell
-    behind it, and halts there if no way is left.
-  - *No march across a third nation* (PLAN 3.4Rl, ADR-149). A formation is routed over the
-    ground of its supply bloc, of a nation it is at war with, of a nation on its side of a
-    war, and over nobody's (`foreignTo`); a `Passage` carries that to the search. A cell of
-    any other holder is entered only from a cell of the same holder (who stands there walks
-    on it and out). With no way round, `MoveRejected`. Before any search the two ends must
-    lie in one group of neighbouring province nodes that have open ground
-    (`World.heldByNode`, cells by node and holder, kept by `setController`); a route, of
-    any length since PLAN 3.10c1c (ADR-189; before it one over 500 km), is planned over such
-    nodes and, when it is not found in their corridor, refused. In that plan a node that has
-    closed ground too costs `SHUT_PRICE` (8) times its own cost (PLAN 3.10c2b3b, ADR-194):
-    it need not be open from side to side, and the way by the cells went round it through
-    provinces that the corridor did not hold.
-    A march whose next cell has become a third nation's ends before it (`MoveRejected`).
-    With part of the step walked (PLAN 3.7l, ADR-172) it turns round where it stands and
-    walks back to the cell behind it: its path is the step read backwards, `MoveRejected`
-    comes in the hour the ground turned and `FormationArrived` when it is back. The walk
-    back is marked (`formations.home` = 2, `HOME_BACK`; a march home is 1, `HOME_MARCH`):
-    it is not barred in its turn, the operational AI leaves it alone as it does a march
-    home, and any order ends it. Before an enemy's cell it loses the mark and waits as any
-    march, the AI's to order (PLAN 3.12Rk, ADR-222). With
-    none of the step walked the march ends on its cell.
-    An order in the middle of a step does not begin at an end that is closed to the
-    formation where the other end is open (PLAN 3.12Ro, ADR-226): the cell that barred a
-    walk back, or one turned a third nation's under a formation held in contact. A path
-    that began there was barred in its first hour.
-- *Hourly:* a formation advances along cell centres. Entering a cell costs step km × move cost ÷
-  (speed × 0.3 march duty × the template's share of its speed on that ground: the least
-  `terrainMods.speed` of its manoeuvre elements, PLAN 3.3b, ADR-138; the route is found by the
-  move cost alone). It faces its travel direction, and emits `FormationArrived` at the end.
-- *Mobility:* a template moves like its slowest manoeuvre element (inf, cav, mot, mech, armour);
-  support guns are towed. Infantry marches ≈ 29 km/day on plains.
-- *Slotted poses:* `slotPose` (`src/sim/core/pose.ts`) places elements in a ≈ 2:1 block, front row
-  first, rotated to the facing; it is shared by the sim and the snapshot builder.
-- *Deployment (PLAN 2.14c1, ADR-89; `deployOf`, `elementPlace` in `systems/elements.ts`):* a
-  formation in contact holds its place (formations in contact stand up to 1.5 cells apart), but
-  its block of elements is deployed: on the line to its nearest enemy in contact, facing it,
-  its front row half a kilometre short of the middle between the two; one whose nearest enemy
-  faces a nearer formation comes up to that enemy's block, and no block goes further from its
-  formation than contact reaches (`DEPLOY_REACH`, 1.5 cells; ADR-98); a line of a stack with no
-  room before its formation's place stands abreast of the lines that have, a block's width out
-  to the right and left by turns (ADR-133), its lines and files counted with those that come from
-  within 60° of its own side (PLAN 7.91, ADR-650); a line stands behind the lines before it by their
-  depths, and a file beside the others by the widest block of the stack, so that a tank
-  brigade (7 by 4 elements) and a tank corps (11 by 5) of one stack do not stand in one
-  another (PLAN 3.11c1, ADR-200); a block on the way to an enemy's block stops the gap short
-  of each block in its way (that enemy's, the block of the one it faces, those of the
-  formations nearer that enemy that go to it), whatever side of that block it comes to, and
-  takes the next file out when its own has no room before its formation's place (PLAN
-  3.11c2, ADR-201); a file holds two lines at most (`DEPLOY_LINES`), the one that enemy
-  faces among them, so that the second line still has that enemy's block in the battle's
-  view on its own (PLAN 3.11c3a, ADR-202); the blocks of an hour have one order (two that
-  are each other's nearest first, then those on the way to a block by the steps to such a
-  pair and the lines before them, then by id), and a block on its way stops short of every
-  block of a nation it is at war with that is before it in that order, whatever that block
-  goes to, so that where a block stands does not hang on which was asked for first (PLAN
-  3.11c3b, ADR-203). Within a deployed block an element stands off its slot by its id, 0.3
-  of the slot spacing at most (`DEPLOY_SCATTER`: 180 m of 600) forward or back and to either
-  side, and is turned off its block's facing by 0.3 rad at most (`DEPLOY_TURN`), the same
-  every hour: a block in contact is not a lattice of elements at one facing; a block at rest
-  stands on its slots and faces one way (PLAN 3.11c4, ADR-204). Derived from the formations' places
-  and `engaged` flags, not state: the snapshot, the fire events and the wrecks read it, and one
-  rule, the air AI's patrols (PLAN 7.24d), which works it out afresh from the state
-  (`withFreshDeployments`: the hour before's held blocks may be stale, and a loaded game has none). So a view at 20 m/px holds both sides of a fight (96%, 110 of 114, of the formations in
-  contact after 60 days of a war, with their nearest enemy), and the T1 marker stays at the
-  formation's place.
-  *Two places in the snapshot (PLAN 3.11a, ADR-198):* a formation's `x`, `y` is its place in
-  the rules, where its T1 marker stands and what the T0 counters count by. `block` is where
-  its block stands, now and a tick before (`blockPose` in `worker/server.ts`, the one helper
-  of the formation section, the element section and the panel's `FormationDetail.x`, `y`):
-  the middle of its elements. The view has the formation there at T2 and T3 (the stand-in
-  sprite and its tag, the click, the selection ring) and for `formationPos`, so a camera
-  that goes to a formation finds its elements. The marker does not go there: the blocks of
-  two sides stand a kilometre apart, and their markers would cover each other.
+### 4.1 Supply [ADR-25]
+`src/sim/systems/supply.ts`, `src/sim/systems/seaSupply.ts`.
+- **Blocs and networks.** A nation's bloc is its realm (`blocOf`: its overlord, or itself). Every
+  `SUPPLY_REFRESH_HOURS` (12) while anything changed, each bloc's network is flooded 4-way from its
+  sources over the cells the bloc controls and the lanes no bloc holds, blocs in ascending order (the
+  lower takes a lane), wrapping on a looping map; `cells.supply` (saved) holds the bloc that reaches
+  each cell. A source is a city a member owns and controls whose land is sea-linked to the bloc
+  (`markSeaLinks`: across the sea a fleet of the bloc keeps open). Only the blocs whose nations
+  changed are refreshed; a load, a change of overlord or a raw write refreshes all.
+- **Mending.** A changed cell is mended from its ring of eight. A ring that is no longer joined is
+  searched part by part (up to `SEARCH_CELLS`, 4,096): a part with no source dries; the bloc is
+  flooded whole when a part touches a lane, is too large, or a source was lost and no other reaches;
+  also when its spans have grown past twice those of its last whole flood, or its sea links changed.
+  Spans (`World.supplySpans`) and the changed marks are derived.
+- **A formation's supply** (0–1, hourly; fleets, wings and troops aboard are not fed this way): fed
+  when its cell is on its bloc's or a partner's network, or, off its own side's ground, a network lies
+  within `SUPPLY_REACH` (2 cells, Chebyshev, scaled); else from the beach layer (`supplyBeach`, saved:
+  landings supplied over the shore, §6.2). Fed: + `SUPPLY_RATE` (1/8) an hour, × (1 + the air
+  superiority term, §6.3); beach-fed: towards `BEACH_SUPPLY` (0.75) at `BEACH_RATE` (1/16). Unfed: −1/8,
+  and − `MARCH_BURN` (1/320) × its template's fuel while marching and not engaged. An encircled
+  formation is dry within 8–20 hours.
+- **At supply 0:** attrition of `BASE_ATTRITION_PER_DAY` (0.02) + the terrain's, applied hourly; a
+  formation that is not on foot moves at `DRY_SPEED` (0.25) + 0.75 × supply, loses `ORG_RATE` (1/32)
+  of org an hour, and at org 0 breaks down: `BREAKDOWN_PER_DAY` (0.1) of its vehicles and towed guns.
+- **Org** starts at 1 and regains 1/32 an hour when fed and out of contact; fire is × (`ORG_FIRE` 0.25
+  + 0.75 × org) (§5).
 
-*Implemented v1 (PLAN 1.14, ADR-27; `src/sim/systems/territory.ts`):*
-- *Pressure:* each formation of a nation at war, but one on the retreat (§5.2 step 4), projects strength/1000 × (0.5 + 0.5 supply) ×
-  (1 − d/3) into cells within 2 cells.
-- *Frontier:* the frontier set is derived. It is rebuilt by one scan only when invalidated (load,
-  a war change, or an outside controller change); flips maintain it locally.
-  `World.frontierMask` is the same set as a byte per cell, for the pressure loop (PLAN 1.42a).
-- *Flips:* a frontier cell flips to the strongest adjacent enemy holder when that enemy's pressure
-  ÷ terrain defence beats the holder bloc's pressure + garrison 1 for 16 consecutive hours
-  (`cells.flip`, saved). Decisions use start-of-tick control and are applied together.
-- *Advance:* formations wait at enemy-held cells until those flip, so a front advances at most
-  1.5 cells per row per day.
-- *Partners* (PLAN 1.42b, ADR-50): nations on the same side of a war (`Wars.sameSide`) fight on
-  each other's fronts. An attacker's pressure on a cell includes that of its partners at war
-  with the holder, and the holder's defence that of its partners; the cell flips to the member
-  that holds the neighbouring cell. Members beside it score their side's same pressure; the tie
-  goes to the one whose own formations press the cell most, then the lowest id (PLAN 7.43,
-  ADR-582: a puppet with no army took its overlord's conquests by its lower id). A cell that only
-  a member with no formations borders is still its (the candidates are the neighbouring holders).
-  A formation on a partner's supply network is in supply, and
-  repatriation leaves it there while the shared war lasts. The operational AI counts a partner's
-  front cells against a common enemy as its own front (within its deploy range).
-- *Liberation* (PLAN 3.4Rj, ADR-147): a cell that flips to a nation not at war with its owner
-  is controlled by that owner, if it lives: a partner's land, a puppet's or a stranger's goes
-  back to it at the flip. So no land is held without a war, and a nation that frees a
-  stranger's land does not advance through it (the next cell wants a neighbour it controls).
-  Nobody's land and an enemy's are the taker's.
-- *Not yet modelled:* org and terrain-dependent radius, garrison from spending, unrest.
+### 4.2 Land movement [ADR-24]
+`src/sim/nav/`, `src/sim/systems/movement.ts`.
+- **Cost.** A step costs its true km (`stepKm`, §3.1) × the entered cell's move cost for the
+  formation's mobility (`data/terrain.json`: foot, motor, tracked; water impassable, a crossing
+  walkable). Land components (`provinceGraph`) reject an unreachable target at once.
+- **Route** (`findRoute`): the province graph (provinces, with crossings and orphan runs of cells as
+  nodes of their own; derived) is searched first for a march over `COARSE_ABOVE_KM` (500 km), and the
+  cell search (A*, 8-way, no corner cut, octile × the least cost, weighted ×1.5 past 120 cells and ×2
+  past 300) runs in a corridor of the route's nodes and their neighbours; shorter marches search the
+  cells directly. A march may cross only ground its `Passage` opens (its own side's and enemies'; a
+  neutral's is shut, `SHUT_PRICE` 8 on the graph; `foreignTo`), entering a cell only from one of the
+  same holder; routes are cached by passage. The AI's `direct` orders are refused as `LongWay` past
+  `LONG_WAY` (4) × the straight line (at least `LONG_WAY_FLOOR_CELLS`, 16).
+- **Orders** (`moveFormation`): refused for another nation's formation (`NoSuch`) or one on retreat
+  (`OnRetreat`); a target off land snaps to land within `TARGET_SNAP_CELLS` (3, scaled) of the same
+  component, else `MoveRejected` (its reason in `RejectReason`: among them `LongWay` and `Contact`). A
+  target at sea makes a march to the coast, or with `byPort` to a transport port (§6.2). An order given
+  mid-step finishes the step first. The path is saved (`world.paths`, moving formations only) and
+  found again when missing; a step no longer allowed is ordered again from the cell behind.
+- **The hourly step:** an engaged formation holds (a player's order `through` excepted; a player's
+  march that meets an enemy is cancelled with `Contact`). A formation moves `MARCH_DUTY` (0.3) × its
+  speed (its slowest manoeuvre element's; guns are towed) × its supply pace × its fuel × the speed
+  buffs (never under × 0.05) ÷ (1 − `FALLOUT_SLOW` (0.5) × fallout) km of cost an hour, and
+  `WITHDRAW_SPEED` (0.5) of that when ordered out of contact; an infantry division walks 28.8 km a day
+  on plains. It goes along the cells' land points and the steps' ways over land (§3.1), waits before an
+  enemy's cell (unless retreating), is barred from a third nation's, and on arrival is
+  `FormationArrived`. `marchHoursLeft` gives the time left.
+- **The march home** (repatriation, `HOME_MARCH` and `HOME_BACK`) is §3.5.
 
-- **Pressure field.** Each land formation projects control pressure into cells within
-  `r = f(type, strength, org)` km. Pressure is weighted by strength × org × terrain-defence
-  inverse × supply. Only cells in the **frontier set** are updated: cells whose
-  controller differs from a 4-neighbour at war with it (on the shore of a crossing, a strait's
-  walkable lane of no province and no holder, the other shores of it count as 4-neighbours, so a
-  front steps over the strait: PLAN 7.49b1, ADR-588), plus cells inside the radius of
-  formations not at peace. Full-grid scans are forbidden in the hot loop.
-- A cell flips to the attacker when the attacker's pressure exceeds the defender's
-  pressure + garrison for `holdTicks`. Flips spread like AoC fronts, pixel by pixel, but
-  can never jump past a connected defended line (connectivity check on flip).
-- **Garrison**: each province has an abstract garrison from the owner's spending,
-  so nations without formations aren't free real estate. It feeds revolts too.
-- **Occupation vs owner**: `controller` changes on flip and `owner` changes only through peace
-  terms, annexation, integration or God Mode. Occupied cells give the occupier
-  reduced income and raise unrest.
-- *Implemented v1 (PLAN 1.15; `src/sim/systems/capitals.ts`):*
-  - Capture: an enemy at war holding a capital city → `CapitalCaptured`. The capital relocates to
-    an owned and controlled city on the landmass where the nation owns and controls the most cells
-    (of the landmasses with such a city; lowest landmass id on ties), its largest there (lowest id
-    on ties; PLAN 7.68, ADR-620: before, the largest anywhere, so a nation holding thousands of
-    cells on one land moved its capital to a one-cell islet) (`CapitalMoved`); without one it
-    becomes a field capital on the nearest held cell. A nation with no land left is eliminated (formations, production
-    and wars removed).
-  - Given away (PLAN 3.4Rh, ADR-145): a capital city on a cell its nation no longer owns (the
-    editor's paint, the God brush, an import, land ceded) moves the same way, hourly, with
-    `CapitalMoved` alone: no `CapitalCaptured`, no war score, and no annexation under either
-    setting or the death rule. A nation painted away whole has no cell to move to and is
-    eliminated. Occupation with no war (the controller differs, the owner does not) moves
-    nothing.
-  - The dead hold no land (PLAN 2.16Rf, ADR-112; `leaveLand`): when a nation is eliminated, the
-    cells it occupied go back to their owners, and the cells of its own that a living nation
-    occupies become that nation's (`LandCeded`, one event for each receiver). Its cores stay
-    the provinces', so it can revive there. An annexed nation's (`annexInto`): what it held of
-    a third nation's is the annexer's where the annexer is at war with that nation, else its
-    owner's again (PLAN 5.8w2, ADR-357).
-  - `winnerTakesAll` (a saved setting; command `setSetting`) annexes everything the loser
-    controls, plus the loser's land the capturer already occupies.
-  - `paintControl {nation, x, y, r}` sets control on land cells; with `x2, y2`, on the
-    cells within r of the segment to that point. It is the command of occupation (tests, a
-    replay). The God Mode territory brush sent it until PLAN 2.17b and sends the editor's
-    nation paint since (ADR-118).
-  - The war-score jump comes with 1.16.
-- **Capital capture**: the war score jumps, the capital relocates to the largest owned city on the land the nation holds most of, and with
-  the `winnerTakesAll` setting the capturer annexes all of the loser's controlled territory.
-- *Cores, collapse and revival implemented v1 (PLAN 1.20, ADR-33; `src/sim/systems/revival.ts`):*
-  - *Cores:* each province has a core (its 1938 owner) plus claims resolved from the scenario's
-    `extraCores` (admin-0 or admin-1 codes), saved.
-  - *Revival:* a dead nation keeps `revivalsLeft` (2 at the start) and `revivalAt`
-    (death + 2 years; 0 for nations dead at the start). It returns through a revolt on a
-    province it has a core on (instead of new rebels), through its holder's collapse, or by God
-    `reviveNation`. It takes each province from the owner of its centre: what a third nation
-    owns of that province stays with it (ADR-123: as in every transfer by province). A holder left without the centre of any province
-    also gives up the cells it owns and controls outside any province, and is eliminated at
-    once if it then controls no cell (ADR-122).
-  - *Collapse:* 6 consecutive bankrupt months. Puppets go free, dead claimants revive on
-    their provinces, and restless (≥ 50) provinces revolt in connected groups.
-  - *God Kill* (`collapseNation`, PLAN 2.15a, ADR-99): the nation dies and nobody declares
-    war over it. Puppets go free and dead claimants revive; land with a living core nation or
-    claimant goes to it; the rest founds at most 5 nations (one for every 200 cells), shared
-    among its connected pieces by their cities; a piece that founds nothing goes to its
-    neighbour, an island to the heir. The heir is the nation founded on the province of the
-    capital's cell (its city's cell, read as the Kill begins: ADR-114), else the largest
-    founded, else whoever received the most. A nation that owns the centre of no province (Danzig, a
-    nation of the toy world) has no heir: its land goes to the living nation with the most
-    cells beside it, else to the nearest (ADR-113). No dead nation owns or controls a cell.
-    A cell outside the provinces shared out that a living nation occupies becomes that
-    nation's, not the heir's (ADR-119). One in a province whose centre a living nation owns
-    goes to that nation (ADR-120); the heir takes those outside any province. The Kill of the only living nation is carried out if
-    it owns a province's centre (its land founds what follows) and refused if it owns none.
-    The dead nation keeps a claim on each province it was the core nation of and a founded
-    nation took (the founded nation is the core there): it returns on them as any dead
-    claimant does, by a revolt or by God `reviveNation` once its cooldown is over (ADR-121).
-  - *Death rule:* losing the capital while holding no core land is death; the capturer annexes
-    the rest.
-- **Cores**: provinces list core nations. Revival spawns a dead nation from its cores
-  (finite `revival.remaining`, `cooldownUntilTick`), seeded with garrison and
-  militia formations.
-- *Revolts implemented v1 (PLAN 1.19, ADR-32; `src/sim/systems/revolts.ts`, `src/sim/provinces.ts`):*
-  - *State:* per-province unrest and core (rightful owner = the 1938 owner of the province's
-    centre cell), saved.
-  - *Monthly unrest:* += non-core 4, occupied 6, war 2, bankrupt 3; −2 decay; −5 × suppression.
-  - *Revolt chance:* a province its holder also controls revolts with p = 0.5 × (unrest − 50)/50 ×
-    (1 − 0.7 × suppression), drawn by hash.
-  - *Suppression:* costs 15% × level of gross income.
-  - *Revolt area:* one province, or (`revoltMode` 'region') adjacent provinces of the same holder
-    and core with unrest ≥ 40, up to 8 provinces and 1,000,000 km² of the holder's land
-    (`REGION_KM2`, PLAN 3.9, ADR-186): a neighbour that would take the area past that land
-    stays. The province that revolts goes whole, whatever its size.
-  - *Rebels:* a new nation takes the land and becomes its core. Its capital is the area's
-    largest city; without a city, its own cell nearest the middle of the area (PLAN 2.15e1,
-    ADR-103). If the city was the holder's capital, the holder relocates. Its `origin`, which
-    names it (§3.4), is the province of its capital's cell (ADR-100, ADR-106). It gets 1–4
-    militia divisions, raised where production raises a formation (`spawnPoint`: ADR-104), and
-    50 gold. The holder always declares war on them (PLAN 1.40, ADR-44; it was a 50% chance),
-    with its puppets and without its allies (ADR-184).
-    Event `RevoltSpawned`.
-  - *Defection and spreading (ADR-47):* a revolt on land whose core nation is alive returns
-    the area to that nation, whatever their bond: its puppet, overlord or ally too (PLAN 7.3d1,
-    ADR-431). Otherwise, next to a rebel state it
-    joins that state, if the state is at war with the holder and of the area's people: the
-    state's `people`, the core of the land it rose on (a revived nation's is itself), is the
-    area's core (PLAN 7.3c, ADR-430). Otherwise a dead claimant returns (§ revival). Otherwise
-    the area goes to the living nation next to it (lowest id) of the people of its dead core
-    nation (that nation's `people`, or the nation itself: a 1938 nation is its own people),
-    and becomes its core, unless that people is the holder's (PLAN 7.3d1, ADR-431). Only
-    otherwise does it found a new nation.
-  - *Statelets of one people come together (PLAN 7.106, ADR-681):* at each month's start,
-    before the revolts, a founded nation (no overlord) whose people is a living nation (no
-    overlord) other than itself, or whose people is a dead founded nation whose own people is
-    living, joins that nation (`kinUnion`, an annexation: `NationAnnexed`) when its land borders
-    that nation's and the two have no war and no truce. Not a nation founded on its people's own
-    land against it (its `people` was its holder) nor one God Mode set down (`world.unionBarred`,
-    saved while not empty). On 911–920 × 30 years founded nations alive at year 30 42.6 → 28.2.
-  - *Land handed over (PLAN 2.15d, ADR-102):* a defection, and each handover of a God Kill, is
-    the event `LandCeded` (a = who received the land, b = who held it), as is the land of a
-    dead nation that goes to its occupier (ADR-112), not a revolt. An area that joins a rebel
-    state stays a `RevoltSpawned`. In the history (PLAN 3.12b2, ADR-210) it is "Land held by
-    {b} rose and went back to {a}", or "Land left by {b} went to {a}" when b died in that
-    hour, and the events of one hour with the same a and b are one row: the worker tells
-    both from the log (`src/worker/historyRows.ts`).
-  - *Overextension (ADR-47):* a holder above 4% of the world's owned land gains, in provinces
-    more than 80 cells from its capital, 1.25 × min(2, share/4% − 1) unrest a month, plus 2 on
-    core land while one of its wars has worn its side down to ≥ 60 by losses: exhaustion without
-    its 0.1 a day, 80·lost + 60·share occupied (ADR-433; a long war that costs the side nothing
-    does not count). The share is of km², not
-    of cells (ADR-57): in 1938 the Soviet Union (15.9%), the United States (7.0%), Canada
-    (6.8%), Brazil (6.4%) and Australia (6.1%) are above 4%. The strain outruns the monthly
-    decay of 2 only above 10.4% of the land.
-  - *Tuning (PLAN 1.40, ADR-44):*
-    - The 1938 scenario revolts by region (`revoltMode`).
-    - A province held for 10 years becomes its holder's core (the old owner keeps a claim).
-    - A garrison within 3 cells gives −3 unrest a month and −70% revolt chance.
-    - A decisive peace annexes a losing leader under 40 cells.
-    - Fight-to-death passes only from a side's leader.
-- **Revolts**: per province or per region (setting). Unrest comes from non-core
-  occupation, low stability, war exhaustion, bankruptcy and nukes. It is reduced by
-  suppression spending and garrison. A revolt spawns a rebel nation (a revived core nation
-  if one exists, or a new generated nation) with formations.
-- **Collapse**: when broke for N months, or the capital is lost with stability < threshold, a nation can
-  fragment into its core nations, revolting provinces and puppets.
+### 4.3 Territory [ADR-588]
+`src/sim/systems/territory.ts`, hourly.
+- **Frontier:** the cells with a 4-neighbour held by a nation at war with their holder, and the shores
+  of a strait across a war; kept from the border index, updated round each flip, not saved.
+- **Pressure:** every land formation of a nation at war (not on retreat) puts strength ÷ 1000 × (0.5 +
+  0.5 × supply) × (1 − d ÷ (R + 1)) on the frontier cells within `PRESSURE_RADIUS` R (2, scaled;
+  Chebyshev d), kept per nation.
+- **A frontier cell held by D:** its defence is `GARRISON` (1) + the pressure of D's bloc and of D's side.
+  Each nation A at war with D that controls a 4-neighbour scores the pressure of A and those beside it
+  (× `CORRIDOR_PRESSURE` (2) in its breakthrough corridor, §5.4) ÷ the cell's terrain defence; the best
+  (ties: its own share, then the lower id) contests. While it beats the defence the cell's `flip`
+  counter (saved) rises 1 an hour (`CORRIDOR_RATE`, 4, in a corridor), else it resets; at
+  `HOLD_TICKS` (16 hours at M, scaled) the cell's controller becomes A. Decisions use the hour's start,
+  so a front moves at most a cell a hold, and a line held cannot be jumped. A cell taken from a living
+  owner that its taker is not at war with goes back to its owner. A flip is a battle where the cell
+  had defending pressure, else a walk-in.
+- **Occupation and ownership.** A flip changes the controller only; an occupied cell yields its
+  occupier `OCCUPIED_SHARE` (0.5) of its value (§3.4). The owner changes by peace (and its pocket
+  settlement), annexation, integration, revolt and defection, revival, kin union, a capital's capture
+  in a winner-takes-all war, a dead nation's land handed on (`leaveLand`), and God (`paintControl`,
+  land cells, radius at most 64).
+
+### 4.4 Capitals
+`src/sim/systems/capitals.ts`.
+- An enemy at war that controls a capital's city takes it (`CapitalCaptured`; the war score's capital
+  bonus, §3.5). In a `winnerTakesAll` war the capturer annexes every cell the loser controls.
+  Otherwise the nation moves its capital to its safest city (the enemy's distance counted up to
+  `CAPITAL_SAFE_STEPS`, 20, scaled), then the largest, then the lowest id, on its main landmass; with no
+  city, to a field capital (at war, the controlled cell farthest from the enemy on its largest
+  landmass; at peace the nearest), moved again on any change of control. A capital given away by peace
+  moves the same way [ADR-145].
+- **Death:** a nation that holds no core province's centre (`holdsCore`) dies (`eliminateNation`,
+  `NationEliminated`): its formations, production, research, wars, alliance place and puppetry end; its
+  puppets go free; its land goes to its holders (`leaveLand`); its revival waits (§3.4). Annexation
+  (`annexInto`) passes cells a third nation holds to that nation and the cores to the annexer.
+
+### 4.5 Cores, revival and collapse
+- **Cores** (`src/sim/provinces.ts`, saved): each province's `core` is the owner of its centre at the
+  start, plus `extraCores` as `claims`. A holder that keeps a province's centre owned and controlled for
+  `CORE_YEARS` (10; `heldBy`, `heldSince`) makes it its core, and the old core keeps a claim. Cores also
+  pass with rebels, a rising neighbour, kin, a revival and annexation.
+- **Revival and collapse** are §3.4. The scenario's `revival.cooldownDays` is read by nothing: the
+  cooldown is `REVIVAL_COOLDOWN` (2 years).
+
+### 4.6 Revolts
+`src/sim/systems/revolts.ts`, at a month's start; none on a map with no provinces.
+- **Unrest** (0–100, a province with a living holder): + `NON_CORE` (4) on land not the holder's core,
+  and there + `AT_WAR` (2) at war and + `BANKRUPT` (3) while bankrupt; + `OCCUPIED` (6) when its centre
+  is occupied; + overextension on a province whose centre is over `OVEREXT_CELLS` (80, scaled) from the
+  capital, core or not, for a nation holding more than `OVEREXT_SHARE` (0.04) of the owned land:
+  `OVEREXT_UNREST` (1.25) × min(`OVEREXT_MAX` (2), share ÷ 0.04 − 1), and `AT_WAR` on core land too while
+  a war has worn its side to `OVEREXT_EXHAUSTION` (60); +
+  10 × the unrest buff; + `NUKE_UNREST` (40) under a burst (§6.4); − `DECAY` (2); − `SUPPRESS` (5) with
+  suppression; − `GARRISON_UNREST` (3) with a land formation of the holder within `GARRISON_CELLS` (3) of
+  its centre.
+- **Revolt:** from `REVOLT_FROM` (50), with a chance rising to `MAX_P` (0.5), × `SUPPRESS_P` (0.7) with
+  suppression (costing `SUPPRESSION_COST` (0.15) × its level of gross income) and × `GARRISON_P` (0.7)
+  garrisoned; an occupied province does not revolt. In region mode (the 1938 scenario's) the restless
+  provinces round it at ≥ `REGION_JOIN` (40) join, at most `REGION_MAX` (8) and `REGION_KM2` (1 M km²).
+  Unrest after a revolt is `AFTER_REVOLT` (10).
+- **Who rises**, in order: defection to a neighbour of the area's people at war with the holder (no
+  puppet: `risingNeighbour`), a dead claimant returning, kin (`kinUnion`), else a new nation (`spawnRebels`:
+  "Free <province>", the holder's techs but the nuclear, militia `round(cells ÷ MILITIA_PER_CELLS (40))`
+  up to `MILITIA_MAX` (4), gold at least `START_GOLD` (150), `REBEL_AGGRESSION` (40)), at war with the
+  holder and its puppets but not its allies. `LandCeded` and the history rows tell it. God has
+  `forceRevolt` and `spawnNation` (no war, `NationSpawned`).
 
 ---
 

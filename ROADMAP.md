@@ -33,7 +33,8 @@ Rules:
     Done: §3.1–3.3 rewritten from three read-throughs of the code (22 → 21 KB: the history and measurements out, the cell layer, air zones, basins and port state in); `specRefs.test.ts` 5 of 5.
   - [x] R6c §3.4–3.7: nations, diplomacy, military, tech and production.
     Done: rewritten from four read-throughs of the code (38 → 26 KB); `specRefs.test.ts` 5 of 5.
-  - [ ] R6d §4: territory, fronts and the strategic layer.
+  - [x] R6d §4: territory, fronts and the strategic layer.
+    Done: rewritten from two read-throughs of the code (29 → 11 KB), in six subsections; `specRefs.test.ts` 6 of 6.
   - [ ] R6e §5: combat.
   - [ ] R6f §6.1–6.2: armour and the navy. As R6b: add `'6'`; §6.1–6.2 current until R6g.
   - [ ] R6g §6.3–6.4: aircraft and nuclear weapons.
@@ -45,4 +46,5 @@ Rules:
   and a scenario trait's `aggressionBias` acts only when traits are random. Either make them act
   (a rule change, with the checkers and the sweep) or drop them from the data and the panel; the
   user's decision. Also: `src/sim/systems/war.ts`'s header says a side fights to the death by any
-  member's flag, the code by its leader's.
+  member's flag, the code by its leader's. And the scenario's `revival.cooldownDays` is read by
+  nothing (the cooldown is `REVIVAL_COOLDOWN`); found by R6d.
