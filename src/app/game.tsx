@@ -69,8 +69,10 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       hud.hoverBySea.value = -1;
       if (!h || key === '') return;
       const cell = h.cell;
-      void sim.overSea(id!, (cell % geometry.w) + 0.5, Math.floor(cell / geometry.w) + 0.5).then((yes) => {
-        if (asked === key) hud.hoverBySea.value = yes ? cell : -1;
+      void sim.overSea(id!, (cell % geometry.w) + 0.5, Math.floor(cell / geometry.w) + 0.5).then((how) => {
+        if (asked !== key) return;
+        hud.hoverSeaNeutral.value = how === 2;
+        hud.hoverBySea.value = how !== 0 ? cell : -1;
       });
     };
     hud.onShowBattle = (x, y, span, fight) => view.showBattle(x, y, span, fight);
@@ -105,6 +107,16 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     });
     const p = new PlayerControl(hud, view);
     player = p;
+    // A refusal of a selected formation's order (ROADMAP R21c): the click that gave it closed the
+    // formation panel, so the panel opens again with the reason in it, where none is open.
+    let told = -1;
+    effect(() => {
+      const news = hud.orderNews.value;
+      const last = news.at(-1);
+      if (!last || last.seq <= told) return;
+      told = last.seq;
+      if (last.kind === 'refused' && hud.formation.peek() === 0 && view.selectedFormations.has(last.id)) hud.selectFormation(last.id);
+    });
     view.onPick = (x, y, sx, sy, shift) => {
       // God Mode's placing armed: the click is the place, on a formation too (no panel opens).
       if (p.placing.value !== null) return p.click(x, y, sx, sy, shift);

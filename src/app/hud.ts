@@ -64,6 +64,8 @@ export class Hud {
   readonly hover = signal<MapHover | null>(null);
   /** The hovered cell an order of the selected land formations would reach over the sea (ROADMAP R17c), -1 for none. */
   readonly hoverBySea = signal(-1);
+  /** The landing under the cursor (`hoverBySea`) is the ground of a nation outside the player's wars: the order would be refused (ROADMAP R21c). */
+  readonly hoverSeaNeutral = signal(false);
   onMapMode: (mode: MapMode) => void = () => {};
   /** Selected nation id (0 = none; PLAN 1.30), set by map clicks. */
   readonly selected = signal(0);

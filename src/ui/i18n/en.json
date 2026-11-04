@@ -592,6 +592,7 @@
   "formation.status.retreat": "On the retreat: no orders for {n} h",
   "formation.status.holding": "Holding",
   "tooltip.bySea": "Your selected forces go by sea: they board transports at a port",
+  "tooltip.bySeaNeutral": "No landing here: the ground of a nation outside your wars",
   "formation.voyage.toPort": "Marching to a port to board transports",
   "formation.voyage.toPort.port": "Marching to {port} to board transports",
   "formation.voyage.waiting": "Waiting for transports",

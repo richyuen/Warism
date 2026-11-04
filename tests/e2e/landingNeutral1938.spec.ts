@@ -54,3 +54,24 @@ test('a landing on a neutral coast is refused and told; a division set home acro
   await page.evaluate(() => window.__warsim!.sim.step(26));
   await expect(page.locator('[data-testid="order-news"][data-order="sentHome"]')).toBeVisible({ timeout: 10_000 });
 });
+
+// ROADMAP R21c (critic run 33, R33-N3): with the mouse, as a player does it. Over Calais at peace the
+// tooltip says no landing there, not "go by sea"; a real click there is refused, and the formation's
+// panel, which the click closed, opens again with the reason in it.
+test('with the mouse: the tooltip over a neutral coast says no landing; the refused click keeps the reason in the panel', async ({ page }) => {
+  test.setTimeout(300_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  const div = await britain(page);
+  await page.evaluate(([x, y]) => window.__warsim!.view!.showPlace(x + 0.5, y + 0.5), CALAIS);
+  await page.waitForTimeout(500);
+  const box = (await page.locator('canvas').first().boundingBox())!;
+  const [cx, cy] = [box.x + box.width / 2, box.y + box.height / 2];
+  await page.mouse.move(cx + 3, cy + 3);
+  await page.mouse.move(cx, cy);
+  await expect(page.getByTestId('tooltip-sea-refused')).toBeVisible({ timeout: 5000 });
+  await expect(page.getByTestId('tooltip-by-sea')).toHaveCount(0);
+  await page.mouse.click(cx, cy);
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('formation-panel')).toHaveAttribute('data-formation', String(div), { timeout: 10_000 });
+  await expect(page.getByTestId('formation-notice')).toContainText('outside its wars', { timeout: 10_000 });
+});

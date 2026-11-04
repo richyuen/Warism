@@ -31,6 +31,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
   `NoPort`: a reason only, for the player's order and the AI's alike (no state, the pin unmoved).
   `portBombing1938.test.ts` asserted `NoPort` for that case; it now asserts the new reason.
   `landingPortShut1938.test.ts`: the critic's case through a player's convoy.
+- **R21c (R33-N3).** A click on the map closes the formation panel (PLAN 2.14b) before the order
+  goes, so a refusal had only a ticker row, one line beside a panel (ADR-754). The refusal now opens
+  the panel of the formation refused again, if it is selected and no formation panel is open: the
+  reason is read in full where the order was given. The tooltip's sea line asks the worker for a
+  neutral's landing (`neutralLanding`) and says no landing instead of promising the voyage.
 - **Tests restated.** `serverOrderNews.test.ts` (Britain on Cuxhaven) and `orderNews1938.spec.ts`
   (Switzerland on London) each order a landing at peace to see a refusal told with its reason (no
   port, no transports); `Neutral` now comes first. Each now makes that war first, and its assertions

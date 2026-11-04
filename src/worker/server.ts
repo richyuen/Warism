@@ -29,6 +29,7 @@ import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { AT_PORT_CELLS, carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
 import { landingOf } from '../sim/systems/amphibious';
 import { overSea } from '../sim/systems/movement';
+import { neutralLanding } from '../sim/systems/amphibious';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -295,10 +296,13 @@ export class SimServer {
         this.reply(msg.reqId, new TextEncoder().encode(JSON.stringify(this.formationInfo(msg.id, msg.generation))), false);
         break;
       case 'overSea': {
-        // ROADMAP R17c: the cursor's hint for the player's selection.
+        // ROADMAP R17c: the cursor's hint for the player's selection: 0 not over the sea, 1 by
+        // sea, 2 by sea onto the ground of a nation outside its wars, refused (ROADMAP R21c).
         const world = this.requireSim().world;
         const yes = world.formations.has(msg.id) && !world.offLand(msg.id) && overSea(world, msg.id, msg.x, msg.y);
-        this.reply(msg.reqId, new TextEncoder().encode(JSON.stringify(yes)), false);
+        const target = Math.floor(msg.y) * world.cells.w + Math.floor(msg.x);
+        const how = !yes ? 0 : neutralLanding(world, world.formations.cols.nation[msg.id]!, target) ? 2 : 1;
+        this.reply(msg.reqId, new TextEncoder().encode(JSON.stringify(how)), false);
         break;
       }
       case 'economy': {

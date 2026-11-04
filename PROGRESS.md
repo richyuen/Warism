@@ -1024,3 +1024,11 @@
 - AT: `landingPortShut1938.test.ts` (Britain's division for Belfast, Portsmouth shut while it marches: `PortShut`; red
   without, `NoPort`).
 - **Next:** R21c.
+
+## 2026-11-04 — ROADMAP R21c: a refusal is read in full (R33-N3)
+- Over a neutral's coast the tooltip says "No landing here: the ground of a nation outside your wars" instead of "go by
+  sea"; a refused order of a selected formation opens its panel again (the click had closed it), the reason in it.
+- AT: `landingNeutral1938.spec.ts` (a real mouse hover and click over Calais at peace: the tooltip's line, the panel
+  open with the reason). Order specs (invasion, orderNews, landing voyage and escort, fleet order, order lines, follow,
+  markers, ticker) green.
+- **Next:** R21d.

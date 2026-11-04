@@ -152,9 +152,11 @@ Rules:
     port is shut, not "no port of its nation". AT: Britain at Portsmouth, the port shut: the reason is the new one.
     Done: `tryLanding` tells `PortShut` (16) where the only ports it stands at are shut;
     `landingPortShut1938.test.ts` (red without: `NoPort`).
-  - [ ] R21c A refusal is read in full (R33-N3): a refused order keeps the formation panel open with the
+  - [x] R21c A refusal is read in full (R33-N3): a refused order keeps the formation panel open with the
     reason in it; the tooltip over a neutral's coast says the landing would be refused, not "go by sea". AT: an
     e2e spec with a real mouse click over Calais at peace: panel open with the reason; the tooltip's line.
+    Done: `overSea` 0/1/2 and `tooltip-sea-refused`; a refusal reopens the selected formation's panel
+    (ADR-826); `landingNeutral1938.spec.ts`'s mouse test.
   - [ ] R21d Many sent home are told (R33-N4): divisions of the player's set home in one hour are one row
     that counts them, and each is a History event. AT: ten set home at once: one row naming ten, ten History rows.
   - [ ] R21e One click lands together (R32-N1): the divisions of one click to one target board one convoy

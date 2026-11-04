@@ -1784,6 +1784,9 @@ Actions tab's assist boxes set the mask (`setPlayerAi`).
   formation has an "Escort with warships" box (ROADMAP R17d): ticked by default, kept in the
   browser (`warsim.escort`), and sent with each click's order (`moveFormation.escort`); no escort
   free is the order's news ("unescorted").
+  Over a landing on the ground of a nation outside the player's wars the tooltip says no landing there
+  instead (`overSea` answers 2; ROADMAP R21c). A refusal of a selected formation's order opens its
+  panel again, with the reason, where the order's click had closed it and no other is open.
 - **Actions tab** (`src/ui/ActionsTab.tsx`): force war (breaking a bond in the way), offer peace (taken at
   score ≥ `PEACE_ACCEPT_SCORE` 25 or exhaustion ≥ `PEACE_ACCEPT_EXHAUSTION` 40, `src/shared/peace.ts`),
   propose an alliance; production of land, sea and air templates (`queueFormation`; no port, no airfield
