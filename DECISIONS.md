@@ -22,6 +22,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Not chosen.** Keeping a landed division where it is: it would stand idle on a neutral's ground,
   the state ADR-169 exists to end; a landing to make war on a neutral is a declaration of war first.
 - **Pin.** Unmoved: the AI never gives a player's sea order, and an event is no state.
+- **R21a (critic run 33, R33-N1).** The same holds after the order, until the transports sail: a
+  division bound for its convoy is stopped where it stands (`Neutral`), as a march is stopped at
+  the border (`Barred`); a loading convoy with its landing a neutral's ends, those aboard ashore at
+  the port. A convoy at sea goes on: turning it back is a voyage of its own, and the landing is told.
+  `landingPeace1938.test.ts` (bound at the peace; aboard a loading convoy at the peace), red without.
 - **Tests restated.** `serverOrderNews.test.ts` (Britain on Cuxhaven) and `orderNews1938.spec.ts`
   (Switzerland on London) each order a landing at peace to see a refusal told with its reason (no
   port, no transports); `Neutral` now comes first. Each now makes that war first, and its assertions

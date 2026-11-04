@@ -1256,6 +1256,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   (`seaConvoy`, `assignTransports`). Refused at once with no landing at the target (`landingOf`),
   and where the target's or the landing's holder is foreign to it (`foreignTo`: `Neutral`, ROADMAP
   R20), as a march by land onto that ground is; landed there, the march home would set it back.
+  So too after the order (`neutralLanding`, ROADMAP R21a): hourly, a division bound for its convoy
+  whose landing a peace made such ground is stopped where it stands, told `Neutral`; a convoy loading
+  for it does not sail, those aboard told and ashore at the port. One at sea lands and is sent home.
   Its transports, in turn: a convoy of its nation loading for the same target cell at a port of its
   land with room for it (so a click's divisions, or a later click's to the same cell, go together);
   a group standing at a port of its land with room, not another's convoy, at the port nearest it; a

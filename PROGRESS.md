@@ -1010,3 +1010,10 @@
   wrong reason), R33-N3 (the refusal read only as a cut row), R33-N4 (many sent home, one row) and R32-N1; every other
   score at its bar. No release while naval is under: filed as R21a–e.
 - **Next:** R21a.
+
+## 2026-11-04 — ROADMAP R21a: a sea order does not outlive the peace (R33-N1)
+- A player's division bound for its convoy whose landing a peace made a neutral's is stopped where it stands and told
+  `Neutral`; a convoy still loading for it does not sail, those aboard are told and go ashore at the port (ADR-826).
+- AT: `landingPeace1938.test.ts` 2 of 2 (Britain on German-held Calais: peace while bound; peace with one aboard a
+  loading convoy), both red without the rule. Pin unmoved.
+- **Next:** R21b.

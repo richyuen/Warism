@@ -37,7 +37,7 @@ import { nearestCellWhere } from '../data/ownership';
 import { FlipCause, navOf, PlayerOrderKind, portSeaOf, seaOf, seaRangeOf, type World } from '../world';
 import { destroyFormation, elementIndex } from './elements';
 import { AT_PORT_CELLS, sailHome } from './navalCombat';
-import { orderMove } from './movement';
+import { foreignTo, orderMove } from './movement';
 import { portShut } from './bombing';
 import { orderSail } from './sail';
 import { seaHolder } from './seaControl';
@@ -328,6 +328,18 @@ export function landingOf(world: World, target: number): { water: number; land: 
   return land < 0 ? null : { water, land };
 }
 
+/**
+ * Whether `nation`'s landing for `target` is on the ground of a nation outside its wars: the
+ * target's holder or the landing cell's is `foreignTo` it (ROADMAP R20, R21a). A player's order
+ * over the sea is refused so, and one under way is stopped so once a peace makes it so.
+ */
+export function neutralLanding(world: World, nation: number, target: number): boolean {
+  const ctl = world.cells.controller;
+  if (foreignTo(world, nation, ctl[target]!)) return true;
+  const l = landingOf(world, target);
+  return l !== null && foreignTo(world, nation, ctl[l.land]!);
+}
+
 /** Whether a landing for a target at (`x`, `y`) can be found (`landingOf`). */
 export function hasLanding(world: World, x: number, y: number): boolean {
   const { w, h } = world.cells;
@@ -358,14 +370,14 @@ export function loading(world: World, fleet: number): boolean {
   return near(world, cellOfPlace(world, fleet), portSeaOf(world)[port]!, world.atSize(AT_PORT_CELLS));
 }
 
-/** Ends the player's convoy on group `fleet`: the formations still bound for it are told (`NoTransports`). */
-function endConvoy(world: World, fleet: number): void {
+/** Ends the player's convoy on group `fleet`: the formations still bound for it are told (`why`, by default `NoTransports`). */
+function endConvoy(world: World, fleet: number, why: RejectReason = RejectReason.NoTransports): void {
   world.convoyPort.delete(fleet);
   for (const [id, o] of [...world.seaFetch].sort((a, b) => a[0] - b[0])) {
     if (o !== fleet) continue;
     world.seaFetch.delete(id);
     world.seaBound.delete(id);
-    if (world.formations.has(id)) world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.NoTransports, NaN);
+    if (world.formations.has(id)) world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, why, NaN);
   }
 }
 
@@ -460,6 +472,14 @@ function convoySystem(world: World): void {
     const pending = [...world.seaFetch].filter(([id, o]) => o === fleet && f.has(id)).map(([id]) => id);
     const load = carrying(world, fleet);
     if (loading(world, fleet)) {
+      // Its landing became a neutral's while it loaded (ROADMAP R21a): it does not sail; those
+      // aboard are told and go ashore at the port, those bound are told.
+      const target = convoyTarget(world, fleet);
+      if (load && target >= 0 && neutralLanding(world, c.nation[fleet]!, target)) {
+        for (const [id, e] of [...world.embarked].sort((a, b) => a[0] - b[0])) if (e.fleet === fleet) world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.Neutral, NaN);
+        endConvoy(world, fleet, RejectReason.Neutral);
+        continue;
+      }
       const room = transportRoom(world, fleet) - aboard(world, fleet);
       if (load && !pending.some((id) => c.strength[id]! <= room)) {
         const first = [...world.embarked].filter(([, e]) => e.fleet === fleet).sort((a, b) => a[0] - b[0])[0]![1];
@@ -595,10 +615,23 @@ export function amphibiousSystem(world: World): void {
         world.seaBound.delete(id);
         continue;
       }
+      const bound = world.seaFetch.get(id);
+      // A peace made its landing a neutral's (ROADMAP R21a): stopped where it stands, and told, as
+      // a march is stopped at the border of ground that became closed to it.
+      if (bound !== undefined && neutralLanding(world, c.nation[id]!, target)) {
+        world.seaFetch.delete(id);
+        world.seaBound.delete(id);
+        if (c.moving[id] === 1) {
+          c.moving[id] = 0;
+          c.home[id] = 0;
+          world.paths.delete(id);
+        }
+        world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.Neutral, NaN);
+        continue;
+      }
       if (c.moving[id] === 1) continue;
       // A player's, bound for its convoy's group (ROADMAP R17a, R17b): it boards when the group
       // stands loading at the port with room, and waits while it is under way or full.
-      const bound = world.seaFetch.get(id);
       if (bound !== undefined) {
         const step = boardConvoy(world, id, target, bound);
         if (step === WAIT) continue;

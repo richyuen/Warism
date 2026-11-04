@@ -71,7 +71,7 @@ import { nearestCellWhere } from '../data/ownership';
 import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroups, type ProvinceGraph } from '../nav/provinceGraph';
 import { isDayStart } from '../../shared/calendar';
 import { Domain, navOf, PlayerOrderKind, portSeaOf, type TemplateRule, type World } from '../world';
-import { assignTransports, carrying, escortConvoy, landingOf, near, transportsPort, tryLanding } from './amphibious';
+import { assignTransports, carrying, escortConvoy, landingOf, near, neutralLanding, transportsPort, tryLanding } from './amphibious';
 import { AT_PORT_CELLS } from './navalCombat';
 import { noteMove } from './elements';
 import { spawnPoint } from './production';
@@ -505,8 +505,7 @@ function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage
   }
   // Not onto the ground of a nation outside its wars (ROADMAP R20): a land march is refused there,
   // and a division landed there would be sent home at the next day start (`repatriationSystem`).
-  const ctl = world.cells.controller;
-  if (foreignTo(world, c.nation[id]!, ctl[target]!) || foreignTo(world, c.nation[id]!, ctl[landing.land]!)) {
+  if (neutralLanding(world, c.nation[id]!, target)) {
     world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.Neutral, NaN);
     return false;
   }

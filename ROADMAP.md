@@ -142,10 +142,12 @@ Rules:
   `landingNeutral1938.spec.ts`. Pin unmoved.
 - [ ] R21 **Naval back to its bar: the edges of the landing order** (critic run 33: no blocking issue, naval 7 under
   its bar of 8 for R33-N1–N4 and R32-N1). Each sub-item its own commit; then the critic again.
-  - [ ] R21a A sea order outlives the peace (R33-N1): a division bound for a landing (marching to its port,
+  - [x] R21a A sea order outlives the peace (R33-N1): a division bound for a landing (marching to its port,
     waiting, or boarding) whose landing's ground became a neutral's is stopped, `Neutral` told, as a march is
     stopped at the border. AT: Japan's division ordered to Java at war, peace before it boards: it never
     boards, and is told; red without the rule.
+    Done: `neutralLanding`, checked hourly for the bound and before a loading convoy sails (ADR-826);
+    `landingPeace1938.test.ts` 2 of 2 (Britain on German-held Calais, peace before boarding and while loading).
   - [ ] R21b A port bombed shut says so (R33-N2): a division refused at its own shut port is told that the
     port is shut, not "no port of its nation". AT: Britain at Portsmouth, the port shut: the reason is the new one.
   - [ ] R21c A refusal is read in full (R33-N3): a refused order keeps the formation panel open with the
