@@ -1003,3 +1003,10 @@
 - AT: `landingNeutral1938.test.ts` 3 of 3 (Calais at peace refused; held by an enemy, by sea; idle there, sent home with
   the event; two red without the rule), `landingNeutral1938.spec.ts` (the panel's reason, the ticker's row). Pin unmoved.
 - **Next:** critic run 33 (focused on R32-B1).
+
+## 2026-11-04 — critic run 33, full, on 937fd085: no blocking issue; naval under its bar
+- R32-B1 fixed (each case refused `Neutral`; at war a landing goes); R20 changes no history (15 twenty-year runs as run
+  32's). 0 blocking; naval **7** under its bar of 8 for R33-N1 (a sea order outlives the peace), R33-N2 (a shut port's
+  wrong reason), R33-N3 (the refusal read only as a cut row), R33-N4 (many sent home, one row) and R32-N1; every other
+  score at its bar. No release while naval is under: filed as R21a–e.
+- **Next:** R21a.

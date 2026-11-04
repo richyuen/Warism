@@ -1,0 +1,43 @@
+== c_6421.json
+.views.13.sorties: 1 | 2
+.views.14.sorties: 1 | 2
+== c_7019.json
+.views.12.sorties: 4 | 3
+== ht_phone.json
+.bootS: 3.453 | 2.936
+== sb_7019.json
+.views.3.tick: 294 | 295
+.views.5.tick: 297 | 299
+== w_7019.json
+.steps.4.n: 60 | 62
+.steps.4.flyingWithMark: 55 | 56
+.steps.4.medianPx: 32 | 31
+.steps.4.p90Px: 88 | 83
+.steps.4.first.tick: 1 | 2
+== z_3517.json
+.steps.1.mpp: 3840.4 | 3840.5
+.steps.14.ind: 7468 | 7495
+.steps.15.ind: 6600 | 6619
+.steps.16.ind: 5727 | 5745
+== a_4219.json
+.notes.titleButtons.3: "3350078215" | "1110723196"
+== os2_c25.json
+.fatal: "page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs == | "page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs ==
+== lp_jap_shanghai.json
+.samples.9: {"h":648,"s0":"none,none"} | undefined
+.ticker.3: "26 January 1938 Germany captured Czechoslovakia's capital" | undefined
+.ticker.4: "30 January 1938 Hungary declared war on Austria" | undefined
+.final.0.p.0: 1700.1911532738845 | 1702.5742659556443
+.final.0.p.1: 403.2205843042934 | 405.48615765976905
+== df_7019_pol.json
+.samples.5.d: 56 | 55
+.samples.6.d: 57 | 56
+.samples.7.d: 58 | 57
+.samples.8.d: 59 | 58
+.samples.9.d: 60 | 59
+== headless_7019.json
+.rows.0.ev.FormationSentHome: undefined | 18
+.rows.1.ev.FormationSentHome: undefined | 20
+.rows.3.ev.FormationSentHome: undefined | 20
+.rows.4.ev.FormationSentHome: undefined | 12
+.rows.5.ev.FormationSentHome: undefined | 9

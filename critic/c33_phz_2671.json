@@ -1,0 +1,63 @@
+{
+ "seed": 2671,
+ "days": 40,
+ "tiers": [
+  {
+   "m": 30000,
+   "overflowX": false,
+   "banners": 2,
+   "el": 0,
+   "shot": "critic/shots/c33phz_2671_30000.png"
+  },
+  {
+   "m": 3500,
+   "overflowX": false,
+   "banners": 2,
+   "el": 0,
+   "shot": "critic/shots/c33phz_2671_03500.png"
+  },
+  {
+   "m": 800,
+   "overflowX": false,
+   "banners": 2,
+   "el": 2328,
+   "shot": "critic/shots/c33phz_2671_00800.png"
+  },
+  {
+   "m": 250,
+   "overflowX": false,
+   "banners": 2,
+   "el": 971,
+   "shot": "critic/shots/c33phz_2671_00250.png"
+  },
+  {
+   "m": 60,
+   "overflowX": false,
+   "banners": 2,
+   "el": 303,
+   "shot": "critic/shots/c33phz_2671_00060.png"
+  },
+  {
+   "m": 25,
+   "overflowX": false,
+   "banners": 2,
+   "el": 235,
+   "shot": "critic/shots/c33phz_2671_00025.png"
+  }
+ ],
+ "fight": {
+  "best": [
+   1125.7932505278147,
+   296.29827578098394
+  ],
+  "bn": 11,
+  "engaged": 57
+ },
+ "tapCentre": {
+  "formation": "Motorised division 345\n×\nKind\nMotorised division\nNation\nItaly\nMen\n10,444 of 10,550\nSupply\n100%\nOrg\n98%\nFuel on the march\n4.6 an hour\nStatus\nIn contact⚔ To its fight\nELEMENTS\n20×\tMotorised infantry\t9,894 of 10,000\n3×\tHeavy artillery\t36 of 36\n1×\tAnti-tank guns\t12 of 12",
+  "nation": null,
+  "menu": null
+ },
+ "tapShot": "critic/shots/c33phz_2671_tap.png",
+ "errors": []
+}

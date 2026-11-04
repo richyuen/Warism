@@ -1,177 +1,189 @@
-# Critic report, run 32 (full) — after R6, R16–R19
+# Critic report, run 33 (full) — after R20
 
 - **Mode: full.** Decided from git before anything else (CRITIC_PROMPT, ADR-804). The first condition of a focused run
-  fails: run 31's report (`8ec3458e`, on `4c546398`) has no blocking issue and no score under its bar. (The second fails
-  too: R16, R17 and R18 change `src/`, and none was filed by `8ec3458e`.) Every dimension is scored afresh; none carried.
-- **Commit judged:** `e7437a5744d70ec34ca653b93108ffde5927b51f` (HEAD at the start, `critic/c32_commit.txt`).
+  holds (run 32 has a blocking issue, R32-B1, and naval under its bar) and the third holds (runs 30–32: focused, full,
+  full). The second fails: the one commit since run 32's report, `937fd085` (R20), changes `src/`, and R20 was not filed
+  by the report's commit — `git show --stat 88fb814e` touches `PROGRESS.md` and `critic/` only; the ROADMAP line R20 was
+  added by `937fd085` itself. So every dimension is scored afresh; none carried.
+- **Commit judged:** `937fd085bdbfddde489ad489c7e688d93b7dbc42` (HEAD at the start, `critic/c33_commit.txt`).
   **Date:** 2026-11-04.
-- **What changed since run 31** (`git diff --stat 4c546398 HEAD -- src data public`: 46 files): nation traits made
-  state, shown and set by God, and made to act (R16a, R16b; save format 1 → 2); landings the player orders, with
-  transports called, convoys, the voyage shown and an escort (R17a–d); blocks of one side's stacks kept apart (R18);
-  SPEC rewritten to the code (R6); the gate runs the e2e suite on a moved pin (R19, gate only: nothing to play).
-- **Build:** `vite build --outDir critic/c32_dist`, exit 0 (`critic/c32_build.log`), served by `vite preview` on
+- **What changed since run 32** (`git diff --stat e7437a57 HEAD -- src`: 6 files): a player's order over the sea onto the
+  ground of a nation outside its wars is refused (`RejectReason.Neutral`, 15); the day start's march home emits
+  `FormationSentHome` (71) and a formation of the player's so moved gets a row below the ticker (ADR-826).
+- **Build:** `vite build --outDir critic/c33_dist`, exit 0 (`critic/c33_build.log`), served by `vite preview` on
   127.0.0.1:**5299**. Chromium through Playwright, headless; desk 1600 × 900, phone 390 × 844 (touch, DPR 2).
-- **Baseline:** run 31's own files (`critic/c31_*`, commit `4c546398`). R16b and R18 moved the pin twice, so every
-  seeded 1938 world differs from run 31 by design: no probe can be "identical". Run 31's counts are compared as
-  aggregates over the **same seeds with the same script** (`c31_ho.ts`, ten seeds × 20 years, heroes off and on;
-  `critic/c32_ho_cmp.txt`); page cases are re-run and read for whether the defect they named is still there.
-- **Runs:** 37 headless jobs six at a time (`critic/scripts/c32_jobs1.txt`, `critic/c32_jobs.log`, every one exit 0),
-  15 trait A/B runs (`c32_jobs_trab.txt`), page suites A, B, C (`critic/scripts/c32_suite{A,B,C}.sh`) and new probes:
-  `c32_lp_landing.mjs` (a landing ordered in the page), `c32_lh.ts` / `c32_lh2.ts` (the same, headless, hour by hour),
-  `c32_tr_traits.mjs` (traits on desk and phone), `c32_trab.ts` (do traits move a war), `c32_ot_oldtraits.mjs` (an older
-  save on HEAD), `c32_sk_stacks.mjs` (R18's scene at T3), `c32_sw_hang.mjs` (a refused order over the sea, by real
-  clicks), `c32_gold.ts`, `c32_swe.ts`, `c32_cellwho.ts`, `c32_comp.ts`, `c32_cells.ts` (helpers).
+- **Baseline:** run 32's own files (`critic/c32_*`, commit `e7437a57`). R20 says "pin unmoved". **Verified:** all 15
+  headless 20-year runs of run 32's seeds (`c31_ho.ts`, ten seeds heroes off, five heroes on) are identical to run 32's
+  JSON to the last hash once wall times are stripped; the year-20 save of 7019 made on HEAD is byte-identical to run 32's
+  (`cmp critic/c33_seed7019_y20.bin critic/c32_seed7019_y20.bin`); workerDeterminism 3517 gives `7e113d94` on all four
+  arms, as in run 32 (`critic/c33_wd_3517.log`). So every seeded world without a player's sea order is run 32's world,
+  and every page case of run 32 can be compared one to one. Of the 55 `c33_` JSONs with a `c32_` twin, 39 are identical
+  once shots and timings are stripped; of the other 16, nine differ only in live samples taken on the page's own clock
+  (a tick or a sortie count at a sample, a title-screen random seed, boot time, frame rates; `critic/c33_twindiff.log`,
+  `critic/scripts/c33_twins.cjs`, `critic/c33_twins.log`), and seven are: the landing cases R20 changes (LH, LP Calais) or
+  stops earlier (LP Shanghai, 25 days not 40), the probes' wall-clock waits (G and OS2 time out the same way, their
+  error logs differ; DF samples a day earlier), and the headless 7019 run, whose counts differ only by the new event
+  `FormationSentHome` (its save is byte-identical).
+- **Runs:** 34 headless jobs six at a time (`critic/scripts/c33_jobs1.txt`, `critic/c33_jobs.log`, every one exit 0);
+  page suites A, B, C (`critic/scripts/c33_suite{A,B,C}.sh`, every probe exit 0); the landing cases in the page
+  (`critic/scripts/c33_lpq.sh`); new probes: `c33_nr_neutralrow.mjs` (a refused landing by real clicks, desk and
+  phone), `c33_shm_mass.mjs` (rows for divisions sent home), `c33_pm.ts` (a peace made while a sea or land order is on
+  its way), `c33_ps.ts` (a refusal's reason at a bombed port), `c33_lmchk.ts` (the land rule at peace); a 30-year run of
+  new seed 9419; a quiet ten-year page watch (6151) with nothing else running.
 
 ## Verdict
 
-**One blocking issue: a landing the player orders on the coast of a nation it is not at war with — an ally, a neutral —
-is carried out, told "Landed", and the next day the division is put back at its own capital, across the sea, with
-no word.** Britain's divisions landed at Calais are in London by the next midnight; a US division that sailed 17 days
-to Calais is back in Washington 15 hours after landing; a British division landed in Norway is back in London. The
-order that the land march refuses (France is closed ground to a British march at peace), the sea order accepts, and
-the daily repatriation rule then undoes it by a jump (R32-B1). R17's own first AT case was "ordered to land in France".
-**Naval warfare drops to 7, under its bar.** Every other score holds at its bar; none rises.
+**R32-B1 is fixed as specified.** A player's landing on the coast of a nation outside its wars is now refused at the
+click, with a reason, on every case of run 32 (Britain → Calais, Britain → Bergen, the USA → Calais), while the same
+order at war goes (Britain at war with France lands at Calais in the page; Japan lands at Shanghai), and a division set
+home across the sea is told by a row. **No blocking issue.**
 
-What the batch does well, verified: the rule checkers are 0 broken on every new seed (5 diploInvariants runs, 6
-worldInvariants runs of 5–20 years, heroWaits 9001); worker and save determinism hold with a convoy at sea; R18's
-blocks keep clear on the named seed and a new one; traits read on every nation panel and God sets them; a landing at
-war (Japan on Shanghai) runs through every state the panel promises.
+**Naval warfare stays at 7, under its bar of 8**, now for the edges of the same feature rather than one defect:
+an order given at war is carried out after the peace — a division still ashore at the peace boards 17 days later, sails
+15 days to the former enemy's coast, lands there and is set home across the sea the next day — where the land march, in
+the same situation, stops at the border with "the way ahead became the ground of a nation outside its wars" (R33-N1);
+a refusal at a bombed-shut port says "it stands at no port of its nation" to a division standing in Portsmouth (R33-N2);
+one click's divisions still land 16 days apart (R32-N1); and the refusal R20 adds is readable only as a row cut at
+"it would land on t…", under a tooltip that had just promised "Your selected forces go by sea" (R33-N3). Every other
+dimension holds at its bar; none rises.
 
 ## Scores
 
-| Dimension | Run 31 | Run 32 | |
+| Dimension | Run 32 | Run 33 | |
 |---|---|---|---|
-| Map visuals and readability | 7 | 7 | rescored: R18's blocks clear at T3 (1212, 4111); the voyage's dashed sea leg reads. Not 8: R31-N1 (Japan's heroes under the Ranking panel at a desk) unchanged on 5521 |
-| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 | rescored: diploInvariants 0 broken on 3517 (heroes), 9137 (random), 2203 (random world), 6421, 1201; worldInvariants 0 broken (3517 × 20 y, 9137 random × 20 y, 2203 world × 5 y, 6977 bankrupt × 20 y). Traits shown and set. Not 8: run 31's list (R30-N6: bond exit, guarantees, Force war rows, refused peace untold) was not re-run, nothing in the batch touches it; R32-B1's two rules disagree (counted under naval) |
-| Emergent world dynamics over long runs | 7 | 7 | rescored: same ten seeds, heroes off, 20 years: wars declared +20 ± 9, capitals taken +29 ± 11, revolts +15 ± 10, nations alive at year 10 +5.4 ± 1.4, nuclear bursts 5.9 → 13.2 (+7.3 ± 3.2); no great power dies more. A busier world. Not 8: defaults still never happen in AI play (0 in 3 seeds × 20 years), sea heroes still die every few months |
-| God Mode | 7 | 7 | rescored: the new trait boxes work and are kept by a save (desk and phone); Militarist ticked greys Pacifist, a clashing mask is refused "Not done: those traits exclude each other." (`critic/c32_tc_3517.json`, `critic/shots/c32tc_3517_clash.png`); Q, K, K2, K3, A run. Not 8: a trait's effect is not shown anywhere a player can check it (below) |
-| Editor and scenarios | 7 | 7 | rescored: a scenario file made before R16a (run 25's) is now refused, "made by an older version of Warism, and this one cannot start it" (decided, ADR on save format 2; design objection). G probe times out as in runs 29–31 (probe side) |
-| Stats and history | 7 | 7 | rescored: year-20 History 3,714 events, opens in 158 ms, 29 kinds; CSV/JSON export whole. Not 8: nothing new in the batch; the teleport of R32-B1 leaves no row |
-| UI/UX and polish | 7 | 7 | rescored: the landing's tooltip, status, sea leg and escort box work in the page; traits read on desk. Not 8: a trait's description is a hover title only, unreadable by touch; refusal toasts cut their reason ("not done: there is no …"); R31-N6 items unchanged (graph's first tap after a drag eaten, a hero hides the fleets under it) |
-| Performance | 7 | 7 | rescored: the ten-year page watch of 6151 with nothing else running: 59.9–60 fps every year, longest gap 83 ms, 290 s (run 31's quiet watch: 283 s, 83 ms); the loaded watch of 3517 with heroes 59.8–60 fps, longest gap 117 ms; PF on HEAD's year-20 save 60 fps at 3,000 and 1,200 m/px. Not 8: no phone-class device measured, nothing in the batch changes a frame's cost |
-| Stability | 7 | 7 | rescored: no page error in any game probe; 37 headless jobs + 15 A/B runs, none crashed; save mid-voyage reloads to the same hash; an older save is refused cleanly. The landing probe's page crashed ("Target crashed") twice with six sims and two browsers beside it; re-run alone it did not (Notes) |
-| Semantic zoom to unit level (needs 8) | 8 | 8 | rescored: Z on new seed 3517 (elements from 1,573 m/px, men from 28 m/px), PHZ on a phone (2671, six tiers 30,000 → 25 m/px, no horizontal overflow, `critic/c32_phz_2671.json`), C on new seed 6421 (German armour on Poles at 15 m/px, every tank drawn), R18's blocks at 60 m/px |
-| Naval warfare (needs 8) | 8 | **7** | **R32-B1**: a player's landing on a non-enemy coast is undone overnight by a jump home. Otherwise: navy and heroes rules 0 broken over 20 years (4637, 3517); sea battles with heroes on +46 ± 10 against run 31's ten seeds |
-| Tanks (needs 8) | 8 | 8 | rescored: C 6421 and 7019, armoured divisions fight at T3; R16b's `armorAttack` acts (unit-tested); FW2 runs |
-| Aircraft (needs 8) | 8 | 8 | rescored: air rules 0 broken over 20 years on 3373 random (heroes) and the full rules on 3517 and 9137; W 7019 (fighter followed, marks on 55 of 60 samples) |
-| AI nuclear use (needs 8) | 8 | 8 | rescored: two AI strikes met in the page on 7019's year-20 save made on HEAD ("China struck United States with an atomic bomb near Belfast: 54,000 civilians killed", then a hydrogen bomb on Iceland), each alerted, Go to on the burst; bursts per 20 years up from 5.9 to 13.2 over the ten seeds |
+| Map visuals and readability | 7 | 7 | rescored on the same world: R18's blocks clear at 60 m/px on 1212 and new seed 8123 (`critic/c33_sk_8123.json`); hero labels at world zoom still sit over unrelated land (`critic/shots/c33lwhon_3517_y10_world.png`: "Sovetsky Soyuz" over the Sahara, "TOG II" over Arabia). Not 8: R31-N1 unchanged (`critic/c33_hf_5521_desk_d0_0.json`: 2 of 12 counters under the Ranking panel) |
+| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 | rescored: diploInvariants 0 broken on five new seeds (8123 heroes, 8431 random diplomacy, 8807 random world, 8573, 8999 heroes); worldInvariants 0 broken (8123 heroes 20 y, 8431 random 20 y, 8807 random world 5 y, 8233 heroes+navy 20 y, 9311 random air 20 y, 8677 bankrupt 20 y); heroWaits 8125 0 broken. FW2 2207 and BT 5113 phone identical to run 32. Not 8: run 30's list (bond exit, guarantees, refused peace untold) untouched; the land and sea orders still disagree after a peace (R33-N1, counted under naval) |
+| Emergent world dynamics over long runs | 7 | 7 | rescored: the same world as run 32 (15 of 15 `ho` runs identical), so its figures stand; new seed 9419 over 30 years: 98 → 92 nations (16 of those alive at year 30 founded during the run), the lead passing from the Soviet Union (31.7 % at year 5) to the United States (26.6 % at year 30), 18 nuclear bursts by four powers in seven years (`critic/c33_headless_9419.json`). Not 8: no default in AI play (0 on new seed 8123 × 20 y, `critic/c33_def_8123.json`), sea heroes die every few months (R32-N5, unchanged by construction) |
+| God Mode | 7 | 7 | rescored: Q tools on new seed 8807 (revolt, spawn nation, city, raze) and A (God's nuke) on 8999 run as on run 32's seeds; K, K2, K3 identical; traits on the phone identical. Not 8: a trait's effect still shown nowhere (R32-N2) |
+| Editor and scenarios | 7 | 7 | rescored: G 4877 places fleets, the bomb budget and wings as in run 32; the probe's 900 s wait times out as in runs 29–32 (wall-clock probe; its marks differ from run 32's because the page runs on its own clock, not because the build changed). Old scenario still refused (design objection, run 32) |
+| Stats and history | 7 | 7 | rescored: History of 7019's year-20 save: 3,714 events, opens in 134 ms, 29 kinds; CSV whole. Not 8: a jump home across the sea leaves no History row (`critic/c33_shm_ten.json`: "3 of 3 events" after ten divisions were set home; no kind for it) |
+| UI/UX and polish | 7 | 7 | rescored: R33-N3 (below): a refused order closes the formation panel on a real click, so R20's reason is read only in a row cut at 272 px (`critic/shots/c33nr_eng_calais_desk_click.png`), and the row's click dismisses it without opening the panel (`..._row.png`); the tooltip promises the voyage (`..._hover.png`). U, P, RG, HS and the phone cases identical to run 32. Not 8: R31-N6 (graph's first tap after a drag, `critic/c33_rgt_4111.json`) and R32-N3 unchanged |
+| Performance | 7 | 7 | rescored: quiet ten-year watch of 6151 with nothing else running, 59.9–60 fps every year, longest gap 83 ms, 293 s for ten years, no page error (run 32: the same fps, 83 ms, 290 s; `critic/c33_lw_6151.json`, `critic/c32_lwquiet_6151.json`); the watch of 3517 with heroes, beside nothing heavier than one 30-year headless run: 59.9–60 fps every year, longest gap 83 ms, 302 s for ten years (run 32, beside six sims: 59.8–60 fps, 117 ms, 420 s; `critic/c33_lwhon_3517.json`); PF on 7019's year-20 save: 60 fps at 3,000, 1,200 and 600 m/px, 35–48 fps at 120 and 30 m/px (run 32: 25–41), p95 frame ≤ 18.4 ms throughout (`critic/c33_pf_7019.json`). Not 8: no phone-class device measured |
+| Stability | 7 | 7 | rescored: no page error in any probe (suites A–C, landing cases, new probes); 34 headless jobs, none crashed; determinism above (save byte-identical, worker four arms equal, a save at the first hour aboard reloads to the same hash `1306977546`, `critic/c33_lh_3517.json`) |
+| Semantic zoom to unit level (needs 8) | 8 | 8 | rescored: Z on new seed 8123 (elements from 1,573 m/px, men from 28 m/px, `critic/c33_z_8123.json`), PHZ on a phone on new seed 8233 (six tiers 30,000 → 25 m/px, no horizontal overflow, a tap at 25 m/px opens the division in contact, `critic/c33_phz_8233.json`), Z 3517 and PHZ 2671 identical to run 32 |
+| Naval warfare (needs 8) | 7 | **7** | R32-B1 fixed (Calais: run 32 `critic/c32_lh_3517.json` landed t74, at London t98 → run 33 `critic/c33_lh_3517.json` refused `Neutral` at t2; Bergen and USA → Calais refused the same, `critic/c33_lh2_eng_bergen2.log`, `critic/c33_lh2_usa_calais.log`); at war a landing goes (`critic/c33_lp_eng_calais_war.json` landed h66, `critic/c33_lp_jap_shanghai.json`); navy and heroes rules 0 broken over 20 years on new seed 8233. **Not 8**: R33-N1, R33-N2, R33-N3, R32-N1 (below) |
+| Tanks (needs 8) | 8 | 8 | rescored: C on new seed 8573, German armoured divisions in contact with the Poles at 15 m/px, every tank drawn, live frames (`critic/shots/c33c_8573_arm_15m_live_1.png`); C 6421 and 7019 identical |
+| Aircraft (needs 8) | 8 | 8 | rescored: W on 7019 and new seed 8431 (the fighter followed, marks on 56 and 57 of 62 samples, none missing a mark while flying); air rules 0 broken over 20 years on new seed 9311 (random diplomacy, heroes) |
+| AI nuclear use (needs 8) | 8 | 8 | rescored: on 7019's year-20 save the same two strikes as run 32 ("China struck United States with an atomic bomb near Belfast: 54,000 civilians killed", then a hydrogen bomb on Iceland), each alerted with Go to; on 6299's year-18 save two strikes on British India (`critic/shots/c33an_6299y18c32_0_goto.png`); new seed 9419: 18 bursts by four powers in 30 years. A readability note: the second 6299 alert reads "near Larkana: 0 civilians killed; 10,212 men and 32 guns lost" |
 
-## R16–R18, case by case
+## R20, case by case
 
-### R17, landings the player orders
 | Case | Result | Evidence |
 |---|---|---|
-| LP, 3517, Britain played, three divisions by London, real hover and left-click on Calais, escort box | Box shown, ticked by default; the tooltip says "Your selected forces go by sea: they board transports at a port"; panel states toPort (Portsmouth) → atSea → landed; dashed sea legs drawn from Portsmouth's water to Calais | `critic/c32_lp_eng_calais.json`, `critic/shots/c32lp_eng_calais_hover.png`, `critic/shots/c32lp_eng_calais_h66.png` |
-| …the first division landed at Calais (h66) | **at London by h84**, still selected, no notice, no ticker row; the other two land at h99 and are **at London by h120** (re-run alone, the same course) | `critic/shots/c32lp_eng_calais_h84.png`, `critic/shots/c32lp_eng_calais_quiet_h120.png`, `critic/c32_lp_eng_calais_quiet.json` |
-| LH (headless), the same orders hour by hour | 270 lands at Calais t74, stands there until t95, **at London (1023.3, 275.2) at t98**: the day start's `repatriationSystem` (`foreignTo(ENG, FRA)` is true: France is not Britain's bloc, not at war beside it), no land way home, so `c.x = spawnPoint` (`movement.ts` 637). 271 and 274 land t99, the same at t120. Belfast (Britain's own land) keeps its division | `critic/c32_lh_3517.json`, `critic/scripts/c32_cellwho.ts` (holder FRA, foreign true) |
-| LH2, USA played, a division by New York to Calais | boards t324, 17 days at sea, lands t730, **at (585.9, 364.2), the US spawn, at t745** | `critic/c32_lh2_usa_calais.log` |
-| LH2, Britain to Bergen (Norway, neutral) | lands t135, marches to Bergen t180, **in London at t193** | `critic/c32_lh2_eng_bergen.log` |
-| LP, Japan (at war with China) to Shanghai, two divisions, escort | each through toPort/atSea/landed, and they stay and fight on; but **the one click's two divisions land 16 days apart** (h123 and h510): one boarded at Tokyo at once, the other marched to Matsuyama for another group | `critic/c32_lp_jap_shanghai.json`, `critic/shots/c32lp_jap_shanghai_h510.png` |
-| Netherlands (no transports) to Java | refused `NoTransports` (6) | `critic/c32_lh2_ned_java.log` |
-| Escort (headless) | three escorts made (one per new convoy), each gone once its convoy is ashore; released, the player's groups go back to the AI within 30 days (R17's "Also" causes nothing seen) | `critic/c32_lh_3517.json` |
-| Save at the first hour aboard (t54), two loads × 200 h | same hash both (3,455,707,383) | `critic/c32_lh_3517.json` (`saveMid`) |
-| workerDeterminism 3517, 2,190 h, four arms | all `7e113d94` | `critic/c32_wd_3517.log` |
-| Selection by a real click (Sweden) | header "Playing Sweden · 1 selected" (the "0 selected" in LP's shots is the probe's API selection, not a defect) | `critic/c32_sw_swe.json`, `critic/shots/c32sw_swe_sel.png` |
+| LH (headless, run 32's case), 3517, Britain played, three divisions by London to Calais, one to Belfast | the three refused `MoveRejected 15` (Neutral) at t2; Belfast sails and lands at t59 and is not sent home | `critic/c33_lh_3517.json` |
+| LH2, Britain to Bergen (run 32's cell 1054.5, 203.5) | refused 15 at t2 (run 32: landed t135, jumped to London t193) | `critic/c33_lh2_eng_bergen2.log`, `critic/c32_lh2_eng_bergen.log` |
+| LH2, USA to Calais | refused 15 at t2 (run 32: 17 days at sea, landed t730, at the US spawn t745) | `critic/c33_lh2_usa_calais.log` |
+| LH2, Netherlands to Java (its own colony, no transports) | refused 6 (NoTransports) as in run 32: `Neutral` does not shadow its own ground | `critic/c33_lh2_ned_java.log` |
+| LP (page, probe's API selection), Britain to Calais at peace; the USA to Calais | no voyage; the row "Infantry division 274: not done: it would land on t…" | `critic/shots/c33lp_eng_calais_click.png` |
+| LP, Britain at war with France (God's war) to Calais | the first division boards at Portsmouth, lands at Calais h66 and fights there (destroyed by h210); the other two follow and are ashore by h210; the war goes on (Italy joins) | `critic/c33_lp_eng_calais_war.json`, `critic/shots/c33lp_eng_calais_war_h66.png` |
+| LP, Japan to Shanghai (at war) | lands h123 and h510 (one click, two landings 16 days apart: R32-N1 unchanged) | `critic/c33_lp_jap_shanghai.json` |
+| NR desk (real clicks), Britain, division 274 to Calais | before the click the tooltip says "France / Your selected forces go by sea: they board transports at a port"; after it the formation panel is gone (the nation panel stands in its place), the row is cut; a click on the row flies to the division and removes the row, no panel opens | `critic/shots/c33nr_eng_calais_desk_hover.png`, `..._click.png`, `..._row.png`, `critic/c33_nr_eng_calais_desk.json` |
+| NR desk, the land refusal for comparison (Sweden to Copenhagen) | the same panel-closing and cut row ("…no way by land that keeps off the ground of nations outside its wars"): older behaviour, shared | `critic/c33_nr_swe_cph_desk.json` |
+| NR desk, an accepted landing for comparison (Japan to Shanghai) | the panel stays open | `critic/c33_nr_jap_shanghai_desk.json` |
+| NR phone (selection by the API: a tap on the counter selected nothing) | the row nearly whole at 376 px, cut at "outside its w…"; the panel closed | `critic/shots/c33nr_eng_calais_phone_click.png` |
+| SHM, ten British divisions put on France's ground by God (as the spec does with one), a day start | all ten at London ("99.9k" stack, army 230,840 → 330,750); **one** row shown beside the open panel (by design: "beside a panel the last only"), cut; a click on it shows the next (division 1476); the hud keeps four (`src/app/hud.ts` 24, `ORDER_NEWS_KEPT = 4`), so by that constant six of ten are never told; History "3 of 3 events", none of them the jump | `critic/c33_shm_ten.json`, `critic/shots/c33shm_ten_after.png`, `critic/shots/c33shm_ten_history.png` |
+| PM, Japan → Shanghai, God's peace 12 h after the first boarded (t14) | the one at sea lands on China's ground t123; the other, still ashore at the peace, boards at t430 and lands on China's ground at t510; no `FormationSentHome` in 25 days; both then walk north-west over China's ground (whether as the march home or by Japan's AI: not traced) | `critic/c33_pm_jap_sea.json` |
+| PM, Japan at war with the Netherlands → Java, peace at t15 | the one at sea lands t407, sent home t457 (decided, ADR-826); **the other boards at t431, 17 days after the peace, lands on Java t781 and is set home across the sea at t817** | `critic/c33_pm_japned_sea.json` |
+| PM, the same with peace 24 h after a landing | the landed division set home at the next day start (decided, ADR-169/826) | `critic/c33_pm_japned_landed.json` |
+| PM land, Germany at war with France, two divisions ordered to Reims, peace at t20 | they march to the border and are stopped there: `MoveRejected 4` (Barred, "the way ahead became the ground of a nation outside its wars") at t143 and t167 | `critic/c33_pm_gerfra_land.json` |
+| PM land, Germany → Warsaw, peace at t30 | marches on into Poland only after Poland joins Germany's alliance and fights beside it (`foreignTo` false from t156) | `critic/c33_lmchk.log` |
+| PS, Britain at war with France, the three for Calais (headless) | each marches 2–4 days to Portsmouth under French air strikes and is refused 5, "it stands at no port of its nation", at Portsmouth: the port's damage is 0.63–0.9, `portShut` true | `critic/c33_ps.log`, `critic/c33_pm_eng_sea.json` |
 
-### R16, traits
-| Case | Result | Evidence |
+## Run 32's cases re-run
+
+Since the pin did not move (above), every case of run 32 that gives no sea order is the same world; each was re-run on
+HEAD anyway and compared to its run-32 JSON.
+
+| Run 32 case | On HEAD (`937fd085`) | Evidence |
 |---|---|---|
-| TR desk, 12 nations | chips on every great power (Germany: Militarist, Industrial, Armoured doctrine; Soviet Union: Industrial, Mass mobilisation, Revolutionary); Turkey none; each with its description as a hover title | `critic/c32_tr_desk.json`, `critic/shots/c32tr_desk_GER.png` |
-| TR God (Poland) | boxes; Armoured doctrine and Fortifier ticked; the panel then shows three chips; an out-of-range mask refused "a value is out of its range"; save and load keep the traits and the hash (946,992,852 both) | `critic/shots/c32tr_desk_god_after.png`, `critic/c32_tr_desk.json` |
-| TR phone | the chips show; **their descriptions are `title` only — a touch cannot read them** | `critic/shots/c32tr_phone_GER.png`, `src/ui/NationPanel.tsx` 173 |
-| TRAB, Germany on Poland (90 days) and on France (120 days), three seeds: Poland + Fortifier, Poland no traits, Germany no traits | no direction survives the chaos of one war: Poland holds 420 / 759 / 583 cells with Fortifier against 672 / 1,133 / 490 without at day 90; Germany without traits takes **more** of France on two seeds of three. Not a defect (R16b's unit tests isolate each modifier), but a player cannot see a trait act | `critic/c32_trab_*.json` |
-| An older save (run 31's 7019 year 20) | refused, "missing section nations.traits" (by decision; the title says "from an older version") | `critic/c32_ot_c31y20.json` |
-
-### R18, blocks of one side's stacks
-| Case | Result | Evidence |
-|---|---|---|
-| SK, 1212 (R18's scene), Soviet Union on Poland from hour 1, day 20, 60 m/px | the closest Soviet pairs (0.14 cells apart) drawn as separate blocks; none inside another | `critic/c32_sk_1212.json`, `critic/shots/c32sk_1212_0.png` |
-| SK, new seed 4111, day 30 | the same | `critic/shots/c32sk_4111_1.png` |
-
-## Run 31's cases re-run
-
-| Run 31 case | On HEAD (`e7437a57`) | Evidence |
-|---|---|---|
-| R31-N1, HF desk 5521 (Japan's heroes under the Ranking panel) | **Unchanged**: 12 of 14 reached, Yamato and O-I open Anglo-Egyptian Sudan | `critic/c32_hf_5521_desk_d0_0.json` |
-| HF 7019 day 730 desk (O-I, Sovetsky Soyuz under the panel) | 11 of 11 (another world since R16b; not a fix) | `critic/c32_hf_7019_desk_d730_0.json` |
-| HF / HFT phone 5521 | 10 of 10; folds reached by touch | `critic/c32_hf_5521_phone_d0_0.json`, `critic/c32_hft_5521.json` |
-| R31-N2 (two nations' hero counters overlap, "Ma") | HWP 4637 at tick 132,000 is another world now (Richelieu "returns in 21 days"); not met | `critic/c32_hwp_4637_fra.json` |
-| R31-N3 (no default in AI play) | **Unchanged**: 0 defaults, 0 collapses, 3 seeds × 20 years. DF 7019 (God sets Poland −800) no longer defaults within 220 days: Poland takes Lithuania on day 56 and climbs back (−674 → +236 by day 220, `c32_gold.ts`) | `critic/c32_def_*.json`, `critic/c32_df_7019_pol.json` |
-| R31-N4 (sea heroes lost often) | **Unchanged/worse**: Sovetsky Soyuz 46.7 losses per 20 years (run 31: 33.5), waits past its hour 1,237 days over ten seeds (run 31: 0); Hood 29.4, Bismarck 28.4, Roma 27.3, Richelieu 29.2 | `critic/c32_ho_sum.txt`, `critic/c31_ho_sum.txt` |
-| R31-N6, RGT (graph's first tap after a drag) | **Unchanged**: tap 1 after the drag opens nothing, tap 2 opens Syria | `critic/c32_rgt_4111.json` |
-| R31-N6, HS 3739 (a hero hides the fleets under it) | **Unchanged** | `critic/c32_hs_3739.json` |
-| HO, ten seeds × 20 years, heroes off / on | Off: above (Emergent). On: sea battles 346.7 → 392.6 (+46 ± 10), the rest within noise | `critic/c32_ho_cmp.txt` |
-| AN with run 31's saves (7019 y20, 6299 y18) | refused (save format 2); re-made on HEAD: two strikes on 7019 y20 (above); 6299's HEAD save (1947) none in 400 days | `critic/c32_an_7019y20.json`, `critic/c32_an_6299y18.json` |
-| HI / DL on a HEAD year-20 save | 3,714 events, 158 ms; CSV 3,716 lines | `critic/c32_hi_7019.json`, `critic/c32_dl_7019.json` |
-| Checkers on run 31's seeds (4637 heroes+navy 20 y, 3373 random air 20 y, 6977 bankrupt 20 y, heroWaits 9001) | 0 broken each | `critic/c32_wi_4637_h20_hn.log`, `critic/c32_wi_3373r_h20_air.log`, `critic/c32_wi_6977_h20_bk.log`, `critic/c32_herowaits_9001.log` |
+| R32-B1 (LP / LH / LH2 Calais, Bergen, USA) | **Fixed**: refused `Neutral` at the click; at war it goes (table above) | `critic/c33_lh_3517.json`, `critic/c33_lh2_*.log`, `critic/c33_lp_*.json` |
+| R32-N1 (one click's divisions land apart) | **Unchanged**: Japan's two land h123 and h510 | `critic/c33_lp_jap_shanghai.json` |
+| R32-N2 (trait descriptions hover-only) | **Unchanged** (TR phone identical) | `critic/c33_tr_phone.json` |
+| R32-N3 (refusal toasts cut) | **Unchanged**, and now carries R20's own reason (R33-N3) | `critic/shots/c33nr_eng_calais_desk_click.png` |
+| R32-N4: R31-N1 (Japan's heroes under the Ranking panel, HF 5521 desk) | **Unchanged**: the same 2 of 12 counters unreached | `critic/c33_hf_5521_desk_d0_0.json` |
+| R32-N4: HF 7019 d730 desk, HF/HFT phone 5521, HT phone | identical to run 32 | `critic/c33_hf_7019_desk_d730_0.json`, `critic/c33_hf_5521_phone_d0_0.json`, `critic/c33_hft_5521.json`, `critic/c33_ht_phone.json` |
+| R32-N4: RGT (graph's first tap after a drag) | **Unchanged**: tap 1 opens nothing, tap 2 opens Syria | `critic/c33_rgt_4111.json` |
+| R32-N4: HS 3739, HS 3517 (a hero hides the fleets under it) | **Unchanged** | `critic/c33_hs_3739.json`, `critic/c33_hs_3517.json` |
+| R32-N4: no default in AI play; DF 7019 Poland −800 | **Unchanged**: 0 defaults on new seed 8123 × 20 y; DF the same course (Lithuania taken day 55) | `critic/c33_def_8123.json`, `critic/c33_df_7019_pol.json` |
+| R32-N5 (sea heroes die more) | **Unchanged** (the five heroes-on runs identical) | `critic/c33_ho_on_*.json` |
+| HO, ten seeds × 20 years off, five on | identical to run 32 | `critic/c33_ho_*.json` |
+| HWP 4637 (Richelieu "returns in 21 days") | identical | `critic/c33_hwp_4637_fra.json` |
+| A 4219, Q 6421, K/K2/K3 2203, Z 3517, C 6421/7019, PHZ 2671 | identical | `critic/c33_a_4219.json` … `critic/c33_phz_2671.json` |
+| AN 7019 year 20 | the same two strikes, alerted | `critic/c33_an_7019y20.json` |
+| AN 6299 year 18 | run 32's probe met none, but it started on 30 December 1947 (`startDate`) from the file named `_y18` (cause not traced). On HEAD the same file starts 28 December 1955 and meets two strikes on British India within 400 days, each alerted. Same world: not a change of the build | `critic/c32_an_6299y18.json`, `critic/c33_an_6299y18c32.json` |
+| HI / DL / PF on 7019 year 20 | 3,714 events, 134 ms; CSV whole; 60 fps | `critic/c33_hi_7019_c32save.json`, `critic/c33_pf_7019.json` |
+| SK 1212 (R18's blocks) | identical; new seed 8123 the same (closest pairs 0.14 cells, separate blocks) | `critic/c33_sk_1212.json`, `critic/c33_sk_8123.json` |
+| G 4877, OS2 (run 25's scenario) | as run 32 (G's wall-clock wait times out; the old scenario is refused) | `critic/c33_g_4877.json`, `critic/c33_os2_c25.json` |
+| SB, PL, P, U, RG, BT, FW2, TR, W 7019 | identical | `critic/c33_sb_7019.json`, `critic/c33_p.json`, `critic/c33_u_1600_5557.json`, `critic/c33_rg_4111_desk.json`, `critic/c33_bt_5113_phone.json`, `critic/c33_fw2_2207.json`, `critic/c33_w_7019.json` |
+| LW with heroes (3517, ten years) | 59.9–60 fps, longest gap 83 ms (run 32: 117 ms with six sims beside it) | `critic/c33_lwhon_3517.json` |
 
 ## Blocking issues
 
-1. **R32-B1. A player's landing on a non-enemy coast is undone by a jump home the next day.** Seen in the page (3517,
-   Britain, Calais: `critic/shots/c32lp_eng_calais_h66.png` landed, `..._h84.png` at London) and headless on three
-   cases (`critic/c32_lh_3517.json`: Calais t74 → London t98; `critic/c32_lh2_usa_calais.log`: a US division 17 days
-   at sea, landed at Calais t730, at Washington t745; `critic/c32_lh2_eng_bergen.log`: Bergen t180 → London t193). The
-   order goes through `seaConvoy` (R17), which checks only `hasLanding`; at the next day start `repatriationSystem`
-   finds the division on ground `foreignTo` its nation (France is not Britain's bloc nor its co-belligerent), finds no
-   land way home, and sets its place to the nation's spawn point. No notice and no ticker row (the probe read both each
-   3 hours); the panel had said "Landed". The land rule on the same kind of ground refuses: Sweden's division ordered
-   to Copenhagen (Denmark at peace, reached over the Øresund crossing) is `MoveRejected` "no way by land that keeps off
-   the ground of nations outside its wars" (`critic/c32_sw_swe.json`, `critic/scripts/c32_swe.ts`); Britain's division
-   ordered to Bergen (Norway at peace) over the sea is accepted, lands, and is jumped home. So the two orders
-   disagree. SPEC §3.5 (752–757) specifies the march home and the set-down at the spawn point "only where no land leads
-   there", and §6.2 (1251–1252) that a beachhead on a neutral's cell "goes back to its owner"; neither covers a
-   player's landing on such ground, which R17 accepts and shows as done (R17a's AT names "ordered to land in France"). **Fix:** refuse a player's order over the sea whose landing is on
-   ground `foreignTo` the nation (say why, as the land march does), or let `seaConvoy` count such a landing as the
-   march home's and keep the division where it landed under its order, and never move a land formation across the sea
-   without its transports; tell any repatriation in the formation's panel.
+None.
 
-## Non-blocking issues
-1. **R32-N1.** One click's divisions do not always sail together: Japan's two for Shanghai landed 16 days apart, one
-   boarding at Tokyo at once while the other marched to Matsuyama for another group (`critic/c32_lp_jap_shanghai.json`);
-   Britain's three for Calais landed in two waves (`critic/c32_lh_3517.json`). For Britain this is SPEC §6.2's order
-   of choice (the first group full with two, the third takes a standing group before a full convoy's next voyage);
-   for Japan the cause (room or port) was not traced. Either way the player sees one click land as two expeditions
-   weeks apart, which ROADMAP R17b's "sail as one convoy" does not prepare them for.
-2. **R32-N2.** A trait's description is reachable only by hovering (`title`); on a phone the chips are names with no
-   meaning (`critic/shots/c32tr_phone_GER.png`). Nothing in the game shows a trait act (A/B: `critic/c32_trab_*.json`).
-3. **R32-N3.** A refusal toast cuts its reason: "Cadre infantry division 860: not done: there is no …"
-   (`critic/shots/c32sw_swe_click.png`).
-4. **R32-N4.** Unchanged from run 31: Japan's heroes under the Ranking panel at a desk (R31-N1); the graph eats the first
-   tap after a drag; a hero hides the fleets stacked with it at T1; run 30's diplomacy list; no default in AI play.
-5. **R32-N5.** Sea heroes die more: Sovetsky Soyuz 46.7 times in 20 years over ten seeds (run 31 33.5), 1,237 days
-   waiting past its hour (run 31 0) (`critic/c32_ho_sum.txt`).
+## Non-blocking issues (prioritised)
+
+1. **R33-N1. An order over the sea given at war is carried out after the peace; the land march is stopped.** Japan at
+   war with the Netherlands orders two divisions to Java; God makes peace at t15, when one is at sea. That one landing and
+   being set home is ADR-826's decided case. The other, still ashore at the peace, **boards at t431 — 17 days after the
+   peace — sails 15 days, lands on Dutch Java at t781, and is set home across the sea at t817** (`FormationSentHome`,
+   jump (1631.5, 632.5) → (1819, 385.3); `critic/c33_pm_japned_sea.json`). Japan → Shanghai the same: one boards at t430
+   and lands on China's ground at t510 after a peace at t14 (`critic/c33_pm_jap_sea.json`). In the same situation by
+   land, Germany's divisions ordered to Reims at war with France are stopped at the border after the peace,
+   `MoveRejected 4`, "the way ahead became the ground of a nation outside its wars" (`critic/c33_pm_gerfra_land.json`).
+   R20's commit says the sea order is refused "as a march by land there is"; after a peace it is not. ADR-826 decides
+   only "a peace made while a convoy is at sea". **Fix:** re-check the landing's holder at boarding (and while the
+   division walks to its port), as the march re-checks its way, and cancel with `Neutral` told.
+2. **R33-N2. A refusal at a port bombed shut gives the wrong reason.** Britain at war with France: three divisions for
+   Calais march 2–4 days to Portsmouth under French air strikes and are each refused with reason 5, "it stands at no port
+   of its nation", standing at Portsmouth — Britain's port, its damage 0.63 → 0.9, `portShut` true (`critic/c33_ps.log`,
+   `critic/scripts/c33_ps.ts`). The order was accepted at the click; the player learns days later something untrue.
+   **Fix:** a reason of its own ("its port is bombed shut"), or send the division on to the next open port.
+3. **R33-N3. R20's refusal is readable only as a cut row, under a tooltip that promised the voyage.** Hovering Calais with
+   a British division selected says "Your selected forces go by sea: they board transports at a port"; the click is
+   refused, the formation panel closes (the nation panel takes its place), and the reason is a row cut at "it would land
+   on t…" at 272 px, whose title is "Show the formation"; clicking it removes it without opening the panel
+   (`critic/shots/c33nr_eng_calais_desk_hover.png`, `..._click.png`, `..._row.png`). The spec (`landingNeutral1938.spec.ts`)
+   asserts the panel's notice after `player.click`; a real click on the same cell closed the panel in both probes (sea
+   and land). The land refusal behaves the same (R32-N3). **Fix:**
+   keep the formation panel open on a refusal with the reason in it; let the by-sea line of the tooltip say when the
+   landing is a neutral's ground.
+4. **R33-N4. Ten divisions set home at once are told by one row; six are never told; History has none.** (`critic/c33_shm_ten.json`)
+   With a panel open the ticker shows the last order row only; by `ORDER_NEWS_KEPT = 4` (`src/app/hud.ts` 24) the hud keeps four. The new seed 9419 sets AI
+   divisions home across the sea 255 times in 30 years (`critic/c33_headless_9419.json`, `ev.FormationSentHome`), none
+   of which reaches the player or History.
+5. **R32-N1** (one click, two landings 16 days apart), **R32-N2**, **R31-N1**, **R31-N6**, **R31-N3/no default in AI play**,
+   **R32-N5** — unchanged, by construction (same world) and by re-run (table above).
 
 ## Design objections (none blocking, no score lowered)
-- Save format 2 (R16a) refuses every older save **and every older scenario file**: run 25's editor scenario now reads
-  "made by an older version of Warism, and this one cannot start it" (`critic/c32_os2_c25.json`). A scenario is the
-  player's own work; a missing column with a default (no traits) could load.
-- Repatriation by a jump to the spawn point (ADR-169, older than this batch) was a corner case while only the AI moved
-  armies over the sea; with R17 it is a player's everyday result (R32-B1).
-- Run 31's objections stand.
+
+- An ally's coast is refused with "a nation outside its wars": Britain cannot land in France while the Anglo-French
+  Entente lists France under ALLIES in the same screen (`critic/shots/c33nr_eng_calais_desk_click.png`). The rule is
+  the land march's (`foreignTo` ignores alliances at peace); the wording reads wrong for an ally.
+- ADR-826 keeps the jump home across the sea. On new seed 9419 the AI's divisions are set home that way 255 times in
+  30 years (up to 32 a year); a watcher sees them vanish from foreign ground and appear at a capital.
+- Run 32's objections stand (save format 2 refuses older scenario files).
 
 ## Ideas from other games (not scored)
-- Hearts of Iron-style "military access" asked of a neutral or an ally before a landing on its coast, so that an
-  expedition to a friend's shore is a diplomatic act with a visible yes or no.
-- A trait's effect listed with its sources in the nation's economy and combat panels (e.g. "+15 % ship fire:
-  Naval tradition"), as Europa Universalis shows modifiers.
+
+- Hearts of Iron's naval invasion plan shows, before execution, whether the target coast is reachable and why not; an
+  order line drawn red with the reason on hover would replace the promise-then-refusal of R33-N3.
+- Europa Universalis cancels an army's move when the war that allowed it ends and leaves it where it stands, with a
+  message; a cancelled embarkation (R33-N1) would read the same way.
 
 ## Notes
-- The landing probe's page crashed twice ("page.evaluate: Target crashed", `critic/c32_lp_eng_calais_loaded.json`),
-  both with six headless sims and two other browsers running (the first also when its runner was stopped). Re-run
-  alone at the end (`critic/c32_lp_eng_calais_quiet.json`): no crash, no page error, the same course, and at h120 all
-  three divisions landed at Calais stand in London, "37.1k ×3" (`critic/shots/c32lp_eng_calais_quiet_h120.png`).
-  Counted as the machine's load, not the build.
-- Quiet ten-year watch: `critic/c32_lwquiet_6151.json` (run after every queue ended).
-- `c32_lp_landing.mjs` read the notice with Playwright's default 30 s wait, so each 3-hour step of its first runs took
-  up to a minute; fixed in the script (500 ms) before the Japan case. The Sweden and Netherlands page cases were cut for
-  it and done headless instead (`c32_swe.ts`, `c32_lh2.ts`). The probes' Brest and Tripoli cells were water or on the
-  same land as the source; not used.
-- `same: false` in the save probes compares two objects (`sim.hash()` returns `{tick, hash}`); the hashes are equal.
+
+- Quiet ten-year watch: `critic/c33_lw_6151.json` (log `critic/c33_lwquiet.log`), run after every queue and suite had ended.
+- The phone NR case's tap on the division's counter selected nothing (`critic/c33_nr_eng_calais_phone.json`,
+  `panelOpen: false`); the probe then selected by the API. Not filed: the probe's screen point is computed for DPR 1.
+- `c33_lp_eng_bergen.json` hovered water (its cell is not Bergen's land); the headless case at run 32's cell is used.
+- `c33_ps.ts` and `c33_pm.ts` give the player's orders through `sim.command` with `nation` and `escort`, as the page does.
 
 ## Strengths, verified
-- **The rules agree where the checkers look:** 0 broken over 5 new diploInvariants seeds and 6 worldInvariants runs
-  (up to 20 years, random diplomacy, random world, bankrupt nations), and the worker and a save at sea reproduce the
-  hash exactly (`critic/c32_wd_3517.log`, `critic/c32_lh_3517.json`).
-- **A landing at war is a real feature now:** Japan's order on Shanghai goes from a click through the tooltip's "by
-  sea", the panel's port, sea and landed, a drawn sea leg and an escort that goes home after, and the divisions fight
-  on ashore (`critic/c32_lp_jap_shanghai.json`).
+
+- **The fix is exact and leaves the rest alone:** the three run-32 cases are refused at the click with their own reason,
+  the at-war landings still go, a colony's own refusal reason is unchanged, and fifteen 20-year worlds, a year-20 save
+  and the worker's four arms are bit-identical to run 32 (`critic/c33_ho_*.json`, `critic/c33_seed7019_y20.bin`,
+  `critic/c33_wd_3517.log`).
+- **The rules agree where the checkers look:** 0 broken on five new diploInvariants seeds and six new worldInvariants
+  runs of up to 20 years (random diplomacy, random world, bankrupt nations, heroes and navy, air), and heroWaits 8125.

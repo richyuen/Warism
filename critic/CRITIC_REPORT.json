@@ -1,5 +1,5 @@
 {
- "commit": "e7437a5744d70ec34ca653b93108ffde5927b51f",
+ "commit": "937fd085bdbfddde489ad489c7e688d93b7dbc42",
  "mode": "full",
  "scores": {
   "mapVisuals": 7,
@@ -17,13 +17,14 @@
   "aircraft": 8,
   "aiNukes": 8
  },
- "blocking": [
+ "blocking": [],
+ "underBar": [
   {
-   "id": "R32-B1",
-   "title": "A player's landing on a non-enemy coast (an ally's, a neutral's) is carried out, told 'Landed', and the next day the division is put back at its capital across the sea, untold",
-   "evidence": "critic/shots/c32lp_eng_calais_h66.png, critic/shots/c32lp_eng_calais_h84.png, critic/shots/c32lp_eng_calais_quiet_h120.png, critic/c32_lp_eng_calais_quiet.json, critic/c32_lh_3517.json (Calais t74 -> London t98), critic/c32_lh2_usa_calais.log (US division landed at Calais t730, at its spawn t745), critic/c32_lh2_eng_bergen.log (Bergen t180 -> London t193), critic/scripts/c32_cellwho.ts (foreignTo ENG/FRA true); src/sim/systems/movement.ts repatriationSystem (c.x = spawnPoint) vs seaConvoy (hasLanding only)",
-   "fix": "Refuse a player's order over the sea whose landing is on ground foreignTo the nation, with the reason the land march gives; or keep a division where its player's landing put it; never move a land formation across the sea without transports, and tell any repatriation in the formation's panel and the ticker."
+   "dimension": "naval",
+   "score": 7,
+   "bar": 8,
+   "why": "R32-B1 fixed; not 8 for the player landing's edges: R33-N1 (an order over the sea given at war boards 17 days after the peace, lands on the former enemy's coast and is set home across the sea, where the land march is stopped at the border with Barred; critic/c33_pm_japned_sea.json, critic/c33_pm_gerfra_land.json), R33-N2 (a port bombed shut refused as 'it stands at no port of its nation'; critic/c33_ps.log), R33-N3 (the refusal only as a cut row under a tooltip that promised the voyage; critic/shots/c33nr_eng_calais_desk_hover.png, critic/shots/c33nr_eng_calais_desk_click.png), R32-N1 unchanged (critic/c33_lp_jap_shanghai.json)"
   }
  ],
- "timestamp": "2026-11-04T21:39:00Z"
+ "timestamp": "2026-11-04T23:25:00Z"
 }

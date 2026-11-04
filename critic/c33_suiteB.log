@@ -1,0 +1,25 @@
+== c33_g_editor 4877 17:38:59
+   exit 0
+== c33_os2_scen critic/c26_critic_standoff.warsim-scenario c25 17:54:36
+   exit 0
+== c33_sb_seaballs 7019 17:55:40
+   exit 0
+== c33_pl_planes 7019 GER POL 5299 17:56:02
+   exit 0
+== c33_p_phone  17:56:18
+   exit 0
+== c33_u_ui  17:56:38
+   exit 0
+== c33_rg_relations 4111 365 1600 900 desk &heroes=on 17:57:00
+   exit 0
+== c33_hs_herostack 3517 17:57:42
+   exit 0
+== c33_bt 5113 390 844 phone 17:58:03
+   exit 0
+== c33_fw2_forcewar 2207 17:58:12
+   exit 0
+== c33_tr_traits 3517 phone phone 17:58:59
+   exit 0
+== c33_long_watch2 3517 10 &heroes=on hon 17:59:20
+   exit 0
+SUITEBDONE

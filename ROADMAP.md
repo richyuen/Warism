@@ -140,3 +140,19 @@ Rules:
   Done: `seaConvoy` refuses `Neutral` (15) by `foreignTo` of the target's and the landing's holders;
   `FormationSentHome` (71), a row below the ticker (ADR-826); `landingNeutral1938.test.ts` 3 of 3,
   `landingNeutral1938.spec.ts`. Pin unmoved.
+- [ ] R21 **Naval back to its bar: the edges of the landing order** (critic run 33: no blocking issue, naval 7 under
+  its bar of 8 for R33-N1–N4 and R32-N1). Each sub-item its own commit; then the critic again.
+  - [ ] R21a A sea order outlives the peace (R33-N1): a division bound for a landing (marching to its port,
+    waiting, or boarding) whose landing's ground became a neutral's is stopped, `Neutral` told, as a march is
+    stopped at the border. AT: Japan's division ordered to Java at war, peace before it boards: it never
+    boards, and is told; red without the rule.
+  - [ ] R21b A port bombed shut says so (R33-N2): a division refused at its own shut port is told that the
+    port is shut, not "no port of its nation". AT: Britain at Portsmouth, the port shut: the reason is the new one.
+  - [ ] R21c A refusal is read in full (R33-N3): a refused order keeps the formation panel open with the
+    reason in it; the tooltip over a neutral's coast says the landing would be refused, not "go by sea". AT: an
+    e2e spec with a real mouse click over Calais at peace: panel open with the reason; the tooltip's line.
+  - [ ] R21d Many sent home are told (R33-N4): divisions of the player's set home in one hour are one row
+    that counts them, and each is a History event. AT: ten set home at once: one row naming ten, ten History rows.
+  - [ ] R21e One click lands together (R32-N1): the divisions of one click to one target board one convoy
+    where one group has room, rather than two groups at two ports weeks apart. AT: Japan's two divisions
+    to Shanghai land within a day of each other.
