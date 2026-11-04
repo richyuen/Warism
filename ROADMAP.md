@@ -68,4 +68,27 @@ Rules:
   point 3 cells from the enemy, the code 3 cells beyond the formation; the snapshot's `majors` is read
   by no UI (R6e). `air.ts`'s header says no land rule reads a wing (R6g). `src/app/player.ts`'s header
   says taking control switches the nation's AI off (ADR-759: its layers but nukes stay on), and
-  `exportScenario` clears every statistic but `stats.nuke` (R6j).
+  `exportScenario` clears every statistic but `stats.nuke` (R6j). SPEC §9.3 says a right-click orders
+  a march; it is a left-click with formations selected (the right-click is the nation menu).
+- [ ] R17 **Landings the player can order** (the user's decision, 2026-11-04, ADR-823). A left-click on
+  land over the sea with divisions selected already lands them, but only when the player's transports
+  wait at a port of their land; else it is refused. Nothing shows a division bound for a port, waiting
+  or at sea; divisions land one by one; the player's transports sail unescorted.
+  - [ ] R17a Transports come to the troops: with none at a port of the division's land, the nearest
+    idle transport group of its nation (not under the player's own order) sails to the port of that
+    land nearest the division; the division marches there and boards when both are in. AT: a 1938
+    case, a British division in England and Britain's only transports at Gibraltar, ordered to land
+    in France: it boards at an English port and lands within the days the voyage takes; with no
+    transports at all, the refusal says so.
+  - [ ] R17b Landings together: divisions ordered over the sea in one click share the transports,
+    sail as one convoy and land on the same stretch of coast; those that do not fit wait for the next
+    voyage. AT: three divisions, room for two: two land together, the third on the return trip.
+  - [ ] R17c Shown: the formation panel says marching to port, waiting for transports, at sea, or
+    landed; the map draws the sea leg and the landing point; the cursor over land across the sea
+    says the order goes by sea. AT: an e2e spec of an order over the sea, each state in turn.
+  - [ ] R17d Escort: an "Escort with warships" box in the panel of the selected divisions, ticked by
+    default and remembered. Ticked, the order takes the nearest idle warfleet of the nation (never
+    one under the player's own order) to the landing water ahead of the transports; it stays until
+    the divisions are ashore, then goes home or back to its station. None free: the transports sail
+    alone and the message says so. AT: a case with a free warfleet (escorted, at the water before the
+    transports) and one without (alone, told); the box's state survives a reload.

@@ -899,3 +899,11 @@
   invariant's desertion bound leaves out armour that fought in the hour (a hole of its own, found on 7019).
   Whole unit suite 2,125 green; `diploInvariants` 99 0 broken; pin f7089e32 → aa1a5dbb.
 - **Next:** R16's remaining notes (war.ts header, `revival.cooldownDays`, retreat.ts header), then the next item.
+
+## 2026-11-04 — R17 planned: landings the player can order (ADR-823)
+- Found: a player's left-click over the sea lands divisions only when transports already wait at a port of their
+  land; nothing brings transports, shows the voyage, or escorts it. SPEC §9.3 says right-click (it is left; filed
+  under R16's notes).
+- The user's decisions: real transports; R17a transports come, R17b landings together, R17c shown, R17d an escort
+  box ticked by default. The United States' lean stays a watch.
+- **Next:** R16's notes, then R17a.

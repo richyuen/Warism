@@ -7,6 +7,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-823 · 2026-11-04 · accepted — The player orders landings overseas, with escort (ROADMAP R17)
+
+- **Context.** A left-click on land over the sea with divisions selected lands them (PLAN 4.5a,
+  4.9b), but only when the player's transports already wait at a port of their land; transports
+  never come to the troops, divisions land one by one, no screen shows the voyage's state, and
+  only the AI escorts its landings.
+- **Decision (the user's, 2026-11-04).** Keep real transports (no abstract sea lift: it would make
+  transports, the sea's control and the invasion AI pointless). The same left-click order; the
+  transports come to the troops (R17a); a click's divisions land together (R17b); the state and the
+  sea leg are shown (R17c); an "Escort with warships" box, ticked by default and remembered, sends
+  the nearest idle warfleet not under the player's own order with the landing (R17d). A fleet the
+  player orders is never taken; ordering a fleet to the landing water stays the way to pick one.
+- **Also (the user's, 2026-11-04).** The United States' lean after R16b (29% of the land on the
+  mean, done31 20%) stays a watch for the critic and the release sweeps, not an item.
+
 ### ADR-822 · 2026-11-03 · accepted — A nation's traits are state, shown and set by God (ROADMAP R16a)
 
 - **Context.** Of a trait's 18 modifier kinds only `income` and `manpower` acted, folded into two
