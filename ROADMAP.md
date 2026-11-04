@@ -21,7 +21,7 @@ Rules:
 
 ## Later
 
-- [ ] R6 **SPEC.md as the game is.** The rest of SPEC.md after R0i: each section rewritten to what
+- [x] R6 **SPEC.md as the game is.** The rest of SPEC.md after R0i: each section rewritten to what
   the code does now, the history left to DECISIONS. Rules of the rewrite: ADR-821. Each part's AT:
   its section added to `tests/unit/specRefs.test.ts` at 0 misses, and every constant it states read
   from the code, listed with file and line in PROGRESS.
@@ -45,7 +45,9 @@ Rules:
     Done: rewritten from three read-throughs of the code (29 → 9 KB); `specRefs.test.ts` 9 of 9.
   - [x] R6i §8: semantic zoom.
     Done: rewritten from three read-throughs of the code (43 → 10 KB); `specRefs.test.ts` 10 of 10.
-  - [ ] R6j §9: UI and UX.
+  - [x] R6j §9: UI and UX.
+    Done: rewritten from three read-throughs of the code (39 → 11 KB); `specRefs.test.ts` 11 of 11, every
+    section at 0 misses (SPEC.md now 1,878 lines).
 - [ ] R16 **Traits that do nothing** (found by R6c). Of a trait's modifiers only `income` and
   `manpower` act; `landAttack`, `org`, `stability` and the rest are validated and read by nothing,
   and a scenario trait's `aggressionBias` acts only when traits are random. Either make them act
@@ -54,4 +56,6 @@ Rules:
   member's flag, the code by its leader's. And the scenario's `revival.cooldownDays` is read by
   nothing (the cooldown is `REVIVAL_COOLDOWN`); found by R6d. `retreat.ts`'s header puts the retreat
   point 3 cells from the enemy, the code 3 cells beyond the formation; the snapshot's `majors` is read
-  by no UI (R6e).
+  by no UI (R6e). `air.ts`'s header says no land rule reads a wing (R6g). `src/app/player.ts`'s header
+  says taking control switches the nation's AI off (ADR-759: its layers but nukes stay on), and
+  `exportScenario` clears every statistic but `stats.nuke` (R6j).

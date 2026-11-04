@@ -2,8 +2,8 @@
 
 Status: v1.0 (2026-11-03, after `release-2026-11-03`; ADR-805). This document says how the game works
 now. The *why* of each choice is in `DECISIONS.md` and `docs/history/DECISIONS-<YYYY-MM>.md` (cited as
-`[ADR-n]`). §1–§8 and §10 are current; the other sections are being brought up to date one by one
-(ROADMAP R6), and where one disagrees with the code, the code and the newest ADR win. A current
+`[ADR-n]`). Every section is current (ROADMAP R6); where one disagrees with the code, the code and the newest
+ADR win. A current
 section names only files, code and scripts that exist (`tests/unit/specRefs.test.ts`, ADR-821).
 
 **Contents.** 1 Goals · 2 Architecture (2.1 module rules, 2.2 repo layout, 2.3 worker protocol,
@@ -1623,463 +1623,140 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
 
 ## 9. UI / UX
 
-- **Layout** (parity with the VISUAL reference): left nation panel, Actions/Economy tab panel,
-  right Statistics ranking, bottom bar (map modes, pause, God Mode, Statistics, speed,
-  date, events counter, history log), and a war-banner strip of active wars.
-- **Nation panel** (implemented PLAN 1.31a, `src/ui/NationPanel.tsx`): opens on the nation
-  selected by a map click. Overview and Economy tabs; nation chips select. Data comes from the
-  worker's `nationStats` message (every living nation + active wars, at most 1 Hz while ticks
-  advance, and after init/load); real-map scenarios only.
-- **Formation panel** (PLAN 2.14b, `src/ui/FormationPanel.tsx`): opens on a click on a
-  formation, at any zoom that shows formations, where the nation panel stands. Its name and
-  kind, whose it is (the chip leads to the nation panel), its men against a whole one's, its
-  supply, whether it is in contact or on the march, its elements by unit type. The numbers are
-  the sim's (`formation {id}`, §2.3), asked for again as ticks advance with the count of the
-  first answer; the panel closes when the formation is gone, whether or not another has taken
-  its id, and at a load (ADR-115). The formation is marked on the map while the panel is open.
-  A formation in contact has a button beside its status, "To its fight" (PLAN 3.11b,
-  ADR-199): `FormationDetail.fight` is the middle between its block and the block of the
-  nearest enemy it is in contact with (`contactsOf`, the one its block faces; where that one died later in the hour, the nearest live enemy in reach), that enemy's
-  id, and how far apart the two blocks' middles stand east-west and north-south. The camera
-  flies there (`MapView.showBattle` with that span): at 20 m/px, or further out, as far as
-  holds both blocks (`T3_MAX_M`, 30 m/px, at most where the view is large enough for 20, so that it stays
-  T3; 28 before ADR-700; a smaller view, which has a battle at T2 already, as far out as holds the two;
-  a pair T3 cannot hold, their middles more than the view at 30 m/px less 5 km apart, as far out as holds the two
-  within T2, ADR-743). No rule of `deployOf` changed for it: a line behind its side's front stands up to a
-  cell from the enemy's block.
-- **Statistics ranking and war banners** (implemented PLAN 1.31b, `src/ui/StatsRanking.tsx`,
-  `src/ui/WarBanners.tsx`, `src/shared/ranking.ts`): top-15 ranking (land, army, income,
-  treasury, manpower) on the right, toggled by the bottom bar's Statistics button, each row
-  one line (PLAN 4.11, ADR-305: the name cut with an ellipsis, the value never wrapping), with
-  the nation's flag and a bar in its colour as long as its value is of the first row's (PLAN
-  7.4c, ADR-442, as AoC's Statistics panel); one banner
-  per active war (side leaders, ally counts, score bar) above the bottom bar, at most 6 + "+N" (8 until PLAN 7.4f6: three rows deep at 1400 px).
-  A click on a banner selects the attackers' leader and, when the war has a battle (gold
-  swords; ADR-96), flies the camera to it at 20 m/px (`flight` in `render/camera.ts`: pan and
-  zoom in one eased movement, ended by any camera input; ADR-91, ADR-94, ADR-95, ADR-97).
-  While paused, the worker keeps pumping (without ticking) until throttled derived messages are
-  flushed, so a single step still updates the UI.
-- **Map modes** (implemented PLAN 1.17–1.30a, `src/shared/mapModes.ts`):
-  - *Choosing one* (the user's request of 2026-10-29, `BottomBar.tsx` `MapModeMenu`): the bar's
-    map button opens a menu of every mode above it, the current one ticked, each with its number
-    key (1–9, 0; the eleventh has none); a pick switches and closes it, as do Escape (before the
-    game's Escape), the button again and a press elsewhere. The button no longer steps to the
-    next mode. While it is open the bar stands over the war banners and the ticker.
-  - *Implemented:* political, alliances, puppets, terrain, wars (red at war), diplomacy (relations
-    to the nation selected by clicking the map), income (log ramp) and revolts.
-  - *Off-map rows* (above/below the map when fully zoomed out) render as sea.
-  - *How:* palette swaps from snapshot fields (alliance leader, overlord, income, war pairs);
-    terrain uses the shader's terrain layer. Each mode has a legend (`src/ui/MapLegend.tsx`).
-  - *Revolts* (1.30b): a per-province unrest choropleth. The worker sends the province raster
-    in `mapLayers` and per-province unrest bytes (`provinceStats`) when `Provinces.version`
-    changes; the shader colours land by its province's unrest (fill mode 2).
-  - *Sea control* (PLAN 4.7a): the worker sends the zone of each cell when the zones are new
-    to the client and each zone's holder when that changes (`seaControl`; a world with no
-    sea control yet, as after a load of a save in which no zone is held, is sent all open
-    once where the page had holders, PLAN 4.8p); the shader tints a
-    zone held with 0.5 of its holder's colour over the sea's, leaves an open one the sea's, and
-    fades the land 0.65 towards grey (fill mode 3). Its legend (PLAN 4.10c, ADR-304) lists the
-    holders in their colours with their zones, the most first (8, and how many more), and names
-    the zone under the cursor with its holder ("Inner Seas: held by United Kingdom"; its sea's
-    name from the map's seeds, sent with the zones; "held by none").
-  - *Air superiority* (PLAN 5.7c, ADR-325): the worker sends each air zone's holder daily
-    (`airControl`: the nation with superiority 0.6 or more there, contested, or none) with the
-    cells' air zones the first time and after a load, at once (at the first look of a day a pump
-    stepped past its first hour in; PLAN 5.8n, ADR-338); the shader (fill mode 4) fades land as the sea-control mode
-    does and tints a zone held, land and sea, 0.55 of its holder's colour, a contested one striped.
-- **Map modes still planned**: fallout, supply (with their phases).
-- **God Mode commands** (implemented PLAN 1.32a): `renameNation` (saved in `world.names`,
-  section `world.names`; the empty name gives back the scenario's name or the founding
-  province's, and is refused for a nation with neither: ADR-124), `declareWar`, `forcePeace`, `createAlliance`, `collapseNation` (God
-  Kill: the nation dies, its land goes back to claimants or founds at most five nations, and
-  no war starts: ADR-99), `reviveNation` (within the revival
-  rules; refused with the reason: it lives, no other nation holds land it has a core on, no
-  revival left, the cooldown: ADR-121), `spawnRevolt`, `forceBreakthrough`, `grantBuff`, `setAi` / `aiEnabled`,
-  `setIncomeBonus`, plus the edits from 1.17–1.24. `sim.inspect()` returns a JSON world summary
-  (tests, critic). Owned-cell counts (`nations.cells`) are maintained by `World.setOwner`.
-  `spawnFormation {nation, x, y, strength, template?}` (PLAN 2.5, ADR-68): with a template of
-  the scenario the formation has its elements and fights, as one from production does; without
-  one it is a bare strength with no elements (the toy world). It has no button in the God tab.
-  It stands where `standPoint` puts the place given (on the water of a coastal cell: the
-  cell's land point), and is refused (`Refusal.AtSea`; PLAN 3.12Rq, ADR-228) where that is a
-  cell of no component of the route grid (water) or off the map: no route begins there.
-  **A command that is not carried out says why** (PLAN 2.17a, ADR-117): `applyCommand` returns a
-  `Refusal` (`shared/commands`), the tick emits `CommandApplied` or `CommandRefused` (b = the
-  reason) after the command, the worker posts `{type: 'refused', reason}` to the page, and the
-  God tab says it in words. Refused: a NaN or an infinity anywhere in a command; a dead nation
-  where a living state is needed (a formation, control, land, an alliance, a puppet, a war); a
-  nation that is not there; a number out of its range (`Refusal.OutOfRange`, `inRange`; PLAN
-  7.2c, ADR-426): an id that is not a whole number of 0 or more, a place more than two map
-  widths or one map height off the map, a strength below 0, a radius past `MAX_PAINT_R` (32,
-  the editor's), a side of a war not 0 or 1, an alliance with a member twice. Ally with a nation in an alliance is refused; "Leave alliance" is
-  the button for that.
-- **Player control** (PLAN 1.33a, `src/app/player.ts`): "Take control" in the nation panel
-  (`setPlayer`, saved as `settings.player`, so loads and resumed autosaves keep it) makes map
-  clicks player orders. Its AI stays on (ADR-759, the user's decision; `ai/layers.ts`): each
-  layer acts for it while its box is ticked (`World.playerAi`, `setPlayerAi`, saved while not
-  the default): army (fronts, invasions, merging hollow divisions), navy, air, diplomacy (war,
-  peace, alliances), economy (building, research, lay-up), all ticked when a nation is taken, and
-  nuclear strikes, not. God Mode's AI switch (`aiOff`) is still every layer. A direct order of
-  the player's (`World.playerOrders`: a march or a fleet's move, a wing's rebase or mission)
-  keeps every layer's hands off its formation until it is done: a march until it arrives (or
-  ends, or the formation retreats), a rebase until the wing is at its base, a mission for 24 h.
-  The AI then has it back and may undo the order at once. A formation or a wing placed by God
-  Mode is the AI's at once (a fleet so placed holds no station: `spawnFleet.free`).
-  A click on an own formation selects it (Shift toggles, Esc clears;
-  rings on the overlay); a click elsewhere orders the selection to march there (into enemy land
-  = attack). "Release control" hands the nation back to its whole AI (and its God Mode switch on,
-  for a save from before ADR-759, where the nation played had it off); the boxes go back to the
-  default and the player's orders are forgotten. The bottom bar shows the nation and count.
-  The selection is of the played nation (ADR-116): each snapshot takes out of it an id that
-  is gone or is another nation's by now (`MapView.selectionNation`), the bar's count
-  follows, and a load empties it.
-  The selection's mark (`MapView.drawSelection`, the user's request of 2026-10-29): a gold frame
-  with a glow and a pointer above it, around the T1 marker that stands for a selected formation
-  (or its stack), a ring where no marker is drawn (T0), and at T2 and T3 around the box of its
-  elements on the screen (the box its tag is placed by), so that it grows with the zoom; the two
-  cross-fade with the elements' share. A click that selects a formation has the camera follow
-  the selection (`CameraController.follow`, `MapView.followPoint`): its middle where the sprites
-  are drawn, between the tick before and the tick in hand, is eased to the middle of the view;
-  a zoom goes on about it. A pan of the user's (a drag past 5 px, a pan key, one finger, a jump
-  or a flight) ends the follow, as an empty selection does.
-  A selection box (the user's request of 2026-10-29; `MapView.formationsInBox`, `PlayerControl.boxSelect`):
-  a Shift-drag of the mouse (past 6 px; less is a Shift-click) adds the played nation's
-  formations in it, a Ctrl+Shift-drag takes them out; on a touch screen a finger held still
-  450 ms, then dragged, draws one (a finger that moves first pans). In it: each formation drawn
-  in the box, and far out every one a T1 marker overlapping it stands for. The land formations
-  where there is one, else the fleets; never wings. Ctrl+A selects all of them (`selectAll`).
-  A box and Ctrl+A leave the camera where it is (no follow). The box is drawn dashed gold, red
-  for one that takes out.
-  A right-click (no drag: a drag of the right button pans) on the ground of another nation
-  (its controller) opens its menu (`src/ui/NationMenu.tsx`, `PlayerControl.menu`; the user's
-  request of 2026-10-29): Declare war, or Offer peace in the war with it; Propose alliance,
-  disabled at war and between allies. The Actions tab's commands. It closes with its action, a
-  press or a wheel turn on the map, Escape (before the selection), a load, or a change of the
-  nation played; a refusal of its action within 3 s is told in words where it was, for 5 s.
-  The controlled nation gets an Actions tab (PLAN 1.33b, `src/ui/ActionsTab.tsx`). At its top the
-  AI assist (ADR-759): a box for each layer of the AI (Army, Navy, Air, Diplomacy, Economy,
-  Nuclear strikes), ticked as `World.playerAi` has them (`nationStats.playerAi`); a tick or an
-  untick sends `setPlayerAi`, applied at once. Below:
-  - `declareWar`, `offerPeace` and `proposeAlliance` (refusable, unlike God commands):
-    - peace is accepted when the offering side leads by ≥ 25 or the other side's exhaustion is
-      > 40, never against a side fighting to the death;
-    - an alliance is accepted when the target is unallied, not a puppet and not at war with
-      the proposer.
-  - Production: every land and sea template with gold, manpower and training days
-    (`mapLayers.templates`), Build when affordable, and the training queue
-    (`NationStat.queue`). A fleet is disabled, "no port", for a nation with no shipyard
-    (`NationStat.shipyard`, PLAN 4.2f, ADR-253; the worker asks `shipyard` of each living
-    nation, about 3 ms for all, by the ports' water of the zones alone, `portSeaOf`: the
-    zones are built at the first stats of a game, not the lane graph). A wing is disabled, "no
-    airfield with room", where the nation's most room for aircraft at an airbase it holds
-    (`NationStat.airRoom`) is under the wing's aircraft (`TemplateInfo.aircraft`; PLAN 5.8v4,
-    ADR-355).
-  - The air force (PLAN 5.8v1, ADR-352): its wings (`nationStats.wings`, the player's, by
-    id), each with its template, base (an airbase, a carrier), mission and whether it flies;
-    a button arms its order (Patrol, Strike, or Supply for a transport; Rebase), the next map
-    click gives it there (`wingMission`, `wingRebase`, with the nation), and Escape disarms it.
-    Paradrop (PLAN 5.8v2, ADR-353), with transports: armed for the formations selected, the
-    next map click drops each there (`paradrop`). A refusal of either is told as a march's is
-    (PLAN 5.8v3, ADR-354: `orderNews`, with its reason in words; a wing named by its template).
-- **God Mode UI** (PLAN 1.32b, `src/ui/GodTab.tsx`): the bottom bar's God Mode button adds a God
-  tab to the nation panel. It has rename, income bonus ±10, AI switches (nation and world), war/
-  ally/puppet on a chosen target, peace per war, buffs, revive (dead nations), Kill (two clicks).
-  Map tools (revolt, breakthrough from two clicks, territory brush) take the next map clicks.
-  The territory brush also paints on a left-drag (PLAN 1.44b): a disc at the press, then the
-  way to every further cell the pointer enters; the right or middle button pans meanwhile.
-  It gives the land to the selected nation, owner and controller (PLAN 2.17b, ADR-118): it
-  sends the editor's `editPaint` on the nation layer (radius 5, no mask; `brush` with
-  `stroke: 'start'` at the press, `line` with `stroke: 'more'` after). A stroke is one step
-  of the editor's undo history; the keys of undo and redo work while the editor is open.
-  God commands are sent with `now`: applied at once between ticks with the next step's tick
-  stamp (`Sim.applyNow`), so they show while paused and replay identically.
-  What the tab holds is its nation's (`src/app/hud.ts`, `GodTab.tsx`): the words of a refusal
-  are shown only while the selection is the one the command was sent under, and go with any
-  change of the selection or of God Mode (ADR-125); an armed Kill and a typed name are
-  nothing on another nation's tab; a selected nation that the statistics list among the dead
-  is deselected, and with no nation selected an armed territory brush is switched off
-  (ADR-126).
-  God Mode's placing (the user's request of 2026-10-29, `PlayerControl.placing`): with God Mode
-  on, the played nation's Actions tab lists every template, of land, sea and air, researched or
-  not, each with Place. One armed, each map click puts one of the played nation's there at once,
-  with no gold and no training: `spawnFormation` (any land, the enemy's too), `spawnFleet` (the
-  water by the click; it holds its place until ordered away), `spawnWing` (an airbase of its with
-  room). The click is the place on a formation too. It stays armed until Escape, the same
-  button, another order or God tool armed, a change of the nation played, or God Mode off. A
-  refusal is told in words under the armed note. Nothing new is saved: the commands are those of
-  the editor and the God tools.
-- **God Mode**: rename; force war, peace, alliance or collapse; spawn a nation, revolt or battle;
-  grant buffs; take control of a nation; disable AI globally or per nation; toggle nukes
-  globally or per nation; grant warheads; force a strike. All of these are Commands.
-- **Editor** (paint tools implemented PLAN 1.35, `src/sim/editor.ts`, `src/ui/EditorPanel.tsx`):
-  - Commands `editPaint` (layer nation = owner + controller, or terrain; tool brush / line /
-    bucket; radius ≤ 32; mask by terrain or nation), `editUndo` and `editRedo`.
-  - The diff stack is world state (`edits.*` sections, ≤ 50 edits and 500 k cells), so a save
-    plus a log with undos replays exactly.
-  - A dead nation gets no cell from the history or an import (PLAN 3.4Ri) [ADR-146]: an undo or
-    a redo that would write one writes the living nation the step says held the cell, else
-    nobody; a controller that is dead becomes the owner. The step is kept as it was made.
-    `importLayer` reads a dead nation's id as unowned, as an unknown one.
-  - Land cells only: terrain edits are land ↔ land until map import (1.37) can regenerate the
-    fine coastline. Terrain edits drop nav and paths; the worker resends `terrainLayer`.
-  - UI: the bottom bar's Editor button; map clicks paint; Ctrl+Z / Ctrl+Y.
-  - Painting by dragging (PLAN 1.44) [ADR-63]: while the brush or the line is the editor's tool,
-    the primary button (and one finger) paints and does not pan; the camera pans with the right
-    or middle button, two fingers and the keys. The brush stamps at the press (`editPaint` with
-    `stroke: 'start'`) and paints a line to every further cell the pointer enters (`stroke:
-    'more'`). A stroke is one undo step: `more` grows the top edit instead of pushing one
-    (`EditStack.stroke`, saved only while a stroke is open). The line paints from the press to
-    the release; released in the cell of the press it is a click of the two-click line. The
-    bucket and the scenario tools are click tools: with them a left-drag pans.
-- **Map import** (PLAN 1.37a):
-  - `src/shared/mapImport.ts` maps an image to the map: nearest-neighbour resample, then the
-    nearest palette colour (terrain colours, or nation colours within 40, else unowned). The
-    result travels as runs in the `importLayer` command.
-  - `importLayer` lets terrain change water ↔ land; owners of new water are cleared in a linked
-    edit, so undo/redo act on the pair. The undo cap never evicts the two newest edit groups.
-  - The worker reports `terrainLayer.landChanged` (land/water differs from the start); the
-    renderer then draws cell coasts with water taken from the terrain layer.
-  - City cells keep their land (a city becomes an island). Formations left on water move to the
-    nearest land within 64 cells, or are removed (PLAN 1.41).
-- **Scenario files** (PLAN 1.38, `src/shared/scenarioFile.ts`, `src/app/scenarioFiles.ts`):
-  - A `.warism-scenario` file is gzip of the magic line, a JSON header (format, name, base,
-    w, h, tick, hash) and the state bytes.
-  - `Sim.exportScenario` saves the world without its run history (command log, pending,
-    history log, statistics, undo stack) and leaves the running game untouched.
-  - Import checks the base and map size, loads the bytes, and compares the state hash with
-    the header. The editor's "Scenario file" section exports a download and loads files.
-- **Flags in play** (PLAN 1.37b, `src/shared/flagPixels.ts`, `src/app/flagStore.ts`,
-  `src/ui/FlagEditor.tsx`):
-  - `setFlag {nation, runs}` stores a 36×24 pixel flag in the world, saved with the names;
-    empty runs restore the scenario flag.
-  - The app resolves each nation's flag: custom, else its scenario FlagSpec rasterized to 36×24
-    (stretched to 3:2), else plain colour. Flags are drawn at capitals from 3 px per cell, and
-    in the nation panel.
-  - The editor's flag tool offers pencil, bucket, colour picker and 11 presets. The editor
-    panel docks right, hiding the ranking, so the map centre stays free.
-- **Scenario editing** (PLAN 1.36, `src/sim/scenarioEdit.ts`):
-  - Commands `spawnCity` (a named city on land; adds 20 × size × mean land-cell economy to its
-    cell, stored on the row and taken back by `removeCity`), `removeCity` (a capital
-    relocates), `setCapital`, `setGold`, `setCore` (core or claim; a dead nation's claim is a
-    preset revolt) and `annexNation` (land, formations, cores and puppets pass; `NationAnnexed`).
-  - Editor city names are saved with the nation names. The worker resends the city layer
-    (`cityLayer`) when cities change. Alliances and puppets use the God tab's commands.
-  - The core-cost rule waits for a core economy.
-- **Editor forces** (PLAN 7.13a, 7.22c, 7.24b; `src/sim/placeForces.ts`):
-  - `spawnFleet` puts a fleet on the sea water nearest the click within `BASE_PICK_CELLS`; it
-    holds that place (`world.station`). Refused `NotAtSea` where no such water is near.
-  - `spawnWing` puts a wing at the airbase of its nation's with room for its aircraft nearest
-    the click: anywhere when the click is on the nation's own land, else within
-    `EDITOR_WING_CELLS` (4 at M) [ADR-505]. Refused `NoAirbase` otherwise; the worker then adds
-    to the `refused` message the nearest base of the nation's with room and its km from the click
-    (`nearestWingBase`, read from the command log; null where it holds none), and the editor says
-    so under the refusal. A change of the editor's nation clears the refusal.
-- **Editor**: brush, bucket, line; undo/redo (command-pattern diff stack); target
-  mask (paint only over a selected terrain or nation); cities; gold and core costs; alliances;
-  puppets; annex; preset revolts; map import (image → terrain/owner via palette
-  mapping); flag editor with presets (tricolours, crosses, cantons, emblems from
-  our own SVG set); save/load scenario files.
-- **Stats** (implemented PLAN 1.34b):
-  - `src/sim/stats.ts`: a monthly sample per living nation [tick, nation, land, income, gold,
-    men, casualties], saved as f32 `stats.rows`. It is the last system of the tick.
-  - Casualties are counted in `settleFormation` as men lost since the last settle (combat,
-    attrition, desertion).
-  - The worker serves the rows raw (`stats` request); `StatsChart` (Charts button in the
-    ranking) draws SVG lines for the top 5 at the latest sample + the selected nation.
-  - Naval/air military sizes join with their phases.
-- **Stats**: per-nation series (land in km² [ADR-52], income, gold, military size by domain,
-  casualties, warheads), ranking list, charts.
-- **History log** (implemented PLAN 1.34a):
-  - `src/sim/history.ts`: state, saved as `history.rows`. Every emitted event of a
-    `HISTORY_KINDS` kind is recorded on emit.
-  - The worker resolves names per `HISTORY_ROLES` (`history` request,
-    `src/worker/historyRows.ts`). No row shows an id (PLAN 3.12a, ADR-208): an alliance has
-    its name, alive or dissolved (`Alliances.past`), and its founder's (`Alliance.founder`,
-    the row's `of`); a Major Battle the city it began near.
-  - A kind that is more than one thing has a sentence for each (`HistoryRow.as`, told from
-    the log alone, so a game saved before reads the same and no state changed). A
-    `RevoltSpawned` (PLAN 3.12b1, ADR-209): "{a} broke away from {b}" for a nation founded;
-    'revived', "{a} took back land held by {b}", when a has a `NationRevived` in that hour;
-    'joined', "More of {b} rose and joined {a}", when a had a `RevoltSpawned` before and no
-    `NationEliminated` since. A `LandCeded` (ADR-210, §4 "Land handed over"): its own
-    sentence, or 'left' when b died in that hour. An `AllianceJoined` (PLAN 3.12Rg1,
-    ADR-214; every member of an alliance that is made has one, the founder first):
-    'founded', "{a} founded {b}", when a is the alliance's founder and no row before names
-    the alliance; b is then told without its founder ("Norway founded a Defensive Pact").
-    A `WarEnded` (PLAN 3.12Rn, ADR-225; a war that a bond ended, emitted by
-    `leaveBondedWars` when the nations that leave were the last of their side: a the leader
-    of the side that stayed, b the nation that left): 'puppet', "The war between {a} and {b}
-    ended: {b} is now a puppet of {c}", when a row before it in its hour is b's
-    `PuppetCreated` or a `NationAnnexed` (the nearest of them: the overlord, or the annexer
-    that has b now, is the row's `cn`); else "… ended with no peace signed". A war whose
-    last nation of a side died has no row of its own: the death's row is its end.
-  - God Mode's acts (PLAN 7.33b, ADR-531): Spawn nation is `NationSpawned`, "{a} was set up on
-    land of {b}" (a birth in the lives, not a revolt of b; land that rises to it later "joined"
-    it); Found city `CitySpawned`, "{a} was founded in {b}"; Raze city `CityRazed`, "{a} in {b}
-    was razed" (a = the city's definition, b its holder; `removeCity` emits it, the editor's
-    too). A town is named as the log keeps it (`History.towns`, row number → name, section
-    `history.towns` saved while not empty): the name a city was placed with, or a razed city's
-    definition's. A city's row and name go when it is razed and the row is reused. A scenario
-    exported from the game has no history and no names.
-  - `src/ui/HistoryPanel.tsx`: newest first, filters by type, nation and years; CSV
-    (RFC 4180) and JSON export of the filtered rows. The sentence of a row is
-    `src/ui/historyText.ts`.
-- **Ticker** (implemented PLAN 3.12c, ADR-211; `src/ui/Ticker.tsx`): the major events
-  (`TICKER_KINDS`: a war declared, a peace, a war ended by a bond, a capital taken, a nation
-  destroyed, collapsed, annexed or returned; God Mode's nation set up, town founded or razed,
-  PLAN 7.33b) as they happen, bottom left above the bar, the newest last, a live
-  region (`role="log"`).
-  - Below the events, what became of the player's orders of formations (PLAN 4.9c, ADR-300):
-    the worker remembers each formation a player's `moveFormation` names and tells the page at
-    once (`orderNews`, not with the stats) a refusal with its reason (`RejectReason`), a landing
-    thrown back, and troops ashore more than 3 cells from the order's cell (their transports
-    broke off). A refused order leaves the one before it standing, and that one is told on (a
-    division aboard keeps its voyage; ADR-301). The page keeps the last 4 (beside a panel the
-    last one); a click flies to the formation and forgets the row; the formation's panel shows
-    its last (`formation-notice`).
-  - Before the orders, the sea battles going on (PLAN 4.10b, ADR-303): "Sea battle: <side>
-    against <side>" from each snapshot's `seas`; a click flies to a T2 view of both fleets
-    (`showBattle`, the span the cells across them). Since PLAN 7.10b the view is of its nearest
-    two fleets at war; since 7.19b (ADR-494) of the nearest two within reach of a ship's weapon
-    of either (a gun or torpedoes on a surface ship, depth charges on a submarine; not the
-    carriers' wings, `inShipReach`), centred on the point of the line between them nearest its
-    middle that is water; a battle with no such pair (a carrier's wings alone reach) is marked
-    on the map and has no row.
-  - The rows are the worker's (`tickerRows`, `src/worker/historyRows.ts`), read from the end
-    of the history log and sent with every `nationStats`: the last `TICKER_ROWS` (5) of the
-    last `TICKER_HOURS` (30 days). Not from the view's event queue, which drops records at
-    Max speed. A death told twice in an hour (a collapse or an annexation, then
-    `NationEliminated`) is one row. A peace whose winner annexed its loser in that hour is
-    one row too, the annexation (PLAN 3.12Rg2, ADR-215); the log has both, the peace first
-    (`makePeace` emits `PeaceSigned` before its terms' `NationAnnexed` or `PuppetCreated`).
-  - Every row has a place: the event's own (a capital taken, a return), else a capital as it
-    is now: of the nation a war was declared on, of a peace's loser, of the nation a bond
-    took out of its war, of the nation that died.
-    A click flies the camera there (`MapView.showPlace`), 1,500 km across the view.
-  - While a nation's or a formation's panel is open on the left, the last two rows only,
-    each of two lines at most (PLAN 3.12Rh, ADR-216): the panel is the view less 12.5 rem
-    at most, which leaves the room of two rows of two lines at every UI size. The war
-    banners are as wide as the lesser of 60% of the view and the view less 39 rem: they
-    begin right of the ticker and of an open panel, whose right edge is at 18.9 rem and
-    2 px (PLAN 3.12Rh4).
-  - At Max speed the ticker is a sample (counted, ADR-216): a message a second spans some
-    380 hours, and 18% of the messages bring more than five major events. It stays the last
-    five (PLAN 3.12Rh2, ADR-218): the History panel has every row, and the room beside a
-    panel is two rows. The cue does not depend on the five (see Sound).
-- **Sound** (implemented PLAN 3.12d, ADR-212; `src/shared/sound.ts`, `src/app/sound.ts`): a
-  cue for each major event the ticker tells, made in code with the Web Audio API (no sound
-  file is loaded).
-  - Five cues (`cueOfKind`): a war declared (three rising notes, as of a trumpet), a peace
-    or a war ended by a bond (two bells), a capital taken (two drum strokes), a nation destroyed, collapsed or annexed
-    (two low falling tones), a nation returned (a rising arpeggio). The notes are data
-    (`CUE_NOTES`), each cue over in 1.5 s at most.
-  - The cue of a `nationStats` message is that of its ticker rows that are new and of its
-    `news` (`cueOfTicker`): one a message at most, the first of war, death, capital, return,
-    peace. `news` is the kinds of every major event since the message before, each once
-    (`tickerNews`, PLAN 3.12Rh2, ADR-218): the worker keeps the log's length at its last
-    message (`SimServer.newsFrom`, not sim state), so a war declared before five captured
-    capitals in one second at Max is heard.
-    The message carries the number of the worker's world (`world`), which a new game or a
-    load changes: the first message of a world is its past and asks for nothing.
-  - A browser lets a page sound after a press: the `AudioContext` is made at the first
-    `pointerdown` or `keydown`. A cue asked for before that is dropped, not kept.
-  - Settings: the volume (25, 50, 75 or 100%, 50% at first; a choice sounds the peace cue at
-    it) and a mute, both persisted (`warsim.volume`, `warsim.muted`). A muted cue is not
-    asked for.
-  - `window.__warsim.sound`: `asked` (the cues asked for) and `sounded` (how many reached the
-    audio context), for a test, which cannot hear.
-- **History log**: wars, peace, battles, Major Battles, city captures, revolts,
-  collapses, revivals, nukes. Filterable by type, nation and date, and exportable to CSV/JSON.
-- **Title screen** (implemented PLAN 1.43a, `src/ui/TitleScreen.tsx`, `src/app/main.tsx`) [ADR-60]:
-  - `/` (no `?scenario=`, or an unknown one) is the title screen: the scenario list (the
-    scenarios whose `scenario.json` is not `hidden`, the 1938 world first), the chosen scenario's
-    name, description, start date and map, and the new-game form (`src/ui/NewGameForm.tsx`: a
-    seed, random per visit, and the options below). No sim worker and no map exist behind it.
-  - A game is its URL. Start navigates to `?scenario=<id>&seed=<n>&paused=1` plus the options,
-    as New game in the settings panel does; a reload restarts that game and the URL can be shared.
-  - The toy world is a test world (`hidden`): it opens by `?scenario=toy` only.
-  - The random world (PLAN 2.16c) [ADR-110] is second on the list. Its picture is one random
-    world (seed 7, 60 nations: `previewRandom`, `tools/data/preview.ts`), and the text says so.
-    Its new-game form has a field for the number of nations (`ScenarioInfo.nationsRange`, 2 to
-    200, 60 at first; Start only for a whole number in the range). The number is the game
-    option `nations`, `?nations=N` in the URL, so it is in the autosave's record and in
-    Continue, and the game's own new-game form starts from it. A world loaded without the
-    number in its URL (a scenario file; a continue URL typed without it) gives the form its
-    number of living nations, brought into the range (`setup` in `src/app/game.tsx`; ADR-111).
-    The range is said once on the title screen, among the scenario's facts; the hint beside
-    the field is the settings panel's.
-  - Settings → Main menu autosaves the game and returns to `/`.
-  - Loading a game (PLAN 1.43b) [ADR-61]:
-    - *Continue:* shown when there is an autosave, with its scenario, in-game date and the time
-      of the save. It opens the URL of the game that wrote it plus `continue=1` (the record keeps
-      that game's seed and options).
-    - *Scenario file:* a `.warism-scenario` file is checked on the title screen (it unpacks, its
-      format, its base scenario exists here at that map size), kept in IndexedDB (slot
-      `scenario`) and loaded by `?scenario=<base>&load=scenario`. The game checks the state hash.
-      The file stays stored, so a reload starts the scenario again. A file the game cannot load
-      leads back to `/?failed=scenario`, which says so.
-    - *The loaded world wins:* after a load the game shows the world's own seed, and when the
-      world's looping setting differs from the URL's the URL is corrected and the game boots
-      again (the map view is built from the URL before the world is there).
-  - The chosen scenario's map (PLAN 1.43c) [ADR-62]: an image of the political map of its start,
-    `public/data/scenarios/<id>/preview.png` (1024 × 512; nations in their colours, the game's
-    sea colour, dark borders where the holder changes), beside the start date, the map with its
-    size and the number of nations alive at the start. The image is made by
-    `npm run data -- --previews` (`tools/data/preview.ts`) from the shipped map assets and the
-    scenario data; `tests/unit/scenarioPreview.test.ts` rebuilds it and fails when the committed
-    image differs.
-- **Settings** (implemented PLAN 1.39a, `src/app/settings.ts`, `src/ui/SettingsPanel.tsx`):
-  interface size 85–130% (root font size, also on the title screen), unit size 50–200% (marker
-  size multiplier), both persisted; the unit look, Countryballs or Classic (`warsim.unitLook`,
-  `src/shared/unitLooks.ts`; PLAN 7.174a, see §8), switched at once and persisted; the sound's volume and mute (PLAN 3.12d, see Sound); F2 or
-  the panel saves a PNG of the map with its overlays;
-  Main menu; seed field, random seed and New game (reloads with `?seed=`, paused).
-- **New-game options** (PLAN 1.39b1, `src/sim/gameOptions.ts`, `src/app/gameUrl.ts`): looping map
-  (`settings.loopingMap`, saved; off = no wrap in pathing, the frontier, the supply flood
-  (ADR-227), the measure of contact (who fights whom, where a block deploys, a retreat's
-  way, a breakthrough corridor: ADR-233), the supply's reach about a formation (ADR-234),
-  the pressure of a formation on a frontier cell (ADR-236), the operational AI's
-  distances and its sums over a sector's 3 × 3 buckets (ADR-237), the nearest-cell
-  search in play (`nearestCellWhere` with `wrap`: a retreat's cell, a capital's move to
-  the field, the cell an order is snapped to, a march home's cell, where a formation is
-  mustered, a founded nation's field capital, the neighbour a collapsed nation's land
-  goes to, a formation an import left on water: ADR-238), the brushes (the editor's brush,
-  line and bucket, the God brush of control, a placed city: a column beyond an edge is no
-  cell and the bucket's first and last columns are not neighbours; the page takes a point
-  beside the map for no cell, `cellOfPoint`: ADR-239), where a block and its slots
-  stand (none beyond an edge, `World.onMap`; over the seam of a map that loops their x is
-  left unfolded: ADR-240; the page draws such a place, and finds it under the pointer, in
-  the copies of the map within `SEAM_MARGIN` (2 cells) of the view, `wrapOffsets` in
-  `render/camera.ts`: the sprites, the tags, the shots, wrecks and hulls, the selection
-  ring and the click, ADR-241), what a view is sent (`inBbox`) or rendering; a world's build
-  wraps as its map does), aggression (random 0..100), traits (1–3 random, exclusions respected → income and
-  manpower multipliers and aggression bias), starting gold (random 0.25–2× or equal = median),
-  CE mode, the start's alliances, guarantees and wars as the scenario's or drawn by the seed (`diplomacy`,
-  PLAN 7.182, ADR-785; puppets stay), and for the random world the number of nations (`nations`, §3.4). Applied once at
-  init from the seed; carried in the URL
-  (`looping=0&aggr=random&traits=random&gold=random|equal&ce=…&nations=N`). The type is
-  `GameOptions` (`src/shared/gameOptions.ts`).
-- **QoL**: keyboard (WASD/arrows pan; +/-, numpad ± and Q/E zoom as in AoC; space pause, 1–5 speed), drag,
-  wheel and touch pinch. Speed and pause persist. Autosave. Screenshot key (F2 → PNG).
-  UI size (rem scale; "The least view" below). Unit-size setting. Looping map. Map size picker (PLAN 7.1b, ADR-43: the
-  sim is tuned in cells for M until its distances are km-based). Locale
-  picker (en first; all strings through `t()`).
-- **The least view** (PLAN 3.12Rh4, ADR-220): the game is laid out for a view 64 rem wide
-  or more, the bottom bar's one line at its widest map mode with 0.5 rem a side: 871 px at
-  85%, 1,024 at 100%, 1,178 at 115%, 1,332 at 130% (`LEAST_VIEW_REM`). A UI size whose
-  least view is wider than the window is not offered (disabled in Settings) and the size
-  in use is the largest offered that is no larger than the one chosen; the choice is kept
-  and is in use again in a wider window. Below 871 px the size is 85% and the bar's ends
-  are cut. A played nation's label is the one item of the bar that shrinks (an ellipsis,
-  the text in its `title`). The History panel is the view less 40 rem at most: clear of a
-  panel on the left at the least view. The title screen keeps the size chosen.
-- **A low view** (PLAN 3.12Rh5, ADR-221): a panel of the centre is the view less 12 rem
-  high at most. The Settings panel scrolls its rows in that box, the History panel its
-  list. The ticker and the war banners are mounted before these panels: where the rows of
-  banners reach above a panel's foot (eight banners in a view 1,100 px wide), the panel is
-  drawn over them and takes the pointer.
-- **Seeds & randomisation**: seed field (shareable), random-seed button, options
-  (randomise aggression, traits, starting gold, alliances and wars, efficiency mode).
+Preact panels over the map (`src/ui/`), wired by `src/app/` (`game.tsx`, `hud.ts`, `App.tsx`). Every
+string is `t()`'s (`src/ui/i18n/`); the release offers English alone (`qps`, a pseudo-locale, in dev
+builds).
+
+### 9.1 Start and settings
+- **Title screen** (`src/ui/TitleScreen.tsx`): `/` with no known `?scenario=` opens it, with no worker
+  behind it. A saved game card (Continue: its scenario, date and save time, `continueUrl`; a warning for
+  an older format or a failed load); the listed scenarios (`LISTED_SCENARIOS`: 1938, random; the toy world
+  hidden), each with its preview (`preview.png`, 1024 × 512, `npm run data -- --previews`; the random
+  world's from seed `PREVIEW_RANDOM_SEED` 7), description, start date, map and nations; the new-game form;
+  and a scenario file to load (checked, shown with Start and Cancel, staged in IndexedDB and opened with
+  `?load=scenario`; a failure goes back with `?failed=scenario`).
+- **New-game form** (`src/ui/NewGameForm.tsx`, `src/shared/gameOptions.ts`, URL by `newGameUrl`), each
+  option the scenario's own by default, applied once at the start from the seed:
+  seed (0–0xffffffff, random once a visit; 1938 with none in the URL); nations for the random world
+  (`RANDOM_NATIONS` 2–200, 60); map size where the map has more than one (`?size=` S, M, L); looping
+  (`?looping=0`); aggression (`?aggr=random`); traits (`?traits=random`, 1–3, exclusions kept); diplomacy
+  where the scenario has any (`?diplo=random`); heroes where it has any (`?heroes=on`); gold (`?gold=`
+  random 0.25–2× or equal to the median); efficiency mode (`?ce=`, §5.3). A game starts paused
+  (`paused=1`). A loaded world keeps its own seed and options.
+- **Settings** (`src/ui/SettingsPanel.tsx`, `src/app/settings.ts`, kept in `localStorage`): UI size
+  (`UI_SCALES` 85–130 %), unit size (`UNIT_SCALES` 50–200 %), unit look (balls or classic, §8.2), volume
+  (`VOLUMES`, 0.5) and mute, pause on a nuclear burst (on); Screenshot (or F2: the map with its overlays,
+  a PNG); Main menu (autosaves, then `/`); the seed and the new-game form.
+- **The least view:** the game is laid out for `LEAST_VIEW_REM` (64 rem); a UI size the view is too narrow
+  for is disabled and the largest that fits is used (`appliedUiScale`, again on resize), the choice kept;
+  85 % below that. The bottom bar wraps what does not fit; the History and Relations panels take
+  what the side panels leave; in a low view the centre panels scroll. A phone (`PHONE_QUERY`) folds the
+  ranking and legend and shows fewer banners and ticker rows.
+- **Autosave** (`src/app/autosave.ts`): every `AUTOSAVE_SECONDS` (60) of real time while the game runs,
+  and when the page is hidden.
+
+### 9.2 Screen and controls
+- **Top bar** (`src/ui/TopBar.tsx`): the title, or "Playing X · n selected" opening its panel.
+- **Bottom bar** (`src/ui/BottomBar.tsx`): Cancel (when something can be), Diplomacy (on a phone while
+  playing), pause, slower, speed, faster, God Mode (and its tool row, §9.4), Map (the map mode menu),
+  Statistics, History, Relations, Editor, the date, Settings. The centre panels (History, Relations,
+  Charts, Settings, Editor) close each other.
+- **Keys:** arrows or WASD pan; E, =, numpad + zoom in, Q, −, numpad − out; space pauses, `.` and `,`
+  change speed (kept, `warsim.speedLevel`, `warsim.paused`); 1–9 and 0 pick map modes; Escape closes the
+  menu, the diplomacy toggle, placing, the selection, then the nearest panel; Ctrl+A selects the played
+  nation's land formations; Ctrl+Z, Ctrl+Y or Ctrl+Shift+Z undo and redo in the editor; F2 a
+  screenshot. **Pointer:** drag (any button) pans, the wheel zooms about the cursor, double-click zooms
+  × `DOUBLE_CLICK_ZOOM` (2), touch drags and pinches; Shift-drag draws a selection box (Ctrl+Shift-drag
+  takes away; a long press of `LONG_PRESS_MS` 450 on touch) (`src/app/input/CameraController.ts`).
+- **Map modes** (`MAP_MODES`, `src/shared/mapModes.ts`; palette swaps, each with its legend): political,
+  alliances, puppets (lightened `PUPPET_LIGHTEN`), terrain, wars, diplomacy, income, revolts (unrest),
+  sea control (`SEA_HOLDERS_SHOWN` 8 in the legend), air control (held at `AIR_HELD`, contested striped),
+  fallout.
+- **Nation panel** (`src/ui/NationPanel.tsx`): opens on a map click, figures from `nationStats` at most
+  every `STATS_INTERVAL_MS` (1 s). Take or Release control. *Overview:* heroes, land and its share, army,
+  warheads and nuclear restraint, air war, efficiency, alliance, overlord, puppets, guarantees, enemies.
+  *Economy:* income, expenses, balance, gold, manpower, bankruptcy, the month in parts, research. *Actions*
+  for the played nation; *God* with God Mode on. A nation chip opens the nation menu.
+- **Nation menu** (right-click; `src/ui/NationMenu.tsx`): the two nations' standing, Go to country, Take
+  or Release control, war, peace, alliance; God's items with God Mode on. A refusal shows
+  `MENU_ANSWER_MS` (3 s) in the menu, `MENU_NOTICE_MS` (5 s) after.
+- **Formation panel** (`src/ui/FormationPanel.tsx`): name, kind, nation, men against full strength, org,
+  supply, fuel, health (heroes), status (retreat with its hours), elements, the latest order news, a
+  carrier's wings; "To its fight" flies to its battle (`battleView.ts`, as close as `T3_MAX_M` that holds
+  both sides; a fleet to its sea battle). It follows its formation and closes when it is gone or on a
+  load.
+- **Ranking** (`src/ui/StatsRanking.tsx`): the top `ROWS` (15) of a list, flag and bar: now (land, army,
+  income, treasury, manpower, wars, puppets, aircraft, warheads) or lifetime (age, wars, revolts, the dead
+  marked †); hidden while the editor is open; Charts opens the statistics chart.
+- **War banners** (`src/ui/WarBanners.tsx`): at most `MAX_BANNERS` (6, `PHONE_BANNERS` 2 on a phone) and
+  "+N": the sides' leaders and allies, the score, swords lit while it has a battle; a click flies to the
+  war's battle (up to `BATTLE_VIEW_MAX_M` 250 m/px).
+- **Ticker** (`src/ui/Ticker.tsx`, bottom left, newest last, `role="log"`): the `TICKER_ROWS` (5) latest of
+  `TICKER_KINDS` within `TICKER_HOURS` (720), deaths deduplicated, a peace with its annexation one row
+  (`tickerRows`); the player's order news (refusals, repulsed or distant landings, `ORDER_NEWS_KEPT` 4);
+  sea battles, carrier strikes, raids and closings, alike rows counted. A click flies to its place
+  (`PLACE_VIEW_KM` 1500 across). Nuclear strikes are alerts (§6.4).
+- **Sound** (`src/shared/sound.ts`, `src/app/sound.ts`): eight short synthesised cues (nuke, war, death,
+  capital, return, peace, town, air), one a message by that priority, from the worker's news; unlocked
+  by the first press; `__warsim.sound` records them.
+
+### 9.3 Player control
+`src/app/player.ts`; `setPlayer` (saved). Taking a nation keeps its AI layers on but nukes (§7.1); the
+Actions tab's assist boxes set the mask (`setPlayerAi`).
+- **Selection:** a click on a formation of the played nation, Shift to add, the box, Ctrl+A; land
+  formations first, never wings; drawn in gold, the camera following it until a pan of more than
+  `FOLLOW_SLACK_PX` (5). A right-click orders a march (`moveFormation`, at sea by transport); a march
+  that meets a fight it was not given in is cancelled; an order keeps the AI off the formation (§7.1).
+- **Actions tab** (`src/ui/ActionsTab.tsx`): force war (breaking a bond in the way), offer peace (taken at
+  score ≥ `PEACE_ACCEPT_SCORE` 25 or exhaustion ≥ `PEACE_ACCEPT_EXHAUSTION` 40, `src/shared/peace.ts`),
+  propose an alliance; production of land, sea and air templates (`queueFormation`; no port, no airfield
+  with room, or research needed say so); the air force: missions (`wingMission`, held
+  `PLAYER_MISSION_HOURS`), rebase, paradrop.
+
+### 9.4 God Mode
+God's commands apply at once (`applyNow`), refused like any command (`inRange`, §2.3).
+- **Tools** (`src/ui/GodToolbar.tsx`, a row on the bottom bar): revolt (`spawnRevolt`), nation
+  (`spawnNation`, size 1–`SPAWN_NATION_MAX` 24), battle (`forceBreakthrough`, two clicks), brush
+  (`editPaint`, radius `BRUSH_RADIUS` 5), nuke (`godNuke`), city (`spawnCity`), raze (`removeCity`).
+- **God tab** (`src/ui/GodTab.tsx`): rename (`renameNation`), gold, colour, income bonus (±10), efficiency
+  and its lock, unity, the nation's and the world's AI (`setAi`, `aiEnabled`), nukes (`setNukes`,
+  `nukesEnabled`, `grantWarheads`), winner takes all, revolt mode, efficiency mode; force war, ally,
+  puppet, leave, annex, donate; peace or to the death in each war; buffs (`BUFF_MAGNITUDE` 0.25 for
+  `BUFF_HOURS` 720); revive, kill (two clicks). Placing forces for that nation (`spawnFormation`,
+  `spawnFleet` free, `spawnWing`; no heroes).
+
+### 9.5 Editor
+`src/sim/editor.ts`, `src/ui/EditorPanel.tsx`; docked right.
+- **Paint** (`editPaint`, `editUndo`, `editRedo`): the nation (owner and controller; dead nations and
+  Unowned too) or terrain (land classes; the terrain map mode on), by brush (radius up to `MAX_PAINT_R`
+  32), line or bucket, masked by terrain or nation; land to land only. Undo is state (`edits`, saved):
+  `UNDO_DEPTH` (50) edits and `UNDO_CELLS` (500,000) cells. A terrain change rebuilds the derived
+  navigation and supply; the worker resends its layers.
+- **Image import** (`src/shared/mapImport.ts`, `src/app/importImage.ts`): an image resampled to the grid,
+  terrain by nearest class, nations by nearest living colour within `NATION_MAX_DIST` (40); water and land
+  change together, owners cleared, city cells kept; formations stranded move to land within 64 cells
+  (scaled), fleets on new land go.
+- **Scenario tools** (`src/sim/scenarioEdit.ts`): found a city (name, size 1–5, economy
+  `CITY_ECON_PER_SIZE` 20 × size × the mean), raze one (a capital moves), set the capital, add or remove a
+  core; warheads, gold, annex. **Forces** (`src/sim/placeForces.ts`): a fleet at sea (`NotAtSea`; it holds
+  its station, §6.2), a wing at a base of the nation's land within `EDITOR_WING_CELLS` (4) (`NoAirbase`).
+- **Flags** (`src/shared/flagPixels.ts`, `src/ui/FlagEditor.tsx`): `FLAG_W` × `FLAG_H` (36 × 24) pixels,
+  saved with the names; pencil, bucket, line, circle and pick, undo 20, eleven presets; with none set, the
+  scenario's flag, else one founded from the nation's id and colour (`foundedFlag`).
+- **Scenario files** (`src/shared/scenarioFile.ts`, `src/app/scenarioFiles.ts`): gzip of a magic line, a
+  JSON header (format `SCENARIO_FORMAT` 1, name, base, size, tick, hash) and the state, without the
+  command log, history, statistics or undo; `.warism-scenario`. Loaded from the editor or the title
+  screen (any size its map offers), the hash compared.
+
+### 9.6 Statistics and history
+- **Statistics** (`src/sim/stats.ts`, last in the tick): monthly a row for each living nation (`stats.km2`:
+  land, income, gold, men, casualties; `stats.air`, `stats.nuke`); the chart (`src/ui/StatsChart.tsx`)
+  draws a series for the top five and the selected nation (`src/shared/statSeries.ts`: land, income, gold,
+  men, casualties, aircraft, aircraft lost, warheads, nuclear dead, fallout).
+- **History** (`src/sim/history.ts`, `HISTORY_STRIDE` 6 a row; kinds in `src/shared/history.ts`): recorded
+  as events are emitted, names resolved by `HISTORY_ROLES` (`src/worker/historyRows.ts`), God's acts and
+  towns too. The panel (`src/ui/HistoryPanel.tsx`): newest first, the last `SHOWN` (400) by kind, nation
+  (living or dead) and years; exported as CSV and JSON.
 
 ---
 

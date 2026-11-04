@@ -848,3 +848,25 @@
   `tags.ts:74–90`; `subscription.ts:5`; `server.ts:90,98`; `protocol.ts:234–239`; `tools/bench/game.ts:16–22`.
 - `specRefs.test.ts` 10 of 10.
 - **Next:** R6j.
+
+## 2026-11-03 — ROADMAP R6j: SPEC §9 as the code is; R6 done
+- Three read-only read-throughs (panels, map modes, God Mode and player control; editor, files, statistics, history,
+  ticker, sound; title screen, settings, options, keys, the least view); rewritten from them, 39 → 11 KB, as 9.1 start
+  and settings, 9.2 screen and controls, 9.3 player control, 9.4 God Mode, 9.5 editor, 9.6 statistics and history.
+- Wrong or gone in the old text: an Actions/Economy panel (tabs of the nation panel); an events counter; five ranking
+  lists (twelve); fallout "still planned" (built) and a supply map mode (none); God's map tools in its tab (a bottom-bar
+  row) and placing in the Actions tab (the God tab); the player's war as `declareWar` (`forceWar`); the played nation
+  on the bottom bar (the top bar); a banner flying to 20 m/px (to hold the battle); terrain edits dropping paths (kept);
+  flags falling back to plain colour (a founded flag); `stats.rows` (`stats.km2`); five sound cues (eight); the ticker's
+  kinds; speed on 1–5 (`,` and `.`; the digits pick map modes); a locale picker (English alone); a scenario file only
+  at its own map size (any the map offers); the URL options (`diplo`, `heroes`, `size` missing).
+- Filed to R16: `player.ts`'s header (AI off on take), `air.ts`'s header (no land rule reads a wing; owed since R6g),
+  `exportScenario` keeping `stats.nuke`.
+- Constants stated, read from: `settings.ts:11–19`; `scenarios.ts:18,138`; `tools/data/preview.ts:15–16,58`;
+  `autosave.ts:15`; `CameraController.ts:49–51`; `MapView.ts:120–122,145`; `mapModes.ts:2,71`; `MapLegend.tsx:7`;
+  `server.ts:99`; `player.ts:46–48`; `StatsRanking.tsx:17`; `WarBanners.tsx:10–12`; `battleView.ts:17`;
+  `shared/history.ts:197–199`; `hud.ts:24,29`; `peace.ts:8–10`; `playerOrders.ts:19`; `commands.ts:319–322`;
+  `GodTab.tsx:11–12`; `editor.ts:23–25`; `importImage.ts:8`; `scenarioEdit.ts:16`; `placeForces.ts:60`;
+  `flagPixels.ts:7–8`; `scenarioFile.ts:16`; `history.ts:12`; `HistoryPanel.tsx:8`.
+- `specRefs.test.ts` 11 of 11: every section of SPEC.md at 0 misses. R6 done.
+- **Next:** R16 is the first open item, and it is the user's decision (make the traits act or drop them).
