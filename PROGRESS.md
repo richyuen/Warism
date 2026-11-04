@@ -813,3 +813,19 @@
   `THERMO_YIELD`, `BLAST_KM` `src/shared/nuclear.ts`; `historyText.ts:19,21`.
 - `specRefs.test.ts` 8 of 8 (§6 whole at 0 misses).
 - **Next:** R6h.
+
+## 2026-11-03 — ROADMAP R6h: SPEC §7 as the code is
+- Three read-only read-throughs (strategic and economic AI; the operational AI in two halves); rewritten from them,
+  29 → 9 KB, as 7.1 layers, 7.2 strategic, 7.3 operational, 7.4 pointers to the navy, invasion and air AI (§6), 7.5
+  economic, 7.6 the long run.
+- Wrong or gone in the old text: AI actions it never takes (suing, accepting peace, guarantees, puppets); "threat from the
+  largest nation" (the top earner); the strategic AI first in the tick (second); the operational AI every 6 h (each nation
+  once a day); defensive postures (none); fleets escorting convoys (landings); air CAS on Major Battles (the nearest
+  engaged enemy); the landing lock (a landing at sea for an enemy cell, the ferry still runs); marches from afar to the
+  own front only (partners' too) and their "nobody" (over 1,500 men); a corridor refusal while open and shut are the
+  same (re-planned); fleets laid up "in port" (standing); the economic AI daily (monthly); admin cost by non-core land
+  (all land held); coalitions by industry (income); collapse on capital loss (six bankrupt months).
+- Constants stated, read from: `ai/strategic.ts:47–100`; `ai/layers.ts:15–39`; `ai/operational.ts:86–147`, `takeMen`
+  `:135`; `ai/economic.ts:149–297,564`; `NAVY_WEIGHT` `seaControl.ts:66`; `POCKET_CELLS` `nav/grid.ts:401`.
+- `specRefs.test.ts` 9 of 9.
+- **Next:** R6i.

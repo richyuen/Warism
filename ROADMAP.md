@@ -41,7 +41,8 @@ Rules:
     Done: rewritten from two read-throughs of the code (21 → 11 KB); `specRefs.test.ts` 8 of 8.
   - [x] R6g §6.3–6.4: aircraft and nuclear weapons.
     Done: rewritten from two read-throughs of the code (24 → 13 KB); `specRefs.test.ts` 8 of 8.
-  - [ ] R6h §7: the AI.
+  - [x] R6h §7: the AI.
+    Done: rewritten from three read-throughs of the code (29 → 9 KB); `specRefs.test.ts` 9 of 9.
   - [ ] R6i §8: semantic zoom.
   - [ ] R6j §9: UI and UX.
 - [ ] R16 **Traits that do nothing** (found by R6c). Of a trait's modifiers only `income` and

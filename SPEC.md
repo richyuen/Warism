@@ -2,7 +2,7 @@
 
 Status: v1.0 (2026-11-03, after `release-2026-11-03`; ADR-805). This document says how the game works
 now. The *why* of each choice is in `DECISIONS.md` and `docs/history/DECISIONS-<YYYY-MM>.md` (cited as
-`[ADR-n]`). §1–§6 and §10 are current; the other sections are being brought up to date one by one
+`[ADR-n]`). §1–§7 and §10 are current; the other sections are being brought up to date one by one
 (ROADMAP R6), and where one disagrees with the code, the code and the newest ADR win. A current
 section names only files, code and scripts that exist (`tests/unit/specRefs.test.ts`, ADR-821).
 
@@ -1387,337 +1387,113 @@ combat, AA.
 
 ## 7. AI
 
-- **Strategic AI** (daily, staggered): utility scoring over candidate actions
-  (declare war, sue for peace, accept peace, join or leave an alliance, form a coalition, create or
-  release a puppet, guarantee, integrate). Inputs: relative strength (incl. allies),
-  opportunity (the target is at war elsewhere or weak), aggression and traits, war exhaustion,
-  gold (broke → peace), core claims, threat from the largest nation (coalition),
-  fightToDeath.
-  *Implemented v1 (PLAN 1.24, ADR-36; `src/sim/ai/strategic.ts`), runs first in the tick:*
-  - *Cadence:* each nation acts weekly (staggered by id), with hash-seeded draws.
-  - *War:* a nation needs aggression ≥ 15, must not be a puppet or broke, and may have at most
-    2 wars. utility = aggression/100 × (min(3, attack/defence) − 1) + 0.3 if the target is at
-    war + 0.3 for claims − exhaustion/100 − 0.4 × wars. Attack = own strength + 0.4 × alliance
-    partners; defence = the target's strength + 0.4 × (partners + guarantors) (ADR-47); a puppet is read as its realm, the overlord's strength with the partners and guarantors of both (ADR-183). It declares on the best target with utility > 0.5, with probability 0.25 ×
-    aggression/100.
-  - *Stalemate peace:* a war older than 720 days, with |score| < 15 and both sides' exhaustion
-    above 40, ends in peace.
-  - *Alliances:* an unaligned nation bordering an aggressive neighbour more than 1.5× stronger
-    joins a neighbour's alliance or forms one (30%).
-  - *Coalitions:* monthly, the unaligned neighbours of a nation earning > 25% of world income
-    form or join a coalition.
-  - *Rivals apart (PLAN 7.53b, ADR-586):* the great powers are the 6 strongest living nations that
-    are no puppet. From 3 years after the scenario's start, monthly, each great power of an
-    alliance but its first (the leader if it is one, else the strongest) loses 30 loyalty while it
-    fights no great power together with the first, and leaves under 25; a great power joins no
-    alliance that holds another (against a threat, a coalition), and an alliance against a threat
-    or a coalition is founded with one great power at most.
-  - *Switches:* `setAi` per nation; setting `aiEnabled`.
-  - *10-year AT:* `tests/sweep/` runs 3 seeds as its own `npm run check` stage.
-- **Operational AI** (every 6 h): assigns formations to fronts proportionally to
-  threat, keeps reserves, launches offensives at local superiority ≥ k (with armour
-  spearheads), sets defensive postures, tasks fleets (sea control around coasts, convoy
-  escort, raiding, invasion), tasks air wings (superiority over active fronts, CAS on
-  Major Battles, strategic bombing when superiority is high).
-  *Invasions (PLAN 4.6b, ADR-268, ADR-511; `src/sim/ai/invasion.ts`):* daily, staggered weekly
-  by id, a nation with no formation aboard and a war in which it has no land front today takes
-  its transport group with the most room at a port it holds, and aims at the port nearest them,
-  of an enemy of such a war, whose sea is open to it (not closed by ice, not held by its enemy)
-  and in the waters they sail (not a lake across land, not behind a passage shut to it: PLAN
-  7.56b, ADR-597); or, nearer them by sea, the capital of such an enemy held by one of them on a
-  coast, at the distance of a water cell beside it that passes the same tests (PLAN 7.69,
-  ADR-621: a capital on a land where its nation holds no port was never invaded); a port wins a
-  tie. The landing goes ashore by the target, port or beach (`orderLanding`).
-  Its free formations at that port (within 3 cells of its land cell or of its water, as an
-  order over the sea takes them: PLAN 7.49f, ADR-593) go aboard there, one after another on the
-  one transport group, under way once the first is aboard, until it has no room for the next
-  (PLAN 7.72, ADR-625: before, every trip carried one formation), and on no other group: one
-  ordered on a full group is refused, and the port's next group takes the rest in its own try (PLAN
-  7.90g, ADR-649: before, it went on another group standing there, which sailed with it alone); with none there, the nearest on the port's
-  land are sent to it to fill the room (one whose march there is refused is passed over, the send
-  ending at the third refused march that was a search: PLAN 7.54a, ADR-594); with the nearest
-  unable to march there (the transports in an exclave), the transports sail instead for a port
-  of the nation that one of its four nearest can march to, and nobody is sent that day (PLAN
-  7.54b, ADR-595). A nation with a front in another war uses only
-  formations beyond the deploy range of its own front on their land. A formation on the march to
-  a port where its nation's transports stand is not one the operational AI plans with (PLAN
-  7.56a, ADR-596: it manned an ally's front with them on the way). A landing takes a cell a nation owns where the target is owned.
-  The ferry (PLAN 7.49d1, ADR-612), in the same turn and lock when no landing gave an order (no
-  target, or nobody at its port nor on its land: PLAN 7.64, ADR-617): a
-  nation with a land front ships its free formations standing on a landmass with none of its
-  front cells to its own port on a front's land nearest a front cell of its own there (straight
-  cells; the nearest its transports by sea on a tie; PLAN 7.63, ADR-616; open, unbombed, not held
-  by its enemy), boarding them as a landing does; transports standing at a port on a
-  front's land, or on a land with none of that army, sail instead for a port of its that the
-  army's formations nearest them can march to. With no such port of its own, an ally's (PLAN
-  7.49d2, ADR-613): of the ports held by nations fighting beside it that pass the same tests, the
-  nearest a front cell of its own on that land, the nearest by sea on a tie. A nation with no
-  front cell of its own (its land front its allies' alone) takes as its front cells their cells
-  beside the enemies it fights with them (`wars.together`; PLAN 7.64, ADR-617). A beachhead with
-  no port (PLAN 7.70c, ADR-624): on a front's land where no port of its own nor of an ally passes
-  those tests, a front cell of its own beside water that passes them (its zone not iced, in the
-  transports' waters, held by no enemy) stands as its port there, on the front itself (nearer it
-  than any port not on a front cell; the nearest the transports by sea of such cells), so the
-  ferry reinforces a landing on a coast with no port.
-  A new front (PLAN 7.70b, ADR-623), in the same turn and lock, after a landing that gave no order
-  and before the ferry: a nation with a land front of its own that it holds (its land formations'
-  men in the squares of the deploy range's side about its front cells, and those beside, at least
-  those of the nations at war with it there, and more than none: a front with nobody of either
-  side about it is not held, PLAN 7.73c, ADR-628) lands its free army (standing, beyond the deploy
-  range of its front on their land) on an enemy's coastal city, of the enemies of its wars with a
-  front, more than the deploy range from its front, with a water cell within 2 cells passing the
-  landing's tests and reached by its bloc's way from home (a beachhead there is fed from the
-  beach, §6.2; on any land since PLAN 7.75, ADR-630): the most worth (3 for a capital, 1 for another city, times the deploy range
-  over its straight distance to the nearest cell of the nation's front: near the enemy's front's
-  rear, PLAN 7.73a, ADR-626) over one more than the enemy's land formations within 10 cells;
-  nearest by sea on a tie. Its free formations at the
-  port go aboard as a group: once their men fill three quarters of the room, or no more of its
-  free army on the port's land is left to come (the rest sent there meanwhile; none aboard while
-  one marches there and is there within a week, the nation's next invasion turn, by its path at its
-  pace; a march in a fight or before an enemy's cell, or one farther, is not waited for: the group
-  at the port goes aboard as it is, or with nobody there the turn is the ferry's, PLAN 7.73b,
-  ADR-627), each on the same transports, passing over one with no room left. A front not
-  held leaves the turn to the ferry.
-  *Fleets at sea (PLAN 4.6c, ADR-270; `src/sim/ai/naval.ts`):* daily, staggered weekly by id. At
-  war, each warfleet (power: its armed ships' hit points, submarines left out) standing at a
-  port of its nation sails, within 2,500 km, to a landing of its nation's under way (escort),
-  else to the nearest enemy port whose zone's enemy power is no more than that of its nation's
-  warfleets in port within 2,500 km of it together, or, nearer, to a standing enemy warfleet
-  within 2,500 km in its sea basin whose zone passes the same test (PLAN 7.35d2c, ADR-550); one
-  away from its ports where the enemy is over 1.5 times its power turns home. Any other warfleet away from its ports at war gets a new
-  order on its day (PLAN 7.35d2b, ADR-549): by such a standing enemy warfleet, it stays; else the
-  nearest battle in reach that it and its fleets there together can win, a standing enemy
-  warfleet from any zone, or from a zone with no enemy ship an enemy port with enemy ships in
-  its zone; else, from a zone with no enemy ship, the nearest standing enemy warfleet of its waters
-  beyond 2,500 km whose zone's enemy power is no more than its nation's standing warfleets of those
-  waters together (the chase, PLAN 7.39b, 7.46c, ADR-580); else, by an
-  enemy port's water, it keeps its station (the blockade); else the nearest enemy port a sortie
-  may take; else home. At peace a fleet away from its ports turns home.
-  A fleet the editor placed holds its place instead (`World.station`, saved
-  while there is one; PLAN 7.22c, ADR-500): the AI sends it nowhere and sails it back when a
-  battle drew it more than 3 cells off; a player's order that sails it, or its breaking off
-  beaten, lets go of the place. At war it holds its sea (PLAN 7.59, ADR-608): it sails for the
-  nearest standing enemy warfleet in the zone of its place whose zone's enemy its nation's
-  warfleets together can win (its own power counted with them there), then back to its place.
-  At war, a submarine flotilla that stands off an enemy bloc's convoy way sails for the
-  nearest zone of one within 4,000 km (PLAN 4.6d, ADR-271).
-  *The navy's cost (PLAN 4.6e1, ADR-273; `src/sim/ai/economic.ts`):* a nation keeps its navy's
-  upkeep near 12 % of its income. Monthly, after its army's orders, a nation with a shipyard
-  and no fleet in training orders one while under it, if the books and the reserve allow: a
-  battle squadron from an income of 1,000, a cruiser squadron from 200, a destroyer flotilla.
-  The order and ADR-557's saving read the upkeep of its armed fleets alone (PLAN 7.46b1,
-  ADR-574): submarine flotillas and transport groups do not stop a warship; the lay-up reads
-  every fleet.
-  ADR-557's saving (a nation with no armed fleet keeps a warship's price over the reserve from its
-  army's orders and refills) holds in peace, at war with its army at its peacetime share, and at
-  war with an enemy that has an armed fleet (PLAN 7.46b2, ADR-575). At war with such an enemy it
-  holds too for a navy rebuilt to a ship or two, its armed fleets' upkeep under the share (PLAN
-  7.47, ADR-579). Not for a nation of FEW_FORMATIONS (3) land formations or fewer: at war with
-  such an enemy its army orders first, as against an enemy with no fleet (PLAN 7.49c, ADR-590).
-  Nor, in peace or war, for a nation that holds a land front (a cell beside one of the other side's)
-  in a war where its side has fewer men on land than the other (`outnumberedOnLand`; PLAN 7.146,
-  ADR-739): the weak side of a long-front war orders for its front first.
-  Its transport group is bought apart (PLAN 7.26h2, ADR-518), before research and the army's
-  orders, outside the navy's share, on a month of reserve: at war, in a war in which it has no
-  land front and whose enemy holds a port, with a free formation on a land with a port of its
-  own and no group (a group with room under an infantry division's men is none: sunk to one or
-  two transports, it carries no division and is never refilled; PLAN 7.55, ADR-598); while it
-  wants one it orders no other fleet. The ferry's want orders one too (PLAN 7.49d3, ADR-614): a
-  land front (with no front cell of its own, its allies' cells beside the enemies it fights with
-  them, as the ferry's: PLAN 7.66, ADR-618), a port of its own or of an ally in the war on that front's land (or a front cell of
-  its own there beside water not iced, a beachhead's: PLAN 7.70c, ADR-624), and an island army
-  (standing on a land with a port of its own and no front cell of its, or on a front's land with a
-  port of its own and reaching none of its front cells, the ferry's own test: PLAN 7.90e, ADR-648)
-  of more men than its
-  transports' room; it stops no other fleet, and its transports in training hold back no
-  warship, as it holds for the war's length. Short of money and over
-  it, it lays up its fleets in port, the dearest first, before its army is sent home.
-  *A navy's weight (PLAN 4.6e2, ADR-274):* a fleet weighs half its armed ships' hit points in
-  men (a transport's or a submarine's nothing): in a nation's strength for the strategic AI (a
-  declaration, an alliance against a threat, a coalition) and in a war's men of each side, so
-  ships lost at sea weigh in its exhaustion and its peace.
-  *Implemented v1 (PLAN 1.25, ADR-37; `src/sim/ai/operational.ts`):*
-  - *Cadence:* each 6 h, a nation at war plans once a day (staggered).
-  - *Front sectors:* its front cells form 4×4-cell sectors. Threat is the enemy strength in a
-    sector's 3×3 neighbourhood.
-  - *Who deploys:* free (not engaged, not on the retreat: §5.2 step 4) formations within 60 cells of the front. The farthest 15%
-    stay in reserve. The range is to each sector (PLAN 3.10c1, ADR-187): a sector is allotted no
-    more than the formations within 60 cells of it and takes only those; what the allotments
-    leave over joins its nearest sector.
-  - *Marches from afar* (PLAN 3.10c1a, ADR-190): a sector of the nation's own front (not an
-    ally's) that has nobody takes one formation from beyond the range. Nobody: no formation
-    of the nation stands in the sector or in one next to it, the allotment gave it none and
-    none is on the march into it. The formation: free, standing still, on the sector's
-    landmass, more than 60 cells from every sector it reaches; the nearest first. It is
-    ordered to the sector's front cell and not planned again before the march ends or
-    comes within the range (then it is a march into a sector, kept as below). A formation
-    is looked at for this on one day in eight (`MARCH_DAYS`, by its id). One whose order
-    from afar or to spare is refused is given none so again for 40 days (`FAR_RETRY_DAYS`,
-    PLAN 7.117, ADR-703; `World.farWait`, saved): late in a war nearly all such orders are
-    refused, each a failed search of the whole way.
-  - *To spare* (PLAN 3.10c1d, ADR-191): such a sector that no formation of the nation is
-    within 60 cells of also takes one of the formations near the front. On the nation's day
-    in eight, of the free formations within the range of a sector that are not on an errand
-    (below), the farthest from the front, as many as the reserve's share (one at least), may
-    go: each to
-    the nearest such sector within 180 cells (`SPARE_RANGES` × the range) on its landmass,
-    one a sector. No more go than the front can spare: the formations near it, less the
-    share of them that the other sectors weigh among all (1 + threat/10,000 each, as in the
-    allotment). On an errand (PLAN 3.10c1d2) is a formation on the march to a cell more than
-    60 cells from it (no allotment orders that far), or into a sector that would have nobody
-    without it: no other formation of the nation stands in it or next to it, and none other
-    marches into it. So a march this rule gave is kept, and a formation that marches to its
-    sector's cell as the others of a front that fights do is to spare as one that stands.
-  - *Reach* (PLAN 3.5b, ADR-152): those formations are classes by where they stand (the
-    landmass; on it the group of provinces joined by ground open to the nation, §4, or
-    closed ground). A class reaches a sector when an order to the sector's front cell would
-    not be refused before its search. Range and reserve count the sectors a formation
-    reaches; each class is allotted to the sectors it reaches and to no other.
-  - *Pockets* (PLAN 3.10c2b1, ADR-192): the provinces are kinder than the cells (two
-    neighbours with open ground each are one group, whether or not their open cells meet).
-    So formations that stand in a pocket of open ground are a class of their own, which
-    reaches the sectors whose front cell lies in the pocket and no other. A pocket: the cells
-    a route comes to from the formation's cell over ground open to the nation, when they are
-    no more than `POCKET_CELLS` (4,096). It is walked once a passage (`pocketOf`,
-    nav/grid.ts). Wider ground is not walked to its end and is judged by the provinces, as
-    before; a formation in a province with no closed ground that is joined to such
-    provinces of more than 4,096 cells is not walked at all (`wideNode`). And the other way
-    (PLAN 3.10c2b2): a sector whose front cell lies in a pocket is reached by the class of
-    that pocket and by no other on open ground; the cells are walked from the sector's cell
-    as from a formation's, once a cell and passage. A class on closed ground is not asked
-    (it walks out of it, into a pocket too). An order's own test (`mayReach`) does not ask
-    this: the order's search finds it.
-  - *Wide grounds* (PLAN 3.10c2b3a, ADR-193): wide ground is not one. The provinces with no
-    closed ground that neighbours join, when they have more than 4,096 cells, are a wide
-    ground with a number (`wideNode`), and a walk that ends at a cell of one says which
-    (`pocketOf`). Formations are classes by the wide ground they stand in or come to, and a
-    class reaches a sector whose front cell is in another wide ground, or comes to another,
-    only when the cells join the two (`wideJoined`, nav/provinceGraph.ts): the open cells of
-    the provinces that have closed ground are walked, once a passage and only when two wide
-    grounds are asked for, and two wide grounds that a run of such cells touches are joined.
-    The plans ask it pair by pair (`wideLinked`, PLAN 7.129, ADR-719): the runs are walked
-    outwards from the two grounds only until they are joined or one side has nothing left, each
-    run once in the passage's hour; the answer is the whole walk's.
-    A class's reach to a sector is asked where the plan reads it and kept for the plan (PLAN
-    7.129, ADR-720): the sectors within 60 cells of one of its formations, the empty sectors a
-    march from afar looks at, and a long way's other sectors; not every sector for every class.
-    Ground that was walked 4,096 cells and came to no wide ground is taken to reach any.
-  - *Allotment:* the rest go to the threatened sectors first (PLAN 7.79b, ADR-634): those with a
-    threat share, by largest remainders over their threat, as many as there are of the class
-    within 60 cells of one of them; the other sectors share what is left over 1 + threat/10,000,
-    every sector getting one while formations last (taken from the largest allotments of those
-    with no threat). Formations already marching into a sector keep it, also beyond the sector's
-    allotment of the day [ADR-53], except one marching into a sector with no threat that is
-    within 60 cells of a threatened one and began its march within 60 cells of its sector (not a
-    march from afar or to spare): it yields to the threatened sectors' allotments and keeps its
-    march only when none takes it. The rest fill what is left nearest-first, the threatened
-    sectors first.
-  - *Orders:* a sector at ≥ 1.5× local superiority attacks the enemy cell next to its centre;
-    otherwise it holds its front cell. A formation is not re-ordered if its target is within a
-    sector of the current one. An order refused for want of a way is not given again while
-    nothing its search read has changed (PLAN 1.42g, ADR-421: the formation stands still, the
-    same holders are open to it, no cell went from an open holder to a closed one or back). One
-    refused by the cells of a corridor of provinces holds while the provinces' open and shut
-    ground is the same, its start is open and no cell of the corridor went from a closed holder
-    to an open one (PLAN 7.30b, ADR-523).
-  - *No long way round* (PLAN 1.42h, ADR-422; the user's decision of 2026-10-15): the AI's order
-    is refused (`RejectReason.LongWay`) where its way is longer than 4 times the straight line
-    in steps of cells (`LONG_WAY`), or 64 steps where the line is under 16 cells
-    (`LONG_WAY_FLOOR_CELLS`, of the map's default size); where its coarse route by the
-    provinces' centres is 3 times that (`COARSE_SLACK`) no cell is searched. The formation then
-    goes to the front cell of the nearest other sector of its class within the range, up to two
-    of them (`DIVERTS`), and else holds. Such a refusal is kept as one for want of a way is. A
-    player's order and a march home have no such limit. The coarse routes over open provinces
-    are kept with the open and shut provinces they were read on (`NodeParts.coarse`).
-  - *Spearheads* (PLAN 3.5c, ADR-153): a formation is armour when half of its upkeep or more
-    is in tanks (`SPEARHEAD_ARMOUR` against `EconomyTables.templateArmour`: 0.66 to 0.93 for
-    the armour formations, 0.20 at most for the others; the planner looks at no element).
-    Where a sector that attacks has armour, the armour marches on the enemy's cell and the
-    rest are sent to the front cell, as in a sector that holds. A sector with no armour
-    attacks with all it has. The rest follow by the plans of the days after: the front cell
-    is then where the armour has taken ground.
-  - *The spearhead metric* (PLAN 3.5c and 3.5e; `tools/diag/spearheads.ts`, read from the
-    run with no hook in the planner). An *attack* is the formations of one nation ordered to
-    one cell that an enemy of the nation holds at the hour of the order, from the first such
-    order until the first of them is in contact within a sector (4 cells) of the cell; a later
-    order to that cell opens another attack. The metric is the share of the attacks that came
-    to contact whose first formation in contact is armour, read beside armour's share of
-    the formations sent, over all attacks and over those armour was sent to.
-  - *Tick cost* with 10-year AI wars: 2–3 ms (above the 1.5 ms budget) until PLAN 1.42a; since
-    then 1.0 ms over 5 years of seed 99 (§2.5).
-- **Economic AI** (daily): a budget split between army, navy, air, industry, research, nukes,
-  revolt suppression and reserve gold. The production mix is adapted to enemies (AT vs armour-heavy
-  enemies, fighters when bombed).
-  *Implemented v1 (PLAN 1.26, ADR-38; `src/sim/ai/economic.ts`), monthly, just before the economy
-  charges the month, on projected accounts (gross − upkeep − admin − CE cost − suppression −
-  tribute):*
-  - *Disbanding:* a nation whose balance does not cover a 5% margin plus debt repaid within a
-    year is short by S a month. While its gold is below 3 × S (`RUNWAY_MONTHS`), idle
-    formations go; a nation with gold enough runs the deficit (PLAN 2.13, ADR-86). The order:
-    the least of its upkeep in tanks first (`EconomyTables.templateArmour`: 0 for a division
-    on foot, on horse or in lorries, 0.14 for the mechanised division, 0.20 for the Soviet
-    rifle division, 0.66 to 0.93 for the armour formations), among those the weakest by men,
-    then the lowest id (PLAN 3.1d, ADR-131: by men alone the tank brigades went before every
-    rifle division). Half their men return to the manpower pool. One `FormationsDisbanded` event per
-    nation and month, kept in the history.
-  - *The treasury of the start* is six months of income, or twelve months of S with the army
-    of the order of battle where that is more (`START_ARMY_MONTHS`; 16 nations of 1938): no
-    army of the start is disbanded in the first hour.
-  - *Suppression:* while a held province has unrest ≥ 40: 1 while the treasury holds a month
-    of it over 3 months of income (at war over the war reserve, none: PLAN 7.173, ADR-776), else
-    0.5 while the balance before suppression is over 15% of income, else 0 (PLAN 7.3e2, ADR-436).
-    The month's balance takes the level set.
-  - *Building:* up to 1 + income/400 orders in training at once, one more for a nation holding a land front where its
-    side is outnumbered on land (`outnumberedOnLand`; PLAN 7.146b, ADR-739) (at most 6; ADR-47). It needs
-    army upkeep, counting the orders in training, under 35% × (0.3 + 0.7 × aggression/100) of
-    income in peace (60% at war), a positive balance after the new upkeep, and 3 months of
-    income in reserve; at war, while that upkeep is under the peacetime share, no reserve
-    (`WAR_RESERVE_MONTHS` 0, for the armour's pick too; PLAN 7.65, ADR-615: the defenders of an
-    income of 150–500 were stopped by gold in most of their months at war). The warship's
-    saving, the refills, the fleets and the wings keep the 3 months.
-  - *The levy (PLAN 7.150, ADR-745):* an AI nation at war holding a land front where its side is
-    outnumbered on land queues up to 2 cadre divisions a month (`LEVY_MONTH`) for no gold, their men
-    from its manpower, while its balance less their upkeep stays over its need. They train as orders
-    do and stand in its order slots meanwhile.
-  - *Overseas muster (ADR-47):* a nation whose fronts all lie on other landmasses than its
-    capital raises new formations in the theatre (nearest own city to the front), an abstraction
-    of sealift until PLAN 4.5. A nation at war with no front cell of its own (its land front its
-    allies' alone; PLAN 7.67, ADR-619) takes its allies' cells beside the enemies it fights with
-    them as its front, as the ferry does (ADR-617): its city on a landmass of those cells nearest
-    one of them; with none there, its port with water nearest one of them by sea (`seaKm`), where
-    the ferry boards; with no port, at home.
-  - *Build mix* (PLAN 3.5d, ADR-154): cadre divisions if income < 20. A nation wants a share
-    of its army's upkeep in tanks (`armourWanted`): none up to an income of 200, rising in a
-    line to 0.3 at 1,000 (`ARMOUR_SHARE_MAX`, `ARMOUR_FULL_INCOME`). While its army, with the
-    orders in training and each order as it is made, has less (`EconomyTables.templateArmour`
-    of each template, by strength), its order is the best armoured division it knows the
-    techs of (MBT, heavy, medium of 1941, the division of 1938; PLAN 3.1c), in peace as at
-    war. Short of that one's price with the reserve it *saves*: with an order in training
-    and an army that costs at least its peacetime share of its income (`peaceShare`, PLAN
-    7.3b, ADR-429) it orders nothing more that month; else it orders the best it has the gold
-    for, infantry at the least (PLAN 1.42c). Its other orders are motorised divisions at war
-    against armour-heavy enemies (≥ 20% tanks) and infantry otherwise; a nation that knows
-    no armoured division orders as one with armour enough.
-    Measured over ten years (`tools/diag/armourMix.ts`; seed 99, seed 7), the tanks' share
-    of the army's upkeep at the end, before → after: GER 3.9 → 29.5 % and 0 → 28.4 %, ENG
-    7.5 → 28.1 and 5.2 → 25.1, USA 30.7 → 31.2 and 20.9 → 27.6, JAP 0 → 13.8 and 0 → 14.7,
-    SOV 28.0 → 22.3 and 15.1 → 14.8, ITA 0.1 → 1.6 and 0.5 → 21.5, FRA 0 → 0 and 3.7 → 10.9.
-- **Peace**: settlement by war score. Terms are cells/provinces up to score, puppet creation,
-  and white peace. Broke or exhausted nations sue for peace.
-- **Anti-hegemon dynamics** (long-run requirement): administrative cost rises
-  superlinearly with non-core territory, unrest is high in non-core occupied land,
-  coalitions form against nations above X% of world industry, puppets drift toward
-  independence, revival brings back dead nations, and collapse on bankruptcy or capital loss.
-  Tuned by sweep (§10).
-- **The long run's shape** (ADR-732, ADR-750, the user's decisions): a stable top is a valid state
-  of the world. The five largest nations by area, as a set and in their order, and the five
-  strongest by `strengths` may stay the same for decades: the largest include empty lands far
-  from any war (the Canadian north, Greenland, Siberia, Australia), which change hands seldom,
-  and great powers that hold their own are as plausible as ones that fall. Turnover at the top
-  is not the measure of a living world and its absence is no defect. The world's change is read
-  by what moves: borders still changing, wars declared and ended, armies in contact, nations
-  rising, falling, revolting and revived, and the shares at the top moving. The largest
-  nation's share of the land has no bar (ADR-740, the user's decision).
+Every nation's AI is a set of systems that give the same commands a player can, in the tick's order
+(§2.5): strategic, operational, invasion, naval and air AI early in the hour, the economic AI after
+production and research. `src/sim/ai/`.
+
+### 7.1 Layers and switches
+- **Layers** (`src/sim/ai/layers.ts`): army 1 (fronts, invasions, hollow merging), navy 2, air 4,
+  diplomacy 8, economy 16, nukes 32. `aiRuns` asks whether a nation's layer runs: never when the world's
+  AI is off (`aiEnabled`) or the nation's is (`aiOff`, `setAi`); for the nation a player takes, as its
+  mask (`World.playerAi`, `setPlayerAi`: `PLAYER_AI_DEFAULT` 31, every layer but nukes; `PLAYER_AI_ALL`
+  63). Taking a nation resets the mask and clears its player orders; releasing it gives its AI back.
+- A player's order to a formation keeps every AI off it until the order is done (`playerHeld`;
+  `PLAYER_MISSION_HOURS` for a wing). Without the economy layer a nation still gets its research budget
+  and refills.
+
+### 7.2 Strategic AI
+`src/sim/ai/strategic.ts`, daily at the day's start.
+- **Peace by stalemate:** every war over `STALEMATE_DAYS` (720) with |score| < `STALEMATE_SCORE` (15) and
+  both sides' exhaustion > `STALEMATE_EXHAUSTION` (40) ends on its score, unless a side fights to the
+  death. Other peace is the war system's, for every nation alike (§3.5).
+- **Who acts:** a living nation that is no puppet, with its diplomacy layer, on its day
+  ((day + id) mod `STAGGER` (7) = 0); draws by `hash32`. A realm's strength is the men of its formations
+  (`forceMen`: a fleet weighs `NAVY_WEIGHT` × its power), a puppet's counted with its overlord.
+- **War:** with fewer than `MAX_WARS` (2), aggression ≥ `PACIFIST_BELOW` (15), gold ≥ 0 and not
+  bankrupt, it scores each land neighbour `whyNotWar` allows (§3.5):
+  aggression ÷ 100 × (min(`RATIO_CAP` 3, attack ÷ defence) − 1) + `OPPORTUNITY` (0.3) if the target is at
+  war + `CLAIM` (0.3) if it holds a province whose centre the target owns − its largest exhaustion ÷ 100 −
+  `WARS_PENALTY` (0.4) × its wars + `PARIAH_WAR` (0.5) × the target's nuclear outrage (§6.4) + `RESTLESS`
+  (0.3) × min(1, years since its last war ÷ `RESTLESS_YEARS` 10) when at peace. Attack and defence are the
+  two realms' strength plus `ALLY_WEIGHT` (0.4) of their partners' and guarantors' (defence at least 1).
+  With no neighbour over `DECLARE_AT` (0.5) it tries targets across the sea (holders of ports its
+  transports at port reach, not iced or held by an enemy). It declares on the best with probability
+  `DECLARE_P` (0.25) × aggression ÷ 100.
+- **Threat pacts:** an unaligned nation whose neighbour of aggression ≥ `THREAT_AGGRESSION` (50) is over
+  `THREAT_RATIO` (1.5) times stronger and not yet at war with it, with probability `ALLY_P` (0.3), joins
+  the strongest neighbouring alliance without that neighbour that `canJoin` allows (a great power avoids
+  one with another), else forms one with an unaligned neighbour of the threat (unity 40).
+- **Monthly:** a coalition against the nation with over `HEGEMON_SHARE` (0.25) of the world's income (its
+  unaligned neighbours, not its puppets or allies, at least two with no war among them and at most one
+  great power; unity 50); a pariah league against the worst nuclear pariah (§6.4); and rivals apart: of the
+  `GREAT_POWERS` (6) largest, after `RIVAL_GRACE_YEARS` (3), a great power in an alliance with another
+  loses `RIVAL_LOYALTY` (30) loyalty a month (with its diplomacy layer) and leaves under 25.
+
+### 7.3 Operational AI
+`src/sim/ai/operational.ts`; every 6 hours, each nation at war with its army layer once a day
+((tick ÷ 6 + id) mod `STAGGER` (4) = 0).
+- **Fronts:** the frontier cells held by the nation or a partner beside an enemy cell, bucketed into
+  sectors of `SECTOR_CELLS` (4) × 4 cells; a sector's threat is the enemy's land strength in the 3 × 3
+  sectors round it.
+- **Free formations:** not engaged, retreating, marching home, aboard, player-held, marching to a port
+  where its transports stand (the invasion AI's), or a hero sent to a fight (`joinFights`). They are
+  grouped by what they can reach (landmass, province group, pocket of up to `POCKET_CELLS` (4,096) open
+  cells, wide ground), the reach asked only when needed. Those within `DEPLOY_RANGE_CELLS` (60) of a
+  sector they reach deploy; the farthest `RESERVE` (0.15) of them stay put; those beyond range are
+  garrisons.
+- **Allotment:** threatened sectors are filled first in proportion to threat, the others by 1 + threat ÷
+  `THREAT_UNIT` (10,000), each at least one while formations last, nearest first; a march under way
+  keeps its sector unless it must yield.
+- **Orders:** a sector whose allotted strength is ≥ `OFFENSIVE_RATIO` (1.5) × its threat attacks (a
+  threat of 0 always): its formations march on the enemy cell beside its front nearest its centre; with
+  armour among them (≥ `SPEARHEAD_ARMOUR` (0.5) of a template's upkeep in tanks) the armour attacks and
+  the rest hold. Otherwise they hold its front cell nearest its centre. No new order when the target is
+  within a sector of the old or already reached. A refused order is remembered (`World.refusedOrders`,
+  derived) and not asked again from the same cell, template and grid; a corridor's refusal holds while
+  its route is the same. An order the movement system refuses as `LongWay` is diverted to another
+  target up to `DIVERTS` (2) times.
+- **From afar:** every `MARCH_DAYS` (8) days (by id) a free, idle formation more than the deploy range from
+  every sector it reaches marches to the nearest sector with nobody of over `takeMen` (1,500) men in it
+  (its own front's, or a partner's when its own has none for it). And on its day a nation sends up to its
+  reserve's count of its farthest formations "to spare" within `SPARE_RANGES` (3) × the range, to empty
+  sectors of its own front, no more than the front can give. A refused march waits `FAR_RETRY_DAYS` (40)
+  (`World.farWait`, saved).
+- **Hollow formations** (`src/sim/ai/hollow.ts`, daily, army layer): §3.7.
+
+### 7.4 Navy, invasions and air
+The naval AI and the invasion AI are §6.2 (`src/sim/ai/naval.ts`, `src/sim/ai/invasion.ts`, each nation
+weekly by `STAGGER` (7)); the air AI is §6.3 (`src/sim/ai/air.ts`, daily); the nuclear decision is §6.4.
+
+### 7.5 Economic AI
+`src/sim/ai/economic.ts`, monthly after the economy's month (the hollow merge daily). On projected
+accounts (gross, upkeep, admin, efficiency's cost, research), in order:
+1. **Short of money** (balance under need, `DEBT_PAYBACK` (1/12) of the debt + `MARGIN` (0.05) of income, and
+   gold under `RUNWAY_MONTHS` (3) × the shortfall): scrap warheads over `STOCKPILE_SHARE`; lay up standing
+   fleets, the dearest first, while the navy costs over `NAVY_SHARE` (0.12) of income (`FleetsLaidUp`);
+   then disband land formations, the fewest tanks first, then the fewest men, half their men back
+   (`DISBAND_MANPOWER`); not those in contact, player-held or heroes.
+2. **Suppression** of unrest from `SUPPRESS_FROM` (40) where it can pay (§4.6).
+3. **Means:** a delivery bomber for warheads without one; transports for a landing or the ferry (with
+   `DELIVERY_RESERVE_MONTHS` (1) of reserve); saving for a first warship while outnumbered at sea with
+   few formations (`FEW_FORMATIONS` 3). Research is set before building (§3.7).
+4. **The army:** an order while the army costs under `ARMY_SHARE` (0.35) of income at peace, `ARMY_SHARE_WAR`
+   (0.6) at war (`PEACE_ARMY_BASE` 0.3), keeping `RESERVE_MONTHS` (3) of reserve at peace and
+   `WAR_RESERVE_MONTHS` (0) at war, in parallel slots (1 + income ÷ `PARALLEL_INCOME` (400), + `OUTNUMBERED_SLOTS`
+   (1) when outnumbered on a land front, at most `MAX_PARALLEL` (6)). The mix: cadre divisions under `POOR_INCOME` (20), armour by `armourWanted`
+   (§6.1), motorised against armour-heavy enemies, else infantry; at war an order it cannot pay falls back
+   to a cadre division, one whose techs it lacks to infantry or cadre. The levy: an outnumbered nation
+   raises up to `LEVY_MONTH` (2) cadre divisions a month for manpower alone.
+5. **Refills** (§3.7).
+6. **Fleets** under `NAVY_SHARE`: a carrier first for income ≥ `BATTLE_FLEET_INCOME` (1000) with fewer than
+   `CARRIERS_KEPT` (4) afloat, then a battle squadron at that income, a cruiser squadron from `RICH_INCOME`
+   (200), else destroyers (from `POOR_INCOME`); none while another warship is in training (a carrier or
+   the ferry's transports excepted). Carrier decks crewed; wings under `AIR_SHARE` (§6.3).
+
+### 7.6 The long run
+A stable top is a valid world [ADR-750]; the world keeps changing through the rules that work against a
+leader: admin cost by area held (§3.4), unrest on land not one's own and overextension (§4.6), coalitions
+against a hegemon (§7.2), puppets drifting free (§3.5), revivals (§3.4), collapse after six bankrupt
+months. The sweep judges the result (§10.4).
 
 ---
 
