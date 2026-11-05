@@ -303,7 +303,7 @@ Rules:
     Done: by R25a's rule (`sameLanding` takes a bound division too); `landingNearAll1938.test.ts` (all four two south,
     and two south-west: none refused, each keeps its transports, landed 1242–1243; red without R25a). Pin unmoved.
   R25 done; then the critic again (run 38).
-- [ ] R26 **Naval back to its bar: news true to the landing kept** (critic run 38, focused: one blocking issue, R38-B1,
+- [x] R26 **Naval back to its bar: news true to the landing kept** (critic run 38, focused: one blocking issue, R38-B1,
   new in R25; naval 7 under its bar of 8). Each sub-item its own commit; then the critic again.
   - [x] R26a A landing kept by a near re-click is judged against that landing (R38-B1): an order the sim keeps as the
     same landing (`sameLanding`) keeps the order's target in the worker's news, so "came ashore away from its target"

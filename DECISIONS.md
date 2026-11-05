@@ -7,6 +7,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-827 · 2026-11-05 · proposed — Show the landing while choosing it (the user's decision)
+
+- **Context.** Critic runs 33–38 each found the next edge of one feature, the player's landing over the
+  sea (R17); R21–R26 fixed them one by one. Each was a case of one thing: the player clicks a cell and
+  the game resolves it, unseen, to a landing (a water and a land cell, `landingOf`) that can lie cells
+  away; a re-click, a near-miss or the news then disagrees with what the player meant. The critic has
+  named it as a design objection since run 35.
+- **Proposed.** While a land formation's order over the sea is chosen, the map marks the landing the
+  click resolves to (its water and land, a ring and an arrow), and a click whose landing is a
+  division's own is shown so. The order is the marked landing; with it, a fuzz test of re-clicks about
+  a landing (1–4 divisions, at several hours, cells all around) that checks no landing splits and no
+  news is false.
+- **Other ways.** Go on fixing cases as the critic finds them (six rounds so far); accept naval at 7
+  for a release, or score naval against a fixed list of cases (a change of the bars, ADR-804).
+- **Status.** Proposed: the user asked (2026-11-05) whether this is a loop; the options were put to
+  them. Nothing is built until they choose.
+
 ### ADR-826 · 2026-11-04 · accepted — No landing on a neutral's ground (ROADMAP R20, R32-B1)
 
 - **Context.** Critic run 32 (R32-B1): a player's order over the sea (R17, `seaConvoy`) checked only

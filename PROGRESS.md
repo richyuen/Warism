@@ -1289,3 +1289,5 @@
 - "{name}: it left its transports, which stay with the landing it had, for others bound for its new landing; it will
   not land with the rest." `landingLeftTold1938.spec.ts` checks the words (red without). Words only.
 - **Next:** critic run 39.
+- ADR-827 proposed (show the landing while choosing it): the user asked whether the naval rounds are a loop; the
+  options are put to them. Meanwhile, the standing order: critic run 39.
