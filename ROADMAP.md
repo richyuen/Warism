@@ -281,7 +281,7 @@ Rules:
     from its convoy; `landingAboardRefused1938.test.ts` (Fuzhou: 18, still aboard, the four land together; red
     without, 6), its spec (the panel's words over "Aboard at Tokyo"; looked at). A reason only: pin unmoved.
   R24 done; then the critic again (run 37, full).
-- [ ] R25 **Naval back to its bar: a click two cells off the landing** (critic run 37, full: one blocking issue, R37-B1;
+- [x] R25 **Naval back to its bar: a click two cells off the landing** (critic run 37, full: one blocking issue, R37-B1;
   naval 7 under its bar of 8 for it, every other score at its bar). Each sub-item its own commit; then the critic again.
   - [x] R25a The near-miss is measured from the click (R37-B1): for a division aboard or bound, a clicked cell within
     `SAME_LANDING_CELLS` of its landing's land, on the same holder, is that landing, whatever landing the click itself
@@ -313,5 +313,8 @@ Rules:
     Done: the worker asks `sameLanding` when the order comes and keeps the landing's target as the order's;
     `landingNearNews1938.spec.ts` (seed 3517: two, and all four, land with no news; red without, 364 told, and all
     four). Worker only: pin unmoved.
-  - [ ] R26b R25b's notice says which landing it leaves (R38-N1): its transports load for the landing it had; it is
+  - [x] R26b R25b's notice says which landing it leaves (R38-N1): its transports load for the landing it had; it is
     the division that goes to another. AT: the words of the notice in `landingLeftTold1938.spec.ts`.
+    Done: "it left its transports, which stay with the landing it had, for others bound for its new landing; it will
+    not land with the rest"; the spec checks the words (red without). Words only.
+  R26 done; then the critic again (run 39).

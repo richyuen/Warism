@@ -1284,3 +1284,8 @@
   land, no news; red without: 364 told, and all four told). Worker only: pin unmoved. The landing and order-news specs
   green.
 - **Next:** R26b.
+
+## 2026-11-05 — ROADMAP R26b: R25b's notice says which landing it leaves (R38-N1); R26 done
+- "{name}: it left its transports, which stay with the landing it had, for others bound for its new landing; it will
+  not land with the rest." `landingLeftTold1938.spec.ts` checks the words (red without). Words only.
+- **Next:** critic run 39.

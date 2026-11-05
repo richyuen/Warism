@@ -51,7 +51,7 @@ test('the one aboard sent to another landing, other transports free: a row and a
 
   await page.evaluate(({ id, x, y, n }) => window.__warsim!.hud.command({ kind: 'moveFormation', id, x, y, nation: n }), { id: two[0]!, x: FUZHOU[0], y: FUZHOU[1], n: JAP });
   await page.evaluate(() => window.__warsim!.sim.step(1));
-  await expect(page.getByTestId('formation-notice')).toContainText('left them for other transports', { timeout: 10_000 });
+  await expect(page.getByTestId('formation-notice')).toContainText('which stay with the landing it had', { timeout: 10_000 });
   await expect(page.locator('[data-testid="order-news"][data-order="leftLanding"]')).toHaveCount(1);
   await page.getByTestId('formation-panel').screenshot({ path: 'test-results/landingLeftTold1938.png' });
 });
