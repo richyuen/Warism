@@ -195,8 +195,10 @@ Rules:
     loaded convoy waits only for one that would be late (`escortAhead`; ADR-826, R22d). `landingEscortWait1938.test.ts`
     (escorts there 1117–1120, last aboard 1121, landed 1242–1243 as unescorted; Belfast 110 either way; red without:
     there from hour 23). `landingEscort1938.test.ts` unchanged. Pin unmoved.
-  - [ ] R22e The aboard status keeps to its column (R34-N2): "Aboard at Tokyo, waiting for the rest of the landing"
+  - [x] R22e The aboard status keeps to its column (R34-N2): "Aboard at Tokyo, waiting for the rest of the landing"
     wraps under its value, not into "Status". AT: the panel's crop at 1600 × 900 and 390 × 844, label and value apart.
+    Done: `.panel-row` keeps its label's width, a gap, the value right-aligned (`style.css`); `landingWait1938.spec.ts`
+    (Status and Landing rows: label ends ≥ 4 px before the value's leftmost line, desk and phone; red without, 0 px).
   - [ ] R22f A refusal notice goes when it stops being true (R34-N3): the panel's refusal is cleared when the
     formation's order or state changes. AT: the recall refused in Tokyo, then the convoy sails: no refusal under
     "At sea, bound for its landing".

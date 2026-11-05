@@ -344,7 +344,16 @@ textarea,
 .panel-row {
   display: flex;
   justify-content: space-between;
+  gap: 0.6rem;
   line-height: 1.4rem;
+}
+/* A long value wraps in its own column, right-aligned, and never runs into its label (ROADMAP R22e,
+   critic run 34, R34-N2: "StatusAboard at Tokyo, …"). */
+.panel-row > :first-child:not(:last-child) {
+  flex: none;
+}
+.panel-row > :last-child:not(:first-child) {
+  text-align: right;
 }
 .formation-fight {
   margin-left: 0.4rem;

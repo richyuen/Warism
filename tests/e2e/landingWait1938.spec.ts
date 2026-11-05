@@ -52,6 +52,19 @@ for (const [label, width, height] of [['desk', 1600, 900], ['phone', 390, 844]] 
     await waiting(page, width, height);
     await expect(page.getByTestId('formation-status')).toHaveAttribute('data-voyage', 'aboard', { timeout: 10_000 });
     await expect(page.getByTestId('formation-wait')).toHaveText(/^1 of 4 aboard; the last \d+ days from the port$/, { timeout: 10_000 });
+    // ROADMAP R22e (R34-N2): a long value wraps in its own column; its label ends before it begins.
+    for (const id of ['formation-status', 'formation-wait']) {
+      const gap = await page.getByTestId(id).evaluate((el) => {
+        const row = el.closest('.panel-row')!;
+        // The leftmost of the value's lines, as drawn.
+        const range = document.createRange();
+        range.selectNodeContents(row.lastElementChild!);
+        let left = row.lastElementChild!.getBoundingClientRect().left;
+        for (const r of range.getClientRects()) left = Math.min(left, r.left);
+        return left - row.firstElementChild!.getBoundingClientRect().right;
+      });
+      expect(gap, `${id}: label and value apart`).toBeGreaterThanOrEqual(4);
+    }
     await page.getByTestId('formation-panel').screenshot({ path: `test-results/landingWait1938-${label}.png` });
   });
 }

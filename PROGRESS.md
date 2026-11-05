@@ -1105,3 +1105,13 @@
   green. Pin unmoved. Tick: a route search an hour for each of the player's kept escorts, none in the AI's world.
   The gate's `snapshot-perf` (2 ms bar) red under the full parallel run, green alone, as at R22b.
 - **Next:** R22e.
+
+## 2026-11-05 — ROADMAP R22e: a long value keeps to its column (R34-N2)
+- A panel row's label keeps its width and a 0.6 rem gap, and a long value wraps right-aligned in its own column
+  (`.panel-row`, every panel): "Aboard at Tokyo, waiting for the rest of the landing" no longer runs into "Status", nor
+  R22c's "Landing" row into its label.
+- AT: `landingWait1938.spec.ts` (the Status and Landing rows: the label ends at least 4 px before the value's leftmost
+  line, at 1600 × 900 and 390 × 844; red without at the desk, 0 px), the crops looked at. Panel and layout specs green
+  (enemyClickPanel, formationClickPanel, formationPanel, godPanelMore, nationPanel, nukeAlertPhone, phoneLayout,
+  orderNews: 29). CSS only: no sim, frame budget untouched.
+- **Next:** R22f.
