@@ -1330,3 +1330,12 @@
 - Red without (two violations in each two-division state). Landing unit tests (22 files) and landing specs green.
   Pin unmoved.
 - **Next:** check the open PR (the user's ask), then critic run 39.
+
+## 2026-11-05 — PR #5 merged: the nightly checker judges only real risings (78c5ca29)
+- The user asked to check the open PR before the critic. #5 (another session's): the war-and-peace checker's revolt
+  probe now takes puppets between `PROTEST_FROM` (10, the literal it had) and `FREE_ABOVE` (90). Above it the puppet
+  pass releases in peace (`autonomy > FREE_ABOVE`), so the probe's forced rising never happens; the nightly's red
+  (seed 1019, Ireland at 90.25) was the probe's, not the game's. Not a weakened test: the rule it judges is the same.
+- Checked on main before the merge: `diploInvariants.ts 1019 random --heroes` 0 broken; `npm run check` green (the
+  whole unit suite, a helper changed; snapshot-perf red under load, green alone, watch list). Squash-merged.
+- **Next:** critic run 39.
