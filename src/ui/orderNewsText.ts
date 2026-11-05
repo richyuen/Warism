@@ -23,9 +23,13 @@ function stateOf(info: FormationDetail): string {
  * refusal only: the rest tell what became of an order under way, or happened (thrown back, landed
  * away, unescorted, sent home), and stay true.
  * `info` is the panel's detail; one of another formation or from before the news decides nothing.
+ * `orderedAt`: the `seq` the next news was to take when the formation's last order was sent from
+ * here (`Hud.orderedAt`); a refusal before it goes, whatever the state (ROADMAP R24c).
  */
-export function staleNotice(seen: Map<number, string>, n: OrderNews & { seq: number }, info: FormationDetail | null): boolean {
-  if (n.kind !== 'refused' || !info || info.id !== n.id || info.tick < n.tick) return false;
+export function staleNotice(seen: Map<number, string>, n: OrderNews & { seq: number }, info: FormationDetail | null, orderedAt?: number): boolean {
+  if (n.kind !== 'refused') return false;
+  if (orderedAt !== undefined && n.seq < orderedAt) return true;
+  if (!info || info.id !== n.id || info.tick < n.tick) return false;
   const now = stateOf(info);
   const was = seen.get(n.seq);
   if (was === undefined) {

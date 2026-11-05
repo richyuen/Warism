@@ -1219,3 +1219,11 @@
   east: still aboard, the two land 632–633; Fuzhou is another landing; red without, one east: 633 / 1285). The one
   south and two east were already the same on HEAD. Pin unmoved.
 - **Next:** R24c.
+
+## 2026-11-05 — ROADMAP R24c: a refusal notice goes with any order taken (R36-N1)
+- The HUD keeps, for each formation ordered from the page, the news `seq` its last order was sent at (`orderedAt`); a
+  refusal older than that is no longer the panel's notice, whatever the state. A refusal of the new order is newer and
+  shows. R23c's goal stays in the state key (a state change without an order of the page).
+- AT: `orderNews1938.spec.ts`'s fourth test (Switzerland's division marching, refused London, re-clicked on its own
+  goal: no notice, "On the march"; red without). UI only.
+- **Next:** R24d.

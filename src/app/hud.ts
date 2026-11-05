@@ -525,6 +525,12 @@ export class Hud {
   /** What became of the player's orders of formations, the newest last (PLAN 4.9c; `seq` numbers them). */
   readonly orderNews = signal<(OrderNews & { seq: number })[]>([]);
   private orderSeq = 0;
+  /**
+   * For each formation ordered from here, the `seq` the next order news was to take when its last
+   * order was sent (ROADMAP R24c, critic run 36, R36-N1): a refusal before it is older than an order
+   * given since, and its notice goes, even for an order to the same place.
+   */
+  readonly orderedAt = signal(new Map<number, number>());
   /** Forgets the order news (a click on one, a new game). */
   dismissOrderNews(seq?: number): void {
     this.orderNews.value = seq === undefined ? [] : this.orderNews.peek().filter((n) => n.seq !== seq);
@@ -536,6 +542,7 @@ export class Hud {
   command(cmd: Command): void {
     this.refusal.value = 0;
     this.commandFor = this.selected.peek();
+    if (cmd.kind === 'moveFormation' || cmd.kind === 'paradrop') this.orderedAt.value = new Map(this.orderedAt.peek()).set(cmd.id, this.orderSeq);
     this.sim.command(cmd, true);
   }
 

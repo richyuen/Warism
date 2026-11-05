@@ -126,7 +126,7 @@ export function App({
           : null;
   // The last news of the formation's order, while what it said still holds (ROADMAP R22f).
   const lastNews = formationTitle ? orderNews.filter((n) => n.id === hud.formation.value).at(-1) : undefined;
-  const lastOrder = lastNews && !staleNotice(noticeSeen, lastNews, hud.formationInfo.value) ? lastNews : undefined;
+  const lastOrder = lastNews && !staleNotice(noticeSeen, lastNews, hud.formationInfo.value, hud.orderedAt.value.get(lastNews.id)) ? lastNews : undefined;
   return (
     <>
       <TopBar

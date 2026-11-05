@@ -1789,7 +1789,8 @@ builds).
   (`tickerRows`); the player's order news (refusals, repulsed or distant landings, `ORDER_NEWS_KEPT` 4;
   the formation's panel shows its last as a notice, and a refusal's only while the formation's
   voyage, march (and the cell it is for: a new order taken ends it, R23c), fight and retreat stay as
-  when the panel first showed it, `staleNotice`, ROADMAP R22f);
+  when the panel first showed it, and no order of it has been sent since, `staleNotice`, ROADMAP R22f,
+  R24c);
   sea battles, carrier strikes, raids and closings, alike rows counted. A click flies to its place
   (`PLACE_VIEW_KM` 1500 across). Nuclear strikes are alerts (§6.4).
 - **Sound** (`src/shared/sound.ts`, `src/app/sound.ts`): eight short synthesised cues (nuke, war, death,

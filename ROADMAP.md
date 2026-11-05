@@ -269,9 +269,11 @@ Rules:
     Done: `sameLanding` takes a landing within `SAME_LANDING_CELLS` (2), same holder; `landingNearSame1938.test.ts`
     (one cell east, one south, two east: still aboard, landed 632–633; Fuzhou another; red without, 633 / 1285). Pin
     unmoved.
-  - [ ] R24c A refusal notice goes with any order taken (R36-N1): an order given after the refusal, even to the march's
+  - [x] R24c A refusal notice goes with any order taken (R36-N1): an order given after the refusal, even to the march's
     own goal, ends it. AT: Germany's (here Switzerland's) division marching, refused, re-clicked on its own goal: no
     notice; red without.
+    Done: `Hud.orderedAt` (the news `seq` at a formation's last order sent), read by `staleNotice`;
+    `orderNews1938.spec.ts`'s fourth test (re-clicked on its own goal: no notice, "On the march"; red without). UI only.
   - [ ] R24d The one aboard sent to another landing is told why (R36-N2): not "no transports … at a port it can
     reach" while it sits aboard transports at that port. AT: the one aboard ordered to Fuzhou: the reason names its
     transports as loading for another landing; red without.
