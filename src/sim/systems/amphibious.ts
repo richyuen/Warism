@@ -417,21 +417,49 @@ export function sameLanding(world: World, id: number, x: number, y: number): boo
   const { w, h } = world.cells;
   const [tx, ty] = [Math.floor(x), Math.floor(y)];
   if (tx < 0 || ty < 0 || tx >= w || ty >= h) return false;
-  const e = world.embarked.get(id);
-  const fetch = world.seaFetch.get(id);
-  const bound = world.seaBound.get(id);
-  let was: { water: number; land: number } | null = null;
-  let goal = -1;
-  if (e !== undefined) [was, goal] = loading(world, e.fleet) ? [e, e.target] : [null, -1];
-  else if (fetch !== undefined && bound !== undefined && world.convoyPort.has(fetch) && world.formations.has(fetch)) [was, goal] = [landingOf(world, bound), bound];
+  const was = ownLanding(world, id);
   if (!was) return false;
   const ctl = world.cells.controller;
   const click = ty * w + tx;
   const r = world.atSize(SAME_LANDING_CELLS);
-  if (goal >= 0 && near(world, click, goal, r) && ctl[click] === ctl[goal]) return true;
+  if (near(world, click, was.goal, r) && ctl[click] === ctl[was.goal]) return true;
   const l = landingOf(world, click);
   if (!l) return false;
   return near(world, l.water, was.water, r) && near(world, l.land, was.land, r) && ctl[l.land] === ctl[was.land];
+}
+
+/**
+ * The landing formation `id` has a place in, and the cell it was ordered for (`goal`): aboard a
+ * player's convoy still loading, or bound for one still at its port; else null (`sameLanding`).
+ */
+function ownLanding(world: World, id: number): { water: number; land: number; goal: number } | null {
+  const e = world.embarked.get(id);
+  if (e !== undefined) return loading(world, e.fleet) ? { water: e.water, land: e.land, goal: e.target } : null;
+  const fetch = world.seaFetch.get(id);
+  const bound = world.seaBound.get(id);
+  if (fetch === undefined || bound === undefined || !world.convoyPort.has(fetch) || !world.formations.has(fetch)) return null;
+  const l = landingOf(world, bound);
+  return l ? { ...l, goal: bound } : null;
+}
+
+/**
+ * The landing an order of formation `id` over the sea to (`x`, `y`) is for (ADR-827, ROADMAP R27a),
+ * as the order itself resolves it: the landing it has when the order is for it (`sameLanding`,
+ * `same`), else the click's (`landingOf`); null for none. `goal` is the cell the order is for: the
+ * one it was ordered for when kept, else the click's; what becomes of the order is judged against
+ * it (the worker's news, R26a). The map marks it while the order is chosen.
+ */
+export function landingFor(world: World, id: number, x: number, y: number): { water: number; land: number; same: boolean; goal: number } | null {
+  const { w, h } = world.cells;
+  const [tx, ty] = [Math.floor(x), Math.floor(y)];
+  if (tx < 0 || ty < 0 || tx >= w || ty >= h) return null;
+  if (sameLanding(world, id, x, y)) {
+    const own = ownLanding(world, id)!;
+    return { water: own.water, land: own.land, same: true, goal: own.goal };
+  }
+  const goal = ty * w + tx;
+  const l = landingOf(world, goal);
+  return l ? { ...l, same: false, goal } : null;
 }
 
 /** How near, in cells of the default map, a landing is to another to be the same for an order (`sameLanding`, ROADMAP R24b): about 25 km. */

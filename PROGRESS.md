@@ -1297,3 +1297,11 @@
   eb35f769, was stopped before its report (its queue and sims killed; its partial files moved out of `critic/` to the
   session's scratchpad, none committed). R27a–c filed.
 - **Next:** R27a.
+
+## 2026-11-05 — ROADMAP R27a: the worker's hover answer names the landing (ADR-827)
+- `landingFor(world, id, x, y)`: the landing an order over the sea is for, as the order resolves it (the one it has
+  when `sameLanding`, else the click's `landingOf`), and the cell it is judged against. `overSea` now answers a
+  `SeaHint` {how, water, land, same}; the worker's order news (R26a) uses the same function.
+- AT: `landingFor1938.test.ts` (before an order: Shanghai's; the one aboard two cells south: its own, `same`, the
+  click's own landing another; Fuzhou: Fuzhou's). All 21 landing unit files green. Pin unmoved.
+- **Next:** R27b.

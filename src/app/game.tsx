@@ -69,7 +69,7 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       hud.hoverBySea.value = -1;
       if (!h || key === '') return;
       const cell = h.cell;
-      void sim.overSea(id!, (cell % geometry.w) + 0.5, Math.floor(cell / geometry.w) + 0.5).then((how) => {
+      void sim.overSea(id!, (cell % geometry.w) + 0.5, Math.floor(cell / geometry.w) + 0.5).then(({ how }) => {
         if (asked !== key) return;
         hud.hoverSeaNeutral.value = how === 2;
         hud.hoverBySea.value = how !== 0 ? cell : -1;

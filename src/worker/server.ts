@@ -27,7 +27,7 @@ import { DAYS_PER_MONTH } from '../sim/systems/research';
 import { shipyard } from '../sim/systems/production';
 import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { AT_PORT_CELLS, carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
-import { landingOf, loading, neutralLanding, sameLanding } from '../sim/systems/amphibious';
+import { landingFor, landingOf, loading, neutralLanding } from '../sim/systems/amphibious';
 import { marchHoursLeft, overSea } from '../sim/systems/movement';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
@@ -47,6 +47,7 @@ import {
   NationField,
   SortieRole,
   type FromWorker,
+  type SeaHint,
   type SimStatus,
   type Snapshot,
   type Speed,
@@ -276,8 +277,8 @@ export class SimServer {
         if (msg.cmd.kind === 'moveFormation' && msg.cmd.nation !== undefined) {
           const w = sim.world;
           const id = msg.cmd.id;
-          const kept = sameLanding(w, id, msg.cmd.x, msg.cmd.y) ? (w.embarked.get(id)?.target ?? w.seaBound.get(id)) : undefined;
-          this.ordered.set(id, { target: kept ?? Math.floor(msg.cmd.y) * w.cells.w + Math.floor(msg.cmd.x), before: this.ordered.get(id)?.target });
+          const kept = landingFor(w, id, msg.cmd.x, msg.cmd.y);
+          this.ordered.set(id, { target: kept?.same ? kept.goal : Math.floor(msg.cmd.y) * w.cells.w + Math.floor(msg.cmd.x), before: this.ordered.get(id)?.target });
         }
         // A wing's order and a paradrop (PLAN 5.8v3): told if refused, as a march is; given or
         // refused in the hour it is applied (`once`, the tick it is applied at), so forgotten after it.
@@ -314,10 +315,13 @@ export class SimServer {
         // ROADMAP R17c: the cursor's hint for the player's selection: 0 not over the sea, 1 by
         // sea, 2 by sea onto the ground of a nation outside its wars, refused (ROADMAP R21c).
         const world = this.requireSim().world;
+        // By sea, the landing the order is for, from what the order uses (`landingFor`, ADR-827, R27a).
         const yes = world.formations.has(msg.id) && !world.offLand(msg.id) && overSea(world, msg.id, msg.x, msg.y);
         const target = Math.floor(msg.y) * world.cells.w + Math.floor(msg.x);
         const how = !yes ? 0 : neutralLanding(world, world.formations.cols.nation[msg.id]!, target) ? 2 : 1;
-        this.reply(msg.reqId, new TextEncoder().encode(JSON.stringify(how)), false);
+        const l = yes ? landingFor(world, msg.id, msg.x, msg.y) : null;
+        const hint: SeaHint = { how, water: l?.water ?? -1, land: l?.land ?? -1, same: l?.same ?? false };
+        this.reply(msg.reqId, new TextEncoder().encode(JSON.stringify(hint)), false);
         break;
       }
       case 'economy': {

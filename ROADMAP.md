@@ -320,10 +320,12 @@ Rules:
   R26 done; then the critic again (run 39).
 - [ ] R27 **The landing shown while it is chosen** (ADR-827, the user's decision 2026-11-05, after six rounds R21–R26 of
   one class: a click resolved, unseen, to a landing cells away). Each sub-item its own commit; then the critic again.
-  - [ ] R27a The worker's hover answer names the landing: with land formations selected and the cursor over a target
+  - [x] R27a The worker's hover answer names the landing: with land formations selected and the cursor over a target
     over the sea, the landing's water and land, and whether it is the first selected division's own (`sameLanding`:
     then its own landing, not the click's). From the functions the order uses. AT: unit test of the answer (Shanghai
     from Tokyo: `landingOf`'s pair; the one aboard, two cells south: its own pair, `same`).
+    Done: `landingFor` (amphibious; `ownLanding` factored out of `sameLanding`), `SeaHint`; the order news takes its
+    `goal`; `landingFor1938.test.ts`. Every landing unit test green. Pin unmoved.
   - [ ] R27b The map marks it and the tooltip says it: a dashed line from the landing's water to its land and a ring
     there, another colour for the landing the division already has; the tooltip says "the landing it already has".
     Asked again when the sim's state changes under a still cursor. AT: e2e (hover Shanghai: the mark at `landingOf`'s

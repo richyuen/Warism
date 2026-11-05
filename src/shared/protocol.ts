@@ -828,6 +828,19 @@ export interface WarStat {
   exhaustion: [number, number];
 }
 
+/**
+ * The worker's answer for the cursor over a target of the selected land formation (ROADMAP R17c,
+ * R21c, R27a): `how` 0 not over the sea, 1 by sea, 2 by sea onto the ground of a nation outside its
+ * wars (refused); by sea, the landing the order is for (`landingFor`): its `water` and `land` cells
+ * and whether it is the one the formation already has (`same`); -1 and false for none.
+ */
+export interface SeaHint {
+  how: 0 | 1 | 2;
+  water: number;
+  land: number;
+  same: boolean;
+}
+
 /** What became of a player's order (PLAN 4.9c; `orderNews`). */
 export interface OrderNews {
   kind: 'refused' | 'repulsed' | 'landedAway' | 'unescorted' | 'sentHome' | 'leftLanding';

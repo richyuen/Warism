@@ -8,7 +8,7 @@
 import type { Command } from '../shared/commands';
 import type { HistoryRow } from '../shared/history';
 import type { LandMask } from '../shared/landMask';
-import type { EconomyBreakdown, RefusedBase } from '../shared/protocol';
+import type { EconomyBreakdown, RefusedBase, SeaHint } from '../shared/protocol';
 import type {
   FromWorker,
   FormationDetail,
@@ -416,10 +416,10 @@ export class SimClient {
     return JSON.parse(new TextDecoder().decode(r.bytes)) as FormationDetail | null;
   }
 
-  /** Whether an order of formation `id` to (`x`, `y`) goes over the sea (ROADMAP R17c: the cursor's hint): 0 no, 1 by sea, 2 by sea onto a neutral's ground, refused (ROADMAP R21c). */
-  async overSea(id: number, x: number, y: number): Promise<0 | 1 | 2> {
+  /** Whether an order of formation `id` to (`x`, `y`) goes over the sea, and the landing it is for (ROADMAP R17c, R21c, R27a: the cursor's hint; `SeaHint`). */
+  async overSea(id: number, x: number, y: number): Promise<SeaHint> {
     const r = await this.status({ type: 'overSea', id, x, y });
-    return r.bytes ? (JSON.parse(new TextDecoder().decode(r.bytes)) as 0 | 1 | 2) : 0;
+    return r.bytes ? (JSON.parse(new TextDecoder().decode(r.bytes)) as SeaHint) : { how: 0, water: -1, land: -1, same: false };
   }
 
   /** Nation `nation`'s month in parts as the sim has it now (PLAN 7.4f34), or null in a world without an economy. */

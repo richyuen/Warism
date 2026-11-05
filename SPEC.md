@@ -140,8 +140,10 @@ ack, buildProvinces, buildTerrain, buildPolitical; requests carry a `reqId` and 
   elements by unit type, its voyage over the sea) for the formation panel, or `null` (PLAN 2.14b). With `generation`,
   `null` also when the id's count is another: ids are given out again, and the formation asked
   for is gone (ADR-115). Read-only, as `inspect`.
-- `overSea {id, x, y}`: whether formation `id`'s order to (x, y) goes over the sea, JSON `boolean`
-  (ROADMAP R17c, the map tooltip's hint). Read-only.
+- `overSea {id, x, y}`: whether formation `id`'s order to (x, y) goes over the sea, and the landing
+  it is for, JSON `SeaHint` (`how` 0 no, 1 by sea, 2 onto a neutral's ground; `water`, `land`, and
+  `same` when it is the landing the formation already has: `landingFor`, the function the order's
+  news uses too; ROADMAP R17c, R21c, R27a, ADR-827). Read-only.
 - `warBattle {war}`: the largest battle of a war as JSON (`WarBattle`: where to look, the pair
   of formations there, formations and men of each side), or `null` when the war has none (PLAN
   2.14e; `largestBattle`, `src/sim/systems/warBattle.ts`). Worked out from the state when

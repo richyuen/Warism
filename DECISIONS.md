@@ -26,6 +26,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **How.** One source of truth: the worker's hover answer (`overSea`) gives the landing to draw from
   the functions the order itself uses (`sameLanding`, the division's own landing; else `landingOf`
   of the click), so the mark cannot disagree with the order; `moveFormation` still sends the click.
+- **R27a.** `landingFor(world, id, x, y)` (amphibious): the landing and the cell the order is for,
+  kept (`same`) or the click's; `overSea` answers a `SeaHint` with it, and the worker's order news
+  takes its `goal` (R26a's rule, now one function). `landingFor1938.test.ts`. Worker: pin unmoved.
 
 ### ADR-826 · 2026-11-04 · accepted — No landing on a neutral's ground (ROADMAP R20, R32-B1)
 
