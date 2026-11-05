@@ -1294,10 +1294,17 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   a warfleet with it (`escortConvoy`): of its nation's fleets with no transports standing idle (not
   under way, in no battle, not under the player's own order, not held by the editor, no other
   convoy's escort), the nearest by straight cells to the landing's water with a sea way (at most
-  `CALL_TRIES`), which sails there at once, ahead of the loading transports, as the player's. None:
-  `ConvoyUnescorted`, and the transports sail alone. Hourly after the convoys (`escortSystem`), an
-  escort whose group is gone, or has no convoy and nobody aboard, is the AI's again and sails back
-  to the cell it came from (else home). A player's own order of it makes it theirs.
+  `CALL_TRIES`), kept for it where it stands as the player's. None: `ConvoyUnescorted`, and the
+  transports sail alone. Hourly after the convoys (`escortSystem`), a kept escort standing while its
+  convoy is at its port sails for the landing's water once its voyage (`sailHours`, by the way and
+  pace `sailStep` takes) is at least the wait left (`waitLeft`: the longest march of a division
+  bound for a convoy at that port for that landing, `marchHoursLeft`, and the voyage of such a
+  group still on its way there, `sailHoursLeft`; ROADMAP R22d). A loaded convoy ready to sail sends
+  one not yet sailed, and waits while one of its landing's is in a battle or would be there after
+  its transports (`escortAhead`). So the escort is there first and the landing no later than
+  without it (Belfast 110 h either way; Japan's four to Shanghai 1243 h). An escort whose group is
+  gone, or has no convoy and nobody aboard, is the AI's again and sails back to the cell it came
+  from (else home). A player's own order of it makes it theirs.
   `world.embarked`, `world.seaBound`, `world.seaFetch`, `world.convoyPort` and `world.escorts` are saved.
 - **Bombardment** (`src/sim/systems/bombardment.ts`): a fleet not under way and not in a sea battle
   fires on land formations within its guns' reach (12–32 km) at the element of most hit points:

@@ -187,9 +187,14 @@ Rules:
     days, at the hour the first boards.
     Done: `voyage.wait` (`landingWait`), the panel's "Landing" row; `landingWait1938.test.ts` (said 47 days at hour 2,
     the last at the port after 46.6; red without), `landingWait1938.spec.ts` (desk and phone). Worker and UI: pin unmoved.
-  - [ ] R22d The escort waits for the sailing (R34-N1): the escort of a new convoy sails when the convoy does, not at
-    the click. AT: four Japanese divisions to Shanghai: no escort at Shanghai's water before the convoy sails, and
-    one there by its landing.
+  - [x] R22d The escort waits for the sailing (R34-N1): the escort of a new convoy sails when the convoy is loaded,
+    not at the click, and is at the landing first. AT: four Japanese divisions to Shanghai: no escort at Shanghai's
+    water more than a day before the last division is aboard; each convoy's escort there before its transports;
+    landed together, and no later than without the escort.
+    Done: kept where it stands, it sails when its voyage (`sailHours`) is at least the wait left (`waitLeft`); a
+    loaded convoy waits only for one that would be late (`escortAhead`; ADR-826, R22d). `landingEscortWait1938.test.ts`
+    (escorts there 1117–1120, last aboard 1121, landed 1242–1243 as unescorted; Belfast 110 either way; red without:
+    there from hour 23). `landingEscort1938.test.ts` unchanged. Pin unmoved.
   - [ ] R22e The aboard status keeps to its column (R34-N2): "Aboard at Tokyo, waiting for the rest of the landing"
     wraps under its value, not into "Status". AT: the panel's crop at 1600 × 900 and 390 × 844, label and value apart.
   - [ ] R22f A refusal notice goes when it stops being true (R34-N3): the panel's refusal is cleared when the

@@ -37,9 +37,9 @@ import { nearestCellWhere } from '../data/ownership';
 import { FlipCause, navOf, PlayerOrderKind, portSeaOf, seaOf, seaRangeOf, type World } from '../world';
 import { destroyFormation, elementIndex } from './elements';
 import { AT_PORT_CELLS, sailHome } from './navalCombat';
-import { foreignTo, orderMove } from './movement';
+import { foreignTo, marchHoursLeft, orderMove } from './movement';
 import { portShut } from './bombing';
-import { orderSail } from './sail';
+import { orderSail, sailHours, sailHoursLeft } from './sail';
 import { seaHolder } from './seaControl';
 import { blocOf } from './supply';
 
@@ -497,6 +497,61 @@ function boardConvoy(world: World, id: number, target: number, fleet: number): n
 }
 
 /**
+ * The hours the player's convoy on group `fleet` at its port has left to wait for its landing (ROADMAP
+ * R22d): the longest of the march of a division bound for a convoy at that port for that landing
+ * (`marchHoursLeft`) and the voyage of such a convoy's group still on its way to the port
+ * (`sailHoursLeft`); Infinity while one does not go on (in a fight, away and standing).
+ */
+function waitLeft(world: World, fleet: number): number {
+  const f = world.formations;
+  const c = f.cols;
+  const port = world.convoyPort.get(fleet);
+  const target = convoyTarget(world, fleet);
+  let hours = 0;
+  for (const [g, p] of world.convoyPort) {
+    if (p !== port || !f.has(g) || c.nation[g] !== c.nation[fleet] || convoyTarget(world, g) !== target) continue;
+    if (!loading(world, g)) hours = Math.max(hours, c.moving[g] === 1 ? sailHoursLeft(world, g) : Infinity);
+    for (const [id, o] of world.seaFetch) if (o === g && f.has(id) && c.moving[id] === 1) hours = Math.max(hours, marchHoursLeft(world, id));
+  }
+  return hours;
+}
+
+/**
+ * Whether the loaded convoy on group `fleet`, ready to sail for landing water `water`, waits for its
+ * escort (ROADMAP R22d), and those of the convoys at its port for its landing, which sail with it
+ * (R21e): one kept and not yet there sails there now, and the convoy waits while it is in a battle or
+ * would be there after the transports (its hours left over theirs, `sailHours`). One with no way
+ * there is the AI's again, and the convoy is told it sails alone (`ConvoyUnescorted`, by the first
+ * aboard).
+ */
+function escortAhead(world: World, fleet: number, water: number): boolean {
+  const f = world.formations;
+  const c = f.cols;
+  const w = world.cells.w;
+  let wait = false;
+  // The escorts of every convoy at its port for its landing (ROADMAP R21e: they sail together).
+  const port = world.convoyPort.get(fleet);
+  const target = convoyTarget(world, fleet);
+  const mates = (g: number): boolean => g === fleet || (f.has(g) && world.convoyPort.get(g) === port && c.nation[g] === c.nation[fleet] && convoyTarget(world, g) === target);
+  // The transports' own voyage: an escort that will be there before them is waited for no longer.
+  const [x, y] = [(water % w) + 0.5, Math.floor(water / w) + 0.5];
+  const voyage = sailHours(world, fleet, x, y);
+  for (const [o, e] of [...world.escorts].sort((a, b) => a[0] - b[0])) {
+    if (!mates(e.convoy) || !f.has(o)) continue;
+    if (near(world, cellOfPlace(world, o), water, world.atSize(AT_PORT_CELLS))) continue;
+    if (c.engaged[o] === 1 || c.moving[o] === 1 || orderSail(world, o, x, y)) {
+      if (c.engaged[o] === 1 || sailHoursLeft(world, o) > voyage) wait = true;
+      continue;
+    }
+    world.escorts.delete(o);
+    world.playerOrders.delete(o);
+    const first = [...world.embarked].filter(([, x]) => x.fleet === fleet).sort((a, b) => a[0] - b[0])[0]![0];
+    world.out.emit(world.tick, EventKind.ConvoyUnescorted, first, c.nation[first]!, c.x[first]!, c.y[first]!);
+  }
+  return wait;
+}
+
+/**
  * The player's convoys (ROADMAP R17b), hourly after the boarding: a group loading at its port with
  * a formation aboard sails for the landing (the first aboard's) once no formation bound for it that
  * would fit is still to come; with no way there, the convoy ends and those aboard go ashore at the
@@ -532,6 +587,8 @@ function convoySystem(world: World): void {
       if (load && !pending.some((id) => c.strength[id]! <= room) && [...world.convoyPort].some(([o, p]) => o !== fleet && p === port && f.has(o) && c.nation[o] === c.nation[fleet] && convoyTarget(world, o) === target && stillLoading(world, o))) continue;
       if (load && !pending.some((id) => c.strength[id]! <= room)) {
         const first = [...world.embarked].filter(([, e]) => e.fleet === fleet).sort((a, b) => a[0] - b[0])[0]![1];
+        // Its escort first, at the landing's water (ROADMAP R22d): it waits for it.
+        if (escortAhead(world, fleet, first.water)) continue;
         if (!orderSail(world, fleet, (first.water % w) + 0.5, Math.floor(first.water / w) + 0.5)) {
           for (const [id, e] of world.embarked) if (e.fleet === fleet) world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.NoSeaWay, NaN);
           endConvoy(world, fleet);
@@ -552,8 +609,10 @@ function convoySystem(world: World): void {
  * asked for by the order of formation `id`: of its nation's warfleets (no transports) standing idle
  * (not under way, in no battle, not under the player's own order, not held in place by the editor,
  * no other convoy's escort), the nearest to the landing's water by straight cells with a way there
- * (at most CALL_TRIES tried) sails there now, ahead of the transports, which wait at their port
- * for the convoy to come in. It sails under the player's order, so the AI leaves it be, until the
+ * (at most CALL_TRIES tried) is kept for it where it stands. When the transports are loaded and
+ * would sail, it sails there first, and they wait at their port until it is there (`escortAhead`,
+ * ROADMAP R22d; before, it sailed at the order and stood weeks at the landing's water while a
+ * click's divisions came in). It is under the player's order, so the AI leaves it be, until the
  * transports have put everyone ashore (`escortSystem`). None free: `ConvoyUnescorted`, and the
  * transports sail alone.
  */
@@ -577,9 +636,10 @@ export function escortConvoy(world: World, convoy: number, target: number, id: n
     });
     idle.sort((a, b) => a[1] - b[1] || a[0] - b[0]);
   }
+  // Kept where it stands with a way there (ROADMAP R22d): it sails when the transports are loaded.
   for (const [o] of idle.slice(0, CALL_TRIES)) {
     const from = cellOfPlace(world, o);
-    if (!orderSail(world, o, (landing!.water % w) + 0.5, Math.floor(landing!.water / w) + 0.5)) continue;
+    if (!Number.isFinite(sailHours(world, o, (landing!.water % w) + 0.5, Math.floor(landing!.water / w) + 0.5))) continue;
     world.playerOrders.set(o, { kind: PlayerOrderKind.march, until: 0, through: false });
     world.escorts.set(o, { convoy, from });
     return;
@@ -601,7 +661,17 @@ function escortSystem(world: World): void {
       world.escorts.delete(o);
       continue;
     }
-    if (f.has(e.convoy) && (world.convoyPort.has(e.convoy) || carrying(world, e.convoy))) continue;
+    if (f.has(e.convoy) && (world.convoyPort.has(e.convoy) || carrying(world, e.convoy))) {
+      // Kept while its convoy is at its port or on its way there (ROADMAP R22d): it sails for the
+      // landing's water once its voyage would take as long as the wait left, so as to be there when
+      // the transports are loaded, not weeks before.
+      const c = f.cols;
+      const target = world.convoyPort.has(e.convoy) && c.moving[o] === 0 && c.engaged[o] === 0 ? convoyTarget(world, e.convoy) : -1;
+      const landing = target >= 0 ? landingOf(world, target) : null;
+      if (!landing || near(world, cellOfPlace(world, o), landing.water, world.atSize(AT_PORT_CELLS))) continue;
+      const [x, y] = [(landing.water % w) + 0.5, Math.floor(landing.water / w) + 0.5];
+      if (sailHours(world, o, x, y) < waitLeft(world, e.convoy) || orderSail(world, o, x, y)) continue;
+    }
     world.escorts.delete(o);
     world.playerOrders.delete(o);
     if (!orderSail(world, o, (e.from % w) + 0.5, Math.floor(e.from / w) + 0.5)) sailHome(world, o);

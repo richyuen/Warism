@@ -83,6 +83,42 @@ export function sailTarget(world: World, tx: number, ty: number): number {
   return -1;
 }
 
+/**
+ * The hours standing fleet `id` would take to (`x`, `y`) at its pace of now, by the way `orderSail`
+ * would take and the steps as `sailStep` paces them; Infinity for no way. It changes nothing and
+ * tells nothing (an escort kept for a convoy still at its port, ROADMAP R22d).
+ */
+export function sailHours(world: World, id: number, x: number, y: number): number {
+  const c = world.formations.cols;
+  const target = sailTarget(world, Math.floor(x), Math.floor(y));
+  const kmh = world.formations.has(id) ? sailKmh(world, id) : 0;
+  if (target < 0 || kmh <= 0) return Infinity;
+  const w = world.cells.w;
+  const lanes = laneOf(world);
+  const nation = c.nation[id]!;
+  const shut = (e: number): boolean => lanes.edges[e]!.passage >= 0 && passageShut(world, lanes.edges[e]!.passage, nation);
+  const route = sailRoute(navOf(world).grid, seaOf(world), lanes, Math.floor(c.y[id]!) * w + Math.floor(c.x[id]!), target, shut);
+  if (!route) return Infinity;
+  return pathHours(world, route.cells, 0, 0, kmh);
+}
+
+/** The hours fleet `id` under way has left on its way at its pace of now (`sailStep`'s steps); 0 when it stands. */
+export function sailHoursLeft(world: World, id: number): number {
+  const c = world.formations.cols;
+  const path = world.paths.get(id);
+  if (c.moving[id] !== 1 || !path) return 0;
+  const kmh = sailKmh(world, id);
+  return kmh <= 0 ? Infinity : pathHours(world, path, c.pathStep[id]!, c.stepFrac[id]!, kmh);
+}
+
+/** The hours over `path` from step `i0`, `frac` of it done, at `kmh`. */
+function pathHours(world: World, path: ArrayLike<number>, i0: number, frac: number, kmh: number): number {
+  const grid = navOf(world).grid;
+  let hours = 0;
+  for (let i = i0; i < path.length - 1; i++) hours += (sailStepKm(grid, path[i]!, path[i + 1]!) / kmh) * (i === i0 ? 1 - frac : 1);
+  return hours;
+}
+
 /** Orders fleet `id` to (`x`, `y`), in cells; false (and `MoveRejected`) for no fleet, a place that is no water and no port, and water no lane leads to. */
 export function orderSail(world: World, id: number, x: number, y: number): boolean {
   const f = world.formations;

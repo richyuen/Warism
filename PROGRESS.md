@@ -1090,3 +1090,18 @@
   at). formationPanel, landingVoyage, landingNeutral specs green. At the desk panel's width the row's value runs into
   its label, as the status row's does (R34-N2): R22e. Worker and UI only: pin unmoved, tick unchanged.
 - **Next:** R22d.
+
+## 2026-11-05 — ROADMAP R22d: the escort is not sent weeks ahead (R34-N1)
+- A convoy's escort is kept where it stands at the order and sails for the landing's water once its voyage (`sailHours`,
+  the way and pace `sailStep` takes) is at least the wait left (`waitLeft`: the longest march of a division still bound,
+  the voyage of a group still coming); a loaded convoy waits only for an escort in a battle or one that would be there
+  after its transports (`escortAhead`).
+- First design rejected on its own numbers: sailing the escort with the transports and holding them at the port until it
+  was there made every escorted landing later (Belfast 110 → 172 h; Shanghai 1243 → 1289 h). With the timing: Belfast
+  110 h escorted and unescorted; Japan's four to Shanghai, escorts at the water at hours 1117–1120, the last aboard 1121,
+  landed 1242–1243 (unescorted 1242–1243; HEAD's escorts there from hour 23). Restated in ADR-826 (R22d).
+- AT: `landingEscortWait1938.test.ts` 2 of 2 (red without). R17d's `landingEscort1938.test.ts` green unchanged; landing,
+  naval AI, carrier, order-news unit tests green (18 files); `landingEscort1938.spec.ts`, `landingVoyage1938.spec.ts`
+  green. Pin unmoved. Tick: a route search an hour for each of the player's kept escorts, none in the AI's world.
+  The gate's `snapshot-perf` (2 ms bar) red under the full parallel run, green alone, as at R22b.
+- **Next:** R22e.

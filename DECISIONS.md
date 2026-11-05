@@ -61,6 +61,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (an order aboard a landing's transports refused `Aboard`), `serverOrderNews.test.ts` (an order
   while the voyage is under way refused, the voyage told on), `landingTogether1938.test.ts`,
   `landingPeace1938.test.ts`: green before and after. `landingAshore1938.test.ts`: red without.
+- **R22c.** The wait aboard is accounted for: "1 of 4 aboard; the last 47 days from the port"
+  (`voyage.wait`, the furthest bound division's `marchHoursLeft`). Worker and UI only.
+- **R22d (R34-N1).** The escort is not sent weeks ahead. R17d sent it at the order; with R21e's wait
+  it stood at Shanghai's water from hour 23 to hour 1243. It is now kept where it stands and sails
+  when its voyage (`sailHours`) is at least the wait left (`waitLeft`), so it is there about when
+  the last division is aboard; a loaded convoy waits only for an escort in a battle or one that
+  would be there after its transports (`escortAhead`). **Not chosen:** sailing it with the
+  transports and holding the loaded convoy at its port until the escort is there: the escort is
+  there first by construction, but every escorted landing is later (Belfast 110 h → 172 h,
+  Shanghai 1243 → 1289 h), a cost with nothing bought. With the timing, both land as without an
+  escort (110 h; 1242–1243 h). The pin stands: the AI has no player's convoy. Checked against:
+  `landingEscort1938.test.ts` (R17d: sails at the click on Belfast, there first, held until ashore,
+  none free told, none asked none taken), unchanged and green; `landingTogether1938.test.ts`.
+  `landingEscortWait1938.test.ts` (Shanghai: none there more than a day before the last is aboard,
+  each there before its transports, together, no later than unescorted; Belfast no later): red
+  without (the escorts there from hour 23).
 - **Tests restated.** `serverOrderNews.test.ts` (Britain on Cuxhaven) and `orderNews1938.spec.ts`
   (Switzerland on London) each order a landing at peace to see a refusal told with its reason (no
   port, no transports); `Neutral` now comes first. Each now makes that war first, and its assertions
