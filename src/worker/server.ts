@@ -26,8 +26,8 @@ import { largestBattle, warsWithBattle } from '../sim/systems/warBattle';
 import { DAYS_PER_MONTH } from '../sim/systems/research';
 import { shipyard } from '../sim/systems/production';
 import { heroHealth, heroWaits } from '../sim/systems/heroes';
-import { AT_PORT_CELLS, carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
-import { aboardAtPort, landingFor, landingOf, loading, neutralLanding } from '../sim/systems/amphibious';
+import { carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
+import { aboardAtPort, landedAway, landingFor, landingOf, loading, neutralLanding, seaOrderLanding } from '../sim/systems/amphibious';
 import { marchHoursLeft, overSea, overSeaFrom } from '../sim/systems/movement';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
@@ -271,14 +271,15 @@ export class SimServer {
           break;
         }
         // A player's order of a formation (it names its nation): what becomes of it is told (PLAN 4.9c).
-        // An order the sim keeps as the landing it has (`sameLanding`) is judged against that landing's
-        // target, not the click (ROADMAP R26a, critic run 38, R38-B1: a click two cells south of
-        // Shanghai, four from the landing's land, was told "came ashore away" for a landing as ordered).
+        // An order over the sea is judged against the land of the landing it is for (`seaOrderLanding`:
+        // the one it has when kept), not the click, which may resolve to a landing cells off (ROADMAP
+        // R26a, R27c; critic run 38, R38-B1: a click two cells south of Shanghai, four from the
+        // landing's land, was told "came ashore away" for a landing as ordered).
         if (msg.cmd.kind === 'moveFormation' && msg.cmd.nation !== undefined) {
           const w = sim.world;
           const id = msg.cmd.id;
-          const kept = landingFor(w, id, msg.cmd.x, msg.cmd.y);
-          this.ordered.set(id, { target: kept?.same ? kept.goal : Math.floor(msg.cmd.y) * w.cells.w + Math.floor(msg.cmd.x), before: this.ordered.get(id)?.target });
+          const l = seaOrderLanding(w, id, msg.cmd.x, msg.cmd.y);
+          this.ordered.set(id, { target: l ? l.land : Math.floor(msg.cmd.y) * w.cells.w + Math.floor(msg.cmd.x), before: this.ordered.get(id)?.target });
         }
         // A wing's order and a paradrop (PLAN 5.8v3): told if refused, as a march is; given or
         // refused in the hour it is applied (`once`, the tick it is applied at), so forgotten after it.
@@ -1439,7 +1440,6 @@ export class SimServer {
     if (kept === undefined) return;
     const target = kept.target;
     const c = world.formations.cols;
-    const w = world.cells.w;
     const tell = (k: OrderNews['kind'], reason: number): void => {
       const has = world.formations.has(id);
       this.post({ type: 'orderNews', news: { kind: k, id, nation: has ? c.nation[id]! : ev[i + 3]!, reason, x: has ? c.x[id]! : ev[i + 4]!, y: has ? c.y[id]! : ev[i + 5]!, tick: ev[i]! } }, []);
@@ -1456,9 +1456,7 @@ export class SimServer {
       tell('leftLanding', 0);
     } else if (kind === EventKind.FormationLanded) {
       this.landedAt.set(id, ev[i]!);
-      const dx = Math.abs(Math.floor(ev[i + 4]!) - (target % w));
-      const dy = Math.abs(Math.floor(ev[i + 5]!) - Math.floor(target / w));
-      if (Math.min(dx, w - dx) > world.atSize(AT_PORT_CELLS) || dy > world.atSize(AT_PORT_CELLS)) tell('landedAway', 0);
+      if (landedAway(world, target, ev[i + 4]!, ev[i + 5]!)) tell('landedAway', 0);
       this.ordered.delete(id);
     } else if (kind === EventKind.FormationDestroyed || (kind === EventKind.FormationArrived && !world.seaBound.has(id) && !world.afloat(id) && !refusedLater(ev, i, id))) {
       this.ordered.delete(id);

@@ -37,7 +37,7 @@ import { nearestCellWhere } from '../data/ownership';
 import { FlipCause, navOf, PlayerOrderKind, portSeaOf, seaOf, seaRangeOf, type World } from '../world';
 import { destroyFormation, elementIndex } from './elements';
 import { AT_PORT_CELLS, sailHome } from './navalCombat';
-import { foreignTo, marchHoursLeft, orderMove } from './movement';
+import { foreignTo, marchHoursLeft, orderMove, overSeaFrom } from './movement';
 import { portShut } from './bombing';
 import { orderSail, sailHours, sailHoursLeft } from './sail';
 import { seaHolder } from './seaControl';
@@ -471,6 +471,73 @@ export function landingFor(world: World, id: number, x: number, y: number): { wa
   const goal = ty * w + tx;
   const l = landingOf(world, goal);
   return l ? { ...l, same: false, goal } : null;
+}
+
+/**
+ * The landing an order of formation `id` to (`x`, `y`) is for when the order goes over the sea
+ * (`landingFor`), from where it takes the order: its cell, or its port when aboard a convoy loading
+ * there (`aboardAtPort`); null when the order is not over the sea or no landing is found. The
+ * worker judges what became of the order against its `land` (ROADMAP R27c, `landedAway`).
+ */
+export function seaOrderLanding(world: World, id: number, x: number, y: number): { water: number; land: number; same: boolean; goal: number } | null {
+  if (!world.formations.has(id)) return null;
+  const port = aboardAtPort(world, id);
+  const c = world.formations.cols;
+  const from = port >= 0 ? port : world.offLand(id) ? -1 : Math.floor(c.y[id]!) * world.cells.w + Math.floor(c.x[id]!);
+  if (from < 0 || !overSeaFrom(world, from, x, y)) return null;
+  return landingFor(world, id, x, y);
+}
+
+/**
+ * Whether a formation ashore at (`x`, `y`) landed away from cell `planned` (PLAN 4.9c, "came
+ * ashore away from its target"): more than `AT_PORT_CELLS` from it either way. The worker's news
+ * judges a landing against the landing the order was for (`orderLanding`'s land), not the click,
+ * which may resolve to a landing cells off (ROADMAP R27c, critic run 38, R38-B1).
+ */
+export function landedAway(world: World, planned: number, x: number, y: number): boolean {
+  const w = world.cells.w;
+  const dx = Math.abs(Math.floor(x) - (planned % w));
+  const dy = Math.abs(Math.floor(y) - Math.floor(planned / w));
+  const r = world.atSize(AT_PORT_CELLS);
+  return Math.min(dx, w - dx) > r || dy > r;
+}
+
+/**
+ * The landing formation `id` has a place in: aboard transports (their landing), or bound for a
+ * convoy (its target's `landingOf`); null for none.
+ */
+export function landingHeld(world: World, id: number): { water: number; land: number } | null {
+  const e = world.embarked.get(id);
+  if (e !== undefined) return { water: e.water, land: e.land };
+  const bound = world.seaBound.get(id);
+  return bound !== undefined && world.seaFetch.has(id) ? landingOf(world, bound) : null;
+}
+
+/**
+ * Tells the player's divisions the hour's orders took off their transports that they leave their
+ * landing (`LeftLanding`, ROADMAP R25b, R27c), where another division of their nation still has
+ * that landing, aboard or bound (on the same transports or on a second group sailing with them,
+ * R21e): the landing splits. Where all of them went (a whole click sent elsewhere), nothing is
+ * told: no one is left behind. Run once the hour's orders are in (`applyPendingCommands`), so a
+ * click's divisions, ordered one by one, are judged together.
+ */
+export function tellLandingsLeft(world: World): void {
+  if (world.landingsLeft.length === 0) return;
+  const left = world.landingsLeft;
+  world.landingsLeft = [];
+  const c = world.formations.cols;
+  const holders = [...new Set([...world.embarked.keys(), ...world.seaFetch.keys()])];
+  for (const [id, water, land] of left) {
+    if (!world.formations.has(id)) continue;
+    const now = landingHeld(world, id);
+    if (now && now.water === water && now.land === land) continue;
+    const stays = holders.some((o) => {
+      if (o === id || !world.formations.has(o) || c.nation[o] !== c.nation[id]) return false;
+      const l = landingHeld(world, o);
+      return l !== null && l.water === water && l.land === land;
+    });
+    if (stays) world.out.emit(world.tick, EventKind.LeftLanding, id, c.nation[id]!, c.x[id]!, c.y[id]!);
+  }
 }
 
 /** How near, in cells of the default map, a landing is to another to be the same for an order (`sameLanding`, ROADMAP R24b): about 25 km. */

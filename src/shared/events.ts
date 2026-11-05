@@ -239,9 +239,10 @@ export const EventKind = {
    */
   FormationsSentHome: 72,
   /**
-   * A player's division aboard a convoy still loading took an order over the sea to another landing
-   * and was put on other transports (ROADMAP R25b): it leaves its landing, and is told. a = the
-   * formation, b = its nation, (x, y) = the port it went ashore at.
+   * A player's division aboard a convoy still loading, or bound for one, took an order over the sea
+   * to another landing and was put on other transports while others stay with its own (ROADMAP
+   * R25b, R27c): it leaves its landing, and is told. a = the formation, b = its nation, (x, y) =
+   * where it stands.
    */
   LeftLanding: 73,
 } as const;

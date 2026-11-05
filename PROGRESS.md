@@ -1317,3 +1317,16 @@
   the two board, the mark turns green at Shanghai's landing; Fuzhou new; screenshots looked at). Landing unit tests
   and the landing and tooltip specs green. Pin unmoved.
 - **Next:** R27c.
+
+## 2026-11-05 — ROADMAP R27c: a fuzz of re-clicks about a landing; R27 done
+- `landingReclickFuzz1938.test.ts`: two and four divisions to Shanghai, re-clicked at hours 26 and 200, one to three
+  cells off in eight directions, the one aboard, one walking, or all: 288 cases from four saved states, 26 s.
+- Its finds, fixed: a whole click sent elsewhere told the one aboard it "will not land with the rest" (the rest went
+  with it); one walking, sent alone elsewhere, left its partner to land alone, untold. `LeftLanding` is now noted for
+  aboard and bound alike and told once the hour's orders are in (`tellLandingsLeft`), where another division still
+  has the landing left (judged by landing: two transport groups can carry one, R21e).
+- The worker's news judges every order over the sea against the land of the marked landing (`seaOrderLanding`,
+  `landedAway`), not the click: a click three cells off would have been told "came ashore away".
+- Red without (two violations in each two-division state). Landing unit tests (22 files) and landing specs green.
+  Pin unmoved.
+- **Next:** check the open PR (the user's ask), then critic run 39.

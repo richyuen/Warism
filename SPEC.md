@@ -1288,14 +1288,18 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   (`ashoreAtPort`, ROADMAP R22b); refused, it is aboard again as it was, its landing kept (R23a); a
   division bound for a convoy keeps its binding when an order is refused (R24a). The one aboard sent
   over the sea to another landing with no other transports free is refused `Loading` (18, R24d); with
-  others free it is put on them and told it leaves its landing (`LeftLanding`, the order's news
-  "leftLanding", R25b). An
+  others free it is put on them. A division aboard or bound that an order takes off its transports
+  is told it leaves its landing (`LeftLanding`, the order's news "leftLanding") when another of its
+  nation still has that landing, judged once the hour's orders are in (`tellLandingsLeft`): a whole
+  click sent elsewhere is not told (R25b, R27c). An
   order to the landing it is aboard for changes nothing: it stays aboard (`sameLanding`, R23b); so for a
   division bound for a convoy still at its port: it keeps its transports (R23e). A landing whose water
   and land are within `SAME_LANDING_CELLS` (2) of its own, the land of the same holder, is its own (R24b);
   so is a click within `SAME_LANDING_CELLS` of the cell its landing was ordered for, of that cell's
-  holder, whatever landing the click resolves to (R25a). What becomes of such an order is judged
-  against the landing kept (its convoy's target), not the click (R26a).
+  holder, whatever landing the click resolves to (R25a). What becomes of an order over the sea is
+  judged against the land of the landing it is for (`seaOrderLanding`, the one the map marks; the
+  one kept for such an order), not the click, which may resolve to a landing cells off
+  (`landedAway`; R26a, R27c).
   Aboard anything else, it takes none (`Aboard`).
   The group is the player's (`playerOrders`; the AI leaves it). The division marches to the
   port, or stands there, bound for the group (`seaFetch`; the group's port `convoyPort`); it boards
@@ -1828,8 +1832,8 @@ Actions tab's assist boxes set the mask (`setPlayerAi`).
   not the way the transports sail (their own order line shows that). The panel of the player's land
   formation has an "Escort with warships" box (ROADMAP R17d): ticked by default, kept in the
   browser (`warsim.escort`), and sent with each click's order (`moveFormation.escort`); no escort
-  free is the order's news ("unescorted"); a division aboard put on other transports by a new order,
-  "leftLanding" (R25b).
+  free is the order's news ("unescorted"); a division taken off a landing others keep, "leftLanding"
+  (R25b, R27c).
   Over a landing on the ground of a nation outside the player's wars the tooltip says no landing there
   instead (`overSea` answers 2; ROADMAP R21c). A refusal of a selected formation's order opens its
   panel again, with the reason, where the order's click had closed it and no other is open.

@@ -1083,6 +1083,12 @@ export class World {
    */
   movedFrom = new Map<number, [number, number, number]>();
   movedTick = -1;
+  /**
+   * The player's divisions an order of this hour took off the transports they were aboard or bound
+   * for: [formation, the water and land of the landing they had] (`orderMove`), told once the
+   * hour's orders are in (`tellLandingsLeft`). Derived, not state: empty between ticks.
+   */
+  landingsLeft: [number, number, number][] = [];
   /** The deployments of the hour before (see elementPlaceBefore in systems/elements.ts); null: not known. */
   deployedBefore: Map<number, { x: number; y: number; facing: number } | null> | null = null;
   /**

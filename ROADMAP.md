@@ -318,7 +318,7 @@ Rules:
     Done: "it left its transports, which stay with the landing it had, for others bound for its new landing; it will
     not land with the rest"; the spec checks the words (red without). Words only.
   R26 done; then the critic again (run 39).
-- [ ] R27 **The landing shown while it is chosen** (ADR-827, the user's decision 2026-11-05, after six rounds R21–R26 of
+- [x] R27 **The landing shown while it is chosen** (ADR-827, the user's decision 2026-11-05, after six rounds R21–R26 of
   one class: a click resolved, unseen, to a landing cells away). Each sub-item its own commit; then the critic again.
   - [x] R27a The worker's hover answer names the landing: with land formations selected and the cursor over a target
     over the sea, the landing's water and land, and whether it is the first selected division's own (`sameLanding`:
@@ -334,7 +334,13 @@ Rules:
     tooltip's "the landing they already have"; the hover asked again each tick; the one aboard asked from its port
     (`aboardAtPort`, `overSeaFrom`). `landingMark1938.spec.ts` (two cells south before the order: a new landing; the
     cursor still while they board: green, Shanghai's landing; Fuzhou new; looked at). Pin unmoved.
-  - [ ] R27c A fuzz of re-clicks about a landing: two and four divisions to Shanghai, re-clicked (the one aboard, and
+  - [x] R27c A fuzz of re-clicks about a landing: two and four divisions to Shanghai, re-clicked (the one aboard, and
     all) at hours 26 and 200, at cells one, two and three off in each direction. Inside `SAME_LANDING_CELLS`: none
     refused, all land within a day, no "landed away" (the worker's judgement, factored out to a pure function). Outside:
     any division whose transports change is told (refused, or `LeftLanding`). A case it finds is filed, not tolerated.
+    Done: `landingReclickFuzz1938.test.ts` (288 cases, the one aboard, one walking, or all; 26 s). Two finds fixed
+    here: a whole click sent elsewhere told the one aboard it lands without the rest; one walking sent alone left
+    its partner untold. `LeftLanding` is told once the hour's orders are in, where another keeps the landing left
+    (`tellLandingsLeft`, by landing, not transports); the news judges against the marked land (`seaOrderLanding`,
+    `landedAway`). Red without. Pin unmoved.
+  R27 done; then the critic again (run 39).

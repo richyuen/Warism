@@ -37,6 +37,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
   selected division's landing: a click sends one cell to all, and the first's answer is the one
   that differs only for one aboard or bound. `landingMark1938.spec.ts` (looked at). UI and a
   read-only query: pin unmoved.
+- **R27c.** `landingReclickFuzz1938.test.ts`: two and four to Shanghai, re-clicked at hours 26 and
+  200, one, two and three cells off in eight directions, the one aboard, one walking, or all: 288
+  cases from four saved states, 26 s. Its finds, fixed here: (1) a whole click sent three cells
+  south-west told the one aboard it "will not land with the rest" while the rest went with it; (2)
+  one walking to its port, sent alone to another landing, left its partner to land alone, untold.
+  `LeftLanding` is now noted in `orderMove` for aboard and bound alike and told once the hour's
+  orders are in, only where another of its nation still has the landing it left. Judged by the
+  landing, not the transports: two groups can carry one landing (R21e), and a first version by
+  transports missed it. The worker's news now judges every order over the sea against the marked
+  landing's land (`seaOrderLanding`, `landedAway`): a click three cells off, not kept, resolved to
+  a landing four or five cells away and would have been told "came ashore away". Red without
+  (HEAD's rule: two violations in each two-division state). Events and a
+  transient list only: pin unmoved.
 
 ### ADR-826 · 2026-11-04 · accepted — No landing on a neutral's ground (ROADMAP R20, R32-B1)
 

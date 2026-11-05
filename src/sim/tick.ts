@@ -4,6 +4,7 @@
  */
 import { orderMission, orderRebase } from './systems/air';
 import { orderParadrop } from './systems/airLift';
+import { tellLandingsLeft } from './systems/amphibious';
 import { finiteCommand, inRange, Refusal, type Command } from '../shared/commands';
 import { EventKind } from '../shared/events';
 import { destroyFormation, equipFormation } from './systems/elements';
@@ -478,6 +479,8 @@ export function applyPendingCommands(world: World): void {
     const why = applyCommand(world, cmd);
     world.out.emit(world.tick, why === Refusal.None ? EventKind.CommandApplied : EventKind.CommandRefused, seq, why, NaN, NaN);
   }
+  // A division taken off its transports while others stay with them is told (ROADMAP R27c).
+  tellLandingsLeft(world);
 }
 
 /** Advances the world by one tick using `systems` after command application. */
