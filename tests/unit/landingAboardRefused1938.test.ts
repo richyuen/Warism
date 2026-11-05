@@ -3,6 +3,8 @@ import { EventKind, RejectReason } from '../../src/shared/events';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
+import { transportRoom } from '../../src/sim/systems/amphibious';
+import { elementIndex } from '../../src/sim/systems/elements';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
 import { nationId } from '../helpers/sim1938';
@@ -22,7 +24,7 @@ const OPEN_SEA = cellOf(150, 30, W, H) as [number, number];
 const CALAIS = cellOf(1.86, 50.95, W, H) as [number, number];
 const FUZHOU = cellOf(119.3, 26.08, W, H) as [number, number];
 
-function refusedAboard(to: [number, number], why: number): void {
+function refusedAboard(to: [number, number], why: number, shared = false): void {
   const sim = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
   const w = sim.world;
   w.settings.player = JAP;
@@ -59,6 +61,16 @@ function refusedAboard(to: [number, number], why: number): void {
   const was = { ...w.embarked.get(first)! };
   const place = [c.x[first], c.y[first]];
   expect(four.some((id) => !w.embarked.has(id)), 'another still to come').toBe(true);
+  // Its transports carry another for its landing (ROADMAP R28a): with room for two, one still to come
+  // is bound for them (as a click's divisions share a group with room, R21e), its own group left with nobody.
+  if (shared) {
+    const g = w.embarked.get(first)!.fleet;
+    const next = four.find((id) => w.seaFetch.has(id))!;
+    const ec = w.elements.cols;
+    for (const e of elementIndex(w).get(g) ?? []) if (w.rules!.units[ec.unit[e]!]!.cls === 'tp') ec.strength[e] = ec.strength[e]! * 2;
+    expect(transportRoom(w, g), 'room for two').toBeGreaterThanOrEqual(c.strength[first]! + c.strength[next]!);
+    w.seaFetch.set(next, g);
+  }
 
   sim.command({ kind: 'moveFormation', id: first, x: to[0], y: to[1], nation: JAP });
   step();
@@ -79,8 +91,9 @@ describe('a refused order leaves the division aboard (ROADMAP R23a)', () => {
     refusedAboard(CALAIS, RejectReason.Neutral);
   });
   // ROADMAP R24d (critic run 36, R36-N2): to another landing, Fuzhou, it was refused "no transports … at a port it
-  // can reach" while it sat aboard transports at that port; the reason now names them.
-  it('ordered to another landing, Fuzhou: refused, its transports loading for another landing; still aboard', () => {
-    refusedAboard(FUZHOU, RejectReason.Loading);
+  // can reach" while it sat aboard transports at that port; the reason now names them. Since R28a its own
+  // transports go with it where they carry no one else (`landingLeftTold1938`); here they carry another.
+  it('ordered to another landing, Fuzhou, its transports carrying another for its landing: refused, its transports loading for another landing; still aboard', () => {
+    refusedAboard(FUZHOU, RejectReason.Loading, true);
   });
 });

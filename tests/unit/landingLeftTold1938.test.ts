@@ -3,6 +3,7 @@ import { EventKind } from '../../src/shared/events';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
+import { landingHeld, landingOf } from '../../src/sim/systems/amphibious';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
 import { nationId } from '../helpers/sim1938';
@@ -12,7 +13,8 @@ import { nationId } from '../helpers/sim1938';
 // no row, its panel naming a port at the far end of Japan, and its landing split for weeks. It is
 // now told it leaves its landing (`LeftLanding`, a notice and a row). The case: Japan at war with
 // China, its two divisions nearest Tokyo to Shanghai (escort on); at hour 26 the one aboard sent to
-// Fuzhou.
+// Fuzhou. Since R28a its own transports, which carry no one else, go with it (they were held by its
+// landing, and it went to others); it is still told.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = nationId('JAP');
@@ -59,8 +61,9 @@ describe('a division aboard never leaves its transports untold (ROADMAP R25b)', 
     const now = w.seaFetch.get(first) ?? w.embarked.get(first)?.fleet;
     process.stderr.write(`R25b: fleet ${fleet} -> ${now}, told ${told}, refused ${refused}\n`);
     expect(refused, 'taken, not refused').not.toContain(first);
-    expect(now, 'other transports').toBeDefined();
-    expect(now, 'other transports').not.toBe(fleet);
+    expect(now, 'transports for it').toBeDefined();
+    const fuzhou = landingOf(w, Math.floor(FUZHOU[1]) * W + Math.floor(FUZHOU[0]));
+    expect(landingHeld(w, first), "Fuzhou's landing, not Shanghai's").toEqual(fuzhou);
     expect(told, 'told it leaves its landing').toEqual([first]);
   });
 });

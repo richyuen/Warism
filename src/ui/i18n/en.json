@@ -634,7 +634,7 @@
   "order.repulsed": "{name}: the landing was thrown back; the transports sail home and land it there.",
   "order.landedAway": "{name}: its transports broke off; it came ashore away from its target.",
   "order.unescorted": "{name}: no warships free to escort it; the transports sail alone.",
-  "order.leftLanding": "{name}: it leaves the landing it had, whose transports stay for the rest, for others bound for its new landing; it will not land with the rest.",
+  "order.leftLanding": "{name}: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
   "order.sentHome": "{name}: it stood on the ground of a nation outside its wars with no way home by land, and was sent home.",
   "order.sentHomeMany": "{name} and {more} more: they stood on the ground of nations outside your wars with no way home by land, and were sent home.",
   "order.toFormation": "Show the formation",

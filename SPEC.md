@@ -1286,12 +1286,17 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   A division aboard such a convoy, still loading at its port of its nation, takes a new order: it
   goes ashore at the port's cell (no landing, its organisation as it was) and the order stands
   (`ashoreAtPort`, ROADMAP R22b); refused, it is aboard again as it was, its landing kept (R23a); a
-  division bound for a convoy keeps its binding when an order is refused (R24a). The one aboard sent
-  over the sea to another landing with no other transports free is refused `Loading` (18, R24d); with
-  others free it is put on them. A division aboard or bound that an order takes off its transports
-  is told it leaves its landing (`LeftLanding`, the order's news "leftLanding") when another of its
-  nation still has that landing, judged once the hour's orders are in (`tellLandingsLeft`): a whole
-  click sent elsewhere is not told (R25b, R27c). An
+  division bound for a convoy keeps its binding when an order is refused (R24a). The hour's orders
+  are judged together (`noteLeaving`, before they are applied, ROADMAP R28a): the transports of a
+  landing those orders take divisions off (`world.leaving`, `world.groupsLeft`) are free for the
+  choice above once nobody else holds them (`heldGroup`), and one of them already on its way to the
+  convoy's port comes on (R21e's "a group at that port"); a click that leaves a landing takes its
+  transports with it, and the one aboard sent alone takes its own where they carry no one else. With
+  none free, the one aboard sent over the sea to another landing is refused `Loading` (18, R24d).
+  A division aboard or bound that an order takes to another landing is told it leaves its landing
+  (`LeftLanding`, the order's news "leftLanding") when another of its nation still has that landing,
+  judged once the hour's orders are in (`tellLandingsLeft`): a whole click sent elsewhere is not
+  told (R25b, R27c). An
   order to the landing it is aboard for changes nothing: it stays aboard (`sameLanding`, R23b); so for a
   division bound for a convoy still at its port: it keeps its transports (R23e). A landing whose water
   and land are within `SAME_LANDING_CELLS` (2) of its own, the land of the same holder, is its own (R24b);

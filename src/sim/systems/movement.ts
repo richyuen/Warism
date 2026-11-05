@@ -470,14 +470,14 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
     if (fetch !== undefined) world.seaFetch.set(id, fetch);
     return false;
   };
-  // Taken to other transports, aboard or bound, it is noted with the landing it had; once the
-  // hour's orders are in, it is told it leaves that landing if others stay with it
-  // (`tellLandingsLeft`; ROADMAP R25b, R27c).
+  // Taken over the sea, aboard or bound, it is noted with the landing it had; once the hour's orders
+  // are in, it is told it leaves that landing if it has another and others stay with the one it had
+  // (`tellLandingsLeft`; ROADMAP R25b, R27c). On its own transports too (R28a).
   const from = world.embarked.get(id)?.fleet ?? fetch;
   const had = landingHeld(world, id);
   const taken = (): true => {
     const now = world.seaFetch.get(id) ?? world.embarked.get(id)?.fleet;
-    if (from !== undefined && had && now !== undefined && now !== from) world.landingsLeft.push([id, had.water, had.land]);
+    if (from !== undefined && had && now !== undefined) world.landingsLeft.push([id, had.water, had.land]);
     return true;
   };
   if (!world.embarked.has(id)) return (orderAshore(world, id, x, y, pass, byPort, direct, call, escort) && taken()) || keep();

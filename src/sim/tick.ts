@@ -4,7 +4,7 @@
  */
 import { orderMission, orderRebase } from './systems/air';
 import { orderParadrop } from './systems/airLift';
-import { tellLandingsLeft } from './systems/amphibious';
+import { noteLeaving, tellLandingsLeft } from './systems/amphibious';
 import { finiteCommand, inRange, Refusal, type Command } from '../shared/commands';
 import { EventKind } from '../shared/events';
 import { destroyFormation, equipFormation } from './systems/elements';
@@ -473,12 +473,18 @@ export function applyPendingCommands(world: World): void {
   world.deployed = null;
   world.deployedBefore = null;
   queue.sort((a, b) => a.seq - b.seq);
+  // The player's divisions the hour's orders take off a landing: its transports are theirs to take,
+  // judged for the whole click, not division by division (ROADMAP R28a).
+  noteLeaving(world, queue.flatMap(({ cmd }) => (cmd.kind === 'moveFormation' && cmd.nation !== undefined ? [cmd] : [])));
   for (const { seq, cmd } of queue) {
     world.commandLog.push({ tick: world.tick, seq, cmd });
     // After the command's own events: which of the two it is, is known only then (PLAN 2.17a).
     const why = applyCommand(world, cmd);
+    if (cmd.kind === 'moveFormation') world.leaving.delete(cmd.id);
     world.out.emit(world.tick, why === Refusal.None ? EventKind.CommandApplied : EventKind.CommandRefused, seq, why, NaN, NaN);
   }
+  world.leaving.clear();
+  world.groupsLeft.clear();
   // A division taken off its transports while others stay with them is told (ROADMAP R27c).
   tellLandingsLeft(world);
 }

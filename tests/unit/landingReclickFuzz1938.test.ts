@@ -18,10 +18,14 @@ import { nationId } from '../helpers/sim1938';
 // - an order taken lands where the map marks: its landing after the order is the marked one, so
 //   the worker's news, judged against the marked land (`landedAway`), tells no false failure;
 // - a division taken off its transports, aboard or bound, is told it leaves its landing
-//   (`LeftLanding`) exactly when another still has that landing (on its transports, or a second
+//   (`LeftLanding`; on its own transports too, R28a) exactly when another still has that landing (on its transports, or a second
 //   group sailing with them): a split landing is told, and a whole click sent elsewhere is not
 //   told it lands without the rest (the first version of R25b told the one aboard so, the fuzz's
-//   first find; a version judging by transports missed the second group).
+//   first find; a version judging by transports missed the second group);
+// - the whole click re-clicked is refused nothing, and those of it bound for one landing load at one
+//   port, to sail together (R28a, critic run 39, R39-B1: each division's order found the landing's
+//   transports held by the rest, so all four were refused "no transports", or went one by one);
+// - every player's convoy is for one landing: those aboard it and bound for it have one target.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = nationId('JAP');
@@ -99,11 +103,32 @@ function reclick(b: Base, who: 'aboard' | 'walker' | 'all', dx: number, dy: numb
       if (!l || l.land !== was.mark.land || l.water !== was.mark.water) bad.push(`${tag}: ${id} lands at ${l?.water}/${l?.land}, marked ${was.mark.water}/${was.mark.land}`);
       else if (landedAway(w, was.mark.land, (l.land % W) + 0.5, Math.floor(l.land / W) + 0.5)) bad.push(`${tag}: ${id} would be told it landed away`);
     }
-    const moved = was.place !== undefined && now !== undefined && now !== was.place && !refused.has(id);
+    // Taken to another landing: on other transports, or on its own where they carry no one else (R28a).
     const same = (l: { water: number; land: number } | null): boolean => l !== null && was.held !== null && l.water === was.held.water && l.land === was.held.land;
-    const stays = moved && !same(landingHeld(w, id)) && ids.some((o) => o !== id && same(landingHeld(w, o)));
+    const held = landingHeld(w, id);
+    const moved = was.held !== null && held !== null && !same(held) && !refused.has(id);
+    const stays = moved && ids.some((o) => o !== id && same(landingHeld(w, o)));
     if (moved && stays && !left.has(id)) bad.push(`${tag}: ${id} ${was.aboard ? 'aboard' : 'bound'}, transports ${was.place} -> ${now}, others stay, untold`);
     if (left.has(id) && !stays) bad.push(`${tag}: ${id} told it leaves its landing, none stays`);
+  }
+  if (who === 'all') {
+    const no = again.filter((id) => refused.has(id) && before.get(id)!.mark);
+    if (no.length > 0) bad.push(`${tag}: the whole click refused ${no}`);
+    const ports = new Map<string, Set<number | undefined>>();
+    for (const id of again) {
+      const l = landingHeld(w, id);
+      const f = place(id);
+      if (!l || f === undefined || w.embarked.has(id)) continue;
+      const k = `${l.water}/${l.land}`;
+      ports.set(k, (ports.get(k) ?? new Set()).add(w.convoyPort.get(f)));
+    }
+    for (const [k, p] of ports) if (p.size > 1) bad.push(`${tag}: one landing ${k} loads at ports ${[...p]}`);
+  }
+  for (const g of w.convoyPort.keys()) {
+    const targets = new Set<number>();
+    for (const [id, f] of w.seaFetch) if (f === g) targets.add(w.seaBound.get(id)!);
+    for (const e of w.embarked.values()) if (e.fleet === g) targets.add(e.target);
+    if (targets.size > 1) bad.push(`${tag}: convoy ${g} for ${targets.size} landings`);
   }
   return bad;
 }

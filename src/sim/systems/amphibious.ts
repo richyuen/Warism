@@ -71,11 +71,51 @@ export function transportRoom(world: World, fleet: number): number {
   return n * TRANSPORT_MEN;
 }
 
-/** Men aboard fleet `fleet` now. */
+/** Men aboard fleet `fleet` now, but those this hour's orders take off it (`world.leaving`, ROADMAP R28a). */
 function aboard(world: World, fleet: number): number {
   let men = 0;
-  for (const [id, e] of world.embarked) if (e.fleet === fleet) men += world.formations.cols.strength[id]!;
+  for (const [id, e] of world.embarked) if (e.fleet === fleet && !world.leaving.has(id)) men += world.formations.cols.strength[id]!;
   return men;
+}
+
+/**
+ * Whether transport group `fleet` is held: a player's convoy's, or carrying anyone, or anyone bound
+ * for it. Not where all who hold it are taken elsewhere by this hour's orders (`world.leaving`,
+ * ROADMAP R28a, critic run 39, R39-B1): the transports of a landing the click leaves are its to
+ * take. Before, each division's order found them held by the others still to be ordered, so the
+ * first went to another port's transports and the rest followed it there, the landing's own idle.
+ */
+function heldGroup(world: World, fleet: number): boolean {
+  let any = world.convoyPort.has(fleet);
+  for (const [id, e] of world.embarked) {
+    if (e.fleet !== fleet) continue;
+    if (!world.leaving.has(id)) return true;
+    any = true;
+  }
+  for (const [id, o] of world.seaFetch) {
+    if (o !== fleet) continue;
+    if (!world.leaving.has(id)) return true;
+    any = true;
+  }
+  return any && !world.groupsLeft.has(fleet);
+}
+
+/**
+ * Notes the player's divisions this hour's orders `cmds` take off the landing they have (ROADMAP
+ * R28a): aboard a convoy loading at its port, or bound for one, and the order not for that landing
+ * (`sameLanding`). Run before the hour's orders are applied, so that a click's divisions are judged
+ * together (`heldGroup`).
+ */
+export function noteLeaving(world: World, cmds: readonly { id: number; x: number; y: number }[]): void {
+  world.leaving.clear();
+  world.groupsLeft.clear();
+  for (const { id, x, y } of cmds) {
+    if (!world.formations.has(id)) continue;
+    const fleet = aboardAtPort(world, id) >= 0 ? world.embarked.get(id)!.fleet : world.seaFetch.get(id);
+    if (fleet === undefined || sameLanding(world, id, x, y)) continue;
+    world.leaving.set(id, fleet);
+    world.groupsLeft.add(fleet);
+  }
 }
 
 const cellOfPlace = (world: World, id: number): number => Math.floor(world.formations.cols.y[id]!) * world.cells.w + Math.floor(world.formations.cols.x[id]!);
@@ -289,7 +329,7 @@ export function callTransports(world: World, id: number, port: number): number {
   const water = portSeaOf(world)[port]!;
   if (water < 0) return 0;
   const w = world.cells.w;
-  const called = new Set([...world.seaFetch.values(), ...world.convoyPort.keys()]);
+
   const dist = (o: number): number => {
     const at = cellOfPlace(world, o);
     let dx = Math.abs((at % w) - (water % w));
@@ -299,7 +339,7 @@ export function callTransports(world: World, id: number, port: number): number {
   };
   const idle: number[] = [];
   f.forEach((o) => {
-    if (!world.isFleet(o) || c.nation[o] !== nation || c.moving[o] === 1 || c.engaged[o] === 1 || carrying(world, o) || world.station.has(o) || called.has(o)) return;
+    if (!world.isFleet(o) || c.nation[o] !== nation || c.moving[o] === 1 || c.engaged[o] === 1 || heldGroup(world, o) || world.station.has(o)) return;
     if (transportRoom(world, o) >= men) idle.push(o);
   });
   idle.sort((a, b) => dist(a) - dist(b) || a - b);
@@ -355,17 +395,17 @@ export function hasLanding(world: World, x: number, y: number): boolean {
   return tx >= 0 && tx < w && ty >= 0 && ty < h && landingOf(world, ty * w + tx) !== null;
 }
 
-/** Men of the player's formations bound for group `fleet` (`world.seaFetch`) and not yet aboard. */
+/** Men of the player's formations bound for group `fleet` (`world.seaFetch`) and not yet aboard, but those this hour's orders take elsewhere (`world.leaving`). */
 function promised(world: World, fleet: number): number {
   let men = 0;
-  for (const [id, o] of world.seaFetch) if (o === fleet && world.formations.has(id)) men += world.formations.cols.strength[id]!;
+  for (const [id, o] of world.seaFetch) if (o === fleet && world.formations.has(id) && !world.leaving.has(id)) men += world.formations.cols.strength[id]!;
   return men;
 }
 
-/** The cell a player's convoy on group `fleet` is for: of a formation bound for it, else of one aboard; -1 for none. */
+/** The cell a player's convoy on group `fleet` is for: of a formation bound for it, else of one aboard; -1 for none. Those this hour's orders take elsewhere (`world.leaving`) do not count. */
 function convoyTarget(world: World, fleet: number): number {
-  for (const [id, o] of [...world.seaFetch].sort((a, b) => a[0] - b[0])) if (o === fleet) return world.seaBound.get(id) ?? -1;
-  for (const [, e] of [...world.embarked].sort((a, b) => a[0] - b[0])) if (e.fleet === fleet) return e.target;
+  for (const [id, o] of [...world.seaFetch].sort((a, b) => a[0] - b[0])) if (o === fleet && !world.leaving.has(id)) return world.seaBound.get(id) ?? -1;
+  for (const [id, e] of [...world.embarked].sort((a, b) => a[0] - b[0])) if (e.fleet === fleet && !world.leaving.has(id)) return e.target;
   return -1;
 }
 
@@ -579,9 +619,12 @@ export function assignTransports(world: World, id: number, target: number): { po
   if (convoys.length > 0) {
     const p = convoys[0]![1];
     let o = 0;
+    // A group a landing this hour's orders leave, on its way to that port for it, comes on (ROADMAP
+    // R28a: the four re-clicked went one by one on the one group standing there).
+    const coming = (g: number): boolean => c.moving[g] === 1 && world.groupsLeft.has(g) && world.convoyPort.get(g) === p;
     f.forEach((g) => {
-      if (o !== 0 || !world.isFleet(g) || c.nation[g] !== nation || c.moving[g] === 1 || c.engaged[g] === 1 || world.convoyPort.has(g) || carrying(world, g)) return;
-      if (transportRoom(world, g) - promised(world, g) >= men && near(world, cellOfPlace(world, g), water[p]!, world.atSize(AT_PORT_CELLS))) o = g;
+      if (o !== 0 || !world.isFleet(g) || c.nation[g] !== nation || (c.moving[g] === 1 && !coming(g)) || c.engaged[g] === 1 || heldGroup(world, g)) return;
+      if (transportRoom(world, g) - promised(world, g) >= men && (coming(g) || near(world, cellOfPlace(world, g), water[p]!, world.atSize(AT_PORT_CELLS)))) o = g;
     });
     if (o === 0) o = callTransports(world, id, p);
     if (o !== 0) return { port: p, fleet: o };
@@ -595,7 +638,7 @@ export function assignTransports(world: World, id: number, target: number): { po
     return dx * dx + dy * dy;
   };
   f.forEach((o) => {
-    if (!world.isFleet(o) || c.nation[o] !== nation || c.moving[o] === 1 || c.engaged[o] === 1 || world.convoyPort.has(o) || carrying(world, o)) return;
+    if (!world.isFleet(o) || c.nation[o] !== nation || c.moving[o] === 1 || c.engaged[o] === 1 || heldGroup(world, o)) return;
     if (transportRoom(world, o) - promised(world, o) < men) return;
     const at = cellOfPlace(world, o);
     world.ports.forEach((p, i) => {

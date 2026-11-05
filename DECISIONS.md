@@ -50,6 +50,27 @@ from AoC are tagged **[AoC-DEVIATION]**.
   a landing four or five cells away and would have been told "came ashore away". Red without
   (HEAD's rule: two violations in each two-division state). Events and a
   transient list only: pin unmoved.
+- **R28a** (critic run 39, R39-B1). Each division's order chose transports while the rest of its
+  click still held the landing's, so the first went to another port's and the rest followed it there
+  by the same-target rule; the landing's own lay idle. Seed 3517: two re-sent to Fuzhou two hours
+  after the first boarded landed at h1291 (h657 from a standing start); of three, the two sent on
+  landed 21 days apart; the four re-clicked three cells south-west were all refused. Now the hour's
+  orders are judged together: `noteLeaving` (before `applyPendingCommands` applies them) notes the
+  player's divisions they take off a landing and its transports; those are free once nobody else
+  holds them (`heldGroup`, in `assignTransports` and `callTransports`), and `aboard`, `promised`
+  and `convoyTarget` leave out those still to be ordered. A released group sailing to the convoy's
+  port comes on (R21e). After: h657/h658 for both cases, the four on their own four groups, none
+  refused. **Changed:** the one aboard sent alone elsewhere now takes its own transports where they
+  carry no one else (R24d's refusal and R25b's "other transports" were for that case);
+  `LeftLanding` is told on its own transports too (by landing, as R27c judges). R24d's refusal is
+  kept where they carry another (`landingAboardRefused1938.test.ts` builds that group: room for two,
+  the next bound for it); its page spec now checks the notice and "at sea". The notice's words no
+  longer say its transports stay. **Not chosen:** a second pass after the hour's orders (moving
+  divisions already sent to other ports back onto the freed groups), which would leave called groups
+  sailing and escorts to undo. `landingLeftTakesShips1938.test.ts` (red without, the critic's three
+  numbers); the fuzz checks a whole click is refused nothing, a landing loads at one port, and every
+  convoy has one target (red without: the four re-clicked south-west). Player convoys only: pin
+  unmoved.
 
 ### ADR-826 · 2026-11-04 · accepted — No landing on a neutral's ground (ROADMAP R20, R32-B1)
 

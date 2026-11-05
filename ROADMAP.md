@@ -346,13 +346,19 @@ Rules:
   R27 done; then the critic again (run 39).
 - [ ] R28 **A changed landing takes its own transports** (critic run 39 on `99ba6c07`: R39-B1 blocking; naval 7, bar 8,
   for R39-B1 and R39-N1). Each sub-item its own commit; then the critic again.
-  - [ ] R28a R39-B1: when an order takes divisions off a landing, the transports of that landing are theirs to take
+  - [x] R28a R39-B1: when an order takes divisions off a landing, the transports of that landing are theirs to take
     first (released before the choice), so a click that leaves a landing takes its ships with it, and no division is
     refused "no transports" where the click's own stand idle. AT (seed 3517, Japan, the two nearest Tokyo to Shanghai):
     both re-sent to Fuzhou two hours after the first boards sail from Tokyo on their own groups and land within a day
     of each other by ~h700 (red: h1291); of three, the two sent to Fuzhou land within a day of each other (red: 21
     days apart); the four re-clicked three cells south-west: none refused, they land together. The R27c fuzz gains
     these checks (all re-clicked far: no refusal; each landing of a click lands within a day).
+    Done: the hour's orders are judged together (`noteLeaving`, `heldGroup`): the transports of a landing they leave
+    are theirs to take. Two: h657/h658 on their own groups; of three, the two h657/h658; four: none refused, on
+    their own four groups, together. The one aboard sent alone takes its own transports where they carry no one
+    else (R24d's refusal kept where they carry another). `landingLeftTakesShips1938.test.ts`; the fuzz gains a
+    whole click refused nothing, one port a landing, one target a convoy (a landing within a day: by the three
+    cases, too slow for 288). Red without. Pin unmoved.
   - [ ] R28b R39-N1: the mark speaks for the whole selection. Where the selected divisions would land at different
     landings, each is marked, and the tooltip says so ("2 landings") rather than "they keep their transports". AT:
     unit test of the answer (the one aboard and a fresh one, two cells south: two landings); e2e looked at.

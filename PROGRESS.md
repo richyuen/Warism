@@ -1347,3 +1347,15 @@
   Sasebo and land h1291 against h657; of three, two land 21 days apart; four re-clicked three cells SW all refused
   "no transports"); present on run 38's commit too. R39-N1: the mark speaks for the first selected division only.
 - **Next:** R28a.
+
+## 2026-11-05 — R28a: a changed landing takes its own transports (R39-B1)
+- The hour's orders are judged together: before they are applied, `noteLeaving` notes the player's divisions they
+  take off a landing; that landing's transports are free once nobody else holds them (`heldGroup`), and a released
+  group on its way to the port comes on. Seed 3517: two re-sent to Fuzhou land h657/h658 (red h1291); of three,
+  the two sent on h657/h658 (red 502 h apart); the four re-clicked SW, none refused (red: all four).
+- The one aboard sent alone now takes its own transports where they carry no one else; R24d's `Loading` refusal
+  is kept where they carry another (the unit test builds that group), its page spec checks the notice and "at
+  sea"; R25b's test checks Fuzhou's landing instead of "other transports". `LeftLanding` judged by landing.
+- Fuzz: a whole click refused nothing, one port a landing, one target a convoy; red without. Whole unit suite
+  green (snapshot-perf red under load, green alone); landing specs green; pin unmoved.
+- **Next:** R28b.

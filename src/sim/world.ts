@@ -1089,6 +1089,15 @@ export class World {
    * hour's orders are in (`tellLandingsLeft`). Derived, not state: empty between ticks.
    */
   landingsLeft: [number, number, number][] = [];
+  /**
+   * The player's divisions this hour's orders take off the landing they are aboard or bound for, by
+   * the transports they hold there (`noteLeaving`, ROADMAP R28a): those transports are theirs to take
+   * for the new landing, once nobody else holds them (`heldGroup`). Each leaves the map when its
+   * order is applied. Derived, not state: empty between the hour's orders.
+   */
+  leaving = new Map<number, number>();
+  /** The transports of `leaving` as the hour's orders began, kept while they are applied (`heldGroup`). Derived, not state. */
+  groupsLeft = new Set<number>();
   /** The deployments of the hour before (see elementPlaceBefore in systems/elements.ts); null: not known. */
   deployedBefore: Map<number, { x: number; y: number; facing: number } | null> | null = null;
   /**
