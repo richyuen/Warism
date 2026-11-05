@@ -1,6 +1,6 @@
 {
-  "commit": "b0dd86f303312971a1fc3239535c18e0d874f14a",
-  "mode": "full",
+  "commit": "a54afc77ca30701733e6245683371406cd6682bb",
+  "mode": "focused",
   "scores": {
     "mapVisuals": 7,
     "diplomacyWarDepth": 7,
@@ -19,11 +19,11 @@
   },
   "blocking": [
     {
-      "id": "R37-B1",
-      "title": "The one aboard, clicked two cells off its landing, is taken off transports with room and sent to another port in silence; the landing splits for four weeks (R36-B2 one step further out)",
-      "evidence": "critic/c37_lwt4_two_s42.json (real click 42 px below Shanghai, cell 1715,415, tooltip 'China / Occupied by Japan'; 364 'Marching to Sasebo to board transports', no news; 365 lands alone h632; 364 still marching h722); critic/shots/c37lwt4_two_s42_act_panel.png; critic/shots/c37lwt4_two_s42_act.png; critic/shots/c37lwt4_two_s42_h722_panel.png; critic/c37_cellprobe_1600.json (no formation pick at that pixel); headless critic/c37_ashp_near_s2_2.json (633/1288), critic/c37_ashp_near_sw2_2.json (633/1291), critic/c37_ashp_near_s2_2_h0.json (633/1264), critic/c37_ashp_near_s2_3_200.json (two land 952, 364 boards at Sasebo t1412), critic/c37_ashp_11003_near_s2_2.json (633/1288); four divisions: refused and kept, critic/c37_ashp_allnear_s2.json; run 36's commit identical: critic/c37_wt_ash_near_s2_2.json; the click resolves to landing 853683/851635, land four cells from Shanghai's: critic/c37_lofp4_3517.log",
-      "fix": "Measure R24b's near-miss from the clicked cell (within SAME_LANDING_CELLS of the convoy's land, same holder), not from the landing that cell resolves to; never move a division aboard to another port's transports without a notice that it leaves its landing. AT: Japan's two to Shanghai, the one aboard re-clicked two cells south (1715.5, 415.5) at hour 26: both land within a day; red without (633 / 1288)."
+      "id": "R38-B1",
+      "title": "A near re-click that R25a keeps as the same landing is told, when it lands, as a failed landing: 'its transports broke off; it came ashore away from its target' (new in R25)",
+      "evidence": "critic/c38_lwt5_two_s42.json (the one aboard re-clicked 42 px below Shanghai, cell 1715,415, at hour 26: kept aboard, both land h632 at 1715.5,411.5; 364 told landedAway in its panel and an order-news row); critic/shots/c38lwt5_two_s42_notice_h632.png; critic/shots/c38lwt5_two_s42_notice_h632_panel.png; critic/c38_lwt4_two_s42.json (same, trace h632); four re-clicked 42 px south (R25c's case): all land h1241-1244, landedAway told for 364 and 367, critic/c38_lwt5_four_alls42.json, critic/shots/c38lwt5_four_alls42_notice_h1241_panel.png, critic/shots/c38lwt5_four_alls42_end.png; none at 21 px S / 14 px E / 42 px W (critic/c38_lwt4_two_s21.json, critic/c38_lwt5_two_e14.json, critic/c38_lwt5_two_w42.json) nor in run 37's one-cell cases (critic/c37_lwt2_two_near14.json). Cause read: server.ts orderNews keeps the new click as the order's target and tells landedAway beyond AT_PORT_CELLS (3) of it; R25a accepts clicks within SAME_LANDING_CELLS (2) of the goal, and Shanghai's landing land is two cells north of Shanghai.",
+      "fix": "When an order is kept as the same landing (sameLanding), keep the order's target the landing it already had (or measure 'landed away' from that landing's land). AT: the two to Shanghai, the one aboard re-clicked two cells south (1715.5, 415.5) at hour 26: both land within a day and no landedAway is told; red without (364 told at h632). The four all re-clicked there: no news at the landing."
     }
   ],
-  "timestamp": "2026-11-05T11:08:29Z"
+  "timestamp": "2026-11-05T13:03:48Z"
 }

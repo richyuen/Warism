@@ -1,0 +1,11 @@
+== two_s42 env NPX=0.01 NPY=42 node critic/scripts/c38_lwt5.mjs 3517 2 30 24 near 1600 900 two_s42 06:47:06
+   exit 1
+== four_alls42 env NPX=0.01 NPY=42 node critic/scripts/c38_lwt5.mjs 3517 4 60 24 allnear 1600 900 four_alls42 06:47:06
+   exit 1
+== two_s42_ph env NPX=0.01 NPY=10 node critic/scripts/c38_lwt5.mjs 3517 2 30 24 near 390 844 two_s10_phone 06:47:06
+   exit 1
+== two_w42 env NPX=-42 NPY=0 node critic/scripts/c38_lwt5.mjs 3517 2 30 24 near 1600 900 two_w42 06:47:06
+   exit 1
+== two_far_fuzhou_t env FX=1703.5 FY=445.5 node critic/scripts/c38_lwt3.mjs 3517 2 30 24 far 1600 900 two_far_fuzhou_long 06:47:06
+   exit 0
+SUITER4DONE

@@ -1,0 +1,36 @@
+{
+ "seed": 3517,
+ "TAG": "ENG",
+ "mode": "desk",
+ "div": 274,
+ "panelOpen": true,
+ "header": "Warism | Playing United Kingdom · 1 selected | ✕ Cancel | Resume | − | Speed ×5 | + | God Mode | Map: Poli",
+ "shotSel": "critic/shots/c38nr_eng_calais_desk_sel.png",
+ "tooltip": "France\nNo landing here: the ground of a nation outside your wars",
+ "bySea": false,
+ "shotHover": "critic/shots/c38nr_eng_calais_desk_hover.png",
+ "notice": "Infantry division 274: not done: it would land on the ground of a nation outside its wars.",
+ "status": "Holding",
+ "panelOpenAfter": true,
+ "rows": [
+  {
+   "kind": "refused",
+   "text": "Infantry division 274: not done: it would land on the ground of a nation outside its wars.",
+   "cut": true,
+   "title": "Show the formation",
+   "w": 272
+  }
+ ],
+ "shotClick": "critic/shots/c38nr_eng_calais_desk_click.png",
+ "afterRow": {
+  "panel": true,
+  "notice": null,
+  "rows": []
+ },
+ "shotRow": "critic/shots/c38nr_eng_calais_desk_row.png",
+ "divPos": [
+  1016.48328157288,
+  276.21170639888
+ ],
+ "errors": []
+}

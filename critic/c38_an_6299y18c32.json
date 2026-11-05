@@ -1,0 +1,57 @@
+{
+ "seed": 6299,
+ "bin": "critic/c32_seed6299_y18.bin",
+ "strikes": [
+  {
+   "got": {
+    "a": 1,
+    "tick": 163658
+   },
+   "date": "2 September 1956",
+   "paused": true,
+   "alerts": [
+    "☢ | China struck British India with an atomic bomb near Bangalore: 144,000 civilians killed; 11,237 men and 40 guns lost | Go to | ×"
+   ],
+   "ticker": [
+    "6 August 1956 Soviet Union captured Free Vienna's capital 8 August 1956 Soviet Union captured Free Vienna's capital 1 September 1956 French Indochina and Japan fought in the air this month: French Indochina lost 3 aircraft, Japan 6 1 September 1956 Soviet Union's air force struck Free Vienna this month: 4,247 men, guns and vehicles lost 2 September 1956 China struck British India with an atomic bomb near Bangalore: 144,000 civilians killed; 11,237 men and 40 guns lost"
+   ],
+   "shotAlert": "critic/shots/c38an_6299y18c32_0_alert.png",
+   "cam": {
+    "cx": 1465.2194133333333,
+    "cy": 523.0622681386609,
+    "mpp": 937.5
+   },
+   "shotGoto": "critic/shots/c38an_6299y18c32_0_goto.png",
+   "shotAfter": "critic/shots/c38an_6299y18c32_0_after48h.png"
+  },
+  {
+   "got": {
+    "a": 1,
+    "tick": 166418
+   },
+   "date": "26 December 1956",
+   "paused": true,
+   "alerts": [
+    "☢ | China struck British India with an atomic bomb near Larkana: 0 civilians killed; 10,212 men and 32 guns lost | Go to | ×"
+   ],
+   "ticker": [
+    "18 December 1956 Soviet Union captured Free Peja's capital 21 December 1956 British India captured Free Kandahar's capital 23 December 1956 Soviet Union captured Free Shkodër's capital 24 December 1956 British India captured Nepal's capital 26 December 1956 China struck British India with an atomic bomb near Larkana: 0 civilians killed; 10,212 men and 32 guns lost"
+   ],
+   "shotAlert": "critic/shots/c38an_6299y18c32_1_alert.png",
+   "cam": {
+    "cx": 1407.9447194945915,
+    "cy": 433.5,
+    "mpp": 937.5
+   },
+   "shotGoto": "critic/shots/c38an_6299y18c32_1_goto.png",
+   "shotAfter": "critic/shots/c38an_6299y18c32_1_after48h.png"
+  }
+ ],
+ "nukePause": true,
+ "startDate": "28 December 1955",
+ "end": {
+  "a": 0,
+  "tick": 167281
+ },
+ "errors": []
+}

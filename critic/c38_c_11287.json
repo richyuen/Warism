@@ -1,0 +1,262 @@
+{
+ "seed": 11287,
+ "views": [
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 3000,
+   "el": 0,
+   "ind": 0,
+   "sorties": 32,
+   "wrecks": 0,
+   "contact": 0,
+   "mpp": 3000
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 900,
+   "el": 2884,
+   "ind": 0,
+   "sorties": 18,
+   "wrecks": 0,
+   "contact": 0,
+   "mpp": 899.9999999999999
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 250,
+   "el": 670,
+   "ind": 0,
+   "sorties": 8,
+   "wrecks": 0,
+   "contact": 1,
+   "mpp": 250
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 80,
+   "el": 456,
+   "ind": 0,
+   "sorties": 4,
+   "wrecks": 0,
+   "contact": 1,
+   "mpp": 80
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 25,
+   "el": 292,
+   "ind": 12162,
+   "sorties": 4,
+   "wrecks": 0,
+   "contact": 1,
+   "mpp": 25
+  },
+  {
+   "label": "inf",
+   "f": 11,
+   "m": 10,
+   "el": 200,
+   "ind": 7422,
+   "sorties": 2,
+   "wrecks": 0,
+   "contact": 1,
+   "mpp": 10
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 3000,
+   "el": 0,
+   "ind": 7422,
+   "sorties": 34,
+   "wrecks": 0,
+   "contact": 0,
+   "mpp": 3000
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 900,
+   "el": 2884,
+   "ind": 7422,
+   "sorties": 15,
+   "wrecks": 0,
+   "contact": 0,
+   "mpp": 899.9999999999999
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 250,
+   "el": 726,
+   "ind": 7422,
+   "sorties": 6,
+   "wrecks": 0,
+   "contact": 3,
+   "mpp": 250
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 80,
+   "el": 452,
+   "ind": 7422,
+   "sorties": 7,
+   "wrecks": 0,
+   "contact": 1,
+   "mpp": 80
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 25,
+   "el": 320,
+   "ind": 13270,
+   "sorties": 3,
+   "wrecks": 0,
+   "contact": 1,
+   "mpp": 25
+  },
+  {
+   "label": "arm",
+   "f": 40,
+   "m": 10,
+   "el": 180,
+   "ind": 6000,
+   "sorties": 2,
+   "wrecks": 0,
+   "contact": 1,
+   "mpp": 10
+  },
+  {
+   "label": "arm15live",
+   "i": 0,
+   "el": 264,
+   "ind": 10182,
+   "sorties": 3,
+   "wrecks": 0,
+   "contact": 1,
+   "mpp": 15
+  },
+  {
+   "label": "arm15live",
+   "i": 1,
+   "el": 264,
+   "ind": 10092,
+   "sorties": 1,
+   "wrecks": 0,
+   "contact": 1,
+   "mpp": 15
+  },
+  {
+   "label": "arm15live",
+   "i": 2,
+   "el": 292,
+   "ind": 11429,
+   "sorties": 1,
+   "wrecks": 0,
+   "contact": 1,
+   "mpp": 15
+  },
+  {
+   "label": "week2",
+   "f": 40,
+   "m": 250,
+   "el": 985,
+   "ind": 1584,
+   "sorties": 5,
+   "wrecks": 0,
+   "contact": 3,
+   "mpp": 250
+  },
+  {
+   "label": "week2",
+   "f": 40,
+   "m": 80,
+   "el": 692,
+   "ind": 1584,
+   "sorties": 1,
+   "wrecks": 1,
+   "contact": 3,
+   "mpp": 80
+  },
+  {
+   "label": "week2",
+   "f": 40,
+   "m": 25,
+   "el": 308,
+   "ind": 13956,
+   "sorties": 1,
+   "wrecks": 1,
+   "contact": 1,
+   "mpp": 25
+  }
+ ],
+ "picks": {
+  "inf": [
+   {
+    "f": 11,
+    "t": {
+     "name": "Infantry division 11",
+     "kind": "Infantry division",
+     "nation": 1
+    },
+    "pos": [
+     1118.291381264959,
+     273.5133912164615
+    ],
+    "e": true
+   },
+   {
+    "f": 15,
+    "t": {
+     "name": "Infantry division 15",
+     "kind": "Infantry division",
+     "nation": 1
+    },
+    "pos": [
+     1118.2383441536915,
+     273.6823465969122
+    ],
+    "e": true
+   }
+  ],
+  "arm": [
+   {
+    "f": 40,
+    "t": {
+     "name": "Armoured division 40",
+     "kind": "Armoured division",
+     "nation": 1
+    },
+    "pos": [
+     1117.626007525019,
+     273.377050933266
+    ],
+    "e": true
+   },
+   {
+    "f": 42,
+    "t": {
+     "name": "Armoured division 42",
+     "kind": "Armoured division",
+     "nation": 1
+    },
+    "pos": [
+     1117.8244893673034,
+     273.3212437180575
+    ],
+    "e": true
+   }
+  ]
+ },
+ "day": 4,
+ "engaged": 4,
+ "engagedWeek2": 14,
+ "errors": []
+}

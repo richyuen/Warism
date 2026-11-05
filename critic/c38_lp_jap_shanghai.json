@@ -1,0 +1,173 @@
+{
+ "seed": 3517,
+ "TAG": "JAP",
+ "src": [
+  1818.5,
+  385.5
+ ],
+ "dst": [
+  1715.5,
+  413.5
+ ],
+ "n": 2,
+ "escort": true,
+ "states": [
+  {
+   "h": 3,
+   "states": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "nation": 75,
+     "p": [
+      1819.1,
+      387.2
+     ],
+     "afloat": false
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "nation": 75,
+     "p": [
+      1794.8,
+      391.5
+     ],
+     "afloat": false
+    }
+   ],
+   "status": null,
+   "shot": "critic/shots/c38lp_jap_shanghai_h3.png"
+  },
+  {
+   "h": 510,
+   "states": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "nation": 75,
+     "p": [
+      1819.1,
+      388.9
+     ],
+     "afloat": false
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "nation": 75,
+     "p": [
+      1819.1,
+      387.2
+     ],
+     "afloat": false
+    }
+   ],
+   "status": null,
+   "shot": "critic/shots/c38lp_jap_shanghai_h510.png"
+  }
+ ],
+ "samples": [
+  {
+   "h": 0,
+   "s0": "aboard,toPort"
+  },
+  {
+   "h": 72,
+   "s0": "aboard,toPort"
+  },
+  {
+   "h": 144,
+   "s0": "aboard,toPort"
+  },
+  {
+   "h": 216,
+   "s0": "aboard,toPort"
+  },
+  {
+   "h": 288,
+   "s0": "aboard,toPort"
+  },
+  {
+   "h": 360,
+   "s0": "aboard,toPort"
+  },
+  {
+   "h": 432,
+   "s0": "aboard,toPort"
+  },
+  {
+   "h": 504,
+   "s0": "aboard,toPort"
+  },
+  {
+   "h": 576,
+   "s0": "atSea,atSea"
+  }
+ ],
+ "notices": [],
+ "ticker": [
+  "7 January 1938 Italy declared war on Austria",
+  "14 January 1938 Italy declared war on Yugoslavia",
+  "26 January 1938 Soviet Union declared war on Romania"
+ ],
+ "srcCell": [
+  1818.5,
+  385.5
+ ],
+ "dstCell": [
+  1715.5,
+  413.5
+ ],
+ "divs": [
+  [
+   364,
+   0.42426406871190436
+  ],
+  [
+   365,
+   24.959567303941746
+  ]
+ ],
+ "escortBoxVisible": true,
+ "escortBoxDefault": true,
+ "shotPanel": "critic/shots/c38lp_jap_shanghai_panel.png",
+ "tooltip": "China\nOccupied by Japan\nYour selected forces go by sea: they board transports at a port",
+ "tooltipBySea": true,
+ "mpp": 937.5,
+ "shotHover": "critic/shots/c38lp_jap_shanghai_hover.png",
+ "afterClick": {
+  "notice": null,
+  "status": null,
+  "ticker": []
+ },
+ "shotClick": "critic/shots/c38lp_jap_shanghai_click.png",
+ "final": [
+  {
+   "id": 364,
+   "v": "atSea",
+   "p": [
+    1743.6468810684298,
+    414.5
+   ]
+  },
+  {
+   "id": 365,
+   "v": "atSea",
+   "p": [
+    1744.6742013779378,
+    414.5
+   ]
+  }
+ ],
+ "shotEnd": "critic/shots/c38lp_jap_shanghai_end.png",
+ "errors": []
+}

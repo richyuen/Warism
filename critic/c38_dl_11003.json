@@ -1,0 +1,18 @@
+{
+ "seed": 11003,
+ "bin": "critic/c37_seed11003_y18.bin",
+ "count": "3483 of 3483 events",
+ "csv": {
+  "name": "warism-history.csv",
+  "bytes": 424031,
+  "lines": 3485,
+  "head": "date,tick,type,a,aName,b,bName,text\r\n1938-01-01,0,AllianceJoined,83,Mexico,8,Coalition,Mexico founded a Coalition\r\n1938-01-01,0,AllianceJoined,90,Cuba,8,Coalition,Cuba joined the Coalition of Mexico\r\n1938-01-04,93,MajorBattleStarted,1,Wuhu,1209,Wuhu,A major battle began near Wuhu\r\n1938-01-06,120,AllianceJoined,9,Finland,9,Defensive Pact,Finland founded a Defensive Pact\r\n1938-01-06,120,AllianceJoined,4,Poland,9,Defensive Pact,Poland joined the Defensive Pact of Finland\r\n1938-01-06,143,MajorBattleEnded,1,Wuhu,75,Japan,The major battle near Wuhu was won by Japan\r\n1938-01-09,192,AllianceJoined,27,"
+ },
+ "json": {
+  "name": "warism-history.json",
+  "bytes": 828863,
+  "lines": 34832,
+  "head": "[\n  {\n    \"date\": \"1938-01-01\",\n    \"tick\": 0,\n    \"type\": \"AllianceJoined\",\n    \"a\": 83,\n    \"aName\": \"Mexico\",\n    \"b\": 8,\n    \"bName\": \"Coalition\",\n    \"text\": \"Mexico founded a Coalition\"\n  },\n  {\n    \"date\": \"1938-01-01\",\n    \"tick\": 0,\n    \"type\": \"AllianceJoined\",\n    \"a\": 90,\n    \"aName\": \"Cuba\",\n    \"b\": 8,\n    \"bName\": \"Coalition\",\n    \"text\": \"Cuba joined the Coalition of Mexico\"\n  },\n  {\n    \"date\": \"1938-01-04\",\n    \"tick\": 93,\n    \"type\": \"MajorBattleStarted\",\n    \"a\": 1,\n    \"aName\": \"Wuhu\",\n    \"b\": 1209,\n    \"bName\": \"Wuhu\",\n    \"text\": \"A major battle began near Wuhu\"\n  },\n  "
+ },
+ "errors": []
+}

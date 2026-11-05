@@ -1,0 +1,87 @@
+{
+ "seed": 3517,
+ "clicks": [
+  {
+   "id": 1474,
+   "near": [
+    [
+     1199,
+     1,
+     1070.56,
+     259.06
+    ],
+    [
+     1200,
+     1,
+     1070.5,
+     258.5
+    ],
+    [
+     1202,
+     1,
+     1071.5,
+     258.5
+    ],
+    [
+     1474,
+     1,
+     1070.56,
+     259.06
+    ]
+   ],
+   "opened": [
+    "Kind | Bismarck",
+    "Kind | Bismarck",
+    "Kind | Bismarck",
+    "Kind | Bismarck",
+    "Kind | Bismarck"
+   ],
+   "shot": "critic/shots/c38hs_3517_1474_1200m.png"
+  },
+  {
+   "id": 1475,
+   "near": [
+    [
+     1,
+     1,
+     1100.2,
+     267.2
+    ],
+    [
+     1475,
+     1,
+     1100.23,
+     267.4
+    ]
+   ],
+   "opened": [
+    "Kind | Maus",
+    "Kind | Maus",
+    "Kind | Maus",
+    "Kind | Maus",
+    "Kind | Maus"
+   ],
+   "shot": "critic/shots/c38hs_3517_1475_1200m.png"
+  },
+  {
+   "id": 1477,
+   "near": [
+    [
+     1477,
+     20,
+     1023.32,
+     275.17
+    ]
+   ],
+   "opened": [
+    "Kind | TOG II",
+    "Kind | TOG II",
+    "Kind | TOG II",
+    "Kind | TOG II",
+    "Kind | TOG II"
+   ],
+   "shot": "critic/shots/c38hs_3517_1477_1200m.png"
+  }
+ ],
+ "errors": []
+}

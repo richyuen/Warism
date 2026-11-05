@@ -1,0 +1,59 @@
+start 06:36:47 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_ashp_near_s2_2.json > critic/c38_ashp_near_s2_2.log 2>&1
+start 06:36:47 NX=1713.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_ashp_near_sw2_2.json > critic/c38_ashp_near_sw2_2.log 2>&1
+start 06:36:47 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 0 far 60 critic/c38_ashp_near_s2_2_h0.json > critic/c38_ashp_near_s2_2_h0.log 2>&1
+end 06:36:58 exit 0 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 0 far 60 critic/c38_ashp_near_s2_2_h0.json > critic/c38_ashp_near_s2_2_h0.log 2>&1
+start 06:36:58 NX=1900.5 NY=420.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 bound 60 critic/c38_ash_bound_sea.json > critic/c38_ash_bound_sea.log 2>&1
+end 06:36:59 exit 0 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_ashp_near_s2_2.json > critic/c38_ashp_near_s2_2.log 2>&1
+start 06:36:59 NX=1034.5 NY=279.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 bound 60 critic/c38_ash_bound_neutral.json > critic/c38_ash_bound_neutral.log 2>&1
+end 06:36:59 exit 0 NX=1713.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_ashp_near_sw2_2.json > critic/c38_ashp_near_sw2_2.log 2>&1
+start 06:36:59 NX=1715.5 NY=418.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_s5_2.json > critic/c38_r25_near_s5_2.log 2>&1
+end 06:37:11 exit 0 NX=1900.5 NY=420.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 bound 60 critic/c38_ash_bound_sea.json > critic/c38_ash_bound_sea.log 2>&1
+end 06:37:11 exit 0 NX=1715.5 NY=418.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_s5_2.json > critic/c38_r25_near_s5_2.log 2>&1
+start 06:37:11 NX=1715.5 NY=419.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_s6_2.json > critic/c38_r25_near_s6_2.log 2>&1
+start 06:37:11 NX=1715.5 NY=421.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_s8_2.json > critic/c38_r25_near_s8_2.log 2>&1
+end 06:37:11 exit 0 NX=1034.5 NY=279.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 bound 60 critic/c38_ash_bound_neutral.json > critic/c38_ash_bound_neutral.log 2>&1
+start 06:37:11 NX=1713.5 NY=413.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_w2_2.json > critic/c38_r25_near_w2_2.log 2>&1
+end 06:37:23 exit 0 NX=1715.5 NY=419.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_s6_2.json > critic/c38_r25_near_s6_2.log 2>&1
+start 06:37:23 NX=1712.5 NY=413.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_w3_2.json > critic/c38_r25_near_w3_2.log 2>&1
+end 06:37:24 exit 0 NX=1713.5 NY=413.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_w2_2.json > critic/c38_r25_near_w2_2.log 2>&1
+end 06:37:24 exit 0 NX=1715.5 NY=421.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_s8_2.json > critic/c38_r25_near_s8_2.log 2>&1
+start 06:37:24 NX=1711.5 NY=413.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_w4_2.json > critic/c38_r25_near_w4_2.log 2>&1
+start 06:37:24 NX=1713.5 NY=411.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_nw2_2.json > critic/c38_r25_near_nw2_2.log 2>&1
+end 06:37:35 exit 0 NX=1712.5 NY=413.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_w3_2.json > critic/c38_r25_near_w3_2.log 2>&1
+start 06:37:36 NX=1715.5 NY=411.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_n2_2.json > critic/c38_r25_near_n2_2.log 2>&1
+end 06:37:36 exit 0 NX=1713.5 NY=411.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_nw2_2.json > critic/c38_r25_near_nw2_2.log 2>&1
+start 06:37:36 NX=1715.5 NY=410.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_n3_2.json > critic/c38_r25_near_n3_2.log 2>&1
+end 06:37:36 exit 0 NX=1711.5 NY=413.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_w4_2.json > critic/c38_r25_near_w4_2.log 2>&1
+start 06:37:36 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 3 200 far 60 critic/c38_r25_near_s2_3_200.json > critic/c38_r25_near_s2_3_200.log 2>&1
+end 06:37:48 exit 0 NX=1715.5 NY=411.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_n2_2.json > critic/c38_r25_near_n2_2.log 2>&1
+start 06:37:48 NX=1715.5 NY=416.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 3 200 far 60 critic/c38_r25_near_s3_3_200.json > critic/c38_r25_near_s3_3_200.log 2>&1
+end 06:37:48 exit 0 NX=1715.5 NY=410.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_near_n3_2.json > critic/c38_r25_near_n3_2.log 2>&1
+start 06:37:48 NX=1715.5 NY=416.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 bound 60 critic/c38_r25_bound_s3.json > critic/c38_r25_bound_s3.log 2>&1
+end 06:37:48 exit 0 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 3 200 far 60 critic/c38_r25_near_s2_3_200.json > critic/c38_r25_near_s2_3_200.log 2>&1
+start 06:37:49 NX=1715.5 NY=418.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 bound 60 critic/c38_r25_bound_s5.json > critic/c38_r25_bound_s5.log 2>&1
+end 06:38:00 exit 0 NX=1715.5 NY=416.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 3 200 far 60 critic/c38_r25_near_s3_3_200.json > critic/c38_r25_near_s3_3_200.log 2>&1
+start 06:38:00 NX=1715.5 NY=418.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c38_r25_allnear_s5.json > critic/c38_r25_allnear_s5.log 2>&1
+end 06:38:01 exit 0 NX=1715.5 NY=416.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 bound 60 critic/c38_r25_bound_s3.json > critic/c38_r25_bound_s3.log 2>&1
+start 06:38:01 NX=1713.5 NY=413.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c38_r25_allnear_w2.json > critic/c38_r25_allnear_w2.log 2>&1
+end 06:38:01 exit 0 NX=1715.5 NY=418.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 bound 60 critic/c38_r25_bound_s5.json > critic/c38_r25_bound_s5.log 2>&1
+start 06:38:01 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 11003 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_11003_near_s2_2.json > critic/c38_r25_11003_near_s2_2.log 2>&1
+end 06:38:12 exit 0 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 11003 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_11003_near_s2_2.json > critic/c38_r25_11003_near_s2_2.log 2>&1
+start 06:38:12 NX=1715.5 NY=416.5 npx tsx critic/scripts/c38_ash2.ts 11003 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_11003_near_s3_2.json > critic/c38_r25_11003_near_s3_2.log 2>&1
+end 06:38:12 exit 0 NX=1715.5 NY=418.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c38_r25_allnear_s5.json > critic/c38_r25_allnear_s5.log 2>&1
+start 06:38:12 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 11003 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c38_r25_11003_allnear_s2.json > critic/c38_r25_11003_allnear_s2.log 2>&1
+end 06:38:13 exit 0 NX=1713.5 NY=413.5 npx tsx critic/scripts/c38_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c38_r25_allnear_w2.json > critic/c38_r25_allnear_w2.log 2>&1
+start 06:38:13 NX=1703.5 NY=445.5 npx tsx critic/scripts/c38_ash2.ts 12007 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_12007_far_fuzhou_2.json > critic/c38_r25_12007_far_fuzhou_2.log 2>&1
+end 06:38:23 exit 0 NX=1715.5 NY=416.5 npx tsx critic/scripts/c38_ash2.ts 11003 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_11003_near_s3_2.json > critic/c38_r25_11003_near_s3_2.log 2>&1
+start 06:38:23 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 12007 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_12007_near_s2_2.json > critic/c38_r25_12007_near_s2_2.log 2>&1
+end 06:38:24 exit 0 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 11003 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c38_r25_11003_allnear_s2.json > critic/c38_r25_11003_allnear_s2.log 2>&1
+start 06:38:24 NX=1036.5 NY=281.5 npx tsx critic/scripts/c38_ash2.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 2 12 far 30 critic/c38_r25_engcalais_near_se2_2.json > critic/c38_r25_engcalais_near_se2_2.log 2>&1
+end 06:38:24 exit 0 NX=1703.5 NY=445.5 npx tsx critic/scripts/c38_ash2.ts 12007 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_12007_far_fuzhou_2.json > critic/c38_r25_12007_far_fuzhou_2.log 2>&1
+start 06:38:24 NX=1037.5 NY=279.5 npx tsx critic/scripts/c38_ash2.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 2 12 far 30 critic/c38_r25_engcalais_near_e3_2.json > critic/c38_r25_engcalais_near_e3_2.log 2>&1
+end 06:38:32 exit 0 NX=1036.5 NY=281.5 npx tsx critic/scripts/c38_ash2.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 2 12 far 30 critic/c38_r25_engcalais_near_se2_2.json > critic/c38_r25_engcalais_near_se2_2.log 2>&1
+start 06:38:32 NX=1082.5 NY=248.5 npx tsx critic/scripts/c38_ash2.ts 3517 ENG GER 1023.5 275.5 1080.5 248.5 2 12 far 40 critic/c38_r25_engger_near_e2_2.json > critic/c38_r25_engger_near_e2_2.log 2>&1
+end 06:38:33 exit 0 NX=1037.5 NY=279.5 npx tsx critic/scripts/c38_ash2.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 2 12 far 30 critic/c38_r25_engcalais_near_e3_2.json > critic/c38_r25_engcalais_near_e3_2.log 2>&1
+start 06:38:33 NX=1084.5 NY=248.5 npx tsx critic/scripts/c38_ash2.ts 3517 ENG GER 1023.5 275.5 1080.5 248.5 2 12 far 40 critic/c38_r25_engger_near_e4_2.json > critic/c38_r25_engger_near_e4_2.log 2>&1
+end 06:38:34 exit 0 NX=1715.5 NY=415.5 npx tsx critic/scripts/c38_ash2.ts 12007 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c38_r25_12007_near_s2_2.json > critic/c38_r25_12007_near_s2_2.log 2>&1
+end 06:38:43 exit 0 NX=1082.5 NY=248.5 npx tsx critic/scripts/c38_ash2.ts 3517 ENG GER 1023.5 275.5 1080.5 248.5 2 12 far 40 critic/c38_r25_engger_near_e2_2.json > critic/c38_r25_engger_near_e2_2.log 2>&1
+end 06:38:44 exit 0 NX=1084.5 NY=248.5 npx tsx critic/scripts/c38_ash2.ts 3517 ENG GER 1023.5 275.5 1080.5 248.5 2 12 far 40 critic/c38_r25_engger_near_e4_2.json > critic/c38_r25_engger_near_e4_2.log 2>&1
+QUEUEDONE

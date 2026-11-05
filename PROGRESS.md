@@ -1268,3 +1268,10 @@
 - Housekeeping: a red-without check stashed a committed file (nothing to stash) and the pop applied an old stash
   (`rule worktree scratch 2026-10-24`) onto `tools/diag/airLate.ts`; both files restored to HEAD, the stash kept.
 - **Next:** critic run 38.
+
+## 2026-11-05 — critic run 38, focused, on a54afc77: one blocking issue (R38-B1, new in R25); naval under its bar
+- R37-B1 fixed (the near re-click stays aboard and lands with its partner; the move to other transports is told).
+  **R38-B1 (blocking):** the worker judges "landed away" against the new click, two cells south of Shanghai, four
+  from the landing's land: a landing that went as ordered is told as failed (364; with four, 364 and 367). Scores
+  unchanged: naval **7** under its bar of 8; the rest at their bars. Filed as R26a–b (with R38-N1).
+- **Next:** R26a.
