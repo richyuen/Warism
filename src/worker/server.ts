@@ -119,6 +119,16 @@ const EMPTY_ELEMENTS: SnapshotElements = {
   truncated: false,
 };
 
+/**
+ * Whether formation `id` is refused later in the same drain (`ev` from record `i`, 6 a record):
+ * a division that marched to its port arrives there and is refused there in one hour (ROADMAP
+ * R22a, critic run 34, R34-B1), and the arrival must not forget the order the refusal tells of.
+ */
+function refusedLater(ev: number[], i: number, id: number): boolean {
+  for (let j = i + 6; j < ev.length; j += 6) if (ev[j + 1] === EventKind.MoveRejected && ev[j + 2] === id) return true;
+  return false;
+}
+
 /** The cells of nation `n`'s land under fallout (PLAN 7.12: its panel). */
 function falloutOf(world: World, n: number): number {
   let k = 0;
@@ -1382,7 +1392,8 @@ export class SimServer {
    * landing thrown back, troops ashore more than `AT_PORT_CELLS` from the order's cell. A refused
    * order leaves the one before it standing (the sim changes nothing then: a division aboard keeps
    * its voyage), and that one is told on; the order is forgotten at a landing, at an arrival on
-   * land and at the formation's end.
+   * land (not one refused in its hour: at the port it marched to, ROADMAP R22a) and at the
+   * formation's end.
    */
   private orderNews(world: World, ev: number[], i: number): void {
     const kind = ev[i + 1]!;
@@ -1410,7 +1421,7 @@ export class SimServer {
       const dy = Math.abs(Math.floor(ev[i + 5]!) - Math.floor(target / w));
       if (Math.min(dx, w - dx) > world.atSize(AT_PORT_CELLS) || dy > world.atSize(AT_PORT_CELLS)) tell('landedAway', 0);
       this.ordered.delete(id);
-    } else if (kind === EventKind.FormationDestroyed || (kind === EventKind.FormationArrived && !world.seaBound.has(id) && !world.afloat(id))) {
+    } else if (kind === EventKind.FormationDestroyed || (kind === EventKind.FormationArrived && !world.seaBound.has(id) && !world.afloat(id) && !refusedLater(ev, i, id))) {
       this.ordered.delete(id);
     }
   }

@@ -169,10 +169,14 @@ Rules:
     `landingTogether1938.test.ts` (hours 632 and 633; before, 123 and 510).
 - [ ] R22 **Naval back to its bar: the refusal at the port, the wait aboard** (critic run 34, focused: one blocking
   issue, R34-B1; naval 7 under its bar of 8 for R34-B1 and R34-N1). Each sub-item its own commit; then the critic again.
-  - [ ] R22a A refusal at the port is told (R34-B1): the worker's `orderNews` forgets a player's order at the hour's
+  - [x] R22a A refusal at the port is told (R34-B1): the worker's `orderNews` forgets a player's order at the hour's
     `FormationArrived` and drops the `MoveRejected` that follows it, so a division refused at the port it marched to
     (shut, no port, no transports, no sea way) is told nothing. AT: an e2e spec, Britain at war with France, divisions
     to Calais, Portsmouth bombed shut: the row and the panel say the port is bombed shut; red without the fix.
+    Done: an arrival forgets the order only when no refusal of the formation follows in its hour (`refusedLater`);
+    `serverPortShutNews1938.test.ts` (Belfast via the worker: told `PortShut`; red without, nothing told),
+    `landingPortShut1938.spec.ts` (seed 3517, three to Calais: division 270's row and panel "its port is bombed
+    shut"; red without). Worker only: pin unmoved.
   - [ ] R22b The wait aboard has an account and a way out (R34-N1): a division aboard a convoy still in its port takes
     an order (goes ashore); the panel says how many of the landing it waits for and the furthest one's days; the
     escort is held until the convoy sails. AT: four Japanese divisions to Shanghai: the panel names "1 of 4 aboard"

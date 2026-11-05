@@ -1056,3 +1056,14 @@
   recall refused); every other score at its bar (diplomacy, stats, UI, performance, stability 7 rescored; the rest carried).
   Filed as R22a–e (with R34-N2–N4).
 - **Next:** R22a.
+
+## 2026-11-04 — ROADMAP R22a: a refusal at the port is told (R34-B1)
+- The worker's `orderNews` forgot a player's order at the hour's `FormationArrived`, so the `MoveRejected` that followed
+  at the port the division had marched to (shut, no port, no transports, no sea way) was told to no page. An arrival now
+  forgets the order only when no refusal of the same formation follows in that hour (`refusedLater`, `server.ts`).
+- AT: `serverPortShutNews1938.test.ts` (Britain → Belfast through the worker, the port kept shut: one `refused` of
+  `PortShut` at the sim's hour; red without, `[]`); `landingPortShut1938.spec.ts` (the critic's case, seed 3517, three
+  divisions to Calais at war with France: division 270's row and panel say "its port is bombed shut"; red without, no
+  news in 150 h). Order and landing specs green (orderNews, landingNeutral ×2, landingVoyage, landingEscort). The
+  worker only, no sim rule: pin unmoved, tick unchanged.
+- **Next:** R22b.
