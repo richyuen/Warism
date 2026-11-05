@@ -463,6 +463,27 @@ export function ashoreAtPort(world: World, id: number): (() => void) | null {
 }
 
 /**
+ * A formation `id` aboard group `ship` under way to its convoy's port along its own coast (`sailingToPort`,
+ * R29b's) goes ashore for an order that is not over the sea from that port (ROADMAP R31c; critic run 42,
+ * R42-N1: refused "aboard", it then sailed abroad with the landing it was ordered away from): on the land of
+ * its side nearest the transports (`strayLanding`, within AT_PORT_CELLS), its organisation as it was. Null
+ * out of reach of such land: it stays aboard. Else the way back aboard, for an order then refused.
+ */
+export function ashoreFromShip(world: World, id: number, ship: number): (() => void) | null {
+  const c = world.formations.cols;
+  const cell = strayLanding(world, c.nation[id]!, cellOfPlace(world, ship));
+  if (cell < 0) return null;
+  const e = world.embarked.get(id)!;
+  const [x, y] = [c.x[id]!, c.y[id]!];
+  world.embarked.delete(id);
+  [c.x[id], c.y[id]] = world.cellPoint(cell);
+  return () => {
+    world.embarked.set(id, e);
+    [c.x[id], c.y[id]] = [x, y];
+  };
+}
+
+/**
  * The cell of the port formation `id` is aboard a convoy loading at, where it takes an order
  * (`ashoreAtPort`), or -1: not aboard, aboard anything else, or the port no longer its nation's.
  * Read-only: the map's hint for the one aboard is asked from there (ADR-827, ROADMAP R27b).

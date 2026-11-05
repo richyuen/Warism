@@ -1444,3 +1444,9 @@
 - Those aboard go ashore at the port and are told `PortShut`, as those bound are. Britain 15101, Calais: nobody
   lands alone (red: 270 at Calais h99, then lost). Naval unit tests green (62 files); R21b's spec green; pin unmoved.
 - **Next:** R31c.
+
+## 2026-11-05 — R31c: the one aboard ferried along its coast takes a land order from the coast (R42-N1)
+- An order not over the sea from its transports' port puts it ashore on its side's land nearest them
+  (`ashoreFromShip`) and is taken from there. Britain 15101: 270 ashore and marching to the Midlands, nobody in
+  France (red: refused, Caen h99). Naval unit tests green (60 files); pin unmoved.
+- **Next:** R31d.

@@ -420,9 +420,11 @@ Rules:
     one aboard alone for that. AT: Britain 16117, the recall case: 274 does not land alone.
     Done: a convoy whose port is shut while it loads is over, all told `PortShut`, those aboard ashore at the port.
     Britain 15101 (the same shape, Calais): nobody lands alone (red: 270 h99). `convoyPortShut1938.test.ts`.
-  - [ ] R31c R42-N1: the one aboard transports under way between home ports, given a land order: told it takes it at
+  - [x] R31c R42-N1: the one aboard transports under way between home ports, given a land order: told it takes it at
     the port, and not taken abroad untold. AT: Britain 15101, R41-B1's case, 270 and 271 onto the Midlands while
     270's ship sails to Plymouth: 270 does not land at Caen untold.
+    Done: ashore on its side's coast nearest its transports (`ashoreFromShip`), the order taken from there. 270
+    marches; neither lands in France (red: refused, Caen h99). Pin unmoved.
   - [ ] R31d R41-N1: the bound one of a redirected landing walks to the other port (~29 days) while the transports
     called for it stand empty: where its own transports are free and nearer, they fetch it (as R29b's one aboard).
     AT: seed 3517, R40-B1's case: 365 does not walk to Sasebo while 1144 idles at Tokyo; the three together.

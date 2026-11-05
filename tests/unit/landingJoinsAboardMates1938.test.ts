@@ -3,6 +3,8 @@ import type { Command } from '../../src/shared/commands';
 import type { FromWorker } from '../../src/shared/protocol';
 import { EventKind } from '../../src/shared/events';
 import type { World } from '../../src/sim/world';
+import { cellOf } from '../../src/sim/data/terrain';
+import { sailingToPort } from '../../src/sim/systems/amphibious';
 import { SimServer } from '../../src/worker/server';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { assets1938 } from '../helpers/earth';
@@ -17,13 +19,15 @@ import { nationId } from '../helpers/sim1938';
 // is still to load (`stillLoading`), and the convoys at that port for that landing wait for it.
 // Driven as the page drives the worker (`cmds`, ids ascending, applied at once).
 
-const { w: W } = SIZE_1938;
+const { w: W, h: H } = SIZE_1938;
 const ENG = nationId('ENG');
 const FRA = nationId('FRA');
 const CALAIS: [number, number] = [1034.5, 279.5];
 const CAEN: [number, number] = [1021.5, 291.5];
+/** The English Midlands (Birmingham), by land from the south coast. */
+const MIDLANDS = cellOf(-1.9, 52.48, W, H).map((v) => Math.floor(v) + 0.5) as [number, number];
 
-function run(seed: number): { landed: Map<number, number>; refused: number[] } {
+function run(seed: number, inland = false): { landed: Map<number, number>; refused: number[]; aboard: boolean; ship: boolean } {
   // Refusals as the page is told them (`orderNews`): at the click, applied at once, as well as later.
   const refused: number[] = [];
   const s = new SimServer((m: FromWorker) => {
@@ -61,9 +65,19 @@ function run(seed: number): { landed: Map<number, number>; refused: number[] } {
   step();
   click([fresh], ...CAEN);
   click(pair, ...CAEN);
-  for (let h = 0; h < 24 * 40 && ids.some((id) => !landed.has(id)); h++) step();
-  process.stderr.write(`R30a ${seed}: refused ${refused}, landed ${[...landed]}\n`);
-  return { landed, refused };
+  // ROADMAP R31c (critic run 42, R42-N1): two hours on, while 270's transports sail it to Plymouth, the two
+  // clicked onto the Midlands: 270 was refused "aboard", and landed at Caen with 276.
+  let ship = false;
+  if (inland) {
+    step();
+    step();
+    ship = sailingToPort(w, w.embarked.get(270)?.fleet ?? 0);
+    click(pair, ...MIDLANDS);
+  }
+  const aboard = w.embarked.has(270);
+  for (let h = 0; h < 24 * 40 && (inland ? h < 24 * 20 : ids.some((id) => !landed.has(id))); h++) step();
+  process.stderr.write(`R30a ${seed} ${inland}: refused ${refused}, landed ${[...landed]}\n`);
+  return { landed, refused, aboard, ship };
 }
 
 describe('the one aboard on its own transports to a port where a convoy for its landing loads: they sail together (ROADMAP R30a)', () => {
@@ -76,4 +90,12 @@ describe('the one aboard on its own transports to a port where a convoy for its 
       expect(Math.max(...at) - Math.min(...at), 'together (red: 276 at h84, the two at h289)').toBeLessThanOrEqual(24);
     }, 300_000);
   }
+
+  it('Britain 15101: the two clicked onto the Midlands while 270 sails to Plymouth: 270 goes ashore on the coast and marches; neither lands in France', () => {
+    const r = run(15101, true);
+    expect(r.ship, '270 aboard its transports, under way to Plymouth').toBe(true);
+    expect(r.refused, 'none refused (red: 270, "aboard")').toEqual([]);
+    expect(r.aboard, '270 ashore').toBe(false);
+    expect(r.landed.has(270) || r.landed.has(271), 'neither lands in France (red: 270 at Caen)').toBe(false);
+  }, 300_000);
 });

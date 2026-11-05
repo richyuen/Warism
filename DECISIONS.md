@@ -36,6 +36,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   over: those aboard are told `PortShut` and go ashore at the port, those bound are told (`endConvoy`). The
   player orders them again (another port). `convoyPortShut1938.test.ts` (red without); R21b's spec green.
   Player convoys only: pin unmoved.
+- **R31c** (R42-N1). The one aboard transports under way to their convoy's port (R29b's), given an order not
+  over the sea from that port (a march inland), was refused "aboard ... until it lands" and then sailed to
+  France with the landing it was ordered away from (Britain 15101: 270 at Caen h99). Now it goes ashore on
+  its side's land nearest the transports (`ashoreFromShip`, `strayLanding`: within AT_PORT_CELLS; they sail
+  along its own coast) and takes the order from there; out of reach of such land it is refused as before.
+  After: 270 ashore, marching; neither lands in France. `landingJoinsAboardMates1938.test.ts` (red
+  without). Player convoys only: pin unmoved.
 
 ### ADR-827 · 2026-11-05 · accepted — Show the landing while choosing it (the user's decision)
 
