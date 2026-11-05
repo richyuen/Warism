@@ -802,6 +802,7 @@ export function sailAboard(world: World, id: number, ship: number, port: number,
   const going = world.convoyPort.get(ship) === port && c.moving[ship] === 1 && near(world, c.targetCell[ship]!, water, world.atSize(AT_PORT_CELLS));
   if (!going && !orderSail(world, ship, (water % w) + 0.5, Math.floor(water / w) + 0.5)) return false;
   world.embarked.set(id, { fleet: ship, land: landing.land, water: landing.water, target });
+  world.seaFetchAt.set(id, world.tick);
   c.moving[id] = 0;
   c.home[id] = 0;
   world.paths.delete(id);
@@ -818,14 +819,48 @@ export function sailAboard(world: World, id: number, ship: number, port: number,
  * (called and on its way, or waiting for the first), or one bound for it that would fit.
  */
 function stillLoading(world: World, fleet: number): boolean {
-  if (!carrying(world, fleet)) return true;
+  // Nobody aboard yet: called and on its way, or waiting for one it waits for (R31f), or over.
+  if (!carrying(world, fleet)) {
+    let any = false;
+    for (const [id, o] of world.seaFetch) {
+      if (o !== fleet || !world.formations.has(id)) continue;
+      if (waitedFor(world, fleet, id)) return true;
+      any = true;
+    }
+    return !any;
+  }
   // Under way: to its own port, with the one aboard its new landing took there (`sailAboard`, ROADMAP
   // R30a; critic run 41, R41-B1: the convoy loading there sailed at once, its first ashore alone), it
   // is still to load; to a landing, it is not.
   if (world.formations.cols.moving[fleet] === 1) return sailingToPort(world, fleet);
   const room = transportRoom(world, fleet) - aboard(world, fleet);
-  for (const [id, o] of world.seaFetch) if (o === fleet && world.formations.has(id) && world.formations.cols.strength[id]! <= room) return true;
+  for (const [id, o] of world.seaFetch) if (o === fleet && world.formations.has(id) && world.formations.cols.strength[id]! <= room && waitedFor(world, fleet, id)) return true;
   return false;
+}
+
+/** Hours within which an order is of a convoy's own click (`waitedFor`): a day. */
+const SAME_CLICK_HOURS = 24;
+/** The longest march, in hours, a convoy waits for a later order's division (`waitedFor`): a week. */
+const LATE_WAIT_HOURS = 24 * 7;
+
+/**
+ * Whether the player's convoy on group `fleet` waits for formation `id` bound for it (ROADMAP R31f; critic
+ * run 37, R37-N2: two aboard at a port sat 45 days for a third ordered ten days later from 48 days away):
+ * one bound within SAME_CLICK_HOURS of the first of the convoy's (its click), however far; a later one
+ * when its march left is LATE_WAIT_HOURS or less. One not waited for stays bound, for the next voyage.
+ */
+export function waitedFor(world: World, fleet: number, id: number): boolean {
+  const at = world.seaFetchAt.get(id);
+  if (at === undefined) return true;
+  // The first of the landing: of every convoy at its port for its target (R21e's, one landing).
+  const port = world.convoyPort.get(fleet);
+  const target = convoyTarget(world, fleet);
+  const mate = (g: number): boolean => g === fleet || (port !== undefined && world.convoyPort.get(g) === port && convoyTarget(world, g) === target);
+  let first = at;
+  for (const [o, g] of world.seaFetch) if (mate(g)) first = Math.min(first, world.seaFetchAt.get(o) ?? first);
+  for (const [o, e] of world.embarked) if (mate(e.fleet)) first = Math.min(first, world.seaFetchAt.get(o) ?? first);
+  if (at - first <= SAME_CLICK_HOURS) return true;
+  return world.formations.cols.moving[id] !== 1 || marchHoursLeft(world, id) <= LATE_WAIT_HOURS;
 }
 
 /** `boardConvoy`: not yet; it waits. */
@@ -864,7 +899,7 @@ function waitLeft(world: World, fleet: number): number {
   for (const [g, p] of world.convoyPort) {
     if (p !== port || !f.has(g) || c.nation[g] !== c.nation[fleet] || convoyTarget(world, g) !== target) continue;
     if (!loading(world, g)) hours = Math.max(hours, c.moving[g] === 1 ? sailHoursLeft(world, g) : Infinity);
-    for (const [id, o] of world.seaFetch) if (o === g && f.has(id) && c.moving[id] === 1) hours = Math.max(hours, marchHoursLeft(world, id));
+    for (const [id, o] of world.seaFetch) if (o === g && f.has(id) && c.moving[id] === 1 && waitedFor(world, g, id)) hours = Math.max(hours, marchHoursLeft(world, id));
   }
   return hours;
 }
@@ -912,6 +947,8 @@ function escortAhead(world: World, fleet: number, water: number): boolean {
  * (the next voyage). A convoy with nobody bound for it or aboard is over.
  */
 function convoySystem(world: World): void {
+  // The hour each was bound, kept while it is bound or aboard (R31f).
+  for (const id of [...world.seaFetchAt.keys()]) if (!world.seaFetch.has(id) && !world.embarked.has(id)) world.seaFetchAt.delete(id);
   if (world.convoyPort.size === 0) return;
   const f = world.formations;
   const c = f.cols;
@@ -945,8 +982,10 @@ function convoySystem(world: World): void {
       const room = transportRoom(world, fleet) - aboard(world, fleet);
       // Another convoy at its port for its landing still to load (ROADMAP R21e: called, or waiting
       // for those bound for it): it waits, and they sail together.
-      if (load && !pending.some((id) => c.strength[id]! <= room) && [...world.convoyPort].some(([o, p]) => o !== fleet && p === port && f.has(o) && c.nation[o] === c.nation[fleet] && convoyTarget(world, o) === target && stillLoading(world, o))) continue;
-      if (load && !pending.some((id) => c.strength[id]! <= room)) {
+      // Those it waits for (R31f): of its click, or near; the rest go on its next voyage.
+      const waits = pending.filter((id) => waitedFor(world, fleet, id));
+      if (load && !waits.some((id) => c.strength[id]! <= room) && [...world.convoyPort].some(([o, p]) => o !== fleet && p === port && f.has(o) && c.nation[o] === c.nation[fleet] && convoyTarget(world, o) === target && stillLoading(world, o))) continue;
+      if (load && !waits.some((id) => c.strength[id]! <= room)) {
         const first = [...world.embarked].filter(([, e]) => e.fleet === fleet).sort((a, b) => a[0] - b[0])[0]![1];
         // Its escort first, at the landing's water (ROADMAP R22d): it waits for it.
         if (escortAhead(world, fleet, first.water)) continue;

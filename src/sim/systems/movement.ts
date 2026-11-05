@@ -596,6 +596,7 @@ function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage
   const fresh = !world.convoyPort.has(a.fleet) && !carrying(world, a.fleet);
   world.seaBound.set(id, target);
   world.seaFetch.set(id, a.fleet);
+  world.seaFetchAt.set(id, world.tick);
   world.convoyPort.set(a.fleet, a.port);
   world.playerOrders.set(a.fleet, { kind: PlayerOrderKind.march, until: 0, through: false });
   world.station.delete(a.fleet);

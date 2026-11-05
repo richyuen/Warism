@@ -1464,3 +1464,10 @@
   both land at Shanghai h633 (red: refused at sea, Fuzhou h151). The seed-2207 news test's second order is now
   refused `NoLanding` (Kassel, inland), not `Aboard`. Whole unit suite green (snapshot-perf under load); pin unmoved.
 - **Next:** R31f.
+
+## 2026-11-05 — R31f: a landing does not wait for a later order from far (R37-N2)
+- Each binding has its hour (`seaFetchAt`); a landing's convoys at a port wait for its click however far, a later
+  order only within a week's march; the rest go on the next voyage. Seed 3517: the two to Shanghai land h632/633
+  with or without a third sent three days later from 1,094 h away (red: all h1289); the third h1290. Whole unit
+  suite green (snapshot-perf under load); landing specs green; pin unmoved.
+- R31 done (all six of run 42's naval issues, ADR-828). **Next:** critic run 43, full.

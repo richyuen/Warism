@@ -27,7 +27,7 @@ import { DAYS_PER_MONTH } from '../sim/systems/research';
 import { shipyard } from '../sim/systems/production';
 import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
-import { landedAway, landingOf, loading, sailingToPort, seaHint, seaOrderLanding } from '../sim/systems/amphibious';
+import { landedAway, landingOf, loading, sailingToPort, seaHint, seaOrderLanding, waitedFor } from '../sim/systems/amphibious';
 import { marchHoursLeft } from '../sim/systems/movement';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
@@ -1116,7 +1116,8 @@ export class SimServer {
       of++;
     }
     for (const [id, o] of world.seaFetch) {
-      if (!world.formations.has(id) || world.convoyPort.get(o) !== port || world.seaBound.get(id) !== target) continue;
+      // Those its convoy waits for (ROADMAP R31f): a later order from far goes on the next voyage.
+      if (!world.formations.has(id) || world.convoyPort.get(o) !== port || world.seaBound.get(id) !== target || !waitedFor(world, o, id)) continue;
       of++;
       hours = Math.max(hours, marchHoursLeft(world, id));
     }

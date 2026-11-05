@@ -65,6 +65,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   while aboard, to Kassel inland) is refused `NoLanding` (no water to land from), not `Aboard`; the voyage
   goes on as before. `landingRecallAtSea1938.test.ts` (red without: refused, Fuzhou h151). Player convoys
   only: pin unmoved.
+- **R31f** (R37-N2, named in runs 37 and 40-42). A landing loading at its port waited for any later order to
+  the same target, however far: two aboard sat 45 days for a third ordered ten days later from 48 days
+  away. Now each binding has its hour (`world.seaFetchAt`, saved while not empty; reset when R29b keeps one
+  aboard), and a convoy waits (`waitedFor`: `convoySystem`, `stillLoading`, `waitLeft`, the panel's
+  `landingWait`) for those bound within a day of the first of its landing at that port (its click, however
+  far: R29b's 365 walks 32 days and is waited for) and for a later one only within a week's march; the
+  rest stay bound and go on the next voyage. Seed 3517: two to Shanghai, the farthest of Honshu (1,094 h
+  away) three days later: the two land h632/633 as without it (red: all three h1289/1290), the third h1290
+  on the next voyage. **Not chosen:** a cap on the march alone (R29b's own-click 32-day walk would split).
+  `convoyLateOrder1938.test.ts` (red without). Player convoys only: pin unmoved.
 
 ### ADR-827 · 2026-11-05 · accepted — Show the landing while choosing it (the user's decision)
 

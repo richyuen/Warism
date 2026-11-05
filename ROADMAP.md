@@ -436,6 +436,10 @@ Rules:
     not refused, it rejoins its landing.
     Done: a convoy of one at sea turns back for the nearest port on an order (`turnBack`), taken as there. Both at
     Shanghai h633 (red: refused, Fuzhou h151). `landingRecallAtSea1938.test.ts`. Pin unmoved.
-  - [ ] R31f R37-N2: a loaded convoy waits for any later order to the same coast (two fresh ones to Fuzhou, one in
+  - [x] R31f R37-N2: a loaded convoy waits for any later order to the same coast (two fresh ones to Fuzhou, one in
     the far north: 364 and 366 still aboard at Sasebo on day 60). A convoy waits only for those whose march to its
     port is near enough; the rest go on the next voyage. AT: the critic's case, both aboard land within ~a month.
+    Done: a landing waits for its click (bound within a day of its first) however far, a later order within a week's
+    march (`waitedFor`, `seaFetchAt`). Seed 3517: the two h632/633 as without the late one (red: h1289), the late
+    one h1290 on the next voyage. `convoyLateOrder1938.test.ts`. Pin unmoved.
+  R31 done; then the critic, full (run 43).

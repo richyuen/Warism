@@ -435,6 +435,8 @@ class WorldCore implements Stateful {
       ...(w.seaBound.size === 0 ? [] : [{ name: 'world.seaBound', dtype: 'f64' as const, data: Float64Array.from([...w.seaBound].sort((a, b) => a[0] - b[0]).flat()) }]),
       // The transports called to such a formation's port (ROADMAP R17a): [id, fleet] each, only while there is one.
       ...(w.seaFetch.size === 0 ? [] : [{ name: 'world.seaFetch', dtype: 'f64' as const, data: Float64Array.from([...w.seaFetch].sort((a, b) => a[0] - b[0]).flat()) }]),
+      // The hour each was bound for its convoy (ROADMAP R31f): [id, tick] each, only while there is one.
+      ...(w.seaFetchAt.size === 0 ? [] : [{ name: 'world.seaFetchAt', dtype: 'f64' as const, data: Float64Array.from([...w.seaFetchAt].sort((a, b) => a[0] - b[0]).flat()) }]),
       // A player's convoys (ROADMAP R17b): [fleet, port] each, only while there is one.
       ...(w.convoyPort.size === 0 ? [] : [{ name: 'world.convoyPort', dtype: 'f64' as const, data: Float64Array.from([...w.convoyPort].sort((a, b) => a[0] - b[0]).flat()) }]),
       ...(w.escorts.size === 0 ? [] : [{ name: 'world.escorts', dtype: 'f64' as const, data: Float64Array.from([...w.escorts].sort((a, b) => a[0] - b[0]).flatMap(([k, e]) => [k, e.convoy, e.from])) }]),
@@ -530,6 +532,7 @@ class WorldCore implements Stateful {
     w.seaLinks = new Map();
     w.seaBound = new Map();
     w.seaFetch = new Map();
+    w.seaFetchAt = new Map();
     w.convoyPort = new Map();
     w.escorts = new Map();
     w.wingBase = new Map();
@@ -567,6 +570,8 @@ class WorldCore implements Stateful {
     for (let at = 0; bound && at < bound.length; at += 2) w.seaBound.set(bound[at]!, bound[at + 1]!);
     const fetch = sections.find((s) => s.name === 'world.seaFetch')?.data as Float64Array | undefined;
     for (let at = 0; fetch && at < fetch.length; at += 2) w.seaFetch.set(fetch[at]!, fetch[at + 1]!);
+    const fetchAt = sections.find((s) => s.name === 'world.seaFetchAt')?.data as Float64Array | undefined;
+    for (let at = 0; fetchAt && at < fetchAt.length; at += 2) w.seaFetchAt.set(fetchAt[at]!, fetchAt[at + 1]!);
     const convoys = sections.find((s) => s.name === 'world.convoyPort')?.data as Float64Array | undefined;
     for (let at = 0; convoys && at < convoys.length; at += 2) w.convoyPort.set(convoys[at]!, convoys[at + 1]!);
     const escorts = sections.find((s) => s.name === 'world.escorts')?.data as Float64Array | undefined;
@@ -1357,6 +1362,12 @@ export class World {
    * while not empty; the formation waits at the port for it.
    */
   seaFetch = new Map<number, number>();
+  /**
+   * The tick each formation was bound for its convoy (`seaFetch`, ROADMAP R31f), kept while it is bound or
+   * aboard: a convoy waits for those of its own click however far, a later one only when near
+   * (`waitedFor`). State, saved while not empty.
+   */
+  seaFetchAt = new Map<number, number>();
   /**
    * A player's convoys (ROADMAP R17b), by transport group: the port (index in `ports`) where those
    * bound for it board. State, saved while not empty; the group sails when its convoy is in
