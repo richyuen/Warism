@@ -1164,3 +1164,11 @@
   Probed: the one aboard sent instead to Fuzhou, Tianjin, Canton or Ningbo is refused `NoTransports` and stays aboard
   (R23a); the four land together. The binding rule is left as it is.
 - **Next:** R23c.
+
+## 2026-11-05 — ROADMAP R23c: a refusal notice goes with the next order taken (R35-N1)
+- The formation panel's detail has `goal`, the cell its march or voyage is for while it moves; `staleNotice`'s state
+  includes it, so a refusal given while marching goes once another march is taken, and holds while the first goes on.
+- AT: `orderNews1938.spec.ts`'s third test (Switzerland's division marching, refused London: "no port" held an hour on;
+  sent to the other of Zurich and Geneva: no notice, "On the march"; red without, the notice stays). UI and worker
+  detail only: pin unmoved.
+- **Next:** R23d.

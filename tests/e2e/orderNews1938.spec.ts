@@ -83,3 +83,49 @@ test('a refusal in the panel goes when the formation does something else', async
   await expect(page.getByTestId('order-news')).toHaveCount(1);
   await page.getByTestId('formation-panel').screenshot({ path: 'test-results/orderNews1938-stale.png' });
 });
+
+// ROADMAP R23c (critic run 35, R35-N1): a refusal given while marching stayed under the next march
+// taken, the state "On the march" unchanged. Switzerland's division marching, refused London, then
+// sent somewhere else in its land: the refusal holds while the first march goes on, and goes once
+// the new order is taken.
+test('a refusal given while marching goes with the next order taken', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.waitForFunction((n) => window.__warsim!.view!.formationsOf(n).length > 0, SWI, { timeout: 60_000 });
+  await page.evaluate((n) => window.__warsim!.view!.select(n), SWI);
+  await page.getByTestId('take-control').click();
+  await expect(page.getByTestId('release-control')).toBeVisible();
+  const div = await page.evaluate((n) => window.__warsim!.view!.formationsOf(n)[0]!, SWI);
+  await page.evaluate(({ a, d }) => window.__warsim!.hud.command({ kind: 'declareWar', attacker: a, defender: d }), { a: SWI, d: ENG });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await page.evaluate((id) => window.__warsim!.hud.selectFormation(id), div);
+  await expect(page.getByTestId('formation-panel')).toHaveAttribute('data-formation', String(div), { timeout: 10_000 });
+  const move = (x: number, y: number): Promise<void> =>
+    page.evaluate(({ div, x, y, n }) => window.__warsim!.hud.command({ kind: 'moveFormation', id: div, x, y, nation: n }), { div, x: Math.floor(x) + 0.5, y: Math.floor(y) + 0.5, n: SWI });
+
+  // Marching to the far one of Zurich and Geneva.
+  const zurich = cellOf(8.54, 47.37, W, H);
+  const geneva = cellOf(6.14, 46.2, W, H);
+  const at = (await page.evaluate((id) => window.__warsim!.view!.formationPos(id), div))!;
+  const [far, other] = Math.hypot(at[0] - zurich[0], at[1] - zurich[1]) > Math.hypot(at[0] - geneva[0], at[1] - geneva[1]) ? [zurich, geneva] : [geneva, zurich];
+  await move(far[0], far[1]);
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('formation-status')).toHaveText('On the march', { timeout: 10_000 });
+
+  // Refused London while marching: the notice holds while the march goes on.
+  const [lx, ly] = cellOf(-0.12, 51.5, W, H);
+  await move(lx, ly);
+  await expect(page.getByTestId('formation-notice')).toContainText('no port', { timeout: 10_000 });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await page.waitForTimeout(1500);
+  await expect(page.getByTestId('formation-notice')).toContainText('no port');
+
+  // Sent elsewhere, taken: the refusal goes, still "On the march".
+  await move(other[0], other[1]);
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('formation-notice')).toHaveCount(0, { timeout: 10_000 });
+  await expect(page.getByTestId('formation-status')).toHaveText('On the march');
+  await page.getByTestId('formation-panel').screenshot({ path: 'test-results/orderNews1938-next.png' });
+});

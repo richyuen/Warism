@@ -231,9 +231,12 @@ Rules:
     `landingSameAgain1938.test.ts` (escort on: landed 1242–1243 as clicked once, none on the quay; red without,
     ashore). Sent instead to four other Chinese coasts, it is refused `NoTransports` and stays aboard (R23a), so no
     rebinding happens to leave another on the quay: no rule of binding changed. Pin unmoved.
-  - [ ] R23c A refusal notice goes with the next accepted order (R35-N1): not only when the state changes. AT:
+  - [x] R23c A refusal notice goes with the next accepted order (R35-N1): not only when the state changes. AT:
     Germany's division marching to Hamburg, refused Paris, then sent to central Germany: no refusal under "On the
     march" once the new order is taken; red without.
+    Done, Switzerland's division (the critic's Germany case in the spec's own nation): the panel's detail carries the
+    cell of its march (`goal`), part of `staleNotice`'s state; `orderNews1938.spec.ts` (marching, refused London, the
+    notice held an hour on; sent to the other of Zurich and Geneva, gone, "On the march"; red without). UI only.
   - [ ] R23d The escort's wait does not cost a lone landing time (R35-N3): one division to Belfast (seed 3517, the
     critic's case) lands no later escorted than unescorted. AT: `landingEscortWait1938.test.ts` on the critic's seed;
     red without (73 h against 59).

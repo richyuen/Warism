@@ -1050,6 +1050,7 @@ export class SimServer {
       fuel: rules?.templates[template]?.fuel ?? 0,
       engaged: fc.engaged[id] === 1,
       moving: fc.moving[id] === 1,
+      ...(fc.moving[id] === 1 ? { goal: fc.targetCell[id]! } : {}),
       retreat: fc.retreat[id]!,
       ...place,
       fight,

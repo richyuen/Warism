@@ -706,6 +706,8 @@ export interface FormationDetail {
   fuel: number;
   engaged: boolean;
   moving: boolean;
+  /** The cell its march or voyage is for while `moving` (row-major); absent when it stands. A new order taken changes it (ROADMAP R23c). */
+  goal?: number;
   /** Hours of its retreat left (PLAN 3.5a; 0 = none): it takes no order in them (PLAN 3.7m). */
   retreat: number;
   /** Where its block stands: as `SnapshotFormations.block` has it. */

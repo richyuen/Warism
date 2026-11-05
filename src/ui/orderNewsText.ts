@@ -12,13 +12,14 @@ export function orderNewsText(n: OrderNews, name: string): string {
 
 /** What a formation is doing, as its panel's status says it: its voyage, march, fight and retreat. */
 function stateOf(info: FormationDetail): string {
-  return `${info.voyage?.state ?? '-'}|${info.moving ? 1 : 0}|${info.engaged ? 1 : 0}|${info.retreat > 0 ? 1 : 0}`;
+  return `${info.voyage?.state ?? '-'}|${info.moving ? (info.goal ?? 1) : '-'}|${info.engaged ? 1 : 0}|${info.retreat > 0 ? 1 : 0}`;
 }
 
 /**
  * Whether the panel's notice of news `n` (its `seq`) no longer holds (ROADMAP R22f, critic run 34,
  * R34-N3: a refusal stood for weeks under "At sea, bound for its landing"): the formation's state
- * when the panel first showed it after the news (kept in `seen`, by `seq`) has changed since. A
+ * when the panel first showed it after the news (kept in `seen`, by `seq`) has changed since, or the
+ * place its march is for (a new order taken while it marched, ROADMAP R23c, R35-N1). A
  * refusal only: the rest tell what became of an order under way, or happened (thrown back, landed
  * away, unescorted, sent home), and stay true.
  * `info` is the panel's detail; one of another formation or from before the news decides nothing.
