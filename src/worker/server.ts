@@ -27,8 +27,8 @@ import { DAYS_PER_MONTH } from '../sim/systems/research';
 import { shipyard } from '../sim/systems/production';
 import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { AT_PORT_CELLS, carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
-import { landingFor, landingOf, loading, neutralLanding } from '../sim/systems/amphibious';
-import { marchHoursLeft, overSea } from '../sim/systems/movement';
+import { aboardAtPort, landingFor, landingOf, loading, neutralLanding } from '../sim/systems/amphibious';
+import { marchHoursLeft, overSea, overSeaFrom } from '../sim/systems/movement';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -316,7 +316,10 @@ export class SimServer {
         // sea, 2 by sea onto the ground of a nation outside its wars, refused (ROADMAP R21c).
         const world = this.requireSim().world;
         // By sea, the landing the order is for, from what the order uses (`landingFor`, ADR-827, R27a).
-        const yes = world.formations.has(msg.id) && !world.offLand(msg.id) && overSea(world, msg.id, msg.x, msg.y);
+        // The one aboard a convoy loading at a port of its nation takes an order there (R22b): asked
+        // from the port (`aboardAtPort`, R27b).
+        const port = world.formations.has(msg.id) ? aboardAtPort(world, msg.id) : -1;
+        const yes = port >= 0 ? overSeaFrom(world, port, msg.x, msg.y) : world.formations.has(msg.id) && !world.offLand(msg.id) && overSea(world, msg.id, msg.x, msg.y);
         const target = Math.floor(msg.y) * world.cells.w + Math.floor(msg.x);
         const how = !yes ? 0 : neutralLanding(world, world.formations.cols.nation[msg.id]!, target) ? 2 : 1;
         const l = yes ? landingFor(world, msg.id, msg.x, msg.y) : null;

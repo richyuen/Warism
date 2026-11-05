@@ -1,4 +1,5 @@
 import type { ReadonlySignal } from '@preact/signals';
+import type { SeaHint } from '../shared/protocol';
 import type { MapHover } from './mapHover';
 import { displayName } from './NationPanel';
 import { t } from './i18n';
@@ -10,7 +11,7 @@ import { t } from './i18n';
  * unrest. No pointer events: it never takes a click. Given the signal, not its value: a mouse
  * move re-renders this, not the whole HUD.
  */
-export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral }: { hover: ReadonlySignal<MapHover | null>; nameOf: (id: number) => string | null; unrestOf: (province: number) => number | null; bySea?: ReadonlySignal<number>; seaNeutral?: ReadonlySignal<boolean> }) {
+export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral, landing }: { hover: ReadonlySignal<MapHover | null>; nameOf: (id: number) => string | null; unrestOf: (province: number) => number | null; bySea?: ReadonlySignal<number>; seaNeutral?: ReadonlySignal<boolean>; landing?: ReadonlySignal<SeaHint | null> }) {
   const hover = signal.value;
   const sea = bySea !== undefined && hover !== null && hover.cell >= 0 && bySea.value === hover.cell;
   if (!hover) return null;
@@ -33,6 +34,10 @@ export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral 
       {sea && seaNeutral?.value === true ? (
         <div class="map-tooltip-note" data-testid="tooltip-sea-refused">
           {t('tooltip.bySeaNeutral')}
+        </div>
+      ) : sea && landing?.value?.same === true ? (
+        <div class="map-tooltip-note" data-testid="tooltip-by-sea" data-same="1">
+          {t('tooltip.bySeaSame')}
         </div>
       ) : sea ? (
         <div class="map-tooltip-note" data-testid="tooltip-by-sea">

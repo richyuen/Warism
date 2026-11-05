@@ -29,6 +29,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **R27a.** `landingFor(world, id, x, y)` (amphibious): the landing and the cell the order is for,
   kept (`same`) or the click's; `overSea` answers a `SeaHint` with it, and the worker's order news
   takes its `goal` (R26a's rule, now one function). `landingFor1938.test.ts`. Worker: pin unmoved.
+- **R27b.** The mark is drawn over the unit markers, in orange (new) or green (the landing it has),
+  each over a dark edge: amber read poorly on Japan's yellow and was hidden by a marker. The hint
+  for the one aboard is asked from its port (`aboardAtPort`, factored out of `ashoreAtPort`;
+  `overSeaFrom`): it takes orders there, and before it was "not over the sea". The hover is asked
+  again at each tick (the answer turns on who is aboard or bound). **Not chosen:** marking every
+  selected division's landing: a click sends one cell to all, and the first's answer is the one
+  that differs only for one aboard or bound. `landingMark1938.spec.ts` (looked at). UI and a
+  read-only query: pin unmoved.
 
 ### ADR-826 · 2026-11-04 · accepted — No landing on a neutral's ground (ROADMAP R20, R32-B1)
 

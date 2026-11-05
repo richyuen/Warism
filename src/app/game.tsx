@@ -1,6 +1,7 @@
 import { effect, signal } from '@preact/signals';
 import { render } from 'preact';
 import type { Inspection, ScenarioId } from '../shared/protocol';
+import type { MapHover } from '../ui/mapHover';
 import { geometryOf, mapSizes, SCENARIO_INFO } from '../shared/scenarios';
 import { App } from './App';
 import { Autosave } from './autosave';
@@ -58,23 +59,44 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     hud.onSelectNation = (id) => view.select(id);
     view.onGroundShown = (shown) => (hud.groundShown.value = shown);
     // Over land across the sea with land formations selected, the tooltip says the order goes by
-    // sea (ROADMAP R17c): asked of the worker once a cell and selection.
+    // sea (ROADMAP R17c) and the map marks the landing it is for (ADR-827, R27b): the first selected
+    // land formation's, by sorted id (a click sends the same cell to all; one aboard has its own).
+    // Asked of the worker once a cell, selection and tick: the answer turns on the sim's state (who
+    // is aboard or bound), so a still cursor is asked again as the sim moves on.
     let asked = '';
-    view.onHover = (h) => {
-      hud.hover.value = h;
+    let last: MapHover | null = null;
+    const ask = (h: MapHover | null): void => {
+      last = h;
       const id = [...view.selectedFormations].sort((a, b) => a - b).find((f) => !view.formationAfloat(f));
-      const key = h && h.cell >= 0 && id !== undefined ? `${h.cell}|${id}` : '';
+      const at = h && h.cell >= 0 && id !== undefined ? `${h.cell}|${id}|` : '';
+      const key = at === '' ? '' : `${at}${hud.stats.peek()?.tick ?? 0}`;
       if (key === asked) return;
+      // A new cell or selection clears the old answer; a new tick keeps it until the next comes.
+      if (at === '' || !asked.startsWith(at)) {
+        hud.hoverBySea.value = -1;
+        hud.hoverLanding.value = null;
+        view.landingMark = null;
+      }
       asked = key;
-      hud.hoverBySea.value = -1;
       if (!h || key === '') return;
       const cell = h.cell;
-      void sim.overSea(id!, (cell % geometry.w) + 0.5, Math.floor(cell / geometry.w) + 0.5).then(({ how }) => {
+      void sim.overSea(id!, (cell % geometry.w) + 0.5, Math.floor(cell / geometry.w) + 0.5).then((hint) => {
         if (asked !== key) return;
-        hud.hoverSeaNeutral.value = how === 2;
-        hud.hoverBySea.value = how !== 0 ? cell : -1;
+        hud.hoverSeaNeutral.value = hint.how === 2;
+        hud.hoverBySea.value = hint.how !== 0 ? cell : -1;
+        const mark = hint.how === 1 && hint.land >= 0 ? hint : null;
+        hud.hoverLanding.value = mark;
+        view.landingMark = mark;
       });
     };
+    view.onHover = (h) => {
+      hud.hover.value = h;
+      ask(h);
+    };
+    effect(() => {
+      void hud.stats.value;
+      ask(last);
+    });
     hud.onShowBattle = (x, y, span, fight) => view.showBattle(x, y, span, fight);
     hud.onShowSeaBattle = (x, y, span) => view.showSeaBattle(x, y, span);
     // A sea battle's view keeps its fleets clear of the panels at the view's sides (PLAN 4.12a).

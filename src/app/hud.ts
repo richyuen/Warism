@@ -11,7 +11,7 @@ import { clampSpeedLevel, DEFAULT_SPEED_LEVEL, speedOfLevel } from '../shared/sp
 import type { Command } from '../shared/commands';
 import type { ShownAlert } from '../shared/nukeAlert';
 import type { NationStats, SimClient } from './simClient';
-import type { FormationDetail, OrderNews, TechInfo, TemplateInfo } from '../shared/protocol';
+import type { FormationDetail, OrderNews, SeaHint, TechInfo, TemplateInfo } from '../shared/protocol';
 import type { CarrierRaidView, SeaBattleView } from './MapView';
 import type { MapHover } from '../ui/mapHover';
 import { t } from '../ui/i18n';
@@ -66,6 +66,8 @@ export class Hud {
   readonly hoverBySea = signal(-1);
   /** The landing under the cursor (`hoverBySea`) is the ground of a nation outside the player's wars: the order would be refused (ROADMAP R21c). */
   readonly hoverSeaNeutral = signal(false);
+  /** The landing an order under the cursor (`hoverBySea`) is for (ADR-827, ROADMAP R27b), marked on the map; null for none or refused. */
+  readonly hoverLanding = signal<SeaHint | null>(null);
   onMapMode: (mode: MapMode) => void = () => {};
   /** Selected nation id (0 = none; PLAN 1.30), set by map clicks. */
   readonly selected = signal(0);

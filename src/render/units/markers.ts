@@ -608,6 +608,67 @@ export function drawMarkers(
   return placed;
 }
 
+/** The landing mark's colours (ADR-827): orange for a new landing, green for the one the division already has; each over a dark edge, to read on any land. */
+export const LANDING_MARK_NEW = 'rgb(255, 120, 50)';
+export const LANDING_MARK_SAME = 'rgb(80, 225, 120)';
+const LANDING_MARK_EDGE = 'rgba(10, 16, 28, 0.85)';
+
+/**
+ * The landing an order over the sea under the cursor is for (ADR-827, ROADMAP R27b; `SeaHint`): a
+ * dashed line from the landing's water to the land it lands on, an arrowhead and a ring there, in
+ * orange, or in green when it is the landing the division already has (`same`), each over a dark
+ * edge. The order is that landing, whatever cell the click names.
+ */
+export function drawLandingMark(ctx: CanvasRenderingContext2D, mark: { water: number; land: number; same: boolean }, cam: Camera, geo: MapGeometry, vw: number, vh: number, scale = 1): void {
+  const pt = (cell: number): [number, number] => [(cell % geo.w) + 0.5, Math.floor(cell / geo.w) + 0.5];
+  const [wx, wy] = pt(mark.water);
+  const [x0, ly] = pt(mark.land);
+  const lx = geo.wrapX && Math.abs(x0 - wx) > geo.w / 2 ? x0 + (x0 < wx ? geo.w : -geo.w) : x0;
+  const colour = mark.same ? LANDING_MARK_SAME : LANDING_MARK_NEW;
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  for (const off of itemOffsets(cam, geo, vw)) {
+    const [ax, ay] = worldToScreen(cam, wx + off, wy, vw, vh);
+    const [bx, by] = worldToScreen(cam, lx + off, ly, vw, vh);
+    if (Math.max(ax, bx) < -30 || Math.min(ax, bx) > vw + 30 || Math.max(ay, by) < -30 || Math.min(ay, by) > vh + 30) continue;
+    const r = 11 * scale;
+    const len = Math.hypot(bx - ax, by - ay);
+    // Drawn twice: the dark edge, wider, then the colour on it.
+    for (const [style, width] of [[LANDING_MARK_EDGE, 5.5], [colour, 2.5]] as const) {
+      ctx.strokeStyle = style;
+      ctx.fillStyle = style;
+      ctx.lineWidth = width * scale;
+      // The line stops at the ring, the arrowhead on it pointing ashore.
+      if (len > r + 2) {
+        const [ux, uy] = [(bx - ax) / len, (by - ay) / len];
+        const [ex, ey] = [bx - ux * r, by - uy * r];
+        ctx.setLineDash([6 * scale, 4 * scale]);
+        ctx.beginPath();
+        ctx.moveTo(ax, ay);
+        ctx.lineTo(ex, ey);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        const h = 8 * scale;
+        ctx.beginPath();
+        ctx.moveTo(ex, ey);
+        ctx.lineTo(ex - ux * h - uy * h * 0.6, ey - uy * h + ux * h * 0.6);
+        ctx.lineTo(ex - ux * h + uy * h * 0.6, ey - uy * h - ux * h * 0.6);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.arc(bx, by, r, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(bx, by, 2.5 * scale, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+}
+
 /**
  * The voyages over the sea (ROADMAP R17c; `Snapshot.voyages`, VOYAGE_STRIDE each): for each
  * formation `shown` says, a dashed line from where the sea leg starts (its port's water, or its

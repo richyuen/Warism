@@ -7,7 +7,7 @@ import { CityLabelLayer, NAME_CLEAR_PX, type NameObstacle } from '../render/labe
 import { LABEL_STRIDE } from '../shared/nationLabels';
 import { FlagStore } from './flagStore';
 import { formationPips, type Pips } from '../render/units/pips';
-import { AT_REST, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
+import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, type StackItem } from '../render/units/markerStacks';
 import { CounterLayer, counterNation, type CounterSource, type HeroCounter } from '../render/units/counters';
@@ -925,6 +925,17 @@ export class MapView {
   set pickedFormation(id: number) {
     if (id === this.picked) return;
     this.picked = id;
+    this.dirty = true;
+  }
+
+  /** The landing an order over the sea under the cursor is for, or null (ADR-827, ROADMAP R27b; `SeaHint`). */
+  private mark: { water: number; land: number; same: boolean } | null = null;
+  get landingMark(): { water: number; land: number; same: boolean } | null {
+    return this.mark;
+  }
+  set landingMark(m: { water: number; land: number; same: boolean } | null) {
+    if (m === this.mark || (m && this.mark && m.water === this.mark.water && m.land === this.mark.land && m.same === this.mark.same)) return;
+    this.mark = m;
     this.dirty = true;
   }
 
@@ -1965,6 +1976,8 @@ export class MapView {
       // No markers: the next ones take their places in their stacks at once.
       this.markerStacks.clear();
       this.pipStates.clear();
+      // The landing an order under the cursor is for (ADR-827, ROADMAP R27b), over everything.
+      if (this.mark) drawLandingMark(ctx, this.mark, cam, this.geo, vw, vh, this.unitScale);
       return;
     }
     const w = this.geo.w;
@@ -2008,6 +2021,8 @@ export class MapView {
     // (The boxes do not move while they shrink into the T2 sprites: ADR-72.)
     const stacks = this.markerStacks.frame(items, MARKER_W * this.unitScale, MARKER_H * this.unitScale, now, this.morph.scale < 1);
     this.markerRects = drawMarkers(ctx, markers, this.majors, cam, this.geo, vw, vh, share, hex, flagOf, this.unitScale, this.morph, stacks, this.picked, this.unitLook === 'balls');
+    // The landing an order under the cursor is for (ADR-827, ROADMAP R27b), over the markers.
+    if (this.mark) drawLandingMark(ctx, this.mark, cam, this.geo, vw, vh, this.unitScale);
   }
 
   /** The formations whose order lines the markers of the last frame drew (PLAN 7.4b; tests). */

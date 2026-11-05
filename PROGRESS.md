@@ -1305,3 +1305,15 @@
 - AT: `landingFor1938.test.ts` (before an order: Shanghai's; the one aboard two cells south: its own, `same`, the
   click's own landing another; Fuzhou: Fuzhou's). All 21 landing unit files green. Pin unmoved.
 - **Next:** R27b.
+
+## 2026-11-05 — ROADMAP R27b: the map marks the landing while it is chosen (ADR-827)
+- With land formations selected and the cursor over a target across the sea, the map draws the landing the order is
+  for: a dashed line from its water to its land, an arrowhead and a ring, orange for a new landing, green for the one
+  the division already has (the tooltip then says "the landing they already have"). Drawn over the unit markers, with
+  a dark edge (a first amber version read poorly on yellow land and hid under a marker).
+- The hover is asked again each tick, so a still cursor follows the sim. The one aboard a loading convoy is asked
+  from its port (`aboardAtPort`, `overSeaFrom`): it was "not over the sea" before, so no hint at all.
+- AT: `landingMark1938.spec.ts` (seed 3517: two cells south before the order, a new landing; the cursor still while
+  the two board, the mark turns green at Shanghai's landing; Fuzhou new; screenshots looked at). Landing unit tests
+  and the landing and tooltip specs green. Pin unmoved.
+- **Next:** R27c.

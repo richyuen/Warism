@@ -386,18 +386,29 @@ export function loading(world: World, fleet: number): boolean {
  * (ROADMAP R23a, critic run 35, R35-B2: a refusal leaves it as it was, its landing kept).
  */
 export function ashoreAtPort(world: World, id: number): (() => void) | null {
-  const e = world.embarked.get(id);
-  if (e === undefined || !loading(world, e.fleet)) return null;
-  const port = world.convoyPort.get(e.fleet)!;
+  const at = aboardAtPort(world, id);
+  if (at < 0) return null;
+  const e = world.embarked.get(id)!;
   const c = world.formations.cols;
-  if (world.cells.controller[world.ports[port]!.cell] !== c.nation[id]) return null;
   const [x, y] = [c.x[id]!, c.y[id]!];
   world.embarked.delete(id);
-  [c.x[id], c.y[id]] = world.cellPoint(world.ports[port]!.cell);
+  [c.x[id], c.y[id]] = world.cellPoint(at);
   return () => {
     world.embarked.set(id, e);
     [c.x[id], c.y[id]] = [x, y];
   };
+}
+
+/**
+ * The cell of the port formation `id` is aboard a convoy loading at, where it takes an order
+ * (`ashoreAtPort`), or -1: not aboard, aboard anything else, or the port no longer its nation's.
+ * Read-only: the map's hint for the one aboard is asked from there (ADR-827, ROADMAP R27b).
+ */
+export function aboardAtPort(world: World, id: number): number {
+  const e = world.embarked.get(id);
+  if (e === undefined || !loading(world, e.fleet)) return -1;
+  const cell = world.ports[world.convoyPort.get(e.fleet)!]!.cell;
+  return world.cells.controller[cell] === world.formations.cols.nation[id] ? cell : -1;
 }
 
 /**

@@ -326,10 +326,14 @@ Rules:
     from Tokyo: `landingOf`'s pair; the one aboard, two cells south: its own pair, `same`).
     Done: `landingFor` (amphibious; `ownLanding` factored out of `sameLanding`), `SeaHint`; the order news takes its
     `goal`; `landingFor1938.test.ts`. Every landing unit test green. Pin unmoved.
-  - [ ] R27b The map marks it and the tooltip says it: a dashed line from the landing's water to its land and a ring
+  - [x] R27b The map marks it and the tooltip says it: a dashed line from the landing's water to its land and a ring
     there, another colour for the landing the division already has; the tooltip says "the landing it already has".
     Asked again when the sim's state changes under a still cursor. AT: e2e (hover Shanghai: the mark at `landingOf`'s
     land; the one aboard, hover two cells south: the tooltip says its own landing; looked at).
+    Done: `drawLandingMark` (orange new, green kept, over a dark edge, over the markers), `Hud.hoverLanding`, the
+    tooltip's "the landing they already have"; the hover asked again each tick; the one aboard asked from its port
+    (`aboardAtPort`, `overSeaFrom`). `landingMark1938.spec.ts` (two cells south before the order: a new landing; the
+    cursor still while they board: green, Shanghai's landing; Fuzhou new; looked at). Pin unmoved.
   - [ ] R27c A fuzz of re-clicks about a landing: two and four divisions to Shanghai, re-clicked (the one aboard, and
     all) at hours 26 and 200, at cells one, two and three off in each direction. Inside `SAME_LANDING_CELLS`: none
     refused, all land within a day, no "landed away" (the worker's judgement, factored out to a pure function). Outside:

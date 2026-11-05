@@ -420,12 +420,18 @@ const SNAPS = new WeakMap<object, Map<number, Map<number, number>>>();
  */
 /** Whether (`x`, `y`) is land of another land component than land formation `id` stands on (PLAN 4.5a). */
 export function overSea(world: World, id: number, x: number, y: number): boolean {
+  const w = world.cells.w;
+  return overSeaFrom(world, Math.floor(world.formations.cols.y[id]!) * w + Math.floor(world.formations.cols.x[id]!), x, y);
+}
+
+/** Whether (`x`, `y`) is land of another land component than cell `from` (`overSea` of a formation standing there). */
+export function overSeaFrom(world: World, from: number, x: number, y: number): boolean {
   const { w, h } = world.cells;
   const tx = Math.floor(x);
   const ty = Math.floor(y);
   if (tx < 0 || tx >= w || ty < 0 || ty >= h) return false;
   const comp = navOf(world).grid.component;
-  const here = comp[Math.floor(world.formations.cols.y[id]!) * w + Math.floor(world.formations.cols.x[id]!)]!;
+  const here = comp[from]!;
   const there = comp[ty * w + tx]!;
   return here !== 0 && there !== 0 && here !== there;
 }
