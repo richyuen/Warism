@@ -3,7 +3,7 @@ import { Refusal } from '../../src/shared/commands';
 import { EventKind } from '../../src/shared/events';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { PROTEST_FROM, puppetSystem, REVOLT_LOYALTY } from '../../src/sim/systems/puppets';
+import { FREE_ABOVE, PROTEST_FROM, puppetSystem, REVOLT_LOYALTY } from '../../src/sim/systems/puppets';
 import { declareWar, forceWar, whyNotWar } from '../../src/sim/systems/war';
 import type { World } from '../../src/sim/world';
 import { assets1938 } from './earth';
@@ -273,7 +273,8 @@ export function diploBreaks(c: DiploCase): string[] {
         stepChecked(copy, 24, breaks, where);
       }
     }
-    for (const [p, o] of pick(bonded.filter(([a, b]) => nc.overlord[a] === b && nc.autonomy[a]! >= 10))) {
+    // A puppet above FREE_ABOVE is released in peace, not risen (puppetSystem's first branch): no rebel to judge.
+    for (const [p, o] of pick(bonded.filter(([a, b]) => nc.overlord[a] === b && nc.autonomy[a]! >= PROTEST_FROM && nc.autonomy[a]! <= FREE_ABOVE))) {
       const where = `${label} day ${probe}, ${tag(p)} revolts on ${tag(o)}`;
       copy.load(bytes);
       const cc = copy.world.nations.cols;
