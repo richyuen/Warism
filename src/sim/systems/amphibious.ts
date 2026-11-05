@@ -408,7 +408,10 @@ export function ashoreAtPort(world: World, id: number): (() => void) | null {
  * it was put on another's next voyage, so a click clicked again landed one by one. A landing whose
  * water and land are within SAME_LANDING_CELLS of its own, the land of the same holder, is its own
  * (R24b, critic run 36, R36-B2: a click a cell off, which nothing on the screen tells apart, sent the
- * one aboard ashore and to another port's transports, the landing split for weeks).
+ * one aboard ashore and to another port's transports, the landing split for weeks). So is a click
+ * within SAME_LANDING_CELLS of the cell its landing was ordered for, of the same holder, whatever
+ * landing that click resolves to (R25a, critic run 37, R37-B1: two cells south of Shanghai resolves
+ * to a landing four cells off).
  */
 export function sameLanding(world: World, id: number, x: number, y: number): boolean {
   const { w, h } = world.cells;
@@ -418,13 +421,17 @@ export function sameLanding(world: World, id: number, x: number, y: number): boo
   const fetch = world.seaFetch.get(id);
   const bound = world.seaBound.get(id);
   let was: { water: number; land: number } | null = null;
-  if (e !== undefined) was = loading(world, e.fleet) ? e : null;
-  else if (fetch !== undefined && bound !== undefined && world.convoyPort.has(fetch) && world.formations.has(fetch)) was = landingOf(world, bound);
+  let goal = -1;
+  if (e !== undefined) [was, goal] = loading(world, e.fleet) ? [e, e.target] : [null, -1];
+  else if (fetch !== undefined && bound !== undefined && world.convoyPort.has(fetch) && world.formations.has(fetch)) [was, goal] = [landingOf(world, bound), bound];
   if (!was) return false;
-  const l = landingOf(world, ty * w + tx);
-  if (!l) return false;
+  const ctl = world.cells.controller;
+  const click = ty * w + tx;
   const r = world.atSize(SAME_LANDING_CELLS);
-  return near(world, l.water, was.water, r) && near(world, l.land, was.land, r) && world.cells.controller[l.land] === world.cells.controller[was.land];
+  if (goal >= 0 && near(world, click, goal, r) && ctl[click] === ctl[goal]) return true;
+  const l = landingOf(world, click);
+  if (!l) return false;
+  return near(world, l.water, was.water, r) && near(world, l.land, was.land, r) && ctl[l.land] === ctl[was.land];
 }
 
 /** How near, in cells of the default map, a landing is to another to be the same for an order (`sameLanding`, ROADMAP R24b): about 25 km. */

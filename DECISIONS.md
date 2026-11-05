@@ -82,6 +82,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   new cell: it changes the landing of every division of the click for a difference the player
   cannot see. A marker of the landing while choosing (the critic's design objection) stays open.
   `landingNearSame1938.test.ts`: red without (one cell east: 633 / 1285).
+  R25a (critic run 37, R37-B1): the near-miss is also measured from the click: a cell within two of
+  the cell the landing was ordered for (the convoy's `target`, or the bound division's), of the same
+  holder, is the same landing. Two cells south of Shanghai resolved to a landing four cells off (the
+  coast bends), so R24b's landing-to-landing test missed it and the one aboard went to Sasebo. Both
+  tests stand: either is enough. **Not chosen:** the critic's "click within two cells of the
+  convoy's land": the landing's land lies four cells north of that click, so it fails the same way.
+  `landingNearSame1938.test.ts` (two south, two south-west): red without (633 / 1288, 633 / 1291).
 - **R22c.** The wait aboard is accounted for: "1 of 4 aboard; the last 47 days from the port"
   (`voyage.wait`, the furthest bound division's `marchHoursLeft`). Worker and UI only.
 - **R22d (R34-N1).** The escort is not sent weeks ahead. R17d sent it at the order; with R21e's wait

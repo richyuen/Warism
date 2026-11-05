@@ -283,10 +283,13 @@ Rules:
   R24 done; then the critic again (run 37, full).
 - [ ] R25 **Naval back to its bar: a click two cells off the landing** (critic run 37, full: one blocking issue, R37-B1;
   naval 7 under its bar of 8 for it, every other score at its bar). Each sub-item its own commit; then the critic again.
-  - [ ] R25a The near-miss is measured from the click (R37-B1): for a division aboard or bound, a clicked cell within
+  - [x] R25a The near-miss is measured from the click (R37-B1): for a division aboard or bound, a clicked cell within
     `SAME_LANDING_CELLS` of its landing's land, on the same holder, is that landing, whatever landing the click itself
     resolves to. AT: the two nearest Tokyo to Shanghai, the one aboard re-clicked two cells south (1715.5, 415.5) at
     hour 26: both land within a day; red without (633 / 1288).
+    Done: `sameLanding` also takes a click within `SAME_LANDING_CELLS` of the cell the landing was ordered for, same
+    holder; `landingNearSame1938.test.ts` (two south, two south-west: landed 632–633; red without, 633 / 1288 and
+    633 / 1291). Pin unmoved.
   - [ ] R25b A division aboard never leaves its transports untold (R37-B1): the one aboard a loading convoy, sent to
     another landing and taken to another port's transports, is told it leaves its landing (a notice in its panel and
     a row). AT: the two to Shanghai, the one aboard ordered to a landing far off with other transports free: a notice

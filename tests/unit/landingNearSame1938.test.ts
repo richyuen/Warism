@@ -13,7 +13,8 @@ import { nationId } from '../helpers/sim1938';
 // to Sasebo's transports, its partner landing alone at hour 633 and it at 1285. The critic's case:
 // Japan at war with China, its two divisions nearest Tokyo to Shanghai (escort on); at hour 26 the
 // one aboard re-clicked one cell east. Now a landing within two cells, of the same holder, is the
-// same landing: it stays aboard and the two land together. Fuzhou is still another.
+// same landing: it stays aboard and the two land together. Fuzhou is still another. So is a click
+// within two cells of the clicked cell, whatever landing it resolves to (R25a).
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = nationId('JAP');
@@ -63,6 +64,10 @@ describe('a click a cell or two off the landing is the same landing (ROADMAP R24
     [1, 0],
     [0, 1],
     [2, 0],
+    // R25a (critic run 37, R37-B1): two cells south, and two south-west, resolve to a landing four
+    // cells off; the click is near the cell the landing was ordered for (red without: 633 / 1288).
+    [0, 2],
+    [-2, 2],
   ])("Japan's two to Shanghai, the one aboard re-clicked (%i, %i) cells off: still aboard; the two land together", (dx, dy) => {
     const run = two(dx, dy);
     process.stderr.write(`R24b (${dx}, ${dy}): landed ${run.landed}\n`);

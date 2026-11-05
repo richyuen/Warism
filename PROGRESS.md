@@ -1243,3 +1243,11 @@
   Scores: naval **7** under its bar of 8; semantic zoom, tanks, aircraft, AI nukes 8; the rest 7, at their bars. All
   dimensions rescored (full run). Filed as R25a–c (with R37-N1).
 - **Next:** R25a.
+
+## 2026-11-05 — ROADMAP R25a: the near-miss is measured from the click (R37-B1)
+- `sameLanding` also takes a click within `SAME_LANDING_CELLS` (2) of the cell its landing was ordered for (the
+  convoy's target, or the bound division's), of the same holder. Two cells south of Shanghai resolved to a landing four
+  cells off, so the landing-to-landing test of R24b missed it.
+- AT: `landingNearSame1938.test.ts`, two new cases (two south, two south-west: landed 632–633; red without, 633 / 1288
+  and 633 / 1291). Pin unmoved (player convoys only).
+- **Next:** R25b.
