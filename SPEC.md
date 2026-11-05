@@ -1298,7 +1298,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   nearest port's, R28c: a landing re-sent by two clicks an hour apart); a click that leaves a landing takes its
   transports with it, and the one aboard sent alone takes its own where they carry no one else. The
   one aboard whose new landing a convoy loads for at another port stays aboard where nobody else holds
-  its transports: they sail to that port with it and load the rest there (`sailAboard`, R29b). With
+  its transports: they sail to that port with it and load the rest there (`sailAboard`, R29b); under
+  way to that port they are still to load, and the convoys there for that landing wait for them
+  (`stillLoading`, R30a). With
   none free, the one aboard sent over the sea to another landing is refused `Loading` (18, R24d).
   A division aboard or bound that an order takes to another landing is told it leaves its landing
   (`LeftLanding`, the order's news "leftLanding") when another of its nation still has that landing,

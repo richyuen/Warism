@@ -1410,3 +1410,9 @@
   transports idle), R41-N2 (a redirect undone hours later now splits, the one aboard at sea refused), R41-N3 ("At
   sea, bound for its landing" while sailing to a home port).
 - **Next:** R30a.
+
+## 2026-11-05 — R30a: the one aboard sails with the convoy it joins (R41-B1)
+- A group carrying and under way to its own convoy's port is still to load: the convoys at that port for its landing
+  wait for it. Britain (15101, 7019): the three land h288/288/289 (red: 276 alone h84, destroyed). R29b's Japan cases
+  unchanged; landing, convoy, sea and server tests green (49 files); pin unmoved.
+- R30 done. **Next:** critic run 42.

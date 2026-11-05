@@ -393,8 +393,11 @@ Rules:
   R29 done; then the critic again (run 41).
 - [ ] R30 **The one aboard sails with the convoy it joins** (critic run 41, focused, on `77d37526`: R41-B1 blocking;
   naval 7, bar 8). Then the critic again.
-  - [ ] R30a R41-B1: R29b's transports, sailing with the one aboard to the port where a convoy for its new landing
+  - [x] R30a R41-B1: R29b's transports, sailing with the one aboard to the port where a convoy for its new landing
     loads, are not that convoy's mate: it sails once its own are aboard, its first lands alone and dies. Britain at
     war with France (seeds 15101, 7019): 270 and 271 to Calais; the hour after 270 boards, 276 to Caen, then the two:
     276 h84 alone (destroyed h233), the two h289 (76b88197: the three h290/291). AT by the page's path (ids
     ascending, applied at once): the three land within a day; R29b's Japan cases unchanged.
+    Done: a group carrying and under way to its own convoy's port is still to load (`stillLoading`). Both seeds:
+    h288/288/289. `landingJoinsAboardMates1938.test.ts`; red without. R29b's unchanged. Pin unmoved.
+  R30 done; then the critic again (run 42).

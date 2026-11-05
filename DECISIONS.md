@@ -71,6 +71,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   numbers); the fuzz checks a whole click is refused nothing, a landing loads at one port, and every
   convoy has one target (red without: the four re-clicked south-west). Player convoys only: pin
   unmoved.
+- **R30a** (critic run 41, R41-B1; a regression of R29b). R29b's transports, under way to the port
+  where a convoy for the new landing loads with the one aboard, were not still to load (`stillLoading`
+  read any group under way as gone), so the convoy at that port sailed once its own were aboard.
+  Britain at war with France (seeds 15101, 7019; forced, the two are allied): 270 and 271 to Calais;
+  the hour after 270 boards, 276 to Caen, then the two: 276 landed alone at h84 and was destroyed
+  (h233), the two at h289 (on 76b88197: h290/291). Now a group carrying and under way to its own
+  convoy's port is still to load. After: h288/288/289. `landingJoinsAboardMates1938.test.ts` (red
+  without); R29b's test unchanged (h792–796). Player convoys only: pin unmoved.
 - **R29b** (critic run 40, R40-B1). A landing redirected to a target another convoy loads for at
   another port (a fresh division sent to Fuzhou first, loading at Sasebo; then the two of the Shanghai
   landing): the one aboard at Tokyo went ashore and was bound for that convoy by R21e's same-target

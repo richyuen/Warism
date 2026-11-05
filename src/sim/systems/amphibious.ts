@@ -735,7 +735,11 @@ export function sailAboard(world: World, id: number, ship: number, port: number,
  */
 function stillLoading(world: World, fleet: number): boolean {
   if (!carrying(world, fleet)) return true;
-  if (world.formations.cols.moving[fleet] === 1) return false;
+  // Under way: to its own port, with the one aboard its new landing took there (`sailAboard`, ROADMAP
+  // R30a; critic run 41, R41-B1: the convoy loading there sailed at once, its first ashore alone), it
+  // is still to load; to a landing, it is not.
+  const c = world.formations.cols;
+  if (c.moving[fleet] === 1) return near(world, c.targetCell[fleet]!, portSeaOf(world)[world.convoyPort.get(fleet)!]!, world.atSize(AT_PORT_CELLS));
   const room = transportRoom(world, fleet) - aboard(world, fleet);
   for (const [id, o] of world.seaFetch) if (o === fleet && world.formations.has(id) && world.formations.cols.strength[id]! <= room) return true;
   return false;
