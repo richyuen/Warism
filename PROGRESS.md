@@ -1183,3 +1183,13 @@
   replaced by R22d; the new escort is near enough to wait, so it is restated to R22d's rule (under way, or kept where
   it stood; ADR-826 notes it). Escort and wait specs green. Pin unmoved (the player's convoys only).
 - **Next:** R23e.
+
+## 2026-11-05 — ROADMAP R23e: a click clicked again keeps its landing together (R35-N2); R23 done
+- Cause: a division's new order cleared its `seaFetch`/`seaBound` first; a convoy's landing is read from the
+  divisions bound for it (`convoyTarget`), so its convoy lost its landing, and `assignTransports` put the division on
+  the full convoy 1136's next voyage (all three did). The four then landed one at a time (148, 633, 952, 1243).
+- `sameLanding` now also covers a division bound for a convoy still at its port: an order to the same landing keeps its
+  binding and changes nothing, as R23b does for the one aboard.
+- AT: `landingSameAgain1938.test.ts`'s second test (all four sent again at hour 26: the same transports, landed
+  1242–1243 as clicked once; red without). Every landing unit test and e2e spec green. Pin unmoved.
+- **Next:** critic run 36.

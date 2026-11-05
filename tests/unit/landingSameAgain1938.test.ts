@@ -27,7 +27,7 @@ interface Run {
   quay: number;
 }
 
-function shanghai(again: boolean): Run {
+function shanghai(again: 'none' | 'first' | 'all'): Run {
   const sim = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
   const w = sim.world;
   w.settings.player = JAP;
@@ -62,10 +62,19 @@ function shanghai(again: boolean): Run {
   }
   expect(first, 'one aboard').not.toBe(0);
   const was = { ...w.embarked.get(first)! };
-  if (again) {
+  if (again === 'first') {
     sim.command({ kind: 'moveFormation', id: first, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true });
     step();
     expect(w.embarked.get(first), 'still aboard, in its place').toEqual(was);
+  }
+  // ROADMAP R23e (R35-N2): the whole click clicked again, at hour 26 as the critic did.
+  if (again === 'all') {
+    while (w.tick < 26) step();
+    const fetch = four.map((id) => w.seaFetch.get(id));
+    for (const id of four) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true });
+    step();
+    expect(w.embarked.get(first), 'the one aboard still aboard').toEqual(was);
+    expect(four.map((id) => w.seaFetch.get(id)), 'the rest bound for the transports they were').toEqual(fetch);
   }
   // Each hour, a division of the four bound for transports that have sailed with others aboard is left on the quay.
   for (let h = 0; h < 24 * 80 && landed.size < 4; h++) {
@@ -79,12 +88,26 @@ function shanghai(again: boolean): Run {
   return run;
 }
 
-describe('ordered to its landing again, the division aboard stays (ROADMAP R23b)', () => {
+describe('ordered to its landing again, a division keeps its place (ROADMAP R23b, R23e)', () => {
   it("Japan's four to Shanghai, the one aboard clicked to Shanghai again: none left on the quay; landed together, no later", () => {
-    const plain = shanghai(false);
-    const run = shanghai(true);
+    const plain = shanghai('none');
+    const run = shanghai('first');
     process.stderr.write(`R23b: once ${plain.landed}; clicked again ${run.landed} (left on the quay ${run.quay} h)\n`);
     expect(plain.landed).toHaveLength(4);
+    expect(run.landed, 'all four landed').toHaveLength(4);
+    expect(run.refused, 'not refused').toBe(0);
+    expect(run.quay, 'none left on the quay while its transports sail').toBe(0);
+    expect(Math.max(...run.landed) - Math.min(...run.landed), 'together').toBeLessThanOrEqual(24);
+    expect(Math.max(...run.landed), 'no later than clicked once').toBeLessThanOrEqual(Math.max(...plain.landed) + 24);
+  });
+
+  // ROADMAP R23e (critic run 35, R35-N2, older than R22): all four sent to Shanghai again at hour 26
+  // landed at 148, 633, 952 and 1243, each alone.
+  it("Japan's four to Shanghai, all four clicked to Shanghai again: landed together, no later", () => {
+    const plain = shanghai('none');
+    const run = shanghai('all');
+    process.stderr.write(`R23e: once ${plain.landed}; all clicked again ${run.landed} (left on the quay ${run.quay} h)
+`);
     expect(run.landed, 'all four landed').toHaveLength(4);
     expect(run.refused, 'not refused').toBe(0);
     expect(run.quay, 'none left on the quay while its transports sail').toBe(0);

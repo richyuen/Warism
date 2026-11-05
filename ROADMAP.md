@@ -211,7 +211,7 @@ Rules:
     order of no player; the Thames water still goes; red without, `NoRoute`), `landingNeutral1938.spec.ts`'s click.
     A reason only: pin unmoved.
   R22 done; then the critic again.
-- [ ] R23 **Naval back to its bar: the way out of the wait aboard** (critic run 35, focused: two blocking issues,
+- [x] R23 **Naval back to its bar: the way out of the wait aboard** (critic run 35, focused: two blocking issues,
   R35-B1 and R35-B2, both in R22b's `ashoreAtPort`; naval 7 under its bar of 8 for them). Each sub-item its own
   commit; then the critic again.
   - [x] R23a A refused order leaves the division aboard (R35-B2): the order is judged before the division goes ashore;
@@ -244,6 +244,10 @@ Rules:
     nearest had Scotland to go round. `landingEscortWait1938.test.ts` (Belfast, the fourth nearest London: 58 h either
     way; red without, 72; the nearest: 110 either way); `landingEscort1938.test.ts`'s "under way at hour 1" restated
     to R22d's rule (under way, or kept where it stood). Pin unmoved.
-  - [ ] R23e A whole click clicked again keeps its landing together (R35-N2, older than R22): the four re-sent to
+  - [x] R23e A whole click clicked again keeps its landing together (R35-N2, older than R22): the four re-sent to
     Shanghai at hour 26 land within a day of each other. AT: a unit test of the critic's case; red without (185, 633,
     952, 1243).
+    Done: `sameLanding` covers a division bound for a convoy still at its port: the order stands, the binding kept
+    (cleared, its convoy lost its landing with it and it went on another's next voyage). `landingSameAgain1938.test.ts`
+    (all four again at hour 26: the same transports, landed 1242–1243; red without, three bound to 1136). Pin unmoved.
+  R23 done; then the critic again.

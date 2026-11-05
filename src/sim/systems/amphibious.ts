@@ -401,17 +401,25 @@ export function ashoreAtPort(world: World, id: number): (() => void) | null {
 }
 
 /**
- * Whether an order of formation `id` aboard a player's convoy still loading to (`x`, `y`) is for
- * the landing it is aboard for (ROADMAP R23b, critic run 35, R35-B1): it stays aboard, and the
- * order stands as it is; ashore, it would give its place to another and wait on the quay.
+ * Whether an order of formation `id` to (`x`, `y`) is for the landing it already has a place in: aboard
+ * a player's convoy still loading (ROADMAP R23b, critic run 35, R35-B1), or bound for one still at
+ * its port (R23e, R35-N2). The order stands as it is. Ashore, the one aboard gave its place to
+ * another, which waited on the quay; bound, its convoy lost its landing with it (`convoyTarget`) and
+ * it was put on another's next voyage, so a click clicked again landed one by one.
  */
 export function sameLanding(world: World, id: number, x: number, y: number): boolean {
-  const e = world.embarked.get(id);
   const { w, h } = world.cells;
   const [tx, ty] = [Math.floor(x), Math.floor(y)];
-  if (e === undefined || !loading(world, e.fleet) || tx < 0 || ty < 0 || tx >= w || ty >= h) return false;
+  if (tx < 0 || ty < 0 || tx >= w || ty >= h) return false;
+  const e = world.embarked.get(id);
+  const fetch = world.seaFetch.get(id);
+  const bound = world.seaBound.get(id);
+  let was: { water: number; land: number } | null = null;
+  if (e !== undefined) was = loading(world, e.fleet) ? e : null;
+  else if (fetch !== undefined && bound !== undefined && world.convoyPort.has(fetch) && world.formations.has(fetch)) was = landingOf(world, bound);
+  if (!was) return false;
   const l = landingOf(world, ty * w + tx);
-  return l !== null && l !== undefined && l.water === e.water && l.land === e.land;
+  return l !== null && l.water === was.water && l.land === was.land;
 }
 
 /** Ends the player's convoy on group `fleet`: the formations still bound for it are told (`why`, by default `NoTransports`). */

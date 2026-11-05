@@ -67,7 +67,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   R23b (R35-B1): an order to the landing it is aboard for (the same land and water, `sameLanding`)
   is taken and changes nothing; ashore, it was bound anew to transports another division of its
   click was walking to, and that one waited on the quay for weeks. `landingSameAgain1938.test.ts`:
-  red without.
+  red without. R23e (R35-N2, older than R22): the same for a division bound for a convoy still at its
+  port; its order cleared its binding, which was all that gave its convoy a landing (`convoyTarget`),
+  so it was put on another convoy's next voyage, and a click clicked again landed one at a time
+  (148, 633, 952, 1243 h). Now the four land together (1242–1243). Red without.
 - **R22c.** The wait aboard is accounted for: "1 of 4 aboard; the last 47 days from the port"
   (`voyage.wait`, the furthest bound division's `marchHoursLeft`). Worker and UI only.
 - **R22d (R34-N1).** The escort is not sent weeks ahead. R17d sent it at the order; with R21e's wait

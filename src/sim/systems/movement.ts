@@ -451,9 +451,10 @@ export const wasLong = (): boolean => refusedLong;
  * ROADMAP R17): the order goes by a convoy instead (`seaConvoy`). Any order ends an order kept so.
  */
 export function orderMove(world: World, id: number, x: number, y: number, pass?: Passage, byPort = false, direct = false, call = false, escort = false): boolean {
-  if (!world.embarked.has(id)) return orderAshore(world, id, x, y, pass, byPort, direct, call, escort);
-  // Aboard a player's convoy still loading, to the landing it is aboard for: it stays (ROADMAP R23b).
+  // Aboard a player's convoy still loading, or bound for one, to the landing it has its place in: it
+  // keeps it (ROADMAP R23b, R23e).
   if (sameLanding(world, id, x, y)) return true;
+  if (!world.embarked.has(id)) return orderAshore(world, id, x, y, pass, byPort, direct, call, escort);
   // Aboard transports it takes no order (PLAN 4.5a), but aboard a player's convoy still loading at
   // its port, where it goes ashore and takes it (ROADMAP R22b); refused, it is aboard again (R23a).
   const back = ashoreAtPort(world, id);
