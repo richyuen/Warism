@@ -1,0 +1,49 @@
+{
+ "seed": 6299,
+ "years": 1,
+ "heroes": false,
+ "diplomacy": "scenario",
+ "perYear": [
+  {
+   "year": 1,
+   "living": 96,
+   "wars": 10,
+   "declared": 27,
+   "peace": 19,
+   "capitals": 40,
+   "eliminated": 6,
+   "annexed": 1,
+   "revolts": 0,
+   "puppetCreated": 10,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 57,
+   "shipsSunk": 648,
+   "bursts": 0,
+   "majorBattles": 95,
+   "gpShare": {
+    "GER": 0.67,
+    "ENG": 1.7,
+    "FRA": 1.32,
+    "ITA": 0.73,
+    "JAP": 0.39,
+    "SOV": 28.34,
+    "USA": 7.42
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 28.3%",
+   "hash": 3696497660
+  }
+ ],
+ "heroRows": [],
+ "alsoGone": [],
+ "ms": 30855.5793
+}

@@ -1,0 +1,53 @@
+{
+ "seed": 7019,
+ "bin": "critic/c32_seed7019_y20.bin",
+ "strikes": [
+  {
+   "got": {
+    "a": 1,
+    "tick": 175322
+   },
+   "date": "1 January 1958",
+   "paused": true,
+   "alerts": [
+    "☢ | China struck United States with an atomic bomb near Belfast: 54,000 civilians killed; 42,408 men and 167 guns lost | Go to | ×"
+   ],
+   "ticker": [
+    "23 December 1957 United Kingdom captured Free Bomi's capital 29 December 1957 Hungary declared war on Austria 1 January 1958 Germany and United Kingdom fought in the air this month: Germany lost 9 aircraft, United Kingdom 9 1 January 1958 United States's air force struck China this month: 5,329 men, guns and vehicles lost 1 January 1958 China struck United States with an atomic bomb near Belfast: 54,000 civilians killed; 42,408 men and 167 guns lost"
+   ],
+   "shotAlert": "critic/shots/c34an_7019y20_0_alert.png",
+   "cam": {
+    "cx": 990.5,
+    "cy": 251.5,
+    "mpp": 937.5
+   },
+   "shotGoto": "critic/shots/c34an_7019y20_0_goto.png",
+   "shotAfter": "critic/shots/c34an_7019y20_0_after48h.png"
+  },
+  {
+   "got": {
+    "a": 1,
+    "tick": 178034
+   },
+   "date": "24 April 1958",
+   "paused": true,
+   "alerts": [
+    "☢ | China struck Iceland with a hydrogen bomb near Höfn: 8,000 civilians killed; 30,012 men and 115 guns lost | Go to | ×"
+   ],
+   "ticker": [
+    "1 April 1958 Japan and United States fought in the air this month: Japan lost 3 aircraft, United States 3 1 April 1958 United States's air force struck Japan this month: 8,052 men, guns and vehicles lost 5 April 1958 Austria made peace with Germany 16 April 1958 Germany captured Anglo-Egyptian Sudan's capital 24 April 1958 China struck Iceland with a hydrogen bomb near Höfn: 8,000 civilians killed; 30,012 men and 115 guns lost ⚓ Carrier strike ashore: United States on Japan"
+   ],
+   "shotAlert": "critic/shots/c34an_7019y20_1_alert.png",
+   "cam": {
+    "cx": 940.5,
+    "cy": 167.5,
+    "mpp": 937.5
+   },
+   "shotGoto": "critic/shots/c34an_7019y20_1_goto.png",
+   "shotAfter": "critic/shots/c34an_7019y20_1_after48h.png"
+  }
+ ],
+ "nukePause": true,
+ "startDate": "27 December 1957",
+ "errors": []
+}

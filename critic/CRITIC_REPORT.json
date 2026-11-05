@@ -1,6 +1,6 @@
 {
- "commit": "937fd085bdbfddde489ad489c7e688d93b7dbc42",
- "mode": "full",
+ "commit": "2535a577878009673bc5e46a6b7d4ce58e5c446b",
+ "mode": "focused",
  "scores": {
   "mapVisuals": 7,
   "diplomacyWarDepth": 7,
@@ -17,14 +17,22 @@
   "aircraft": 8,
   "aiNukes": 8
  },
- "blocking": [],
+ "carried": ["mapVisuals", "emergentDynamics", "godMode", "editorScenarios", "semanticZoom", "tanks", "aircraft", "aiNukes"],
+ "blocking": [
+  {
+   "id": "R34-B1",
+   "title": "A refusal at the port a division marched to is never told in the page (R21b's PortShut reason unseen)",
+   "evidence": "critic/c34_pst.json (Britain at war with France, three divisions to Calais by a real click: 0 orderNews posts in 110 hours from a listener on the worker; 270 and 271 'Holding' at Portsmouth, no row, no notice; control: an immediate refusal in the same page is posted, reason 15 at tick 111), critic/shots/c34pst_div270.png, critic/c34_ps.log (the same orders headless: refused PortShut 16 at t55, t63, t87)",
+   "fix": "In src/worker/server.ts orderNews, do not forget a player's order at a FormationArrived when a MoveRejected of the same formation follows in the same hour (or handle MoveRejected first); add an e2e spec on Portsmouth bombed shut that reads the row"
+  }
+ ],
  "underBar": [
   {
    "dimension": "naval",
    "score": 7,
    "bar": 8,
-   "why": "R32-B1 fixed; not 8 for the player landing's edges: R33-N1 (an order over the sea given at war boards 17 days after the peace, lands on the former enemy's coast and is set home across the sea, where the land march is stopped at the border with Barred; critic/c33_pm_japned_sea.json, critic/c33_pm_gerfra_land.json), R33-N2 (a port bombed shut refused as 'it stands at no port of its nation'; critic/c33_ps.log), R33-N3 (the refusal only as a cut row under a tooltip that promised the voyage; critic/shots/c33nr_eng_calais_desk_hover.png, critic/shots/c33nr_eng_calais_desk_click.png), R32-N1 unchanged (critic/c33_lp_jap_shanghai.json)"
+   "why": "R34-B1 (blocking: refusals at the port silent in the page); R34-N1 (four divisions to Shanghai: the first aboard at Tokyo 50 days, panel names neither who nor how long, a recall in its own port refused; critic/c34_wait_four120.json, critic/c34_wp_four.json, critic/shots/c34wp_four_recall.png)"
   }
  ],
- "timestamp": "2026-11-04T23:25:00Z"
+ "timestamp": "2026-11-05T04:30:13Z"
 }

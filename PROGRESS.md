@@ -1048,3 +1048,11 @@
 - AT: `landingTogether1938.test.ts` (within a day; the panel's `aboard`; red without, 387 h apart). Landing unit and e2e
   specs green. Pin unmoved (the player's convoys only).
 - **Next:** critic run 34.
+
+## 2026-11-04 — critic run 34, focused, on 2535a577: one blocking issue (R34-B1); naval under its bar
+- R33-N1, R33-N3 and R32-N1 fixed; R33-N2 fixed in the sim only. **R34-B1 (blocking):** a refusal at the port a division
+  marched to is never told in the page (the worker's `orderNews` forgets the order at the hour's arrival), so R21b's
+  `PortShut` is unseen. Naval **7** under its bar of 8 for R34-B1 and R34-N1 (the wait aboard: 50 days, no account, a
+  recall refused); every other score at its bar (diplomacy, stats, UI, performance, stability 7 rescored; the rest carried).
+  Filed as R22a–e (with R34-N2–N4).
+- **Next:** R22a.

@@ -167,3 +167,21 @@ Rules:
     Done, restated (no group has room for both there): a full convoy's port first for the click's next
     division, and convoys there for one landing sail together; the panel's `aboard` (ADR-826);
     `landingTogether1938.test.ts` (hours 632 and 633; before, 123 and 510).
+- [ ] R22 **Naval back to its bar: the refusal at the port, the wait aboard** (critic run 34, focused: one blocking
+  issue, R34-B1; naval 7 under its bar of 8 for R34-B1 and R34-N1). Each sub-item its own commit; then the critic again.
+  - [ ] R22a A refusal at the port is told (R34-B1): the worker's `orderNews` forgets a player's order at the hour's
+    `FormationArrived` and drops the `MoveRejected` that follows it, so a division refused at the port it marched to
+    (shut, no port, no transports, no sea way) is told nothing. AT: an e2e spec, Britain at war with France, divisions
+    to Calais, Portsmouth bombed shut: the row and the panel say the port is bombed shut; red without the fix.
+  - [ ] R22b The wait aboard has an account and a way out (R34-N1): a division aboard a convoy still in its port takes
+    an order (goes ashore); the panel says how many of the landing it waits for and the furthest one's days; the
+    escort is held until the convoy sails. AT: four Japanese divisions to Shanghai: the panel names "1 of 4 aboard"
+    and the days; a recall of the first in Tokyo is obeyed (ashore, not refused); no escort on Shanghai's water before
+    the convoy sails.
+  - [ ] R22c The aboard status keeps to its column (R34-N2): "Aboard at Tokyo, waiting for the rest of the landing"
+    wraps under its value, not into "Status". AT: the panel's crop at 1600 × 900 and 390 × 844, label and value apart.
+  - [ ] R22d A refusal notice goes when it stops being true (R34-N3): the panel's refusal is cleared when the
+    formation's order or state changes. AT: the recall refused in Tokyo, then the convoy sails: no refusal under
+    "At sea, bound for its landing".
+  - [ ] R22e A sea order on open water says so (R34-N4): a click onto the sea off Bergen is refused for the sea, not for
+    "a way by land". AT: Britain's division clicked onto the water off Bergen: the reason speaks of the sea.

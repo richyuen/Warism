@@ -1,0 +1,174 @@
+{
+ "seed": 3517,
+ "n": 2,
+ "days": 3,
+ "recallH": 30,
+ "marks": [
+  {
+   "h": 25,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "aboard": null,
+     "p": [
+      1818.2,
+      385.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "aboard": null,
+     "p": [
+      1794.2,
+      391.2
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "title": null,
+    "status": "Holding",
+    "notice": null,
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nHolding\nEscort with warships\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "shot": "critic/shots/c34wp_twophone_h25_first.png",
+   "shotLanding": "critic/shots/c34wp_twophone_h25_landing.png",
+   "fleetsNearLanding": 0
+  },
+  {
+   "h": 31,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "aboard": null,
+     "p": [
+      1818.2,
+      385.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "aboard": null,
+     "p": [
+      1794.2,
+      391.2
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "title": null,
+    "status": "Holding",
+    "notice": null,
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nHolding\nEscort with warships\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "shot": "critic/shots/c34wp_twophone_h31_first.png",
+   "shotLanding": "critic/shots/c34wp_twophone_h31_landing.png",
+   "fleetsNearLanding": 0,
+   "recallTooltip": "Japan",
+   "recall": {
+    "panel": {
+     "open": false,
+     "title": null,
+     "status": null,
+     "notice": null,
+     "text": ""
+    },
+    "ticker": [],
+    "shot": "critic/shots/c34wp_twophone_recall.png"
+   }
+  },
+  {
+   "h": 50,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "aboard": null,
+     "p": [
+      1818.3,
+      384.3
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "aboard": null,
+     "p": [
+      1794.6,
+      391.5
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "title": null,
+    "status": "On the march",
+    "notice": null,
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nOn the march\nEscort with warships\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "shot": "critic/shots/c34wp_twophone_h50_first.png",
+   "shotLanding": "critic/shots/c34wp_twophone_h50_landing.png",
+   "fleetsNearLanding": 0
+  }
+ ],
+ "ticker": [],
+ "notices": [],
+ "ids": [
+  364,
+  365
+ ],
+ "tooltip": "Shanghai\nChina\nOccupied by Japan\nUnrest 0\nYour selected forces go by sea: they board transports at a port",
+ "afterClick": {
+  "panel": {
+   "open": true,
+   "title": null,
+   "status": "Holding",
+   "notice": null,
+   "text": "Square infantry division 388\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n88%\nOrg\n100%\nFuel on the march\nNone\nStatus\nHolding\nEscort with warships\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+  },
+  "ticker": []
+ },
+ "final": [
+  {
+   "id": 364,
+   "alive": true,
+   "v": null,
+   "port": null,
+   "aboard": null,
+   "p": [
+    1817,
+    383
+   ]
+  },
+  {
+   "id": 365,
+   "alive": true,
+   "v": null,
+   "port": null,
+   "aboard": null,
+   "p": [
+    1796.1,
+    390.9
+   ]
+  }
+ ],
+ "finalH": 74,
+ "errors": []
+}
