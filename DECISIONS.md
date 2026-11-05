@@ -71,6 +71,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   numbers); the fuzz checks a whole click is refused nothing, a landing loads at one port, and every
   convoy has one target (red without: the four re-clicked south-west). Player convoys only: pin
   unmoved.
+- **R28c** (the advisor's trace of the critic's `c39_ll_three_stagger`). Two clicks an hour apart:
+  the first, alone aboard its own transports, sails for Fuzhou at once; the second's own, still under
+  way to the port for it, were not offered (only R21e's block took a group under way), so it went on
+  another port's group and landed at h794 (h657 from a standing start). A group of a landing left,
+  under way to its convoy's port, is now offered at that port in the general choice too (`comingTo`).
+  After: h658. `noteLeaving` also skips an order naming another nation than the division's. Red
+  without. Pin unmoved.
 - **R28b** (critic run 39, R39-N1). The mark and the tooltip were the first selected division's
   answer (R27b's "Not chosen": marking every one's landing). The one aboard and a fresh one, two cells
   south of Shanghai: green, "they keep their transports", and the fresh one landed alone four cells

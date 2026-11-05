@@ -1364,4 +1364,11 @@
 - `seaHint` (the worker's `overSea` takes the selection's ids): each distinct landing of the selection is marked,
   green where every division it is for has it; two or more: "{n} landings, each marked: they will not land
   together". The one aboard and a fresh one two cells south of Shanghai: two marks (unit test; spec looked at).
+- **Next:** R28c.
+
+## 2026-11-05 — R28c: a landing re-sent an hour apart takes its own transports
+- Found tracing the critic's stagger case after R28a: the second of two re-sent to Fuzhou an hour after the first
+  went on another port's group (h794), its own under way to the port for it unoffered. A group of a landing left,
+  under way to its convoy's port, is offered there (`comingTo`): h658. Red without. `noteLeaving` checks the
+  order's nation. Landing tests (29 files) and the fuzz green; pin unmoved.
 - R28 done. **Next:** critic run 40.

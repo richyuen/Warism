@@ -102,16 +102,26 @@ function heldGroup(world: World, fleet: number): boolean {
 }
 
 /**
+ * The port (index in `world.ports`) a group of a landing this hour's orders leave (`world.groupsLeft`)
+ * is under way to for it, its convoy's; -1 for none. It is offered there as if it stood there (ROADMAP
+ * R28a, R28c): a division's own transports, still sailing to fetch it, are its to take.
+ */
+function comingTo(world: World, fleet: number): number {
+  if (world.formations.cols.moving[fleet] !== 1 || !world.groupsLeft.has(fleet)) return -1;
+  return world.convoyPort.get(fleet) ?? -1;
+}
+
+/**
  * Notes the player's divisions this hour's orders `cmds` take off the landing they have (ROADMAP
  * R28a): aboard a convoy loading at its port, or bound for one, and the order not for that landing
  * (`sameLanding`). Run before the hour's orders are applied, so that a click's divisions are judged
  * together (`heldGroup`).
  */
-export function noteLeaving(world: World, cmds: readonly { id: number; x: number; y: number }[]): void {
+export function noteLeaving(world: World, cmds: readonly { id: number; x: number; y: number; nation?: number }[]): void {
   world.leaving.clear();
   world.groupsLeft.clear();
-  for (const { id, x, y } of cmds) {
-    if (!world.formations.has(id)) continue;
+  for (const { id, x, y, nation } of cmds) {
+    if (!world.formations.has(id) || world.formations.cols.nation[id] !== nation) continue;
     const fleet = aboardAtPort(world, id) >= 0 ? world.embarked.get(id)!.fleet : world.seaFetch.get(id);
     if (fleet === undefined || sameLanding(world, id, x, y)) continue;
     world.leaving.set(id, fleet);
@@ -648,7 +658,7 @@ export function assignTransports(world: World, id: number, target: number): { po
     let o = 0;
     // A group a landing this hour's orders leave, on its way to that port for it, comes on (ROADMAP
     // R28a: the four re-clicked went one by one on the one group standing there).
-    const coming = (g: number): boolean => c.moving[g] === 1 && world.groupsLeft.has(g) && world.convoyPort.get(g) === p;
+    const coming = (g: number): boolean => comingTo(world, g) === p;
     f.forEach((g) => {
       if (o !== 0 || !world.isFleet(g) || c.nation[g] !== nation || (c.moving[g] === 1 && !coming(g)) || c.engaged[g] === 1 || heldGroup(world, g)) return;
       if (transportRoom(world, g) - promised(world, g) >= men && (coming(g) || near(world, cellOfPlace(world, g), water[p]!, world.atSize(AT_PORT_CELLS)))) o = g;
@@ -665,11 +675,14 @@ export function assignTransports(world: World, id: number, target: number): { po
     return dx * dx + dy * dy;
   };
   f.forEach((o) => {
-    if (!world.isFleet(o) || c.nation[o] !== nation || c.moving[o] === 1 || c.engaged[o] === 1 || heldGroup(world, o)) return;
+    // Under way, but a group of a landing left on its way to fetch them: at its convoy's port (R28c,
+    // the second of a landing re-sent an hour after the first went to another port's transports).
+    const to = comingTo(world, o);
+    if (!world.isFleet(o) || c.nation[o] !== nation || (c.moving[o] === 1 && to < 0) || c.engaged[o] === 1 || heldGroup(world, o)) return;
     if (transportRoom(world, o) - promised(world, o) < men) return;
     const at = cellOfPlace(world, o);
     world.ports.forEach((p, i) => {
-      if (!own(i) || !near(world, at, water[i]!, world.atSize(AT_PORT_CELLS))) return;
+      if (!own(i) || (to >= 0 ? i !== to : !near(world, at, water[i]!, world.atSize(AT_PORT_CELLS)))) return;
       const d = dist(p.cell);
       if (d < bd || (d === bd && best !== null && o < best.fleet)) [bd, best] = [d, { port: i, fleet: o }];
     });

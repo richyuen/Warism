@@ -109,6 +109,23 @@ describe('a changed landing takes its own transports (ROADMAP R28a)', () => {
     expect(Math.abs(at[0]! - at[1]!), 'together (red: 21 days apart)').toBeLessThanOrEqual(24);
   }, 300_000);
 
+  // ROADMAP R28c: two clicks an hour apart. The first, alone aboard its own transports, sails for Fuzhou
+  // at once; the second's own, still under way to the port for it, were not offered (under way), and it
+  // went on another group from another port, landing at h794 against h657 from a standing start.
+  it('two re-sent to Fuzhou an hour apart: the second takes its own transports, under way to the port for it', () => {
+    const k = start(2);
+    const was = k.ids.map((id) => place(k.sim, id));
+    k.sim.command({ kind: 'moveFormation', id: k.ids[0]!, x: FUZHOU[0], y: FUZHOU[1], nation: JAP, escort: true });
+    k.step();
+    const { now } = reclick(k, [k.ids[1]!], ...FUZHOU);
+    for (let h = 0; h < 24 * 90 && k.landed.size < 2; h++) k.step();
+    process.stderr.write(`R28c: ${was} -> ${place(k.sim, k.ids[0]!)},${now}, refused ${[...k.refused]}, landed ${[...k.landed]}\n`);
+    expect([...k.refused], 'none refused').toEqual([]);
+    expect(now[0], 'the second on its own transports').toBe(was[1]);
+    expect(k.landed.size, 'both landed').toBe(2);
+    expect(k.landed.get(k.ids[1]!)!, 'the second about as soon as from a standing start (h657; red: h794)').toBeLessThanOrEqual(700);
+  }, 300_000);
+
   it('the four re-clicked three cells south-west: none refused, they land together', () => {
     const k = start(4);
     const { was, now } = reclick(k, k.ids, SHANGHAI[0] - 3, SHANGHAI[1] + 3);

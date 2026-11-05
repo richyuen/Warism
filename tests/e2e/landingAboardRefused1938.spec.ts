@@ -60,8 +60,9 @@ test('the division aboard, ordered onto the open sea: refused, and still aboard'
 
   // To another landing, Fuzhou: refused before (ROADMAP R24d, R36-N2: "its transports are loading for
   // another landing"); since R28a its transports, which carry no one else, go with it, and it is told it
-  // leaves its landing; aboard, with no one else bound for them, they sail for Fuzhou. (The refusal, where
-  // they carry another: `landingAboardRefused1938.test.ts`.)
+  // leaves its landing; aboard, with no one else bound for them, they sail for Fuzhou at once (no escort
+  // is asked here: with one, they would wait for it, "aboard"). (The refusal, where they carry another:
+  // `landingAboardRefused1938.test.ts`.)
   await page.evaluate(({ id, x, y, n }) => window.__warsim!.hud.command({ kind: 'moveFormation', id, x, y, nation: n }), { id: four[0]!, x: FUZHOU[0], y: FUZHOU[1], n: JAP });
   await page.evaluate(() => window.__warsim!.sim.step(1));
   await expect(page.getByTestId('formation-notice')).toContainText('leaves the landing it had', { timeout: 10_000 });

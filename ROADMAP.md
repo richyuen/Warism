@@ -365,4 +365,8 @@ Rules:
     Done: `seaHint` (the worker's `overSea` takes the selection), a mark for each landing, "{n} landings, each
     marked: they will not land together". `landingHintSelection1938.test.ts`, `landingMark1938.spec.ts` (looked
     at: green at Shanghai, orange two cells south). Pin unmoved.
+  - [x] R28c (found tracing the critic's `c39_ll_three_stagger`) A landing re-sent by two clicks an hour apart: the
+    second's own transports, under way to the port for it, are offered there. AT: two to Fuzhou an hour apart, the
+    second on its own transports, landing by ~h700 (red: another port's group, h794).
+    Done: `comingTo` in the general choice; h658. Red without. Pin unmoved.
   R28 done; then the critic again (run 40).

@@ -1289,8 +1289,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   division bound for a convoy keeps its binding when an order is refused (R24a). The hour's orders
   are judged together (`noteLeaving`, before they are applied, ROADMAP R28a): the transports of a
   landing those orders take divisions off (`world.leaving`, `world.groupsLeft`) are free for the
-  choice above once nobody else holds them (`heldGroup`), and one of them already on its way to the
-  convoy's port comes on (R21e's "a group at that port"); a click that leaves a landing takes its
+  choice above once nobody else holds them (`heldGroup`), and one of them on its way to its convoy's
+  port is offered there as if it stood there (`comingTo`; R21e's "a group at that port", and the
+  nearest port's, R28c: a landing re-sent by two clicks an hour apart); a click that leaves a landing takes its
   transports with it, and the one aboard sent alone takes its own where they carry no one else. With
   none free, the one aboard sent over the sea to another landing is refused `Loading` (18, R24d).
   A division aboard or bound that an order takes to another landing is told it leaves its landing
