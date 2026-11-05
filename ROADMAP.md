@@ -344,7 +344,7 @@ Rules:
     (`tellLandingsLeft`, by landing, not transports); the news judges against the marked land (`seaOrderLanding`,
     `landedAway`). Red without. Pin unmoved.
   R27 done; then the critic again (run 39).
-- [ ] R28 **A changed landing takes its own transports** (critic run 39 on `99ba6c07`: R39-B1 blocking; naval 7, bar 8,
+- [x] R28 **A changed landing takes its own transports** (critic run 39 on `99ba6c07`: R39-B1 blocking; naval 7, bar 8,
   for R39-B1 and R39-N1). Each sub-item its own commit; then the critic again.
   - [x] R28a R39-B1: when an order takes divisions off a landing, the transports of that landing are theirs to take
     first (released before the choice), so a click that leaves a landing takes its ships with it, and no division is
@@ -370,3 +370,17 @@ Rules:
     second on its own transports, landing by ~h700 (red: another port's group, h794).
     Done: `comingTo` in the general choice; h658. Red without. Pin unmoved.
   R28 done; then the critic again (run 40).
+- [ ] R29 **A click's orders judged as the game sends them** (critic run 40, focused, on `76b88197`: R40-B1 and
+  R40-B2 blocking; naval 7, bar 8, for both). Each sub-item its own commit; then the critic again.
+  - [ ] R29a R40-B2: the game applies each selected division's order at once (`player.ts` one `hud.command` each,
+    `now = true`, the worker's `applyNow`), so R28a's `noteLeaving` and R27c's `tellLandingsLeft` judge one division
+    at a time: a whole landing re-clicked tells all but the last "the rest keep the old landing". A click's orders
+    reach the sim as one batch, applied together. AT, through the game's path (the hud's command, applied at once),
+    seed 3517: the four re-clicked three cells SW: no `LeftLanding`; the two re-sent to Fuzhou by one click: none;
+    of three, the two sent away: both told; landings as R28a's by that path.
+  - [ ] R29b R40-B1: a landing redirected to a target another convoy already serves (a fresh division sent to Fuzhou
+    first, then the two of the Shanghai landing): the one aboard is put ashore and walks ~50 days to Sasebo while its
+    own group sails there empty. A leaver aboard or bound for a group that joins a convoy at another port keeps its
+    group, which sails there with it (offered first). AT (by the game's path; the fresh one first, the same hour and
+    an hour before): all three land within a day of each other by ~h980 (red: 657 and 1291); 364 never "Marching to
+    Sasebo".

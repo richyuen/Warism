@@ -1,0 +1,9 @@
+start 12:52:25 npx tsx tools/diag/diploInvariants.ts 14003 scenario 400 60,200,350 20 --heroes > critic/c40_diploinv_14003s_h.log 2>&1
+start 12:52:25 npx tsx tools/diag/diploInvariants.ts 14011 random 400 60,200,350 20 > critic/c40_diploinv_14011r.log 2>&1
+start 12:52:25 npx tsx tools/diag/worldInvariants.ts 14003 3650 --heroes --rules heroes,navy > critic/c40_wi_14003_h10_hn.log 2>&1
+start 12:52:25 npx tsx tools/diag/workerDeterminism.ts 14011 2190 24 critic/c40_wd_14011.json > critic/c40_wd_14011.log 2>&1
+end 12:56:42 exit 0 npx tsx tools/diag/diploInvariants.ts 14003 scenario 400 60,200,350 20 --heroes > critic/c40_diploinv_14003s_h.log 2>&1
+end 12:56:57 exit 0 npx tsx tools/diag/diploInvariants.ts 14011 random 400 60,200,350 20 > critic/c40_diploinv_14011r.log 2>&1
+end 12:59:28 exit 0 npx tsx tools/diag/workerDeterminism.ts 14011 2190 24 critic/c40_wd_14011.json > critic/c40_wd_14011.log 2>&1
+end 13:00:14 exit 0 npx tsx tools/diag/worldInvariants.ts 14003 3650 --heroes --rules heroes,navy > critic/c40_wi_14003_h10_hn.log 2>&1
+QUEUEDONE

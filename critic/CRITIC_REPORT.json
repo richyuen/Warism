@@ -1,6 +1,6 @@
 {
-  "commit": "99ba6c0754c4e50cd857501caff07ca6dacd5476",
-  "mode": "full",
+  "commit": "76b881972be3468986a91dff6eaca6293ef8f6b3",
+  "mode": "focused",
   "scores": {
     "mapVisuals": 7,
     "diplomacyWarDepth": 7,
@@ -19,11 +19,17 @@
   },
   "blocking": [
     {
-      "id": "R39-B1",
-      "title": "A landing the player redirects abandons its own transports: the click walks to another port for weeks while its ships lie empty, splits into landings 21 days apart, or is refused 'no transports' (present on a54afc77 too)",
-      "evidence": "Seed 3517, Japan, the two nearest Tokyo sent to Shanghai, both re-sent to Fuzhou 2 h after the first boards: groups 1136 and 1144 lie empty at Tokyo for the 54-day trace while 364 and 365 march to Sasebo (critic/c39_tied_two_fuzhou60.json); they land h1291 (critic/c39_ll_bothfar.json) against h657 from a standing start (critic/c39_base_fuzhou_2.json). Of three, two re-sent to Fuzhou by one click land h791 and h1293, the first alone (critic/c39_ll_three_twofar.json). The four, all re-clicked three cells SW where the R27b mark shows an orange landing, are all refused 18/6 'no transports' (critic/c39_ll_four_all_sw3.json; real click critic/c39_lwt5_four_allsw63.json, critic/shots/c39lwt5_four_allsw63_act.png). Same on run 38's commit a54afc77 (critic/c39_tied_two_fuzhou_a54.json, critic/c39_ll_three_twofar_a54.json, critic/c39_ll_four_all_sw3_a54.json). Cause read: orderMove/orderAshore pick transports for each division while its old ones are still that landing's; once all have left, the freed groups are never offered.",
-      "fix": "When an order takes divisions off a landing, offer that landing's own transports first (or release them before choosing), so the click that leaves a landing takes its ships with it. AT: the two re-sent to Fuzhou 2 h after the first boards sail from Tokyo on their own groups and land within a day of each other by ~h700 (red: h1291); of three, the two sent to Fuzhou land within a day of each other; the four re-clicked three cells SW: no refusal, land together."
+      "id": "R40-B1",
+      "title": "A landing redirected to a target another convoy already serves walks to that convoy's port while its own ship sails there empty, and splits (R39-B1's remaining case; present on 99ba6c07 too)",
+      "evidence": "Seed 3517, Japan, the two nearest Tokyo sent to Shanghai; in the hour after, a fresh division (366) sent to Fuzhou, then the two re-sent to Fuzhou. By the game's path (each order applied at once): 364, aboard group 1136 at Tokyo, is put ashore and bound for 1152 at Sasebo; 1136 sails empty Tokyo->Sasebo (t6-t122) while 364 walks ~50 days (critic/c40_l3_steal_freshfuzhou.json); 365 lands alone h657, 364 and 366 h1291 (critic/c40_now_steal_freshfuzhou.json). Real click, seeds 3517/14003/14011: 365 h682, 364+366 h1318, 364 'Marching to Sasebo' days 1-20 (critic/c40_mk2_freshfirst*.json, critic/shots/c40mk2_freshfirst_day10.png; hover says 'they keep their transports' over that status, critic/shots/c40mk2_freshfirst_panel_h4.png). Three from a standing start: h976/977 (critic/c40_l2_fresh3_base.json); the reverse click order: 978/979 (critic/c40_now_leaversfirst_fz.json). 99ba6c07: same walk, 365 not landed in 60 d (critic/c40_wt_now_steal_freshfuzhou.json).",
+      "fix": "When a leaver aboard (or bound for) a group joins a convoy at another port and its group is free to go there, it stays aboard and sails with it (or its group is offered first). AT: fresh one first, then the two (same hour and an hour before): all three land within a day of each other by ~h980, 364 never 'Marching to Sasebo', tested through the game's path (orders applied one at a time)."
+    },
+    {
+      "id": "R40-B2",
+      "title": "The game applies each division's order at once, so a whole-landing redirect tells every division but the last 'the rest keep the old landing, and it will not land with them' - and they all land together; R28a's whole-click judgement never runs in the game",
+      "evidence": "player.ts:333 sends one hud.command per selected division; hud.ts:548 sends it with now=true; the worker applies each with sim.applyNow, so noteLeaving/tellLandingsLeft run per division. Real click, the four of a landing re-clicked 3 cells SW: LeftLanding for 364, 365, 366, ticker row 'Square infantry division 366: it leaves the landing...', all four land together h1244 (critic/c40_lwt5_four_allsw63.json news/final, critic/shots/c40lwt5_four_allsw63_notice_h35.png). Two re-sent to Fuzhou by one paused click: 364 told so, both land h682 (critic/c40_mk2_nofresh2.json). Per-order replica reproduces it (critic/c40_now_four_all_sw3.json, critic/c40_now_bothfar.json); the queued batch every R25-R28 test uses tells nobody (critic/c40_ll_four_all_sw3.json). Also on 99ba6c07 by the game's path (critic/c40_wt_now_bothfar.json).",
+      "fix": "Give a click's orders to the sim as one batch (queued for the hour, or one command carrying the selection), or judge tellLandingsLeft after the whole click; test order news and landings through hud.command (now=true). AT: four re-clicked 3 cells SW by real click: no LeftLanding; two re-sent to Fuzhou by one click: none; of three, the two sent away: both told."
     }
   ],
-  "timestamp": "2026-11-05T16:21:07Z"
+  "timestamp": "2026-11-05T19:27:37Z"
 }

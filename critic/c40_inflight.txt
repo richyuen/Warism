@@ -1,0 +1,6 @@
+critic/c40_herowaits_8125.log
+critic/c40_diploinv_8123s_h.log
+critic/c40_diploinv_8431r.log
+critic/c40_diploinv_8807w.log
+critic/c40_diploinv_8573.log
+critic/c40_diploinv_8999s_h.log

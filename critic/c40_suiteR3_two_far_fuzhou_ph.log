@@ -1,0 +1,8 @@
+file:///C:/Git/Warism/critic/scripts/c40_lwt3.mjs:110
+console.log(JSON.stringify({ ids: out.ids, tooltip: out.tooltip, act: out.act ? { tip: out.act.tip, before: out.act.before.panel.status, after: [out.act.after.panel.status, out.act.after.panel.notice, out.act.after.st], after6: [out.act.after6?.panel.status, out.act.after6?.panel.notice, out.act.after6?.st] } : null, trace: out.trace.filter((_, i) => i % 8 === 0).map((t) => [t.h, t.st, t.wait, t.status]), endH: out.endH, final: out.final, fatal: out.fatal, errors: out.errors.slice(0, 5) }).slice(0, 6000));
+                                                                                                                           ^
+
+TypeError: Cannot read properties of undefined (reading 'panel')
+    at file:///C:/Git/Warism/critic/scripts/c40_lwt3.mjs:110:124
+
+Node.js v24.21.0

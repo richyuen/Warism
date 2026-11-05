@@ -1,0 +1,64 @@
+{
+ "seed": 3517,
+ "TAG": "USA",
+ "src": [
+  603.5,
+  352.5
+ ],
+ "dst": [
+  1034.5,
+  279.5
+ ],
+ "n": 1,
+ "escort": true,
+ "states": [],
+ "samples": [
+  {
+   "h": 0,
+   "s0": "none"
+  }
+ ],
+ "notices": [
+  "Cadre infantry division 609: not done: it would land on the ground of a nation outside its wars."
+ ],
+ "ticker": [],
+ "srcCell": [
+  603.5,
+  352.5
+ ],
+ "dstCell": [
+  1034.5,
+  279.5
+ ],
+ "divs": [
+  [
+   609,
+   20.13036379979357
+  ]
+ ],
+ "escortBoxVisible": true,
+ "escortBoxDefault": true,
+ "shotPanel": "critic/shots/c40lp_usa_calais_panel.png",
+ "tooltip": "Calais\nFrance\nUnrest 0\nNo landing here: the ground of a nation outside your wars",
+ "tooltipBySea": false,
+ "mpp": 937.5,
+ "shotHover": "critic/shots/c40lp_usa_calais_hover.png",
+ "afterClick": {
+  "notice": "Cadre infantry division 609: not done: it would land on the ground of a nation outside its wars.",
+  "status": "Holding",
+  "ticker": []
+ },
+ "shotClick": "critic/shots/c40lp_usa_calais_click.png",
+ "final": [
+  {
+   "id": 609,
+   "v": null,
+   "p": [
+    585.57082039322,
+    361.65292659972
+   ]
+  }
+ ],
+ "shotEnd": "critic/shots/c40lp_usa_calais_end.png",
+ "errors": []
+}

@@ -1,0 +1,97 @@
+{
+ "seed": 6421,
+ "ATT": "GER",
+ "DEF": "POL",
+ "variant": "defFort",
+ "before": {
+  "att": 273,
+  "def": 512
+ },
+ "after": {
+  "att": 273,
+  "def": 1536
+ },
+ "rows": [
+  {
+   "d": 10,
+   "defHolds": 2100,
+   "attTook": 122,
+   "attMen": 564932,
+   "defMen": 385760,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 20,
+   "defHolds": 2123,
+   "attTook": 99,
+   "attMen": 501576,
+   "defMen": 327057,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 30,
+   "defHolds": 2164,
+   "attTook": 58,
+   "attMen": 444266,
+   "defMen": 262736,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 40,
+   "defHolds": 2147,
+   "attTook": 63,
+   "attMen": 413473,
+   "defMen": 206084,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 50,
+   "defHolds": 1927,
+   "attTook": 114,
+   "attMen": 380568,
+   "defMen": 143996,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 60,
+   "defHolds": 1690,
+   "attTook": 41,
+   "attMen": 379351,
+   "defMen": 108153,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 70,
+   "defHolds": 1286,
+   "attTook": 45,
+   "attMen": 370322,
+   "defMen": 83289,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 80,
+   "defHolds": 985,
+   "attTook": 39,
+   "attMen": 364385,
+   "defMen": 39965,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 90,
+   "defHolds": 759,
+   "attTook": 39,
+   "attMen": 399332,
+   "defMen": 10020,
+   "atWar": true,
+   "defAlive": 1
+  }
+ ]
+}

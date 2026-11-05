@@ -1,0 +1,3860 @@
+{
+ "seed": 3517,
+ "n": 4,
+ "days": 60,
+ "actH": 24,
+ "act": {
+  "h": 26,
+  "tip": "China\nOccupied by Japan\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+  "before": {
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "1 of 4 aboard; the last 46 days from the port",
+    "notice": null,
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n1 of 4 aboard; the last 46 days from the port\nEscort with warships\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "st": {
+    "id": 364,
+    "alive": true,
+    "v": "aboard",
+    "port": "Tokyo",
+    "wait": {
+     "aboard": 1,
+     "of": 4,
+     "days": 46
+    },
+    "moving": false,
+    "p": [
+     1819.1,
+     387.2
+    ]
+   }
+  },
+  "after": {
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "1 of 4 aboard; the last 46 days from the port",
+    "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n1 of 4 aboard; the last 46 days from the port\nEscort with warships\nSquare infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "st": {
+    "id": 364,
+    "alive": true,
+    "v": "aboard",
+    "port": "Tokyo",
+    "wait": {
+     "aboard": 1,
+     "of": 4,
+     "days": 46
+    },
+    "moving": false,
+    "p": [
+     1819.1,
+     387.2
+    ]
+   }
+  },
+  "crop": "critic/shots/c40lwt5_four_allsw63_act_panel.png",
+  "shot": "critic/shots/c40lwt5_four_allsw63_act.png",
+  "after6": {
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "1 of 4 aboard; the last 46 days from the port",
+    "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n1 of 4 aboard; the last 46 days from the port\nEscort with warships\nSquare infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "st": {
+    "id": 364,
+    "alive": true,
+    "v": "aboard",
+    "port": "Tokyo",
+    "wait": {
+     "aboard": 1,
+     "of": 4,
+     "days": 46
+    },
+    "moving": false,
+    "p": [
+     1819.1,
+     387.2
+    ]
+   }
+  }
+ },
+ "trace": [
+  {
+   "h": 4,
+   "st": "364:aboard(1/4,47) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 47 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 7,
+   "st": "364:aboard(1/4,47) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 47 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 10,
+   "st": "364:aboard(1/4,47) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 47 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 13,
+   "st": "364:aboard(1/4,47) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 47 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 16,
+   "st": "364:aboard(1/4,46) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 46 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 19,
+   "st": "364:aboard(1/4,46) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 46 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 22,
+   "st": "364:aboard(1/4,46) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 46 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 25,
+   "st": "364:aboard(1/4,46) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 46 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 35,
+   "st": "364:aboard(1/4,46) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 46 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 38,
+   "st": "364:aboard(1/4,46) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 46 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 41,
+   "st": "364:aboard(1/4,45) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 45 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 44,
+   "st": "364:aboard(1/4,45) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 45 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 47,
+   "st": "364:aboard(1/4,45) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 45 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 50,
+   "st": "364:aboard(1/4,45) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 45 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 53,
+   "st": "364:aboard(1/4,45) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 45 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 56,
+   "st": "364:aboard(1/4,45) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 45 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 59,
+   "st": "364:aboard(1/4,45) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 45 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 62,
+   "st": "364:aboard(1/4,45) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 45 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 65,
+   "st": "364:aboard(1/4,44) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 44 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 68,
+   "st": "364:aboard(1/4,44) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 44 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 71,
+   "st": "364:aboard(1/4,44) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 44 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 74,
+   "st": "364:aboard(1/4,44) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 44 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 77,
+   "st": "364:aboard(1/4,44) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 44 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 80,
+   "st": "364:aboard(1/4,44) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 44 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 83,
+   "st": "364:aboard(1/4,44) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 44 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 86,
+   "st": "364:aboard(1/4,44) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 44 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 89,
+   "st": "364:aboard(1/4,43) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 43 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 92,
+   "st": "364:aboard(1/4,43) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 43 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 95,
+   "st": "364:aboard(1/4,43) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 43 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 98,
+   "st": "364:aboard(1/4,43) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 43 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 101,
+   "st": "364:aboard(1/4,43) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 43 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 104,
+   "st": "364:aboard(1/4,43) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 43 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 107,
+   "st": "364:aboard(1/4,43) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 43 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 110,
+   "st": "364:aboard(1/4,43) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 43 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 113,
+   "st": "364:aboard(1/4,42) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 42 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 116,
+   "st": "364:aboard(1/4,42) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 42 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 119,
+   "st": "364:aboard(1/4,42) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 42 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 122,
+   "st": "364:aboard(1/4,42) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 42 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 125,
+   "st": "364:aboard(1/4,42) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 42 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 128,
+   "st": "364:aboard(1/4,42) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 42 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 131,
+   "st": "364:aboard(1/4,42) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 42 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 134,
+   "st": "364:aboard(1/4,42) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 42 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 137,
+   "st": "364:aboard(1/4,41) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 41 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 140,
+   "st": "364:aboard(1/4,41) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 41 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 143,
+   "st": "364:aboard(1/4,41) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 41 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 146,
+   "st": "364:aboard(1/4,41) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 41 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 149,
+   "st": "364:aboard(1/4,41) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 41 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 152,
+   "st": "364:aboard(1/4,41) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 41 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 155,
+   "st": "364:aboard(1/4,41) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 41 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 158,
+   "st": "364:aboard(1/4,41) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 41 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 161,
+   "st": "364:aboard(1/4,40) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 40 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 164,
+   "st": "364:aboard(1/4,40) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 40 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 167,
+   "st": "364:aboard(1/4,40) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 40 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 170,
+   "st": "364:aboard(1/4,40) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 40 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 173,
+   "st": "364:aboard(1/4,40) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 40 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 176,
+   "st": "364:aboard(1/4,40) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 40 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 179,
+   "st": "364:aboard(1/4,40) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 40 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 182,
+   "st": "364:aboard(1/4,40) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 40 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 185,
+   "st": "364:aboard(1/4,39) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 39 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 188,
+   "st": "364:aboard(1/4,39) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 39 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 191,
+   "st": "364:aboard(1/4,39) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 39 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 194,
+   "st": "364:aboard(1/4,39) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 39 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 197,
+   "st": "364:aboard(1/4,39) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 39 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 200,
+   "st": "364:aboard(1/4,39) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 39 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 203,
+   "st": "364:aboard(1/4,39) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 39 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 206,
+   "st": "364:aboard(1/4,39) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 39 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 209,
+   "st": "364:aboard(1/4,38) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 38 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 212,
+   "st": "364:aboard(1/4,38) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 38 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 215,
+   "st": "364:aboard(1/4,38) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 38 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 218,
+   "st": "364:aboard(1/4,38) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 38 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 221,
+   "st": "364:aboard(1/4,38) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 38 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 224,
+   "st": "364:aboard(1/4,38) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 38 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 227,
+   "st": "364:aboard(1/4,38) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 38 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 230,
+   "st": "364:aboard(1/4,38) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 38 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 233,
+   "st": "364:aboard(1/4,37) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 37 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 236,
+   "st": "364:aboard(1/4,37) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 37 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 239,
+   "st": "364:aboard(1/4,37) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 37 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 242,
+   "st": "364:aboard(1/4,37) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 37 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 245,
+   "st": "364:aboard(1/4,37) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 37 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 248,
+   "st": "364:aboard(1/4,37) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 37 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 251,
+   "st": "364:aboard(1/4,37) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 37 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 254,
+   "st": "364:aboard(1/4,37) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 37 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 257,
+   "st": "364:aboard(1/4,36) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 36 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 260,
+   "st": "364:aboard(1/4,36) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 36 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 263,
+   "st": "364:aboard(1/4,36) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 36 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 266,
+   "st": "364:aboard(1/4,36) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 36 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 269,
+   "st": "364:aboard(1/4,36) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 36 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 272,
+   "st": "364:aboard(1/4,36) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 36 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 275,
+   "st": "364:aboard(1/4,36) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 36 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 278,
+   "st": "364:aboard(1/4,36) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 36 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 281,
+   "st": "364:aboard(1/4,35) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 35 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 284,
+   "st": "364:aboard(1/4,35) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 35 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 287,
+   "st": "364:aboard(1/4,35) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 35 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 290,
+   "st": "364:aboard(1/4,35) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 35 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 293,
+   "st": "364:aboard(1/4,35) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 35 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 296,
+   "st": "364:aboard(1/4,35) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 35 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 299,
+   "st": "364:aboard(1/4,35) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 35 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 302,
+   "st": "364:aboard(1/4,35) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 35 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 305,
+   "st": "364:aboard(1/4,34) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 34 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 308,
+   "st": "364:aboard(1/4,34) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 34 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 311,
+   "st": "364:aboard(1/4,34) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 34 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 314,
+   "st": "364:aboard(1/4,34) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 34 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 317,
+   "st": "364:aboard(1/4,34) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 34 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 320,
+   "st": "364:aboard(1/4,34) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 34 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 323,
+   "st": "364:aboard(1/4,34) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 34 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 326,
+   "st": "364:aboard(1/4,34) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 34 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 329,
+   "st": "364:aboard(1/4,33) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 33 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 332,
+   "st": "364:aboard(1/4,33) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 33 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 335,
+   "st": "364:aboard(1/4,33) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 33 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 338,
+   "st": "364:aboard(1/4,33) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 33 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 341,
+   "st": "364:aboard(1/4,33) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 33 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 344,
+   "st": "364:aboard(1/4,33) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 33 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 347,
+   "st": "364:aboard(1/4,33) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 33 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 350,
+   "st": "364:aboard(1/4,33) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 33 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 353,
+   "st": "364:aboard(1/4,32) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 32 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 356,
+   "st": "364:aboard(1/4,32) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 32 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 359,
+   "st": "364:aboard(1/4,32) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 32 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 362,
+   "st": "364:aboard(1/4,32) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 32 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 365,
+   "st": "364:aboard(1/4,32) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 32 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 368,
+   "st": "364:aboard(1/4,32) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 32 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 371,
+   "st": "364:aboard(1/4,32) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 32 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 374,
+   "st": "364:aboard(1/4,32) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 32 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 377,
+   "st": "364:aboard(1/4,31) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 31 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 380,
+   "st": "364:aboard(1/4,31) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 31 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 383,
+   "st": "364:aboard(1/4,31) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 31 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 386,
+   "st": "364:aboard(1/4,31) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 31 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 389,
+   "st": "364:aboard(1/4,31) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 31 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 392,
+   "st": "364:aboard(1/4,31) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 31 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 395,
+   "st": "364:aboard(1/4,31) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 31 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 398,
+   "st": "364:aboard(1/4,31) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 31 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 401,
+   "st": "364:aboard(1/4,30) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 30 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 404,
+   "st": "364:aboard(1/4,30) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 30 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 407,
+   "st": "364:aboard(1/4,30) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 30 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 410,
+   "st": "364:aboard(1/4,30) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 30 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 413,
+   "st": "364:aboard(1/4,30) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 30 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 416,
+   "st": "364:aboard(1/4,30) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 30 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 419,
+   "st": "364:aboard(1/4,30) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 30 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 422,
+   "st": "364:aboard(1/4,30) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 30 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 425,
+   "st": "364:aboard(1/4,29) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 29 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 428,
+   "st": "364:aboard(1/4,29) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 29 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 431,
+   "st": "364:aboard(1/4,29) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 29 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 434,
+   "st": "364:aboard(1/4,29) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 29 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 437,
+   "st": "364:aboard(1/4,29) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 29 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 440,
+   "st": "364:aboard(1/4,29) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 29 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 443,
+   "st": "364:aboard(1/4,29) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 29 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 446,
+   "st": "364:aboard(1/4,29) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 29 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 449,
+   "st": "364:aboard(1/4,28) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 28 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 452,
+   "st": "364:aboard(1/4,28) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 28 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 455,
+   "st": "364:aboard(1/4,28) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 28 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 458,
+   "st": "364:aboard(1/4,28) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 28 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 461,
+   "st": "364:aboard(1/4,28) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 28 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 464,
+   "st": "364:aboard(1/4,28) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 28 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 467,
+   "st": "364:aboard(1/4,28) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 28 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 470,
+   "st": "364:aboard(1/4,28) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 28 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 473,
+   "st": "364:aboard(1/4,27) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 27 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 476,
+   "st": "364:aboard(1/4,27) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 27 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 479,
+   "st": "364:aboard(1/4,27) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 27 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 482,
+   "st": "364:aboard(1/4,27) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 27 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 485,
+   "st": "364:aboard(1/4,27) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 27 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 488,
+   "st": "364:aboard(1/4,27) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 27 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 491,
+   "st": "364:aboard(1/4,27) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 27 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 494,
+   "st": "364:aboard(1/4,27) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 27 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 497,
+   "st": "364:aboard(1/4,26) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 26 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 500,
+   "st": "364:aboard(1/4,26) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 26 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 503,
+   "st": "364:aboard(1/4,26) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 26 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 506,
+   "st": "364:aboard(1/4,26) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 26 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 509,
+   "st": "364:aboard(1/4,26) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 26 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 512,
+   "st": "364:aboard(2/4,26) 365:aboard(2/4,26) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 26 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 515,
+   "st": "364:aboard(2/4,26) 365:aboard(2/4,26) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 26 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 518,
+   "st": "364:aboard(2/4,26) 365:aboard(2/4,26) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 26 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 521,
+   "st": "364:aboard(2/4,25) 365:aboard(2/4,25) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 25 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 524,
+   "st": "364:aboard(2/4,25) 365:aboard(2/4,25) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 25 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 527,
+   "st": "364:aboard(2/4,25) 365:aboard(2/4,25) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 25 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 530,
+   "st": "364:aboard(2/4,25) 365:aboard(2/4,25) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 25 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 533,
+   "st": "364:aboard(2/4,25) 365:aboard(2/4,25) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 25 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 536,
+   "st": "364:aboard(2/4,25) 365:aboard(2/4,25) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 25 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 539,
+   "st": "364:aboard(2/4,25) 365:aboard(2/4,25) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 25 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 542,
+   "st": "364:aboard(2/4,25) 365:aboard(2/4,25) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 25 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 545,
+   "st": "364:aboard(2/4,24) 365:aboard(2/4,24) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 24 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 548,
+   "st": "364:aboard(2/4,24) 365:aboard(2/4,24) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 24 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 551,
+   "st": "364:aboard(2/4,24) 365:aboard(2/4,24) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 24 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 554,
+   "st": "364:aboard(2/4,24) 365:aboard(2/4,24) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 24 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 557,
+   "st": "364:aboard(2/4,24) 365:aboard(2/4,24) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 24 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 560,
+   "st": "364:aboard(2/4,24) 365:aboard(2/4,24) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 24 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 563,
+   "st": "364:aboard(2/4,24) 365:aboard(2/4,24) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 24 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 566,
+   "st": "364:aboard(2/4,24) 365:aboard(2/4,24) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 24 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 569,
+   "st": "364:aboard(2/4,23) 365:aboard(2/4,23) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 23 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 572,
+   "st": "364:aboard(2/4,23) 365:aboard(2/4,23) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 23 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 575,
+   "st": "364:aboard(2/4,23) 365:aboard(2/4,23) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 23 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 578,
+   "st": "364:aboard(2/4,23) 365:aboard(2/4,23) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 23 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 581,
+   "st": "364:aboard(2/4,23) 365:aboard(2/4,23) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 23 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 584,
+   "st": "364:aboard(2/4,23) 365:aboard(2/4,23) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 23 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 587,
+   "st": "364:aboard(2/4,23) 365:aboard(2/4,23) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 23 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 590,
+   "st": "364:aboard(2/4,23) 365:aboard(2/4,23) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 23 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 593,
+   "st": "364:aboard(2/4,22) 365:aboard(2/4,22) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 22 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 596,
+   "st": "364:aboard(2/4,22) 365:aboard(2/4,22) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 22 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 599,
+   "st": "364:aboard(2/4,22) 365:aboard(2/4,22) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 22 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 602,
+   "st": "364:aboard(2/4,22) 365:aboard(2/4,22) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 22 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 605,
+   "st": "364:aboard(2/4,22) 365:aboard(2/4,22) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 22 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 608,
+   "st": "364:aboard(2/4,22) 365:aboard(2/4,22) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 22 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 611,
+   "st": "364:aboard(2/4,22) 365:aboard(2/4,22) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 22 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 614,
+   "st": "364:aboard(2/4,22) 365:aboard(2/4,22) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 22 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 617,
+   "st": "364:aboard(2/4,21) 365:aboard(2/4,21) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 21 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 620,
+   "st": "364:aboard(2/4,21) 365:aboard(2/4,21) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 21 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 623,
+   "st": "364:aboard(2/4,21) 365:aboard(2/4,21) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 21 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 626,
+   "st": "364:aboard(2/4,21) 365:aboard(2/4,21) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 21 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 629,
+   "st": "364:aboard(2/4,21) 365:aboard(2/4,21) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 21 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 632,
+   "st": "364:aboard(2/4,21) 365:aboard(2/4,21) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 21 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 635,
+   "st": "364:aboard(2/4,21) 365:aboard(2/4,21) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 21 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 638,
+   "st": "364:aboard(2/4,21) 365:aboard(2/4,21) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 21 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 641,
+   "st": "364:aboard(2/4,20) 365:aboard(2/4,20) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 20 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 644,
+   "st": "364:aboard(2/4,20) 365:aboard(2/4,20) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 20 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 647,
+   "st": "364:aboard(2/4,20) 365:aboard(2/4,20) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 20 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 650,
+   "st": "364:aboard(2/4,20) 365:aboard(2/4,20) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 20 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 653,
+   "st": "364:aboard(2/4,20) 365:aboard(2/4,20) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 20 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 656,
+   "st": "364:aboard(2/4,20) 365:aboard(2/4,20) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 20 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 659,
+   "st": "364:aboard(2/4,20) 365:aboard(2/4,20) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 20 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 662,
+   "st": "364:aboard(2/4,20) 365:aboard(2/4,20) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 20 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 665,
+   "st": "364:aboard(2/4,19) 365:aboard(2/4,19) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 19 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 668,
+   "st": "364:aboard(2/4,19) 365:aboard(2/4,19) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 19 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 671,
+   "st": "364:aboard(2/4,19) 365:aboard(2/4,19) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 19 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 674,
+   "st": "364:aboard(2/4,19) 365:aboard(2/4,19) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 19 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 677,
+   "st": "364:aboard(2/4,19) 365:aboard(2/4,19) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 19 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 680,
+   "st": "364:aboard(2/4,19) 365:aboard(2/4,19) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 19 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 683,
+   "st": "364:aboard(2/4,19) 365:aboard(2/4,19) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 19 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 686,
+   "st": "364:aboard(2/4,19) 365:aboard(2/4,19) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 19 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 689,
+   "st": "364:aboard(2/4,18) 365:aboard(2/4,18) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 18 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 692,
+   "st": "364:aboard(2/4,18) 365:aboard(2/4,18) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 18 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 695,
+   "st": "364:aboard(2/4,18) 365:aboard(2/4,18) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 18 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 698,
+   "st": "364:aboard(2/4,18) 365:aboard(2/4,18) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 18 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 701,
+   "st": "364:aboard(2/4,18) 365:aboard(2/4,18) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 18 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 704,
+   "st": "364:aboard(2/4,18) 365:aboard(2/4,18) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 18 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 707,
+   "st": "364:aboard(2/4,18) 365:aboard(2/4,18) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 18 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 710,
+   "st": "364:aboard(2/4,18) 365:aboard(2/4,18) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 18 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 713,
+   "st": "364:aboard(2/4,17) 365:aboard(2/4,17) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 17 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 716,
+   "st": "364:aboard(2/4,17) 365:aboard(2/4,17) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 17 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 719,
+   "st": "364:aboard(2/4,17) 365:aboard(2/4,17) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 17 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 722,
+   "st": "364:aboard(2/4,17) 365:aboard(2/4,17) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 17 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 725,
+   "st": "364:aboard(2/4,17) 365:aboard(2/4,17) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 17 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 728,
+   "st": "364:aboard(2/4,17) 365:aboard(2/4,17) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 17 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 731,
+   "st": "364:aboard(2/4,17) 365:aboard(2/4,17) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 17 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 734,
+   "st": "364:aboard(2/4,17) 365:aboard(2/4,17) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 17 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 737,
+   "st": "364:aboard(2/4,16) 365:aboard(2/4,16) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 16 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 740,
+   "st": "364:aboard(2/4,16) 365:aboard(2/4,16) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 16 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 743,
+   "st": "364:aboard(2/4,16) 365:aboard(2/4,16) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 16 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 746,
+   "st": "364:aboard(2/4,16) 365:aboard(2/4,16) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 16 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 749,
+   "st": "364:aboard(2/4,16) 365:aboard(2/4,16) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 16 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 752,
+   "st": "364:aboard(2/4,16) 365:aboard(2/4,16) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 16 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 755,
+   "st": "364:aboard(2/4,16) 365:aboard(2/4,16) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 16 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 758,
+   "st": "364:aboard(2/4,16) 365:aboard(2/4,16) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 16 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 761,
+   "st": "364:aboard(2/4,15) 365:aboard(2/4,15) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 15 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 764,
+   "st": "364:aboard(2/4,15) 365:aboard(2/4,15) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 15 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 767,
+   "st": "364:aboard(2/4,15) 365:aboard(2/4,15) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 15 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 770,
+   "st": "364:aboard(2/4,15) 365:aboard(2/4,15) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 15 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 773,
+   "st": "364:aboard(2/4,15) 365:aboard(2/4,15) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 15 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 776,
+   "st": "364:aboard(2/4,15) 365:aboard(2/4,15) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 15 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 779,
+   "st": "364:aboard(2/4,15) 365:aboard(2/4,15) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 15 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 782,
+   "st": "364:aboard(2/4,15) 365:aboard(2/4,15) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 15 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 785,
+   "st": "364:aboard(2/4,14) 365:aboard(2/4,14) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 14 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 788,
+   "st": "364:aboard(2/4,14) 365:aboard(2/4,14) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 14 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 791,
+   "st": "364:aboard(2/4,14) 365:aboard(2/4,14) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 14 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 794,
+   "st": "364:aboard(2/4,14) 365:aboard(2/4,14) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 14 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 797,
+   "st": "364:aboard(2/4,14) 365:aboard(2/4,14) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 14 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 800,
+   "st": "364:aboard(2/4,14) 365:aboard(2/4,14) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 14 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 803,
+   "st": "364:aboard(2/4,14) 365:aboard(2/4,14) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 14 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 806,
+   "st": "364:aboard(2/4,14) 365:aboard(2/4,14) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 14 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 809,
+   "st": "364:aboard(2/4,13) 365:aboard(2/4,13) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 13 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 812,
+   "st": "364:aboard(2/4,13) 365:aboard(2/4,13) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 13 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 815,
+   "st": "364:aboard(2/4,13) 365:aboard(2/4,13) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 13 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 818,
+   "st": "364:aboard(2/4,13) 365:aboard(2/4,13) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 13 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 821,
+   "st": "364:aboard(2/4,13) 365:aboard(2/4,13) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 13 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 824,
+   "st": "364:aboard(2/4,13) 365:aboard(2/4,13) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 13 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 827,
+   "st": "364:aboard(2/4,13) 365:aboard(2/4,13) 366:toPort 367:toPort",
+   "wait": "2 of 4 aboard; the last 13 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 830,
+   "st": "364:aboard(3/4,13) 365:aboard(3/4,13) 366:aboard(3/4,13) 367:toPort",
+   "wait": "3 of 4 aboard; the last 13 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 833,
+   "st": "364:aboard(3/4,12) 365:aboard(3/4,12) 366:aboard(3/4,12) 367:toPort",
+   "wait": "3 of 4 aboard; the last 12 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 836,
+   "st": "364:aboard(3/4,12) 365:aboard(3/4,12) 366:aboard(3/4,12) 367:toPort",
+   "wait": "3 of 4 aboard; the last 12 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 839,
+   "st": "364:aboard(3/4,12) 365:aboard(3/4,12) 366:aboard(3/4,12) 367:toPort",
+   "wait": "3 of 4 aboard; the last 12 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 842,
+   "st": "364:aboard(3/4,12) 365:aboard(3/4,12) 366:aboard(3/4,12) 367:toPort",
+   "wait": "3 of 4 aboard; the last 12 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 845,
+   "st": "364:aboard(3/4,12) 365:aboard(3/4,12) 366:aboard(3/4,12) 367:toPort",
+   "wait": "3 of 4 aboard; the last 12 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 848,
+   "st": "364:aboard(3/4,12) 365:aboard(3/4,12) 366:aboard(3/4,12) 367:toPort",
+   "wait": "3 of 4 aboard; the last 12 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 851,
+   "st": "364:aboard(3/4,12) 365:aboard(3/4,12) 366:aboard(3/4,12) 367:toPort",
+   "wait": "3 of 4 aboard; the last 12 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 854,
+   "st": "364:aboard(3/4,12) 365:aboard(3/4,12) 366:aboard(3/4,12) 367:toPort",
+   "wait": "3 of 4 aboard; the last 12 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 857,
+   "st": "364:aboard(3/4,11) 365:aboard(3/4,11) 366:aboard(3/4,11) 367:toPort",
+   "wait": "3 of 4 aboard; the last 11 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 860,
+   "st": "364:aboard(3/4,11) 365:aboard(3/4,11) 366:aboard(3/4,11) 367:toPort",
+   "wait": "3 of 4 aboard; the last 11 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 863,
+   "st": "364:aboard(3/4,11) 365:aboard(3/4,11) 366:aboard(3/4,11) 367:toPort",
+   "wait": "3 of 4 aboard; the last 11 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 866,
+   "st": "364:aboard(3/4,11) 365:aboard(3/4,11) 366:aboard(3/4,11) 367:toPort",
+   "wait": "3 of 4 aboard; the last 11 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 869,
+   "st": "364:aboard(3/4,11) 365:aboard(3/4,11) 366:aboard(3/4,11) 367:toPort",
+   "wait": "3 of 4 aboard; the last 11 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 872,
+   "st": "364:aboard(3/4,11) 365:aboard(3/4,11) 366:aboard(3/4,11) 367:toPort",
+   "wait": "3 of 4 aboard; the last 11 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 875,
+   "st": "364:aboard(3/4,11) 365:aboard(3/4,11) 366:aboard(3/4,11) 367:toPort",
+   "wait": "3 of 4 aboard; the last 11 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 878,
+   "st": "364:aboard(3/4,11) 365:aboard(3/4,11) 366:aboard(3/4,11) 367:toPort",
+   "wait": "3 of 4 aboard; the last 11 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 881,
+   "st": "364:aboard(3/4,10) 365:aboard(3/4,10) 366:aboard(3/4,10) 367:toPort",
+   "wait": "3 of 4 aboard; the last 10 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 884,
+   "st": "364:aboard(3/4,10) 365:aboard(3/4,10) 366:aboard(3/4,10) 367:toPort",
+   "wait": "3 of 4 aboard; the last 10 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 887,
+   "st": "364:aboard(3/4,10) 365:aboard(3/4,10) 366:aboard(3/4,10) 367:toPort",
+   "wait": "3 of 4 aboard; the last 10 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 890,
+   "st": "364:aboard(3/4,10) 365:aboard(3/4,10) 366:aboard(3/4,10) 367:toPort",
+   "wait": "3 of 4 aboard; the last 10 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 893,
+   "st": "364:aboard(3/4,10) 365:aboard(3/4,10) 366:aboard(3/4,10) 367:toPort",
+   "wait": "3 of 4 aboard; the last 10 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 896,
+   "st": "364:aboard(3/4,10) 365:aboard(3/4,10) 366:aboard(3/4,10) 367:toPort",
+   "wait": "3 of 4 aboard; the last 10 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 899,
+   "st": "364:aboard(3/4,10) 365:aboard(3/4,10) 366:aboard(3/4,10) 367:toPort",
+   "wait": "3 of 4 aboard; the last 10 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 902,
+   "st": "364:aboard(3/4,10) 365:aboard(3/4,10) 366:aboard(3/4,10) 367:toPort",
+   "wait": "3 of 4 aboard; the last 10 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 905,
+   "st": "364:aboard(3/4,9) 365:aboard(3/4,9) 366:aboard(3/4,9) 367:toPort",
+   "wait": "3 of 4 aboard; the last 9 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 908,
+   "st": "364:aboard(3/4,9) 365:aboard(3/4,9) 366:aboard(3/4,9) 367:toPort",
+   "wait": "3 of 4 aboard; the last 9 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 911,
+   "st": "364:aboard(3/4,9) 365:aboard(3/4,9) 366:aboard(3/4,9) 367:toPort",
+   "wait": "3 of 4 aboard; the last 9 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 914,
+   "st": "364:aboard(3/4,9) 365:aboard(3/4,9) 366:aboard(3/4,9) 367:toPort",
+   "wait": "3 of 4 aboard; the last 9 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 917,
+   "st": "364:aboard(3/4,9) 365:aboard(3/4,9) 366:aboard(3/4,9) 367:toPort",
+   "wait": "3 of 4 aboard; the last 9 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 920,
+   "st": "364:aboard(3/4,9) 365:aboard(3/4,9) 366:aboard(3/4,9) 367:toPort",
+   "wait": "3 of 4 aboard; the last 9 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 923,
+   "st": "364:aboard(3/4,9) 365:aboard(3/4,9) 366:aboard(3/4,9) 367:toPort",
+   "wait": "3 of 4 aboard; the last 9 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 926,
+   "st": "364:aboard(3/4,9) 365:aboard(3/4,9) 366:aboard(3/4,9) 367:toPort",
+   "wait": "3 of 4 aboard; the last 9 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 929,
+   "st": "364:aboard(3/4,8) 365:aboard(3/4,8) 366:aboard(3/4,8) 367:toPort",
+   "wait": "3 of 4 aboard; the last 8 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 932,
+   "st": "364:aboard(3/4,8) 365:aboard(3/4,8) 366:aboard(3/4,8) 367:toPort",
+   "wait": "3 of 4 aboard; the last 8 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 935,
+   "st": "364:aboard(3/4,8) 365:aboard(3/4,8) 366:aboard(3/4,8) 367:toPort",
+   "wait": "3 of 4 aboard; the last 8 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 938,
+   "st": "364:aboard(3/4,8) 365:aboard(3/4,8) 366:aboard(3/4,8) 367:toPort",
+   "wait": "3 of 4 aboard; the last 8 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 941,
+   "st": "364:aboard(3/4,8) 365:aboard(3/4,8) 366:aboard(3/4,8) 367:toPort",
+   "wait": "3 of 4 aboard; the last 8 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 944,
+   "st": "364:aboard(3/4,8) 365:aboard(3/4,8) 366:aboard(3/4,8) 367:toPort",
+   "wait": "3 of 4 aboard; the last 8 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 947,
+   "st": "364:aboard(3/4,8) 365:aboard(3/4,8) 366:aboard(3/4,8) 367:toPort",
+   "wait": "3 of 4 aboard; the last 8 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 950,
+   "st": "364:aboard(3/4,8) 365:aboard(3/4,8) 366:aboard(3/4,8) 367:toPort",
+   "wait": "3 of 4 aboard; the last 8 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 953,
+   "st": "364:aboard(3/4,7) 365:aboard(3/4,7) 366:aboard(3/4,7) 367:toPort",
+   "wait": "3 of 4 aboard; the last 7 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 956,
+   "st": "364:aboard(3/4,7) 365:aboard(3/4,7) 366:aboard(3/4,7) 367:toPort",
+   "wait": "3 of 4 aboard; the last 7 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 959,
+   "st": "364:aboard(3/4,7) 365:aboard(3/4,7) 366:aboard(3/4,7) 367:toPort",
+   "wait": "3 of 4 aboard; the last 7 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 962,
+   "st": "364:aboard(3/4,7) 365:aboard(3/4,7) 366:aboard(3/4,7) 367:toPort",
+   "wait": "3 of 4 aboard; the last 7 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 965,
+   "st": "364:aboard(3/4,7) 365:aboard(3/4,7) 366:aboard(3/4,7) 367:toPort",
+   "wait": "3 of 4 aboard; the last 7 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 968,
+   "st": "364:aboard(3/4,7) 365:aboard(3/4,7) 366:aboard(3/4,7) 367:toPort",
+   "wait": "3 of 4 aboard; the last 7 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 971,
+   "st": "364:aboard(3/4,7) 365:aboard(3/4,7) 366:aboard(3/4,7) 367:toPort",
+   "wait": "3 of 4 aboard; the last 7 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 974,
+   "st": "364:aboard(3/4,7) 365:aboard(3/4,7) 366:aboard(3/4,7) 367:toPort",
+   "wait": "3 of 4 aboard; the last 7 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 977,
+   "st": "364:aboard(3/4,6) 365:aboard(3/4,6) 366:aboard(3/4,6) 367:toPort",
+   "wait": "3 of 4 aboard; the last 6 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 980,
+   "st": "364:aboard(3/4,6) 365:aboard(3/4,6) 366:aboard(3/4,6) 367:toPort",
+   "wait": "3 of 4 aboard; the last 6 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 983,
+   "st": "364:aboard(3/4,6) 365:aboard(3/4,6) 366:aboard(3/4,6) 367:toPort",
+   "wait": "3 of 4 aboard; the last 6 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 986,
+   "st": "364:aboard(3/4,6) 365:aboard(3/4,6) 366:aboard(3/4,6) 367:toPort",
+   "wait": "3 of 4 aboard; the last 6 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 989,
+   "st": "364:aboard(3/4,6) 365:aboard(3/4,6) 366:aboard(3/4,6) 367:toPort",
+   "wait": "3 of 4 aboard; the last 6 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 992,
+   "st": "364:aboard(3/4,6) 365:aboard(3/4,6) 366:aboard(3/4,6) 367:toPort",
+   "wait": "3 of 4 aboard; the last 6 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 995,
+   "st": "364:aboard(3/4,6) 365:aboard(3/4,6) 366:aboard(3/4,6) 367:toPort",
+   "wait": "3 of 4 aboard; the last 6 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 998,
+   "st": "364:aboard(3/4,6) 365:aboard(3/4,6) 366:aboard(3/4,6) 367:toPort",
+   "wait": "3 of 4 aboard; the last 6 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1001,
+   "st": "364:aboard(3/4,5) 365:aboard(3/4,5) 366:aboard(3/4,5) 367:toPort",
+   "wait": "3 of 4 aboard; the last 5 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1004,
+   "st": "364:aboard(3/4,5) 365:aboard(3/4,5) 366:aboard(3/4,5) 367:toPort",
+   "wait": "3 of 4 aboard; the last 5 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1007,
+   "st": "364:aboard(3/4,5) 365:aboard(3/4,5) 366:aboard(3/4,5) 367:toPort",
+   "wait": "3 of 4 aboard; the last 5 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1010,
+   "st": "364:aboard(3/4,5) 365:aboard(3/4,5) 366:aboard(3/4,5) 367:toPort",
+   "wait": "3 of 4 aboard; the last 5 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1013,
+   "st": "364:aboard(3/4,5) 365:aboard(3/4,5) 366:aboard(3/4,5) 367:toPort",
+   "wait": "3 of 4 aboard; the last 5 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1016,
+   "st": "364:aboard(3/4,5) 365:aboard(3/4,5) 366:aboard(3/4,5) 367:toPort",
+   "wait": "3 of 4 aboard; the last 5 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1019,
+   "st": "364:aboard(3/4,5) 365:aboard(3/4,5) 366:aboard(3/4,5) 367:toPort",
+   "wait": "3 of 4 aboard; the last 5 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1022,
+   "st": "364:aboard(3/4,5) 365:aboard(3/4,5) 366:aboard(3/4,5) 367:toPort",
+   "wait": "3 of 4 aboard; the last 5 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1025,
+   "st": "364:aboard(3/4,4) 365:aboard(3/4,4) 366:aboard(3/4,4) 367:toPort",
+   "wait": "3 of 4 aboard; the last 4 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1028,
+   "st": "364:aboard(3/4,4) 365:aboard(3/4,4) 366:aboard(3/4,4) 367:toPort",
+   "wait": "3 of 4 aboard; the last 4 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1031,
+   "st": "364:aboard(3/4,4) 365:aboard(3/4,4) 366:aboard(3/4,4) 367:toPort",
+   "wait": "3 of 4 aboard; the last 4 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1034,
+   "st": "364:aboard(3/4,4) 365:aboard(3/4,4) 366:aboard(3/4,4) 367:toPort",
+   "wait": "3 of 4 aboard; the last 4 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1037,
+   "st": "364:aboard(3/4,4) 365:aboard(3/4,4) 366:aboard(3/4,4) 367:toPort",
+   "wait": "3 of 4 aboard; the last 4 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1040,
+   "st": "364:aboard(3/4,4) 365:aboard(3/4,4) 366:aboard(3/4,4) 367:toPort",
+   "wait": "3 of 4 aboard; the last 4 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1043,
+   "st": "364:aboard(3/4,4) 365:aboard(3/4,4) 366:aboard(3/4,4) 367:toPort",
+   "wait": "3 of 4 aboard; the last 4 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1046,
+   "st": "364:aboard(3/4,4) 365:aboard(3/4,4) 366:aboard(3/4,4) 367:toPort",
+   "wait": "3 of 4 aboard; the last 4 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1049,
+   "st": "364:aboard(3/4,3) 365:aboard(3/4,3) 366:aboard(3/4,3) 367:toPort",
+   "wait": "3 of 4 aboard; the last 3 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1052,
+   "st": "364:aboard(3/4,3) 365:aboard(3/4,3) 366:aboard(3/4,3) 367:toPort",
+   "wait": "3 of 4 aboard; the last 3 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1055,
+   "st": "364:aboard(3/4,3) 365:aboard(3/4,3) 366:aboard(3/4,3) 367:toPort",
+   "wait": "3 of 4 aboard; the last 3 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1058,
+   "st": "364:aboard(3/4,3) 365:aboard(3/4,3) 366:aboard(3/4,3) 367:toPort",
+   "wait": "3 of 4 aboard; the last 3 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1061,
+   "st": "364:aboard(3/4,3) 365:aboard(3/4,3) 366:aboard(3/4,3) 367:toPort",
+   "wait": "3 of 4 aboard; the last 3 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1064,
+   "st": "364:aboard(3/4,3) 365:aboard(3/4,3) 366:aboard(3/4,3) 367:toPort",
+   "wait": "3 of 4 aboard; the last 3 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1067,
+   "st": "364:aboard(3/4,3) 365:aboard(3/4,3) 366:aboard(3/4,3) 367:toPort",
+   "wait": "3 of 4 aboard; the last 3 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1070,
+   "st": "364:aboard(3/4,3) 365:aboard(3/4,3) 366:aboard(3/4,3) 367:toPort",
+   "wait": "3 of 4 aboard; the last 3 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1073,
+   "st": "364:aboard(3/4,2) 365:aboard(3/4,2) 366:aboard(3/4,2) 367:toPort",
+   "wait": "3 of 4 aboard; the last 2 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1076,
+   "st": "364:aboard(3/4,2) 365:aboard(3/4,2) 366:aboard(3/4,2) 367:toPort",
+   "wait": "3 of 4 aboard; the last 2 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1079,
+   "st": "364:aboard(3/4,2) 365:aboard(3/4,2) 366:aboard(3/4,2) 367:toPort",
+   "wait": "3 of 4 aboard; the last 2 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1082,
+   "st": "364:aboard(3/4,2) 365:aboard(3/4,2) 366:aboard(3/4,2) 367:toPort",
+   "wait": "3 of 4 aboard; the last 2 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1085,
+   "st": "364:aboard(3/4,2) 365:aboard(3/4,2) 366:aboard(3/4,2) 367:toPort",
+   "wait": "3 of 4 aboard; the last 2 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1088,
+   "st": "364:aboard(3/4,2) 365:aboard(3/4,2) 366:aboard(3/4,2) 367:toPort",
+   "wait": "3 of 4 aboard; the last 2 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1091,
+   "st": "364:aboard(3/4,2) 365:aboard(3/4,2) 366:aboard(3/4,2) 367:toPort",
+   "wait": "3 of 4 aboard; the last 2 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1094,
+   "st": "364:aboard(3/4,2) 365:aboard(3/4,2) 366:aboard(3/4,2) 367:toPort",
+   "wait": "3 of 4 aboard; the last 2 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1097,
+   "st": "364:aboard(3/4,1) 365:aboard(3/4,1) 366:aboard(3/4,1) 367:toPort",
+   "wait": "3 of 4 aboard; the last a day from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1100,
+   "st": "364:aboard(3/4,1) 365:aboard(3/4,1) 366:aboard(3/4,1) 367:toPort",
+   "wait": "3 of 4 aboard; the last a day from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1103,
+   "st": "364:aboard(3/4,1) 365:aboard(3/4,1) 366:aboard(3/4,1) 367:toPort",
+   "wait": "3 of 4 aboard; the last a day from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1106,
+   "st": "364:aboard(3/4,1) 365:aboard(3/4,1) 366:aboard(3/4,1) 367:toPort",
+   "wait": "3 of 4 aboard; the last a day from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1109,
+   "st": "364:aboard(3/4,1) 365:aboard(3/4,1) 366:aboard(3/4,1) 367:toPort",
+   "wait": "3 of 4 aboard; the last a day from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1112,
+   "st": "364:aboard(3/4,1) 365:aboard(3/4,1) 366:aboard(3/4,1) 367:toPort",
+   "wait": "3 of 4 aboard; the last a day from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1115,
+   "st": "364:aboard(3/4,1) 365:aboard(3/4,1) 366:aboard(3/4,1) 367:toPort",
+   "wait": "3 of 4 aboard; the last a day from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1118,
+   "st": "364:aboard(3/4,1) 365:aboard(3/4,1) 366:aboard(3/4,1) 367:toPort",
+   "wait": "3 of 4 aboard; the last a day from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1121,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1124,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1127,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1130,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1133,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1136,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1139,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1142,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1145,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1148,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1151,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1154,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1157,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1160,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1163,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1166,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1169,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1172,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1175,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1178,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1181,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1184,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1187,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1190,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1193,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1196,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1199,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1202,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1205,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1208,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1211,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1214,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1217,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1220,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1223,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1226,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1229,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1232,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1235,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1238,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1241,
+   "st": "364:atSea 365:atSea 366:atSea 367:atSea",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 1244,
+   "st": "364:landed 365:landed 366:landed 367:landed",
+   "wait": null,
+   "status": "Landed",
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  }
+ ],
+ "marks": [
+  {
+   "h": 4,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 1,
+      "of": 4,
+      "days": 47
+     },
+     "moving": false,
+     "p": [
+      1819.1,
+      387.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1794.8,
+      391.5
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1777.6,
+      393.4
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1827.4,
+      335.6
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "1 of 4 aboard; the last 47 days from the port",
+    "notice": null,
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n1 of 4 aboard; the last 47 days from the port\nEscort with warships\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c40lwt5_four_allsw63_h4_panel.png",
+   "shot": "critic/shots/c40lwt5_four_allsw63_h4.png"
+  },
+  {
+   "h": 25,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 1,
+      "of": 4,
+      "days": 46
+     },
+     "moving": false,
+     "p": [
+      1819.1,
+      387.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1796.1,
+      390.9
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1778.3,
+      392.7
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1826.6,
+      336.4
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "1 of 4 aboard; the last 46 days from the port",
+    "notice": null,
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n1 of 4 aboard; the last 46 days from the port\nEscort with warships\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c40lwt5_four_allsw63_h25_panel.png",
+   "shot": "critic/shots/c40lwt5_four_allsw63_h25.png"
+  },
+  {
+   "h": 122,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 1,
+      "of": 4,
+      "days": 42
+     },
+     "moving": false,
+     "p": [
+      1819.1,
+      387.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1800.7,
+      389.5
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1783.4,
+      392.5
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1822.3,
+      338.7
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "1 of 4 aboard; the last 42 days from the port",
+    "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n1 of 4 aboard; the last 42 days from the port\nEscort with warships\nSquare infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c40lwt5_four_allsw63_h122_panel.png",
+   "shot": "critic/shots/c40lwt5_four_allsw63_h122.png"
+  },
+  {
+   "h": 242,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 1,
+      "of": 4,
+      "days": 37
+     },
+     "moving": false,
+     "p": [
+      1819.1,
+      387.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1808,
+      389.5
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1789.7,
+      390.5
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1823.2,
+      343.2
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "1 of 4 aboard; the last 37 days from the port",
+    "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n1 of 4 aboard; the last 37 days from the port\nEscort with warships\nSquare infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c40lwt5_four_allsw63_h242_panel.png",
+   "shot": "critic/shots/c40lwt5_four_allsw63_h242.png"
+  },
+  {
+   "h": 482,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 1,
+      "of": 4,
+      "days": 27
+     },
+     "moving": false,
+     "p": [
+      1819.1,
+      387.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1817.8,
+      386.2
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1803.8,
+      389.5
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1827.6,
+      350.3
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "1 of 4 aboard; the last 27 days from the port",
+    "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n1 of 4 aboard; the last 27 days from the port\nEscort with warships\nSquare infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c40lwt5_four_allsw63_h482_panel.png",
+   "shot": "critic/shots/c40lwt5_four_allsw63_h482.png"
+  },
+  {
+   "h": 722,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 2,
+      "of": 4,
+      "days": 17
+     },
+     "moving": false,
+     "p": [
+      1819.1,
+      387.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 2,
+      "of": 4,
+      "days": 17
+     },
+     "moving": false,
+     "p": [
+      1819.5,
+      386.5
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1813.8,
+      388.2
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1826.5,
+      362.6
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "2 of 4 aboard; the last 17 days from the port",
+    "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n2 of 4 aboard; the last 17 days from the port\nEscort with warships\nSquare infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c40lwt5_four_allsw63_h722_panel.png",
+   "shot": "critic/shots/c40lwt5_four_allsw63_h722.png"
+  },
+  {
+   "h": 962,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 3,
+      "of": 4,
+      "days": 7
+     },
+     "moving": false,
+     "p": [
+      1819.1,
+      387.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 3,
+      "of": 4,
+      "days": 7
+     },
+     "moving": false,
+     "p": [
+      1819.5,
+      386.5
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 3,
+      "of": 4,
+      "days": 7
+     },
+     "moving": false,
+     "p": [
+      1819.5,
+      386.5
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1822.2,
+      375.8
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "3 of 4 aboard; the last 7 days from the port",
+    "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n3 of 4 aboard; the last 7 days from the port\nEscort with warships\nSquare infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c40lwt5_four_allsw63_h962_panel.png",
+   "shot": "critic/shots/c40lwt5_four_allsw63_h962.png"
+  },
+  {
+   "h": 1112,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 3,
+      "of": 4,
+      "days": 1
+     },
+     "moving": false,
+     "p": [
+      1819.1,
+      387.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 3,
+      "of": 4,
+      "days": 1
+     },
+     "moving": false,
+     "p": [
+      1819.5,
+      386.5
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 3,
+      "of": 4,
+      "days": 1
+     },
+     "moving": false,
+     "p": [
+      1819.5,
+      386.5
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1819.5,
+      385
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "3 of 4 aboard; the last a day from the port",
+    "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n3 of 4 aboard; the last a day from the port\nEscort with warships\nSquare infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c40lwt5_four_allsw63_h1112_panel.png",
+   "shot": "critic/shots/c40lwt5_four_allsw63_h1112.png"
+  },
+  {
+   "h": 1151,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "wait": null,
+     "moving": false,
+     "p": [
+      1796.3,
+      401.7
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "wait": null,
+     "moving": false,
+     "p": [
+      1797.3,
+      401.5
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "wait": null,
+     "moving": false,
+     "p": [
+      1797.3,
+      401.5
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "wait": null,
+     "moving": false,
+     "p": [
+      1797.3,
+      401.5
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "At sea, bound for its landing",
+    "wait": null,
+    "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAt sea, bound for its landing\nEscort with warships\nSquare infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c40lwt5_four_allsw63_h1151_panel.png",
+   "shot": "critic/shots/c40lwt5_four_allsw63_h1151.png"
+  },
+  {
+   "h": 1202,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "wait": null,
+     "moving": false,
+     "p": [
+      1752.5,
+      416.5
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "wait": null,
+     "moving": false,
+     "p": [
+      1753.6,
+      416.5
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "wait": null,
+     "moving": false,
+     "p": [
+      1753.6,
+      416.5
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "wait": null,
+     "moving": false,
+     "p": [
+      1753.6,
+      416.5
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "At sea, bound for its landing",
+    "wait": null,
+    "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAt sea, bound for its landing\nEscort with warships\nSquare infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c40lwt5_four_allsw63_h1202_panel.png",
+   "shot": "critic/shots/c40lwt5_four_allsw63_h1202.png"
+  }
+ ],
+ "rows": [
+  "Square infantry division 366: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+  "7 January 1938 Italy declared war on Austria",
+  "14 January 1938 Italy declared war on Yugoslavia",
+  "26 January 1938 Soviet Union declared war on Romania",
+  "26 January 1938 Germany captured Czechoslovakia's capital",
+  "30 January 1938 Hungary declared war on Austria",
+  "1 February 1938 Germany and Czechoslovakia fought in the air this month: Germany lost 108 aircraft, Czechoslovakia 153",
+  "1 February 1938 Japan's air force struck China this month: 16,531 men, guns and vehicles lost",
+  "2 February 1938 Soviet Union declared war on Lithuania",
+  "3 February 1938 Germany captured Austria's capital",
+  "4 February 1938 Italy made peace with Austria",
+  "4 February 1938 Hungary made peace with Austria",
+  "5 February 1938 Albania captured Yugoslavia's capital",
+  "13 February 1938 United Kingdom declared war on Ireland",
+  "14 February 1938 Nationalist Spain made peace with Spanish Republic",
+  "18 February 1938 Germany declared war on Lithuania"
+ ],
+ "ids": [
+  364,
+  365,
+  366,
+  367
+ ],
+ "escortBox": true,
+ "scale": {
+  "pxPerCell": 20.872395833333332,
+  "mPerPx": 937.5
+ },
+ "tooltip": "China\nOccupied by Japan\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+ "noticeShot": {
+  "h": 35,
+  "st": [
+   {
+    "id": 364,
+    "alive": true,
+    "v": "aboard",
+    "port": "Tokyo",
+    "wait": {
+     "aboard": 1,
+     "of": 4,
+     "days": 46
+    },
+    "moving": false,
+    "p": [
+     1819.1,
+     387.2
+    ]
+   },
+   {
+    "id": 365,
+    "alive": true,
+    "v": "toPort",
+    "port": "Tokyo",
+    "wait": null,
+    "moving": true,
+    "p": [
+     1796.6,
+     390.4
+    ]
+   },
+   {
+    "id": 366,
+    "alive": true,
+    "v": "toPort",
+    "port": "Tokyo",
+    "wait": null,
+    "moving": true,
+    "p": [
+     1778.8,
+     392.5
+    ]
+   },
+   {
+    "id": 367,
+    "alive": true,
+    "v": "toPort",
+    "port": "Tokyo",
+    "wait": null,
+    "moving": true,
+    "p": [
+     1826,
+     336.5
+    ]
+   }
+  ],
+  "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+  "status": "Aboard at Tokyo, waiting for the rest of the landing",
+  "news": [
+   [
+    "leftLanding",
+    "Square infantry division 366: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+   ]
+  ],
+  "crop": "critic/shots/c40lwt5_four_allsw63_notice_h35_panel.png",
+  "shot": "critic/shots/c40lwt5_four_allsw63_notice_h35.png"
+ },
+ "endH": 1244,
+ "endPanel": {
+  "panel": {
+   "open": true,
+   "id": "364",
+   "status": "Landed",
+   "wait": null,
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+   "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n88%\nOrg\n53%\nFuel on the march\nNone\nStatus\nLanded\nEscort with warships\nSquare infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+  },
+  "news": [
+   [
+    "leftLanding",
+    "Square infantry division 366: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+   ]
+  ],
+  "crop": "critic/shots/c40lwt5_four_allsw63_end_panel.png",
+  "shot": "critic/shots/c40lwt5_four_allsw63_end.png"
+ },
+ "final": [
+  {
+   "id": 364,
+   "alive": true,
+   "v": "landed",
+   "port": null,
+   "wait": null,
+   "moving": true,
+   "p": [
+    1713.4,
+    416.5
+   ]
+  },
+  {
+   "id": 365,
+   "alive": true,
+   "v": "landed",
+   "port": null,
+   "wait": null,
+   "moving": true,
+   "p": [
+    1713.4,
+    416.1
+   ]
+  },
+  {
+   "id": 366,
+   "alive": true,
+   "v": "landed",
+   "port": null,
+   "wait": null,
+   "moving": true,
+   "p": [
+    1713.4,
+    416.9
+   ]
+  },
+  {
+   "id": 367,
+   "alive": true,
+   "v": "landed",
+   "port": null,
+   "wait": null,
+   "moving": true,
+   "p": [
+    1713.4,
+    415.8
+   ]
+  }
+ ],
+ "finalH": 1244,
+ "news": [
+  {
+   "kind": "leftLanding",
+   "id": 364,
+   "nation": 75,
+   "reason": 0,
+   "x": 1819.5,
+   "y": 385.5,
+   "tick": 25,
+   "at": 25
+  },
+  {
+   "kind": "leftLanding",
+   "id": 365,
+   "nation": 75,
+   "reason": 0,
+   "x": 1796.0912415396397,
+   "y": 390.9087584603603,
+   "tick": 25,
+   "at": 25
+  },
+  {
+   "kind": "leftLanding",
+   "id": 366,
+   "nation": 75,
+   "reason": 0,
+   "x": 1778.3460587687757,
+   "y": 392.6539412312244,
+   "tick": 25,
+   "at": 25
+  }
+ ],
+ "errors": []
+}

@@ -1,0 +1,21 @@
+== c40_sn_stale 3517 GER 1100.5 267.5 1079.5 260.5 1037.5 294.5 1076.5 276.5 ger3 12:43:45
+   exit 0
+== c40_sn_stale 3517 GER 1100.5 267.5 1079.5 260.5 1037.5 294.5 1079.5 260.5 ger_samegoal 12:44:08
+   exit 0
+== c40_lwt_landwait 3517 4 60 24 same 1600 900 four_same 12:44:31
+   exit 0
+== c40_lwt_landwait 3517 4 8 24 sea 1600 900 four_sea 12:49:49
+   exit 0
+== c40_lwt_landwait 3517 4 8 24 neutral 1600 900 four_neutral 12:50:27
+   exit 0
+== c40_lwt_landwait 3517 4 60 300 recall 1600 900 four_recall 12:51:06
+   exit 0
+== c40_ssb_stranded  12:58:44
+   exit 0
+== c40_pst_portshut  12:59:10
+   exit 0
+== c40_lwp_phonepanel 1600 900 desk 12:59:28
+   exit 0
+== c40_lwp_phonepanel 390 844 phone 12:59:41
+   exit 0
+SUITERDONE

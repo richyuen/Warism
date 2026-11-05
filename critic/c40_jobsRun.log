@@ -1,0 +1,131 @@
+start 12:31:44 npx tsx critic/scripts/c31_headless.ts 7019 20 critic/c40_headless_7019.json 20 critic/c40_seed7019_y20.bin > critic/c40_headless_7019.log 2>&1
+start 12:31:44 npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c40_wd_3517.json > critic/c40_wd_3517.log 2>&1
+start 12:31:44 npx tsx tools/diag/workerDeterminism.ts 11071 2190 24 critic/c40_wd_11071.json > critic/c40_wd_11071.log 2>&1
+start 12:31:44 npx tsx tools/diag/workerDeterminism.ts 12007 2190 24 critic/c40_wd_12007.json > critic/c40_wd_12007.log 2>&1
+start 12:31:44 npx tsx tools/diag/workerDeterminism.ts 13109 2190 24 critic/c40_wd_13109.json > critic/c40_wd_13109.log 2>&1
+start 12:31:44 npx tsx critic/scripts/c40_ash2.ts 3517 JAP CHI 1818.5 385.5 1703.5 445.5 2 24 none 60 critic/c40_base_fuzhou_2.json > critic/c40_base_fuzhou_2.log 2>&1
+end 12:31:53 exit 0 npx tsx critic/scripts/c40_ash2.ts 3517 JAP CHI 1818.5 385.5 1703.5 445.5 2 24 none 60 critic/c40_base_fuzhou_2.json > critic/c40_base_fuzhou_2.log 2>&1
+start 12:31:54 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:3,who:[1],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 3517 3 60 critic/c40_ll_three_stagger.json > critic/c40_ll_three_stagger.log 2>&1
+end 12:32:00 exit 0 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:3,who:[1],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 3517 3 60 critic/c40_ll_three_stagger.json > critic/c40_ll_three_stagger.log 2>&1
+start 12:32:00 npx tsx critic/scripts/c40_tied.ts 3517 2 1703.5 445.5 60 critic/c40_tied_two_fuzhou60.json > critic/c40_tied_two_fuzhou60.log 2>&1
+end 12:32:09 exit 0 npx tsx critic/scripts/c40_tied.ts 3517 2 1703.5 445.5 60 critic/c40_tied_two_fuzhou60.json > critic/c40_tied_two_fuzhou60.log 2>&1
+start 12:32:09 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 3517 2 60 critic/c40_ll_bothfar.json > critic/c40_ll_bothfar.log 2>&1
+end 12:32:14 exit 0 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 3517 2 60 critic/c40_ll_bothfar.json > critic/c40_ll_bothfar.log 2>&1
+start 12:32:14 ORDERS=[{at:2,who:[1],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 3517 2 60 critic/c40_ll_walkerfar_h2.json > critic/c40_ll_walkerfar_h2.log 2>&1
+end 12:32:20 exit 0 ORDERS=[{at:2,who:[1],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 3517 2 60 critic/c40_ll_walkerfar_h2.json > critic/c40_ll_walkerfar_h2.log 2>&1
+start 12:32:20 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 3517 3 60 critic/c40_ll_three_twofar.json > critic/c40_ll_three_twofar.log 2>&1
+end 12:32:26 exit 0 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 3517 3 60 critic/c40_ll_three_twofar.json > critic/c40_ll_three_twofar.log 2>&1
+start 12:32:26 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:26,who:[0],x:1715.5,y:413.5}] npx tsx critic/scripts/c40_ll.ts 3517 2 60 critic/c40_ll_back.json > critic/c40_ll_back.log 2>&1
+end 12:32:31 exit 0 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:26,who:[0],x:1715.5,y:413.5}] npx tsx critic/scripts/c40_ll.ts 3517 2 60 critic/c40_ll_back.json > critic/c40_ll_back.log 2>&1
+start 12:32:31 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:8,who:[1],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 3517 2 60 critic/c40_ll_follow.json > critic/c40_ll_follow.log 2>&1
+end 12:32:35 exit 0 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:8,who:[1],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 3517 2 60 critic/c40_ll_follow.json > critic/c40_ll_follow.log 2>&1
+start 12:32:36 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:2,who:[1],x:1715.5,y:420.5}] npx tsx critic/scripts/c40_ll.ts 3517 2 60 critic/c40_ll_split2.json > critic/c40_ll_split2.log 2>&1
+end 12:32:40 exit 0 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:2,who:[1],x:1715.5,y:420.5}] npx tsx critic/scripts/c40_ll.ts 3517 2 60 critic/c40_ll_split2.json > critic/c40_ll_split2.log 2>&1
+start 12:32:40 ORDERS=[{at:aboard,plus:2,who:[1,2,3],x:1716.5,y:415.5}] npx tsx critic/scripts/c40_ll.ts 3517 4 60 critic/c40_ll_four_walk_se2.json > critic/c40_ll_four_walk_se2.log 2>&1
+end 12:32:48 exit 0 ORDERS=[{at:aboard,plus:2,who:[1,2,3],x:1716.5,y:415.5}] npx tsx critic/scripts/c40_ll.ts 3517 4 60 critic/c40_ll_four_walk_se2.json > critic/c40_ll_four_walk_se2.log 2>&1
+start 12:32:48 ORDERS=[{at:aboard,plus:2,who:[0,1,2,3],x:1712.5,y:416.5}] npx tsx critic/scripts/c40_ll.ts 3517 4 60 critic/c40_ll_four_all_sw3.json > critic/c40_ll_four_all_sw3.log 2>&1
+end 12:32:56 exit 0 ORDERS=[{at:aboard,plus:2,who:[0,1,2,3],x:1712.5,y:416.5}] npx tsx critic/scripts/c40_ll.ts 3517 4 60 critic/c40_ll_four_all_sw3.json > critic/c40_ll_four_all_sw3.log 2>&1
+start 12:32:56 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 13001 2 60 critic/c40_ll_13001_far.json > critic/c40_ll_13001_far.log 2>&1
+end 12:33:02 exit 0 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5}] npx tsx critic/scripts/c40_ll.ts 13001 2 60 critic/c40_ll_13001_far.json > critic/c40_ll_13001_far.log 2>&1
+start 12:33:02 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1713.5,y:416.5}] npx tsx critic/scripts/c40_ll.ts 13001 2 60 critic/c40_ll_13001_both_sw3.json > critic/c40_ll_13001_both_sw3.log 2>&1
+end 12:33:09 exit 0 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1713.5,y:416.5}] npx tsx critic/scripts/c40_ll.ts 13001 2 60 critic/c40_ll_13001_both_sw3.json > critic/c40_ll_13001_both_sw3.log 2>&1
+start 12:33:09 ORDERS=[{at:aboard,plus:2,who:[0],x:1714.5,y:415.5},{at:aboard,plus:2,who:[1],x:1715.5,y:411.5}] npx tsx critic/scripts/c40_ll.ts 13001 2 60 critic/c40_ll_13001_twonear.json > critic/c40_ll_13001_twonear.log 2>&1
+end 12:33:16 exit 0 ORDERS=[{at:aboard,plus:2,who:[0],x:1714.5,y:415.5},{at:aboard,plus:2,who:[1],x:1715.5,y:411.5}] npx tsx critic/scripts/c40_ll.ts 13001 2 60 critic/c40_ll_13001_twonear.json > critic/c40_ll_13001_twonear.log 2>&1
+start 12:33:16 npx tsx critic/scripts/c40_trab.ts 3517 GER POL base 90 critic/c40_trab_3517_GERPOL_base.json > critic/c40_trab_3517_GERPOL_base.log 2>&1
+end 12:33:33 exit 0 npx tsx critic/scripts/c40_trab.ts 3517 GER POL base 90 critic/c40_trab_3517_GERPOL_base.json > critic/c40_trab_3517_GERPOL_base.log 2>&1
+start 12:33:33 npx tsx critic/scripts/c40_trab.ts 3517 GER POL defFort 90 critic/c40_trab_3517_GERPOL_defFort.json > critic/c40_trab_3517_GERPOL_defFort.log 2>&1
+end 12:33:48 exit 0 npx tsx critic/scripts/c40_trab.ts 3517 GER POL defFort 90 critic/c40_trab_3517_GERPOL_defFort.json > critic/c40_trab_3517_GERPOL_defFort.log 2>&1
+start 12:33:48 npx tsx critic/scripts/c40_trab.ts 3517 GER POL defNone 90 critic/c40_trab_3517_GERPOL_defNone.json > critic/c40_trab_3517_GERPOL_defNone.log 2>&1
+end 12:34:01 exit 0 npx tsx critic/scripts/c40_trab.ts 3517 GER POL defNone 90 critic/c40_trab_3517_GERPOL_defNone.json > critic/c40_trab_3517_GERPOL_defNone.log 2>&1
+start 12:34:01 npx tsx critic/scripts/c40_trab.ts 3517 GER FRA base 120 critic/c40_trab_3517_GERFRA_base.json > critic/c40_trab_3517_GERFRA_base.log 2>&1
+end 12:34:17 exit 0 npx tsx critic/scripts/c40_trab.ts 3517 GER FRA base 120 critic/c40_trab_3517_GERFRA_base.json > critic/c40_trab_3517_GERFRA_base.log 2>&1
+start 12:34:17 npx tsx critic/scripts/c40_trab.ts 3517 GER FRA attNone 120 critic/c40_trab_3517_GERFRA_attNone.json > critic/c40_trab_3517_GERFRA_attNone.log 2>&1
+end 12:34:33 exit 0 npx tsx critic/scripts/c40_trab.ts 3517 GER FRA attNone 120 critic/c40_trab_3517_GERFRA_attNone.json > critic/c40_trab_3517_GERFRA_attNone.log 2>&1
+start 12:34:33 npx tsx critic/scripts/c40_trab.ts 6421 GER POL base 90 critic/c40_trab_6421_GERPOL_base.json > critic/c40_trab_6421_GERPOL_base.log 2>&1
+end 12:34:47 exit 0 npx tsx critic/scripts/c40_trab.ts 6421 GER POL base 90 critic/c40_trab_6421_GERPOL_base.json > critic/c40_trab_6421_GERPOL_base.log 2>&1
+start 12:34:47 npx tsx critic/scripts/c40_trab.ts 6421 GER POL defFort 90 critic/c40_trab_6421_GERPOL_defFort.json > critic/c40_trab_6421_GERPOL_defFort.log 2>&1
+end 12:35:00 exit 0 npx tsx critic/scripts/c40_trab.ts 6421 GER POL defFort 90 critic/c40_trab_6421_GERPOL_defFort.json > critic/c40_trab_6421_GERPOL_defFort.log 2>&1
+start 12:35:00 npx tsx critic/scripts/c40_trab.ts 6421 GER POL defNone 90 critic/c40_trab_6421_GERPOL_defNone.json > critic/c40_trab_6421_GERPOL_defNone.log 2>&1
+end 12:35:15 exit 0 npx tsx critic/scripts/c40_trab.ts 6421 GER POL defNone 90 critic/c40_trab_6421_GERPOL_defNone.json > critic/c40_trab_6421_GERPOL_defNone.log 2>&1
+start 12:35:15 npx tsx critic/scripts/c40_trab.ts 6421 GER FRA base 120 critic/c40_trab_6421_GERFRA_base.json > critic/c40_trab_6421_GERFRA_base.log 2>&1
+end 12:35:32 exit 0 npx tsx critic/scripts/c40_trab.ts 6421 GER FRA base 120 critic/c40_trab_6421_GERFRA_base.json > critic/c40_trab_6421_GERFRA_base.log 2>&1
+start 12:35:32 npx tsx critic/scripts/c40_trab.ts 6421 GER FRA attNone 120 critic/c40_trab_6421_GERFRA_attNone.json > critic/c40_trab_6421_GERFRA_attNone.log 2>&1
+end 12:35:37 exit 0 npx tsx tools/diag/workerDeterminism.ts 12007 2190 24 critic/c40_wd_12007.json > critic/c40_wd_12007.log 2>&1
+start 12:35:37 npx tsx critic/scripts/c40_trab.ts 8803 GER POL base 90 critic/c40_trab_8803_GERPOL_base.json > critic/c40_trab_8803_GERPOL_base.log 2>&1
+end 12:35:38 exit 0 npx tsx tools/diag/workerDeterminism.ts 13109 2190 24 critic/c40_wd_13109.json > critic/c40_wd_13109.log 2>&1
+start 12:35:38 npx tsx critic/scripts/c40_trab.ts 8803 GER POL defFort 90 critic/c40_trab_8803_GERPOL_defFort.json > critic/c40_trab_8803_GERPOL_defFort.log 2>&1
+end 12:35:46 exit 0 npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c40_wd_3517.json > critic/c40_wd_3517.log 2>&1
+start 12:35:46 npx tsx critic/scripts/c40_trab.ts 8803 GER POL defNone 90 critic/c40_trab_8803_GERPOL_defNone.json > critic/c40_trab_8803_GERPOL_defNone.log 2>&1
+end 12:35:52 exit 0 npx tsx tools/diag/workerDeterminism.ts 11071 2190 24 critic/c40_wd_11071.json > critic/c40_wd_11071.log 2>&1
+start 12:35:52 npx tsx critic/scripts/c40_trab.ts 8803 GER FRA base 120 critic/c40_trab_8803_GERFRA_base.json > critic/c40_trab_8803_GERFRA_base.log 2>&1
+end 12:35:54 exit 0 npx tsx critic/scripts/c40_trab.ts 8803 GER POL base 90 critic/c40_trab_8803_GERPOL_base.json > critic/c40_trab_8803_GERPOL_base.log 2>&1
+start 12:35:54 npx tsx critic/scripts/c40_trab.ts 8803 GER FRA attNone 120 critic/c40_trab_8803_GERFRA_attNone.json > critic/c40_trab_8803_GERFRA_attNone.log 2>&1
+end 12:35:54 exit 0 npx tsx critic/scripts/c40_trab.ts 6421 GER FRA attNone 120 critic/c40_trab_6421_GERFRA_attNone.json > critic/c40_trab_6421_GERFRA_attNone.log 2>&1
+start 12:35:55 npx tsx critic/scripts/c31_ho.ts 4111 20 off critic/c40_ho_off_4111.json > critic/c40_ho_off_4111.log 2>&1
+end 12:35:57 exit 0 npx tsx critic/scripts/c40_trab.ts 8803 GER POL defFort 90 critic/c40_trab_8803_GERPOL_defFort.json > critic/c40_trab_8803_GERPOL_defFort.log 2>&1
+start 12:35:57 npx tsx critic/scripts/c31_ho.ts 4253 20 off critic/c40_ho_off_4253.json > critic/c40_ho_off_4253.log 2>&1
+end 12:36:04 exit 0 npx tsx critic/scripts/c40_trab.ts 8803 GER POL defNone 90 critic/c40_trab_8803_GERPOL_defNone.json > critic/c40_trab_8803_GERPOL_defNone.log 2>&1
+start 12:36:04 npx tsx critic/scripts/c31_ho.ts 4637 20 off critic/c40_ho_off_4637.json > critic/c40_ho_off_4637.log 2>&1
+end 12:36:11 exit 0 npx tsx critic/scripts/c40_trab.ts 8803 GER FRA base 120 critic/c40_trab_8803_GERFRA_base.json > critic/c40_trab_8803_GERFRA_base.log 2>&1
+start 12:36:11 npx tsx critic/scripts/c31_ho.ts 5023 20 off critic/c40_ho_off_5023.json > critic/c40_ho_off_5023.log 2>&1
+end 12:36:13 exit 0 npx tsx critic/scripts/c40_trab.ts 8803 GER FRA attNone 120 critic/c40_trab_8803_GERFRA_attNone.json > critic/c40_trab_8803_GERFRA_attNone.log 2>&1
+start 12:36:13 npx tsx critic/scripts/c31_ho.ts 5449 20 off critic/c40_ho_off_5449.json > critic/c40_ho_off_5449.log 2>&1
+end 12:42:20 exit 0 npx tsx critic/scripts/c31_headless.ts 7019 20 critic/c40_headless_7019.json 20 critic/c40_seed7019_y20.bin > critic/c40_headless_7019.log 2>&1
+start 12:42:20 npx tsx critic/scripts/c31_ho.ts 5867 20 off critic/c40_ho_off_5867.json > critic/c40_ho_off_5867.log 2>&1
+end 12:46:05 exit 0 npx tsx critic/scripts/c31_ho.ts 4253 20 off critic/c40_ho_off_4253.json > critic/c40_ho_off_4253.log 2>&1
+start 12:46:05 npx tsx critic/scripts/c31_ho.ts 6299 20 off critic/c40_ho_off_6299.json > critic/c40_ho_off_6299.log 2>&1
+end 12:48:35 exit 0 npx tsx critic/scripts/c31_ho.ts 4637 20 off critic/c40_ho_off_4637.json > critic/c40_ho_off_4637.log 2>&1
+start 12:48:35 npx tsx critic/scripts/c31_ho.ts 6733 20 off critic/c40_ho_off_6733.json > critic/c40_ho_off_6733.log 2>&1
+end 12:48:41 exit 0 npx tsx critic/scripts/c31_ho.ts 5023 20 off critic/c40_ho_off_5023.json > critic/c40_ho_off_5023.log 2>&1
+start 12:48:41 npx tsx critic/scripts/c31_ho.ts 7177 20 off critic/c40_ho_off_7177.json > critic/c40_ho_off_7177.log 2>&1
+end 12:50:03 exit 0 npx tsx critic/scripts/c31_ho.ts 5449 20 off critic/c40_ho_off_5449.json > critic/c40_ho_off_5449.log 2>&1
+start 12:50:03 npx tsx critic/scripts/c31_ho.ts 7603 20 off critic/c40_ho_off_7603.json > critic/c40_ho_off_7603.log 2>&1
+end 12:50:35 exit 0 npx tsx critic/scripts/c31_ho.ts 4111 20 off critic/c40_ho_off_4111.json > critic/c40_ho_off_4111.log 2>&1
+start 12:50:35 npx tsx critic/scripts/c31_ho.ts 4111 20 on critic/c40_ho_on_4111.json > critic/c40_ho_on_4111.log 2>&1
+end 12:56:11 exit 0 npx tsx critic/scripts/c31_ho.ts 5867 20 off critic/c40_ho_off_5867.json > critic/c40_ho_off_5867.log 2>&1
+start 12:56:11 npx tsx critic/scripts/c31_ho.ts 4637 20 on critic/c40_ho_on_4637.json > critic/c40_ho_on_4637.log 2>&1
+end 13:00:30 exit 0 npx tsx critic/scripts/c31_ho.ts 6299 20 off critic/c40_ho_off_6299.json > critic/c40_ho_off_6299.log 2>&1
+start 13:00:30 npx tsx critic/scripts/c31_ho.ts 5449 20 on critic/c40_ho_on_5449.json > critic/c40_ho_on_5449.log 2>&1
+end 13:01:08 exit 0 npx tsx critic/scripts/c31_ho.ts 7177 20 off critic/c40_ho_off_7177.json > critic/c40_ho_off_7177.log 2>&1
+start 13:01:08 npx tsx critic/scripts/c31_ho.ts 6299 20 on critic/c40_ho_on_6299.json > critic/c40_ho_on_6299.log 2>&1
+end 13:02:29 exit 0 npx tsx critic/scripts/c31_ho.ts 6733 20 off critic/c40_ho_off_6733.json > critic/c40_ho_off_6733.log 2>&1
+start 13:02:29 npx tsx critic/scripts/c31_ho.ts 7177 20 on critic/c40_ho_on_7177.json > critic/c40_ho_on_7177.log 2>&1
+end 13:03:45 exit 0 npx tsx critic/scripts/c31_ho.ts 7603 20 off critic/c40_ho_off_7603.json > critic/c40_ho_off_7603.log 2>&1
+start 13:03:45 npx tsx critic/scripts/c40_lh.ts 3517 30 critic/c40_lh_3517.json > critic/c40_lh_3517.log 2>&1
+end 13:04:01 exit 0 npx tsx critic/scripts/c40_lh.ts 3517 30 critic/c40_lh_3517.json > critic/c40_lh_3517.log 2>&1
+start 13:04:01 npx tsx critic/scripts/c40_lh2.ts 3517 USA 603.5 352.5 1034.5 279.5 40 > critic/c40_lh2_usa_calais.log 2>&1
+end 13:04:09 exit 0 npx tsx critic/scripts/c40_lh2.ts 3517 USA 603.5 352.5 1034.5 279.5 40 > critic/c40_lh2_usa_calais.log 2>&1
+start 13:04:09 npx tsx critic/scripts/c40_lh2.ts 3517 ENG 1023 275 1048.5 199.5 20 > critic/c40_lh2_eng_bergen.log 2>&1
+end 13:04:14 exit 0 npx tsx critic/scripts/c40_lh2.ts 3517 ENG 1023 275 1048.5 199.5 20 > critic/c40_lh2_eng_bergen.log 2>&1
+start 13:04:14 npx tsx critic/scripts/c40_swe.ts 3517 > critic/c40_swe.log 2>&1
+end 13:04:17 exit 0 npx tsx critic/scripts/c40_swe.ts 3517 > critic/c40_swe.log 2>&1
+start 13:04:17 npx tsx tools/diag/worldInvariants.ts 8123 7300 --heroes > critic/c40_wi_8123_h20.log 2>&1
+end 13:04:40 exit 0 npx tsx critic/scripts/c31_ho.ts 4111 20 on critic/c40_ho_on_4111.json > critic/c40_ho_on_4111.log 2>&1
+start 13:04:40 npx tsx tools/diag/worldInvariants.ts 8431 7300 --diplomacy random > critic/c40_wi_8431r_20.log 2>&1
+end 13:06:32 exit 0 npx tsx critic/scripts/c31_ho.ts 4637 20 on critic/c40_ho_on_4637.json > critic/c40_ho_on_4637.log 2>&1
+start 13:06:32 npx tsx tools/diag/worldInvariants.ts 8807 1825 --world random > critic/c40_wi_8807w_5y.log 2>&1
+end 13:08:27 exit 0 npx tsx critic/scripts/c31_ho.ts 5449 20 on critic/c40_ho_on_5449.json > critic/c40_ho_on_5449.log 2>&1
+start 13:08:27 npx tsx tools/diag/worldInvariants.ts 8233 7300 --heroes --rules heroes,navy > critic/c40_wi_8233_h20_hn.log 2>&1
+end 13:08:40 exit 0 npx tsx tools/diag/worldInvariants.ts 8807 1825 --world random > critic/c40_wi_8807w_5y.log 2>&1
+start 13:08:40 npx tsx tools/diag/worldInvariants.ts 9311 7300 --heroes --diplomacy random --rules air > critic/c40_wi_9311r_h20_air.log 2>&1
+end 13:10:42 exit 0 npx tsx critic/scripts/c31_ho.ts 6299 20 on critic/c40_ho_on_6299.json > critic/c40_ho_on_6299.log 2>&1
+start 13:10:42 npx tsx tools/diag/worldInvariants.ts 8677 7300 --heroes --bankrupt POL:-800,ROM:-300 > critic/c40_wi_8677_h20_bk.log 2>&1
+end 13:11:13 exit 0 npx tsx critic/scripts/c31_ho.ts 7177 20 on critic/c40_ho_on_7177.json > critic/c40_ho_on_7177.log 2>&1
+start 13:11:13 npx tsx tools/diag/heroWaits.ts 8125 7300 > critic/c40_herowaits_8125.log 2>&1
+end 13:13:35 exit 0 npx tsx tools/diag/worldInvariants.ts 8123 7300 --heroes > critic/c40_wi_8123_h20.log 2>&1
+start 13:13:35 npx tsx tools/diag/diploInvariants.ts 8123 scenario 400 60,200,350 20 --heroes > critic/c40_diploinv_8123s_h.log 2>&1
+end 13:14:38 exit 0 npx tsx tools/diag/worldInvariants.ts 8431 7300 --diplomacy random > critic/c40_wi_8431r_20.log 2>&1
+start 13:14:39 npx tsx tools/diag/diploInvariants.ts 8431 random 400 60,200,350 20 > critic/c40_diploinv_8431r.log 2>&1
+end 13:16:12 exit 0 npx tsx tools/diag/diploInvariants.ts 8123 scenario 400 60,200,350 20 --heroes > critic/c40_diploinv_8123s_h.log 2>&1
+start 13:16:12 npx tsx tools/diag/diploInvariants.ts 8807 scenario 400 60,200,350 20 --world random > critic/c40_diploinv_8807w.log 2>&1
+end 13:16:30 exit 0 npx tsx tools/diag/worldInvariants.ts 8233 7300 --heroes --rules heroes,navy > critic/c40_wi_8233_h20_hn.log 2>&1
+start 13:16:30 npx tsx tools/diag/diploInvariants.ts 8573 scenario 400 60,200,350 20 > critic/c40_diploinv_8573.log 2>&1
+end 13:17:10 exit 0 npx tsx tools/diag/diploInvariants.ts 8431 random 400 60,200,350 20 > critic/c40_diploinv_8431r.log 2>&1
+start 13:17:10 npx tsx tools/diag/diploInvariants.ts 8999 scenario 400 60,200,350 20 --heroes > critic/c40_diploinv_8999s_h.log 2>&1
+QUEUEDONE
+end 13:17:55 exit 0 npx tsx tools/diag/diploInvariants.ts 8807 scenario 400 60,200,350 20 --world random > critic/c40_diploinv_8807w.log 2>&1
+end 13:18:35 exit 0 npx tsx tools/diag/worldInvariants.ts 9311 7300 --heroes --diplomacy random --rules air > critic/c40_wi_9311r_h20_air.log 2>&1
+end 13:19:31 exit 0 npx tsx tools/diag/diploInvariants.ts 8573 scenario 400 60,200,350 20 > critic/c40_diploinv_8573.log 2>&1
+end 13:20:02 exit 0 npx tsx tools/diag/worldInvariants.ts 8677 7300 --heroes --bankrupt POL:-800,ROM:-300 > critic/c40_wi_8677_h20_bk.log 2>&1
+end 13:20:43 exit 0 npx tsx tools/diag/diploInvariants.ts 8999 scenario 400 60,200,350 20 --heroes > critic/c40_diploinv_8999s_h.log 2>&1
+end 13:22:00 exit 0 npx tsx tools/diag/heroWaits.ts 8125 7300 > critic/c40_herowaits_8125.log 2>&1

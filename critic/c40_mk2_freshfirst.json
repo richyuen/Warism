@@ -1,0 +1,134 @@
+{
+ "seed": 3517,
+ "tag": "freshfirst",
+ "mode": "freshfirst",
+ "steps": [],
+ "panels": [
+  {
+   "h": 4,
+   "status": "Marching to Sasebo to board transports",
+   "wait": null,
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them.",
+   "shot": "critic/shots/c40mk2_freshfirst_panel_h4.png"
+  },
+  {
+   "h": 28,
+   "status": "Marching to Sasebo to board transports",
+   "wait": null,
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 124,
+   "status": "Marching to Sasebo to board transports",
+   "wait": null,
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 244,
+   "status": "Marching to Sasebo to board transports",
+   "wait": null,
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 484,
+   "status": "Marching to Sasebo to board transports",
+   "wait": null,
+   "notice": "Square infantry division 364: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  }
+ ],
+ "ids": [
+  364,
+  365,
+  366
+ ],
+ "aboardAt": 3,
+ "before": [
+  {
+   "id": 364,
+   "v": "aboard",
+   "port": "Tokyo",
+   "p": [
+    1819.1,
+    387.2
+   ]
+  },
+  {
+   "id": 365,
+   "v": "toPort",
+   "port": "Tokyo",
+   "p": [
+    1794.7,
+    391.5
+   ]
+  },
+  {
+   "id": 366,
+   "v": null,
+   "port": null,
+   "p": [
+    1777.2,
+    393.2
+   ]
+  }
+ ],
+ "freshHover": {
+  "marks": [
+   {
+    "water": 913064,
+    "land": 911016,
+    "same": false
+   }
+  ],
+  "tip": "China\nYour selected forces go by sea: they board transports at a port and land at the marked place"
+ },
+ "twoHover": {
+  "marks": [
+   {
+    "water": 913064,
+    "land": 911016,
+    "same": false
+   }
+  ],
+  "tip": "China\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+  "shot": "critic/shots/c40mk2_freshfirst_twohover.png"
+ },
+ "tokyoShot": "critic/shots/c40mk2_freshfirst_tokyo_h4.png",
+ "day10Shot": "critic/shots/c40mk2_freshfirst_day10.png",
+ "landed": {
+  "364": {
+   "h": 1318,
+   "p": [
+    1703.5,
+    444.7
+   ]
+  },
+  "365": {
+   "h": 682,
+   "p": [
+    1704,
+    444.5
+   ]
+  },
+  "366": {
+   "h": 1318,
+   "p": [
+    1703.2,
+    444.7
+   ]
+  }
+ },
+ "endH": 1318,
+ "news": [
+  {
+   "kind": "leftLanding",
+   "id": 364,
+   "nation": 75,
+   "reason": 0,
+   "x": 1819.5,
+   "y": 385.5,
+   "tick": 3,
+   "at": 3
+  }
+ ],
+ "errors": []
+}

@@ -1,0 +1,63 @@
+{
+ "seed": 11071,
+ "days": 40,
+ "tiers": [
+  {
+   "m": 30000,
+   "overflowX": false,
+   "banners": 2,
+   "el": 0,
+   "shot": "critic/shots/c40phz_11071_30000.png"
+  },
+  {
+   "m": 3500,
+   "overflowX": false,
+   "banners": 2,
+   "el": 0,
+   "shot": "critic/shots/c40phz_11071_03500.png"
+  },
+  {
+   "m": 800,
+   "overflowX": false,
+   "banners": 2,
+   "el": 1251,
+   "shot": "critic/shots/c40phz_11071_00800.png"
+  },
+  {
+   "m": 250,
+   "overflowX": false,
+   "banners": 2,
+   "el": 869,
+   "shot": "critic/shots/c40phz_11071_00250.png"
+  },
+  {
+   "m": 60,
+   "overflowX": false,
+   "banners": 2,
+   "el": 195,
+   "shot": "critic/shots/c40phz_11071_00060.png"
+  },
+  {
+   "m": 25,
+   "overflowX": false,
+   "banners": 2,
+   "el": 150,
+   "shot": "critic/shots/c40phz_11071_00025.png"
+  }
+ ],
+ "fight": {
+  "best": [
+   1699.018581364304,
+   393.8845258994925
+  ],
+  "bn": 14,
+  "engaged": 64
+ },
+ "tapCentre": {
+  "formation": "Square infantry division 390\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n7,928 of 20,580\nSupply\n100%\nOrg\n95%\nFuel on the march\nNone\nStatus\nIn contact⚔ To its fight\nELEMENTS\n40×\tInfantry\t7,666 of 20,000\n4×\tArtillery\t22 of 48\n1×\tAnti-tank guns\t5 of 12",
+  "nation": null,
+  "menu": null
+ },
+ "tapShot": "critic/shots/c40phz_11071_tap.png",
+ "errors": []
+}

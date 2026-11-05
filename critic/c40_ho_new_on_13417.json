@@ -1,0 +1,7167 @@
+{
+ "seed": 13417,
+ "years": 20,
+ "heroes": true,
+ "diplomacy": "scenario",
+ "perYear": [
+  {
+   "year": 1,
+   "living": 97,
+   "wars": 4,
+   "declared": 23,
+   "peace": 20,
+   "capitals": 19,
+   "eliminated": 5,
+   "annexed": 1,
+   "revolts": 0,
+   "puppetCreated": 10,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 33,
+   "shipsSunk": 730,
+   "bursts": 0,
+   "majorBattles": 47,
+   "gpShare": {
+    "GER": 0.74,
+    "ENG": 1.44,
+    "FRA": 1.91,
+    "ITA": 1.79,
+    "JAP": 0.95,
+    "SOV": 27.16,
+    "USA": 7.29
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 27.2%",
+   "hash": 3569528725
+  },
+  {
+   "year": 2,
+   "living": 90,
+   "wars": 8,
+   "declared": 12,
+   "peace": 8,
+   "capitals": 30,
+   "eliminated": 7,
+   "annexed": 0,
+   "revolts": 0,
+   "puppetCreated": 4,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 36,
+   "shipsSunk": 212,
+   "bursts": 0,
+   "majorBattles": 25,
+   "gpShare": {
+    "GER": 0.13,
+    "ENG": 1.83,
+    "FRA": 2.75,
+    "ITA": 0.7,
+    "JAP": 2.79,
+    "SOV": 28.13,
+    "USA": 7.35
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 28.1%",
+   "hash": 3655027677
+  },
+  {
+   "year": 3,
+   "living": 90,
+   "wars": 6,
+   "declared": 13,
+   "peace": 15,
+   "capitals": 27,
+   "eliminated": 3,
+   "annexed": 1,
+   "revolts": 3,
+   "puppetCreated": 5,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 19,
+   "shipsSunk": 145,
+   "bursts": 0,
+   "majorBattles": 9,
+   "gpShare": {
+    "GER": 0.09,
+    "ENG": 2.33,
+    "FRA": 2.21,
+    "ITA": 0.17,
+    "JAP": 2.36,
+    "SOV": 27.54,
+    "USA": 9.16
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 27.5%",
+   "hash": 1452236745
+  },
+  {
+   "year": 4,
+   "living": 95,
+   "wars": 9,
+   "declared": 21,
+   "peace": 18,
+   "capitals": 19,
+   "eliminated": 3,
+   "annexed": 1,
+   "revolts": 8,
+   "puppetCreated": 5,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 1,
+   "shipsSunk": 1,
+   "bursts": 0,
+   "majorBattles": 0,
+   "gpShare": {
+    "GER": 0.18,
+    "ENG": 2.69,
+    "FRA": 2.39,
+    "ITA": 0.54,
+    "JAP": 2.76,
+    "SOV": 25.5,
+    "USA": 12.37
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 25.5%",
+   "hash": 1423595168
+  },
+  {
+   "year": 5,
+   "living": 88,
+   "wars": 7,
+   "declared": 13,
+   "peace": 15,
+   "capitals": 29,
+   "eliminated": 8,
+   "annexed": 1,
+   "revolts": 1,
+   "puppetCreated": 5,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 4,
+   "seaBattles": 30,
+   "shipsSunk": 211,
+   "bursts": 0,
+   "majorBattles": 0,
+   "gpShare": {
+    "GER": 0,
+    "ENG": 2.58,
+    "FRA": 3.43,
+    "ITA": 0.56,
+    "JAP": 9.02,
+    "SOV": 25.1,
+    "USA": 14.02
+   },
+   "gpLiving": {
+    "GER": 0,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 25.1%",
+   "hash": 4129533442
+  },
+  {
+   "year": 6,
+   "living": 85,
+   "wars": 3,
+   "declared": 9,
+   "peace": 12,
+   "capitals": 14,
+   "eliminated": 8,
+   "annexed": 3,
+   "revolts": 5,
+   "puppetCreated": 1,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 14,
+   "shipsSunk": 42,
+   "bursts": 0,
+   "majorBattles": 10,
+   "gpShare": {
+    "GER": 0,
+    "ENG": 2.62,
+    "FRA": 2.54,
+    "ITA": 0.28,
+    "JAP": 9.83,
+    "SOV": 25.13,
+    "USA": 12.89
+   },
+   "gpLiving": {
+    "GER": 0,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 25.1%",
+   "hash": 1991172797
+  },
+  {
+   "year": 7,
+   "living": 90,
+   "wars": 6,
+   "declared": 15,
+   "peace": 12,
+   "capitals": 22,
+   "eliminated": 1,
+   "annexed": 0,
+   "revolts": 6,
+   "puppetCreated": 4,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 29,
+   "shipsSunk": 297,
+   "bursts": 0,
+   "majorBattles": 3,
+   "gpShare": {
+    "GER": 0,
+    "ENG": 2.85,
+    "FRA": 2.32,
+    "ITA": 0.32,
+    "JAP": 9.24,
+    "SOV": 24.59,
+    "USA": 13.29
+   },
+   "gpLiving": {
+    "GER": 0,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 24.6%",
+   "hash": 831913895
+  },
+  {
+   "year": 8,
+   "living": 83,
+   "wars": 7,
+   "declared": 12,
+   "peace": 10,
+   "capitals": 18,
+   "eliminated": 13,
+   "annexed": 0,
+   "revolts": 6,
+   "puppetCreated": 1,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 8,
+   "seaBattles": 25,
+   "shipsSunk": 143,
+   "bursts": 0,
+   "majorBattles": 0,
+   "gpShare": {
+    "GER": 0,
+    "ENG": 4.31,
+    "FRA": 6.47,
+    "ITA": 0.13,
+    "JAP": 8.91,
+    "SOV": 22.61,
+    "USA": 10.88
+   },
+   "gpLiving": {
+    "GER": 0,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 22.6%",
+   "hash": 1153219451
+  },
+  {
+   "year": 9,
+   "living": 83,
+   "wars": 5,
+   "declared": 15,
+   "peace": 17,
+   "capitals": 19,
+   "eliminated": 5,
+   "annexed": 0,
+   "revolts": 5,
+   "puppetCreated": 1,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 20,
+   "shipsSunk": 91,
+   "bursts": 1,
+   "majorBattles": 0,
+   "gpShare": {
+    "GER": 0.01,
+    "ENG": 5.7,
+    "FRA": 6.56,
+    "ITA": 0.29,
+    "JAP": 13.95,
+    "SOV": 16.16,
+    "USA": 10.74
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 16.2%",
+   "hash": 390504579
+  },
+  {
+   "year": 10,
+   "living": 86,
+   "wars": 5,
+   "declared": 11,
+   "peace": 11,
+   "capitals": 9,
+   "eliminated": 3,
+   "annexed": 1,
+   "revolts": 6,
+   "puppetCreated": 2,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 23,
+   "shipsSunk": 137,
+   "bursts": 0,
+   "majorBattles": 0,
+   "gpShare": {
+    "GER": 0.05,
+    "ENG": 6.82,
+    "FRA": 4.94,
+    "ITA": 0.44,
+    "JAP": 16.07,
+    "SOV": 11.78,
+    "USA": 10.71
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "JAP 16.1%",
+   "hash": 1564418742
+  },
+  {
+   "year": 11,
+   "living": 85,
+   "wars": 8,
+   "declared": 15,
+   "peace": 12,
+   "capitals": 9,
+   "eliminated": 6,
+   "annexed": 3,
+   "revolts": 6,
+   "puppetCreated": 1,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 21,
+   "shipsSunk": 72,
+   "bursts": 1,
+   "majorBattles": 2,
+   "gpShare": {
+    "GER": 0.08,
+    "ENG": 7.9,
+    "FRA": 3.27,
+    "ITA": 0.63,
+    "JAP": 14.84,
+    "SOV": 11.21,
+    "USA": 12.02
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "JAP 14.8%",
+   "hash": 1512377474
+  },
+  {
+   "year": 12,
+   "living": 86,
+   "wars": 10,
+   "declared": 17,
+   "peace": 15,
+   "capitals": 15,
+   "eliminated": 8,
+   "annexed": 4,
+   "revolts": 10,
+   "puppetCreated": 3,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 22,
+   "shipsSunk": 54,
+   "bursts": 0,
+   "majorBattles": 0,
+   "gpShare": {
+    "GER": 0.08,
+    "ENG": 8.23,
+    "FRA": 3.3,
+    "ITA": 0.66,
+    "JAP": 10.91,
+    "SOV": 14.06,
+    "USA": 19.2
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "USA 19.2%",
+   "hash": 1131075297
+  },
+  {
+   "year": 13,
+   "living": 88,
+   "wars": 5,
+   "declared": 17,
+   "peace": 20,
+   "capitals": 12,
+   "eliminated": 3,
+   "annexed": 2,
+   "revolts": 5,
+   "puppetCreated": 4,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 10,
+   "shipsSunk": 91,
+   "bursts": 0,
+   "majorBattles": 1,
+   "gpShare": {
+    "GER": 0.2,
+    "ENG": 6.68,
+    "FRA": 3.95,
+    "ITA": 0.66,
+    "JAP": 10.23,
+    "SOV": 17.63,
+    "USA": 19.64
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "USA 19.6%",
+   "hash": 3758909619
+  },
+  {
+   "year": 14,
+   "living": 87,
+   "wars": 7,
+   "declared": 14,
+   "peace": 12,
+   "capitals": 10,
+   "eliminated": 6,
+   "annexed": 4,
+   "revolts": 5,
+   "puppetCreated": 2,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 19,
+   "shipsSunk": 156,
+   "bursts": 3,
+   "majorBattles": 0,
+   "gpShare": {
+    "GER": 0.25,
+    "ENG": 6.98,
+    "FRA": 4,
+    "ITA": 0.71,
+    "JAP": 10.21,
+    "SOV": 17.22,
+    "USA": 19.62
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "USA 19.6%",
+   "hash": 205013082
+  },
+  {
+   "year": 15,
+   "living": 84,
+   "wars": 5,
+   "declared": 7,
+   "peace": 9,
+   "capitals": 5,
+   "eliminated": 3,
+   "annexed": 0,
+   "revolts": 0,
+   "puppetCreated": 2,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 6,
+   "shipsSunk": 43,
+   "bursts": 2,
+   "majorBattles": 16,
+   "gpShare": {
+    "GER": 0.23,
+    "ENG": 5.91,
+    "FRA": 4.38,
+    "ITA": 0.71,
+    "JAP": 10.34,
+    "SOV": 17.9,
+    "USA": 19.6
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "USA 19.6%",
+   "hash": 1838545494
+  },
+  {
+   "year": 16,
+   "living": 85,
+   "wars": 7,
+   "declared": 11,
+   "peace": 9,
+   "capitals": 7,
+   "eliminated": 1,
+   "annexed": 1,
+   "revolts": 2,
+   "puppetCreated": 3,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 4,
+   "shipsSunk": 34,
+   "bursts": 3,
+   "majorBattles": 0,
+   "gpShare": {
+    "GER": 0.23,
+    "ENG": 6.02,
+    "FRA": 5.58,
+    "ITA": 0.71,
+    "JAP": 10.35,
+    "SOV": 17.58,
+    "USA": 18.39
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "USA 18.4%",
+   "hash": 3423127384
+  },
+  {
+   "year": 17,
+   "living": 83,
+   "wars": 7,
+   "declared": 8,
+   "peace": 7,
+   "capitals": 11,
+   "eliminated": 3,
+   "annexed": 0,
+   "revolts": 1,
+   "puppetCreated": 1,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 5,
+   "shipsSunk": 30,
+   "bursts": 0,
+   "majorBattles": 2,
+   "gpShare": {
+    "GER": 0.05,
+    "ENG": 5.95,
+    "FRA": 5.41,
+    "ITA": 0.73,
+    "JAP": 10.43,
+    "SOV": 17.71,
+    "USA": 17.33
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 17.7%",
+   "hash": 3347714908
+  },
+  {
+   "year": 18,
+   "living": 83,
+   "wars": 6,
+   "declared": 5,
+   "peace": 6,
+   "capitals": 19,
+   "eliminated": 2,
+   "annexed": 0,
+   "revolts": 2,
+   "puppetCreated": 1,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 15,
+   "shipsSunk": 50,
+   "bursts": 1,
+   "majorBattles": 0,
+   "gpShare": {
+    "GER": 0.04,
+    "ENG": 7.36,
+    "FRA": 4.95,
+    "ITA": 0.54,
+    "JAP": 9.62,
+    "SOV": 20.48,
+    "USA": 15.1
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 20.5%",
+   "hash": 1313982949
+  },
+  {
+   "year": 19,
+   "living": 86,
+   "wars": 10,
+   "declared": 14,
+   "peace": 10,
+   "capitals": 4,
+   "eliminated": 1,
+   "annexed": 0,
+   "revolts": 4,
+   "puppetCreated": 1,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 15,
+   "shipsSunk": 98,
+   "bursts": 0,
+   "majorBattles": 1,
+   "gpShare": {
+    "GER": 0.04,
+    "ENG": 8.51,
+    "FRA": 2.85,
+    "ITA": 0.8,
+    "JAP": 9.65,
+    "SOV": 20.27,
+    "USA": 10.61
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 20.3%",
+   "hash": 3694134659
+  },
+  {
+   "year": 20,
+   "living": 86,
+   "wars": 8,
+   "declared": 13,
+   "peace": 15,
+   "capitals": 10,
+   "eliminated": 3,
+   "annexed": 2,
+   "revolts": 3,
+   "puppetCreated": 5,
+   "puppetRevolt": 0,
+   "puppetIntegrated": 0,
+   "seaBattles": 30,
+   "shipsSunk": 136,
+   "bursts": 0,
+   "majorBattles": 1,
+   "gpShare": {
+    "GER": 0.22,
+    "ENG": 6.79,
+    "FRA": 2.84,
+    "ITA": 0.42,
+    "JAP": 9.7,
+    "SOV": 20.46,
+    "USA": 13.21
+   },
+   "gpLiving": {
+    "GER": 1,
+    "ENG": 1,
+    "FRA": 1,
+    "ITA": 1,
+    "JAP": 1,
+    "SOV": 1,
+    "USA": 1
+   },
+   "top": "SOV 20.5%",
+   "hash": 1841670659
+  }
+ ],
+ "heroRows": [
+  {
+   "name": "JAP hero_yamato",
+   "alive": 6946,
+   "war": 6820,
+   "engaged": 60,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 40667,
+     "x": 1107.4,
+     "y": 243.6,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "INC",
+      "MAD",
+      "NSP",
+      "POL",
+      "SWE",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 54556,
+     "x": 970.5,
+     "y": 406.2,
+     "foes": [
+      "AEF",
+      "ALB",
+      "AOF",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BRA",
+      "BUR",
+      "CAN",
+      "CEY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "IRE",
+      "MAD",
+      "MAL",
+      "NIG",
+      "NSP",
+      "OMN",
+      "PHI",
+      "POL",
+      "POR",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SAU",
+      "SIA",
+      "SRH",
+      "SUD",
+      "SWE",
+      "SWI",
+      "USA",
+      "YEM",
+      "YUG",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 57422,
+     "x": 282.5,
+     "y": 254.5,
+     "foes": [
+      "AEF",
+      "ALB",
+      "AOF",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "IRE",
+      "MAD",
+      "MAL",
+      "NIG",
+      "NSP",
+      "OMN",
+      "PHI",
+      "POL",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SAU",
+      "SIA",
+      "SRH",
+      "SUD",
+      "SWE",
+      "SWI",
+      "USA",
+      "YEM",
+      "YUG",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 60373,
+     "x": 265,
+     "y": 247,
+     "foes": [
+      "ALB",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "GCO",
+      "IRE",
+      "MAL",
+      "NIG",
+      "OMN",
+      "PHI",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SAU",
+      "SIA",
+      "SRH",
+      "SUD",
+      "SWI",
+      "USA",
+      "YEM",
+      "YUG",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 62137,
+     "x": 1846.5,
+     "y": 520.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FIN",
+      "FMO",
+      "FRA",
+      "MAD",
+      "NOR",
+      "NSP",
+      "PHI",
+      "POL",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 173906,
+     "x": 1082.5,
+     "y": 252.5,
+     "foes": [
+      "AST",
+      "BUL",
+      "BUR",
+      "CAN",
+      "CZS",
+      "EST",
+      "FIN",
+      "GER",
+      "GRE",
+      "HON",
+      "NED",
+      "NIC",
+      "POR",
+      "RAJ",
+      "ROM",
+      "SOV",
+      "SRH",
+      "YUG",
+      "new#126",
+      "new#140"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 42107,
+     "x": 1818.9,
+     "y": 388.9,
+     "lateDays": 0
+    },
+    {
+     "tick": 55996,
+     "x": 1818.9,
+     "y": 388.9,
+     "lateDays": 0
+    },
+    {
+     "tick": 58862,
+     "x": 1818.9,
+     "y": 388.9,
+     "lateDays": 0
+    },
+    {
+     "tick": 61813,
+     "x": 1818.9,
+     "y": 388.9,
+     "lateDays": 0
+    },
+    {
+     "tick": 63577,
+     "x": 1818.9,
+     "y": 388.9,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.006080000000000418,
+   "healthWarSum": 6688.17830294905,
+   "healthWarDays": 6820
+  },
+  {
+   "name": "JAP hero_o_i",
+   "alive": 6580,
+   "war": 6454,
+   "engaged": 311,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 2416,
+     "x": 1688.8,
+     "y": 376.8,
+     "foes": [
+      "CCP",
+      "CHI"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 35508,
+     "x": 1152.5,
+     "y": 115.5,
+     "foes": [
+      "EGY",
+      "FIN",
+      "NOR",
+      "POL"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 53760,
+     "x": 329.5,
+     "y": 184.5,
+     "foes": [
+      "AEF",
+      "ALB",
+      "AOF",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BRA",
+      "BUR",
+      "CAN",
+      "CEY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "IRE",
+      "MAD",
+      "MAL",
+      "NIG",
+      "NSP",
+      "OMN",
+      "POL",
+      "POR",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWE",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 59897,
+     "x": 307.5,
+     "y": 250.5,
+     "foes": [
+      "ALB",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "GCO",
+      "IRE",
+      "MAL",
+      "NIG",
+      "OMN",
+      "PHI",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SAU",
+      "SIA",
+      "SRH",
+      "SUD",
+      "SWI",
+      "USA",
+      "YEM",
+      "YUG",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 63975,
+     "x": 1576.1,
+     "y": 565.1,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FIN",
+      "FMO",
+      "FRA",
+      "MAD",
+      "NOR",
+      "NSP",
+      "PHI",
+      "POL",
+      "USA",
+      "new#111",
+      "new#112",
+      "new#117"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 70888,
+     "x": 1120.1,
+     "y": 152.9,
+     "foes": [
+      "EST",
+      "IRN",
+      "MON",
+      "ROM",
+      "SOV",
+      "SYR",
+      "TAN",
+      "TUR",
+      "new#107"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 79238,
+     "x": 1860.5,
+     "y": 635.5,
+     "foes": [
+      "AST",
+      "CZS",
+      "EST",
+      "FIN",
+      "MEX",
+      "MON",
+      "ROM",
+      "SOV",
+      "TAN",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#115",
+      "new#121",
+      "new#124"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 89161,
+     "x": 1899.4,
+     "y": 123.6,
+     "foes": [
+      "ARG",
+      "BRA",
+      "CAN",
+      "GUA",
+      "LIB",
+      "MEX",
+      "NED",
+      "PAR",
+      "POR",
+      "new#111",
+      "new#112",
+      "new#115",
+      "new#116",
+      "new#121",
+      "new#123",
+      "new#124"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 104077,
+     "x": 597.9,
+     "y": 534.9,
+     "foes": [
+      "COL",
+      "FIN",
+      "FMO",
+      "FRA",
+      "GER",
+      "NOR",
+      "NSP",
+      "SWE",
+      "VEN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 141374,
+     "x": 1782.5,
+     "y": 669.5,
+     "foes": [
+      "ALB",
+      "AST",
+      "CAN",
+      "CZS",
+      "GRE",
+      "POL",
+      "ROM",
+      "TAN",
+      "YUG"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 152343,
+     "x": 1125,
+     "y": 253,
+     "foes": [
+      "FIN",
+      "FRA",
+      "NOR",
+      "NSP",
+      "POL",
+      "SWE"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 171552,
+     "x": 1818.5,
+     "y": 610.5,
+     "foes": [
+      "AST",
+      "BUR",
+      "CAN",
+      "CZS",
+      "GER",
+      "GRE",
+      "HON",
+      "NED",
+      "NIC",
+      "POR",
+      "RAJ",
+      "ROM",
+      "SRH",
+      "YUG",
+      "new#126"
+     ],
+     "engagedLast24": false
+    }
+   ],
+   "returns": [
+    {
+     "tick": 3856,
+     "x": 1819,
+     "y": 385.3,
+     "lateDays": 0
+    },
+    {
+     "tick": 36948,
+     "x": 1819,
+     "y": 385.3,
+     "lateDays": 0
+    },
+    {
+     "tick": 55200,
+     "x": 1819,
+     "y": 385.3,
+     "lateDays": 0
+    },
+    {
+     "tick": 61337,
+     "x": 1819,
+     "y": 385.3,
+     "lateDays": 0
+    },
+    {
+     "tick": 65415,
+     "x": 1819,
+     "y": 385.3,
+     "lateDays": 0
+    },
+    {
+     "tick": 72328,
+     "x": 1595.8,
+     "y": 518.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 80678,
+     "x": 1595.8,
+     "y": 518.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 90601,
+     "x": 1595.8,
+     "y": 518.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 105517,
+     "x": 1595.8,
+     "y": 518.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 142814,
+     "x": 1746.5,
+     "y": 373,
+     "lateDays": 0
+    },
+    {
+     "tick": 153783,
+     "x": 1819,
+     "y": 385.3,
+     "lateDays": 0
+    },
+    {
+     "tick": 172992,
+     "x": 1819,
+     "y": 385.3,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.0020833333333369897,
+   "healthWarSum": 6364.509423556115,
+   "healthWarDays": 6454
+  },
+  {
+   "name": "USA hero_iowa",
+   "alive": 7120,
+   "war": 5148,
+   "engaged": 29,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 59540,
+     "x": 1719.4,
+     "y": 522.6,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "ITA",
+      "JAP"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 64001,
+     "x": 1613.7,
+     "y": 590.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "CUB",
+      "EGY",
+      "ITA",
+      "JAP"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 165278,
+     "x": 1068.5,
+     "y": 375,
+     "foes": [
+      "ENG",
+      "FMO",
+      "IRE",
+      "ITA",
+      "NIC",
+      "POR",
+      "RAJ",
+      "SAF",
+      "SRH",
+      "SUD",
+      "new#126"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 60980,
+     "x": 326.5,
+     "y": 371.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 65441,
+     "x": 326.5,
+     "y": 371.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 166718,
+     "x": 356.5,
+     "y": 404.5,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.19040000000000012,
+   "healthWarSum": 5079.225037430628,
+   "healthWarDays": 5148
+  },
+  {
+   "name": "USA hero_t28",
+   "alive": 7060,
+   "war": 5088,
+   "engaged": 120,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 55148,
+     "x": 988.5,
+     "y": 523.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "ITA",
+      "JAP"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 64557,
+     "x": 348,
+     "y": 184,
+     "foes": [
+      "CUB"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 156948,
+     "x": 1171.5,
+     "y": 169.5,
+     "foes": [
+      "FIN",
+      "FRA",
+      "NOR",
+      "NSP",
+      "SWE"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 160865,
+     "x": 948.5,
+     "y": 447.5,
+     "foes": [
+      "FIN",
+      "FRA",
+      "NOR",
+      "NSP",
+      "SWE"
+     ],
+     "engagedLast24": false
+    }
+   ],
+   "returns": [
+    {
+     "tick": 56588,
+     "x": 585.9,
+     "y": 364.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 65997,
+     "x": 585.9,
+     "y": 364.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 158388,
+     "x": 585.9,
+     "y": 364.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 162305,
+     "x": 585.9,
+     "y": 364.2,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.04916666666666547,
+   "healthWarSum": 5056.440264677461,
+   "healthWarDays": 5088
+  },
+  {
+   "name": "SOV hero_sovetsky_soyuz",
+   "alive": 5140,
+   "war": 4776,
+   "engaged": 49,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 16336,
+     "x": 733.5,
+     "y": 776.1,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "GER",
+      "GRE",
+      "INC",
+      "ITA",
+      "JAP",
+      "MAD",
+      "MAN",
+      "MEN",
+      "NOR",
+      "NSP",
+      "POL",
+      "REP",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 18101,
+     "x": 1140.8,
+     "y": 233.9,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "GER",
+      "GRE",
+      "INC",
+      "ITA",
+      "JAP",
+      "MAD",
+      "MAN",
+      "MEN",
+      "NOR",
+      "NSP",
+      "POL",
+      "REP",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 19781,
+     "x": 1140.8,
+     "y": 232,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "GER",
+      "GRE",
+      "INC",
+      "ITA",
+      "JAP",
+      "MAD",
+      "MAN",
+      "MEN",
+      "NOR",
+      "NSP",
+      "POL",
+      "REP",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 21330,
+     "x": 1144.9,
+     "y": 229.2,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "GRE",
+      "INC",
+      "ITA",
+      "JAP",
+      "MAD",
+      "MAN",
+      "MEN",
+      "NOR",
+      "NSP",
+      "POL",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 22809,
+     "x": 1160.5,
+     "y": 231.5,
+     "foes": [
+      "GRE",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "NOR"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 24321,
+     "x": 1160.5,
+     "y": 231.5,
+     "foes": [
+      "GRE",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "NOR"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 25833,
+     "x": 1160.5,
+     "y": 231.5,
+     "foes": [
+      "GRE",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "NOR"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 27345,
+     "x": 1160.5,
+     "y": 231.5,
+     "foes": [
+      "GRE",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "NOR"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 37920,
+     "x": 395.5,
+     "y": 456.5,
+     "foes": [
+      "AEF",
+      "ALB",
+      "AOF",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "IRE",
+      "MAD",
+      "MAL",
+      "NFL",
+      "NIG",
+      "NSP",
+      "OMN",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "TUN",
+      "YEM"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 39477,
+     "x": 1142.6,
+     "y": 236.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "INC",
+      "MAD",
+      "NSP",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 41610,
+     "x": 1066.8,
+     "y": 332.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "GRE",
+      "INC",
+      "ITA",
+      "MAD",
+      "NSP",
+      "TUN",
+      "TUR"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 44239,
+     "x": 1165.5,
+     "y": 206.5,
+     "foes": [
+      "AEF",
+      "ALB",
+      "AOF",
+      "BEA",
+      "BRA",
+      "BUR",
+      "CAN",
+      "CEY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "IRE",
+      "MAD",
+      "MAL",
+      "MEX",
+      "NIG",
+      "NSP",
+      "OMN",
+      "POR",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 46236,
+     "x": 1193.5,
+     "y": 207.5,
+     "foes": [
+      "ALB",
+      "BEA",
+      "BRA",
+      "BUR",
+      "CAN",
+      "CEY",
+      "ENG",
+      "GCO",
+      "IRE",
+      "MAL",
+      "NIG",
+      "OMN",
+      "POR",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 48008,
+     "x": 1215.5,
+     "y": 118.8,
+     "foes": [
+      "AEF",
+      "ALB",
+      "AOF",
+      "BEA",
+      "BRA",
+      "BUR",
+      "CAN",
+      "CEY",
+      "ENG",
+      "FMO",
+      "GCO",
+      "IRE",
+      "MAD",
+      "MAL",
+      "NIG",
+      "NSP",
+      "OMN",
+      "POL",
+      "POR",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWE",
+      "TUN",
+      "new#109"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 49458,
+     "x": 1215.5,
+     "y": 119.5,
+     "foes": [
+      "AEF",
+      "ALB",
+      "AOF",
+      "BEA",
+      "BRA",
+      "BUR",
+      "CAN",
+      "CEY",
+      "ENG",
+      "FMO",
+      "GCO",
+      "IRE",
+      "MAD",
+      "MAL",
+      "NIG",
+      "NOR",
+      "NSP",
+      "OMN",
+      "POL",
+      "POR",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWE",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 51116,
+     "x": 1112.5,
+     "y": 239.5,
+     "foes": [
+      "AEF",
+      "ALB",
+      "AOF",
+      "BEA",
+      "BRA",
+      "BUR",
+      "CAN",
+      "CEY",
+      "ENG",
+      "FMO",
+      "GCO",
+      "IRE",
+      "MAD",
+      "MAL",
+      "NIG",
+      "NOR",
+      "NSP",
+      "OMN",
+      "POL",
+      "POR",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWE"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 62082,
+     "x": 1042.5,
+     "y": 274.5,
+     "foes": [
+      "ALB",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "GCO",
+      "IRE",
+      "MAL",
+      "NIG",
+      "RAJ",
+      "SAF",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 63532,
+     "x": 1130.5,
+     "y": 251.5,
+     "foes": [
+      "ALB",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "GCO",
+      "IRE",
+      "MAL",
+      "NIG",
+      "RAJ",
+      "SAF",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 64982,
+     "x": 1130.5,
+     "y": 251.5,
+     "foes": [
+      "ALB",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "GCO",
+      "IRE",
+      "MAL",
+      "NIG",
+      "RAJ",
+      "SAF",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 66432,
+     "x": 1130.5,
+     "y": 251.5,
+     "foes": [
+      "ALB",
+      "AST",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 67882,
+     "x": 1130.5,
+     "y": 251.5,
+     "foes": [
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 69332,
+     "x": 1130.5,
+     "y": 251.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "EGY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "JAP",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 70777,
+     "x": 1130.5,
+     "y": 251.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "JAP",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 72222,
+     "x": 1130.5,
+     "y": 251.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "JAP",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 73667,
+     "x": 1130.5,
+     "y": 251.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "JAP",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 75112,
+     "x": 1130.5,
+     "y": 251.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "JAP",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG",
+      "new#122"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 76777,
+     "x": 1063,
+     "y": 164,
+     "foes": [
+      "AFG",
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "JAP",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 78308,
+     "x": 1130.5,
+     "y": 251.5,
+     "foes": [
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "JAP",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 79758,
+     "x": 1130.5,
+     "y": 251.5,
+     "foes": [
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "JAP",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 82067,
+     "x": 998.5,
+     "y": 298.5,
+     "foes": [
+      "FMO",
+      "FRA",
+      "GER",
+      "ITA",
+      "JAP",
+      "NOR",
+      "NSP",
+      "SWE"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 83730,
+     "x": 1160.5,
+     "y": 231.5,
+     "foes": [
+      "FMO",
+      "FRA",
+      "GER",
+      "ITA",
+      "JAP",
+      "NOR",
+      "NSP",
+      "SWE"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 85291,
+     "x": 1165.5,
+     "y": 206.5,
+     "foes": [
+      "FMO",
+      "FRA",
+      "GER",
+      "ITA",
+      "JAP",
+      "NOR",
+      "NSP",
+      "SWE"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 90341,
+     "x": 1102.8,
+     "y": 324.8,
+     "foes": [
+      "AST",
+      "FMO",
+      "FRA",
+      "NOR",
+      "NSP",
+      "SWE",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 122233,
+     "x": 1068.3,
+     "y": 376.5,
+     "foes": [
+      "ARG",
+      "BRA",
+      "ELS",
+      "HON",
+      "MEX",
+      "NED",
+      "NFL",
+      "NIC",
+      "PAR",
+      "POR",
+      "USA",
+      "new#111",
+      "new#112",
+      "new#115",
+      "new#134"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 145834,
+     "x": 1143.5,
+     "y": 242.5,
+     "foes": [
+      "ALB",
+      "AST",
+      "CAN",
+      "GER"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 173782,
+     "x": 1082.5,
+     "y": 252.5,
+     "foes": [
+      "AFG",
+      "AST",
+      "CAN",
+      "GRE",
+      "ITA",
+      "JAP",
+      "MON",
+      "TUN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 17776,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 19541,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 21221,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 22770,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 24249,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 25761,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 27273,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 28785,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 39360,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 40917,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 43050,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 45679,
+     "x": 1215.5,
+     "y": 119.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 47676,
+     "x": 1215.5,
+     "y": 119.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 49448,
+     "x": 1215.5,
+     "y": 119.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 50898,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 52556,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 63522,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 64972,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 66422,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 67872,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 69322,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 70772,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 72217,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 73662,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 75107,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 76552,
+     "x": 1215.5,
+     "y": 119.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 78217,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 79748,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 81198,
+     "x": 1130.5,
+     "y": 251.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 83507,
+     "x": 1143.1,
+     "y": 236.4,
+     "lateDays": 0
+    },
+    {
+     "tick": 85170,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 86731,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 91781,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 123673,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 147274,
+     "x": 1193.5,
+     "y": 207.5,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.010399999999999188,
+   "healthWarSum": 4749.9744200000005,
+   "healthWarDays": 4776
+  },
+  {
+   "name": "SOV hero_t42",
+   "alive": 6820,
+   "war": 6455,
+   "engaged": 428,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 27310,
+     "x": 1589.4,
+     "y": 295.6,
+     "foes": [
+      "GRE",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "NOR"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 35650,
+     "x": 1198.5,
+     "y": 463.5,
+     "foes": [
+      "ALB",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "GCO",
+      "HUN",
+      "IRE",
+      "MAL",
+      "NFL",
+      "NIG",
+      "OMN",
+      "PHI",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "USA",
+      "YEM"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 41849,
+     "x": 1177.5,
+     "y": 288.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "INC",
+      "MAD",
+      "NSP",
+      "TUN"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 48852,
+     "x": 1335.5,
+     "y": 456.5,
+     "foes": [
+      "AEF",
+      "ALB",
+      "AOF",
+      "BEA",
+      "BRA",
+      "BUR",
+      "CAN",
+      "CEY",
+      "ENG",
+      "FMO",
+      "GCO",
+      "IRE",
+      "MAD",
+      "MAL",
+      "NIG",
+      "NOR",
+      "NSP",
+      "OMN",
+      "POL",
+      "POR",
+      "RAJ",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWE",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 54207,
+     "x": 1167.5,
+     "y": 284.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "MAD",
+      "NOR",
+      "NSP",
+      "POL",
+      "SWE"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 71965,
+     "x": 1358,
+     "y": 360.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "JAP",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 74713,
+     "x": 1403.5,
+     "y": 345.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "JAP",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 78452,
+     "x": 1344.3,
+     "y": 357.7,
+     "foes": [
+      "ALB",
+      "BEL",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "JAP",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 28750,
+     "x": 1238,
+     "y": 242.1,
+     "lateDays": 0
+    },
+    {
+     "tick": 37090,
+     "x": 1238,
+     "y": 242.1,
+     "lateDays": 0
+    },
+    {
+     "tick": 43289,
+     "x": 1238,
+     "y": 242.1,
+     "lateDays": 0
+    },
+    {
+     "tick": 50292,
+     "x": 1238,
+     "y": 242.1,
+     "lateDays": 0
+    },
+    {
+     "tick": 55647,
+     "x": 1238,
+     "y": 242.1,
+     "lateDays": 0
+    },
+    {
+     "tick": 73405,
+     "x": 1238,
+     "y": 242.1,
+     "lateDays": 0
+    },
+    {
+     "tick": 76153,
+     "x": 1238,
+     "y": 242.1,
+     "lateDays": 0
+    },
+    {
+     "tick": 79892,
+     "x": 1238,
+     "y": 242.1,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.000227937236220499,
+   "healthWarSum": 6392.5368088862115,
+   "healthWarDays": 6455
+  },
+  {
+   "name": "GER hero_bismarck",
+   "alive": 4356,
+   "war": 4058,
+   "engaged": 21,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 6033,
+     "x": 1106.3,
+     "y": 384.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NSP",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "REP",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 10525,
+     "x": 1070.6,
+     "y": 259.1,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FIN",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "IRQ",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NOR",
+      "NSP",
+      "NZL",
+      "OMN",
+      "POL",
+      "RAJ",
+      "REP",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 18126,
+     "x": 1163.8,
+     "y": 210.2,
+     "foes": [
+      "EST",
+      "FIN",
+      "IRN",
+      "LAT",
+      "MON",
+      "NOR",
+      "POL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 41564,
+     "x": 1249.5,
+     "y": 332.5,
+     "foes": [],
+     "engagedLast24": false
+    },
+    {
+     "tick": 90454,
+     "x": 1094.9,
+     "y": 319.9,
+     "foes": [
+      "ALB",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG",
+      "new#122"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 92354,
+     "x": 1030.5,
+     "y": 275.5,
+     "foes": [
+      "ALB",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG",
+      "new#122"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 94936,
+     "x": 1069.5,
+     "y": 223.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "ITA",
+      "JAP",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 97365,
+     "x": 1107.9,
+     "y": 352.9,
+     "foes": [
+      "AFG",
+      "CHI",
+      "COL",
+      "ITA",
+      "JAP",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 99352,
+     "x": 593.4,
+     "y": 537.5,
+     "foes": [
+      "AFG",
+      "AST",
+      "CHI",
+      "COL",
+      "CZS",
+      "ITA",
+      "JAP",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 101027,
+     "x": 1033.3,
+     "y": 275.7,
+     "foes": [
+      "AFG",
+      "AST",
+      "CHI",
+      "COL",
+      "CZS",
+      "ITA",
+      "JAP",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 102707,
+     "x": 1033.3,
+     "y": 275.7,
+     "foes": [
+      "AFG",
+      "AST",
+      "CHI",
+      "COL",
+      "CZS",
+      "ITA",
+      "JAP",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 104387,
+     "x": 1033.3,
+     "y": 275.7,
+     "foes": [
+      "AFG",
+      "AST",
+      "CHI",
+      "COL",
+      "CZS",
+      "ITA",
+      "JAP",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 145834,
+     "x": 1142.7,
+     "y": 241.7,
+     "foes": [
+      "BOL",
+      "BUL",
+      "CHL",
+      "DEN",
+      "ECU",
+      "EST",
+      "FIN",
+      "POL",
+      "PRU",
+      "SOV",
+      "URU",
+      "new#140"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 148565,
+     "x": 431.1,
+     "y": 489.1,
+     "foes": [
+      "FIN",
+      "FRA",
+      "NOR",
+      "NSP",
+      "SWE"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 150669,
+     "x": 1117.5,
+     "y": 333.5,
+     "foes": [
+      "FIN",
+      "FRA",
+      "NOR",
+      "NSP",
+      "SWE"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 169010,
+     "x": 756.1,
+     "y": 313.5,
+     "foes": [
+      "AFG",
+      "BUR",
+      "CHI",
+      "FMO",
+      "HON",
+      "ITA",
+      "JAP",
+      "MON",
+      "NED",
+      "NIC",
+      "POR",
+      "RAJ",
+      "SRH",
+      "TUN",
+      "new#115",
+      "new#126",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 170542,
+     "x": 1115.8,
+     "y": 374.2,
+     "foes": [
+      "AFG",
+      "BUR",
+      "CHI",
+      "FMO",
+      "HON",
+      "ITA",
+      "JAP",
+      "MON",
+      "NED",
+      "NIC",
+      "POR",
+      "RAJ",
+      "SRH",
+      "TUN",
+      "new#115",
+      "new#126",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 172103,
+     "x": 1079.5,
+     "y": 329.7,
+     "foes": [
+      "AFG",
+      "BUL",
+      "BUR",
+      "CHI",
+      "EST",
+      "FIN",
+      "HON",
+      "ITA",
+      "JAP",
+      "MON",
+      "NED",
+      "NIC",
+      "POL",
+      "POR",
+      "RAJ",
+      "SOV",
+      "SRH",
+      "TUN",
+      "new#115",
+      "new#126",
+      "new#128",
+      "new#140"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 174397,
+     "x": 1074.5,
+     "y": 327.5,
+     "foes": [
+      "AFG",
+      "BUR",
+      "CHI",
+      "HON",
+      "ITA",
+      "JAP",
+      "MON",
+      "NED",
+      "NIC",
+      "POR",
+      "RAJ",
+      "SRH",
+      "TUN",
+      "new#115",
+      "new#126",
+      "new#128"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 7473,
+     "x": 1082.5,
+     "y": 252.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 11965,
+     "x": 1082.5,
+     "y": 252.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 19566,
+     "x": 1153.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 86905,
+     "x": 1141.5,
+     "y": 248.5,
+     "lateDays": 1829.21
+    },
+    {
+     "tick": 91894,
+     "x": 1141.5,
+     "y": 248.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 93794,
+     "x": 1141.5,
+     "y": 248.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 96376,
+     "x": 593.5,
+     "y": 537.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 98805,
+     "x": 593.5,
+     "y": 537.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 100792,
+     "x": 1141.5,
+     "y": 248.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 102467,
+     "x": 1141.5,
+     "y": 248.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 104147,
+     "x": 1141.5,
+     "y": 248.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 105827,
+     "x": 1141.5,
+     "y": 248.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 147274,
+     "x": 724.9,
+     "y": 304.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 150005,
+     "x": 724.9,
+     "y": 304.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 152109,
+     "x": 724.9,
+     "y": 304.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 170450,
+     "x": 1102.5,
+     "y": 323.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 171982,
+     "x": 1102.5,
+     "y": 323.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 173543,
+     "x": 1082.5,
+     "y": 252.5,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 699,
+   "minHealth": 0.0369240000000004,
+   "healthWarSum": 4049.636565524296,
+   "healthWarDays": 4058
+  },
+  {
+   "name": "GER hero_maus",
+   "alive": 5209,
+   "war": 4879,
+   "engaged": 259,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 8203,
+     "x": 1147.5,
+     "y": 327.5,
+     "foes": [
+      "TUR"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 15404,
+     "x": 1149.9,
+     "y": 424.5,
+     "foes": [
+      "EST",
+      "FIN",
+      "IRN",
+      "LAT",
+      "MON",
+      "NOR",
+      "POL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 17323,
+     "x": 1201.1,
+     "y": 362.1,
+     "foes": [
+      "EST",
+      "FIN",
+      "IRN",
+      "LAT",
+      "MON",
+      "NOR",
+      "POL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 19291,
+     "x": 1202.6,
+     "y": 364.4,
+     "foes": [
+      "EST",
+      "FIN",
+      "IRN",
+      "LAT",
+      "MON",
+      "NOR",
+      "POL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 26321,
+     "x": 1182.9,
+     "y": 200.5,
+     "foes": [
+      "AST"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 34569,
+     "x": 1211.3,
+     "y": 415.5,
+     "foes": [
+      "AST",
+      "EGY"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 41564,
+     "x": 1204.5,
+     "y": 418.5,
+     "foes": [],
+     "engagedLast24": false
+    },
+    {
+     "tick": 83203,
+     "x": 1168.5,
+     "y": 240.5,
+     "foes": [
+      "EST",
+      "MEX",
+      "MON",
+      "ROM",
+      "SOV",
+      "TAN",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 85033,
+     "x": 1080.5,
+     "y": 318.5,
+     "foes": [
+      "ALB",
+      "BUR",
+      "CEY",
+      "ENG",
+      "EST",
+      "IRE",
+      "ITA",
+      "MAL",
+      "RAJ",
+      "ROM",
+      "SAF",
+      "SAU",
+      "SOV",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG",
+      "new#122"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 87091,
+     "x": 1066.5,
+     "y": 279.5,
+     "foes": [
+      "ALB",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG",
+      "new#122"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 93404,
+     "x": 1053.5,
+     "y": 323.5,
+     "foes": [
+      "MEX",
+      "NFL",
+      "new#111",
+      "new#112",
+      "new#115",
+      "new#117",
+      "new#121"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 100146,
+     "x": 594.5,
+     "y": 541.8,
+     "foes": [
+      "AFG",
+      "AST",
+      "CHI",
+      "COL",
+      "CZS",
+      "ITA",
+      "JAP",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 130345,
+     "x": 1119.5,
+     "y": 261.5,
+     "foes": [
+      "ARG",
+      "BRA",
+      "ELS",
+      "HON",
+      "NED",
+      "NIC",
+      "PAR",
+      "POR",
+      "new#115"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 145821,
+     "x": 1134.3,
+     "y": 255.5,
+     "foes": [
+      "BOL",
+      "BUL",
+      "CHL",
+      "DEN",
+      "ECU",
+      "EST",
+      "FIN",
+      "POL",
+      "PRU",
+      "SOV",
+      "URU",
+      "new#140"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 147638,
+     "x": 1057.5,
+     "y": 277.5,
+     "foes": [],
+     "engagedLast24": false
+    },
+    {
+     "tick": 172979,
+     "x": 1076.5,
+     "y": 301.5,
+     "foes": [
+      "AFG",
+      "BUL",
+      "BUR",
+      "CHI",
+      "EST",
+      "FIN",
+      "HON",
+      "ITA",
+      "JAP",
+      "MON",
+      "NED",
+      "NIC",
+      "POL",
+      "POR",
+      "RAJ",
+      "SOV",
+      "SRH",
+      "TUN",
+      "new#115",
+      "new#126",
+      "new#128",
+      "new#140"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 9643,
+     "x": 1100.2,
+     "y": 267.4,
+     "lateDays": 0
+    },
+    {
+     "tick": 16844,
+     "x": 1154.2,
+     "y": 352.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 18763,
+     "x": 1154.2,
+     "y": 352.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 20731,
+     "x": 1154.2,
+     "y": 352.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 27761,
+     "x": 1154.2,
+     "y": 352.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 36009,
+     "x": 1154.2,
+     "y": 352.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 70129,
+     "x": 1155.5,
+     "y": 250.5,
+     "lateDays": 1130.21
+    },
+    {
+     "tick": 84643,
+     "x": 1069.5,
+     "y": 303.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 86473,
+     "x": 1061.5,
+     "y": 274.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 88531,
+     "x": 1161.5,
+     "y": 238.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 94844,
+     "x": 1161.5,
+     "y": 238.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 101586,
+     "x": 1161.5,
+     "y": 238.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 131785,
+     "x": 1161.5,
+     "y": 238.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 147261,
+     "x": 1057.5,
+     "y": 277.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 149078,
+     "x": 1113.5,
+     "y": 322.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 174419,
+     "x": 1097.5,
+     "y": 346.5,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.006560140796371017,
+   "healthWarSum": 4749.160003796911,
+   "healthWarDays": 4879
+  },
+  {
+   "name": "ENG hero_hood",
+   "alive": 6280,
+   "war": 5422,
+   "engaged": 147,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 5978,
+     "x": 1104.8,
+     "y": 383.8,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 8776,
+     "x": 974,
+     "y": 378,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 14181,
+     "x": 988,
+     "y": 379.8,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 36547,
+     "x": 1684.7,
+     "y": 561.5,
+     "foes": [
+      "EST",
+      "FIN",
+      "IRN",
+      "LAT",
+      "MON",
+      "PHI",
+      "ROM",
+      "SIN",
+      "SOV",
+      "SYR",
+      "TAN",
+      "TRJ",
+      "USA",
+      "new#106",
+      "new#107",
+      "new#108"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 38747,
+     "x": 1003.5,
+     "y": 382,
+     "foes": [
+      "PHI",
+      "USA",
+      "new#106"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 40653,
+     "x": 1003.5,
+     "y": 382.6,
+     "foes": [
+      "PHI",
+      "USA",
+      "new#106"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 42585,
+     "x": 1003.6,
+     "y": 382.6,
+     "foes": [
+      "PHI",
+      "USA",
+      "new#106"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 57422,
+     "x": 282.3,
+     "y": 254.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "JAP"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 92625,
+     "x": 1024.5,
+     "y": 290.5,
+     "foes": [
+      "FMO",
+      "FRA",
+      "GER",
+      "MEX",
+      "NFL",
+      "NOR",
+      "NSP",
+      "SWE",
+      "USA",
+      "new#111",
+      "new#112",
+      "new#117",
+      "new#121",
+      "new#124"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 94525,
+     "x": 998.6,
+     "y": 298.9,
+     "foes": [
+      "MEX",
+      "NFL",
+      "USA",
+      "new#111",
+      "new#112",
+      "new#117",
+      "new#121"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 96102,
+     "x": 1006.5,
+     "y": 216.5,
+     "foes": [
+      "IRN",
+      "MEX",
+      "NFL",
+      "USA",
+      "new#111",
+      "new#112",
+      "new#121"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 99206,
+     "x": 1079.9,
+     "y": 330.3,
+     "foes": [
+      "IRN",
+      "MEX",
+      "NFL",
+      "USA",
+      "new#111",
+      "new#112",
+      "new#121"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 101378,
+     "x": 1024.8,
+     "y": 566,
+     "foes": [
+      "MEX",
+      "NFL",
+      "OMN",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 104365,
+     "x": 1041,
+     "y": 563.5,
+     "foes": [
+      "MEX",
+      "NFL",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 106668,
+     "x": 754.6,
+     "y": 429.6,
+     "foes": [
+      "MEX",
+      "NFL",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 165056,
+     "x": 967.4,
+     "y": 418.7,
+     "foes": [
+      "BOL",
+      "CHL",
+      "DEN",
+      "ECU",
+      "GUA",
+      "MEX",
+      "NFL",
+      "PRU",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 169086,
+     "x": 1024.1,
+     "y": 379.4,
+     "foes": [
+      "BOL",
+      "CHL",
+      "DEN",
+      "ECU",
+      "GUA",
+      "MEX",
+      "NFL",
+      "PRU",
+      "SYR",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 7418,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 10216,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 15621,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 37987,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 40187,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 42093,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 44025,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 58862,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 94065,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 95965,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 97542,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 100646,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 102818,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 105805,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 108108,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 166496,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 170526,
+     "x": 1006.5,
+     "y": 216.5,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.03520000000000156,
+   "healthWarSum": 5237.167204281991,
+   "healthWarDays": 5422
+  },
+  {
+   "name": "ENG hero_tog2",
+   "alive": 6640,
+   "war": 5849,
+   "engaged": 361,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 3193,
+     "x": 979.1,
+     "y": 361.5,
+     "foes": [
+      "NSP"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 7840,
+     "x": 1235.3,
+     "y": 530.7,
+     "foes": [],
+     "engagedLast24": false
+    },
+    {
+     "tick": 13238,
+     "x": 1209.8,
+     "y": 467.8,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 32659,
+     "x": 370.5,
+     "y": 420.4,
+     "foes": [],
+     "engagedLast24": false
+    },
+    {
+     "tick": 38005,
+     "x": 1316.5,
+     "y": 462.5,
+     "foes": [
+      "EST",
+      "FIN",
+      "IRN",
+      "LAT",
+      "MON",
+      "PHI",
+      "ROM",
+      "SIN",
+      "SOV",
+      "SYR",
+      "TAN",
+      "TRJ",
+      "USA",
+      "new#106",
+      "new#107",
+      "new#108"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 69851,
+     "x": 1281.5,
+     "y": 338.9,
+     "foes": [
+      "EST",
+      "IRN",
+      "MON",
+      "SOV",
+      "SYR",
+      "TAN",
+      "TUR",
+      "new#107"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 85860,
+     "x": 939.5,
+     "y": 518.5,
+     "foes": [
+      "FMO",
+      "FRA",
+      "GER",
+      "NOR",
+      "NSP",
+      "SWE"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 107251,
+     "x": 665.3,
+     "y": 493.4,
+     "foes": [
+      "MEX",
+      "NFL",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 120472,
+     "x": 750.5,
+     "y": 676.9,
+     "foes": [
+      "ARG",
+      "BRA",
+      "ELS",
+      "HON",
+      "NED",
+      "NIC",
+      "PAR",
+      "new#115"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 166252,
+     "x": 542.5,
+     "y": 524.8,
+     "foes": [
+      "BOL",
+      "BUL",
+      "CHL",
+      "DEN",
+      "ECU",
+      "GUA",
+      "MEX",
+      "NFL",
+      "PRU",
+      "SWI",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 170022,
+     "x": 996.9,
+     "y": 227.5,
+     "foes": [
+      "BOL",
+      "CHL",
+      "DEN",
+      "ECU",
+      "GUA",
+      "MEX",
+      "NFL",
+      "PRU",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 4633,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 9280,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 14678,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 34099,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 39445,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 71291,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 87300,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 108691,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 121912,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 167692,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 171462,
+     "x": 1023.3,
+     "y": 275.2,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.0025247404484578517,
+   "healthWarSum": 5723.251251075459,
+   "healthWarDays": 5849
+  },
+  {
+   "name": "FRA hero_richelieu",
+   "alive": 4360,
+   "war": 4001,
+   "engaged": 97,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 7289,
+     "x": 1093.2,
+     "y": 364.8,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 8989,
+     "x": 975.8,
+     "y": 328.3,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 10525,
+     "x": 1070.5,
+     "y": 258.2,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 12205,
+     "x": 1032.8,
+     "y": 368.2,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 13937,
+     "x": 1100.2,
+     "y": 376.2,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YEM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 16773,
+     "x": 727.7,
+     "y": 785.7,
+     "foes": [
+      "BRA",
+      "EST",
+      "IRN",
+      "LAT",
+      "MON",
+      "PHI",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN",
+      "USA"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 18791,
+     "x": 1143.1,
+     "y": 236.4,
+     "foes": [
+      "BRA",
+      "EST",
+      "IRN",
+      "LAT",
+      "MON",
+      "PHI",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN",
+      "USA",
+      "new#104"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 20819,
+     "x": 1043.8,
+     "y": 371.5,
+     "foes": [
+      "EST",
+      "IRE",
+      "IRN",
+      "LAT",
+      "MON",
+      "PHI",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN",
+      "USA"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 37920,
+     "x": 395.5,
+     "y": 455.5,
+     "foes": [
+      "EST",
+      "IRN",
+      "LAT",
+      "MON",
+      "PAL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "SYR",
+      "TAN",
+      "TRJ",
+      "new#107",
+      "new#108"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 39477,
+     "x": 1143.1,
+     "y": 236.4,
+     "foes": [
+      "EST",
+      "IRN",
+      "LAT",
+      "MON",
+      "PAL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "SYR",
+      "TAN",
+      "TRJ",
+      "new#107",
+      "new#108"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 41610,
+     "x": 1065.5,
+     "y": 332.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "EST",
+      "GRE",
+      "IRN",
+      "ITA",
+      "JAP",
+      "LAT",
+      "MON",
+      "PAL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "SYR",
+      "TAN",
+      "TRJ",
+      "TUR",
+      "new#107",
+      "new#108"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 43308,
+     "x": 1165.5,
+     "y": 206.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "EST",
+      "GRE",
+      "IRN",
+      "ITA",
+      "JAP",
+      "MON",
+      "PAL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "SYR",
+      "TAN",
+      "TRJ",
+      "TUR",
+      "new#107",
+      "new#108"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 45286,
+     "x": 1109.3,
+     "y": 405.3,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "EST",
+      "GRE",
+      "IRN",
+      "ITA",
+      "JAP",
+      "MON",
+      "PAL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "SYR",
+      "TAN",
+      "TRJ",
+      "TUR",
+      "new#107",
+      "new#108"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 47706,
+     "x": 1098.5,
+     "y": 402.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "GRE",
+      "ITA",
+      "JAP",
+      "PHI",
+      "TUR",
+      "USA",
+      "new#106",
+      "new#110"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 49643,
+     "x": 1106.1,
+     "y": 385.3,
+     "foes": [
+      "AFG",
+      "BUL",
+      "CHI",
+      "EGY",
+      "GRE",
+      "ITA",
+      "JAP",
+      "TUR"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 51270,
+     "x": 1105.3,
+     "y": 385.3,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "GRE",
+      "ITA",
+      "JAP",
+      "TUR"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 52950,
+     "x": 1105.3,
+     "y": 385.3,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "GRE",
+      "ITA",
+      "JAP",
+      "TUR"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 54398,
+     "x": 998.5,
+     "y": 298.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "GRE",
+      "ITA",
+      "JAP",
+      "TUR"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 56545,
+     "x": 1160.1,
+     "y": 407.1,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "GRE",
+      "ITA",
+      "JAP",
+      "TUR"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 64351,
+     "x": 1478.5,
+     "y": 529.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "ITA",
+      "JAP"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 66046,
+     "x": 1099.1,
+     "y": 368.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "ITA",
+      "JAP"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 67496,
+     "x": 998.5,
+     "y": 298.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "ITA",
+      "JAP"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 68946,
+     "x": 998.5,
+     "y": 298.5,
+     "foes": [
+      "AFG",
+      "AST",
+      "CHI",
+      "CZS",
+      "EGY",
+      "ITA",
+      "JAP",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 70396,
+     "x": 998.5,
+     "y": 298.5,
+     "foes": [
+      "AFG",
+      "ARG",
+      "AST",
+      "BRA",
+      "CAN",
+      "CHI",
+      "CZS",
+      "GUA",
+      "ITA",
+      "JAP",
+      "LIB",
+      "NED",
+      "PAR",
+      "POR",
+      "YUG",
+      "new#115",
+      "new#118"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 72522,
+     "x": 976.4,
+     "y": 378.5,
+     "foes": [
+      "ARG",
+      "AST",
+      "BRA",
+      "CAN",
+      "CZS",
+      "GUA",
+      "LIB",
+      "NED",
+      "PAR",
+      "POR",
+      "USA",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#115",
+      "new#117",
+      "new#118",
+      "new#121"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 74524,
+     "x": 1082.5,
+     "y": 252.5,
+     "foes": [
+      "ARG",
+      "AST",
+      "BRA",
+      "CAN",
+      "CZS",
+      "GUA",
+      "LIB",
+      "NED",
+      "PAR",
+      "POR",
+      "USA",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#115",
+      "new#117",
+      "new#118",
+      "new#121"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 76373,
+     "x": 1068.5,
+     "y": 375.3,
+     "foes": [
+      "ARG",
+      "AST",
+      "BRA",
+      "CAN",
+      "CZS",
+      "GUA",
+      "LIB",
+      "MEX",
+      "NED",
+      "PAR",
+      "POR",
+      "USA",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#115",
+      "new#118",
+      "new#124"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 78340,
+     "x": 1040,
+     "y": 274,
+     "foes": [
+      "ARG",
+      "AST",
+      "BRA",
+      "CAN",
+      "CZS",
+      "GUA",
+      "LIB",
+      "MEX",
+      "NED",
+      "PAR",
+      "POR",
+      "USA",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#115",
+      "new#118"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 80040,
+     "x": 996.9,
+     "y": 296.8,
+     "foes": [
+      "MEX",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 81817,
+     "x": 998.5,
+     "y": 298.5,
+     "foes": [
+      "EST",
+      "MEX",
+      "MON",
+      "ROM",
+      "SOV",
+      "TAN",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 83262,
+     "x": 998.5,
+     "y": 298.5,
+     "foes": [
+      "EST",
+      "MEX",
+      "MON",
+      "ROM",
+      "SOV",
+      "TAN",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 84916,
+     "x": 1098.3,
+     "y": 375.3,
+     "foes": [
+      "ALB",
+      "BUR",
+      "CEY",
+      "ENG",
+      "EST",
+      "IRE",
+      "ITA",
+      "MAL",
+      "RAJ",
+      "ROM",
+      "SAF",
+      "SAU",
+      "SOV",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG",
+      "new#122"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 90341,
+     "x": 1102.5,
+     "y": 323.5,
+     "foes": [
+      "ALB",
+      "BUR",
+      "CEY",
+      "ENG",
+      "EST",
+      "IRE",
+      "ITA",
+      "MAL",
+      "RAJ",
+      "ROM",
+      "SAF",
+      "SAU",
+      "SOV",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG",
+      "new#122"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 92117,
+     "x": 1056.2,
+     "y": 336.2,
+     "foes": [
+      "ALB",
+      "BUR",
+      "CEY",
+      "ENG",
+      "EST",
+      "IRE",
+      "ITA",
+      "MAL",
+      "RAJ",
+      "ROM",
+      "SAF",
+      "SAU",
+      "SOV",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG",
+      "new#122"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 96853,
+     "x": 1109.5,
+     "y": 405.2,
+     "foes": [
+      "AFG",
+      "CHI",
+      "COL",
+      "EST",
+      "ITA",
+      "JAP",
+      "ROM",
+      "SOV",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 98298,
+     "x": 1098.5,
+     "y": 402.5,
+     "foes": [
+      "AFG",
+      "AST",
+      "CHI",
+      "COL",
+      "CZS",
+      "EST",
+      "ITA",
+      "JAP",
+      "ROM",
+      "SOV",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 100212,
+     "x": 1098.7,
+     "y": 402.3,
+     "foes": [
+      "AFG",
+      "AST",
+      "CHI",
+      "COL",
+      "CZS",
+      "EST",
+      "ITA",
+      "JAP",
+      "ROM",
+      "SOV",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 102156,
+     "x": 1098.5,
+     "y": 402.5,
+     "foes": [
+      "AFG",
+      "AST",
+      "CHI",
+      "COL",
+      "CZS",
+      "EST",
+      "ITA",
+      "JAP",
+      "ROM",
+      "SOV",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 103999,
+     "x": 1110.5,
+     "y": 373.5,
+     "foes": [
+      "AFG",
+      "AST",
+      "CHI",
+      "COL",
+      "CZS",
+      "EST",
+      "ITA",
+      "JAP",
+      "ROM",
+      "SOV",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 148565,
+     "x": 431.5,
+     "y": 488.5,
+     "foes": [
+      "ALB",
+      "AST",
+      "CAN",
+      "CZS",
+      "GER",
+      "GRE",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 150669,
+     "x": 1118.5,
+     "y": 333.5,
+     "foes": [
+      "ALB",
+      "AST",
+      "CAN",
+      "CZS",
+      "GER",
+      "GRE",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 152288,
+     "x": 976.5,
+     "y": 332.9,
+     "foes": [
+      "AFG",
+      "ALB",
+      "AST",
+      "CAN",
+      "CHI",
+      "CZS",
+      "GER",
+      "GRE",
+      "ITA",
+      "JAP",
+      "MON",
+      "YUG",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 153950,
+     "x": 1015.4,
+     "y": 288.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "AST",
+      "BOL",
+      "CAN",
+      "CHI",
+      "CHL",
+      "CZS",
+      "DEN",
+      "ECU",
+      "GER",
+      "GRE",
+      "GUA",
+      "ITA",
+      "JAP",
+      "MEX",
+      "MON",
+      "NFL",
+      "PRU",
+      "USA",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 155393,
+     "x": 998.5,
+     "y": 298.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "AST",
+      "BOL",
+      "CAN",
+      "CHI",
+      "CHL",
+      "CZS",
+      "DEN",
+      "ECU",
+      "GER",
+      "GRE",
+      "GUA",
+      "ITA",
+      "JAP",
+      "MEX",
+      "MON",
+      "NFL",
+      "PRU",
+      "USA",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 156835,
+     "x": 998.5,
+     "y": 298.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "AST",
+      "BOL",
+      "CAN",
+      "CHI",
+      "CHL",
+      "CZS",
+      "DEN",
+      "ECU",
+      "GER",
+      "GRE",
+      "GUA",
+      "ITA",
+      "JAP",
+      "MEX",
+      "MON",
+      "NFL",
+      "PRU",
+      "USA",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 158501,
+     "x": 1025,
+     "y": 367.6,
+     "foes": [
+      "AFG",
+      "ALB",
+      "AST",
+      "BOL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "CHI",
+      "CHL",
+      "CZS",
+      "DEN",
+      "ECU",
+      "ENG",
+      "GER",
+      "GRE",
+      "GUA",
+      "IRE",
+      "IRN",
+      "IRQ",
+      "ITA",
+      "JAP",
+      "MAL",
+      "MEX",
+      "MON",
+      "NFL",
+      "OMN",
+      "PRU",
+      "SAF",
+      "SAU",
+      "SUD",
+      "TUR",
+      "USA",
+      "YEM",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 159946,
+     "x": 1020.5,
+     "y": 384.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "AST",
+      "BOL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "CHI",
+      "CHL",
+      "CZS",
+      "DEN",
+      "ECU",
+      "ENG",
+      "GER",
+      "GRE",
+      "GUA",
+      "IRE",
+      "IRN",
+      "IRQ",
+      "ITA",
+      "JAP",
+      "MAL",
+      "MEX",
+      "MON",
+      "NFL",
+      "OMN",
+      "PRU",
+      "SAF",
+      "SAU",
+      "SUD",
+      "TUR",
+      "USA",
+      "YEM",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 161436,
+     "x": 1080.5,
+     "y": 374.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "AST",
+      "BOL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "CHI",
+      "CHL",
+      "CZS",
+      "DEN",
+      "ECU",
+      "ENG",
+      "GER",
+      "GRE",
+      "GUA",
+      "IRE",
+      "IRN",
+      "IRQ",
+      "ITA",
+      "JAP",
+      "MAL",
+      "MEX",
+      "MON",
+      "NFL",
+      "OMN",
+      "PRU",
+      "SAF",
+      "SAU",
+      "SUD",
+      "TUR",
+      "USA",
+      "YEM",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#128"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 163457,
+     "x": 925.1,
+     "y": 486.9,
+     "foes": [
+      "AFG",
+      "AST",
+      "BOL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "CHI",
+      "CHL",
+      "CZS",
+      "DEN",
+      "ECU",
+      "ENG",
+      "GER",
+      "GRE",
+      "GUA",
+      "IRE",
+      "IRN",
+      "IRQ",
+      "ITA",
+      "JAP",
+      "MAL",
+      "MEX",
+      "MON",
+      "NFL",
+      "OMN",
+      "PRU",
+      "SAF",
+      "SAU",
+      "SUD",
+      "TUR",
+      "USA",
+      "YEM",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#128"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 8729,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 10429,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 11965,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 13645,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 15377,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 18213,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 20231,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 22259,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 39360,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 40917,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 43050,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 44748,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 46726,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 49146,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 51083,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 52710,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 54390,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 55838,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 57985,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 65791,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 67486,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 68936,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 70386,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 71836,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 73962,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 75964,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 77813,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 79780,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 81480,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 83257,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 84702,
+     "x": 1057.5,
+     "y": 336.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 86356,
+     "x": 1057.5,
+     "y": 336.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 91781,
+     "x": 1057.5,
+     "y": 336.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 93557,
+     "x": 1098.5,
+     "y": 402.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 98293,
+     "x": 1098.5,
+     "y": 402.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 99738,
+     "x": 1098.5,
+     "y": 402.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 101652,
+     "x": 1098.5,
+     "y": 402.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 103596,
+     "x": 1098.5,
+     "y": 402.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 105439,
+     "x": 1098.5,
+     "y": 402.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 150005,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 152109,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 153728,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 155390,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 156833,
+     "x": 998.5,
+     "y": 298.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 158275,
+     "x": 1020.5,
+     "y": 384.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 159941,
+     "x": 1020.5,
+     "y": 384.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 161386,
+     "x": 1080.5,
+     "y": 374.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 162876,
+     "x": 924.5,
+     "y": 513.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 164897,
+     "x": 924.5,
+     "y": 513.5,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.007200000000000761,
+   "healthWarSum": 3953.1105603860265,
+   "healthWarDays": 4001
+  },
+  {
+   "name": "FRA hero_char2c",
+   "alive": 6460,
+   "war": 6064,
+   "engaged": 380,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 6743,
+     "x": 1071.5,
+     "y": 302.5,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 11581,
+     "x": 1174.4,
+     "y": 415.6,
+     "foes": [
+      "ALB",
+      "GER",
+      "GRE",
+      "HUN",
+      "ITA",
+      "JAP",
+      "MAN",
+      "MEN",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 17761,
+     "x": 1152.5,
+     "y": 262.5,
+     "foes": [
+      "BRA",
+      "EST",
+      "IRN",
+      "LAT",
+      "MON",
+      "PHI",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN",
+      "USA",
+      "new#104"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 19577,
+     "x": 1133.5,
+     "y": 269.5,
+     "foes": [
+      "BRA",
+      "EST",
+      "IRN",
+      "LAT",
+      "MON",
+      "PHI",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN",
+      "USA"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 48064,
+     "x": 1119.5,
+     "y": 285.5,
+     "foes": [
+      "AFG",
+      "CHI",
+      "EGY",
+      "GRE",
+      "ITA",
+      "JAP",
+      "PHI",
+      "TUR",
+      "USA",
+      "new#106",
+      "new#110"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 75017,
+     "x": 1068.5,
+     "y": 302.5,
+     "foes": [
+      "ARG",
+      "AST",
+      "BRA",
+      "CAN",
+      "CZS",
+      "GUA",
+      "LIB",
+      "NED",
+      "PAR",
+      "POR",
+      "YUG",
+      "new#115",
+      "new#118"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 77941,
+     "x": 1030.8,
+     "y": 337.5,
+     "foes": [
+      "ARG",
+      "AST",
+      "BRA",
+      "CAN",
+      "CZS",
+      "GUA",
+      "LIB",
+      "MEX",
+      "NED",
+      "PAR",
+      "POR",
+      "USA",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#115",
+      "new#118"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 80297,
+     "x": 1005.5,
+     "y": 402.5,
+     "foes": [
+      "MEX",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 87671,
+     "x": 1262.5,
+     "y": 534.5,
+     "foes": [
+      "ALB",
+      "BUR",
+      "CEY",
+      "ENG",
+      "IRE",
+      "ITA",
+      "MAL",
+      "RAJ",
+      "SAF",
+      "SAU",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG",
+      "new#122"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 90006,
+     "x": 1048,
+     "y": 287,
+     "foes": [
+      "ALB",
+      "BUR",
+      "CEY",
+      "ENG",
+      "EST",
+      "IRE",
+      "ITA",
+      "MAL",
+      "RAJ",
+      "ROM",
+      "SAF",
+      "SAU",
+      "SOV",
+      "SRH",
+      "SUD",
+      "SWI",
+      "YEM",
+      "YUG",
+      "new#122"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 100071,
+     "x": 595.5,
+     "y": 546.5,
+     "foes": [
+      "AFG",
+      "AST",
+      "CHI",
+      "COL",
+      "CZS",
+      "EST",
+      "ITA",
+      "JAP",
+      "ROM",
+      "SOV",
+      "VEN",
+      "new#128"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 149164,
+     "x": 1122.5,
+     "y": 330.6,
+     "foes": [
+      "ALB",
+      "AST",
+      "CAN",
+      "CZS",
+      "GER",
+      "GRE",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 154272,
+     "x": 1172.5,
+     "y": 388.5,
+     "foes": [
+      "AFG",
+      "ALB",
+      "AST",
+      "BOL",
+      "CAN",
+      "CHI",
+      "CHL",
+      "CZS",
+      "DEN",
+      "ECU",
+      "GER",
+      "GRE",
+      "GUA",
+      "ITA",
+      "JAP",
+      "MEX",
+      "MON",
+      "NFL",
+      "PRU",
+      "USA",
+      "YUG",
+      "new#111",
+      "new#112",
+      "new#128"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 164492,
+     "x": 1078.5,
+     "y": 440.3,
+     "foes": [
+      "AFG",
+      "AST",
+      "BUR",
+      "CAN",
+      "CEY",
+      "CHI",
+      "CZS",
+      "ENG",
+      "GER",
+      "GRE",
+      "IRE",
+      "IRN",
+      "IRQ",
+      "ITA",
+      "JAP",
+      "MAL",
+      "MON",
+      "OMN",
+      "SAF",
+      "SAU",
+      "SUD",
+      "TUR",
+      "YEM",
+      "YUG",
+      "new#128"
+     ],
+     "engagedLast24": false
+    }
+   ],
+   "returns": [
+    {
+     "tick": 8183,
+     "x": 1037.3,
+     "y": 294.8,
+     "lateDays": 0
+    },
+    {
+     "tick": 13021,
+     "x": 1037.3,
+     "y": 294.8,
+     "lateDays": 0
+    },
+    {
+     "tick": 19201,
+     "x": 1037.3,
+     "y": 294.8,
+     "lateDays": 0
+    },
+    {
+     "tick": 21017,
+     "x": 1037.3,
+     "y": 294.8,
+     "lateDays": 0
+    },
+    {
+     "tick": 49504,
+     "x": 1037.3,
+     "y": 294.8,
+     "lateDays": 0
+    },
+    {
+     "tick": 76457,
+     "x": 1003,
+     "y": 354.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 79381,
+     "x": 1037.3,
+     "y": 294.8,
+     "lateDays": 0
+    },
+    {
+     "tick": 81737,
+     "x": 1037.3,
+     "y": 294.8,
+     "lateDays": 0
+    },
+    {
+     "tick": 89111,
+     "x": 1037.3,
+     "y": 294.8,
+     "lateDays": 0
+    },
+    {
+     "tick": 91446,
+     "x": 924.6,
+     "y": 512.9,
+     "lateDays": 0
+    },
+    {
+     "tick": 101511,
+     "x": 924.6,
+     "y": 512.9,
+     "lateDays": 0
+    },
+    {
+     "tick": 150604,
+     "x": 924.6,
+     "y": 512.9,
+     "lateDays": 0
+    },
+    {
+     "tick": 155712,
+     "x": 1001,
+     "y": 567,
+     "lateDays": 0
+    },
+    {
+     "tick": 165932,
+     "x": 1001,
+     "y": 567,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.01689318315292898,
+   "healthWarSum": 5941.87497995943,
+   "healthWarDays": 6064
+  },
+  {
+   "name": "ITA hero_roma",
+   "alive": 6460,
+   "war": 6296,
+   "engaged": 129,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 6069,
+     "x": 1106.3,
+     "y": 384.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LEB",
+      "LUX",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NSP",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "REP",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 18227,
+     "x": 1162.7,
+     "y": 210.5,
+     "foes": [
+      "BRA",
+      "EST",
+      "FIN",
+      "IRN",
+      "LAT",
+      "MON",
+      "NOR",
+      "POL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 37403,
+     "x": 1165.5,
+     "y": 206.5,
+     "foes": [
+      "AST",
+      "FIN",
+      "NOR",
+      "PHI",
+      "POL",
+      "USA",
+      "new#106"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 39067,
+     "x": 1157.9,
+     "y": 370.9,
+     "foes": [
+      "AST",
+      "FIN",
+      "NOR",
+      "PHI",
+      "POL",
+      "USA",
+      "new#106"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 41129,
+     "x": 1035.9,
+     "y": 372.9,
+     "foes": [
+      "AEF",
+      "AOF",
+      "EST",
+      "FIN",
+      "FMO",
+      "FRA",
+      "INC",
+      "IRN",
+      "LAT",
+      "MAD",
+      "MON",
+      "NSP",
+      "PAL",
+      "PHI",
+      "POL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "SWE",
+      "SYR",
+      "TAN",
+      "TRJ",
+      "TUN",
+      "USA",
+      "new#106",
+      "new#107",
+      "new#108"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 43417,
+     "x": 1035.9,
+     "y": 372.9,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "INC",
+      "MAD",
+      "NSP",
+      "PHI",
+      "POL",
+      "SWE",
+      "TUN",
+      "USA",
+      "new#106"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 45689,
+     "x": 1025.9,
+     "y": 375.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "INC",
+      "MAD",
+      "NSP",
+      "PHI",
+      "POL",
+      "SWE",
+      "TUN",
+      "USA",
+      "new#106"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 55040,
+     "x": 968.5,
+     "y": 418.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "MAD",
+      "NSP",
+      "PHI",
+      "POL",
+      "SIA",
+      "SWE",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 58409,
+     "x": 1020.5,
+     "y": 384.5,
+     "foes": [
+      "PHI",
+      "SIA",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 60732,
+     "x": 970.5,
+     "y": 406.5,
+     "foes": [
+      "PHI",
+      "SIA",
+      "USA",
+      "new#111",
+      "new#112",
+      "new#117"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 64007,
+     "x": 1608.6,
+     "y": 587.6,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FIN",
+      "FMO",
+      "FRA",
+      "MAD",
+      "NOR",
+      "NSP",
+      "PHI",
+      "POL",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 95002,
+     "x": 1069.5,
+     "y": 223.5,
+     "foes": [
+      "FIN",
+      "FMO",
+      "FRA",
+      "GER",
+      "IRN",
+      "NOR",
+      "NSP",
+      "SWE"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 165282,
+     "x": 1067.1,
+     "y": 375.5,
+     "foes": [
+      "BOL",
+      "CHL",
+      "DEN",
+      "ECU",
+      "GUA",
+      "MEX",
+      "NFL",
+      "PRU",
+      "TUN",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 168063,
+     "x": 1099.2,
+     "y": 368.2,
+     "foes": [
+      "BOL",
+      "CHL",
+      "DEN",
+      "ECU",
+      "GUA",
+      "MEX",
+      "NFL",
+      "PRU",
+      "TUN",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 7509,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 19667,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 38843,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 40507,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 42569,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 44857,
+     "x": 1160.5,
+     "y": 407.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 47129,
+     "x": 1160.5,
+     "y": 407.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 56480,
+     "x": 1160.5,
+     "y": 407.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 59849,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 62172,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 65447,
+     "x": 1098.5,
+     "y": 402.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 96442,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 166722,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    },
+    {
+     "tick": 169503,
+     "x": 1121.5,
+     "y": 353.5,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.021999999999999353,
+   "healthWarSum": 5993.937350068124,
+   "healthWarDays": 6296
+  },
+  {
+   "name": "ITA hero_p100",
+   "alive": 6160,
+   "war": 6024,
+   "engaged": 471,
+   "moved": 0,
+   "lost": [
+    {
+     "tick": 6743,
+     "x": 1072.6,
+     "y": 303.4,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "LEB",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NSP",
+      "NZL",
+      "OMN",
+      "PAL",
+      "RAJ",
+      "REP",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SWI",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 9654,
+     "x": 1053.5,
+     "y": 310.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "AST",
+      "BCO",
+      "BEA",
+      "BEL",
+      "BUR",
+      "CAN",
+      "CEY",
+      "DEI",
+      "EGY",
+      "ENG",
+      "FIN",
+      "FMO",
+      "FRA",
+      "GCO",
+      "INC",
+      "IRQ",
+      "MAD",
+      "MAL",
+      "NED",
+      "NFL",
+      "NIG",
+      "NOR",
+      "NSP",
+      "NZL",
+      "OMN",
+      "PAL",
+      "POL",
+      "RAJ",
+      "REP",
+      "SAF",
+      "SAR",
+      "SRH",
+      "SUD",
+      "SYR",
+      "TRJ",
+      "TUN"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 15855,
+     "x": 1276.5,
+     "y": 391.5,
+     "foes": [
+      "BRA",
+      "EST",
+      "FIN",
+      "IRN",
+      "LAT",
+      "MON",
+      "NOR",
+      "POL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 21591,
+     "x": 1139.5,
+     "y": 321.5,
+     "foes": [
+      "AST",
+      "EST",
+      "FIN",
+      "IRN",
+      "LAT",
+      "MON",
+      "NOR",
+      "POL",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 26223,
+     "x": 1108.5,
+     "y": 277.5,
+     "foes": [
+      "AST",
+      "EST",
+      "IRN",
+      "LAT",
+      "MON",
+      "ROM",
+      "SIN",
+      "SOV",
+      "TAN"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 29976,
+     "x": 1140.5,
+     "y": 248.5,
+     "foes": [
+      "AST",
+      "CAN",
+      "EST",
+      "FIN",
+      "LAT",
+      "LIT",
+      "MEX",
+      "NOR",
+      "POL",
+      "new#104"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 42302,
+     "x": 1132.5,
+     "y": 132.8,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "INC",
+      "MAD",
+      "NSP",
+      "PHI",
+      "POL",
+      "SWE",
+      "TUN",
+      "USA",
+      "new#106"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 57497,
+     "x": 1152.1,
+     "y": 443.9,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FMO",
+      "FRA",
+      "MAD",
+      "NSP",
+      "PHI",
+      "POL",
+      "SIA",
+      "SWE",
+      "USA",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 62757,
+     "x": 1099.5,
+     "y": 332.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FIN",
+      "FMO",
+      "FRA",
+      "MAD",
+      "NOR",
+      "NSP",
+      "PHI",
+      "POL",
+      "USA",
+      "new#111",
+      "new#112",
+      "new#117"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 64504,
+     "x": 1115.5,
+     "y": 366.5,
+     "foes": [
+      "AEF",
+      "AOF",
+      "FIN",
+      "FMO",
+      "FRA",
+      "MAD",
+      "NOR",
+      "NSP",
+      "POL"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 85033,
+     "x": 1081.5,
+     "y": 319.5,
+     "foes": [
+      "ARG",
+      "BRA",
+      "CAN",
+      "EST",
+      "FIN",
+      "FMO",
+      "FRA",
+      "GER",
+      "GUA",
+      "LIB",
+      "MEX",
+      "NED",
+      "NOR",
+      "NSP",
+      "PAR",
+      "POR",
+      "ROM",
+      "SOV",
+      "SWE",
+      "new#111",
+      "new#112",
+      "new#115",
+      "new#116",
+      "new#121",
+      "new#123",
+      "new#124"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 106479,
+     "x": 1266.9,
+     "y": 387.9,
+     "foes": [
+      "COL",
+      "VEN"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 115603,
+     "x": 1098.8,
+     "y": 305.5,
+     "foes": [
+      "ALB",
+      "ARG",
+      "AST",
+      "BRA",
+      "BUL",
+      "CZS",
+      "ELS",
+      "GRE",
+      "HON",
+      "NED",
+      "NIC",
+      "PAR",
+      "ROM",
+      "TUR",
+      "new#115",
+      "new#118"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 123395,
+     "x": 1075.5,
+     "y": 249.5,
+     "foes": [
+      "BOL",
+      "BUL",
+      "CHL",
+      "DEN",
+      "ECU",
+      "PRU",
+      "TUR",
+      "URU"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 149236,
+     "x": 1128.5,
+     "y": 250.5,
+     "foes": [
+      "ALB",
+      "AST",
+      "CAN",
+      "CZS",
+      "GRE",
+      "POL",
+      "ROM",
+      "YUG"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 157287,
+     "x": 1053.5,
+     "y": 289.5,
+     "foes": [
+      "FIN",
+      "FRA",
+      "NOR",
+      "NSP",
+      "POL",
+      "SWE"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 167016,
+     "x": 1062.5,
+     "y": 314.5,
+     "foes": [
+      "BOL",
+      "BUL",
+      "CHL",
+      "DEN",
+      "ECU",
+      "GUA",
+      "MEX",
+      "NFL",
+      "PRU",
+      "SWI",
+      "TUN",
+      "USA",
+      "new#111",
+      "new#112",
+      "new#146"
+     ],
+     "engagedLast24": false
+    },
+    {
+     "tick": 168795,
+     "x": 1102.1,
+     "y": 314.5,
+     "foes": [
+      "AST",
+      "BOL",
+      "CAN",
+      "CHL",
+      "CZS",
+      "DEN",
+      "ECU",
+      "GER",
+      "GRE",
+      "GUA",
+      "MEX",
+      "NFL",
+      "PRU",
+      "ROM",
+      "SYR",
+      "USA",
+      "YUG",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    },
+    {
+     "tick": 170684,
+     "x": 1105,
+     "y": 351.2,
+     "foes": [
+      "AST",
+      "BOL",
+      "CAN",
+      "CHL",
+      "CZS",
+      "DEN",
+      "ECU",
+      "GER",
+      "GRE",
+      "GUA",
+      "MEX",
+      "NFL",
+      "PRU",
+      "ROM",
+      "USA",
+      "YUG",
+      "new#111",
+      "new#112"
+     ],
+     "engagedLast24": true
+    }
+   ],
+   "returns": [
+    {
+     "tick": 8183,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 11094,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 17295,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 23031,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 27663,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 31416,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 43742,
+     "x": 1138.1,
+     "y": 408.1,
+     "lateDays": 0
+    },
+    {
+     "tick": 58937,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 64197,
+     "x": 1099.9,
+     "y": 369.3,
+     "lateDays": 0
+    },
+    {
+     "tick": 65944,
+     "x": 1099.9,
+     "y": 369.3,
+     "lateDays": 0
+    },
+    {
+     "tick": 86473,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 107919,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 117043,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 124835,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 150676,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 158727,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 168456,
+     "x": 1095,
+     "y": 344,
+     "lateDays": 0
+    },
+    {
+     "tick": 170235,
+     "x": 1105,
+     "y": 351.2,
+     "lateDays": 0
+    },
+    {
+     "tick": 172124,
+     "x": 1413,
+     "y": 449.7,
+     "lateDays": 0
+    }
+   ],
+   "servedOther": 0,
+   "servedBy": [],
+   "waitingPast": 0,
+   "minHealth": 0.024869221208911885,
+   "healthWarSum": 5905.921634312205,
+   "healthWarDays": 6024
+  }
+ ],
+ "alsoGone": [
+  {
+   "hero": "SOV hero_sovetsky_soyuz",
+   "at": 175221,
+   "living": 1
+  },
+  {
+   "hero": "JAP hero_yamato",
+   "at": 175345,
+   "living": 1
+  },
+  {
+   "hero": "GER hero_bismarck",
+   "at": 175836,
+   "living": 1
+  }
+ ],
+ "ms": 530985.8335
+}

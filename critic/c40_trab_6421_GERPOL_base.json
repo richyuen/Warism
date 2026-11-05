@@ -1,0 +1,97 @@
+{
+ "seed": 6421,
+ "ATT": "GER",
+ "DEF": "POL",
+ "variant": "base",
+ "before": {
+  "att": 273,
+  "def": 512
+ },
+ "after": {
+  "att": 273,
+  "def": 512
+ },
+ "rows": [
+  {
+   "d": 10,
+   "defHolds": 2105,
+   "attTook": 117,
+   "attMen": 562462,
+   "defMen": 383079,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 20,
+   "defHolds": 2103,
+   "attTook": 119,
+   "attMen": 503528,
+   "defMen": 311859,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 30,
+   "defHolds": 2145,
+   "attTook": 77,
+   "attMen": 429766,
+   "defMen": 264608,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 40,
+   "defHolds": 2125,
+   "attTook": 86,
+   "attMen": 390158,
+   "defMen": 209425,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 50,
+   "defHolds": 1965,
+   "attTook": 72,
+   "attMen": 327508,
+   "defMen": 152873,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 60,
+   "defHolds": 1722,
+   "attTook": 97,
+   "attMen": 302411,
+   "defMen": 112566,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 70,
+   "defHolds": 1356,
+   "attTook": 138,
+   "attMen": 288763,
+   "defMen": 81379,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 80,
+   "defHolds": 1292,
+   "attTook": 123,
+   "attMen": 283339,
+   "defMen": 61729,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 90,
+   "defHolds": 1133,
+   "attTook": 126,
+   "attMen": 319412,
+   "defMen": 39376,
+   "atWar": true,
+   "defAlive": 1
+  }
+ ]
+}

@@ -1,0 +1,212 @@
+c40_a_11213.json DIFF ['notes']
+c40_a_13007.json DIFF ['notes']
+c40_a_8999.json DIFF ['notes']
+c40_an_11003y18.json IDENTICAL
+c40_an_13007y18.json IDENTICAL
+c40_an_7019y20.json IDENTICAL
+c40_base_fuzhou_2.json IDENTICAL
+c40_bt_5113_phone.json IDENTICAL
+c40_c_11071.json DIFF ['views']
+c40_c_11287.json DIFF ['views']
+c40_c_13313.json DIFF ['views']
+c40_c_13519.json DIFF ['engagedWeek2', 'views']
+c40_c_8573.json DIFF ['views']
+c40_dl_11003.json IDENTICAL
+c40_dl_13007.json IDENTICAL
+c40_dl_7019.json IDENTICAL
+c40_fw2_2207.json IDENTICAL
+c40_headless_7019.json DIFF ['rows', 'totalS']
+c40_hf_13007_desk_d730_0.json IDENTICAL
+c40_hf_5521_desk_d0_0.json IDENTICAL
+c40_hf_5521_phone_d0_0.json IDENTICAL
+c40_hf_7019_desk_d730_0.json IDENTICAL
+c40_hft_5521.json IDENTICAL
+c40_hi_11003.json IDENTICAL
+c40_hi_13007.json IDENTICAL
+c40_hi_7019.json IDENTICAL
+c40_hintmix_3517_sh.json no c39
+c40_ho_off_4111.json IDENTICAL
+c40_ho_off_4253.json IDENTICAL
+c40_ho_off_4637.json IDENTICAL
+c40_ho_off_5023.json IDENTICAL
+c40_ho_off_5449.json IDENTICAL
+c40_ho_off_5867.json IDENTICAL
+c40_ho_off_6299.json IDENTICAL
+c40_ho_off_7177.json IDENTICAL
+c40_hp_hintperf.json no c39
+c40_hs_3517.json IDENTICAL
+c40_hs_3739.json IDENTICAL
+c40_hs_desk.json no c39
+c40_hs_phone.json no c39
+c40_ht_phone.json DIFF ['bootS']
+c40_k_11003.json IDENTICAL
+c40_k_13109.json IDENTICAL
+c40_l2_aboard_alone.json no c39
+c40_l2_bothfar_14003.json no c39
+c40_l2_bothfar_hint.json no c39
+c40_l2_click_plus_fresh.json no c39
+c40_l2_four_daily.json no c39
+c40_l2_four_hourly.json no c39
+c40_l2_four_sw3_14003.json no c39
+c40_l2_four_sw3_hint.json no c39
+c40_l2_four_two_sw3.json no c39
+c40_l2_fresh3_base.json no c39
+c40_l2_six_all_far.json no c39
+c40_l2_six_half_far.json no c39
+c40_l2_six_half_far_14011.json no c39
+c40_l2_steal_freshdaybefore.json no c39
+c40_l2_steal_freshfirst.json no c39
+c40_l2_steal_freshfuzhou.json no c39
+c40_l2_steal_freshhourbefore.json no c39
+c40_l2_steal_leaversfirst.json no c39
+c40_l2_steal_leaversfirst_fz.json no c39
+c40_l2_there_and_back_samehour.json no c39
+c40_l2_three_hourly.json no c39
+c40_l2_three_twofar_14011.json no c39
+c40_l2_three_twofar_hint.json no c39
+c40_l2_walker_alone.json no c39
+c40_l3_four_sw3_h26.json no c39
+c40_l3_steal_freshfuzhou.json no c39
+c40_l3_steal_plus0.json no c39
+c40_l3_steal_plus1.json no c39
+c40_l3_steal_plus3.json no c39
+c40_l3_steal_t0.json no c39
+c40_ll_13001_both_sw3.json DIFF ['events', 'landed', 'trace']
+c40_ll_13001_far.json DIFF ['end', 'events', 'landed', 'trace']
+c40_ll_13001_twonear.json IDENTICAL
+c40_ll_back.json DIFF ['end', 'events', 'landed', 'trace']
+c40_ll_bothfar.json DIFF ['events', 'landed', 'trace']
+c40_ll_follow.json DIFF ['end', 'events', 'landed', 'trace']
+c40_ll_four_all_sw3.json DIFF ['end', 'events', 'landed', 'trace']
+c40_ll_four_walk_se2.json IDENTICAL
+c40_ll_split2.json DIFF ['end', 'events', 'landed', 'trace']
+c40_ll_three_stagger.json DIFF ['end', 'events', 'landed', 'trace']
+c40_ll_three_twofar.json DIFF ['end', 'events', 'landed', 'trace']
+c40_ll_walkerfar_h2.json DIFF ['end', 'events', 'landed', 'trace']
+c40_lp_eng_bergen.json IDENTICAL
+c40_lp_eng_calais.json IDENTICAL
+c40_lp_eng_calais_war.json IDENTICAL
+c40_lp_jap_shanghai.json IDENTICAL
+c40_lp_usa_calais.json IDENTICAL
+c40_lwp_desk.json IDENTICAL
+c40_lwp_phone.json IDENTICAL
+c40_lwt2_four_allnear14.json IDENTICAL
+c40_lwt2_four_allnear42.json IDENTICAL
+c40_lwt2_four_allnear8.json IDENTICAL
+c40_lwt2_two_near14.json IDENTICAL
+c40_lwt2_two_near42.json IDENTICAL
+c40_lwt2_two_near63.json IDENTICAL
+c40_lwt2_two_near8.json IDENTICAL
+c40_lwt3_four_far_fuzhou.json DIFF ['act', 'final', 'marks', 'news', 'rows', 'trace']
+c40_lwt3_two_far_fuzhou.json DIFF ['act', 'final', 'marks', 'rows', 'trace']
+c40_lwt3_two_far_fuzhou_ph2.json IDENTICAL
+c40_lwt4_four_alls42.json IDENTICAL
+c40_lwt4_four_alls63.json IDENTICAL
+c40_lwt4_two_s105.json IDENTICAL
+c40_lwt4_two_s21.json IDENTICAL
+c40_lwt4_two_s42.json DIFF ['act', 'marks']
+c40_lwt4_two_s63.json IDENTICAL
+c40_lwt5_four_alls42.json DIFF ['act', 'endPanel', 'marks']
+c40_lwt5_four_allsw63.json DIFF ['act', 'endPanel', 'final', 'marks', 'news', 'rows', 'trace']
+c40_lwt5_two_e14.json DIFF ['act', 'endPanel', 'marks']
+c40_lwt5_two_s42.json DIFF ['act', 'endPanel', 'marks']
+c40_lwt5_two_w42.json DIFF ['act', 'endPanel', 'marks']
+c40_lwt_four_neutral.json DIFF ['act', 'marks']
+c40_lwt_four_recall.json DIFF ['act', 'marks']
+c40_lwt_four_same.json DIFF ['act', 'marks']
+c40_lwt_four_sea.json DIFF ['act', 'marks']
+c40_mk2_freshfirst.json no c39
+c40_mk2_freshfirst2.json no c39
+c40_mk2_freshfirst_14003.json no c39
+c40_mk2_freshfirst_14011.json no c39
+c40_mk2_leaversfirst.json no c39
+c40_mk2_nofresh2.json no c39
+c40_mk2_nofresh3.json no c39
+c40_mk_aboard_s2.json DIFF ['afterClick', 'afterEsc', 'beforeEsc', 'hover', 'zoom']
+c40_mk_aboard_s3.json DIFF ['afterEsc', 'beforeEsc', 'hover', 'zoom']
+c40_mk_mixed_s2.json DIFF ['afterClick', 'afterEsc', 'beforeEsc', 'hover', 'rows', 'zoom']
+c40_mk_mixedlow_s2.json DIFF ['afterClick', 'afterEsc', 'beforeEsc', 'hover', 'zoom']
+c40_mk_phone_s2.json DIFF ['afterEsc', 'beforeEsc', 'endH', 'final', 'hover', 'landed', 'rows', 'zoom']
+c40_now_bothfar.json no c39
+c40_now_four_all_far.json no c39
+c40_now_four_all_sw3.json no c39
+c40_now_four_all_sw3_h26.json no c39
+c40_now_four_three_far.json no c39
+c40_now_four_two_far.json no c39
+c40_now_leaversfirst_fz.json no c39
+c40_now_six_all_far.json no c39
+c40_now_steal_freshfuzhou.json no c39
+c40_now_three_twofar.json no c39
+c40_nr_eng_calais_desk.json IDENTICAL
+c40_nr_eng_calais_phone.json IDENTICAL
+c40_nr_jap_shanghai_desk.json IDENTICAL
+c40_nr_swe_cph_desk.json IDENTICAL
+c40_os2_c25.json DIFF ['newMagic']
+c40_p.json IDENTICAL
+c40_phz_11071.json IDENTICAL
+c40_phz_13109.json IDENTICAL
+c40_phz_8233.json IDENTICAL
+c40_pst.json IDENTICAL
+c40_q_11287.json IDENTICAL
+c40_q_13211.json IDENTICAL
+c40_q_8807.json IDENTICAL
+c40_rg_11213_desk.json IDENTICAL
+c40_rg_13109_desk.json IDENTICAL
+c40_rg_4111_desk.json IDENTICAL
+c40_rgt_4111.json IDENTICAL
+c40_sb_7019.json DIFF ['views']
+c40_shm_ten.json IDENTICAL
+c40_sk_11149.json IDENTICAL
+c40_sk_1212.json IDENTICAL
+c40_sk_13313.json IDENTICAL
+c40_sk_8123.json IDENTICAL
+c40_sn_ger3.json DIFF ['steps']
+c40_sn_ger_samegoal.json DIFF ['steps']
+c40_ssb.json IDENTICAL
+c40_tied_two_fuzhou60.json DIFF ['trace']
+c40_tm_touch.json DIFF ['perfNoSel', 'perfNoSel2', 'perfSel']
+c40_tr_phone.json IDENTICAL
+c40_trab_3517_GERFRA_attNone.json no c39
+c40_trab_3517_GERFRA_base.json no c39
+c40_trab_3517_GERPOL_base.json no c39
+c40_trab_3517_GERPOL_defFort.json no c39
+c40_trab_3517_GERPOL_defNone.json no c39
+c40_trab_6421_GERFRA_attNone.json no c39
+c40_trab_6421_GERFRA_base.json no c39
+c40_trab_6421_GERPOL_base.json no c39
+c40_trab_6421_GERPOL_defFort.json no c39
+c40_trab_6421_GERPOL_defNone.json no c39
+c40_trab_8803_GERFRA_attNone.json no c39
+c40_trab_8803_GERFRA_base.json no c39
+c40_trab_8803_GERPOL_base.json no c39
+c40_trab_8803_GERPOL_defFort.json no c39
+c40_trab_8803_GERPOL_defNone.json no c39
+c40_u_1600_5557.json IDENTICAL
+c40_w_11149.json DIFF ['raw_x1_250', 'raw_x1_3000', 'raw_x5_3000', 'steps']
+c40_w_13417.json DIFF ['raw_x1_250', 'raw_x1_3000', 'raw_x5_3000', 'steps']
+c40_w_7019.json DIFF ['raw_x1_250', 'raw_x1_3000', 'raw_x5_3000', 'steps']
+c40_w_8431.json DIFF ['raw_x1_250', 'raw_x1_3000', 'raw_x5_3000', 'steps']
+c40_wd_11071.json IDENTICAL
+c40_wd_12007.json IDENTICAL
+c40_wd_13109.json IDENTICAL
+c40_wd_14011.json no c39
+c40_wd_3517.json IDENTICAL
+c40_wt_l2_click_plus_fresh.json no c39
+c40_wt_l2_fresh3_base.json no c39
+c40_wt_l2_steal_freshdaybefore.json no c39
+c40_wt_l2_steal_freshfuzhou.json no c39
+c40_wt_l2_steal_freshhourbefore.json no c39
+c40_wt_l2_steal_leaversfirst_fz.json no c39
+c40_wt_now_bothfar.json no c39
+c40_wt_now_four_all_far.json no c39
+c40_wt_now_four_all_sw3.json no c39
+c40_wt_now_four_all_sw3_h26.json no c39
+c40_wt_now_four_three_far.json no c39
+c40_wt_now_four_two_far.json no c39
+c40_wt_now_leaversfirst_fz.json no c39
+c40_wt_now_six_all_far.json no c39
+c40_wt_now_steal_freshfuzhou.json no c39
+c40_wt_now_three_twofar.json no c39
+c40_z_11003.json DIFF ['steps']
+c40_z_13109.json DIFF ['steps']
+c40_z_8123.json DIFF ['steps']

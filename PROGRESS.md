@@ -1372,3 +1372,13 @@
   under way to its convoy's port, is offered there (`comingTo`): h658. Red without. `noteLeaving` checks the
   order's nation. Landing tests (29 files) and the fuzz green; pin unmoved.
 - R28 done. **Next:** critic run 40.
+
+## 2026-11-05 — Critic run 40 (focused) on 76b88197: two blocking issues, R40-B1 and R40-B2; R29 filed
+- Focused (R28 filed by run 39's report). Rescored: map 7, UI 7, performance 7, stability 7, naval 7 (bar 8); the rest
+  carried (7 diplomacy, emergent, god mode, editor, stats; 8 semantic zoom, tanks, aircraft, AI nukes). Two blocking.
+- R39-B1's three cases fixed in outcome. R40-B2: the game applies each division's order at once, so R28a's whole-click
+  judgement never runs in the game, and a whole landing re-clicked is told "the rest keep the old landing". R40-B1:
+  with a fresh division sent to Fuzhou first, the one aboard of the redirected landing walks to Sasebo while its
+  group sails there empty (h657 against h1291); present on 99ba6c07 too. N1: one re-sent alone sails at once; N2:
+  "go by sea" for a selection most of which march.
+- **Next:** R29a.

@@ -1,0 +1,124 @@
+{
+ "seed": 8803,
+ "ATT": "GER",
+ "DEF": "FRA",
+ "variant": "base",
+ "before": {
+  "att": 273,
+  "def": 5120
+ },
+ "after": {
+  "att": 273,
+  "def": 5120
+ },
+ "rows": [
+  {
+   "d": 10,
+   "defHolds": 10394,
+   "attTook": 65,
+   "attMen": 566396,
+   "defMen": 570387,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 20,
+   "defHolds": 10191,
+   "attTook": 248,
+   "attMen": 565690,
+   "defMen": 502053,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 30,
+   "defHolds": 10081,
+   "attTook": 287,
+   "attMen": 554386,
+   "defMen": 401534,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 40,
+   "defHolds": 9967,
+   "attTook": 276,
+   "attMen": 543613,
+   "defMen": 242291,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 50,
+   "defHolds": 9825,
+   "attTook": 291,
+   "attMen": 539630,
+   "defMen": 122576,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 60,
+   "defHolds": 9613,
+   "attTook": 296,
+   "attMen": 534892,
+   "defMen": 92717,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 70,
+   "defHolds": 9293,
+   "attTook": 329,
+   "attMen": 521172,
+   "defMen": 88928,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 80,
+   "defHolds": 8734,
+   "attTook": 436,
+   "attMen": 509943,
+   "defMen": 85530,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 90,
+   "defHolds": 8464,
+   "attTook": 446,
+   "attMen": 544149,
+   "defMen": 89866,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 100,
+   "defHolds": 8209,
+   "attTook": 446,
+   "attMen": 542439,
+   "defMen": 89164,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 110,
+   "defHolds": 7944,
+   "attTook": 446,
+   "attMen": 542243,
+   "defMen": 89036,
+   "atWar": true,
+   "defAlive": 1
+  },
+  {
+   "d": 120,
+   "defHolds": 7859,
+   "attTook": 446,
+   "attMen": 542941,
+   "defMen": 82386,
+   "atWar": true,
+   "defAlive": 1
+  }
+ ]
+}

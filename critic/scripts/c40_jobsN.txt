@@ -1,0 +1,9 @@
+NX=1716.5 NY=413.5 npx tsx critic/scripts/c40_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 far 60 critic/c40_ash_near_e1.json > critic/c40_ash_near_e1.log 2>&1
+NX=1716.5 NY=414.5 npx tsx critic/scripts/c40_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 far 60 critic/c40_ash_near_se1.json > critic/c40_ash_near_se1.log 2>&1
+NX=1715.5 NY=415.5 npx tsx critic/scripts/c40_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 far 60 critic/c40_ash_near_s2.json > critic/c40_ash_near_s2.log 2>&1
+NX=1712.5 NY=408.5 npx tsx critic/scripts/c40_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 far 60 critic/c40_ash_near_nw6.json > critic/c40_ash_near_nw6.log 2>&1
+NX=1716.5 NY=413.5 npx tsx critic/scripts/c40_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c40_ash_allnear_e1.json > critic/c40_ash_allnear_e1.log 2>&1
+NX=1716.5 NY=413.5 npx tsx critic/scripts/c40_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 0 allnear 60 critic/c40_ash_allnear_e1_h0.json > critic/c40_ash_allnear_e1_h0.log 2>&1
+npx tsx critic/scripts/c40_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 0 all 60 critic/c40_ash_all_h0.json > critic/c40_ash_all_h0.log 2>&1
+NX=1716.5 NY=413.5 npx tsx critic/scripts/c40_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 3 200 far 60 critic/c40_ash_near_e1_3_200.json > critic/c40_ash_near_e1_3_200.log 2>&1
+NX=1716.5 NY=413.5 npx tsx critic/scripts/c40_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c40_ash_near_e1_2.json > critic/c40_ash_near_e1_2.log 2>&1
