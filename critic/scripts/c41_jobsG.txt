@@ -1,0 +1,6 @@
+npx tsx critic/scripts/c41_gen.ts 15101 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 2 60 critic/c41_g_eng_15101.json > critic/c41_g_eng_15101.log 2>&1
+npx tsx critic/scripts/c41_gen.ts 15101 GER ENG 10,53.55 1.3,52.6 -2.1,57.15 10.1,54.3 2 60 critic/c41_g_ger_15101.json > critic/c41_g_ger_15101.log 2>&1
+npx tsx critic/scripts/c41_gen.ts 15107 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 3 60 critic/c41_g_eng3_15107.json > critic/c41_g_eng3_15107.log 2>&1
+cd critic/wt && npx tsx critic/scripts/c41_gen.ts 15101 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 2 60 ../c41_gwt_eng_15101.json > ../c41_gwt_eng_15101.log 2>&1
+cd critic/wt && npx tsx critic/scripts/c41_gen.ts 15101 GER ENG 10,53.55 1.3,52.6 -2.1,57.15 10.1,54.3 2 60 ../c41_gwt_ger_15101.json > ../c41_gwt_ger_15101.log 2>&1
+cd critic/wt && npx tsx critic/scripts/c41_gen.ts 15107 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 3 60 ../c41_gwt_eng3_15107.json > ../c41_gwt_eng3_15107.log 2>&1

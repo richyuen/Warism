@@ -1,0 +1,19 @@
+== mk2_freshfirst node critic/scripts/c41_mk2_steal.mjs 3517 60 freshfirst 15:04:11
+== mk2_freshfirst_14003 node critic/scripts/c41_mk2_steal.mjs 14003 60 freshfirst_14003 15:04:11
+== mk2_freshfirst_14011 node critic/scripts/c41_mk2_steal.mjs 14011 60 freshfirst_14011 15:04:11
+   exit 0
+   exit 0
+   exit 0
+== mk2_nofresh2 env MODE=nofresh node critic/scripts/c41_mk2_steal.mjs 3517 60 nofresh2 15:04:40
+== mk2_leaversfirst env MODE=leaversfirst node critic/scripts/c41_mk2_steal.mjs 3517 60 leaversfirst 15:04:40
+== lwt5_four_allsw63 env NPX=-63 NPY=63 node critic/scripts/c41_lwt5.mjs 3517 4 60 24 allnear 1600 900 four_allsw63 15:04:40
+   exit 0
+   exit 0
+   exit 0
+== mk_mixed_s2 node critic/scripts/c41_mk_mark.mjs 3517 mixed 0 2 40 1600 900 mixed_s2 15:09:23
+== tm_touch node critic/scripts/c41_tm_touch.mjs 15:09:23
+== hs_desk node critic/scripts/c41_hs_hintsel.mjs 3517 1600 900 desk 15:09:23
+   exit 0
+   exit 0
+   exit 0
+SUITEMKDONE

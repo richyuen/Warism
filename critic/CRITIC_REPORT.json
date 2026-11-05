@@ -1,5 +1,5 @@
 {
-  "commit": "76b881972be3468986a91dff6eaca6293ef8f6b3",
+  "commit": "77d37526eef9a0a7c244b62310669146e4305ce0",
   "mode": "focused",
   "scores": {
     "mapVisuals": 7,
@@ -19,17 +19,11 @@
   },
   "blocking": [
     {
-      "id": "R40-B1",
-      "title": "A landing redirected to a target another convoy already serves walks to that convoy's port while its own ship sails there empty, and splits (R39-B1's remaining case; present on 99ba6c07 too)",
-      "evidence": "Seed 3517, Japan, the two nearest Tokyo sent to Shanghai; in the hour after, a fresh division (366) sent to Fuzhou, then the two re-sent to Fuzhou. By the game's path (each order applied at once): 364, aboard group 1136 at Tokyo, is put ashore and bound for 1152 at Sasebo; 1136 sails empty Tokyo->Sasebo (t6-t122) while 364 walks ~50 days (critic/c40_l3_steal_freshfuzhou.json); 365 lands alone h657, 364 and 366 h1291 (critic/c40_now_steal_freshfuzhou.json). Real click, seeds 3517/14003/14011: 365 h682, 364+366 h1318, 364 'Marching to Sasebo' days 1-20 (critic/c40_mk2_freshfirst*.json, critic/shots/c40mk2_freshfirst_day10.png; hover says 'they keep their transports' over that status, critic/shots/c40mk2_freshfirst_panel_h4.png). Three from a standing start: h976/977 (critic/c40_l2_fresh3_base.json); the reverse click order: 978/979 (critic/c40_now_leaversfirst_fz.json). 99ba6c07: same walk, 365 not landed in 60 d (critic/c40_wt_now_steal_freshfuzhou.json).",
-      "fix": "When a leaver aboard (or bound for) a group joins a convoy at another port and its group is free to go there, it stays aboard and sails with it (or its group is offered first). AT: fresh one first, then the two (same hour and an hour before): all three land within a day of each other by ~h980, 364 never 'Marching to Sasebo', tested through the game's path (orders applied one at a time)."
-    },
-    {
-      "id": "R40-B2",
-      "title": "The game applies each division's order at once, so a whole-landing redirect tells every division but the last 'the rest keep the old landing, and it will not land with them' - and they all land together; R28a's whole-click judgement never runs in the game",
-      "evidence": "player.ts:333 sends one hud.command per selected division; hud.ts:548 sends it with now=true; the worker applies each with sim.applyNow, so noteLeaving/tellLandingsLeft run per division. Real click, the four of a landing re-clicked 3 cells SW: LeftLanding for 364, 365, 366, ticker row 'Square infantry division 366: it leaves the landing...', all four land together h1244 (critic/c40_lwt5_four_allsw63.json news/final, critic/shots/c40lwt5_four_allsw63_notice_h35.png). Two re-sent to Fuzhou by one paused click: 364 told so, both land h682 (critic/c40_mk2_nofresh2.json). Per-order replica reproduces it (critic/c40_now_four_all_sw3.json, critic/c40_now_bothfar.json); the queued batch every R25-R28 test uses tells nobody (critic/c40_ll_four_all_sw3.json). Also on 99ba6c07 by the game's path (critic/c40_wt_now_bothfar.json).",
-      "fix": "Give a click's orders to the sim as one batch (queued for the hour, or one command carrying the selection), or judge tellLandingsLeft after the whole click; test order news and landings through hud.command (now=true). AT: four re-clicked 3 cells SW by real click: no LeftLanding; two re-sent to Fuzhou by one click: none; of three, the two sent away: both told."
+      "id": "R41-B1",
+      "title": "R29b's ship sails the one aboard to the new landing's port but never joins the convoy loading there: that convoy sails at once and the division that was there first lands alone and is destroyed (regression from 76b88197)",
+      "evidence": "Britain at war with France, seed 15101 (7019 the same), by real clicks on the HEAD page: divisions 270 and 271 clicked onto Calais; 270 boards 1068 at Portsmouth (t63); paused at t64 the fresh tank brigade 276 clicked onto Caen, then 270+271 clicked there. 270's group sails Portsmouth->Plymouth with it aboard and waits for 271 marching; 276's group sails at once: 276 lands alone h87 and is destroyed h237, 270/271 land h291; no order news; 270's panel says '1 of 2 aboard' (critic/c41_mk4_eng15101_p270.json, critic/shots/c41mk4_eng15101_p270_firstland.png, critic/c41_mk4_eng7019_p270.json). On 76b88197 the same clicks land all three h291 (critic/c41_mk4_old_eng15101_p270.json; per-order replica critic/c41_gwtper_eng_15101_pick270_271.json). Headless with ascending ids as player.ts sends: 276 h84 alone, destroyed h233 (critic/c41_g_eng_15101_pick270_271.json). Mechanism trace: critic/c41_g_eng_15101_hourly.json (1068 gets convoyPort Plymouth, 271 stays bound for 1068, nobody bound for 276's 1072, convoySystem sails it).",
+      "fix": "A group sailAboard sends to a port where a convoy for the same target loads is part of that convoy: the convoy waits for it (and those still bound for it) as for a division still to come, or the leavers still marching are bound to the port's convoy rather than the ship under way. AT through player.click (ids ascending): Britain 15101, 270/271 + 276 to Caen as above, all three land within a day, 276 never alone; R29b's Japan cases unchanged."
     }
   ],
-  "timestamp": "2026-11-05T19:27:37Z"
+  "timestamp": "2026-11-05T20:27:37Z"
 }

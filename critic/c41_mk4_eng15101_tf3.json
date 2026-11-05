@@ -1,0 +1,331 @@
+{
+ "seed": 15101,
+ "tag": "eng15101_tf3",
+ "steps": [
+  {
+   "h": 62,
+   "st": "274:atSea@1011.5,282.5 271:toPort/Plymouth@1017.3,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 68,
+   "st": "274:atSea@1004.7,284.5 271:toPort/Plymouth@1016.7,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 74,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1016.1,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 80,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1015.6,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 86,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1015,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 92,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1014.4,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 98,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1013.8,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 104,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1013.2,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 110,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1012.6,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 116,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1012,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 122,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1011.4,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 128,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1010.9,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 134,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1010.3,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 140,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1009.7,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 146,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1009.1,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 152,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1008.5,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 158,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1007.9,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 164,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1007.3,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 170,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1006.8,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 176,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1006.2,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 182,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1005.6,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 188,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1005.2,278.8 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 194,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1004.8,279.2 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 200,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1004.4,279.6 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 206,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1004.1,279.9 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 212,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1003.7,280.3 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 218,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1003.3,280.7 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 224,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1002.9,281.1 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 230,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1002.6,281.4 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 236,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1002.2,281.8 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 242,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1001.8,282.2 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 248,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1001.4,282.6 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 254,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1001.1,282.9 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 260,
+   "st": "274:aboard/Plymouth@1000.5,284.5 271:toPort/Plymouth@1000.7,283.3 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 266,
+   "st": "274:atSea@1002.6,285.5 271:atSea@1001.6,285.5 276:atSea@1001.6,285.5"
+  },
+  {
+   "h": 272,
+   "st": "274:atSea@1009.9,286.5 271:atSea@1008.9,286.5 276:atSea@1008.9,286.5"
+  },
+  {
+   "h": 278,
+   "st": "274:atSea@1017.2,287.5 271:atSea@1016.2,287.5 276:atSea@1016.2,287.5"
+  },
+  {
+   "h": 284,
+   "st": "274:landed@1021.3,291.3 271:landed@1021.5,291.5 276:landed@1021.7,291.7"
+  }
+ ],
+ "panels": [
+  {
+   "h": 62,
+   "id": 274,
+   "status": "At sea, bound for its landing",
+   "wait": null,
+   "notice": null
+  },
+  {
+   "h": 62,
+   "id": 271,
+   "status": "Marching to Plymouth to board transports",
+   "wait": null,
+   "notice": null
+  },
+  {
+   "h": 62,
+   "id": 276,
+   "status": "Aboard at Plymouth, waiting for the rest of the landing",
+   "wait": "2 of 3 aboard; the last 9 days from the port",
+   "notice": null
+  },
+  {
+   "h": 74,
+   "id": 274,
+   "status": "Aboard at Plymouth, waiting for the rest of the landing",
+   "wait": "2 of 3 aboard; the last 8 days from the port",
+   "notice": null
+  },
+  {
+   "h": 74,
+   "id": 271,
+   "status": "Marching to Plymouth to board transports",
+   "wait": null,
+   "notice": null
+  },
+  {
+   "h": 74,
+   "id": 276,
+   "status": "Aboard at Plymouth, waiting for the rest of the landing",
+   "wait": "2 of 3 aboard; the last 8 days from the port",
+   "notice": null
+  },
+  {
+   "h": 122,
+   "id": 274,
+   "status": "Aboard at Plymouth, waiting for the rest of the landing",
+   "wait": "2 of 3 aboard; the last 6 days from the port",
+   "notice": null
+  },
+  {
+   "h": 122,
+   "id": 271,
+   "status": "Marching to Plymouth to board transports",
+   "wait": null,
+   "notice": null
+  },
+  {
+   "h": 122,
+   "id": 276,
+   "status": "Aboard at Plymouth, waiting for the rest of the landing",
+   "wait": "2 of 3 aboard; the last 6 days from the port",
+   "notice": null
+  }
+ ],
+ "events": [],
+ "ids": [
+  274,
+  271,
+  276
+ ],
+ "firstTip": "Calais\nFrance\nUnrest 0\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+ "orderTick": 57,
+ "aboardAt": 56,
+ "before": [
+  {
+   "id": 274,
+   "alive": true,
+   "v": "aboard",
+   "port": "Portsmouth",
+   "p": [
+    1019.5,
+    282.5
+   ]
+  },
+  {
+   "id": 271,
+   "alive": true,
+   "v": "toPort",
+   "port": "Portsmouth",
+   "p": [
+    1017.5,
+    278.2
+   ]
+  },
+  {
+   "id": 276,
+   "alive": true,
+   "v": null,
+   "port": null,
+   "p": [
+    1003.8,
+    280.2
+   ]
+  }
+ ],
+ "freshTip": "France\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+ "twoTip": "France\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+ "after": [
+  {
+   "id": 274,
+   "alive": true,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1019.5,
+    282.5
+   ]
+  },
+  {
+   "id": 271,
+   "alive": true,
+   "v": "toPort",
+   "port": "Plymouth",
+   "p": [
+    1017.5,
+    278.2
+   ]
+  },
+  {
+   "id": 276,
+   "alive": true,
+   "v": "waiting",
+   "port": "Plymouth",
+   "p": [
+    1003.8,
+    280.2
+   ]
+  }
+ ],
+ "day3Shot": "critic/shots/c41mk4_eng15101_tf3_day3.png",
+ "firstLandShot": {
+  "h": 284,
+  "shot": "critic/shots/c41mk4_eng15101_tf3_firstland.png"
+ },
+ "landed": {
+  "271": {
+   "h": 284,
+   "p": [
+    1021.5,
+    291.5
+   ]
+  },
+  "274": {
+   "h": 284,
+   "p": [
+    1021.3,
+    291.3
+   ]
+  },
+  "276": {
+   "h": 284,
+   "p": [
+    1021.7,
+    291.7
+   ]
+  }
+ },
+ "endH": 284,
+ "news": [],
+ "rows": [],
+ "endShot": "critic/shots/c41mk4_eng15101_tf3_end.png",
+ "errors": []
+}

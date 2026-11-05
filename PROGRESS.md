@@ -1400,3 +1400,13 @@
 - Filed from run 40: its two blocking issues (PROMPT RELEASES 2), the naval line's bold "Not 8". R40-N1 (one
   re-sent alone sails at once, "consistent with the rules") and R37-N2 stay non-blocking.
 - R29 done. **Next:** critic run 41.
+
+## 2026-11-05 — Critic run 41 (focused) on 77d37526: one blocking issue, R41-B1; R30 filed
+- Rescored: UI 7, performance 7, stability 7, naval 7 (bar 8), aircraft 8; the rest carried (7 map, diplomacy,
+  emergent, god mode, editor, stats; 8 semantic zoom, tanks, AI nukes). One blocking.
+- R40-B1 and R40-B2 fixed by real click. R41-B1 (a regression of R29b): the one aboard's transports, sailing to the
+  port where a convoy for its new landing loads, are not that convoy's mate; it sails at once, and its first lands
+  alone and dies (Britain, 276 h84 against h289). Non-blocking: R41-N1 (the bound one walks while its called
+  transports idle), R41-N2 (a redirect undone hours later now splits, the one aboard at sea refused), R41-N3 ("At
+  sea, bound for its landing" while sailing to a home port).
+- **Next:** R30a.

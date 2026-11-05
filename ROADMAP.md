@@ -370,7 +370,7 @@ Rules:
     second on its own transports, landing by ~h700 (red: another port's group, h794).
     Done: `comingTo` in the general choice; h658. Red without. Pin unmoved.
   R28 done; then the critic again (run 40).
-- [ ] R29 **A click's orders judged as the game sends them** (critic run 40, focused, on `76b88197`: R40-B1 and
+- [x] R29 **A click's orders judged as the game sends them** (critic run 40, focused, on `76b88197`: R40-B1 and
   R40-B2 blocking; naval 7, bar 8, for both). Each sub-item its own commit; then the critic again.
   - [x] R29a R40-B2: the game applies each selected division's order at once (`player.ts` one `hud.command` each,
     `now = true`, the worker's `applyNow`), so R28a's `noteLeaving` and R27c's `tellLandingsLeft` judge one division
@@ -391,3 +391,10 @@ Rules:
     with it (`sailAboard`). Same hour: h792/792/794; an hour before: h794/794/796; never ashore. Red without (walked,
     h1292). `landingJoinsAboard1938.test.ts`. Pin unmoved.
   R29 done; then the critic again (run 41).
+- [ ] R30 **The one aboard sails with the convoy it joins** (critic run 41, focused, on `77d37526`: R41-B1 blocking;
+  naval 7, bar 8). Then the critic again.
+  - [ ] R30a R41-B1: R29b's transports, sailing with the one aboard to the port where a convoy for its new landing
+    loads, are not that convoy's mate: it sails once its own are aboard, its first lands alone and dies. Britain at
+    war with France (seeds 15101, 7019): 270 and 271 to Calais; the hour after 270 boards, 276 to Caen, then the two:
+    276 h84 alone (destroyed h233), the two h289 (76b88197: the three h290/291). AT by the page's path (ids
+    ascending, applied at once): the three land within a day; R29b's Japan cases unchanged.
