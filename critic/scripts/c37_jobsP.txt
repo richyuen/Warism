@@ -1,0 +1,7 @@
+NX=1715.5 NY=416.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c37_ashp_near_s3_2.json > critic/c37_ashp_near_s3_2.log 2>&1
+NX=1712.5 NY=410.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c37_ashp_near_nw3_2.json > critic/c37_ashp_near_nw3_2.log 2>&1
+NX=1715.5 NY=417.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c37_ashp_near_s4_2.json > critic/c37_ashp_near_s4_2.log 2>&1
+NX=1715.5 NY=416.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c37_ashp_allnear_s3.json > critic/c37_ashp_allnear_s3.log 2>&1
+NX=1716.5 NY=413.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 bound 60 critic/c37_ashp_bound_e1.json > critic/c37_ashp_bound_e1.log 2>&1
+NX=1703.5 NY=445.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c37_ashp_far_fuzhou_2.json > critic/c37_ashp_far_fuzhou_2.log 2>&1
+npx tsx critic/scripts/c37_lof.ts 3517 1715.5 413.5 8 > critic/c37_lofp_3517.log 2>&1

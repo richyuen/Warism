@@ -1,0 +1,33 @@
+NX=1717.5 NY=413.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c37_ash_near_e2_2.json > critic/c37_ash_near_e2_2.log 2>&1
+NX=1718.5 NY=413.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c37_ash_near_e3_2.json > critic/c37_ash_near_e3_2.log 2>&1
+NX=1715.5 NY=416.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c37_ash_near_s3_2.json > critic/c37_ash_near_s3_2.log 2>&1
+NX=1712.5 NY=410.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c37_ash_near_nw3_2.json > critic/c37_ash_near_nw3_2.log 2>&1
+NX=1715.5 NY=417.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c37_ash_near_s4_2.json > critic/c37_ash_near_s4_2.log 2>&1
+NX=1718.5 NY=413.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c37_ash_allnear_e3.json > critic/c37_ash_allnear_e3.log 2>&1
+NX=1715.5 NY=416.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c37_ash_allnear_s3.json > critic/c37_ash_allnear_s3.log 2>&1
+NX=1716.5 NY=413.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 bound 60 critic/c37_ash_bound_e1.json > critic/c37_ash_bound_e1.log 2>&1
+NX=1715.5 NY=416.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 bound 60 critic/c37_ash_bound_s3.json > critic/c37_ash_bound_s3.log 2>&1
+NX=1703.5 NY=445.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c37_ash_far_fuzhou_2.json > critic/c37_ash_far_fuzhou_2.log 2>&1
+NX=1703.5 NY=445.5 npx tsx critic/scripts/c37_ash2.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c37_ash_allfar_fuzhou.json > critic/c37_ash_allfar_fuzhou.log 2>&1
+NX=1716.5 NY=413.5 npx tsx critic/scripts/c37_ash2.ts 11003 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 far 60 critic/c37_ash_11003_near_e1_2.json > critic/c37_ash_11003_near_e1_2.log 2>&1
+NX=1716.5 NY=413.5 npx tsx critic/scripts/c37_ash2.ts 11003 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 allnear 60 critic/c37_ash_11003_allnear_e1.json > critic/c37_ash_11003_allnear_e1.log 2>&1
+npx tsx critic/scripts/c37_lof.ts 3517 1715.5 413.5 8 > critic/c37_lof_3517.log 2>&1
+npx tsx critic/scripts/c37_fz.ts 11003 JAP 120 10 3 -1 critic/c37_fz_11003_jap.json > critic/c37_fz_11003_jap.log 2>&1
+npx tsx critic/scripts/c37_fz.ts 11071 ENG 120 10 3 60 critic/c37_fz_11071_eng_p60.json > critic/c37_fz_11071_eng_p60.log 2>&1
+npx tsx critic/scripts/c37_fz.ts 11149 USA 120 10 3 -1 critic/c37_fz_11149_usa.json > critic/c37_fz_11149_usa.log 2>&1
+npx tsx critic/scripts/c37_fz.ts 11213 ITA 120 10 3 -1 critic/c37_fz_11213_ita.json > critic/c37_fz_11213_ita.log 2>&1
+npx tsx critic/scripts/c37_fz.ts 11287 GER 120 10 3 -1 critic/c37_fz_11287_ger.json > critic/c37_fz_11287_ger.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 11003 scenario 400 60,200,350 20 --heroes > critic/c37_diploinv_11003s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 11071 random 400 60,200,350 20 > critic/c37_diploinv_11071r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 11149 scenario 400 60,200,350 20 --world random > critic/c37_diploinv_11149w.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 11213 scenario 400 60,200,350 20 > critic/c37_diploinv_11213.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 11003 7300 --heroes --rules heroes,navy > critic/c37_wi_11003_h20_hn.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 11071 3650 --diplomacy random > critic/c37_wi_11071r_10.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 11149 1825 --world random > critic/c37_wi_11149w_5y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 11287 7300 --heroes --diplomacy random --rules air > critic/c37_wi_11287r_h20_air.log 2>&1
+npx tsx tools/diag/heroWaits.ts 11003 7300 > critic/c37_herowaits_11003.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 11071 2190 24 critic/c37_wd_11071.json > critic/c37_wd_11071.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 11003 20 off critic/c37_ho_new_off_11003.json > critic/c37_ho_new_off_11003.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 11071 20 off critic/c37_ho_new_off_11071.json > critic/c37_ho_new_off_11071.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 11149 20 on critic/c37_ho_new_on_11149.json > critic/c37_ho_new_on_11149.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 11213 20 on critic/c37_ho_new_on_11213.json > critic/c37_ho_new_on_11213.log 2>&1

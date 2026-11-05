@@ -1,0 +1,128 @@
+{
+ "marks": [
+  {
+   "h": 4,
+   "rows": [
+    {
+     "label": "Kind",
+     "value": "Square infantry division",
+     "labelRight": 47,
+     "valueLeft": 153,
+     "gap": 106,
+     "lines": 1
+    },
+    {
+     "label": "Nation",
+     "value": "Japan",
+     "labelRight": 60,
+     "valueLeft": 228,
+     "gap": 168,
+     "lines": 1
+    },
+    {
+     "label": "Status",
+     "value": "Aboard at Tokyo, waiting for the rest of the landing",
+     "labelRight": 57,
+     "valueLeft": 66,
+     "gap": 10,
+     "lines": 2
+    },
+    {
+     "label": "Landing",
+     "value": "1 of 4 aboard; the last 47 days from the port",
+     "labelRight": 66,
+     "valueLeft": 75,
+     "gap": 10,
+     "lines": 2
+    }
+   ],
+   "crop": "critic/shots/c37lwp_desk_h4_panel.png",
+   "full": "critic/shots/c37lwp_desk_h4.png"
+  },
+  {
+   "h": 200,
+   "rows": [
+    {
+     "label": "Kind",
+     "value": "Square infantry division",
+     "labelRight": 47,
+     "valueLeft": 153,
+     "gap": 106,
+     "lines": 1
+    },
+    {
+     "label": "Nation",
+     "value": "Japan",
+     "labelRight": 60,
+     "valueLeft": 228,
+     "gap": 168,
+     "lines": 1
+    },
+    {
+     "label": "Status",
+     "value": "Aboard at Tokyo, waiting for the rest of the landing",
+     "labelRight": 57,
+     "valueLeft": 66,
+     "gap": 10,
+     "lines": 2
+    },
+    {
+     "label": "Landing",
+     "value": "1 of 4 aboard; the last 39 days from the port",
+     "labelRight": 66,
+     "valueLeft": 75,
+     "gap": 10,
+     "lines": 2
+    }
+   ],
+   "crop": "critic/shots/c37lwp_desk_h200_panel.png",
+   "full": "critic/shots/c37lwp_desk_h200.png"
+  },
+  {
+   "h": 1100,
+   "rows": [
+    {
+     "label": "Kind",
+     "value": "Square infantry division",
+     "labelRight": 47,
+     "valueLeft": 153,
+     "gap": 106,
+     "lines": 1
+    },
+    {
+     "label": "Nation",
+     "value": "Japan",
+     "labelRight": 60,
+     "valueLeft": 228,
+     "gap": 168,
+     "lines": 1
+    },
+    {
+     "label": "Status",
+     "value": "Aboard at Tokyo, waiting for the rest of the landing",
+     "labelRight": 57,
+     "valueLeft": 66,
+     "gap": 10,
+     "lines": 2
+    },
+    {
+     "label": "Landing",
+     "value": "3 of 4 aboard; the last a day from the port",
+     "labelRight": 66,
+     "valueLeft": 75,
+     "gap": 10,
+     "lines": 2
+    }
+   ],
+   "crop": "critic/shots/c37lwp_desk_h1100_panel.png",
+   "full": "critic/shots/c37lwp_desk_h1100.png"
+  }
+ ],
+ "ids": [
+  364,
+  365,
+  366,
+  367
+ ],
+ "errors": []
+}

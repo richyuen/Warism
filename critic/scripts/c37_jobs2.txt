@@ -1,0 +1,4 @@
+npx tsx critic/scripts/c37_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 reorder 30 critic/c37_wait_reorder.json > critic/c37_wait_reorder.log 2>&1
+npx tsx critic/scripts/c37_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 peace 30 critic/c37_wait_peace.json > critic/c37_wait_peace.log 2>&1
+npx tsx critic/scripts/c37_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 cancel 30 critic/c37_wait_cancel.json > critic/c37_wait_cancel.log 2>&1
+npx tsx critic/scripts/c37_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 1 none 40 critic/c37_wait_four.json > critic/c37_wait_four.log 2>&1

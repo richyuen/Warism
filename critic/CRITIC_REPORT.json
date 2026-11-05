@@ -1,6 +1,6 @@
 {
-  "commit": "41e88005e77ee4c91f924036fe4d28f4251fbca4",
-  "mode": "focused",
+  "commit": "b0dd86f303312971a1fc3239535c18e0d874f14a",
+  "mode": "full",
   "scores": {
     "mapVisuals": 7,
     "diplomacyWarDepth": 7,
@@ -19,17 +19,11 @@
   },
   "blocking": [
     {
-      "id": "R36-B1",
-      "title": "A refused order drops a walking division from its landing; a whole click re-clicked a few pixels off sends the one aboard to land alone",
-      "evidence": "critic/c36_lwt2_four_allnear14.json; critic/shots/c36lwt2_four_allnear14_act_panel.png ('At sea, bound for its landing' over 'not done: no transports'); critic/shots/c36lwt2_four_allnear14_h242_panel.png (alone in China); critic/c36_ash_allnear_e1.json (364 lands t148, 365-367 at Tokyo to day 60); critic/c36_ash_allnear_e1_h0.json; critic/c36_ash_bound_sea.json, critic/c36_ash_bound_neutral.json (a refused walking division dropped for good); run 35's commit: critic/c36_wt_ash_bound_sea.json, critic/c36_wt_ash_allnear_e1.json",
-      "fix": "Judge every order before clearing the formation's binding (orderAshore deletes seaBound/seaFetch first); a refused order restores seaBound/seaFetch for any division, not only one aboard. AT: the four re-clicked one cell east of Shanghai at hour 26: all refused, all still bound/aboard, all land within a day; red without."
-    },
-    {
-      "id": "R36-B2",
-      "title": "The one aboard clicked a few pixels off its landing is taken off its transports and sent to another port; the landing splits for weeks, untold",
-      "evidence": "critic/c36_lwt2_two_near14.json; critic/shots/c36lwt2_two_near14_act_panel.png ('Marching to Sasebo to board transports'); critic/c36_ash_near_e1_2.json (365 lands t633, 364 t1285); critic/c36_ash_near_e1_3_200.json (364 boards t1412, the others landed t952); critic/c36_lwt2_two_near8.json (8 px off: together, h632); critic/c36_lof_3517.log (one cell east of Shanghai is another landing; 39 others within 20 cells); run 35's commit identical: critic/c36_wt_ash_near_e1_2.json",
-      "fix": "Match a re-order of a division aboard or bound to its own landing when it is the same coast within a few cells (or same water zone and land holder), not only the same cell pair; or keep the convoy and retarget it when that close; never move a division aboard to another port's transports without telling it. AT: two to Shanghai, the one aboard re-clicked one cell east: both land within a day; red without (h633 / h1285)."
+      "id": "R37-B1",
+      "title": "The one aboard, clicked two cells off its landing, is taken off transports with room and sent to another port in silence; the landing splits for four weeks (R36-B2 one step further out)",
+      "evidence": "critic/c37_lwt4_two_s42.json (real click 42 px below Shanghai, cell 1715,415, tooltip 'China / Occupied by Japan'; 364 'Marching to Sasebo to board transports', no news; 365 lands alone h632; 364 still marching h722); critic/shots/c37lwt4_two_s42_act_panel.png; critic/shots/c37lwt4_two_s42_act.png; critic/shots/c37lwt4_two_s42_h722_panel.png; critic/c37_cellprobe_1600.json (no formation pick at that pixel); headless critic/c37_ashp_near_s2_2.json (633/1288), critic/c37_ashp_near_sw2_2.json (633/1291), critic/c37_ashp_near_s2_2_h0.json (633/1264), critic/c37_ashp_near_s2_3_200.json (two land 952, 364 boards at Sasebo t1412), critic/c37_ashp_11003_near_s2_2.json (633/1288); four divisions: refused and kept, critic/c37_ashp_allnear_s2.json; run 36's commit identical: critic/c37_wt_ash_near_s2_2.json; the click resolves to landing 853683/851635, land four cells from Shanghai's: critic/c37_lofp4_3517.log",
+      "fix": "Measure R24b's near-miss from the clicked cell (within SAME_LANDING_CELLS of the convoy's land, same holder), not from the landing that cell resolves to; never move a division aboard to another port's transports without a notice that it leaves its landing. AT: Japan's two to Shanghai, the one aboard re-clicked two cells south (1715.5, 415.5) at hour 26: both land within a day; red without (633 / 1288)."
     }
   ],
-  "timestamp": "2026-11-05T09:09:28Z"
+  "timestamp": "2026-11-05T11:08:29Z"
 }

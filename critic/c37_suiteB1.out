@@ -1,0 +1,21 @@
+== c37_os2_scen critic/c26_critic_standoff.warsim-scenario c25 04:47:53
+   exit 0
+== c37_sb_seaballs 7019 04:48:58
+   exit 0
+== c37_pl_planes 7019 GER POL 5299 04:49:24
+   exit 0
+== c37_p_phone  04:49:43
+   exit 0
+== c37_u_ui  04:50:07
+   exit 0
+== c37_rg_relations 4111 365 1600 900 desk &heroes=on 04:50:34
+   exit 0
+== c37_hs_herostack 3517 04:51:35
+   exit 0
+== c37_bt 5113 390 844 phone 04:51:59
+   exit 0
+== c37_fw2_forcewar 2207 04:52:11
+   exit 0
+== c37_tr_traits 3517 phone phone 04:53:08
+   exit 0
+SUITEBDONE

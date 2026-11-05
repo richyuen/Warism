@@ -1235,3 +1235,11 @@
 - AT: `landingAboardRefused1938.test.ts`'s third test (Fuzhou: 18, still aboard, the four land together; red without,
   6) and `landingAboardRefused1938.spec.ts` (the words in the panel over "Aboard at Tokyo"; looked at). Pin unmoved.
 - **Next:** critic run 37 (full).
+
+## 2026-11-05 — critic run 37, full, on b0dd86f3: one blocking issue (R37-B1); naval under its bar
+- R36-B1, R36-B2 (at one cell), R36-N1, R36-N2 fixed. **R37-B1 (blocking):** the one aboard re-clicked two cells south
+  of Shanghai resolves to a landing four cells off, is not the same landing, and is taken ashore to transports at
+  Sasebo in silence; the landing splits for four weeks (with four divisions the same click is refused and kept).
+  Scores: naval **7** under its bar of 8; semantic zoom, tanks, aircraft, AI nukes 8; the rest 7, at their bars. All
+  dimensions rescored (full run). Filed as R25a–c (with R37-N1).
+- **Next:** R25a.

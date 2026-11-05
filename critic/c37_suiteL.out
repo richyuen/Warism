@@ -1,0 +1,22 @@
+== c37_nr_neutralrow 3517 ENG 1023.5 275.5 1034.5 279.5 1600 900 desk eng_calais_desk 05:04:52
+   exit 0
+== c37_nr_neutralrow 3517 ENG 1023.5 275.5 1034.5 279.5 390 844 phone eng_calais_phone 05:05:08
+   exit 0
+== c37_nr_neutralrow 3517 JAP 1818.5 385.5 1715.5 413.5 1600 900 desk jap_shanghai_desk 05:05:23
+   exit 0
+== c37_nr_neutralrow 3517 SWE 1126.5 212.5 1095.5 242.5 1600 900 desk swe_cph_desk 05:05:37
+   exit 0
+== c37_shm_mass 3517 10 1600 900 ten 05:05:53
+   exit 0
+== eng_calais 3517 ENG 1023.5 275.5 1034.5 279.5 3 1 3 eng_calais 05:06:13
+   exit 0
+== eng_bergen 3517 ENG 1023.5 275.5 1048.5 199.5 1 1 3 eng_bergen 05:06:26
+   exit 0
+== usa_calais 3517 USA 603.5 352.5 1034.5 279.5 1 1 3 usa_calais 05:06:36
+   exit 0
+== eng_calais_war 3517 ENG 1023.5 275.5 1034.5 279.5 3 1 12 eng_calais_war FRA 05:06:47
+   exit 0
+== jap_shanghai 3517 JAP 1818.5 385.5 1715.5 413.5 2 1 25 jap_shanghai 05:08:05
+   exit 0
+LPQDONE
+SUITELDONE

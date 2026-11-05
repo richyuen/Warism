@@ -1,0 +1,4 @@
+// Critic run 34 (copy of run 33): first differing paths between a c35 JSON and its c33 twin (shots/timings stripped).
+const fs=require('fs');const strip=o=>JSON.parse(JSON.stringify(o,(k,v)=>/shot|[mM]s$|time|fps|wallS|totalS|p95|p99|worst|maxGap|frames|elapsed|bootMs/i.test(k)?undefined:v));
+function walk(a,b,p,out){if(out.length>4)return;if(JSON.stringify(a)===JSON.stringify(b))return;if(a&&b&&typeof a==='object'&&typeof b==='object'){for(const k of new Set([...Object.keys(a),...Object.keys(b)]))walk(a[k],b[k],p+'.'+k,out);}else out.push(p+': '+JSON.stringify(a)?.slice(0,80)+' | '+JSON.stringify(b)?.slice(0,80));}
+for (const f of process.argv.slice(2)){const o=[];walk(strip(JSON.parse(fs.readFileSync('critic/c33_'+f))),strip(JSON.parse(fs.readFileSync('critic/c37_'+f))),'',o);console.log('== '+f);console.log(o.join('\n'));}

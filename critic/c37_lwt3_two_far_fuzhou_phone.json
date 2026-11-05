@@ -1,0 +1,724 @@
+{
+ "seed": 3517,
+ "n": 2,
+ "days": 12,
+ "actH": 24,
+ "act": "far",
+ "trace": [
+  {
+   "h": 4,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 7,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 10,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 13,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 16,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 19,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 22,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 25,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 28,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 31,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 34,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 37,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 40,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 43,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 46,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 49,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 52,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 55,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 58,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 61,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 64,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 67,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 70,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 73,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 76,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 79,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 82,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 85,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 88,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 91,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 94,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 97,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 100,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 103,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 106,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 109,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 112,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 115,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 118,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 121,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 124,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 127,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 130,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 133,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 136,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 139,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 142,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 145,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 148,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 151,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 154,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 157,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 160,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 163,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 166,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 169,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 172,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 175,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 178,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 181,
+   "st": "364:atSea 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 184,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 187,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 190,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 193,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 196,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 199,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 202,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 205,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 208,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 211,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 214,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 217,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 220,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 223,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 226,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 229,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 232,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 235,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 238,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 241,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 244,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 247,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 250,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 253,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 256,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 259,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 262,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 265,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 268,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 271,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 274,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 277,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 280,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 283,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 286,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  },
+  {
+   "h": 289,
+   "st": "364:- 365:-",
+   "wait": null,
+   "status": null,
+   "notice": null
+  }
+ ],
+ "marks": [],
+ "rows": [
+  "7 January 1938 Italy declared war on Austria"
+ ],
+ "ids": [
+  364,
+  365
+ ],
+ "escortBox": true,
+ "scale": {
+  "pxPerCell": 5.087646484375,
+  "mPerPx": 3846.153846153846
+ },
+ "tooltip": "Shanghai\nChina\nOccupied by Japan\nUnrest 0\nYour selected forces go by sea: they board transports at a port",
+ "final": [
+  {
+   "id": 364,
+   "alive": true,
+   "v": null,
+   "port": null,
+   "wait": null,
+   "moving": true,
+   "p": [
+    1712.9,
+    375.1
+   ]
+  },
+  {
+   "id": 365,
+   "alive": true,
+   "v": null,
+   "port": null,
+   "wait": null,
+   "moving": true,
+   "p": [
+    1781.1,
+    392.5
+   ]
+  }
+ ],
+ "finalH": 289,
+ "news": [],
+ "errors": []
+}
