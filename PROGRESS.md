@@ -1193,3 +1193,12 @@
 - AT: `landingSameAgain1938.test.ts`'s second test (all four sent again at hour 26: the same transports, landed
   1242–1243 as clicked once; red without). Every landing unit test and e2e spec green. Pin unmoved.
 - **Next:** critic run 36.
+
+## 2026-11-05 — critic run 36, focused, on 41e88005: two blocking issues (R36-B1, R36-B2); naval under its bar
+- R35-B1, R35-B2, R35-N1, R35-N2, R35-N3 fixed. **R36-B1 (blocking):** a refused order clears the binding of a division
+  walking to its convoy (older), so a whole click re-clicked a cell off Shanghai, all refused, sails the one aboard
+  alone. **R36-B2 (blocking, older):** the one aboard clicked a cell off is a different landing: ashore, sent to Sasebo,
+  the landing split for weeks, untold. Scores: naval **7** under its bar of 8; the rest at their bars (diplomacy, UI,
+  performance, stability rescored 7; the others carried). AI worlds bit-identical to run 35's. Run 37 must be full.
+  Filed as R24a–d (with R36-N1, R36-N2).
+- **Next:** R24a.

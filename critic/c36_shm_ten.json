@@ -1,0 +1,43 @@
+{
+ "seed": 3517,
+ "n": 10,
+ "spawn": [
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null
+ ],
+ "inFrance": 15,
+ "shotBefore": "critic/shots/c36shm_ten_before.png",
+ "rows": [
+  {
+   "kind": "sentHome",
+   "text": "Infantry division 1468 and 9 more: they stood on the ground of nations outside your wars with no way home by land, and were sent home.",
+   "cut": true,
+   "box": [
+    8,
+    829,
+    272,
+    20
+   ]
+  }
+ ],
+ "stillInFrance": 15,
+ "shotAfter": "critic/shots/c36shm_ten_after.png",
+ "afterRowClick": {
+  "panel": false,
+  "rows": 0
+ },
+ "shotRow": "critic/shots/c36shm_ten_rowclick.png",
+ "history": "History\n×\nAll types\nAlliance joined\nSent home\nAll nations\nAfghanistan\nAlbania\nAnglo-Egyptian Sudan\nAngola\nArgentina\nAustralia\nAustria\nBelgian Congo\nBelgium\nBolivia\nBrazil\nBritish East Africa\nBritish India\nBritish Malaya\nBulgaria\nBurma\nCanada\nCeylon\nChile\nChina\nColombia\nCommunist China\nCosta Rica\nCuba\nCzechoslovakia\nDenmark\nDominican Republic\nDutch East Indies\nEcuador\nEgypt\nEl Salvador\nEstonia\nEthiopia\nFinland\nFrance\nFree City of Danzig\nFrench Equatorial Africa\nFrench Indochina\nFrench Morocco\nFrench West Africa\nGermany\nGold Coast\nGreece\nGuatemala\nHaiti\nHonduras\nHungary\nIceland\nIran\nIraq\nIreland\nItaly\nJapan\nLatvia\nLebanon\nLiberia\nLithuania\nLuxembourg\nMadagascar\nManchukuo\nMengjiang\nMexico\nMongolia\nMozambique\nNationalist Spain\nNepal\nNetherlands\nNew Zealand\nNewfoundland\nNicaragua\nNigeria\nNorway\nOman\nPalestine\nPanama\nParaguay\nPeru\nPhilippines\nPoland\nPortugal\nRomania\nSarawak\nSaudi Arabia\nSiam\nSouth Africa\nSouthern Rhodesia\nSoviet Union\nSpanish Republic\nSweden\nSwitzerland\nSyria\nTannu Tuva\nTibet\nTransjordan\nTunisia\nTurkey\nUnited Kingdom\nUnited States\nUruguay\nVenezuela\nXinjiang\nYemen\nYugoslavia\n4 of 4 eventsExport CSVExport JSON\n1 January 1938 United Kingdom's formations on the ground of nations outside its wars, with no way home by land, were sent home: 10\n1 January 1938 Cuba joined the Coalition of Mexico\n1 January 1938 Mexico founded a Coalition\n1 January 1938 Netherlands joined the Anglo-French Entente",
+ "historyHasHome": true,
+ "shotHist": "critic/shots/c36shm_ten_history.png",
+ "rowsNextDay": 0,
+ "errors": []
+}

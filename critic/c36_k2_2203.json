@@ -1,0 +1,17 @@
+{
+ "steps": [
+  {
+   "tab": "overview",
+   "said": null,
+   "status": "",
+   "shot": "critic/shots/c36k2_overview.png"
+  },
+  {
+   "tab": "god",
+   "said": null,
+   "status": "",
+   "shot": "critic/shots/c36k2_god.png"
+  }
+ ],
+ "errors": []
+}

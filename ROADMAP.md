@@ -251,3 +251,21 @@ Rules:
     (cleared, its convoy lost its landing with it and it went on another's next voyage). `landingSameAgain1938.test.ts`
     (all four again at hour 26: the same transports, landed 1242–1243; red without, three bound to 1136). Pin unmoved.
   R23 done; then the critic again.
+- [ ] R24 **Naval back to its bar: a click near the landing** (critic run 36, focused: two blocking issues, R36-B1 and
+  R36-B2, both a click a cell off Shanghai; naval 7 under its bar of 8 for them). Each sub-item its own commit; then
+  the critic again (a full run, run 37).
+  - [ ] R24a A refused order leaves every division's landing standing (R36-B1): a division bound for a convoy (walking
+    to its port, or waiting there) keeps its binding when its new order is refused, as the one aboard does (R23a); a
+    convoy never sails because its bound divisions' refused orders cleared them. AT: Japan's four to Shanghai, all four
+    re-clicked one cell east at hour 26 and a walking one ordered onto open sea: whatever is refused stays bound or
+    aboard, and all four land within a day; red without (364 lands alone at t148, the rest at Tokyo).
+  - [ ] R24b A click a cell or two off the landing is the same landing (R36-B2): for a division aboard or bound, an
+    order whose landing is within two cells (water and land) of its own, on the same land holder, is that landing.
+    AT: the two nearest Tokyo to Shanghai, the one aboard re-clicked one cell east: both land within a day; red without
+    (h633 / h1285).
+  - [ ] R24c A refusal notice goes with any order taken (R36-N1): an order given after the refusal, even to the march's
+    own goal, ends it. AT: Germany's (here Switzerland's) division marching, refused, re-clicked on its own goal: no
+    notice; red without.
+  - [ ] R24d The one aboard sent to another landing is told why (R36-N2): not "no transports … at a port it can
+    reach" while it sits aboard transports at that port. AT: the one aboard ordered to Fuzhou: the reason names its
+    transports as loading for another landing; red without.

@@ -1,0 +1,1113 @@
+{
+ "seed": 3517,
+ "n": 4,
+ "days": 12,
+ "actH": 24,
+ "act": {
+  "h": 26,
+  "tip": "China\nOccupied by Japan",
+  "before": {
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "1 of 4 aboard; the last 46 days from the port",
+    "notice": null,
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n1 of 4 aboard; the last 46 days from the port\nEscort with warships\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "st": {
+    "id": 364,
+    "alive": true,
+    "v": "aboard",
+    "port": "Tokyo",
+    "wait": {
+     "aboard": 1,
+     "of": 4,
+     "days": 46
+    },
+    "moving": false,
+    "p": [
+     1819.1,
+     387.2
+    ]
+   }
+  },
+  "after": {
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "At sea, bound for its landing",
+    "wait": null,
+    "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAt sea, bound for its landing\nEscort with warships\nSquare infantry division 364: not done: no transports of its nation with room for it are at a port it can reach.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "st": {
+    "id": 364,
+    "alive": true,
+    "v": "atSea",
+    "port": null,
+    "wait": null,
+    "moving": false,
+    "p": [
+     1819.1,
+     387.2
+    ]
+   }
+  },
+  "crop": "critic/shots/c36lwt2_four_allnear14_act_panel.png",
+  "shot": "critic/shots/c36lwt2_four_allnear14_act.png",
+  "after6": {
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "At sea, bound for its landing",
+    "wait": null,
+    "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAt sea, bound for its landing\nEscort with warships\nSquare infantry division 364: not done: no transports of its nation with room for it are at a port it can reach.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "st": {
+    "id": 364,
+    "alive": true,
+    "v": "atSea",
+    "port": null,
+    "wait": null,
+    "moving": false,
+    "p": [
+     1817,
+     391.5
+    ]
+   }
+  }
+ },
+ "trace": [
+  {
+   "h": 4,
+   "st": "364:aboard(1/4,47) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 47 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 7,
+   "st": "364:aboard(1/4,47) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 47 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 10,
+   "st": "364:aboard(1/4,47) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 47 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 13,
+   "st": "364:aboard(1/4,47) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 47 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 16,
+   "st": "364:aboard(1/4,46) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 46 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 19,
+   "st": "364:aboard(1/4,46) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 46 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 22,
+   "st": "364:aboard(1/4,46) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 46 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 25,
+   "st": "364:aboard(1/4,46) 365:toPort 366:toPort 367:toPort",
+   "wait": "1 of 4 aboard; the last 46 days from the port",
+   "status": "Aboard at Tokyo, waiting for the rest of the landing",
+   "notice": null
+  },
+  {
+   "h": 35,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 38,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 41,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 44,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 47,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 50,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 53,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 56,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 59,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 62,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 65,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 68,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 71,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 74,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 77,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 80,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 83,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 86,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 89,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 92,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 95,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 98,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 101,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 104,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 107,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 110,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 113,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 116,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 119,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 122,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 125,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 128,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 131,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 134,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 137,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 140,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 143,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 146,
+   "st": "364:atSea 365:- 366:- 367:-",
+   "wait": null,
+   "status": "At sea, bound for its landing",
+   "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach."
+  },
+  {
+   "h": 149,
+   "st": "364:landed 365:- 366:- 367:-",
+   "wait": null,
+   "status": "Landed",
+   "notice": null
+  },
+  {
+   "h": 152,
+   "st": "364:landed 365:- 366:- 367:-",
+   "wait": null,
+   "status": "Landed",
+   "notice": null
+  },
+  {
+   "h": 155,
+   "st": "364:landed 365:- 366:- 367:-",
+   "wait": null,
+   "status": "Landed",
+   "notice": null
+  },
+  {
+   "h": 158,
+   "st": "364:landed 365:- 366:- 367:-",
+   "wait": null,
+   "status": "Landed",
+   "notice": null
+  },
+  {
+   "h": 161,
+   "st": "364:landed 365:- 366:- 367:-",
+   "wait": null,
+   "status": "Landed",
+   "notice": null
+  },
+  {
+   "h": 164,
+   "st": "364:landed 365:- 366:- 367:-",
+   "wait": null,
+   "status": "Landed",
+   "notice": null
+  },
+  {
+   "h": 167,
+   "st": "364:landed 365:- 366:- 367:-",
+   "wait": null,
+   "status": "Landed",
+   "notice": null
+  },
+  {
+   "h": 170,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 173,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 176,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 179,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 182,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 185,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 188,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 191,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 194,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 197,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 200,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 203,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 206,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 209,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 212,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 215,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 218,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 221,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 224,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 227,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 230,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 233,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 236,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 239,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 242,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 245,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 248,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 251,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 254,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 257,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 260,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 263,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 266,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 269,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 272,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 275,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 278,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 281,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 284,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 287,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  },
+  {
+   "h": 290,
+   "st": "364:- 365:- 366:- 367:-",
+   "wait": null,
+   "status": "On the march",
+   "notice": null
+  }
+ ],
+ "marks": [
+  {
+   "h": 4,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 1,
+      "of": 4,
+      "days": 47
+     },
+     "moving": false,
+     "p": [
+      1819.1,
+      387.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1794.8,
+      391.5
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1777.6,
+      393.4
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1827.4,
+      335.6
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "1 of 4 aboard; the last 47 days from the port",
+    "notice": null,
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n1 of 4 aboard; the last 47 days from the port\nEscort with warships\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c36lwt2_four_allnear14_h4_panel.png",
+   "shot": "critic/shots/c36lwt2_four_allnear14_h4.png"
+  },
+  {
+   "h": 25,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "aboard",
+     "port": "Tokyo",
+     "wait": {
+      "aboard": 1,
+      "of": 4,
+      "days": 46
+     },
+     "moving": false,
+     "p": [
+      1819.1,
+      387.2
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1796.1,
+      390.9
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1778.3,
+      392.7
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": "toPort",
+     "port": "Tokyo",
+     "wait": null,
+     "moving": true,
+     "p": [
+      1826.6,
+      336.4
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "Aboard at Tokyo, waiting for the rest of the landing",
+    "wait": "1 of 4 aboard; the last 46 days from the port",
+    "notice": null,
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAboard at Tokyo, waiting for the rest of the landing\nLanding\n1 of 4 aboard; the last 46 days from the port\nEscort with warships\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c36lwt2_four_allnear14_h25_panel.png",
+   "shot": "critic/shots/c36lwt2_four_allnear14_h25.png"
+  },
+  {
+   "h": 122,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "wait": null,
+     "moving": false,
+     "p": [
+      1739.2,
+      413.5
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "wait": null,
+     "moving": true,
+     "p": [
+      1800.7,
+      389.5
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "wait": null,
+     "moving": true,
+     "p": [
+      1783.4,
+      392.5
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "wait": null,
+     "moving": true,
+     "p": [
+      1822.3,
+      338.7
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "At sea, bound for its landing",
+    "wait": null,
+    "notice": "Square infantry division 364: not done: no transports of its nation with room for it are at a port it can reach.",
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n100%\nOrg\n100%\nFuel on the march\nNone\nStatus\nAt sea, bound for its landing\nEscort with warships\nSquare infantry division 364: not done: no transports of its nation with room for it are at a port it can reach.\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c36lwt2_four_allnear14_h122_panel.png",
+   "shot": "critic/shots/c36lwt2_four_allnear14_h122.png"
+  },
+  {
+   "h": 242,
+   "st": [
+    {
+     "id": 364,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "wait": null,
+     "moving": true,
+     "p": [
+      1712.6,
+      411.6
+     ]
+    },
+    {
+     "id": 365,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "wait": null,
+     "moving": true,
+     "p": [
+      1808,
+      389.5
+     ]
+    },
+    {
+     "id": 366,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "wait": null,
+     "moving": true,
+     "p": [
+      1789.7,
+      390.5
+     ]
+    },
+    {
+     "id": 367,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "wait": null,
+     "moving": true,
+     "p": [
+      1823.2,
+      343.2
+     ]
+    }
+   ],
+   "panel": {
+    "open": true,
+    "id": "364",
+    "status": "On the march",
+    "wait": null,
+    "notice": null,
+    "text": "Square infantry division 364\n×\nKind\nSquare infantry division\nNation\nJapan\nMen\n20,580 of 20,580\nSupply\n75%\nOrg\n100%\nFuel on the march\nNone\nStatus\nOn the march\nEscort with warships\nELEMENTS\n40×\tInfantry\t20,000 of 20,000\n4×\tArtillery\t48 of 48\n1×\tAnti-tank guns\t12 of 12"
+   },
+   "crop": "critic/shots/c36lwt2_four_allnear14_h242_panel.png",
+   "shot": "critic/shots/c36lwt2_four_allnear14_h242.png"
+  }
+ ],
+ "rows": [
+  "7 January 1938 Italy declared war on Austria"
+ ],
+ "ids": [
+  364,
+  365,
+  366,
+  367
+ ],
+ "escortBox": true,
+ "scale": {
+  "pxPerCell": 20.872395833333332,
+  "mPerPx": 937.5
+ },
+ "tooltip": "China\nOccupied by Japan\nYour selected forces go by sea: they board transports at a port",
+ "final": [
+  {
+   "id": 364,
+   "alive": true,
+   "v": null,
+   "port": null,
+   "wait": null,
+   "moving": true,
+   "p": [
+    1715.3,
+    413.5
+   ]
+  },
+  {
+   "id": 365,
+   "alive": true,
+   "v": null,
+   "port": null,
+   "wait": null,
+   "moving": true,
+   "p": [
+    1810.4,
+    389.5
+   ]
+  },
+  {
+   "id": 366,
+   "alive": true,
+   "v": null,
+   "port": null,
+   "wait": null,
+   "moving": true,
+   "p": [
+    1793,
+    390.5
+   ]
+  },
+  {
+   "id": 367,
+   "alive": true,
+   "v": null,
+   "port": null,
+   "wait": null,
+   "moving": true,
+   "p": [
+    1825.3,
+    344.5
+   ]
+  }
+ ],
+ "finalH": 290,
+ "news": [
+  {
+   "kind": "refused",
+   "id": 364,
+   "nation": 75,
+   "reason": 6,
+   "x": 1819.0625,
+   "y": 387.1875,
+   "tick": 25,
+   "at": 25
+  },
+  {
+   "kind": "refused",
+   "id": 365,
+   "nation": 75,
+   "reason": 6,
+   "x": 1796.0912415396397,
+   "y": 390.9087584603603,
+   "tick": 25,
+   "at": 25
+  },
+  {
+   "kind": "refused",
+   "id": 366,
+   "nation": 75,
+   "reason": 6,
+   "x": 1778.3460587687757,
+   "y": 392.6539412312244,
+   "tick": 25,
+   "at": 25
+  },
+  {
+   "kind": "refused",
+   "id": 367,
+   "nation": 75,
+   "reason": 6,
+   "x": 1826.5703441284227,
+   "y": 336.4296558715774,
+   "tick": 25,
+   "at": 25
+  }
+ ],
+ "errors": []
+}

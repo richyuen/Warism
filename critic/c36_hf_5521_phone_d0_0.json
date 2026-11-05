@@ -1,0 +1,430 @@
+{
+ "seed": 5521,
+ "day": 0,
+ "mppWant": 0,
+ "W": 390,
+ "H": 844,
+ "counters": [
+  {
+   "key": "hero:1472",
+   "text": "Sovetsky Soyuz",
+   "box": [
+    207,
+    181.8771484375,
+    182,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1472,
+     "name": "Sovetsky Soyuz",
+     "nation": 10,
+     "at": [
+      321,
+      196
+     ],
+     "pxFromBox": 23,
+     "inBox": true
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      298,
+      196
+     ],
+     "picked": 1472,
+     "panel": "Sovetsky Soyuz | × | Kind | Sovetsky Soyuz | Nation | Soviet Union"
+    },
+    {
+     "k": 1,
+     "at": [
+      298,
+      196
+     ],
+     "picked": 1472,
+     "panel": "Sovetsky Soyuz | × | Kind | Sovetsky Soyuz | Nation | Soviet Union"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1473",
+   "text": "T-42",
+   "box": [
+    308,
+    240.1836562824568,
+    80,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1473,
+     "name": "T-42",
+     "nation": 10,
+     "at": [
+      354,
+      222
+     ],
+     "pxFromBox": 33,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      348,
+      254
+     ],
+     "picked": 1473,
+     "panel": "T-42 | × | Kind | T-42 | Nation | Soviet Union"
+    },
+    {
+     "k": 1,
+     "at": [
+      348,
+      254
+     ],
+     "picked": 1473,
+     "panel": "T-42 | × | Kind | T-42 | Nation | Soviet Union"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1474",
+   "text": "Bismarck",
+   "box": [
+    168.4600830078125,
+    219.6282470703125,
+    122,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1474,
+     "name": "Bismarck",
+     "nation": 1,
+     "at": [
+      230,
+      234
+     ],
+     "pxFromBox": 1,
+     "inBox": true
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      229,
+      234
+     ],
+     "picked": 1474,
+     "panel": "Bismarck | × | Kind | Bismarck | Nation | Germany"
+    },
+    {
+     "k": 1,
+     "at": [
+      229,
+      234
+     ],
+     "picked": 1474,
+     "panel": "Bismarck | × | Kind | Bismarck | Nation | Germany"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1475",
+   "text": "Maus",
+   "box": [
+    208.4536880000001,
+    259.44486724952634,
+    88,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1475,
+     "name": "Maus",
+     "nation": 1,
+     "at": [
+      252,
+      241
+     ],
+     "pxFromBox": 33,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      252,
+      273
+     ],
+     "picked": 1475,
+     "panel": "Maus | × | Kind | Maus | Nation | Germany"
+    },
+    {
+     "k": 1,
+     "at": [
+      252,
+      273
+     ],
+     "picked": 1475,
+     "panel": "Maus | × | Kind | Maus | Nation | Germany"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1476",
+   "text": "HMS Hood",
+   "box": [
+    111.9814453125,
+    157.20097656250002,
+    140,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1476,
+     "name": "HMS Hood",
+     "nation": 20,
+     "at": [
+      182,
+      203
+     ],
+     "pxFromBox": 32,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      182,
+      171
+     ],
+     "picked": 1476,
+     "panel": "HMS Hood | × | Kind | HMS Hood | Nation | United Kingdom"
+    },
+    {
+     "k": 1,
+     "at": [
+      182,
+      171
+     ],
+     "picked": 1476,
+     "panel": "HMS Hood | × | Kind | HMS Hood | Nation | United Kingdom"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1477",
+   "text": "TOG II",
+   "box": [
+    145.500914,
+    199.6770008962622,
+    96,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1477,
+     "name": "TOG II",
+     "nation": 20,
+     "at": [
+      194,
+      246
+     ],
+     "pxFromBox": 33,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      194,
+      214
+     ],
+     "picked": 1477,
+     "panel": "TOG II | × | Kind | TOG II | Nation | United Kingdom"
+    },
+    {
+     "k": 1,
+     "at": [
+      194,
+      214
+     ],
+     "picked": 1477,
+     "panel": "TOG II | × | Kind | TOG II | Nation | United Kingdom"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1478",
+   "text": "Richelieu +1",
+   "box": [
+    99.91582031249999,
+    282.3736328125,
+    154,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1478,
+     "name": "Richelieu",
+     "nation": 19,
+     "at": [
+      176,
+      264
+     ],
+     "pxFromBox": 33,
+     "inBox": false
+    },
+    {
+     "id": 1479,
+     "name": "Char 2C",
+     "nation": 19,
+     "at": [
+      205,
+      261
+     ],
+     "pxFromBox": 45,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      177,
+      296
+     ],
+     "picked": 1478,
+     "panel": "Richelieu | × | Kind | Richelieu | Nation | France"
+    },
+    {
+     "k": 1,
+     "at": [
+      177,
+      296
+     ],
+     "picked": 1479,
+     "panel": "Char 2C | × | Kind | Char 2C | Nation | France"
+    },
+    {
+     "k": 2,
+     "at": [
+      177,
+      296
+     ],
+     "picked": 1478,
+     "panel": "Richelieu | × | Kind | Richelieu | Nation | France"
+    }
+   ],
+   "reached": [
+    true,
+    true
+   ]
+  },
+  {
+   "key": "hero:1480",
+   "text": "Roma +1",
+   "box": [
+    206.6748046875,
+    321.5748046875,
+    122,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1480,
+     "name": "Roma",
+     "nation": 15,
+     "at": [
+      267,
+      304
+     ],
+     "pxFromBox": 31,
+     "inBox": false
+    },
+    {
+     "id": 1481,
+     "name": "P.100 Ercole",
+     "nation": 15,
+     "at": [
+      248,
+      297
+     ],
+     "pxFromBox": 43,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      268,
+      336
+     ],
+     "picked": 1480,
+     "panel": "Roma | × | Kind | Roma | Nation | Italy"
+    },
+    {
+     "k": 1,
+     "at": [
+      268,
+      336
+     ],
+     "picked": 1481,
+     "panel": "P.100 Ercole | × | Kind | P.100 Ercole | Nation | Italy"
+    },
+    {
+     "k": 2,
+     "at": [
+      268,
+      336
+     ],
+     "picked": 1480,
+     "panel": "Roma | × | Kind | Roma | Nation | Italy"
+    }
+   ],
+   "reached": [
+    true,
+    true
+   ]
+  }
+ ],
+ "mpp": 19567.87109375,
+ "shot": "critic/shots/c36hf_5521_phone_d0_0.png",
+ "errors": []
+}
