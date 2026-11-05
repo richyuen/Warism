@@ -1824,12 +1824,13 @@ Actions tab's assist boxes set the mask (`setPlayerAi`).
   that meets a fight it was not given in is cancelled; an order keeps the AI off the formation (§7.1).
 - **Orders over the sea** (ROADMAP R17c; the rules in §6.2): with land formations selected, the map
   tooltip over land across the sea says the order goes by sea (`overSea`, asked of the worker once a
-  cell, selection and tick), and the map marks the landing the order is for (ADR-827, ROADMAP R27b;
-  `drawLandingMark`, over the markers): a dashed line from the landing's water to its land, an
-  arrowhead and a ring there, each over a dark edge; orange for a new landing, green for the one the
-  first selected division already has, where the tooltip says "the landing they already have". It
-  is the first selected land formation's answer (by id); a division aboard a convoy loading at its
-  port is asked from the port (`aboardAtPort`). A still cursor is asked again as the sim moves on. The formation panel's status says marching to the port (named) to board
+  cell, selection and tick), and the map marks each landing the order is for (ADR-827, ROADMAP R27b,
+  R28b; `seaHint`, `drawLandingMark`, over the markers): a dashed line from the landing's water to its
+  land, an arrowhead and a ring there, each over a dark edge; orange for a new landing, green for one
+  every division it is for already has. One landing kept: the tooltip says "the landing they already
+  have"; two or more (a division aboard and a fresh one, say), "{n} landings, each marked: they will
+  not land together" (R39-N1: it was the first selected division's answer alone). A division aboard a
+  convoy loading at its port is asked from the port (`aboardAtPort`). A still cursor is asked again as the sim moves on. The formation panel's status says marching to the port (named) to board
   transports, waiting at it for them, at sea, or landed (for a day after a player's order lands;
   `FormationDetail.voyage`). While bound for a landing, a formation whose order lines are shown has
   its sea leg drawn (`drawVoyages`, `Snapshot.voyages`): a dashed line from its port's water, or its

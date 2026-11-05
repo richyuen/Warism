@@ -32,6 +32,7 @@
  * Not here: the bombardment (PLAN 4.5c); the AI's invasions (PLAN 4.6).
  */
 import { EventKind, RejectReason } from '../../shared/events';
+import type { LandingMark, SeaHint } from '../../shared/protocol';
 import { isLand } from '../../shared/terrain';
 import { nearestCellWhere } from '../data/ownership';
 import { FlipCause, navOf, PlayerOrderKind, portSeaOf, seaOf, seaRangeOf, type World } from '../world';
@@ -526,6 +527,32 @@ export function seaOrderLanding(world: World, id: number, x: number, y: number):
   const from = port >= 0 ? port : world.offLand(id) ? -1 : Math.floor(c.y[id]!) * world.cells.w + Math.floor(c.x[id]!);
   if (from < 0 || !overSeaFrom(world, from, x, y)) return null;
   return landingFor(world, id, x, y);
+}
+
+/**
+ * The cursor's hint for an order of the player's land formations `ids` (sorted) to (`x`, `y`)
+ * (`SeaHint`; ROADMAP R17c, R21c, R27a, R28b): `how` and the landing of the first; `marks`, each
+ * distinct landing of those whose order goes over the sea (from where each stands, or the port of
+ * the one aboard a loading convoy, R27b), `same` where all it is for already have it. Read-only.
+ */
+export function seaHint(world: World, ids: readonly number[], x: number, y: number): SeaHint {
+  const target = Math.floor(y) * world.cells.w + Math.floor(x);
+  const marks: LandingMark[] = [];
+  let hint: SeaHint | null = null;
+  for (const id of ids) {
+    if (!world.formations.has(id)) continue;
+    const port = aboardAtPort(world, id);
+    const from = port >= 0 ? port : world.offLand(id) ? -1 : cellOfPlace(world, id);
+    const yes = from >= 0 && overSeaFrom(world, from, x, y);
+    const how = !yes ? 0 : neutralLanding(world, world.formations.cols.nation[id]!, target) ? 2 : 1;
+    const l = how === 1 ? landingFor(world, id, x, y) : null;
+    hint ??= { how, water: l?.water ?? -1, land: l?.land ?? -1, same: l?.same ?? false, marks };
+    if (!l) continue;
+    const m = marks.find((k) => k.water === l.water && k.land === l.land);
+    if (m) m.same &&= l.same;
+    else marks.push({ water: l.water, land: l.land, same: l.same });
+  }
+  return hint ?? { how: 0, water: -1, land: -1, same: false, marks };
 }
 
 /**

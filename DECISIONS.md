@@ -71,6 +71,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   numbers); the fuzz checks a whole click is refused nothing, a landing loads at one port, and every
   convoy has one target (red without: the four re-clicked south-west). Player convoys only: pin
   unmoved.
+- **R28b** (critic run 39, R39-N1). The mark and the tooltip were the first selected division's
+  answer (R27b's "Not chosen": marking every one's landing). The one aboard and a fresh one, two cells
+  south of Shanghai: green, "they keep their transports", and the fresh one landed alone four cells
+  off. Reversed: `seaHint` (amphibious; the worker's `overSea` now takes the selection's ids) marks
+  each distinct landing of the selection, green where all it is for already have it; with two or
+  more the tooltip says "{n} landings, each marked: they will not land together". `how` and the
+  first's landing as before. `landingHintSelection1938.test.ts`; `landingMark1938.spec.ts` (looked
+  at). UI and a read-only query: pin unmoved.
 
 ### ADR-826 · 2026-11-04 · accepted — No landing on a neutral's ground (ROADMAP R20, R32-B1)
 

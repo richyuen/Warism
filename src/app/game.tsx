@@ -59,34 +59,34 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     hud.onSelectNation = (id) => view.select(id);
     view.onGroundShown = (shown) => (hud.groundShown.value = shown);
     // Over land across the sea with land formations selected, the tooltip says the order goes by
-    // sea (ROADMAP R17c) and the map marks the landing it is for (ADR-827, R27b): the first selected
-    // land formation's, by sorted id (a click sends the same cell to all; one aboard has its own).
+    // sea (ROADMAP R17c) and the map marks the landings it is for (ADR-827, R27b, R28b): each distinct
+    // one of the selected land formations' (a click sends the same cell to all; one aboard has its own).
     // Asked of the worker once a cell, selection and tick: the answer turns on the sim's state (who
     // is aboard or bound), so a still cursor is asked again as the sim moves on.
     let asked = '';
     let last: MapHover | null = null;
     const ask = (h: MapHover | null): void => {
       last = h;
-      const id = [...view.selectedFormations].sort((a, b) => a - b).find((f) => !view.formationAfloat(f));
-      const at = h && h.cell >= 0 && id !== undefined ? `${h.cell}|${id}|` : '';
+      const ids = [...view.selectedFormations].sort((a, b) => a - b).filter((f) => !view.formationAfloat(f));
+      const at = h && h.cell >= 0 && ids.length > 0 ? `${h.cell}|${ids.join(',')}|` : '';
       const key = at === '' ? '' : `${at}${hud.stats.peek()?.tick ?? 0}`;
       if (key === asked) return;
       // A new cell or selection clears the old answer; a new tick keeps it until the next comes.
       if (at === '' || !asked.startsWith(at)) {
         hud.hoverBySea.value = -1;
         hud.hoverLanding.value = null;
-        view.landingMark = null;
+        view.landingMarks = [];
       }
       asked = key;
       if (!h || key === '') return;
       const cell = h.cell;
-      void sim.overSea(id!, (cell % geometry.w) + 0.5, Math.floor(cell / geometry.w) + 0.5).then((hint) => {
+      void sim.overSea(ids, (cell % geometry.w) + 0.5, Math.floor(cell / geometry.w) + 0.5).then((hint) => {
         if (asked !== key) return;
         hud.hoverSeaNeutral.value = hint.how === 2;
         hud.hoverBySea.value = hint.how !== 0 ? cell : -1;
-        const mark = hint.how === 1 && hint.land >= 0 ? hint : null;
-        hud.hoverLanding.value = mark;
-        view.landingMark = mark;
+        const by = hint.how === 1 && hint.marks.length > 0;
+        hud.hoverLanding.value = by ? hint : null;
+        view.landingMarks = by ? hint.marks : [];
       });
     };
     view.onHover = (h) => {

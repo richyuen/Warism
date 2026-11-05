@@ -27,8 +27,8 @@ import { DAYS_PER_MONTH } from '../sim/systems/research';
 import { shipyard } from '../sim/systems/production';
 import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
-import { aboardAtPort, landedAway, landingFor, landingOf, loading, neutralLanding, seaOrderLanding } from '../sim/systems/amphibious';
-import { marchHoursLeft, overSea, overSeaFrom } from '../sim/systems/movement';
+import { landedAway, landingOf, loading, seaHint, seaOrderLanding } from '../sim/systems/amphibious';
+import { marchHoursLeft } from '../sim/systems/movement';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -315,16 +315,9 @@ export class SimServer {
       case 'overSea': {
         // ROADMAP R17c: the cursor's hint for the player's selection: 0 not over the sea, 1 by
         // sea, 2 by sea onto the ground of a nation outside its wars, refused (ROADMAP R21c).
-        const world = this.requireSim().world;
-        // By sea, the landing the order is for, from what the order uses (`landingFor`, ADR-827, R27a).
-        // The one aboard a convoy loading at a port of its nation takes an order there (R22b): asked
-        // from the port (`aboardAtPort`, R27b).
-        const port = world.formations.has(msg.id) ? aboardAtPort(world, msg.id) : -1;
-        const yes = port >= 0 ? overSeaFrom(world, port, msg.x, msg.y) : world.formations.has(msg.id) && !world.offLand(msg.id) && overSea(world, msg.id, msg.x, msg.y);
-        const target = Math.floor(msg.y) * world.cells.w + Math.floor(msg.x);
-        const how = !yes ? 0 : neutralLanding(world, world.formations.cols.nation[msg.id]!, target) ? 2 : 1;
-        const l = yes ? landingFor(world, msg.id, msg.x, msg.y) : null;
-        const hint: SeaHint = { how, water: l?.water ?? -1, land: l?.land ?? -1, same: l?.same ?? false };
+        // By sea, the landings the orders are for, from what the order uses (`seaHint`, ADR-827, R27a,
+        // R28b): each distinct one of the selection.
+        const hint: SeaHint = seaHint(this.requireSim().world, msg.ids, msg.x, msg.y);
         this.reply(msg.reqId, new TextEncoder().encode(JSON.stringify(hint)), false);
         break;
       }

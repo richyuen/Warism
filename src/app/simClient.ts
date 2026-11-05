@@ -416,10 +416,10 @@ export class SimClient {
     return JSON.parse(new TextDecoder().decode(r.bytes)) as FormationDetail | null;
   }
 
-  /** Whether an order of formation `id` to (`x`, `y`) goes over the sea, and the landing it is for (ROADMAP R17c, R21c, R27a: the cursor's hint; `SeaHint`). */
-  async overSea(id: number, x: number, y: number): Promise<SeaHint> {
-    const r = await this.status({ type: 'overSea', id, x, y });
-    return r.bytes ? (JSON.parse(new TextDecoder().decode(r.bytes)) as SeaHint) : { how: 0, water: -1, land: -1, same: false };
+  /** Whether an order of formations `ids` to (`x`, `y`) goes over the sea, and the landings it is for (ROADMAP R17c, R21c, R27a, R28b: the cursor's hint; `SeaHint`). */
+  async overSea(ids: number[], x: number, y: number): Promise<SeaHint> {
+    const r = await this.status({ type: 'overSea', ids, x, y });
+    return r.bytes ? (JSON.parse(new TextDecoder().decode(r.bytes)) as SeaHint) : { how: 0, water: -1, land: -1, same: false, marks: [] };
   }
 
   /** Nation `nation`'s month in parts as the sim has it now (PLAN 7.4f34), or null in a world without an economy. */

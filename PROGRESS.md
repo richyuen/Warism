@@ -1359,3 +1359,9 @@
 - Fuzz: a whole click refused nothing, one port a landing, one target a convoy; red without. Whole unit suite
   green (snapshot-perf red under load, green alone); landing specs green; pin unmoved.
 - **Next:** R28b.
+
+## 2026-11-05 — R28b: the mark speaks for the whole selection (R39-N1)
+- `seaHint` (the worker's `overSea` takes the selection's ids): each distinct landing of the selection is marked,
+  green where every division it is for has it; two or more: "{n} landings, each marked: they will not land
+  together". The one aboard and a fresh one two cells south of Shanghai: two marks (unit test; spec looked at).
+- R28 done. **Next:** critic run 40.

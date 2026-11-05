@@ -359,6 +359,10 @@ Rules:
     else (R24d's refusal kept where they carry another). `landingLeftTakesShips1938.test.ts`; the fuzz gains a
     whole click refused nothing, one port a landing, one target a convoy (a landing within a day: by the three
     cases, too slow for 288). Red without. Pin unmoved.
-  - [ ] R28b R39-N1: the mark speaks for the whole selection. Where the selected divisions would land at different
+  - [x] R28b R39-N1: the mark speaks for the whole selection. Where the selected divisions would land at different
     landings, each is marked, and the tooltip says so ("2 landings") rather than "they keep their transports". AT:
     unit test of the answer (the one aboard and a fresh one, two cells south: two landings); e2e looked at.
+    Done: `seaHint` (the worker's `overSea` takes the selection), a mark for each landing, "{n} landings, each
+    marked: they will not land together". `landingHintSelection1938.test.ts`, `landingMark1938.spec.ts` (looked
+    at: green at Shanghai, orange two cells south). Pin unmoved.
+  R28 done; then the critic again (run 40).

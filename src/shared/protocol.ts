@@ -78,7 +78,7 @@ export type ToWorker =
    */
   | { type: 'formation'; reqId: number; id: number; generation?: number }
   /** ROADMAP R17c: whether an order of formation `id` to (`x`, `y`) goes over the sea, as JSON `boolean` in the reply bytes. */
-  | { type: 'overSea'; reqId: number; id: number; x: number; y: number }
+  | { type: 'overSea'; reqId: number; ids: number[]; x: number; y: number }
   /** PLAN 7.4f34: nation `nation`'s month in parts as JSON `EconomyBreakdown` in the reply bytes (`null` with no economy). */
   | { type: 'economy'; reqId: number; nation: number }
   /** PLAN 2.14e: the largest battle of war `war` as JSON `WarBattle` in the reply bytes (`null` when it has none). */
@@ -828,17 +828,27 @@ export interface WarStat {
   exhaustion: [number, number];
 }
 
+/** A landing an order over the sea is for: its water and land cells, and whether those it is for already have it (ROADMAP R27a, R28b). */
+export interface LandingMark {
+  water: number;
+  land: number;
+  same: boolean;
+}
+
 /**
- * The worker's answer for the cursor over a target of the selected land formation (ROADMAP R17c,
- * R21c, R27a): `how` 0 not over the sea, 1 by sea, 2 by sea onto the ground of a nation outside its
- * wars (refused); by sea, the landing the order is for (`landingFor`): its `water` and `land` cells
- * and whether it is the one the formation already has (`same`); -1 and false for none.
+ * The worker's answer for the cursor over a target of the selected land formations (ROADMAP R17c,
+ * R21c, R27a, R28b; `seaHint`): `how`, of the first by sorted id, 0 not over the sea, 1 by sea, 2 by
+ * sea onto the ground of a nation outside its wars (refused); by sea, the landing the first's order
+ * is for (`landingFor`): its `water` and `land` cells and whether it already has it (`same`); -1 and
+ * false for none. `marks`: each distinct landing of the selection's orders over the sea, `same` where
+ * every division it is for already has it (R39-N1: the first's answer spoke for all).
  */
 export interface SeaHint {
   how: 0 | 1 | 2;
   water: number;
   land: number;
   same: boolean;
+  marks: LandingMark[];
 }
 
 /** What became of a player's order (PLAN 4.9c; `orderNews`). */

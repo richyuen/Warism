@@ -8,7 +8,9 @@ import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 // cursor two cells south of Shanghai before any order: by sea, the mark at that click's own landing,
 // a new one. The cursor kept still while the two are sent to Shanghai and the first boards: the
 // mark is asked again and turns to the landing it has (green, "the landing they already have"), the
-// one Shanghai's click marks; Fuzhou's is a new one.
+// one Shanghai's click marks; Fuzhou's is a new one. ROADMAP R28b (critic run 39, R39-N1): the one
+// aboard and the third nearest, never ordered, selected, two cells south: two landings marked, its own
+// kept and the click's new, and the tooltip says they will not land together.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = NATIONS_1938.findIndex((n) => n.tag === 'JAP') + 1;
@@ -41,17 +43,17 @@ test('the landing is marked while chosen; under a still cursor it turns to the l
   await page.evaluate((n) => window.__warsim!.view!.select(n), JAP);
   await page.getByTestId('take-control').click();
   await expect(page.getByTestId('release-control')).toBeVisible();
-  const two = await page.evaluate(({ n, x, y }) => {
+  const three = await page.evaluate(({ n, x, y }) => {
     const v = window.__warsim!.view!;
     return v
       .formationsOf(n)
       .filter((id) => !v.formationAfloat(id))
       .map((id) => [id, Math.hypot(v.formationPos(id)![0] - x, v.formationPos(id)![1] - y)] as const)
       .sort((a, b) => a[1] - b[1])
-      .slice(0, 2)
-      .map((d) => d[0])
-      .sort((a, b) => a - b);
+      .slice(0, 3)
+      .map((d) => d[0]);
   }, { n: JAP, x: TOKYO[0], y: TOKYO[1] });
+  const two = three.slice(0, 2).sort((a, b) => a - b);
   await page.evaluate((id) => {
     window.__warsim!.view!.selectedFormations.add(id);
     window.__warsim!.hud.selectFormation(id);
@@ -82,7 +84,7 @@ test('the landing is marked while chosen; under a still cursor it turns to the l
   }
   await expect(status).toHaveAttribute('data-voyage', 'aboard', { timeout: 10_000 });
   await expect.poll(async () => (await mark(page))?.same, { timeout: 10_000 }).toBe(true);
-  expect(await mark(page)).toEqual({ ...shanghai, same: true, how: 1 });
+  expect(await mark(page)).toEqual({ ...shanghai, same: true });
   await expect(page.getByTestId('tooltip-by-sea')).toHaveAttribute('data-same', '1');
   await expect(page.getByTestId('tooltip-by-sea')).toContainText('already have');
   await page.screenshot({ path: 'test-results/landingMark1938-same.png' });
@@ -91,4 +93,15 @@ test('the landing is marked while chosen; under a still cursor it turns to the l
   await hover(page, FUZHOU[0], FUZHOU[1]);
   await expect.poll(async () => (await mark(page))?.same, { timeout: 5000 }).toBe(false);
   await expect(page.getByTestId('tooltip-by-sea')).not.toHaveAttribute('data-same', '1');
+
+  // The one aboard and a fresh division, two cells south: two landings, each marked (R28b).
+  await page.evaluate((id) => window.__warsim!.view!.selectedFormations.add(id), three[2]!);
+  await hover(page, SHANGHAI[0], SHANGHAI[1] + 2);
+  await expect(page.getByTestId('tooltip-by-sea')).toHaveAttribute('data-landings', '2', { timeout: 10_000 });
+  await expect(page.getByTestId('tooltip-by-sea')).toContainText('2 landings');
+  const marks = await page.evaluate(() => window.__warsim!.view!.landingMarks);
+  expect(marks.map((k) => k.same).sort()).toEqual([false, true]);
+  expect(marks.find((k) => k.same)).toEqual({ ...shanghai, same: true });
+  expect(marks.find((k) => !k.same)!.land).toBe(south.land);
+  await page.screenshot({ path: 'test-results/landingMark1938-two.png' });
 });

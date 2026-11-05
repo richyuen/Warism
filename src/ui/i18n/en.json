@@ -593,6 +593,7 @@
   "formation.status.holding": "Holding",
   "tooltip.bySea": "Your selected forces go by sea: they board transports at a port and land at the marked place",
   "tooltip.bySeaSame": "The landing they already have: they keep their transports and land at the marked place",
+  "tooltip.bySeaMany": "Your selected forces go by sea to {n} landings, each marked: they will not land together",
   "tooltip.bySeaNeutral": "No landing here: the ground of a nation outside your wars",
   "formation.voyage.toPort": "Marching to a port to board transports",
   "formation.voyage.toPort.port": "Marching to {port} to board transports",
