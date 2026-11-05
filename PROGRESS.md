@@ -1202,3 +1202,12 @@
   performance, stability rescored 7; the others carried). AI worlds bit-identical to run 35's. Run 37 must be full.
   Filed as R24a–d (with R36-N1, R36-N2).
 - **Next:** R24a.
+
+## 2026-11-05 — ROADMAP R24a: a refused order leaves every division its landing (R36-B1)
+- `orderAshore` clears `seaBound`/`seaFetch` before judging; R23a restored them only for the one aboard. `orderMove` now
+  restores them on any refusal, so a division walking to its convoy, or waiting at its port, keeps its place.
+- AT: `landingRefusedBound1938.test.ts` (Japan's four to Shanghai with the escort; at hour 26 the walker 365 onto open
+  sea, or all four a cell east of Shanghai: those refused keep their transports, the four land 1242–1243; red without,
+  365 unbound). Landing unit tests green. Pin unmoved (no player convoy in AI play). In the gate run, two timing
+  tests red under load and green alone: `snapshot-perf` (watch list) and `scenario1938`'s build time (2044 ms of 2000).
+- **Next:** R24b.

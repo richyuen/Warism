@@ -64,6 +64,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   R23a (critic run 35, R35-B2): the order is judged with the division ashore, and a refused one puts
   it back aboard as it was (`ashoreAtPort` returns the way back): "a refused order leaves the one
   before it standing" holds aboard too. `landingAboardRefused1938.test.ts` and `.spec.ts`: red without.
+  R24a (critic run 36, R36-B1, older): and for a division bound for a convoy, walking to its port or
+  waiting there: a refused order restores its `seaBound`/`seaFetch` (cleared, it stood at Tokyo for
+  good, and a convoy whose bound divisions were all refused sailed with the one aboard alone).
+  `landingRefusedBound1938.test.ts`: red without.
   R23b (R35-B1): an order to the landing it is aboard for (the same land and water, `sameLanding`)
   is taken and changes nothing; ashore, it was bound anew to transports another division of its
   click was walking to, and that one waited on the quay for weeks. `landingSameAgain1938.test.ts`:

@@ -254,11 +254,14 @@ Rules:
 - [ ] R24 **Naval back to its bar: a click near the landing** (critic run 36, focused: two blocking issues, R36-B1 and
   R36-B2, both a click a cell off Shanghai; naval 7 under its bar of 8 for them). Each sub-item its own commit; then
   the critic again (a full run, run 37).
-  - [ ] R24a A refused order leaves every division's landing standing (R36-B1): a division bound for a convoy (walking
+  - [x] R24a A refused order leaves every division's landing standing (R36-B1): a division bound for a convoy (walking
     to its port, or waiting there) keeps its binding when its new order is refused, as the one aboard does (R23a); a
     convoy never sails because its bound divisions' refused orders cleared them. AT: Japan's four to Shanghai, all four
     re-clicked one cell east at hour 26 and a walking one ordered onto open sea: whatever is refused stays bound or
     aboard, and all four land within a day; red without (364 lands alone at t148, the rest at Tokyo).
+    Done: `orderMove` restores the binding on any refusal (`keep`); `landingRefusedBound1938.test.ts` (the walker onto
+    open sea: refused, still bound to 1144; all four a cell east: all refused, each keeps its transports; landed
+    1242–1243 both; red without). Pin unmoved.
   - [ ] R24b A click a cell or two off the landing is the same landing (R36-B2): for a division aboard or bound, an
     order whose landing is within two cells (water and land) of its own, on the same land holder, is that landing.
     AT: the two nearest Tokyo to Shanghai, the one aboard re-clicked one cell east: both land within a day; red without

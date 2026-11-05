@@ -448,17 +448,26 @@ export const wasLong = (): boolean => refusedLong;
  * `byPort` (PLAN 4.9b): an order over the sea from where no transports wait marches to the nearest
  * port of its land with transports that have room (`transportsPort`), and the order is kept
  * (`world.seaBound`) for the amphibious system to embark it there. `call` (a player's order,
- * ROADMAP R17): the order goes by a convoy instead (`seaConvoy`). Any order ends an order kept so.
+ * ROADMAP R17): the order goes by a convoy instead (`seaConvoy`). Any order taken ends an order kept
+ * so; a refused one leaves it (ROADMAP R24a).
  */
 export function orderMove(world: World, id: number, x: number, y: number, pass?: Passage, byPort = false, direct = false, call = false, escort = false): boolean {
   // Aboard a player's convoy still loading, or bound for one, to the landing it has its place in: it
   // keeps it (ROADMAP R23b, R23e).
   if (sameLanding(world, id, x, y)) return true;
-  if (!world.embarked.has(id)) return orderAshore(world, id, x, y, pass, byPort, direct, call, escort);
+  // A refused order leaves the one before it standing, its landing too (ROADMAP R24a, critic run 36,
+  // R36-B1: a division walking to its convoy, refused, was dropped from its landing, and a convoy whose
+  // bound divisions were all refused so sailed with the one aboard alone).
+  const [bound, fetch] = [world.seaBound.get(id), world.seaFetch.get(id)];
+  const keep = (): false => {
+    if (bound !== undefined) world.seaBound.set(id, bound);
+    if (fetch !== undefined) world.seaFetch.set(id, fetch);
+    return false;
+  };
+  if (!world.embarked.has(id)) return orderAshore(world, id, x, y, pass, byPort, direct, call, escort) || keep();
   // Aboard transports it takes no order (PLAN 4.5a), but aboard a player's convoy still loading at
   // its port, where it goes ashore and takes it (ROADMAP R22b); refused, it is aboard again (R23a).
   const back = ashoreAtPort(world, id);
-  const [bound, fetch] = [world.seaBound.get(id), world.seaFetch.get(id)];
   if (back === null) {
     world.seaBound.delete(id);
     world.seaFetch.delete(id);
@@ -468,9 +477,7 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
   }
   if (orderAshore(world, id, x, y, pass, byPort, direct, call, escort)) return true;
   back();
-  if (bound !== undefined) world.seaBound.set(id, bound);
-  if (fetch !== undefined) world.seaFetch.set(id, fetch);
-  return false;
+  return keep();
 }
 
 /** `orderMove` of a formation not aboard (or just gone ashore). */
