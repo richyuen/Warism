@@ -1439,3 +1439,8 @@
   order to the Channel refused, 270 still aboard at Portsmouth (red: it sailed). Naval unit tests green (58 files);
   pin unmoved. The same case then shows R42-N2 (Portsmouth bombed shut, 271 refused, 270 sails alone): R31b.
 - **Next:** R31b.
+
+## 2026-11-05 — R31b: a convoy whose port is bombed shut while it loads is over (R42-N2)
+- Those aboard go ashore at the port and are told `PortShut`, as those bound are. Britain 15101, Calais: nobody
+  lands alone (red: 270 at Calais h99, then lost). Naval unit tests green (62 files); R21b's spec green; pin unmoved.
+- **Next:** R31c.

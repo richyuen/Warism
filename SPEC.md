@@ -1298,7 +1298,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   nearest port's, R28c: a landing re-sent by two clicks an hour apart); a click that leaves a landing takes its
   transports with it, and the one aboard sent alone takes its own where they carry no one else. The
   one aboard whose new landing a convoy loads for at another port stays aboard where nobody else holds
-  its transports: they sail to that port with it and load the rest there (`sailAboard`, R29b); under
+  its transports: they sail to that port with it and load the rest there (`sailAboard`, R29b). A
+  convoy whose port is bombed shut while it loads is over: those aboard go ashore there, and they and
+  those bound for it are told `PortShut` (R31b); under
   way to that port they are still to load, and the convoys there for that landing wait for them
   (`stillLoading`, R30a). The one aboard them takes an order as at that port (`sailingToPort`,
   R30b): to the landing it has, nothing changes; to another landing over the sea from that port, its

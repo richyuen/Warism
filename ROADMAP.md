@@ -416,8 +416,10 @@ Rules:
     refused, with why; the one aboard is never left at sea. AT: Britain 15101, 270 aboard 1068 at Portsmouth, 1068
     ordered onto the Channel: refused, still aboard at Portsmouth; the landing goes on.
     Done: `Convoy` (19). `convoyFleetOrderRefused1938.test.ts`; red without. Pin unmoved.
-  - [ ] R31b R42-N2: the division bound for a convoy refused `PortShut` at its port: the convoy does not sail with the
+  - [x] R31b R42-N2: the division bound for a convoy refused `PortShut` at its port: the convoy does not sail with the
     one aboard alone for that. AT: Britain 16117, the recall case: 274 does not land alone.
+    Done: a convoy whose port is shut while it loads is over, all told `PortShut`, those aboard ashore at the port.
+    Britain 15101 (the same shape, Calais): nobody lands alone (red: 270 h99). `convoyPortShut1938.test.ts`.
   - [ ] R31c R42-N1: the one aboard transports under way between home ports, given a land order: told it takes it at
     the port, and not taken abroad untold. AT: Britain 15101, R41-B1's case, 270 and 271 onto the Midlands while
     270's ship sails to Plymouth: 270 does not land at Caen untold.

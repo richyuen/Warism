@@ -30,6 +30,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   aboard takes no order, and ordered onto the Channel they stood there with it for weeks. The AI's orders
   (no nation named) are not checked. `convoyFleetOrderRefused1938.test.ts` (red without: it sailed).
   Player orders only: pin unmoved.
+- **R31b** (R42-N2). A port bombed shut while a division marched to its convoy there: the division was
+  refused at the port (`PortShut`, R21b) and the convoy, nobody else to wait for, sailed with the one aboard
+  alone (Britain 15101: 270 at Calais h99, then lost). Now a convoy whose port is shut while it loads is
+  over: those aboard are told `PortShut` and go ashore at the port, those bound are told (`endConvoy`). The
+  player orders them again (another port). `convoyPortShut1938.test.ts` (red without); R21b's spec green.
+  Player convoys only: pin unmoved.
 
 ### ADR-827 · 2026-11-05 · accepted — Show the landing while choosing it (the user's decision)
 

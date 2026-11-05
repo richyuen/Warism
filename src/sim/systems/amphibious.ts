@@ -869,6 +869,14 @@ function convoySystem(world: World): void {
         endConvoy(world, fleet, RejectReason.Neutral);
         continue;
       }
+      // Its port bombed shut while it loads (ROADMAP R31b; critic run 42, R42-N2: the one marching to it was
+      // refused there, `PortShut`, and the convoy sailed with the one aboard alone, lost): it is over, those
+      // aboard go ashore at the port and are told, as are those bound for it.
+      if (portShut(world, port)) {
+        for (const [id, e] of [...world.embarked].sort((a, b) => a[0] - b[0])) if (e.fleet === fleet) world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.PortShut, NaN);
+        endConvoy(world, fleet, RejectReason.PortShut);
+        continue;
+      }
       const room = transportRoom(world, fleet) - aboard(world, fleet);
       // Another convoy at its port for its landing still to load (ROADMAP R21e: called, or waiting
       // for those bound for it): it waits, and they sail together.
