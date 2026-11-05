@@ -1,0 +1,8 @@
+npx tsx critic/scripts/c31_headless.ts 7019 20 critic/c42_headless_7019.json 20 critic/c42_seed7019_y20.bin > critic/c42_headless_7019.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c42_wd_3517.json > critic/c42_wd_3517.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 11071 2190 24 critic/c42_wd_11071.json > critic/c42_wd_11071.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 14011 2190 24 critic/c42_wd_14011.json > critic/c42_wd_14011.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 15013 2190 24 critic/c42_wd_15013.json > critic/c42_wd_15013.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 16013 scenario 400 60,200,350 20 --heroes > critic/c42_diploinv_16013s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 16019 random 400 60,200,350 20 > critic/c42_diploinv_16019r.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 16013 3650 --heroes --rules heroes,navy > critic/c42_wi_16013_h10_hn.log 2>&1

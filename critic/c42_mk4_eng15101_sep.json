@@ -1,0 +1,348 @@
+{
+ "seed": 15101,
+ "tag": "eng15101_sep",
+ "steps": [
+  {
+   "h": 69,
+   "st": "270:toPort/Plymouth@1017,280.8 271:toPort/Plymouth@1017.2,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 75,
+   "st": "270:toPort/Plymouth@1016.4,280.9 271:toPort/Plymouth@1016.6,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 81,
+   "st": "270:toPort/Plymouth@1015.8,280.6 271:toPort/Plymouth@1016,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 87,
+   "st": "270:toPort/Plymouth@1015.3,280.5 271:toPort/Plymouth@1015.4,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 93,
+   "st": "270:toPort/Plymouth@1014.9,280.5 271:toPort/Plymouth@1014.9,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 99,
+   "st": "270:toPort/Plymouth@1014.5,280.5 271:toPort/Plymouth@1014.3,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 105,
+   "st": "270:toPort/Plymouth@1013.9,280.5 271:toPort/Plymouth@1013.7,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 111,
+   "st": "270:toPort/Plymouth@1013.3,280.5 271:toPort/Plymouth@1013.1,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 117,
+   "st": "270:toPort/Plymouth@1012.8,280.5 271:toPort/Plymouth@1012.5,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 123,
+   "st": "270:toPort/Plymouth@1012.2,280.5 271:toPort/Plymouth@1011.9,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 129,
+   "st": "270:toPort/Plymouth@1011.6,280.5 271:toPort/Plymouth@1011.3,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 135,
+   "st": "270:toPort/Plymouth@1011,280.5 271:toPort/Plymouth@1010.8,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 141,
+   "st": "270:toPort/Plymouth@1010.4,280.5 271:toPort/Plymouth@1010.2,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 147,
+   "st": "270:toPort/Plymouth@1009.8,280.5 271:toPort/Plymouth@1009.6,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 153,
+   "st": "270:toPort/Plymouth@1009.3,280.5 271:toPort/Plymouth@1009,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 159,
+   "st": "270:toPort/Plymouth@1008.7,280.5 271:toPort/Plymouth@1008.4,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 165,
+   "st": "270:toPort/Plymouth@1008.1,280.5 271:toPort/Plymouth@1007.8,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 171,
+   "st": "270:toPort/Plymouth@1007.5,280.5 271:toPort/Plymouth@1007.2,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 177,
+   "st": "270:toPort/Plymouth@1006.9,280.5 271:toPort/Plymouth@1006.7,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 183,
+   "st": "270:toPort/Plymouth@1006.3,280.5 271:toPort/Plymouth@1006.1,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 189,
+   "st": "270:toPort/Plymouth@1005.8,280.5 271:toPort/Plymouth@1005.5,278.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 195,
+   "st": "270:toPort/Plymouth@1005.2,280.5 271:toPort/Plymouth@1005.1,278.9 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 201,
+   "st": "270:toPort/Plymouth@1004.6,280.5 271:toPort/Plymouth@1004.7,279.3 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 207,
+   "st": "270:toPort/Plymouth@1004,280.5 271:toPort/Plymouth@1004.4,279.6 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 213,
+   "st": "270:toPort/Plymouth@1003.5,280.5 271:toPort/Plymouth@1004,280 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 219,
+   "st": "270:toPort/Plymouth@1003.1,280.9 271:toPort/Plymouth@1003.6,280.4 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 225,
+   "st": "270:toPort/Plymouth@1002.7,281.3 271:toPort/Plymouth@1003.2,280.8 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 231,
+   "st": "270:toPort/Plymouth@1002.3,281.7 271:toPort/Plymouth@1002.9,281.1 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 237,
+   "st": "270:toPort/Plymouth@1002,282 271:toPort/Plymouth@1002.5,281.5 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 243,
+   "st": "270:toPort/Plymouth@1001.6,282.4 271:toPort/Plymouth@1002.1,281.9 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 249,
+   "st": "270:toPort/Plymouth@1001.2,282.8 271:toPort/Plymouth@1001.8,282.2 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 255,
+   "st": "270:toPort/Plymouth@1000.8,283.2 271:toPort/Plymouth@1001.4,282.6 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 261,
+   "st": "270:aboard/Plymouth@999.5,284.5 271:toPort/Plymouth@1001,283 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 267,
+   "st": "270:aboard/Plymouth@999.5,284.5 271:toPort/Plymouth@1000.6,283.4 276:aboard/Plymouth@999.5,284.5"
+  },
+  {
+   "h": 273,
+   "st": "270:atSea@1002.9,285.5 271:atSea@1003.9,285.5 276:atSea@1002.9,285.5"
+  },
+  {
+   "h": 279,
+   "st": "270:atSea@1010.2,286.5 271:atSea@1011.2,286.5 276:atSea@1010.2,286.5"
+  },
+  {
+   "h": 285,
+   "st": "270:atSea@1017.6,287.5 271:atSea@1018.5,287.5 276:atSea@1017.6,287.5"
+  },
+  {
+   "h": 291,
+   "st": "270:landed@1021.5,291.5 271:landed@1021.3,291.3 276:landed@1021.7,291.7"
+  }
+ ],
+ "panels": [
+  {
+   "h": 69,
+   "id": 270,
+   "status": "Marching to Plymouth to board transports",
+   "wait": null,
+   "notice": "Infantry division 270: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 69,
+   "id": 271,
+   "status": "Marching to Plymouth to board transports",
+   "wait": null,
+   "notice": null
+  },
+  {
+   "h": 69,
+   "id": 276,
+   "status": "Aboard at Plymouth, waiting for the rest of the landing",
+   "wait": "1 of 3 aboard; the last 9 days from the port",
+   "notice": null
+  },
+  {
+   "h": 75,
+   "id": 270,
+   "status": "Marching to Plymouth to board transports",
+   "wait": null,
+   "notice": "Infantry division 270: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 75,
+   "id": 271,
+   "status": "Marching to Plymouth to board transports",
+   "wait": null,
+   "notice": null
+  },
+  {
+   "h": 75,
+   "id": 276,
+   "status": "Aboard at Plymouth, waiting for the rest of the landing",
+   "wait": "1 of 3 aboard; the last 9 days from the port",
+   "notice": null
+  },
+  {
+   "h": 123,
+   "id": 270,
+   "status": "Marching to Plymouth to board transports",
+   "wait": null,
+   "notice": "Infantry division 270: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  },
+  {
+   "h": 123,
+   "id": 271,
+   "status": "Marching to Plymouth to board transports",
+   "wait": null,
+   "notice": null
+  },
+  {
+   "h": 123,
+   "id": 276,
+   "status": "Aboard at Plymouth, waiting for the rest of the landing",
+   "wait": "1 of 3 aboard; the last 7 days from the port",
+   "notice": null
+  }
+ ],
+ "events": [],
+ "ids": [
+  270,
+  271,
+  276
+ ],
+ "firstTip": "Calais\nFrance\nUnrest 0\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+ "orderTick": 64,
+ "aboardAt": 63,
+ "before": [
+  {
+   "id": 270,
+   "alive": true,
+   "v": "aboard",
+   "port": "Portsmouth",
+   "p": [
+    1019.5,
+    282.5
+   ]
+  },
+  {
+   "id": 271,
+   "alive": true,
+   "v": "toPort",
+   "port": "Portsmouth",
+   "p": [
+    1017.5,
+    278.7
+   ]
+  },
+  {
+   "id": 276,
+   "alive": true,
+   "v": null,
+   "port": null,
+   "p": [
+    1002.5,
+    281.5
+   ]
+  }
+ ],
+ "freshTip": "France\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+ "tip270": "France\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+ "tip271": "France\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+ "after": [
+  {
+   "id": 270,
+   "alive": true,
+   "v": "toPort",
+   "port": "Plymouth",
+   "p": [
+    1017.5,
+    280.5
+   ]
+  },
+  {
+   "id": 271,
+   "alive": true,
+   "v": "toPort",
+   "port": "Plymouth",
+   "p": [
+    1017.5,
+    278.7
+   ]
+  },
+  {
+   "id": 276,
+   "alive": true,
+   "v": "waiting",
+   "port": "Plymouth",
+   "p": [
+    1002.5,
+    281.5
+   ]
+  }
+ ],
+ "day3Shot": "critic/shots/c42mk4_eng15101_sep_day3.png",
+ "firstLandShot": {
+  "h": 291,
+  "shot": "critic/shots/c42mk4_eng15101_sep_firstland.png"
+ },
+ "landed": {
+  "270": {
+   "h": 291,
+   "p": [
+    1021.5,
+    291.5
+   ]
+  },
+  "271": {
+   "h": 291,
+   "p": [
+    1021.3,
+    291.3
+   ]
+  },
+  "276": {
+   "h": 291,
+   "p": [
+    1021.7,
+    291.7
+   ]
+  }
+ },
+ "endH": 291,
+ "news": [
+  {
+   "kind": "leftLanding",
+   "id": 270,
+   "nation": 20,
+   "reason": 0,
+   "x": 1017.5,
+   "y": 280.5,
+   "tick": 64,
+   "at": 64
+  }
+ ],
+ "rows": [
+  [
+   "leftLanding",
+   "Infantry division 270: it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with them."
+  ]
+ ],
+ "endShot": "critic/shots/c42mk4_eng15101_sep_end.png",
+ "errors": []
+}

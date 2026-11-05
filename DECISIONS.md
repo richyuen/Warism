@@ -7,6 +7,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-828 · 2026-11-05 · proposed — The naval bar after ten rounds (the user's decision)
+
+- **Context.** Naval has scored 7 against its bar of 8 in every critic run from 33 to 42. Ten rounds (R21–R30,
+  with ADR-827's marker and fuzz between) fixed what each run blocked on; each fix, or the critic's next probe of
+  the same feature (the player's landing over the sea), found the next case. Run 42 (focused, on `1eb4bf85`) has
+  no blocking issue, and still names six non-blocking ones for naval: R42-N1 (a land order refused while the one
+  aboard ferries between home ports, then it lands abroad untold), R42-N2 (a port bombed shut: its convoy sails
+  with the one aboard alone), R42-N3 (a fleet order to a loading convoy's transports strands the one aboard),
+  R41-N1 (a bound division walks to another port), R40-N1 (one re-sent alone sails at once), R37-N2 (a loaded
+  convoy waits for any later order to the same coast). PROMPT's RELEASES have no step for "no blocking issue, a
+  score under its bar"; a release needs every score at its bar.
+- **Proposed.** One of: (1) go on as now: each named issue a ROADMAP item, the critic again, until it gives 8;
+  (2) a release with naval at 7, its open issues listed in the CHANGELOG; (3) score naval against a fixed list of
+  cases agreed now (a change of the bars, ADR-804): the landing cases R21–R30 fixed, as tests, plus these six.
+- **Meanwhile.** R31 takes R42-N3, R42-N2 and R42-N1 (a division stranded at sea, one lost alone, one sent abroad
+  untold: bugs whatever the bar), and the next critic run is full (a clean focused run is followed by one).
+- **Status.** Proposed, for the user.
+
 ### ADR-827 · 2026-11-05 · accepted — Show the landing while choosing it (the user's decision)
 
 - **Context.** Critic runs 33–38 each found the next edge of one feature, the player's landing over the

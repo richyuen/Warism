@@ -1423,3 +1423,12 @@
   refused, Fuzhou h478); its panel "Aboard, sailing to {port} to load the rest of the landing". The join tests read
   refusals from the order news. Landing, convoy, sea, server tests green (50 files); pin unmoved.
 - R30 done. **Next:** critic run 42.
+
+## 2026-11-05 — Critic run 42 (focused) on 1eb4bf85: no blocking issue; naval 7 (bar 8); R31 filed, ADR-828 proposed
+- Rescored: UI 7, performance 7, stability 7, naval 7 (bar 8); the rest carried (7 map, diplomacy, emergent, god
+  mode, editor, stats; 8 semantic zoom, tanks, aircraft, AI nukes). No blocking issue: R41-B1, R41-N2, R41-N3 and
+  R40-N1's re-click fixed by real click. The next run is full (a clean focused run is followed by one).
+- Naval held at 7 by six non-blocking issues (R42-N1, N2, N3 new; R41-N1, R40-N1, R37-N2). Ten rounds at 7: ADR-828
+  proposes the bar to the user (go on, release at 7, or a fixed list of cases). Meanwhile R31 takes the three that
+  strand or lose a division (R42-N3, N2, N1).
+- **Next:** R31a.

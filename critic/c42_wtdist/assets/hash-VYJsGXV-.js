@@ -1,0 +1,2 @@
+function e(e,t){let n=Math.imul(e^Math.imul(t+1,2654435761),2246822507);return n^=n>>>15,n=Math.imul(n,3266489909),n^=n>>>13,n>>>0}function t(e){return[(e&65535)/32768-1,(e>>>16)/32768-1]}export{t as n,e as t};
+//# sourceMappingURL=hash-VYJsGXV-.js.map

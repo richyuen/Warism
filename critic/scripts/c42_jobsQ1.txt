@@ -1,0 +1,13 @@
+npx tsx critic/scripts/c31_headless.ts 7019 20 critic/c42_headless_7019.json 20 critic/c42_seed7019_y20.bin > critic/c42_headless_7019.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c42_wd_3517.json > critic/c42_wd_3517.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 11071 2190 24 critic/c42_wd_11071.json > critic/c42_wd_11071.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 14011 2190 24 critic/c42_wd_14011.json > critic/c42_wd_14011.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 15013 2190 24 critic/c42_wd_15013.json > critic/c42_wd_15013.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 15013 scenario 400 60,200,350 20 --heroes > critic/c42_diploinv_15013s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 15017 random 400 60,200,350 20 > critic/c42_diploinv_15017r.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 15013 3650 --heroes --rules heroes,navy > critic/c42_wi_15013_h10_hn.log 2>&1
+cd /c/Git/Warism/critic/wt && NOW=1 T0=1 EXTRA=1 ORDERS='[{"at":"aboard","plus":2,"who":[2],"x":1703.5,"y":445.5},{"at":"aboard","plus":2,"who":[0,1],"x":1703.5,"y":445.5},{"at":"aboard","plus":26,"who":[0,1],"x":1715.5,"y":413.5}]' npx tsx critic/scripts/c40_ll3.ts 3517 2 60 ../c42_wt_steal_recall_d1.json > ../c42_wt_steal_recall_d1.log 2>&1
+cd /c/Git/Warism/critic/wt && NOW=1 T0=1 EXTRA=1 ORDERS='[{"at":"aboard","plus":2,"who":[2],"x":1703.5,"y":445.5},{"at":"aboard","plus":2,"who":[0,1],"x":1703.5,"y":445.5},{"at":"aboard","plus":4,"who":[0,1],"x":1715.5,"y":413.5}]' npx tsx critic/scripts/c40_ll3.ts 3517 2 60 ../c42_wt_steal_recall_h4.json > ../c42_wt_steal_recall_h4.log 2>&1
+cd /c/Git/Warism/critic/wt && NOW=1 T0=1 EXTRA=1 ORDERS='[{"at":"aboard","plus":2,"who":[2],"x":1703.5,"y":445.5},{"at":"aboard","plus":2,"who":[0,1],"x":1703.5,"y":445.5},{"at":"aboard","plus":8,"who":[0,1],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c40_ll3.ts 3517 2 60 ../c42_wt_steal_reclick.json > ../c42_wt_steal_reclick.log 2>&1
+cd /c/Git/Warism/critic/wt && NOW=1 T0=1 EXTRA=1 ORDERS='[{"at":"aboard","plus":2,"who":[2],"x":1703.5,"y":445.5},{"at":"aboard","plus":2,"who":[0,1],"x":1703.5,"y":445.5},{"at":"aboard","plus":30,"who":[0,1,2],"x":1712.5,"y":416.5}]' npx tsx critic/scripts/c40_ll3.ts 3517 2 60 ../c42_wt_steal_then_sw3.json > ../c42_wt_steal_then_sw3.log 2>&1
+cd /c/Git/Warism/critic/wt && NOW=1 T0=1 EXTRA=2 ORDERS='[{"at":"aboard","plus":2,"who":[2,3],"x":1703.5,"y":445.5},{"at":"aboard","plus":2,"who":[0,1],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c40_ll3.ts 3517 2 60 ../c42_wt_steal_fresh2.json > ../c42_wt_steal_fresh2.log 2>&1

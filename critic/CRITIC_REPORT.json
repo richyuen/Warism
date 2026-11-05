@@ -1,5 +1,5 @@
 {
-  "commit": "77d37526eef9a0a7c244b62310669146e4305ce0",
+  "commit": "1eb4bf8531c271a3c711b10ff2aa274cd68c4cfc",
   "mode": "focused",
   "scores": {
     "mapVisuals": 7,
@@ -17,13 +17,6 @@
     "aircraft": 8,
     "aiNukes": 8
   },
-  "blocking": [
-    {
-      "id": "R41-B1",
-      "title": "R29b's ship sails the one aboard to the new landing's port but never joins the convoy loading there: that convoy sails at once and the division that was there first lands alone and is destroyed (regression from 76b88197)",
-      "evidence": "Britain at war with France, seed 15101 (7019 the same), by real clicks on the HEAD page: divisions 270 and 271 clicked onto Calais; 270 boards 1068 at Portsmouth (t63); paused at t64 the fresh tank brigade 276 clicked onto Caen, then 270+271 clicked there. 270's group sails Portsmouth->Plymouth with it aboard and waits for 271 marching; 276's group sails at once: 276 lands alone h87 and is destroyed h237, 270/271 land h291; no order news; 270's panel says '1 of 2 aboard' (critic/c41_mk4_eng15101_p270.json, critic/shots/c41mk4_eng15101_p270_firstland.png, critic/c41_mk4_eng7019_p270.json). On 76b88197 the same clicks land all three h291 (critic/c41_mk4_old_eng15101_p270.json; per-order replica critic/c41_gwtper_eng_15101_pick270_271.json). Headless with ascending ids as player.ts sends: 276 h84 alone, destroyed h233 (critic/c41_g_eng_15101_pick270_271.json). Mechanism trace: critic/c41_g_eng_15101_hourly.json (1068 gets convoyPort Plymouth, 271 stays bound for 1068, nobody bound for 276's 1072, convoySystem sails it).",
-      "fix": "A group sailAboard sends to a port where a convoy for the same target loads is part of that convoy: the convoy waits for it (and those still bound for it) as for a division still to come, or the leavers still marching are bound to the port's convoy rather than the ship under way. AT through player.click (ids ascending): Britain 15101, 270/271 + 276 to Caen as above, all three land within a day, 276 never alone; R29b's Japan cases unchanged."
-    }
-  ],
-  "timestamp": "2026-11-05T20:27:37Z"
+  "blocking": [],
+  "timestamp": "2026-11-05T21:46:17Z"
 }

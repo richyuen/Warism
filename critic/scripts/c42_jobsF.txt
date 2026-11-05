@@ -1,0 +1,4 @@
+cd /c/Git/Warism && PICK=270,271 ASC=1 FLEETMOVE=2,1010.5,288.5 npx tsx critic/scripts/c42_gen.ts 15101 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 2 25 critic/c42_f_redirect.json > critic/c42_f_redirect.log 2>&1
+cd /c/Git/Warism && PICK=270,271 ASC=1 NOREDIRECT=1 FLEETBEFORE=1 FLEETMOVE=2,1010.5,288.5 npx tsx critic/scripts/c42_gen.ts 15101 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 2 25 critic/c42_f_control.json > critic/c42_f_control.log 2>&1
+cd /c/Git/Warism/critic/wt && PICK=270,271 ASC=1 FLEETMOVE=2,1010.5,288.5 npx tsx critic/scripts/c42_gen.ts 15101 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 2 25 ../c42_fwt_redirect.json > ../c42_fwt_redirect.log 2>&1
+cd /c/Git/Warism/critic/wt && PICK=270,271 ASC=1 NOREDIRECT=1 FLEETBEFORE=1 FLEETMOVE=2,1010.5,288.5 npx tsx critic/scripts/c42_gen.ts 15101 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 2 25 ../c42_fwt_control.json > ../c42_fwt_control.log 2>&1

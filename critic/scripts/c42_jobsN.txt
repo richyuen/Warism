@@ -1,0 +1,12 @@
+cd /c/Git/Warism && ASC=1 npx tsx critic/scripts/c42_gen.ts 16101 GER ENG 10,53.55 1.3,52.6 -2.1,57.15 10.1,54.3 2 50 critic/c42_n_ger_16101.json > critic/c42_n_ger_16101.log 2>&1
+cd /c/Git/Warism && ASC=1 npx tsx critic/scripts/c42_gen.ts 16103 GER ENG 10,53.55 1.3,52.6 -2.1,57.15 10.1,54.3 2 50 critic/c42_n_ger_16103.json > critic/c42_n_ger_16103.log 2>&1
+cd /c/Git/Warism && ASC=1 npx tsx critic/scripts/c42_gen.ts 16107 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 3 50 critic/c42_n_eng3_16107.json > critic/c42_n_eng3_16107.log 2>&1
+cd /c/Git/Warism && ASC=1 npx tsx critic/scripts/c42_gen.ts 16111 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 2 50 critic/c42_n_eng_16111.json > critic/c42_n_eng_16111.log 2>&1
+cd /c/Git/Warism && ASC=1 npx tsx critic/scripts/c42_gen.ts 16113 ITA GRE 14.25,40.85 19.9,39.6 22.4,38.25 17.2,40.47 2 50 critic/c42_n_ita_16113.json > critic/c42_n_ita_16113.log 2>&1
+cd /c/Git/Warism && ASC=1 RECALL=30 npx tsx critic/scripts/c42_gen.ts 16117 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 2 50 critic/c42_n_eng_16117_recall30.json > critic/c42_n_eng_16117_recall30.log 2>&1
+cd /c/Git/Warism/critic/wt && ASC=1 npx tsx critic/scripts/c42_gen.ts 16101 GER ENG 10,53.55 1.3,52.6 -2.1,57.15 10.1,54.3 2 50 ../c42_nwt_ger_16101.json > ../c42_nwt_ger_16101.log 2>&1
+cd /c/Git/Warism/critic/wt && ASC=1 npx tsx critic/scripts/c42_gen.ts 16103 GER ENG 10,53.55 1.3,52.6 -2.1,57.15 10.1,54.3 2 50 ../c42_nwt_ger_16103.json > ../c42_nwt_ger_16103.log 2>&1
+cd /c/Git/Warism/critic/wt && ASC=1 npx tsx critic/scripts/c42_gen.ts 16107 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 3 50 ../c42_nwt_eng3_16107.json > ../c42_nwt_eng3_16107.log 2>&1
+cd /c/Git/Warism/critic/wt && ASC=1 npx tsx critic/scripts/c42_gen.ts 16111 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 2 50 ../c42_nwt_eng_16111.json > ../c42_nwt_eng_16111.log 2>&1
+cd /c/Git/Warism/critic/wt && ASC=1 npx tsx critic/scripts/c42_gen.ts 16113 ITA GRE 14.25,40.85 19.9,39.6 22.4,38.25 17.2,40.47 2 50 ../c42_nwt_ita_16113.json > ../c42_nwt_ita_16113.log 2>&1
+cd /c/Git/Warism/critic/wt && ASC=1 RECALL=30 npx tsx critic/scripts/c42_gen.ts 16117 ENG FRA -0.12,51.5 1.86,50.95 -0.37,49.3 -4.14,50.37 2 50 ../c42_nwt_eng_16117_recall30.json > ../c42_nwt_eng_16117_recall30.log 2>&1

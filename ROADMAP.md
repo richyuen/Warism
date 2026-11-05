@@ -391,7 +391,7 @@ Rules:
     with it (`sailAboard`). Same hour: h792/792/794; an hour before: h794/794/796; never ashore. Red without (walked,
     h1292). `landingJoinsAboard1938.test.ts`. Pin unmoved.
   R29 done; then the critic again (run 41).
-- [ ] R30 **The one aboard sails with the convoy it joins** (critic run 41, focused, on `77d37526`: R41-B1 blocking;
+- [x] R30 **The one aboard sails with the convoy it joins** (critic run 41, focused, on `77d37526`: R41-B1 blocking;
   naval 7, bar 8). Then the critic again.
   - [x] R30a R41-B1: R29b's transports, sailing with the one aboard to the port where a convoy for its new landing
     loads, are not that convoy's mate: it sails once its own are aboard, its first lands alone and dies. Britain at
@@ -409,3 +409,14 @@ Rules:
   - [x] R30c (R41-N3) Its panel while its transports sail to the port: "Aboard, sailing to {port} to load the rest of
     the landing" (`toPortAboard`), not "At sea, bound for its landing". Red without.
   R30 done; then the critic again (run 42).
+- [ ] R31 **A convoy's transports and the one aboard: no one stranded or sent off alone** (critic run 42, focused, on
+  `1eb4bf85`: no blocking issue; naval 7, bar 8, for six non-blocking ones; ADR-828 proposed on the bar). The three
+  that strand or lose a division. Each its own commit; then the critic, full.
+  - [ ] R31a R42-N3: a player's fleet order to the transports of a convoy (loading, or under way to its port) is
+    refused, with why; the one aboard is never left at sea. AT: Britain 15101, 270 aboard 1068 at Portsmouth, 1068
+    ordered onto the Channel: refused, still aboard at Portsmouth; the landing goes on.
+  - [ ] R31b R42-N2: the division bound for a convoy refused `PortShut` at its port: the convoy does not sail with the
+    one aboard alone for that. AT: Britain 16117, the recall case: 274 does not land alone.
+  - [ ] R31c R42-N1: the one aboard transports under way between home ports, given a land order: told it takes it at
+    the port, and not taken abroad untold. AT: Britain 15101, R41-B1's case, 270 and 271 onto the Midlands while
+    270's ship sails to Plymouth: 270 does not land at Caen untold.

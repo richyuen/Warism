@@ -1,0 +1,32 @@
+{
+ "id": 364,
+ "before": {
+  "mark": null,
+  "tip": null,
+  "shot": "critic/shots/c42tm_before.png"
+ },
+ "after": {
+  "mark": null,
+  "f": {
+   "state": "atSea",
+   "port": null
+  },
+  "shot": "critic/shots/c42tm_after.png"
+ },
+ "errors": [],
+ "perfNoSel": {
+  "asksPerS": 0,
+  "ticksPerS": 222.5321277011175,
+  "fps": 59.481858033317565
+ },
+ "perfSel": {
+  "asksPerS": 0.09996401295532117,
+  "ticksPerS": 249.71010436239231,
+  "fps": 59.92842576671505
+ },
+ "perfNoSel2": {
+  "asksPerS": 0,
+  "ticksPerS": 382.81433504744496,
+  "fps": 59.82098682138272
+ }
+}
