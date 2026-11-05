@@ -1415,4 +1415,11 @@
 - A group carrying and under way to its own convoy's port is still to load: the convoys at that port for its landing
   wait for it. Britain (15101, 7019): the three land h288/288/289 (red: 276 alone h84, destroyed). R29b's Japan cases
   unchanged; landing, convoy, sea and server tests green (49 files); pin unmoved.
+- **Next:** R30b, R30c (the advisor: run 41's naval clause lists them; one state of R29b's, three holes).
+
+## 2026-11-05 — R30b, R30c: the one aboard under way to its port takes an order as at that port
+- `sailingToPort` (R29b's state) in `aboardAtPort`, `ownLanding`, `stillLoading`: a click onto its landing changes
+  nothing (red: refused at sea); the redirect undone four hours later lands both at Shanghai h766/772 (red: 364
+  refused, Fuzhou h478); its panel "Aboard, sailing to {port} to load the rest of the landing". The join tests read
+  refusals from the order news. Landing, convoy, sea, server tests green (50 files); pin unmoved.
 - R30 done. **Next:** critic run 42.

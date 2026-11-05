@@ -71,6 +71,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
   numbers); the fuzz checks a whole click is refused nothing, a landing loads at one port, and every
   convoy has one target (red without: the four re-clicked south-west). Player convoys only: pin
   unmoved.
+- **R30b, R30c** (critic run 41, R41-N2, R40-N1's re-click, R41-N3; the advisor: one state of R29b's
+  with a hole wherever a rule asked `loading`). The one aboard transports under way to their convoy's
+  port (`sailingToPort`) was at sea: a click onto the landing it has was refused `Aboard` (SPEC: it
+  "changes nothing"), and the redirect undone four hours later split the landing (364 refused, landed
+  at Fuzhou h478; 365 at Shanghai h772; on 76b88197 both back at h656). Now it takes an order as at
+  that port (`aboardAtPort`, `ownLanding`): the same landing changes nothing; another over the sea
+  from that port keeps it on its transports, which load for that one there (`assignTransports`' first
+  choice, `sailAboard` on as it goes); anything else is refused as before, not put ashore at a port it
+  is not at. After: the recall lands both at Shanghai h766/772; the re-click refuses nothing. Its
+  panel: "Aboard, sailing to {port} to load the rest of the landing" (`toPortAboard`; was "At sea,
+  bound for its landing"). `landingJoinsAboard1938.test.ts` (red without: refused, Fuzhou, "atSea");
+  refusals there and in `landingJoinsAboardMates1938.test.ts` now read from the order news (a refusal
+  at the click was not seen by the step's events). **Not done:** R41-N1 (the bound one walks to the
+  other port; it stood about as far from both) and R37-N2. Player convoys only: pin unmoved.
 - **R30a** (critic run 41, R41-B1; a regression of R29b). R29b's transports, under way to the port
   where a convoy for the new landing loads with the one aboard, were not still to load (`stillLoading`
   read any group under way as gone), so the convoy at that port sailed once its own were aboard.

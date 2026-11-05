@@ -72,7 +72,7 @@ import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroup
 import { isDayStart } from '../../shared/calendar';
 import { isLand } from '../../shared/terrain';
 import { Domain, navOf, PlayerOrderKind, portSeaOf, type TemplateRule, type World } from '../world';
-import { ashoreAtPort, assignTransports, carrying, escortConvoy, landingHeld, landingOf, near, neutralLanding, sailAboard, sameLanding, transportsPort, tryLanding } from './amphibious';
+import { ashoreAtPort, assignTransports, carrying, escortConvoy, landingHeld, landingOf, near, neutralLanding, sailAboard, sailingToPort, sameLanding, transportsPort, tryLanding } from './amphibious';
 import { AT_PORT_CELLS } from './navalCombat';
 import { noteMove } from './elements';
 import { spawnPoint } from './production';
@@ -484,7 +484,11 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
   // Aboard transports it takes no order (PLAN 4.5a), but aboard a player's convoy still loading at
   // its port, where it goes ashore and takes it (ROADMAP R22b); refused, it is aboard again (R23a).
   const ship = world.embarked.get(id)!.fleet;
-  const back = ashoreAtPort(world, id);
+  // Under way to its port (R29b's), only an order over the sea from there, which its transports keep
+  // (ROADMAP R30b): ashore it would stand at a port it is not at.
+  const sailing = sailingToPort(world, ship);
+  const port = world.convoyPort.get(ship);
+  const back = sailing && !(call && port !== undefined && overSeaFrom(world, world.ports[port]!.cell, x, y)) ? null : ashoreAtPort(world, id);
   if (back === null) {
     world.seaBound.delete(id);
     world.seaFetch.delete(id);
@@ -553,7 +557,14 @@ function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage
     world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.Neutral, NaN);
     return false;
   }
+  // At sea on its way to its port (R29b's; ROADMAP R30b): its own transports keep it, or it is refused.
+  const atSea = aboard !== 0 && sailingToPort(world, aboard);
   const a = assignTransports(world, id, target, aboard);
+  if (atSea) {
+    if (a && sailAboard(world, id, aboard, a.port, target)) return true;
+    world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.Aboard, NaN);
+    return false;
+  }
   // Gone ashore from transports loading for another landing (ROADMAP R24d): those are why.
   const none = aboard !== 0 ? RejectReason.Loading : RejectReason.NoTransports;
   if (!a) return order(world, id, x, y, pass, 0, transportsPort(world, id, false) >= 0 ? none : RejectReason.NoPort);

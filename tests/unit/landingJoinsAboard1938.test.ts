@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Command } from '../../src/shared/commands';
+import type { FromWorker } from '../../src/shared/protocol';
 import { EventKind } from '../../src/shared/events';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
@@ -25,15 +26,20 @@ const SHANGHAI = cellOf(121.47, 31.23, W, H) as [number, number];
 const TOKYO = cellOf(139.69, 35.69, W, H) as [number, number];
 const FUZHOU: [number, number] = [1703.5, 445.5];
 
-function run(gap: number): { landed: Map<number, number>; walked: boolean; refused: number[]; ids: number[] } {
-  const s = new SimServer(() => {});
+type Then = 'recall' | 'reclick' | null;
+
+function run(gap: number, then: Then = null): { landed: Map<number, number>; walked: boolean; refused: number[]; ids: number[]; panel: string | undefined; where: Map<number, number> } {
+  // Refusals as the page is told them (`orderNews`): at the click, applied at once, as well as later.
+  const refused: number[] = [];
+  const s = new SimServer((m: FromWorker) => {
+    if (m.type === 'orderNews' && m.news.kind === 'refused') refused.push(m.news.id);
+  });
   s.handle({ type: 'init', reqId: 1, init: { scenario: '1938', seed: 3517, assets: assets1938(W) } }, 0);
   s.handle({ type: 'cmd', cmd: { kind: 'setPlayer', nation: JAP } }, 1);
   const w = s.sim!.world;
   if (!w.wars.atWar(JAP, CHI)) s.handle({ type: 'cmd', cmd: { kind: 'declareWar', attacker: JAP, defender: CHI }, now: true }, 1);
   const drain = (x: World): void => (s as unknown as { drainEvents(w: World): void }).drainEvents(x);
   const landed = new Map<number, number>();
-  const refused: number[] = [];
   let boarded = false;
   let ids: number[] = [];
   const step = (): void =>
@@ -42,7 +48,6 @@ function run(gap: number): { landed: Map<number, number>; walked: boolean; refus
       for (let i = 0; i < ev.length; i += 6) {
         if (!ids.includes(ev[i + 2]!)) continue;
         if (ev[i + 1] === EventKind.FormationLanded) landed.set(ev[i + 2]!, x.tick);
-        if (ev[i + 1] === EventKind.MoveRejected) refused.push(ev[i + 2]!);
         if (ev[i + 1] === EventKind.FormationEmbarked) boarded = true;
       }
       drain(x);
@@ -72,14 +77,23 @@ function run(gap: number): { landed: Map<number, number>; walked: boolean; refus
   click([fresh], ...FUZHOU);
   for (let h = 0; h < gap; h++) step();
   click(pair, ...FUZHOU);
+  // Its panel while its transports sail to the convoy's port (ROADMAP R30c).
+  const panel = (s as unknown as { voyageOf(w: World, id: number): { state: string } | null }).voyageOf(w, first)?.state;
+  // ROADMAP R30b (critic run 41, R41-N2, R40-N1): four hours later the two clicked back onto Shanghai (the
+  // redirect undone), or onto Fuzhou again (the landing it has).
+  if (then !== null) {
+    for (let h = 0; h < 4; h++) step();
+    click(pair, ...(then === 'recall' ? SHANGHAI : FUZHOU));
+  }
   // The one aboard is never ashore before its landing: aboard, not marching to a port (red: it walked ~50 days).
   let walked = false;
   for (let h = 0; h < 24 * 90 && ids.some((id) => !landed.has(id)); h++) {
     if (!landed.has(first) && !w.embarked.has(first)) walked = true;
     step();
   }
-  process.stderr.write(`R29b gap ${gap}: first ${first}, walked ${walked}, refused ${refused}, landed ${[...landed]}\n`);
-  return { landed, walked, refused, ids };
+  const where = new Map(ids.map((id) => [id, Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!)]));
+  process.stderr.write(`R29b gap ${gap} ${then}: first ${first}, panel ${panel}, walked ${walked}, refused ${refused}, landed ${[...landed]}\n`);
+  return { landed, walked, refused, ids, panel, where };
 }
 
 describe('a landing redirected to a convoy loading elsewhere: the one aboard goes on its own transports (ROADMAP R29b)', () => {
@@ -92,6 +106,29 @@ describe('a landing redirected to a convoy loading elsewhere: the one aboard goe
       const at = [...r.landed.values()];
       expect(Math.max(...at) - Math.min(...at), 'together (red: h657 and h1291)').toBeLessThanOrEqual(24);
       expect(Math.max(...at), 'about as soon as the three from a standing start (h976)').toBeLessThanOrEqual(1000);
+      expect(r.panel, 'its panel: aboard, sailing to the port for the rest (red: "At sea, bound for its landing")').toBe('toPortAboard');
     }, 300_000);
   }
+
+  it('the two clicked back onto Shanghai four hours later: none refused, both land at Shanghai together (red: the one aboard refused at sea, lands at Fuzhou)', () => {
+    const r = run(0, 'recall');
+    const pair = r.ids.slice(0, 2);
+    expect(r.refused, 'none refused').toEqual([]);
+    const at = pair.map((id) => r.landed.get(id));
+    expect(at.every((t) => t !== undefined), 'both landed').toBe(true);
+    expect(Math.abs(at[0]! - at[1]!), 'together').toBeLessThanOrEqual(24);
+    const [sx, sy] = [Math.floor(SHANGHAI[0]), Math.floor(SHANGHAI[1])];
+    for (const id of pair) {
+      const cell = r.where.get(id)!;
+      expect(Math.hypot((cell % W) - sx, Math.floor(cell / W) - sy), `${id} at Shanghai`).toBeLessThan(15);
+    }
+  }, 300_000);
+
+  it('the two clicked onto Fuzhou again four hours later: it changes nothing, none refused (red: the one aboard refused at sea)', () => {
+    const r = run(0, 'reclick');
+    expect(r.refused, 'none refused').toEqual([]);
+    expect(r.landed.size, 'all three landed').toBe(3);
+    const at = [...r.landed.values()];
+    expect(Math.max(...at) - Math.min(...at), 'together').toBeLessThanOrEqual(24);
+  }, 300_000);
 });

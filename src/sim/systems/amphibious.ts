@@ -429,6 +429,18 @@ export function loading(world: World, fleet: number): boolean {
 }
 
 /**
+ * Whether group `fleet` of a player's convoy carries a formation and is under way to its own port
+ * (`sailAboard`, ROADMAP R29b): the one aboard its new landing took there, to load the rest. It is
+ * still to load (`stillLoading`, R30a), and the one aboard takes an order as at that port (R30b).
+ */
+export function sailingToPort(world: World, fleet: number): boolean {
+  const port = world.convoyPort.get(fleet);
+  const c = world.formations.cols;
+  if (port === undefined || !world.formations.has(fleet) || c.moving[fleet] !== 1 || !carrying(world, fleet)) return false;
+  return near(world, c.targetCell[fleet]!, portSeaOf(world)[port]!, world.atSize(AT_PORT_CELLS));
+}
+
+/**
  * A formation `id` aboard a player's convoy still loading at its port (ROADMAP R22b, critic run 34,
  * R34-N1) goes ashore there on a new order: at the port's cell, its organisation as it was, no
  * landing (it never left). The convoy waits on for the rest, or is over with nobody aboard or bound
@@ -457,7 +469,9 @@ export function ashoreAtPort(world: World, id: number): (() => void) | null {
  */
 export function aboardAtPort(world: World, id: number): number {
   const e = world.embarked.get(id);
-  if (e === undefined || !loading(world, e.fleet)) return -1;
+  // Or under way to it, R29b's (ROADMAP R30b; critic run 41, R41-N2: refused at sea, a redirect undone
+  // split the landing): as at that port.
+  if (e === undefined || !(loading(world, e.fleet) || sailingToPort(world, e.fleet))) return -1;
   const cell = world.ports[world.convoyPort.get(e.fleet)!]!.cell;
   return world.cells.controller[cell] === world.formations.cols.nation[id] ? cell : -1;
 }
@@ -496,7 +510,7 @@ export function sameLanding(world: World, id: number, x: number, y: number): boo
  */
 function ownLanding(world: World, id: number): { water: number; land: number; goal: number } | null {
   const e = world.embarked.get(id);
-  if (e !== undefined) return loading(world, e.fleet) ? { water: e.water, land: e.land, goal: e.target } : null;
+  if (e !== undefined) return loading(world, e.fleet) || sailingToPort(world, e.fleet) ? { water: e.water, land: e.land, goal: e.target } : null;
   const fetch = world.seaFetch.get(id);
   const bound = world.seaBound.get(id);
   if (fetch === undefined || bound === undefined || !world.convoyPort.has(fetch) || !world.formations.has(fetch)) return null;
@@ -652,6 +666,9 @@ export function assignTransports(world: World, id: number, target: number, ship 
   const here = cellOfPlace(world, id);
   const own = (i: number): boolean => water[i]! >= 0 && world.cells.controller[world.ports[i]!.cell] === nation && comp[world.ports[i]!.cell] === comp[here] && !portShut(world, i);
   const convoys = [...world.convoyPort].filter(([o, p]) => f.has(o) && c.nation[o] === nation && own(p) && convoyTarget(world, o) === target).sort((a, b) => a[0] - b[0]);
+  // The one aboard its own transports under way to their port (R29b's), ordered there (ROADMAP R30b):
+  // they keep it and load for its new landing at that port; held by others or full, none (it is at sea).
+  if (ship !== 0 && sailingToPort(world, ship)) return !heldGroup(world, ship) && transportRoom(world, ship) - aboard(world, ship) - promised(world, ship) >= men ? { port: world.convoyPort.get(ship)!, fleet: ship } : null;
   // The one aboard, its landing now one a convoy loads for at a port (ROADMAP R29b; critic run 40,
   // R40-B1): its own transports, free, take it there, not another convoy's while it walks there and
   // they sail there empty (called for the next of its click).
@@ -716,7 +733,9 @@ export function sailAboard(world: World, id: number, ship: number, port: number,
   const water = portSeaOf(world)[port]!;
   const landing = landingOf(world, target);
   if (!landing || water < 0 || near(world, cellOfPlace(world, ship), water, world.atSize(AT_PORT_CELLS))) return false;
-  if (!orderSail(world, ship, (water % w) + 0.5, Math.floor(water / w) + 0.5)) return false;
+  // Under way there already (ROADMAP R30b): on as it goes.
+  const going = world.convoyPort.get(ship) === port && c.moving[ship] === 1 && near(world, c.targetCell[ship]!, water, world.atSize(AT_PORT_CELLS));
+  if (!going && !orderSail(world, ship, (water % w) + 0.5, Math.floor(water / w) + 0.5)) return false;
   world.embarked.set(id, { fleet: ship, land: landing.land, water: landing.water, target });
   c.moving[id] = 0;
   c.home[id] = 0;
@@ -738,8 +757,7 @@ function stillLoading(world: World, fleet: number): boolean {
   // Under way: to its own port, with the one aboard its new landing took there (`sailAboard`, ROADMAP
   // R30a; critic run 41, R41-B1: the convoy loading there sailed at once, its first ashore alone), it
   // is still to load; to a landing, it is not.
-  const c = world.formations.cols;
-  if (c.moving[fleet] === 1) return near(world, c.targetCell[fleet]!, portSeaOf(world)[world.convoyPort.get(fleet)!]!, world.atSize(AT_PORT_CELLS));
+  if (world.formations.cols.moving[fleet] === 1) return sailingToPort(world, fleet);
   const room = transportRoom(world, fleet) - aboard(world, fleet);
   for (const [id, o] of world.seaFetch) if (o === fleet && world.formations.has(id) && world.formations.cols.strength[id]! <= room) return true;
   return false;

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Command } from '../../src/shared/commands';
+import type { FromWorker } from '../../src/shared/protocol';
 import { EventKind } from '../../src/shared/events';
 import type { World } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
@@ -23,7 +24,11 @@ const CALAIS: [number, number] = [1034.5, 279.5];
 const CAEN: [number, number] = [1021.5, 291.5];
 
 function run(seed: number): { landed: Map<number, number>; refused: number[] } {
-  const s = new SimServer(() => {});
+  // Refusals as the page is told them (`orderNews`): at the click, applied at once, as well as later.
+  const refused: number[] = [];
+  const s = new SimServer((m: FromWorker) => {
+    if (m.type === 'orderNews' && m.news.kind === 'refused') refused.push(m.news.id);
+  });
   s.handle({ type: 'init', reqId: 1, init: { scenario: '1938', seed, assets: assets1938(W) } }, 0);
   s.handle({ type: 'cmd', cmd: { kind: 'setPlayer', nation: ENG } }, 1);
   const w = s.sim!.world;
@@ -34,7 +39,6 @@ function run(seed: number): { landed: Map<number, number>; refused: number[] } {
   const ids = [...pair, fresh];
   for (const id of ids) expect(w.formations.cols.nation[id], `${id} British`).toBe(ENG);
   const landed = new Map<number, number>();
-  const refused: number[] = [];
   let boarded = false;
   const step = (): void =>
     s.sim!.step(1, (x) => {
@@ -42,7 +46,6 @@ function run(seed: number): { landed: Map<number, number>; refused: number[] } {
       for (let i = 0; i < ev.length; i += 6) {
         if (!ids.includes(ev[i + 2]!)) continue;
         if (ev[i + 1] === EventKind.FormationLanded) landed.set(ev[i + 2]!, x.tick);
-        if (ev[i + 1] === EventKind.MoveRejected) refused.push(ev[i + 2]!);
         if (ev[i + 1] === EventKind.FormationEmbarked) boarded = true;
       }
       drain(x);

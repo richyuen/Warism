@@ -607,6 +607,8 @@
   "formation.wait.here": "{n} of {of} aboard; the rest at the port",
   "formation.wait.held": "{n} of {of} aboard; one held up on the way",
   "formation.wait.ships": "{n} of {of} aboard; more transports on their way",
+  "formation.voyage.toPortAboard": "Aboard, sailing to a port to load the rest of the landing",
+  "formation.voyage.toPortAboard.port": "Aboard, sailing to {port} to load the rest of the landing",
   "formation.voyage.atSea": "At sea, bound for its landing",
   "formation.voyage.atSea.port": "At sea, bound for its landing",
   "formation.voyage.landed": "Landed",

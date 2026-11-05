@@ -400,4 +400,12 @@ Rules:
     ascending, applied at once): the three land within a day; R29b's Japan cases unchanged.
     Done: a group carrying and under way to its own convoy's port is still to load (`stillLoading`). Both seeds:
     h288/288/289. `landingJoinsAboardMates1938.test.ts`; red without. R29b's unchanged. Pin unmoved.
+  - [x] R30b (critic run 41, R41-N2 and R40-N1's re-click; the advisor's reading: the naval clause lists them, and
+    run 42 would hold naval at 7 for them) The one aboard R29b's transports under way to their port takes an order
+    as at that port: the same landing changes nothing; another over the sea from there, its transports keep it.
+    AT: the R40-B1 case, the two clicked back onto Shanghai four hours later: none refused, both at Shanghai within
+    a day (red: refused, Fuzhou h478 against Shanghai h772); clicked onto Fuzhou again: none refused.
+    Done: `sailingToPort` in `aboardAtPort` and `ownLanding`; `assignTransports` keeps its own first. Recall h766/772.
+  - [x] R30c (R41-N3) Its panel while its transports sail to the port: "Aboard, sailing to {port} to load the rest of
+    the landing" (`toPortAboard`), not "At sea, bound for its landing". Red without.
   R30 done; then the critic again (run 42).

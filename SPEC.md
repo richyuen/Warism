@@ -1300,7 +1300,11 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   one aboard whose new landing a convoy loads for at another port stays aboard where nobody else holds
   its transports: they sail to that port with it and load the rest there (`sailAboard`, R29b); under
   way to that port they are still to load, and the convoys there for that landing wait for them
-  (`stillLoading`, R30a). With
+  (`stillLoading`, R30a). The one aboard them takes an order as at that port (`sailingToPort`,
+  R30b): to the landing it has, nothing changes; to another landing over the sea from that port, its
+  transports keep it and load for that one there; anything else, or with its transports held by
+  others, is refused `Aboard`. Its panel reads "Aboard, sailing to {port} to load the rest of the
+  landing" (R30c). With
   none free, the one aboard sent over the sea to another landing is refused `Loading` (18, R24d).
   A division aboard or bound that an order takes to another landing is told it leaves its landing
   (`LeftLanding`, the order's news "leftLanding") when another of its nation still has that landing,
