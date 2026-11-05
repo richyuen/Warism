@@ -1395,4 +1395,8 @@
   that port where nobody else holds it, stays aboard, and the group sails there with it (`sailAboard`). Seed 3517,
   the fresh one first, then the two (same hour / an hour before): the three land h792–796 (red: the one aboard
   walks, h1292–1294; before R29a h657 and h1291). Landing, convoy, sea and server tests green (48 files); pin unmoved.
+- Checked (the advisor's question): the second, bound for 1144 at Tokyo, walks to Sasebo from where it stood
+  (about as far as Tokyo); 1144 reaches Tokyo and stays idle; no group sails empty to Sasebo.
+- Filed from run 40: its two blocking issues (PROMPT RELEASES 2), the naval line's bold "Not 8". R40-N1 (one
+  re-sent alone sails at once, "consistent with the rules") and R37-N2 stay non-blocking.
 - R29 done. **Next:** critic run 41.
