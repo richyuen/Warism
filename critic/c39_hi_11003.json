@@ -1,0 +1,203 @@
+{
+ "seed": 11003,
+ "bin": "critic/c37_seed11003_y18.bin",
+ "historyOpenMs": 135,
+ "count": "3483 of 3483 events",
+ "rowsInDom": 400,
+ "kinds": [
+  "All types",
+  "Capital captured",
+  "Nation destroyed",
+  "War declared",
+  "Peace",
+  "Alliance left",
+  "Alliance dissolved",
+  "Union formed",
+  "Alliance joined",
+  "Puppet created",
+  "Puppet released",
+  "Puppet revolt",
+  "Puppet integrated",
+  "Revolt",
+  "Nation revived",
+  "Major battle",
+  "Major battle ended",
+  "Annexation",
+  "Army disbanded",
+  "Land handed over",
+  "War ended",
+  "Sea battle",
+  "Convoys raided",
+  "Air war",
+  "Air raids",
+  "Nuclear strike",
+  "Nuclear decision",
+  "New nuclear power",
+  "Guarantee lapsed",
+  "War left"
+ ],
+ "firstRows": [
+  "19 December 1955 Australia captured Ecuador's capital",
+  "13 December 1955 United Kingdom and United States fought at sea: United Kingdom lost 12 ships, United States 0",
+  "7 December 1955 United Kingdom made peace with Peru",
+  "1 December 1955 Land held by Free Tukums rose and went back to Latvia",
+  "1 December 1955 Land held by France rose and went back to United Kingdom",
+  "1 December 1955 Land held by United States rose and went back to Soviet Union",
+  "1 December 1955 Land held by United States rose and went back to Romania",
+  "1 December 1955 Land held by United States rose and went back to United Kingdom",
+  "1 December 1955 France's air force struck Soviet Union this month: 4,523 men, guns and vehicles lost",
+  "1 December 1955 Soviet Union's air force struck United States this month: 3,045 men, guns and vehicles lost",
+  "1 December 1955 China's air force struck United States this month: 2,220 men, guns and vehicles lost",
+  "1 December 1955 Italy and United States fought in the air this month: Italy lost 24 aircraft, United States 3"
+ ],
+ "byKind": [
+  {
+   "label": "Capital captured",
+   "count": "288 of 3483 events",
+   "ms": 179
+  },
+  {
+   "label": "Nation destroyed",
+   "count": "60 of 3483 events",
+   "ms": 160
+  },
+  {
+   "label": "War declared",
+   "count": "209 of 3483 events",
+   "ms": 173
+  },
+  {
+   "label": "Peace",
+   "count": "202 of 3483 events",
+   "ms": 166
+  },
+  {
+   "label": "Alliance left",
+   "count": "24 of 3483 events",
+   "ms": 157
+  },
+  {
+   "label": "Alliance dissolved",
+   "count": "5 of 3483 events",
+   "ms": 169
+  },
+  {
+   "label": "Union formed",
+   "count": "9 of 3483 events",
+   "ms": 168
+  },
+  {
+   "label": "Alliance joined",
+   "count": "54 of 3483 events",
+   "ms": 164
+  },
+  {
+   "label": "Puppet created",
+   "count": "45 of 3483 events",
+   "ms": 158
+  },
+  {
+   "label": "Puppet released",
+   "count": "14 of 3483 events",
+   "ms": 162
+  },
+  {
+   "label": "Puppet revolt",
+   "count": "1 of 3483 events",
+   "ms": 162
+  },
+  {
+   "label": "Puppet integrated",
+   "count": "7 of 3483 events",
+   "ms": 155
+  },
+  {
+   "label": "Revolt",
+   "count": "38 of 3483 events",
+   "ms": 168
+  },
+  {
+   "label": "Nation revived",
+   "count": "20 of 3483 events",
+   "ms": 169
+  },
+  {
+   "label": "Major battle",
+   "count": "205 of 3483 events",
+   "ms": 172
+  },
+  {
+   "label": "Major battle ended",
+   "count": "205 of 3483 events",
+   "ms": 177
+  },
+  {
+   "label": "Annexation",
+   "count": "13 of 3483 events",
+   "ms": 166
+  },
+  {
+   "label": "Army disbanded",
+   "count": "65 of 3483 events",
+   "ms": 170
+  },
+  {
+   "label": "Land handed over",
+   "count": "506 of 3483 events",
+   "ms": 168
+  },
+  {
+   "label": "War ended",
+   "count": "2 of 3483 events",
+   "ms": 158
+  },
+  {
+   "label": "Sea battle",
+   "count": "196 of 3483 events",
+   "ms": 170
+  },
+  {
+   "label": "Convoys raided",
+   "count": "206 of 3483 events",
+   "ms": 173
+  },
+  {
+   "label": "Air war",
+   "count": "431 of 3483 events",
+   "ms": 178
+  },
+  {
+   "label": "Air raids",
+   "count": "645 of 3483 events",
+   "ms": 170
+  },
+  {
+   "label": "Nuclear strike",
+   "count": "9 of 3483 events",
+   "ms": 160
+  },
+  {
+   "label": "Nuclear decision",
+   "count": "10 of 3483 events",
+   "ms": 161
+  },
+  {
+   "label": "New nuclear power",
+   "count": "8 of 3483 events",
+   "ms": 157
+  },
+  {
+   "label": "Guarantee lapsed",
+   "count": "1 of 3483 events",
+   "ms": 165
+  },
+  {
+   "label": "War left",
+   "count": "5 of 3483 events",
+   "ms": 163
+  }
+ ],
+ "chartsMs": 1538,
+ "chartsText": "Warism\nWorld war simulator\nResume\n−\nSpeed ×5\n+\nGod Mode\nMap: Political\nStatistics\nHistory\nRelations\nEditor\n28 December 1955 · Paused\nSettings\n1 December 1955 Italy and United States fought in the air this month: Italy lost 24 aircraft, United States 3\n1 December 1955 France's air force struck Soviet Union this month: 4,523 men, guns and vehicles lost\n7 December 1955 United Kingdom made peace with Peru\n19 December 1955 Australia captured Ecuador's capital\nUnited States\n+12\n⚔\nChina\n+10\nCzechoslovakia\n+1\n⚔\nNetherlands\n+7\nSoviet Union\n+12\n⚔\nPeru\n+2\nFree Lakes\n+14\n⚔\nUnited Kingdom\n+5\nGermany\n+5\n⚔\nU",
+ "errors": []
+}

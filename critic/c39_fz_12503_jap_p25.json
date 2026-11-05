@@ -1,0 +1,58 @@
+{
+ "seed": 12503,
+ "T": "JAP",
+ "days": 120,
+ "every": 10,
+ "k": 3,
+ "peaceDay": 25,
+ "orders": 67,
+ "accepted": 67,
+ "embarked": 5,
+ "landed": 3,
+ "sentHome": 1,
+ "sentHomeMany": 1,
+ "reasons": {
+  "3": 29,
+  "4": 9,
+  "6": 3,
+  "14": 4,
+  "15": 21
+ },
+ "aboardNow": 9,
+ "boundNow": 0,
+ "convoysNow": 0,
+ "worstAboardStill": [],
+ "aboardStillOver240": 0,
+ "aboardStillOver720": 0,
+ "aboardSpells": 0,
+ "worstBound": [
+  [
+   629,
+   367,
+   2311
+  ],
+  [
+   326,
+   365,
+   568
+  ],
+  [
+   134,
+   365,
+   2296
+  ],
+  [
+   120,
+   372,
+   602
+  ],
+  [
+   120,
+   364,
+   602
+  ]
+ ],
+ "boundOver720": 0,
+ "stranded": [],
+ "strandedN": 0
+}

@@ -1,0 +1,83 @@
+{
+ "seed": 13109,
+ "T": "ENG",
+ "days": 120,
+ "every": 10,
+ "k": 3,
+ "peaceDay": 60,
+ "orders": 73,
+ "accepted": 73,
+ "embarked": 9,
+ "landed": 9,
+ "sentHome": 0,
+ "sentHomeMany": 0,
+ "reasons": {
+  "3": 20,
+  "5": 8,
+  "6": 13,
+  "8": 2,
+  "15": 19
+ },
+ "aboardNow": 1,
+ "boundNow": 2,
+ "convoysNow": 2,
+ "worstAboardStill": [],
+ "aboardStillOver240": 0,
+ "aboardStillOver720": 0,
+ "aboardSpells": 0,
+ "worstBound": [
+  [
+   1275,
+   274,
+   2237
+  ],
+  [
+   1200,
+   270,
+   -1
+  ],
+  [
+   935,
+   280,
+   2617
+  ],
+  [
+   485,
+   272,
+   1447
+  ],
+  [
+   485,
+   273,
+   1447
+  ],
+  [
+   480,
+   276,
+   -1
+  ],
+  [
+   394,
+   281,
+   636
+  ],
+  [
+   376,
+   275,
+   1098
+  ],
+  [
+   84,
+   271,
+   326
+  ],
+  [
+   20,
+   276,
+   22
+  ]
+ ],
+ "boundOver720": 3,
+ "stranded": [],
+ "strandedN": 0
+}

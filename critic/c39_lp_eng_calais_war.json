@@ -1,0 +1,402 @@
+{
+ "seed": 3517,
+ "TAG": "ENG",
+ "src": [
+  1023.5,
+  275.5
+ ],
+ "dst": [
+  1034.5,
+  279.5
+ ],
+ "n": 3,
+ "escort": true,
+ "states": [
+  {
+   "h": 3,
+   "states": [
+    {
+     "id": 274,
+     "alive": true,
+     "v": "toPort",
+     "port": "Portsmouth",
+     "nation": 20,
+     "p": [
+      1016.8,
+      276.8
+     ],
+     "afloat": false
+    },
+    {
+     "id": 271,
+     "alive": true,
+     "v": "toPort",
+     "port": "Portsmouth",
+     "nation": 20,
+     "p": [
+      1014.8,
+      274.8
+     ],
+     "afloat": false
+    },
+    {
+     "id": 270,
+     "alive": true,
+     "v": "toPort",
+     "port": "Portsmouth",
+     "nation": 20,
+     "p": [
+      1014.8,
+      276.8
+     ],
+     "afloat": false
+    }
+   ],
+   "status": null,
+   "shot": "critic/shots/c39lp_eng_calais_war_h3.png"
+  },
+  {
+   "h": 54,
+   "states": [
+    {
+     "id": 274,
+     "alive": true,
+     "v": "aboard",
+     "port": "Portsmouth",
+     "nation": 20,
+     "p": [
+      1020.5,
+      281.5
+     ],
+     "afloat": false
+    },
+    {
+     "id": 271,
+     "alive": true,
+     "v": "toPort",
+     "port": "Portsmouth",
+     "nation": 20,
+     "p": [
+      1017.5,
+      278.1
+     ],
+     "afloat": false
+    },
+    {
+     "id": 270,
+     "alive": true,
+     "v": "toPort",
+     "port": "Portsmouth",
+     "nation": 20,
+     "p": [
+      1017.4,
+      280.1
+     ],
+     "afloat": false
+    }
+   ],
+   "status": null,
+   "shot": "critic/shots/c39lp_eng_calais_war_h54.png"
+  },
+  {
+   "h": 60,
+   "states": [
+    {
+     "id": 274,
+     "alive": true,
+     "v": "aboard",
+     "port": "Portsmouth",
+     "nation": 20,
+     "p": [
+      1020.5,
+      281.5
+     ],
+     "afloat": false
+    },
+    {
+     "id": 271,
+     "alive": true,
+     "v": "toPort",
+     "port": "Portsmouth",
+     "nation": 20,
+     "p": [
+      1017.5,
+      278.6
+     ],
+     "afloat": false
+    },
+    {
+     "id": 270,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "nation": 20,
+     "p": [
+      1017.5,
+      280.5
+     ],
+     "afloat": false
+    }
+   ],
+   "status": "Holding",
+   "shot": "critic/shots/c39lp_eng_calais_war_h60.png"
+  },
+  {
+   "h": 84,
+   "states": [
+    {
+     "id": 274,
+     "alive": true,
+     "v": "atSea",
+     "port": null,
+     "nation": 20,
+     "p": [
+      1020.5,
+      281.5
+     ],
+     "afloat": false
+    },
+    {
+     "id": 271,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "nation": 20,
+     "p": [
+      1017.2,
+      280.6
+     ],
+     "afloat": false
+    },
+    {
+     "id": 270,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "nation": 20,
+     "p": [
+      1017.5,
+      280.5
+     ],
+     "afloat": false
+    }
+   ],
+   "status": "Holding",
+   "shot": "critic/shots/c39lp_eng_calais_war_h84.png"
+  },
+  {
+   "h": 96,
+   "states": [
+    {
+     "id": 274,
+     "alive": true,
+     "v": "landed",
+     "port": null,
+     "nation": 20,
+     "p": [
+      1034.5,
+      279.5
+     ],
+     "afloat": false
+    },
+    {
+     "id": 271,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "nation": 20,
+     "p": [
+      1017.2,
+      280.6
+     ],
+     "afloat": false
+    },
+    {
+     "id": 270,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "nation": 20,
+     "p": [
+      1017.5,
+      280.5
+     ],
+     "afloat": false
+    }
+   ],
+   "status": "Holding",
+   "shot": "critic/shots/c39lp_eng_calais_war_h96.png"
+  },
+  {
+   "h": 120,
+   "states": [
+    {
+     "id": 274,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "nation": 20,
+     "p": [
+      1034.7,
+      279.5
+     ],
+     "afloat": false
+    },
+    {
+     "id": 271,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "nation": 20,
+     "p": [
+      1017.7,
+      280.3
+     ],
+     "afloat": false
+    },
+    {
+     "id": 270,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "nation": 20,
+     "p": [
+      1017.4,
+      280.3
+     ],
+     "afloat": false
+    }
+   ],
+   "status": "On the march",
+   "shot": "critic/shots/c39lp_eng_calais_war_h120.png"
+  },
+  {
+   "h": 213,
+   "states": [
+    {
+     "id": 274,
+     "alive": false,
+     "v": null,
+     "port": null,
+     "p": null,
+     "afloat": false
+    },
+    {
+     "id": 271,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "nation": 20,
+     "p": [
+      1024.5,
+      277.8
+     ],
+     "afloat": false
+    },
+    {
+     "id": 270,
+     "alive": true,
+     "v": null,
+     "port": null,
+     "nation": 20,
+     "p": [
+      1024.5,
+      277.5
+     ],
+     "afloat": false
+    }
+   ],
+   "status": "On the march",
+   "shot": "critic/shots/c39lp_eng_calais_war_h213.png"
+  }
+ ],
+ "samples": [
+  {
+   "h": 0,
+   "s0": "toPort,toPort,toPort"
+  },
+  {
+   "h": 72,
+   "s0": "aboard,toPort,none"
+  },
+  {
+   "h": 144,
+   "s0": "none,none,none"
+  },
+  {
+   "h": 216,
+   "s0": "dead,none,none"
+  }
+ ],
+ "notices": [
+  "Infantry division 270: not done: its port is bombed shut."
+ ],
+ "ticker": [
+  "1 January 1938 United Kingdom broke its alliance with France",
+  "1 January 1938 United Kingdom declared war on France",
+  "7 January 1938 Italy declared war on United Kingdom"
+ ],
+ "srcCell": [
+  1023.5,
+  275.5
+ ],
+ "dstCell": [
+  1034.5,
+  279.5
+ ],
+ "divs": [
+  [
+   274,
+   7.052720289625333
+  ],
+  [
+   271,
+   8.96926874363784
+  ],
+  [
+   270,
+   9.326306878931184
+  ]
+ ],
+ "escortBoxVisible": true,
+ "escortBoxDefault": true,
+ "shotPanel": "critic/shots/c39lp_eng_calais_war_panel.png",
+ "tooltip": "Calais\nFrance\nUnrest 0\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+ "tooltipBySea": true,
+ "mpp": 937.5,
+ "shotHover": "critic/shots/c39lp_eng_calais_war_hover.png",
+ "afterClick": {
+  "notice": null,
+  "status": null,
+  "ticker": [
+   "1 January 1938 United Kingdom broke its alliance with France",
+   "1 January 1938 United Kingdom declared war on France"
+  ]
+ },
+ "shotClick": "critic/shots/c39lp_eng_calais_war_click.png",
+ "final": [
+  {
+   "id": 274,
+   "v": null,
+   "p": null
+  },
+  {
+   "id": 271,
+   "v": null,
+   "p": [
+    1031.5,
+    277.79
+   ]
+  },
+  {
+   "id": 270,
+   "v": null,
+   "p": [
+    1031.5,
+    277.5
+   ]
+  }
+ ],
+ "shotEnd": "critic/shots/c39lp_eng_calais_war_end.png",
+ "errors": []
+}

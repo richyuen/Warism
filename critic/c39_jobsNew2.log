@@ -1,0 +1,45 @@
+start 09:38:02 npx tsx critic/scripts/c31_headless.ts 13007 20 critic/c39_headless_13007.json 18 critic/c39_seed13007_y18.bin > critic/c39_headless_13007.log 2>&1
+start 09:38:02 npx tsx tools/diag/diploInvariants.ts 13007 scenario 400 60,200,350 20 --heroes > critic/c39_diploinv_13007s_h.log 2>&1
+end 09:41:32 exit 0 npx tsx tools/diag/diploInvariants.ts 13007 scenario 400 60,200,350 20 --heroes > critic/c39_diploinv_13007s_h.log 2>&1
+start 09:41:32 npx tsx tools/diag/diploInvariants.ts 13109 random 400 60,200,350 20 > critic/c39_diploinv_13109r.log 2>&1
+end 09:44:55 exit 0 npx tsx tools/diag/diploInvariants.ts 13109 random 400 60,200,350 20 > critic/c39_diploinv_13109r.log 2>&1
+start 09:44:55 npx tsx tools/diag/diploInvariants.ts 13211 scenario 400 60,200,350 20 --world random > critic/c39_diploinv_13211w.log 2>&1
+end 09:47:02 exit 0 npx tsx tools/diag/diploInvariants.ts 13211 scenario 400 60,200,350 20 --world random > critic/c39_diploinv_13211w.log 2>&1
+start 09:47:02 npx tsx tools/diag/diploInvariants.ts 13313 scenario 400 60,200,350 20 > critic/c39_diploinv_13313.log 2>&1
+end 09:49:46 exit 0 npx tsx critic/scripts/c31_headless.ts 13007 20 critic/c39_headless_13007.json 18 critic/c39_seed13007_y18.bin > critic/c39_headless_13007.log 2>&1
+start 09:49:46 npx tsx tools/diag/worldInvariants.ts 13007 7300 --heroes --rules heroes,navy > critic/c39_wi_13007_h20_hn.log 2>&1
+end 09:50:20 exit 0 npx tsx tools/diag/diploInvariants.ts 13313 scenario 400 60,200,350 20 > critic/c39_diploinv_13313.log 2>&1
+start 09:50:20 npx tsx tools/diag/worldInvariants.ts 13109 3650 --diplomacy random > critic/c39_wi_13109r_10.log 2>&1
+end 09:56:54 exit 0 npx tsx tools/diag/worldInvariants.ts 13109 3650 --diplomacy random > critic/c39_wi_13109r_10.log 2>&1
+start 09:56:54 npx tsx tools/diag/worldInvariants.ts 13211 1825 --world random > critic/c39_wi_13211w_5y.log 2>&1
+end 09:59:18 exit 0 npx tsx tools/diag/worldInvariants.ts 13211 1825 --world random > critic/c39_wi_13211w_5y.log 2>&1
+start 09:59:18 npx tsx tools/diag/worldInvariants.ts 13417 7300 --heroes --diplomacy random --rules air > critic/c39_wi_13417r_h20_air.log 2>&1
+end 10:05:01 exit 0 npx tsx tools/diag/worldInvariants.ts 13007 7300 --heroes --rules heroes,navy > critic/c39_wi_13007_h20_hn.log 2>&1
+start 10:05:01 npx tsx tools/diag/worldInvariants.ts 13313 7300 > critic/c39_wi_13313_20.log 2>&1
+end 10:11:16 exit 0 npx tsx tools/diag/worldInvariants.ts 13417 7300 --heroes --diplomacy random --rules air > critic/c39_wi_13417r_h20_air.log 2>&1
+start 10:11:16 npx tsx tools/diag/heroWaits.ts 13007 7300 > critic/c39_herowaits_13007.log 2>&1
+end 10:16:54 exit 0 npx tsx tools/diag/worldInvariants.ts 13313 7300 > critic/c39_wi_13313_20.log 2>&1
+start 10:16:54 npx tsx tools/diag/workerDeterminism.ts 13109 2190 24 critic/c39_wd_13109.json > critic/c39_wd_13109.log 2>&1
+end 10:21:30 exit 0 npx tsx tools/diag/workerDeterminism.ts 13109 2190 24 critic/c39_wd_13109.json > critic/c39_wd_13109.log 2>&1
+start 10:21:30 npx tsx critic/scripts/c31_ho.ts 13007 20 off critic/c39_ho_new_off_13007.json > critic/c39_ho_new_off_13007.log 2>&1
+end 10:24:31 exit 0 npx tsx tools/diag/heroWaits.ts 13007 7300 > critic/c39_herowaits_13007.log 2>&1
+start 10:24:32 npx tsx critic/scripts/c31_ho.ts 13109 20 off critic/c39_ho_new_off_13109.json > critic/c39_ho_new_off_13109.log 2>&1
+end 10:30:57 exit 0 npx tsx critic/scripts/c31_ho.ts 13007 20 off critic/c39_ho_new_off_13007.json > critic/c39_ho_new_off_13007.log 2>&1
+start 10:30:57 npx tsx critic/scripts/c31_ho.ts 13313 20 on critic/c39_ho_new_on_13313.json > critic/c39_ho_new_on_13313.log 2>&1
+end 10:33:35 exit 0 npx tsx critic/scripts/c31_ho.ts 13109 20 off critic/c39_ho_new_off_13109.json > critic/c39_ho_new_off_13109.log 2>&1
+start 10:33:35 npx tsx critic/scripts/c31_ho.ts 13417 20 on critic/c39_ho_new_on_13417.json > critic/c39_ho_new_on_13417.log 2>&1
+end 10:40:38 exit 0 npx tsx critic/scripts/c31_ho.ts 13313 20 on critic/c39_ho_new_on_13313.json > critic/c39_ho_new_on_13313.log 2>&1
+start 10:40:38 npx tsx critic/scripts/c39_fz.ts 13007 JAP 120 10 3 -1 critic/c39_fz_13007_jap.json > critic/c39_fz_13007_jap.log 2>&1
+end 10:40:54 exit 0 npx tsx critic/scripts/c39_fz.ts 13007 JAP 120 10 3 -1 critic/c39_fz_13007_jap.json > critic/c39_fz_13007_jap.log 2>&1
+start 10:40:54 npx tsx critic/scripts/c39_fz.ts 13109 ENG 120 10 3 60 critic/c39_fz_13109_eng_p60.json > critic/c39_fz_13109_eng_p60.log 2>&1
+end 10:41:09 exit 0 npx tsx critic/scripts/c39_fz.ts 13109 ENG 120 10 3 60 critic/c39_fz_13109_eng_p60.json > critic/c39_fz_13109_eng_p60.log 2>&1
+start 10:41:09 npx tsx critic/scripts/c39_fz.ts 13211 USA 120 10 3 -1 critic/c39_fz_13211_usa.json > critic/c39_fz_13211_usa.log 2>&1
+end 10:41:27 exit 0 npx tsx critic/scripts/c39_fz.ts 13211 USA 120 10 3 -1 critic/c39_fz_13211_usa.json > critic/c39_fz_13211_usa.log 2>&1
+start 10:41:27 npx tsx critic/scripts/c39_fz.ts 13313 ITA 120 10 3 -1 critic/c39_fz_13313_ita.json > critic/c39_fz_13313_ita.log 2>&1
+end 10:41:43 exit 0 npx tsx critic/scripts/c39_fz.ts 13313 ITA 120 10 3 -1 critic/c39_fz_13313_ita.json > critic/c39_fz_13313_ita.log 2>&1
+start 10:41:43 npx tsx critic/scripts/c39_fz.ts 13417 GER 120 10 3 -1 critic/c39_fz_13417_ger.json > critic/c39_fz_13417_ger.log 2>&1
+end 10:42:00 exit 0 npx tsx critic/scripts/c39_fz.ts 13417 GER 120 10 3 -1 critic/c39_fz_13417_ger.json > critic/c39_fz_13417_ger.log 2>&1
+start 10:42:00 npx tsx critic/scripts/c39_fz.ts 13519 JAP 120 10 3 25 critic/c39_fz_13519_jap_p25.json > critic/c39_fz_13519_jap_p25.log 2>&1
+end 10:42:13 exit 0 npx tsx critic/scripts/c39_fz.ts 13519 JAP 120 10 3 25 critic/c39_fz_13519_jap_p25.json > critic/c39_fz_13519_jap_p25.log 2>&1
+end 10:43:08 exit 0 npx tsx critic/scripts/c31_ho.ts 13417 20 on critic/c39_ho_new_on_13417.json > critic/c39_ho_new_on_13417.log 2>&1
+QUEUEDONE

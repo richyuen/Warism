@@ -1,0 +1,32 @@
+{
+ "id": 364,
+ "before": {
+  "mark": null,
+  "tip": null,
+  "shot": "critic/shots/c39tm_before.png"
+ },
+ "after": {
+  "mark": null,
+  "f": {
+   "state": "atSea",
+   "port": null
+  },
+  "shot": "critic/shots/c39tm_after.png"
+ },
+ "errors": [],
+ "perfNoSel": {
+  "asksPerS": 0,
+  "ticksPerS": 143.9985600143784,
+  "fps": 58.449415505836235
+ },
+ "perfSel": {
+  "asksPerS": 0.999980000399694,
+  "ticksPerS": 127.39745205092102,
+  "fps": 59.24881502368187
+ },
+ "perfNoSel2": {
+  "asksPerS": 0,
+  "ticksPerS": 152.96787674586056,
+  "fps": 59.787444636617394
+ }
+}

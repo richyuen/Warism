@@ -1,0 +1,54 @@
+{
+ "seed": 5113,
+ "W": 390,
+ "H": 844,
+ "tg": "phone",
+ "targets": {
+  "FRA": {
+   "standing": "Fights beside you",
+   "kind": "beside",
+   "warText": "Declare war",
+   "warDisabled": true,
+   "warTitle": "they fight on one side in a war: a nation does not turn on its partner, nor leave its war so.",
+   "allyDisabled": true,
+   "shot": "critic/shots/c39bt_5113_phone_actions_FRA.png"
+  },
+  "GER": {
+   "standing": "At war",
+   "kind": "war",
+   "warText": "Declare war",
+   "warDisabled": true,
+   "warTitle": "",
+   "allyDisabled": true,
+   "shot": "critic/shots/c39bt_5113_phone_actions_GER.png"
+  },
+  "ENG": {
+   "standing": "Neutral",
+   "kind": "neutral",
+   "warText": "Declare war",
+   "warDisabled": false,
+   "warTitle": "",
+   "allyDisabled": true,
+   "shot": "critic/shots/c39bt_5113_phone_actions_ENG.png"
+  },
+  "ITA": {
+   "standing": "At war",
+   "kind": "war",
+   "warText": "Declare war",
+   "warDisabled": true,
+   "warTitle": "",
+   "allyDisabled": true,
+   "shot": "critic/shots/c39bt_5113_phone_actions_ITA.png"
+  }
+ },
+ "godText": "France\n×\nTake control\nOverview\nEconomy\nGod\nPLACE AT ONCE\nEvery unit, researched or not: no gold, no training. A division on any land, a fleet on the water by the click, a wing at an airbase of yours.\nInfantry division\nPlace\nSquare infantry division\nPlace\nCadre infantry division\nPlace\nColonial infantry division\nPlace\nLight infantry division\nPlace\nMountain division\nPlace\nMotorised division\nPlace\nArmoured division\nPlace\nLight mechanised division\nPlace\nTank brigade\nPlace\nTank corps\nPlace\nRifle division\nPlace\nCavalry division\nPlace\nCavalry brigade\nPlace\nGarrison brigade\nPlace\nMedium armoured division\nPlace\nHeavy armoured division\nPlace\nMechanised division\nPlace\nMain battle tank division\nPlace\nBattle squadron\nPlace\nCarrier group\nPlace\nCruiser squadron\nPlace\nDestroyer flotilla\nPlace\nSubmarine flotilla\nPlace\nTransport group\nPlace\nFighter group\nPlace\nTactical bomber group\nPlace\nStrategic bomber group\nPlace\nClose support group\nPlace\nNaval bomber group\nPlace\nAir transport group\nPlace\nRename\nTreasury\nSet\nRecolor\nTraits\nMilitarist\nPacifist\nExpansionist\nIsolationist\nIndustrial\nMercantile\nNaval tradition\nAir-minded\nArmoured doctrine\nMass mobilisation\nFortifier\nAuthoritarian\nDemocratic\nRevolutionary\nIncome bonus\n−10\n10%\n+10\nCombat efficiency\n−10\n70%\n+10\nLock\nAlliance unity\n−10\n49\n+10\nAI controls this nation\nWorld AI\nNuclear weapons allowed (this nation)\nNuclear warheads\n0\n+1\nNuclear weapons (all nations)\nWinner takes all (a capital taken annexes the loser)\nRevolts\nBy province\nBy region\nComba",
+ "godShot": "critic/shots/c39bt_5113_phone_god_fra.png",
+ "afterForce": {
+  "wars": 4,
+  "fraPol": false
+ },
+ "warsBefore": 4,
+ "ticker": "9 January 1938 United Kingdom declared war on Portugal\n⚓ Carrier strike ashore: United Kingdom on Portugal ×3",
+ "godShot2": "critic/shots/c39bt_5113_phone_after_force.png",
+ "errors": []
+}

@@ -1,0 +1,3 @@
+npx tsx critic/scripts/c39_ash2.ts 3517 JAP CHI 1818.5 385.5 1703.5 445.5 2 24 none 60 critic/c39_base_fuzhou_2.json > critic/c39_base_fuzhou_2.log 2>&1
+ORDERS='[{"at":"aboard","plus":2,"who":[0],"x":1703.5,"y":445.5},{"at":"aboard","plus":3,"who":[1],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c39_ll.ts 3517 3 60 critic/c39_ll_three_stagger.json > critic/c39_ll_three_stagger.log 2>&1
+npx tsx critic/scripts/c39_tied.ts 3517 2 1703.5 445.5 60 critic/c39_tied_two_fuzhou60.json > critic/c39_tied_two_fuzhou60.log 2>&1

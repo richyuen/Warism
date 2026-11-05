@@ -1,0 +1,19 @@
+== four_allnear14 env NPX=14 node critic/scripts/c39_lwt2.mjs 3517 4 12 24 allnear 1600 900 four_allnear14 09:49:27
+   exit 0
+== two_near14 env NPX=14 node critic/scripts/c39_lwt2.mjs 3517 2 30 24 near 1600 900 two_near14 09:50:43
+   exit 0
+== two_near8 env NPX=8 node critic/scripts/c39_lwt2.mjs 3517 2 30 24 near 1600 900 two_near8 09:53:28
+   exit 0
+== four_allnear8 env NPX=8 node critic/scripts/c39_lwt2.mjs 3517 4 60 24 allnear 1600 900 four_allnear8 09:56:13
+   exit 0
+== two_near42 env NPX=42 node critic/scripts/c39_lwt2.mjs 3517 2 30 24 near 1600 900 two_near42 10:01:13
+   exit 0
+== two_near63 env NPX=63 node critic/scripts/c39_lwt2.mjs 3517 2 30 24 near 1600 900 two_near63 10:03:04
+   exit 0
+== four_allnear42 env NPX=42 node critic/scripts/c39_lwt2.mjs 3517 4 12 24 allnear 1600 900 four_allnear42 10:04:53
+   exit 0
+== four_far_fuzhou env FX=1703.5 FY=445.5 node critic/scripts/c39_lwt3.mjs 3517 4 12 24 far 1600 900 four_far_fuzhou 10:05:39
+   exit 0
+== two_far_fuzhou_phone env FX=1703.5 FY=445.5 node critic/scripts/c39_lwt3.mjs 3517 2 12 24 far 390 844 two_far_fuzhou_phone 10:06:24
+   exit 1
+SUITER2DONE

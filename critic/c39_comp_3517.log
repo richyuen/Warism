@@ -1,0 +1,63 @@
+x from 1709 to 1721
+407:  56  56  56  56  56  56   .   .   .   .   .   .   . 
+408:  56  56  56  56  56  56  56   .   .   .   .   .   . 
+409:  56  56   .  56  56  56  56  56   .   .   .   .   . 
+410:  56  56  56  56   .  56  56  56   .   .   .   .   . 
+411:  56  56  56  56  56   .  56  56  56   .   .   .   . 
+412:  56  56  56  56  56  56   .   .   .   .   .   .   . 
+413:  56  56  56  56  56  56  56* 56   .   .   .   .   . 
+414:   .  56  56  56  56  56  56  56   .   .   .   .   . 
+415:  56  56  56  56  56  56  56  56  56   .   .   .   . 
+416:  56  56  56  56  56  56   .   .   .   .   .   .   . 
+417:  56  56  56  56   .   .   .   .   .   .   .   .   . 
+418:  56  56  56   .   .   .   .   .   .   .   .   .   . 
+419:  56  56   .   .  56  56   .   .   .   .   .   .   . 
+click 1712,410 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1713,410 comp 0 -> none
+click 1714,410 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1715,410 comp 56 -> water 1717,410 land 1716,410 comp 56
+click 1716,410 comp 56 -> water 1717,410 land 1716,410 comp 56
+click 1717,410 comp 0 -> none
+click 1718,410 comp 0 -> none
+click 1712,411 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1713,411 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1714,411 comp 0 -> none
+click 1715,411 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1716,411 comp 56 -> water 1716,412 land 1716,411 comp 56
+click 1717,411 comp 56 -> water 1717,410 land 1716,410 comp 56
+click 1718,411 comp 0 -> none
+click 1712,412 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1713,412 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1714,412 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1715,412 comp 0 -> none
+click 1716,412 comp 0 -> none
+click 1717,412 comp 0 -> none
+click 1718,412 comp 0 -> none
+click 1712,413 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1713,413 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1714,413 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1715,413 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1716,413 comp 56 -> water 1716,412 land 1716,411 comp 56
+click 1717,413 comp 0 -> none
+click 1718,413 comp 0 -> none
+click 1712,414 comp 56 -> water 1713,417 land 1713,416 comp 56
+click 1713,414 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1714,414 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1715,414 comp 56 -> water 1715,412 land 1715,411 comp 56
+click 1716,414 comp 56 -> water 1717,414 land 1716,414 comp 56
+click 1717,414 comp 0 -> none
+click 1718,414 comp 0 -> none
+click 1712,415 comp 56 -> water 1713,417 land 1713,416 comp 56
+click 1713,415 comp 56 -> water 1713,417 land 1713,416 comp 56
+click 1714,415 comp 56 -> water 1715,416 land 1715,415 comp 56
+click 1715,415 comp 56 -> water 1715,416 land 1715,415 comp 56
+click 1716,415 comp 56 -> water 1716,416 land 1716,415 comp 56
+click 1717,415 comp 56 -> water 1717,414 land 1716,414 comp 56
+click 1718,415 comp 0 -> none
+click 1712,416 comp 56 -> water 1713,417 land 1713,416 comp 56
+click 1713,416 comp 56 -> water 1713,417 land 1713,416 comp 56
+click 1714,416 comp 56 -> water 1715,416 land 1715,415 comp 56
+click 1715,416 comp 0 -> none
+click 1716,416 comp 0 -> none
+click 1717,416 comp 0 -> none
+click 1718,416 comp 0 -> none

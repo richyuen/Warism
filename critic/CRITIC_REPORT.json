@@ -1,6 +1,6 @@
 {
-  "commit": "a54afc77ca30701733e6245683371406cd6682bb",
-  "mode": "focused",
+  "commit": "99ba6c0754c4e50cd857501caff07ca6dacd5476",
+  "mode": "full",
   "scores": {
     "mapVisuals": 7,
     "diplomacyWarDepth": 7,
@@ -19,11 +19,11 @@
   },
   "blocking": [
     {
-      "id": "R38-B1",
-      "title": "A near re-click that R25a keeps as the same landing is told, when it lands, as a failed landing: 'its transports broke off; it came ashore away from its target' (new in R25)",
-      "evidence": "critic/c38_lwt5_two_s42.json (the one aboard re-clicked 42 px below Shanghai, cell 1715,415, at hour 26: kept aboard, both land h632 at 1715.5,411.5; 364 told landedAway in its panel and an order-news row); critic/shots/c38lwt5_two_s42_notice_h632.png; critic/shots/c38lwt5_two_s42_notice_h632_panel.png; critic/c38_lwt4_two_s42.json (same, trace h632); four re-clicked 42 px south (R25c's case): all land h1241-1244, landedAway told for 364 and 367, critic/c38_lwt5_four_alls42.json, critic/shots/c38lwt5_four_alls42_notice_h1241_panel.png, critic/shots/c38lwt5_four_alls42_end.png; none at 21 px S / 14 px E / 42 px W (critic/c38_lwt4_two_s21.json, critic/c38_lwt5_two_e14.json, critic/c38_lwt5_two_w42.json) nor in run 37's one-cell cases (critic/c37_lwt2_two_near14.json). Cause read: server.ts orderNews keeps the new click as the order's target and tells landedAway beyond AT_PORT_CELLS (3) of it; R25a accepts clicks within SAME_LANDING_CELLS (2) of the goal, and Shanghai's landing land is two cells north of Shanghai.",
-      "fix": "When an order is kept as the same landing (sameLanding), keep the order's target the landing it already had (or measure 'landed away' from that landing's land). AT: the two to Shanghai, the one aboard re-clicked two cells south (1715.5, 415.5) at hour 26: both land within a day and no landedAway is told; red without (364 told at h632). The four all re-clicked there: no news at the landing."
+      "id": "R39-B1",
+      "title": "A landing the player redirects abandons its own transports: the click walks to another port for weeks while its ships lie empty, splits into landings 21 days apart, or is refused 'no transports' (present on a54afc77 too)",
+      "evidence": "Seed 3517, Japan, the two nearest Tokyo sent to Shanghai, both re-sent to Fuzhou 2 h after the first boards: groups 1136 and 1144 lie empty at Tokyo for the 54-day trace while 364 and 365 march to Sasebo (critic/c39_tied_two_fuzhou60.json); they land h1291 (critic/c39_ll_bothfar.json) against h657 from a standing start (critic/c39_base_fuzhou_2.json). Of three, two re-sent to Fuzhou by one click land h791 and h1293, the first alone (critic/c39_ll_three_twofar.json). The four, all re-clicked three cells SW where the R27b mark shows an orange landing, are all refused 18/6 'no transports' (critic/c39_ll_four_all_sw3.json; real click critic/c39_lwt5_four_allsw63.json, critic/shots/c39lwt5_four_allsw63_act.png). Same on run 38's commit a54afc77 (critic/c39_tied_two_fuzhou_a54.json, critic/c39_ll_three_twofar_a54.json, critic/c39_ll_four_all_sw3_a54.json). Cause read: orderMove/orderAshore pick transports for each division while its old ones are still that landing's; once all have left, the freed groups are never offered.",
+      "fix": "When an order takes divisions off a landing, offer that landing's own transports first (or release them before choosing), so the click that leaves a landing takes its ships with it. AT: the two re-sent to Fuzhou 2 h after the first boards sail from Tokyo on their own groups and land within a day of each other by ~h700 (red: h1291); of three, the two sent to Fuzhou land within a day of each other; the four re-clicked three cells SW: no refusal, land together."
     }
   ],
-  "timestamp": "2026-11-05T13:03:48Z"
+  "timestamp": "2026-11-05T16:21:07Z"
 }

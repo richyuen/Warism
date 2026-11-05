@@ -1,0 +1,23 @@
+start 09:35:24 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1703.5,y:445.5}] npx tsx critic/scripts/c39_ll.ts 3517 2 60 critic/c39_ll_bothfar.json > critic/c39_ll_bothfar.log 2>&1
+start 09:35:24 ORDERS=[{at:2,who:[1],x:1703.5,y:445.5}] npx tsx critic/scripts/c39_ll.ts 3517 2 60 critic/c39_ll_walkerfar_h2.json > critic/c39_ll_walkerfar_h2.log 2>&1
+start 09:35:24 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1703.5,y:445.5}] npx tsx critic/scripts/c39_ll.ts 3517 3 60 critic/c39_ll_three_twofar.json > critic/c39_ll_three_twofar.log 2>&1
+start 09:35:24 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:26,who:[0],x:1715.5,y:413.5}] npx tsx critic/scripts/c39_ll.ts 3517 2 60 critic/c39_ll_back.json > critic/c39_ll_back.log 2>&1
+end 09:35:34 exit 0 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:26,who:[0],x:1715.5,y:413.5}] npx tsx critic/scripts/c39_ll.ts 3517 2 60 critic/c39_ll_back.json > critic/c39_ll_back.log 2>&1
+start 09:35:34 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:8,who:[1],x:1703.5,y:445.5}] npx tsx critic/scripts/c39_ll.ts 3517 2 60 critic/c39_ll_follow.json > critic/c39_ll_follow.log 2>&1
+end 09:35:35 exit 0 ORDERS=[{at:2,who:[1],x:1703.5,y:445.5}] npx tsx critic/scripts/c39_ll.ts 3517 2 60 critic/c39_ll_walkerfar_h2.json > critic/c39_ll_walkerfar_h2.log 2>&1
+start 09:35:35 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:2,who:[1],x:1715.5,y:420.5}] npx tsx critic/scripts/c39_ll.ts 3517 2 60 critic/c39_ll_split2.json > critic/c39_ll_split2.log 2>&1
+end 09:35:39 exit 0 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1703.5,y:445.5}] npx tsx critic/scripts/c39_ll.ts 3517 3 60 critic/c39_ll_three_twofar.json > critic/c39_ll_three_twofar.log 2>&1
+end 09:35:39 exit 0 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1703.5,y:445.5}] npx tsx critic/scripts/c39_ll.ts 3517 2 60 critic/c39_ll_bothfar.json > critic/c39_ll_bothfar.log 2>&1
+start 09:35:39 ORDERS=[{at:aboard,plus:2,who:[1,2,3],x:1716.5,y:415.5}] npx tsx critic/scripts/c39_ll.ts 3517 4 60 critic/c39_ll_four_walk_se2.json > critic/c39_ll_four_walk_se2.log 2>&1
+start 09:35:39 ORDERS=[{at:aboard,plus:2,who:[0,1,2,3],x:1712.5,y:416.5}] npx tsx critic/scripts/c39_ll.ts 3517 4 60 critic/c39_ll_four_all_sw3.json > critic/c39_ll_four_all_sw3.log 2>&1
+end 09:35:47 exit 0 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:8,who:[1],x:1703.5,y:445.5}] npx tsx critic/scripts/c39_ll.ts 3517 2 60 critic/c39_ll_follow.json > critic/c39_ll_follow.log 2>&1
+start 09:35:47 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5}] npx tsx critic/scripts/c39_ll.ts 13001 2 60 critic/c39_ll_13001_far.json > critic/c39_ll_13001_far.log 2>&1
+end 09:35:48 exit 0 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5},{at:aboard,plus:2,who:[1],x:1715.5,y:420.5}] npx tsx critic/scripts/c39_ll.ts 3517 2 60 critic/c39_ll_split2.json > critic/c39_ll_split2.log 2>&1
+start 09:35:48 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1713.5,y:416.5}] npx tsx critic/scripts/c39_ll.ts 13001 2 60 critic/c39_ll_13001_both_sw3.json > critic/c39_ll_13001_both_sw3.log 2>&1
+end 09:35:52 exit 0 ORDERS=[{at:aboard,plus:2,who:[0,1,2,3],x:1712.5,y:416.5}] npx tsx critic/scripts/c39_ll.ts 3517 4 60 critic/c39_ll_four_all_sw3.json > critic/c39_ll_four_all_sw3.log 2>&1
+end 09:35:52 exit 0 ORDERS=[{at:aboard,plus:2,who:[1,2,3],x:1716.5,y:415.5}] npx tsx critic/scripts/c39_ll.ts 3517 4 60 critic/c39_ll_four_walk_se2.json > critic/c39_ll_four_walk_se2.log 2>&1
+start 09:35:52 ORDERS=[{at:aboard,plus:2,who:[0],x:1714.5,y:415.5},{at:aboard,plus:2,who:[1],x:1715.5,y:411.5}] npx tsx critic/scripts/c39_ll.ts 13001 2 60 critic/c39_ll_13001_twonear.json > critic/c39_ll_13001_twonear.log 2>&1
+end 09:35:59 exit 0 ORDERS=[{at:aboard,plus:2,who:[0],x:1703.5,y:445.5}] npx tsx critic/scripts/c39_ll.ts 13001 2 60 critic/c39_ll_13001_far.json > critic/c39_ll_13001_far.log 2>&1
+end 09:36:00 exit 0 ORDERS=[{at:aboard,plus:2,who:[0],x:1714.5,y:415.5},{at:aboard,plus:2,who:[1],x:1715.5,y:411.5}] npx tsx critic/scripts/c39_ll.ts 13001 2 60 critic/c39_ll_13001_twonear.json > critic/c39_ll_13001_twonear.log 2>&1
+end 09:36:00 exit 0 ORDERS=[{at:aboard,plus:2,who:[0,1],x:1713.5,y:416.5}] npx tsx critic/scripts/c39_ll.ts 13001 2 60 critic/c39_ll_13001_both_sw3.json > critic/c39_ll_13001_both_sw3.log 2>&1
+QUEUEDONE

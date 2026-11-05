@@ -1339,3 +1339,11 @@
 - Checked on main before the merge: `diploInvariants.ts 1019 random --heroes` 0 broken; `npm run check` green (the
   whole unit suite, a helper changed; snapshot-perf red under load, green alone, watch list). Squash-merged.
 - **Next:** critic run 39.
+
+## 2026-11-05 — Critic run 39 (full) on 99ba6c07: one blocking issue, R39-B1; R28 filed
+- Full (R27 was filed by the user's ADR-827, not a report). Scores: 7 for map, diplomacy, emergent, god mode, editor,
+  stats, UI, performance, stability, naval (bar 8); 8 for semantic zoom, tanks, aircraft, AI nukes. One blocking.
+- R38-B1 fixed. R39-B1: a landing the player redirects leaves its own transports idle (two re-sent to Fuzhou walk to
+  Sasebo and land h1291 against h657; of three, two land 21 days apart; four re-clicked three cells SW all refused
+  "no transports"); present on run 38's commit too. R39-N1: the mark speaks for the first selected division only.
+- **Next:** R28a.
