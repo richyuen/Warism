@@ -41,6 +41,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (the page keeps four rows; ten sent home lost six). The player's only: the AI's are mechanics, not
   history (seed 9419: 255 in 30 years), and with none played (the pin's run) nothing is recorded, so
   the pin stands. `sentHomeMany1938.test.ts`: ten at once, one event, one History record, one row.
+- **R21e (R32-N1).** One click, one port, one sailing. A division whose target has a convoy loading
+  at a port of its land, full, takes a group standing at that port or calls one there, before the
+  nearest standing group elsewhere (an amendment of R17b's order of choice); and a loaded convoy waits
+  while another at its port for the same landing is still to load. The wait is not bounded: on the
+  critic's case (Japan to Shanghai, room for one division a group) the second division is some 500
+  hours from Tokyo's port, and no bound short of that lands them together; so both land at hour 632
+  and 633 where they landed at 123 and 510. The trade is the landing together; the panel says why the
+  first waits (`aboard`, "waiting for the rest of the landing"). A click that wants speed gives the
+  far division a target of its own. The second group, a new convoy, takes its own escort (two
+  warfleets for such a click with the box ticked). The ROADMAP's "where one group has room" did not
+  cover the AT's own case; restated. `landingTogether1938.test.ts` (red without: 387 hours apart).
 - **Tests restated.** `serverOrderNews.test.ts` (Britain on Cuxhaven) and `orderNews1938.spec.ts`
   (Switzerland on London) each order a landing at peace to see a refusal told with its reason (no
   port, no transports); `Neutral` now comes first. Each now makes that war first, and its assertions

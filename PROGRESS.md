@@ -1039,3 +1039,12 @@
 - AT: `sentHomeMany1938.test.ts` (ten British divisions at Calais: ten sent home, one event of ten, one History record,
   one row of ten). The AI's are not recorded: pin unmoved.
 - **Next:** R21e.
+
+## 2026-11-04 — ROADMAP R21e: one click lands together (R32-N1); R21 done
+- A division whose landing has a full convoy loading at a port of its land takes another group at that port, or calls
+  one there; convoys at one port for one landing sail together. The waiting division's panel says "Aboard at {port},
+  waiting for the rest of the landing". Japan's two divisions to Shanghai land at hours 632 and 633 (before: 123, 510):
+  the trade, recorded in ADR-826, is the landing together.
+- AT: `landingTogether1938.test.ts` (within a day; the panel's `aboard`; red without, 387 h apart). Landing unit and e2e
+  specs green. Pin unmoved (the player's convoys only).
+- **Next:** critic run 34.

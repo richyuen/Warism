@@ -1270,7 +1270,12 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   idle, not under way, in no battle, carrying nobody, not held by the editor, not another convoy's,
   with room for it, the nearest by straight cells to the port's water that has a sea way, at most
   `CALL_TRIES` (4) tried); a full convoy for the same target, for its next voyage. None: refused as
-  before. The group is the player's (`playerOrders`; the AI leaves it). The division marches to the
+  before. But where a convoy for the same target loads at a port of its land and is full, first a
+  group standing at that port, or one called there (ROADMAP R21e): one click, one port, one sailing.
+  A loaded convoy waits at its port while another there for the same landing is still to load
+  (called, or one bound for it would fit; `stillLoading`), however long; its divisions' panels say
+  "Aboard at {port}, waiting for the rest of the landing" (`aboard`).
+  The group is the player's (`playerOrders`; the AI leaves it). The division marches to the
   port, or stands there, bound for the group (`seaFetch`; the group's port `convoyPort`); it boards
   when the group stands at that port with room (aboard, not sailing), waits while the group is under
   way, fighting, away or full, and is refused (`NoTransports`) if its march ends short of the port.

@@ -405,6 +405,18 @@ export function assignTransports(world: World, id: number, target: number): { po
   const own = (i: number): boolean => water[i]! >= 0 && world.cells.controller[world.ports[i]!.cell] === nation && comp[world.ports[i]!.cell] === comp[here] && !portShut(world, i);
   const convoys = [...world.convoyPort].filter(([o, p]) => f.has(o) && c.nation[o] === nation && own(p) && convoyTarget(world, o) === target).sort((a, b) => a[0] - b[0]);
   for (const [o, p] of convoys) if (transportRoom(world, o) - aboard(world, o) - promised(world, o) >= men) return { port: p, fleet: o };
+  // Its click's convoy full (ROADMAP R21e): another group at that port, or called there, so that the
+  // two load at one port and sail together (`convoySystem`), not from two ports weeks apart.
+  if (convoys.length > 0) {
+    const p = convoys[0]![1];
+    let o = 0;
+    f.forEach((g) => {
+      if (o !== 0 || !world.isFleet(g) || c.nation[g] !== nation || c.moving[g] === 1 || c.engaged[g] === 1 || world.convoyPort.has(g) || carrying(world, g)) return;
+      if (transportRoom(world, g) - promised(world, g) >= men && near(world, cellOfPlace(world, g), water[p]!, world.atSize(AT_PORT_CELLS))) o = g;
+    });
+    if (o === 0) o = callTransports(world, id, p);
+    if (o !== 0) return { port: p, fleet: o };
+  }
   let best: { port: number; fleet: number } | null = null;
   let bd = Infinity;
   const dist = (k: number): number => {
@@ -431,6 +443,18 @@ export function assignTransports(world: World, id: number, target: number): { po
   }
   for (const [o, p] of convoys) if (transportRoom(world, o) >= men) return { port: p, fleet: o };
   return null;
+}
+
+/**
+ * Whether the player's convoy on group `fleet` is still to load (ROADMAP R21e): nobody aboard yet
+ * (called and on its way, or waiting for the first), or one bound for it that would fit.
+ */
+function stillLoading(world: World, fleet: number): boolean {
+  if (!carrying(world, fleet)) return true;
+  if (world.formations.cols.moving[fleet] === 1) return false;
+  const room = transportRoom(world, fleet) - aboard(world, fleet);
+  for (const [id, o] of world.seaFetch) if (o === fleet && world.formations.has(id) && world.formations.cols.strength[id]! <= room) return true;
+  return false;
 }
 
 /** `boardConvoy`: not yet; it waits. */
@@ -485,6 +509,9 @@ function convoySystem(world: World): void {
         continue;
       }
       const room = transportRoom(world, fleet) - aboard(world, fleet);
+      // Another convoy at its port for its landing still to load (ROADMAP R21e: called, or waiting
+      // for those bound for it): it waits, and they sail together.
+      if (load && !pending.some((id) => c.strength[id]! <= room) && [...world.convoyPort].some(([o, p]) => o !== fleet && p === port && f.has(o) && c.nation[o] === c.nation[fleet] && convoyTarget(world, o) === target && stillLoading(world, o))) continue;
       if (load && !pending.some((id) => c.strength[id]! <= room)) {
         const first = [...world.embarked].filter(([, e]) => e.fleet === fleet).sort((a, b) => a[0] - b[0])[0]![1];
         if (!orderSail(world, fleet, (first.water % w) + 0.5, Math.floor(first.water / w) + 0.5)) {

@@ -597,6 +597,8 @@
   "formation.voyage.toPort.port": "Marching to {port} to board transports",
   "formation.voyage.waiting": "Waiting for transports",
   "formation.voyage.waiting.port": "Waiting at {port} for transports",
+  "formation.voyage.aboard": "Aboard transports, waiting for the rest of the landing",
+  "formation.voyage.aboard.port": "Aboard at {port}, waiting for the rest of the landing",
   "formation.voyage.atSea": "At sea, bound for its landing",
   "formation.voyage.atSea.port": "At sea, bound for its landing",
   "formation.voyage.landed": "Landed",

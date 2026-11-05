@@ -140,7 +140,7 @@ Rules:
   Done: `seaConvoy` refuses `Neutral` (15) by `foreignTo` of the target's and the landing's holders;
   `FormationSentHome` (71), a row below the ticker (ADR-826); `landingNeutral1938.test.ts` 3 of 3,
   `landingNeutral1938.spec.ts`. Pin unmoved.
-- [ ] R21 **Naval back to its bar: the edges of the landing order** (critic run 33: no blocking issue, naval 7 under
+- [x] R21 **Naval back to its bar: the edges of the landing order** (critic run 33: no blocking issue, naval 7 under
   its bar of 8 for R33-N1–N4 and R32-N1). Each sub-item its own commit; then the critic again.
   - [x] R21a A sea order outlives the peace (R33-N1): a division bound for a landing (marching to its port,
     waiting, or boarding) whose landing's ground became a neutral's is stopped, `Neutral` told, as a march is
@@ -161,6 +161,9 @@ Rules:
     that counts them, and each is a History event. AT: ten set home at once: one row naming ten, ten History rows.
     Done, restated: one History record that counts them, as the row does (`FormationsSentHome`, ADR-826);
     `sentHomeMany1938.test.ts`.
-  - [ ] R21e One click lands together (R32-N1): the divisions of one click to one target board one convoy
+  - [x] R21e One click lands together (R32-N1): the divisions of one click to one target board one convoy
     where one group has room, rather than two groups at two ports weeks apart. AT: Japan's two divisions
     to Shanghai land within a day of each other.
+    Done, restated (no group has room for both there): a full convoy's port first for the click's next
+    division, and convoys there for one landing sail together; the panel's `aboard` (ADR-826);
+    `landingTogether1938.test.ts` (hours 632 and 633; before, 123 and 510).

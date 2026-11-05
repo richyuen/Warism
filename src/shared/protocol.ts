@@ -734,7 +734,7 @@ export interface FormationDetail {
    * at sea, or landed (a player's order, for a day after); the port's name where it has one. Null
    * for none.
    */
-  voyage: { state: 'toPort' | 'waiting' | 'atSea' | 'landed'; port: string | null } | null;
+  voyage: { state: 'toPort' | 'waiting' | 'aboard' | 'atSea' | 'landed'; port: string | null } | null;
 }
 
 /**

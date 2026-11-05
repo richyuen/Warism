@@ -27,9 +27,8 @@ import { DAYS_PER_MONTH } from '../sim/systems/research';
 import { shipyard } from '../sim/systems/production';
 import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { AT_PORT_CELLS, carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
-import { landingOf } from '../sim/systems/amphibious';
+import { landingOf, loading, neutralLanding } from '../sim/systems/amphibious';
 import { overSea } from '../sim/systems/movement';
-import { neutralLanding } from '../sim/systems/amphibious';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -1055,7 +1054,11 @@ export class SimServer {
     const fleet = world.seaFetch.get(id);
     const port = fleet === undefined ? undefined : world.convoyPort.get(fleet);
     const name = port === undefined ? null : (world.ports[port]?.name ?? null);
-    if (world.embarked.has(id)) return { state: 'atSea', port: null };
+    const e = world.embarked.get(id);
+    // Aboard a convoy still at its port (ROADMAP R21e): it waits for the rest of its landing.
+    const at0 = e === undefined ? undefined : world.convoyPort.get(e.fleet);
+    if (e !== undefined && at0 !== undefined && loading(world, e.fleet)) return { state: 'aboard', port: world.ports[at0]?.name ?? null };
+    if (e !== undefined) return { state: 'atSea', port: null };
     if (world.seaBound.has(id)) return { state: world.formations.cols.moving[id] === 1 ? 'toPort' : 'waiting', port: name };
     const at = this.landedAt.get(id);
     return at !== undefined && world.tick - at < 24 ? { state: 'landed', port: null } : null;
