@@ -1298,8 +1298,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   The escort (ROADMAP R17d): an order with `escort` (the panel's box) that makes a new convoy sends
   a warfleet with it (`escortConvoy`): of its nation's fleets with no transports standing idle (not
   under way, in no battle, not under the player's own order, not held by the editor, no other
-  convoy's escort), the nearest by straight cells to the landing's water with a sea way (at most
-  `CALL_TRIES`), kept for it where it stands as the player's. None: `ConvoyUnescorted`, and the
+  convoy's escort), of the `ESCORT_TRIES` (8) nearest by straight cells to the landing's water the one
+  there soonest by sea (`sailHours`, ROADMAP R23d), kept for it where it stands as the player's. None: `ConvoyUnescorted`, and the
   transports sail alone. Hourly after the convoys (`escortSystem`), a kept escort standing while its
   convoy is at its port sails for the landing's water once its voyage (`sailHours`, by the way and
   pace `sailStep` takes) is at least the wait left (`waitLeft`: the longest march of a division

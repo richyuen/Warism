@@ -237,9 +237,13 @@ Rules:
     Done, Switzerland's division (the critic's Germany case in the spec's own nation): the panel's detail carries the
     cell of its march (`goal`), part of `staleNotice`'s state; `orderNews1938.spec.ts` (marching, refused London, the
     notice held an hour on; sent to the other of Zurich and Geneva, gone, "On the march"; red without). UI only.
-  - [ ] R23d The escort's wait does not cost a lone landing time (R35-N3): one division to Belfast (seed 3517, the
+  - [x] R23d The escort's wait does not cost a lone landing time (R35-N3): one division to Belfast (seed 3517, the
     critic's case) lands no later escorted than unescorted. AT: `landingEscortWait1938.test.ts` on the critic's seed;
     red without (73 h against 59).
+    Done: the escort is the one of the eight nearest that is there soonest by sea (`ESCORT_TRIES`, `sailHours`); the
+    nearest had Scotland to go round. `landingEscortWait1938.test.ts` (Belfast, the fourth nearest London: 58 h either
+    way; red without, 72; the nearest: 110 either way); `landingEscort1938.test.ts`'s "under way at hour 1" restated
+    to R22d's rule (under way, or kept where it stood). Pin unmoved.
   - [ ] R23e A whole click clicked again keeps its landing together (R35-N2, older than R22): the four re-sent to
     Shanghai at hour 26 land within a day of each other. AT: a unit test of the critic's case; red without (185, 633,
     952, 1243).

@@ -1172,3 +1172,14 @@
   sent to the other of Zurich and Geneva: no notice, "On the march"; red without, the notice stays). UI and worker
   detail only: pin unmoved.
 - **Next:** R23d.
+
+## 2026-11-05 — ROADMAP R23d: the escort's wait does not cost a lone landing time (R35-N3)
+- The critic's Belfast case is the same on every seed: the fourth division nearest London stands at the port and boards
+  at hour 2; the escort, Britain's warfleet nearest Belfast by straight cells, had Scotland to go round (72 h), and the
+  loaded transports waited for it from hour 2 to 18 (`escortAhead`). Landed 72–73 h against 58–59 unescorted.
+- `escortConvoy` now takes, of the eight nearest by straight cells, the one there soonest by sea (`sailHours`).
+- AT: `landingEscortWait1938.test.ts` (Belfast, fourth nearest: 58 / 58; red without, 72; nearest: 110 / 110; Shanghai
+  unchanged). `landingEscort1938.test.ts`'s line "under way after the first hour" was R17d's sailing at the order,
+  replaced by R22d; the new escort is near enough to wait, so it is restated to R22d's rule (under way, or kept where
+  it stood; ADR-826 notes it). Escort and wait specs green. Pin unmoved (the player's convoys only).
+- **Next:** R23e.

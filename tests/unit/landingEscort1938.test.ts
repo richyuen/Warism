@@ -82,7 +82,9 @@ describe('an escort for a landing (ROADMAP R17d)', () => {
     const convoy = w.seaFetch.get(div)!;
     expect(e.convoy).toBe(convoy);
     expect(w.playerOrders.get(escort)?.kind, "under the player's order").toBe(PlayerOrderKind.march);
-    expect(w.formations.cols.moving[escort]).toBe(1);
+    // Under way, or kept where it stood until its voyage would take as long as the wait (ADR-826, R22d:
+    // it no longer sails at the order; R23d's escort, the one there soonest, is near enough to wait).
+    if (w.formations.cols.moving[escort] !== 1) expect(cellAt(w, escort), 'kept where it stood').toBe(e.from);
     // A save on the way keeps the escort.
     const t = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
     t.load(s.save());

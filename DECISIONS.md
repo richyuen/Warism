@@ -84,6 +84,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   `landingEscortWait1938.test.ts` (Shanghai: none there more than a day before the last is aboard,
   each there before its transports, together, no later than unescorted; Belfast no later): red
   without (the escorts there from hour 23).
+  R23d (critic run 35, R35-N3): the escort is the one of the eight nearest by straight cells that is
+  there soonest by sea (`sailHours`), not the nearest: Britain's nearest to Belfast had Scotland to go
+  round (72 h), and the loaded transports of a division already at the port waited for it (landed
+  73 h against 58). `landingEscortWait1938.test.ts`'s fourth-nearest case: red without. Its nearer
+  escort waits where it stands, so `landingEscort1938.test.ts`'s "under way after the first hour"
+  (R17d's sailing at the order, which R22d replaced) is restated: under way, or kept where it stood.
 - **Tests restated.** `serverOrderNews.test.ts` (Britain on Cuxhaven) and `orderNews1938.spec.ts`
   (Switzerland on London) each order a landing at peace to see a refusal told with its reason (no
   port, no transports); `Neutral` now comes first. Each now makes that war first, and its assertions

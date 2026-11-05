@@ -270,6 +270,9 @@ export function transportsPort(world: World, id: number, withTransports = true):
 /** How many of the nearest idle transport groups a call tries to send (each a sea route searched). */
 const CALL_TRIES = 4;
 
+/** How many of the nearest idle warfleets by straight cells an escort is chosen from, by the hours to the landing (`escortConvoy`). */
+const ESCORT_TRIES = 8;
+
 /**
  * Calls transports to port `port` (index in `world.ports`) for a player's land formation `id`
  * whose land has none for it (ROADMAP R17a): of its nation's transport groups standing idle
@@ -627,8 +630,8 @@ function convoySystem(world: World): void {
  * The escort of a player's new convoy on transport group `convoy` for cell `target` (ROADMAP R17d),
  * asked for by the order of formation `id`: of its nation's warfleets (no transports) standing idle
  * (not under way, in no battle, not under the player's own order, not held in place by the editor,
- * no other convoy's escort), the nearest to the landing's water by straight cells with a way there
- * (at most CALL_TRIES tried) is kept for it where it stands. When the transports are loaded and
+ * no other convoy's escort), of the ESCORT_TRIES nearest to the landing's water by straight cells the
+ * one there soonest (`sailHours`; ROADMAP R23d) is kept for it where it stands. When the transports are loaded and
  * would sail, it sails there first, and they wait at their port until it is there (`escortAhead`,
  * ROADMAP R22d; before, it sailed at the order and stood weeks at the landing's water while a
  * click's divisions came in). It is under the player's order, so the AI leaves it be, until the
@@ -655,12 +658,18 @@ export function escortConvoy(world: World, convoy: number, target: number, id: n
     });
     idle.sort((a, b) => a[1] - b[1] || a[0] - b[0]);
   }
-  // Kept where it stands with a way there (ROADMAP R22d): it sails when the transports are loaded.
-  for (const [o] of idle.slice(0, CALL_TRIES)) {
-    const from = cellOfPlace(world, o);
-    if (!Number.isFinite(sailHours(world, o, (landing!.water % w) + 0.5, Math.floor(landing!.water / w) + 0.5))) continue;
-    world.playerOrders.set(o, { kind: PlayerOrderKind.march, until: 0, through: false });
-    world.escorts.set(o, { convoy, from });
+  // Of the nearest, the one there soonest (ROADMAP R23d, critic run 35, R35-N3: the nearest by
+  // straight cells may have a coast to go round, and the transports wait for it), kept where it
+  // stands with a way there (ROADMAP R22d): it sails when the transports are loaded.
+  let best = 0;
+  let hours = Infinity;
+  for (const [o] of idle.slice(0, ESCORT_TRIES)) {
+    const t = sailHours(world, o, (landing!.water % w) + 0.5, Math.floor(landing!.water / w) + 0.5);
+    if (t < hours) [best, hours] = [o, t];
+  }
+  if (best !== 0) {
+    world.playerOrders.set(best, { kind: PlayerOrderKind.march, until: 0, through: false });
+    world.escorts.set(best, { convoy, from: cellOfPlace(world, best) });
     return;
   }
   world.out.emit(world.tick, EventKind.ConvoyUnescorted, id, nation, c.x[id]!, c.y[id]!);

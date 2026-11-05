@@ -105,7 +105,13 @@ describe('the escort is not sent weeks ahead (ROADMAP R22d)', () => {
   });
 
   // R17d's own case, one division: its escort sails at the click (its voyage is longer than the march).
-  it("Britain's division to Belfast: landed no later with the escort than without", () => {
+  // ROADMAP R23d (critic run 35, R35-N3): the critic's own, the fourth nearest London, which stands at
+  // the port and boards at once; the nearest warfleet by straight cells had a coast to go round, and
+  // the loaded transports waited for it (landed 73 against 59).
+  it.each([
+    { nth: 0, label: 'the nearest' },
+    { nth: 3, label: 'the fourth nearest' },
+  ])("Britain's division to Belfast ($label London): landed no later with the escort than without", ({ nth }) => {
     const hour = (escort: boolean): number => {
       const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
       const w = s.world;
@@ -113,13 +119,12 @@ describe('the escort is not sent weeks ahead (ROADMAP R22d)', () => {
       const c = w.formations.cols;
       const comp = navOf(w).grid.component;
       const london = Math.floor(LONDON[1]) * W + Math.floor(LONDON[0]);
-      let div = 0;
-      let best = Infinity;
+      const near: [number, number][] = [];
       w.formations.forEach((id) => {
         if (c.nation[id] !== ENG || w.isFleet(id) || w.offLand(id) || comp[at(w, id)] !== comp[london]) return;
-        const d = (c.x[id]! - LONDON[0]) ** 2 + (c.y[id]! - LONDON[1]) ** 2;
-        if (d < best) [best, div] = [d, id];
+        near.push([id, (c.x[id]! - LONDON[0]) ** 2 + (c.y[id]! - LONDON[1]) ** 2]);
       });
+      const div = near.sort((a, b) => a[1] - b[1] || a[0] - b[0])[nth]![0];
       s.command({ kind: 'moveFormation', id: div, x: BELFAST[0], y: BELFAST[1], nation: ENG, escort });
       let landed = -1;
       for (let h = 0; h < 24 * 30 && landed < 0; h++) {
@@ -133,7 +138,7 @@ describe('the escort is not sent weeks ahead (ROADMAP R22d)', () => {
       return landed;
     };
     const [plain, escorted] = [hour(false), hour(true)];
-    process.stderr.write(`R22d: Belfast landed ${plain} unescorted, ${escorted} escorted
+    process.stderr.write(`R22d/R23d: Belfast (${nth}) landed ${plain} unescorted, ${escorted} escorted
 `);
     expect(plain).toBeGreaterThan(0);
     expect(escorted, 'landed').toBeGreaterThan(0);
