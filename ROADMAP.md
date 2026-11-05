@@ -318,3 +318,17 @@ Rules:
     Done: "it left its transports, which stay with the landing it had, for others bound for its new landing; it will
     not land with the rest"; the spec checks the words (red without). Words only.
   R26 done; then the critic again (run 39).
+- [ ] R27 **The landing shown while it is chosen** (ADR-827, the user's decision 2026-11-05, after six rounds R21–R26 of
+  one class: a click resolved, unseen, to a landing cells away). Each sub-item its own commit; then the critic again.
+  - [ ] R27a The worker's hover answer names the landing: with land formations selected and the cursor over a target
+    over the sea, the landing's water and land, and whether it is the first selected division's own (`sameLanding`:
+    then its own landing, not the click's). From the functions the order uses. AT: unit test of the answer (Shanghai
+    from Tokyo: `landingOf`'s pair; the one aboard, two cells south: its own pair, `same`).
+  - [ ] R27b The map marks it and the tooltip says it: a dashed line from the landing's water to its land and a ring
+    there, another colour for the landing the division already has; the tooltip says "the landing it already has".
+    Asked again when the sim's state changes under a still cursor. AT: e2e (hover Shanghai: the mark at `landingOf`'s
+    land; the one aboard, hover two cells south: the tooltip says its own landing; looked at).
+  - [ ] R27c A fuzz of re-clicks about a landing: two and four divisions to Shanghai, re-clicked (the one aboard, and
+    all) at hours 26 and 200, at cells one, two and three off in each direction. Inside `SAME_LANDING_CELLS`: none
+    refused, all land within a day, no "landed away" (the worker's judgement, factored out to a pure function). Outside:
+    any division whose transports change is told (refused, or `LeftLanding`). A case it finds is filed, not tolerated.

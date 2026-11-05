@@ -7,7 +7,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
-### ADR-827 · 2026-11-05 · proposed — Show the landing while choosing it (the user's decision)
+### ADR-827 · 2026-11-05 · accepted — Show the landing while choosing it (the user's decision)
 
 - **Context.** Critic runs 33–38 each found the next edge of one feature, the player's landing over the
   sea (R17); R21–R26 fixed them one by one. Each was a case of one thing: the player clicks a cell and
@@ -21,8 +21,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
   news is false.
 - **Other ways.** Go on fixing cases as the critic finds them (six rounds so far); accept naval at 7
   for a release, or score naval against a fixed list of cases (a change of the bars, ADR-804).
-- **Status.** Proposed: the user asked (2026-11-05) whether this is a loop; the options were put to
-  them. Nothing is built until they choose.
+- **Status.** Accepted 2026-11-05 by the user: "Yes do 1 and 2 first" (the marker, and the fuzz of
+  re-clicks), before the critic again. The third way (the bars) is not taken now. ROADMAP R27.
+- **How.** One source of truth: the worker's hover answer (`overSea`) gives the landing to draw from
+  the functions the order itself uses (`sameLanding`, the division's own landing; else `landingOf`
+  of the click), so the mark cannot disagree with the order; `moveFormation` still sends the click.
 
 ### ADR-826 · 2026-11-04 · accepted — No landing on a neutral's ground (ROADMAP R20, R32-B1)
 

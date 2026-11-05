@@ -1291,3 +1291,9 @@
 - **Next:** critic run 39.
 - ADR-827 proposed (show the landing while choosing it): the user asked whether the naval rounds are a loop; the
   options are put to them. Meanwhile, the standing order: critic run 39.
+
+## 2026-11-05 — ADR-827 accepted: the landing shown while it is chosen; R27 filed
+- The user chose the marker and the fuzz of re-clicks first ("Yes do 1 and 2 first"). Critic run 39, started on
+  eb35f769, was stopped before its report (its queue and sims killed; its partial files moved out of `critic/` to the
+  session's scratchpad, none committed). R27a–c filed.
+- **Next:** R27a.
