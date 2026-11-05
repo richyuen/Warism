@@ -305,10 +305,13 @@ Rules:
   R25 done; then the critic again (run 38).
 - [ ] R26 **Naval back to its bar: news true to the landing kept** (critic run 38, focused: one blocking issue, R38-B1,
   new in R25; naval 7 under its bar of 8). Each sub-item its own commit; then the critic again.
-  - [ ] R26a A landing kept by a near re-click is judged against that landing (R38-B1): an order the sim keeps as the
+  - [x] R26a A landing kept by a near re-click is judged against that landing (R38-B1): an order the sim keeps as the
     same landing (`sameLanding`) keeps the order's target in the worker's news, so "came ashore away from its target"
     is not told for a landing that went as ordered. AT: the two to Shanghai, the one aboard re-clicked two cells south
     at hour 26: both land within a day, no `landedAway` for either; and the four, all re-clicked there: no news at the
     landing; red without (364 told at h632).
+    Done: the worker asks `sameLanding` when the order comes and keeps the landing's target as the order's;
+    `landingNearNews1938.spec.ts` (seed 3517: two, and all four, land with no news; red without, 364 told, and all
+    four). Worker only: pin unmoved.
   - [ ] R26b R25b's notice says which landing it leaves (R38-N1): its transports load for the landing it had; it is
     the division that goes to another. AT: the words of the notice in `landingLeftTold1938.spec.ts`.

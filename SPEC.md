@@ -1292,7 +1292,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   division bound for a convoy still at its port: it keeps its transports (R23e). A landing whose water
   and land are within `SAME_LANDING_CELLS` (2) of its own, the land of the same holder, is its own (R24b);
   so is a click within `SAME_LANDING_CELLS` of the cell its landing was ordered for, of that cell's
-  holder, whatever landing the click resolves to (R25a).
+  holder, whatever landing the click resolves to (R25a). What becomes of such an order is judged
+  against the landing kept (its convoy's target), not the click (R26a).
   Aboard anything else, it takes none (`Aboard`).
   The group is the player's (`playerOrders`; the AI leaves it). The division marches to the
   port, or stands there, bound for the group (`seaFetch`; the group's port `convoyPort`); it boards

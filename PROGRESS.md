@@ -1275,3 +1275,12 @@
   from the landing's land: a landing that went as ordered is told as failed (364; with four, 364 and 367). Scores
   unchanged: naval **7** under its bar of 8; the rest at their bars. Filed as R26a–b (with R38-N1).
 - **Next:** R26a.
+
+## 2026-11-05 — ROADMAP R26a: a landing kept by a near re-click is judged against that landing (R38-B1)
+- The worker's order news took the new click as the order's target; a click two cells south of Shanghai is four from
+  the landing's land, so a landing as ordered was told "came ashore away". It now asks `sameLanding` when the order
+  comes and, if kept, keeps the convoy's (or bound division's) target.
+- AT: `landingNearNews1938.spec.ts` (seed 3517, the critic's; two with the one aboard re-clicked, and all four: they
+  land, no news; red without: 364 told, and all four told). Worker only: pin unmoved. The landing and order-news specs
+  green.
+- **Next:** R26b.

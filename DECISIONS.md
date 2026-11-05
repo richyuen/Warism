@@ -96,6 +96,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   `landingLeftTold1938.test.ts` and `.spec.ts` (Fuzhou with two: told, on fleet 1151 for 1136): red
   without. R25c (R37-N1): the walkers of a whole click re-clicked near it are bound, and R25a's rule
   covers them: no refusal. `landingNearAll1938.test.ts`: red without R25a.
+  R26a (critic run 38, R38-B1, new in R25): the worker judged "came ashore away from its target"
+  against the new click, two cells south of Shanghai and four from the landing's land; a landing as
+  ordered was told as failed. An order the sim keeps (`sameLanding`, asked when the command comes)
+  keeps the landing's target in the worker's news. **Not chosen:** widening `AT_PORT_CELLS`: it
+  would hide a landing truly thrown off. `landingNearNews1938.spec.ts` (seed 3517, two and four):
+  red without (364 told; all four told). Worker only: pin unmoved.
 - **R22c.** The wait aboard is accounted for: "1 of 4 aboard; the last 47 days from the port"
   (`voyage.wait`, the furthest bound division's `marchHoursLeft`). Worker and UI only.
 - **R22d (R34-N1).** The escort is not sent weeks ahead. R17d sent it at the order; with R21e's wait
