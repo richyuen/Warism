@@ -290,10 +290,13 @@ Rules:
     Done: `sameLanding` also takes a click within `SAME_LANDING_CELLS` of the cell the landing was ordered for, same
     holder; `landingNearSame1938.test.ts` (two south, two south-west: landed 632–633; red without, 633 / 1288 and
     633 / 1291). Pin unmoved.
-  - [ ] R25b A division aboard never leaves its transports untold (R37-B1): the one aboard a loading convoy, sent to
+  - [x] R25b A division aboard never leaves its transports untold (R37-B1): the one aboard a loading convoy, sent to
     another landing and taken to another port's transports, is told it leaves its landing (a notice in its panel and
     a row). AT: the two to Shanghai, the one aboard ordered to a landing far off with other transports free: a notice
     says so; red without (none).
+    Done: `LeftLanding` (73), the order's news "leftLanding" ("its transports are loading for another landing; it
+    left them for other transports and will not land with the rest"); `landingLeftTold1938.test.ts` (Fuzhou: taken,
+    1136 → 1151, told) and its spec (the row and the panel's notice; looked at). Red without. Pin unmoved.
   - [ ] R25c No false refusals for a near re-click (R37-N1): the walkers of a whole click re-clicked near their landing
     keep it and are told nothing. AT: all four re-clicked two cells south at hour 26: no refusal for the three walking,
     all land within a day; red without (three refused 6).

@@ -1285,7 +1285,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   goes ashore at the port's cell (no landing, its organisation as it was) and the order stands
   (`ashoreAtPort`, ROADMAP R22b); refused, it is aboard again as it was, its landing kept (R23a); a
   division bound for a convoy keeps its binding when an order is refused (R24a). The one aboard sent
-  over the sea to another landing with no other transports free is refused `Loading` (18, R24d). An
+  over the sea to another landing with no other transports free is refused `Loading` (18, R24d); with
+  others free it is put on them and told it leaves its landing (`LeftLanding`, the order's news
+  "leftLanding", R25b). An
   order to the landing it is aboard for changes nothing: it stays aboard (`sameLanding`, R23b); so for a
   division bound for a convoy still at its port: it keeps its transports (R23e). A landing whose water
   and land are within `SAME_LANDING_CELLS` (2) of its own, the land of the same holder, is its own (R24b);
@@ -1818,7 +1820,8 @@ Actions tab's assist boxes set the mask (`setPlayerAi`).
   not the way the transports sail (their own order line shows that). The panel of the player's land
   formation has an "Escort with warships" box (ROADMAP R17d): ticked by default, kept in the
   browser (`warsim.escort`), and sent with each click's order (`moveFormation.escort`); no escort
-  free is the order's news ("unescorted").
+  free is the order's news ("unescorted"); a division aboard put on other transports by a new order,
+  "leftLanding" (R25b).
   Over a landing on the ground of a nation outside the player's wars the tooltip says no landing there
   instead (`overSea` answers 2; ROADMAP R21c). A refusal of a selected formation's order opens its
   panel again, with the reason, where the order's click had closed it and no other is open.

@@ -89,6 +89,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   tests stand: either is enough. **Not chosen:** the critic's "click within two cells of the
   convoy's land": the landing's land lies four cells north of that click, so it fails the same way.
   `landingNearSame1938.test.ts` (two south, two south-west): red without (633 / 1288, 633 / 1291).
+  R25b (R37-B1, the silence): the one aboard a loading convoy, taken by an order over the sea to
+  other transports, emits `LeftLanding` (73) and is told so (order news "leftLanding": a row and its
+  panel's notice). **Not chosen:** refusing it (`Loading`) whenever its own convoy is loading: the
+  player could no longer redirect one division aboard. An event, not state: pin unmoved.
+  `landingLeftTold1938.test.ts` and `.spec.ts` (Fuzhou with two: told, on fleet 1151 for 1136): red
+  without.
 - **R22c.** The wait aboard is accounted for: "1 of 4 aboard; the last 47 days from the port"
   (`voyage.wait`, the furthest bound division's `marchHoursLeft`). Worker and UI only.
 - **R22d (R34-N1).** The escort is not sent weeks ahead. R17d sent it at the order; with R21e's wait

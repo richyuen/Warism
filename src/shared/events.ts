@@ -238,6 +238,12 @@ export const EventKind = {
    * (x, y) = its spawn point. None for a nation not played (the AI's are not history).
    */
   FormationsSentHome: 72,
+  /**
+   * A player's division aboard a convoy still loading took an order over the sea to another landing
+   * and was put on other transports (ROADMAP R25b): it leaves its landing, and is told. a = the
+   * formation, b = its nation, (x, y) = the port it went ashore at.
+   */
+  LeftLanding: 73,
 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */

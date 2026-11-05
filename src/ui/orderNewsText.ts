@@ -6,6 +6,7 @@ export function orderNewsText(n: OrderNews, name: string): string {
   if (n.kind === 'repulsed') return t('order.repulsed', { name });
   if (n.kind === 'landedAway') return t('order.landedAway', { name });
   if (n.kind === 'unescorted') return t('order.unescorted', { name });
+  if (n.kind === 'leftLanding') return t('order.leftLanding', { name });
   if (n.kind === 'sentHome') return n.reason > 1 ? t('order.sentHomeMany', { name, more: n.reason - 1 }) : t('order.sentHome', { name });
   return t('order.refused', { name, why: t(`order.why.${n.reason}` as MessageKey) });
 }
@@ -21,7 +22,7 @@ function stateOf(info: FormationDetail): string {
  * when the panel first showed it after the news (kept in `seen`, by `seq`) has changed since, or the
  * place its march is for (a new order taken while it marched, ROADMAP R23c, R35-N1). A
  * refusal only: the rest tell what became of an order under way, or happened (thrown back, landed
- * away, unescorted, sent home), and stay true.
+ * away, unescorted, sent home, left its landing), and stay true.
  * `info` is the panel's detail; one of another formation or from before the news decides nothing.
  * `orderedAt`: the `seq` the next news was to take when the formation's last order was sent from
  * here (`Hud.orderedAt`); a refusal before it goes, whatever the state (ROADMAP R24c).

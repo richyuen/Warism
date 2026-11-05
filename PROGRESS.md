@@ -1251,3 +1251,11 @@
 - AT: `landingNearSame1938.test.ts`, two new cases (two south, two south-west: landed 632–633; red without, 633 / 1288
   and 633 / 1291). Pin unmoved (player convoys only).
 - **Next:** R25b.
+
+## 2026-11-05 — ROADMAP R25b: a division aboard never leaves its transports untold (R37-B1)
+- The one aboard a loading convoy, taken by an order over the sea to other transports, emits `LeftLanding` (73); the
+  worker tells it as the order's news "leftLanding" (a row and the panel's notice: "its transports are loading for
+  another landing; it left them for other transports and will not land with the rest").
+- AT: `landingLeftTold1938.test.ts` (Japan's two to Shanghai, the one aboard sent to Fuzhou: 1136 → 1151, told) and
+  `landingLeftTold1938.spec.ts` (the row and the notice; looked at). Red without, both. Pin unmoved (an event only).
+- **Next:** R25c.

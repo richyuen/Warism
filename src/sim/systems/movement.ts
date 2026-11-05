@@ -467,6 +467,7 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
   if (!world.embarked.has(id)) return orderAshore(world, id, x, y, pass, byPort, direct, call, escort) || keep();
   // Aboard transports it takes no order (PLAN 4.5a), but aboard a player's convoy still loading at
   // its port, where it goes ashore and takes it (ROADMAP R22b); refused, it is aboard again (R23a).
+  const was = world.embarked.get(id)!.fleet;
   const back = ashoreAtPort(world, id);
   if (back === null) {
     world.seaBound.delete(id);
@@ -475,7 +476,14 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
     world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Aboard, NaN);
     return false;
   }
-  if (orderAshore(world, id, x, y, pass, byPort, direct, call, escort, true)) return true;
+  if (orderAshore(world, id, x, y, pass, byPort, direct, call, escort, true)) {
+    // Taken to other transports, it is told it leaves its landing (ROADMAP R25b, critic run 37,
+    // R37-B1: it was sent to another port's in silence, the landing split for weeks).
+    const now = world.seaFetch.get(id) ?? world.embarked.get(id)?.fleet;
+    const c = world.formations.cols;
+    if (now !== undefined && now !== was) world.out.emit(world.tick, EventKind.LeftLanding, id, c.nation[id]!, c.x[id]!, c.y[id]!);
+    return true;
+  }
   back();
   return keep();
 }
