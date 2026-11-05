@@ -1275,6 +1275,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   A loaded convoy waits at its port while another there for the same landing is still to load
   (called, or one bound for it would fit; `stillLoading`), however long; its divisions' panels say
   "Aboard at {port}, waiting for the rest of the landing" (`aboard`).
+  Below it, the landing (`voyage.wait`, ROADMAP R22c): of the divisions for that target at that
+  port, how many are aboard of how many in all, and the days the furthest bound has left to march
+  (`marchHoursLeft`, rounded up; "held up on the way" where it does not go on).
   A division aboard such a convoy, still loading at its port of its nation, takes a new order: it
   goes ashore at the port's cell (no landing, its organisation as it was) and the order stands
   (`ashoreAtPort`, ROADMAP R22b); aboard anything else, it takes none (`Aboard`).

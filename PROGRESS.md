@@ -1079,3 +1079,14 @@
   every `landing*` unit test (15 files). Pin unmoved (the gate's pin stage green). Tick: an embarked formation's order
   only, no system's hourly cost changed.
 - **Next:** R22c.
+
+## 2026-11-05 — ROADMAP R22c: the wait aboard is accounted for (R34-N1)
+- A division aboard at its port waiting for the rest of its landing has a "Landing" row in its panel: "1 of 4 aboard;
+  the last 47 days from the port" (or "the rest at the port", "one held up on the way", "more transports on their way").
+  The worker counts the landing's divisions at that port for that target and takes the furthest bound one's
+  `marchHoursLeft` (`voyage.wait`).
+- AT: `landingWait1938.test.ts` (Japan's four to Shanghai: 1 of 4, 47 days said at hour 2; the last reached the port
+  after 46.6 days; red without, no account); `landingWait1938.spec.ts` (the row at 1600 × 900 and 390 × 844, looked
+  at). formationPanel, landingVoyage, landingNeutral specs green. At the desk panel's width the row's value runs into
+  its label, as the status row's does (R34-N2): R22e. Worker and UI only: pin unmoved, tick unchanged.
+- **Next:** R22d.

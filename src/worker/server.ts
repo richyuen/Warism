@@ -28,7 +28,7 @@ import { shipyard } from '../sim/systems/production';
 import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { AT_PORT_CELLS, carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
 import { landingOf, loading, neutralLanding } from '../sim/systems/amphibious';
-import { overSea } from '../sim/systems/movement';
+import { marchHoursLeft, overSea } from '../sim/systems/movement';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -1067,11 +1067,34 @@ export class SimServer {
     const e = world.embarked.get(id);
     // Aboard a convoy still at its port (ROADMAP R21e): it waits for the rest of its landing.
     const at0 = e === undefined ? undefined : world.convoyPort.get(e.fleet);
-    if (e !== undefined && at0 !== undefined && loading(world, e.fleet)) return { state: 'aboard', port: world.ports[at0]?.name ?? null };
+    if (e !== undefined && at0 !== undefined && loading(world, e.fleet)) return { state: 'aboard', port: world.ports[at0]?.name ?? null, wait: this.landingWait(world, e.target, at0) };
     if (e !== undefined) return { state: 'atSea', port: null };
     if (world.seaBound.has(id)) return { state: world.formations.cols.moving[id] === 1 ? 'toPort' : 'waiting', port: name };
     const at = this.landedAt.get(id);
     return at !== undefined && world.tick - at < 24 ? { state: 'landed', port: null } : null;
+  }
+
+  /**
+   * The landing a division aboard at port `port` for cell `target` waits for (ROADMAP R22c, critic run
+   * 34, R34-N1): of the divisions for that target at that port, how many are aboard and how many in
+   * all (aboard, and bound for a convoy there); the days the furthest bound has left to march (0: all
+   * at the port; null: one held up on the way, in a fight or at the front).
+   */
+  private landingWait(world: World, target: number, port: number): NonNullable<NonNullable<FormationDetail['voyage']>['wait']> {
+    let aboard = 0;
+    let of = 0;
+    let hours = 0;
+    for (const [, x] of world.embarked) {
+      if (x.target !== target || world.convoyPort.get(x.fleet) !== port) continue;
+      aboard++;
+      of++;
+    }
+    for (const [id, o] of world.seaFetch) {
+      if (!world.formations.has(id) || world.convoyPort.get(o) !== port || world.seaBound.get(id) !== target) continue;
+      of++;
+      hours = Math.max(hours, marchHoursLeft(world, id));
+    }
+    return { aboard, of, days: Number.isFinite(hours) ? Math.ceil(hours / 24) : null };
   }
 
   /** The snapshot's voyages (ROADMAP R17c; `Snapshot.voyages`). */

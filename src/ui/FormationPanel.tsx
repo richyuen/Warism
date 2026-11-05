@@ -61,6 +61,17 @@ export function FormationPanel({
       : voyage && !info?.engaged
         ? t(voyage.port ? `formation.voyage.${voyage.state}.port` : `formation.voyage.${voyage.state}`, { port: voyage.port ?? '' })
         : t(info?.engaged ? 'formation.status.engaged' : info?.moving ? 'formation.status.moving' : 'formation.status.holding');
+  // Aboard at its port, waiting for the rest of its landing (ROADMAP R22c): how many, and how far the last.
+  const wait = voyage?.state === 'aboard' ? voyage.wait : undefined;
+  const waitText = wait
+    ? wait.days === null
+      ? t('formation.wait.held', { n: wait.aboard, of: wait.of })
+      : wait.aboard === wait.of
+        ? t('formation.wait.ships', { n: wait.aboard, of: wait.of })
+        : wait.days === 0
+          ? t('formation.wait.here', { n: wait.aboard, of: wait.of })
+          : t(wait.days === 1 ? 'formation.wait.days.one' : 'formation.wait.days', { n: wait.aboard, of: wait.of, days: wait.days })
+    : null;
   return (
     <aside class="nation-panel formation-panel" data-testid="formation-panel" data-formation={info?.id ?? 0}>
       <div class="panel-head">
@@ -118,6 +129,7 @@ export function FormationPanel({
               ) : null}
             </span>
           </div>
+          {waitText ? row('formation.wait', waitText, 'formation-wait') : null}
           {escort ? (
             <label class="panel-row formation-escort" title={t('formation.escort.title')}>
               <span>{t('formation.escort')}</span>

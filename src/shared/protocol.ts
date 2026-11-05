@@ -732,9 +732,11 @@ export interface FormationDetail {
   /**
    * A land formation's voyage (ROADMAP R17c): marching to its port, waiting there for its transports,
    * at sea, or landed (a player's order, for a day after); the port's name where it has one. Null
-   * for none.
+   * for none. `wait`, aboard at its port (ROADMAP R22c): of its landing's divisions, how many are
+   * aboard and how many in all, and the days the furthest has left to the port (0: all there; null:
+   * held up on the way).
    */
-  voyage: { state: 'toPort' | 'waiting' | 'aboard' | 'atSea' | 'landed'; port: string | null } | null;
+  voyage: { state: 'toPort' | 'waiting' | 'aboard' | 'atSea' | 'landed'; port: string | null; wait?: { aboard: number; of: number; days: number | null } } | null;
 }
 
 /**
