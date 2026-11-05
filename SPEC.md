@@ -1275,6 +1275,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   A loaded convoy waits at its port while another there for the same landing is still to load
   (called, or one bound for it would fit; `stillLoading`), however long; its divisions' panels say
   "Aboard at {port}, waiting for the rest of the landing" (`aboard`).
+  A division aboard such a convoy, still loading at its port of its nation, takes a new order: it
+  goes ashore at the port's cell (no landing, its organisation as it was) and the order stands
+  (`ashoreAtPort`, ROADMAP R22b); aboard anything else, it takes none (`Aboard`).
   The group is the player's (`playerOrders`; the AI leaves it). The division marches to the
   port, or stands there, bound for the group (`seaFetch`; the group's port `convoyPort`); it boards
   when the group stands at that port with room (aboard, not sailing), waits while the group is under

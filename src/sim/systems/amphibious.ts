@@ -374,6 +374,24 @@ export function loading(world: World, fleet: number): boolean {
   return near(world, cellOfPlace(world, fleet), portSeaOf(world)[port]!, world.atSize(AT_PORT_CELLS));
 }
 
+/**
+ * A formation `id` aboard a player's convoy still loading at its port (ROADMAP R22b, critic run 34,
+ * R34-N1) goes ashore there on a new order: at the port's cell, its organisation as it was, no
+ * landing (it never left). The convoy waits on for the rest, or is over with nobody aboard or bound
+ * (`convoySystem`). False where it is aboard anything else (under way, or the AI's) or the port is
+ * no longer its nation's: it takes no order.
+ */
+export function ashoreAtPort(world: World, id: number): boolean {
+  const e = world.embarked.get(id);
+  if (e === undefined || !loading(world, e.fleet)) return false;
+  const port = world.convoyPort.get(e.fleet)!;
+  const c = world.formations.cols;
+  if (world.cells.controller[world.ports[port]!.cell] !== c.nation[id]) return false;
+  world.embarked.delete(id);
+  [c.x[id], c.y[id]] = world.cellPoint(world.ports[port]!.cell);
+  return true;
+}
+
 /** Ends the player's convoy on group `fleet`: the formations still bound for it are told (`why`, by default `NoTransports`). */
 function endConvoy(world: World, fleet: number, why: RejectReason = RejectReason.NoTransports): void {
   world.convoyPort.delete(fleet);

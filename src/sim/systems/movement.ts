@@ -71,7 +71,7 @@ import { nearestCellWhere } from '../data/ownership';
 import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroups, type ProvinceGraph } from '../nav/provinceGraph';
 import { isDayStart } from '../../shared/calendar';
 import { Domain, navOf, PlayerOrderKind, portSeaOf, type TemplateRule, type World } from '../world';
-import { assignTransports, carrying, escortConvoy, landingOf, near, neutralLanding, transportsPort, tryLanding } from './amphibious';
+import { ashoreAtPort, assignTransports, carrying, escortConvoy, landingOf, near, neutralLanding, transportsPort, tryLanding } from './amphibious';
 import { AT_PORT_CELLS } from './navalCombat';
 import { noteMove } from './elements';
 import { spawnPoint } from './production';
@@ -455,8 +455,9 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
   refusedLong = false;
   // A fleet sails (PLAN 4.2c): its order is its own.
   if (world.formations.has(id) && world.isFleet(id)) return orderSail(world, id, x, y);
-  // Aboard transports it takes no order (PLAN 4.5a).
-  if (world.embarked.has(id)) {
+  // Aboard transports it takes no order (PLAN 4.5a), but aboard a player's convoy still loading at
+  // its port, where it goes ashore and takes it (ROADMAP R22b).
+  if (world.embarked.has(id) && !ashoreAtPort(world, id)) {
     world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Aboard, NaN);
     return false;
   }

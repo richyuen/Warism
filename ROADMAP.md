@@ -177,15 +177,21 @@ Rules:
     `serverPortShutNews1938.test.ts` (Belfast via the worker: told `PortShut`; red without, nothing told),
     `landingPortShut1938.spec.ts` (seed 3517, three to Calais: division 270's row and panel "its port is bombed
     shut"; red without). Worker only: pin unmoved.
-  - [ ] R22b The wait aboard has an account and a way out (R34-N1): a division aboard a convoy still in its port takes
-    an order (goes ashore); the panel says how many of the landing it waits for and the furthest one's days; the
-    escort is held until the convoy sails. AT: four Japanese divisions to Shanghai: the panel names "1 of 4 aboard"
-    and the days; a recall of the first in Tokyo is obeyed (ashore, not refused); no escort on Shanghai's water before
-    the convoy sails.
-  - [ ] R22c The aboard status keeps to its column (R34-N2): "Aboard at Tokyo, waiting for the rest of the landing"
+  - [x] R22b The wait aboard has a way out (R34-N1): a division aboard a player's convoy still loading at its port
+    takes an order: it goes ashore at the port and the order stands. AT: four Japanese divisions to Shanghai, a recall
+    of the first while it waits aboard at Tokyo is obeyed (ashore, marching; not refused); red without the rule.
+    Done: `ashoreAtPort` (ADR-826, R22b); `landingAshore1938.test.ts` (ashore by the port, marching; the other three
+    land together; red without: refused `Aboard`). The AI's embarked untouched: pin unmoved.
+  - [ ] R22c The wait aboard is accounted for (R34-N1): the waiting division's panel says how many of the landing are
+    aboard and the furthest one's days to the port. AT: four Japanese divisions to Shanghai: "1 of 4 aboard" and the
+    days, at the hour the first boards.
+  - [ ] R22d The escort waits for the sailing (R34-N1): the escort of a new convoy sails when the convoy does, not at
+    the click. AT: four Japanese divisions to Shanghai: no escort at Shanghai's water before the convoy sails, and
+    one there by its landing.
+  - [ ] R22e The aboard status keeps to its column (R34-N2): "Aboard at Tokyo, waiting for the rest of the landing"
     wraps under its value, not into "Status". AT: the panel's crop at 1600 × 900 and 390 × 844, label and value apart.
-  - [ ] R22d A refusal notice goes when it stops being true (R34-N3): the panel's refusal is cleared when the
+  - [ ] R22f A refusal notice goes when it stops being true (R34-N3): the panel's refusal is cleared when the
     formation's order or state changes. AT: the recall refused in Tokyo, then the convoy sails: no refusal under
     "At sea, bound for its landing".
-  - [ ] R22e A sea order on open water says so (R34-N4): a click onto the sea off Bergen is refused for the sea, not for
+  - [ ] R22g A sea order on open water says so (R34-N4): a click onto the sea off Bergen is refused for the sea, not for
     "a way by land". AT: Britain's division clicked onto the water off Bergen: the reason speaks of the sea.

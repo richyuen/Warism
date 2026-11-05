@@ -1067,3 +1067,15 @@
   news in 150 h). Order and landing specs green (orderNews, landingNeutral ×2, landingVoyage, landingEscort). The
   worker only, no sim rule: pin unmoved, tick unchanged.
 - **Next:** R22b.
+
+## 2026-11-05 — ROADMAP R22b: the wait aboard has a way out (R34-N1)
+- R22b split into b (a way out), c (the panel's account) and d (the escort waits for the sailing); the old c–e are e–g.
+- A division aboard a player's convoy still loading at a port of its nation takes an order: it goes ashore at the port's
+  cell and the order stands (`ashoreAtPort`, an amendment of PLAN 4.5a in ADR-826's R22b). Under way, or the AI's, as
+  before: refused `Aboard`.
+- AT: `landingAshore1938.test.ts` (Japan's four to Shanghai, the first recalled inland while it waits at Tokyo: ashore by
+  the port and marching, not refused; the other three land together; red without, `Aboard`). The decisions it stands
+  on green before and after: `rejectReasons1938`, `serverOrderNews`, `landingTogether1938`, `landingPeace1938`, and
+  every `landing*` unit test (15 files). Pin unmoved (the gate's pin stage green). Tick: an embarked formation's order
+  only, no system's hourly cost changed.
+- **Next:** R22c.

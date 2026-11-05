@@ -52,6 +52,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
   far division a target of its own. The second group, a new convoy, takes its own escort (two
   warfleets for such a click with the box ticked). The ROADMAP's "where one group has room" did not
   cover the AT's own case; restated. `landingTogether1938.test.ts` (red without: 387 hours apart).
+- **R22b (critic run 34, R34-N1).** The unbounded wait gets a way out. A division aboard a player's
+  convoy still loading at a port of its nation takes an order (an amendment of PLAN 4.5a's "aboard it
+  takes no order", ADR-262): it goes ashore at the port's cell and the order stands; the convoy waits
+  on for the rest, or is over with nobody aboard or bound. Not a landing (no event, no loss of
+  organisation: it never left the quay). The AI's embarked and every convoy under way keep 4.5a: the
+  AI never has a player's convoy, so the pin stands. Checked against: `rejectReasons1938.test.ts`
+  (an order aboard a landing's transports refused `Aboard`), `serverOrderNews.test.ts` (an order
+  while the voyage is under way refused, the voyage told on), `landingTogether1938.test.ts`,
+  `landingPeace1938.test.ts`: green before and after. `landingAshore1938.test.ts`: red without.
 - **Tests restated.** `serverOrderNews.test.ts` (Britain on Cuxhaven) and `orderNews1938.spec.ts`
   (Switzerland on London) each order a landing at peace to see a refusal told with its reason (no
   port, no transports); `Neutral` now comes first. Each now makes that war first, and its assertions
