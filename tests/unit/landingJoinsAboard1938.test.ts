@@ -28,7 +28,7 @@ const FUZHOU: [number, number] = [1703.5, 445.5];
 
 type Then = 'recall' | 'reclick' | null;
 
-function run(gap: number, then: Then = null): { landed: Map<number, number>; walked: boolean; refused: number[]; ids: number[]; panel: string | undefined; where: Map<number, number> } {
+function run(gap: number, then: Then = null): { landed: Map<number, number>; walked: boolean; refused: number[]; ids: number[]; panel: string | undefined; where: Map<number, number>; idle: boolean } {
   // Refusals as the page is told them (`orderNews`): at the click, applied at once, as well as later.
   const refused: number[] = [];
   const s = new SimServer((m: FromWorker) => {
@@ -74,6 +74,8 @@ function run(gap: number, then: Then = null): { landed: Map<number, number>; wal
   step();
   const first = pair.find((id) => w.embarked.has(id))!;
   expect(first, 'one aboard').toBeDefined();
+  // The transports called for the second (ROADMAP R31d, R41-N1).
+  const called = w.seaFetch.get(pair.find((id) => id !== first)!);
   click([fresh], ...FUZHOU);
   for (let h = 0; h < gap; h++) step();
   click(pair, ...FUZHOU);
@@ -87,13 +89,17 @@ function run(gap: number, then: Then = null): { landed: Map<number, number>; wal
   }
   // The one aboard is never ashore before its landing: aboard, not marching to a port (red: it walked ~50 days).
   let walked = false;
+  // Those transports, from day 5: carrying, in a convoy, under way, or the AI's; not idle under the player's order.
+  let idle = false;
   for (let h = 0; h < 24 * 90 && ids.some((id) => !landed.has(id)); h++) {
     if (!landed.has(first) && !w.embarked.has(first)) walked = true;
+    const g = called ?? 0;
+    if (h >= 120 && w.formations.has(g) && w.playerOrders.has(g) && !w.convoyPort.has(g) && c.moving[g] !== 1 && ![...w.embarked.values()].some((e) => e.fleet === g)) idle = true;
     step();
   }
   const where = new Map(ids.map((id) => [id, Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!)]));
-  process.stderr.write(`R29b gap ${gap} ${then}: first ${first}, panel ${panel}, walked ${walked}, refused ${refused}, landed ${[...landed]}\n`);
-  return { landed, walked, refused, ids, panel, where };
+  process.stderr.write(`R29b gap ${gap} ${then}: first ${first}, panel ${panel}, called ${called} idle ${idle}, walked ${walked}, refused ${refused}, landed ${[...landed]}\n`);
+  return { landed, walked, refused, ids, panel, where, idle };
 }
 
 describe('a landing redirected to a convoy loading elsewhere: the one aboard goes on its own transports (ROADMAP R29b)', () => {
@@ -107,6 +113,7 @@ describe('a landing redirected to a convoy loading elsewhere: the one aboard goe
       expect(Math.max(...at) - Math.min(...at), 'together (red: h657 and h1291)').toBeLessThanOrEqual(24);
       expect(Math.max(...at), 'about as soon as the three from a standing start (h976)').toBeLessThanOrEqual(1000);
       expect(r.panel, 'its panel: aboard, sailing to the port for the rest (red: "At sea, bound for its landing")').toBe('toPortAboard');
+      expect(r.idle, "the transports called for the second not idle under the player's order (R31d; red: a month at Tokyo)").toBe(false);
     }, 300_000);
   }
 

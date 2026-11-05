@@ -43,6 +43,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   along its own coast) and takes the order from there; out of reach of such land it is refused as before.
   After: 270 ashore, marching; neither lands in France. `landingJoinsAboardMates1938.test.ts` (red
   without). Player convoys only: pin unmoved.
+- **R31d** (R41-N1). The bound one of a redirected landing (365, bound for group 1144 called to Tokyo for
+  it) walks to the other port's convoy (~29 days) while 1144 stood empty at Tokyo for a month: a fleet's
+  player order never ended (`playerOrderSystem` keeps an order while the formation is `afloat`, which a
+  fleet always is). Now transports standing with no convoy and nobody aboard are the AI's again.
+  **Not chosen:** 1144 fetching 365 at Tokyo and ferrying it to Sasebo (R29b's state for the bound): on
+  the trace 365 stands ~25 cells from Tokyo and ~33 from Sasebo at ~17 h a cell, so the ferry saves
+  about two days for a cross-port convoy rule (a canonical port, every same-target check) that R21e
+  exists to avoid; measured first, at the advisor's word. **Changed:** R22b's test
+  (`landingAshore1938.test.ts`) expected the one recalled inland never to land in 70 days; once its march
+  is over it is the AI's (ADR-759), which now ships it on the group it left, freed, to China at h183. The
+  test checks the other three land together, as it says. `landingJoinsAboard1938.test.ts` (red without:
+  1144 idle under the player's order). Player orders only: pin unmoved.
 
 ### ADR-827 · 2026-11-05 · accepted — Show the landing while choosing it (the user's decision)
 

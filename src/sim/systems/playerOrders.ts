@@ -14,6 +14,7 @@
  */
 import { EventKind, RejectReason } from '../../shared/events';
 import { PlayerOrderKind, type World } from '../world';
+import { carrying, transportRoom } from './amphibious';
 
 /** How long the AI leaves a wing's mission given by the player (hours). */
 export const PLAYER_MISSION_HOURS = 24;
@@ -35,6 +36,13 @@ export function playerOrderSystem(world: World): void {
       continue;
     }
     if (c.moving[id] !== 1 && !world.embarked.has(id) && !world.seaBound.has(id) && !world.afloat(id)) {
+      world.playerOrders.delete(id);
+      continue;
+    }
+    // Transports standing with no convoy and nobody aboard (ROADMAP R31d; critic run 41, R41-N1: called for a
+    // division that then went to another port's convoy, they stood empty at Tokyo under the player's order
+    // for a month): the AI's again. A fleet's order otherwise held while it is afloat, that is always.
+    if (world.isFleet(id) && c.moving[id] !== 1 && !world.convoyPort.has(id) && !carrying(world, id) && transportRoom(world, id) > 0) {
       world.playerOrders.delete(id);
       continue;
     }

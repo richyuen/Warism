@@ -425,9 +425,12 @@ Rules:
     270's ship sails to Plymouth: 270 does not land at Caen untold.
     Done: ashore on its side's coast nearest its transports (`ashoreFromShip`), the order taken from there. 270
     marches; neither lands in France (red: refused, Caen h99). Pin unmoved.
-  - [ ] R31d R41-N1: the bound one of a redirected landing walks to the other port (~29 days) while the transports
+  - [x] R31d R41-N1: the bound one of a redirected landing walks to the other port (~29 days) while the transports
     called for it stand empty: where its own transports are free and nearer, they fetch it (as R29b's one aboard).
     AT: seed 3517, R40-B1's case: 365 does not walk to Sasebo while 1144 idles at Tokyo; the three together.
+    Done (measured, then the smaller fix): transports with no convoy and nobody aboard are the AI's again, not
+    idle under the player's order (a fleet's never ended). The ferry would save ~2 days: not built (DECISIONS).
+    R22b's test checks the three (the recalled one is the AI's, ADR-759). Red without. Pin unmoved.
   - [ ] R31e R40-N1: one re-sent alone sails at once and cannot be recalled: a convoy of one waits an hour for the
     rest of its click (or the recall takes it back). AT: the one aboard sent alone to Fuzhou, recalled a day later:
     not refused, it rejoins its landing.

@@ -1450,3 +1450,10 @@
   (`ashoreFromShip`) and is taken from there. Britain 15101: 270 ashore and marching to the Midlands, nobody in
   France (red: refused, Caen h99). Naval unit tests green (60 files); pin unmoved.
 - **Next:** R31d.
+
+## 2026-11-05 — R31d: transports with no convoy are the AI's again (R41-N1)
+- A fleet's player order never ended (`afloat`); transports called for a division that then went to another
+  port's convoy stood empty for a month. Now standing, no convoy, nobody aboard: the AI's. The ferry of the bound
+  one (Tokyo → Sasebo) measured at ~2 days' gain, not built. R22b's test now checks the three it names (the
+  recalled one is the AI's after its march). Whole unit suite green (snapshot-perf under load); pin unmoved.
+- **Next:** R31e.

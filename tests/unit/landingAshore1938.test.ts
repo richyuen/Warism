@@ -72,10 +72,14 @@ describe('the wait aboard has a way out (ROADMAP R22b)', () => {
     const at = Math.floor(c.y[first]!) * W + Math.floor(c.x[first]!);
     expect(Math.abs((at % W) - (port.cell % W)) + Math.abs(Math.floor(at / W) - Math.floor(port.cell / W)), 'by the port').toBeLessThanOrEqual(2);
 
-    // The convoy waits on for the rest, and they land together at Shanghai.
-    for (let h = 0; h < 24 * 70 && landed.size < 3; h++) step();
-    expect([...landed.keys()].sort(), 'the other three landed').toEqual(four.filter((id) => id !== first).sort());
+    // The convoy waits on for the rest, and they land together at Shanghai. (The one recalled is the AI's
+    // once its march is over, ADR-759, and may be shipped elsewhere by it on transports the convoys freed,
+    // R31d: on this seed on the group it left, freed, to China at h183, weeks before them.)
+    const rest = four.filter((id) => id !== first);
+    for (let h = 0; h < 24 * 70 && rest.some((id) => !landed.has(id)); h++) step();
+    expect(rest.filter((id) => landed.has(id)), 'the other three landed').toEqual(rest);
     expect(refused, 'none refused').toEqual([]);
-    expect(Math.max(...landed.values()) - Math.min(...landed.values()), 'together').toBeLessThanOrEqual(24);
+    const when = rest.map((id) => landed.get(id)!);
+    expect(Math.max(...when) - Math.min(...when), 'together').toBeLessThanOrEqual(24);
   });
 });
