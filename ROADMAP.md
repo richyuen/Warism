@@ -205,5 +205,9 @@ Rules:
     Done, restated (R22b obeys that recall now): `staleNotice`, a refusal only; `orderNews1938.spec.ts` (Switzerland
     refused London, the notice held over two hours standing, gone once marched to Zurich, the ticker's row kept; red
     without). The rest of the news stays (`landingEscort1938.spec.ts`'s "no warships free" while bound).
-  - [ ] R22g A sea order on open water says so (R34-N4): a click onto the sea off Bergen is refused for the sea, not for
+  - [x] R22g A sea order on open water says so (R34-N4): a click onto the sea off Bergen is refused for the sea, not for
     "a way by land". AT: Britain's division clicked onto the water off Bergen: the reason speaks of the sea.
+    Done: `RejectReason.OpenSea` (17, "there is only sea there"); `orderOpenSea1938.test.ts` (the player's order and an
+    order of no player; the Thames water still goes; red without, `NoRoute`), `landingNeutral1938.spec.ts`'s click.
+    A reason only: pin unmoved.
+  R22 done; then the critic again.

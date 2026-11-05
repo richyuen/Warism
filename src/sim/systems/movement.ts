@@ -70,6 +70,7 @@ import { exitsOf } from '../nav/crossings';
 import { nearestCellWhere } from '../data/ownership';
 import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroups, type ProvinceGraph } from '../nav/provinceGraph';
 import { isDayStart } from '../../shared/calendar';
+import { isLand } from '../../shared/terrain';
 import { Domain, navOf, PlayerOrderKind, portSeaOf, type TemplateRule, type World } from '../world';
 import { ashoreAtPort, assignTransports, carrying, escortConvoy, landingOf, near, neutralLanding, transportsPort, tryLanding } from './amphibious';
 import { AT_PORT_CELLS } from './navalCombat';
@@ -577,7 +578,10 @@ function order(world: World, id: number, x: number, y: number, pass: Passage | u
     route = found;
   } else if (target >= 0) route = findRoute(nav.grid, nav.graph, rule.mobility as MobilityId, origin, target, way);
   if (!route) {
-    world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, why, NaN);
+    // A target on open sea with no land of its own near it (ROADMAP R22g): that is why, not the
+    // way by land it was never asked for.
+    const open = why === RejectReason.NoRoute && target < 0 && !isLand(world.cells.terrain[ty * w + tx]!);
+    world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, open ? RejectReason.OpenSea : why, NaN);
     return false;
   }
   noteMove(world, id);

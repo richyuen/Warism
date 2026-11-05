@@ -278,6 +278,8 @@ export const RejectReason = {
   Neutral: 15,
   /** Over the sea (ROADMAP R21b): the port of its nation it stands at is bombed shut. */
   PortShut: 16,
+  /** A land formation's order to open sea (ROADMAP R22g, critic run 34, R34-N4): water, and no land of its own near it to go to. */
+  OpenSea: 17,
 } as const;
 export type RejectReason = (typeof RejectReason)[keyof typeof RejectReason];
 

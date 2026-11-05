@@ -1125,3 +1125,13 @@
   notice held over two hours standing; marched to Zurich, "On the march" and no notice; the row kept; red without).
   orderNews, landingNeutral, landingPortShut, landingVoyage, landingEscort, landingWait, airOrders specs green. UI only.
 - **Next:** R22g.
+
+## 2026-11-05 — ROADMAP R22g: an order to the open sea says so (R34-N4); R22 done
+- A land formation's order to water with no land of its own near enough to snap to is refused `OpenSea` (17: "there is
+  only sea there: it goes over the sea to land on a coast"), not `NoRoute` ("no way by land…"), which spoke of a march
+  never asked for. A reason only, for every order: the pin unmoved (the gate's pin stage green).
+- AT: `orderOpenSea1938.test.ts` (Britain's division onto the water off Bergen, the player's order and one of no player:
+  `OpenSea`; the Thames water by London snaps to land and goes; red without, `NoRoute`); `landingNeutral1938.spec.ts`
+  (a click there: the panel says "only sea there"; looked at). `rejectReasons1938` green. The gate's `snapshot-perf`
+  red in the full run and green alone again (BLOCKERS watch list, a timing test under load).
+- **Next:** critic run 35.

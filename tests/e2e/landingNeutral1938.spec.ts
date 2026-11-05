@@ -75,3 +75,16 @@ test('with the mouse: the tooltip over a neutral coast says no landing; the refu
   await expect(page.getByTestId('formation-panel')).toHaveAttribute('data-formation', String(div), { timeout: 10_000 });
   await expect(page.getByTestId('formation-notice')).toContainText('outside its wars', { timeout: 10_000 });
 });
+
+// ROADMAP R22g (critic run 34, R34-N4): a click on the open sea off Bergen with Britain's division
+// selected was refused for "a way by land"; the panel now says there is only sea there.
+test('a click on the open sea is refused for the sea', async ({ page }) => {
+  test.setTimeout(300_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await britain(page);
+  await page.evaluate(() => window.__warsim!.player!.click(1048.5, 199.5, -9999, -9999, false));
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('formation-notice')).toContainText('only sea there', { timeout: 10_000 });
+  await expect(page.getByTestId('formation-notice')).not.toContainText('way by land');
+  await page.getByTestId('formation-panel').screenshot({ path: 'test-results/landingOpenSea1938.png' });
+});
