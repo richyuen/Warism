@@ -72,7 +72,7 @@ import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroup
 import { isDayStart } from '../../shared/calendar';
 import { isLand } from '../../shared/terrain';
 import { Domain, navOf, PlayerOrderKind, portSeaOf, type TemplateRule, type World } from '../world';
-import { ashoreAtPort, assignTransports, carrying, escortConvoy, landingHeld, landingOf, near, neutralLanding, sameLanding, transportsPort, tryLanding } from './amphibious';
+import { ashoreAtPort, assignTransports, carrying, escortConvoy, landingHeld, landingOf, near, neutralLanding, sailAboard, sameLanding, transportsPort, tryLanding } from './amphibious';
 import { AT_PORT_CELLS } from './navalCombat';
 import { noteMove } from './elements';
 import { spawnPoint } from './production';
@@ -483,6 +483,7 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
   if (!world.embarked.has(id)) return (orderAshore(world, id, x, y, pass, byPort, direct, call, escort) && taken()) || keep();
   // Aboard transports it takes no order (PLAN 4.5a), but aboard a player's convoy still loading at
   // its port, where it goes ashore and takes it (ROADMAP R22b); refused, it is aboard again (R23a).
+  const ship = world.embarked.get(id)!.fleet;
   const back = ashoreAtPort(world, id);
   if (back === null) {
     world.seaBound.delete(id);
@@ -491,13 +492,13 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
     world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Aboard, NaN);
     return false;
   }
-  if (orderAshore(world, id, x, y, pass, byPort, direct, call, escort, true)) return taken();
+  if (orderAshore(world, id, x, y, pass, byPort, direct, call, escort, ship)) return taken();
   back();
   return keep();
 }
 
-/** `orderMove` of a formation not aboard (or just gone ashore: `aboard`). */
-function orderAshore(world: World, id: number, x: number, y: number, pass: Passage | undefined, byPort: boolean, direct: boolean, call: boolean, escort: boolean, aboard = false): boolean {
+/** `orderMove` of a formation not aboard (or just gone ashore from group `aboard`; 0 for none). */
+function orderAshore(world: World, id: number, x: number, y: number, pass: Passage | undefined, byPort: boolean, direct: boolean, call: boolean, escort: boolean, aboard = 0): boolean {
   world.seaBound.delete(id);
   world.seaFetch.delete(id);
   refusedLong = false;
@@ -537,7 +538,7 @@ function orderAshore(world: World, id: number, x: number, y: number, pass: Passa
  * no landing at the target, or no transports, refused as before; and where the target or the
  * landing is the ground of a nation outside its wars (`RejectReason.Neutral`, ROADMAP R20).
  */
-function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage | undefined, escort: boolean, aboard = false): boolean {
+function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage | undefined, escort: boolean, aboard = 0): boolean {
   const c = world.formations.cols;
   const w = world.cells.w;
   const target = Math.floor(y) * w + Math.floor(x);
@@ -552,10 +553,12 @@ function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage
     world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.Neutral, NaN);
     return false;
   }
-  const a = assignTransports(world, id, target);
+  const a = assignTransports(world, id, target, aboard);
   // Gone ashore from transports loading for another landing (ROADMAP R24d): those are why.
-  const none = aboard ? RejectReason.Loading : RejectReason.NoTransports;
+  const none = aboard !== 0 ? RejectReason.Loading : RejectReason.NoTransports;
   if (!a) return order(world, id, x, y, pass, 0, transportsPort(world, id, false) >= 0 ? none : RejectReason.NoPort);
+  // Its own transports, to its new landing's port: it stays aboard and they take it there (ROADMAP R29b).
+  if (aboard !== 0 && a.fleet === aboard && sailAboard(world, id, aboard, a.port, target)) return true;
   const port = world.ports[a.port]!;
   const here = Math.floor(c.y[id]!) * w + Math.floor(c.x[id]!);
   const r = world.atSize(AT_PORT_CELLS);

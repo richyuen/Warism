@@ -381,9 +381,13 @@ Rules:
     Done: the click's orders go in one message (`cmds`, `Hud.commands`), taken then applied once. Four SW3: none
     told, h1244/1245; two to Fuzhou: none told, h657/658; of three, the two: both told. `landingClickBatch1938`
     test (the worker as the page drives it) and spec (by `Player.click`); red without. Pin unmoved.
-  - [ ] R29b R40-B1: a landing redirected to a target another convoy already serves (a fresh division sent to Fuzhou
+  - [x] R29b R40-B1: a landing redirected to a target another convoy already serves (a fresh division sent to Fuzhou
     first, then the two of the Shanghai landing): the one aboard is put ashore and walks ~50 days to Sasebo while its
     own group sails there empty. A leaver aboard or bound for a group that joins a convoy at another port keeps its
     group, which sails there with it (offered first). AT (by the game's path; the fresh one first, the same hour and
     an hour before): all three land within a day of each other by ~h980 (red: 657 and 1291); 364 never "Marching to
     Sasebo".
+    Done: the one aboard is offered its own group at the convoy's port; it stays aboard, and the group sails there
+    with it (`sailAboard`). Same hour: h792/792/794; an hour before: h794/794/796; never ashore. Red without (walked,
+    h1292). `landingJoinsAboard1938.test.ts`. Pin unmoved.
+  R29 done; then the critic again (run 41).

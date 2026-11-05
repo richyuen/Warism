@@ -71,6 +71,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   numbers); the fuzz checks a whole click is refused nothing, a landing loads at one port, and every
   convoy has one target (red without: the four re-clicked south-west). Player convoys only: pin
   unmoved.
+- **R29b** (critic run 40, R40-B1). A landing redirected to a target another convoy loads for at
+  another port (a fresh division sent to Fuzhou first, loading at Sasebo; then the two of the Shanghai
+  landing): the one aboard at Tokyo went ashore and was bound for that convoy by R21e's same-target
+  rule, and walked ~50 days to Sasebo, while its own transports, freed by R28a and called there for
+  the second, sailed there empty. Seed 3517: 365 h657, 364 and 366 h1291 (one-at-a-time orders);
+  h1292–1294 with R29a's batch, the one aboard still walking. Now `assignTransports` offers the one
+  aboard its own group at the convoy's port where nobody else holds it, and `sailAboard` keeps it
+  aboard for the new landing while the group sails there (`convoyPort` that port; it loads the rest
+  and sails with the port's convoys, R21e). After: h792–796, the three within a day, the one aboard
+  never ashore; the fresh one an hour before, the same. `landingJoinsAboard1938.test.ts` (red
+  without). **Not chosen:** the one aboard and its group as a convoy of their own at their port,
+  which splits the landing by port. Player convoys only: pin unmoved.
 - **R29a** (critic run 40, R40-B2). The map's click sent one `hud.command` per selected division,
   each applied at once (`now`, `applyNow`), so R28a's `noteLeaving` and R27c's `tellLandingsLeft`
   judged one division at a time: the four of a landing re-clicked three cells south-west were told,

@@ -1389,3 +1389,10 @@
   the page's path: the four re-clicked SW3, nobody told (red: three of four), together h1244/1245; two to Fuzhou,
   none told (red: the first), h657/658; of three, the two told. Test and spec, both red without. Pin unmoved.
 - **Next:** R29b.
+
+## 2026-11-05 — R29b: the one aboard goes to its new landing's port on its own transports (R40-B1)
+- A landing redirected to a target a convoy loads for at another port: the one aboard is offered its own group at
+  that port where nobody else holds it, stays aboard, and the group sails there with it (`sailAboard`). Seed 3517,
+  the fresh one first, then the two (same hour / an hour before): the three land h792–796 (red: the one aboard
+  walks, h1292–1294; before R29a h657 and h1291). Landing, convoy, sea and server tests green (48 files); pin unmoved.
+- R29 done. **Next:** critic run 41.

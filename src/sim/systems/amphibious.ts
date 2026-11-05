@@ -637,9 +637,11 @@ function endConvoy(world: World, fleet: number, why: RejectReason = RejectReason
  * its nation loading for the same target at a port of its land with room for it (a click's
  * divisions go together); a group standing at a port of its land with room, not another's convoy,
  * at the port nearest the formation; a group called to the nearest port of its land
- * (`callTransports`); a convoy for the same target that is full, for its next voyage.
+ * (`callTransports`); a convoy for the same target that is full, for its next voyage. `ship`: the
+ * group it was aboard, gone ashore for this order (ROADMAP R29b): where a convoy for the target loads
+ * at a port and nobody else holds `ship`, `ship` at that port, which takes it there aboard (`sailAboard`).
  */
-export function assignTransports(world: World, id: number, target: number): { port: number; fleet: number } | null {
+export function assignTransports(world: World, id: number, target: number, ship = 0): { port: number; fleet: number } | null {
   const f = world.formations;
   const c = f.cols;
   const nation = c.nation[id]!;
@@ -650,6 +652,10 @@ export function assignTransports(world: World, id: number, target: number): { po
   const here = cellOfPlace(world, id);
   const own = (i: number): boolean => water[i]! >= 0 && world.cells.controller[world.ports[i]!.cell] === nation && comp[world.ports[i]!.cell] === comp[here] && !portShut(world, i);
   const convoys = [...world.convoyPort].filter(([o, p]) => f.has(o) && c.nation[o] === nation && own(p) && convoyTarget(world, o) === target).sort((a, b) => a[0] - b[0]);
+  // The one aboard, its landing now one a convoy loads for at a port (ROADMAP R29b; critic run 40,
+  // R40-B1): its own transports, free, take it there, not another convoy's while it walks there and
+  // they sail there empty (called for the next of its click).
+  if (ship !== 0 && convoys.length > 0 && f.has(ship) && c.moving[ship] !== 1 && c.engaged[ship] !== 1 && !heldGroup(world, ship) && transportRoom(world, ship) - aboard(world, ship) - promised(world, ship) >= men) return { port: convoys[0]![1], fleet: ship };
   for (const [o, p] of convoys) if (transportRoom(world, o) - aboard(world, o) - promised(world, o) >= men) return { port: p, fleet: o };
   // Its click's convoy full (ROADMAP R21e): another group at that port, or called there, so that the
   // two load at one port and sail together (`convoySystem`), not from two ports weeks apart.
@@ -695,6 +701,32 @@ export function assignTransports(world: World, id: number, target: number): { po
   }
   for (const [o, p] of convoys) if (transportRoom(world, o) >= men) return { port: p, fleet: o };
   return null;
+}
+
+/**
+ * A player's land formation `id`, gone ashore from group `ship` at its port for an order over the sea
+ * to cell `target` whose convoy loads at port `port` (`assignTransports`' `ship`; ROADMAP R29b,
+ * critic run 40, R40-B1), is aboard again for that landing and `ship` sails to `port` with it, to load
+ * the rest there and sail with that port's convoys (R21e; `convoySystem`). False, nothing changed,
+ * where `ship` stands at `port` already (it boards there as any) or has no way there.
+ */
+export function sailAboard(world: World, id: number, ship: number, port: number, target: number): boolean {
+  const c = world.formations.cols;
+  const w = world.cells.w;
+  const water = portSeaOf(world)[port]!;
+  const landing = landingOf(world, target);
+  if (!landing || water < 0 || near(world, cellOfPlace(world, ship), water, world.atSize(AT_PORT_CELLS))) return false;
+  if (!orderSail(world, ship, (water % w) + 0.5, Math.floor(water / w) + 0.5)) return false;
+  world.embarked.set(id, { fleet: ship, land: landing.land, water: landing.water, target });
+  c.moving[id] = 0;
+  c.home[id] = 0;
+  world.paths.delete(id);
+  c.x[id] = c.x[ship]!;
+  c.y[id] = c.y[ship]!;
+  world.convoyPort.set(ship, port);
+  world.playerOrders.set(ship, { kind: PlayerOrderKind.march, until: 0, through: false });
+  world.station.delete(ship);
+  return true;
 }
 
 /**
