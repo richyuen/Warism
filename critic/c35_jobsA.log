@@ -1,0 +1,103 @@
+start 00:53:03 npx tsx critic/scripts/c31_ho.ts 4111 20 off critic/c35_ho_off_4111.json > critic/c35_ho_off_4111.log 2>&1
+start 00:53:03 npx tsx critic/scripts/c31_ho.ts 4253 20 off critic/c35_ho_off_4253.json > critic/c35_ho_off_4253.log 2>&1
+start 00:53:04 npx tsx critic/scripts/c31_ho.ts 4637 20 off critic/c35_ho_off_4637.json > critic/c35_ho_off_4637.log 2>&1
+start 00:53:04 npx tsx critic/scripts/c31_ho.ts 5023 20 off critic/c35_ho_off_5023.json > critic/c35_ho_off_5023.log 2>&1
+start 00:53:04 npx tsx critic/scripts/c31_ho.ts 5449 20 off critic/c35_ho_off_5449.json > critic/c35_ho_off_5449.log 2>&1
+end 01:00:46 exit 0 npx tsx critic/scripts/c31_ho.ts 4253 20 off critic/c35_ho_off_4253.json > critic/c35_ho_off_4253.log 2>&1
+start 01:00:47 npx tsx critic/scripts/c31_ho.ts 5867 20 off critic/c35_ho_off_5867.json > critic/c35_ho_off_5867.log 2>&1
+end 01:02:00 exit 0 npx tsx critic/scripts/c31_ho.ts 5023 20 off critic/c35_ho_off_5023.json > critic/c35_ho_off_5023.log 2>&1
+start 01:02:00 npx tsx critic/scripts/c31_ho.ts 6299 20 off critic/c35_ho_off_6299.json > critic/c35_ho_off_6299.log 2>&1
+end 01:02:11 exit 0 npx tsx critic/scripts/c31_ho.ts 4637 20 off critic/c35_ho_off_4637.json > critic/c35_ho_off_4637.log 2>&1
+start 01:02:11 npx tsx critic/scripts/c31_ho.ts 6733 20 off critic/c35_ho_off_6733.json > critic/c35_ho_off_6733.log 2>&1
+end 01:02:58 exit 0 npx tsx critic/scripts/c31_ho.ts 5449 20 off critic/c35_ho_off_5449.json > critic/c35_ho_off_5449.log 2>&1
+start 01:02:58 npx tsx critic/scripts/c31_ho.ts 7177 20 off critic/c35_ho_off_7177.json > critic/c35_ho_off_7177.log 2>&1
+end 01:03:39 exit 0 npx tsx critic/scripts/c31_ho.ts 4111 20 off critic/c35_ho_off_4111.json > critic/c35_ho_off_4111.log 2>&1
+start 01:03:39 npx tsx critic/scripts/c31_ho.ts 7603 20 off critic/c35_ho_off_7603.json > critic/c35_ho_off_7603.log 2>&1
+end 01:09:34 exit 0 npx tsx critic/scripts/c31_ho.ts 5867 20 off critic/c35_ho_off_5867.json > critic/c35_ho_off_5867.log 2>&1
+start 01:09:34 npx tsx critic/scripts/c31_ho.ts 4111 20 on critic/c35_ho_on_4111.json > critic/c35_ho_on_4111.log 2>&1
+end 01:11:13 exit 0 npx tsx critic/scripts/c31_ho.ts 7177 20 off critic/c35_ho_off_7177.json > critic/c35_ho_off_7177.log 2>&1
+start 01:11:13 npx tsx critic/scripts/c31_ho.ts 4637 20 on critic/c35_ho_on_4637.json > critic/c35_ho_on_4637.log 2>&1
+end 01:11:19 exit 0 npx tsx critic/scripts/c31_ho.ts 6299 20 off critic/c35_ho_off_6299.json > critic/c35_ho_off_6299.log 2>&1
+start 01:11:19 npx tsx critic/scripts/c31_ho.ts 5449 20 on critic/c35_ho_on_5449.json > critic/c35_ho_on_5449.log 2>&1
+end 01:11:57 exit 0 npx tsx critic/scripts/c31_ho.ts 6733 20 off critic/c35_ho_off_6733.json > critic/c35_ho_off_6733.log 2>&1
+start 01:11:57 npx tsx critic/scripts/c31_ho.ts 6299 20 on critic/c35_ho_on_6299.json > critic/c35_ho_on_6299.log 2>&1
+end 01:13:34 exit 0 npx tsx critic/scripts/c31_ho.ts 7603 20 off critic/c35_ho_off_7603.json > critic/c35_ho_off_7603.log 2>&1
+start 01:13:34 npx tsx critic/scripts/c31_ho.ts 7177 20 on critic/c35_ho_on_7177.json > critic/c35_ho_on_7177.log 2>&1
+end 01:20:06 exit 0 npx tsx critic/scripts/c31_ho.ts 5449 20 on critic/c35_ho_on_5449.json > critic/c35_ho_on_5449.log 2>&1
+start 01:20:06 npx tsx critic/scripts/c35_lh.ts 3517 30 critic/c35_lh_3517.json > critic/c35_lh_3517.log 2>&1
+end 01:20:23 exit 0 npx tsx critic/scripts/c35_lh.ts 3517 30 critic/c35_lh_3517.json > critic/c35_lh_3517.log 2>&1
+start 01:20:24 npx tsx critic/scripts/c35_lh2.ts 3517 USA 603.5 352.5 1034.5 279.5 40 > critic/c35_lh2_usa_calais.log 2>&1
+end 01:20:31 exit 0 npx tsx critic/scripts/c35_lh2.ts 3517 USA 603.5 352.5 1034.5 279.5 40 > critic/c35_lh2_usa_calais.log 2>&1
+start 01:20:31 npx tsx critic/scripts/c35_lh2.ts 3517 ENG 1023 275 1048.5 199.5 20 > critic/c35_lh2_eng_bergen.log 2>&1
+end 01:20:36 exit 0 npx tsx critic/scripts/c35_lh2.ts 3517 ENG 1023 275 1048.5 199.5 20 > critic/c35_lh2_eng_bergen.log 2>&1
+start 01:20:36 npx tsx critic/scripts/c35_swe.ts 3517 > critic/c35_swe.log 2>&1
+end 01:20:40 exit 0 npx tsx critic/scripts/c35_swe.ts 3517 > critic/c35_swe.log 2>&1
+start 01:20:40 npx tsx critic/scripts/c31_headless.ts 7019 20 critic/c35_headless_7019.json 20 critic/c35_seed7019_y20.bin > critic/c35_headless_7019.log 2>&1
+end 01:20:53 exit 0 npx tsx critic/scripts/c31_ho.ts 4111 20 on critic/c35_ho_on_4111.json > critic/c35_ho_on_4111.log 2>&1
+start 01:20:53 npx tsx tools/diag/worldInvariants.ts 8123 7300 --heroes > critic/c35_wi_8123_h20.log 2>&1
+end 01:21:08 exit 0 npx tsx critic/scripts/c31_ho.ts 4637 20 on critic/c35_ho_on_4637.json > critic/c35_ho_on_4637.log 2>&1
+start 01:21:08 npx tsx tools/diag/worldInvariants.ts 8431 7300 --diplomacy random > critic/c35_wi_8431r_20.log 2>&1
+end 01:22:39 exit 0 npx tsx critic/scripts/c31_ho.ts 6299 20 on critic/c35_ho_on_6299.json > critic/c35_ho_on_6299.log 2>&1
+start 01:22:39 npx tsx tools/diag/worldInvariants.ts 8807 1825 --world random > critic/c35_wi_8807w_5y.log 2>&1
+end 01:23:36 exit 0 npx tsx critic/scripts/c31_ho.ts 7177 20 on critic/c35_ho_on_7177.json > critic/c35_ho_on_7177.log 2>&1
+start 01:23:36 npx tsx tools/diag/worldInvariants.ts 8233 7300 --heroes --rules heroes,navy > critic/c35_wi_8233_h20_hn.log 2>&1
+end 01:24:50 exit 0 npx tsx tools/diag/worldInvariants.ts 8807 1825 --world random > critic/c35_wi_8807w_5y.log 2>&1
+start 01:24:50 npx tsx tools/diag/worldInvariants.ts 9311 7300 --heroes --diplomacy random --rules air > critic/c35_wi_9311r_h20_air.log 2>&1
+end 01:29:58 exit 0 npx tsx tools/diag/worldInvariants.ts 8123 7300 --heroes > critic/c35_wi_8123_h20.log 2>&1
+start 01:29:59 npx tsx tools/diag/worldInvariants.ts 8677 7300 --heroes --bankrupt POL:-800,ROM:-300 > critic/c35_wi_8677_h20_bk.log 2>&1
+end 01:30:40 exit 0 npx tsx critic/scripts/c31_headless.ts 7019 20 critic/c35_headless_7019.json 20 critic/c35_seed7019_y20.bin > critic/c35_headless_7019.log 2>&1
+start 01:30:40 npx tsx tools/diag/heroWaits.ts 8125 7300 > critic/c35_herowaits_8125.log 2>&1
+end 01:30:57 exit 0 npx tsx tools/diag/worldInvariants.ts 8431 7300 --diplomacy random > critic/c35_wi_8431r_20.log 2>&1
+start 01:30:57 npx tsx tools/diag/diploInvariants.ts 8123 scenario 400 60,200,350 20 --heroes > critic/c35_diploinv_8123s_h.log 2>&1
+end 01:31:25 exit 0 npx tsx tools/diag/worldInvariants.ts 8233 7300 --heroes --rules heroes,navy > critic/c35_wi_8233_h20_hn.log 2>&1
+start 01:31:25 npx tsx tools/diag/diploInvariants.ts 8431 random 400 60,200,350 20 > critic/c35_diploinv_8431r.log 2>&1
+end 01:33:27 exit 0 npx tsx tools/diag/diploInvariants.ts 8123 scenario 400 60,200,350 20 --heroes > critic/c35_diploinv_8123s_h.log 2>&1
+start 01:33:27 npx tsx tools/diag/diploInvariants.ts 8807 scenario 400 60,200,350 20 --world random > critic/c35_diploinv_8807w.log 2>&1
+end 01:33:55 exit 0 npx tsx tools/diag/diploInvariants.ts 8431 random 400 60,200,350 20 > critic/c35_diploinv_8431r.log 2>&1
+start 01:33:55 npx tsx tools/diag/diploInvariants.ts 8573 scenario 400 60,200,350 20 > critic/c35_diploinv_8573.log 2>&1
+end 01:34:07 exit 0 npx tsx tools/diag/worldInvariants.ts 9311 7300 --heroes --diplomacy random --rules air > critic/c35_wi_9311r_h20_air.log 2>&1
+start 01:34:07 npx tsx tools/diag/diploInvariants.ts 8999 scenario 400 60,200,350 20 --heroes > critic/c35_diploinv_8999s_h.log 2>&1
+end 01:35:10 exit 0 npx tsx tools/diag/diploInvariants.ts 8807 scenario 400 60,200,350 20 --world random > critic/c35_diploinv_8807w.log 2>&1
+start 01:35:10 npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c35_wd_3517.json > critic/c35_wd_3517.log 2>&1
+end 01:36:27 exit 0 npx tsx tools/diag/diploInvariants.ts 8573 scenario 400 60,200,350 20 > critic/c35_diploinv_8573.log 2>&1
+start 01:36:27 npx tsx critic/scripts/c31_def.ts 8123 20 critic/c35_def_8123.json > critic/c35_def_8123.log 2>&1
+end 01:36:59 exit 0 npx tsx tools/diag/diploInvariants.ts 8999 scenario 400 60,200,350 20 --heroes > critic/c35_diploinv_8999s_h.log 2>&1
+start 01:36:59 npx tsx critic/scripts/c35_pm.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 sea 25 critic/c35_pm_jap_sea.json > critic/c35_pm_jap_sea.log 2>&1
+end 01:37:03 exit 0 npx tsx critic/scripts/c35_pm.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 sea 25 critic/c35_pm_jap_sea.json > critic/c35_pm_jap_sea.log 2>&1
+start 01:37:03 npx tsx critic/scripts/c35_pm.ts 3517 JAP NED 1818.5 385.5 1631.5 632.5 2 sea 40 critic/c35_pm_japned_sea.json > critic/c35_pm_japned_sea.log 2>&1
+end 01:37:10 exit 0 npx tsx critic/scripts/c35_pm.ts 3517 JAP NED 1818.5 385.5 1631.5 632.5 2 sea 40 critic/c35_pm_japned_sea.json > critic/c35_pm_japned_sea.log 2>&1
+start 01:37:10 npx tsx critic/scripts/c35_pm.ts 3517 JAP NED 1818.5 385.5 1631.5 632.5 2 landed 40 critic/c35_pm_japned_landed.json > critic/c35_pm_japned_landed.log 2>&1
+end 01:37:19 exit 0 npx tsx critic/scripts/c35_pm.ts 3517 JAP NED 1818.5 385.5 1631.5 632.5 2 landed 40 critic/c35_pm_japned_landed.json > critic/c35_pm_japned_landed.log 2>&1
+start 01:37:19 npx tsx critic/scripts/c35_pm.ts 3517 GER FRA 1066.5 280.5 1046.5 291.5 2 h20 12 critic/c35_pm_gerfra_land.json > critic/c35_pm_gerfra_land.log 2>&1
+end 01:37:23 exit 0 npx tsx critic/scripts/c35_pm.ts 3517 GER FRA 1066.5 280.5 1046.5 291.5 2 h20 12 critic/c35_pm_gerfra_land.json > critic/c35_pm_gerfra_land.log 2>&1
+start 01:37:23 npx tsx critic/scripts/c35_pm.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 3 sea 12 critic/c35_pm_eng_sea.json > critic/c35_pm_eng_sea.log 2>&1
+end 01:37:27 exit 0 npx tsx critic/scripts/c35_pm.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 3 sea 12 critic/c35_pm_eng_sea.json > critic/c35_pm_eng_sea.log 2>&1
+start 01:37:27 npx tsx critic/scripts/c35_ps.ts > critic/c35_ps.log 2>&1
+end 01:37:31 exit 0 npx tsx critic/scripts/c35_ps.ts > critic/c35_ps.log 2>&1
+start 01:37:31 npx tsx critic/scripts/c35_lmchk.ts > critic/c35_lmchk.log 2>&1
+end 01:37:34 exit 0 npx tsx critic/scripts/c35_lmchk.ts > critic/c35_lmchk.log 2>&1
+start 01:37:34 npx tsx critic/scripts/c35_lh2.ts 3517 ENG 1023 275 1054.5 203.5 20 > critic/c35_lh2_eng_bergen2.log 2>&1
+end 01:37:39 exit 0 npx tsx critic/scripts/c35_lh2.ts 3517 ENG 1023 275 1054.5 203.5 20 > critic/c35_lh2_eng_bergen2.log 2>&1
+start 01:37:39 npx tsx critic/scripts/c35_lh2.ts 3517 NED 1043.5 237.5 1631.5 632.5 20 > critic/c35_lh2_ned_java.log 2>&1
+end 01:37:44 exit 0 npx tsx critic/scripts/c35_lh2.ts 3517 NED 1043.5 237.5 1631.5 632.5 20 > critic/c35_lh2_ned_java.log 2>&1
+start 01:37:44 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 1 none 120 critic/c35_wait_four120.json > critic/c35_wait_four120.log 2>&1
+end 01:37:59 exit 0 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 1 none 120 critic/c35_wait_four120.json > critic/c35_wait_four120.log 2>&1
+start 01:37:59 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 3 1 none 90 critic/c35_wait_three90.json > critic/c35_wait_three90.log 2>&1
+end 01:38:11 exit 0 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 3 1 none 90 critic/c35_wait_three90.json > critic/c35_wait_three90.log 2>&1
+start 01:38:11 npx tsx critic/scripts/c35_wait.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 3 1 none 20 critic/c35_wait_engcalais3.json > critic/c35_wait_engcalais3.log 2>&1
+end 01:38:16 exit 0 npx tsx critic/scripts/c35_wait.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 3 1 none 20 critic/c35_wait_engcalais3.json > critic/c35_wait_engcalais3.log 2>&1
+start 01:38:16 npx tsx critic/scripts/c35_wait.ts 3517 ENG GER 1023.5 275.5 1080.5 248.5 4 1 none 40 critic/c35_wait_enggerfour.json > critic/c35_wait_enggerfour.log 2>&1
+end 01:38:25 exit 0 npx tsx critic/scripts/c35_wait.ts 3517 ENG GER 1023.5 275.5 1080.5 248.5 4 1 none 40 critic/c35_wait_enggerfour.json > critic/c35_wait_enggerfour.log 2>&1
+start 01:38:25 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 reorder 30 critic/c35_wait_reorder.json > critic/c35_wait_reorder.log 2>&1
+end 01:38:31 exit 0 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 reorder 30 critic/c35_wait_reorder.json > critic/c35_wait_reorder.log 2>&1
+start 01:38:31 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 peace 30 critic/c35_wait_peace.json > critic/c35_wait_peace.log 2>&1
+end 01:38:35 exit 0 npx tsx tools/diag/worldInvariants.ts 8677 7300 --heroes --bankrupt POL:-800,ROM:-300 > critic/c35_wi_8677_h20_bk.log 2>&1
+start 01:38:35 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 cancel 30 critic/c35_wait_cancel.json > critic/c35_wait_cancel.log 2>&1
+end 01:38:36 exit 0 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 peace 30 critic/c35_wait_peace.json > critic/c35_wait_peace.log 2>&1
+start 01:38:36 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 1 none 40 critic/c35_wait_four.json > critic/c35_wait_four.log 2>&1
+end 01:38:40 exit 0 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 cancel 30 critic/c35_wait_cancel.json > critic/c35_wait_cancel.log 2>&1
+end 01:38:43 exit 0 npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 1 none 40 critic/c35_wait_four.json > critic/c35_wait_four.log 2>&1
+end 01:39:21 exit 0 npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c35_wd_3517.json > critic/c35_wd_3517.log 2>&1
+end 01:40:20 exit 0 npx tsx tools/diag/heroWaits.ts 8125 7300 > critic/c35_herowaits_8125.log 2>&1
+end 01:44:36 exit 0 npx tsx critic/scripts/c31_def.ts 8123 20 critic/c35_def_8123.json > critic/c35_def_8123.log 2>&1
+QUEUEDONE

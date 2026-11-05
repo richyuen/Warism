@@ -211,3 +211,24 @@ Rules:
     order of no player; the Thames water still goes; red without, `NoRoute`), `landingNeutral1938.spec.ts`'s click.
     A reason only: pin unmoved.
   R22 done; then the critic again.
+- [ ] R23 **Naval back to its bar: the way out of the wait aboard** (critic run 35, focused: two blocking issues,
+  R35-B1 and R35-B2, both in R22b's `ashoreAtPort`; naval 7 under its bar of 8 for them). Each sub-item its own
+  commit; then the critic again.
+  - [ ] R23a A refused order leaves the division aboard (R35-B2): the order is judged before the division goes ashore;
+    a refused one leaves it aboard, its landing kept. AT: Japan's four to Shanghai, the one aboard at Tokyo ordered onto
+    open sea and onto Calais (France at peace): refused (17, 15), still aboard, and all four land together; an e2e spec,
+    the panel still "Aboard at Tokyo" with the refusal; red without.
+  - [ ] R23b Ordered to the same landing again, the division aboard stays (R35-B1): an order of a division aboard a
+    loading convoy to the landing it is bound for changes nothing, and no division is bound to a group beyond its room
+    when another of its click is bound to it. AT: Japan's four to Shanghai, the one aboard clicked to Shanghai again:
+    no division waits at Tokyo without room, all four land within a day of each other, no later than without the
+    second click; red without (365 on the quay h512–h1367).
+  - [ ] R23c A refusal notice goes with the next accepted order (R35-N1): not only when the state changes. AT:
+    Germany's division marching to Hamburg, refused Paris, then sent to central Germany: no refusal under "On the
+    march" once the new order is taken; red without.
+  - [ ] R23d The escort's wait does not cost a lone landing time (R35-N3): one division to Belfast (seed 3517, the
+    critic's case) lands no later escorted than unescorted. AT: `landingEscortWait1938.test.ts` on the critic's seed;
+    red without (73 h against 59).
+  - [ ] R23e A whole click clicked again keeps its landing together (R35-N2, older than R22): the four re-sent to
+    Shanghai at hour 26 land within a day of each other. AT: a unit test of the critic's case; red without (185, 633,
+    952, 1243).

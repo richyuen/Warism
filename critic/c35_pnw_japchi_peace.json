@@ -1,0 +1,54 @@
+{
+ "TAG": "JAP",
+ "FOE": "CHI",
+ "dst": [
+  1715.5,
+  413.5
+ ],
+ "n": 2,
+ "peaceH": 50,
+ "changes": [
+  {
+   "h": 1,
+   "st": "aboard,toPort"
+  },
+  {
+   "h": 51,
+   "st": "-,-"
+  }
+ ],
+ "rows": [
+  "3 January 1938 Japan made peace with China",
+  "Square infantry division 364: not done: it would land on the ground of a nation outside its wars.",
+  "7 January 1938 Italy declared war on Austria"
+ ],
+ "ids": [
+  364,
+  365
+ ],
+ "peace": {
+  "war": 2
+ },
+ "news": [
+  {
+   "kind": "refused",
+   "id": 365,
+   "nation": 75,
+   "reason": 15,
+   "x": 1797.4517751857652,
+   "y": 389.6125245665481,
+   "tick": 51
+  },
+  {
+   "kind": "refused",
+   "id": 364,
+   "nation": 75,
+   "reason": 15,
+   "x": 1818.0625,
+   "y": 387.4375,
+   "tick": 51
+  }
+ ],
+ "shotEnd": "critic/shots/c35pnw_japchi_peace_end.png",
+ "errors": []
+}

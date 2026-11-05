@@ -1,0 +1,243 @@
+{
+ "seed": 3517,
+ "years": [
+  {
+   "frames": 2518,
+   "maxGap": 50,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "13 December 1938 Bismarck is back with Germany near Bremerhaven 16 December 1938 Italy captured Nigeria's capital 20 December 1938 France lost Char 2C near Altamira 20 December 1938 Roma is back with Italy near Taranto 23 December 1938 Paraguay declared war on Bolivia"
+   ],
+   "chips": [
+    "Japan +2 ⚔ China +1",
+    "China +1 ⚔ Tibet",
+    "Nationalist Spain ⚔ Portugal +22",
+    "Brazil ⚔ Colombia",
+    "France +33 ⚔ Brazil",
+    "Iraq ⚔ Turkey +3"
+   ],
+   "date": "2 January 1939",
+   "nations": 98,
+   "year": 1,
+   "wallS": 42.036,
+   "fps": 59.9,
+   "shot": "critic/shots/c35lwhon_3517_y01_world.png"
+  },
+  {
+   "frames": 1988,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1939 Soviet Union and Greece fought in the air this month: Soviet Union lost 33 aircraft, Greece 15 1 December 1939 Soviet Union's air force struck French West Africa this month: 3,141 men, guns and vehicles lost 15 December 1939 Sovetsky Soyuz is back with Soviet Union near Leningrad 15 December 1939 Richelieu is back with France near Oran 17 December 1939 Soviet Union captured British India's capital"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Nationalist Spain ⚔ Portugal +20",
+    "Germany +5 ⚔ Portugal +21",
+    "Germany +4 ⚔ Netherlands +8",
+    "Poland +4 ⚔ Greece +3",
+    "Soviet Union +5 ⚔ France +27"
+   ],
+   "date": "2 January 1940",
+   "nations": 90,
+   "year": 2,
+   "wallS": 33.177,
+   "fps": 59.9,
+   "shot": "critic/shots/c35lwhon_3517_y02_world.png"
+  },
+  {
+   "frames": 1705,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "30 November 1940 Egypt was destroyed 1 December 1940 Soviet Union and United Kingdom fought in the air this month: Soviet Union lost 0 aircraft, United Kingdom 6 1 December 1940 Germany's air force struck France this month: 5,713 men, guns and vehicles lost 6 December 1940 TOG II is back with United Kingdom near London 13 December 1940 Soviet Union captured French Indochina's capital"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Nationalist Spain ⚔ Portugal +18",
+    "French Equatorial Africa ⚔ France +5",
+    "Soviet Union +8 ⚔ Portugal +16",
+    "Germany +5 ⚔ France +21",
+    "Free Centre Macedonia ⚔ Yugoslavia +1"
+   ],
+   "date": "4 January 1941",
+   "nations": 89,
+   "year": 3,
+   "wallS": 28.415,
+   "fps": 60,
+   "shot": "critic/shots/c35lwhon_3517_y03_world.png"
+  },
+  {
+   "frames": 1581,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "13 December 1941 France lost Richelieu near Barcelona 1 January 1942 Soviet Union and Italy fought in the air this month: Soviet Union lost 15 aircraft, Italy 0 1 January 1942 Germany's air force struck France this month: 4,343 men, guns and vehicles lost 2 January 1942 Albania captured Romania's capital 2 January 1942 Italy made peace with Soviet Union"
+   ],
+   "chips": [
+    "Nationalist Spain ⚔ Portugal +17",
+    "French Equatorial Africa ⚔ France +5",
+    "Germany +5 ⚔ France +19",
+    "Germany +7 ⚔ South Africa",
+    "Poland +2 ⚔ United Kingdom +14",
+    "China +2 ⚔ United Kingdom +20"
+   ],
+   "date": "6 January 1942",
+   "nations": 90,
+   "year": 4,
+   "wallS": 26.411,
+   "fps": 59.9,
+   "shot": "critic/shots/c35lwhon_3517_y04_world.png"
+  },
+  {
+   "frames": 1781,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "12 December 1942 Japan lost Yamato near Catania 21 December 1942 United States declared war on Canada 25 December 1942 Germany captured Albania's capital 1 January 1943 United States and Mexico fought in the air this month: United States lost 30 aircraft, Mexico 36 1 January 1943 Italy's air force struck Germany this month: 6,805 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "Nationalist Spain ⚔ Portugal +15",
+    "Soviet Union +10 ⚔ United Kingdom +18",
+    "Soviet Union +10 ⚔ Japan +2",
+    "Italy +4 ⚔ United Kingdom +20",
+    "Soviet Union +11 ⚔ Burma",
+    "China +2 ⚔ Burma +1"
+   ],
+   "date": "7 January 1943",
+   "nations": 92,
+   "year": 5,
+   "wallS": 29.69,
+   "fps": 60,
+   "shot": "critic/shots/c35lwhon_3517_y05_world.png"
+  },
+  {
+   "frames": 2129,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "30 December 1943 P.100 Ercole is back with Italy near Rome 1 January 1944 Japan and United States fought in the air this month: Japan lost 15 aircraft, United States 18 1 January 1944 United States's air force struck Japan this month: 6,498 men, guns and vehicles lost 1 January 1944 Egypt broke away from Soviet Union 1 January 1944 Egypt returned ⚓ Carrier strike ashore: United States on Germany ×3"
+   ],
+   "chips": [
+    "China +2 ⚔ Burma +1",
+    "Nationalist Spain +1 ⚔ France +20",
+    "Italy +7 ⚔ French Equatorial Africa +1",
+    "China +2 ⚔ British India",
+    "Japan +3 ⚔ Greece +7",
+    "Nationalist Spain +1 ⚔ French Equatorial Africa"
+   ],
+   "date": "9 January 1944",
+   "nations": 97,
+   "year": 6,
+   "wallS": 35.548,
+   "fps": 59.9,
+   "shot": "critic/shots/c35lwhon_3517_y06_world.png"
+  },
+  {
+   "frames": 1903,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "18 December 1944 Bolivia was destroyed 20 December 1944 France lost Char 2C near Salalah 21 December 1944 Germany captured Nationalist Spain's capital 1 January 1945 Poland and United States fought in the air this month: Poland lost 15 aircraft, United States 21 1 January 1945 Germany's air force struck United States this month: 5,396 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "United States +1 ⚔ Germany +4",
+    "Soviet Union +8 ⚔ French Equatorial Africa +1",
+    "South Africa ⚔ French West Africa",
+    "Germany +6 ⚔ Nationalist Spain +1",
+    "Soviet Union +12 ⚔ Belgian Congo +17",
+    "Italy +6 ⚔ Siam +3"
+   ],
+   "date": "8 January 1945",
+   "nations": 96,
+   "year": 7,
+   "wallS": 31.71,
+   "fps": 60,
+   "shot": "critic/shots/c35lwhon_3517_y07_world.png"
+  },
+  {
+   "frames": 1826,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "22 December 1945 Argentina made peace with Chile 26 December 1945 Soviet Union lost T-42 near Balıkesir 29 December 1945 United States captured Cuba's capital 1 January 1946 Germany and Soviet Union fought in the air this month: Germany lost 30 aircraft, Soviet Union 18 1 January 1946 United States's air force struck Mexico this month: 6,739 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "Canada +7 ⚔ Iceland",
+    "Soviet Union +13 ⚔ Canada +7",
+    "Poland +4 ⚔ Italy +2",
+    "Germany +5 ⚔ French West Africa +9",
+    "United States ⚔ Canada +6",
+    "Japan +7 ⚔ Free Istanbul +6"
+   ],
+   "date": "9 January 1946",
+   "nations": 85,
+   "year": 8,
+   "wallS": 30.499,
+   "fps": 59.9,
+   "shot": "critic/shots/c35lwhon_3517_y08_world.png"
+  },
+  {
+   "frames": 1918,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "23 December 1946 Poland captured Estonia's capital 26 December 1946 Soviet Union lost T-42 near Sumy 31 December 1946 Poland captured Estonia's capital 1 January 1947 Germany and Soviet Union fought in the air this month: Germany lost 51 aircraft, Soviet Union 0 1 January 1947 Italy's air force struck Egypt this month: 5,284 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "China +5 ⚔ Portugal +7",
+    "China +5 ⚔ Soviet Union +12",
+    "Japan +2 ⚔ Greece +5",
+    "Germany +7 ⚔ Soviet Union +9",
+    "Italy +7 ⚔ Egypt",
+    "Poland +5 ⚔ Greece +5"
+   ],
+   "date": "13 January 1947",
+   "nations": 82,
+   "year": 9,
+   "wallS": 31.973,
+   "fps": 60,
+   "shot": "critic/shots/c35lwhon_3517_y09_world.png"
+  },
+  {
+   "frames": 1794,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "21 December 1947 Uruguay made peace with Brazil 1 January 1948 Germany and United Kingdom fought in the air this month: Germany lost 27 aircraft, United Kingdom 18 1 January 1948 China's air force struck Ceylon this month: 2,172 men, guns and vehicles lost 12 January 1948 United States lost USS Iowa near Kenai"
+   ],
+   "chips": [
+    "China +5 ⚔ Portugal +7",
+    "China +5 ⚔ Soviet Union +9",
+    "United States +2 ⚔ Poland +12",
+    "Transjordan ⚔ Soviet Union +13",
+    "Japan +10 ⚔ United Kingdom +8"
+   ],
+   "date": "13 January 1948",
+   "nations": 79,
+   "year": 10,
+   "wallS": 29.958,
+   "fps": 59.9,
+   "shot": "critic/shots/c35lwhon_3517_y10_world.png"
+  }
+ ],
+ "fight": {
+  "best": [
+   1158.5665087353889,
+   678.1200292229327
+  ],
+  "bn": 4,
+  "engaged": 9
+ },
+ "errors": []
+}

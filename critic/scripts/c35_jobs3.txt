@@ -1,0 +1,13 @@
+npx tsx critic/scripts/c35_pm.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 sea 25 critic/c35_pm_jap_sea.json > critic/c35_pm_jap_sea.log 2>&1
+npx tsx critic/scripts/c35_pm.ts 3517 JAP NED 1818.5 385.5 1631.5 632.5 2 sea 40 critic/c35_pm_japned_sea.json > critic/c35_pm_japned_sea.log 2>&1
+npx tsx critic/scripts/c35_pm.ts 3517 JAP NED 1818.5 385.5 1631.5 632.5 2 landed 40 critic/c35_pm_japned_landed.json > critic/c35_pm_japned_landed.log 2>&1
+npx tsx critic/scripts/c35_pm.ts 3517 GER FRA 1066.5 280.5 1046.5 291.5 2 h20 12 critic/c35_pm_gerfra_land.json > critic/c35_pm_gerfra_land.log 2>&1
+npx tsx critic/scripts/c35_pm.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 3 sea 12 critic/c35_pm_eng_sea.json > critic/c35_pm_eng_sea.log 2>&1
+npx tsx critic/scripts/c35_ps.ts > critic/c35_ps.log 2>&1
+npx tsx critic/scripts/c35_lmchk.ts > critic/c35_lmchk.log 2>&1
+npx tsx critic/scripts/c35_lh2.ts 3517 ENG 1023 275 1054.5 203.5 20 > critic/c35_lh2_eng_bergen2.log 2>&1
+npx tsx critic/scripts/c35_lh2.ts 3517 NED 1043.5 237.5 1631.5 632.5 20 > critic/c35_lh2_ned_java.log 2>&1
+npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 1 none 120 critic/c35_wait_four120.json > critic/c35_wait_four120.log 2>&1
+npx tsx critic/scripts/c35_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 3 1 none 90 critic/c35_wait_three90.json > critic/c35_wait_three90.log 2>&1
+npx tsx critic/scripts/c35_wait.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 3 1 none 20 critic/c35_wait_engcalais3.json > critic/c35_wait_engcalais3.log 2>&1
+npx tsx critic/scripts/c35_wait.ts 3517 ENG GER 1023.5 275.5 1080.5 248.5 4 1 none 40 critic/c35_wait_enggerfour.json > critic/c35_wait_enggerfour.log 2>&1

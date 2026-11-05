@@ -1,0 +1,11 @@
+npx tsx critic/scripts/c35_fz.ts 10037 JAP 120 10 3 -1 critic/c35_fz_10037_jap.json > critic/c35_fz_10037_jap.log 2>&1
+npx tsx critic/scripts/c35_fz.ts 10111 ENG 120 10 3 60 critic/c35_fz_10111_eng_p60.json > critic/c35_fz_10111_eng_p60.log 2>&1
+npx tsx critic/scripts/c35_fz.ts 10193 USA 120 10 3 -1 critic/c35_fz_10193_usa.json > critic/c35_fz_10193_usa.log 2>&1
+npx tsx critic/scripts/c35_fz.ts 10267 ITA 120 10 3 -1 critic/c35_fz_10267_ita.json > critic/c35_fz_10267_ita.log 2>&1
+npx tsx critic/scripts/c35_fz.ts 10331 ENG 120 10 3 -1 critic/c35_fz_10331_eng.json > critic/c35_fz_10331_eng.log 2>&1
+npx tsx critic/scripts/c35_fz.ts 10427 JAP 120 10 3 25 critic/c35_fz_10427_jap_p25.json > critic/c35_fz_10427_jap_p25.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 10037 scenario 400 60,200,350 20 --heroes > critic/c35_diploinv_10037s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 10111 random 400 60,200,350 20 > critic/c35_diploinv_10111r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 10193 scenario 400 60,200,350 20 --world random > critic/c35_diploinv_10193w.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 10037 7300 --heroes --rules heroes,navy > critic/c35_wi_10037_h20_hn.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 10111 3650 --diplomacy random > critic/c35_wi_10111r_10.log 2>&1

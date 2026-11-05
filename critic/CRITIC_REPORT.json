@@ -1,5 +1,5 @@
 {
- "commit": "2535a577878009673bc5e46a6b7d4ce58e5c446b",
+ "commit": "a3e76107e8e7f03d6e2161d3f2bd733428f20580",
  "mode": "focused",
  "scores": {
   "mapVisuals": 7,
@@ -17,13 +17,29 @@
   "aircraft": 8,
   "aiNukes": 8
  },
- "carried": ["mapVisuals", "emergentDynamics", "godMode", "editorScenarios", "semanticZoom", "tanks", "aircraft", "aiNukes"],
+ "carried": [
+  "mapVisuals",
+  "emergentDynamics",
+  "godMode",
+  "editorScenarios",
+  "statsHistory",
+  "semanticZoom",
+  "tanks",
+  "aircraft",
+  "aiNukes"
+ ],
  "blocking": [
   {
-   "id": "R34-B1",
-   "title": "A refusal at the port a division marched to is never told in the page (R21b's PortShut reason unseen)",
-   "evidence": "critic/c34_pst.json (Britain at war with France, three divisions to Calais by a real click: 0 orderNews posts in 110 hours from a listener on the worker; 270 and 271 'Holding' at Portsmouth, no row, no notice; control: an immediate refusal in the same page is posted, reason 15 at tick 111), critic/shots/c34pst_div270.png, critic/c34_ps.log (the same orders headless: refused PortShut 16 at t55, t63, t87)",
-   "fix": "In src/worker/server.ts orderNews, do not forget a player's order at a FormationArrived when a MoveRejected of the same formation follows in the same hour (or handle MoveRejected first); add an e2e spec on Portsmouth bombed shut that reads the row"
+   "id": "R35-B1",
+   "title": "Clicking the same landing again for the division waiting aboard leaves another division of the click on the quay for weeks (R22b)",
+   "evidence": "critic/c35_lwt_four_same.json (real click, Japan's four to Shanghai, 364 re-clicked to Shanghai at hour 26: 365 'Waiting at Tokyo for transports' h512-h1367 while 364, 366, 367 land h1244; no news), critic/c35_ssb.json, critic/shots/c35ssb_h1250_tokyo.png, critic/shots/c35ssb_h1250_365_panel.png, critic/shots/c35ssb_h1100_364_panel.png ('2 of 4 aboard; the last a day from the port' with 365 on the quay), critic/c35_ash_same.json (364 rebinds to 1144, 365's group; convoyPort keeps 1144 while it sails; 365 embarks t1366), critic/c35_wt_ash_same.json (run 34's commit: refused Aboard, all land t1242-1243)",
+   "fix": "A division going ashore from a loading convoy keeps that convoy's place (or a re-order to the same landing is a no-op while it waits); never bind a division to a group already full with another division of the click bound to it; landingWait counts a bound division at the port with no room as held up, and the worker tells it"
+  },
+  {
+   "id": "R35-B2",
+   "title": "A refused order unloads the division waiting aboard and drops it from its landing (R22b)",
+   "evidence": "critic/c35_lwt_four_neutral.json and critic/c35_lwt_four_sea.json (real clicks on Calais at peace and on open water at hour 26: refused 15 / 17, panel 'Holding' at Tokyo, voyage gone), critic/shots/c35lwt_four_sea_act_panel.png, critic/c35_ash_neutral.json, critic/c35_ash_seaopen.json (364 ends ashore at Tokyo, never lands); contradicts server.ts orderNews ('a refused order leaves the one before it standing ... a division aboard keeps its voyage') and SPEC R22b ('goes ashore ... and the order stands')",
+   "fix": "Judge the order first and call ashoreAtPort only for an accepted one (or restore the embarked entry on a refusal); a spec: the aboard division clicked onto open sea still reads 'Aboard at Tokyo'"
   }
  ],
  "underBar": [
@@ -31,8 +47,8 @@
    "dimension": "naval",
    "score": 7,
    "bar": 8,
-   "why": "R34-B1 (blocking: refusals at the port silent in the page); R34-N1 (four divisions to Shanghai: the first aboard at Tokyo 50 days, panel names neither who nor how long, a recall in its own port refused; critic/c34_wait_four120.json, critic/c34_wp_four.json, critic/shots/c34wp_four_recall.png)"
+   "why": "R35-B1 and R35-B2 (blocking), both in R22b's ashore rule; R34-B1, R34-N2, R34-N4 fixed and R34-N1 answered"
   }
  ],
- "timestamp": "2026-11-05T04:30:13Z"
+ "timestamp": "2026-11-05T06:52:57Z"
 }

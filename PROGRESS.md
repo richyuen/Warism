@@ -1135,3 +1135,12 @@
   (a click there: the panel says "only sea there"; looked at). `rejectReasons1938` green. The gate's `snapshot-perf`
   red in the full run and green alone again (BLOCKERS watch list, a timing test under load).
 - **Next:** critic run 35.
+
+## 2026-11-05 — critic run 35, focused, on a3e76107: two blocking issues (R35-B1, R35-B2); naval under its bar
+- R34-B1 fixed (both refusals at the port told), R34-N1's account, way out and escort timing, R34-N2, R34-N4 fixed;
+  R34-N3 fixed for its case. **R35-B1 (blocking):** the division aboard clicked to the same landing again goes ashore
+  and takes another division's place, which waits on the quay for weeks. **R35-B2 (blocking):** a refused order still
+  takes the division aboard off its transports. Both in R22b's `ashoreAtPort`. Scores: naval **7** under its bar of 8;
+  semanticZoom, tanks, aircraft, aiNukes 8; the rest 7, at their bars. Every AI world bit-identical to run 34's.
+  Filed as R23a–e (with R35-N1–N3).
+- **Next:** R23a.
