@@ -71,6 +71,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   numbers); the fuzz checks a whole click is refused nothing, a landing loads at one port, and every
   convoy has one target (red without: the four re-clicked south-west). Player convoys only: pin
   unmoved.
+- **R29a** (critic run 40, R40-B2). The map's click sent one `hud.command` per selected division,
+  each applied at once (`now`, `applyNow`), so R28a's `noteLeaving` and R27c's `tellLandingsLeft`
+  judged one division at a time: the four of a landing re-clicked three cells south-west were told,
+  all but the last, "the rest keep the old landing", and landed together; R25–R28's tests queued the
+  orders as one hour's, a path the page never took. Now a click's orders go in one message (`cmds`,
+  `Hud.commands`, `SimClient.commands`) and the worker takes them all, then applies them once
+  (`SimServer.take`, `applyNow`); a paradrop of the selection too. `landingClickBatch1938.test.ts`
+  drives the worker as the page does (red with one `cmd` each: three told of four, one of two;
+  landings h1244/1245, h657/658); `landingClickBatch1938.spec.ts` by `Player.click` (red with
+  HEAD's `player.ts`). Page and worker only: pin unmoved.
 - **R28c** (the advisor's trace of the critic's `c39_ll_three_stagger`). Two clicks an hour apart:
   the first, alone aboard its own transports, sails for Fuzhou at once; the second's own, still under
   way to the port for it, were not offered (only R21e's block took a group under way), so it went on

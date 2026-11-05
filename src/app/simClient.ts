@@ -364,6 +364,11 @@ export class SimClient {
     this.send(now ? { type: 'cmd', cmd, now } : { type: 'cmd', cmd });
   }
 
+  /** One click's commands, applied together (ROADMAP R29a: the sim judges them as one hour's orders). */
+  commands(cmds: Command[], now = false): void {
+    this.send(now ? { type: 'cmds', cmds, now } : { type: 'cmds', cmds });
+  }
+
   setSpeed(speed: Speed): void {
     this.send({ type: 'speed', speed });
   }

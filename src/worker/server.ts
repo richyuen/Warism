@@ -35,7 +35,7 @@ import { aircraftOf } from '../sim/systems/airCombat';
 import { isTransport, liveCarriers, wingAircraft } from '../sim/systems/air';
 import { airbaseRoom } from '../sim/data/airbases';
 import { nearestWingBase } from '../sim/placeForces';
-import { Refusal } from '../shared/commands';
+import { Refusal, type Command } from '../shared/commands';
 import { sortieAt, sortieEnd } from '../shared/sorties';
 import { carrierRaids } from './carrierRaids';
 import {
@@ -223,6 +223,47 @@ export class SimServer {
   /** Whether the game pauses at the tick of a nuclear strike (PLAN 7.109a): the host's setting, kept here so the pause is not a statistics message late. */
   private nukePause = false;
 
+  /** Takes a command for the next tick boundary and notes a player's order to tell what becomes of it; false when refused. */
+  private take(cmd: Command): boolean {
+    const sim = this.requireSim();
+    // A command of a kind the sim does not know is refused and nothing follows (PLAN 2.12b).
+    if (!sim.command(cmd)) {
+      console.warn(`sim worker: refused a command of an unknown kind: ${JSON.stringify(cmd)?.slice(0, 120)}`);
+      return false;
+    }
+    // A player's order of a formation (it names its nation): what becomes of it is told (PLAN 4.9c).
+    // An order over the sea is judged against the land of the landing it is for (`seaOrderLanding`:
+    // the one it has when kept), not the click, which may resolve to a landing cells off (ROADMAP
+    // R26a, R27c; critic run 38, R38-B1: a click two cells south of Shanghai, four from the
+    // landing's land, was told "came ashore away" for a landing as ordered).
+    if (cmd.kind === 'moveFormation' && cmd.nation !== undefined) {
+      const w = sim.world;
+      const l = seaOrderLanding(w, cmd.id, cmd.x, cmd.y);
+      this.ordered.set(cmd.id, { target: l ? l.land : Math.floor(cmd.y) * w.cells.w + Math.floor(cmd.x), before: this.ordered.get(cmd.id)?.target });
+    }
+    // A wing's order and a paradrop (PLAN 5.8v3): told if refused, as a march is; given or
+    // refused in the hour it is applied (`once`, the tick it is applied at), so forgotten after it.
+    if ((cmd.kind === 'wingMission' || cmd.kind === 'wingRebase' || cmd.kind === 'paradrop') && cmd.nation !== undefined) {
+      this.ordered.set(cmd.id, { target: Math.floor(cmd.y) * sim.world.cells.w + Math.floor(cmd.x), before: this.ordered.get(cmd.id)?.target, once: sim.world.tick });
+    }
+    return true;
+  }
+
+  /**
+   * `now` (God Mode UI): applies the commands taken at once, between ticks, with the tick stamp the
+   * next step would give (PLAN 1.32b); the snapshot and stats follow. Plain commands stay pending.
+   */
+  private applyNow(): void {
+    this.requireSim().applyNow((w) => this.drainEvents(w));
+    this.forceSend = true;
+    // God actions skip the (cheap) stats throttle, so panels update on the click. Labels
+    // keep theirs (~40 ms a derivation; brush strokes come in bursts) and follow within
+    // LABEL_INTERVAL_MS through the paused flush pump.
+    this.statsTick = -1;
+    this.lastStatsMs = -1;
+    this.maybeSend();
+  }
+
   handle(msg: ToWorker, nowMs: number): void {
     try {
       this.handleInner(msg, nowMs);
@@ -263,41 +304,15 @@ export class SimServer {
         this.advance(msg.n);
         this.reply(msg.reqId);
         break;
-      case 'cmd': {
-        const sim = this.requireSim();
-        // A command of a kind the sim does not know is refused and nothing follows (PLAN 2.12b).
-        if (!sim.command(msg.cmd)) {
-          console.warn(`sim worker: refused a command of an unknown kind: ${JSON.stringify(msg.cmd)?.slice(0, 120)}`);
-          break;
-        }
-        // A player's order of a formation (it names its nation): what becomes of it is told (PLAN 4.9c).
-        // An order over the sea is judged against the land of the landing it is for (`seaOrderLanding`:
-        // the one it has when kept), not the click, which may resolve to a landing cells off (ROADMAP
-        // R26a, R27c; critic run 38, R38-B1: a click two cells south of Shanghai, four from the
-        // landing's land, was told "came ashore away" for a landing as ordered).
-        if (msg.cmd.kind === 'moveFormation' && msg.cmd.nation !== undefined) {
-          const w = sim.world;
-          const id = msg.cmd.id;
-          const l = seaOrderLanding(w, id, msg.cmd.x, msg.cmd.y);
-          this.ordered.set(id, { target: l ? l.land : Math.floor(msg.cmd.y) * w.cells.w + Math.floor(msg.cmd.x), before: this.ordered.get(id)?.target });
-        }
-        // A wing's order and a paradrop (PLAN 5.8v3): told if refused, as a march is; given or
-        // refused in the hour it is applied (`once`, the tick it is applied at), so forgotten after it.
-        if ((msg.cmd.kind === 'wingMission' || msg.cmd.kind === 'wingRebase' || msg.cmd.kind === 'paradrop') && msg.cmd.nation !== undefined) {
-          this.ordered.set(msg.cmd.id, { target: Math.floor(msg.cmd.y) * sim.world.cells.w + Math.floor(msg.cmd.x), before: this.ordered.get(msg.cmd.id)?.target, once: sim.world.tick });
-        }
-        // `now` (God Mode UI): apply at once, between ticks, with the tick stamp the next step
-        // would give (PLAN 1.32b); the snapshot and stats follow. Plain commands stay pending.
-        if (msg.now) {
-          sim.applyNow((w) => this.drainEvents(w));
-          this.forceSend = true;
-          // God actions skip the (cheap) stats throttle, so panels update on the click. Labels
-          // keep theirs (~40 ms a derivation; brush strokes come in bursts) and follow within
-          // LABEL_INTERVAL_MS through the paused flush pump.
-          this.statsTick = -1;
-          this.lastStatsMs = -1;
-          this.maybeSend();
-        }
+      case 'cmd':
+        if (this.take(msg.cmd) && msg.now) this.applyNow();
+        break;
+      case 'cmds': {
+        // One click's commands (ROADMAP R29a; critic run 40, R40-B2): all taken, then applied
+        // together, so the sim judges them as one hour's orders, not one division at a time.
+        let any = false;
+        for (const cmd of msg.cmds) any = this.take(cmd) || any;
+        if (any && msg.now) this.applyNow();
         break;
       }
       case 'hash':

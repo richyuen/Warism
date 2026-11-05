@@ -127,6 +127,10 @@ ack, buildProvinces, buildTerrain, buildPolitical; requests carry a `reqId` and 
 - `cmd {cmd: Command, now?}`: applied at the next tick boundary, stamped with that tick,
   and appended to `commandLog`. `now` (God Mode and player UI, PLAN 1.32b) applies it at once
   between ticks with the same stamp (`Sim.applyNow`); plain commands stay pending (I3).
+- `cmds {cmds: Command[], now?}`: one click's commands, each taken as `cmd` takes it, then, with
+  `now`, applied together by one `applyNow`: the map's click sends the selection's orders so
+  (`Hud.commands`, ROADMAP R29a), and the sim judges them as one hour's (§6.2, `noteLeaving`,
+  `tellLandingsLeft`), not one division at a time.
   A command of a kind that is not in the `Command` type is refused at `World.enqueue`: not
   queued, no sequence number, no line in the log, so the hash is that of a sim that never got
   it (PLAN 2.12b). `COMMAND_KINDS` is held to the type by the compiler. A kind's fields are

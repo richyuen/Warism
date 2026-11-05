@@ -548,6 +548,21 @@ export class Hud {
     this.sim.command(cmd, true);
   }
 
+  /**
+   * One click's orders of the selection, applied together at once (ROADMAP R29a; critic run 40,
+   * R40-B2): one at a time, a whole landing re-clicked told all but the last "the rest keep the old
+   * landing", and each order chose transports while the rest still held the landing's.
+   */
+  commands(cmds: Command[]): void {
+    if (cmds.length === 0) return;
+    this.refusal.value = 0;
+    this.commandFor = this.selected.peek();
+    const at = new Map(this.orderedAt.peek());
+    for (const cmd of cmds) if (cmd.kind === 'moveFormation' || cmd.kind === 'paradrop') at.set(cmd.id, this.orderSeq);
+    this.orderedAt.value = at;
+    this.sim.commands(cmds, true);
+  }
+
   setGodTool(tool: GodTool | null): void {
     this.godTool.value = this.godTool.value === tool ? null : tool;
     this.battleStart = null;

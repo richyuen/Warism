@@ -66,6 +66,12 @@ export type ToWorker =
    * between ticks, as `Sim.applyNow` does in Node; a plain `cmd` stays pending until the next step.
    */
   | { type: 'cmd'; cmd: Command; now?: boolean }
+  /**
+   * One click's commands (ROADMAP R29a; critic run 40, R40-B2): taken in order and, with `now`, applied
+   * together at once, so the sim judges the click's orders as one hour's (`noteLeaving`,
+   * `tellLandingsLeft`), not one division at a time.
+   */
+  | { type: 'cmds'; cmds: Command[]; now?: boolean }
   | { type: 'hash'; reqId: number }
   /** PLAN 1.32: a JSON summary of the world (`Inspection`) for tests and the critic. */
   | { type: 'inspect'; reqId: number; full?: boolean }

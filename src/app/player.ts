@@ -311,7 +311,7 @@ export class PlayerControl {
     // A paradrop armed (PLAN 5.8v2): the selection is dropped here.
     if (this.dropArmed.value) {
       this.dropArmed.value = false;
-      for (const id of [...this.view.selectedFormations].sort((a, b) => a - b)) this.hud.command({ kind: 'paradrop', id, x: x + 0.5, y: y + 0.5, nation: n });
+      this.hud.commands([...this.view.selectedFormations].sort((a, b) => a - b).map((id) => ({ kind: 'paradrop', id, x: x + 0.5, y: y + 0.5, nation: n })));
       return true;
     }
     const sel = this.view.selectedFormations;
@@ -330,7 +330,8 @@ export class PlayerControl {
     }
     if (sel.size === 0) return false;
     const escort = this.escort();
-    for (const id of [...sel].sort((a, b) => a - b)) this.hud.command({ kind: 'moveFormation', id, x: x + 0.5, y: y + 0.5, nation: n, escort });
+    // The click's orders go together (ROADMAP R29a, R40-B2): the sim judges them as one hour's.
+    this.hud.commands([...sel].sort((a, b) => a - b).map((id) => ({ kind: 'moveFormation', id, x: x + 0.5, y: y + 0.5, nation: n, escort })));
     return true;
   }
 }

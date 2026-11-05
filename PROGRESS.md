@@ -1382,3 +1382,10 @@
   group sails there empty (h657 against h1291); present on 99ba6c07 too. N1: one re-sent alone sails at once; N2:
   "go by sea" for a selection most of which march.
 - **Next:** R29a.
+
+## 2026-11-05 — R29a: a click's orders applied together (R40-B2)
+- The map's click now sends the selection's orders in one message (`cmds`, `Hud.commands`); the worker takes them
+  all and applies them once, so `noteLeaving` and `tellLandingsLeft` judge the click, as R28a meant. Seed 3517 by
+  the page's path: the four re-clicked SW3, nobody told (red: three of four), together h1244/1245; two to Fuzhou,
+  none told (red: the first), h657/658; of three, the two told. Test and spec, both red without. Pin unmoved.
+- **Next:** R29b.

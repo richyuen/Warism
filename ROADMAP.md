@@ -372,12 +372,15 @@ Rules:
   R28 done; then the critic again (run 40).
 - [ ] R29 **A click's orders judged as the game sends them** (critic run 40, focused, on `76b88197`: R40-B1 and
   R40-B2 blocking; naval 7, bar 8, for both). Each sub-item its own commit; then the critic again.
-  - [ ] R29a R40-B2: the game applies each selected division's order at once (`player.ts` one `hud.command` each,
+  - [x] R29a R40-B2: the game applies each selected division's order at once (`player.ts` one `hud.command` each,
     `now = true`, the worker's `applyNow`), so R28a's `noteLeaving` and R27c's `tellLandingsLeft` judge one division
     at a time: a whole landing re-clicked tells all but the last "the rest keep the old landing". A click's orders
     reach the sim as one batch, applied together. AT, through the game's path (the hud's command, applied at once),
     seed 3517: the four re-clicked three cells SW: no `LeftLanding`; the two re-sent to Fuzhou by one click: none;
     of three, the two sent away: both told; landings as R28a's by that path.
+    Done: the click's orders go in one message (`cmds`, `Hud.commands`), taken then applied once. Four SW3: none
+    told, h1244/1245; two to Fuzhou: none told, h657/658; of three, the two: both told. `landingClickBatch1938`
+    test (the worker as the page drives it) and spec (by `Player.click`); red without. Pin unmoved.
   - [ ] R29b R40-B1: a landing redirected to a target another convoy already serves (a fresh division sent to Fuzhou
     first, then the two of the Shanghai landing): the one aboard is put ashore and walks ~50 days to Sasebo while its
     own group sails there empty. A leaver aboard or bound for a group that joins a convoy at another port keeps its
