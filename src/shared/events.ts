@@ -280,6 +280,12 @@ export const RejectReason = {
   PortShut: 16,
   /** A land formation's order to open sea (ROADMAP R22g, critic run 34, R34-N4): water, and no land of its own near it to go to. */
   OpenSea: 17,
+  /**
+   * A player's division aboard transports loading for one landing, ordered over the sea to another
+   * (ROADMAP R24d, critic run 36, R36-N2): its transports are that landing's, and no others with room
+   * are at a port it can reach. Before, `NoTransports`, while it sat aboard transports at the port.
+   */
+  Loading: 18,
 } as const;
 export type RejectReason = (typeof RejectReason)[keyof typeof RejectReason];
 

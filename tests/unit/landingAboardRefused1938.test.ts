@@ -20,6 +20,7 @@ const SHANGHAI = cellOf(121.47, 31.23, W, H) as [number, number];
 const TOKYO = cellOf(139.69, 35.69, W, H) as [number, number];
 const OPEN_SEA = cellOf(150, 30, W, H) as [number, number];
 const CALAIS = cellOf(1.86, 50.95, W, H) as [number, number];
+const FUZHOU = cellOf(119.3, 26.08, W, H) as [number, number];
 
 function refusedAboard(to: [number, number], why: number): void {
   const sim = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
@@ -76,5 +77,10 @@ describe('a refused order leaves the division aboard (ROADMAP R23a)', () => {
   });
   it('ordered onto Calais, France at peace: refused, still aboard; the four land together', () => {
     refusedAboard(CALAIS, RejectReason.Neutral);
+  });
+  // ROADMAP R24d (critic run 36, R36-N2): to another landing, Fuzhou, it was refused "no transports … at a port it
+  // can reach" while it sat aboard transports at that port; the reason now names them.
+  it('ordered to another landing, Fuzhou: refused, its transports loading for another landing; still aboard', () => {
+    refusedAboard(FUZHOU, RejectReason.Loading);
   });
 });

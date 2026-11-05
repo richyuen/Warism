@@ -14,6 +14,7 @@ const CHI = NATIONS_1938.findIndex((n) => n.tag === 'CHI') + 1;
 const SHANGHAI = cellOf(121.47, 31.23, W, H).map((v) => Math.floor(v) + 0.5) as [number, number];
 const TOKYO = cellOf(139.69, 35.69, W, H);
 const OPEN_SEA = cellOf(150, 30, W, H).map((v) => Math.floor(v) + 0.5) as [number, number];
+const FUZHOU = cellOf(119.3, 26.08, W, H).map((v) => Math.floor(v) + 0.5) as [number, number];
 
 test('the division aboard, ordered onto the open sea: refused, and still aboard', async ({ page }) => {
   test.setTimeout(300_000);
@@ -56,4 +57,11 @@ test('the division aboard, ordered onto the open sea: refused, and still aboard'
   await expect(status).toContainText('Aboard at Tokyo');
   await expect(page.getByTestId('formation-wait')).toContainText('of 4 aboard');
   await page.getByTestId('formation-panel').screenshot({ path: 'test-results/landingAboardRefused1938.png' });
+
+  // To another landing, Fuzhou (ROADMAP R24d, R36-N2): its transports are named as why, still aboard.
+  await page.evaluate(({ id, x, y, n }) => window.__warsim!.hud.command({ kind: 'moveFormation', id, x, y, nation: n }), { id: four[0]!, x: FUZHOU[0], y: FUZHOU[1], n: JAP });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('formation-notice')).toContainText('loading for another landing', { timeout: 10_000 });
+  await expect(status).toHaveAttribute('data-voyage', 'aboard');
+  await page.getByTestId('formation-panel').screenshot({ path: 'test-results/landingAboardRefused1938-fuzhou.png' });
 });

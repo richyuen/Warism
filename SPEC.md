@@ -1284,7 +1284,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   A division aboard such a convoy, still loading at its port of its nation, takes a new order: it
   goes ashore at the port's cell (no landing, its organisation as it was) and the order stands
   (`ashoreAtPort`, ROADMAP R22b); refused, it is aboard again as it was, its landing kept (R23a); a
-  division bound for a convoy keeps its binding when an order is refused (R24a). An
+  division bound for a convoy keeps its binding when an order is refused (R24a). The one aboard sent
+  over the sea to another landing with no other transports free is refused `Loading` (18, R24d). An
   order to the landing it is aboard for changes nothing: it stays aboard (`sameLanding`, R23b); so for a
   division bound for a convoy still at its port: it keeps its transports (R23e). A landing whose water
   and land are within `SAME_LANDING_CELLS` (2) of its own, the land of the same holder, is its own (R24b).

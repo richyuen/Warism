@@ -1227,3 +1227,11 @@
 - AT: `orderNews1938.spec.ts`'s fourth test (Switzerland's division marching, refused London, re-clicked on its own
   goal: no notice, "On the march"; red without). UI only.
 - **Next:** R24d.
+
+## 2026-11-05 — ROADMAP R24d: the one aboard sent to another landing is told why (R36-N2); R24 done
+- A division gone ashore from its loading convoy for an order over the sea that finds no transports is refused
+  `Loading` (18: "its transports are loading for another landing, and no others with room are at a port it can
+  reach"), not `NoTransports`, which it contradicted while aboard transports at that port. R23a puts it back aboard.
+- AT: `landingAboardRefused1938.test.ts`'s third test (Fuzhou: 18, still aboard, the four land together; red without,
+  6) and `landingAboardRefused1938.spec.ts` (the words in the panel over "Aboard at Tokyo"; looked at). Pin unmoved.
+- **Next:** critic run 37 (full).

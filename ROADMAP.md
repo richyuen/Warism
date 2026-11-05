@@ -251,7 +251,7 @@ Rules:
     (cleared, its convoy lost its landing with it and it went on another's next voyage). `landingSameAgain1938.test.ts`
     (all four again at hour 26: the same transports, landed 1242–1243; red without, three bound to 1136). Pin unmoved.
   R23 done; then the critic again.
-- [ ] R24 **Naval back to its bar: a click near the landing** (critic run 36, focused: two blocking issues, R36-B1 and
+- [x] R24 **Naval back to its bar: a click near the landing** (critic run 36, focused: two blocking issues, R36-B1 and
   R36-B2, both a click a cell off Shanghai; naval 7 under its bar of 8 for them). Each sub-item its own commit; then
   the critic again (a full run, run 37).
   - [x] R24a A refused order leaves every division's landing standing (R36-B1): a division bound for a convoy (walking
@@ -274,6 +274,10 @@ Rules:
     notice; red without.
     Done: `Hud.orderedAt` (the news `seq` at a formation's last order sent), read by `staleNotice`;
     `orderNews1938.spec.ts`'s fourth test (re-clicked on its own goal: no notice, "On the march"; red without). UI only.
-  - [ ] R24d The one aboard sent to another landing is told why (R36-N2): not "no transports … at a port it can
+  - [x] R24d The one aboard sent to another landing is told why (R36-N2): not "no transports … at a port it can
     reach" while it sits aboard transports at that port. AT: the one aboard ordered to Fuzhou: the reason names its
     transports as loading for another landing; red without.
+    Done: `RejectReason.Loading` (18, "its transports are loading for another landing…") for the one gone ashore
+    from its convoy; `landingAboardRefused1938.test.ts` (Fuzhou: 18, still aboard, the four land together; red
+    without, 6), its spec (the panel's words over "Aboard at Tokyo"; looked at). A reason only: pin unmoved.
+  R24 done; then the critic again (run 37, full).

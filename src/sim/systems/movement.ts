@@ -475,20 +475,20 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
     world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Aboard, NaN);
     return false;
   }
-  if (orderAshore(world, id, x, y, pass, byPort, direct, call, escort)) return true;
+  if (orderAshore(world, id, x, y, pass, byPort, direct, call, escort, true)) return true;
   back();
   return keep();
 }
 
-/** `orderMove` of a formation not aboard (or just gone ashore). */
-function orderAshore(world: World, id: number, x: number, y: number, pass: Passage | undefined, byPort: boolean, direct: boolean, call: boolean, escort: boolean): boolean {
+/** `orderMove` of a formation not aboard (or just gone ashore: `aboard`). */
+function orderAshore(world: World, id: number, x: number, y: number, pass: Passage | undefined, byPort: boolean, direct: boolean, call: boolean, escort: boolean, aboard = false): boolean {
   world.seaBound.delete(id);
   world.seaFetch.delete(id);
   refusedLong = false;
   // A fleet sails (PLAN 4.2c): its order is its own.
   if (world.formations.has(id) && world.isFleet(id)) return orderSail(world, id, x, y);
   const over = world.formations.has(id) && overSea(world, id, x, y);
-  if (call && over) return seaConvoy(world, id, x, y, pass, escort);
+  if (call && over) return seaConvoy(world, id, x, y, pass, escort, aboard);
   // To another land: by sea, from a port its nation holds with transports there (PLAN 4.5a). With
   // none, a march as before (a target by the coast may snap to this land); refused, it says why
   // the sea was refused (PLAN 4.9a).
@@ -521,7 +521,7 @@ function orderAshore(world: World, id: number, x: number, y: number, pass: Passa
  * no landing at the target, or no transports, refused as before; and where the target or the
  * landing is the ground of a nation outside its wars (`RejectReason.Neutral`, ROADMAP R20).
  */
-function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage | undefined, escort: boolean): boolean {
+function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage | undefined, escort: boolean, aboard = false): boolean {
   const c = world.formations.cols;
   const w = world.cells.w;
   const target = Math.floor(y) * w + Math.floor(x);
@@ -537,7 +537,9 @@ function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage
     return false;
   }
   const a = assignTransports(world, id, target);
-  if (!a) return order(world, id, x, y, pass, 0, transportsPort(world, id, false) >= 0 ? RejectReason.NoTransports : RejectReason.NoPort);
+  // Gone ashore from transports loading for another landing (ROADMAP R24d): those are why.
+  const none = aboard ? RejectReason.Loading : RejectReason.NoTransports;
+  if (!a) return order(world, id, x, y, pass, 0, transportsPort(world, id, false) >= 0 ? none : RejectReason.NoPort);
   const port = world.ports[a.port]!;
   const here = Math.floor(c.y[id]!) * w + Math.floor(c.x[id]!);
   const r = world.atSize(AT_PORT_CELLS);
