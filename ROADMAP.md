@@ -431,9 +431,11 @@ Rules:
     Done (measured, then the smaller fix): transports with no convoy and nobody aboard are the AI's again, not
     idle under the player's order (a fleet's never ended). The ferry would save ~2 days: not built (DECISIONS).
     R22b's test checks the three (the recalled one is the AI's, ADR-759). Red without. Pin unmoved.
-  - [ ] R31e R40-N1: one re-sent alone sails at once and cannot be recalled: a convoy of one waits an hour for the
+  - [x] R31e R40-N1: one re-sent alone sails at once and cannot be recalled: a convoy of one waits an hour for the
     rest of its click (or the recall takes it back). AT: the one aboard sent alone to Fuzhou, recalled a day later:
     not refused, it rejoins its landing.
+    Done: a convoy of one at sea turns back for the nearest port on an order (`turnBack`), taken as there. Both at
+    Shanghai h633 (red: refused, Fuzhou h151). `landingRecallAtSea1938.test.ts`. Pin unmoved.
   - [ ] R31f R37-N2: a loaded convoy waits for any later order to the same coast (two fresh ones to Fuzhou, one in
     the far north: 364 and 366 still aboard at Sasebo on day 60). A convoy waits only for those whose march to its
     port is near enough; the rest go on the next voyage. AT: the critic's case, both aboard land within ~a month.

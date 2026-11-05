@@ -55,6 +55,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   is over it is the AI's (ADR-759), which now ships it on the group it left, freed, to China at h183. The
   test checks the other three land together, as it says. `landingJoinsAboard1938.test.ts` (red without:
   1144 idle under the player's order). Player orders only: pin unmoved.
+- **R31e** (R40-N1). The one aboard sent alone to another landing takes its own transports (R28a) and they
+  sail at once; recalled a day later it was refused at sea and landed alone (seed 3517: Fuzhou h151; before
+  R28a it rejoined, 631/632). Now the player's transports at sea with one division alone aboard, bound for
+  its landing (`soleAtSea`), turn back for their nation's nearest port on an order to it (`turnBack`): under
+  way there as R29b's (`sailingToPort`), it takes the order as at that port (R30b, R31c); refused, they
+  sail on for the landing as before. An order for the landing it has changes nothing (`ownLanding`).
+  After: both at Shanghai h633. **Changed:** the seed-2207 case of `serverOrderNews.test.ts` (a second order
+  while aboard, to Kassel inland) is refused `NoLanding` (no water to land from), not `Aboard`; the voyage
+  goes on as before. `landingRecallAtSea1938.test.ts` (red without: refused, Fuzhou h151). Player convoys
+  only: pin unmoved.
 
 ### ADR-827 · 2026-11-05 · accepted — Show the landing while choosing it (the user's decision)
 

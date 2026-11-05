@@ -122,7 +122,7 @@ export function noteLeaving(world: World, cmds: readonly { id: number; x: number
   world.groupsLeft.clear();
   for (const { id, x, y, nation } of cmds) {
     if (!world.formations.has(id) || world.formations.cols.nation[id] !== nation) continue;
-    const fleet = aboardAtPort(world, id) >= 0 ? world.embarked.get(id)!.fleet : world.seaFetch.get(id);
+    const fleet = aboardAtPort(world, id) >= 0 || (world.embarked.has(id) && soleAtSea(world, world.embarked.get(id)!.fleet, id)) ? world.embarked.get(id)!.fleet : world.seaFetch.get(id);
     if (fleet === undefined || sameLanding(world, id, x, y)) continue;
     world.leaving.set(id, fleet);
     world.groupsLeft.add(fleet);
@@ -463,6 +463,50 @@ export function ashoreAtPort(world: World, id: number): (() => void) | null {
 }
 
 /**
+ * Whether the player's transports `fleet` are under way to a landing with formation `id` alone aboard
+ * (ROADMAP R31e): a convoy of one that sailed, its port left (`convoyPort` gone). An order to it turns
+ * them back (`turnBack`).
+ */
+export function soleAtSea(world: World, fleet: number, id: number): boolean {
+  if (!world.formations.has(fleet) || world.formations.cols.moving[fleet] !== 1 || world.convoyPort.has(fleet) || !world.playerOrders.has(fleet)) return false;
+  for (const [o, e] of world.embarked) if (e.fleet === fleet && o !== id) return false;
+  return world.embarked.get(id)?.fleet === fleet;
+}
+
+/**
+ * The player's transports `fleet`, a convoy of one at sea (`soleAtSea`), turn back for the port of
+ * their nation nearest them by straight cells (ROADMAP R31e; critic run 40, R40-N1: the one re-sent
+ * alone sailed at once and, recalled a day later, was refused at sea and landed alone): under way to
+ * it as R29b's (`sailingToPort`), so the one aboard takes the order as at that port. The way back to
+ * the voyage it had, for an order then refused; null where no port is reached.
+ */
+export function turnBack(world: World, fleet: number): (() => void) | null {
+  const c = world.formations.cols;
+  const w = world.cells.w;
+  const water = portSeaOf(world);
+  const at = cellOfPlace(world, fleet);
+  const goal = c.targetCell[fleet]!;
+  const ports: [number, number][] = [];
+  world.ports.forEach((p, i) => {
+    if (water[i]! < 0 || world.cells.controller[p.cell] !== c.nation[fleet] || portShut(world, i)) return;
+    let dx = Math.abs((water[i]! % w) - (at % w));
+    if (world.settings.loopingMap && dx > w / 2) dx = w - dx;
+    const dy = Math.floor(water[i]! / w) - Math.floor(at / w);
+    ports.push([i, dx * dx + dy * dy]);
+  });
+  ports.sort((a, b) => a[1] - b[1] || a[0] - b[0]);
+  for (const [i] of ports.slice(0, 4)) {
+    if (!orderSail(world, fleet, (water[i]! % w) + 0.5, Math.floor(water[i]! / w) + 0.5)) continue;
+    world.convoyPort.set(fleet, i);
+    return () => {
+      world.convoyPort.delete(fleet);
+      orderSail(world, fleet, (goal % w) + 0.5, Math.floor(goal / w) + 0.5);
+    };
+  }
+  return null;
+}
+
+/**
  * A formation `id` aboard group `ship` under way to its convoy's port along its own coast (`sailingToPort`,
  * R29b's) goes ashore for an order that is not over the sea from that port (ROADMAP R31c; critic run 42,
  * R42-N1: refused "aboard", it then sailed abroad with the landing it was ordered away from): on the land of
@@ -531,7 +575,7 @@ export function sameLanding(world: World, id: number, x: number, y: number): boo
  */
 function ownLanding(world: World, id: number): { water: number; land: number; goal: number } | null {
   const e = world.embarked.get(id);
-  if (e !== undefined) return loading(world, e.fleet) || sailingToPort(world, e.fleet) ? { water: e.water, land: e.land, goal: e.target } : null;
+  if (e !== undefined) return loading(world, e.fleet) || sailingToPort(world, e.fleet) || soleAtSea(world, e.fleet, id) ? { water: e.water, land: e.land, goal: e.target } : null;
   const fetch = world.seaFetch.get(id);
   const bound = world.seaBound.get(id);
   if (fetch === undefined || bound === undefined || !world.convoyPort.has(fetch) || !world.formations.has(fetch)) return null;

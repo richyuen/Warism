@@ -72,7 +72,7 @@ import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroup
 import { isDayStart } from '../../shared/calendar';
 import { isLand } from '../../shared/terrain';
 import { Domain, navOf, PlayerOrderKind, portSeaOf, type TemplateRule, type World } from '../world';
-import { ashoreAtPort, ashoreFromShip, assignTransports, carrying, escortConvoy, landingHeld, landingOf, near, neutralLanding, sailAboard, sailingToPort, sameLanding, transportsPort, tryLanding } from './amphibious';
+import { ashoreAtPort, ashoreFromShip, assignTransports, soleAtSea, turnBack, carrying, escortConvoy, landingHeld, landingOf, near, neutralLanding, sailAboard, sailingToPort, sameLanding, transportsPort, tryLanding } from './amphibious';
 import { AT_PORT_CELLS } from './navalCombat';
 import { noteMove } from './elements';
 import { spawnPoint } from './production';
@@ -491,6 +491,10 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
   // Aboard transports it takes no order (PLAN 4.5a), but aboard a player's convoy still loading at
   // its port, where it goes ashore and takes it (ROADMAP R22b); refused, it is aboard again (R23a).
   const ship = world.embarked.get(id)!.fleet;
+  // Alone aboard the player's transports at sea, bound for its landing: they turn back for the nearest
+  // port, and it takes the order as at that port (ROADMAP R31e); refused, they sail on as they were.
+  const turned = call && soleAtSea(world, ship, id) ? turnBack(world, ship) : null;
+  const undo = (): void => turned?.();
   // Under way to its port (R29b's): an order over the sea from there its transports keep (ROADMAP R30b);
   // any other, ashore on its side's coast by them, and taken from there (R31c), out of reach of it refused.
   const sailing = sailingToPort(world, ship);
@@ -498,6 +502,7 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
   const fromPort = !sailing || (call && port !== undefined && overSeaFrom(world, world.ports[port]!.cell, x, y));
   const back = fromPort ? ashoreAtPort(world, id) : ashoreFromShip(world, id, ship);
   if (back === null) {
+    undo();
     world.seaBound.delete(id);
     world.seaFetch.delete(id);
     refusedLong = false;
@@ -506,6 +511,7 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
   }
   if (orderAshore(world, id, x, y, pass, byPort, direct, call, escort, fromPort ? ship : 0)) return taken();
   back();
+  undo();
   return keep();
 }
 

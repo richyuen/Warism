@@ -1306,7 +1306,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   R30b): to the landing it has, nothing changes; to another landing over the sea from that port, its
   transports keep it and load for that one there, or, held by others, it is refused `Aboard`; any
   other order, it goes ashore on its side's coast nearest them and takes it from there (R31c), out of
-  reach of such land refused `Aboard`. Its panel reads "Aboard, sailing to {port} to load the rest of the
+  reach of such land refused `Aboard`. The player's transports at sea with one division alone aboard,
+  bound for its landing, turn back for their nation's nearest port on an order to it, and it takes the
+  order as at that port; refused, they sail on (`soleAtSea`, `turnBack`, R31e). Its panel reads "Aboard, sailing to {port} to load the rest of the
   landing" (R30c). With
   none free, the one aboard sent over the sea to another landing is refused `Loading` (18, R24d).
   A division aboard or bound that an order takes to another landing is told it leaves its landing

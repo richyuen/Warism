@@ -1457,3 +1457,10 @@
   one (Tokyo → Sasebo) measured at ~2 days' gain, not built. R22b's test now checks the three it names (the
   recalled one is the AI's after its march). Whole unit suite green (snapshot-perf under load); pin unmoved.
 - **Next:** R31e.
+
+## 2026-11-05 — R31e: a convoy of one at sea can be recalled (R40-N1)
+- The player's transports at sea with one division alone aboard turn back for the nearest port on an order to it,
+  which is taken as at that port; refused, they sail on. Seed 3517: sent alone to Fuzhou, recalled a day later,
+  both land at Shanghai h633 (red: refused at sea, Fuzhou h151). The seed-2207 news test's second order is now
+  refused `NoLanding` (Kassel, inland), not `Aboard`. Whole unit suite green (snapshot-perf under load); pin unmoved.
+- **Next:** R31f.

@@ -1,0 +1,84 @@
+import { describe, expect, it } from 'vitest';
+import type { Command } from '../../src/shared/commands';
+import { EventKind } from '../../src/shared/events';
+import type { FromWorker } from '../../src/shared/protocol';
+import { cellOf } from '../../src/sim/data/terrain';
+import { SIZE_1938 } from '../../src/sim/scenario1938';
+import type { World } from '../../src/sim/world';
+import { navOf } from '../../src/sim/world';
+import { SimServer } from '../../src/worker/server';
+import { assets1938 } from '../helpers/earth';
+import { nationId } from '../helpers/sim1938';
+
+// ROADMAP R31e (critic run 40, R40-N1): the one aboard sent alone to another landing takes its own
+// transports (R28a) and they sail at once; recalled a day later, it was refused at sea ("aboard") and
+// landed alone at Fuzhou h150, while before R28a it rejoined its landing (631/632). Now the player's
+// transports at sea with it alone turn back for the nearest port, and it takes the order as there.
+// Seed 3517, Japan at war with China: the two nearest Tokyo sent to Shanghai by a click (escort on);
+// two hours after the first boards, it alone is sent to Fuzhou; a day later, back to Shanghai.
+
+const { w: W, h: H } = SIZE_1938;
+const JAP = nationId('JAP');
+const CHI = nationId('CHI');
+const SHANGHAI = cellOf(121.47, 31.23, W, H) as [number, number];
+const TOKYO = cellOf(139.69, 35.69, W, H) as [number, number];
+const FUZHOU: [number, number] = [1703.5, 445.5];
+
+describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e)', () => {
+  it('sent alone to Fuzhou, recalled to Shanghai a day later: not refused; the two land at Shanghai within a day', () => {
+    const refused: number[] = [];
+    const s = new SimServer((m: FromWorker) => {
+      if (m.type === 'orderNews' && m.news.kind === 'refused') refused.push(m.news.id);
+    });
+    s.handle({ type: 'init', reqId: 1, init: { scenario: '1938', seed: 3517, assets: assets1938(W) } }, 0);
+    s.handle({ type: 'cmd', cmd: { kind: 'setPlayer', nation: JAP } }, 1);
+    const w = s.sim!.world;
+    if (!w.wars.atWar(JAP, CHI)) s.handle({ type: 'cmd', cmd: { kind: 'declareWar', attacker: JAP, defender: CHI }, now: true }, 1);
+    const drain = (x: World): void => (s as unknown as { drainEvents(w: World): void }).drainEvents(x);
+    const landed = new Map<number, number>();
+    let boarded = false;
+    let ids: number[] = [];
+    const step = (): void =>
+      s.sim!.step(1, (x) => {
+        const ev = x.out.events;
+        for (let i = 0; i < ev.length; i += 6) {
+          if (!ids.includes(ev[i + 2]!)) continue;
+          if (ev[i + 1] === EventKind.FormationLanded) landed.set(ev[i + 2]!, x.tick);
+          if (ev[i + 1] === EventKind.FormationEmbarked) boarded = true;
+        }
+        drain(x);
+      });
+    step();
+    const c = w.formations.cols;
+    const comp = navOf(w).grid.component;
+    const honshu = comp[Math.floor(TOKYO[1]) * W + Math.floor(TOKYO[0])];
+    const all: [number, number][] = [];
+    w.formations.forEach((id) => {
+      if (c.nation[id] !== JAP || w.isFleet(id) || w.offLand(id) || comp[Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!)] !== honshu) return;
+      all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
+    });
+    ids = all.sort((a, b) => a[1] - b[1]).slice(0, 2).map((d) => d[0]);
+    const click = (sel: number[], x: number, y: number): void => {
+      const cmds: Command[] = [...sel].sort((a, b) => a - b).map((id) => ({ kind: 'moveFormation', id, x, y, nation: JAP, escort: true }));
+      s.handle({ type: 'cmds', cmds, now: true }, 2);
+    };
+    click(ids, ...SHANGHAI);
+    for (let h = 0; h < 24 * 10 && !boarded; h++) step();
+    expect(boarded, 'the first boards').toBe(true);
+    step();
+    step();
+    const first = ids.find((id) => w.embarked.has(id))!;
+    click([first], ...FUZHOU);
+    for (let h = 0; h < 24; h++) step();
+    const ship = w.embarked.get(first)?.fleet ?? 0;
+    expect(c.moving[ship], 'its transports at sea, for Fuzhou').toBe(1);
+    click([first], ...SHANGHAI);
+    for (let h = 0; h < 24 * 90 && ids.some((id) => !landed.has(id)); h++) step();
+    process.stderr.write(`R31e: first ${first}, refused ${refused}, landed ${[...landed]}, at ${ids.map((id) => `${c.x[id]!.toFixed(0)},${c.y[id]!.toFixed(0)}`)}\n`);
+    expect(refused, 'none refused (red: the first, at sea)').toEqual([]);
+    expect(landed.size, 'both landed').toBe(2);
+    const at = [...landed.values()];
+    expect(Math.max(...at) - Math.min(...at), 'together (red: Fuzhou h150 and Shanghai)').toBeLessThanOrEqual(24);
+    for (const id of ids) expect(Math.hypot(c.x[id]! - SHANGHAI[0], c.y[id]! - SHANGHAI[1]), `${id} at Shanghai`).toBeLessThan(15);
+  }, 300_000);
+});
