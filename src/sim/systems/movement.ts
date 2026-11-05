@@ -451,17 +451,32 @@ export const wasLong = (): boolean => refusedLong;
  * ROADMAP R17): the order goes by a convoy instead (`seaConvoy`). Any order ends an order kept so.
  */
 export function orderMove(world: World, id: number, x: number, y: number, pass?: Passage, byPort = false, direct = false, call = false, escort = false): boolean {
+  if (!world.embarked.has(id)) return orderAshore(world, id, x, y, pass, byPort, direct, call, escort);
+  // Aboard transports it takes no order (PLAN 4.5a), but aboard a player's convoy still loading at
+  // its port, where it goes ashore and takes it (ROADMAP R22b); refused, it is aboard again (R23a).
+  const back = ashoreAtPort(world, id);
+  const [bound, fetch] = [world.seaBound.get(id), world.seaFetch.get(id)];
+  if (back === null) {
+    world.seaBound.delete(id);
+    world.seaFetch.delete(id);
+    refusedLong = false;
+    world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Aboard, NaN);
+    return false;
+  }
+  if (orderAshore(world, id, x, y, pass, byPort, direct, call, escort)) return true;
+  back();
+  if (bound !== undefined) world.seaBound.set(id, bound);
+  if (fetch !== undefined) world.seaFetch.set(id, fetch);
+  return false;
+}
+
+/** `orderMove` of a formation not aboard (or just gone ashore). */
+function orderAshore(world: World, id: number, x: number, y: number, pass: Passage | undefined, byPort: boolean, direct: boolean, call: boolean, escort: boolean): boolean {
   world.seaBound.delete(id);
   world.seaFetch.delete(id);
   refusedLong = false;
   // A fleet sails (PLAN 4.2c): its order is its own.
   if (world.formations.has(id) && world.isFleet(id)) return orderSail(world, id, x, y);
-  // Aboard transports it takes no order (PLAN 4.5a), but aboard a player's convoy still loading at
-  // its port, where it goes ashore and takes it (ROADMAP R22b).
-  if (world.embarked.has(id) && !ashoreAtPort(world, id)) {
-    world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Aboard, NaN);
-    return false;
-  }
   const over = world.formations.has(id) && overSea(world, id, x, y);
   if (call && over) return seaConvoy(world, id, x, y, pass, escort);
   // To another land: by sea, from a port its nation holds with transports there (PLAN 4.5a). With

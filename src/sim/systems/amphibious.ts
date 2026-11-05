@@ -378,18 +378,37 @@ export function loading(world: World, fleet: number): boolean {
  * A formation `id` aboard a player's convoy still loading at its port (ROADMAP R22b, critic run 34,
  * R34-N1) goes ashore there on a new order: at the port's cell, its organisation as it was, no
  * landing (it never left). The convoy waits on for the rest, or is over with nobody aboard or bound
- * (`convoySystem`). False where it is aboard anything else (under way, or the AI's) or the port is
- * no longer its nation's: it takes no order.
+ * (`convoySystem`). Null where it is aboard anything else (under way, or the AI's) or the port is
+ * no longer its nation's: it takes no order. Else the way back aboard, for an order then refused
+ * (ROADMAP R23a, critic run 35, R35-B2: a refusal leaves it as it was, its landing kept).
  */
-export function ashoreAtPort(world: World, id: number): boolean {
+export function ashoreAtPort(world: World, id: number): (() => void) | null {
   const e = world.embarked.get(id);
-  if (e === undefined || !loading(world, e.fleet)) return false;
+  if (e === undefined || !loading(world, e.fleet)) return null;
   const port = world.convoyPort.get(e.fleet)!;
   const c = world.formations.cols;
-  if (world.cells.controller[world.ports[port]!.cell] !== c.nation[id]) return false;
+  if (world.cells.controller[world.ports[port]!.cell] !== c.nation[id]) return null;
+  const [x, y] = [c.x[id]!, c.y[id]!];
   world.embarked.delete(id);
   [c.x[id], c.y[id]] = world.cellPoint(world.ports[port]!.cell);
-  return true;
+  return () => {
+    world.embarked.set(id, e);
+    [c.x[id], c.y[id]] = [x, y];
+  };
+}
+
+/**
+ * Whether an order of formation `id` aboard a player's convoy still loading to (`x`, `y`) is for
+ * the landing it is aboard for (ROADMAP R23b, critic run 35, R35-B1): it stays aboard, and the
+ * order stands as it is; ashore, it would give its place to another and wait on the quay.
+ */
+export function sameLanding(world: World, id: number, x: number, y: number): boolean {
+  const e = world.embarked.get(id);
+  const { w, h } = world.cells;
+  const [tx, ty] = [Math.floor(x), Math.floor(y)];
+  if (e === undefined || !loading(world, e.fleet) || tx < 0 || ty < 0 || tx >= w || ty >= h) return false;
+  const l = landingOf(world, ty * w + tx);
+  return l !== null && l !== undefined && l.water === e.water && l.land === e.land;
 }
 
 /** Ends the player's convoy on group `fleet`: the formations still bound for it are told (`why`, by default `NoTransports`). */

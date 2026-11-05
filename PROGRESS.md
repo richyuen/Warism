@@ -1144,3 +1144,13 @@
   semanticZoom, tanks, aircraft, aiNukes 8; the rest 7, at their bars. Every AI world bit-identical to run 34's.
   Filed as R23a–e (with R35-N1–N3).
 - **Next:** R23a.
+
+## 2026-11-05 — ROADMAP R23a: a refused order leaves the division aboard (R35-B2)
+- `orderMove` of a division aboard a loading convoy goes ashore, judges the order, and on a refusal puts it back aboard
+  where it was (`ashoreAtPort` now returns the way back), its `seaBound`/`seaFetch` restored. The rest of `orderMove` is
+  `orderAshore`, unchanged.
+- AT: `landingAboardRefused1938.test.ts` (Japan's four to Shanghai, the one aboard ordered onto open sea and onto Calais:
+  refused 17 / 15, embarked entry and place as before, the four land within a day; red without, ashore),
+  `landingAboardRefused1938.spec.ts` (the panel: "only sea there" under "Aboard at Tokyo", "1 of 4 aboard"; red without;
+  looked at). The player's convoys only.
+- **Next:** R23b.

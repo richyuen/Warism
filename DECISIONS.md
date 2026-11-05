@@ -61,6 +61,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (an order aboard a landing's transports refused `Aboard`), `serverOrderNews.test.ts` (an order
   while the voyage is under way refused, the voyage told on), `landingTogether1938.test.ts`,
   `landingPeace1938.test.ts`: green before and after. `landingAshore1938.test.ts`: red without.
+  R23a (critic run 35, R35-B2): the order is judged with the division ashore, and a refused one puts
+  it back aboard as it was (`ashoreAtPort` returns the way back): "a refused order leaves the one
+  before it standing" holds aboard too. `landingAboardRefused1938.test.ts` and `.spec.ts`: red without.
 - **R22c.** The wait aboard is accounted for: "1 of 4 aboard; the last 47 days from the port"
   (`voyage.wait`, the furthest bound division's `marchHoursLeft`). Worker and UI only.
 - **R22d (R34-N1).** The escort is not sent weeks ahead. R17d sent it at the order; with R21e's wait

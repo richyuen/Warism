@@ -214,10 +214,14 @@ Rules:
 - [ ] R23 **Naval back to its bar: the way out of the wait aboard** (critic run 35, focused: two blocking issues,
   R35-B1 and R35-B2, both in R22b's `ashoreAtPort`; naval 7 under its bar of 8 for them). Each sub-item its own
   commit; then the critic again.
-  - [ ] R23a A refused order leaves the division aboard (R35-B2): the order is judged before the division goes ashore;
+  - [x] R23a A refused order leaves the division aboard (R35-B2): the order is judged before the division goes ashore;
     a refused one leaves it aboard, its landing kept. AT: Japan's four to Shanghai, the one aboard at Tokyo ordered onto
     open sea and onto Calais (France at peace): refused (17, 15), still aboard, and all four land together; an e2e spec,
     the panel still "Aboard at Tokyo" with the refusal; red without.
+    Done: `orderMove` judges the order with the division ashore and puts it back aboard on a refusal (`ashoreAtPort`'s
+    way back); `landingAboardRefused1938.test.ts` (open sea 17, Calais 15: still aboard, its place kept, the four land
+    together; red without, ashore), `landingAboardRefused1938.spec.ts` ("only sea there" over "Aboard at Tokyo", "1 of 4
+    aboard"; red without). The player's convoys only: pin unmoved.
   - [ ] R23b Ordered to the same landing again, the division aboard stays (R35-B1): an order of a division aboard a
     loading convoy to the landing it is bound for changes nothing, and no division is bound to a group beyond its room
     when another of its click is bound to it. AT: Japan's four to Shanghai, the one aboard clicked to Shanghai again:
