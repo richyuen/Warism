@@ -1335,17 +1335,20 @@ export class SimServer {
 
   private drainEvents(world: World): void {
     const ev = world.out.events;
+    let sentFirst = -1;
     for (let i = 0; i < ev.length; i += 6) {
       let b = ev[i + 3]!;
       // A refusal goes to the page at once and whatever it looks at: the panel that sent the
       // command says why (PLAN 2.17a).
       if (ev[i + 1] === EventKind.CommandRefused) this.post({ type: 'refused', reason: b, base: this.baseFor(world, ev[i + 2]!, b) }, []);
       if (this.ordered.size > 0) this.orderNews(world, ev, i);
-      // A player's formation set home across the sea (ROADMAP R20): told, ordered or not.
-      if (ev[i + 1] === EventKind.FormationSentHome && b !== 0 && b === world.settings.player) {
-        const id = ev[i + 2]!;
+      // The player's formations set home across the sea (ROADMAP R20, R21d): told, ordered or not,
+      // by one row for the day start's all (`FormationsSentHome` follows theirs), naming the first.
+      if (ev[i + 1] === EventKind.FormationSentHome && b !== 0 && b === world.settings.player && sentFirst < 0) sentFirst = ev[i + 2]!;
+      if (ev[i + 1] === EventKind.FormationsSentHome && sentFirst >= 0) {
         const c = world.formations.cols;
-        this.post({ type: 'orderNews', news: { kind: 'sentHome', id, nation: b, reason: 0, x: c.x[id]!, y: c.y[id]!, tick: ev[i]! } }, []);
+        this.post({ type: 'orderNews', news: { kind: 'sentHome', id: sentFirst, nation: ev[i + 2]!, reason: b, x: c.x[sentFirst]!, y: c.y[sentFirst]!, tick: ev[i]! } }, []);
+        sentFirst = -1;
       }
       if (ev[i + 1] === EventKind.ElementDestroyed) {
         // The end of an element is for a view that draws elements (PLAN 2.4b); it gets what the

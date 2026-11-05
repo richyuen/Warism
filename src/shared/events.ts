@@ -232,6 +232,12 @@ export const EventKind = {
    * a = the formation, b = its nation, (x, y) = where it stood.
    */
   FormationSentHome: 71,
+  /**
+   * The player's formations sent home in one day start (`FormationSentHome`, ROADMAP R21d): one
+   * event for them all, kept in History and told by one row. a = the nation played, b = how many,
+   * (x, y) = its spawn point. None for a nation not played (the AI's are not history).
+   */
+  FormationsSentHome: 72,
 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */

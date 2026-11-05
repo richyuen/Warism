@@ -755,7 +755,9 @@ km², integers). A realm has one head: a puppet's overlord is never a puppet [AD
   to their spawn point. That march alone crosses a neutral's ground (`formations.home`) [ADR-169],
   unfed there, the operational AI leaving it be; it keeps off enemies' ground and is ordered round it
   [ADR-222]; a formation is set on its spawn point only where no land leads there
-  (`FormationSentHome`: the player is told of one of theirs below the ticker, ROADMAP R20).
+  (`FormationSentHome`: the player is told of one of theirs below the ticker, ROADMAP R20). The
+  player's sent home in one day start are also one `FormationsSentHome` (the nation, how many), kept
+  in History and told by one row naming the first and counting the rest (ROADMAP R21d).
 - *God commands:* `forceWar`, `forcePeace`, `setWarFightToDeath`.
 
 **Alliances** [ADR-30] (`src/sim/systems/alliances.ts`, monthly):

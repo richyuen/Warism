@@ -61,6 +61,8 @@ export const HISTORY_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.HeroReturned,
   // A default with nothing to fragment (ROADMAP R7).
   EventKind.NationDefaulted,
+  // The player's formations sent home across the sea in one day start (ROADMAP R21d).
+  EventKind.FormationsSentHome,
 ]);
 
 export class History implements Stateful {

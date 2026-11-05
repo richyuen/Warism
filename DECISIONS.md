@@ -36,6 +36,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
   the panel of the formation refused again, if it is selected and no formation panel is open: the
   reason is read in full where the order was given. The tooltip's sea line asks the worker for a
   neutral's landing (`neutralLanding`) and says no landing instead of promising the voyage.
+- **R21d (R33-N4).** The player's formations sent home in one day start are one event,
+  `FormationsSentHome` (72: the nation, how many), a History kind, and one row below the ticker
+  (the page keeps four rows; ten sent home lost six). The player's only: the AI's are mechanics, not
+  history (seed 9419: 255 in 30 years), and with none played (the pin's run) nothing is recorded, so
+  the pin stands. `sentHomeMany1938.test.ts`: ten at once, one event, one History record, one row.
 - **Tests restated.** `serverOrderNews.test.ts` (Britain on Cuxhaven) and `orderNews1938.spec.ts`
   (Switzerland on London) each order a landing at peace to see a refusal told with its reason (no
   port, no transports); `Neutral` now comes first. Each now makes that war first, and its assertions

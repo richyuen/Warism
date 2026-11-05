@@ -113,6 +113,8 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.HeroReturned]: ['nation', 'hero'],
   // A default with nothing to fragment (ROADMAP R7): the nation, the debt voided.
   [EventKind.NationDefaulted]: ['nation', 'number'],
+  // The player's formations sent home (ROADMAP R21d): the nation, how many.
+  [EventKind.FormationsSentHome]: ['nation', 'number'],
 };
 
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */

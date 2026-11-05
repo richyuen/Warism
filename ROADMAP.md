@@ -157,8 +157,10 @@ Rules:
     e2e spec with a real mouse click over Calais at peace: panel open with the reason; the tooltip's line.
     Done: `overSea` 0/1/2 and `tooltip-sea-refused`; a refusal reopens the selected formation's panel
     (ADR-826); `landingNeutral1938.spec.ts`'s mouse test.
-  - [ ] R21d Many sent home are told (R33-N4): divisions of the player's set home in one hour are one row
+  - [x] R21d Many sent home are told (R33-N4): divisions of the player's set home in one hour are one row
     that counts them, and each is a History event. AT: ten set home at once: one row naming ten, ten History rows.
+    Done, restated: one History record that counts them, as the row does (`FormationsSentHome`, ADR-826);
+    `sentHomeMany1938.test.ts`.
   - [ ] R21e One click lands together (R32-N1): the divisions of one click to one target board one convoy
     where one group has room, rather than two groups at two ports weeks apart. AT: Japan's two divisions
     to Shanghai land within a day of each other.

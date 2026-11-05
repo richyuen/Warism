@@ -1032,3 +1032,10 @@
   open with the reason). Order specs (invasion, orderNews, landing voyage and escort, fleet order, order lines, follow,
   markers, ticker) green.
 - **Next:** R21d.
+
+## 2026-11-04 — ROADMAP R21d: many sent home are told once (R33-N4)
+- The player's formations sent home across the sea in one day start are one event (`FormationsSentHome`, the count),
+  one History record ("Sent home"), and one row below the ticker naming the first and counting the rest.
+- AT: `sentHomeMany1938.test.ts` (ten British divisions at Calais: ten sent home, one event of ten, one History record,
+  one row of ten). The AI's are not recorded: pin unmoved.
+- **Next:** R21e.

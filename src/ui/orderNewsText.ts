@@ -6,6 +6,6 @@ export function orderNewsText(n: OrderNews, name: string): string {
   if (n.kind === 'repulsed') return t('order.repulsed', { name });
   if (n.kind === 'landedAway') return t('order.landedAway', { name });
   if (n.kind === 'unescorted') return t('order.unescorted', { name });
-  if (n.kind === 'sentHome') return t('order.sentHome', { name });
+  if (n.kind === 'sentHome') return n.reason > 1 ? t('order.sentHomeMany', { name, more: n.reason - 1 }) : t('order.sentHome', { name });
   return t('order.refused', { name, why: t(`order.why.${n.reason}` as MessageKey) });
 }

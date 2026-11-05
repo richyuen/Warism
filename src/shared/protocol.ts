@@ -829,7 +829,7 @@ export interface OrderNews {
   kind: 'refused' | 'repulsed' | 'landedAway' | 'unescorted' | 'sentHome';
   id: number;
   nation: number;
-  /** A `RejectReason` for `refused`, else 0. */
+  /** A `RejectReason` for `refused`; for `sentHome` how many were sent home (ROADMAP R21d); else 0. */
   reason: number;
   x: number;
   y: number;

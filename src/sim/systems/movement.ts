@@ -621,6 +621,8 @@ export function repatriationSystem(world: World): void {
   const comp = navOf(world).grid.component;
   // The ground of the day's marches home, by nation.
   const ways = new Map<number, Passage>();
+  // The player's formations set on their spawn point (ROADMAP R21d): one event for them all.
+  let sent = 0;
   f.forEach((id) => {
     if (c.moving[id] === 1 || c.engaged[id] === 1 || !world.rules?.templates[c.template[id]!] || world.offLand(id)) return;
     const nation = c.nation[id]!;
@@ -643,9 +645,13 @@ export function repatriationSystem(world: World): void {
       if (way.open !== undefined) return;
     }
     world.out.emit(world.tick, EventKind.FormationSentHome, id, nation, c.x[id]!, c.y[id]!);
+    if (nation === world.settings.player) sent++;
     c.x[id] = at[0];
     c.y[id] = at[1];
   });
+  const p = world.settings.player;
+  const at = sent > 0 ? spawnPoint(world, p) : null;
+  if (at) world.out.emit(world.tick, EventKind.FormationsSentHome, p, sent, at[0], at[1]);
 }
 
 /** A march through a fight (ADR-759: the player's order given in contact) goes at this share of its pace while in contact. */
