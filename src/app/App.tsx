@@ -19,7 +19,7 @@ import { usePhone } from '../ui/usePhone';
 import { Ticker } from '../ui/Ticker';
 import { NukeAlerts } from '../ui/NukeAlert';
 import { GodToolbar } from '../ui/GodToolbar';
-import { orderNewsText } from '../ui/orderNewsText';
+import { orderNewsText, staleNotice } from '../ui/orderNewsText';
 import { TopBar } from '../ui/TopBar';
 import type { Hud } from './hud';
 import type { PlayerControl } from './player';
@@ -74,6 +74,8 @@ export function App({
   const phone = usePhone();
   // Re-render when custom flags change (the flag store is outside the signals).
   const [flagVersion, setFlagVersion] = useState(0);
+  // The state each order notice was first shown with (ROADMAP R22f): kept for the life of the page.
+  const [noticeSeen] = useState(() => new Map<number, string>());
   useEffect(() => hud.sim.onFlags(() => setFlagVersion((v) => v + 1)), []);
   const stats = hud.stats.value;
   const byId = new Map((stats?.nations ?? []).map((n) => [n.id, n]));
@@ -122,7 +124,9 @@ export function App({
         : hud.godTool.value !== null
           ? () => hud.setGodTool(null)
           : null;
-  const lastOrder = formationTitle ? orderNews.filter((n) => n.id === hud.formation.value).at(-1) : undefined;
+  // The last news of the formation's order, while what it said still holds (ROADMAP R22f).
+  const lastNews = formationTitle ? orderNews.filter((n) => n.id === hud.formation.value).at(-1) : undefined;
+  const lastOrder = lastNews && !staleNotice(noticeSeen, lastNews, hud.formationInfo.value) ? lastNews : undefined;
   return (
     <>
       <TopBar

@@ -199,8 +199,11 @@ Rules:
     wraps under its value, not into "Status". AT: the panel's crop at 1600 × 900 and 390 × 844, label and value apart.
     Done: `.panel-row` keeps its label's width, a gap, the value right-aligned (`style.css`); `landingWait1938.spec.ts`
     (Status and Landing rows: label ends ≥ 4 px before the value's leftmost line, desk and phone; red without, 0 px).
-  - [ ] R22f A refusal notice goes when it stops being true (R34-N3): the panel's refusal is cleared when the
+  - [x] R22f A refusal notice goes when it stops being true (R34-N3): the panel's refusal is cleared when the
     formation's order or state changes. AT: the recall refused in Tokyo, then the convoy sails: no refusal under
     "At sea, bound for its landing".
+    Done, restated (R22b obeys that recall now): `staleNotice`, a refusal only; `orderNews1938.spec.ts` (Switzerland
+    refused London, the notice held over two hours standing, gone once marched to Zurich, the ticker's row kept; red
+    without). The rest of the news stays (`landingEscort1938.spec.ts`'s "no warships free" while bound).
   - [ ] R22g A sea order on open water says so (R34-N4): a click onto the sea off Bergen is refused for the sea, not for
     "a way by land". AT: Britain's division clicked onto the water off Bergen: the reason speaks of the sea.

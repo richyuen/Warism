@@ -1115,3 +1115,13 @@
   (enemyClickPanel, formationClickPanel, formationPanel, godPanelMore, nationPanel, nukeAlertPhone, phoneLayout,
   orderNews: 29). CSS only: no sim, frame budget untouched.
 - **Next:** R22f.
+
+## 2026-11-05 — ROADMAP R22f: a refusal notice goes when it stops being true (R34-N3)
+- The formation panel's notice of a refusal is shown only while the formation's voyage, march, fight and retreat are as
+  when the panel first showed it after the news (`staleNotice`, `orderNewsText.ts`); the ticker's row is untouched.
+  Refusals only: a first try cleared "no warships free" as the division marched to its port, which stays true while the
+  order goes on (`landingEscort1938.spec.ts` red, then green with the rule narrowed).
+- AT, restated (R22b obeys the critic's recall in Tokyo): `orderNews1938.spec.ts` (Switzerland refused London, the
+  notice held over two hours standing; marched to Zurich, "On the march" and no notice; the row kept; red without).
+  orderNews, landingNeutral, landingPortShut, landingVoyage, landingEscort, landingWait, airOrders specs green. UI only.
+- **Next:** R22g.
