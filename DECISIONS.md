@@ -94,7 +94,8 @@ from AoC are tagged **[AoC-DEVIATION]**.
   panel's notice). **Not chosen:** refusing it (`Loading`) whenever its own convoy is loading: the
   player could no longer redirect one division aboard. An event, not state: pin unmoved.
   `landingLeftTold1938.test.ts` and `.spec.ts` (Fuzhou with two: told, on fleet 1151 for 1136): red
-  without.
+  without. R25c (R37-N1): the walkers of a whole click re-clicked near it are bound, and R25a's rule
+  covers them: no refusal. `landingNearAll1938.test.ts`: red without R25a.
 - **R22c.** The wait aboard is accounted for: "1 of 4 aboard; the last 47 days from the port"
   (`voyage.wait`, the furthest bound division's `marchHoursLeft`). Worker and UI only.
 - **R22d (R34-N1).** The escort is not sent weeks ahead. R17d sent it at the order; with R21e's wait

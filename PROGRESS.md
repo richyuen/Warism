@@ -1259,3 +1259,12 @@
 - AT: `landingLeftTold1938.test.ts` (Japan's two to Shanghai, the one aboard sent to Fuzhou: 1136 → 1151, told) and
   `landingLeftTold1938.spec.ts` (the row and the notice; looked at). Red without, both. Pin unmoved (an event only).
 - **Next:** R25c.
+
+## 2026-11-05 — ROADMAP R25c: no false refusals for a near re-click (R37-N1); R25 done
+- The walkers of a whole click re-clicked two cells off are bound to their convoy, and R25a's rule (a click within two
+  cells of the clicked target) holds for them: none refused, each keeps its transports. No code beyond R25a.
+- AT: `landingNearAll1938.test.ts` (all four two south, and two south-west: none refused, landed 1242–1243; red
+  without R25a's change). Pin unmoved.
+- Housekeeping: a red-without check stashed a committed file (nothing to stash) and the pop applied an old stash
+  (`rule worktree scratch 2026-10-24`) onto `tools/diag/airLate.ts`; both files restored to HEAD, the stash kept.
+- **Next:** critic run 38.

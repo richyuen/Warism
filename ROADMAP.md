@@ -297,6 +297,9 @@ Rules:
     Done: `LeftLanding` (73), the order's news "leftLanding" ("its transports are loading for another landing; it
     left them for other transports and will not land with the rest"); `landingLeftTold1938.test.ts` (Fuzhou: taken,
     1136 → 1151, told) and its spec (the row and the panel's notice; looked at). Red without. Pin unmoved.
-  - [ ] R25c No false refusals for a near re-click (R37-N1): the walkers of a whole click re-clicked near their landing
+  - [x] R25c No false refusals for a near re-click (R37-N1): the walkers of a whole click re-clicked near their landing
     keep it and are told nothing. AT: all four re-clicked two cells south at hour 26: no refusal for the three walking,
     all land within a day; red without (three refused 6).
+    Done: by R25a's rule (`sameLanding` takes a bound division too); `landingNearAll1938.test.ts` (all four two south,
+    and two south-west: none refused, each keeps its transports, landed 1242–1243; red without R25a). Pin unmoved.
+  R25 done; then the critic again (run 38).
