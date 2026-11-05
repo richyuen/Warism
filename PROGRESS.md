@@ -1211,3 +1211,11 @@
   365 unbound). Landing unit tests green. Pin unmoved (no player convoy in AI play). In the gate run, two timing
   tests red under load and green alone: `snapshot-perf` (watch list) and `scenario1938`'s build time (2044 ms of 2000).
 - **Next:** R24b.
+
+## 2026-11-05 — ROADMAP R24b: a click a cell or two off the landing is the same landing (R36-B2)
+- `sameLanding` matches a landing whose water and land are within `SAME_LANDING_CELLS` (2 cells of the default map,
+  about 25 km) of the division's own, the land of the same holder; the order stands as it was.
+- AT: `landingNearSame1938.test.ts` (Japan's two to Shanghai; the one aboard re-clicked one cell east, one south, two
+  east: still aboard, the two land 632–633; Fuzhou is another landing; red without, one east: 633 / 1285). The one
+  south and two east were already the same on HEAD. Pin unmoved.
+- **Next:** R24c.

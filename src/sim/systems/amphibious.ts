@@ -405,7 +405,10 @@ export function ashoreAtPort(world: World, id: number): (() => void) | null {
  * a player's convoy still loading (ROADMAP R23b, critic run 35, R35-B1), or bound for one still at
  * its port (R23e, R35-N2). The order stands as it is. Ashore, the one aboard gave its place to
  * another, which waited on the quay; bound, its convoy lost its landing with it (`convoyTarget`) and
- * it was put on another's next voyage, so a click clicked again landed one by one.
+ * it was put on another's next voyage, so a click clicked again landed one by one. A landing whose
+ * water and land are within SAME_LANDING_CELLS of its own, the land of the same holder, is its own
+ * (R24b, critic run 36, R36-B2: a click a cell off, which nothing on the screen tells apart, sent the
+ * one aboard ashore and to another port's transports, the landing split for weeks).
  */
 export function sameLanding(world: World, id: number, x: number, y: number): boolean {
   const { w, h } = world.cells;
@@ -419,8 +422,13 @@ export function sameLanding(world: World, id: number, x: number, y: number): boo
   else if (fetch !== undefined && bound !== undefined && world.convoyPort.has(fetch) && world.formations.has(fetch)) was = landingOf(world, bound);
   if (!was) return false;
   const l = landingOf(world, ty * w + tx);
-  return l !== null && l.water === was.water && l.land === was.land;
+  if (!l) return false;
+  const r = world.atSize(SAME_LANDING_CELLS);
+  return near(world, l.water, was.water, r) && near(world, l.land, was.land, r) && world.cells.controller[l.land] === world.cells.controller[was.land];
 }
+
+/** How near, in cells of the default map, a landing is to another to be the same for an order (`sameLanding`, ROADMAP R24b): about 25 km. */
+export const SAME_LANDING_CELLS = 2;
 
 /** Ends the player's convoy on group `fleet`: the formations still bound for it are told (`why`, by default `NoTransports`). */
 function endConvoy(world: World, fleet: number, why: RejectReason = RejectReason.NoTransports): void {

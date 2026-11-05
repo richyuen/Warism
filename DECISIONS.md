@@ -75,6 +75,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   port; its order cleared its binding, which was all that gave its convoy a landing (`convoyTarget`),
   so it was put on another convoy's next voyage, and a click clicked again landed one at a time
   (148, 633, 952, 1243 h). Now the four land together (1242–1243). Red without.
+  R24b (critic run 36, R36-B2, older): "the same landing" is a landing within two cells (water and
+  land, `SAME_LANDING_CELLS`), the land of the same holder, not only the same cell pair: a click a
+  cell off (14 px at the default zoom, nothing on the screen to tell) sent the one aboard ashore to
+  Sasebo's transports, landing 27 days after its partner. **Not chosen:** moving the convoy to the
+  new cell: it changes the landing of every division of the click for a difference the player
+  cannot see. A marker of the landing while choosing (the critic's design objection) stays open.
+  `landingNearSame1938.test.ts`: red without (one cell east: 633 / 1285).
 - **R22c.** The wait aboard is accounted for: "1 of 4 aboard; the last 47 days from the port"
   (`voyage.wait`, the furthest bound division's `marchHoursLeft`). Worker and UI only.
 - **R22d (R34-N1).** The escort is not sent weeks ahead. R17d sent it at the order; with R21e's wait

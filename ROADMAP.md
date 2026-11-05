@@ -262,10 +262,13 @@ Rules:
     Done: `orderMove` restores the binding on any refusal (`keep`); `landingRefusedBound1938.test.ts` (the walker onto
     open sea: refused, still bound to 1144; all four a cell east: all refused, each keeps its transports; landed
     1242–1243 both; red without). Pin unmoved.
-  - [ ] R24b A click a cell or two off the landing is the same landing (R36-B2): for a division aboard or bound, an
+  - [x] R24b A click a cell or two off the landing is the same landing (R36-B2): for a division aboard or bound, an
     order whose landing is within two cells (water and land) of its own, on the same land holder, is that landing.
     AT: the two nearest Tokyo to Shanghai, the one aboard re-clicked one cell east: both land within a day; red without
     (h633 / h1285).
+    Done: `sameLanding` takes a landing within `SAME_LANDING_CELLS` (2), same holder; `landingNearSame1938.test.ts`
+    (one cell east, one south, two east: still aboard, landed 632–633; Fuzhou another; red without, 633 / 1285). Pin
+    unmoved.
   - [ ] R24c A refusal notice goes with any order taken (R36-N1): an order given after the refusal, even to the march's
     own goal, ends it. AT: Germany's (here Switzerland's) division marching, refused, re-clicked on its own goal: no
     notice; red without.
