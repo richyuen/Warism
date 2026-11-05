@@ -72,7 +72,7 @@ import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroup
 import { isDayStart } from '../../shared/calendar';
 import { isLand } from '../../shared/terrain';
 import { Domain, navOf, PlayerOrderKind, portSeaOf, type TemplateRule, type World } from '../world';
-import { ashoreAtPort, assignTransports, carrying, escortConvoy, landingOf, near, neutralLanding, transportsPort, tryLanding } from './amphibious';
+import { ashoreAtPort, assignTransports, carrying, escortConvoy, landingOf, near, neutralLanding, sameLanding, transportsPort, tryLanding } from './amphibious';
 import { AT_PORT_CELLS } from './navalCombat';
 import { noteMove } from './elements';
 import { spawnPoint } from './production';
@@ -452,6 +452,8 @@ export const wasLong = (): boolean => refusedLong;
  */
 export function orderMove(world: World, id: number, x: number, y: number, pass?: Passage, byPort = false, direct = false, call = false, escort = false): boolean {
   if (!world.embarked.has(id)) return orderAshore(world, id, x, y, pass, byPort, direct, call, escort);
+  // Aboard a player's convoy still loading, to the landing it is aboard for: it stays (ROADMAP R23b).
+  if (sameLanding(world, id, x, y)) return true;
   // Aboard transports it takes no order (PLAN 4.5a), but aboard a player's convoy still loading at
   // its port, where it goes ashore and takes it (ROADMAP R22b); refused, it is aboard again (R23a).
   const back = ashoreAtPort(world, id);

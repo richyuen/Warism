@@ -222,11 +222,15 @@ Rules:
     way back); `landingAboardRefused1938.test.ts` (open sea 17, Calais 15: still aboard, its place kept, the four land
     together; red without, ashore), `landingAboardRefused1938.spec.ts` ("only sea there" over "Aboard at Tokyo", "1 of 4
     aboard"; red without). The player's convoys only: pin unmoved.
-  - [ ] R23b Ordered to the same landing again, the division aboard stays (R35-B1): an order of a division aboard a
+  - [x] R23b Ordered to the same landing again, the division aboard stays (R35-B1): an order of a division aboard a
     loading convoy to the landing it is bound for changes nothing, and no division is bound to a group beyond its room
     when another of its click is bound to it. AT: Japan's four to Shanghai, the one aboard clicked to Shanghai again:
     no division waits at Tokyo without room, all four land within a day of each other, no later than without the
     second click; red without (365 on the quay h512–h1367).
+    Done: `sameLanding` (same land and water): the order is taken and the division stays aboard;
+    `landingSameAgain1938.test.ts` (escort on: landed 1242–1243 as clicked once, none on the quay; red without,
+    ashore). Sent instead to four other Chinese coasts, it is refused `NoTransports` and stays aboard (R23a), so no
+    rebinding happens to leave another on the quay: no rule of binding changed. Pin unmoved.
   - [ ] R23c A refusal notice goes with the next accepted order (R35-N1): not only when the state changes. AT:
     Germany's division marching to Hamburg, refused Paris, then sent to central Germany: no refusal under "On the
     march" once the new order is taken; red without.

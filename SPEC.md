@@ -1283,7 +1283,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   (`marchHoursLeft`, rounded up; "held up on the way" where it does not go on).
   A division aboard such a convoy, still loading at its port of its nation, takes a new order: it
   goes ashore at the port's cell (no landing, its organisation as it was) and the order stands
-  (`ashoreAtPort`, ROADMAP R22b); refused, it is aboard again as it was, its landing kept (R23a).
+  (`ashoreAtPort`, ROADMAP R22b); refused, it is aboard again as it was, its landing kept (R23a). An
+  order to the landing it is aboard for changes nothing: it stays aboard (`sameLanding`, R23b).
   Aboard anything else, it takes none (`Aboard`).
   The group is the player's (`playerOrders`; the AI leaves it). The division marches to the
   port, or stands there, bound for the group (`seaFetch`; the group's port `convoyPort`); it boards

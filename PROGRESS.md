@@ -1154,3 +1154,13 @@
   `landingAboardRefused1938.spec.ts` (the panel: "only sea there" under "Aboard at Tokyo", "1 of 4 aboard"; red without;
   looked at). The player's convoys only.
 - **Next:** R23b.
+
+## 2026-11-05 — ROADMAP R23b: ordered to its landing again, the division aboard stays (R35-B1)
+- `orderMove` of a division aboard a loading convoy to the landing it is aboard for (`sameLanding`: the same land and
+  water) is taken and changes nothing. Before, it went ashore (R22b) and its new order bound it to the group division
+  365 was walking to; 365 then found no room and waited on the quay from h512 to h1367.
+- AT: `landingSameAgain1938.test.ts` (Japan's four to Shanghai with the escort, the one aboard clicked to Shanghai again:
+  still aboard in its place, none bound to sailed transports, landed 1242–1243 as with one click; red without, ashore).
+  Probed: the one aboard sent instead to Fuzhou, Tianjin, Canton or Ningbo is refused `NoTransports` and stays aboard
+  (R23a); the four land together. The binding rule is left as it is.
+- **Next:** R23c.
