@@ -167,7 +167,7 @@ Rules:
     Done, restated (no group has room for both there): a full convoy's port first for the click's next
     division, and convoys there for one landing sail together; the panel's `aboard` (ADR-826);
     `landingTogether1938.test.ts` (hours 632 and 633; before, 123 and 510).
-- [ ] R22 **Naval back to its bar: the refusal at the port, the wait aboard** (critic run 34, focused: one blocking
+- [x] R22 **Naval back to its bar: the refusal at the port, the wait aboard** (critic run 34, focused: one blocking
   issue, R34-B1; naval 7 under its bar of 8 for R34-B1 and R34-N1). Each sub-item its own commit; then the critic again.
   - [x] R22a A refusal at the port is told (R34-B1): the worker's `orderNews` forgets a player's order at the hour's
     `FormationArrived` and drops the `MoveRejected` that follows it, so a division refused at the port it marched to
