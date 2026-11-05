@@ -1432,3 +1432,10 @@
   proposes the bar to the user (go on, release at 7, or a fixed list of cases). Meanwhile R31 takes the three that
   strand or lose a division (R42-N3, N2, N1).
 - **Next:** R31a.
+
+## 2026-11-05 — R31a: a convoy's transports take no player's order (R42-N3); ADR-828 accepted
+- The user chose "Fix all six, then critic" (ADR-828): R31d–f filed for R41-N1, R40-N1, R37-N2.
+- A player's order to transports with a convoy or carrying a landing is refused, `Convoy` (19). Britain 15101: the
+  order to the Channel refused, 270 still aboard at Portsmouth (red: it sailed). Naval unit tests green (58 files);
+  pin unmoved. The same case then shows R42-N2 (Portsmouth bombed shut, 271 refused, 270 sails alone): R31b.
+- **Next:** R31b.

@@ -410,13 +410,23 @@ Rules:
     the landing" (`toPortAboard`), not "At sea, bound for its landing". Red without.
   R30 done; then the critic again (run 42).
 - [ ] R31 **A convoy's transports and the one aboard: no one stranded or sent off alone** (critic run 42, focused, on
-  `1eb4bf85`: no blocking issue; naval 7, bar 8, for six non-blocking ones; ADR-828 proposed on the bar). The three
-  that strand or lose a division. Each its own commit; then the critic, full.
-  - [ ] R31a R42-N3: a player's fleet order to the transports of a convoy (loading, or under way to its port) is
+  `1eb4bf85`: no blocking issue; naval 7, bar 8, for six non-blocking ones; ADR-828, the user: "Fix all six, then
+  critic"). Each its own commit; then the critic, full.
+  - [x] R31a R42-N3: a player's fleet order to the transports of a convoy (loading, or under way to its port) is
     refused, with why; the one aboard is never left at sea. AT: Britain 15101, 270 aboard 1068 at Portsmouth, 1068
     ordered onto the Channel: refused, still aboard at Portsmouth; the landing goes on.
+    Done: `Convoy` (19). `convoyFleetOrderRefused1938.test.ts`; red without. Pin unmoved.
   - [ ] R31b R42-N2: the division bound for a convoy refused `PortShut` at its port: the convoy does not sail with the
     one aboard alone for that. AT: Britain 16117, the recall case: 274 does not land alone.
   - [ ] R31c R42-N1: the one aboard transports under way between home ports, given a land order: told it takes it at
     the port, and not taken abroad untold. AT: Britain 15101, R41-B1's case, 270 and 271 onto the Midlands while
     270's ship sails to Plymouth: 270 does not land at Caen untold.
+  - [ ] R31d R41-N1: the bound one of a redirected landing walks to the other port (~29 days) while the transports
+    called for it stand empty: where its own transports are free and nearer, they fetch it (as R29b's one aboard).
+    AT: seed 3517, R40-B1's case: 365 does not walk to Sasebo while 1144 idles at Tokyo; the three together.
+  - [ ] R31e R40-N1: one re-sent alone sails at once and cannot be recalled: a convoy of one waits an hour for the
+    rest of its click (or the recall takes it back). AT: the one aboard sent alone to Fuzhou, recalled a day later:
+    not refused, it rejoins its landing.
+  - [ ] R31f R37-N2: a loaded convoy waits for any later order to the same coast (two fresh ones to Fuzhou, one in
+    the far north: 364 and 366 still aboard at Sasebo on day 60). A convoy waits only for those whose march to its
+    port is near enough; the rest go on the next voyage. AT: the critic's case, both aboard land within ~a month.

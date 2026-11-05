@@ -659,6 +659,7 @@
   "order.why.16": "its port is bombed shut.",
   "order.why.17": "there is only sea there: it goes over the sea to land on a coast.",
   "order.why.18": "its transports are loading for another landing, and no others with room are at a port it can reach.",
+  "order.why.19": "these transports carry a landing, or load for one: they sail with it, and take no other order until it is ashore.",
   "relations.title": "Relations",
   "relations.kind.war": "Wars",
   "relations.kind.alliance": "Alliances",

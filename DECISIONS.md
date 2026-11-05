@@ -7,7 +7,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
-### ADR-828 · 2026-11-05 · proposed — The naval bar after ten rounds (the user's decision)
+### ADR-828 · 2026-11-05 · accepted — The naval bar after ten rounds (the user's decision)
 
 - **Context.** Naval has scored 7 against its bar of 8 in every critic run from 33 to 42. Ten rounds (R21–R30,
   with ADR-827's marker and fuzz between) fixed what each run blocked on; each fix, or the critic's next probe of
@@ -23,7 +23,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   cases agreed now (a change of the bars, ADR-804): the landing cases R21–R30 fixed, as tests, plus these six.
 - **Meanwhile.** R31 takes R42-N3, R42-N2 and R42-N1 (a division stranded at sea, one lost alone, one sent abroad
   untold: bugs whatever the bar), and the next critic run is full (a clean focused run is followed by one).
-- **Status.** Proposed, for the user.
+- **Status.** Accepted 2026-11-05 by the user: "Fix all six, then critic" (the first way). R31 takes all six
+  (R31a–R31f), then a full critic run.
+- **R31a** (R42-N3). A player's order to transports with a convoy (`convoyPort`) or carrying a landing is
+  refused, `Convoy` (19, "these transports carry a landing, or load for one: they sail with it"): the one
+  aboard takes no order, and ordered onto the Channel they stood there with it for weeks. The AI's orders
+  (no nation named) are not checked. `convoyFleetOrderRefused1938.test.ts` (red without: it sailed).
+  Player orders only: pin unmoved.
 
 ### ADR-827 · 2026-11-05 · accepted — Show the landing while choosing it (the user's decision)
 

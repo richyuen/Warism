@@ -293,6 +293,12 @@ export const RejectReason = {
    * are at a port it can reach. Before, `NoTransports`, while it sat aboard transports at the port.
    */
   Loading: 18,
+  /**
+   * A player's order to transports carrying a landing's divisions or loading for one (ROADMAP R31a,
+   * critic run 42, R42-N3: ordered onto the Channel, they stood there with the one aboard for weeks):
+   * they sail with the landing.
+   */
+  Convoy: 19,
 } as const;
 export type RejectReason = (typeof RejectReason)[keyof typeof RejectReason];
 

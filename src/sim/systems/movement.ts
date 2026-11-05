@@ -458,6 +458,13 @@ export const wasLong = (): boolean => refusedLong;
  * so; a refused one leaves it (ROADMAP R24a).
  */
 export function orderMove(world: World, id: number, x: number, y: number, pass?: Passage, byPort = false, direct = false, call = false, escort = false): boolean {
+  // The player's transports of a convoy (loading, under way to its port, or carrying a landing) sail
+  // with it alone (ROADMAP R31a; critic run 42, R42-N3: sent onto the Channel, they stood there with
+  // the one aboard, which took no order, for weeks).
+  if (call && world.formations.has(id) && world.isFleet(id) && (world.convoyPort.has(id) || carrying(world, id))) {
+    world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Convoy, NaN);
+    return false;
+  }
   // Aboard a player's convoy still loading, or bound for one, to the landing it has its place in: it
   // keeps it (ROADMAP R23b, R23e).
   if (sameLanding(world, id, x, y)) return true;
