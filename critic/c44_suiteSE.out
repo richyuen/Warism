@@ -1,0 +1,9 @@
+== se_one env MODE=one node critic/scripts/c44_se_seaedit.mjs 3517 50 one 01:09:43
+== se_both env MODE=both node critic/scripts/c44_se_seaedit.mjs 3517 50 both 01:09:43
+   exit 0
+   exit 0
+== se_home env MODE=home node critic/scripts/c44_se_seaedit.mjs 3517 50 home 01:10:10
+== se_tsing env MODE=tsing node critic/scripts/c44_se_seaedit.mjs 3517 50 tsing 01:10:10
+   exit 0
+   exit 0
+SUITESEDONE

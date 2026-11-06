@@ -7,6 +7,38 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-832 · 2026-11-06 · proposed, the user's decision — After the rebuild: run 44's two regressions
+
+- **Context.** Critic run 44 (full, on `0fba90d8`, R33's end): naval **6** (bar 8; run 43: 7); every other
+  dimension as in run 43 (semantic zoom, tanks, aircraft, AI nukes 8; the rest 7). Two blocking issues, both
+  found on the same cases on both commits and both fine at `813eb375`, so both regressions of R33:
+  - **R44-B1.** A gathering landing re-sent in part by one click keeps too few transports: the sail hour boards
+    those at the port that fit and sails, the rest stand at the port untold and land alone ~12 days apart.
+    Split grid 6 of 8 shapes on HEAD, 0 of 8 at `813eb375`. Cause, read: `gather` skips one with no room
+    (`if (fleet === undefined) continue`); the part re-sent is given groups by the old landing's room.
+  - **R44-B2.** All of a landing at sea ordered onto water is taken as a cancel (ADR-830: "a place not over the
+    sea: sails back"), sails home and is refused `OpenSea` a day later. At `813eb375`: refused at the click.
+  What R33 fixed, the critic verified: R43-B1 (recall, all hours), R43-N1, N2, N3, N4; old saves mid-landing
+  migrate and land at the old hours; landingInvariants 0 broken on six new seeds; the AI's worlds byte-identical.
+  Non-blocking: R44-N1 (stale recall notice), N2 (two clicks in one hour, two ports), N3 (long waits ashore,
+  R31f), N4 (the checkers miss B1 and B2: two divisions only, no water click).
+- **The exit (PROMPT "RELEASES", ADR-829).** A blocking issue is a regression of an item ticked since the last
+  release; naval has been under its bar in every run since 32. The loop stops; no naval item until the user
+  decides. R36a/R36b are filed in ROADMAP, held.
+- **Proposed.**
+  1. **Fix the two inside the object (R36a, R36b), widen the checkers, then the critic.** Unlike runs 32–43,
+     neither is two rules meeting: B1 is one missing condition of the object's sail hour (room for all its
+     divisions, or wait and say so) and its part-split; B2 is one missing refusal on its at-sea edit. N4 is
+     why they got through: R36 makes `landingInvariants` click parts elsewhere and water, and check "no sail
+     leaves a division at its port" and "room covers the divisions", red on `0fba90d8` first.
+  2. **Take the player's landing (R17) out of this release**: orders over the sea refused as before R17; naval
+     was 8 without it. Release; the object stays in the code for the next batch.
+  3. **Release with naval under its bar**, or score naval against a fixed case list (offered in ADR-827, 828,
+     829; not taken).
+  The question that decides it: does the rebuild hold, so that its gaps are cheap? Run 44 says it fixed what
+  it was for (five of run 43's issues) and its two holes each have a one-place cause. Recommended: 1, with the
+  rule that a third regression of the landing in the next run means 2.
+
 ### ADR-831 · 2026-11-06 · accepted — R33d: a recalled division rejoins its landing; the player's transports keep their order; the landing checker
 
 - **Context.** R33b's grid left one case broken 15 times (the one walking re-sent elsewhere, then recalled to its

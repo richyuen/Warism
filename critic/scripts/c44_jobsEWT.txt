@@ -1,0 +1,1 @@
+cd /c/Git/Warism/critic/wt && npx tsx critic/scripts/c44_r31d.ts 15101 ENG 1072 1010.5,288.5 20 ../c44_r31dwt_seawar.json GER > ../c44_r31dwt_seawar.log 2>&1

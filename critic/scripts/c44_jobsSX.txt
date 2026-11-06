@@ -1,0 +1,16 @@
+AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,1],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c44_ll5.ts 3517 3 70 critic/c44_sx_n3_01.json > critic/c44_sx_n3_01.log 2>&1
+cd critic/wt && AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,1],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c43_ll4.ts 3517 3 70 ../c44_sxwt_n3_01.json > ../c44_sxwt_n3_01.log 2>&1
+AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[1,2],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c44_ll5.ts 3517 3 70 critic/c44_sx_n3_12.json > critic/c44_sx_n3_12.log 2>&1
+cd critic/wt && AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[1,2],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c43_ll4.ts 3517 3 70 ../c44_sxwt_n3_12.json > ../c44_sxwt_n3_12.log 2>&1
+AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,1,2],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c44_ll5.ts 3517 4 70 critic/c44_sx_n4_012.json > critic/c44_sx_n4_012.log 2>&1
+cd critic/wt && AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,1,2],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c43_ll4.ts 3517 4 70 ../c44_sxwt_n4_012.json > ../c44_sxwt_n4_012.log 2>&1
+AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[2,3],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c44_ll5.ts 3517 4 70 critic/c44_sx_n4_23.json > critic/c44_sx_n4_23.log 2>&1
+cd critic/wt && AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[2,3],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c43_ll4.ts 3517 4 70 ../c44_sxwt_n4_23.json > ../c44_sxwt_n4_23.log 2>&1
+AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,3],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c44_ll5.ts 3517 4 70 critic/c44_sx_n4_03.json > critic/c44_sx_n4_03.log 2>&1
+cd critic/wt && AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,3],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c43_ll4.ts 3517 4 70 ../c44_sxwt_n4_03.json > ../c44_sxwt_n4_03.log 2>&1
+AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,1],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c44_ll5.ts 3517 5 70 critic/c44_sx_n5_01.json > critic/c44_sx_n5_01.log 2>&1
+cd critic/wt && AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,1],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c43_ll4.ts 3517 5 70 ../c44_sxwt_n5_01.json > ../c44_sxwt_n5_01.log 2>&1
+AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,1,2],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c44_ll5.ts 3517 5 70 critic/c44_sx_n5_012.json > critic/c44_sx_n5_012.log 2>&1
+cd critic/wt && AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,1,2],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c43_ll4.ts 3517 5 70 ../c44_sxwt_n5_012.json > ../c44_sxwt_n5_012.log 2>&1
+AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,1,2],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c44_ll5.ts 3517 6 70 critic/c44_sx_n6_012.json > critic/c44_sx_n6_012.log 2>&1
+cd critic/wt && AT0=port NOW=click T0=1 EXTRA=0 ORDERS='[{"at":"aboard","plus":2,"who":[0,1,2],"x":1703.5,"y":445.5}]' npx tsx critic/scripts/c43_ll4.ts 3517 6 70 ../c44_sxwt_n6_012.json > ../c44_sxwt_n6_012.log 2>&1

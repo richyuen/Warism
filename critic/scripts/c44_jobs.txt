@@ -1,0 +1,36 @@
+npx tsx critic/scripts/c31_ho.ts 4111 20 off critic/c44_ho_off_4111.json > critic/c44_ho_off_4111.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 4253 20 off critic/c44_ho_off_4253.json > critic/c44_ho_off_4253.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 4637 20 off critic/c44_ho_off_4637.json > critic/c44_ho_off_4637.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 5023 20 off critic/c44_ho_off_5023.json > critic/c44_ho_off_5023.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 5449 20 off critic/c44_ho_off_5449.json > critic/c44_ho_off_5449.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 5867 20 off critic/c44_ho_off_5867.json > critic/c44_ho_off_5867.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 6299 20 off critic/c44_ho_off_6299.json > critic/c44_ho_off_6299.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 6733 20 off critic/c44_ho_off_6733.json > critic/c44_ho_off_6733.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 7177 20 off critic/c44_ho_off_7177.json > critic/c44_ho_off_7177.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 7603 20 off critic/c44_ho_off_7603.json > critic/c44_ho_off_7603.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 4111 20 on critic/c44_ho_on_4111.json > critic/c44_ho_on_4111.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 4637 20 on critic/c44_ho_on_4637.json > critic/c44_ho_on_4637.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 5449 20 on critic/c44_ho_on_5449.json > critic/c44_ho_on_5449.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 6299 20 on critic/c44_ho_on_6299.json > critic/c44_ho_on_6299.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 7177 20 on critic/c44_ho_on_7177.json > critic/c44_ho_on_7177.log 2>&1
+npx tsx critic/scripts/c44_lh.ts 3517 30 critic/c44_lh_3517.json > critic/c44_lh_3517.log 2>&1
+npx tsx critic/scripts/c44_lh2.ts 3517 USA 603.5 352.5 1034.5 279.5 40 > critic/c44_lh2_usa_calais.log 2>&1
+npx tsx critic/scripts/c44_lh2.ts 3517 ENG 1023 275 1048.5 199.5 20 > critic/c44_lh2_eng_bergen.log 2>&1
+npx tsx critic/scripts/c44_swe.ts 3517 > critic/c44_swe.log 2>&1
+npx tsx critic/scripts/c31_headless.ts 7019 20 critic/c44_headless_7019.json 20 critic/c44_seed7019_y20.bin > critic/c44_headless_7019.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 8123 7300 --heroes > critic/c44_wi_8123_h20.log 2>&1
+npx tsx critic/scripts/c44_lh2.ts 3517 NED 1053.5 270.5 1631.5 632.5 20 > critic/c44_lh2_ned_java.log 2>&1
+npx tsx critic/scripts/c44_pm.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 sea 25 critic/c44_pm_jap_sea.json > critic/c44_pm_jap_sea.log 2>&1
+npx tsx critic/scripts/c44_pm.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 landed 30 critic/c44_pm_jap_landed.json > critic/c44_pm_jap_landed.log 2>&1
+npx tsx critic/scripts/c44_pm.ts 3517 JAP NED 1818.5 385.5 1631.5 632.5 2 sea 45 critic/c44_pm_japned_sea.json > critic/c44_pm_japned_sea.log 2>&1
+npx tsx critic/scripts/c44_pm.ts 3517 JAP NED 1818.5 385.5 1631.5 632.5 2 landed 45 critic/c44_pm_japned_landed.json > critic/c44_pm_japned_landed.log 2>&1
+npx tsx critic/scripts/c44_pm.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 3 sea 12 critic/c44_pm_eng_sea.json > critic/c44_pm_eng_sea.log 2>&1
+npx tsx critic/scripts/c44_pm.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 3 landed 12 critic/c44_pm_eng_landed.json > critic/c44_pm_eng_landed.log 2>&1
+npx tsx critic/scripts/c44_pm.ts 3517 GER FRA 1066.4 280.6 1046.5 291.5 2 h20 8 critic/c44_pm_gerfra_land.json > critic/c44_pm_gerfra_land.log 2>&1
+npx tsx critic/scripts/c44_ps.ts > critic/c44_ps.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 9127 7300 --heroes --rules heroes,navy > critic/c44_wi_9127_h20_hn.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 9241 7300 --diplomacy random > critic/c44_wi_9241r_20.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 9127 scenario 400 60,200,350 20 --heroes > critic/c44_diploinv_9127s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 9241 random 400 60,200,350 20 > critic/c44_diploinv_9241r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 9533 scenario 400 60,200,350 20 > critic/c44_diploinv_9533.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c44_wd_3517.json > critic/c44_wd_3517.log 2>&1

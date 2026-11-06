@@ -1,0 +1,22 @@
+npx tsx critic/scripts/c31_headless.ts 13007 20 critic/c44_headless_13007.json 18 critic/c44_seed13007_y18.bin > critic/c44_headless_13007.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 13007 scenario 400 60,200,350 20 --heroes > critic/c44_diploinv_13007s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 13109 random 400 60,200,350 20 > critic/c44_diploinv_13109r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 13211 scenario 400 60,200,350 20 --world random > critic/c44_diploinv_13211w.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 13313 scenario 400 60,200,350 20 > critic/c44_diploinv_13313.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 13007 7300 --heroes --rules heroes,navy > critic/c44_wi_13007_h20_hn.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 13109 3650 --diplomacy random > critic/c44_wi_13109r_10.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 13211 1825 --world random > critic/c44_wi_13211w_5y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 13417 7300 --heroes --diplomacy random --rules air > critic/c44_wi_13417r_h20_air.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 13313 7300 > critic/c44_wi_13313_20.log 2>&1
+npx tsx tools/diag/heroWaits.ts 13007 7300 > critic/c44_herowaits_13007.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 13109 2190 24 critic/c44_wd_13109.json > critic/c44_wd_13109.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 13007 20 off critic/c44_ho_new_off_13007.json > critic/c44_ho_new_off_13007.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 13109 20 off critic/c44_ho_new_off_13109.json > critic/c44_ho_new_off_13109.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 13313 20 on critic/c44_ho_new_on_13313.json > critic/c44_ho_new_on_13313.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 13417 20 on critic/c44_ho_new_on_13417.json > critic/c44_ho_new_on_13417.log 2>&1
+npx tsx critic/scripts/c44_fz.ts 13007 JAP 120 10 3 -1 critic/c44_fz_13007_jap.json > critic/c44_fz_13007_jap.log 2>&1
+npx tsx critic/scripts/c44_fz.ts 13109 ENG 120 10 3 60 critic/c44_fz_13109_eng_p60.json > critic/c44_fz_13109_eng_p60.log 2>&1
+npx tsx critic/scripts/c44_fz.ts 13211 USA 120 10 3 -1 critic/c44_fz_13211_usa.json > critic/c44_fz_13211_usa.log 2>&1
+npx tsx critic/scripts/c44_fz.ts 13313 ITA 120 10 3 -1 critic/c44_fz_13313_ita.json > critic/c44_fz_13313_ita.log 2>&1
+npx tsx critic/scripts/c44_fz.ts 13417 GER 120 10 3 -1 critic/c44_fz_13417_ger.json > critic/c44_fz_13417_ger.log 2>&1
+npx tsx critic/scripts/c44_fz.ts 13519 JAP 120 10 3 25 critic/c44_fz_13519_jap_p25.json > critic/c44_fz_13519_jap_p25.log 2>&1

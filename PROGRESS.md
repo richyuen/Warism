@@ -1564,3 +1564,13 @@
 - Whole unit suite green (snapshot-perf red under load, green alone); 44 landing test files green; pin unmoved.
 - **Next:** the critic, full (R33's end).
 
+## 2026-11-06 — Critic run 44 (full) on 0fba90d8: two blocking issues, R44-B1 and R44-B2; naval 6 (bar 8); the loop stopped
+- Full run. Scores: 7 for map, diplomacy, emergent, god mode, editor, stats, UI, performance, stability; 8 for
+  semantic zoom, tanks, aircraft, AI nukes; naval 6 (bar 8; run 43: 7). R43-B1 and R43-N1–N4 verified fixed; old
+  saves mid-landing migrate; AI worlds byte-identical to run 43's.
+- Two blocking, both regressions of R33: R44-B1 (a landing re-sent in part keeps too few transports and sails
+  leaving some at the port; 6 of 8 split shapes, 0 at `813eb375`), R44-B2 (a landing at sea clicked onto water
+  turns home, refused a day later). R33 ticked; R36a/b filed, held.
+- The exit (ADR-829) holds: ADR-832 proposed, the user's decision (recommended: fix both inside the object with
+  wider checkers, then the critic).
+- **Next:** the user's decision on ADR-832.

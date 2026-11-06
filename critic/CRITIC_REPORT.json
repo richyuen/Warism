@@ -1,5 +1,5 @@
 {
- "commit": "813eb3757f02967d66ef448c942fa05b26b655d1",
+ "commit": "0fba90d8844d9ed02f91d1d7f091602380ddf5ad",
  "mode": "full",
  "scores": {
   "mapVisuals": 7,
@@ -12,33 +12,43 @@
   "performance": 7,
   "stability": 7,
   "semanticZoom": 8,
-  "naval": 7,
+  "naval": 6,
   "tanks": 8,
   "aircraft": 8,
   "aiNukes": 8
  },
  "blocking": [
   {
-   "id": "R43-B1",
-   "title": "A landing recalled at sea after its first day splits: the one aboard is put ashore on the nearest home coast and marches to the old port for weeks while its partner lands alone; the map says it keeps its transports",
+   "id": "R44-B1",
+   "title": "A landing re-sent in part keeps too few transports: it sails with what fits and leaves the rest of the one click standing at the port, untold, so they land alone one by one about 12 days apart",
    "evidence": [
-    "critic/c43_rc_d3.json",
-    "critic/shots/c43rc_d3_d20.png",
-    "critic/shots/c43rc_d3_recall_panel.png",
-    "critic/shots/c43rc_d3_hover.png",
-    "critic/c43_rc_d1.json",
-    "critic/c43_e_back_h6.json",
-    "critic/c43_k_back.json",
-    "critic/c43_e_back_d2.json",
-    "critic/c43_e_back_d3.json",
-    "critic/c43_e_back_d5.json",
-    "critic/c43_ewt_back_d1.json",
-    "critic/c43_ewt_back_d2.json",
-    "critic/c43_ewt_back_d3.json",
-    "critic/c43_ewt_back_d5.json"
+    "critic/c44_k_four_two_far.json",
+    "critic/c43_k_four_two_far.json",
+    "critic/c44_k_four_hourly.json",
+    "critic/c44_sp_four.json",
+    "critic/shots/c44sp_four_h513.png",
+    "critic/c44_sx_n4_012.json",
+    "critic/c44_sxwt_n4_012.json",
+    "critic/c44_sx_n5_01.json",
+    "critic/c44_sxwt_n5_01.json"
    ],
-   "fix": "A recalled convoy of one sails back to its own landing's port (or on to the landing, to join its mates), not to the nearest port by straight cells; a recall that cannot rejoin is refused with that reason, and the mark agrees with the outcome. AT: seed 3517, the one sent alone to Fuzhou recalled to Shanghai at 1, 2, 3 and 5 days: it lands within a day of 365 each time, or is refused and told why."
+   "fix": "A landing made or changed by an order takes, or calls, room for all its divisions before it may sail, and never sails while one of its divisions stands at its port without room; if it cannot get the room, it waits or is refused and told. AT: seed 3517, N in {3,4,5,6} sent to Shanghai, a subset re-sent to Fuzhou by one click (the 8 shapes of critic/scripts/c44_jobsSX.txt), plus four_hourly, on 3517 and 15101: every one-click group lands within a day. landingInvariants gains 'no sail leaves a division of the landing standing at its port'."
+  },
+  {
+   "id": "R44-B2",
+   "title": "A whole landing at sea clicked onto open water (even a cell off its own beach) silently turns for home and is told a day later, at its port, that 'there is only sea there'",
+   "evidence": [
+    "critic/c44_se_water2.json",
+    "critic/shots/c44se_water2_hover.png",
+    "critic/shots/c44se_water2_after.png",
+    "critic/c44_se_tsing.json",
+    "critic/c44_os_own.json",
+    "critic/c44_oswt_own.json",
+    "critic/c44_os_east.json",
+    "critic/c44_oswt_east.json"
+   ],
+   "fix": "An order of a whole landing at sea to water is refused at the click (OpenSea) and the landing keeps its course; a cancel is an order to its nation's own land. AT: 3517, 364/365 a day out for Shanghai, clicked onto its own water, the sea one cell off, open sea east, and the Yellow Sea: refused at once, the landing lands as planned, the tooltip over water says why."
   }
  ],
- "timestamp": "2026-11-06T00:24:23Z"
+ "timestamp": "2026-11-06T06:55:49Z"
 }

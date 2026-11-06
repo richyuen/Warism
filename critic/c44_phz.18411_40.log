@@ -1,0 +1,63 @@
+{
+ "seed": 18411,
+ "days": 40,
+ "tiers": [
+  {
+   "m": 30000,
+   "overflowX": false,
+   "banners": 2,
+   "el": 0,
+   "shot": "critic/shots/c44phz_18411_30000.png"
+  },
+  {
+   "m": 3500,
+   "overflowX": false,
+   "banners": 2,
+   "el": 0,
+   "shot": "critic/shots/c44phz_18411_03500.png"
+  },
+  {
+   "m": 800,
+   "overflowX": false,
+   "banners": 2,
+   "el": 1396,
+   "shot": "critic/shots/c44phz_18411_00800.png"
+  },
+  {
+   "m": 250,
+   "overflowX": false,
+   "banners": 2,
+   "el": 728,
+   "shot": "critic/shots/c44phz_18411_00250.png"
+  },
+  {
+   "m": 60,
+   "overflowX": false,
+   "banners": 2,
+   "el": 180,
+   "shot": "critic/shots/c44phz_18411_00060.png"
+  },
+  {
+   "m": 25,
+   "overflowX": false,
+   "banners": 2,
+   "el": 165,
+   "shot": "critic/shots/c44phz_18411_00025.png"
+  }
+ ],
+ "fight": {
+  "best": [
+   1671.8047269728359,
+   375.80983364815046
+  ],
+  "bn": 26,
+  "engaged": 80
+ },
+ "tapCentre": {
+  "formation": "Light infantry division 451\n×\nKind\nLight infantry division\nNation\nChina\nMen\n3,859 of 7,120\nSupply\n100%\nOrg\n89%\nFuel on the march\nNone\nStatus\nIn contact⚔ To its fight\nELEMENTS\n14×\tInfantry\t3,779 of 7,000\n1×\tArtillery\t8 of 12",
+  "nation": null,
+  "menu": null
+ },
+ "tapShot": "critic/shots/c44phz_18411_tap.png",
+ "errors": []
+}

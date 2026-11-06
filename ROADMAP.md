@@ -456,7 +456,7 @@ Rules:
     R43-N1–N4 are inputs to R33. R32a's code went in the critic-run-43 commit `dc365b36`; the next critic run
     diffs from `813eb375`.
   R32 done.
-- [ ] R33 **The landing as one object** (ADR-829, the user's decision, 2026-11-05; the critic's objection since run
+- [x] R33 **The landing as one object** (ADR-829, the user's decision, 2026-11-05; the critic's objection since run
   35 and the Hearts of Iron line in every report since run 32). The player's landing is today resolved per division
   and per hour from a dozen rules (`landingOf`, `sameLanding`, `noteLeaving`, `heldGroup`, `assignTransports`,
   `waitedFor`, `seaFetchAt`, `turnBack`, `ashoreFromShip`, `endConvoy` …); twelve critic runs found where two meet.
@@ -518,7 +518,22 @@ Rules:
     broken (R33b 15, R33a 140), all the recall after 3–5 days, its mate sailed (by decision, R31f)
     (`docs/sweeps/landingGrid-R33d.md`). `PlayerOrderKind.called`: only transports a landing called go back to the
     AI (`fleetOrderKept1938`, red at t26 before). `landingInvariants` (helper, tool, test): 120 days on six seeds,
-    0 broken; found a sunk group kept in its landing (fixed). The critic, full: next.
+    0 broken; found a sunk group kept in its landing (fixed). The critic, full: run 44.
+  R33 done; then the critic, full (run 44, on `0fba90d8`: naval 6, bar 8; two blocking issues, both regressions of
+  R33: the loop stopped, ADR-832 proposed).
+- [ ] R36 **Run 44's blocking issues** (critic run 44, full, on `0fba90d8`). **Held for the user's decision (ADR-832):**
+  the loop takes no naval item until then. Then the critic again.
+  - [ ] R36a R44-B1: a gathering landing re-sent in part by one click keeps too few transport groups; the sail hour
+    boards those at the port that fit and sails, leaving the rest standing at the port, still members, untold
+    (`gather`: `if (fleet === undefined) continue`); they land alone one by one, ~12 days apart. Split grid: 6 of 8
+    shapes split on HEAD, 0 of 8 at `813eb375`; `four_hourly` too. AT: the critic's 8 shapes plus `four_hourly` on
+    3517 and 15101, every one-click group lands within a day (or is refused and told); `landingInvariants` gains
+    "no sail leaves a division of the landing standing at its port" and "a landing's room covers its divisions"
+    (red on `0fba90d8`), and its pool clicks parts of a landing elsewhere.
+  - [ ] R36b R44-B2: all of a landing at sea ordered onto water (its own beach's water, open sea, the Yellow Sea) is
+    taken as a cancel, sails home, and is refused `OpenSea` a day later at its port. AT: the four waters by click,
+    refused `OpenSea` at the click, the landing keeps its course and lands as planned, the hover over water says why;
+    the grid and `landingInvariants` click water too (red on `0fba90d8`).
 
 ## Batch 3 — readability (after the release, ADR-829)
 

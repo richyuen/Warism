@@ -1,0 +1,203 @@
+{
+ "seed": 18003,
+ "bin": "critic/c44_seed18003_y20.bin",
+ "historyOpenMs": 106,
+ "count": "3464 of 3464 events",
+ "rowsInDom": 400,
+ "kinds": [
+  "All types",
+  "Capital captured",
+  "Nation destroyed",
+  "War declared",
+  "Peace",
+  "Alliance left",
+  "Alliance dissolved",
+  "Union formed",
+  "Alliance joined",
+  "Puppet created",
+  "Puppet released",
+  "Puppet revolt",
+  "Puppet integrated",
+  "Revolt",
+  "Nation revived",
+  "Major battle",
+  "Major battle ended",
+  "Annexation",
+  "Army disbanded",
+  "Land handed over",
+  "War ended",
+  "Sea battle",
+  "Convoys raided",
+  "Air war",
+  "Air raids",
+  "Nuclear strike",
+  "Nuclear decision",
+  "New nuclear power",
+  "Guarantee lapsed",
+  "War left"
+ ],
+ "firstRows": [
+  "8 December 1957 United Kingdom declared war on Greece",
+  "1 December 1957 Land held by Germany rose and went back to Turkey",
+  "1 December 1957 Land held by Germany rose and went back to France",
+  "1 December 1957 United States's air force struck Turkey this month: 3,262 men, guns and vehicles lost",
+  "1 December 1957 Germany's air force struck United States this month: 2,417 men, guns and vehicles lost",
+  "1 December 1957 Japan's air force struck Mongolia this month: 1,470 men, guns and vehicles lost",
+  "1 December 1957 Hungary and United States fought in the air this month: Hungary lost 45 aircraft, United States 39",
+  "1 December 1957 Soviet Union and Turkey fought in the air this month: Soviet Union lost 6 aircraft, Turkey 6",
+  "1 December 1957 Japan and United States fought in the air this month: Japan lost 9 aircraft, United States 0",
+  "20 November 1957 United States made peace with United Kingdom",
+  "5 November 1957 United States captured South Africa's capital",
+  "1 November 1957 Land held by Germany rose and went back to Turkey"
+ ],
+ "byKind": [
+  {
+   "label": "Capital captured",
+   "count": "314 of 3464 events",
+   "ms": 177
+  },
+  {
+   "label": "Nation destroyed",
+   "count": "81 of 3464 events",
+   "ms": 157
+  },
+  {
+   "label": "War declared",
+   "count": "255 of 3464 events",
+   "ms": 173
+  },
+  {
+   "label": "Peace",
+   "count": "236 of 3464 events",
+   "ms": 174
+  },
+  {
+   "label": "Alliance left",
+   "count": "44 of 3464 events",
+   "ms": 159
+  },
+  {
+   "label": "Alliance dissolved",
+   "count": "14 of 3464 events",
+   "ms": 157
+  },
+  {
+   "label": "Union formed",
+   "count": "10 of 3464 events",
+   "ms": 157
+  },
+  {
+   "label": "Alliance joined",
+   "count": "79 of 3464 events",
+   "ms": 156
+  },
+  {
+   "label": "Puppet created",
+   "count": "59 of 3464 events",
+   "ms": 157
+  },
+  {
+   "label": "Puppet released",
+   "count": "13 of 3464 events",
+   "ms": 158
+  },
+  {
+   "label": "Puppet revolt",
+   "count": "3 of 3464 events",
+   "ms": 157
+  },
+  {
+   "label": "Puppet integrated",
+   "count": "9 of 3464 events",
+   "ms": 157
+  },
+  {
+   "label": "Revolt",
+   "count": "63 of 3464 events",
+   "ms": 157
+  },
+  {
+   "label": "Nation revived",
+   "count": "26 of 3464 events",
+   "ms": 157
+  },
+  {
+   "label": "Major battle",
+   "count": "93 of 3464 events",
+   "ms": 157
+  },
+  {
+   "label": "Major battle ended",
+   "count": "93 of 3464 events",
+   "ms": 157
+  },
+  {
+   "label": "Annexation",
+   "count": "18 of 3464 events",
+   "ms": 159
+  },
+  {
+   "label": "Army disbanded",
+   "count": "97 of 3464 events",
+   "ms": 167
+  },
+  {
+   "label": "Land handed over",
+   "count": "483 of 3464 events",
+   "ms": 173
+  },
+  {
+   "label": "War ended",
+   "count": "2 of 3464 events",
+   "ms": 158
+  },
+  {
+   "label": "Sea battle",
+   "count": "215 of 3464 events",
+   "ms": 159
+  },
+  {
+   "label": "Convoys raided",
+   "count": "227 of 3464 events",
+   "ms": 173
+  },
+  {
+   "label": "Air war",
+   "count": "294 of 3464 events",
+   "ms": 173
+  },
+  {
+   "label": "Air raids",
+   "count": "717 of 3464 events",
+   "ms": 174
+  },
+  {
+   "label": "Nuclear strike",
+   "count": "2 of 3464 events",
+   "ms": 158
+  },
+  {
+   "label": "Nuclear decision",
+   "count": "2 of 3464 events",
+   "ms": 156
+  },
+  {
+   "label": "New nuclear power",
+   "count": "5 of 3464 events",
+   "ms": 159
+  },
+  {
+   "label": "Guarantee lapsed",
+   "count": "2 of 3464 events",
+   "ms": 159
+  },
+  {
+   "label": "War left",
+   "count": "8 of 3464 events",
+   "ms": 157
+  }
+ ],
+ "chartsMs": 1546,
+ "chartsText": "Warism\nWorld war simulator\nResume\n−\nSpeed ×5\n+\nGod Mode\nMap: Political\nStatistics\nHistory\nRelations\nEditor\n27 December 1957 · Paused\nSettings\n1 December 1957 Hungary and United States fought in the air this month: Hungary lost 45 aircraft, United States 39\n1 December 1957 United States's air force struck Turkey this month: 3,262 men, guns and vehicles lost\n8 December 1957 United Kingdom declared war on Greece\nSoviet Union\n+10\n⚔\nGreece\n+1\nAustralia\n⚔\nFree Anuradhapura\nJapan\n+11\n⚔\nBrazil\n+7\nJapan\n+8\n⚔\nSoviet Union\n+11\nGermany\n+10\n⚔\nFree Khartoum\n+18\nUnited Kingdom\n+3\n⚔\nGreece\n+3\nStatistics\nLand ",
+ "errors": []
+}
