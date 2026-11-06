@@ -66,6 +66,8 @@ export class Hud {
   readonly hoverBySea = signal(-1);
   /** The landing under the cursor (`hoverBySea`) is the ground of a nation outside the player's wars: the order would be refused (ROADMAP R21c). */
   readonly hoverSeaNeutral = signal(false);
+  /** Under the cursor the sea, with one of the selection aboard at sea: the order would be refused, `OpenSea` (ROADMAP R36b). */
+  readonly hoverSeaOpen = signal(false);
   /** The landing an order under the cursor (`hoverBySea`) is for (ADR-827, ROADMAP R27b), marked on the map; null for none or refused. */
   readonly hoverLanding = signal<SeaHint | null>(null);
   onMapMode: (mode: MapMode) => void = () => {};

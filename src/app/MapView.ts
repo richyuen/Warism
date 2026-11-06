@@ -2777,7 +2777,8 @@ export class MapView {
       const c = this.cityLabels.dotAt(sx, sy);
       const city = c ? { name: c.name, capital: c.capital, size: c.size } : null;
       const province = cell ? this.provinceAt(cell[0], cell[1]) : 0;
-      if (owner !== 0 || holder !== 0 || city) hover = { owner, holder, city, province, cell: k, x: m.x, y: m.y };
+      // Over the sea only with formations selected: what an order there would do (ROADMAP R36b, `seaHint` 3).
+      if (owner !== 0 || holder !== 0 || city || (k >= 0 && this.selectedFormations.size > 0)) hover = { owner, holder, city, province, cell: k, x: m.x, y: m.y };
     }
     const key = hover ? `${hover.owner}|${hover.holder}|${hover.city ? `${hover.city.name}|${hover.city.capital}` : ''}|${hover.province}|${hover.x}|${hover.y}|${this.snapArrival}` : '';
     if (key === this.hoverKey) return;

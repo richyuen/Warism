@@ -481,7 +481,8 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
       refusedLong = false;
       // Of several: told to order the whole landing. Alone, it is the whole landing (`landingOrders`): why that failed.
       const target = Math.floor(y) * world.cells.w + Math.floor(x);
-      const why = l.divisions.size > 1 ? RejectReason.AtSea : !landingOf(world, target) ? RejectReason.NoLanding : neutralLanding(world, l.nation, target) ? RejectReason.Neutral : RejectReason.NoSeaWay;
+      // To the sea: why, at the click (critic run 44, R44-B2: taken as a cancel, refused a day later).
+      const why = !isLand(world.cells.terrain[target]!) ? RejectReason.OpenSea : l.divisions.size > 1 ? RejectReason.AtSea : !landingOf(world, target) ? RejectReason.NoLanding : neutralLanding(world, l.nation, target) ? RejectReason.Neutral : RejectReason.NoSeaWay;
       world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, why, NaN);
       return false;
     }

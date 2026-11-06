@@ -1290,10 +1290,13 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   port, none of its divisions at the port is in a fight, it waits for none still marching (`waited`:
   those that joined within `SAME_CLICK_HOURS` (24) of its first, however far; a later one only within
   `LATE_WAIT_HOURS` (168) of its march, R31f), its escort is ready (`escortAhead`) and an hour has passed
-  since its last order (`ordered`: a division joined, or it was redirected; R40-N1): those at the port
-  board then, first fit (`tryLanding` with `via`: "loading" is that hour, not a state), and the groups
-  carrying them sail for its water (no sea way: `NoSeaWay`, over). Those that do not fit stay for the
-  next voyage, and the groups come back for them; groups carrying no one are the AI's again when no one
+  since its last order (`ordered`: a division joined, or it was redirected; R40-N1). It sails with room
+  for all at its port (`noRoom`, first fit as at boarding; ROADMAP R36a, critic run 44, R44-B1: a part
+  re-sent by one click kept too few groups, sailed with what fit and left the rest at the port, untold):
+  short, a group free at its port or one called (`callTransports`) joins it and it waits. Those at the
+  port board then, first fit (`tryLanding` with `via`: "loading" is that hour, not a state), and the
+  groups carrying them sail for its water (no sea way: `NoSeaWay`, over). Those that do not fit (no group
+  to be had anywhere, R17b; or still marching) go on the next voyage, and the groups come back for them; groups carrying no one are the AI's again when no one
   is left. A sailing landing's divisions land as any (`amphibiousSystem`: at the landing's water, or
   thrown back, `LandingRepulsed`, those not aboard told `NoTransports`); each leaves the landing as it
   lands, and the landing is over with its last.
@@ -1306,8 +1309,11 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   back, it kept a landing of its own, and its mate sailed alone); one click ordering all
   of a sailing or returning landing's divisions, all aboard, to another landing gathering for that place
   sends its groups to that one's port, and it joins it (ROADMAP R33b, critic run 43, R43-B1's recall); to
-  another place over the sea from its port, it sails there (`retarget`); to a place not over the sea (a
-  cancel), back to its own port, where they go ashore and march there (`returning`, `then`). Some of
+  another place over the sea from its port, it sails there (`retarget`); to land not over the sea (a
+  cancel), back to its own port, where they go ashore and march there (`returning`, `then`); to the sea,
+  each is refused `OpenSea` at the click and it keeps its course (ROADMAP R36b, critic run 44, R44-B2:
+  taken as a cancel, refused a day later at its port; the hover says so, `seaHint` 3,
+  "tooltip.bySeaOpen"). Some of
   those aboard at sea: refused `AtSea` (20, "it is at sea with its landing, which goes as one", ROADMAP R33c). A division ashore ordered elsewhere leaves its landing
   (`detachDivision`: the groups it no longer needs are free, those at its port first, R40-B1) and
   takes the order; refused, it is back in it as it was (R24a). It is told it leaves (`LeftLanding`, the

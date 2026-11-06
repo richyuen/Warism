@@ -521,19 +521,32 @@ Rules:
     0 broken; found a sunk group kept in its landing (fixed). The critic, full: run 44.
   R33 done; then the critic, full (run 44, on `0fba90d8`: naval 6, bar 8; two blocking issues, both regressions of
   R33: the loop stopped, ADR-832 proposed).
-- [ ] R36 **Run 44's blocking issues** (critic run 44, full, on `0fba90d8`). ADR-832 accepted (way 1): fix both inside the
+- [x] R36 **Run 44's blocking issues** (critic run 44, full, on `0fba90d8`). ADR-832 accepted (way 1): fix both inside the
   object, the checkers widened first; then the critic. A third regression of the landing there means way 2.
-  - [ ] R36a R44-B1: a gathering landing re-sent in part by one click keeps too few transport groups; the sail hour
+  - [x] R36a R44-B1: a gathering landing re-sent in part by one click keeps too few transport groups; the sail hour
     boards those at the port that fit and sails, leaving the rest standing at the port, still members, untold
     (`gather`: `if (fleet === undefined) continue`); they land alone one by one, ~12 days apart. Split grid: 6 of 8
     shapes split on HEAD, 0 of 8 at `813eb375`; `four_hourly` too. AT: the critic's 8 shapes plus `four_hourly` on
     3517 and 15101, every one-click group lands within a day (or is refused and told); `landingInvariants` gains
     "no sail leaves a division of the landing standing at its port" and "a landing's room covers its divisions"
     (red on `0fba90d8`), and its pool clicks parts of a landing elsewhere.
-  - [ ] R36b R44-B2: all of a landing at sea ordered onto water (its own beach's water, open sea, the Yellow Sea) is
+    Done: a landing sails with room for all at its port (`noRoom`, first fit as at boarding): short, a group free
+    at its port or called joins it and it waits; no group anywhere, R17b's next voyage (`landingCall1938`). The
+    critic's 10 cases: every one-click group lands within 2 h (HEAD: 7 split); the cost is the call, e.g.
+    `four_two_far` 788/789 (HEAD 656/951). `landingPartResent1938` (3517 and 15101, three shapes each, and the
+    four one an hour): red on HEAD for the 3517 cases. `landingInvariants` gains `leftBehind`; it did not fire
+    in 24 runs on HEAD (the fuzz's nations have spare groups), so the test above is R36a's AT.
+  - [x] R36b R44-B2: all of a landing at sea ordered onto water (its own beach's water, open sea, the Yellow Sea) is
     taken as a cancel, sails home, and is refused `OpenSea` a day later at its port. AT: the four waters by click,
     refused `OpenSea` at the click, the landing keeps its course and lands as planned, the hover over water says why;
     the grid and `landingInvariants` click water too (red on `0fba90d8`).
+    Done: an order of a landing at sea to the sea is refused `OpenSea` at the click and the landing keeps its
+    course; the hover over the sea with one at sea selected says so (`seaHint` 3, "tooltip.bySeaOpen"; the map
+    now reports a hover over water while formations are selected). `landingSeaClick1938` (the four waters, red
+    on HEAD), `landingMark1938.spec` (the tooltip). `landingInvariants` clicks the sea and checks `cancelWater`:
+    HEAD 19 of 24 runs broken; this code 0 of 30 (six seeds × five order seeds, 120 days). Grid 6 of 480, as
+    R33d (`docs/sweeps/landingGrid-R36.md`).
+  R36 done; then the critic (run 45).
 
 ## Batch 3 — readability (after the release, ADR-829)
 

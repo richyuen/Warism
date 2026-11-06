@@ -13,19 +13,23 @@
  *   at the port are in no fight, and which waits for none still marching (those that joined within
  *   SAME_CLICK_HOURS of its first, however far; a later one only within LATE_WAIT_HOURS of its march) and
  *   for no escort, boards those at the port and sails, in the one hour: "loading" is that hour, not a
- *   state. Those that do not fit stay, for the next voyage: the transports come back for them. A landing
+ *   state. It sails with room for all at the port: short, it takes a group free at its port or calls one
+ *   and waits. Those that do not fit (none to be had anywhere, or still marching) go on the next voyage:
+ *   the transports come back for them. A landing
  *   is over when none of its divisions is left; it is told why when it cannot go on (its port shut or lost,
  *   its target a neutral's, no transports, no way over the sea).
  * - An hour's orders edit it as a batch (`landingOrders`, before they are applied): all of a landing's
  *   divisions aboard at sea ordered by one click redirect it (to another landing gathering for that place:
  *   its transports sail to that one's port and join it, R43-B1's recall; else to the new water), or, to a
- *   place not over the sea, send it back to its own port, where they go ashore and march there (a cancel).
- *   Some of those aboard at sea: refused, `AtSea`. A division ashore (gathering, or bound for the next
+ *   place not over the sea, send it back to its own port, where they go ashore and march there (a cancel);
+ *   to the sea, each is refused (`OpenSea`) and it keeps its course. Some of those aboard at sea: refused,
+ *   `AtSea`. A division ashore (gathering, or bound for the next
  *   voyage) ordered elsewhere leaves the landing, told `LeftLanding` where others stay (`tellLandingsLeft`);
  *   refused, it is back in it as it was. An order for the landing it has changes nothing.
  */
 import { EventKind, RejectReason } from '../../shared/events';
 import type { LandingMark, SeaHint } from '../../shared/protocol';
+import { isLand } from '../../shared/terrain';
 import { navOf, PlayerOrderKind, portSeaOf, type World } from '../world';
 import { callTransports, carrying, landingOf, near, neutralLanding, SAME_LANDING_CELLS, transportRoom, transportsPort, tryLanding } from './amphibious';
 import { portShut } from './bombing';
@@ -355,6 +359,9 @@ export function landingOrders(world: World, cmds: readonly { id: number; x: numb
     const { x, y } = last.get(ids[0]!)!;
     if (!ids.every((id) => last.get(id)!.x === x && last.get(id)!.y === y) || sameLandingAs(world, l, x, y)) continue;
     const target = cellAt(world, x, y);
+    // The sea is no cancel (critic run 44, R44-B2: it sailed home and was refused a day later): each order is
+    // refused at the click, `OpenSea` (`orderMove`), and the landing keeps its course.
+    if (!isLand(world.cells.terrain[target]!)) continue;
     const port = world.ports[l.port]!.cell;
     if (!overSeaFrom(world, port, x, y)) {
       // A cancel: back to its own port, then the march.
@@ -569,6 +576,18 @@ function gather(world: World, l: Landing): void {
   // It sails no sooner than an hour after its last order (ROADMAP R31e; critic run 40, R40-N1: the one re-sent
   // alone sailed at once, before the rest of its click, an hour on, could join it).
   if (present.length === 0 || waits || world.tick - l.ordered < 1 || l.fleets.some((o) => !atPort(world, l, o)) || escortAhead(world, l)) return;
+  // Room for all at the port (critic run 44, R44-B1: a part re-sent by one click kept too few groups, sailed
+  // with what fit and left the rest at the port, untold, to land alone weeks later): short, a group free at
+  // its port or one called joins it, and it waits. None to be had anywhere: those that fit sail and the groups
+  // come back for the rest (R17b, `landingCall1938`).
+  const unfit = noRoom(world, l, present);
+  if (unfit.length > 0) {
+    const o = freeAtPort(world, l.nation, c.strength[unfit[0]!]!, l.port) || callTransports(world, unfit[0]!, l.port);
+    if (o !== 0) {
+      bindGroup(world, l, o);
+      return;
+    }
+  }
   // The sail hour: those at the port board, first fit, and the groups carrying them sail.
   const [tx, ty] = pointOf(world, l.target);
   for (const id of present) {
@@ -597,6 +616,27 @@ function gather(world: World, l: Landing): void {
     l.fleets = l.fleets.filter((g) => carrying(world, g));
   }
   l.state = LandingState.sailing;
+}
+
+/** Of landing `l`'s divisions `ids` at its port, those its groups have no room for, boarded first fit as at the sail hour. */
+function noRoom(world: World, l: Landing, ids: readonly number[]): number[] {
+  const c = world.formations.cols;
+  const left = new Map(l.fleets.map((o) => [o, transportRoom(world, o) - menAboard(world, o)]));
+  const out: number[] = [];
+  for (const id of ids) {
+    const o = l.fleets.find((g) => left.get(g)! >= c.strength[id]!);
+    if (o === undefined) out.push(id);
+    else left.set(o, left.get(o)! - c.strength[id]!);
+  }
+  return out;
+}
+
+/** Group `o` joins landing `l`: the player's, sailing to its port (`gather`). */
+function bindGroup(world: World, l: Landing, o: number): void {
+  l.fleets.push(o);
+  l.fleets.sort((a, b) => a - b);
+  world.playerOrders.set(o, { kind: PlayerOrderKind.called, until: 0, through: false });
+  world.station.delete(o);
 }
 
 /** Men aboard group `fleet`. */
@@ -768,11 +808,16 @@ export function seaOrderLanding(world: World, id: number, x: number, y: number):
 
 /**
  * The cursor's hint for an order of the player's divisions `ids` (sorted) to (`x`, `y`) (`SeaHint`; ROADMAP
- * R17c, R21c, R27a, R28b): `how` and the landing of the first; `marks`, each distinct landing of those whose
+ * R17c, R21c, R27a, R28b): `how` and the landing of the first (3: the sea, one aboard at sea, R36b); `marks`, each distinct landing of those whose
  * order goes over the sea, `same` where all it is for already have it. Read-only.
  */
 export function seaHint(world: World, ids: readonly number[], x: number, y: number): SeaHint {
   const target = cellAt(world, x, y);
+  // The sea, with one aboard at sea: refused, `OpenSea`, its landing keeps its course (ROADMAP R36b; critic run
+  // 44, R44-B2: no tooltip, no mark, and the click taken as a cancel).
+  if (target >= 0 && target < world.cells.terrain.length && !isLand(world.cells.terrain[target]!) && ids.some((id) => world.formations.has(id) && world.embarked.has(id) && landingOfDivision(world, id) !== undefined)) {
+    return { how: 3, water: -1, land: -1, same: false, marks: [] };
+  }
   const marks: LandingMark[] = [];
   let hint: SeaHint | null = null;
   for (const id of ids) {

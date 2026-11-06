@@ -40,6 +40,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
   rule that a third regression of the landing in the next run means 2.
 - **Status.** Accepted 2026-11-06 by the user: "Let's do option 1". R36a, R36b, then the critic; a third
   regression of the landing in that run means way 2.
+- **Done (R36).** R36a: a gathering landing sails with room for all at its port (`noRoom`): short, a group free
+  at its port or called joins it and it waits; with no group to be had anywhere, R17b's next voyage stands
+  (`landingCall1938`'s three with room for two: two sail, the group comes back). R36b: all of a landing at sea
+  ordered to the sea is refused `OpenSea` at the click and keeps its course; the hover says so (`seaHint` 3).
+  The cancel is an order to land not over the sea. Player landings only; the pin of seed 99 unmoved.
 
 ### ADR-831 · 2026-11-06 · accepted — R33d: a recalled division rejoins its landing; the player's transports keep their order; the landing checker
 

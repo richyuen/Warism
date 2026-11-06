@@ -1,9 +1,10 @@
 /**
  * ROADMAP R33d (ADR-830; as `diploInvariants`, ADR-803): the rules of the player's landings, checked every hour
  * of a run with random landing orders. A nation at war (`GRID_SETUPS`' targets), the player; its six divisions
- * nearest its capital are the pool. Every 12 to 72 hours (an RNG of its own, not the sim's) one click: one, two
- * or all of the pool, to the landing's target or the other's (0–3 cells off), or home (a cancel); the farther of
- * the pool make late orders, and re-sent ones make recalls, redirects and re-clicks of every kind.
+ * nearest its capital are the pool. Every 12 to 72 hours (an RNG of its own, not the sim's) one click: one, two,
+ * three or all of the pool, to the landing's target or the other's (0–3 cells off), to the sea off the first's
+ * beach (ROADMAP R36b), or home (a cancel); the farther of the pool make late orders, and re-sent ones make
+ * recalls, redirects, re-clicks and part of a landing sent elsewhere (R36a) of every kind.
  *
  * Broken, each with its hour:
  * - `one`: a division or a group in two landings;
@@ -14,14 +15,20 @@
  *   them (bar God's `seaBound`; one whose order is over is the AI's to ship, ADR-759);
  * - `idle`: a spell aboard a landing's transports over IDLE_HOURS, standing in no fight;
  * - `returning`: a landing returning with no march after it (`then`);
+ * - `cancelWater`: a landing returning for a march onto water (critic run 44, R44-B2: an order to the sea was taken
+ *   as a cancel, and refused a day later at its port);
+ * - `leftBehind`: at the hour a landing sails, one of its divisions standing ashore (critic run 44, R44-B1: a part
+ *   re-sent kept too few transports; the rest stood at the port, untold, and landed alone weeks later);
  * - `escort`: an escort for no landing two hours running (one ending this hour is let go the next);
  * - `stuck`: a division in a gathering landing for over STUCK_DAYS;
  * - `save`: a save that does not load bit-identical (on the probe days).
  * Each kind is told once a division, group or landing (its first hour).
  */
 import type { Command } from '../../src/shared/commands';
+import { isLand } from '../../src/shared/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
+import { landingOf } from '../../src/sim/systems/amphibious';
 import { LandingState } from '../../src/sim/systems/landings';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from './earth';
@@ -61,7 +68,7 @@ function rng(seed: number): () => number {
 const DIRS: [number, number][] = [[0, 0], [1, 0], [0, 1], [-1, 0], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
 
 /** The rules each hour on `w` for player `n`; `idle` and `since` carry spells between hours. */
-function check(w: World, n: number, idle: Map<number, number>, since: Map<number, number>, orphans: Set<number>, moored: Set<number>, put: (key: string, line: string) => void): void {
+function check(w: World, n: number, idle: Map<number, number>, since: Map<number, number>, orphans: Set<number>, moored: Set<number>, was: Map<number, number>, put: (key: string, line: string) => void): void {
   const t = `t${w.tick}`;
   const out = { push: (line: string): void => put(line.replace(/^t\d+ /, '').replace(/ (aboard|standing|for|in|,|has|gathering).*$/, ''), line) };
   const f = w.formations;
@@ -88,7 +95,13 @@ function check(w: World, n: number, idle: Map<number, number>, since: Map<number
       if (!f.has(o) || c.nation[o] !== l.nation) out.push(`${t} empty: landing ${l.id}'s group ${o} gone or another's`);
     }
     if (l.state === LandingState.returning && l.then < 0) out.push(`${t} returning: landing ${l.id} with no march after`);
+    if (l.state === LandingState.returning && l.then >= 0 && !isLand(w.cells.terrain[l.then]!)) out.push(`${t} cancelWater: landing ${l.id} returning for a march onto water`);
+    if (l.state === LandingState.sailing && was.get(l.id) === LandingState.gathering) {
+      for (const id of l.divisions.keys()) if (f.has(id) && !w.embarked.has(id) && c.moving[id] !== 1) out.push(`${t} leftBehind: ${id} ashore as landing ${l.id} sails`);
+    }
   }
+  was.clear();
+  for (const l of w.landings.values()) was.set(l.id, l.state);
   for (const [o, e] of w.escorts) {
     if (w.landings.has(e.convoy)) orphans.delete(o);
     else if (orphans.has(o)) out.push(`${t} escort: ${o} for landing ${e.convoy}, none two hours on`);
@@ -155,6 +168,7 @@ export function landingBreaks(k: LandingCase): string[] {
   const moored = new Set<number>();
   const idle = new Map<number, number>();
   const since = new Map<number, number>();
+  const was = new Map<number, number>();
   let next = w.tick;
   const end = w.tick + k.days * 24;
   const probes = new Set(k.probeDays.map((d) => w.tick + d * 24));
@@ -162,19 +176,21 @@ export function landingBreaks(k: LandingCase): string[] {
     if (w.tick >= next) {
       const live = pool.filter((id) => w.formations.has(id) && c.nation[id] === n);
       if (live.length > 0) {
-        const size = pick([1, 1, 2, live.length]);
+        const size = pick([1, 1, 2, 3, live.length]);
         const sel = [...live].sort(() => r() - 0.5).slice(0, size).sort((a, b) => a - b);
-        const where = pick(['a', 'a', 'b', 'home'] as const);
+        const where = pick(['a', 'a', 'b', 'sea', 'home'] as const);
         const [dx, dy] = pick(DIRS);
         const off = pick([0, 1, 2, 3]);
-        const [x, y] = where === 'home' ? setup.home : [(where === 'a' ? setup.a : setup.b)[0] + dx * off, (where === 'a' ? setup.a : setup.b)[1] + dy * off];
+        // The sea: the water off the first target's beach, 0–3 cells further out (ROADMAP R36b).
+        const sea = landingOf(w, Math.floor(setup.a[1]) * W + Math.floor(setup.a[0]))!.water;
+        const [x, y] = where === 'home' ? setup.home : where === 'sea' ? [(sea % W) + 0.5 + dx * off, Math.floor(sea / W) + 0.5 + dy * off] : [(where === 'a' ? setup.a : setup.b)[0] + dx * off, (where === 'a' ? setup.a : setup.b)[1] + dy * off];
         for (const id of sel) sim.command({ kind: 'moveFormation', id, x, y, nation: n, escort: true } as Command);
         k.onHour?.(w, { ids: sel, x, y });
       }
       next = w.tick + 12 + Math.floor(r() * 61);
     }
     sim.step(1, quiet);
-    check(w, n, idle, since, orphans, moored, put);
+    check(w, n, idle, since, orphans, moored, was, put);
     k.onHour?.(w);
     if (probes.has(w.tick)) {
       const bytes = sim.save();

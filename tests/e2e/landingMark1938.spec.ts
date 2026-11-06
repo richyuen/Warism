@@ -11,7 +11,7 @@ import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 // one Shanghai's click marks; Fuzhou's is a new one. ROADMAP R28b (critic run 39, R39-N1): the one
 // aboard and the third nearest, never ordered, selected, two cells south: two landings marked, its own
 // kept and the click's new, and the tooltip says they will not land together. ROADMAP R33c (R43-N4): with the
-// landing at sea, the one selected still has its marks.
+// landing at sea, the one selected still has its marks; R36b: over the sea, the tooltip says a click there is refused.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = NATIONS_1938.findIndex((n) => n.tag === 'JAP') + 1;
@@ -120,4 +120,11 @@ test('the landing is marked while chosen; under a still cursor it turns to the l
   await page.screenshot({ path: 'test-results/landingMark1938-atSea.png' });
   await hover(page, SHANGHAI[0], SHANGHAI[1]);
   await expect.poll(async () => (await mark(page))?.same, { timeout: 10_000 }).toBe(true);
+  // ROADMAP R36b (critic run 44, R44-B2: over the sea a cell off the beach, no tooltip, no mark, and the click
+  // a silent cancel): the tooltip says why a click there is refused; no mark.
+  await hover(page, 1718.5, 413.5);
+  await expect(page.getByTestId('tooltip-sea-open')).toBeVisible({ timeout: 10_000 });
+  await expect(page.getByTestId('tooltip-sea-open')).toContainText('keeps its course');
+  expect(await page.evaluate(() => window.__warsim!.view!.landingMarks)).toEqual([]);
+  await page.screenshot({ path: 'test-results/landingMark1938-seaOpen.png' });
 });

@@ -1574,3 +1574,16 @@
 - The exit (ADR-829) holds: ADR-832 proposed, the user's decision (recommended: fix both inside the object with
   wider checkers, then the critic).
 - **Next:** the user's decision on ADR-832.
+
+## 2026-11-06 — R36: run 44's two regressions fixed inside the landing (ADR-832, way 1)
+- ADR-832 accepted by the user ("Let's do option 1").
+- Checkers first: `landingInvariants` clicks the sea and three of the pool, and checks `cancelWater` and
+  `leftBehind`; on HEAD `cancelWater` broke 19 of 24 runs. New tests red on HEAD: `landingPartResent1938`
+  (4 cases), `landingSeaClick1938` (4 waters).
+- R36a: a landing sails with room for all at its port, a group called when short; R17b's next voyage only
+  with no group anywhere. The critic's 10 split cases: every one-click group within 2 h (HEAD: 7 split).
+- R36b: a landing at sea ordered to the sea is refused `OpenSea` at the click and keeps its course; the
+  tooltip over the sea says so.
+- Checker 0 broken on 30 runs (120 days); grid 6 of 480 as R33d; landing/convoy tests 42 files green;
+  `landingMark1938.spec` green.
+- **Next:** the critic, run 45.
