@@ -7,7 +7,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
-### ADR-832 · 2026-11-06 · proposed, the user's decision — After the rebuild: run 44's two regressions
+### ADR-832 · 2026-11-06 · accepted — After the rebuild: run 44's two regressions
 
 - **Context.** Critic run 44 (full, on `0fba90d8`, R33's end): naval **6** (bar 8; run 43: 7); every other
   dimension as in run 43 (semantic zoom, tanks, aircraft, AI nukes 8; the rest 7). Two blocking issues, both
@@ -38,6 +38,8 @@ from AoC are tagged **[AoC-DEVIATION]**.
   The question that decides it: does the rebuild hold, so that its gaps are cheap? Run 44 says it fixed what
   it was for (five of run 43's issues) and its two holes each have a one-place cause. Recommended: 1, with the
   rule that a third regression of the landing in the next run means 2.
+- **Status.** Accepted 2026-11-06 by the user: "Let's do option 1". R36a, R36b, then the critic; a third
+  regression of the landing in that run means way 2.
 
 ### ADR-831 · 2026-11-06 · accepted — R33d: a recalled division rejoins its landing; the player's transports keep their order; the landing checker
 

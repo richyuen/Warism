@@ -521,8 +521,8 @@ Rules:
     0 broken; found a sunk group kept in its landing (fixed). The critic, full: run 44.
   R33 done; then the critic, full (run 44, on `0fba90d8`: naval 6, bar 8; two blocking issues, both regressions of
   R33: the loop stopped, ADR-832 proposed).
-- [ ] R36 **Run 44's blocking issues** (critic run 44, full, on `0fba90d8`). **Held for the user's decision (ADR-832):**
-  the loop takes no naval item until then. Then the critic again.
+- [ ] R36 **Run 44's blocking issues** (critic run 44, full, on `0fba90d8`). ADR-832 accepted (way 1): fix both inside the
+  object, the checkers widened first; then the critic. A third regression of the landing there means way 2.
   - [ ] R36a R44-B1: a gathering landing re-sent in part by one click keeps too few transport groups; the sail hour
     boards those at the port that fit and sails, leaving the rest standing at the port, still members, untold
     (`gather`: `if (fleet === undefined) continue`); they land alone one by one, ~12 days apart. Split grid: 6 of 8
