@@ -20,7 +20,7 @@
  *   divisions aboard at sea ordered by one click redirect it (to another landing gathering for that place:
  *   its transports sail to that one's port and join it, R43-B1's recall; else to the new water), or, to a
  *   place not over the sea, send it back to its own port, where they go ashore and march there (a cancel).
- *   Some of those aboard at sea: refused, `Aboard`. A division ashore (gathering, or bound for the next
+ *   Some of those aboard at sea: refused, `AtSea`. A division ashore (gathering, or bound for the next
  *   voyage) ordered elsewhere leaves the landing, told `LeftLanding` where others stay (`tellLandingsLeft`);
  *   refused, it is back in it as it was. An order for the landing it has changes nothing.
  */

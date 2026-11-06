@@ -10,7 +10,8 @@ import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 // mark is asked again and turns to the landing it has (green, "the landing they already have"), the
 // one Shanghai's click marks; Fuzhou's is a new one. ROADMAP R28b (critic run 39, R39-N1): the one
 // aboard and the third nearest, never ordered, selected, two cells south: two landings marked, its own
-// kept and the click's new, and the tooltip says they will not land together.
+// kept and the click's new, and the tooltip says they will not land together. ROADMAP R33c (R43-N4): with the
+// landing at sea, the one selected still has its marks.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = NATIONS_1938.findIndex((n) => n.tag === 'JAP') + 1;
@@ -104,4 +105,19 @@ test('the landing is marked while chosen; under a still cursor it turns to the l
   expect(marks.find((k) => k.same)).toEqual({ ...shanghai, same: true });
   expect(marks.find((k) => !k.same)!.land).toBe(south.land);
   await page.screenshot({ path: 'test-results/landingMark1938-two.png' });
+
+  // ROADMAP R33c (critic run 43, R43-N4: hovering with a division at sea selected, no mark): the one at sea, its
+  // landing sailed, asked from its landing's port: Shanghai its own landing, Fuzhou a new one.
+  await page.evaluate((id) => window.__warsim!.view!.selectedFormations.delete(id), three[2]!);
+  for (let d = 0; d < 60 && (await status.getAttribute('data-voyage')) !== 'atSea'; d++) {
+    await page.evaluate(() => window.__warsim!.sim.step(24));
+    await page.waitForTimeout(50);
+  }
+  await expect(status).toHaveAttribute('data-voyage', 'atSea', { timeout: 10_000 });
+  await hover(page, FUZHOU[0], FUZHOU[1]);
+  await expect.poll(async () => (await page.evaluate(() => window.__warsim!.view!.landingMarks)).length, { timeout: 10_000 }).toBe(1);
+  await expect.poll(async () => (await mark(page))?.same, { timeout: 5000 }).toBe(false);
+  await page.screenshot({ path: 'test-results/landingMark1938-atSea.png' });
+  await hover(page, SHANGHAI[0], SHANGHAI[1]);
+  await expect.poll(async () => (await mark(page))?.same, { timeout: 10_000 }).toBe(true);
 });

@@ -500,13 +500,20 @@ Rules:
     36 landing/convoy test files green, `landingSave1938` new (saved gathering and sailing, bit-identical);
     tests changed with the rules they pinned: ADR-830's list. Whole unit suite green; 14 landing specs green;
     pin unmoved.
-  - [ ] R33c The map's mark, the panel and the news read the object (`seaHint`, `voyageOf`, `landingWait`,
+  - [x] R33c The map's mark, the panel and the news read the object (`seaHint`, `voyageOf`, `landingWait`,
     `voyages`, the news's `landedAway`); a mark for a division aboard at sea (R43-N4). AT: the grid's mark column
     0 broken; the landing e2e specs green.
+    Done: the reading went in with R33b (grid mark column 0 of 480). New here: one of a landing at sea ordered
+    alone is refused `AtSea` (20, "select all of the landing"), not `Aboard`'s false "no order until it lands";
+    alone at sea, the landing's own reason (`NoLanding`, `Neutral`, `NoSeaWay`). `landingAtSeaOrder1938` (one
+    refused and told, the two land at Shanghai together; both by one click land at Fuzhou together; the hint's
+    mark for the one at sea, R43-N4); `landingMark1938.spec` at sea: one mark at Fuzhou (new), Shanghai's its own.
   - [ ] R33d The grid's open case (R33b: the one walking re-sent elsewhere, then recalled: its mate sailed alone
     meanwhile; 15 cases split). `landingInvariants` (as `diploInvariants`) on several seeds and the fuzz (`landingReclickFuzz` with
     recall, redirect, cancel, port shut, late order; the 120-day run a tool): 0 broken. Then the grid on the final
-    code (R33's AT), and the critic, full.
+    code (R33's AT), and the critic, full. Also R43-N1 (a player's order to idle transports undone by R31d's "idle
+    transports with no landing are the AI's", `playerOrders.ts`): landings now free their groups themselves; drop
+    the blanket rule, `landingJoinsAboard`'s `idle` check kept green.
 
 ## Batch 3 — readability (after the release, ADR-829)
 

@@ -476,10 +476,13 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
     // For the landing it has (ROADMAP R23b, R23e), or one this hour's orders made so (`landingOrders`): it stands.
     if (sameLandingAs(world, l, x, y)) return true;
     if (l.state === LandingState.returning && l.then === Math.floor(y) * world.cells.w + Math.floor(x)) return true;
-    // Aboard at sea it takes no order of its own: a landing at sea is ordered as one (ROADMAP R33b).
+    // Aboard at sea it takes no order of its own: a landing at sea is ordered as one (ROADMAP R33b, R33c).
     if (world.embarked.has(id)) {
       refusedLong = false;
-      world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Aboard, NaN);
+      // Of several: told to order the whole landing. Alone, it is the whole landing (`landingOrders`): why that failed.
+      const target = Math.floor(y) * world.cells.w + Math.floor(x);
+      const why = l.divisions.size > 1 ? RejectReason.AtSea : !landingOf(world, target) ? RejectReason.NoLanding : neutralLanding(world, l.nation, target) ? RejectReason.Neutral : RejectReason.NoSeaWay;
+      world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, why, NaN);
       return false;
     }
     // Ashore (marching to its port, or there): it leaves its landing for the order; refused, it is back in it.

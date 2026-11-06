@@ -35,7 +35,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
     landing at sea, all aboard: to a landing gathering for that place, its groups sail to that one's port and
     join it (R43-B1's recall); to another place over the sea, it sails there; to a place not over the sea, it
     sails back to its own port and they march once ashore (a cancel). Some of those aboard at sea: refused
-    `Aboard`. A division ashore otherwise leaves its landing for its order, back in it if refused (R24a);
+    `AtSea` (20, R33c; `Aboard`'s "takes no order until it lands" was false for a whole landing). A division ashore otherwise leaves its landing for its order, back in it if refused (R24a);
     told `LeftLanding` where others go on (R25b).
 - **Removed, with the rule each test pinned** (ADR-829: a test goes only with its rule): `heldGroup`,
   `comingTo`, `noteLeaving`, `promised`, `convoyTarget`, `loading`, `sailingToPort`, `ashoreAtPort` (as an

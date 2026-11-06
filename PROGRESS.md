@@ -1536,3 +1536,15 @@
 - Tick (PROMPT step 8), seed 99, a year, `f9e7ab94` and HEAD at once on separate cores, then swapped: old 3.70 /
   3.52 ms, new 3.51 / 3.70 ms (the cores, not the code); hash 6012d9d2 both. No change.
 
+## 2026-11-06 — R33c: a landing at sea ordered as one, told so; its mark
+- One division of a landing at sea ordered alone: refused `AtSea` (new reason 20: "it is at sea with its landing,
+  which goes as one: select all of the landing..."), not `Aboard` ("takes no order until it lands", false since
+  R33b for a whole landing). A lone division at sea is its whole landing: refused for the landing's own reason
+  (`serverOrderNews`'s Kassel case now `NoLanding`).
+- `landingAtSeaOrder1938` (new, server news): one of the two at sea to Fuzhou refused `AtSea` and told, both land at
+  Shanghai together; both by one click land at Fuzhou together; the hint over Fuzhou marks one landing for the one
+  at sea (R43-N4). `landingMark1938.spec` extended: at sea, Fuzhou marked (new), Shanghai its own; shot looked at.
+- The mark, panel and news already read `world.landings` since R33b (grid mark column 0).
+- R43-N1 (player's order to idle transports undone) filed under R33d.
+- **Next:** R33d.
+

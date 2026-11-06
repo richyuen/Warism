@@ -299,6 +299,11 @@ export const RejectReason = {
    * they sail with the landing.
    */
   Convoy: 19,
+  /**
+   * A player's division aboard its landing's transports at sea, ordered without the rest of that landing
+   * (ROADMAP R33c, ADR-830): a landing at sea is ordered as one (all of its divisions by one click).
+   */
+  AtSea: 20,
 } as const;
 export type RejectReason = (typeof RejectReason)[keyof typeof RejectReason];
 

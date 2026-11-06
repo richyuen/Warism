@@ -1303,7 +1303,7 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   sends its groups to that one's port, and it joins it (ROADMAP R33b, critic run 43, R43-B1's recall); to
   another place over the sea from its port, it sails there (`retarget`); to a place not over the sea (a
   cancel), back to its own port, where they go ashore and march there (`returning`, `then`). Some of
-  those aboard at sea: refused `Aboard`. A division ashore ordered elsewhere leaves its landing
+  those aboard at sea: refused `AtSea` (20, "it is at sea with its landing, which goes as one", ROADMAP R33c). A division ashore ordered elsewhere leaves its landing
   (`detachDivision`: the groups it no longer needs are free, those at its port first, R40-B1) and
   takes the order; refused, it is back in it as it was (R24a). It is told it leaves (`LeftLanding`, the
   news "leftLanding") where the landing goes on with others, once the hour's orders are in

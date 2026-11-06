@@ -660,6 +660,7 @@
   "order.why.17": "there is only sea there: it goes over the sea to land on a coast.",
   "order.why.18": "its transports are loading for another landing, and no others with room are at a port it can reach.",
   "order.why.19": "these transports carry a landing, or load for one: they sail with it, and take no other order until it is ashore.",
+  "order.why.20": "it is at sea with its landing, which goes as one: select all of the landing to send it elsewhere or back to its port.",
   "relations.title": "Relations",
   "relations.kind.war": "Wars",
   "relations.kind.alliance": "Alliances",
