@@ -1,0 +1,50 @@
+c46_x_aboard_alone                   151/632                      nv[] rej0 364{gath3,read1} 365{}
+c46_x_back                           632/632                      nv[] rej0 364{gath462,read1,toPo23} 365{}
+c46_x_base2                          631/632                      nv[] rej0 364{gath509} 365{}
+c46_x_base_18201                     631/632                      nv[] rej0 364{gath509} 365{}
+c46_x_bothfar                        656/657                      nv[] rej0 364{gath509} 365{}
+c46_x_click_plus_fresh               978/979/979                  nv[] rej0 364{gath831} 365{gath322} 366{}
+c46_x_four_19101                     1266/1267/1267/1267/-        nv[] rej1 364{gath1119} 365{gath610} 366{gath291} 367{} 369{}
+c46_x_four_19103                     1266/1267/1267/1267/-        nv[] rej1 364{gath1119} 365{gath610} 366{gath291} 367{} 369{}
+c46_x_four_19105                     1266/1267/1267/1267/-        nv[] rej0 364{gath1119} 365{gath610} 366{gath291} 367{} 369{}
+c46_x_four_19107                     1266/1267/1267/1267/-        nv[] rej1 364{gath1119} 365{gath610} 366{gath291} 367{} 369{}
+c46_x_four_19109                     1266/1267/1267/1267/-        nv[] rej1 364{gath1119} 365{gath610} 366{gath291} 367{} 369{}
+c46_x_four_all_sw3                   1243/1244/1244/1244          nv[] rej0 364{gath1119} 365{gath610} 366{gath291} 367{}
+c46_x_four_all_sw3_h26               1243/1244/1244/1244          nv[] rej0 364{gath1119} 365{gath610} 366{gath291} 367{}
+c46_x_four_hourly                    1266/1267/1267/1267          nv[] rej0 364{gath1118,read1} 365{gath610} 366{gath291} 367{}
+c46_x_four_two_far                   656/657/1242/1242            nv[] rej0 364{gath509} 365{} 366{gath291} 367{}
+c46_x_fresh2_19101                   656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_fresh2_19103                   656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_fresh2_19105                   656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_fresh2_19107                   656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_fresh2_19109                   656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_fresh3_base                    976/977/977                  nv[] rej0 364{gath828} 365{gath319} 366{}
+c46_x_freshday_19101                 998/999/999                  nv[] rej0 364{gath851} 365{gath342} 366{}
+c46_x_freshday_19103                 998/999/999                  nv[] rej0 364{gath851} 365{gath342} 366{}
+c46_x_freshday_19105                 998/999/999                  nv[] rej0 364{gath851} 365{gath342} 366{}
+c46_x_freshday_19107                 998/999/999                  nv[] rej0 364{gath851} 365{gath342} 366{}
+c46_x_freshday_19109                 998/999/999                  nv[] rej0 364{gath851} 365{gath342} 366{}
+c46_x_freshfuzhou_19101              656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_freshfuzhou_19103              656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_freshfuzhou_19105              656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_freshfuzhou_19107              656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_freshfuzhou_19109              656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_leaversfirst_fz                978/979/979                  nv[] rej0 364{gath831} 365{gath322} 366{}
+c46_x_six_all_far                    1266/1267/1267/1267/-/-      nv[] rej0 364{gath1119} 365{gath610} 366{gath291} 367{} 368{} 369{}
+c46_x_steal_cancelfresh              656/657/-                    nv[] rej0 364{gath509} 365{} 366{}
+c46_x_steal_four                     1266/1267/1267/1267/-        nv[] rej0 364{gath1119} 365{gath610} 366{gath291} 367{} 369{}
+c46_x_steal_fresh2                   656/657/-/-                  nv[] rej0 364{gath509} 365{} 366{gath1044} 367{}
+c46_x_steal_freshdaybefore           656/657/634                  nv[] rej0 364{gath509} 365{} 366{read161}
+c46_x_steal_freshfuzhou              656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_steal_freshfuzhou_13001        656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_steal_freshfuzhou_14003        656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_steal_freshfuzhou_14011        656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_steal_freshhourbefore          656/657/634                  nv[] rej0 364{gath509} 365{} 366{read160}
+c46_x_steal_noescort                 656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_steal_one                      1280/632/1278                nv[] rej0 364{gath3} 365{} 366{gath803}
+c46_x_steal_recall_d1                631/632/475                  nv[] rej0 364{gath509} 365{} 366{}
+c46_x_steal_recall_h4                631/632/475                  nv[] rej0 364{gath509} 365{} 366{}
+c46_x_steal_reclick                  656/657/634                  nv[] rej0 364{gath509} 365{} 366{read159}
+c46_x_steal_then_sw3                 1005/1006/1006               nv[] rej0 364{gath881} 365{gath372} 366{}
+c46_x_there_and_back_samehour        631/632                      nv[] rej0 364{gath509} 365{}
+c46_x_three_twofar                   656/657/951                  nv[] rej0 364{gath509} 365{} 366{}

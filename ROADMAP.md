@@ -588,7 +588,24 @@ Rules:
     Left as before: walkers from Korea in the n5/n6 shapes (never at sea), `gwater_tokyo` (the AI ships idle
     divisions, ADR-759), R31f's long waits (R44-N3, by decision). `landingInvariants` 0 broken on 30 runs;
     grid 6 of 480 as R33d. No page error in any probe.
-  R37 done; then the critic (run 46).
+  R37 done; then the critic (run 46, focused, on `4040cad6`: naval 7, bar 8; one blocking issue, R46-B1).
+- [ ] R38 **Run 46's issues** (critic run 46, focused, on `4040cad6`; ADR-833: fixed until naval is at its bar, its
+  non-blocking ones too, the critic's probes replayed first).
+  - [ ] R38a R46-B1: a sailing landing whose transports are sunk: its divisions aboard, lost with them, were told
+    `NoTransports` ("no transports ... at a port") and nothing said they were lost; `voyageOf` read `nextVoyage`;
+    landingInvariants `aboardNoLanding` (19113/15101, t1463). AT: a unit case (a sailing landing's group
+    destroyed): no `MoveRejected`, the news names the loss; landingInvariants on ten new seeds of each setup: no
+    `aboardNoLanding`.
+  - [ ] R38b R46-N1: a landing waiting for its sibling (R37c) reads `ready`; a state `sibling` ("waiting for the
+    landing from {port} for the same place; they land together") with the days.
+  - [ ] R38c R46-N2: the rejoin hover (and R45-N2's sea hover) cut on a phone: the tooltip wraps within the screen.
+  - [ ] R38d R46-N3: a division walks 40 days within its land to a far port's free group (18705, 19111: `stuck`)
+    rather than wait at the near one for a called group: choose the called group at the near port when the march
+    to the far one is over a week longer.
+  - [ ] R38e R46-N4: `leftBehind` exempts a division told `NextVoyage` in that hour; the checker's pool one group
+    short (R37a's AT).
+  - [ ] R38f R45-N3 (carried): no hover over the sea for a gathering landing's divisions (or any land selection):
+    the tooltip says a click there is refused.
 
 ## Batch 3 — readability (after the release, ADR-829)
 

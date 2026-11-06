@@ -1,0 +1,53 @@
+== se_water2 env MODE=water2 node critic/scripts/c46_se_seaedit.mjs 3517 50 water2 07:38:10
+== se_water env MODE=water node critic/scripts/c46_se_seaedit.mjs 3517 50 water 07:38:10
+== se_tsing env MODE=tsing node critic/scripts/c46_se_seaedit.mjs 3517 50 tsing 07:38:10
+   exit 0 se_water2 07:38:35
+   exit 0 se_tsing 07:38:35
+   exit 0 se_water 07:38:36
+== sp_four node critic/scripts/c46_sp_split.mjs 3517 60 four 07:38:36
+== se_home env MODE=home node critic/scripts/c46_se_seaedit.mjs 3517 50 home 07:38:36
+== se_both env MODE=both node critic/scripts/c46_se_seaedit.mjs 3517 50 both 07:38:36
+   exit 0 se_home 07:38:58
+   exit 0 se_both 07:39:02
+   exit 0 sp_four 07:39:04
+== se_one env MODE=one node critic/scripts/c46_se_seaedit.mjs 3517 50 one 07:39:04
+== rc2_d1 env RECALL=24 node critic/scripts/c46_rc2_recall.mjs 3517 40 d1 07:39:04
+== rc2_d3 env RECALL=72 node critic/scripts/c46_rc2_recall.mjs 3517 40 d3 07:39:04
+   exit 0 se_one 07:39:29
+   exit 0 rc2_d1 07:39:38
+   exit 0 rc2_d3 07:39:38
+== rc2_d5 env RECALL=120 node critic/scripts/c46_rc2_recall.mjs 3517 40 d5 07:39:38
+== rc2_h6 env RECALL=6 node critic/scripts/c46_rc2_recall.mjs 3517 40 h6 07:39:38
+== mk2_freshfirst node critic/scripts/c46_mk2_steal.mjs 3517 60 freshfirst 07:39:38
+   exit 0 mk2_freshfirst 07:40:09
+   exit 0 rc2_d5 07:40:12
+   exit 0 rc2_h6 07:40:12
+== mk2_freshfirst_14003 node critic/scripts/c46_mk2_steal.mjs 14003 60 freshfirst_14003 07:40:12
+== mk2_freshfirst_14011 node critic/scripts/c46_mk2_steal.mjs 14011 60 freshfirst_14011 07:40:12
+== mk2_nofresh2 env MODE=nofresh node critic/scripts/c46_mk2_steal.mjs 3517 60 nofresh2 07:40:12
+   exit 0 mk2_nofresh2 07:40:41
+   exit 0 mk2_freshfirst_14011 07:40:44
+   exit 0 mk2_freshfirst_14003 07:40:44
+== mk2_leaversfirst env MODE=leaversfirst node critic/scripts/c46_mk2_steal.mjs 3517 60 leaversfirst 07:40:44
+== lwt5_four_allsw63 env NPX=-63 NPY=63 node critic/scripts/c46_lwt5.mjs 3517 4 60 24 allnear 1600 900 four_allsw63 07:40:44
+== mk_mixed_s2 node critic/scripts/c46_mk_mark.mjs 3517 mixed 0 2 40 1600 900 mixed_s2 07:40:44
+   exit 0 mk_mixed_s2 07:41:21
+   exit 0 mk2_leaversfirst 07:41:21
+   exit 0 lwt5_four_allsw63 07:45:48
+== tm_touch node critic/scripts/c46_tm_touch.mjs 07:45:48
+== mk2_recall4 env RECALL=4 node critic/scripts/c46_mk2_steal.mjs 3517 60 recall4 07:45:48
+== hs_desk node critic/scripts/c46_hs_hintsel.mjs 3517 1600 900 desk 07:45:48
+   exit 0 hs_desk 07:46:01
+   exit 0 mk2_recall4 07:46:26
+   exit 0 tm_touch 07:47:04
+== mk4_eng7019_p270 env PICK=270,271 node critic/scripts/c46_mk4_eng.mjs 7019 30 eng7019_p270 07:47:04
+== mk4_eng15101_sep env PICK=270,271 SEPARATE=1 node critic/scripts/c46_mk4_eng.mjs 15101 30 eng15101_sep 07:47:04
+== mk4_eng15101_p270 env PICK=270,271 node critic/scripts/c46_mk4_eng.mjs 15101 30 eng15101_p270 07:47:04
+   exit 0 mk4_eng15101_p270 07:47:37
+   exit 0 mk4_eng7019_p270 07:47:37
+   exit 0 mk4_eng15101_sep 07:47:40
+== pn_eng15101 node critic/scripts/c46_pn_panel.mjs 15101 20 eng15101 07:47:40
+== fs_eng15101 node critic/scripts/c46_fs_strand.mjs 15101 12 eng15101 07:47:40
+   exit 0 fs_eng15101 07:48:07
+   exit 0 pn_eng15101 07:48:18
+SUITEPDONE

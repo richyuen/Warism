@@ -1,0 +1,121 @@
+{
+ "seed": 15101,
+ "tag": "eng15101",
+ "steps": [],
+ "panels": [],
+ "events": [],
+ "ids": [
+  274,
+  271,
+  276
+ ],
+ "firstTip": "Calais\nFrance\nUnrest 0\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+ "orderTick": 56,
+ "before": [
+  {
+   "id": 274,
+   "alive": true,
+   "v": "gathering",
+   "port": "Portsmouth",
+   "p": [
+    1017.5,
+    280.5
+   ]
+  },
+  {
+   "id": 271,
+   "alive": true,
+   "v": "toPort",
+   "port": "Portsmouth",
+   "p": [
+    1017.5,
+    278.1
+   ]
+  },
+  {
+   "id": 276,
+   "alive": true,
+   "v": null,
+   "port": null,
+   "p": [
+    1004,
+    280
+   ]
+  }
+ ],
+ "fleetsNear": [
+  [
+   1067,
+   2
+  ],
+  [
+   1068,
+   2.8284271247461903
+  ],
+  [
+   1066,
+   3.1622776601683795
+  ],
+  [
+   1069,
+   3.1622776601683795
+  ]
+ ],
+ "gid": 1067,
+ "fleetPanel0": {
+  "status": "Holding",
+  "wait": null,
+  "notice": null
+ },
+ "seaTip": null,
+ "rows0": [],
+ "panel270_d3": {
+  "status": "Holding",
+  "wait": null,
+  "notice": "Infantry division 274: not done: its port is bombed shut."
+ },
+ "shot_d3": "critic/shots/c46fs_eng15101_d3.png",
+ "panel270_d12": {
+  "status": "Holding",
+  "wait": null,
+  "notice": "Infantry division 274: not done: its port is bombed shut."
+ },
+ "shot_d12": "critic/shots/c46fs_eng15101_d12.png",
+ "trace": [
+  "d1 274:-@1017.5,280.5 271:-@1017.4,280 276:-@1000.5,283.5",
+  "d2 274:-@1017.2,280.6 271:-@1017.5,280.5 276:-@1000.5,283.5",
+  "d3 274:-@1017.2,280.6 271:-@1017.5,280.5 276:-@1000.5,283.5",
+  "d4 274:-@1017.2,280.6 271:-@1017.5,280.5 276:-@1000.5,283.5",
+  "d5 274:-@1017.2,280.6 271:-@1017.5,280.5 276:-@1000.5,283.5",
+  "d6 274:-@1017.2,280.6 271:-@1017.5,280.5 276:atSea@991.7,289.3",
+  "d7 274:-@1017.2,280.6 271:-@1017.5,280.5 276:atSea@968.7,303.5",
+  "d8 274:-@1017.2,280.6 271:-@1017.5,280.5 276:atSea@946.6,317.4",
+  "d9 274:-@1017.2,280.6 271:-@1017.5,280.5 276:atSea@925,331",
+  "d10 274:-@1017.2,280.6 271:-@1017.5,280.5 276:atSea@904,344",
+  "d11 274:-@1017.2,280.6 271:-@1017.5,280.5 276:atSea@883.9,357.5",
+  "d12 274:-@1017.2,280.6 271:-@1017.5,280.5 276:atSea@863.9,370.1"
+ ],
+ "news": [
+  {
+   "kind": "refused",
+   "id": 271,
+   "nation": 20,
+   "reason": 16,
+   "x": 1017.5,
+   "y": 278.3331558648381,
+   "tick": 58,
+   "at": 56
+  },
+  {
+   "kind": "refused",
+   "id": 274,
+   "nation": 20,
+   "reason": 16,
+   "x": 1017.5,
+   "y": 280.5,
+   "tick": 58,
+   "at": 56
+  }
+ ],
+ "errors": []
+}

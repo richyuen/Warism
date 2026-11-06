@@ -1608,3 +1608,13 @@
 - R37d: the critic's 162 headless cases and 22 page probes replayed first; two faults found and fixed before
   commit. Checker 0 of 30; grid 6 of 480; whole unit suite green (snapshot-perf alone); 14 landing specs green.
 - **Next:** the critic, run 46.
+
+## 2026-11-06 — Critic run 46 (focused) on 4040cad6: one blocking issue, R46-B1; naval 7 (bar 8)
+- Focused run. Scores: naval 7 (bar 8), UI 7, stability 7 rescored; the rest carried. R45-B1, R44-N1/N2 and
+  R45-N1 verified fixed.
+- One blocking: R46-B1, a landing's transports sunk at sea: its drowned divisions told "no transports at a port",
+  the loss untold (landingInvariants on a new seed; code from R33b). Non-blocking R46-N1–N5 (the sibling wait
+  reads "ready"; the rejoin hover cut on a phone; a 40-day walk to a far port; `leftBehind` on a told next
+  voyage; Britain's n6_012 17–19 h later, within a day).
+- ADR-833: no exit for naval. R38 filed (R38a–f).
+- **Next:** R38.

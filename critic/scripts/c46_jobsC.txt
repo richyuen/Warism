@@ -1,0 +1,19 @@
+npx tsx tools/diag/landingInvariants.ts 18601 3517 120 > critic/c46_li_18601_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18603 15101 120 > critic/c46_li_18603_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18607 3517 120 > critic/c46_li_18607_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18609 15101 120 > critic/c46_li_18609_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19111 3517 120 > critic/c46_li_19111_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19113 15101 120 > critic/c46_li_19113_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19115 3517 150 > critic/c46_li_19115_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19117 15101 150 > critic/c46_li_19117_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18705 3517 120 18705 > critic/c46_li_18705_jap.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 18615 scenario --heroes > critic/c46_diploinv_18615s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 18617 random --world random > critic/c46_diploinv_18617rw.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 19121 scenario --heroes > critic/c46_diploinv_19121s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 19123 random --world random > critic/c46_diploinv_19123rw.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c46_wd_3517.json > critic/c46_wd_3517.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 17011 2190 24 critic/c46_wd_17011.json > critic/c46_wd_17011.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 18011 2190 24 critic/c46_wd_18011.json > critic/c46_wd_18011.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 19127 2190 24 critic/c46_wd_19127.json > critic/c46_wd_19127.log 2>&1
+npx tsx critic/scripts/c31_headless.ts 7019 20 critic/c46_headless_7019.json 20 critic/c46_seed7019_y20.bin > critic/c46_headless_7019.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 19129 > critic/c46_worldinv_19129.log 2>&1

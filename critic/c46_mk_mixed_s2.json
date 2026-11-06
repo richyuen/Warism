@@ -1,0 +1,217 @@
+{
+ "seed": 3517,
+ "sel": "mixed",
+ "dx": 0,
+ "dy": 2,
+ "tag": "mixed_s2",
+ "zoom": [
+  {
+   "m": 3000,
+   "mark": {
+    "water": 845491,
+    "land": 843443,
+    "same": false
+   },
+   "tip": "Shanghai\nChina\nOccupied by Japan\nUnrest 0\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+   "shot": "critic/shots/c46mk_mixed_s2_z3000.png"
+  },
+  {
+   "m": 600,
+   "mark": {
+    "water": 845491,
+    "land": 843443,
+    "same": false
+   },
+   "tip": "China\nOccupied by Japan\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+   "shot": "critic/shots/c46mk_mixed_s2_z600.png"
+  },
+  {
+   "m": 120,
+   "mark": {
+    "water": 845491,
+    "land": 843443,
+    "same": false
+   },
+   "tip": "China\nOccupied by Japan\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+   "shot": "critic/shots/c46mk_mixed_s2_z120.png"
+  },
+  {
+   "m": 30,
+   "mark": {
+    "water": 845491,
+    "land": 843443,
+    "same": false
+   },
+   "tip": "China\nOccupied by Japan\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+   "shot": "critic/shots/c46mk_mixed_s2_z30.png"
+  }
+ ],
+ "steps": [],
+ "ids": [
+  364,
+  365,
+  366
+ ],
+ "beforeEsc": {
+  "mark": {
+   "water": 845491,
+   "land": 843443,
+   "same": false
+  },
+  "sel": 1
+ },
+ "afterEsc": {
+  "mark": {
+   "water": 845491,
+   "land": 843443,
+   "same": false
+  },
+  "marks": [
+   {
+    "water": 845491,
+    "land": 843443,
+    "same": false
+   }
+  ],
+  "sel": 0,
+  "tip": "China\nOccupied by Japan\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+  "shot": "critic/shots/c46mk_mixed_s2_afterEsc.png"
+ },
+ "afterMoveAway": {
+  "mark": null
+ },
+ "aboard": 364,
+ "aboardH": 1,
+ "selection": [
+  364,
+  366
+ ],
+ "firstForMark": 364,
+ "target": [
+  1715.5,
+  415.5
+ ],
+ "hover": {
+  "mark": {
+   "water": 845491,
+   "land": 843443,
+   "same": true
+  },
+  "marks": [
+   {
+    "water": 845491,
+    "land": 843443,
+    "same": true
+   },
+   {
+    "water": 853683,
+    "land": 851635,
+    "same": false
+   }
+  ],
+  "nLandings": "2",
+  "tip": "China\nOccupied by Japan\nYour selected forces go by sea to 2 landings, each marked: they will not land together",
+  "shot": "critic/shots/c46mk_mixed_s2_hover.png",
+  "markLand": [
+   1715,
+   411
+  ],
+  "markWater": [
+   1715,
+   412
+  ]
+ },
+ "afterClick": {
+  "mark": {
+   "water": 845491,
+   "land": 843443,
+   "same": true
+  },
+  "st": [
+   {
+    "id": 364,
+    "alive": true,
+    "v": "gathering",
+    "port": "Tokyo",
+    "p": [
+     1818.2,
+     385.2
+    ]
+   },
+   {
+    "id": 365,
+    "alive": true,
+    "v": "toPort",
+    "port": "Tokyo",
+    "p": [
+     1794.6,
+     391.5
+    ]
+   },
+   {
+    "id": 366,
+    "alive": true,
+    "v": "toPort",
+    "port": "Tokyo",
+    "p": [
+     1777.5,
+     393.5
+    ]
+   }
+  ],
+  "shot": "critic/shots/c46mk_mixed_s2_afterClick.png"
+ },
+ "landed": {},
+ "endH": 962,
+ "news": [
+  {
+   "kind": "landedAway",
+   "id": 366,
+   "nation": 75,
+   "reason": 0,
+   "x": 1715.5,
+   "y": 411.5,
+   "tick": 951,
+   "at": 878
+  }
+ ],
+ "rows": [
+  "4 February 1938 Hungary made peace with Austria",
+  "5 February 1938 Albania captured Yugoslavia's capital",
+  "Square infantry division 366: its transports broke off; it came ashore away from its target."
+ ],
+ "final": [
+  {
+   "id": 364,
+   "alive": true,
+   "v": "landed",
+   "port": null,
+   "p": [
+    1715.5,
+    411.5
+   ]
+  },
+  {
+   "id": 365,
+   "alive": true,
+   "v": "landed",
+   "port": null,
+   "p": [
+    1715.5,
+    411.9
+   ]
+  },
+  {
+   "id": 366,
+   "alive": true,
+   "v": "landed",
+   "port": null,
+   "p": [
+    1715.5,
+    411.1
+   ]
+  }
+ ],
+ "endShot": "critic/shots/c46mk_mixed_s2_end.png",
+ "errors": []
+}

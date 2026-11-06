@@ -1,5 +1,5 @@
 {
- "commit": "7e09b7b37b58232e91c49795f282b2a097da7f85",
+ "commit": "4040cad64df6bf5ef3ca72294ac40a6c2a25bb12",
  "mode": "focused",
  "scores": {
   "mapVisuals": 7,
@@ -19,20 +19,16 @@
  },
  "blocking": [
   {
-   "id": "R45-B1",
-   "title": "R44-B1 persists when the group a re-send freed is busy: of three re-sent by one click the landing sails with two and leaves the third standing at its port, untold; it lands alone 12 days later (seed 18705; 813eb375 lands all three together)",
+   "id": "R46-B1",
+   "title": "A landing whose transports are sunk at sea: its drowned divisions are told 'not done: no transports of its nation with room for it are at a port it can reach' and nothing says they were lost; landingInvariants aboardNoLanding (seed 19113, setup 15101, t1463)",
    "evidence": [
-    "critic/c45_b_jap18705_n4_012.json",
-    "critic/c45_b_jap18705_n4_012_g.json",
-    "critic/c45_s_18705_n4_012.json",
-    "critic/c45_swt2_18705_n4_012.json",
-    "critic/c45_bwt2_jap18705_n4_012.json",
-    "critic/c45_uw_three18705.json",
-    "critic/shots/c45uw_three18705_stranded_h831.png",
-    "critic/c45_s_cmp.txt"
+    "critic/c46_li_19113_eng.log",
+    "critic/c46_litrace_19113_sink.log",
+    "critic/scripts/c46_litrace.ts",
+    "critic/c46_liwt_19113_eng.log"
    ],
-   "fix": "Keep, at the re-send, the transport groups the new landing needs (detachDivision sizes the new landing's groups to its divisions) instead of freeing them to the AI and calling them back at the sail hour; or let the call take one of the nation's busy groups before falling back to 'those that fit sail'; if none can be had, tell the one left behind at the sail hour. AT: the split grid of critic/scripts/c45_jobsS.txt (8 shapes x seeds 18705, 18709, 18711, 18713, 18715) plus run 44's grid on 3517 and 15101: every one-click group lands within a day, and no later than at 813eb375 + 24 h; landingInvariants' leftBehind shown to fire on 0fba90d8 (by a fixed case if its random pool misses it)."
+   "fix": "In landingSystem, tell a sailing landing whose groups were sunk apart from one that put all ashore (landings.ts 'All it carried ashore' branch): a division aboard a group that is gone is lost with it (or put ashore), not refused with NoTransports; tell the player (an order news kind such as 'lost at sea with its transports'); no nextVoyage panel state for it. AT: landingInvariants 19113/15101 no aboardNoLanding; a unit case of a sailing landing whose group is destroyed (no MoveRejected, the news names the sinking); landingInvariants on ten new seeds per setup with no aboardNoLanding."
   }
  ],
- "timestamp": "2026-11-06T11:37:19Z"
+ "timestamp": "2026-11-06T13:04:27Z"
 }

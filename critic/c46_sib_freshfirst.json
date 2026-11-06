@@ -1,0 +1,162 @@
+{
+ "seed": 3517,
+ "tag": "freshfirst",
+ "mode": "freshfirst",
+ "steps": [],
+ "panels": [
+  {
+   "h": 4,
+   "status": "At Tokyo, waiting for the rest of the landing",
+   "wait": "1 of 2 at the port; the last 22 days from it",
+   "notice": null,
+   "shot": "critic/shots/c46mk2_freshfirst_panel_h4.png"
+  },
+  {
+   "h": 28,
+   "id": 366,
+   "status": "Marching to Sasebo to board transports",
+   "wait": null,
+   "notice": null,
+   "shot": "critic/shots/c46sib_freshfirst_h28.png"
+  },
+  {
+   "h": 244,
+   "id": 366,
+   "status": "Marching to Sasebo to board transports",
+   "wait": null,
+   "notice": null,
+   "shot": "critic/shots/c46sib_freshfirst_h244.png"
+  },
+  {
+   "h": 484,
+   "id": 366,
+   "status": "At Sasebo, all of the landing there: it sails when its transports and escort are ready",
+   "wait": null,
+   "notice": null,
+   "shot": "critic/shots/c46sib_freshfirst_h484.png"
+  },
+  {
+   "h": 544,
+   "id": 366,
+   "status": "At Sasebo, all of the landing there: it sails when its transports and escort are ready",
+   "wait": null,
+   "notice": null,
+   "shot": "critic/shots/c46sib_freshfirst_h544.png"
+  },
+  {
+   "h": 604,
+   "id": 366,
+   "status": "At sea, bound for its landing",
+   "wait": null,
+   "notice": null,
+   "shot": "critic/shots/c46sib_freshfirst_h604.png"
+  },
+  {
+   "h": 640,
+   "id": 366,
+   "status": "Landed",
+   "wait": null,
+   "notice": null,
+   "shot": "critic/shots/c46sib_freshfirst_h640.png"
+  }
+ ],
+ "ids": [
+  364,
+  365,
+  366
+ ],
+ "aboardAt": 3,
+ "before": [
+  {
+   "id": 364,
+   "v": "gathering",
+   "port": "Tokyo",
+   "p": [
+    1818.2,
+    385.2
+   ]
+  },
+  {
+   "id": 365,
+   "v": "toPort",
+   "port": "Tokyo",
+   "p": [
+    1794.7,
+    391.5
+   ]
+  },
+  {
+   "id": 366,
+   "v": null,
+   "port": null,
+   "p": [
+    1777.2,
+    393.2
+   ]
+  }
+ ],
+ "freshHover": {
+  "marks": [
+   {
+    "water": 913064,
+    "land": 911016,
+    "same": false
+   }
+  ],
+  "tip": "China\nYour selected forces go by sea: they board transports at a port and land at the marked place"
+ },
+ "twoHover": {
+  "marks": [
+   {
+    "water": 913064,
+    "land": 911016,
+    "same": false
+   }
+  ],
+  "tip": "China\nYour selected forces go by sea: they board transports at a port and land at the marked place",
+  "shot": "critic/shots/c46mk2_freshfirst_twohover.png"
+ },
+ "cmds": [
+  {
+   "batch": [
+    366
+   ],
+   "tick": 3
+  },
+  {
+   "batch": [
+    364,
+    365
+   ],
+   "tick": 3
+  }
+ ],
+ "tokyoShot": "critic/shots/c46mk2_freshfirst_tokyo_h4.png",
+ "day10Shot": "critic/shots/c46mk2_freshfirst_day10.png",
+ "landed": {
+  "364": {
+   "h": 682,
+   "p": [
+    1704.5,
+    444.3
+   ]
+  },
+  "365": {
+   "h": 682,
+   "p": [
+    1704.8,
+    444.3
+   ]
+  },
+  "366": {
+   "h": 658,
+   "p": [
+    1704.5,
+    444.1
+   ]
+  }
+ },
+ "endH": 682,
+ "news": [],
+ "errors": []
+}
