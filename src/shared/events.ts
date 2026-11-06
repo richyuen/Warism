@@ -251,6 +251,12 @@ export const EventKind = {
    * untold). a = the formation, b = its nation, (x, y) = where it stands.
    */
   NextVoyage: 74,
+  /**
+   * A land formation aboard transports that were sunk is lost at sea with them (ROADMAP R38a; critic run 46,
+   * R46-B1: a player's division so lost was told "no transports at a port"). Before its FormationDestroyed.
+   * a = the formation, b = its nation, (x, y) = where it was.
+   */
+  LostAtSea: 75,
 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */

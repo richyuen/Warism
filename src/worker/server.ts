@@ -1436,6 +1436,8 @@ export class SimServer {
       tell('leftLanding', 0);
     } else if (kind === EventKind.NextVoyage) {
       tell('nextVoyage', 0);
+    } else if (kind === EventKind.LostAtSea) {
+      tell('lostAtSea', 0);
     } else if (kind === EventKind.FormationLanded) {
       this.landedAt.set(id, ev[i]!);
       if (landedAway(world, target, ev[i + 4]!, ev[i + 5]!)) tell('landedAway', 0);

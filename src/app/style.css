@@ -2006,6 +2006,8 @@ button.unit-icon.on {
   box-shadow: 0 0 0 1px var(--frame-edge);
   font-size: 0.8rem;
   white-space: nowrap;
+  /* Its max-width (set where it is placed) holds its padding and border too (ROADMAP R38c). */
+  box-sizing: border-box;
 }
 .map-tooltip-name {
   font-weight: 700;
@@ -2013,6 +2015,8 @@ button.unit-icon.on {
 }
 .map-tooltip-note {
   color: #e9c46a;
+  /* A note wraps within the tooltip's width (ROADMAP R38c; critic run 46, R46-N2: cut on a phone). */
+  white-space: normal;
 }
 .map-tooltip-nation {
   color: #f6ead2;

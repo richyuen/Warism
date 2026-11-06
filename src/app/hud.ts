@@ -68,6 +68,10 @@ export class Hud {
   readonly hoverSeaNeutral = signal(false);
   /** Under the cursor the sea, with one of the selection aboard at sea: the order would be refused, `OpenSea` (ROADMAP R36b). */
   readonly hoverSeaOpen = signal(false);
+  /** `hoverSeaOpen` with the selection's landing gathering at its port, none aboard (ROADMAP R38f). */
+  readonly hoverSeaAshore = signal(false);
+  /** `hoverSeaOpen` for land formations in no landing (ROADMAP R38f). */
+  readonly hoverSeaPlain = signal(false);
   /** The landing an order under the cursor (`hoverBySea`) is for (ADR-827, ROADMAP R27b), marked on the map; null for none or refused. */
   readonly hoverLanding = signal<SeaHint | null>(null);
   onMapMode: (mode: MapMode) => void = () => {};

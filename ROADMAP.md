@@ -589,23 +589,41 @@ Rules:
     divisions, ADR-759), R31f's long waits (R44-N3, by decision). `landingInvariants` 0 broken on 30 runs;
     grid 6 of 480 as R33d. No page error in any probe.
   R37 done; then the critic (run 46, focused, on `4040cad6`: naval 7, bar 8; one blocking issue, R46-B1).
-- [ ] R38 **Run 46's issues** (critic run 46, focused, on `4040cad6`; ADR-833: fixed until naval is at its bar, its
+- [x] R38 **Run 46's issues** (critic run 46, focused, on `4040cad6`; ADR-833: fixed until naval is at its bar, its
   non-blocking ones too, the critic's probes replayed first).
-  - [ ] R38a R46-B1: a sailing landing whose transports are sunk: its divisions aboard, lost with them, were told
+  - [x] R38a R46-B1: a sailing landing whose transports are sunk: its divisions aboard, lost with them, were told
     `NoTransports` ("no transports ... at a port") and nothing said they were lost; `voyageOf` read `nextVoyage`;
     landingInvariants `aboardNoLanding` (19113/15101, t1463). AT: a unit case (a sailing landing's group
     destroyed): no `MoveRejected`, the news names the loss; landingInvariants on ten new seeds of each setup: no
     `aboardNoLanding`.
-  - [ ] R38b R46-N1: a landing waiting for its sibling (R37c) reads `ready`; a state `sibling` ("waiting for the
+    Done: those aboard transports sunk leave their landing in the hour and are told `LostAtSea` (75, news
+    "lostAtSea": "its transports were sunk at sea; it was lost with them"); none refused; the panel reads "at
+    sea" till the hour's end. `landingSunk1938` (red without the fix: two refused); 19113/15101 0 broken.
+  - [x] R38b R46-N1: a landing waiting for its sibling (R37c) reads `ready`; a state `sibling` ("waiting for the
     landing from {port} for the same place; they land together") with the days.
-  - [ ] R38c R46-N2: the rejoin hover (and R45-N2's sea hover) cut on a phone: the tooltip wraps within the screen.
-  - [ ] R38d R46-N3: a division walks 40 days within its land to a far port's free group (18705, 19111: `stuck`)
+    Done: `siblingWait` gives the port and hours; `landingTwoPorts1938` checks `sibling` shows and `ready` lasts a
+    day at most (run 46's 50 x-cases replayed: `ready` 1 h at most).
+  - [x] R38c R46-N2: the rejoin hover (and R45-N2's sea hover) cut on a phone: the tooltip wraps within the screen.
+    Done: notes wrap; the box is placed and sized within the screen (border-box). Run 46's phone probes: 562 px
+    wide past a 390-px screen before, now 200 px ending 8 px inside it.
+  - [x] R38d R46-N3: a division walks 40 days within its land to a far port's free group (18705, 19111: `stuck`)
     rather than wait at the near one for a called group: choose the called group at the near port when the march
     to the far one is over a week longer.
-  - [ ] R38e R46-N4: `leftBehind` exempts a division told `NextVoyage` in that hour; the checker's pool one group
+    Done: a free group's port over `FAR_PORT_CELLS` (20) cells farther than the land's nearest port: a group is
+    called to the nearer. 18705 and 19111 0 broken. Not done: joining a gathering landing at a far port (19206,
+    19207 Japan: 45 days on the march from the north of Honshu, landingInvariants `stuck`). Tried: it made one click
+    of four into four landings at four ports (run 46's 383 cases replayed: splits 35 → 160); dropped. A follow-on.
+  - [x] R38e R46-N4: `leftBehind` exempts a division told `NextVoyage` in that hour; the checker's pool one group
     short (R37a's AT).
-  - [ ] R38f R45-N3 (carried): no hover over the sea for a gathering landing's divisions (or any land selection):
+    Done: the checker takes `groups` (only the nearest groups kept) and an `hour` hook; 1 and 2 groups on three
+    seeds of each setup: 0 broken.
+  - [x] R38f R45-N3 (carried): no hover over the sea for a gathering landing's divisions (or any land selection):
     the tooltip says a click there is refused.
+    Done: `seaHint` 3 with `ashore` (a gathering landing: "your landing stays as it is") and `plain` (land
+    formations in no landing, open sea with no coast near: "they cannot march there"); `landingSeaClick1938`.
+  - [x] R38g Before the critic: run 46's 383 headless cases and 35 page probes replayed (landings as in run 46, no
+    page error); landingInvariants on 20 new seeds (19201–19210, both setups) and 12 short pools: 0 broken but the
+    two `stuck` of R38d's follow-on.
 
 ## Batch 3 — readability (after the release, ADR-829)
 

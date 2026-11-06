@@ -12,23 +12,27 @@
  * - `aboardGathering`: a division aboard standing transports two hours running while its landing gathers (they
  *   wait ashore and board at the sail hour; a landing at sea joined to one gathering sails to its port aboard);
  * - `aboardNoLanding`: a division aboard transports under the player's order (`playerOrders`), in no landing on
- *   them (bar God's `seaBound`; one whose order is over is the AI's to ship, ADR-759);
+ *   them (bar God's `seaBound`; one whose order is over is the AI's to ship, ADR-759; one whose transports were
+ *   sunk this hour, lost with them at the next, R38a);
  * - `idle`: a spell aboard a landing's transports over IDLE_HOURS, standing in no fight;
  * - `returning`: a landing returning with no march after it (`then`);
  * - `cancelWater`: a landing returning for a march onto water (critic run 44, R44-B2: an order to the sea was taken
  *   as a cancel, and refused a day later at its port);
  * - `leftBehind`: at the hour a landing sails, one of its divisions standing ashore (critic run 44, R44-B1: a part
- *   re-sent kept too few transports; the rest stood at the port, untold, and landed alone weeks later);
+ *   re-sent kept too few transports; the rest stood at the port, untold, and landed alone weeks later); bar one
+ *   told `NextVoyage` that hour (R17b's next voyage, told; ROADMAP R38e, critic run 46, R46-N4);
  * - `escort`: an escort for no landing two hours running (one ending this hour is let go the next);
  * - `stuck`: a division in a gathering landing for over STUCK_DAYS;
  * - `save`: a save that does not load bit-identical (on the probe days).
  * Each kind is told once a division, group or landing (its first hour).
  */
 import type { Command } from '../../src/shared/commands';
+import { EventKind } from '../../src/shared/events';
 import { isLand } from '../../src/shared/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { landingOf } from '../../src/sim/systems/amphibious';
+import { landingOf, transportRoom } from '../../src/sim/systems/amphibious';
+import { destroyFormation } from '../../src/sim/systems/elements';
 import { LandingState } from '../../src/sim/systems/landings';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from './earth';
@@ -49,6 +53,10 @@ export interface LandingCase {
   orders: number;
   /** Days on which a save is loaded and compared. */
   probeDays: number[];
+  /** Keep only this many of the nation's transport groups, those nearest its capital (R38e: a pool short of room). */
+  groups?: number;
+  /** Called after each hour stepped (a diagnosis tool's trace). */
+  hour?: (w: World) => void;
   /** Each hour after the step, and each click (a tool's trace). */
   onHour?: (w: World, click?: { ids: number[]; x: number; y: number }) => void;
 }
@@ -68,7 +76,7 @@ function rng(seed: number): () => number {
 const DIRS: [number, number][] = [[0, 0], [1, 0], [0, 1], [-1, 0], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
 
 /** The rules each hour on `w` for player `n`; `idle` and `since` carry spells between hours. */
-function check(w: World, n: number, idle: Map<number, number>, since: Map<number, number>, orphans: Set<number>, moored: Set<number>, was: Map<number, number>, put: (key: string, line: string) => void): void {
+function check(w: World, n: number, idle: Map<number, number>, since: Map<number, number>, orphans: Set<number>, moored: Set<number>, was: Map<number, number>, told: Set<number>, put: (key: string, line: string) => void): void {
   const t = `t${w.tick}`;
   const out = { push: (line: string): void => put(line.replace(/^t\d+ /, '').replace(/ (aboard|standing|for|in|,|has|gathering).*$/, ''), line) };
   const f = w.formations;
@@ -97,7 +105,7 @@ function check(w: World, n: number, idle: Map<number, number>, since: Map<number
     if (l.state === LandingState.returning && l.then < 0) out.push(`${t} returning: landing ${l.id} with no march after`);
     if (l.state === LandingState.returning && l.then >= 0 && !isLand(w.cells.terrain[l.then]!)) out.push(`${t} cancelWater: landing ${l.id} returning for a march onto water`);
     if (l.state === LandingState.sailing && was.get(l.id) === LandingState.gathering) {
-      for (const id of l.divisions.keys()) if (f.has(id) && !w.embarked.has(id) && c.moving[id] !== 1) out.push(`${t} leftBehind: ${id} ashore as landing ${l.id} sails`);
+      for (const id of l.divisions.keys()) if (f.has(id) && !w.embarked.has(id) && c.moving[id] !== 1 && !told.has(id)) out.push(`${t} leftBehind: ${id} ashore as landing ${l.id} sails`);
     }
   }
   was.clear();
@@ -110,6 +118,8 @@ function check(w: World, n: number, idle: Map<number, number>, since: Map<number
   for (const [id, e] of w.embarked) {
     if (c.nation[id] !== n || w.seaBound.has(id)) continue;
     const l = divs.get(id);
+    // Aboard transports sunk this hour: lost with them at the next (`amphibiousSystem`, told `LostAtSea`, R38a).
+    if (!f.has(e.fleet)) continue;
     if (w.playerOrders.has(id) && (l === undefined || !w.landings.get(l)!.fleets.includes(e.fleet))) out.push(`${t} aboardNoLanding: ${id} aboard ${e.fleet}, landing ${l ?? 'none'}`);
     // Idle aboard: of a landing's (the AI's own shipping is its own).
     const standing = l !== undefined && f.has(e.fleet) && c.moving[e.fleet] !== 1 && c.engaged[e.fleet] !== 1;
@@ -137,7 +147,10 @@ export function landingBreaks(k: LandingCase): string[] {
   const sim = new Sim({ scenario: '1938', seed: k.seed, assets: assets1938(W) });
   const w = sim.world;
   const [n, e] = [nationId(setup.nation), nationId(setup.enemy)];
+  // Divisions told `NextVoyage` in the hour stepped (R38e).
+  const voyageTold = new Set<number>();
   const quiet = (x: World): void => {
+    for (let i = 0; i < x.out.events.length; i += 6) if (x.out.events[i + 1] === EventKind.NextVoyage) voyageTold.add(x.out.events[i + 2]!);
     x.out.events.length = 0;
     x.out.fires.length = 0;
   };
@@ -155,6 +168,14 @@ export function landingBreaks(k: LandingCase): string[] {
     all.push([id, (c.x[id]! - setup.home[0]) ** 2 + (c.y[id]! - setup.home[1]) ** 2]);
   });
   const pool = all.sort((a, b) => a[1] - b[1] || a[0] - b[0]).slice(0, 6).map((d) => d[0]);
+  // A pool short of room (R38e): only the `groups` transport groups nearest the capital kept.
+  if (k.groups !== undefined) {
+    const ships: [number, number][] = [];
+    w.formations.forEach((o) => {
+      if (c.nation[o] === n && w.isFleet(o) && transportRoom(w, o) > 0) ships.push([o, (c.x[o]! - setup.home[0]) ** 2 + (c.y[o]! - setup.home[1]) ** 2]);
+    });
+    for (const [o] of ships.sort((a, b) => a[1] - b[1] || a[0] - b[0]).slice(k.groups)) destroyFormation(w, o);
+  }
   const r = rng(k.orders);
   const pick = <T>(xs: readonly T[]): T => xs[Math.floor(r() * xs.length)]!;
   const out: string[] = [];
@@ -189,8 +210,10 @@ export function landingBreaks(k: LandingCase): string[] {
       }
       next = w.tick + 12 + Math.floor(r() * 61);
     }
+    voyageTold.clear();
     sim.step(1, quiet);
-    check(w, n, idle, since, orphans, moored, was, put);
+    check(w, n, idle, since, orphans, moored, was, voyageTold, put);
+    k.hour?.(w);
     k.onHour?.(w);
     if (probes.has(w.tick)) {
       const bytes = sim.save();

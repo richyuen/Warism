@@ -11,7 +11,17 @@ import { t } from './i18n';
  * unrest. No pointer events: it never takes a click. Given the signal, not its value: a mouse
  * move re-renders this, not the whole HUD.
  */
-export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral, seaOpen, landing }: { hover: ReadonlySignal<MapHover | null>; nameOf: (id: number) => string | null; unrestOf: (province: number) => number | null; bySea?: ReadonlySignal<number>; seaNeutral?: ReadonlySignal<boolean>; seaOpen?: ReadonlySignal<boolean>; landing?: ReadonlySignal<SeaHint | null> }) {
+/** Where the tooltip goes: right of and below the mouse, its width within the screen (ROADMAP R38c; critic run 46,
+ * R46-N2: a note 546 px wide on a 390-px phone). At least 200 px wide: nearer the right edge it moves left. */
+function place(x: number, y: number): Record<string, string> {
+  const screen = typeof window === 'undefined' ? 1600 : window.innerWidth;
+  const room = Math.min(360, screen - 16);
+  let left = x + 14;
+  if (screen - left - 8 < Math.min(200, room)) left = Math.max(8, screen - 8 - Math.min(200, room));
+  return { left: `${left}px`, top: `${y + 16}px`, maxWidth: `${Math.min(room, screen - left - 8)}px` };
+}
+
+export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral, seaOpen, seaAshore, seaPlain, landing }: { hover: ReadonlySignal<MapHover | null>; nameOf: (id: number) => string | null; unrestOf: (province: number) => number | null; bySea?: ReadonlySignal<number>; seaNeutral?: ReadonlySignal<boolean>; seaOpen?: ReadonlySignal<boolean>; seaAshore?: ReadonlySignal<boolean>; seaPlain?: ReadonlySignal<boolean>; landing?: ReadonlySignal<SeaHint | null> }) {
   const hover = signal.value;
   const sea = bySea !== undefined && hover !== null && hover.cell >= 0 && bySea.value === hover.cell;
   if (!hover) return null;
@@ -23,7 +33,7 @@ export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral,
   if (!name && !hover.city && !open) return null;
   const unrest = hover.city && hover.province !== 0 ? unrestOf(hover.province) : null;
   return (
-    <div class="map-tooltip" data-testid="map-tooltip" style={{ left: `${hover.x + 14}px`, top: `${hover.y + 16}px` }}>
+    <div class="map-tooltip" data-testid="map-tooltip" style={place(hover.x, hover.y)}>
       {hover.city ? (
         <div class="map-tooltip-name" data-testid="tooltip-city">
           {hover.city.name}
@@ -35,7 +45,7 @@ export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral,
       {unrest !== null ? <div class="map-tooltip-nation" data-testid="tooltip-unrest">{t('tooltip.unrest', { n: Math.round(unrest) })}</div> : null}
       {open ? (
         <div class="map-tooltip-note" data-testid="tooltip-sea-open">
-          {t('tooltip.bySeaOpen')}
+          {t(seaPlain?.value === true ? 'tooltip.bySeaOpenPlain' : seaAshore?.value === true ? 'tooltip.bySeaOpenAshore' : 'tooltip.bySeaOpen')}
         </div>
       ) : sea && seaNeutral?.value === true ? (
         <div class="map-tooltip-note" data-testid="tooltip-sea-refused">

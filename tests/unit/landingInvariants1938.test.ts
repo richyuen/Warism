@@ -14,4 +14,11 @@ describe("the rules of the player's landings hold under random orders (ROADMAP R
       expect(landingBreaks({ seed, setup, days: 60, orders: seed, probeDays: [30] })).toEqual([]);
     }, 300_000);
   }
+  // ROADMAP R38 (critic run 46): 19113 Britain, a landing's transports sunk at t1463 (`aboardNoLanding`, R46-B1);
+  // 18705 Japan, a 40-day walk to Sasebo (`stuck`, R46-N3); a pool short of room, two groups (R38e).
+  for (const [seed, setup, days, groups] of [[19113, 15101, 70, undefined], [18705, 3517, 120, undefined], [3517, 3517, 60, 2], [15101, 15101, 60, 2]] as const) {
+    it(`seed ${seed} (${setup === 3517 ? 'Japan' : 'Britain'}${groups ? `, ${groups} groups` : ''}): ${days} days, none broken`, () => {
+      expect(landingBreaks({ seed, setup, days, orders: seed, probeDays: [30], ...(groups === undefined ? {} : { groups }) })).toEqual([]);
+    }, 300_000);
+  }
 });

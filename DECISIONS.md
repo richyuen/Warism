@@ -51,6 +51,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   back to {port}"; the notice of a landing left goes at the next order; a recall's hover names the port it turns
   back to. R37c: a landing waits for a sibling of its click (same place, another port) that would land over a day
   after it, unless that one waits over a week. Player landings only; the pin of seed 99 unmoved.
+- **Done (R38, run 46).** R38a: those aboard transports sunk leave the landing in the hour and are told
+  `LostAtSea` (75), not refused. R38b: a panel state `sibling`. R38c: the tooltip within the screen. R38d: a free
+  group over 20 cells farther than the nearest port: one is called to the nearer. Not taken: joining a far
+  gathering landing from the nearer port; it split one click into a landing per port (35 → 160 of run 46's 383
+  cases); one click lands together (R37c) stands over a long march. R38e: the checker's `leftBehind` exempts a
+  told next voyage; short pools. R38f: the sea hover for a gathering landing and for land formations. Player
+  landings only.
 
 ### ADR-832 · 2026-11-06 · accepted — After the rebuild: run 44's two regressions
 

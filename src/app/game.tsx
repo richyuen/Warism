@@ -84,6 +84,8 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
         if (asked !== key) return;
         hud.hoverSeaNeutral.value = hint.how === 2;
         hud.hoverSeaOpen.value = hint.how === 3;
+        hud.hoverSeaAshore.value = hint.how === 3 && hint.ashore === true;
+        hud.hoverSeaPlain.value = hint.how === 3 && hint.plain === true;
         hud.hoverBySea.value = hint.how !== 0 ? cell : -1;
         const by = hint.how === 1 && hint.marks.length > 0;
         hud.hoverLanding.value = by ? hint : null;

@@ -4,6 +4,7 @@ import { EventKind } from '../../src/shared/events';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
+import { voyageOf } from '../../src/sim/systems/landings';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
 import { atItsPort } from '../helpers/landings';
@@ -14,6 +15,8 @@ import { nationId } from '../helpers/sim1938';
 // h682). Japan's three nearest Tokyo: the first two sent to Shanghai (escort on); two hours after the first is at
 // its port, in one hour, the third clicked onto Fuzhou, then the two. Each landing for that place now waits while
 // the other would land more than a day after it: the three land within a day, or are told.
+// ROADMAP R38b (critic run 46, R46-N1): while the fresh one's landing waits for the other its panel read "ready"
+// for days: it now says it waits for the landing from the other port (`sibling`), "ready" a day at most.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = nationId('JAP');
@@ -63,7 +66,14 @@ describe('two clicks for one place in one hour, from two ports: they land togeth
       sim.step(2, take);
       click([fresh], FUZHOU);
       click(pair, FUZHOU);
-      for (let h = 0; h < 24 * 90 && ids.some((id) => w.formations.has(id) && !landed.has(id) && !told.has(id)); h++) sim.step(1, take);
+      const states = new Map<string, number>();
+      for (let h = 0; h < 24 * 90 && ids.some((id) => w.formations.has(id) && !landed.has(id) && !told.has(id)); h++) {
+        sim.step(1, take);
+        const v = voyageOf(w, fresh)?.state;
+        if (v) states.set(v, (states.get(v) ?? 0) + 1);
+      }
+      expect(states.get('sibling') ?? 0, `the fresh one's panel says it waits for the other landing: ${JSON.stringify([...states])}`).toBeGreaterThan(0);
+      expect(states.get('ready') ?? 0, 'ready a day at most').toBeLessThanOrEqual(24);
       const at = ids.filter((id) => !told.has(id)).map((id) => landed.get(id));
       expect(at.every((t) => t !== undefined), `each landed or told: ${JSON.stringify([...landed])}`).toBe(true);
       if (at.length > 1) expect(Math.max(...(at as number[])) - Math.min(...(at as number[])), `within a day: ${JSON.stringify([...landed])}`).toBeLessThanOrEqual(24);

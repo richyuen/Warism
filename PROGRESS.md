@@ -1618,3 +1618,19 @@
   voyage; Britain's n6_012 17–19 h later, within a day).
 - ADR-833: no exit for naval. R38 filed (R38a–f).
 - **Next:** R38.
+
+## 2026-11-06 — R38: run 46's blocking issue and its non-blocking ones (ADR-833)
+- R38a (R46-B1): divisions aboard transports sunk at sea are lost with them and told so (`LostAtSea`, news
+  "lostAtSea"), not refused "no transports"; the panel reads "at sea" till the hour's end. Unit case red without it.
+- R38b (R46-N1): a landing waiting for its sibling says so, with the port and days (`sibling`); `ready` lasts an
+  hour at most in run 46's 50 x-cases.
+- R38c (R46-N2): the tooltip stays within a phone screen (562 px past a 390-px screen before; 200 px, 8 px in now).
+- R38d (R46-N3): a free group over 20 cells farther than the nearest port: a group is called to the nearer; 18705
+  and 19111 clean. Joining a far gathering landing from the nearer port was tried and dropped: it split one click
+  into a landing per port (35 → 160 splits of 383). 19206/19207 Japan `stuck` (a 45-day march) left, a follow-on.
+- R38e (R46-N4): `leftBehind` exempts a told next voyage; the checker takes short pools (1, 2 groups) and an hour hook.
+- R38f (R45-N3): the sea hover says a click is refused for a gathering landing and for land formations in no landing.
+- Before the critic: run 46's 383 headless cases (landings as in run 46: splits 35 of 35, none later) and 35 page
+  probes (landings as in run 46, no page error) replayed; checker 0 broken on 20 new seeds and 12 short pools but
+  the two `stuck`; whole unit suite green (two timing tests alone); 14 landing specs green.
+- **Next:** the critic, run 47.

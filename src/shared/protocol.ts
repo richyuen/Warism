@@ -745,7 +745,7 @@ export interface FormationDetail {
    * the port (`aboard`) and how many in all, and the days the furthest has left to the port (0: all
    * there; null: held up on the way).
    */
-  voyage: { state: 'toPort' | 'waiting' | 'gathering' | 'ready' | 'nextVoyage' | 'toPortAboard' | 'atSea' | 'landed'; port: string | null; wait?: { aboard: number; of: number; days: number | null } } | null;
+  voyage: { state: 'toPort' | 'waiting' | 'gathering' | 'ready' | 'sibling' | 'nextVoyage' | 'toPortAboard' | 'atSea' | 'landed'; port: string | null; other?: string; days?: number; wait?: { aboard: number; of: number; days: number | null } } | null;
 }
 
 /**
@@ -853,6 +853,10 @@ export interface LandingMark {
  */
 export interface SeaHint {
   how: 0 | 1 | 2 | 3;
+  /** `how` 3 with none of them aboard: the landing gathers at its port (ROADMAP R38f). */
+  ashore?: boolean;
+  /** `how` 3 for land formations in no landing: open sea, no coast near, the march refused (ROADMAP R38f). */
+  plain?: boolean;
   /** By sea, a landing at sea selected: the port it turns back to, to join the landing gathering there for that place (ROADMAP R37b). */
   rejoin?: string;
   water: number;
@@ -863,7 +867,7 @@ export interface SeaHint {
 
 /** What became of a player's order (PLAN 4.9c; `orderNews`). */
 export interface OrderNews {
-  kind: 'refused' | 'repulsed' | 'landedAway' | 'unescorted' | 'sentHome' | 'leftLanding' | 'nextVoyage';
+  kind: 'refused' | 'repulsed' | 'landedAway' | 'unescorted' | 'sentHome' | 'leftLanding' | 'nextVoyage' | 'lostAtSea';
   id: number;
   nation: number;
   /** A `RejectReason` for `refused`; for `sentHome` how many were sent home (ROADMAP R21d); else 0. */

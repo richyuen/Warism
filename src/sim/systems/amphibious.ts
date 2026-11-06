@@ -446,8 +446,9 @@ export function amphibiousSystem(world: World): void {
       continue;
     }
     if (!f.has(e.fleet)) {
-      // Its transports sunk: lost at sea with them.
+      // Its transports sunk: lost at sea with them, and told so (ROADMAP R38a).
       world.embarked.delete(id);
+      world.out.emit(world.tick, EventKind.LostAtSea, id, c.nation[id]!, c.x[id]!, c.y[id]!);
       destroyFormation(world, id);
       continue;
     }

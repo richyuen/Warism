@@ -1277,7 +1277,10 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   carrying no one, with room) at the port of its land nearest it: a new landing there; a group called
   to its land's nearest port (`callTransports`: of the nation's groups standing idle, not held by the
   editor, with room, the nearest by straight cells with a sea way, `CALL_TRIES` (4) tried): a new
-  landing; a landing for that place that has sailed: its next voyage. None: refused `NoTransports` (or
+  landing; a landing for that place that has sailed: its next voyage. Where the port with a free group is
+  over `FAR_PORT_CELLS` (20) straight cells farther than its land's nearest port, a group is called to the
+  nearer first (ROADMAP R38d, critic run 46, R46-N3: a 40-day walk within Honshu). None: refused
+  `NoTransports` (or
   `NoPort`). The division marches to the port, or stands there, and waits there ashore; its groups and
   its divisions are the player's (`playerOrders`) while the landing is: its groups as `called`, the AI's again
   when standing with no landing and carrying no one (R31d), where transports the player ordered keep the
@@ -1305,7 +1308,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   "nextVoyage", R37a); groups carrying no one are the AI's again when no one
   is left. A sailing landing's divisions land as any (`amphibiousSystem`: at the landing's water, or
   thrown back, `LandingRepulsed`, those not aboard told `NoTransports`); each leaves the landing as it
-  lands, and the landing is over with its last.
+  lands, and the landing is over with its last. Those aboard transports sunk leave it in the hour and are
+  lost at sea with them, told `LostAtSea` (the news "lostAtSea"; ROADMAP R38a, critic run 46, R46-B1:
+  the landing, left with no groups, ended "no transports" and told them so).
   An hour's orders edit it as a batch (`landingOrders`, before they are applied): one click ordering all
   of a gathering landing's divisions to one other place over the sea from its port redirects it, its port
   and groups kept, or merges it into one gathering for that place at the same port (`redirectGathering`;
@@ -1319,7 +1324,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   cancel), back to its own port, where they go ashore and march there (`returning`, `then`); to the sea,
   each is refused `OpenSea` at the click and it keeps its course (ROADMAP R36b, critic run 44, R44-B2:
   taken as a cancel, refused a day later at its port; the hover says so, `seaHint` 3,
-  "tooltip.bySeaOpen"). Some of
+  "tooltip.bySeaOpen"; for a landing still gathering, `ashore`, "tooltip.bySeaOpenAshore", R38f). The
+  tooltip's notes wrap within the screen (R38c). Some of
   those aboard at sea: refused `AtSea` (20, "it is at sea with its landing, which goes as one", ROADMAP R33c). A division ashore ordered elsewhere leaves its landing
   (`detachDivision`: the groups it no longer needs are free, those at its port first, R40-B1; the hour's
   `World.freed`, which the landing its order makes or joins takes first, R37a: freed to the AI at once,
@@ -1332,7 +1338,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   when all of it is there and a group is on its way, R37b); at its port with them, waiting for the rest
   (`gathering`, "At {port}, waiting for the rest of the landing"), with how many it waits for are at the
   port of how many and the days the furthest has left to march (`marchHoursLeft`); all there, ready
-  (`ready`, for its escort or the hour); left at the port by a voyage (`nextVoyage`); at sea; aboard,
+  (`ready`, for its escort or the hour; `sibling`, waiting for the landing from another port for the same
+  place, with its port and the days, R38b); left at the port by a voyage (`nextVoyage`); at sea (also aboard
+  transports sunk this hour, R38a); aboard,
   sailing back to its port (a cancel, or a recall to a landing gathering there: R37b, critic run 44,
   R44-N1). The notice of a landing left goes at the next order; a next voyage's, as a refusal's, at the
   next order or change of state (`staleNotice`); the hover over a place a landing at sea would turn back for, to join

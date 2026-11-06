@@ -488,7 +488,7 @@ export function App({
       {player && player.menuNotice.value ? (
         <NationMenuNotice name={byId.get(player.menuNotice.value.nation)?.name ?? `#${player.menuNotice.value.nation}`} x={player.menuNotice.value.x} y={player.menuNotice.value.y} reason={player.menuNotice.value.reason} />
       ) : null}
-      <MapTooltip hover={hud.hover} nameOf={(id) => byId.get(id)?.name ?? null} unrestOf={(p) => hud.sim.unrest?.[p] ?? null} bySea={hud.hoverBySea} seaNeutral={hud.hoverSeaNeutral} seaOpen={hud.hoverSeaOpen} landing={hud.hoverLanding} />
+      <MapTooltip hover={hud.hover} nameOf={(id) => byId.get(id)?.name ?? null} unrestOf={(p) => hud.sim.unrest?.[p] ?? null} bySea={hud.hoverBySea} seaNeutral={hud.hoverSeaNeutral} seaOpen={hud.hoverSeaOpen} seaAshore={hud.hoverSeaAshore} seaPlain={hud.hoverSeaPlain} landing={hud.hoverLanding} />
       <MapLegend
         mode={hud.mapMode.value}
         phone={phone}
