@@ -69,9 +69,18 @@ game's assets or code.
 
 Items come in batches (a ROADMAP section). After the last item of a batch:
 1. Spawn the `critic` subagent with no hints, wait for it, check that its report names HEAD, commit
-   `critic/` with a line in PROGRESS.md (scores, blocking count).
+   `critic/` with a line in PROGRESS.md (scores, blocking count). That commit carries `critic/`,
+   PROGRESS.md, ROADMAP.md and DECISIONS.md only; a fix is a commit of its own.
 2. Each blocking issue becomes a ROADMAP item before the release item; fix them, then the critic
    runs again (it decides itself whether the run is full or focused).
+   **The exit (ADR-829).** The loop stops, and writes an ADR "proposed, the user's decision" that names
+   the structural options (a redesign, taking the feature out of the release, the bar), when:
+   - one dimension is under its bar, or blocks, in three critic runs in a row; or
+   - a blocking issue is a regression of an item ticked since the last release (a fix that broke
+     another); or
+   - a run has no blocking issue and a score under its bar (step 3 cannot start).
+   The next message to the user starts with it; the loop takes no item of that dimension until the
+   user decides.
 3. On a full report with no blocking issue and every score at its bar: `npm run check:review`, the
    soak (`npm run soak -- --scenario 1938 --seed 99 --minutes 30 --affinity 0xFFFF`), the sweep on
    unseen seeds (`npm run sweep -- --first <seed> --tag <name>`: borders still moving at the end
@@ -85,6 +94,12 @@ A feature the user asks for during a batch joins the next batch, unless the user
 
 - One cause per commit.
 - An acceptance test names a number and a stop: the figure, its bar and the run that reads it.
+- An AT for an order, a click or a timing sweeps its parameters, not one point (ADR-829): the hour
+  (e.g. 6 h, 1, 2, 3, 5 days), the cell offset, which unit (the one aboard, one walking, all), how
+  many, on two seeds, as R27c's fuzz does. Most of runs 34–43's blocking issues were a ticked item's
+  own case with one of these moved (R31e's AT recalled at one day; the critic at 2, 3 and 5).
+- A rule a fix adds is checked with the rules beside it: the feature's checker (step 5) runs on the
+  fix, and a case the critic found goes into the checker or the fuzz, not only into one test.
 - Tune on small runs: `npm run sweep:quick` (10 seeds × 20 years); the full sweep once per item,
   on the final code, on seeds no tuning has seen.
 - Gate before a long run, never after.

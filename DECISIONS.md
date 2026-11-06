@@ -7,7 +7,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
-### ADR-829 · 2026-11-05 · proposed, the user's decision — Stop patching the player's landing case by case
+### ADR-829 · 2026-11-05 · accepted — Stop patching the player's landing case by case (the user's decision)
+
+- **Status.** Accepted 2026-11-05 by the user: "Go with option 2, rebuild the landing as one object. Make the
+  process fix." ROADMAP R33; PROMPT "RELEASES" (the exit) and "KEEPING WORK SHORT" (an AT sweeps its parameter).
+- **How (settled now, so R33 does not re-decide it).**
+  - **Player landings only.** `amphibiousSystem` and `escortConvoy` also carry the AI's landings; the AI's path
+    is untouched and the pin of seed 99 does not move. If the rebuild must change shared code the AI uses, that
+    is an ADR of its own with the old and new hash.
+  - **Save.** A `world.landings` section written like `world.seaFetchAt` (only when not empty, optional on
+    load): older saves and scenarios still load. No new format refusal.
+  - **The landing tests** (33 files of `tests/unit/*landing*`, `*convoy*`). Each test's case is kept and asserted
+    against the object's outcome (land together, or refused and told). A test goes only with the rule it pinned
+    (`turnBack`, `waitedFor`, `noteLeaving`, `heldGroup` …), each named in the item's evidence; an hour pinned
+    by the old rules (h633) is not a requirement of the new design, "within a day of each other" is.
 
 - **Finding.** The loop is not stuck on naval; it is stuck on one feature. Naval was 8 at run 28 and at the
   release. It fell to 7 at run 32, the first run after R17 (the player's landings, ADR-823, 2026-11-04), and has

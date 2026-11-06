@@ -443,7 +443,7 @@ Rules:
     march (`waitedFor`, `seaFetchAt`). Seed 3517: the two h632/633 as without the late one (red: h1289), the late
     one h1290 on the next voyage. `convoyLateOrder1938.test.ts`. Pin unmoved.
   R31 done; then the critic, full (run 43).
-- [ ] R32 **A recall at sea rejoins its landing** (critic run 43, full, on `813eb375`: R43-B1 blocking, a regression of
+- [x] R32 **A recall at sea rejoins its landing** (critic run 43, full, on `813eb375`: R43-B1 blocking, a regression of
   R31e; naval 7, bar 8). Then the critic again.
   - [x] R32a R43-B1: the one alone at sea, recalled to its landing after the first day, was put ashore at the nearest
     port and walked weeks to its landing's port while its partner landed alone (2 d: 16 days apart; 3 d: marching
@@ -452,6 +452,40 @@ Rules:
     Done: the transports turn back only for the port where a landing for the order's target loads, and it rejoins
     it there; no such landing: refused "aboard", as before R31e. All four h633 together (red: h1015, h1563, h230).
     `landingRecallAtSea1938.test.ts`. The seed-2207 news test's Kassel order is refused `Aboard` again. Pin unmoved.
-  - [ ] Then the critic again (run 44). Open from run 43, non-blocking: R43-N1 (the AI undoes a fleet order to empty
-    transports on arrival and ships the player's divisions on them), R43-N2 (other orders at sea refused), R43-N3
-    (R37-N2's own-click case still waits two months), R43-N4 (no mark for one aboard at sea).
+  - [x] No critic lap on R32a alone (ADR-829, the user's decision): the rebuild R33 replaces the rules it fixes.
+    R43-N1–N4 are inputs to R33. R32a's code went in the critic-run-43 commit `dc365b36`; the next critic run
+    diffs from `813eb375`.
+  R32 done.
+- [ ] R33 **The landing as one object** (ADR-829, the user's decision, 2026-11-05; the critic's objection since run
+  35 and the Hearts of Iron line in every report since run 32). The player's landing is today resolved per division
+  and per hour from a dozen rules (`landingOf`, `sameLanding`, `noteLeaving`, `heldGroup`, `assignTransports`,
+  `waitedFor`, `seaFetchAt`, `turnBack`, `ashoreFromShip`, `endConvoy` …); twelve critic runs found where two meet.
+  Make it one object: its target (water, land), its port, its transports, its divisions, one state (assembling,
+  loading, sailing, landing, over), one sailing. A click makes or joins one; a re-click, a redirect, a recall or a
+  cancel is an edit of it, refused with a told reason when it cannot be done; a cancel at sea sails back to its own
+  port. The map's mark, the panel and the news read the object. Constraints (ADR-829 "How"): player landings only,
+  AI path untouched, pin unmoved; `world.landings` saved only when not empty, older saves load; each landing test's
+  case kept, a test removed only with the rule it pinned, named in the evidence. Split into lettered parts when
+  started; a likely cut: the object and its save; orders as edits of it; sailing and landing read from it and the
+  per-division rules removed; mark and panel from it; the checker and the fuzz.
+  AT (a grid, PROMPT "KEEPING WORK SHORT"): every case of R21–R32 and R43-N1–N4, and each of re-click, redirect,
+  recall and cancel at {6 h, 1, 2, 3, 5 days} × {0, 1, 2, 3 cells off} × {the one aboard, one walking, all}, on
+  seed 3517 (Japan) and 15101 (Britain): every division of a landing lands within a day of the others, or is
+  refused and told why; nobody idle aboard over 72 h; the mark agrees with the outcome. `landingInvariants`
+  (a checker as `diploInvariants`, on several seeds, the 120-day sea-order fuzz of critic run 43): no division
+  bound to a landing without transports, none aboard transports without a landing, no landing with two ports,
+  none over while one of its divisions is at sea; 0 broken. Then the critic, full.
+
+## Batch 3 — readability (after the release, ADR-829)
+
+The carried non-blocking issues of critic runs 31–43 (why some dimensions are 7 and not 8; none gates a release)
+and the small ideas from other games. Each one line until it is taken.
+
+- [ ] R34 The critic's carried issues: R37-N4 (relations graph labels overlap); R32-N3 (a refusal toast cuts its
+  reason); R37-N3 (God's Breakthrough at peace does nothing, says nothing); R31-N1 (hero counters under the HUD);
+  R31-N6 (the graph eats the first tap after a drag; a hero hides fleets stacked with it); R32-N2 (trait text only
+  on hover, none on a phone); R32-N5 (sea heroes die more); R36-N3 (a re-click of the same landing is silent);
+  R39-N2 (no landing mark on touch); R39-N3 (Escape leaves the mark); R39-N4 (the tooltip points at a mark off
+  screen); R40-N2 ("go by sea" for a selection most of which march); the ranking cuts long names.
+- [ ] R35 Small ideas from the reports: an order's error cleared by any new order; a flag at the destination while
+  choosing; a long-press preview of an order on touch; a mark on a fleet the AI has taken back.

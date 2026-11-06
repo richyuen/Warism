@@ -1481,3 +1481,15 @@
   landing specs green; pin unmoved. Committed with run 43's report in one commit, at the user's word ("after the next
   commit let's stop").
 - **Next:** critic run 44 (R32 open in ROADMAP), when the loop is restarted.
+
+## 2026-11-05 — ADR-829 accepted: the landing rebuilt as one object; the loop's exit
+
+- Analysis of runs 32–43: naval 7 in all twelve, every blocking issue a case of R17's player landings; fixes
+  added rules that met (R31e → R43-B1). The user chose the rebuild (ADR-829, way 2) and the process fix.
+- PROMPT "RELEASES": the critic commit carries no fix; the loop stops for the user's decision when a dimension
+  is under its bar three runs in a row, a blocking issue regresses a ticked item, or a clean run leaves a score
+  under its bar. "KEEPING WORK SHORT": an AT for an order or timing sweeps its parameters; a fix's rule runs in
+  its feature's checker.
+- ROADMAP: R32 closed without a critic lap; R33 the landing as one object (grid AT, `landingInvariants`);
+  Batch 3 (readability) holds the carried non-blocking issues and the small ideas, after the release.
+- **Next:** R33 (split into lettered parts when started).
