@@ -475,6 +475,31 @@ Rules:
   (a checker as `diploInvariants`, on several seeds, the 120-day sea-order fuzz of critic run 43): no division
   bound to a landing without transports, none aboard transports without a landing, no landing with two ports,
   none over while one of its divisions is at sea; 0 broken. Then the critic, full.
+  - [x] R33a The AT's instrument, at HEAD, no sim change: the grid (`tests/helpers/landingGrid.ts`,
+    `tools/diag/landingGrid.ts`): {re-click, redirect, recall, cancel} × {6 h, 1, 2, 3, 5 days after the first
+    boards} × {0, 1, 2, 3 cells off} × {the one aboard, one walking, all} on 3517 (Japan, Shanghai / Fuzhou) and
+    15101 (Britain, Calais / Caen), each case from one saved state. Per case: a landing's divisions land within a
+    day, or are told; none lands away from its marked landing; the longest idle spell aboard; a mark before the
+    click for each that then lands. AT: the grid runs on both seeds; HEAD's figures (cases, broken by kind,
+    longest idle aboard) in `docs/sweeps/` and PROGRESS, the baseline R33b–d are judged by.
+    Done: `docs/sweeps/landingGrid-R33a-b166998e.md`. 480 cases, 140 broken, all on 3517: idle 125 (aboard at
+    Tokyo up to 507 h while 365 walks), split 15 (recall: the one walking lands alone at h128, its mate h634), mark 5
+    (recall at sea: no mark, R43-N4). 15101: 0 broken, but weak: its port is bombed shut, 236 of 480 divisions told
+    `PortShut` (R31b); R33b adds a seed whose port stays open.
+  - [ ] R33b The object, its save, and the player's whole landing path on it: `world.landings` (target, water,
+    land, port, transports, divisions with the hour each joined, state, escort), saved only when not empty, older
+    saves' convoy sections read into it; a click makes or joins one, an hour's orders edit it as a batch (all of
+    its divisions: the landing redirects or cancels; some: they leave it, told); a recall or cancel at sea sails
+    back to its own port; the per-division rules (`heldGroup`, `noteLeaving`, `turnBack`, `waitedFor`, `sailAboard`,
+    `ashoreFromShip`, `soleAtSea`, `comingTo` …) removed, each with its test named; SPEC §6.2 rewritten; the AI's
+    path and the pin unmoved; a save mid-voyage round-trips bit-identical. AT: the 33 landing test files' cases
+    green (an hour pinned becomes "within a day"), the grid no worse than R33a's on any kind.
+  - [ ] R33c The map's mark, the panel and the news read the object (`seaHint`, `voyageOf`, `landingWait`,
+    `voyages`, the news's `landedAway`); a mark for a division aboard at sea (R43-N4). AT: the grid's mark column
+    0 broken; the landing e2e specs green.
+  - [ ] R33d `landingInvariants` (as `diploInvariants`) on several seeds and the fuzz (`landingReclickFuzz` with
+    recall, redirect, cancel, port shut, late order; the 120-day run a tool): 0 broken. Then the grid on the final
+    code (R33's AT), and the critic, full.
 
 ## Batch 3 — readability (after the release, ADR-829)
 

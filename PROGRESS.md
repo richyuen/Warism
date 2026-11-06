@@ -1493,3 +1493,17 @@
 - ROADMAP: R32 closed without a critic lap; R33 the landing as one object (grid AT, `landingInvariants`);
   Batch 3 (readability) holds the carried non-blocking issues and the small ideas, after the release.
 - **Next:** R33 (split into lettered parts when started).
+
+## 2026-11-05 — R33a: the landing grid, HEAD's baseline
+- R33 split into R33a–d (ROADMAP). R33a: `tests/helpers/landingGrid.ts`, `tools/diag/landingGrid.ts` (one seed, one
+  order or all, JSON) and `tools/diag/landingGridReport.ts`. Re-click, redirect, recall, cancel × 6 h, 1, 2, 3, 5 days
+  after the first boards × 0–3 cells off × the one aboard, one walking, both; from one saved state a case, run to
+  60 days after the last order. Broken: split (a landing's divisions over a day apart), untold, away, mark, idle
+  (aboard and standing over 72 h), home (a cancel). A division whose order is over (landed, told, home) is the AI's
+  (ADR-759) and not read on: the first run counted the AI's later voyages against the landing (312 broken, wrong).
+- HEAD b166998e: 480 cases, **140 broken**, all on seed 3517: idle 125 (longest 507 h: 364 aboard at Tokyo while 365
+  walks), split 15 (recall of the one walking: 364 lands h128, 365 h634), mark 5 (recalled at sea: no mark,
+  R43-N4). 15101: 0 broken, weak: its port is bombed shut, 236 of 480 divisions told `PortShut`. 8 processes, ~5 min.
+  Report: `docs/sweeps/landingGrid-R33a-b166998e.md`. No sim change.
+- **Next:** R33b.
+
