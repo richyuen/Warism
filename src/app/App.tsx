@@ -91,7 +91,7 @@ export function App({
     return key ? t(key as MessageKey) : undefined;
   };
   const orderName = (id: number): string => (view ? view.formationTitle(id)?.name : undefined) ?? wingName(id) ?? t('order.aFormation');
-  const orders = orderNews.map((n) => ({ seq: n.seq, kind: n.kind, text: orderNewsText(n, orderName(n.id)) }));
+  const orders = orderNews.map((n) => ({ seq: n.seq, kind: n.kind, text: orderNewsText(n, n.name ?? orderName(n.id)) }));
   // The sea battles going on (PLAN 4.10b), each by its two sides' names: those with two fleets
   // within reach of a ship's weapon (PLAN 7.19b), then those a carrier's wings fight alone, by
   // the striker and the struck (PLAN 7.35a: they sank ships with no row), then those no weapon

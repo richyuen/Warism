@@ -1643,3 +1643,16 @@
   Non-blocking R47-N1–N4 (the lost row unnamed; the tooltip past the bottom; R38d by straight cells; 19206/19207).
 - ADR-833: no exit for naval. R39 filed (R39a–e).
 - **Next:** R39.
+
+## 2026-11-06 — R39: run 47's blocking issue and its non-blocking ones (ADR-833)
+- R39a (R47-B1): a landing left with no transport group calls another (free, idle or busy) and goes on; its groups
+  destroyed, its divisions are told `TransportsSunk` (another called, or the landing over), never "no transports
+  at a port". The critic's USA case: told at t273, 1123 called; case B: those at the port told, none refused.
+- R39b: a notice keeps the division's name ("Square infantry division 365", not "A formation").
+- R39c: the tooltip stands above the mouse near the screen's bottom.
+- R39d: R38d's call is taken only when it lands over a day sooner by hours; Moscow to Cyprus keeps its free group.
+- R39e held: 19206/19207's 45-day march is one click of two divisions far apart; landing together keeps it.
+- Before the critic: run 47's 383 headless cases (as in run 47), far, sinking and checker jobs, and 37 page probes
+  (as in run 47, no page error) replayed. Unit suite: 30 timeouts in one loaded full run, every file green alone;
+  landing specs green (two timeouts in the batch, green alone).
+- **Next:** the critic, run 48.

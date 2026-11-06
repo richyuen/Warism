@@ -12,14 +12,21 @@ import { t } from './i18n';
  * move re-renders this, not the whole HUD.
  */
 /** Where the tooltip goes: right of and below the mouse, its width within the screen (ROADMAP R38c; critic run 46,
- * R46-N2: a note 546 px wide on a 390-px phone). At least 200 px wide: nearer the right edge it moves left. */
+ * R46-N2: a note 546 px wide on a 390-px phone). At least 200 px wide: nearer the right edge it moves left. Within
+ * FLIP_PX of the screen's bottom it stands above the mouse (ROADMAP R39c; critic run 47, R47-N2: 871-957 px on a
+ * 900-px screen, over the bottom bar). */
 function place(x: number, y: number): Record<string, string> {
   const screen = typeof window === 'undefined' ? 1600 : window.innerWidth;
+  const tall = typeof window === 'undefined' ? 900 : window.innerHeight;
   const room = Math.min(360, screen - 16);
   let left = x + 14;
   if (screen - left - 8 < Math.min(200, room)) left = Math.max(8, screen - 8 - Math.min(200, room));
-  return { left: `${left}px`, top: `${y + 16}px`, maxWidth: `${Math.min(room, screen - left - 8)}px` };
+  const at = y + 16 + FLIP_PX > tall ? { bottom: `${Math.max(8, tall - y + 8)}px` } : { top: `${y + 16}px` };
+  return { left: `${left}px`, ...at, maxWidth: `${Math.min(room, screen - left - 8)}px` };
 }
+
+/** The room below the mouse the tooltip needs, else it stands above (R39c): its tallest, a city with notes. */
+const FLIP_PX = 180;
 
 export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral, seaOpen, seaAshore, seaPlain, landing }: { hover: ReadonlySignal<MapHover | null>; nameOf: (id: number) => string | null; unrestOf: (province: number) => number | null; bySea?: ReadonlySignal<number>; seaNeutral?: ReadonlySignal<boolean>; seaOpen?: ReadonlySignal<boolean>; seaAshore?: ReadonlySignal<boolean>; seaPlain?: ReadonlySignal<boolean>; landing?: ReadonlySignal<SeaHint | null> }) {
   const hover = signal.value;

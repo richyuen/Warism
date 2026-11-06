@@ -242,7 +242,9 @@ export class Hud {
     });
     // What became of the player's orders (PLAN 4.9c): the newest last, ORDER_NEWS_KEPT at most.
     sim.onOrderNews((news) => {
-      this.orderNews.value = [...this.orderNews.peek(), { ...news, seq: this.orderSeq++ }].slice(-ORDER_NEWS_KEPT);
+      // Its name as the page knows it now: one lost at sea is gone by the next snapshot (ROADMAP R39b).
+      const name = news.name ?? this.nameOf?.(news.id);
+      this.orderNews.value = [...this.orderNews.peek(), { ...news, ...(name === undefined ? {} : { name }), seq: this.orderSeq++ }].slice(-ORDER_NEWS_KEPT);
     });
     effect(() => {
       const selected = this.selected.value;
@@ -532,6 +534,8 @@ export class Hud {
   readonly refusalBase = signal<RefusedBase | null | undefined>(undefined);
   /** What became of the player's orders of formations, the newest last (PLAN 4.9c; `seq` numbers them). */
   readonly orderNews = signal<(OrderNews & { seq: number })[]>([]);
+  /** A formation's name as the map last drew it (set by the game; ROADMAP R39b: a notice keeps it). */
+  nameOf: ((id: number) => string | undefined) | undefined;
   private orderSeq = 0;
   /**
    * For each formation ordered from here, the `seq` the next order news was to take when its last

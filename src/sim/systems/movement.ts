@@ -709,7 +709,7 @@ function holdsInFight(world: World, id: number): boolean {
 }
 
 /** Land formation `id`'s pace on the march, km an hour on ground of cost 1 (its fuel and its buffs; in contact, WITHDRAW_SPEED of it). */
-function marchKmPerHour(world: World, id: number, rule: TemplateRule): number {
+export function marchKmPerHour(world: World, id: number, rule: TemplateRule): number {
   const c = world.formations.cols;
   const fuelled = rule.mobility === Mobility.foot ? 1 : DRY_SPEED + (1 - DRY_SPEED) * c.supply[id]!;
   const fight = c.engaged[id] === 1 ? WITHDRAW_SPEED : 1;

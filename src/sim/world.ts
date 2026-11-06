@@ -1119,6 +1119,12 @@ export class World {
    * short). Read within the hour, not saved.
    */
   freed = new Map<number, number>();
+  /**
+   * Landings that lost a transport group to its destruction since the landing system's last hour (`leaveLanding`):
+   * one left with none tells its divisions the sinking (`TransportsSunk`), not "no transports" (ROADMAP R39a;
+   * critic run 47, R47-B1). Cleared at the end of `landingSystem`; not saved (it words a notice, no more).
+   */
+  sunk = new Set<number>();
   /** The deployments of the hour before (see elementPlaceBefore in systems/elements.ts); null: not known. */
   deployedBefore: Map<number, { x: number; y: number; facing: number } | null> | null = null;
   /**

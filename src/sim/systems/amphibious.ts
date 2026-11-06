@@ -272,24 +272,15 @@ export function transportsPort(world: World, id: number, withTransports = true):
 /** How many of the nearest idle transport groups a call tries to send (each a sea route searched). */
 const CALL_TRIES = 4;
 
-/**
- * Calls transports to port `port` (index in `world.ports`) for a player's land formation `id`
- * whose land has none for it (ROADMAP R17a): of its nation's transport groups standing idle
- * anywhere (not under way, in no battle, carrying nobody, not held in place by the editor, not
- * called for another), with room for it, the nearest to the port's water by straight cells that
- * has a way there (at most CALL_TRIES tried) sails there under the player's order, so the AI
- * leaves it be. `busy`: also those under way on the AI's errands or held in place (ROADMAP R37a: a
- * landing short of room at its sail hour, none idle). Returns the group, or 0 for none.
- */
-export function callTransports(world: World, id: number, port: number, busy = false): number {
+/** The groups `callTransports` tries for `id` at `port`, in its order (read-only; ROADMAP R39d judges a call by them). */
+export function callCandidates(world: World, id: number, port: number, busy = false): number[] {
   const f = world.formations;
   const c = f.cols;
   const nation = c.nation[id]!;
   const men = c.strength[id]!;
   const water = portSeaOf(world)[port]!;
-  if (water < 0) return 0;
+  if (water < 0) return [];
   const w = world.cells.w;
-
   const dist = (o: number): number => {
     const at = cellOfPlace(world, o);
     let dx = Math.abs((at % w) - (water % w));
@@ -303,8 +294,23 @@ export function callTransports(world: World, id: number, port: number, busy = fa
     if (!busy && (c.moving[o] === 1 || world.station.has(o))) return;
     if (transportRoom(world, o) >= men) idle.push(o);
   });
-  idle.sort((a, b) => dist(a) - dist(b) || a - b);
-  for (const o of idle.slice(0, CALL_TRIES)) {
+  return idle.sort((a, b) => dist(a) - dist(b) || a - b).slice(0, CALL_TRIES);
+}
+
+/**
+ * Calls transports to port `port` (index in `world.ports`) for a player's land formation `id`
+ * whose land has none for it (ROADMAP R17a): of its nation's transport groups standing idle
+ * anywhere (not under way, in no battle, carrying nobody, not held in place by the editor, not
+ * called for another), with room for it, the nearest to the port's water by straight cells that
+ * has a way there (at most CALL_TRIES tried) sails there under the player's order, so the AI
+ * leaves it be. `busy`: also those under way on the AI's errands or held in place (ROADMAP R37a: a
+ * landing short of room at its sail hour, none idle). Returns the group, or 0 for none.
+ */
+export function callTransports(world: World, id: number, port: number, busy = false): number {
+  const water = portSeaOf(world)[port]!;
+  if (water < 0) return 0;
+  const w = world.cells.w;
+  for (const o of callCandidates(world, id, port, busy)) {
     if (!orderSail(world, o, (water % w) + 0.5, Math.floor(water / w) + 0.5)) continue;
     world.playerOrders.set(o, { kind: PlayerOrderKind.called, until: 0, through: false });
     world.station.delete(o);

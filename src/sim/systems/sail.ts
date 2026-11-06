@@ -90,14 +90,19 @@ export function sailTarget(world: World, tx: number, ty: number): number {
  */
 export function sailHours(world: World, id: number, x: number, y: number): number {
   const c = world.formations.cols;
+  return sailHoursFrom(world, id, Math.floor(c.y[id]!) * world.cells.w + Math.floor(c.x[id]!), x, y);
+}
+
+/** `sailHours` for fleet `id` as if it stood at cell `from` (a port's water: a voyage from there, ROADMAP R39d). */
+export function sailHoursFrom(world: World, id: number, from: number, x: number, y: number): number {
+  const c = world.formations.cols;
   const target = sailTarget(world, Math.floor(x), Math.floor(y));
   const kmh = world.formations.has(id) ? sailKmh(world, id) : 0;
   if (target < 0 || kmh <= 0) return Infinity;
-  const w = world.cells.w;
   const lanes = laneOf(world);
   const nation = c.nation[id]!;
   const shut = (e: number): boolean => lanes.edges[e]!.passage >= 0 && passageShut(world, lanes.edges[e]!.passage, nation);
-  const route = sailRoute(navOf(world).grid, seaOf(world), lanes, Math.floor(c.y[id]!) * w + Math.floor(c.x[id]!), target, shut);
+  const route = sailRoute(navOf(world).grid, seaOf(world), lanes, from, target, shut);
   if (!route) return Infinity;
   return pathHours(world, route.cells, 0, 0, kmh);
 }

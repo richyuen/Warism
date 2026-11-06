@@ -30,12 +30,13 @@
 import { EventKind, RejectReason } from '../../shared/events';
 import type { LandingMark, SeaHint } from '../../shared/protocol';
 import { isLand } from '../../shared/terrain';
+import { octileKm } from '../nav/grid';
 import { navOf, PlayerOrderKind, portSeaOf, type World } from '../world';
-import { callTransports, carrying, landingOf, near, neutralLanding, SAME_LANDING_CELLS, transportRoom, transportsPort, tryLanding } from './amphibious';
+import { callCandidates, callTransports, carrying, landingOf, near, neutralLanding, SAME_LANDING_CELLS, transportRoom, transportsPort, tryLanding } from './amphibious';
 import { portShut } from './bombing';
-import { marchHoursLeft, orderMove, overSeaFrom, snapTarget } from './movement';
+import { marchHoursLeft, marchKmPerHour, orderMove, overSeaFrom, snapTarget } from './movement';
 import { AT_PORT_CELLS, sailHome } from './navalCombat';
-import { orderSail, sailHours, sailHoursLeft } from './sail';
+import { orderSail, sailHours, sailHoursFrom, sailHoursLeft } from './sail';
 
 /** A landing's state: gathering at its port, sailing for its water, or sailing back to its port (a cancel). */
 export const LandingState = { gathering: 0, sailing: 1, returning: 2 } as const;
@@ -229,7 +230,7 @@ export function chooseTransports(world: World, id: number, target: number): Land
   // A group called to its land's nearest port: also where the free one stands far beyond it (ROADMAP R38d; critic
   // run 46, R46-N3: a 40-day walk within Honshu to Sasebo's group, not a call to Tokyo): a ship sails it sooner.
   const found = best as { port: number; fleet: number } | null;
-  if (found && far(found.port)) {
+  if (found && far(found.port) && callSooner(world, id, target, port, found)) {
     const o = callTransports(world, id, port);
     if (o !== 0) return { port, fleet: o };
   }
@@ -241,6 +242,39 @@ export function chooseTransports(world: World, id: number, target: number): Land
   // A landing for that place that has sailed: its next voyage.
   for (const l of mine) if (l.fleets.some((g) => transportRoom(world, g) >= men)) return { join: l, port: l.port, fleet: 0 };
   return null;
+}
+
+/** How many hours sooner a call must land than the free group far off, to be taken (`callSooner`): a day. */
+const CALL_SOONER_HOURS = 24;
+
+/**
+ * Whether a group called to port `near` lands division `id` at `target` over CALL_SOONER_HOURS sooner than the
+ * free group `far.fleet` at port `far.port` (ROADMAP R39d; critic run 47, R47-N3: R38d judged by straight cells,
+ * and a group called from Sevastopol to Leningrad for Cyprus shuttled at the Straits for nine days). By the near
+ * way: the march to `near` or the called group's sail there, the later, and the voyage from `near`; by the far way:
+ * the march to `far.port` and the voyage from it. Marches by the shortest way over the ground (`octileKm`) at its
+ * pace; voyages by `sailHoursFrom`. No group that can reach `near`, or no voyage from it: false.
+ */
+function callSooner(world: World, id: number, target: number, near: number, far: { port: number; fleet: number }): boolean {
+  const c = world.formations.cols;
+  const rule = world.rules?.templates[c.template[id]!];
+  const l = landingOf(world, target);
+  if (!rule || !l) return false;
+  const kmh = marchKmPerHour(world, id, rule);
+  if (!(kmh > 0)) return false;
+  const grid = navOf(world).grid;
+  const here = cellOfPlace(world, id);
+  const water = portSeaOf(world);
+  const w = world.cells.w;
+  const [x, y] = [(l.water % w) + 0.5, Math.floor(l.water / w) + 0.5];
+  const nearWater = water[near]!;
+  const [nx, ny] = [(nearWater % w) + 0.5, Math.floor(nearWater / w) + 0.5];
+  // The group the call sends: the first of its tries with a way there (`callTransports`).
+  const ship = callCandidates(world, id, near).find((o) => Number.isFinite(sailHours(world, o, nx, ny)));
+  if (ship === undefined) return false;
+  const byNear = Math.max(octileKm(grid, here, world.ports[near]!.cell) / kmh, sailHours(world, ship, nx, ny)) + sailHoursFrom(world, ship, nearWater, x, y);
+  const byFar = octileKm(grid, here, world.ports[far.port]!.cell) / kmh + sailHoursFrom(world, far.fleet, water[far.port]!, x, y);
+  return byNear + CALL_SOONER_HOURS < byFar;
 }
 
 /** Division `id` joins landing `choice.join`, or a new one for cell `target` (ROADMAP R33b); its landing. */
@@ -291,7 +325,10 @@ function endLanding(world: World, l: Landing, why = 0): void {
  */
 export function leaveLanding(world: World, id: number): void {
   const g = landingOfFleet(world, id);
-  if (g) g.fleets = g.fleets.filter((o) => o !== id);
+  if (g) {
+    g.fleets = g.fleets.filter((o) => o !== id);
+    world.sunk.add(g.id);
+  }
   const l = landingOfDivision(world, id);
   if (!l) return;
   l.divisions.delete(id);
@@ -577,10 +614,7 @@ function gather(world: World, l: Landing): void {
     if (c.moving[o] === 1 || c.engaged[o] === 1) continue;
     if (!orderSail(world, o, (water % w) + 0.5, Math.floor(water / w) + 0.5)) l.fleets.splice(l.fleets.indexOf(o), 1);
   }
-  if (l.fleets.length === 0) {
-    endLanding(world, l, RejectReason.NoTransports);
-    return;
-  }
+  if (l.fleets.length === 0 && !replaceGroups(world, l)) return;
   // Its divisions: marching to the port, at it, or stalled short of it (told; not waited for).
   const present: number[] = [];
   let waits = false;
@@ -763,7 +797,10 @@ function comeBack(world: World, l: Landing): void {
  * ashore at their port.
  */
 export function landingSystem(world: World): void {
-  if (world.landings.size === 0) return;
+  if (world.landings.size === 0) {
+    world.sunk.clear();
+    return;
+  }
   const f = world.formations;
   for (const l of [...world.landings.values()].sort((a, b) => a.id - b.id)) {
     if (!world.landings.has(l.id)) continue;
@@ -782,11 +819,37 @@ export function landingSystem(world: World): void {
     if (l.state === LandingState.gathering) gather(world, l);
     else if (l.state === LandingState.returning) comeBack(world, l);
     else if (aboardOf(world, l).length === 0) {
-      // All it carried ashore: those left gather at its port for the next voyage, its transports sent back.
-      if (l.fleets.length === 0) endLanding(world, l, RejectReason.NoTransports);
-      else l.state = LandingState.gathering;
+      // All it carried ashore: those left gather at its port for the next voyage, its transports sent back; its
+      // transports gone, another called for them (R39a).
+      if (l.fleets.length > 0 || replaceGroups(world, l)) l.state = LandingState.gathering;
     }
   }
+  world.sunk.clear();
+}
+
+/**
+ * Landing `l`, gathering or left with some for its next voyage, has no transport group: one is called to its port
+ * (free there, or the nearest idle, or a busy one: `callTransports`), and it goes on; with none, it is over. Its
+ * groups destroyed (`World.sunk`): its divisions are told so (`TransportsSunk`, x 1 another called, 0 over), not
+ * "no transports ... at a port it can reach" (ROADMAP R39a; critic run 47, R47-B1: 1119 bombed at Norfolk, 1123
+ * idle at San Francisco). Whether it goes on.
+ */
+function replaceGroups(world: World, l: Landing): boolean {
+  const c = world.formations.cols;
+  const sunk = world.sunk.has(l.id);
+  const ids = [...l.divisions.keys()].filter((id) => world.formations.has(id)).sort((a, b) => a - b);
+  // The largest first: the group called has room for it (`noRoom` calls more at the sail hour).
+  const big = [...ids].sort((a, b) => c.strength[b]! - c.strength[a]! || a - b)[0];
+  const o = big === undefined ? 0 : freeAtPort(world, l.nation, c.strength[big]!, l.port) || callTransports(world, big, l.port) || callTransports(world, big, l.port, true);
+  if (o !== 0) {
+    l.fleets.push(o);
+    world.playerOrders.set(o, { kind: PlayerOrderKind.called, until: 0, through: false });
+    world.station.delete(o);
+  }
+  if (sunk) for (const id of ids) world.out.emit(world.tick, EventKind.TransportsSunk, id, c.nation[id]!, o !== 0 ? 1 : 0, NaN);
+  if (o !== 0) return true;
+  endLanding(world, l, sunk ? 0 : RejectReason.NoTransports);
+  return false;
 }
 
 /** A repulsed landing from group `fleet` (PLAN 4.5b): those of its landing not aboard are told and leave it. */

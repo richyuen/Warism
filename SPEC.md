@@ -1279,7 +1279,10 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   editor, with room, the nearest by straight cells with a sea way, `CALL_TRIES` (4) tried): a new
   landing; a landing for that place that has sailed: its next voyage. Where the port with a free group is
   over `FAR_PORT_CELLS` (20) straight cells farther than its land's nearest port, a group is called to the
-  nearer first (ROADMAP R38d, critic run 46, R46-N3: a 40-day walk within Honshu). None: refused
+  nearer first (ROADMAP R38d, critic run 46, R46-N3: a 40-day walk within Honshu), when that lands it over a
+  day sooner by hours: the march there or the called group's sail there, the later, and the voyage from it,
+  against the march to the far port and the voyage from it (`callSooner`, R39d; critic run 47, R47-N3: a group
+  called from Sevastopol to Leningrad for Cyprus shuttled at the Straits). None: refused
   `NoTransports` (or
   `NoPort`). The division marches to the port, or stands there, and waits there ashore; its groups and
   its divisions are the player's (`playerOrders`) while the landing is: its groups as `called`, the AI's again
@@ -1310,7 +1313,12 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   thrown back, `LandingRepulsed`, those not aboard told `NoTransports`); each leaves the landing as it
   lands, and the landing is over with its last. Those aboard transports sunk leave it in the hour and are
   lost at sea with them, told `LostAtSea` (the news "lostAtSea"; ROADMAP R38a, critic run 46, R46-B1:
-  the landing, left with no groups, ended "no transports" and told them so).
+  the landing, left with no groups, ended "no transports" and told them so). A gathering landing, or one with
+  some left for its next voyage, that has no group left calls one to its port (free there, or the nearest
+  idle, or a busy one) and goes on; with none, it is over. Its groups destroyed, its divisions are told so
+  (`TransportsSunk`, 76, the news "transportsSunk": another called, or the landing over), not refused
+  "no transports ... at a port it can reach" (ROADMAP R39a; critic run 47, R47-B1: false where another
+  group stood idle). A notice keeps the division's name as the page knew it (R39b).
   An hour's orders edit it as a batch (`landingOrders`, before they are applied): one click ordering all
   of a gathering landing's divisions to one other place over the sea from its port redirects it, its port
   and groups kept, or merges it into one gathering for that place at the same port (`redirectGathering`;
@@ -1325,7 +1333,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   each is refused `OpenSea` at the click and it keeps its course (ROADMAP R36b, critic run 44, R44-B2:
   taken as a cancel, refused a day later at its port; the hover says so, `seaHint` 3,
   "tooltip.bySeaOpen"; for a landing still gathering, `ashore`, "tooltip.bySeaOpenAshore", R38f). The
-  tooltip's notes wrap within the screen (R38c). Some of
+  tooltip's notes wrap within the screen (R38c); near the screen's bottom it stands above the mouse (R39c);
+  for land formations in no landing on open sea with no coast near, `plain`, "tooltip.bySeaOpenPlain". Some of
   those aboard at sea: refused `AtSea` (20, "it is at sea with its landing, which goes as one", ROADMAP R33c). A division ashore ordered elsewhere leaves its landing
   (`detachDivision`: the groups it no longer needs are free, those at its port first, R40-B1; the hour's
   `World.freed`, which the landing its order makes or joins takes first, R37a: freed to the AI at once,

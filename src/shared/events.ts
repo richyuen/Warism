@@ -257,6 +257,13 @@ export const EventKind = {
    * a = the formation, b = its nation, (x, y) = where it was.
    */
   LostAtSea: 75,
+  /**
+   * A division's landing lost its last transport group, destroyed at port or at sea (ROADMAP R39a; critic run 47,
+   * R47-B1: told "no transports ... at a port it can reach", false where another group stood idle, and nothing
+   * said they were sunk). a = the division, b = its nation, x = 1 when another group was called to its port
+   * (the landing goes on), 0 when none could come (the landing is over), y = NaN.
+   */
+  TransportsSunk: 76,
 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */

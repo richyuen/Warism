@@ -58,6 +58,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   cases); one click lands together (R37c) stands over a long march. R38e: the checker's `leftBehind` exempts a
   told next voyage; short pools. R38f: the sea hover for a gathering landing and for land formations. Player
   landings only.
+- **Done (R39, run 47).** R39a: a landing left with no group calls one (free, idle or busy) and goes on; its groups
+  destroyed, its divisions are told `TransportsSunk`, never "no transports at a port". R39b: notices keep the name.
+  R39c: the tooltip above the mouse near the bottom. R39d: R38d's call taken only when it lands over a day sooner by
+  hours. R39e held: one click lands together over a long march (19206, 19207). Player landings only.
 
 ### ADR-832 · 2026-11-06 · accepted — After the rebuild: run 44's two regressions
 

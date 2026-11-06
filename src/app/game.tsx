@@ -51,6 +51,7 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
   const geometry = options.loopingMap === false ? { ...sized, wrapX: false } : sized;
   const view = params.get('view') === '0' ? null : new MapView(canvas, geometry, sim, scenario.nationTags, Number(params.get('maxTexture') ?? 0));
   const hud = new Hud(sim, scenario.startDay);
+  if (view) hud.nameOf = (id) => view.formationTitle(id)?.name;
   let player: PlayerControl | null = null;
   hud.installKeys(window);
   if (view) {

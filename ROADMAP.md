@@ -625,20 +625,35 @@ Rules:
     page error); landingInvariants on 20 new seeds (19201–19210, both setups) and 12 short pools: 0 broken but the
     two `stuck` of R38d's follow-on.
 
-- [ ] R39 **Run 47's issues** (critic run 47, focused, on `f464db35`; ADR-833: fixed until naval is at its bar, its
+- [x] R39 **Run 47's issues** (critic run 47, focused, on `f464db35`; ADR-833: fixed until naval is at its bar, its
   non-blocking ones too, the critic's probes replayed first).
-  - [ ] R39a R47-B1: a landing whose last group is destroyed (bombed at port while gathering; sunk at sea with some
+  - [x] R39a R47-B1: a landing whose last group is destroyed (bombed at port while gathering; sunk at sea with some
     left for the next voyage) ended `NoTransports` ("no transports ... at a port it can reach"), false where another
     group stood idle (USA 3517 to Norwich: 1119 bombed at Norfolk t272, 1123 idle at San Francisco), and nothing told
     the sinking. Fix: the landing calls another group (as R37a's call) and ends only if none comes; when it ends, its
     own news ("its transports were sunk"), for those at the port too. AT: `c47_far.ts` USA 3517: no reason 6 at
     t273; a unit case (a gathering landing's group destroyed, another idle): no reason 6; case B: those at the port
     told the sinking.
-  - [ ] R39b R47-N1: the lost-at-sea row names the division (its name sent with the news).
-  - [ ] R39c R47-N2: the tooltip flips above the cursor where it would pass the screen's bottom.
-  - [ ] R39d R47-N3: R38d judges the call by hours (`sailHours` of the called group plus the voyage, against the
+    Done: `replaceGroups` (gathering, or after a voyage with some left): a group free at the port, the nearest
+    idle, or a busy one called, and the landing goes on; none: over. Groups destroyed (`World.sunk`, not saved):
+    each told `TransportsSunk` (76; news "transportsSunk", 1 another called, 0 over), no reason 6. `c47_far.ts` USA
+    3517: t273 told, 1123 called (the landing ends at t895 as Norfolk is bombed shut, `PortShut`, true); case B
+    (`c47_sunk.ts` n3k1, n3k2, n4k2, n5k3): those at the port told, none refused; `landingSunk1938` two cases.
+  - [x] R39b R47-N1: the lost-at-sea row names the division (its name sent with the news).
+    Done: the page keeps the name it drew with each notice on arrival (`Hud.nameOf`; `OrderNews.name`).
+  - [x] R39c R47-N2: the tooltip flips above the cursor where it would pass the screen's bottom.
+    Done: within 180 px of the bottom it is anchored by its bottom above the mouse.
+  - [x] R39d R47-N3: R38d judges the call by hours (`sailHours` of the called group plus the voyage, against the
     march plus the voyage), and keeps the free group where no call can reach (Moscow to Cyprus).
+    Done: `callSooner` (march by `octileKm` at its pace; the call's `sailHours`; voyages by `sailHoursFrom`; a day
+    sooner to be taken). Moscow to Cyprus keeps Sevastopol's group (as at `4040cad6`; it ends there `PortShut`);
+    18705, 19111 still clean; run 47's 383 cases as in run 47.
   - [ ] R39e R47-N4: 19206/19207 `stuck` (a 45-day march to a far gathering landing), without splitting a click.
+    Not done: one click of two divisions ~70 cells apart; together means the far one walks. A port chosen for the
+    whole click (the least latest march) is the way left; it changes every landing's port choice, the kind of
+    change that split clicks in R38d; held.
+  - [x] R39f Before the critic: run 47's 383 headless cases (as in run 47), its far, sinking and checker jobs, and
+    its 37 page probes replayed.
 
 ## Batch 3 — readability (after the release, ADR-829)
 
