@@ -14,7 +14,7 @@
  */
 import { EventKind, RejectReason } from '../../shared/events';
 import { PlayerOrderKind, type World } from '../world';
-import { carrying, transportRoom } from './amphibious';
+import { carrying } from './amphibious';
 import { inLanding, landingOfDivision, leaveLanding } from './landings';
 
 /** How long the AI leaves a wing's mission given by the player (hours). */
@@ -41,10 +41,11 @@ export function playerOrderSystem(world: World): void {
       world.playerOrders.delete(id);
       continue;
     }
-    // Transports standing with no landing and nobody aboard (ROADMAP R31d; critic run 41, R41-N1: called for a
-    // division that then went to another port's convoy, they stood empty at Tokyo under the player's order
-    // for a month): the AI's again. A fleet's order otherwise held while it is afloat, that is always.
-    if (world.isFleet(id) && c.moving[id] !== 1 && !inLanding(world, id) && !carrying(world, id) && transportRoom(world, id) > 0) {
+    // Transports a landing called or held, standing with no landing and nobody aboard (ROADMAP R31d; critic run
+    // 41, R41-N1: called for a division that then went to another port's, they stood empty at Tokyo for a month):
+    // the AI's again. A fleet the player ordered keeps its order while afloat, that is always (R33d; critic run
+    // 43, R43-N1: transports clicked onto the Channel were the AI's the hour they came).
+    if (o.kind === PlayerOrderKind.called && c.moving[id] !== 1 && !inLanding(world, id) && !carrying(world, id)) {
       world.playerOrders.delete(id);
       continue;
     }

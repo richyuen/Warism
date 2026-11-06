@@ -508,12 +508,17 @@ Rules:
     alone at sea, the landing's own reason (`NoLanding`, `Neutral`, `NoSeaWay`). `landingAtSeaOrder1938` (one
     refused and told, the two land at Shanghai together; both by one click land at Fuzhou together; the hint's
     mark for the one at sea, R43-N4); `landingMark1938.spec` at sea: one mark at Fuzhou (new), Shanghai's its own.
-  - [ ] R33d The grid's open case (R33b: the one walking re-sent elsewhere, then recalled: its mate sailed alone
+  - [x] R33d The grid's open case (R33b: the one walking re-sent elsewhere, then recalled: its mate sailed alone
     meanwhile; 15 cases split). `landingInvariants` (as `diploInvariants`) on several seeds and the fuzz (`landingReclickFuzz` with
     recall, redirect, cancel, port shut, late order; the 120-day run a tool): 0 broken. Then the grid on the final
     code (R33's AT), and the critic, full. Also R43-N1 (a player's order to idle transports undone by R31d's "idle
     transports with no landing are the AI's", `playerOrders.ts`): landings now free their groups themselves; drop
     the blanket rule, `landingJoinsAboard`'s `idle` check kept green.
+    Done (ADR-831): the recalled one rejoins its landing at another port, keeping the hour it joined; grid 6 of 480
+    broken (R33b 15, R33a 140), all the recall after 3–5 days, its mate sailed (by decision, R31f)
+    (`docs/sweeps/landingGrid-R33d.md`). `PlayerOrderKind.called`: only transports a landing called go back to the
+    AI (`fleetOrderKept1938`, red at t26 before). `landingInvariants` (helper, tool, test): 120 days on six seeds,
+    0 broken; found a sunk group kept in its landing (fixed). The critic, full: next.
 
 ## Batch 3 — readability (after the release, ADR-829)
 

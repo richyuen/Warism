@@ -7,6 +7,36 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-831 · 2026-11-06 · accepted — R33d: a recalled division rejoins its landing; the player's transports keep their order; the landing checker
+
+- **Context.** R33b's grid left one case broken 15 times (the one walking re-sent elsewhere, then recalled to its
+  landing: it kept a landing of its own at another port, and its mate's sailed alone). Critic run 43's R43-N1:
+  transports the player ordered onto the Channel were the AI's the hour they came (R31d: "transports with no
+  landing and nobody aboard are the AI's"), with nothing to tell the player. ROADMAP R33d also asked for the
+  rules checked together on many seeds (as ADR-803's `diploInvariants`).
+- **Decision.**
+  - `redirectGathering`: a gathering landing whose divisions one click sends to a place another landing gathers
+    for, at another port of their land, joins it when none of its divisions stands at its own port yet (one
+    there does not walk to another port: R29b, `landingJoinsAboard1938`); each keeps the hour it joined the
+    landing it leaves (`World.rejoined`, read within the hour, not saved), so R31f's window judges it from its
+    first click, not its recall.
+  - `PlayerOrderKind.called` (3): transports a landing called or holds. R31d's rule hands back only those; a
+    fleet the player ordered keeps its order (`fleetOrderKept1938`: red at t26 before). A save from before has
+    its landings' groups as `march`, kept till the landing frees them (`endLanding`, `detachDivision`).
+  - A destroyed group leaves its landing at once (`leaveLanding`); it stayed listed till the next hour, and its
+    id may be given again (found by the checker, seed 17203).
+  - `tests/helpers/landingInvariants.ts` (`landingBreaks`) and `tools/diag/landingInvariants.ts`: random landing
+    orders, the rules each hour (one landing a division and a group; no empty landing; none aboard standing
+    transports while gathering; none of the player's orders aboard outside a landing; no idle spell aboard over
+    72 h; a returning landing's march; no escort for none; none gathering over 45 days) and a save loaded
+    bit-identical on probe days. 120 days on six seeds (Japan 3517, 4021, 8803; Britain 15101, 16117, 17203):
+    0 broken. `landingInvariants1938` runs two of them 60 days.
+- **Left by decision:** the grid's recall after 3 and 5 days (6 cases): the mate's landing sailed before the
+  recall; the recalled one goes on the next voyage (R31f, ADR-828), not one already at sea.
+- **Stands on:** ADR-830 (its tests green), ADR-828 (R31d: `landingJoinsAboard1938`'s idle check green; R31f),
+  ADR-759 (the player's orders; a division whose order is over is the AI's to ship, so the checker reads the
+  player's orders only). Pin of seed 99 unmoved.
+
 ### ADR-830 · 2026-11-05 · accepted — The player's landing is one object; its divisions wait ashore (ROADMAP R33b)
 
 - **Context.** ADR-829 (the user's decision): rebuild the player's landing as one object. R33a measured HEAD

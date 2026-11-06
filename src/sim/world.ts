@@ -819,8 +819,12 @@ export function provinceCellsOf(world: World): { start: Int32Array; cells: Int32
 export type { SeaControl } from './systems/seaControl';
 import type { SeaControl } from './systems/seaControl';
 
-/** What a player's direct order is (ADR-759): a march (a formation's or a fleet's move), a wing's rebase, a wing's mission. */
-export const PlayerOrderKind = { march: 0, rebase: 1, mission: 2 } as const;
+/**
+ * What a player's direct order is (ADR-759): a march (a formation's or a fleet's move), a wing's rebase, a wing's
+ * mission; `called`: transports a player's landing called or holds (ROADMAP R33d, R43-N1), the AI's again
+ * when standing with no landing and nobody aboard, where a fleet the player ordered keeps its order.
+ */
+export const PlayerOrderKind = { march: 0, rebase: 1, mission: 2, called: 3 } as const;
 export type PlayerOrderKind = (typeof PlayerOrderKind)[keyof typeof PlayerOrderKind];
 
 /**
@@ -1103,6 +1107,11 @@ export class World {
    * between ticks.
    */
   landingsLeft: [number, number][] = [];
+  /**
+   * The hour's divisions moving whole from one gathering landing to another (`redirectGathering`): the hour
+   * each joined the one they leave, kept in the one they join (ROADMAP R33d). Read within the hour, not saved.
+   */
+  rejoined = new Map<number, number>();
   /** The deployments of the hour before (see elementPlaceBefore in systems/elements.ts); null: not known. */
   deployedBefore: Map<number, { x: number; y: number; facing: number } | null> | null = null;
   /**

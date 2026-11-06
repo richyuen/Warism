@@ -226,10 +226,12 @@ export function bindDivision(world: World, id: number, target: number, choice: L
     l.fleets.sort((a, b) => a - b);
   }
   for (const o of l.fleets) {
-    world.playerOrders.set(o, { kind: PlayerOrderKind.march, until: 0, through: false });
+    world.playerOrders.set(o, { kind: PlayerOrderKind.called, until: 0, through: false });
     world.station.delete(o);
   }
-  l.divisions.set(id, world.tick);
+  // Moved whole from another gathering landing: the hour it joined that one (R33d), so it is waited for as then.
+  const was = choice.join ? world.rejoined.get(id) : undefined;
+  l.divisions.set(id, was !== undefined ? Math.min(was, world.tick) : world.tick);
   l.ordered = world.tick;
   return l;
 }
@@ -251,8 +253,14 @@ function endLanding(world: World, l: Landing, why = 0): void {
   world.landings.delete(l.id);
 }
 
-/** Division `id` leaves its landing, if any (it landed, or went ashore elsewhere); the landing ends with its last. */
+/**
+ * Division `id` leaves its landing, if any (it landed, or went ashore elsewhere); the landing ends with its last.
+ * A group `id` (destroyed) leaves its landing at once (ROADMAP R33d: listed till the next hour, its id could be
+ * another's); a landing left with none is told at its hour (`gather`, `landingSystem`).
+ */
 export function leaveLanding(world: World, id: number): void {
+  const g = landingOfFleet(world, id);
+  if (g) g.fleets = g.fleets.filter((o) => o !== id);
   const l = landingOfDivision(world, id);
   if (!l) return;
   l.divisions.delete(id);
@@ -331,6 +339,7 @@ function sailAll(world: World, l: Landing, to: number): boolean {
  * edited here: their orders take them out of their landing one by one (`detachDivision`).
  */
 export function landingOrders(world: World, cmds: readonly { id: number; x: number; y: number; nation?: number }[]): void {
+  world.rejoined.clear();
   if (world.landings.size === 0) return;
   const last = new Map<number, { x: number; y: number }>();
   for (const { id, x, y, nation } of cmds) if (nation !== undefined && world.formations.has(id) && world.formations.cols.nation[id] === nation) last.set(id, { x, y });
@@ -384,7 +393,8 @@ export function landingOrders(world: World, cmds: readonly { id: number; x: numb
  * one other place over the sea from its port (ROADMAP R33b; critic runs 39–40, R39-B1, R40-B1: one by one,
  * each found the landing's transports held by the rest, and walked to another port's): the landing goes
  * there, with its port and its transports; where another gathers for that place at the same port, it joins
- * that one. Anything else is left to each order (`detachDivision`).
+ * that one; where another gathers for that place at another port of their land, each order joins that one.
+ * Anything else is left to each order (`detachDivision`).
  */
 function redirectGathering(world: World, l: Landing, last: ReadonlyMap<number, { x: number; y: number }>): void {
   const ids = [...l.divisions.keys()];
@@ -401,6 +411,15 @@ function redirectGathering(world: World, l: Landing, last: ReadonlyMap<number, {
     join.ordered = world.tick;
     world.landings.delete(l.id);
     for (const e of world.escorts.values()) if (e.convoy === l.id) e.convoy = join.id;
+    return;
+  }
+  // Another gathering for that place at a port of their land, none of these yet at its own (R33d; the grid's recall: the one re-sent
+  // elsewhere, then back, kept its own landing at another port, and its mate sailed alone): each order
+  // joins it (`chooseTransports`), this landing's transports freed for it, each keeping the hour it joined.
+  // Not where one already stands at its port: it does not walk to another (R29b).
+  const there = ids.every((id) => world.formations.cols.moving[id] === 1) && [...world.landings.values()].some((o) => o.id !== l.id && o.nation === l.nation && o.state === LandingState.gathering && sameLandingAs(world, o, x, y) && ids.every((id) => ownPort(world, l.nation, cellOfPlace(world, id), o.port)));
+  if (there) {
+    for (const id of ids) world.rejoined.set(id, l.divisions.get(id)!);
     return;
   }
   retarget(world, l, target);

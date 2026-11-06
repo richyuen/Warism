@@ -304,7 +304,7 @@ export function callTransports(world: World, id: number, port: number): number {
   idle.sort((a, b) => dist(a) - dist(b) || a - b);
   for (const o of idle.slice(0, CALL_TRIES)) {
     if (!orderSail(world, o, (water % w) + 0.5, Math.floor(water / w) + 0.5)) continue;
-    world.playerOrders.set(o, { kind: PlayerOrderKind.march, until: 0, through: false });
+    world.playerOrders.set(o, { kind: PlayerOrderKind.called, until: 0, through: false });
     return o;
   }
   return 0;

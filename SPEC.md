@@ -1279,7 +1279,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   editor, with room, the nearest by straight cells with a sea way, `CALL_TRIES` (4) tried): a new
   landing; a landing for that place that has sailed: its next voyage. None: refused `NoTransports` (or
   `NoPort`). The division marches to the port, or stands there, and waits there ashore; its groups and
-  its divisions are the player's (`playerOrders`) while the landing is.
+  its divisions are the player's (`playerOrders`) while the landing is: its groups as `called`, the AI's again
+  when standing with no landing and carrying no one (R31d), where transports the player ordered keep the
+  order, as warships do (ROADMAP R33d, critic run 43, R43-N1). A group destroyed leaves its landing at once.
   Hourly (`landingSystem`, in `amphibiousSystem` after the AI's boarding): a gathering landing is over,
   all told, where its target became a neutral's (`Neutral`, R21a: those marching stopped), its port was
   bombed shut or lost (`PortShut`, `NoPort`, R31b), or it has no group left (`NoTransports`); its groups
@@ -1298,7 +1300,10 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   An hour's orders edit it as a batch (`landingOrders`, before they are applied): one click ordering all
   of a gathering landing's divisions to one other place over the sea from its port redirects it, its port
   and groups kept, or merges it into one gathering for that place at the same port (`redirectGathering`;
-  R39-B1, R40-B1: one by one, each found its groups held by the rest); one click ordering all
+  R39-B1, R40-B1: one by one, each found its groups held by the rest); where one gathers for that place at
+  another port of their land and none of these stands at its own port yet, each order joins that one, keeping
+  the hour it joined the landing it leaves (`World.rejoined`; R33d, the grid's recall: re-sent elsewhere and
+  back, it kept a landing of its own, and its mate sailed alone); one click ordering all
   of a sailing or returning landing's divisions, all aboard, to another landing gathering for that place
   sends its groups to that one's port, and it joins it (ROADMAP R33b, critic run 43, R43-B1's recall); to
   another place over the sea from its port, it sails there (`retarget`); to a place not over the sea (a

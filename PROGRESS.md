@@ -1548,3 +1548,19 @@
 - R43-N1 (player's order to idle transports undone) filed under R33d.
 - **Next:** R33d.
 
+## 2026-11-06 — R33d: recall rejoins; the player's transports keep their order; the landing checker (ADR-831)
+- Grid's open case (the walker re-sent elsewhere, then recalled): it kept a landing of its own at another port and
+  its mate sailed alone. Now a whole gathering landing redirected to a place another gathers for at another port
+  of their land joins it, if none of it stands at its own port (R29b: one at its port does not walk), keeping the
+  hour it joined (`World.rejoined`, not saved). Grid **6 of 480** (R33b 15): the recall after 3 or 5 days, the mate
+  already at sea; by decision.
+- R43-N1: `PlayerOrderKind.called` for transports a landing called or holds; R31d's hand-back is theirs only.
+  `fleetOrderKept1938` (Britain 15101, 1072 onto the Channel): red at t26 before, green 20 days.
+- `landingInvariants` (`tests/helpers/`, `tools/diag/`, `tests/unit/landingInvariants1938`): random orders, rules
+  each hour, a save probe. First runs: checker fixes (the AI may ship a division whose order is over, ADR-759;
+  a merged landing sails to its port aboard; an escort is let go the hour after its landing). One real find: a
+  sunk group stayed in its landing till the next hour (seed 17203); `leaveLanding` drops it at once. 120 days on
+  3517, 4021, 8803 (Japan), 15101, 16117, 17203 (Britain): 0 broken.
+- Whole unit suite green (snapshot-perf red under load, green alone); 44 landing test files green; pin unmoved.
+- **Next:** the critic, full (R33's end).
+
