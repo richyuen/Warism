@@ -99,6 +99,25 @@ describe('puppets (PLAN 1.18)', () => {
     expect(s.world.wars.atWar(ALB, ITA)).toBe(true);
   });
 
+  // ROADMAP R40a (critic run 48, R48-B1): a rising on an overlord overrun was refused as a war (`Overrun`; an overrun
+  // holder declares no war on its rebels) and the subject went free under "rose against", with no war. It is told
+  // as what it is: it broke free (`PuppetReleased`), no `PuppetRevolt`.
+  it('revolt on an overrun overlord: told as broken free, not a rising with no war', () => {
+    const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
+    const w = s.world;
+    s.command({ kind: 'setPuppetLoyalty', subject: ALB, value: 5 });
+    // Four in five of Italy's land held by France.
+    const FRA = nationId('FRA');
+    let k = 0;
+    for (let c = 0; c < w.cells.owner.length; c++) if (w.cells.owner[c] === ITA && k++ % 5 !== 0) w.cells.controller[c] = FRA;
+    w.dropLandCounts();
+    const ev = run(s, 1);
+    expect(kinds(ev, EventKind.PuppetRevolt), 'no rising told').toEqual([]);
+    expect(kinds(ev, EventKind.PuppetReleased), 'broke free').toEqual([[ALB, ITA]]);
+    expect(w.nations.cols.overlord[ALB]).toBe(0);
+    expect(w.wars.atWar(ALB, ITA)).toBe(false);
+  });
+
   it('a voiceless satellite (autonomy < 10) cannot revolt however disloyal', () => {
     const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
     s.command({ kind: 'setAutonomy', subject: ALB, value: 5 });

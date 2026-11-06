@@ -7,6 +7,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-834 · 2026-11-06 · accepted — A rising on an overrun overlord is a release (R40a)
+
+- **Context.** Critic run 48, R48-B1: diploInvariants 20429 (random diplomacy) day 546, "DEI rose on NED and is not
+  at war with it". A puppet at loyalty < 20 with a voice rises (ADR-184, ADR-807); its war of independence passed
+  `whyNotWar`, which refuses a war on an overrun leader (ADR-229: "a holder that is overrun declares no war on its
+  rebels"). The rising was told ("rose against") and no war came.
+- **Decision.** The critic offered two ways: let the rising past `Overrun`, or make it a release in name. ADR-229
+  chose the second for rebels (the overrun nation is left to the wars it is in), so a rising is told once the war is
+  known: the subject is cut loose untold, leaves the wars beside its overlord (and an alliance shared with it), and
+  then is told `PuppetRevolt` with its war if the war may be declared, else `PuppetReleased` ("was freed from").
+  Any refusal does this, not `Overrun` alone. The checker's `rise` rule is unchanged: a told rising has its war.
+- **Consequence.** In the log the rows "left its war with …" come before the release or the rising of the hour.
+  The pin of seed 99: see the gate (no rising refused in its first year expected).
+- **Done (R40a).** `puppets.ts`; `puppets.test` (red without it); 20429 random 3650 and the critic's four other
+  ten-year seeds 0 broken.
+
 ### ADR-833 · 2026-11-06 · accepted — Run 45: R44-B1 left in one case; way 1 or way 2
 
 - **Context.** Critic run 45 (focused, on `7e09b7b3`, R36): naval **7** (bar 8; run 44: 6); the rest as run 44.

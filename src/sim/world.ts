@@ -442,6 +442,9 @@ class WorldCore implements Stateful {
       ...(w.supplyBeach.size === 0 ? [] : [{ name: 'world.supplyBeach', dtype: 'i32' as const, data: Int32Array.from([...w.supplyBeach].sort((a, b) => a[0] - b[0]).flat()) }]),
       // The formations waiting after a refused march from afar (PLAN 7.117): [id, day] each, only while there is one.
       ...(w.farWait.size === 0 ? [] : [{ name: 'world.farWait', dtype: 'i32' as const, data: Int32Array.from([...w.farWait].sort((a, b) => a[0] - b[0]).flat()) }]),
+      // Landings whose groups were destroyed since the landing system's hour (ROADMAP R40b; critic run 48, R48-N1:
+      // lost in a save between, the sinking went untold): only while some are.
+      ...(w.sunk.size === 0 ? [] : [{ name: 'world.sunk', dtype: 'f64' as const, data: Float64Array.from([...w.sunk].sort((a, b) => a - b)) }]),
       // The player's AI assist and direct orders (ADR-759): only while not the default, not empty.
       ...(w.playerAi === PLAYER_AI_DEFAULT ? [] : [{ name: 'world.playerAi', dtype: 'i32' as const, data: Int32Array.from([w.playerAi]) }]),
       ...(w.playerOrders.size === 0 ? [] : [{ name: 'world.playerOrders', dtype: 'f64' as const, data: Float64Array.from([...w.playerOrders].sort((a, b) => a[0] - b[0]).flatMap(([id, o]) => [id, o.kind, o.until, o.through ? 1 : 0])) }]),
@@ -585,6 +588,8 @@ class WorldCore implements Stateful {
     const escorts = sections.find((s) => s.name === 'world.escorts')?.data as Float64Array | undefined;
     for (let at = 0; escorts && at < escorts.length; at += 3) w.escorts.set(escorts[at]!, { convoy: escorts[at + 1]!, from: escorts[at + 2]! });
     w.station = new Map();
+    w.sunk = new Set();
+    for (const id of (sections.find((s) => s.name === 'world.sunk')?.data as Float64Array | undefined) ?? []) w.sunk.add(id);
     w.farWait = new Map();
     const waits = sections.find((s) => s.name === 'world.farWait')?.data as Int32Array | undefined;
     for (let at = 0; waits && at < waits.length; at += 2) w.farWait.set(waits[at]!, waits[at + 1]!);
@@ -1122,7 +1127,8 @@ export class World {
   /**
    * Landings that lost a transport group to its destruction since the landing system's last hour (`leaveLanding`):
    * one left with none tells its divisions the sinking (`TransportsSunk`), not "no transports" (ROADMAP R39a;
-   * critic run 47, R47-B1). Cleared at the end of `landingSystem`; not saved (it words a notice, no more).
+   * critic run 47, R47-B1). Cleared at the end of `landingSystem`; saved while not empty (ROADMAP R40b: a save
+   * between the sinking and the landing system's hour lost it, and the false refusal came back).
    */
   sunk = new Set<number>();
   /** The deployments of the hour before (see elementPlaceBefore in systems/elements.ts); null: not known. */

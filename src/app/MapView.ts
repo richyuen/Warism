@@ -66,6 +66,8 @@ import { setSizeScale, sizeScale } from '../render/sizeScale';
 import { loadMapFonts, MAP_FONT, NAME_WEIGHT } from '../render/labels/fonts';
 import type { MapHover } from '../ui/mapHover';
 
+/** Metres a pixel from which a hero's counter is drawn at the others' size (ROADMAP R40d: the whole world in view; T0 at 5,000 m/px keeps PLAN 7.184b3's twice). */
+const HERO_SMALL_M = 10000;
 /**
  * A tool that paints on a primary-button drag (PLAN 1.44). Positions are world cells, fractional,
  * with x not wrapped. While `active()`, a press calls `start`, every further cell the pointer
@@ -1969,7 +1971,9 @@ export class MapView {
     // The air's fights, bombs and flak (PLAN 5.7b), with the sorties; at T3 a strike's bombs on
     // the men it hit, its formation's drawn elements (PLAN 5.9).
     this.airFx.draw(ctx, cam, this.geo, vw, vh, now, airFxSize(cam.scale, this.unitScale), this.shares.individuals, (f) => this.elementPlaces(f));
-    this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls, heroes);
+    // At the world's zoom a hero's counter is the others' size: at twice it, four covered Germany, France and Italy's
+    // names in 1940 (ROADMAP R40d; critic run 48, R48-N3).
+    this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls, heroes, this.metresPerPx >= HERO_SMALL_M ? 1 : HERO_SCALE);
     // The voyages over the sea of the formations whose orders are shown (ROADMAP R17c), at every tier.
     const shownTo: OrderViewer = { picked: this.picked, selected: this.selectedFormations, player: this.selectionNation, nation: this.selected };
     const nationOf = new Map<number, number>();

@@ -120,8 +120,10 @@ describe("a landing's last group destroyed: another called, or the sinking told 
     expect(l.fleets.length > 0 && l.fleets.every((o) => !gone.includes(o)), `another group: ${JSON.stringify(l.fleets)}`).toBe(true);
   }, 300_000);
 
-  it('three with room for two: the one left for the next voyage is told the sinking, not refused', () => {
-    const { w, news, ids, step } = setUp(1, 3);
+  // ROADMAP R40b (critic run 48, R48-N1): with a save and load in the sinking hour, `World.sunk` was lost and the
+  // false refusal came back: it is saved.
+  for (const save of [false, true]) it(`three with room for two${save ? ', saved and loaded in the sinking hour' : ''}: the one left for the next voyage is told the sinking, not refused`, () => {
+    const { s, w, news, ids, step } = setUp(1, 3);
     const sailing = (): Landing | undefined => [...w.landings.values()].find((l) => l.state === LandingState.sailing);
     for (let h = 0; h < 24 * 60 && !sailing(); h++) step();
     const l = sailing()!;
@@ -131,6 +133,12 @@ describe("a landing's last group destroyed: another called, or the sinking told 
     for (let h = 0; h < 24; h++) step();
     news.length = 0;
     for (const o of [...l.fleets]) destroyFormation(w, o);
+    if (save) {
+      // Loaded into a fresh page's world, which knows no sinking but what the save holds.
+      const bytes = s.sim!.save();
+      w.sunk.clear();
+      s.sim!.load(bytes);
+    }
     step();
     expect(news.filter((n) => n.kind === 'refused'), 'none refused').toEqual([]);
     expect(news.filter((n) => n.kind === 'transportsSunk').map((n) => n.id).sort((a, b) => a - b), 'those at the port told the sinking').toEqual([...left].sort((a, b) => a - b));

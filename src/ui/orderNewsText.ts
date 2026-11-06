@@ -2,7 +2,10 @@ import type { FormationDetail, OrderNews } from '../shared/protocol';
 import { t, type MessageKey } from './i18n';
 
 /** The words of what became of a player's order (PLAN 4.9c): `name` is the formation's. */
-export function orderNewsText(n: OrderNews, name: string): string {
+export function orderNewsText(n: OrderNews, name: string, count = 1): string {
+  // Several in one hour, `name` all their names (ROADMAP R40c).
+  if (count > 1 && n.kind === 'lostAtSea') return t('order.lostAtSeaMany', { count, name });
+  if (count > 1 && n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalledMany' : 'order.transportsSunkMany', { count, name });
   if (n.kind === 'repulsed') return t('order.repulsed', { name });
   if (n.kind === 'landedAway') return t('order.landedAway', { name });
   if (n.kind === 'unescorted') return t('order.unescorted', { name });

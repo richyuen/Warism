@@ -95,14 +95,14 @@ export function makePuppet(world: World, overlord: number, subject: number, auto
 }
 
 /** Frees a puppet (release is free, as in AoC). */
-export function releasePuppet(world: World, subject: number, revolt = false): void {
+export function releasePuppet(world: World, subject: number, revolt = false, tell = true): void {
   const nc = world.nations.cols;
   const overlord = nc.overlord[subject]!;
   if (overlord === 0) return;
   nc.overlord[subject] = 0;
   nc.integration[subject] = 0;
   world.supplyDirty = true;
-  world.out.emit(world.tick, revolt ? EventKind.PuppetRevolt : EventKind.PuppetReleased, subject, overlord, NaN, NaN);
+  if (tell) world.out.emit(world.tick, revolt ? EventKind.PuppetRevolt : EventKind.PuppetReleased, subject, overlord, NaN, NaN);
 }
 
 /** The overlord absorbs the puppet: land, formations; the puppet nation ends. */
@@ -192,14 +192,19 @@ export function puppetSystem(world: World): void {
       return;
     }
     if (nc.loyalty[n]! < REVOLT_LOYALTY && nc.autonomy[n]! >= PROTEST_FROM) {
-      releasePuppet(world, n, true);
+      // Cut loose, told once the war is known (ROADMAP R40a).
+      releasePuppet(world, n, true, false);
       // It leaves the wars it fought beside its overlord in, then rises (PLAN 7.191, R26-B1).
       leaveWarsBeside(world, n, [o]);
       // A puppet in its overlord's alliance (Tannu Tuva in the Soviet one) leaves it too: else the
       // war was refused as between allies, and the rising only freed it (ROADMAP R2, ADR-807).
       const why = whyNotWar(world, n, o);
       if (why === Refusal.Allied || why === Refusal.AlliedRealm) leaveAlliance(world, n);
-      declareWar(world, n, o, true);
+      // A war refused (an overlord overrun: it fights no war of independence, ADR-229's note): it broke free, told
+      // as a release, not a rising with no war (ROADMAP R40a; critic run 48, R48-B1: "rose against" and no war).
+      const free = whyNotWar(world, n, o) !== Refusal.None;
+      world.out.emit(world.tick, free ? EventKind.PuppetReleased : EventKind.PuppetRevolt, n, o, NaN, NaN);
+      if (!free) declareWar(world, n, o, true);
       return;
     }
     const tribute = Math.max(0, TRIBUTE * (1 - nc.autonomy[n]! / 100) * nc.income[n]!);

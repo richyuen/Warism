@@ -91,7 +91,17 @@ export function App({
     return key ? t(key as MessageKey) : undefined;
   };
   const orderName = (id: number): string => (view ? view.formationTitle(id)?.name : undefined) ?? wingName(id) ?? t('order.aFormation');
-  const orders = orderNews.map((n) => ({ seq: n.seq, kind: n.kind, text: orderNewsText(n, n.name ?? orderName(n.id)) }));
+  // A loss told of several divisions in one hour is one row naming them all (ROADMAP R40c; critic run 48, R48-N2: two
+  // lost at sea read as one cut row, the other never on the screen beside a panel); a click dismisses them all.
+  const groups = new Map<number, number[]>();
+  const orders: { seq: number; kind: string; text: string }[] = [];
+  for (const n of orderNews) {
+    const of = n.kind === 'lostAtSea' || n.kind === 'transportsSunk' ? orderNews.filter((o) => o.kind === n.kind && o.tick === n.tick && o.reason === n.reason) : [n];
+    if (of.length > 1 && of.at(-1)!.seq !== n.seq) continue;
+    groups.set(n.seq, of.map((o) => o.seq));
+    const names = of.map((o) => o.name ?? orderName(o.id));
+    orders.push({ seq: n.seq, kind: n.kind, text: of.length > 1 ? orderNewsText(n, names.join(', '), of.length) : orderNewsText(n, names[0]!) });
+  }
   // The sea battles going on (PLAN 4.10b), each by its two sides' names: those with two fleets
   // within reach of a ship's weapon (PLAN 7.19b), then those a carrier's wings fight alone, by
   // the striker and the struck (PLAN 7.35a: they sank ships with no row), then those no weapon
@@ -208,7 +218,7 @@ export function App({
           }}
           onOrder={(seq) => {
             const n = orderNews.find((o) => o.seq === seq);
-            hud.dismissOrderNews(seq);
+            for (const s of groups.get(seq) ?? [seq]) hud.dismissOrderNews(s);
             if (n) hud.onShowPlace(n.x, n.y);
           }}
         />

@@ -450,6 +450,8 @@ export class CounterLayer {
     balls = false,
     /** The heroes (PLAN 7.184b3), not in `src`: each its own counter, never folded, above the others. */
     heroes: readonly HeroCounter[] = [],
+    /** A hero counter's size × the others' (HERO_SCALE; 1 at the world's zoom, ROADMAP R40d). */
+    heroScale = HERO_SCALE,
   ): void {
     this.drawn = [];
     this.boxes = [];
@@ -500,7 +502,7 @@ export class CounterLayer {
     // Stepped down as often as it took, Europe's ten heroes at the world's zoom cascaded into Africa,
     // P.100 Ercole drawn 5,009 km from itself. Laid out once, on the first copy; each copy drawn, a
     // counter whose place is in the view kept whole in it ("+1" was cut by the screen's edge).
-    const hs = size * HERO_SCALE;
+    const hs = size * heroScale;
     if (alpha > 0.01) {
       const step = (h + 2) * hs;
       const groups: { lead: HeroCounter; members: number[]; dy: number; box: [number, number, number, number] }[] = [];

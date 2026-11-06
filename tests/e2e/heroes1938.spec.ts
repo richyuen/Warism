@@ -236,6 +236,25 @@ test('PLAN 7.184b2: a hero is drawn twice its kind at T2 and T3, Classic and Cou
   expect(fails, 'heroes not 1.9–2.1 × their kind').toEqual([]);
 });
 
+// ROADMAP R40d (critic run 48, R48-N3): with the whole world in view, heroes' counters at twice the others' covered
+// Germany, France and Italy's names. From 10,000 m/px a hero's counter is its nation's size; T0 below keeps twice.
+test('R40d: with the whole world in view a hero counter is its nation’s size', async ({ page }) => {
+  test.setTimeout(180_000);
+  await openWithHeroes(page);
+  const id = await heroId(page, 'Maus');
+  await lookAt(page, id, 20000);
+  await page.waitForFunction((id) => window.__warsim!.view!.counters.drawn.some((d) => d.hero === id && d.alpha > 0.99), id, { timeout: 30_000 });
+  await page.waitForTimeout(800);
+  const r = await page.evaluate((id) => {
+    const v = window.__warsim!.view!;
+    const hero = v.counters.drawn.find((d) => d.hero === id)!;
+    const own = v.counters.drawn.filter((d) => d.hero === undefined && d.nation === hero.nation && d.alpha > 0.99);
+    return { hero: hero.h, own: own.map((d) => d.h) };
+  }, id);
+  expect(r.own.length, "Germany's other counters in the view").toBeGreaterThan(0);
+  for (const h of r.own) expect(r.hero / h, `Maus ${r.hero.toFixed(1)} px against ${h.toFixed(1)} px`).toBeCloseTo(1, 1);
+});
+
 test('PLAN 7.184b3: a hero is its own counter at T0 and its own marker at T1, twice its nation’s, both looks', async ({ page }) => {
   test.setTimeout(240_000);
   await openWithHeroes(page);

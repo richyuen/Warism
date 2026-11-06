@@ -1665,3 +1665,15 @@
   19206/19207 `stuck`. Non-blocking R48-N2 (one cut row for two lost), R48-N3 (hero tags over Europe).
 - R40 filed (R40a–e).
 - **Next:** R40.
+
+## 2026-11-06 — R40: run 48's blocking issue and its non-blocking ones (ADR-834; R40e held for the user)
+- R40a (R48-B1, ADR-834): a rising whose war may not be declared (an overlord overrun) is told as a release ("was
+  freed from"), not "rose against" with no war. 20429 random ten years: 0 broken; the critic's four other ten-year
+  seeds 0 broken.
+- R40b (R48-N1): `world.sunk` saved while set; a save and load in the sinking hour still tells the sinking.
+- R40c (R48-N2): two lost in one hour make one row naming both.
+- R40d (R48-N3): with the whole world in view a hero's counter is its nation's size (T0 keeps twice).
+- R40e held: 19206/19207 `stuck` is a march (367 walks ~70 cells, ~1 a day, through landings 7, 11, 12, 7 as the
+  checker's orders re-click it); no port rule clears 45 days reliably. The bar is the user's question.
+- Before the gate: run 48's 38 headless jobs (as in run 48 but 20429 fixed) and its lost and rise page probes.
+- **Next:** the user's answer on R40e; then the critic, run 49.

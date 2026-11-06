@@ -786,7 +786,9 @@ km², integers). A realm has one head: a puppet's overlord is never a puppet [AD
 1. Above `FREE_ABOVE` (90) autonomy it leaves freely.
 2. With autonomy ≥ `PROTEST_FROM` (10) and loyalty under `REVOLT_LOYALTY` (20) it rises: it leaves
    the wars it fought beside its overlord and an alliance it shares with it, and fights a war of
-   independence, the two realms' [ADR-184, ADR-807].
+   independence, the two realms' [ADR-184, ADR-807]. A war it may not declare (its overlord overrun: an
+   overrun holder fights no war of independence, ADR-229): it breaks free, told as freed
+   (`PuppetReleased`), not "rose against" [ADR-834].
 3. Tribute: `TRIBUTE` (0.25) × (1 − autonomy/100) × its gross to the overlord.
 4. Below `INTEGRATE_BELOW` (50) autonomy, integration grows `INTEGRATION_RATE` (4) × (50 −
    autonomy)/50 a month; at 100 the overlord annexes it.
@@ -1318,7 +1320,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   idle, or a busy one) and goes on; with none, it is over. Its groups destroyed, its divisions are told so
   (`TransportsSunk`, 76, the news "transportsSunk": another called, or the landing over), not refused
   "no transports ... at a port it can reach" (ROADMAP R39a; critic run 47, R47-B1: false where another
-  group stood idle). A notice keeps the division's name as the page knew it (R39b).
+  group stood idle). A notice keeps the division's name as the page knew it (R39b); the mark is saved while set
+  (`world.sunk`, R40b). The same loss of several divisions in one hour is one row naming them (R40c).
   An hour's orders edit it as a batch (`landingOrders`, before they are applied): one click ordering all
   of a gathering landing's divisions to one other place over the sea from its port redirects it, its port
   and groups kept, or merges it into one gathering for that place at the same port (`redirectGathering`;
@@ -1680,7 +1683,8 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
 - **T0 counters** (`src/render/units/counters.ts`): a counter a formation, clustered by screen distance
   (`CLUSTER_PX` 64, levels to `MAX_LEVEL` 14, ± `HYSTERESIS` 0.15 of a level, split or merge over
   `SPLIT_MS` 250 ms), overlapping ones folded (`FOLD_GAP_PX` 2, `FOLD_HOLD_PX` 6, `FOLD_MS` 250); the
-  number is the men (`1.54M`, `12.3k`), a hero's its health; a hero has a counter of its own. Balls: the
+  number is the men (`1.54M`, `12.3k`), a hero's its health; a hero has a counter of its own, `HERO_SCALE`
+  its nation's, its nation's size from `HERO_SMALL_M` (10,000 m/px: the whole world in view, ROADMAP R40d). Balls: the
   flag chip a ball of `COUNTER_BALL_R` (8 px) over the box's left end.
 - **T1 markers** (`src/render/units/markers.ts`, from `T1_MAX_M` to `T1_MIN_M`): a box with the NATO
   symbol, pips for its elements (fading in and out each; the strength bar only while no elements came),

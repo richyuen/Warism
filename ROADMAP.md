@@ -655,15 +655,24 @@ Rules:
   - [x] R39f Before the critic: run 47's 383 headless cases (as in run 47), its far, sinking and checker jobs, and
     its 37 page probes replayed.
 
-- [ ] R40 **Run 48's issues** (critic run 48, full, on `4ebaee76`; ADR-833 for naval; the critic's probes replayed first).
-  - [ ] R40a R48-B1 (diplomacy): a puppet rising against an overrun overlord: `whyNotWar` refuses `Overrun`, and the
+- [x] R40 **Run 48's issues** (critic run 48, full, on `4ebaee76`; ADR-833 for naval; the critic's probes replayed first).
+  - [x] R40a R48-B1 (diplomacy): a puppet rising against an overrun overlord: `whyNotWar` refuses `Overrun`, and the
     rising becomes a free release told as "rose against" with no war (diploInvariants 20429 random, day 546, `rise`).
     AT: diploInvariants 20429 random 3650: 0 broken; a unit case (a puppet at loyalty < 20, its overlord overrun,
     rises on the month's start): at war with it, or told released, not "rose against".
-  - [ ] R40b R48-N1: `World.sunk` saved while not empty (or decided from saved state): a save and load in the sinking
+    Done (ADR-834): the rising is told once the war is known: a war it may not declare (an overlord overrun, ADR-229)
+    makes it freed (`PuppetReleased`, "was freed from"), not "rose against". 20429 random 3650: 0 broken; the
+    critic's other ten-year seeds (20491, 20493, 20413, 20495) 0 broken; `puppets.test` red without it.
+  - [x] R40b R48-N1: `World.sunk` saved while not empty (or decided from saved state): a save and load in the sinking
     hour still tells `TransportsSunk` (`c48_far_save.ts`, `c48_sunk_save.ts` with SAVE=1).
-  - [ ] R40c R48-N2: two divisions lost at sea in one hour: one row ("2 divisions lost at sea"), not one cut row.
-  - [ ] R40d R48-N3: hero tags at world zoom collide like nation labels.
+    Done: section `world.sunk` while not empty. `c48_far_save.ts` SAVE=1: told at t273; `landingSunk1938` loads into
+    a world that knows no sinking (red without it).
+  - [x] R40c R48-N2: two divisions lost at sea in one hour: one row ("2 divisions lost at sea"), not one cut row.
+    Done: the page merges the hour's same loss into one row naming them ("2 divisions lost at sea with their
+    transports: Square infantry division 364, Square infantry division 365."; `c48_lost.mjs` desk and phone).
+  - [x] R40d R48-N3: hero tags at world zoom collide like nation labels.
+    Done: from 10,000 m/px (the whole world in view) a hero's counter is its nation's size; T0 at 5,000 m/px keeps
+    twice (PLAN 7.184b3). `heroes1938.spec` R40d (red without it).
   - [ ] R40e R39e (held under naval's 8): 19206/19207 `stuck`.
 
 ## Batch 3 — readability (after the release, ADR-829)
