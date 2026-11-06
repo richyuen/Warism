@@ -7,6 +7,46 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-829 · 2026-11-05 · proposed, the user's decision — Stop patching the player's landing case by case
+
+- **Finding.** The loop is not stuck on naval; it is stuck on one feature. Naval was 8 at run 28 and at the
+  release. It fell to 7 at run 32, the first run after R17 (the player's landings, ADR-823, 2026-11-04), and has
+  been 7 in all twelve runs since (32–43). All thirteen blocking issues of those runs (R32-B1 … R43-B1) are
+  cases of R17's orders: a re-click, a redirect, a recall, a refusal, a port shut. Every other dimension is at
+  its bar. 60 commits since run 32; blocking per run 1, 0, 1, 2, 2, 1, 1, 1, 2, 1, 0, 1: no trend.
+- **Why case by case does not end.** A landing is not one thing in the sim: it is resolved per division and
+  per hour from rules each measured from its own place (`landingOf`, `sameLanding`, `SAME_LANDING_CELLS`,
+  `noteLeaving`, `heldGroup`, `assignTransports`, `waitedFor`, `seaFetchAt`, `turnBack`, `ashoreFromShip`,
+  `endConvoy`). Each fix adds a rule, and the critic's next probe finds where two rules meet: R40-N1 → R31e →
+  R43-B1 (a regression; R32a undid half of R31e); R41-N1 → R31d → R43-N1. ADR-828's "fix all six" made the
+  next blocking issue. The critic has said so since run 35 (design objection) and in every "ideas" section
+  since run 32 (Hearts of Iron: the invasion as one operation, its transports assigned, one port, a cancel
+  returns to the port it left). That is not an idea list; it is the critic's diagnosis.
+- **Proposed** (ADR-827 and ADR-828 offered only the first, third and fourth):
+  1. Go on as now. Twelve runs say it does not converge.
+  2. **Rebuild R17's landing as one object**: a landing with its target, its port, its transports and its
+     divisions, one state (assembling, loading, sailing, landing, over), one sailing; a re-click, a redirect
+     or a recall is an edit of that object; a cancel at sea sails back to its own port. The R21–R32 cases
+     become its tests, and a landing checker (as `diploInvariants` for war) and R27c's fuzz extended to
+     recall, redirect, port shut and late order, on several seeds, are its AT. One bounded item, then the
+     critic.
+  3. **Take R17 out of this release** (refuse player orders over the sea, or only allow them before boarding,
+     as before R17): naval was 8 without it. Release; bring the landing back as way 2 in the next batch.
+  4. Release with naval at 7, or score naval against a fixed list of cases (a change of the bars). Offered
+     twice and not taken.
+  The question that decides it: is the player's landing a must-have for this release? Yes → 2. No → 3.
+- **Non-blocking issues and ideas.** The naval ones (R43-N1–N4) are the next blocking issues by the pattern
+  above: not taken one by one, but inputs to way 2 (or moot under way 3). The twelve carried ones (R31-N1,
+  R31-N6, R32-N2, R32-N3, R32-N5, R36-N3, R37-N3, R37-N4, R39-N2, R39-N3, R39-N4, R40-N2) are why other
+  dimensions are 7 and not 8; none gates a release. They go into a readability batch after the release
+  (PROMPT: work found during a batch joins the next), with the small ideas (the error cleared on a new order,
+  a flag at the destination while choosing, a long-press preview, a mark on a fleet the AI took back).
+- **Process.** PROMPT "RELEASES" step 2 loops blocking → item → critic with no exit, and step 3 has no path
+  for "no blocking issue, a score under its bar". Proposed: when one dimension stays under its bar for three
+  critic runs, the loop stops and writes a user's-decision ADR naming the structural options, as this one.
+- **Note.** R32a's source change (`amphibious.ts`, `movement.ts`) is in the critic-run-43 commit `dc365b36`,
+  not a commit of its own; the next critic run should diff from `813eb375`.
+
 ### ADR-828 · 2026-11-05 · accepted — The naval bar after ten rounds (the user's decision)
 
 - **Context.** Naval has scored 7 against its bar of 8 in every critic run from 33 to 42. Ten rounds (R21–R30,
