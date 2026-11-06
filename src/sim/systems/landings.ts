@@ -356,7 +356,7 @@ export function landingOrders(world: World, cmds: readonly { id: number; x: numb
     }
     if (!landingOf(world, target) || neutralLanding(world, l.nation, target)) continue;
     // Another landing gathering for that place, at a port of its nation: they sail there and join it.
-    const join = [...world.landings.values()].find((o) => o.id !== l.id && o.nation === l.nation && o.state === LandingState.gathering && world.cells.controller[world.ports[o.port]!.cell] === l.nation && !portShut(world, o.port) && sameLandingAs(world, o, x, y));
+    const join = [...world.landings.values()].sort((a, b) => a.id - b.id).find((o) => o.id !== l.id && o.nation === l.nation && o.state === LandingState.gathering && world.cells.controller[world.ports[o.port]!.cell] === l.nation && !portShut(world, o.port) && sameLandingAs(world, o, x, y));
     if (join) {
       if (!sailAll(world, l, portSeaOf(world)[join.port]!)) continue;
       for (const [id, at] of l.divisions) join.divisions.set(id, at);
@@ -393,7 +393,7 @@ function redirectGathering(world: World, l: Landing, last: ReadonlyMap<number, {
   if (!ids.every((id) => last.get(id)!.x === x && last.get(id)!.y === y) || sameLandingAs(world, l, x, y)) return;
   const target = cellAt(world, x, y);
   if (!overSeaFrom(world, world.ports[l.port]!.cell, x, y) || !landingOf(world, target) || neutralLanding(world, l.nation, target)) return;
-  const join = [...world.landings.values()].find((o) => o.id !== l.id && o.nation === l.nation && o.state === LandingState.gathering && o.port === l.port && sameLandingAs(world, o, x, y));
+  const join = [...world.landings.values()].sort((a, b) => a.id - b.id).find((o) => o.id !== l.id && o.nation === l.nation && o.state === LandingState.gathering && o.port === l.port && sameLandingAs(world, o, x, y));
   if (join) {
     for (const [id, at] of l.divisions) join.divisions.set(id, at);
     for (const o of l.fleets) if (!join.fleets.includes(o)) join.fleets.push(o);

@@ -1526,3 +1526,13 @@
   with a player's landing; seed 99 has none.
 - **Next:** R33c (mark, panel, news from the object; most of it went in here: `seaHint`/`voyageOf` read it).
 
+## 2026-11-05 — R33b follow-up: a landing's merge picks by id; an older save tested; tick time
+- `landingOrders` and `redirectGathering` chose the landing to merge into in the map's order, which a load (sorted
+  by id) or a refused order (re-inserted last) changes: now by id. `landingSave1938` gives the same order to the
+  run and its loaded copy after each load (redirect, back, recall at sea): the same hash a day on.
+- `landingLegacySave1938` (new): a save written at `f9e7ab94` (`tests/fixtures/landingPreR33b-3517.bin.gz`, hour
+  32: 364 aboard at Tokyo, 365 bound, two convoys, two escorts) loads; one landing at port 33 with both, both groups
+  and both escorts, nobody aboard; saved again without the old sections; the two land together.
+- Tick (PROMPT step 8), seed 99, a year, `f9e7ab94` and HEAD at once on separate cores, then swapped: old 3.70 /
+  3.52 ms, new 3.51 / 3.70 ms (the cores, not the code); hash 6012d9d2 both. No change.
+
