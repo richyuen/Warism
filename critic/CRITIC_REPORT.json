@@ -1,5 +1,5 @@
 {
- "commit": "4040cad64df6bf5ef3ca72294ac40a6c2a25bb12",
+ "commit": "f464db35c03d644ac4f18a1ed2fd90fff860d768",
  "mode": "focused",
  "scores": {
   "mapVisuals": 7,
@@ -19,16 +19,23 @@
  },
  "blocking": [
   {
-   "id": "R46-B1",
-   "title": "A landing whose transports are sunk at sea: its drowned divisions are told 'not done: no transports of its nation with room for it are at a port it can reach' and nothing says they were lost; landingInvariants aboardNoLanding (seed 19113, setup 15101, t1463)",
+   "id": "R47-B1",
+   "title": "A landing whose transports are destroyed tells the player 'not done: no transports of its nation with room for it are at a port it can reach' and nothing says they were sunk; for a US landing whose group was bombed in Norfolk the reason is false (an idle group stood at San Francisco; the same click an hour later makes a landing there). Those left for the next voyage of a sunk landing get the same refusal",
    "evidence": [
-    "critic/c46_li_19113_eng.log",
-    "critic/c46_litrace_19113_sink.log",
-    "critic/scripts/c46_litrace.ts",
-    "critic/c46_liwt_19113_eng.log"
+    "critic/c47_far_usachi_watch.json",
+    "critic/c47_far_usachi_stall2.json",
+    "critic/c47_far_usachi_reclick.json",
+    "critic/c47_far_usachi_eng_wt.json",
+    "critic/c47_sunk_3517_n3k2.json",
+    "critic/c47_lost_desk.json",
+    "critic/shots/c47lost_desk_portpanel.png",
+    "critic/shots/c47lost_phone_portpanel.png",
+    "critic/scripts/c47_far.ts",
+    "critic/scripts/c47_sunk.ts",
+    "critic/scripts/c47_lost.mjs"
    ],
-   "fix": "In landingSystem, tell a sailing landing whose groups were sunk apart from one that put all ashore (landings.ts 'All it carried ashore' branch): a division aboard a group that is gone is lost with it (or put ashore), not refused with NoTransports; tell the player (an order news kind such as 'lost at sea with its transports'); no nextVoyage panel state for it. AT: landingInvariants 19113/15101 no aboardNoLanding; a unit case of a sailing landing whose group is destroyed (no MoveRejected, the news names the sinking); landingInvariants on ten new seeds per setup with no aboardNoLanding."
+   "fix": "In landings.ts (gather's 'no group left' and the sailing branch with no fleets): a landing whose last group is destroyed calls another (callTransports, as R37a's busy call) and is over only if none comes; when over, it is told by its own reason or news kind ('its transports were sunk at port / at sea'), naming the division, not RejectReason.NoTransports; the same for those waiting for a next voyage. AT: c47_far.ts USA 3517 (Chicago to Norwich) has no reason-6 refusal at t273; a unit case of a gathering landing whose group is destroyed at port while another group is idle gives no reason 6; c47_sunk n3k2: the one at the port is told its transports were sunk."
   }
  ],
- "timestamp": "2026-11-06T13:04:27Z"
+ "timestamp": "2026-11-06T15:00:01Z"
 }

@@ -1,0 +1,6033 @@
+{
+ "summary": {
+  "seed": 15101,
+  "ops": [
+   "reclick",
+   "redirect",
+   "recall",
+   "cancel"
+  ],
+  "t0": 64,
+  "ids": [
+   270,
+   271
+  ],
+  "cases": 240,
+  "run": 240,
+  "skipped": 0,
+  "broken": 0,
+  "byKind": {
+   "split": 0,
+   "untold": 0,
+   "away": 0,
+   "mark": 0,
+   "idle": 0,
+   "home": 0
+  },
+  "worstIdle": 0,
+  "worstWait": 5,
+  "seconds": 131
+ },
+ "cases": [
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 6,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 24,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 48,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 274,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 274,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 274,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 274,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 274,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 274,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 274,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 274,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 275,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 275,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 275,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 275,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 275,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 275,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 72,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 275,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 275,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 322,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 322,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 322,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 322,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 322,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 322,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 322,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 322,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 323,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 323,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 323,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 323,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 323,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 323,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "reclick",
+   "hour": 120,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 323,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 323,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 6,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 24,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 48,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 287,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 287,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 287,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 287,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 72,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 289,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 335,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 335,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 335,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 335,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "redirect",
+   "hour": 120,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 337,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 86,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 86,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 87,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 87,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 88,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 88,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 88,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 88,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 6,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 24,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 48,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 276,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 276,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 276,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 276,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 277,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 277,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 72,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 277,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 277,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 324,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 324,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 324,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 324,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 325,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 325,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 3
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 80,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 2
+    },
+    {
+     "id": 271,
+     "landed": 77,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 1
+    }
+   ]
+  },
+  {
+   "op": "recall",
+   "hour": 120,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": 325,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": 325,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 6,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 24,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 48,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 72,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 0,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 0,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 0,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 1,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 1,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 1,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 2,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 2,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 2,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 3,
+   "who": "aboard",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 3,
+   "who": "walking",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": 16,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  },
+  {
+   "op": "cancel",
+   "hour": 120,
+   "off": 3,
+   "who": "all",
+   "broken": [],
+   "divisions": [
+    {
+     "id": 270,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 5
+    },
+    {
+     "id": 271,
+     "landed": null,
+     "told": null,
+     "dead": false,
+     "idle": 0,
+     "wait": 0
+    }
+   ]
+  }
+ ]
+}

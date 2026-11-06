@@ -1,0 +1,101 @@
+{
+ "seed": 15101,
+ "T": "ENG",
+ "F": "FRA",
+ "home": [
+  1023.5,
+  275.5
+ ],
+ "t1": [
+  1034.5,
+  279.5
+ ],
+ "t2": [
+  1021.5,
+  291.5
+ ],
+ "freshAt": [
+  1000.5,
+  283.5
+ ],
+ "ids": [
+  270,
+  271
+ ],
+ "fresh": 276,
+ "first": [
+  true,
+  true
+ ],
+ "fleetAt": 64,
+ "fleetMoved": 1068,
+ "fleetOrder": true,
+ "unitAt": 112,
+ "unitOrder": [
+  true
+ ],
+ "aboard": 62,
+ "landed": {
+  "270": [
+   99,
+   1034.5,
+   279.5
+  ],
+  "271": [
+   99,
+   1034.5,
+   279.5
+  ],
+  "276": [
+   246,
+   1034.5,
+   279.5
+  ]
+ },
+ "end": [
+  "270:dead",
+  "271:dead",
+  "276:dead"
+ ],
+ "events": [
+  "t64 prefleet 270:still@1017.5,280.5{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] | 271:march@1017.5,278.7{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] | 276:march@1002.5,281.5",
+  "t64 postfleet 270:still@1017.5,280.5{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] | 271:march@1017.5,278.7{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] | 276:march@1002.5,281.5",
+  "t98 FormationLanded a270 b20 x1034.5 y279.5",
+  "t98 FormationLanded a271 b20 x1034.5 y279.5",
+  "t112 MoveRejected a270 b20 x3.0 yNaN",
+  "t112 postunit 270:still@1034.5,279.5 | 271:still@1034.5,279.5 | 276:still@1000.5,283.5",
+  "t245 FormationLanded a276 b20 x1034.5 y279.5",
+  "t311 FormationDestroyed a270 b20 x1033.5 y282.5",
+  "t312 FormationDestroyed a271 b20 x1033.8 y281.2",
+  "t363 FormationDestroyed a276 b20 x1033.5 y283.5"
+ ],
+ "trace": [
+  "t2 270:march@1014.6,276.6{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 271:march@1014.6,274.6{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 276:still@1012.2,278.2",
+  "t3 270:march@1014.6,276.6{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 271:march@1014.6,274.6{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 276:still@1012.2,278.2",
+  "t4 270:march@1014.7,276.7{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 271:march@1014.7,274.7{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 276:still@1012.2,278.2",
+  "t5 270:march@1014.8,276.8{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 271:march@1014.8,274.8{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 276:still@1012.2,278.2",
+  "t6 270:march@1014.8,276.8{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 271:march@1014.8,274.8{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 276:still@1012.2,278.2",
+  "t7 270:march@1014.9,276.9{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 271:march@1014.9,274.9{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 276:still@1012.2,278.2",
+  "t8 270:march@1014.9,276.9{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 271:march@1014.9,274.9{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 276:still@1012.2,278.2",
+  "t9 270:march@1015.0,277.0{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 271:march@1015.0,275.0{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 276:still@1012.2,278.2",
+  "t26 270:march@1016.1,278.1{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 271:march@1016.1,276.1{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 276:march@1011.9,278.5",
+  "t50 270:march@1017.5,279.6{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 271:march@1017.5,277.6{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 276:march@1005.1,278.9",
+  "t74 270:still@1017.5,280.5{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 271:march@1017.5,279.6{L1gath pPortsmouth f1068 d270/271}[g1068@1019.5,282.5 s720] 276:march@1000.6,283.4",
+  "t98 270:aboard1068@1033.3,278.5{L1sail pPortsmouth f1068 d270/271}[g1068@1033.3,278.5m s720] 271:aboard1068@1033.3,278.5{L1sail pPortsmouth f1068 d270/271}[g1068@1033.3,278.5m s720] 276:still@1000.5,283.5",
+  "t122 270:march@1034.7,279.5 271:march@1034.5,279.7 276:march@1000.9,283.1",
+  "t146 270:march@1035.3,279.5 271:march@1034.6,280.4 276:march@1005.3,278.7",
+  "t170 270:march@1035.3,279.5 271:march@1035.2,279.8 276:march@1011.7,277.5",
+  "t194 270:march@1035.4,279.6 271:march@1036.4,279.5 276:march@1018.8,277.5",
+  "t218 270:march@1034.5,281.1 271:march@1036.4,279.5 276:march@1025.9,277.5",
+  "t242 270:still@1033.5,281.5 271:march@1035.0,279.5 276:aboard1068@1032.5,276.1[g1068@1032.5,276.1m s720]",
+  "t266 270:march@1033.5,281.7 271:march@1034.5,280.1 276:march@1033.5,281.5",
+  "t290 270:still@1033.5,282.5 271:march@1033.8,281.2 276:still@1033.5,283.5",
+  "t314 270:dead 271:dead 276:still@1033.5,283.5",
+  "t338 270:dead 271:dead 276:still@1033.5,283.5",
+  "t362 270:dead 271:dead 276:still@1033.5,283.5",
+  "t386 270:dead 271:dead 276:dead",
+  "t410 270:dead 271:dead 276:dead",
+  "t434 270:dead 271:dead 276:dead",
+  "t458 270:dead 271:dead 276:dead"
+ ]
+}

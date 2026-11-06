@@ -1634,3 +1634,12 @@
   probes (landings as in run 46, no page error) replayed; checker 0 broken on 20 new seeds and 12 short pools but
   the two `stuck`; whole unit suite green (two timing tests alone); 14 landing specs green.
 - **Next:** the critic, run 47.
+
+## 2026-11-06 — Critic run 47 (focused) on f464db35: one blocking issue, R47-B1; naval 7 (bar 8)
+- Focused run. Scores: naval 7 (bar 8), UI 7, stability 7 rescored; the rest carried. R46-B1 and R46-N1–N4
+  verified fixed (19206/19207 `stuck` left, R47-N4); landings as in run 46; no page error.
+- One blocking: R47-B1, a landing whose last group is destroyed (bombed at port, or sunk with some left for the next
+  voyage) tells "no transports at a port", false where another group is idle, and never tells the sinking.
+  Non-blocking R47-N1–N4 (the lost row unnamed; the tooltip past the bottom; R38d by straight cells; 19206/19207).
+- ADR-833: no exit for naval. R39 filed (R39a–e).
+- **Next:** R39.

@@ -1,0 +1,19 @@
+npx tsx tools/diag/landingInvariants.ts 19311 3517 > critic/c47_li_19311_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19313 15101 > critic/c47_li_19313_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19315 3517 120 19315 30,90 1 > critic/c47_li_19315_jap_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19317 15101 120 19317 30,90 1 > critic/c47_li_19317_eng_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19319 3517 120 19319 30,90 2 > critic/c47_li_19319_jap_g2.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19331 15101 120 19331 30,90 2 > critic/c47_li_19331_eng_g2.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19333 3517 > critic/c47_li_19333_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19335 15101 > critic/c47_li_19335_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18705 3517 > critic/c47_li_18705_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19111 3517 > critic/c47_li_19111_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19115 3517 > critic/c47_li_19115_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19117 15101 > critic/c47_li_19117_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19206 3517 > critic/c47_li_19206_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 19207 3517 > critic/c47_li_19207_jap.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 19321 scenario --heroes > critic/c47_diploinv_19321s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 19323 random > critic/c47_diploinv_19323r.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 19329 > critic/c47_wi_19329.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 3517 8760 24 critic/c47_wd_3517.json > critic/c47_wd_3517.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 19327 8760 24 critic/c47_wd_19327.json > critic/c47_wd_19327.log 2>&1

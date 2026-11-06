@@ -625,6 +625,21 @@ Rules:
     page error); landingInvariants on 20 new seeds (19201–19210, both setups) and 12 short pools: 0 broken but the
     two `stuck` of R38d's follow-on.
 
+- [ ] R39 **Run 47's issues** (critic run 47, focused, on `f464db35`; ADR-833: fixed until naval is at its bar, its
+  non-blocking ones too, the critic's probes replayed first).
+  - [ ] R39a R47-B1: a landing whose last group is destroyed (bombed at port while gathering; sunk at sea with some
+    left for the next voyage) ended `NoTransports` ("no transports ... at a port it can reach"), false where another
+    group stood idle (USA 3517 to Norwich: 1119 bombed at Norfolk t272, 1123 idle at San Francisco), and nothing told
+    the sinking. Fix: the landing calls another group (as R37a's call) and ends only if none comes; when it ends, its
+    own news ("its transports were sunk"), for those at the port too. AT: `c47_far.ts` USA 3517: no reason 6 at
+    t273; a unit case (a gathering landing's group destroyed, another idle): no reason 6; case B: those at the port
+    told the sinking.
+  - [ ] R39b R47-N1: the lost-at-sea row names the division (its name sent with the news).
+  - [ ] R39c R47-N2: the tooltip flips above the cursor where it would pass the screen's bottom.
+  - [ ] R39d R47-N3: R38d judges the call by hours (`sailHours` of the called group plus the voyage, against the
+    march plus the voyage), and keeps the free group where no call can reach (Moscow to Cyprus).
+  - [ ] R39e R47-N4: 19206/19207 `stuck` (a 45-day march to a far gathering landing), without splitting a click.
+
 ## Batch 3 — readability (after the release, ADR-829)
 
 The carried non-blocking issues of critic runs 31–43 (why some dimensions are 7 and not 8; none gates a release)
