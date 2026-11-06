@@ -1,0 +1,16 @@
+npx tsx critic/scripts/c45_ash.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 same 60 critic/c45_ash_same.json > critic/c45_ash_same.log 2>&1
+npx tsx critic/scripts/c45_ash.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 24 same 60 critic/c45_ash_same2.json > critic/c45_ash_same2.log 2>&1
+npx tsx critic/scripts/c45_ash.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 3 200 same 60 critic/c45_ash_same3_200.json > critic/c45_ash_same3_200.log 2>&1
+NX=1034.5 NY=279.5 npx tsx critic/scripts/c45_ash.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 neutral 60 critic/c45_ash_neutral.json > critic/c45_ash_neutral.log 2>&1
+npx tsx critic/scripts/c45_ash.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 seaopen 60 critic/c45_ash_seaopen.json > critic/c45_ash_seaopen.log 2>&1
+npx tsx critic/scripts/c45_ash.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 all 60 critic/c45_ash_all.json > critic/c45_ash_all.log 2>&1
+npx tsx critic/scripts/c45_ash.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 extra 60 critic/c45_ash_extra.json > critic/c45_ash_extra.log 2>&1
+npx tsx critic/scripts/c45_ash.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 1 none 60 critic/c45_ash_none.json > critic/c45_ash_none.log 2>&1
+NX=1703.5 NY=445.5 npx tsx critic/scripts/c45_ash.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 far 60 critic/c45_ash_far_fuzhou.json > critic/c45_ash_far_fuzhou.log 2>&1
+NX=1709.5 NY=383.5 npx tsx critic/scripts/c45_ash.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 far 60 critic/c45_ash_far_tsingtao.json > critic/c45_ash_far_tsingtao.log 2>&1
+NX=1709.5 NY=383.5 npx tsx critic/scripts/c45_ash.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 300 far 60 critic/c45_ash_far_tsingtao300.json > critic/c45_ash_far_tsingtao300.log 2>&1
+npx tsx critic/scripts/c45_ash.ts 3517 ENG GER 1023.5 275.5 1080.5 248.5 4 12 same 40 critic/c45_ash_enggerfour_same.json > critic/c45_ash_enggerfour_same.log 2>&1
+npx tsx critic/scripts/c45_ash.ts 3517 ENG GER 1023.5 275.5 1080.5 248.5 4 12 all 40 critic/c45_ash_enggerfour_all.json > critic/c45_ash_enggerfour_all.log 2>&1
+npx tsx critic/scripts/c45_ash.ts 10501 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 same 60 critic/c45_ash_10501_same.json > critic/c45_ash_10501_same.log 2>&1
+npx tsx critic/scripts/c45_ash.ts 10501 JAP CHI 1818.5 385.5 1715.5 413.5 4 24 all 60 critic/c45_ash_10501_all.json > critic/c45_ash_10501_all.log 2>&1
+npx tsx critic/scripts/c45_ash.ts 10501 JAP CHI 1818.5 385.5 1715.5 413.5 4 1 none 60 critic/c45_ash_10501_none.json > critic/c45_ash_10501_none.log 2>&1

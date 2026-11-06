@@ -546,7 +546,16 @@ Rules:
     on HEAD), `landingMark1938.spec` (the tooltip). `landingInvariants` clicks the sea and checks `cancelWater`:
     HEAD 19 of 24 runs broken; this code 0 of 30 (six seeds × five order seeds, 120 days). Grid 6 of 480, as
     R33d (`docs/sweeps/landingGrid-R36.md`).
-  R36 done; then the critic (run 45).
+  R36 done; then the critic (run 45, focused, on `7e09b7b3`: naval 7, bar 8; one blocking issue, R45-B1: the loop
+  stopped, ADR-833 proposed).
+- [ ] R37 **Run 45's blocking issue** (critic run 45, focused, on `7e09b7b3`). **Held for the user's decision
+  (ADR-833).**
+  - [ ] R37a R45-B1: a part re-sent while the group it frees is busy sails short and leaves one at the port untold
+    (seed 18705, three of four re-sent: 976/977/1272). At the re-send the new landing keeps the groups it needs
+    (also R45-N1's 5.5–6.7 days); the call may take a busy group; one left at the sail hour is told. AT: the
+    critic's 40 shapes on its five seeds and run 44's 8 shapes on 3517/15101: every one-click group within a
+    day, or told; no later than `813eb375` by over a day; `leftBehind` red on `7e09b7b3` with a pool one
+    group short.
 
 ## Batch 3 — readability (after the release, ADR-829)
 

@@ -7,6 +7,34 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-833 · 2026-11-06 · proposed, the user's decision — Run 45: R44-B1 left in one case; way 1 or way 2
+
+- **Context.** Critic run 45 (focused, on `7e09b7b3`, R36): naval **7** (bar 8; run 44: 6); the rest as run 44.
+  R44-B2 fixed on every water, seed and selection tried. R44-B1 fixed in all of run 44's shapes (0 of 8 split on
+  3517, 15101, 18601; run 44: 6 of 8), but one blocking issue is left:
+  - **R45-B1.** The same edit as R44-B1 where the group the re-send freed is busy: seed 18705, three of four
+    re-sent to Fuzhou; the landing sails with two and 366 stands at Tokyo untold, landing alone 12 days later
+    (976/977/1272; at `813eb375` 975/976/976). 1 of 40 shapes on five new seeds. Cause, read: `detachDivision`
+    hands the old landing's spare groups to the AI at once; R36a's call (`callTransports`) takes only idle
+    groups, so with the freed one under way for the AI the landing sails with what fits (R17b's next voyage).
+  - **R45-N1.** Every re-sent part lands 5.5–6.7 days later than at `813eb375` (the call's wait), the panel
+    reading "waiting for the rest of the landing" beside "2 of 2 at the port".
+- **The exit (PROMPT "RELEASES", ADR-829).** Naval has been under its bar in three runs in a row (43: 7, 44: 6,
+  45: 7). ADR-832 said a third regression of the landing means way 2; R45-B1 is not a new rule broken but R44-B1
+  in a case R36a did not reach, so whether it counts is the user's call. No naval item until the user decides;
+  R37 filed, held.
+- **Proposed.**
+  1. **One more bounded fix (R37), then the critic, with no further exit.** At the re-send the new landing keeps
+     the old one's groups it needs (sized to its divisions, as `813eb375` did in effect), which also removes
+     R45-N1's wait; the call may take the nation's busy groups; one left behind at the sail hour is told.
+     `leftBehind` gets a pool that reaches it (one group short). If the next run has any blocking naval issue,
+     way 2 without another proposal.
+  2. **Way 2: take the player's sea landings out of this release** (orders over the sea refused, as before
+     R17); naval was 8 without them. Release; bring them back next batch.
+  3. **Release with naval at 7**, R45-B1 listed in the CHANGELOG (offered in ADR-827, 828, 829; not taken).
+  Recommended: 1. The rebuild's direction holds (run 45: R44-B2 gone everywhere, R44-B1 gone in 39 of 40
+  shapes, the AI's worlds byte-identical); the cause is one place, and the fix also wins back the 5.5 days.
+
 ### ADR-832 · 2026-11-06 · accepted — After the rebuild: run 44's two regressions
 
 - **Context.** Critic run 44 (full, on `0fba90d8`, R33's end): naval **6** (bar 8; run 43: 7); every other

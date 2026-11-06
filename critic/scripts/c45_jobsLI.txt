@@ -1,0 +1,8 @@
+npx tsx tools/diag/landingInvariants.ts 18601 3517 120 > critic/c45_li_18601_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18603 15101 120 > critic/c45_li_18603_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18607 3517 120 > critic/c45_li_18607_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18609 15101 120 > critic/c45_li_18609_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 3517 3517 120 18611 > critic/c45_li_3517_o18611.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 15101 15101 120 18613 > critic/c45_li_15101_o18613.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 18615 scenario --heroes > critic/c45_diploinv_18615s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 18617 random --world random > critic/c45_diploinv_18617rw.log 2>&1

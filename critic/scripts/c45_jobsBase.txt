@@ -1,0 +1,20 @@
+npx tsx critic/scripts/c31_headless.ts 7019 20 critic/c45_headless_7019.json 20 critic/c45_seed7019_y20.bin > critic/c45_headless_7019.log 2>&1
+npx tsx critic/scripts/c31_headless.ts 18003 20 critic/c45_headless_18003.json 20 critic/c45_seed18003_y20.bin > critic/c45_headless_18003.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c45_wd_3517.json > critic/c45_wd_3517.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 17011 2190 24 critic/c45_wd_17011.json > critic/c45_wd_17011.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 18011 2190 24 critic/c45_wd_18011.json > critic/c45_wd_18011.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 18013 scenario 400 60,200,350 20 --heroes > critic/c45_diploinv_18013s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 18019 random 400 60,200,350 20 > critic/c45_diploinv_18019r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 18021 scenario 400 60,200,350 20 > critic/c45_diploinv_18021s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 18023 random 400 60,200,350 20 --world random > critic/c45_diploinv_18023rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 18013 3650 --heroes --rules heroes,navy > critic/c45_wi_18013_h10_hn.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 18027 7300 > critic/c45_wi_18027_20.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 18029 7300 --rules air > critic/c45_wi_18029_20_air.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18101 3517 120 > critic/c45_li_18101_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18103 15101 120 > critic/c45_li_18103_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18107 3517 120 > critic/c45_li_18107_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 18109 15101 120 > critic/c45_li_18109_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 3517 3517 120 18113 > critic/c45_li_3517_o18113.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 15101 15101 120 18117 > critic/c45_li_15101_o18117.log 2>&1
+npx tsx tools/diag/landingGrid.ts 3517 all critic/c45_grid_3517.json > critic/c45_grid_3517.log 2>&1
+npx tsx tools/diag/landingGrid.ts 15101 all critic/c45_grid_15101.json > critic/c45_grid_15101.log 2>&1

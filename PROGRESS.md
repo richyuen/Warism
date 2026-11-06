@@ -1587,3 +1587,13 @@
 - Checker 0 broken on 30 runs (120 days); grid 6 of 480 as R33d; landing/convoy tests 42 files green;
   `landingMark1938.spec` green.
 - **Next:** the critic, run 45.
+
+## 2026-11-06 — Critic run 45 (focused) on 7e09b7b3: one blocking issue, R45-B1; naval 7 (bar 8); the loop stopped
+- Focused run. Scores: naval 7 (bar 8; run 44: 6); map, UI, stability 7 rescored; the rest carried (7; 8 for
+  semantic zoom, tanks, aircraft, AI nukes). R44-B2 fixed everywhere; R44-B1 fixed in run 44's shapes (0 of 8 on
+  three seeds); AI worlds byte-identical.
+- One blocking: R45-B1, R44-B1 where the freed group is busy (18705, 1 of 40 shapes). R45-N1: re-sent parts land
+  5.5–6.7 days later than at `813eb375`.
+- Exit (ADR-829): naval under its bar three runs in a row. ADR-833 proposed, the user's decision (recommended: one
+  bounded fix, R37, then way 2 on any further naval blocking issue). R37 filed, held.
+- **Next:** the user's decision on ADR-833.

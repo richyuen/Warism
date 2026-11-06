@@ -1,267 +1,220 @@
-# Critic report, run 44 (full): after R33, "the landing as one object"
+# Critic report, run 45 (focused): after R36, "a landing sails with room for all; the sea is no cancel"
 
-- **Mode: full.** I decided this from git before anything else (CRITIC_PROMPT, ADR-804). Run 43's report commit
-  `dc365b36` filed one ROADMAP item, R32a. Since then, R33a–d (`f9e7ab94`, `42cb44e9`, `fe57a033`, `2a8ac19d`,
-  `0fba90d8`) change `src/`, and none of them names an item that commit filed: R33 was filed later by `642c951a`
-  (ADR-829). Focused-run condition 2 therefore fails, so this is the whole brief, with every dimension rescored.
-- **Commit judged:** `0fba90d8844d9ed02f91d1d7f091602380ddf5ad`, HEAD at the start (`critic/c44_commit.txt`). **Date:**
-  2026-11-06.
-- **Build:** `vite build --outDir critic/c44_dist`, exit 0 (`critic/c44_build.log`), served by `vite preview` on
-  127.0.0.1:5299. I drove Chromium through Playwright at desk 1600 × 900 and phone 390 × 844. Run 43's commit
-  `813eb375` was checked out in a worktree (`critic/wt`) to get a before/after for every new defect.
-- **What "the same case" means now.** R33b removed the state "aboard at its port". A landing's divisions now wait
-  ashore and board at the sail hour. Run 43's probes timed their orders from "the first aboard a convoy standing at
-  its port". On HEAD I time them from "the first standing at its landing's port, ashore" (`AT0=port` in
-  `critic/scripts/c44_ll5.ts`, the probes `c44_gen5.ts`, and the page probes, whose state `aboard` became
-  `gathering`). That is the same moment as before (t1–t3 on 3517, t56–t64 on 15101) and it matches the grid's own t0
-  (`tests/helpers/landingGrid.ts` `atItsPort`). In my new recall cases (`c44_r_*`), "aboard + P" means P hours after
-  the one sent alone sails.
+- **Mode: focused.** I decided this from git before anything else (CRITIC_PROMPT, ADR-804). All three conditions hold:
+  1. Run 44 (`8f6f2628`, on `0fba90d8`) has two blocking issues and naval under its bar (6, bar 8).
+  2. Every commit since then qualifies:
+     - `8f6f2628` is the report commit itself (critic/ and docs only). It filed R36a/b.
+     - `f609d256` touches no file under `src/`, `data/` or `public/`.
+     - `7e09b7b3`'s subject names R36, which `8f6f2628` filed.
+  3. The last three reports were full (44), full (43) and focused (42), so they were not all focused.
+
+  Per the brief I re-ran every named case of run 44. I rescored afresh the dimensions run 44 scored under the bar or
+  blocked on, and the ones the diff touches:
+  - **naval:** under the bar, blocked;
+  - **uiUxPolish:** `MapTooltip.tsx`, `hud.ts`, `game.tsx`, `App.tsx`, `en.json`;
+  - **stability:** `landings.ts`, `movement.ts`, `protocol.ts`;
+  - **mapVisuals:** `MapView.ts`'s hover.
+
+  Every other score is **carried**. A release needs a full run with no blocking issue.
+- **Commit judged:** `7e09b7b37b58232e91c49795f282b2a097da7f85`, HEAD at the start (`critic/c45_commit.txt`).
+  **Date:** 2026-11-06.
+- **Build:** `vite build --outDir critic/c45_dist`, exit 0 (`critic/c45_build.log`). Served by `vite preview` on
+  127.0.0.1:5299 and driven through Playwright Chromium at desk 1600 × 900 and phone 390 × 844.
+- **Baselines.**
+  - Run 44's own `c44_*` outputs are the `0fba90d8` baseline for its named cases.
+  - New cases ran on HEAD and, in worktrees, at `0fba90d8` (`critic/wt`) and at `813eb375` (`critic/wt2`, the last
+    commit before R33, where run 44 found these cases fine).
+  - Both worktrees were removed at the end, each with its `node_modules` junction unlinked first.
 - **Runs.**
-  - Run 43's cases: 51 headless (`critic/scripts/c44_jobsK.txt`, from run 43's R42 and E lists, plus the
-    fleet-order and R43-N1 cases) and the page suite `c44_suiteMK.sh`.
-  - Full-run page probes on **new seeds 18101–18513**: `c44_suiteF1.sh` (zoom, battles, wings, God Mode nukes and
-    tools, Breakthrough, phone zoom, stacks) and `c44_suiteF2.sh` (relations graph, planes, hero fold, old scenario,
-    sea battle, editor, phone, UI, traits, mass orders).
-  - Late-game probes on HEAD's own 20-year saves: `c44_suiteF3.sh` (AI nukes, History, export).
-  - Attacks on R33:
-    - page probes of recall at sea (`c44_rc2_recall.mjs`) and of edits to a whole landing at sea
-      (`c44_se_seaedit.mjs`);
-    - a split by real click (`c44_sp_split.mjs`);
-    - a 16-run split grid on both commits (`c44_jobsSX.txt`);
-    - older saves made at `813eb375` and loaded on HEAD (`c44_mig.ts`).
-  - Checkers on new seeds: diploInvariants, worldInvariants, landingInvariants and the builder's grid.
-  - Suite Q (timing) ran alone at the end.
-- **Baseline: R33 left every AI world alone.**
-  - The year-20 save of 7019 is byte-identical to run 43's (`cmp critic/c44_seed7019_y20.bin
-    critic/c43_seed7019_y20.bin`: identical).
-  - workerDeterminism ends on run 43's hash for 3517 (`7e113d94`) and 17011 (`4bae12d3`), and on one hash for every
-    arm on new seed 18011 (`4d83261a`) (`critic/c44_wd_*.log`).
+  - Run 44's named cases: 116 headless jobs (`critic/scripts/c45_jobsRe.txt`), covering the K and E lists, the split
+    grid, the `os_*` sea clicks, R31d, R42-N3, the save migration, the builder's grid and landingInvariants. Page
+    cases: `c45_suiteP.sh` (SE, RC, MK, sp_split, touch, hint).
+  - New attacks on R36:
+    - 68 jobs on both commits (`c45_jobsN2.txt`): the split grid on seed 15101 (the AT's second seed) and new seed
+      18601, new shapes, a gathering landing ordered onto water, a mixed selection onto water, and sea clicks on
+      new seeds;
+    - 42 jobs for Britain (two divisions to a transport group) and Japan on new seeds 18703/18705/18707
+      (`c45_jobsB.txt`);
+    - **the split grid on five new seeds, 40 shapes, HEAD beside `813eb375`** (`c45_jobsS.txt`);
+    - page probes: the hover sweep over the sea at desk and phone (`c45_uh_seahover.mjs`), and the wait for room and
+      the stranded division by click (`c45_uw_wait.mjs`).
+  - Checkers on new seeds:
+    - landingInvariants: 6 runs on seeds 18601–18613;
+    - diploInvariants: 18615 with heroes, 18617 on a random world;
+    - HEAD's landingInvariants run against `0fba90d8` (`critic/c45_liwt_headchecker.log`);
+    - workerDeterminism on 3517, 17011 and 18011;
+    - 7019 × 20 years.
 
 ## Verdict
 
-**R33 fixes what run 43 filed, but it opens two new holes in the player's landing. Both are blocking, so naval falls
-to 6.**
+**R36 fixes R44-B2 completely and fixes R44-B1 in most cases, but not all.**
 
-What R33 fixes:
+- **R44-B2 is fixed.**
+  - An order of a landing at sea onto water is now refused at the click, with a tooltip saying why, and the
+    landing lands as planned.
+  - This holds on every water I tried: its own beach's water, the sea a cell off it, open sea east, the Yellow Sea,
+    Tokyo Bay, and two misclicks in a row. It holds on three seeds, by click at desk and phone, and with a fresh
+    division mixed into the selection.
+- **R44-B1 is fixed in run 44's eight shapes on 3517 and 15101, and in four_hourly.** Every one-click group now
+  lands within two hours.
+- **R44-B1 is not fixed on new seed 18705, and that case is blocking.** On 18705 the same edit (three of four re-sent
+  by one click) still sails with two transport groups and leaves the third division standing at Tokyo, untold.
+  - The stranded division lands alone at Fuzhou 12 days later, in the page and headless alike.
+  - On the same seed, `813eb375` lands all three together.
+  - The cause is R36's own fallback, "none to be had anywhere: those that fit sail". It counts only idle groups. The
+    group the re-send freed was, at that hour, sailing the Yellow Sea under the AI.
+  - I filed this as **R45-B1**: 1 of 40 new-seed shapes, against 6 of 8 shapes in run 44.
+- **The fix has a systematic cost.** On 4 of 5 new seeds, and on 3517/15101, every re-sent part lands **5.5–6.7 days
+  later than at `813eb375`** (+132 to +161 h).
+  - The re-send still frees the group to the AI. The landing calls it back only at the sail hour, then waits for it
+    while the panel says "waiting for the rest of the landing" beside "2 of 2 at the port" (R45-N1).
 
-- **R43-B1 is gone.** The one sent alone to Fuzhou and recalled at 2 h, 8 h, 1, 2, 3 or 5 days sails back to Tokyo,
-  waits there and lands at Shanghai with its mate, both at h632. The page gives the same result (h660, both)
-  (`critic/c44_r_back_*.json`, `critic/c44_rc_d3.json`).
-- **R43-N1, N2 and N4 are closed.** In R43-N3's case the two now land together; the fresh pair still waits (R31f, by
-  decision).
-- **Older saves migrate cleanly.**
-
-What R33 breaks:
-
-- **R44-B1.** When some of a gathering landing's divisions are re-sent by one click, the new landing keeps too few
-  transports. It sails with what fits and leaves the rest standing at the port, without a word. The divisions of that
-  one click then land one by one, about 12 days apart. Four sent to Shanghai, then two of them clicked onto Fuzhou:
-  364 lands alone at h656 and 365 at h951. On `813eb375` the same case lands h656/657. In my grid of 8 shapes, 6
-  split on HEAD and 0 on `813eb375`.
-- **R44-B2.** A whole landing at sea clicked onto the water a cell off its own beach silently turns for home. The
-  player is told a day later, at Tokyo, "there is only sea there". On `813eb375` the same click was refused at once and
-  the landing went in.
-
-Neither the builder's grid (two divisions, never a sea click) nor `landingInvariants` covers these cases. Both
-checkers report 0 broken on new seeds.
-
-Every other score stands on fresh evidence. The AI world is byte-identical to run 43's, the checkers are clean on 13
-new runs, and no page error appeared anywhere.
+**Naval goes from 6 to 7.** It stays under its bar of 8, with one blocking issue. That matches run 43, which scored
+naval 7 with one blocking issue in the same class.
 
 ## Scores
 
-| Dimension | Run 43 | Run 44 | |
+| Dimension | Run 44 | Run 45 | |
 |---|---|---|---|
-| Map visuals and readability | 7 | 7 | **Rescored on new seeds.** Z 18101 goes from 6,000 to 3 m/px in 18 steps with no error. Elements appear from 1,573 m/px and 13,830 individuals at 28 m/px (`critic/c44_z_18101.json`). C 18203 reads cleanly from 3,000 to 10 m/px (`critic/shots/c44c_18203_arm_0010m.png`). SK 18513 shows formations with leader lines and readable tags (`critic/shots/c44sk_18513_0.png`). **Not 8:** the ranking still cuts "French Equatorial…" (every shot) and the relations graph overprints its labels (below) |
-| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 | **Rescored on new seeds, 0 broken.** diploInvariants 18013 (heroes), 18019 (random diplomacy), 18021, 18023 (random world) (`critic/c44_diploinv_*.log`). worldInvariants 18013 heroes and navy over 10 years, 18027 every rule over 20 years, 18029 air over 20 years (`critic/c44_wi_*.log`). Relations graph RG 18513: 67 nodes on day 0 (war 7, alliance 11, guarantee 8, puppet 40), matching the sim's truth, and each kind's click reads a true sentence ("Albania is a puppet of Italy") (`critic/c44_rg_18513_desk.json`). **Not 8:** R37-N4 unchanged. On day 365 "Romani…Tannu Tuva…ongolia", "Spanish Republic" and "…ench West Africa" overprint one another, and the British cluster is a knot (`critic/shots/c44rg_18513_desk_d365.png`) |
-| Emergent world dynamics over long runs | 7 | 7 | **Rescored.** 7019's 20-year world is byte-identical to run 43's. **New** 18003 × 20 years (`critic/c44_headless_18003.json`): 79–100 nations living, 7–14 founded at a time, 4–14 wars. The Soviet Union falls from 32 % to 15 % while Germany rises from 3 % to 17.9 % and leads in years 17, 18 and 20. There are two AI nuclear decisions (the UK on Germany in year 11, 363,632 dead; the Soviet Union in year 15). History holds 3,464 events of 29 kinds (`critic/c44_hi_18003.json`). **Not 8:** Canada sits at 10–13 % for all 20 years and Denmark-by-Greenland at 5.4 % for most of them. The table's frozen half is the same as in run 37–43 |
-| God Mode | 7 | 7 | **Rescored on new seeds.** A 18101: an H-bomb on Paris (3,329,000 civilians, alert, "Go to", History row) and an A-bomb on London (`critic/shots/c44a_18101_14_paris_h_2h.png`). Q 18203: revolt (102→103 nations), spawn nation (→104), found city and raze city, each with its ticker row (`critic/c44_q_18203.json`). **Not 8:** R37-N3 unchanged. Breakthrough at peace does nothing and says nothing (K 18307: `before` = `after`, ticker empty, `critic/c44_k_18307.json`) |
-| Editor and scenarios | 7 | 7 | **Rescored.** G 18101 (`critic/c44_g_18101.json`): German and British fleets and a Polish bomber are placed, and a fleet on Berlin is refused with "Not done: no water of a sea is near the place". Poland has 10 warheads. The scenario exports; the pending text and Cancel are right. The export loads from the title with 89/76/50 forces and 10 Polish warheads, as placed, and plays to day 30 with carrier strikes in History. As in runs 39 and 43, the probe's 120-day wait timed out at max speed beside other suites, so that is not a finding. **Not 8:** the run-26 scenario is still refused as "made by an older version" (the objection since run 33), and the editor's nation list is a flat list of 100 lines (`critic/c44_g_18101.json` `editorText`) |
-| Stats and history | 7 | 7 | **Rescored on a new 20-year world.** History of 18003 at year 20 opens in 106 ms with 3,464 events of 29 kinds. The CSV has 3,466 lines and the JSON export 34,642 lines (`critic/c44_hi_18003.json`, `critic/c44_dl_18003.json`). God Mode strikes have their rows (`critic/shots/c44a_18101_30_history.png`). Not 8: R32-N3 (rows cut mid-word) |
-| UI/UX and polish | 7 | 7 | **Rescored.** Good: R33c's refusal for one division of a landing at sea reads well ("not done: it is at sea with its landing, which goes as one: select all of the landing…", `critic/c44_se_one.json`). The cancel is told in the panel ("Aboard, sailing back to Tokyo", `critic/c44_se_home.json`). Bad: R44-B2's sea click shows no tooltip, no mark and no message at the click (`critic/shots/c44se_water2_hover.png`). R44-N1's notice "it will not land with them" stays for 27 days beside "1 of 2 at the port", after the recall that rejoined it (`critic/shots/c44rc_d3_d10.png`). R44-B1's left-behind division reads "Waiting at Tokyo for transports" while its landing is at sea without it (`critic/shots/c44sp_four_h513.png`). Carried: R39-N2, R39-N3 and R40-N2 (`critic/c44_hs_desk.json` identical to run 43's) |
-| Performance | 7 | 7 | **Rescored.** Suite Q ran alone on the machine at the end (`critic/scripts/c44_suiteQ.sh`), on the same byte-identical 7019 world as run 43. PF 7019 at year 20 (fps per pass): 3,000 / 1,200 / 600 m/px 58.8–60.1 with p95 ≤ 18.2 ms; **120 m/px 31.4–39.0** (run 43: 35.5–39.2); **30 m/px 40.7–48.3** (run 43: 38.6–48.2) (`critic/c44_pf_7019.json` `agg`). Ten-year watches: LW 6151 59.9–60 fps, longest gap 83 ms, 0 over 500 ms (run 43 the same); LWHON 3517 59.9–60, 83 ms; **new seed** 18101 59.8–60, 83 ms (`critic/c44_lw_6151.json`, `critic/c44_lwhon_3517.json`, `critic/c44_lw_18101.json`). Headless tick on 18003 is 2.6–4.7 ms a year, worst 209 ms (`critic/c44_headless_18003.json`). **Not 8:** 31–48 fps at unit zoom on a year-20 world, as in every run since 37 |
-| Stability | 7 | 7 | **Rescored.** No page error in any page JSON of this run (`errors: []`). 7019's save is byte-identical to run 43's, and workerDeterminism is identical on 3517 and 17011 and consistent on new seed 18011. 13 checker runs on new seeds report 0 broken (diploInvariants 4, worldInvariants 3, landingInvariants 6), including landingInvariants on 18101, 18103, 18107, 18109 and on 3517/15101 with new order seeds (`critic/c44_li_*.log`). **Old saves:** saves made at `813eb375` mid-landing (Japan at t3, 60, 300 gathering and t620 at sea; Britain at t3, 30, 80, 140) load on HEAD and migrate into one landing each. All land together at the old hours (Japan h630/631, Britain h87), and a re-save round-trips bit-identical (`critic/c44_mig_load_jap.json`, `critic/c44_mig_load_eng.json`). **Not 8:** R44-B1 leaves divisions standing at a port, untold, for 12 days at a time |
-| Semantic zoom to unit level (needs 8) | 8 | 8 | **Re-earned on new seeds.** Z 18101 is one camera from 6,000 m/px to 3 m/px in 18 steps with no error (`critic/c44_z_18101.json`). PHZ 18411 runs 40 days on the phone from 30,000 to 25 m/px with no overflow at any tier (`critic/c44_phz_18411.json`). C 18203 shows armoured divisions 40 and 42 labelled at 80 m/px, and tank balls with turrets and tracks at 10 m/px (`critic/shots/c44c_18203_arm_0010m.png`) |
-| Naval warfare (needs 8) | 7 | **6** | **Rescored. Down, for two new blocking issues found on the same cases on both commits.** **R44-B1** (`critic/c44_k_four_two_far.json` vs `critic/c43_k_four_two_far.json`; split grid 6/8 vs 0/8) and **R44-B2** (`critic/c44_os_*.json` vs `critic/c44_oswt_*.json`; page `critic/c44_se_water2.json`). What R33 fixed, verified: R43-B1 (recall at 2 h–5 days: both h632, `critic/c44_e_back_*.json`, `critic/c44_r_back_*.json`; page `critic/c44_rc_*.json`); R43-N1 (the player's transports hold the Channel 20 days, `critic/c44_r31d_seawar.json`; run 43: the AI's at t26); R43-N2 (recall home or to water is a cancel, `critic/c44_e_home_d1_h.json`); R43-N3 (`steal_fresh2`: 364/365 land h656/657, run 43 never); R43-N4 (mark at the recall hover, `critic/c44_rc_d3.json` `recallHover.marks`); R42-N3 still refused (`critic/c44_r42n3.json`: reason 19). At-sea edits: whole landing redirected to Fuzhou lands within 6 h (`critic/c44_se_both.json`); cancel sails home (`critic/c44_se_home.json`). Sea battle SB 7019 the same as run 43 |
-| Tanks (needs 8) | 8 | 8 | **Re-earned on new seeds.** C 18203 and 18307 (Germany–Poland, day 5): German armoured divisions 40 and 42 are in contact. They read as labelled divisions at 80 m/px and as tank balls with turrets and tracks among wings at 10 m/px, with no error (`critic/c44_c_18203.json`, `critic/c44_c_18307.json`, `critic/shots/c44c_18203_arm_0010m.png`). SK 18513: Soviet tank brigades 199–207 and tank corps 179–182 face Polish infantry at 60 m/px, each a readable formation (`critic/shots/c44sk_18513_0.png`) |
-| Aircraft (needs 8) | 8 | 8 | **Re-earned on new seeds.** W 18411: a German fighter is ordered towards Warsaw and followed. In 59 samples it flies with its mark in 54, is never shown without one, and sits a median 32 px from its sorties at 3,000 m/px (`critic/c44_w_18411.json`). PL 18203, Germany–Poland from 3,000 to 25 m/px in both looks: 37 planes in hour 2, no error (`critic/c44_pl_planes.18203_GER_POL_5299.log`). Air rules report 0 broken over 20 years on new seed 18029 (`critic/c44_wi_18029_20_air.log`) |
-| AI nuclear use (needs 8) | 8 | 8 | **Rescored.** AN 7019 at year 20 shows the same strike as runs 39–43 (China on the USA near Belfast, alert and row, `critic/c44_an_7019y20.json`). **New** 18003: two AI decisions in 20 years. The UK strikes Germany in year 11, with the toll and the forces lost logged, and the Soviet Union launches in year 15 (`critic/c44_headless_18003.json` `nukeLog`). No strike falls in the 400 h watched at year 20 (`critic/c44_an_18003y20.json`). Restraint, as the design asks |
+| Map visuals and readability | 7 | 7 | **Rescored (the hover).** R36 builds a hover over every sea cell whenever something is selected. Sweeping the mouse over open sea at 3,000 m/px across 60 points each way (desk): <ul><li>a selected warship group shows no tooltip over water;</li><li>with nothing selected there is no tooltip over water;</li><li>the landing at sea shows "Only sea here…" over water and its by-sea lines over land;</li><li>no page error (`critic/c45_uh_desk.json` `sweepShip`/`sweepNone`/`sweepLanding`, `critic/shots/c45uh_desk_sweep_landing.png`).</li></ul> **Not 8:** run 37–44's reasons stand (carried, see run 44), and the tooltip still runs off the screen near the right edge (3 of 6 samples on desk) |
+| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 (carried) | Not touched by R36. diploInvariants on new seeds 18615 (heroes) and 18617 (random world) report 0 broken (`critic/c45_diploinv_*.log`) |
+| Emergent world dynamics over long runs | 7 | 7 (carried) | R36 changes only the player's landings; see Stability for the AI world |
+| God Mode | 7 | 7 (carried) | |
+| Editor and scenarios | 7 | 7 (carried) | |
+| Stats and history | 7 | 7 (carried) | |
+| UI/UX and polish | 7 | 7 | **Rescored.** <br>**Good:** the sea hover now reads "Only sea here: your landing at sea keeps its course. Click a coast to send it there, or your own land to bring it back" (`critic/shots/c45se_water2_hover.png`). The click gives a row and toast at once ("not done: there is only sea there…", `critic/c45_se_water2.json`), and the panel keeps "At sea, bound for its landing". A gathering landing clicked onto water is refused at once and stays as it was (`critic/shots/c45uh_desk_g_after.png`). <br>**Bad:** <ul><li>On a phone the new tooltip is cut ("Only sea here: your landing at sea ke…") in 6 of 6 samples, because the tooltip is `white-space: nowrap` with no clamping and 545 px wide on a 390 px screen (`critic/shots/c45uh_phone_m_hover.png`, `critic/c45_uh_phone.json` `offscreen: 6`). This is the R39 phone-tooltip class, with the AT's "the hover says why" unreadable there.</li><li>R45-N1: during R36a's 5-day wait for a called group the panel says "At Tokyo, waiting for the rest of the landing" beside "2 of 2 at the port" (`critic/shots/c45uw_four_h561.png`).</li><li>R44-N1's stale notice is unchanged (`critic/c45_rc_d3.json` identical panels to run 44).</li><li>R45-B1's stranded division reads "Waiting at Tokyo for transports" while its landing is at sea (`critic/shots/c45uw_three18705_stranded_h831.png`).</li></ul> Carried: R39-N2, R39-N3, R40-N2 (`critic/c45_hs_desk.json` identical to run 44's) |
+| Performance | 7 | 7 (carried) | Not rerun as suite Q. Touch probe `tm_touch` under heavy contention (eight sims running): 58.6–60 fps. Its overSea asks went from 0.05 to 1.0 a second with a selection parked (`critic/c45_tm_touch.json`); cheap, noted only |
+| Stability | 7 | 7 | **Rescored.** <ul><li>No page error in any page JSON of this run.</li><li>workerDeterminism ends on run 44's hashes for 3517 (`7e113d94`), 17011 (`4bae12d3`) and 18011 (`4d83261a`) on every arm (`critic/c45_wd_*.log`).</li><li>12 landingInvariants runs report 0 broken (`critic/c45_li_*.log`), and two diploInvariants runs report 0.</li><li>7019's 20-year save is byte-identical to run 44's (`cmp critic/c45_seed7019_y20.bin critic/c44_seed7019_y20.bin`).</li><li>Saves made at `813eb375` mid-landing still load and land at the old hours (`critic/c45_mig_load_*.json` = run 44).</li><li>The builder's grid: 3517 6 of 240, the same R31f "split" set as run 44; 15101 0 of 240 (`critic/c45_grid_*.log`).</li></ul> **Not 8:** R45-B1 is a division standing 12 days at a port, untold, with no checker able to see it. HEAD's `leftBehind` rule ran against `0fba90d8` on four seeds flags `cancelWater` 8 times but `leftBehind` **never**, although R44-B1 was there in 6 of 8 shapes (`critic/c45_liwt_headchecker.log`). The rule exists, but random clicks rarely hit the shape |
+| Semantic zoom to unit level (needs 8) | 8 | 8 (carried) | |
+| Naval warfare (needs 8) | 6 | **7** | **Rescored. Up, for R44-B2 fixed and R44-B1 fixed in all of run 44's shapes. Not 8: R45-B1 (blocking) and the cost of the fix.** Same cases on both commits: <ul><li>`os_own`/`os_east`/`os_yellow`: `0fba90d8` 856/856 (sailed home); HEAD 631/632, as at `813eb375`.</li><li>By click, `se_water2`: `0fba90d8` home at h559; HEAD lands h655.</li><li>`se_tsing` lands h655.</li><li>New: `seawater_15101`, `seawater_18601`, `seawater_tokyo`, `mixwater`: `0fba90d8` -/- or 856; HEAD 631/632 (`critic/c45_n_*.json` vs `critic/c45_nwt_*.json`).</li><li>Split grid on 3517: HEAD 0 of 8 shapes split, against 6 of 8 on `0fba90d8` (`critic/c45_sx_*.json`).</li><li>`four_two_far` 788/789 (was 656/951); `four_hourly` 1399/1400 × 4 (was 2 never landed).</li><li>The same on 15101; on 18601, 0 of 8 shapes split.</li><li>Five new seeds: **1 of 40** splits (18705 `n4_012`: 976/977/**1272**; `813eb375` 975/976/976).</li><li>Delay against `813eb375` on 4 of 5 seeds: +132–161 h on every re-sent part (`critic/c45_s_cmp.txt`).</li><li>Unchanged: the recall cases (`r_back_*`, `e_back_*`, `rc_*`: h632 / h660 as run 44), R43-N1 (R31d identical), R42-N3 (`critic/c45_r42n3.json`: reason 19), and Britain's cases (`critic/c45_b_eng*` = `c45_bwt_eng*`).</li></ul> |
+| Tanks (needs 8) | 8 | 8 (carried) | `movement.ts`'s change is one reason code for a division aboard at sea (read) |
+| Aircraft (needs 8) | 8 | 8 (carried) | |
+| AI nuclear use (needs 8) | 8 | 8 (carried) | |
 
 ## Blocking issues
 
-1. **R44-B1. A landing re-sent in part keeps too few transports. It sails with what fits and leaves the rest of the
-   one click standing at the port, untold, so they land alone one by one, about 12 days apart.**
-   - **The case.** Seed 3517, Japan. The four nearest Tokyo are sent to Shanghai (one landing, four transport
-     groups). Two hours after the first stands at Tokyo, 364 and 365 are re-sent to Fuzhou by one click.
-   - **What happens.** The new landing for Fuzhou gets one group (1136). Groups 1144/1151/1152 stay with, or are
-     freed from, the old one (`critic/c44_k_four_two_far.json` trace t4: `L2gath pTokyo f1136 d364/365`).
-     - 365 reaches Tokyo at about h505.
-     - The landing sails between h505 and h529 with only 364 aboard. 365 is left standing at the port, still a
-       member of the sailing landing (t529: `365:still@1819.5,385.5 … L2sail`).
-     - 364 lands **alone** at Fuzhou at h656.
-     - The group comes back for 365, which lands alone at **h951**, 12 days later.
-     - Nothing is emitted at the sail hour.
-   - **The same case at `813eb375`:** both land h656/657 (`critic/c43_k_four_two_far.json`).
-   - **By real click** (`critic/c44_sp_four.json`):
-     - 364 lands h681 and 365 h975. 366/367 (the rest, for Shanghai) land h1269.
-     - While 364 is at sea, 365's panel reads "Waiting at Tokyo for transports". It carries the stale notice
-       "…it leaves the landing it had for its new one; the rest keep the old landing, and it will not land with
-       them", and there is no other row (`critic/shots/c44sp_four_h513.png`).
-   - **It is systematic.** I ran a split grid (`critic/c44_sx_*.json` on HEAD, `critic/c44_sxwt_*.json` on
-     `813eb375`, each N to Shanghai, a subset re-sent by one click to Fuzhou). The one-click group lands more than a
-     day apart in **6 of 8** shapes on HEAD and in **0 of 8** on `813eb375`:
+1. **R45-B1. R44-B1 is still there when the group a re-send freed is busy. Of three divisions re-sent by one click,
+   the landing sails with two and leaves the third standing at its port, untold. That division lands alone 12 days
+   later.**
+   - **The case.** Seed 18705, Japan. The four divisions nearest Tokyo are sent to Shanghai. Two hours after the first
+     stands at Tokyo, the first three are clicked onto Fuzhou.
+   - **Headless** (`critic/c45_b_jap18705_n4_012.json`; groups traced in `critic/c45_b_jap18705_n4_012_g.json`):
+     - The Fuzhou landing gets group 1136, and 1144 is freed to the AI.
+     - At about h830 the landing has 1136 and 1151. 1152 belongs to 367's landing, and 1144 is under way in the Yellow
+       Sea (`G1144@1742.9,395.9m`).
+     - It sails with 364 and 365. **366 stays at Tokyo, still a member of the sailing landing** (`366:still@1819.5,385.5
+       …L2sail`).
+     - Nothing is emitted. 364/365 land h976/977 and **366 lands alone h1272**.
+   - **By real click** (`critic/c45_uw_three18705.json`): 364 lands h999, 365 h1005 and 366 **h1299**. While the two
+     are at sea, 366's panel reads "Waiting at Tokyo for transports". The only row is the stale "it leaves the landing
+     it had…" (`critic/shots/c45uw_three18705_stranded_h831.png`, h903, h975).
+   - **The same case at `813eb375`:** 975/976/976 together (`critic/c45_bwt2_jap18705_n4_012.json`,
+     `critic/c45_swt2_18705_n4_012.json`).
+   - **Why blocking.** It is R44-B1, the same edit with the same outcome, still untold. It contradicts R36's AT ("every
+     one-click group lands within a day, or is refused and told") and SPEC's R36a ("short, a group free at its port or
+     one called joins it and it waits"). A group was to be had: it was the player's nation's own group, and the re-send
+     had just handed it to the AI.
+   - **Cause, read.** `gather`: `noRoom` → `freeAtPort(...) || callTransports(...)`. `callTransports` skips groups that
+     are `moving` or `engaged`. When it returns 0, the code falls through to "those that fit sail". The re-send
+     (`detachDivision`) frees the old landing's surplus groups to the AI at once, so the group the new landing will
+     need is usually the one now sailing for the AI.
+   - **Fix.** Either of these:
+     - Keep, at the re-send, the groups the new landing needs: `detachDivision` sizes the new landing's groups to its
+       divisions, as `813eb375` effectively did. This also removes R45-N1's 5.5-day wait.
+     - Let the call take a busy group of the nation (one of the AI's under way) before falling back.
 
-     | Shape | HEAD | `813eb375` |
-     |---|---|---|
-     | 4, three re-sent | 975 / 1270 / 1565, one at a time over 25 days | 975 / 976 / 976 |
-     | 4, two re-sent | 1299 / 1588 | 1267 / 1267 |
-     | 4, the first and last re-sent | 1266 / 1561 | 1266 / 1267 |
-     | 5, two re-sent | 656 / 951 | 656 / 657 |
-     | 5, three re-sent | the same one-by-one pattern as "4, three re-sent" | together |
-     | 6, three re-sent | the same one-by-one pattern | together |
-
-     Run 43's `four_hourly` (the four re-sent one an hour, to one place) also goes wrong. Two land at h1265 and
-     h1266, and 366/367, left at the port when it sailed, are still at sea on day 60. At `813eb375` all of them land
-     at h1267 (`critic/c44_k_four_hourly.json`).
-   - **Why blocking.** It contradicts R33's own AT and claim ("every division of a landing lands within a day of the
-     others, or is refused and told why"). It lands lone divisions on an enemy coast, the class that was blocking in
-     runs 37, 39 and 43. It follows from the most ordinary edit a player makes: send four, then send two of them
-     elsewhere. Neither the grid (two divisions only) nor `landingInvariants` covers it (0 broken on six new seeds,
-     `critic/c44_li_*.log`).
-   - **Cause, read.** In `landings.ts` `gather`, the sail hour boards "those at the port, first fit"; one with no room
-     is skipped (`if (fleet === undefined) continue`) and the landing sails. The groups a re-sent part takes with it
-     are not sized to its divisions (`landingOrders` / `detachDivision` free groups by the old landing's room).
-   - **Fix.** A landing made or changed by an order takes, or calls, room for all its divisions before it may sail.
-     Then a landing never sails while one of its divisions stands at its port without room. If it cannot get the
-     room, it waits or is refused, and says so.
-   - **AT.** The 8 shapes above plus `four_hourly` on 3517 and 15101: every one-click group lands within a day.
-     Add "no sail leaves a division of the landing standing at its port" to `landingInvariants`.
-
-2. **R44-B2. A whole landing at sea clicked onto open water (a cell off its own beach, or any sea) silently turns for
-   home, and is told a day later, at its port, that "there is only sea there".**
-   - **The case, by real click.** Seed 3517: 364/365 aboard at sea for Shanghai, a day out. Both are selected and the
-     sea one cell off the Shanghai coast (1718.5, 413.5) is hovered: no tooltip and no mark
-     (`critic/c44_se_water2.json` `hover: {marks: [], tip: null}`, `critic/shots/c44se_water2_hover.png`).
-   - **The click.** Nothing is said (`click.rows: []`). The next hour the panel reads "Aboard, sailing back to Tokyo"
-     (`critic/shots/c44se_water2_after.png`).
-   - **The outcome.** The landing is home at h559. Only then, 22 h after the click, both are refused "not done: there
-     is only sea there: it goes over the sea to land on a coast" (`news`: reason 17 `OpenSea` at t557/558, the order
-     given at t534). The invasion, a day from the beach after 22 days of gathering, is cancelled.
-   - **Headless, the same on three waters** (the landing's own water 1715.5,412.5; open sea east; the Yellow Sea):
-     each turns home and is refused `OpenSea` a day later. At `813eb375` all three clicks are refused at once and
-     the landing goes in at h631/632 (`critic/c44_os_*.json` vs `critic/c44_oswt_*.json`). The Yellow Sea case by
-     click is the same (`critic/c44_se_tsing.json`).
-   - **Why blocking.** It contradicts R33's claim ("a re-click, a redirect, a recall or a cancel is an edit of it,
-     refused with a told reason when it cannot be done"). Two rules fire one after the other and disagree: ADR-830's
-     "to a place not over the sea: a cancel" and R22g's "an order to open sea is refused". A plausible misclick, the
-     sea in front of the beach the player is watching, throws away an invasion without a word.
-   - **Fix.** An order of a whole landing at sea to water is refused at the click, `OpenSea`, and the landing keeps
-     its course. A cancel is an order to its nation's own land.
-   - **AT.** The four waters above, by click: refused at once, the landing lands as planned, and the tooltip over
-     water says why.
+     If none can be had, say so at the sail hour, to the one left behind.
+   - **AT.**
+     - The split grid of `c45_jobsS.txt` (8 shapes × seeds 18705, 18709, 18711, 18713, 18715) plus run 44's grid on
+       3517 and 15101: every one-click group lands within a day.
+     - The re-sent part lands no later than at `813eb375` + 24 h.
+     - landingInvariants' `leftBehind` fires on `0fba90d8` within its default seeds, or a fixed case does.
 
 ## Non-blocking issues (prioritised)
 
-1. **R44-N1. Stale and misleading panel text around a recall.**
-   - After a recall that rejoins (run 43's case, recalled at 1/3/5 days), the notice "it leaves the landing it had for
-     its new one; the rest keep the old landing, and it will not land with them" stays on the panel for 20+ days. It
-     sits beside "Landing: 1 of 2 at the port", and it does land with them (`critic/c44_rc_d3.json` `panels`,
-     `critic/shots/c44rc_d3_d10.png`).
-   - Recalled 5 days out, its status reads "At sea, bound for its landing" for 4+ days while it sails *away* from
-     Shanghai back to Tokyo (`critic/c44_rc_d5.json` panels at h132 and h240).
-   - The recall's mark is `same: false` and its tooltip "they board transports at a port and land at the marked
-     place". Nothing says it will first sail back to Tokyo and wait there for weeks.
-2. **R44-N2. Two clicks for one place in the same hour make two landings from two ports. The first lands alone, a
-   week early.**
-   - Japan (`critic/c44_mk2_freshfirst*.json`, three seeds): 366, clicked first, lands at h500 and 364/365 at h682.
-     Run 43 landed all three together at h814–820.
-   - Britain (`critic/c44_g_eng_7019.json`, 15103, 15109, 15111, 15121): the fresh one from Plymouth lands alone at
-     h78 and is destroyed at h204. The two at Portsmouth are told `PortShut`. Run 43 landed all three together at
-     h284.
-   - The mark gives no hint of the other landing (`critic/shots/c44mk2_freshfirst_14003_twohover.png`).
-   - ADR-830 records the separate landing (R29b's ferry not rebuilt), so the rule is a decision. The readability is
-     not: the player is not told that the place already has a landing from another port that will sail first.
-3. **R44-N3. Long waits at the port, by R31f's rule.**
-   - `steal_one`: 364, clicked to Fuzhou with a fresh division from far, waits ashore at Tokyo 53 days and lands
-     h1278 (run 43: h477) (`critic/c44_k_steal_one.json`).
-   - `steal_then_sw3` lands h1005 (run 43: h770).
-   - The grid's longest wait at the port is 507 h (`critic/c44_grid_3517.json`). The panel tells the wait ("the last
-     22 days from it"), so this is readable. It is listed for the decision's cost.
-4. **R44-N4. The checkers do not reach R33's new failure modes.**
-   - `landingInvariants` has no rule that a sailing landing has left none of its divisions at its port, and none
-     that its room covers its divisions.
-   - The grid has two divisions and never clicks water.
-   - Both report 0 broken while R44-B1 and R44-B2 happen. The builder's figure "6 of 480" is reproduced exactly
-     (`critic/c44_grid_3517.log`, `critic/c44_grid_15101.json`), but it measures a narrower space than R33's claim.
+1. **R45-N1. The fix costs 5.5–6.7 days on every part re-sent, and the panel misstates the wait.**
+   - **The cost.** On seeds 3517, 15101, 18703, 18707, 18709, 18711, 18713 and 18715, the re-sent part lands 132–161 h
+     later than at `813eb375`:
+
+     | Shape | HEAD | `813eb375` |
+     |---|---|---|
+     | `n4_012` | 1108 | 975 |
+     | `n4_23` | 1426/1428 | 1267 |
+     | `n5_01` | 788 | 656 |
+     | `four_hourly` | 1399 | 1267 |
+
+   - **The cause.** The freed group is called back only at the sail hour, from wherever the AI sent it. 18601 and
+     18705, where the group stayed near, show no delay.
+   - **What the player sees.** For those days both divisions stand at Tokyo. The status reads "At Tokyo, waiting for
+     the rest of the landing" while the landing row reads "2 of 2 at the port; it sails when its transports and escort
+     are ready". Nothing says a group is being called or from where (`critic/c45_uw_four.json` panels h513/561/609,
+     `critic/shots/c45uw_four_h561.png`).
+2. **R45-N2. On a phone the new sea tooltip cannot be read.** It is a single 545-px line on a 390-px screen, cut at
+   "your landing at sea ke…" in 6 of 6 samples (`critic/shots/c45uh_phone_m_hover.png`). This is the R39 phone-tooltip
+   class (`.map-tooltip { white-space: nowrap }`, no clamping).
+3. **R45-N3. A gathering (ashore) landing gets no hover hint over water**, though the click is refused at once with a
+   row (`critic/c45_uh_desk.json` `g.hover.tip: null`). `seaHint` 3 needs one of the selection aboard.
+4. **R45-N4. The `leftBehind` rule did not catch R44-B1 on `0fba90d8` in four random seeds** (`critic/c45_liwt_headchecker.log`), and
+   it cannot see R45-B1 on HEAD. R44-N4 is half closed: `cancelWater` works, `leftBehind` is untested by its own pool.
 5. Carried, unchanged:
-   - **R37-N3**: K 18307.
-   - **R37-N4**: RG 18513.
-   - **R32-N3**.
-   - **R40-N2**: `hs_desk` identical.
-   - **R39-N2, R39-N3, R36-N3, R32-N2, R31-N1, R31-N6, R32-N5, R39-N4**.
-   - The ranking cuts long names.
+   - **R44-N1**: the stale "it will not land with them" notice for 20 days after a rejoining recall
+     (`critic/c45_rc_d1.json`–`d5`, `h6`, identical panels).
+   - **R44-N2**: two landings for one place (`critic/c45_mk2_freshfirst*.json` identical).
+   - **R44-N3**: `steal_one` h1278.
+   - **R37-N3, R37-N4, R32-N3, R40-N2, R39-N2, R39-N3, R36-N3, R32-N2, R31-N1, R31-N6, R32-N5, R39-N4**, and the
+     ranking cutting long names.
 
-## Run 43's cases re-run
+## Run 44's cases re-run
 
-| Run 43 case | `813eb375` (run 43) | HEAD `0fba90d8` | Evidence |
+| Run 44 case | `0fba90d8` (run 44) | HEAD `7e09b7b3` | Evidence |
 |---|---|---|---|
-| **R43-B1**: 364 alone to Fuzhou, recalled to Shanghai at 6 h / 1 / 2 / 3 / 5 days | h632 together / h632 together / 364 h1014 / 364 never by day 60 / 364 h229 alone | **fixed**: all h632 together; also 2 h and 8 h, and seeds 17101, 17203, 18201, 18203 | `critic/c44_e_back_*.json`, `critic/c44_r_back_*.json` |
-| R43-B1 by real click (recall 1/3/5 days, and 6 h) | split, walk to Tokyo | both h660 at Shanghai; stale notice (R44-N1) | `critic/c44_rc_h6.json`, `…_d1.json`, `…_d3.json`, `…_d5.json` |
-| **R43-N1**: the player's transports 1072 onto the Channel / a port's water | the AI's at t26 | **fixed**: the player's order held to day 20 | `critic/c44_r31d_seawar.json`, `critic/c44_r31d_ports.json` |
-| **R43-N2**: recall home (1 / 3 days), to Tsingtao | refused, lands alone at Fuzhou | **fixed**: home is a cancel (sails back, marches to the cell by h184); Tsingtao is water, so R44-B2 | `critic/c44_e_home_d1_h.json`, `critic/c44_e_tsing_d1.json` |
-| **R43-N3**: `steal_fresh2` | 364/366/367 not landed by day 60 | 364/365 h656/657; 366/367 still not landed by day 60 | `critic/c44_k_steal_fresh2.json` |
-| **R43-N4**: no mark at sea | `marks: []` | **fixed**: a mark at the recall hover | `critic/c44_rc_d3.json` |
-| `steal_freshdaybefore` (run 43: 365 alone, 15 days late) | 473 / 475 / 839 | 473 / 656 / 657: the two together | `critic/c44_k_steal_freshdaybefore.json` |
-| `steal_freshfuzhou` ×4 seeds, `freshhourbefore`, `noescort`, `reclick` | all h791–793 together | 366 h475, 364/365 h656/657 (R44-N2, by decision) | `critic/c44_k_steal_*.json` |
-| `steal_recall_d1`, `steal_recall_h4` | 364/365 h765/771 | h631/632 | same |
-| `four_two_far`, `four_hourly` | together | **split** (R44-B1) | `critic/c44_k_four_*.json` |
-| `steal_one` | 364 h477 | h1278 (R44-N3) | `critic/c44_k_steal_one.json` |
-| the other K cases (`bothfar`, `click_plus_fresh`, `four_all_sw3` ×2, `fresh3_base`, `leaversfirst_fz`, `six_all_far`, `steal_four`, `there_and_back`, `three_twofar`, `aboard_alone`, `back`, late-far ×3) | — | identical landings | `critic/c44_k_*.json`, `critic/c44_e_*.json` |
-| R42-N3: fleet order to a landing's transports | refused `Convoy` | refused `Convoy` (19) | `critic/c44_r42n3.json` |
-| G/N Britain lists | 3 land h284–291 together | `p270` cases land h86–94 together; the auto-picked 274/271 cases split (R44-N2), `PortShut` | `critic/c44_g_*.json`, `critic/c44_n_*.json`, `critic/c44_mk4_*.json` |
-| page MK cases (`nofresh2`, `leaversfirst`, `eng15101_sep`) | — | identical | `critic/c44_mk2_*.json`, `critic/c44_mk4_eng15101_sep.json` |
-| R40-N2, R39-N2, R39-N3 | open | open (`hs_desk` identical) | `critic/c44_hs_desk.json`, `critic/c44_mk_mixed_s2.json` |
-| 7019 × 20, workerDeterminism | — | save byte-identical; hashes identical | `critic/c44_seed7019_y20.bin`, `critic/c44_wd_*.log` |
-| Suite Q | PF 120: 35.5–39.2; 30: 38.6–48.2; LW 59.4–60, 83 ms | PF 120: 31.4–39.0; 30: 40.7–48.3; LW 59.8–60, 83 ms (same world: noise) | `critic/c44_pf_7019.json`, `critic/c44_lw_*.json` |
+| **R44-B1** `four_two_far` | 364 h656, 365 h951 | **fixed**: 788/789 (`813eb375`: 656/657; +132 h, R45-N1) | `critic/c45_k_four_two_far.json` |
+| **R44-B1** `four_hourly` | 1266/1267; 366/367 never | **fixed**: 1399/1400/1400/1400 | `critic/c45_k_four_hourly.json` |
+| **R44-B1** split grid, 8 shapes on 3517 | 6 of 8 split | **0 of 8**; all later than `813eb375` by 132–161 h (`n3_*` the same) | `critic/c45_sx_*.json`, `critic/c45_cmp_part1.txt` |
+| **R44-B1** by click, `sp_four` | 364 h681, 365 h975 | 364/365 **h813** together | `critic/c45_sp_four.json` |
+| **R44-B2** `os_own`/`os_east`/`os_yellow` | home, refused a day later, land 856 | **fixed**: refused at t536, land 631/632 | `critic/c45_os_*.json` |
+| **R44-B2** by click, `se_water2` | no tooltip; home h559 | **fixed**: tooltip; row at the click; lands h655 | `critic/c45_se_water2.json`, `critic/shots/c45se_water2_hover.png` |
+| `se_tsing`, `se_water`, `se_one`, `se_both`, `se_home` | — | tsing **fixed** (refused, h655); the rest identical | `critic/c45_se_*.json` |
+| `e_tsing_d1`, `r_tsing_26` (one alone at sea onto Tsingtao's water) | -/632 | 151/632: refused, keeps its course to Fuzhou | `critic/c45_e_tsing_d1.json` |
+| R43-B1 recalls (`e_back_*`, `r_back_*`, `rc_*`) | h632 / h660 together | identical | `critic/c45_e_back_*.json`, `critic/c45_r_back_*.json`, `critic/c45_rc_*.json` |
+| Every other K case (`steal_*`, `bothfar`, `click_plus_fresh`, `four_all_sw3*`, `fresh3_base`, `leaversfirst_fz`, `six_all_far`, `three_twofar`, `aboard_alone`, `back`, late-far ×3, `there_and_back`) | — | identical | `critic/c45_k_*.json` |
+| G/N/F Britain lists, R31d, R42-N3 | — | identical | `critic/c45_g_*.json`, `critic/c45_f*_*.json`, `critic/c45_r31d_*.json`, `critic/c45_r42n3.json` |
+| Page MK, RC, hint and touch cases | — | identical landings; `hs_desk` identical | `critic/c45_mk*.json`, `critic/c45_hs_desk.json` |
+| Migration of `813eb375` saves | Japan h630/631, Britain h87 | identical | `critic/c45_mig_load_*.json` |
+| landingInvariants on 18101–18117 | 0 broken | 0 broken | `critic/c45_li_181*.log` |
+| Builder's grid 3517 / 15101 | 6 / 0 of 240 | 6 / 0 of 240 | `critic/c45_grid_*.log` |
+| workerDeterminism 3517 / 17011 / 18011 | `7e113d94` / `4bae12d3` / `4d83261a` | identical | `critic/c45_wd_*.log` |
+| 7019 × 20 years | save | **byte-identical** to run 44's (`cmp`) | `critic/c45_seed7019_y20.bin` |
 
 ## Design objections (none blocking, no score lowered)
 
-- **Two landings for one place.** ADR-830 keeps a fresh division's landing at its own port separate from a landing
-  for the same place at another port. The first then sails alone (R44-N2). Run 43 landed these together. A landing
-  for one place could draw its divisions to one port, as the R29b ferry did. At the least, the mark could say "a
-  landing for this place sails from Sasebo".
-- **R31f's window kept on the object.** One click waits for its furthest division however far, so a division can
-  stand 53 days at its port (R44-N3). Hearts of Iron lets the player launch with what has arrived. A "sail now" on
-  the panel would put the trade in the player's hands.
-- Run 33–43's objections stand: save format 2 refuses older scenarios; the jump home across the sea; an ally's coast
-  is refused as "a nation outside its wars".
+- **R31f's window and the ADR-830 two-landings rule** stand as in run 44.
+- **R17b's fallback** ("no group to be had: those that fit sail, the groups come back") is a silent split by design.
+  - Given how few groups a nation has (Japan and Britain have four each, `critic/scripts/c45_tx.ts` output in this
+    report's runs), any landing larger than the fleet meets it.
+  - A sentence at the sail hour ("2 of 3 sail; the rest on the next voyage, ~12 days") would make it a choice the
+    player sees.
 
 ## Ideas from other games (not scored)
 
-- Hearts of Iron shows a naval invasion's progress as one bar per invasion, with the divisions assigned and the
-  convoys it needs. A count of transports needed against held would make R44-B1 visible before it bites.
-- Many RTS games ignore a move order onto impassable ground or show a "can't go there" cursor, rather than turning a
-  group around. That cursor is all R44-B2 needs.
+- Hearts of Iron reserves the convoys an invasion needs when it is planned, and shows "convoys needed / assigned". That
+  is the shape of R45-B1's fix: reserve at the order, not at the sail hour.
+- RTS tooltips clamp to the screen edge and wrap. R45-N2 needs only `max-width` and a flip at the right edge.
 
 ## Strengths (verified)
 
-- R33 fixed the run-43 blocking issue completely. At every recall hour from 2 h to 5 days headless (seed 3517, and
-  2 days on 18201 and 18203) and at 6 h, 1, 3 and 5 days by click on 3517, the recalled division rejoins and lands with its mate (`critic/c44_r_back_*.json`,
-  `critic/c44_rc_*.json`). Saves made at the old commit in the middle of a landing load and finish it at the same hour
-  (`critic/c44_mig_load_*.json`).
-- The AI is untouched by a rebuild of 850 lines. 7019's 20-year save is byte-identical to run 43's, and 13 checker runs
-  on new seeds report 0 broken.
+- **R44-B2 is fixed cleanly.** The refusal is immediate on every water, seed, selection shape and input tried, and the
+  landing goes in at the old hour (`critic/c45_os_*.json`, `critic/c45_n_seawater_*.json`, `critic/c45_uh_*.json`). The
+  new hover sentence tells the player both ways out.
+- **The AI world is untouched.** 7019's 20-year save is byte-identical to run 44's, workerDeterminism gives identical hashes on three seeds, and every run-44 case that
+  R36 did not aim at lands at the same hour.
 
 ## Notes
 
-- Run 43's R31 fuzz (`c43_fz3.ts`, a named case of its stability row) was not re-run: it reads `seaFetch` and
-  `convoyPort`, which R33 removed. In its place I used the builder's `landingInvariants` on six new seeds
-  (0 broken), plus my own split grid and sea-click probes, which found R44-B1 and R44-B2. It does not move stability:
-  that score was 7 with the fuzz clean, and R44-B1 is already the reason it is not 8.
-
-- `critic/wt` (`813eb375`) was used for every before/after, and removed at the end with its `node_modules` junction
-  unlinked first. The preview server was stopped.
-- Page probe `c44_fs_strand.mjs` picked group 1067 (the nearest), not the landing's 1068, because nobody waits aboard
-  1068 any more. That is a probe artefact; R42-N3 was checked directly (`critic/c44_r42n3.json`).
-- The events' `b` field in my logs is the nation and `x` the reason. The British `MoveRejected … x16` are `PortShut`,
-  which is true.
+- Seed 15101's Japan runs are hour-identical to 3517's in the first 70 days. Its "second seed" adds little for
+  Japan's landings, so I added five new seeds.
+- Britain's new cases (`critic/c45_b_eng*`) are identical on both commits. Several never record a `FormationLanded`
+  for the divisions within the window, the same on `0fba90d8`. I did not judge them.
+- `tm_touch`'s ticks per second fell (231 → 129) because it ran beside eight sims. It is contention, not a finding.
+- `critic/wt` (`0fba90d8`) and `critic/wt2` (`813eb375`) were removed at the end with their `node_modules`
+  junctions unlinked first. The preview server was stopped.

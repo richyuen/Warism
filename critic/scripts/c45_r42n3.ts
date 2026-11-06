@@ -1,0 +1,26 @@
+// Critic run 44: R42-N3 on R33's landing: Britain 15101, 270/271 to Calais; at t64 the landing's own group ordered onto the Channel.
+import { writeFileSync } from 'node:fs';
+import { EventKind } from '../../src/shared/events';
+import { size1938, NATIONS_1938 } from '../../src/sim/scenario1938';
+import { Sim } from '../../src/sim/sim';
+import { loadAssets1938 } from '../../tools/headless/assets';
+import { landingOfDivision } from '../../src/sim/systems/landings';
+const s = new Sim({ scenario: '1938', seed: 15101, assets: loadAssets1938(size1938().w) });
+const tag = (t: string): number => NATIONS_1938.findIndex((d) => d.tag === t) + 1;
+const N = tag('ENG');
+s.command({ kind: 'setPlayer', nation: N } as never);
+const w = s.world, c = () => w.formations.cols;
+s.command({ kind: 'forceWar', attacker: N, defender: tag('FRA') } as never); s.step(1);
+const ev: string[] = [];
+const take = (wd: typeof w): void => { const e = wd.out.events; for (let i = 0; i < e.length; i += 6) if (e[i + 1] === EventKind.MoveRejected && e[i + 3] === N) ev.push(`t${e[i]} rej a${e[i + 2]} reason${e[i + 4]}`); e.length = 0; wd.out.fires.length = 0; };
+for (const id of [270, 271]) s.command({ kind: 'moveFormation', id, x: 1034.5, y: 279.5, nation: N, escort: true } as never);
+s.applyNow(take as never);
+while (w.tick < 64) s.step(1, take as never);
+const l = landingOfDivision(w, 270)!;
+const g = l.fleets[0]!;
+const before = `${c().x[g]},${c().y[g]}`;
+const ok = s.command({ kind: 'moveFormation', id: g, x: 1010.5, y: 288.5, nation: N } as never);
+s.applyNow(take as never);
+for (let h = 0; h < 12; h++) s.step(1, take as never);
+const out = { group: g, fleets: l.fleets, ok, before, after12: `${c().x[g]},${c().y[g]} moving${c().moving[g]}`, ev };
+writeFileSync('critic/c45_r42n3.json', JSON.stringify(out, null, 1)); console.log(JSON.stringify(out));

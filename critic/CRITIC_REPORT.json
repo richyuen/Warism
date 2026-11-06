@@ -1,6 +1,6 @@
 {
- "commit": "0fba90d8844d9ed02f91d1d7f091602380ddf5ad",
- "mode": "full",
+ "commit": "7e09b7b37b58232e91c49795f282b2a097da7f85",
+ "mode": "focused",
  "scores": {
   "mapVisuals": 7,
   "diplomacyWarDepth": 7,
@@ -12,43 +12,27 @@
   "performance": 7,
   "stability": 7,
   "semanticZoom": 8,
-  "naval": 6,
+  "naval": 7,
   "tanks": 8,
   "aircraft": 8,
   "aiNukes": 8
  },
  "blocking": [
   {
-   "id": "R44-B1",
-   "title": "A landing re-sent in part keeps too few transports: it sails with what fits and leaves the rest of the one click standing at the port, untold, so they land alone one by one about 12 days apart",
+   "id": "R45-B1",
+   "title": "R44-B1 persists when the group a re-send freed is busy: of three re-sent by one click the landing sails with two and leaves the third standing at its port, untold; it lands alone 12 days later (seed 18705; 813eb375 lands all three together)",
    "evidence": [
-    "critic/c44_k_four_two_far.json",
-    "critic/c43_k_four_two_far.json",
-    "critic/c44_k_four_hourly.json",
-    "critic/c44_sp_four.json",
-    "critic/shots/c44sp_four_h513.png",
-    "critic/c44_sx_n4_012.json",
-    "critic/c44_sxwt_n4_012.json",
-    "critic/c44_sx_n5_01.json",
-    "critic/c44_sxwt_n5_01.json"
+    "critic/c45_b_jap18705_n4_012.json",
+    "critic/c45_b_jap18705_n4_012_g.json",
+    "critic/c45_s_18705_n4_012.json",
+    "critic/c45_swt2_18705_n4_012.json",
+    "critic/c45_bwt2_jap18705_n4_012.json",
+    "critic/c45_uw_three18705.json",
+    "critic/shots/c45uw_three18705_stranded_h831.png",
+    "critic/c45_s_cmp.txt"
    ],
-   "fix": "A landing made or changed by an order takes, or calls, room for all its divisions before it may sail, and never sails while one of its divisions stands at its port without room; if it cannot get the room, it waits or is refused and told. AT: seed 3517, N in {3,4,5,6} sent to Shanghai, a subset re-sent to Fuzhou by one click (the 8 shapes of critic/scripts/c44_jobsSX.txt), plus four_hourly, on 3517 and 15101: every one-click group lands within a day. landingInvariants gains 'no sail leaves a division of the landing standing at its port'."
-  },
-  {
-   "id": "R44-B2",
-   "title": "A whole landing at sea clicked onto open water (even a cell off its own beach) silently turns for home and is told a day later, at its port, that 'there is only sea there'",
-   "evidence": [
-    "critic/c44_se_water2.json",
-    "critic/shots/c44se_water2_hover.png",
-    "critic/shots/c44se_water2_after.png",
-    "critic/c44_se_tsing.json",
-    "critic/c44_os_own.json",
-    "critic/c44_oswt_own.json",
-    "critic/c44_os_east.json",
-    "critic/c44_oswt_east.json"
-   ],
-   "fix": "An order of a whole landing at sea to water is refused at the click (OpenSea) and the landing keeps its course; a cancel is an order to its nation's own land. AT: 3517, 364/365 a day out for Shanghai, clicked onto its own water, the sea one cell off, open sea east, and the Yellow Sea: refused at once, the landing lands as planned, the tooltip over water says why."
+   "fix": "Keep, at the re-send, the transport groups the new landing needs (detachDivision sizes the new landing's groups to its divisions) instead of freeing them to the AI and calling them back at the sail hour; or let the call take one of the nation's busy groups before falling back to 'those that fit sail'; if none can be had, tell the one left behind at the sail hour. AT: the split grid of critic/scripts/c45_jobsS.txt (8 shapes x seeds 18705, 18709, 18711, 18713, 18715) plus run 44's grid on 3517 and 15101: every one-click group lands within a day, and no later than at 813eb375 + 24 h; landingInvariants' leftBehind shown to fire on 0fba90d8 (by a fixed case if its random pool misses it)."
   }
  ],
- "timestamp": "2026-11-06T06:55:49Z"
+ "timestamp": "2026-11-06T11:37:19Z"
 }

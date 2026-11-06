@@ -1,0 +1,4 @@
+npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c45_wd_3517.json > critic/c45_wd_3517.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 17011 2190 24 critic/c45_wd_17011.json > critic/c45_wd_17011.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 18011 2190 24 critic/c45_wd_18011.json > critic/c45_wd_18011.log 2>&1
+npx tsx critic/scripts/c31_headless.ts 7019 20 critic/c45_headless_7019.json 20 critic/c45_seed7019_y20.bin > critic/c45_headless_7019.log 2>&1

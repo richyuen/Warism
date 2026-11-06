@@ -1,0 +1,105 @@
+c45_e_back_d1_17101                      HEAD 632/632                    0fba90d8 632/632                   
+c45_e_back_d1_17203                      HEAD 632/632                    0fba90d8 632/632                   
+c45_e_back_d2                            HEAD 632/632                    0fba90d8 632/632                   
+c45_e_back_d3                            HEAD 632/632                    0fba90d8 632/632                   
+c45_e_back_d5                            HEAD 632/632                    0fba90d8 632/632                   
+c45_e_back_h6                            HEAD 632/632                    0fba90d8 632/632                   
+c45_e_fresh2_17101                       HEAD 656/657/-/-                0fba90d8 656/657/-/-               
+c45_e_home_d1                            HEAD -/632                      0fba90d8 -/632                     
+c45_e_home_d3                            HEAD -/632                      0fba90d8 -/632                     
+c45_e_late_far10                         HEAD 631/632/-/-/-/-/-/-/-/-/-  0fba90d8 631/632/-/-/-/-/-/-/-/-/- 
+c45_e_late_far16                         HEAD 631/632/-/-/-/-/-/-/-/-/-/-/-/-/-/-/- 0fba90d8 631/632/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-
+c45_e_late_far6                          HEAD 631/632/-/-/-/-/-          0fba90d8 631/632/-/-/-/-/-         
+c45_e_tsing_d1                           HEAD 151/632                    0fba90d8 -/632                       *
+c45_f2_backport                          HEAD 99/99                      0fba90d8 99/99                     
+c45_f2_tocalais                          HEAD 99/99                      0fba90d8 99/99                     
+c45_f2_unitcalais                        HEAD 99/99                      0fba90d8 99/99                     
+c45_f2_unithome                          HEAD 99/99                      0fba90d8 99/99                     
+c45_f_control                            HEAD 99/99                      0fba90d8 99/99                     
+c45_f_redirect                           HEAD 94/94                      0fba90d8 94/94                     
+c45_g_eng_15101_p270                     HEAD 94/94                      0fba90d8 94/94                     
+c45_g_eng_15101_p270_land                HEAD -/-                        0fba90d8 -/-                       
+c45_g_eng_15101_p270_recall4             HEAD 99/99                      0fba90d8 99/99                     
+c45_g_eng_15101_p270_reclick             HEAD 94/94                      0fba90d8 94/94                     
+c45_g_eng_15103                          HEAD -/-                        0fba90d8 -/-                       
+c45_g_eng_15109                          HEAD -/-                        0fba90d8 -/-                       
+c45_g_eng_15111                          HEAD -/-                        0fba90d8 -/-                       
+c45_g_eng_15121                          HEAD -/-                        0fba90d8 -/-                       
+c45_g_eng_3517                           HEAD -/-                        0fba90d8 -/-                       
+c45_g_eng_7019                           HEAD -/-                        0fba90d8 -/-                       
+c45_g_eng_7019_p270                      HEAD 94/94                      0fba90d8 94/94                     
+c45_k_aboard_alone                       HEAD 151/632                    0fba90d8 151/632                   
+c45_k_back                               HEAD 632/632                    0fba90d8 632/632                   
+c45_k_base2                              HEAD 631/632                    0fba90d8 631/632                   
+c45_k_base_18201                         HEAD 631/632                    0fba90d8 631/632                   
+c45_k_bothfar                            HEAD 656/657                    0fba90d8 656/657                   
+c45_k_click_plus_fresh                   HEAD 978/979/979                0fba90d8 978/979/979               
+c45_k_four_all_sw3                       HEAD 1243/1244/1244/1244        0fba90d8 1243/1244/1244/1244       
+c45_k_four_all_sw3_h26                   HEAD 1243/1244/1244/1244        0fba90d8 1243/1244/1244/1244       
+c45_k_four_hourly                        HEAD 1399/1400/1400/1400        0fba90d8 1266/1267/-/-               *
+c45_k_four_two_far                       HEAD 788/789/1242/1242          0fba90d8 656/951/1242/1242           *
+c45_k_fresh3_base                        HEAD 976/977/977                0fba90d8 976/977/977               
+c45_k_leaversfirst_fz                    HEAD 978/979/979                0fba90d8 978/979/979               
+c45_k_six_all_far                        HEAD 1266/1267/1267/1267/-/-    0fba90d8 1266/1267/1267/1267/-/-   
+c45_k_steal_cancelfresh                  HEAD 656/657/-                  0fba90d8 656/657/-                 
+c45_k_steal_four                         HEAD 1266/1267/1267/1267/-      0fba90d8 1266/1267/1267/1267/-     
+c45_k_steal_fresh2                       HEAD 656/657/-/-                0fba90d8 656/657/-/-               
+c45_k_steal_freshdaybefore               HEAD 656/657/473                0fba90d8 656/657/473               
+c45_k_steal_freshfuzhou                  HEAD 656/657/475                0fba90d8 656/657/475               
+c45_k_steal_freshfuzhou_13001            HEAD 656/657/475                0fba90d8 656/657/475               
+c45_k_steal_freshfuzhou_14003            HEAD 656/657/475                0fba90d8 656/657/475               
+c45_k_steal_freshfuzhou_14011            HEAD 656/657/475                0fba90d8 656/657/475               
+c45_k_steal_freshhourbefore              HEAD 656/657/474                0fba90d8 656/657/474               
+c45_k_steal_noescort                     HEAD 656/657/475                0fba90d8 656/657/475               
+c45_k_steal_one                          HEAD 1278/632/1278              0fba90d8 1278/632/1278             
+c45_k_steal_recall_d1                    HEAD 631/632/475                0fba90d8 631/632/475               
+c45_k_steal_recall_h4                    HEAD 631/632/475                0fba90d8 631/632/475               
+c45_k_steal_reclick                      HEAD 656/657/475                0fba90d8 656/657/475               
+c45_k_steal_then_sw3                     HEAD 1005/1006/1006             0fba90d8 1005/1006/1006            
+c45_k_there_and_back_samehour            HEAD 631/632                    0fba90d8 631/632                   
+c45_k_three_twofar                       HEAD 656/657/951                0fba90d8 656/657/951               
+c45_n_eng3_16107                         HEAD 972/-/-                    0fba90d8 n/a                       
+c45_n_eng_16111                          HEAD 1172/1172                  0fba90d8 n/a                       
+c45_n_eng_16117_recall30                 HEAD -/1172                     0fba90d8 n/a                       
+c45_n_ger_16101                          HEAD -/-                        0fba90d8 n/a                       
+c45_n_ger_16103                          HEAD -/-                        0fba90d8 n/a                       
+c45_n_hourly15101                        HEAD 1399/1400/1400/1400        0fba90d8 1266/1267/-/-               *
+c45_n_ita_16113                          HEAD -/-                        0fba90d8 n/a                       
+c45_n_sx15101_n3_01                      HEAD 656/657/951                0fba90d8 656/657/951               
+c45_n_sx15101_n3_12                      HEAD 206/950/948                0fba90d8 206/950/948               
+c45_n_sx15101_n4_012                     HEAD 1108/1109/1109/1242        0fba90d8 975/1270/1565/1242          *
+c45_n_sx15101_n4_03                      HEAD 1398/951/951/1399          0fba90d8 1266/951/951/1561           *
+c45_n_sx15101_n4_23                      HEAD 632/632/1428/1426          0fba90d8 632/632/1299/1588           *
+c45_n_sx15101_n5_01                      HEAD 788/789/1242/1242/-        0fba90d8 656/951/1242/1242/-         *
+c45_n_sx15101_n5_012                     HEAD 1108/1109/1109/1242/-      0fba90d8 975/1270/1565/1242/-        *
+c45_n_sx15101_n6_012                     HEAD 1108/1109/1109/1242/-/-    0fba90d8 975/1270/1565/1242/-/-      *
+c45_n_sx18601_n3_01                      HEAD 656/657/951                0fba90d8 656/657/951               
+c45_n_sx18601_n3_12                      HEAD 206/950/948                0fba90d8 206/950/948               
+c45_n_sx18601_n4_012                     HEAD 977/978/978/1242           0fba90d8 975/1270/1565/1242          *
+c45_n_sx18601_n4_03                      HEAD 1388/951/951/1389          0fba90d8 1266/951/951/1561           *
+c45_n_sx18601_n4_23                      HEAD 632/632/1300/1301          0fba90d8 632/632/1299/1588           *
+c45_n_sx18601_n5_01                      HEAD 657/658/1242/1242/-        0fba90d8 656/951/1242/1242/-         *
+c45_os_east                              HEAD 631/632                    0fba90d8 856/856                     *
+c45_os_own                               HEAD 631/632                    0fba90d8 856/856                     *
+c45_os_yellow                            HEAD 631/632                    0fba90d8 856/856                     *
+c45_r_back_122                           HEAD 632/632                    0fba90d8 632/632                   
+c45_r_back_2                             HEAD 632/632                    0fba90d8 632/632                   
+c45_r_back_26                            HEAD 632/632                    0fba90d8 632/632                   
+c45_r_back_50                            HEAD 632/632                    0fba90d8 632/632                   
+c45_r_back_50_18201                      HEAD 632/632                    0fba90d8 632/632                   
+c45_r_back_50_18203                      HEAD 632/632                    0fba90d8 632/632                   
+c45_r_back_74                            HEAD 632/632                    0fba90d8 632/632                   
+c45_r_back_8                             HEAD 632/632                    0fba90d8 632/632                   
+c45_r_cancelsea_26                       HEAD 1024/1024                  0fba90d8 1024/1024                 
+c45_r_home_26                            HEAD -/632                      0fba90d8 -/632                     
+c45_r_home_74                            HEAD -/632                      0fba90d8 -/632                     
+c45_r_redirsea_26                        HEAD 656/657                    0fba90d8 656/657                   
+c45_r_tsing_26                           HEAD 151/632                    0fba90d8 -/632                       *
+c45_sx_n3_01                             HEAD 656/657/951                0fba90d8 656/657/951                813eb375 656/657/951
+c45_sx_n3_12                             HEAD 206/950/948                0fba90d8 206/950/948                813eb375 125/976/976
+c45_sx_n4_012                            HEAD 1108/1109/1109/1242        0fba90d8 975/1270/1565/1242         813eb375 975/976/976/1242  *
+c45_sx_n4_03                             HEAD 1398/951/951/1399          0fba90d8 1266/951/951/1561          813eb375 1266/951/951/1267  *
+c45_sx_n4_23                             HEAD 632/632/1428/1426          0fba90d8 632/632/1299/1588          813eb375 631/632/1267/1267  *
+c45_sx_n5_01                             HEAD 788/789/1242/1242/-        0fba90d8 656/951/1242/1242/-        813eb375 656/657/1242/1242/-  *
+c45_sx_n5_012                            HEAD 1108/1109/1109/1242/-      0fba90d8 975/1270/1565/1242/-       813eb375 975/976/976/1242/-  *
+c45_sx_n6_012                            HEAD 1108/1109/1109/1242/-/-    0fba90d8 975/1270/1565/1242/-/-     813eb375 975/976/976/1242/-/-  *
