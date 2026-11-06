@@ -1,0 +1,435 @@
+{
+ "seed": 17101,
+ "day": 730,
+ "mppWant": 0,
+ "W": 1600,
+ "H": 900,
+ "counters": [
+  {
+   "key": "hero:50",
+   "text": "Maus",
+   "box": [
+    801.7668553503129,
+    265.21361339968706,
+    88,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 50,
+     "name": "Maus",
+     "nation": 1,
+     "at": [
+      846,
+      279
+     ],
+     "pxFromBox": 1,
+     "inBox": true
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      846,
+      279
+     ],
+     "picked": 50,
+     "panel": "Maus | × | Kind | Maus | Nation | Germany"
+    },
+    {
+     "k": 1,
+     "at": [
+      846,
+      279
+     ],
+     "picked": 50,
+     "panel": "Maus | × | Kind | Maus | Nation | Germany"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:246",
+   "text": "O-I",
+   "box": [
+    1357.5068359375,
+    344.1533203125,
+    66,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 246,
+     "name": "O-I",
+     "nation": 75,
+     "at": [
+      1390,
+      358
+     ],
+     "pxFromBox": 0,
+     "inBox": true
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      1391,
+      358
+     ],
+     "picked": 0,
+     "panel": "Belgian Congo | × | Take control | Overview | Economy | Land (km²)"
+    },
+    {
+     "k": 1,
+     "at": [
+      1391,
+      358
+     ],
+     "picked": 0,
+     "panel": "Belgian Congo | × | Take control | Overview | Economy | Land (km²)"
+    }
+   ],
+   "reached": [
+    false
+   ]
+  },
+  {
+   "key": "hero:338",
+   "text": "Sovetsky Soyuz",
+   "box": [
+    706.7685546875,
+    334.8544921875,
+    182,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 338,
+     "name": "Sovetsky Soyuz",
+     "nation": 10,
+     "at": [
+      797,
+      349
+     ],
+     "pxFromBox": 1,
+     "inBox": true
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      798,
+      349
+     ],
+     "picked": 338,
+     "panel": "Sovetsky Soyuz | × | Kind | Sovetsky Soyuz | Nation | Soviet Union"
+    },
+    {
+     "k": 1,
+     "at": [
+      798,
+      349
+     ],
+     "picked": 338,
+     "panel": "Sovetsky Soyuz | × | Kind | Sovetsky Soyuz | Nation | Soviet Union"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1020",
+   "text": "T-42",
+   "box": [
+    839.1692787172957,
+    216.95052871729575,
+    80,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1020,
+     "name": "T-42",
+     "nation": 10,
+     "at": [
+      879,
+      263
+     ],
+     "pxFromBox": 32,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      879,
+      231
+     ],
+     "picked": 1020,
+     "panel": "T-42 | × | Kind | T-42 | Nation | Soviet Union"
+    },
+    {
+     "k": 1,
+     "at": [
+      879,
+      231
+     ],
+     "picked": 1020,
+     "panel": "T-42 | × | Kind | T-42 | Nation | Soviet Union"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1340",
+   "text": "Char 2C",
+   "box": [
+    1104.7649999999999,
+    448.5120397243859,
+    110,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1340,
+     "name": "Char 2C",
+     "nation": 19,
+     "at": [
+      1159,
+      463
+     ],
+     "pxFromBox": 1,
+     "inBox": true
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      1160,
+      463
+     ],
+     "picked": 1340,
+     "panel": "Char 2C | × | Kind | Char 2C | Nation | France"
+    },
+    {
+     "k": 1,
+     "at": [
+      1160,
+      463
+     ],
+     "picked": 1340,
+     "panel": "Char 2C | × | Kind | Char 2C | Nation | France"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1467",
+   "text": "Richelieu",
+   "box": [
+    751.7392578125,
+    297.6005859375,
+    122,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1467,
+     "name": "Richelieu",
+     "nation": 19,
+     "at": [
+      812,
+      344
+     ],
+     "pxFromBox": 33,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      813,
+      312
+     ],
+     "picked": 1467,
+     "panel": "Richelieu | × | Kind | Richelieu | Nation | France"
+    },
+    {
+     "k": 1,
+     "at": [
+      813,
+      312
+     ],
+     "picked": 1467,
+     "panel": "Richelieu | × | Kind | Richelieu | Nation | France"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1470",
+   "text": "USS Iowa",
+   "box": [
+    374.2626953125,
+    527.8466796875,
+    124,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1470,
+     "name": "USS Iowa",
+     "nation": 82,
+     "at": [
+      436,
+      542
+     ],
+     "pxFromBox": 1,
+     "inBox": true
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      436,
+      542
+     ],
+     "picked": 1470,
+     "panel": "USS Iowa | × | Kind | USS Iowa | Nation | United States"
+    },
+    {
+     "k": 1,
+     "at": [
+      436,
+      542
+     ],
+     "picked": 1470,
+     "panel": "USS Iowa | × | Kind | USS Iowa | Nation | United States"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1471",
+   "text": "T28",
+   "box": [
+    411.1884765625,
+    471.5771484375,
+    72,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1471,
+     "name": "T28",
+     "nation": 82,
+     "at": [
+      447,
+      518
+     ],
+     "pxFromBox": 33,
+     "inBox": false
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      447,
+      486
+     ],
+     "picked": 1471,
+     "panel": "T28 | × | Kind | T28 | Nation | United States"
+    },
+    {
+     "k": 1,
+     "at": [
+      447,
+      486
+     ],
+     "picked": 1471,
+     "panel": "T28 | × | Kind | T28 | Nation | United States"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  },
+  {
+   "key": "hero:1477",
+   "text": "TOG II",
+   "box": [
+    681.0228426828983,
+    406.4541015625,
+    96,
+    28
+   ],
+   "alpha": 1,
+   "members": [
+    {
+     "id": 1477,
+     "name": "TOG II",
+     "nation": 20,
+     "at": [
+      729,
+      420
+     ],
+     "pxFromBox": 1,
+     "inBox": true
+    }
+   ],
+   "clicks": [
+    {
+     "k": 0,
+     "at": [
+      729,
+      420
+     ],
+     "picked": 1477,
+     "panel": "TOG II | × | Kind | TOG II | Nation | United Kingdom"
+    },
+    {
+     "k": 1,
+     "at": [
+      729,
+      420
+     ],
+     "picked": 1477,
+     "panel": "TOG II | × | Kind | TOG II | Nation | United Kingdom"
+    }
+   ],
+   "reached": [
+    true
+   ]
+  }
+ ],
+ "mpp": 19567.87109375,
+ "shot": "critic/shots/c43hf_17101_desk_d730_0.png",
+ "errors": []
+}

@@ -65,10 +65,9 @@ describe('the page is told what became of a player\'s order (PLAN 4.9c)', () => 
     s.handle({ type: 'cmd', cmd: { kind: 'moveFormation', id: div, x: kx, y: ky, nation: ENG } }, 3);
     run(24 * 8);
     expect(news.map((n) => n.kind)).toEqual(['refused', 'repulsed', 'landedAway']);
-    // Alone aboard the player's transports at sea, it takes an order as at the port they turn back for
-    // (ROADMAP R31e): Kassel, inland, has no water to land from; refused so, and they sail on as before.
-    // (Before R31e: "aboard".)
-    expect(news[0]!.reason).toBe(RejectReason.NoLanding);
+    // Alone aboard the player's transports at sea, they turn back only to rejoin a landing loading for the
+    // order's target (ROADMAP R31e, R32a); none loads for Kassel: refused "aboard", and they sail on.
+    expect(news[0]!.reason).toBe(RejectReason.Aboard);
     news.shift();
     expect(news.every((n) => n.id === div && n.nation === ENG)).toBe(true);
     expect(news[1]!.x).toBeLessThan(CUXHAVEN[0] - 20);

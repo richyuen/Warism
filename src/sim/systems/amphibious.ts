@@ -474,36 +474,32 @@ export function soleAtSea(world: World, fleet: number, id: number): boolean {
 }
 
 /**
- * The player's transports `fleet`, a convoy of one at sea (`soleAtSea`), turn back for the port of
- * their nation nearest them by straight cells (ROADMAP R31e; critic run 40, R40-N1: the one re-sent
- * alone sailed at once and, recalled a day later, was refused at sea and landed alone): under way to
- * it as R29b's (`sailingToPort`), so the one aboard takes the order as at that port. The way back to
- * the voyage it had, for an order then refused; null where no port is reached.
+ * The player's transports `fleet`, a convoy of one at sea (`soleAtSea`), turn back for the port where a
+ * landing for cell `target` loads (ROADMAP R31e, R32a; critic run 40, R40-N1: the one re-sent alone
+ * sailed at once and, recalled a day later, was refused at sea and landed alone): under way to it as
+ * R29b's (`sailingToPort`), so the one aboard takes the order as at that port and rejoins it. The way
+ * back to the voyage it had, for an order then refused; null where no such landing loads, or no way.
  */
-export function turnBack(world: World, fleet: number): (() => void) | null {
-  const c = world.formations.cols;
+export function turnBack(world: World, fleet: number, target: number): (() => void) | null {
+  const f = world.formations;
+  const c = f.cols;
   const w = world.cells.w;
   const water = portSeaOf(world);
-  const at = cellOfPlace(world, fleet);
   const goal = c.targetCell[fleet]!;
-  const ports: [number, number][] = [];
-  world.ports.forEach((p, i) => {
-    if (water[i]! < 0 || world.cells.controller[p.cell] !== c.nation[fleet] || portShut(world, i)) return;
-    let dx = Math.abs((water[i]! % w) - (at % w));
-    if (world.settings.loopingMap && dx > w / 2) dx = w - dx;
-    const dy = Math.floor(water[i]! / w) - Math.floor(at / w);
-    ports.push([i, dx * dx + dy * dy]);
-  });
-  ports.sort((a, b) => a[1] - b[1] || a[0] - b[0]);
-  for (const [i] of ports.slice(0, 4)) {
-    if (!orderSail(world, fleet, (water[i]! % w) + 0.5, Math.floor(water[i]! / w) + 0.5)) continue;
-    world.convoyPort.set(fleet, i);
-    return () => {
-      world.convoyPort.delete(fleet);
-      orderSail(world, fleet, (goal % w) + 0.5, Math.floor(goal / w) + 0.5);
-    };
-  }
-  return null;
+  // Only to rejoin a landing loading for the order's target at a port of its nation, at that port (ROADMAP
+  // R32a; critic run 43, R43-B1: turned for the nearest port, the one aboard was put ashore there and
+  // walked for weeks to its landing's port, and its partner landed alone). None: the order is refused.
+  const convoy = [...world.convoyPort]
+    .filter(([o, p]) => o !== fleet && f.has(o) && c.nation[o] === c.nation[fleet] && water[p]! >= 0 && world.cells.controller[world.ports[p]!.cell] === c.nation[fleet] && !portShut(world, p) && convoyTarget(world, o) === target)
+    .sort((a, b) => a[0] - b[0])[0];
+  if (convoy === undefined) return null;
+  const i = convoy[1];
+  if (!orderSail(world, fleet, (water[i]! % w) + 0.5, Math.floor(water[i]! / w) + 0.5)) return null;
+  world.convoyPort.set(fleet, i);
+  return () => {
+    world.convoyPort.delete(fleet);
+    orderSail(world, fleet, (goal % w) + 0.5, Math.floor(goal / w) + 0.5);
+  };
 }
 
 /**

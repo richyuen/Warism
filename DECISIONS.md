@@ -65,6 +65,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   while aboard, to Kassel inland) is refused `NoLanding` (no water to land from), not `Aboard`; the voyage
   goes on as before. `landingRecallAtSea1938.test.ts` (red without: refused, Fuzhou h151). Player convoys
   only: pin unmoved.
+- **R32a** (critic run 43, R43-B1; a regression of R31e). `turnBack` turned a convoy of one for the
+  nearest port of its nation; the order was then taken there, and recalled after the first day the one
+  aboard was put ashore and bound for its landing's convoy at another port, walking weeks (R31f did not
+  wait for it: bound days after its landing's first) while its partner landed alone. Now the transports turn
+  back only for the port where a landing for the order's exact target loads, and it rejoins it there, never
+  ashore on the way; with none, the order is refused `Aboard`, as before R31e (so other orders at sea are
+  refused: R43-N2, open). Seed 3517, recalled at 1, 2, 3, 5 days: both h633 (red: h633 walking, h1015,
+  h1563, h230). The seed-2207 news test's Kassel order is refused `Aboard` again. Pin unmoved.
 - **R31f** (R37-N2, named in runs 37 and 40-42). A landing loading at its port waited for any later order to
   the same target, however far: two aboard sat 45 days for a third ordered ten days later from 48 days
   away. Now each binding has its hour (`world.seaFetchAt`, saved while not empty; reset when R29b keeps one

@@ -1,22 +1,44 @@
 {
-  "commit": "1eb4bf8531c271a3c711b10ff2aa274cd68c4cfc",
-  "mode": "focused",
-  "scores": {
-    "mapVisuals": 7,
-    "diplomacyWarDepth": 7,
-    "emergentDynamics": 7,
-    "godMode": 7,
-    "editorScenarios": 7,
-    "statsHistory": 7,
-    "uiUxPolish": 7,
-    "performance": 7,
-    "stability": 7,
-    "semanticZoom": 8,
-    "naval": 7,
-    "tanks": 8,
-    "aircraft": 8,
-    "aiNukes": 8
-  },
-  "blocking": [],
-  "timestamp": "2026-11-05T21:46:17Z"
+ "commit": "813eb3757f02967d66ef448c942fa05b26b655d1",
+ "mode": "full",
+ "scores": {
+  "mapVisuals": 7,
+  "diplomacyWarDepth": 7,
+  "emergentDynamics": 7,
+  "godMode": 7,
+  "editorScenarios": 7,
+  "statsHistory": 7,
+  "uiUxPolish": 7,
+  "performance": 7,
+  "stability": 7,
+  "semanticZoom": 8,
+  "naval": 7,
+  "tanks": 8,
+  "aircraft": 8,
+  "aiNukes": 8
+ },
+ "blocking": [
+  {
+   "id": "R43-B1",
+   "title": "A landing recalled at sea after its first day splits: the one aboard is put ashore on the nearest home coast and marches to the old port for weeks while its partner lands alone; the map says it keeps its transports",
+   "evidence": [
+    "critic/c43_rc_d3.json",
+    "critic/shots/c43rc_d3_d20.png",
+    "critic/shots/c43rc_d3_recall_panel.png",
+    "critic/shots/c43rc_d3_hover.png",
+    "critic/c43_rc_d1.json",
+    "critic/c43_e_back_h6.json",
+    "critic/c43_k_back.json",
+    "critic/c43_e_back_d2.json",
+    "critic/c43_e_back_d3.json",
+    "critic/c43_e_back_d5.json",
+    "critic/c43_ewt_back_d1.json",
+    "critic/c43_ewt_back_d2.json",
+    "critic/c43_ewt_back_d3.json",
+    "critic/c43_ewt_back_d5.json"
+   ],
+   "fix": "A recalled convoy of one sails back to its own landing's port (or on to the landing, to join its mates), not to the nearest port by straight cells; a recall that cannot rejoin is refused with that reason, and the mark agrees with the outcome. AT: seed 3517, the one sent alone to Fuzhou recalled to Shanghai at 1, 2, 3 and 5 days: it lands within a day of 365 each time, or is refused and told why."
+  }
+ ],
+ "timestamp": "2026-11-06T00:24:23Z"
 }

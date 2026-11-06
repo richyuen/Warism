@@ -1471,3 +1471,13 @@
   with or without a third sent three days later from 1,094 h away (red: all h1289); the third h1290. Whole unit
   suite green (snapshot-perf under load); landing specs green; pin unmoved.
 - R31 done (all six of run 42's naval issues, ADR-828). **Next:** critic run 43, full.
+
+## 2026-11-05 — Critic run 43 (full) on 813eb375: one blocking issue, R43-B1; R32a fixed; the loop stopped
+- Full run. Scores: 7 for map, diplomacy, emergent, god mode, editor, stats, UI, performance, stability, naval (bar
+  8); 8 for semantic zoom, tanks, aircraft, AI nukes. R42-N1/N2/N3 and R40-N1 (one day) verified fixed. One blocking:
+  R43-B1, a regression of R31e (a recall at sea after the first day walked and split the landing).
+- R32a: the transports turn back only for the port where a landing for the order's target loads; none, refused as
+  before R31e. Recalled at 1, 2, 3, 5 days: both land h633 (red: walked; h1015, h1563, h230). Naval unit tests,
+  landing specs green; pin unmoved. Committed with run 43's report in one commit, at the user's word ("after the next
+  commit let's stop").
+- **Next:** critic run 44 (R32 open in ROADMAP), when the loop is restarted.

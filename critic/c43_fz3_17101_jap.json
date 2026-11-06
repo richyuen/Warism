@@ -1,0 +1,103 @@
+{
+ "seed": 17101,
+ "T": "JAP",
+ "days": 120,
+ "every": 10,
+ "k": 3,
+ "peaceDay": -1,
+ "orders": 81,
+ "accepted": 81,
+ "embarked": 6,
+ "landed": 5,
+ "sentHome": 0,
+ "sentHomeMany": 0,
+ "reasons": {
+  "1": 21,
+  "3": 7,
+  "5": 1,
+  "6": 7,
+  "14": 18,
+  "15": 4,
+  "19": 18
+ },
+ "aboardNow": 3,
+ "boundNow": 2,
+ "convoysNow": 1,
+ "worstAboardStill": [
+  [
+   544,
+   366,
+   2100
+  ],
+  [
+   91,
+   365,
+   2197
+  ]
+ ],
+ "aboardStillOver240": 1,
+ "aboardStillOver720": 0,
+ "aboardSpells": 2,
+ "worstBound": [
+  [
+   1772,
+   367,
+   2014
+  ],
+  [
+   555,
+   365,
+   1037
+  ],
+  [
+   480,
+   388,
+   -1
+  ],
+  [
+   480,
+   369,
+   -1
+  ],
+  [
+   341,
+   366,
+   1303
+  ],
+  [
+   135,
+   368,
+   1577
+  ],
+  [
+   131,
+   384,
+   1093
+  ],
+  [
+   110,
+   394,
+   1552
+  ],
+  [
+   104,
+   391,
+   1306
+  ],
+  [
+   48,
+   368,
+   2450
+  ]
+ ],
+ "boundOver720": 1,
+ "stranded": [],
+ "strandedN": 0,
+ "reorders": 29,
+ "reAccepted": 29,
+ "fleetOrders": 18,
+ "fleetAccepted": 18,
+ "worstIdleAboard": [],
+ "idleOver72": 0,
+ "idleNow": []
+}

@@ -409,7 +409,7 @@ Rules:
   - [x] R30c (R41-N3) Its panel while its transports sail to the port: "Aboard, sailing to {port} to load the rest of
     the landing" (`toPortAboard`), not "At sea, bound for its landing". Red without.
   R30 done; then the critic again (run 42).
-- [ ] R31 **A convoy's transports and the one aboard: no one stranded or sent off alone** (critic run 42, focused, on
+- [x] R31 **A convoy's transports and the one aboard: no one stranded or sent off alone** (critic run 42, focused, on
   `1eb4bf85`: no blocking issue; naval 7, bar 8, for six non-blocking ones; ADR-828, the user: "Fix all six, then
   critic"). Each its own commit; then the critic, full.
   - [x] R31a R42-N3: a player's fleet order to the transports of a convoy (loading, or under way to its port) is
@@ -443,3 +443,15 @@ Rules:
     march (`waitedFor`, `seaFetchAt`). Seed 3517: the two h632/633 as without the late one (red: h1289), the late
     one h1290 on the next voyage. `convoyLateOrder1938.test.ts`. Pin unmoved.
   R31 done; then the critic, full (run 43).
+- [ ] R32 **A recall at sea rejoins its landing** (critic run 43, full, on `813eb375`: R43-B1 blocking, a regression of
+  R31e; naval 7, bar 8). Then the critic again.
+  - [x] R32a R43-B1: the one alone at sea, recalled to its landing after the first day, was put ashore at the nearest
+    port and walked weeks to its landing's port while its partner landed alone (2 d: 16 days apart; 3 d: marching
+    on day 60; 5 d: alone, before it). AT: recalled at 1, 2, 3 and 5 days, the two land within a day, or it is
+    refused and told; never ashore.
+    Done: the transports turn back only for the port where a landing for the order's target loads, and it rejoins
+    it there; no such landing: refused "aboard", as before R31e. All four h633 together (red: h1015, h1563, h230).
+    `landingRecallAtSea1938.test.ts`. The seed-2207 news test's Kassel order is refused `Aboard` again. Pin unmoved.
+  - [ ] Then the critic again (run 44). Open from run 43, non-blocking: R43-N1 (the AI undoes a fleet order to empty
+    transports on arrival and ships the player's divisions on them), R43-N2 (other orders at sea refused), R43-N3
+    (R37-N2's own-click case still waits two months), R43-N4 (no mark for one aboard at sea).

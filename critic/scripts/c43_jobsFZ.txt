@@ -1,0 +1,6 @@
+npx tsx critic/scripts/c43_fz3.ts 17101 JAP 120 10 3 -1 critic/c43_fz3_17101_jap.json > critic/c43_fz3_17101_jap.log 2>&1
+npx tsx critic/scripts/c43_fz3.ts 17203 ENG 120 10 3 -1 critic/c43_fz3_17203_eng.json > critic/c43_fz3_17203_eng.log 2>&1
+npx tsx critic/scripts/c43_fz3.ts 17307 USA 120 10 3 -1 critic/c43_fz3_17307_usa.json > critic/c43_fz3_17307_usa.log 2>&1
+npx tsx critic/scripts/c43_fz3.ts 17411 ITA 120 10 3 -1 critic/c43_fz3_17411_ita.json > critic/c43_fz3_17411_ita.log 2>&1
+npx tsx critic/scripts/c43_fz3.ts 17513 JAP 120 10 3 -1 critic/c43_fz3_17513_jap.json > critic/c43_fz3_17513_jap.log 2>&1
+npx tsx critic/scripts/c43_fz3.ts 17617 ENG 120 10 3 60 critic/c43_fz3_17617_eng_p60.json > critic/c43_fz3_17617_eng_p60.log 2>&1

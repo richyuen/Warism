@@ -24,8 +24,13 @@ const SHANGHAI = cellOf(121.47, 31.23, W, H) as [number, number];
 const TOKYO = cellOf(139.69, 35.69, W, H) as [number, number];
 const FUZHOU: [number, number] = [1703.5, 445.5];
 
-describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e)', () => {
-  it('sent alone to Fuzhou, recalled to Shanghai a day later: not refused; the two land at Shanghai within a day', () => {
+// ROADMAP R32a (critic run 43, R43-B1): R31e turned the transports for the nearest port; recalled after the
+// first day, the one aboard was put ashore there and walked weeks to its landing's port while its partner
+// landed alone (2 days: 16 days apart; 3 days: still marching on day 60; 5 days: alone, before it). Now they
+// turn back only for the port where its landing loads, and it rejoins it there; recalled at 1, 2, 3 and 5
+// days, the two land within a day, or the recall is refused (told) and it never walks.
+describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e, R32a)', () => {
+  for (const days of [1, 2, 3, 5]) it(`sent alone to Fuzhou, recalled to Shanghai ${days} day(s) later: the two land at Shanghai within a day, or it is refused and never walks`, () => {
     const refused: number[] = [];
     const s = new SimServer((m: FromWorker) => {
       if (m.type === 'orderNews' && m.news.kind === 'refused') refused.push(m.news.id);
@@ -69,16 +74,25 @@ describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e)', () => 
     step();
     const first = ids.find((id) => w.embarked.has(id))!;
     click([first], ...FUZHOU);
-    for (let h = 0; h < 24; h++) step();
+    for (let h = 0; h < 24 * days; h++) step();
     const ship = w.embarked.get(first)?.fleet ?? 0;
     expect(c.moving[ship], 'its transports at sea, for Fuzhou').toBe(1);
     click([first], ...SHANGHAI);
-    for (let h = 0; h < 24 * 90 && ids.some((id) => !landed.has(id)); h++) step();
-    process.stderr.write(`R31e: first ${first}, refused ${refused}, landed ${[...landed]}, at ${ids.map((id) => `${c.x[id]!.toFixed(0)},${c.y[id]!.toFixed(0)}`)}\n`);
-    expect(refused, 'none refused (red: the first, at sea)').toEqual([]);
+    let walked = false;
+    for (let h = 0; h < 24 * 90 && ids.some((id) => !landed.has(id)); h++) {
+      if (!landed.has(first) && !w.embarked.has(first)) walked = true;
+      step();
+    }
+    process.stderr.write(`R32a ${days} d: first ${first}, refused ${refused}, walked ${walked}, landed ${[...landed]}, at ${ids.map((id) => `${c.x[id]!.toFixed(0)},${c.y[id]!.toFixed(0)}`)}\n`);
+    expect(walked, 'the one aboard never ashore before it lands (red: put ashore, walked weeks)').toBe(false);
     expect(landed.size, 'both landed').toBe(2);
+    if (refused.length > 0) {
+      // Refused: told, and it goes on to the landing it was sent to.
+      expect(refused, 'the one at sea, told').toEqual([first]);
+      return;
+    }
     const at = [...landed.values()];
-    expect(Math.max(...at) - Math.min(...at), 'together (red: Fuzhou h150 and Shanghai)').toBeLessThanOrEqual(24);
+    expect(Math.max(...at) - Math.min(...at), 'together (red: 16 days apart, or alone)').toBeLessThanOrEqual(24);
     for (const id of ids) expect(Math.hypot(c.x[id]! - SHANGHAI[0], c.y[id]! - SHANGHAI[1]), `${id} at Shanghai`).toBeLessThan(15);
   }, 300_000);
 });

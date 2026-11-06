@@ -1,0 +1,62 @@
+npx tsx critic/scripts/c31_ho.ts 4111 20 off critic/c43_ho_off_4111.json > critic/c43_ho_off_4111.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 4253 20 off critic/c43_ho_off_4253.json > critic/c43_ho_off_4253.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 4637 20 off critic/c43_ho_off_4637.json > critic/c43_ho_off_4637.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 5023 20 off critic/c43_ho_off_5023.json > critic/c43_ho_off_5023.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 5449 20 off critic/c43_ho_off_5449.json > critic/c43_ho_off_5449.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 5867 20 off critic/c43_ho_off_5867.json > critic/c43_ho_off_5867.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 6299 20 off critic/c43_ho_off_6299.json > critic/c43_ho_off_6299.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 6733 20 off critic/c43_ho_off_6733.json > critic/c43_ho_off_6733.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 7177 20 off critic/c43_ho_off_7177.json > critic/c43_ho_off_7177.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 7603 20 off critic/c43_ho_off_7603.json > critic/c43_ho_off_7603.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 4111 20 on critic/c43_ho_on_4111.json > critic/c43_ho_on_4111.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 4637 20 on critic/c43_ho_on_4637.json > critic/c43_ho_on_4637.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 5449 20 on critic/c43_ho_on_5449.json > critic/c43_ho_on_5449.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 6299 20 on critic/c43_ho_on_6299.json > critic/c43_ho_on_6299.log 2>&1
+npx tsx critic/scripts/c31_ho.ts 7177 20 on critic/c43_ho_on_7177.json > critic/c43_ho_on_7177.log 2>&1
+npx tsx critic/scripts/c43_lh.ts 3517 30 critic/c43_lh_3517.json > critic/c43_lh_3517.log 2>&1
+npx tsx critic/scripts/c43_lh2.ts 3517 USA 603.5 352.5 1034.5 279.5 40 > critic/c43_lh2_usa_calais.log 2>&1
+npx tsx critic/scripts/c43_lh2.ts 3517 ENG 1023 275 1048.5 199.5 20 > critic/c43_lh2_eng_bergen.log 2>&1
+npx tsx critic/scripts/c43_swe.ts 3517 > critic/c43_swe.log 2>&1
+npx tsx critic/scripts/c31_headless.ts 7019 20 critic/c43_headless_7019.json 20 critic/c43_seed7019_y20.bin > critic/c43_headless_7019.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 8123 7300 --heroes > critic/c43_wi_8123_h20.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 8431 7300 --diplomacy random > critic/c43_wi_8431r_20.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 8807 1825 --world random > critic/c43_wi_8807w_5y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 8233 7300 --heroes --rules heroes,navy > critic/c43_wi_8233_h20_hn.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 9311 7300 --heroes --diplomacy random --rules air > critic/c43_wi_9311r_h20_air.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 8677 7300 --heroes --bankrupt POL:-800,ROM:-300 > critic/c43_wi_8677_h20_bk.log 2>&1
+npx tsx tools/diag/heroWaits.ts 8125 7300 > critic/c43_herowaits_8125.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 8123 scenario 400 60,200,350 20 --heroes > critic/c43_diploinv_8123s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 8431 random 400 60,200,350 20 > critic/c43_diploinv_8431r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 8807 scenario 400 60,200,350 20 --world random > critic/c43_diploinv_8807w.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 8573 scenario 400 60,200,350 20 > critic/c43_diploinv_8573.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 8999 scenario 400 60,200,350 20 --heroes > critic/c43_diploinv_8999s_h.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c43_wd_3517.json > critic/c43_wd_3517.log 2>&1
+npx tsx critic/scripts/c31_def.ts 8123 20 critic/c43_def_8123.json > critic/c43_def_8123.log 2>&1
+npx tsx critic/scripts/c43_pm.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 sea 25 critic/c43_pm_jap_sea.json > critic/c43_pm_jap_sea.log 2>&1
+npx tsx critic/scripts/c43_pm.ts 3517 JAP NED 1818.5 385.5 1631.5 632.5 2 sea 40 critic/c43_pm_japned_sea.json > critic/c43_pm_japned_sea.log 2>&1
+npx tsx critic/scripts/c43_pm.ts 3517 JAP NED 1818.5 385.5 1631.5 632.5 2 landed 40 critic/c43_pm_japned_landed.json > critic/c43_pm_japned_landed.log 2>&1
+npx tsx critic/scripts/c43_pm.ts 3517 GER FRA 1066.5 280.5 1046.5 291.5 2 h20 12 critic/c43_pm_gerfra_land.json > critic/c43_pm_gerfra_land.log 2>&1
+npx tsx critic/scripts/c43_pm.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 3 sea 12 critic/c43_pm_eng_sea.json > critic/c43_pm_eng_sea.log 2>&1
+npx tsx critic/scripts/c43_ps.ts > critic/c43_ps.log 2>&1
+npx tsx critic/scripts/c43_lmchk.ts > critic/c43_lmchk.log 2>&1
+npx tsx critic/scripts/c43_lh2.ts 3517 ENG 1023 275 1054.5 203.5 20 > critic/c43_lh2_eng_bergen2.log 2>&1
+npx tsx critic/scripts/c43_lh2.ts 3517 NED 1043.5 237.5 1631.5 632.5 20 > critic/c43_lh2_ned_java.log 2>&1
+npx tsx critic/scripts/c43_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 1 none 120 critic/c43_wait_four120.json > critic/c43_wait_four120.log 2>&1
+npx tsx critic/scripts/c43_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 3 1 none 90 critic/c43_wait_three90.json > critic/c43_wait_three90.log 2>&1
+npx tsx critic/scripts/c43_wait.ts 3517 ENG FRA 1023.5 275.5 1034.5 279.5 3 1 none 20 critic/c43_wait_engcalais3.json > critic/c43_wait_engcalais3.log 2>&1
+npx tsx critic/scripts/c43_wait.ts 3517 ENG GER 1023.5 275.5 1080.5 248.5 4 1 none 40 critic/c43_wait_enggerfour.json > critic/c43_wait_enggerfour.log 2>&1
+npx tsx critic/scripts/c43_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 reorder 30 critic/c43_wait_reorder.json > critic/c43_wait_reorder.log 2>&1
+npx tsx critic/scripts/c43_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 peace 30 critic/c43_wait_peace.json > critic/c43_wait_peace.log 2>&1
+npx tsx critic/scripts/c43_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 2 48 cancel 30 critic/c43_wait_cancel.json > critic/c43_wait_cancel.log 2>&1
+npx tsx critic/scripts/c43_wait.ts 3517 JAP CHI 1818.5 385.5 1715.5 413.5 4 1 none 40 critic/c43_wait_four.json > critic/c43_wait_four.log 2>&1
+npx tsx critic/scripts/c43_fz.ts 10601 JAP 120 10 3 -1 critic/c43_fz_10601_jap.json > critic/c43_fz_10601_jap.log 2>&1
+npx tsx critic/scripts/c43_fz.ts 10663 ENG 120 10 3 60 critic/c43_fz_10663_eng_p60.json > critic/c43_fz_10663_eng_p60.log 2>&1
+npx tsx critic/scripts/c43_fz.ts 10709 USA 120 10 3 -1 critic/c43_fz_10709_usa.json > critic/c43_fz_10709_usa.log 2>&1
+npx tsx critic/scripts/c43_fz.ts 10781 ITA 120 10 3 -1 critic/c43_fz_10781_ita.json > critic/c43_fz_10781_ita.log 2>&1
+npx tsx critic/scripts/c43_fz.ts 10853 ENG 120 10 3 -1 critic/c43_fz_10853_eng.json > critic/c43_fz_10853_eng.log 2>&1
+npx tsx critic/scripts/c43_fz.ts 10937 JAP 120 10 3 25 critic/c43_fz_10937_jap_p25.json > critic/c43_fz_10937_jap_p25.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 10601 scenario 400 60,200,350 20 --heroes > critic/c43_diploinv_10601s_h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 10663 random 400 60,200,350 20 > critic/c43_diploinv_10663r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 10709 scenario 400 60,200,350 20 --world random > critic/c43_diploinv_10709w.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 10601 7300 --heroes --rules heroes,navy > critic/c43_wi_10601_h20_hn.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 10663 3650 --diplomacy random > critic/c43_wi_10663r_10.log 2>&1

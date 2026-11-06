@@ -1,189 +1,196 @@
-# Critic report, run 42 (focused) — after R30
+# Critic report, run 43 (full) — after R31
 
-- **Mode: focused.** Decided from git before anything else (CRITIC_PROMPT, ADR-804). (1) Run 41 (`6a1a7e7c`, on
-  `77d37526`) has a blocking issue (R41-B1) and naval 7 under its bar of 8. (2) Every commit since is an R30 item, and
-  R30 was filed by that report commit ("… naval 7 (bar 8); R30 filed"): `aad6a00d` R30a, `1eb4bf85` R30b, R30c.
-  (3) The last three reports are focused (41), focused (40), full (39): not all focused. So: run 41's named cases
-  re-run; naval (under its bar, blocked) rescored; and the dimensions the changed files touch rescored —
-  `amphibious.ts`/`movement.ts` → naval; `server.ts`/`protocol.ts` (the new `toPortAboard` panel state) → stability
-  and performance; `en.json` (the new panel text) → uiUxPolish. The rest carried, marked "carried".
-- **This run has no blocking issue, but it is focused: a release still needs a full run with none** (ADR-804). The next
-  critic run is full.
-- **Commit judged:** `1eb4bf8531c271a3c711b10ff2aa274cd68c4cfc` (`critic/c42_commit.txt`). **Date:** 2026-11-05.
-- **Build:** `vite build --outDir critic/c42_dist`, exit 0 (`critic/c42_build.log`), `vite preview` on 127.0.0.1:5299.
-  Run 41's commit `77d37526` in a worktree (`critic/wt`), built to `critic/c42_wtdist` (`critic/c42_wtbuild.log`) and
-  served on 5298, so the R41-B1 page case was played on both builds. Chromium through Playwright, desk 1600 × 900.
-- **Runs:** run 41's scripts copied as `critic/scripts/c42_*` (output names only changed). Job lists
-  `c42_jobsBase.txt` (baseline, determinism, checkers), `c42_jobsK.txt` (run 41's 28 Japan cases, headless by the page's
-  path), `c42_jobsG.txt` (Britain, HEAD and `77d37526`), `c42_suiteMK.sh` (run 41's page cases, plus R41-B1 on 7019,
-  the redirect by two clicks, and the R41-N2 recall by real click). **New:** `c42_gen.ts` gained `RECALL`/`RECALLTO`
-  (the two clicked back, onto the old landing, the same landing, or home), `FLEETMOVE`/`FLEET2`/`UNITAFTER` (the
-  player's own order to a loaded convoy's transports, then recovery attempts), `NOREDIRECT`; `c42_jobsN.txt` (new seeds
-  and coasts, both commits), `c42_jobsF.txt`/`c42_jobsF2.txt` (transports ordered by the player); page probes
-  `c42_pn_panel.mjs` (the new panel, then the two clicked home while the ship sails between ports) and
-  `c42_fs_strand.mjs` (the transports of a loading landing clicked out to sea). Suite Q alone at the end
-  (`critic/scripts/c42_suiteQ.sh`).
-- **Baseline: R30 left every AI world alone.** The year-20 save of 7019 is byte-identical to run 41's
-  (`cmp critic/c42_seed7019_y20.bin critic/c41_seed7019_y20.bin`: identical); workerDeterminism ends on the same hash on
-  every arm as run 41 for 3517 (`7e113d94`), 11071 (`d2716b65`), 14011 (`30c3bbe9`) and 15013 (`56855b2d`)
-  (`critic/c42_wd_*.log`). The carried scores rest on this.
+- **Mode: full.** Decided from git before anything else (CRITIC_PROMPT, ADR-804). Condition 3 of a focused run fails:
+  the last three reports are all focused — run 42 (`9830a4ad`, on `1eb4bf85`), run 41 (`6a1a7e7c`, on `77d37526`) and
+  run 40 (`27d14686`, on `76b88197`), each JSON `"mode": "focused"`. Run 42 itself said the next run is
+  full. So the whole brief: every dimension rescored, nothing carried; the four 8s re-earned on new seeds.
+- **Commit judged:** `813eb3757f02967d66ef448c942fa05b26b655d1` (HEAD at the start, `critic/c43_commit.txt`).
+  **Date:** 2026-11-05.
+- **Build:** `vite build --outDir critic/c43_dist`, exit 0 (`critic/c43_build.log`), served by `vite preview` on
+  127.0.0.1:5299. Chromium through Playwright, desk 1600 × 900, phone 390 × 844. Run 42's commit `1eb4bf85` in a
+  worktree (`critic/wt`) for the before/after of every new defect.
+- **Runs.** Run 42's scripts copied as `critic/scripts/c43_*` (and run 39's full-run probes where no run-42 copy
+  existed). Run 42's cases: page suite `c43_suiteMK.sh` (R40-B1/B2, R41-B1, R41-N2, the mark, touch, the hint, plus
+  R42-N1 `c43_pn_panel.mjs` and R42-N3 `c43_fs_strand.mjs`), 51 headless jobs `c43_jobsR42.txt` (run 42's K, G, G2, N,
+  F, F2 lists). Full-run probes on **new seeds 17101–17617**: `c43_suiteF1.sh`, `c43_suiteF2.sh` (zoom, battles, wing,
+  God Mode nukes and tools, Breakthrough, phone zoom, stacks, relations graph, planes, hero fold, editor, sea battle,
+  phone/UI, traits, mass orders), `c43_suiteF3.sh` (AI nukes, History, export on HEAD's own 20-year saves). New attacks
+  on R31: `c43_jobsE.txt` (R31e recall at sea at 6 h, 1, 2, 3, 5 days; recall to home, to another coast; R31f late
+  orders), replayed on `1eb4bf85` (`c43_jobsEWT2.txt`); page probe `c43_rc_recall.mjs` (the recall by real click);
+  `c43_r31d.ts` (a player's fleet order to empty transports); `c43_fz3.ts` (run 34's sea-order fuzz plus R31's own
+  attack: aboard divisions re-ordered and convoy transports given fleet orders every 3 days, idle-aboard spells
+  tracked), six new seeds × 120 days. Checkers on new seeds. Suite Q (timing) alone at the end.
+- **Baseline: R31 left every AI world alone.** The year-20 save of 7019 is byte-identical to run 42's
+  (`cmp critic/c43_seed7019_y20.bin critic/c42_seed7019_y20.bin`: identical); workerDeterminism ends on run 42's hash on
+  every arm for 3517 (`7e113d94`), 11071 (`d2716b65`), 14011 (`30c3bbe9`), 15013 (`56855b2d`) and on new seed 17011
+  (`4bae12d3`) (`critic/c43_wd_*.log`).
 
 ## Verdict
 
-**R30 fixes R41-B1 as run 41 stated it, by real click, on both seeds.** Britain at war with France, 270 and 271 clicked
-onto Calais; the hour after 270 boards, the fresh tank brigade 276 clicked onto Caen, then the two: **all three land
-together at h291** on 15101 and on 7019 (`critic/c42_mk4_eng15101_p270.json`, `critic/c42_mk4_eng7019_p270.json`;
-`critic/shots/c42mk4_eng15101_p270_firstland.png`: one 26.4k stack at Caen on 13 January). The same clicks on
-`77d37526` still land 276 alone at h87 and lose it at h237 (`critic/c42_mk4_old_eng15101_p270.json`). Redirected by
-two clicks instead of one: the three at h291 (`critic/c42_mk4_eng15101_sep.json`). Headless, ascending ids:
-290/290/291 on both seeds (`critic/c42_g_eng_15101_p270.json`, `critic/c42_g_eng_7019_p270.json`; `77d37526`: 276 at
-h85 alone, destroyed h233, `critic/c42_gwt_eng_15101_p270.json`).
-
-**R30b and R30c do what they say.** The R41-N2 recall (fresh one to Fuzhou, then the two, then the two back onto
-Shanghai four hours later), by real click: nobody refused, 364 and 365 land at Shanghai h788/794
-(`critic/c42_mk2_recall4.json`; run 41: 364 refused, Fuzhou h500, 365 Shanghai h794 alone). The re-click onto the
-landing it has while the ship is under way refuses nothing now (`critic/c42_k_steal_reclick.json`: no `MoveRejected`;
-run 41's had `t9 MoveRejected a364 … x1.0`). The panel reads "Aboard, sailing to Sasebo to load the rest of the
-landing" (`critic/shots/c42mk2_freshfirst_panel_h4.png`) and, for Britain, "Aboard, sailing to Plymouth…"
-(`critic/shots/c42pn_eng15101_landorder.png`).
-
-**No blocking issue.** The new defects found are non-blocking: a land order to the one aboard while its ship ferries
-between home ports is refused with a reason that is no longer true and it then lands abroad (R42-N1, R30b's remaining
-hole); a port bombed shut while a division walks to it sends the convoy off with the one aboard alone (R42-N2,
-pre-existing); a player's fleet order to a loaded convoy's transports strands the division aboard at sea indefinitely
-under a false "bound for its landing" (R42-N3, pre-existing). **Naval stays 7**, under its bar of 8.
+**R31 closes four of run 42's six as filed** — R42-N1, R42-N2, R42-N3 by real click or on their seeds, and R40-N1 at
+the moment its AT names — and leaves R41-N1 and R37-N2's named case as they were, by recorded decision. **But R31e's
+recall at sea opens a worse hole than the one it closes, and it is blocking (R43-B1).** The one sent alone to Fuzhou
+and recalled to its landing at Shanghai one day out rejoins it (both h632, page h658, `critic/c43_rc_d1.json`). Recalled
+**three** days out — the same click, two days later — its transports turn for the nearest Japanese port, it is put
+ashore on Kyushu and marches the length of Honshu back to **Tokyo** for 40+ days ("Marching to Tokyo to board
+transports"), its partner lands **alone** at h658, and on day 60 it has only just sailed (`critic/c43_rc_d3.json`,
+`critic/shots/c43rc_d3_d20.png`). The map, the moment the order is given, shows the green mark "The landing they
+already have: they keep their transports and land at the marked place" (`critic/shots/c43rc_d3_recall_panel.png`):
+neither is true. Recalled two days out it lands 16 days after its partner; five days out it lands alone 17 days before
+it. On `1eb4bf85` every one of these recalls was refused and it landed at Fuzhou h150 (`critic/c43_ewt_back_*.json`).
+**Naval stays 7, under its bar of 8.** No other score moves: R31 changed no AI world, the checkers are clean on seven
+new runs, and the fuzz of R31's own orders strands nobody.
 
 ## Scores
 
-| Dimension | Run 41 | Run 42 | |
+| Dimension | Run 42 | Run 43 | |
 |---|---|---|---|
-| Map visuals and readability | 7 | 7 | **Carried.** No map file changed |
-| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 | **Carried.** No rule file changed. Checkers on new seeds: diploInvariants 16013 (heroes, 400 days) and 16019 (random world) 0 broken (`critic/c42_diploinv_16013s_h.log`, `critic/c42_diploinv_16019r.log`); worldInvariants 16013 heroes+navy 10 years 0 broken (`critic/c42_wi_16013_h10_hn.log`) |
-| Emergent world dynamics over long runs | 7 | 7 | **Carried.** 20-year save of 7019 byte-identical to run 41's |
-| God Mode | 7 | 7 | **Carried.** |
-| Editor and scenarios | 7 | 7 | **Carried.** |
-| Stats and history | 7 | 7 | **Carried.** |
-| UI/UX and polish | 7 | 7 | **Rescored.** R41-N3 fixed (the panel lines above). R41-B1's "1 of 2 aboard" for a landing of three is gone with it: 276's panel reads "2 of 3 aboard; the last 9 days from the port" (`critic/c42_mk4_eng15101_p270.json` `panels` h69). Still: R40-N2 (33 selected, "Your selected forces go by sea", `critic/c42_hs_desk.json`, `critic/shots/c42hs_desk_n33.png`), R39-N2 (no mark on a touch screen, `critic/c42_tm_touch.json` `before.mark: null`), R39-N3 (Escape empties the selection, mark and by-sea tooltip stay, `critic/c42_mk_mixed_s2.json` `afterEsc`). New: R42-N1's refusal text ("it is aboard transports and takes no order until it lands") for a division that takes orders at the port it reaches next day (`critic/shots/c42pn_eng15101_landorder.png`); R42-N3's "At sea, bound for its landing" for twelve days on transports going nowhere (`critic/shots/c42fs_eng15101_d12.png`). Not 8: these, the same class run 38–41 scored 7 |
-| Performance | 7 | 7 | **Rescored** (`server.ts`'s new panel state). Suite Q alone (the two previews only; PF and LW re-run by `critic/scripts/c42_suiteQ2.sh` after the first pass overlapped two headless probes, kept as `critic/c42_pf_7019_contended.json`, `critic/c42_lw_6151_contended.json`): PF 7019 y20 (min–max fps, worst p95) 3,000 m/px 60–60.2, 18.5 ms; 1,200 59–60.2; 600 60–60.2; **120: 35.5–38.2** (run 41 37.1–38.2, run 40 34.5–39.1); **30: 38.6–48** (run 41 38.5–47.1) (`critic/c42_pf_7019.json`); LW 6151 ten years 59.9–60 fps, longest gap 83 ms, none over 500 ms (`critic/c42_lw_6151.json`); LWHON 3517 (heroes) 59.9–60 fps, longest gap 83 ms, none over 500 ms (`critic/c42_lwhon_3517.json`), all as run 41. **Not 8:** 35–48 fps at unit zoom on a year-20 world, as before |
-| Stability | 7 | 7 | **Rescored.** Save of 7019 byte-identical; workerDeterminism the same end hashes on 3517, 11071, 14011, 15013 on every arm; checkers 0 broken on new seeds; a save taken while R29b's ship sails Tokyo → Sasebo (t12, the R30a/R30b state) and one while it waits at Sasebo (t200) load to the same hash, step identically to t900 and land h790/790/792 as the unsaved run (`critic/c42_sl_t12.json`, `critic/c42_sl_t200.json`, 0 diffs); no page error in any page JSON of this run (`errors: []`). **Not 8:** run 41 held it at 7 for R41-B1, which is fixed, but R42-N3 is a state the game never leaves on its own: a division aboard at sea for 25 days and counting, its mate waiting at the port as long (`critic/c42_f_control.json`, `critic/c42_fs_eng15101.json`), reached by one ordinary fleet order |
-| Semantic zoom to unit level (needs 8) | 8 | 8 | **Carried.** |
-| Naval warfare (needs 8) | 7 | **7** | **Rescored.** R41-B1 fixed, R41-N2 and R41-N3 fixed, R40-N1's re-click fixed (Verdict). **Not 8:** R41-N1 unchanged (365 walks Tokyo → Sasebo for ~29 days while its landing waits, `critic/c42_k_steal_freshfuzhou.json` `trace` t4–t769); R42-N1 (new, R30b's hole); R42-N2 and R42-N3 (pre-existing, found this run, both builds); R40-N1 (re-sent alone and recalled: refused) and R37-N2 unchanged |
-| Tanks (needs 8) | 8 | 8 | **Carried.** (R41-B1's lost tank brigade now lands with the others) |
-| Aircraft (needs 8) | 8 | 8 | **Carried.** No air file changed |
-| AI nuclear use (needs 8) | 8 | 8 | **Carried.** |
+| Map visuals and readability | 7 (carried) | 7 | **Rescored.** Z 17101 from 6,000 to 3 m/px in 18 steps, no error (elements from 1,573 m/px, 13,828 individuals at 28 m/px, `critic/c43_z_17101.json`); C 17203 at 3,000/80/10 m/px reads cleanly (`critic/shots/c43c_17203_arm_3000m.png`, `…_0080m.png`, `…_0010m.png`). **Not 8:** the run 37–39 reasons stand — the ranking still cuts "French Equatorial…" (every shot, e.g. `critic/shots/c43sk_17513_0.png`), division labels pile up in a battle at 80 m/px (`critic/shots/c43c_17203_arm_0080m.png`), the relations graph's labels overlap (below) |
+| Diplomacy, war, alliance, puppet, revolt depth | 7 (carried) | 7 | **Rescored.** Checkers on **new seeds**, 0 broken: diploInvariants 17013 (heroes), 17019 (random diplomacy), 17021, 17023 (random world) (`critic/c43_diploinv_*.log`); worldInvariants 17013 heroes+navy 10 y, 17027 all rules 20 y, 17029 air 20 y (`critic/c43_wi_*.log`). Relations graph on 17513, day 0 and 365: 67 nodes, war 7 / alliance 11 / guarantee 8 / puppet 40, matching the sim's truth; each kind's click reads a true sentence ("Albania is a puppet of Italy") (`critic/c43_rg_17513_desk.json`). **Not 8:** R37-N4 unchanged — "France"/"French West…ca", "Mengjiang"/"Turkey", "Spanish Re~ublic" overprint each other at day 365 (`critic/shots/c43rg_17513_desk_d365.png`); run 30's list (bond exit, guarantees, a refused peace untold) untouched |
+| Emergent world dynamics over long runs | 7 (carried) | 7 | **Rescored.** 7019's 20-year world byte-identical to run 42's, so run 37–42's reading stands. **New** 17003 × 20 years (`critic/c43_headless_17003.json`): 82–99 nations living, 7–12 founded at a time, 7–10 wars, the Soviet Union 20–28 % and the USA 11–15 %, Germany rising to 8.4 % by year 17, one AI nuclear decision (the Soviet Union on the UK, year 11); History of that world 3,703 events of 29 kinds (`critic/c43_hi_17003.json`). **Not 8:** the top of the table barely moves over 20 years (Soviet Union, USA, Canada, Denmark-by-Greenland 5.4 % every year), as run 37 said |
+| God Mode | 7 (carried) | 7 | **Rescored on new seeds.** A 17101: an H-bomb on Paris (3,329,000 civilians, alert, "Go to", History row) and an A-bomb on London, with the cloud and fallout read at 3,000 to 30 m/px (`critic/shots/c43a_17101_14_paris_h_2h.png`, `critic/shots/c43a_17101_30_history.png`); Q 17203: revolt, spawn nation, found city, raze city, each with its ticker row (`critic/c43_q_17203.json`). **Not 8:** R37-N3 unchanged — a Breakthrough at peace does nothing and says nothing (K 17307, `before` = `after`, ticker empty, `critic/c43_k_17307.json`) |
+| Editor and scenarios | 7 (carried) | 7 | **Rescored.** G 17101: German/British fleets and a Polish bomber placed, a fleet on Berlin refused "no water of a sea is near the place"; the scenario exported, the pending text and Cancel right, the export loaded from the title (89/76/50 forces, 10 Polish warheads as placed) and played to day 60 with its sea battle in the ticker and History (`critic/c43_g_17101.json` `loaded`, `marks`); the probe's 120-day wait timed out at max speed beside other suites, as run 39's did at the same point (`critic/c39_g_4877.json`), so not a finding. OS2: the run-26 scenario is still refused "made by an older version of Warism" (`critic/c43_os2_c25.json`, the objection since run 33). Not 8 for that, and for the editor's flat 100-line nation list |
+| Stats and history | 7 (carried) | 7 | **Rescored on a new 20-year world.** History of 17003 y20 opens in 136 ms with 3,703 events and 29 kinds; CSV 3,705 lines, JSON export (`critic/c43_hi_17003.json`, `critic/c43_dl_17003.json`); the God Mode strikes have their rows (`critic/shots/c43a_17101_30_history.png`). Not 8: R32-N3 (rows cut mid-word, "its port is bombe…", `critic/shots/c43fs_eng15101_d3.png`) |
+| UI/UX and polish | 7 (carried) | 7 | **Rescored.** R31a's refusal reads well ("Transport group 1068: not done: these transports carry a landing, or load for one: they sail with it…", `critic/c43_fs_eng15101.json` `rows0`); R42-N1's false refusal is gone (`critic/c43_pn_eng15101.json` `rowsAfterLand: []`). New: R43-B1's green mark and "they keep their transports" for an order that puts the division ashore 600 km away; its panel notice "it leaves the landing it had for its new one; the rest keep the old landing" stays for 40 days after the player sent it back to that landing (`critic/shots/c43rc_d3_d20.png`); before the recall click there is no mark and no by-sea line at all for a division aboard at sea (`critic/shots/c43rc_d3_hover.png`, `recallHover.marks: []`). R31b's convoy ended by bombing tells the one aboard "not done: its port is bombed shut" though no order was given (`critic/shots/c43fs_eng15101_d3.png`). Carried: R39-N2, R39-N3, R40-N2 (`critic/c43_tm_touch.json`, `critic/c43_mk_mixed_s2.json`, `critic/c43_hs_desk.json`) |
+| Performance | 7 | 7 | **Rescored**, Suite Q alone on the machine at the end (`critic/scripts/c43_suiteQ.sh`). PF 7019 y20 (fps per pass, worst p95): 3,000 / 1,200 / 600 m/px 58.8–60.2, ≤ 18.4 ms; **120 m/px 35.5–39.2** (run 42 35.5–38.2); **30 m/px 38.6–48.2** (run 42 38.6–48) (`critic/c43_pf_7019.json` `agg`). Ten-year watches: LW 6151 59.9–60 fps, longest gap 83 ms (run 42 the same), LWHON 3517 59.4–60 fps, 83 ms, and **new seed** 17101 59.6–60 fps, 83 ms, no gap over 500 ms (`critic/c43_lw_6151.json`, `critic/c43_lwhon_3517.json`, `critic/c43_lw_17101.json`). Headless tick on 17003 y17 6.1 ms, worst 257 ms (`critic/c43_headless_17003.json`). **Not 8:** 35–48 fps at unit zoom on a year-20 world, as in every run since 37 |
+| Stability | 7 | 7 | **Rescored.** No page error in any page JSON of this run (`errors: []`); 7019's save byte-identical; workerDeterminism the same end hash on every arm for four old seeds and new 17011; seven checker runs on new seeds 0 broken; the R31 fuzz (`critic/c43_fz3_*.json`, six seeds × 120 days, 412 sea orders, 153 re-orders of divisions aboard, 98 fleet orders to convoy transports): **no division aboard a dead group, no idle-aboard spell over 72 h, none idle at the end**. **Not 8:** R43-B1 is a state the player cannot see out of (a division marching 40+ days to a port while the panel and the mark say it keeps its transports); the longest bound spell in the fuzz is 1,772 h (74 days, 17101 `worstBound`) |
+| Semantic zoom to unit level (needs 8) | 8 (carried) | 8 | **Re-earned on new seeds.** Z 17101: one camera from 6,000 m/px to 3 m/px, 18 steps, no error, elements appear at 1,573 m/px and individual soldiers at 28 m/px (`critic/c43_z_17101.json`); PHZ 17411 on the phone 40 days, 30,000 → 25 m/px, no overflow, Japanese and Chinese soldiers as helmeted balls with their division tags (`critic/c43_phz_17411.json`, `critic/shots/c43phz_17411_00025.png`); C 17203: armoured division 40/42 labelled at 80 m/px and tank balls with turrets at 10 m/px (`critic/shots/c43c_17203_arm_0010m.png`) |
+| Naval warfare (needs 8) | 7 | **7** | **Rescored. Not 8: R43-B1 (blocking).** What works, verified: R42-N3 (the fleet order refused, `critic/c43_fs_eng15101.json`, headless `critic/c43_f_control.json`); R42-N2 (16117: 274 no longer lands alone, `critic/c43_n_eng_16117_recall30.json`); R42-N1 (270/274 goes ashore and marches, nobody lands in France untold, `critic/c43_pn_eng15101.json`, `critic/c43_g_eng_15101_p270_land.json`); R40-N1 at one day (`critic/c43_k_back.json`, `critic/c43_rc_d1.json`); 23 of run 42's 28 Japan cases identical (`k_back` and `steal_freshdaybefore` changed, below; `aboard_alone`, `four_hourly`, `steal_cancelfresh` only in end-states after the same landings); sea battle SB 7019 identical but page-clock samples; the fuzz above. Open: R43-B1, R43-N1, R43-N2, R43-N3, R41-N1 and R37-N2 (by decision) |
+| Tanks (needs 8) | 8 (carried) | 8 | **Re-earned on new seeds.** C 17203 and 17307 (Germany–Poland, day 5): German armoured divisions 40 and 42 in contact, read as labelled divisions at 80 m/px and as tank balls with turrets and tracks among wings at 10 m/px, no error (`critic/c43_c_17203.json`, `critic/c43_c_17307.json`, `critic/shots/c43c_17203_arm_0080m.png`, `…_0010m.png`); SK 17513: Soviet tank brigades 201–204 stacked against Polish cavalry at 60 m/px, each a readable formation (`critic/shots/c43sk_17513_0.png`) |
+| Aircraft (needs 8) | 8 (carried) | 8 | **Re-earned on new seeds.** W 17411: a German fighter ordered towards Warsaw and followed, 59 of 59 samples aloft with its mark at 3,000 m/px, median 32 px from its sorties (43 px at ×5) (`critic/c43_w_17411.json`); PL 17203 Germany–Poland from 3,000 to 25 m/px, both looks, 37 planes found in hour 2, no error (`critic/c43_pl_planes.17203_GER_POL_5299.log`); air rules 0 broken 20 years on new seed 17029 (`critic/c43_wi_17029_20_air.log`) |
+| AI nuclear use (needs 8) | 8 (carried) | 8 | **Rescored.** AN 7019 y20 the same strike as runs 39–42 (China on the USA near Belfast, alert and row, `critic/c43_an_7019y20.json`); **new** 17003: one AI decision in 20 years (the Soviet Union on the UK, year 11, 25,838 men lost, `critic/c43_headless_17003.json` `nukeLog`) and none in the 400 h watched at year 20 (`critic/c43_an_17003y20.json`) — restraint as the design asks, with the strike that comes read in the alert and History |
 
-## Run 41's cases re-run
+## R31, item by item
 
-| Run 41 case | `77d37526` (run 41) | HEAD `1eb4bf85` | Evidence |
+| Item | Case | Result | Evidence |
 |---|---|---|---|
-| **R41-B1** by real click, 15101 (270/271 → Calais, then 276 and the two → Caen) | 276 alone h87, destroyed h237; 270/271 h291 | **all three h291** | `critic/c42_mk4_eng15101_p270.json`; same clicks on `77d37526` re-played: `critic/c42_mk4_old_eng15101_p270.json` (h87 / dead h237 / h291) |
-| R41-B1 by real click, 7019 | as 15101 | **all three h291** | `critic/c42_mk4_eng7019_p270.json` |
-| R41-B1, the two by two clicks | — | all three h291 (one "leftLanding" row for 270 after the first click, true at that moment) | `critic/c42_mk4_eng15101_sep.json` |
-| R41-B1 headless, ascending ids, 15101 / 7019 | 276 h85 alone, dead h233 / same | 290/290/291 both | `critic/c42_g_eng_*_p270.json`, `critic/c42_gwt_eng_*_p270.json` |
-| **R41-N2** recall 4 h later, by real click | 364 refused, Fuzhou h500; 365 Shanghai h794 | **364/365 Shanghai h788/794**, nobody refused | `critic/c42_mk2_recall4.json` |
-| R41-N2 headless, recall 4 h / 1 day | 364 Fuzhou 477; 365 Shanghai 771 | 765/771 both | `critic/c42_k_steal_recall_h4.json`, `…_d1.json` |
-| the steal, then all three 3 SW of Shanghai a day later | 364 refused, alone h178 | **770/768/767 together** | `critic/c42_k_steal_then_sw3.json` |
-| the steal, re-clicked onto Fuzhou 6 h later (R40-N1's re-click) | 364 refused `Aboard` | **no refusal**, 793/791/791 | `critic/c42_k_steal_reclick.json` |
-| **R41-N3** panel while sailing to Sasebo | "At sea, bound for its landing" | "Aboard, sailing to Sasebo to load the rest of the landing" | `critic/shots/c42mk2_freshfirst_panel_h4.png` |
-| **R41-N1** 365 walks to Sasebo | t3–t700 | unchanged (bound 1152, 1794 → 1767 by t601, aboard t769) | `critic/c42_k_steal_freshfuzhou.json` |
-| R40-B1 by real click, 3517 / 14003 / 14011 | 814/814/820 | 814/814/820 | `critic/c42_mk2_freshfirst*.json` |
-| R40-B2 four 3 SW by click; two by one click; leavers first | h1244 no row; h682 no row; h1006 | same, `news: []` | `critic/c42_lwt5_four_allsw63.json`, `critic/c42_mk2_nofresh2.json`, `critic/c42_mk2_leaversfirst.json` |
-| the rest of run 41's 28 Japan cases (`c42_jobsK.txt`) | — | landing hours identical to run 41's (only recall_h4, recall_d1 and steal_then_sw3 moved, above) | `critic/c42_k_*.json` against `critic/c41_k_*.json` |
-| R40-N1 (one re-sent alone; recalled a day later) | 150; recall refused | unchanged | `critic/c42_k_aboard_alone.json`, `critic/c42_k_back.json` |
-| R37-N2 (two fresh, one far north) | 365 alone h656; 364/366 wait | unchanged | `critic/c42_k_steal_fresh2.json` |
-| R40-N2, R39-N2, R39-N3 | open | unchanged | UI row above |
-| save/load mid-sail t12, t200 | 0 diffs | 0 diffs | `critic/c42_sl_*.json` |
-| AI worlds: 7019 × 20, workerDeterminism | — | save byte-identical; hashes identical | `critic/c42_seed7019_y20.bin`, `critic/c42_wd_*.log` |
-| Suite Q alone | PF/LW as run 40 | within run 38–41's spread (Performance row) | `critic/c42_pf_7019.json`, `critic/c42_lw_6151.json`, `critic/c42_lwhon_3517.json` |
-
-## New cases (new seeds and variants, both commits)
-
-| Case | `77d37526` | HEAD | Evidence |
-|---|---|---|---|
-| Britain 16107, three nearest London → Calais, then fresh + three → Caen | 274 refused `Aboard` (t56), two "leftLanding"; all four 283–285 | **nothing refused, no row**; all four 283–285 | `critic/c42_nwt_eng3_16107.json`, `critic/c42_n_eng3_16107.json` |
-| Britain 16111, two nearest | 284/284/285 | 284/284/285 | `critic/c42_n_eng_16111.json` |
-| Britain 15101, the two recalled to Calais 4 h after the redirect | 270 refused, lands Caen h100 with 276; 271 Calais h81 alone | 270/271 Calais h300 together; 276 (its own order) Caen alone h89, lost h231 | `critic/c42_gwt_eng_15101_p270_recall4.json`, `critic/c42_g_eng_15101_p270_recall4.json` |
-| … re-clicked onto Caen 4 h after | 270 refused; 276 alone h85 | no refusal; 290/290/291 | `critic/c42_g*_eng_15101_p270_reclick.json` |
-| … the two clicked home (inland) 4 h after | 270 refused, lands Caen h100 with 276, both destroyed (h341/353) | **the same** (h100/101, destroyed h352/495) | `critic/c42_g*_eng_15101_p270_land.json`; by real click `critic/c42_pn_eng15101.json` (R42-N1) |
-| Britain 16117, recalled to Calais 30 h after the redirect | 274 Calais alone h199 (271 refused `PortShut` t178), lost h464; 276 Caen alone, lost | **the same** | `critic/c42_nwt_eng_16117_recall30.json`, `critic/c42_n_eng_16117_recall30.json` (R42-N2) |
-| Britain 15101, 270 aboard at Portsmouth, its transports ordered to sea by the player (no redirect) | 270 aboard at sea, 271 waiting at Portsmouth, to day 25 | **the same**; by real click to day 12 | `critic/c42_fwt_control.json`, `critic/c42_f_control.json`, `critic/c42_fs_eng15101.json` (R42-N3) |
-| Germany 16101/16103 (Hamburg → Norfolk), Italy 16113 (Naples → Corfu) | refused `NoTransports` / `NoRoute` at the first order | the same | `critic/c42_n_ger_*.json`, `critic/c42_n_ita_16113.json`: **not engaged**, no evidence either way |
+| R31a (R42-N3) | Britain 15101, the loading convoy's transports clicked onto the Channel (real click) | **refused** with its reason; the one aboard stays at Portsmouth | `critic/c43_fs_eng15101.json` `rows0`, `news` |
+| R31b (R42-N2) | 16117, recalled to Calais 30 h after; the port bombed shut | 274 put ashore at the port (h106), does not land alone; c42: alone h199, destroyed | `critic/c43_n_eng_16117_recall30.json` |
+| R31b | 15101 page case: Portsmouth bombed shut on day 2 | both told "its port is bombed shut", 274 "Holding" at Portsmouth (no new order was given; the text says "not done") | `critic/shots/c43fs_eng15101_d3.png` |
+| R31c (R42-N1) | 15101, the two onto the Midlands while the ship sails to Plymouth (real click) | no refusal, 274 ashore and marching; nobody lands in France untold | `critic/c43_pn_eng15101.json` |
+| R31d (R41-N1) | 3517, 365 bound for Sasebo | **unchanged** — the walk stays (decision: "the ferry would save ~2 days"), only the idle transports go back to the AI | `critic/c43_k_steal_freshfuzhou.json` identical to c42 |
+| R31d | Britain 15101, the player's empty transports 1072 clicked onto the Channel | arrive at t12 and are **the AI's at once**: back to Plymouth by t26, sailed off towards 1280,536 at t362. On `1eb4bf85` they hold the Channel for 20 days | `critic/c43_r31d_seawar.json`, `critic/c43_r31dwt_seawar.json` (R43-N1) |
+| R31e (R40-N1) | one sent alone to Fuzhou, recalled to Shanghai at 6 h / 1 day | both land h632 (page h658) | `critic/c43_e_back_h6.json`, `critic/c43_k_back.json`, `critic/c43_rc_d1.json` |
+| R31e | the same, recalled at **2 / 3 / 5 days** | **h1014 (16 days after its mate) / not landed by day 60, marched Kyushu → Tokyo / alone h229, 17 days before its mate**; on `1eb4bf85` all refused, Fuzhou h150 | `critic/c43_e_back_d2.json`, `…_d3.json`, `…_d5.json`; `critic/c43_ewt_back_*.json`; page `critic/c43_rc_d3.json` (R43-B1) |
+| R31e | recalled to home soil (1 / 3 days) or to Tsingtao (1 day) | refused (`Aboard`, `NoPort`), lands alone at Fuzhou h150 | `critic/c43_e_home_d1.json`, `…_home_d3.json`, `…_tsing_d1.json` (R43-N2) |
+| R31f (R37-N2) | run 40–42's named case (two fresh to Fuzhou, one in the far north, then the two) | **unchanged**: 364 and 366 aboard at Sasebo on day 60, 367 still walking | `critic/c43_k_steal_fresh2.json` identical to c42 (R43-N3) |
+| R31f | the fresh one sent a day before the two (`steal_freshdaybefore`) | now 473 / 475 / **839**: the later click's 365 lands alone 15 days after (c42: 839–841 together), untold | `critic/c43_k_steal_freshdaybefore.json` |
+| R31 fuzz | 6 new seeds × 120 days, R31's orders included | 0 stranded, 0 idle-aboard spells > 72 h; `Convoy` (19) refusals 4–25 a seed | `critic/c43_fz3_*.json` |
 
 ## Blocking issues
 
-None.
+1. **R43-B1. A landing recalled at sea after its first day splits: the one aboard is put ashore on the nearest home
+   coast and marches to the old port for weeks, while its partner lands alone; the map says it keeps its transports.**
+   Seed 3517, Japan, by real click: the two nearest Tokyo sent to Shanghai; two hours after 364 boards, 364 alone is
+   clicked onto Fuzhou (it sails at once, alone, as R28a has it); at h75 it is clicked back onto Shanghai. The order
+   is taken. Its transports turn for the nearest Japanese port; 364 is put ashore on Kyushu (1766.5,411.5) and bound
+   for group 1152 **at Tokyo**; its panel reads "Marching to Tokyo to board transports" on days 5, 10, 20 and 40
+   (`critic/c43_rc_d3.json` `panels`, `critic/shots/c43rc_d3_d20.png`: 364 on day 20 at Hiroshima, Sasebo's transports
+   beside it). 365 sails without it and lands **alone** at h658; at h1444 (day 60) 364 has only just left Tokyo
+   (`end`). The green mark and tooltip at the click: "The landing they already have: they keep their transports and
+   land at the marked place" (`critic/shots/c43rc_d3_recall_panel.png`); the notice "it leaves the landing it had for
+   its new one; the rest keep the old landing, and it will not land with them" stays on its panel for the 40 days of
+   the march. Headless the same (`critic/c43_e_back_d3.json`: still `bound1152` at 1818,386 on day 60). The outcome
+   depends on the hour of the recall: 6 h and 1 day — both land h632 (the AT, `critic/c43_e_back_h6.json`,
+   `critic/c43_k_back.json`); 2 days — 364 lands h1014, 16 days after 365, alone (`critic/c43_e_back_d2.json`);
+   3 days — above; 5 days — it lands alone at h229, 17 days **before** 365 (`critic/c43_e_back_d5.json`). On run 42's
+   commit `1eb4bf85` every one of these recalls is refused and 364 lands at Fuzhou h150 as first ordered
+   (`critic/c43_ewt_back_d1.json` … `…_d5.json`): **new in R31e.** **Blocking** because it contradicts the feature R31e
+   claims ("a convoy of one at sea can be recalled … it rejoins its landing"), because the order splits a landing by
+   weeks and lands one division alone on an enemy coast — the class that was blocking in runs 37 and 39 (R37-B1,
+   R39-B1) — and because the map promises the opposite of what happens. **Cause, read:** `turnBack` picks the nearest
+   port of the nation by straight cells and `orderMove` takes the order "as at that port"; the old landing's convoy is
+   at Tokyo, so `assignTransports` binds 364 to it and it walks; `waitedFor` (R31f) then does not wait for it (bound
+   two days after the first of its landing, a march of weeks), so the convoy sails without it. **Fix:** a recalled
+   convoy of one sails back to its own landing's port (or straight to the landing, joining its mates there), not to the
+   nearest port; and a recall that cannot rejoin is refused with that reason. AT: the case above recalled at 1, 2, 3 and
+   5 days: 364 lands within a day of 365 each time, or is refused and told why; the mark agrees with the outcome.
 
 ## Non-blocking issues (prioritised)
 
-1. **R42-N1. A land order to the one aboard while its transports ferry it between home ports is refused with a reason
-   that is not true, and it then lands abroad.** Britain 15101, by real click: R41-B1's case; while 270's ship sails
-   Portsmouth → Plymouth (panel "Aboard, sailing to Plymouth to load the rest of the landing"), 270 and 271 are selected
-   and clicked onto the English Midlands. 271 obeys; 270 is refused: "Infantry division 270: not done: it is aboard
-   transports and takes no order until it lands" (`critic/c42_pn_eng15101.json` `rowsAfterLand`,
-   `critic/shots/c42pn_eng15101_landorder.png`). It then sails with 276's convoy and lands at Caen by h119
-   (`arriveTrace`); headless the two at Caen are destroyed h352/h495 (`critic/c42_g_eng_15101_p270_land.json`). An hour
-   earlier, aboard at Portsmouth, the same click would have put it ashore; a day later, at Plymouth, it would too. SPEC
-   (R30b) refuses "anything else", so the refusal itself is specified — but the words promise the player nothing will
-   change until it lands, and the player is not told the ship then takes it to France. Identical on `77d37526` (R29b's
-   state since `76b88197`), so it moves no score by itself; it is the one order R30b's fix left behind. **Fix:** on
-   arrival at the port, take the refused order (or hold it ashore), or at least say "it takes an order at <port>" and
-   do not sail it to the landing it was refused away from without a row.
-2. **R42-N2. A port bombed shut while a division walks to it sends the convoy waiting there off with the one aboard
-   alone.** Britain 16117: the two recalled to Calais 30 h after the redirect; 274 is aboard group 1068 at port 538
-   from t122, 271 walks there; at t178 271 is refused `PortShut`; at t194 1068 sails with 274 alone, it lands at Calais
-   h199 and is destroyed h464; 271 stands on the Kent coast to the end (`critic/c42_n_eng_16117_recall30.json`). The
-   same with the transports sent back to Portsmouth (`critic/c42_f2_backport.json`: 271 refused `PortShut` t120, 270
-   lands alone h135, destroyed h304). Same on `77d37526`. SPEC R21b says only that the division is refused `PortShut`;
-   not that its convoy then sails without it. R36-B1's shape (a convoy whose bound division is refused sails with the
-   one aboard alone), from enemy bombing instead of a click.
-3. **R42-N3. A player's fleet order to a loading convoy's transports strands the division aboard at sea.** Britain
-   15101, by real click: 270 aboard group 1068 at Portsmouth waiting for 271; 1068 selected and clicked onto the
-   Channel. It sails there and stays; 270 is aboard at sea for the 12 days played (25 headless), its panel "At sea,
-   bound for its landing" throughout; 271's "waiting at Portsmouth" as long; no row (`critic/c42_fs_eng15101.json`
-   `trace`, `panel270_d12`; `critic/shots/c42fs_eng15101_d12.png`; headless `critic/c42_f_control.json`, the same on
-   `77d37526` `critic/c42_fwt_control.json`). 270 itself refuses every order (`Aboard`, `critic/c42_f2_unitcalais.json`,
-   `critic/c42_f2_unithome.json`). Ordering 1068 back to Portsmouth's water is the only way out found
-   (`critic/c42_f2_backport.json`), and the player is told nothing that suggests it. SPEC does not cover a player's
-   order to a convoy's transports. **Fix:** refuse a fleet order to a group with a convoy (or carrying), or end the
-   convoy and treat it as at sea (land or go home).
-4. **R41-N1** unchanged: 365 bound for Sasebo walks ~29 days while the transports called for it stand empty at Tokyo
-   (`critic/c42_k_steal_freshfuzhou.json` `trace`). The R41-N2 recall now costs ~5 days over the pre-R29b build
-   (765/771 against 631/632) for the same reason: the ship goes on to Sasebo and the landing loads there.
-5. **R40-N1, R37-N2, R40-N2, R39-N2, R39-N3** unchanged (table above).
-6. **Headless and page differ on an unordered division of the player's nation.** In `c42_gen.ts` (`setPlayer`, then the
-   war) the fresh brigade 276, never ordered, is put aboard a group and sailed far south-west
-   (`critic/c42_f_control.json` `end`: `276:aboard1072@785.2,399.5`), as run 41 noted for a God Mode spawn; in the page
-   (war, then Take control) it stands at Plymouth (`critic/c42_fs_eng15101.json`). Not followed up; the headless
-   end-states of unordered divisions are caveated, not filed.
-7. Carried: **R37-N3, R37-N4, R36-N3, R32-N2, R32-N3, R31-N1, R31-N6, R32-N5, R39-N4**, and two paradrop refusals in
-   one click showing one row.
+1. **R43-N1. A player's fleet order to empty transports is undone the hour they arrive.** Britain 15101: transports
+   1072 clicked onto the Channel arrive at t12; by t26 the AI has sailed them back to Plymouth, and at t362 it sends
+   them south towards 1280,536; the player is told nothing (`critic/c43_r31d_seawar.json`; peace, a port's water: the
+   order is dropped on arrival, `critic/c43_r31d_ports.json`). On `1eb4bf85` they hold the Channel for 20 days
+   (`critic/c43_r31dwt_seawar.json`). R31d specifies it (transports with no convoy and nobody aboard are the AI's), so
+   the rule is not the defect; the player cannot see which of his fleets are his and which the AI's, and a warship
+   fleet keeps the same order indefinitely. The AI then uses the freed transports to ship the player's own divisions
+   far away: 366 (Japan, never ordered) aboard 1144 off Ceylon for 1186,328 (`critic/c43_k_steal_cancelfresh.json`
+   `end`); 271, ordered by the player to the English Midlands, aboard 1076 in mid-Atlantic
+   (`critic/c43_g_eng_15101_p270_land.json` `end`). See Design objections.
+2. **R43-N2. The one alone at sea, ordered anywhere but its old landing, is refused and lands alone where first sent.**
+   Recalled to home soil at 1 day (`Aboard`) or 3 days (`NoPort`), or to Tsingtao (`Aboard`): refused; it lands at
+   Fuzhou h150 alone (`critic/c43_e_home_d1.json`, `…_home_d3.json`, `…_tsing_d1.json`). R31e turns the ship back only
+   for its own landing; R40-N1's "cannot be recalled" stands for every other order.
+3. **R43-N3. R37-N2 as runs 40–42 named it is unchanged.** Two fresh ones to Fuzhou (one from the far north), then the
+   two: 364 and 366 aboard at Sasebo on day 60, 367 still walking (`critic/c43_k_steal_fresh2.json`, identical to
+   c42). ROADMAP R31f names this case and is ticked; its Done line measures a different one (a later order three days
+   on). By R31f's rule (one click is waited for however far) this is designed, but the player still has two divisions
+   sitting aboard at a port for two months. And R31f now splits `steal_freshdaybefore` — 473/475 then 365 alone at
+   839, untold (`critic/c43_k_steal_freshdaybefore.json`; c42 839–841 together).
+4. **R43-N4. No mark for a division aboard at sea.** Hovering Shanghai with 364 selected at sea: `marks: []`, the
+   tooltip only "China / Occupied by Japan" (`critic/shots/c43rc_d3_hover.png`); the mark appears only after the
+   click, and then false (R43-B1).
+5. **R41-N1** unchanged by decision (`critic/c43_k_steal_freshfuzhou.json` identical to c42).
+6. Carried, unchanged: **R37-N3** (K 17307), **R37-N4** (RG 17513), **R32-N3** (rows cut: "its port is bombe…"),
+   **R39-N2**, **R39-N3**, **R40-N2**, **R36-N3**, **R32-N2**, **R31-N1**, **R31-N6**, **R32-N5**, **R39-N4**.
+
+## Run 42's cases re-run
+
+| Run 42 case | `1eb4bf85` (run 42) | HEAD `813eb375` | Evidence |
+|---|---|---|---|
+| R41-B1 by real click, 15101 / 7019 / by two clicks | all three h291 | identical | `critic/c43_mk4_eng15101_p270.json`, `…_eng7019_p270.json`, `…_eng15101_sep.json` |
+| R40-B1 by click 3517 / 14003 / 14011; nofresh2; leaversfirst; four SW | as run 41 | identical | `critic/c43_mk2_*.json`, `critic/c43_lwt5_four_allsw63.json` |
+| R41-N2 recall 4 h by click | 364/365 Shanghai h788/794 | identical | `critic/c43_mk2_recall4.json` |
+| **R42-N1** land order while ferried to Plymouth | 270 refused "aboard", Caen h119 | **fixed**: no refusal, ashore, marches | `critic/c43_pn_eng15101.json`; headless `critic/c43_g_eng_15101_p270_land.json` |
+| **R42-N2** port bombed shut (16117 recall30; 15101 backport) | 274 alone h199 destroyed; 270 alone h135 destroyed | **fixed**: put ashore at the port, told `PortShut` | `critic/c43_n_eng_16117_recall30.json`, `critic/c43_f2_backport.json` |
+| **R42-N3** fleet order to the loading convoy's transports (page and headless) | 270 at sea 12/25 days | **fixed**: refused `Convoy` | `critic/c43_fs_eng15101.json`, `critic/c43_f_control.json` |
+| **R40-N1** recall a day later | refused, Fuzhou h150 | **fixed at 1 day** (both h632); R43-B1 at 2–5 days | `critic/c43_k_back.json`, `critic/c43_e_back_*.json` |
+| **R41-N1** 365 walks to Sasebo | t4–t769 | unchanged (by decision) | `critic/c43_k_steal_freshfuzhou.json` |
+| **R37-N2** two fresh + the two | 364/366 aboard day 60 | unchanged | `critic/c43_k_steal_fresh2.json` |
+| the other 23 of run 42's 28 Japan cases | — | identical, but `steal_freshdaybefore` (above) and end-states of unordered divisions after landing (`aboard_alone`, `four_hourly`, `steal_cancelfresh`: same landings) | `critic/c43_k_*.json` |
+| G, N lists (Britain, Germany, Italy) | — | identical, but R42's cases above | `critic/c43_g_*.json`, `critic/c43_n_*.json` |
+| R40-N2, R39-N2, R39-N3 | open | open (`hs_desk` identical; `tm_touch` timings only; `mk_mixed_s2` ticker rows only) | `critic/c43_hs_desk.json`, `critic/c43_tm_touch.json`, `critic/c43_mk_mixed_s2.json` |
+| 7019 × 20, workerDeterminism | — | save byte-identical, hashes identical | `critic/c43_seed7019_y20.bin`, `critic/c43_wd_*.log` |
+| Suite Q alone | PF 120: 35.5–38.2, 30: 38.6–48; LW 59.9–60, 83 ms | PF 120: 35.5–39.2, 30: 38.6–48.2; LW 59.4–60, 83 ms | `critic/c43_pf_7019.json`, `critic/c43_lw_6151.json`, `critic/c43_lwhon_3517.json` |
 
 ## Design objections (none blocking, no score lowered)
 
-- R30b keeps R29b's ferry between home ports as "at sea" for every order but one over the sea from the next port.
-  R42-N1 is the result. A division aboard a player's convoy under way between two of the player's own ports could take
-  any order as at the port it reaches (go ashore there and march), which is what a player expects from a ferry.
-- Two convoys for one target at one port still load and sail apart; R30a makes the moving one a mate while it sails.
-  Run 41's objection stands: a landing as one object (the groups and divisions for one target, sailing when the last is
-  in, ended or held when one is refused) would make R21e, R28, R29, R30 and R42-N2 one rule.
+- **R31d hands a player's transports back to the AI** the hour they stand empty. A player who stages transports at a
+  port or off a coast loses them to the AI (R43-N1), and the AI then ships the player's own divisions across the world
+  on them. A player-owned fleet that stays where it was put until ordered again — as warships do — with only *called*
+  transports returned to the AI, would fix R41-N1's idle ships without taking the player's.
+- **R31e's "nearest port".** A recall is a request to rejoin a landing; turning back for whatever port is nearest by
+  straight cells makes the result depend on where the ship happens to be (R43-B1). A landing as one object — its
+  transports and divisions, with one port and one sailing — remains run 41–42's objection; R31 added two more rules
+  (`waitedFor`, `turnBack`) measured from different places.
+- Run 33–42's objections stand: save format 2 refuses older scenarios; the jump home across the sea; an ally's coast
+  refused as "a nation outside its wars".
 
 ## Ideas from other games (not scored)
 
-- Hearts of Iron cancels a naval invasion whose port is lost or blockaded before launch and tells the player, rather
-  than sending the part already embarked.
-- Most RTS games lock a transport's orders while it carries an assigned landing force, or give the transport a
-  "return to port and unload" order the player can see.
+- Hearts of Iron lets a naval invasion be cancelled while under way: the transports return to the port they left and
+  the divisions disembark there, never at an arbitrary port.
+- Many RTS games mark a group as "AI-controlled" with an icon when it reverts; a small mark on a fleet the player no
+  longer commands would make R31d readable.
 
 ## Strengths (verified)
 
-- R30a is a real fix at the page: the same real clicks that lost the tank brigade on `77d37526` now land all three
-  together on both seeds and by one or two clicks (`critic/c42_mk4_eng15101_p270.json`,
-  `critic/c42_mk4_eng7019_p270.json`, `critic/c42_mk4_eng15101_sep.json`), and on a new seed with three divisions the
-  old build's refusal and false "leftLanding" rows are gone (`critic/c42_n_eng3_16107.json`).
-- The fix touches nothing else: 25 of run 41's 28 Japan cases land at the same hours, the three that moved all moved to
-  one landing together, and the AI's 20-year world is byte-identical (`critic/c42_seed7019_y20.bin`).
+- The AI is untouched by six commits of player-order changes: 7019's 20-year save is byte-identical to run 42's, and
+  workerDeterminism ends on the same hash on every arm for five seeds (`critic/c43_wd_*.log`).
+- R31's own orders do not strand: across six new seeds × 120 days with 153 re-orders of divisions aboard and 98 fleet
+  orders to convoy transports, no division ever sat aboard an idle ship (`critic/c43_fz3_*.json`, `idleOver72: 0`,
+  `strandedN: 0`), and R31a's refusal is told in plain words at the click (`critic/c43_fs_eng15101.json`).
 
 ## Notes
 
-- The worktree `critic/wt` at `77d37526` was used for the replays and removed at the end (its `node_modules` junction
-  unlinked first). Both previews were stopped.
+- `critic/scripts/c43_os2_scen.mjs` first ran with a renamed input (`c43_critic_standoff…` did not exist); re-run after
+  copying run 39's file; both passes show the title's "Could not load: it was made by an older version" and the probe's
+  load wait times out, exactly as run 39's JSON (`critic/c39_os2_c25.json` `fatal`). The worktree `critic/wt` at `1eb4bf85` was used for the
+  replays and removed at the end (its `node_modules` junction unlinked first). The preview was stopped.
+- The page probes `c43_pn_panel.mjs` and `c43_fs_strand.mjs` pick "the two nearest London" on the page's clock; on HEAD they
+  picked 274 (aboard at Portsmouth at h55) where run 42 picked 270 (h63): the same shape, one aboard and one walking.
+  It is a probe artefact, not a game difference: every headless case that picks by the same rule (`c43_n_eng_16111.json`,
+  `c43_n_eng3_16107.json`) and every `PICK=270,271` case is identical to run 42's.
+- Early-game page probes on "new seeds" (C 17203 and 17307) show the same first days: the 1938 world's first week is
+  nearly seed-independent, so those two count as one case; Z, W, PHZ, SK, RG and the 20-year world do differ.

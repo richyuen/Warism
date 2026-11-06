@@ -493,14 +493,15 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
   const ship = world.embarked.get(id)!.fleet;
   // Alone aboard the player's transports at sea, bound for its landing: they turn back for the nearest
   // port, and it takes the order as at that port (ROADMAP R31e); refused, they sail on as they were.
-  const turned = call && soleAtSea(world, ship, id) ? turnBack(world, ship) : null;
+  const turned = call && soleAtSea(world, ship, id) ? turnBack(world, ship, Math.floor(y) * world.cells.w + Math.floor(x)) : null;
   const undo = (): void => turned?.();
   // Under way to its port (R29b's): an order over the sea from there its transports keep (ROADMAP R30b);
   // any other, ashore on its side's coast by them, and taken from there (R31c), out of reach of it refused.
   const sailing = sailingToPort(world, ship);
   const port = world.convoyPort.get(ship);
   const fromPort = !sailing || (call && port !== undefined && overSeaFrom(world, world.ports[port]!.cell, x, y));
-  const back = fromPort ? ashoreAtPort(world, id) : ashoreFromShip(world, id, ship);
+  // Turned back to rejoin a landing, only an order over the sea from its port (R32a): never ashore by them.
+  const back = turned && !fromPort ? null : fromPort ? ashoreAtPort(world, id) : ashoreFromShip(world, id, ship);
   if (back === null) {
     undo();
     world.seaBound.delete(id);
