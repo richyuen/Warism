@@ -7,6 +7,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-836 · 2026-11-06 · accepted — R38d's gate goes; a click's sibling waited for up to a month (R41)
+
+- **Context.** ADR-835's `farPort` found that within R38d's gate (a far port under 20 straight cells beyond the
+  nearer) a division walked to the far port's free group though a call to the nearer landed it 7–13 days sooner
+  (18705 t784, 3517 t1574; critic run 49, R49-N4, 20621). The user chose to do R41 before R42. Dropping the gate
+  alone made R37c's case split (`landingTwoPorts1938` red): the fresh one, from a nearer port, ready ~22 days before
+  its pair walking to Tokyo, and `siblingWait` waits at most `LATE_WAIT_HOURS` (a week, R31f) for a sibling.
+- **Decision.** The gate goes: any other port's free group is weighed against a call to the nearer by hours
+  (`callSooner`, R39d). A landing waits for a sibling of its click while that one is ready within
+  `SIBLING_WAIT_HOURS`, a month; a later order still within `LATE_WAIT_HOURS`. Without a bound (tried) run 47's
+  `fresh2` stood still: the Tokyo pair waited on a landing that waited two months for a mate in the north, and none
+  landed in the case (run 47: the pair at hour 656). A month is the bound both cases allow.
+- **Evidence.** Run 47's 383 cases: 35 split as in run 47; only four changed (England, 274: a call to Portsmouth,
+  landed at hour 64, where it walked to London and was refused `PortShut`). Every checker seed the critic has run:
+  0 broken, with `farPort` at any distance. 19206's 367: 46 → 28 days in a gathering landing.
+- **Checker.** `farPort` breaks at any distance; a landing gathering for the same water as one that gained ground
+  gains it too (a wait for a sibling is not a stall); an escort let go is forgotten (20405 t1694: two one-hour
+  orphans a month apart read as two hours running). `landingInvariants1938`'s 19206 case: its march over 20 days
+  (over 40 before; 28 now).
+
 ### ADR-835 · 2026-11-06 · accepted — The landing checker's `stuck` is a stall; `farPort` (R40e, the user's decision)
 
 - **Context.** Critic run 48 kept R47-N4 open: on 19206/19207 the landing checker said `stuck`, a division 45 days

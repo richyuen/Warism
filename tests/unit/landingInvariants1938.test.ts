@@ -31,7 +31,8 @@ describe("the rules of the player's landings hold under random orders (ROADMAP R
 // only (two divisions bound for a landing): each hour, every division and group of a gathering landing is stopped
 // and put back where it was first seen in it (frozen), or its divisions set on a circle of 2 cells about that place
 // (walking in circles: never a cell nearer); the same orders unplanted sail, none stuck. And 19206 (R47-N4's seed):
-// none broken, 367's march in the notes; 19207: none broken (its 24-day walk to a freed group, fixed by R40e).
+// none broken, 367's march in the notes (46 days before R41, 28 since: no walk to a far port); 19207: none broken
+// (its 24-day walk to a freed group, fixed by R40e).
 describe('`stuck` is a stall, not a march (ADR-835)', () => {
   const plant = (how: 'frozen' | 'circling') => {
     const at = new Map<number, [number, number]>();
@@ -67,7 +68,7 @@ describe('`stuck` is a stall, not a march (ADR-835)', () => {
     const notes: string[] = [];
     expect(landingBreaks({ seed: 19206, setup: 3517, days: 120, orders: 19206, probeDays: [30], notes })).toEqual([]);
     const march = notes.find((n) => n.startsWith('note: 367 longest'));
-    expect(Number(/landing ([\d.]+) days/.exec(march ?? '')?.[1] ?? 0), notes.join('\n')).toBeGreaterThan(40);
+    expect(Number(/landing ([\d.]+) days/.exec(march ?? '')?.[1] ?? 0), notes.join('\n')).toBeGreaterThan(20);
   }, 300_000);
   it('seed 19207 (Japan): 120 days, none broken (R40e: 366 re-sent walked 24 days to the group it freed)', () => {
     expect(landingBreaks({ seed: 19207, setup: 3517, days: 120, orders: 19207, probeDays: [30] })).toEqual([]);

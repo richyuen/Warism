@@ -62,12 +62,16 @@ export interface Landing {
   ordered: number;
 }
 
-/** How many straight cells farther than its land's nearest port a free group's port may be before one is called there instead (`chooseTransports`, R38d). */
-const FAR_PORT_CELLS = 20;
 /** Hours within which a division joined with a landing's first (its click, `waited`): a day. */
 export const SAME_CLICK_HOURS = 24;
 /** The longest march, in hours, a landing waits for one that joined later (`waited`): a week. */
 export const LATE_WAIT_HOURS = 24 * 7;
+/**
+ * The longest a landing waits for a sibling of its click to be ready (`siblingWait`): a month (ROADMAP R41, ADR-836:
+ * with R38d's gate gone a division from a nearer port is ready weeks before its mate walking to the far one;
+ * critic run 47's `fresh2`: a mate two months off is not waited for).
+ */
+export const SIBLING_WAIT_HOURS = 24 * 30;
 
 const cellOfPlace = (world: World, id: number): number => Math.floor(world.formations.cols.y[id]!) * world.cells.w + Math.floor(world.formations.cols.x[id]!);
 const cellAt = (world: World, x: number, y: number): number => Math.floor(y) * world.cells.w + Math.floor(x);
@@ -202,9 +206,9 @@ export function chooseTransports(world: World, id: number, target: number): Land
     const dy = Math.floor(k / w) - Math.floor(here / w);
     return dx * dx + dy * dy;
   };
-  // Its land's nearest port, and whether port `i` is far beyond it (R38d: a march over FAR_PORT_CELLS longer).
+  // Its land's nearest port, and whether port `i` is another: a call there is judged by hours (`callSooner`; R41).
   const port = transportsPort(world, id, false);
-  const far = (i: number): boolean => port >= 0 && i !== port && Math.sqrt(dist(world.ports[i]!.cell)) - Math.sqrt(dist(world.ports[port]!.cell)) > world.atSize(FAR_PORT_CELLS);
+  const far = (i: number): boolean => port >= 0 && i !== port;
   // A landing gathering for that place: it joins (however far its port: one click lands together, R37c); with no
   // room left, a group at its port or called there.
   for (const l of mine) {
@@ -741,7 +745,7 @@ function voyageHours(world: World, l: Landing): number {
 /**
  * Whether landing `l`, ready to sail, waits for its siblings (R37c): while one would land more than
  * SAME_CLICK_HOURS after `l` sailing now (a gathering one: its wait left, `waitLeft`, and its voyage; a
- * sailing one: its voyage left). One whose wait has no end known, or is over LATE_WAIT_HOURS, is not waited
+ * sailing one: its voyage left). One whose wait has no end known, or is over SIBLING_WAIT_HOURS, is not waited
  * for. So they land within a day, and a landing ready does not stand at its port longer than that needs
  * (R30a: a port bombed shut).
  */
@@ -759,9 +763,9 @@ function siblingWait(world: World, l: Landing): { port: number; hours: number } 
   const mine = voyageHours(world, l);
   let out: { port: number; hours: number } | null = null;
   for (const o of sib) {
-    // A gathering one weeks from sailing (a march from afar, R31f) is not waited for: no more than LATE_WAIT_HOURS.
+    // A gathering one over a month from sailing (a march from afar, R31f) is not waited for: SIBLING_WAIT_HOURS.
     const left = o.state === LandingState.gathering ? waitLeft(world, o) : 0;
-    if (!Number.isFinite(left) || left > LATE_WAIT_HOURS) continue;
+    if (!Number.isFinite(left) || left > SIBLING_WAIT_HOURS) continue;
     const hours = left + voyageHours(world, o) - mine - SAME_CLICK_HOURS;
     if (hours > 0 && (!out || hours > out.hours)) out = { port: o.port, hours };
   }

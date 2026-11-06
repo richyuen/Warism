@@ -1693,3 +1693,11 @@
   the cut loss row (R49-N3). R49-N4 is R41 reproduced.
 - R42 filed (R42a–e); R41 carries R49-N4.
 - **Next:** R42.
+
+## 2026-11-06 — R41: R38d's gate goes; a sibling waited for up to a month (ADR-836)
+- The user chose R41 before R42. The 20-cell gate is gone (hours decide, `callSooner`); a landing waits up to a
+  month for a sibling of its click (a week before), so R37c's lands-together holds when one side is near its port.
+- No cap tried first: run 47's `fresh2` stood still (no one landed); a month keeps its pair landing at 656.
+- Run 47's 383 cases: 35 split as before, four English cases now land (274 at hour 64) instead of a refusal.
+- Checker: `farPort` at any distance; a sibling's ground counts; an escort let go is forgotten (20405).
+- **Next:** gate; then R42 (or the critic first: the user's call).

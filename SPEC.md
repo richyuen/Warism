@@ -1280,8 +1280,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   to its land's nearest port (`callTransports`: of the nation's groups standing idle, not held by the
   editor, with room, the nearest by straight cells with a sea way, `CALL_TRIES` (4) tried): a new
   landing; a landing for that place that has sailed: its next voyage. Where the port with a free group is
-  over `FAR_PORT_CELLS` (20) straight cells farther than its land's nearest port, a group is called to the
-  nearer first (ROADMAP R38d, critic run 46, R46-N3: a 40-day walk within Honshu), when that lands it over a
+  another than its land's nearest port, a group is called to the nearer first (ROADMAP R38d, critic run 46,
+  R46-N3: a 40-day walk within Honshu; at any distance since R41, ADR-836: 20 straight cells let a division walk
+  ~13 days more), when that lands it over a
   day sooner by hours: the march there or the called group's sail there, the later, and the voyage from it,
   against the march to the far port and the voyage from it (`callSooner`, R39d; critic run 47, R47-N3: a group
   called from Sevastopol to Leningrad for Cyprus shuttled at the Straits). A group freed by the click's own re-send
@@ -1307,7 +1308,7 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   AI's errands, R37a, critic run 45, R45-B1) joins it and it waits. It waits too for another landing of its
   nation for the same place from its click (first joined, or last order, within `SAME_CLICK_HOURS`; from
   another port) while that one would land more than a day after it, unless that one's own wait is over
-  `LATE_WAIT_HOURS` (`waitsForSiblings`; R37c, critic run 44, R44-N2: two clicks in one hour, two ports, the
+  `SIBLING_WAIT_HOURS` (a month, R41, ADR-836; a week before) (`waitsForSiblings`; R37c, critic run 44, R44-N2: two clicks in one hour, two ports, the
   nearer landed alone a week early). Those at the port board then, first fit (`tryLanding` with `via`:
   "loading" is that hour, not a state), and the groups carrying them sail for its water (no sea way:
   `NoSeaWay`, over). Those that do not fit (no group to be had anywhere, R17b; or still marching) go on the

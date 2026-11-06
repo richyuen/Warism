@@ -30,8 +30,9 @@
  * - `farPort`: a division that makes a landing alone (new in the hour, it its only division) at a port whose
  *   whole way to the landing's water (the march, the voyage) is over FAR_PORT_DAYS longer than by its land's nearest
  *   port of its nation (the march there or an idle group of its nation with room called there, `callCandidates`,
- *   the later, then the voyage): R39d's rule as a checker (ADR-835: R46-N3's class, a 40-day walk within Honshu to a far port's free group, kept caught once
- *   `stuck` counts the march as ground gained);
+ *   the later, then the voyage): R39d's rule as a checker, at any distance since R38d's gate went (ROADMAP R41,
+ *   ADR-836) (ADR-835: R46-N3's class, a 40-day walk within Honshu to a far port's free group, kept caught once
+ *   `stuck` counts the march as ground gained; a landing waiting for a sibling gains ground as the sibling does);
  * - `save`: a save that does not load bit-identical (on the probe days).
  * Each kind is told once a division, group or landing (its first hour).
  *
@@ -59,8 +60,6 @@ const { w: W } = SIZE_1938;
 export const STUCK_DAYS = 45;
 /** How many days longer a lone division's way by its port may be than by its land's nearest before `farPort` (a week). */
 export const FAR_PORT_DAYS = 7;
-/** R38d's gate: a far port under this many straight cells beyond the nearer is taken by rule (ROADMAP R41). */
-const GATE_CELLS = 20;
 
 /** The checker's memory between hours for `stuck`, `farPort` and the notes (ADR-835). */
 interface Track {
@@ -75,8 +74,6 @@ interface Track {
   landing: Map<number, number>;
   /** The landings of last hour (a landing not among them is new). */
   seen: Set<number>;
-  /** `farPort` cases within R38d's gate, for the notes. */
-  gate: string[];
 }
 
 export interface LandingCase {
@@ -150,6 +147,9 @@ function check(w: World, n: number, idle: Map<number, number>, track: Track, orp
   }
   was.clear();
   for (const l of w.landings.values()) was.set(l.id, l.state);
+  // An escort let go is forgotten: "two hours running" is two hours in a row (20405 t1694: one orphaned an hour
+  // twice, a month apart, was told).
+  for (const o of [...orphans]) if (!w.escorts.has(o)) orphans.delete(o);
   for (const [o, e] of w.escorts) {
     if (w.landings.has(e.convoy)) orphans.delete(o);
     else if (orphans.has(o)) out.push(`${t} escort: ${o} for landing ${e.convoy}, none two hours on`);
@@ -195,6 +195,11 @@ function check(w: World, n: number, idle: Map<number, number>, track: Track, orp
     for (const id of l.divisions.keys()) near(id, port);
     for (const o of l.fleets) near(o, water[l.port]!);
   }
+  // A landing waiting at its port for another of its nation for the same water (a sibling of its click, R37c, waited
+  // for up to a month, R41) gains ground as that one does.
+  const place = (l: { nation: number; water: number }): string => `${l.nation}:${l.water}`;
+  const placed = new Set([...gained].map((id) => place(w.landings.get(id)!)));
+  for (const l of w.landings.values()) if (l.state === LandingState.gathering && placed.has(place(l))) gained.add(l.id);
   for (const [id, l] of divs) {
     const L = w.landings.get(l)!;
     if (L.state !== LandingState.gathering) {
@@ -224,14 +229,7 @@ function check(w: World, n: number, idle: Map<number, number>, track: Track, orp
           const come = sailHours(w, o, kx, ky);
           if (Number.isFinite(come)) byNear = Math.min(byNear, Math.max(octileKm(grid, here, w.ports[nearest]!.cell) / kmh, come) + sailHoursFrom(w, o, k, lx, ly));
         }
-        if (byNear + FAR_PORT_DAYS * 24 < byFar) {
-          // Within R38d's gate (the far port under GATE_CELLS straight cells beyond the nearer) the game takes the
-          // free group by rule (R37c: a call there splits one click's landings): told in the notes, not broken (R41).
-          const straight = (k_: number): number => Math.hypot(Math.min(Math.abs((k_ % W_) - (here % W_)), w.settings.loopingMap ? W_ - Math.abs((k_ % W_) - (here % W_)) : Infinity), Math.floor(k_ / W_) - Math.floor(here / W_));
-          const line = `farPort: ${id} made landing ${l} at ${w.ports[L.port]!.name}, ${Math.round(byFar / 24)} days to its water; by ${w.ports[nearest]!.name} ${Math.round(byNear / 24)}`;
-          if (straight(w.ports[L.port]!.cell) - straight(w.ports[nearest]!.cell) > w.atSize(GATE_CELLS)) out.push(`${t} ${line}`);
-          else track.gate.push(`note: t${w.tick} ${line} (within R38d's gate)`);
-        }
+        if (byNear + FAR_PORT_DAYS * 24 < byFar) out.push(`${t} farPort: ${id} made landing ${l} at ${w.ports[L.port]!.name}, ${Math.round(byFar / 24)} days to its water; by ${w.ports[nearest]!.name} ${Math.round(byNear / 24)}`);
       }
     }
     track.landing.set(id, l);
@@ -294,7 +292,7 @@ export function landingBreaks(k: LandingCase): string[] {
   const orphans = new Set<number>();
   const moored = new Set<number>();
   const idle = new Map<number, number>();
-  const track: Track = { best: new Map(), ground: new Map(), spell: new Map(), longest: new Map(), landing: new Map(), seen: new Set(), gate: [] };
+  const track: Track = { best: new Map(), ground: new Map(), spell: new Map(), longest: new Map(), landing: new Map(), seen: new Set() };
   const was = new Map<number, number>();
   let next = w.tick;
   const end = w.tick + k.days * 24;
@@ -330,7 +328,6 @@ export function landingBreaks(k: LandingCase): string[] {
     }
     if (out.length > 200) break;
   }
-  k.notes?.push(...track.gate);
   for (const [id, { hours, still }] of [...track.longest].sort((a, b) => a[0] - b[0])) k.notes?.push(`note: ${id} longest in a gathering landing ${(hours / 24).toFixed(1)} days, ${(still / 24).toFixed(1)} of them with no ground gained`);
   return out;
 }

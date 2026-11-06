@@ -684,13 +684,20 @@ Rules:
     group (`callSooner`). Planted stalls (frozen, circling) still `stuck`. All the critic's checker seeds 0 broken;
     run 47's 383 cases as in run 47 (35 split, none later).
 
-- [ ] R41 **R38d's gate of 20 straight cells** (found by R40e's `farPort`, not taken). Within it the free group is
+- [x] R41 **R38d's gate of 20 straight cells** (found by R40e's `farPort`, not taken). Within it the free group is
   taken by rule though a call to the nearer port lands 7–13 days sooner (18705 t784: Lianyungang 20 days, by
   Shanghai 7; 3517 t1574; told as notes). Removing the gate (and sending the free group itself to the nearer port,
   'fetch') splits R37c's same-hour clicks: `landingTwoPorts1938` red, run 47's splits 35 → 58 (366 at 158, the two
   at 656: a lone landing sails before its sibling, `LATE_WAIT_HOURS` caps the wait). It needs one port for a click
   first (R39e's class).
   Critic run 49, R49-N4: reproduced on 20621 t526 (Weihai 18 days, by Rizhao 10), the recorded rule.
+  Done (ADR-836): the gate is gone (a far port's free group against a call to the nearer is `callSooner`'s, by
+  hours, at any distance), and a landing waits up to a month for a sibling of its click (`SIBLING_WAIT_HOURS`, a
+  week before: R37c's fresh one is ready ~22 days before its pair; run 47's `fresh2`, a mate two months off, still
+  not waited for). Not taken: no cap (fresh2: four divisions stood the whole case). Run 47's 383 cases: 35 split as
+  in run 47, none changed but four English cases where 274 now lands at hour 64 (a call to Portsmouth) instead of
+  walking to London to be refused `PortShut`. Every checker seed the critic has run 0 broken, `farPort` now at any
+  distance, a landing waiting for a sibling gaining ground as it does; 19206's 367 46 → 28 days gathering.
 
 - [ ] R42 **Run 49's issues** (critic run 49, focused, on `5da444a8`: no blocking issue; naval 7, bar 8: "nothing new
   earns an 8"; ADR-833: each finding fixed; the critic's probes replayed first).
