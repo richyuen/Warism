@@ -1,0 +1,4 @@
+npx tsx tools/diag/diploInvariants.ts 20413 scenario 3650 > critic/c48_diploinv_20413s_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20429 random 3650 > critic/c48_diploinv_20429r_10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 20421 3650 > critic/c48_wi_20421_10y.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c48_wd_3517_2190.json > critic/c48_wd_3517_2190.log 2>&1

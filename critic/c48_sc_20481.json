@@ -1,0 +1,18 @@
+{
+ "seed": 20481,
+ "shots": [
+  "critic/shots/c48sc_20481_click.png",
+  "critic/shots/c48sc_20481_600m.png",
+  "critic/shots/c48sc_20481_150m.png",
+  "critic/shots/c48sc_20481_40m.png"
+ ],
+ "day": 11,
+ "row": "⚓ Sea battle: United Kingdom against Netherlands",
+ "cam": {
+  "cx": 1677.966526221865,
+  "cy": 568.1614379882812,
+  "scale": 288.5020041573041,
+  "mpp": 67.82577178590665
+ },
+ "errors": []
+}

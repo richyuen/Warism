@@ -1,0 +1,3 @@
+npx tsx tools/diag/diploInvariants.ts 20491 random 3650 > critic/c48_diploinv_20491r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20493 random 3650 > critic/c48_diploinv_20493r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20495 scenario 3650 > critic/c48_diploinv_20495s_10y.log 2>&1

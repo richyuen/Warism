@@ -1,0 +1,30 @@
+{
+ "seed": 3517,
+ "tag": "GER",
+ "from": "20.5,54.7",
+ "to": "1.3,52.6",
+ "ids": [
+  8
+ ],
+ "start": [
+  "8@1140.6,252.7"
+ ],
+ "t0": 2,
+ "firstL": "landing 1 port Königsberg fleets 1207 water 1033,265 land 1032,265 TO 1031.3955555555556,266.8144004971501",
+ "landed": {
+  "8": 150
+ },
+ "landedAfterDays": {
+  "8": 6.2
+ },
+ "evs": [
+  "t0 kind3 0 b0 NaN,NaN",
+  "t47 embarked 8",
+  "t150 landed 8 @1073.5,253.5"
+ ],
+ "trace": [
+  "t26 8@1141,253 L1/0/Königsberg/1207@1112,245m",
+  "t146 8@1069,251(aboard) L1/1/Königsberg/1207@1069,251m"
+ ]
+}
+done:

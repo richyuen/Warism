@@ -655,6 +655,17 @@ Rules:
   - [x] R39f Before the critic: run 47's 383 headless cases (as in run 47), its far, sinking and checker jobs, and
     its 37 page probes replayed.
 
+- [ ] R40 **Run 48's issues** (critic run 48, full, on `4ebaee76`; ADR-833 for naval; the critic's probes replayed first).
+  - [ ] R40a R48-B1 (diplomacy): a puppet rising against an overrun overlord: `whyNotWar` refuses `Overrun`, and the
+    rising becomes a free release told as "rose against" with no war (diploInvariants 20429 random, day 546, `rise`).
+    AT: diploInvariants 20429 random 3650: 0 broken; a unit case (a puppet at loyalty < 20, its overlord overrun,
+    rises on the month's start): at war with it, or told released, not "rose against".
+  - [ ] R40b R48-N1: `World.sunk` saved while not empty (or decided from saved state): a save and load in the sinking
+    hour still tells `TransportsSunk` (`c48_far_save.ts`, `c48_sunk_save.ts` with SAVE=1).
+  - [ ] R40c R48-N2: two divisions lost at sea in one hour: one row ("2 divisions lost at sea"), not one cut row.
+  - [ ] R40d R48-N3: hero tags at world zoom collide like nation labels.
+  - [ ] R40e R39e (held under naval's 8): 19206/19207 `stuck`.
+
 ## Batch 3 — readability (after the release, ADR-829)
 
 The carried non-blocking issues of critic runs 31–43 (why some dimensions are 7 and not 8; none gates a release)

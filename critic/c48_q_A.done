@@ -1,0 +1,31 @@
+0 env TAG=GER FOE=ENG FROM=20.5,54.7 TO=1.3,52.6 N=1 DAYS=200 npx tsx critic/scripts/c47_far.ts 3517 critic/c48_far_gerkon_eng.json > critic/c48_far_gerkon_eng.log 2>&1
+0 env N=3 KEEP=1 npx tsx critic/scripts/c47_sunk.ts 3517 critic/c48_sunk_3517_n3k1.json > critic/c48_sunk_3517_n3k1.log 2>&1
+0 env TAG=SOV FOE=SWE FROM=37.6,55.75 TO=18.5,57.5 N=1 DAYS=200 npx tsx critic/scripts/c47_far.ts 3517 critic/c48_far_sovmos_got.json > critic/c48_far_sovmos_got.log 2>&1
+0 env N=3 KEEP=2 npx tsx critic/scripts/c47_sunk.ts 3517 critic/c48_sunk_3517_n3k2.json > critic/c48_sunk_3517_n3k2.log 2>&1
+0 env N=2 KEEP=0 npx tsx critic/scripts/c47_sunk.ts 3517 critic/c48_sunk_3517_n2k0.json > critic/c48_sunk_3517_n2k0.log 2>&1
+0 env N=4 KEEP=2 npx tsx critic/scripts/c47_sunk.ts 3517 critic/c48_sunk_3517_n4k2.json > critic/c48_sunk_3517_n4k2.log 2>&1
+0 env N=5 KEEP=3 npx tsx critic/scripts/c47_sunk.ts 3517 critic/c48_sunk_3517_n5k3.json > critic/c48_sunk_3517_n5k3.log 2>&1
+0 env N=2 KEEP=0 PART=1 npx tsx critic/scripts/c47_sunk.ts 3517 critic/c48_sunk_3517_n2k0_part.json > critic/c48_sunk_3517_n2k0_part.log 2>&1
+0 env N=3 KEEP=2 PART=1 npx tsx critic/scripts/c47_sunk.ts 3517 critic/c48_sunk_3517_n3k2_part.json > critic/c48_sunk_3517_n3k2_part.log 2>&1
+0 env TAG=SOV FOE=ENG FROM=37.6,55.75 TO=33.0,35.1 N=1 DAYS=200 npx tsx critic/scripts/c47_far.ts 3517 critic/c48_far_sovmos_cyp.json > critic/c48_far_sovmos_cyp.log 2>&1
+0 env TAG=USA FOE=ENG FROM=-87.6,41.9 TO=1.3,52.6 N=1 DAYS=200 npx tsx critic/scripts/c47_far.ts 3517 critic/c48_far_usachi_eng.json > critic/c48_far_usachi_eng.log 2>&1
+1 npx tsx tools/diag/landingInvariants.ts 19206 3517 > critic/c48_li_19206_jap.log 2>&1
+1 npx tsx tools/diag/landingInvariants.ts 19207 3517 > critic/c48_li_19207_jap.log 2>&1
+0 npx tsx tools/diag/landingInvariants.ts 19113 15101 > critic/c48_li_19113_eng.log 2>&1
+0 npx tsx tools/diag/landingInvariants.ts 18705 3517 > critic/c48_li_18705_jap.log 2>&1
+0 npx tsx tools/diag/landingInvariants.ts 19111 3517 > critic/c48_li_19111_jap.log 2>&1
+0 npx tsx tools/diag/landingInvariants.ts 20401 3517 > critic/c48_li_20401_jap.log 2>&1
+0 npx tsx tools/diag/landingInvariants.ts 20403 15101 > critic/c48_li_20403_eng.log 2>&1
+0 npx tsx tools/diag/landingInvariants.ts 20405 3517 120 20405 30,90 1 > critic/c48_li_20405_jap_g1.log 2>&1
+0 npx tsx tools/diag/landingInvariants.ts 20407 15101 120 20407 30,90 2 > critic/c48_li_20407_eng_g2.log 2>&1
+0 npx tsx tools/diag/landingInvariants.ts 20409 3517 > critic/c48_li_20409_jap.log 2>&1
+0 npx tsx tools/diag/landingInvariants.ts 20411 15101 > critic/c48_li_20411_eng.log 2>&1
+0 npx tsx tools/diag/diploInvariants.ts 20419 random --world random > critic/c48_diploinv_20419rw.log 2>&1
+0 npx tsx tools/diag/worldInvariants.ts 20421 > critic/c48_wi_20421.log 2>&1
+0 npx tsx tools/diag/diploInvariants.ts 20413 scenario > critic/c48_diploinv_20413s.log 2>&1
+0 npx tsx tools/diag/diploInvariants.ts 20415 scenario --heroes > critic/c48_diploinv_20415s_h.log 2>&1
+0 npx tsx tools/diag/worldInvariants.ts 20423 365 --world random > critic/c48_wi_20423rw.log 2>&1
+0 npx tsx tools/diag/diploInvariants.ts 20417 random > critic/c48_diploinv_20417r.log 2>&1
+0 npx tsx tools/diag/worldInvariants.ts 20425 365 --heroes > critic/c48_wi_20425h.log 2>&1
+0 npx tsx tools/diag/workerDeterminism.ts 3517 2190 24 critic/c48_wd_3517_2190.json > critic/c48_wd_3517_2190.log 2>&1
+0 npx tsx tools/diag/workerDeterminism.ts 20427 8760 24 critic/c48_wd_20427.json > critic/c48_wd_20427.log 2>&1

@@ -1,222 +1,182 @@
-# Critic report, run 47 (focused): after R38, "troops lost with sunk transports are told so; the sibling wait, the phone tooltip, the far port, the sea hover"
+# Critic report, run 48 (full): after R39, "a landing whose transports are sunk calls others or says so; named notices; the tooltip above the mouse; R38d by hours"
 
-- **Mode: focused.** I decided this from git before anything else (CRITIC_PROMPT, ADR-804). All three conditions hold:
-  1. Run 46 (`72c458f7`, on `4040cad6`) has a blocking issue (R46-B1) and naval under its bar (7, bar 8).
-  2. The only commit since `72c458f7` is `f464db35`, whose subject names R38, which `72c458f7` filed.
-  3. The last three reports were focused (46), focused (45) and full (44), so not all focused.
-
-  I re-ran run 46's named cases and rescored afresh the dimensions it scored under the bar or blocked on, and those the
-  diff (`git diff --stat 4040cad6 HEAD`) touches:
-  - **naval:** under the bar, blocked; `landings.ts`, `amphibious.ts`, `events.ts`, `server.ts`;
-  - **uiUxPolish:** `MapTooltip.tsx`, `FormationPanel.tsx`, `style.css`, `en.json`, `orderNewsText.ts`, `hud.ts`;
-  - **stability:** `landings.ts`, `amphibious.ts`, `protocol.ts`, `server.ts`, the checker helper.
-
-  Every other score is **carried**. A release needs a full run with no blocking issue.
-- **Commit judged:** `f464db35c03d644ac4f18a1ed2fd90fff860d768`, HEAD at the start (`critic/c47_commit.txt`). **Date:** 2026-11-06.
-- **Build:** `vite build --outDir critic/c47_dist`, exit 0 (`critic/c47_build.log`). Served by `vite preview` on
-  127.0.0.1:**5298**, driven through Playwright Chromium at desk 1600 × 900 and phone 390 × 844.
-- **Baselines.** Run 46's own `c46_*` outputs are the `4040cad6` baseline for its named cases. New cases ran on HEAD and in
-  a worktree at `4040cad6` (`critic/wt`, scripts copied into it so their imports hit its `src/`), with a
-  `node_modules` junction that I unlinked before removing the worktree.
+- **Mode: full.** I decided this from git before anything else (CRITIC_PROMPT, ADR-804). The last three reports were
+  all focused: run 47 (`1e1b2cb7`), run 46 (`72c458f7`) and run 45 (`021cf870`) each have `"mode": "focused"`. So
+  the third condition for a focused run fails, and this run is the whole brief. Run 44 (`8f6f2628`) was the last full one.
+- **Commit judged:** `4ebaee7630b134d0bc91afb7b83568a5158120f4`, HEAD at the start (`critic/c48_commit.txt`).
+  **Date:** 2026-11-06.
+- **Build:** `vite build --outDir critic/c48_dist`, exit 0 (`critic/c48_build.log`). Served by `vite preview` on
+  127.0.0.1:**5299**, driven through Playwright Chromium at desk 1600 × 900, phone 390 × 844 and a landscape phone
+  844 × 390.
+- **Baseline:** a worktree at run 47's commit `f464db35` (`critic/wt`, `node_modules` linked and unlinked before
+  removal) for the new defects found, and run 47's own `c47_*` outputs for its named cases.
 - **Runs.**
-  - Run 46's named cases: 432 headless jobs (`critic/scripts/c47_jobsHL.txt` = run 46's All, G, X and Y lists),
-    its page suites (`c47_suiteP.sh`, `c47_suiteP2.sh`) and the phone recall hover, and the checkers.
-  - New:
-    - **sinkings** (R38a beyond its unit case): `critic/scripts/c47_sunk.ts`, Japan 3517, pools of 1, 2, 3 and all
-      groups, all of a landing's groups or one of two destroyed at sea a day after it sails;
-    - the same **in the page** with the rows, the panel of the one left at the port, and the tooltip at the screen's
-      edges (`critic/scripts/c47_lost.mjs`, desk and phone);
-    - **R38d on other nations and seas** (`critic/scripts/c47_far.ts`, HEAD and `4040cad6`): the Soviet Union from
-      Moscow to Gotland and to Cyprus, Germany from Königsberg to Norwich, the United States from Chicago to
-      Norwich;
-    - checkers on new seeds: landingInvariants 19311, 19313, 19333, 19335, and the new short pools (1 group: 19315,
-      19317; 2 groups: 19319, 19331); diploInvariants 19321 (heroes), 19323 (random world); worldInvariants 19329;
-      workerDeterminism 19327.
+  - **Run 47's named cases:** the far-port cases (`c47_far.ts`: USA Chicago to Norwich, Soviet Union Moscow to Cyprus
+    and to Gotland, Germany Königsberg to Norwich), the sinkings (`c47_sunk.ts`: n3k1, n3k2, n4k2, n5k3, n2k0, both
+    partials), the page probe of the rows, the panel and the tooltip's edges (`c48_lost.mjs`: desk, phone and
+    landscape phone), landingInvariants 19206, 19207, 19113/15101, 18705 and 19111, and workerDeterminism 3517.
+  - **New attacks on R39:** a real save and load in the hour a landing's last group is destroyed
+    (`critic/scripts/c48_far_save.ts`), the same on case B (`critic/scripts/c48_sunk_save.ts`), and an hourly trace
+    of the Königsberg convoy (`critic/scripts/c48_far2.ts`).
+  - **The whole game on new seeds**, with run 44's page scripts renamed `c48_*`:
+    - zoom Z 20441, land battle C 20443, God's nukes A 20445, God's tools Q 20447, editor G 20449;
+    - Breakthrough K 20451, planes PL 20453, wing W 20455, sea SB 20457 and my own sea-battle click
+      (`c48_seaclick.mjs` 20481, 20483);
+    - phone and laptop P, UI U, relations graph RG 20459 (heroes), phone zoom PHZ 20461, old scenario OS, force war
+      FW 20463;
+    - two 12-year page watches at Max (LWHON 20471 with heroes; LW 20473 plain);
+    - two headless worlds: 7019 for 20 years (its save is HEAD's own) and new seed 20431 for 25 years;
+    - on 7019's year-20 save: AI nukes AN, History HI, exports DL, and the frame rate PF (run alone at the end).
+  - **Checkers on new seeds:**
+    - landingInvariants 20401, 20403, 20405 (1 group), 20407 (2 groups), 20409, 20411;
+    - diploInvariants 20413, 20415 (heroes), 20417 (random), 20419 (random world) to day 180; and 20413, 20429 (random),
+      20491 (random), 20493 (random), 20495 to day 3650;
+    - worldInvariants 20421 (180 days and 10 years), 20423 (random world), 20425 (heroes);
+    - workerDeterminism 3517 (2190 h) and 20427 (8760 h).
 
 ## Verdict
 
-**R38 does what it set out to do in every one of run 46's cases. But the class R46-B1 belongs to is still there: when
-a landing's transports are destroyed, the player is told "no transports of its nation with room for it are at a port
-it can reach", and nothing says the transports were sunk.**
+**R39 fixes R47-B1 in both of its cases, and its three other parts do what they say. But a ten-year check on a new
+seed breaks a rule of war and peace: a puppet "rose against" its overlord and walked free with no war, because its
+overlord was overrun. This is R48-B1, blocking. It is the same on `f464db35`, so it is not R39's.**
 
-- **R46-B1's own case is fixed.** landingInvariants 19113/15101: 0 broken, and the run still reaches the sinking:
-  271 and 272 are lost with group 1076 at t1464 (`critic/c47_li_19113_eng.log`, `critic/c47_li_sunk_19113.log`).
-- **Run 46's 406 landing cases are identical** to run 46's hour for hour (`critic/c47_cmp46.txt`: same 406,
-  different 0). Every page probe lands at run 46's hours, with no page error (`critic/scripts/c47_pagecmp.cjs`).
-- **The men aboard are now told they were lost, but not by name.** The row reads "A formation: its transports were
-  sunk at sea; it was lost with them." The formation is gone when the page names it, so this is what every such row
-  will say (R47-N1).
-- **New blocking issue: R47-B1.** Two cases:
-  - A US landing's transport group is bombed and sunk in Norfolk. The landing ends with the refusal above, while
-    an idle US group stands at San Francisco. Clicking the same order again an hour later makes a landing there.
-  - When the groups of a sailing landing are sunk, the division left at the port for the next voyage was told "they
-    come back for it". Now it gets the same refusal, and nothing says what happened.
-
-  The first case is the same on `4040cad6`, so it is not R38's. It is the rest of the class R46-B1 was filed for.
-
-**Naval stays 7.** The fix for the men aboard works, and R38d makes two cross-sea landings possible or faster. But
-the player is still misled about what became of their transports.
+- **R47-B1 is fixed.**
+  - Case A (USA 3517): the division is told `TransportsSunk` "others are on their way" at t273, and group 1123 is called
+    from San Francisco. There is no reason-6 refusal. The landing ends at t895 because Norfolk is bombed shut, and
+    that is true: Norfolk's damage was 0 when the call was made (`critic/c48_far_save0.json` trace).
+  - Case B: those left at the port are told "the transports of its landing were sunk … the landing is over"
+    (`critic/c48_sunk_3517_*.json`, `critic/shots/c48lost_desk_portpanel.png`).
+- **R39b, R39c and R39d work.**
+  - The lost row names the division: "Square infantry division 365: its transports were sunk at sea…" (run 47:
+    "A formation").
+  - The tooltip is kept above the bottom edge on desk, phone and landscape phone (`critic/c48_lost_*.json`).
+  - Moscow to Cyprus keeps Sevastopol's group, as the ADR says.
+- **But R39a has a hole: `World.sunk` is not saved.** If the game is saved and loaded in the hour a landing's last
+  group goes down, case B's divisions get R47-B1's string again ("no transports … at a port it can reach"). In case A,
+  the landing silently calls another group and the sinking is never told (R48-N1).
+- **New blocking issue R48-B1** (diplomacy): diploInvariants 20429 (1938, random diplomacy, 10 years) reports 1 broken:
+  "DEI rose on NED and is not at war with it". The trace shows the declaration refused as `Overrun`. The player reads
+  "Dutch East Indies rose against Netherlands", and no war follows.
 
 ## Scores
 
-| Dimension | Run 46 | Run 47 | |
+| Dimension | Run 47 | Run 48 | |
 |---|---|---|---|
-| Map visuals and readability | 7 | 7 (carried) | R38 changes the tooltip's box and words (judged under UI/UX), not the map |
-| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 (carried) | diploInvariants 19321 (heroes) and 19323 (random world): 0 broken (`critic/c47_diploinv_19321s_h.log`, `critic/c47_diploinv_19323r.log`) |
-| Emergent world dynamics over long runs | 7 | 7 (carried) | |
-| God Mode | 7 | 7 (carried) | God's `removeFormation` of a transport group at sea is told as "its transports were sunk at sea" (`critic/c47_lost_desk.json`). That is acceptable for God |
-| Editor and scenarios | 7 | 7 (carried) | |
-| Stats and history | 7 | 7 (carried) | |
-| UI/UX and polish | 7 | 7 | **Rescored.** **Better:** <ul><li>**R46-N1 fixed.** The sibling wait reads "At Sasebo, waiting for the landing from Tokyo for the same place, about 3 days: they land together", then "about a day" (`critic/shots/c47sib_freshfirst_h484.png`, `critic/c47_sib_freshfirst.json`). The count is right: `sibling` lasts 159 h on 16 headless cases (`critic/c47_x_*.json` `voy`), and it ends in the page between h544 and h604.</li><li>**R46-N2 and R45-N2 fixed sideways.** The phone recall hover is 200 px wide and ends 8 px inside the screen (run 46: 562 px; `critic/shots/c47rc_phone_d3_hover.png`, `critic/c47_rc_phone_d3.json`). The phone sea sweep has 0 of 6 tooltips off the screen (run 46: 6 of 6; `critic/c47_uh_phone.json`).</li><li>**R45-N3 fixed.** Over the sea, a gathering landing reads "Only sea here: your landing stays as it is", and a division in no landing reads "they cannot march there" (`critic/c47_lost_desk.json` `edgesAshore`/`edgesPlain`, `critic/shots/c47lost_phone_plain.png`).</li></ul> **Not 8:** <ul><li>**R47-N1:** the lost-at-sea row never names the division (`critic/shots/c47lost_desk_rows.png`, `critic/shots/c47lost_phone_portpanel.png`).</li><li>**R47-N2:** the tooltip is still not kept within the bottom of the screen. On a desk, hovering 45 px from the bottom puts it 25–57 px below the screen and over the bottom bar (`critic/shots/c47lost_desk_ashore.png`: the "Longyan" box [94,871,454,957] on a 900-px screen).</li><li>R47-B1's false refusal reaches the player as a notice in the panel (`critic/shots/c47lost_phone_portpanel.png`).</li></ul> |
-| Performance | 7 | 7 (carried) | `tm_touch` 58.6–60.0 fps and 1.0 hover ask a second with a selection, as in run 46 (`critic/c47_tm_touch.json`) |
-| Stability | 7 | 7 | **Rescored.** <ul><li>No page error in any page JSON of this run.</li><li>workerDeterminism 3517 at 2190 h ends on run 46's hash `7e113d94` on every arm (`critic/c47_wd_3517_2190.log`). At 8760 h, 3517 and new seed 19327 end the same on all four arms (`critic/c47_wd_3517.log`, `critic/c47_wd_19327.log`).</li><li>Run 46's 10 named landingInvariants runs: 0 broken. 18705 and 19111 (run 46's `stuck`, R46-N3) are now 0 broken.</li><li>New seeds 19311, 19313, 19333 and 19335, and the short pools 19315/19317 (1 group) and 19319/19331 (2 groups): 0 broken (`critic/c47_li_*.log`).</li><li>worldInvariants 19329: 0 broken.</li></ul> **Not 8:** <ul><li>landingInvariants still breaks `stuck` on 19206 and 19207: 367 waits 45 days in a gathering landing (`critic/c47_li_19206_jap.log`, `critic/c47_li_19207_jap.log`). The builder records this as R38d's follow-on.</li><li>A focused run gives no broad evidence for an 8.</li></ul> |
-| Semantic zoom to unit level (needs 8) | 8 | 8 (carried) | |
-| Naval warfare (needs 8) | 7 | **7** | **Rescored. Held under 8 by R47-B1.** <br>**Better, same cases on both commits:** <ul><li>R46-B1's case: 0 broken, and the sinking is reached (above).</li><li>A partial sinking (one of two groups destroyed at sea) is handled. The survivor lands (h633), the lost is told, and the one waiting for the next voyage keeps its state and lands at h1198 (`critic/c47_sunk_3517_n2k0_part.json`, `critic/c47_sunk_3517_n3k2_part.json`).</li><li>R38d, Moscow to Gotland: lands in 45.9 days on HEAD against 69.7 on `4040cad6` (`critic/c47_far_sovmos_got_head.json`, `_wt.json`).</li><li>All 406 of run 46's landing cases are unchanged.</li></ul> **Held:** <ul><li>R47-B1.</li><li>R47-N3: R38d calls a group across seas without asking whether it can get there (Moscow to Cyprus).</li></ul> |
-| Tanks (needs 8) | 8 | 8 (carried) | |
-| Aircraft (needs 8) | 8 | 8 (carried) | |
-| AI nuclear use (needs 8) | 8 | 8 (carried) | |
+| Map visuals and readability | 7 | 7 | **Rescored on new seeds.** Z 20441 is one camera from 6,000 to 3 m/px in 18 steps: elements from 1,573 m/px, 13,791 individuals at 28 m/px, no error (`critic/c48_z_20441.json`, `critic/shots/c48z_20441_00.png` … `_17.png`). C 20443 reads cleanly from 3,000 to 10 m/px (`critic/shots/c48c_20443_arm_0250m.png`). **Not 8:** <ul><li>With heroes on, the hero tags cover Europe at world zoom ("P.100 Ercole", "Maus", "Char 2C", "Roma" over Germany, France and Italy in 1940; "HMS Hood" and "Yamato" in 1950: `critic/shots/c48lwhon_20471_y02_world.png`, `_y12_world.png`). It is the same in run 44's `c44lwhon_3517_y05_world.png`.</li><li>The ranking still cuts "French Equatorial…" in every shot.</li><li>On day 365 the relations graph prints "France" over "French West Africa" and "Nationalist Spain" over "Canada" (`critic/shots/c48rg_20459_desk_d365.png`).</li></ul> |
+| Diplomacy, war, alliance, puppet, revolt depth | 7 | **6** | **Rescored. Down, for R48-B1:** diploInvariants 20429 breaks `rise` on day 546 (`critic/c48_diploinv_20429r_10y.log`). It is the same on `f464db35` (`critic/c48_rise_20429_wt.log`), so it was found on a new seed, not caused by R39. **Clean:** 20413, 20415 (heroes), 20417 (random), 20419 (random world) to day 180; 20413 (`critic/c48_diploinv_20413s_10y.log`) 20491 and 20493 (random) and 20495 to day 3650 (`critic/c48_diploinv_*_10y.log`). The relations graph RG 20459 matches the sim on day 0 (67 nodes: war 7, alliance 11, guarantee 8, puppet 40), and each kind's click reads a true sentence (`critic/c48_rg_20459_desk.json`). Force war (FW 20463) breaks Japan's bond and makes the war (`critic/c48_fw2_forcewar.20463.log`) |
+| Emergent world dynamics over long runs | 7 | 7 | **Rescored on new worlds.** <ul><li>LWHON 20471 over 12 years: the Soviet Union falls, and by 1950 Germany (15.4 M km²), the USA and France lead. Romania takes Turkey's and Greece's capitals in year 1. 85–100 nations live (`critic/c48_lwhon_20471.json`, `critic/shots/c48lwhon_20471_y12_world.png`).</li><li>Headless 20431 over 25 years: 70–100 nations live. The Soviet Union goes from 29.9 % to 17.6 % and back to 21.2 %; Germany from 3.8 % to 13.1 %; the USA from 7.3 % to 15.2 % (`critic/c48_top_20431.txt`).</li><li>7019 over 20 years: the USA, China and Japan overtake the Soviet Union (`critic/c48_top_7019.txt`). History has 3,714 events of 28 kinds.</li></ul> **Not 8:** <ul><li>Canada holds 12.1–12.9 % from year 1 to year 21 on 20431. As in run 44, half the table is frozen.</li><li>Year-one wars are dogpiles: "France +36 ⚔ Brazil", "Nationalist Spain +26 ⚔ Finland +2", "United Kingdom +29 ⚔ Netherlands +1" (`critic/c48_lwhon_20471.json` chips, `critic/shots/c48sc_20481_click.png`).</li></ul> |
+| God Mode | 7 | 7 | **Rescored on new seeds.** <ul><li>A 20445: an H-bomb on Paris (3,329,000 civilians, the alert, "Go to", the History row, France's panel "Nuclear strikes on its land", the charts) and an A-bomb on London (`critic/shots/c48a_20445_13_paris_h_strike.png`, `_32_charts.png`).</li><li>Q 20447: revolt (102→103 nations), spawn nation (→104), found and raze a city, each with its ticker row (`critic/c48_q_20447.json`).</li><li>No error.</li></ul> **Not 8:** R37-N3 unchanged, and a God `removeFormation` of a transport group reads as "sunk" (run 47's note, unchanged) |
+| Editor and scenarios | 7 | 7 | **Rescored.** G 20449: German and British fleets and a Polish bomber are placed. Poland has 10 warheads. The scenario exports, Cancel works, and it loads with 89/76/50 forces and 10 warheads, as placed (`critic/c48_g_20449.json`). **Not 8:** the run-26 scenario is still refused as "made by an older version" (`critic/c48_os2_c48.json`), and the editor's nation list is a flat list of 100 lines |
+| Stats and history | 7 | 7 | **Rescored on HEAD's own 7019 year-20 save.** History opens in 191 ms with 3,714 events of 28 kinds. Each kind filter answers in under 200 ms. The CSV has 3,716 lines (3,714 + header + end), matching the panel (`critic/c48_hi_7019.json`, `critic/c48_dl_7019.json`). **Not 8:** R32-N3 (rows cut mid-word) unchanged |
+| UI/UX and polish | 7 | 7 | **Rescored.** **Better:** <ul><li>R47-N1 fixed: the lost row names the division (`critic/c48_lost_desk.json` `afterSink.rows`).</li><li>R47-N2 fixed: hovering 45 px from the bottom puts the box at 761–847 on a 900-px screen (run 47: 871–957). On a landscape phone (844 × 390) a mid-screen hover stands above the mouse, inside the screen (`critic/c48_lost_land.json`).</li><li>The phone's Actions tab scrolls and fits (`critic/shots/c48p_phone_04_actions.png`).</li></ul> **Not 8:** <ul><li>**R48-N2:** with a panel open, the ticker shows one order row of the two lost divisions, cut mid-sentence ("Square infantry division 365: its transports were …"). 364's loss is not on the screen (`critic/shots/c48lost_desk_rows.png`).</li><li>The relations graph overprints its labels (above).</li><li>Carried: R39-N2, R39-N3, R40-N2.</li></ul> |
+| Performance | 7 | 7 | **Rescored.** PF ran at the end with nothing else of mine running, on run 44's own 7019 year-20 save (byte-identical to HEAD's new one, `cmp`). I ran it on HEAD and on `f464db35`'s build, one after the other (`critic/c48_pf44_7019.json`, `critic/c48_pfwt_7019.json`). <ul><li>3,000 / 1,200 / 600 m/px: 57.7–60.2 fps on both builds.</li><li>120 m/px: 21.4–29.7 on HEAD, 20.4–29.2 on `f464db35`.</li><li>30 m/px: 22.2–30.4 on HEAD, 21.4–30.9 on `f464db35`.</li><li>HEAD's own save gives the same (`critic/c48_pf_7019.json`).</li><li>Run 44 measured 31–48 at those zooms on this world. **Run 44's own build (`0fba90d8`, worktree `critic/wt44`) gives the same today:** 120 m/px 21.4–27.7, 30 m/px 23.0–29.5 (`critic/c48_pf0f_7019.json`). So the drop is today's machine, not a commit, and it moves no score.</li><li>The two 12-year watches at Max: 59.1–59.9 fps, longest gap 100–250 ms, 0 frames over 500 ms (`critic/c48_lwhon_20471.json`, `critic/c48_lwplain_20473.json`).</li><li>Headless tick: 7019 6.99 ms mean over 20 years, 20431 6.63 ms over 25 (`critic/c48_sim7019.log`, `critic/c48_sim20431.log`).</li></ul> **Not 8:** under 31 fps at unit zoom on a year-20 world, on both builds |
+| Stability | 7 | 7 | **Rescored.** <ul><li>No page error in any page JSON of this run (24 probes, two 12-year watches).</li><li>workerDeterminism 3517 at 2190 h ends `7e113d94` on every arm, as in runs 46 and 47 (`critic/c48_wd_3517_2190.log`). New seed 20427 at 8760 h ends `72dc45cd` on all four arms (`critic/c48_wd_20427.log`).</li><li>worldInvariants 20421 to 10 years, 20423 (random world) and 20425 (heroes): 0 broken (`critic/c48_wi_*.log`).</li><li>landingInvariants on 6 new seeds, the short pools included: 0 broken (`critic/c48_li_204*.log`).</li><li>Both 12-year watches ran with 0 frames over 500 ms.</li></ul> **Not 8:** <ul><li>landingInvariants still breaks `stuck` on 19206 and 19207 (R39e held).</li><li>R48-N1: a save and load in one hour changes what the player is told.</li></ul> |
+| Semantic zoom to unit level (needs 8) | 8 | 8 | **Re-earned on new seeds.** <ul><li>Z 20441: one camera from 6,000 to 3 m/px in 18 steps, with counters, elements and individuals in turn and no error (`critic/c48_z_20441.json`).</li><li>PHZ 20461: 40 days on the phone from 30,000 to 25 m/px, with no overflow at any tier and a tap that opens China's panel (`critic/c48_phz_20461.json`).</li><li>Sea battle 20481: two cruiser squadrons and a destroyer flotilla are labelled at 600 and 150 m/px inside the battle ring (`critic/shots/c48sc_20481_click.png`, `_150m.png`).</li></ul> |
+| Naval warfare (needs 8) | 7 | **7** | **Rescored.** **Better, same cases as run 47:** <ul><li>R47-B1 case A: told and replaced at t273 (run 47: reason 6) (`critic/c48_far_usachi_eng.json`).</li><li>Case B, n3k1/n3k2/n4k2/n5k3: those at the port get `transportsSunk`, not reason 6 (`critic/c48_sunk_3517_*.json`).</li><li>The partials and the Gotland and Königsberg cases are as in run 47 (Gotland lands at the same hour, `{"103":1104}`).</li><li>The Königsberg convoy that came ashore on Germany's coast (run 47: "not judged") was struck from the air at t132 and broke off (`FormationRetreated`). The division is told "its transports broke off; it came ashore away from its target", which is true (`critic/c48_far_gerkon_hourly.json`).</li></ul> **Held under 8:** <ul><li>R48-N1: R47-B1's false refusal comes back after a save and load in the sinking hour (`critic/c48_sunksave_3517_n3k2.json`: `855 refused 366 reason 6`; `critic/c48_far_save1.json`: no `TransportsSunk` at all).</li><li>landingInvariants `stuck` on 19206/19207 (1 broken each, `critic/c48_li_19206_jap.log`, `_19207_jap.log`): a named rule checker still reports a broken rule in this dimension. The builder holds it (R39e).</li><li>SB 20457 found no ships to show at the fight it picked (`critic/shots/c48sb_20457_60m_balls.png`). It is a probe's miss, not scored, but it gives no new evidence for an 8.</li></ul> |
+| Tanks (needs 8) | 8 | 8 | **Re-earned on new seeds.** C 20443, Germany–Poland day 5: armoured divisions 40 and 42 are labelled at 250 m/px with leader lines among tank brigades 581–583 and motorised divisions 44–45. At 10 m/px they are tank balls with turrets and tracks among German infantry and wings (`critic/shots/c48c_20443_arm_0250m.png`, `_arm_0010m.png`). No error |
+| Aircraft (needs 8) | 8 | 8 | **Re-earned on new seeds.** <ul><li>W 20455: a German fighter is ordered to strike near Warsaw and followed. In 56 samples it flies with its mark in 51, is never shown without one, and sits a median 32 px from its sorties at 3,000 m/px (`critic/c48_w_20455.json`).</li><li>PL 20453, Germany–Poland from 3,000 to 25 m/px in both looks: 37 planes in hour 2, with marks at every tier and no error (`critic/c48_pl_planes.20453_GER_POL_5299.log`).</li><li>worldInvariants with the air rules over 10 years on 20421: 0 broken.</li></ul> |
+| AI nuclear use (needs 8) | 8 | 8 | **Rescored on HEAD's own 7019 year-20 save.** <ul><li>The game pauses on two AI strikes in 4 months. China on the USA near Belfast (54,000 civilians, 42,408 men), the same strike as runs 39–44. China on Iceland near Höfn with a hydrogen bomb (8,000 civilians, 30,012 men).</li><li>Each has an alert, "Go to" and a ticker row, and the burst and fallout are drawn over the struck army (`critic/c48_an_7019y20.json`, `critic/shots/c48an_7019y20_1_goto.png`).</li><li>No error.</li></ul> |
 
 ## Blocking issues
 
-1. **R47-B1. When a landing's transports are destroyed, the player is told "not done: no transports of its nation
-   with room for it are at a port it can reach", and nothing says the transports were sunk. In the US case the
-   reason is false.**
-   - **Case A: a gathering landing whose group is bombed in port.** United States, seed 3517, at war with Britain.
-     The division nearest Chicago (615) is sent to Norwich (1.3, 52.6) (`critic/scripts/c47_far.ts`;
-     `critic/c47_far_usachi_watch.json`, `critic/c47_far_usachi_stall2.json`, `critic/c47_far_usachi_reclick.json`):
-     - The landing is made at Norfolk with group 1119, and 615 marches there.
-     - 1119 stands in Norfolk under the landing (player order kind 3). It takes five air strikes (`StrikeHit`, wings
-       1452/1453, t247–t272) and is destroyed at t272.
-     - At t273 the landing ends. 615 is told `MoveRejected` reason 6, the string above, and walks on to Norfolk with
-       no landing.
-     - At that hour group 1123 stands idle at San Francisco with room for it (m0, room 25200). Re-clicking the same
-       order at t274 makes landing 2 at San Francisco with 1123.
-     - So the reason is false, and nothing tells the player that the group they were waiting for was sunk.
-     - The same happens on `4040cad6` (`critic/c47_far_usachi_eng_wt.json`: t273 refused 615 reason 6).
-   - **Case B: those left for the next voyage when the sailing landing's groups are sunk.** Japan, 3517, the three
-     nearest Tokyo sent to Shanghai, with Japan's other groups removed (`critic/c47_sunk_3517_n3k1.json`, `n3k2`,
-     `n4k2`, `n5k3`):
-     - The one or two left at Tokyo are told `nextVoyage`: "it waits at the port, and they come back for it".
-     - The groups are sunk a day out. Those aboard get `lostAtSea`. Those at the port get `refused` reason 6 in the
-       same hour.
-     - In the page, 366's panel reads "Holding" with "Square infantry division 366: not done: no transports of its
-       nation with room for it are at a port it can reach." Nothing tells them their transports went down
-       (`critic/shots/c47lost_desk_portpanel.png`, `critic/shots/c47lost_phone_portpanel.png`,
-       `critic/c47_lost_desk.json`).
-     - Here Japan had no other group, so the words are not false, but the promise "they come back for it" ends in a
-       refusal with no cause given.
-   - **Why it blocks.**
-     - **Two rules disagree.** At t273 the game refuses 615 because "no transports … at a port it can reach". At
-       that hour 1123 stands idle at San Francisco, and an hour later `chooseTransports` finds it for the same click.
-     - **What SPEC decides.** SPEC (l.1290) says such a landing is over (`NoTransports`), and I do not object to that
-       here. What is wrong is the reason it gives, and the silence about the sinking. The code path is `landings.ts`
-       `gather` ("no group left": `endLanding(…, NoTransports)`) and the sailing branch (`l.fleets.length === 0`).
-     - **It is R46-B1's player experience** in the two states R38a did not touch: the transports go down and the game
-       reports a missing port.
-     - **Case B supports this; it does not carry it.** The words are true there, but the sinking is never told.
-   - **Fix.**
-     - A landing whose last group is destroyed calls another group (`callTransports`, as R37a's busy call does), and
-       is over only if none comes.
-     - When it is over, it is told by its own reason or news kind ("its transports were sunk at port / at sea"),
-       naming the division, not reason 6.
-     - Those waiting for a next voyage get the same.
-   - **AT.**
-     - Case A (`c47_far.ts` USA 3517) gives no reason-6 refusal at t273. The landing goes on with 1123, or the news
-       names the sinking.
-     - A unit case of a gathering landing whose group is destroyed at its port while another group is idle: no
-       refusal reason 6.
-     - Case B: the one at the port is told its transports were sunk.
+1. **R48-B1. A puppet "rises" against an overrun overlord and goes free with no war. The rule checker reports it
+   broken, and the player reads a revolt that never becomes a war.**
+   - **The case.** diploInvariants 20429, 1938 world, random diplomacy, 10 years:
+     `20429 random day 546: rise: DEI rose on NED and is not at war with it` (`critic/c48_diploinv_20429r_10y.log`).
+   - **The trace** (`critic/scripts/c48_rise.ts`, `critic/c48_rise_20429.log`). The Dutch East Indies fight beside the
+     Netherlands in two wars (against Britain's side and against Norway's). At t13104, on the month's start:
+     - `PuppetRevolt DEI NED`, `WarLeft DEI ENG`, `WarLeft DEI NOR`, then `WarRejected DEI NED`.
+     - From the next hour DEI has no overlord and no war; the next 48 hours bring none.
+   - **Why it was refused** (`critic/scripts/c48_rise_why.ts`, `critic/c48_rise_why.log`). After the release and
+     `leaveWarsBeside`, `whyNotWar(DEI, NED)` is **`Overrun`**: the Netherlands has most of its land occupied.
+     `puppets.ts` handles only the `Allied` and `AlliedRealm` refusals before `declareWar(world, n, o, true)`. Every
+     other refusal turns the rising into a free release.
+   - **What the player sees** (`critic/scripts/c48_rise_page.mjs`, `&diplo=random`, the page at t13110). The ticker and
+     History say "1 July 1939 Dutch East Indies rose against Netherlands", then "left its war with United Kingdom"
+     and "…with Norway". No row tells of a war between the two, and none comes, because `WarRejected` has no text
+     (`critic/shots/c48rise_20429_history.png`, `critic/c48_rise_page.json`).
+   - **Same on `f464db35`:** the same events at t13104 (`critic/c48_rise_20429_wt.log`). It was found on a new seed,
+     not caused by R39.
+   - **How often:** 1 of 5 ten-year runs (with random diplomacy, 1 of 3: 20429 broken; 20491, 20493 clean; scenario diplomacy 20413, 20495 clean).
+   - **Why it blocks.** It breaks a rule checker (`tests/helpers/diploInvariants.ts` `riseBreaks`). Two rules
+     disagree: SPEC's "Overrun refuses new wars on it" (l.751) and the rising that is a war of independence
+     (`puppets.ts` header, step 2). A rising against a beaten overlord is the case ADR-807 sets out to produce
+     ("a losing overlord with a great subject").
+   - **Fix (the design's choice).** Either:
+     - a rising on an overrun overlord is not refused, as an overrun puppet is still declared on (DECISIONS-2026-10
+       l.14381); or
+     - it is a release in name and in law: told as "broke free" (`PuppetReleased`), with the checker's rule for
+       `rise` saying so in the same commit, as an ADR records.
+
+     Not: the revolt row with no war.
+   - **AT.** diploInvariants 20429 random 3650: 0 broken. A unit case: a puppet at loyalty < 20 with a voice, under
+     an overlord with ¾ of its land occupied, rises on the month's start: either at war with it, or told released and
+     not "rose against".
 
 ## Non-blocking issues (prioritised)
 
-1. **R47-N1. The lost-at-sea row never names the division.**
-   - **What the player sees.** `App.tsx` names a row by `view.formationTitle(id)`. The division is destroyed in the
-     same hour `LostAtSea` is sent, so the name is always the fallback: "A formation: its transports were sunk at sea;
-     it was lost with them." (`critic/c47_lost_desk.json` `afterSink.rows`, `critic/shots/c47lost_desk_rows.png`,
-     `critic/shots/c47lost_phone_portpanel.png`).
-   - **Why it matters.** Two divisions were lost and the player cannot tell which. The row's click goes to a
-     formation that no longer exists (read in `App.tsx` `onOrder`; not clicked). The unit test checks the news ids, not the words.
-   - **Fix.** Send the name with the news, or keep the title of a formation told `lostAtSea` until its row is
-     cleared.
-2. **R47-N2. R38c keeps the tooltip inside the screen sideways, but not at the bottom.**
-   - `place()` clamps `left` but sets `top` to y + 16 always.
-   - On a desk, hovering 45 px from the bottom puts the box at 871–925 (sea) and 871–957 (a city) on a 900-px screen.
-     It hangs off the screen and over the bottom bar (`critic/shots/c47lost_desk_ashore.png`,
-     `critic/c47_lost_desk.json` `edgesAshore`).
-   - **Fix:** flip the box above the cursor when it would pass the bottom.
-3. **R47-N3. R38d calls a group across seas with no check that it can get there or that this is sooner.**
-   - **The case.** Moscow to Cyprus (Soviet Union at war with Britain, 3517; `critic/c47_far_sovmos_cyp_head.json`).
-     - The only Soviet group, at Sevastopol, is "far" from the nearest port (Leningrad) and is called there.
-     - For 9 days it shuttles between Sevastopol and the Sea of Marmara: (1195,342) → (1176,355) → (1199,338) →
-       (1210,325) → …
-     - At t222 the landing ends with reason 6.
-   - **On `4040cad6`** the landing was made at Sevastopol and ended at t81 "its port is bombed shut", so both fail.
-   - **What R38d leaves out.** It compares straight-line distances and never asks which sea a port is on, or whether
-     the called group can reach it. A target in the Black Sea or the Mediterranean is then reached by a call around
-     Europe (if at all).
-   - **Fix.** Compare the call's sail hours plus the voyage against the march plus the voyage (`sailHours`), and
-     keep the free group where the call cannot reach.
-4. **R47-N4.** landingInvariants `stuck` on 19206 and 19207: 367 waits 45 days in a gathering landing
-   (`critic/c47_li_19206_jap.log`, `critic/c47_li_19207_jap.log`). This is R46-N3's class; the builder records it
-   as R38d's follow-on.
-5. Carried, unchanged:
-   - R44-N3 (`steal_one`), R46-N5 (Britain `n6_012` +17 h), identical to run 46 (`critic/c47_cmp46.txt`);
-   - R37-N3, R37-N4, R32-N3, R40-N2, R39-N2, R39-N3, R36-N3, R32-N2, R31-N1, R31-N6, R32-N5, R39-N4;
-   - the ranking cutting long names (`critic/c47_hs_desk.json` identical to run 46's but for the shot names).
+1. **R48-N1. `World.sunk` is not saved, so a save and load in the sinking hour brings R47-B1 back.**
+   - Groups sunk by air or naval combat go down after `amphibiousSystem` in the tick. `landingSystem` reads
+     `World.sunk` only at the next hour, and a save between drops it ("not saved (it words a notice, no more)").
+   - **Case A, a real save and load into a fresh `Sim`** (`critic/scripts/c48_far_save.ts`, `SAVE=1`): at t273 the
+     landing has no group and `sunk=1`. After the load, `sunk` is empty. 615 gets no `TransportsSunk`: the landing
+     silently calls another group, and the player's next word is t895's "port shut" (`critic/c48_far_save1.json`). Without the
+     save (`critic/c48_far_save0.json`) it is told at t273.
+   - **Case B, `sunk` cleared as a load leaves it** (`critic/scripts/c48_sunk_save.ts`, n3k2): `855 refused 366
+     reason 6`. That is R47-B1's string, word for word (`critic/c48_sunksave_3517_n3k2.json`).
+   - The window is one hour, but the autosave runs on a timer and when the page is hidden (`src/app/autosave.ts`).
+   - **Fix:** save `sunk` while it is not empty (as `embarked`), or decide "sunk" from state that is saved (the
+     landing's groups at its last hour). **AT:** both scripts with `SAVE=1` give `transportsSunk`.
+2. **R48-N2. Two divisions lost at sea read as one cut row beside a panel.** `Ticker.tsx` shows only the last order
+   row beside a panel, and `.ticker.short` cuts it: "Square infantry division 365: its transports were …". 364's loss
+   is never on the screen while the panel is open (`critic/shots/c48lost_desk_rows.png`). **Fix:** merge the same
+   news of one hour into one row ("2 divisions lost at sea: …"), or let an order row wrap.
+3. **R48-N3. Hero tags cover Europe at world zoom** (heroes on): four tags hide Germany, France and Italy in 1940
+   (`critic/shots/c48lwhon_20471_y02_world.png`). **Fix:** give hero tags the same collision rule as nation labels,
+   or shrink them below a zoom.
+4. **R47-N4 / R39e (held):** landingInvariants `stuck` on 19206 and 19207, 1 broken each (`critic/c48_li_19206_jap.log`,
+   `critic/c48_li_19207_jap.log`).
+   - **Why this checker break is not blocking when R48-B1's is.** `stuck` is a wait limit: its break is a
+     division that waits 45 days for a far sibling, then lands. Nothing it is told is false, and the builder
+     holds it on the record (ROADMAP R39e), as runs 46 and 47 judged it.
+   - `rise` is a hard rule. Its break emits a row ("rose against") that the game then contradicts.
+   - It still holds naval under 8.
+5. Carried, unchanged: R44-N3, R46-N5, R37-N3, R37-N4, R32-N3, R40-N2, R39-N2, R39-N3, R36-N3, R32-N2, R31-N1, R31-N6,
+   R32-N5, R39-N4; the ranking cutting long names; the relations graph's overprinted labels.
 
-## Run 46's cases re-run
+## Run 47's cases re-run
 
-| Run 46 case | `4040cad6` (run 46) | HEAD `f464db35` | Evidence |
+| Run 47 case | `f464db35` (run 47) | HEAD `4ebaee76` | Evidence |
 |---|---|---|---|
-| **R46-B1** landingInvariants 19113/15101 | `aboardNoLanding` ×2 at t1463 | **fixed**: 0 broken; 271/272 lost with group 1076 at t1464 | `critic/c47_li_19113_eng.log`, `critic/c47_li_sunk_19113.log` |
-| **R46-N1** sibling wait (page, 3517 and 19101) | "all of the landing there: it sails when its transports and escort are ready" | **fixed**: "waiting for the landing from Tokyo … about 3 days", then "about a day"; lands h658/h682 as before | `critic/c47_sib_freshfirst*.json`, `critic/shots/c47sib_freshfirst_h484.png` |
-| **R46-N1** headless `sibling` hours (16 cases) | 159 h `ready` | 159–161 h `sibling`, 0–1 h `ready` | `critic/c47_x_*.json` |
-| **R46-N2** recall hover on a phone | 562 px, cut | **fixed**: 200 px, inside | `critic/c47_rc_phone_d3.json`, `critic/shots/c47rc_phone_d3_hover.png` |
-| **R45-N2** sea sweep on a phone | 6 of 6 off the screen | **fixed**: 0 of 6 | `critic/c47_uh_phone.json` |
-| **R45-N3** gathering landing over water | no hover | **fixed**: "Only sea here: your landing stays as it is" | `critic/c47_uh_desk.json`, `critic/c47_uh_phone.json` |
-| **R46-N3** `stuck` 18705, 19111 | 1 broken each | **fixed**: 0 broken (19206, 19207 still `stuck`, R47-N4) | `critic/c47_li_18705_jap.log`, `critic/c47_li_19111_jap.log` |
-| **R46-N4** `leftBehind` and short pools | not exempt; no pool | exempt; pools of 1 and 2 on four new seeds: 0 broken | `critic/c47_li_193*_g*.log` |
-| All headless lists (All, G, X, Y; 432 jobs) | — | 406 with landings, all identical hour for hour; the 13 that fail are run 46's own stale `c45_ll4` imports, which failed there too | `critic/c47_cmp46.txt`, `critic/c47_q_hl.done` |
-| Page suites P, P2 (SE, RC, MK, MK2, MK4, UW, UH, SP, PN, FS, HS, LWT5, TM) | — | identical landings, no page error | `critic/c47_*.json`, `critic/scripts/c47_pagecmp.cjs` |
-| workerDeterminism 3517 (2190 h) | `7e113d94` | `7e113d94` on every arm | `critic/c47_wd_3517_2190.log` |
-| Run 46's 10 landingInvariants runs | 0 broken | 0 broken | `critic/c47_li_18*.log`, `critic/c47_li_15101_o18117.log`, `critic/c47_li_3517_o18113.log` |
+| **R47-B1 A** USA 3517 Chicago→Norwich | t273 refused 615 reason 6 | **fixed**: t273 `TransportsSunk` x=1, 1123 called; t895 `PortShut` (true: Norfolk's damage 0 at the call) | `critic/c48_far_usachi_eng.json`, `critic/c48_far_save0.json` |
+| **R47-B1 B** n3k1, n3k2, n4k2, n5k3 | those at the port `refused` reason 6 | **fixed**: `transportsSunk` (x=0, over) | `critic/c48_sunk_3517_n*.json` |
+| Partials n2k0_part, n3k2_part; n2k0 | as run 47 | the same news | `critic/c48_sunk_3517_*_part.json` |
+| **R47-N1** lost row's name | "A formation: …" | **fixed**: "Square infantry division 365: …" (desk, phone, landscape) | `critic/c48_lost_*.json` |
+| **R47-N2** tooltip at the bottom | 871–957 on 900 px | **fixed**: 761–847; landscape phone inside | `critic/c48_lost_desk.json`, `critic/c48_lost_land.json` |
+| **R47-N3** Moscow→Cyprus | Leningrad called, shuttles, t222 reason 6 | Sevastopol's group kept; t81 `PortShut` (as at `4040cad6`) | `critic/c48_far_sovmos_cyp.json` |
+| Moscow→Gotland | lands t1104 | lands t1104 | `critic/c48_far_sovmos_got.json` |
+| Königsberg→Norwich | ashore at t150 in Germany, "not judged" | the same; traced: bombed at t132, the group broke off, told `landedAway` | `critic/c48_far_gerkon_hourly.json` |
+| **R47-N4** landingInvariants 19206, 19207 | 1 broken each (`stuck`) | 1 broken each (R39e held) | `critic/c48_li_19206_jap.log`, `critic/c48_li_19207_jap.log` |
+| R46-B1 19113/15101; 18705, 19111 | 0 broken | 0 broken | `critic/c48_li_19113_eng.log`, `critic/c48_li_18705_jap.log`, `critic/c48_li_19111_jap.log` |
+| workerDeterminism 3517 (2190 h) | `7e113d94` | `7e113d94` on every arm | `critic/c48_wd_3517_2190.log` |
 
 ## Design objections (none blocking, no score lowered)
 
-- **R38d puts the call before the walk by straight-line distance alone.** The ADR records it as a cure for one
-  40-day walk within Honshu. On a continent, the nearest port may lie on another sea from both the target and the
-  group (R47-N3). Judging the call by hours, as escorts already are (`sailHours`, R23d), would make it a choice
-  rather than a rule of thumb.
-- **SPEC ends a landing whose last group is lost** (l.1290) rather than calling another. With R37a's busy call
-  already in the game, keeping the landing and calling a group would match what the player asked for.
+- **SPEC ends a landing whose last group is lost** (l.1290). R39a now calls another group first, which answers run
+  47's objection. The message "others are on their way" gives no idea of the wait: in case A it was 26 days, from San
+  Francisco to Norfolk. A day count, as the sibling wait has, would set the player's expectation.
+- **The run-26 scenario is still refused** as "made by an older version". This has been the objection since run 33.
 
 ## Ideas from other games (not scored)
 
-- Hearts of Iron names the divisions lost with a convoy in one message ("3 divisions lost at sea"). That is the shape
-  of R47-N1's fix.
-- Many strategy games flip a tooltip above the cursor near the screen's bottom. That is R47-N2's.
+- Hearts of Iron shows "3 divisions lost at sea" as one message: R48-N2's fix.
+- Europa Universalis lets a subject that cannot fight its overlord gain independence by a named event ("broke
+  free"), not a revolt: one shape for R48-B1's fix.
 
 ## Strengths (verified)
 
-- **R38 changed nothing it did not mean to.** All 406 of run 46's landing cases are identical hour for hour. Every page
-  probe lands at run 46's hours. Seed 3517's worker hash is unchanged (`critic/c47_cmp46.txt`,
-  `critic/c47_wd_3517_2190.log`).
-- **The sibling wait now tells the truth, and its count is right.** "About 3 days" at h484 and "about a day" at
-  h544, against a 159-hour wait that ends before h604 (`critic/c47_sib_freshfirst.json`).
-
-## Notes
-
-- **Königsberg to Norwich (R38d), not judged as better or worse.**
-  - `4040cad6` refuses it with reason 3 (`critic/c47_far_gerkon_eng_wt.log`).
-  - HEAD calls the Kiel group to Königsberg and sails at t47. The convoy then comes ashore on Germany's own North Sea
-    coast at t150, not in England.
-  - No repulse or refusal event is logged for the division, and I did not trace the fleet
-    (`critic/c47_far_gerkon_eng_head.json`, `critic/c47_far_gerkon_eng_head2.json`).
-- `c47_far.ts` cases where no landing is made:
-  - Moscow to Turkey and to Finland march overland; I did not judge them (`critic/c47_far_*` first attempts were
-    deleted).
-  - Chicago to Dublin was water, refused 17.
-- The `c47_sunk` cases destroy groups with `destroyFormation`, as a sinking does: `elements.ts` sets the fleet of
-  those aboard to −1. The US case A is a real sinking, by air strikes in port.
-- workerDeterminism at 8760 h: 3517 (`4c5a37a2`) and new seed 19327 (`849bf16d`) end the same on all four arms (plain,
-  quiet, start, every) (`critic/c47_wd_3517.log`, `critic/c47_wd_19327.log`).
+- **It runs for decades without a hitch.** Two 12-year page watches at Max held 59.7–59.9 fps with no frame over
+  500 ms and no page error (`critic/c48_lwhon_20471.json`, `critic/c48_lwplain_20473.json`). The 25-year headless world
+  has 70–100 nations and a changing top five (`critic/c48_top_20431.txt`).
+- **R39 is precise.** All of run 47's cases moved only where R39 meant them to. The worker hash of 3517 is unchanged,
+  and every checker but the two held `stuck` seeds is clean on the landing seeds.

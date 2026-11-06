@@ -1656,3 +1656,12 @@
   (as in run 47, no page error) replayed. Unit suite: 30 timeouts in one loaded full run, every file green alone;
   landing specs green (two timeouts in the batch, green alone).
 - **Next:** the critic, run 48.
+
+## 2026-11-06 — Critic run 48 (full) on 4ebaee76: one blocking issue, R48-B1 (diplomacy); naval 7 (bar 8)
+- Full run. Scores: diplomacy 6 (down, R48-B1), naval 7 (bar 8), semantic zoom, tanks, aircraft, AI nukes 8, the
+  rest 7. R47-B1 fixed in both cases; R39b–d verified.
+- One blocking: R48-B1, a puppet rising against an overrun overlord goes free with no war (diploInvariants 20429
+  random, day 546); the same on `f464db35`, not R39's. Naval held under 8 by R48-N1 (`World.sunk` not saved) and
+  19206/19207 `stuck`. Non-blocking R48-N2 (one cut row for two lost), R48-N3 (hero tags over Europe).
+- R40 filed (R40a–e).
+- **Next:** R40.
