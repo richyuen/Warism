@@ -7,6 +7,35 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-835 · 2026-11-06 · accepted — The landing checker's `stuck` is a stall; `farPort` (R40e, the user's decision)
+
+- **Context.** Critic run 48 kept R47-N4 open: on 19206/19207 the landing checker said `stuck`, a division 45 days
+  in a gathering landing. Traced: 19206's 367 marched ~70 cells to Kure at ~1 a day, its click's landing, through
+  landings 7, 11, 12, 7 as the checker's own orders re-clicked it. The critic: "`stuck` is a wait limit… nothing it
+  is told is false"; R39e (one click lands together) makes a long march to the click's port the rule's own result.
+  No port rule cleared 45 days without splitting clicks. The user decided to refine the rule, and asked how the
+  critic would accept it.
+- **Decision (the user's).** `stuck` counts the hours a gathering landing gains no ground: none of its divisions a
+  straight cell nearer its port, none of its groups a cell nearer its port's water, than each has come. A landing
+  re-clicked or redirected starts afresh. The checker does not go blind: stalls planted by hand (every division and
+  group held where it stood, or the divisions walking a circle of 2 cells) are told `stuck`; the same orders unplanted
+  are not. Nothing is hidden: each division's longest gathering spell, and its part with no ground, is printed as a
+  note (19206's 367: 46.0 days, 3.5 with no ground). And a new rule keeps R46-N3's class (a 40-day walk within Honshu
+  to a far port's free group) caught, as `stuck` once caught it: `farPort`, a division making a landing alone (new
+  in the hour, its only division) at a port whose whole way (march, voyage) is over `FAR_PORT_DAYS` (7) longer than
+  by its land's nearest port, with an idle group of its nation with room called there (`callCandidates`) — R39d's
+  rule as a checker. Within R38d's gate of 20 straight cells the game takes the far group by rule: told as a note,
+  not broken (R41).
+- **Evidence.** HEAD with the fix below: every checker seed the critic has run 0 broken. At `4040cad6` (before R38d), the
+  same checker breaks on 18705 (4) and 19111 (7): 367 to Sasebo 43–49 days, by Sendai or Hakodate 11–15. To run it
+  there, `sailHoursFrom` and `callCandidates` were copied into that worktree's copy as at HEAD (read-only helpers;
+  `callTransports` picks the same groups at both commits).
+- **A fault it found.** A group freed by the click's own re-send (R37a, `freedGroup`) was taken at any port: 19207's
+  366, re-sent from Hiroshima, walked 24 days to the group it had freed at Tokyo. Now judged as any free group far
+  off (`callSooner`). 19207 and 19111 clean; run 47's 383 cases as in run 47 (35 split, none later, none changed).
+- **Not taken.** Dropping the 20-cell gate and sending the far group itself to the nearer port ('fetch'): with them
+  `landingTwoPorts1938` (R37c) is red and run 47's splits rose 35 → 58; filed as R41.
+
 ### ADR-834 · 2026-11-06 · accepted — A rising on an overrun overlord is a release (R40a)
 
 - **Context.** Critic run 48, R48-B1: diploInvariants 20429 (random diplomacy) day 546, "DEI rose on NED and is not

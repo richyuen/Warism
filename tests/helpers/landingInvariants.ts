@@ -22,19 +22,34 @@
  *   re-sent kept too few transports; the rest stood at the port, untold, and landed alone weeks later); bar one
  *   told `NextVoyage` that hour (R17b's next voyage, told; ROADMAP R38e, critic run 46, R46-N4);
  * - `escort`: an escort for no landing two hours running (one ending this hour is let go the next);
- * - `stuck`: a division in a gathering landing for over STUCK_DAYS;
+ * - `stuck`: a division in a gathering landing that has gained no ground for STUCK_DAYS: none of its divisions
+ *   nearer its port, none of its groups nearer its port's water, by a cell (ADR-835, the user's decision; critic
+ *   run 48 on R47-N4: "`stuck` is a wait limit... nothing it is told is false": 19206's 367 walked ~70 cells to
+ *   Kure at ~1 a day, its click's landing, and was counted stuck). A wait at the port for a mate on the march is
+ *   the landing's ground gained; a stand with no one nearing is a stall, however its landings are re-clicked;
+ * - `farPort`: a division that makes a landing alone (new in the hour, it its only division) at a port whose
+ *   whole way to the landing's water (the march, the voyage) is over FAR_PORT_DAYS longer than by its land's nearest
+ *   port of its nation (the march there or an idle group of its nation with room called there, `callCandidates`,
+ *   the later, then the voyage): R39d's rule as a checker (ADR-835: R46-N3's class, a 40-day walk within Honshu to a far port's free group, kept caught once
+ *   `stuck` counts the march as ground gained);
  * - `save`: a save that does not load bit-identical (on the probe days).
  * Each kind is told once a division, group or landing (its first hour).
+ *
+ * Not broken but told (`notes`, ADR-835): each division's longest spell in a gathering landing, and how much of it
+ * gained no ground, so a long march stays in view.
  */
 import type { Command } from '../../src/shared/commands';
 import { EventKind } from '../../src/shared/events';
 import { isLand } from '../../src/shared/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { landingOf, transportRoom } from '../../src/sim/systems/amphibious';
+import { callCandidates, landingOf, transportRoom, transportsPort } from '../../src/sim/systems/amphibious';
 import { destroyFormation } from '../../src/sim/systems/elements';
 import { LandingState } from '../../src/sim/systems/landings';
-import { navOf, type World } from '../../src/sim/world';
+import { octileKm } from '../../src/sim/nav/grid';
+import { MARCH_DUTY } from '../../src/sim/systems/movement';
+import { sailHours, sailHoursFrom } from '../../src/sim/systems/sail';
+import { navOf, portSeaOf, type World } from '../../src/sim/world';
 import { assets1938 } from './earth';
 import { GRID_SETUPS, IDLE_HOURS, type GridSetup } from './landingGrid';
 import { nationId } from './sim1938';
@@ -42,6 +57,27 @@ import { nationId } from './sim1938';
 const { w: W } = SIZE_1938;
 /** The longest a division may stand in a gathering landing, in days (R31f's late march is a week; the longest walk ~21 days). */
 export const STUCK_DAYS = 45;
+/** How many days longer a lone division's way by its port may be than by its land's nearest before `farPort` (a week). */
+export const FAR_PORT_DAYS = 7;
+/** R38d's gate: a far port under this many straight cells beyond the nearer is taken by rule (ROADMAP R41). */
+const GATE_CELLS = 20;
+
+/** The checker's memory between hours for `stuck`, `farPort` and the notes (ADR-835). */
+interface Track {
+  /** Per division or group, its landing and the nearest it has come to that landing's port (cells). */
+  best: Map<number, { landing: number; port: number; d: number }>;
+  /** Per division, the hour its landing last gained ground. */
+  ground: Map<number, number>;
+  /** Per division, the hour it entered gathering landings; its longest spell in them, and its longest with no ground. */
+  spell: Map<number, number>;
+  longest: Map<number, { hours: number; still: number }>;
+  /** Per division, the landing it was in last hour. */
+  landing: Map<number, number>;
+  /** The landings of last hour (a landing not among them is new). */
+  seen: Set<number>;
+  /** `farPort` cases within R38d's gate, for the notes. */
+  gate: string[];
+}
 
 export interface LandingCase {
   /** The sim's seed. */
@@ -57,6 +93,10 @@ export interface LandingCase {
   groups?: number;
   /** Called after each hour stepped (a diagnosis tool's trace). */
   hour?: (w: World) => void;
+  /** Random orders only in the first this many days (a stall planted by `hour` then runs undisturbed); default all. */
+  orderDays?: number;
+  /** Filled with the notes (ADR-835): each division's longest gathering spell and its part with no ground gained. */
+  notes?: string[];
   /** Each hour after the step, and each click (a tool's trace). */
   onHour?: (w: World, click?: { ids: number[]; x: number; y: number }) => void;
 }
@@ -76,7 +116,7 @@ function rng(seed: number): () => number {
 const DIRS: [number, number][] = [[0, 0], [1, 0], [0, 1], [-1, 0], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
 
 /** The rules each hour on `w` for player `n`; `idle` and `since` carry spells between hours. */
-function check(w: World, n: number, idle: Map<number, number>, since: Map<number, number>, orphans: Set<number>, moored: Set<number>, was: Map<number, number>, told: Set<number>, put: (key: string, line: string) => void): void {
+function check(w: World, n: number, idle: Map<number, number>, track: Track, orphans: Set<number>, moored: Set<number>, was: Map<number, number>, told: Set<number>, put: (key: string, line: string) => void): void {
   const t = `t${w.tick}`;
   const out = { push: (line: string): void => put(line.replace(/^t\d+ /, '').replace(/ (aboard|standing|for|in|,|has|gathering).*$/, ''), line) };
   const f = w.formations;
@@ -129,16 +169,82 @@ function check(w: World, n: number, idle: Map<number, number>, since: Map<number
   }
   for (const id of [...idle.keys()]) if (!w.embarked.has(id)) idle.delete(id);
   for (const id of [...moored]) if (!aboardNow.has(id)) moored.delete(id);
+  // Ground gained (ADR-835): each gathering landing's divisions and groups against the nearest each has come to its
+  // port (a group: its port's water), by straight cells; a cell nearer is ground. A new landing or port starts afresh.
+  const W_ = w.cells.w;
+  const cellsTo = (x: number, y: number, k: number): number => {
+    let dx = Math.abs(x - ((k % W_) + 0.5));
+    if (w.settings.loopingMap && dx > W_ / 2) dx = W_ - dx;
+    return Math.hypot(dx, y - (Math.floor(k / W_) + 0.5));
+  };
+  const water = portSeaOf(w);
+  const gained = new Set<number>();
+  for (const l of w.landings.values()) {
+    if (l.state !== LandingState.gathering) continue;
+    const port = w.ports[l.port]!.cell;
+    const near = (id: number, k: number): void => {
+      if (!f.has(id) || k < 0) return;
+      const d = cellsTo(c.x[id]!, c.y[id]!, k);
+      const b = track.best.get(id);
+      if (!b || b.landing !== l.id || b.port !== l.port) track.best.set(id, { landing: l.id, port: l.port, d });
+      else if (d <= b.d - 1) {
+        b.d = d;
+        gained.add(l.id);
+      }
+    };
+    for (const id of l.divisions.keys()) near(id, port);
+    for (const o of l.fleets) near(o, water[l.port]!);
+  }
   for (const [id, l] of divs) {
-    if (w.landings.get(l)!.state !== LandingState.gathering) {
-      since.delete(id);
+    const L = w.landings.get(l)!;
+    if (L.state !== LandingState.gathering) {
+      track.ground.delete(id);
+      track.spell.delete(id);
+      track.landing.delete(id);
       continue;
     }
-    const s = since.get(id) ?? w.tick;
-    since.set(id, s);
-    if (w.tick - s === STUCK_DAYS * 24) out.push(`${t} stuck: ${id} in gathering landing ${l} for ${STUCK_DAYS} days`);
+    // `farPort`: one that makes a landing alone (new this hour, it its only division) at a port whose whole way
+    // (march, voyage) is over FAR_PORT_DAYS longer than by its land's nearest port (march there or a group's sail
+    // there, the later, then the voyage). A landing merged or redirected keeps its port: not made.
+    if (!track.seen.has(l) && L.divisions.size === 1) {
+      const nearest = transportsPort(w, id, false);
+      const rule = w.rules?.templates[c.template[id]!];
+      if (nearest >= 0 && nearest !== L.port && rule && rule.speedKmh > 0) {
+        const grid = navOf(w).grid;
+        const kmh = rule.speedKmh * MARCH_DUTY;
+        const here = Math.floor(c.y[id]!) * W_ + Math.floor(c.x[id]!);
+        const [lx, ly] = [(L.water % W_) + 0.5, Math.floor(L.water / W_) + 0.5];
+        const k = water[nearest]!;
+        const [kx, ky] = [(k % W_) + 0.5, Math.floor(k / W_) + 0.5];
+        const far = L.fleets.find((o) => f.has(o));
+        const byFar = octileKm(grid, here, w.ports[L.port]!.cell) / kmh + (far === undefined ? 0 : sailHoursFrom(w, far, water[L.port]!, lx, ly));
+        // The groups a call to the nearer port tries (idle, with room: R39d's rule, `callCandidates`), with a way.
+        let byNear = Infinity;
+        for (const o of callCandidates(w, id, nearest)) {
+          const come = sailHours(w, o, kx, ky);
+          if (Number.isFinite(come)) byNear = Math.min(byNear, Math.max(octileKm(grid, here, w.ports[nearest]!.cell) / kmh, come) + sailHoursFrom(w, o, k, lx, ly));
+        }
+        if (byNear + FAR_PORT_DAYS * 24 < byFar) {
+          // Within R38d's gate (the far port under GATE_CELLS straight cells beyond the nearer) the game takes the
+          // free group by rule (R37c: a call there splits one click's landings): told in the notes, not broken (R41).
+          const straight = (k_: number): number => Math.hypot(Math.min(Math.abs((k_ % W_) - (here % W_)), w.settings.loopingMap ? W_ - Math.abs((k_ % W_) - (here % W_)) : Infinity), Math.floor(k_ / W_) - Math.floor(here / W_));
+          const line = `farPort: ${id} made landing ${l} at ${w.ports[L.port]!.name}, ${Math.round(byFar / 24)} days to its water; by ${w.ports[nearest]!.name} ${Math.round(byNear / 24)}`;
+          if (straight(w.ports[L.port]!.cell) - straight(w.ports[nearest]!.cell) > w.atSize(GATE_CELLS)) out.push(`${t} ${line}`);
+          else track.gate.push(`note: t${w.tick} ${line} (within R38d's gate)`);
+        }
+      }
+    }
+    track.landing.set(id, l);
+    const s = track.spell.get(id) ?? w.tick;
+    track.spell.set(id, s);
+    if (gained.has(l) || !track.ground.has(id)) track.ground.set(id, w.tick);
+    const g = track.ground.get(id)!;
+    const most = track.longest.get(id) ?? { hours: 0, still: 0 };
+    track.longest.set(id, { hours: Math.max(most.hours, w.tick - s), still: Math.max(most.still, w.tick - g) });
+    if (w.tick - g === STUCK_DAYS * 24) out.push(`${t} stuck: ${id} in gathering landing ${l}, no ground gained for ${STUCK_DAYS} days`);
   }
-  for (const id of [...since.keys()]) if (!divs.has(id)) since.delete(id);
+  for (const m of [track.ground, track.spell, track.landing]) for (const id of [...m.keys()]) if (!divs.has(id)) m.delete(id);
+  track.seen = new Set(w.landings.keys());
 }
 
 /** The broken rules of one run, each a line (empty: none). */
@@ -188,13 +294,13 @@ export function landingBreaks(k: LandingCase): string[] {
   const orphans = new Set<number>();
   const moored = new Set<number>();
   const idle = new Map<number, number>();
-  const since = new Map<number, number>();
+  const track: Track = { best: new Map(), ground: new Map(), spell: new Map(), longest: new Map(), landing: new Map(), seen: new Set(), gate: [] };
   const was = new Map<number, number>();
   let next = w.tick;
   const end = w.tick + k.days * 24;
   const probes = new Set(k.probeDays.map((d) => w.tick + d * 24));
   while (w.tick < end) {
-    if (w.tick >= next) {
+    if (w.tick >= next && (k.orderDays === undefined || w.tick < end - (k.days - k.orderDays) * 24)) {
       const live = pool.filter((id) => w.formations.has(id) && c.nation[id] === n);
       if (live.length > 0) {
         const size = pick([1, 1, 2, 3, live.length]);
@@ -212,7 +318,7 @@ export function landingBreaks(k: LandingCase): string[] {
     }
     voyageTold.clear();
     sim.step(1, quiet);
-    check(w, n, idle, since, orphans, moored, was, voyageTold, put);
+    check(w, n, idle, track, orphans, moored, was, voyageTold, put);
     k.hour?.(w);
     k.onHour?.(w);
     if (probes.has(w.tick)) {
@@ -224,5 +330,7 @@ export function landingBreaks(k: LandingCase): string[] {
     }
     if (out.length > 200) break;
   }
+  k.notes?.push(...track.gate);
+  for (const [id, { hours, still }] of [...track.longest].sort((a, b) => a[0] - b[0])) k.notes?.push(`note: ${id} longest in a gathering landing ${(hours / 24).toFixed(1)} days, ${(still / 24).toFixed(1)} of them with no ground gained`);
   return out;
 }

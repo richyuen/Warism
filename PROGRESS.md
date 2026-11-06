@@ -1677,3 +1677,12 @@
   checker's orders re-click it); no port rule clears 45 days reliably. The bar is the user's question.
 - Before the gate: run 48's 38 headless jobs (as in run 48 but 20429 fixed) and its lost and rise page probes.
 - **Next:** the user's answer on R40e; then the critic, run 49.
+
+## 2026-11-06 — R40e: `stuck` is a stall; `farPort`; a freed group judged far (ADR-835, the user's decision)
+- The checker's `stuck` counts days with no ground gained, not days gathering; the longest spell of each division is
+  a note. Planted stalls (frozen, circling) still `stuck`; the same orders unplanted are not.
+- New rule `farPort` (R39d as a checker): breaks at `4040cad6` on 18705 and 19111 (R46-N3's Sasebo walks); 0 at HEAD.
+- It found a fault, fixed: a group freed by the click's own re-send was taken at any distance (19207: 24 days' walk).
+- Not taken, R41: dropping R38d's 20-cell gate or sending the far group itself splits R37c's clicks (35 → 58).
+- Before the gate: every checker seed the critic has run 0 broken; run 47's 383 cases as in run 47.
+- **Next:** the critic, run 49.

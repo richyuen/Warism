@@ -1284,7 +1284,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   nearer first (ROADMAP R38d, critic run 46, R46-N3: a 40-day walk within Honshu), when that lands it over a
   day sooner by hours: the march there or the called group's sail there, the later, and the voyage from it,
   against the march to the far port and the voyage from it (`callSooner`, R39d; critic run 47, R47-N3: a group
-  called from Sevastopol to Leningrad for Cyprus shuttled at the Straits). None: refused
+  called from Sevastopol to Leningrad for Cyprus shuttled at the Straits). A group freed by the click's own re-send
+  (R37a) is judged so too, at any distance (ADR-835, R40e: 366 re-sent from Hiroshima walked 24 days to the group
+  it freed at Tokyo). None: refused
   `NoTransports` (or
   `NoPort`). The division marches to the port, or stands there, and waits there ashore; its groups and
   its divisions are the player's (`playerOrders`) while the landing is: its groups as `called`, the AI's again

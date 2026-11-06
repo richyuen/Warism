@@ -673,7 +673,23 @@ Rules:
   - [x] R40d R48-N3: hero tags at world zoom collide like nation labels.
     Done: from 10,000 m/px (the whole world in view) a hero's counter is its nation's size; T0 at 5,000 m/px keeps
     twice (PLAN 7.184b3). `heroes1938.spec` R40d (red without it).
-  - [ ] R40e R39e (held under naval's 8): 19206/19207 `stuck`.
+  - [x] R40e R39e (held under naval's 8): 19206/19207 `stuck`.
+    Done (ADR-835, the user's decision): the checker's `stuck` counts a landing's days with no ground gained (none
+    of its divisions or groups a cell nearer its port), not its days gathering; each division's longest gathering
+    spell is told in the notes (19206's 367: 46 days, 3.5 with no ground). A new rule, `farPort`, keeps R46-N3's
+    class caught: a division making a landing alone at a port whose whole way is over a week longer than by its
+    land's nearest port with an idle group to call (R39d's rule as a checker); at `4040cad6` it breaks on 18705 and
+    19111 (30–49 days to Sasebo against 9–15). It found one game fault, fixed: a group freed by the click's own
+    re-send (R37a) was taken however far (19207: 366 walked 24 days from Hiroshima to Tokyo); now judged as a free
+    group (`callSooner`). Planted stalls (frozen, circling) still `stuck`. All the critic's checker seeds 0 broken;
+    run 47's 383 cases as in run 47 (35 split, none later).
+
+- [ ] R41 **R38d's gate of 20 straight cells** (found by R40e's `farPort`, not taken). Within it the free group is
+  taken by rule though a call to the nearer port lands 7–13 days sooner (18705 t784: Lianyungang 20 days, by
+  Shanghai 7; 3517 t1574; told as notes). Removing the gate (and sending the free group itself to the nearer port,
+  'fetch') splits R37c's same-hour clicks: `landingTwoPorts1938` red, run 47's splits 35 → 58 (366 at 158, the two
+  at 656: a lone landing sails before its sibling, `LATE_WAIT_HOURS` caps the wait). It needs one port for a click
+  first (R39e's class).
 
 ## Batch 3 — readability (after the release, ADR-829)
 

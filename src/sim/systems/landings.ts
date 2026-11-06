@@ -214,9 +214,17 @@ export function chooseTransports(world: World, id: number, target: number): Land
     if (o !== 0) return { join: l, port: l.port, fleet: o };
     if (l.fleets.some((g) => transportRoom(world, g) >= men)) return { join: l, port: l.port, fleet: 0 };
   }
-  // A group this hour's orders freed from its landing (R37a): the landing it makes takes it, at that port.
+  // A group this hour's orders freed from its landing (R37a): the landing it makes takes it, at that port; at a port
+  // far beyond its land's nearest, as a free group there (R38d, R39d): a group called to the nearer where sooner
+  // (ADR-835; the checker's `farPort`, 19207: 366 re-sent from Hiroshima walked 24 days to the group it freed at Tokyo).
   const fr = freedGroup(world, nation, men, here);
-  if (fr) return fr;
+  if (fr) {
+    if (far(fr.port) && callSooner(world, id, target, port, fr)) {
+      const o = callTransports(world, id, port);
+      if (o !== 0) return { port, fleet: o };
+    }
+    return fr;
+  }
   // A free group at a port of its land, the port nearest it.
   let best: { port: number; fleet: number } | null = null;
   let bd = Infinity;
