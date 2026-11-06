@@ -7,7 +7,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
-### ADR-833 · 2026-11-06 · proposed, the user's decision — Run 45: R44-B1 left in one case; way 1 or way 2
+### ADR-833 · 2026-11-06 · accepted — Run 45: R44-B1 left in one case; way 1 or way 2
 
 - **Context.** Critic run 45 (focused, on `7e09b7b3`, R36): naval **7** (bar 8; run 44: 6); the rest as run 44.
   R44-B2 fixed on every water, seed and selection tried. R44-B1 fixed in all of run 44's shapes (0 of 8 split on
@@ -34,6 +34,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
   3. **Release with naval at 7**, R45-B1 listed in the CHANGELOG (offered in ADR-827, 828, 829; not taken).
   Recommended: 1. The rebuild's direction holds (run 45: R44-B2 gone everywhere, R44-B1 gone in 39 of 40
   shapes, the AI's worlds byte-identical); the cause is one place, and the fix also wins back the 5.5 days.
+- **Status.** Accepted 2026-11-06 by the user, way 1 without its exit: "Let's do option 1, and let's just keep
+  fixing until this works - I think this is an important feature - otherwise it's hard for players to get
+  troops across the sea. If there's anything we can do to anticipate the critic's objections, then let's do
+  it." So:
+  - The player's sea landing stays in this release. Way 2 is off the table, and for the naval dimension the loop
+    does not stop at ADR-829's exit: each blocking naval issue becomes an item, fixed, then the critic again,
+    until naval is at its bar. (The exit still holds for other dimensions.)
+  - The naval non-blocking issues are taken with the blocking one (ADR-829: they are the next blocking ones):
+    R45-N1 (with R37a), R44-N1 and R44-N2.
+  - Before each critic run, the critic's own probes are replayed on new seeds (its `critic/scripts`: the
+    split shapes, the recall and sea-click cases, the panel at each step), and what they find is fixed first.
 
 ### ADR-832 · 2026-11-06 · accepted — After the rebuild: run 44's two regressions
 

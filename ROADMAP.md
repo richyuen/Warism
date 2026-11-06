@@ -548,14 +548,24 @@ Rules:
     R33d (`docs/sweeps/landingGrid-R36.md`).
   R36 done; then the critic (run 45, focused, on `7e09b7b3`: naval 7, bar 8; one blocking issue, R45-B1: the loop
   stopped, ADR-833 proposed).
-- [ ] R37 **Run 45's blocking issue** (critic run 45, focused, on `7e09b7b3`). **Held for the user's decision
-  (ADR-833).**
+- [ ] R37 **Run 45's issues** (critic run 45, focused, on `7e09b7b3`). ADR-833 accepted: keep fixing the landing
+  until naval is at its bar; its non-blocking issues taken too; the critic's probes replayed on new seeds first.
   - [ ] R37a R45-B1: a part re-sent while the group it frees is busy sails short and leaves one at the port untold
     (seed 18705, three of four re-sent: 976/977/1272). At the re-send the new landing keeps the groups it needs
     (also R45-N1's 5.5–6.7 days); the call may take a busy group; one left at the sail hour is told. AT: the
     critic's 40 shapes on its five seeds and run 44's 8 shapes on 3517/15101: every one-click group within a
     day, or told; no later than `813eb375` by over a day; `leftBehind` red on `7e09b7b3` with a pool one
     group short.
+  - [ ] R37b R44-N1: the panel around a recall: the notice "it will not land with them" stays 20+ days after a
+    recall that rejoined; "At sea, bound for its landing" while it sails back to its port; the recall's tooltip
+    does not say it first sails back and waits. AT: the recall cases at 6 h, 1, 3, 5 days by page probe: each
+    panel line true at every day.
+  - [ ] R37c R44-N2: two clicks for one place in one hour make two landings from two ports; the first lands alone a
+    week early (Japan 366 h500, the two h682; Britain the fresh one alone at h78, destroyed). AT: the critic's
+    cases (`mk2_freshfirst` on three seeds, `g_eng` on 15101–15121): one landing, or the mark and tooltip say there
+    are two.
+  - [ ] R37d Before the critic: its probes replayed on new seeds (split shapes, recall, sea click, port shut, late
+    order; page probes of the panel and tooltip), anything found fixed; then the critic.
 
 ## Batch 3 — readability (after the release, ADR-829)
 
