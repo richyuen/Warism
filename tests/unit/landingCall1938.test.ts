@@ -158,6 +158,7 @@ describe('landings together (ROADMAP R17b)', () => {
     // Each division's boardings and landings, by the hour.
     const embarked = new Map<number, number[]>();
     const landed = new Map<number, number[]>();
+    const nextVoyage: number[] = [];
     const ulster = comp[Math.floor(belfast[1]) * W + Math.floor(belfast[0])];
     const done = (): boolean => three.every((id) => (landed.get(id)?.length ?? 0) > 0 && !w.embarked.has(id) && comp[Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!)] === ulster);
     for (let h = 0; h < 24 * 60 && !done(); h++) {
@@ -169,6 +170,7 @@ describe('landings together (ROADMAP R17b)', () => {
           expect(ev[i + 1], `division ${id} refused`).not.toBe(EventKind.MoveRejected);
           if (ev[i + 1] === EventKind.FormationEmbarked) embarked.set(id, [...(embarked.get(id) ?? []), wd.tick]);
           if (ev[i + 1] === EventKind.FormationLanded) landed.set(id, [...(landed.get(id) ?? []), wd.tick]);
+          if (ev[i + 1] === EventKind.NextVoyage) nextVoyage.push(id);
         }
         for (const [id, e] of wd.embarked) if (three.includes(id)) expect(e.fleet).toBe(keep);
         wd.out.events.length = 0;
@@ -183,6 +185,8 @@ describe('landings together (ROADMAP R17b)', () => {
     const third = three.find((id) => landed.get(id)![0] === at[2])!;
     const second = three.find((id) => id !== third && landed.get(id)![0] === at[0])!;
     expect(embarked.get(third)![0]!).toBeGreaterThan(landed.get(second)![0]!);
+    // ROADMAP R37a (critic runs 44-45: left at the port untold): the third is told it goes on the next voyage.
+    expect(nextVoyage, 'the third told, once').toEqual([third]);
     expect(w.landings.size).toBe(0);
   });
 });

@@ -45,6 +45,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
     R45-N1 (with R37a), R44-N1 and R44-N2.
   - Before each critic run, the critic's own probes are replayed on new seeds (its `critic/scripts`: the
     split shapes, the recall and sea-click cases, the panel at each step), and what they find is fixed first.
+- **Done (R37).** R37a: the groups a leaving division frees are that hour's (`World.freed`) and its new landing
+  takes them first; short at the sail hour the call may take a busy group; one left for the next voyage is told
+  (`NextVoyage`). R37b: the panel's voyage states `ready` and `nextVoyage`; aboard and not sailing reads "sailing
+  back to {port}"; the notice of a landing left goes at the next order; a recall's hover names the port it turns
+  back to. R37c: a landing waits for a sibling of its click (same place, another port) that would land over a day
+  after it, unless that one waits over a week. Player landings only; the pin of seed 99 unmoved.
 
 ### ADR-832 · 2026-11-06 · accepted — After the rebuild: run 44's two regressions
 

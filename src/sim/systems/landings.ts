@@ -158,6 +158,19 @@ function freeAtPort(world: World, nation: number, men: number, i: number): numbe
   return best;
 }
 
+/**
+ * Of the groups this hour's orders freed (`World.freed`), the first by id of `nation`'s with room for `men`,
+ * in no landing and carrying no one, whose port is one of the land at cell `here`: it and its port; null for none.
+ */
+function freedGroup(world: World, nation: number, men: number, here: number): { port: number; fleet: number } | null {
+  const c = world.formations.cols;
+  for (const [o, port] of [...world.freed].sort((a, b) => a[0] - b[0])) {
+    if (!world.formations.has(o) || c.nation[o] !== nation || c.engaged[o] === 1 || inLanding(world, o) || carrying(world, o) || transportRoom(world, o) < men) continue;
+    if (ownPort(world, nation, here, port)) return { port, fleet: o };
+  }
+  return null;
+}
+
 /** What a player's order over the sea of division `id` to cell `target` takes (`chooseTransports`). */
 export interface LandingChoice {
   /** The landing it joins; absent: a new one at `port` with `fleet`. */
@@ -183,10 +196,13 @@ export function chooseTransports(world: World, id: number, target: number): Land
   for (const l of mine) {
     if (l.state !== LandingState.gathering) continue;
     if (roomOf(world, l) - menOf(world, l) >= men) return { join: l, port: l.port, fleet: 0 };
-    const o = freeAtPort(world, nation, men, l.port) || callTransports(world, id, l.port);
+    const o = freedGroup(world, nation, men, here)?.fleet || freeAtPort(world, nation, men, l.port) || callTransports(world, id, l.port);
     if (o !== 0) return { join: l, port: l.port, fleet: o };
     if (l.fleets.some((g) => transportRoom(world, g) >= men)) return { join: l, port: l.port, fleet: 0 };
   }
+  // A group this hour's orders freed from its landing (R37a): the landing it makes takes it, at that port.
+  const fr = freedGroup(world, nation, men, here);
+  if (fr) return fr;
   // A free group at a port of its land, the port nearest it.
   const w = world.cells.w;
   const dist = (k: number): number => {
@@ -284,7 +300,11 @@ export function detachDivision(world: World, id: number): () => void {
   const gone = l.divisions.size === 0;
   if (gone) {
     world.landings.delete(l.id);
-    for (const o of l.fleets) if (!carrying(world, o)) world.playerOrders.delete(o);
+    for (const o of l.fleets) {
+      if (carrying(world, o)) continue;
+      world.playerOrders.delete(o);
+      world.freed.set(o, l.port);
+    }
   } else if (l.state === LandingState.gathering) {
     // Its transports beyond what those left need are free (critic run 40, R40-B1: the one leaving walked to
     // another port's while its landing's spare group stood at its own): those at the port it stands at first.
@@ -294,11 +314,13 @@ export function detachDivision(world: World, id: number): () => void {
       if (l.fleets.length <= 1 || carrying(world, o) || roomOf(world, l) - transportRoom(world, o) < menOf(world, l)) continue;
       l.fleets.splice(l.fleets.indexOf(o), 1);
       world.playerOrders.delete(o);
+      world.freed.set(o, l.port);
     }
   }
   return () => {
     l.divisions.set(id, joined);
     l.fleets = fleets;
+    for (const o of fleets) world.freed.delete(o);
     if (gone) world.landings.set(l.id, l);
     for (const [o, p] of orders) if (p !== undefined && world.formations.has(o)) world.playerOrders.set(o, p);
   };
@@ -344,6 +366,7 @@ function sailAll(world: World, l: Landing, to: number): boolean {
  */
 export function landingOrders(world: World, cmds: readonly { id: number; x: number; y: number; nation?: number }[]): void {
   world.rejoined.clear();
+  world.freed.clear();
   if (world.landings.size === 0) return;
   const last = new Map<number, { x: number; y: number }>();
   for (const { id, x, y, nation } of cmds) if (nation !== undefined && world.formations.has(id) && world.formations.cols.nation[id] === nation) last.set(id, { x, y });
@@ -578,16 +601,19 @@ function gather(world: World, l: Landing): void {
   if (present.length === 0 || waits || world.tick - l.ordered < 1 || l.fleets.some((o) => !atPort(world, l, o)) || escortAhead(world, l)) return;
   // Room for all at the port (critic run 44, R44-B1: a part re-sent by one click kept too few groups, sailed
   // with what fit and left the rest at the port, untold, to land alone weeks later): short, a group free at
-  // its port or one called joins it, and it waits. None to be had anywhere: those that fit sail and the groups
-  // come back for the rest (R17b, `landingCall1938`).
+  // its port or one called joins it (an idle one, else one busy on the AI's errands: R37a, critic run 45,
+  // R45-B1), and it waits. None to be had anywhere: those that fit sail, the rest are told, and the groups
+  // come back for them (R17b, `landingCall1938`).
   const unfit = noRoom(world, l, present);
   if (unfit.length > 0) {
-    const o = freeAtPort(world, l.nation, c.strength[unfit[0]!]!, l.port) || callTransports(world, unfit[0]!, l.port);
+    const o = freeAtPort(world, l.nation, c.strength[unfit[0]!]!, l.port) || callTransports(world, unfit[0]!, l.port) || callTransports(world, unfit[0]!, l.port, true);
     if (o !== 0) {
       bindGroup(world, l, o);
       return;
     }
   }
+  // Another landing of its click for the same place, from another port: they go together (R37c).
+  if (waitsForSiblings(world, l)) return;
   // The sail hour: those at the port board, first fit, and the groups carrying them sail.
   const [tx, ty] = pointOf(world, l.target);
   for (const id of present) {
@@ -609,6 +635,8 @@ function gather(world: World, l: Landing): void {
     endLanding(world, l, RejectReason.NoSeaWay);
     return;
   }
+  // Those at the port with no room: told they go on the next voyage (R37a; critic runs 44–45: untold).
+  for (const id of present) if (l.divisions.has(id) && world.formations.has(id) && !isAboard(world, l, id)) world.out.emit(world.tick, EventKind.NextVoyage, id, c.nation[id]!, c.x[id]!, c.y[id]!);
   // Groups carrying no one: kept for those left (the next voyage), else the AI's.
   const left = [...l.divisions.keys()].some((id) => !isAboard(world, l, id));
   if (!left) {
@@ -637,6 +665,44 @@ function bindGroup(world: World, l: Landing, o: number): void {
   l.fleets.sort((a, b) => a - b);
   world.playerOrders.set(o, { kind: PlayerOrderKind.called, until: 0, through: false });
   world.station.delete(o);
+}
+
+/**
+ * The other landings of `l`'s nation for the same place (`sameLandingAs`) whose first joined, or last order, within
+ * SAME_CLICK_HOURS of `l`'s: one click, or two for one place within a day, that went to two ports (ROADMAP
+ * R37c; critic run 44, R44-N2: the one from the nearer port sailed first and landed alone, a week early).
+ */
+function siblings(world: World, l: Landing): Landing[] {
+  const [x, y] = pointOf(world, l.target);
+  const first = firstJoined(l);
+  const near = (o: Landing): boolean => Math.abs(firstJoined(o) - first) <= SAME_CLICK_HOURS || Math.abs(o.ordered - l.ordered) <= SAME_CLICK_HOURS;
+  return [...world.landings.values()].filter((o) => o.id !== l.id && o.nation === l.nation && o.state !== LandingState.returning && o.divisions.size > 0 && near(o) && sameLandingAs(world, o, x, y));
+}
+
+/** The longest voyage, in hours, of landing `l`'s groups from where they are to its water; 0 for none known. */
+function voyageHours(world: World, l: Landing): number {
+  const [x, y] = pointOf(world, l.water);
+  return Math.max(0, ...l.fleets.map((o) => (world.formations.cols.moving[o] === 1 ? sailHoursLeft(world, o) : sailHours(world, o, x, y))).filter(Number.isFinite));
+}
+
+/**
+ * Whether landing `l`, ready to sail, waits for its siblings (R37c): while one would land more than
+ * SAME_CLICK_HOURS after `l` sailing now (a gathering one: its wait left, `waitLeft`, and its voyage; a
+ * sailing one: its voyage left). One whose wait has no end known, or is over LATE_WAIT_HOURS, is not waited
+ * for. So they land within a day, and a landing ready does not stand at its port longer than that needs
+ * (R30a: a port bombed shut).
+ */
+function waitsForSiblings(world: World, l: Landing): boolean {
+  const sib = siblings(world, l);
+  if (sib.length === 0) return false;
+  const mine = voyageHours(world, l);
+  for (const o of sib) {
+    // A gathering one weeks from sailing (a march from afar, R31f) is not waited for: no more than LATE_WAIT_HOURS.
+    const left = o.state === LandingState.gathering ? waitLeft(world, o) : 0;
+    if (!Number.isFinite(left) || left > LATE_WAIT_HOURS) continue;
+    if (left + voyageHours(world, o) > mine + SAME_CLICK_HOURS) return true;
+  }
+  return false;
 }
 
 /** Men aboard group `fleet`. */
@@ -832,6 +898,13 @@ export function seaHint(world: World, ids: readonly number[], x: number, y: numb
     if (m) m.same &&= l.same;
     else marks.push({ water: l.water, land: l.land, same: l.same });
   }
+  // A landing at sea sent to a place another gathers for at a port of its nation: it turns back and joins it
+  // there (`landingOrders`, R43-B1's recall); the tooltip says so (ROADMAP R37b; critic run 44, R44-N1).
+  if (hint?.how === 1 && !hint.same) {
+    const at = ids.map((id) => landingOfDivision(world, id)).find((l) => l !== undefined && l.state !== LandingState.gathering && ids.some((id) => world.embarked.has(id) && l.divisions.has(id)));
+    const join = at && [...world.landings.values()].find((o) => o.id !== at.id && o.nation === at.nation && o.state === LandingState.gathering && world.cells.controller[world.ports[o.port]!.cell] === at.nation && sameLandingAs(world, o, x, y));
+    if (join) hint.rejoin = world.ports[join.port]?.name ?? '';
+  }
   return hint ?? { how: 0, water: -1, land: -1, same: false, marks };
 }
 
@@ -847,13 +920,17 @@ export function landingHeld(world: World, id: number): { water: number; land: nu
  * at the port of how many, the days the furthest it waits for has left to march), at sea, or sailing back
  * to its port. Null for none.
  */
-export function voyageOf(world: World, id: number): { state: 'toPort' | 'waiting' | 'gathering' | 'toPortAboard' | 'atSea'; port: string | null; wait?: { aboard: number; of: number; days: number | null } } | null {
+export function voyageOf(world: World, id: number): { state: 'toPort' | 'waiting' | 'gathering' | 'ready' | 'nextVoyage' | 'toPortAboard' | 'atSea'; port: string | null; wait?: { aboard: number; of: number; days: number | null } } | null {
   const l = landingOfDivision(world, id);
   if (!l) return null;
   const port = world.ports[l.port]?.name ?? null;
   const c = world.formations.cols;
-  if (isAboard(world, l, id)) return l.state === LandingState.returning ? { state: 'toPortAboard', port } : { state: 'atSea', port: null };
+  // Aboard: at sea for its landing; sailing back to its port, a cancel or a recall to a landing gathering
+  // there (ROADMAP R37b; critic run 44, R44-N1: "bound for its landing" while it sailed away from it).
+  if (isAboard(world, l, id)) return l.state === LandingState.sailing ? { state: 'atSea', port: null } : { state: 'toPortAboard', port };
   if (c.moving[id] === 1) return { state: 'toPort', port };
+  // At the port, its landing sailed without it: the next voyage (R17b, R37a).
+  if (l.state !== LandingState.gathering) return { state: 'nextVoyage', port };
   if (!l.fleets.some((o) => atPort(world, l, o))) return { state: 'waiting', port };
   let at = 0;
   let of = 0;
@@ -865,6 +942,9 @@ export function voyageOf(world: World, id: number): { state: 'toPort' | 'waiting
     if (c.moving[d] === 1) hours = Math.max(hours, marchHoursLeft(world, d));
     else at++;
   }
+  // All at the port (R37b; critic run 45, R45-N1: "waiting for the rest of the landing" beside "2 of 2 at the
+  // port"): waiting for its transports while one is on its way, else ready, for its escort or the hour.
+  if (at === of) return l.fleets.every((o) => atPort(world, l, o)) ? { state: 'ready', port } : { state: 'waiting', port };
   return { state: 'gathering', port, wait: { aboard: at, of, days: Number.isFinite(hours) ? Math.ceil(hours / 24) : null } };
 }
 

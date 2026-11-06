@@ -1597,3 +1597,14 @@
 - Exit (ADR-829): naval under its bar three runs in a row. ADR-833 proposed, the user's decision (recommended: one
   bounded fix, R37, then way 2 on any further naval blocking issue). R37 filed, held.
 - **Next:** the user's decision on ADR-833.
+
+## 2026-11-06 — R37: run 45's blocking issue and the naval non-blocking ones (ADR-833 accepted)
+- The user: keep fixing the landing until naval is at its bar; take its non-blocking issues; anticipate the critic.
+- R37a (R45-B1, R45-N1): a re-sent part takes the groups its click freed; a busy group may be called; one left
+  for the next voyage is told. 18705's three land together; re-sent parts land as at `813eb375` again.
+- R37b (R44-N1): panel states `ready`, `nextVoyage`; a recall reads "Aboard, sailing back to Tokyo"; the
+  landing-left notice goes at the next order; a recall's hover names the port.
+- R37c (R44-N2): sibling landings for one place from two ports land within a day (unless one waits over a week).
+- R37d: the critic's 162 headless cases and 22 page probes replayed first; two faults found and fixed before
+  commit. Checker 0 of 30; grid 6 of 480; whole unit suite green (snapshot-perf alone); 14 landing specs green.
+- **Next:** the critic, run 46.

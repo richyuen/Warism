@@ -41,6 +41,10 @@ export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral,
         <div class="map-tooltip-note" data-testid="tooltip-sea-refused">
           {t('tooltip.bySeaNeutral')}
         </div>
+      ) : sea && landing?.value?.rejoin !== undefined ? (
+        <div class="map-tooltip-note" data-testid="tooltip-by-sea" data-rejoin="1">
+          {t('tooltip.bySeaRejoin', { port: landing.value.rejoin })}
+        </div>
       ) : sea && (landing?.value?.marks.length ?? 0) > 1 ? (
         <div class="map-tooltip-note" data-testid="tooltip-by-sea" data-landings={landing!.value!.marks.length}>
           {t('tooltip.bySeaMany', { n: landing!.value!.marks.length })}

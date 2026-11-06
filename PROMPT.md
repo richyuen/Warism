@@ -81,6 +81,9 @@ Items come in batches (a ROADMAP section). After the last item of a batch:
    - a run has no blocking issue and a score under its bar (step 3 cannot start).
    The next message to the user starts with it; the loop takes no item of that dimension until the
    user decides.
+   Not for naval (ADR-833, the user's decision, 2026-11-06): its blocking issues and its non-blocking
+   ones are items, fixed, then the critic again, until it is at its bar; before each critic run the
+   critic's own probes (`critic/scripts`) are replayed on the code and what they find is fixed first.
 3. On a full report with no blocking issue and every score at its bar: `npm run check:review`, the
    soak (`npm run soak -- --scenario 1938 --seed 99 --minutes 30 --affinity 0xFFFF`), the sweep on
    unseen seeds (`npm run sweep -- --first <seed> --tag <name>`: borders still moving at the end

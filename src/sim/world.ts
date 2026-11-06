@@ -1112,6 +1112,13 @@ export class World {
    * each joined the one they leave, kept in the one they join (ROADMAP R33d). Read within the hour, not saved.
    */
   rejoined = new Map<number, number>();
+  /**
+   * The hour's transport groups a division leaving a gathering landing freed (`detachDivision`), each with
+   * that landing's port: the landing its order makes or joins takes them first (ROADMAP R37a; critic run 45,
+   * R45-B1: freed to the AI at once, the one needed was under way on its errand when the new landing sailed
+   * short). Read within the hour, not saved.
+   */
+  freed = new Map<number, number>();
   /** The deployments of the hour before (see elementPlaceBefore in systems/elements.ts); null: not known. */
   deployedBefore: Map<number, { x: number; y: number; facing: number } | null> | null = null;
   /**

@@ -68,6 +68,7 @@ test('the division aboard, ordered onto the open sea: refused, and still aboard'
   await page.evaluate(() => window.__warsim!.sim.step(1));
   await expect(page.getByTestId('formation-notice')).toContainText('leaves the landing it had', { timeout: 10_000 });
   // Since R33b it leaves its landing ashore and takes the transports that landing no longer needs, or others.
-  await expect(status).toHaveAttribute('data-voyage', /^(atSea|gathering|waiting|toPort)$/);
+  // R37b: all of its new landing at the port reads `ready` (it was `gathering`, "waiting for the rest").
+  await expect(status).toHaveAttribute('data-voyage', /^(atSea|gathering|ready|waiting|toPort)$/);
   await page.getByTestId('formation-panel').screenshot({ path: 'test-results/landingAboardRefused1938-fuzhou.png' });
 });

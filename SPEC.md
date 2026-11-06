@@ -1293,10 +1293,16 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   since its last order (`ordered`: a division joined, or it was redirected; R40-N1). It sails with room
   for all at its port (`noRoom`, first fit as at boarding; ROADMAP R36a, critic run 44, R44-B1: a part
   re-sent by one click kept too few groups, sailed with what fit and left the rest at the port, untold):
-  short, a group free at its port or one called (`callTransports`) joins it and it waits. Those at the
-  port board then, first fit (`tryLanding` with `via`: "loading" is that hour, not a state), and the
-  groups carrying them sail for its water (no sea way: `NoSeaWay`, over). Those that do not fit (no group
-  to be had anywhere, R17b; or still marching) go on the next voyage, and the groups come back for them; groups carrying no one are the AI's again when no one
+  short, a group free at its port or one called (`callTransports`: an idle one, else one under way on the
+  AI's errands, R37a, critic run 45, R45-B1) joins it and it waits. It waits too for another landing of its
+  nation for the same place from its click (first joined, or last order, within `SAME_CLICK_HOURS`; from
+  another port) while that one would land more than a day after it, unless that one's own wait is over
+  `LATE_WAIT_HOURS` (`waitsForSiblings`; R37c, critic run 44, R44-N2: two clicks in one hour, two ports, the
+  nearer landed alone a week early). Those at the port board then, first fit (`tryLanding` with `via`:
+  "loading" is that hour, not a state), and the groups carrying them sail for its water (no sea way:
+  `NoSeaWay`, over). Those that do not fit (no group to be had anywhere, R17b; or still marching) go on the
+  next voyage, and the groups come back for them; one left at the port is told (`NextVoyage`, the news
+  "nextVoyage", R37a); groups carrying no one are the AI's again when no one
   is left. A sailing landing's divisions land as any (`amphibiousSystem`: at the landing's water, or
   thrown back, `LandingRepulsed`, those not aboard told `NoTransports`); each leaves the landing as it
   lands, and the landing is over with its last.
@@ -1315,16 +1321,22 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   taken as a cancel, refused a day later at its port; the hover says so, `seaHint` 3,
   "tooltip.bySeaOpen"). Some of
   those aboard at sea: refused `AtSea` (20, "it is at sea with its landing, which goes as one", ROADMAP R33c). A division ashore ordered elsewhere leaves its landing
-  (`detachDivision`: the groups it no longer needs are free, those at its port first, R40-B1) and
-  takes the order; refused, it is back in it as it was (R24a). It is told it leaves (`LeftLanding`, the
+  (`detachDivision`: the groups it no longer needs are free, those at its port first, R40-B1; the hour's
+  `World.freed`, which the landing its order makes or joins takes first, R37a: freed to the AI at once,
+  the one needed was off on an errand when the new landing sailed short) and takes the order; refused, it is back in it as it was (R24a). It is told it leaves (`LeftLanding`, the
   news "leftLanding") where the landing goes on with others, once the hour's orders are in
   (`tellLandingsLeft`; a whole click sent elsewhere is not told, R25b, R27c). An order for the landing
   it has changes nothing (R23b, R23e). A player's order to a landing's transports is refused `Convoy`
   (19, R31a).
-  The panel (`voyageOf`, ROADMAP R17c, R22c): marching to its port; waiting there for transports; at its
-  port with them, waiting for the rest (`gathering`, "At {port}, waiting for the rest of the landing"),
-  with how many it waits for are at the port of how many and the days the furthest has left to march
-  (`marchHoursLeft`); at sea; sailing back to its port. The map's mark and an order's news are judged
+  The panel (`voyageOf`, ROADMAP R17c, R22c): marching to its port; waiting there for transports (also
+  when all of it is there and a group is on its way, R37b); at its port with them, waiting for the rest
+  (`gathering`, "At {port}, waiting for the rest of the landing"), with how many it waits for are at the
+  port of how many and the days the furthest has left to march (`marchHoursLeft`); all there, ready
+  (`ready`, for its escort or the hour); left at the port by a voyage (`nextVoyage`); at sea; aboard,
+  sailing back to its port (a cancel, or a recall to a landing gathering there: R37b, critic run 44,
+  R44-N1). The notice of a landing left goes at the next order; a next voyage's, as a refusal's, at the
+  next order or change of state (`staleNotice`); the hover over a place a landing at sea would turn back for, to join
+  the one gathering there, says so (`seaHint`'s `rejoin`, "tooltip.bySeaRejoin"). The map's mark and an order's news are judged
   against the landing the order is for (`seaOrderLanding`, `seaHint`: from the landing's port while
   aboard, R27b, R43-N4; `landedAway`, R26a, R27c).
   The escort (ROADMAP R17d): an order with `escort` that makes a new landing keeps a warfleet for it

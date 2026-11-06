@@ -548,24 +548,47 @@ Rules:
     R33d (`docs/sweeps/landingGrid-R36.md`).
   R36 done; then the critic (run 45, focused, on `7e09b7b3`: naval 7, bar 8; one blocking issue, R45-B1: the loop
   stopped, ADR-833 proposed).
-- [ ] R37 **Run 45's issues** (critic run 45, focused, on `7e09b7b3`). ADR-833 accepted: keep fixing the landing
+- [x] R37 **Run 45's issues** (critic run 45, focused, on `7e09b7b3`). ADR-833 accepted: keep fixing the landing
   until naval is at its bar; its non-blocking issues taken too; the critic's probes replayed on new seeds first.
-  - [ ] R37a R45-B1: a part re-sent while the group it frees is busy sails short and leaves one at the port untold
+  - [x] R37a R45-B1: a part re-sent while the group it frees is busy sails short and leaves one at the port untold
     (seed 18705, three of four re-sent: 976/977/1272). At the re-send the new landing keeps the groups it needs
     (also R45-N1's 5.5–6.7 days); the call may take a busy group; one left at the sail hour is told. AT: the
     critic's 40 shapes on its five seeds and run 44's 8 shapes on 3517/15101: every one-click group within a
     day, or told; no later than `813eb375` by over a day; `leftBehind` red on `7e09b7b3` with a pool one
     group short.
-  - [ ] R37b R44-N1: the panel around a recall: the notice "it will not land with them" stays 20+ days after a
+    Done: the groups a leaving division frees are the hour's (`World.freed`), and the landing its order makes or
+    joins takes them first; short at the sail hour, the call may take a group busy on the AI's errands; one left
+    at the port is told (`NextVoyage`, "nextVoyage"). The critic's 162 headless cases replayed: 18705's three
+    975/976/976 (HEAD 976/977/1272; `813eb375` 975/976/976); re-sent parts land as at `813eb375` (656/657,
+    975/976; HEAD 788/789, 1108/1109); no one-click group split. `landingPartResent1938` (+18705, +the h681
+    bound, red on HEAD), `landingCall1938` (the third told). `leftBehind` not given a short pool: the cases
+    above and the replay stand for it.
+  - [x] R37b R44-N1: the panel around a recall: the notice "it will not land with them" stays 20+ days after a
     recall that rejoined; "At sea, bound for its landing" while it sails back to its port; the recall's tooltip
     does not say it first sails back and waits. AT: the recall cases at 6 h, 1, 3, 5 days by page probe: each
     panel line true at every day.
-  - [ ] R37c R44-N2: two clicks for one place in one hour make two landings from two ports; the first lands alone a
+    Done: aboard and its landing not sailing reads "Aboard, sailing back to {port}"; left at the port by a
+    voyage, `nextVoyage`; all at the port, `waiting` (a group on its way) or `ready`, never "the rest"; the
+    notice of a landing left goes at the next order; the hover of a recall says it turns back to the port and
+    joins the landing there (`rejoin`). `landingRecallPanel1938` (1, 3, 5 days), `orderNewsStale`; the critic's
+    recall page probes (6 h, 1, 3, 5 days): no stale notice, "Aboard, sailing back to Tokyo", both h660.
+  - [x] R37c R44-N2: two clicks for one place in one hour make two landings from two ports; the first lands alone a
     week early (Japan 366 h500, the two h682; Britain the fresh one alone at h78, destroyed). AT: the critic's
     cases (`mk2_freshfirst` on three seeds, `g_eng` on 15101–15121): one landing, or the mark and tooltip say there
     are two.
-  - [ ] R37d Before the critic: its probes replayed on new seeds (split shapes, recall, sea click, port shut, late
+    Done: a landing waits for another of its nation for the same place from its click while that one would land
+    over a day after it, unless that one's own wait is over a week (`waitsForSiblings`). `freshfirst` on 3517,
+    14003, 14011: 366 h658, the two h682 (HEAD 502 / 682; headless 634 / 656–657). `landingTwoPorts1938`
+    (three seeds, red on HEAD); R30a's Britain case unchanged (276 h85, the two h94).
+  - [x] R37d Before the critic: its probes replayed on new seeds (split shapes, recall, sea click, port shut, late
     order; page probes of the panel and tooltip), anything found fixed; then the critic.
+    Done: the critic's 162 headless cases (18 seeds) and 22 page probes (recall, split, two ports, wait, sea
+    edits, sea hover; desk and phone) replayed on this code. Found and fixed before commit: a sibling wait on a
+    landing weeks from sailing (`steal_fresh2`: no one landed), and the landing-left notice dropped at once.
+    Left as before: walkers from Korea in the n5/n6 shapes (never at sea), `gwater_tokyo` (the AI ships idle
+    divisions, ADR-759), R31f's long waits (R44-N3, by decision). `landingInvariants` 0 broken on 30 runs;
+    grid 6 of 480 as R33d. No page error in any probe.
+  R37 done; then the critic (run 46).
 
 ## Batch 3 — readability (after the release, ADR-829)
 

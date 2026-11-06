@@ -278,9 +278,10 @@ const CALL_TRIES = 4;
  * anywhere (not under way, in no battle, carrying nobody, not held in place by the editor, not
  * called for another), with room for it, the nearest to the port's water by straight cells that
  * has a way there (at most CALL_TRIES tried) sails there under the player's order, so the AI
- * leaves it be. Returns the group, or 0 for none.
+ * leaves it be. `busy`: also those under way on the AI's errands or held in place (ROADMAP R37a: a
+ * landing short of room at its sail hour, none idle). Returns the group, or 0 for none.
  */
-export function callTransports(world: World, id: number, port: number): number {
+export function callTransports(world: World, id: number, port: number, busy = false): number {
   const f = world.formations;
   const c = f.cols;
   const nation = c.nation[id]!;
@@ -298,13 +299,15 @@ export function callTransports(world: World, id: number, port: number): number {
   };
   const idle: number[] = [];
   f.forEach((o) => {
-    if (!world.isFleet(o) || c.nation[o] !== nation || c.moving[o] === 1 || c.engaged[o] === 1 || inLanding(world, o) || carrying(world, o) || world.station.has(o)) return;
+    if (!world.isFleet(o) || c.nation[o] !== nation || c.engaged[o] === 1 || inLanding(world, o) || carrying(world, o)) return;
+    if (!busy && (c.moving[o] === 1 || world.station.has(o))) return;
     if (transportRoom(world, o) >= men) idle.push(o);
   });
   idle.sort((a, b) => dist(a) - dist(b) || a - b);
   for (const o of idle.slice(0, CALL_TRIES)) {
     if (!orderSail(world, o, (water % w) + 0.5, Math.floor(water / w) + 0.5)) continue;
     world.playerOrders.set(o, { kind: PlayerOrderKind.called, until: 0, through: false });
+    world.station.delete(o);
     return o;
   }
   return 0;

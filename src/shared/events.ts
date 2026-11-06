@@ -245,6 +245,12 @@ export const EventKind = {
    * where it stands.
    */
   LeftLanding: 73,
+  /**
+   * A player's division at its landing's port had no room on the voyage that sailed: it waits there and
+   * goes on the next, the transports coming back for it (ROADMAP R17b, R37a; critic runs 44–45: left
+   * untold). a = the formation, b = its nation, (x, y) = where it stands.
+   */
+  NextVoyage: 74,
 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */

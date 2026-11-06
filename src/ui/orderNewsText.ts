@@ -7,6 +7,7 @@ export function orderNewsText(n: OrderNews, name: string): string {
   if (n.kind === 'landedAway') return t('order.landedAway', { name });
   if (n.kind === 'unescorted') return t('order.unescorted', { name });
   if (n.kind === 'leftLanding') return t('order.leftLanding', { name });
+  if (n.kind === 'nextVoyage') return t('order.nextVoyage', { name });
   if (n.kind === 'sentHome') return n.reason > 1 ? t('order.sentHomeMany', { name, more: n.reason - 1 }) : t('order.sentHome', { name });
   return t('order.refused', { name, why: t(`order.why.${n.reason}` as MessageKey) });
 }
@@ -21,14 +22,18 @@ function stateOf(info: FormationDetail): string {
  * R34-N3: a refusal stood for weeks under "At sea, bound for its landing"): the formation's state
  * when the panel first showed it after the news (kept in `seen`, by `seq`) has changed since, or the
  * place its march is for (a new order taken while it marched, ROADMAP R23c, R35-N1). A
- * refusal only: the rest tell what became of an order under way, or happened (thrown back, landed
- * away, unescorted, sent home, left its landing), and stay true.
+ * refusal or a next voyage only (R37b; a landing left goes at the next order): the rest tell what became of
+ * an order under way, or happened (thrown back, landed away, unescorted, sent home), and stay true.
  * `info` is the panel's detail; one of another formation or from before the news decides nothing.
  * `orderedAt`: the `seq` the next news was to take when the formation's last order was sent from
  * here (`Hud.orderedAt`); a refusal before it goes, whatever the state (ROADMAP R24c).
  */
 export function staleNotice(seen: Map<number, string>, n: OrderNews & { seq: number }, info: FormationDetail | null, orderedAt?: number): boolean {
-  if (n.kind !== 'refused') return false;
+  // Left its landing: true until its next order (ROADMAP R37b; critic run 44, R44-N1: "it will not land with them"
+  // stood 20 days after a recall that rejoined); its state changes with the order that told it, so not by state.
+  if (n.kind === 'leftLanding') return orderedAt !== undefined && n.seq < orderedAt;
+  // The next voyage: true until it sails, or the next order (R37b).
+  if (n.kind !== 'refused' && n.kind !== 'nextVoyage') return false;
   if (orderedAt !== undefined && n.seq < orderedAt) return true;
   if (!info || info.id !== n.id || info.tick < n.tick) return false;
   const now = stateOf(info);
