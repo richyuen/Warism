@@ -1,0 +1,37 @@
+{
+ "seed": 20667,
+ "tag": "USA",
+ "from": "-122.4,37.8",
+ "to": "139.69,35.69",
+ "ids": [
+  613
+ ],
+ "start": [
+  "613@329.2,372.2"
+ ],
+ "t0": 2,
+ "firstL": "landing 1 port San Francisco fleets 1122 water 1819,386 land 1819,385 TO 1818.6808888888888,385.26248756048625",
+ "landed": {
+  "613": 871
+ },
+ "landedAfterDays": {
+  "613": 36.2
+ },
+ "evs": [
+  "t0 kind3 0 b0 NaN,NaN",
+  "t3 embarked 613",
+  "t548 kind45 613 b75 1819.5,386.5",
+  "t871 landed 613 @99.5,245.5"
+ ],
+ "trace": [
+  "t26 613@303,373(aboard) L1/1/San Francisco/1122@303,373m",
+  "t146 613@178,377(aboard) L1/1/San Francisco/1122@178,377m",
+  "t266 613@54,381(aboard) L1/1/San Francisco/1122@54,381m",
+  "t386 613@1979,385(aboard) L1/1/San Francisco/1122@1979,385m",
+  "t506 613@1856,390(aboard) L1/1/San Francisco/1122@1856,390m",
+  "t626 613@1874,347(aboard) L1/1/San Francisco/1122@1874,347m",
+  "t746 613@1979,261(aboard) L1/1/San Francisco/1122@1979,261m",
+  "t866 613@91,245(aboard) L1/1/San Francisco/1122@91,245m"
+ ]
+}
+done:

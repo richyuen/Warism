@@ -1,9 +1,9 @@
 {
- "commit": "4ebaee7630b134d0bc91afb7b83568a5158120f4",
- "mode": "full",
+ "commit": "5da444a8303e16dcbef0776acec9ae401f9d5d2e",
+ "mode": "focused",
  "scores": {
   "mapVisuals": 7,
-  "diplomacyWarDepth": 6,
+  "diplomacyWarDepth": 7,
   "emergentDynamics": 7,
   "godMode": 7,
   "editorScenarios": 7,
@@ -17,23 +17,6 @@
   "aircraft": 8,
   "aiNukes": 8
  },
- "blocking": [
-  {
-   "id": "R48-B1",
-   "title": "A puppet rises against an overrun overlord and goes free with no war: diploInvariants 20429 (1938, random diplomacy, 10 years) breaks rise on day 546 (DEI rose on NED and is not at war with it); the declaration is refused as Overrun after the release, the player reads \"Dutch East Indies rose against Netherlands\" and no war follows. Same on f464db35.",
-   "evidence": [
-    "critic/c48_diploinv_20429r_10y.log",
-    "critic/c48_rise_20429.log",
-    "critic/c48_rise_why.log",
-    "critic/c48_rise_20429_wt.log",
-    "critic/scripts/c48_rise.ts",
-    "critic/scripts/c48_rise_why.ts",
-    "critic/c48_rise_page.json",
-    "critic/shots/c48rise_20429_history.png",
-    "critic/scripts/c48_rise_page.mjs"
-   ],
-   "fix": "puppets.ts handles only Allied/AlliedRealm before declareWar(world, n, o, true). Either a rising on an overrun overlord is not refused (as an overrun puppet is still declared on), or it is a release in name and law (PuppetReleased, \"broke free\") with the checker rule for rise changed in the same commit by an ADR. AT: diploInvariants 20429 random 3650: 0 broken; a unit case of a rising on an overlord with 3/4 of its land occupied: at war with it, or told released and not \"rose against\"."
-  }
- ],
- "timestamp": "2026-11-06T17:26:26.806Z"
+ "blocking": [],
+ "timestamp": "2026-11-06T20:56:34.223Z"
 }

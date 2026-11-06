@@ -1,0 +1,526 @@
+{
+ "seed": 3517,
+ "tag": "desk6",
+ "W": 1600,
+ "H": 900,
+ "removed": [
+  [
+   1151,
+   null
+  ],
+  [
+   1152,
+   null
+  ]
+ ],
+ "ids": [
+  364,
+  365,
+  366,
+  367,
+  369,
+  368
+ ],
+ "other": 374,
+ "edgesAshore": [
+  [
+   [
+    800,
+    450
+   ],
+   false,
+   [
+    814,
+    466,
+    1174,
+    504
+   ]
+  ],
+  [
+   [
+    1440,
+    450
+   ],
+   false,
+   [
+    1392,
+    466,
+    1592,
+    520
+   ]
+  ],
+  [
+   [
+    1552,
+    450
+   ],
+   false,
+   [
+    1392,
+    466,
+    1592,
+    520
+   ]
+  ],
+  [
+   [
+    800,
+    810
+   ],
+   false,
+   [
+    814,
+    764,
+    1174,
+    802
+   ]
+  ],
+  [
+   [
+    800,
+    873
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    1520,
+    855
+   ],
+   false,
+   [
+    1392,
+    793,
+    1592,
+    847
+   ]
+  ],
+  [
+   [
+    80,
+    855
+   ],
+   false,
+   [
+    94,
+    761,
+    454,
+    847
+   ]
+  ],
+  [
+   [
+    1552,
+    90
+   ],
+   null,
+   null
+  ]
+ ],
+ "edgesPlain": [
+  [
+   [
+    800,
+    450
+   ],
+   false,
+   [
+    814,
+    466,
+    1174,
+    504
+   ]
+  ],
+  [
+   [
+    1440,
+    450
+   ],
+   false,
+   [
+    1392,
+    466,
+    1592,
+    520
+   ]
+  ],
+  [
+   [
+    1552,
+    450
+   ],
+   false,
+   [
+    1392,
+    466,
+    1592,
+    520
+   ]
+  ],
+  [
+   [
+    800,
+    810
+   ],
+   false,
+   [
+    814,
+    764,
+    1174,
+    802
+   ]
+  ],
+  [
+   [
+    800,
+    873
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    1520,
+    855
+   ],
+   false,
+   [
+    1392,
+    793,
+    1592,
+    847
+   ]
+  ],
+  [
+   [
+    80,
+    855
+   ],
+   false,
+   [
+    94,
+    793,
+    159,
+    847
+   ]
+  ],
+  [
+   [
+    1552,
+    90
+   ],
+   null,
+   null
+  ]
+ ],
+ "sailedH": 1124,
+ "atSail": [
+  {
+   "id": 364,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1818.5,
+    390.4
+   ]
+  },
+  {
+   "id": 365,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1818.5,
+    389.4
+   ]
+  },
+  {
+   "id": 366,
+   "v": "nextVoyage",
+   "port": "Tokyo",
+   "p": [
+    1819.5,
+    385.5
+   ]
+  },
+  {
+   "id": 367,
+   "v": "nextVoyage",
+   "port": "Tokyo",
+   "p": [
+    1819.5,
+    385.9
+   ]
+  },
+  {
+   "id": 369,
+   "v": null,
+   "port": null,
+   "p": [
+    1700.7,
+    375.7
+   ]
+  },
+  {
+   "id": 368,
+   "v": null,
+   "port": null,
+   "p": [
+    1699.2,
+    374.2
+   ]
+  }
+ ],
+ "beforeSink": [
+  {
+   "id": 364,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1798.8,
+    400.5
+   ]
+  },
+  {
+   "id": 365,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1799.7,
+    400.3
+   ]
+  },
+  {
+   "id": 366,
+   "v": "nextVoyage",
+   "port": "Tokyo",
+   "p": [
+    1819.5,
+    385.5
+   ]
+  },
+  {
+   "id": 367,
+   "v": "nextVoyage",
+   "port": "Tokyo",
+   "p": [
+    1819.5,
+    385.9
+   ]
+  },
+  {
+   "id": 369,
+   "v": null,
+   "port": null,
+   "p": [
+    1701.5,
+    377.1
+   ]
+  },
+  {
+   "id": 368,
+   "v": null,
+   "port": null,
+   "p": [
+    1700.5,
+    375.5
+   ]
+  }
+ ],
+ "voyage0": {
+  "state": "atSea",
+  "port": null
+ },
+ "rowsBefore": [
+  [
+   "nextVoyage",
+   "Square infantry division 367: no room on the transports that sailed; it waits at the port, and they come back for it.",
+   {
+    "cut": false,
+    "box": [
+     8,
+     829,
+     280,
+     849
+    ],
+    "sw": 268,
+    "cw": 268,
+    "sh": 18,
+    "ch": 18,
+    "vis": true,
+    "of": "clip",
+    "ws": "normal"
+   }
+  ]
+ ],
+ "sink": [
+  [
+   1136,
+   null
+  ],
+  [
+   1144,
+   null
+  ]
+ ],
+ "afterSink": {
+  "h": 1149,
+  "st": [
+   {
+    "id": 364,
+    "v": null,
+    "port": null,
+    "p": null
+   },
+   {
+    "id": 365,
+    "v": null,
+    "port": null,
+    "p": null
+   },
+   {
+    "id": 366,
+    "v": null,
+    "port": null,
+    "p": [
+     1819.5,
+     385.5
+    ]
+   },
+   {
+    "id": 367,
+    "v": null,
+    "port": null,
+    "p": [
+     1819.5,
+     385.9
+    ]
+   },
+   {
+    "id": 369,
+    "v": null,
+    "port": null,
+    "p": [
+     1701.5,
+     377.1
+    ]
+   },
+   {
+    "id": 368,
+    "v": null,
+    "port": null,
+    "p": [
+     1700.5,
+     375.5
+    ]
+   }
+  ],
+  "rows": [
+   [
+    "lostAtSea",
+    "2 divisions lost at sea with their transports: Square infantry division 364, Square infantry division 365.",
+    {
+     "cut": false,
+     "box": [
+      8,
+      829,
+      280,
+      849
+     ],
+     "sw": 268,
+     "cw": 268,
+     "sh": 18,
+     "ch": 18,
+     "vis": true,
+     "of": "clip",
+     "ws": "normal"
+    }
+   ]
+  ],
+  "ticker": {
+   "cls": "ticker short",
+   "box": [
+    8,
+    734,
+    280,
+    849
+   ],
+   "text": "13 February 1938 United Kingdom declared war on Ireland 14 February 1938 Nationalist Spain made peace with Spanish Republic ⚓ Carrier strike ashore: United Kingdom on Ireland 2 divisions lost at sea with their transports: Square infantry division 364, Square infantry division 365."
+  },
+  "toast": [],
+  "shot": "critic/shots/c49lost_desk6_rows.png"
+ },
+ "atPort": 366,
+ "portPanel": {
+  "panel": {
+   "status": "Holding",
+   "notice": "Square infantry division 366: the transports of its landing were sunk, and no others of its nation can come to its port: the landing is over."
+  },
+  "shot": "critic/shots/c49lost_desk6_portpanel.png"
+ },
+ "news": [
+  {
+   "kind": "nextVoyage",
+   "id": 366,
+   "nation": 75,
+   "reason": 0,
+   "x": 1819.5,
+   "y": 385.5,
+   "tick": 1121,
+   "at": 1072
+  },
+  {
+   "kind": "nextVoyage",
+   "id": 367,
+   "nation": 75,
+   "reason": 0,
+   "x": 1819.5,
+   "y": 385.5,
+   "tick": 1121,
+   "at": 1072
+  },
+  {
+   "kind": "transportsSunk",
+   "id": 366,
+   "nation": 75,
+   "reason": 0,
+   "x": 1819.5,
+   "y": 385.5,
+   "tick": 1150,
+   "at": 1150
+  },
+  {
+   "kind": "transportsSunk",
+   "id": 367,
+   "nation": 75,
+   "reason": 0,
+   "x": 1819.5,
+   "y": 385.5,
+   "tick": 1150,
+   "at": 1150
+  },
+  {
+   "kind": "lostAtSea",
+   "id": 364,
+   "nation": 75,
+   "reason": 0,
+   "x": 1798.8019029375519,
+   "y": 400.5,
+   "tick": 1150,
+   "at": 1150
+  },
+  {
+   "kind": "lostAtSea",
+   "id": 365,
+   "nation": 75,
+   "reason": 0,
+   "x": 1799.7425049365306,
+   "y": 400.25749506346943,
+   "tick": 1150,
+   "at": 1150
+  }
+ ],
+ "rowsBeforeClick": [
+  [
+   "lostAtSea",
+   "2 divisions lost at sea with their transports: Square infantry divisio

@@ -1,0 +1,9 @@
+env TAG=JAP FOE=CHI FROM=139.69,35.69 TO=120.38,36.07 N=2 DAYS=150 npx tsx critic/scripts/c47_far.ts 20661 critic/c49_far_20661_jap_qingdao.json > critic/c49_far_20661_jap_qingdao.log 2>&1
+env TAG=ITA FOE=ENG FROM=12.5,41.9 TO=29.9,31.2 N=1 DAYS=150 npx tsx critic/scripts/c47_far.ts 20663 critic/c49_far_20663_ita_alex.json > critic/c49_far_20663_ita_alex.log 2>&1
+env TAG=ENG FOE=GER FROM=-0.1,51.5 TO=8.6,53.5 N=2 DAYS=150 npx tsx critic/scripts/c47_far.ts 20665 critic/c49_far_20665_eng_bremen.json > critic/c49_far_20665_eng_bremen.log 2>&1
+env TAG=USA FOE=JAP FROM=-122.4,37.8 TO=139.69,35.69 N=1 DAYS=200 npx tsx critic/scripts/c47_far.ts 20667 critic/c49_far_20667_usa_tokyo.json > critic/c49_far_20667_usa_tokyo.log 2>&1
+env N=3 KEEP=2 npx tsx critic/scripts/c47_sunk.ts 20669 critic/c49_sunk_20669_n3k2.json > critic/c49_sunk_20669_n3k2.log 2>&1
+env N=3 KEEP=2 SAVE=1 npx tsx critic/scripts/c49_sunk_save.ts 20669 critic/c49_sunksave_20669_n3k2.json > critic/c49_sunksave_20669_n3k2.log 2>&1
+env N=4 KEEP=1 SAVE=1 npx tsx critic/scripts/c49_sunk_save.ts 20671 critic/c49_sunksave_20671_n4k1.json > critic/c49_sunksave_20671_n4k1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 20673 3517 > critic/c49_li_20673_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 20675 15101 120 20675 30,90 1 > critic/c49_li_20675_eng_g1.log 2>&1

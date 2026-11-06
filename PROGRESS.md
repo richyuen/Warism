@@ -1686,3 +1686,10 @@
 - Not taken, R41: dropping R38d's 20-cell gate or sending the far group itself splits R37c's clicks (35 → 58).
 - Before the gate: every checker seed the critic has run 0 broken; run 47's 383 cases as in run 47.
 - **Next:** the critic, run 49.
+
+## 2026-11-06 — Critic run 49 (focused) on 5da444a8: no blocking issue; naval 7 (bar 8)
+- R48-B1 and R48-N1 fixed; R47-N4 closed under ADR-835 (every landing seed 0 broken, the notes read as built).
+  Diplomacy 6 → 7. Naval 7: "nothing new earns an 8"; a month-long two-division crossing with no day count (R49-N5),
+  the cut loss row (R49-N3). R49-N4 is R41 reproduced.
+- R42 filed (R42a–e); R41 carries R49-N4.
+- **Next:** R42.
