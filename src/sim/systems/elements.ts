@@ -12,6 +12,7 @@ import { hash32 } from '../core/hash';
 import { SLOT_SPACING, slotGrid, slotPose } from '../core/pose';
 import { Domain, type World } from '../world';
 import { heroLost } from './heroes';
+import { leaveLanding } from './landings';
 
 /**
  * Where element `slot` of a formation at (`fx`, `fy`) stands: its slot in the block (`slotPose`);
@@ -756,7 +757,7 @@ export function destroyFormation(world: World, fid: number): void {
   world.embarked.delete(fid);
   for (const e of world.embarked.values()) if (e.fleet === fid) e.fleet = -1;
   world.seaBound.delete(fid);
-  world.seaFetch.delete(fid);
+  leaveLanding(world, fid);
   world.escorts.delete(fid);
   world.station.delete(fid);
   world.playerOrders.delete(fid);

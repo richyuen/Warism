@@ -5,6 +5,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { isBound, landingId } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R24a (critic run 36, R36-B1): a refused order cleared the binding of a division walking to
@@ -51,14 +52,14 @@ function run(again: 'walker-sea' | 'all-east'): void {
       x.out.fires.length = 0;
     });
   while (w.tick < 26) step();
-  const place = new Map(four.map((id) => [id, w.embarked.get(id)?.fleet ?? w.seaFetch.get(id)]));
-  expect(four.filter((id) => w.seaFetch.has(id) && !w.embarked.has(id)).length, 'some walking to their convoy').toBeGreaterThan(0);
+  const place = new Map(four.map((id) => [id, landingId(w, id)]));
+  expect(four.filter((id) => isBound(w, id) && w.formations.cols.moving[id] === 1).length, 'some walking to their convoy').toBeGreaterThan(0);
   if (again === 'walker-sea') {
-    const walker = four.find((id) => w.seaFetch.has(id) && !w.embarked.has(id))!;
+    const walker = four.find((id) => isBound(w, id) && w.formations.cols.moving[id] === 1)!;
     sim.command({ kind: 'moveFormation', id: walker, x: OPEN_SEA[0], y: OPEN_SEA[1], nation: JAP, escort: true });
   } else for (const id of four) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0] + 1, y: SHANGHAI[1], nation: JAP, escort: true });
   step();
-  for (const id of refused) expect(w.embarked.get(id)?.fleet ?? w.seaFetch.get(id), `${id}, refused, keeps its transports`).toBe(place.get(id));
+  for (const id of refused) expect(landingId(w, id), `${id}, refused, keeps its landing`).toBe(place.get(id));
   for (let h = 0; h < 24 * 80 && landed.size < 4; h++) step();
   process.stderr.write(`R24a ${again}: refused ${[...refused]}, landed ${[...landed.values()]}\n`);
   expect(landed.size, 'all four landed').toBe(4);

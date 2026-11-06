@@ -5,6 +5,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { isBound, landingId } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R25c (critic run 37, R37-N1): the whole click re-clicked two cells south of Shanghai: the
@@ -49,12 +50,12 @@ function run(dx: number, dy: number): void {
       x.out.fires.length = 0;
     });
   while (w.tick < 26) step();
-  const place = new Map(four.map((id) => [id, w.embarked.get(id)?.fleet ?? w.seaFetch.get(id)]));
-  expect(four.filter((id) => w.seaFetch.has(id) && !w.embarked.has(id)).length, 'some walking to their convoy').toBeGreaterThan(0);
+  const place = new Map(four.map((id) => [id, landingId(w, id)]));
+  expect(four.filter((id) => isBound(w, id) && w.formations.cols.moving[id] === 1).length, 'some walking to their convoy').toBeGreaterThan(0);
   for (const id of four) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0] + dx, y: SHANGHAI[1] + dy, nation: JAP, escort: true });
   step();
   expect([...refused], 'none refused').toEqual([]);
-  for (const id of four) expect(w.embarked.get(id)?.fleet ?? w.seaFetch.get(id), `${id} keeps its transports`).toBe(place.get(id));
+  for (const id of four) expect(landingId(w, id), `${id} keeps its landing`).toBe(place.get(id));
   for (let h = 0; h < 24 * 80 && landed.size < 4; h++) step();
   process.stderr.write(`R25c (${dx}, ${dy}): refused ${[...refused]}, landed ${[...landed.values()]}\n`);
   expect(landed.size, 'all four landed').toBe(4);

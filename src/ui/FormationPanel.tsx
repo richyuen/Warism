@@ -61,8 +61,8 @@ export function FormationPanel({
       : voyage && !info?.engaged
         ? t(voyage.port ? `formation.voyage.${voyage.state}.port` : `formation.voyage.${voyage.state}`, { port: voyage.port ?? '' })
         : t(info?.engaged ? 'formation.status.engaged' : info?.moving ? 'formation.status.moving' : 'formation.status.holding');
-  // Aboard at its port, waiting for the rest of its landing (ROADMAP R22c): how many, and how far the last.
-  const wait = voyage?.state === 'aboard' ? voyage.wait : undefined;
+  // At its port, waiting for the rest of its landing (ROADMAP R22c, R33b): how many, and how far the last.
+  const wait = voyage?.state === 'gathering' ? voyage.wait : undefined;
   const waitText = wait
     ? wait.days === null
       ? t('formation.wait.held', { n: wait.aboard, of: wait.of })

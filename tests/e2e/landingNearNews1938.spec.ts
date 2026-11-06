@@ -45,9 +45,9 @@ for (const [n, all] of [[2, false], [4, true]] as const) {
     const status = page.getByTestId('formation-status');
     for (let h = 0; h < 48; h++) {
       await page.evaluate(() => window.__warsim!.sim.step(1));
-      if ((await status.getAttribute('data-voyage')) === 'aboard') break;
+      if ((await status.getAttribute('data-voyage')) === 'gathering') break;
     }
-    await expect(status).toHaveAttribute('data-voyage', 'aboard', { timeout: 10_000 });
+    await expect(status).toHaveAttribute('data-voyage', 'gathering', { timeout: 10_000 });
     const again = all ? ids : [ids[0]!];
     for (const id of again) await page.evaluate(({ id, x, y, n }) => window.__warsim!.hud.command({ kind: 'moveFormation', id, x, y, nation: n, escort: true }), { id, x: SHANGHAI[0], y: SHANGHAI[1] + 2, n: JAP });
     const ashore = (): Promise<number> =>

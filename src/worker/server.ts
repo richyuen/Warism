@@ -27,8 +27,8 @@ import { DAYS_PER_MONTH } from '../sim/systems/research';
 import { shipyard } from '../sim/systems/production';
 import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
-import { landedAway, landingOf, loading, sailingToPort, seaHint, seaOrderLanding, waitedFor } from '../sim/systems/amphibious';
-import { marchHoursLeft } from '../sim/systems/movement';
+import { landedAway } from '../sim/systems/amphibious';
+import { LandingState, landingOfDivision, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -1082,61 +1082,29 @@ export class SimServer {
     };
   }
 
-  /** Formation `id`'s voyage for its panel (ROADMAP R17c; `FormationDetail.voyage`). */
+  /** Formation `id`'s voyage for its panel (ROADMAP R17c, R33b: read from its landing; `FormationDetail.voyage`). */
   private voyageOf(world: World, id: number): FormationDetail['voyage'] {
-    const fleet = world.seaFetch.get(id);
-    const port = fleet === undefined ? undefined : world.convoyPort.get(fleet);
-    const name = port === undefined ? null : (world.ports[port]?.name ?? null);
-    const e = world.embarked.get(id);
-    // Aboard a convoy still at its port (ROADMAP R21e): it waits for the rest of its landing.
-    const at0 = e === undefined ? undefined : world.convoyPort.get(e.fleet);
-    if (e !== undefined && at0 !== undefined && loading(world, e.fleet)) return { state: 'aboard', port: world.ports[at0]?.name ?? null, wait: this.landingWait(world, e.target, at0) };
-    // Under way to its port for the rest of its landing (ROADMAP R29b; R30c, critic run 41, R41-N3: "At sea,
-    // bound for its landing" while it sailed to Sasebo to wait there 24 days).
-    if (e !== undefined && at0 !== undefined && sailingToPort(world, e.fleet)) return { state: 'toPortAboard', port: world.ports[at0]?.name ?? null };
-    if (e !== undefined) return { state: 'atSea', port: null };
-    if (world.seaBound.has(id)) return { state: world.formations.cols.moving[id] === 1 ? 'toPort' : 'waiting', port: name };
+    const v = voyageOf(world, id);
+    if (v) return v;
+    if (world.embarked.has(id)) return { state: 'atSea', port: null };
+    if (world.seaBound.has(id)) return { state: world.formations.cols.moving[id] === 1 ? 'toPort' : 'waiting', port: null };
     const at = this.landedAt.get(id);
     return at !== undefined && world.tick - at < 24 ? { state: 'landed', port: null } : null;
   }
 
-  /**
-   * The landing a division aboard at port `port` for cell `target` waits for (ROADMAP R22c, critic run
-   * 34, R34-N1): of the divisions for that target at that port, how many are aboard and how many in
-   * all (aboard, and bound for a convoy there); the days the furthest bound has left to march (0: all
-   * at the port; null: one held up on the way, in a fight or at the front).
-   */
-  private landingWait(world: World, target: number, port: number): NonNullable<NonNullable<FormationDetail['voyage']>['wait']> {
-    let aboard = 0;
-    let of = 0;
-    let hours = 0;
-    for (const [, x] of world.embarked) {
-      if (x.target !== target || world.convoyPort.get(x.fleet) !== port) continue;
-      aboard++;
-      of++;
-    }
-    for (const [id, o] of world.seaFetch) {
-      // Those its convoy waits for (ROADMAP R31f): a later order from far goes on the next voyage.
-      if (!world.formations.has(id) || world.convoyPort.get(o) !== port || world.seaBound.get(id) !== target || !waitedFor(world, o, id)) continue;
-      of++;
-      hours = Math.max(hours, marchHoursLeft(world, id));
-    }
-    return { aboard, of, days: Number.isFinite(hours) ? Math.ceil(hours / 24) : null };
-  }
-
-  /** The snapshot's voyages (ROADMAP R17c; `Snapshot.voyages`). */
+  /** The snapshot's voyages (ROADMAP R17c; `Snapshot.voyages`): the player's landings' divisions marching to their port or waiting there, and those at sea. */
   private voyages(world: World): number[] {
     const out: number[] = [];
     const w = world.cells.w;
     const c = world.formations.cols;
     const water = portSeaOf(world);
     const at = (k: number): [number, number] => [(k % w) + 0.5, Math.floor(k / w) + 0.5];
-    for (const [id, target] of [...world.seaBound].sort((a, b) => a[0] - b[0])) {
-      const fleet = world.seaFetch.get(id);
-      const port = fleet === undefined ? undefined : world.convoyPort.get(fleet);
-      const landing = landingOf(world, target);
-      if (!world.formations.has(id) || port === undefined || water[port]! < 0 || !landing) continue;
-      out.push(id, c.moving[id] === 1 ? VoyageState.toPort : VoyageState.waiting, ...at(water[port]!), ...at(landing.water), ...at(landing.land));
+    for (const l of [...world.landings.values()].sort((a, b) => a.id - b.id)) {
+      if (water[l.port]! < 0) continue;
+      for (const id of [...l.divisions.keys()].sort((a, b) => a - b)) {
+        if (!world.formations.has(id) || world.embarked.has(id) || l.state !== LandingState.gathering) continue;
+        out.push(id, c.moving[id] === 1 ? VoyageState.toPort : VoyageState.waiting, ...at(water[l.port]!), ...at(l.water), ...at(l.land));
+      }
     }
     for (const [id, e] of [...world.embarked].sort((a, b) => a[0] - b[0])) {
       if (e.water < 0 || !world.formations.has(e.fleet)) continue;
@@ -1470,7 +1438,7 @@ export class SimServer {
       this.landedAt.set(id, ev[i]!);
       if (landedAway(world, target, ev[i + 4]!, ev[i + 5]!)) tell('landedAway', 0);
       this.ordered.delete(id);
-    } else if (kind === EventKind.FormationDestroyed || (kind === EventKind.FormationArrived && !world.seaBound.has(id) && !world.afloat(id) && !refusedLater(ev, i, id))) {
+    } else if (kind === EventKind.FormationDestroyed || (kind === EventKind.FormationArrived && !world.seaBound.has(id) && landingOfDivision(world, id) === undefined && !world.afloat(id) && !refusedLater(ev, i, id))) {
       this.ordered.delete(id);
     }
   }

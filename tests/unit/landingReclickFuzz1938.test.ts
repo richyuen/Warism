@@ -3,9 +3,11 @@ import { EventKind } from '../../src/shared/events';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { landedAway, landingHeld, landingOf, seaOrderLanding } from '../../src/sim/systems/amphibious';
+import { landedAway } from '../../src/sim/systems/amphibious';
+import { landingHeld, seaOrderLanding } from '../../src/sim/systems/landings';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort, landingId, portOf } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R27c (ADR-827): a fuzz of re-clicks about a landing, the class critic runs 33–38 found
@@ -26,6 +28,8 @@ import { nationId } from '../helpers/sim1938';
 //   port, to sail together (R28a, critic run 39, R39-B1: each division's order found the landing's
 //   transports held by the rest, so all four were refused "no transports", or went one by one);
 // - every player's convoy is for one landing: those aboard it and bound for it have one target.
+// ROADMAP R33b (ADR-830): a division's transports are its landing (`landingId`); one waits at its port ashore
+// ("the one aboard": the first at its port); a landing's groups are its alone.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = nationId('JAP');
@@ -67,14 +71,14 @@ function reclick(b: Base, who: 'aboard' | 'walker' | 'all', dx: number, dy: numb
   sim.load(b.saved);
   const w = sim.world;
   w.settings.player = JAP;
-  const place = (id: number): number | undefined => w.embarked.get(id)?.fleet ?? w.seaFetch.get(id);
+  const place = (id: number): number | undefined => landingId(w, id);
   const placed = ids.filter((id) => place(id) !== undefined);
   if (placed.length === 0) return [];
-  const walker = placed.find((id) => !w.embarked.has(id));
+  const walker = placed.find((id) => !atItsPort(w, id));
   if (who === 'walker' && walker === undefined) return [];
-  const again = who === 'all' ? placed : who === 'walker' ? [walker!] : [placed.find((id) => w.embarked.has(id)) ?? placed[0]!];
+  const again = who === 'all' ? placed : who === 'walker' ? [walker!] : [placed.find((id) => atItsPort(w, id)) ?? placed[0]!];
   const [x, y] = [SHANGHAI[0] + dx, SHANGHAI[1] + dy];
-  const before = new Map(again.map((id) => [id, { place: place(id), held: landingHeld(w, id), aboard: w.embarked.has(id), mark: seaOrderLanding(w, id, x, y) }]));
+  const before = new Map(again.map((id) => [id, { place: place(id), held: landingHeld(w, id), aboard: atItsPort(w, id), mark: seaOrderLanding(w, id, x, y) }]));
   for (const id of again) sim.command({ kind: 'moveFormation', id, x, y, nation: JAP, escort: true });
   const refused = new Set<number>();
   const left = new Set<number>();
@@ -97,9 +101,7 @@ function reclick(b: Base, who: 'aboard' | 'walker' | 'all', dx: number, dy: numb
       if (now !== was.place) bad.push(`${tag}: ${id} marked its own landing, transports ${was.place} -> ${now}`);
     }
     if (!refused.has(id) && was.mark) {
-      const e = w.embarked.get(id);
-      const bound = w.seaBound.get(id);
-      const l = e ? { water: e.water, land: e.land } : bound !== undefined ? landingOf(w, bound) : null;
+      const l = landingHeld(w, id);
       if (!l || l.land !== was.mark.land || l.water !== was.mark.water) bad.push(`${tag}: ${id} lands at ${l?.water}/${l?.land}, marked ${was.mark.water}/${was.mark.land}`);
       else if (landedAway(w, was.mark.land, (l.land % W) + 0.5, Math.floor(l.land / W) + 0.5)) bad.push(`${tag}: ${id} would be told it landed away`);
     }
@@ -120,16 +122,13 @@ function reclick(b: Base, who: 'aboard' | 'walker' | 'all', dx: number, dy: numb
       const f = place(id);
       if (!l || f === undefined || w.embarked.has(id)) continue;
       const k = `${l.water}/${l.land}`;
-      ports.set(k, (ports.get(k) ?? new Set()).add(w.convoyPort.get(f)));
+      ports.set(k, (ports.get(k) ?? new Set()).add(portOf(w, id)));
     }
     for (const [k, p] of ports) if (p.size > 1) bad.push(`${tag}: one landing ${k} loads at ports ${[...p]}`);
   }
-  for (const g of w.convoyPort.keys()) {
-    const targets = new Set<number>();
-    for (const [id, f] of w.seaFetch) if (f === g) targets.add(w.seaBound.get(id)!);
-    for (const e of w.embarked.values()) if (e.fleet === g) targets.add(e.target);
-    if (targets.size > 1) bad.push(`${tag}: convoy ${g} for ${targets.size} landings`);
-  }
+  // A landing's groups are its alone (ROADMAP R33b): no group in two landings.
+  const groups = [...w.landings.values()].flatMap((l) => l.fleets);
+  if (new Set(groups).size !== groups.length) bad.push(`${tag}: a group in two landings`);
   return bad;
 }
 

@@ -5,6 +5,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort, groupOf, isBound, landingId } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R23b (critic run 35, R35-B1): the division waiting aboard clicked to the same landing
@@ -58,29 +59,30 @@ function shanghai(again: 'none' | 'first' | 'all'): Run {
   let first = 0;
   for (let h = 0; h < 24 * 10 && first === 0; h++) {
     step();
-    first = four.find((id) => w.embarked.has(id)) ?? 0;
+    first = four.find((id) => atItsPort(w, id)) ?? 0;
   }
-  expect(first, 'one aboard').not.toBe(0);
-  const was = { ...w.embarked.get(first)! };
+  // ROADMAP R33b: the one at its port (it waits there ashore; before, aboard) keeps its landing.
+  expect(first, 'one at its port').not.toBe(0);
+  const was = landingId(w, first);
   if (again === 'first') {
     sim.command({ kind: 'moveFormation', id: first, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true });
     step();
-    expect(w.embarked.get(first), 'still aboard, in its place').toEqual(was);
+    expect(landingId(w, first), 'its landing kept').toBe(was);
   }
   // ROADMAP R23e (R35-N2): the whole click clicked again, at hour 26 as the critic did.
   if (again === 'all') {
     while (w.tick < 26) step();
-    const fetch = four.map((id) => w.seaFetch.get(id));
+    const fetch = four.map((id) => landingId(w, id));
     for (const id of four) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true });
     step();
-    expect(w.embarked.get(first), 'the one aboard still aboard').toEqual(was);
-    expect(four.map((id) => w.seaFetch.get(id)), 'the rest bound for the transports they were').toEqual(fetch);
+    expect(landingId(w, first), 'the one at the port keeps its landing').toBe(was);
+    expect(four.map((id) => landingId(w, id)), 'the rest keep theirs').toEqual(fetch);
   }
   // Each hour, a division of the four bound for transports that have sailed with others aboard is left on the quay.
   for (let h = 0; h < 24 * 80 && landed.size < 4; h++) {
     step();
     for (const id of four) {
-      const g = w.seaFetch.get(id);
+      const g = isBound(w, id) ? groupOf(w, id) : undefined;
       if (g !== undefined && c.moving[g] === 1 && [...w.embarked.values()].some((e) => e.fleet === g)) run.quay++;
     }
   }

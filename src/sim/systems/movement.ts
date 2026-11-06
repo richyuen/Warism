@@ -71,8 +71,9 @@ import { nearestCellWhere } from '../data/ownership';
 import { dropRuns, findDirectRoute, findRoute, JOIN_PROBE, joinedKept, nodeGroups, type ProvinceGraph } from '../nav/provinceGraph';
 import { isDayStart } from '../../shared/calendar';
 import { isLand } from '../../shared/terrain';
-import { Domain, navOf, PlayerOrderKind, portSeaOf, type TemplateRule, type World } from '../world';
-import { ashoreAtPort, ashoreFromShip, assignTransports, soleAtSea, turnBack, carrying, escortConvoy, landingHeld, landingOf, near, neutralLanding, sailAboard, sailingToPort, sameLanding, transportsPort, tryLanding } from './amphibious';
+import { Domain, navOf, portSeaOf, type TemplateRule, type World } from '../world';
+import { carrying, landingOf, near, neutralLanding, transportsPort, tryLanding } from './amphibious';
+import { bindDivision, chooseTransports, detachDivision, escortConvoy, inLanding, LandingState, landingOfDivision, sameLandingAs } from './landings';
 import { AT_PORT_CELLS } from './navalCombat';
 import { noteMove } from './elements';
 import { spawnPoint } from './production';
@@ -458,73 +459,53 @@ export const wasLong = (): boolean => refusedLong;
  * so; a refused one leaves it (ROADMAP R24a).
  */
 export function orderMove(world: World, id: number, x: number, y: number, pass?: Passage, byPort = false, direct = false, call = false, escort = false): boolean {
-  // The player's transports of a convoy (loading, under way to its port, or carrying a landing) sail
-  // with it alone (ROADMAP R31a; critic run 42, R42-N3: sent onto the Channel, they stood there with
-  // the one aboard, which took no order, for weeks).
-  if (call && world.formations.has(id) && world.isFleet(id) && (world.convoyPort.has(id) || carrying(world, id))) {
+  // The player's transports of a landing, or carrying anyone, sail with it alone (ROADMAP R31a; critic
+  // run 42, R42-N3: sent onto the Channel, they stood there with the one aboard, which took no order).
+  if (call && world.formations.has(id) && world.isFleet(id) && (inLanding(world, id) || carrying(world, id))) {
     world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Convoy, NaN);
     return false;
   }
-  // Aboard a player's convoy still loading, or bound for one, to the landing it has its place in: it
-  // keeps it (ROADMAP R23b, R23e).
-  if (sameLanding(world, id, x, y)) return true;
-  // A refused order leaves the one before it standing, its landing too (ROADMAP R24a, critic run 36,
-  // R36-B1: a division walking to its convoy, refused, was dropped from its landing, and a convoy whose
-  // bound divisions were all refused so sailed with the one aboard alone).
-  const [bound, fetch] = [world.seaBound.get(id), world.seaFetch.get(id)];
+  // A refused order leaves the one before it standing (ROADMAP R24a).
+  const bound = world.seaBound.get(id);
   const keep = (): false => {
     if (bound !== undefined) world.seaBound.set(id, bound);
-    if (fetch !== undefined) world.seaFetch.set(id, fetch);
     return false;
   };
-  // Taken over the sea, aboard or bound, it is noted with the landing it had; once the hour's orders
-  // are in, it is told it leaves that landing if it has another and others stay with the one it had
-  // (`tellLandingsLeft`; ROADMAP R25b, R27c). On its own transports too (R28a).
-  const from = world.embarked.get(id)?.fleet ?? fetch;
-  const had = landingHeld(world, id);
-  const taken = (): true => {
-    const now = world.seaFetch.get(id) ?? world.embarked.get(id)?.fleet;
-    if (from !== undefined && had && now !== undefined) world.landingsLeft.push([id, had.water, had.land]);
-    return true;
-  };
-  if (!world.embarked.has(id)) return (orderAshore(world, id, x, y, pass, byPort, direct, call, escort) && taken()) || keep();
-  // Aboard transports it takes no order (PLAN 4.5a), but aboard a player's convoy still loading at
-  // its port, where it goes ashore and takes it (ROADMAP R22b); refused, it is aboard again (R23a).
-  const ship = world.embarked.get(id)!.fleet;
-  // Alone aboard the player's transports at sea, bound for its landing: they turn back for the nearest
-  // port, and it takes the order as at that port (ROADMAP R31e); refused, they sail on as they were.
-  const turned = call && soleAtSea(world, ship, id) ? turnBack(world, ship, Math.floor(y) * world.cells.w + Math.floor(x)) : null;
-  const undo = (): void => turned?.();
-  // Under way to its port (R29b's): an order over the sea from there its transports keep (ROADMAP R30b);
-  // any other, ashore on its side's coast by them, and taken from there (R31c), out of reach of it refused.
-  const sailing = sailingToPort(world, ship);
-  const port = world.convoyPort.get(ship);
-  const fromPort = !sailing || (call && port !== undefined && overSeaFrom(world, world.ports[port]!.cell, x, y));
-  // Turned back to rejoin a landing, only an order over the sea from its port (R32a): never ashore by them.
-  const back = turned && !fromPort ? null : fromPort ? ashoreAtPort(world, id) : ashoreFromShip(world, id, ship);
-  if (back === null) {
-    undo();
-    world.seaBound.delete(id);
-    world.seaFetch.delete(id);
-    refusedLong = false;
-    world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Aboard, NaN);
+  const l = landingOfDivision(world, id);
+  if (l) {
+    // For the landing it has (ROADMAP R23b, R23e), or one this hour's orders made so (`landingOrders`): it stands.
+    if (sameLandingAs(world, l, x, y)) return true;
+    if (l.state === LandingState.returning && l.then === Math.floor(y) * world.cells.w + Math.floor(x)) return true;
+    // Aboard at sea it takes no order of its own: a landing at sea is ordered as one (ROADMAP R33b).
+    if (world.embarked.has(id)) {
+      refusedLong = false;
+      world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Aboard, NaN);
+      return false;
+    }
+    // Ashore (marching to its port, or there): it leaves its landing for the order; refused, it is back in it.
+    const back = detachDivision(world, id);
+    if (orderAshore(world, id, x, y, pass, byPort, direct, call, escort)) {
+      world.landingsLeft.push([id, l.id]);
+      return true;
+    }
+    back();
     return false;
   }
-  if (orderAshore(world, id, x, y, pass, byPort, direct, call, escort, fromPort ? ship : 0)) return taken();
-  back();
-  undo();
-  return keep();
+  if (!world.embarked.has(id)) return orderAshore(world, id, x, y, pass, byPort, direct, call, escort) || keep();
+  // Aboard transports it takes no order (PLAN 4.5a).
+  refusedLong = false;
+  world.out.emit(world.tick, EventKind.MoveRejected, id, world.formations.cols.nation[id]!, RejectReason.Aboard, NaN);
+  return false;
 }
 
-/** `orderMove` of a formation not aboard (or just gone ashore from group `aboard`; 0 for none). */
-function orderAshore(world: World, id: number, x: number, y: number, pass: Passage | undefined, byPort: boolean, direct: boolean, call: boolean, escort: boolean, aboard = 0): boolean {
+/** `orderMove` of a formation not aboard. */
+function orderAshore(world: World, id: number, x: number, y: number, pass: Passage | undefined, byPort: boolean, direct: boolean, call: boolean, escort: boolean): boolean {
   world.seaBound.delete(id);
-  world.seaFetch.delete(id);
   refusedLong = false;
   // A fleet sails (PLAN 4.2c): its order is its own.
   if (world.formations.has(id) && world.isFleet(id)) return orderSail(world, id, x, y);
   const over = world.formations.has(id) && overSea(world, id, x, y);
-  if (call && over) return seaConvoy(world, id, x, y, pass, escort, aboard);
+  if (call && over) return seaConvoy(world, id, x, y, pass, escort);
   // To another land: by sea, from a port its nation holds with transports there (PLAN 4.5a). With
   // none, a march as before (a target by the coast may snap to this land); refused, it says why
   // the sea was refused (PLAN 4.9a).
@@ -550,19 +531,16 @@ function orderAshore(world: World, id: number, x: number, y: number, pass: Passa
 }
 
 /**
- * A player's order over the sea (ROADMAP R17a, R17b): its transports and port (`assignTransports`:
- * a convoy for the same target with room, a group at a port of its land, one called there, or a
- * full convoy's next voyage); it marches to the port, or stands there already, and is bound for
- * the group (`world.seaBound`, `world.seaFetch`, `world.convoyPort`), which is the player's. With
- * no landing at the target, or no transports, refused as before; and where the target or the
- * landing is the ground of a nation outside its wars (`RejectReason.Neutral`, ROADMAP R20).
+ * A player's order over the sea (ROADMAP R17a, R17b, R33b): it joins or makes a landing (`chooseTransports`,
+ * `bindDivision`), and marches to its port, or stands there already. With no landing at the target, or no
+ * transports, refused as before; and where the target or the landing is the ground of a nation outside its
+ * wars (`RejectReason.Neutral`, ROADMAP R20).
  */
-function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage | undefined, escort: boolean, aboard = 0): boolean {
+function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage | undefined, escort: boolean): boolean {
   const c = world.formations.cols;
   const w = world.cells.w;
   const target = Math.floor(y) * w + Math.floor(x);
-  const landing = landingOf(world, target);
-  if (!landing) {
+  if (!landingOf(world, target)) {
     world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.NoLanding, NaN);
     return false;
   }
@@ -572,19 +550,8 @@ function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage
     world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.Neutral, NaN);
     return false;
   }
-  // At sea on its way to its port (R29b's; ROADMAP R30b): its own transports keep it, or it is refused.
-  const atSea = aboard !== 0 && sailingToPort(world, aboard);
-  const a = assignTransports(world, id, target, aboard);
-  if (atSea) {
-    if (a && sailAboard(world, id, aboard, a.port, target)) return true;
-    world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.Aboard, NaN);
-    return false;
-  }
-  // Gone ashore from transports loading for another landing (ROADMAP R24d): those are why.
-  const none = aboard !== 0 ? RejectReason.Loading : RejectReason.NoTransports;
-  if (!a) return order(world, id, x, y, pass, 0, transportsPort(world, id, false) >= 0 ? none : RejectReason.NoPort);
-  // Its own transports, to its new landing's port: it stays aboard and they take it there (ROADMAP R29b).
-  if (aboard !== 0 && a.fleet === aboard && sailAboard(world, id, aboard, a.port, target)) return true;
+  const a = chooseTransports(world, id, target);
+  if (!a) return order(world, id, x, y, pass, 0, transportsPort(world, id, false) >= 0 ? RejectReason.NoTransports : RejectReason.NoPort);
   const port = world.ports[a.port]!;
   const here = Math.floor(c.y[id]!) * w + Math.floor(c.x[id]!);
   const r = world.atSize(AT_PORT_CELLS);
@@ -593,15 +560,9 @@ function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage
     c.home[id] = 0;
     world.paths.delete(id);
   } else if (!order(world, id, (port.cell % w) + 0.5, Math.floor(port.cell / w) + 0.5, pass, 0, RejectReason.NoRoute)) return false;
-  // A new convoy takes its escort (ROADMAP R17d); one that a division joins has its own already.
-  const fresh = !world.convoyPort.has(a.fleet) && !carrying(world, a.fleet);
-  world.seaBound.set(id, target);
-  world.seaFetch.set(id, a.fleet);
-  world.seaFetchAt.set(id, world.tick);
-  world.convoyPort.set(a.fleet, a.port);
-  world.playerOrders.set(a.fleet, { kind: PlayerOrderKind.march, until: 0, through: false });
-  world.station.delete(a.fleet);
-  if (escort && fresh) escortConvoy(world, a.fleet, target, id);
+  const l = bindDivision(world, id, target, a);
+  // A new landing takes its escort (ROADMAP R17d); one that a division joins has its own already.
+  if (escort && !a.join) escortConvoy(world, l, id);
   return true;
 }
 

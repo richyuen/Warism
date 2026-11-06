@@ -47,11 +47,11 @@ async function waiting(page: Page, width: number, height: number): Promise<void>
 }
 
 for (const [label, width, height] of [['desk', 1600, 900], ['phone', 390, 844]] as const) {
-  test(`aboard at Tokyo, the panel says how many and how far the last (${label})`, async ({ page }) => {
+  test(`at Tokyo, the panel says how many and how far the last (${label})`, async ({ page }) => {
     test.setTimeout(300_000);
     await waiting(page, width, height);
-    await expect(page.getByTestId('formation-status')).toHaveAttribute('data-voyage', 'aboard', { timeout: 10_000 });
-    await expect(page.getByTestId('formation-wait')).toHaveText(/^1 of 4 aboard; the last \d+ days from the port$/, { timeout: 10_000 });
+    await expect(page.getByTestId('formation-status')).toHaveAttribute('data-voyage', 'gathering', { timeout: 10_000 });
+    await expect(page.getByTestId('formation-wait')).toHaveText(/^1 of 4 at the port; the last \d+ days from it$/, { timeout: 10_000 });
     // ROADMAP R22e (R34-N2): a long value wraps in its own column; its label ends before it begins.
     for (const id of ['formation-status', 'formation-wait']) {
       const gap = await page.getByTestId(id).evaluate((el) => {

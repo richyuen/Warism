@@ -6,6 +6,7 @@ import { Sim } from '../../src/sim/sim';
 import { PORT_SHUT } from '../../src/sim/systems/bombing';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { isBound, portOf } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R21b (critic run 33, R33-N2): a division whose order over the sea is refused at its own
@@ -33,9 +34,9 @@ describe('a port bombed shut says so (ROADMAP R21b)', () => {
     });
     s.command({ kind: 'moveFormation', id: div, x: BELFAST[0], y: BELFAST[1], nation: ENG });
     s.step(1);
-    const fleet = w.seaFetch.get(div);
-    expect(fleet, 'bound for a convoy').toBeDefined();
-    const port = w.convoyPort.get(fleet!)!;
+    // ROADMAP R33b: bound for a landing, at its port.
+    expect(isBound(w, div), 'bound for a landing').toBe(true);
+    const port = portOf(w, div)!;
     let why: number | undefined;
     for (let h = 0; h < 24 * 20 && why === undefined && !w.embarked.has(div); h++) {
       w.portDamage.set(port, PORT_SHUT);

@@ -8,6 +8,7 @@ import type { World } from '../../src/sim/world';
 import { navOf } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R29a (critic run 40, R40-B2): the game applied each selected division's order at once, one
@@ -49,7 +50,6 @@ function start(n: number): Game {
   const drain = (x: World): void => (s as unknown as { drainEvents(w: World): void }).drainEvents(x);
   const landed = new Map<number, number>();
   const refused = new Set<number>();
-  let boarded = false;
   let ids: number[] = [];
   const step = (): void =>
     s.sim!.step(1, (x) => {
@@ -58,7 +58,6 @@ function start(n: number): Game {
         if (!ids.includes(ev[i + 2]!)) continue;
         if (ev[i + 1] === EventKind.FormationLanded) landed.set(ev[i + 2]!, x.tick);
         if (ev[i + 1] === EventKind.MoveRejected) refused.add(ev[i + 2]!);
-        if (ev[i + 1] === EventKind.FormationEmbarked) boarded = true;
       }
       drain(x);
     });
@@ -77,8 +76,9 @@ function start(n: number): Game {
     s.handle({ type: 'cmds', cmds, now: true }, 2);
   };
   click(ids, ...SHANGHAI);
-  for (let h = 0; h < 24 * 10 && !boarded; h++) step();
-  expect(boarded, 'the first boards').toBe(true);
+  for (let h = 0; h < 24 * 10 && !ids.some((id) => atItsPort(w, id)); h++) step();
+  // ROADMAP R33b: a landing's divisions wait at its port ashore (ADR-830): the first at its port.
+  expect(ids.some((id) => atItsPort(w, id)), 'the first at its port').toBe(true);
   step();
   step();
   news.length = 0;

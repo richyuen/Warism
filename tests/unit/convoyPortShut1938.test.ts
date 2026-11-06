@@ -46,9 +46,15 @@ describe('a convoy whose port is bombed shut while it loads does not sail with t
     for (let h = 0; h < 24 * 20; h++) step();
     const shut = news.filter((n) => n.kind === 'refused' && n.reason === RejectReason.PortShut).map((n) => n.id);
     process.stderr.write(`R31b: landed ${[...landed]}, told shut ${shut}, aboard ${pair.filter((id) => w.embarked.has(id))}\n`);
-    expect(shut, '271 told its port is shut (as before)').toContain(271);
     expect(landed.has(270) && !landed.has(271), 'the one aboard does not land alone (red: 270 at Calais h99, then lost)').toBe(false);
-    expect(shut, 'the one aboard told too').toContain(270);
-    expect(w.embarked.has(270), 'ashore at the port').toBe(false);
+    // ROADMAP R33b (ADR-829: the case kept, judged by the landing's outcome): a landing's divisions wait at its
+    // port ashore and board at the sail hour; on this seed the two now sail before the port is shut, and land
+    // together. Shut first, both are told and neither is aboard (`landingPortShut1938.test.ts` drives that).
+    if (landed.size === 2) expect(Math.abs(landed.get(270)! - landed.get(271)!), 'together').toBeLessThanOrEqual(24);
+    else {
+      expect(shut, '271 told its port is shut').toContain(271);
+      expect(shut, 'the one at the port told too').toContain(270);
+      expect(w.embarked.has(270), 'ashore at the port').toBe(false);
+    }
   }, 300_000);
 });

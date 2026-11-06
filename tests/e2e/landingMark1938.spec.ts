@@ -80,9 +80,9 @@ test('the landing is marked while chosen; under a still cursor it turns to the l
   const status = page.getByTestId('formation-status');
   for (let h = 0; h < 48; h++) {
     await page.evaluate(() => window.__warsim!.sim.step(1));
-    if ((await status.getAttribute('data-voyage')) === 'aboard') break;
+    if ((await status.getAttribute('data-voyage')) === 'gathering') break;
   }
-  await expect(status).toHaveAttribute('data-voyage', 'aboard', { timeout: 10_000 });
+  await expect(status).toHaveAttribute('data-voyage', 'gathering', { timeout: 10_000 });
   await expect.poll(async () => (await mark(page))?.same, { timeout: 10_000 }).toBe(true);
   expect(await mark(page)).toEqual({ ...shanghai, same: true });
   await expect(page.getByTestId('tooltip-by-sea')).toHaveAttribute('data-same', '1');

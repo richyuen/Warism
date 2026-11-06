@@ -6,6 +6,7 @@ import { Sim } from '../../src/sim/sim';
 import { spawnPoint } from '../../src/sim/systems/production';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { isBound } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R20 (critic run 32, R32-B1): a player's order over the sea onto the ground of a nation
@@ -59,7 +60,7 @@ describe('no landing on the ground of a nation outside the war (ROADMAP R20)', (
     s.command({ kind: 'moveFormation', id: div, x: CALAIS[0], y: CALAIS[1], nation: ENG, escort: true });
     const ev = eventsOf(s, div, 1);
     expect(ev.find((e) => e[0] === EventKind.MoveRejected)?.[2], 'refused, Neutral').toBe(RejectReason.Neutral);
-    expect(w.seaFetch.has(div)).toBe(false);
+    expect(isBound(w, div)).toBe(false);
     expect(w.seaBound.has(div)).toBe(false);
     expect(w.escorts.size).toBe(0);
   });
@@ -75,7 +76,7 @@ describe('no landing on the ground of a nation outside the war (ROADMAP R20)', (
     s.command({ kind: 'moveFormation', id: div, x: CALAIS[0], y: CALAIS[1], nation: ENG });
     const ev = eventsOf(s, div, 1);
     expect(ev.some((e) => e[0] === EventKind.MoveRejected), 'not refused').toBe(false);
-    expect(w.seaFetch.has(div), 'by sea').toBe(true);
+    expect(isBound(w, div), 'by sea').toBe(true);
   });
 
   it('a division idle on such ground with no way home by land is sent home, and the jump is an event', () => {

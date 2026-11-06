@@ -129,7 +129,7 @@ ack, buildProvinces, buildTerrain, buildPolitical; requests carry a `reqId` and 
   between ticks with the same stamp (`Sim.applyNow`); plain commands stay pending (I3).
 - `cmds {cmds: Command[], now?}`: one click's commands, each taken as `cmd` takes it, then, with
   `now`, applied together by one `applyNow`: the map's click sends the selection's orders so
-  (`Hud.commands`, ROADMAP R29a), and the sim judges them as one hour's (§6.2, `noteLeaving`,
+  (`Hud.commands`, ROADMAP R29a), and the sim judges them as one hour's (§6.2, `landingOrders`,
   `tellLandingsLeft`), not one division at a time.
   A command of a kind that is not in the `Command` type is refused at `World.enqueue`: not
   queued, no sequence number, no line in the log, so the hash is that of a sim that never got
@@ -1260,97 +1260,74 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   aboard. Sunk transports take it with them. A beachhead on a cell of a living nation not at war with it
   goes back to its owner. With no port or room, an order is a march (`seaBound`, an order given
   through `moveFormation`: to the nearest port of its land with transports that have room).
-- **The player's landings** (ROADMAP R17a, R17b): a player's order over the sea goes by convoy
-  (`seaConvoy`, `assignTransports`). Refused at once with no landing at the target (`landingOf`),
-  and where the target's or the landing's holder is foreign to it (`foreignTo`: `Neutral`, ROADMAP
-  R20), as a march by land onto that ground is; landed there, the march home would set it back.
-  So too after the order (`neutralLanding`, ROADMAP R21a): hourly, a division bound for its convoy
-  whose landing a peace made such ground is stopped where it stands, told `Neutral`; a convoy loading
-  for it does not sail, those aboard told and ashore at the port. One at sea lands and is sent home.
-  A division at a port of its nation that is bombed shut (`portShut`) is refused `PortShut` (16, "its
-  port is bombed shut"), not `NoPort` (ROADMAP R21b).
-  An order of a land formation to open sea, water with no land of its own near enough to snap to
-  (`TARGET_SNAP_CELLS`), is refused `OpenSea` (17, "there is only sea there"), not `NoRoute`, whose
-  words speak of a march by land (ROADMAP R22g).
-  Its transports, in turn: a convoy of its nation loading for the same target cell at a port of its
-  land with room for it (so a click's divisions, or a later click's to the same cell, go together);
-  a group standing at a port of its land with room, not another's convoy, at the port nearest it; a
-  group called to the nearest port of its land (`callTransports`: of its nation's groups standing
-  idle, not under way, in no battle, carrying nobody, not held by the editor, not another convoy's,
-  with room for it, the nearest by straight cells to the port's water that has a sea way, at most
-  `CALL_TRIES` (4) tried); a full convoy for the same target, for its next voyage. None: refused as
-  before. But where a convoy for the same target loads at a port of its land and is full, first a
-  group standing at that port, or one called there (ROADMAP R21e): one click, one port, one sailing.
-  A loaded convoy waits at its port while another there for the same landing is still to load
-  (called, or one bound for it would fit; `stillLoading`), however long; its divisions' panels say
-  "Aboard at {port}, waiting for the rest of the landing" (`aboard`).
-  Below it, the landing (`voyage.wait`, ROADMAP R22c): of the divisions for that target at that
-  port, how many are aboard of how many in all, and the days the furthest bound has left to march
-  (`marchHoursLeft`, rounded up; "held up on the way" where it does not go on).
-  A division aboard such a convoy, still loading at its port of its nation, takes a new order: it
-  goes ashore at the port's cell (no landing, its organisation as it was) and the order stands
-  (`ashoreAtPort`, ROADMAP R22b); refused, it is aboard again as it was, its landing kept (R23a); a
-  division bound for a convoy keeps its binding when an order is refused (R24a). The hour's orders
-  are judged together (`noteLeaving`, before they are applied, ROADMAP R28a): the transports of a
-  landing those orders take divisions off (`world.leaving`, `world.groupsLeft`) are free for the
-  choice above once nobody else holds them (`heldGroup`), and one of them on its way to its convoy's
-  port is offered there as if it stood there (`comingTo`; R21e's "a group at that port", and the
-  nearest port's, R28c: a landing re-sent by two clicks an hour apart); a click that leaves a landing takes its
-  transports with it, and the one aboard sent alone takes its own where they carry no one else. The
-  one aboard whose new landing a convoy loads for at another port stays aboard where nobody else holds
-  its transports: they sail to that port with it and load the rest there (`sailAboard`, R29b). A
-  convoy whose port is bombed shut while it loads is over: those aboard go ashore there, and they and
-  those bound for it are told `PortShut` (R31b); under
-  way to that port they are still to load, and the convoys there for that landing wait for them
-  (`stillLoading`, R30a). The one aboard them takes an order as at that port (`sailingToPort`,
-  R30b): to the landing it has, nothing changes; to another landing over the sea from that port, its
-  transports keep it and load for that one there, or, held by others, it is refused `Aboard`; any
-  other order, it goes ashore on its side's coast nearest them and takes it from there (R31c), out of
-  reach of such land refused `Aboard`. The player's transports at sea with one division alone aboard,
-  bound for its landing, turn back for their nation's nearest port on an order to it, and it takes the
-  order as at that port; refused, they sail on (`soleAtSea`, `turnBack`, R31e). A landing's convoys
-  at a port wait for those bound within a day of its first (its click), however far, and for a later
-  order only within a week's march; the rest go on the next voyage (`waitedFor`, `seaFetchAt`, R31f). Its panel reads "Aboard, sailing to {port} to load the rest of the
-  landing" (R30c). With
-  none free, the one aboard sent over the sea to another landing is refused `Loading` (18, R24d).
-  A division aboard or bound that an order takes to another landing is told it leaves its landing
-  (`LeftLanding`, the order's news "leftLanding") when another of its nation still has that landing,
-  judged once the hour's orders are in (`tellLandingsLeft`): a whole click sent elsewhere is not
-  told (R25b, R27c). An
-  order to the landing it is aboard for changes nothing: it stays aboard (`sameLanding`, R23b); so for a
-  division bound for a convoy still at its port: it keeps its transports (R23e). A landing whose water
-  and land are within `SAME_LANDING_CELLS` (2) of its own, the land of the same holder, is its own (R24b);
-  so is a click within `SAME_LANDING_CELLS` of the cell its landing was ordered for, of that cell's
-  holder, whatever landing the click resolves to (R25a). What becomes of an order over the sea is
-  judged against the land of the landing it is for (`seaOrderLanding`, the one the map marks; the
-  one kept for such an order), not the click, which may resolve to a landing cells off
-  (`landedAway`; R26a, R27c).
-  Aboard anything else, it takes none (`Aboard`).
-  The group is the player's (`playerOrders`; the AI leaves it). The division marches to the
-  port, or stands there, bound for the group (`seaFetch`; the group's port `convoyPort`); it boards
-  when the group stands at that port with room (aboard, not sailing), waits while the group is under
-  way, fighting, away or full, and is refused (`NoTransports`) if its march ends short of the port.
-  Hourly after the boarding (`convoySystem`): a loading group with someone aboard sails for the
-  landing of the first aboard once no division bound for it that would fit is still to come (no
-  sea way: refused `NoSeaWay`, ashore at the port); away from its port with nobody aboard, it sails
-  back for those still bound for it; with nobody bound or aboard, the convoy is over. A repulsed
-  landing ends its convoy (those still bound are told). No other order takes a loading group.
-  The escort (ROADMAP R17d): an order with `escort` (the panel's box) that makes a new convoy sends
-  a warfleet with it (`escortConvoy`): of its nation's fleets with no transports standing idle (not
-  under way, in no battle, not under the player's own order, not held by the editor, no other
-  convoy's escort), of the `ESCORT_TRIES` (8) nearest by straight cells to the landing's water the one
-  there soonest by sea (`sailHours`, ROADMAP R23d), kept for it where it stands as the player's. None: `ConvoyUnescorted`, and the
-  transports sail alone. Hourly after the convoys (`escortSystem`), a kept escort standing while its
-  convoy is at its port sails for the landing's water once its voyage (`sailHours`, by the way and
-  pace `sailStep` takes) is at least the wait left (`waitLeft`: the longest march of a division
-  bound for a convoy at that port for that landing, `marchHoursLeft`, and the voyage of such a
-  group still on its way there, `sailHoursLeft`; ROADMAP R22d). A loaded convoy ready to sail sends
-  one not yet sailed, and waits while one of its landing's is in a battle or would be there after
-  its transports (`escortAhead`). So the escort is there first and the landing no later than
-  without it (Belfast 110 h either way; Japan's four to Shanghai 1243 h). An escort whose group is
-  gone, or has no convoy and nobody aboard, is the AI's again and sails back to the cell it came
-  from (else home). A player's own order of it makes it theirs.
-  `world.embarked`, `world.seaBound`, `world.seaFetch`, `world.convoyPort` and `world.escorts` are saved.
+- **The player's landings** (ROADMAP R17, R33; ADR-829, ADR-830; `src/sim/systems/landings.ts`): a
+  landing is one object (`world.landings`): its target (the cell ordered, and the water and land
+  `landingOf` finds for it), its port (one of its nation's), its transport groups, its divisions (each
+  with the tick it joined), one state (`gathering`, `sailing`, `returning`) and its escort
+  (`world.escorts`, by landing id). It is the player's alone: the AI's landings (`tryLanding` with
+  `via`, PLAN 7.90g) do not use it, and its groups are taken by no other order (`inLanding`).
+  A player's order over the sea (`seaConvoy`) is refused at once with no landing at the target
+  (`NoLanding`), and where the target's or the landing's holder is foreign to it (`Neutral`, ROADMAP
+  R20). An order of a land formation to open sea is refused `OpenSea` (17, R22g); at a port bombed shut,
+  `PortShut` (16, R21b). Its transports (`chooseTransports`), in turn: a landing gathering for the same
+  place (`sameLandingAs`: the click within `SAME_LANDING_CELLS` (2) of the cell it was ordered for, of the
+  same holder, or the click's landing within 2 cells of its water and land, R24b, R25a) at a port of its
+  land: it joins, and where the landing's room is short, a free group at that port or one called there
+  joins too (R21e: one click, one port, one sailing); a free group (standing, in no battle, no landing's,
+  carrying no one, with room) at the port of its land nearest it: a new landing there; a group called
+  to its land's nearest port (`callTransports`: of the nation's groups standing idle, not held by the
+  editor, with room, the nearest by straight cells with a sea way, `CALL_TRIES` (4) tried): a new
+  landing; a landing for that place that has sailed: its next voyage. None: refused `NoTransports` (or
+  `NoPort`). The division marches to the port, or stands there, and waits there ashore; its groups and
+  its divisions are the player's (`playerOrders`) while the landing is.
+  Hourly (`landingSystem`, in `amphibiousSystem` after the AI's boarding): a gathering landing is over,
+  all told, where its target became a neutral's (`Neutral`, R21a: those marching stopped), its port was
+  bombed shut or lost (`PortShut`, `NoPort`, R31b), or it has no group left (`NoTransports`); its groups
+  away from its port sail there (those aboard one at the port go ashore there); a division whose march
+  ended short of the port is told `NoTransports` and leaves it. It sails when every group stands at its
+  port, none of its divisions at the port is in a fight, it waits for none still marching (`waited`:
+  those that joined within `SAME_CLICK_HOURS` (24) of its first, however far; a later one only within
+  `LATE_WAIT_HOURS` (168) of its march, R31f), its escort is ready (`escortAhead`) and an hour has passed
+  since its last order (`ordered`: a division joined, or it was redirected; R40-N1): those at the port
+  board then, first fit (`tryLanding` with `via`: "loading" is that hour, not a state), and the groups
+  carrying them sail for its water (no sea way: `NoSeaWay`, over). Those that do not fit stay for the
+  next voyage, and the groups come back for them; groups carrying no one are the AI's again when no one
+  is left. A sailing landing's divisions land as any (`amphibiousSystem`: at the landing's water, or
+  thrown back, `LandingRepulsed`, those not aboard told `NoTransports`); each leaves the landing as it
+  lands, and the landing is over with its last.
+  An hour's orders edit it as a batch (`landingOrders`, before they are applied): one click ordering all
+  of a gathering landing's divisions to one other place over the sea from its port redirects it, its port
+  and groups kept, or merges it into one gathering for that place at the same port (`redirectGathering`;
+  R39-B1, R40-B1: one by one, each found its groups held by the rest); one click ordering all
+  of a sailing or returning landing's divisions, all aboard, to another landing gathering for that place
+  sends its groups to that one's port, and it joins it (ROADMAP R33b, critic run 43, R43-B1's recall); to
+  another place over the sea from its port, it sails there (`retarget`); to a place not over the sea (a
+  cancel), back to its own port, where they go ashore and march there (`returning`, `then`). Some of
+  those aboard at sea: refused `Aboard`. A division ashore ordered elsewhere leaves its landing
+  (`detachDivision`: the groups it no longer needs are free, those at its port first, R40-B1) and
+  takes the order; refused, it is back in it as it was (R24a). It is told it leaves (`LeftLanding`, the
+  news "leftLanding") where the landing goes on with others, once the hour's orders are in
+  (`tellLandingsLeft`; a whole click sent elsewhere is not told, R25b, R27c). An order for the landing
+  it has changes nothing (R23b, R23e). A player's order to a landing's transports is refused `Convoy`
+  (19, R31a).
+  The panel (`voyageOf`, ROADMAP R17c, R22c): marching to its port; waiting there for transports; at its
+  port with them, waiting for the rest (`gathering`, "At {port}, waiting for the rest of the landing"),
+  with how many it waits for are at the port of how many and the days the furthest has left to march
+  (`marchHoursLeft`); at sea; sailing back to its port. The map's mark and an order's news are judged
+  against the landing the order is for (`seaOrderLanding`, `seaHint`: from the landing's port while
+  aboard, R27b, R43-N4; `landedAway`, R26a, R27c).
+  The escort (ROADMAP R17d): an order with `escort` that makes a new landing keeps a warfleet for it
+  (`escortConvoy`: of its nation's fleets with no transports standing idle, not the player's, not held
+  by the editor, no landing's, no other's escort, of the `ESCORT_TRIES` (8) nearest by straight cells to
+  the landing's water the one there soonest, `sailHours`, R23d), where it stands. None:
+  `ConvoyUnescorted`. Hourly (`escortSystem`) it sails for the landing's water once its voyage is at
+  least the wait left (`waitLeft`: the longest march of a division waited for and the voyage of a group
+  still on its way, R22d); the landing ready to sail waits while it is in a battle or would be there
+  after the transports. Its landing over, it is the AI's again and sails back to the cell it came from
+  (else home). A player's own order of it makes it theirs.
+  A save from before R33b (its `world.convoyPort`, `world.seaFetch`, `world.seaFetchAt` sections) is
+  read into landings at its first hour (`migrateLegacyLandings`). `world.embarked`, `world.seaBound`,
+  `world.landings` and `world.escorts` are saved.
 - **Bombardment** (`src/sim/systems/bombardment.ts`): a fleet not under way and not in a sea battle
   fires on land formations within its guns' reach (12–32 km) at the element of most hit points:
   effectiveness (§5.2) × strength ÷ size × `FIRE_SCALE` × `BOMBARD_FIRE` (2.5); its losses count to org.
@@ -1849,9 +1826,9 @@ Actions tab's assist boxes set the mask (`setPlayerAi`).
   land, an arrowhead and a ring there, each over a dark edge; orange for a new landing, green for one
   every division it is for already has. One landing kept: the tooltip says "the landing they already
   have"; two or more (a division aboard and a fresh one, say), "{n} landings, each marked: they will
-  not land together" (R39-N1: it was the first selected division's answer alone). A division aboard a
-  convoy loading at its port is asked from the port (`aboardAtPort`). A still cursor is asked again as the sim moves on. The formation panel's status says marching to the port (named) to board
-  transports, waiting at it for them, at sea, or landed (for a day after a player's order lands;
+  not land together" (R39-N1: it was the first selected division's answer alone). A division aboard its
+  landing's transports is asked from its landing's port (`orderFrom`, ROADMAP R33b, R43-N4). A still cursor is asked again as the sim moves on. The formation panel's status says marching to the port (named) to board
+  transports, waiting at it for them or for the rest of its landing, at sea, sailing back to its port, or landed (for a day after a player's order lands;
   `FormationDetail.voyage`). While bound for a landing, a formation whose order lines are shown has
   its sea leg drawn (`drawVoyages`, `Snapshot.voyages`): a dashed line from its port's water, or its
   transports at sea, to the landing's water and the land it lands on, and a ring there; straight,

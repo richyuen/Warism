@@ -8,6 +8,7 @@ import type { World } from '../../src/sim/world';
 import { navOf } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R31e (critic run 40, R40-N1): the one aboard sent alone to another landing takes its own
@@ -41,7 +42,6 @@ describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e, R32a)', 
     if (!w.wars.atWar(JAP, CHI)) s.handle({ type: 'cmd', cmd: { kind: 'declareWar', attacker: JAP, defender: CHI }, now: true }, 1);
     const drain = (x: World): void => (s as unknown as { drainEvents(w: World): void }).drainEvents(x);
     const landed = new Map<number, number>();
-    let boarded = false;
     let ids: number[] = [];
     const step = (): void =>
       s.sim!.step(1, (x) => {
@@ -49,7 +49,6 @@ describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e, R32a)', 
         for (let i = 0; i < ev.length; i += 6) {
           if (!ids.includes(ev[i + 2]!)) continue;
           if (ev[i + 1] === EventKind.FormationLanded) landed.set(ev[i + 2]!, x.tick);
-          if (ev[i + 1] === EventKind.FormationEmbarked) boarded = true;
         }
         drain(x);
       });
@@ -68,11 +67,12 @@ describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e, R32a)', 
       s.handle({ type: 'cmds', cmds, now: true }, 2);
     };
     click(ids, ...SHANGHAI);
-    for (let h = 0; h < 24 * 10 && !boarded; h++) step();
-    expect(boarded, 'the first boards').toBe(true);
+    for (let h = 0; h < 24 * 10 && !ids.some((id) => atItsPort(w, id)); h++) step();
+    // ROADMAP R33b: a landing's divisions wait at its port ashore (ADR-830): the first at its port.
+  expect(ids.some((id) => atItsPort(w, id)), 'the first at its port').toBe(true);
     step();
     step();
-    const first = ids.find((id) => w.embarked.has(id))!;
+    const first = ids.find((id) => atItsPort(w, id))!;
     click([first], ...FUZHOU);
     for (let h = 0; h < 24 * days; h++) step();
     const ship = w.embarked.get(first)?.fleet ?? 0;
@@ -80,11 +80,11 @@ describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e, R32a)', 
     click([first], ...SHANGHAI);
     let walked = false;
     for (let h = 0; h < 24 * 90 && ids.some((id) => !landed.has(id)); h++) {
-      if (!landed.has(first) && !w.embarked.has(first)) walked = true;
+      if (!landed.has(first) && !w.embarked.has(first) && c.moving[first] === 1) walked = true;
       step();
     }
     process.stderr.write(`R32a ${days} d: first ${first}, refused ${refused}, walked ${walked}, landed ${[...landed]}, at ${ids.map((id) => `${c.x[id]!.toFixed(0)},${c.y[id]!.toFixed(0)}`)}\n`);
-    expect(walked, 'the one aboard never ashore before it lands (red: put ashore, walked weeks)').toBe(false);
+    expect(walked, 'the one at sea never marches before it lands (red: put ashore, walked weeks)').toBe(false);
     expect(landed.size, 'both landed').toBe(2);
     if (refused.length > 0) {
       // Refused: told, and it goes on to the landing it was sent to.

@@ -7,6 +7,7 @@ import { transportRoom } from '../../src/sim/systems/amphibious';
 import { navOf, type World } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R21e (critic run 32, R32-N1): the divisions of one click to one target land together. Japan
@@ -60,12 +61,13 @@ describe('one click lands together (ROADMAP R21e)', () => {
         x.out.events.length = 0;
         x.out.fires.length = 0;
       });
-      // One aboard at the port while the other is still to come: told it waits for the rest.
-      if (landed.size === 0) for (const id of two) if (w.embarked.has(id) && !two.every((d) => w.embarked.has(d))) states.add(voyage(id)?.state ?? 'none');
+      // One at the port, its transports there, while the other is still to come: told it waits for the rest
+      // (ROADMAP R33b: ashore, `gathering`; before, aboard).
+      if (landed.size === 0) for (const id of two) if (atItsPort(w, id) && !two.every((d) => atItsPort(w, d)) && voyage(id)?.state !== 'waiting') states.add(voyage(id)?.state ?? 'none');
     }
     expect(landed.size, 'both landed').toBe(2);
     const [a, b] = [...landed.values()];
     expect(Math.abs(a! - b!), 'within a day').toBeLessThanOrEqual(24);
-    expect([...states], 'aboard, waiting for the rest').toEqual(['aboard']);
+    expect([...states], 'at the port, waiting for the rest').toEqual(['gathering']);
   });
 });

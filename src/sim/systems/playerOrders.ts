@@ -15,6 +15,7 @@
 import { EventKind, RejectReason } from '../../shared/events';
 import { PlayerOrderKind, type World } from '../world';
 import { carrying, transportRoom } from './amphibious';
+import { inLanding, landingOfDivision, leaveLanding } from './landings';
 
 /** How long the AI leaves a wing's mission given by the player (hours). */
 export const PLAYER_MISSION_HOURS = 24;
@@ -35,27 +36,31 @@ export function playerOrderSystem(world: World): void {
       if (!world.wingFerry.has(id)) world.playerOrders.delete(id);
       continue;
     }
-    if (c.moving[id] !== 1 && !world.embarked.has(id) && !world.seaBound.has(id) && !world.afloat(id)) {
+    // A division of a landing is the player's while it is (ROADMAP R33b): waiting at its port, the AI leaves it be.
+    if (c.moving[id] !== 1 && !world.embarked.has(id) && !world.seaBound.has(id) && !world.afloat(id) && landingOfDivision(world, id) === undefined) {
       world.playerOrders.delete(id);
       continue;
     }
-    // Transports standing with no convoy and nobody aboard (ROADMAP R31d; critic run 41, R41-N1: called for a
+    // Transports standing with no landing and nobody aboard (ROADMAP R31d; critic run 41, R41-N1: called for a
     // division that then went to another port's convoy, they stood empty at Tokyo under the player's order
     // for a month): the AI's again. A fleet's order otherwise held while it is afloat, that is always.
-    if (world.isFleet(id) && c.moving[id] !== 1 && !world.convoyPort.has(id) && !carrying(world, id) && transportRoom(world, id) > 0) {
+    if (world.isFleet(id) && c.moving[id] !== 1 && !inLanding(world, id) && !carrying(world, id) && transportRoom(world, id) > 0) {
       world.playerOrders.delete(id);
       continue;
     }
     if (c.engaged[id] !== 1) {
       o.through = false;
     } else if (!o.through) {
+      // Waiting at its landing's port: it keeps its landing, which waits for it (ROADMAP R33b).
+      const l = landingOfDivision(world, id);
+      if (l && c.moving[id] !== 1) continue;
       // Contact on the way: the order is cancelled, and the formation stands and fights; the
       // player is told (`MoveRejected`, as a refused order).
       c.moving[id] = 0;
       c.home[id] = 0;
       world.paths.delete(id);
       world.seaBound.delete(id);
-      world.seaFetch.delete(id);
+      if (l) leaveLanding(world, id);
       world.playerOrders.delete(id);
       world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.Contact, NaN);
     }

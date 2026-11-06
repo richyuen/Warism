@@ -1507,3 +1507,22 @@
   Report: `docs/sweeps/landingGrid-R33a-b166998e.md`. No sim change.
 - **Next:** R33b.
 
+## 2026-11-05 — R33b: the player's landing as one object (ADR-830)
+- `src/sim/systems/landings.ts`: `world.landings` (target, port, groups, divisions with the hour each joined,
+  state gathering/sailing/returning, last order, escort by landing id), saved only while not empty; older saves'
+  convoy sections read into landings at the first hour. Divisions wait at the port ashore and board at the sail
+  hour; the landing sails an hour after its last order at the soonest. The hour's orders edit it as a batch
+  (`landingOrders`: a whole gathering landing redirected keeps its port and groups; at sea, a whole landing
+  rejoins one gathering for the place, sails to a new one, or sails back to its port; some of those aboard at sea
+  refused `Aboard`). Removed: `heldGroup`, `noteLeaving`, `turnBack`, `waitedFor`, `sailAboard`, `ashoreFromShip`,
+  `soleAtSea`, `comingTo`, `convoySystem` and their state (ADR-830 lists them with the tests changed).
+- Grid (R33a's): **15 of 480 broken (HEAD 140)**: idle aboard 0 (125), mark 0 (5), split 15 (15, one case: the
+  walker re-sent elsewhere and recalled; its mate sailed alone). Longest wait at the port 507 h: HEAD's idle
+  aboard, now ashore, no shorter. Report `docs/sweeps/landingGrid-R33b.md`.
+- Tests: 36 landing/convoy files green; `landingSave1938` new; whole unit suite green (snapshot-perf red under
+  load, green alone; specRefs green once `landings.ts` was tracked). Specs by hand: the 10 `tests/e2e/landing*`
+  files, 14 tests, green; panel shots looked at ("At Tokyo, waiting for the rest of the landing", "1 of 4 at the
+  port; the last 47 days from it"). Pin of seed 99 unmoved (no player). Tick time: the landing code runs only
+  with a player's landing; seed 99 has none.
+- **Next:** R33c (mark, panel, news from the object; most of it went in here: `seaHint`/`voyageOf` read it).
+

@@ -2,9 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { landingOf, seaHint } from '../../src/sim/systems/amphibious';
+import { landingOf } from '../../src/sim/systems/amphibious';
+import { landingOfDivision, seaHint } from '../../src/sim/systems/landings';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R28b (critic run 39, R39-N1): the map's mark and the tooltip spoke for the first selected
@@ -45,9 +47,10 @@ describe('the mark speaks for the whole selection (ROADMAP R28b)', () => {
 
     for (const id of pair) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true });
     while (w.tick < 26) sim.step(1);
-    const first = pair.find((id) => w.embarked.has(id))!;
-    expect(first, 'one aboard').toBeDefined();
-    const e = w.embarked.get(first)!;
+    // ROADMAP R33b: the one at its port (it waits there ashore; before, aboard): its landing.
+    const first = pair.find((id) => atItsPort(w, id))!;
+    expect(first, 'one at its port').toBeDefined();
+    const e = landingOfDivision(w, first)!;
     const [x, y] = [SHANGHAI[0], SHANGHAI[1] + 2];
     const click = landingOf(w, cell(x, y))!;
 

@@ -5,6 +5,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort, groupOf } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R28a (critic run 39, R39-B1): a landing the player redirects took other transports while
@@ -50,7 +51,6 @@ function start(n: number): Case {
   for (const id of ids) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true });
   const refused = new Map<number, number>();
   const landed = new Map<number, number>();
-  let boarded = false;
   const step = (): void =>
     sim.step(1, (x) => {
       const ev = x.out.events;
@@ -58,20 +58,20 @@ function start(n: number): Case {
         if (!ids.includes(ev[i + 2]!)) continue;
         if (ev[i + 1] === EventKind.MoveRejected) refused.set(ev[i + 2]!, ev[i + 4]!);
         if (ev[i + 1] === EventKind.FormationLanded) landed.set(ev[i + 2]!, x.tick);
-        if (ev[i + 1] === EventKind.FormationEmbarked) boarded = true;
       }
       x.out.events.length = 0;
       x.out.fires.length = 0;
     });
-  for (let h = 0; h < 24 * 10 && !boarded; h++) step();
-  expect(boarded, 'the first boards').toBe(true);
+  // ROADMAP R33b: a landing's divisions wait at its port ashore (ADR-830): the first at its port.
+  for (let h = 0; h < 24 * 10 && !ids.some((id) => atItsPort(w, id)); h++) step();
+  expect(ids.some((id) => atItsPort(w, id)), 'the first at its port').toBe(true);
   step();
   step();
   return { sim, ids, refused, landed, step };
 }
 
-/** The transports `id` is aboard or bound for. */
-const place = (s: Sim, id: number): number | undefined => s.world.embarked.get(id)?.fleet ?? s.world.seaFetch.get(id);
+/** The transports `id` is aboard, or its landing's first group (ROADMAP R33b). */
+const place = (s: Sim, id: number): number | undefined => s.world.embarked.get(id)?.fleet ?? groupOf(s.world, id);
 
 /** Clicks `again` to (`x`, `y`); steps until those clicked have landed (or 90 days). Their old transports, and their new. */
 function reclick(k: Case, again: number[], x: number, y: number): { was: (number | undefined)[]; now: (number | undefined)[] } {

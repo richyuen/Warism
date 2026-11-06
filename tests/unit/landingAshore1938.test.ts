@@ -5,6 +5,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort, groupOf, hasLanding, portOf } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R22b (critic run 34, R34-N1): a division aboard a player's convoy still loading at its port
@@ -12,6 +13,8 @@ import { nationId } from '../helpers/sim1938';
 // to Shanghai by one click; the first boards at Tokyo and waits there for the rest (R21e, weeks). A
 // recall of it then was refused ("aboard transports, takes no order until it lands"). Now it goes
 // ashore at the port and marches; the convoy waits on and the other three land at Shanghai.
+// ROADMAP R33b (ADR-830): a landing's divisions wait at its port ashore and board at the sail hour: the first
+// at the port, recalled, marches; its landing waits on for the rest.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = nationId('JAP');
@@ -49,17 +52,17 @@ describe('the wait aboard has a way out (ROADMAP R22b)', () => {
         x.out.events.length = 0;
         x.out.fires.length = 0;
       });
-    // Until one is aboard while another is still to come.
+    // Until one is at its port while another is still to come.
     let first = 0;
     for (let h = 0; h < 24 * 10 && first === 0; h++) {
       step();
-      first = four.find((id) => w.embarked.has(id)) ?? 0;
+      first = four.find((id) => atItsPort(w, id)) ?? 0;
     }
-    expect(first, 'one aboard').not.toBe(0);
-    const fleet = w.embarked.get(first)!.fleet;
-    expect(w.convoyPort.has(fleet), 'its convoy loading at the port').toBe(true);
-    expect(four.some((id) => !w.embarked.has(id)), 'another still to come').toBe(true);
-    const port = w.ports[w.convoyPort.get(fleet)!]!;
+    expect(first, 'one at its port').not.toBe(0);
+    const fleet = groupOf(w, first)!;
+    expect(hasLanding(w, fleet), 'its landing gathering at the port').toBe(true);
+    expect(four.some((id) => !atItsPort(w, id)), 'another still to come').toBe(true);
+    const port = w.ports[portOf(w, first)!]!;
 
     // Recalled to a cell inland, a day's march from the port.
     const inland = cellOf(139.4, 35.9, W, H) as [number, number];

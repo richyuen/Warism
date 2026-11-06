@@ -433,12 +433,9 @@ class WorldCore implements Stateful {
       ...(w.wingFerry.size === 0 ? [] : [{ name: 'world.wingFerry', dtype: 'f64' as const, data: Float64Array.from([...w.wingFerry].sort((a, b) => a[0] - b[0]).flat()) }]),
       // A player's order over the sea marching to its port (PLAN 4.9b): [id, target] each, only while there is one.
       ...(w.seaBound.size === 0 ? [] : [{ name: 'world.seaBound', dtype: 'f64' as const, data: Float64Array.from([...w.seaBound].sort((a, b) => a[0] - b[0]).flat()) }]),
-      // The transports called to such a formation's port (ROADMAP R17a): [id, fleet] each, only while there is one.
-      ...(w.seaFetch.size === 0 ? [] : [{ name: 'world.seaFetch', dtype: 'f64' as const, data: Float64Array.from([...w.seaFetch].sort((a, b) => a[0] - b[0]).flat()) }]),
-      // The hour each was bound for its convoy (ROADMAP R31f): [id, tick] each, only while there is one.
-      ...(w.seaFetchAt.size === 0 ? [] : [{ name: 'world.seaFetchAt', dtype: 'f64' as const, data: Float64Array.from([...w.seaFetchAt].sort((a, b) => a[0] - b[0]).flat()) }]),
-      // A player's convoys (ROADMAP R17b): [fleet, port] each, only while there is one.
-      ...(w.convoyPort.size === 0 ? [] : [{ name: 'world.convoyPort', dtype: 'f64' as const, data: Float64Array.from([...w.convoyPort].sort((a, b) => a[0] - b[0]).flat()) }]),
+      // The player's landings (ROADMAP R33b): [next id, then each: id, nation, target, water, land, port, state, then,
+      // ordered, fleets n, ...fleets, divisions n, ...(id, joined)], only while there is one.
+      ...(w.landings.size === 0 ? [] : [{ name: 'world.landings', dtype: 'f64' as const, data: Float64Array.from([w.nextLanding, ...[...w.landings.values()].sort((a, b) => a.id - b.id).flatMap((l) => [l.id, l.nation, l.target, l.water, l.land, l.port, l.state, l.then, l.ordered, l.fleets.length, ...l.fleets, l.divisions.size, ...[...l.divisions].sort((a, b) => a[0] - b[0]).flat()])]) }]),
       ...(w.escorts.size === 0 ? [] : [{ name: 'world.escorts', dtype: 'f64' as const, data: Float64Array.from([...w.escorts].sort((a, b) => a[0] - b[0]).flatMap(([k, e]) => [k, e.convoy, e.from])) }]),
       // The fleets placed by the editor that hold their place (PLAN 7.22c): [id, x, y] each, only while there is one.
       // The beach's supply layer (PLAN 7.75): [cell, bloc] each, only while there is one.
@@ -531,9 +528,8 @@ class WorldCore implements Stateful {
     w.seaControl = control ? { holder: Uint16Array.from(control.subarray(1, 1 + control[0]!)), days: Uint8Array.from(control.subarray(1 + control[0]!, 1 + 2 * control[0]!)) } : null;
     w.seaLinks = new Map();
     w.seaBound = new Map();
-    w.seaFetch = new Map();
-    w.seaFetchAt = new Map();
-    w.convoyPort = new Map();
+    w.landings = new Map();
+    w.nextLanding = 1;
     w.escorts = new Map();
     w.wingBase = new Map();
     w.bombDamage = new Map();
@@ -568,12 +564,24 @@ class WorldCore implements Stateful {
     for (let at = 0; ferries && at < ferries.length; at += 2) w.wingFerry.set(ferries[at]!, ferries[at + 1]!);
     const bound = sections.find((s) => s.name === 'world.seaBound')?.data as Float64Array | undefined;
     for (let at = 0; bound && at < bound.length; at += 2) w.seaBound.set(bound[at]!, bound[at + 1]!);
-    const fetch = sections.find((s) => s.name === 'world.seaFetch')?.data as Float64Array | undefined;
-    for (let at = 0; fetch && at < fetch.length; at += 2) w.seaFetch.set(fetch[at]!, fetch[at + 1]!);
-    const fetchAt = sections.find((s) => s.name === 'world.seaFetchAt')?.data as Float64Array | undefined;
-    for (let at = 0; fetchAt && at < fetchAt.length; at += 2) w.seaFetchAt.set(fetchAt[at]!, fetchAt[at + 1]!);
-    const convoys = sections.find((s) => s.name === 'world.convoyPort')?.data as Float64Array | undefined;
-    for (let at = 0; convoys && at < convoys.length; at += 2) w.convoyPort.set(convoys[at]!, convoys[at + 1]!);
+    const landings = sections.find((s) => s.name === 'world.landings')?.data as Float64Array | undefined;
+    if (landings && landings.length > 0) {
+      w.nextLanding = landings[0]!;
+      for (let at = 1; at < landings.length; ) {
+        const [id, nation, target, water, land, port, state, then, ordered, nf] = landings.subarray(at, at + 10);
+        at += 10;
+        const fleets = [...landings.subarray(at, at + nf!)];
+        at += nf!;
+        const nd = landings[at++]!;
+        const divisions = new Map<number, number>();
+        for (let k = 0; k < nd; k++, at += 2) divisions.set(landings[at]!, landings[at + 1]!);
+        w.landings.set(id!, { id: id!, nation: nation!, target: target!, water: water!, land: land!, port: port!, state: state! as LandingStateKind, then: then!, ordered: ordered!, fleets, divisions });
+      }
+    }
+    // A save from before ROADMAP R33b: its player's convoys, made landings at the next hour (`migrateLegacyLandings`).
+    const legacy = (name: string): Float64Array | undefined => sections.find((s) => s.name === name)?.data as Float64Array | undefined;
+    const ports = legacy('world.convoyPort');
+    w.legacyConvoys = ports && ports.length > 0 ? { fetch: legacy('world.seaFetch') ?? new Float64Array(), fetchAt: legacy('world.seaFetchAt') ?? new Float64Array(), ports } : null;
     const escorts = sections.find((s) => s.name === 'world.escorts')?.data as Float64Array | undefined;
     for (let at = 0; escorts && at < escorts.length; at += 3) w.escorts.set(escorts[at]!, { convoy: escorts[at + 1]!, from: escorts[at + 2]! });
     w.station = new Map();
@@ -826,6 +834,7 @@ export interface PlayerOrder {
   through: boolean;
 }
 import type { Embarked } from './systems/amphibious';
+import type { Landing, LandingStateKind } from './systems/landings';
 
 /**
  * A tally of the month's air war (PLAN 5.11a): `fight` 1 for the fights of nations a and b (a
@@ -1089,20 +1098,11 @@ export class World {
   movedFrom = new Map<number, [number, number, number]>();
   movedTick = -1;
   /**
-   * The player's divisions an order of this hour took off the transports they were aboard or bound
-   * for: [formation, the water and land of the landing they had] (`orderMove`), told once the
-   * hour's orders are in (`tellLandingsLeft`). Derived, not state: empty between ticks.
+   * The player's divisions an order of this hour took out of their landing: [formation, the landing's id]
+   * (`orderMove`), told once the hour's orders are in (`tellLandingsLeft`). Derived, not state: empty
+   * between ticks.
    */
-  landingsLeft: [number, number, number][] = [];
-  /**
-   * The player's divisions this hour's orders take off the landing they are aboard or bound for, by
-   * the transports they hold there (`noteLeaving`, ROADMAP R28a): those transports are theirs to take
-   * for the new landing, once nobody else holds them (`heldGroup`). Each leaves the map when its
-   * order is applied. Derived, not state: empty between the hour's orders.
-   */
-  leaving = new Map<number, number>();
-  /** The transports of `leaving` as the hour's orders began, kept while they are applied (`heldGroup`). Derived, not state. */
-  groupsLeft = new Set<number>();
+  landingsLeft: [number, number][] = [];
   /** The deployments of the hour before (see elementPlaceBefore in systems/elements.ts); null: not known. */
   deployedBefore: Map<number, { x: number; y: number; facing: number } | null> | null = null;
   /**
@@ -1351,31 +1351,18 @@ export class World {
   /** The land formations aboard transports (PLAN 4.5a, `amphibiousSystem`), by id: state, saved while not empty. */
   embarked = new Map<number, Embarked>();
   /**
-   * A player's land formations marching to a port to go over the sea (PLAN 4.9b), by id: the cell
-   * their order was for. State, saved while not empty; `amphibiousSystem` embarks them at the end
-   * of the march.
+   * Land formations marching to a port to go over the sea on an order that names no nation (PLAN 4.9b,
+   * God's), by id: the cell their order was for. State, saved while not empty; `amphibiousSystem`
+   * embarks them at the end of the march. The player's go by a landing (`landings`).
    */
   seaBound = new Map<number, number>();
+  /** The player's landings (ROADMAP R33b, `systems/landings.ts`), by id: state, saved while not empty. */
+  landings = new Map<number, Landing>();
+  nextLanding = 1;
+  /** A save from before ROADMAP R33b: its player's convoys' sections, read into landings at the next hour (`migrateLegacyLandings`). Not state. */
+  legacyConvoys: { fetch: Float64Array; fetchAt: Float64Array; ports: Float64Array } | null = null;
   /**
-   * Of those formations, the ones whose port had no transports for them (ROADMAP R17a), by id: the
-   * transport group called there for them, sailing to it under the player's order. State, saved
-   * while not empty; the formation waits at the port for it.
-   */
-  seaFetch = new Map<number, number>();
-  /**
-   * The tick each formation was bound for its convoy (`seaFetch`, ROADMAP R31f), kept while it is bound or
-   * aboard: a convoy waits for those of its own click however far, a later one only when near
-   * (`waitedFor`). State, saved while not empty.
-   */
-  seaFetchAt = new Map<number, number>();
-  /**
-   * A player's convoys (ROADMAP R17b), by transport group: the port (index in `ports`) where those
-   * bound for it board. State, saved while not empty; the group sails when its convoy is in
-   * (`convoySystem`), and comes back for those left over.
-   */
-  convoyPort = new Map<number, number>();
-  /**
-   * The escorts of a player's convoys (ROADMAP R17d), by warfleet: the transport group it guards and
+   * The escorts of a player's landings (ROADMAP R17d, R33b), by warfleet: the landing it guards (`convoy`, its id) and
    * the cell it came from, where it sails back once the group has put everyone ashore
    * (`escortSystem`). State, saved while not empty.
    */

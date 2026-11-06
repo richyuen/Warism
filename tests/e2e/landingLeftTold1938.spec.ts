@@ -45,9 +45,9 @@ test('the one aboard sent to another landing, other transports free: a row and a
   const status = page.getByTestId('formation-status');
   for (let h = 0; h < 48; h++) {
     await page.evaluate(() => window.__warsim!.sim.step(1));
-    if ((await status.getAttribute('data-voyage')) === 'aboard') break;
+    if ((await status.getAttribute('data-voyage')) === 'gathering') break;
   }
-  await expect(status).toHaveAttribute('data-voyage', 'aboard', { timeout: 10_000 });
+  await expect(status).toHaveAttribute('data-voyage', 'gathering', { timeout: 10_000 });
 
   await page.evaluate(({ id, x, y, n }) => window.__warsim!.hud.command({ kind: 'moveFormation', id, x, y, nation: n }), { id: two[0]!, x: FUZHOU[0], y: FUZHOU[1], n: JAP });
   await page.evaluate(() => window.__warsim!.sim.step(1));

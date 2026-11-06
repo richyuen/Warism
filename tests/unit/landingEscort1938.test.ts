@@ -7,6 +7,7 @@ import { landingOf, transportRoom } from '../../src/sim/systems/amphibious';
 import { AT_PORT_CELLS } from '../../src/sim/systems/navalCombat';
 import { navOf, PlayerOrderKind, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { groupOf, isBound, landingId } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R17d: a player's order over the sea with the escort asked for (the panel's box, ticked by
@@ -79,8 +80,9 @@ describe('an escort for a landing (ROADMAP R17d)', () => {
     expect(w.escorts.size, 'one escort').toBe(1);
     const [escort, e] = [...w.escorts][0]!;
     expect(warfleets).toContain(escort);
-    const convoy = w.seaFetch.get(div)!;
-    expect(e.convoy).toBe(convoy);
+    // The escort is its landing's (ROADMAP R33b), the transports its landing's group.
+    const convoy = groupOf(w, div)!;
+    expect(e.convoy).toBe(landingId(w, div));
     expect(w.playerOrders.get(escort)?.kind, "under the player's order").toBe(PlayerOrderKind.march);
     // Under way, or kept where it stood until its voyage would take as long as the wait (ADR-826, R22d:
     // it no longer sails at the order; R23d's escort, the one there soonest, is near enough to wait).
@@ -98,11 +100,11 @@ describe('an escort for a landing (ROADMAP R17d)', () => {
       s,
       div,
       24 * 30,
-      () => !w.embarked.has(div) && !w.seaBound.has(div) && w.escorts.size === 0,
+      () => !w.embarked.has(div) && !isBound(w, div) && w.escorts.size === 0,
       () => {
         if (escortThere < 0 && w.formations.has(escort) && near(cellAt(w, escort), water, r)) escortThere = w.tick;
         if (transportsThere < 0 && w.formations.has(convoy) && near(cellAt(w, convoy), water, r)) transportsThere = w.tick;
-        if ((w.embarked.has(div) || w.seaBound.has(div)) && !w.escorts.has(escort)) heldUntilAshore = false;
+        if ((w.embarked.has(div) || isBound(w, div)) && !w.escorts.has(escort)) heldUntilAshore = false;
       },
     );
     expect(seen.has(EventKind.MoveRejected), 'not refused').toBe(false);
@@ -124,7 +126,7 @@ describe('an escort for a landing (ROADMAP R17d)', () => {
     // Every warfleet under the player's own order: none to take.
     for (const o of warfleets) w.playerOrders.set(o, { kind: PlayerOrderKind.march, until: 0, through: false });
     s.command({ kind: 'moveFormation', id: div, x: belfast[0], y: belfast[1], nation: ENG, escort: true });
-    const seen = run(s, div, 24 * 30, () => w.formations.cols.moving[div] === 0 && !w.embarked.has(div) && !w.seaBound.has(div) && w.tick > 2);
+    const seen = run(s, div, 24 * 30, () => w.formations.cols.moving[div] === 0 && !w.embarked.has(div) && !isBound(w, div) && w.tick > 2);
     expect(seen.has(EventKind.ConvoyUnescorted), 'told it sails alone').toBe(true);
     expect(seen.has(EventKind.MoveRejected), 'not refused').toBe(false);
     expect(seen.get(EventKind.FormationLanded), 'landed all the same').toBeDefined();
@@ -135,7 +137,7 @@ describe('an escort for a landing (ROADMAP R17d)', () => {
     const { s, w, div, belfast } = britain();
     s.command({ kind: 'moveFormation', id: div, x: belfast[0], y: belfast[1], nation: ENG });
     const seen = run(s, div, 2, () => false);
-    expect(w.seaFetch.has(div), 'by sea').toBe(true);
+    expect(isBound(w, div), 'by sea').toBe(true);
     expect(w.escorts.size).toBe(0);
     expect(seen.has(EventKind.ConvoyUnescorted)).toBe(false);
   });

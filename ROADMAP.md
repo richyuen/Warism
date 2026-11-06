@@ -486,7 +486,7 @@ Rules:
     Tokyo up to 507 h while 365 walks), split 15 (recall: the one walking lands alone at h128, its mate h634), mark 5
     (recall at sea: no mark, R43-N4). 15101: 0 broken, but weak: its port is bombed shut, 236 of 480 divisions told
     `PortShut` (R31b); R33b adds a seed whose port stays open.
-  - [ ] R33b The object, its save, and the player's whole landing path on it: `world.landings` (target, water,
+  - [x] R33b The object, its save, and the player's whole landing path on it: `world.landings` (target, water,
     land, port, transports, divisions with the hour each joined, state, escort), saved only when not empty, older
     saves' convoy sections read into it; a click makes or joins one, an hour's orders edit it as a batch (all of
     its divisions: the landing redirects or cancels; some: they leave it, told); a recall or cancel at sea sails
@@ -494,10 +494,17 @@ Rules:
     `ashoreFromShip`, `soleAtSea`, `comingTo` …) removed, each with its test named; SPEC §6.2 rewritten; the AI's
     path and the pin unmoved; a save mid-voyage round-trips bit-identical. AT: the 33 landing test files' cases
     green (an hour pinned becomes "within a day"), the grid no worse than R33a's on any kind.
+    Done (ADR-830): `src/sim/systems/landings.ts`; divisions wait at the port ashore and board at the sail hour;
+    an hour's orders edit a landing as a batch. Grid 15 of 480 broken (R33a: 140): idle aboard 0 (125), mark 0
+    (5), split 15 (15), longest wait at the port 507 h (the old idle, ashore now) (`docs/sweeps/landingGrid-R33b.md`).
+    36 landing/convoy test files green, `landingSave1938` new (saved gathering and sailing, bit-identical);
+    tests changed with the rules they pinned: ADR-830's list. Whole unit suite green; 14 landing specs green;
+    pin unmoved.
   - [ ] R33c The map's mark, the panel and the news read the object (`seaHint`, `voyageOf`, `landingWait`,
     `voyages`, the news's `landedAway`); a mark for a division aboard at sea (R43-N4). AT: the grid's mark column
     0 broken; the landing e2e specs green.
-  - [ ] R33d `landingInvariants` (as `diploInvariants`) on several seeds and the fuzz (`landingReclickFuzz` with
+  - [ ] R33d The grid's open case (R33b: the one walking re-sent elsewhere, then recalled: its mate sailed alone
+    meanwhile; 15 cases split). `landingInvariants` (as `diploInvariants`) on several seeds and the fuzz (`landingReclickFuzz` with
     recall, redirect, cancel, port shut, late order; the 120-day run a tool): 0 broken. Then the grid on the final
     code (R33's AT), and the critic, full.
 

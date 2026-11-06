@@ -7,6 +7,7 @@ import { PORT_SHUT } from '../../src/sim/systems/bombing';
 import { navOf, type World } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
+import { isBound, portOf } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R22a (critic run 34, R34-B1): a division refused at the port it marched to arrives there
@@ -46,9 +47,9 @@ describe('a refusal at the port a division marched to is told (ROADMAP R22a)', (
       (s as unknown as { drainEvents(w: World): void }).drainEvents(x);
     };
     s.sim!.step(1, drain);
-    const fleet = w.seaFetch.get(div);
-    expect(fleet, 'bound for a convoy').toBeDefined();
-    const port = w.convoyPort.get(fleet!)!;
+    // ROADMAP R33b: bound for a landing, at its port.
+    expect(isBound(w, div), 'bound for a landing').toBe(true);
+    const port = portOf(w, div)!;
     for (let h = 0; h < 24 * 20 && why === undefined && !w.embarked.has(div); h++) {
       w.portDamage.set(port, PORT_SHUT);
       s.sim!.step(1, drain);

@@ -7,6 +7,7 @@ import { landingOf } from '../../src/sim/systems/amphibious';
 import { AT_PORT_CELLS } from '../../src/sim/systems/navalCombat';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { landingId } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R22d (critic run 34, R34-N1): the escort of a convoy is not sent weeks ahead. The critic's
@@ -76,7 +77,11 @@ function shanghai(escort: boolean): Run {
       if (!run.escortThere.has(e.convoy)) run.escortThere.set(e.convoy, w.tick);
       if (run.firstEscort < 0) run.firstEscort = w.tick;
     }
-    for (const g of new Set([...w.embarked].filter(([id]) => four.includes(id)).map(([, e]) => e.fleet))) if (near(at(w, g), water, r) && !run.transportsThere.has(g)) run.transportsThere.set(g, w.tick);
+    // By landing (ROADMAP R33b: an escort is its landing's, `e.convoy` its id).
+    for (const [id, e] of w.embarked) {
+      const l = landingId(w, id);
+      if (four.includes(id) && l !== undefined && near(at(w, e.fleet), water, r) && !run.transportsThere.has(l)) run.transportsThere.set(l, w.tick);
+    }
     if (run.ready < 0 && four.every((id) => w.embarked.has(id))) run.ready = w.tick;
   }
   run.landed = [...landed.values()];
@@ -97,8 +102,8 @@ describe('the escort is not sent weeks ahead (ROADMAP R22d)', () => {
     expect(run.ready, 'all four aboard').toBeGreaterThan(0);
     expect(run.firstEscort, 'no escort at the landing water more than a day before the last is aboard').toBeGreaterThanOrEqual(run.ready - 24);
     for (const [g, t] of run.transportsThere) {
-      expect(run.escortThere.get(g), `group ${g}'s escort there`).toBeDefined();
-      expect(run.escortThere.get(g)!, `group ${g}'s escort there first`).toBeLessThanOrEqual(t);
+      expect(run.escortThere.get(g), `landing ${g}'s escort there`).toBeDefined();
+      expect(run.escortThere.get(g)!, `landing ${g}'s escort there first`).toBeLessThanOrEqual(t);
     }
     expect(Math.max(...run.landed) - Math.min(...run.landed), 'landed together').toBeLessThanOrEqual(24);
     expect(Math.max(...run.landed), 'no later than without the escort, a day of grace').toBeLessThanOrEqual(Math.max(...plain.landed) + 24);

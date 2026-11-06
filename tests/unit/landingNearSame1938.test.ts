@@ -3,9 +3,10 @@ import { EventKind } from '../../src/shared/events';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { sameLanding } from '../../src/sim/systems/amphibious';
+import { landingOfDivision, sameLandingAs } from '../../src/sim/systems/landings';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort, landingId } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R24b (critic run 36, R36-B2): the one aboard clicked a cell off its landing (14 px at the
@@ -48,13 +49,14 @@ function two(dx: number, dy: number): { landed: number[]; kept: boolean; far: bo
       x.out.fires.length = 0;
     });
   while (w.tick < 26) step();
-  const first = pair.find((id) => w.embarked.has(id))!;
-  expect(first, 'one aboard').toBeDefined();
-  const was = { ...w.embarked.get(first)! };
-  const far = sameLanding(w, first, FUZHOU[0], FUZHOU[1]);
+  // ROADMAP R33b: the one at its port (it waits there ashore; before, aboard) keeps its landing.
+  const first = pair.find((id) => atItsPort(w, id))!;
+  expect(first, 'one at its port').toBeDefined();
+  const was = landingId(w, first);
+  const far = sameLandingAs(w, landingOfDivision(w, first)!, FUZHOU[0], FUZHOU[1]);
   sim.command({ kind: 'moveFormation', id: first, x: SHANGHAI[0] + dx, y: SHANGHAI[1] + dy, nation: JAP, escort: true });
   step();
-  const kept = JSON.stringify(w.embarked.get(first)) === JSON.stringify(was);
+  const kept = landingId(w, first) === was;
   for (let h = 0; h < 24 * 80 && landed.size < 2; h++) step();
   return { landed: [...landed.values()], kept, far };
 }
@@ -68,11 +70,11 @@ describe('a click a cell or two off the landing is the same landing (ROADMAP R24
     // cells off; the click is near the cell the landing was ordered for (red without: 633 / 1288).
     [0, 2],
     [-2, 2],
-  ])("Japan's two to Shanghai, the one aboard re-clicked (%i, %i) cells off: still aboard; the two land together", (dx, dy) => {
+  ])("Japan's two to Shanghai, the one at its port re-clicked (%i, %i) cells off: its landing kept; the two land together", (dx, dy) => {
     const run = two(dx, dy);
     process.stderr.write(`R24b (${dx}, ${dy}): landed ${run.landed}\n`);
     expect(run.far, 'Fuzhou is another landing').toBe(false);
-    expect(run.kept, 'still aboard, in its place').toBe(true);
+    expect(run.kept, 'its landing kept').toBe(true);
     expect(run.landed, 'both landed').toHaveLength(2);
     expect(Math.max(...run.landed) - Math.min(...run.landed), 'together').toBeLessThanOrEqual(24);
   });

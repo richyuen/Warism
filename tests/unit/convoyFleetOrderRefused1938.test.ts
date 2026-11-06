@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import type { Command } from '../../src/shared/commands';
-import { EventKind, RejectReason } from '../../src/shared/events';
+import { RejectReason } from '../../src/shared/events';
 import type { FromWorker, OrderNews } from '../../src/shared/protocol';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import type { World } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort, groupOf, hasLanding, landingId } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R31a (critic run 42, R42-N3): the player's order to the transports of a convoy still loading
@@ -14,6 +15,8 @@ import { nationId } from '../helpers/sim1938';
 // Now such an order is refused (`Convoy`), and the landing goes on. Britain at war with France (forced;
 // they are allies), seed 15101: 270 and 271 sent to Calais by a click (escort on); the hour after 270
 // boards at Portsmouth, its transports are ordered onto the Channel: refused, 270 aboard there.
+// ROADMAP R33b: a landing's divisions wait at its port ashore and board at the sail hour (ADR-830): the hour
+// after the first is at its port, its landing's transports are so ordered; refused, the landing goes on.
 
 const { w: W } = SIZE_1938;
 const ENG = nationId('ENG');
@@ -33,33 +36,25 @@ describe("the player's order to a convoy's transports is refused (ROADMAP R31a)"
     if (!w.wars.atWar(ENG, FRA)) s.handle({ type: 'cmd', cmd: { kind: 'forceWar', attacker: ENG, defender: FRA }, now: true }, 1);
     const drain = (x: World): void => (s as unknown as { drainEvents(w: World): void }).drainEvents(x);
     const pair = [270, 271];
-    let boarded = false;
-    const step = (): void =>
-      s.sim!.step(1, (x) => {
-        const ev = x.out.events;
-        for (let i = 0; i < ev.length; i += 6) {
-          if (!pair.includes(ev[i + 2]!)) continue;
-          if (ev[i + 1] === EventKind.FormationEmbarked) boarded = true;
-        }
-        drain(x);
-      });
+    const step = (): void => s.sim!.step(1, drain);
     step();
     const cmds: Command[] = pair.map((id) => ({ kind: 'moveFormation', id, x: CALAIS[0], y: CALAIS[1], nation: ENG, escort: true }));
     s.handle({ type: 'cmds', cmds, now: true }, 2);
-    for (let h = 0; h < 24 * 10 && !boarded; h++) step();
-    expect(boarded, 'the first boards').toBe(true);
+    for (let h = 0; h < 24 * 10 && !pair.some((id) => atItsPort(w, id)); h++) step();
+    expect(pair.some((id) => atItsPort(w, id)), 'the first at its port').toBe(true);
     step();
-    const first = pair.find((id) => w.embarked.has(id))!;
-    const fleet = w.embarked.get(first)!.fleet;
+    const first = pair.find((id) => atItsPort(w, id))!;
+    const fleet = groupOf(w, first)!;
+    const landing = landingId(w, first);
     const [x0, y0] = [w.formations.cols.x[fleet]!, w.formations.cols.y[fleet]!];
     news.length = 0;
     s.handle({ type: 'cmds', cmds: [{ kind: 'moveFormation', id: fleet, x: CHANNEL[0], y: CHANNEL[1], nation: ENG }], now: true }, 3);
     const told = news.filter((n) => n.kind === 'refused' && n.id === fleet);
     expect(told.map((n) => n.reason), 'refused: it carries a landing (red: it sailed)').toEqual([RejectReason.Convoy]);
     step();
-    expect(w.embarked.get(first)?.fleet, 'still aboard').toBe(fleet);
+    expect(landingId(w, first), 'still in its landing').toBe(landing);
     expect(Math.hypot(w.formations.cols.x[fleet]! - x0, w.formations.cols.y[fleet]! - y0), 'still at its port').toBeLessThan(1);
-    expect(w.convoyPort.has(fleet), 'its convoy goes on').toBe(true);
+    expect(hasLanding(w, fleet), 'its landing goes on').toBe(true);
     // (Portsmouth is then bombed shut before 271 is there: R31b's case, `convoyPortShut1938.test.ts`.)
   }, 300_000);
 });

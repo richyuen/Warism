@@ -3,10 +3,9 @@ import { EventKind, RejectReason } from '../../src/shared/events';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { transportRoom } from '../../src/sim/systems/amphibious';
-import { elementIndex } from '../../src/sim/systems/elements';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort, landingId } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R23a (critic run 35, R35-B2): a refused order took the division waiting aboard off its
@@ -14,6 +13,10 @@ import { nationId } from '../helpers/sim1938';
 // Shanghai by one click; the first boards at Tokyo and waits for the rest. Ordered then onto the open
 // sea, or onto Calais (France at peace), it is refused (R22g's `OpenSea`, R20's `Neutral`) and was
 // left ashore at Tokyo, out of the landing. Now it stays aboard, and the four land together.
+// ROADMAP R33b (ADR-830): a landing's divisions wait at its port ashore and board at the sail hour: the first
+// at the port, refused, keeps its landing and stands where it was; the four land together. R24d's `Loading`
+// (its transports another's, refused) went with the rule that kept the one waiting aboard: ordered to Fuzhou,
+// it leaves the landing and takes other transports; it lands there, the three at Shanghai together.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = nationId('JAP');
@@ -24,7 +27,7 @@ const OPEN_SEA = cellOf(150, 30, W, H) as [number, number];
 const CALAIS = cellOf(1.86, 50.95, W, H) as [number, number];
 const FUZHOU = cellOf(119.3, 26.08, W, H) as [number, number];
 
-function refusedAboard(to: [number, number], why: number, shared = false): void {
+function refusedAboard(to: [number, number], why: number): void {
   const sim = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
   const w = sim.world;
   w.settings.player = JAP;
@@ -55,32 +58,31 @@ function refusedAboard(to: [number, number], why: number, shared = false): void 
   let first = 0;
   for (let h = 0; h < 24 * 10 && first === 0; h++) {
     step();
-    first = four.find((id) => w.embarked.has(id)) ?? 0;
+    first = four.find((id) => atItsPort(w, id)) ?? 0;
   }
-  expect(first, 'one aboard').not.toBe(0);
-  const was = { ...w.embarked.get(first)! };
+  expect(first, 'one at its port').not.toBe(0);
+  const was = landingId(w, first);
   const place = [c.x[first], c.y[first]];
-  expect(four.some((id) => !w.embarked.has(id)), 'another still to come').toBe(true);
-  // Its transports carry another for its landing (ROADMAP R28a): with room for two, one still to come
-  // is bound for them (as a click's divisions share a group with room, R21e), its own group left with nobody.
-  if (shared) {
-    const g = w.embarked.get(first)!.fleet;
-    const next = four.find((id) => w.seaFetch.has(id))!;
-    const ec = w.elements.cols;
-    for (const e of elementIndex(w).get(g) ?? []) if (w.rules!.units[ec.unit[e]!]!.cls === 'tp') ec.strength[e] = ec.strength[e]! * 2;
-    expect(transportRoom(w, g), 'room for two').toBeGreaterThanOrEqual(c.strength[first]! + c.strength[next]!);
-    w.seaFetch.set(next, g);
-  }
+  expect(four.some((id) => !atItsPort(w, id)), 'another still to come').toBe(true);
 
   sim.command({ kind: 'moveFormation', id: first, x: to[0], y: to[1], nation: JAP });
   step();
-  expect(refused, 'refused, and why').toEqual([first, why]);
-  expect(w.embarked.get(first), 'still aboard, for its landing').toEqual(was);
-  expect([c.x[first], c.y[first]], 'where it was').toEqual(place);
+  const rest = four.filter((id) => id !== first);
+  if (why !== 0) {
+    expect(refused, 'refused, and why').toEqual([first, why]);
+    expect(landingId(w, first), 'still in its landing').toBe(was);
+    expect([c.x[first], c.y[first]], 'where it was').toEqual(place);
+  } else {
+    expect(refused, 'taken').toEqual([]);
+    expect(landingId(w, first), 'out of its landing').not.toBe(was);
+    for (const id of rest) expect(landingId(w, id), 'the rest keep theirs').toBe(was);
+  }
 
   for (let h = 0; h < 24 * 70 && landed.size < 4; h++) step();
   expect([...landed.keys()].sort(), 'all four landed').toEqual([...four].sort());
-  expect(Math.max(...landed.values()) - Math.min(...landed.values()), 'together').toBeLessThanOrEqual(24);
+  const together = why !== 0 ? four : rest;
+  const at = together.map((id) => landed.get(id)!);
+  expect(Math.max(...at) - Math.min(...at), 'together').toBeLessThanOrEqual(24);
 }
 
 describe('a refused order leaves the division aboard (ROADMAP R23a)', () => {
@@ -90,10 +92,8 @@ describe('a refused order leaves the division aboard (ROADMAP R23a)', () => {
   it('ordered onto Calais, France at peace: refused, still aboard; the four land together', () => {
     refusedAboard(CALAIS, RejectReason.Neutral);
   });
-  // ROADMAP R24d (critic run 36, R36-N2): to another landing, Fuzhou, it was refused "no transports … at a port it
-  // can reach" while it sat aboard transports at that port; the reason now names them. Since R28a its own
-  // transports go with it where they carry no one else (`landingLeftTold1938`); here they carry another.
-  it('ordered to another landing, Fuzhou, its transports carrying another for its landing: refused, its transports loading for another landing; still aboard', () => {
-    refusedAboard(FUZHOU, RejectReason.Loading, true);
+  // ROADMAP R24d's case (critic run 36, R36-N2), since R33b: ordered to another landing, Fuzhou, it is taken.
+  it('ordered to another landing, Fuzhou: taken, it leaves its landing and lands there; the three land together at Shanghai', () => {
+    refusedAboard(FUZHOU, 0);
   });
 });

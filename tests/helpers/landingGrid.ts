@@ -18,6 +18,12 @@
  * - `mark`: one landed at its order's target without a mark when it was ordered (`seaHint`), or away from it;
  * - `idle`: an idle spell aboard over 72 h (aboard transports standing, in no fight);
  * - `home`: a cancelled one landed abroad, or not at home at the end.
+ * And a figure, not a kind (ROADMAP R33b): `wait`, the longest a division stood at its port in a landing that
+ * had not sailed, ashore or aboard. Since R33b a landing's divisions wait ashore and board at the sail hour, so
+ * `idle` alone would hide a long wait.
+ *
+ * "The one aboard" is the first of the click to reach its port (at R33a's HEAD it boarded on arrival: the same
+ * division at the same hour), "one walking" one still marching to it.
  */
 import type { Command } from '../../src/shared/commands';
 import { EventKind } from '../../src/shared/events';
@@ -25,7 +31,8 @@ import { isLand } from '../../src/shared/terrain';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { landedAway, landingOf, near, SAME_LANDING_CELLS, seaHint } from '../../src/sim/systems/amphibious';
+import { landedAway, landingOf, near, SAME_LANDING_CELLS } from '../../src/sim/systems/amphibious';
+import { LandingState, landingOfDivision, seaHint } from '../../src/sim/systems/landings';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from './earth';
 import { nationId } from './sim1938';
@@ -82,8 +89,8 @@ export interface GridCase {
   /** No such division at the base (none walking), or the order's cell not land. */
   skipped?: string;
   broken: { kind: BrokenKind; what: string }[];
-  /** Per division: landed at (tick), told (reason), dead, longest idle aboard (h). */
-  divisions: { id: number; landed: number | null; told: number | null; dead: boolean; idle: number }[];
+  /** Per division: landed at (tick), told (reason), dead, longest idle aboard (h), longest wait at its port (h). */
+  divisions: { id: number; landed: number | null; told: number | null; dead: boolean; idle: number; wait: number }[];
 }
 
 const cellAt = (x: number, y: number): number => Math.floor(y) * W + Math.floor(x);
@@ -128,20 +135,23 @@ export function gridBase(setup: GridSetup): GridBase {
     ids = all.sort((x, y) => x[1] - y[1] || x[0] - y[0]).slice(0, 2).map((d) => d[0]);
   }
   for (const id of [...ids].sort((x, y) => x - y)) sim.command({ kind: 'moveFormation', id, x: setup.a[0], y: setup.a[1], nation: n, escort: true });
-  let boarded = false;
-  for (let h = 0; h < 24 * 20 && !boarded; h++) {
-    sim.step(1, (x) => {
-      const ev = x.out.events;
-      for (let i = 0; i < ev.length; i += 6) if (ev[i + 1] === EventKind.FormationEmbarked && ids.includes(ev[i + 2]!)) boarded = true;
-      quiet(x);
-    });
+  let there = false;
+  for (let h = 0; h < 24 * 20 && !there; h++) {
+    sim.step(1, quiet);
+    there = ids.some((id) => atItsPort(w, id));
   }
-  if (!boarded) throw new Error(`seed ${setup.seed}: nobody boarded in 20 days`);
+  if (!there) throw new Error(`seed ${setup.seed}: nobody at its port in 20 days`);
   sim.step(1, quiet);
   return { setup, sim, saved: sim.save(), ids, t0: w.tick };
 }
 
 interface Order { at: number; ids: number[]; to: [number, number] }
+
+/** Whether division `id` stands at its landing's port, ashore or aboard, the landing not sailed. */
+function atItsPort(w: World, id: number): boolean {
+  const l = landingOfDivision(w, id);
+  return l !== undefined && l.state === LandingState.gathering && w.formations.cols.moving[id] !== 1;
+}
 
 /** One case of the grid from the base's saved state. */
 export function gridCase(b: GridBase, op: GridOp, hour: number, off: number, who: GridWho): GridCase {
@@ -151,8 +161,8 @@ export function gridCase(b: GridBase, op: GridOp, hour: number, off: number, who
   const n = nationId(setup.nation);
   const c = w.formations.cols;
   const out: GridCase = { op, hour, off, who, broken: [], divisions: [] };
-  const aboard = b.ids.find((id) => w.embarked.has(id));
-  const walking = b.ids.find((id) => !w.embarked.has(id) && w.seaFetch.has(id));
+  const aboard = b.ids.find((id) => atItsPort(w, id));
+  const walking = b.ids.find((id) => !atItsPort(w, id) && landingOfDivision(w, id) !== undefined && c.moving[id] === 1);
   const sel = who === 'all' ? b.ids : who === 'aboard' ? (aboard === undefined ? [] : [aboard]) : walking === undefined ? [] : [walking];
   if (sel.length === 0) return { ...out, skipped: `no division ${who}` };
   const comp = navOf(w).grid.component;
@@ -172,6 +182,8 @@ export function gridCase(b: GridBase, op: GridOp, hour: number, off: number, who
   const told = new Map<number, number>();
   const dead = new Set<number>();
   const idle = new Map<number, number>(b.ids.map((id) => [id, 0]));
+  const wait = new Map<number, number>(b.ids.map((id) => [id, 0]));
+  const waitSpell = new Map<number, number>(b.ids.map((id) => [id, 0]));
   const spell = new Map<number, number>(b.ids.map((id) => [id, 0]));
   // Once its order is over (landed, told, dead, or home from a cancel) a division is the AI's (ADR-759): not read on.
   const settled = new Set<number>();
@@ -188,6 +200,9 @@ export function gridCase(b: GridBase, op: GridOp, hour: number, off: number, who
       const s = standing ? spell.get(id)! + 1 : 0;
       spell.set(id, s);
       idle.set(id, Math.max(idle.get(id)!, s));
+      const ws = atItsPort(w, id) ? waitSpell.get(id)! + 1 : 0;
+      waitSpell.set(id, ws);
+      wait.set(id, Math.max(wait.get(id)!, ws));
     }
   };
   const step = (): void =>
@@ -270,7 +285,7 @@ export function gridCase(b: GridBase, op: GridOp, hour: number, off: number, who
     }
     if (!i.over && w.formations.has(id) && !settled.has(id)) out.broken.push({ kind: 'home', what: `${id} cancelled, not at home at t${w.tick}${w.embarked.has(id) ? ' (aboard)' : ''}` });
     if (idle.get(id)! > IDLE_HOURS) out.broken.push({ kind: 'idle', what: `${id} idle aboard ${idle.get(id)} h` });
-    out.divisions.push({ id, landed: landed.get(id) ?? null, told: told.get(id) ?? null, dead: dead.has(id), idle: idle.get(id)! });
+    out.divisions.push({ id, landed: landed.get(id) ?? null, told: told.get(id) ?? null, dead: dead.has(id), idle: idle.get(id)!, wait: wait.get(id)! });
   }
   return out;
 }

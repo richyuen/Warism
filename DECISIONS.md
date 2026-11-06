@@ -7,6 +7,64 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-830 · 2026-11-05 · accepted — The player's landing is one object; its divisions wait ashore (ROADMAP R33b)
+
+- **Context.** ADR-829 (the user's decision): rebuild the player's landing as one object. R33a measured HEAD
+  `b166998e` on the grid (`docs/sweeps/landingGrid-R33a-b166998e.md`): 140 of 480 cases broken, all on seed
+  3517 (idle aboard 125, split 15, no mark 5).
+- **Decision.** `world.landings` (`src/sim/systems/landings.ts`): a landing has its target (cell, water,
+  land), one port, its transport groups, its divisions (each with the tick it joined), one state
+  (`gathering`, `sailing`, `returning`), the tick of its last order and its escort (`world.escorts`, now by
+  landing id). Saved as `world.landings` only while not empty; a save from before (its `convoyPort`,
+  `seaFetch`, `seaFetchAt` sections) is read into landings at its first hour (`migrateLegacyLandings`).
+  - **The divisions wait at the port ashore** and board at the hour the landing sails: "loading" is that
+    hour, not a state. So nobody waits aboard (R43-N3's two aboard for two months; R22b–R24a, R29b–R31c's
+    rules for the one aboard at its port go). A division in a fight at the port keeps its landing, and the
+    landing waits for it; the AI leaves a landing's divisions and groups alone while it is (ADR-759).
+  - **Joining** (`chooseTransports`): a landing gathering for the same place (`sameLandingAs`, R24b/R25a's
+    nearness) at a port of the division's land; else a free group at the port of its land nearest it; else a
+    group called; else, as a later voyage, a landing for that place that sailed. A division leaving a
+    gathering landing frees the groups it no longer needs, those at its port first (R40-B1).
+  - **It sails** when its groups all stand at its port, none of its divisions at the port fights, it waits
+    for none still marching (R31f's window: joined within a day of its first, however far; later, a week's
+    march), its escort is ready (R22d), and an hour has passed since its last order (R40-N1). Those that do
+    not fit go on the next voyage.
+  - **The hour's orders, as a batch** (`landingOrders`, replacing `noteLeaving`/`heldGroup`/`groupsLeft`):
+    one click sending all of a gathering landing's divisions to one other place over the sea redirects it
+    (port and groups kept), or merges it into one gathering for that place at the same port; all of a
+    landing at sea, all aboard: to a landing gathering for that place, its groups sail to that one's port and
+    join it (R43-B1's recall); to another place over the sea, it sails there; to a place not over the sea, it
+    sails back to its own port and they march once ashore (a cancel). Some of those aboard at sea: refused
+    `Aboard`. A division ashore otherwise leaves its landing for its order, back in it if refused (R24a);
+    told `LeftLanding` where others go on (R25b).
+- **Removed, with the rule each test pinned** (ADR-829: a test goes only with its rule): `heldGroup`,
+  `comingTo`, `noteLeaving`, `promised`, `convoyTarget`, `loading`, `sailingToPort`, `ashoreAtPort` (as an
+  order's), `soleAtSea`, `turnBack`, `ashoreFromShip`, `aboardAtPort`, `ownLanding`, `endConvoy`,
+  `assignTransports`, `sailAboard`, `stillLoading`, `boardConvoy`, `convoySystem`; `world.seaFetch`,
+  `seaFetchAt`, `convoyPort`, `leaving`, `groupsLeft`. `RejectReason.Loading` (R24d) is no longer given:
+  `landingAboardRefused1938.test.ts`'s third case now asserts its outcome (taken; it lands at Fuzhou, the
+  three at Shanghai together). `landingJoinsAboard1938.test.ts` (R29b): the one at the port never walks and
+  the two land together at h657 (the standing-start figure); the fresh one, a landing of its own at another
+  port, lands at h475: R29b's ferry to that port (`sailAboard`) is not rebuilt; its panel state `toPortAboard`
+  now means a landing sailing back to its port. `landingJoinsAboardMates1938.test.ts`: R31c's state (aboard,
+  sailing to Plymouth) no longer exists; the case's outcome (nobody lands in France) is asserted.
+  `convoyPortShut1938.test.ts`: on 15101 the two now sail before Portsmouth is shut and land together; the
+  test accepts that or both told. The panel's `aboard` state is `gathering` ("At {port}, waiting for the rest
+  of the landing"); five landing specs' precondition follows.
+- **Stands on (ADR-803), each test green before and after:** ADR-823 (the player's landings with escort:
+  `landingEscort*`, `landingCall`), ADR-826 (no landing on a neutral's ground: `landingNeutral`,
+  `landingPeace`), ADR-827 (the mark while choosing: `landingFor`, `landingHintSelection`,
+  `landingReclickFuzz`), ADR-828's R31a–f (`convoyFleetOrderRefused`, `convoyPortShut` as above,
+  `convoyLateOrder`, `landingRecallAtSea`), ADR-649 (`tryLanding` with `via`, the AI's and the sail hour's:
+  unchanged), ADR-759 (the AI leaves the player's orders: `playerOrders.ts`), PLAN 4.5a/4.9b (the AI's and
+  God's `seaBound` path: `seaBound1938`, `amphibious1938`, unchanged). The pin of seed 99 is unmoved (no
+  player).
+- **Grid** (R33a's, on this code, `docs/sweeps/landingGrid-R33b.md`): 15 of 480 broken (was 140): idle
+  aboard 0 (was 125), no mark 0 (was 5), split 15 (was 15): all one case, the one walking re-sent elsewhere
+  two hours after the first is at the port, then recalled 6 h to 5 days later: its mate, alone in the
+  landing, sails (h186), and the recall cannot rejoin a landing at sea (h608). Open, for R33d. The longest wait at the port is 507 h, as HEAD's longest
+  idle aboard: the wait moved ashore; it is no shorter (R31f's window, by decision).
+
 ### ADR-829 · 2026-11-05 · accepted — Stop patching the player's landing case by case (the user's decision)
 
 - **Status.** Accepted 2026-11-05 by the user: "Go with option 2, rebuild the landing as one object. Make the

@@ -53,9 +53,9 @@ test("a landing re-clicked by one click: nobody told it leaves the landing; one 
   await expect(page.getByTestId('formation-panel')).toHaveAttribute('data-formation', String(four[0]!), { timeout: 10_000 });
   for (let h = 0; h < 48; h++) {
     await page.evaluate(() => window.__warsim!.sim.step(1));
-    if ((await status.getAttribute('data-voyage')) === 'aboard') break;
+    if ((await status.getAttribute('data-voyage')) === 'gathering') break;
   }
-  await expect(status).toHaveAttribute('data-voyage', 'aboard', { timeout: 10_000 });
+  await expect(status).toHaveAttribute('data-voyage', 'gathering', { timeout: 10_000 });
   await page.evaluate(() => window.__warsim!.sim.step(2));
 
   // The four re-clicked three cells south-west by one click: they keep together, and nobody is told

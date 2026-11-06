@@ -738,13 +738,14 @@ export interface FormationDetail {
    */
   deck: { carriers: number; wings: { id: number; nameKey: string; aircraft: number; mission: 'patrol' | 'strike' | 'supply' | null; flying: boolean }[] } | null;
   /**
-   * A land formation's voyage (ROADMAP R17c): marching to its port, waiting there for its transports,
-   * at sea, or landed (a player's order, for a day after); the port's name where it has one. Null
-   * for none. `wait`, aboard at its port (ROADMAP R22c): of its landing's divisions, how many are
-   * aboard and how many in all, and the days the furthest has left to the port (0: all there; null:
-   * held up on the way).
+   * A land formation's voyage (ROADMAP R17c, R33b): marching to its port, waiting there for its
+   * transports, there with them waiting for the rest of its landing (`gathering`), at sea, sailing back
+   * to its port, or landed (a player's order, for a day after); the port's name where it has one. Null
+   * for none. `wait`, gathering (ROADMAP R22c): of the divisions its landing waits for, how many are at
+   * the port (`aboard`) and how many in all, and the days the furthest has left to the port (0: all
+   * there; null: held up on the way).
    */
-  voyage: { state: 'toPort' | 'waiting' | 'aboard' | 'toPortAboard' | 'atSea' | 'landed'; port: string | null; wait?: { aboard: number; of: number; days: number | null } } | null;
+  voyage: { state: 'toPort' | 'waiting' | 'gathering' | 'toPortAboard' | 'atSea' | 'landed'; port: string | null; wait?: { aboard: number; of: number; days: number | null } } | null;
 }
 
 /**

@@ -46,16 +46,17 @@ test('the division aboard, ordered onto the open sea: refused, and still aboard'
   const status = page.getByTestId('formation-status');
   for (let h = 0; h < 48; h++) {
     await page.evaluate(() => window.__warsim!.sim.step(1));
-    if ((await status.getAttribute('data-voyage')) === 'aboard') break;
+    if ((await status.getAttribute('data-voyage')) === 'gathering') break;
   }
-  await expect(status).toHaveAttribute('data-voyage', 'aboard', { timeout: 10_000 });
+  await expect(status).toHaveAttribute('data-voyage', 'gathering', { timeout: 10_000 });
 
   await page.evaluate(({ id, x, y, n }) => window.__warsim!.hud.command({ kind: 'moveFormation', id, x, y, nation: n }), { id: four[0]!, x: OPEN_SEA[0], y: OPEN_SEA[1], n: JAP });
   await page.evaluate(() => window.__warsim!.sim.step(1));
   await expect(page.getByTestId('formation-notice')).toContainText('only sea there', { timeout: 10_000 });
-  await expect(status).toHaveAttribute('data-voyage', 'aboard');
-  await expect(status).toContainText('Aboard at Tokyo');
-  await expect(page.getByTestId('formation-wait')).toContainText('of 4 aboard');
+  await expect(status).toHaveAttribute('data-voyage', 'gathering');
+  // ROADMAP R33b (ADR-830): a landing's divisions wait at its port ashore and board at the sail hour.
+  await expect(status).toContainText('At Tokyo');
+  await expect(page.getByTestId('formation-wait')).toContainText('of 4 at the port');
   await page.getByTestId('formation-panel').screenshot({ path: 'test-results/landingAboardRefused1938.png' });
 
   // To another landing, Fuzhou: refused before (ROADMAP R24d, R36-N2: "its transports are loading for
@@ -66,6 +67,7 @@ test('the division aboard, ordered onto the open sea: refused, and still aboard'
   await page.evaluate(({ id, x, y, n }) => window.__warsim!.hud.command({ kind: 'moveFormation', id, x, y, nation: n }), { id: four[0]!, x: FUZHOU[0], y: FUZHOU[1], n: JAP });
   await page.evaluate(() => window.__warsim!.sim.step(1));
   await expect(page.getByTestId('formation-notice')).toContainText('leaves the landing it had', { timeout: 10_000 });
-  await expect(status).toHaveAttribute('data-voyage', 'atSea');
+  // Since R33b it leaves its landing ashore and takes the transports that landing no longer needs, or others.
+  await expect(status).toHaveAttribute('data-voyage', /^(atSea|gathering|waiting|toPort)$/);
   await page.getByTestId('formation-panel').screenshot({ path: 'test-results/landingAboardRefused1938-fuzhou.png' });
 });

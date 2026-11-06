@@ -5,6 +5,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort, isBound, landingId } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R21a (critic run 33, R33-N1): a player's order over the sea given at war, whose landing
@@ -67,12 +68,12 @@ describe('a sea order does not outlive the peace (ROADMAP R21a)', () => {
     const [div] = divs as [number];
     s.command({ kind: 'moveFormation', id: div, x: CALAIS[0], y: CALAIS[1], nation: ENG });
     expect(hour(s, divs).has(div), 'the order at war goes').toBe(false);
-    expect(w.seaFetch.has(div), 'bound for its transports').toBe(true);
+    expect(isBound(w, div), 'bound for its transports').toBe(true);
     peace(s, w);
     const told = hour(s, divs);
     expect(w.wars.atWar(ENG, GER)).toBe(false);
     expect(told.get(div), 'told Neutral').toBe(RejectReason.Neutral);
-    expect(w.seaFetch.has(div)).toBe(false);
+    expect(isBound(w, div)).toBe(false);
     expect(w.seaBound.has(div)).toBe(false);
     // (Britain's AI may send it elsewhere by sea: not for Calais.)
     for (let h = 0; h < 24 * 30; h++) {
@@ -81,20 +82,19 @@ describe('a sea order does not outlive the peace (ROADMAP R21a)', () => {
     }
   });
 
-  it('aboard a convoy still loading at the peace: it does not sail, and those aboard go ashore, told', () => {
+  // ROADMAP R33b (ADR-830): a landing's divisions wait at its port ashore and board at the sail hour; at the
+  // port, its landing still waiting for others (before, aboard a convoy still loading).
+  it('at the port of a landing still gathering at the peace: it does not sail, and those there are told', () => {
     const { s, w, divs } = atWar(3);
     for (const id of divs) s.command({ kind: 'moveFormation', id, x: CALAIS[0], y: CALAIS[1], nation: ENG });
-    // Until one is aboard a convoy that still loads for the others.
+    // Until one is at the port of a landing that still waits for the others.
     let fleet = -1;
     for (let h = 0; h < 24 * 20 && fleet < 0; h++) {
       hour(s, divs);
-      for (const id of divs) {
-        const e = w.embarked.get(id);
-        if (e && w.convoyPort.has(e.fleet) && w.formations.cols.moving[e.fleet] === 0 && [...w.seaFetch.values()].includes(e.fleet)) fleet = e.fleet;
-      }
+      for (const id of divs) if (atItsPort(w, id) && divs.some((o) => o !== id && landingId(w, o) === landingId(w, id) && !atItsPort(w, o))) fleet = landingId(w, id)!;
     }
-    expect(fleet, 'a convoy loading with someone aboard').toBeGreaterThan(0);
-    const aboard = divs.filter((id) => w.embarked.get(id)?.fleet === fleet);
+    expect(fleet, 'a landing gathering with one at its port').toBeGreaterThan(0);
+    const aboard = divs.filter((id) => landingId(w, id) === fleet && atItsPort(w, id));
     peace(s, w);
     const told = new Map<number, number>();
     for (let h = 0; h < 3; h++) for (const [id, r] of hour(s, divs)) told.set(id, r);
@@ -102,7 +102,7 @@ describe('a sea order does not outlive the peace (ROADMAP R21a)', () => {
       expect(told.get(id), `${id} told`).toBe(RejectReason.Neutral);
       expect(w.embarked.has(id), `${id} ashore`).toBe(false);
     }
-    expect(w.convoyPort.has(fleet), 'the convoy is over').toBe(false);
+    expect(w.landings.has(fleet), 'the landing is over').toBe(false);
     for (let h = 0; h < 24 * 30; h++) {
       hour(s, divs);
       for (const id of divs) expect(w.embarked.get(id)?.target, `${id} never sails for Calais`).not.toBe(CALAIS_CELL);

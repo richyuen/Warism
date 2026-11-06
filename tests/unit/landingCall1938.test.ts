@@ -7,6 +7,8 @@ import { transportRoom } from '../../src/sim/systems/amphibious';
 import { destroyFormation } from '../../src/sim/systems/elements';
 import { navOf, portSeaOf, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+
+import { groupOf, isBound } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R17a: a player's order over the sea from a land whose ports have no transports calls
@@ -14,6 +16,7 @@ import { nationId } from '../helpers/sim1938';
 // Belfast (Ulster, another land): the nearest group sails to an English port under the player's
 // order, the division marches there and waits, boards that group and lands in Ulster. With no
 // transports anywhere the order is refused as before; an order that is not a player's calls none.
+// ROADMAP R33b: the division and the group called are a landing (`world.landings`).
 
 const { w: W, h: H } = SIZE_1938;
 const ENG = nationId('ENG');
@@ -75,22 +78,22 @@ describe('transports called to a landing (ROADMAP R17a)', () => {
     const { s, w, div, transports, belfast } = britain();
     s.command({ kind: 'moveFormation', id: div, x: belfast[0], y: belfast[1], nation: ENG });
     s.step(1);
-    const called = w.seaFetch.get(div);
+    const called = groupOf(w, div);
     expect(called, 'a transport group called').toBeDefined();
     expect(transports).toContain(called);
     expect(w.playerOrders.has(called!), "under the player's order").toBe(true);
     expect(w.formations.cols.moving[called!]).toBe(1);
-    expect(w.seaBound.has(div)).toBe(true);
+    expect(isBound(w, div)).toBe(true);
     // A save while it waits keeps the call.
     const t = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
     t.load(s.save());
-    expect(t.world.seaFetch.get(div)).toBe(called);
+    expect(groupOf(t.world, div)).toBe(called);
     const comp = navOf(w).grid.component;
     const ulster = comp[Math.floor(belfast[1]) * W + Math.floor(belfast[0])];
     let fleet = 0;
     const seen = run(s, div, 24 * 30, () => {
       fleet ||= w.embarked.get(div)?.fleet ?? 0;
-      return w.seaFetch.size === 0 && !w.embarked.has(div) && !w.seaBound.has(div);
+      return w.landings.size === 0 && !w.embarked.has(div) && !isBound(w, div);
     });
     expect(seen.has(EventKind.MoveRejected), 'not refused').toBe(false);
     expect(fleet, 'aboard the called group').toBe(called);
@@ -113,15 +116,15 @@ describe('transports called to a landing (ROADMAP R17a)', () => {
       wd.out.events.length = 0;
     });
     expect([...seen.values()]).toContain(RejectReason.NoTransports);
-    expect(w.seaFetch.size).toBe(0);
-    expect(w.seaBound.has(div)).toBe(false);
+    expect(w.landings.size).toBe(0);
+    expect(isBound(w, div)).toBe(false);
   });
 
   it('an order that is not a player\'s (God Mode, no nation named) calls no transports', () => {
     const { s, w, div, belfast } = britain();
     s.command({ kind: 'moveFormation', id: div, x: belfast[0], y: belfast[1] });
     s.step(1);
-    expect(w.seaFetch.size).toBe(0);
+    expect(w.landings.size).toBe(0);
   });
 });
 
@@ -151,7 +154,7 @@ describe('landings together (ROADMAP R17b)', () => {
     expect(3 * 12460).toBeGreaterThan(room);
     for (const id of three) s.command({ kind: 'moveFormation', id, x: belfast[0], y: belfast[1], nation: ENG });
     s.step(1);
-    for (const id of three) expect(w.seaFetch.get(id), `division ${id} bound for the group`).toBe(keep);
+    for (const id of three) expect(groupOf(w, id), `division ${id} bound for the group`).toBe(keep);
     // Each division's boardings and landings, by the hour.
     const embarked = new Map<number, number[]>();
     const landed = new Map<number, number[]>();
@@ -180,7 +183,6 @@ describe('landings together (ROADMAP R17b)', () => {
     const third = three.find((id) => landed.get(id)![0] === at[2])!;
     const second = three.find((id) => id !== third && landed.get(id)![0] === at[0])!;
     expect(embarked.get(third)![0]!).toBeGreaterThan(landed.get(second)![0]!);
-    expect(w.convoyPort.size).toBe(0);
-    expect(w.seaFetch.size).toBe(0);
+    expect(w.landings.size).toBe(0);
   });
 });

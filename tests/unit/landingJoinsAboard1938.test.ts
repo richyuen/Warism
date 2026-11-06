@@ -7,7 +7,9 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import type { World } from '../../src/sim/world';
 import { navOf } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
+import { landingOfDivision } from '../../src/sim/systems/landings';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort, hasLanding } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R29b (critic run 40, R40-B1): a landing redirected to a target another convoy already loads
@@ -16,7 +18,11 @@ import { nationId } from '../helpers/sim1938';
 // to Fuzhou, which makes a convoy at another port, then the two are sent there too. The one aboard was
 // put ashore and bound for that convoy, and walked there for weeks while its own transports, called
 // for the second, sailed there empty: one landed at h657, the others at h1291. Now its own transports
-// take it there aboard (`sailAboard`), and the three land together. Driven as the page drives the
+// take it there aboard (`sailAboard`), and the three land together. ROADMAP R33b (ADR-830): a landing's
+// divisions wait at its port ashore and board at the sail hour; the redirected two join the fresh one's
+// landing, or make one with the transports their own left them, and the three land together; the one at
+// the port does not walk to another. `sailAboard` and its panel state (R29b, R30c) went with the rule that
+// kept a division aboard at its port. Driven as the page drives the
 // worker (`cmds`, applied at once).
 
 const { w: W, h: H } = SIZE_1938;
@@ -40,7 +46,6 @@ function run(gap: number, then: Then = null): { landed: Map<number, number>; wal
   if (!w.wars.atWar(JAP, CHI)) s.handle({ type: 'cmd', cmd: { kind: 'declareWar', attacker: JAP, defender: CHI }, now: true }, 1);
   const drain = (x: World): void => (s as unknown as { drainEvents(w: World): void }).drainEvents(x);
   const landed = new Map<number, number>();
-  let boarded = false;
   let ids: number[] = [];
   const step = (): void =>
     s.sim!.step(1, (x) => {
@@ -48,7 +53,6 @@ function run(gap: number, then: Then = null): { landed: Map<number, number>; wal
       for (let i = 0; i < ev.length; i += 6) {
         if (!ids.includes(ev[i + 2]!)) continue;
         if (ev[i + 1] === EventKind.FormationLanded) landed.set(ev[i + 2]!, x.tick);
-        if (ev[i + 1] === EventKind.FormationEmbarked) boarded = true;
       }
       drain(x);
     });
@@ -68,14 +72,14 @@ function run(gap: number, then: Then = null): { landed: Map<number, number>; wal
     s.handle({ type: 'cmds', cmds, now: true }, 2);
   };
   click(pair, ...SHANGHAI);
-  for (let h = 0; h < 24 * 10 && !boarded; h++) step();
-  expect(boarded, 'the first boards').toBe(true);
+  for (let h = 0; h < 24 * 10 && !pair.some((id) => atItsPort(w, id)); h++) step();
+  expect(pair.some((id) => atItsPort(w, id)), 'the first at its port').toBe(true);
   step();
   step();
-  const first = pair.find((id) => w.embarked.has(id))!;
-  expect(first, 'one aboard').toBeDefined();
-  // The transports called for the second (ROADMAP R31d, R41-N1).
-  const called = w.seaFetch.get(pair.find((id) => id !== first)!);
+  const first = pair.find((id) => atItsPort(w, id))!;
+  expect(first, 'one at its port').toBeDefined();
+  // The transports called for the second (ROADMAP R31d, R41-N1): its landing's last group.
+  const called = landingOfDivision(w, pair.find((id) => id !== first)!)?.fleets.at(-1);
   click([fresh], ...FUZHOU);
   for (let h = 0; h < gap; h++) step();
   click(pair, ...FUZHOU);
@@ -87,14 +91,14 @@ function run(gap: number, then: Then = null): { landed: Map<number, number>; wal
     for (let h = 0; h < 4; h++) step();
     click(pair, ...(then === 'recall' ? SHANGHAI : FUZHOU));
   }
-  // The one aboard is never ashore before its landing: aboard, not marching to a port (red: it walked ~50 days).
+  // The one at the port never marches to another before its landing (red: it walked ~50 days).
   let walked = false;
   // Those transports, from day 5: carrying, in a convoy, under way, or the AI's; not idle under the player's order.
   let idle = false;
   for (let h = 0; h < 24 * 90 && ids.some((id) => !landed.has(id)); h++) {
-    if (!landed.has(first) && !w.embarked.has(first)) walked = true;
+    if (!landed.has(first) && !w.embarked.has(first) && c.moving[first] === 1) walked = true;
     const g = called ?? 0;
-    if (h >= 120 && w.formations.has(g) && w.playerOrders.has(g) && !w.convoyPort.has(g) && c.moving[g] !== 1 && ![...w.embarked.values()].some((e) => e.fleet === g)) idle = true;
+    if (h >= 120 && w.formations.has(g) && w.playerOrders.has(g) && !hasLanding(w, g) && c.moving[g] !== 1 && ![...w.embarked.values()].some((e) => e.fleet === g)) idle = true;
     step();
   }
   const where = new Map(ids.map((id) => [id, Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!)]));
@@ -104,15 +108,17 @@ function run(gap: number, then: Then = null): { landed: Map<number, number>; wal
 
 describe('a landing redirected to a convoy loading elsewhere: the one aboard goes on its own transports (ROADMAP R29b)', () => {
   for (const gap of [0, 1]) {
-    it(`the fresh one sent to Fuzhou ${gap === 0 ? 'in the same hour as' : 'an hour before'} the two: the one aboard stays aboard; the three land together`, () => {
+    // ROADMAP R33b: the two are their own landing, redirected with its port and transports (`redirectGathering`);
+    // the fresh one's is another, at its port. Each lands together; R29b's ferry of the one aboard to the
+    // other port (`sailAboard`) went with the rule that kept it aboard there (ADR-830).
+    it(`the fresh one sent to Fuzhou ${gap === 0 ? 'in the same hour as' : 'an hour before'} the two: the one at the port does not walk; the two land together`, () => {
       const r = run(gap);
       expect(r.refused, 'none refused').toEqual([]);
-      expect(r.walked, 'the one aboard never walks (red: ~50 days to Sasebo)').toBe(false);
+      expect(r.walked, 'the one at the port never walks (red: ~50 days to Sasebo)').toBe(false);
       expect(r.landed.size, 'all three landed').toBe(3);
-      const at = [...r.landed.values()];
-      expect(Math.max(...at) - Math.min(...at), 'together (red: h657 and h1291)').toBeLessThanOrEqual(24);
-      expect(Math.max(...at), 'about as soon as the three from a standing start (h976)').toBeLessThanOrEqual(1000);
-      expect(r.panel, 'its panel: aboard, sailing to the port for the rest (red: "At sea, bound for its landing")').toBe('toPortAboard');
+      const at = r.ids.slice(0, 2).map((id) => r.landed.get(id)!);
+      expect(Math.max(...at) - Math.min(...at), 'the two together (red: h657 and h1291)').toBeLessThanOrEqual(24);
+      expect(Math.max(...r.landed.values()), 'about as soon as the three from a standing start (h976)').toBeLessThanOrEqual(1000);
       expect(r.idle, "the transports called for the second not idle under the player's order (R31d; red: a month at Tokyo)").toBe(false);
     }, 300_000);
   }
@@ -135,7 +141,7 @@ describe('a landing redirected to a convoy loading elsewhere: the one aboard goe
     const r = run(0, 'reclick');
     expect(r.refused, 'none refused').toEqual([]);
     expect(r.landed.size, 'all three landed').toBe(3);
-    const at = [...r.landed.values()];
+    const at = r.ids.slice(0, 2).map((id) => r.landed.get(id)!);
     expect(Math.max(...at) - Math.min(...at), 'together').toBeLessThanOrEqual(24);
   }, 300_000);
 });

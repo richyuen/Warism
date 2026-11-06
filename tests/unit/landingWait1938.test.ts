@@ -5,6 +5,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { navOf, type World } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R22c (critic run 34, R34-N1): the division aboard at its port, waiting for the rest of its
@@ -45,26 +46,27 @@ describe('the wait aboard is accounted for (ROADMAP R22c)', () => {
     let first = 0;
     for (let h = 0; h < 24 * 10 && first === 0; h++) {
       sim.step(1, clear);
-      first = four.find((id) => w.embarked.has(id)) ?? 0;
+      first = four.find((id) => atItsPort(w, id) && voyage(id)?.state === 'gathering') ?? 0;
     }
-    expect(first, 'one aboard').not.toBe(0);
+    // ROADMAP R33b: at its port with its transports (it waits there ashore; before, aboard).
+    expect(first, 'one at its port').not.toBe(0);
     const v = voyage(first)!;
-    expect(v.state).toBe('aboard');
+    expect(v.state).toBe('gathering');
     expect(v.wait, 'the account').toBeDefined();
     expect(v.wait!.of).toBe(4);
-    expect(v.wait!.aboard).toBe(four.filter((id) => w.embarked.has(id)).length);
+    expect(v.wait!.aboard).toBe(four.filter((id) => atItsPort(w, id)).length);
     expect(v.wait!.days, 'the last is days away').toBeGreaterThan(1);
     const said = v.wait!.days!;
     const from = w.tick;
     // The last to reach the port does so within the days said (a day's grace for the hour it boards).
     let lastAt = -1;
-    const there = new Set<number>(four.filter((id) => w.embarked.has(id)));
+    const there = new Set<number>(four.filter((id) => atItsPort(w, id)));
     for (let h = 0; h < 24 * 80 && there.size < 4; h++) {
       sim.step(1, clear);
-      for (const id of four) if (!there.has(id) && (w.embarked.has(id) || (w.seaBound.has(id) && c.moving[id] === 0))) there.add(id);
+      for (const id of four) if (!there.has(id) && (w.embarked.has(id) || atItsPort(w, id))) there.add(id);
       if (there.size === 4) lastAt = w.tick;
       // The account counts up as they come.
-      if (w.embarked.has(first) && voyage(first)?.state === 'aboard') expect(voyage(first)!.wait!.of).toBe(4);
+      if (voyage(first)?.state === 'gathering') expect(voyage(first)!.wait!.of).toBe(4);
     }
     expect(lastAt, 'all four at the port').toBeGreaterThan(0);
     const took = (lastAt - from) / 24;

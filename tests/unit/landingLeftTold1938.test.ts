@@ -3,9 +3,11 @@ import { EventKind } from '../../src/shared/events';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { landingHeld, landingOf } from '../../src/sim/systems/amphibious';
+import { landingOf } from '../../src/sim/systems/amphibious';
+import { landingHeld } from '../../src/sim/systems/landings';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { atItsPort, groupOf, landingId } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R25b (critic run 37, R37-B1): the one aboard a convoy still loading, sent to another
@@ -53,12 +55,13 @@ describe('a division aboard never leaves its transports untold (ROADMAP R25b)', 
         x.out.fires.length = 0;
       });
     while (w.tick < 26) step();
-    const first = pair.find((id) => w.embarked.has(id))!;
-    expect(first, 'one aboard').toBeDefined();
-    const fleet = w.embarked.get(first)!.fleet;
+    // ROADMAP R33b: the one at its port (it waits there ashore; before, aboard).
+    const first = pair.find((id) => atItsPort(w, id))!;
+    expect(first, 'one at its port').toBeDefined();
+    const fleet = landingId(w, first);
     sim.command({ kind: 'moveFormation', id: first, x: FUZHOU[0], y: FUZHOU[1], nation: JAP, escort: true });
     step();
-    const now = w.seaFetch.get(first) ?? w.embarked.get(first)?.fleet;
+    const now = groupOf(w, first) ?? w.embarked.get(first)?.fleet;
     process.stderr.write(`R25b: fleet ${fleet} -> ${now}, told ${told}, refused ${refused}\n`);
     expect(refused, 'taken, not refused').not.toContain(first);
     expect(now, 'transports for it').toBeDefined();
