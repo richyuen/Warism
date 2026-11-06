@@ -18,4 +18,5 @@ critic/*.bin
 critic/*.wsz
 critic/*_dist/
 critic/*_olddist/
+critic/*_wtdist/
 critic/wt/
