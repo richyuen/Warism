@@ -57,3 +57,48 @@ test('desk: Escape empties the selection, and the mark and the tooltip go at onc
   mkdirSync(out, { recursive: true });
   await page.screenshot({ path: path.join(out, 'landing-mark-escape.png') });
 });
+
+// R39-N4: at a unit's zoom (30 m/px) the landing the cursor's cell is for lies off the screen: an arrow at the
+// screen's edge points the way to it, in the screen, towards its land.
+for (const [dx, dy] of [[0, 2], [-3, 3], [2, -2]] as const) {
+  test(`desk, 30 m/px, the cursor ${dx},${dy} cells from Shanghai: the mark, or an arrow the way to it`, async ({ page }, info) => {
+    test.setTimeout(180_000);
+    await page.setViewportSize({ width: 1600, height: 900 });
+    await japanOne(page);
+    const [x, y] = [SHANGHAI[0] + dx, SHANGHAI[1] + dy];
+    await page.evaluate(([x, y]) => {
+      const v = window.__warsim!.view!;
+      v.controller.set({ cx: x, cy: y, scale: (v.metresPerPx * v.controller.cam.scale) / 30 });
+    }, [x, y] as const);
+    await page.waitForTimeout(500);
+    const box = (await page.locator('canvas').first().boundingBox())!;
+    const [cx, cy] = [box.x + box.width / 2, box.y + box.height / 2];
+    await page.mouse.move(cx + 3, cy + 3);
+    await page.mouse.move(cx, cy);
+    await expect.poll(() => marks(page), { timeout: 5000 }).toBeGreaterThan(0);
+    await page.waitForTimeout(300);
+    const r = await page.evaluate(() => {
+      const v = window.__warsim!.view!;
+      const k = v.landingMarks[0]!;
+      const w = v.geo.w;
+      const c = v.controller.cam;
+      const land = [(k.land % w) + 0.5, Math.floor(k.land / w) + 0.5];
+      return { edge: v.landingEdges[0] ?? null, land: [(land[0]! - c.cx) * c.scale + innerWidth / 2, (land[1]! - c.cy) * c.scale + innerHeight / 2] };
+    });
+    process.stderr.write(`R34k2 ${dx},${dy}: land at ${r.land.map((v) => v.toFixed(0))}, edge ${JSON.stringify(r.edge)}\n`);
+    const onScreen = r.land[0]! >= 0 && r.land[0]! <= 1600 && r.land[1]! >= 0 && r.land[1]! <= 900;
+    if (onScreen) expect(r.edge, 'on the screen: no arrow').toBeNull();
+    else {
+      expect(r.edge, 'off the screen: an arrow').not.toBeNull();
+      expect(r.edge!.x).toBeGreaterThanOrEqual(0);
+      expect(r.edge!.x).toBeLessThanOrEqual(1600);
+      expect(r.edge!.y).toBeGreaterThanOrEqual(0);
+      expect(r.edge!.y).toBeLessThanOrEqual(900);
+      // Towards the land: the arrow is on the line from the middle to it.
+      const [ax, ay] = [r.edge!.x - 800, r.edge!.y - 450];
+      const [bx, by] = [r.land[0]! - 800, r.land[1]! - 450];
+      expect((ax * bx + ay * by) / (Math.hypot(ax, ay) * Math.hypot(bx, by))).toBeGreaterThan(0.99);
+    }
+    await page.screenshot({ path: info.outputPath(`r34k2-${dx}-${dy}.png`) });
+  });
+}

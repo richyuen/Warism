@@ -1895,3 +1895,10 @@
 - `landingMarkMore1938` (new; 3517, Japan's division nearest Tokyo, the cursor on Shanghai): red before (the mark
   stayed), green; `landingMark1938` green.
 - **Next:** R34k2.
+
+## 2026-11-07 — R34k2: a landing's mark off the screen is pointed to
+- With no copy of a landing's mark on the screen (a unit's zoom), an arrow in its colour at the screen's edge, on
+  the line from the middle to its land, points the way (`drawLandingMark` returns it; `MapView.landingEdges`).
+- `landingMarkMore1938`: 30 m/px, the cursor 0,2 / -3,3 / 2,-2 cells from Shanghai: on the screen no arrow; off it
+  (2,-2) an arrow at (376, 26) towards the land; red before. `landingMark1938` green.
+- **Next:** R34k3.

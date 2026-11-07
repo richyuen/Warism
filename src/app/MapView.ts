@@ -936,12 +936,15 @@ export class MapView {
 
   /** The landings an order over the sea under the cursor is for, each marked (ADR-827, ROADMAP R27b, R28b; `SeaHint.marks`). */
   private marks: LandingMark[] = [];
+  /** Each of `landingMarks` off the screen: the edge arrow pointing the way to it, CSS px; null where it is on it (ROADMAP R34k2). */
+  landingEdges: ({ x: number; y: number } | null)[] = [];
   get landingMarks(): LandingMark[] {
     return this.marks;
   }
   set landingMarks(m: LandingMark[]) {
     if (m.length === this.marks.length && m.every((k, i) => k.water === this.marks[i]!.water && k.land === this.marks[i]!.land && k.same === this.marks[i]!.same)) return;
     this.marks = m;
+    if (m.length === 0) this.landingEdges = [];
     this.dirty = true;
   }
   /** The first of `landingMarks`, or null. */
@@ -2007,7 +2010,7 @@ export class MapView {
       this.markerStacks.clear();
       this.pipStates.clear();
       // The landing an order under the cursor is for (ADR-827, ROADMAP R27b), over everything.
-      for (const k of this.marks) drawLandingMark(ctx, k, cam, this.geo, vw, vh, this.unitScale);
+      this.landingEdges = this.marks.map((k) => drawLandingMark(ctx, k, cam, this.geo, vw, vh, this.unitScale));
       return;
     }
     const w = this.geo.w;
@@ -2052,7 +2055,7 @@ export class MapView {
     const stacks = this.markerStacks.frame(items, MARKER_W * this.unitScale, MARKER_H * this.unitScale, now, this.morph.scale < 1);
     this.markerRects = drawMarkers(ctx, markers, this.majors, cam, this.geo, vw, vh, share, hex, flagOf, this.unitScale, this.morph, stacks, this.picked, this.unitLook === 'balls');
     // The landing an order under the cursor is for (ADR-827, ROADMAP R27b), over the markers.
-    for (const k of this.marks) drawLandingMark(ctx, k, cam, this.geo, vw, vh, this.unitScale);
+    this.landingEdges = this.marks.map((k) => drawLandingMark(ctx, k, cam, this.geo, vw, vh, this.unitScale));
   }
 
   /** The formations whose order lines the markers of the last frame drew (PLAN 7.4b; tests). */

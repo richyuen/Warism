@@ -657,9 +657,11 @@ const LANDING_MARK_EDGE = 'rgba(10, 16, 28, 0.85)';
  * The landing an order over the sea under the cursor is for (ADR-827, ROADMAP R27b; `SeaHint`): a
  * dashed line from the landing's water to the land it lands on, an arrowhead and a ring there, in
  * orange, or in green when it is the landing the division already has (`same`), each over a dark
- * edge. The order is that landing, whatever cell the click names.
+ * edge. The order is that landing, whatever cell the click names. With no copy of it on the screen (a unit's
+ * zoom, ROADMAP R34k2; critic run 39, R39-N4: the tooltip pointed at a mark off the screen), an arrow at the
+ * screen's edge points the way to it, in its colour: returned, its point in CSS px; else null.
  */
-export function drawLandingMark(ctx: CanvasRenderingContext2D, mark: { water: number; land: number; same: boolean }, cam: Camera, geo: MapGeometry, vw: number, vh: number, scale = 1): void {
+export function drawLandingMark(ctx: CanvasRenderingContext2D, mark: { water: number; land: number; same: boolean }, cam: Camera, geo: MapGeometry, vw: number, vh: number, scale = 1): { x: number; y: number } | null {
   const pt = (cell: number): [number, number] => [(cell % geo.w) + 0.5, Math.floor(cell / geo.w) + 0.5];
   const [wx, wy] = pt(mark.water);
   const [x0, ly] = pt(mark.land);
@@ -668,10 +670,13 @@ export function drawLandingMark(ctx: CanvasRenderingContext2D, mark: { water: nu
   ctx.save();
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
+  let shown = false;
   for (const off of itemOffsets(cam, geo, vw)) {
     const [ax, ay] = worldToScreen(cam, wx + off, wy, vw, vh);
     const [bx, by] = worldToScreen(cam, lx + off, ly, vw, vh);
     if (Math.max(ax, bx) < -30 || Math.min(ax, bx) > vw + 30 || Math.max(ay, by) < -30 || Math.min(ay, by) > vh + 30) continue;
+    // Its ring or its line on the screen (a line across it counts).
+    if ((bx >= 0 && bx <= vw && by >= 0 && by <= vh) || (ax >= 0 && ax <= vw && ay >= 0 && ay <= vh)) shown = true;
     const r = 11 * scale;
     const len = Math.hypot(bx - ax, by - ay);
     // Drawn twice: the dark edge, wider, then the colour on it.
@@ -706,7 +711,40 @@ export function drawLandingMark(ctx: CanvasRenderingContext2D, mark: { water: nu
       ctx.fill();
     }
   }
+  if (shown) {
+    ctx.restore();
+    return null;
+  }
+  // Off the screen: the way to its landing from the screen's middle, an arrow at the edge.
+  const at = worldToScreen(cam, lx, ly, vw, vh);
+  const ty = at[1];
+  let tx = at[0];
+  if (geo.wrapX) {
+    const span = geo.w * cam.scale;
+    tx -= span * Math.round((tx - vw / 2) / span);
+  }
+  const [mx, my] = [vw / 2, vh / 2];
+  const [dx, dy] = [tx - mx, ty - my];
+  const pad = 26 * scale;
+  const k = Math.min(Math.abs(dx) > 0 ? (vw / 2 - pad) / Math.abs(dx) : Infinity, Math.abs(dy) > 0 ? (vh / 2 - pad) / Math.abs(dy) : Infinity);
+  const [px, py] = [mx + dx * k, my + dy * k];
+  const len = Math.hypot(dx, dy) || 1;
+  const [ux, uy] = [dx / len, dy / len];
+  const h = 14 * scale;
+  for (const [style, width] of [[LANDING_MARK_EDGE, 5.5], [colour, 2.5]] as const) {
+    ctx.strokeStyle = style;
+    ctx.fillStyle = style;
+    ctx.lineWidth = width * scale;
+    ctx.beginPath();
+    ctx.moveTo(px + ux * h, py + uy * h);
+    ctx.lineTo(px - ux * h * 0.4 - uy * h * 0.8, py - uy * h * 0.4 + ux * h * 0.8);
+    ctx.lineTo(px - ux * h * 0.4 + uy * h * 0.8, py - uy * h * 0.4 - ux * h * 0.8);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+  }
   ctx.restore();
+  return { x: px, y: py };
 }
 
 /**
