@@ -1,5 +1,6 @@
 import { SPAWN_NATION_MAX } from '../shared/commands';
-import type { GodToolId as GodTool } from './GodTab';
+import type { Refusal } from '../shared/commands';
+import { REFUSAL_KEY, type GodToolId as GodTool } from './GodTab';
 import { t, type MessageKey } from './i18n';
 
 const TOOLS: readonly GodTool[] = ['revolt', 'nation', 'battle', 'brush', 'nuke', 'city', 'raze'];
@@ -17,6 +18,8 @@ export interface GodToolbarProps {
   onThermonuclear: (on: boolean) => void;
   /** A nation is selected (Breakthrough and Territory act for it). */
   nationSelected: boolean;
+  /** Why the last command of a tool's click was refused (R34d; 0: none). */
+  refused?: number;
 }
 
 /**
@@ -25,7 +28,7 @@ export interface GodToolbarProps {
  * shown as soon as God Mode is on, a nation selected or not. A nation's own God powers stay in the
  * God tab of its panel.
  */
-export function GodToolbar({ tool, onTool, spawnSize, onSpawnSize, thermonuclear, onThermonuclear, nationSelected }: GodToolbarProps) {
+export function GodToolbar({ tool, onTool, spawnSize, onSpawnSize, thermonuclear, onThermonuclear, nationSelected, refused = 0 }: GodToolbarProps) {
   return (
     <div class="god-tools" data-testid="god-tools">
       <span class="god-tools-name">{t('god.tools')}</span>
@@ -49,6 +52,11 @@ export function GodToolbar({ tool, onTool, spawnSize, onSpawnSize, thermonuclear
       {tool ? (
         <span class="god-tools-hint" data-testid="god-tool-hint">
           {t(OF_NATION.has(tool) && !nationSelected ? 'god.hint.pickNation' : (`god.hint.${tool}` as MessageKey))}
+        </span>
+      ) : null}
+      {refused !== 0 ? (
+        <span class="god-tools-hint panel-warn" data-testid="god-tool-refusal" role="status">
+          {t('refusal.lead')} {t(REFUSAL_KEY[refused as Exclude<Refusal, 0>] ?? 'refusal.noEffect')}
         </span>
       ) : null}
     </div>

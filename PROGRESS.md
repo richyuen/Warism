@@ -1820,3 +1820,12 @@
 - The 14 specs that read History: 51 passed after the fix below. R34a had moved `heroesRead1938`'s R11 phone case
   (a zoomed name twice the size): its claim follows ADR-847, committed alone (`65cb615e`).
 - **Next:** R34d.
+
+## 2026-11-07 — R34d: a map tool's refusal on the tools' bar
+- Breakthrough at peace was refused since PLAN 7.165 (`AtPeace`), but its words were only in the God tab of the
+  nation's panel: from the map tools' bar with the panel on another tab (critic run 37's path) nothing showed. A
+  command a map tool's click sends now has its refusal on the bar (`god-tool-refusal`), cleared by the next tool or
+  command. With no nation selected the bar's hint already asks for one.
+- `godBreakthrough1938`'s new case (11003, the panel on Overview): red before, green. The God specs: 27 passed.
+  No sim change.
+- **Next:** R34e.

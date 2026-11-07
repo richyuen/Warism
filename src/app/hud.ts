@@ -236,6 +236,9 @@ export class Hud {
     // the selection has moved on is not shown, and none stays through a change of the selection
     // (PLAN 2.17e2).
     sim.onRefused((reason, base) => {
+      // A map tool's (R34d; critic run 37, R37-N3: Breakthrough at peace said nothing, the God tab not open): its
+      // words on the tools' bar, whatever panel is open.
+      if (this.commandFromTool) this.toolRefusal.value = reason;
       if (this.selected.peek() !== this.commandFor) return;
       this.refusal.value = reason;
       this.refusalBase.value = base;
@@ -549,10 +552,17 @@ export class Hud {
   }
   /** The selection when the last command was sent: a refusal is shown to that nation's panel only. */
   private commandFor = 0;
+  /** Why the sim did not carry out the last command a map tool's click sent (R34d; 0: it did, or none sent since). */
+  readonly toolRefusal = signal(0);
+  /** Whether the last command was sent by a map tool's click (`pick`). */
+  private commandFromTool = false;
+  private picking = false;
 
   /** Issues a God command, applied at once (also while paused). */
   command(cmd: Command): void {
     this.refusal.value = 0;
+    this.toolRefusal.value = 0;
+    this.commandFromTool = this.picking;
     this.commandFor = this.selected.peek();
     if (cmd.kind === 'moveFormation' || cmd.kind === 'paradrop') this.orderedAt.value = new Map(this.orderedAt.peek()).set(cmd.id, this.orderSeq);
     this.sim.command(cmd, true);
@@ -566,6 +576,8 @@ export class Hud {
   commands(cmds: Command[]): void {
     if (cmds.length === 0) return;
     this.refusal.value = 0;
+    this.toolRefusal.value = 0;
+    this.commandFromTool = false;
     this.commandFor = this.selected.peek();
     const at = new Map(this.orderedAt.peek());
     for (const cmd of cmds) if (cmd.kind === 'moveFormation' || cmd.kind === 'paradrop') at.set(cmd.id, this.orderSeq);
@@ -574,6 +586,7 @@ export class Hud {
   }
 
   setGodTool(tool: GodTool | null): void {
+    this.toolRefusal.value = 0;
     this.godTool.value = this.godTool.value === tool ? null : tool;
     this.battleStart = null;
   }
@@ -583,6 +596,15 @@ export class Hud {
    * tool used the click (the map then does not select).
    */
   pick(x: number, y: number, province: number, city = 0): boolean {
+    this.picking = true;
+    try {
+      return this.pickTool(x, y, province, city);
+    } finally {
+      this.picking = false;
+    }
+  }
+
+  private pickTool(x: number, y: number, province: number, city = 0): boolean {
     const tool = this.godTool.value;
     const nation = this.selected.value;
     if (!tool) return false;

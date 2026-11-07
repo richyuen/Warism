@@ -32,3 +32,33 @@ test("Breakthrough for a nation at peace: refused, and the God tab says there is
   await expect(page.getByTestId('god-refusal')).toContainText('at war with no one');
   expect((await inspect(page)).corridors).toBe(corridors);
 });
+
+// ROADMAP R34d (critic run 37, R37-N3: Berlin → Warsaw from the map tools' bar, Germany at peace, "nothing and no
+// word"): the refusal was only in the God tab of the nation's panel. A map tool's refusal is on the tools' bar,
+// whatever tab is open; the next tool chosen clears it.
+test("Breakthrough at peace from the map tools' bar, the panel on its first tab: the bar says why", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?scenario=1938&paused=1&seed=11003');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.sim.mapLayers !== null, null, { timeout: 60_000 });
+  expect((await inspect(page)).wars.some((w) => w.attackers.includes(GER) || w.defenders.includes(GER))).toBe(false);
+  await page.getByTestId('god-btn').click();
+  await page.evaluate((n) => window.__warsim!.view!.select(n), GER);
+  await expect(page.getByTestId('tab-god')).toBeVisible();
+  await expect(page.getByTestId('god-refusal')).toHaveCount(0);
+  const corridors = (await inspect(page)).corridors;
+  await page.getByTestId('god-tool-battle').click();
+  const [x, y] = cellOf(17, 52.4, W, H);
+  await page.evaluate(([cx, cy]) => window.__warsim!.view!.controller.set({ cx, cy, scale: 8 }), [x, y] as const);
+  await page.waitForTimeout(150);
+  await page.mouse.click(600, 400);
+  await page.mouse.click(800, 400);
+  const said = page.getByTestId('god-tool-refusal');
+  await expect(said).toBeVisible();
+  await expect(said).toContainText('at war with no one');
+  expect((await inspect(page)).corridors).toBe(corridors);
+  await page.screenshot({ path: test.info().outputPath('r34d-bar-refusal.png') });
+  // The next tool chosen clears it.
+  await page.getByTestId('god-tool-city').click();
+  await expect(said).toHaveCount(0);
+});

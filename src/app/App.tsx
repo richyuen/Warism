@@ -168,6 +168,7 @@ export function App({
               thermonuclear={hud.nukeThermonuclear.value}
               onThermonuclear={(on) => (hud.nukeThermonuclear.value = on)}
               nationSelected={hud.selected.value !== 0}
+              refused={hud.toolRefusal.value}
             />
           ) : null
         }
