@@ -100,8 +100,7 @@ export function App({
     if (of.length > 1 && of.at(-1)!.seq !== n.seq) continue;
     groups.set(n.seq, of.map((o) => o.seq));
     const names = of.map((o) => o.name ?? orderName(o.id));
-    const brief = orderNewsBrief(n, of.length);
-    orders.push({ seq: n.seq, kind: n.kind, text: of.length > 1 ? orderNewsText(n, names.join(', '), of.length) : orderNewsText(n, names[0]!), ...(brief ? { brief } : {}) });
+    orders.push({ seq: n.seq, kind: n.kind, text: of.length > 1 ? orderNewsText(n, names.join(', '), of.length) : orderNewsText(n, names[0]!), brief: orderNewsBrief(n, of.length, names[0]!) });
   }
   // The sea battles going on (PLAN 4.10b), each by its two sides' names: those with two fleets
   // within reach of a ship's weapon (PLAN 7.19b), then those a carrier's wings fight alone, by

@@ -7,6 +7,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-839 · 2026-11-07 · accepted — A single order row beside a panel by its gist (R43b)
+
+- **Decision.** In the ticker's one-line rows (beside a panel, a phone) every order news has a brief: a division by
+  its number, as its counter ("366: transports sunk, the landing is over"), a hero or a wing by its name; a refusal
+  "not done, " and its reason's gist (`order.whyBrief.<reason>`, 20). The full words in the row's tooltip, as R42b's
+  merged rows; the panel the click opens keeps them too. Not taken: two lines an order row (ADR-754's room, as R42b).
+- **Why.** Critic run 50, R50-N2: "Square infantry division 366: the transports of its…", "…: not done: there is o…".
+- **Bound.** Each kind and each reason, a division beside the longest name that can be told it (P.100 Ercole, Sovetsky
+  Soyuz, Improved fighters), whole at 1600, 844 and 390 px (`orderRowsBrief1938`).
+
 ### ADR-838 · 2026-11-06 · accepted — A click's division a week nearer its own port boards there, a sibling landing (R43a)
 
 - **Decision (the user's, 2026-11-06: "option 2", then "one week, do it fully").** A division ordered over the sea

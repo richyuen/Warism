@@ -1738,3 +1738,9 @@
   later; run 50's 19 landing checker seeds 0 broken. Tests of one landing at Tokyo place their divisions within
   Tokyo's reach (`nearPort`; specs `tokyoReach`); claims kept. `invasion1938` was red since R33c (an aboard division
   alone is told why its landing cannot go: "no water ... to land from", not "aboard"): its expectation follows R33c.
+- R43b (ADR-839): a single order row beside a panel by its gist: "366: transports sunk, the landing is over", a refusal
+  "365: not done, no coast to land on"; the full words in the tooltip. Specs by hand: `orderRowsBrief1938` (new; each
+  kind and reason with the longest names that can be told it, at 1600, 844, 390 px), `orderNews1938`,
+  `orderRowsPanel1938`, `ticker1938`, `phoneLayout1938`, `invasion1938`, `landingClickBatch1938`,
+  `landingLeftTold1938`, `landingNearNews1938`, `landingNeutral1938`, `landingPortShut1938`. No sim change; budgets
+  unmoved (one string a row).

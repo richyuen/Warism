@@ -18,15 +18,25 @@ export function orderNewsText(n: OrderNews, name: string, count = 1): string {
 }
 
 /**
- * The words of a loss of `count` divisions in one hour without their names, for a row of one line beside a panel (ROADMAP
- * R42b; critic run 49, R49-N3: "2 divisions lost at sea with their transports: Squar…"); the names in its tooltip.
- * Null for one, or another kind.
+ * The words of an order's news for a row of one line beside a panel, its full words in the row's tooltip. A loss of
+ * `count` divisions in one hour by its count (ROADMAP R42b; critic run 49, R49-N3: "2 divisions lost at sea with their
+ * transports: Squar…"); one formation's by its number and the gist (R43b; critic run 50, R50-N2: "Square infantry
+ * division 366: the transports of its…", "…: not done: there is o…"). `name` is the formation's, as `orderNewsText`'s.
  */
-export function orderNewsBrief(n: OrderNews, count: number): string | null {
-  if (count < 2) return null;
-  if (n.kind === 'lostAtSea') return t('order.lostAtSeaBrief', { count });
-  if (n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalledBrief' : 'order.transportsSunkBrief', { count });
-  return null;
+export function orderNewsBrief(n: OrderNews, count: number, name: string): string {
+  if (count > 1 && n.kind === 'lostAtSea') return t('order.lostAtSeaBrief', { count });
+  if (count > 1 && n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalledBrief' : 'order.transportsSunkBrief', { count });
+  // A division is told by its number ("366"), as its counter on the map; a hero or a wing by its name.
+  const tag = name.endsWith(` ${n.id}`) ? String(n.id) : name;
+  if (n.kind === 'repulsed') return t('order.repulsedBrief', { name: tag });
+  if (n.kind === 'landedAway') return t('order.landedAwayBrief', { name: tag });
+  if (n.kind === 'unescorted') return t('order.unescortedBrief', { name: tag });
+  if (n.kind === 'leftLanding') return t('order.leftLandingBrief', { name: tag });
+  if (n.kind === 'nextVoyage') return t('order.nextVoyageBrief', { name: tag });
+  if (n.kind === 'lostAtSea') return t('order.lostAtSeaOneBrief', { name: tag });
+  if (n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalledOneBrief' : 'order.transportsSunkOneBrief', { name: tag });
+  if (n.kind === 'sentHome') return n.reason > 1 ? t('order.sentHomeManyBrief', { name: tag, more: n.reason - 1 }) : t('order.sentHomeBrief', { name: tag });
+  return t('order.refusedBrief', { name: tag, why: t(`order.whyBrief.${n.reason}` as MessageKey) });
 }
 
 /** What a formation is doing, as its panel's status says it: its voyage, march, fight and retreat. */

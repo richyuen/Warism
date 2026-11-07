@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { FormationDetail, OrderNews } from '../../src/shared/protocol';
-import { orderNewsText, staleNotice } from '../../src/ui/orderNewsText';
+import { orderNewsBrief, orderNewsText, staleNotice } from '../../src/ui/orderNewsText';
 
 // ROADMAP R37b (critic run 44, R44-N1): the panel's notice "it leaves the landing it had for its new one ... it will
 // not land with them" stood 20+ days after a recall that rejoined that landing. It now goes at the next order sent
@@ -51,5 +51,29 @@ describe('a loss of several in one hour is one row naming them (ROADMAP R40c)', 
     const s = orderNewsText(n, 'A, B', 2);
     expect(s).toBe('2 divisions: the transports of their landing were sunk, and no others can come to their port: the landing is over (A, B).');
     expect(s).not.toMatch(/\bits\b/);
+  });
+});
+
+// ROADMAP R43b (critic run 50, R50-N2): a single order row beside a panel was cut before its meaning. Each kind has a
+// brief, a division told by its number, another by its name; each refusal's reason its own gist.
+describe('a single order row has a brief beside a panel (ROADMAP R43b)', () => {
+  const one = (kind: OrderNews['kind'], reason = 0): OrderNews => ({ kind, id: 366, nation: 1, reason, x: 0, y: 0, tick: 855 });
+  it('a division by its number; a hero or a wing by its name', () => {
+    expect(orderNewsBrief(one('transportsSunk'), 1, 'Square infantry division 366')).toBe('366: transports sunk, the landing is over');
+    expect(orderNewsBrief(one('transportsSunk', 1), 1, 'Square infantry division 366')).toBe('366: transports sunk, others on their way');
+    expect(orderNewsBrief(one('lostAtSea'), 1, 'Yamato')).toBe('Yamato: lost at sea with its transports');
+    expect(orderNewsBrief(one('sentHome', 3), 1, 'Square infantry division 366')).toBe('366 and 2 more: sent home');
+    expect(orderNewsBrief(one('lostAtSea'), 2, 'A')).toBe('2 divisions lost at sea with their transports');
+  });
+  it('every refusal reason its own words, shorter than the full', () => {
+    const seen = new Set<string>();
+    for (let r = 1; r <= 20; r++) {
+      const s = orderNewsBrief(one('refused', r), 1, 'Square infantry division 366');
+      expect(s, String(r)).toMatch(/^366: not done, /);
+      expect(s).not.toContain('order.');
+      expect(s.length).toBeLessThan(orderNewsText(one('refused', r), 'Square infantry division 366').length);
+      seen.add(s);
+    }
+    expect(seen.size).toBe(20);
   });
 });

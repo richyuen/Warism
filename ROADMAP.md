@@ -726,8 +726,11 @@ Rules:
     at its own nearer port as a sibling landing.
     Done (ADR-838, the user's choice): a week sooner at its own port, a sibling landing there; 20841 39.6 → 5.4 days,
     20661 26.3 → 5.3; run 47's grid splits 5 → 5, 259 sooner, none later; `landingOwnPort1938`.
-  - [ ] R43b R50-N2: a single order row beside a panel cut before its meaning ("366: the transports of its…", a
+  - [x] R43b R50-N2: a single order row beside a panel cut before its meaning ("366: the transports of its…", a
     refusal "not done: there is o…"): a brief for each single kind, the full text in the tooltip.
+    Done (ADR-839): a division by its number, a hero or wing by its name, a refusal by its reason's gist ("365: not
+    done, no coast to land on"); `orderRowsBrief1938` (each kind, 20 reasons, the longest names, desk, landscape,
+    phone: red before).
   - [ ] R43c R50-N3: on a phone the merged loss row's names are only in a tooltip a phone cannot hover: the names where
     a tap reaches them (the panel the click opens, or the row).
   - [x] R43d R50-N4: a freed rising's "left its war" rows tick before "was freed from", their cause: within the hour,
