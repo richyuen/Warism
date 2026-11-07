@@ -1928,3 +1928,12 @@
 - `fleetAiBack1938` (new; 3517, a Japanese division Tokyo → Shanghai: its transports, released once it is ashore):
   red before, green; a fleet never ordered has no line. The order and panel specs: 27 passed.
 - **Next:** R45.
+
+## 2026-11-07 — R45: the critic's replay as a tool (ADR-851)
+- `tools/diag/replayCritic.ts`: run 50's 65 headless jobs from `critic/scripts/c50_jobsAll.txt`, 6 at a time, at
+  HEAD or at a commit in a worktree; outputs compared with the critic's (wall time out, sim time in); `--new K`.
+- At run 50's commit 3fe138b1: 65 of 65 the same (30 min). At HEAD: 30 the same, 35 differ, each named with what both
+  say (R43's landing notes, transports sailing at once, far landings' fleets); 95 jobs on 5 new seeds a family, all
+  exit 0, every checker 0 broken. Reports in `docs/replays/`.
+- A failed edit script let a whole rerun start; stopped, its sims killed, the ten logs it rewrote run again.
+- **Next:** R46.

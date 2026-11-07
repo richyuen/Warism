@@ -7,6 +7,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-851 · 2026-11-07 · accepted — The critic's replay is a tool (R45)
+- **Context.** Each batch began by replaying the last critic run's headless jobs from a hand-built list
+  (`.cache/replay49/jobs.txt`, `suiteP.sh`) and diffing outputs by eye; 20 sims at once were killed for memory.
+- **Decision.** `tools/diag/replayCritic.ts` reads `critic/scripts/c<N>_jobsAll.txt` (the latest N), rewrites each
+  job's `critic/c<N>_…` outputs into `.cache/replay<N>[-<commit>]/`, and runs them 6 at a time (`--jobs`), at HEAD
+  or in a worktree at the report's commit or any (`--at`; HEAD's `critic/scripts` copied in, the junction to
+  node_modules taken down before the worktree). Each output is compared with the critic's after the run's wall
+  time is taken out (`ms`, `wallS`, `…Ms` keys; seconds in text); sim times (`at`, `sailedAt`) are compared. A
+  family is the script with its mode and its non-number env words; `--new K` runs each family's first job on K new
+  seeds (60001 + 100·family + 2k). The report (`REPORT.md`) names each case that differs with what both say (a
+  log's last line, or a probe JSON's findings) and the first line that differs. Run 50's job list is the only
+  input it reads from the critic: it stays read-only.
+- **Consequences.** At run 50's commit: 65 of 65 the same (`docs/replays/run50-at-3fe138b1.md`). At HEAD
+  (`docs/replays/run50-at-abaceed3.md`): 30 the same; 35 differ, each for a change since: the landing checker's
+  `slowClick` lines (R43), transports sailing at once (sailedAt 830 → 3–8, R43f), a far landing's fleets and
+  sea events; every landing log still "0 broken". 95 jobs on new seeds, all exit 0; each checker "0 broken".
+
 ### ADR-850 · 2026-11-07 · accepted — The reports' small ideas: three were done, a fleet back with the AI is told (R35)
 - **Context.** R35 gathered four ideas from the critic's "Ideas from other games": an order's error cleared by any
   new order (EU, for R35-N1); a flag at the destination while choosing (Supreme Ruler, EU); a long-press preview of

@@ -820,10 +820,11 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
 Before critic run 51 (the user, 2026-11-07: "let's do all before 51"), after R35. R44 (`slowClick`) is in R43's
 batch. R45's replay runs before the critic, as ADR-833's replay does.
 
-- [ ] R45 **The critic's replay as a tool.** `tools/diag/replayCritic.ts` builds the job list from the last report's
+- [x] R45 **The critic's replay as a tool.** `tools/diag/replayCritic.ts` builds the job list from the last report's
   JSON and `critic/scripts` (the hand-built `.cache/replay49/jobs.txt` and `suiteP.sh`, committed as a tool), runs it
   5–8 sims at a time (20 at once were killed for memory), and adds new seeds for each probe family. AT: it replays run 50's 65 headless
   jobs with the same results as run 50, and runs each family on 5 new seeds; its report names every case that differs.
+  Done (ADR-851): at run 50's commit 65 of 65 the same; at HEAD 30 the same, 35 named (`docs/replays/`); 95 new.
 - [ ] R46 **Sea battles the critic can find.** `tools/diag/seaBattles.ts <seed> [scenario|random] [--years N]`: each
   sea battle and sinking with its day, place (sea zone, cell), sides and ships, and the camera (x, y, m/px) to look at
   it. AT: on 3 seeds × 5 years, every battle it lists is drawn at its camera in the page (a probe shows ships), and run
