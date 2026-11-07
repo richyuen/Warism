@@ -7,7 +7,7 @@ import { transportRoom } from '../../src/sim/systems/amphibious';
 import { navOf, type World } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
-import { atItsPort } from '../helpers/landings';
+import { atItsPort, nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R21e (critic run 32, R32-N1): the divisions of one click to one target land together. Japan
@@ -41,6 +41,9 @@ describe('one click lands together (ROADMAP R21e)', () => {
       all.push([id, (c.x[id]! - lx) ** 2 + (c.y[id]! - ly) ** 2]);
     });
     const two = all.sort((a, b) => a[1] - b[1]).slice(0, 2).map((d) => d[0]);
+    // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+    // of its own there, a sibling): this test's one landing at Tokyo.
+    nearPort(w, two, portNamed(w, 'Tokyo'), [0, 4]);
     expect(two).toHaveLength(2);
     // Room for one division a group: no group takes both.
     w.formations.forEach((id) => {

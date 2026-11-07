@@ -3,25 +3,27 @@ import type { Command } from '../../src/shared/commands';
 import { EventKind } from '../../src/shared/events';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
+import { transportsPort } from '../../src/sim/systems/amphibious';
 import { marchHoursLeft } from '../../src/sim/systems/movement';
 import type { World } from '../../src/sim/world';
-import { navOf } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
+import { portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R31f (critic run 37, R37-N2; named again in runs 40-42): a landing already loading waited for
 // any later order to the same coast, however far: two aboard at a port sat 45 days for a third ordered
 // ten days later from 48 days away. Now a convoy waits for those of its own click (bound within a day of
 // its first) however far, and for a later order only when its march left is a week or less; the rest go
-// on its next voyage. Seed 3517, Japan at war with China: the two divisions nearest Tokyo sent to
-// Shanghai by a click (escort off); three days later, the division of Honshu farthest from Tokyo
-// sent there too.
+// on its next voyage. Seed 3517, Japan at war with China: of the divisions whose land's nearest port is
+// Tientsin, the two nearest it sent to Tokyo by a click (escort off); three days later, the farthest
+// (over two weeks' march) sent there too. Not Honshu's farthest to Shanghai, as before ROADMAP R43a: that
+// one now boards at its own nearer port (ADR-838), and Honshu's ports are a few days' walk apart; north
+// China's hinterland of one port still makes the case.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = nationId('JAP');
 const CHI = nationId('CHI');
-const SHANGHAI = cellOf(121.47, 31.23, W, H) as [number, number];
 const TOKYO = cellOf(139.69, 35.69, W, H) as [number, number];
 
 function run(late: boolean): { landed: Map<number, number>; ids: number[]; far: number; march: number } {
@@ -41,19 +43,19 @@ function run(late: boolean): { landed: Map<number, number>; ids: number[]; far: 
     });
   step();
   const c = w.formations.cols;
-  const comp = navOf(w).grid.component;
-  const honshu = comp[Math.floor(TOKYO[1]) * W + Math.floor(TOKYO[0])];
+  const port = portNamed(w, 'Tientsin');
+  const [px, py] = [w.ports[port]!.cell % W, Math.floor(w.ports[port]!.cell / W)];
   const all: [number, number][] = [];
   w.formations.forEach((id) => {
-    if (c.nation[id] !== JAP || w.isFleet(id) || w.offLand(id) || comp[Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!)] !== honshu) return;
-    all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
+    if (c.nation[id] !== JAP || w.isFleet(id) || w.offLand(id) || transportsPort(w, id, false) !== port) return;
+    all.push([id, (c.x[id]! - px) ** 2 + (c.y[id]! - py) ** 2]);
   });
-  all.sort((a, b) => a[1] - b[1]);
+  all.sort((a, b) => a[1] - b[1] || a[0] - b[0]);
   const ids = all.slice(0, 2).map((d) => d[0]);
   const far = all[all.length - 1]![0];
   watch = [...ids, far];
   const click = (sel: number[]): void => {
-    const cmds: Command[] = [...sel].sort((a, b) => a - b).map((id) => ({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: false }));
+    const cmds: Command[] = [...sel].sort((a, b) => a - b).map((id) => ({ kind: 'moveFormation', id, x: TOKYO[0], y: TOKYO[1], nation: JAP, escort: false }));
     s.handle({ type: 'cmds', cmds, now: true }, 2);
   };
   click(ids);
@@ -69,7 +71,7 @@ function run(late: boolean): { landed: Map<number, number>; ids: number[]; far: 
 }
 
 describe('a convoy does not wait for a later order from far (ROADMAP R31f)', () => {
-  it('the two to Shanghai, the farthest of Honshu sent there three days later: the two land as without it', () => {
+  it("Tientsin's two to Tokyo, its port's farthest sent there three days later: the two land as without it", () => {
     const alone = run(false);
     const late = run(true);
     expect(late.march, 'the late one more than a week from the port').toBeGreaterThan(24 * 7);

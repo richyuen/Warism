@@ -7,6 +7,7 @@ import { navOf, type World } from '../../src/sim/world';
 import { sameText } from '../../src/ui/seaHintText';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
+import { nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R42a (critic run 49, R49-N5): Tokyo to Shanghai took 26 days, 21 of them at the port waiting for a division
@@ -38,6 +39,9 @@ describe('a click says how long its landing waits (ROADMAP R42a)', () => {
       all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
     });
     const four = all.sort((a, b) => a[1] - b[1]).slice(0, 4).map((d) => d[0]).sort((a, b) => a - b);
+    // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+    // of its own there, a sibling): this test's one landing at Tokyo.
+    nearPort(w, four, portNamed(w, 'Tokyo'), [0, 2, 5, 8]);
     const clear = (x: World): void => {
       x.out.events.length = 0;
       x.out.fires.length = 0;

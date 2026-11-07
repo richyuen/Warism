@@ -7,7 +7,7 @@ import { landingOf } from '../../src/sim/systems/amphibious';
 import { AT_PORT_CELLS } from '../../src/sim/systems/navalCombat';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
-import { landingId } from '../helpers/landings';
+import { landingId, nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R22d (critic run 34, R34-N1): the escort of a convoy is not sent weeks ahead. The critic's
@@ -55,6 +55,9 @@ function shanghai(escort: boolean): Run {
     all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
   });
   const four = all.sort((a, b) => a[1] - b[1]).slice(0, 4).map((d) => d[0]);
+  // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+  // of its own there, a sibling): this test's one landing at Tokyo.
+  nearPort(w, four, portNamed(w, 'Tokyo'), [0, 2, 4, 6]);
   for (const id of four) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort });
   const water = landingOf(w, Math.floor(SHANGHAI[1]) * W + Math.floor(SHANGHAI[0]))!.water;
   const r = w.atSize(AT_PORT_CELLS);

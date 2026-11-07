@@ -6,7 +6,7 @@ import { landingOf } from '../../src/sim/systems/amphibious';
 import { landingOfDivision, seaHint } from '../../src/sim/systems/landings';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
-import { atItsPort } from '../helpers/landings';
+import { atItsPort, nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R28b (critic run 39, R39-N1): the map's mark and the tooltip spoke for the first selected
@@ -39,6 +39,9 @@ describe('the mark speaks for the whole selection (ROADMAP R28b)', () => {
       all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
     });
     const three = all.sort((a, b) => a[1] - b[1]).slice(0, 3).map((d) => d[0]);
+    // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+    // of its own there, a sibling): this test's one landing at Tokyo.
+    nearPort(w, three, portNamed(w, 'Tokyo'), [0, 4, 2]);
     const pair = three.slice(0, 2);
     const fresh = three[2]!;
 

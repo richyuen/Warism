@@ -6,7 +6,7 @@ import { landingOf } from '../../src/sim/systems/amphibious';
 import { landingFor, landingOfDivision } from '../../src/sim/systems/landings';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
-import { atItsPort } from '../helpers/landings';
+import { atItsPort, nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R27a (ADR-827): the landing an order over the sea is for, as the order resolves it, for
@@ -39,6 +39,9 @@ describe('the landing an order over the sea is for (ROADMAP R27a)', () => {
       all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
     });
     const pair = all.sort((a, b) => a[1] - b[1]).slice(0, 2).map((d) => d[0]);
+    // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+    // of its own there, a sibling): this test's one landing at Tokyo.
+    nearPort(w, pair, portNamed(w, 'Tokyo'), [0, 4]);
 
     const before = landingFor(w, pair[0]!, SHANGHAI[0], SHANGHAI[1]);
     expect(before, 'the click').toEqual({ ...landingOf(w, cell(SHANGHAI[0], SHANGHAI[1]))!, same: false, goal: cell(SHANGHAI[0], SHANGHAI[1]) });

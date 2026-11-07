@@ -5,7 +5,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { navOf, type World } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
-import { atItsPort } from '../helpers/landings';
+import { atItsPort, nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R22c (critic run 34, R34-N1): the division aboard at its port, waiting for the rest of its
@@ -37,6 +37,9 @@ describe('the wait aboard is accounted for (ROADMAP R22c)', () => {
       all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
     });
     const four = all.sort((a, b) => a[1] - b[1]).slice(0, 4).map((d) => d[0]);
+    // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+    // of its own there, a sibling): this test's one landing at Tokyo.
+    nearPort(w, four, portNamed(w, 'Tokyo'), [0, 2, 5, 8]);
     for (const id of four) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP });
     const voyage = (id: number): FormationDetail['voyage'] => (s as unknown as { voyageOf(w: World, id: number): FormationDetail['voyage'] }).voyageOf(w, id);
     const clear = (x: World): void => {

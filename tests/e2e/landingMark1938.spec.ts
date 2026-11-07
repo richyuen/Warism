@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import type {} from '../../src/app/testApi';
 import { cellOf } from '../../src/sim/data/terrain';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
+import { tokyoReach } from './tokyoReach';
 
 // ROADMAP R27b AT (ADR-827): the landing an order over the sea is for is marked while it is chosen.
 // Japan (seed 3517, the critic's case), its two divisions nearest Tokyo, the first selected. The
@@ -44,6 +45,8 @@ test('the landing is marked while chosen; under a still cursor it turns to the l
   await page.evaluate((n) => window.__warsim!.view!.select(n), JAP);
   await page.getByTestId('take-control').click();
   await expect(page.getByTestId('release-control')).toBeVisible();
+  // ROADMAP R43a: three more within Tokyo's reach, so that the nearest Tokyo are one landing there (`tokyoReach`).
+  await tokyoReach(page, [8]);
   const three = await page.evaluate(({ n, x, y }) => {
     const v = window.__warsim!.view!;
     return v

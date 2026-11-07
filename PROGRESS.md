@@ -1731,3 +1731,10 @@
 - **Next:** R43.
 - R43d: the ticker tells a release or rising before the wars it left that hour (`causeFirst` in `tickerRows`; the
   sim's log order unchanged). `realmWars` (Manchukuo) red before, green after.
+- R43a (ADR-838, the user's choice of a sibling, a week): a click's division a week nearer its own port boards there,
+  a sibling landing; the two land together. 20841 39.6 → 5.4 days, 20661 26.3 → 5.3, 3517's four 11 days with
+  Sapporo's sibling told. A gathering landing's voyage from its port, a 12-hour slack on a sibling's wait, a 6-hour
+  hold after a click's last order. Run 47's grid (403 jobs): splits 5 → 5, no landing 54 → 30, 259 sooner, none
+  later; run 50's 19 landing checker seeds 0 broken. Tests of one landing at Tokyo place their divisions within
+  Tokyo's reach (`nearPort`; specs `tokyoReach`); claims kept. `invasion1938` was red since R33c (an aboard division
+  alone is told why its landing cannot go: "no water ... to land from", not "aboard"): its expectation follows R33c.

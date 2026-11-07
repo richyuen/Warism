@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import type {} from '../../src/app/testApi';
 import { cellOf } from '../../src/sim/data/terrain';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
+import { tokyoReach } from './tokyoReach';
 
 // ROADMAP R26a AT (critic run 38, R38-B1): Japan's divisions nearest Tokyo sent to Shanghai (seed 3517, the critic's); at
 // hour 26 the one aboard (or all of them) clicked again two cells south. The sim keeps it as the
@@ -26,6 +27,8 @@ for (const [n, all] of [[2, false], [4, true]] as const) {
     await page.evaluate((n) => window.__warsim!.view!.select(n), JAP);
     await page.getByTestId('take-control').click();
     await expect(page.getByTestId('release-control')).toBeVisible();
+    // ROADMAP R43a: three more within Tokyo's reach, so that the nearest Tokyo are one landing there (`tokyoReach`).
+    await tokyoReach(page, n === 2 ? [8] : [2, 5, 8]);
     const ids = await page.evaluate(({ n, k, x, y }) => {
       const v = window.__warsim!.view!;
       return v

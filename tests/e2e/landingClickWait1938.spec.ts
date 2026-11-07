@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import type {} from '../../src/app/testApi';
 import { cellOf } from '../../src/sim/data/terrain';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
+import { tokyoReach } from './tokyoReach';
 
 // ROADMAP R42a (critic run 49, R49-N5): a click whose landing waits weeks for a marching division says so in days.
 // Japan (seed 1, R22c's case): its four divisions nearest Tokyo sent to Shanghai, the cursor kept on Shanghai: the
@@ -35,6 +36,8 @@ for (const [name, width, height] of [['desk', 1600, 900], ['phone', 390, 844]] a
     await page.evaluate((n) => window.__warsim!.view!.select(n), JAP);
     await page.getByTestId('take-control').click();
     await expect(page.getByTestId('release-control')).toBeVisible();
+    // ROADMAP R43a: three more within Tokyo's reach, so that the nearest Tokyo are one landing there (`tokyoReach`).
+    await tokyoReach(page);
     const four = await page.evaluate(({ n, x, y }) => {
       const v = window.__warsim!.view!;
       return v

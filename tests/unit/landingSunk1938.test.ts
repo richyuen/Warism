@@ -9,6 +9,7 @@ import { type Landing, LandingState, landingOfDivision, voyageOf } from '../../s
 import { navOf, type World } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
+import { nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R38a (critic run 46, R46-B1): a landing's transports sunk at sea with its divisions aboard: in that hour
@@ -46,6 +47,9 @@ describe("a landing's transports sunk at sea (ROADMAP R38a)", () => {
       all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
     });
     const pair = all.sort((a, b) => a[1] - b[1] || a[0] - b[0]).slice(0, 2).map((d) => d[0]);
+    // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+    // of its own there, a sibling): this test's one landing at Tokyo.
+    nearPort(w, pair, portNamed(w, 'Tokyo'), [0, 4]);
     const cmds: Command[] = pair.map((id) => ({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true }));
     s.handle({ type: 'cmds', cmds, now: true }, 2);
     const sailing = (): boolean => pair.every((id) => w.embarked.has(id) && landingOfDivision(w, id)?.state === LandingState.sailing);
@@ -100,6 +104,9 @@ describe("a landing's last group destroyed: another called, or the sinking told 
       all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
     });
     const ids = all.sort((a, b) => a[1] - b[1] || a[0] - b[0]).slice(0, n).map((d) => d[0]);
+    // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+    // of its own there, a sibling): one landing at Tokyo.
+    nearPort(w, ids, portNamed(w, 'Tokyo'), [0, 4, 2].slice(0, n));
     const cmds: Command[] = ids.map((id) => ({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true }));
     s.handle({ type: 'cmds', cmds, now: true }, 2);
     return { s, w, news, ids, step };

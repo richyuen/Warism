@@ -72,6 +72,12 @@ export const LATE_WAIT_HOURS = 24 * 7;
  * critic run 47's `fresh2`: a mate two months off is not waited for).
  */
 export const SIBLING_WAIT_HOURS = 24 * 30;
+/**
+ * How much later than a landing a sibling may land and not be waited for (`siblingWait`): half a day, so that with the
+ * estimates' error of an hour or two they land within a day (ROADMAP R43a: 40 of run 47's grid 25 hours apart at a
+ * day's slack).
+ */
+const SIBLING_SLACK_HOURS = 12;
 
 const cellOfPlace = (world: World, id: number): number => Math.floor(world.formations.cols.y[id]!) * world.cells.w + Math.floor(world.formations.cols.x[id]!);
 const cellAt = (world: World, x: number, y: number): number => Math.floor(y) * world.cells.w + Math.floor(x);
@@ -209,10 +215,19 @@ export function chooseTransports(world: World, id: number, target: number): Land
   // Its land's nearest port, and whether port `i` is another: a call there is judged by hours (`callSooner`; R41).
   const port = transportsPort(world, id, false);
   const far = (i: number): boolean => port >= 0 && i !== port;
-  // A landing gathering for that place: it joins (however far its port: one click lands together, R37c); with no
-  // room left, a group at its port or called there.
-  for (const l of mine) {
-    if (l.state !== LandingState.gathering) continue;
+  // A landing gathering for that place: it joins (one click lands together, R37c), the one at its land's nearest port
+  // first; with no room left, a group at its port or called there. Where its land's nearest port lands it
+  // SPLIT_SOONER_HOURS sooner by hours (`callSooner`) and none gathers there, it makes a landing of its own there, a
+  // sibling of the click's, which the two wait for (`siblingWait`, within a month) to land together (ROADMAP R43a;
+  // critic run 50, R50-N1: three to Shanghai waited 35 days at Tokyo for one walking from western Honshu; the user's
+  // choice of 2026-11-06, of a bound or its own port).
+  const gathering = mine.filter((l) => l.state === LandingState.gathering);
+  const atOwn = gathering.some((l) => l.port === port);
+  for (const l of [...gathering.filter((g) => g.port === port), ...gathering.filter((g) => g.port !== port)]) {
+    if (!atOwn && far(l.port) && l.fleets.length > 0 && callSooner(world, id, target, port, { port: l.port, fleet: l.fleets[0]! }, SPLIT_SOONER_HOURS)) {
+      const o = freeAtPort(world, nation, men, port) || callTransports(world, id, port);
+      if (o !== 0) return { port, fleet: o };
+    }
     if (roomOf(world, l) - menOf(world, l) >= men) return { join: l, port: l.port, fleet: 0 };
     const o = freedGroup(world, nation, men, here)?.fleet || freeAtPort(world, nation, men, l.port) || callTransports(world, id, l.port);
     if (o !== 0) return { join: l, port: l.port, fleet: o };
@@ -258,6 +273,12 @@ export function chooseTransports(world: World, id: number, target: number): Land
 
 /** How many hours sooner a call must land than the free group far off, to be taken (`callSooner`): a day. */
 const CALL_SOONER_HOURS = 24;
+/**
+ * How many hours sooner its land's nearest port must land a division than the click's gathering landing at another
+ * port, for it to make a landing of its own there (ROADMAP R43a): a week. A landing more spends a group, so a day is
+ * not worth one.
+ */
+export const SPLIT_SOONER_HOURS = 24 * 7;
 
 /**
  * Whether a group called to port `near` lands division `id` at `target` over CALL_SOONER_HOURS sooner than the
@@ -267,7 +288,7 @@ const CALL_SOONER_HOURS = 24;
  * the march to `far.port` and the voyage from it. Marches by the shortest way over the ground (`octileKm`) at its
  * pace; voyages by `sailHoursFrom`. No group that can reach `near`, or no voyage from it: false.
  */
-function callSooner(world: World, id: number, target: number, near: number, far: { port: number; fleet: number }): boolean {
+function callSooner(world: World, id: number, target: number, near: number, far: { port: number; fleet: number }, sooner = CALL_SOONER_HOURS): boolean {
   const c = world.formations.cols;
   const rule = world.rules?.templates[c.template[id]!];
   const l = landingOf(world, target);
@@ -286,7 +307,7 @@ function callSooner(world: World, id: number, target: number, near: number, far:
   if (ship === undefined) return false;
   const byNear = Math.max(octileKm(grid, here, world.ports[near]!.cell) / kmh, sailHours(world, ship, nx, ny)) + sailHoursFrom(world, ship, nearWater, x, y);
   const byFar = octileKm(grid, here, world.ports[far.port]!.cell) / kmh + sailHoursFrom(world, far.fleet, water[far.port]!, x, y);
-  return byNear + CALL_SOONER_HOURS < byFar;
+  return byNear + sooner < byFar;
 }
 
 /** Division `id` joins landing `choice.join`, or a new one for cell `target` (ROADMAP R33b); its landing. */
@@ -671,6 +692,10 @@ function gather(world: World, l: Landing): void {
   }
   // Another landing of its click for the same place, from another port: they go together (R37c).
   if (waitsForSiblings(world, l)) return;
+  // Its click made other landings that still gather (R43a: one a port): a few hours after its last order, so that
+  // clicks moments apart for one place go together (landingPartResent: the four re-sent one an hour, Tokyo's sailed
+  // before Hiroshima's and Sapporo's were sent and landed six days alone).
+  if (world.tick - l.ordered < CLICK_HOLD_HOURS && clickFamily(world, l)) return;
   // The sail hour: those at the port board, first fit, and the groups carrying them sail.
   const [tx, ty] = pointOf(world, l.target);
   for (const id of present) {
@@ -736,21 +761,37 @@ function siblings(world: World, l: Landing): Landing[] {
   return [...world.landings.values()].filter((o) => o.id !== l.id && o.nation === l.nation && o.state !== LandingState.returning && o.divisions.size > 0 && near(o) && sameLandingAs(world, o, x, y));
 }
 
-/** The longest voyage, in hours, of landing `l`'s groups from where they are to its water; 0 for none known. */
+/**
+ * The longest voyage, in hours, of landing `l`'s groups to its water; 0 for none known. Gathering: from its port (a
+ * group still on its way there is counted by `waitLeft`; ROADMAP R43a: its hours to the port were read as its
+ * voyage, and a sibling from Sapporo was not waited for); else from where they are.
+ */
 function voyageHours(world: World, l: Landing): number {
   const [x, y] = pointOf(world, l.water);
-  return Math.max(0, ...l.fleets.map((o) => (world.formations.cols.moving[o] === 1 ? sailHoursLeft(world, o) : sailHours(world, o, x, y))).filter(Number.isFinite));
+  const from = portSeaOf(world)[l.port]!;
+  const one = (o: number): number => (l.state === LandingState.gathering ? sailHoursFrom(world, o, from, x, y) : world.formations.cols.moving[o] === 1 ? sailHoursLeft(world, o) : sailHours(world, o, x, y));
+  return Math.max(0, ...l.fleets.map(one).filter(Number.isFinite));
 }
 
 /**
  * Whether landing `l`, ready to sail, waits for its siblings (R37c): while one would land more than
- * SAME_CLICK_HOURS after `l` sailing now (a gathering one: its wait left, `waitLeft`, and its voyage; a
+ * SIBLING_SLACK_HOURS after `l` sailing now (a gathering one: its wait left, `waitLeft`, and its voyage; a
  * sailing one: its voyage left). One whose wait has no end known, or is over SIBLING_WAIT_HOURS, is not waited
  * for. So they land within a day, and a landing ready does not stand at its port longer than that needs
  * (R30a: a port bombed shut).
  */
 function waitsForSiblings(world: World, l: Landing): boolean {
   return siblingWait(world, l) !== null;
+}
+
+/** How many hours after its last order a landing of a click that made several holds (ROADMAP R43a): six. */
+const CLICK_HOLD_HOURS = 6;
+
+/** Whether another landing of `l`'s nation first joined within SAME_CLICK_HOURS of `l`'s still gathers: its click made several (R43a). */
+function clickFamily(world: World, l: Landing): boolean {
+  const first = firstJoined(l);
+  for (const o of world.landings.values()) if (o.id !== l.id && o.nation === l.nation && o.state === LandingState.gathering && Math.abs(firstJoined(o) - first) <= SAME_CLICK_HOURS) return true;
+  return false;
 }
 
 /**
@@ -766,7 +807,7 @@ function siblingWait(world: World, l: Landing): { port: number; hours: number } 
     // A gathering one over a month from sailing (a march from afar, R31f) is not waited for: SIBLING_WAIT_HOURS.
     const left = o.state === LandingState.gathering ? waitLeft(world, o) : 0;
     if (!Number.isFinite(left) || left > SIBLING_WAIT_HOURS) continue;
-    const hours = left + voyageHours(world, o) - mine - SAME_CLICK_HOURS;
+    const hours = left + voyageHours(world, o) - mine - SIBLING_SLACK_HOURS;
     if (hours > 0 && (!out || hours > out.hours)) out = { port: o.port, hours };
   }
   return out;

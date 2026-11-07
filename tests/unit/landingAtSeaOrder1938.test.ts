@@ -9,6 +9,7 @@ import type { World } from '../../src/sim/world';
 import { navOf } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
+import { nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R33c (ADR-830): a landing at sea is ordered as one. Seed 3517, Japan's two nearest Tokyo sent to
@@ -53,6 +54,9 @@ function atSea(both: boolean): { news: OrderNews[]; landed: Map<number, number>;
     all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
   });
   pair = all.sort((a, b) => a[1] - b[1] || a[0] - b[0]).slice(0, 2).map((d) => d[0]);
+  // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+  // of its own there, a sibling): this test's one landing at Tokyo.
+  nearPort(w, pair, portNamed(w, 'Tokyo'), [0, 4]);
   const click = (sel: number[], x: number, y: number): void => {
     const cmds: Command[] = [...sel].sort((a, b) => a - b).map((id) => ({ kind: 'moveFormation', id, x, y, nation: JAP, escort: true }));
     s.handle({ type: 'cmds', cmds, now: true }, 2);

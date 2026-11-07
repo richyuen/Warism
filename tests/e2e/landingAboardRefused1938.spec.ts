@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import type {} from '../../src/app/testApi';
 import { cellOf } from '../../src/sim/data/terrain';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
+import { tokyoReach } from './tokyoReach';
 
 // ROADMAP R23a AT, the page's part (the worker's is `landingAboardRefused1938.test.ts`; critic run 35,
 // R35-B2): Japan's four divisions nearest Tokyo sent to Shanghai; the first boards at Tokyo and waits.
@@ -27,6 +28,8 @@ test('the division aboard, ordered onto the open sea: refused, and still aboard'
   await page.evaluate((n) => window.__warsim!.view!.select(n), JAP);
   await page.getByTestId('take-control').click();
   await expect(page.getByTestId('release-control')).toBeVisible();
+  // ROADMAP R43a: three more within Tokyo's reach, so that the nearest Tokyo are one landing there (`tokyoReach`).
+  await tokyoReach(page);
   const four = await page.evaluate(({ n, x, y }) => {
     const v = window.__warsim!.view!;
     return v

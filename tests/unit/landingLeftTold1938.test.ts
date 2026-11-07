@@ -7,7 +7,7 @@ import { landingOf } from '../../src/sim/systems/amphibious';
 import { landingHeld } from '../../src/sim/systems/landings';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
-import { atItsPort, groupOf, landingId } from '../helpers/landings';
+import { atItsPort, groupOf, landingId, nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R25b (critic run 37, R37-B1): the one aboard a convoy still loading, sent to another
@@ -41,6 +41,9 @@ describe('a division aboard never leaves its transports untold (ROADMAP R25b)', 
       all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
     });
     const pair = all.sort((a, b) => a[1] - b[1]).slice(0, 2).map((d) => d[0]);
+    // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+    // of its own there, a sibling): this test's one landing at Tokyo.
+    nearPort(w, pair, portNamed(w, 'Tokyo'), [0, 4]);
     for (const id of pair) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true });
     const told: number[] = [];
     const refused: number[] = [];

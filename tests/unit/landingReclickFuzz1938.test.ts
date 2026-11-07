@@ -7,7 +7,7 @@ import { landedAway } from '../../src/sim/systems/amphibious';
 import { landingHeld, seaOrderLanding } from '../../src/sim/systems/landings';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
-import { atItsPort, landingId, portOf } from '../helpers/landings';
+import { atItsPort, landingId, nearPort, portNamed, portOf } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R27c (ADR-827): a fuzz of re-clicks about a landing, the class critic runs 33–38 found
@@ -56,6 +56,9 @@ function base(n: number, hour: number): Base {
     all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
   });
   const ids = all.sort((a, b) => a[1] - b[1]).slice(0, n).map((d) => d[0]);
+  // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+  // of its own there, a sibling): the fuzz is of one landing at one port.
+  nearPort(w, ids, portNamed(w, 'Tokyo'), (n === 2 ? [0, 8] : [0, 4, 2, 6]).slice(0, n));
   for (const id of ids) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true });
   const quiet = (x: Sim['world']): void => {
     x.out.events.length = 0;

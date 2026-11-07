@@ -31,7 +31,7 @@ describe("the rules of the player's landings hold under random orders (ROADMAP R
 // only (two divisions bound for a landing): each hour, every division and group of a gathering landing is stopped
 // and put back where it was first seen in it (frozen), or its divisions set on a circle of 2 cells about that place
 // (walking in circles: never a cell nearer); the same orders unplanted sail, none stuck. And 19206 (R47-N4's seed):
-// none broken, 367's march in the notes (46 days before R41, 28 since: no walk to a far port); 19207: none broken
+// none broken (367 gathered 46 days before R41, 28 after, 4 since R43a); 19207: none broken
 // (its 24-day walk to a freed group, fixed by R40e).
 describe('`stuck` is a stall, not a march (ADR-835)', () => {
   const plant = (how: 'frozen' | 'circling') => {
@@ -64,11 +64,14 @@ describe('`stuck` is a stall, not a march (ADR-835)', () => {
     const out = landingBreaks({ seed: 3517, setup: 3517, days: 60, orders: 2, probeDays: [], orderDays: 1 });
     expect(out.filter((l) => / stuck: /.test(l)), out.join('\n')).toEqual([]);
   }, 300_000);
-  it('seed 19206 (Japan), a long march to the landing of its click: 120 days, none broken, the march in the notes', () => {
+  // ROADMAP R43a: 367 marched to its click's port 46 days (run 49) and 28 (R41); it now boards at its own port as a
+  // sibling landing. The long march gone, `stuck`'s march-is-not-a-stall claim is the planted cases' above.
+  it('seed 19206 (Japan): 120 days, none broken; no division gathers two weeks (R43a: 367 46 → 28 → 4 days)', () => {
     const notes: string[] = [];
     expect(landingBreaks({ seed: 19206, setup: 3517, days: 120, orders: 19206, probeDays: [30], notes })).toEqual([]);
-    const march = notes.find((n) => n.startsWith('note: 367 longest'));
-    expect(Number(/landing ([\d.]+) days/.exec(march ?? '')?.[1] ?? 0), notes.join('\n')).toBeGreaterThan(20);
+    const longest = notes.map((n) => Number(/landing ([\d.]+) days/.exec(n)?.[1] ?? 0));
+    expect(longest.length, 'the notes').toBeGreaterThan(0);
+    expect(Math.max(...longest), notes.join('\n')).toBeLessThan(14);
   }, 300_000);
   it('seed 19207 (Japan): 120 days, none broken (R40e: 366 re-sent walked 24 days to the group it freed)', () => {
     expect(landingBreaks({ seed: 19207, setup: 3517, days: 120, orders: 19207, probeDays: [30] })).toEqual([]);

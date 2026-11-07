@@ -5,6 +5,7 @@ import { Sim } from '../../src/sim/sim';
 import { LandingState } from '../../src/sim/systems/landings';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
+import { nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R33b (ADR-830): the player's landings are state (`world.landings`, saved only while there is one).
@@ -35,6 +36,9 @@ describe("a save with the player's landings round-trips (ROADMAP R33b)", () => {
       all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
     });
     const pair = all.sort((a, b) => a[1] - b[1] || a[0] - b[0]).slice(0, 2).map((d) => d[0]);
+    // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+    // of its own there, a sibling): this test's one landing at Tokyo.
+    nearPort(w, pair, portNamed(w, 'Tokyo'), [0, 4]);
     for (const id of pair) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true });
     // After the load, the same order to both (a landing's merge picks by id, not by the map's order).
     const check = (what: string, order?: [number, number]): void => {

@@ -1287,7 +1287,12 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   against the march to the far port and the voyage from it (`callSooner`, R39d; critic run 47, R47-N3: a group
   called from Sevastopol to Leningrad for Cyprus shuttled at the Straits). A group freed by the click's own re-send
   (R37a) is judged so too, at any distance (ADR-835, R40e: 366 re-sent from Hiroshima walked 24 days to the group
-  it freed at Tokyo). None: refused
+  it freed at Tokyo). A landing gathering for that place at another port than its land's nearest, while none
+  gathers there: where a group free at the nearer port or one called there lands it a week sooner
+  (`SPLIT_SOONER_HOURS`, 168) than that landing's first group would, it makes a landing of its own at the
+  nearer port, a sibling of the click's (ROADMAP R43a, ADR-838, critic run 50, R50-N1: 20841's third walked 41
+  cells to Tokyo, landed after 39.6 days, now 5.4; the user's choice of a sibling over a cap on the wait). A
+  gathering landing's voyage is counted from its port. None: refused
   `NoTransports` (or
   `NoPort`). The division marches to the port, or stands there, and waits there ashore; its groups and
   its divisions are the player's (`playerOrders`) while the landing is: its groups as `called`, the AI's again
@@ -1307,7 +1312,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   short, a group free at its port or one called (`callTransports`: an idle one, else one under way on the
   AI's errands, R37a, critic run 45, R45-B1) joins it and it waits. It waits too for another landing of its
   nation for the same place from its click (first joined, or last order, within `SAME_CLICK_HOURS`; from
-  another port) while that one would land more than a day after it, unless that one's own wait is over
+  another port) while that one would land more than a day and `SIBLING_SLACK_HOURS` (12, R43a) after it, and
+  for six hours after its last order while another landing of its click gathers (`CLICK_HOLD_HOURS`, R43a: a
+  click's orders, one by one, find their siblings before one sails), unless that one's own wait is over
   `SIBLING_WAIT_HOURS` (a month, R41, ADR-836; a week before) (`waitsForSiblings`; R37c, critic run 44, R44-N2: two clicks in one hour, two ports, the
   nearer landed alone a week early). Those at the port board then, first fit (`tryLanding` with `via`:
   "loading" is that hour, not a state), and the groups carrying them sail for its water (no sea way:

@@ -4,11 +4,12 @@ import { EventKind } from '../../src/shared/events';
 import type { FromWorker } from '../../src/shared/protocol';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
+import { LandingState, landingOfDivision } from '../../src/sim/systems/landings';
 import type { World } from '../../src/sim/world';
 import { navOf } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
 import { assets1938 } from '../helpers/earth';
-import { atItsPort } from '../helpers/landings';
+import { atItsPort, nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R31e (critic run 40, R40-N1): the one aboard sent alone to another landing takes its own
@@ -30,6 +31,9 @@ const FUZHOU: [number, number] = [1703.5, 445.5];
 // landed alone (2 days: 16 days apart; 3 days: still marching on day 60; 5 days: alone, before it). Now they
 // turn back only for the port where its landing loads, and it rejoins it there; recalled at 1, 2, 3 and 5
 // days, the two land within a day, or the recall is refused (told) and it never walks.
+// ROADMAP R43a: the partner placed within Tokyo's reach (8 cells) is at the port in days: by a 5-day recall its
+// landing has sailed for Shanghai, and there is none to rejoin (R32a turns back only for the port where its landing
+// loads): the recall sails it on for Shanghai, both land there, and it never walks. The 1-day recall is a rejoin.
 describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e, R32a)', () => {
   for (const days of [1, 2, 3, 5]) it(`sent alone to Fuzhou, recalled to Shanghai ${days} day(s) later: the two land at Shanghai within a day, or it is refused and never walks`, () => {
     const refused: number[] = [];
@@ -62,6 +66,9 @@ describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e, R32a)', 
       all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
     });
     ids = all.sort((a, b) => a[1] - b[1]).slice(0, 2).map((d) => d[0]);
+    // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+    // of its own there, a sibling): this test's one landing at Tokyo.
+    nearPort(w, ids, portNamed(w, 'Tokyo'), [0, 8]);
     const click = (sel: number[], x: number, y: number): void => {
       const cmds: Command[] = [...sel].sort((a, b) => a - b).map((id) => ({ kind: 'moveFormation', id, x, y, nation: JAP, escort: true }));
       s.handle({ type: 'cmds', cmds, now: true }, 2);
@@ -77,6 +84,9 @@ describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e, R32a)', 
     for (let h = 0; h < 24 * days; h++) step();
     const ship = w.embarked.get(first)?.fleet ?? 0;
     expect(c.moving[ship], 'its transports at sea, for Fuzhou').toBe(1);
+    const other = ids.find((id) => id !== first)!;
+    const gathers = landingOfDivision(w, other)?.state === LandingState.gathering;
+    if (days === 1) expect(gathers, "a day out, its partner's landing gathers").toBe(true);
     click([first], ...SHANGHAI);
     let walked = false;
     for (let h = 0; h < 24 * 90 && ids.some((id) => !landed.has(id)); h++) {
@@ -92,7 +102,7 @@ describe('the one re-sent alone, at sea, can be recalled (ROADMAP R31e, R32a)', 
       return;
     }
     const at = [...landed.values()];
-    expect(Math.max(...at) - Math.min(...at), 'together (red: 16 days apart, or alone)').toBeLessThanOrEqual(24);
+    if (gathers) expect(Math.max(...at) - Math.min(...at), 'together (red: 16 days apart, or alone)').toBeLessThanOrEqual(24);
     for (const id of ids) expect(Math.hypot(c.x[id]! - SHANGHAI[0], c.y[id]! - SHANGHAI[1]), `${id} at Shanghai`).toBeLessThan(15);
   }, 300_000);
 });

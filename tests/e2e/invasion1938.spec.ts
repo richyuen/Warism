@@ -22,11 +22,13 @@ const CASPIAN = cell(50.5, 42.0);
 
 const command = (page: Page, cmd: Command): Promise<void> => page.evaluate((c) => window.__warsim!.hud.command(c), cmd);
 const order = (page: Page, id: number, [x, y]: [number, number]): Promise<void> => command(page, { kind: 'moveFormation', id, x, y, nation: ENG });
-/** The newest row of order news; it says `text` within a second. */
+/** The newest row of order news; it says `text` within a second (its full words: beside a panel in its tooltip, R43b). */
 async function told(page: Page, kind: string, text: string): Promise<void> {
   const row = page.getByTestId('order-news').last();
   await expect(row).toHaveAttribute('data-order', kind, { timeout: 1000 });
-  await expect(row).toContainText(text, { timeout: 1000 });
+  // Shown by its brief, the full words are the tooltip's first line.
+  if ((await row.getAttribute('title'))?.includes('\n')) await expect(row).toHaveAttribute('title', new RegExp(text), { timeout: 1000 });
+  else await expect(row).toContainText(text, { timeout: 1000 });
 }
 
 /** British formations, the nearest to (lon, lat) first: fleets or land ones. */
@@ -62,9 +64,10 @@ test('a British division in London ordered onto the German coast lands, or is th
   expect(div, 'a British division in London').toBeGreaterThan(0);
   await order(page, div!, CUXHAVEN);
   await page.evaluate(() => window.__warsim!.sim.step(3));
-  // Aboard: a second order is refused, and says so (it proves the embarking too).
+  // Aboard: a second order is refused, and says so (it proves the embarking too). Aboard alone it is its landing, and
+  // is told why the landing cannot go there (ROADMAP R33c: inland Kassel has no water to land from).
   await order(page, div!, KASSEL);
-  await told(page, 'refused', 'aboard transports');
+  await told(page, 'refused', 'no water near the target to land from');
 
   // The voyage: it lands near Cuxhaven, or is thrown back (and then comes ashore elsewhere), told.
   // The order's news (all kept by the page; beside the panel the ticker shows the newest).

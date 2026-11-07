@@ -7,6 +7,34 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-838 · 2026-11-06 · accepted — A click's division a week nearer its own port boards there, a sibling landing (R43a)
+
+- **Decision (the user's, 2026-11-06: "option 2", then "one week, do it fully").** A division ordered over the sea
+  whose click's landing gathers at another port than its land's nearest, with none gathering there, makes a landing
+  of its own at the nearer port when a group free there or one called there lands it `SPLIT_SOONER_HOURS` (a week)
+  sooner than the click's landing would. The two are siblings (R37c) and wait for each other to land together. Not
+  taken: the same month bound for the click's own last division as for a sibling's (ADR-836), sail and let it follow.
+- **Why.** Critic run 50, R50-N1: 20841's three Tokyo→Shanghai waited 35 days at Tokyo for one walking 41 cells from
+  western Honshu (landed after 39.6 days); 20661's two after 26. Now 5.4 and 5.3 days. R38's "Not taken" (one
+  landing a port for every click: 35 → 160 splits on run 46's grid) is not this: a sibling only a week sooner, and
+  siblings wait for each other.
+- **What it took.** A gathering landing's voyage counted from its port, not its groups' sail to it (else a group
+  still sailing there made the sibling look days later: 89 splits on run 47's grid, then 46); a sibling waited for
+  only past a day and 12 hours (`SIBLING_SLACK_HOURS`: 40 of the 46 were 25 h apart); a landing waits six hours
+  after its last order while another of its click gathers (`CLICK_HOLD_HOURS`: a click's orders one by one, the
+  first sailed before the second found it). Run 47's grid (403 jobs): splits 5 → 5 (one gone; the new one a re-sent
+  division that met the enemy on its march, its two partners now landed, none before), cases with no landing 54 → 30,
+  259 last landings sooner (7,909 days in all), none later; refusals 394 → 416, met-the-enemy as more get ashore.
+  Run 50's 19 landing checker seeds: 0 broken.
+- **Tests.** Setups of one landing at Tokyo placed their divisions within Tokyo's reach (`nearPort`, 8 cells; the
+  two-nearest-Tokyo pair was 365 near Ōsaka, R49-N5's case itself); claims unchanged. A recall 5 days out finds the
+  partner's landing sailed (none to turn back to): told none, both land at Shanghai. 19206's 367 no longer marches
+  (46 → 28 → 4 days): its note's claim is now no division gathers two weeks; ADR-835's march-is-not-a-stall rests
+  on the planted cases. R31f's late order (`convoyLateOrder1938`): Honshu's farthest boards at its own port now (no
+  march), so the case is Tientsin's: its two nearest to Tokyo, its farthest (390 h) three days later; the two land at
+  hour 251 with it or without, 649 with R31f's rule taken out. New: `landingOwnPort1938` (20841, 20661, 3517's four with Sapporo's sibling told).
+- **Consequences.** Player-only rule: the seed 99 pin unmoved.
+
 ### ADR-837 · 2026-11-06 · accepted — Run 49's issues (R42): a landing's wait told in days; heroes blended to 5,000 m/px; two order rows beside a panel
 
 - **R42a (R49-N5).** The hover over the place of the landing they already have says when it sails, in days, once the

@@ -7,7 +7,7 @@ import { Sim } from '../../src/sim/sim';
 import { seaHint, voyageOf } from '../../src/sim/systems/landings';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
-import { atItsPort } from '../helpers/landings';
+import { atItsPort, nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R37c (critic run 44, R44-N2): two clicks for one place in one hour made two landings from two ports, and
@@ -17,7 +17,7 @@ import { nationId } from '../helpers/sim1938';
 // the other would land more than a day after it: the three land within a day, or are told.
 // ROADMAP R38b (critic run 46, R46-N1): while the fresh one's landing waits for the other its panel read "ready"
 // for days: it now says it waits for the landing from the other port (`sibling`), "ready" a day at most.
-// ROADMAP R42a: the cursor on Fuzhou with the fresh one selected says so too: when it sails, waiting for which.
+// ROADMAP R42a: the cursor on Fuzhou with the fresh one selected says so too, while it waits over a day.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = nationId('JAP');
@@ -58,6 +58,9 @@ describe('two clicks for one place in one hour, from two ports: they land togeth
       });
       ids = all.sort((a, b) => a[1] - b[1] || a[0] - b[0]).slice(0, 3).map((d) => d[0]);
       const [pair, fresh] = [ids.slice(0, 2), ids[2]!];
+      // ROADMAP R43a: the pair placed so that Tokyo is each one's own port (else the second makes a landing of its own
+      // at Ōsaka): R37c's case, the pair at Tokyo, the fresh one from a nearer port.
+      nearPort(w, pair, portNamed(w, 'Tokyo'), [0, 4]);
       const click = (sel: number[], [x, y]: [number, number]): void => {
         for (const id of [...sel].sort((a, b) => a - b)) sim.command({ kind: 'moveFormation', id, x, y, nation: JAP, escort: true } as Command);
         sim.applyNow(take);
@@ -83,7 +86,8 @@ describe('two clicks for one place in one hour, from two ports: they land togeth
           hinted = sails!.other!;
         }
       }
-      expect(hinted, 'the hint asked while it waited for its sibling').not.toBeNull();
+      // R43a: the fresh one's landing waits for its sibling a day at most here; the hover of a longer wait is
+      // `landingOwnPort1938`'s (3517's four, one from Sapporo).
       expect(states.get('sibling') ?? 0, `the fresh one's panel says it waits for the other landing: ${JSON.stringify([...states])}`).toBeGreaterThan(0);
       expect(states.get('ready') ?? 0, 'ready a day at most').toBeLessThanOrEqual(24);
       const at = ids.filter((id) => !told.has(id)).map((id) => landed.get(id));

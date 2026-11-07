@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import type {} from '../../src/app/testApi';
 import { cellOf } from '../../src/sim/data/terrain';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
+import { tokyoReach } from './tokyoReach';
 
 // ROADMAP R22c AT, the page's part (the worker's is `landingWait1938.test.ts`; critic run 34,
 // R34-N1): Japan's four divisions nearest Tokyo sent to Shanghai by one click; the first boards at
@@ -24,6 +25,8 @@ async function waiting(page: Page, width: number, height: number): Promise<void>
   await page.evaluate((n) => window.__warsim!.view!.select(n), JAP);
   await page.getByTestId('take-control').click();
   await expect(page.getByTestId('release-control')).toBeVisible();
+  // ROADMAP R43a: three more within Tokyo's reach, so that the nearest Tokyo are one landing there (`tokyoReach`).
+  await tokyoReach(page, [6, 7, 8]);
   const four = await page.evaluate(({ n, x, y }) => {
     const v = window.__warsim!.view!;
     return v

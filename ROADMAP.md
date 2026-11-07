@@ -720,10 +720,12 @@ Rules:
 
 - [ ] R43 **Run 50's issues** (critic run 50, full, on `3fe138b1`: no blocking issue; naval 7, bar 8; stability up to 8;
   ADR-833: each finding fixed; the critic's probes replayed first).
-  - [ ] R43a R50-N1 (naval): one click's last division has no bound on its landing's wait while a sibling landing's is
+  - [x] R43a R50-N1 (naval): one click's last division has no bound on its landing's wait while a sibling landing's is
     a month (ADR-836): 20861/20841 Tokyo→Shanghai, three divisions, 35 days at Tokyo for 366 walking 41 cells, a
     4-day crossing. The same bound for the click's own last division (past it, sail and let it follow), or it boards
     at its own nearer port as a sibling landing.
+    Done (ADR-838, the user's choice): a week sooner at its own port, a sibling landing there; 20841 39.6 → 5.4 days,
+    20661 26.3 → 5.3; run 47's grid splits 5 → 5, 259 sooner, none later; `landingOwnPort1938`.
   - [ ] R43b R50-N2: a single order row beside a panel cut before its meaning ("366: the transports of its…", a
     refusal "not done: there is o…"): a brief for each single kind, the full text in the tooltip.
   - [ ] R43c R50-N3: on a phone the merged loss row's names are only in a tooltip a phone cannot hover: the names where

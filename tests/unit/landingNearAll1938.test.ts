@@ -5,7 +5,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
-import { isBound, landingId } from '../helpers/landings';
+import { isBound, landingId, nearPort, portNamed } from '../helpers/landings';
 import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R25c (critic run 37, R37-N1): the whole click re-clicked two cells south of Shanghai: the
@@ -36,6 +36,9 @@ function run(dx: number, dy: number): void {
     all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
   });
   const four = all.sort((a, b) => a[1] - b[1]).slice(0, 4).map((d) => d[0]);
+  // ROADMAP R43a: placed so that Tokyo is each one's own port (else one whose own port is a week sooner makes a landing
+  // of its own there, a sibling): this test's one landing at Tokyo.
+  nearPort(w, four, portNamed(w, 'Tokyo'), [0, 2, 4, 6]);
   for (const id of four) sim.command({ kind: 'moveFormation', id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP, escort: true });
   const refused = new Set<number>();
   const landed = new Map<number, number>();
