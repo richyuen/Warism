@@ -776,6 +776,26 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
   on hover, none on a phone); R32-N5 (sea heroes die more); R36-N3 (a re-click of the same landing is silent);
   R39-N2 (no landing mark on touch); R39-N3 (Escape leaves the mark); R39-N4 (the tooltip points at a mark off
   screen); R40-N2 ("go by sea" for a selection most of which march); the ranking cuts long names.
+  Split (one cause a part; each AT a screenshot or figure at desk and phone where it is drawn):
+  - [ ] R34a R37-N4: the relations graph's labels collide ("AustraliaUnited Kingdom"), illegible on a phone: no two
+    labels overlap, at desk and at 390 px, on a late world (run 50: `c50rg_20887_desk_d365`, `_20889_phone_d365`).
+  - [ ] R34b the ranking cuts long names ("French Equatorial…", "Anglo-Egyptian S…"): the whole name, or a shortening
+    that keeps it readable, with the full name on hover and tap.
+  - [ ] R34c R32-N3: a refusal toast and History rows cut their reason mid-word ("not done: there is no …"; "lost 42
+    aircraft, / Iraq 18"): the reason whole, wrapped, desk and phone.
+  - [ ] R34d R37-N3: God's Breakthrough at peace does nothing and says nothing: refused with a reason, or disabled
+    and told why.
+  - [ ] R34e R31-N1: hero counters drawn under the HUD at a desk start view (Japan's two): kept clear of the HUD.
+  - [ ] R34f R31-N6: the relations graph eats the first tap after a drag (R30-N3).
+  - [ ] R34g R31-N6: a hero hides the fleets stacked with it: both visible, or the stack told.
+  - [ ] R34h R32-N2: a trait's description only on hover; a phone shows names with no meaning: reachable by tap.
+  - [ ] R34i R32-N5: sea heroes die more (Sovetsky Soyuz 46.7 times in 20 years over ten seeds): the cause found; a
+    rule only if one is wrong (an AI rule: the pin moves in its own commit).
+  - [ ] R34j R36-N3: a re-click of the same landing is taken in silence: told it changes nothing.
+  - [ ] R34k R39-N2, R39-N3, R39-N4: the landing mark: none on a touch screen; Escape leaves it; at unit zoom the
+    tooltip points at a mark off screen.
+  - [ ] R34l R40-N2: "your selected forces go by sea" for a selection most of which march: the tooltip says which go
+    by sea and which march.
 - [ ] R35 Small ideas from the reports: an order's error cleared by any new order; a flag at the destination while
   choosing; a long-press preview of an order on touch; a mark on a fleet the AI has taken back.
 
