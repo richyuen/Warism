@@ -826,13 +826,14 @@ textarea,
   fill: #f3d9a4;
   pointer-events: none;
 }
+.relations-labels {
+  /* One size on the screen (R34a): its font-size and stroke set in drawing units by the zoom. */
+  pointer-events: none;
+}
 .relations-label {
   fill: var(--ui-text, #eee);
-  font-size: 10px;
   paint-order: stroke;
   stroke: rgba(0, 0, 0, 0.85);
-  stroke-width: 3px;
-  pointer-events: none;
 }
 .relations-footer {
   margin-top: 0.35rem;

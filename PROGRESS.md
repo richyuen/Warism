@@ -1795,3 +1795,11 @@
   together). Whole unit suite green (two timing tests red under load, green alone). Specs by hand: invasion1938 and
   the 15 landing/order-row specs (31 passed). Pin unmoved; no system's tick cost changed beyond one test a march.
 - **Next:** R34.
+
+## 2026-11-07 — R34 split (R34a–l); R34a: the relations graph's labels (ADR-847)
+- Labels one size on the screen (11 px; were 10 drawing units, ~6 px on a phone), placed in order of importance
+  where they overlap none placed before (`placeLabels`); a hidden one in its title and a tap.
+- `relationsLabels1938` (new): 20887 desk and 20889 phone a year on, whole and ×3.4: 0 overlapping pairs (18 before),
+  each ≥ 10 px; 32 named whole on both. `relations1938` green. Unit `relationLabels` (5). Evidence `docs/evidence/R34`.
+- No sim change; one placement pass over ≤ ~100 labels a render of the panel.
+- **Next:** R34b.

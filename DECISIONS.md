@@ -7,6 +7,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-847 · 2026-11-07 · accepted — The relations graph's labels: one size on the screen, none over another (R34a)
+
+- **Context.** Critic run 37's R37-N4, carried to run 50: labels printed over each other ("AustraliaUnited Kingdom",
+  "Albania Manchuku"), and on a phone not readable: 10 drawing units are about 6 px in a 390 px panel.
+- **Decision.** Labels are 11 px on the screen at any zoom (font size in drawing units set from the drawing's width
+  on the screen, `ResizeObserver`), drawn in one layer above the nodes, and placed by `placeLabels`
+  (`src/ui/relationLabels.ts`): in order of importance (the selected nation, the focus, then the largest, then the
+  most tied), each at the first of below, above, right and left of its node that overlaps no label placed before it
+  and lies in the view; one with no room is not drawn. A hidden name stays in its node's title and a tap's footer,
+  and zooming in names more. Which nodes may be named is unchanged (at the whole graph: large, tied, chosen).
+- **Evidence.** `relationLabels.test` (dense random graphs: no overlap, in view, the first named);
+  `relationsLabels1938` on run 50's worlds a year on (20887 desk, 20889 phone, whole and ×3.4): 0 overlapping pairs,
+  every label ≥ 10 px; red before (18 overlapping pairs zoomed in). `docs/evidence/R34/`.
+
 ### ADR-846 · 2026-11-07 · accepted — A landing ready to sail waits six days for those still marching, from the hour it was ready (R44a)
 
 - **Context.** `slowClick` (ADR-845) on run 50's 19 seeds broke on 20827 (Britain): every southern port and

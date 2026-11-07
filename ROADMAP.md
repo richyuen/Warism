@@ -777,8 +777,9 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
   R39-N2 (no landing mark on touch); R39-N3 (Escape leaves the mark); R39-N4 (the tooltip points at a mark off
   screen); R40-N2 ("go by sea" for a selection most of which march); the ranking cuts long names.
   Split (one cause a part; each AT a screenshot or figure at desk and phone where it is drawn):
-  - [ ] R34a R37-N4: the relations graph's labels collide ("AustraliaUnited Kingdom"), illegible on a phone: no two
+  - [x] R34a R37-N4: the relations graph's labels collide ("AustraliaUnited Kingdom"), illegible on a phone: no two
     labels overlap, at desk and at 390 px, on a late world (run 50: `c50rg_20887_desk_d365`, `_20889_phone_d365`).
+    Done (ADR-847): 11 px at any zoom, placed in order of importance, none over another; 0 overlaps (18 before).
   - [ ] R34b the ranking cuts long names ("French Equatorial…", "Anglo-Egyptian S…"): the whole name, or a shortening
     that keeps it readable, with the full name on hover and tap.
   - [ ] R34c R32-N3: a refusal toast and History rows cut their reason mid-word ("not done: there is no …"; "lost 42

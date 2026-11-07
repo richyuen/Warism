@@ -1,9 +1,10 @@
-import { useMemo, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import type { NationStat, WarStat } from '../shared/protocol';
 import { t, type MessageKey } from './i18n';
 import { displayName } from './NationPanel';
 import { buildRelationGraph, EDGE_KINDS, nationKey, type EdgeKind, type GraphEdge, type RelationGraph } from './relationGraph';
 import { layoutGraph, type Pos } from './relationLayout';
+import { placeLabels, type LabelItem } from './relationLabels';
 
 /** The drawing's own size (the SVG scales it to the panel). */
 const W = 640;
@@ -44,6 +45,26 @@ function clampZoom(zoom: Zoom): Zoom {
   return { z, cx: Math.max(hw, Math.min(W - hw, zoom.cx)), cy: Math.max(hh, Math.min(H - hh, zoom.cy)) };
 }
 
+/** A label's size on the screen, whatever the zoom (ROADMAP R34a: at 10 drawing units it was 6 px on a phone). */
+const LABEL_PX = 11;
+/** The space between labels, and from a label to its node, in screen px. */
+const LABEL_GAP_PX = 2;
+
+let measurer: CanvasRenderingContext2D | null = null;
+const widths = new Map<string, number>();
+/** The width of `text` at LABEL_PX in the page's font, in px (an estimate where there is no canvas). */
+function textPx(text: string): number {
+  let w = widths.get(text);
+  if (w !== undefined) return w;
+  if (!measurer && typeof document !== 'undefined') {
+    measurer = document.createElement('canvas').getContext('2d');
+    if (measurer) measurer.font = `${LABEL_PX}px ${getComputedStyle(document.body).fontFamily}`;
+  }
+  w = measurer ? measurer.measureText(text).width : text.length * LABEL_PX * 0.6;
+  widths.set(text, w);
+  return w;
+}
+
 const nodeRadius = (landShare: number): number => Math.min(22, 7 + 60 * Math.sqrt(landShare) * 0.5);
 const idOf = (key: string): number => Number(key.slice(1));
 
@@ -59,6 +80,17 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
   // Zoom and pan (ROADMAP R11, R29-N8): the wheel, a pinch, a drag, and the buttons for a tap.
   const [zoom, setZoom] = useState<Zoom>(WHOLE);
   const svg = useRef<SVGSVGElement>(null);
+  // The drawing's width on the screen (labels keep one size on the screen: R34a).
+  const [svgPx, setSvgPx] = useState(0);
+  useEffect(() => {
+    const el = svg.current;
+    if (!el) return;
+    const read = (): void => setSvgPx(el.getBoundingClientRect().width);
+    read();
+    const ro = new ResizeObserver(read);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   const pointers = useRef(new Map<number, { x: number; y: number }>());
   const dragged = useRef(false);
   /** Drawing units in a CSS px of the SVG, at the zoom now. */
@@ -176,6 +208,18 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
   };
   const sorted = [...nations].sort((x, y) => displayName(x.name).localeCompare(displayName(y.name)));
   const at = (key: string): Pos => pos.get(key) ?? { x: W / 2, y: H / 2 };
+  // The labels (R34a): one size on the screen; those that would print over another left out, in order of
+  // importance (the one chosen, the focus, then the largest and most tied); zooming in names more.
+  const k = W / zoom.z / (svgPx > 0 ? svgPx : W);
+  const fontUnits = LABEL_PX * k;
+  const labelled = shown.nodes
+    .filter((n) => n.kind === 'nation' && (zoom.z >= NAME_ALL_ZOOM || nodeRadius(n.weight) >= 12 || (degree.get(n.key) ?? 0) >= 4 || n.id === selected || n.id === focus))
+    .map((n) => ({ n, rank: n.id === selected ? 0 : n.id === focus ? 1 : 2 }))
+    .sort((a, b) => a.rank - b.rank || b.n.weight - a.n.weight || (degree.get(b.n.key) ?? 0) - (degree.get(a.n.key) ?? 0) || a.n.key.localeCompare(b.n.key));
+  const items: LabelItem[] = labelled.map(({ n }) => ({ key: n.key, ...at(n.key), r: nodeRadius(n.weight), w: textPx(name(n.id)) * k, h: fontUnits }));
+  const halfW = W / zoom.z / 2;
+  const halfH = H / zoom.z / 2;
+  const labels = placeLabels(items, { x0: zoom.cx - halfW, y0: zoom.cy - halfH, x1: zoom.cx + halfW, y1: zoom.cy + halfH }, LABEL_GAP_PX * k);
 
   return (
     <aside class="history-panel relations-panel" data-testid="relations-panel">
@@ -299,15 +343,17 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
                 <circle cx={p.x} cy={p.y} r={r} fill={fill} />
                 {url ? <image href={url} x={p.x - r * 1.5} y={p.y - r} width={r * 3} height={r * 2} preserveAspectRatio="xMidYMid slice" clip-path={`url(#rg-clip-${n.id})`} /> : null}
                 <circle cx={p.x} cy={p.y} r={r} fill="none" stroke={n.id === selected ? '#f1c40f' : 'rgba(0,0,0,0.6)'} stroke-width={n.id === selected ? 3 : 1} />
-                {zoom.z >= NAME_ALL_ZOOM || r >= 12 || (degree.get(n.key) ?? 0) >= 4 || n.id === selected || n.id === focus ? (
-                  <text class="relations-label" x={p.x} y={p.y + r + 11} text-anchor="middle">
-                    {name(n.id)}
-                  </text>
-                ) : null}
                 <title>{name(n.id)}</title>
               </g>
             );
           })}
+        </g>
+        <g class="relations-labels" style={{ fontSize: `${fontUnits}px`, strokeWidth: `${3 * k}px` }}>
+          {[...labels].map(([key, l]) => (
+            <text key={key} class="relations-label" data-testid={`relations-label-${key}`} x={l.x} y={l.y} text-anchor={l.anchor}>
+              {name(idOf(key))}
+            </text>
+          ))}
         </g>
       </svg>
       <footer class="relations-footer" data-testid="relations-said">
