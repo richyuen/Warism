@@ -1803,3 +1803,11 @@
   each ≥ 10 px; 32 named whole on both. `relations1938` green. Unit `relationLabels` (5). Evidence `docs/evidence/R34`.
 - No sim change; one placement pass over ≤ ~100 labels a render of the panel.
 - **Next:** R34b.
+
+## 2026-11-07 — R34b: the ranking's names whole
+- The ranking is as wide as its longest row (15–20rem, never past the view); a longer name is cut with its title
+  the name, and a tap opens its panel. Values unchanged (`rankingRows1938`'s one number).
+- `rankingNames1938` (new): 20895's start, every present list, desk and phone: no name cut ("French Equatorial
+  Africa" and "Anglo-Egyptian Sudan" cut before). The 10 specs that read the ranking: 28 passed. Evidence
+  `docs/evidence/R34/ranking-names-*.png`. No sim change. A small choice, no ADR (a width).
+- **Next:** R34c.

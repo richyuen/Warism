@@ -780,8 +780,9 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
   - [x] R34a R37-N4: the relations graph's labels collide ("AustraliaUnited Kingdom"), illegible on a phone: no two
     labels overlap, at desk and at 390 px, on a late world (run 50: `c50rg_20887_desk_d365`, `_20889_phone_d365`).
     Done (ADR-847): 11 px at any zoom, placed in order of importance, none over another; 0 overlaps (18 before).
-  - [ ] R34b the ranking cuts long names ("French Equatorial…", "Anglo-Egyptian S…"): the whole name, or a shortening
+  - [x] R34b the ranking cuts long names ("French Equatorial…", "Anglo-Egyptian S…"): the whole name, or a shortening
     that keeps it readable, with the full name on hover and tap.
+    Done: the panel as wide as its longest row, 15–20rem; each name's title the name; `rankingNames1938` (red before).
   - [ ] R34c R32-N3: a refusal toast and History rows cut their reason mid-word ("not done: there is no …"; "lost 42
     aircraft, / Iraq 18"): the reason whole, wrapped, desk and phone.
   - [ ] R34d R37-N3: God's Breakthrough at peace does nothing and says nothing: refused with a reason, or disabled

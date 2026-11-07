@@ -108,7 +108,7 @@ export function StatsRanking({
               <span class="rank-pos">{i + 1}.</span>
               {url ? <img class="rank-flag" data-testid="rank-flag" src={url} alt="" width={21} height={14} /> : <span class="chip-swatch" style={{ background: hex(n.color) }} />}
               <span class="rank-bar" data-testid="rank-bar" data-share={share.toFixed(4)} style={{ background: `linear-gradient(to right, ${hex(n.color)}d9 ${(share * 100).toFixed(2)}%, rgba(255, 255, 255, 0.05) ${(share * 100).toFixed(2)}%)` }}>
-                <span class="rank-name">
+                <span class="rank-name" title={displayName(n.name)}>
                   {displayName(n.name)}
                   {n.living ? null : <span class="rank-dagger" title={t('stats.dead')} data-testid="rank-dead"> †</span>}
                 </span>

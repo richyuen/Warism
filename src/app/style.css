@@ -404,7 +404,11 @@ textarea,
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  width: 15rem;
+  /* As wide as its longest row, between 15rem and 20rem (R34b; the critic: "French Equatorial…", "Anglo-Egyptian
+     S…" cut in every desk shot); a name longer still is cut, whole in its title and the panel a tap opens. */
+  width: max-content;
+  min-width: 15rem;
+  max-width: min(20rem, calc(100vw - 1rem));
   padding: 0.4rem 0.6rem;
   background: rgba(20, 24, 32, 0.88);
   border: 1px solid rgba(214, 178, 94, 0.55);
