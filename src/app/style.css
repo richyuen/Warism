@@ -860,14 +860,23 @@ textarea,
   list-style: none;
   overflow-y: auto;
 }
+/* A row is the date and its text side by side: a long text wraps in its own column, not under the date (R34c;
+   critic run 32, R32-N3: "...Soviet Union lost 42 aircraft, / Iraq 18" with "Iraq 18" in the dates' column). */
 .history-list li {
+  display: flex;
+  align-items: baseline;
   line-height: 1.35rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 .history-date {
-  display: inline-block;
+  flex: none;
   min-width: 7.5rem;
   opacity: 0.65;
+}
+.history-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 /* Statistics charts (PLAN 1.34b). */

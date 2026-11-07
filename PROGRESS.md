@@ -1811,3 +1811,12 @@
   Africa" and "Anglo-Egyptian Sudan" cut before). The 10 specs that read the ranking: 28 passed. Evidence
   `docs/evidence/R34/ranking-names-*.png`. No sim change. A small choice, no ADR (a width).
 - **Next:** R34c.
+
+## 2026-11-07 — R34c: History rows wrap beside their date
+- A History row is the date and its text side by side (flex): a long text wraps in its own column, not under the
+  date. `historyWrap1938` (new): 20429 eighteen months on, 400 rows: rows with a line under the date 73 → 0 (desk),
+  194 → 0 (phone). R32-N3's refusal half was R43b's (`orderRowsBrief1938`). Evidence `docs/evidence/R34/history-wrap-*`;
+  five older History-row shots redrawn in the new layout.
+- The 14 specs that read History: 51 passed after the fix below. R34a had moved `heroesRead1938`'s R11 phone case
+  (a zoomed name twice the size): its claim follows ADR-847, committed alone (`65cb615e`).
+- **Next:** R34d.

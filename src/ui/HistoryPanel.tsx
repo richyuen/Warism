@@ -95,7 +95,7 @@ export function HistoryPanel({ load, refreshKey, startDay, nations, onClose }: H
             const d = dateOfTick(startDay, r.tick);
             return (
               <li key={`${r.tick}:${i}`} data-testid="history-row" data-kind={r.kind}>
-                <span class="history-date">{t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year })}</span> {historyText(r)}
+                <span class="history-date">{t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year })}</span> <span class="history-text">{historyText(r)}</span>
               </li>
             );
           })}

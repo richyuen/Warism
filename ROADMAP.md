@@ -783,8 +783,10 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
   - [x] R34b the ranking cuts long names ("French Equatorial…", "Anglo-Egyptian S…"): the whole name, or a shortening
     that keeps it readable, with the full name on hover and tap.
     Done: the panel as wide as its longest row, 15–20rem; each name's title the name; `rankingNames1938` (red before).
-  - [ ] R34c R32-N3: a refusal toast and History rows cut their reason mid-word ("not done: there is no …"; "lost 42
+  - [x] R34c R32-N3: a refusal toast and History rows cut their reason mid-word ("not done: there is no …"; "lost 42
     aircraft, / Iraq 18"): the reason whole, wrapped, desk and phone.
+    Done: a History row's text wraps in its own column (73 desk / 194 phone rows had a line under the date → 0);
+    the refusal beside a panel whole since R43b (`orderRowsBrief1938`).
   - [ ] R34d R37-N3: God's Breakthrough at peace does nothing and says nothing: refused with a reason, or disabled
     and told why.
   - [ ] R34e R31-N1: hero counters drawn under the HUD at a desk start view (Japan's two): kept clear of the HUD.
