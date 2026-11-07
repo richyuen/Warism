@@ -1864,3 +1864,16 @@
 - `traitsTap1938` (new; phone, Germany): red before (no words on a tap), green; `godUi1938` green.
   R32-N2's other half (nothing shows a trait act) is not this item.
 - **Next:** R34i.
+
+## 2026-11-07 — R34i: why sea heroes die so often
+- Probe (`.cache/r34i/probe.ts`, six of the critic's seeds × five years, heroes on): every sea-hero loss with its
+  place, hours alive, hours engaged. Before: 62 Soviet losses, 19 sea-hero losses within 24 hours of a return.
+  Sovetsky Soyuz came back on Leningrad's water under the US fleet (5867) or Hood (4253) and was sunk in 2 to 12
+  hours, every 60 days.
+- ADR-848: a sea hero comes back only where no enemy fleet holds the port's water (`BLOCKADE_CELLS` 2); none, it
+  waits and says so ('blockade'). After: within 24 hours 19 → 2; Soviet losses 62 → 58.
+- The rest, found and not changed: the Soviet Union has no other fleet of power, so the naval AI orders the hero
+  itself, and at `AVOID_RATIO` 1.5 it fights at even odds: out of Leningrad at Hood (25,000 each) under British
+  bombers, lost 60–71 hours after each return. Every fleet's rule; a change is the user's.
+- Unit: `heroes` (18, a new case), `worldInvariantsHeroes`, `saveFormat`: 25 passed. Heroes off by default: no pin.
+- **Next:** R34j.

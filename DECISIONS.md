@@ -7,6 +7,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-848 · 2026-11-07 · accepted — A sea hero does not come back under an enemy fleet (R34i)
+- **Context.** R32-N5: sea heroes die often (Sovetsky Soyuz 46.7 times in 20 years over ten seeds). Six seeds ×
+  five years, heroes on: 62 Soviet losses; 19 sea-hero losses within 24 hours of a return. The cause: a hero comes
+  back on its port's water (R10, ADR-813, ADR-816) whatever is there, and the US fleet with Iowa (5867), or Hood
+  (4253), held Leningrad's water: raised alone under it, sunk in 2 to 12 hours, every 60 days, eight times running.
+- **Decision.** `returnPlace` skips a port with an enemy fleet within `BLOCKADE_CELLS` (2) of its water: the base
+  first, then any port, on the start's basin as before; none left, the hero waits, and its row says why
+  (`heroWaits` 'blockade': "waits: enemy ships hold its ports"). The checker's rule reads `returnPlace` and holds.
+- **Consequences.** Losses within 24 hours of a return 19 → 2. Soviet losses only 62 → 58: the second cause,
+  found and not changed, is the naval AI's. A nation with no other fleet of power leaves its hero to the rest of the
+  naval AI (ADR-793), which turns a fleet home only at `AVOID_RATIO` (1.5×) the enemy's power: Sovetsky Soyuz
+  (25,000) sails out of Leningrad at Hood (25,000) and the British bombers, and loses (5867 days 1145–1334: lost
+  60 to 71 hours after each return). That rule is every fleet's; a fight at even odds is not wrong by itself, and
+  a change of it is the user's (it moves every world). Heroes are off by default: seed 99's pin does not move.
+
 ### ADR-847 · 2026-11-07 · accepted — The relations graph's labels: one size on the screen, none over another (R34a)
 
 - **Context.** Critic run 37's R37-N4, carried to run 50: labels printed over each other ("AustraliaUnited Kingdom",

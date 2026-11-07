@@ -1090,6 +1090,7 @@
   "panel.heroReturnsOne": "returns in 1 day",
   "panel.heroWaits": "waits to return",
   "panel.heroWaitsPort": "waits for a port on its sea",
+  "panel.heroWaitsBlockade": "waits: enemy ships hold its ports",
   "panel.heroWaitsRevival": "waits for its nation's revival",
   "panel.heroOpen": "Open {name} on the map",
   "panel.aircraft": "Aircraft (wings)",

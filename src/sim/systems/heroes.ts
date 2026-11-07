@@ -98,7 +98,14 @@ export function heroHealth(world: World, id: number): number {
  * on its start's basin (ROADMAP R13, ADR-816): Baku's water is the Caspian, and Sovetsky Soyuz came
  * back there and stayed for the rest of the run.
  */
-export function returnPlace(world: World, row: number): [number, number] | null {
+/**
+ * How near an enemy fleet to a port's water keeps a sea hero from coming back there, cells (ROADMAP R34i, ADR-848;
+ * critic run 32, R32-N5: Sovetsky Soyuz raised on Leningrad's water under the US fleet that held it, sunk within
+ * 2 to 12 hours, eight times running on 5867).
+ */
+export const BLOCKADE_CELLS = 2;
+
+export function returnPlace(world: World, row: number, blockade = true): [number, number] | null {
   const r = world.heroRoster[row]!;
   const nc = world.nations.cols;
   const { w, h, controller } = world.cells;
@@ -111,10 +118,22 @@ export function returnPlace(world: World, row: number): [number, number] | null 
   }
   // At sea: the naval base by its start (the one it was raised at) while held, else the nearest held;
   // with none, the nearest port held; either on its start's basin (ROADMAP R13).
-  return seaReturn(world, r, true) ?? seaReturn(world, r, false);
+  // Not where an enemy fleet holds the water (ROADMAP R34i).
+  const enemy = blockade ? enemyFleets(world, r.nation) : [];
+  return seaReturn(world, r, true, enemy) ?? seaReturn(world, r, false, enemy);
 }
 
-function seaReturn(world: World, r: HeroRow, bases: boolean): [number, number] | null {
+/** The places of the fleets of the nations at war with `nation`, cells, x and y in turn. */
+function enemyFleets(world: World, nation: number): number[] {
+  const c = world.formations.cols;
+  const out: number[] = [];
+  world.formations.forEach((id) => {
+    if (world.isFleet(id) && world.wars.atWar(nation, c.nation[id]!)) out.push(c.x[id]!, c.y[id]!);
+  });
+  return out;
+}
+
+function seaReturn(world: World, r: HeroRow, bases: boolean, enemy: readonly number[] = []): [number, number] | null {
   const { w, h, controller, terrain } = world.cells;
   let best: [number, number] | null = null;
   let bestD = Infinity;
@@ -134,6 +153,13 @@ function seaReturn(world: World, r: HeroRow, bases: boolean): [number, number] |
     const cell = portWater(p, terrain, w, h, world.portReach, world.settings.loopingMap);
     const at = cell >= 0 ? world.seaPoint(cell) : null;
     if (!at) continue;
+    let held = false;
+    for (let k = 0; k < enemy.length && !held; k += 2) {
+      const ex = wrapDx(world, at[0], enemy[k]!);
+      const ey = enemy[k + 1]! - at[1];
+      held = ex * ex + ey * ey <= BLOCKADE_CELLS * BLOCKADE_CELLS;
+    }
+    if (held) continue;
     bestD = d;
     best = at;
   }
@@ -154,11 +180,13 @@ export function heroBasin(world: World, x: number, y: number): number {
  * ('revival'), or it has no place (`returnPlace`: a sea hero's nation holds no port: 'port'); null
  * while it lives, before its day, or with a place (it is back within the hour).
  */
-export function heroWaits(world: World, row: number): 'revival' | 'port' | null {
+export function heroWaits(world: World, row: number): 'revival' | 'port' | 'blockade' | null {
   const at = world.heroReturn.get(row);
   if (at === undefined || world.tick < at) return null;
   if (world.nations.cols.living[world.heroRoster[row]!.nation] !== 1) return 'revival';
-  return returnPlace(world, row) === null ? 'port' : null;
+  if (returnPlace(world, row) !== null) return null;
+  // A port held, but each under an enemy fleet (ROADMAP R34i).
+  return returnPlace(world, row, false) === null ? 'port' : 'blockade';
 }
 
 /**

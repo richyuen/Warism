@@ -7,7 +7,7 @@ import { Domain, type World } from '../../src/sim/world';
 import { isMonthStart } from '../../src/shared/calendar';
 import { assets1938 } from '../helpers/earth';
 import { elementIndex } from '../../src/sim/systems/elements';
-import { HERO_RETURN_HOURS, heroBasin, heroHealth, heroWaits } from '../../src/sim/systems/heroes';
+import { BLOCKADE_CELLS, HERO_RETURN_HOURS, heroBasin, heroHealth, heroWaits, returnPlace } from '../../src/sim/systems/heroes';
 import { landFight, seaFight } from '../helpers/heroFight';
 import { fleetPower } from '../../src/sim/systems/seaControl';
 import { AT_PORT_CELLS } from '../../src/sim/systems/navalCombat';
@@ -320,6 +320,58 @@ describe('heroes heal and come back (PLAN 7.184a2)', () => {
     expect(id, 'a port on its sea: back').not.toBe(0);
     expect(heroBasin(w, w.formations.cols.x[id]!, w.formations.cols.y[id]!)).toBe(home);
     expect(heroBreaks(w, tagOf)).toEqual([]);
+  });
+
+  // ROADMAP R34i (critic run 32, R32-N5; ADR-848): Sovetsky Soyuz came back on Leningrad's water under the US fleet
+  // that held it and was sunk within 2 to 12 hours, eight times running (5867). A sea hero comes back only to a port
+  // whose water no enemy fleet holds (BLOCKADE_CELLS); with every one held it waits, and says why; a port freed, back.
+  it("a sea hero does not come back under an enemy fleet: another port, or it waits for one and says why", () => {
+    const sim = make('on');
+    const w = sim.world;
+    const sov = NATIONS_1938.findIndex((n) => n.tag === 'SOV') + 1;
+    const usa = NATIONS_1938.findIndex((n) => n.tag === 'USA') + 1;
+    const row = rowOf(w, 'hero_sovetsky_soyuz');
+    const squadron = TEMPLATES_1938.findIndex((t) => t.id === 'battle_squadron');
+    expect(squadron).toBeGreaterThanOrEqual(0);
+    sim.step(1, quiet);
+    w.wars.set(sov, usa, true);
+    sim.command({ kind: 'removeFormation', id: heroOf(w, 'hero_sovetsky_soyuz') });
+    sim.step(1, quiet);
+    // A US fleet on the water it would come back to (the AI sails its fleets: each case read at once).
+    const fleets: number[] = [];
+    const block = (): [number, number] => {
+      const at = returnPlace(w, row)!;
+      const before = new Set<number>();
+      w.formations.forEach((id) => void before.add(id));
+      sim.command({ kind: 'spawnFleet', nation: usa, x: at[0], y: at[1], template: squadron, free: true });
+      sim.step(1, quiet);
+      // On the water itself (a spawn takes the nearest sea point it can).
+      w.formations.forEach((id) => {
+        if (before.has(id)) return;
+        fleets.push(id);
+        w.formations.cols.x[id] = at[0];
+        w.formations.cols.y[id] = at[1];
+      });
+      return at;
+    };
+    const first = block();
+    expect(fleets.length, 'a US fleet put there').toBeGreaterThan(0);
+    const next = returnPlace(w, row);
+    expect(next, 'another port on its sea').not.toBeNull();
+    expect(Math.hypot(next![0] - first[0], next![1] - first[1]), 'not under the US fleet').toBeGreaterThan(BLOCKADE_CELLS);
+    // Every port it holds on its sea held by a US fleet: it waits, and says why.
+    for (let k = 0; k < 60 && returnPlace(w, row) !== null; k++) block();
+    expect(returnPlace(w, row), 'every port held').toBeNull();
+    // Its day now.
+    w.heroReturn.set(row, w.tick);
+    sim.step(1, quiet);
+    expect(heroOf(w, 'hero_sovetsky_soyuz'), 'it waits').toBe(0);
+    expect(heroWaits(w, row)).toBe('blockade');
+    expect(heroBreaks(w, tagOf)).toEqual([]);
+    // Peace: no enemy holds a port, and it is back within the hour.
+    w.wars.set(sov, usa, false);
+    sim.step(2, quiet);
+    expect(heroOf(w, 'hero_sovetsky_soyuz'), 'at peace: back').not.toBe(0);
   });
 
   // ROADMAP R9 (critic run 29, R29-B2; ADR-812): an annexation or an integration moved every

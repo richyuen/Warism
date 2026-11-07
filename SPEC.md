@@ -872,7 +872,8 @@ take no diplomatic turn). The checkers hold these rules together (§10.1).
   powers), placed after every other formation; `world.heroes` (formation → row) and
   `world.heroReturn` (row → tick). A hero is one element; never built, refilled or paid for; it heals
   `HERO_HEAL_PER_DAY` (0.05) a day and returns `HERO_RETURN_HOURS` (1,440) after it is lost, a sea
-  hero at a port on its start's basin. Its rules are a checker's (§10.1).
+  hero at a port on its start's basin whose water no enemy fleet holds (within `BLOCKADE_CELLS`, 2; ADR-848);
+  with each held so, it waits ("enemy ships hold its ports"). Its rules are a checker's (§10.1).
 
 ### 3.7 Tech & production
 **Techs** (`data/tech/*.json`: 7 files, 43 techs, 1936–1952; `src/sim/tech.ts`): a rule

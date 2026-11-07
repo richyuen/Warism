@@ -798,8 +798,10 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
     Done: a hero's T1 marker steps clear of the markers it would cover, a line to its place.
   - [x] R34h R32-N2: a trait's description only on hover; a phone shows names with no meaning: reachable by tap.
     Done: a chip's tap shows its words under the chips; the God tab says the trait touched.
-  - [ ] R34i R32-N5: sea heroes die more (Sovetsky Soyuz 46.7 times in 20 years over ten seeds): the cause found; a
+  - [x] R34i R32-N5: sea heroes die more (Sovetsky Soyuz 46.7 times in 20 years over ten seeds): the cause found; a
     rule only if one is wrong (an AI rule: the pin moves in its own commit).
+    Done (ADR-848): raised under an enemy fleet on its port's water; now not. Also found: the naval AI fights at
+    even odds (`AVOID_RATIO` 1.5), and a lone sea hero sails at Hood and the bombers: left as it is.
   - [ ] R34j R36-N3: a re-click of the same landing is taken in silence: told it changes nothing.
   - [ ] R34k R39-N2, R39-N3, R39-N4: the landing mark: none on a touch screen; Escape leaves it; at unit zoom the
     tooltip points at a mark off screen.
