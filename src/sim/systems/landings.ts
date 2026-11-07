@@ -334,11 +334,21 @@ export function bindDivision(world: World, id: number, target: number, choice: L
   return l;
 }
 
-/** Ends landing `l`: its transports carrying no one are the AI's again; those still in it are told `why` (none: not told). */
+/**
+ * Ends landing `l`: its transports carrying no one are the AI's again; those still in it are told `why` (none: not
+ * told). Those marching to its port stop where they stand (ROADMAP R43e; critic run 50, R50-N5: 20845's two, told
+ * their transports were sunk and the landing over, walked on to Hamburg for six days), as at a peace (R21a): their
+ * order is over, and the AI has them from the next hour (ADR-759).
+ */
 function endLanding(world: World, l: Landing, why = 0): void {
   const c = world.formations.cols;
   for (const id of [...l.divisions.keys()].sort((a, b) => a - b)) {
     if (!world.formations.has(id)) continue;
+    if (c.moving[id] === 1 && !world.embarked.has(id)) {
+      c.moving[id] = 0;
+      c.home[id] = 0;
+      world.paths.delete(id);
+    }
     // Aboard at its port, or standing off it: ashore there (it never left; its organisation as it was).
     const e = world.embarked.get(id);
     if (e !== undefined && l.fleets.includes(e.fleet) && l.state !== LandingState.sailing) {
@@ -619,14 +629,8 @@ function gather(world: World, l: Landing): void {
   const f = world.formations;
   const c = f.cols;
   const portCell = world.ports[l.port]!.cell;
-  // Its target a neutral's after a peace (ROADMAP R21a): over, those marching stopped where they stand.
+  // Its target a neutral's after a peace (ROADMAP R21a): over, those marching stopped where they stand (`endLanding`).
   if (neutralLanding(world, l.nation, l.target)) {
-    for (const id of l.divisions.keys()) {
-      if (c.moving[id] !== 1 || world.embarked.has(id)) continue;
-      c.moving[id] = 0;
-      c.home[id] = 0;
-      world.paths.delete(id);
-    }
     endLanding(world, l, RejectReason.Neutral);
     return;
   }

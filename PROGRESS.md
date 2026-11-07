@@ -1747,3 +1747,7 @@
 - R43c (ADR-840): on a phone the first tap on a shortened order row opens it to its full words (a loss's names), the
   next flies there. Specs by hand: `orderRowsTap1938` (new), `orderRowsPanel1938`, `orderRowsBrief1938`,
   `orderNews1938`, `ticker1938`, `phoneLayout1938`, `landingLeftTold1938`. No sim change; budgets unmoved.
+- R43e (ADR-841): a landing that ends, however, stops its divisions' march to its port (R21a's peace stop made the
+  rule). 20845 (the critic's `c47_far.ts`): told at t89, no longer at Hamburg at t222/t242. New checker rule `marchOn`:
+  run 50's 19 landing seeds 5 broken (28, England's) before, 0 after; every landing unit test green (46 files). No
+  AI rule changed: the pin unmoved; budgets: one test per division when a landing ends.

@@ -33,6 +33,9 @@
  *   the later, then the voyage): R39d's rule as a checker, at any distance since R38d's gate went (ROADMAP R41,
  *   ADR-836) (ADR-835: R46-N3's class, a 40-day walk within Honshu to a far port's free group, kept caught once
  *   `stuck` counts the march as ground gained; a landing waiting for a sibling gains ground as the sibling does);
+ * - `marchOn`: a division of a gathering landing, out of it with no order of the player's that hour, still marching
+ *   to that landing's port (ROADMAP R43e; critic run 50, R50-N5: 20845's two told the landing was over walked on
+ *   to Hamburg for six days);
  * - `save`: a save that does not load bit-identical (on the probe days).
  * Each kind is told once a division, group or landing (its first hour).
  *
@@ -113,7 +116,7 @@ function rng(seed: number): () => number {
 const DIRS: [number, number][] = [[0, 0], [1, 0], [0, 1], [-1, 0], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
 
 /** The rules each hour on `w` for player `n`; `idle` and `since` carry spells between hours. */
-function check(w: World, n: number, idle: Map<number, number>, track: Track, orphans: Set<number>, moored: Set<number>, was: Map<number, number>, told: Set<number>, put: (key: string, line: string) => void): void {
+function check(w: World, n: number, idle: Map<number, number>, track: Track, orphans: Set<number>, moored: Set<number>, was: Map<number, number>, told: Set<number>, clicked: ReadonlySet<number>, put: (key: string, line: string) => void): void {
   const t = `t${w.tick}`;
   const out = { push: (line: string): void => put(line.replace(/^t\d+ /, '').replace(/ (aboard|standing|for|in|,|has|gathering).*$/, ''), line) };
   const f = w.formations;
@@ -241,6 +244,12 @@ function check(w: World, n: number, idle: Map<number, number>, track: Track, orp
     track.longest.set(id, { hours: Math.max(most.hours, w.tick - s), still: Math.max(most.still, w.tick - g) });
     if (w.tick - g === STUCK_DAYS * 24) out.push(`${t} stuck: ${id} in gathering landing ${l}, no ground gained for ${STUCK_DAYS} days`);
   }
+  // `marchOn`: out of its gathering landing of last hour (`track.landing`) by no click, still marching to its port.
+  for (const [id, l] of track.landing) {
+    if (divs.has(id) || clicked.has(id) || !f.has(id) || w.embarked.has(id) || c.moving[id] !== 1) continue;
+    const b = track.best.get(id);
+    if (b && b.landing === l && c.targetCell[id] === w.ports[b.port]!.cell) out.push(`${t} marchOn: ${id} marches on to ${w.ports[b.port]!.name}, out of landing ${l}`);
+  }
   for (const m of [track.ground, track.spell, track.landing]) for (const id of [...m.keys()]) if (!divs.has(id)) m.delete(id);
   track.seen = new Set(w.landings.keys());
 }
@@ -295,6 +304,7 @@ export function landingBreaks(k: LandingCase): string[] {
   const track: Track = { best: new Map(), ground: new Map(), spell: new Map(), longest: new Map(), landing: new Map(), seen: new Set() };
   const was = new Map<number, number>();
   let next = w.tick;
+  const clicked = new Set<number>();
   const end = w.tick + k.days * 24;
   const probes = new Set(k.probeDays.map((d) => w.tick + d * 24));
   while (w.tick < end) {
@@ -310,13 +320,15 @@ export function landingBreaks(k: LandingCase): string[] {
         const sea = landingOf(w, Math.floor(setup.a[1]) * W + Math.floor(setup.a[0]))!.water;
         const [x, y] = where === 'home' ? setup.home : where === 'sea' ? [(sea % W) + 0.5 + dx * off, Math.floor(sea / W) + 0.5 + dy * off] : [(where === 'a' ? setup.a : setup.b)[0] + dx * off, (where === 'a' ? setup.a : setup.b)[1] + dy * off];
         for (const id of sel) sim.command({ kind: 'moveFormation', id, x, y, nation: n, escort: true } as Command);
+        for (const id of sel) clicked.add(id);
         k.onHour?.(w, { ids: sel, x, y });
       }
       next = w.tick + 12 + Math.floor(r() * 61);
     }
     voyageTold.clear();
     sim.step(1, quiet);
-    check(w, n, idle, track, orphans, moored, was, voyageTold, put);
+    check(w, n, idle, track, orphans, moored, was, voyageTold, clicked, put);
+    clicked.clear();
     k.hour?.(w);
     k.onHour?.(w);
     if (probes.has(w.tick)) {

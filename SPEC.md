@@ -1299,7 +1299,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   when standing with no landing and carrying no one (R31d), where transports the player ordered keep the
   order, as warships do (ROADMAP R33d, critic run 43, R43-N1). A group destroyed leaves its landing at once.
   Hourly (`landingSystem`, in `amphibiousSystem` after the AI's boarding): a gathering landing is over,
-  all told, where its target became a neutral's (`Neutral`, R21a: those marching stopped), its port was
+  all told, those marching to its port stopped where they stand however it ends (R43e, ADR-841), where its target
+  became a neutral's (`Neutral`, R21a), its port was
   bombed shut or lost (`PortShut`, `NoPort`, R31b), or it has no group left (`NoTransports`); its groups
   away from its port sail there (those aboard one at the port go ashore there); a division whose march
   ended short of the port is told `NoTransports` and leaves it. It sails when every group stands at its

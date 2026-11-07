@@ -7,6 +7,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-841 · 2026-11-07 · accepted — A landing that ends stops its divisions' march to its port (R43e)
+
+- **Decision.** However a landing ends (its groups sunk with none to come, its port bombed shut or lost, no sea way,
+  no transports, its target a neutral's), its divisions still marching to its port stop where they stand
+  (`endLanding`); their order is over, and the AI has them from the next hour (ADR-759). R21a's stop at a peace is
+  now this one rule.
+- **Why.** Critic run 50, R50-N5: 20845's two, told their transports were sunk and the landing over, walked on to
+  Hamburg for six days (t222, t242): an order the player did not give.
+- **Stands on (ADR-803).** R21a (neutral: those marching stopped; `landingNeutral` green), R31b (port shut or lost:
+  all told), R39a (sunk: another called, the landing goes on and its march with it; told 0 only when over;
+  `landingSunk1938` green), R33b and ADR-759 (a division of a landing is the player's while it is; after, the
+  AI's: `playerOrderSystem` drops the order of one standing in no landing). No AI rule: the pin of seed 99 unmoved.
+- **Checker (ADR-804).** `landingInvariants` `marchOn`: a division out of its gathering landing with no click that
+  hour, still marching to its port. Run 50's 19 landing seeds: before, 5 broken (28 cases, all England's: Portsmouth,
+  Brighton, Chatham, Liverpool, Cardiff); after, 0. `landingEndedMarch1938` (sunk, port lost; red before).
+
 ### ADR-840 · 2026-11-07 · accepted — On a phone a tap opens an order row to its full words (R43c)
 
 - **Decision.** On a phone (`compact`) the first tap on an order row told by its brief (R42b, R43b) opens it in place

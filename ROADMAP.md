@@ -738,8 +738,10 @@ Rules:
   - [x] R43d R50-N4: a freed rising's "left its war" rows tick before "was freed from", their cause: within the hour,
     the release first. Done: the ticker moves a release or rising above the wars its nation left in that hour
     (`causeFirst`; the sim's order kept: the pin unmoved); `realmWars` Manchukuo's rising red before.
-  - [ ] R43e R50-N5 (naval): 20845 Berlin→Norwich, the group sunk at t89, both told the landing is over, then both
+  - [x] R43e R50-N5 (naval): 20845 Berlin→Norwich, the group sunk at t89, both told the landing is over, then both
     marched on to Hamburg for six days: a landing ended stops its divisions' march to its port.
+    Done (ADR-841): `endLanding` stops them, however it ends; 20845: none at Hamburg (1 the AI's, 4 stands).
+    `landingEndedMarch1938` (sunk, port lost; red before); checker `marchOn`: run 50's 19 seeds 5 broken (28) → 0.
   - [ ] R43f R50-N6 (God Mode): Revolt and Spawn name the new nation for a province other than the one clicked ("Free
     Saxony" for Bavaria): the clicked province's name.
 
