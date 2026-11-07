@@ -1,0 +1,92 @@
+t274-290 day 11 FRA v REP at 1018.5,373.5 (Mediterranean Sea): ships FRA:8 REP:8 FRA:8 FRA:8 GER:8 FRA:8, lost 7/8; camera 1018.28,373.72 40 m/px
+t1185-1188 day 49 GER v DEN at 1096.5,242.5 (Kattegat): ships GER:8 GER:8 DEN:8, lost 12/8; camera 1096.5,242.5 40 m/px
+t1491-1497 day 62 ENG v ITA at 1036.5,348.5 (Balearic Sea): ships ENG:10 ITA:9 ENG:10 ENG:10, lost 0/6; camera 1029.5,354.5 391 m/px
+t1521-1526 day 63 ITA v NED at 1050.5,250 (North Sea): ships ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 GER:2 GER:2 NED:8 NED:7 ITA:8 ITA:8 GER:8, lost 2/15; camera 1050.99,249.77 40 m/px
+t1532-1536 day 63 ITA v NED at 1051.1,262.2 (North Sea): ships ITA:8 ITA:8 GER:8 NED:8, lost 1/8; camera 1051.1,262.14 40 m/px
+t1576-1582 day 65 ENG v JAP at 1702.5,456.5 (Taiwan Strait): ships ENG:8 ENG:8 JAP:10 JAP:10 JAP:10, lost 13/3; camera 1702.07,460.93 248 m/px
+t1680-1685 day 70 FRA v ITA at 1014.5,287.5 (English Channel): ships FRA:8 ITA:16, lost 8/1; camera 1014.39,287.11 40 m/px
+t1727-1730 day 71 ENG v JAP at 1693.1,462.9 (Taiwan Strait): ships ENG:3 JAP:9 JAP:8 JAP:10, lost 3/0; camera 1697.64,461.42 253 m/px
+t1735-1743 day 72 ENG v ITA at 995.5,383.5 (Alboran Sea): ships ENG:10 ENG:10 ITA:8 ITA:8 ITA:8 ITA:6 ITA:8 ENG:10 ITA:8 ITA:6 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8, lost 2/47; camera 988.28,382 400 m/px
+t1749-1769 day 72 ENG v ITA at 982.7,380.7 (Alboran Sea): ships ENG:10 ITA:15 ENG:10 ENG:10 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8, lost 6/13; camera 975.19,375.69 400 m/px
+t1847-1847 day 76 ENG v GER at 1047.3,263.5 (North Sea): ships ENG:0 ENG:0 ENG:0 ENG:0 GER:0, lost 0/4; camera 1050.06,257.84 317 m/px
+t1865-1876 day 77 SOV v YUG at 1189.5,345.4 (Black Sea): ships SOV:8 YUG:8 SOV:8, lost 3/8; camera 1189.96,346 40 m/px
+t1931-1932 day 80 SOV v ROM at 1187.5,328.5 (Black Sea): ships SOV:8 SOV:8 ROM:8, lost 1/8; camera 1187.57,328.43 40 m/px
+t1939-1944 day 80 ENG v ITA at 1099.8,379.8 (Mediterranean Sea): ships ENG:10 ENG:10 ENG:10 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8, lost 25/0; camera 1102.14,384.64 272 m/px
+t1941-1947 day 80 ENG v GER at 994.2,383.5 (Alboran Sea): ships ENG:12 GER:4, lost 12/0; camera 994.44,383.4 40 m/px
+t1967-1968 day 81 ENG v ITA at 1106.9,384.9 (Mediterranean Sea): ships ENG:2 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8, lost 2/0; camera 1104.89,385.51 115 m/px
+t1978-1978 day 82 ENG v JAP at 1189.4,407.4 (Mediterranean Sea): ships ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0, lost 0/12; camera 1189.35,407.35 40 m/px
+t2412-2413 day 100 ENG v BRA at 995.3,383.5 (Alboran Sea): ships ENG:16 ENG:16 ENG:16 ENG:16 BRA:8, lost 0/8; camera 996.05,383.5 42 m/px
+t3333-3340 day 138 NSP v POR at 971.5,367.3 (North Atlantic Ocean): ships NSP:8 POR:8, lost 0/8; camera 971.5,366.91 40 m/px
+t4354-4361 day 181 ENG v GER at 1018.5,283.5 (English Channel): ships ENG:8 GER:11, lost 1/9; camera 1018.85,284 40 m/px
+t4508-4510 day 187 ENG v POL at 1130.9,250 (Baltic Sea): ships ENG:7 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:7 ENG:8 POL:8, lost 0/8; camera 1130.71,250.77 41 m/px
+t4549-4550 day 189 ENG v GER at 1020,245 (North Sea): ships ENG:11 GER:2, lost 6/0; camera 1020.83,245.74 45 m/px
+t4558-4564 day 189 SOV v NOR at 1161.3,209.7 (Gulf of Finland): ships SOV:5 SOV:8 SOV:8 NOR:8, lost 1/7; camera 1162.66,210.4 78 m/px
+t4589-4590 day 191 ENG v ITA at 1105.4,385.4 (Mediterranean Sea): ships ENG:12 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8, lost 12/0; camera 1105.04,385.51 40 m/px
+t4586-4591 day 191 SOV v FIN at 1164.3,207.7 (Gulf of Finland): ships SOV:7 FIN:8, lost 5/0; camera 1164.92,207.08 40 m/px
+t4596-4596 day 191 SOV v NOR at 1090.9,251.5 (Kattegat): ships SOV:0, lost 0/1; camera 1090.91,251.5 40 m/px
+t4611-4611 day 192 ENG v GER at 1021.4,245.5 (North Sea): ships ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0 ENG:0, lost 0/2; camera 1013.94,243 400 m/px
+t4630-4631 day 192 GER v ENG at 1019.1,284.9 (English Channel): ships GER:12 ENG:7, lost 5/0; camera 1018.98,284.41 40 m/px
+t4639-4642 day 193 SOV v FIN at 1165.5,206.5 (Gulf of Finland): ships SOV:16 FIN:8, lost 0/8; camera 1165.25,206.75 40 m/px
+t6864-6908 day 286 SOV v TUR at 1099.6,381.6 (Mediterranean Sea): ships SOV:5 SOV:7 SOV:8 TUR:8 SOV:2 GRE:8, lost 16/5; camera 1098.88,381.04 40 m/px
+t6912-6916 day 288 GER v TUR at 1099.6,379.6 (Mediterranean Sea): ships GER:3 TUR:7, lost 2/0; camera 1098.96,380.11 40 m/px
+t7225-7230 day 301 SOV v TUR at 1034.5,270.6 (North Sea): ships SOV:2 SOV:2 SOV:2 TUR:7, lost 6/1; camera 1034,270.77 40 m/px
+t7412-7414 day 308 SOV v TUR at 994.2,383.5 (Alboran Sea): ships SOV:16 TUR:6, lost 0/6; camera 993.46,383.5 40 m/px
+t7418-7418 day 309 JAP v GRE at 1070.5,258.7 (Skagerrak): ships JAP:0 JAP:0 JAP:0 JAP:0 JAP:0 JAP:0 JAP:0 JAP:0, lost 1/4; camera 1070.53,258.73 40 m/px
+t9978-9983 day 415 ENG v ARG at 695.5,918.7 (South Atlantic Ocean): ships ENG:7 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:8 ENG:7 ENG:8 ARG:8 ARG:8, lost 2/16; camera 695.5,919.62 49 m/px
+t10479-10485 day 436 SOV v SWE at 1162.4,210.6 (Gulf of Finland): ships SOV:16 SWE:8 SWE:8, lost 0/11; camera 1163.24,210.82 46 m/px
+t10525-10527 day 438 SOV v SWE at 1129.9,213.8 (Gulf of Bothnia): ships SOV:16 SWE:2 SWE:3, lost 0/5; camera 1129.34,213.03 40 m/px
+t12187-12187 day 507 POL v SWE at 1113.3,239.5 (Baltic Sea): ships POL:0 SWE:0 SWE:0, lost 4/0; camera 1112.5,239.5 56 m/px
+t12355-12355 day 514 POL v SWE at 1113.3,239.5 (Baltic Sea): ships POL:0 SWE:0 SWE:0, lost 6/0; camera 1112.5,239.5 56 m/px
+t12580-12581 day 524 SOV v SWE at 1114.1,239.9 (Baltic Sea): ships SOV:12 SWE:8, lost 5/0; camera 1113.82,239.68 40 m/px
+t12918-13049 day 538 GER v NOR at 1083.8,216.2 (Skagerrak): ships GER:1 NOR:12, lost 0/12; camera 1084.16,215.84 40 m/px
+t13290-13297 day 553 ITA v NSP at 996.5,296.5 (English Channel): ships ITA:8 NSP:8, lost 6/0; camera 997.16,295.84 40 m/px
+t13306-13307 day 554 ITA v ENG at 1030.4,279.6 (English Channel): ships ITA:12 ENG:8, lost 6/0; camera 1030,280 40 m/px
+t13337-13338 day 555 ITA v NSP at 998.5,293.5 (English Channel): ships ITA:6 NSP:8, lost 1/0; camera 998.14,294.36 47 m/px
+t13381-13382 day 557 GER v ENG at 1030.4,279.6 (English Channel): ships GER:12 ENG:8, lost 4/0; camera 1030.24,279.76 40 m/px
+t13403-13404 day 558 GER v ENG at 1030.9,279.5 (English Channel): ships GER:1 ENG:8, lost 1/0; camera 1030.49,279.7 40 m/px
+t13445-13445 day 560 ITA v NSP at 985.3,379.3 (Alboran Sea): ships ITA:0 ITA:0 ENG:0 NSP:0, lost 1/0; camera 982.22,379.23 400 m/px
+t13447-13451 day 560 ITA v NSP at 988.4,382.5 (Alboran Sea): ships ITA:2 NSP:8, lost 2/0; camera 987.84,381.87 40 m/px
+t13471-13472 day 561 GER v NSP at 988.3,382.5 (Alboran Sea): ships GER:9 NSP:8, lost 0/0; camera 987.8,381.91 40 m/px
+t13474-13474 day 561 ITA v NSP at 987.7,382.5 (Alboran Sea): ships GER:0 ITA:0 NSP:0, lost 1/0; camera 987.15,381.92 40 m/px
+t13578-13583 day 565 ITA v NSP at 1018.5,373.5 (Mediterranean Sea): ships ITA:4 ITA:11 NSP:8, lost 15/0; camera 1018.43,373.57 40 m/px
+t14260-14260 day 594 SOV v SWE at 1114.1,239.9 (Baltic Sea): ships SOV:0 SWE:0 SWE:0, lost 5/0; camera 1112.82,239.68 74 m/px
+t14428-14428 day 601 SOV v SWE at 1114.1,239.9 (Baltic Sea): ships SWE:0 SWE:0, lost 2/0; camera 1112.82,239.68 74 m/px
+t15915-15915 day 663 ENG v JAP at 988,382.5 (Alboran Sea): ships ENG:0 JAP:0 JAP:0 NSP:0, lost 8/0; camera 993,381 307 m/px
+t16380-16380 day 682 FRA v JAP at 986.7,381.7 (Alboran Sea): ships FRA:0 JAP:0 JAP:0 NSP:0, lost 6/0; camera 992.61,380.61 329 m/px
+t16698-16699 day 695 JAP v NSP at 998.9,379.5 (Alboran Sea): ships JAP:16 JAP:16 NSP:12, lost 0/12; camera 998.72,379.5 40 m/px
+t18255-18255 day 760 RAJ v SOV at 1165.5,206.5 (Gulf of Finland): ships RAJ:0 SOV:0 SOV:0 SOV:0 SOV:0 SOV:0, lost 4/0; camera 1168.28,208 227 m/px
+t20316-20317 day 846 NED v JAP at 884.2,462.8 (North Atlantic Ocean): ships NED:12 JAP:9 JAP:8 JAP:10, lost 8/0; camera 876.86,466.16 400 m/px
+t20358-20359 day 848 AST v JAP at 1187.5,353.5 (Sea of Marmara): ships AST:8 CAN:8 JAP:16 JAP:16, lost 13/0; camera 1186.84,353.5 40 m/px
+t20383-20383 day 849 AST v JAP at 1187.5,353.5 (Sea of Marmara): ships JAP:0 JAP:0 FRA:0 FRA:0 FRA:0 FRA:0 FRA:0 FRA:0 FRA:0 FRA:0 FRA:0 FRA:0 FRA:0, lost 3/0; camera 1188.49,349.59 219 m/px
+t20385-20400 day 849 JAP v FRA at 1187.5,353.5 (Sea of Marmara): ships JAP:16 JAP:16 FRA:8 FRA:8 FRA:7 FRA:7 FRA:1 FRA:8 FRA:8 FRA:7 FRA:7 FRA:13 FRA:15, lost 5/78; camera 1187.23,352.77 41 m/px
+t20410-20410 day 850 JAP v FRA at 1187.5,353.5 (Sea of Marmara): ships JAP:0 JAP:0 FRA:0 FRA:0 FRA:0 FRA:0 FRA:0 FRA:0, lost 0/1; camera 1187.37,353.15 40 m/px
+t20413-20413 day 850 JAP v FRA at 1187.5,353.5 (Sea of Marmara): ships JAP:0 JAP:0 FRA:0 FRA:0 FRA:0 FRA:0 FRA:0, lost 0/1; camera 1187.5,353.5 40 m/px
+t20416-20416 day 850 JAP v FRA at 1187.5,353.5 (Sea of Marmara): ships JAP:0 JAP:0 FRA:0 FRA:0 FRA:0 FRA:0, lost 0/2; camera 1187.5,353.5 40 m/px
+t20417-20417 day 850 JAP v FRA at 1187.5,353.5 (Sea of Marmara): ships JAP:0 JAP:0 FRA:0 FRA:0 FRA:0, lost 0/1; camera 1187.5,353.5 40 m/px
+t20419-20419 day 850 JAP v FRA at 1187.5,353.5 (Sea of Marmara): ships JAP:0 JAP:0 FRA:0 FRA:0, lost 0/1; camera 1187.5,353.5 40 m/px
+t20421-20422 day 850 JAP v FRA at 1187.5,353.5 (Sea of Marmara): ships JAP:13 JAP:14 FRA:4, lost 0/4; camera 1187.5,353.5 40 m/px
+t20424-20424 day 851 JAP v FRA at 1187.5,353.5 (Sea of Marmara): ships JAP:0 JAP:0, lost 0/1; camera 1187.5,353.5 40 m/px
+t20487-20487 day 853 RAJ v JAP at 1187.5,353.5 (Sea of Marmara): ships JAP:0 JAP:0 JAP:0 JAP:0 JAP:0 JAP:0 JAP:0 JAP:0, lost 8/1; camera 1187.47,353.5 40 m/px
+t20529-20546 day 855 ENG v JAP at 1187,352 (Sea of Marmara): ships ENG:6 ENG:6 ENG:8 ENG:7 ENG:6 ENG:6 ENG:5 ENG:5 ENG:6 ENG:8 ENG:6 ENG:7 JAP:8 JAP:8 JAP:8 JAP:7 JAP:8 JAP:8 JAP:8 JAP:7 JAP:8 JAP:8 JAP:8 JAP:7 JAP:8 ENG:3 ENG:6 ENG:3 ENG:5 ENG:6 ENG:6 ENG:5 ENG:6 ENG:16 ENG:15 ENG:15 ENG:14, lost 111/86; camera 1187.23,352.77 41 m/px
+t20637-20637 day 859 JAP v AST at 994.8,383.2 (Alboran Sea): ships ITA:0 JAP:0 JAP:0 AST:0, lost 0/1; camera 992.45,383.61 134 m/px
+t20685-20687 day 861 JAP v AST at 950.8,394.2 (North Atlantic Ocean): ships JAP:3 AST:11, lost 0/0; camera 950.54,394.96 43 m/px
+t20569-20705 day 857 ENG v JAP at 1186.8,352.2 (Sea of Marmara): ships ENG:1 JAP:9 JAP:8 ENG:12 ENG:12 ENG:12 ENG:11 JAP:10 SOV:16, lost 48/12; camera 1178.17,355.99 400 m/px
+t21160-21161 day 881 DEI v JAP at 1190.5,390.5 (Mediterranean Sea): ships DEI:12 JAP:9 JAP:8 JAP:10, lost 6/0; camera 1194.51,384.5 335 m/px
+t21185-21185 day 882 DEI v JAP at 1212.1,383.5 (Mediterranean Sea): ships JAP:0 JAP:0 JAP:0 SOV:0, lost 6/0; camera 1210.5,381 400 m/px
+t22269-22269 day 927 ENG v SOV at 1147.4,395.5 (Mediterranean Sea): ships ENG:0 SOV:0 SOV:0 USA:0, lost 10/0; camera 1143.95,390.05 305 m/px
+t22338-22338 day 930 MEX v USA at 471.5,446.5 (Gulf of Mexico): ships USA:0 USA:0 USA:0 USA:0 USA:0 USA:0 USA:0 USA:0 USA:0 USA:0 USA:0 USA:0, lost 8/1; camera 471.5,446.5 40 m/px
+t22605-22605 day 941 ENG v SOV at 1147.4,395.5 (Mediterranean Sea): ships ENG:0 ENG:0 SOV:0 SOV:0, lost 14/0; camera 1147.44,395.5 40 m/px
+t22724-22725 day 946 FRA v SOV at 1147.8,395.8 (Mediterranean Sea): ships FRA:12 SOV:8 SOV:8, lost 10/0; camera 1147.66,395.66 40 m/px
+t22749-22749 day 947 ENG v SOV at 1147.6,395.6 (Mediterranean Sea): ships SOV:0 SOV:0, lost 2/0; camera 1147.59,395.59 40 m/px
+t23594-23600 day 983 USA v SOV at 1101.6,381.6 (Mediterranean Sea): ships USA:10 USA:10 USA:10 SOV:8 SOV:8, lost 1/14; camera 1103.03,385.53 222 m/px
+t23616-23617 day 984 ENG v USA at 995.5,258.5 (Irish Sea): ships ENG:7 ENG:8 ENG:8 ENG:8 USA:11, lost 0/11; camera 995,258.38 40 m/px
+t23639-23644 day 984 USA v SOV at 1130.5,341.5 (Adriatic Sea): ships USA:8 USA:8 USA:8 USA:8 USA:8 USA:8 USA:8 USA:7 USA:8 USA:8 USA:8 USA:8 USA:8 USA:8 USA:8 USA:8 USA:8 SOV:4, lost 0/3; camera 1129.52,341.02 55 m/px
+t23955-23956 day 998 ENG v USA at 995,258.4 (Irish Sea): ships ENG:7 ENG:8 ENG:8 ENG:8 USA:12, lost 0/11; camera 994.72,258.48 40 m/px
+t24123-24123 day 1005 ENG v USA at 994.9,258.4 (Irish Sea): ships ENG:0 ENG:0 ENG:0 ENG:0, lost 0/8; camera 994.91,258.41 40 m/px
+t24496-24513 day 1020 ARG v AST at 670.8,831.5 (Golfo San Matías): ships ARG:8 AST:11, lost 0/11; camera 670.63,831 40 m/px
+t24918-24919 day 1038 USA v ENG at 994.2,258.8 (Irish Sea): ships USA:12 ENG:7 ENG:8 ENG:8 ENG:8, lost 12/0; camera 994.57,258.59 40 m/px
+t26598-26598 day 1108 ENG v USA at 994.7,258.5 (Irish Sea): ships ENG:0 ENG:0 ENG:0 ENG:0, lost 0/12; camera 994.66,258.54 40 m/px
+t34132-34133 day 1422 FRA v ITA at 932.5,414.1 (North Atlantic Ocean): ships FRA:2 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8 ITA:8, lost 2/0; camera 932.5,413.8 40 m/px
+t39207-39209 day 1633 DEN v USA at 1130.5,251.5 (Baltic Sea): ships DEN:8 USA:8 USA:8 USA:8 USA:8 USA:7 USA:8 USA:8 USA:8 USA:8 USA:8 USA:8 USA:8 DEN:8 USA:8 USA:8 USA:8 USA:8 USA:8, lost 16/0; camera 1130.62,250.66 47 m/px
+seed 7019 1938 scenario, 5 years: 90 sea battles, 44 sinkings out of battle; .cache/seaBattles_7019.json
+done:

@@ -825,10 +825,12 @@ batch. R45's replay runs before the critic, as ADR-833's replay does.
   5–8 sims at a time (20 at once were killed for memory), and adds new seeds for each probe family. AT: it replays run 50's 65 headless
   jobs with the same results as run 50, and runs each family on 5 new seeds; its report names every case that differs.
   Done (ADR-851): at run 50's commit 65 of 65 the same; at HEAD 30 the same, 35 named (`docs/replays/`); 95 new.
-- [ ] R46 **Sea battles the critic can find.** `tools/diag/seaBattles.ts <seed> [scenario|random] [--years N]`: each
+- [x] R46 **Sea battles the critic can find.** `tools/diag/seaBattles.ts <seed> [scenario|random] [--years N]`: each
   sea battle and sinking with its day, place (sea zone, cell), sides and ships, and the camera (x, y, m/px) to look at
   it. AT: on 3 seeds × 5 years, every battle it lists is drawn at its camera in the page (a probe shows ships), and run
   50's `c50_sb_20885` case (0 elements) gets a battle to look at.
+  Done (ADR-852): 20885, 7019, 3517 × 5 years: 85, 90, 100 battles, every one seen at its camera; 20885's first is
+  t107, Soviet v Romanian ships in the Black Sea (`docs/replays/seaBattles_*.txt`, `docs/evidence/R46/`).
 - [ ] R47 **A landing as one row** (the critic's idea since run 32). A panel or bar for each of the player's landings:
   its target, its port, its divisions (at the port, marching, with days), its transports needed and assigned, the
   days to sail, the outcome once for the operation, and a cancel (the transports back to the port they left). Read

@@ -39,6 +39,8 @@ Frozen records, searched and never edited: `PLAN.md`, `docs/PLAN_DONE.md`, `docs
   check, each stage on its own, a failed test run again alone, resumable.
 - `npx tsx tools/diag/replayCritic.ts [--at head|report|<commit>] [--new K] [--jobs P]`: the last critic run's
   headless jobs again, compared with its outputs; `--new K` runs each family on K new seeds (ADR-851).
+- `npx tsx tools/diag/seaBattles.ts <seed> [scenario|random] [--years N]`: each sea battle with its place, sides,
+  ships and a camera; `tools/diag/seaBattlesLook.ts <its json>` (a preview on 4173) checks each is drawn (ADR-852).
 - `npx tsx tools/diag/diploInvariants.ts <seed> [scenario|random] [--heroes] [--world random]`: the
   rules of war and peace on one run, as `tests/unit/diploInvariants*.test.ts` check them (ADR-803).
 - `npm run typecheck`: `src/`, `tools/` and `tests/` (a bare `tsc --noEmit -p .` checks nothing).

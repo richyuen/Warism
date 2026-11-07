@@ -7,6 +7,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-852 · 2026-11-07 · accepted — Sea battles listed with a camera (R46)
+- **Context.** The critic's sea-balls probe looked at seed 20885 where seed 7019's battle had been, and found no
+  ship (run 50, `c50_sb_20885`, 0 elements): it had no way to find a battle on the seed it played.
+- **Decision.** `tools/diag/seaBattles.ts` follows `world.seaBattles` hour by hour: each record from its first hour
+  to its `SeaBattle` row, with its first and last tick, the place it began (cell, zone, sea name), sides, fleets
+  with their ships, losses, and a camera at its first hour (the middle of its fleets; m/px holding them in 700 px,
+  40 to 400). A battle begun and over in one hour is made and dropped inside the tick, never seen at an hour's end:
+  its fleets are those of its sides' nations, or at war with them, within 16 cells (a carrier's wings fight from
+  far: 7019 t21185, Japan's carriers 14.5 cells off). Carrier sinkings out of battle are listed too.
+  `tools/diag/seaBattlesLook.ts` opens the seed in the page, steps to each battle's first hour, sets its camera and
+  counts the ships of each side drawn in the view (`view.elementPlaces`); a battle with no fleet is not seen.
+- **Consequences.** 3 seeds × 5 years: 275 battles, all seen with both sides' ships (one side where it was all sunk)
+  and no page error. No sim rule changes: tools only.
+
 ### ADR-851 · 2026-11-07 · accepted — The critic's replay is a tool (R45)
 - **Context.** Each batch began by replaying the last critic run's headless jobs from a hand-built list
   (`.cache/replay49/jobs.txt`, `suiteP.sh`) and diffing outputs by eye; 20 sims at once were killed for memory.

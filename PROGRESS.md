@@ -1937,3 +1937,11 @@
   exit 0, every checker 0 broken. Reports in `docs/replays/`.
 - A failed edit script let a whole rerun start; stopped, its sims killed, the ten logs it rewrote run again.
 - **Next:** R46.
+
+## 2026-11-07 — R46: sea battles the critic can find (ADR-852)
+- `tools/diag/seaBattles.ts`: each sea battle of a run with its hours, sea, sides, fleets, losses and a camera;
+  `tools/diag/seaBattlesLook.ts`: each looked at in the page, each side's ships counted in the view.
+- 20885, 7019, 3517 × 5 years: 85, 90, 100 battles; all 275 seen. On the way: one-hour battles (11, 30, 23) are
+  never in `world.seaBattles` at an hour's end, so their fleets are taken from about their place (a side sunk
+  whole leaves the other; carriers fight from 14.5 cells). 20885's first battle: t107 Black Sea, SOV v ROM.
+- **Next:** R47.
