@@ -16,6 +16,7 @@ import { Ball2dCache, drawBall2dCached } from './ball2d';
 import { HERO_SCALE } from './ballShader';
 import { strengthText } from './markers';
 import { worldToScreen, itemOffsets, type Camera, type MapGeometry } from '../camera';
+import { clearOf, type ScreenRect } from './clearOf';
 
 export interface CounterSource {
   x: number;
@@ -469,6 +470,8 @@ export class CounterLayer {
     heroes: readonly HeroCounter[] = [],
     /** A hero counter's size × the others' (`heroScaleAt`: 1 at the world's zoom, ROADMAP R40d, R42c); within HERO_SCREEN_SHARE of `vw`. */
     heroScale = HERO_SCALE,
+    /** The panels over the map (screen px): a hero's counter under one is drawn beside it (ROADMAP R34e). */
+    covered: readonly ScreenRect[] = [],
   ): void {
     this.drawn = [];
     this.boxes = [];
@@ -566,9 +569,23 @@ export class CounterLayer {
           if (sx >= 0 && sx <= vw) sx1 = Math.min(Math.max(sx, (w / 2 + 1) * hs), vw - (w / 2 + 1) * hs);
           const x = Math.round(sx1 - w / 2);
           const y = Math.round(sy - h / 2);
-          box ??= [sx1 + (x - sx1) * hs, sy + (y - sy) * hs];
-          this.boxes.push({ x: sx1 + (x - sx1) * hs, y: sy + (y - sy) * hs, w: w * hs, h: h * hs, alpha, own: 1 });
-          this.paintHero(ctx, sx1 + (x - sx1) * hs, sy + (y - sy) * hs, w, h, hs, alpha, { ...g.lead, name }, widthOf, colorOf, flagOf, balls);
+          // Under a panel (the Ranking, a nation's): beside it, a thin line to its place (ROADMAP R34e).
+          const [ox, oy] = [sx1 + (x - sx1) * hs, sy + (y - sy) * hs];
+          const at = clearOf({ x: ox, y: oy, w: w * hs, h: h * hs }, covered, vw, vh);
+          const [bx, by] = [at.x, at.y];
+          if (bx !== ox || by !== oy) {
+            ctx.globalAlpha = alpha;
+            ctx.strokeStyle = colorOf(g.lead.nation);
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(Math.min(Math.max(sx, bx), bx + w * hs), Math.min(Math.max(sy, by), by + h * hs));
+            ctx.lineTo(sx, sy);
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+          box ??= [bx, by];
+          this.boxes.push({ x: bx, y: by, w: w * hs, h: h * hs, alpha, own: 1 });
+          this.paintHero(ctx, bx, by, w, h, hs, alpha, { ...g.lead, name }, widthOf, colorOf, flagOf, balls);
         }
         if (box) this.drawn.push({ key: `hero:${g.lead.id}`, nation: g.lead.nation, naval: g.lead.naval, wx: g.lead.x, wy: g.lead.y, alpha, strength: 0, text: name, others: g.members.length - 1, folded: false, x: box[0], y: box[1], w: w * hs, h: h * hs, hero: g.lead.id, heroes: g.members });
       }

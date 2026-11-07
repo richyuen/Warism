@@ -790,7 +790,8 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
   - [x] R34d R37-N3: God's Breakthrough at peace does nothing and says nothing: refused with a reason, or disabled
     and told why.
     Done: refused since PLAN 7.165, but told only in the God tab; a map tool's refusal is now on the tools' bar.
-  - [ ] R34e R31-N1: hero counters drawn under the HUD at a desk start view (Japan's two): kept clear of the HUD.
+  - [x] R34e R31-N1: hero counters drawn under the HUD at a desk start view (Japan's two): kept clear of the HUD.
+    Done: a hero counter under a panel is drawn beside it, at its height, a line to its place; 5→0 under a panel.
   - [ ] R34f R31-N6: the relations graph eats the first tap after a drag (R30-N3).
   - [ ] R34g R31-N6: a hero hides the fleets stacked with it: both visible, or the stack told.
   - [ ] R34h R32-N2: a trait's description only on hover; a phone shows names with no meaning: reachable by tap.

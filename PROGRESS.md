@@ -1829,3 +1829,12 @@
 - `godBreakthrough1938`'s new case (11003, the panel on Overview): red before, green. The God specs: 27 passed.
   No sim change.
 - **Next:** R34e.
+
+## 2026-11-07 — R34e: hero counters clear of the panels
+- MapView reads the panels over the map (top and bottom bars, Ranking, a nation's, formation, History, Relations,
+  editor, settings, legend) every 250 ms; a hero counter under one is drawn beside it (`clearOf`): left or right at
+  its own height first (R8's "within a step of its place"), else below or above; a thin line to its place.
+- `heroesClear1938` (new; desk, heroes on): 5521 and 1201 at the start, 7019 at day 730: under a panel 2, 2, 1 →
+  0 (Japan's O-I and Yamato under the Ranking, the critic's case). The 13 specs that read counters or heroes:
+  39 passed. Unit `clearOf` (4). Budgets: ~10 `getBoundingClientRect` every 250 ms; no sim change.
+- **Next:** R34f.

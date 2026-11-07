@@ -3,6 +3,7 @@
  * formations → instanced markers) and renders every animation frame with GPU interpolation
  * between the previous and current tick.
  */
+import type { ScreenRect } from '../render/units/clearOf';
 import { CityLabelLayer, NAME_CLEAR_PX, type NameObstacle } from '../render/labels/cityLabels';
 import { LABEL_STRIDE } from '../shared/nationLabels';
 import { FlagStore } from './flagStore';
@@ -32,6 +33,10 @@ import { viewSubscription } from './subscription';
 import { battleViewM, SEA_VIEW_MAX_M } from './battleView';
 
 /** Flags are drawn at capitals from this zoom (px per cell), at this size (PLAN 1.37b). */
+/** How often the panels over the map are read again for the hero counters (ROADMAP R34e), ms. */
+const COVER_MS = 250;
+/** The panels that lie over the map (ROADMAP R34e): a hero's counter under one is drawn beside it. */
+const COVER_SELECTOR = '.topbar, .bottombar, .stats-ranking, .nation-panel, .formation-panel, .history-panel, .relations-panel, .editor-panel, .settings-panel, .map-legend';
 const FLAG_MIN_SCALE = 3;
 const FLAG_PX_W = 24;
 const FLAG_PX_H = 16;
@@ -1013,6 +1018,24 @@ export class MapView {
   seaMarks: { x: number; y: number }[] = [];
   /** The sorties placed on screen at the last frame (PLAN 5.7a), for tests. */
   sortieMarks: PlacedSortie[] = [];
+  /** The panels over the map in canvas px (ROADMAP R34e: hero counters kept clear of them), read at most every COVER_MS. */
+  private covered: ScreenRect[] = [];
+  private coveredAt = -Infinity;
+
+  /** The page's panels over the map, in the canvas's px (`covered`), read again after COVER_MS. */
+  private coveredNow(now: number): readonly ScreenRect[] {
+    if (now - this.coveredAt < COVER_MS || typeof document === 'undefined') return this.covered;
+    this.coveredAt = now;
+    const cr = this.canvas.getBoundingClientRect();
+    const out: ScreenRect[] = [];
+    for (const el of document.querySelectorAll<HTMLElement>(COVER_SELECTOR)) {
+      const r = el.getBoundingClientRect();
+      if (r.width <= 0 || r.height <= 0 || getComputedStyle(el).visibility === 'hidden') continue;
+      out.push({ x: r.left - cr.left, y: r.top - cr.top, w: r.width, h: r.height });
+    }
+    this.covered = out;
+    return out;
+  }
   /** The air's fights, bombs and flak (PLAN 5.7b). */
   airFx = new AirFx();
   /** Nuclear bursts' flash, shockwave and cloud (PLAN 6.6b). */
@@ -1971,7 +1994,7 @@ export class MapView {
     this.airFx.draw(ctx, cam, this.geo, vw, vh, now, airFxSize(cam.scale, this.unitScale), this.shares.individuals, (f) => this.elementPlaces(f));
     // At the world's zoom a hero's counter is the others' size: at twice it, four covered Germany, France and Italy's
     // names in 1940 (ROADMAP R40d; critic run 48, R48-N3); twice from 5,000 m/px, blended between (R42c, R49-N1).
-    this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls, heroes, heroScaleAt(this.metresPerPx));
+    this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls, heroes, heroScaleAt(this.metresPerPx), this.coveredNow(now));
     // The voyages over the sea of the formations whose orders are shown (ROADMAP R17c), at every tier.
     const shownTo: OrderViewer = { picked: this.picked, selected: this.selectedFormations, player: this.selectionNation, nation: this.selected };
     const nationOf = new Map<number, number>();
