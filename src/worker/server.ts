@@ -1236,8 +1236,12 @@ export class SimServer {
   private voyageOf(world: World, id: number): FormationDetail['voyage'] {
     const v = voyageOf(world, id);
     if (v) return v;
-    if (world.embarked.has(id)) return { state: 'atSea', port: null };
-    if (world.seaBound.has(id)) return { state: world.formations.cols.moving[id] === 1 ? 'toPort' : 'waiting', port: null };
+    // In no landing of the player's: the AI's own voyage, its nation's AI (ROADMAP R48b; critic run 51, R51-N2: a
+    // cancelled division the AI shipped off read "bound for its landing", and no row stood for it). Said so for the
+    // played nation's; another nation's is its AI's in any case.
+    const ai = world.formations.cols.nation[id] === world.settings.player && world.settings.player !== 0 ? { ai: true as const } : {};
+    if (world.embarked.has(id)) return { state: 'atSea', port: null, ...ai };
+    if (world.seaBound.has(id)) return { state: world.formations.cols.moving[id] === 1 ? 'toPort' : 'waiting', port: null, ...ai };
     const at = this.landedAt.get(id);
     return at !== undefined && world.tick - at < 24 ? { state: 'landed', port: null } : null;
   }

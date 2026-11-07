@@ -7,6 +7,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-858 · 2026-11-07 · accepted — A division on the AI's voyage says so (R48b)
+- **Context.** Critic run 51, R51-N2 and its objection to §7.1's layers on a taken nation: on 20661 a cancelled
+  division was the AI's again (ADR-759) and the AI shipped it on a landing of its own; its panel said "At sea, bound
+  for its landing", and "Your landings" had no row for it.
+- **Decision.** The worker's voyage for a division of the played nation's aboard or bound for a port in no landing of
+  the player's carries `ai`, and its words say whose: "At sea with the AI's landing (not one of yours)" (and the
+  march to a port, the wait there, so). The AI keeps taking such divisions (SPEC §7.1, the user's design): only the
+  words change, as R35 did for a fleet back with the AI.
+- **Consequences.** `landingAiVoyage1938` (20661, cancelled at hour 26: 364 shipped by the AI at t217; red before);
+  the critic's `c51_cancel_page.mjs 20661 …`: from h216 the panel says so, and the bar has no row.
+
 ### ADR-857 · 2026-11-07 · accepted — A landing's cancel stops those ashore where they stand (R48a; supersedes ADR-855's march)
 - **Context.** Critic run 51, R51-N1 and its objection to ADR-855: 21107's gathering landing, cancelled on day 3,
   marched its three divisions a week on to Hamburg, a port they never reached, while the row said "cancelled: back

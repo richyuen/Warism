@@ -1994,3 +1994,9 @@
   (20829 t2325: 364 beaten at Jiaxing retreated toward it).
 - `landingRow1938` 4 (3 red before; the one-ashore case red on the sim change alone); `landingsBar1938` 4.
 - **Next:** R48b.
+
+## 2026-11-07 — R48b: a division on the AI's voyage says so (ADR-858)
+- The played nation's division aboard or bound for a port in no landing of the player's: "At sea with the AI's
+  landing (not one of yours)". `landingAiVoyage1938` (20661: 364 shipped by the AI at t217; red before); the
+  critic's `c51_cancel_page.mjs 20661 …` in the page: from h216 so, no row.
+- **Next:** R48c.

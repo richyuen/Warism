@@ -9,6 +9,8 @@ type Voyage = NonNullable<FormationDetail['voyage']>;
  * line in its landing's row (R47b): the two say the same.
  */
 export function voyageText(voyage: Voyage): string {
+  // The AI's voyage of a division of the played nation's (R48b): not one of the player's landings.
+  if (voyage.ai) return t(`formation.voyage.${voyage.state === 'atSea' ? 'atSea' : voyage.state === 'toPort' ? 'toPort' : 'waiting'}.ai`);
   if (voyage.state === 'sibling') return t(voyage.days === 1 ? 'formation.voyage.sibling.one' : 'formation.voyage.sibling', { port: voyage.port ?? '', other: voyage.other ?? '', days: voyage.days ?? 1 });
   if (voyage.state === 'toPort' && voyage.port && voyage.later) return t(voyage.days !== undefined ? 'formation.voyage.toPort.later' : 'formation.voyage.toPort.laterSoon', { port: voyage.port, days: voyage.days ?? 1 });
   if (voyage.state === 'toPort' && voyage.port && voyage.days !== undefined) return t('formation.voyage.toPort.days', { port: voyage.port, days: voyage.days });

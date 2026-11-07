@@ -859,8 +859,9 @@ ideas and "what the bar needs", filed (PROMPT's RELEASES, ADR-843); then critic 
     Done (ADR-857): ashore stop, aboard turn back (with one ashore too); "stopped where they stood; the AI commands
     them again" on 21107, as its panels; `landingRows` 108 cases 0 broken; the 25 seeds 0 broken (`marchOn` skips a
     retreat: 20829's 364, beaten at Jiaxing).
-  - [ ] R48b R51-N2 (and §7.1's AI layers objection): a division the AI ships says so in its panel ("At sea with the
+  - [x] R48b R51-N2 (and §7.1's AI layers objection): a division the AI ships says so in its panel ("At sea with the
     AI's landing"), as R35 does for a fleet. AT (the bar's): `c51_cancel_page.mjs 20661 JAP CHI … jap_sh 26 240`.
+    Done (ADR-858): 20661's 364 from h216 "At sea with the AI's landing (not one of yours)", no row.
   - [ ] R48c R51-N3: on a landscape phone (844 × 390) an open row's last division and its cancel are on the screen
     (the cancel in the row's head at a short height).
   - [ ] R48d R51-N6: "waits for the landing from {port}" only when it does wait for it (20861 row 2 sailed first); a
