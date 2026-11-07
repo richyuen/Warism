@@ -20,6 +20,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Evidence.** `relationLabels.test` (dense random graphs: no overlap, in view, the first named);
   `relationsLabels1938` on run 50's worlds a year on (20887 desk, 20889 phone, whole and ×3.4): 0 overlapping pairs,
   every label ≥ 10 px; red before (18 overlapping pairs zoomed in). `docs/evidence/R34/`.
+- **Amended (a test it moved).** R11's `heroesRead1938` phone case asked a zoomed name to be twice its size on the
+  screen (R11 made names readable by zooming, from ~6 px); since R34a it is 11 px at every zoom: the claim is now
+  ≥ 10 px whole and zoomed (missed by R34a's spec run; found running R34c's).
 
 ### ADR-846 · 2026-11-07 · accepted — A landing ready to sail waits six days for those still marching, from the hour it was ready (R44a)
 

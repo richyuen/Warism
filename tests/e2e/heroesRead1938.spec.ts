@@ -140,17 +140,19 @@ test('ROADMAP R11: the relations graph names a war line\'s side, and zooms on a 
   expect(self, 'lines that put a nation beside itself').toEqual([]);
   expect(texts.some((s) => / leads its side| alone on its side/.test(s)), `a leader's or a lone nation's line (${texts.slice(0, 3).join(' / ')})`).toBe(true);
   await page.screenshot({ path: path.join(out, 'r11-phone-graph-whole.png') });
-  // Zoomed: more nations named, and larger on the screen.
+  // Zoomed: more nations named. Names are one size on the screen since R34a (ADR-847: 11 px, readable on a phone
+  // with the whole graph; R11 had them grow with the zoom from about 6 px): at least 10 px whole and zoomed.
   const graph = page.getByTestId('relations-graph');
   const labels = (): Promise<number> => page.locator('.relations-label').count();
   const before = await labels();
   const size = async (): Promise<number> => (await page.locator('.relations-label').first().boundingBox())!.height;
   const small = await size();
+  expect(small, 'a name readable, the whole graph').toBeGreaterThanOrEqual(10);
   await page.getByTestId('relations-zoom-in').click();
   await page.getByTestId('relations-zoom-in').click();
   await expect(graph).toHaveAttribute('data-zoom', '2.25');
   expect(await labels(), 'every nation named at 2.25×').toBeGreaterThan(before);
-  expect(await size(), 'a name larger on the screen').toBeGreaterThan(small * 2);
+  expect(await size(), 'a name readable, zoomed in').toBeGreaterThanOrEqual(10);
   await page.screenshot({ path: path.join(out, 'r11-phone-graph-zoomed.png') });
   // A drag moves the view; it opens nothing.
   const vb = await graph.getAttribute('viewBox');
