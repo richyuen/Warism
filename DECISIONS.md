@@ -7,6 +7,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-860 · 2026-11-07 · accepted — A row says when it sails to land with another, and at sea when it lands (R48d)
+- **Context.** Critic run 51, R51-N6: on 20861 Ōsaka's row said "waits for the landing from Hiroshima: about a day"
+  and sailed a day before Hiroshima's. The wait was real (R37c, `siblingWait`): it holds until it can land within
+  half a day of the other, and its voyage is the longer, so it sails first. The words were false, not the rule. At sea
+  a row said only "at sea".
+- **Decision.** The words say what is done, as the click's hover already did: "sails in about a day, to land with the
+  landing from Hiroshima"; the division's panel "At Ōsaka: sails in about a day, to land with the landing from
+  Hiroshima for the same place". At sea: "at sea: lands in about N days", from the longest voyage left of its groups
+  (`voyageHours`, `LandingRowData.landsIn`). `landingStatus` moved to `src/ui/landingStatus.ts` for the tests.
+- **Consequences.** `landingRowDays1938` (20861: never "waits for", a sibling row so worded, each row sails and lands
+  within its days and a day; red before at t3, row 2).
+
 ### ADR-859 · 2026-11-07 · accepted — The open row's cancel in its head; a short view's bar runs to the bottom bar (R48c)
 - **Context.** Critic run 51, R51-N3: at 844 × 390 the bar's 40 vh (156 px) held two divisions; the third and the
   cancel under them were in the bar's scroll.

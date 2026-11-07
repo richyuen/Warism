@@ -889,6 +889,8 @@ export interface LandingRowData {
   have: number;
   /** Gathering: the hours until it sails and the sibling's port it waits for (`sailsIn`); null otherwise or unknown. */
   sailsIn: { hours: number; other?: number } | null;
+  /** At sea: the hours until its groups are at its water (`voyageHours`, the longest); null otherwise or unknown (R48d). */
+  landsIn: number | null;
 }
 
 /** Nation `nation`'s landings in rows, by id (ROADMAP R47a). */
@@ -911,6 +913,7 @@ export function landingRows(world: World, nation: number): LandingRowData[] {
         need: Math.ceil(men / TRANSPORT_MEN),
         have: Math.floor(roomOf(world, l) / TRANSPORT_MEN),
         sailsIn: sailsIn(world, l),
+        landsIn: l.state === LandingState.sailing ? voyageHours(world, l) || null : null,
       };
     });
 }

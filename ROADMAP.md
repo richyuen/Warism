@@ -866,8 +866,10 @@ ideas and "what the bar needs", filed (PROMPT's RELEASES, ADR-843); then critic 
     (the cancel in the row's head at a short height).
     Done (ADR-859): the cancel in the open row's head; under 500 px tall the bar's list runs down to the bottom bar.
     21107's three to Norwich at 844 × 390: all on the screen (`docs/evidence/R47/landings-landscape-open3.png`).
-  - [ ] R48d R51-N6: "waits for the landing from {port}" only when it does wait for it (20861 row 2 sailed first); a
+  - [x] R48d R51-N6: "waits for the landing from {port}" only when it does wait for it (20861 row 2 sailed first); a
     landing at sea says its days to land.
+    Done (ADR-860): "sails in about a day, to land with the landing from Hiroshima" (and the panel so); at sea "lands in
+    about N days". On 20861 each row sails and lands within its days and a day.
   - [ ] R48e R51-N7: "they land together" for landings 12 hours apart (20661 t117/t129): the words as the rule is
     (within a day), or the landings within the hour.
   - [ ] R48f The ADR-838 objection and Hearts of Iron's idea: one click's landings from several ports grouped as one

@@ -2005,3 +2005,8 @@
 - At 844 × 390 the critic's 21107 three and the cancel all on the screen; under 500 px tall the bar's list runs to the
   bottom bar. `landingsBar1938` 5 (the new case red before).
 - **Next:** R48d.
+
+## 2026-11-07 — R48d: when a row sails and lands (ADR-860)
+- "sails in about a day, to land with the landing from Hiroshima" for a sibling wait (it sails first when its voyage is
+  longer, R51-N6); at sea "lands in about N days". `landingRowDays1938` on 20861 (red before at t3).
+- **Next:** R48e.
