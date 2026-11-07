@@ -728,8 +728,9 @@ Rules:
     refusal "not done: there is o…"): a brief for each single kind, the full text in the tooltip.
   - [ ] R43c R50-N3: on a phone the merged loss row's names are only in a tooltip a phone cannot hover: the names where
     a tap reaches them (the panel the click opens, or the row).
-  - [ ] R43d R50-N4: a freed rising's "left its war" rows tick before "was freed from", their cause: within the hour,
-    the release first.
+  - [x] R43d R50-N4: a freed rising's "left its war" rows tick before "was freed from", their cause: within the hour,
+    the release first. Done: the ticker moves a release or rising above the wars its nation left in that hour
+    (`causeFirst`; the sim's order kept: the pin unmoved); `realmWars` Manchukuo's rising red before.
   - [ ] R43e R50-N5 (naval): 20845 Berlin→Norwich, the group sunk at t89, both told the landing is over, then both
     marched on to Hamburg for six days: a landing ended stops its divisions' march to its port.
   - [ ] R43f R50-N6 (God Mode): Revolt and Spawn name the new nation for a province other than the one clicked ("Free

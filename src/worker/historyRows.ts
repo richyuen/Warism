@@ -234,7 +234,23 @@ export function tickerRows(world: World, nationName: (id: number) => string, cit
     const rose = kind === EventKind.WarDeclared ? roseThen(rows, i, b, a) : -1;
     out.push(tickerRowAt(world, rose >= 0 ? rose : i, nation, cityName, defName));
   }
-  return out.reverse();
+  return causeFirst(out.reverse());
+}
+
+/**
+ * A puppet's release or rising told before the wars it left in that hour (ROADMAP R43d; critic run 50, R50-N4: "left
+ * its war" twice, then "was freed from", their cause). The sim logs the wars left first (`leaveWarsBeside` before the
+ * rising is judged); the ticker, oldest first, moves the release or rising above them. Order kept otherwise.
+ */
+function causeFirst(rows: TickerRow[]): TickerRow[] {
+  for (let i = 0; i < rows.length; i++) {
+    const r = rows[i]!;
+    if (r.kind !== EventKind.PuppetReleased && r.kind !== EventKind.PuppetRevolt) continue;
+    let j = i;
+    while (j > 0 && rows[j - 1]!.tick === r.tick && rows[j - 1]!.kind === EventKind.WarLeft && rows[j - 1]!.a === r.a) j--;
+    if (j < i) rows.splice(j, 0, ...rows.splice(i, 1));
+  }
+  return rows;
 }
 
 /** The index of the row of the hour of row `i` in which `rebel` rose against `holder` (a `RevoltSpawned`), or -1. */

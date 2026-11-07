@@ -1729,4 +1729,5 @@
   at Tokyo), N2 single order rows cut, N3 phone names, N4 release after its effects, N5 a march on after the landing
   ended, N6 God's revolt names.
 - **Next:** R43.
-
+- R43d: the ticker tells a release or rising before the wars it left that hour (`causeFirst` in `tickerRows`; the
+  sim's log order unchanged). `realmWars` (Manchukuo) red before, green after.

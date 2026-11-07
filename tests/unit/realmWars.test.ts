@@ -218,6 +218,8 @@ describe('no war inside one realm or one alliance (PLAN 3.8)', () => {
     expect(ticker).toContain(EventKind.WarLeft);
     expect(ticker).toContain(EventKind.PuppetRevolt);
     expect(TICKER_KINDS.has(EventKind.WarLeft) && TICKER_KINDS.has(EventKind.PuppetRevolt)).toBe(true);
+    // The cause first (ROADMAP R43d; critic run 50, R50-N4): the rising above the war it left, oldest first.
+    expect(ticker.indexOf(EventKind.PuppetRevolt), ticker.join(',')).toBeLessThan(ticker.indexOf(EventKind.WarLeft));
   });
 
   // A nation called into a war against one it fights beside in another stays out of the new war.
