@@ -811,8 +811,9 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
     - [x] R34k3 R39-N2: no mark on a touch screen: a tap asks, a second tap orders.
   - [x] R34l R40-N2: "your selected forces go by sea" for a selection most of which march: the tooltip says which go
     by sea and which march.
-- [ ] R35 Small ideas from the reports: an order's error cleared by any new order; a flag at the destination while
+- [x] R35 Small ideas from the reports: an order's error cleared by any new order; a flag at the destination while
   choosing; a long-press preview of an order on touch; a mark on a fleet the AI has taken back.
+  Done (ADR-850): the first three were so already (R24c; ADR-827's mark; R34k3's two taps); the fourth is new.
 
 ## Batch 4 — naval evidence (ADR-843, the user's decision)
 

@@ -7,6 +7,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-850 · 2026-11-07 · accepted — The reports' small ideas: three were done, a fleet back with the AI is told (R35)
+- **Context.** R35 gathered four ideas from the critic's "Ideas from other games": an order's error cleared by any
+  new order (EU, for R35-N1); a flag at the destination while choosing (Supreme Ruler, EU); a long-press preview of
+  an order on touch (Supreme Ruler, HoI); a mark on a fleet the player no longer commands (for R31d's transports).
+- **Decision.** The first three are in the game already, and nothing is added: a refusal goes with the formation's
+  next order (R24c, `staleNotice` by `orderedAt`; `orderNews1938`); the landing's mark is the flag on the coast
+  (ADR-827); a touch screen's first tap previews an order over the sea (ADR-849; a long press is the box already).
+  The fourth: the worker remembers each fleet of the played nation that has been on a player's order (its own, or
+  a landing's) since the game was opened; its panel says "Done with your orders: the AI commands it again" while it
+  is on none and the player's navy is the AI's (`FormationDetail.aiRun`), not after a refusal. A panel line, not a
+  map mark: every fleet of the player's is the AI's by default (ADR-759), and a mark on each would say nothing.
+- **Consequences.** R31d's released transports read so; a fleet never ordered has no line. The memory is the page
+  worker's, not the sim's: a reload forgets it.
+
 ### ADR-849 · 2026-11-07 · accepted — On a touch screen an order over the sea takes two taps (R34k3)
 - **Context.** R39-N2: the landing's mark (ADR-827) comes of a mouse's hover; a touch screen has none, and a tap
   over the sea ordered at once, the landing never shown: the blind click ADR-827 set out to end.

@@ -593,6 +593,7 @@
   "formation.status.holding": "Holding",
   "tooltip.bySea": "Your selected forces go by sea: they board transports at a port and land at the marked place",
   "tooltip.tapAgain": "Tap again to send them",
+  "formation.aiBack": "Done with your orders: the AI commands it again",
   "tooltip.bySeaPart": "{n} of the {m} selected go by sea; the rest march",
   "tooltip.bySeaSame": "The landing they already have: they keep their transports and land at the marked place",
   "tooltip.bySeaSameWait": "The landing they already have: it sails from {port} in about {days} days, when the last of it is there, and lands at the marked place",

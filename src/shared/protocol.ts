@@ -691,6 +691,8 @@ export const VOYAGE_STRIDE = 8;
 
 export interface FormationDetail {
   id: number;
+  /** The played nation's fleet once on a player's order (its own, or a landing's) and on none now, its navy's AI running it (ROADMAP R35d). */
+  aiRun?: true;
   /**
    * How often the id has been given out (`Table.generation`): with the id it says which
    * formation this is, in this worker and between two loads. Ids are given out again.

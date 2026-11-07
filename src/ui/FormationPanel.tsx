@@ -29,6 +29,7 @@ export function FormationPanel({
   onClose,
   notice = null,
   escort = null,
+  aiBack = false,
 }: {
   /** Null while the first answer is on its way. */
   info: FormationDetail | null;
@@ -45,6 +46,11 @@ export function FormationPanel({
   notice?: string | null;
   /** The player's land formation (ROADMAP R17d): whether its orders over the sea take an escort, and the change; the setting's, remembered. */
   escort?: { on: boolean; onChange: (on: boolean) => void } | null;
+  /**
+   * A fleet the player ordered, its order done and the AI's navy running it again (ROADMAP R35d; critic run 43: R31d
+   * hands a player's empty transports back to the AI, and nothing showed it): said under its status.
+   */
+  aiBack?: boolean;
 }) {
   const row = (label: MessageKey, value: string, testid: string) => (
     <div class="panel-row">
@@ -136,6 +142,11 @@ export function FormationPanel({
             </span>
           </div>
           {waitText ? row('formation.wait', waitText, 'formation-wait') : null}
+          {aiBack ? (
+            <div class="panel-row formation-ai" data-testid="formation-ai-back">
+              {t('formation.aiBack')}
+            </div>
+          ) : null}
           {escort ? (
             <label class="panel-row formation-escort" title={t('formation.escort.title')}>
               <span>{t('formation.escort')}</span>

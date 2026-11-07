@@ -1920,3 +1920,11 @@
 - Unit `landingHintSelection1938` (a new case): red before, green; the seven `seaHint` tests: 19 passed; the
   tooltip specs: 13 passed; `landingMarkMore1938`: 6 passed. R34 done.
 - **Next:** R35.
+
+## 2026-11-07 — R35: the reports' small ideas (ADR-850)
+- An order's error cleared by the next order (R24c), the destination's flag (ADR-827's mark), a preview on touch
+  (R34k3's two taps): in the game already. New: a fleet once on a player's order and on none now, its navy the AI's,
+  says so in its panel ("Done with your orders: the AI commands it again"); the worker remembers such fleets.
+- `fleetAiBack1938` (new; 3517, a Japanese division Tokyo → Shanghai: its transports, released once it is ashore):
+  red before, green; a fleet never ordered has no line. The order and panel specs: 27 passed.
+- **Next:** R45.

@@ -26,6 +26,7 @@ import { largestBattle, warsWithBattle } from '../sim/systems/warBattle';
 import { DAYS_PER_MONTH } from '../sim/systems/research';
 import { shipyard } from '../sim/systems/production';
 import { heroHealth, heroWaits } from '../sim/systems/heroes';
+import { AiLayer, aiRuns, playerHeld } from '../sim/ai/layers';
 import { carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
 import { landedAway } from '../sim/systems/amphibious';
 import { LandingState, landingOfDivision, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
@@ -204,6 +205,8 @@ export class SimServer {
    * told. `before`: the order it replaced, which stands again if this one is refused.
    */
   private ordered = new Map<number, { target: number; before: number | undefined; once?: number }>();
+  /** The played nation's fleets that have been on a player's order since the game was opened or loaded (ROADMAP R35d). */
+  private playerFleets = new Set<number>();
   /** When a formation of a player's order last landed (ROADMAP R17c: its panel says so for a day). */
   private landedAt = new Map<number, number>();
   private labelNames = -1;
@@ -380,6 +383,7 @@ export class SimServer {
         this.airHoldersSent = '';
         this.airDay = -1;
         this.ordered.clear();
+        this.playerFleets.clear();
         this.statsTick = -1;
         this.lastStatsMs = -1;
         this.resetStreams();
@@ -474,6 +478,7 @@ export class SimServer {
     this.airHoldersSent = '';
     this.airDay = -1;
     this.ordered.clear();
+    this.playerFleets.clear();
     this.statsTick = -1;
     this.lastStatsMs = -1;
     this.flagsSent = -1;
@@ -1079,6 +1084,8 @@ export class SimServer {
       units: [...units.values()],
       deck: fleet ? this.deckOf(world, id) : null,
       voyage: this.voyageOf(world, id),
+      // The played nation's fleet on no order of the player's, its navy the AI's (ROADMAP R35d).
+      ...(fleet && this.playerFleets.has(id) && fc.nation[id] === world.settings.player && aiRuns(world, fc.nation[id]!, AiLayer.navy) && !playerHeld(world, id) ? { aiRun: true as const } : {}),
     };
   }
 
@@ -1365,6 +1372,8 @@ export class SimServer {
   }
 
   private drainEvents(world: World): void {
+    // The fleets on a player's order this hour, remembered (ROADMAP R35d): one released later is told back with the AI.
+    for (const id of world.playerOrders.keys()) if (world.isFleet(id)) this.playerFleets.add(id);
     const ev = world.out.events;
     let sentFirst = -1;
     for (let i = 0; i < ev.length; i += 6) {
