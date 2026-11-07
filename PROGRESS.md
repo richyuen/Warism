@@ -1701,3 +1701,14 @@
 - Run 47's 383 cases: 35 split as before, four English cases now land (274 at hour 64) instead of a refusal.
 - Checker: `farPort` at any distance; a sibling's ground counts; an escort let go is forgotten (20405).
 - **Next:** gate; then R42 (or the critic first: the user's call).
+
+## 2026-11-06 — R42: run 49's issues (ADR-837)
+- R42a: the hover over the landing they have says "it sails from Tokyo in about 47 days, when the last of it is
+  there" (sailed after 46.6); the marching one's panel its days. Before the click not told (no landing yet).
+- R42b: beside a panel the last two order rows; "2 divisions lost at sea with their transports", names in the tooltip.
+  A phone keeps ADR-760's one order row.
+- R42c: hero counters 1× at 10,000 m/px to 2× at 5,000 (not 3,000: PLAN 7.184b3's AT), within a quarter of the screen.
+- R42d: `PuppetReleased` in the ticker (cue "return"). R42e: "their port".
+- Specs run by hand: `landingClickWait1938`, `orderRowsPanel1938`, `heroes1938` (R40d, R42c, 7.184b3), `ticker1938`,
+  `landingMark1938`'s text unchanged. Budgets: no sim system changed; one pass over 14 heroes a frame.
+- **Next:** the batch's critic run (R42 was its last item).

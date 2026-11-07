@@ -189,6 +189,9 @@ export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([
   // A war a nation left while it goes on, and a puppet's revolt (PLAN 7.192, critic run 26's 1).
   EventKind.WarLeft,
   EventKind.PuppetRevolt,
+  // A puppet freed, or broken free of an overlord overrun: the cause of its "left its war" rows (ROADMAP R42d,
+  // critic run 49, R49-N2).
+  EventKind.PuppetReleased,
   // A hero lost and back (ROADMAP R12).
   EventKind.HeroLost,
   EventKind.HeroReturned,

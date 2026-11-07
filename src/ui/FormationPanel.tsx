@@ -61,7 +61,9 @@ export function FormationPanel({
       : voyage && !info?.engaged
         ? voyage.state === 'sibling'
           ? t(voyage.days === 1 ? 'formation.voyage.sibling.one' : 'formation.voyage.sibling', { port: voyage.port ?? '', other: voyage.other ?? '', days: voyage.days ?? 1 })
-          : t(voyage.port ? `formation.voyage.${voyage.state}.port` : `formation.voyage.${voyage.state}`, { port: voyage.port ?? '' })
+          : voyage.state === 'toPort' && voyage.port && voyage.days !== undefined
+            ? t('formation.voyage.toPort.days', { port: voyage.port, days: voyage.days })
+            : t(voyage.port ? `formation.voyage.${voyage.state}.port` : `formation.voyage.${voyage.state}`, { port: voyage.port ?? '' })
         : t(info?.engaged ? 'formation.status.engaged' : info?.moving ? 'formation.status.moving' : 'formation.status.holding');
   // At its port, waiting for the rest of its landing (ROADMAP R22c, R33b): how many, and how far the last.
   const wait = voyage?.state === 'gathering' ? voyage.wait : undefined;

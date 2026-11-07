@@ -45,4 +45,11 @@ describe('a loss of several in one hour is one row naming them (ROADMAP R40c)', 
     expect(orderNewsText({ ...n, kind: 'transportsSunk', reason: 1 }, 'A, B', 2)).toContain('2 divisions: the transports of their landing were sunk; others are on their way');
     expect(orderNewsText(n, 'A')).toBe('A: its transports were sunk at sea; it was lost with them.');
   });
+  // ROADMAP R42e (critic run 49, #6): "their landing… its port" mixed number.
+  it('transports sunk of two, none to come: one number throughout', () => {
+    const n = { kind: 'transportsSunk' as const, id: 364, nation: 1, reason: 0, x: 0, y: 0, tick: 855 };
+    const s = orderNewsText(n, 'A, B', 2);
+    expect(s).toBe('2 divisions: the transports of their landing were sunk, and no others can come to their port: the landing is over (A, B).');
+    expect(s).not.toMatch(/\bits\b/);
+  });
 });

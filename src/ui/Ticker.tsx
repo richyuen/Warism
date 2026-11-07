@@ -15,7 +15,9 @@ const TICKER_SHORT = 2;
  * lines at most (PLAN 3.12Rh): the panel leaves the room of two rows of two lines, and a long
  * name would put a third over the panel's foot.
  * Below the events, what became of the player's orders of formations (PLAN 4.9c): a click flies
- * to the formation and forgets the row.
+ * to the formation and forgets the row. Beside a panel the last two (ROADMAP R42b; critic run 49, R49-N3: the
+ * at-port division's "landing is over" not on the screen), the sea row then given way to keep the room (ADR-754); a
+ * loss of several there by its count, the names in its tooltip (the row is one line).
  * `compact` (a phone's width; the user's choice of 2026-10-29, ADR-760): two rows in all, each of
  * two lines at most: the newest event, and the player's last order's news, else the first sea
  * battle, else the event before it.
@@ -37,8 +39,8 @@ export function Ticker({
   compact?: boolean;
   startDay: number;
   onPlace: (x: number, y: number) => void;
-  /** What became of the player's orders (PLAN 4.9c), after the events: beside a panel the last only. */
-  orders?: { seq: number; kind: string; text: string }[];
+  /** What became of the player's orders (PLAN 4.9c), after the events: beside a panel the last two; `brief`, the row's words there (R42b). */
+  orders?: { seq: number; kind: string; text: string; brief?: string }[];
   onOrder?: (seq: number) => void;
   /** The sea battles going on (PLAN 4.10b), before the orders: beside a panel the first only. */
   /** `kind`: two fleets within reach (`pair`), a carrier's strike in a battle, one out of a battle (`raid`, PLAN 7.154a), or its fleets closing (PLAN 7.41a); its tooltip says what the click shows. */
@@ -53,7 +55,7 @@ export function Ticker({
   const [evs, ss, os] = compact
     ? [rows.slice(lastOrder.length + phoneSea.length > 0 ? -1 : -TICKER_SHORT), phoneSea, lastOrder]
     : short
-      ? [rows.slice(-TICKER_SHORT), merged.slice(0, 1), lastOrder]
+      ? [rows.slice(-TICKER_SHORT), orders.length > 1 ? [] : merged.slice(0, 1), orders.slice(-2)]
       : [rows, merged, orders];
   return (
     <div class={compact ? 'ticker short compact' : short ? 'ticker short' : 'ticker'} data-testid="ticker" role="log" aria-live="polite" aria-label={t('ticker.title')}>
@@ -82,8 +84,9 @@ export function Ticker({
         ))}
         {os.map((o) => (
           <li key={`order-${o.seq}`}>
-            <button type="button" class="ticker-row order-news" data-testid="order-news" data-order={o.kind} title={t('order.toFormation')} onClick={() => onOrder(o.seq)}>
-              <span class="ticker-line">{o.text}</span>
+            <button type="button" class="ticker-row order-news" data-testid="order-news" data-order={o.kind} title={(short || compact) && o.brief ? `${o.text}
+${t('order.toFormation')}` : t('order.toFormation')} onClick={() => onOrder(o.seq)}>
+              <span class="ticker-line">{(short || compact) && o.brief ? o.brief : o.text}</span>
             </button>
           </li>
         ))}

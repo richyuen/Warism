@@ -1,0 +1,12 @@
+desk 12000 m/px: 1.000 ×
+desk 10001 m/px: 1.000 ×
+desk 9999 m/px: 1.000 ×
+desk 9000 m/px: 1.152 ×
+desk 8000 m/px: 1.322 ×
+desk 7000 m/px: 1.515 ×
+desk 6000 m/px: 1.737 ×
+desk 5001 m/px: 2.000 ×
+desk 4000 m/px: 2.000 ×
+phone 9999 m/px: 1.000 ×, Maus 44 px (11 %)
+phone 8000 m/px: 1.071 ×, Maus 47 px (12 %)
+phone 5000 m/px: 1.071 ×, Maus 47 px (12 %)

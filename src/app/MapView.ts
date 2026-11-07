@@ -11,7 +11,7 @@ import type { LandingMark } from '../shared/protocol';
 import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, type StackItem } from '../render/units/markerStacks';
-import { CounterLayer, counterNation, type CounterSource, type HeroCounter } from '../render/units/counters';
+import { CounterLayer, counterNation, heroScaleAt, type CounterSource, type HeroCounter } from '../render/units/counters';
 import { drawSeaBattles } from '../render/units/seaBattles';
 import { FlagAtlas, NO_FLAG_SLOT } from '../render/units/flagAtlas';
 import { BallState, HERO_BIT, HERO_SCALE, HURT_SHIFT, hurtLevel } from '../render/units/ballShader';
@@ -66,8 +66,6 @@ import { setSizeScale, sizeScale } from '../render/sizeScale';
 import { loadMapFonts, MAP_FONT, NAME_WEIGHT } from '../render/labels/fonts';
 import type { MapHover } from '../ui/mapHover';
 
-/** Metres a pixel from which a hero's counter is drawn at the others' size (ROADMAP R40d: the whole world in view; T0 at 5,000 m/px keeps PLAN 7.184b3's twice). */
-const HERO_SMALL_M = 10000;
 /**
  * A tool that paints on a primary-button drag (PLAN 1.44). Positions are world cells, fractional,
  * with x not wrapped. While `active()`, a press calls `start`, every further cell the pointer
@@ -1972,8 +1970,8 @@ export class MapView {
     // the men it hit, its formation's drawn elements (PLAN 5.9).
     this.airFx.draw(ctx, cam, this.geo, vw, vh, now, airFxSize(cam.scale, this.unitScale), this.shares.individuals, (f) => this.elementPlaces(f));
     // At the world's zoom a hero's counter is the others' size: at twice it, four covered Germany, France and Italy's
-    // names in 1940 (ROADMAP R40d; critic run 48, R48-N3).
-    this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls, heroes, this.metresPerPx >= HERO_SMALL_M ? 1 : HERO_SCALE);
+    // names in 1940 (ROADMAP R40d; critic run 48, R48-N3); twice from 5,000 m/px, blended between (R42c, R49-N1).
+    this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls, heroes, heroScaleAt(this.metresPerPx));
     // The voyages over the sea of the formations whose orders are shown (ROADMAP R17c), at every tier.
     const shownTo: OrderViewer = { picked: this.picked, selected: this.selectedFormations, player: this.selectionNation, nation: this.selected };
     const nationOf = new Map<number, number>();

@@ -772,6 +772,20 @@ function siblingWait(world: World, l: Landing): { port: number; hours: number } 
   return out;
 }
 
+/**
+ * The hours until gathering landing `l` sails, and why (ROADMAP R42a; critic run 49, R49-N5: a 5-day crossing took a
+ * month, and the click did not say): its wait for its own (`waitLeft`: the last division's march, its transports'
+ * sail to the port), or for a sibling of its click (`siblingWait`), the later; `other` that sibling's port. Null when
+ * not gathering, or with no end known (one held up on the way).
+ */
+export function sailsIn(world: World, l: Landing): { hours: number; other?: number } | null {
+  if (l.state !== LandingState.gathering) return null;
+  const own = waitLeft(world, l);
+  if (!Number.isFinite(own)) return null;
+  const sib = siblingWait(world, l);
+  return sib && sib.hours > own ? { hours: sib.hours, other: sib.port } : { hours: own };
+}
+
 /** Men aboard group `fleet`. */
 function menAboard(world: World, fleet: number): number {
   let men = 0;
@@ -1015,6 +1029,15 @@ export function seaHint(world: World, ids: readonly number[], x: number, y: numb
     const join = at && [...world.landings.values()].find((o) => o.id !== at.id && o.nation === at.nation && o.state === LandingState.gathering && world.cells.controller[world.ports[o.port]!.cell] === at.nation && sameLandingAs(world, o, x, y));
     if (join) hint.rejoin = world.ports[join.port]?.name ?? '';
   }
+  // The landing they already have, gathering: when it sails, in days (ROADMAP R42a; critic run 49, R49-N5: Tokyo to
+  // Shanghai, 21 of 26 days waiting for a division 22 cells off, the click silent on it). Over a day only.
+  if (hint?.how === 1 && hint.same && marks.length === 1) {
+    const l = ids.map((id) => landingOfDivision(world, id)).find((o) => o !== undefined && o.water === hint!.water && o.land === hint!.land);
+    const when = l && sailsIn(world, l);
+    if (l && when && when.hours >= SAME_CLICK_HOURS) {
+      hint.sails = { port: world.ports[l.port]?.name ?? '', days: Math.ceil(when.hours / 24), ...(when.other !== undefined ? { other: world.ports[when.other]?.name ?? '' } : {}) };
+    }
+  }
   return hint ?? { how: 0, water: -1, land: -1, same: false, marks };
 }
 
@@ -1041,7 +1064,11 @@ export function voyageOf(world: World, id: number): { state: 'toPort' | 'waiting
   // Aboard transports sunk this hour: at sea, lost with them at its end (R38a; critic run 46: "next voyage").
   const e = world.embarked.get(id);
   if (e !== undefined && !world.formations.has(e.fleet)) return { state: 'atSea', port: null };
-  if (c.moving[id] === 1) return { state: 'toPort', port };
+  // On its way, its days to the port (ROADMAP R42a: the one its landing waits for says how long).
+  if (c.moving[id] === 1) {
+    const hours = marchHoursLeft(world, id);
+    return Number.isFinite(hours) && hours >= SAME_CLICK_HOURS ? { state: 'toPort', port, days: Math.ceil(hours / 24) } : { state: 'toPort', port };
+  }
   // At the port, its landing sailed without it: the next voyage (R17b, R37a).
   if (l.state !== LandingState.gathering) return { state: 'nextVoyage', port };
   if (!l.fleets.some((o) => atPort(world, l, o))) return { state: 'waiting', port };

@@ -3,6 +3,7 @@ import type { SeaHint } from '../shared/protocol';
 import type { MapHover } from './mapHover';
 import { displayName } from './NationPanel';
 import { t } from './i18n';
+import { sameText } from './seaHintText';
 
 /**
  * What is under the mouse (PLAN 7.4f7, the critic's "no tooltip on hover"): the nation's name by
@@ -67,8 +68,8 @@ export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral,
           {t('tooltip.bySeaMany', { n: landing!.value!.marks.length })}
         </div>
       ) : sea && landing?.value?.marks[0]?.same === true ? (
-        <div class="map-tooltip-note" data-testid="tooltip-by-sea" data-same="1">
-          {t('tooltip.bySeaSame')}
+        <div class="map-tooltip-note" data-testid="tooltip-by-sea" data-same="1" data-days={landing.value.sails?.days}>
+          {sameText(landing.value)}
         </div>
       ) : sea ? (
         <div class="map-tooltip-note" data-testid="tooltip-by-sea">

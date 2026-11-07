@@ -1324,7 +1324,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   (`TransportsSunk`, 76, the news "transportsSunk": another called, or the landing over), not refused
   "no transports ... at a port it can reach" (ROADMAP R39a; critic run 47, R47-B1: false where another
   group stood idle). A notice keeps the division's name as the page knew it (R39b); the mark is saved while set
-  (`world.sunk`, R40b). The same loss of several divisions in one hour is one row naming them (R40c).
+  (`world.sunk`, R40b). The same loss of several divisions in one hour is one row naming them (R40c); in the
+  ticker's one-line rows (beside a panel, a phone) by its count, the names in its tooltip (`orderNewsBrief`, R42b).
   An hour's orders edit it as a batch (`landingOrders`, before they are applied): one click ordering all
   of a gathering landing's divisions to one other place over the sea from its port redirects it, its port
   and groups kept, or merges it into one gathering for that place at the same port (`redirectGathering`;
@@ -1349,7 +1350,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   (`tellLandingsLeft`; a whole click sent elsewhere is not told, R25b, R27c). An order for the landing
   it has changes nothing (R23b, R23e). A player's order to a landing's transports is refused `Convoy`
   (19, R31a).
-  The panel (`voyageOf`, ROADMAP R17c, R22c): marching to its port; waiting there for transports (also
+  The panel (`voyageOf`, ROADMAP R17c, R22c): marching to its port (with its days there where over a day, R42a:
+  "its landing waits for it"); waiting there for transports (also
   when all of it is there and a group is on its way, R37b); at its port with them, waiting for the rest
   (`gathering`, "At {port}, waiting for the rest of the landing"), with how many it waits for are at the
   port of how many and the days the furthest has left to march (`marchHoursLeft`); all there, ready
@@ -1359,7 +1361,10 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   sailing back to its port (a cancel, or a recall to a landing gathering there: R37b, critic run 44,
   R44-N1). The notice of a landing left goes at the next order; a next voyage's, as a refusal's, at the
   next order or change of state (`staleNotice`); the hover over a place a landing at sea would turn back for, to join
-  the one gathering there, says so (`seaHint`'s `rejoin`, "tooltip.bySeaRejoin"). The map's mark and an order's news are judged
+  the one gathering there, says so (`seaHint`'s `rejoin`, "tooltip.bySeaRejoin"). The hover over the place of the
+  landing they already have, gathering over a day more, says when it sails, in days, and why: the last of it on its
+  way, or a sibling of its click from another port (`seaHint`'s `sails`, `sailsIn`: `waitLeft` or `siblingWait`, the
+  later; "tooltip.bySeaSameWait", "tooltip.bySeaSameSibling"; ROADMAP R42a, critic run 49, R49-N5). The map's mark and an order's news are judged
   against the landing the order is for (`seaOrderLanding`, `seaHint`: from the landing's port while
   aboard, R27b, R43-N4; `landedAway`, R26a, R27c).
   The escort (ROADMAP R17d): an order with `escort` that makes a new landing keeps a warfleet for it
@@ -1687,7 +1692,9 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   (`CLUSTER_PX` 64, levels to `MAX_LEVEL` 14, ± `HYSTERESIS` 0.15 of a level, split or merge over
   `SPLIT_MS` 250 ms), overlapping ones folded (`FOLD_GAP_PX` 2, `FOLD_HOLD_PX` 6, `FOLD_MS` 250); the
   number is the men (`1.54M`, `12.3k`), a hero's its health; a hero has a counter of its own, `HERO_SCALE`
-  its nation's, its nation's size from `HERO_SMALL_M` (10,000 m/px: the whole world in view, ROADMAP R40d). Balls: the
+  its nation's, its nation's size from `HERO_SMALL_M` (10,000 m/px: the whole world in view, ROADMAP R40d), blended by
+  zoom level to `HERO_FULL_M` (5,000; `heroScaleAt`, R42c: no jump at one step of the wheel), and no wider above its
+  nation's size than `HERO_SCREEN_SHARE` (a quarter) of the screen (the widest name's). Balls: the
   flag chip a ball of `COUNTER_BALL_R` (8 px) over the box's left end.
 - **T1 markers** (`src/render/units/markers.ts`, from `T1_MAX_M` to `T1_MIN_M`): a box with the NATO
   symbol, pips for its elements (fading in and out each; the strength bar only while no elements came),
@@ -1846,8 +1853,10 @@ builds).
   "+N": the sides' leaders and allies, the score, swords lit while it has a battle; a click flies to the
   war's battle (up to `BATTLE_VIEW_MAX_M` 250 m/px).
 - **Ticker** (`src/ui/Ticker.tsx`, bottom left, newest last, `role="log"`): the `TICKER_ROWS` (5) latest of
-  `TICKER_KINDS` within `TICKER_HOURS` (720), deaths deduplicated, a peace with its annexation one row
-  (`tickerRows`); the player's order news (refusals, repulsed or distant landings, `ORDER_NEWS_KEPT` 4;
+  `TICKER_KINDS` within `TICKER_HOURS` (720; a puppet freed among them, `PuppetReleased`, the cause of its "left its
+  war" rows, R42d), deaths deduplicated, a peace with its annexation one row
+  (`tickerRows`); the player's order news (refusals, repulsed or distant landings, `ORDER_NEWS_KEPT` 4; beside a
+  panel the last two, the sea row then given way, R42b, ADR-754's room; on a phone the last;
   the formation's panel shows its last as a notice, and a refusal's only while the formation's
   voyage, march (and the cell it is for: a new order taken ends it, R23c), fight and retreat stay as
   when the panel first showed it, and no order of it has been sent since, `staleNotice`, ROADMAP R22f,

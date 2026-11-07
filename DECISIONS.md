@@ -7,6 +7,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-837 · 2026-11-06 · accepted — Run 49's issues (R42): a landing's wait told in days; heroes blended to 5,000 m/px; two order rows beside a panel
+
+- **R42a (R49-N5).** The hover over the place of the landing they already have says when it sails, in days, once the
+  click is taken (`seaHint`'s `sails`, `sailsIn`: `waitLeft`, or `siblingWait` where later); the marching one's panel
+  its days to the port. Not before the click: no landing exists yet, and the order's port is chosen by
+  `chooseTransports`, which sends a called group (a guess could name another port). 1938 seed 1, R22c's four to
+  Shanghai: said 47 days, sailed after 46.6. The sibling's branch on `landingTwoPorts1938`'s three seeds.
+- **R42c (R49-N1).** A hero's counter is 1× from 10,000 m/px and 2× from 5,000, by zoom level between (1.32× at 8,000,
+  a Europe view); 5,000 not the critic's "for example 3,000": PLAN 7.184b3's accepted AT (`heroes1938`, 1.9–2.1× at
+  5,000) stays green. Above 1× no wider than a quarter of the screen (the widest name's): inert at a desk, 1.07× on a
+  390-px phone (Maus 12 % of it; the bar 38 %). `docs/evidence/7.184b/r42c-sizes.txt`.
+- **R42b (R49-N3).** Beside a panel the last two order rows, the sea row giving way while there are two (ADR-754's room
+  unchanged: `ticker1938` green); a loss of several by its count, its names in the tooltip. Not taken: two lines an
+  order row (ADR-754's room, `ticker1938`'s two events). On a phone, upright or on its side, the last order only, as
+  ADR-760 (the user's choice) has it: the at-port division's row is not shown there while a later stands.
+- **R42d (R49-N2).** `PuppetReleased` is a ticker kind, cue "return". **R42e.** "their landing… their port".
+- **Budgets.** No sim system changed (`seaHint` and `voyageOf` are read on request); the frame adds one pass over the
+  heroes (14) for the widest name.
+
 ### ADR-836 · 2026-11-06 · accepted — R38d's gate goes; a click's sibling waited for up to a month (R41)
 
 - **Context.** ADR-835's `farPort` found that within R38d's gate (a far port under 20 straight cells beyond the

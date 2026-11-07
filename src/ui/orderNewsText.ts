@@ -17,6 +17,18 @@ export function orderNewsText(n: OrderNews, name: string, count = 1): string {
   return t('order.refused', { name, why: t(`order.why.${n.reason}` as MessageKey) });
 }
 
+/**
+ * The words of a loss of `count` divisions in one hour without their names, for a row of one line beside a panel (ROADMAP
+ * R42b; critic run 49, R49-N3: "2 divisions lost at sea with their transports: Squar…"); the names in its tooltip.
+ * Null for one, or another kind.
+ */
+export function orderNewsBrief(n: OrderNews, count: number): string | null {
+  if (count < 2) return null;
+  if (n.kind === 'lostAtSea') return t('order.lostAtSeaBrief', { count });
+  if (n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalledBrief' : 'order.transportsSunkBrief', { count });
+  return null;
+}
+
 /** What a formation is doing, as its panel's status says it: its voyage, march, fight and retreat. */
 function stateOf(info: FormationDetail): string {
   return `${info.voyage?.state ?? '-'}|${info.moving ? (info.goal ?? 1) : '-'}|${info.engaged ? 1 : 0}|${info.retreat > 0 ? 1 : 0}`;

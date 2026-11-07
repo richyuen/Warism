@@ -4,7 +4,7 @@ import { EventKind } from '../../src/shared/events';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { voyageOf } from '../../src/sim/systems/landings';
+import { seaHint, voyageOf } from '../../src/sim/systems/landings';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
 import { atItsPort } from '../helpers/landings';
@@ -17,6 +17,7 @@ import { nationId } from '../helpers/sim1938';
 // the other would land more than a day after it: the three land within a day, or are told.
 // ROADMAP R38b (critic run 46, R46-N1): while the fresh one's landing waits for the other its panel read "ready"
 // for days: it now says it waits for the landing from the other port (`sibling`), "ready" a day at most.
+// ROADMAP R42a: the cursor on Fuzhou with the fresh one selected says so too: when it sails, waiting for which.
 
 const { w: W, h: H } = SIZE_1938;
 const JAP = nationId('JAP');
@@ -67,11 +68,22 @@ describe('two clicks for one place in one hour, from two ports: they land togeth
       click([fresh], FUZHOU);
       click(pair, FUZHOU);
       const states = new Map<string, number>();
+      let hinted: string | null = null;
       for (let h = 0; h < 24 * 90 && ids.some((id) => w.formations.has(id) && !landed.has(id) && !told.has(id)); h++) {
         sim.step(1, take);
-        const v = voyageOf(w, fresh)?.state;
+        const voyage = voyageOf(w, fresh);
+        const v = voyage?.state;
         if (v) states.set(v, (states.get(v) ?? 0) + 1);
+        if (v === 'sibling' && hinted === null && voyage!.days! > 1) {
+          const sails = seaHint(w, [fresh], FUZHOU[0], FUZHOU[1]).sails;
+          expect(sails, 'the hint: when it sails').toBeDefined();
+          expect(sails!.other, 'waiting for the other landing').toBe(voyage!.other);
+          expect(sails!.port).toBe(voyage!.port);
+          expect(Math.abs(sails!.days - voyage!.days!), `${sails!.days} days against the panel's ${voyage!.days}`).toBeLessThanOrEqual(1);
+          hinted = sails!.other!;
+        }
       }
+      expect(hinted, 'the hint asked while it waited for its sibling').not.toBeNull();
       expect(states.get('sibling') ?? 0, `the fresh one's panel says it waits for the other landing: ${JSON.stringify([...states])}`).toBeGreaterThan(0);
       expect(states.get('ready') ?? 0, 'ready a day at most').toBeLessThanOrEqual(24);
       const at = ids.filter((id) => !told.has(id)).map((id) => landed.get(id));

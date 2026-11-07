@@ -80,6 +80,23 @@ export interface DrawnCounter {
   heroes?: number[];
 }
 
+/** Metres a pixel from which a hero's counter is the others' size (ROADMAP R40d: the whole world in view). */
+export const HERO_SMALL_M = 10000;
+/** Metres a pixel to which a hero's counter is HERO_SCALE × the others' (PLAN 7.184b3's T0 at 5,000 m/px). */
+export const HERO_FULL_M = 5000;
+/** The widest a hero's counter is drawn above the others' size, as a share of the screen's width (ROADMAP R42c). */
+export const HERO_SCREEN_SHARE = 0.25;
+
+/**
+ * A hero counter's size × the others' at `metresPerPx` (ROADMAP R42c; critic run 49, R49-N1: twice below 10,000 m/px
+ * and once above, a jump at one step of the wheel): 1 from HERO_SMALL_M, HERO_SCALE to HERO_FULL_M, between them
+ * by zoom level (the log of the metres a pixel).
+ */
+export function heroScaleAt(metresPerPx: number): number {
+  const k = Math.log(HERO_SMALL_M / metresPerPx) / Math.log(HERO_SMALL_M / HERO_FULL_M);
+  return 1 + (HERO_SCALE - 1) * Math.min(1, Math.max(0, k));
+}
+
 /** A hero at T0 (PLAN 7.184b3): its own counter, HERO_SCALE × a nation's, with its name. */
 export interface HeroCounter {
   id: number;
@@ -450,7 +467,7 @@ export class CounterLayer {
     balls = false,
     /** The heroes (PLAN 7.184b3), not in `src`: each its own counter, never folded, above the others. */
     heroes: readonly HeroCounter[] = [],
-    /** A hero counter's size × the others' (HERO_SCALE; 1 at the world's zoom, ROADMAP R40d). */
+    /** A hero counter's size × the others' (`heroScaleAt`: 1 at the world's zoom, ROADMAP R40d, R42c); within HERO_SCREEN_SHARE of `vw`. */
     heroScale = HERO_SCALE,
   ): void {
     this.drawn = [];
@@ -502,7 +519,11 @@ export class CounterLayer {
     // Stepped down as often as it took, Europe's ten heroes at the world's zoom cascaded into Africa,
     // P.100 Ercole drawn 5,009 km from itself. Laid out once, on the first copy; each copy drawn, a
     // counter whose place is in the view kept whole in it ("+1" was cut by the screen's edge).
-    const hs = size * heroScale;
+    // No larger than the others where its box would be over HERO_SCREEN_SHARE of the screen's width (ROADMAP R42c;
+    // critic run 49, R49-N1: "P.100 Ercole" 148 px, 38 % of a phone's): the widest name's.
+    const widest = heroes.reduce((m, hero) => Math.max(m, widthOf(hero.name) + 18), 0);
+    const room = widest > 0 ? (HERO_SCREEN_SHARE * vw) / (widest * size) : heroScale;
+    const hs = size * Math.max(1, Math.min(heroScale, room));
     if (alpha > 0.01) {
       const step = (h + 2) * hs;
       const groups: { lead: HeroCounter; members: number[]; dy: number; box: [number, number, number, number] }[] = [];

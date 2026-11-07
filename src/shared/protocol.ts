@@ -859,6 +859,11 @@ export interface SeaHint {
   plain?: boolean;
   /** By sea, a landing at sea selected: the port it turns back to, to join the landing gathering there for that place (ROADMAP R37b). */
   rejoin?: string;
+  /**
+   * By sea, the landing they already have (`same`), gathering over a day more: its port and the days until it sails
+   * (`sailsIn`); `other`, the port of the sibling of its click it waits for, when that is the later (ROADMAP R42a).
+   */
+  sails?: { port: string; days: number; other?: string };
   water: number;
   land: number;
   same: boolean;

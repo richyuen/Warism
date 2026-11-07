@@ -699,17 +699,23 @@ Rules:
   walking to London to be refused `PortShut`. Every checker seed the critic has run 0 broken, `farPort` now at any
   distance, a landing waiting for a sibling gaining ground as it does; 19206's 367 46 → 28 days gathering.
 
-- [ ] R42 **Run 49's issues** (critic run 49, focused, on `5da444a8`: no blocking issue; naval 7, bar 8: "nothing new
+- [x] R42 **Run 49's issues** (critic run 49, focused, on `5da444a8`: no blocking issue; naval 7, bar 8: "nothing new
   earns an 8"; ADR-833: each finding fixed; the critic's probes replayed first).
-  - [ ] R42a R49-N5 (naval feel): a click whose landing waits for a marching sibling says so in days at the click
+  - [x] R42a R49-N5 (naval feel): a click whose landing waits for a marching sibling says so in days at the click
     (20661 Tokyo→Shanghai: 26 days, 21 waiting for a division 22 cells off), as the sibling wait does elsewhere.
-  - [ ] R42b R49-N3: the merged loss row beside a panel is cut (desk, phone, landscape phone), and the at-port
+  - [x] R42b R49-N3: the merged loss row beside a panel is cut (desk, phone, landscape phone), and the at-port
     division's "landing is over" row is off screen: the row wraps to two lines beside a panel, or shows the count
     with the names in its tooltip; more than the last order row shown.
-  - [ ] R42c R49-N1: hero counters blend from 1× at 10,000 m/px to 2× at ~3,000 m/px, sized by screen width too
+  - [x] R42c R49-N1: hero counters blend from 1× at 10,000 m/px to 2× at ~3,000 m/px, sized by screen width too
     (no jump at 10,000; at a Europe view they do not cover nation names; a phone name under 38 % of the screen).
-  - [ ] R42d R49-N2: `PuppetReleased` ticks (at least the release that ends a rising), so "left its war" has its cause.
-  - [ ] R42e R49 #6: `order.transportsSunkMany` agrees in number ("their landing… their port").
+  - [x] R42d R49-N2: `PuppetReleased` ticks (at least the release that ends a rising), so "left its war" has its cause.
+  - [x] R42e R49 #6: `order.transportsSunkMany` agrees in number ("their landing… their port").
+  Done (ADR-837): R42a the hover over the landing they have says when it sails, in days, and the marching one's panel
+  its days (`landingClickWait1938` unit and spec: said 47, sailed after 46.6; the sibling's branch on
+  `landingTwoPorts1938`); R42b beside a panel the last two order rows, the loss of several by its count with its
+  names in the tooltip (`orderRowsPanel1938`; a phone keeps ADR-760's last order); R42c 1× at 10,000 m/px to 2× at
+  5,000 by zoom level, within a quarter of the screen (`heroes1938` R42c: 1.32× at 8,000, phone 12 %; 7.184b3 green);
+  R42d `PuppetReleased` ticked; R42e one number.
 
 ## Batch 3 — readability (after the release, ADR-829)
 

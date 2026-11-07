@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { EventKind } from '../../src/shared/events';
+import { cueOfKind } from '../../src/shared/sound';
+import { tickerRows } from '../../src/worker/historyRows';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { eliminateNation } from '../../src/sim/systems/capitals';
@@ -116,6 +118,10 @@ describe('puppets (PLAN 1.18)', () => {
     expect(kinds(ev, EventKind.PuppetReleased), 'broke free').toEqual([[ALB, ITA]]);
     expect(w.nations.cols.overlord[ALB]).toBe(0);
     expect(w.wars.atWar(ALB, ITA)).toBe(false);
+    // In the ticker too, so a "left its war" row has its cause there (ROADMAP R42d, critic run 49, R49-N2).
+    const row = tickerRows(w, (n) => `=${n}`).find((r) => r.kind === EventKind.PuppetReleased);
+    expect(row && [row.a, row.b]).toEqual([ALB, ITA]);
+    expect(cueOfKind(EventKind.PuppetReleased)).toBe('return');
   });
 
   it('a voiceless satellite (autonomy < 10) cannot revolt however disloyal', () => {

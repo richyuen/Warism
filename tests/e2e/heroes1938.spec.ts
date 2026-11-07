@@ -255,6 +255,52 @@ test('R40d: with the whole world in view a hero counter is its nation’s size',
   for (const h of r.own) expect(r.hero / h, `Maus ${r.hero.toFixed(1)} px against ${h.toFixed(1)} px`).toBeCloseTo(1, 1);
 });
 
+// ROADMAP R42c (critic run 49, R49-N1): from 1× to 2× between 10,001 and 9,999 m/px, a jump at one step of the wheel,
+// and 2× at a Europe view; on a phone "P.100 Ercole" 38 % of the screen. Now blended by zoom level from 1× at 10,000
+// to 2× at 5,000 (7.184b3's T0), and no wider than a quarter of the screen while above the others' size.
+test('R42c: a hero counter grows with the zoom from 10,000 to 5,000 m/px, no jump; on a phone, within a quarter of it', async ({ page }) => {
+  test.setTimeout(240_000);
+  await openWithHeroes(page);
+  const id = await heroId(page, 'Maus');
+  const ratioAt = async (m: number): Promise<{ ratio: number; w: number }> => {
+    await lookAt(page, id, m);
+    await page.waitForFunction((id) => window.__warsim!.view!.counters.drawn.some((d) => d.hero === id && d.alpha > 0.99), id, { timeout: 30_000 });
+    await page.waitForTimeout(400);
+    return page.evaluate((id) => {
+      const v = window.__warsim!.view!;
+      const hero = v.counters.drawn.find((d) => d.hero === id)!;
+      const own = v.counters.drawn.filter((d) => d.hero === undefined && d.nation === hero.nation && !d.naval && d.alpha > 0.99);
+      return { ratio: hero.h / own[0]!.h, w: hero.w };
+    }, id);
+  };
+  const lines: string[] = [];
+  let last = 0;
+  for (const m of [12000, 10001, 9999, 9000, 8000, 7000, 6000, 5001, 4000]) {
+    const { ratio } = await ratioAt(m);
+    lines.push(`desk ${m} m/px: ${ratio.toFixed(3)} ×`);
+    if (m >= 10000) expect(ratio, `${m} m/px`).toBeCloseTo(1, 2);
+    if (m <= 5001) expect(ratio, `${m} m/px`).toBeGreaterThan(1.97);
+    expect(ratio, `${m} m/px: it grows as the view closes in`).toBeGreaterThanOrEqual(last - 0.01);
+    // One step of the wheel (10,001 to 9,999 m/px) moves it by a hair, not 1× to 2× (R49-N1).
+    if (m === 9999) expect(ratio - last, 'no jump at 10,000').toBeLessThan(0.01);
+    last = ratio;
+  }
+  await lookAt(page, id, 8000);
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: 'test-results/heroes-r42c-desk-08000.png' });
+  // A phone: no hero counter over a quarter of the screen's width while larger than the others.
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const m of [9999, 8000, 5000]) {
+    const { ratio, w } = await ratioAt(m);
+    lines.push(`phone ${m} m/px: ${ratio.toFixed(3)} ×, Maus ${w.toFixed(0)} px (${((100 * w) / 390).toFixed(0)} %)`);
+    const widest = await page.evaluate(() => Math.max(...window.__warsim!.view!.counters.drawn.filter((d) => d.hero !== undefined).map((d) => d.w)));
+    expect(widest / 390, `${m} m/px: the widest hero counter's share`).toBeLessThan(0.38);
+    if (ratio > 1.01) expect(widest / 390).toBeLessThanOrEqual(0.25 + 0.01);
+  }
+  await page.screenshot({ path: 'test-results/heroes-r42c-phone-05000.png' });
+  writeFileSync(path.join(EVIDENCE, 'r42c-sizes.txt'), `${lines.join('\n')}\n`);
+});
+
 test('PLAN 7.184b3: a hero is its own counter at T0 and its own marker at T1, twice its nation’s, both looks', async ({ page }) => {
   test.setTimeout(240_000);
   await openWithHeroes(page);
