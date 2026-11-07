@@ -1753,3 +1753,9 @@
   AI rule changed: the pin unmoved; budgets: one test per division when a landing ends.
 - ADR-842 (the user's decision): R43f, then R34 and R35, before critic run 51; no critic run after R43f.
 - R39e ticked: done by R40e (`5da444a8`, ADR-835), confirmed by critic run 50.
+
+## 2026-11-07 — ADR-843 (the user's decision): naval's bar after run 50
+- The loop analysed at the user's request: runs 49–50 had no blocking naval issue and still 7 ("nothing new earns an
+  8"). All six options taken: CRITIC_PROMPT OUTPUT 4 ("what the bar needs"), PROMPT "RELEASES" step 1 (the filing
+  commit files that dimension's objections and ideas); R44 `slowClick` before critic run 51; Batch 4 R45–R47.
+- **Next:** R43f, R44, R34, R35, then critic run 51.

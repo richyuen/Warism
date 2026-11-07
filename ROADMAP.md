@@ -746,6 +746,13 @@ Rules:
     `landingEndedMarch1938` (sunk, port lost; red before); checker `marchOn`: run 50's 19 seeds 5 broken (28) → 0.
   - [ ] R43f R50-N6 (God Mode): Revolt and Spawn name the new nation for a province other than the one clicked ("Free
     Saxony" for Bavaria): the clicked province's name.
+- [ ] R44 **A click's landing has a bound (`slowClick`; ADR-843, the user's decision: before critic run 51).**
+  `landingInvariants` gets a rule `slowClick`: a click's landing whose first division ashore is over 7 days later than
+  the click's best single-division way (march to its own nearest port or a called group, the later, then the voyage;
+  as `farPort` reckons it), and the player was not told why at the click. R49-N5 and R50-N1 are its cases: break at
+  `3fe138b1` (20841 three to Shanghai, 20661 two), pass at HEAD. AT: run 50's 19 landing seeds and run 47's grid
+  (`tools/diag/landingGrid.ts`, 403 jobs) at 0 broken, with the worst click's days over its best way named in
+  PROGRESS. No new landing rule unless the checker finds a break; each one it finds is a part of its own (R44a …).
 
 ## Batch 3 — readability (after the release, ADR-829)
 
@@ -763,3 +770,21 @@ R35 are done first, and the critic run 51 judges them together.
   screen); R40-N2 ("go by sea" for a selection most of which march); the ranking cuts long names.
 - [ ] R35 Small ideas from the reports: an order's error cleared by any new order; a flag at the destination while
   choosing; a long-press preview of an order on touch; a mark on a fleet the AI has taken back.
+
+## Batch 4 — naval evidence (ADR-843, the user's decision)
+
+After critic run 51. R44 (`slowClick`) is in R43's batch, before that run.
+
+- [ ] R45 **The critic's replay as a tool.** `tools/diag/replayCritic.ts` builds the job list from the last report's
+  JSON and `critic/scripts` (the hand-built `.cache/replay49/jobs.txt` and `suiteP.sh`, committed as a tool), runs it
+  5–8 sims at a time (20 at once were killed for memory), and adds new seeds for each probe family. AT: it replays run 50's 65 headless
+  jobs with the same results as run 50, and runs each family on 5 new seeds; its report names every case that differs.
+- [ ] R46 **Sea battles the critic can find.** `tools/diag/seaBattles.ts <seed> [scenario|random] [--years N]`: each
+  sea battle and sinking with its day, place (sea zone, cell), sides and ships, and the camera (x, y, m/px) to look at
+  it. AT: on 3 seeds × 5 years, every battle it lists is drawn at its camera in the page (a probe shows ships), and run
+  50's `c50_sb_20885` case (0 elements) gets a battle to look at.
+- [ ] R47 **A landing as one row** (the critic's idea since run 32). A panel or bar for each of the player's landings:
+  its target, its port, its divisions (at the port, marching, with days), its transports needed and assigned, the
+  days to sail, the outcome once for the operation, and a cancel (the transports back to the port they left). Read
+  from `world.landings` (R33b); no new sim rule. AT: on the critic's landing cases (run 47's grid, run 50's far
+  routes) the row says, hour by hour, what the divisions' panels say; desk, landscape and phone; Playwright specs.

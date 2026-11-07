@@ -71,6 +71,9 @@ Items come in batches (a ROADMAP section). After the last item of a batch:
 1. Spawn the `critic` subagent with no hints, wait for it, check that its report names HEAD, commit
    `critic/` with a line in PROGRESS.md (scores, blocking count). That commit carries `critic/`,
    PROGRESS.md, ROADMAP.md and DECISIONS.md only; a fix is a commit of its own.
+   For each dimension under its bar, that commit also files every design objection and idea of the report
+   in that dimension, and its "what the bar needs", as a one-line ROADMAP entry: taken, or the reason it
+   is not (ADR-843).
 2. Each blocking issue becomes a ROADMAP item before the release item; fix them, then the critic
    runs again (it decides itself whether the run is full or focused).
    **The exit (ADR-829).** The loop stops, and writes an ADR "proposed, the user's decision" that names

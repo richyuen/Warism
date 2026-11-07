@@ -7,7 +7,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
-### ADR-843 · 2026-11-07 · proposed, the user's decision — Naval's bar after run 50: name the 8, bound the click, show the landing
+### ADR-843 · 2026-11-07 · accepted (the user's decision) — Naval's bar after run 50: name the 8, bound the click, show the landing
 
 - **Context (the user asked, 2026-11-07: analyse the loop; can anything improve naval's chance of its bar?).**
   - Naval was 8 from run 28 to the release (run 31). It has been 7 (once 6) in all 19 runs since, 32–50. Every other
@@ -59,7 +59,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   6. **On a dimension under its bar, each of the report's design objections and ideas in that dimension** gets a
      one-line ROADMAP entry in the commit that files the report: taken, or the reason it is not.
 - **Not proposed again:** taking the landing out (way 2) or releasing at 7 (refused in ADR-827, 828, 829, 833).
-- **Status.** Proposed, the user's decision.
+- **Status.** Accepted 2026-11-07 by the user: "Yes, let's do all 6, but can we do option 2 before next critic
+  run?" So:
+  - 1: `CRITIC_PROMPT.md` OUTPUT 4, "what the bar needs" for every score under its bar (now).
+  - 6: PROMPT.md "RELEASES" step 1, the filing commit files that dimension's objections, ideas and "what the bar
+    needs" (now).
+  - 2: ROADMAP R44, in R43's batch after R43f and before critic run 51 (ADR-842's R34 and R35 stay before the run).
+  - 5, 4, 3: ROADMAP Batch 4, R45 (the replay tool), R46 (`seaBattles`), R47 (a landing as one row), after run 51.
 
 ### ADR-842 · 2026-11-07 · accepted (the user's decision) — R34 and R35 before the next critic run
 

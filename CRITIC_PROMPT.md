@@ -73,3 +73,6 @@ A new feature is scored under the dimension it belongs to (the relations graph u
    evidence,fix}], timestamp}`, where commit is `git rev-parse HEAD` when you started and mode is
    `"full"` or `"focused"`.
 3. Scores must be defensible; every score above 7 needs explicit evidence.
+4. Every score under its bar names the evidence that would earn the bar (ADR-843): beside "what to fix", "what
+   the bar needs", as cases the builder can run: a seed and scenario, a probe (`critic/scripts/...`) or a checker
+   under `tools/diag/`, and the figure or sight it must show. "Nothing new earns it" is not enough on its own.
