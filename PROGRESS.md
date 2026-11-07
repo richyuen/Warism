@@ -1751,3 +1751,4 @@
   rule). 20845 (the critic's `c47_far.ts`): told at t89, no longer at Hamburg at t222/t242. New checker rule `marchOn`:
   run 50's 19 landing seeds 5 broken (28, England's) before, 0 after; every landing unit test green (46 files). No
   AI rule changed: the pin unmoved; budgets: one test per division when a landing ends.
+- ADR-842 (the user's decision): R43f, then R34 and R35, before critic run 51; no critic run after R43f.

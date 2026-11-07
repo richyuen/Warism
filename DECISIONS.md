@@ -7,6 +7,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-842 · 2026-11-07 · accepted (the user's decision) — R34 and R35 before the next critic run
+
+- **Decision (the user's, 2026-11-07: "make sure that R43f, R34, and R35 are all scheduled before next critic
+  run").** R43's batch does not end at R43f: Batch 3's R34 (the critic's carried issues) and R35 (small ideas) are
+  done next, and the critic runs once after R35 (PROMPT.md "RELEASES" step 1), judging R43, R34 and R35 together.
+- **Consequences.** No critic run between R43f and R34. The order of the items is unchanged (R43f, R34, R35). Naval's
+  ADR-833 loop (fix, then the critic, until it is at its bar) waits one run longer for its next score.
+
 ### ADR-841 · 2026-11-07 · accepted — A landing that ends stops its divisions' march to its port (R43e)
 
 - **Decision.** However a landing ends (its groups sunk with none to come, its port bombed shut or lost, no sea way,

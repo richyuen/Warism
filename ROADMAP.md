@@ -750,6 +750,9 @@ Rules:
 The carried non-blocking issues of critic runs 31–43 (why some dimensions are 7 and not 8; none gates a release)
 and the small ideas from other games. Each one line until it is taken.
 
+**The next critic run comes after R35, not after R43f** (ADR-842, the user's decision, 2026-11-07): R43f, R34 and
+R35 are done first, and the critic run 51 judges them together.
+
 - [ ] R34 The critic's carried issues: R37-N4 (relations graph labels overlap); R32-N3 (a refusal toast cuts its
   reason); R37-N3 (God's Breakthrough at peace does nothing, says nothing); R31-N1 (hero counters under the HUD);
   R31-N6 (the graph eats the first tap after a drag; a hero hides fleets stacked with it); R32-N2 (trait text only
