@@ -17,6 +17,7 @@ function hudOnStub(): { hud: Hud; refuse: (reason: number) => void; sent: Comman
     onLoad: on,
     onSnapshotReceived: on,
     onOrderNews: on,
+    onLandings: on,
     onRefused: (l: (reason: number) => void) => {
       refused = l;
       return () => undefined;

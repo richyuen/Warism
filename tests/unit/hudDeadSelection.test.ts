@@ -20,6 +20,7 @@ function hudOnStub(): { hud: Hud; stats: (living: number[], dead: number[]) => v
     onLoad: on,
     onSnapshotReceived: on,
     onOrderNews: on,
+    onLandings: on,
     onRefused: (l: (reason: number) => void) => {
       refused = l;
       return () => undefined;

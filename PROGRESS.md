@@ -1945,3 +1945,11 @@
   never in `world.seaBattles` at an hour's end, so their fleets are taken from about their place (a side sunk
   whole leaves the other; carriers fight from 14.5 cells). 20885's first battle: t107 Black Sea, SOV v ROM.
 - **Next:** R47.
+
+## 2026-11-07 — R47a: a landing's row, its data (ADR-853)
+- R47 split: a data (this), b the bar on the page, c the cancel, d the AT on the critic's cases.
+- `landingRows` (sim, read only) and the worker's `landings` message: each landing's port, target city, divisions
+  with their panels' voyage, ships needed and had, days to sail; over, its outcome for a day. `hud.landings`.
+- `landingRow1938` (new; R42a's four Tokyo → Shanghai): one row, each hour its divisions as their panels, sails, over
+  "landed" 4, kept a day; red before.
+- **Next:** R47b.

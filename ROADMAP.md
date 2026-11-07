@@ -836,3 +836,9 @@ batch. R45's replay runs before the critic, as ADR-833's replay does.
   days to sail, the outcome once for the operation, and a cancel (the transports back to the port they left). Read
   from `world.landings` (R33b); no new sim rule. AT: on the critic's landing cases (run 47's grid, run 50's far
   routes) the row says, hour by hour, what the divisions' panels say; desk, landscape and phone; Playwright specs.
+  - [x] R47a The rows' data: `landingRows` (sim, read only) and the worker's `landings` message, sent when they
+    change; each division with its panel's voyage; the outcome kept a day (ADR-853).
+  - [ ] R47b The rows on the page: a landings bar, a row each (target, port, divisions with days, ships, days to
+    sail, outcome); a click on a row goes to its land; desk, landscape and phone.
+  - [ ] R47c A row's cancel: its divisions ordered back to its port by the orders a click gives (no new rule).
+  - [ ] R47d The AT on the critic's cases: run 47's grid and run 50's far routes, hour by hour against the panels.

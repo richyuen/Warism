@@ -412,6 +412,7 @@ export type FromWorker =
    * target (`landedAway`: their transports broke off). (`x`, `y`): the formation's place then.
    */
   | { type: 'orderNews'; news: OrderNews }
+  | { type: 'landings'; rows: LandingRow[] }
   | { type: 'provinces'; reqId: number; result: ProvinceBuildResult }
   | { type: 'terrain'; reqId: number; result: TerrainBuildResult }
   | { type: 'political'; reqId: number; result: PoliticalBuildResult }
@@ -886,6 +887,27 @@ export interface OrderNews {
   x: number;
   y: number;
   tick: number;
+}
+
+/**
+ * One of the player's landings in a row (ROADMAP R47; `landingRows`, read from `world.landings`): its state, its port
+ * and the city nearest the land it is for ('=' + literal; '' none), its divisions with what each one's panel says
+ * (`FormationDetail.voyage`), the transport ships its divisions need and its groups have, the days until it sails
+ * (gathering; `other` the sibling's port it waits for), and, once it is over, for a day, how (`outcome`: some landed,
+ * thrown back, lost at sea, turned back to its port by a cancel, or none of these) with how many landed and were lost.
+ */
+export interface LandingRow {
+  id: number;
+  state: 'gathering' | 'sailing' | 'returning' | 'over';
+  port: string;
+  target: string;
+  /** The land cell it lands on, and the cell the order was for: [x, y], cells. */
+  land: [number, number];
+  to: [number, number];
+  divisions: { id: number; voyage: FormationDetail['voyage'] }[];
+  ships: { need: number; have: number };
+  sails: { days: number; other?: string } | null;
+  outcome?: { kind: 'landed' | 'repulsed' | 'lost' | 'cancelled' | 'over'; tick: number; landed: number; lost: number };
 }
 
 /** Numbers per sea battle in a snapshot's `seas` (PLAN 4.10b). */

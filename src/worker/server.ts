@@ -18,7 +18,7 @@ import { frameOf, symbolOf, Weapon, weaponOf, wreckOf } from '../shared/unitLook
 import { Terrain, TERRAIN_IDS } from '../shared/terrain';
 import { wayLine } from '../shared/wayLine';
 import { encodeRuns } from '../shared/mapImport';
-import { historyRows, strikeRows, struckSince, tickerNews, tickerRows } from './historyRows';
+import { historyRows, nearestCity, strikeRows, struckSince, tickerNews, tickerRows } from './historyRows';
 import { Lives } from './lives';
 import { fileOffsets } from './files';
 import { economyBreakdown } from '../sim/systems/economy';
@@ -29,7 +29,7 @@ import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { AiLayer, aiRuns, playerHeld } from '../sim/ai/layers';
 import { carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
 import { landedAway } from '../sim/systems/amphibious';
-import { LandingState, landingOfDivision, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
+import { LandingState, landingOfDivision, landingRows, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -58,6 +58,7 @@ import {
   type HeroStat,
   type NationStat,
   type FormationDetail,
+  type LandingRow,
   type Inspection,
   type WarBattle,
   type WarStat,
@@ -207,6 +208,15 @@ export class SimServer {
   private ordered = new Map<number, { target: number; before: number | undefined; once?: number }>();
   /** The played nation's fleets that have been on a player's order since the game was opened or loaded (ROADMAP R35d). */
   private playerFleets = new Set<number>();
+  /**
+   * The player's landings as last sent (ROADMAP R47a): by id; each one's division to landing; what became of each
+   * one's divisions so far (landed, thrown back, lost at sea); those over, kept a day with their outcome.
+   */
+  private landingsLast = new Map<number, LandingRow>();
+  private landingOfDiv = new Map<number, number>();
+  private landingTally = new Map<number, { landed: number; repulsed: number; lost: number }>();
+  private landingsOver = new Map<number, LandingRow>();
+  private landingsSent = '';
   /** When a formation of a player's order last landed (ROADMAP R17c: its panel says so for a day). */
   private landedAt = new Map<number, number>();
   private labelNames = -1;
@@ -384,6 +394,7 @@ export class SimServer {
         this.airDay = -1;
         this.ordered.clear();
         this.playerFleets.clear();
+        this.clearLandingRows();
         this.statsTick = -1;
         this.lastStatsMs = -1;
         this.resetStreams();
@@ -479,6 +490,7 @@ export class SimServer {
     this.airDay = -1;
     this.ordered.clear();
     this.playerFleets.clear();
+    this.clearLandingRows();
     this.statsTick = -1;
     this.lastStatsMs = -1;
     this.flagsSent = -1;
@@ -1089,6 +1101,70 @@ export class SimServer {
     };
   }
 
+  /** Forgets the player's landings as sent (a game opened or loaded; ROADMAP R47a). */
+  private clearLandingRows(): void {
+    this.landingsLast.clear();
+    this.landingOfDiv.clear();
+    this.landingTally.clear();
+    this.landingsOver.clear();
+    this.landingsSent = '';
+  }
+
+  /** What became of a division of a landing of the player's in an event (ROADMAP R47a): counted to its landing. */
+  private tallyLanding(kind: number, id: number): void {
+    const l = this.landingOfDiv.get(id);
+    if (l === undefined) return;
+    const t = this.landingTally.get(l) ?? { landed: 0, repulsed: 0, lost: 0 };
+    if (kind === EventKind.FormationLanded) t.landed++;
+    else if (kind === EventKind.LandingRepulsed) t.repulsed++;
+    else if (kind === EventKind.LostAtSea || kind === EventKind.TransportsSunk) t.lost++;
+    else return;
+    this.landingTally.set(l, t);
+  }
+
+  /**
+   * The player's landings in rows (ROADMAP R47a; `LandingRow`), sent when they change: each from `landingRows`, its
+   * divisions with what their panels say; one gone since the last hour is over, told how for a day.
+   */
+  private sendLandingRows(world: World): void {
+    const player = world.settings.player;
+    if (player === 0 && this.landingsLast.size === 0 && this.landingsOver.size === 0) return;
+    const w = world.cells.w;
+    const cell = (k: number): [number, number] => [(k % w) + 0.5, Math.floor(k / w) + 0.5];
+    const rows: LandingRow[] = (player === 0 ? [] : landingRows(world, player)).map((r) => {
+      const [lx, ly] = cell(r.land);
+      const city = nearestCity(world, lx, ly);
+      const name = city !== 0 ? this.cityName(city) : '';
+      return {
+        id: r.id,
+        state: r.state === LandingState.gathering ? 'gathering' : r.state === LandingState.sailing ? 'sailing' : 'returning',
+        port: world.ports[r.port]?.name ?? '',
+        target: name ? `=${name}` : '',
+        land: [lx, ly],
+        to: cell(r.target),
+        divisions: r.divisions.map((id) => ({ id, voyage: this.voyageOf(world, id) })),
+        ships: { need: r.need, have: r.have },
+        sails: r.sailsIn ? { days: Math.max(1, Math.ceil(r.sailsIn.hours / 24)), ...(r.sailsIn.other !== undefined ? { other: world.ports[r.sailsIn.other]?.name ?? '' } : {}) } : null,
+      };
+    });
+    const now = new Set(rows.map((r) => r.id));
+    for (const [id, last] of this.landingsLast) {
+      if (now.has(id)) continue;
+      const t = this.landingTally.get(id) ?? { landed: 0, repulsed: 0, lost: 0 };
+      const kind = t.landed > 0 ? 'landed' : t.repulsed > 0 ? 'repulsed' : t.lost > 0 ? 'lost' : last.state === 'returning' ? 'cancelled' : 'over';
+      this.landingsOver.set(id, { ...last, state: 'over', sails: null, outcome: { kind, tick: world.tick, landed: t.landed, lost: t.lost } });
+      this.landingTally.delete(id);
+    }
+    for (const [id, r] of this.landingsOver) if (world.tick - r.outcome!.tick >= 24) this.landingsOver.delete(id);
+    this.landingsLast = new Map(rows.map((r) => [r.id, r]));
+    this.landingOfDiv = new Map(rows.flatMap((r) => r.divisions.map((d) => [d.id, r.id] as [number, number])));
+    const all = [...rows, ...this.landingsOver.values()].sort((a, b) => a.id - b.id);
+    const key = JSON.stringify(all);
+    if (key === this.landingsSent) return;
+    this.landingsSent = key;
+    this.post({ type: 'landings', rows: all }, []);
+  }
+
   /** Formation `id`'s voyage for its panel (ROADMAP R17c, R33b: read from its landing; `FormationDetail.voyage`). */
   private voyageOf(world: World, id: number): FormationDetail['voyage'] {
     const v = voyageOf(world, id);
@@ -1382,6 +1458,7 @@ export class SimServer {
       // command says why (PLAN 2.17a).
       if (ev[i + 1] === EventKind.CommandRefused) this.post({ type: 'refused', reason: b, base: this.baseFor(world, ev[i + 2]!, b) }, []);
       if (this.ordered.size > 0) this.orderNews(world, ev, i);
+      if (this.landingOfDiv.size > 0) this.tallyLanding(ev[i + 1]!, ev[i + 2]!);
       // The player's formations set home across the sea (ROADMAP R20, R21d): told, ordered or not,
       // by one row for the day start's all (`FormationsSentHome` follows theirs), naming the first.
       if (ev[i + 1] === EventKind.FormationSentHome && b !== 0 && b === world.settings.player && sentFirst < 0) sentFirst = ev[i + 2]!;
@@ -1407,6 +1484,7 @@ export class SimServer {
       else this.ordered.set(id, { target: o.before, before: undefined });
     }
     this.drainFires(world);
+    this.sendLandingRows(world);
     const over = this.eventQueue.length / EVENT_STRIDE - EVENT_QUEUE_CAP;
     if (over > 0) {
       this.eventQueue.splice(0, over * EVENT_STRIDE);

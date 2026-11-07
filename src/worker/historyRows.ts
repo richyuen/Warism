@@ -60,7 +60,7 @@ function overlordThen(rows: readonly number[], i: number): number {
 }
 
 /** The city nearest (x, y) on the map, its row, 0 when there is none. */
-function nearestCity(world: World, x: number, y: number): number {
+export function nearestCity(world: World, x: number, y: number): number {
   const cc = world.cities.cols;
   let best = 0;
   let bd = Infinity;

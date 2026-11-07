@@ -7,6 +7,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-853 · 2026-11-07 · accepted — A landing's row: its data from the worker (R47a)
+- **Context.** R47 wants each of the player's landings as one row (the critic's idea since run 32): what its
+  divisions' panels say, together, with its ships, its days to sail and its outcome.
+- **Decision.** `landingRows(world, nation)` (sim, read only) gives each landing's state, port, water, land, target,
+  living divisions, transport ships needed (their men, `TRANSPORT_MEN` a ship) and had (its groups' room), and
+  `sailsIn`. The worker turns them into `LandingRow`s at each hour's end: names (the port, the city nearest its
+  land), each division's `voyage` as its panel's, days to sail as the click's hint rounds them; a landing gone since
+  the last hour is `over` with an outcome from its divisions' events (landed, thrown back, lost at sea; else
+  `cancelled` when it was turning back, `over` otherwise), kept 24 hours. Sent only when they change; forgotten
+  at a load. The page keeps them in `hud.landings`.
+- **Consequences.** No sim rule and no state: the pin does not move. R47b draws them; R47c adds the cancel.
+
 ### ADR-852 · 2026-11-07 · accepted — Sea battles listed with a camera (R46)
 - **Context.** The critic's sea-balls probe looked at seed 20885 where seed 7019's battle had been, and found no
   ship (run 50, `c50_sb_20885`, 0 elements): it had no way to find a battle on the seed it played.

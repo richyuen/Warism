@@ -11,7 +11,7 @@ import { clampSpeedLevel, DEFAULT_SPEED_LEVEL, speedOfLevel } from '../shared/sp
 import type { Command } from '../shared/commands';
 import type { ShownAlert } from '../shared/nukeAlert';
 import type { NationStats, SimClient } from './simClient';
-import type { FormationDetail, OrderNews, SeaHint, TechInfo, TemplateInfo } from '../shared/protocol';
+import type { FormationDetail, LandingRow, OrderNews, SeaHint, TechInfo, TemplateInfo } from '../shared/protocol';
 import type { CarrierRaidView, SeaBattleView } from './MapView';
 import type { MapHover } from '../ui/mapHover';
 import { t } from '../ui/i18n';
@@ -246,6 +246,9 @@ export class Hud {
       this.refusalBase.value = base;
     });
     // What became of the player's orders (PLAN 4.9c): the newest last, ORDER_NEWS_KEPT at most.
+    sim.onLandings((rows) => {
+      this.landings.value = rows;
+    });
     sim.onOrderNews((news) => {
       // Its name as the page knows it now: one lost at sea is gone by the next snapshot (ROADMAP R39b).
       const name = news.name ?? this.nameOf?.(news.id);
@@ -539,6 +542,8 @@ export class Hud {
   readonly refusalBase = signal<RefusedBase | null | undefined>(undefined);
   /** What became of the player's orders of formations, the newest last (PLAN 4.9c; `seq` numbers them). */
   readonly orderNews = signal<(OrderNews & { seq: number })[]>([]);
+  /** The player's landings in rows (ROADMAP R47a): those under way, and those over for a day with their outcome. */
+  readonly landings = signal<LandingRow[]>([]);
   /** A formation's name as the map last drew it (set by the game; ROADMAP R39b: a notice keeps it). */
   nameOf: ((id: number) => string | undefined) | undefined;
   private orderSeq = 0;

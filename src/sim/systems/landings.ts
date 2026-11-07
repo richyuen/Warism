@@ -32,7 +32,7 @@ import type { LandingMark, SeaHint } from '../../shared/protocol';
 import { isLand } from '../../shared/terrain';
 import { octileKm } from '../nav/grid';
 import { navOf, PlayerOrderKind, portSeaOf, type World } from '../world';
-import { callCandidates, callTransports, carrying, landingOf, near, neutralLanding, SAME_LANDING_CELLS, transportRoom, transportsPort, tryLanding } from './amphibious';
+import { callCandidates, callTransports, carrying, landingOf, near, neutralLanding, SAME_LANDING_CELLS, TRANSPORT_MEN, transportRoom, transportsPort, tryLanding } from './amphibious';
 import { portShut } from './bombing';
 import { marchHoursLeft, marchKmPerHour, orderMove, overSeaFrom, snapTarget } from './movement';
 import { AT_PORT_CELLS, sailHome } from './navalCombat';
@@ -866,6 +866,48 @@ export function sailsIn(world: World, l: Landing): { hours: number; other?: numb
   if (!Number.isFinite(own)) return null;
   const sib = siblingWait(world, l);
   return sib && sib.hours > own ? { hours: sib.hours, other: sib.port } : { hours: own };
+}
+
+/** A landing of a nation's in a row (ROADMAP R47; `landingRows`): read from `world.landings`, nothing decided here. */
+export interface LandingRowData {
+  id: number;
+  state: LandingStateKind;
+  /** Its port, index in `world.ports`; its water and land cells; the cell the order was for. */
+  port: number;
+  water: number;
+  land: number;
+  target: number;
+  /** Its living divisions, ascending. */
+  divisions: number[];
+  /** Transport ships: those its divisions need (their men, `TRANSPORT_MEN` a ship) and its groups have. */
+  need: number;
+  have: number;
+  /** Gathering: the hours until it sails and the sibling's port it waits for (`sailsIn`); null otherwise or unknown. */
+  sailsIn: { hours: number; other?: number } | null;
+}
+
+/** Nation `nation`'s landings in rows, by id (ROADMAP R47a). */
+export function landingRows(world: World, nation: number): LandingRowData[] {
+  const c = world.formations.cols;
+  return [...world.landings.values()]
+    .filter((l) => l.nation === nation)
+    .sort((a, b) => a.id - b.id)
+    .map((l) => {
+      const divisions = [...l.divisions.keys()].filter((d) => world.formations.has(d)).sort((a, b) => a - b);
+      const men = divisions.reduce((s, d) => s + c.strength[d]!, 0);
+      return {
+        id: l.id,
+        state: l.state,
+        port: l.port,
+        water: l.water,
+        land: l.land,
+        target: l.target,
+        divisions,
+        need: Math.ceil(men / TRANSPORT_MEN),
+        have: Math.floor(roomOf(world, l) / TRANSPORT_MEN),
+        sailsIn: sailsIn(world, l),
+      };
+    });
 }
 
 /** Men aboard group `fleet`. */

@@ -24,6 +24,7 @@ import type {
   TerrainBuildResult,
   ToWorker,
   OrderNews,
+  LandingRow,
 } from '../shared/protocol';
 
 /** Static map layers sent by the worker (PLAN 1.28b). */
@@ -139,6 +140,10 @@ export class SimClient {
     }
     if (msg.type === 'orderNews') {
       for (const l of this.orderNewsListeners) l(msg.news);
+      return;
+    }
+    if (msg.type === 'landings') {
+      for (const l of this.landingListeners) l(msg.rows);
       return;
     }
     const p = this.pending.get(msg.reqId);
@@ -343,6 +348,13 @@ export class SimClient {
     const r = await this.request({ type: 'buildPolitical', assetBase, w, h });
     if (!('political' in r)) throw new Error('unexpected reply to buildPolitical');
     return r.political;
+  }
+
+  private readonly landingListeners = new Set<(rows: LandingRow[]) => void>();
+  /** The player's landings in rows, when they change (ROADMAP R47a). */
+  onLandings(l: (rows: LandingRow[]) => void): () => void {
+    this.landingListeners.add(l);
+    return () => this.landingListeners.delete(l);
   }
 
   private readonly orderNewsListeners = new Set<(news: OrderNews) => void>();
