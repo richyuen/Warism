@@ -7,6 +7,60 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-843 · 2026-11-07 · proposed, the user's decision — Naval's bar after run 50: name the 8, bound the click, show the landing
+
+- **Context (the user asked, 2026-11-07: analyse the loop; can anything improve naval's chance of its bar?).**
+  - Naval was 8 from run 28 to the release (run 31). It has been 7 (once 6) in all 19 runs since, 32–50. Every other
+    dimension is at its bar.
+  - Runs 32–48: a blocking landing issue nearly every run (ADR-829, ADR-833 cover this).
+  - Runs 49 and 50 are a different problem. Zero blocking issues, and naval still 7. Run 49's reason: "nothing new in
+    this run earns an 8 (a score above 7 needs explicit evidence). The fixes remove run 48's two reasons, but they add
+    no new strength." This is ADR-829's third exit (no blocking issue, a score under its bar), twice in a row; naval is
+    exempt from the exit (ADR-833). The levers for "no defects" and for "evidence of an 8" are different.
+  - Since the release: 119 commits, 82 of them items, 63 of those subjects on landings, ports or transports.
+    `src/sim/systems` +1,581 lines; `landings.ts` 1,190. `critic/scripts` 3,178 files, 150–250 more per run.
+  - The 8 at the release was earned on sea battles, sea heroes and the navy rules (0 broken over 20 years). Since R17
+    the critic's naval evidence is the player's landing alone. Its sea-balls probe found no ship to draw in runs 48
+    and 50 (`critic/c50_sb_20885.json`, el 0), so the fleet war adds no evidence for an 8.
+- **Findings.**
+  1. **The critic never names what naval's 8 needs.** Each naval row is a "Not 8" list of defects. Stability is the
+     precedent: run 49 named what its 8 needed (page years with no error, save and load in the page). R42 closed it,
+     and run 50 gave the 8.
+  2. **The last two naval findings are one class that no checker bounds.** R49-N5 (26.3 days for a 5-day crossing)
+     and R50-N1 (39.6 days for 4) are both a click whose landing takes many times its crossing. `landingInvariants`
+     bounds this only for a division landing alone (`farPort`); a click of several divisions is a note, never broken.
+     R43a fixed the instance (39.6 → 5.4 days). The seam between R37c, R41 and R43a's waits is left, and the critic
+     probes there ("two rules about the same click disagree").
+  3. **The critic's ideas reach the roadmap late.** HoI's "the invasion as one operation" was in the ideas from run 32
+     and was taken at run 43 (ADR-829). Its other repeated naval ideas are still not taken: one panel or bar per
+     landing with its divisions and its transports needed and assigned, and one outcome per operation. "Each embarks
+     at its own nearest port" (run 50) was taken in the same cycle (R43a), so the lag is shrinking.
+  4. **The pre-critic replay (ADR-833) is rebuilt by hand each run** (`.cache/replay49/jobs.txt`, `suiteP.sh`,
+     uncommitted). It replays named cases. The critic's next finding comes from a new seed or a moved parameter.
+- **Proposed** (each one separate; none changes a bar, so none is ADR-828's way 3):
+  1. **CRITIC_PROMPT: a score under its bar names the evidence that would earn the bar**, as a case the builder can
+     run (a seed, a probe, a figure). This is a change to the critic's brief, so it is the user's decision. Highest
+     leverage.
+  2. **Checker rule `slowClick`** in `landingInvariants`: a click's landing ashore within its crossing plus a fixed
+     slack (e.g. its best single-division way + 7 days), or told why at the click. It runs on the checker's seeds and
+     run 47's grid, and it is the bound that every wait rule (R31f, R37c, ADR-836, R43a) must keep together. A ROADMAP
+     item before critic run 51, with no new landing rule unless the checker finds a break.
+  3. **Show the landing as one thing** (the critic's idea since run 32): a row per landing, with its target, its port,
+     its divisions (at the port or marching), its transports needed and assigned, the days to sail, and a cancel. The
+     sim has had one object since R33b (`world.landings`); the player still reads it division by division. Most naval
+     non-blocking issues were "untold" or a cut row, and one place to read them also gives a strength to point at. A
+     ROADMAP item in R34's place for naval (R34's R36-N3, R39-N2–N4 and R40-N2 are landing readability).
+  4. **Fleet-war evidence the critic can find:** a `tools/diag/seaBattles.ts` that lists where and when sea battles
+     and sinkings happen on a seed (the critic's brief runs `tools/diag/` checkers). Sea battles are the 8's other
+     source, and the critic's camera currently misses them.
+  5. **The replay as a committed tool:** `tools/diag/replayCritic.ts` builds the job list from the last report's JSON
+     and `critic/scripts`, and adds N new seeds per probe family (as the critic does). Before each run it replays the
+     named cases and a fuzz of those families.
+  6. **On a dimension under its bar, each of the report's design objections and ideas in that dimension** gets a
+     one-line ROADMAP entry in the commit that files the report: taken, or the reason it is not.
+- **Not proposed again:** taking the landing out (way 2) or releasing at 7 (refused in ADR-827, 828, 829, 833).
+- **Status.** Proposed, the user's decision.
+
 ### ADR-842 · 2026-11-07 · accepted (the user's decision) — R34 and R35 before the next critic run
 
 - **Decision (the user's, 2026-11-07: "make sure that R43f, R34, and R35 are all scheduled before next critic
