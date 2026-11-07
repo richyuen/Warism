@@ -1968,3 +1968,12 @@
 - Found on the way: an ended landing's opened row kept its divisions' last voyage ("it sails when …"); now blank.
 - `landingRow1938` +2 cases (gathering, at sea), red before; `landingsBar1938` +1 (the button): 4 passed.
 - **Next:** R47d.
+
+## 2026-11-07 — R47d: the landings bar on the critic's cases (ADR-856); R47 done
+- `tools/diag/landingRows.ts` (with `tests/helpers/landingRows.ts`): run 47's grid and run 50's far routes through the
+  worker, each hour the rows against the panels. Grid 3517: 40 cases (20 skipped, none walking), 15101: 60; far: 8.
+  0 broken over 19,905 hours. A planted fault (a division dropped from each row): 7 of 8 far cases broken.
+- On the way: 20661 → Qingdao made no landing; the AI shipped the division itself. Not the player's landing, not the
+  bar's; the reading counts only divisions in `world.landings`.
+- `landingRowsCritic1938` (new, six cases, 31 s).
+- **Next:** critic run 51 (PROMPT's RELEASES: the batch R43f–R47 ends in a critic run and a tag).

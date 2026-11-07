@@ -831,7 +831,7 @@ batch. R45's replay runs before the critic, as ADR-833's replay does.
   50's `c50_sb_20885` case (0 elements) gets a battle to look at.
   Done (ADR-852): 20885, 7019, 3517 × 5 years: 85, 90, 100 battles, every one seen at its camera; 20885's first is
   t107, Soviet v Romanian ships in the Black Sea (`docs/replays/seaBattles_*.txt`, `docs/evidence/R46/`).
-- [ ] R47 **A landing as one row** (the critic's idea since run 32). A panel or bar for each of the player's landings:
+- [x] R47 **A landing as one row** (the critic's idea since run 32). A panel or bar for each of the player's landings:
   its target, its port, its divisions (at the port, marching, with days), its transports needed and assigned, the
   days to sail, the outcome once for the operation, and a cancel (the transports back to the port they left). Read
   from `world.landings` (R33b); no new sim rule. AT: on the critic's landing cases (run 47's grid, run 50's far
@@ -841,4 +841,5 @@ batch. R45's replay runs before the critic, as ADR-833's replay does.
   - [x] R47b The rows on the page: a landings bar, a row each (target, port, divisions with days, ships, days to
     sail, outcome); a click on a row goes to its land; desk, landscape and phone (ADR-854).
   - [x] R47c A row's cancel: its divisions ordered back to its port by the orders a click gives (no new rule; ADR-855).
-  - [ ] R47d The AT on the critic's cases: run 47's grid and run 50's far routes, hour by hour against the panels.
+  - [x] R47d The AT on the critic's cases: run 47's grid and run 50's far routes, hour by hour against the panels.
+    108 cases (100 of the grid, 8 far), 19,905 hours: 0 broken (`tools/diag/landingRows.ts`; ADR-856).

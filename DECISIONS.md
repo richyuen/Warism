@@ -7,6 +7,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-856 · 2026-11-07 · accepted — The landings bar's AT on the critic's cases (R47d)
+- **Decision.** `tests/helpers/landingRows.ts` runs the critic's landing cases through the worker (`SimServer`, which
+  makes both the rows and the panels): run 47's grid (each setup × op × hour × who, off 0) and run 50's eight far
+  routes, the click and each case's orders as `cmds` batches. Each hour it reads: a division of a player's landing
+  in no row under way (`missing`), in two (`twice`), its row's words not its panel's (`words`), a gathering row with
+  one at sea or a row at sea with one waiting at the port (`state`), and a row over whose outcome or count of the
+  landed is not its divisions' (`outcome`). A division the AI put aboard (the played nation's armies are the AI's
+  by default, ADR-759: 20661's order to Qingdao made no landing, and the AI shipped 364 two days on) is at sea in
+  its panel and in no landing of the player's: not the bar's, and not counted.
+- **Consequences.** 108 cases, 19,905 hours: 0 broken. With one division dropped from each row (a planted fault)
+  7 of the 8 far cases break (`missing`), so the reading can fail. `landingRowsCritic1938`: six of them each gate.
+
 ### ADR-855 · 2026-11-07 · accepted — A landing's cancel from its row (R47c)
 - **Decision.** The row's cancel (gathering or at sea) is the click a player could give: each of its divisions
   ordered, in one batch (`hud.commands`), to its port's cell (`LandingRow.portAt`). The sim judges it as any click
