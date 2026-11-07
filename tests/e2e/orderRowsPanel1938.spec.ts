@@ -6,7 +6,8 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // at sea with their transports: Squar…"), and the at-port division's "landing is over" row was not on the screen.
 // Japan's three in one hour: two lost at sea, one whose landing is over. Beside a panel at a desk both order rows are
 // shown, the sea row given way (ADR-754's room); the loss of two by its count, whole on its line, the names in its
-// tooltip. On a phone, upright or on its side (ADR-760, the user's: the newest event and the last order), the last.
+// tooltip. On a phone, upright or on its side, the two orders' rows in place of the newest event (two rows in all,
+// ADR-760; the user's choice of 2026-11-06, ADR-837).
 
 const JAP = NATIONS_1938.findIndex((n) => n.tag === 'JAP') + 1;
 const NEWS = [
@@ -15,7 +16,7 @@ const NEWS = [
   { kind: 'transportsSunk', id: 367, nation: JAP, reason: 0, x: 1819, y: 387, tick: 855, seq: 9003, name: 'Square infantry division 367' },
 ];
 
-for (const [name, width, height, rows] of [['desk', 1600, 900, 2], ['land', 844, 390, 1], ['phone', 390, 844, 1]] as const) {
+for (const [name, width, height, rows] of [['desk', 1600, 900, 2], ['land', 844, 390, 2], ['phone', 390, 844, 2]] as const) {
   test(`${name}: beside a panel the loss rows are whole and the last two shown`, async ({ page }) => {
     test.setTimeout(180_000);
     await page.setViewportSize({ width, height });
@@ -34,6 +35,8 @@ for (const [name, width, height, rows] of [['desk', 1600, 900, 2], ['land', 844,
       await expect(order.nth(0)).toHaveAttribute('title', /Square infantry division 364, Square infantry division 365/);
       await expect(order.nth(1)).toHaveAttribute('data-order', 'transportsSunk');
       await expect(page.getByTestId('sea-battle-row').or(page.getByTestId('carrier-raid-row'))).toHaveCount(0);
+      // A phone: two rows in all, the two orders' (ADR-760, ADR-837).
+      if (name !== 'desk') await expect(page.locator('[data-testid="ticker"] li')).toHaveCount(2);
     } else {
       await expect(order.nth(0)).toHaveAttribute('data-order', 'transportsSunk');
     }

@@ -20,7 +20,8 @@ const TICKER_SHORT = 2;
  * loss of several there by its count, the names in its tooltip (the row is one line).
  * `compact` (a phone's width; the user's choice of 2026-10-29, ADR-760): two rows in all, each of
  * two lines at most: the newest event, and the player's last order's news, else the first sea
- * battle, else the event before it.
+ * battle, else the event before it; with two orders' news or more, the last two (the user's, ROADMAP R42b,
+ * ADR-837: critic run 49, R49-N3, the at-port division's row hidden behind the other).
  */
 export function Ticker({
   rows,
@@ -50,10 +51,10 @@ export function Ticker({
   // What is shown: all; beside a panel the last events, a sea battle and an order; on a phone two rows.
   // Sea rows of the same words are one, with how many (PLAN 7.167).
   const merged = mergeSeaRows(seas);
-  const lastOrder = orders.slice(-1);
-  const phoneSea = lastOrder.length === 0 ? merged.slice(0, 1) : [];
+  const lastOrders = orders.slice(-2);
+  const phoneSea = lastOrders.length === 0 ? merged.slice(0, 1) : [];
   const [evs, ss, os] = compact
-    ? [rows.slice(lastOrder.length + phoneSea.length > 0 ? -1 : -TICKER_SHORT), phoneSea, lastOrder]
+    ? [lastOrders.length > 1 ? [] : rows.slice(lastOrders.length + phoneSea.length > 0 ? -1 : -TICKER_SHORT), phoneSea, lastOrders]
     : short
       ? [rows.slice(-TICKER_SHORT), orders.length > 1 ? [] : merged.slice(0, 1), orders.slice(-2)]
       : [rows, merged, orders];

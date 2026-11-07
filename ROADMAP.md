@@ -713,7 +713,8 @@ Rules:
   Done (ADR-837): R42a the hover over the landing they have says when it sails, in days, and the marching one's panel
   its days (`landingClickWait1938` unit and spec: said 47, sailed after 46.6; the sibling's branch on
   `landingTwoPorts1938`); R42b beside a panel the last two order rows, the loss of several by its count with its
-  names in the tooltip (`orderRowsPanel1938`; a phone keeps ADR-760's last order); R42c 1× at 10,000 m/px to 2× at
+  names in the tooltip, on a phone too, two orders in place of the newest event (`orderRowsPanel1938`; the user's
+  amendment of ADR-760); R42c 1× at 10,000 m/px to 2× at
   5,000 by zoom level, within a quarter of the screen (`heroes1938` R42c: 1.32× at 8,000, phone 12 %; 7.184b3 green);
   R42d `PuppetReleased` ticked; R42e one number.
 

@@ -20,8 +20,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
   390-px phone (Maus 12 % of it; the bar 38 %). `docs/evidence/7.184b/r42c-sizes.txt`.
 - **R42b (R49-N3).** Beside a panel the last two order rows, the sea row giving way while there are two (ADR-754's room
   unchanged: `ticker1938` green); a loss of several by its count, its names in the tooltip. Not taken: two lines an
-  order row (ADR-754's room, `ticker1938`'s two events). On a phone, upright or on its side, the last order only, as
-  ADR-760 (the user's choice) has it: the at-port division's row is not shown there while a later stands.
+  order row (ADR-754's room, `ticker1938`'s two events). On a phone, upright or on its side, with two orders' news or
+  more, the last two in place of the newest event: two rows in all, as ADR-760 has it (the user's choice of 2026-11-06,
+  amending ADR-760's "the newest event and the last order"; R49-N3 cited the phone's shots too).
 - **R42d (R49-N2).** `PuppetReleased` is a ticker kind, cue "return". **R42e.** "their landing… their port".
 - **Budgets.** No sim system changed (`seaHint` and `voyageOf` are read on request); the frame adds one pass over the
   heroes (14) for the widest name.
