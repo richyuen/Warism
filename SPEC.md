@@ -1351,7 +1351,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   of a sailing or returning landing's divisions, all aboard, to another landing gathering for that place
   sends its groups to that one's port, and it joins it (ROADMAP R33b, critic run 43, R43-B1's recall); to
   another place over the sea from its port, it sails there (`retarget`); to land not over the sea (a
-  cancel), back to its own port, where they go ashore and march there (`returning`, `then`); to the sea,
+  cancel), back to its own port, where they go ashore and march there (`returning`, `then`; with one of it
+  ashore, bound for its next voyage, and ordered too, those aboard alone are judged and only a cancel is taken:
+  that one leaves by its own order, ROADMAP R48a); to the sea,
   each is refused `OpenSea` at the click and it keeps its course (ROADMAP R36b, critic run 44, R44-B2:
   taken as a cancel, refused a day later at its port; the hover says so, `seaHint` 3,
   "tooltip.bySeaOpen"; for a landing still gathering, `ashore`, "tooltip.bySeaOpenAshore", R38f). The

@@ -189,7 +189,7 @@ export function App({
           rows={hud.landings.value}
           nameOf={(id) => hud.nameOf?.(id)}
           onPlace={(x, y) => hud.onShowPlace(x, y)}
-          onCancel={(r) => hud.commands(r.divisions.map((d) => ({ kind: 'moveFormation' as const, id: d.id, x: r.portAt[0], y: r.portAt[1], nation: stats.player })))}
+          onCancel={(r) => hud.cancelLanding(r)}
         />
       ) : null}
       {/* Before the panels of the centre, which are drawn over a row of banners that reaches them (PLAN 3.12Rh5). */}

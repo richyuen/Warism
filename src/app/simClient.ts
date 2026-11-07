@@ -377,6 +377,11 @@ export class SimClient {
   }
 
   /** One click's commands, applied together (ROADMAP R29a: the sim judges them as one hour's orders). */
+  /** A landing's cancel from its row (ROADMAP R48a). */
+  cancelLanding(id: number): void {
+    this.send({ type: 'cancelLanding', id });
+  }
+
   commands(cmds: Command[], now = false): void {
     this.send(now ? { type: 'cmds', cmds, now } : { type: 'cmds', cmds });
   }

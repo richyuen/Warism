@@ -217,8 +217,11 @@ export class SimServer {
   private landingTally = new Map<number, { landed: number; repulsed: number; lost: number }>();
   private landingsOver = new Map<number, LandingRow>();
   private landingsSent = '';
-  /** The player's landings a click sent all of back to their port (ROADMAP R47c): told `cancelled` once over. */
-  private landingsCancelled = new Set<number>();
+  /**
+   * The player's landings cancelled (ROADMAP R47c, R48a): by their row's cancel, how many were sent back aboard and how
+   * many stopped ashore; by a click that sent all of one to its port, all back. Told `cancelled` once over.
+   */
+  private landingsCancelled = new Map<number, { home: number; stopped: number }>();
   /** When a formation of a player's order last landed (ROADMAP R17c: its panel says so for a day). */
   private landedAt = new Map<number, number>();
   private labelNames = -1;
@@ -322,6 +325,12 @@ export class SimServer {
       case 'cmd':
         if (this.take(msg.cmd) && msg.now) this.applyNow();
         break;
+      case 'cancelLanding': {
+        if (!this.sim) break;
+        const cmds = this.cancelOrders(this.sim.world, msg.id);
+        for (const cmd of cmds) this.take(cmd);
+        break;
+      }
       case 'cmds': {
         // One click's commands (ROADMAP R29a; critic run 40, R40-B2): all taken, then applied
         // together, so the sim judges them as one hour's orders, not one division at a time.
@@ -1128,8 +1137,38 @@ export class SimServer {
       if (l.nation !== world.settings.player) continue;
       const port = world.ports[l.port]?.cell;
       const ids = [...l.divisions.keys()].filter((d) => world.formations.has(d));
-      if (port !== undefined && ids.length > 0 && ids.every((d) => to.get(d) === port)) this.landingsCancelled.add(l.id);
+      if (port !== undefined && ids.length > 0 && ids.every((d) => to.get(d) === port)) this.landingsCancelled.set(l.id, { home: ids.length, stopped: 0 });
     }
+  }
+
+  /**
+   * A landing's cancel as the click a player could give (ROADMAP R48a; critic run 51, R51-N1 and the ADR-855 objection:
+   * those ashore marched a week on to a port they never reached while the row said "back at Hamburg"): each division
+   * aboard ordered to its port's cell, so the landing turns back; each ashore to where it stands, so it leaves the
+   * landing and stops. The orders are the sim's to judge (`landingOrders`); noted for the row's outcome.
+   */
+  private cancelOrders(world: World, id: number): Command[] {
+    const l = world.landings.get(id);
+    const player = world.settings.player;
+    if (!l || l.nation !== player) return [];
+    const port = world.ports[l.port]!.cell;
+    const w = world.cells.w;
+    const c = world.formations.cols;
+    const cmds: Command[] = [];
+    let home = 0;
+    let stopped = 0;
+    for (const d of [...l.divisions.keys()].sort((a, b) => a - b)) {
+      if (!world.formations.has(d)) continue;
+      if (world.embarked.has(d)) {
+        home++;
+        cmds.push({ kind: 'moveFormation', id: d, x: (port % w) + 0.5, y: Math.floor(port / w) + 0.5, nation: player });
+      } else {
+        stopped++;
+        cmds.push({ kind: 'moveFormation', id: d, x: c.x[d]!, y: c.y[d]!, nation: player });
+      }
+    }
+    this.landingsCancelled.set(id, { home, stopped });
+    return cmds;
   }
 
   /** What became of a division of a landing of the player's in an event (ROADMAP R47a): counted to its landing. */
@@ -1174,10 +1213,13 @@ export class SimServer {
     for (const [id, last] of this.landingsLast) {
       if (now.has(id)) continue;
       const t = this.landingTally.get(id) ?? { landed: 0, repulsed: 0, lost: 0 };
-      const kind = t.landed > 0 ? 'landed' : t.repulsed > 0 ? 'repulsed' : t.lost > 0 ? 'lost' : last.state === 'returning' || this.landingsCancelled.has(id) ? 'cancelled' : 'over';
+      const cancel = this.landingsCancelled.get(id);
+      const kind = t.landed > 0 ? 'landed' : t.repulsed > 0 ? 'repulsed' : t.lost > 0 ? 'lost' : last.state === 'returning' || cancel ? 'cancelled' : 'over';
       this.landingsCancelled.delete(id);
+      // A turn back by a click of the player's own: all back (no row's cancel to count them).
+      const how = kind === 'cancelled' ? { ...(cancel ?? { home: last.divisions.length, stopped: 0 }), ...(aiRuns(world, world.settings.player, AiLayer.army) ? { ai: true as const } : {}) } : null;
       // Its divisions' voyages were the landing's: over, they say nothing of it (their panels say where they are now).
-      this.landingsOver.set(id, { ...last, state: 'over', sails: null, divisions: last.divisions.map((d) => ({ id: d.id, voyage: null })), outcome: { kind, tick: world.tick, landed: t.landed, lost: t.lost } });
+      this.landingsOver.set(id, { ...last, state: 'over', sails: null, divisions: last.divisions.map((d) => ({ id: d.id, voyage: null })), outcome: { kind, tick: world.tick, landed: t.landed, lost: t.lost, ...(how ?? {}) } });
       this.landingTally.delete(id);
     }
     for (const [id, r] of this.landingsOver) if (world.tick - r.outcome!.tick >= 24) this.landingsOver.delete(id);

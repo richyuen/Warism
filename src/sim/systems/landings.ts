@@ -479,9 +479,13 @@ export function landingOrders(world: World, cmds: readonly { id: number; x: numb
     }
     const ids = [...l.divisions.keys()];
     const aboard = aboardOf(world, l);
-    if (aboard.length === 0 || aboard.length !== ids.length || !ids.every((id) => last.has(id))) continue;
-    const { x, y } = last.get(ids[0]!)!;
-    if (!ids.every((id) => last.get(id)!.x === x && last.get(id)!.y === y) || sameLandingAs(world, l, x, y)) continue;
+    if (aboard.length === 0 || !ids.every((id) => last.has(id))) continue;
+    // Those aboard are what the click turns (ROADMAP R48a: a cancel stops those ashore where they stand, each by its
+    // own order, and turns those aboard back): one ashore, bound for its next voyage, leaves by its order. With one
+    // ashore the click is only a cancel; a redirect or a join takes the landing whole.
+    const ashore = aboard.length !== ids.length;
+    const { x, y } = last.get(aboard[0]!)!;
+    if (!(ashore ? aboard : ids).every((id) => last.get(id)!.x === x && last.get(id)!.y === y) || sameLandingAs(world, l, x, y)) continue;
     const target = cellAt(world, x, y);
     // The sea is no cancel (critic run 44, R44-B2: it sailed home and was refused a day later): each order is
     // refused at the click, `OpenSea` (`orderMove`), and the landing keeps its course.
@@ -494,6 +498,7 @@ export function landingOrders(world: World, cmds: readonly { id: number; x: numb
       l.then = target;
       continue;
     }
+    if (ashore) continue;
     if (!landingOf(world, target) || neutralLanding(world, l.nation, target)) continue;
     // Another landing gathering for that place, at a port of its nation: they sail there and join it.
     const join = [...world.landings.values()].sort((a, b) => a.id - b.id).find((o) => o.id !== l.id && o.nation === l.nation && o.state === LandingState.gathering && world.cells.controller[world.ports[o.port]!.cell] === l.nation && !portShut(world, o.port) && sameLandingAs(world, o, x, y));

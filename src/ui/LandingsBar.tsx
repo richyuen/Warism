@@ -11,7 +11,14 @@ export function landingStatus(r: LandingRow): string {
   if (r.state === 'over' && r.outcome) {
     const o = r.outcome;
     if (o.kind === 'landed') return o.lost > 0 ? t('landing.over.landedLost', { n: o.landed, lost: o.lost }) : t('landing.over.landed', { n: o.landed });
-    if (o.kind === 'cancelled') return t('landing.over.cancelled', { port: r.port });
+    if (o.kind === 'cancelled') {
+      // R48a: those aboard back at the port, those ashore stopped where they stood (R51-N1: "back at Hamburg" for a week's march).
+      // Then the AI commands them again, where the player's army is the AI's (21107: two walked off the next day).
+      const home = o.home ?? 0;
+      const stopped = o.stopped ?? 0;
+      const said = stopped === 0 ? t('landing.over.cancelled', { port: r.port }) : home === 0 ? t('landing.over.cancelledStopped') : t('landing.over.cancelledBoth', { home, stopped, port: r.port });
+      return o.ai ? t('landing.over.aiAgain', { said }) : said;
+    }
     return t(`landing.over.${o.kind}`);
   }
   if (r.state === 'sailing') return t('landing.sailing');

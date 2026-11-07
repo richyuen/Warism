@@ -7,6 +7,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-857 · 2026-11-07 · accepted — A landing's cancel stops those ashore where they stand (R48a; supersedes ADR-855's march)
+- **Context.** Critic run 51, R51-N1 and its objection to ADR-855: 21107's gathering landing, cancelled on day 3,
+  marched its three divisions a week on to Hamburg, a port they never reached, while the row said "cancelled: back
+  at Hamburg". R43e (ADR-841) stops the march when a landing ends any other way; Europa Universalis's "halt".
+- **Decision.** The row's cancel is a command of its own (`cancelLanding`), which the worker turns into the click a
+  player could give: each division aboard ordered to its port's cell (the landing turns back), each ashore to where it
+  stands (it leaves the landing and stops). One sim change for it: a landing at sea with one of it ashore (bound for
+  its next voyage) and all of it ordered is judged by those aboard, and only a cancel is taken (before, those aboard
+  were refused `AtSea` and it sailed on); a redirect or join still takes it whole. The row says what was done, with
+  counts ("4 back at Tokyo, 1 stopped where they stood"), and, where the player's army is the AI's (ADR-759), "the
+  AI commands them again": on 21107 two walked off the next day under the AI, and the row says so. The tooltip:
+  "those at sea sail to {port}; those ashore stop where they stand".
+- **The checker.** `marchOn` skips a division on the retreat: on 20829 at t2325 (a history the change moved), 364
+  was beaten at Jiaxing, its landing's port in China, and retreated toward it; the fight's march, not the
+  landing's (R43e's). The 25 seeds of run 51: 0 broken.
+- **Consequences.** `landingRow1938` (gathering, at sea, at sea with one ashore; red before, the last red on the
+  sim change alone); `landingsBar1938` (the button: over in the hour, the division where it stood).
+
 ### ADR-856 · 2026-11-07 · accepted — The landings bar's AT on the critic's cases (R47d)
 - **Decision.** `tests/helpers/landingRows.ts` runs the critic's landing cases through the worker (`SimServer`, which
   makes both the rows and the panels): run 47's grid (each setup × op × hour × who, off 0) and run 50's eight far

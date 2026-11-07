@@ -580,6 +580,14 @@ export class Hud {
    * R40-B2): one at a time, a whole landing re-clicked told all but the last "the rest keep the old
    * landing", and each order chose transports while the rest still held the landing's.
    */
+  /** A landing's cancel from its row (ROADMAP R48a): its divisions' orders are the worker's; each counts as ordered now. */
+  cancelLanding(row: LandingRow): void {
+    const at = new Map(this.orderedAt.peek());
+    for (const d of row.divisions) at.set(d.id, this.orderSeq);
+    this.orderedAt.value = at;
+    this.sim.cancelLanding(row.id);
+  }
+
   commands(cmds: Command[]): void {
     if (cmds.length === 0) return;
     this.refusal.value = 0;

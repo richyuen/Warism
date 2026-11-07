@@ -72,6 +72,8 @@ export type ToWorker =
    * `tellLandingsLeft`), not one division at a time.
    */
   | { type: 'cmds'; cmds: Command[]; now?: boolean }
+  /** A landing's cancel from its row (ROADMAP R48a): those aboard sail back to its port, those ashore stop where they stand. */
+  | { type: 'cancelLanding'; id: number }
   | { type: 'hash'; reqId: number }
   /** PLAN 1.32: a JSON summary of the world (`Inspection`) for tests and the critic. */
   | { type: 'inspect'; reqId: number; full?: boolean }
@@ -908,7 +910,11 @@ export interface LandingRow {
   divisions: { id: number; voyage: FormationDetail['voyage'] }[];
   ships: { need: number; have: number };
   sails: { days: number; other?: string } | null;
-  outcome?: { kind: 'landed' | 'repulsed' | 'lost' | 'cancelled' | 'over'; tick: number; landed: number; lost: number };
+  /**
+   * `home`, `stopped`: a cancel's, those sent back to the port aboard and those stopped where they stood ashore (R48a);
+   * `ai`: the player's army is the AI's (ADR-759), which commands them again once the cancel's orders are done.
+   */
+  outcome?: { kind: 'landed' | 'repulsed' | 'lost' | 'cancelled' | 'over'; tick: number; landed: number; lost: number; home?: number; stopped?: number; ai?: true };
 }
 
 /** Numbers per sea battle in a snapshot's `seas` (PLAN 4.10b). */

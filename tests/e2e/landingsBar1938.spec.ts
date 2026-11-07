@@ -87,8 +87,9 @@ test("a landing's row: gathering at Tokyo, then at sea, then over; its division 
   await expect(page.getByTestId('landings-bar')).toHaveCount(0);
 });
 
-// ROADMAP R47c: the row's cancel. Gathering at Tokyo, the cancel orders its division to the port: the landing is over,
-// "cancelled: back at Tokyo"; the division in no landing, ashore. (At sea it turns back: `landingRow1938`.)
+// ROADMAP R47c, R48a: the row's cancel. Gathering at Tokyo, the cancel stops its division where it stands (critic run 51,
+// R51-N1: it marched a week on to the port while the row said "back at"): over in the hour, "cancelled: stopped where
+// they stood"; the division in no landing, ashore, where it was. (At sea it turns back: `landingRow1938`.)
 test("a landing's cancel from its row: over, cancelled, its division ashore and free", async ({ page }, info) => {
   test.setTimeout(240_000);
   const div = await ordered(page, 1600, 900);
@@ -96,19 +97,23 @@ test("a landing's cancel from its row: over, cancelled, its division ashore and 
   await expect(row).toHaveAttribute('data-state', 'gathering');
   await page.getByTestId('landing-toggle').click();
   await expect(page.getByTestId('landing-cancel')).toBeVisible();
+  const before = await page.evaluate((id) => window.__warsim!.view!.formationPos(id), div);
+  await expect(page.getByTestId('landing-cancel')).toHaveAttribute('title', /those ashore stop where they stand/);
   await page.getByTestId('landing-cancel').click();
   for (let h = 0; h < 48 && (await row.getAttribute('data-state')) !== 'over'; h++) {
     await page.evaluate(() => window.__warsim!.sim.step(1));
     await page.waitForTimeout(100);
   }
   await expect(row).toHaveAttribute('data-outcome', 'cancelled');
-  await expect(page.getByTestId('landing-status')).toHaveText('cancelled: back at Tokyo');
+  await expect(page.getByTestId('landing-status')).toHaveText('cancelled: stopped where they stood; the AI commands them again');
   await expect(page.getByTestId('landing-cancel'), 'no cancel for one over').toHaveCount(0);
   await expect(page.getByTestId('landing-division-voyage'), "over: the landing's words gone").toHaveText('');
   await page.screenshot({ path: path.join(shotDir(info), 'landings-desk-cancelled.png') });
   await page.evaluate((id) => window.__warsim!.hud.selectFormation(id), div);
   await expect(page.getByTestId('formation-panel')).toHaveAttribute('data-formation', String(div));
   await expect(page.getByTestId('formation-status')).not.toHaveAttribute('data-voyage', /gathering|waiting|toPort|ready|atSea/);
+  const after = await page.evaluate((id) => window.__warsim!.view!.formationPos(id), div);
+  expect(Math.hypot(after![0] - before![0], after![1] - before![1]), 'where it stood').toBeLessThan(0.6);
 });
 
 for (const [name, w, h] of [['landscape', 844, 390], ['phone', 390, 844]] as const) {

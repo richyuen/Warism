@@ -851,11 +851,14 @@ Critic run 51 (full, on `14a85a51`): no blocking issue, 0 broken on every checke
 ideas and "what the bar needs", filed (PROMPT's RELEASES, ADR-843); then critic run 52.
 
 - [ ] R48 **Run 51's naval findings.**
-  - [ ] R48a R51-N1 and the ADR-855 objection (EU's "halt"): a gathering landing's cancel stops those ashore where
+  - [x] R48a R51-N1 and the ADR-855 objection (EU's "halt"): a gathering landing's cancel stops those ashore where
     they stand (as R43e's end does), those aboard sail back to the port; the row says what is true each hour ("turning
     back to {port}", then "back at {port}"; ashore "stopped where they stand"), the tooltip "go to", not "go back to".
     AT (the bar's): `c51_lbar.mjs 21107 GER ENG … 3 ger_norwich3_phone` from the cancel day on the row and the panels
     agree; `landingRows` and `landingInvariants` at 0 broken.
+    Done (ADR-857): ashore stop, aboard turn back (with one ashore too); "stopped where they stood; the AI commands
+    them again" on 21107, as its panels; `landingRows` 108 cases 0 broken; the 25 seeds 0 broken (`marchOn` skips a
+    retreat: 20829's 364, beaten at Jiaxing).
   - [ ] R48b R51-N2 (and §7.1's AI layers objection): a division the AI ships says so in its panel ("At sea with the
     AI's landing"), as R35 does for a fleet. AT (the bar's): `c51_cancel_page.mjs 20661 JAP CHI … jap_sh 26 240`.
   - [ ] R48c R51-N3: on a landscape phone (844 × 390) an open row's last division and its cancel are on the screen

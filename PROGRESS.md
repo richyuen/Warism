@@ -1985,3 +1985,12 @@
   Run 50's six findings all fixed. Naval's 7 rests on the landings bar's cancel words (R51-N1, N2).
 - Filed as Batch 5 (R48 naval, R49 the rest); ADR-833: naval's findings fixed, then critic run 52.
 - **Next:** R48a.
+
+## 2026-11-07 — R48a: a landing's cancel stops those ashore (ADR-857)
+- `cancelLanding`: those aboard turn back, those ashore stop where they stand; a landing at sea with one ashore turns
+  back too (sim: judged by those aboard, only a cancel). Row: "stopped where they stood; the AI commands them again".
+- The critic's `c51_lbar.mjs 21107 GER …` (copied to `.cache/c51`, its outputs there): day 4 the row and the panels
+  agree. `landingRows` all: 108 cases, 0 broken. Run 51's 25 landing seeds: 0 broken after `marchOn` skips a retreat
+  (20829 t2325: 364 beaten at Jiaxing retreated toward it).
+- `landingRow1938` 4 (3 red before; the one-ashore case red on the sim change alone); `landingsBar1938` 4.
+- **Next:** R48b.

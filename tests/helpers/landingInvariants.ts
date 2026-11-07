@@ -33,8 +33,8 @@
  *   the later, then the voyage): R39d's rule as a checker, at any distance since R38d's gate went (ROADMAP R41,
  *   ADR-836) (ADR-835: R46-N3's class, a 40-day walk within Honshu to a far port's free group, kept caught once
  *   `stuck` counts the march as ground gained; a landing waiting for a sibling gains ground as the sibling does);
- * - `marchOn`: a division of a gathering landing, out of it with no order of the player's that hour, still marching
- *   to that landing's port (ROADMAP R43e; critic run 50, R50-N5: 20845's two told the landing was over walked on
+ * - `marchOn`: a division of a gathering landing, out of it with no order of the player's that hour and not on the
+ *   retreat (a fight's, not the landing's), still marching to that landing's port (ROADMAP R43e; critic run 50, R50-N5: 20845's two told the landing was over walked on
  *   to Hamburg for six days);
  * - `slowClick`: a click over the sea whose first division ashore comes over SLOW_CLICK_DAYS after its best
  *   single-division way, `farPort`'s reckoning (`bestWayHours`), not refused at the click (ROADMAP R44, ADR-843;
@@ -244,7 +244,9 @@ function check(w: World, n: number, idle: Map<number, number>, track: Track, orp
   }
   // `marchOn`: out of its gathering landing of last hour (`track.landing`) by no click, still marching to its port.
   for (const [id, l] of track.landing) {
-    if (divs.has(id) || clicked.has(id) || !f.has(id) || w.embarked.has(id) || c.moving[id] !== 1) continue;
+    // On the retreat it is the fight's, not its landing's (ROADMAP R48a: 20829 t2325, 364 beaten at Jiaxing retreated
+    // toward that port, its own side's; the landing's march is what R43e stops).
+    if (divs.has(id) || clicked.has(id) || !f.has(id) || w.embarked.has(id) || c.moving[id] !== 1 || c.retreat[id]! > 0) continue;
     const b = track.best.get(id);
     if (b && b.landing === l && c.targetCell[id] === w.ports[b.port]!.cell) out.push(`${t} marchOn: ${id} marches on to ${w.ports[b.port]!.name}, out of landing ${l}`);
   }
