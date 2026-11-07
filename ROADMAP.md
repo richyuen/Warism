@@ -759,8 +759,8 @@ Rules:
 The carried non-blocking issues of critic runs 31–43 (why some dimensions are 7 and not 8; none gates a release)
 and the small ideas from other games. Each one line until it is taken.
 
-**The next critic run comes after R35, not after R43f** (ADR-842, the user's decision, 2026-11-07): R43f, R34 and
-R35 are done first, and the critic run 51 judges them together.
+**The next critic run comes after R47, not after R43f** (ADR-842 and ADR-843, the user's decisions, 2026-11-07):
+R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 judges them together.
 
 - [ ] R34 The critic's carried issues: R37-N4 (relations graph labels overlap); R32-N3 (a refusal toast cuts its
   reason); R37-N3 (God's Breakthrough at peace does nothing, says nothing); R31-N1 (hero counters under the HUD);
@@ -773,7 +773,8 @@ R35 are done first, and the critic run 51 judges them together.
 
 ## Batch 4 — naval evidence (ADR-843, the user's decision)
 
-After critic run 51. R44 (`slowClick`) is in R43's batch, before that run.
+Before critic run 51 (the user, 2026-11-07: "let's do all before 51"), after R35. R44 (`slowClick`) is in R43's
+batch. R45's replay runs before the critic, as ADR-833's replay does.
 
 - [ ] R45 **The critic's replay as a tool.** `tools/diag/replayCritic.ts` builds the job list from the last report's
   JSON and `critic/scripts` (the hand-built `.cache/replay49/jobs.txt` and `suiteP.sh`, committed as a tool), runs it

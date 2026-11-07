@@ -1758,4 +1758,4 @@
 - The loop analysed at the user's request: runs 49–50 had no blocking naval issue and still 7 ("nothing new earns an
   8"). All six options taken: CRITIC_PROMPT OUTPUT 4 ("what the bar needs"), PROMPT "RELEASES" step 1 (the filing
   commit files that dimension's objections and ideas); R44 `slowClick` before critic run 51; Batch 4 R45–R47.
-- **Next:** R43f, R44, R34, R35, then critic run 51.
+- **Next:** R43f, R44, R34, R35, R45, R46, R47, then critic run 51 (the user: all before 51).

@@ -65,7 +65,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
   - 6: PROMPT.md "RELEASES" step 1, the filing commit files that dimension's objections, ideas and "what the bar
     needs" (now).
   - 2: ROADMAP R44, in R43's batch after R43f and before critic run 51 (ADR-842's R34 and R35 stay before the run).
-  - 5, 4, 3: ROADMAP Batch 4, R45 (the replay tool), R46 (`seaBattles`), R47 (a landing as one row), after run 51.
+  - 5, 4, 3: ROADMAP Batch 4, R45 (the replay tool), R46 (`seaBattles`), R47 (a landing as one row), after R35.
+  - Amended the same day by the user: "no, sorry let's do all before 51". Every option comes before critic run 51:
+    R43f, R44, R34, R35, R45, R46, R47, then the run.
 
 ### ADR-842 · 2026-11-07 · accepted (the user's decision) — R34 and R35 before the next critic run
 
