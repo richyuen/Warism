@@ -862,8 +862,10 @@ ideas and "what the bar needs", filed (PROMPT's RELEASES, ADR-843); then critic 
   - [x] R48b R51-N2 (and §7.1's AI layers objection): a division the AI ships says so in its panel ("At sea with the
     AI's landing"), as R35 does for a fleet. AT (the bar's): `c51_cancel_page.mjs 20661 JAP CHI … jap_sh 26 240`.
     Done (ADR-858): 20661's 364 from h216 "At sea with the AI's landing (not one of yours)", no row.
-  - [ ] R48c R51-N3: on a landscape phone (844 × 390) an open row's last division and its cancel are on the screen
+  - [x] R48c R51-N3: on a landscape phone (844 × 390) an open row's last division and its cancel are on the screen
     (the cancel in the row's head at a short height).
+    Done (ADR-859): the cancel in the open row's head; under 500 px tall the bar's list runs down to the bottom bar.
+    21107's three to Norwich at 844 × 390: all on the screen (`docs/evidence/R47/landings-landscape-open3.png`).
   - [ ] R48d R51-N6: "waits for the landing from {port}" only when it does wait for it (20861 row 2 sailed first); a
     landing at sea says its days to land.
   - [ ] R48e R51-N7: "they land together" for landings 12 hours apart (20661 t117/t129): the words as the rule is

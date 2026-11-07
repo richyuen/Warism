@@ -2000,3 +2000,8 @@
   landing (not one of yours)". `landingAiVoyage1938` (20661: 364 shipped by the AI at t217; red before); the
   critic's `c51_cancel_page.mjs 20661 …` in the page: from h216 so, no row.
 - **Next:** R48c.
+
+## 2026-11-07 — R48c: the open row's cancel in its head (ADR-859)
+- At 844 × 390 the critic's 21107 three and the cancel all on the screen; under 500 px tall the bar's list runs to the
+  bottom bar. `landingsBar1938` 5 (the new case red before).
+- **Next:** R48d.

@@ -75,6 +75,12 @@ export function LandingsBar({
                     </span>
                   ) : null}
                 </button>
+                {/* In the head, opened (R48c; critic run 51, R51-N3: at 844 × 390 under the divisions it was in the bar's scroll). */}
+                {isOpen && (r.state === 'gathering' || r.state === 'sailing') ? (
+                  <button type="button" class="landing-cancel" data-testid="landing-cancel" title={t('landing.cancelTip', { port: r.port })} onClick={() => onCancel(r)}>
+                    {t('landing.cancel')}
+                  </button>
+                ) : null}
               </div>
               {isOpen ? (
                 <div class="landing-body">
@@ -93,11 +99,6 @@ export function LandingsBar({
                       </li>
                     ))}
                   </ul>
-                  {r.state === 'gathering' || r.state === 'sailing' ? (
-                    <button type="button" class="landing-cancel" data-testid="landing-cancel" title={t('landing.cancelTip', { port: r.port })} onClick={() => onCancel(r)}>
-                      {t('landing.cancel')}
-                    </button>
-                  ) : null}
                 </div>
               ) : null}
             </li>

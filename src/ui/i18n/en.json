@@ -615,7 +615,7 @@
   "landing.over.cancelledBoth": "cancelled: {home} back at {port}, {stopped} stopped where they stood",
   "landing.over.aiAgain": "{said}; the AI commands them again",
   "landing.over.over": "over",
-  "landing.cancel": "Cancel the landing",
+  "landing.cancel": "Cancel landing",
   "landing.cancelTip": "Those at sea sail to {port} with their transports; those ashore stop where they stand",
   "tooltip.bySeaPart": "{n} of the {m} selected go by sea; the rest march",
   "tooltip.bySeaSame": "The landing they already have: they keep their transports and land at the marked place",

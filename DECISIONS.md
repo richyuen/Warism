@@ -7,6 +7,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-859 · 2026-11-07 · accepted — The open row's cancel in its head; a short view's bar runs to the bottom bar (R48c)
+- **Context.** Critic run 51, R51-N3: at 844 × 390 the bar's 40 vh (156 px) held two divisions; the third and the
+  cancel under them were in the bar's scroll.
+- **Decision.** The cancel ("Cancel landing", shorter) stands in the open row's head, beside its title, at every size;
+  under 500 px tall the list's cap is the room down to the bottom bar, not 40 vh. A row of more divisions than that
+  room still scrolls, its cancel always in sight.
+- **Consequences.** `landingsBar1938` case 5 (the critic's 21107 three, 844 × 390: the cancel and each division in the
+  bar and on the screen; red before on the cancel).
+
 ### ADR-858 · 2026-11-07 · accepted — A division on the AI's voyage says so (R48b)
 - **Context.** Critic run 51, R51-N2 and its objection to §7.1's layers on a taken nation: on 20661 a cancelled
   division was the AI's again (ADR-759) and the AI shipped it on a landing of its own; its panel said "At sea, bound

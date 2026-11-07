@@ -1239,6 +1239,13 @@ textarea,
   max-height: 40vh;
   overflow-y: auto;
 }
+/* A short view (a landscape phone, R48c; critic run 51, R51-N3: 156 px held two divisions): the room down to the
+   bottom bar. */
+@media (max-height: 500px) {
+  .landings-bar > ol {
+    max-height: calc(100vh - 3.4rem - var(--bar-top, 2.8rem) - 1rem);
+  }
+}
 .landing-row {
   background: rgba(20, 24, 32, 0.86);
   border: 1px solid rgba(214, 178, 94, 0.35);
@@ -1302,8 +1309,10 @@ textarea,
   font-weight: 600;
 }
 .landing-cancel {
-  margin-top: 0.3rem;
-  padding: 0.1rem 0.6rem;
+  flex: none;
+  align-self: center;
+  margin: 0 0.3rem;
+  padding: 0.1rem 0.5rem;
   background: rgba(120, 40, 36, 0.6);
   border: 1px solid rgba(217, 83, 79, 0.7);
   border-radius: 0.2rem;
