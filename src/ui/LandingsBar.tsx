@@ -24,17 +24,21 @@ export function landingStatus(r: LandingRow): string {
 /**
  * The player's landings, a row each (ROADMAP R47b; the critic's idea since run 32): where to and from which port, where
  * it stands, its transports had of those needed while it gathers. A click on a row opens it: each division with what its
- * panel says (`voyageText`, the same words), the wait at the port; a click on its mark flies to the land it is for.
+ * panel says (`voyageText`, the same words), the wait at the port, and its cancel (R47c); a click on its mark flies to
+ * the land it is for.
  * Top middle, under the bar of the top; a phone's width, the whole width less its gutters. None without a landing.
  */
 export function LandingsBar({
   rows,
   nameOf,
   onPlace,
+  onCancel,
 }: {
   rows: LandingRow[];
   nameOf: (id: number) => string | undefined;
   onPlace: (x: number, y: number) => void;
+  /** Its cancel (ROADMAP R47c): its divisions ordered to its port's cell, as a click there orders them. */
+  onCancel: (row: LandingRow) => void;
 }) {
   const [open, setOpen] = useState<number | null>(null);
   if (rows.length === 0) return null;
@@ -82,6 +86,11 @@ export function LandingsBar({
                       </li>
                     ))}
                   </ul>
+                  {r.state === 'gathering' || r.state === 'sailing' ? (
+                    <button type="button" class="landing-cancel" data-testid="landing-cancel" title={t('landing.cancelTip', { port: r.port })} onClick={() => onCancel(r)}>
+                      {t('landing.cancel')}
+                    </button>
+                  ) : null}
                 </div>
               ) : null}
             </li>

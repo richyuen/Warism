@@ -901,9 +901,10 @@ export interface LandingRow {
   state: 'gathering' | 'sailing' | 'returning' | 'over';
   port: string;
   target: string;
-  /** The land cell it lands on, and the cell the order was for: [x, y], cells. */
+  /** The land cell it lands on, the cell the order was for, and its port's cell (a cancel's orders go there, R47c): [x, y], cells. */
   land: [number, number];
   to: [number, number];
+  portAt: [number, number];
   divisions: { id: number; voyage: FormationDetail['voyage'] }[];
   ships: { need: number; have: number };
   sails: { days: number; other?: string } | null;

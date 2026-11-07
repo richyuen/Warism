@@ -1961,3 +1961,10 @@
   and phone inside the view. Red before (3 of 3). The 27 specs that read the panel: 26 passed, `landingWait1938`
   (phone) red at 4 workers on a count ("1 of 2" for "1 of 4"), green alone.
 - **Next:** R47c.
+
+## 2026-11-07 — R47c: a landing's cancel from its row (ADR-855)
+- The row's cancel orders its divisions to its port's cell in one click's batch; the sim's rules do the rest (at
+  sea it turns back, gathering they leave it). Told "cancelled: back at {port}" once over.
+- Found on the way: an ended landing's opened row kept its divisions' last voyage ("it sails when …"); now blank.
+- `landingRow1938` +2 cases (gathering, at sea), red before; `landingsBar1938` +1 (the button): 4 passed.
+- **Next:** R47d.

@@ -1301,6 +1301,16 @@ textarea,
 .landing-division-name {
   font-weight: 600;
 }
+.landing-cancel {
+  margin-top: 0.3rem;
+  padding: 0.1rem 0.6rem;
+  background: rgba(120, 40, 36, 0.6);
+  border: 1px solid rgba(217, 83, 79, 0.7);
+  border-radius: 0.2rem;
+  color: #f1e6d2;
+  font: inherit;
+  cursor: pointer;
+}
 
 .nuke-alerts {
   position: absolute;

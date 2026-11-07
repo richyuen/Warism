@@ -7,6 +7,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-855 · 2026-11-07 · accepted — A landing's cancel from its row (R47c)
+- **Decision.** The row's cancel (gathering or at sea) is the click a player could give: each of its divisions
+  ordered, in one batch (`hud.commands`), to its port's cell (`LandingRow.portAt`). The sim judges it as any click
+  (`landingOrders`): at sea, all aboard, it turns back (`returning`) and they go ashore at the port; gathering,
+  each leaves the landing. No new rule. The worker notes a batch that sends all of a landing to its port, and that
+  landing, over with none landed or lost, is told `cancelled` ("cancelled: back at Tokyo"). An ended landing's
+  divisions carry no voyage: its words stopped being true when it ended (the cancelled row said "it sails when its
+  transports … are ready").
+- **Consequences.** `landingRow1938` (worker): gathering and at-sea cancels, both `cancelled`, none lost, ashore
+  by Tokyo; red before. `landingsBar1938`: the button, the row over and cancelled, the division free.
+
 ### ADR-854 · 2026-11-07 · accepted — The landings bar (R47b)
 - **Decision.** `LandingsBar`: top middle under the top bar, a row a landing: "{city} from {port}", where it stands
   (sails in about N days; waits for the landing from another port; at sea; turning back; how it ended), and while

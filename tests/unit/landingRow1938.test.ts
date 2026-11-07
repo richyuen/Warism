@@ -87,3 +87,78 @@ describe("the player's landings in rows (ROADMAP R47a)", () => {
     expect(sent, 'the same rows are not sent again').toBe(before);
   });
 });
+
+/** R42a's case: Japan played, its four divisions nearest Tokyo, put by the port, ordered to Shanghai by one click. */
+function fourToShanghai(): { s: SimServer; rows: () => LandingRow[]; four: number[] } {
+  let rows: LandingRow[] = [];
+  const s = new SimServer((msg) => {
+    if (msg.type === 'landings') rows = msg.rows;
+  });
+  s.handle({ type: 'init', reqId: 1, init: { scenario: '1938', seed: 1, assets: assets1938(W) } }, 0);
+  s.handle({ type: 'cmd', cmd: { kind: 'setPlayer', nation: JAP } }, 1);
+  const w = s.sim!.world;
+  if (!w.wars.atWar(JAP, CHI)) s.sim!.command({ kind: 'declareWar', attacker: JAP, defender: CHI });
+  s.handle({ type: 'step', reqId: 2, n: 1 }, 2);
+  const c = w.formations.cols;
+  const comp = navOf(w).grid.component;
+  const honshu = comp[Math.floor(TOKYO[1]) * W + Math.floor(TOKYO[0])];
+  const all: [number, number][] = [];
+  w.formations.forEach((id) => {
+    if (c.nation[id] !== JAP || w.isFleet(id) || w.offLand(id) || comp[Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!)] !== honshu) return;
+    all.push([id, (c.x[id]! - TOKYO[0]) ** 2 + (c.y[id]! - TOKYO[1]) ** 2]);
+  });
+  const four = all.sort((a, b) => a[1] - b[1]).slice(0, 4).map((d) => d[0]).sort((a, b) => a - b);
+  nearPort(w, four, portNamed(w, 'Tokyo'), [0, 2, 5, 8]);
+  s.handle({ type: 'cmds', cmds: four.map((id) => ({ kind: 'moveFormation' as const, id, x: SHANGHAI[0], y: SHANGHAI[1], nation: JAP })) }, 3);
+  s.handle({ type: 'step', reqId: 3, n: 1 }, 4);
+  return { s, rows: () => rows, four };
+}
+
+/** The row's cancel (R47c): each of its divisions ordered to its port's cell, in one click's batch. */
+function cancel(s: SimServer, r: LandingRow): void {
+  s.handle({ type: 'cmds', cmds: r.divisions.map((d) => ({ kind: 'moveFormation' as const, id: d.id, x: r.portAt[0], y: r.portAt[1], nation: JAP })) }, 5);
+}
+
+describe("a landing's cancel from its row (ROADMAP R47c)", () => {
+  it('gathering at Tokyo: its divisions leave it, ashore; it is over, told cancelled', () => {
+    const { s, rows, four } = fourToShanghai();
+    const w = s.sim!.world;
+    const row = rows()[0]!;
+    expect(row.state).toBe('gathering');
+    expect(row.portAt, "Tokyo's cell").toEqual([(w.ports[landingOfDivision(w, four[0]!)!.port]!.cell % W) + 0.5, Math.floor(w.ports[landingOfDivision(w, four[0]!)!.port]!.cell / W) + 0.5]);
+    cancel(s, row);
+    for (let h = 0; h < 48 && rows().find((r) => r.id === row.id)?.state !== 'over'; h++) s.handle({ type: 'step', reqId: 20 + h, n: 1 }, 20 + h);
+    const over = rows().find((r) => r.id === row.id)!;
+    expect(over.state).toBe('over');
+    expect(over.outcome).toMatchObject({ kind: 'cancelled', landed: 0, lost: 0 });
+    expect(over.divisions.map((d) => d.voyage), "over: no landing's words").toEqual(four.map(() => null));
+    for (const id of four) {
+      expect(w.formations.has(id), `${id} lives`).toBe(true);
+      expect(w.embarked.has(id), `${id} ashore`).toBe(false);
+      expect(landingOfDivision(w, id), `${id} in no landing`).toBeUndefined();
+    }
+  });
+
+  it('at sea: it turns back, its divisions go ashore at Tokyo; over, told cancelled, none lost', () => {
+    const { s, rows, four } = fourToShanghai();
+    const w = s.sim!.world;
+    const id = rows()[0]!.id;
+    for (let h = 0; h < 24 * 60 && rows().find((r) => r.id === id)?.state !== 'sailing'; h++) s.handle({ type: 'step', reqId: 100 + h, n: 1 }, 100 + h);
+    const sailing = rows().find((r) => r.id === id)!;
+    expect(sailing.state).toBe('sailing');
+    // A few hours out of port.
+    s.handle({ type: 'step', reqId: 3000, n: 3 }, 3000);
+    cancel(s, rows().find((r) => r.id === id)!);
+    s.handle({ type: 'step', reqId: 3001, n: 1 }, 3001);
+    expect(rows().find((r) => r.id === id)?.state, 'turned back').toBe('returning');
+    for (let h = 0; h < 24 * 10 && rows().find((r) => r.id === id)?.state !== 'over'; h++) s.handle({ type: 'step', reqId: 4000 + h, n: 1 }, 4000 + h);
+    const over = rows().find((r) => r.id === id)!;
+    expect(over.outcome).toMatchObject({ kind: 'cancelled', landed: 0, lost: 0 });
+    const port = w.ports.find((p) => p.name === sailing.port)!.cell;
+    for (const d of four) {
+      expect(w.embarked.has(d), `${d} ashore`).toBe(false);
+      const c = w.formations.cols;
+      expect(Math.hypot(c.x[d]! - ((port % W) + 0.5), c.y[d]! - (Math.floor(port / W) + 0.5)), `${d} by Tokyo`).toBeLessThan(12);
+    }
+  });
+});
