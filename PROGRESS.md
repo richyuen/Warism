@@ -1759,3 +1759,17 @@
   8"). All six options taken: CRITIC_PROMPT OUTPUT 4 ("what the bar needs"), PROMPT "RELEASES" step 1 (the filing
   commit files that dimension's objections and ideas); R44 `slowClick` before critic run 51; Batch 4 R45–R47.
 - **Next:** R43f, R44, R34, R35, R45, R46, R47, then critic run 51 (the user: all before 51).
+
+## 2026-11-07 — R43f: a nation God founds is of the province clicked (ADR-844)
+- `spawnRebels` takes God's `seat`: the capital is the clicked province's largest city, else its own cell nearest
+  that province's middle; the origin (the capital's province, ADR-100/103) and so the name follow. The sim's own
+  revolts and a Kill's pieces unchanged: the pin unmoved.
+- Run 50's case: Spawn ×5 on Greater Poland founded "Free Silesian Voivodeship" (Katowice the area's largest city);
+  now "Free Greater Poland Voivodeship", its flag in Greater Poland (the critic's probe replayed on the build,
+  `.cache/r43f`). The probe's `revolt_bavaria` cell is in Saxony: "Free Saxony" was right.
+- Test: `nationNames` sweep (every 7th province × sizes 1, 2, 5, 12, 24 and region revolts, 2,000+ founded):
+  1,698 named for another province before, 0 after. Related units green (`godMode`, `rebelCapitals`,
+  `revoltRegion`, `statelet`, `foundedFlags`, `godActsHistory1938`, `tableGrowth`, `flagAtlas`).
+- Specs by hand: `godMode1938`, `godPanelMore1938`, `godRevolt1938`, `godUi1938`, `loadedWorld1938`,
+  `seamItems1938`, `workerNodeGrowth1938` (30 passed). Budgets: God commands only; no tick system changed.
+- R43 done. **Next:** R44 (`slowClick`).

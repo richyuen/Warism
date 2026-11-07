@@ -1062,7 +1062,8 @@ month's start only).
   "Free <province>", the holder's techs but the nuclear, militia `round(cells ÷ MILITIA_PER_CELLS (40))`
   up to `MILITIA_MAX` (4), gold at least `START_GOLD` (150), `REBEL_AGGRESSION` (40)), at war with the
   holder and its puppets but not its allies. `LandCeded` and the history rows tell it. God has
-  `forceRevolt` and `spawnNation` (no war, `NationSpawned`).
+  `forceRevolt` and `spawnNation` (no war, `NationSpawned`); a nation either founds has its capital,
+  and so its name, in the province clicked (`seat`: its largest city, else its cell nearest the middle) [ADR-844].
 
 ---
 

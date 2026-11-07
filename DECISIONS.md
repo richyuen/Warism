@@ -7,6 +7,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-844 · 2026-11-07 · accepted — A nation God founds is of the province clicked: its capital is there (R43f)
+
+- **Context (the critic's R50-N6).** God's Spawn nation on Greater Poland, five provinces, founded "Free Silesian
+  Voivodeship": a founded nation is named for the province of its capital (ADR-100, ADR-103), and the capital was
+  the area's largest city, Katowice. The run's other case, "Free Saxony" for the probe step called `revolt_bavaria`,
+  was right: the probe's cell (Berlin −6, +10) is in Saxony (province 118), in the page and headless.
+- **Decision.** `spawnRebels` takes a `seat`, the province God clicked (`forceRevolt`, `spawnNation`): the capital
+  is the seat's largest city that is no other nation's capital, else the nation's own cell nearest the seat's
+  middle. The origin rule is unchanged (the province of the capital's cell), so the name is the seat's. A revolt
+  of the sim's own and a Kill's pieces have no seat: as before.
+- **Stands on (ADR-803).** ADR-100 and ADR-103 (origin = the capital's province; the capital's cell, not its
+  coordinates): their tests in `nationNames.test.ts` green before and after, and the every-province revolt test still
+  finds no capital outside its origin. SPEC §3.4's `forceRevolt` and `spawnNation` line names the seat.
+- **Evidence.** `nationNames.test.ts` "a nation God founds is named for the province clicked": every 7th province ×
+  sizes 1, 2, 5, 12, 24 and region revolts, over 2,000 founded (over 1,000 of several provinces): 1,698 named for
+  another province before, 0 after. The critic's probe replayed on the build: "Free Greater Poland Voivodeship was set
+  up on land of Poland", its capital flag in Greater Poland.
+- **The pin:** not moved: God's commands are not in the pinned run.
+
 ### ADR-843 · 2026-11-07 · accepted (the user's decision) — Naval's bar after run 50: name the 8, bound the click, show the landing
 
 - **Context (the user asked, 2026-11-07: analyse the loop; can anything improve naval's chance of its bar?).**

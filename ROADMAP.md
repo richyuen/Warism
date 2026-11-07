@@ -720,7 +720,7 @@ Rules:
   5,000 by zoom level, within a quarter of the screen (`heroes1938` R42c: 1.32× at 8,000, phone 12 %; 7.184b3 green);
   R42d `PuppetReleased` ticked; R42e one number.
 
-- [ ] R43 **Run 50's issues** (critic run 50, full, on `3fe138b1`: no blocking issue; naval 7, bar 8; stability up to 8;
+- [x] R43 **Run 50's issues** (critic run 50, full, on `3fe138b1`: no blocking issue; naval 7, bar 8; stability up to 8;
   ADR-833: each finding fixed; the critic's probes replayed first).
   - [x] R43a R50-N1 (naval): one click's last division has no bound on its landing's wait while a sibling landing's is
     a month (ADR-836): 20861/20841 Tokyo→Shanghai, three divisions, 35 days at Tokyo for 366 walking 41 cells, a
@@ -744,8 +744,10 @@ Rules:
     marched on to Hamburg for six days: a landing ended stops its divisions' march to its port.
     Done (ADR-841): `endLanding` stops them, however it ends; 20845: none at Hamburg (1 the AI's, 4 stands).
     `landingEndedMarch1938` (sunk, port lost; red before); checker `marchOn`: run 50's 19 seeds 5 broken (28) → 0.
-  - [ ] R43f R50-N6 (God Mode): Revolt and Spawn name the new nation for a province other than the one clicked ("Free
+  - [x] R43f R50-N6 (God Mode): Revolt and Spawn name the new nation for a province other than the one clicked ("Free
     Saxony" for Bavaria): the clicked province's name.
+    Done (ADR-844): the capital in the province clicked, so its name; Spawn on Greater Poland was "Free Silesian
+    Voivodeship" (Katowice), now its own; the "Bavaria" click was Saxony. `nationNames` sweep: 1,698 of 2,000+ wrong → 0.
 - [ ] R44 **A click's landing has a bound (`slowClick`; ADR-843, the user's decision: before critic run 51).**
   `landingInvariants` gets a rule `slowClick`: a click's landing whose first division ashore is over 7 days later than
   the click's best single-division way (march to its own nearest port or a called group, the later, then the voyage;

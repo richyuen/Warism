@@ -279,8 +279,11 @@ function kinTarget(world: World, f: number): number {
   return q !== p && live(q) ? q : 0;
 }
 
-/** Province p (held by `holder`) revolts: returns the provinces that left. */
-function revolt(world: World, p: number, holder: number): number[] {
+/**
+ * Province p (held by `holder`) revolts: returns the provinces that left. `seat`: God Mode's, the
+ * province clicked, which a nation founded here is of (`spawnRebels`).
+ */
+function revolt(world: World, p: number, holder: number, seat = 0): number[] {
   const area = revoltArea(world, p, holder);
   const core = world.provinces.core[p]!;
   const nc = world.nations.cols;
@@ -310,7 +313,7 @@ function revolt(world: World, p: number, holder: number): number[] {
     }
     return area;
   }
-  spawnRebels(world, area, holder);
+  spawnRebels(world, area, holder, 0, true, EventKind.RevoltSpawned, seat);
   return area;
 }
 
@@ -416,7 +419,7 @@ export function forceRevolt(world: World, p: number): boolean {
   const o = world.cells.owner[c]!;
   if (o === 0 || world.nations.cols.living[o] !== 1) return false;
   pv.version++;
-  revolt(world, p, o);
+  revolt(world, p, o, p);
   return true;
 }
 
@@ -447,7 +450,7 @@ export function spawnNation(world: World, p: number, size: number): number {
     }
   }
   pv.version++;
-  return spawnRebels(world, area, holder, 0, false, EventKind.NationSpawned);
+  return spawnRebels(world, area, holder, 0, false, EventKind.NationSpawned, p);
 }
 
 /** The revolting provinces: p alone, or its restless region (setting `revoltMode`). */
@@ -503,9 +506,12 @@ function nuclearMask(world: World): TechMask {
  * Creates the rebel nation on `area` (province ids) and returns its id; with `revive`, that dead
  * nation returns instead (PLAN 1.20, called by `reviveNation`). Without `war` the holder does not
  * declare war on it (a God Mode Kill, whose holder dies in the same tick: ADR-99). Its event is
- * `kind`: a revolt, or God Mode's Spawn nation (`NationSpawned`, PLAN 7.33b).
+ * `kind`: a revolt, or God Mode's Spawn nation (`NationSpawned`, PLAN 7.33b). `seat` (in the area;
+ * 0: none) is the province God Mode clicked: the capital is there, so the nation is named for the
+ * place the player chose (R43f, the critic's R50-N6: a click on Greater Poland founded "Free Silesian
+ * Voivodeship", Katowice being the largest city of the five provinces).
  */
-export function spawnRebels(world: World, area: number[], holder: number, revive = 0, war = true, kind: EventKind = EventKind.RevoltSpawned): number {
+export function spawnRebels(world: World, area: number[], holder: number, revive = 0, war = true, kind: EventKind = EventKind.RevoltSpawned, seat = 0): number {
   const nt = world.nations;
   let id = revive;
   if (id === 0) id = nt.create();
@@ -558,8 +564,9 @@ export function spawnRebels(world: World, area: number[], holder: number, revive
     world.provinces.unrest[q] = AFTER_REVOLT;
   }
   // Capital: the largest city of the area (lowest id on ties), else its cell nearest the area's
-  // centroid. If the holder's own capital lies in the area, the rebels take it and the holder
-  // relocates.
+  // centroid; with a `seat`, of the seat (its largest city, else its cell nearest its centroid).
+  // If the holder's own capital lies in the area, the rebels take it and the holder relocates.
+  if (!inArea.has(seat)) seat = 0;
   const cc = world.cities.cols;
   let best = 0;
   let holderLostCapital = false;
@@ -570,6 +577,7 @@ export function spawnRebels(world: World, area: number[], holder: number, revive
       holderLostCapital = true;
     }
     if (cc.capitalOf[ci] !== 0) return; // another nation's capital flag is never taken
+    if (seat !== 0 && province[cc.cell[ci]!] !== seat) return;
     if (best === 0 || cc.size[ci]! > cc.size[best]!) best = ci;
   });
   if (holderLostCapital) relocateCapital(world, holder);
@@ -583,7 +591,23 @@ export function spawnRebels(world: World, area: number[], holder: number, revive
     // The middle of a crescent, of a strip of coast or of a group of islands is not the
     // nation's land, and is often the sea (PLAN 2.15e): its own cell nearest that middle.
     const h = owner.length / w;
-    const mid = cells > 0 ? nearestCellWhere((c) => owner[c] === id, sx / cells, sy / cells, w, h, Math.max(w, h), world.settings.loopingMap) : -1;
+    // With a seat, the middle of its cells (the area's when none are the nation's).
+    let [n, mx, my] = [cells, sx, sy];
+    if (seat !== 0) {
+      let k = 0;
+      let kx = 0;
+      let ky = 0;
+      for (let c = 0; c < owner.length; c++) {
+        if (owner[c] !== id || province[c] !== seat) continue;
+        k++;
+        kx += (c % w) + 0.5;
+        ky += Math.floor(c / w) + 0.5;
+      }
+      if (k > 0) [n, mx, my] = [k, kx, ky];
+      else seat = 0;
+    }
+    const mine = seat !== 0 ? (c: number): boolean => owner[c] === id && province[c] === seat : (c: number): boolean => owner[c] === id;
+    const mid = n > 0 ? nearestCellWhere(mine, mx / n, my / n, w, h, Math.max(w, h), world.settings.loopingMap) : -1;
     [nc.capitalX[id], nc.capitalY[id]] = mid >= 0 ? world.cellPoint(mid) : [0, 0];
     capitalCell = mid;
   }

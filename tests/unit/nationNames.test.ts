@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { foundedName, foundedNth, provinceLabel, randomNationName } from '../../src/shared/nationNames';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { forceRevolt, spawnRebels } from '../../src/sim/systems/revolts';
+import { forceRevolt, spawnNation, spawnRebels } from '../../src/sim/systems/revolts';
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938, earthAdmin1 } from '../helpers/earth';
 
@@ -156,6 +156,42 @@ describe('the names of founded nations (PLAN 2.15b)', () => {
     expect(elsewhere.length, 'nations with the capital outside the origin').toBe(0);
     expect(first).toBe(NATIONS_1938.length + 1);
   }, 300_000);
+
+  // R43f (the critic's R50-N6): God's Spawn nation on Greater Poland, five provinces, founded "Free
+  // Silesian Voivodeship", Katowice being the area's largest city. A nation God founds is of the
+  // province clicked: its capital is there (its largest city, else its own cell nearest its middle),
+  // so its name is. Every 7th province, five sizes, and the revolt of a region (`REGION_JOIN`).
+  it('a nation God founds is named for the province clicked, whatever the area\'s largest city', () => {
+    const l = labels();
+    const wrong: string[] = [];
+    let founded = 0;
+    let wider = 0;
+    const check = (world: World, p: number, id: number, how: string): void => {
+      const nc = world.nations.cols;
+      founded++;
+      let size = 0;
+      for (let q = 1; q < world.provinces.count; q++) if (world.provinces.core[q] === id) size++;
+      if (size > 1) wider++;
+      const cap = capitalProvince(world, id, capitalCities(world));
+      if (nc.origin[id] !== p || cap !== p) wrong.push(`${how} ${p} ${l[p - 1]}: origin ${nc.origin[id]} ${l[nc.origin[id]! - 1]}, capital in ${cap}`);
+    };
+    for (const size of [1, 2, 5, 12, 24]) {
+      const world = sim1938().world;
+      for (let p = 1 + size; p < world.provinces.count; p += 7) {
+        const id = spawnNation(world, p, size);
+        if (id !== 0) check(world, p, id, `spawn ${size}`);
+      }
+    }
+    const world = sim1938().world;
+    world.settings.revoltMode = 'region';
+    for (let p = 3; p < world.provinces.count; p += 7) {
+      const id = world.nations.highWater;
+      if (forceRevolt(world, p) && world.nations.highWater > id && world.nations.cols.origin[id] !== 0) check(world, p, id, 'region revolt');
+    }
+    expect(founded, 'nations founded').toBeGreaterThan(2000);
+    expect(wider, 'of more than one province').toBeGreaterThan(1000);
+    expect(wrong.slice(0, 8), `${wrong.length} not of the province clicked`).toEqual([]);
+  }, 600_000);
 });
 
 describe('a nation of the random world is named (PLAN 7.4f10)', () => {
