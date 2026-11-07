@@ -551,6 +551,11 @@ textarea,
 .ticker-row:hover {
   background: rgba(40, 46, 60, 0.92);
 }
+/* A phone's order row opened by a tap to its full words (ROADMAP R43c): as many lines as they take. */
+.ticker.short .order-news.open .ticker-line {
+  white-space: normal;
+  overflow: visible;
+}
 .ticker-date {
   color: #b9b3a3;
 }

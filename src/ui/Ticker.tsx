@@ -1,3 +1,4 @@
+import { useState } from 'preact/hooks';
 import { dateOfTick } from '../shared/calendar';
 import { kindName, type TickerRow } from '../shared/history';
 import { t, type MessageKey } from './i18n';
@@ -21,7 +22,9 @@ const TICKER_SHORT = 2;
  * `compact` (a phone's width; the user's choice of 2026-10-29, ADR-760): two rows in all, each of
  * two lines at most: the newest event, and the player's last order's news, else the first sea
  * battle, else the event before it; with two orders' news or more, the last two (the user's, ROADMAP R42b,
- * ADR-837: critic run 49, R49-N3, the at-port division's row hidden behind the other).
+ * ADR-837: critic run 49, R49-N3, the at-port division's row hidden behind the other). A phone has no hover for a
+ * row's tooltip: there the first tap on an order row told by its brief opens it to its full words (the names of a
+ * loss of several), and the next flies to it (ROADMAP R43c; critic run 50, R50-N3).
  */
 export function Ticker({
   rows,
@@ -51,6 +54,8 @@ export function Ticker({
   // What is shown: all; beside a panel the last events, a sea battle and an order; on a phone two rows.
   // Sea rows of the same words are one, with how many (PLAN 7.167).
   const merged = mergeSeaRows(seas);
+  // The order row a phone's tap has opened to its full words (R43c), by its `seq`.
+  const [opened, setOpened] = useState<number | null>(null);
   const lastOrders = orders.slice(-2);
   const phoneSea = lastOrders.length === 0 ? merged.slice(0, 1) : [];
   const [evs, ss, os] = compact
@@ -83,14 +88,29 @@ export function Ticker({
             </button>
           </li>
         ))}
-        {os.map((o) => (
-          <li key={`order-${o.seq}`}>
-            <button type="button" class="ticker-row order-news" data-testid="order-news" data-order={o.kind} title={(short || compact) && o.brief ? `${o.text}
-${t('order.toFormation')}` : t('order.toFormation')} onClick={() => onOrder(o.seq)}>
-              <span class="ticker-line">{(short || compact) && o.brief ? o.brief : o.text}</span>
-            </button>
-          </li>
-        ))}
+        {os.map((o) => {
+          const brief = (short || compact) && o.brief !== undefined && o.brief !== o.text;
+          const open = brief && compact && opened === o.seq;
+          return (
+            <li key={`order-${o.seq}`}>
+              <button
+                type="button"
+                class={open ? 'ticker-row order-news open' : 'ticker-row order-news'}
+                data-testid="order-news"
+                data-order={o.kind}
+                aria-expanded={brief && compact ? open : undefined}
+                title={brief ? `${o.text}
+${t('order.toFormation')}` : t('order.toFormation')}
+                onClick={() => {
+                  if (brief && compact && !open) setOpened(o.seq);
+                  else onOrder(o.seq);
+                }}
+              >
+                <span class="ticker-line">{brief && !open ? o.brief : o.text}</span>
+              </button>
+            </li>
+          );
+        })}
       </ol>
     </div>
   );

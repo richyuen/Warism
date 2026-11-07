@@ -7,6 +7,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-840 · 2026-11-07 · accepted — On a phone a tap opens an order row to its full words (R43c)
+
+- **Decision.** On a phone (`compact`) the first tap on an order row told by its brief (R42b, R43b) opens it in place
+  to its full words: a loss of several names every division; the next tap flies to the place and forgets it, as a
+  click does. One row open at a time; a desk keeps one click (its tooltip has the words).
+- **Why.** Critic run 50, R50-N3: the names were only in a tooltip a phone cannot hover. Not taken: the formation
+  panel (a division lost at sea has none, and the click opens no panel: ADR-839's "the panel the click opens keeps
+  them" was wrong, the words were in the panel only when the player selected the formation).
+- **Bound.** Six lost at sea, opened, on the screen beside the panel and not under it, at 390 × 844 and 844 × 390
+  (`orderRowsTap1938`).
+
 ### ADR-839 · 2026-11-07 · accepted — A single order row beside a panel by its gist (R43b)
 
 - **Decision.** In the ticker's one-line rows (beside a panel, a phone) every order news has a brief: a division by

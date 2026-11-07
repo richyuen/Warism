@@ -1334,7 +1334,7 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   (`world.sunk`, R40b). The same loss of several divisions in one hour is one row naming them (R40c); in the
   ticker's one-line rows (beside a panel, a phone) by its count, the names in its tooltip (`orderNewsBrief`, R42b); a single row there by its gist, a division by its number
   ("366: transports sunk, the landing is over"; a refusal "365: not done, no coast to land on"), its words in
-  the tooltip (R43b, ADR-839).
+  the tooltip (R43b, ADR-839); on a phone the first tap opens the row to them, the next flies (R43c, ADR-840).
   An hour's orders edit it as a batch (`landingOrders`, before they are applied): one click ordering all
   of a gathering landing's divisions to one other place over the sea from its port redirects it, its port
   and groups kept, or merges it into one gathering for that place at the same port (`redirectGathering`;

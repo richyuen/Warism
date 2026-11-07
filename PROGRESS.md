@@ -1744,3 +1744,6 @@
   `orderRowsPanel1938`, `ticker1938`, `phoneLayout1938`, `invasion1938`, `landingClickBatch1938`,
   `landingLeftTold1938`, `landingNearNews1938`, `landingNeutral1938`, `landingPortShut1938`. No sim change; budgets
   unmoved (one string a row).
+- R43c (ADR-840): on a phone the first tap on a shortened order row opens it to its full words (a loss's names), the
+  next flies there. Specs by hand: `orderRowsTap1938` (new), `orderRowsPanel1938`, `orderRowsBrief1938`,
+  `orderNews1938`, `ticker1938`, `phoneLayout1938`, `landingLeftTold1938`. No sim change; budgets unmoved.

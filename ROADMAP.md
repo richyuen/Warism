@@ -731,8 +731,10 @@ Rules:
     Done (ADR-839): a division by its number, a hero or wing by its name, a refusal by its reason's gist ("365: not
     done, no coast to land on"); `orderRowsBrief1938` (each kind, 20 reasons, the longest names, desk, landscape,
     phone: red before).
-  - [ ] R43c R50-N3: on a phone the merged loss row's names are only in a tooltip a phone cannot hover: the names where
+  - [x] R43c R50-N3: on a phone the merged loss row's names are only in a tooltip a phone cannot hover: the names where
     a tap reaches them (the panel the click opens, or the row).
+    Done (ADR-840): on a phone the first tap opens the row to its full words (six names), the next flies; one open at a
+    time; a desk one click. `orderRowsTap1938` (phone with and without a panel, landscape, desk; red before).
   - [x] R43d R50-N4: a freed rising's "left its war" rows tick before "was freed from", their cause: within the hour,
     the release first. Done: the ticker moves a release or rising above the wars its nation left in that hour
     (`causeFirst`; the sim's order kept: the pin unmoved); `realmWars` Manchukuo's rising red before.
