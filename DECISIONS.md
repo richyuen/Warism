@@ -7,6 +7,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-861 · 2026-11-07 · accepted — Siblings land "within a day of" each other, as the words say (R48e)
+- **Context.** Critic run 51, R51-N7: 365's panel on 20661 said "they land together", and its landings came ashore at
+  t117 and t129; 20841's at t119, t129, t131. The rule (R37c, ADR-836's `SIBLING_SLACK_HOURS`) lands them within half
+  a day of the estimate, a day with its error. The critic left it to us: the words as the rule, or the landings within
+  the hour.
+- **Decision.** The words. Landings within the hour would hold the first ashore off the coast for hours, or delay
+  every sibling for an estimate an hour or two off: a rule change for a wording fault. The row, the panel and the
+  click's hover say "to land within a day of the landing from {other}" (R48d had already dropped "together").
+- **Consequences.** `landingWithinADay1938` (20661, 20841: the words, and each pair so told lands within 24 h; red
+  before on the words); `landingOwnPort1938`'s hover assertion reads the new words.
+
 ### ADR-860 · 2026-11-07 · accepted — A row says when it sails to land with another, and at sea when it lands (R48d)
 - **Context.** Critic run 51, R51-N6: on 20861 Ōsaka's row said "waits for the landing from Hiroshima: about a day"
   and sailed a day before Hiroshima's. The wait was real (R37c, `siblingWait`): it holds until it can land within

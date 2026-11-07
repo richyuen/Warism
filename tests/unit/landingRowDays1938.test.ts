@@ -6,7 +6,7 @@ import { nationId } from '../helpers/sim1938';
 
 // ROADMAP R48d (critic run 51, R51-N6): on 20861 Japan's three nearest Tokyo to Shanghai, three landings (Tokyo, Ōsaka,
 // Hiroshima). Ōsaka's row said "waits for the landing from Hiroshima: about a day" and sailed a day before it: it waits
-// to land with it, its voyage the longer. The row says what it does, "sails in about a day, to land with the landing from
+// to land with it, its voyage the longer. The row says what it does, "sails in about a day, to land within a day of the landing from
 // Hiroshima", never "waits for"; and at sea its days to land, which it keeps: landed within them and a day.
 
 const JAP = nationId('JAP');
@@ -36,7 +36,7 @@ describe("a landing's row says when it sails and lands (ROADMAP R48d)", () => {
         if (row.state === 'gathering' && row.sails && !sails.has(row.id)) sails.set(row.id, { at: t, days: row.sails.days });
         if (row.sails?.other) {
           sibling++;
-          expect(said, `t${t} row ${row.id}`).toContain(`to land with the landing from ${row.sails.other}`);
+          expect(said, `t${t} row ${row.id}`).toContain(`to land within a day of the landing from ${row.sails.other}`);
         }
         if (row.state === 'sailing') {
           if (!sailed.has(row.id)) sailed.set(row.id, t);

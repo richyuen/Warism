@@ -870,8 +870,10 @@ ideas and "what the bar needs", filed (PROMPT's RELEASES, ADR-843); then critic 
     landing at sea says its days to land.
     Done (ADR-860): "sails in about a day, to land with the landing from Hiroshima" (and the panel so); at sea "lands in
     about N days". On 20861 each row sails and lands within its days and a day.
-  - [ ] R48e R51-N7: "they land together" for landings 12 hours apart (20661 t117/t129): the words as the rule is
+  - [x] R48e R51-N7: "they land together" for landings 12 hours apart (20661 t117/t129): the words as the rule is
     (within a day), or the landings within the hour.
+    Done (ADR-861): the words as the rule, "to land within a day of the landing from …" (row, panel, hover); on 20661
+    and 20841 each pair so told lands within 24 h.
   - [ ] R48f The ADR-838 objection and Hearts of Iron's idea: one click's landings from several ports grouped as one
     row (each port a line in it), with one cancel for the click.
   - [ ] R48g The ADR-854 objection: on a phone, taking control leaves the nation's panel open and hides the bar after

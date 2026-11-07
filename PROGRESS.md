@@ -2010,3 +2010,9 @@
 - "sails in about a day, to land with the landing from Hiroshima" for a sibling wait (it sails first when its voyage is
   longer, R51-N6); at sea "lands in about N days". `landingRowDays1938` on 20861 (red before at t3).
 - **Next:** R48e.
+
+## 2026-11-07 — R48e: siblings "within a day of" each other (ADR-861)
+- Row, panel and hover: "to land within a day of the landing from …", the rule's promise. `landingWithinADay1938` on
+  20661 and 20841 (each pair so told lands within 24 h). A heredoc nearly overwrote `landingTogether1938.test.ts`;
+  restored from git before any commit.
+- **Next:** R48f.

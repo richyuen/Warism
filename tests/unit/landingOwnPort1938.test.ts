@@ -65,7 +65,7 @@ describe("a click's division boards at its own port, a sibling landing (ROADMAP 
           if (said === null && v?.state === 'sibling' && (v.days ?? 0) > 1) {
             const hint = seaHint(w, [id], ...SHANGHAI);
             expect(hint.sails?.other, 'the hover names the sibling').toBe(v.other);
-            expect(sameText(hint)).toContain(`with the landing from ${v.other}`);
+            expect(sameText(hint)).toContain(`within a day of the landing from ${v.other}`);
             said = { id, days: hint.sails!.days, at: w.tick, other: v.other! };
           }
         }
