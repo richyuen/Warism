@@ -802,7 +802,8 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
     rule only if one is wrong (an AI rule: the pin moves in its own commit).
     Done (ADR-848): raised under an enemy fleet on its port's water; now not. Also found: the naval AI fights at
     even odds (`AVOID_RATIO` 1.5), and a lone sea hero sails at Hood and the bombers: left as it is.
-  - [ ] R34j R36-N3: a re-click of the same landing is taken in silence: told it changes nothing.
+  - [x] R34j R36-N3: a re-click of the same landing is taken in silence: told it changes nothing.
+    Done: an order's notice, "already bound for this landing; the order changes nothing" (the escort box not applied).
   - [ ] R34k R39-N2, R39-N3, R39-N4: the landing mark: none on a touch screen; Escape leaves it; at unit zoom the
     tooltip points at a mark off screen.
   - [ ] R34l R40-N2: "your selected forces go by sea" for a selection most of which march: the tooltip says which go

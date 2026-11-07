@@ -585,6 +585,22 @@ export class Hud {
     this.sim.commands(cmds, true);
   }
 
+  /**
+   * Told when a click orders divisions all of which already have the landing it is for (ROADMAP R34j; critic run 36,
+   * R36-N3: the re-click was taken in silence, the panel unchanged): an order's news, "the order changes nothing".
+   * Asked of the sim before the orders are sent (`overSea`, read-only), so it reads the landings they had.
+   */
+  tellSameLanding(ids: readonly number[], x: number, y: number, nation: number): void {
+    if (ids.length === 0) return;
+    void this.sim.overSea([...ids], x, y).then((h) => {
+      if (h.how !== 1 || !h.same || h.marks.length !== 1) return;
+      const id = ids[0]!;
+      const name = this.nameOf?.(id);
+      const news: OrderNews = { kind: 'sameLanding', id, nation, reason: ids.length, x, y, tick: this.tick.peek() };
+      this.orderNews.value = [...this.orderNews.peek(), { ...news, ...(name === undefined ? {} : { name }), seq: this.orderSeq++ }].slice(-ORDER_NEWS_KEPT);
+    });
+  }
+
   setGodTool(tool: GodTool | null): void {
     this.toolRefusal.value = 0;
     this.godTool.value = this.godTool.value === tool ? null : tool;

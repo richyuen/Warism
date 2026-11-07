@@ -872,10 +872,10 @@ export interface SeaHint {
 
 /** What became of a player's order (PLAN 4.9c; `orderNews`). */
 export interface OrderNews {
-  kind: 'refused' | 'repulsed' | 'landedAway' | 'unescorted' | 'sentHome' | 'leftLanding' | 'nextVoyage' | 'lostAtSea' | 'transportsSunk';
+  kind: 'refused' | 'repulsed' | 'landedAway' | 'unescorted' | 'sentHome' | 'leftLanding' | 'nextVoyage' | 'lostAtSea' | 'transportsSunk' | 'sameLanding';
   id: number;
   nation: number;
-  /** A `RejectReason` for `refused`; for `sentHome` how many were sent home (ROADMAP R21d); for `transportsSunk` 1 when another group was called (R39a); else 0. */
+  /** A `RejectReason` for `refused`; for `sentHome` how many were sent home (ROADMAP R21d); for `transportsSunk` 1 when another group was called (R39a); for `sameLanding` how many the click ordered (R34j); else 0. */
   reason: number;
   /** The formation's name as the page last knew it (set by the page on arrival: one lost is gone; ROADMAP R39b). */
   name?: string;

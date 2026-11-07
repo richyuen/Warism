@@ -1877,3 +1877,13 @@
   bombers, lost 60–71 hours after each return. Every fleet's rule; a change is the user's.
 - Unit: `heroes` (18, a new case), `worldInvariantsHeroes`, `saveFormat`: 25 passed. Heroes off by default: no pin.
 - **Next:** R34j.
+
+## 2026-11-07 — R34j: the same landing clicked again is told
+- A click of the player's divisions asks the worker's read-only `overSea` before the orders go; where all of them
+  already have the landing it is for (`same`, one mark), the page adds an order's notice: "{name} and 3 more:
+  already bound for this landing; the order changes nothing", in the panel and as a row; the next order takes it
+  away. No sim change. The escort box on a re-click is still not applied (R36-N3's second half): the words say so
+  by saying nothing changes.
+- `landingSameClick1938` (new; 3517, Japan's four to Shanghai, again, then Fuzhou): red before, green. The order
+  and landing specs: 31 passed.
+- **Next:** R34k.

@@ -330,6 +330,8 @@ export class PlayerControl {
     }
     if (sel.size === 0) return false;
     const escort = this.escort();
+    // The same landing clicked again is told (ROADMAP R34j): asked before the orders go.
+    this.hud.tellSameLanding([...sel].sort((a, b) => a - b), x + 0.5, y + 0.5, n);
     // The click's orders go together (ROADMAP R29a, R40-B2): the sim judges them as one hour's.
     this.hud.commands([...sel].sort((a, b) => a - b).map((id) => ({ kind: 'moveFormation', id, x: x + 0.5, y: y + 0.5, nation: n, escort })));
     return true;

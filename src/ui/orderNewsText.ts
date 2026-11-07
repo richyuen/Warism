@@ -11,6 +11,7 @@ export function orderNewsText(n: OrderNews, name: string, count = 1): string {
   if (n.kind === 'unescorted') return t('order.unescorted', { name });
   if (n.kind === 'leftLanding') return t('order.leftLanding', { name });
   if (n.kind === 'nextVoyage') return t('order.nextVoyage', { name });
+  if (n.kind === 'sameLanding') return n.reason > 1 ? t('order.sameLandingMany', { name, more: n.reason - 1 }) : t('order.sameLanding', { name });
   if (n.kind === 'lostAtSea') return t('order.lostAtSea', { name });
   if (n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalled' : 'order.transportsSunk', { name });
   if (n.kind === 'sentHome') return n.reason > 1 ? t('order.sentHomeMany', { name, more: n.reason - 1 }) : t('order.sentHome', { name });
@@ -33,6 +34,7 @@ export function orderNewsBrief(n: OrderNews, count: number, name: string): strin
   if (n.kind === 'unescorted') return t('order.unescortedBrief', { name: tag });
   if (n.kind === 'leftLanding') return t('order.leftLandingBrief', { name: tag });
   if (n.kind === 'nextVoyage') return t('order.nextVoyageBrief', { name: tag });
+  if (n.kind === 'sameLanding') return n.reason > 1 ? t('order.sameLandingManyBrief', { name: tag, more: n.reason - 1 }) : t('order.sameLandingBrief', { name: tag });
   if (n.kind === 'lostAtSea') return t('order.lostAtSeaOneBrief', { name: tag });
   if (n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalledOneBrief' : 'order.transportsSunkOneBrief', { name: tag });
   if (n.kind === 'sentHome') return n.reason > 1 ? t('order.sentHomeManyBrief', { name: tag, more: n.reason - 1 }) : t('order.sentHomeBrief', { name: tag });
@@ -58,7 +60,8 @@ function stateOf(info: FormationDetail): string {
 export function staleNotice(seen: Map<number, string>, n: OrderNews & { seq: number }, info: FormationDetail | null, orderedAt?: number): boolean {
   // Left its landing: true until its next order (ROADMAP R37b; critic run 44, R44-N1: "it will not land with them"
   // stood 20 days after a recall that rejoined); its state changes with the order that told it, so not by state.
-  if (n.kind === 'leftLanding' || n.kind === 'transportsSunk') return orderedAt !== undefined && n.seq < orderedAt;
+  // The same landing clicked again (R34j): true until the next order.
+  if (n.kind === 'leftLanding' || n.kind === 'transportsSunk' || n.kind === 'sameLanding') return orderedAt !== undefined && n.seq < orderedAt;
   // The next voyage: true until it sails, or the next order (R37b).
   if (n.kind !== 'refused' && n.kind !== 'nextVoyage') return false;
   if (orderedAt !== undefined && n.seq < orderedAt) return true;
