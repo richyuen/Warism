@@ -1847,3 +1847,12 @@
 - `relationsTap1938` (new; phone, the critic's 4111 a year on): a tap, a drag then a tap and a second tap, a pinch
   then a tap: red before at the tap after the drag. The relations specs: 5 passed.
 - **Next:** R34g.
+
+## 2026-11-07 — R34g: a hero's marker no longer hides the stack under it
+- At T1 a hero's marker (twice the others') was drawn over the markers where it stands: Bismarck at Kiel hid the
+  German fleets' "×4" (3739, two hours in, 1,200 m/px), and every click opened Bismarck. The stacker's nudge
+  (7 px at most) cannot clear a box twice its size, so the hero's marker steps instead (`heroClear`): just above
+  the markers it would cover, clear of their tags, or below when that covers less; a thin line to its place.
+- `heroStack1938` (new): markers under Bismarck 1 → 0; a click on the fleets opens a fleet, on the hero the
+  hero. The 27 specs that read markers or heroes: 67 passed.
+- **Next:** R34h.

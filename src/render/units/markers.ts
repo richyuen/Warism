@@ -120,6 +120,30 @@ export function markerMorph(p: number): { elements: number; morph: MarkerMorph }
   return { elements: smooth(q), morph: { box: 1 - smooth(q), scale: 1 - MARKER_SHRINK * q, bar: 1 - smooth(late) } };
 }
 
+/**
+ * Where a hero's marker of size `ms` about (px, py) stands so that it covers none of the markers `placed` this frame
+ * (ROADMAP R34g): where it is if it covers none; else just above those it covers, or just below them, whichever
+ * covers less of the others (above when even).
+ */
+export function heroClear(placed: readonly { x: number; y: number; w: number; h: number; alpha: number }[], px: number, py: number, ms: number): number {
+  const rectAt = (cy: number): [number, number, number, number] => [px - (BOX_W / 2) * ms, cy - (BOX_H / 2) * ms, BOX_W * ms, MARKER_H * ms];
+  const cover = (cy: number): number => {
+    const [x, y, w, h] = rectAt(cy);
+    let sum = 0;
+    for (const o of placed) if (o.alpha > 0.01) sum += Math.max(0, Math.min(x + w, o.x + o.w) - Math.max(x, o.x)) * Math.max(0, Math.min(y + h, o.y + o.h) - Math.max(y, o.y));
+    return sum;
+  };
+  if (cover(py) <= 0) return py;
+  const [x, y, w, h] = rectAt(py);
+  const under = placed.filter((o) => o.alpha > 0.01 && o.x < x + w && x < o.x + o.w && o.y < y + h && y < o.y + o.h);
+  const top = Math.min(...under.map((o) => o.y));
+  const bottom = Math.max(...under.map((o) => o.y + o.h));
+  // Above them clear of a stack's tag too, which stands 6 px over its box.
+  const up = top - 8 - (MARKER_H - BOX_H / 2) * ms;
+  const down = bottom + 2 + (BOX_H / 2) * ms;
+  return cover(down) < cover(up) ? down : up;
+}
+
 export interface PlacedMarker {
   id: number;
   nation: number;
@@ -436,7 +460,23 @@ export function drawMarkers(
       // another nation (PLAN 2.7s2); the order arrow starts at the formation.
       const [fx, fy] = worldToScreen(cam, m.x + off, m.y, vw, vh);
       const px = fx + (stack?.dx ?? 0);
-      const py = fy + (stack?.dy ?? 0);
+      let py = fy + (stack?.dy ?? 0);
+      // A hero's marker over others (ROADMAP R34g; critic run 30, R30-N4: Bismarck's hid the German fleets'
+      // "×3" at Kiel, and every click opened Bismarck): stepped clear of them, a line to its place.
+      if (m.hero) {
+        py = heroClear(placed, px, py, ms);
+        if (py !== fy) {
+          ctx.save();
+          ctx.globalAlpha = boxAlpha;
+          ctx.strokeStyle = colorOf(m.nation);
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(px, fy);
+          ctx.lineTo(px, py + (py > fy ? -BOX_H / 2 : MARKER_H - BOX_H / 2) * ms);
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
       const x = Math.round(px - BOX_W / 2);
       const y = Math.round(py - BOX_H / 2);
       if (px + BOX_W * ms < 0 || py + BOX_H * ms < 0 || px - BOX_W * ms > vw || py - BOX_H * ms > vh) continue;
