@@ -648,7 +648,9 @@ Rules:
     Done: `callSooner` (march by `octileKm` at its pace; the call's `sailHours`; voyages by `sailHoursFrom`; a day
     sooner to be taken). Moscow to Cyprus keeps Sevastopol's group (as at `4040cad6`; it ends there `PortShut`);
     18705, 19111 still clean; run 47's 383 cases as in run 47.
-  - [ ] R39e R47-N4: 19206/19207 `stuck` (a 45-day march to a far gathering landing), without splitting a click.
+  - [x] R39e R47-N4: 19206/19207 `stuck` (a 45-day march to a far gathering landing), without splitting a click.
+    Done by R40e (`5da444a8`, ADR-835): `stuck` counts days with no ground gained; critic run 50 confirmed (19
+    landing seeds 0 broken; 19206's 367 28.1 days gathering, 46.0 in run 49).
     Not done: one click of two divisions ~70 cells apart; together means the far one walks. A port chosen for the
     whole click (the least latest march) is the way left; it changes every landing's port choice, the kind of
     change that split clicks in R38d; held.
