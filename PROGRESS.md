@@ -1887,3 +1887,11 @@
 - `landingSameClick1938` (new; 3517, Japan's four to Shanghai, again, then Fuzhou): red before, green. The order
   and landing specs: 31 passed.
 - **Next:** R34k.
+
+## 2026-11-07 — R34k1: Escape takes the landing's mark away
+- R34k split in three (Escape; a mark off the screen at unit zoom; a touch screen). The hover's sea hint is asked
+  again on any change of the player's selection: Escape (or a click, a box) with none left clears the mark and the
+  tooltip at once, the cursor still.
+- `landingMarkMore1938` (new; 3517, Japan's division nearest Tokyo, the cursor on Shanghai): red before (the mark
+  stayed), green; `landingMark1938` green.
+- **Next:** R34k2.

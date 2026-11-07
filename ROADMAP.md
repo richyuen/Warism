@@ -806,6 +806,9 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
     Done: an order's notice, "already bound for this landing; the order changes nothing" (the escort box not applied).
   - [ ] R34k R39-N2, R39-N3, R39-N4: the landing mark: none on a touch screen; Escape leaves it; at unit zoom the
     tooltip points at a mark off screen.
+    - [x] R34k1 R39-N3: Escape empties the selection, and the mark and the tooltip go at once.
+    - [ ] R34k2 R39-N4: at unit zoom the tooltip points at a mark off the screen: the way to it shown.
+    - [ ] R34k3 R39-N2: no mark on a touch screen: a tap asks, a second tap orders.
   - [ ] R34l R40-N2: "your selected forces go by sea" for a selection most of which march: the tooltip says which go
     by sea and which march.
 - [ ] R35 Small ideas from the reports: an order's error cleared by any new order; a flag at the destination while

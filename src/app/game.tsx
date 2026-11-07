@@ -132,6 +132,12 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       return { x: r.left, y: r.top, w: r.width, h: r.height };
     });
     const p = new PlayerControl(hud, view);
+    // The selection changed (Escape, a click, a box): the hover is asked again, and an empty selection clears the
+    // landing's mark and the tooltip at once (ROADMAP R34k; critic run 39, R39-N3: both stayed until the mouse moved).
+    effect(() => {
+      void p.selectedCount.value;
+      ask(last);
+    });
     player = p;
     // A refusal of a selected formation's order (ROADMAP R21c): the click that gave it closed the
     // formation panel, so the panel opens again with the reason in it, where none is open.
