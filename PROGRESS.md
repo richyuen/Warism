@@ -1953,3 +1953,11 @@
 - `landingRow1938` (new; R42a's four Tokyo → Shanghai): one row, each hour its divisions as their panels, sails, over
   "landed" 4, kept a day; red before.
 - **Next:** R47b.
+
+## 2026-11-07 — R47b: the landings bar (ADR-854)
+- `LandingsBar` (top middle; a phone's width under the top bar): a row a landing, opened to its divisions with their
+  panels' words (`voyageText`, `waitText` shared with `FormationPanel`), the anchor to its land.
+- `landingsBar1938` (new): desk hour by hour against the panel, gathering → at sea → over, gone a day on; landscape
+  and phone inside the view. Red before (3 of 3). The 27 specs that read the panel: 26 passed, `landingWait1938`
+  (phone) red at 4 workers on a count ("1 of 2" for "1 of 4"), green alone.
+- **Next:** R47c.

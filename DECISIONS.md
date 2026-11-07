@@ -7,6 +7,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-854 · 2026-11-07 · accepted — The landings bar (R47b)
+- **Decision.** `LandingsBar`: top middle under the top bar, a row a landing: "{city} from {port}", where it stands
+  (sails in about N days; waits for the landing from another port; at sea; turning back; how it ended), and while
+  it gathers its transports had and needed. A click on the row opens it: the wait at the port and each division
+  with what its panel says, by one function (`voyageText`, `waitText`, moved out of `FormationPanel`); the anchor
+  flies to its land. It gives way to the History, Relations, Settings and Editor panels and a nuclear alert, which
+  stand there; on a phone it takes the view's width where the ranking stood (the ranking gives way to it, and it to
+  a nation's panel). A row of its own, not the ticker's: the ticker's rows are one event each, and its room beside a
+  panel and on a phone is spent (ADR-754, ADR-837). Hero tags keep clear of it (`COVER_SELECTOR`).
+- **Consequences.** `landingsBar1938`: Japan's division Tokyo → Shanghai, each 12 hours the row's division line is
+  its panel's status, gathering → at sea → "over: 1 landed", gone a day on; on a landscape phone and a phone the bar
+  is inside the view, under the top bar, clear of the ranking.
+
 ### ADR-853 · 2026-11-07 · accepted — A landing's row: its data from the worker (R47a)
 - **Context.** R47 wants each of the player's landings as one row (the critic's idea since run 32): what its
   divisions' panels say, together, with its ships, its days to sail and its outcome.

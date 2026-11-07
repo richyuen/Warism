@@ -17,6 +17,7 @@ import { StatsRanking } from '../ui/StatsRanking';
 import { WarBanners } from '../ui/WarBanners';
 import { usePhone } from '../ui/usePhone';
 import { Ticker } from '../ui/Ticker';
+import { LandingsBar } from '../ui/LandingsBar';
 import { NukeAlerts } from '../ui/NukeAlert';
 import { GodToolbar } from '../ui/GodToolbar';
 import { orderNewsBrief, orderNewsText, staleNotice } from '../ui/orderNewsText';
@@ -183,6 +184,7 @@ export function App({
         onCancel={cancel}
         diplomacy={phone && player ? { on: player.diplomacy.value, onToggle: () => player.toggleDiplomacy() } : null}
       />
+      {stats ? <LandingsBar rows={hud.landings.value} nameOf={(id) => hud.nameOf?.(id)} onPlace={(x, y) => hud.onShowPlace(x, y)} /> : null}
       {/* Before the panels of the centre, which are drawn over a row of banners that reaches them (PLAN 3.12Rh5). */}
       {stats ? (
         <Ticker

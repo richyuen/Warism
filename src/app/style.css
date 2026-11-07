@@ -1212,6 +1212,96 @@ textarea,
 
 /* The nuclear alert banners (PLAN 6.6a): below the top bar, centred, over the map; one a strike,
    the oldest on top (PLAN 7.109a). */
+/* The player's landings, a row each (ROADMAP R47b): top middle, where the History panel and a nuclear alert stand
+   when open (it gives way to them); one line a row, opened on a click. */
+.landings-bar {
+  position: absolute;
+  top: 3.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(30rem, calc(100% - 39rem));
+  min-width: 18rem;
+  z-index: 5;
+}
+#ui:has(.history-panel, .relations-panel, .settings-panel, .editor-panel, .nuke-alert) .landings-bar {
+  display: none;
+}
+.landings-bar ol,
+.landings-bar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.landings-bar > ol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+.landing-row {
+  background: rgba(20, 24, 32, 0.86);
+  border: 1px solid rgba(214, 178, 94, 0.35);
+  border-left: 3px solid #5fa8d3;
+  border-radius: 0.25rem;
+  color: #f1e6d2;
+  font-size: 0.74rem;
+}
+.landing-row.over {
+  border-left-color: #8c8c8c;
+}
+.landing-row[data-outcome='repulsed'],
+.landing-row[data-outcome='lost'] {
+  border-left-color: #d9534f;
+}
+.landing-head {
+  display: flex;
+  align-items: stretch;
+}
+.landing-go,
+.landing-toggle {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+}
+.landing-go {
+  flex: none;
+  border-right: 1px solid rgba(214, 178, 94, 0.25);
+}
+.landing-toggle {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.5rem;
+  text-align: left;
+}
+.landing-title {
+  font-weight: 700;
+  color: #e9c46a;
+}
+.landing-ships.short {
+  color: #f0a35e;
+}
+.landing-body {
+  padding: 0.1rem 0.5rem 0.3rem 1.9rem;
+}
+.landing-wait {
+  color: #c8bfae;
+  margin-bottom: 0.15rem;
+}
+.landing-body li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.4rem;
+}
+.landing-division-name {
+  font-weight: 600;
+}
+
 .nuke-alerts {
   position: absolute;
   top: 3.4rem;
@@ -1901,7 +1991,18 @@ button.unit-icon.on {
   .stats-ranking {
     top: 3.4rem;
   }
-  #ui:has(.nation-panel, .history-panel) .stats-ranking {
+  #ui:has(.nation-panel, .history-panel, .landings-bar) .stats-ranking {
+    display: none;
+  }
+  /* The landings stand where the ranking stood, the view's width; a nation's or a formation's panel there is first. */
+  .landings-bar {
+    left: 0.5rem;
+    right: 0.5rem;
+    width: auto;
+    min-width: 0;
+    transform: none;
+  }
+  #ui:has(.nation-panel) .landings-bar {
     display: none;
   }
   .nation-panel {

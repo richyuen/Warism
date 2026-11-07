@@ -1,6 +1,7 @@
 import type { FormationDetail } from '../shared/protocol';
 import { t, type MessageKey } from './i18n';
 import { displayName } from './NationPanel';
+import { voyageText, waitText as waitOf } from './voyageText';
 
 const num = (v: number): string => Math.round(v).toLocaleString('en-US');
 /** A template's fuel figure: tenths below ten (the motorised division's 4.6), else whole. */
@@ -65,25 +66,10 @@ export function FormationPanel({
     info && info.retreat > 0
       ? t('formation.status.retreat', { n: info.retreat })
       : voyage && !info?.engaged
-        ? voyage.state === 'sibling'
-          ? t(voyage.days === 1 ? 'formation.voyage.sibling.one' : 'formation.voyage.sibling', { port: voyage.port ?? '', other: voyage.other ?? '', days: voyage.days ?? 1 })
-          : voyage.state === 'toPort' && voyage.port && voyage.later
-            ? t(voyage.days !== undefined ? 'formation.voyage.toPort.later' : 'formation.voyage.toPort.laterSoon', { port: voyage.port, days: voyage.days ?? 1 })
-            : voyage.state === 'toPort' && voyage.port && voyage.days !== undefined
-              ? t('formation.voyage.toPort.days', { port: voyage.port, days: voyage.days })
-            : t(voyage.port ? `formation.voyage.${voyage.state}.port` : `formation.voyage.${voyage.state}`, { port: voyage.port ?? '' })
+        ? voyageText(voyage)
         : t(info?.engaged ? 'formation.status.engaged' : info?.moving ? 'formation.status.moving' : 'formation.status.holding');
   // At its port, waiting for the rest of its landing (ROADMAP R22c, R33b): how many, and how far the last.
-  const wait = voyage?.state === 'gathering' ? voyage.wait : undefined;
-  const waitText = wait
-    ? wait.days === null
-      ? t('formation.wait.held', { n: wait.aboard, of: wait.of })
-      : wait.aboard === wait.of
-        ? t('formation.wait.ships', { n: wait.aboard, of: wait.of })
-        : wait.days === 0
-          ? t('formation.wait.here', { n: wait.aboard, of: wait.of })
-          : t(wait.days === 1 ? 'formation.wait.days.one' : 'formation.wait.days', { n: wait.aboard, of: wait.of, days: wait.days })
-    : null;
+  const waitText = waitOf(voyage);
   return (
     <aside class="nation-panel formation-panel" data-testid="formation-panel" data-formation={info?.id ?? 0}>
       <div class="panel-head">

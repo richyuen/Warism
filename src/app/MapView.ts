@@ -36,7 +36,7 @@ import { battleViewM, SEA_VIEW_MAX_M } from './battleView';
 /** How often the panels over the map are read again for the hero counters (ROADMAP R34e), ms. */
 const COVER_MS = 250;
 /** The panels that lie over the map (ROADMAP R34e): a hero's counter under one is drawn beside it. */
-const COVER_SELECTOR = '.topbar, .bottombar, .stats-ranking, .nation-panel, .formation-panel, .history-panel, .relations-panel, .editor-panel, .settings-panel, .map-legend';
+const COVER_SELECTOR = '.topbar, .bottombar, .stats-ranking, .nation-panel, .formation-panel, .history-panel, .relations-panel, .editor-panel, .settings-panel, .map-legend, .landings-bar';
 const FLAG_MIN_SCALE = 3;
 const FLAG_PX_W = 24;
 const FLAG_PX_H = 16;
