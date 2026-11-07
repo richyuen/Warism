@@ -4,21 +4,24 @@ import { describe, expect, it } from 'vitest';
 import { EventKind } from '../../src/shared/events';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { LandingState, landingOfDivision } from '../../src/sim/systems/landings';
+import { LandingState, landingOfDivision, READY_WAIT_HOURS, voyageOf } from '../../src/sim/systems/landings';
+import { marchHoursLeft } from '../../src/sim/systems/movement';
 import { assets1938 } from '../helpers/earth';
 
 // ROADMAP R33b (ADR-829 "How": older saves still load; ADR-830): a save written before R33b, at `f9e7ab94`
 // (`tests/fixtures/landingPreR33b-3517.bin.gz`): seed 3517, Japan's two nearest Tokyo sent to Shanghai,
 // hour 32: 364 aboard group 1136 at Tokyo, 365 bound for group 1144 (`convoyPort` 1136 and 1144 at port 33,
 // `seaFetch`, two escorts by group). Loaded now: no refusal; at its first hour one landing gathering at that
-// port with both, both groups and both escorts, nobody aboard; saved again, the old sections are gone; the
-// two land within a day of each other.
+// port with both, both groups and both escorts, nobody aboard; saved again, the old sections are gone; both land.
+// Since ROADMAP R44a (ADR-846) a landing ready to sail waits READY_WAIT_HOURS for those still marching: 365 was 448
+// hours from Tokyo when 364 and both groups stood there (R49-N5's own pair), so 364 sails and lands within its voyage
+// of the wait, and 365 goes on the next voyage (before R44a they waited 19 days and landed together).
 
 const { w: W } = SIZE_1938;
 const bytes = (): Uint8Array => new Uint8Array(gunzipSync(readFileSync(new URL('../fixtures/landingPreR33b-3517.bin.gz', import.meta.url))));
 
 describe('a save from before R33b loads, its convoys made one landing (ROADMAP R33b)', () => {
-  it('seed 3517 at hour 32: one landing of the two at Tokyo, nobody aboard; they land together', () => {
+  it('seed 3517 at hour 32: one landing of the two at Tokyo, nobody aboard; both land, the far one on the next voyage', () => {
     const sim = new Sim({ scenario: '1938', seed: 3517, assets: assets1938(W) });
     sim.load(bytes());
     const w = sim.world;
@@ -45,8 +48,22 @@ describe('a save from before R33b loads, its convoys made one landing (ROADMAP R
     const again = names(sim.save());
     expect(again.includes('world.convoyPort') || again.includes('world.seaFetch'), 'the old sections gone').toBe(false);
     expect(again.includes('world.landings'), 'the landing saved').toBe(true);
-    for (let h = 0; h < 24 * 60 && landed.size < 2; h++) step();
+    let ready = -1;
+    let far = 0;
+    for (let h = 0; h < 24 * 60 && landed.size < 2; h++) {
+      step();
+      if (ready < 0 && l.ready >= 0) {
+        ready = l.ready;
+        far = w.formations.cols.moving[365] === 1 ? marchHoursLeft(w, 365) : 0;
+        // Its panel: on its way, its landing sails before it is there (not "its landing waits for it").
+        expect(voyageOf(w, 365), "365's panel").toMatchObject({ state: 'toPort', later: true });
+      }
+    }
     expect(landed.size, 'both landed').toBe(2);
-    expect(Math.abs(landed.get(364)! - landed.get(365)!), 'together').toBeLessThanOrEqual(24);
+    expect(ready, 'ready at Tokyo').toBeGreaterThan(0);
+    expect(far, "365's march left when ready: over the wait").toBeGreaterThan(READY_WAIT_HOURS);
+    // 364 sails within the wait and lands within its voyage (five days to Shanghai); 365 after, on the next voyage.
+    expect(landed.get(364)! - ready, '364 ashore after the ready hour').toBeLessThanOrEqual(READY_WAIT_HOURS + 24 * 7);
+    expect(landed.get(365)!, '365 on the next voyage').toBeGreaterThan(landed.get(364)!);
   }, 300_000);
 });

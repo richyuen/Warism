@@ -748,7 +748,7 @@ Rules:
     Saxony" for Bavaria): the clicked province's name.
     Done (ADR-844): the capital in the province clicked, so its name; Spawn on Greater Poland was "Free Silesian
     Voivodeship" (Katowice), now its own; the "Bavaria" click was Saxony. `nationNames` sweep: 1,698 of 2,000+ wrong → 0.
-- [ ] R44 **A click's landing has a bound (`slowClick`; ADR-843, the user's decision: before critic run 51).**
+- [x] R44 **A click's landing has a bound (`slowClick`; ADR-843, the user's decision: before critic run 51).**
   `landingInvariants` gets a rule `slowClick`: a click's landing whose first division ashore is over 7 days later than
   the click's best single-division way (march to its own nearest port or a called group, the later, then the voyage;
   as `farPort` reckons it), and the player was not told why at the click. R49-N5 and R50-N1 are its cases: break at
@@ -757,9 +757,10 @@ Rules:
   PROGRESS. No new landing rule unless the checker finds a break; each one it finds is a part of its own (R44a …).
   The checker is in (ADR-845): the critic's two break at `3fe138b1`, pass at HEAD; 18 of the 19 seeds and the grid
   clean (worst 3.8 days over; grid 14 h).
-  - [ ] R44a 20827 (Britain, Newcastle the nearest port of all): t708's click of six, 277 at Liverpool with a group
+  - [x] R44a 20827 (Britain, Newcastle the nearest port of all): t708's click of six, 277 at Liverpool with a group
     there (best 5.8 days); landing 6 waited at Newcastle for 273 walking ~12 days from London to the same port (R43a's
     sibling needs another port). Not ashore after 12.8 days.
+    Done (ADR-846): a ready landing waits 6 days from its ready hour; 20827 ashore after 10.5 days; 19 seeds 0 broken.
 
 ## Batch 3 — readability (after the release, ADR-829)
 

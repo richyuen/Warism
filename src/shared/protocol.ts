@@ -745,7 +745,7 @@ export interface FormationDetail {
    * the port (`aboard`) and how many in all, and the days the furthest has left to the port (0: all
    * there; null: held up on the way).
    */
-  voyage: { state: 'toPort' | 'waiting' | 'gathering' | 'ready' | 'sibling' | 'nextVoyage' | 'toPortAboard' | 'atSea' | 'landed'; port: string | null; other?: string; days?: number; wait?: { aboard: number; of: number; days: number | null } } | null;
+  voyage: { state: 'toPort' | 'waiting' | 'gathering' | 'ready' | 'sibling' | 'nextVoyage' | 'toPortAboard' | 'atSea' | 'landed'; port: string | null; other?: string; days?: number; later?: true; wait?: { aboard: number; of: number; days: number | null } } | null;
 }
 
 /**

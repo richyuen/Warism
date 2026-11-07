@@ -1306,8 +1306,11 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   away from its port sail there (those aboard one at the port go ashore there); a division whose march
   ended short of the port is told `NoTransports` and leaves it. It sails when every group stands at its
   port, none of its divisions at the port is in a fight, it waits for none still marching (`waited`:
-  those that joined within `SAME_CLICK_HOURS` (24) of its first, however far; a later one only within
-  `LATE_WAIT_HOURS` (168) of its march, R31f), its escort is ready (`escortAhead`) and an hour has passed
+  before it is ready, those that joined within `SAME_CLICK_HOURS` (24) of its first while there within
+  `READY_WAIT_HOURS` (144) of the hour it could sail without them, a later one only within `LATE_WAIT_HOURS`
+  (168) of its march, R31f; once ready, its groups at its port and a division there (`Landing.ready`, saved as
+  `world.landingReady`), only those there within `READY_WAIT_HOURS` of that hour or of their joining if later,
+  R44a [ADR-846]; one not waited for goes on the next voyage, its panel saying so), its escort is ready (`escortAhead`) and an hour has passed
   since its last order (`ordered`: a division joined, or it was redirected; R40-N1). It sails with room
   for all at its port (`noRoom`, first fit as at boarding; ROADMAP R36a, critic run 44, R44-B1: a part
   re-sent by one click kept too few groups, sailed with what fit and left the rest at the port, untold):

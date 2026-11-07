@@ -1784,3 +1784,14 @@
   3517's 3 splits (recall at 120 h) the same on HEAD without the checker.
 - `landingInvariants1938` (11) green. No sim change: the pin and budgets unmoved.
 - **Next:** R44a.
+
+## 2026-11-07 — R44a: a ready landing waits six days from its ready hour (ADR-846)
+- 20827: the wait was read anew each hour, so each marching division came within the week in turn (8 days past
+  ready at Newcastle). Now `Landing.ready` (saved, optional section) anchors it: `READY_WAIT_HOURS` (144) from then.
+  One not waited for goes on the next voyage; its panel says the landing sails before it is there.
+- AT: run 50's 19 landing seeds 0 broken; the worst click 4.6 days over its best way (20827, 10.5 days for 5.8).
+  Grid 0 `slowClick` (worst 14 h), the same 3 splits. R44 done.
+- `landingLegacySave1938`'s claim follows the rule (364 at t185, 365 on the next voyage at t634; was 19 days' wait
+  together). Whole unit suite green (two timing tests red under load, green alone). Specs by hand: invasion1938 and
+  the 15 landing/order-row specs (31 passed). Pin unmoved; no system's tick cost changed beyond one test a march.
+- **Next:** R34.

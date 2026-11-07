@@ -7,6 +7,36 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-846 · 2026-11-07 · accepted — A landing ready to sail waits six days for those still marching, from the hour it was ready (R44a)
+
+- **Context.** `slowClick` (ADR-845) on run 50's 19 seeds broke on 20827 (Britain): every southern port and
+  Liverpool bombed shut, Newcastle the nearest open port of all. t708's click of six joined a landing there; 277 and
+  both groups stood at Newcastle by t804, and the landing waited 8 days more for divisions walking from London. The
+  wait was read anew each hour: a division of the click was waited for however far, and R31f's later ones once within
+  a week, so each came within the bound in turn. Not ashore after 12.8 days (best way 5.8).
+- **Decision.** A landing is ready the first hour its groups stand at its port with a division there
+  (`Landing.ready`, saved in an optional section `world.landingReady`, so older saves load; reset for the next
+  voyage). From then it waits only for those there within `READY_WAIT_HOURS` (144) of that hour, or of their own
+  joining if later. Before it is ready, a division of its click is waited for while there within `READY_WAIT_HOURS`
+  of the hour the landing could sail without it (`readyHours`). One not waited for goes on the next voyage (R31f's
+  way, the transports coming back), and its panel says "its landing sails before it is there" (`later`), not "its
+  landing waits for it". Six days: a day inside `slowClick`'s week for the estimates.
+- **ADR-838's "not taken".** The user chose a sibling at the nearer port over "sail and let it follow" with a month
+  bound. Here there is no nearer port (one open port for all), and the bound is ADR-843's week: a sibling cannot fix
+  this case, and a click otherwise has no bound. Where a nearer port exists R43a's sibling still comes first (the
+  click's own path, unchanged).
+- **Stands on (ADR-803).** ADR-838 (`landingOwnPort1938`), ADR-836's sibling wait, R31f (`convoyLateOrder1938`),
+  R17b/R38e's next voyage and `leftBehind`, ADR-837's `landingClickWait1938` (unit and spec): green before and after,
+  with the whole unit suite and the 16 landing specs. One claim changed: `landingLegacySave1938` (R33b, a pre-R33b
+  save of 3517 holding R49-N5's own pair) said the two land within a day; 365 was 448 hours off when the landing
+  was ready, so they waited 19 days. Now 364 lands at t185 and 365 on the next voyage (t634), and its panel says so.
+- **Evidence.** 20827: 0 broken, the click ashore after 10.5 days (4.6 over). Run 50's 19 seeds: 0 broken, the
+  worst 4.6 days over (20827), others as before or within half a day (20821 1.7 → 2.2, 20825 −0.4 → 0.6, 20829 2.5
+  → 1.7). The grid: 0 `slowClick`, the same 3 splits. `landingInvariants1938` runs 20827 (red before at t1016).
+- **What it does not give.** A sibling at another port is still waited for up to a month (ADR-836), longer than this
+  week; no seed broke on it. No news row for one left marching (as R31f's): its panel tells it.
+- **The pin:** unmoved (player-only rule).
+
 ### ADR-845 · 2026-11-07 · accepted — `slowClick`: a click's landing ashore within a week of its best single-division way (R44)
 
 - **Context.** ADR-843 (the user's decision), proposal 2: R49-N5 and R50-N1 were one class, a click whose landing took
