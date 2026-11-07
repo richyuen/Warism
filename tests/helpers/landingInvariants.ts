@@ -36,6 +36,9 @@
  * - `marchOn`: a division of a gathering landing, out of it with no order of the player's that hour, still marching
  *   to that landing's port (ROADMAP R43e; critic run 50, R50-N5: 20845's two told the landing was over walked on
  *   to Hamburg for six days);
+ * - `slowClick`: a click over the sea whose first division ashore comes over SLOW_CLICK_DAYS after its best
+ *   single-division way, `farPort`'s reckoning (`bestWayHours`), not refused at the click (ROADMAP R44, ADR-843;
+ *   `tests/helpers/slowClick.ts`); broken too while still on its way past the bound;
  * - `save`: a save that does not load bit-identical (on the probe days).
  * Each kind is told once a division, group or landing (its first hour).
  *
@@ -47,16 +50,17 @@ import { EventKind } from '../../src/shared/events';
 import { isLand } from '../../src/shared/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { callCandidates, landingOf, transportRoom, transportsPort } from '../../src/sim/systems/amphibious';
+import { landingOf, transportRoom, transportsPort } from '../../src/sim/systems/amphibious';
 import { destroyFormation } from '../../src/sim/systems/elements';
 import { LandingState } from '../../src/sim/systems/landings';
 import { octileKm } from '../../src/sim/nav/grid';
 import { MARCH_DUTY } from '../../src/sim/systems/movement';
-import { sailHours, sailHoursFrom } from '../../src/sim/systems/sail';
+import { sailHoursFrom } from '../../src/sim/systems/sail';
 import { navOf, portSeaOf, type World } from '../../src/sim/world';
 import { assets1938 } from './earth';
 import { GRID_SETUPS, IDLE_HOURS, type GridSetup } from './landingGrid';
 import { nationId } from './sim1938';
+import { bestWayHours, SlowClicks } from './slowClick';
 
 const { w: W } = SIZE_1938;
 /** The longest a division may stand in a gathering landing, in days (R31f's late march is a week; the longest walk ~21 days). */
@@ -97,6 +101,8 @@ export interface LandingCase {
   orderDays?: number;
   /** Filled with the notes (ADR-835): each division's longest gathering spell and its part with no ground gained. */
   notes?: string[];
+  /** Filled with the run's `slowClick` tracker (its figures: clicks reckoned, ashore, the worst). */
+  slow?: SlowClicks;
   /** Each hour after the step, and each click (a tool's trace). */
   onHour?: (w: World, click?: { ids: number[]; x: number; y: number }) => void;
 }
@@ -218,20 +224,12 @@ function check(w: World, n: number, idle: Map<number, number>, track: Track, orp
       const nearest = transportsPort(w, id, false);
       const rule = w.rules?.templates[c.template[id]!];
       if (nearest >= 0 && nearest !== L.port && rule && rule.speedKmh > 0) {
-        const grid = navOf(w).grid;
         const kmh = rule.speedKmh * MARCH_DUTY;
         const here = Math.floor(c.y[id]!) * W_ + Math.floor(c.x[id]!);
         const [lx, ly] = [(L.water % W_) + 0.5, Math.floor(L.water / W_) + 0.5];
-        const k = water[nearest]!;
-        const [kx, ky] = [(k % W_) + 0.5, Math.floor(k / W_) + 0.5];
         const far = L.fleets.find((o) => f.has(o));
-        const byFar = octileKm(grid, here, w.ports[L.port]!.cell) / kmh + (far === undefined ? 0 : sailHoursFrom(w, far, water[L.port]!, lx, ly));
-        // The groups a call to the nearer port tries (idle, with room: R39d's rule, `callCandidates`), with a way.
-        let byNear = Infinity;
-        for (const o of callCandidates(w, id, nearest)) {
-          const come = sailHours(w, o, kx, ky);
-          if (Number.isFinite(come)) byNear = Math.min(byNear, Math.max(octileKm(grid, here, w.ports[nearest]!.cell) / kmh, come) + sailHoursFrom(w, o, k, lx, ly));
-        }
+        const byFar = octileKm(navOf(w).grid, here, w.ports[L.port]!.cell) / kmh + (far === undefined ? 0 : sailHoursFrom(w, far, water[L.port]!, lx, ly));
+        const byNear = bestWayHours(w, id, L.water, nearest);
         if (byNear + FAR_PORT_DAYS * 24 < byFar) out.push(`${t} farPort: ${id} made landing ${l} at ${w.ports[L.port]!.name}, ${Math.round(byFar / 24)} days to its water; by ${w.ports[nearest]!.name} ${Math.round(byNear / 24)}`);
       }
     }
@@ -260,10 +258,18 @@ export function landingBreaks(k: LandingCase): string[] {
   const sim = new Sim({ scenario: '1938', seed: k.seed, assets: assets1938(W) });
   const w = sim.world;
   const [n, e] = [nationId(setup.nation), nationId(setup.enemy)];
-  // Divisions told `NextVoyage` in the hour stepped (R38e).
+  // Divisions told `NextVoyage` in the hour stepped (R38e); ashore abroad and refused (`slowClick`).
   const voyageTold = new Set<number>();
+  const ashore = new Set<number>();
+  const refused = new Set<number>();
   const quiet = (x: World): void => {
-    for (let i = 0; i < x.out.events.length; i += 6) if (x.out.events[i + 1] === EventKind.NextVoyage) voyageTold.add(x.out.events[i + 2]!);
+    const ev = x.out.events;
+    for (let i = 0; i < ev.length; i += 6) {
+      const kind = ev[i + 1];
+      if (kind === EventKind.NextVoyage) voyageTold.add(ev[i + 2]!);
+      else if (kind === EventKind.MoveRejected) refused.add(ev[i + 2]!);
+      else if (kind === EventKind.FormationLanded && x.cells.owner[Math.floor(ev[i + 5]!) * W + Math.floor(ev[i + 4]!)] !== x.formations.cols.nation[ev[i + 2]!]) ashore.add(ev[i + 2]!);
+    }
     x.out.events.length = 0;
     x.out.fires.length = 0;
   };
@@ -303,6 +309,7 @@ export function landingBreaks(k: LandingCase): string[] {
   const idle = new Map<number, number>();
   const track: Track = { best: new Map(), ground: new Map(), spell: new Map(), longest: new Map(), landing: new Map(), seen: new Set() };
   const was = new Map<number, number>();
+  const slow = new SlowClicks((line) => put(line.replace(/ of [\d,]+ .*$/, ''), line));
   let next = w.tick;
   const clicked = new Set<number>();
   const end = w.tick + k.days * 24;
@@ -319,6 +326,9 @@ export function landingBreaks(k: LandingCase): string[] {
         // The sea: the water off the first target's beach, 0–3 cells further out (ROADMAP R36b).
         const sea = landingOf(w, Math.floor(setup.a[1]) * W + Math.floor(setup.a[0]))!.water;
         const [x, y] = where === 'home' ? setup.home : where === 'sea' ? [(sea % W) + 0.5 + dx * off, Math.floor(sea / W) + 0.5 + dy * off] : [(where === 'a' ? setup.a : setup.b)[0] + dx * off, (where === 'a' ? setup.a : setup.b)[1] + dy * off];
+        // `slowClick`: the click's best way, reckoned on the world before it (the groups a call tries still idle).
+        const to = landingOf(w, Math.floor(y) * W + Math.floor(x));
+        slow.click(w, sel, where === 'home' || !to ? -1 : to.water);
         for (const id of sel) sim.command({ kind: 'moveFormation', id, x, y, nation: n, escort: true } as Command);
         for (const id of sel) clicked.add(id);
         k.onHour?.(w, { ids: sel, x, y });
@@ -326,8 +336,11 @@ export function landingBreaks(k: LandingCase): string[] {
       next = w.tick + 12 + Math.floor(r() * 61);
     }
     voyageTold.clear();
+    ashore.clear();
+    refused.clear();
     sim.step(1, quiet);
     check(w, n, idle, track, orphans, moored, was, voyageTold, clicked, put);
+    slow.hour(w, ashore, refused);
     clicked.clear();
     k.hour?.(w);
     k.onHour?.(w);
@@ -340,6 +353,8 @@ export function landingBreaks(k: LandingCase): string[] {
     }
     if (out.length > 200) break;
   }
+  k.notes?.push(slow.note());
+  k.slow = slow;
   for (const [id, { hours, still }] of [...track.longest].sort((a, b) => a[0] - b[0])) k.notes?.push(`note: ${id} longest in a gathering landing ${(hours / 24).toFixed(1)} days, ${(still / 24).toFixed(1)} of them with no ground gained`);
   return out;
 }

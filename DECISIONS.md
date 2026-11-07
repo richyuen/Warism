@@ -7,6 +7,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-845 · 2026-11-07 · accepted — `slowClick`: a click's landing ashore within a week of its best single-division way (R44)
+
+- **Context.** ADR-843 (the user's decision), proposal 2: R49-N5 and R50-N1 were one class, a click whose landing took
+  many times its crossing, and no checker bounded it (`farPort` only a division alone).
+- **Decision.** `tests/helpers/slowClick.ts`, run by `landingInvariants` (the fuzz) and `landingGrid` (the grid): a
+  click over the sea is broken when its first division ashore (abroad) comes over `SLOW_CLICK_DAYS` (7) after the
+  click's best single-division way, or while it is still on its way past that. The best way is `farPort`'s reckoning,
+  now one function (`bestWayHours`): the march to the division's land's nearest port or the sail there of a group a
+  call tries (`callCandidates`), the later, then that group's voyage; the best of the click's divisions, reckoned on
+  the world before the click. Told why at the click is a refusal in its hour only; the hover's day count is not (run
+  50 filed R50-N1 with "sails in about 35 days" on the screen). A later click takes its divisions from earlier ones;
+  a click with no group to reckon by is not judged (counted in the note).
+- **Stands on (ADR-803).** `farPort` unchanged (its reckoning moved into `bestWayHours`): `landingInvariants1938`'s 11
+  tests green before and after. No sim rule changed: the pin unmoved.
+- **Evidence.** `slowClick1938` (the critic's clicks, Japan's nearest Tokyo to Shanghai): at `3fe138b1` 20661's two
+  not ashore after 11.8 days (best 4.8), 20841's three after 10.8 (best 3.8), broken; at HEAD 4.8 and 4.9 days (0.1 and
+  1.1 over). Run 50's 19 landing seeds: 18 clean (worst 3.8 days over, 20629), 20827 broken (R44a). The grid (400 cases
+  run of 480): 0 `slowClick`, worst 14 hours over; its 3 splits (3517, recall at 120 h) are HEAD's without the rule.
+
 ### ADR-844 · 2026-11-07 · accepted — A nation God founds is of the province clicked: its capital is there (R43f)
 
 - **Context (the critic's R50-N6).** God's Spawn nation on Greater Poland, five provinces, founded "Free Silesian

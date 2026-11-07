@@ -755,6 +755,11 @@ Rules:
   `3fe138b1` (20841 three to Shanghai, 20661 two), pass at HEAD. AT: run 50's 19 landing seeds and run 47's grid
   (`tools/diag/landingGrid.ts`, 403 jobs) at 0 broken, with the worst click's days over its best way named in
   PROGRESS. No new landing rule unless the checker finds a break; each one it finds is a part of its own (R44a …).
+  The checker is in (ADR-845): the critic's two break at `3fe138b1`, pass at HEAD; 18 of the 19 seeds and the grid
+  clean (worst 3.8 days over; grid 14 h).
+  - [ ] R44a 20827 (Britain, Newcastle the nearest port of all): t708's click of six, 277 at Liverpool with a group
+    there (best 5.8 days); landing 6 waited at Newcastle for 273 walking ~12 days from London to the same port (R43a's
+    sibling needs another port). Not ashore after 12.8 days.
 
 ## Batch 3 — readability (after the release, ADR-829)
 

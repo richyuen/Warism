@@ -33,7 +33,10 @@ const byKind = Object.fromEntries(BROKEN_KINDS.map((kind) => [kind, run.filter((
 const worstIdle = Math.max(0, ...run.flatMap((k) => k.divisions.map((d) => d.idle)));
 const worstWait = Math.max(0, ...run.flatMap((k) => k.divisions.map((d) => d.wait ?? 0)));
 const broken = run.filter((k) => k.broken.length > 0).length;
-const summary = { seed, ops, t0: base.t0, ids: base.ids, cases: cases.length, run: run.length, skipped: cases.length - run.length, broken, byKind, worstIdle, worstWait, seconds: Math.round((performance.now() - t) / 1000) };
+// `slowClick` (R44): the worst click's first division ashore over its best single-division way, hours.
+const slows = run.map((k) => k.slow).filter((v): v is number => v !== null && v !== undefined);
+const worstSlow = slows.length > 0 ? Math.max(...slows) : null;
+const summary = { seed, ops, t0: base.t0, ids: base.ids, cases: cases.length, run: run.length, skipped: cases.length - run.length, broken, byKind, worstIdle, worstWait, worstSlow, seconds: Math.round((performance.now() - t) / 1000) };
 console.log(JSON.stringify(summary));
 if (outPath) writeFileSync(outPath, JSON.stringify({ summary, cases }, null, 1));
 console.log('done:');

@@ -18,6 +18,8 @@
  * - `mark`: one landed at its order's target without a mark when it was ordered (`seaHint`), or away from it;
  * - `idle`: an idle spell aboard over 72 h (aboard transports standing, in no fight);
  * - `home`: a cancelled one landed abroad, or not at home at the end.
+ * - `slowClick` (ROADMAP R44): the base's click or a case's order whose first division ashore came over
+ *   SLOW_CLICK_DAYS after its best single-division way (`tests/helpers/slowClick.ts`); `slow`, the worst's hours over.
  * And a figure, not a kind (ROADMAP R33b): `wait`, the longest a division stood at its port in a landing that
  * had not sailed, ashore or aboard. Since R33b a landing's divisions wait ashore and board at the sail hour, so
  * `idle` alone would hide a long wait.
@@ -36,6 +38,7 @@ import { LandingState, landingOfDivision, seaHint } from '../../src/sim/systems/
 import { navOf, type World } from '../../src/sim/world';
 import { assets1938 } from './earth';
 import { nationId } from './sim1938';
+import { clickBest, SlowClicks } from './slowClick';
 
 const { w: W, h: H } = SIZE_1938;
 
@@ -45,7 +48,7 @@ export const GRID_OPS: GridOp[] = ['reclick', 'redirect', 'recall', 'cancel'];
 export const GRID_HOURS = [6, 24, 48, 72, 120];
 export const GRID_OFFS = [0, 1, 2, 3];
 export const GRID_WHO: GridWho[] = ['aboard', 'walking', 'all'];
-export const BROKEN_KINDS = ['split', 'untold', 'away', 'mark', 'idle', 'home'] as const;
+export const BROKEN_KINDS = ['split', 'untold', 'away', 'mark', 'idle', 'home', 'slowClick'] as const;
 export type BrokenKind = (typeof BROKEN_KINDS)[number];
 
 /** The longest idle spell aboard the AT allows, in hours. */
@@ -79,6 +82,8 @@ export interface GridBase {
   ids: number[];
   /** The hour of the saved state. */
   t0: number;
+  /** The first click's hour and its best single-division way, hours (`slowClick`, R44). */
+  click: { t0: number; best: number };
 }
 
 export interface GridCase {
@@ -89,6 +94,8 @@ export interface GridCase {
   /** No such division at the base (none walking), or the order's cell not land. */
   skipped?: string;
   broken: { kind: BrokenKind; what: string }[];
+  /** The worst click's first division ashore after its best way, hours (`slowClick`; null: none ashore reckoned). */
+  slow?: number | null;
   /** Per division: landed at (tick), told (reason), dead, longest idle aboard (h), longest wait at its port (h). */
   divisions: { id: number; landed: number | null; told: number | null; dead: boolean; idle: number; wait: number }[];
 }
@@ -134,6 +141,7 @@ export function gridBase(setup: GridSetup): GridBase {
     });
     ids = all.sort((x, y) => x[1] - y[1] || x[0] - y[0]).slice(0, 2).map((d) => d[0]);
   }
+  const click = { t0: w.tick, best: clickBest(w, ids, landingOf(w, cellAt(setup.a[0], setup.a[1]))!.water) };
   for (const id of [...ids].sort((x, y) => x - y)) sim.command({ kind: 'moveFormation', id, x: setup.a[0], y: setup.a[1], nation: n, escort: true });
   let there = false;
   for (let h = 0; h < 24 * 20 && !there; h++) {
@@ -142,7 +150,7 @@ export function gridBase(setup: GridSetup): GridBase {
   }
   if (!there) throw new Error(`seed ${setup.seed}: nobody at its port in 20 days`);
   sim.step(1, quiet);
-  return { setup, sim, saved: sim.save(), ids, t0: w.tick };
+  return { setup, sim, saved: sim.save(), ids, t0: w.tick, click };
 }
 
 interface Order { at: number; ids: number[]; to: [number, number] }
@@ -187,6 +195,11 @@ export function gridCase(b: GridBase, op: GridOp, hour: number, off: number, who
   const spell = new Map<number, number>(b.ids.map((id) => [id, 0]));
   // Once its order is over (landed, told, dead, or home from a cancel) a division is the AI's (ADR-759): not read on.
   const settled = new Set<number>();
+  // `slowClick` (R44): the base's click, and each order of the case; ashore abroad and refused, per hour.
+  const slow = new SlowClicks((line) => out.broken.push({ kind: 'slowClick', what: line }));
+  if (Number.isFinite(b.click.best)) slow.add(b.click.t0, b.ids, b.click.best);
+  const ashore = new Set<number>();
+  const refused = new Set<number>();
   const hourOf = (): void => {
     for (const id of b.ids) {
       if (!w.formations.has(id) || settled.has(id)) continue;
@@ -212,6 +225,8 @@ export function gridCase(b: GridBase, op: GridOp, hour: number, off: number, who
         const id = ev[i + 2]!;
         if (!b.ids.includes(id) || settled.has(id)) continue;
         const k = ev[i + 1];
+        if (k === EventKind.MoveRejected) refused.add(id);
+        if (k === EventKind.FormationLanded && x.cells.owner[cellAt(ev[i + 4]!, ev[i + 5]!)] !== n) ashore.add(id);
         if (k === EventKind.MoveRejected) told.set(id, ev[i + 4]!);
         if (k === EventKind.FormationDestroyed) dead.add(id);
         if (k === EventKind.FormationLanded) {
@@ -227,6 +242,9 @@ export function gridCase(b: GridBase, op: GridOp, hour: number, off: number, who
       }
       quiet(x);
       hourOf();
+      slow.hour(x, ashore, refused);
+      ashore.clear();
+      refused.clear();
     });
   let t = 0;
   for (const o of orders) {
@@ -239,6 +257,8 @@ export function gridCase(b: GridBase, op: GridOp, hour: number, off: number, who
       const hint = seaHint(w, [id], o.to[0], o.to[1]);
       return [id, hint.how === 1 && hint.land >= 0 ? { land: hint.land } : null];
     }));
+    const over = landingOf(w, cellAt(o.to[0], o.to[1]));
+    slow.click(w, live, comp[cellAt(o.to[0], o.to[1])] === homeComp || !over ? -1 : over.water);
     for (const id of [...live].sort((x, y) => x - y)) sim.command({ kind: 'moveFormation', id, x: o.to[0], y: o.to[1], nation: n, escort: true } as Command);
     // A refusal at the click leaves the order before it; one later ends its landing (told).
     for (const id of live) {
@@ -287,5 +307,6 @@ export function gridCase(b: GridBase, op: GridOp, hour: number, off: number, who
     if (idle.get(id)! > IDLE_HOURS) out.broken.push({ kind: 'idle', what: `${id} idle aboard ${idle.get(id)} h` });
     out.divisions.push({ id, landed: landed.get(id) ?? null, told: told.get(id) ?? null, dead: dead.has(id), idle: idle.get(id)!, wait: wait.get(id)! });
   }
+  out.slow = slow.worst?.over ?? null;
   return out;
 }

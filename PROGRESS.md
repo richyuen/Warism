@@ -1773,3 +1773,14 @@
 - Specs by hand: `godMode1938`, `godPanelMore1938`, `godRevolt1938`, `godUi1938`, `loadedWorld1938`,
   `seamItems1938`, `workerNodeGrowth1938` (30 passed). Budgets: God commands only; no tick system changed.
 - R43 done. **Next:** R44 (`slowClick`).
+
+## 2026-11-07 — R44: `slowClick`, the checker (ADR-845)
+- `tests/helpers/slowClick.ts`: a click's first division ashore within 7 days of its best single-division way
+  (`bestWayHours`, `farPort`'s reckoning moved there), in the fuzz and the grid (`slowClick` kind, `worstSlow`).
+- The critic's cases (`slowClick1938`): broken at `3fe138b1` (20661 11.8 days, best 4.8; 20841 10.8, best 3.8; a
+  worktree), ashore 0.1 and 1.1 days over at HEAD.
+- Run 50's 19 landing seeds: 18 clean; worst ashore 3.8 days over its best way (20629, 367: 6.2 for 2.4). 20827 broken:
+  R44a filed (one port for all, a 12-day walk to it). Grid: 3517 160 run, 15101 240: 0 `slowClick`, worst 14.2 h over;
+  3517's 3 splits (recall at 120 h) the same on HEAD without the checker.
+- `landingInvariants1938` (11) green. No sim change: the pin and budgets unmoved.
+- **Next:** R44a.
