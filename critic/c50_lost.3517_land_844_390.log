@@ -1,0 +1,481 @@
+{
+ "seed": 3517,
+ "tag": "land",
+ "W": 844,
+ "H": 390,
+ "removed": [
+  [
+   1151,
+   null
+  ],
+  [
+   1152,
+   null
+  ]
+ ],
+ "ids": [
+  364,
+  365,
+  366
+ ],
+ "other": 367,
+ "edgesAshore": [
+  [
+   [
+    422,
+    195
+   ],
+   false,
+   [
+    436,
+    168,
+    775,
+    187
+   ]
+  ],
+  [
+   [
+    760,
+    195
+   ],
+   false,
+   [
+    636,
+    155,
+    836,
+    187
+   ]
+  ],
+  [
+   [
+    819,
+    195
+   ],
+   false,
+   [
+    636,
+    155,
+    836,
+    187
+   ]
+  ],
+  [
+   [
+    422,
+    351
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    422,
+    378
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    802,
+    371
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    42,
+    371
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    819,
+    39
+   ],
+   false,
+   [
+    636,
+    55,
+    836,
+    87
+   ]
+  ]
+ ],
+ "edgesPlain": [
+  [
+   [
+    422,
+    195
+   ],
+   false,
+   [
+    436,
+    155,
+    796,
+    187
+   ]
+  ],
+  [
+   [
+    760,
+    195
+   ],
+   false,
+   [
+    636,
+    142,
+    836,
+    187
+   ]
+  ],
+  [
+   [
+    819,
+    195
+   ],
+   false,
+   [
+    636,
+    142,
+    836,
+    187
+   ]
+  ],
+  [
+   [
+    422,
+    351
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    422,
+    378
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    802,
+    371
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    42,
+    371
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    819,
+    39
+   ],
+   null,
+   null
+  ]
+ ],
+ "sailedH": 830,
+ "atSail": [
+  {
+   "id": 364,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1819.1,
+    388.9
+   ]
+  },
+  {
+   "id": 365,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1819.1,
+    387.2
+   ]
+  },
+  {
+   "id": 366,
+   "v": "nextVoyage",
+   "port": "Tokyo",
+   "p": [
+    1819.5,
+    385.5
+   ]
+  }
+ ],
+ "beforeSink": [
+  {
+   "id": 364,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1801.4,
+    399.5
+   ]
+  },
+  {
+   "id": 365,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1802.1,
+    398.9
+   ]
+  },
+  {
+   "id": 366,
+   "v": "nextVoyage",
+   "port": "Tokyo",
+   "p": [
+    1819.5,
+    385.5
+   ]
+  }
+ ],
+ "voyage0": {
+  "state": "atSea",
+  "port": null
+ },
+ "rowsBefore": [
+  [
+   "nextVoyage",
+   "Square infantry division 366: no room on the transports that sailed; it waits at the port, and they come back for it.",
+   {
+    "cut": false,
+    "box": [
+     7,
+     272,
+     415,
+     290
+    ],
+    "sw": 404,
+    "cw": 404,
+    "sh": 16,
+    "ch": 16,
+    "vis": true,
+    "of": "clip",
+    "ws": "normal"
+   }
+  ]
+ ],
+ "sink": [
+  [
+   1136,
+   null
+  ],
+  [
+   1144,
+   null
+  ]
+ ],
+ "afterSink": {
+  "h": 855,
+  "st": [
+   {
+    "id": 364,
+    "v": null,
+    "port": null,
+    "p": null
+   },
+   {
+    "id": 365,
+    "v": null,
+    "port": null,
+    "p": null
+   },
+   {
+    "id": 366,
+    "v": null,
+    "port": null,
+    "p": [
+     1819.5,
+     385.5
+    ]
+   }
+  ],
+  "rows": [
+   [
+    "transportsSunk",
+    "Square infantry division 366: the transports of its landing were sunk, and no others of its nation can come to its port: the landing is over.",
+    {
+     "cut": false,
+     "box": [
+      7,
+      251,
+      415,
+      270
+     ],
+     "sw": 404,
+     "cw": 404,
+     "sh": 16,
+     "ch": 16,
+     "vis": true,
+     "of": "clip",
+     "ws": "normal"
+    }
+   ],
+   [
+    "lostAtSea",
+    "2 divisions lost at sea with their transports",
+    {
+     "cut": false,
+     "box": [
+      7,
+      272,
+      415,
+      290
+     ],
+     "sw": 404,
+     "cw": 404,
+     "sh": 16,
+     "ch": 16,
+     "vis": true,
+     "of": "clip",
+     "ws": "normal"
+    }
+   ]
+  ],
+  "ticker": {
+   "cls": "ticker short compact",
+   "box": [
+    7,
+    251,
+    415,
+    290
+   ],
+   "text": "Square infantry division 366: the transports of its landing were sunk, and no others of its nation can come to its port: the landing is over. 2 divisions lost at sea with their transports"
+  },
+  "toast": [],
+  "shot": "critic/shots/c50lost_land_rows.png"
+ },
+ "atPort": 366,
+ "portPanel": {
+  "panel": {
+   "status": "Holding",
+   "notice": "Square infantry division 366: the transports of its landing were sunk, and no others of its nation can come to its port: the landing is over."
+  },
+  "shot": "critic/shots/c50lost_land_portpanel.png"
+ },
+ "news": [
+  {
+   "kind": "nextVoyage",
+   "id": 366,
+   "nation": 75,
+   "reason": 0,
+   "x": 1819.5,
+   "y": 385.5,
+   "tick": 830,
+   "at": 748
+  },
+  {
+   "kind": "transportsSunk",
+   "id": 366,
+   "nation": 75,
+   "reason": 0,
+   "x": 1819.5,
+   "y": 385.5,
+   "tick": 856,
+   "at": 856
+  },
+  {
+   "kind": "lostAtSea",
+   "id": 364,
+   "nation": 75,
+   "reason": 0,
+   "x": 1801.3719418541107,
+   "y": 399.5,
+   "tick": 856,
+   "at": 856
+  },
+  {
+   "kind": "lostAtSea",
+   "id": 365,
+   "nation": 75,
+   "reason": 0,
+   "x": 1802.1334504236765,
+   "y": 398.8665495763234,
+   "tick": 856,
+   "at": 856
+  }
+ ],
+ "rowsBeforeClick": [
+  [
+   "transportsSunk",
+   "Square infantry division 366: the transports of its landing were sunk, and no others of its nation can come to its port: the landing is over.",
+   {
+    "cut": false,
+    "box": [
+     7,
+     251,
+     415,
+     270
+    ],
+    "sw": 404,
+    "cw": 404,
+    "sh": 16,
+    "ch": 16,
+    "vis": true,
+    "of": "clip",
+    "ws": "normal"
+   }
+  ],
+  [
+   "lostAtSea",
+   "2 divisions lost at sea with their transports",
+   {
+    "cut": false,
+    "box": [
+     7,
+     272,
+     415,
+     290
+    ],
+    "sw": 404,
+    "cw": 404,
+    "sh": 16,
+    "ch": 16,
+    "vis": true,
+    "of": "clip",
+    "ws": "normal"
+   }
+  ]
+ ],
+ "clicked": "2 divisions lost at sea with their transports",
+ "rowsAfterClick": [
+  [
+   "nextVoyage",
+   "Square infantry division 366: no room on the transports that sailed; it waits at the port, and they come back for it.",
+   {
+    "cut": false,
+    "box": [
+     7,
+     251,
+     415,
+     270
+    ],
+    "sw": 404,
+    "cw": 404,
+    "sh": 16,
+    "ch": 16,
+    "vis": true,
+    "of": "clip",
+    "ws": "normal"
+   }
+  ],
+  [
+   "transportsSunk",
+   "Square infantry division 366: the transports of its landing were sunk, and no others of its nation can come to its port: the landing is over.",
+

@@ -1,0 +1,36 @@
+{
+ "seed": 20903,
+ "D": 400,
+ "extra": "&diplo=random",
+ "atSave": {
+  "tick": 9600,
+  "hash": 2924818273
+ },
+ "saveBytes": 4006696,
+ "A": {
+  "tick": 19200,
+  "hash": 3275338370
+ },
+ "shotA": "critic/shots/c50sl_rnd_20903_A.png",
+ "afterLoad": {
+  "tick": 9600,
+  "hash": 2924818273
+ },
+ "B": {
+  "tick": 19200,
+  "hash": 3275338370
+ },
+ "shotB": "critic/shots/c50sl_rnd_20903_B.png",
+ "same": true,
+ "afterLoad2": {
+  "tick": 9600,
+  "hash": 2924818273
+ },
+ "C": {
+  "tick": 19200,
+  "hash": 3275338370
+ },
+ "same2": true,
+ "date": "11 March 1940 · Paused",
+ "errors": []
+}

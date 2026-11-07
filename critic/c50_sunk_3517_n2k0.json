@@ -1,0 +1,54 @@
+{
+ "seed": 3517,
+ "N": 2,
+ "KEEP": 0,
+ "SINK": 24,
+ "ids": [
+  364,
+  365
+ ],
+ "sailedAt": 511,
+ "sunkAt": 535,
+ "sunkFleets": [
+  1136,
+  1144
+ ],
+ "landedAt": {},
+ "news": [
+  "536 lostAtSea 364 reason 0",
+  "536 lostAtSea 365 reason 0"
+ ],
+ "trace": [
+  "t2 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t26 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t50 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t74 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t98 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t122 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t146 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t170 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t194 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t218 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t242 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t266 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t290 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t314 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t338 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t362 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t386 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t410 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t434 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t458 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t482 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t506 day 364:ashore L1/0/f1136,1144 gathering | 365:ashore L1/0/f1136,1144 toPort",
+  "t511 sailed 364:aboard L1/1/f1136,1144 atSea | 365:aboard L1/1/f1136,1144 atSea",
+  "t535 before sink 364:aboard L1/1/f1136,1144 atSea | 365:aboard L1/1/f1136,1144 atSea",
+  "t535 sunk (same hour, panel) 364:aboard L1/1/f atSea | 365:aboard L1/1/f atSea",
+  "t536 after 364:gone | 365:gone",
+  "t537 after 364:gone | 365:gone",
+  "t538 after 364:gone | 365:gone",
+  "t560 after 364:gone | 365:gone",
+  "t584 after 364:gone | 365:gone",
+  "t607 end 364:gone | 365:gone"
+ ]
+}

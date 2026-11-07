@@ -1714,3 +1714,19 @@
 - **Next:** the batch's critic run (R42 was its last item).
 - Then the user's choice: on a phone, two orders' rows in place of the newest event (ADR-760 amended, ADR-837);
   `orderRowsPanel1938`, `phoneLayout1938`, `ticker1938` by hand.
+- Before critic run 50 (ADR-833): run 49's 62 headless jobs replayed on `3fe138b1` (`.cache/replay49`): every checker
+  0 broken, both worker hashes as in run 49, all 29 far/sunk cases the same event for event, the risings the same.
+  Its 14 page probes: no page error; the lost rows whole and the at-port row on the screen (desk, phone), the freed
+  rising in the ticker, hero tags 74 → 98 → 129 → 148 px from 10,000 to 5,000 m/px (phone at most 25 %).
+
+## 2026-11-06 — Critic run 50 (full) on `3fe138b1`: no blocking issue; naval 7 (bar 8)
+- Scores: map 7, diplomacy 7, dynamics 7, God 7, editor 7, stats 7, UI 7, performance 7, stability **8** (up), zoom 8,
+  naval 7 (bar 8), tanks 8, aircraft 8, AI nukes 8. Blocking: 0. Every checker 0 broken (18 diplomacy, 19 landing,
+  5 world, 2 worker seeds).
+- R41 and R42 confirmed: no `farPort` note; the click's days count down and the landing sails on the day said; hero
+  tags blend; the release in the ticker; both order rows on the screen.
+- Naval under its bar: no exit (ADR-833); R43 filed (R43a–f): R50-N1 the click's own last division unbounded (35 days
+  at Tokyo), N2 single order rows cut, N3 phone names, N4 release after its effects, N5 a march on after the landing
+  ended, N6 God's revolt names.
+- **Next:** R43.
+

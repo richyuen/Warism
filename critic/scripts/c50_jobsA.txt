@@ -1,0 +1,18 @@
+npx tsx tools/diag/diploInvariants.ts 20429 random 3650 > critic/c50_diploinv_20429r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20491 random 3650 > critic/c50_diploinv_20491r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20493 random 3650 > critic/c50_diploinv_20493r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20413 scenario 3650 > critic/c50_diploinv_20413s_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20495 scenario 3650 > critic/c50_diploinv_20495s_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20601 random 3650 > critic/c50_diploinv_20601r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20603 random 3650 > critic/c50_diploinv_20603r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20605 random 3650 > critic/c50_diploinv_20605r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20607 random 3650 > critic/c50_diploinv_20607r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20609 scenario 3650 --heroes > critic/c50_diploinv_20609s_h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20611 random 1825 --world random > critic/c50_diploinv_20611rw_5y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20801 random 3650 > critic/c50_diploinv_20801r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20803 random 3650 > critic/c50_diploinv_20803r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20805 scenario 3650 > critic/c50_diploinv_20805s_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20807 scenario 3650 > critic/c50_diploinv_20807s_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20809 scenario 3650 --heroes > critic/c50_diploinv_20809s_h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20811 random 1825 --world random > critic/c50_diploinv_20811rw_5y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 20813 random 3650 --heroes > critic/c50_diploinv_20813r_h_10y.log 2>&1

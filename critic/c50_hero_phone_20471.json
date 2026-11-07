@@ -1,0 +1,357 @@
+{
+ "seed": 20471,
+ "hours": 17520,
+ "W": 390,
+ "H": 844,
+ "at": [
+  {
+   "mpp": 26379,
+   "heroes": [
+    {
+     "text": "Char 2C",
+     "others": 0,
+     "box": [
+      121,
+      254,
+      55,
+      14
+     ]
+    },
+    {
+     "text": "Maus",
+     "others": 0,
+     "box": [
+      246,
+      236,
+      44,
+      14
+     ]
+    },
+    {
+     "text": "Roma",
+     "others": 0,
+     "box": [
+      72,
+      274,
+      45,
+      14
+     ]
+    },
+    {
+     "text": "HMS Hood",
+     "others": 0,
+     "box": [
+      -59,
+      534,
+      70,
+      14
+     ]
+    },
+    {
+     "text": "TOG II",
+     "others": 0,
+     "box": [
+      -37,
+      550,
+      48,
+      14
+     ]
+    },
+    {
+     "text": "Richelieu",
+     "others": 0,
+     "box": [
+      171,
+      593,
+      61,
+      14
+     ]
+    },
+    {
+     "text": "P.100 Ercole",
+     "others": 0,
+     "box": [
+      232,
+      199,
+      74,
+      14
+     ]
+    }
+   ],
+   "heroArea": 5558,
+   "heroAreaPct": 1.69,
+   "meanOtherArea": 744,
+   "others": 38,
+   "shot": "critic/shots/c50hero_phone_20471_30000.png"
+  },
+  {
+   "mpp": 15000,
+   "heroes": [
+    {
+     "text": "Char 2C",
+     "others": 0,
+     "box": [
+      85,
+      378,
+      55,
+      14
+     ]
+    },
+    {
+     "text": "Maus",
+     "others": 0,
+     "box": [
+      301,
+      346,
+      44,
+      14
+     ]
+    },
+    {
+     "text": "Roma",
+     "others": 0,
+     "box": [
+      1,
+      413,
+      45,
+      14
+     ]
+    },
+    {
+     "text": "P.100 Ercole",
+     "others": 0,
+     "box": [
+      288,
+      282,
+      74,
+      14
+     ]
+    }
+   ],
+   "heroArea": 3052,
+   "heroAreaPct": 0.93,
+   "meanOtherArea": 728,
+   "others": 45,
+   "shot": "critic/shots/c50hero_phone_20471_15000.png"
+  },
+  {
+   "mpp": 10001,
+   "heroes": [
+    {
+     "text": "Char 2C",
+     "others": 0,
+     "box": [
+      44,
+      469,
+      55,
+      14
+     ]
+    },
+    {
+     "text": "Maus",
+     "others": 0,
+     "box": [
+      345,
+      422,
+      44,
+      14
+     ]
+    },
+    {
+     "text": "P.100 Ercole",
+     "others": 0,
+     "box": [
+      315,
+      325,
+      74,
+      14
+     ]
+    }
+   ],
+   "heroArea": 2422,
+   "heroAreaPct": 0.74,
+   "meanOtherArea": 704,
+   "others": 56,
+   "shot": "critic/shots/c50hero_phone_20471_10001.png"
+  },
+  {
+   "mpp": 9999,
+   "heroes": [
+    {
+     "text": "Char 2C",
+     "others": 0,
+     "box": [
+      44,
+      469,
+      55,
+      14
+     ]
+    },
+    {
+     "text": "Maus",
+     "others": 0,
+     "box": [
+      345,
+      422,
+      44,
+      14
+     ]
+    },
+    {
+     "text": "P.100 Ercole",
+     "others": 0,
+     "box": [
+      315,
+      325,
+      74,
+      14
+     ]
+    }
+   ],
+   "heroArea": 2423,
+   "heroAreaPct": 0.74,
+   "meanOtherArea": 704,
+   "others": 56,
+   "shot": "critic/shots/c50hero_phone_20471_09999.png"
+  },
+  {
+   "mpp": 9000,
+   "heroes": [
+    {
+     "text": "Char 2C",
+     "others": 0,
+     "box": [
+      27,
+      473,
+      63,
+      16
+     ]
+    },
+    {
+     "text": "Maus",
+     "others": 0,
+     "box": [
+      384,
+      421,
+      51,
+      16
+     ]
+    },
+    {
+     "text": "P.100 Ercole",
+     "others": 0,
+     "box": [
+      368,
+      314,
+      85,
+      16
+     ]
+    }
+   ],
+   "heroArea": 3214,
+   "heroAreaPct": 0.98,
+   "meanOtherArea": 691,
+   "others": 48,
+   "shot": "critic/shots/c50hero_phone_20471_09000.png"
+  },
+  {
+   "mpp": 8000,
+   "heroes": [
+    {
+     "text": "Char 2C",
+     "others": 0,
+     "box": [
+      4,
+      480,
+      72,
+      18
+     ]
+    },
+    {
+     "text": "P.100 Ercole",
+     "others": 0,
+     "box": [
+      389,
+      301,
+      98,
+      18
+     ]
+    }
+   ],
+   "heroArea": 3135,
+   "heroAreaPct": 0.95,
+   "meanOtherArea": 650,
+   "others": 42,
+   "shot": "critic/shots/c50hero_phone_20471_08000.png"
+  },
+  {
+   "mpp": 7000,
+   "heroes": [
+    {
+     "text": "Char 2C",
+     "others": 0,
+     "box": [
+      1,
+      489,
+      72,
+      18
+     ]
+    }
+   ],
+   "heroArea": 1337,
+   "heroAreaPct": 0.41,
+   "meanOtherArea": 598,
+   "others": 43,
+   "shot": "critic/shots/c50hero_phone_20471_07000.png"
+  },
+  {
+   "mpp": 6000,
+   "heroes": [
+    {
+     "text": "Char 2C",
+     "others": 0,
+     "box": [
+      -47,
+      502,
+      72,
+      18
+     ]
+    }
+   ],
+   "heroArea": 1337,
+   "heroAreaPct": 0.41,
+   "meanOtherArea": 582,
+   "others": 33,
+   "shot": "critic/shots/c50hero_phone_20471_06000.png"
+  },
+  {
+   "mpp": 5000,
+   "heroes": [],
+   "heroArea": 0,
+   "heroAreaPct": 0,
+   "meanOtherArea": 590,
+   "others": 25,
+   "shot": "critic/shots/c50hero_phone_20471_05000.png"
+  },
+  {
+   "mpp": 3500,
+   "heroes": [],
+   "heroArea": 0,
+   "heroAreaPct": 0,
+   "meanOtherArea": 583,
+   "others": 13,
+   "shot": "critic/shots/c50hero_phone_20471_03500.png"
+  },
+  {
+   "mpp": 2500,
+   "heroes": [],
+   "heroArea": 0,
+   "heroAreaPct": 0,
+   "meanOtherArea": 577,
+   "others": 5,
+   "shot": "critic/shots/c50hero_phone_20471_02500.png"
+  }
+ ],
+ "date": "1 January 1940",
+ "errors": []
+}

@@ -1,0 +1,31 @@
+== c50_lost 3517 desk 20:16:05
+   exit 0
+== c50_lost 3517 phone 390 844 20:16:34
+   exit 0
+== c50_lost 3517 land 844 390 20:17:04
+   exit 0
+== c50_lost 3517 desk6 20:17:33
+   exit 0
+== c50_lost 3517 phone6 390 844 20:18:07
+   exit 0
+== c50_rise_page  20:18:39
+   exit 0
+== c50_hero 20471 17520 desk 20:19:21
+   exit 0
+== c50_hero 20471 17520 phone 390 844 20:20:29
+   exit 0
+== c50_hero 20651 26280 desk 20:21:36
+   exit 0
+== c50_wait_page 20661 JAP CHI 1818.5,385.5 1715.5,413.5 2 jap_sh 390 844 30 20:23:05
+   exit 0
+== c50_wait_page 20861 JAP CHI 1818.5,385.5 1708.5,382.5 3 jap_qd 1600 900 45 20:24:03
+   exit 0
+== c50_wait_page 20863 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br 1600 900 45 20:25:35
+   exit 0
+== c50_z_zoom 20865 20:27:08
+   exit 0
+== c50_seaclick 20867 20:27:28
+   exit 0
+== c50_seaclick 20869 20:27:41
+   exit 0
+== c50_c_battle 20871 20:27:52

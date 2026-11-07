@@ -718,6 +718,23 @@ Rules:
   5,000 by zoom level, within a quarter of the screen (`heroes1938` R42c: 1.32× at 8,000, phone 12 %; 7.184b3 green);
   R42d `PuppetReleased` ticked; R42e one number.
 
+- [ ] R43 **Run 50's issues** (critic run 50, full, on `3fe138b1`: no blocking issue; naval 7, bar 8; stability up to 8;
+  ADR-833: each finding fixed; the critic's probes replayed first).
+  - [ ] R43a R50-N1 (naval): one click's last division has no bound on its landing's wait while a sibling landing's is
+    a month (ADR-836): 20861/20841 Tokyo→Shanghai, three divisions, 35 days at Tokyo for 366 walking 41 cells, a
+    4-day crossing. The same bound for the click's own last division (past it, sail and let it follow), or it boards
+    at its own nearer port as a sibling landing.
+  - [ ] R43b R50-N2: a single order row beside a panel cut before its meaning ("366: the transports of its…", a
+    refusal "not done: there is o…"): a brief for each single kind, the full text in the tooltip.
+  - [ ] R43c R50-N3: on a phone the merged loss row's names are only in a tooltip a phone cannot hover: the names where
+    a tap reaches them (the panel the click opens, or the row).
+  - [ ] R43d R50-N4: a freed rising's "left its war" rows tick before "was freed from", their cause: within the hour,
+    the release first.
+  - [ ] R43e R50-N5 (naval): 20845 Berlin→Norwich, the group sunk at t89, both told the landing is over, then both
+    marched on to Hamburg for six days: a landing ended stops its divisions' march to its port.
+  - [ ] R43f R50-N6 (God Mode): Revolt and Spawn name the new nation for a province other than the one clicked ("Free
+    Saxony" for Bavaria): the clicked province's name.
+
 ## Batch 3 — readability (after the release, ADR-829)
 
 The carried non-blocking issues of critic runs 31–43 (why some dimensions are 7 and not 8; none gates a release)

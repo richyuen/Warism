@@ -1,0 +1,18 @@
+{
+ "seed": 20867,
+ "shots": [
+  "critic/shots/c50sc_20867_click.png",
+  "critic/shots/c50sc_20867_600m.png",
+  "critic/shots/c50sc_20867_150m.png",
+  "critic/shots/c50sc_20867_40m.png"
+ ],
+ "day": 28,
+ "row": "⚓ Sea battle: Soviet Union against Yugoslavia",
+ "cam": {
+  "cx": 1132.0166943591585,
+  "cy": 343.0328063964844,
+  "scale": 244.9246413421253,
+  "mpp": 79.89343573812336
+ },
+ "errors": []
+}
