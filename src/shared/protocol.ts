@@ -864,6 +864,8 @@ export interface SeaHint {
    * (`sailsIn`); `other`, the port of the sibling of its click it waits for, when that is the later (ROADMAP R42a).
    */
   sails?: { port: string; days: number; other?: string };
+  /** By sea for some of the land formations only: how many go by sea of how many (ROADMAP R34l); absent when all do. */
+  part?: { sea: number; all: number };
   water: number;
   land: number;
   same: boolean;

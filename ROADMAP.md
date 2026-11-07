@@ -770,7 +770,7 @@ and the small ideas from other games. Each one line until it is taken.
 **The next critic run comes after R47, not after R43f** (ADR-842 and ADR-843, the user's decisions, 2026-11-07):
 R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 judges them together.
 
-- [ ] R34 The critic's carried issues: R37-N4 (relations graph labels overlap); R32-N3 (a refusal toast cuts its
+- [x] R34 The critic's carried issues: R37-N4 (relations graph labels overlap); R32-N3 (a refusal toast cuts its
   reason); R37-N3 (God's Breakthrough at peace does nothing, says nothing); R31-N1 (hero counters under the HUD);
   R31-N6 (the graph eats the first tap after a drag; a hero hides fleets stacked with it); R32-N2 (trait text only
   on hover, none on a phone); R32-N5 (sea heroes die more); R36-N3 (a re-click of the same landing is silent);
@@ -809,7 +809,7 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
     - [x] R34k1 R39-N3: Escape empties the selection, and the mark and the tooltip go at once.
     - [x] R34k2 R39-N4: at unit zoom the tooltip points at a mark off the screen: the way to it shown.
     - [x] R34k3 R39-N2: no mark on a touch screen: a tap asks, a second tap orders.
-  - [ ] R34l R40-N2: "your selected forces go by sea" for a selection most of which march: the tooltip says which go
+  - [x] R34l R40-N2: "your selected forces go by sea" for a selection most of which march: the tooltip says which go
     by sea and which march.
 - [ ] R35 Small ideas from the reports: an order's error cleared by any new order; a flag at the destination while
   choosing; a long-press preview of an order on touch; a mark on a fleet the AI has taken back.

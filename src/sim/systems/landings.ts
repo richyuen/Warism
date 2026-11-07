@@ -1095,12 +1095,21 @@ export function seaHint(world: World, ids: readonly number[], x: number, y: numb
   }
   const marks: LandingMark[] = [];
   let hint: SeaHint | null = null;
+  // How many of the land formations go by sea (ROADMAP R34l; critic run 40, R40-N2: 33 of Japan's selected, 29 of them
+  // on the mainland, and the tooltip said "your selected forces go by sea"). The hint is the first's that goes by sea.
+  let sea = 0;
+  let all = 0;
   for (const id of ids) {
     if (!world.formations.has(id)) continue;
     const from = orderFrom(world, id);
     const yes = from >= 0 && overSeaFrom(world, from, x, y);
     const how = !yes ? 0 : neutralLanding(world, world.formations.cols.nation[id]!, target) ? 2 : 1;
     const l = how === 1 ? landingFor(world, id, x, y) : null;
+    if (!world.isFleet(id) && !world.isWing(id)) {
+      all++;
+      if (yes) sea++;
+    }
+    if (hint?.how === 0 && how !== 0) hint = null;
     hint ??= { how, water: l?.water ?? -1, land: l?.land ?? -1, same: l?.same ?? false, marks };
     if (!l) continue;
     const m = marks.find((k) => k.water === l.water && k.land === l.land);
@@ -1123,6 +1132,7 @@ export function seaHint(world: World, ids: readonly number[], x: number, y: numb
       hint.sails = { port: world.ports[l.port]?.name ?? '', days: Math.ceil(when.hours / 24), ...(when.other !== undefined ? { other: world.ports[when.other]?.name ?? '' } : {}) };
     }
   }
+  if (hint && hint.how !== 0 && sea < all) hint.part = { sea, all };
   return hint ?? { how: 0, water: -1, land: -1, same: false, marks };
 }
 

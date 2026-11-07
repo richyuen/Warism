@@ -72,3 +72,42 @@ describe('the mark speaks for the whole selection (ROADMAP R28b)', () => {
     expect(mixed.marks.length).toBe(2);
   });
 });
+
+// ROADMAP R34l (critic run 40, R40-N2): every land division of Japan's selected, the cursor on Shanghai: "your selected
+// forces go by sea" where most of them stand on the mainland and would march. The hint counts those that go by sea of
+// all; the first selected marching, the hint is still the sea's.
+describe('a selection only some of which go by sea (ROADMAP R34l)', () => {
+  it("all of Japan's land divisions to Shanghai: how many go by sea, of how many", () => {
+    const sim = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
+    const w = sim.world;
+    w.settings.player = JAP;
+    if (!w.wars.atWar(JAP, CHI)) sim.command({ kind: 'declareWar', attacker: JAP, defender: CHI });
+    sim.step(1);
+    const c = w.formations.cols;
+    const comp = navOf(w).grid.component;
+    const shanghai = comp[cell(SHANGHAI[0], SHANGHAI[1])];
+    const land: number[] = [];
+    w.formations.forEach((id) => {
+      if (c.nation[id] === JAP && !w.isFleet(id) && !w.isWing(id) && !w.offLand(id)) land.push(id);
+    });
+    land.sort((a, b) => a - b);
+    const mainland = land.filter((id) => comp[cell(c.x[id]!, c.y[id]!)] === shanghai);
+    expect(mainland.length, 'some on the mainland (the case is there)').toBeGreaterThan(0);
+    expect(mainland.length).toBeLessThan(land.length);
+    const hint = seaHint(w, land, SHANGHAI[0] + 0.5, SHANGHAI[1] + 0.5);
+    expect(hint.how).toBe(1);
+    expect(hint.part, 'some only go by sea').toBeDefined();
+    expect(hint.part!.all).toBe(land.length);
+    expect(hint.part!.sea).toBeLessThan(land.length);
+    expect(hint.part!.sea).toBeLessThanOrEqual(land.length - mainland.length);
+    // A marcher first: still the sea's hint.
+    const first = [mainland[0]!, ...land.filter((id) => id !== mainland[0])];
+    expect(seaHint(w, first, SHANGHAI[0] + 0.5, SHANGHAI[1] + 0.5).how).toBe(1);
+    // All by sea: no part.
+    const islanders = land.filter((id) => !mainland.includes(id)).slice(0, 2);
+    const h2 = seaHint(w, islanders, SHANGHAI[0] + 0.5, SHANGHAI[1] + 0.5);
+    expect(h2.how).toBe(1);
+    expect(h2.part).toBeUndefined();
+  });
+});
+

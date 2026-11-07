@@ -151,3 +151,35 @@ test.describe('a touch screen', () => {
     await expect.poll(ordered, { timeout: 5000 }).toBe(true);
   });
 });
+
+// ROADMAP R34l (critic run 40, R40-N2): all of Japan's land divisions selected, the cursor on Shanghai: most of them
+// stand on the mainland and march; the tooltip says how many go by sea of how many, and that the rest march.
+test("desk: all of Japan's divisions selected over Shanghai: the tooltip says how many go by sea", async ({ page }, info) => {
+  test.setTimeout(180_000);
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await japanOne(page);
+  const n = await page.evaluate((nat) => {
+    const v = window.__warsim!.view!;
+    const p = window.__warsim!.player!;
+    const ids = v.formationsOf(nat).filter((f) => !v.formationAfloat(f));
+    p.clearSelection();
+    p.boxSelect(ids, false);
+    return ids.length;
+  }, JAP);
+  await page.evaluate(([x, y]) => window.__warsim!.view!.showPlace(x, y), SHANGHAI);
+  await page.waitForTimeout(500);
+  const box = (await page.locator('canvas').first().boundingBox())!;
+  const [cx, cy] = [box.x + box.width / 2, box.y + box.height / 2];
+  await page.mouse.move(cx + 3, cy + 3);
+  await page.mouse.move(cx, cy);
+  const part = page.getByTestId('tooltip-by-sea-part');
+  await expect(part).toBeVisible({ timeout: 5000 });
+  const [sea, all] = [Number(await part.getAttribute('data-sea')), Number(await part.getAttribute('data-all'))];
+  process.stderr.write(`R34l: ${n} selected; ${sea} of ${all} by sea\n`);
+  expect(all).toBeGreaterThan(sea);
+  expect(sea).toBeGreaterThan(0);
+  await expect(part).toContainText(`${sea} of the ${all} selected go by sea; the rest march`);
+  const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/R34') : info.outputPath();
+  mkdirSync(out, { recursive: true });
+  await page.screenshot({ path: path.join(out, 'landing-part-by-sea.png') });
+});

@@ -1912,3 +1912,11 @@
   none. The land march goes through the page's tap handler at a point off the canvas (a drawn counter under a
   chosen point made it flaky). The touch and mark specs: 32 passed.
 - **Next:** R34l.
+
+## 2026-11-07 — R34l: the tooltip says how many go by sea
+- `seaHint` counts the land formations whose order goes by sea of all selected (`part`, when not all); the hint is
+  the first that goes by sea's (a marcher first gave none). The tooltip adds "{n} of the {m} selected go by sea;
+  the rest march". 3517, all of Japan's 33 to Shanghai: "4 of the 33".
+- Unit `landingHintSelection1938` (a new case): red before, green; the seven `seaHint` tests: 19 passed; the
+  tooltip specs: 13 passed; `landingMarkMore1938`: 6 passed. R34 done.
+- **Next:** R35.

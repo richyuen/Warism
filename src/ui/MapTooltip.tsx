@@ -76,6 +76,12 @@ export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral,
           {t('tooltip.bySea')}
         </div>
       ) : null}
+      {sea && landing?.value?.part ? (
+        // Some of the selection only (ROADMAP R34l): how many go by sea, and the rest march.
+        <div class="map-tooltip-note" data-testid="tooltip-by-sea-part" data-sea={landing.value.part.sea} data-all={landing.value.part.all}>
+          {t('tooltip.bySeaPart', { n: landing.value.part.sea, m: landing.value.part.all })}
+        </div>
+      ) : null}
       {sea && tapAgain?.value ? (
         // A tap's (ROADMAP R34k3, ADR-849): the first shows, a second there orders.
         <div class="map-tooltip-note" data-testid="tooltip-tap-again">
