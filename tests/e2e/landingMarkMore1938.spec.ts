@@ -13,8 +13,10 @@ const { w: W, h: H } = SIZE_1938;
 const JAP = NATIONS_1938.findIndex((n) => n.tag === 'JAP') + 1;
 const SHANGHAI = cellOf(121.47, 31.23, W, H).map((v) => Math.floor(v) + 0.5) as [number, number];
 const TOKYO = cellOf(139.69, 35.69, W, H);
+const FUZHOU = cellOf(119.3, 26.08, W, H).map((v) => Math.floor(v) + 0.5) as [number, number];
 
 const marks = (page: Page): Promise<number> => page.evaluate(() => window.__warsim!.view!.landingMarks.length);
+
 
 /** Japan played, its division nearest Tokyo selected by the player's own selection. */
 export async function japanOne(page: Page): Promise<number> {
@@ -102,3 +104,50 @@ for (const [dx, dy] of [[0, 2], [-3, 3], [2, -2]] as const) {
     await page.screenshot({ path: info.outputPath(`r34k2-${dx}-${dy}.png`) });
   });
 }
+
+// R39-N2: a touch screen has no hover, and a tap over the sea ordered at once, the landing never shown. Now the first
+// tap on a cell shows the mark and the tooltip and orders nothing; a second on it orders; a tap whose order does
+// not go by sea orders at once (ADR-849). Fuzhou: no division of Japan's near it (Shanghai has some, and a tap
+// there picks one).
+test.describe('a touch screen', () => {
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 });
+  test('a tap over the sea shows the landing; a second orders; a march by land orders at once', async ({ page }, info) => {
+    test.setTimeout(180_000);
+    const id = await japanOne(page);
+    const ordered = (): Promise<boolean> => page.evaluate((id) => window.__warsim!.hud.orderedAt.value.has(id), id);
+    // Panels closed: the map's middle free.
+    await page.evaluate(() => {
+      window.__warsim!.hud.selectFormation(0);
+      window.__warsim!.view!.select(0);
+    });
+    await page.evaluate(([x, y]) => window.__warsim!.view!.showPlace(x, y), FUZHOU);
+    await page.waitForTimeout(600);
+    const box = (await page.locator('canvas').first().boundingBox())!;
+    const [cx, cy] = [box.x + box.width / 2, box.y + box.height / 2];
+    expect(await page.evaluate(() => window.__warsim!.player!.selectedCount.value)).toBe(1);
+    await page.touchscreen.tap(cx, cy);
+    await expect.poll(() => marks(page), { timeout: 5000 }).toBeGreaterThan(0);
+    await expect(page.getByTestId('tooltip-by-sea')).toBeVisible();
+    expect(await ordered(), 'the first tap orders nothing').toBe(false);
+    await expect(page.getByTestId('tooltip-tap-again')).toBeVisible();
+    const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/R34') : info.outputPath();
+    mkdirSync(out, { recursive: true });
+    await page.screenshot({ path: path.join(out, 'landing-mark-touch-first-tap.png') });
+    await page.touchscreen.tap(cx, cy);
+    await expect.poll(ordered, { timeout: 5000 }).toBe(true);
+    await expect(page.getByTestId('tooltip-tap-again')).toHaveCount(0);
+    // A march by land: at once.
+    await page.evaluate((id) => {
+      const p = window.__warsim!.player!;
+      p.clearSelection();
+      p.boxSelect([id], false);
+      window.__warsim!.hud.selectFormation(0);
+      window.__warsim!.hud.orderedAt.value = new Map();
+    }, id);
+    // The map's tap at a land cell near Tokyo, by the page's own handler (a tap's point off the canvas: no formation
+    // picked there, whatever is drawn).
+    const [tx, ty] = cellOf(138.9, 36.4, W, H).map(Math.floor) as [number, number];
+    expect(await page.evaluate(([x, y]) => window.__warsim!.view!.onPick!(x, y, -9999, -9999, false, true), [tx, ty] as const)).toBe(true);
+    await expect.poll(ordered, { timeout: 5000 }).toBe(true);
+  });
+});

@@ -1899,7 +1899,7 @@ Actions tab's assist boxes set the mask (`setPlayerAi`).
   every division it is for already has. One landing kept: the tooltip says "the landing they already
   have"; two or more (a division aboard and a fresh one, say), "{n} landings, each marked: they will
   not land together" (R39-N1: it was the first selected division's answer alone). A division aboard its
-  landing's transports is asked from its landing's port (`orderFrom`, ROADMAP R33b, R43-N4). A still cursor is asked again as the sim moves on. The formation panel's status says marching to the port (named) to board
+  landing's transports is asked from its landing's port (`orderFrom`, ROADMAP R33b, R43-N4). A still cursor is asked again as the sim moves on, and at a change of the selection (an empty one clears the mark: R34k1). A mark with no copy on the screen has an arrow at the screen's edge pointing the way (R34k2). On a touch screen a tap that would order the selection over the sea shows the mark and the tooltip ("Tap again to send them") and orders nothing; a second tap on that cell orders; a tap whose order does not go by sea orders at once (ADR-849). The formation panel's status says marching to the port (named) to board
   transports, waiting at it for them or for the rest of its landing, at sea, sailing back to its port, or landed (for a day after a player's order lands;
   `FormationDetail.voyage`). While bound for a landing, a formation whose order lines are shown has
   its sea leg drawn (`drawVoyages`, `Snapshot.voyages`): a dashed line from its port's water, or its

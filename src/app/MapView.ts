@@ -334,7 +334,15 @@ export class MapView {
       this.mouseAt = e.buttons !== 0 ? null : { x: e.clientX, y: e.clientY };
       this.readHover();
     });
-    canvas.addEventListener('pointerleave', () => {
+    canvas.addEventListener('pointerleave', (e) => {
+      // A finger lifted is no leave: a tap's hover (`hoverAt`) stays till the next touch.
+      if (e.pointerType === 'touch') return;
+      this.mouseAt = null;
+      this.readHover();
+    });
+    // A finger down: the hover a tap set (`hoverAt`) goes; a pan or a pinch has none (ROADMAP R34k3).
+    canvas.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'touch' || !this.mouseAt) return;
       this.mouseAt = null;
       this.readHover();
     });
@@ -477,7 +485,7 @@ export class MapView {
         const cell = this.cellAt(sx, sy);
         // A God Mode map tool or a player order consumes the click (PLAN 1.32b/1.33a); otherwise
         // it selects the nation.
-        if (!(this.onPick && cell && this.onPick(cell[0], cell[1], sx, sy, e.shiftKey))) this.select(this.nationAt(sx, sy));
+        if (!(this.onPick && cell && this.onPick(cell[0], cell[1], sx, sy, e.shiftKey, e.pointerType === 'touch'))) this.select(this.nationAt(sx, sy));
       }
       down = null;
     });
@@ -893,7 +901,18 @@ export class MapView {
    * Map click hook (God tools PLAN 1.32b, player orders PLAN 1.33a): the clicked cell, the CSS-px
    * point and Shift; returns true to consume the click.
    */
-  onPick: ((x: number, y: number, sx: number, sy: number, shift: boolean) => boolean) | null = null;
+  onPick: ((x: number, y: number, sx: number, sy: number, shift: boolean, touch?: boolean) => boolean) | null = null;
+
+  /**
+   * The hover at the canvas's point (`sx`, `sy`), as a mouse's there (ROADMAP R34k3; critic run 39, R39-N2: a touch
+   * screen has no hover, and the landing an order goes to was never shown before the tap ordered it): a tap's.
+   * It stays until the next finger down.
+   */
+  hoverAt(sx: number, sy: number): void {
+    const r = this.canvas.getBoundingClientRect();
+    this.mouseAt = { x: r.left + sx, y: r.top + sy };
+    this.readHover();
+  }
   /**
    * A click of the secondary button (no drag: a drag of it pans) at CSS px (sx, sy) of the map
    * and the page's (cx, cy), with the nation of the ground there (the player's menu of a nation).

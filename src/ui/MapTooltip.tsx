@@ -29,7 +29,7 @@ function place(x: number, y: number): Record<string, string> {
 /** The room below the mouse the tooltip needs, else it stands above (R39c): its tallest, a city with notes. */
 const FLIP_PX = 180;
 
-export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral, seaOpen, seaAshore, seaPlain, landing }: { hover: ReadonlySignal<MapHover | null>; nameOf: (id: number) => string | null; unrestOf: (province: number) => number | null; bySea?: ReadonlySignal<number>; seaNeutral?: ReadonlySignal<boolean>; seaOpen?: ReadonlySignal<boolean>; seaAshore?: ReadonlySignal<boolean>; seaPlain?: ReadonlySignal<boolean>; landing?: ReadonlySignal<SeaHint | null> }) {
+export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral, seaOpen, seaAshore, seaPlain, landing, tapAgain }: { hover: ReadonlySignal<MapHover | null>; nameOf: (id: number) => string | null; unrestOf: (province: number) => number | null; bySea?: ReadonlySignal<number>; seaNeutral?: ReadonlySignal<boolean>; seaOpen?: ReadonlySignal<boolean>; seaAshore?: ReadonlySignal<boolean>; seaPlain?: ReadonlySignal<boolean>; landing?: ReadonlySignal<SeaHint | null>; tapAgain?: ReadonlySignal<boolean> }) {
   const hover = signal.value;
   const sea = bySea !== undefined && hover !== null && hover.cell >= 0 && bySea.value === hover.cell;
   if (!hover) return null;
@@ -74,6 +74,12 @@ export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral,
       ) : sea ? (
         <div class="map-tooltip-note" data-testid="tooltip-by-sea">
           {t('tooltip.bySea')}
+        </div>
+      ) : null}
+      {sea && tapAgain?.value ? (
+        // A tap's (ROADMAP R34k3, ADR-849): the first shows, a second there orders.
+        <div class="map-tooltip-note" data-testid="tooltip-tap-again">
+          {t('tooltip.tapAgain')}
         </div>
       ) : null}
     </div>

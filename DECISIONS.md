@@ -7,6 +7,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-849 · 2026-11-07 · accepted — On a touch screen an order over the sea takes two taps (R34k3)
+- **Context.** R39-N2: the landing's mark (ADR-827) comes of a mouse's hover; a touch screen has none, and a tap
+  over the sea ordered at once, the landing never shown: the blind click ADR-827 set out to end.
+- **Decision.** A tap of the player's selection on a cell with nothing of theirs under it shows the hover there
+  (`MapView.hoverAt`: the tooltip, and the sea hint asked as a mouse's) and asks the worker; an order that does not
+  go by sea is sent at once (one round trip later); one that does waits for a second tap on the same cell with the
+  same selection, and the tooltip says "Tap again to send them". The next finger down clears the tap's hover, so a
+  pan or a pinch shows nothing. A mouse is as before.
+- **Consequences.** A phone's order over the sea is two taps; a march by land still one. Long-press boxes, God
+  tools and picks are untouched (they come before it in `onPick`). Tested by `landingMarkMore1938` (a phone).
+
 ### ADR-848 · 2026-11-07 · accepted — A sea hero does not come back under an enemy fleet (R34i)
 - **Context.** R32-N5: sea heroes die often (Sovetsky Soyuz 46.7 times in 20 years over ten seeds). Six seeds ×
   five years, heroes on: 62 Soviet losses; 19 sea-hero losses within 24 hours of a return. The cause: a hero comes

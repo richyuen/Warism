@@ -94,6 +94,8 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       });
     };
     view.onHover = (h) => {
+      // No hover, or a mouse's: no tap waits for its second (R34k3).
+      if (h === null) hud.tapAgain.value = false;
       hud.hover.value = h;
       ask(h);
     };
@@ -149,7 +151,15 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       told = last.seq;
       if (last.kind === 'refused' && hud.formation.peek() === 0 && view.selectedFormations.has(last.id)) hud.selectFormation(last.id);
     });
-    view.onPick = (x, y, sx, sy, shift) => {
+    // A tap's order over the sea on a touch screen (ROADMAP R34k3, ADR-849): the first tap shows where it goes, the
+    // mark and the tooltip as a mouse's hover; a second on the same cell orders. Its cell and the selection.
+    let tapAsked = '';
+    effect(() => {
+      void p.selectedCount.value;
+      tapAsked = '';
+      hud.tapAgain.value = false;
+    });
+    view.onPick = (x, y, sx, sy, shift, touch) => {
       // God Mode's placing armed: the click is the place, on a formation too (no panel opens).
       if (p.placing.value !== null) return p.click(x, y, sx, sy, shift);
       if (hud.editorClick(x, y, view.cityNear(x, y), view.provinceAt(x, y)) || hud.pick(x, y, view.provinceAt(x, y), view.cityNear(x, y))) return true;
@@ -166,6 +176,26 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       const own = n === 0 || armed ? 0 : drawn !== 0 ? (view.formationNation(drawn) === n ? drawn : 0) : view.formationAt(sx, sy, n);
       const formation = own !== 0 ? own : drawn;
       hud.selectFormation(formation);
+      if (touch && n !== 0 && !armed && formation === 0 && !shift && p.selectedCount.value > 0) {
+        const ids = [...view.selectedFormations].sort((a, b) => a - b);
+        const ashore = ids.filter((f) => !view.formationAfloat(f));
+        const key = `${y * geometry.w + x}|${ids.join(',')}`;
+        if (ashore.length > 0 && tapAsked !== key) {
+          // The first tap: shown, and asked; an order that does not go by sea is sent at once.
+          tapAsked = key;
+          hud.tapAgain.value = true;
+          view.hoverAt(sx, sy);
+          void sim.overSea(ashore, x + 0.5, y + 0.5).then((hint) => {
+            if (tapAsked !== key || hint.how !== 0) return;
+            tapAsked = '';
+            hud.tapAgain.value = false;
+            p.click(x, y, sx, sy, shift, 0);
+          });
+          return true;
+        }
+        tapAsked = '';
+        hud.tapAgain.value = false;
+      }
       if (p.click(x, y, sx, sy, shift, own)) return true;
       // Another nation's formation, or any with no nation played (PLAN 7.183): the camera follows
       // it where it is drawn, as it follows the player's selection.

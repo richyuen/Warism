@@ -74,6 +74,8 @@ export class Hud {
   readonly hoverSeaPlain = signal(false);
   /** The landing an order under the cursor (`hoverBySea`) is for (ADR-827, ROADMAP R27b), marked on the map; null for none or refused. */
   readonly hoverLanding = signal<SeaHint | null>(null);
+  /** The hover is a tap's that ordered nothing yet (ROADMAP R34k3, ADR-849): a second tap there orders. */
+  readonly tapAgain = signal(false);
   onMapMode: (mode: MapMode) => void = () => {};
   /** Selected nation id (0 = none; PLAN 1.30), set by map clicks. */
   readonly selected = signal(0);

@@ -1902,3 +1902,13 @@
 - `landingMarkMore1938`: 30 m/px, the cursor 0,2 / -3,3 / 2,-2 cells from Shanghai: on the screen no arrow; off it
   (2,-2) an arrow at (376, 26) towards the land; red before. `landingMark1938` green.
 - **Next:** R34k3.
+
+## 2026-11-07 — R34k3: a touch screen sees the landing before it orders (ADR-849)
+- A tap of the selection that would go by sea shows the hover at the tap (the mark, the tooltip, "Tap again to send
+  them") and orders nothing; a second tap there orders; a march by land is sent at once. The next finger down
+  clears the tap's hover. R34k done.
+- `landingMarkMore1938` touch case: red before (the first tap ordered, no mark), green 8/8 at six workers. The case
+  first tapped by Shanghai, where a Japanese division stands within 14 px: the tap picked it (right); Fuzhou has
+  none. The land march goes through the page's tap handler at a point off the canvas (a drawn counter under a
+  chosen point made it flaky). The touch and mark specs: 32 passed.
+- **Next:** R34l.
