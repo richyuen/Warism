@@ -1,0 +1,31 @@
+{
+ "seed": 21125,
+ "A": "GER",
+ "D": "POL",
+ "port": 5321,
+ "views": [
+  "3000 balls marks 42 elPx 5",
+  "3000 classic marks 42 elPx 5",
+  "1200 balls marks 30 elPx 5",
+  "1200 classic marks 30 elPx 5",
+  "600 balls marks 12 elPx 5",
+  "600 classic marks 12 elPx 5",
+  "250 balls marks 7 elPx 5",
+  "250 classic marks 7 elPx 5",
+  "120 balls marks 2 elPx 5",
+  "120 classic marks 2 elPx 5",
+  "60 balls marks 1 elPx 8.479410807291666",
+  "60 classic marks 1 elPx 8.479410807291666",
+  "25 balls marks 1 elPx 20.3505859375",
+  "25 classic marks 1 elPx 20.3505859375"
+ ],
+ "found": {
+  "hour": 2,
+  "n": 37
+ },
+ "centre": [
+  1072.5437878548291,
+  281.1126833246271
+ ],
+ "errors": []
+}

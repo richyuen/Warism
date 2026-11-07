@@ -1,0 +1,488 @@
+{
+ "seed": 3517,
+ "tag": "desk6",
+ "W": 1600,
+ "H": 900,
+ "removed": [
+  [
+   1151,
+   null
+  ],
+  [
+   1152,
+   null
+  ]
+ ],
+ "ids": [
+  364,
+  365,
+  366,
+  367,
+  369,
+  368
+ ],
+ "other": 374,
+ "edgesAshore": [
+  [
+   [
+    800,
+    450
+   ],
+   false,
+   [
+    814,
+    466,
+    1174,
+    504
+   ]
+  ],
+  [
+   [
+    1440,
+    450
+   ],
+   false,
+   [
+    1392,
+    466,
+    1592,
+    536
+   ]
+  ],
+  [
+   [
+    1552,
+    450
+   ],
+   false,
+   [
+    1392,
+    466,
+    1592,
+    536
+   ]
+  ],
+  [
+   [
+    800,
+    810
+   ],
+   false,
+   [
+    814,
+    764,
+    1174,
+    802
+   ]
+  ],
+  [
+   [
+    800,
+    873
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    1520,
+    855
+   ],
+   false,
+   [
+    1392,
+    777,
+    1592,
+    847
+   ]
+  ],
+  [
+   [
+    80,
+    855
+   ],
+   false,
+   [
+    94,
+    745,
+    454,
+    847
+   ]
+  ],
+  [
+   [
+    1552,
+    90
+   ],
+   null,
+   null
+  ]
+ ],
+ "edgesPlain": [
+  [
+   [
+    800,
+    450
+   ],
+   false,
+   [
+    814,
+    466,
+    1174,
+    504
+   ]
+  ],
+  [
+   [
+    1440,
+    450
+   ],
+   false,
+   [
+    1392,
+    466,
+    1592,
+    520
+   ]
+  ],
+  [
+   [
+    1552,
+    450
+   ],
+   false,
+   [
+    1392,
+    466,
+    1592,
+    520
+   ]
+  ],
+  [
+   [
+    800,
+    810
+   ],
+   false,
+   [
+    814,
+    764,
+    1174,
+    802
+   ]
+  ],
+  [
+   [
+    800,
+    873
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    1520,
+    855
+   ],
+   false,
+   [
+    1392,
+    793,
+    1592,
+    847
+   ]
+  ],
+  [
+   [
+    80,
+    855
+   ],
+   false,
+   [
+    94,
+    793,
+    159,
+    847
+   ]
+  ],
+  [
+   [
+    1552,
+    90
+   ],
+   null,
+   null
+  ]
+ ],
+ "sailedH": 104,
+ "atSail": [
+  {
+   "id": 364,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1738.2,
+    413.5
+   ]
+  },
+  {
+   "id": 365,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1726.9,
+    413.5
+   ]
+  },
+  {
+   "id": 366,
+   "v": "toPort",
+   "port": "Tokyo",
+   "p": [
+    1782.2,
+    392.5
+   ]
+  },
+  {
+   "id": 367,
+   "v": "toPort",
+   "port": "Tokyo",
+   "p": [
+    1823.2,
+    338.5
+   ]
+  },
+  {
+   "id": 369,
+   "v": null,
+   "port": null,
+   "p": [
+    1741.8,
+    365.8
+   ]
+  },
+  {
+   "id": 368,
+   "v": null,
+   "port": null,
+   "p": [
+    1743.2,
+    367.2
+   ]
+  }
+ ],
+ "beforeSink": [
+  {
+   "id": 364,
+   "v": "landed",
+   "port": null,
+   "p": [
+    1715.5,
+    411.5
+   ]
+  },
+  {
+   "id": 365,
+   "v": "landed",
+   "port": null,
+   "p": [
+    1715.5,
+    411.9
+   ]
+  },
+  {
+   "id": 366,
+   "v": "toPort",
+   "port": "Tokyo",
+   "p": [
+    1783.8,
+    392.5
+   ]
+  },
+  {
+   "id": 367,
+   "v": "toPort",
+   "port": "Tokyo",
+   "p": [
+    1822.1,
+    338.9
+   ]
+  },
+  {
+   "id": 369,
+   "v": null,
+   "port": null,
+   "p": [
+    1740.5,
+    364.5
+   ]
+  },
+  {
+   "id": 368,
+   "v": null,
+   "port": null,
+   "p": [
+    1742,
+    366
+   ]
+  }
+ ],
+ "voyage0": {
+  "state": "landed",
+  "port": null
+ },
+ "rowsBefore": [],
+ "sink": [
+  [
+   1136,
+   null
+  ],
+  [
+   1144,
+   null
+  ]
+ ],
+ "afterSink": {
+  "h": 129,
+  "st": [
+   {
+    "id": 364,
+    "v": "landed",
+    "port": null,
+    "p": [
+     1715.5,
+     411.5
+    ]
+   },
+   {
+    "id": 365,
+    "v": "landed",
+    "port": null,
+    "p": [
+     1715.5,
+     411.9
+    ]
+   },
+   {
+    "id": 366,
+    "v": null,
+    "port": null,
+    "p": [
+     1783.9,
+     392.5
+    ]
+   },
+   {
+    "id": 367,
+    "v": null,
+    "port": null,
+    "p": [
+     1822,
+     339
+    ]
+   },
+   {
+    "id": 369,
+    "v": null,
+    "port": null,
+    "p": [
+     1740.5,
+     364.4
+    ]
+   },
+   {
+    "id": 368,
+    "v": null,
+    "port": null,
+    "p": [
+     1741.9,
+     365.9
+    ]
+   }
+  ],
+  "rows": [
+   [
+    "transportsSunk",
+    "2 divisions: transports sunk, the landing is over",
+    {
+     "cut": false,
+     "box": [
+      8,
+      829,
+      280,
+      849
+     ],
+     "sw": 268,
+     "cw": 268,
+     "sh": 18,
+     "ch": 18,
+     "vis": true,
+     "of": "clip",
+     "ws": "normal"
+    }
+   ]
+  ],
+  "ticker": {
+   "cls": "ticker short",
+   "box": [
+    8,
+    805,
+    280,
+    849
+   ],
+   "text": "⚓ Carrier strike ashore: Japan on China ×2 2 divisions: transports sunk, the landing is over"
+  },
+  "toast": [],
+  "shot": "critic/shots/c51lost_desk6_rows.png"
+ },
+ "atPort": null,
+ "news": [
+  {
+   "kind": "transportsSunk",
+   "id": 366,
+   "nation": 75,
+   "reason": 0,
+   "x": 1783.9146927342376,
+   "y": 392.5,
+   "tick": 130,
+   "at": 130
+  },
+  {
+   "kind": "transportsSunk",
+   "id": 367,
+   "nation": 75,
+   "reason": 0,
+   "x": 1822.0431122830123,
+   "y": 338.9568877169877,
+   "tick": 130,
+   "at": 130
+  }
+ ],
+ "rowsBeforeClick": [
+  [
+   "transportsSunk",
+   "2 divisions: transports sunk, the landing is over",
+   {
+    "cut": false,
+    "box": [
+     8,
+     829,
+     280,
+     849
+    ],
+    "sw": 268,
+    "cw": 268,
+    "sh": 18,
+    "ch": 18,
+    "vis": true,
+    "of": "clip",
+    "ws": "normal"
+   }
+  ]
+ ],
+ "clicked": "2 divisions: transports sunk, the landing is over",
+ "rowsAfterClick": [],
+ "newsLeft": [],
+ "clickShot": "critic/shots/c51lost_desk6_afterclick.png",
+ "errors": []
+}

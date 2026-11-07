@@ -1,13 +1,13 @@
 {
- "commit": "3fe138b1bbfa930057c11df9fade770102d2a8f2",
+ "commit": "14a85a51c23a5b10a29f0b1193c7748d11e0ffd1",
  "mode": "full",
  "scores": {
-  "mapVisuals": 7,
+  "mapVisuals": 8,
   "diplomacyWarDepth": 7,
   "emergentDynamics": 7,
   "godMode": 7,
   "editorScenarios": 7,
-  "statsHistory": 7,
+  "statsHistory": 8,
   "uiUxPolish": 7,
   "performance": 7,
   "stability": 8,
@@ -18,5 +18,5 @@
   "aiNukes": 8
  },
  "blocking": [],
- "timestamp": "2026-11-07T02:14:19Z"
+ "timestamp": "2026-11-07T22:35:21Z"
 }

@@ -1,0 +1,288 @@
+{
+ "seed": 21143,
+ "years": [
+  {
+   "frames": 2254,
+   "maxGap": 39,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1938 Germany and Soviet Union fought in the air this month: Germany lost 9 aircraft, Soviet Union 45 1 December 1938 Soviet Union's air force struck Poland this month: 18,584 men, guns and vehicles lost 15 December 1938 United States captured Denmark's capital"
+   ],
+   "chips": [
+    "Japan +2 ⚔ China +1",
+    "Brazil ⚔ Colombia",
+    "Peru ⚔ Colombia",
+    "Italy +6 ⚔ Denmark",
+    "United Kingdom +35 ⚔ Brazil",
+    "Soviet Union +4 ⚔ Finland +2"
+   ],
+   "date": "1 January 1939",
+   "nations": 99,
+   "year": 1,
+   "wallS": 37.589,
+   "fps": 60,
+   "shot": "critic/shots/c51lwplain_21143_y01_world.png"
+  },
+  {
+   "frames": 1536,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1939 China and Japan fought in the air this month: China lost 30 aircraft, Japan 3 1 December 1939 Chile's air force struck Argentina this month: 4,059 men, guns and vehicles lost 6 December 1939 Soviet Union declared war on Afghanistan 9 December 1939 Japan captured Finland's capital 17 December 1939 United Kingdom declared war on Canada ⚓ Carrier strike ashore: United States on Norway ×3"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Chile ⚔ Peru",
+    "Germany +5 ⚔ Peru",
+    "United States +2 ⚔ Finland +4",
+    "Argentina ⚔ Chile",
+    "Germany +5 ⚔ Finland +2"
+   ],
+   "date": "1 January 1940",
+   "nations": 94,
+   "year": 2,
+   "wallS": 25.656,
+   "fps": 59.9,
+   "shot": "critic/shots/c51lwplain_21143_y02_world.png"
+  },
+  {
+   "frames": 1764,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "25 November 1940 France declared war on Italy 1 December 1940 Italy and United Kingdom fought in the air this month: Italy lost 12 aircraft, United Kingdom 4 1 December 1940 Japan's air force struck China this month: 1,549 men, guns and vehicles lost 2 December 1940 United States declared war on Soviet Union"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "Germany +5 ⚔ Soviet Union +4",
+    "Italy +6 ⚔ Colombia +1",
+    "France +34 ⚔ Italy +7",
+    "United States +2 ⚔ Soviet Union +5"
+   ],
+   "date": "3 January 1941",
+   "nations": 92,
+   "year": 3,
+   "wallS": 29.399,
+   "fps": 60,
+   "shot": "critic/shots/c51lwplain_21143_y03_world.png"
+  },
+  {
+   "frames": 1822,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "11 December 1941 Germany made peace with Switzerland 11 December 1941 France made peace with Switzerland 22 December 1941 France declared war on Soviet Union 24 December 1941 Venezuela declared war on Colombia 26 December 1941 Germany declared war on France"
+   ],
+   "chips": [
+    "Japan ⚔ China +1",
+    "United States +2 ⚔ Soviet Union +5",
+    "South Africa ⚔ Ecuador +1",
+    "Italy +5 ⚔ Soviet Union +5",
+    "Australia ⚔ South Africa",
+    "Germany +8 ⚔ Bolivia +1"
+   ],
+   "date": "5 January 1942",
+   "nations": 93,
+   "year": 4,
+   "wallS": 30.429,
+   "fps": 59.9,
+   "shot": "critic/shots/c51lwplain_21143_y04_world.png"
+  },
+  {
+   "frames": 1765,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "16 December 1942 United States captured Spanish Republic's capital 31 December 1942 China made peace with Japan 1 January 1943 Germany and United Kingdom fought in the air this month: Germany lost 36 aircraft, United Kingdom 48 1 January 1943 Netherlands's air force struck French Equatorial Africa this month: 3,540 men, guns and vehicles lost 3 January 1943 China declared war on Nepal ⚓ Carrier strike ashore: United States on France ×3"
+   ],
+   "chips": [
+    "France +8 ⚔ Soviet Union +5",
+    "United Kingdom +23 ⚔ France +9",
+    "Germany +5 ⚔ Argentina +1",
+    "Italy +7 ⚔ Argentina +3",
+    "Germany +5 ⚔ Netherlands +25",
+    "Italy +8 ⚔ Japan +4"
+   ],
+   "date": "6 January 1943",
+   "nations": 90,
+   "year": 5,
+   "wallS": 29.407,
+   "fps": 60,
+   "shot": "critic/shots/c51lwplain_21143_y05_world.png"
+  },
+  {
+   "frames": 1853,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1943 United States's air force struck Germany this month: 4,140 men, guns and vehicles lost 5 December 1943 Japan captured Free Valencia's capital 19 December 1943 Free Valencia made peace with United States 25 December 1943 French West Africa captured France's capital 26 December 1943 China declared war on Soviet Union"
+   ],
+   "chips": [
+    "Soviet Union +5 ⚔ Australia",
+    "Portugal +25 ⚔ Australia",
+    "French West Africa ⚔ France +6",
+    "United States +3 ⚔ Germany +5",
+    "Soviet Union +5 ⚔ French West Africa",
+    "Germany +5 ⚔ Free Valencia"
+   ],
+   "date": "9 January 1944",
+   "nations": 87,
+   "year": 6,
+   "wallS": 30.941,
+   "fps": 59.9,
+   "shot": "critic/shots/c51lwplain_21143_y06_world.png"
+  },
+  {
+   "frames": 1721,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "16 December 1944 Portugal made peace with Australia 22 December 1944 Soviet Union made peace with Australia 1 January 1945 Germany and United Kingdom fought in the air this month: Germany lost 9 aircraft, United Kingdom 9 1 January 1945 Soviet Union's air force struck China this month: 8,389 men, guns and vehicles lost 3 January 1945 Switzerland was destroyed"
+   ],
+   "chips": [
+    "French West Africa ⚔ France +6",
+    "Soviet Union +5 ⚔ French West Africa",
+    "China +2 ⚔ Soviet Union +5",
+    "Argentina +1 ⚔ Australia",
+    "United Kingdom +24 ⚔ Germany +5",
+    "Italy +8 ⚔ Germany +3"
+   ],
+   "date": "10 January 1945",
+   "nations": 85,
+   "year": 7,
+   "wallS": 28.674,
+   "fps": 60,
+   "shot": "critic/shots/c51lwplain_21143_y07_world.png"
+  },
+  {
+   "frames": 1680,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "31 December 1945 United Kingdom made peace with Free Suva Reka 1 January 1946 Italy's air force struck Germany this month: 3,754 men, guns and vehicles lost 1 January 1946 Free Acre broke away from Brazil 2 January 1946 Germany made peace with Italy ⚓ Carrier strike ashore: United States on Soviet Union ×3"
+   ],
+   "chips": [
+    "China +2 ⚔ Soviet Union +5",
+    "Italy +7 ⚔ France +3",
+    "Japan +5 ⚔ French West Africa",
+    "United States +2 ⚔ Soviet Union +5",
+    "Saudi Arabia ⚔ Free Makkah",
+    "Japan +5 ⚔ China +2"
+   ],
+   "date": "10 January 1946",
+   "nations": 80,
+   "year": 8,
+   "wallS": 28.042,
+   "fps": 59.9,
+   "shot": "critic/shots/c51lwplain_21143_y08_world.png"
+  },
+  {
+   "frames": 2190,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1947 United Kingdom's air force struck Argentina this month: 5,247 men, guns and vehicles lost 1 January 1947 Cuba broke away from United States 1 January 1947 Cuba returned 5 January 1947 Anglo-Egyptian Sudan captured Egypt's capital 5 January 1947 Egypt was destroyed ⚓ Carrier strike ashore: United States on Canada ×3"
+   ],
+   "chips": [
+    "China ⚔ Soviet Union +5",
+    "Japan +5 ⚔ China",
+    "Portugal +19 ⚔ Argentina +2",
+    "United Kingdom +18 ⚔ France +2",
+    "Free Acre ⚔ Bolivia +1",
+    "Italy +7 ⚔ Argentina +2"
+   ],
+   "date": "11 January 1947",
+   "nations": 77,
+   "year": 9,
+   "wallS": 36.499,
+   "fps": 60,
+   "shot": "critic/shots/c51lwplain_21143_y09_world.png"
+  },
+  {
+   "frames": 2209,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "17 December 1947 Free Acre captured Venezuela's capital 1 January 1948 Germany and Soviet Union fought in the air this month: Germany lost 9 aircraft, Soviet Union 6 1 January 1948 United Kingdom's air force struck Argentina this month: 3,556 men, guns and vehicles lost ⚓ Carrier strike ashore: Germany on China ⚓ Carrier strike ashore: United States on Cuba ×3"
+   ],
+   "chips": [
+    "Portugal +19 ⚔ Argentina +1",
+    "Japan +4 ⚔ France +2",
+    "United States +2 ⚔ Cuba",
+    "Australia +17 ⚔ France +3",
+    "Germany +4 ⚔ Soviet Union +6",
+    "Italy +7 ⚔ Free Acre +2"
+   ],
+   "date": "15 January 1948",
+   "nations": 80,
+   "year": 10,
+   "wallS": 36.881,
+   "fps": 59.9,
+   "shot": "critic/shots/c51lwplain_21143_y10_world.png"
+  },
+  {
+   "frames": 1983,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1949 United Kingdom's air force struck Free KwaZulu-Natal this month: 2,064 men, guns and vehicles lost 2 January 1949 Free Grand Casablanca made peace with United States 6 January 1949 Germany captured Xinjiang's capital 6 January 1949 Xinjiang was destroyed 12 January 1949 Free KwaZulu-Natal made peace with United Kingdom"
+   ],
+   "chips": [
+    "Italy +9 ⚔ Norway",
+    "United States +2 ⚔ Germany +5",
+    "Japan +5 ⚔ Italy +8",
+    "Argentina +1 ⚔ Norway +1",
+    "Soviet Union +5 ⚔ Free Seoul"
+   ],
+   "date": "17 January 1949",
+   "nations": 83,
+   "year": 11,
+   "wallS": 33.043,
+   "fps": 60,
+   "shot": "critic/shots/c51lwplain_21143_y11_world.png"
+  },
+  {
+   "frames": 1933,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1950 Soviet Union and United Kingdom fought in the air this month: Soviet Union lost 12 aircraft, United Kingdom 39 1 January 1950 Germany's air force struck Free Seoul this month: 9,435 men, guns and vehicles lost 3 January 1950 Venezuela captured Colombia's capital 11 January 1950 United Kingdom captured Greece's capital"
+   ],
+   "chips": [
+    "Iraq +20 ⚔ Italy +10",
+    "Soviet Union +6 ⚔ Italy +8",
+    "Japan +4 ⚔ Soviet Union +7",
+    "Germany +4 ⚔ Italy +9",
+    "United Kingdom +21 ⚔ Soviet Union +7",
+    "Free Acre +2 ⚔ Bolivia +1"
+   ],
+   "date": "17 January 1950",
+   "nations": 83,
+   "year": 12,
+   "wallS": 32.267,
+   "fps": 59.9,
+   "shot": "critic/shots/c51lwplain_21143_y12_world.png"
+  }
+ ],
+ "fight": {
+  "best": [
+   1412.9900653459445,
+   358.0992566796483
+  ],
+  "bn": 11,
+  "engaged": 23
+ },
+ "errors": []
+}

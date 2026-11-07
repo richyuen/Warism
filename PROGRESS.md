@@ -1977,3 +1977,11 @@
   bar's; the reading counts only divisions in `world.landings`.
 - `landingRowsCritic1938` (new, six cases, 31 s).
 - **Next:** critic run 51 (PROMPT's RELEASES: the batch R43f–R47 ends in a critic run and a tag).
+
+## 2026-11-07 — Critic run 51 (full, on `14a85a51`)
+- Scores: map visuals 8 (up), diplomacy 7, emergent 7, God Mode 7, editor 7, stats 8 (up), UI 7, performance 7,
+  stability 8, semantic zoom 8, naval 7 (bar 8), tanks 8, aircraft 8, AI nukes 8. Blocking: 0.
+- 0 broken on every checker (25 diplomacy runs, 25 landing seeds, 8 world seeds, 3 worker seeds; `landingRows far`).
+  Run 50's six findings all fixed. Naval's 7 rests on the landings bar's cancel words (R51-N1, N2).
+- Filed as Batch 5 (R48 naval, R49 the rest); ADR-833: naval's findings fixed, then critic run 52.
+- **Next:** R48a.

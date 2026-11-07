@@ -1,0 +1,11 @@
+== c51_an_ainuke 7019 critic/c51_seed7019_y20.bin 7019y20 2 400 17:16:39
+   exit 0
+== c51_hist 7019 critic/c51_seed7019_y20.bin 17:17:33
+   exit 0
+== c51_dl_export 7019 critic/c51_seed7019_y20.bin 17:17:45
+   exit 0
+== c51_long_watch2 21141 12 &heroes=on hon 17:17:52
+   exit 0
+== c51_long_watch2 21143 12  plain 17:24:04
+   exit 0
+SUITE2DONE

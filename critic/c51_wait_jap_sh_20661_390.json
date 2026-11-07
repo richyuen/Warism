@@ -1,0 +1,422 @@
+{
+ "seed": 20661,
+ "TAG": "JAP",
+ "FOE": "CHI",
+ "FROM": "1818.5,385.5",
+ "TO": "1715.5,413.5",
+ "N": 2,
+ "label": "jap_sh",
+ "W": 390,
+ "H": 844,
+ "days": [
+  {
+   "day": 0,
+   "tip": null,
+   "status": {
+    "364": "At Tokyo, all of the landing there: it sails when its transports and escort are ready",
+    "365": "Waiting at Ōsaka for transports"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 1,
+   "tip": {
+    "text": "The landing they already have: they keep their transports and land at the marked place",
+    "days": null,
+    "same": "1"
+   },
+   "status": {
+    "364": "At sea, bound for its landing",
+    "365": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 2,
+   "tip": {
+    "text": "The landing they already have: they keep their transports and land at the marked place",
+    "days": null,
+    "same": "1"
+   },
+   "status": {
+    "364": "At sea, bound for its landing",
+    "365": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 3,
+   "tip": {
+    "text": "The landing they already have: they keep their transports and land at the marked place",
+    "days": null,
+    "same": "1"
+   },
+   "status": {
+    "364": "At sea, bound for its landing",
+    "365": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 4,
+   "tip": {
+    "text": "The landing they already have: they keep their transports and land at the marked place",
+    "days": null,
+    "same": "1"
+   },
+   "status": {
+    "364": "At sea, bound for its landing",
+    "365": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 5,
+   "tip": {
+    "text": "The landing they already have: they keep their transports and land at the marked place",
+    "days": null,
+    "same": "1"
+   },
+   "status": {
+    "364": "At sea, bound for its landing",
+    "365": "Landed"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 6,
+   "tip": null,
+   "status": {
+    "364": "Landed",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 7,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 8,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 9,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 10,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 11,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 12,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 13,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 14,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 15,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 16,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 17,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 18,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 19,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 20,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 21,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 22,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 23,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 24,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 25,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 26,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 27,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 28,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 29,
+   "tip": null,
+   "status": {
+    "364": "On the march",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  },
+  {
+   "day": 30,
+   "tip": null,
+   "status": {
+    "364": "In contact",
+    "365": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   }
+  }
+ ],
+ "shots": [
+  "critic/shots/c51wait_jap_sh_20661_390_d0.png",
+  "critic/shots/c51wait_jap_sh_20661_390_d3.png"
+ ],
+ "nat": [
+  75,
+  69
+ ],
+ "toCell": [
+  1715.5,
+  413.5
+ ],
+ "ids": [
+  364,
+  365
+ ],
+ "errors": []
+}

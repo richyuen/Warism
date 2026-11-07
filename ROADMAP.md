@@ -843,3 +843,35 @@ batch. R45's replay runs before the critic, as ADR-833's replay does.
   - [x] R47c A row's cancel: its divisions ordered back to its port by the orders a click gives (no new rule; ADR-855).
   - [x] R47d The AT on the critic's cases: run 47's grid and run 50's far routes, hour by hour against the panels.
     108 cases (100 of the grid, 8 far), 19,905 hours: 0 broken (`tools/diag/landingRows.ts`; ADR-856).
+
+## Batch 5 — run 51's naval findings (ADR-833: naval's findings are items, fixed, then the critic again)
+
+Critic run 51 (full, on `14a85a51`): no blocking issue, 0 broken on every checker; map visuals and stats up to 8; naval
+7 (bar 8), resting on the landings bar's cancel words (R51-N1, N2). Each of its naval findings, design objections,
+ideas and "what the bar needs", filed (PROMPT's RELEASES, ADR-843); then critic run 52.
+
+- [ ] R48 **Run 51's naval findings.**
+  - [ ] R48a R51-N1 and the ADR-855 objection (EU's "halt"): a gathering landing's cancel stops those ashore where
+    they stand (as R43e's end does), those aboard sail back to the port; the row says what is true each hour ("turning
+    back to {port}", then "back at {port}"; ashore "stopped where they stand"), the tooltip "go to", not "go back to".
+    AT (the bar's): `c51_lbar.mjs 21107 GER ENG … 3 ger_norwich3_phone` from the cancel day on the row and the panels
+    agree; `landingRows` and `landingInvariants` at 0 broken.
+  - [ ] R48b R51-N2 (and §7.1's AI layers objection): a division the AI ships says so in its panel ("At sea with the
+    AI's landing"), as R35 does for a fleet. AT (the bar's): `c51_cancel_page.mjs 20661 JAP CHI … jap_sh 26 240`.
+  - [ ] R48c R51-N3: on a landscape phone (844 × 390) an open row's last division and its cancel are on the screen
+    (the cancel in the row's head at a short height).
+  - [ ] R48d R51-N6: "waits for the landing from {port}" only when it does wait for it (20861 row 2 sailed first); a
+    landing at sea says its days to land.
+  - [ ] R48e R51-N7: "they land together" for landings 12 hours apart (20661 t117/t129): the words as the rule is
+    (within a day), or the landings within the hour.
+  - [ ] R48f The ADR-838 objection and Hearts of Iron's idea: one click's landings from several ports grouped as one
+    row (each port a line in it), with one cancel for the click.
+  - [ ] R48g The ADR-854 objection: on a phone, taking control leaves the nation's panel open and hides the bar after
+    the first order; the bar is seen with a panel open (or the panel gives way at an order).
+  - Not taken: the bar gives way to a nuclear alert (ADR-854; the critic: "the user's choice; noted").
+  - Kept: `landingInvariants` at 0 broken on run 51's 25 landing seeds (the bar's third line), checked in each part.
+- [ ] R49 **Run 51's other findings** (dimensions at their bars; after R48).
+  - [ ] R49a R51-N4 (God Mode): Breakthrough at war is taken in silence: its corridor drawn for its 10 days, or a
+    ticker row.
+  - [ ] R49b R51-N5 (history): History lists a release after its "left its war" rows within an hour: R43d's
+    `causeFirst` in History's order too.

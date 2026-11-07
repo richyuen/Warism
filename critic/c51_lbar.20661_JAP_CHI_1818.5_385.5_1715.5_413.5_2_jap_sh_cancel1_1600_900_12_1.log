@@ -1,0 +1,9 @@
+{"d":0,"bar":[["gathering","sails in about a day","transports 12, 10 needed",null],["gathering","sails in about a day","transports 12, 10 needed",null]],"panel":{"364":"At Tokyo, all of the landing there: it sails when its transports and escort are ready","365":"Waiting at Ōsaka for transports"},"afloat":{"364":0,"365":0}}
+{"d":1,"bar":[["sailing","at sea",null,null],["sailing","at sea",null,null]],"panel":{"364":"At sea, bound for its landing","365":"At sea, bound for its landing"},"afloat":{"364":0,"365":0}}
+{"d":2,"bar":[["over","cancelled: back at Tokyo",null,null],["sailing","at sea",null,null]],"panel":{"364":"At sea, bound for its landing","365":"At sea, bound for its landing"},"afloat":{"364":0,"365":0}}
+{"d":3,"bar":[["sailing","at sea",null,null]],"panel":{"364":"At sea, bound for its landing","365":"At sea, bound for its landing"},"afloat":{"364":0,"365":0}}
+{"d":4,"bar":[["sailing","at sea",null,null]],"panel":{"364":"At sea, bound for its landing","365":"At sea, bound for its landing"},"afloat":{"364":0,"365":0}}
+{"d":5,"bar":[["over","over: 1 landed",null,null]],"panel":{"364":"At sea, bound for its landing","365":"Landed"},"afloat":{"364":0,"365":0}}
+{"d":6,"panel":{"364":"At sea, bound for its landing","365":"On the march"},"afloat":{"364":0,"365":0}}
+{"d":7,"panel":{"364":"At sea, bound for its landing","365":"On the march"},"afloat":{"364":0,"365":0}}
+{"d":8,"panel":{"364":"Holding","365":"On the march"},"afloat":{"364":0,"365":0}}

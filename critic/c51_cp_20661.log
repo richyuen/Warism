@@ -1,0 +1,81 @@
+{"h":0,"tick":1,"rows":[],"d":{"364":[[1818.2,385.2],"At Tokyo, all of the landing there: it sails when its transports and escort are ready"],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":3,"tick":4,"rows":[["Shanghai from Tokyo","gathering","sails in about a day"],["Shanghai from Ōsaka","gathering","sails in about a day"]],"d":{"364":[[1818.2,385.2],"At Tokyo, all of the landing there: it sails when its transports and escort are ready"],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":6,"tick":7,"rows":[["Shanghai from Tokyo","gathering","sails in about a day"],["Shanghai from Ōsaka","gathering","waits for the landing from Tokyo: about a day"]],"d":{"364":[[1818.2,385.2],"At Tokyo, all of the landing there: it sails when its transports and escort are ready"],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":9,"tick":10,"rows":[["Shanghai from Tokyo","sailing","at sea"],["Shanghai from Ōsaka","gathering","waits for the landing from Tokyo: about a day"]],"d":{"364":[[1818.9,388.9],"At sea, bound for its landing"],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":12,"tick":13,"rows":[["Shanghai from Tokyo","sailing","at sea"],["Shanghai from Ōsaka","gathering","waits for the landing from Tokyo: about a day"]],"d":{"364":[[1817.9,391.1],"At sea, bound for its landing"],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":15,"tick":16,"rows":[["Shanghai from Tokyo","sailing","at sea"],["Shanghai from Ōsaka","gathering","waits for the landing from Tokyo: about a day"]],"d":{"364":[[1815.4,392.5],null],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":18,"tick":19,"rows":[["Shanghai from Tokyo","sailing","at sea"],["Shanghai from Ōsaka","gathering","waits for the landing from Tokyo: about a day"]],"d":{"364":[[1812.8,393.5],"At sea, bound for its landing"],"365":[[1794.2,391.2],"At Ōsaka, waiting for the landing from Tokyo for the same place, about a day: they land together"]}}
+{"h":21,"tick":22,"rows":[["Shanghai from Tokyo","sailing","at sea"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1810.3,394.7],"At sea, bound for its landing"],"365":[[1791.4,392.5],"At sea, bound for its landing"]}}
+{"h":24,"tick":25,"rows":[["Shanghai from Tokyo","sailing","at sea"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1807.9,396.1],"At sea, bound for its landing"],"365":[[1788.7,393.3],"At sea, bound for its landing"]}}
+{"h":27,"tick":28,"rows":[["Shanghai from Tokyo","sailing","at sea"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1805.5,397.5],"Aboard, sailing back to Tokyo"],"365":[[1785.8,393.5],"At sea, bound for its landing"]}}
+{"h":30,"tick":31,"rows":[["Shanghai from Tokyo","returning","turning back to Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1808.1,396.5],"Aboard, sailing back to Tokyo"],"365":[[1783.2,394.5],"At sea, bound for its landing"]}}
+{"h":33,"tick":34,"rows":[["Shanghai from Tokyo","returning","turning back to Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1810.6,395.4],"Aboard, sailing back to Tokyo"],"365":[[1780.1,395.1],"At sea, bound for its landing"]}}
+{"h":36,"tick":37,"rows":[["Shanghai from Tokyo","returning","turning back to Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1813,394],"Aboard, sailing back to Tokyo"],"365":[[1777.7,395.9],"At sea, bound for its landing"]}}
+{"h":39,"tick":40,"rows":[["Shanghai from Tokyo","returning","turning back to Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1815.4,392.6],"Aboard, sailing back to Tokyo"],"365":[[1776.5,398.5],"At sea, bound for its landing"]}}
+{"h":42,"tick":43,"rows":[["Shanghai from Tokyo","returning","turning back to Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1816.8,390.2],"Aboard, sailing back to Tokyo"],"365":[[1775.5,401],"At sea, bound for its landing"]}}
+{"h":45,"tick":46,"rows":[["Shanghai from Tokyo","returning","turning back to Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819,388.9],"Aboard, sailing back to Tokyo"],"365":[[1775.5,403.8],"At sea, bound for its landing"]}}
+{"h":48,"tick":49,"rows":[["Shanghai from Tokyo","over","cancelled: back at Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"On the march"],"365":[[1774.7,406.3],"At sea, bound for its landing"]}}
+{"h":51,"tick":52,"rows":[["Shanghai from Tokyo","over","cancelled: back at Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1774.1,408.9],"At sea, bound for its landing"]}}
+{"h":54,"tick":55,"rows":[["Shanghai from Tokyo","over","cancelled: back at Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1772.8,411.2],"At sea, bound for its landing"]}}
+{"h":57,"tick":58,"rows":[["Shanghai from Tokyo","over","cancelled: back at Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1771.4,413.6],"At sea, bound for its landing"]}}
+{"h":60,"tick":61,"rows":[["Shanghai from Tokyo","over","cancelled: back at Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1769.4,415.5],"At sea, bound for its landing"]}}
+{"h":63,"tick":64,"rows":[["Shanghai from Tokyo","over","cancelled: back at Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1766.4,415.5],"At sea, bound for its landing"]}}
+{"h":66,"tick":67,"rows":[["Shanghai from Tokyo","over","cancelled: back at Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1763.5,415.5],"At sea, bound for its landing"]}}
+{"h":69,"tick":70,"rows":[["Shanghai from Tokyo","over","cancelled: back at Tokyo"],["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1760.5,415.5],"At sea, bound for its landing"]}}
+{"h":72,"tick":73,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1758,414.5],"At sea, bound for its landing"]}}
+{"h":75,"tick":76,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1755.1,414.5],"At sea, bound for its landing"]}}
+{"h":78,"tick":79,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1752.1,414.5],"At sea, bound for its landing"]}}
+{"h":81,"tick":82,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1749.1,414.5],"At sea, bound for its landing"]}}
+{"h":84,"tick":85,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1746.2,414.5],"At sea, bound for its landing"]}}
+{"h":87,"tick":88,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1743.2,414.5],"At sea, bound for its landing"]}}
+{"h":90,"tick":91,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1740.7,413.5],"At sea, bound for its landing"]}}
+{"h":93,"tick":94,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1737.8,413.5],"At sea, bound for its landing"]}}
+{"h":96,"tick":97,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1734.8,413.5],"At sea, bound for its landing"]}}
+{"h":99,"tick":100,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1731.8,413.5],"At sea, bound for its landing"]}}
+{"h":102,"tick":103,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1728.9,413.5],"At sea, bound for its landing"]}}
+{"h":105,"tick":106,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1725.9,413.5],"At sea, bound for its landing"]}}
+{"h":108,"tick":109,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1723.4,412.5],"At sea, bound for its landing"]}}
+{"h":111,"tick":112,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1720.4,412.5],"At sea, bound for its landing"]}}
+{"h":114,"tick":115,"rows":[["Shanghai from Ōsaka","sailing","at sea"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1717.5,412.5],"At sea, bound for its landing"]}}
+{"h":117,"tick":118,"rows":[["Shanghai from Ōsaka","over","over: 1 landed"]],"d":{"364":[[1819.5,385.5],null],"365":[[1715.5,411.5],"Landed"]}}
+{"h":120,"tick":121,"rows":[["Shanghai from Ōsaka","over","over: 1 landed"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1715.5,411.5],"Landed"]}}
+{"h":123,"tick":124,"rows":[["Shanghai from Ōsaka","over","over: 1 landed"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1715.5,411.5],"Landed"]}}
+{"h":126,"tick":127,"rows":[["Shanghai from Ōsaka","over","over: 1 landed"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1715.5,411.5],"Landed"]}}
+{"h":129,"tick":130,"rows":[["Shanghai from Ōsaka","over","over: 1 landed"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1715.4,411.3],"Landed"]}}
+{"h":132,"tick":133,"rows":[["Shanghai from Ōsaka","over","over: 1 landed"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1715.3,411.2],"Landed"]}}
+{"h":135,"tick":136,"rows":[["Shanghai from Ōsaka","over","over: 1 landed"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1715.2,411.1],"Landed"]}}
+{"h":138,"tick":139,"rows":[["Shanghai from Ōsaka","over","over: 1 landed"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1715.1,411],"Landed"]}}
+{"h":141,"tick":142,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1715,410.8],"On the march"]}}
+{"h":144,"tick":145,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1714.9,410.6],"On the march"]}}
+{"h":147,"tick":148,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1714.9,410.4],"On the march"]}}
+{"h":150,"tick":151,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1714.8,410.2],"On the march"]}}
+{"h":153,"tick":154,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1714.7,410],"On the march"]}}
+{"h":156,"tick":157,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1714.6,409.8],"On the march"]}}
+{"h":159,"tick":160,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1714.5,409.6],"On the march"]}}
+{"h":162,"tick":163,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1714.4,409.4],"On the march"]}}
+{"h":165,"tick":166,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1714.2,409.2],"On the march"]}}
+{"h":168,"tick":169,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1714.1,409.1],"On the march"]}}
+{"h":171,"tick":172,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1713.9,408.9],"On the march"]}}
+{"h":174,"tick":175,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1713.8,408.8],"On the march"]}}
+{"h":177,"tick":178,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1713.7,408.7],"On the march"]}}
+{"h":180,"tick":181,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1713.5,408.5],"On the march"]}}
+{"h":183,"tick":184,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1713.4,408.4],"On the march"]}}
+{"h":186,"tick":187,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1713.2,408.2],"On the march"]}}
+{"h":189,"tick":190,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1713.1,408.1],"On the march"]}}
+{"h":192,"tick":193,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1712.9,407.9],"On the march"]}}
+{"h":195,"tick":196,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1712.8,407.8],"On the march"]}}
+{"h":198,"tick":199,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1712.6,407.6],"On the march"]}}
+{"h":201,"tick":202,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1712.5,407.5],"On the march"]}}
+{"h":204,"tick":205,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1712.3,407.3],"On the march"]}}
+{"h":207,"tick":208,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1712.2,407.2],"On the march"]}}
+{"h":210,"tick":211,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1712,407],"On the march"]}}
+{"h":213,"tick":214,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1711.9,406.9],"On the march"]}}
+{"h":216,"tick":217,"rows":[],"d":{"364":[[1819.1,387.2],"At sea, bound for its landing"],"365":[[1711.7,406.7],"On the march"]}}
+{"h":219,"tick":220,"rows":[],"d":{"364":[[1818.5,389.4],"At sea, bound for its landing"],"365":[[1711.6,406.6],"On the march"]}}
+{"h":222,"tick":223,"rows":[],"d":{"364":[[1817.1,391.5],"At sea, bound for its landing"],"365":[[1711.5,406.5],"On the march"]}}
+{"h":225,"tick":226,"rows":[],"d":{"364":[[1814.5,392.5],"At sea, bound for its landing"],"365":[[1711.4,406.4],"On the march"]}}
+{"h":228,"tick":229,"rows":[],"d":{"364":[[1812.1,393.9],"At sea, bound for its landing"],"365":[[1711.2,406.2],"On the march"]}}
+{"h":231,"tick":232,"rows":[],"d":{"364":[[1809.6,395.4],"At sea, bound for its landing"],"365":[[1711.1,406.1],"On the march"]}}
+{"h":234,"tick":235,"rows":[],"d":{"364":[[1807.1,396.5],"At sea, bound for its landing"],"365":[[1710.9,405.9],"On the march"]}}
+{"h":237,"tick":238,"rows":[],"d":{"364":[[1804.5,397.5],"At sea, bound for its landing"],"365":[[1710.8,405.8],"On the march"]}}
+{"h":240,"tick":241,"rows":[],"d":{"364":[[1802.1,398.9],"At sea, bound for its landing"],"365":[[1710.6,405.6],"On the march"]}}

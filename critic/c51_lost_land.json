@@ -1,0 +1,421 @@
+{
+ "seed": 3517,
+ "tag": "land",
+ "W": 844,
+ "H": 390,
+ "removed": [
+  [
+   1151,
+   null
+  ],
+  [
+   1152,
+   null
+  ]
+ ],
+ "ids": [
+  364,
+  365,
+  366
+ ],
+ "other": 367,
+ "edgesAshore": {
+  "label": "ashore",
+  "r": [
+   {
+    "at": [
+     422,
+     195
+    ],
+    "tip": {
+     "text": "Only sea here: your landing at sea keeps its course. Click a coast to send it there, or your own land to bring it back",
+     "box": [
+      436,
+      155,
+      796,
+      187
+     ]
+    },
+    "off": false
+   },
+   {
+    "at": [
+     760,
+     195
+    ],
+    "tip": {
+     "text": "Only sea here: your landing at sea keeps its course. Click a coast to send it there, or your own land to bring it back",
+     "box": [
+      636,
+      129,
+      836,
+      187
+     ]
+    },
+    "off": false
+   },
+   {
+    "at": [
+     819,
+     195
+    ],
+    "tip": {
+     "text": "Only sea here: your landing at sea keeps its course. Click a coast to send it there, or your own land to bring it back",
+     "box": [
+      636,
+      129,
+      836,
+      187
+     ]
+    },
+    "off": false
+   },
+   {
+    "at": [
+     422,
+     351
+    ],
+    "tip": null,
+    "off": null
+   },
+   {
+    "at": [
+     422,
+     378
+    ],
+    "tip": null,
+    "off": null
+   },
+   {
+    "at": [
+     802,
+     371
+    ],
+    "tip": null,
+    "off": null
+   },
+   {
+    "at": [
+     42,
+     371
+    ],
+    "tip": null,
+    "off": null
+   },
+   {
+    "at": [
+     819,
+     39
+    ],
+    "tip": {
+     "text": "Only sea here: your landing at sea keeps its course. Click a coast to send it there, or your own land to bring it back",
+     "box": [
+      636,
+      55,
+      836,
+      113
+     ]
+    },
+    "off": false
+   }
+  ],
+  "shot": "critic/shots/c51lost_land_ashore.png"
+ },
+ "edgesPlain": {
+  "label": "plain",
+  "r": [
+   {
+    "at": [
+     422,
+     195
+    ],
+    "tip": {
+     "text": "Only sea here: they cannot march there. Click a coast to send them over the sea",
+     "box": [
+      436,
+      155,
+      796,
+      187
+     ]
+    },
+    "off": false
+   },
+   {
+    "at": [
+     760,
+     195
+    ],
+    "tip": {
+     "text": "Only sea here: they cannot march there. Click a coast to send them over the sea",
+     "box": [
+      636,
+      142,
+      836,
+      187
+     ]
+    },
+    "off": false
+   },
+   {
+    "at": [
+     819,
+     195
+    ],
+    "tip": {
+     "text": "Only sea here: they cannot march there. Click a coast to send them over the sea",
+     "box": [
+      636,
+      142,
+      836,
+      187
+     ]
+    },
+    "off": false
+   },
+   {
+    "at": [
+     422,
+     351
+    ],
+    "tip": null,
+    "off": null
+   },
+   {
+    "at": [
+     422,
+     378
+    ],
+    "tip": null,
+    "off": null
+   },
+   {
+    "at": [
+     802,
+     371
+    ],
+    "tip": null,
+    "off": null
+   },
+   {
+    "at": [
+     42,
+     371
+    ],
+    "tip": null,
+    "off": null
+   },
+   {
+    "at": [
+     819,
+     39
+    ],
+    "tip": null,
+    "off": null
+   }
+  ],
+  "shot": "critic/shots/c51lost_land_plain.png"
+ },
+ "sailedH": 104,
+ "atSail": [
+  {
+   "id": 364,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1738.2,
+    413.5
+   ]
+  },
+  {
+   "id": 365,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1726.9,
+    413.5
+   ]
+  },
+  {
+   "id": 366,
+   "v": "toPort",
+   "port": "Tokyo",
+   "p": [
+    1782.2,
+    392.5
+   ]
+  }
+ ],
+ "beforeSink": [
+  {
+   "id": 364,
+   "v": "landed",
+   "port": null,
+   "p": [
+    1715.5,
+    411.5
+   ]
+  },
+  {
+   "id": 365,
+   "v": "landed",
+   "port": null,
+   "p": [
+    1715.5,
+    411.9
+   ]
+  },
+  {
+   "id": 366,
+   "v": "toPort",
+   "port": "Tokyo",
+   "p": [
+    1783.8,
+    392.5
+   ]
+  }
+ ],
+ "voyage0": {
+  "state": "landed",
+  "port": null
+ },
+ "rowsBefore": [],
+ "sink": [
+  [
+   1136,
+   null
+  ],
+  [
+   1144,
+   null
+  ]
+ ],
+ "afterSink": {
+  "h": 129,
+  "st": [
+   {
+    "id": 364,
+    "v": "landed",
+    "port": null,
+    "p": [
+     1715.5,
+     411.5
+    ]
+   },
+   {
+    "id": 365,
+    "v": "landed",
+    "port": null,
+    "p": [
+     1715.5,
+     411.9
+    ]
+   },
+   {
+    "id": 366,
+    "v": null,
+    "port": null,
+    "p": [
+     1783.9,
+     392.5
+    ]
+   }
+  ],
+  "rows": [
+   [
+    "transportsSunk",
+    "366: transports sunk, the landing is over",
+    {
+     "cut": false,
+     "box": [
+      7,
+      272,
+      415,
+      290
+     ],
+     "sw": 404,
+     "cw": 404,
+     "sh": 16,
+     "ch": 16,
+     "vis": true,
+     "of": "clip",
+     "ws": "normal"
+    }
+   ]
+  ],
+  "ticker": {
+   "cls": "ticker short compact",
+   "box": [
+    7,
+    272,
+    415,
+    290
+   ],
+   "text": "366: transports sunk, the landing is over"
+  },
+  "toast": [],
+  "shot": "critic/shots/c51lost_land_rows.png"
+ },
+ "atPort": null,
+ "news": [
+  {
+   "kind": "transportsSunk",
+   "id": 366,
+   "nation": 75,
+   "reason": 0,
+   "x": 1783.9146927342376,
+   "y": 392.5,
+   "tick": 130,
+   "at": 130
+  }
+ ],
+ "rowsBeforeClick": [
+  [
+   "transportsSunk",
+   "366: transports sunk, the landing is over",
+   {
+    "cut": false,
+    "box": [
+     7,
+     272,
+     415,
+     290
+    ],
+    "sw": 404,
+    "cw": 404,
+    "sh": 16,
+    "ch": 16,
+    "vis": true,
+    "of": "clip",
+    "ws": "normal"
+   }
+  ]
+ ],
+ "clicked": "366: transports sunk, the landing is over",
+ "rowsAfterClick": [
+  [
+   "transportsSunk",
+   "Square infantry division 366: the transports of its landing were sunk, and no others of its nation can come to its port: the landing is over.",
+   {
+    "cut": false,
+    "box": [
+     7,
+     260,
+     415,
+     290
+    ],
+    "sw": 404,
+    "cw": 404,
+    "sh": 28,
+    "ch": 28,
+    "vis": true,
+    "of": "clip",
+    "ws": "normal"
+   }
+  ]
+ ],
+ "newsLeft": [
+  "0 transportsSunk 366 t130"
+ ],
+ "clickShot": "critic/shots/c51lost_land_afterclick.png",
+ "errors": []
+}

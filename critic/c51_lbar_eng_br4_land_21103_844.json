@@ -1,0 +1,1081 @@
+{
+ "seed": 21103,
+ "TAG": "ENG",
+ "FOE": "GER",
+ "FROM": "1023.5,275.5",
+ "TO": "1072.5,259.5",
+ "N": 4,
+ "label": "eng_br4_land",
+ "W": 844,
+ "H": 390,
+ "cancelDay": null,
+ "days": [
+  {
+   "day": 0,
+   "tick": 3,
+   "bar": {
+    "box": [
+     265,
+     46,
+     314,
+     156
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       12
+      ],
+      "status": "sails in about 4 days",
+      "ships": "transports 24, 24 needed",
+      "wait": "1 of 4 at the port; the last 4 days from it",
+      "divisions": [
+       [
+        "270",
+        "toPort",
+        "Infantry division 270Marching to Portsmouth to board transports, about 3 days; its landing waits for it"
+       ],
+       [
+        "271",
+        "toPort",
+        "Infantry division 271Marching to Portsmouth to board transports, about 4 days; its landing waits for it"
+       ],
+       [
+        "272",
+        "gathering",
+        "Infantry division 272At Portsmouth, waiting for the rest of the landing"
+       ],
+       [
+        "274",
+        "toPort",
+        "Infantry division 274Marching to Portsmouth to board transports, about 3 days; its landing waits for it"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "270": "Marching to Portsmouth to board transports, about 3 days; its landing waits for it",
+    "271": "Marching to Portsmouth to board transports, about 4 days; its landing waits for it",
+    "272": "At Portsmouth, waiting for the rest of the landing",
+    "274": "Marching to Portsmouth to board transports, about 3 days; its landing waits for it"
+   },
+   "afloat": {
+    "270": 0,
+    "271": 0,
+    "272": 0,
+    "274": 0
+   },
+   "pos": {
+    "270": [
+     1014.6,
+     276.6
+    ],
+    "271": [
+     1014.6,
+     274.6
+    ],
+    "272": [
+     1014.3,
+     278.5
+    ],
+    "274": [
+     1016.6,
+     276.6
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     265,
+     46,
+     314,
+     156
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       12
+      ],
+      "status": "sails in about 4 days",
+      "ships": "transports 24, 24 needed",
+      "wait": "1 of 4 at the port; the last 4 days from it",
+      "divisions": [
+       [
+        "270",
+        "toPort",
+        "Infantry division 270Marching to Portsmouth to board transports, about 3 days; its landing waits for it"
+       ],
+       [
+        "271",
+        "toPort",
+        "Infantry division 271Marching to Portsmouth to board transports, about 4 days; its landing waits for it"
+       ],
+       [
+        "272",
+        "gathering",
+        "Infantry division 272At Portsmouth, waiting for the rest of the landing"
+       ],
+       [
+        "274",
+        "toPort",
+        "Infantry division 274Marching to Portsmouth to board transports, about 3 days; its landing waits for it"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 1,
+   "tick": 27,
+   "bar": {
+    "box": [
+     265,
+     46,
+     314,
+     156
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       12
+      ],
+      "status": "sails in about 3 days",
+      "ships": "transports 24, 24 needed",
+      "wait": "1 of 4 at the port; the last 3 days from it",
+      "divisions": [
+       [
+        "270",
+        "toPort",
+        "Infantry division 270Marching to Portsmouth to board transports, about 2 days; its landing waits for it"
+       ],
+       [
+        "271",
+        "toPort",
+        "Infantry division 271Marching to Portsmouth to board transports, about 3 days; its landing waits for it"
+       ],
+       [
+        "272",
+        "gathering",
+        "Infantry division 272At Portsmouth, waiting for the rest of the landing"
+       ],
+       [
+        "274",
+        "toPort",
+        "Infantry division 274Marching to Portsmouth to board transports, about 2 days; its landing waits for it"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "270": "Marching to Portsmouth to board transports, about 2 days; its landing waits for it",
+    "271": "Marching to Portsmouth to board transports, about 3 days; its landing waits for it",
+    "272": "At Portsmouth, waiting for the rest of the landing",
+    "274": "Marching to Portsmouth to board transports, about 2 days; its landing waits for it"
+   },
+   "afloat": {
+    "270": 0,
+    "271": 0,
+    "272": 0,
+    "274": 0
+   },
+   "pos": {
+    "270": [
+     1016.1,
+     278.1
+    ],
+    "271": [
+     1016.1,
+     276.1
+    ],
+    "272": [
+     1014.3,
+     278.5
+    ],
+    "274": [
+     1017.5,
+     278.3
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     265,
+     46,
+     314,
+     156
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       12
+      ],
+      "status": "sails in about 3 days",
+      "ships": "transports 24, 24 needed",
+      "wait": "1 of 4 at the port; the last 3 days from it",
+      "divisions": [
+       [
+        "270",
+        "toPort",
+        "Infantry division 270Marching to Portsmouth to board transports, about 2 days; its landing waits for it"
+       ],
+       [
+        "271",
+        "toPort",
+        "Infantry division 271Marching to Portsmouth to board transports, about 3 days; its landing waits for it"
+       ],
+       [
+        "272",
+        "gathering",
+        "Infantry division 272At Portsmouth, waiting for the rest of the landing"
+       ],
+       [
+        "274",
+        "toPort",
+        "Infantry division 274Marching to Portsmouth to board transports, about 2 days; its landing waits for it"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 2,
+   "tick": 51,
+   "bar": {
+    "box": [
+     265,
+     46,
+     314,
+     156
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       12
+      ],
+      "status": "sails in about 2 days",
+      "ships": "transports 24, 24 needed",
+      "wait": "1 of 4 at the port; the last 2 days from it",
+      "divisions": [
+       [
+        "270",
+        "toPort",
+        "Infantry division 270Marching to Portsmouth to board transports"
+       ],
+       [
+        "271",
+        "toPort",
+        "Infantry division 271Marching to Portsmouth to board transports, about 2 days; its landing waits for it"
+       ],
+       [
+        "272",
+        "gathering",
+        "Infantry division 272At Portsmouth, waiting for the rest of the landing"
+       ],
+       [
+        "274",
+        "toPort",
+        "Infantry division 274Marching to Portsmouth to board transports"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "270": "Marching to Portsmouth to board transports",
+    "271": "Marching to Portsmouth to board transports, about 2 days; its landing waits for it",
+    "272": "At Portsmouth, waiting for the rest of the landing",
+    "274": "Marching to Portsmouth to board transports"
+   },
+   "afloat": {
+    "270": 0,
+    "271": 0,
+    "272": 0,
+    "274": 0
+   },
+   "pos": {
+    "270": [
+     1017.5,
+     279.7
+    ],
+    "271": [
+     1017.5,
+     277.7
+    ],
+    "272": [
+     1014.3,
+     278.5
+    ],
+    "274": [
+     1017.4,
+     280.3
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     265,
+     46,
+     314,
+     156
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       12
+      ],
+      "status": "sails in about 2 days",
+      "ships": "transports 24, 24 needed",
+      "wait": "1 of 4 at the port; the last 2 days from it",
+      "divisions": [
+       [
+        "270",
+        "toPort",
+        "Infantry division 270Marching to Portsmouth to board transports"
+       ],
+       [
+        "271",
+        "toPort",
+        "Infantry division 271Marching to Portsmouth to board transports, about 2 days; its landing waits for it"
+       ],
+       [
+        "272",
+        "gathering",
+        "Infantry division 272At Portsmouth, waiting for the rest of the landing"
+       ],
+       [
+        "274",
+        "toPort",
+        "Infantry division 274Marching to Portsmouth to board transports"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 3,
+   "tick": 75,
+   "bar": {
+    "box": [
+     265,
+     46,
+     314,
+     156
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       12
+      ],
+      "status": "sails in about a day",
+      "ships": "transports 24, 24 needed",
+      "wait": "3 of 4 at the port; the last a day from it",
+      "divisions": [
+       [
+        "270",
+        "gathering",
+        "Infantry division 270At Portsmouth, waiting for the rest of the landing"
+       ],
+       [
+        "271",
+        "toPort",
+        "Infantry division 271Marching to Portsmouth to board transports"
+       ],
+       [
+        "272",
+        "gathering",
+        "Infantry division 272At Portsmouth, waiting for the rest of the landing"
+       ],
+       [
+        "274",
+        "gathering",
+        "Infantry division 274At Portsmouth, waiting for the rest of the landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "270": "At Portsmouth, waiting for the rest of the landing",
+    "271": "Marching to Portsmouth to board transports",
+    "272": "At Portsmouth, waiting for the rest of the landing",
+    "274": "At Portsmouth, waiting for the rest of the landing"
+   },
+   "afloat": {
+    "270": 0,
+    "271": 0,
+    "272": 0,
+    "274": 0
+   },
+   "pos": {
+    "270": [
+     1017.5,
+     280.5
+    ],
+    "271": [
+     1017.5,
+     279.6
+    ],
+    "272": [
+     1014.3,
+     278.5
+    ],
+    "274": [
+     1017.2,
+     280.6
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     265,
+     46,
+     314,
+     156
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       12
+      ],
+      "status": "sails in about a day",
+      "ships": "transports 24, 24 needed",
+      "wait": "3 of 4 at the port; the last a day from it",
+      "divisions": [
+       [
+        "270",
+        "gathering",
+        "Infantry division 270At Portsmouth, waiting for the rest of the landing"
+       ],
+       [
+        "271",
+        "toPort",
+        "Infantry division 271Marching to Portsmouth to board transports"
+       ],
+       [
+        "272",
+        "gathering",
+        "Infantry division 272At Portsmouth, waiting for the rest of the landing"
+       ],
+       [
+        "274",
+        "gathering",
+        "Infantry division 274At Portsmouth, waiting for the rest of the landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 4,
+   "tick": 99,
+   "bar": {
+    "box": [
+     265,
+     46,
+     314,
+     96
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       14
+      ],
+      "status": "at sea",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "270",
+        "atSea",
+        "Infantry division 270At sea, bound for its landing"
+       ],
+       [
+        "271",
+        "atSea",
+        "Infantry division 271At sea, bound for its landing"
+       ],
+       [
+        "272",
+        "atSea",
+        "Infantry division 272At sea, bound for its landing"
+       ],
+       [
+        "274",
+        "atSea",
+        "Infantry division 274At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "270": "At sea, bound for its landing",
+    "271": "At sea, bound for its landing",
+    "272": "At sea, bound for its landing",
+    "274": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "270": 0,
+    "271": 0,
+    "272": 0,
+    "274": 0
+   },
+   "pos": {
+    "270": [
+     1032.5,
+     276.7
+    ],
+    "271": [
+     1032.5,
+     276.7
+    ],
+    "272": [
+     1033.3,
+     275.7
+    ],
+    "274": [
+     1033.3,
+     275.7
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     265,
+     46,
+     314,
+     96
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       14
+      ],
+      "status": "at sea",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "270",
+        "atSea",
+        "Infantry division 270At sea, bound for its landing"
+       ],
+       [
+        "271",
+        "atSea",
+        "Infantry division 271At sea, bound for its landing"
+       ],
+       [
+        "272",
+        "atSea",
+        "Infantry division 272At sea, bound for its landing"
+       ],
+       [
+        "274",
+        "atSea",
+        "Infantry division 274At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 5,
+   "tick": 123,
+   "bar": {
+    "box": [
+     265,
+     46,
+     314,
+     96
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       14
+      ],
+      "status": "at sea",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "270",
+        "atSea",
+        "Infantry division 270At sea, bound for its landing"
+       ],
+       [
+        "271",
+        "atSea",
+        "Infantry division 271At sea, bound for its landing"
+       ],
+       [
+        "272",
+        "atSea",
+        "Infantry division 272At sea, bound for its landing"
+       ],
+       [
+        "274",
+        "atSea",
+        "Infantry division 274At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "270": "At sea, bound for its landing",
+    "271": "At sea, bound for its landing",
+    "272": "At sea, bound for its landing",
+    "274": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "270": 0,
+    "271": 0,
+    "272": 0,
+    "274": 0
+   },
+   "pos": {
+    "270": [
+     1052,
+     261.1
+    ],
+    "271": [
+     1052,
+     261.1
+    ],
+    "272": [
+     1054.1,
+     261.5
+    ],
+    "274": [
+     1054.1,
+     261.5
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     265,
+     46,
+     314,
+     96
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       14
+      ],
+      "status": "at sea",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "270",
+        "atSea",
+        "Infantry division 270At sea, bound for its landing"
+       ],
+       [
+        "271",
+        "atSea",
+        "Infantry division 271At sea, bound for its landing"
+       ],
+       [
+        "272",
+        "atSea",
+        "Infantry division 272At sea, bound for its landing"
+       ],
+       [
+        "274",
+        "atSea",
+        "Infantry division 274At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 6,
+   "tick": 147,
+   "bar": {
+    "box": [
+     265,
+     46,
+     314,
+     51
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "over",
+      "outcome": "landed",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       14
+      ],
+      "status": "over: 4 landed",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "270",
+        "",
+        "Infantry division 270"
+       ],
+       [
+        "271",
+        "",
+        "Infantry division 271"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "270": "Landed",
+    "271": "Landed",
+    "272": "Landed",
+    "274": "Landed"
+   },
+   "afloat": {
+    "270": 0,
+    "271": 0,
+    "272": 0,
+    "274": 0
+   },
+   "pos": {
+    "270": [
+     1072.5,
+     258.5
+    ],
+    "271": [
+     1072.3,
+     258.7
+    ],
+    "272": [
+     1072.7,
+     258.3
+    ],
+    "274": [
+     1072,
+     258.9
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     265,
+     46,
+     314,
+     51
+    ],
+    "vw": 844,
+    "vh": 390,
+    "scrollW": 844,
+    "rows": [
+     {
+      "id": "1",
+      "state": "over",
+      "outcome": "landed",
+      "title": "Bremerhaven from Portsmouth",
+      "titleCut": false,
+      "titleBox": [
+       299,
+       50,
+       141,
+       14
+      ],
+      "status": "over: 4 landed",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "270",
+        "",
+        "Infantry division 270"
+       ],
+       [
+        "271",
+        "",
+        "Infantry division 271"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 7,
+   "tick": 171,
+   "bar": null,
+   "panel": {
+    "270": "On the march",
+    "271": "On the march",
+    "272": "On the march",
+    "274": "On the march"
+   },
+   "afloat": {
+    "270": 0,
+    "271": 0,
+    "272": 0,
+    "274": 0
+   },
+   "pos": {
+    "270": [
+     1072.9,
+     259.1
+    ],
+    "271": [
+     1072.7,
+     259
+    ],
+    "272": [
+     1072.5,
+     258.5
+    ],
+    "274": [
+     1072.3,
+     258.7
+    ]
+   },
+   "barWithPanel": null
+  },
+  {
+   "day": 8,
+   "tick": 195,
+   "bar": null,
+   "panel": {
+    "270": "On the march",
+    "271": "On the march",
+    "272": "On the march",
+    "274": "On the march"
+   },
+   "afloat": {
+    "270": 0,
+    "271": 0,
+    "272": 0,
+    "274": 0
+   },
+   "pos": {
+    "270": [
+     1072.6,
+     259.9
+    ],
+    "271": [
+     1072.6,
+     259.6
+    ],
+    "272": [
+     1073.5,
+     260.1
+    ],
+    "274": [
+     1073.2,
+     260.1
+    ]
+   },
+   "barWithPanel": null
+  },
+  {
+   "day": 9,
+   "tick": 219,
+   "bar": null,
+   "panel": {
+    "270": "On the march",
+    "271": "On the march",
+    "272": "On the march",
+    "274": "On the march"
+   },
+   "afloat": {
+    "270": 0,
+    "271": 0,
+    "272": 0,
+    "274": 0
+   },
+   "pos": {
+    "270": [
+     1071.5,
+     260.5
+    ],
+    "271": [
+     1071.3,
+     260.3
+    ],
+    "272": [
+     1073.5,
+     261.5
+    ],
+    "274": [
+     1073.2,
+     261.5
+    ]
+   },
+   "barWithPanel": null
+  }
+ ],
+ "shots": [
+  "critic/shots/c51lbar_eng_br4_land_21103_844_d0.png",
+  "critic/shots/c51lbar_eng_br4_land_21103_844_d2.png"
+ ],
+ "barBefore": null,
+ "ids": [
+  274,
+  271,
+  270,
+  272
+ ],
+ "endedDay": 6,
+ "errors": []
+}
