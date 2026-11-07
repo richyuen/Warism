@@ -81,6 +81,8 @@ export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, r
   const setName = (v: string) => setTyped({ nation: n, name: v });
   const [target, setTarget] = useState(0);
   const [buff, setBuff] = useState<(typeof BUFFS)[number]>('attack');
+  // The trait last touched, its words under the list (ROADMAP R34h: a phone has no hover for the `title`).
+  const [traitSaid, setTraitSaid] = useState(-1);
   const [revive, setRevive] = useState(0);
   const [armed, setArmed] = useState(0);
   /** The gold typed for the treasury (PLAN 7.4f15), this nation's only. */
@@ -147,12 +149,17 @@ export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, r
           // A trait that would clash with one held is greyed: militarist beside pacifist.
           const clash = !held && traitsClash(nation.traits | bit);
           return (
-            <label key={tr.id} class="god-trait" title={t(tr.descKey as MessageKey)}>
+            <label key={tr.id} class="god-trait" title={t(tr.descKey as MessageKey)} onPointerDown={() => setTraitSaid(i)} onFocusIn={() => setTraitSaid(i)}>
               <input type="checkbox" data-testid={`god-trait-${tr.id}`} checked={held} disabled={clash} onChange={() => onCommand({ kind: 'setTraits', nation: n, mask: nation.traits ^ bit })} />
               {t(tr.nameKey as MessageKey)}
             </label>
           );
         })}
+        {TRAITS[traitSaid] ? (
+          <div class="trait-desc" data-testid="god-trait-desc">
+            {t(TRAITS[traitSaid]!.nameKey as MessageKey)}: {t(TRAITS[traitSaid]!.descKey as MessageKey)}
+          </div>
+        ) : null}
       </div>
       <div class="god-row">
         <span>{t('panel.incomeBonus')}</span>

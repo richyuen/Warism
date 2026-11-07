@@ -62,6 +62,9 @@ export function NationPanel({
   onHero?: ((formation: number) => void) | null;
 }) {
   const [chosen, setTab] = useState<Tab>('overview');
+  // The trait whose words are shown (ROADMAP R34h; critic run 32, R32-N2: on a phone, where nothing hovers, the
+  // chips were names with no meaning): a tap on its chip; again, or another nation, hides them.
+  const [traitOpen, setTraitOpen] = useState<{ nation: number; id: string } | null>(null);
   // The God tab exists only in God Mode (PLAN 1.32b).
   const tab: Tab = (!god && chosen === 'god') || (!actions && chosen === 'actions') ? 'overview' : chosen;
   const tabs: Tab[] = ['overview', 'economy', ...(actions ? (['actions'] as const) : []), ...(god ? (['god'] as const) : [])];
@@ -167,13 +170,32 @@ export function NationPanel({
             </div>
           ) : null}
           {nation.traits !== 0 ? (
-            // Its traits (ROADMAP R16), each with what it does on hover.
+            // Its traits (ROADMAP R16), each with what it does on hover, and below them on a tap (R34h).
             <div class="panel-traits" data-testid="panel-traits">
-              {traitsOf(nation.traits).map((tr) => (
-                <span key={tr.id} class="trait-chip" data-testid="trait-chip" data-trait={tr.id} title={t(tr.descKey as MessageKey)}>
-                  {t(tr.nameKey as MessageKey)}
-                </span>
-              ))}
+              {traitsOf(nation.traits).map((tr) => {
+                const open = traitOpen?.nation === nation.id && traitOpen.id === tr.id;
+                return (
+                  <button
+                    type="button"
+                    key={tr.id}
+                    class={open ? 'trait-chip open' : 'trait-chip'}
+                    data-testid="trait-chip"
+                    data-trait={tr.id}
+                    title={t(tr.descKey as MessageKey)}
+                    aria-expanded={open}
+                    onClick={() => setTraitOpen(open ? null : { nation: nation.id, id: tr.id })}
+                  >
+                    {t(tr.nameKey as MessageKey)}
+                  </button>
+                );
+              })}
+              {traitsOf(nation.traits)
+                .filter((tr) => traitOpen?.nation === nation.id && traitOpen.id === tr.id)
+                .map((tr) => (
+                  <div key={tr.id} class="trait-desc" data-testid="trait-desc">
+                    {t(tr.descKey as MessageKey)}
+                  </div>
+                ))}
             </div>
           ) : null}
           {row('panel.land', num(nation.area), 'stat-land')}

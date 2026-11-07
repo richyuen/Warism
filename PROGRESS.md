@@ -1856,3 +1856,11 @@
 - `heroStack1938` (new): markers under Bismarck 1 → 0; a click on the fleets opens a fleet, on the hero the
   hero. The 27 specs that read markers or heroes: 67 passed.
 - **Next:** R34h.
+
+## 2026-11-07 — R34h: a trait's words on a tap
+- A trait chip in a nation's panel is a button: a tap shows what the trait does on a line under the chips, a tap
+  again (or another nation) hides it; the hover title stays. In the God tab, where a tap on a trait toggles it,
+  the trait last touched is named and described under the list.
+- `traitsTap1938` (new; phone, Germany): red before (no words on a tap), green; `godUi1938` green.
+  R32-N2's other half (nothing shows a trait act) is not this item.
+- **Next:** R34i.

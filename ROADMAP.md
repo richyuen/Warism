@@ -796,7 +796,8 @@ R43f, R44, R34, R35 and Batch 4's R45–R47 are done first, and critic run 51 ju
     Done: the browser sent no click for the tap after a drag's fling; the graph reads a finger's tap itself.
   - [x] R34g R31-N6: a hero hides the fleets stacked with it: both visible, or the stack told.
     Done: a hero's T1 marker steps clear of the markers it would cover, a line to its place.
-  - [ ] R34h R32-N2: a trait's description only on hover; a phone shows names with no meaning: reachable by tap.
+  - [x] R34h R32-N2: a trait's description only on hover; a phone shows names with no meaning: reachable by tap.
+    Done: a chip's tap shows its words under the chips; the God tab says the trait touched.
   - [ ] R34i R32-N5: sea heroes die more (Sovetsky Soyuz 46.7 times in 20 years over ten seeds): the cause found; a
     rule only if one is wrong (an AI rule: the pin moves in its own commit).
   - [ ] R34j R36-N3: a re-click of the same landing is taken in silence: told it changes nothing.

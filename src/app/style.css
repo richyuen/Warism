@@ -671,10 +671,24 @@ textarea,
 }
 .trait-chip {
   padding: 0.05rem 0.4rem;
+  border: 1px solid transparent;
   border-radius: 0.6rem;
   background: rgba(233, 196, 106, 0.18);
+  color: inherit;
+  font: inherit;
   font-size: 0.85em;
   cursor: help;
+}
+.trait-chip.open {
+  border-color: rgba(233, 196, 106, 0.8);
+}
+/* A trait's words, shown on a tap (ROADMAP R34h): a line of their own under the chips. */
+.trait-desc {
+  flex-basis: 100%;
+  grid-column: 1 / -1;
+  font-size: 0.85em;
+  color: #e8dcb5;
+  overflow-wrap: anywhere;
 }
 .god-tab .god-row {
   display: flex;
