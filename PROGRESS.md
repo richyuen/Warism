@@ -1838,3 +1838,12 @@
   0 (Japan's O-I and Yamato under the Ranking, the critic's case). The 13 specs that read counters or heroes:
   39 passed. Unit `clearOf` (4). Budgets: ~10 `getBoundingClientRect` every 250 ms; no sim change.
 - **Next:** R34f.
+
+## 2026-11-07 — R34f: the first tap after a drag in the relations graph
+- The cause: after a one-finger drag Chrome took the next tap for stopping the drag's fling and sent no click
+  (pointerdown and pointerup came, no click, even 1.5 s later), so the nation tapped was not chosen. The graph now
+  reads a finger's tap from its pointer events (same finger, no drag, under 10 px) and clicks what it went down
+  on; the browser's own click within 800 ms after is dropped, so a tap is never two clicks. Mouse unchanged.
+- `relationsTap1938` (new; phone, the critic's 4111 a year on): a tap, a drag then a tap and a second tap, a pinch
+  then a tap: red before at the tap after the drag. The relations specs: 5 passed.
+- **Next:** R34g.

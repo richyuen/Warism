@@ -73,6 +73,11 @@ const idOf = (key: string): number => Number(key.slice(1));
  * of the world at once. The layout is made over every kind, so switching a kind off hides its lines
  * and leaves the rest where they were.
  */
+/** The farthest a finger moves in a tap, CSS px (ROADMAP R34f). */
+const TAP_PX = 10;
+/** How long after a tap clicked by the graph the browser's own click is not taken again, ms. */
+const TAP_CLICK_MS = 800;
+
 export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, onClose }: RelationsPanelProps) {
   const [kinds, setKinds] = useState<ReadonlySet<EdgeKind>>(new Set(EDGE_KINDS));
   const [focus, setFocus] = useState(0);
@@ -93,6 +98,9 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
   }, []);
   const pointers = useRef(new Map<number, { x: number; y: number }>());
   const dragged = useRef(false);
+  /** A finger's tap in the graph (R34f): where it went down; the time a tap was clicked by us. */
+  const tap = useRef<{ id: number; x: number; y: number; target: EventTarget | null } | null>(null);
+  const tapped = useRef(-Infinity);
   /** Drawing units in a CSS px of the SVG, at the zoom now. */
   const unitsPerPx = (): number => {
     const r = svg.current?.getBoundingClientRect();
@@ -118,6 +126,7 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
   const onPointerDown = (e: PointerEvent): void => {
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pointers.current.size === 1) dragged.current = false;
+    tap.current = e.pointerType === 'touch' && pointers.current.size === 1 ? { id: e.pointerId, x: e.clientX, y: e.clientY, target: e.target } : null;
   };
   const onPointerMove = (e: PointerEvent): void => {
     const was = pointers.current.get(e.pointerId);
@@ -143,6 +152,15 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
   };
   const onPointerUp = (e: PointerEvent): void => {
     pointers.current.delete(e.pointerId);
+    // A finger's tap is a click on what it went down on, read here (ROADMAP R34f; critic run 30, R30-N3): after a
+    // drag the browser took the next tap for the end of the drag's fling and sent no click, and the nation tapped
+    // was not chosen. The browser's own click that may follow it is not a second one.
+    const d = tap.current;
+    tap.current = null;
+    if (e.type !== 'pointerup' || !d || d.id !== e.pointerId || dragged.current || Math.hypot(e.clientX - d.x, e.clientY - d.y) > TAP_PX) return;
+    if (!(d.target instanceof Element) || !d.target.isConnected) return;
+    tapped.current = performance.now();
+    d.target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, clientX: e.clientX, clientY: e.clientY }));
   };
   const places = useRef<Map<string, Pos>>(new Map());
   const byId = useMemo(() => new Map(nations.map((n) => [n.id, n])), [nations]);
@@ -272,6 +290,11 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
         onClickCapture={(e) => {
+          // The browser's click after a tap already clicked (R34f).
+          if (e.isTrusted && performance.now() - tapped.current < TAP_CLICK_MS) {
+            e.stopPropagation();
+            return;
+          }
           // A drag or a pinch is not a click on what it ended over.
           if (dragged.current) {
             e.stopPropagation();
