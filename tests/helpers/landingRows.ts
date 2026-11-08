@@ -107,7 +107,10 @@ export class RowRun {
       const row = this.rowOf.get(id);
       const afloat = w.formations.has(id) && (w.embarked.has(id) || w.afloat(id));
       // Thrown back: so from that hour, wherever it comes ashore after (it may be at sea still when its row is over).
-      if (row !== undefined && w.embarked.get(id)?.water === -1 && !this.thrownBack.has(id)) {
+      // (Or aboard the group of one so: it sails home with all aboard.)
+      const fleet = w.embarked.get(id)?.fleet;
+      const sent = fleet !== undefined && [...w.embarked].some(([d, e]) => e.fleet === fleet && e.water === -1 && (d === id || this.thrownBack.has(d) || this.ids.includes(d)));
+      if (row !== undefined && sent && !this.thrownBack.has(id)) {
         this.thrownBack.add(id);
         const e = this.ends.get(row) ?? new Map<number, 'landed' | 'away' | 'repulsed' | 'lost'>();
         e.set(id, 'repulsed');

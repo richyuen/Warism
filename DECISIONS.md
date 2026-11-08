@@ -7,6 +7,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-874 · 2026-11-07 · accepted — All aboard a thrown-back group are thrown back (R52d)
+- **Context.** The replay of critic run 53's probes at 585e20a8: on 23071 (staged) 270 and 271, aboard one group, were
+  thrown back together; `LandingRepulsed` named 270 alone (the repulse sends its group home, `sailHome`, with all
+  aboard), so the row read "1 came ashore away from Bremerhaven, 1 thrown back".
+- **Decision.** In the worker, a `LandingRepulsed` marks every division of the landing aboard that group thrown back;
+  the checker, likewise, any case division aboard a group with one thrown back. The sim's rule and events are
+  unchanged (the pin and the AI's landings as they were).
+- **Consequences.** `landingRepulse1938` 23071 ("over: 1 landed, 2 thrown back"; red before); 108 cases 0 broken.
+
 ### ADR-873 · 2026-11-07 · accepted — A held landing names who holds it up, in its row and its panels (R52c)
 - **Context.** Critic run 53, R53-N3: on 21105 "at sea: under attack, held up" for days with no attacker in view at
   1500 or 250 m/px, the panels of those aboard silent; the critic found no British fleet engaged within 15 cells and

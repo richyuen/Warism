@@ -955,4 +955,8 @@ code of this month's; fixed first, then critic run 54 (full).
     Done (ADR-873): the engagement is mutual (British fleet 1080, 19 cells off, engaged too: a fight at sight's
     range); the row "at sea: under attack by United Kingdom, held up", the panels "At sea, held up: its landing is
     under attack by United Kingdom".
+  - [x] R52d The replay of run 53 at 585e20a8 (ADR-833's step): on 23071 271, aboard the group with thrown-back 270,
+    read "came ashore away" (the repulse's event names one; its group sails home with all aboard). Done (ADR-874): all
+    of the landing aboard a thrown-back group are thrown back, in the worker and the checker; "over: 1 landed, 2
+    thrown back"; 108 cases 0 broken.
   - Kept: `landingInvariants` and `landingRows` 0 broken.

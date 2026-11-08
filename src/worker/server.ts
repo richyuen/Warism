@@ -1204,7 +1204,13 @@ export class SimServer {
       if (ends.get(id) === 'repulsed') return;
       const [lx, ly] = this.landingsLast.get(l)?.land ?? [ev[i + 4]!, ev[i + 5]!];
       ends.set(id, landedAway(world, Math.floor(ly) * world.cells.w + Math.floor(lx), ev[i + 4]!, ev[i + 5]!) ? 'away' : 'landed');
-    } else if (kind === EventKind.LandingRepulsed) ends.set(id, 'repulsed');
+    } else if (kind === EventKind.LandingRepulsed) {
+      // Its group sails home with all aboard (`sailHome`): those of its landing on it are thrown back too, though the
+      // event names one (critic run 53's replay on 23071: 271, aboard with 270, read "came ashore away").
+      const fleet = world.embarked.get(id)?.fleet;
+      ends.set(id, 'repulsed');
+      for (const [d, e] of world.embarked) if (d !== id && fleet !== undefined && e.fleet === fleet && this.landingOfDiv.get(d) === l) ends.set(d, 'repulsed');
+    }
     else if (kind === EventKind.LostAtSea) ends.set(id, 'lost');
     else if (kind === EventKind.TransportsSunk && ev[i + 4] === 0 && ends.get(id) !== 'lost') ends.set(id, 'stayed');
     else return;

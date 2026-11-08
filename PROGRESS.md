@@ -2096,3 +2096,8 @@
 - 21105's group is in a mutual fight with British fleet 1080, 19 cells off; the row and the panels name the United
   Kingdom. `landingHeld1938` (red before). Landing tests 23, specs 8.
 - **Next:** the probes replayed (run 53's jobs), then critic run 54 (full).
+
+## 2026-11-07 — Run 53's probes replayed at 585e20a8; R52d (ADR-874)
+- 18 jobs: 15 the same, 3 differ (two are R52a and R52b as meant), 0 broken; one gap, 23071's 271 thrown back with
+  its group but "came ashore away": all aboard a thrown-back group now count so. `landingRepulse1938` 2 (red before).
+- **Next:** critic run 54 (full).
