@@ -14,7 +14,7 @@ import { annexNation, makePuppet, releasePuppet } from './systems/puppets';
 import { removeCity, setCapital, setCore, spawnCity } from './scenarioEdit';
 import { collapseNation, reviveOnCores, whyNotKill, whyNotRevive } from './systems/revival';
 import { MAX_CE, MIN_CE } from './systems/efficiency';
-import { addCorridor } from './systems/majorBattles';
+import { addCorridor, nearestCity } from './systems/majorBattles';
 import { orderMove } from './systems/movement';
 import { queueFormation } from './systems/production';
 import { forceRevolt, spawnNation } from './systems/revolts';
@@ -201,6 +201,8 @@ function applyCommand(world: World, cmd: Command): Refusal {
       world.battles.history.push({ tick: world.tick, kind: EventKind.MajorBattleEnded, a: id, b: cmd.nation, x: cmd.x, y: cmd.y });
       world.out.emit(world.tick, EventKind.MajorBattleEnded, id, cmd.nation, cmd.x, cmd.y);
       addCorridor(world, cmd.nation, cmd.x, cmd.y, cmd.toX - cmd.x, cmd.toY - cmd.y);
+      // Told: a row in the ticker and History (R49a).
+      world.out.emit(world.tick, EventKind.GodBreakthrough, cmd.nation, nearestCity(world, cmd.x, cmd.y), cmd.x, cmd.y);
       return Refusal.None;
     }
     case 'setAi': {

@@ -32,7 +32,7 @@ function log(world: World, kind: EventKind, a: number, b: number, x: number, y: 
   world.out.emit(world.tick, kind, a, b, x, y);
 }
 
-function nearestCity(world: World, x: number, y: number): number {
+export function nearestCity(world: World, x: number, y: number): number {
   let best = 0;
   let bd = Infinity;
   const cc = world.cities.cols;

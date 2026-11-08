@@ -29,6 +29,8 @@ const CUE_OF_KIND: Readonly<Record<number, Cue>> = {
   [EventKind.NationSpawned]: 'return',
   [EventKind.CitySpawned]: 'town',
   [EventKind.CityRazed]: 'town',
+  // God's Breakthrough at war (ROADMAP R49a): a front broken, the capital's fall.
+  [EventKind.GodBreakthrough]: 'capital',
   // A holder's last means of delivery lost (PLAN 7.37b3): a fall, as a capital's.
   [EventKind.NukeMeansLost]: 'capital',
   // A new nuclear power (PLAN 7.37i): the nuclear cue.

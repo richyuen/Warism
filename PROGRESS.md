@@ -2026,3 +2026,8 @@
 - A new landing on a phone closes the nation's panel; `landingsBar1938` 7 (red before). Run 51's 25 landing seeds: 0
   broken. R48 (run 51's naval findings) done.
 - **Next:** R49, then the critic (run 52).
+
+## 2026-11-07 — R49a: God's Breakthrough told (ADR-864)
+- `GodBreakthrough` event and row ("God opened a breakthrough for Germany"), ticker and History; the critic's
+  `c51_kw_breakthrough.mjs 21151` (copied to `.cache/c51`) sees it. `godBreakthroughRow1938` (red before).
+- **Next:** R49b.

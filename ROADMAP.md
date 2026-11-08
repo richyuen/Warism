@@ -885,7 +885,9 @@ ideas and "what the bar needs", filed (PROMPT's RELEASES, ADR-843); then critic 
   - Not taken: the bar gives way to a nuclear alert (ADR-854; the critic: "the user's choice; noted").
   - Kept: `landingInvariants` at 0 broken on run 51's 25 landing seeds (the bar's third line), checked in each part.
 - [ ] R49 **Run 51's other findings** (dimensions at their bars; after R48).
-  - [ ] R49a R51-N4 (God Mode): Breakthrough at war is taken in silence: its corridor drawn for its 10 days, or a
+  - [x] R49a R51-N4 (God Mode): Breakthrough at war is taken in silence: its corridor drawn for its 10 days, or a
     ticker row.
+    Done (ADR-864): a `GodBreakthrough` row, "God opened a breakthrough for Germany (near …)", in the ticker and
+    History; the critic's `c51_kw_breakthrough.mjs 21151` sees it after the clicks (`docs/evidence/R49/`).
   - [ ] R49b R51-N5 (history): History lists a release after its "left its war" rows within an hour: R43d's
     `causeFirst` in History's order too.

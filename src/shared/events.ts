@@ -264,6 +264,11 @@ export const EventKind = {
    * (the landing goes on), 0 when none could come (the landing is over), y = NaN.
    */
   TransportsSunk: 76,
+  /**
+   * God Mode's Breakthrough at war (ROADMAP R49a; critic run 51, R51-N4: taken in silence, no mark and no row): a =
+   * the nation, b = the city nearest its start (0: none), (x, y) = its start. After its corridor is made.
+   */
+  GodBreakthrough: 77,
 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */

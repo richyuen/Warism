@@ -46,6 +46,7 @@ export const HISTORY_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.NationSpawned,
   EventKind.CitySpawned,
   EventKind.CityRazed,
+  EventKind.GodBreakthrough,
   // A holder's last means of delivery lost (PLAN 7.37b3).
   EventKind.NukeMeansLost,
   // A new nuclear power (PLAN 7.37i).

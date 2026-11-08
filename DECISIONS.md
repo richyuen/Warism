@@ -7,6 +7,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-864 · 2026-11-07 · accepted — God's Breakthrough is told in the ticker (R49a)
+- **Context.** Critic run 51, R51-N4: at war (21151, Germany against Poland, Berlin to Warsaw) Breakthrough was taken in
+  silence. Its `MajorBattleEnded` of a battle with no name is not a ticker kind; nothing marked the corridor.
+- **Decision.** A row, as Spawn, Found and Raze have (PLAN 7.33b): a new event `GodBreakthrough` (a = the nation, b =
+  the city nearest its start, at its start), logged, in the ticker and History's type filter, "God opened a
+  breakthrough for {a} near {b}" (or without the city), the capital's cue. Not taken: drawing the corridor for its 10
+  days, a map layer for one God tool; the row's "Show where" flies to its start.
+- **Consequences.** `godBreakthroughRow1938` (the row in History and the ticker at its start, filtered by type; at
+  peace none; red before); the critic's script: its ticker row from the click's hour.
+
 ### ADR-863 · 2026-11-07 · accepted — On a phone the nation's panel gives way to a new landing (R48g)
 - **Context.** Critic run 51's objection to ADR-854: on a phone a nation's panel hides the landings bar (both want
   the top of a narrow screen), and take control leaves the nation's panel open, so after the player's first landing

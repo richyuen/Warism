@@ -98,6 +98,8 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.NationSpawned]: ['nation', 'nation'],
   [EventKind.CitySpawned]: ['town', 'nation'],
   [EventKind.CityRazed]: ['town', 'nation'],
+  // God Mode's Breakthrough at war (ROADMAP R49a): the nation, the city nearest its start.
+  [EventKind.GodBreakthrough]: ['nation', 'city'],
   // A holder's last means of delivery lost (PLAN 7.37b3): the enemy that took its airbase, or none.
   [EventKind.NukeMeansLost]: ['nation', 'nation'],
   // A new nuclear power (PLAN 7.37i): its income's rank that day, told in words.
@@ -180,6 +182,7 @@ export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.NationSpawned,
   EventKind.CitySpawned,
   EventKind.CityRazed,
+  EventKind.GodBreakthrough,
   // A holder's last means of delivery lost (PLAN 7.37b3).
   EventKind.NukeMeansLost,
   // A new nuclear power (PLAN 7.37i).
