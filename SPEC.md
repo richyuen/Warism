@@ -1964,6 +1964,9 @@ God's commands apply at once (`applyNow`), refused like any command (`inRange`, 
 - **Flags** (`src/shared/flagPixels.ts`, `src/ui/FlagEditor.tsx`): `FLAG_W` × `FLAG_H` (36 × 24) pixels,
   saved with the names; pencil, bucket, line, circle and pick, undo 20, eleven presets; with none set, the
   scenario's flag, else one founded from the nation's id and colour (`foundedFlag`).
+- **Nation filter** (ROADMAP R53j): while a list of nations is shown (the layer's, the mask's), a box narrows both
+  to the names that hold its text, case and accents aside, with "n of N"; a list's chosen nation stays in it, and
+  one the text leaves out gives way to the first it keeps.
 - **Scenario files** (`src/shared/scenarioFile.ts`, `src/app/scenarioFiles.ts`): gzip of a magic line, a
   JSON header (format `SCENARIO_FORMAT` 1, name, base, size, tick, hash) and the state, without the
   command log, history, statistics or undo; `.warism-scenario`. Loaded from the editor or the title

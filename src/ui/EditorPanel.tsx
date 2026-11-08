@@ -67,6 +67,11 @@ const LAND = TERRAIN_IDS.map((id, i) => [id, i] as const).filter(([, i]) => isLa
  * paint, brush radius, an optional target mask, and undo/redo (also Ctrl+Z / Ctrl+Y). While it is
  * open, map clicks paint.
  */
+/** A name for the filter: lower case, its accents dropped ("São Tomé" holds "sao"). */
+function fold(s: string): string {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
 export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onChange, onUndo, onRedo, onClose, onGold, onAnnex, onImport, flagOf, onFlag, onExportScenario, onImportScenario, scenarioStatus, templates, onWarheads, refusal, refusalBase }: EditorPanelProps) {
   const [warheads, setWarheads] = useState('1');
   const [scenarioName, setScenarioName] = useState('');
@@ -74,26 +79,52 @@ export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onC
   const [importLayer, setImportLayer] = useState<'terrain' | 'nation'>('terrain');
   const [gold, setGold] = useState('');
   const [annexTarget, setAnnexTarget] = useState(0);
+  // The nation lists' typed filter (ROADMAP R53j): a name holds it, case and accents aside.
+  const [filter, setFilter] = useState('');
   const me = nations.find((n) => n.id === state.nation);
   const set = (p: Partial<EditorState>) => onChange({ ...state, ...p });
   const sorted = [...nations].sort((a, b) => displayName(a.name).localeCompare(displayName(b.name)));
-  const nationOptions = (
+  const sortedDead = [...dead].sort((a, b) => displayName(a.name).localeCompare(displayName(b.name)));
+  const key = fold(filter.trim());
+  const matches = (name: string): boolean => key === '' || fold(displayName(name)).includes(key);
+  const shown = { live: sorted.filter((n) => matches(n.name)), dead: sortedDead.filter((n) => matches(n.name)) };
+  const listed = sorted.length + sortedDead.length;
+  // A list's options: those the filter keeps, and the one chosen in it whatever the filter (a select shows its value).
+  const nationOptions = (chosen: number) => (
     <>
-      <option value={0}>{t('editor.unowned')}</option>
-      {sorted.map((n) => (
-        <option key={n.id} value={n.id}>
-          {displayName(n.name)}
-        </option>
-      ))}
-      {[...dead]
-        .sort((a, b) => displayName(a.name).localeCompare(displayName(b.name)))
-        .map((n) => (
+      {key === '' || chosen === 0 ? <option value={0}>{t('editor.unowned')}</option> : null}
+      {sorted.map((n) =>
+        n.id === chosen || matches(n.name) ? (
+          <option key={n.id} value={n.id}>
+            {displayName(n.name)}
+          </option>
+        ) : null,
+      )}
+      {sortedDead.map((n) =>
+        n.id === chosen || matches(n.name) ? (
           <option key={n.id} value={n.id}>
             {t('editor.dead', { name: displayName(n.name) })}
           </option>
-        ))}
+        ) : null,
+      )}
     </>
   );
+  /** The filter typed: a list's chosen nation that it does not keep gives way to the first it does. */
+  const typeFilter = (text: string): void => {
+    setFilter(text);
+    const k = fold(text.trim());
+    if (k === '') return;
+    const first = [...sorted, ...sortedDead].find((n) => fold(displayName(n.name)).includes(k));
+    if (!first) return;
+    const keeps = (id: number): boolean => {
+      const n = [...sorted, ...sortedDead].find((x) => x.id === id);
+      return n !== undefined && fold(displayName(n.name)).includes(k);
+    };
+    const p: Partial<EditorState> = {};
+    if (state.layer === 'nation' && !keeps(state.nation)) p.nation = first.id;
+    if (state.mask === 'nation' && !keeps(state.maskNation)) p.maskNation = first.id;
+    if (Object.keys(p).length > 0) set(p);
+  };
   const terrainOptions = LAND.map(([id, i]) => (
     <option key={i} value={i}>
       {t(`terrain.${id}` as MessageKey)}
@@ -119,6 +150,23 @@ export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onC
           <input data-testid="editor-radius" type="number" min={0} max={MAX_PAINT_R} value={state.r} onInput={(e) => set({ r: Math.max(0, Math.min(MAX_PAINT_R, Number((e.currentTarget as HTMLInputElement).value) || 0)) })} />
         </label>
       </div>
+      {state.layer === 'nation' || state.mask === 'nation' ? (
+        <div class="god-row editor-filter">
+          <input
+            type="search"
+            data-testid="editor-nation-filter"
+            placeholder={t('editor.filter')}
+            aria-label={t('editor.filter')}
+            value={filter}
+            onInput={(e) => typeFilter((e.currentTarget as HTMLInputElement).value)}
+          />
+          {key !== '' ? (
+            <span class="act-cost" data-testid="editor-nation-count">
+              {t('editor.filterCount', { n: shown.live.length + shown.dead.length, of: listed })}
+            </span>
+          ) : null}
+        </div>
+      ) : null}
       <div class="god-row">
         <select data-testid="editor-layer" value={state.layer} onChange={(e) => set({ layer: (e.currentTarget as HTMLSelectElement).value as EditorState['layer'] })}>
           <option value="nation">{t('editor.layer.nation')}</option>
@@ -126,7 +174,7 @@ export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onC
         </select>
         {state.layer === 'nation' ? (
           <select data-testid="editor-nation" value={state.nation} onChange={(e) => set({ nation: num(e) })}>
-            {nationOptions}
+            {nationOptions(state.nation)}
           </select>
         ) : (
           <select data-testid="editor-terrain" value={state.terrain} onChange={(e) => set({ terrain: num(e) })}>
@@ -147,7 +195,7 @@ export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onC
           </select>
         ) : state.mask === 'nation' ? (
           <select data-testid="editor-mask-nation" value={state.maskNation} onChange={(e) => set({ maskNation: num(e) })}>
-            {nationOptions}
+            {nationOptions(state.maskNation)}
           </select>
         ) : null}
       </div>

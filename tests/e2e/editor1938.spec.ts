@@ -70,7 +70,17 @@ test('editor: paint, undo and redo restore identical rasters; line, bucket and m
   await page.getByTestId('editor-mask').selectOption('terrain');
   await page.getByTestId('editor-mask-terrain').selectOption(String(Terrain.Plains));
   const polBefore = await page.evaluate(async (p) => (await window.__warsim!.sim.inspect()).nations.find((n) => n.id === p)!.cells, POL);
-  await page.mouse.click(700, 520);
+  // A Polish point near (700, 520), clear of the line (ROADMAP R53j: the editor's nation filter made the panel taller,
+  // and the line, a row below it, came to lie on 520).
+  const [bx, by] = await page.evaluate(
+    ({ p, ly }) => {
+      const v = window.__warsim!.view!;
+      for (let d = 0; d <= 120; d += 4) for (const y of [520 + d, 520 - d]) for (const x of [700, 680, 720]) if (Math.abs(y - ly) > 12 && v.nationAt(x, y) === p) return [x, y];
+      return [700, 520];
+    },
+    { p: POL, ly },
+  );
+  await page.mouse.click(bx, by);
   await expect.poll(async () => (await edits(page)).undo).toBe(3);
   const polAfter = await page.evaluate(async (p) => (await window.__warsim!.sim.inspect()).nations.find((n) => n.id === p)!.cells, POL);
   expect(polAfter).toBeLessThan(polBefore);

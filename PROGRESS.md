@@ -2165,3 +2165,9 @@
   traits; the title screen says so. The hash is checked on the file as written. Unit `scenarioUpgrade`, spec
   `scenarioUpgrade1938` on the critic's own file (both red before). Saves are not upgraded.
 - **Next:** R53j.
+
+## 2026-11-08 — R53j: the editor's nation filter (ADR-886)
+- A search box narrows the editor's nation lists (layer and mask) as typed, case and accents aside; the chosen
+  nation stays, and typing a name picks it. Spec `editorNationFilter1938` (desk and phone, red before; shots looked
+  at). `editor1938`'s bucket click finds Polish ground clear of its line. UI only.
+- **Next:** R53k.

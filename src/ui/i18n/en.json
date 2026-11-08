@@ -975,6 +975,8 @@
   "chart.empty": "No monthly samples yet: run the simulation into the next month.",
   "bar.editor": "Editor",
   "editor.title": "Map editor",
+  "editor.filter": "Filter nations…",
+  "editor.filterCount": "{n} of {of}",
   "editor.unowned": "Unowned",
   "editor.radius": "Radius",
   "editor.tool.brush": "Brush",

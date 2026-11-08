@@ -7,6 +7,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-886 · 2026-11-08 · accepted — The editor's nation lists have a typed filter (R53j)
+- **Context.** Critic run 54 (carried, Editor "not 8"): the editor's nation list is one flat list of 100+ names
+  (`c54_g_editor.mjs 24121`).
+- **Decision.** A search box above the editor's lists, shown while a list of nations is (the layer's or the
+  mask's), narrows both to the names that hold the text, case and accents aside (`fold`: NFD, marks dropped), and
+  says "n of N". "Unowned" is offered with no text (or when chosen). A list's chosen nation stays in it whatever the
+  text, so the select always shows its value; when the text leaves it out and keeps another, the first kept is chosen,
+  so typing a name picks it. Cleared, the whole lists. One box for both lists: the mask's nation is usually the
+  painted one's neighbour, found by the same text.
+- **Consequences.** Spec `editorNationFilter1938` (desk and phone; red before). `editor1938`'s bucket click looks
+  for a Polish point clear of its line (the panel a row taller put the line on 520). UI only.
+
 ### ADR-885 · 2026-11-08 · accepted — A scenario file that lacks only nation traits starts, with none, and says so (R53i)
 - **Context.** Critic run 54 (carried since run 48): the run-26 scenario file (`critic/c26_critic_standoff.warsim-scenario`)
   is refused on the title, "made by an older version of Warism, and this one cannot start it" (PLAN 7.168's check).

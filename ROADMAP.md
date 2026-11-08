@@ -1021,7 +1021,9 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     version of Warism, and this one cannot start it").
     Done (ADR-885): it lacked `nations.traits` alone; a scenario file lacking only that starts with no traits, the
     title saying "Made before nation traits: its nations start with none" (`scenarioUpgrade1938`, the critic's file).
-  - [ ] R53j A typed filter narrows the editor's nation list (one flat list of 100+ names; `c54_g_editor.mjs 24121`).
+  - [x] R53j A typed filter narrows the editor's nation list (one flat list of 100+ names; `c54_g_editor.mjs 24121`).
+    Done (ADR-886): a box above the lists narrows them as typed, "n of N", typing a name picks it
+    (`editorNationFilter1938`).
   - [ ] R53k Emergent dynamics: on 21099 and 20899 for 25 years (`node critic/scripts/c48_top.cjs` on `npm run sim
     -- --scenario 1938 --seed <s> --years 25`), no top-5 holder within ±0.2 % of the same share for 20 or more years
     (Denmark at 5.4 % all 25 years); on 24099 the first three places are not the same three nations in the same

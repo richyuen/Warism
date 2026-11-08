@@ -2428,3 +2428,18 @@ button.unit-icon.on {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* The editor's nation filter (ROADMAP R53j): the box takes the row, its count beside it on one line. */
+.editor-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.editor-filter input {
+  flex: 1;
+  min-width: 0;
+}
+.editor-filter .act-cost {
+  flex: none;
+  white-space: nowrap;
+}
