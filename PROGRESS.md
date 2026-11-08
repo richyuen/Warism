@@ -2141,3 +2141,8 @@
   critic's Berlin → Warsaw click at 1500 m/px, "Show where" at about 1,070 m/px, day 5; shots looked at). At most
   13 corridors at once on 24123 over two years. Display only.
 - **Next:** R53f.
+
+## 2026-11-08 — R53f: History's "My wars only" (ADR-882)
+- While a nation is played, History keeps its war rows (`WAR_KINDS`). Unit `historyMine` (red before); spec
+  `historyMine1938.spec` (Germany at war with Poland: 15 of 119 rows; desk and phone shots looked at). UI only.
+- **Next:** R53g.

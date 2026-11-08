@@ -15,6 +15,8 @@ export interface HistoryPanelProps {
   startDay: number;
   /** Nations for the nation filter (living and dead). */
   nations: { id: number; name: string }[];
+  /** The nation played (0 = none): "My wars only" is offered for it (ROADMAP R53f). */
+  player?: number;
   onClose: () => void;
 }
 
@@ -33,7 +35,7 @@ function download(name: string, type: string, text: string): void {
  * History log (PLAN 1.34a): every historic event, newest first, filterable by type, nation and
  * years; the filtered rows export to CSV or JSON. Refetched from the worker while open.
  */
-export function HistoryPanel({ load, refreshKey, startDay, nations, onClose }: HistoryPanelProps) {
+export function HistoryPanel({ load, refreshKey, startDay, nations, player = 0, onClose }: HistoryPanelProps) {
   const [rows, setRows] = useState<HistoryRow[]>([]);
   const [f, setF] = useState<HistoryFilter>(NO_FILTER);
   useEffect(() => {
@@ -44,7 +46,8 @@ export function HistoryPanel({ load, refreshKey, startDay, nations, onClose }: H
     };
   }, [refreshKey]);
   const kinds = [...new Set(rows.map((r) => r.kind))].sort((a, b) => a - b);
-  const shown = filterHistory(rows, f, startDay);
+  // "My wars only" holds for the nation played now; with none played, off.
+  const shown = filterHistory(rows, { ...f, mine: f.mine !== null && player > 0 ? player : null }, startDay);
   const exported = () => toExport(shown, startDay, displayName, historyText);
   const num = (v: string): number | null => (v.trim() === '' || !Number.isFinite(Number(v)) ? null : Number(v));
   const sorted = [...nations].sort((a, b) => displayName(a.name).localeCompare(displayName(b.name)));
@@ -73,6 +76,12 @@ export function HistoryPanel({ load, refreshKey, startDay, nations, onClose }: H
             </option>
           ))}
         </select>
+        {player > 0 ? (
+          <label class="history-mine">
+            <input type="checkbox" data-testid="history-mine" checked={f.mine !== null} onChange={(e) => setF({ ...f, mine: (e.currentTarget as HTMLInputElement).checked ? player : null })} />
+            {t('history.mine')}
+          </label>
+        ) : null}
         <input data-testid="history-from" type="number" placeholder={t('history.from')} value={f.fromYear ?? ''} onInput={(e) => setF({ ...f, fromYear: num((e.currentTarget as HTMLInputElement).value) })} />
         <input data-testid="history-to" type="number" placeholder={t('history.to')} value={f.toYear ?? ''} onInput={(e) => setF({ ...f, toYear: num((e.currentTarget as HTMLInputElement).value) })} />
       </div>

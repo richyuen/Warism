@@ -7,6 +7,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-882 · 2026-11-08 · accepted — History has "My wars only" for the nation played (R53f)
+- **Context.** Critic run 54's idea from Europa Universalis' message log (and Stats' "not 9": "there is no 'my wars
+  only' filter"). History filters by type, nation and years; a nation's rows mix its wars with its economy, alliances
+  and revolts.
+- **Decision.** While a nation is played, History offers "My wars only": the rows of a war's kinds (`WAR_KINDS`: wars
+  declared, left and ended, peace, captures, annexations, land ceded, battles won, sea and air war, raids, nuclear
+  strikes and their means, God's breakthroughs, bonds and guarantees broken, a nation's end, heroes lost) naming the
+  nation played in a nation role. It goes with the other filters and the exports. A major battle's row names its
+  winner alone (its sides are not logged), so a battle the nation lost shows by its losses at sea, in the air and in
+  land, not its own row. With no nation played, no box.
+- **Consequences.** UI only. `historyMine` (unit; red before), `historyMine1938.spec` (Germany at war with Poland, 15
+  of 119 rows, every one a war kind; no box unplayed; desk and phone shots looked at).
+
 ### ADR-881 · 2026-11-08 · accepted — The breakthrough corridors are drawn on the map (R53e)
 - **Context.** Critic run 54's objection to ADR-864 (since run 51): God's Breakthrough is told in the ticker, but "the
   map still shows nothing of the 10-day corridor that is the tool's whole effect". ADR-864 had not taken it ("a map

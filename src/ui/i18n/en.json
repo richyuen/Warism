@@ -816,6 +816,7 @@
   "history.allNations": "All nations",
   "history.from": "From year",
   "history.to": "To year",
+  "history.mine": "My wars only",
   "history.count": "{n} of {total} events",
   "history.exportCsv": "Export CSV",
   "history.exportJson": "Export JSON",

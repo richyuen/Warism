@@ -868,6 +868,18 @@ textarea,
   width: 5.5rem;
   flex: 0 0 auto;
 }
+/* "My wars only" (ROADMAP R53f): a box and its words, kept together. */
+.history-filters .history-mine {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.history-filters .history-mine input {
+  width: auto;
+  margin: 0;
+}
 .history-list {
   margin: 0.3rem 0 0;
   padding: 0;

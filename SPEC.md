@@ -166,7 +166,8 @@ ack, buildProvinces, buildTerrain, buildPolitical; requests carry a `reqId` and 
 - `buildPolitical {assetBase, w, h}`: the 1938 political map via `buildPoliticalMap`: owner,
   controller, placed cities (PLAN 1.3–1.5). Bench views `?b=T` and `?b=W` use these until the
   1938 scenario boots in the app.
-- `save`, `load {bytes}`, `history` (the log as JSON rows, PLAN 1.34a; filtered in the UI),
+- `save`, `load {bytes}`, `history` (the log as JSON rows, PLAN 1.34a; filtered in the UI by type, nation, years,
+  and, while a nation is played, "My wars only": its war rows, `WAR_KINDS`, R53f, ADR-882),
   `stats` (the monthly series as raw f32 bytes, PLAN 1.34b)
 
 Worker → main:

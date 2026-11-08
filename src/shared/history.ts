@@ -222,9 +222,40 @@ export interface HistoryFilter {
   /** Inclusive year range (null = open). */
   fromYear: number | null;
   toYear: number | null;
+  /** "My wars only" (ROADMAP R53f): the nation played, whose war rows (`WAR_KINDS`) naming it are kept; null = all. */
+  mine: number | null;
 }
 
-export const NO_FILTER: HistoryFilter = { kind: null, nation: null, fromYear: null, toYear: null };
+/**
+ * The kinds of a war's rows (ROADMAP R53f; critic run 54's idea from Europa Universalis: "my wars only"): wars declared,
+ * left and ended, peace, captures and annexations, land ceded, battles won (a major battle's row names its winner
+ * alone), sea and air war, raids, nuclear strikes and their means, God's breakthroughs, forced bonds and guarantees
+ * broken, a nation's end, heroes lost; not its economy, alliances, puppets' politics or revolts.
+ */
+export const WAR_KINDS: ReadonlySet<number> = new Set([
+  EventKind.WarDeclared,
+  EventKind.PeaceSigned,
+  EventKind.WarEnded,
+  EventKind.WarLeft,
+  EventKind.CapitalCaptured,
+  EventKind.NationAnnexed,
+  EventKind.NationEliminated,
+  EventKind.LandCeded,
+  EventKind.MajorBattleEnded,
+  EventKind.SeaBattle,
+  EventKind.ConvoyRaided,
+  EventKind.AirWar,
+  EventKind.AirRaids,
+  EventKind.NukeCasualties,
+  EventKind.NukeDecided,
+  EventKind.NukeMeansLost,
+  EventKind.GodBreakthrough,
+  EventKind.BondsBroken,
+  EventKind.GuaranteeLapsed,
+  EventKind.HeroLost,
+]);
+
+export const NO_FILTER: HistoryFilter = { kind: null, nation: null, fromYear: null, toYear: null, mine: null };
 
 /** The nation a row's a or b names in its role (a side's or a strike's too: PLAN 7.33a), 0 when it names none. */
 export function roleNation(role: HistoryRole, v: number): number {
@@ -255,6 +286,11 @@ export function filterHistory(rows: readonly HistoryRow[], f: HistoryFilter, sta
     if (f.nation !== null) {
       const [ra, rb] = HISTORY_ROLES[r.kind] ?? ['number', 'number'];
       if (roleNation(ra, r.a) !== f.nation && roleNation(rb, r.b) !== f.nation) return false;
+    }
+    if (f.mine !== null) {
+      if (!WAR_KINDS.has(r.kind)) return false;
+      const [ra, rb] = HISTORY_ROLES[r.kind] ?? ['number', 'number'];
+      if (roleNation(ra, r.a) !== f.mine && roleNation(rb, r.b) !== f.mine) return false;
     }
     if (f.fromYear !== null || f.toYear !== null) {
       const y = dateOfTick(startDay, r.tick).year;

@@ -1003,8 +1003,9 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
       off, nothing drawn between).
       Done (ADR-880): a red ring on the held transports and a dashed line in the foe's colour from the fleet that
       holds them (`Snapshot.holds`), over the markers; 21105 h60 at 1500 and 250 m/px.
-  - [ ] R53f Run 54's idea from other games, the other one (the Hearts of Iron one is R53a's design): History has a
+  - [x] R53f Run 54's idea from other games, the other one (the Hearts of Iron one is R53a's design): History has a
     "my wars only" filter, as Europa Universalis' message log.
+    Done (ADR-882): "My wars only" while a nation is played, its war rows (`WAR_KINDS`); desk and phone.
   - [ ] R53g History's first rows on 7019 (year 20) repeat a pair: "A major battle began near Tangier" and "The
     major battle near Tangier was won by Germany", twice on 25 December 1957, once more on the 26th
     (`critic/c54_hi_7019.json` `firstRows`): one begin and one end a battle.

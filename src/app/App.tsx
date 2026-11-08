@@ -343,6 +343,7 @@ export function App({
           refreshKey={stats.tick}
           startDay={hud.startDay}
           nations={[...stats.nations.map((n) => ({ id: n.id, name: n.name })), ...stats.dead]}
+          player={stats.player}
           onClose={() => hud.toggleHistory()}
         />
       ) : null}
