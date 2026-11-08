@@ -107,7 +107,9 @@ test('a fighter group built from the Actions tab; with no airfield of room, its 
   await open1938(page);
   await page.evaluate((n) => window.__warsim!.view!.select(n), GER);
   await page.getByTestId('take-control').click();
-  await page.getByTestId('tab-actions').click();
+  // Production is the Build tab's since ROADMAP R53h (ADR-884), by kind; each tile holds its name and why it cannot.
+  await page.getByTestId('tab-build').click();
+  await page.getByTestId('build-kind-air').click();
   const tps = await page.evaluate(() => window.__warsim!.hud.templates.value);
   const fighter = tps.findIndex((t) => t.nameKey === 'template.fighter_group');
   expect(tps[fighter]!.domain).toBe(2);
@@ -135,9 +137,10 @@ test('a fighter group built from the Actions tab; with no airfield of room, its 
   await expect.poll(async () => page.evaluate((n) => window.__warsim!.hud.stats.value!.nations.find((x) => x.id === n)?.airRoom ?? -1, none), { timeout: 30_000 }).toBe(0);
   await page.evaluate((n) => window.__warsim!.view!.select(n), none);
   await page.getByTestId('take-control').click();
-  await page.getByTestId('tab-actions').click();
+  await page.getByTestId('tab-build').click();
+  await page.getByTestId('build-kind-air').click();
   await expect(page.getByTestId(`act-build-${fighter}`)).toBeDisabled();
-  await expect(page.getByTestId(`act-build-${fighter}`).locator('xpath=..')).toContainText('no airfield with room');
+  await expect(page.getByTestId(`act-build-${fighter}`)).toContainText('no airfield with room');
 });
 
 // PLAN 7.142: a wing at sea on its way to a new base (the sea ferry, ADR-723) says so on its row of

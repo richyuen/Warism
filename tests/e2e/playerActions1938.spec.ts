@@ -41,17 +41,20 @@ test('player actions: build a formation, declare war, offer peace, propose an al
   // A template whose techs Poland does not know cannot be ordered (PLAN 3.1a): the panzer
   // division asks for the medium tank. The tank brigade of its own army is known to it (whether
   // it has the gold for one is another matter).
+  // Production is the Build tab's since ROADMAP R53h (ADR-884), by kind; each tile holds its name and why it cannot.
+  await page.getByTestId('tab-build').click();
+  await page.getByTestId('build-kind-armour').click();
   const names = await page.evaluate(() => window.__warsim!.hud.templates.value.map((t) => t.nameKey));
   const panzer = page.getByTestId(`act-build-${names.indexOf('template.panzer_div')}`);
   await expect(panzer).toBeDisabled();
-  await expect(panzer.locator('xpath=..')).toContainText('not researched');
-  await expect(page.getByTestId(`act-build-${names.indexOf('template.tank_brigade')}`).locator('xpath=..')).not.toContainText('not researched');
+  await expect(panzer).toContainText('not researched');
+  await expect(page.getByTestId(`act-build-${names.indexOf('template.tank_brigade')}`)).not.toContainText('not researched');
   // The four templates of PLAN 3.1c are on the list by name, and nobody can order them in 1938.
   for (const [id, name] of [['panzer_div_2', 'Medium armoured division'], ['heavy_panzer_div', 'Heavy armoured division'], ['mech_div', 'Mechanised division'], ['mbt_div', 'Main battle tank division']] as const) {
     const button = page.getByTestId(`act-build-${names.indexOf(`template.${id}`)}`);
     await expect(button, id).toBeDisabled();
-    await expect(button.locator('xpath=..'), id).toContainText(name);
-    await expect(button.locator('xpath=..'), id).toContainText('not researched');
+    await expect(button, id).toContainText(name);
+    await expect(button, id).toContainText('not researched');
   }
   await page.getByTestId(`act-build-${names.indexOf('template.mbt_div')}`).scrollIntoViewIfNeeded();
   if (process.env['EVIDENCE']) {
@@ -63,6 +66,7 @@ test('player actions: build a formation, declare war, offer peace, propose an al
   // Production: build template 0 (infantry division).
   const t0 = await page.evaluate(() => window.__warsim!.hud.templates.value[0]!);
   const before = await pol(page);
+  await page.getByTestId('build-kind-infantry').click();
   await page.getByTestId('act-build-0').click();
   await expect.poll(async () => (await pol(page)).gold).toBeCloseTo(before.gold - t0.gold, 3);
   await expect(page.getByTestId('act-queue-row')).toHaveCount(1);
@@ -72,7 +76,8 @@ test('player actions: build a formation, declare war, offer peace, propose an al
   await expect.poll(async () => (await pol(page)).formations, { timeout: 30_000 }).toBe(before.formations + 1);
   await expect(page.getByTestId('act-queue-row')).toHaveCount(0);
 
-  // Declare war on Lithuania.
+  // Declare war on Lithuania (the Actions tab's).
+  await page.getByTestId('tab-actions').click();
   await page.getByTestId('act-target').selectOption(String(id('LIT')));
   await page.getByTestId('act-war').click();
   await expect.poll(async () => (await pol(page)).enemies).toContain(id('LIT'));
@@ -219,8 +224,11 @@ test('God Mode places any unit of the played nation at once: a division, a fleet
   // Without God Mode there is no placing; with it, in God's tab and not the Actions tab.
   await expect(page.getByTestId(`god-place-${panzer}`)).toHaveCount(0);
   await page.getByTestId('god-btn').click();
-  await page.getByTestId('tab-actions').click();
+  await page.getByTestId('tab-build').click();
+  await page.getByTestId('build-kind-armour').click();
   await expect(page.getByTestId(`act-build-${panzer}`)).toBeVisible();
+  await expect(page.getByTestId('panel-build')).not.toContainText('Place at once');
+  await page.getByTestId('tab-actions').click();
   await expect(page.getByTestId('panel-actions')).not.toContainText('Place at once');
   await expect(page.getByTestId(`god-place-${panzer}`)).toHaveCount(0);
   await page.getByTestId('tab-god').click();

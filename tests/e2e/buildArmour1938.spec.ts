@@ -28,7 +28,9 @@ test('a player builds an armoured division from the Actions tab, and it takes th
 
   await page.evaluate((n) => window.__warsim!.view!.select(n), GER);
   await page.getByTestId('take-control').click();
-  await page.getByTestId('tab-actions').click();
+  // Production is the Build tab's since ROADMAP R53h (ADR-884), by kind; each tile holds its name and why it cannot.
+  await page.getByTestId('tab-build').click();
+  await page.getByTestId('build-kind-armour').click();
   const templates = await page.evaluate(() => window.__warsim!.hud.templates.value);
   const panzer = templates.findIndex((t) => t.nameKey === 'template.panzer_div');
   expect(panzer).toBeGreaterThanOrEqual(0);
@@ -36,7 +38,7 @@ test('a player builds an armoured division from the Actions tab, and it takes th
   await page.evaluate(([n, g]) => window.__warsim!.sim.command({ kind: 'setGold', nation: n!, value: g! }, true), [GER, templates[panzer]!.gold * 2]);
   const build = page.getByTestId(`act-build-${panzer}`);
   await expect(build).toBeEnabled();
-  await expect(build.locator('xpath=..')).toContainText('Armoured division');
+  await expect(build).toContainText('Armoured division');
 
   const before = await inspect(page);
   const gold = before.nations.find((n) => n.id === GER)!.gold;

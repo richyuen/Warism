@@ -2335,3 +2335,96 @@ button.unit-icon.on {
   color: var(--ui-muted);
   font-style: italic;
 }
+
+/* The played nation's Build tab (ROADMAP R53h): its kinds as a small segmented control, then a kind's templates as
+   tiles two to a row, each the button that builds it; a kind's tiles fit the panel on a phone. */
+.build-kinds {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  padding: 3px;
+  margin: 0.1rem 0 0.4rem;
+  background: rgba(0, 0, 0, 0.32);
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+.build-kind {
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.1rem;
+  color: var(--ui-muted);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.build-kind:hover {
+  filter: brightness(1.18);
+}
+.build-kind.active {
+  color: #2e2100;
+  background: var(--ui-brass);
+  border-color: rgba(70, 45, 0, 0.8);
+  box-shadow: var(--ui-brass-shadow);
+}
+.build-kind:focus-visible,
+.build-tile:focus-visible {
+  outline: 2px solid var(--ui-accent);
+  outline-offset: 1px;
+}
+.build-kind-n {
+  margin-left: 0.25rem;
+  font-weight: 400;
+  opacity: 0.75;
+}
+.build-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  margin-bottom: 0.4rem;
+}
+.build-tile {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.2rem 0.3rem;
+  font: inherit;
+  font-size: 0.78rem;
+  line-height: 1.15;
+  text-align: left;
+  color: var(--ui-text);
+  background: var(--ui-chip);
+  border: 1px solid var(--frame-edge);
+  border-radius: 7px;
+  box-shadow: var(--ui-chip-shadow);
+  cursor: pointer;
+}
+.build-tile:hover:not(:disabled) {
+  filter: brightness(1.18);
+}
+.build-tile:active:not(:disabled) {
+  filter: brightness(0.92);
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.45);
+}
+.build-tile:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.build-tile-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+/* A name wraps to a second line where the panel is narrow (a laptop's 18.9 rem), never cut. */
+.build-tile-name {
+  overflow-wrap: anywhere;
+}
+.build-tile .act-cost {
+  font-size: 0.68rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

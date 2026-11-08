@@ -1011,8 +1011,11 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     (`critic/c54_hi_7019.json` `firstRows`): one begin and one end a battle.
     Done (ADR-883): not a repeated row, a battle ended by one quiet hour; a lull of a day with both camps there
     goes on. Restarts within a day 36 % → 10 % (7019, two years). Pin → `bd1b6944`.
-  - [ ] R53h On the phone (390 × 844), the nation panel's 16 "Build" buttons sit below the screen inside its scroll
+  - [x] R53h On the phone (390 × 844), the nation panel's 16 "Build" buttons sit below the screen inside its scroll
     (`critic/c54_p.json`, `actions`: panel 139–1289 px of 844): reachable at a glance.
+    Done (ADR-884): production is a Build tab by kind (Infantry, Armour, Navy, Air), tiles two to a row; every tile of
+    a kind whole in the panel and nothing off the screen on Build or Actions, at 390 × 844 and 1280 × 720
+    (`buildTab1938`).
   - [ ] R53i The run-26 scenario loads, or says what it changed to load it
     (`node critic/scripts/c54_os2_scen.mjs critic/c26_critic_standoff.warsim-scenario c54`; now "made by an older
     version of Warism, and this one cannot start it").

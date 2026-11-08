@@ -7,6 +7,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-884 · 2026-11-08 · accepted — The played nation's production is a Build tab, by kind (R53h)
+- **Context.** Critic run 54 (small, UI; "as in earlier runs"): on the phone the nation panel's 16 "Build" buttons
+  were below the screen (`critic/c54_p.json`, the Actions tab 139–1289 px of 844), and at 1280 × 720 26. The Actions
+  tab held the AI assist, diplomacy, the air force and 31 templates at about 25 px each; the panel shows some 500 px
+  on a phone and 390 at 1280 × 720. No layout of 31 named rows under the rest fits.
+- **Decision.** Production leaves the Actions tab for a tab of its own, Build, beside it. Its templates by kind:
+  Infantry (10 in 1938), Armour (9: an armour or motorised marker symbol), Navy (6), Air (6), a segmented control with
+  each kind's count; a kind's templates are tiles two to a row, each the button that builds it, with its name, its
+  price and days or why it cannot; the training queue below. Not a picker with one Build button (a choice hidden
+  behind a list), nor the rows behind an opener. Names wrap rather than being cut where the panel is narrow.
+- **Consequences.** At 390 × 844 and 1280 × 720, Poland played: every tile of each kind whole in the panel, and no
+  control of the page off the screen on Build, Actions, or Actions in God Mode (the critic's own count). Spec
+  `buildTab1938` (red before: Actions had controls off the screen). `airOrders`, `buildArmour`, `buildFleet` and
+  `playerActions` open the Build tab and the kind before a tile; their checks of a row's words read the tile, which now
+  holds them. UI only.
+
 ### ADR-883 · 2026-11-08 · accepted — A Major Battle goes on through a lull of a day (R53g)
 - **Context.** Critic run 54 (small, Stats): History on 7019 read "A major battle began near Tangier" and "… was won
   by Germany" twice on 25 December 1957 and again on the 26th. Not a repeated row: a battle ended the first hour no

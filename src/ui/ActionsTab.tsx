@@ -47,8 +47,8 @@ const num = (v: number): string => Math.round(v).toLocaleString('en-US');
 
 /**
  * Actions of the nation the player controls (PLAN 1.33b): diplomacy that the other side may
- * refuse (declare war, offer peace per war, propose an alliance) and production (build a template
- * if gold and manpower allow; the training queue with days left). Its air wings (PLAN 5.8v1):
+ * refuse (declare war, offer peace per war, propose an alliance); production is the Build tab's (`BuildTab`,
+ * ROADMAP R53h). Its air wings (PLAN 5.8v1):
  * each with its base and mission, and its orders, armed by a button and given by the next click
  * on the map (patrol, strike, supply for a transport, rebase); and a paradrop of the formations
  * selected, the same way (PLAN 5.8v2).
@@ -60,7 +60,7 @@ function wingWhere(wg: PlayerWing, templates: readonly { nameKey: string }[]): s
   return wg.base !== '' ? t('act.wingAt', { base: wg.base }) : t('act.wingAirbase');
 }
 
-export function ActionsTab({ nation, nations, wars, templates, day, onCommand, wings, wingOrder, onArmWing, followedWing, onFollowWing, selected, dropArmed, onArmDrop, assist }: ActionsTabProps) {
+export function ActionsTab({ nation, nations, wars, templates, onCommand, wings, wingOrder, onArmWing, followedWing, onFollowWing, selected, dropArmed, onArmDrop, assist }: ActionsTabProps) {
   const n = nation.id;
   const others = nations.filter((o) => o.id !== n).sort((a, b) => displayName(a.name).localeCompare(displayName(b.name)));
   const [target, setTarget] = useState(0);
@@ -215,31 +215,79 @@ export function ActionsTab({ nation, nations, wars, templates, day, onCommand, w
         </>
       ) : null}
 
-      <div class="panel-sub">{t('act.production')}</div>
-      {templates.map((tp, i) => {
-        // Every template, the land's, the sea's and the air's (PLAN 5.8v4), but a hero's (PLAN 7.184). `i` stays the template's index.
-        if (tp.hero) return null;
-        // Its own price and days (ROADMAP R16b): industry and build speed of its traits.
-        const gold = priceWith(nation.traits, tp.gold);
-        const days = daysWith(nation.traits, tp.days);
-        const affordable = nation.gold >= gold && nation.manpower >= tp.manpower;
-        // The sim refuses a template whose techs the nation does not know (PLAN 3.1a), a fleet of a
-        // nation with no port (PLAN 4.2e), and a wing of one with no airbase with room for it (PLAN 5.8s1).
-        const known = (nation.techs[0] & tp.techs[0]) >>> 0 === tp.techs[0] && (nation.techs[1] & tp.techs[1]) >>> 0 === tp.techs[1];
-        const port = tp.domain === 0 || (tp.domain === 1 ? nation.shipyard : nation.airRoom >= tp.aircraft);
-        return (
-          <div class="god-row act-template" key={i}>
-            <UnitIcon template={tp} />
-            <span class="god-war-name" title={t('act.templateInfo', { men: num(tp.men), gold: num(gold), manpower: num(tp.manpower), days })}>
-              {t(tp.nameKey as MessageKey)}
-              <span class="act-cost"> {!known ? t('act.needsResearch') : !port ? t(tp.domain === 1 ? 'act.needsPort' : 'act.needsAirfield') : t('act.cost', { gold: num(gold), days })}</span>
-            </span>
-            <button type="button" class="god-btn" data-testid={`act-build-${i}`} disabled={!affordable || !known || !port} onClick={() => onCommand({ kind: 'queueFormation', nation: n, template: i })}>
-              {t('act.build')}
+    </section>
+  );
+}
+
+/** The kinds of the Build tab (ROADMAP R53h), in the order shown: the land's by its marker's symbol, then the sea's and the air's. */
+export const BUILD_KINDS = ['infantry', 'armour', 'sea', 'air'] as const;
+export type BuildKind = (typeof BUILD_KINDS)[number];
+
+/** A template's kind in the Build tab: armour and motorised are Armour, the land's others Infantry. */
+export function buildKind(tp: Pick<TemplateInfo, 'domain' | 'symbol'>): BuildKind {
+  if (tp.domain === 1) return 'sea';
+  if (tp.domain === 2) return 'air';
+  return tp.symbol === 'armour' || tp.symbol === 'motorised' ? 'armour' : 'infantry';
+}
+
+export interface BuildTabProps {
+  nation: NationStat;
+  templates: TemplateInfo[];
+  day: number;
+  onCommand: (cmd: Command) => void;
+}
+
+/**
+ * The played nation's production (ROADMAP R53h; PLAN 1.33b): its templates by kind (Infantry, Armour, Navy, Air), each a
+ * tile that builds it, with its price and days or why it cannot; then the training queue. A kind's tiles fit the panel
+ * on a phone (critic run 54: in the Actions tab 16 of its Build buttons were below the screen).
+ */
+export function BuildTab({ nation, templates, day, onCommand }: BuildTabProps) {
+  const n = nation.id;
+  const [kind, setKind] = useState<BuildKind>('infantry');
+  const count = (k: BuildKind): number => templates.filter((tp) => !tp.hero && buildKind(tp) === k).length;
+  return (
+    <section class="god-tab" data-testid="panel-build">
+      <div class="build-kinds" role="group" aria-label={t('act.production')}>
+        {BUILD_KINDS.map((k) => (
+          <button type="button" key={k} class={kind === k ? 'build-kind active' : 'build-kind'} aria-pressed={kind === k} data-testid={`build-kind-${k}`} onClick={() => setKind(k)}>
+            {t(`build.kind.${k}` as MessageKey)}
+            <span class="build-kind-n">{count(k)}</span>
+          </button>
+        ))}
+      </div>
+      <div class="build-grid" data-testid="build-grid">
+        {templates.map((tp, i) => {
+          // Every template of the kind but a hero's (PLAN 7.184). `i` stays the template's index.
+          if (tp.hero || buildKind(tp) !== kind) return null;
+          // Its own price and days (ROADMAP R16b): industry and build speed of its traits.
+          const gold = priceWith(nation.traits, tp.gold);
+          const days = daysWith(nation.traits, tp.days);
+          const affordable = nation.gold >= gold && nation.manpower >= tp.manpower;
+          // The sim refuses a template whose techs the nation does not know (PLAN 3.1a), a fleet of a
+          // nation with no port (PLAN 4.2e), and a wing of one with no airbase with room for it (PLAN 5.8s1).
+          const known = (nation.techs[0] & tp.techs[0]) >>> 0 === tp.techs[0] && (nation.techs[1] & tp.techs[1]) >>> 0 === tp.techs[1];
+          const port = tp.domain === 0 || (tp.domain === 1 ? nation.shipyard : nation.airRoom >= tp.aircraft);
+          const name = t(tp.nameKey as MessageKey);
+          return (
+            <button
+              type="button"
+              key={i}
+              class="build-tile"
+              data-testid={`act-build-${i}`}
+              disabled={!affordable || !known || !port}
+              title={`${t('act.build')}: ${name} · ${t('act.templateInfo', { men: num(tp.men), gold: num(gold), manpower: num(tp.manpower), days })}`}
+              onClick={() => onCommand({ kind: 'queueFormation', nation: n, template: i })}
+            >
+              <UnitIcon template={tp} />
+              <span class="build-tile-text">
+                <span class="build-tile-name">{name}</span>
+                <span class="act-cost">{!known ? t('act.needsResearch') : !port ? t(tp.domain === 1 ? 'act.needsPort' : 'act.needsAirfield') : t('act.cost', { gold: num(gold), days })}</span>
+              </span>
             </button>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
       <div class="panel-sub">{t('act.queue')}</div>
       {nation.queue.length === 0 ? (
         <div class="panel-note">{t('act.queueEmpty')}</div>

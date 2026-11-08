@@ -1927,9 +1927,11 @@ Actions tab's assist boxes set the mask (`setPlayerAi`).
   panel again, with the reason, where the order's click had closed it and no other is open.
 - **Actions tab** (`src/ui/ActionsTab.tsx`): force war (breaking a bond in the way), offer peace (taken at
   score ≥ `PEACE_ACCEPT_SCORE` 25 or exhaustion ≥ `PEACE_ACCEPT_EXHAUSTION` 40, `src/shared/peace.ts`),
-  propose an alliance; production of land, sea and air templates (`queueFormation`; no port, no airfield
-  with room, or research needed say so); the air force: missions (`wingMission`, held
-  `PLAYER_MISSION_HOURS`), rebase, paradrop.
+  propose an alliance; the air force: missions (`wingMission`, held `PLAYER_MISSION_HOURS`), rebase, paradrop.
+- **Build tab** (`BuildTab`, ROADMAP R53h): production (`queueFormation`) by kind, Infantry, Armour (the land's
+  of an armour or motorised symbol), Navy and Air (`buildKind`), each template a tile that builds it with its price
+  and days, or why it cannot (no port, no airfield with room, research needed); the training queue below. A kind's
+  tiles fit the panel at 390 × 844 and 1280 × 720.
 
 ### 9.4 God Mode
 God's commands apply at once (`applyNow`), refused like any command (`inRange`, §2.3).

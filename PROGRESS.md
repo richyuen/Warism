@@ -2153,3 +2153,9 @@
   84 → 51; 24123 91 → 69. Land of the leaders −5 % to +11 %. Pin `6012d9d2` → `bd1b6944`. `majorBattles` (red before).
   The critic's long worlds (7019, 21099, 20899) change from here: a rule moved, not a regression.
 - **Next:** R53h.
+
+## 2026-11-08 — R53h: the played nation's Build tab (ADR-884)
+- Production moved from the Actions tab (1,150 px tall on a phone that shows 500) to a Build tab: Infantry, Armour,
+  Navy and Air, tiles two to a row. Spec `buildTab1938` (red before; phone and laptop shots looked at); four specs
+  reach the tiles through the tab. `seaRow1938`'s Speed x1 test back on `knownRed.json` with R53g (red on HEAD too).
+- **Next:** R53i.

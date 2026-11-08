@@ -15,8 +15,9 @@ const inspect = (page: Page): Promise<Inspection> => page.evaluate(() => window.
 async function control(page: Page, nation: number): Promise<void> {
   await page.evaluate((p) => window.__warsim!.view!.select(p), nation);
   await page.getByTestId('take-control').click();
-  await page.getByTestId('tab-actions').click();
-  await expect(page.getByTestId('panel-actions')).toBeVisible();
+  // Production is the Build tab's since ROADMAP R53h (ADR-884), by kind; each tile holds its name and why it cannot.
+  await page.getByTestId('tab-build').click();
+  await expect(page.getByTestId('panel-build')).toBeVisible();
 }
 
 test('the build list: fleets for a nation with a port, disabled for one with none', async ({ page }, info) => {
@@ -31,21 +32,24 @@ test('the build list: fleets for a nation with a port, disabled for one with non
 
   // Switzerland: on the list, disabled, "no port"; a division it can order.
   await control(page, id('SWI'));
+  await page.getByTestId('build-kind-sea').click();
   for (const f of fleets) {
     const button = page.getByTestId(`act-build-${names.indexOf(`template.${f}`)}`);
     await expect(button, f).toBeDisabled();
-    await expect(button.locator('xpath=..'), f).toContainText('no port');
+    await expect(button, f).toContainText('no port');
   }
+  await page.getByTestId('build-kind-infantry').click();
   await expect(page.getByTestId('act-build-0')).toBeEnabled();
   expect((await inspect(page)).nations.find((n) => n.id === id('SWI'))!.shipyard).toBe(false);
 
   // The United Kingdom: the flotilla is built and in its queue, its gold paid.
   const ENG = id('ENG');
   await control(page, ENG);
+  await page.getByTestId('build-kind-sea').click();
   const button = page.getByTestId(`act-build-${flotilla}`);
   await expect(button).toBeEnabled();
-  await expect(button.locator('xpath=..')).toContainText('Destroyer flotilla');
-  await expect(button.locator('xpath=..')).not.toContainText('no port');
+  await expect(button).toContainText('Destroyer flotilla');
+  await expect(button).not.toContainText('no port');
   const t = await page.evaluate((i) => window.__warsim!.hud.templates.value[i]!, flotilla);
   const before = (await inspect(page)).nations.find((n) => n.id === ENG)!;
   expect(before.shipyard).toBe(true);

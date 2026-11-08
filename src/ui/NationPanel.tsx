@@ -2,7 +2,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { traitsOf } from '../shared/traits';
 import type { EconomyBreakdown } from '../shared/protocol';
 import type { NationStat, TechInfo } from '../shared/protocol';
-import { ActionsTab, type ActionsTabProps } from './ActionsTab';
+import { ActionsTab, BuildTab, type ActionsTabProps } from './ActionsTab';
 import { GodTab, type GodTabProps } from './GodTab';
 import { displayName, t, type MessageKey } from './i18n';
 import { allianceTitle } from './historyText';
@@ -13,7 +13,7 @@ const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
 const num = (v: number): string => Math.round(v).toLocaleString('en-US');
 const signed = (v: number): string => (v >= 0 ? '+' : '−') + num(Math.abs(v));
 
-type Tab = 'overview' | 'economy' | 'actions' | 'god';
+type Tab = 'overview' | 'economy' | 'actions' | 'build' | 'god';
 
 /**
  * Left nation panel (PLAN 1.31a): the selected nation's name and colour, then an Overview tab
@@ -66,8 +66,8 @@ export function NationPanel({
   // chips were names with no meaning): a tap on its chip; again, or another nation, hides them.
   const [traitOpen, setTraitOpen] = useState<{ nation: number; id: string } | null>(null);
   // The God tab exists only in God Mode (PLAN 1.32b).
-  const tab: Tab = (!god && chosen === 'god') || (!actions && chosen === 'actions') ? 'overview' : chosen;
-  const tabs: Tab[] = ['overview', 'economy', ...(actions ? (['actions'] as const) : []), ...(god ? (['god'] as const) : [])];
+  const tab: Tab = (!god && chosen === 'god') || (!actions && (chosen === 'actions' || chosen === 'build')) ? 'overview' : chosen;
+  const tabs: Tab[] = ['overview', 'economy', ...(actions ? (['actions', 'build'] as const) : []), ...(god ? (['god'] as const) : [])];
   // The month in parts is asked for while the economy tab is open, of this nation.
   useEffect(() => {
     onEconomy?.(tab === 'economy' ? nation.id : 0);
@@ -129,6 +129,9 @@ export function NationPanel({
       </nav>
       {tab === 'actions' && actions ? (
         <ActionsTab nation={nation} {...actions} />
+      ) : tab === 'build' && actions ? (
+        // The played nation's production on a tab of its own (ROADMAP R53h).
+        <BuildTab nation={nation} templates={actions.templates} day={actions.day} onCommand={actions.onCommand} />
       ) : tab === 'god' && god ? (
         <GodTab nation={nation} {...god} />
       ) : tab === 'overview' ? (
