@@ -2119,3 +2119,7 @@
 - `heldBy` reads `world.seaBattles`; on 21105 a French division in a fight beside the transports was named, now the
   British fleet is. Display only. `landingHeld1938` 2 (the new case red before).
 - **Next:** R53c.
+
+## 2026-11-08 — R53c: a march to the port gives its days to the last (ADR-878)
+- Under a day from the port the days were left out; now "about a day". `landingMarchDays1938` (red before).
+- **Next:** R53d.

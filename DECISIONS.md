@@ -7,6 +7,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-878 · 2026-11-08 · accepted — A division marching to its port gives its days to the last (R53c)
+- **Context.** Critic run 54 (small, since run 53): on 22105 day 2, two of three division lines read "Marching to
+  Portsmouth to board transports" with no days and the third kept them. Under `SAME_CLICK_HOURS` (a day) from the
+  port, `voyageOf` left the days out.
+- **Decision.** Its days whenever its march hours are known, at least one; "about a day" words for the last (its
+  landing waits for it, or sails before it).
+- **Consequences.** Display only (`voyageOf` feeds the panels and the rows). `landingMarchDays1938` (red before).
+
 ### ADR-877 · 2026-11-08 · accepted — A held landing names the fleet in its sea battle, not any foe in a fight (R53b)
 - **Context.** Critic run 54, R54-N1 (code reading): `heldBy` took the nearest formation in a fight at war with the
   lander, of any kind at any distance; with two foes, an army fighting ashore near the coast could be named for the

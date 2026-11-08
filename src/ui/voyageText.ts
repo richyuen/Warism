@@ -16,8 +16,9 @@ export function voyageText(voyage: Voyage): string {
   if (voyage.state === 'atSea' && voyage.heldBy) return t('formation.voyage.atSea.held', { by: displayName(voyage.heldBy) });
   if (voyage.ai) return t(`formation.voyage.${voyage.state === 'atSea' ? 'atSea' : voyage.state === 'toPort' ? 'toPort' : 'waiting'}.ai`);
   if (voyage.state === 'sibling') return t(voyage.days === 1 ? 'formation.voyage.sibling.one' : 'formation.voyage.sibling', { port: voyage.port ?? '', other: voyage.other ?? '', days: voyage.days ?? 1 });
-  if (voyage.state === 'toPort' && voyage.port && voyage.later) return t(voyage.days !== undefined ? 'formation.voyage.toPort.later' : 'formation.voyage.toPort.laterSoon', { port: voyage.port, days: voyage.days ?? 1 });
-  if (voyage.state === 'toPort' && voyage.port && voyage.days !== undefined) return t('formation.voyage.toPort.days', { port: voyage.port, days: voyage.days });
+  // Its days to the port, "about a day" the last (R53c).
+  if (voyage.state === 'toPort' && voyage.port && voyage.later) return t(voyage.days === undefined ? 'formation.voyage.toPort.laterSoon' : voyage.days === 1 ? 'formation.voyage.toPort.later.one' : 'formation.voyage.toPort.later', { port: voyage.port, days: voyage.days ?? 1 });
+  if (voyage.state === 'toPort' && voyage.port && voyage.days !== undefined) return t(voyage.days === 1 ? 'formation.voyage.toPort.days.one' : 'formation.voyage.toPort.days', { port: voyage.port, days: voyage.days });
   return t(voyage.port ? `formation.voyage.${voyage.state}.port` : `formation.voyage.${voyage.state}`, { port: voyage.port ?? '' });
 }
 

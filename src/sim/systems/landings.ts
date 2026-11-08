@@ -1279,7 +1279,8 @@ export function voyageOf(world: World, id: number): { state: 'toPort' | 'waiting
     const hours = marchHoursLeft(world, id);
     // One its landing does not wait for (R31f, R44a): it sails before; this one goes on the next voyage.
     const later = l.state !== LandingState.gathering || !waited(world, l, id) ? { later: true as const } : {};
-    return Number.isFinite(hours) && hours >= SAME_CLICK_HOURS ? { state: 'toPort', port, days: Math.ceil(hours / 24), ...later } : { state: 'toPort', port, ...later };
+    // Its days to the last, at least one (R53c; critic run 54: under a day it said none, beside lines that did).
+    return Number.isFinite(hours) ? { state: 'toPort', port, days: Math.max(1, Math.ceil(hours / 24)), ...later } : { state: 'toPort', port, ...later };
   }
   // At the port, its landing sailed without it: the next voyage (R17b, R37a).
   if (l.state !== LandingState.gathering) return { state: 'nextVoyage', port };
