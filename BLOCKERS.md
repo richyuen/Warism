@@ -5,6 +5,27 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 
 ## Open
 
+### R53k: Denmark's frozen share on 20899 is Greenland's ice counted in cells; the rule that would move it reaches Britain too (2026-11-08) — waits on the user
+- **The bar:** `c48_top.cjs` on 21099, 20899 and 24099 for 25 years: no top-5 holder within ±0.2 % of one share for
+  20 years or more; 24099's first three not the same every year.
+- **Read on HEAD `8aad3be5`** (`.cache/r53k/head-*.json`): 24099 passes (France third by year 8, the USA first by
+  year 16); 21099 passes (Denmark out of the top 5 after year 11); 20899 fails: Denmark 5.0–5.5 % in 24 of 25 years.
+  R53g made these new worlds.
+- **Why** (`.cache/r53k/den.ts 20899`): Denmark is at war most years (with GER, SOV, ENG, CAN, USA …); its European
+  land falls from 74 cells to 10 by year 18, but it keeps Greenland and Iceland (33,861 cells) all 25 years. No
+  enemy lands there; a peace annexes only occupied land; and `overrun` (0.75), `SMALL_STATE_KM2` and `PUPPET_SHARE`
+  all weigh Greenland, so Denmark never capitulates.
+- **The measure:** the critic's share counts cells (`runner.ts` `controlled`). By area, the game's own ranking
+  (ADR-52), Denmark is 1.74 % of the land, not in the top 5; 27,677 of its 34,154 cells are ice.
+- **The reach of a homeland rule** (`.cache/r53k/scope.ts`, 1938, share of owned area off the capital's landmass):
+  Denmark 98 %, United Kingdom 87 %, Netherlands 72 %, Dutch East Indies 69 %, Japan 46 %, Philippines 62 %.
+- **Options for the user:** (a) a homeland rule: capitulation and the small-state annexation weigh the capital's
+  landmass, and a capitulated nation's cut-off land goes to the winners in the peace (Denmark's Greenland, but also
+  Britain's empire when Britain falls); a whole-game change, A/B on the sweep first. (b) The bar re-scoped to area,
+  the game's own ranking (the critic's script unchanged; the ADR says why). (c) Greenland's ice cap unowned in the
+  1938 data (the coast Danish).
+- **Left:** R53k waits on the user's choice; R53l onward go on meanwhile.
+
 ### `seaRow1938`'s Speed x1 test red on this machine again, the code not its cause; on `tools/gate/knownRed.json` (2026-11-08, R53g)
 - **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
   with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a). Resolved once (docs/BLOCKERS_DONE.md,
