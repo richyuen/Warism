@@ -976,15 +976,30 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     ashore near Catania"); a "thrown back" row for each division counted, not only the one the event names;
     `landingRows` gains the Malta case with a row, panel and last-news check. AT:
     `SHOTAT=162,168,174,180,186 node critic/scripts/c54_lhold.mjs 23105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta
-    200`, and `c54_lland.mjs` with the same arguments (240 h) on the five new seeds.
+    200`, and `c54_lland.mjs` with the same arguments (240 h) on the five new seeds. Design (the report's Hearts of
+    Iron idea): a landing has one status from start to end, and the bar, the order, the panel and the news say it in
+    the same words.
   - [ ] R53b R54-N1: `heldBy` names the nation of a foe fleet in the landing's sea battle (`world.seaBattles`), not
     the nearest engaged formation of any kind at war.
   - [ ] R53c Small: on 22105 day 2, every division line gives its days (two drop them: "Marching to Portsmouth to
     board transports"; `c54_lbar.mjs 22105 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br3_phone 390 844 14 4`).
+  - [ ] R53d The three places checked, not the bar alone: `landingRows` compares, hour by hour, each division's row,
+    its panel and its last order news (the ticker), and fails on a disagreement; the Malta click (23105, 24151) among
+    its cases. 0 broken on every case.
+  - [ ] R53e Run 54's design objections (each was "no score lowered"; taken before run 55 by the user's call):
+    - ADR-759: a cancel no longer hands a played nation's divisions to the AI at once; an option keeps them where the
+      player left them (20661: 365 read "At sea with the AI's landing" within a day of "cancelled: back at Tokyo").
+    - ADR-864: the Breakthrough corridor is drawn on the map for its 10 days.
+    - ADR-873: a mark joins a held landing's transports to the fleet that holds them (21105: the fight 14–19 cells
+      off, nothing drawn between).
+  - [ ] R53f Run 54's idea from other games, the other one (the Hearts of Iron one is R53a's design): History has a
+    "my wars only" filter, as Europa Universalis' message log.
+  - [ ] R53g Before critic run 55: the critic's own probes on new seeds, and the spread of endings read, not one case:
+    `c54_lhold.mjs` and `c54_lland.mjs` on the 11 Malta seeds and about 20 new ones, and the other landing families
+    (Tokyo → Shanghai, Portsmouth → Bremerhaven, Germany → Norwich); then run 54's jobs replayed (ADR-833), and R54-B1's
+    "what the bar needs" read item by item.
   - Kept: `landingInvariants` and `landingRows` 0 broken.
 - Filed, not in this batch (each carried from earlier runs, its "what the bar needs" in the report): History's
   repeated Tangier begin/won pair on 7019; the phone nation panel's Build buttons below the screen; the run-26
   scenario refused; the editor's flat nation list; Denmark frozen (21099, 20899) and 24099's fixed top three; year-one
-  dogpiles (20887, 24129); the unit zooms at 33–48 fps on 7019's year 20. Design objections: a cancel hands the army to
-  the AI at once (ADR-759); the Breakthrough corridor undrawn (ADR-864); no mark joins a held landing to its attacker
-  (ADR-873).
+  dogpiles (20887, 24129); the unit zooms at 33–48 fps on 7019's year 20.
