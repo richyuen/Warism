@@ -58,8 +58,8 @@ if (scenarioId !== null) {
           if (save) location.assign(continueUrl(save));
         }}
         checkScenarioFile={async (file) => {
-          const { header, scenario } = await checkScenarioFile(new Uint8Array(await file.arrayBuffer()));
-          return { name: header.name, scenario, startDay: SCENARIO_INFO[scenario].startDay, tick: header.tick };
+          const { header, scenario, upgraded } = await checkScenarioFile(new Uint8Array(await file.arrayBuffer()));
+          return { name: header.name, scenario, startDay: SCENARIO_INFO[scenario].startDay, tick: header.tick, upgraded };
         }}
         onScenarioFile={async (file) => location.assign(stagedScenarioUrl(await stageScenarioFile(new Uint8Array(await file.arrayBuffer()))))}
         loadFailed={params.get('failed') === 'scenario'}

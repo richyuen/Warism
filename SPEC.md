@@ -1967,7 +1967,11 @@ God's commands apply at once (`applyNow`), refused like any command (`inRange`, 
 - **Scenario files** (`src/shared/scenarioFile.ts`, `src/app/scenarioFiles.ts`): gzip of a magic line, a
   JSON header (format `SCENARIO_FORMAT` 1, name, base, size, tick, hash) and the state, without the
   command log, history, statistics or undo; `.warism-scenario`. Loaded from the editor or the title
-  screen (any size its map offers), the hash compared.
+  screen (any size its map offers), the hash compared. A file lacking a part this version reads is refused,
+  with why, but for the parts in `UPGRADABLE_SECTIONS` (`src/shared/stateCheck.ts`; ROADMAP R53i): the worker adds
+  them, zeros (`src/sim/core/upgrade.ts`), the hash is compared on the file as written, and the title screen and the
+  editor's line say what was added (`nations.traits`: "Made before nation traits: its nations start with none").
+  A save is never upgraded.
 
 ### 9.6 Statistics and history
 - **Statistics** (`src/sim/stats.ts`, last in the tick): monthly a row for each living nation (`stats.km2`:

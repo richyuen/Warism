@@ -308,7 +308,7 @@ export function App({
               .arrayBuffer()
               .then((buf) => importScenarioFile(hud.sim, new Uint8Array(buf), base, geo.w, geo.h))
               .then((h) => {
-                setScenarioStatus(t('scenario.loaded', { name: h.name }));
+                setScenarioStatus([t('scenario.loaded', { name: h.name }), ...h.upgraded.map((u) => t(`scenario.upgraded.${u}`))].join(' '));
                 onLoaded();
               })
               .catch((e: unknown) => setScenarioStatus(t('scenario.failed', { error: e instanceof Error ? e.message : String(e) })));

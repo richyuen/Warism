@@ -80,6 +80,7 @@ import { landStandings } from '../sim/landArea';
 import { Sim } from '../sim/sim';
 import { CONTACT_CELLS, cellDist, contactsOf, deployOf, elementFacing, elementIndex, slotCount, slotPlace, wrapDx } from '../sim/systems/elements';
 import { blockReach, SLOT_SPACING } from '../sim/core/pose';
+import { upgradeState } from '../sim/core/upgrade';
 import { AssetStore } from './assets';
 import { airOf, buildMapCaches, Domain, portSeaOf, seaOf, TILE, type World } from '../sim/world';
 import { airHolders } from '../sim/systems/airSuperiority';
@@ -403,8 +404,10 @@ export class SimServer {
       case 'save':
         this.reply(msg.reqId, this.requireSim().save());
         break;
-      case 'load':
-        this.requireSim().load(msg.bytes);
+      case 'load': {
+        // A scenario file of an older version: the parts it lacks that this one can add (ROADMAP R53i).
+        const up = msg.upgrade ? upgradeState(msg.bytes) : null;
+        this.requireSim().load(up ? up.bytes : msg.bytes);
         this.worldNo++;
         this.newsFrom = -1;
         this.labelVersion = -1; // the controller layer was replaced wholesale
@@ -423,9 +426,13 @@ export class SimServer {
         this.statsTick = -1;
         this.lastStatsMs = -1;
         this.resetStreams();
-        this.reply(msg.reqId);
+        if (up) {
+          const s = this.requireSim();
+          this.post({ type: 'reply', reqId: msg.reqId, status: { tick: s.tick, hash: s.hash(), upgraded: { fileHash: up.fileHash, added: up.added } } }, []);
+        } else this.reply(msg.reqId);
         this.warmLanes();
         break;
+      }
       case 'speed':
         this.speed = msg.speed;
         this.owed = 0;

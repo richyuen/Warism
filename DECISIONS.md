@@ -7,6 +7,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-885 · 2026-11-08 · accepted — A scenario file that lacks only nation traits starts, with none, and says so (R53i)
+- **Context.** Critic run 54 (carried since run 48): the run-26 scenario file (`critic/c26_critic_standoff.warsim-scenario`)
+  is refused on the title, "made by an older version of Warism, and this one cannot start it" (PLAN 7.168's check).
+  It lacks one section of the 123 this version reads, `nations.traits:u16` (ROADMAP R16, ADR-822, came after it).
+- **Decision.** A scenario file is a starting point: a part it lacks is added where zeros mean "as before the part
+  came". `UPGRADABLE_SECTIONS` (shared) lists them, now `nations.traits` alone (no traits: the file's nations had
+  none); the worker adds each as a column of its table's high water (`upgradeState`) before the load. The state hash
+  is checked on the file's sections as written (equal to the header's, the old version's `Sim.hash`), since the world
+  with the part added hashes otherwise. The title screen offers the file with "Made before nation traits: its
+  nations start with none"; the editor's import line says the same. A file lacking any other part is refused as
+  before. A save is not upgraded: a game under way, refused whole (PLAN 7.149).
+- **Consequences.** The run-26 file starts at its own tick with no traits (spec `scenarioUpgrade1938`, the critic's
+  file; red before: refused). Unit `scenarioUpgrade` (a 1938 export with traits stripped: refused by the sim before,
+  loaded with none after; with another part stripped, still refused). Sim rules unchanged; no pin moves.
+
 ### ADR-884 · 2026-11-08 · accepted — The played nation's production is a Build tab, by kind (R53h)
 - **Context.** Critic run 54 (small, UI; "as in earlier runs"): on the phone the nation panel's 16 "Build" buttons
   were below the screen (`critic/c54_p.json`, the Actions tab 139–1289 px of 844), and at 1280 × 720 26. The Actions

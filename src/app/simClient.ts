@@ -479,9 +479,10 @@ export class SimClient {
     return { bytes: r.bytes, status: r.status };
   }
 
-  async load(bytes: Uint8Array): Promise<SimStatus> {
+  /** `upgrade`: a scenario file of an older version, its missing parts added (ROADMAP R53i; `SimStatus.upgraded`). */
+  async load(bytes: Uint8Array, upgrade = false): Promise<SimStatus> {
     const copy = bytes.slice();
-    const status = (await this.status({ type: 'load', bytes: copy }, [copy.buffer])).status;
+    const status = (await this.status({ type: 'load', bytes: copy, ...(upgrade ? { upgrade } : {}) }, [copy.buffer])).status;
     for (const l of this.loadListeners) l();
     return status;
   }

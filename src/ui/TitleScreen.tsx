@@ -29,9 +29,10 @@ export interface TitleScreenProps {
   onContinue: () => void;
   /**
    * Reads a scenario file's header (PLAN 7.13b): its name, its scenario and its date; rejects with a
-   * readable error when the file does not fit. Nothing starts.
+   * readable error when the file does not fit. Nothing starts. `upgraded`: the parts of an older version's file that
+   * this one adds to start it (ROADMAP R53i), said under its date.
    */
-  checkScenarioFile: (file: File) => Promise<{ name: string; scenario: ScenarioId; startDay: number; tick: number }>;
+  checkScenarioFile: (file: File) => Promise<{ name: string; scenario: ScenarioId; startDay: number; tick: number; upgraded?: readonly 'traits'[] }>;
   /** Starts the game of a scenario file (checked); rejects with a readable error when the file does not fit. */
   onScenarioFile: (file: File) => Promise<void>;
   /** A scenario file could not be loaded after this screen was left for its game. */
@@ -56,7 +57,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, readSave, onContin
   const [failed, setFailed] = useState(loadFailed);
   // A file chosen and read, waiting for Start (PLAN 7.13b, critic run 7: "a file starts the game at
   // once, with no confirmation").
-  const [pending, setPending] = useState<{ file: File; name: string; scenario: ScenarioId; startDay: number; tick: number } | null>(null);
+  const [pending, setPending] = useState<{ file: File; name: string; scenario: ScenarioId; startDay: number; tick: number; upgraded?: readonly 'traits'[] } | null>(null);
   useEffect(() => {
     void readSave()
       .then(setSave)
@@ -143,6 +144,11 @@ export function TitleScreen({ scenarios, previewUrl, onStart, readSave, onContin
                 <div class="title-scenario-date">
                   {t(scenarios.find((s) => s.id === pending.scenario)?.info.nameKey as MessageKey ?? 'scenario.file')} · {dateAt(pending.startDay, pending.tick)}
                 </div>
+                {pending.upgraded?.map((u) => (
+                  <div key={u} class="panel-note title-file-upgraded" data-testid="title-file-upgraded">
+                    {t(`scenario.upgraded.${u}` as MessageKey)}
+                  </div>
+                ))}
                 <div class="title-file-actions">
                   <button
                     type="button"

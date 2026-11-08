@@ -2159,3 +2159,9 @@
   Navy and Air, tiles two to a row. Spec `buildTab1938` (red before; phone and laptop shots looked at); four specs
   reach the tiles through the tab. `seaRow1938`'s Speed x1 test back on `knownRed.json` with R53g (red on HEAD too).
 - **Next:** R53i.
+
+## 2026-11-08 — R53i: the run-26 scenario starts (ADR-885)
+- It lacked one section, `nations.traits` (R16 came after it). A scenario file lacking only that now starts with no
+  traits; the title screen says so. The hash is checked on the file as written. Unit `scenarioUpgrade`, spec
+  `scenarioUpgrade1938` on the critic's own file (both red before). Saves are not upgraded.
+- **Next:** R53j.

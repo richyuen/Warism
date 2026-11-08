@@ -96,7 +96,7 @@ export type ToWorker =
   | { type: 'save'; reqId: number }
   /** PLAN 1.38: the world as a scenario (run history dropped): state bytes + their hash. */
   | { type: 'exportScenario'; reqId: number }
-  | { type: 'load'; reqId: number; bytes: Uint8Array }
+  | { type: 'load'; reqId: number; bytes: Uint8Array; upgrade?: boolean }
   | { type: 'speed'; speed: Speed }
   | { type: 'pause'; paused: boolean }
   /** Whether the worker pauses itself at the tick of a nuclear strike (PLAN 7.109a: the host's pause came a second late, ~155 game hours at Max). */
@@ -129,6 +129,8 @@ export interface ProvinceBuildResult {
 export interface SimStatus {
   tick: number;
   hash: number;
+  /** A load with `upgrade` (a scenario file, ROADMAP R53i): the hash of the bytes as given, and the sections added. */
+  upgraded?: { fileHash: number; added: string[] };
 }
 
 /** Per-nation record in `Snapshot.nations` (stride NATION_STRIDE). */

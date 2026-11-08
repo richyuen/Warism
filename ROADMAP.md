@@ -1016,9 +1016,11 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     Done (ADR-884): production is a Build tab by kind (Infantry, Armour, Navy, Air), tiles two to a row; every tile of
     a kind whole in the panel and nothing off the screen on Build or Actions, at 390 × 844 and 1280 × 720
     (`buildTab1938`).
-  - [ ] R53i The run-26 scenario loads, or says what it changed to load it
+  - [x] R53i The run-26 scenario loads, or says what it changed to load it
     (`node critic/scripts/c54_os2_scen.mjs critic/c26_critic_standoff.warsim-scenario c54`; now "made by an older
     version of Warism, and this one cannot start it").
+    Done (ADR-885): it lacked `nations.traits` alone; a scenario file lacking only that starts with no traits, the
+    title saying "Made before nation traits: its nations start with none" (`scenarioUpgrade1938`, the critic's file).
   - [ ] R53j A typed filter narrows the editor's nation list (one flat list of 100+ names; `c54_g_editor.mjs 24121`).
   - [ ] R53k Emergent dynamics: on 21099 and 20899 for 25 years (`node critic/scripts/c48_top.cjs` on `npm run sim
     -- --scenario 1938 --seed <s> --years 25`), no top-5 holder within ±0.2 % of the same share for 20 or more years
