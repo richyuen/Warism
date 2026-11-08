@@ -247,6 +247,12 @@ export class Hud {
     });
     // What became of the player's orders (PLAN 4.9c): the newest last, ORDER_NEWS_KEPT at most.
     sim.onLandings((rows) => {
+      // A new landing of the player's on a phone: the nation's panel gives way to the bar, which it hides there
+      // (ROADMAP R48g; critic run 51, the ADR-854 objection: take control left Japan's panel open, and the bar was not
+      // seen after the first order).
+      const had = new Set(this.landings.peek().map((r) => r.id));
+      const fresh = rows.some((r) => r.state !== 'over' && !had.has(r.id));
+      if (fresh && this.selected.peek() !== 0 && typeof window !== 'undefined' && window.matchMedia?.('(max-width: 600px)').matches) this.onSelectNation(0);
       this.landings.value = rows;
     });
     sim.onOrderNews((news) => {

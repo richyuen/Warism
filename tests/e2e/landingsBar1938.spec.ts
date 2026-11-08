@@ -196,3 +196,36 @@ test("one click's landings from several ports: one row, a line a port, one cance
   await expect(row.getByTestId('landing-status')).toHaveText(/^cancelled: /);
   await page.screenshot({ path: path.join(shotDir(info), 'landings-click-cancelled.png') });
 });
+
+// ROADMAP R48g (critic run 51, the ADR-854 objection): on a phone, take control left Japan's panel open, which hides the
+// bar there, and after the first order the bar was not seen. Now the panel gives way at a new landing: Japan's panel
+// open, its division nearest Tokyo sent to Shanghai, then the bar on the screen and the panel closed.
+test("on a phone a new landing's bar is seen: the nation's panel gives way", async ({ page }, info) => {
+  test.setTimeout(240_000);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?scenario=1938&paused=1&seed=3517');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(({ a, d }) => window.__warsim!.hud.command({ kind: 'declareWar', attacker: a, defender: d }), { a: JAP, d: CHI });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await page.evaluate((n) => window.__warsim!.view!.select(n), JAP);
+  await page.getByTestId('take-control').click();
+  await expect(page.getByTestId('release-control')).toBeVisible();
+  await expect(page.locator('.nation-panel'), "Japan's panel, open after take control").toBeVisible();
+  const div = await page.evaluate(({ nat, x, y }) => {
+    const v = window.__warsim!.view!;
+    return v.formationsOf(nat).filter((f) => !v.formationAfloat(f)).map((f) => [f, Math.hypot(v.formationPos(f)![0] - x, v.formationPos(f)![1] - y)] as const).sort((a, b) => a[1] - b[1])[0]![0];
+  }, { nat: JAP, x: TOKYO[0], y: TOKYO[1] });
+  await page.evaluate(({ id, to }) => {
+    const p = window.__warsim!.player!;
+    p.clearSelection();
+    p.boxSelect([id], false);
+    p.click(to[0], to[1], -9999, -9999, false);
+    p.clearSelection();
+  }, { id: div, to: SHANGHAI });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('landings-bar'), 'the bar, seen').toBeVisible();
+  await expect(page.locator('.nation-panel'), 'the panel gave way').toHaveCount(0);
+  const box = (await page.getByTestId('landings-bar').boundingBox())!;
+  expect(box.y + box.height, 'on the screen').toBeLessThanOrEqual(844);
+  await page.screenshot({ path: path.join(shotDir(info), 'landings-phone-after-control.png') });
+});

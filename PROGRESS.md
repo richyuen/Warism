@@ -2021,3 +2021,8 @@
 - `LandingRow.click` (siblings taken through); the bar a row a click, a line a port, one cancel. 20861's three: one
   row, cancelled whole. `landingClick1938` 4 (2 red before), `landingsBar1938` 6.
 - **Next:** R48g.
+
+## 2026-11-07 — R48g: on a phone the panel gives way to a new landing (ADR-863); R48 done
+- A new landing on a phone closes the nation's panel; `landingsBar1938` 7 (red before). Run 51's 25 landing seeds: 0
+  broken. R48 (run 51's naval findings) done.
+- **Next:** R49, then the critic (run 52).

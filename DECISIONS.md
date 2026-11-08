@@ -7,6 +7,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-863 · 2026-11-07 · accepted — On a phone the nation's panel gives way to a new landing (R48g)
+- **Context.** Critic run 51's objection to ADR-854: on a phone a nation's panel hides the landings bar (both want
+  the top of a narrow screen), and take control leaves the nation's panel open, so after the player's first landing
+  order the bar was not seen.
+- **Decision.** The panel gives way: on a phone (the 600 px rule's width), a landing of the player's new in the
+  hour's rows closes the nation's panel (`hud.onLandings`). The bar under a panel stays hidden (two panels in 390 px
+  hide the map); the desktop is as it was.
+- **Consequences.** `landingsBar1938` case 7 (390 × 844: Japan's panel open after take control, an order to
+  Shanghai, the bar seen and the panel closed; red before).
+
 ### ADR-862 · 2026-11-07 · accepted — One click's landings, one row (R48f)
 - **Context.** Critic run 51's objection to ADR-838 with R47: one click split over three ports showed three rows, and a
   cancel ended one; Hearts of Iron shows one plan with its ports and one cancel.

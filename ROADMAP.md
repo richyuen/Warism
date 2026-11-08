@@ -878,8 +878,10 @@ ideas and "what the bar needs", filed (PROMPT's RELEASES, ADR-843); then critic 
     row (each port a line in it), with one cancel for the click.
     Done (ADR-862): rows carry their click (siblings taken through); the bar draws one row a click, its ports in the
     title, a line a port opened, one cancel for all. 20861: one row of three, cancelled whole.
-  - [ ] R48g The ADR-854 objection: on a phone, taking control leaves the nation's panel open and hides the bar after
+  - [x] R48g The ADR-854 objection: on a phone, taking control leaves the nation's panel open and hides the bar after
     the first order; the bar is seen with a panel open (or the panel gives way at an order).
+    Done (ADR-863): on a phone a new landing closes the nation's panel; the bar is seen. Run 51's 25 landing seeds:
+    0 broken after R48a–g.
   - Not taken: the bar gives way to a nuclear alert (ADR-854; the critic: "the user's choice; noted").
   - Kept: `landingInvariants` at 0 broken on run 51's 25 landing seeds (the bar's third line), checked in each part.
 - [ ] R49 **Run 51's other findings** (dimensions at their bars; after R48).
