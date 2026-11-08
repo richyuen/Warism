@@ -2123,3 +2123,8 @@
 ## 2026-11-08 — R53c: a march to the port gives its days to the last (ADR-878)
 - Under a day from the port the days were left out; now "about a day". `landingMarchDays1938` (red before).
 - **Next:** R53d.
+
+## 2026-11-08 — R53d: the landing checker reads the news, and the critic's page clicks (ADR-879)
+- A `news` kind (row, panel and order news agree) and seven Rome → Valletta page cases; red on the code before R53a
+  (the six seeds the critic found), 115 cases 0 broken now.
+- **Next:** R53e.

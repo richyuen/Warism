@@ -989,9 +989,11 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
   - [x] R53c Small: on 22105 day 2, every division line gives its days (two drop them: "Marching to Portsmouth to
     board transports"; `c54_lbar.mjs 22105 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br3_phone 390 844 14 4`).
     Done (ADR-878): under a day, "about a day"; every line on 22105's march has its days.
-  - [ ] R53d The three places checked, not the bar alone: `landingRows` compares, hour by hour, each division's row,
+  - [x] R53d The three places checked, not the bar alone: `landingRows` compares, hour by hour, each division's row,
     its panel and its last order news (the ticker), and fails on a disagreement; the Malta click (23105, 24151) among
     its cases. 0 broken on every case.
+    Done (ADR-879): a `news` kind; `PAGE_CASES` (the Malta clicks, seven seeds); before R53a 6 broken, now 115 cases
+    0 broken.
   - [ ] R53e Run 54's design objections (each was "no score lowered"; taken before run 55 by the user's call; the
     ADR-759 one, a cancel handing the army to the AI, not taken: ADR-875):
     - ADR-864: the Breakthrough corridor is drawn on the map for its 10 days.

@@ -13,7 +13,13 @@
  *   the worker's tally (ROADMAP R50a; critic run 52, R52-B1: "lost at sea" for two inland, "landed" for two ashore on
  *   Sicily): `landed` afloat one hour and ashore at the row's land the next (`landedAway`, as the news judges it),
  *   `away` ashore away from it, `lost` gone while afloat; a row that says landed with none so, or other than landed
- *   with one.
+ *   with one;
+ * - `news`: one whose order news (the ticker's and its panel's last words) says other than its row and panel (ROADMAP
+ *   R53a, R53d; critic run 54, R54-B1: "over: 2 thrown back" beside two "landed away from its target", "lands in about
+ *   a day" after "thrown back"). Since it joined its row: its panel says thrown back with no such news, or such news
+ *   and its panel at sea bound for the landing; told both thrown back and landed away; thrown back and ashore with no
+ *   `thrownAshore` that hour; and, its row over, thrown back with no such news, or ashore away (by the world) and not
+ *   told so.
  */
 import type { Command } from '../../src/shared/commands';
 import type { FormationDetail, LandingRow, OrderNews } from '../../src/shared/protocol';
@@ -30,8 +36,8 @@ import { nationId } from './sim1938';
 const { w: W, h: H } = SIZE_1938;
 const cellAt = (x: number, y: number): number => Math.floor(y) * W + Math.floor(x);
 
-export type RowBrokenKind = 'missing' | 'twice' | 'words' | 'state' | 'outcome';
-export const ROW_BROKEN_KINDS: RowBrokenKind[] = ['missing', 'twice', 'words', 'state', 'outcome'];
+export type RowBrokenKind = 'missing' | 'twice' | 'words' | 'state' | 'outcome' | 'news';
+export const ROW_BROKEN_KINDS: RowBrokenKind[] = ['missing', 'twice', 'words', 'state', 'outcome', 'news'];
 
 /** A worker with the player's landings' rows as last sent, and the case's divisions' events. */
 export class RowRun {
@@ -47,6 +53,9 @@ export class RowRun {
   private ends = new Map<number, Map<number, 'landed' | 'away' | 'repulsed' | 'lost'>>();
   /** The case's divisions thrown back while afloat: their place aboard with no water (`amphibious`'s repulse, R52a). */
   private thrownBack = new Set<number>();
+  /** The kinds of order news each of the case's divisions was told since it joined its row (R53d), and the news read. */
+  private told = new Map<number, Set<OrderNews['kind']>>();
+  private newsRead = 0;
   hours = 0;
 
   constructor(
@@ -103,6 +112,25 @@ export class RowRun {
       const p = this.panel(id);
       if (landingOfDivision(w, id) !== undefined) this.broken.push({ kind: 'missing', what: `t${t} ${id}: in landing ${landingOfDivision(w, id)!.id}, panel ${p?.state ?? 'none'}, in no row` });
     }
+    // The news since each joined its row (R53d): a new row, told afresh.
+    for (const id of this.ids) if (seen.has(id) && this.rowOf.get(id) !== seen.get(id)) this.told.delete(id);
+    for (; this.newsRead < this.news.length; this.newsRead++) {
+      const n = this.news[this.newsRead]!;
+      if (!this.ids.includes(n.id)) continue;
+      const k = this.told.get(n.id) ?? new Set<OrderNews['kind']>();
+      k.add(n.kind);
+      this.told.set(n.id, k);
+    }
+    const told = (id: number, k: OrderNews['kind']): boolean => this.told.get(id)?.has(k) ?? false;
+    for (const r of open) {
+      for (const d of r.divisions) {
+        if (!this.ids.includes(d.id)) continue;
+        const thrown = d.voyage?.state === 'atSea' && d.voyage.thrownTo !== undefined;
+        if (thrown && !told(d.id, 'repulsed')) this.broken.push({ kind: 'news', what: `t${t} ${d.id}: panel thrown back, never told so` });
+        if (!thrown && d.voyage?.state === 'atSea' && told(d.id, 'repulsed')) this.broken.push({ kind: 'news', what: `t${t} ${d.id}: told thrown back, panel ${JSON.stringify(d.voyage)}` });
+      }
+    }
+    for (const id of this.ids) if (told(id, 'repulsed') && told(id, 'landedAway')) this.broken.push({ kind: 'news', what: `t${t} ${id}: told thrown back and landed away` });
     // Where each division of a row under way ended, from the world: off the water this hour (ashore, at the row's land or
     // away from it), or gone while afloat.
     const land = new Map(this.rows.map((r) => [r.id, r.land]));
@@ -128,6 +156,10 @@ export class RowRun {
         }
         this.ends.set(row, e);
       }
+      // Thrown back and ashore this hour: told so (R53d).
+      if (this.thrownBack.has(id) && this.wasAfloat.has(id) && !afloat && w.formations.has(id) && !told(id, 'thrownAshore')) {
+        this.broken.push({ kind: 'news', what: `t${t} ${id}: thrown back, ashore, not told so (${[...(this.told.get(id) ?? [])].join(',')})` });
+      }
       if (afloat) this.wasAfloat.add(id);
       else this.wasAfloat.delete(id);
       if (seen.has(id)) this.rowOf.set(id, seen.get(id)!);
@@ -144,6 +176,11 @@ export class RowRun {
       if (o.kind === 'cancelled') said.away = was.away; // turned back: ashore at its port, not broken off
       if (JSON.stringify(said) !== JSON.stringify(was)) this.broken.push({ kind: 'outcome', what: `t${t} row ${r.id} ${o.kind} says ${JSON.stringify(said)}, they ended ${JSON.stringify(was)}` });
       if ((o.kind === 'landed') !== was.landed > 0) this.broken.push({ kind: 'outcome', what: `t${t} row ${r.id} ${o.kind}, ${was.landed} of its divisions landed` });
+      // Its words and each division's news (R53d): thrown back told so; ashore away told so (not a cancel's, home).
+      for (const [id, end] of this.ends.get(r.id) ?? []) {
+        if (end === 'repulsed' && !told(id, 'repulsed')) this.broken.push({ kind: 'news', what: `t${t} row ${r.id} ${id}: thrown back, never told so` });
+        if (end === 'away' && o.kind !== 'cancelled' && !told(id, 'landedAway')) this.broken.push({ kind: 'news', what: `t${t} row ${r.id} ${id}: ashore away, told ${[...(this.told.get(id) ?? [])].join(',') || 'nothing'}` });
+      }
       for (const id of mine) if (this.rowOf.get(id) === r.id) this.rowOf.delete(id);
     }
   }
@@ -208,6 +245,28 @@ export function farRows(f: FarCase): RowRun {
   r.ids = ids;
   order(r, ids, [Math.floor(to[0]) + 0.5, Math.floor(to[1]) + 0.5]);
   runOut(r, f.days * 24);
+  return r;
+}
+
+/**
+ * The critic's page clicks (ROADMAP R53d; critic run 54, R54-B1, `c54_lland.mjs`): at war, `n` divisions of `tag`
+ * nearest `from` (cells) each ordered to `to` on its own, with no escort, as the page's clicks; run `hours`.
+ */
+export interface PageCase { seed: number; tag: string; foe: string; from: [number, number]; to: [number, number]; n: number; hours: number }
+
+/** Rome to Valletta, Italy's two (run 50's Malta case): thrown back on 23105 and 24151–24171, held on 21105. */
+const MALTA = { tag: 'ITA', foe: 'ENG', from: [1095.5, 344.5] as [number, number], to: [1106.5, 383.5] as [number, number], n: 2, hours: 260 };
+export const PAGE_CASES: PageCase[] = [21105, 23105, 24151, 24153, 24155, 24159, 24171].map((seed) => ({ seed, ...MALTA }));
+
+export function pageRows(p: PageCase): RowRun {
+  const nation = nationId(p.tag);
+  const r = new RowRun(p.seed, nation);
+  r.cmds([{ kind: 'declareWar', attacker: nation, defender: nationId(p.foe) }]);
+  r.step();
+  const ids = nearestDivisions(r.world, nation, p.from, p.n);
+  r.ids = ids;
+  for (const id of ids) r.cmds([{ kind: 'moveFormation', id, x: p.to[0], y: p.to[1], nation }]);
+  runOut(r, p.hours);
   return r;
 }
 

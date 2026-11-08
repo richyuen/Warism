@@ -7,6 +7,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-879 · 2026-11-08 · accepted — The landing checker reads the news too, and the critic's page clicks (R53d)
+- **Context.** Critic run 54, R54-B1: `landingRows` (108 cases, 0 broken) and landingInvariants did not see a bar that
+  said "lands in about a day" after "thrown back", nor "over: 2 thrown back" beside the ticker's "landed away". The
+  checker read the row and the panels, not the order news; and its cases clicked all at once with an escort, where
+  the page's player orders each division on its own.
+- **Decision.** `RowRun` keeps the order news, and a `news` kind is broken when, since a division joined its row: its
+  panel says thrown back with no such news, or it was told so and its panel says at sea bound for the landing; it was
+  told both thrown back and landed away; thrown back and ashore with no `thrownAshore` that hour; its row over, thrown
+  back (by the world) with no such news, or ashore away and not told so (not a cancel's). New cases, `PAGE_CASES`
+  (`tools/diag/landingRows.ts page`): run 54's Rome to Valletta clicks, each division ordered alone, no escort, on
+  21105, 23105, 24151, 24153, 24155, 24159, 24171.
+- **Consequences.** On the code before R53a the page cases read 6 broken (174 `news`), the six seeds the critic found;
+  at HEAD 115 cases, 21,167 hours, 0 broken. `landingRowsCritic1938` runs 23105.
+
 ### ADR-878 · 2026-11-08 · accepted — A division marching to its port gives its days to the last (R53c)
 - **Context.** Critic run 54 (small, since run 53): on 22105 day 2, two of three division lines read "Marching to
   Portsmouth to board transports" with no days and the third kept them. Under `SAME_CLICK_HOURS` (a day) from the
