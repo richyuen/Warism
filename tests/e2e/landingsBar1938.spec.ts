@@ -168,3 +168,31 @@ test("a landing's open row on a landscape phone: its cancel and every division o
   for (let k = 0; k < (await divisions.count()); k++) await inside(await divisions.nth(k).boundingBox(), `division ${k + 1}`);
   await page.screenshot({ path: path.join(shotDir(info), 'landings-landscape-open3.png') });
 });
+
+// ROADMAP R48f (critic run 51, the ADR-838 objection; Hearts of Iron's one plan): on 20861 one click sends Japan's three
+// nearest Tokyo to Shanghai from three ports. One row for the click, its ports in its title; opened, a line a port with
+// its divisions; its one cancel ends every landing of it: the row over, "cancelled".
+test("one click's landings from several ports: one row, a line a port, one cancel for all", async ({ page }, info) => {
+  test.setTimeout(240_000);
+  await ordered(page, 1600, 900, { seed: 20861, nat: JAP, foe: CHI, from: [1818.5, 385.5], to: [1715.5, 413.5], n: 3 });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  const row = page.getByTestId('landing-row');
+  await expect(row, 'one row for the click').toHaveCount(1);
+  const parts = Number(await row.getAttribute('data-parts'));
+  expect(parts, 'landings of the click').toBeGreaterThan(1);
+  await expect(row.getByTestId('landing-title')).toHaveText(/^Shanghai from Tokyo, Ōsaka/);
+  await row.getByTestId('landing-toggle').click();
+  await expect(row.getByTestId('landing-part')).toHaveCount(parts);
+  await expect(row.getByTestId('landing-division')).toHaveCount(3);
+  await expect(row.getByTestId('landing-cancel')).toHaveCount(1);
+  await page.screenshot({ path: path.join(shotDir(info), 'landings-click-open.png') });
+  await row.getByTestId('landing-cancel').click();
+  for (let h = 0; h < 48; h++) {
+    if ((await row.getAttribute('data-state')) === 'over') break;
+    await page.evaluate(() => window.__warsim!.sim.step(1));
+  }
+  await expect(row).toHaveAttribute('data-state', 'over');
+  await expect(row).toHaveAttribute('data-outcome', 'cancelled');
+  await expect(row.getByTestId('landing-status')).toHaveText(/^cancelled: /);
+  await page.screenshot({ path: path.join(shotDir(info), 'landings-click-cancelled.png') });
+});

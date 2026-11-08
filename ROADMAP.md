@@ -874,8 +874,10 @@ ideas and "what the bar needs", filed (PROMPT's RELEASES, ADR-843); then critic 
     (within a day), or the landings within the hour.
     Done (ADR-861): the words as the rule, "to land within a day of the landing from …" (row, panel, hover); on 20661
     and 20841 each pair so told lands within 24 h.
-  - [ ] R48f The ADR-838 objection and Hearts of Iron's idea: one click's landings from several ports grouped as one
+  - [x] R48f The ADR-838 objection and Hearts of Iron's idea: one click's landings from several ports grouped as one
     row (each port a line in it), with one cancel for the click.
+    Done (ADR-862): rows carry their click (siblings taken through); the bar draws one row a click, its ports in the
+    title, a line a port opened, one cancel for all. 20861: one row of three, cancelled whole.
   - [ ] R48g The ADR-854 objection: on a phone, taking control leaves the nation's panel open and hides the bar after
     the first order; the bar is seen with a panel open (or the panel gives way at an order).
   - Not taken: the bar gives way to a nuclear alert (ADR-854; the critic: "the user's choice; noted").

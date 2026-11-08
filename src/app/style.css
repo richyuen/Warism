@@ -1308,6 +1308,22 @@ textarea,
 .landing-division-name {
   font-weight: 600;
 }
+/* One click's landing from a port (R48f): its port and where it stands, then its divisions. */
+.landing-part + .landing-part {
+  margin-top: 0.25rem;
+}
+.landing-part-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.4rem;
+}
+.landing-part-port {
+  font-weight: 700;
+  color: #d9c08a;
+}
+.landing-part > ul {
+  padding-left: 0.6rem;
+}
 .landing-cancel {
   flex: none;
   align-self: center;

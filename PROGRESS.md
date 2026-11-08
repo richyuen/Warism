@@ -2016,3 +2016,8 @@
   20661 and 20841 (each pair so told lands within 24 h). A heredoc nearly overwrote `landingTogether1938.test.ts`;
   restored from git before any commit.
 - **Next:** R48f.
+
+## 2026-11-07 — R48f: one click, one row (ADR-862)
+- `LandingRow.click` (siblings taken through); the bar a row a click, a line a port, one cancel. 20861's three: one
+  row, cancelled whole. `landingClick1938` 4 (2 red before), `landingsBar1938` 6.
+- **Next:** R48g.

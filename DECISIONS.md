@@ -7,6 +7,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-862 · 2026-11-07 · accepted — One click's landings, one row (R48f)
+- **Context.** Critic run 51's objection to ADR-838 with R47: one click split over three ports showed three rows, and a
+  cancel ended one; Hearts of Iron shows one plan with its ports and one cancel.
+- **Decision.** A landing's row carries its click: the least id of it and its siblings (R37c's `siblings`, the same
+  place within a day of each other's first order), taken through (`clickOf`). The bar draws one row a click: "Shanghai
+  from Tokyo, Ōsaka, Hiroshima"; where it stands as one (`groupStatus`: the last to sail, "1 of 3 at sea; the last
+  sails in about 2 days", the last to land, landed summed, cancelled summed); transports summed; opened, "From
+  Tokyo" and where that one stands, then its divisions, a port each; one cancel, every live landing of it. A lone
+  landing's row is as before. A part turning back is no longer a sibling (`siblings` leaves out returning) and so
+  stands as its own row.
+- **Consequences.** `landingClick1938` (20861 one click; 15101 two orders an hour apart for two places, two clicks; the
+  click's cancel ends all; `groupStatus`'s words; red before on the click); `landingsBar1938` case 6 (the row, its
+  parts, one cancel, over and cancelled).
+
 ### ADR-861 · 2026-11-07 · accepted — Siblings land "within a day of" each other, as the words say (R48e)
 - **Context.** Critic run 51, R51-N7: 365's panel on 20661 said "they land together", and its landings came ashore at
   t117 and t129; 20841's at t119, t129, t131. The rule (R37c, ADR-836's `SIBLING_SLACK_HOURS`) lands them within half

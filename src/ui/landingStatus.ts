@@ -23,3 +23,35 @@ export function landingStatus(r: LandingRow): string {
   if (r.sails) return t(r.sails.days === 1 ? 'landing.sails.one' : 'landing.sails', { days: r.sails.days });
   return t('landing.gathering');
 }
+
+/**
+ * Where one click's landings stand together (ROADMAP R48f): one alone says its own. Several: gathering, the last to
+ * sail; some at sea and some not, how many at sea and when the last sails; all at sea, the last to land; turning back,
+ * so; all over, their landed summed, or, all cancelled, their sent back and stopped summed, the ports named.
+ */
+export function groupStatus(parts: LandingRow[]): string {
+  if (parts.length === 1) return landingStatus(parts[0]!);
+  const days = (r: LandingRow): number => r.sails?.days ?? 0;
+  const gathering = parts.filter((r) => r.state === 'gathering').sort((a, b) => days(b) - days(a));
+  const sailing = parts.filter((r) => r.state === 'sailing').sort((a, b) => (b.lands ?? 0) - (a.lands ?? 0));
+  if (gathering.length > 0 && sailing.length === 0) return landingStatus(gathering[0]!);
+  if (gathering.length > 0) {
+    const d = days(gathering[0]!);
+    if (d === 0) return t('landing.group.someNoDays', { at: sailing.length, of: parts.length });
+    return t(d === 1 ? 'landing.group.some.one' : 'landing.group.some', { at: sailing.length, of: parts.length, days: d });
+  }
+  if (sailing.length > 0) return landingStatus(sailing[0]!);
+  const back = parts.find((r) => r.state === 'returning');
+  if (back) return landingStatus(back);
+  const sum = (f: (r: LandingRow) => number): number => parts.reduce((n, r) => n + f(r), 0);
+  const landed = sum((r) => (r.outcome?.kind === 'landed' ? r.outcome.landed : 0));
+  const lost = sum((r) => r.outcome?.lost ?? 0);
+  if (landed > 0) return lost > 0 ? t('landing.over.landedLost', { n: landed, lost }) : t('landing.over.landed', { n: landed });
+  if (parts.every((r) => r.outcome?.kind === 'cancelled')) {
+    // The ports of those sent back (the others' divisions stopped where they stood).
+    const port = parts.filter((r) => (r.outcome?.home ?? 0) > 0).map((r) => r.port).join(', ') || parts[0]!.port;
+    const merged: LandingRow = { ...parts[0]!, port, outcome: { kind: 'cancelled', tick: parts[0]!.outcome!.tick, landed: 0, lost: 0, home: sum((r) => r.outcome?.home ?? 0), stopped: sum((r) => r.outcome?.stopped ?? 0), ...(parts.some((r) => r.outcome?.ai) ? { ai: true as const } : {}) } };
+    return landingStatus(merged);
+  }
+  return landingStatus(parts[0]!);
+}

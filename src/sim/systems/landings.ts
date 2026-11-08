@@ -873,6 +873,23 @@ export function sailsIn(world: World, l: Landing): { hours: number; other?: numb
   return sib && sib.hours > own ? { hours: sib.hours, other: sib.port } : { hours: own };
 }
 
+/**
+ * The click landing `l` is of (ROADMAP R48f; critic run 51, the ADR-838 objection: one click, three rows, a cancel
+ * ending one): the least id of `l` and the landings it is a sibling of, through siblings of siblings.
+ */
+function clickOf(world: World, l: Landing): number {
+  const seen = new Set<number>([l.id]);
+  const todo = [l];
+  while (todo.length > 0) {
+    for (const o of siblings(world, todo.pop()!)) {
+      if (seen.has(o.id)) continue;
+      seen.add(o.id);
+      todo.push(o);
+    }
+  }
+  return Math.min(...seen);
+}
+
 /** A landing of a nation's in a row (ROADMAP R47; `landingRows`): read from `world.landings`, nothing decided here. */
 export interface LandingRowData {
   id: number;
@@ -891,6 +908,8 @@ export interface LandingRowData {
   sailsIn: { hours: number; other?: number } | null;
   /** At sea: the hours until its groups are at its water (`voyageHours`, the longest); null otherwise or unknown (R48d). */
   landsIn: number | null;
+  /** Its click: the least id of it and its siblings (`siblings`, taken through), one key for the landings one click made from several ports (R48f). */
+  click: number;
 }
 
 /** Nation `nation`'s landings in rows, by id (ROADMAP R47a). */
@@ -914,6 +933,7 @@ export function landingRows(world: World, nation: number): LandingRowData[] {
         have: Math.floor(roomOf(world, l) / TRANSPORT_MEN),
         sailsIn: sailsIn(world, l),
         landsIn: l.state === LandingState.sailing ? voyageHours(world, l) || null : null,
+        click: clickOf(world, l),
       };
     });
 }

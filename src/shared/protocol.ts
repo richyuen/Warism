@@ -912,6 +912,8 @@ export interface LandingRow {
   sails: { days: number; other?: string } | null;
   /** At sea: the days until it lands, at least 1 (ROADMAP R48d; critic run 51, R51-N6: it said only "at sea"). */
   lands?: number;
+  /** Its click (ROADMAP R48f): the landings one click made from several ports share it, the bar's one row. */
+  click: number;
   /**
    * `home`, `stopped`: a cancel's, those sent back to the port aboard and those stopped where they stood ashore (R48a);
    * `ai`: the player's army is the AI's (ADR-759), which commands them again once the cancel's orders are done.
