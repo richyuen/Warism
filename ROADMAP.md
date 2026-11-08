@@ -850,7 +850,7 @@ Critic run 51 (full, on `14a85a51`): no blocking issue, 0 broken on every checke
 7 (bar 8), resting on the landings bar's cancel words (R51-N1, N2). Each of its naval findings, design objections,
 ideas and "what the bar needs", filed (PROMPT's RELEASES, ADR-843); then critic run 52.
 
-- [ ] R48 **Run 51's naval findings.**
+- [x] R48 **Run 51's naval findings.**
   - [x] R48a R51-N1 and the ADR-855 objection (EU's "halt"): a gathering landing's cancel stops those ashore where
     they stand (as R43e's end does), those aboard sail back to the port; the row says what is true each hour ("turning
     back to {port}", then "back at {port}"; ashore "stopped where they stand"), the tooltip "go to", not "go back to".

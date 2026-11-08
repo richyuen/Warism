@@ -2035,3 +2035,9 @@
 ## 2026-11-07 — R49b: History's hour cause first (ADR-865); R49 done
 - History's rows take `causeFirst`; the panel the newest hour first, each hour as logged. `historyHourOrder` on 20429.
 - **Next:** the critic's probes replayed (`replayCritic.ts`), then critic run 52 (naval, ADR-833).
+
+## 2026-11-07 — Run 51's probes replayed at 0b3dd6e1 (ADR-833's step before a critic run)
+- `replayCritic.ts --run 51 --at head --jobs 4`: 65 jobs, 63 the same, 2 differ in a note only (`slowClick`'s counts;
+  20829's worst click 4.3 days over its best way, 1.7 at the critic's, inside `slowClick`), 0 broken on every checker
+  (`docs/replays/run51-at-0b3dd6e1.md`). Nothing to fix first.
+- **Next:** critic run 52.
