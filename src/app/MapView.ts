@@ -9,6 +9,7 @@ import { LABEL_STRIDE } from '../shared/nationLabels';
 import { FlagStore } from './flagStore';
 import { formationPips, type Pips } from '../render/units/pips';
 import type { LandingMark } from '../shared/protocol';
+import { drawCorridors, type CorridorMark } from '../render/fx/corridors';
 import { drawHolds, type HoldMark } from '../render/fx/holds';
 import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
@@ -721,6 +722,7 @@ export class MapView {
     this.voyages = s.voyages.slice();
     this.seas = s.seas.slice();
     this.holds = s.holds.slice();
+    this.corridors = s.corridors.slice();
     this.sorties = s.sorties.slice();
     // The sea battles going on, for the ticker (PLAN 4.10b): told when the set changes.
     const seaKey = Array.from(this.seas, (v, k) => (k % SEA_STRIDE === 3 || k % SEA_STRIDE === 4 ? v : Math.round(v))).join(',');
@@ -1025,6 +1027,8 @@ export class MapView {
   private seas = new Float32Array(0);
   /** The player's landings held at sea (ROADMAP R53e; `Snapshot.holds`). */
   private holds = new Float32Array(0);
+  /** The breakthrough corridors in force (ROADMAP R53e; `Snapshot.corridors`). */
+  private corridors = new Float32Array(0);
   private raids = new Float32Array(0);
   private raidKey = '';
   /** Cells with fallout in the last message (PLAN 6.3c; tests). */
@@ -1044,6 +1048,8 @@ export class MapView {
   seaMarks: { x: number; y: number }[] = [];
   /** Where the held landings' marks were drawn in the last frame (ROADMAP R53e; tests). */
   holdMarks: HoldMark[] = [];
+  /** Where the breakthrough corridors were drawn in the last frame (ROADMAP R53e; tests). */
+  corridorMarks: CorridorMark[] = [];
   /** The sorties placed on screen at the last frame (PLAN 5.7a), for tests. */
   sortieMarks: PlacedSortie[] = [];
   /** The panels over the map in canvas px (ROADMAP R34e: hero counters kept clear of them), read at most every COVER_MS. */
@@ -2016,6 +2022,8 @@ export class MapView {
     const tint = (n: number): string => `#${this.nationColor(n).toString(16).padStart(6, '0')}`;
     // In the ball look each plane its silhouette with a small countryball on it (PLAN 7.174f, 7.180).
     const balls = this.unitLook === 'balls';
+    // The breakthrough corridors in force (ROADMAP R53e), on the ground: under the sorties and the counters.
+    this.corridorMarks = drawCorridors(ctx, this.corridors, cam, this.geo, vw, vh, tint, this.unitScale);
     this.sortieMarks = drawSorties(ctx, this.sorties, this.tickProgress(now) - 1, cam, this.geo, vw, vh, 1, tint, this.unitScale, this.shares.individuals, balls ? flagOf : undefined);
     // The air's fights, bombs and flak (PLAN 5.7b), with the sorties; at T3 a strike's bombs on
     // the men it hit, its formation's drawn elements (PLAN 5.9).

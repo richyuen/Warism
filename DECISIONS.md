@@ -7,6 +7,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-881 · 2026-11-08 · accepted — The breakthrough corridors are drawn on the map (R53e)
+- **Context.** Critic run 54's objection to ADR-864 (since run 51): God's Breakthrough is told in the ticker, but "the
+  map still shows nothing of the 10-day corridor that is the tool's whole effect". ADR-864 had not taken it ("a map
+  layer for one God tool").
+- **Decision.** Every corridor in force is drawn, God's and a major battle's winner's (one rule, SPEC §5.4; a God-only
+  mark would need a saved field on `Corridor`). The snapshot's `corridors` (CORRIDOR_STRIDE 8: start, way, length and
+  half width by `atSize`, nation, days left); the map draws the strip `inCorridor` reads (−1 to len along, ± half +
+  0.5 across) as a band of the nation's colour at 0.3, edged in amber on a dark line, with amber chevrons along its
+  way, under the sorties and counters; amber so a corridor over its own land (Germany's grey) is seen. It fades over
+  its last day; under 10 px long it is not drawn (the world's zoom). On 24123, two years: at most 13 in force at once,
+  1.2 on average.
+- **Consequences.** Display only. `corridorMark1938` (unit: God's corridor from Berlin toward Warsaw in the snapshot,
+  Germany's, 10 days, then gone; at peace none; red before), `corridorMark1938.spec` (the critic's clicks at 1500 m/px:
+  drawn from the click toward Warsaw; drawn where the ticker row's "Show where" flies, about 1,070 m/px; still on day
+  5; shots looked at). Frame cost: a few paths a corridor.
+
 ### ADR-880 · 2026-11-08 · accepted — A held landing's transports are joined on the map to the fleet that holds them (R53e)
 - **Context.** Critic run 54's objection to ADR-873: on 21105 the row named the United Kingdom, and the fight was real,
   but the British fleet was 14–19 cells off with nothing drawn between it and the transports; "a line or a ring on the

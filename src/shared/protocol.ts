@@ -330,6 +330,13 @@ export interface Snapshot {
    */
   holds: Float32Array;
   /**
+   * The breakthrough corridors in force (ROADMAP R53e; critic run 54's objection to ADR-864: nothing on the map of the
+   * 10 days that are the tool's whole effect), God's and a major battle's winner's (SPEC §5.4), CORRIDOR_STRIDE each:
+   * [x, y, dx, dy, len, half, nation, days]: its start (cells), its way (unit), its length and half width (cells,
+   * `atSize`), its nation, its days left.
+   */
+  corridors: Float32Array;
+  /**
    * A carrier's strikes out of a sea battle (PLAN 7.154a), RAID_STRIDE each (`worker/carrierRaids`): [kx, ky, tx,
    * ty, by, on, ashore, fleet, mx, my, mw, mh]: the carrier's fleet's place, its target's, the carrier's nation, the
    * target's, 1 when the target is on land, the fleet's id; the middle of the fleet and the target and the cells
@@ -944,6 +951,9 @@ export interface LandingRow {
 
 /** Numbers per held landing in a snapshot's `holds` (ROADMAP R53e). */
 export const HOLD_STRIDE = 6;
+
+/** Numbers per breakthrough corridor in a snapshot's `corridors` (ROADMAP R53e). */
+export const CORRIDOR_STRIDE = 8;
 
 /** Numbers per sea battle in a snapshot's `seas` (PLAN 4.10b). */
 export const SEA_STRIDE = 24;

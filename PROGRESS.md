@@ -2134,3 +2134,10 @@
   over the markers. Unit `landingHoldMark1938` (red before); spec `landingHoldMark1938.spec` (21105 h60 at 1500 and
   250 m/px, shots looked at). Display only; a few strokes a held landing.
 - **Next:** R53e's corridor.
+
+## 2026-11-08 — R53e (second part): the breakthrough corridors drawn (ADR-881); R53e done
+- `Snapshot.corridors` and `drawCorridors`: each corridor in force, God's and a battle winner's, as a band edged in
+  amber with chevrons, under the counters. Unit `corridorMark1938` (red before); spec `corridorMark1938.spec` (the
+  critic's Berlin → Warsaw click at 1500 m/px, "Show where" at about 1,070 m/px, day 5; shots looked at). At most
+  13 corridors at once on 24123 over two years. Display only.
+- **Next:** R53f.

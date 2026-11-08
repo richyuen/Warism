@@ -994,9 +994,11 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     its cases. 0 broken on every case.
     Done (ADR-879): a `news` kind; `PAGE_CASES` (the Malta clicks, seven seeds); before R53a 6 broken, now 115 cases
     0 broken.
-  - [ ] R53e Run 54's design objections (each was "no score lowered"; taken before run 55 by the user's call; the
+  - [x] R53e Run 54's design objections (each was "no score lowered"; taken before run 55 by the user's call; the
     ADR-759 one, a cancel handing the army to the AI, not taken: ADR-875):
     - ADR-864: the Breakthrough corridor is drawn on the map for its 10 days.
+      Done (ADR-881): every corridor in force (God's and a battle winner's), a band edged in amber with chevrons;
+      at the critic's click (1500 m/px) and where "Show where" flies.
     - ADR-873: a mark joins a held landing's transports to the fleet that holds them (21105: the fight 14–19 cells
       off, nothing drawn between).
       Done (ADR-880): a red ring on the held transports and a dashed line in the foe's colour from the fleet that

@@ -1153,6 +1153,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
 - Its start and end are events and History rows (`MajorBattleStarted`, `MajorBattleEnded`); the map marks it with a crossed
   swords disc (§8). God's `forceBreakthrough` makes a corridor and its row, refused at peace
   (`AtPeace`).
+- The map draws each corridor in force, God's and a battle winner's (`Snapshot.corridors`; R53e, ADR-881): the strip
+  the sim reads, a band of the nation's colour edged in amber with amber chevrons along its way, under the counters,
+  fading over its last day; under 10 px long on the screen it is not drawn.
 
 ---
 

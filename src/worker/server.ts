@@ -29,6 +29,7 @@ import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { AiLayer, aiRuns, playerHeld } from '../sim/ai/layers';
 import { carrierStrikes, inShipReach, nearestOwnPort, strikeTarget } from '../sim/systems/navalCombat';
 import { landedAway } from '../sim/systems/amphibious';
+import { CORRIDOR_HALF_WIDTH, CORRIDOR_LEN } from '../sim/systems/majorBattles';
 import { heldBy, heldByFleet, LandingState, landingOfDivision, landingRows, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
@@ -1367,6 +1368,19 @@ export class SimServer {
     return out;
   }
 
+  /**
+   * The snapshot's corridors (ROADMAP R53e; `Snapshot.corridors`): each breakthrough corridor in force, its start, way,
+   * length and half width (`atSize`), nation and days left, CORRIDOR_STRIDE each.
+   */
+  private corridors(world: World): number[] {
+    const out: number[] = [];
+    for (const c of world.battles.corridors) {
+      if (c.untilTick <= world.tick) continue;
+      out.push(c.x, c.y, c.dx, c.dy, world.atSize(CORRIDOR_LEN), world.atSize(CORRIDOR_HALF_WIDTH), c.nation, (c.untilTick - world.tick) / 24);
+    }
+    return out;
+  }
+
   /** The snapshot's voyages (ROADMAP R17c; `Snapshot.voyages`): the player's landings' divisions marching to their port or waiting there, and those at sea. */
   private voyages(world: World): number[] {
     const out: number[] = [];
@@ -2137,6 +2151,7 @@ export class SimServer {
       voyages: Float32Array.from(this.voyages(world)),
       seas,
       holds: Float32Array.from(this.holds(world)),
+      corridors: Float32Array.from(this.corridors(world)),
       raids: Float32Array.from(carrierRaids(world)),
       sorties,
       elements,
