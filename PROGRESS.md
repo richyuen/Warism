@@ -2086,3 +2086,8 @@
 - `endLanding` keeps `repulsed`; "over: 1 landed, 2 thrown back". `landingRepulse1938` (red before); the checker reads
   a throw-back from the world; 108 cases 0 broken.
 - **Next:** R52b.
+
+## 2026-11-07 — R52b: every port turning back named (ADR-872)
+- "turning back to Tokyo, Ōsaka: there in about a day"; "1 of 3 ashore; at sea: …". `landingClick1938` (red before);
+  the critic's two page probes pass.
+- **Next:** R52c.

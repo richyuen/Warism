@@ -608,6 +608,7 @@
   "landing.group.some": "{at} of {of} at sea; the last sails in about {days} days",
   "landing.group.some.one": "{at} of {of} at sea; the last sails in about a day",
   "landing.group.someNoDays": "{at} of {of} at sea",
+  "landing.group.ashore": "{at} of {of} ashore",
   "landing.sailing.days": "at sea: lands in about {days} days",
   "landing.sailing.one": "at sea: lands in about a day",
   "landing.sailing.held": "at sea: under attack, held up",

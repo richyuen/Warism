@@ -944,9 +944,11 @@ code of this month's; fixed first, then critic run 54 (full).
     critic's unstaged 23081 is consistent with "home").
     Done (ADR-871): thrown back stays so; "over: 1 landed, 2 thrown back"; the checker reads a throw-back from the
     world (a place aboard with no water); 108 cases 0 broken.
-  - [ ] R52b R53-N2: a click's row turning back from several ports names them all, with the longest days
+  - [x] R52b R53-N2: a click's row turning back from several ports names them all, with the longest days
     (`SHOTAT=30 c53_turnback.mjs 20661 …`: "turning back to Tokyo, Ōsaka"; `c53_lbar.mjs 22101 …` day 3 all three);
     and with one part ashore and others at sea, "1 of 3 ashore" as gathering's "2 of 3 at sea".
+    Done (ADR-872): "turning back to Tokyo, Ōsaka: there in about a day" (the critic's 20661 h30 and 22101 day 3 in the
+    page); "1 of 3 ashore; at sea: lands in about a day".
   - [ ] R52c R53-N3: "under attack, held up" names the attacker or is said only with a foe engaged near (a one-sided
     `engaged` checked: 21105 t55–t144, no British fleet engaged within 15 cells); the division's panel says the same.
     AT: `SHOTAT=60 c53_lhold.mjs 21105 ITA ENG … 2 ita_malta 200`.

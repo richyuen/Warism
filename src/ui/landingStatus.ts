@@ -58,9 +58,20 @@ export function groupStatus(parts: LandingRow[]): string {
     if (d === 0) return t('landing.group.someNoDays', { at: sailing.length, of: parts.length });
     return t(d === 1 ? 'landing.group.some.one' : 'landing.group.some', { at: sailing.length, of: parts.length, days: d });
   }
-  if (sailing.length > 0) return landingStatus(sailing.find((r) => r.held) ?? sailing[0]!);
-  const back = parts.find((r) => r.state === 'returning');
-  if (back) return landingStatus(back);
+  // Some ashore (over), the rest at sea: how many, then the sea's (R52b; critic run 53: "at sea" with one ashore).
+  const done = parts.filter((r) => r.state === 'over').length;
+  if (sailing.length > 0) {
+    const sea = landingStatus(sailing.find((r) => r.held) ?? sailing[0]!);
+    return done > 0 ? `${t('landing.group.ashore', { at: done, of: parts.length })}; ${sea}` : sea;
+  }
+  // Turning back from several ports: each named, the longest days (R52b; critic run 53, R53-N2: "turning back to Tokyo"
+  // for Tokyo, Ōsaka and Hiroshima).
+  const backs = parts.filter((r) => r.state === 'returning');
+  if (backs.length === 1) return landingStatus(backs[0]!);
+  if (backs.length > 1) {
+    const days = Math.max(0, ...backs.map((r) => r.back ?? 0));
+    return landingStatus({ ...backs[0]!, port: [...new Set(backs.map((r) => r.port))].join(', '), ...(days > 0 ? { back: days } : {}) });
+  }
   const sum = (f: (r: LandingRow) => number): number => parts.reduce((n, r) => n + f(r), 0);
   // Each part's divisions by where they ended, summed (R50a), told as one landing's.
   const landed = sum((r) => r.outcome?.landed ?? 0);

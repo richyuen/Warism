@@ -7,6 +7,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-872 · 2026-11-07 · accepted — A click's row names every port turning back (R52b)
+- **Context.** Critic run 53, R53-N2: a click's row turning back from two or three ports read "turning back to Tokyo"
+  (`groupStatus` took the first part's words), while the sub-lines and the panels named each port; and with one part
+  ashore and the rest at sea it read "at sea", where gathering says "2 of 3 at sea".
+- **Decision.** Turning back from several ports, the row names them all with the longest days ("turning back to
+  Tokyo, Ōsaka: there in about a day"); some ashore and the rest at sea, "1 of 3 ashore; at sea: lands in about a day".
+- **Consequences.** `landingClick1938` (the words; 20661's cancel names each port turning back every hour; red before);
+  the critic's `c53_turnback.mjs 20661 …` at h30 and `c53_lbar.mjs 22101 …` day 3 in the page.
+
 ### ADR-871 · 2026-11-07 · accepted — A division thrown back stays so in its row (R52a)
 - **Context.** Critic run 53, R53-N1: `endLanding` (ADR-866) set `repulsed` on `LandingRepulsed`, and the division's
   later coming ashore (it always does) overwrote it with landed or away: on the critic's staged 20861 the bar read

@@ -106,6 +106,9 @@ describe("one click's row to its end (ROADMAP R50b)", () => {
     for (let h = 0; h < 72; h++) {
       r.step();
       if (r.rows.some((x) => x.state === 'returning')) back++;
+      // R52b (critic run 53, R53-N2): the row names each port turning back, not the first only.
+      const backs = r.rows.filter((x) => x.state === 'returning');
+      if (backs.length > 1) for (const b of backs) expect(groupStatus(r.rows), `t${r.world.tick}`).toContain(b.port);
       if (r.rows.length > 0) expect(new Set(r.rows.map((x) => x.click)).size, `t${r.world.tick}: ${r.rows.map((x) => `${x.port} ${x.state}`).join(', ')}`).toBe(1);
     }
     expect(back, 'hours turning back').toBeGreaterThan(0);
@@ -118,6 +121,9 @@ describe("a click's row says where it stands (ROADMAP R48f)", () => {
     expect(groupStatus([row(1, 'Tokyo', { sails: { days: 1 } }), row(2, 'Hiroshima', { sails: { days: 3 } })])).toBe('sails in about 3 days');
     expect(groupStatus([row(1, 'Tokyo', { state: 'sailing', lands: 4 }), row(2, 'Hiroshima', { sails: { days: 2 } })])).toBe('1 of 2 at sea; the last sails in about 2 days');
     expect(groupStatus([row(1, 'Tokyo', { state: 'sailing', lands: 4 }), row(2, 'Hiroshima', { state: 'sailing', lands: 5 })])).toBe('at sea: lands in about 5 days');
+    // R52b: turning back from two ports, both named, the longer days; one ashore and the rest at sea, how many ashore.
+    expect(groupStatus([row(1, 'Tokyo', { state: 'returning', back: 1 }), row(2, 'Ōsaka', { state: 'returning', back: 2 })])).toBe('turning back to Tokyo, Ōsaka: there in about 2 days');
+    expect(groupStatus([row(1, 'Tokyo', { state: 'over', outcome: { kind: 'landed', tick: 9, landed: 1, lost: 0 } }), row(2, 'Ōsaka', { state: 'sailing', lands: 1 }), row(3, 'Hiroshima', { state: 'sailing', lands: 1 })])).toBe('1 of 3 ashore; at sea: lands in about a day');
     expect(groupStatus([row(1, 'Tokyo', { state: 'over', outcome: { kind: 'landed', tick: 9, landed: 2, lost: 0 } }), row(2, 'Hiroshima', { state: 'over', outcome: { kind: 'landed', tick: 9, landed: 1, lost: 0 } })])).toBe('over: 3 landed');
     expect(groupStatus([row(1, 'Tokyo', { state: 'over', outcome: { kind: 'cancelled', tick: 9, landed: 0, lost: 0, home: 2, stopped: 0 } }), row(2, 'Hiroshima', { state: 'over', outcome: { kind: 'cancelled', tick: 9, landed: 0, lost: 0, home: 0, stopped: 1 } })])).toBe('cancelled: 2 back at Tokyo, 1 stopped where they stood');
   });
