@@ -16,9 +16,11 @@ import type {} from '../../src/app/testApi';
 //
 // Since ROADMAP R16b (ADR-822, nation traits in the sim) three of the critic's 8 are no longer in
 // contact on day 21 (376, 475 and 487); each is replaced by the next formation of its nation and
-// template that is (380, 474 and 488), so the 8 are still 8 in contact.
+// template that is (380, 474 and 488), so the 8 are still 8 in contact. Since ROADMAP R53g (ADR-883, a Major Battle goes
+// on through a lull of a day) six of them are not in contact on day 21 (380, 389, 408, 427, 442, 488), each replaced
+// so (386, 390, 410, 429, 443, 489: the formation's `engaged` on day 21, headless).
 
-const IDS = [380, 389, 408, 427, 442, 474, 488, 746];
+const IDS = [386, 390, 410, 429, 443, 474, 489, 746];
 
 test("a land formation's \"To its fight\": it and the enemy it faces drawn in the view, the critic's 8 of 8", async ({ page }, info) => {
   test.setTimeout(600_000);

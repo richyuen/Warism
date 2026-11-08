@@ -2146,3 +2146,10 @@
 - While a nation is played, History keeps its war rows (`WAR_KINDS`). Unit `historyMine` (red before); spec
   `historyMine1938.spec` (Germany at war with Poland: 15 of 119 rows; desk and phone shots looked at). UI only.
 - **Next:** R53g.
+
+## 2026-11-08 — R53g: a Major Battle goes on through a lull of a day (ADR-883)
+- The Tangier pair was two battles: one quiet hour ended a battle and the armies began another. Now it ends when
+  decided or after 24 h unmatched. 7019, two years: battles 84 → 51, restarts within a day 36 % → 10 %, corridors
+  84 → 51; 24123 91 → 69. Land of the leaders −5 % to +11 %. Pin `6012d9d2` → `bd1b6944`. `majorBattles` (red before).
+  The critic's long worlds (7019, 21099, 20899) change from here: a rule moved, not a regression.
+- **Next:** R53h.

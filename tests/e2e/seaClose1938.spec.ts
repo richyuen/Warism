@@ -17,6 +17,8 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // transports), 1100 (ENG/JAP battle fleet) and 1664 (FRA/SOV cruisers) no longer happen; the same
 // scan (70 and 80 days) on HEAD gives a French transport group against Italian destroyers at hour 156,
 // British and Nationalist Spanish cruiser squadrons at 1230 and French and Soviet destroyers at 1465.
+// Since ROADMAP R53g (ADR-883, a Major Battle through a lull of a day) the row of 1465 no longer happens; the same scan
+// (80 days) gives Soviet and Polish destroyers at hour 1195, 12 km; the other four stand at their hours.
 
 const id = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
 
@@ -25,8 +27,8 @@ const CASES = [
   { hour: 45, a: 'ENG', b: 'GER', what: 'destroyers against a battle fleet, 32 km' },
   { hour: 156, a: 'FRA', b: 'ITA', what: 'transports against destroyers, 12 km' },
   { hour: 164, a: 'ENG', b: 'ITA', what: 'a carrier group against submarines, 12 km' },
+  { hour: 1195, a: 'SOV', b: 'POL', what: 'destroyers against destroyers, 12 km' },
   { hour: 1230, a: 'ENG', b: 'NSP', what: 'a cruiser squadron against a cruiser squadron, 12 km' },
-  { hour: 1465, a: 'FRA', b: 'SOV', what: 'destroyers against destroyers, 12 km' },
 ] as const;
 
 /** After a flight of the camera: until it is over, and a snapshot of the new view. */

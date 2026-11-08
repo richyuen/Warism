@@ -447,8 +447,12 @@ test('one zoom from the whole world to the men of a battle: eight stops, every t
       // a stronger neighbour's (PLAN 1.45b: its men are in that counter's number, which says "+n"),
       // the nearest counter that stands for other nations too. (Since PLAN 2.13 the battle is a
       // Romanian division's, and at the whole world's scale Romania's counter is folded.)
+      // The counter that holds the division: within 150 px, its nation's or one with others folded in, with its men at
+      // least (a counter is a grid cell's cluster at its centroid, PLAN 2.2, and folds into a stronger neighbour's,
+      // 1.45b: since ADR-883, on day 31 the Japanese division's cluster is in China's "634.1k +2" 35 px off, while a
+      // Japanese cluster of 720 stands 99 px off). With none, the nearest of its nation's, or with others, as before.
       const shown = seen.counters.filter((c) => c.alpha === 1 && !c.folded).sort((a, b) => a.d - b.d);
-      const own = shown.find((c) => c.nation === node.nation) ?? shown.find((c) => c.others > 0);
+      const own = shown.find((c) => (c.nation === node.nation || c.others > 0) && c.d < 150 && c.strength >= node.men[0]!) ?? shown.find((c) => c.nation === node.nation) ?? shown.find((c) => c.others > 0);
       console.log(`  its counter: ${own ? `"${own.text}" (${own.strength} men, of ${NATIONS_1938[own.nation - 1]?.tag}, with ${own.others} other nation(s)) ${own.d.toFixed(0)} px from the battle` : 'none'}; ${seen.counters.length} counters in all`);
       expect(own, `${name}: a counter of ${tag}`).toBeDefined();
       expect(own!.d, `${name}: the counter's distance from the battle, px`).toBeLessThan(150);

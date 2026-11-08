@@ -12,7 +12,10 @@ import { assets1938 } from '../helpers/earth';
 // whole way (5–6 ms), and was asked again every MARCH_DAYS: the operational AI's largest cost.
 
 describe('a refused march from afar waits (PLAN 7.117, ADR-703)', () => {
-  it('seed 4: the first formation refused waits FAR_RETRY_DAYS with no order refused, and the wait is saved', () => {
+  it('seed 6: the first formation refused waits FAR_RETRY_DAYS with no order refused, and the wait is saved', () => {
+    // Seed 6 from day 180 since ADR-883 (R53g, a Major Battle goes on through a lull of a day): seed 2 has none in its
+    // first 400 days on that history; 1 on day 172, 3 on 276, 4 on 126, 5 on 129, 6 on 254 (formation 307), 7 on 304
+    // (`tools/diag/firstWait.ts`); 4's is before day 180.
     // Seed 4 from day 180 since ADR-797 (PLAN 7.188, a pledge binds as a bond): seeds 1 and 2 have none in their
     // first 400 days on that history; 3 on day 253 (formation 820), 4 on 255 (formation 729), 5 on 330, 6 on 338,
     // 7 on 352 (`tools/diag/firstWait.ts`). Seed 3's 820 is not taken: while it waits, the plan's orders to the
@@ -27,7 +30,7 @@ describe('a refused march from afar waits (PLAN 7.117, ADR-703)', () => {
     // Seed 4 from day 180 since ADR-723 (PLAN 7.133, the wings over the sea): seeds 7 and 99 have none in
     // their first 400 days on that history, seeds 1-6 each one (4: day 185; `tools/diag/firstWait.ts`).
     // Seed 7 from day 180 since ADR-711 (PLAN 7.5 before critic run 15); before, seed 99 from day 90.
-    const s = at1938(4, 180 * 24);
+    const s = at1938(6, 180 * 24);
     const w = s.world;
     const refused = new Map<number, number[]>();
     const step = (): void =>
@@ -44,7 +47,7 @@ describe('a refused march from afar waits (PLAN 7.117, ADR-703)', () => {
         ww.out.fires.length = 0;
       });
     // Day by day to the first wait (seed 99 on 2026-10-25's rules: formation 571 on day 117; seed 7 on
-    // ADR-711's: formation 35 on day 198; seed 4 on ADR-723's: formation 32 on day 185; seed 7 on ADR-738's: formation 732 on day 261; seed 5 on ADR-739's: formation 544 on day 129; seed 4 on ADR-797's: formation 729 on day 255).
+    // ADR-711's: formation 35 on day 198; seed 4 on ADR-723's: formation 32 on day 185; seed 7 on ADR-738's: formation 732 on day 261; seed 5 on ADR-739's: formation 544 on day 129; seed 4 on ADR-797's: formation 729 on day 255; seed 6 on ADR-883's: formation 307 on day 254).
     let id = -1;
     let until = -1;
     for (let d = 0; d < 120 && id < 0; d++) {
@@ -60,7 +63,7 @@ describe('a refused march from afar waits (PLAN 7.117, ADR-703)', () => {
     // It was refused on the day the wait began.
     expect(refused.get(id) ?? []).toContain(from);
     // Saved and loaded with the state.
-    const u = new Sim({ scenario: '1938', seed: 4, assets: assets1938(SIZE_1938.w) });
+    const u = new Sim({ scenario: '1938', seed: 6, assets: assets1938(SIZE_1938.w) });
     u.load(s.save());
     expect(u.world.farWait.get(id)).toBe(until);
     expect(u.hash()).toBe(s.hash());

@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
+import { battleViewM, FIGHT_VIEW_MAX_M } from '../../src/app/battleView';
 import { NATIONS_1938 } from '../../src/sim/scenario1938';
 import { Domain } from '../../src/sim/world';
 import { settle } from './settle';
@@ -185,15 +186,15 @@ test('the panel of a formation in contact leads to its fight: both sides on the 
   const { furthest, tallest } = await page.evaluate(async () => {
     const { sim, view } = window.__warsim!;
     const km = (view!.metresPerPx * view!.controller.cam.scale) / 1000;
-    let furthest = { id: 0, enemy: 0, km: 0 };
-    let tallest = { id: 0, enemy: 0, km: 0 };
+    let furthest = { id: 0, enemy: 0, km: 0, span: [0, 0] as [number, number] };
+    let tallest = { id: 0, enemy: 0, km: 0, span: [0, 0] as [number, number] };
     for (const n of window.__warsim!.hud.stats.value!.nations) {
       for (const id of view!.formationsOf(n.id)) {
         const d = await sim.formation(id);
         // Of blocks on land: a fleet's fight is the box of two fleets' ships at sea (PLAN 7.126), framed as a sea battle's row.
         if (!d?.fight || d.fight.sea) continue;
-        if (Math.hypot(...d.fight.span) * km > furthest.km) furthest = { id, enemy: d.fight.enemy, km: Math.hypot(...d.fight.span) * km };
-        if (d.fight.span[1] * km > tallest.km) tallest = { id, enemy: d.fight.enemy, km: d.fight.span[1] * km };
+        if (Math.hypot(...d.fight.span) * km > furthest.km) furthest = { id, enemy: d.fight.enemy, km: Math.hypot(...d.fight.span) * km, span: [d.fight.span[0], d.fight.span[1]] };
+        if (d.fight.span[1] * km > tallest.km) tallest = { id, enemy: d.fight.enemy, km: d.fight.span[1] * km, span: [d.fight.span[0], d.fight.span[1]] };
       }
     }
     return { furthest, tallest };
@@ -210,7 +211,12 @@ test('the panel of a formation in contact leads to its fight: both sides on the 
   const tallAt = await page.evaluate(() => ({ m: window.__warsim!.view!.metresPerPx, figures: window.__warsim!.view!.individualCount }));
   console.log(`the furthest north or south: formation ${tallest.id}, ${tallest.km.toFixed(1)} km from the block of ${tallest.enemy}; the view at ${tallAt.m.toFixed(1)} m/px, ${tallOwn.on} of its ${tallOwn.all} elements and ${tallFoe.on} of the enemy's ${tallFoe.all} on the screen`);
   expect(tallAt.m).toBeGreaterThan(20.5);
-  expect(tallAt.m).toBeLessThanOrEqual(30);
+  // No further than T3 where T3 holds both blocks; where it cannot (since ADR-883 on this seed, 341 19.4 km north of
+  // 255's block: 45 m/px), as far out as holds them, the fight's zoom (`battleViewM`), and both whole below.
+  const kmPerCell = await page.evaluate(() => window.__warsim!.view!.geo.kmPerCell);
+  const tallM = battleViewM(VIEW.width, VIEW.height, kmPerCell, tallest.span, true);
+  if (tallM <= FIGHT_VIEW_MAX_M) expect(tallAt.m).toBeLessThanOrEqual(30);
+  expect(tallAt.m, 'the fight zoom for its span').toBeCloseTo(tallM, 0);
   expect(tallAt.figures).toBeGreaterThan(0);
   expect(tallOwn.all).toBeGreaterThan(0);
   expect(tallFoe.all).toBeGreaterThan(0);
@@ -223,7 +229,9 @@ test('the panel of a formation in contact leads to its fight: both sides on the 
   const farAt = await page.evaluate(() => ({ m: window.__warsim!.view!.metresPerPx, figures: window.__warsim!.view!.individualCount }));
   console.log(`the furthest: formation ${furthest.id}, ${furthest.km.toFixed(1)} km from the block of ${furthest.enemy}; the view at ${farAt.m.toFixed(1)} m/px, ${farOwn.on} of its ${farOwn.all} elements and ${farFoe.on} of the enemy's ${farFoe.all} on the screen`);
   expect(farAt.m).toBeGreaterThanOrEqual(19.99);
-  expect(farAt.m).toBeLessThanOrEqual(30);
+  const farM = battleViewM(VIEW.width, VIEW.height, kmPerCell, furthest.span, true);
+  if (farM <= FIGHT_VIEW_MAX_M) expect(farAt.m).toBeLessThanOrEqual(30);
+  expect(farAt.m, 'the fight zoom for its span').toBeCloseTo(farM, 0);
   expect(farAt.figures).toBeGreaterThan(0);
   expect(farOwn.all).toBeGreaterThan(0);
   expect(farFoe.all).toBeGreaterThan(0);

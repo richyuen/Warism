@@ -7,6 +7,33 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-883 · 2026-11-08 · accepted — A Major Battle goes on through a lull of a day (R53g)
+- **Context.** Critic run 54 (small, Stats): History on 7019 read "A major battle began near Tangier" and "… was won
+  by Germany" twice on 25 December 1957 and again on the 26th. Not a repeated row: a battle ended the first hour no
+  group continued it (SPEC §5.4), and the armies still there began another, each end a corridor. On 7019 in three
+  years 30 of 85 battles began again within 24 h and 3 cells of an end, 62 lasted a day or less; with a 72 h window
+  50 of 85 (24123: 60 of 91), the gaps spread evenly over 1–72 h.
+- **Decision.** An unmatched Major Battle ends when a camp has no men left within `END_CELLS` (decided, as before), or
+  after `MAJOR_END_HOURS` (24) unmatched; until then it stays in `majors` (its marker drawn: the battle is on) and a
+  group within `MATCH_CELLS` continues it. No new state (`lastTick` was kept). A day, the rule's unit elsewhere, and
+  the critic's case; the gaps have no natural cut.
+- **Consequences.** Seed 99's pin `6012d9d2` → `bd1b6944`. Two years, old → new: 7019 84 → 51 battles, began again
+  within a day 36 % → 10 %, a day or less 61 → 5, corridors 84 → 51; 24123 91 → 69, 44 % → 12 %, 64 → 4, 91 → 69.
+  The leading nations' land moves −5 % to +11 % either way (fronts do not stall). The critic's long worlds (7019's
+  `6a8590fe`, 21099, 20899) are new worlds from here. `majorBattles` (a 12 h lull, back in contact: one battle; apart,
+  it ends after 24 h; red before); the decided end of the test before it as it was. Random diplomacy, 20429–20439,
+  three years, old → new summed: wars 384 → 386, peaces 334 → 343, puppets 98 → 104, releases 37 → 37, capitals
+  taken 506 → 499, nations ended 89 → 91, battles ended 499 → 337. Tests on the old history moved, their checks
+  kept: `farWait1938` to seed 6 (4's first wait now on day 126, before its day 180; `tools/diag/firstWait.ts`),
+  `historyHourOrder` to 20441 (a release in the hour of a war left: none on 20429 in three years), `heroes`' portless
+  wait holds Germany portless through it (Riga taken by day 120 on seed 99). E2e on the old history, checks kept:
+  `fightCamera1938` six of its 8 to the next of their nation and template in contact on day 21; `fallen1938` to
+  Polish 565 (`contactPick.ts 4242 21 21`); `seaClose1938`'s fifth row to Soviet and Polish destroyers at hour 1195
+  (`seaPairs.ts 3613 80`); `enemyClickPanel1938` to seed 7's day 70 (seed 3's had one stack a pixel off the click);
+  `zoomDemo1938`'s theatre counter is the one within 150 px holding the division's men (it is folded into China's);
+  `formationFight1938`'s tallest and furthest pairs (341 19.4 km north of 255) go past T3 where T3 cannot hold both,
+  at the fight zoom of their span (`battleViewM`, 45 m/px), both blocks whole.
+
 ### ADR-882 · 2026-11-08 · accepted — History has "My wars only" for the nation played (R53f)
 - **Context.** Critic run 54's idea from Europa Universalis' message log (and Stats' "not 9": "there is no 'my wars
   only' filter"). History filters by type, nation and years; a nation's rows mix its wars with its economy, alliances

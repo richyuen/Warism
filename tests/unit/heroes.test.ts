@@ -271,7 +271,16 @@ describe('heroes heal and come back (PLAN 7.184a2)', () => {
       sim.command({ kind: 'removeFormation', id: back });
       sim.step(1, quiet);
       const due2 = w.heroReturn.get(row)!;
-      while (w.tick <= due2 + 48) sim.step(1, quiet);
+      // No port held through the wait: one Germany takes meanwhile (on seed 99 since ADR-883, Riga by day 120) is
+      // Poland's again within its hour, before the heroes' return is asked.
+      while (w.tick <= due2 + 48) {
+        for (const p of w.ports) {
+          if (w.cells.controller[p.cell] !== ger) continue;
+          w.setOwner(p.cell, pol);
+          w.setController(p.cell, pol);
+        }
+        sim.step(1, quiet);
+      }
       expect(heroOf(w, 'hero_bismarck'), 'no port: it waits').toBe(0);
       expect(heroWaits(w, row), 'and its row says why').toBe('port');
       expect(heroBreaks(w, tagOf)).toEqual([]);

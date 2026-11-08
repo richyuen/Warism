@@ -5,6 +5,16 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 
 ## Open
 
+### `seaRow1938`'s Speed x1 test red on this machine again, the code not its cause; on `tools/gate/knownRed.json` (2026-11-08, R53g)
+- **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
+  with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a). Resolved once (docs/BLOCKERS_DONE.md,
+  2026-11-03: green alone in a review).
+- **What was read:** red in R53g's gate and again alone; then alone 1 of 2 with R53g, and on HEAD `db7953f0`'s battle
+  rule (R53g's sim change stashed) 1 of 3. Each run the same battle, 25–27 frames in 6 s (SwiftShader), 6 ticks, at most
+  1 German tracer and 4 British at once; it passes when the one German tracer and a British one share a frame. The machine
+  idle (load 5 %, no node or Chrome left over).
+- **Left:** the test leaves the list when it passes here twice running. The test is not changed. Nothing waits on the user.
+
 ### PLAN 7.83c: supply's beach layer −7 %, short of `dd3b730` + 0.03 (2026-10-23)
 - **The bar:** supply's mean a tick on a year from HEAD's year-4 save of seed 99 at most `dd3b730`'s rules'
   + 0.03 (0.168 ms; 0.153 against the pairs' own HEAD), the year's hash f278491d and the pin unchanged.

@@ -5,8 +5,9 @@
  * committed men reach MAJOR_MEN, or that lies within MATCH_CELLS of an active Major Battle,
  * is (or continues) that Major Battle; its losses are amplified by MAJOR_LOSS_MULT. Camps are
  * the nations allied with the group's lowest-id formation (not at war with it) and the rest.
- * A Major Battle not matched in a tick ends: the camp with more men still within END_CELLS of
- * it wins (the last observation breaks ties), and its strongest nation gets a corridor from the battle toward the loser's centroid,
+ * A Major Battle not matched in a tick ends when a camp has no men left within END_CELLS of it, or
+ * after MAJOR_END_HOURS unmatched (a lull with both armies there goes on: R53g); the camp with more
+ * men still within END_CELLS of it wins (the last observation breaks ties), and its strongest nation gets a corridor from the battle toward the loser's centroid,
  * CORRIDOR_DAYS long, CORRIDOR_LEN cells deep and 2 × CORRIDOR_HALF_WIDTH + 1 wide, where the
  * territory system multiplies its pressure by CORRIDOR_PRESSURE and its flip progress by
  * CORRIDOR_RATE. Start and end go to the history log and emit events.
@@ -21,6 +22,13 @@ export const MATCH_CELLS = 3;
 /** Radius around an ending battle within which standing armies decide the winner. */
 export const END_CELLS = 5;
 export const MAJOR_LOSS_MULT = 1.5;
+/**
+ * Hours a Major Battle with both camps still within END_CELLS goes on unmatched before it ends (ROADMAP R53g; critic
+ * run 54: on 7019 "began near Tangier" and "won by Germany" twice in a day, then again: one hour with no group ended it,
+ * and the armies still there began another; 30 of 85 battles on 7019 in three years began again within a day of their
+ * end, at their place). A group matching it in that time continues it.
+ */
+export const MAJOR_END_HOURS = 24;
 export const CORRIDOR_DAYS = 10;
 export const CORRIDOR_LEN = 8;
 export const CORRIDOR_HALF_WIDTH = 2;
@@ -85,18 +93,21 @@ export function updateMajorBattles(world: World, groups: readonly number[][]): S
     ];
     for (const id of g) inMajor.add(id);
   }
-  // Unmatched Major Battles end.
+  // Unmatched Major Battles end: decided (a camp has no men left within END_CELLS), or quiet for MAJOR_END_HOURS.
   for (const mb of [...world.battles.majors]) {
     if (seen.has(mb)) continue;
-    world.battles.majors = world.battles.majors.filter((m) => m !== mb);
-    // The winner is the camp with more men still standing at the battle (within END_CELLS of it);
-    // the last observation breaks a tie (e.g. both withdrew).
+    // The camps' men still standing at the battle (within END_CELLS of it).
     const now = [0, 0];
     world.formations.forEach((id) => {
       const k = mb.camps[0].includes(f.nation[id]!) ? 0 : mb.camps[1].includes(f.nation[id]!) ? 1 : -1;
       if (k < 0 || world.offLand(id) || (f.x[id]! - mb.x) * (f.x[id]! - mb.x) + (f.y[id]! - mb.y) * (f.y[id]! - mb.y) > world.atSize(END_CELLS) * world.atSize(END_CELLS)) return;
       now[k]! += f.strength[id]!;
     });
+    // A lull with both camps there: it goes on (R53g).
+    if (now[0]! > 0 && now[1]! > 0 && world.tick - mb.lastTick < MAJOR_END_HOURS) continue;
+    world.battles.majors = world.battles.majors.filter((m) => m !== mb);
+    // The winner is the camp with more men still standing at the battle; the last observation breaks a tie (e.g. both
+    // withdrew).
     const w = now[0] !== now[1] ? (now[0]! > now[1]! ? 0 : 1) : mb.men[0] >= mb.men[1] ? 0 : 1;
     const winner = strongest(world, mb.camps[w]!);
     const [wx, wy] = mb.centroid[w]!;

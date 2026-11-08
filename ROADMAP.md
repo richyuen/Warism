@@ -1006,9 +1006,11 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
   - [x] R53f Run 54's idea from other games, the other one (the Hearts of Iron one is R53a's design): History has a
     "my wars only" filter, as Europa Universalis' message log.
     Done (ADR-882): "My wars only" while a nation is played, its war rows (`WAR_KINDS`); desk and phone.
-  - [ ] R53g History's first rows on 7019 (year 20) repeat a pair: "A major battle began near Tangier" and "The
+  - [x] R53g History's first rows on 7019 (year 20) repeat a pair: "A major battle began near Tangier" and "The
     major battle near Tangier was won by Germany", twice on 25 December 1957, once more on the 26th
     (`critic/c54_hi_7019.json` `firstRows`): one begin and one end a battle.
+    Done (ADR-883): not a repeated row, a battle ended by one quiet hour; a lull of a day with both camps there
+    goes on. Restarts within a day 36 % → 10 % (7019, two years). Pin → `bd1b6944`.
   - [ ] R53h On the phone (390 × 844), the nation panel's 16 "Build" buttons sit below the screen inside its scroll
     (`critic/c54_p.json`, `actions`: panel 139–1289 px of 844): reachable at a glance.
   - [ ] R53i The run-26 scenario loads, or says what it changed to load it

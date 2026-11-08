@@ -11,7 +11,9 @@ import { assets1938 } from '../helpers/earth';
 // ROADMAP R49b (critic run 51, R51-N5): History showed every row reversed, newest first, so within an hour a puppet's
 // release stood under the "left its war" rows it caused; the ticker (R43d) tells the release first. History now shows
 // the newest hour first and each hour's rows in their logged order: on 20429 (the critic's case, random diplomacy, the Dutch East Indies
-// freed in July 1939) the release above its wars left.
+// freed in July 1939) the release above its wars left. Since ADR-883 (R53g, a Major Battle through a lull of a day)
+// 20429 has no release in the hour of a war left in three years, nor 20431–20439 and 20443–20451; 20441 has one on
+// day 517 (the six seeds' wars, peaces, puppets and releases summed the same on both rules: a coincidence of an hour).
 
 const { w: W } = SIZE_1938;
 const nationName = (n: number): string => `nation.${NATIONS_1938[n - 1]?.tag ?? ''}`;
@@ -26,11 +28,11 @@ describe('History: the newest hour first, each hour as logged (ROADMAP R49b)', (
     expect(newestHourFirst([])).toEqual([]);
   });
 
-  it("20429: a release's hour shows the release above the wars it left", { timeout: 600_000 }, () => {
-    const s = new Sim({ scenario: '1938', seed: 20429, assets: assets1938(W), options: { diplomacy: 'random' } });
+  it("20441: a release's hour shows the release above the wars it left", { timeout: 600_000 }, () => {
+    const s = new Sim({ scenario: '1938', seed: 20441, assets: assets1938(W), options: { diplomacy: 'random' } });
     let found: HistoryRow | undefined;
     let rows: HistoryRow[] = [];
-    // To the first release with a war left in its hour (about 18 months on this seed), a day at a time.
+    // To the first release with a war left in its hour (about 17 months on this seed), a day at a time.
     for (let d = 0; d < 365 * 3 && !found; d++) {
       s.step(24);
       if (!s.world.history.rows.includes(EventKind.PuppetReleased)) continue;

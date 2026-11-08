@@ -16,6 +16,9 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // German counter, so the clicked one opens 3 to 7 times of 12, short of the 9 the case asks; every
 // click still opened what was drawn, and a drawn Polish counter its own panel with nothing selected.
 // Germany at war with Poland is played on seed 3 instead, day 60, where the clicked one opens 10.
+// Since ROADMAP R53g (ADR-883, a Major Battle through a lull of a day) seed 3's day 60 has one of the twelve (558) in a
+// stack whose box begins a pixel below the click: nothing is drawn there and nothing opens (11 of 12 as drawn). Of seeds
+// 3, 5, 7, 11 and 4441 on days 50, 60 and 70, seed 7's day 70 is the first with 12 of 12 as drawn and the clicked one 10.
 
 const tag = (t: string): number => NATIONS_1938.findIndex((n) => n.tag === t) + 1;
 
@@ -111,7 +114,7 @@ async function front(page: Page, seed: number, a: number, label: string, b: numb
 }
 
 const cases = [
-  { seed: 3, a: 'GER', label: 'Poland', b: 'POL', days: 60, clickedAtLeast: 9 },
+  { seed: 7, a: 'GER', label: 'Poland', b: 'POL', days: 70, clickedAtLeast: 9 },
   { seed: 6827, a: 'JAP', label: 'China', b: 'CHI', days: 45, clickedAtLeast: 1 },
 ];
 

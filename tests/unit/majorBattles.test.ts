@@ -6,7 +6,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { combatSystem } from '../../src/sim/systems/combat';
 import { destroyFormation } from '../../src/sim/systems/elements';
-import { CORRIDOR_DAYS, inCorridor, MAJOR_LOSS_MULT, MAJOR_MEN } from '../../src/sim/systems/majorBattles';
+import { CORRIDOR_DAYS, inCorridor, MAJOR_END_HOURS, MAJOR_LOSS_MULT, MAJOR_MEN } from '../../src/sim/systems/majorBattles';
 import { territorySystem } from '../../src/sim/systems/territory';
 import { FIRE_STRIDE, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
@@ -89,6 +89,40 @@ describe('Major Battles (PLAN 1.23)', () => {
     expect(c.nation).toBe(GER);
     expect(c.dx).toBeGreaterThan(0.9); // pointing east, at the Polish side
     expect(c.untilTick).toBe(w.tick + CORRIDOR_DAYS * 24);
+  });
+
+  it(`a lull with both armies still there does not end it: the same battle goes on, and ends after ${MAJOR_END_HOURS} h of quiet (ROADMAP R53g)`, () => {
+    // Critic run 54: on 7019, "A major battle began near Tangier" and "… was won by Germany" twice on 25 December 1957
+    // and once more on the 26th: an hour with no group ended it, and the armies still there began another.
+    const s = emptyWar();
+    const w = s.world;
+    const { pol } = clash(w, 5);
+    const c = w.formations.cols;
+    const hour = (): void => {
+      combatSystem(w);
+      w.tick++;
+    };
+    for (let h = 0; h < 6; h++) hour();
+    const id = w.battles.majors[0]!.id;
+    // Poland draws back 4 cells: out of contact, still within END_CELLS (5) of the battle.
+    const apart = (dx: number): void => pol.forEach((p) => (c.x[p] = X0 + 0.5 + dx));
+    apart(4);
+    w.out.events.length = 0;
+    for (let h = 0; h < 12; h++) hour();
+    expect(ofKind(w, EventKind.MajorBattleEnded), 'no end in a 12 h lull').toEqual([]);
+    // Back in contact: the same battle, not a new one.
+    apart(1);
+    for (let h = 0; h < 3; h++) hour();
+    expect(ofKind(w, EventKind.MajorBattleStarted), 'no new battle').toEqual([]);
+    expect(w.battles.majors.map((m) => m.id)).toEqual([id]);
+    // Apart for good: it ends once, after its quiet hours.
+    apart(4);
+    w.out.events.length = 0;
+    for (let h = 0; h < MAJOR_END_HOURS - 1; h++) hour();
+    expect(ofKind(w, EventKind.MajorBattleEnded)).toEqual([]);
+    for (let h = 0; h < 2; h++) hour();
+    expect(ofKind(w, EventKind.MajorBattleEnded).map((e) => e[0])).toEqual([id]);
+    expect(w.battles.history.filter((h) => h.kind === EventKind.MajorBattleStarted).length).toBe(1);
   });
 
   it(`the corridor flips cells faster for ${CORRIDOR_DAYS} days, then expires`, () => {

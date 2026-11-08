@@ -44,6 +44,10 @@
   {
    "id": "tests/e2e/ticker1938.spec.ts › a view 1,100 px wide: the bar is inside the view at every UI size offered there, and a wider size is not",
    "why": "Fails alone in a cloud container with a software GPU (frames and ticks counted against wall time); green on the machine the budgets were set on. BLOCKERS: the browser suite at PLAN 4.2f, 4.7 and 4.8."
+  },
+  {
+   "id": "tests/e2e/seaRow1938.spec.ts › from the row of the critic's battle, both fleets' fire on the screen within seconds at Speed x1 (PLAN 7.22a)",
+   "why": "At most one German tracer at a time at 25–27 frames in 6 s on this machine (SwiftShader): red 2 of 3 alone on HEAD db7953f0 too. BLOCKERS: seaRow1938's Speed x1 test red on this machine again (2026-11-08)."
   }
  ]
 }
