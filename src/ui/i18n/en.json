@@ -622,6 +622,8 @@
   "landing.more.lost": "{n} lost at sea",
   "landing.more.away": "{n} came ashore away from {target}",
   "landing.more.stayed": "{n} never sailed",
+  "landing.more.repulsed": "{n} thrown back",
+  "landing.over.repulsedN": "over: {n} thrown back",
   "landing.target": "its target",
   "landing.over.repulsed": "over: thrown back",
   "landing.over.lost": "over: lost at sea",

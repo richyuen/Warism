@@ -42,7 +42,9 @@ export class RowRun {
   private checkedOver = new Set<number>();
   private rowOf = new Map<number, number>();
   private wasAfloat = new Set<number>();
-  private ends = new Map<number, Map<number, 'landed' | 'away' | 'lost'>>();
+  private ends = new Map<number, Map<number, 'landed' | 'away' | 'repulsed' | 'lost'>>();
+  /** The case's divisions thrown back while afloat: their place aboard with no water (`amphibious`'s repulse, R52a). */
+  private thrownBack = new Set<number>();
   hours = 0;
 
   constructor(
@@ -104,8 +106,15 @@ export class RowRun {
     for (const id of this.ids) {
       const row = this.rowOf.get(id);
       const afloat = w.formations.has(id) && (w.embarked.has(id) || w.afloat(id));
-      if (row !== undefined && this.wasAfloat.has(id) && !afloat) {
-        const e = this.ends.get(row) ?? new Map<number, 'landed' | 'away' | 'lost'>();
+      // Thrown back: so from that hour, wherever it comes ashore after (it may be at sea still when its row is over).
+      if (row !== undefined && w.embarked.get(id)?.water === -1 && !this.thrownBack.has(id)) {
+        this.thrownBack.add(id);
+        const e = this.ends.get(row) ?? new Map<number, 'landed' | 'away' | 'repulsed' | 'lost'>();
+        e.set(id, 'repulsed');
+        this.ends.set(row, e);
+      }
+      if (row !== undefined && this.wasAfloat.has(id) && !afloat && !(this.thrownBack.has(id) && w.formations.has(id))) {
+        const e = this.ends.get(row) ?? new Map<number, 'landed' | 'away' | 'repulsed' | 'lost'>();
         if (!w.formations.has(id)) e.set(id, 'lost');
         else {
           const [lx, ly] = land.get(row) ?? [NaN, NaN];
@@ -123,10 +132,10 @@ export class RowRun {
       const mine = r.divisions.filter((d) => this.ids.length === 0 || this.ids.includes(d.id)).map((d) => d.id);
       if (mine.length !== r.divisions.length) continue;
       const e = [...(this.ends.get(r.id)?.values() ?? [])];
-      const was = { landed: e.filter((x) => x === 'landed').length, away: e.filter((x) => x === 'away').length, lost: e.filter((x) => x === 'lost').length };
+      const was = { landed: e.filter((x) => x === 'landed').length, away: e.filter((x) => x === 'away').length, repulsed: e.filter((x) => x === 'repulsed').length, lost: e.filter((x) => x === 'lost').length };
       const o = r.outcome;
-      const said = { landed: o.landed, away: o.away ?? 0, lost: o.lost };
-      if (o.kind === 'repulsed' || o.kind === 'cancelled') said.away = was.away; // thrown back or turned back: ashore at its port, not broken off
+      const said = { landed: o.landed, away: o.away ?? 0, repulsed: o.repulsed ?? 0, lost: o.lost };
+      if (o.kind === 'cancelled') said.away = was.away; // turned back: ashore at its port, not broken off
       if (JSON.stringify(said) !== JSON.stringify(was)) this.broken.push({ kind: 'outcome', what: `t${t} row ${r.id} ${o.kind} says ${JSON.stringify(said)}, they ended ${JSON.stringify(was)}` });
       if ((o.kind === 'landed') !== was.landed > 0) this.broken.push({ kind: 'outcome', what: `t${t} row ${r.id} ${o.kind}, ${was.landed} of its divisions landed` });
       for (const id of mine) if (this.rowOf.get(id) === r.id) this.rowOf.delete(id);

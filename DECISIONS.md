@@ -7,6 +7,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-871 · 2026-11-07 · accepted — A division thrown back stays so in its row (R52a)
+- **Context.** Critic run 53, R53-N1: `endLanding` (ADR-866) set `repulsed` on `LandingRepulsed`, and the division's
+  later coming ashore (it always does) overwrote it with landed or away: on the critic's staged 20861 the bar read
+  "over: 3 landed" beside two "thrown back" news rows.
+- **Decision.** Once thrown back, a division stays so; the outcome counts it (`repulsed`) and says it: "over: 1 landed,
+  2 thrown back", "over: 2 thrown back". `landingRows`' `outcome` reads a throw-back from the world, a case division's
+  place aboard with no water (only the repulse clears it), from that hour. Not taken: whether a thrown-back division
+  may stray-land on its own side's beachhead at the target (PLAN 4.8n; the critic's unstaged case reads as "home").
+- **Consequences.** `landingRepulse1938` (the critic's staged case; red before: "3 landed"); 108 cases 0 broken.
+
 ### ADR-870 · 2026-11-07 · accepted — The ticker names a row's city as History does (R51a)
 - **Context.** Critic run 52, R52-N4: the Breakthrough row read "God opened a breakthrough for Germany", no place, for
   a click 3 cells from Berlin. The city was found; the ticker's names (`tickerRowAt`'s `who`) had no case for a city

@@ -1199,6 +1199,9 @@ export class SimServer {
     if (l === undefined) return;
     const ends = this.landingEnds.get(l) ?? new Map<number, 'landed' | 'away' | 'repulsed' | 'lost' | 'stayed'>();
     if (kind === EventKind.FormationLanded) {
+      // Thrown back, it stays so wherever it comes ashore after (ROADMAP R52a; critic run 53, R53-N1: the later landing
+      // overwrote it, "over: 3 landed" beside two "thrown back").
+      if (ends.get(id) === 'repulsed') return;
       const [lx, ly] = this.landingsLast.get(l)?.land ?? [ev[i + 4]!, ev[i + 5]!];
       ends.set(id, landedAway(world, Math.floor(ly) * world.cells.w + Math.floor(lx), ev[i + 4]!, ev[i + 5]!) ? 'away' : 'landed');
     } else if (kind === EventKind.LandingRepulsed) ends.set(id, 'repulsed');
@@ -1250,7 +1253,7 @@ export class SimServer {
       // A turn back by a click of the player's own: all back (no row's cancel to count them).
       const how = kind === 'cancelled' ? { ...(cancel ?? { home: last.divisions.length, stopped: 0 }), ...(aiRuns(world, world.settings.player, AiLayer.army) ? { ai: true as const } : {}) } : null;
       // Its divisions' voyages were the landing's: over, they say nothing of it (their panels say where they are now).
-      this.landingsOver.set(id, { ...last, state: 'over', sails: null, divisions: last.divisions.map((d) => ({ id: d.id, voyage: null })), outcome: { kind, tick: world.tick, landed: t.landed, lost: t.lost, ...(t.away > 0 ? { away: t.away } : {}), ...(t.stayed > 0 ? { stayed: t.stayed } : {}), ...(how ?? {}) } });
+      this.landingsOver.set(id, { ...last, state: 'over', sails: null, divisions: last.divisions.map((d) => ({ id: d.id, voyage: null })), outcome: { kind, tick: world.tick, landed: t.landed, lost: t.lost, ...(t.away > 0 ? { away: t.away } : {}), ...(t.repulsed > 0 ? { repulsed: t.repulsed } : {}), ...(t.stayed > 0 ? { stayed: t.stayed } : {}), ...(how ?? {}) } });
       this.landingEnds.delete(id);
     }
     // An over part stays while its click has a part under way, and a day from its click's last end (R50b).

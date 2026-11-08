@@ -2081,3 +2081,8 @@
 - Naval up to 8 (its bar): R52-B1 fixed on its three cases and new seeds; every checker 0 broken. Every dimension at
   its bar. Three small findings (R53-N1–N3) filed as batch 7 (R52), fixed before the full run 54 the release needs.
 - **Next:** R52a.
+
+## 2026-11-07 — R52a: thrown back stays so (ADR-871)
+- `endLanding` keeps `repulsed`; "over: 1 landed, 2 thrown back". `landingRepulse1938` (red before); the checker reads
+  a throw-back from the world; 108 cases 0 broken.
+- **Next:** R52b.

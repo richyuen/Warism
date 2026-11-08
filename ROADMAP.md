@@ -938,10 +938,12 @@ run is followed by a full one before a release (PROMPT's RELEASES 3). Its three 
 code of this month's; fixed first, then critic run 54 (full).
 
 - [ ] R52 **Run 53's findings.**
-  - [ ] R52a R53-N1: a thrown-back division keeps "thrown back" when it comes ashore after (`endLanding` overwrote
+  - [x] R52a R53-N1: a thrown-back division keeps "thrown back" when it comes ashore after (`endLanding` overwrote
     it): "over: 2 thrown back" (with where they came ashore); `landingRows` gains a repulse case. Not taken here:
     whether a thrown-back division may stray-land on its own side's beachhead at the target (PLAN 4.8n's rule; the
     critic's unstaged 23081 is consistent with "home").
+    Done (ADR-871): thrown back stays so; "over: 1 landed, 2 thrown back"; the checker reads a throw-back from the
+    world (a place aboard with no water); 108 cases 0 broken.
   - [ ] R52b R53-N2: a click's row turning back from several ports names them all, with the longest days
     (`SHOTAT=30 c53_turnback.mjs 20661 …`: "turning back to Tokyo, Ōsaka"; `c53_lbar.mjs 22101 …` day 3 all three);
     and with one part ashore and others at sea, "1 of 3 ashore" as gathering's "2 of 3 at sea".

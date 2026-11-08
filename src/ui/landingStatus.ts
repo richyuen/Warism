@@ -12,11 +12,13 @@ export function landingStatus(r: LandingRow): string {
       const parts: string[] = [];
       if (skip !== 'lost' && o.lost > 0) parts.push(t('landing.more.lost', { n: o.lost }));
       if (skip !== 'away' && (o.away ?? 0) > 0) parts.push(t('landing.more.away', { n: o.away!, target }));
+      if (skip !== 'repulsed' && (o.repulsed ?? 0) > 0) parts.push(t('landing.more.repulsed', { n: o.repulsed! }));
       if (skip !== 'sunk' && (o.stayed ?? 0) > 0) parts.push(t('landing.more.stayed', { n: o.stayed! }));
       return parts.map((p) => `, ${p}`).join('');
     };
     if (o.kind === 'landed') return t('landing.over.landed', { n: o.landed }) + more('');
     if (o.kind === 'away') return t('landing.over.away', { n: o.away ?? 0, target }) + more('away');
+    if (o.kind === 'repulsed') return t('landing.over.repulsedN', { n: o.repulsed ?? 0 }) + more('repulsed');
     if (o.kind === 'lost') return t('landing.over.lostN', { n: o.lost }) + more('lost');
     if (o.kind === 'sunk') return t('landing.over.sunk', { n: o.stayed ?? 0 }) + more('sunk');
     if (o.kind === 'cancelled') {
@@ -65,9 +67,10 @@ export function groupStatus(parts: LandingRow[]): string {
   const lost = sum((r) => r.outcome?.lost ?? 0);
   const away = sum((r) => r.outcome?.away ?? 0);
   const stayed = sum((r) => r.outcome?.stayed ?? 0);
-  if (landed + lost + away + stayed > 0) {
-    const kind = landed > 0 ? 'landed' : away > 0 ? 'away' : lost > 0 ? 'lost' : 'sunk';
-    return landingStatus({ ...parts[0]!, outcome: { kind, tick: parts[0]!.outcome!.tick, landed, lost, away, stayed } });
+  const repulsed = sum((r) => r.outcome?.repulsed ?? 0);
+  if (landed + lost + away + stayed + repulsed > 0) {
+    const kind = landed > 0 ? 'landed' : away > 0 ? 'away' : repulsed > 0 ? 'repulsed' : lost > 0 ? 'lost' : 'sunk';
+    return landingStatus({ ...parts[0]!, outcome: { kind, tick: parts[0]!.outcome!.tick, landed, lost, away, stayed, repulsed } });
   }
   if (parts.every((r) => r.outcome?.kind === 'cancelled')) {
     // The ports of those sent back (the others' divisions stopped where they stood).
