@@ -2053,3 +2053,8 @@
   `landingOutcome1938` (3 red before); `landingRows`' `outcome` from the world (red before on 22103, 21105), 108
   cases 0 broken; `landingsBar1938` 7.
 - **Next:** R50b.
+
+## 2026-11-07 — R50b: one click's row to its end (ADR-867)
+- The worker keeps each landing's click; over parts stay while the click runs, a day after its last end. 20861: one
+  row, "over: 3 landed" (critic's script in the page too); 20661's cancel: one row. `landingClick1938` 6 (2 red before).
+- **Next:** R50c.

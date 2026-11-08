@@ -7,6 +7,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-867 · 2026-11-07 · accepted — One click's row holds to its end (R50b)
+- **Context.** Critic run 52, R52-N2 and its objection to ADR-862: a click's row came apart as its landings ended
+  (20861 t129: "Tokyo, Ōsaka · over: 2 landed" beside "Hiroshima · at sea"; Ōsaka's part dropped after its day; the
+  click never read "3 landed"), and a cancel split it into a row a port. `clickOf` read siblings in the world: a part
+  over is gone from it, and one turning back is no sibling.
+- **Decision.** The worker keeps each landing's click as first seen (the least, where two clicks are found one); a
+  part over stays in the bar while any part of its click is under way, and until a day after its click's last end.
+  The row's words are ADR-862's `groupStatus`, now over all of the click to its end ("over: 3 landed").
+- **Consequences.** `landingClick1938`: 20861 one click every hour to "over: 3 landed"; 20661's cancel at hour 26,
+  both at sea, one row turning back (both red before). The critic's `c52_lland.mjs 20861 …` in the page: one row
+  t1 to its end.
+
 ### ADR-866 · 2026-11-07 · accepted — A landing's outcome is where its divisions ended (R50a)
 - **Context.** Critic run 52, R52-B1 (blocking): R47a's tally (ADR-853) counted every `TransportsSunk` as lost and
   every `FormationLanded` as landed. On 22103 two divisions whose transports were sunk before they boarded read "over:

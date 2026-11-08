@@ -217,6 +217,11 @@ export class SimServer {
   /** Where each division of a landing of the player's ended, by landing (ROADMAP R50a: not a count of events). */
   private landingEnds = new Map<number, Map<number, 'landed' | 'away' | 'repulsed' | 'lost' | 'stayed'>>();
   private landingsOver = new Map<number, LandingRow>();
+  /**
+   * Each landing's click as first seen (ROADMAP R50b; critic run 52, R52-N2: once its siblings were over, gone from the
+   * world, a part was a click of its own, and one turning back is no sibling): kept to its end.
+   */
+  private landingClick = new Map<number, number>();
   private landingsSent = '';
   /**
    * The player's landings cancelled (ROADMAP R47c, R48a): by their row's cancel, how many were sent back aboard and how
@@ -1120,6 +1125,7 @@ export class SimServer {
     this.landingOfDiv.clear();
     this.landingEnds.clear();
     this.landingsOver.clear();
+    this.landingClick.clear();
     this.landingsSent = '';
     this.landingsCancelled.clear();
   }
@@ -1172,6 +1178,14 @@ export class SimServer {
     return cmds;
   }
 
+  /** Landing `id`'s click: as first seen, or the least of that and `now` (two clicks found one, R48f's siblings taken through). */
+  private clickOf(id: number, now: number): number {
+    const was = this.landingClick.get(id);
+    const click = was === undefined ? now : Math.min(was, now);
+    this.landingClick.set(id, click);
+    return click;
+  }
+
   /**
    * Where a division of a landing of the player's ended, from an event (ROADMAP R47a; R50a, critic run 52, R52-B1: a
    * sinking before it boarded was "lost at sea", a landing away from the target "landed"): ashore at its landing's
@@ -1219,7 +1233,7 @@ export class SimServer {
         ships: { need: r.need, have: r.have },
         sails: r.sailsIn ? { days: Math.max(1, Math.ceil(r.sailsIn.hours / 24)), ...(r.sailsIn.other !== undefined ? { other: world.ports[r.sailsIn.other]?.name ?? '' } : {}) } : null,
         ...(r.landsIn !== null ? { lands: Math.max(1, Math.ceil(r.landsIn / 24)) } : {}),
-        click: r.click,
+        click: this.clickOf(r.id, r.click),
       };
     });
     const now = new Set(rows.map((r) => r.id));
@@ -1237,7 +1251,15 @@ export class SimServer {
       this.landingsOver.set(id, { ...last, state: 'over', sails: null, divisions: last.divisions.map((d) => ({ id: d.id, voyage: null })), outcome: { kind, tick: world.tick, landed: t.landed, lost: t.lost, ...(t.away > 0 ? { away: t.away } : {}), ...(t.stayed > 0 ? { stayed: t.stayed } : {}), ...(how ?? {}) } });
       this.landingEnds.delete(id);
     }
-    for (const [id, r] of this.landingsOver) if (world.tick - r.outcome!.tick >= 24) this.landingsOver.delete(id);
+    // An over part stays while its click has a part under way, and a day from its click's last end (R50b).
+    const live = new Set(rows.map((r) => r.click));
+    const lastEnd = new Map<number, number>();
+    for (const r of this.landingsOver.values()) lastEnd.set(r.click, Math.max(lastEnd.get(r.click) ?? 0, r.outcome!.tick));
+    for (const [id, r] of this.landingsOver) {
+      if (live.has(r.click) || world.tick - lastEnd.get(r.click)! < 24) continue;
+      this.landingsOver.delete(id);
+      this.landingClick.delete(id);
+    }
     this.landingsLast = new Map(rows.map((r) => [r.id, r]));
     this.landingOfDiv = new Map(rows.flatMap((r) => r.divisions.map((d) => [d.id, r.id] as [number, number])));
     const all = [...rows, ...this.landingsOver.values()].sort((a, b) => a.id - b.id);

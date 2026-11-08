@@ -13,13 +13,13 @@ import { nationId } from '../helpers/sim1938';
 const JAP = nationId('JAP');
 const CHI = nationId('CHI');
 
-/** 20861, at war, its three nearest Tokyo ordered to Shanghai; the run and the three. */
-function shanghai(): { r: RowRun; ids: number[] } {
-  const r = new RowRun(20861, JAP);
+/** 20861 (or `seed`), at war, its three (or `n`) nearest Tokyo ordered to Shanghai; the run and the divisions. */
+function shanghai(seed = 20861, n = 3): { r: RowRun; ids: number[] } {
+  const r = new RowRun(seed, JAP);
   r.step();
   r.cmds([{ kind: 'declareWar', attacker: JAP, defender: CHI }]);
   r.step();
-  const ids = nearestDivisions(r.world, JAP, [1818.5, 385.5], 3);
+  const ids = nearestDivisions(r.world, JAP, [1818.5, 385.5], n);
   r.ids = ids;
   r.cmds(ids.map((id) => ({ kind: 'moveFormation' as const, id, x: 1715.5, y: 413.5, nation: JAP, escort: true })));
   return { r, ids };
@@ -72,6 +72,43 @@ describe("one click's landings, one row (ROADMAP R48f)", () => {
     expect(ends.size, 'each landing of the click over').toBe(live.length);
     for (const e of ends.values()) expect(e.outcome?.kind, `landing ${e.id}`).toBe('cancelled');
     expect(groupStatus([...ends.values()]), 'the row').toMatch(/^cancelled: /);
+  });
+});
+
+// ROADMAP R50b (critic run 52, R52-N2 and the ADR-862 objection): the click's row came apart as its landings ended
+// (t129: "Tokyo, Ōsaka · over: 2 landed" beside "Hiroshima · at sea"; Ōsaka's dropped after its day; never "3 landed"),
+// and a cancel made a row a port. Now each landing keeps its click to its end, and a part over stays while its click
+// runs and a day after its last end.
+describe("one click's row to its end (ROADMAP R50b)", () => {
+  it('20861: one click every hour to the end, "over: 3 landed"', { timeout: 300_000 }, () => {
+    const { r } = shanghai();
+    let last = '';
+    let ended = -1;
+    for (let h = 0; h < 24 * 12 && (ended < 0 || h - ended < 12); h++) {
+      r.step();
+      if (r.rows.length === 0) continue;
+      expect(new Set(r.rows.map((x) => x.click)).size, `t${r.world.tick}: ${r.rows.map((x) => `${x.port} ${x.state}`).join(', ')}`).toBe(1);
+      last = groupStatus(r.rows);
+      if (ended < 0 && r.rows.every((x) => x.state === 'over')) ended = h;
+    }
+    expect(ended, 'over').toBeGreaterThanOrEqual(0);
+    expect(last).toBe('over: 3 landed');
+    expect(r.broken).toEqual([]);
+  });
+
+  it("20661: the click's cancel at hour 26, both at sea, keeps one row, its parts turning back in it", { timeout: 300_000 }, () => {
+    const { r } = shanghai(20661, 2);
+    for (let h = 0; h < 26; h++) r.step();
+    const live = r.rows.filter((y) => y.state === 'gathering' || y.state === 'sailing');
+    expect(live.filter((y) => y.state === 'sailing').length, 'two at sea').toBe(2);
+    for (const x of live) r.s.handle({ type: 'cancelLanding', id: x.id }, 0);
+    let back = 0;
+    for (let h = 0; h < 72; h++) {
+      r.step();
+      if (r.rows.some((x) => x.state === 'returning')) back++;
+      if (r.rows.length > 0) expect(new Set(r.rows.map((x) => x.click)).size, `t${r.world.tick}: ${r.rows.map((x) => `${x.port} ${x.state}`).join(', ')}`).toBe(1);
+    }
+    expect(back, 'hours turning back').toBeGreaterThan(0);
   });
 });
 

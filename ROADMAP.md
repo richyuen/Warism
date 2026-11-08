@@ -911,9 +911,11 @@ objection, idea and "what the bar needs" filed; then the probes replayed and cri
     Done (ADR-866): each division by where it ended (landed at the land, broke off, lost at sea, never sailed); "over:
     its transports broke off; 2 came ashore away from Valletta", "over: its transports were sunk; 2 never sailed".
     `landingRows`' `outcome` from the world (red before on 22103 and 21105); its 108 cases 0 broken.
-  - [ ] R50b R52-N2 and the ADR-862 objection: one click's row holds to its end: a part over or turning back stays in
+  - [x] R50b R52-N2 and the ADR-862 objection: one click's row holds to its end: a part over or turning back stays in
     it until the last is over; the click's outcome summed and kept a day from the last. AT: `STEP=2 c52_lland.mjs
     20861 JAP CHI … 3 jap_sh3 200`: one row from t1 to its end, "over: 3 landed".
+    Done (ADR-867): each landing keeps its click as first seen; a part over stays while its click runs and a day after
+    its last end. The critic's script: one row t1–t153, "over: 3 landed"; 20661's cancel: one row turning back.
   - [ ] R50c R52-N3: while a landing's transports are engaged at sea the row says so ("under attack at sea") and its days
     count from when it moves again (21105: "about a day" for four days, group 1195 engaged t63–t147).
   - [ ] R50d R52-N5: a row turning back says its days to its port, as one at sea does.
