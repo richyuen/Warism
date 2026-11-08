@@ -1,6 +1,6 @@
 {
-  "commit": "5f8ef9e830357411d52dbbb24bfb3363de63d0f7",
-  "mode": "focused",
+  "commit": "8d7d02fe6083771f8bd4b7bcfc7f1470a3bc5a0f",
+  "mode": "full",
   "scores": {
     "mapVisuals": 8,
     "diplomacyWarDepth": 7,
@@ -12,11 +12,18 @@
     "performance": 7,
     "stability": 8,
     "semanticZoom": 8,
-    "naval": 8,
+    "naval": 7,
     "tanks": 8,
     "aircraft": 8,
     "aiNukes": 8
   },
-  "blocking": [],
-  "timestamp": "2026-11-07T22:43:55-05:00"
+  "blocking": [
+    {
+      "id": "R54-B1",
+      "title": "A thrown-back landing tells three stories: the bar reads 'lands in about a day' for a day after the throw-back, then 'over: 2 thrown back' beside a ticker and panel saying 'landed away from its target' (6 of 11 Rome → Valletta clicks)",
+      "evidence": "SHOTAT=162,168,174,180,186 node critic/scripts/c54_lhold.mjs 23105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 200 (critic/c54_lhold_23105_b.log; critic/shots/c54lh_ita_malta_23105_h174_1500m.png: bar 'at sea: lands in about a day', panel 'At sea, bound for its landing' above 'the landing was thrown back'; critic/shots/c54lh_ita_malta_23105_h186_1500m.png: bar 'over: 2 thrown back', ticker '319/321: landed away from its target', panel 'Landed', divisions ashore near Catania). Run 53 on the same seed and click ended 'broke off; 2 came ashore away from Valletta', agreeing with the ticker (critic/c53_lland_ita_malta_23105.json). The same on new 24151, 24153, 24155, 24159, 24171 (critic/c54_lland_ita_malta_241*.json). landingRows all: 0 broken (critic/c54_lrows_all.log), so the checker does not see it.",
+      "fix": "From the repulse, the row and the panels of those aboard say 'thrown back: sailing home' (the landing leaves sailing, or the row stops reading voyage hours). At the end, the bar, panel and ticker agree: e.g. '2 thrown back; came ashore near Catania', with a 'thrown back' news row for each division R52d counts, not only the one the event names. Add the Rome → Valletta case (23105 or 24151) to landingRows with a row/panel/last-news agreement check."
+    }
+  ],
+  "timestamp": "2026-11-08T07:55:00-05:00"
 }

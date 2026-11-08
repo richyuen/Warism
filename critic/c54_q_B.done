@@ -1,0 +1,5 @@
+0 npx tsx critic/scripts/c54_heldby.ts 24203 random --years 2 critic/c54_heldby_24203r.json > critic/c54_heldby_24203r.log 2>&1
+0 npx tsx critic/scripts/c54_heldby.ts 24201 scenario --years 2 critic/c54_heldby_24201.json > critic/c54_heldby_24201.log 2>&1
+0 npx tsx critic/scripts/c54_heldby.ts 7019 scenario --years 3 critic/c54_heldby_7019.json > critic/c54_heldby_7019.log 2>&1
+0 npm run sim -- --scenario 1938 --seed 20899 --years 25 > critic/c54_sim20899.log 2>&1
+0 npm run sim -- --scenario 1938 --seed 21099 --years 25 > critic/c54_sim21099.log 2>&1

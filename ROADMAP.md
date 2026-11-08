@@ -960,3 +960,31 @@ code of this month's; fixed first, then critic run 54 (full).
     of the landing aboard a thrown-back group are thrown back, in the worker and the checker; "over: 1 landed, 2
     thrown back"; 108 cases 0 broken.
   - Kept: `landingInvariants` and `landingRows` 0 broken.
+
+## Batch 8 — run 54's findings
+
+Critic run 54 (full, on `8d7d02fe`): one blocking issue, R54-B1; naval 7 (under its bar of 8); every other dimension
+at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833) and critic run 55.
+
+- [ ] R53 **Run 54's findings.**
+  - [ ] R53a R54-B1 (blocking): a thrown-back landing tells one story in the bar, the panels and the ticker. Rome →
+    Valletta (23105; 24151, 24153, 24155, 24159, 24171) is thrown back at h156–162, then reads "at sea: lands in about
+    a day" for 18–24 h; one panel says "At sea, bound for its landing" above "the landing was thrown back"; at the
+    end the bar reads "over: 2 thrown back" beside the ticker's two "landed away from its target" and 319's panel
+    "Landed", ashore near Catania; 321 is never told "thrown back" in the ticker. From the repulse the row and the
+    panels say "thrown back: sailing home" (no voyage hours); at the end all three agree (e.g. "2 thrown back; came
+    ashore near Catania"); a "thrown back" row for each division counted, not only the one the event names;
+    `landingRows` gains the Malta case with a row, panel and last-news check. AT:
+    `SHOTAT=162,168,174,180,186 node critic/scripts/c54_lhold.mjs 23105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta
+    200`, and `c54_lland.mjs` with the same arguments (240 h) on the five new seeds.
+  - [ ] R53b R54-N1: `heldBy` names the nation of a foe fleet in the landing's sea battle (`world.seaBattles`), not
+    the nearest engaged formation of any kind at war.
+  - [ ] R53c Small: on 22105 day 2, every division line gives its days (two drop them: "Marching to Portsmouth to
+    board transports"; `c54_lbar.mjs 22105 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br3_phone 390 844 14 4`).
+  - Kept: `landingInvariants` and `landingRows` 0 broken.
+- Filed, not in this batch (each carried from earlier runs, its "what the bar needs" in the report): History's
+  repeated Tangier begin/won pair on 7019; the phone nation panel's Build buttons below the screen; the run-26
+  scenario refused; the editor's flat nation list; Denmark frozen (21099, 20899) and 24099's fixed top three; year-one
+  dogpiles (20887, 24129); the unit zooms at 33–48 fps on 7019's year 20. Design objections: a cancel hands the army to
+  the AI at once (ADR-759); the Breakthrough corridor undrawn (ADR-864); no mark joins a held landing to its attacker
+  (ADR-873).

@@ -1,188 +1,206 @@
-# Critic report, run 53 (focused): after Batch 6 (R50a–d, R51a)
+# Critic report, run 54 (full): after R52a–d (run 53's issues)
 
-- **Mode: focused.** Decided from git before anything else (CRITIC_PROMPT, ADR-804). All three conditions hold:
-  - the last report (run 52, `3357f0a3`, on `d8dba302`) has a blocking issue (R52-B1) and a score under its bar
-    (naval 7, bar 8);
-  - every commit since is one of the two kinds: `efdc5b2d` (R50a), `f7114ed5` (R50b), `50baf181` (R50c), `4a57ea7d`
-    (R50d) and `29928a1b` (R51a) name items filed by `3357f0a3`'s own ROADMAP diff ("Batch 6"); `5f8ef9e8` (the replay
-    of run 52's probes) changes no file under `src/`, `data/` or `public/`;
-  - the last three reports were not all focused: run 52 focused, run 51 full, run 50 full.
-- **What is scored afresh.**
-  - Naval: under its bar and blocked.
-  - The dimensions the changed files touch (`git diff --stat d8dba302 HEAD -- src data public`: 6 files, +120 −24):
-    - UI/UX: `landingStatus.ts`, `en.json`, `protocol.ts`;
-    - naval and stability: `landings.ts` (`held`, `backIn`), `server.ts` (`endLanding`, `landingClick`);
-    - God Mode and stats/history: `historyRows.ts` (the city in a ticker row).
-  - Every other score is carried and marked so. A defect met in passing still counts.
-- **Commit judged:** `5f8ef9e830357411d52dbbb24bfb3363de63d0f7`, HEAD at the start, clean tree (`critic/c53_commit.txt`).
-  **Date:** 2026-11-07.
-- **Build:** `vite build --outDir critic/c53_dist`, exit 0 (`critic/c53_build.log`), served by `vite preview` on
-  127.0.0.1:**5353**; stopped at the end. Playwright Chromium at 1600 × 900, 390 × 844 and 844 × 390.
+- **Mode: full.** I decided this from git before anything else (CRITIC_PROMPT, ADR-804). A focused run needs all
+  three conditions. The first fails: the last report (run 53, `bcf13f19`, on `5f8ef9e8`) has no blocking issue and no
+  score under its bar (naval 8 against 8, every first-group score at 7 or more). So this is the full run that ADR-804
+  asks for after a clean focused one. The commits since are `7e626645` (R52a), `74f170d8` (R52b), `585e20a8` (R52c) and
+  `8d7d02fe` (R52d). Together they change 6 files under `src/` (`git diff --stat 5f8ef9e8 HEAD -- src data public`:
+  +79 −17: `landings.ts`, `server.ts`, `landingStatus.ts`, `voyageText.ts`, `protocol.ts`, `en.json`). Every dimension
+  is scored afresh; nothing is carried.
+- **Commit judged:** `8d7d02fe6083771f8bd4b7bcfc7f1470a3bc5a0f`, HEAD at the start, clean tree
+  (`critic/c54_commit.txt`). **Date:** 2026-11-08.
+- **Build:** `vite build --outDir critic/c54_dist`, exit 0 (`critic/c54_build.log`). Served by `vite preview` on
+  127.0.0.1:**5354** and stopped at the end. Driven with Playwright Chromium at 1600 × 900, 390 × 844 and 844 × 390.
 - **Runs.**
-  - **Headless replay** of run 52's 35 jobs plus one new seed per family:
-    `tools/diag/replayCritic.ts --run 52 --new 1 --jobs 3 --out critic/c53_replay` (`critic/c53_replay/REPORT.md`,
-    `critic/c53_replay.log`).
-  - **Headless, fresh seeds** (`critic/scripts/c53_jobsQ.txt`, exits in `critic/c53_q_q.done`): landingInvariants
-    23021–23033 (7), diploInvariants 23001 (random), 23003 (scenario, heroes), 23005 (random world), workerDeterminism
-    23059, worldInvariants 23051 (ten years), seaBattles 23061.
-  - **Page, one at a time:** `critic/scripts/c53_suiteP.sh` (every run-52 case first, then new seeds 23103–23151) and
-    `critic/scripts/c53_suiteP2.sh` (the new probes below).
+  - **Headless replay** of run 53's 18 jobs, plus one new seed per family:
+    `tools/diag/replayCritic.ts --run 53 --new 1 --jobs 2 --out critic/c54_replay` (`critic/c54_replay/REPORT.md`).
+  - **Headless, fresh seeds, 30 jobs** (`critic/scripts/c54_jobsAll.txt`; every one exited 0, `critic/c54_q_all.done`):
+    - diploInvariants 24001–24011 (random, scenario, heroes, a random world);
+    - landingInvariants 24021–24033;
+    - worldInvariants 24051, 24053 (heroes), 24055 (ten years), 24057 (random world);
+    - workerDeterminism 24059; seaBattles 24061; `landingRows all`;
+    - far routes 24041, 24043, 24045;
+    - staged repulses 24071, 24073, 24075; unstaged repulses 24081, 24083;
+    - 7019 for 20 years (saved, `critic/c54_seed7019_y20.bin`) and a new world, 24099, for 25 years.
+  - **Headless, second list** (`critic/scripts/c54_jobsB.txt`): 21099 and 20899 for 25 years (run 53's bar cases for
+    emergent dynamics), and `critic/scripts/c54_heldby.ts` (below).
+  - **Page, one at a time** (`critic/scripts/c54_suiteP.sh`, `c54_suiteP2.sh`):
+    - run 53's "what the bar needs" and named cases first, then new seeds 24101–24143 for the whole brief;
+    - 7019's year-20 save: AI nukes, History, the downloads; two 12-year watches at Max;
+    - last, alone: the frame rate on 7019's year-20 save (`critic/scripts/c54_chain3.sh`).
   - **New probes:**
-    - `critic/scripts/c53_repulse.ts`: headless through the worker (`SimServer`, as `tests/helpers/landingRows.ts`).
-      One click's landing; from the hour the first division lands, the foe is made holder of the sea about the
-      landing's water, so a later part is thrown back (PLAN 4.5b). Logs every event of the divisions, the worker's
-      order news, and the bar's words (`landingStatus` and `groupStatus` themselves). **Staged**: the sea hold is
-      written into `world.seaControl`, not won.
-    - `critic/scripts/c53_repland.ts`: headless, no staging: every `LandingRepulsed` in an AI world and whether the
-      same division comes ashore within 48 h.
-    - `critic/scripts/c53_turnback.mjs`, `critic/scripts/c53_lhold.mjs`: the cancel and landing probes with shots
-      and the bar's text at chosen hours.
-    - `critic/scripts/c53_kwhist.mjs`: R51a's city in the ticker, History's row and both downloads.
+    - `critic/scripts/c54_dest2.ts`: one click's landing, headless, every 2–6 hours, with the sea battle its groups
+      are in (`world.seaBattles`: the fleets, their ships, both sides' losses) and every foe fleet within 30 cells.
+      It answers run 53's question on R53-N3: is the hold real?
+    - `critic/scripts/c54_heldby.ts`: who `heldBy` names in an AI world. It found nothing: the AI's landings are not
+      in `world.landings` (only `bindDivision`, the player's click, makes one), so `heldBy` reads only the player's.
+    - `critic/scripts/c54_rw_random.mjs`: the random world and the toy world in the page, one year each at Max.
+    - The Rome → Valletta click on eight new seeds, 24151–24175 (`critic/c54_lland_ita_malta_241*.json`).
 
 ## Verdict
 
-**R52-B1 is fixed on all three of its cases and on new seeds, and the bar's other run-52 findings (N2, N3, N4, N5)
-are fixed on their own cases. Every checker reports 0 broken. No blocking issue. Naval goes to 8 and reaches its bar.**
+**R52a–d do what they say on run 53's named cases. Every checker reports 0 broken on every seed. But the newest
+feature has a new blocking issue: on the commonest outcome of run 53's own Malta case, the bar, the division's panel
+and the ticker tell three different stories.**
 
-- **R52-B1:** 22103 now reads "over: its transports were sunk; 2 never sailed" beside the news saying the same, with
-  both divisions inland. 21105 reads "over: its transports broke off; 2 came ashore away from Valletta" with the two on
-  Sicily. 3517 reads "over: 2 landed, 1 never sailed" with 366 on land.
-- **R52-N2:** 20861 is one row from t1 to "over: 3 landed".
-- **Still wrong, not blocking:**
-  - **R53-N1:** a landing thrown back is never told so in the bar. The division later comes ashore, and that
-    overwrites "thrown back" with "landed" or "came ashore away". On a staged case the bar reads "over: 3 landed"
-    beside two "thrown back" news rows.
-  - **R53-N2:** a click's row turning back from two or three ports says "turning back to Tokyo" (seen on 20661 and on
-    new 22101).
-  - **R53-N3:** "under attack, held up" for four days with no attacker on the map at 1500 or 250 m/px, and with the
-    division's panel saying "At sea, bound for its landing".
+- **Fixed, each on its run-53 case:**
+  - **R53-N1:** the staged 23071 now ends "over: 1 landed, 2 thrown back", and 20861 ends "over: 1 landed, 2 thrown
+    back" (run 53: "2 came ashore away from Bremerhaven" and "3 landed").
+  - **R53-N2:** 20661 at h30 reads "turning back to Tokyo, Ōsaka: there in about a day". 22101 on day 3 names both
+    ports still turning back, and Hiroshima's part reads "cancelled: back at Hiroshima".
+  - **R53-N3:** 21105 reads "at sea: under attack by United Kingdom, held up", and the panel agrees. The hold is
+    real: British fleet 1080 shells the Italian ships from 18.8 cells for 90 hours (0 British losses, 32 Italian).
+  - **R53's small item:** 20861 at h120 reads "1 of 3 ashore; at sea: lands in about a day".
+- **R54-B1 (blocking, new):** Italy's two-division landing from Rome to Valletta, the critic's named case since run
+  50, is thrown back on 6 of the 11 seeds I ran (23105, 24151, 24153, 24155, 24159, 24171). On every one:
+  - for 18–24 hours after the news "the landing was thrown back; the transports sail home and land it there", the
+    bar reads "at sea: lands in about a day". The division's panel says both "At sea, bound for its landing" and,
+    two lines below, "the landing was thrown back";
+  - then the bar reads **"over: 2 thrown back"**. The ticker beside it reads "319: landed away from its target",
+    "321: landed away from its target", and the panel reads "Landed". The divisions are ashore at Catania, neither
+    home at Rome nor at Valletta.
+  - Run 53, same seed and click: "over: its transports broke off; 2 came ashore away from Valletta", which agreed
+    with the ticker. R52a's "once thrown back, stays so" turned an agreeing line into a contradicting one.
 
-**Scores.**
-
-- **Up:** naval to 8.
-- **UI/UX stays at 7,** for R53-N2 and R53-N3: the bar's headline still says less than, or other than, what the map
-  and the sub-lines show.
-- Everything else is the same.
+**Scores.** Naval goes from 8 to 7 for R54-B1. Everything else holds its run-53 score; each is re-earned below on
+this run's own evidence.
 
 ## Scores
 
-| Dimension | Run 52 | Run 53 | |
+| Dimension | Run 53 | Run 54 | |
 |---|---|---|---|
-| Map visuals and readability | 8 | 8 | **Carried.** Not touched by Batch 6. |
-| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 | **Carried.** Checkers on new seeds, as the brief asks: diploInvariants 0 broken on 23001 (random, 10 y), 23003 (scenario, heroes, 10 y), 23005 (random world, 5 y) (`critic/c53_diploinv_23*.log`), and on run 52's 22001/22003/22005 and 21001–21013 again (replay). **What the bar needs:** as run 52 said: on 20887 and 21129 (`node critic/scripts/c53_rg_relations.mjs <seed> 365 1600 900 desk '&heroes=on'`), no war chip at day 365 with one side more than 4 times the other's count of nations. |
-| Emergent world dynamics over long runs | 7 | 7 | **Carried.** Batch 6's sim change (`held`, `backIn`) only reads the world: 7019's year-20 hash is still `6a8590fe` (`critic/c53_replay/c52_seed7019_save.log`; runs 50–52 the same). **What the bar needs:** as run 52 said: `node critic/scripts/c48_top.cjs` on 21099 (25 years) and 20899, with no top-5 holder within ±0.2 % of the same share for 20 or more years. |
-| God Mode | 8 | 8 | **Rescored (R51a).** <ul><li>**R52-N4 fixed:** "1 January 1938 God opened a breakthrough for Germany near Berlin" in the ticker on 21151, 22151 and new 23151 (`critic/c53_kw_21151.json`, `critic/c53_kw_22151.json`, `critic/shots/c53kw_21151_00_breakthrough_clicked.png`; run 52: "for Germany").</li><li>The same words in History's row, and in the CSV (`…,GodBreakthrough,1,Germany,1,Berlin,God opened a breakthrough for Germany near Berlin`) and the JSON. No raw "=Berlin" anywhere (`critic/c53_kwh_21151.json`, `critic/c53_kwh_23151.json`, `critic/shots/c53kwh_21151_history.png`).</li><li>Fighting follows: engaged 0 → 4 → 19 → 54 by day 7 on 21151.</li><li>At peace it is still refused (`critic/c53_k_20879.json`).</li><li>Revolt, Spawn, Found and Raze are each told, on 20875 and new 23119 (`critic/c53_q_23119.json`).</li><li>No page error.</li></ul> **Not 9:** the corridor is still not drawn on the map (ADR-864's choice; see Design objections). |
-| Editor and scenarios | 7 | 7 | **Carried.** **What the bar needs:** as run 52 said: `node critic/scripts/c53_os2_scen.mjs critic/c26_critic_standoff.warsim-scenario c53` loads the run-26 file, or says what it changed to load it; and the editor's nation list is searchable or grouped. |
-| Stats and history | 8 | 8 | **Rescored (`historyRows.ts`).** History's Breakthrough row and both downloads name the place, with the `=` literal marker stripped everywhere (above). The 7019 save is the same world (`6a8590fe`). **Not 9:** as run 52: no "my wars only" filter, and no link from a row to its war chip. |
-| UI/UX and polish | 7 | 7 | **Rescored.** **Better, each on run 52's case:** <ul><li>The over line agrees with the order news on 22103, 21105 and 3517 (Naval row).</li><li>One row for one click to its end on 20861: "over: 3 landed" (`critic/c53_lland_jap_sh3_20861.json`).</li><li>A row turning back gives its days: "turning back to Tokyo: there in about a day" (`critic/c53_cp_jap_cancel_20661.json`).</li><li>The landscape-phone row still fits: the cancel and four division lines are inside the viewport and topmost on days 0–4 of 21103 (`critic/c53_lbox_eng_br4_21103_844x390.json`).</li><li>The bar is seen beside the phone's nation panel (`barVisibleWithNationPanel: true`, 21101 and 21107).</li><li>No page error in any c53 probe.</li></ul> **Not 8:** <ul><li>**R53-N2:** one click from two or three ports turning back is headed "turning back to Tokyo" on 20661 (h30–h45) and on new 22101 (day 3: "turning back to Tokyo" for Tokyo, Ōsaka, Hiroshima). The sub-lines say "turning back to Ōsaka", and 365's panel says "Aboard, sailing back to Ōsaka" (`critic/c53_tb_jap_cancel_20661.json` `barText` at h30, `critic/shots/c53tb_jap_cancel_20661_h30.png`, `critic/c53_lbar_jap_sh3_land_22101_844.json`). `groupStatus` returns the first returning part's words. While sailing it sums ("2 of 3 at sea"); turning back it does not.</li><li>**R53-N3:** "at sea: under attack, held up" (below).</li><li>Small: on 22105 day 2, one division's line drops its days ("Marching to Portsmouth to board transports") while its sibling keeps them (`critic/c53_lbar_eng_br3_phone_22105_390.json`).</li></ul> **What the bar needs:** <ul><li>`SHOTAT=30 node critic/scripts/c53_turnback.mjs 20661 JAP CHI 1818.5,385.5 1715.5,413.5 2 jap_cancel 26 60`: the headline at h30 names both ports, "turning back to Tokyo, Ōsaka", with the longer of their days.</li><li>`node critic/scripts/c53_lbar.mjs 22101 JAP CHI 1818.5,385.5 1715.5,413.5 3 jap_sh3_land 844 390 12 2`: day 3 names all three ports.</li><li>`SHOTAT=60 node critic/scripts/c53_lhold.mjs 21105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 200`: at h60 the held row's attacker is on the map or named, and the division's panel agrees with the row.</li></ul> |
-| Performance | 7 | 7 | **Carried** (no render or sim-cost change). In passing, 7019's 20 years ran at a mean of 3.32 ms a tick headless, with two other jobs beside it (`critic/c53_replay/c52_seed7019_save.log`; run 52: 3.76). **What the bar needs:** as run 52 said: `node critic/scripts/c53_pf_lookfps.mjs 7019 critic/c52_seed7019_y20.bin`, alone, at 45 fps or more at 120 m/px in both looks. |
-| Stability | 8 | 8 | **Rescored on new seeds** (`landings.ts`, `server.ts` changed). <ul><li>**Save and load in the page (23137, new):** saved at t4800 (hash 31191321) and run 200 days: 3888954380. Loaded twice and run 200 days each time: 3888954380 both times (`critic/c53_sl_plain_23137.json`).</li><li>**7019's 20-year hash** is `6a8590fe`, as in runs 50–52.</li><li>**workerDeterminism 23059:** `7818e79e` on every arm (`critic/c53_wd_23059.log`).</li><li>**worldInvariants 23051 (ten years):** 0 broken.</li><li>**No page error:** a sweep of all 46 `critic/c53_*.json` finds no `errors` entry and no `fail` or `fatal` key.</li></ul> |
-| Semantic zoom to unit level (needs 8) | 8 | 8 | **Carried.** In passing, the sea battle at R46's camera on 20885 (t107) is drawn with 24 / 22 / 16 elements at 250 / 60 / 25 m/px in Balls (19 at 60 in Classic), as in run 52 (`critic/c53_sb_20885.json`). |
-| Naval warfare (needs 8) | 7 | **8** | **Up: every case run 52 named as "what the bar needs" now shows what it asked for, and so do new seeds.** <ul><li>**22103** (`STEP=3 c53_lland … ger_norwich 130`): run 52 "over: lost at sea". Now **"over: its transports were sunk; 2 never sailed"** from t91, with both divisions inland near Berlin (1094.4, 263.6; 1092.8, 261.8). The news beside it says the transports were sunk and the landing is over (`critic/c53_lland_ger_norwich_22103.json`). The same hours and words on new 23103 (the 1938 start plays out alike there: not an independent case).</li><li>**21105** Rome → Valletta: run 52 "over: 2 landed". Now **"over: its transports broke off; 2 came ashore away from Valletta"**. The ticker beside it has 319's and 321's "its transports broke off; it came ashore away from its target" (`critic/shots/c53lland_ita_malta_21105_over_1500m.png`). The same on new 23105 (two divisions) and 23107 (three).</li><li>**3517** desk: run 52 "2 landed, 1 lost at sea". Now **"over: 2 landed, 1 never sailed"**, with 366 on land at 1783.9, 392.5 (`critic/shots/c53lost_desk_rows.png`). Phone and landscape probes: no error.</li><li>**20861** (`STEP=2`): **one row from t1 to "over: 3 landed"** at t131, gone at t155 (`critic/c53_lland_jap_sh3_20861.json`; run 52: split into three rows). The same on new 23111 ("over: 3 landed" at t133).</li><li>**R52-N3:** 21105 now reads "at sea: under attack, held up" from t55 to t144 while the group is engaged. It reads "lands in about 2 days" when the group moves again (`critic/c53_lland_ita_malta_21105.json`).</li><li>**R52-N5:** "turning back to Tokyo: there in about a day", and it is there by h48 (`critic/c53_cp_jap_cancel_20661.json`).</li><li>Checkers: landingInvariants 0 broken on new 23021–23033; run 52's 22021–22033 and 21021–21031 0 broken again (replay); `landingRows all` 0 broken (replay).</li><li>Landings that go right go right: new 23109, England's three to Bremerhaven, "over: 3 landed" at t145 with all three at the target (1072.5, 258.5).</li><li>seaBattles 23061: 61 sea battles in 3 years (`critic/c53_sb_23061.log`).</li></ul> **Not 9:** <ul><li>**R53-N1:** a landing thrown back is told "landed" or "came ashore away" in the bar (staged; below).</li><li>**R53-N3:** "under attack" with nothing on the map. At h60 on 21105, transport group 1195 sits alone west of Sicily at 250 m/px, with no enemy ship, battle marker or fire in view (`critic/shots/c53lh_ita_malta_21105_h60_250m.png`, `critic/shots/c53lh_ita_malta_21105_h60_1500m.png`). Run 52's headless trace (`critic/c52_dest_21105_ita_malta_fleets.json`) has the group `engaged` while every British fleet within 15 cells is not, 12 cells off.</li><li>The Malta landing never reaches Valletta on any seed tried (21105, 22107, 23105, 23107).</li></ul> |
-| Tanks (needs 8) | 8 | 8 | **Carried.** Not touched. |
-| Aircraft (needs 8) | 8 | 8 | **Carried.** Not touched. |
-| AI nuclear use (needs 8) | 8 | 8 | **Carried.** Not touched; 7019's year-20 world is the same hash as runs 39–52. |
+| Map visuals and readability | 8 | 8 | **Re-earned on new seeds.** <ul><li>**The relations graph:** on 20887, 21129 and new 24129 at day 365, every name is whole and no label lies over another (`critic/shots/c54rg_20887_desk_d365.png`, `critic/shots/c54rg_24129_desk_d365.png`). On the phone (24131, day 730, random diplomacy) the names can be read (`critic/shots/c54rg_24131_phone_d730.png`).</li><li>**The random world** (24161, one year in the page) reads at the world zoom: nations named along their land, 15 whole names in the ranking, occupied land hatched (`critic/shots/c54rw_random_24161_end_world.png`).</li><li>**A 12-year world** (24141, heroes) reads at a glance: the USA across western Canada, France over West Africa, every chip and ticker row whole (`critic/shots/c54lwhon_24141_y12_world.png`).</li><li>**A sea battle** at 60 m/px: Romanian destroyers against a Soviet cruiser squadron off Constanța, with tracers and the battle ring (`critic/shots/c54sb_20885_60m_balls.png`).</li></ul> **Not 9:** <ul><li>The relations graph is a hairball at day 365: about 40 war lines meet on the United Kingdom (`critic/shots/c54rg_20887_desk_d365.png`), and 21–37 nations are left out.</li><li>A held landing's attacker is named but not linked on the map: on 21105 the battle marker is 14 cells from the transports, with nothing between them (`critic/shots/c54lh_ita_malta_21105_h60_1500m.png`).</li></ul> |
+| Diplomacy, war, alliance, puppet, revolt depth | 7 | 7 | **Rescored.** <ul><li>**0 broken on every run:** diploInvariants on 24001 (random), 24003 (scenario, heroes), 24005 (random world), 24007, 24009 (random, heroes) and 24011. Each runs ten years, except the random world's five (`critic/c54_diploinv_24*.log`). Also 0 broken on run 53's 23001, 23003 and 23005 again, and on new 60101, 60201 and 60301 (`critic/c54_replay/REPORT.md`).</li><li>Force war on 24135 matches the sim's ties (`critic/c54_fw2_24135.json`).</li><li>The 12-year watch on 24141 has 70–100 nations alive and real turns: the USA at war with the United Kingdom in year 8, France with the UK in year 12 (`critic/c54_lwhon_24141.json`).</li></ul> **Not 8, as in runs 51 and 53:** year-one wars are still dogpiles. At day 365: <ul><li>20887: "Germany +6 ⚔ United Kingdom +36" and "Nationalist Spain ⚔ Portugal +22" (`critic/shots/c54rg_20887_desk_d365.png`; run 53 the same);</li><li>new 24129: "United Kingdom +35 ⚔ Brazil" (`critic/shots/c54rg_24129_desk_d365.png`);</li><li>24141, year 2: "France +30 ⚔ Brazil +5" (`critic/c54_lwhon_24141.json`).</li></ul> **What the bar needs:** on 20887, 21129 and 24129, `node critic/scripts/c54_rg_relations.mjs <seed> 365 1600 900 desk '&heroes=on'` shows no war chip at day 365 with one side more than 4 times the other's count of nations. And diploInvariants stays at 0 broken on the runs above. |
+| Emergent world dynamics over long runs | 7 | 7 | **Rescored.** <ul><li>**21099 (25 years) is the same world as run 51's:** hash `f971613c` on both builds, and an identical top-5 timeline (`critic/c54_top_21099.txt` against `critic/c51_top_21099.txt`). Denmark sits at 5.4 % for all 25 years.</li><li>**20899 is the same world as run 50's** (hash `bf870991`). Denmark is in the top 5 at 5.4–5.5 % for 17 of the 25 years (`critic/c54_top_20899.txt`).</li><li>**New 24099 (25 years):** the Soviet Union holds 27.3–31.9 % and Canada 12.1–13.4 % in every year. The first three places are the same nations in the same order for all 25 years (`critic/c54_top_24099.txt`). New seed, not compared.</li><li>**The page watches are livelier:** on 24141 the USA overtakes the Soviet Union by year 12 (22.5 M km² against 22.4 M), and France and Japan rise to third and fourth (`critic/shots/c54lwhon_24141_y12_world.png`).</li></ul> **What the bar needs:** as run 53 said, `node critic/scripts/c48_top.cjs` on `npm run sim -- --scenario 1938 --seed 21099 --years 25` and on seed 20899, with no top-5 holder within ±0.2 % of the same share for 20 or more years. And on 24099, the first three places are not the same three nations in the same order every year. |
+| God Mode | 8 | 8 | **Rescored on new seeds.** <ul><li>**Nukes on 24117:** the H-bomb on Paris (3,329,000 civilians) shows its mushroom, its ring and an alert with "Go to", and the A-bomb follows on London (`critic/shots/c54a_24117_13_paris_h_strike.png`, `_15_london_a_strike.png`). The nuke charts draw (`_33_chart_*.png`).</li><li>**Tools on 24119:** Revolt makes "Free Saxony broke away from Germany", and Spawn makes "Free Greater Poland Voivodeship was set up on land of Poland". Found and Raze are each told in the ticker (`critic/c54_q_24119.json`).</li><li>**Breakthrough at war** on new 24123 reads "God opened a breakthrough for Germany near Berlin". Fighting follows: engaged 0 → 4 → 19 → 49 by day 7 (`critic/c54_kw_24123.json`). On 21151 the same row is in History and in the CSV (`critic/c54_kwh_21151.json`, `critic/shots/c54kwh_21151_history.png`).</li><li>At peace, Breakthrough is refused (`critic/c54_k_20879.json`).</li><li>No page error.</li></ul> **Not 9:** the corridor is still not drawn (ADR-864; see Design objections). |
+| Editor and scenarios | 7 | 7 | **Rescored.** On G 24121, fleets and a Polish bomber are placed, and a fleet at Berlin is refused ("Not done: no water of a sea is near the place."). The scenario exports and loads as placed: 89 German, 76 British and 50 Polish forces and 10 warheads. It plays, with sea battles on day 1 (`critic/c54_g_24121.json`). The probe's day-60 mark timed out, as in runs 48–53: that is the probe, not the game. **Not 8:** <ul><li>The run-26 scenario is still refused: "Could not load: it was made by an older version of Warism, and this one cannot start it" (`critic/c54_os2_c54.json`).</li><li>The editor's nation list is still one flat list of 100+ names (`critic/c54_g_24121.json` `editorText`).</li></ul> **What the bar needs:** as run 53 said, `node critic/scripts/c54_os2_scen.mjs critic/c26_critic_standoff.warsim-scenario c54` loads the file, or says what it changed to load it. And a typed filter narrows the editor's nation list (`c54_g_editor.mjs 24121`). |
+| Stats and history | 8 | 8 | **Rescored on HEAD's own 7019 year-20 save** (hash `6a8590fe`, the same as runs 39–53). <ul><li>History opens in 121 ms with 3,714 events of 28 kinds (`critic/c54_hi_7019.json`).</li><li>The CSV has 3,716 lines and the JSON 37,142 (`critic/c54_dl_7019.json`, `critic/c54_dl_7019.csv`).</li><li>The Breakthrough row names its place in History, the CSV and the JSON (God Mode row).</li><li>The nuke charts draw (`critic/shots/c54a_24117_33_chart_*.png`).</li></ul> **Not 9:** <ul><li>There is no "my wars only" filter.</li><li>History's first rows on 7019 repeat a pair: "25 December 1957 A major battle began near Tangier" and "The major battle near Tangier was won by Germany", twice on one day, then once more on the 26th (`critic/c54_hi_7019.json` `firstRows`).</li></ul> |
+| UI/UX and polish | 7 | 7 | **Rescored.** **Better, each on run 53's case:** <ul><li>**R53-N2:** 20661 at h30 reads "turning back to Tokyo, Ōsaka: there in about a day" (`critic/shots/c54tb_jap_cancel_20661_h30.png`). 22101 on day 3 names Tokyo and Ōsaka, with Hiroshima's part "cancelled: back at Hiroshima" (`critic/shots/c54lbar_jap_sh3_land_22101_844_d3.png`). New 24101 (three ports) reads "cancelled: 2 back at Tokyo, Ōsaka, 1 stopped where they stood" (`critic/c54_tb_jap_cancel3_24101.json`).</li><li>**R53-N3:** the held row and the panels name the attacker (Naval row).</li><li>20861 at h120 reads "1 of 3 ashore; at sea: lands in about a day" (`critic/c54_lh_jap_sh3_20861.json`).</li><li>The landscape phone's bar keeps its Cancel button and four division lines on screen and topmost (`critic/c54_lbox_eng_br4_21103_844x390.json`).</li><li>On a touch screen, a tap shows the landing's mark, at 59–60 fps (`critic/c54_tm_touch.json`).</li><li>No page error in any c54 probe.</li></ul> **Not 8:** <ul><li>**R54-B1** (below): the bar, the panel and the ticker disagree on the commonest Malta outcome. One panel says two opposite things at once (`critic/shots/c54lh_ita_malta_23105_h174_1500m.png`).</li><li>Small, unchanged since run 53: on 22105, day 2, two division lines drop their days ("Marching to Portsmouth to board transports") while the third keeps them (`critic/c54_lbar_eng_br3_phone_22105_390.json`).</li></ul> **What the bar needs:** R54-B1's cases (Naval row) read as one story in the bar, the panel and the ticker. And on 22105 (`node critic/scripts/c54_lbar.mjs 22105 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br3_phone 390 844 14 4`), every division line gives its days on day 2. |
+| Performance | 7 | 7 | **Rescored, alone, at the end, on the same save as runs 50–53** (7019's year 20 is the same world: hash `6a8590fe`). <ul><li>3,000 / 1,200 / 600 m/px: 58.8–60.2 fps in both looks.</li><li>**120 m/px: 33.2–38.7 fps** (run 51: 31.0–39.6).</li><li>30 m/px: 38.7–48.0 (run 51: 40.1–47.3) (`critic/c54_pf_7019.json`, `critic/c54_pf_lookfps.log`).</li><li>The two 12-year watches at Max: 59.9–60 fps every year, the longest gap 83 ms, 0 frames over 500 ms (`critic/c54_lwhon_24141.json`, `critic/c54_lwplain_24143.json`).</li><li>Touch: 59.5–60 fps with and without a selection (`critic/c54_tm_touch.json`).</li><li>Headless 7019 for 20 years: 3.59 ms a tick, with 7–8 other jobs running (not a clean figure; run 53: 3.32 with two beside it).</li></ul> **Not 8:** the unit zooms on a late world still run at 33–48 fps, the same as run 51 within noise. **What the bar needs:** as run 53 said: `node critic/scripts/c54_pf_lookfps.mjs 7019 critic/c54_seed7019_y20.bin`, alone, at 45 fps or more at 120 m/px in both looks. |
+| Stability | 8 | 8 | **Re-earned on new seeds.** <ul><li>**Save and load in the page (24137, new):** saved at t4800 (hash 3845193331) and run 200 days: 3951874301. Loaded twice and run 200 days each time: 3951874301 both times (`critic/c54_sl_plain_24137.json`).</li><li>**Long worlds keep their hashes:** 7019's 20-year hash is `6a8590fe`, as in runs 39–53 (`critic/c54_seed7019_save.log`). 21099 and 20899 end on the same hashes as in runs 51 and 50.</li><li>**workerDeterminism:** 24059 ends `437ada37` on every arm. 23059 is the same as in run 53, and new 60401 ends `4895a8ec` on every arm (`critic/c54_wd_24059.log`, the replay).</li><li>**worldInvariants:** 0 broken on 24051, 24053 (heroes), 24055 (ten years) and 24057 (random world). Also 0 on 23051 and 60501, ten years each, in the replay.</li><li>**The two 12-year watches at Max:** 0 page errors and 0 frames over 500 ms (`critic/c54_lwhon_24141.json`, `critic/c54_lwplain_24143.json`).</li><li>Of 77 c54 JSONs, none has a page error. Two have a `fatal`, and both come from the probe: the editor's day-60 wait and the refused run-26 file.</li></ul> |
+| Semantic zoom to unit level (needs 8) | 8 | 8 | **Re-earned on new seeds.** <ul><li>**Z 24111:** one camera from 6,000 to 3 m/px in 18 steps. Elements appear from 1,573 m/px (7,962). Individuals appear at 28 m/px (13,836) and number 4,428 at 3 m/px, with no error (`critic/c54_z_24111.json`).</li><li>At 11.6 m/px: German and Polish balls with helmets, rifles and tracers, and planes overhead (`critic/shots/c54z_24111_14.png`). At 1,000 m/px: divisions, fronts and the hatched contested ground (`critic/shots/c54z_24111_04.png`).</li><li>**PHZ 24133:** on the phone from 30,000 to 25 m/px, with no overflow at any tier (`critic/c54_phz_24133.json`).</li><li>**The sea battle at R46's camera** (20885 t107) is drawn with 24 / 22 / 16 elements at 250 / 60 / 25 m/px in Balls, as in run 53 (`critic/c54_sb_20885.json`).</li></ul> |
+| Naval warfare (needs 8) | 8 | **7** | **Down, for R54-B1, shown on the same case on both builds.** <ul><li>**23105**, Rome → Valletta, two divisions, in the page:<ul><li>**Run 53** (`5f8ef9e8`, `critic/c53_lland_ita_malta_23105.json`): "over: its transports broke off; 2 came ashore away from Valletta", the same as the ticker's last two rows.</li><li>**HEAD** (`critic/c54_lland_ita_malta_23105.json`, `critic/c54_lhold_23105_b.log`): "over: **2 thrown back**", beside the ticker's "319: landed away from its target" and "321: landed away from its target", and 319's panel "Landed" (`critic/shots/c54lh_ita_malta_23105_h186_1500m.png`).</li></ul></li><li>**Before the end, on both builds** (h162–h180): after the news "the landing was thrown back; the transports sail home and land it there", the bar reads "at sea: lands in about a day". 319's panel says "At sea, bound for its landing", with the throw-back news two lines below it (`critic/shots/c54lh_ita_malta_23105_h174_1500m.png`).</li><li>**It is the commonest outcome.** On new 24151, 24153, 24155, 24159 and 24171, the same click is thrown back, reads "at sea: lands in about a day" for 18–24 h, and ends "over: 2 thrown back" beside two "broke off; came ashore away" rows. 24157, 24173 and 24175 end "broke off; 2 came ashore away from Valletta" with no throw-back (`critic/c54_lland_ita_malta_241*.json`). So 6 of the 11 Malta clicks I ran (21105, 23105, 24105, 24151–24175) end this way.</li></ul> **Fixed and better (run 53's cases):** <ul><li>**R53-N1:** the staged 23071 ends "over: 1 landed, 2 thrown back", and so does 20861 (run 53: "2 came ashore away from Bremerhaven" and "3 landed"; `critic/c54_replay/REPORT.md`). The same on new staged 24071 and 24073 (`critic/c54_repulse_24071.json`, `_24073.json`).</li><li>**R53-N3:** the hold is real, and now named. `critic/scripts/c54_dest2.ts` on 21105: from t63 to t153, transport group 1195 is in one sea battle with British fleet 1080 (10 ships, 18.8 cells off) and Italian fleet 1179. Britain loses 0 ships and Italy 32 (`critic/c54_dest2_21105.json`). The row reads "under attack by United Kingdom, held up", and so do both panels (`critic/shots/c54lh_ita_malta_21105_h60_250m.png`). The same on new 24105 at h60 and h90.</li><li>22103's two divisions: "over: its transports were sunk; 2 never sailed". On new 24103 (three): "3 never sailed", and the news says the same (`critic/c54_lland_ger_norwich3_24103.json`).</li><li>Landings that go right: on 23109 and new 24107, England's three land at Bremerhaven, "over: 3 landed" at h144. On 24045, four land at t141–142 (`critic/c54_far_24045_eng_bremen4.json`).</li><li>Checkers: landingInvariants 0 broken on 24021–24033. `landingRows all`: 0 broken on 108 cases and 19,905 hours (`critic/c54_lrows_all.log`). seaBattles 24061: 76 sea battles in 3 years.</li></ul> **What the bar needs:** `SHOTAT=162,168,174,180,186 node critic/scripts/c54_lhold.mjs 23105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 200`, and `c54_lland.mjs` with the same arguments (240 h) on 24151, 24153, 24155, 24159 and 24171. It must show:<ul><li>From the throw-back hour on, the bar and the panel say the landing was thrown back ("thrown back: sailing home", not "lands in about a day").</li><li>At the end, the bar, the panel and the ticker agree. Either "thrown back" with where they came ashore ("2 thrown back; came ashore near Catania"), or "broke off; came ashore away", but not one in the bar and the other in the ticker.</li><li>`landingRows` has a case that would have caught it.</li></ul> |
+| Tanks (needs 8) | 8 | 8 | **Re-earned on a new seed.** C 24115, Germany against Poland, day 5: armoured divisions 40 and 42 are labelled at 250 m/px. At 15 m/px, live, their tank balls have treads and guns, with infantry balls and tracers among them (`critic/shots/c54c_24115_arm_15m_live_1.png`). The shots go down to 10 m/px (`_arm_0010m.png`), with the same element counts as run 51's 21115 (`critic/c54_c_24115.json`). No error. |
+| Aircraft (needs 8) | 8 | 8 | **Re-earned on new seeds.** <ul><li>**W 24127:** a fighter ordered to strike toward Warsaw is followed. At 3,000 m/px it flies with its mark in 56 of 61 samples, is never shown without one, and stays a median 32 px from its sorties. At ×5 it has its mark in 61 of 61 (`critic/c54_w_24127.json`; run 51: 56/61, 60/61).</li><li>**PL 24125:** planes in hour 2, marked from 3,000 m/px (42 marks) to 25 m/px, in both looks (`critic/c54_pl_planes.24125_GER_POL_5354.log`).</li><li>**Air war is told:** on 24141 in year 12, "Italy and Philippines fought in the air this month" and "Soviet Union's air force struck United States this month: 6,331 men, guns and vehicles lost" (`critic/shots/c54lwhon_24141_y12_world.png`).</li><li>worldInvariants (air included): 0 broken.</li></ul> |
+| AI nuclear use (needs 8) | 8 | 8 | **Rescored on HEAD's own 7019 year-20 save.** The game pauses on two AI strikes: China on the USA near Belfast (54,000 civilians), and China on Iceland near Höfn with a hydrogen bomb (8,000). Each has its alert, "Go to" and ticker row (`critic/c54_an_7019y20.json`, `critic/shots/c54an_7019y20_0_goto.png`). It is the same world as in runs 39–53 (the same hash), so this shows the rule still holds, not a new strength. |
 
 ## Blocking issues
 
-None. A release still needs a full run with no blocking issue (ADR-804): this clean focused run is to be followed by
-a full one.
+1. **R54-B1 (naval, rules agree; UI): a thrown-back landing tells three stories, on 6 of 11 Rome → Valletta clicks.**
+   - **The case** (page, unstaged, the player's own click; run 53's named Malta case on a seed run 53 also ran):
+     `SHOTAT=162,168,174,180,186 node critic/scripts/c54_lhold.mjs 23105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 200`.
+     - **h162:** the ticker says "319: thrown back, sails home". The order news reads "Infantry division 319: the landing
+       was thrown back; the transports sail home and land it there."
+     - **h168–h180:** the bar reads "Valletta from Rome · at sea: lands in about a day". 319's panel reads "Status:
+       At sea, bound for its landing", and two lines below, in the same panel, "the landing was thrown back; the
+       transports sail home and land it there" (`critic/shots/c54lh_ita_malta_23105_h174_1500m.png`).
+     - **h186:** the bar reads **"over: 2 thrown back"**. The ticker reads "319: landed away from its target" and
+       "321: landed away from its target". 319's panel reads "Landed" and "its transports broke off; it came ashore
+       away from its target". Both divisions are ashore near Catania, on Sicily: not home at Rome, and not at Valletta
+       (`critic/shots/c54lh_ita_malta_23105_h186_1500m.png`).
+   - **Not one seed's luck:** the same on new 24151, 24153, 24155, 24159 and 24171
+     (`critic/c54_lland_ita_malta_241*.json`, each "thrownAt" h156–162, "over: 2 thrown back" at h180–186).
+   - **What is judged** is the execution, not ADR-871's choice of words ("over: 2 thrown back" alone is what it
+     chose). Three facts: (a) 18–24 h of "lands in about a day" after the throw-back news, on both builds; (b) one
+     panel saying "At sea, bound for its landing" two lines above "the landing was thrown back"; (c) 321 is told
+     "thrown back" only by the bar's count, never in the ticker or its panel.
+   - **Why blocking:** it contradicts what the batch claims. ADR-871 says a thrown-back division "stays so" and the
+     outcome "says it". ADR-866 counts "each division by where it ended". Here the throw-back is not in the row for
+     the day it lasts, and the row's end contradicts the ticker beside it. That is the same class as run 52's
+     R52-B1, on the commonest outcome of the critic's longest-standing landing case. On run 53's build the same seed
+     ended in agreement ("broke off; 2 came ashore away from Valletta"). R52a's sticky `repulsed` turned it into a
+     contradiction. `landingRows` (108 cases, 0 broken) and landingInvariants do not see it.
+   - **What happens, from the traces:** the repulse (`LandingRepulsed`) names 319 and sends the group home
+     (`sailHome`), but the landing stays `sailing`, so the row keeps its voyage hours. The group then breaks off and
+     lands on the nearest own coast, and the worker posts `FormationLanded` "away" news for both, which the sticky
+     `repulsed` (R52a) and R52d's "all aboard" now override in the bar only. 321 is never told "thrown back" in the
+     ticker at all.
+   - **Fix:** one account in all three places.
+     - From the repulse, the row (and the panels of those aboard) says "thrown back: sailing home"; the landing
+       leaves `sailing` or the row stops reading voyage hours.
+     - At the end, say both facts in the bar ("2 thrown back; came ashore near Catania"), or let the break-off
+       news name the throw-back. Post a "thrown back" row for each division R52d counts, not only the one the
+       event names.
+     - Add the Rome → Valletta case (23105 or 24151) to `landingRows`, with a check that the row, the panel and the
+       last order news of each division agree.
 
 ## Non-blocking issues (prioritised)
 
-1. **R53-N1 (naval, rules agree): a landing thrown back is never told "thrown back" in the bar, because its later
-   landing overwrites it.**
-   - **The cause:** `server.ts` `endLanding` sets a division's end to `repulsed` on `LandingRepulsed`. When the same
-     division comes ashore afterwards (`FormationLanded`, which a thrown-back division always does sooner or later),
-     the end is overwritten with `landed` or `away`. So the `repulsed` kind is reached only when no division ever
-     comes ashore.
-   - **Case A** (staged: the sea held for China from the first landing; `npx tsx critic/scripts/c53_repulse.ts 20861
-     JAP CHI 1818.5,385.5 1715.5,413.5 3 critic/c53_repulse_20861.json 400 12`):
-     - 364 is thrown back at t129 and 366 at t131. The worker posts order news `repulsed` for each.
-     - Each comes ashore one hour later at 1715.5, 411.5: the beachhead 365 took at t119, now Japan's, so the stray
-       landing (PLAN 4.8n) takes it.
-     - The bar reads **"over: 3 landed"**.
-     - Two rules undo each other: the repulse ("home with the transports, nothing taken") and the stray landing put
-       the division on the target beach an hour later. The news says "thrown back" and the bar says "landed"
-       (`critic/c53_repulse_20861.json` `evLog`, `news`).
-   - **Case B** (staged, `… c53_repulse.ts 23071 ENG GER 1023.5,275.5 1072.5,259.5 3 …`):
-     - 274 lands at Bremerhaven at t141, and 270 and 271 are thrown back at t142.
-     - They sail home and come ashore in Kent (1030.5, 276.5, next to Dover) at t200.
-     - The bar reads **"over: 1 landed, 2 came ashore away from Bremerhaven"**: true of the place, but "away from
-       Bremerhaven" reads as near it, and "thrown back" is never said (`critic/c53_repulse_23071.json`).
-   - **Unstaged:** on 23081 (scenario, 3 years, all AI), 5 of the 7 landings thrown back are ashore within an hour,
-     1 cell from where they were thrown back, all French off France's own coast (`critic/c53_repland_23081.json`).
-     That is consistent with "home" there, so I file the rule clash only on the staged player case.
-   - **Why not blocking:** both player cases need a sea hold I wrote in, and `landingRows` (which treats a repulse as
-     "not broken off") reports 0.
-   - **Fix:** keep `repulsed` once set (a thrown-back division that comes ashore later is "thrown back; came ashore at
-     <port>"). Decide whether a thrown-back division may stray-land on its own beachhead at the target. Add a
-     repulse case to `landingRows`.
-2. **R53-N2 (UI): a click's row turning back from several ports names only the first port** (UI row above; 20661,
-   22101).
-3. **R53-N3 (naval readability): "under attack, held up" for days, with nothing on the map and a silent panel**
-   (Naval row; 21105 t55–t144; 23105 three times, t37, t55, t163).
-   - **Fix:** name or show the attacker (a sea-battle marker, or "under attack by British ships"). Put the same
-     words in the division's panel.
-   - If the engagement is one-sided (the group `engaged`, no foe `engaged`), check whether it is real.
-4. **Small:**
-   - with one part ashore and two at sea, the click's row reads "at sea: lands in about a day" (20861 t121–t130, 365
-     ashore at 1715.5, 411.5: `critic/c53_lh_jap_sh3_20861.json`), where gathering has its "2 of 3 at sea";
-   - 22105's division line loses its days on day 2.
-5. **Carried, unchanged (dimensions carried):**
+1. **R54-N1 (code reading, not shown): `heldBy` searches any engaged formation at war, of any kind, at any distance.**
+   `landings.ts` `heldBy` takes the nearest formation with `engaged === 1` whose nation is at war with the lander:
+   a land division in a battle ashore counts as much as the fleet shooting at the transports. On every case I ran
+   it named the right nation (United Kingdom, on 21105, 23105, 24105, 22107). With two foes at war, it can name the
+   one whose army is fighting nearer the coast rather than the one whose fleet holds the transports. My AI-world probe
+   (`critic/scripts/c54_heldby.ts`) found no landing to test: the AI's landings never enter `world.landings`. **Fix:**
+   name the nation of a foe fleet in the same sea battle (`world.seaBattles`, as `c54_dest2.ts` reads it).
+2. **Small:**
+   - On 22105, day 2, two division lines drop their days (UI row).
+   - History's first rows on 7019 repeat the Tangier begin/won pair three times in two days (Stats row).
+   - On the phone, the nation panel's 16 "Build" buttons sit below the screen inside its scroll
+     (`critic/c54_p.json`, `actions`: panel 139–1289 px of 844), as in earlier runs.
+3. **Carried, unchanged (each re-checked this run):**
    - the run-26 scenario is refused;
    - the editor's nation list is flat;
-   - Denmark is frozen;
-   - year-one dogpiles;
-   - the unit zooms' 31–47 fps on a late world.
+   - Denmark is frozen (21099, 20899) and 24099's first three places never change;
+   - year-one dogpiles (20887, 24129);
+   - the unit zooms' frame rate on a late world (Performance row).
 
-## Run 52's cases re-run
+## Run 53's cases re-run
 
-| Run 52 case | `d8dba302` (run 52) | HEAD `5f8ef9e8` | Evidence |
+| Run 53 case | `5f8ef9e8` (run 53) | HEAD `8d7d02fe` | Evidence |
 |---|---|---|---|
-| **R52-B1** 22103 Berlin → Norwich ×2, sunk before boarding | "over: lost at sea" | **"over: its transports were sunk; 2 never sailed"** | `critic/c53_lland_ger_norwich_22103.json` |
-| **R52-B1** 21105 Rome → Valletta | "over: 2 landed" (on Sicily) | **"over: its transports broke off; 2 came ashore away from Valletta"** | `critic/shots/c53lland_ita_malta_21105_over_1500m.png` |
-| **R52-B1** 3517 desk (366 sunk before boarding) | "2 landed, 1 lost at sea" | **"2 landed, 1 never sailed"** | `critic/shots/c53lost_desk_rows.png` |
-| **R52-N2** 20861 three ports | rows split at the end; never "3 landed" | **one row, "over: 3 landed"** (page, STEP 2; and lbar day 6) | `critic/c53_lland_jap_sh3_20861.json`, `critic/c53_lbar_jap_sh3_20861_1600.json` |
-| **R52-N3** 21105 held 4 days | "lands in about a day" ×4 days | **"under attack, held up"**, days again when it moves (R53-N3 for what it lacks) | `critic/c53_lland_ita_malta_21105.json` |
-| **R52-N4** Breakthrough row 21151, 22151 | "for Germany" | **"for Germany near Berlin"**, in History and both downloads too | `critic/c53_kwh_21151.json` |
-| **R52-N5** 20661 cancel at h26 | "turning back to Tokyo" | **"…: there in about a day"** (one port only: R53-N2) | `critic/c53_tb_jap_cancel_20661.json` |
-| 21107 cancel day 3 (phone) | "stopped where they stood…" | the same; bar seen with the nation panel | `critic/c53_lbar_ger_norwich3_phone_21107_390.json` |
-| 21103 landscape box | cancel and 4 lines on screen, topmost | the same, days 0–4 | `critic/c53_lbox_eng_br4_21103_844x390.json` |
-| 20863, 22101, 22105, 22107 bars | as run 52 | the same words, now with R50's outcomes; 22107: "3 came ashore away from Valletta"; 22101: R53-N2 | `critic/c53_lbar_*.json` |
-| Sea balls 20885 t107 | 24 / 22 / 16 | 24 / 22 / 16 | `critic/c53_sb_20885.json` |
-| God tools 20875, 22119 → 23119; Breakthrough at peace 20879 | told; refused | the same | `critic/c53_q_*.json`, `critic/c53_k_20879.json` |
-| Save and load 22137 → new 23137 | same hash twice | same hash twice | `critic/c53_sl_plain_23137.json` |
-| Run 52's 35 headless jobs + 13 new seeds (replay) | — | **32 the same, 3 differ, 0 failed.** Two differ only in an echoed output path (7019's save, seaBattles 22061: the same hash `6a8590fe` and the same 65 battles). One is `landingRows all`'s `grid 3517 redirect 6 aboard`, with 2 rows at the end, not 1: R50b keeping an over part beside its click's live part, as ADR-867 means; still 0 broken. The 13 new seeds (60001–61201) all exit 0, and every checker among them reads 0 broken. workerDeterminism 61001 is the same on every arm | `critic/c53_replay/REPORT.md` |
-| Not re-run: the frame rate, the relations graphs, the editor and the run-26 file, 21099's 25 years | — | their dimensions are carried and Batch 6 does not touch them | — |
+| **R53-N1** staged 20861 (`c53_repulse.ts`) | "over: 3 landed" beside two "thrown back" | **"over: 1 landed, 2 thrown back"** | `critic/c54_replay/c53_repulse_20861.json` |
+| **R53-N1** staged 23071 | "over: 1 landed, 2 came ashore away from Bremerhaven" | **"over: 1 landed, 2 thrown back"** | `critic/c54_replay/c53_repulse_23071.json` |
+| **R53-N1** unstaged 23081 (AI, 3 y) | 7 thrown back, 5 ashore within 1 h | the same (no AI rule changed) | `critic/c54_replay/REPORT.md` |
+| **R53-N2** 20661 cancel at h26, h30 | "turning back to Tokyo" | **"turning back to Tokyo, Ōsaka: there in about a day"** | `critic/shots/c54tb_jap_cancel_20661_h30.png` |
+| **R53-N2** 22101 day 3 (landscape) | "turning back to Tokyo" | **"turning back to Tokyo, Ōsaka"**; Hiroshima "cancelled: back at Hiroshima" | `critic/shots/c54lbar_jap_sh3_land_22101_844_d3.png` |
+| **R53-N3** 21105 h60 | "under attack, held up", panel silent | **"under attack by United Kingdom, held up"**, the panel the same; the fight is real (0 / 32 ships lost) | `critic/shots/c54lh_ita_malta_21105_h60_250m.png`, `critic/c54_dest2_21105.json` |
+| Small: 20861 h121–h130, one ashore | "at sea: lands in about a day" | **"1 of 3 ashore; at sea: …"**, then "2 of 3 ashore" | `critic/c54_lh_jap_sh3_20861.json` |
+| Small: 22105 day 2 line without days | two lines | the same | `critic/c54_lbar_eng_br3_phone_22105_390.json` |
+| 22103, 3517, 20861 (R52-B1, N2) | "never sailed"; "2 landed, 1 never sailed"; "3 landed" | the same | `critic/c54_lland_ger_norwich_22103.json`, `critic/shots/c54lost_desk_rows.png`, `critic/c54_lland_jap_sh3_20861.json` |
+| 21105 Malta end | "broke off; 2 came ashore away from Valletta" | the same (no throw-back on this seed) | `critic/c54_lland_ita_malta_21105.json` |
+| **23105** Malta end | "broke off; 2 came ashore away from Valletta" | **"2 thrown back"**, against the ticker (R54-B1) | `critic/c54_lland_ita_malta_23105.json` |
+| 23109 England → Bremerhaven | "over: 3 landed" | the same, at h144 | `critic/c54_lland_eng_br3_23109.json` |
+| 21151 Breakthrough row, History, CSV | "for Germany near Berlin" | the same | `critic/c54_kwh_21151.json` |
+| 20879 Breakthrough at peace | refused | refused | `critic/c54_k_20879.json` |
+| 21103 landscape box | Cancel and 4 lines on screen, topmost | the same | `critic/c54_lbox_eng_br4_21103_844x390.json` |
+| Sea balls 20885 t107 | 24 / 22 / 16 | 24 / 22 / 16 | `critic/c54_sb_20885.json` |
+| Relations 20887, 21129 at day 365 | dogpiles | the same | `critic/shots/c54rg_20887_desk_d365.png`, `critic/shots/c54rg_21129_desk_d365.png` |
+| Run-26 scenario file | refused | refused | `critic/c54_os2_c54.json` |
+| 21099, 20899 over 25 years | Denmark frozen (run 51, run 50) | the same worlds, the same hashes | `critic/c54_top_21099.txt`, `critic/c54_top_20899.txt` |
+| Frame rate on 7019's year-20 save | 31–47 fps at the unit zooms (run 51) | see Performance | `critic/c54_pf_lookfps.log` |
+| Run 53's 18 headless jobs + 11 new seeds (replay) | — | **15 the same, 3 differ, 0 failed.** The three that differ: seaBattles 23061 only in an echoed path (the same 61 battles), and the two staged repulses, by R52a/R52d as their ADRs say. All 11 new seeds exit 0, and every checker among them reads 0 broken | `critic/c54_replay/REPORT.md` |
 
 **Checkers on fresh seeds (this run).** None reports a broken rule:
-- landingInvariants 23021–23033: 0 broken (`critic/c53_li_23*.log`);
-- diploInvariants 23001, 23003 and 23005: 0 broken;
-- worldInvariants 23051 (ten years): 0 broken;
-- workerDeterminism 23059: the same on every arm;
-- seaBattles 23061: 61 battles.
+- diploInvariants 24001–24011 (6 runs): 0 broken;
+- landingInvariants 24021–24033 (7): 0 broken;
+- worldInvariants 24051, 24053, 24055 (ten years), 24057: 0 broken;
+- workerDeterminism 24059: the same on every arm;
+- `landingRows all`: 108 cases, 0 broken;
+- seaBattles 24061: 76 battles.
 
 ## Design objections (none blocking, no score lowered)
 
-- **ADR-759 / SPEC §7.1: a cancel hands the army to the AI at once.** On 22105 the cancelled three are on an AI
-  landing by day 8. On 20661 (lbar, cancelled t27), the row reads "back at Tokyo, Ōsaka" at t51 while both panels
-  already read "At sea with the AI's landing" (`critic/c53_lbar_jap_sh_cancel1_20661_1600.json`). The words are true,
-  but the player's cancel is undone within a day. An option to keep a played nation's divisions where the player left
-  them is still wanted.
-- **ADR-864: the Breakthrough corridor is not drawn.** The row now says where. The map still does not show the
+- **ADR-759 / SPEC §7.1: a cancel hands the army to the AI at once.** On 20661 the row reads "cancelled: back at
+  Tokyo, Ōsaka" at h48, while 365's panel already reads "At sea with the AI's landing (not one of yours)"
+  (`critic/c54_tb_jap_cancel_20661.json`, h48–h60). The words are true, but the player's cancel is undone within a
+  day. An option to keep a played nation's divisions where the player left them is still wanted.
+- **ADR-864: the Breakthrough corridor is not drawn.** The row says where; the map still shows nothing of the
   10-day corridor that is the tool's whole effect.
+- **ADR-873: no mark joins a held landing to its attacker.** The fight is real but 14–19 cells off, beyond what a
+  player connects to the transports. A line or a ring on the transports while held would make "held up" visible.
 
 ## Ideas from other games (not scored)
 
-- Hearts of Iron names the attacker on a convoy under attack ("Convoy raided by submarines in the Western Med"). That
-  is R53-N3's fix.
-- Europa Universalis' message log has a filter for "my wars only" (History has types and nations, not "my wars").
+- Hearts of Iron's naval invasion has one status line from start to end ("Invasion failed: forces returned to
+  port"). The panel, the order and the log say the same.
+- Europa Universalis' message log has a "my wars only" filter.
 
 ## Strengths (verified)
 
-- **The bar's last line is now true on every case I have.** It was false on three named cases in run 52. Now
-  "never sailed", "broke off; came ashore away from Valletta" and "3 landed" each match where the divisions stand,
-  and the order news beside them, on 22103, 21105, 3517 and 20861, and on new 23103, 23105, 23107, 23109 and 23111.
-- **One click is one row to its end.** 20861's three ports read as one landing from the first hour to "over: 3
-  landed", and the row goes a day after the last landed.
+- **Run 53's three findings are fixed, each on its own case, without new checker failures.** 20661 and 22101 name
+  every port turning back. 21105 names the United Kingdom, and the fight behind that name is real (0 British against
+  32 Italian ships lost over 90 hours). The staged 23071 reads "1 landed, 2 thrown back".
+- **Long runs are solid.** Two 12-year watches at Max held 59.9–60 fps with no frame over 500 ms and no page error.
+  7019, 21099 and 20899 end on the same hashes as the runs that first made them, and save and load in the page gives
+  the same hash twice.

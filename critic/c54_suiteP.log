@@ -1,0 +1,85 @@
+== c54_turnback 20661 JAP CHI 1818.5,385.5 1715.5,413.5 2 jap_cancel 26 60 06:57:40
+   exit 0
+== c54_lbar 22101 JAP CHI 1818.5,385.5 1715.5,413.5 3 jap_sh3_land 844 390 12 2 06:57:57
+   exit 0
+== c54_lhold 21105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 200 06:58:10
+   exit 0
+== c54_lhold 20861 JAP CHI 1818.5,385.5 1715.5,413.5 3 jap_sh3 160 06:58:28
+   exit 0
+== c54_lland 22103 GER ENG 1100.5,267.5 1031.5,266.5 2 ger_norwich 130 06:58:45
+   exit 0
+== c54_lland 21105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 06:58:56
+   exit 0
+== c54_lost 3517 desk 06:59:07
+   exit 0
+== c54_lland 20861 JAP CHI 1818.5,385.5 1715.5,413.5 3 jap_sh3 200 06:59:33
+   exit 0
+== c54_cancel_page 20661 JAP CHI 1818.5,385.5 1715.5,413.5 2 jap_cancel 26 240 06:59:44
+   exit 0
+== c54_kwhist 21151 07:00:22
+   exit 0
+== c54_lbar 22105 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br3_phone 390 844 14 4 07:00:31
+   exit 0
+== c54_lbar 22107 ITA ENG 1095.5,344.5 1106.5,383.5 3 ita_malta3 1600 900 20 5 07:00:45
+   exit 0
+== c54_lbox 21103 ENG GER 1023.5,275.5 1072.5,259.5 4 eng_br4 844 390 5 07:00:58
+   exit 0
+== c54_lland 23105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 07:01:04
+   exit 0
+== c54_lland 23109 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br3 240 07:01:16
+   exit 0
+== c54_rg_relations 20887 365 1600 900 desk &heroes=on 07:01:26
+   exit 0
+== c54_rg_relations 21129 365 1600 900 desk &heroes=on 07:02:13
+   exit 0
+== c54_os2_scen critic/c26_critic_standoff.warsim-scenario c54 07:03:01
+   exit 0
+== c54_sb_seaballs 20885 107 1188.17 328.5 07:04:06
+   exit 0
+== c54_k_breakthrough 20879 07:04:31
+   exit 0
+== c54_turnback 24101 JAP CHI 1818.5,385.5 1715.5,413.5 3 jap_cancel3 26 60 07:04:48
+   exit 0
+== c54_lhold 24105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 200 07:05:08
+   exit 0
+== c54_lland 24103 GER ENG 1100.5,267.5 1031.5,266.5 3 ger_norwich3 240 07:05:26
+   exit 0
+== c54_lland 24107 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br3 240 07:05:37
+   exit 0
+== c54_lbar 24109 JAP CHI 1818.5,385.5 1715.5,413.5 3 jap_sh3_phone 390 844 12 07:05:49
+   exit 0
+== c54_z_zoom 24111 07:06:04
+   exit 0
+== c54_seaclick 24113 07:06:25
+   exit 0
+== c54_c_battle 24115 07:06:38
+   exit 0
+== c54_a_god_nuke 24117 07:08:12
+   exit 0
+== c54_q_god_tools 24119 07:08:58
+   exit 0
+== c54_g_editor 24121 07:09:17
+   exit 0
+== c54_kw_breakthrough 24123 07:24:52
+   exit 0
+== c54_pl_planes 24125 GER POL 5354 07:25:15
+   exit 0
+== c54_w_wing 24127 07:25:31
+   exit 0
+== c54_p_phone  07:26:08
+   exit 0
+== c54_u_ui  07:26:27
+   exit 0
+== c54_rg_relations 24129 365 1600 900 desk &heroes=on 07:26:50
+   exit 0
+== c54_rg_relations 24131 730 390 844 phone &diplo=random 07:27:30
+   exit 0
+== c54_phz 24133 40 07:28:31
+   exit 0
+== c54_fw2_forcewar 24135 07:28:47
+   exit 0
+== c54_tm_touch  07:29:36
+   exit 0
+== c54_saveload_page 24137 07:30:48
+   exit 0
+SUITEPDONE

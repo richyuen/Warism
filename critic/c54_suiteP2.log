@@ -1,0 +1,13 @@
+== c54_lhold 23105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 200 07:31:46
+   exit 0
+== c54_an_ainuke 7019 critic/c54_seed7019_y20.bin 7019y20 2 400 07:31:56
+   exit 0
+== c54_hist 7019 critic/c54_seed7019_y20.bin 07:32:50
+   exit 0
+== c54_dl_export 7019 critic/c54_seed7019_y20.bin 07:33:02
+   exit 0
+== c54_long_watch2 24141 12 &heroes=on hon 07:33:09
+   exit 0
+== c54_long_watch2 24143 12  plain 07:39:10
+   exit 0
+SUITE2DONE

@@ -2101,3 +2101,9 @@
 - 18 jobs: 15 the same, 3 differ (two are R52a and R52b as meant), 0 broken; one gap, 23071's 271 thrown back with
   its group but "came ashore away": all aboard a thrown-back group now count so. `landingRepulse1938` 2 (red before).
 - **Next:** critic run 54 (full).
+
+## 2026-11-08 — Critic run 54 (full, on 8d7d02fe): one blocking issue, naval 7
+- R53-N1–N3 fixed on their cases; every checker 0 broken. R54-B1: a thrown-back Malta landing (6 of 11 clicks) reads
+  "lands in about a day" for a day after, then "over: 2 thrown back" beside the ticker's "landed away"; naval 8 → 7.
+  Filed as batch 8 (R53); no release.
+- **Next:** R53a.

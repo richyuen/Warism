@@ -1,0 +1,288 @@
+{
+ "seed": 24141,
+ "years": [
+  {
+   "frames": 1930,
+   "maxGap": 50,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "9 December 1938 Italy declared war on Greece 10 December 1938 Italy lost P.100 Ercole near Logroño 13 December 1938 United States captured Colombia's capital 20 December 1938 Germany lost Bismarck near Bremerhaven 21 December 1938 Soviet Union made peace with Norway ⚓ Carrier strike ashore: United States on Colombia ×3"
+   ],
+   "chips": [
+    "Japan +2 ⚔ China +1",
+    "China +1 ⚔ Tibet",
+    "Brazil ⚔ Colombia",
+    "Peru ⚔ Colombia",
+    "United States +1 ⚔ Colombia",
+    "Soviet Union +6 ⚔ Turkey +4"
+   ],
+   "date": "1 January 1939",
+   "nations": 100,
+   "year": 1,
+   "wallS": 32.198,
+   "fps": 59.9,
+   "shot": "critic/shots/c54lwhon_24141_y01_world.png"
+  },
+  {
+   "frames": 2068,
+   "maxGap": 67,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "8 December 1939 Roma is back with Italy near Taranto 18 December 1939 United States captured Venezuela's capital 1 January 1940 Soviet Union and Italy fought in the air this month: Soviet Union lost 27 aircraft, Italy 0 1 January 1940 Soviet Union's air force struck Germany this month: 7,743 men, guns and vehicles lost 1 January 1940 Free Community of Madrid broke away from Germany"
+   ],
+   "chips": [
+    "Japan +2 ⚔ China +1",
+    "Soviet Union +7 ⚔ Japan +5",
+    "United States +1 ⚔ Mexico +4",
+    "France +30 ⚔ Brazil +5",
+    "Germany +6 ⚔ Canada +2",
+    "Italy +1 ⚔ Free Tarragona"
+   ],
+   "date": "3 January 1940",
+   "nations": 97,
+   "year": 2,
+   "wallS": 34.516,
+   "fps": 59.9,
+   "shot": "critic/shots/c54lwhon_24141_y02_world.png"
+  },
+  {
+   "frames": 1719,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 December 1940 Italy and French West Africa fought in the air this month: Italy lost 3 aircraft, French West Africa 12 1 December 1940 Japan's air force struck British India this month: 1,888 men, guns and vehicles lost 24 December 1940 Richelieu is back with France near Brest 26 December 1940 Sovetsky Soyuz is back with Soviet Union near Leningrad"
+   ],
+   "chips": [
+    "France +28 ⚔ Brazil +4",
+    "Germany +6 ⚔ Canada +2",
+    "Soviet Union +8 ⚔ Portugal +19",
+    "France +28 ⚔ Italy +5",
+    "Soviet Union +8 ⚔ Mexico +4",
+    "Germany +6 ⚔ Mexico +5"
+   ],
+   "date": "4 January 1941",
+   "nations": 96,
+   "year": 3,
+   "wallS": 28.641,
+   "fps": 60,
+   "shot": "critic/shots/c54lwhon_24141_y03_world.png"
+  },
+  {
+   "frames": 1641,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "19 December 1941 Italy declared war on Greece 19 December 1941 Germany made peace with Mexico 19 December 1941 Japan made peace with Siam 23 December 1941 Sovetsky Soyuz is back with Soviet Union near Leningrad 23 December 1941 Richelieu is back with France near Brest"
+   ],
+   "chips": [
+    "Soviet Union +8 ⚔ Mexico +4",
+    "Argentina ⚔ Brazil +5",
+    "Soviet Union +6 ⚔ Estonia +10",
+    "South Africa ⚔ Saudi Arabia",
+    "Australia ⚔ South Africa",
+    "Italy +2 ⚔ Greece +3"
+   ],
+   "date": "6 January 1942",
+   "nations": 94,
+   "year": 4,
+   "wallS": 27.4,
+   "fps": 59.9,
+   "shot": "critic/shots/c54lwhon_24141_y04_world.png"
+  },
+  {
+   "frames": 1708,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "7 December 1942 Japan lost O-I near Brits 8 December 1942 Sovetsky Soyuz is back with Soviet Union near Leningrad 11 December 1942 United Kingdom captured South Africa's capital 21 December 1942 Japan declared war on Nepal 29 December 1942 Portugal declared war on South Africa"
+   ],
+   "chips": [
+    "Italy +3 ⚔ South Africa",
+    "Bolivia +5 ⚔ Paraguay",
+    "Japan +3 ⚔ Italy +5",
+    "Italy +1 ⚔ Spanish Republic",
+    "Soviet Union +10 ⚔ Spanish Republic",
+    "Germany ⚔ Brazil +5"
+   ],
+   "date": "9 January 1943",
+   "nations": 88,
+   "year": 5,
+   "wallS": 28.456,
+   "fps": 60,
+   "shot": "critic/shots/c54lwhon_24141_y05_world.png"
+  },
+  {
+   "frames": 2145,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "18 December 1943 United States captured Norway's capital 26 December 1943 Sovetsky Soyuz is back with Soviet Union near Leningrad 1 January 1944 Germany and United Kingdom fought in the air this month: Germany lost 39 aircraft, United Kingdom 85 1 January 1944 Soviet Union's air force struck United States this month: 6,682 men, guns and vehicles lost 3 January 1944 Soviet Union lost Sovetsky Soyuz near Stockholm ⚓ Carrier strike ashore: United States on Soviet Union ⚓ Carrier strike ashore: United States on Romania ×2"
+   ],
+   "chips": [
+    "Japan +3 ⚔ Italy +4",
+    "United States +2 ⚔ Soviet Union +10",
+    "Soviet Union +10 ⚔ Argentina +5",
+    "Japan +4 ⚔ Portugal +15",
+    "France +14 ⚔ Australia",
+    "Germany +1 ⚔ Italy +15"
+   ],
+   "date": "10 January 1944",
+   "nations": 85,
+   "year": 6,
+   "wallS": 35.809,
+   "fps": 59.9,
+   "shot": "critic/shots/c54lwhon_24141_y06_world.png"
+  },
+  {
+   "frames": 1475,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "8 December 1944 Bismarck is back with Germany near Bahía Blanca 10 December 1944 Latvia made peace with Romania 13 December 1944 Dominican Republic made peace with Haiti 18 December 1944 Germany made peace with Portugal 30 December 1944 Latvia declared war on Free Nereta ⚓ Sea battle: France against Germany"
+   ],
+   "chips": [
+    "Soviet Union +7 ⚔ France +12",
+    "Japan +4 ⚔ France +13",
+    "Japan +4 ⚔ Oman +17",
+    "Germany +11 ⚔ France +15",
+    "Italy +16 ⚔ Egypt +1",
+    "Romania ⚔ Hungary"
+   ],
+   "date": "11 January 1945",
+   "nations": 86,
+   "year": 7,
+   "wallS": 24.585,
+   "fps": 60,
+   "shot": "critic/shots/c54lwhon_24141_y07_world.png"
+  },
+  {
+   "frames": 1872,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "1 January 1946 United Kingdom and United States fought in the air this month: United Kingdom lost 0 aircraft, United States 6 1 January 1946 United Kingdom's air force struck Japan this month: 3,182 men, guns and vehicles lost 1 January 1946 France lost Richelieu near Vigo 1 January 1946 Free Oslo broke away from United States 1 January 1946 Maus is back with Germany near Buenos Aires ⚓ Carrier strike ashore: United States on United Kingdom"
+   ],
+   "chips": [
+    "Soviet Union +6 ⚔ France +6",
+    "Japan +4 ⚔ France +7",
+    "Japan +4 ⚔ Oman +10",
+    "Soviet Union +6 ⚔ Brazil +10",
+    "United States +2 ⚔ United Kingdom +10",
+    "Italy +9 ⚔ Australia"
+   ],
+   "date": "15 January 1946",
+   "nations": 73,
+   "year": 8,
+   "wallS": 31.268,
+   "fps": 59.9,
+   "shot": "critic/shots/c54lwhon_24141_y08_world.png"
+  },
+  {
+   "frames": 1397,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "14 December 1946 Sovetsky Soyuz is back with Soviet Union near Tallinn 14 December 1946 Bismarck is back with Germany near Bahía Blanca 1 January 1947 United Kingdom and United States fought in the air this month: United Kingdom lost 0 aircraft, United States 3 1 January 1947 United States's air force struck Netherlands this month: 3,016 men, guns and vehicles lost"
+   ],
+   "chips": [
+    "United States +2 ⚔ United Kingdom +10",
+    "Portugal +1 ⚔ Italy +10",
+    "Argentina +11 ⚔ Australia +1",
+    "Soviet Union +10 ⚔ Argentina +10"
+   ],
+   "date": "17 January 1947",
+   "nations": 73,
+   "year": 9,
+   "wallS": 23.28,
+   "fps": 60,
+   "shot": "critic/shots/c54lwhon_24141_y09_world.png"
+  },
+  {
+   "frames": 1399,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "19 December 1947 Italy captured Belgium's capital 29 December 1947 Yamato is back with Japan near Tokyo 29 December 1947 HMS Hood is back with United Kingdom near Valletta 1 January 1948 Italy and Belgium fought in the air this month: Italy lost 99 aircraft, Belgium 54 1 January 1948 United States's air force struck Mexico this month: 5,675 men, guns and vehicles lost ⚓ Carrier strike ashore: United States on Argentina ×3"
+   ],
+   "chips": [
+    "Soviet Union +10 ⚔ Argentina +10",
+    "France +3 ⚔ Australia +1",
+    "Japan +5 ⚔ Portugal +4",
+    "Japan +5 ⚔ Philippines +10",
+    "United States +2 ⚔ Germany +11",
+    "Italy +6 ⚔ Netherlands +12"
+   ],
+   "date": "17 January 1948",
+   "nations": 73,
+   "year": 10,
+   "wallS": 23.308,
+   "fps": 60,
+   "shot": "critic/shots/c54lwhon_24141_y10_world.png"
+  },
+  {
+   "frames": 1761,
+   "maxGap": 83,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "2 January 1949 France lost Richelieu near Pärnu 3 January 1949 Soviet Union captured Iraq's capital 3 January 1949 Saudi Arabia was freed from Iraq 3 January 1949 Iraq was destroyed 8 January 1949 Soviet Union captured British India's capital ⚓ Carrier strike ashore: United States on Norway ×3"
+   ],
+   "chips": [
+    "Japan +5 ⚔ Portugal +4",
+    "Soviet Union +7 ⚔ Philippines +8",
+    "Soviet Union +9 ⚔ Brazil +10",
+    "Italy +5 ⚔ Australia",
+    "Japan +5 ⚔ Australia +1",
+    "United States +3 ⚔ Norway"
+   ],
+   "date": "17 January 1949",
+   "nations": 71,
+   "year": 11,
+   "wallS": 29.409,
+   "fps": 59.9,
+   "shot": "critic/shots/c54lwhon_24141_y11_world.png"
+  },
+  {
+   "frames": 1768,
+   "maxGap": 17,
+   "p99Gap": 17,
+   "over500": 0,
+   "ticker": [
+    "24 December 1949 Soviet Union lost T-42 near Sharya 1 January 1950 Italy and Philippines fought in the air this month: Italy lost 6 aircraft, Philippines 6 1 January 1950 Soviet Union's air force struck United States this month: 6,331 men, guns and vehicles lost 4 January 1950 Sovetsky Soyuz is back with Soviet Union near Tallinn 11 January 1950 Soviet Union lost Sovetsky Soyuz near Helsinki ⚓ Carrier strike ashore: United States on Romania ×3"
+   ],
+   "chips": [
+    "Soviet Union +7 ⚔ Philippines +4",
+    "Italy +5 ⚔ Australia",
+    "Japan +5 ⚔ Australia +1",
+    "France +4 ⚔ United Kingdom +3",
+    "Japan +5 ⚔ United Kingdom +3",
+    "United States +2 ⚔ Soviet Union +9"
+   ],
+   "date": "19 January 1950",
+   "nations": 70,
+   "year": 12,
+   "wallS": 29.465,
+   "fps": 60,
+   "shot": "critic/shots/c54lwhon_24141_y12_world.png"
+  }
+ ],
+ "fight": {
+  "best": [
+   1768.7808372586737,
+   670.4259133026666
+  ],
+  "bn": 15,
+  "engaged": 22
+ },
+ "errors": []
+}

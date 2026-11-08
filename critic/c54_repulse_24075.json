@@ -1,0 +1,185 @@
+{
+ "seed": 24075,
+ "TAG": "GER",
+ "FOE": "ENG",
+ "FROM": [
+  1100.5,
+  267.5
+ ],
+ "TO": [
+  1031.5,
+  266.5
+ ],
+ "N": 2,
+ "ids": [
+  1,
+  4
+ ],
+ "samples": [
+  {
+   "t": 3,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Hamburg",
+       "gathering",
+       "sails in about 10 days",
+       null
+      ]
+     ],
+     "says": "sails in about 10 days"
+    }
+   ]
+  },
+  {
+   "t": 27,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Hamburg",
+       "gathering",
+       "sails in about 9 days",
+       null
+      ]
+     ],
+     "says": "sails in about 9 days"
+    }
+   ]
+  },
+  {
+   "t": 51,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Hamburg",
+       "gathering",
+       "sails in about 8 days",
+       null
+      ]
+     ],
+     "says": "sails in about 8 days"
+    }
+   ]
+  },
+  {
+   "t": 75,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Hamburg",
+       "gathering",
+       "sails in about 7 days",
+       null
+      ]
+     ],
+     "says": "sails in about 7 days"
+    }
+   ]
+  },
+  {
+   "t": 94,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Hamburg",
+       "over",
+       "over: its transports were sunk; 2 never sailed",
+       {
+        "kind": "sunk",
+        "tick": 94,
+        "landed": 0,
+        "lost": 0,
+        "stayed": 2
+       }
+      ]
+     ],
+     "says": "over: its transports were sunk; 2 never sailed"
+    }
+   ]
+  },
+  {
+   "t": 118,
+   "groups": []
+  }
+ ],
+ "events": [],
+ "repulsedKind": 45,
+ "end": [
+  {
+   "id": 1,
+   "alive": true,
+   "p": [
+    1093.0904158307792,
+    262.5
+   ]
+  },
+  {
+   "id": 4,
+   "alive": true,
+   "p": [
+    1092.574689145728,
+    261.5746891457279
+   ]
+  }
+ ],
+ "broken": [],
+ "evLog": [
+  [
+   72,
+   "AllianceJoined",
+   4,
+   1,
+   null,
+   null
+  ],
+  [
+   93,
+   "TransportsSunk",
+   1,
+   1,
+   0,
+   null
+  ],
+  [
+   93,
+   "TransportsSunk",
+   4,
+   1,
+   0,
+   null
+  ],
+  [
+   93,
+   "MajorBattleStarted",
+   1,
+   1209,
+   1695.214435210099,
+   410.17392742113924
+  ]
+ ],
+ "news": [
+  [
+   94,
+   "{\"type\":\"orderNews\",\"news\":{\"kind\":\"transportsSunk\",\"id\":1,\"nation\":1,\"reason\":0,\"x\":1093.8465519575225,\"y\":262.84655195752254,\"tick\":93}}"
+  ],
+  [
+   94,
+   "{\"type\":\"orderNews\",\"news\":{\"kind\":\"transportsSunk\",\"id\":4,\"nation\":1,\"reason\":0,\"x\":1092.574689145728,\"y\":261.5746891457279,\"tick\":93}}"
+  ]
+ ]
+}

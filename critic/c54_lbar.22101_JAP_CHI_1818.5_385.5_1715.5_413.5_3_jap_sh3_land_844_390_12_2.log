@@ -1,0 +1,8 @@
+{"d":0,"bar":[["gathering","sails in about 2 days","transports 36, 30 needed",null]],"panel":{"364":"At Tokyo, all of the landing there: it sails when its transports and escort are ready","365":"Waiting at Ōsaka for transports","366":"Waiting at Hiroshima for transports"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":1,"bar":[["gathering","2 of 3 at sea; the last sails in about a day","transports 12, 10 needed",null]],"panel":{"364":"At sea, bound for its landing","365":"At sea, bound for its landing","366":"Waiting at Hiroshima for transports"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":2,"bar":[["sailing","at sea: lands in about 4 days",null,null]],"panel":{"364":"At sea, bound for its landing","365":"At sea, bound for its landing","366":"At sea, bound for its landing"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":3,"bar":[["returning","turning back to Tokyo, Ōsaka: there in about a day",null,null]],"panel":{"364":"Aboard, sailing back to Tokyo","365":"Aboard, sailing back to Ōsaka","366":"Holding"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":4,"bar":[["over","cancelled: back at Tokyo, Ōsaka, Hiroshima; the AI commands them again",null,null]],"panel":{"364":"Holding","365":"Holding","366":"Holding"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":5,"panel":{"364":"Holding","365":"Holding","366":"Holding"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":6,"panel":{"364":"Holding","365":"Holding","366":"Holding"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":7,"panel":{"364":"Holding","365":"Holding","366":"Holding"},"afloat":{"364":0,"365":0,"366":0}}

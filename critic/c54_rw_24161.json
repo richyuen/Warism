@@ -1,0 +1,206 @@
+{
+ "seed": 24161,
+ "days": 365,
+ "worlds": [
+  {
+   "label": "random",
+   "openMs": 1113,
+   "samples": [
+    {
+     "d": 30,
+     "wallMs": 1378,
+     "date": "31 January 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 60,
+     "wallMs": 1456,
+     "date": "2 March 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 90,
+     "wallMs": 860,
+     "date": "1 April 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 120,
+     "wallMs": 804,
+     "date": "1 May 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 150,
+     "wallMs": 1049,
+     "date": "31 May 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 180,
+     "wallMs": 1176,
+     "date": "30 June 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 210,
+     "wallMs": 1157,
+     "date": "30 July 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 240,
+     "wallMs": 1676,
+     "date": "29 August 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 270,
+     "wallMs": 1530,
+     "date": "28 September 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 300,
+     "wallMs": 1693,
+     "date": "28 October 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 330,
+     "wallMs": 1711,
+     "date": "27 November 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 360,
+     "wallMs": 1550,
+     "date": "27 December 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 390,
+     "wallMs": 268,
+     "date": "1 January 1939",
+     "wars": [],
+     "nations": null
+    }
+   ],
+   "spot": [
+    970.878065911715,
+    495.68773520895417
+   ]
+  },
+  {
+   "label": "toy",
+   "openMs": 65,
+   "samples": [
+    {
+     "d": 30,
+     "wallMs": 43,
+     "date": "31 January 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 60,
+     "wallMs": 45,
+     "date": "2 March 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 90,
+     "wallMs": 40,
+     "date": "1 April 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 120,
+     "wallMs": 36,
+     "date": "1 May 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 150,
+     "wallMs": 35,
+     "date": "31 May 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 180,
+     "wallMs": 37,
+     "date": "30 June 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 210,
+     "wallMs": 35,
+     "date": "30 July 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 240,
+     "wallMs": 35,
+     "date": "29 August 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 270,
+     "wallMs": 35,
+     "date": "28 September 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 300,
+     "wallMs": 36,
+     "date": "28 October 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 330,
+     "wallMs": 36,
+     "date": "27 November 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 360,
+     "wallMs": 35,
+     "date": "27 December 1938",
+     "wars": [],
+     "nations": null
+    },
+    {
+     "d": 390,
+     "wallMs": 16,
+     "date": "1 January 1939",
+     "wars": [],
+     "nations": null
+    }
+   ],
+   "spot": null
+  }
+ ],
+ "errors": []
+}
