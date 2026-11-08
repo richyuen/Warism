@@ -16,7 +16,7 @@
  *   with one.
  */
 import type { Command } from '../../src/shared/commands';
-import type { FormationDetail, LandingRow } from '../../src/shared/protocol';
+import type { FormationDetail, LandingRow, OrderNews } from '../../src/shared/protocol';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { landedAway } from '../../src/sim/systems/amphibious';
@@ -37,6 +37,8 @@ export const ROW_BROKEN_KINDS: RowBrokenKind[] = ['missing', 'twice', 'words', '
 export class RowRun {
   readonly s: SimServer;
   rows: LandingRow[] = [];
+  /** The order news posted, in order (R53a: the ticker's and the panels' last words). */
+  readonly news: OrderNews[] = [];
   readonly broken: { kind: RowBrokenKind; what: string }[] = [];
   /** The rows over already read; each of the case's divisions' row and whether it was afloat, last hour; where they ended, by row. */
   private checkedOver = new Set<number>();
@@ -54,6 +56,7 @@ export class RowRun {
   ) {
     this.s = new SimServer((msg) => {
       if (msg.type === 'landings') this.rows = msg.rows;
+      if (msg.type === 'orderNews') this.news.push(msg.news);
     });
     this.s.handle({ type: 'init', reqId: 1, init: { scenario: '1938', seed, assets: assets1938(W) } }, 0);
     this.s.handle({ type: 'cmd', cmd: { kind: 'setPlayer', nation } }, 1);

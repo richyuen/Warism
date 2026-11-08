@@ -11,6 +11,8 @@ type Voyage = NonNullable<FormationDetail['voyage']>;
 export function voyageText(voyage: Voyage): string {
   // The AI's voyage of a division of the played nation's (R48b): not one of the player's landings.
   // Its landing held at sea, by whom (R52c; critic run 53, R53-N3: the row said so and the panel did not).
+  // Thrown back, sailing home (R53a; critic run 54, R54-B1: "bound for its landing" under the throw-back's news).
+  if (voyage.state === 'atSea' && voyage.thrownTo !== undefined) return voyage.thrownTo ? t('formation.voyage.atSea.thrown', { home: voyage.thrownTo }) : t('formation.voyage.atSea.thrownNoPort');
   if (voyage.state === 'atSea' && voyage.heldBy) return t('formation.voyage.atSea.held', { by: displayName(voyage.heldBy) });
   if (voyage.ai) return t(`formation.voyage.${voyage.state === 'atSea' ? 'atSea' : voyage.state === 'toPort' ? 'toPort' : 'waiting'}.ai`);
   if (voyage.state === 'sibling') return t(voyage.days === 1 ? 'formation.voyage.sibling.one' : 'formation.voyage.sibling', { port: voyage.port ?? '', other: voyage.other ?? '', days: voyage.days ?? 1 });

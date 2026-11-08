@@ -2107,3 +2107,10 @@
   "lands in about a day" for a day after, then "over: 2 thrown back" beside the ticker's "landed away"; naval 8 → 7.
   Filed as batch 8 (R53); no release.
 - **Next:** R53a.
+
+## 2026-11-08 — R53a: a thrown-back landing tells one story (ADR-876)
+- Rome to Valletta on 23105 and 24151: "thrown back: sailing home to Catania" in the bar and both panels from the
+  repulse, both divisions told; ashore, the ticker and the bar "came ashore near Catania". Worker and UI only (the sim
+  and the pin unchanged). `landingThrownBack1938` (red before); `serverOrderNews` 2207 hears `thrownAshore`.
+  `landingRows all` 108 cases 0 broken.
+- **Next:** R53b.

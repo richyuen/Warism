@@ -18,7 +18,8 @@ export function landingStatus(r: LandingRow): string {
     };
     if (o.kind === 'landed') return t('landing.over.landed', { n: o.landed }) + more('');
     if (o.kind === 'away') return t('landing.over.away', { n: o.away ?? 0, target }) + more('away');
-    if (o.kind === 'repulsed') return t('landing.over.repulsedN', { n: o.repulsed ?? 0 }) + more('repulsed');
+    // Thrown back, and where they came ashore, all at one place (R53a; critic run 54, R54-B1).
+    if (o.kind === 'repulsed') return (o.ashore ? t('landing.over.repulsedAt', { n: o.repulsed ?? 0, at: o.ashore }) : t('landing.over.repulsedN', { n: o.repulsed ?? 0 })) + more('repulsed');
     if (o.kind === 'lost') return t('landing.over.lostN', { n: o.lost }) + more('lost');
     if (o.kind === 'sunk') return t('landing.over.sunk', { n: o.stayed ?? 0 }) + more('sunk');
     if (o.kind === 'cancelled') {
@@ -33,6 +34,14 @@ export function landingStatus(r: LandingRow): string {
   }
   // R48d: its days to land (R51-N6: "at sea" alone).
   // R50c: held in a fight, no days (R52-N3: "about a day" for four days on 21105).
+  // R53a: thrown back, sailing home (all of it: no days to land; some: said after the rest's).
+  if (r.state === 'sailing' && r.thrown) {
+    const { thrown, ...rest } = r;
+    const home = thrown.home;
+    if (thrown.n >= r.divisions.length) return home ? t('landing.sailing.thrown', { home }) : t('landing.sailing.thrownNoPort');
+    const said = landingStatus(rest);
+    return home ? t('landing.sailing.someThrown', { said, n: thrown.n, home }) : t('landing.sailing.someThrownNoPort', { said, n: thrown.n });
+  }
   if (r.state === 'sailing' && r.held) return r.heldBy ? t('landing.sailing.heldBy', { by: displayName(r.heldBy) }) : t('landing.sailing.held');
   if (r.state === 'sailing') return r.lands === undefined ? t('landing.sailing') : t(r.lands === 1 ? 'landing.sailing.one' : 'landing.sailing.days', { days: r.lands });
   // R50d: its days to the port, as one at sea has its days to land.

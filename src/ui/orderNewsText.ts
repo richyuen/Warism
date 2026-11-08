@@ -7,6 +7,8 @@ export function orderNewsText(n: OrderNews, name: string, count = 1): string {
   if (count > 1 && n.kind === 'lostAtSea') return t('order.lostAtSeaMany', { count, name });
   if (count > 1 && n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalledMany' : 'order.transportsSunkMany', { count, name });
   if (n.kind === 'repulsed') return t('order.repulsed', { name });
+  // Thrown back, ashore where its transports put in (ROADMAP R53a): not "landed away".
+  if (n.kind === 'thrownAshore') return n.at ? t('order.thrownAshore', { name, at: n.at }) : t('order.thrownAshoreNoPlace', { name });
   if (n.kind === 'landedAway') return t('order.landedAway', { name });
   if (n.kind === 'unescorted') return t('order.unescorted', { name });
   if (n.kind === 'leftLanding') return t('order.leftLanding', { name });
@@ -30,6 +32,7 @@ export function orderNewsBrief(n: OrderNews, count: number, name: string): strin
   // A division is told by its number ("366"), as its counter on the map; a hero or a wing by its name.
   const tag = name.endsWith(` ${n.id}`) ? String(n.id) : name;
   if (n.kind === 'repulsed') return t('order.repulsedBrief', { name: tag });
+  if (n.kind === 'thrownAshore') return n.at ? t('order.thrownAshoreBrief', { name: tag, at: n.at }) : t('order.thrownAshoreNoPlaceBrief', { name: tag });
   if (n.kind === 'landedAway') return t('order.landedAwayBrief', { name: tag });
   if (n.kind === 'unescorted') return t('order.unescortedBrief', { name: tag });
   if (n.kind === 'leftLanding') return t('order.leftLandingBrief', { name: tag });

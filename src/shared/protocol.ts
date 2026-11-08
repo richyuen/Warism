@@ -750,7 +750,7 @@ export interface FormationDetail {
    * the port (`aboard`) and how many in all, and the days the furthest has left to the port (0: all
    * there; null: held up on the way).
    */
-  voyage: { state: 'toPort' | 'waiting' | 'gathering' | 'ready' | 'sibling' | 'nextVoyage' | 'toPortAboard' | 'atSea' | 'landed'; port: string | null; other?: string; days?: number; later?: true; wait?: { aboard: number; of: number; days: number | null }; ai?: true; heldBy?: string } | null;
+  voyage: { state: 'toPort' | 'waiting' | 'gathering' | 'ready' | 'sibling' | 'nextVoyage' | 'toPortAboard' | 'atSea' | 'landed'; port: string | null; other?: string; days?: number; later?: true; wait?: { aboard: number; of: number; days: number | null }; ai?: true; heldBy?: string; thrownTo?: string } | null;
 }
 
 /**
@@ -879,13 +879,15 @@ export interface SeaHint {
 
 /** What became of a player's order (PLAN 4.9c; `orderNews`). */
 export interface OrderNews {
-  kind: 'refused' | 'repulsed' | 'landedAway' | 'unescorted' | 'sentHome' | 'leftLanding' | 'nextVoyage' | 'lostAtSea' | 'transportsSunk' | 'sameLanding';
+  kind: 'refused' | 'repulsed' | 'thrownAshore' | 'landedAway' | 'unescorted' | 'sentHome' | 'leftLanding' | 'nextVoyage' | 'lostAtSea' | 'transportsSunk' | 'sameLanding';
   id: number;
   nation: number;
   /** A `RejectReason` for `refused`; for `sentHome` how many were sent home (ROADMAP R21d); for `transportsSunk` 1 when another group was called (R39a); for `sameLanding` how many the click ordered (R34j); else 0. */
   reason: number;
   /** The formation's name as the page last knew it (set by the page on arrival: one lost is gone; ROADMAP R39b). */
   name?: string;
+  /** `thrownAshore`: the place it came ashore, a city's name (ROADMAP R53a). */
+  at?: string;
   x: number;
   y: number;
   tick: number;
@@ -917,6 +919,11 @@ export interface LandingRow {
   /** At sea, a group of it in a fight: held, its days to land not to be told (ROADMAP R50c); by whom, a nation's name key (R52c). */
   held?: true;
   heldBy?: string;
+  /**
+   * At sea, thrown back (ROADMAP R53a; critic run 54, R54-B1): how many of it, and the port they sail home to (no days
+   * to land then: the landing is over for them).
+   */
+  thrown?: { n: number; home: string };
   /** Its click (ROADMAP R48f): the landings one click made from several ports share it, the bar's one row. */
   click: number;
   /**
@@ -924,9 +931,9 @@ export interface LandingRow {
    * `ai`: the player's army is the AI's (ADR-759), which commands them again once the cancel's orders are done.
    * Each division counted by where it ended (ROADMAP R50a; critic run 52, R52-B1): `landed` ashore at its target,
    * `away` ashore away from it (its transports broke off), `repulsed` thrown back (so, wherever it came ashore after: R52a), `lost` lost at sea with its transports, `stayed` never
-   * sailed (its transports sunk before it boarded). `kind`: `away` none landed and some broke off; `sunk` none sailed.
+   * sailed (its transports sunk before it boarded). `ashore`: where all the thrown back came ashore, one place (R53a). `kind`: `away` none landed and some broke off; `sunk` none sailed.
    */
-  outcome?: { kind: 'landed' | 'away' | 'repulsed' | 'lost' | 'sunk' | 'cancelled' | 'over'; tick: number; landed: number; lost: number; away?: number; repulsed?: number; stayed?: number; home?: number; stopped?: number; ai?: true };
+  outcome?: { kind: 'landed' | 'away' | 'repulsed' | 'lost' | 'sunk' | 'cancelled' | 'over'; tick: number; landed: number; lost: number; away?: number; repulsed?: number; stayed?: number; home?: number; stopped?: number; ai?: true; ashore?: string };
 }
 
 /** Numbers per sea battle in a snapshot's `seas` (PLAN 4.10b). */

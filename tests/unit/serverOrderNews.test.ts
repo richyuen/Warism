@@ -64,7 +64,9 @@ describe('the page is told what became of a player\'s order (PLAN 4.9c)', () => 
     const [kx, ky] = cellOf(9.5, 51.3, W, H).map((v) => Math.floor(v) + 0.5) as [number, number];
     s.handle({ type: 'cmd', cmd: { kind: 'moveFormation', id: div, x: kx, y: ky, nation: ENG } }, 3);
     run(24 * 8);
-    expect(news.map((n) => n.kind)).toEqual(['refused', 'repulsed', 'landedAway']);
+    // Ashore after the throw-back: told as thrown back, with where (ROADMAP R53a, ADR-876), not "landed away".
+    expect(news.map((n) => n.kind)).toEqual(['refused', 'repulsed', 'thrownAshore']);
+    expect(news[2]!.at).toBeTruthy();
     // Alone aboard at sea it is its whole landing, ordered as one (ROADMAP R33b, R33c): Kassel has no water to
     // land from, so it is refused that (`NoLanding`), and the landing sails on.
     expect(news[0]!.reason).toBe(RejectReason.NoLanding);

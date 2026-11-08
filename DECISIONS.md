@@ -7,6 +7,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-876 · 2026-11-08 · accepted — A thrown-back landing tells one story: sailing home, then ashore there (R53a)
+- **Context.** Critic run 54, R54-B1 (blocking): Rome to Valletta, thrown back on 6 of 11 seeds. For a day after the
+  news the bar read "at sea: lands in about a day" and the panels "At sea, bound for its landing"; the transports put
+  in at Italy's nearest port (`sailHome`: Catania), and the bar read "over: 2 thrown back" beside the ticker's two
+  "landed away from its target"; 321, aboard with 319, was never told. The landing stays `sailing` in the sim (its
+  voyage hours read on), and only the event's division had news.
+- **Decision** (the report's Hearts of Iron idea: one status from start to end). In the worker, not the sim:
+  - from the repulse, each division of the landing aboard the group sent home is told "thrown back, sails home"
+    (not only the one the event names);
+  - the row says "thrown back: sailing home to Catania" (the port `nearestOwnPort` gives, by its city), with no days
+    to land and no hold; some of it so, "…; 1 thrown back, sailing home to …" after the rest's words. The panels:
+    "At sea, thrown back: sailing home to Catania";
+  - ashore, the news is "thrown back; it came ashore near Catania" (`thrownAshore`), not "landed away", and the end
+    "over: 2 thrown back; came ashore near Catania" (the place named when all came ashore at one).
+- **Consequences.** The sim's rule and events are unchanged (the pin and the AI's landings as they were). Protocol:
+  `LandingRow.thrown`, `outcome.ashore`, `voyage.thrownTo`, `OrderNews` kind `thrownAshore` with `at`.
+  `landingThrownBack1938` (23105; red before); `RowRun.news` keeps the order news, for R53d's check. `serverOrderNews`'
+  2207 case (thrown back off Cuxhaven, ashore in England) now hears `thrownAshore`, with its place, for `landedAway`.
+
 ### ADR-875 · 2026-11-08 · accepted (the user's decision) — A cancelled crossing's divisions go back to the AI, as ADR-759 says
 - **Context.** Critic run 54's design objection to ADR-759: on 20661 the player's cancelled landing read "cancelled:
   back at Tokyo, Ōsaka", and within a day the AI had 365 at sea on a landing of its own ("the player's cancel is

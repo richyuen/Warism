@@ -967,7 +967,7 @@ Critic run 54 (full, on `8d7d02fe`): one blocking issue, R54-B1; naval 7 (under 
 at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833) and critic run 55.
 
 - [ ] R53 **Run 54's findings.**
-  - [ ] R53a R54-B1 (blocking): a thrown-back landing tells one story in the bar, the panels and the ticker. Rome →
+  - [x] R53a R54-B1 (blocking): a thrown-back landing tells one story in the bar, the panels and the ticker. Rome →
     Valletta (23105; 24151, 24153, 24155, 24159, 24171) is thrown back at h156–162, then reads "at sea: lands in about
     a day" for 18–24 h; one panel says "At sea, bound for its landing" above "the landing was thrown back"; at the
     end the bar reads "over: 2 thrown back" beside the ticker's two "landed away from its target" and 319's panel
@@ -979,6 +979,9 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     200`, and `c54_lland.mjs` with the same arguments (240 h) on the five new seeds. Design (the report's Hearts of
     Iron idea): a landing has one status from start to end, and the bar, the order, the panel and the news say it in
     the same words.
+    Done (ADR-876): "thrown back: sailing home to Catania" in the bar and both panels from the repulse, each
+    division told; ashore, "thrown back; it came ashore near Catania" and "over: 2 thrown back; came ashore near
+    Catania" (23105 and 24151 headless); the sim unchanged; 108 cases 0 broken.
   - [ ] R53b R54-N1: `heldBy` names the nation of a foe fleet in the landing's sea battle (`world.seaBattles`), not
     the nearest engaged formation of any kind at war.
   - [ ] R53c Small: on 22105 day 2, every division line gives its days (two drop them: "Marching to Portsmouth to
