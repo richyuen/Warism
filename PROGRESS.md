@@ -2062,3 +2062,7 @@
 ## 2026-11-07 — R50c: "under attack, held up" (ADR-868)
 - A landing at sea with a group engaged says so, no days. `landingHeld1938` on 21105 (red before at t38).
 - **Next:** R50d.
+
+## 2026-11-07 — R50d: turning back with its days (ADR-869); R50 done
+- "turning back to Tokyo: there in about N days"; `landingRowDays1938` 20661 (red before at t29).
+- **Next:** R51a, then the 25 landing seeds and the probes replayed, then critic run 53.

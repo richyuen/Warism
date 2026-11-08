@@ -33,7 +33,8 @@ export function landingStatus(r: LandingRow): string {
   // R50c: held in a fight, no days (R52-N3: "about a day" for four days on 21105).
   if (r.state === 'sailing' && r.held) return t('landing.sailing.held');
   if (r.state === 'sailing') return r.lands === undefined ? t('landing.sailing') : t(r.lands === 1 ? 'landing.sailing.one' : 'landing.sailing.days', { days: r.lands });
-  if (r.state === 'returning') return t('landing.returning', { port: r.port });
+  // R50d: its days to the port, as one at sea has its days to land.
+  if (r.state === 'returning') return r.back === undefined ? t('landing.returning', { port: r.port }) : t(r.back === 1 ? 'landing.returning.one' : 'landing.returning.days', { port: r.port, days: r.back });
   if (r.sails?.other) return t(r.sails.days === 1 ? 'landing.sibling.one' : 'landing.sibling', { other: r.sails.other, days: r.sails.days });
   if (r.sails) return t(r.sails.days === 1 ? 'landing.sails.one' : 'landing.sails', { days: r.sails.days });
   return t('landing.gathering');

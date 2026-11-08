@@ -612,6 +612,8 @@
   "landing.sailing.one": "at sea: lands in about a day",
   "landing.sailing.held": "at sea: under attack, held up",
   "landing.returning": "turning back to {port}",
+  "landing.returning.days": "turning back to {port}: there in about {days} days",
+  "landing.returning.one": "turning back to {port}: there in about a day",
   "landing.ships": "transports {have}, {need} needed",
   "landing.over.landed": "over: {n} landed",
   "landing.over.away": "over: its transports broke off; {n} came ashore away from {target}",

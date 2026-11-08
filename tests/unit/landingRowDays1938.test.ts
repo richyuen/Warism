@@ -58,3 +58,35 @@ describe("a landing's row says when it sails and lands (ROADMAP R48d)", () => {
     expect(r.broken).toEqual([]);
   });
 });
+
+// ROADMAP R50d (critic run 52, R52-N5): a cancelled row said "turning back to Tokyo" with no days (20661, cancelled at
+// hour 26 with both at sea, h30–h45), where a row at sea gives them. Now each hour turning back gives its days to the
+// port, and it is over within them and a day.
+describe("a row turning back says when it is at its port (ROADMAP R50d)", () => {
+  it('20661: cancelled at hour 26, both at sea: "there in about N days", over within them', { timeout: 300_000 }, () => {
+    const r = new RowRun(20661, JAP);
+    r.step();
+    r.cmds([{ kind: 'declareWar', attacker: JAP, defender: CHI }]);
+    r.step();
+    const ids = nearestDivisions(r.world, JAP, [1818.5, 385.5], 2);
+    r.ids = ids;
+    r.cmds(ids.map((id) => ({ kind: 'moveFormation' as const, id, x: 1715.5, y: 413.5, nation: JAP, escort: true })));
+    for (let h = 0; h < 26; h++) r.step();
+    for (const x of r.rows.filter((y) => y.state === 'gathering' || y.state === 'sailing')) r.s.handle({ type: 'cancelLanding', id: x.id }, 0);
+    const first = new Map<number, { at: number; days: number }>();
+    const ended = new Map<number, number>();
+    for (let h = 0; h < 24 * 6; h++) {
+      r.step();
+      for (const row of r.rows) {
+        if (row.state === 'returning') {
+          expect(landingStatus(row), `t${r.world.tick} row ${row.id}`).toMatch(/^turning back to .+: there in about (a day|\d+ days)$/);
+          if (!first.has(row.id)) first.set(row.id, { at: r.world.tick, days: row.back! });
+        }
+        if (row.state === 'over' && !ended.has(row.id)) ended.set(row.id, r.world.tick);
+      }
+    }
+    expect(first.size, 'rows turning back').toBeGreaterThan(0);
+    for (const [id, f] of first) expect(ended.get(id)! - f.at, `row ${id} at its port as said (${f.days} days)`).toBeLessThanOrEqual((f.days + 1) * 24);
+    expect(r.broken).toEqual([]);
+  });
+});

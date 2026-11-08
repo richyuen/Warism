@@ -900,7 +900,7 @@ Critic run 52 (focused, on `d8dba302`): one blocking issue, R52-B1 (the landings
 God Mode up to 8; naval 7 (bar 8). Run 51's seven findings fixed on their cases; every checker 0 broken. Each finding,
 objection, idea and "what the bar needs" filed; then the probes replayed and critic run 53.
 
-- [ ] R50 **Run 52's naval findings.**
+- [x] R50 **Run 52's naval findings.**
   - [x] R50a R52-B1 (blocking) and Hearts of Iron's one notice per operation: a landing's outcome from where each of its
     divisions ended (at its target, ashore elsewhere: broke off, at a port or inland: never sailed, gone), not R47a's
     tally (`TransportsSunk` as lost, every `FormationLanded` as landed); the row says what the order news says.
@@ -919,7 +919,8 @@ objection, idea and "what the bar needs" filed; then the probes replayed and cri
   - [x] R50c R52-N3: while a landing's transports are engaged at sea the row says so ("under attack at sea") and its days
     count from when it moves again (21105: "about a day" for four days, group 1195 engaged t63–t147).
     Done (ADR-868): "at sea: under attack, held up" while a group of it is engaged, and only then (21105).
-  - [ ] R50d R52-N5: a row turning back says its days to its port, as one at sea does.
+  - [x] R50d R52-N5: a row turning back says its days to its port, as one at sea does.
+    Done (ADR-869): "turning back to Tokyo: there in about N days" (20661 cancelled at hour 26: within them).
   - Kept: `landingInvariants` 0 broken on the 25 seeds; `landingRows` 0 broken with R50a's reading.
   - For the user (SPEC §7.1, ADR-759; the critic, not blocking): a cancelled division of a played nation is the AI's
     at once; an option to keep the player's divisions where the player left them. Not taken without the user.

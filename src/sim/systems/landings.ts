@@ -908,10 +908,22 @@ export interface LandingRowData {
   sailsIn: { hours: number; other?: number } | null;
   /** At sea: the hours until its groups are at its water (`voyageHours`, the longest); null otherwise or unknown (R48d). */
   landsIn: number | null;
+  /** Turning back: the hours until its groups at sea are at its port (R50d), the longest; null when none is under way. */
+  backIn: number | null;
   /** At sea with a group of it in a fight (ROADMAP R50c; critic run 52, R52-N3: "lands in about a day" for four days while 21105's were held). */
   held: boolean;
   /** Its click: the least id of it and its siblings (`siblings`, taken through), one key for the landings one click made from several ports (R48f). */
   click: number;
+}
+
+/**
+ * The hours until returning landing `l`'s groups still sailing are at its port (ROADMAP R50d; critic run 52, R52-N5:
+ * "turning back to Tokyo" with no days, where a landing at sea gives them): the longest; null for none under way.
+ */
+function backHours(world: World, l: Landing): number | null {
+  const c = world.formations.cols;
+  const left = l.fleets.filter((o) => world.formations.has(o) && c.moving[o] === 1).map((o) => sailHoursLeft(world, o)).filter(Number.isFinite);
+  return left.length > 0 ? Math.max(...left) : null;
 }
 
 /** Nation `nation`'s landings in rows, by id (ROADMAP R47a). */
@@ -936,6 +948,7 @@ export function landingRows(world: World, nation: number): LandingRowData[] {
         sailsIn: sailsIn(world, l),
         landsIn: l.state === LandingState.sailing ? voyageHours(world, l) || null : null,
         held: l.state === LandingState.sailing && l.fleets.some((o) => world.formations.has(o) && c.engaged[o] === 1),
+        backIn: l.state === LandingState.returning ? backHours(world, l) : null,
         click: clickOf(world, l),
       };
     });

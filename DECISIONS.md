@@ -7,6 +7,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-869 · 2026-11-07 · accepted — A row turning back gives its days to its port (R50d)
+- **Context.** Critic run 52, R52-N5: a cancelled row said "turning back to Tokyo" with no days, where one at sea gives
+  them (R48d).
+- **Decision.** A returning landing's row carries the longest sail left of its groups under way (`backHours`):
+  "turning back to Tokyo: there in about N days"; with none under way, as before.
+- **Consequences.** `landingRowDays1938`'s 20661 case (cancelled at hour 26, both at sea: each hour its days, over
+  within them and a day; red before at t29).
+
 ### ADR-868 · 2026-11-07 · accepted — A landing held in a fight at sea says so (R50c)
 - **Context.** Critic run 52, R52-N3: on 21105 the row read "at sea: lands in about a day" for four days while its
   transport group was engaged, held west of Malta; nothing said it was under attack, and ADR-860's days failed.

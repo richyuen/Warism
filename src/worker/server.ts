@@ -1234,6 +1234,7 @@ export class SimServer {
         sails: r.sailsIn ? { days: Math.max(1, Math.ceil(r.sailsIn.hours / 24)), ...(r.sailsIn.other !== undefined ? { other: world.ports[r.sailsIn.other]?.name ?? '' } : {}) } : null,
         ...(r.landsIn !== null ? { lands: Math.max(1, Math.ceil(r.landsIn / 24)) } : {}),
         ...(r.held ? { held: true as const } : {}),
+        ...(r.backIn !== null ? { back: Math.max(1, Math.ceil(r.backIn / 24)) } : {}),
         click: this.clickOf(r.id, r.click),
       };
     });
