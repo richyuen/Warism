@@ -908,6 +908,8 @@ export interface LandingRowData {
   sailsIn: { hours: number; other?: number } | null;
   /** At sea: the hours until its groups are at its water (`voyageHours`, the longest); null otherwise or unknown (R48d). */
   landsIn: number | null;
+  /** At sea with a group of it in a fight (ROADMAP R50c; critic run 52, R52-N3: "lands in about a day" for four days while 21105's were held). */
+  held: boolean;
   /** Its click: the least id of it and its siblings (`siblings`, taken through), one key for the landings one click made from several ports (R48f). */
   click: number;
 }
@@ -933,6 +935,7 @@ export function landingRows(world: World, nation: number): LandingRowData[] {
         have: Math.floor(roomOf(world, l) / TRANSPORT_MEN),
         sailsIn: sailsIn(world, l),
         landsIn: l.state === LandingState.sailing ? voyageHours(world, l) || null : null,
+        held: l.state === LandingState.sailing && l.fleets.some((o) => world.formations.has(o) && c.engaged[o] === 1),
         click: clickOf(world, l),
       };
     });

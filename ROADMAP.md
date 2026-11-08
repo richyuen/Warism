@@ -916,8 +916,9 @@ objection, idea and "what the bar needs" filed; then the probes replayed and cri
     20861 JAP CHI … 3 jap_sh3 200`: one row from t1 to its end, "over: 3 landed".
     Done (ADR-867): each landing keeps its click as first seen; a part over stays while its click runs and a day after
     its last end. The critic's script: one row t1–t153, "over: 3 landed"; 20661's cancel: one row turning back.
-  - [ ] R50c R52-N3: while a landing's transports are engaged at sea the row says so ("under attack at sea") and its days
+  - [x] R50c R52-N3: while a landing's transports are engaged at sea the row says so ("under attack at sea") and its days
     count from when it moves again (21105: "about a day" for four days, group 1195 engaged t63–t147).
+    Done (ADR-868): "at sea: under attack, held up" while a group of it is engaged, and only then (21105).
   - [ ] R50d R52-N5: a row turning back says its days to its port, as one at sea does.
   - Kept: `landingInvariants` 0 broken on the 25 seeds; `landingRows` 0 broken with R50a's reading.
   - For the user (SPEC §7.1, ADR-759; the critic, not blocking): a cancelled division of a played nation is the AI's

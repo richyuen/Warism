@@ -2058,3 +2058,7 @@
 - The worker keeps each landing's click; over parts stay while the click runs, a day after its last end. 20861: one
   row, "over: 3 landed" (critic's script in the page too); 20661's cancel: one row. `landingClick1938` 6 (2 red before).
 - **Next:** R50c.
+
+## 2026-11-07 — R50c: "under attack, held up" (ADR-868)
+- A landing at sea with a group engaged says so, no days. `landingHeld1938` on 21105 (red before at t38).
+- **Next:** R50d.

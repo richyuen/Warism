@@ -7,6 +7,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-868 · 2026-11-07 · accepted — A landing held in a fight at sea says so (R50c)
+- **Context.** Critic run 52, R52-N3: on 21105 the row read "at sea: lands in about a day" for four days while its
+  transport group was engaged, held west of Malta; nothing said it was under attack, and ADR-860's days failed.
+- **Decision.** A landing at sea with a group of it engaged (`LandingRowData.held`) reads "at sea: under attack, held
+  up", with no days; once it moves again its days are told from where it is (`voyageHours`). A click's row says so
+  when any part of it is held.
+- **Consequences.** `landingHeld1938` (21105: so while a group is engaged and only then; red before at t38).
+
 ### ADR-867 · 2026-11-07 · accepted — One click's row holds to its end (R50b)
 - **Context.** Critic run 52, R52-N2 and its objection to ADR-862: a click's row came apart as its landings ended
   (20861 t129: "Tokyo, Ōsaka · over: 2 landed" beside "Hiroshima · at sea"; Ōsaka's part dropped after its day; the

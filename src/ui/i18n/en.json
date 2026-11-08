@@ -610,6 +610,7 @@
   "landing.group.someNoDays": "{at} of {of} at sea",
   "landing.sailing.days": "at sea: lands in about {days} days",
   "landing.sailing.one": "at sea: lands in about a day",
+  "landing.sailing.held": "at sea: under attack, held up",
   "landing.returning": "turning back to {port}",
   "landing.ships": "transports {have}, {need} needed",
   "landing.over.landed": "over: {n} landed",

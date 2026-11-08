@@ -912,6 +912,8 @@ export interface LandingRow {
   sails: { days: number; other?: string } | null;
   /** At sea: the days until it lands, at least 1 (ROADMAP R48d; critic run 51, R51-N6: it said only "at sea"). */
   lands?: number;
+  /** At sea, a group of it in a fight: held, its days to land not to be told (ROADMAP R50c). */
+  held?: true;
   /** Its click (ROADMAP R48f): the landings one click made from several ports share it, the bar's one row. */
   click: number;
   /**

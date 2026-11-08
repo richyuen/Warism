@@ -30,6 +30,8 @@ export function landingStatus(r: LandingRow): string {
     return t(`landing.over.${o.kind}`);
   }
   // R48d: its days to land (R51-N6: "at sea" alone).
+  // R50c: held in a fight, no days (R52-N3: "about a day" for four days on 21105).
+  if (r.state === 'sailing' && r.held) return t('landing.sailing.held');
   if (r.state === 'sailing') return r.lands === undefined ? t('landing.sailing') : t(r.lands === 1 ? 'landing.sailing.one' : 'landing.sailing.days', { days: r.lands });
   if (r.state === 'returning') return t('landing.returning', { port: r.port });
   if (r.sails?.other) return t(r.sails.days === 1 ? 'landing.sibling.one' : 'landing.sibling', { other: r.sails.other, days: r.sails.days });
@@ -53,7 +55,7 @@ export function groupStatus(parts: LandingRow[]): string {
     if (d === 0) return t('landing.group.someNoDays', { at: sailing.length, of: parts.length });
     return t(d === 1 ? 'landing.group.some.one' : 'landing.group.some', { at: sailing.length, of: parts.length, days: d });
   }
-  if (sailing.length > 0) return landingStatus(sailing[0]!);
+  if (sailing.length > 0) return landingStatus(sailing.find((r) => r.held) ?? sailing[0]!);
   const back = parts.find((r) => r.state === 'returning');
   if (back) return landingStatus(back);
   const sum = (f: (r: LandingRow) => number): number => parts.reduce((n, r) => n + f(r), 0);
