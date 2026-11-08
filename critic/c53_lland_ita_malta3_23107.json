@@ -1,0 +1,808 @@
+{
+ "seed": 23107,
+ "TAG": "ITA",
+ "FOE": "ENG",
+ "FROM": "1095.5,344.5",
+ "TO": "1106.5,383.5",
+ "N": 3,
+ "label": "ita_malta3",
+ "samples": [
+  {
+   "h": 0,
+   "tick": 1,
+   "rows": [
+    [
+     "gathering",
+     "Valletta from Rome",
+     "sails in about 2 days",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1095.2,
+      344.2
+     ],
+     0
+    ],
+    "321": [
+     [
+      1095.9,
+      346.1
+     ],
+     0
+    ],
+    "322": [
+     [
+      1093.7,
+      344.4
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 6,
+   "tick": 7,
+   "rows": [
+    [
+     "gathering",
+     "Valletta from Rome",
+     "sails in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1095.2,
+      344.2
+     ],
+     0
+    ],
+    "321": [
+     [
+      1095.9,
+      346.1
+     ],
+     0
+    ],
+    "322": [
+     [
+      1093.7,
+      344.4
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 12,
+   "tick": 13,
+   "rows": [
+    [
+     "gathering",
+     "Valletta from Rome",
+     "sails in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1095.2,
+      344.2
+     ],
+     0
+    ],
+    "321": [
+     [
+      1095.9,
+      346.1
+     ],
+     0
+    ],
+    "322": [
+     [
+      1093.7,
+      344.4
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 18,
+   "tick": 19,
+   "rows": [
+    [
+     "gathering",
+     "Valletta from Rome",
+     "sails in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1095.2,
+      344.2
+     ],
+     0
+    ],
+    "321": [
+     [
+      1095.9,
+      346.1
+     ],
+     0
+    ],
+    "322": [
+     [
+      1093.7,
+      344.4
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 24,
+   "tick": 25,
+   "rows": [
+    [
+     "gathering",
+     "Valletta from Rome",
+     "sails in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1095.2,
+      344.2
+     ],
+     0
+    ],
+    "321": [
+     [
+      1095.9,
+      346.1
+     ],
+     0
+    ],
+    "322": [
+     [
+      1093.7,
+      344.4
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 30,
+   "tick": 31,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about 2 days",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1093.5,
+      349.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1093.5,
+      349.5
+     ],
+     0
+    ],
+    "322": [
+     [
+      1093.5,
+      349.5
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 36,
+   "tick": 37,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about 2 days",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1094.5,
+      355.2
+     ],
+     0
+    ],
+    "321": [
+     [
+      1094.5,
+      355.2
+     ],
+     0
+    ],
+    "322": [
+     [
+      1094.5,
+      355.2
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 42,
+   "tick": 43,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about 2 days",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1094.5,
+      361.2
+     ],
+     0
+    ],
+    "321": [
+     [
+      1094.5,
+      361.2
+     ],
+     0
+    ],
+    "322": [
+     [
+      1094.5,
+      361.2
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 48,
+   "tick": 49,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1094.5,
+      365.1
+     ],
+     0
+    ],
+    "321": [
+     [
+      1094.5,
+      365.1
+     ],
+     0
+    ],
+    "322": [
+     [
+      1094.5,
+      365.1
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 54,
+   "tick": 55,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1094.5,
+      369.1
+     ],
+     0
+    ],
+    "321": [
+     [
+      1094.5,
+      369.1
+     ],
+     0
+    ],
+    "322": [
+     [
+      1094.5,
+      369.1
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 60,
+   "tick": 61,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1095.6,
+      374.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1095.6,
+      374.5
+     ],
+     0
+    ],
+    "322": [
+     [
+      1095.6,
+      374.5
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 66,
+   "tick": 67,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1094.8,
+      373.8
+     ],
+     0
+    ],
+    "321": [
+     [
+      1094.8,
+      373.8
+     ],
+     0
+    ],
+    "322": [
+     [
+      1094.8,
+      373.8
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 72,
+   "tick": 73,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1094.5,
+      368.1
+     ],
+     0
+    ],
+    "321": [
+     [
+      1094.5,
+      368.1
+     ],
+     0
+    ],
+    "322": [
+     [
+      1094.5,
+      368.1
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 78,
+   "tick": 79,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1095.5,
+      362.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1095.5,
+      362.5
+     ],
+     0
+    ],
+    "322": [
+     [
+      1095.5,
+      362.5
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 84,
+   "tick": 85,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1096.9,
+      363.9
+     ],
+     0
+    ],
+    "321": [
+     [
+      1096.9,
+      363.9
+     ],
+     0
+    ],
+    "322": [
+     [
+      1096.9,
+      363.9
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 90,
+   "tick": 91,
+   "rows": [
+    [
+     "over",
+     "Valletta from Rome",
+     "over: its transports broke off; 3 came ashore away from Valletta",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry divi ion 319: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 321: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 322: it  tran port  broke off; it came a hore away from it  target."
+   ],
+   "d": {
+    "319": [
+     [
+      1099.5,
+      369.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1099.5,
+      369.8
+     ],
+     0
+    ],
+    "322": [
+     [
+      1099.5,
+      369.2
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 96,
+   "tick": 97,
+   "rows": [
+    [
+     "over",
+     "Valletta from Rome",
+     "over: its transports broke off; 3 came ashore away from Valletta",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry divi ion 319: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 321: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 322: it  tran port  broke off; it came a hore away from it  target."
+   ],
+   "d": {
+    "319": [
+     [
+      1099.5,
+      369.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1099.5,
+      369.8
+     ],
+     0
+    ],
+    "322": [
+     [
+      1099.5,
+      369.2
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 102,
+   "tick": 103,
+   "rows": [
+    [
+     "over",
+     "Valletta from Rome",
+     "over: its transports broke off; 3 came ashore away from Valletta",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry divi ion 319: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 321: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 322: it  tran port  broke off; it came a hore away from it  target."
+   ],
+   "d": {
+    "319": [
+     [
+      1099.5,
+      369.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1099.5,
+      369.8
+     ],
+     0
+    ],
+    "322": [
+     [
+      1099.5,
+      369.2
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 108,
+   "tick": 109,
+   "rows": [
+    [
+     "over",
+     "Valletta from Rome",
+     "over: its transports broke off; 3 came ashore away from Valletta",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry divi ion 319: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 321: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 322: it  tran port  broke off; it came a hore away from it  target."
+   ],
+   "d": {
+    "319": [
+     [
+      1099.5,
+      369.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1099.5,
+      369.8
+     ],
+     0
+    ],
+    "322": [
+     [
+      1099.5,
+      369.2
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 114,
+   "tick": 115,
+   "rows": [],
+   "news": [
+    "Infantry divi ion 319: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 321: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 322: it  tran port  broke off; it came a hore away from it  target."
+   ],
+   "d": {
+    "319": [
+     [
+      1099.5,
+      369.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1099.5,
+      369.8
+     ],
+     0
+    ],
+    "322": [
+     [
+      1099.5,
+      369.2
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 120,
+   "tick": 121,
+   "rows": [],
+   "news": [
+    "Infantry divi ion 319: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 321: it  tran port  broke off; it came a hore away from it  target.",
+    "Infantry divi ion 322: it  tran port  broke off; it came a hore away from it  target."
+   ],
+   "d": {
+    "319": [
+     [
+      1099.5,
+      369.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1099.5,
+      369.8
+     ],
+     0
+    ],
+    "322": [
+     [
+      1099.5,
+      369.2
+     ],
+     0
+    ]
+   }
+  }
+ ],
+ "shots": [
+  "critic/shots/c53lland_ita_malta3_23107_over_1500m.png",
+  "critic/shots/c53lland_ita_malta3_23107_over_250m.png",
+  "critic/shots/c53lland_ita_malta3_23107_target_1500m.png"
+ ],
+ "ids": [
+  319,
+  321,
+  322
+ ],
+ "overAt": 90,
+ "errors": []
+}

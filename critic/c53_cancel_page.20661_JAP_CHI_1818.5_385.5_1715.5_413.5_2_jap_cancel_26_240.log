@@ -1,0 +1,81 @@
+{"h":0,"tick":1,"rows":[],"d":{"364":[[1818.2,385.2],"At Tokyo, all of the landing there: it sails when its transports and escort are ready"],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":3,"tick":4,"rows":[["Shanghai from Tokyo, Ōsaka","gathering","sails in about a day"]],"d":{"364":[[1818.2,385.2],"At Tokyo, all of the landing there: it sails when its transports and escort are ready"],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":6,"tick":7,"rows":[["Shanghai from Tokyo, Ōsaka","gathering","sails in about a day"]],"d":{"364":[[1818.2,385.2],"At Tokyo, all of the landing there: it sails when its transports and escort are ready"],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":9,"tick":10,"rows":[["Shanghai from Tokyo, Ōsaka","gathering","1 of 2 at sea; the last sails in about a day"]],"d":{"364":[[1818.9,388.9],"At sea, bound for its landing"],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":12,"tick":13,"rows":[["Shanghai from Tokyo, Ōsaka","gathering","1 of 2 at sea; the last sails in about a day"]],"d":{"364":[[1817.9,391.1],"At sea, bound for its landing"],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":15,"tick":16,"rows":[["Shanghai from Tokyo, Ōsaka","gathering","1 of 2 at sea; the last sails in about a day"]],"d":{"364":[[1815.4,392.5],"At sea, bound for its landing"],"365":[[1794.2,391.2],"Waiting at Ōsaka for transports"]}}
+{"h":18,"tick":19,"rows":[["Shanghai from Tokyo, Ōsaka","gathering","1 of 2 at sea; the last sails in about a day"]],"d":{"364":[[1812.8,393.5],"At sea, bound for its landing"],"365":[[1794.2,391.2],"At Ōsaka: sails in about a day, to land within a day of the landing from Tokyo for the same place"]}}
+{"h":21,"tick":22,"rows":[["Shanghai from Tokyo, Ōsaka","sailing","at sea: lands in about 5 days"]],"d":{"364":[[1810.3,394.7],"At sea, bound for its landing"],"365":[[1791.4,392.5],"At sea, bound for its landing"]}}
+{"h":24,"tick":25,"rows":[["Shanghai from Tokyo, Ōsaka","sailing","at sea: lands in about 5 days"]],"d":{"364":[[1807.9,396.1],"At sea, bound for its landing"],"365":[[1788.7,393.3],"At sea, bound for its landing"]}}
+{"h":27,"tick":28,"rows":[["Shanghai from Tokyo, Ōsaka","sailing","at sea: lands in about 5 days"]],"d":{"364":[[1805.5,397.5],"At sea, bound for its landing"],"365":[[1785.8,393.5],"At sea, bound for its landing"]}}
+{"h":30,"tick":31,"rows":[["Shanghai from Tokyo, Ōsaka","returning","turning back to Tokyo: there in about a day"]],"d":{"364":[[1808.1,396.5],"Aboard, sailing back to Tokyo"],"365":[[1788.8,393.5],"Aboard, sailing back to Ōsaka"]}}
+{"h":33,"tick":34,"rows":[["Shanghai from Tokyo, Ōsaka","returning","turning back to Tokyo: there in about a day"]],"d":{"364":[[1810.6,395.4],"Aboard, sailing back to Tokyo"],"365":[[1791.4,392.5],"Aboard, sailing back to Ōsaka"]}}
+{"h":36,"tick":37,"rows":[["Shanghai from Tokyo, Ōsaka","returning","turning back to Tokyo: there in about a day"]],"d":{"364":[[1813,394],"Aboard, sailing back to Tokyo"],"365":[[1794.5,391.5],"On the march"]}}
+{"h":39,"tick":40,"rows":[["Shanghai from Tokyo, Ōsaka","returning","turning back to Tokyo: there in about a day"]],"d":{"364":[[1815.4,392.6],"Aboard, sailing back to Tokyo"],"365":[[1794.5,391.5],"Holding"]}}
+{"h":42,"tick":43,"rows":[["Shanghai from Tokyo, Ōsaka","returning","turning back to Tokyo: there in about a day"]],"d":{"364":[[1816.8,390.2],"Aboard, sailing back to Tokyo"],"365":[[1794.5,391.5],"Holding"]}}
+{"h":45,"tick":46,"rows":[["Shanghai from Tokyo, Ōsaka","returning","turning back to Tokyo: there in about a day"]],"d":{"364":[[1819,388.9],"Aboard, sailing back to Tokyo"],"365":[[1794.5,391.5],"Holding"]}}
+{"h":48,"tick":49,"rows":[["Shanghai from Tokyo, Ōsaka","over","cancelled: back at Tokyo, Ōsaka; the AI commands them again"]],"d":{"364":[[1819.5,385.5],"On the march"],"365":[[1792.5,392.5],"At sea with the AI's landing (not one of yours)"]}}
+{"h":51,"tick":52,"rows":[["Shanghai from Tokyo, Ōsaka","over","cancelled: back at Tokyo, Ōsaka; the AI commands them again"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1789.4,392.6],"At sea with the AI's landing (not one of yours)"]}}
+{"h":54,"tick":55,"rows":[["Shanghai from Tokyo, Ōsaka","over","cancelled: back at Tokyo, Ōsaka; the AI commands them again"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1786.8,393.5],"At sea with the AI's landing (not one of yours)"]}}
+{"h":57,"tick":58,"rows":[["Shanghai from Tokyo, Ōsaka","over","cancelled: back at Tokyo, Ōsaka; the AI commands them again"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1784,393.9],"At sea with the AI's landing (not one of yours)"]}}
+{"h":60,"tick":61,"rows":[["Shanghai from Tokyo, Ōsaka","over","cancelled: back at Tokyo, Ōsaka; the AI commands them again"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1781.3,395],"At sea with the AI's landing (not one of yours)"]}}
+{"h":63,"tick":64,"rows":[["Shanghai from Tokyo, Ōsaka","over","cancelled: back at Tokyo, Ōsaka; the AI commands them again"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1778.5,395.5],"At sea with the AI's landing (not one of yours)"]}}
+{"h":66,"tick":67,"rows":[["Shanghai from Tokyo, Ōsaka","over","cancelled: back at Tokyo, Ōsaka; the AI commands them again"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1777.2,397.8],"At sea with the AI's landing (not one of yours)"]}}
+{"h":69,"tick":70,"rows":[["Shanghai from Tokyo, Ōsaka","over","cancelled: back at Tokyo, Ōsaka; the AI commands them again"]],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1775.7,400],"At sea with the AI's landing (not one of yours)"]}}
+{"h":72,"tick":73,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1775.5,402.9],"At sea with the AI's landing (not one of yours)"]}}
+{"h":75,"tick":76,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1775.3,405.7],"At sea with the AI's landing (not one of yours)"]}}
+{"h":78,"tick":79,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1774.5,408.2],"At sea with the AI's landing (not one of yours)"]}}
+{"h":81,"tick":82,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1773.4,410.6],"At sea with the AI's landing (not one of yours)"]}}
+{"h":84,"tick":85,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1772.1,412.9],"At sea with the AI's landing (not one of yours)"]}}
+{"h":87,"tick":88,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1770.1,414.9],"At sea with the AI's landing (not one of yours)"]}}
+{"h":90,"tick":91,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1767.4,415.4],"At sea with the AI's landing (not one of yours)"]}}
+{"h":93,"tick":94,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1764.9,414.5],"At sea with the AI's landing (not one of yours)"]}}
+{"h":96,"tick":97,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1762.7,412.7],"At sea with the AI's landing (not one of yours)"]}}
+{"h":99,"tick":100,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1760.4,411.4],"At sea with the AI's landing (not one of yours)"]}}
+{"h":102,"tick":103,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1758.4,409.4],"At sea with the AI's landing (not one of yours)"]}}
+{"h":105,"tick":106,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1756.3,407.3],"At sea with the AI's landing (not one of yours)"]}}
+{"h":108,"tick":109,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1754.2,405.2],"At sea with the AI's landing (not one of yours)"]}}
+{"h":111,"tick":112,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1751.9,403.9],"At sea with the AI's landing (not one of yours)"]}}
+{"h":114,"tick":115,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1749.8,401.8],"At sea with the AI's landing (not one of yours)"]}}
+{"h":117,"tick":118,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1747.7,399.7],"At sea with the AI's landing (not one of yours)"]}}
+{"h":120,"tick":121,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1745.7,397.7],"At sea with the AI's landing (not one of yours)"]}}
+{"h":123,"tick":124,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1743.3,396.3],"At sea with the AI's landing (not one of yours)"]}}
+{"h":126,"tick":127,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1741.2,394.2],"At sea with the AI's landing (not one of yours)"]}}
+{"h":129,"tick":130,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1739.1,392.1],"At sea with the AI's landing (not one of yours)"]}}
+{"h":132,"tick":133,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1737,390],"At sea with the AI's landing (not one of yours)"]}}
+{"h":135,"tick":136,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1734.9,387.9],"At sea with the AI's landing (not one of yours)"]}}
+{"h":138,"tick":139,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1732.8,385.8],"At sea with the AI's landing (not one of yours)"]}}
+{"h":141,"tick":142,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1731.4,383.4],"At sea with the AI's landing (not one of yours)"]}}
+{"h":144,"tick":145,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1729.2,381.2],"At sea with the AI's landing (not one of yours)"]}}
+{"h":147,"tick":148,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1727.1,379.1],"At sea with the AI's landing (not one of yours)"]}}
+{"h":150,"tick":151,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1725,377],"At sea with the AI's landing (not one of yours)"]}}
+{"h":153,"tick":154,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1722.8,374.8],"At sea with the AI's landing (not one of yours)"]}}
+{"h":156,"tick":157,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1720.7,372.7],"At sea with the AI's landing (not one of yours)"]}}
+{"h":159,"tick":160,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.5,373.5],"Holding"]}}
+{"h":162,"tick":163,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.5,373.5],"Holding"]}}
+{"h":165,"tick":166,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.5,373.5],"Holding"]}}
+{"h":168,"tick":169,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.5,373.5],"Holding"]}}
+{"h":171,"tick":172,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.5,373.5],"Holding"]}}
+{"h":174,"tick":175,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.5,373.6],"On the march"]}}
+{"h":177,"tick":178,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.5,373.8],"On the march"]}}
+{"h":180,"tick":181,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.5,374],"On the march"]}}
+{"h":183,"tick":184,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.5,374.2],"On the march"]}}
+{"h":186,"tick":187,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.5,374.4],"On the march"]}}
+{"h":189,"tick":190,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.4,374.5],"On the march"]}}
+{"h":192,"tick":193,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1718.1,374.5],"On the march"]}}
+{"h":195,"tick":196,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1717.9,374.5],"On the march"]}}
+{"h":198,"tick":199,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1717.7,374.5],"On the march"]}}
+{"h":201,"tick":202,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1717.4,374.5],"On the march"]}}
+{"h":204,"tick":205,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1717.2,374.5],"On the march"]}}
+{"h":207,"tick":208,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1717,374.5],"On the march"]}}
+{"h":210,"tick":211,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1716.7,374.5],"On the march"]}}
+{"h":213,"tick":214,"rows":[],"d":{"364":[[1819.5,385.5],"Holding"],"365":[[1716.5,374.5],"On the march"]}}
+{"h":216,"tick":217,"rows":[],"d":{"364":[[1819.1,387.2],"At sea with the AI's landing (not one of yours)"],"365":[[1716.3,374.5],"On the march"]}}
+{"h":219,"tick":220,"rows":[],"d":{"364":[[1818.5,389.4],"At sea with the AI's landing (not one of yours)"],"365":[[1716,374.5],"On the march"]}}
+{"h":222,"tick":223,"rows":[],"d":{"364":[[1817.1,391.5],"At sea with the AI's landing (not one of yours)"],"365":[[1715.8,374.5],"On the march"]}}
+{"h":225,"tick":226,"rows":[],"d":{"364":[[1814.5,392.5],"At sea with the AI's landing (not one of yours)"],"365":[[1715.6,374.5],"On the march"]}}
+{"h":228,"tick":229,"rows":[],"d":{"364":[[1812.1,393.9],"At sea with the AI's landing (not one of yours)"],"365":[[1715.3,374.5],"On the march"]}}
+{"h":231,"tick":232,"rows":[],"d":{"364":[[1809.6,395.4],"At sea with the AI's landing (not one of yours)"],"365":[[1715.1,374.5],"On the march"]}}
+{"h":234,"tick":235,"rows":[],"d":{"364":[[1807.1,396.5],"At sea with the AI's landing (not one of yours)"],"365":[[1714.9,374.5],"On the march"]}}
+{"h":237,"tick":238,"rows":[],"d":{"364":[[1804.5,397.5],"At sea with the AI's landing (not one of yours)"],"365":[[1714.6,374.5],"On the march"]}}
+{"h":240,"tick":241,"rows":[],"d":{"364":[[1802.1,398.9],"At sea with the AI's landing (not one of yours)"],"365":[[1714.4,374.5],"On the march"]}}

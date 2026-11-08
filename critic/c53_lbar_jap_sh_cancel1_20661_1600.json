@@ -1,0 +1,463 @@
+{
+ "seed": 20661,
+ "TAG": "JAP",
+ "FOE": "CHI",
+ "FROM": "1818.5,385.5",
+ "TO": "1715.5,413.5",
+ "N": 2,
+ "label": "jap_sh_cancel1",
+ "W": 1600,
+ "H": 900,
+ "cancelDay": 1,
+ "days": [
+  {
+   "day": 0,
+   "tick": 3,
+   "bar": {
+    "box": [
+     560,
+     54,
+     480,
+     127
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       149,
+       16
+      ],
+      "status": "sails in about a day",
+      "ships": "transports 24, 20 needed",
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "ready",
+        "Square infantry division 364At Tokyo, all of the landing there: it sails when its transports and escort are ready"
+       ],
+       [
+        "365",
+        "waiting",
+        "Square infantry division 365Waiting at Ōsaka for transports"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "364": "At Tokyo, all of the landing there: it sails when its transports and escort are ready",
+    "365": "Waiting at Ōsaka for transports"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   },
+   "pos": {
+    "364": [
+     1818.2,
+     385.2
+    ],
+    "365": [
+     1794.2,
+     391.2
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     560,
+     54,
+     480,
+     127
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       149,
+       16
+      ],
+      "status": "sails in about a day",
+      "ships": "transports 24, 20 needed",
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "ready",
+        "Square infantry division 364At Tokyo, all of the landing there: it sails when its transports and escort are ready"
+       ],
+       [
+        "365",
+        "waiting",
+        "Square infantry division 365Waiting at Ōsaka for transports"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 1,
+   "tick": 27,
+   "bar": {
+    "box": [
+     560,
+     54,
+     480,
+     96
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       149,
+       16
+      ],
+      "status": "at sea: lands in about 5 days",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "atSea",
+        "Square infantry division 365At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "364": "At sea, bound for its landing",
+    "365": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   },
+   "pos": {
+    "364": [
+     1806.2,
+     396.8
+    ],
+    "365": [
+     1786.8,
+     393.5
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     560,
+     54,
+     480,
+     96
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       149,
+       16
+      ],
+      "status": "at sea: lands in about 5 days",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "atSea",
+        "Square infantry division 365At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 2,
+   "tick": 51,
+   "bar": {
+    "box": [
+     560,
+     54,
+     480,
+     112
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "over",
+      "outcome": "cancelled",
+      "title": "Shanghai from Tokyo, Ōsaka",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       149,
+       16
+      ],
+      "status": "cancelled: back at Tokyo, Ōsaka; the AI commands them again",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "",
+        "Square infantry division 364"
+       ],
+       [
+        "365",
+        "",
+        "Square infantry division 365"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "364": "At sea with the AI's landing (not one of yours)",
+    "365": "At sea with the AI's landing (not one of yours)"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   },
+   "pos": {
+    "364": [
+     1818.9,
+     388.9
+    ],
+    "365": [
+     1790.4,
+     392.5
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     560,
+     54,
+     480,
+     112
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "over",
+      "outcome": "cancelled",
+      "title": "Shanghai from Tokyo, Ōsaka",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       149,
+       16
+      ],
+      "status": "cancelled: back at Tokyo, Ōsaka; the AI commands them again",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "",
+        "Square infantry division 364"
+       ],
+       [
+        "365",
+        "",
+        "Square infantry division 365"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 3,
+   "tick": 75,
+   "bar": null,
+   "panel": {
+    "364": "At sea with the AI's landing (not one of yours)",
+    "365": "At sea with the AI's landing (not one of yours)"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   },
+   "pos": {
+    "364": [
+     1800.4,
+     399.6
+    ],
+    "365": [
+     1775.5,
+     404.8
+    ]
+   },
+   "barWithPanel": null
+  },
+  {
+   "day": 4,
+   "tick": 99,
+   "bar": null,
+   "panel": {
+    "364": "At sea with the AI's landing (not one of yours)",
+    "365": "At sea with the AI's landing (not one of yours)"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   },
+   "pos": {
+    "364": [
+     1780.9,
+     409.5
+    ],
+    "365": [
+     1761.3,
+     411.5
+    ]
+   },
+   "barWithPanel": null
+  },
+  {
+   "day": 5,
+   "tick": 123,
+   "bar": null,
+   "panel": {
+    "364": "At sea with the AI's landing (not one of yours)",
+    "365": "At sea with the AI's landing (not one of yours)"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0
+   },
+   "pos": {
+    "364": [
+     1761.7,
+     411.7
+    ],
+    "365": [
+     1744,
+     397
+    ]
+   },
+   "barWithPanel": null
+  }
+ ],
+ "shots": [
+  "critic/shots/c53lbar_jap_sh_cancel1_20661_1600_nationpanel.png",
+  "critic/shots/c53lbar_jap_sh_cancel1_20661_1600_d0.png",
+  "critic/shots/c53lbar_jap_sh_cancel1_20661_1600_d1.png",
+  "critic/shots/c53lbar_jap_sh_cancel1_20661_1600_cancel.png",
+  "critic/shots/c53lbar_jap_sh_cancel1_20661_1600_d2.png"
+ ],
+ "barBefore": null,
+ "ids": [
+  364,
+  365
+ ],
+ "barVisibleWithNationPanel": true,
+ "cancelButtons": 1,
+ "cancelTip": "Those at sea sail to Tokyo, Ōsaka with their transports; those ashore stop where they stand",
+ "afterCancelBar": {
+  "box": [
+   560,
+   54,
+   480,
+   96
+  ],
+  "vw": 1600,
+  "vh": 900,
+  "scrollW": 1600,
+  "rows": [
+   {
+    "id": "1",
+    "state": "sailing",
+    "outcome": "",
+    "title": "Shanghai from Tokyo, Ōsaka",
+    "titleCut": false,
+    "titleBox": [
+     599,
+     59,
+     149,
+     16
+    ],
+    "status": "at sea: lands in about 5 days",
+    "ships": null,
+    "wait": null,
+    "divisions": [
+     [
+      "364",
+      "atSea",
+      "Square infantry division 364At sea, bound for its landing"
+     ],
+     [
+      "365",
+      "atSea",
+      "Square infantry division 365At sea, bound for its landing"
+     ]
+    ],
+    "open": true
+   }
+  ]
+ },
+ "endedDay": 2,
+ "errors": []
+}

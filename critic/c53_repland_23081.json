@@ -1,0 +1,100 @@
+{
+ "seed": 23081,
+ "diplomacy": "scenario",
+ "years": 3,
+ "repulsed": 7,
+ "landedWithin48h": 5,
+ "within3cells": 5,
+ "cases": [
+  {
+   "id": 245,
+   "nation": "FRA",
+   "holder": "GER",
+   "repulsedAt": 6402,
+   "at": [
+    1065.5,
+    332.5
+   ],
+   "landedAt": 6403,
+   "landed": [
+    1065.5,
+    331.5
+   ],
+   "cells": 1,
+   "player": false,
+   "controllerNow": "FRA"
+  },
+  {
+   "id": 268,
+   "nation": "FRA",
+   "holder": "GER",
+   "repulsedAt": 6402,
+   "at": [
+    1065.5,
+    332.5
+   ],
+   "landedAt": 6403,
+   "landed": [
+    1065.5,
+    331.5
+   ],
+   "cells": 1,
+   "player": false,
+   "controllerNow": "FRA"
+  },
+  {
+   "id": 246,
+   "nation": "FRA",
+   "holder": "GER",
+   "repulsedAt": 6403,
+   "at": [
+    1065.5,
+    332.5
+   ],
+   "landedAt": 6404,
+   "landed": [
+    1065.5,
+    331.5
+   ],
+   "cells": 1,
+   "player": false,
+   "controllerNow": "FRA"
+  },
+  {
+   "id": 269,
+   "nation": "FRA",
+   "holder": "GER",
+   "repulsedAt": 6403,
+   "at": [
+    1065.5,
+    332.5
+   ],
+   "landedAt": 6404,
+   "landed": [
+    1065.5,
+    331.5
+   ],
+   "cells": 1,
+   "player": false,
+   "controllerNow": "FRA"
+  },
+  {
+   "id": 629,
+   "nation": "FRA",
+   "holder": "GER",
+   "repulsedAt": 6404,
+   "at": [
+    1065.5,
+    332.5
+   ],
+   "landedAt": 6405,
+   "landed": [
+    1065.5,
+    331.5
+   ],
+   "cells": 1,
+   "player": false,
+   "controllerNow": "FRA"
+  }
+ ]
+}

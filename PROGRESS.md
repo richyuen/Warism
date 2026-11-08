@@ -2076,3 +2076,8 @@
   over part beside its click's), 0 broken on every checker (`docs/replays/run52-at-29928a1b.md`); run 51's 25
   landing seeds 0 broken. Nothing to fix first.
 - **Next:** critic run 53.
+
+## 2026-11-07 — Critic run 53 (focused, on 5f8ef9e8): no blocking issue, naval 8
+- Naval up to 8 (its bar): R52-B1 fixed on its three cases and new seeds; every checker 0 broken. Every dimension at
+  its bar. Three small findings (R53-N1–N3) filed as batch 7 (R52), fixed before the full run 54 the release needs.
+- **Next:** R52a.

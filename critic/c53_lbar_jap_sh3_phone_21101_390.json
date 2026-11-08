@@ -1,0 +1,972 @@
+{
+ "seed": 21101,
+ "TAG": "JAP",
+ "FOE": "CHI",
+ "FROM": "1818.5,385.5",
+ "TO": "1715.5,413.5",
+ "N": 3,
+ "label": "jap_sh3_phone",
+ "W": 390,
+ "H": 844,
+ "cancelDay": null,
+ "days": [
+  {
+   "day": 0,
+   "tick": 3,
+   "bar": {
+    "box": [
+     7,
+     46,
+     376,
+     158
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       41,
+       50,
+       177,
+       14
+      ],
+      "status": "sails in about 2 days",
+      "ships": "transports 36, 30 needed",
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "ready",
+        "Square infantry division 364At Tokyo, all of the landing there: it sails when its transports and escort are ready"
+       ],
+       [
+        "365",
+        "waiting",
+        "Square infantry division 365Waiting at Ōsaka for transports"
+       ],
+       [
+        "366",
+        "waiting",
+        "Square infantry division 366Waiting at Hiroshima for transports"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "364": "At Tokyo, all of the landing there: it sails when its transports and escort are ready",
+    "365": "Waiting at Ōsaka for transports",
+    "366": "Waiting at Hiroshima for transports"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0,
+    "366": 0
+   },
+   "pos": {
+    "364": [
+     1818.2,
+     385.2
+    ],
+    "365": [
+     1794.2,
+     391.2
+    ],
+    "366": [
+     1777.2,
+     393.2
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       0,
+       0,
+       0,
+       0
+      ],
+      "status": "sails in about 2 days",
+      "ships": "transports 36, 30 needed",
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "ready",
+        "Square infantry division 364At Tokyo, all of the landing there: it sails when its transports and escort are ready"
+       ],
+       [
+        "365",
+        "waiting",
+        "Square infantry division 365Waiting at Ōsaka for transports"
+       ],
+       [
+        "366",
+        "waiting",
+        "Square infantry division 366Waiting at Hiroshima for transports"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 1,
+   "tick": 27,
+   "bar": {
+    "box": [
+     7,
+     46,
+     376,
+     132
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       41,
+       50,
+       177,
+       14
+      ],
+      "status": "2 of 3 at sea; the last sails in about a day",
+      "ships": "transports 12, 10 needed",
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "atSea",
+        "Square infantry division 365At sea, bound for its landing"
+       ],
+       [
+        "366",
+        "waiting",
+        "Square infantry division 366Waiting at Hiroshima for transports"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "364": "At sea, bound for its landing",
+    "365": "At sea, bound for its landing",
+    "366": "Waiting at Hiroshima for transports"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0,
+    "366": 0
+   },
+   "pos": {
+    "364": [
+     1806.2,
+     396.8
+    ],
+    "365": [
+     1788.7,
+     393.3
+    ],
+    "366": [
+     1777.2,
+     393.2
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       0,
+       0,
+       0,
+       0
+      ],
+      "status": "2 of 3 at sea; the last sails in about a day",
+      "ships": "transports 12, 10 needed",
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "atSea",
+        "Square infantry division 365At sea, bound for its landing"
+       ],
+       [
+        "366",
+        "waiting",
+        "Square infantry division 366Waiting at Hiroshima for transports"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 2,
+   "tick": 51,
+   "bar": {
+    "box": [
+     7,
+     46,
+     376,
+     120
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       41,
+       50,
+       177,
+       14
+      ],
+      "status": "at sea: lands in about 4 days",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "atSea",
+        "Square infantry division 365At sea, bound for its landing"
+       ],
+       [
+        "366",
+        "atSea",
+        "Square infantry division 366At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "364": "At sea, bound for its landing",
+    "365": "At sea, bound for its landing",
+    "366": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0,
+    "366": 0
+   },
+   "pos": {
+    "364": [
+     1786.5,
+     406.5
+    ],
+    "365": [
+     1774.7,
+     406.3
+    ],
+    "366": [
+     1777.3,
+     396
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       0,
+       0,
+       0,
+       0
+      ],
+      "status": "at sea: lands in about 4 days",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "atSea",
+        "Square infantry division 365At sea, bound for its landing"
+       ],
+       [
+        "366",
+        "atSea",
+        "Square infantry division 366At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 3,
+   "tick": 75,
+   "bar": {
+    "box": [
+     7,
+     46,
+     376,
+     120
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       41,
+       50,
+       177,
+       14
+      ],
+      "status": "at sea: lands in about 3 days",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "atSea",
+        "Square infantry division 365At sea, bound for its landing"
+       ],
+       [
+        "366",
+        "atSea",
+        "Square infantry division 366At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "364": "At sea, bound for its landing",
+    "365": "At sea, bound for its landing",
+    "366": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0,
+    "366": 0
+   },
+   "pos": {
+    "364": [
+     1766.8,
+     415.5
+    ],
+    "365": [
+     1758,
+     414.5
+    ],
+    "366": [
+     1769,
+     415.5
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       0,
+       0,
+       0,
+       0
+      ],
+      "status": "at sea: lands in about 3 days",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "atSea",
+        "Square infantry division 365At sea, bound for its landing"
+       ],
+       [
+        "366",
+        "atSea",
+        "Square infantry division 366At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 4,
+   "tick": 99,
+   "bar": {
+    "box": [
+     7,
+     46,
+     376,
+     120
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       41,
+       50,
+       177,
+       14
+      ],
+      "status": "at sea: lands in about 2 days",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "atSea",
+        "Square infantry division 365At sea, bound for its landing"
+       ],
+       [
+        "366",
+        "atSea",
+        "Square infantry division 366At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "364": "At sea, bound for its landing",
+    "365": "At sea, bound for its landing",
+    "366": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0,
+    "366": 0
+   },
+   "pos": {
+    "364": [
+     1743.6,
+     414.5
+    ],
+    "365": [
+     1734.8,
+     413.5
+    ],
+    "366": [
+     1745.8,
+     414.5
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       0,
+       0,
+       0,
+       0
+      ],
+      "status": "at sea: lands in about 2 days",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "atSea",
+        "Square infantry division 365At sea, bound for its landing"
+       ],
+       [
+        "366",
+        "atSea",
+        "Square infantry division 366At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 5,
+   "tick": 123,
+   "bar": {
+    "box": [
+     7,
+     46,
+     376,
+     120
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       41,
+       50,
+       177,
+       14
+      ],
+      "status": "at sea: lands in about a day",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "",
+        "Square infantry division 365"
+       ],
+       [
+        "366",
+        "atSea",
+        "Square infantry division 366At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "364": "At sea, bound for its landing",
+    "365": "Landed",
+    "366": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0,
+    "366": 0
+   },
+   "pos": {
+    "364": [
+     1720.9,
+     412.5
+    ],
+    "365": [
+     1715.5,
+     411.5
+    ],
+    "366": [
+     1723,
+     412.5
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       0,
+       0,
+       0,
+       0
+      ],
+      "status": "at sea: lands in about a day",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "atSea",
+        "Square infantry division 364At sea, bound for its landing"
+       ],
+       [
+        "365",
+        "",
+        "Square infantry division 365"
+       ],
+       [
+        "366",
+        "atSea",
+        "Square infantry division 366At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 6,
+   "tick": 147,
+   "bar": {
+    "box": [
+     7,
+     46,
+     376,
+     108
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "over",
+      "outcome": "landed",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       41,
+       50,
+       177,
+       14
+      ],
+      "status": "over: 3 landed",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "",
+        "Square infantry division 364"
+       ],
+       [
+        "365",
+        "",
+        "Square infantry division 365"
+       ],
+       [
+        "366",
+        "",
+        "Square infantry division 366"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "364": "Landed",
+    "365": "On the march",
+    "366": "Landed"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0,
+    "366": 0
+   },
+   "pos": {
+    "364": [
+     1715.5,
+     411.5
+    ],
+    "365": [
+     1714.9,
+     410.5
+    ],
+    "366": [
+     1715.5,
+     411.9
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vw": 390,
+    "vh": 844,
+    "scrollW": 390,
+    "rows": [
+     {
+      "id": "1",
+      "state": "over",
+      "outcome": "landed",
+      "title": "Shanghai from Tokyo, Ōsaka, Hiroshima",
+      "titleCut": false,
+      "titleBox": [
+       0,
+       0,
+       0,
+       0
+      ],
+      "status": "over: 3 landed",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "364",
+        "",
+        "Square infantry division 364"
+       ],
+       [
+        "365",
+        "",
+        "Square infantry division 365"
+       ],
+       [
+        "366",
+        "",
+        "Square infantry division 366"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 7,
+   "tick": 171,
+   "bar": null,
+   "panel": {
+    "364": "On the march",
+    "365": "On the march",
+    "366": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0,
+    "366": 0
+   },
+   "pos": {
+    "364": [
+     1714.9,
+     410.5
+    ],
+    "365": [
+     1714,
+     409
+    ],
+    "366": [
+     1715.2,
+     410.4
+    ]
+   },
+   "barWithPanel": null
+  },
+  {
+   "day": 8,
+   "tick": 195,
+   "bar": null,
+   "panel": {
+    "364": "On the march",
+    "365": "On the march",
+    "366": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0,
+    "366": 0
+   },
+   "pos": {
+    "364": [
+     1714,
+     409
+    ],
+    "365": [
+     1712.8,
+     407.8
+    ],
+    "366": [
+     1714.2,
+     408.8
+    ]
+   },
+   "barWithPanel": null
+  },
+  {
+   "day": 9,
+   "tick": 219,
+   "bar": null,
+   "panel": {
+    "364": "On the march",
+    "365": "On the march",
+    "366": "On the march"
+   },
+   "afloat": {
+    "364": 0,
+    "365": 0,
+    "366": 0
+   },
+   "pos": {
+    "364": [
+     1712.8,
+     407.8
+    ],
+    "365": [
+     1711.6,
+     406.6
+    ],
+    "366": [
+     1713.1,
+     407.6
+    ]
+   },
+   "barWithPanel": null
+  }
+ ],
+ "shots": [
+  "critic/shots/c53lbar_jap_sh3_phone_21101_390_nationpanel.png",
+  "critic/shots/c53lbar_jap_sh3_phone_21101_390_d0.png",
+  "critic/shots/c53lbar_jap_sh3_phone_21101_390_d2.png"
+ ],
+ "barBefore": null,
+ "ids": [
+  364,
+  365,
+  366
+ ],
+ "barVisibleWithNationPanel": true,
+ "endedDay": 6,
+ "errors": []
+}

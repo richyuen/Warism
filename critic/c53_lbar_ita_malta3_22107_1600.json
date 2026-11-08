@@ -1,0 +1,731 @@
+{
+ "seed": 22107,
+ "TAG": "ITA",
+ "FOE": "ENG",
+ "FROM": "1095.5,344.5",
+ "TO": "1106.5,383.5",
+ "N": 3,
+ "label": "ita_malta3",
+ "W": 1600,
+ "H": 900,
+ "cancelDay": 5,
+ "days": [
+  {
+   "day": 0,
+   "tick": 3,
+   "bar": {
+    "box": [
+     560,
+     54,
+     480,
+     90
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Valletta from Rome",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       103,
+       15
+      ],
+      "status": "sails in about a day",
+      "ships": "transports 24, 18 needed",
+      "wait": null,
+      "divisions": [
+       [
+        "319",
+        "waiting",
+        "Infantry division 319Waiting at Rome for transports"
+       ],
+       [
+        "321",
+        "waiting",
+        "Infantry division 321Waiting at Rome for transports"
+       ],
+       [
+        "322",
+        "waiting",
+        "Infantry division 322Waiting at Rome for transports"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "319": "Waiting at Rome for transports",
+    "321": "Waiting at Rome for transports",
+    "322": "Waiting at Rome for transports"
+   },
+   "afloat": {
+    "319": 0,
+    "321": 0,
+    "322": 0
+   },
+   "pos": {
+    "319": [
+     1095.2,
+     344.2
+    ],
+    "321": [
+     1095.9,
+     346.1
+    ],
+    "322": [
+     1093.7,
+     344.4
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     560,
+     54,
+     480,
+     90
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "gathering",
+      "outcome": "",
+      "title": "Valletta from Rome",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       103,
+       15
+      ],
+      "status": "sails in about a day",
+      "ships": "transports 24, 18 needed",
+      "wait": null,
+      "divisions": [
+       [
+        "319",
+        "waiting",
+        "Infantry division 319Waiting at Rome for transports"
+       ],
+       [
+        "321",
+        "waiting",
+        "Infantry division 321Waiting at Rome for transports"
+       ],
+       [
+        "322",
+        "waiting",
+        "Infantry division 322Waiting at Rome for transports"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 1,
+   "tick": 27,
+   "bar": {
+    "box": [
+     560,
+     54,
+     480,
+     76
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Valletta from Rome",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       103,
+       16
+      ],
+      "status": "at sea: lands in about 2 days",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "319",
+        "atSea",
+        "Infantry division 319At sea, bound for its landing"
+       ],
+       [
+        "321",
+        "atSea",
+        "Infantry division 321At sea, bound for its landing"
+       ],
+       [
+        "322",
+        "atSea",
+        "Infantry division 322At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "319": "At sea, bound for its landing",
+    "321": "At sea, bound for its landing",
+    "322": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "319": 0,
+    "321": 0,
+    "322": 0
+   },
+   "pos": {
+    "319": [
+     1093.5,
+     345.5
+    ],
+    "321": [
+     1093.5,
+     345.5
+    ],
+    "322": [
+     1093.5,
+     345.5
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     560,
+     54,
+     480,
+     76
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Valletta from Rome",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       103,
+       16
+      ],
+      "status": "at sea: lands in about 2 days",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "319",
+        "atSea",
+        "Infantry division 319At sea, bound for its landing"
+       ],
+       [
+        "321",
+        "atSea",
+        "Infantry division 321At sea, bound for its landing"
+       ],
+       [
+        "322",
+        "atSea",
+        "Infantry division 322At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 2,
+   "tick": 51,
+   "bar": {
+    "box": [
+     560,
+     54,
+     480,
+     76
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Valletta from Rome",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       103,
+       16
+      ],
+      "status": "at sea: under attack, held up",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "319",
+        "atSea",
+        "Infantry division 319At sea, bound for its landing"
+       ],
+       [
+        "321",
+        "atSea",
+        "Infantry division 321At sea, bound for its landing"
+       ],
+       [
+        "322",
+        "atSea",
+        "Infantry division 322At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "319": "At sea, bound for its landing",
+    "321": "At sea, bound for its landing",
+    "322": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "319": 0,
+    "321": 0,
+    "322": 0
+   },
+   "pos": {
+    "319": [
+     1094.5,
+     367.1
+    ],
+    "321": [
+     1094.5,
+     367.1
+    ],
+    "322": [
+     1094.5,
+     367.1
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     560,
+     54,
+     480,
+     76
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Valletta from Rome",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       103,
+       16
+      ],
+      "status": "at sea: under attack, held up",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "319",
+        "atSea",
+        "Infantry division 319At sea, bound for its landing"
+       ],
+       [
+        "321",
+        "atSea",
+        "Infantry division 321At sea, bound for its landing"
+       ],
+       [
+        "322",
+        "atSea",
+        "Infantry division 322At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 3,
+   "tick": 75,
+   "bar": {
+    "box": [
+     560,
+     54,
+     480,
+     76
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Valletta from Rome",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       103,
+       16
+      ],
+      "status": "at sea: lands in about a day",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "319",
+        "atSea",
+        "Infantry division 319At sea, bound for its landing"
+       ],
+       [
+        "321",
+        "atSea",
+        "Infantry division 321At sea, bound for its landing"
+       ],
+       [
+        "322",
+        "atSea",
+        "Infantry division 322At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "319": "At sea, bound for its landing",
+    "321": "At sea, bound for its landing",
+    "322": "At sea, bound for its landing"
+   },
+   "afloat": {
+    "319": 0,
+    "321": 0,
+    "322": 0
+   },
+   "pos": {
+    "319": [
+     1095.5,
+     366.5
+    ],
+    "321": [
+     1095.5,
+     366.5
+    ],
+    "322": [
+     1095.5,
+     366.5
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     560,
+     54,
+     480,
+     76
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "sailing",
+      "outcome": "",
+      "title": "Valletta from Rome",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       103,
+       16
+      ],
+      "status": "at sea: lands in about a day",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "319",
+        "atSea",
+        "Infantry division 319At sea, bound for its landing"
+       ],
+       [
+        "321",
+        "atSea",
+        "Infantry division 321At sea, bound for its landing"
+       ],
+       [
+        "322",
+        "atSea",
+        "Infantry division 322At sea, bound for its landing"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 4,
+   "tick": 99,
+   "bar": {
+    "box": [
+     560,
+     54,
+     480,
+     90
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "over",
+      "outcome": "away",
+      "title": "Valletta from Rome",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       103,
+       15
+      ],
+      "status": "over: its transports broke off; 3 came ashore away from Valletta",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "319",
+        "",
+        "Infantry division 319"
+       ],
+       [
+        "321",
+        "",
+        "Infantry division 321"
+       ],
+       [
+        "322",
+        "",
+        "Infantry division 322"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   },
+   "panel": {
+    "319": "Landed",
+    "321": "Landed",
+    "322": "Landed"
+   },
+   "afloat": {
+    "319": 0,
+    "321": 0,
+    "322": 0
+   },
+   "pos": {
+    "319": [
+     1099.5,
+     369.5
+    ],
+    "321": [
+     1099.5,
+     369.8
+    ],
+    "322": [
+     1099.5,
+     369.2
+    ]
+   },
+   "barWithPanel": {
+    "box": [
+     560,
+     54,
+     480,
+     90
+    ],
+    "vw": 1600,
+    "vh": 900,
+    "scrollW": 1600,
+    "rows": [
+     {
+      "id": "1",
+      "state": "over",
+      "outcome": "away",
+      "title": "Valletta from Rome",
+      "titleCut": false,
+      "titleBox": [
+       599,
+       59,
+       103,
+       15
+      ],
+      "status": "over: its transports broke off; 3 came ashore away from Valletta",
+      "ships": null,
+      "wait": null,
+      "divisions": [
+       [
+        "319",
+        "",
+        "Infantry division 319"
+       ],
+       [
+        "321",
+        "",
+        "Infantry division 321"
+       ],
+       [
+        "322",
+        "",
+        "Infantry division 322"
+       ]
+      ],
+      "open": true
+     }
+    ]
+   }
+  },
+  {
+   "day": 5,
+   "tick": 123,
+   "bar": null,
+   "panel": {
+    "319": "Holding",
+    "321": "Holding",
+    "322": "Holding"
+   },
+   "afloat": {
+    "319": 0,
+    "321": 0,
+    "322": 0
+   },
+   "pos": {
+    "319": [
+     1099.5,
+     369.5
+    ],
+    "321": [
+     1099.5,
+     369.8
+    ],
+    "322": [
+     1099.5,
+     369.2
+    ]
+   },
+   "barWithPanel": null
+  },
+  {
+   "day": 6,
+   "tick": 147,
+   "bar": null,
+   "panel": {
+    "319": "Holding",
+    "321": "Holding",
+    "322": "Holding"
+   },
+   "afloat": {
+    "319": 0,
+    "321": 0,
+    "322": 0
+   },
+   "pos": {
+    "319": [
+     1099.5,
+     369.5
+    ],
+    "321": [
+     1099.5,
+     369.8
+    ],
+    "322": [
+     1099.5,
+     369.2
+    ]
+   },
+   "barWithPanel": null
+  },
+  {
+   "day": 7,
+   "tick": 171,
+   "bar": null,
+   "panel": {
+    "319": "Holding",
+    "321": "Holding",
+    "322": "Holding"
+   },
+   "afloat": {
+    "319": 0,
+    "321": 0,
+    "322": 0
+   },
+   "pos": {
+    "319": [
+     1099.5,
+     369.5
+    ],
+    "321": [
+     1099.5,
+     369.8
+    ],
+    "322": [
+     1099.5,
+     369.2
+    ]
+   },
+   "barWithPanel": null
+  }
+ ],
+ "shots": [
+  "critic/shots/c53lbar_ita_malta3_22107_1600_nationpanel.png",
+  "critic/shots/c53lbar_ita_malta3_22107_1600_d0.png",
+  "critic/shots/c53lbar_ita_malta3_22107_1600_d2.png",
+  "critic/shots/c53lbar_ita_malta3_22107_1600_d5.png",
+  "critic/shots/c53lbar_ita_malta3_22107_1600_d6.png"
+ ],
+ "barBefore": null,
+ "ids": [
+  319,
+  321,
+  322
+ ],
+ "barVisibleWithNationPanel": true,
+ "endedDay": 4,
+ "cancelButtons": 0,
+ "errors": []
+}

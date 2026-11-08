@@ -930,3 +930,22 @@ objection, idea and "what the bar needs" filed; then the probes replayed and cri
     Done (ADR-870): the ticker's names had no city role (History's had); the ticker row reads as History's.
   - Not taken: the corridor drawn on the map for its 10 days (the ADR-864 objection: the ticker row's "Show where"
     flies to it; a map layer for one God tool).
+
+## Batch 7 — run 53's findings, before the full run
+
+Critic run 53 (focused, on `5f8ef9e8`): no blocking issue; naval 8 (at its bar); every dimension at its bar. A focused
+run is followed by a full one before a release (PROMPT's RELEASES 3). Its three non-blocking findings are small and in
+code of this month's; fixed first, then critic run 54 (full).
+
+- [ ] R52 **Run 53's findings.**
+  - [ ] R52a R53-N1: a thrown-back division keeps "thrown back" when it comes ashore after (`endLanding` overwrote
+    it): "over: 2 thrown back" (with where they came ashore); `landingRows` gains a repulse case. Not taken here:
+    whether a thrown-back division may stray-land on its own side's beachhead at the target (PLAN 4.8n's rule; the
+    critic's unstaged 23081 is consistent with "home").
+  - [ ] R52b R53-N2: a click's row turning back from several ports names them all, with the longest days
+    (`SHOTAT=30 c53_turnback.mjs 20661 …`: "turning back to Tokyo, Ōsaka"; `c53_lbar.mjs 22101 …` day 3 all three);
+    and with one part ashore and others at sea, "1 of 3 ashore" as gathering's "2 of 3 at sea".
+  - [ ] R52c R53-N3: "under attack, held up" names the attacker or is said only with a foe engaged near (a one-sided
+    `engaged` checked: 21105 t55–t144, no British fleet engaged within 15 cells); the division's panel says the same.
+    AT: `SHOTAT=60 c53_lhold.mjs 21105 ITA ENG … 2 ita_malta 200`.
+  - Kept: `landingInvariants` and `landingRows` 0 broken.
