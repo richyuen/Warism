@@ -9,13 +9,17 @@
  * - `words`: one whose row says other than its panel (`FormationDetail.voyage`);
  * - `state`: a row gathering with one at sea, or a row at sea with one waiting at the port for it to sail
  *   (`waiting`, `gathering`, `ready`, `sibling`);
- * - `outcome`: a row over that says landed when none of its divisions landed in its time, or other than landed when
- *   one did; or its count of the landed other than theirs.
+ * - `outcome`: a row over whose counts are not where its divisions ended, as the world shows them hour by hour, not
+ *   the worker's tally (ROADMAP R50a; critic run 52, R52-B1: "lost at sea" for two inland, "landed" for two ashore on
+ *   Sicily): `landed` afloat one hour and ashore at the row's land the next (`landedAway`, as the news judges it),
+ *   `away` ashore away from it, `lost` gone while afloat; a row that says landed with none so, or other than landed
+ *   with one.
  */
 import type { Command } from '../../src/shared/commands';
 import type { FormationDetail, LandingRow } from '../../src/shared/protocol';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
+import { landedAway } from '../../src/sim/systems/amphibious';
 import { LandingState, landingOfDivision } from '../../src/sim/systems/landings';
 import { navOf, type World } from '../../src/sim/world';
 import { SimServer } from '../../src/worker/server';
@@ -34,9 +38,11 @@ export class RowRun {
   readonly s: SimServer;
   rows: LandingRow[] = [];
   readonly broken: { kind: RowBrokenKind; what: string }[] = [];
-  /** The hour each of the case's divisions landed (its panel's `landed`), and the rows over already read. */
-  private landedAt = new Map<number, number>();
+  /** The rows over already read; each of the case's divisions' row and whether it was afloat, last hour; where they ended, by row. */
   private checkedOver = new Set<number>();
+  private rowOf = new Map<number, number>();
+  private wasAfloat = new Set<number>();
+  private ends = new Map<number, Map<number, 'landed' | 'away' | 'lost'>>();
   hours = 0;
 
   constructor(
@@ -91,17 +97,39 @@ export class RowRun {
       if (!w.formations.has(id) || seen.has(id)) continue;
       const p = this.panel(id);
       if (landingOfDivision(w, id) !== undefined) this.broken.push({ kind: 'missing', what: `t${t} ${id}: in landing ${landingOfDivision(w, id)!.id}, panel ${p?.state ?? 'none'}, in no row` });
-      // Landed this hour (its panel's `landed` for a day after): noted for its row's outcome.
-      if (p?.state === 'landed' && !this.landedAt.has(id)) this.landedAt.set(id, t);
+    }
+    // Where each division of a row under way ended, from the world: off the water this hour (ashore, at the row's land or
+    // away from it), or gone while afloat.
+    const land = new Map(this.rows.map((r) => [r.id, r.land]));
+    for (const id of this.ids) {
+      const row = this.rowOf.get(id);
+      const afloat = w.formations.has(id) && (w.embarked.has(id) || w.afloat(id));
+      if (row !== undefined && this.wasAfloat.has(id) && !afloat) {
+        const e = this.ends.get(row) ?? new Map<number, 'landed' | 'away' | 'lost'>();
+        if (!w.formations.has(id)) e.set(id, 'lost');
+        else {
+          const [lx, ly] = land.get(row) ?? [NaN, NaN];
+          e.set(id, landedAway(w, Math.floor(ly) * W + Math.floor(lx), w.formations.cols.x[id]!, w.formations.cols.y[id]!) ? 'away' : 'landed');
+        }
+        this.ends.set(row, e);
+      }
+      if (afloat) this.wasAfloat.add(id);
+      else this.wasAfloat.delete(id);
+      if (seen.has(id)) this.rowOf.set(id, seen.get(id)!);
     }
     for (const r of this.rows) {
       if (r.state !== 'over' || this.checkedOver.has(r.id) || !r.outcome) continue;
       this.checkedOver.add(r.id);
       const mine = r.divisions.filter((d) => this.ids.length === 0 || this.ids.includes(d.id)).map((d) => d.id);
-      const landed = mine.filter((id) => this.landedAt.has(id)).length;
+      if (mine.length !== r.divisions.length) continue;
+      const e = [...(this.ends.get(r.id)?.values() ?? [])];
+      const was = { landed: e.filter((x) => x === 'landed').length, away: e.filter((x) => x === 'away').length, lost: e.filter((x) => x === 'lost').length };
       const o = r.outcome;
-      if (mine.length === r.divisions.length && (o.kind === 'landed') !== landed > 0) this.broken.push({ kind: 'outcome', what: `t${t} row ${r.id} ${o.kind}, ${landed} of its divisions landed` });
-      if (mine.length === r.divisions.length && o.kind === 'landed' && o.landed !== landed) this.broken.push({ kind: 'outcome', what: `t${t} row ${r.id} says ${o.landed} landed, ${landed} did` });
+      const said = { landed: o.landed, away: o.away ?? 0, lost: o.lost };
+      if (o.kind === 'repulsed' || o.kind === 'cancelled') said.away = was.away; // thrown back or turned back: ashore at its port, not broken off
+      if (JSON.stringify(said) !== JSON.stringify(was)) this.broken.push({ kind: 'outcome', what: `t${t} row ${r.id} ${o.kind} says ${JSON.stringify(said)}, they ended ${JSON.stringify(was)}` });
+      if ((o.kind === 'landed') !== was.landed > 0) this.broken.push({ kind: 'outcome', what: `t${t} row ${r.id} ${o.kind}, ${was.landed} of its divisions landed` });
+      for (const id of mine) if (this.rowOf.get(id) === r.id) this.rowOf.delete(id);
     }
   }
 

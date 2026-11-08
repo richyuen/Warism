@@ -5,7 +5,20 @@ import { t } from './i18n';
 export function landingStatus(r: LandingRow): string {
   if (r.state === 'over' && r.outcome) {
     const o = r.outcome;
-    if (o.kind === 'landed') return o.lost > 0 ? t('landing.over.landedLost', { n: o.landed, lost: o.lost }) : t('landing.over.landed', { n: o.landed });
+    // Each division by where it ended (R50a; critic run 52, R52-B1): the first of landed, broke off, lost, never sailed
+    // says how it went, the others follow.
+    const target = r.target.startsWith('=') ? r.target.slice(1) : t('landing.target');
+    const more = (skip: string): string => {
+      const parts: string[] = [];
+      if (skip !== 'lost' && o.lost > 0) parts.push(t('landing.more.lost', { n: o.lost }));
+      if (skip !== 'away' && (o.away ?? 0) > 0) parts.push(t('landing.more.away', { n: o.away!, target }));
+      if (skip !== 'sunk' && (o.stayed ?? 0) > 0) parts.push(t('landing.more.stayed', { n: o.stayed! }));
+      return parts.map((p) => `, ${p}`).join('');
+    };
+    if (o.kind === 'landed') return t('landing.over.landed', { n: o.landed }) + more('');
+    if (o.kind === 'away') return t('landing.over.away', { n: o.away ?? 0, target }) + more('away');
+    if (o.kind === 'lost') return t('landing.over.lostN', { n: o.lost }) + more('lost');
+    if (o.kind === 'sunk') return t('landing.over.sunk', { n: o.stayed ?? 0 }) + more('sunk');
     if (o.kind === 'cancelled') {
       // R48a: those aboard back at the port, those ashore stopped where they stood (R51-N1: "back at Hamburg" for a week's march).
       // Then the AI commands them again, where the player's army is the AI's (21107: two walked off the next day).
@@ -44,9 +57,15 @@ export function groupStatus(parts: LandingRow[]): string {
   const back = parts.find((r) => r.state === 'returning');
   if (back) return landingStatus(back);
   const sum = (f: (r: LandingRow) => number): number => parts.reduce((n, r) => n + f(r), 0);
-  const landed = sum((r) => (r.outcome?.kind === 'landed' ? r.outcome.landed : 0));
+  // Each part's divisions by where they ended, summed (R50a), told as one landing's.
+  const landed = sum((r) => r.outcome?.landed ?? 0);
   const lost = sum((r) => r.outcome?.lost ?? 0);
-  if (landed > 0) return lost > 0 ? t('landing.over.landedLost', { n: landed, lost }) : t('landing.over.landed', { n: landed });
+  const away = sum((r) => r.outcome?.away ?? 0);
+  const stayed = sum((r) => r.outcome?.stayed ?? 0);
+  if (landed + lost + away + stayed > 0) {
+    const kind = landed > 0 ? 'landed' : away > 0 ? 'away' : lost > 0 ? 'lost' : 'sunk';
+    return landingStatus({ ...parts[0]!, outcome: { kind, tick: parts[0]!.outcome!.tick, landed, lost, away, stayed } });
+  }
   if (parts.every((r) => r.outcome?.kind === 'cancelled')) {
     // The ports of those sent back (the others' divisions stopped where they stood).
     const port = parts.filter((r) => (r.outcome?.home ?? 0) > 0).map((r) => r.port).join(', ') || parts[0]!.port;

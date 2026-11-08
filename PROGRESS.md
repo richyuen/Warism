@@ -2047,3 +2047,9 @@
   God Mode 8; every checker 0 broken; run 51's seven findings fixed on their cases. Filed as ROADMAP batch 6 (R50,
   R51).
 - **Next:** R50a.
+
+## 2026-11-07 — R50a: a landing's outcome where its divisions ended (ADR-866)
+- The worker's `endLanding` per division; "broke off … away from Valletta", "transports were sunk; 2 never sailed".
+  `landingOutcome1938` (3 red before); `landingRows`' `outcome` from the world (red before on 22103, 21105), 108
+  cases 0 broken; `landingsBar1938` 7.
+- **Next:** R50b.

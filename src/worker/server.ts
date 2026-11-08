@@ -214,7 +214,8 @@ export class SimServer {
    */
   private landingsLast = new Map<number, LandingRow>();
   private landingOfDiv = new Map<number, number>();
-  private landingTally = new Map<number, { landed: number; repulsed: number; lost: number }>();
+  /** Where each division of a landing of the player's ended, by landing (ROADMAP R50a: not a count of events). */
+  private landingEnds = new Map<number, Map<number, 'landed' | 'away' | 'repulsed' | 'lost' | 'stayed'>>();
   private landingsOver = new Map<number, LandingRow>();
   private landingsSent = '';
   /**
@@ -1117,7 +1118,7 @@ export class SimServer {
   private clearLandingRows(): void {
     this.landingsLast.clear();
     this.landingOfDiv.clear();
-    this.landingTally.clear();
+    this.landingEnds.clear();
     this.landingsOver.clear();
     this.landingsSent = '';
     this.landingsCancelled.clear();
@@ -1171,16 +1172,26 @@ export class SimServer {
     return cmds;
   }
 
-  /** What became of a division of a landing of the player's in an event (ROADMAP R47a): counted to its landing. */
-  private tallyLanding(kind: number, id: number): void {
+  /**
+   * Where a division of a landing of the player's ended, from an event (ROADMAP R47a; R50a, critic run 52, R52-B1: a
+   * sinking before it boarded was "lost at sea", a landing away from the target "landed"): ashore at its landing's
+   * land (`landedAway` as the order news judges it) or away from it, thrown back, lost at sea with its transports, or
+   * left ashore by the sinking of its landing's last transports (`TransportsSunk` with none to come: the landing over).
+   */
+  private endLanding(world: World, ev: ArrayLike<number>, i: number): void {
+    const kind = ev[i + 1]!;
+    const id = ev[i + 2]!;
     const l = this.landingOfDiv.get(id);
     if (l === undefined) return;
-    const t = this.landingTally.get(l) ?? { landed: 0, repulsed: 0, lost: 0 };
-    if (kind === EventKind.FormationLanded) t.landed++;
-    else if (kind === EventKind.LandingRepulsed) t.repulsed++;
-    else if (kind === EventKind.LostAtSea || kind === EventKind.TransportsSunk) t.lost++;
+    const ends = this.landingEnds.get(l) ?? new Map<number, 'landed' | 'away' | 'repulsed' | 'lost' | 'stayed'>();
+    if (kind === EventKind.FormationLanded) {
+      const [lx, ly] = this.landingsLast.get(l)?.land ?? [ev[i + 4]!, ev[i + 5]!];
+      ends.set(id, landedAway(world, Math.floor(ly) * world.cells.w + Math.floor(lx), ev[i + 4]!, ev[i + 5]!) ? 'away' : 'landed');
+    } else if (kind === EventKind.LandingRepulsed) ends.set(id, 'repulsed');
+    else if (kind === EventKind.LostAtSea) ends.set(id, 'lost');
+    else if (kind === EventKind.TransportsSunk && ev[i + 4] === 0 && ends.get(id) !== 'lost') ends.set(id, 'stayed');
     else return;
-    this.landingTally.set(l, t);
+    this.landingEnds.set(l, ends);
   }
 
   /**
@@ -1214,15 +1225,17 @@ export class SimServer {
     const now = new Set(rows.map((r) => r.id));
     for (const [id, last] of this.landingsLast) {
       if (now.has(id)) continue;
-      const t = this.landingTally.get(id) ?? { landed: 0, repulsed: 0, lost: 0 };
+      const ends = [...(this.landingEnds.get(id)?.values() ?? [])];
+      const n = (e: string): number => ends.filter((x) => x === e).length;
+      const t = { landed: n('landed'), away: n('away'), repulsed: n('repulsed'), lost: n('lost'), stayed: n('stayed') };
       const cancel = this.landingsCancelled.get(id);
-      const kind = t.landed > 0 ? 'landed' : t.repulsed > 0 ? 'repulsed' : t.lost > 0 ? 'lost' : last.state === 'returning' || cancel ? 'cancelled' : 'over';
+      const kind = t.landed > 0 ? 'landed' : t.away > 0 ? 'away' : t.repulsed > 0 ? 'repulsed' : t.lost > 0 ? 'lost' : t.stayed > 0 ? 'sunk' : last.state === 'returning' || cancel ? 'cancelled' : 'over';
       this.landingsCancelled.delete(id);
       // A turn back by a click of the player's own: all back (no row's cancel to count them).
       const how = kind === 'cancelled' ? { ...(cancel ?? { home: last.divisions.length, stopped: 0 }), ...(aiRuns(world, world.settings.player, AiLayer.army) ? { ai: true as const } : {}) } : null;
       // Its divisions' voyages were the landing's: over, they say nothing of it (their panels say where they are now).
-      this.landingsOver.set(id, { ...last, state: 'over', sails: null, divisions: last.divisions.map((d) => ({ id: d.id, voyage: null })), outcome: { kind, tick: world.tick, landed: t.landed, lost: t.lost, ...(how ?? {}) } });
-      this.landingTally.delete(id);
+      this.landingsOver.set(id, { ...last, state: 'over', sails: null, divisions: last.divisions.map((d) => ({ id: d.id, voyage: null })), outcome: { kind, tick: world.tick, landed: t.landed, lost: t.lost, ...(t.away > 0 ? { away: t.away } : {}), ...(t.stayed > 0 ? { stayed: t.stayed } : {}), ...(how ?? {}) } });
+      this.landingEnds.delete(id);
     }
     for (const [id, r] of this.landingsOver) if (world.tick - r.outcome!.tick >= 24) this.landingsOver.delete(id);
     this.landingsLast = new Map(rows.map((r) => [r.id, r]));
@@ -1531,7 +1544,7 @@ export class SimServer {
       // command says why (PLAN 2.17a).
       if (ev[i + 1] === EventKind.CommandRefused) this.post({ type: 'refused', reason: b, base: this.baseFor(world, ev[i + 2]!, b) }, []);
       if (this.ordered.size > 0) this.orderNews(world, ev, i);
-      if (this.landingOfDiv.size > 0) this.tallyLanding(ev[i + 1]!, ev[i + 2]!);
+      if (this.landingOfDiv.size > 0) this.endLanding(world, ev, i);
       // The player's formations set home across the sea (ROADMAP R20, R21d): told, ordered or not,
       // by one row for the day start's all (`FormationsSentHome` follows theirs), naming the first.
       if (ev[i + 1] === EventKind.FormationSentHome && b !== 0 && b === world.settings.player && sentFirst < 0) sentFirst = ev[i + 2]!;

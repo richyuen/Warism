@@ -7,6 +7,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-866 · 2026-11-07 · accepted — A landing's outcome is where its divisions ended (R50a)
+- **Context.** Critic run 52, R52-B1 (blocking): R47a's tally (ADR-853) counted every `TransportsSunk` as lost and
+  every `FormationLanded` as landed. On 22103 two divisions whose transports were sunk before they boarded read "over:
+  lost at sea" while alive inland; on 21105 two that broke off and came ashore on Sicily read "over: 2 landed"; on
+  3517 "1 lost at sea" for 366 on land. `landingRows` compared the row with the same tally and saw nothing.
+- **Decision.** The worker notes each division's end (`endLanding`): ashore at its landing's land (`landedAway`, as the
+  order news judges it) is landed, ashore away from it broke off, `LostAtSea` lost, `TransportsSunk` with none to come
+  never sailed (unless lost). The outcome's kind is the first of landed, broke off (`away`), thrown back, lost, never
+  sailed (`sunk`), then cancelled or over; its counts are said after it ("over: 2 landed, 1 lost at sea, 1 never
+  sailed"). The words follow the order news: "over: its transports broke off; 2 came ashore away from Valletta",
+  "over: its transports were sunk; 2 never sailed". The checker's `outcome` reads the world, not the worker: a case
+  division afloat one hour and ashore the next at the row's land or away from it, or gone while afloat.
+- **Consequences.** `landingOutcome1938` (22103, 21105, 3517: red before on each); the checker alone red before on 22103
+  and 21105; `tools/diag/landingRows.ts all`: 108 cases 0 broken.
+
 ### ADR-865 · 2026-11-07 · accepted — History shows the newest hour first, each hour cause first (R49b)
 - **Context.** Critic run 51, R51-N5: the ticker tells a puppet's release before the "left its war" rows it caused
   (R43d's `causeFirst`), but History listed every row reversed, so within an hour the release stood under them.

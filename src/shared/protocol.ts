@@ -917,8 +917,11 @@ export interface LandingRow {
   /**
    * `home`, `stopped`: a cancel's, those sent back to the port aboard and those stopped where they stood ashore (R48a);
    * `ai`: the player's army is the AI's (ADR-759), which commands them again once the cancel's orders are done.
+   * Each division counted by where it ended (ROADMAP R50a; critic run 52, R52-B1): `landed` ashore at its target,
+   * `away` ashore away from it (its transports broke off), `lost` lost at sea with its transports, `stayed` never
+   * sailed (its transports sunk before it boarded). `kind`: `away` none landed and some broke off; `sunk` none sailed.
    */
-  outcome?: { kind: 'landed' | 'repulsed' | 'lost' | 'cancelled' | 'over'; tick: number; landed: number; lost: number; home?: number; stopped?: number; ai?: true };
+  outcome?: { kind: 'landed' | 'away' | 'repulsed' | 'lost' | 'sunk' | 'cancelled' | 'over'; tick: number; landed: number; lost: number; away?: number; stayed?: number; home?: number; stopped?: number; ai?: true };
 }
 
 /** Numbers per sea battle in a snapshot's `seas` (PLAN 4.10b). */
