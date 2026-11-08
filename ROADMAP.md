@@ -993,12 +993,28 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
       off, nothing drawn between).
   - [ ] R53f Run 54's idea from other games, the other one (the Hearts of Iron one is R53a's design): History has a
     "my wars only" filter, as Europa Universalis' message log.
-  - [ ] R53g Before critic run 55: the critic's own probes on new seeds, and the spread of endings read, not one case:
+  - [ ] R53g History's first rows on 7019 (year 20) repeat a pair: "A major battle began near Tangier" and "The
+    major battle near Tangier was won by Germany", twice on 25 December 1957, once more on the 26th
+    (`critic/c54_hi_7019.json` `firstRows`): one begin and one end a battle.
+  - [ ] R53h On the phone (390 × 844), the nation panel's 16 "Build" buttons sit below the screen inside its scroll
+    (`critic/c54_p.json`, `actions`: panel 139–1289 px of 844): reachable at a glance.
+  - [ ] R53i The run-26 scenario loads, or says what it changed to load it
+    (`node critic/scripts/c54_os2_scen.mjs critic/c26_critic_standoff.warsim-scenario c54`; now "made by an older
+    version of Warism, and this one cannot start it").
+  - [ ] R53j A typed filter narrows the editor's nation list (one flat list of 100+ names; `c54_g_editor.mjs 24121`).
+  - [ ] R53k Emergent dynamics: on 21099 and 20899 for 25 years (`node critic/scripts/c48_top.cjs` on `npm run sim
+    -- --scenario 1938 --seed <s> --years 25`), no top-5 holder within ±0.2 % of the same share for 20 or more years
+    (Denmark at 5.4 % all 25 years); on 24099 the first three places are not the same three nations in the same
+    order every year.
+  - [ ] R53l Year-one dogpiles: on 20887, 21129 and 24129 at day 365 (`node critic/scripts/c54_rg_relations.mjs
+    <seed> 365 1600 900 desk '&heroes=on'`) no war chip with one side more than 4 times the other's count of nations
+    ("Germany +6 ⚔ United Kingdom +36", "United Kingdom +35 ⚔ Brazil"); diploInvariants 0 broken on run 54's seeds.
+  - [ ] R53m The unit zooms on a late world: `node critic/scripts/c54_pf_lookfps.mjs 7019
+    critic/c54_seed7019_y20.bin`, alone, at 45 fps or more at 120 m/px in both looks (now 33–39; 30 m/px 39–48).
+  - [ ] R53n Before critic run 55: the critic's own probes on new seeds, and the spread of endings read, not one case:
     `c54_lhold.mjs` and `c54_lland.mjs` on the 11 Malta seeds and about 20 new ones, and the other landing families
-    (Tokyo → Shanghai, Portsmouth → Bremerhaven, Germany → Norwich); then run 54's jobs replayed (ADR-833), and R54-B1's
-    "what the bar needs" read item by item.
-  - Kept: `landingInvariants` and `landingRows` 0 broken.
-- Filed, not in this batch (each carried from earlier runs, its "what the bar needs" in the report): History's
-  repeated Tangier begin/won pair on 7019; the phone nation panel's Build buttons below the screen; the run-26
-  scenario refused; the editor's flat nation list; Denmark frozen (21099, 20899) and 24099's fixed top three; year-one
-  dogpiles (20887, 24129); the unit zooms at 33–48 fps on 7019's year 20.
+    (Tokyo → Shanghai, Portsmouth → Bremerhaven, Germany → Norwich); then run 54's jobs replayed (ADR-833), and the
+    "what the bar needs" of R54-B1 and of each item above read item by item.
+  - Kept: `landingInvariants` and `landingRows` 0 broken; every dimension's evidence in run 54 kept (the pin of seed
+    99 moves only with a logged rule change, R53k and R53l the likeliest).
+- Run 54's carried findings are R53g–R53m (the user's call, 2026-11-08), each from the report's "what the bar needs".
