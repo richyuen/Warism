@@ -750,7 +750,7 @@ export interface FormationDetail {
    * the port (`aboard`) and how many in all, and the days the furthest has left to the port (0: all
    * there; null: held up on the way).
    */
-  voyage: { state: 'toPort' | 'waiting' | 'gathering' | 'ready' | 'sibling' | 'nextVoyage' | 'toPortAboard' | 'atSea' | 'landed'; port: string | null; other?: string; days?: number; later?: true; wait?: { aboard: number; of: number; days: number | null }; ai?: true } | null;
+  voyage: { state: 'toPort' | 'waiting' | 'gathering' | 'ready' | 'sibling' | 'nextVoyage' | 'toPortAboard' | 'atSea' | 'landed'; port: string | null; other?: string; days?: number; later?: true; wait?: { aboard: number; of: number; days: number | null }; ai?: true; heldBy?: string } | null;
 }
 
 /**
@@ -914,8 +914,9 @@ export interface LandingRow {
   lands?: number;
   /** Turning back: the days until it is at its port, at least 1 (ROADMAP R50d). */
   back?: number;
-  /** At sea, a group of it in a fight: held, its days to land not to be told (ROADMAP R50c). */
+  /** At sea, a group of it in a fight: held, its days to land not to be told (ROADMAP R50c); by whom, a nation's name key (R52c). */
   held?: true;
+  heldBy?: string;
   /** Its click (ROADMAP R48f): the landings one click made from several ports share it, the bar's one row. */
   click: number;
   /**

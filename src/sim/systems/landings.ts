@@ -912,6 +912,8 @@ export interface LandingRowData {
   backIn: number | null;
   /** At sea with a group of it in a fight (ROADMAP R50c; critic run 52, R52-N3: "lands in about a day" for four days while 21105's were held). */
   held: boolean;
+  /** Held: the nation of the nearest foe in a fight to its groups (`heldBy`; R52c), 0 for none found. */
+  heldBy: number;
   /** Its click: the least id of it and its siblings (`siblings`, taken through), one key for the landings one click made from several ports (R48f). */
   click: number;
 }
@@ -924,6 +926,28 @@ function backHours(world: World, l: Landing): number | null {
   const c = world.formations.cols;
   const left = l.fleets.filter((o) => world.formations.has(o) && c.moving[o] === 1).map((o) => sailHoursLeft(world, o)).filter(Number.isFinite);
   return left.length > 0 ? Math.max(...left) : null;
+}
+
+/**
+ * Who holds landing `l`'s groups up at sea (ROADMAP R52c; critic run 53, R53-N3: "under attack, held up" for days with
+ * no attacker in view, 21105's foe a British fleet 19 cells off, in a fight at its sight's range): the nation of the
+ * formation at war with it, itself in a fight, nearest to one of its groups in a fight; 0 for none.
+ */
+export function heldBy(world: World, l: Landing): number {
+  const c = world.formations.cols;
+  const held = l.fleets.filter((o) => world.formations.has(o) && c.engaged[o] === 1);
+  if (held.length === 0) return 0;
+  let best = 0;
+  let bd = Infinity;
+  world.formations.forEach((f) => {
+    if (c.engaged[f] !== 1 || !world.wars.atWar(c.nation[f]!, l.nation)) return;
+    for (const o of held) {
+      const [dx, dy] = [c.x[f]! - c.x[o]!, c.y[f]! - c.y[o]!];
+      const d = dx * dx + dy * dy;
+      if (d < bd || (d === bd && f < best)) [bd, best] = [d, f];
+    }
+  });
+  return best === 0 ? 0 : c.nation[best]!;
 }
 
 /** Nation `nation`'s landings in rows, by id (ROADMAP R47a). */
@@ -948,6 +972,7 @@ export function landingRows(world: World, nation: number): LandingRowData[] {
         sailsIn: sailsIn(world, l),
         landsIn: l.state === LandingState.sailing ? voyageHours(world, l) || null : null,
         held: l.state === LandingState.sailing && l.fleets.some((o) => world.formations.has(o) && c.engaged[o] === 1),
+        heldBy: l.state === LandingState.sailing ? heldBy(world, l) : 0,
         backIn: l.state === LandingState.returning ? backHours(world, l) : null,
         click: clickOf(world, l),
       };

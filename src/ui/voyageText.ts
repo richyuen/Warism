@@ -1,5 +1,5 @@
 import type { FormationDetail } from '../shared/protocol';
-import { t } from './i18n';
+import { displayName, t } from './i18n';
 
 type Voyage = NonNullable<FormationDetail['voyage']>;
 
@@ -10,6 +10,8 @@ type Voyage = NonNullable<FormationDetail['voyage']>;
  */
 export function voyageText(voyage: Voyage): string {
   // The AI's voyage of a division of the played nation's (R48b): not one of the player's landings.
+  // Its landing held at sea, by whom (R52c; critic run 53, R53-N3: the row said so and the panel did not).
+  if (voyage.state === 'atSea' && voyage.heldBy) return t('formation.voyage.atSea.held', { by: displayName(voyage.heldBy) });
   if (voyage.ai) return t(`formation.voyage.${voyage.state === 'atSea' ? 'atSea' : voyage.state === 'toPort' ? 'toPort' : 'waiting'}.ai`);
   if (voyage.state === 'sibling') return t(voyage.days === 1 ? 'formation.voyage.sibling.one' : 'formation.voyage.sibling', { port: voyage.port ?? '', other: voyage.other ?? '', days: voyage.days ?? 1 });
   if (voyage.state === 'toPort' && voyage.port && voyage.later) return t(voyage.days !== undefined ? 'formation.voyage.toPort.later' : 'formation.voyage.toPort.laterSoon', { port: voyage.port, days: voyage.days ?? 1 });

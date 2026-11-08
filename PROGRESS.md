@@ -2091,3 +2091,8 @@
 - "turning back to Tokyo, Ōsaka: there in about a day"; "1 of 3 ashore; at sea: …". `landingClick1938` (red before);
   the critic's two page probes pass.
 - **Next:** R52c.
+
+## 2026-11-07 — R52c: who holds a landing up (ADR-873); R52 done
+- 21105's group is in a mutual fight with British fleet 1080, 19 cells off; the row and the panels name the United
+  Kingdom. `landingHeld1938` (red before). Landing tests 23, specs 8.
+- **Next:** the probes replayed (run 53's jobs), then critic run 54 (full).

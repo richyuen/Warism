@@ -7,6 +7,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-873 · 2026-11-07 · accepted — A held landing names who holds it up, in its row and its panels (R52c)
+- **Context.** Critic run 53, R53-N3: on 21105 "at sea: under attack, held up" for days with no attacker in view at
+  1500 or 250 m/px, the panels of those aboard silent; the critic found no British fleet engaged within 15 cells and
+  asked whether the fight was one-sided. It is not: British fleet 1080, 18.8 cells off, is engaged with the group (a
+  battle at the range of sight, `navalCombat`'s detection), out of the critic's view and search.
+- **Decision.** The rule stands; the words name the foe: the nation of the formation at war, itself in a fight,
+  nearest the landing's groups in a fight (`heldBy`). The row: "at sea: under attack by United Kingdom, held up"; each
+  division aboard: "At sea, held up: its landing is under attack by United Kingdom". Not taken: a mark joining the
+  two on the map (the sea battle's drawing is R46's, at its own place).
+- **Consequences.** `landingHeld1938` (21105: so each hour held, row and panels; red before at t38).
+
 ### ADR-872 · 2026-11-07 · accepted — A click's row names every port turning back (R52b)
 - **Context.** Critic run 53, R53-N2: a click's row turning back from two or three ports read "turning back to Tokyo"
   (`groupStatus` took the first part's words), while the sub-lines and the panels named each port; and with one part

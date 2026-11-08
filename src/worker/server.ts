@@ -29,7 +29,7 @@ import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { AiLayer, aiRuns, playerHeld } from '../sim/ai/layers';
 import { carrierStrikes, inShipReach, strikeTarget } from '../sim/systems/navalCombat';
 import { landedAway } from '../sim/systems/amphibious';
-import { LandingState, landingOfDivision, landingRows, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
+import { heldBy, LandingState, landingOfDivision, landingRows, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -1236,7 +1236,7 @@ export class SimServer {
         ships: { need: r.need, have: r.have },
         sails: r.sailsIn ? { days: Math.max(1, Math.ceil(r.sailsIn.hours / 24)), ...(r.sailsIn.other !== undefined ? { other: world.ports[r.sailsIn.other]?.name ?? '' } : {}) } : null,
         ...(r.landsIn !== null ? { lands: Math.max(1, Math.ceil(r.landsIn / 24)) } : {}),
-        ...(r.held ? { held: true as const } : {}),
+        ...(r.held ? { held: true as const, ...(r.heldBy !== 0 ? { heldBy: this.nameOf(r.heldBy) } : {}) } : {}),
         ...(r.backIn !== null ? { back: Math.max(1, Math.ceil(r.backIn / 24)) } : {}),
         click: this.clickOf(r.id, r.click),
       };
@@ -1277,6 +1277,12 @@ export class SimServer {
   /** Formation `id`'s voyage for its panel (ROADMAP R17c, R33b: read from its landing; `FormationDetail.voyage`). */
   private voyageOf(world: World, id: number): FormationDetail['voyage'] {
     const v = voyageOf(world, id);
+    if (v?.state === 'atSea') {
+      // Its landing held at sea: by whom, as its row says (R52c).
+      const l = landingOfDivision(world, id);
+      const by = l ? heldBy(world, l) : 0;
+      if (by !== 0) return { ...v, heldBy: this.nameOf(by) };
+    }
     if (v) return v;
     // In no landing of the player's: the AI's own voyage, its nation's AI (ROADMAP R48b; critic run 51, R51-N2: a
     // cancelled division the AI shipped off read "bound for its landing", and no row stood for it). Said so for the

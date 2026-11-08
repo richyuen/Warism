@@ -937,7 +937,7 @@ Critic run 53 (focused, on `5f8ef9e8`): no blocking issue; naval 8 (at its bar);
 run is followed by a full one before a release (PROMPT's RELEASES 3). Its three non-blocking findings are small and in
 code of this month's; fixed first, then critic run 54 (full).
 
-- [ ] R52 **Run 53's findings.**
+- [x] R52 **Run 53's findings.**
   - [x] R52a R53-N1: a thrown-back division keeps "thrown back" when it comes ashore after (`endLanding` overwrote
     it): "over: 2 thrown back" (with where they came ashore); `landingRows` gains a repulse case. Not taken here:
     whether a thrown-back division may stray-land on its own side's beachhead at the target (PLAN 4.8n's rule; the
@@ -949,7 +949,10 @@ code of this month's; fixed first, then critic run 54 (full).
     and with one part ashore and others at sea, "1 of 3 ashore" as gathering's "2 of 3 at sea".
     Done (ADR-872): "turning back to Tokyo, Ōsaka: there in about a day" (the critic's 20661 h30 and 22101 day 3 in the
     page); "1 of 3 ashore; at sea: lands in about a day".
-  - [ ] R52c R53-N3: "under attack, held up" names the attacker or is said only with a foe engaged near (a one-sided
+  - [x] R52c R53-N3: "under attack, held up" names the attacker or is said only with a foe engaged near (a one-sided
     `engaged` checked: 21105 t55–t144, no British fleet engaged within 15 cells); the division's panel says the same.
     AT: `SHOTAT=60 c53_lhold.mjs 21105 ITA ENG … 2 ita_malta 200`.
+    Done (ADR-873): the engagement is mutual (British fleet 1080, 19 cells off, engaged too: a fight at sight's
+    range); the row "at sea: under attack by United Kingdom, held up", the panels "At sea, held up: its landing is
+    under attack by United Kingdom".
   - Kept: `landingInvariants` and `landingRows` 0 broken.

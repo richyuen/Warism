@@ -1,5 +1,5 @@
 import type { LandingRow } from '../shared/protocol';
-import { t } from './i18n';
+import { displayName, t } from './i18n';
 
 /** What a landing's row says of where it stands (ROADMAP R47b): its days to sail, at sea, turning back, or how it ended. */
 export function landingStatus(r: LandingRow): string {
@@ -33,7 +33,7 @@ export function landingStatus(r: LandingRow): string {
   }
   // R48d: its days to land (R51-N6: "at sea" alone).
   // R50c: held in a fight, no days (R52-N3: "about a day" for four days on 21105).
-  if (r.state === 'sailing' && r.held) return t('landing.sailing.held');
+  if (r.state === 'sailing' && r.held) return r.heldBy ? t('landing.sailing.heldBy', { by: displayName(r.heldBy) }) : t('landing.sailing.held');
   if (r.state === 'sailing') return r.lands === undefined ? t('landing.sailing') : t(r.lands === 1 ? 'landing.sailing.one' : 'landing.sailing.days', { days: r.lands });
   // R50d: its days to the port, as one at sea has its days to land.
   if (r.state === 'returning') return r.back === undefined ? t('landing.returning', { port: r.port }) : t(r.back === 1 ? 'landing.returning.one' : 'landing.returning.days', { port: r.port, days: r.back });
