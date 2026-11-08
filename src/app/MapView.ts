@@ -9,6 +9,7 @@ import { LABEL_STRIDE } from '../shared/nationLabels';
 import { FlagStore } from './flagStore';
 import { formationPips, type Pips } from '../render/units/pips';
 import type { LandingMark } from '../shared/protocol';
+import { drawHolds, type HoldMark } from '../render/fx/holds';
 import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, type StackItem } from '../render/units/markerStacks';
@@ -719,6 +720,7 @@ export class MapView {
     this.majors = s.majors.slice();
     this.voyages = s.voyages.slice();
     this.seas = s.seas.slice();
+    this.holds = s.holds.slice();
     this.sorties = s.sorties.slice();
     // The sea battles going on, for the ticker (PLAN 4.10b): told when the set changes.
     const seaKey = Array.from(this.seas, (v, k) => (k % SEA_STRIDE === 3 || k % SEA_STRIDE === 4 ? v : Math.round(v))).join(',');
@@ -1021,6 +1023,8 @@ export class MapView {
   /** The voyages over the sea (ROADMAP R17c; `Snapshot.voyages`). */
   private voyages = new Float32Array(0);
   private seas = new Float32Array(0);
+  /** The player's landings held at sea (ROADMAP R53e; `Snapshot.holds`). */
+  private holds = new Float32Array(0);
   private raids = new Float32Array(0);
   private raidKey = '';
   /** Cells with fallout in the last message (PLAN 6.3c; tests). */
@@ -1038,6 +1042,8 @@ export class MapView {
   onCarrierRaids: (raids: CarrierRaidView[]) => void = () => {};
   /** Where the sea battles' marks were drawn in the last frame (tests). */
   seaMarks: { x: number; y: number }[] = [];
+  /** Where the held landings' marks were drawn in the last frame (ROADMAP R53e; tests). */
+  holdMarks: HoldMark[] = [];
   /** The sorties placed on screen at the last frame (PLAN 5.7a), for tests. */
   sortieMarks: PlacedSortie[] = [];
   /** The panels over the map in canvas px (ROADMAP R34e: hero counters kept clear of them), read at most every COVER_MS. */
@@ -2028,6 +2034,8 @@ export class MapView {
       // No markers: the next ones take their places in their stacks at once.
       this.markerStacks.clear();
       this.pipStates.clear();
+      // A held landing's transports joined to the fleet that holds them (ROADMAP R53e), over the counters.
+      this.holdMarks = drawHolds(ctx, this.holds, cam, this.geo, vw, vh, tint, this.unitScale);
       // The landing an order under the cursor is for (ADR-827, ROADMAP R27b), over everything.
       this.landingEdges = this.marks.map((k) => drawLandingMark(ctx, k, cam, this.geo, vw, vh, this.unitScale));
       return;
@@ -2073,6 +2081,9 @@ export class MapView {
     // (The boxes do not move while they shrink into the T2 sprites: ADR-72.)
     const stacks = this.markerStacks.frame(items, MARKER_W * this.unitScale, MARKER_H * this.unitScale, now, this.morph.scale < 1);
     this.markerRects = drawMarkers(ctx, markers, this.majors, cam, this.geo, vw, vh, share, hex, flagOf, this.unitScale, this.morph, stacks, this.picked, this.unitLook === 'balls');
+    // A held landing's transports joined to the fleet that holds them (ROADMAP R53e), over the markers (at 1500 m/px
+    // the transports' marker hid its ring).
+    this.holdMarks = drawHolds(ctx, this.holds, cam, this.geo, vw, vh, tint, this.unitScale);
     // The landing an order under the cursor is for (ADR-827, ROADMAP R27b), over the markers.
     this.landingEdges = this.marks.map((k) => drawLandingMark(ctx, k, cam, this.geo, vw, vh, this.unitScale));
   }

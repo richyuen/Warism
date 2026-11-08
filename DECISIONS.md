@@ -7,6 +7,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-880 · 2026-11-08 · accepted — A held landing's transports are joined on the map to the fleet that holds them (R53e)
+- **Context.** Critic run 54's objection to ADR-873: on 21105 the row named the United Kingdom, and the fight was real,
+  but the British fleet was 14–19 cells off with nothing drawn between it and the transports; "a line or a ring on the
+  transports while held would make 'held up' visible".
+- **Decision.** `heldByFleet` gives the foe fleet `heldBy` names and the group it holds (one choice for the words and
+  the mark). The snapshot's `holds` (HOLD_STRIDE 6: the group's place, the fleet's, the foe, the landing) for each
+  landing of the player's at sea with a group held; the map draws a red ring on the transports and a dashed line in
+  the foe's colour, on a dark edge, from the fleet to the ring with a chevron at it, at every tier, over the markers
+  (at 1500 m/px the transports' marker hid a ring drawn under it). The player's landings only, as the row.
+- **Consequences.** Display only. `landingHoldMark1938` (unit: a row each held hour, at the group and a fleet of its sea
+  battle, the foe named; none unheld; red before), `landingHoldMark1938.spec` (the critic's camera, h60 at 1500 and
+  250 m/px: one mark, the foe the United Kingdom, the ring on the screen, at 1500 the fleet too; shots looked at).
+  Frame cost: one row a held landing, a few strokes.
+
 ### ADR-879 · 2026-11-08 · accepted — The landing checker reads the news too, and the critic's page clicks (R53d)
 - **Context.** Critic run 54, R54-B1: `landingRows` (108 cases, 0 broken) and landingInvariants did not see a bar that
   said "lands in about a day" after "thrown back", nor "over: 2 thrown back" beside the ticker's "landed away". The

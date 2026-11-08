@@ -2128,3 +2128,9 @@
 - A `news` kind (row, panel and order news agree) and seven Rome → Valletta page cases; red on the code before R53a
   (the six seeds the critic found), 115 cases 0 broken now.
 - **Next:** R53e.
+
+## 2026-11-08 — R53e (first part): a held landing's transports joined to the fleet that holds them (ADR-880)
+- `Snapshot.holds` and `drawHolds`: a red ring on the transports and a dashed line in the foe's colour from its fleet,
+  over the markers. Unit `landingHoldMark1938` (red before); spec `landingHoldMark1938.spec` (21105 h60 at 1500 and
+  250 m/px, shots looked at). Display only; a few strokes a held landing.
+- **Next:** R53e's corridor.

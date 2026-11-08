@@ -999,6 +999,8 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     - ADR-864: the Breakthrough corridor is drawn on the map for its 10 days.
     - ADR-873: a mark joins a held landing's transports to the fleet that holds them (21105: the fight 14–19 cells
       off, nothing drawn between).
+      Done (ADR-880): a red ring on the held transports and a dashed line in the foe's colour from the fleet that
+      holds them (`Snapshot.holds`), over the markers; 21105 h60 at 1500 and 250 m/px.
   - [ ] R53f Run 54's idea from other games, the other one (the Hearts of Iron one is R53a's design): History has a
     "my wars only" filter, as Europa Universalis' message log.
   - [ ] R53g History's first rows on 7019 (year 20) repeat a pair: "A major battle began near Tangier" and "The

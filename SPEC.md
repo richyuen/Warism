@@ -1329,7 +1329,12 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   "nextVoyage", R37a); groups carrying no one are the AI's again when no one
   is left. A sailing landing's divisions land as any (`amphibiousSystem`: at the landing's water, or
   thrown back, `LandingRepulsed`, those not aboard told `NoTransports`); each leaves the landing as it
-  lands, and the landing is over with its last. Those aboard transports sunk leave it in the hour and are
+  lands, and the landing is over with its last. Thrown back, each aboard the group sent home is told so, and its
+  row and panels say "thrown back: sailing home to <port>" (no days to land) until it is ashore, then "thrown back;
+  came ashore near <place>" in the news and the row's end (R53a, ADR-876). Held in a sea battle, the row and the
+  panels name the nation of the foe fleet in it (R53b, ADR-877), and the map joins the held transports to that
+  fleet: a red ring on them and a dashed line in the foe's colour, over the markers (`Snapshot.holds`, R53e,
+  ADR-880). Those aboard transports sunk leave it in the hour and are
   lost at sea with them, told `LostAtSea` (the news "lostAtSea"; ROADMAP R38a, critic run 46, R46-B1:
   the landing, left with no groups, ended "no transports" and told them so). A gathering landing, or one with
   some left for its next voyage, that has no group left calls one to its port (free there, or the nearest

@@ -29,7 +29,7 @@ import { heroHealth, heroWaits } from '../sim/systems/heroes';
 import { AiLayer, aiRuns, playerHeld } from '../sim/ai/layers';
 import { carrierStrikes, inShipReach, nearestOwnPort, strikeTarget } from '../sim/systems/navalCombat';
 import { landedAway } from '../sim/systems/amphibious';
-import { heldBy, LandingState, landingOfDivision, landingRows, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
+import { heldBy, heldByFleet, LandingState, landingOfDivision, landingRows, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -1350,6 +1350,23 @@ export class SimServer {
     return at !== undefined && world.tick - at < 24 ? { state: 'landed', port: null } : null;
   }
 
+  /**
+   * The snapshot's holds (ROADMAP R53e; `Snapshot.holds`): each landing of the player's at sea with a group held, the
+   * group's place and the foe fleet's that holds it (`heldByFleet`, the one its row names), HOLD_STRIDE each.
+   */
+  private holds(world: World): number[] {
+    const out: number[] = [];
+    const player = world.settings.player;
+    if (player === 0) return out;
+    const c = world.formations.cols;
+    for (const l of [...world.landings.values()].sort((a, b) => a.id - b.id)) {
+      if (l.nation !== player || l.state !== LandingState.sailing) continue;
+      const h = heldByFleet(world, l);
+      if (h !== 0) out.push(c.x[h.group]!, c.y[h.group]!, c.x[h.fleet]!, c.y[h.fleet]!, c.nation[h.fleet]!, l.id);
+    }
+    return out;
+  }
+
   /** The snapshot's voyages (ROADMAP R17c; `Snapshot.voyages`): the player's landings' divisions marching to their port or waiting there, and those at sea. */
   private voyages(world: World): number[] {
     const out: number[] = [];
@@ -2119,6 +2136,7 @@ export class SimServer {
       majors,
       voyages: Float32Array.from(this.voyages(world)),
       seas,
+      holds: Float32Array.from(this.holds(world)),
       raids: Float32Array.from(carrierRaids(world)),
       sorties,
       elements,

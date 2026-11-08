@@ -936,10 +936,20 @@ function backHours(world: World, l: Landing): number | null {
  * of a second foe, would be named for the fleet that holds the transports).
  */
 export function heldBy(world: World, l: Landing): number {
+  const f = heldByFleet(world, l);
+  return f === 0 ? 0 : world.formations.cols.nation[f.fleet]!;
+}
+
+/**
+ * The foe fleet `heldBy` names, and the group of landing `l` it holds (R53e: the map's mark joins them, so the fleet
+ * drawn is the nation named); 0 for none.
+ */
+export function heldByFleet(world: World, l: Landing): { fleet: number; group: number } | 0 {
   const c = world.formations.cols;
   const held = l.fleets.filter((o) => world.formations.has(o) && c.engaged[o] === 1);
   if (held.length === 0) return 0;
   let best = 0;
+  let group = 0;
   let bd = Infinity;
   for (const o of held) {
     const battle = world.seaBattles.find((b) => b.fleets.includes(o));
@@ -948,10 +958,10 @@ export function heldBy(world: World, l: Landing): number {
       if (!world.formations.has(f) || !world.wars.atWar(c.nation[f]!, l.nation)) continue;
       const [dx, dy] = [c.x[f]! - c.x[o]!, c.y[f]! - c.y[o]!];
       const d = dx * dx + dy * dy;
-      if (d < bd || (d === bd && f < best)) [bd, best] = [d, f];
+      if (d < bd || (d === bd && f < best)) [bd, best, group] = [d, f, o];
     }
   }
-  return best === 0 ? 0 : c.nation[best]!;
+  return best === 0 ? 0 : { fleet: best, group };
 }
 
 /** Nation `nation`'s landings in rows, by id (ROADMAP R47a). */

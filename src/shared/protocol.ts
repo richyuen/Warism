@@ -324,6 +324,12 @@ export interface Snapshot {
    */
   seas: Float32Array;
   /**
+   * The player's landings held at sea (ROADMAP R53e; critic run 54's objection to ADR-873: the fight 14–19 cells off,
+   * nothing drawn between), HOLD_STRIDE each: [gx, gy, fx, fy, foe, landing]: the held group's place, the foe fleet's
+   * that holds it (`heldByFleet`, the one its row names), the foe's nation, the landing's id.
+   */
+  holds: Float32Array;
+  /**
    * A carrier's strikes out of a sea battle (PLAN 7.154a), RAID_STRIDE each (`worker/carrierRaids`): [kx, ky, tx,
    * ty, by, on, ashore, fleet, mx, my, mw, mh]: the carrier's fleet's place, its target's, the carrier's nation, the
    * target's, 1 when the target is on land, the fleet's id; the middle of the fleet and the target and the cells
@@ -935,6 +941,9 @@ export interface LandingRow {
    */
   outcome?: { kind: 'landed' | 'away' | 'repulsed' | 'lost' | 'sunk' | 'cancelled' | 'over'; tick: number; landed: number; lost: number; away?: number; repulsed?: number; stayed?: number; home?: number; stopped?: number; ai?: true; ashore?: string };
 }
+
+/** Numbers per held landing in a snapshot's `holds` (ROADMAP R53e). */
+export const HOLD_STRIDE = 6;
 
 /** Numbers per sea battle in a snapshot's `seas` (PLAN 4.10b). */
 export const SEA_STRIDE = 24;
