@@ -7,6 +7,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-875 · 2026-11-08 · accepted (the user's decision) — A cancelled crossing's divisions go back to the AI, as ADR-759 says
+- **Context.** Critic run 54's design objection to ADR-759: on 20661 the player's cancelled landing read "cancelled:
+  back at Tokyo, Ōsaka", and within a day the AI had 365 at sea on a landing of its own ("the player's cancel is
+  undone within a day"); it asked for an option to keep a played nation's divisions where the player left them.
+- **Decision** (the user's): not taken. A crossing the player ordered and then cancelled ends the player's order, and
+  control of its divisions goes back to the AI, as for any order done (ADR-759). The player who wants them left alone
+  unticks the army layer.
+- **Consequences.** None in code. The row already says so ("the AI commands them again", R48a).
+
 ### ADR-874 · 2026-11-07 · accepted — All aboard a thrown-back group are thrown back (R52d)
 - **Context.** The replay of critic run 53's probes at 585e20a8: on 23071 (staged) 270 and 271, aboard one group, were
   thrown back together; `LandingRepulsed` named 270 alone (the repulse sends its group home, `sailHome`, with all

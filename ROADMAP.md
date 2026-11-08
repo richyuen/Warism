@@ -986,9 +986,8 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
   - [ ] R53d The three places checked, not the bar alone: `landingRows` compares, hour by hour, each division's row,
     its panel and its last order news (the ticker), and fails on a disagreement; the Malta click (23105, 24151) among
     its cases. 0 broken on every case.
-  - [ ] R53e Run 54's design objections (each was "no score lowered"; taken before run 55 by the user's call):
-    - ADR-759: a cancel no longer hands a played nation's divisions to the AI at once; an option keeps them where the
-      player left them (20661: 365 read "At sea with the AI's landing" within a day of "cancelled: back at Tokyo").
+  - [ ] R53e Run 54's design objections (each was "no score lowered"; taken before run 55 by the user's call; the
+    ADR-759 one, a cancel handing the army to the AI, not taken: ADR-875):
     - ADR-864: the Breakthrough corridor is drawn on the map for its 10 days.
     - ADR-873: a mark joins a held landing's transports to the fleet that holds them (21105: the fight 14–19 cells
       off, nothing drawn between).
