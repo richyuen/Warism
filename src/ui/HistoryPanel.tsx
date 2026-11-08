@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 import { dateOfTick } from '../shared/calendar';
-import { filterHistory, kindName, NO_FILTER, toCsv, toExport, type HistoryFilter, type HistoryRow } from '../shared/history';
+import { filterHistory, kindName, newestHourFirst, NO_FILTER, toCsv, toExport, type HistoryFilter, type HistoryRow } from '../shared/history';
 import { t, type MessageKey } from './i18n';
 import { historyText } from './historyText';
 import { displayName } from './NationPanel';
@@ -88,17 +88,14 @@ export function HistoryPanel({ load, refreshKey, startDay, nations, onClose }: H
         </button>
       </div>
       <ol class="history-list">
-        {shown
-          .slice(-SHOWN)
-          .reverse()
-          .map((r, i) => {
-            const d = dateOfTick(startDay, r.tick);
-            return (
-              <li key={`${r.tick}:${i}`} data-testid="history-row" data-kind={r.kind}>
-                <span class="history-date">{t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year })}</span> <span class="history-text">{historyText(r)}</span>
-              </li>
-            );
-          })}
+        {newestHourFirst(shown.slice(-SHOWN)).map((r, i) => {
+          const d = dateOfTick(startDay, r.tick);
+          return (
+            <li key={`${r.tick}:${i}`} data-testid="history-row" data-kind={r.kind}>
+              <span class="history-date">{t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year })}</span> <span class="history-text">{historyText(r)}</span>
+            </li>
+          );
+        })}
       </ol>
     </aside>
   );

@@ -186,7 +186,8 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     if (kind === EventKind.BondsBroken) [row.bonds, row.y] = [y, null];
     out.push(row);
   }
-  return out;
+  // A release before the wars it left, as the ticker tells it (ROADMAP R49b; critic run 51, R51-N5).
+  return causeFirst(out);
 }
 
 /** The kinds whose b is the nation the event happened to (the one a war was declared on, the loser of a peace, the one a bond took out of its war). */
@@ -240,9 +241,10 @@ export function tickerRows(world: World, nationName: (id: number) => string, cit
 /**
  * A puppet's release or rising told before the wars it left in that hour (ROADMAP R43d; critic run 50, R50-N4: "left
  * its war" twice, then "was freed from", their cause). The sim logs the wars left first (`leaveWarsBeside` before the
- * rising is judged); the ticker, oldest first, moves the release or rising above them. Order kept otherwise.
+ * rising is judged); the ticker, oldest first, moves the release or rising above them, and History so (R49b). Order
+ * kept otherwise.
  */
-function causeFirst(rows: TickerRow[]): TickerRow[] {
+function causeFirst<T extends HistoryRow>(rows: T[]): T[] {
   for (let i = 0; i < rows.length; i++) {
     const r = rows[i]!;
     if (r.kind !== EventKind.PuppetReleased && r.kind !== EventKind.PuppetRevolt) continue;

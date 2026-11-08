@@ -2031,3 +2031,7 @@
 - `GodBreakthrough` event and row ("God opened a breakthrough for Germany"), ticker and History; the critic's
   `c51_kw_breakthrough.mjs 21151` (copied to `.cache/c51`) sees it. `godBreakthroughRow1938` (red before).
 - **Next:** R49b.
+
+## 2026-11-07 — R49b: History's hour cause first (ADR-865); R49 done
+- History's rows take `causeFirst`; the panel the newest hour first, each hour as logged. `historyHourOrder` on 20429.
+- **Next:** the critic's probes replayed (`replayCritic.ts`), then critic run 52 (naval, ADR-833).

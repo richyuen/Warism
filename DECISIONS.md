@@ -7,6 +7,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-865 · 2026-11-07 · accepted — History shows the newest hour first, each hour cause first (R49b)
+- **Context.** Critic run 51, R51-N5: the ticker tells a puppet's release before the "left its war" rows it caused
+  (R43d's `causeFirst`), but History listed every row reversed, so within an hour the release stood under them.
+- **Decision.** History's rows (`historyRows`, also the CSV and JSON) take `causeFirst`; the panel shows the newest hour
+  first and each hour's rows in that order (`newestHourFirst`), not every row reversed. An hour reads in History as
+  in the ticker.
+- **Consequences.** `historyHourOrder` (the order; 20429 with random diplomacy, the critic's case: the release first in
+  its hour, where reversed it stood last).
+
 ### ADR-864 · 2026-11-07 · accepted — God's Breakthrough is told in the ticker (R49a)
 - **Context.** Critic run 51, R51-N4: at war (21151, Germany against Poland, Berlin to Warsaw) Breakthrough was taken in
   silence. Its `MajorBattleEnded` of a battle with no name is not a ticker kind; nothing marked the corridor.

@@ -232,6 +232,23 @@ export function roleNation(role: HistoryRole, v: number): number {
 }
 
 /** Rows matching `f`; `startDay` dates the ticks. Order is kept. */
+/**
+ * Rows oldest first, as History shows them: the newest hour first, each hour's rows in the order they were logged
+ * (ROADMAP R49b; critic run 51, R51-N5: every row reversed, a release stood under the "left its war" rows it caused,
+ * which the ticker, R43d, tells after it). One hour reads as the ticker reads it.
+ */
+export function newestHourFirst<T extends { tick: number }>(rows: readonly T[]): T[] {
+  const out: T[] = [];
+  let end = rows.length;
+  while (end > 0) {
+    let start = end - 1;
+    while (start > 0 && rows[start - 1]!.tick === rows[end - 1]!.tick) start--;
+    for (let i = start; i < end; i++) out.push(rows[i]!);
+    end = start;
+  }
+  return out;
+}
+
 export function filterHistory(rows: readonly HistoryRow[], f: HistoryFilter, startDay: number): HistoryRow[] {
   return rows.filter((r) => {
     if (f.kind !== null && r.kind !== f.kind) return false;
