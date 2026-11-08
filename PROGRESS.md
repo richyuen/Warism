@@ -2070,3 +2070,9 @@
 ## 2026-11-07 — R51a: the Breakthrough row's place (ADR-870); R51 done
 - The ticker names a city role as History does. `godBreakthroughRow1938` (red before).
 - **Next:** the 25 landing seeds, the probes replayed (run 52's jobs), critic run 53.
+
+## 2026-11-07 — Run 52's probes replayed at 29928a1b
+- 35 jobs: 32 the same, 3 differ in an echoed path or command and one grid case's rows at the end (2: R50b keeps an
+  over part beside its click's), 0 broken on every checker (`docs/replays/run52-at-29928a1b.md`); run 51's 25
+  landing seeds 0 broken. Nothing to fix first.
+- **Next:** critic run 53.
