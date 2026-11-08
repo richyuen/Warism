@@ -1,0 +1,34 @@
+{
+ "seed": 3517,
+ "N": 5,
+ "KEEP": 3,
+ "SINK": 24,
+ "ids": [
+  364,
+  365,
+  366,
+  367
+ ],
+ "sailedAt": 8,
+ "sunkAt": 32,
+ "sunkFleets": [
+  1136
+ ],
+ "landedAt": {},
+ "news": [
+  "33 transportsSunk 367 reason 0",
+  "33 lostAtSea 364 reason 0"
+ ],
+ "trace": [
+  "t2 day 364:ashore L1/0/f1136 ready | 365:ashore L2/0/f1144 waiting | 366:ashore L3/0/f1152 waiting | 367:ashore L1/0/f1136 toPort",
+  "t8 sailed 364:aboard L1/1/f1136 atSea | 365:ashore L2/0/f1144 waiting | 366:ashore L3/0/f1152 waiting | 367:ashore L1/1/f1136 toPort",
+  "t32 before sink 364:aboard L1/1/f1136 atSea | 365:aboard L2/1/f1144 atSea | 366:ashore L3/0/f1152 waiting | 367:ashore L1/1/f1136 toPort",
+  "t32 sunk (same hour, panel) 364:aboard L1/1/f atSea | 365:aboard L2/1/f1144 atSea | 366:ashore L3/0/f1152 waiting | 367:ashore L1/1/f toPort",
+  "t33 after 364:gone | 365:aboard L2/1/f1144 atSea | 366:ashore L3/0/f1152 waiting | 367:ashore L- -",
+  "t34 after 364:gone | 365:aboard L2/1/f1144 atSea | 366:ashore L3/0/f1152 waiting | 367:ashore L- -",
+  "t35 after 364:gone | 365:aboard L2/1/f1144 atSea | 366:ashore L3/0/f1152 waiting | 367:ashore L- -",
+  "t57 after 364:gone | 365:aboard L2/1/f1144 atSea | 366:aboard L3/1/f1152 atSea | 367:ashore L- -",
+  "t81 after 364:gone | 365:aboard L2/1/f1144 atSea | 366:aboard L3/1/f1152 atSea | 367:ashore L- -",
+  "t104 end 364:gone | 365:aboard L2/1/f1144 atSea | 366:aboard L3/1/f1152 atSea | 367:ashore L- -"
+ ]
+}

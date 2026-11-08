@@ -893,3 +893,32 @@ ideas and "what the bar needs", filed (PROMPT's RELEASES, ADR-843); then critic 
     `causeFirst` in History's order too.
     Done (ADR-865): History's rows cause first (`causeFirst`), shown newest hour first, each hour as logged
     (`newestHourFirst`); 20429 (random diplomacy): the release above its wars left.
+
+## Batch 6 — run 52's naval findings (ADR-833)
+
+Critic run 52 (focused, on `d8dba302`): one blocking issue, R52-B1 (the landings bar's outcome line, R47a's tally);
+God Mode up to 8; naval 7 (bar 8). Run 51's seven findings fixed on their cases; every checker 0 broken. Each finding,
+objection, idea and "what the bar needs" filed; then the probes replayed and critic run 53.
+
+- [ ] R50 **Run 52's naval findings.**
+  - [ ] R50a R52-B1 (blocking) and Hearts of Iron's one notice per operation: a landing's outcome from where each of its
+    divisions ended (at its target, ashore elsewhere: broke off, at a port or inland: never sailed, gone), not R47a's
+    tally (`TransportsSunk` as lost, every `FormationLanded` as landed); the row says what the order news says.
+    `landingRows`' `outcome` reads each division's state, red before on 22103, 3517 and 21105. AT (the bar's):
+    `STEP=3 c52_lland.mjs 22103 GER ENG … 2 ger_norwich 130` (sunk before boarding: not "lost at sea"); `c52_lland.mjs
+    21105 ITA ENG … 2 ita_malta 240` (broke off, ashore away from Valletta); `c52_lost.mjs 3517 desk` (no "lost at sea"
+    for 366).
+  - [ ] R50b R52-N2 and the ADR-862 objection: one click's row holds to its end: a part over or turning back stays in
+    it until the last is over; the click's outcome summed and kept a day from the last. AT: `STEP=2 c52_lland.mjs
+    20861 JAP CHI … 3 jap_sh3 200`: one row from t1 to its end, "over: 3 landed".
+  - [ ] R50c R52-N3: while a landing's transports are engaged at sea the row says so ("under attack at sea") and its days
+    count from when it moves again (21105: "about a day" for four days, group 1195 engaged t63–t147).
+  - [ ] R50d R52-N5: a row turning back says its days to its port, as one at sea does.
+  - Kept: `landingInvariants` 0 broken on the 25 seeds; `landingRows` 0 broken with R50a's reading.
+  - For the user (SPEC §7.1, ADR-759; the critic, not blocking): a cancelled division of a played nation is the AI's
+    at once; an option to keep the player's divisions where the player left them. Not taken without the user.
+- [ ] R51 **Run 52's other findings** (after R50).
+  - [ ] R51a R52-N4 (God Mode): the Breakthrough row names its place ("near Berlin"): `nearestCity`'s id is not one
+    `cityName` reads.
+  - Not taken: the corridor drawn on the map for its 10 days (the ADR-864 objection: the ticker row's "Show where"
+    flies to it; a map layer for one God tool).

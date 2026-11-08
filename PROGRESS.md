@@ -2041,3 +2041,9 @@
   20829's worst click 4.3 days over its best way, 1.7 at the critic's, inside `slowClick`), 0 broken on every checker
   (`docs/replays/run51-at-0b3dd6e1.md`). Nothing to fix first.
 - **Next:** critic run 52.
+
+## 2026-11-07 — Critic run 52 (focused, on d8dba302): one blocking issue, naval 7
+- R52-B1: the landings bar's outcome ("lost at sea", "landed") from R47a's tally, false on 22103, 3517 and 21105.
+  God Mode 8; every checker 0 broken; run 51's seven findings fixed on their cases. Filed as ROADMAP batch 6 (R50,
+  R51).
+- **Next:** R50a.

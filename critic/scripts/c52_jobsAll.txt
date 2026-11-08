@@ -1,0 +1,35 @@
+npm run sim -- --scenario 1938 --seed 7019 --years 20 --save critic/c52_seed7019_y20.bin > critic/c52_seed7019_save.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 21001 random 3650 > critic/c52_diploinv_21001r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 21009 scenario 3650 --heroes > critic/c52_diploinv_21009s_h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 21011 random 1825 --world random > critic/c52_diploinv_21011rw_5y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 21013 random 3650 --heroes > critic/c52_diploinv_21013r_h_10y.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 21021 3517 > critic/c52_li_21021_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 21023 15101 > critic/c52_li_21023_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 21025 3517 > critic/c52_li_21025_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 21027 15101 > critic/c52_li_21027_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 21029 3517 120 21029 30,90 1 > critic/c52_li_21029_jap_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 21031 15101 120 21031 30,90 2 > critic/c52_li_21031_eng_g2.log 2>&1
+env TAG=JAP FOE=CHI FROM=139.69,35.69 TO=121.47,31.23 N=3 DAYS=150 npx tsx critic/scripts/c47_far.ts 21041 critic/c52_far_21041_jap_sh3.json > critic/c52_far_21041_jap_sh3.log 2>&1
+env TAG=GER FOE=ENG FROM=13.4,52.5 TO=1.3,52.6 N=3 DAYS=150 npx tsx critic/scripts/c47_far.ts 21043 critic/c52_far_21043_ger_norwich3.json > critic/c52_far_21043_ger_norwich3.log 2>&1
+env TAG=ENG FOE=GER FROM=-0.1,51.5 TO=8.6,53.5 N=4 DAYS=150 npx tsx critic/scripts/c47_far.ts 21045 critic/c52_far_21045_eng_bremen4.json > critic/c52_far_21045_eng_bremen4.log 2>&1
+env TAG=JAP FOE=CHI FROM=130.4,33.6 TO=120.38,36.07 N=4 DAYS=150 npx tsx critic/scripts/c47_far.ts 21047 critic/c52_far_21047_jap_fuk_qd4.json > critic/c52_far_21047_jap_fuk_qd4.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 21051 > critic/c52_wi_21051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 21053 365 --heroes > critic/c52_wi_21053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 21055 3650 > critic/c52_wi_21055_10y.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 21059 4380 24 critic/c52_wd_21059.json > critic/c52_wd_21059.log 2>&1
+npx tsx tools/diag/landingRows.ts far critic/c52_lrows_far.json > critic/c52_lrows_far.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 22021 3517 > critic/c52_li_22021_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 22023 15101 > critic/c52_li_22023_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 22025 3517 > critic/c52_li_22025_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 22027 15101 > critic/c52_li_22027_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 22029 3517 120 22029 30,90 1 > critic/c52_li_22029_jap_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 22031 15101 120 22031 30,90 2 > critic/c52_li_22031_eng_g2.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 22033 3517 120 22033 30,90 2 > critic/c52_li_22033_jap_g2.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 22001 random 3650 > critic/c52_diploinv_22001r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 22003 scenario 3650 --heroes > critic/c52_diploinv_22003s_h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 22005 random 1825 --world random > critic/c52_diploinv_22005rw_5y.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 22059 4380 24 critic/c52_wd_22059.json > critic/c52_wd_22059.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 22051 3650 > critic/c52_wi_22051_10y.log 2>&1
+npx tsx tools/diag/landingRows.ts all critic/c52_lrows_all.json > critic/c52_lrows_all.log 2>&1
+npx tsx tools/diag/seaBattles.ts 22061 scenario --years 3 --out critic/c52_sb_22061.json > critic/c52_sb_22061.log 2>&1
+TAG=ITA FOE=ENG FROM=1095.5,344.5 TO=1106.5,383.5 N=2 HOURS=175 npx tsx critic/scripts/c52_dest.ts 21105 critic/c52_dest_21105_ita_malta_fleets.json > critic/c52_dest_21105.log 2>&1

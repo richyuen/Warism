@@ -1,0 +1,19 @@
+{
+ "seed": 21047,
+ "tag": "JAP",
+ "from": "130.4,33.6",
+ "to": "120.38,36.07",
+ "ids": [],
+ "start": [],
+ "t0": 2,
+ "firstL": "",
+ "landed": {},
+ "landedAfterDays": {},
+ "evs": [
+  "t0 kind3 0 b0 NaN,NaN"
+ ],
+ "trace": [
+  "t3 "
+ ]
+}
+done:

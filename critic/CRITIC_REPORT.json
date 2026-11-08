@@ -1,11 +1,11 @@
 {
- "commit": "14a85a51c23a5b10a29f0b1193c7748d11e0ffd1",
- "mode": "full",
+ "commit": "d8dba302b941c8b4085ecfe33fbd2f8f2f16483b",
+ "mode": "focused",
  "scores": {
   "mapVisuals": 8,
   "diplomacyWarDepth": 7,
   "emergentDynamics": 7,
-  "godMode": 7,
+  "godMode": 8,
   "editorScenarios": 7,
   "statsHistory": 8,
   "uiUxPolish": 7,
@@ -17,6 +17,13 @@
   "aircraft": 8,
   "aiNukes": 8
  },
- "blocking": [],
- "timestamp": "2026-11-07T22:35:21Z"
+ "blocking": [
+  {
+   "id": "R52-B1",
+   "title": "The landings bar's outcome contradicts what happened and the order news beside it: 'lost at sea' for divisions alive on land, 'landed' for a landing that broke off",
+   "evidence": "22103 (GER Berlin->Norwich, transports sunk t90 while marching): row 'over: lost at sea', news 'the transports of their landing were sunk ... the landing is over', both divisions inland (critic/c52_lland_ger_norwich_22103.json, critic/shots/c52lland_ger_norwich_22103_over_1500m.png). 3517 (run 50's case): 'over: 2 landed, 1 lost at sea' with 366 alive on land (critic/c52_lost_desk.json afterSink, critic/shots/c52lost_desk_rows.png; also critic/shots/c51lost_desk_rows.png). 21105 (run 51's Malta case): 'over: 2 landed' while news says 'its transports broke off; it came ashore away from its target' and they stand on Sicily (critic/c52_lland_ita_malta_21105.json, critic/shots/c52lland_ita_malta_21105_over_1500m.png). Cause: src/worker/server.ts tally since 760140ff (R47a): TransportsSunk counted as lost, every FormationLanded as landed. landingRows' outcome check compares with the same tally (0 broken).",
+   "fix": "Word the over row from each division's state as the order news does ('transports sunk; 2 stay ashore', 'broke off; 2 came ashore near Palermo'; 'lost at sea' only for those dead at sea); make landingRows' outcome check read the divisions, red before on 22103, 3517 and 21105."
+  }
+ ],
+ "timestamp": "2026-11-08T01:58:23Z"
 }

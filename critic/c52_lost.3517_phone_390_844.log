@@ -1,0 +1,387 @@
+{
+ "seed": 3517,
+ "tag": "phone",
+ "W": 390,
+ "H": 844,
+ "removed": [
+  [
+   1151,
+   null
+  ],
+  [
+   1152,
+   null
+  ]
+ ],
+ "ids": [
+  364,
+  365,
+  366
+ ],
+ "other": 367,
+ "edgesAshore": [
+  [
+   [
+    195,
+    422
+   ],
+   false,
+   [
+    182,
+    438,
+    382,
+    496
+   ]
+  ],
+  [
+   [
+    351,
+    422
+   ],
+   false,
+   [
+    182,
+    438,
+    382,
+    496
+   ]
+  ],
+  [
+   [
+    378,
+    422
+   ],
+   false,
+   [
+    182,
+    438,
+    382,
+    496
+   ]
+  ],
+  [
+   [
+    195,
+    760
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    195,
+    819
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    371,
+    802
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    20,
+    802
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    378,
+    84
+   ],
+   null,
+   null
+  ]
+ ],
+ "edgesPlain": [
+  [
+   [
+    195,
+    422
+   ],
+   false,
+   [
+    182,
+    438,
+    382,
+    483
+   ]
+  ],
+  [
+   [
+    351,
+    422
+   ],
+   false,
+   [
+    182,
+    438,
+    382,
+    483
+   ]
+  ],
+  [
+   [
+    378,
+    422
+   ],
+   false,
+   [
+    182,
+    438,
+    382,
+    483
+   ]
+  ],
+  [
+   [
+    195,
+    760
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    195,
+    819
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    371,
+    802
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    20,
+    802
+   ],
+   null,
+   null
+  ],
+  [
+   [
+    378,
+    84
+   ],
+   null,
+   null
+  ]
+ ],
+ "sailedH": 104,
+ "atSail": [
+  {
+   "id": 364,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1738.2,
+    413.5
+   ]
+  },
+  {
+   "id": 365,
+   "v": "atSea",
+   "port": null,
+   "p": [
+    1726.9,
+    413.5
+   ]
+  },
+  {
+   "id": 366,
+   "v": "toPort",
+   "port": "Tokyo",
+   "p": [
+    1782.2,
+    392.5
+   ]
+  }
+ ],
+ "beforeSink": [
+  {
+   "id": 364,
+   "v": "landed",
+   "port": null,
+   "p": [
+    1715.5,
+    411.5
+   ]
+  },
+  {
+   "id": 365,
+   "v": "landed",
+   "port": null,
+   "p": [
+    1715.5,
+    411.9
+   ]
+  },
+  {
+   "id": 366,
+   "v": "toPort",
+   "port": "Tokyo",
+   "p": [
+    1783.8,
+    392.5
+   ]
+  }
+ ],
+ "voyage0": {
+  "state": "landed",
+  "port": null
+ },
+ "rowsBefore": [],
+ "sink": [
+  [
+   1136,
+   null
+  ],
+  [
+   1144,
+   null
+  ]
+ ],
+ "afterSink": {
+  "h": 129,
+  "st": [
+   {
+    "id": 364,
+    "v": "landed",
+    "port": null,
+    "p": [
+     1715.5,
+     411.5
+    ]
+   },
+   {
+    "id": 365,
+    "v": "landed",
+    "port": null,
+    "p": [
+     1715.5,
+     411.9
+    ]
+   },
+   {
+    "id": 366,
+    "v": null,
+    "port": null,
+    "p": [
+     1783.9,
+     392.5
+    ]
+   }
+  ],
+  "rows": [
+   [
+    "transportsSunk",
+    "366: transports sunk, the landing is over",
+    {
+     "cut": false,
+     "box": [
+      7,
+      701,
+      383,
+      719
+     ],
+     "sw": 372,
+     "cw": 372,
+     "sh": 16,
+     "ch": 16,
+     "vis": true,
+     "of": "clip",
+     "ws": "normal"
+    }
+   ]
+  ],
+  "ticker": {
+   "cls": "ticker short compact",
+   "box": [
+    7,
+    701,
+    383,
+    719
+   ],
+   "text": "366: transports sunk, the landing is over"
+  },
+  "toast": [],
+  "shot": "critic/shots/c52lost_phone_rows.png"
+ },
+ "atPort": null,
+ "news": [
+  {
+   "kind": "transportsSunk",
+   "id": 366,
+   "nation": 75,
+   "reason": 0,
+   "x": 1783.9146927342376,
+   "y": 392.5,
+   "tick": 130,
+   "at": 130
+  }
+ ],
+ "rowsBeforeClick": [
+  [
+   "transportsSunk",
+   "366: transports sunk, the landing is over",
+   {
+    "cut": false,
+    "box": [
+     7,
+     701,
+     383,
+     719
+    ],
+    "sw": 372,
+    "cw": 372,
+    "sh": 16,
+    "ch": 16,
+    "vis": true,
+    "of": "clip",
+    "ws": "normal"
+   }
+  ]
+ ],
+ "clicked": "366: transports sunk, the landing is over",
+ "rowsAfterClick": [
+  [
+   "transportsSunk",
+   "Square infantry division 366: the transports of its landing were sunk, and no others of its nation can come to its port: the landing is over.",
+   {
+    "cut": false,
+    "box": [
+     7,
+     689,
+     383,
+     719
+    ],
+    "sw": 372,
+    "cw": 372,
+    "sh": 28,
+    "ch": 28,
+    "vis": true,
+    "of": "clip",
+    "ws": "normal"
+   }
+  ]
+ ],
+ "newsLeft": [
+  "0 transportsSunk 366 t130"
+ ],
+ "clickShot": "critic/shots/c52lost_phone_afterclick.png",
+ "errors": []
+}

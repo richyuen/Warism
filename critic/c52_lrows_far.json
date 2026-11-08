@@ -1,0 +1,44 @@
+{
+ "cases": [
+  {
+   "name": "far 20661 JAP→121.47,31.23 n2",
+   "hours": 130,
+   "broken": []
+  },
+  {
+   "name": "far 20661 JAP→120.38,36.07 n2",
+   "hours": 183,
+   "broken": []
+  },
+  {
+   "name": "far 20841 JAP→121.47,31.23 n3",
+   "hours": 132,
+   "broken": []
+  },
+  {
+   "name": "far 20665 ENG→8.6,53.5 n2",
+   "hours": 143,
+   "broken": []
+  },
+  {
+   "name": "far 20845 GER→1.3,52.6 n2",
+   "hours": 90,
+   "broken": []
+  },
+  {
+   "name": "far 20843 ITA→14.45,35.9 n2",
+   "hours": 187,
+   "broken": []
+  },
+  {
+   "name": "far 20667 USA→139.69,35.69 n1",
+   "hours": 872,
+   "broken": []
+  },
+  {
+   "name": "far 3517 USA→1.3,52.6 n1",
+   "hours": 896,
+   "broken": []
+  }
+ ]
+}
