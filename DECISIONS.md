@@ -7,6 +7,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-870 · 2026-11-07 · accepted — The ticker names a row's city as History does (R51a)
+- **Context.** Critic run 52, R52-N4: the Breakthrough row read "God opened a breakthrough for Germany", no place, for
+  a click 3 cells from Berlin. The city was found; the ticker's names (`tickerRowAt`'s `who`) had no case for a city
+  role, so it was dropped there while History named it.
+- **Decision.** The ticker names a city role as History does. `GodBreakthrough` is the one ticker kind with one.
+- **Consequences.** `godBreakthroughRow1938`: the ticker row's words are History's ("… near …"; red before).
+
 ### ADR-869 · 2026-11-07 · accepted — A row turning back gives its days to its port (R50d)
 - **Context.** Critic run 52, R52-N5: a cancelled row said "turning back to Tokyo" with no days, where one at sea gives
   them (R48d).

@@ -43,6 +43,9 @@ describe("God Mode's Breakthrough is told (ROADMAP R49a)", () => {
     const tick = tickerRows(w, nationName, cityName(w), defName).find((r) => r.kind === EventKind.GodBreakthrough);
     expect(tick, 'its ticker row').toBeDefined();
     expect(Math.hypot(tick!.x - bx, tick!.y - by), 'at its start').toBeLessThan(1);
+    // The ticker names the place as History does (ROADMAP R51a; critic run 52, R52-N4: "God opened a breakthrough for
+    // Germany", no place, for a click 3 cells from Berlin).
+    expect(historyText(tick!), 'the ticker row').toBe(text);
     expect(`history.type.${kindName(EventKind.GodBreakthrough)}` in en).toBe(true);
     expect(filterHistory(rows, { ...NO_FILTER, kind: EventKind.GodBreakthrough }, w.startDay)).toHaveLength(1);
   });

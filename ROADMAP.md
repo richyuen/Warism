@@ -924,8 +924,9 @@ objection, idea and "what the bar needs" filed; then the probes replayed and cri
   - Kept: `landingInvariants` 0 broken on the 25 seeds; `landingRows` 0 broken with R50a's reading.
   - For the user (SPEC §7.1, ADR-759; the critic, not blocking): a cancelled division of a played nation is the AI's
     at once; an option to keep the player's divisions where the player left them. Not taken without the user.
-- [ ] R51 **Run 52's other findings** (after R50).
-  - [ ] R51a R52-N4 (God Mode): the Breakthrough row names its place ("near Berlin"): `nearestCity`'s id is not one
+- [x] R51 **Run 52's other findings** (after R50).
+  - [x] R51a R52-N4 (God Mode): the Breakthrough row names its place ("near Berlin"): `nearestCity`'s id is not one
     `cityName` reads.
+    Done (ADR-870): the ticker's names had no city role (History's had); the ticker row reads as History's.
   - Not taken: the corridor drawn on the map for its 10 days (the ADR-864 objection: the ticker row's "Show where"
     flies to it; a map layer for one God tool).

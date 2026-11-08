@@ -2066,3 +2066,7 @@
 ## 2026-11-07 — R50d: turning back with its days (ADR-869); R50 done
 - "turning back to Tokyo: there in about N days"; `landingRowDays1938` 20661 (red before at t29).
 - **Next:** R51a, then the 25 landing seeds and the probes replayed, then critic run 53.
+
+## 2026-11-07 — R51a: the Breakthrough row's place (ADR-870); R51 done
+- The ticker names a city role as History does. `godBreakthroughRow1938` (red before).
+- **Next:** the 25 landing seeds, the probes replayed (run 52's jobs), critic run 53.
