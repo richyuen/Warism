@@ -931,7 +931,9 @@ function backHours(world: World, l: Landing): number | null {
 /**
  * Who holds landing `l`'s groups up at sea (ROADMAP R52c; critic run 53, R53-N3: "under attack, held up" for days with
  * no attacker in view, 21105's foe a British fleet 19 cells off, in a fight at its sight's range): the nation of the
- * formation at war with it, itself in a fight, nearest to one of its groups in a fight; 0 for none.
+ * fleet at war with it in the sea battle of one of its groups in a fight (`world.seaBattles`), the nearest to that
+ * group; 0 for none. Not any formation in a fight (R53b; critic run 54, R54-N1: an army fighting ashore near the coast,
+ * of a second foe, would be named for the fleet that holds the transports).
  */
 export function heldBy(world: World, l: Landing): number {
   const c = world.formations.cols;
@@ -939,14 +941,16 @@ export function heldBy(world: World, l: Landing): number {
   if (held.length === 0) return 0;
   let best = 0;
   let bd = Infinity;
-  world.formations.forEach((f) => {
-    if (c.engaged[f] !== 1 || !world.wars.atWar(c.nation[f]!, l.nation)) return;
-    for (const o of held) {
+  for (const o of held) {
+    const battle = world.seaBattles.find((b) => b.fleets.includes(o));
+    if (!battle) continue;
+    for (const f of battle.fleets) {
+      if (!world.formations.has(f) || !world.wars.atWar(c.nation[f]!, l.nation)) continue;
       const [dx, dy] = [c.x[f]! - c.x[o]!, c.y[f]! - c.y[o]!];
       const d = dx * dx + dy * dy;
       if (d < bd || (d === bd && f < best)) [bd, best] = [d, f];
     }
-  });
+  }
   return best === 0 ? 0 : c.nation[best]!;
 }
 

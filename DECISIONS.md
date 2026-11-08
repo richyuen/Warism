@@ -7,6 +7,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-877 · 2026-11-08 · accepted — A held landing names the fleet in its sea battle, not any foe in a fight (R53b)
+- **Context.** Critic run 54, R54-N1 (code reading): `heldBy` took the nearest formation in a fight at war with the
+  lander, of any kind at any distance; with two foes, an army fighting ashore near the coast could be named for the
+  fleet that holds the transports. On 21105 at t38, a French division in a fight put beside group 1195 was named.
+- **Decision.** The nation of the fleet at war with the landing in the sea battle of one of its held groups
+  (`world.seaBattles`), the nearest to that group; 0 for none ("under attack, held up", unnamed).
+- **Consequences.** Display only (the rows and the panels; no rule reads it). `landingHeld1938`: the French case (red
+  before); R52c's every engaged hour still names the United Kingdom.
+
 ### ADR-876 · 2026-11-08 · accepted — A thrown-back landing tells one story: sailing home, then ashore there (R53a)
 - **Context.** Critic run 54, R54-B1 (blocking): Rome to Valletta, thrown back on 6 of 11 seeds. For a day after the
   news the bar read "at sea: lands in about a day" and the panels "At sea, bound for its landing"; the transports put

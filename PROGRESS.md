@@ -2114,3 +2114,8 @@
   and the pin unchanged). `landingThrownBack1938` (red before); `serverOrderNews` 2207 hears `thrownAshore`.
   `landingRows all` 108 cases 0 broken.
 - **Next:** R53b.
+
+## 2026-11-08 — R53b: who holds a landing up is the fleet in its sea battle (ADR-877)
+- `heldBy` reads `world.seaBattles`; on 21105 a French division in a fight beside the transports was named, now the
+  British fleet is. Display only. `landingHeld1938` 2 (the new case red before).
+- **Next:** R53c.

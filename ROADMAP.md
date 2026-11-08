@@ -982,8 +982,10 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     Done (ADR-876): "thrown back: sailing home to Catania" in the bar and both panels from the repulse, each
     division told; ashore, "thrown back; it came ashore near Catania" and "over: 2 thrown back; came ashore near
     Catania" (23105 and 24151 headless); the sim unchanged; 108 cases 0 broken.
-  - [ ] R53b R54-N1: `heldBy` names the nation of a foe fleet in the landing's sea battle (`world.seaBattles`), not
+  - [x] R53b R54-N1: `heldBy` names the nation of a foe fleet in the landing's sea battle (`world.seaBattles`), not
     the nearest engaged formation of any kind at war.
+    Done (ADR-877): the nearest foe fleet in a held group's sea battle; a French division in a fight beside 21105's
+    transports is not named.
   - [ ] R53c Small: on 22105 day 2, every division line gives its days (two drop them: "Marching to Portsmouth to
     board transports"; `c54_lbar.mjs 22105 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br3_phone 390 844 14 4`).
   - [ ] R53d The three places checked, not the bar alone: `landingRows` compares, hour by hour, each division's row,
