@@ -903,6 +903,8 @@ export interface OrderNews {
   name?: string;
   /** `thrownAshore`: the place it came ashore, a city's name (ROADMAP R53a). */
   at?: string;
+  /** `nextVoyage`: the days until it can sail, at least one (ROADMAP R58b); none when no group is reckoned. */
+  days?: number;
   x: number;
   y: number;
   tick: number;

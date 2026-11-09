@@ -13,7 +13,11 @@ export function orderNewsText(n: OrderNews, name: string, count = 1): string {
   if (n.kind === 'unescorted') return t('order.unescorted', { name });
   // Left for a march, not another landing (reason 1; ROADMAP R55e, critic run 56: "for a new one" with none).
   if (n.kind === 'leftLanding') return t(n.reason === 1 ? 'order.leftLandingMarch' : 'order.leftLanding', { name });
-  if (n.kind === 'nextVoyage') return t(n.reason === 1 ? 'order.nextVoyageMarch' : 'order.nextVoyage', { name });
+  // With when (ROADMAP R58b): "in about N days".
+  if (n.kind === 'nextVoyage') {
+    const key = n.reason === 1 ? 'order.nextVoyageMarch' : 'order.nextVoyage';
+    return n.days === undefined ? t(key, { name }) : t(n.days === 1 ? `${key}.one` : `${key}.days`, { name, days: n.days });
+  }
   if (n.kind === 'sameLanding') return n.reason > 1 ? t('order.sameLandingMany', { name, more: n.reason - 1 }) : t('order.sameLanding', { name });
   if (n.kind === 'lostAtSea') return t('order.lostAtSea', { name });
   if (n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalled' : 'order.transportsSunk', { name });
@@ -37,7 +41,7 @@ export function orderNewsBrief(n: OrderNews, count: number, name: string): strin
   if (n.kind === 'landedAway') return n.at ? t('order.landedAwayAtBrief', { name: tag, at: n.at }) : t('order.landedAwayBrief', { name: tag });
   if (n.kind === 'unescorted') return t('order.unescortedBrief', { name: tag });
   if (n.kind === 'leftLanding') return t(n.reason === 1 ? 'order.leftLandingMarchBrief' : 'order.leftLandingBrief', { name: tag });
-  if (n.kind === 'nextVoyage') return t('order.nextVoyageBrief', { name: tag });
+  if (n.kind === 'nextVoyage') return n.days === undefined ? t('order.nextVoyageBrief', { name: tag }) : t(n.days === 1 ? 'order.nextVoyageBrief.one' : 'order.nextVoyageBrief.days', { name: tag, days: n.days });
   if (n.kind === 'sameLanding') return n.reason > 1 ? t('order.sameLandingManyBrief', { name: tag, more: n.reason - 1 }) : t('order.sameLandingBrief', { name: tag });
   if (n.kind === 'lostAtSea') return t('order.lostAtSeaOneBrief', { name: tag });
   if (n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalledOneBrief' : 'order.transportsSunkOneBrief', { name: tag });

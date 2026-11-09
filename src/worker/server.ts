@@ -30,7 +30,8 @@ import { AiLayer, aiRuns, playerHeld } from '../sim/ai/layers';
 import { carrierStrikes, inShipReach, nearestOwnPort, strikeTarget } from '../sim/systems/navalCombat';
 import { landedAway } from '../sim/systems/amphibious';
 import { CORRIDOR_HALF_WIDTH, CORRIDOR_LEN } from '../sim/systems/majorBattles';
-import { heldBy, heldByFleet, LandingState, landingOfDivision, landingRows, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
+import { heldBy, heldByFleet, LandingState, landingOfDivision, landingRows, nextVoyageHours, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
+import { marchHoursLeft } from '../sim/systems/movement';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -1759,8 +1760,12 @@ export class SimServer {
       // For another landing, or for a march (reason 1: no landing of its own now; ROADMAP R55e).
       tell('leftLanding', world.formations.has(id) && landingOfDivision(world, id) === undefined ? 1 : 0);
     } else if (kind === EventKind.NextVoyage) {
-      // Still marching as its landing sailed: 1 (ROADMAP R57b), else at the port with no room: 0.
-      tell('nextVoyage', world.formations.has(id) && c.moving[id] === 1 ? 1 : 0);
+      // Still marching as its landing sailed: 1 (ROADMAP R57b), else at the port with no room: 0. When: the later of
+      // its march and its landing's groups back at the port (ROADMAP R58b; critic run 59, R59-N1: no figure).
+      const marching = world.formations.has(id) && c.moving[id] === 1;
+      const l = world.formations.has(id) ? landingOfDivision(world, id) : undefined;
+      const hours = l ? Math.max(nextVoyageHours(world, l), marching ? marchHoursLeft(world, id) : 0) : Infinity;
+      tell('nextVoyage', marching ? 1 : 0, id, Number.isFinite(hours) ? { days: Math.max(1, Math.ceil(hours / 24)) } : {});
     } else if (kind === EventKind.LostAtSea) {
       tell('lostAtSea', 0);
     } else if (kind === EventKind.TransportsSunk) {

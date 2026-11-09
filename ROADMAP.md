@@ -1277,7 +1277,9 @@ Critic run 59 (full, on `fe9b0e9e`): batch 12 done on every case run 58 named; o
 every other dimension at 8. Naval's findings are items, fixed, then the critic again (ADR-833). No release.
 
 - [ ] R58 **Run 59's findings.**
-  - [ ] R58a R59-B1 (blocking): `slowClick` breaks on new seed 30041 (setup 3517, one group: t729's click of 364–366,
+  - [x] R58a **Not taken (the user's decision, 2026-11-09, ADR-914):** under the 5 % rule R59-B1 is non-blocking (1 of
+    90; 0 of 150 fresh runs on `0abbcd5a`); its 366 marched at the normal pace and the bound assumed a group the one-group
+    pool did not have; a route-based reckoning tried and reverted (it refused 366 at the click). Was: R59-B1 (blocking): `slowClick` breaks on new seed 30041 (setup 3517, one group: t729's click of 364–366,
     best way 5.9 days; 366 walks 11 cells to its port near Tokyo in 10.4 days, about a cell a day, and is ashore near
     Shanghai at 15.4 days). R57a's checker rightly keeps 366 in that click past its refused t870 re-click; what it
     exposes is a best way (`clickBest`, `Landing.due`) that reckons the march to the port about twice as fast as
@@ -1286,7 +1288,9 @@ every other dimension at 8. Naval's findings are items, fixed, then the critic a
     120 30041 30,90 1` at 0 broken with 366 kept in t729's click (no checker change that drops it); `P=2 sh
     critic/scripts/c59_liab_new.sh` (90 runs) and `P=3 sh critic/scripts/c59_liab_head.sh` (306) all 0; R58-B1's and
     R57-B1's cases, `c59_stuckret`, Malta's 18 unchanged.
-  - [ ] R58b R59-N1: a division left for the next voyage is told when, "in about N days" (R57b's own wording;
+  - [x] R58b (done: `nextVoyageHours`; the news, its row and the panel say "in about N days"; 29043's 273 told 5 days
+    at t1170, sailed t1284, 4.75 days, ashore t1340 as before; `tests/unit/nextVoyageDays1938.test.ts`,
+    `orderRowsBrief1938.spec.ts` by hand) R59-N1: a division left for the next voyage is told when, "in about N days" (R57b's own wording;
     `order.nextVoyageBrief`, `formation.voyage.nextVoyage` have no figure); 29043's 273 (left at t1170, ashore t1340,
     11.3 days after its t1068 click, best 3.4) waits no longer than the next voyage needs. AT: `critic/c59_told_29043_273.log`'s
     case told with a figure that comes true within a day; `c59_od_29043_273` no later.

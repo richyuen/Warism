@@ -1488,6 +1488,26 @@ export function landingHeld(world: World, id: number): { water: number; land: nu
 }
 
 /**
+ * The hours until a group of landing `l` can be at its port for those it left (ROADMAP R58b; critic run 59, R59-N1:
+ * "waits for the next voyage" with no figure): 0 with an empty group there; else, of its groups, the soonest of a
+ * carrying one's voyage out and its sail back from the landing's water, and an empty one's sail to the port. Not
+ * counted: a fight at the beach, and the hour the landing turns to gather again. Infinity with no group.
+ */
+export function nextVoyageHours(world: World, l: Landing): number {
+  const c = world.formations.cols;
+  const [px, py] = pointOf(world, portSeaOf(world)[l.port]!);
+  let best = Infinity;
+  for (const o of l.fleets) {
+    if (!world.formations.has(o)) continue;
+    const full = carrying(world, o);
+    if (!full && atPort(world, l, o)) return 0;
+    const hours = full ? (c.moving[o] === 1 ? sailHoursLeft(world, o) : 0) + sailHoursFrom(world, o, l.water, px, py) : c.moving[o] === 1 ? sailHoursLeft(world, o) : sailHours(world, o, px, py);
+    if (Number.isFinite(hours)) best = Math.min(best, hours);
+  }
+  return best;
+}
+
+/**
  * What a division's panel says of its voyage (ROADMAP R17c, R22c; `FormationDetail.voyage`), read from its
  * landing: marching to its port, waiting there for transports or for the rest of its landing (how many are
  * at the port of how many, the days the furthest it waits for has left to march), at sea, or sailing back
@@ -1513,7 +1533,11 @@ export function voyageOf(world: World, id: number): { state: 'toPort' | 'waiting
     return Number.isFinite(hours) ? { state: 'toPort', port, days: Math.max(1, Math.ceil(hours / 24)), ...later } : { state: 'toPort', port, ...later };
   }
   // At the port, its landing sailed without it: the next voyage (R17b, R37a).
-  if (l.state !== LandingState.gathering) return { state: 'nextVoyage', port };
+  // When they come back, at least a day (ROADMAP R58b).
+  if (l.state !== LandingState.gathering) {
+    const back = nextVoyageHours(world, l);
+    return Number.isFinite(back) ? { state: 'nextVoyage', port, days: Math.max(1, Math.ceil(back / 24)) } : { state: 'nextVoyage', port };
+  }
   if (!l.fleets.some((o) => atPort(world, l, o))) return { state: 'waiting', port };
   let at = 0;
   let of = 0;

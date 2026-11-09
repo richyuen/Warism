@@ -18,6 +18,7 @@ export function voyageText(voyage: Voyage): string {
   if (voyage.state === 'sibling') return t(voyage.days === 1 ? 'formation.voyage.sibling.one' : 'formation.voyage.sibling', { port: voyage.port ?? '', other: voyage.other ?? '', days: voyage.days ?? 1 });
   // Its days to the port, "about a day" the last (R53c).
   if (voyage.state === 'toPort' && voyage.port && voyage.later) return t(voyage.days === undefined ? 'formation.voyage.toPort.laterSoon' : voyage.days === 1 ? 'formation.voyage.toPort.later.one' : 'formation.voyage.toPort.later', { port: voyage.port, days: voyage.days ?? 1 });
+  if (voyage.state === 'nextVoyage' && voyage.port && voyage.days !== undefined) return t(voyage.days === 1 ? 'formation.voyage.nextVoyage.one' : 'formation.voyage.nextVoyage.days', { port: voyage.port, days: voyage.days });
   if (voyage.state === 'toPort' && voyage.port && voyage.days !== undefined) return t(voyage.days === 1 ? 'formation.voyage.toPort.days.one' : 'formation.voyage.toPort.days', { port: voyage.port, days: voyage.days });
   return t(voyage.port ? `formation.voyage.${voyage.state}.port` : `formation.voyage.${voyage.state}`, { port: voyage.port ?? '' });
 }

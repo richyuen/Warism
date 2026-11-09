@@ -2443,3 +2443,12 @@
   have. A route-based march reckoning was tried and reverted (it refused 366 `NoTransports` instead; 150 fresh runs the
   same as HEAD). See ADR-914, "R59-B1 read again".
 - **Next:** the user's call on 2 and on R58a; then R58b–d.
+
+## 2026-11-09 — R58b: the next voyage told with when
+- `nextVoyageHours` (`landings.ts`, a read, no rule changed; the pin unmoved): an empty group at the port 0, else the
+  soonest of a carrying group's way out and back, an empty one's sail to the port. The `NextVoyage` news (with a
+  marching one's own march, the later), its brief row and the panel's `nextVoyage` say "in about N days".
+- 29043 setup 15101: 273 told 5 days (4.6) at t1170, sails t1284 (4.75 days), ashore t1340 as on HEAD.
+- Stands on ADR-909 (R57b: told as its landing sails), ADR-910 (R57c: the panel keeps its news): unchanged.
+- Tests: `tests/unit/nextVoyageDays1938.test.ts` (new), `orderNewsStale`; `npx playwright test
+  tests/e2e/orderRowsBrief1938.spec.ts` (3 passed). Not looked at in the page: the words are one line in the panel.
