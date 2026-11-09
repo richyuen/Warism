@@ -34,7 +34,7 @@
  * has it now. The row is then 'puppet' and names the overlord ("The war between Germany and
  * Albania ended: Albania is now a puppet of Italy").
  */
-import { EventKind } from '../shared/events';
+import { EventKind, JoinedBy } from '../shared/events';
 import { HISTORY_ROLES, nukeStrike, nukeToll, seaSide, TICKER_HOURS, TICKER_KINDS, TICKER_ONE_AN_HOUR, TICKER_ROWS, type HistoryAs, type HistoryRole, type HistoryRow, type TickerRow } from '../shared/history';
 import { HISTORY_STRIDE } from '../sim/history';
 import type { World } from '../sim/world';
@@ -184,6 +184,8 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     const toll = kind === EventKind.NukeCasualties ? tollAfter(rows, i) : undefined;
     if (toll) row.toll = toll;
     if (kind === EventKind.BondsBroken) [row.bonds, row.y] = [y, null];
+    // Why it joined (ROADMAP R55i): its own sentence.
+    if (kind === EventKind.WarJoined) [row.as, row.y] = [y === JoinedBy.guarantee ? 'guarantee' : 'alliance', null];
     out.push(row);
   }
   // A release before the wars it left, as the ticker tells it (ROADMAP R49b; critic run 51, R51-N5).

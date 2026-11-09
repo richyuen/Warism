@@ -269,7 +269,17 @@ export const EventKind = {
    * the nation, b = the city nearest its start (0: none), (x, y) = its start. After its corridor is made.
    */
   GodBreakthrough: 77,
+  /**
+   * A nation called into a war at its declaration by a bond (ROADMAP R55i; critic run 55, R55-N1: France joined
+   * Germany's war on Poland as its guarantor and History said nothing of it). a = the nation, b = the one it stands
+   * beside (the leader of its side, or the nation it guarantees), x = NaN, y = why (`JoinedBy`). Logged after its
+   * `WarDeclared`, in the same hour. Not the leaders, nor puppets (with their overlords).
+   */
+  WarJoined: 78,
 } as const;
+
+/** Why a nation joined a war (`WarJoined`'s y). */
+export const JoinedBy = { alliance: 1, guarantee: 2 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */
 export const Bond = { truce: 1, alliance: 2, puppet: 4 } as const;

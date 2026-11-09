@@ -2334,3 +2334,10 @@
   nation panel is closed while Breakthrough or Territory is on. `historyWording`, `landingAwayPlace1938` and the phone
   Breakthrough case red before; the filter and sea-battle tests follow the words; `landingRows page` 0.
 - **Next:** R55i.
+
+## 2026-11-09 — R55i: a war joined by a bond is a History row; My wars only keeps that war (ADR-901)
+- `WarJoined` after a declaration, for each ally or guarantor called in ("France joined the war on Poland's side, as
+  its guarantor"); "My wars only" keeps the declaration and the peace of a war the player joined. No guarantee-given
+  row (no pledge is made in play). `historyWarJoined1938` red before; pin e0da3e5f → c64a53fb (the log alone).
+- Critic run 55's 27 headless jobs replayed on HEAD (R55a–g): none failed; landing checks 0; differences paths and
+  figures. **Next:** R55j.

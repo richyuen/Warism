@@ -7,6 +7,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-901 · 2026-11-09 · accepted — A nation a bond calls into a war is a row of History, and My wars only keeps that war (R55i)
+- **Context.** Critic run 55, R55-N1: on 26309, played as France, France joined Germany's war on Poland as its
+  guarantor; History had only "Germany declared war on Poland" and the peace, and "My wars only" kept France's sea and
+  air rows of that war but dropped those two, as neither names France. The critic asked for a "joined the war" row, a
+  "guarantee given" row, and the war's rows kept for a player on one of its sides.
+- **Decision.** (1) `WarJoined` (78), logged after its `WarDeclared` in the same hour, for each nation a declaration's
+  bonds call in, not the leaders and not puppets (which go with their overlords): a guarantor beside the nation it
+  guarantees ("France joined the war on Poland's side, as its guarantor"), else an ally beside its side's leader
+  ("Italy joined the war on Germany's side, as its ally"). It is a war's row (`WAR_KINDS`), not the ticker's (a bloc
+  would fill it). (2) "My wars only" keeps, of a war the player was called into, its declaration (the `WarDeclared`
+  before the join in its hour) and its peace (the first `PeaceSigned` of the same two after it). (3) No "guarantee
+  given" row: no pledge is made in play (the 1938 start's and a random world's are set before the first hour); a
+  guarantor's row says it.
+- **Stands on (ADR-803).** ADR-797, ADR-887, ADR-889 (who is called, within reach, bonds keeping some out): unchanged;
+  the row is of those the war starts with. The log is state: the pin of seed 99 moves, e0da3e5f → c64a53fb, by the
+  rows alone (no rule moved).
+- **Results.** `historyWarJoined1938` (Germany on Poland, seed 26309: France as guarantor, Italy as ally; France's wars
+  keep the declaration and the peace; Japan's not) red before; `history`, `historyMine`, `godMode` green.
+
 ### ADR-900 · 2026-11-09 · accepted — Run 55's small items: counts, possessives, where a landing came ashore, the editor's filter, a phone's Breakthrough (R55h)
 - **Context.** Critic run 55's small list, carried through batch 10, taken before critic run 57 by the user's call
   (2026-11-09): "lost 1 ships"; "United States's air force"; "2 came ashore away from Valletta" not saying where (a

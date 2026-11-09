@@ -108,6 +108,8 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.BondsBroken]: ['nation', 'nation'],
   // A guarantee lapsed at a war between its two (PLAN 7.190): the guarantor, the target.
   [EventKind.GuaranteeLapsed]: ['nation', 'nation'],
+  // A nation called into a war by a bond (ROADMAP R55i): it, the one it stands beside.
+  [EventKind.WarJoined]: ['nation', 'nation'],
   // A nation out of a war that goes on (PLAN 7.190): it, the enemy's leader.
   [EventKind.WarLeft]: ['nation', 'nation'],
   // A hero lost and back (ROADMAP R12): its nation, its roster row (named by its template).
@@ -161,7 +163,7 @@ export interface HistoryRow {
   bonds?: number;
 }
 
-export type HistoryAs = 'revived' | 'joined' | 'left' | 'founded' | 'puppet';
+export type HistoryAs = 'revived' | 'joined' | 'left' | 'founded' | 'puppet' | 'alliance' | 'guarantee';
 
 /** The major events, which the ticker tells as they happen (PLAN 3.12c): war, peace, a capital taken, a nation's death or return. */
 export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([
@@ -253,6 +255,7 @@ export const WAR_KINDS: ReadonlySet<number> = new Set([
   EventKind.BondsBroken,
   EventKind.GuaranteeLapsed,
   EventKind.HeroLost,
+  EventKind.WarJoined,
 ]);
 
 export const NO_FILTER: HistoryFilter = { kind: null, nation: null, fromYear: null, toYear: null, mine: null };
@@ -281,6 +284,7 @@ export function newestHourFirst<T extends { tick: number }>(rows: readonly T[]):
 }
 
 export function filterHistory(rows: readonly HistoryRow[], f: HistoryFilter, startDay: number): HistoryRow[] {
+  const joined = f.mine !== null ? joinedWarRows(rows, f.mine) : new Set<HistoryRow>();
   return rows.filter((r) => {
     if (f.kind !== null && r.kind !== f.kind) return false;
     if (f.nation !== null) {
@@ -290,7 +294,7 @@ export function filterHistory(rows: readonly HistoryRow[], f: HistoryFilter, sta
     if (f.mine !== null) {
       if (!WAR_KINDS.has(r.kind)) return false;
       const [ra, rb] = HISTORY_ROLES[r.kind] ?? ['number', 'number'];
-      if (roleNation(ra, r.a) !== f.mine && roleNation(rb, r.b) !== f.mine) return false;
+      if (roleNation(ra, r.a) !== f.mine && roleNation(rb, r.b) !== f.mine && !joined.has(r)) return false;
     }
     if (f.fromYear !== null || f.toYear !== null) {
       const y = dateOfTick(startDay, r.tick).year;
@@ -299,6 +303,29 @@ export function filterHistory(rows: readonly HistoryRow[], f: HistoryFilter, sta
     }
     return true;
   });
+}
+
+/**
+ * The declaration and the peace of each war nation `n` was called into (`WarJoined`; ROADMAP R55i, critic run 55,
+ * R55-N1: "My wars only" kept France's battles of Germany's war on Poland but not the war, nor its end, as neither names
+ * France): the `WarDeclared` logged before the join in its hour, and the first `PeaceSigned` of the same two after it.
+ */
+function joinedWarRows(rows: readonly HistoryRow[], n: number): Set<HistoryRow> {
+  const out = new Set<HistoryRow>();
+  const open = new Map<string, number>();
+  const pair = (a: number, b: number): string => (a < b ? `${a}:${b}` : `${b}:${a}`);
+  let declared: HistoryRow | null = null;
+  for (const r of rows) {
+    if (r.kind === EventKind.WarDeclared) declared = r;
+    else if (r.kind === EventKind.WarJoined && r.a === n && declared && declared.tick === r.tick) {
+      out.add(declared);
+      open.set(pair(declared.a, declared.b), r.tick);
+    } else if (r.kind === EventKind.PeaceSigned && open.has(pair(r.a, r.b))) {
+      out.add(r);
+      open.delete(pair(r.a, r.b));
+    }
+  }
+  return out;
 }
 
 /** ISO date (YYYY-MM-DD) of a tick. */

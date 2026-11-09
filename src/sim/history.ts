@@ -55,6 +55,8 @@ export const HISTORY_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.BondsBroken,
   // A guarantee lapsed at a war between its two (PLAN 7.190).
   EventKind.GuaranteeLapsed,
+  // A nation called into a war by a bond (ROADMAP R55i).
+  EventKind.WarJoined,
   // A nation out of a war that goes on (PLAN 7.190).
   EventKind.WarLeft,
   // A hero lost and back (ROADMAP R12).

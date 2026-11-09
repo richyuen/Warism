@@ -1165,9 +1165,12 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
     Done (ADR-900): "lost 1 ship"; "United States' air force"; "2 came ashore near Palermo, away from Valletta" (row
     and news); the filter takes tags and aliases, an exact one chosen first, and a miss lists all ("none match; all
     shown"); on a phone the nation panel is closed while Breakthrough or Territory is on. New tests red before.
-  - [ ] R55i R55-N1: a war joined by guarantee or alliance leaves a History row ("France joined the war on Poland's
+  - [x] R55i R55-N1: a war joined by guarantee or alliance leaves a History row ("France joined the war on Poland's
     side (guarantee)"), a guarantee given has one, and "My wars only" keeps a war's rows when the player is on one of
     its sides (26309, France).
+    Done (ADR-901): `WarJoined`, "France joined the war on Poland's side, as its guarantor" (an ally: "as its ally");
+    My wars only keeps the declaration and the peace of a war the player was called into. No guarantee-given row: none
+    is made in play. Pin e0da3e5f → c64a53fb (the log's rows alone).
   - [ ] R55j R55-N2: landscape phone (844 × 390): the Build tab shows its tiles, not 2 of 10 in a 170-px panel, and
     the Actions tab's air-wing controls are on the screen; `buildTab1938` gains 844 × 390.
   - Kept: `landingInvariants` and `landingRows` 0 broken; R55-B1's commands 0; the Malta endings.

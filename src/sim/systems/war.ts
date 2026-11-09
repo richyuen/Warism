@@ -63,7 +63,7 @@
 import { traitMod } from '../traits';
 import { isDayStart } from '../../shared/calendar';
 import { Refusal } from '../../shared/commands';
-import { Bond, EventKind } from '../../shared/events';
+import { Bond, EventKind, JoinedBy } from '../../shared/events';
 import { PEACE_ACCEPT_EXHAUSTION, peaceVerdict } from '../../shared/peace';
 import { Terrain } from '../../shared/terrain';
 import { annexNation, makePuppet, releasePuppet } from './puppets';
@@ -501,6 +501,18 @@ export function declareWar(world: World, attacker: number, target: number, alone
     al.changed();
   }
   world.out.emit(world.tick, EventKind.WarDeclared, attacker, defender, NaN, NaN);
+  // Those its bonds called in (ROADMAP R55i): an ally beside its side's leader; a guarantor beside the nation it
+  // guarantees (the defender, or the puppet the war is about). Not the leaders, nor puppets (they go with their overlord).
+  if (!alone) {
+    for (const x of d) {
+      if (leader(x) || nc.overlord[x] !== 0) continue;
+      const by = al.guarantorsOf(defender).includes(x) ? defender : target !== defender && al.guarantorsOf(target).includes(x) ? target : 0;
+      const ally = by === 0 ? (allies(defender).includes(x) ? defender : target !== defender && allies(target).includes(x) ? target : 0) : 0;
+      if (by !== 0) world.out.emit(world.tick, EventKind.WarJoined, x, by, NaN, JoinedBy.guarantee);
+      else if (ally !== 0) world.out.emit(world.tick, EventKind.WarJoined, x, ally, NaN, JoinedBy.alliance);
+    }
+    for (const x of a) if (!leader(x) && nc.overlord[x] === 0 && allies(attacker).includes(x)) world.out.emit(world.tick, EventKind.WarJoined, x, attacker, NaN, JoinedBy.alliance);
+  }
   for (const g of lapsed) world.out.emit(world.tick, EventKind.GuaranteeLapsed, g.guarantor, g.target, NaN, NaN);
   return war;
 }
