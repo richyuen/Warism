@@ -278,9 +278,26 @@ export function chooseTransports(world: World, id: number, target: number): Land
     const o = callTransports(world, id, port);
     if (o !== 0) return { port, fleet: o };
   }
-  // A landing for that place that has sailed: its next voyage.
-  for (const l of mine) if (l.fleets.some((g) => transportRoom(world, g) >= men)) return { join: l, port: l.port, fleet: 0 };
+  // A landing for that place that has sailed: its next voyage; at a port other than its land's nearest, only where the
+  // march there is no more than SPLIT_SOONER_HOURS longer (ROADMAP R55c; critic run 56, R56-N2: 367 from Hokkaido joined
+  // a voyage from port 104 and walked 73 days, past Tokyo). Else none: refused, told why at the click.
+  for (const l of mine) if (l.fleets.some((g) => transportRoom(world, g) >= men) && !farVoyage(world, id, port, l.port)) return { join: l, port: l.port, fleet: 0 };
   return null;
+}
+
+/**
+ * Whether division `id`'s march to port `there` is over SPLIT_SOONER_HOURS longer than to `near`, its land's nearest
+ * port (ROADMAP R55c): by the shortest way over the ground at its pace, as `callSooner` reckons a march. False where
+ * they are one port, or where it has no pace or no nearest port.
+ */
+function farVoyage(world: World, id: number, near: number, there: number): boolean {
+  if (near < 0 || near === there) return false;
+  const rule = world.rules?.templates[world.formations.cols.template[id]!];
+  const kmh = rule ? marchKmPerHour(world, id, rule) : 0;
+  if (!(kmh > 0)) return false;
+  const grid = navOf(world).grid;
+  const here = cellOfPlace(world, id);
+  return octileKm(grid, here, world.ports[there]!.cell) / kmh > octileKm(grid, here, world.ports[near]!.cell) / kmh + SPLIT_SOONER_HOURS;
 }
 
 /** How many hours sooner a call must land than the free group far off, to be taken (`callSooner`): a day. */

@@ -2292,3 +2292,10 @@
 - Found on the way: a stopped preview task can leave its server on the port; a page probe then reads the build before.
   Each page run now checks the served asset name against `dist/`.
 - **Next:** R55c.
+
+## 2026-11-09 — R55c: a far port's next voyage only within a week's march of the nearest (ADR-895)
+- 24033 (orders for 8 days): 367 from Hokkaido joined port 104's next voyage and walked 73 days. `chooseTransports`'
+  last way now takes a sailed landing at another port only within SPLIT_SOONER_HOURS of the march to the nearest;
+  else refused, told. `landingFarVoyage1938` (red before). Landing unit tests 57 files green; 78 of 78 setups at 0;
+  Malta the same; `landingRows all` 0.
+- **Next:** R55d.

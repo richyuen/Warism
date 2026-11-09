@@ -7,6 +7,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-895 · 2026-11-09 · accepted — A far port's next voyage is joined only within a week's march of the nearest (R55c)
+- **Context.** Critic run 56, R56-N2 (both builds): 24033 (Japan, two groups), orders only in the first 8 days. t173's
+  click of 367, in Hokkaido, to China found no free group and none to call, and took `chooseTransports`' last way: the
+  next voyage of a landing that had sailed from port 104, far down Honshu. 367 walked there 73 days, past Tokyo, and
+  landed 77 days after its click; no checker saw it (`farPort` judges new landings, `slowClick` could not reckon it).
+- **Decision.** That last way (ADR-830's "else, as a later voyage, a landing for that place that sailed") is taken at
+  a port other than the division's land's nearest only where its march there is no more than SPLIT_SOONER_HOURS (a
+  week, the bound by which a click splits to its own port, R43a) longer than to the nearest (`farVoyage`, as
+  `callSooner` reckons a march). Else none: the order is refused at the click, told why (no transports).
+- **Stands on (ADR-803).** ADR-830's joining order: unchanged but this bound on its last way. R43a / SPLIT_SOONER_HOURS:
+  the same week. ADR-843 (`slowClick`: a click refused at the click, told why, is not slow). The landing tests (57
+  files) green.
+- **Results.** `landingFarVoyage1938` (red before: 367 73 days in a gathering landing): none over 30 days, 0 broken.
+  The 78 setups 78 of 78 at 0; Malta the same on 21 seeds; `landingRows all` 0.
+- **Consequences.** Such a click is refused where it was taken; the player clicks again when a group is free.
+
 ### ADR-894 · 2026-11-09 · accepted — A landing at sea counts the groups carrying it; a row says how many are ashore (R55b)
 - **Context.** Critic run 56, R56-N1 (both builds): Britain (27123, 27127, 27129), ten to Bremerhaven, eight join and
   seven sail at h90 with one still days from Portsmouth. The row read "at sea: lands in about 3 days" for 54 hours

@@ -1126,9 +1126,11 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
     Done (ADR-894): its days to land are the carrying groups' (the one kept at the port counted its voyage each hour);
     the row counts those ashore. In the page on the three: the longest same "lands in" 18 h, "7 of 8 ashore; sails in
     about 6 days" from h150 to "over: 8 landed". `landingRowAshore1938` (59 h before).
-  - [ ] R55c R56-N2: a click that joins a sailed landing's next voyage from far off is bounded as a new one is
+  - [x] R55c R56-N2: a click that joins a sailed landing's next voyage from far off is bounded as a new one is
     (`farPort`): 24033 with orders stopped after day 8 (`ORDERDAYS=8 npx tsx critic/scripts/c56_orderdays.ts`), 367 not
     77 days from click to shore.
+    Done (ADR-895): a far port's next voyage is joined only within a week's march of the nearest (`farVoyage`); else
+    refused at the click, told why. 367 no longer joins; `landingFarVoyage1938` (73 days before).
   - [ ] R55d R56-N3: the fuzz judges more clicks: a `landingInvariants` mode with orders that stop early (`orderDays`),
     in the checker's suite of seeds, so that R56-B1's and R56-N2's cases would have broken it.
   - [ ] R55e Small: after a cancel, 323's ticker says "left its landing for a new one"; the "they come back for it"
