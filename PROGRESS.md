@@ -2306,3 +2306,9 @@
 - On the critic's 26 seeds × 6 setups: 149 of 156 at 0. The 7 found: five clicks walking weeks to a far port (up to
   88.5 days), filed R55f; 26039 Britain's 273 `stuck` 45 days, filed R55g. The "marches are slow" objection is taken.
 - **Next:** R55e, R55f, R55g; then the probes replayed and critic run 57.
+
+## 2026-11-09 — R55e: who leaves a landing is told why; the transports line says what is at hand (ADR-897)
+- After a cancel, those stopped are not told "left its landing for a new one" (the row tells it); one leaving for a
+  march is told "for its new order"; "6 transports needed, 48 at hand". `landingCancelFreed1938` +2 cases (red
+  before); e2e by hand: landingsBar (its words follow), landingLeftTold, ticker (13 passed); `landingRows all` 0.
+- **Next:** R55f.

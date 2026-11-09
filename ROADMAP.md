@@ -1136,9 +1136,11 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
     Done (ADR-896): a click with no idle group is reckoned by its nation's other groups (from their leg's end); the
     tool takes order days; the suite runs three cases with orders for 8 days. R56-N2's case breaks before R55c, not
     after. On the critic's 26 seeds × 6 setups, 149 of 156 at 0; the 7 found are R55f and R55g.
-  - [ ] R55e Small: after a cancel, 323's ticker says "left its landing for a new one"; the "they come back for it"
+  - [x] R55e Small: after a cancel, 323's ticker says "left its landing for a new one"; the "they come back for it"
     news stays after the division has marched off (with R55a); "transports 48, 6 needed" when 48 are at hand reads as
     a shortage.
+    Done (ADR-897): a cancel's stopped ones are not told they left (the row says so); one leaving for a march is told
+    "for its new order"; "6 transports needed, 48 at hand". The stale "they come back for it" went with R55a.
   - [ ] R55f Found by R55d: a click's division walks weeks to a far port, no group free to come to its own (the
     "marches are slow against voyages" objection, measured). `npx tsx tools/diag/landingInvariants.ts <seed> <setup>
     120 <seed> <probe> <groups> [order days]` at 0 broken on: 26035 3517 30 2 8 (t188's 367, 44 days), 26039 3517 30 2 8

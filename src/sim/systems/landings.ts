@@ -594,7 +594,9 @@ export function tellLandingsLeft(world: World): void {
   for (const [id, was] of left) {
     if (!world.formations.has(id)) continue;
     const l = world.landings.get(was);
-    if (!l || l.divisions.has(id) || l.divisions.size === 0) continue;
+    // A landing turned back (a cancel): its row says who stopped where (ROADMAP R55e; critic run 56: 323 read "left its
+    // landing for a new one").
+    if (!l || l.divisions.has(id) || l.divisions.size === 0 || l.state === LandingState.returning) continue;
     world.out.emit(world.tick, EventKind.LeftLanding, id, c.nation[id]!, c.x[id]!, c.y[id]!);
   }
 }

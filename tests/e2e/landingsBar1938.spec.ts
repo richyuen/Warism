@@ -63,7 +63,7 @@ test("a landing's row: gathering at Tokyo, then at sea, then over; its division 
   const row = page.getByTestId('landing-row');
   await expect(row).toHaveAttribute('data-state', 'gathering');
   await expect(page.getByTestId('landing-title')).toContainText('from Tokyo');
-  await expect(page.getByTestId('landing-ships')).toContainText(/transports \d+, \d+ needed/);
+  await expect(page.getByTestId('landing-ships')).toContainText(/\d+ transports needed, \d+ at hand/);
   await page.getByTestId('landing-toggle').click();
   await expect(page.getByTestId('landing-division')).toHaveCount(1);
   await page.screenshot({ path: path.join(shotDir(info), 'landings-desk-gathering.png') });

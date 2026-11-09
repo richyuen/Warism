@@ -1739,7 +1739,8 @@ export class SimServer {
     } else if (kind === EventKind.ConvoyUnescorted) {
       tell('unescorted', 0);
     } else if (kind === EventKind.LeftLanding) {
-      tell('leftLanding', 0);
+      // For another landing, or for a march (reason 1: no landing of its own now; ROADMAP R55e).
+      tell('leftLanding', world.formations.has(id) && landingOfDivision(world, id) === undefined ? 1 : 0);
     } else if (kind === EventKind.NextVoyage) {
       tell('nextVoyage', 0);
     } else if (kind === EventKind.LostAtSea) {

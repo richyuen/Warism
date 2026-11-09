@@ -7,6 +7,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-897 · 2026-11-09 · accepted — Who leaves a landing is told why; the transports line says what is at hand (R55e)
+- **Context.** Critic run 56's small items: after a cancel, 323's ticker read "left its landing for a new one" (it
+  stopped where it stood; no new one); and a gathering row's "transports 48, 6 needed" with 48 at hand read as a
+  shortage. (The third, "they come back for it" after it marched off, went with R55a: one ashore leaves a landing
+  turned back, and the panel's notice goes with its state, `staleNotice`.)
+- **Decision.** (1) A landing turned back tells none of those its cancel stopped that they left it (`tellLandingsLeft`):
+  the row says "n stopped where they stood". (2) One leaving a landing for a march, with no landing of its own after
+  the order, is told "it leaves its landing for its new order" (`leftLanding`, reason 1), not "for its new one". (3)
+  "{need} transports needed, {have} at hand".
+- **Results.** `landingCancelFreed1938` gains both (red before); `landingsBar1938`'s text follows the words (the
+  feature's own test); `landingLeftTold1938`, `ticker1938`, `orderNewsStale` green; `landingRows all` 0.
+
 ### ADR-896 · 2026-11-09 · accepted — The landing fuzz judges clicks with no idle group, and runs with orders that stop (R55d)
 - **Context.** Critic run 56, R56-N3: `slowClick` reckoned 369 of 2,488 clicks over 77 runs; R56-B1's and R56-N2's
   cases passed at 0 broken. A click with no idle group of its nation had no best way (`bestWayHours` Infinity) and was

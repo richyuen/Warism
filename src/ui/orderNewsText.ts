@@ -11,7 +11,8 @@ export function orderNewsText(n: OrderNews, name: string, count = 1): string {
   if (n.kind === 'thrownAshore') return n.at ? t('order.thrownAshore', { name, at: n.at }) : t('order.thrownAshoreNoPlace', { name });
   if (n.kind === 'landedAway') return t('order.landedAway', { name });
   if (n.kind === 'unescorted') return t('order.unescorted', { name });
-  if (n.kind === 'leftLanding') return t('order.leftLanding', { name });
+  // Left for a march, not another landing (reason 1; ROADMAP R55e, critic run 56: "for a new one" with none).
+  if (n.kind === 'leftLanding') return t(n.reason === 1 ? 'order.leftLandingMarch' : 'order.leftLanding', { name });
   if (n.kind === 'nextVoyage') return t('order.nextVoyage', { name });
   if (n.kind === 'sameLanding') return n.reason > 1 ? t('order.sameLandingMany', { name, more: n.reason - 1 }) : t('order.sameLanding', { name });
   if (n.kind === 'lostAtSea') return t('order.lostAtSea', { name });
@@ -35,7 +36,7 @@ export function orderNewsBrief(n: OrderNews, count: number, name: string): strin
   if (n.kind === 'thrownAshore') return n.at ? t('order.thrownAshoreBrief', { name: tag, at: n.at }) : t('order.thrownAshoreNoPlaceBrief', { name: tag });
   if (n.kind === 'landedAway') return t('order.landedAwayBrief', { name: tag });
   if (n.kind === 'unescorted') return t('order.unescortedBrief', { name: tag });
-  if (n.kind === 'leftLanding') return t('order.leftLandingBrief', { name: tag });
+  if (n.kind === 'leftLanding') return t(n.reason === 1 ? 'order.leftLandingMarchBrief' : 'order.leftLandingBrief', { name: tag });
   if (n.kind === 'nextVoyage') return t('order.nextVoyageBrief', { name: tag });
   if (n.kind === 'sameLanding') return n.reason > 1 ? t('order.sameLandingManyBrief', { name: tag, more: n.reason - 1 }) : t('order.sameLandingBrief', { name: tag });
   if (n.kind === 'lostAtSea') return t('order.lostAtSeaOneBrief', { name: tag });

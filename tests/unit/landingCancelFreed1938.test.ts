@@ -36,8 +36,11 @@ describe('a landing turned back keeps only those aboard (ROADMAP R55a)', () => {
     const w = r.world;
     const row = r.rows.find((x) => x.divisions.some((d) => d.id === left[0]))!;
     const at = left.map((id) => [w.formations.cols.x[id], w.formations.cols.y[id]]);
+    const before = r.news.length;
     r.s.handle({ type: 'cancelLanding', id: row.id }, 0);
     r.step();
+    // R55e: not told "left its landing for a new one"; the row says who stopped where.
+    expect(r.news.slice(before).filter((n) => n.kind === 'leftLanding' && left.includes(n.id))).toEqual([]);
     for (const id of left) expect(landingOfDivision(w, id), `${id} out of the landing`).toBeUndefined();
     // Stood: in its own cell (an order to where it stands takes it to the cell's middle); later the AI has it (ADR-875).
     left.forEach((id, i) => expect([Math.floor(w.formations.cols.x[id]!), Math.floor(w.formations.cols.y[id]!)], `${id} stood`).toEqual(at[i]!.map((v) => Math.floor(v!))));
@@ -59,5 +62,24 @@ describe('a landing turned back keeps only those aboard (ROADMAP R55a)', () => {
     r.step();
     const now = left.map((id) => landingOfDivision(w, id));
     for (const l of now) expect(l?.state, 'in a landing gathering for Valletta').toBe(LandingState.gathering);
+  });
+
+  // R55e: one leaving a gathering landing for a march (no landing of its own now) is told so, not "for a new one".
+  it('one of the six sent to a place in Italy at h12: told it leaves its landing for its new order', () => {
+    const r = new RowRun(27125, ITA);
+    r.cmds([{ kind: 'declareWar', attacker: ITA, defender: ENG }]);
+    r.step();
+    const ids = nearestDivisions(r.world, ITA, ROME, 6);
+    r.ids = ids;
+    for (const id of ids) r.cmds([{ kind: 'moveFormation', id, x: VALLETTA[0], y: VALLETTA[1], nation: ITA }]);
+    for (let h = 1; h < 12; h++) r.step();
+    const one = ids[0]!;
+    expect(landingOfDivision(r.world, one)?.state).toBe(LandingState.gathering);
+    const before = r.news.length;
+    r.cmds([{ kind: 'moveFormation', id: one, x: ROME[0] - 3, y: ROME[1] - 3, nation: ITA }]);
+    r.step();
+    expect(landingOfDivision(r.world, one)).toBeUndefined();
+    const told = r.news.slice(before).filter((n) => n.kind === 'leftLanding' && n.id === one);
+    expect(told.map((n) => n.reason)).toEqual([1]);
   });
 });
