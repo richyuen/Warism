@@ -225,6 +225,8 @@ export class SimServer {
    */
   private thrownHome = new Map<number, string>();
   private thrownAshore = new Map<number, string>();
+  /** Where each division of a landing came ashore away from its target (ROADMAP R55h; critic run 55: "away from Valletta" said not where). */
+  private awayAshore = new Map<number, string>();
   /**
    * Each landing's click as first seen (ROADMAP R50b; critic run 52, R52-N2: once its siblings were over, gone from the
    * world, a part was a click of its own, and one turning back is no sibling): kept to its end.
@@ -1239,7 +1241,9 @@ export class SimServer {
         return;
       }
       const [lx, ly] = this.landingsLast.get(l)?.land ?? [ev[i + 4]!, ev[i + 5]!];
-      ends.set(id, landedAway(world, Math.floor(ly) * world.cells.w + Math.floor(lx), ev[i + 4]!, ev[i + 5]!) ? 'away' : 'landed');
+      const away = landedAway(world, Math.floor(ly) * world.cells.w + Math.floor(lx), ev[i + 4]!, ev[i + 5]!);
+      ends.set(id, away ? 'away' : 'landed');
+      if (away) this.awayAshore.set(id, this.placeName(world, ev[i + 4]!, ev[i + 5]!));
     } else if (kind === EventKind.LandingRepulsed) {
       // Its group sails home with all aboard (`sailHome`): those of its landing on it are thrown back too, though the
       // event names one (critic run 53's replay on 23071: 271, aboard with 270, read "came ashore away").
@@ -1312,12 +1316,16 @@ export class SimServer {
       const thrown = last.divisions.map((d) => d.id).filter((d) => this.landingEnds.get(id)?.get(d) === 'repulsed');
       const places = new Set(thrown.map((d) => this.thrownAshore.get(d) ?? ''));
       const ashore = places.size === 1 && !places.has('') ? { ashore: [...places][0]! } : {};
+      // Those ashore away from the target all at one place: named too (R55h).
+      const awayPlaces = new Set(last.divisions.map((d) => d.id).filter((d) => this.landingEnds.get(id)?.get(d) === 'away').map((d) => this.awayAshore.get(d) ?? ''));
+      const awayAt = t.away > 0 && awayPlaces.size === 1 && !awayPlaces.has('') ? { awayAt: [...awayPlaces][0]! } : {};
       for (const d of last.divisions) {
         this.thrownHome.delete(d.id);
         this.thrownAshore.delete(d.id);
+        this.awayAshore.delete(d.id);
       }
       // Its divisions' voyages were the landing's: over, they say nothing of it (their panels say where they are now).
-      this.landingsOver.set(id, { ...last, state: 'over', sails: null, divisions: last.divisions.map((d) => ({ id: d.id, voyage: null })), outcome: { kind, tick: world.tick, landed: t.landed, lost: t.lost, ...(t.away > 0 ? { away: t.away } : {}), ...(t.repulsed > 0 ? { repulsed: t.repulsed } : {}), ...(t.stayed > 0 ? { stayed: t.stayed } : {}), ...(t.repulsed > 0 ? ashore : {}), ...(how ?? {}) } });
+      this.landingsOver.set(id, { ...last, state: 'over', sails: null, divisions: last.divisions.map((d) => ({ id: d.id, voyage: null })), outcome: { kind, tick: world.tick, landed: t.landed, lost: t.lost, ...(t.away > 0 ? { away: t.away } : {}), ...(t.repulsed > 0 ? { repulsed: t.repulsed } : {}), ...(t.stayed > 0 ? { stayed: t.stayed } : {}), ...(t.repulsed > 0 ? ashore : {}), ...awayAt, ...(how ?? {}) } });
       this.landingEnds.delete(id);
     }
     // An over part stays while its click has a part under way, and a day from its click's last end (R50b).
@@ -1751,7 +1759,7 @@ export class SimServer {
       this.landedAt.set(id, ev[i]!);
       // Thrown back, ashore where its transports put in: so told, not "landed away" (R53a).
       if (this.thrownHome.has(id)) tell('thrownAshore', 0, id, { at: this.placeName(world, ev[i + 4]!, ev[i + 5]!) });
-      else if (landedAway(world, target, ev[i + 4]!, ev[i + 5]!)) tell('landedAway', 0);
+      else if (landedAway(world, target, ev[i + 4]!, ev[i + 5]!)) tell('landedAway', 0, id, { at: this.placeName(world, ev[i + 4]!, ev[i + 5]!) });
       this.ordered.delete(id);
     } else if (kind === EventKind.FormationDestroyed || (kind === EventKind.FormationArrived && !world.seaBound.has(id) && landingOfDivision(world, id) === undefined && !world.afloat(id) && !refusedLater(ev, i, id))) {
       this.ordered.delete(id);

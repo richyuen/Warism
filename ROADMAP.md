@@ -1158,10 +1158,22 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
     Done (ADR-899): 273 (12,412 men) waited on a group of 4,200 with none to call within the wait; nobody fitted, so
     nothing sailed, untold. Now a group from anywhere is called, else those at the port are told. Red before, in the
     R55d suite; 156 of 156 at 0.
+  - [x] R55h Run 55's small items (the user's call, 2026-11-09: before critic run 57): "lost 1 ships" (a plural by
+    count); "United States's" (a possessive of a name ending in s); a broke-off landing's "came ashore away from
+    Valletta" says where (as "near Catania"); the editor filter takes aliases ("uk", "ussr") and on a miss does not
+    show the chosen nation alone; a phone Breakthrough's clicks fall on the map, not the nation panel.
+    Done (ADR-900): "lost 1 ship"; "United States' air force"; "2 came ashore near Palermo, away from Valletta" (row
+    and news); the filter takes tags and aliases, an exact one chosen first, and a miss lists all ("none match; all
+    shown"); on a phone the nation panel is closed while Breakthrough or Territory is on. New tests red before.
+  - [ ] R55i R55-N1: a war joined by guarantee or alliance leaves a History row ("France joined the war on Poland's
+    side (guarantee)"), a guarantee given has one, and "My wars only" keeps a war's rows when the player is on one of
+    its sides (26309, France).
+  - [ ] R55j R55-N2: landscape phone (844 × 390): the Build tab shows its tiles, not 2 of 10 in a 170-px panel, and
+    the Actions tab's air-wing controls are on the screen; `buildTab1938` gains 844 × 390.
   - Kept: `landingInvariants` and `landingRows` 0 broken; R55-B1's commands 0; the Malta endings.
 - Naval's design objections (ADR-843): a cancel hands the army to the AI at once (ADR-759): not taken, ADR-875, the
   user's call. Malta is never taken: not taken, the rules working (run 55). Marches are slow against voyages (a
   division walks about a cell a day, so the port decides weeks; a group sailing to the division would often be
   quicker): taken as R55f once R55d's checker measured it (five clicks up to 88.5 days); R55c bounds the case of a
   sailed landing's next voyage.
-- Carried, not in this batch (dimensions at their bars): R55-N1, R55-N2 and run 55's small items (batch 9's list).
+- Carried: R55-N1, R55-N2 and run 55's small items: taken as R55h–j by the user's call (2026-11-09).

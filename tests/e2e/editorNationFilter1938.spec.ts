@@ -10,6 +10,7 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // that does. Cleared, the whole list again. The mask's list of nations is narrowed the same way.
 
 const POL = NATIONS_1938.findIndex((n) => n.tag === 'POL') + 1;
+const ENG = NATIONS_1938.findIndex((n) => n.tag === 'ENG') + 1;
 const options = (page: Page, id: string): Promise<string[]> => page.getByTestId(id).locator('option').allInnerTexts();
 
 for (const [name, width, height] of [['desk', 1400, 800], ['phone', 390, 844]] as const) {
@@ -39,10 +40,18 @@ for (const [name, width, height] of [['desk', 1400, 800], ['phone', 390, 844]] a
     // Case aside: "POLAND" is Poland (accents aside too: `fold`).
     await filter.fill('POLAND');
     expect(await options(page, 'editor-nation')).toEqual(['Poland']);
-    // Nothing matches: the chosen one stays, the only one, and the count says none.
+    // Nothing matches: the whole list, Poland still chosen, and the count says so (R55h; critic run 55: the chosen one
+    // alone read as a match).
     await filter.fill('zzzz');
-    expect(await options(page, 'editor-nation')).toEqual(['Poland']);
-    await expect(page.getByTestId('editor-nation-count')).toHaveText(`0 of ${all.length - 1}`);
+    expect(await options(page, 'editor-nation')).toEqual(all);
+    await expect(page.getByTestId('editor-nation')).toHaveValue(String(POL));
+    await expect(page.getByTestId('editor-nation-count')).toHaveText('none match; all shown');
+    // Other names (R55h; critic run 55: "uk", "ussr" found nothing): the nation they name, chosen.
+    await filter.fill('uk');
+    expect(await options(page, 'editor-nation')).toContain('United Kingdom');
+    await expect(page.getByTestId('editor-nation')).toHaveValue(String(ENG));
+    await filter.fill('USSR');
+    expect(await options(page, 'editor-nation')).toEqual(['Soviet Union']);
     // The mask's list too.
     await page.getByTestId('editor-mask').selectOption('nation');
     await filter.fill('ger');

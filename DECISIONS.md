@@ -7,6 +7,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-900 · 2026-11-09 · accepted — Run 55's small items: counts, possessives, where a landing came ashore, the editor's filter, a phone's Breakthrough (R55h)
+- **Context.** Critic run 55's small list, carried through batch 10, taken before critic run 57 by the user's call
+  (2026-11-09): "lost 1 ships"; "United States's air force"; "2 came ashore away from Valletta" not saying where (a
+  landing thrown back says "near Catania"); the editor's nation filter knew no other names ("uk", "ussr") and on a miss
+  listed the chosen nation alone; on a phone, Germany's panel lay over Berlin and Warsaw and both Breakthrough clicks
+  fell on it.
+- **Decision.** (1) A sea battle's ships by count ("1 ship", "3 ships"; the second side's count names its ships too).
+  (2) `t()`: a `{name}'s` filled with a name ending in s gives "name'" (all nine such messages take a nation's name).
+  (3) The worker keeps where each division came ashore away from its target; the row names it when all are at one
+  place ("2 came ashore near Palermo, away from Valletta") and the news does ("…came ashore near Palermo, away from its
+  target."). (4) The filter holds a nation by its name, its tag whole, or an alias from its start (ENG: uk, britain,
+  england, gb; USA: us, america; SOV: ussr, soviet, russia; NED: holland, dutch; IRN: persia; SIA: thailand; CZS:
+  czech; JAP: nippon); one whose name, tag or alias is the text whole is chosen first; a filter that holds none lists
+  them all, "none match; all shown". (5) On a phone, the nation panel is closed while a God tool acting for the selected
+  nation (Breakthrough, Territory) is on; the tools' bar, apart from it, keeps the tool and its hint and refusal.
+- **Results.** `historyWording` (new), `landingAwayPlace1938` (new), red before; `navalBattle1938`'s sea-battle words
+  `editorNationFilter1938`'s miss and `landingOutcome1938`'s "away" follow the words (the features' own tests);
+  the air's rows keep their bare counts (`airHistory1938`, red on a first try that gave them "ships"); `godBreakthrough1938` gains a phone
+  case, red before; `godUi1938` green; `landingRows page` 0.
+
 ### ADR-899 · 2026-11-09 · accepted — A landing none of whose divisions fits its groups calls one from anywhere, or tells them (R55g)
 - **Context.** R55d on 26039 Britain, orders for 8 days: 273 (12,412 men) stood 45 days at its port in gathering
   landing 3 by its one group, 1076 (room 4,200), its row "sails now" (`stuck`). At the sail hour `noRoom` calls a group

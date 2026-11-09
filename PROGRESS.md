@@ -2326,3 +2326,11 @@
   nobody fitted, so nothing sailed. Now a group from anywhere is called, else those at the port are told. The case in
   the R55d suite, red before; the critic's 156 setups 156 at 0; `landingRows all` 0; pin unchanged.
 - **Next:** batch 10 is done: the critic's probes replayed (ADR-833), then critic run 57.
+
+## 2026-11-09 — R55h: run 55's small items (ADR-900)
+- By the user's call, before critic run 57: R55h–j filed (run 55's small items, R55-N1, R55-N2).
+- "lost 1 ship"; "United States' air force" (`t()`'s possessive); a landing ashore away from its target names where
+  (row and news, "near Palermo"); the editor filter takes tags and aliases and lists all on a miss; on a phone the
+  nation panel is closed while Breakthrough or Territory is on. `historyWording`, `landingAwayPlace1938` and the phone
+  Breakthrough case red before; the filter and sea-battle tests follow the words; `landingRows page` 0.
+- **Next:** R55i.

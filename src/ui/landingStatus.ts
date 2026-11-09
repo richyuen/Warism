@@ -11,13 +11,14 @@ export function landingStatus(r: LandingRow): string {
     const more = (skip: string): string => {
       const parts: string[] = [];
       if (skip !== 'lost' && o.lost > 0) parts.push(t('landing.more.lost', { n: o.lost }));
-      if (skip !== 'away' && (o.away ?? 0) > 0) parts.push(t('landing.more.away', { n: o.away!, target }));
+      if (skip !== 'away' && (o.away ?? 0) > 0) parts.push(o.awayAt ? t('landing.more.awayAt', { n: o.away!, target, at: o.awayAt }) : t('landing.more.away', { n: o.away!, target }));
       if (skip !== 'repulsed' && (o.repulsed ?? 0) > 0) parts.push(t('landing.more.repulsed', { n: o.repulsed! }));
       if (skip !== 'sunk' && (o.stayed ?? 0) > 0) parts.push(t('landing.more.stayed', { n: o.stayed! }));
       return parts.map((p) => `, ${p}`).join('');
     };
     if (o.kind === 'landed') return t('landing.over.landed', { n: o.landed }) + more('');
-    if (o.kind === 'away') return t('landing.over.away', { n: o.away ?? 0, target }) + more('away');
+    // Where they came ashore, all at one place (R55h; critic run 55: "away from Valletta" said not where).
+    if (o.kind === 'away') return (o.awayAt ? t('landing.over.awayAt', { n: o.away ?? 0, target, at: o.awayAt }) : t('landing.over.away', { n: o.away ?? 0, target })) + more('away');
     // Thrown back, and where they came ashore, all at one place (R53a; critic run 54, R54-B1).
     if (o.kind === 'repulsed') return (o.ashore ? t('landing.over.repulsedAt', { n: o.repulsed ?? 0, at: o.ashore }) : t('landing.over.repulsedN', { n: o.repulsed ?? 0 })) + more('repulsed');
     if (o.kind === 'lost') return t('landing.over.lostN', { n: o.lost }) + more('lost');

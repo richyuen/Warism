@@ -105,7 +105,10 @@ export function historyText(r: HistoryRow): string {
   const none = `${key}.none`;
   // A sea battle's sides carry the ships each lost (PLAN 4.3c), the air's rows their aircraft or
   // what their bombs took (PLAN 5.11a): {na} and {nb}.
-  const ships = ra === 'side' || rb === 'side' ? { na: count(ra === 'side' ? seaSide(r.a).ships : 0), nb: count(rb === 'side' ? seaSide(r.b).ships : 0) } : {};
+  // "1 ship", "3 ships" (ROADMAP R55h; critic run 55: "lost 1 ships").
+  // Other kinds with sides (the air's) keep their bare counts: their messages name what was lost.
+  const shipsN = (n: number): string => (r.kind === EventKind.SeaBattle ? t(n === 1 ? 'history.ships.one' : 'history.ships.many', { n: count(n) }) : count(n));
+  const ships = ra === 'side' || rb === 'side' ? { na: shipsN(ra === 'side' ? seaSide(r.a).ships : 0), nb: shipsN(rb === 'side' ? seaSide(r.b).ships : 0) } : {};
   // A nuclear strike's bomb and its dead (PLAN 6.5a): {bomb} and {nb}; the city nearest it, {near} (PLAN 6.11c).
   const strike = rb === 'strike' ? { bomb: t(nukeStrike(r.b).yieldN >= 2 ? 'history.hBomb' : 'history.aBomb'), toll: strikeToll(r), near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '' } : {};
   // A decision to strike (PLAN 7.25c): its place, and its utility told in words, not as a number.

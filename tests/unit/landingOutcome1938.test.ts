@@ -65,7 +65,8 @@ describe("a landing's outcome is where its divisions ended (ROADMAP R50a)", () =
     expect(over.length, 'its landing over').toBeGreaterThan(0);
     const away = over.find((row) => row.outcome!.kind === 'away');
     expect(away, `broke off: ${over.map((row) => landingStatus(row)).join(' | ')}`).toBeDefined();
-    expect(landingStatus(away!)).toMatch(/^over: its transports broke off; \d came ashore away from Valletta/);
+    // Where they came ashore, named (R55h, ADR-900).
+    expect(landingStatus(away!)).toMatch(/^over: its transports broke off; \d came ashore near .+, away from Valletta/);
     expect(away!.outcome!.landed).toBe(0);
     expect(r.broken).toEqual([]);
   });

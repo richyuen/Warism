@@ -93,7 +93,13 @@ export function setLocale(l: Locale): void {
 export function t(key: MessageKey, params?: Record<string, string | number>): string {
   const msg = catalogs[locale.value][key] ?? en[key];
   if (!params) return msg;
-  return msg.replace(/\{(\w+)\}/g, (m, name: string) => (name in params ? String(params[name]) : m));
+  // A name ending in s takes a bare apostrophe: "United States' air force", not "United States's" (ROADMAP R55h;
+  // critic run 55). Only a filled {name}'s; text written in a message keeps its own.
+  return msg.replace(/\{(\w+)\}('s\b)?/g, (m, name: string, poss?: string) => {
+    if (!(name in params)) return m;
+    const v = String(params[name]);
+    return poss ? (/s$/.test(v) ? `${v}'` : `${v}'s`) : v;
+  });
 }
 
 /** Display name of an i18n key, or of a '=' + literal name (spawned nations). */

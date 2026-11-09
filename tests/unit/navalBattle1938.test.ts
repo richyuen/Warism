@@ -241,7 +241,8 @@ describe('gunnery by range: the AT (PLAN 4.3a)', () => {
     expect(row.bn).toBe('nation.ENG');
     const lost = seaSide(row.b).ships;
     process.stderr.write(`${historyText(row)}\n`);
-    expect(historyText(row)).toBe(`Germany and United Kingdom fought at sea: Germany lost 0 ships, United Kingdom ${lost}`);
+    // Each side's ships by count (ROADMAP R55h: "lost 1 ships" was "1 ship"; the second side's count names its ships too).
+    expect(historyText(row)).toBe(`Germany and United Kingdom fought at sea: Germany lost 0 ships, United Kingdom ${lost === 1 ? '1 ship' : `${lost} ships`}`);
   });
 
   /** Steps `s` an hour at a time while `go` holds (at most `max` hours), with each hour's sea battle rows and the fleets that broke off. */

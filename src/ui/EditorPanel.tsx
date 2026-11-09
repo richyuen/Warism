@@ -72,6 +72,37 @@ function fold(s: string): string {
   return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 }
 
+/**
+ * Other names a nation is typed by, by its tag (ROADMAP R55h; critic run 55: "uk" and "ussr" found nothing): one held
+ * when it starts with the filter (two letters at least); its tag held whole. Its own name is matched as before.
+ */
+const ALIASES: Record<string, readonly string[]> = {
+  ENG: ['uk', 'britain', 'great britain', 'england', 'gb'],
+  USA: ['us', 'usa', 'america'],
+  SOV: ['ussr', 'soviet', 'russia', 'cccp'],
+  NED: ['holland', 'dutch'],
+  IRN: ['persia'],
+  SIA: ['thailand'],
+  CZS: ['czech'],
+  JAP: ['nippon'],
+};
+
+/** Whether nation `name` (an i18n key, "nation.ENG", or a spawned one's "=Name") is held by filter `key`, folded. */
+export function nationMatches(name: string, key: string): boolean {
+  if (key === '') return true;
+  if (fold(displayName(name)).includes(key)) return true;
+  const tag = name.startsWith('nation.') ? name.slice(7) : '';
+  if (tag === '') return false;
+  if (tag.toLowerCase() === key) return true;
+  return key.length >= 2 && (ALIASES[tag] ?? []).some((a) => a.startsWith(key));
+}
+
+/** Whether filter `key` is nation `name`'s own name, tag or one of its other names whole: the one chosen first. */
+function nationIs(name: string, key: string): boolean {
+  const tag = name.startsWith('nation.') ? name.slice(7) : '';
+  return fold(displayName(name)) === key || (tag !== '' && (tag.toLowerCase() === key || (ALIASES[tag] ?? []).includes(key)));
+}
+
 export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onChange, onUndo, onRedo, onClose, onGold, onAnnex, onImport, flagOf, onFlag, onExportScenario, onImportScenario, scenarioStatus, templates, onWarheads, refusal, refusalBase }: EditorPanelProps) {
   const [warheads, setWarheads] = useState('1');
   const [scenarioName, setScenarioName] = useState('');
@@ -86,13 +117,16 @@ export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onC
   const sorted = [...nations].sort((a, b) => displayName(a.name).localeCompare(displayName(b.name)));
   const sortedDead = [...dead].sort((a, b) => displayName(a.name).localeCompare(displayName(b.name)));
   const key = fold(filter.trim());
-  const matches = (name: string): boolean => key === '' || fold(displayName(name)).includes(key);
+  // A filter that holds none lists them all, its count saying so (ROADMAP R55h; critic run 55: a miss showed the chosen
+  // nation alone, as if it matched).
+  const miss = key !== '' && ![...sorted, ...sortedDead].some((n) => nationMatches(n.name, key));
+  const matches = (name: string): boolean => miss || nationMatches(name, key);
   const shown = { live: sorted.filter((n) => matches(n.name)), dead: sortedDead.filter((n) => matches(n.name)) };
   const listed = sorted.length + sortedDead.length;
   // A list's options: those the filter keeps, and the one chosen in it whatever the filter (a select shows its value).
   const nationOptions = (chosen: number) => (
     <>
-      {key === '' || chosen === 0 ? <option value={0}>{t('editor.unowned')}</option> : null}
+      {key === '' || miss || chosen === 0 ? <option value={0}>{t('editor.unowned')}</option> : null}
       {sorted.map((n) =>
         n.id === chosen || matches(n.name) ? (
           <option key={n.id} value={n.id}>
@@ -114,11 +148,11 @@ export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onC
     setFilter(text);
     const k = fold(text.trim());
     if (k === '') return;
-    const first = [...sorted, ...sortedDead].find((n) => fold(displayName(n.name)).includes(k));
+    const first = [...sorted, ...sortedDead].find((n) => nationIs(n.name, k)) ?? [...sorted, ...sortedDead].find((n) => nationMatches(n.name, k));
     if (!first) return;
     const keeps = (id: number): boolean => {
       const n = [...sorted, ...sortedDead].find((x) => x.id === id);
-      return n !== undefined && fold(displayName(n.name)).includes(k);
+      return n !== undefined && nationMatches(n.name, k);
     };
     const p: Partial<EditorState> = {};
     if (state.layer === 'nation' && !keeps(state.nation)) p.nation = first.id;
@@ -162,7 +196,7 @@ export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onC
           />
           {key !== '' ? (
             <span class="act-cost" data-testid="editor-nation-count">
-              {t('editor.filterCount', { n: shown.live.length + shown.dead.length, of: listed })}
+              {miss ? t('editor.filterNone') : t('editor.filterCount', { n: shown.live.length + shown.dead.length, of: listed })}
             </span>
           ) : null}
         </div>

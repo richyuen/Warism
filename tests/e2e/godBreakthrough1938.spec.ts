@@ -62,3 +62,28 @@ test("Breakthrough at peace from the map tools' bar, the panel on its first tab:
   await page.getByTestId('god-tool-city').click();
   await expect(said).toHaveCount(0);
 });
+
+// ROADMAP R55h (critic run 55, small: on a phone with Germany selected, the nation panel lay over Berlin and Warsaw and
+// both Breakthrough clicks fell on it). On a phone the panel is closed while the tool is on, so the clicks reach the
+// map: at peace the bar says why (the clicks were taken); the tool spent, the panel is back.
+test('Breakthrough on a phone: the clicks reach the map, not the nation panel', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?scenario=1938&paused=1&seed=26307');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.sim.mapLayers !== null, null, { timeout: 60_000 });
+  await page.getByTestId('god-btn').click();
+  await page.evaluate((n) => window.__warsim!.view!.select(n), GER);
+  await expect(page.getByTestId('nation-panel')).toBeVisible();
+  await page.getByTestId('god-tool-battle').click();
+  await expect(page.getByTestId('nation-panel')).toHaveCount(0);
+  const [x, y] = cellOf(17, 52.4, W, H);
+  await page.evaluate(([cx, cy]) => window.__warsim!.view!.controller.set({ cx, cy, scale: 8 }), [x, y] as const);
+  await page.waitForTimeout(150);
+  await page.mouse.click(140, 380);
+  await page.mouse.click(250, 380);
+  await expect(page.getByTestId('god-tool-refusal')).toContainText('at war with no one');
+  await page.screenshot({ path: test.info().outputPath('r55h-phone-breakthrough.png') });
+  // The tool is spent by its second click: the panel is back.
+  await expect(page.getByTestId('god-tool-battle')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.getByTestId('nation-panel')).toBeVisible();
+});

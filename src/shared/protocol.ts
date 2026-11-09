@@ -950,7 +950,7 @@ export interface LandingRow {
    * `away` ashore away from it (its transports broke off), `repulsed` thrown back (so, wherever it came ashore after: R52a), `lost` lost at sea with its transports, `stayed` never
    * sailed (its transports sunk before it boarded). `ashore`: where all the thrown back came ashore, one place (R53a). `kind`: `away` none landed and some broke off; `sunk` none sailed.
    */
-  outcome?: { kind: 'landed' | 'away' | 'repulsed' | 'lost' | 'sunk' | 'cancelled' | 'over'; tick: number; landed: number; lost: number; away?: number; repulsed?: number; stayed?: number; home?: number; stopped?: number; ai?: true; ashore?: string };
+  outcome?: { kind: 'landed' | 'away' | 'repulsed' | 'lost' | 'sunk' | 'cancelled' | 'over'; tick: number; landed: number; lost: number; away?: number; repulsed?: number; stayed?: number; home?: number; stopped?: number; ai?: true; ashore?: string; awayAt?: string };
 }
 
 /** Numbers per held landing in a snapshot's `holds` (ROADMAP R53e). */

@@ -73,6 +73,9 @@ export function App({
   const [scenarioStatus, setScenarioStatus] = useState('');
   // A phone's width (ADR-760): the ticker, the war banners and the legend take less of the map.
   const phone = usePhone();
+  // On a phone, a God tool acting for the selected nation (Breakthrough, Territory) takes map clicks that its panel would
+  // cover (ROADMAP R55h; critic run 55: Germany's panel lay over Berlin and Warsaw): the panel is closed while it is on.
+  const toolOnMap = phone && (hud.godTool.value === 'battle' || hud.godTool.value === 'brush');
   // Re-render when custom flags change (the flag store is outside the signals).
   const [flagVersion, setFlagVersion] = useState(0);
   // The state each order notice was first shown with (ROADMAP R22f): kept for the life of the page.
@@ -381,7 +384,7 @@ export function App({
               : null
           }
         />
-      ) : nation ? (
+      ) : nation && !toolOnMap ? (
         <NationPanel
           nation={nation}
           byId={byId}
