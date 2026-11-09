@@ -38,7 +38,7 @@ const hidden = (page: Page): Promise<{ n: number; out: string[] }> =>
     return { n: tiles.length, out };
   });
 
-for (const [name, width, height] of [['phone', 390, 844], ['laptop', 1280, 720]] as const) {
+for (const [name, width, height] of [['phone', 390, 844], ['landscape phone', 844, 390], ['laptop', 1280, 720]] as const) {
   test(`the played nation's Build tab: every template of a kind at a glance (${name})`, async ({ page }, info) => {
     test.setTimeout(180_000);
     await page.setViewportSize({ width, height });

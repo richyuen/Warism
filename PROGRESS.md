@@ -2341,3 +2341,9 @@
   row (no pledge is made in play). `historyWarJoined1938` red before; pin e0da3e5f → c64a53fb (the log alone).
 - Critic run 55's 27 headless jobs replayed on HEAD (R55a–g): none failed; landing checks 0; differences paths and
   figures. **Next:** R55j.
+
+## 2026-11-09 — R55j: a phone on its side: the panel wide and to the bar, Build in four columns, Actions in two (ADR-902)
+- At 844 × 390 the nation panel was 169 px high (the portrait room for the news under it): 2 of 10 Build tiles, 8 air-wing
+  controls off the screen. Now up to 40 rem wide and to the bar, Build four columns, Actions two. `buildTab1938` gains
+  844 × 390, red before; `phoneLayout1938` green.
+- Batch 10 and R55h–j done. **Next:** the critic's probes replayed (ADR-833), then critic run 57.

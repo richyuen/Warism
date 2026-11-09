@@ -7,6 +7,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-902 · 2026-11-09 · accepted — A phone on its side: the nation panel wide and to the bar, Build in four columns, Actions in two (R55j)
+- **Context.** Critic run 55, R55-N2: at 844 × 390 the Build tab showed 2 of 10 infantry tiles in a 169-px panel, and
+  the Actions tab put 8 air-wing controls below the screen; `buildTab1938` tested 390 × 844 and 1280 × 720 only. The
+  panel's height leaves room under it for the news of a portrait phone (12.6 rem and the bar), which on a phone on its
+  side is the screen's whole.
+- **Decision.** At `max-height: 500px` (the phone on its side, `PHONE_QUERY`'s second half): the nation panel is up to
+  40 rem wide and reaches the bar (standing over the news while open, as the landings bar gives way to it in
+  portrait); the Build grid has four columns; the Actions tab flows in two CSS columns, a row never split, a heading
+  kept with its first row.
+- **Results.** `buildTab1938` gains 844 × 390 (red before: 8 controls off the screen): every tile of the four kinds
+  whole at a glance, no control off the screen on Build or Actions; portrait and laptop unchanged; `phoneLayout1938`
+  green. `docs`: not taken (`build-landscape phone-infantry.png` in the test's output: ten tiles, four columns).
+
 ### ADR-901 · 2026-11-09 · accepted — A nation a bond calls into a war is a row of History, and My wars only keeps that war (R55i)
 - **Context.** Critic run 55, R55-N1: on 26309, played as France, France joined Germany's war on Poland as its
   guarantor; History had only "Germany declared war on Poland" and the peace, and "My wars only" kept France's sea and

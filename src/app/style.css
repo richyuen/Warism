@@ -2443,3 +2443,30 @@ button.unit-icon.on {
   flex: none;
   white-space: nowrap;
 }
+
+/* A phone on its side (ROADMAP R55j; critic run 55, R55-N2: at 844 × 390 the panel was 169 px high, the Build tab 2 of
+   10 tiles, the Actions tab's air-wing controls below the screen). The height the portrait panel leaves to the news
+   below it is the screen's whole here: the panel is wide and reaches the bar, standing over the news while it is
+   open, and the Build grid has four columns. */
+@media (max-height: 500px) {
+  .nation-panel {
+    width: min(40rem, calc(100% - 1rem));
+    max-height: calc(100% - 3.4rem - var(--bar-top, 2.8rem) - 0.4rem);
+    z-index: 3;
+  }
+  .nation-panel .build-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  /* The Actions tab in two columns, each row whole in one (304 px of rows in a 200 px box). */
+  .nation-panel .actions-tab {
+    column-count: 2;
+    column-gap: 1rem;
+  }
+  .nation-panel .actions-tab > * {
+    break-inside: avoid;
+  }
+  /* A heading stays with its first row. */
+  .nation-panel .actions-tab > .panel-sub {
+    break-after: avoid;
+  }
+}

@@ -1171,8 +1171,10 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
     Done (ADR-901): `WarJoined`, "France joined the war on Poland's side, as its guarantor" (an ally: "as its ally");
     My wars only keeps the declaration and the peace of a war the player was called into. No guarantee-given row: none
     is made in play. Pin e0da3e5f → c64a53fb (the log's rows alone).
-  - [ ] R55j R55-N2: landscape phone (844 × 390): the Build tab shows its tiles, not 2 of 10 in a 170-px panel, and
+  - [x] R55j R55-N2: landscape phone (844 × 390): the Build tab shows its tiles, not 2 of 10 in a 170-px panel, and
     the Actions tab's air-wing controls are on the screen; `buildTab1938` gains 844 × 390.
+    Done (ADR-902): on a phone on its side the panel is wide and reaches the bar, Build has four columns, Actions two;
+    `buildTab1938` at 844 × 390 red before, every tile whole and no control off the screen.
   - Kept: `landingInvariants` and `landingRows` 0 broken; R55-B1's commands 0; the Malta endings.
 - Naval's design objections (ADR-843): a cancel hands the army to the AI at once (ADR-759): not taken, ADR-875, the
   user's call. Malta is never taken: not taken, the rules working (run 55). Marches are slow against voyages (a

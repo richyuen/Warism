@@ -77,7 +77,7 @@ export function ActionsTab({ nation, nations, wars, templates, onCommand, wings,
     return o ? displayName(o.name) : `#${id}`;
   };
   return (
-    <section class="god-tab" data-testid="panel-actions">
+    <section class="god-tab actions-tab" data-testid="panel-actions">
       {assist ? (
         <>
           <div class="panel-sub" title={t('act.assistHint')}>
