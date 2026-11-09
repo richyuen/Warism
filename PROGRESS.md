@@ -2225,3 +2225,15 @@
 - The critic's probe: 120 m/px 50–55 (was 33–43), 30 m/px 54–55. `maxGlide1938` red before (0 of 40 frames partway,
   8.7 cells off). Under parallel load gaps passed half a second and were dropped as stalls: now counted as 1 s at most.
 - **Next:** R53n.
+
+## 2026-11-08 — R53n: the Malta landing on 21 seeds, read
+- The critic's `c54_lland.mjs` (copied to `.cache/r53n/` to write there) on the 11 Malta seeds and 25151–25169, the
+  production build on 5354; `c54_lhold.mjs` with shots on 25151 and 25153. Headless, `landingRows`' page check on the
+  same 21 seeds.
+- Spread: 11 thrown back (h156–162), "thrown back: sailing home to Catania" in the bar and the panel to the end, then
+  "over: 2 thrown back; came ashore near Catania", the panel's note and both divisions' news the same. 10 broke off,
+  "2 came ashore away from Valletta", the same in all three. Never "lands in" after a throw-back; no page error;
+  `landingRows` 0 broken on all 21. None short of its bar; no code changed.
+- Seen, not filed as a bar: a broke-off ending names no place (ashore at Palermo on 25153), and Italy lands on Malta
+  on none of the 21 (the British fleet holds every time).
+- **Next:** the batch's last item is done: critic run 55.
