@@ -43,10 +43,20 @@ export function bestWayHours(w: World, id: number, water: number, port = transpo
   return best;
 }
 
-/** A click's best single-division way to `water`, hours: the best of its divisions'. */
-export function clickBest(w: World, ids: readonly number[], water: number): number {
+/**
+ * A click's best single-division way to `water`, hours: the best of its divisions'. With `land` (the landing's land
+ * cell), a division on that land's own landmass walks there and is not reckoned (ROADMAP R54a; critic run 55, 26045:
+ * three in China set a 2.5-day best for the one crossing from Honshu, whose own was 10.2).
+ */
+export function clickBest(w: World, ids: readonly number[], water: number, land = -1): number {
+  const comp = navOf(w).grid.component;
+  const c = w.formations.cols;
+  const W = w.cells.w;
   let best = Infinity;
-  for (const id of ids) best = Math.min(best, bestWayHours(w, id, water));
+  for (const id of ids) {
+    if (land >= 0 && comp[Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!)] === comp[land]) continue;
+    best = Math.min(best, bestWayHours(w, id, water));
+  }
   return best;
 }
 
@@ -77,13 +87,14 @@ export class SlowClicks {
 
   /**
    * A click of `ids` (call before the step that applies it). `water` is its landing's water (`landingOf`), or -1
-   * for an order that is no landing (home, a march): it only takes the divisions from earlier clicks.
+   * for an order that is no landing (home, a march): it only takes the divisions from earlier clicks. `land`, the
+   * landing's land cell: those on its landmass walk and are not reckoned (`clickBest`).
    */
-  click(w: World, ids: readonly number[], water: number): void {
+  click(w: World, ids: readonly number[], water: number, land = -1): void {
     for (const k of this.open) for (const id of ids) k.ids.delete(id);
     this.open = this.open.filter((k) => k.ids.size > 0);
     if (water < 0 || ids.length === 0) return;
-    const best = clickBest(w, ids, water);
+    const best = clickBest(w, ids, water, land);
     if (!Number.isFinite(best)) {
       this.unreckoned++;
       return;

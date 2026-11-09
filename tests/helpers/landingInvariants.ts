@@ -330,7 +330,7 @@ export function landingBreaks(k: LandingCase): string[] {
         const [x, y] = where === 'home' ? setup.home : where === 'sea' ? [(sea % W) + 0.5 + dx * off, Math.floor(sea / W) + 0.5 + dy * off] : [(where === 'a' ? setup.a : setup.b)[0] + dx * off, (where === 'a' ? setup.a : setup.b)[1] + dy * off];
         // `slowClick`: the click's best way, reckoned on the world before it (the groups a call tries still idle).
         const to = landingOf(w, Math.floor(y) * W + Math.floor(x));
-        slow.click(w, sel, where === 'home' || !to ? -1 : to.water);
+        slow.click(w, sel, where === 'home' || !to ? -1 : to.water, to?.land ?? -1);
         for (const id of sel) sim.command({ kind: 'moveFormation', id, x, y, nation: n, escort: true } as Command);
         for (const id of sel) clicked.add(id);
         k.onHour?.(w, { ids: sel, x, y });
