@@ -7,6 +7,52 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-914 · 2026-11-09 · proposed, the user's decision — Naval after run 59: fuzz more than the critic, one budget per click
+- **Context (the user asked, 2026-11-09: analyse the loop; can anything improve naval's chance of its bar?).**
+  - Naval has been under its bar in every run since run 32, except run 53 (focused, 8), lost again on full run 54.
+    Every other dimension is at its bar.
+  - Runs 55, 57, 58 and 59 were each blocked by `slowClick` (ADR-843), each time on a new seed and with a different
+    cause: 55 `siblingWait` holding a ready landing; 57 a shared port against `SPLIT_SOONER_HOURS`; 58 the checker's
+    reading of "the same landing" and a second voyage; 59 `clickBest` reckoning the march to the port about twice as fast
+    as divisions make it. Each batch fixed its case and the critic's old seeds stayed at 0.
+  - The critic's fuzz is cheap and fresh: `c59_liab_new.sh` is 15 new seeds × 6 setups, 90 runs, about 17 s each,
+    16 minutes at P=2. It found 1 break in 90. At a rate near 1 % a run of 90 finds at least one about 60 % of the
+    time.
+  - The builder never runs that fuzz on fresh seeds. `replayCritic.ts` has no `landingInvariants` family; its last use
+    was `--new 1` before run 56; each item's AT replays the critic's own (old) seeds. The builder samples fewer fresh
+    setups than the critic, so the critic finds the tail first.
+  - The bar moves with our own checker: R59-B1's sim is identical on both commits; R57a's new checker reading
+    (ADR-908) exposed a slow walk the old reading dropped. The run-59 design objection (judge the last ashore, not the
+    first) would tighten it again.
+  - Cost per cycle: a batch about 2 h, a critic run 1.5–2 h; runs 57–59 were all full because each batch carried items
+    the report commit had not filed. Each critic commit adds 870–1,210 files and 90–150k lines (`critic/` 18,631
+    tracked files, 3.6 GB on disk, the pack 727 MB). DECISIONS.md has 108 ADRs since ADR-805 (6 days).
+- **Proposed** (each separate; 1, 2 and 5 do not change a bar):
+  1. **A landing fuzz before every critic run, larger than the critic's.** `tools/diag/landingFuzz.ts`: fresh seeds from
+     a block no tuning has used, setups 3517 / 15101 / random, groups 1–3, orders 0 / 8 days, click hour varied; 6 at a
+     time. 2,500 fresh setups at 0 broken bound the rate under about 0.12 % (rule of three), so the critic's 90 come
+     back clean about 90 % of the time (about 2 h). Tune on the small grid, pass the gate on a held-out block; the
+     report in `docs/replays/`. Also nightly in CI.
+  2. **One time budget per click, read by every wait rule** (R58a widened). At the click: the best way by the same move
+     model as the march (one function for `clickBest`, `Landing.due` and the walk), and the bound (best + 7 days). Every
+     wait rule (`siblingWait`, `SPLIT_SOONER_HOURS`, the call, the next voyage, `READY_WAIT_HOURS`) reads the time left
+     and gives way when it is spent: sail with those at hand, tell the rest with a figure. A click that cannot make the
+     bound is told so at the click. A property test: reckoned march ≥ the actual one on random divisions and ports.
+     This makes `slowClick` true by construction instead of one rule per run.
+  3. **A checker change runs the fuzz in its own item** (ADR-908's class): what a wider reading exposes is fixed in the
+     same batch, not found by the critic.
+  4. **(The bar, the user's decision.)** A checker break whose sim is the same on the last report's commit (only the
+     checker's reading moved, as R59-B1) is a non-blocking finding, an item for the next batch, not blocking. Or:
+     `slowClick` blocks above a rate (more than 1 in 200 of the critic's fresh setups) and each break under it is an
+     item. Changes CRITIC_PROMPT's "breaks a rule checker".
+  5. **The loop's cost.** Naval batches carry only the items the report filed, so the next run is focused (naval scored
+     afresh, the rest carried) and a full run follows a clean one; the critic commits its report, JSON, scripts and the
+     shots it cites, and its logs and dumps go to an ignored `critic/out/` (kept on disk, zipped per run); an ADR only
+     for a rule or design choice, an item's detail in PROGRESS.md.
+- **Not proposed again:** taking the landing out, or releasing at 7 (refused in ADR-827, 828, 829, 833). The run-59
+  objection to judge the last ashore: not now (it raises the bar while the first-ashore one is not met).
+- **Recommended:** 2 as R58a's fix, then 1 and 3 before critic run 60; 5 at once; 4 only if 1 and 2 are not enough.
+
 ### ADR-913 · 2026-11-09 · accepted — The AI lands at no enemy port an enemy fleet that fights stands by, submarines counted (R57f)
 - **Context.** Critic run 58's small naval item (the user's call to take it, 2026-11-09): on 28061 Japan lost a group of
   4–6 ships at one place in the Black Sea each week for eight weeks, 0 Soviet losses (t19734–t21576). The critic read it
