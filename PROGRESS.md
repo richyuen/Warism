@@ -2243,3 +2243,14 @@
   dimension at 8 but naval, 7. R55-B1: `landingInvariants` slowClick broken on 24033 (HEAD only) and 26045 (both
   commits), a landing click held in port days past its best way. Filed as batch 9 (R54); no release.
 - **Next:** R54a.
+
+## 2026-11-09 — R54a: a landing short of room calls only a group within its wait; a click's best way is its crossers' (ADR-892)
+- 24033: landing 6, ready at Tokyo with one group too small for two, called Japan's only other group, 273 hours off,
+  and stood for it 11 days (`siblingWait`, the critic's lead, was not it). A group called for room, at the sail hour or
+  at a click joining, now comes within the landing's wait (`callWithin`, as `waited`); else those that fit sail.
+- 26045: not a stall. Three of the click were in China and walked; their sea way set the click's best (2.5 days), and
+  366 from Honshu was within its own (10.2). `clickBest` reckons those not on the landing's landmass. Two commits.
+- Both cases 0 broken; critic run 55's landingInvariants setups 33 of 33 at 0; Malta's endings unchanged on 21 seeds;
+  `landingRows all` 0; pin unchanged. Unit: `landingCallBound1938` (far case red before), `slowClick1938`'s new case.
+  `npm test`: all green but `snapshot-perf` under the suite's load, green alone.
+- **Next:** the probes replayed (ADR-833), then critic run 56.

@@ -39,7 +39,7 @@ import { destroyFormation, elementIndex } from './elements';
 import { AT_PORT_CELLS, sailHome } from './navalCombat';
 import { foreignTo, orderMove } from './movement';
 import { portShut } from './bombing';
-import { orderSail } from './sail';
+import { orderSail, sailHours } from './sail';
 import { escortSystem, heldByLanding, inLanding, landingRepulsed, landingSystem, leaveLanding } from './landings';
 import { seaHolder } from './seaControl';
 import { blocOf } from './supply';
@@ -304,13 +304,16 @@ export function callCandidates(world: World, id: number, port: number, busy = fa
  * called for another), with room for it, the nearest to the port's water by straight cells that
  * has a way there (at most CALL_TRIES tried) sails there under the player's order, so the AI
  * leaves it be. `busy`: also those under way on the AI's errands or held in place (ROADMAP R37a: a
- * landing short of room at its sail hour, none idle). Returns the group, or 0 for none.
+ * landing short of room at its sail hour, none idle). `maxHours`: only one there within so many hours (ROADMAP
+ * R54a; critic run 55, R55-B1: a landing ready at Tokyo called a group 11 days off and stood waiting for it).
+ * Returns the group, or 0 for none.
  */
-export function callTransports(world: World, id: number, port: number, busy = false): number {
+export function callTransports(world: World, id: number, port: number, busy = false, maxHours = Infinity): number {
   const water = portSeaOf(world)[port]!;
   if (water < 0) return 0;
   const w = world.cells.w;
   for (const o of callCandidates(world, id, port, busy)) {
+    if (maxHours < Infinity && !(sailHours(world, o, (water % w) + 0.5, Math.floor(water / w) + 0.5) <= maxHours)) continue;
     if (!orderSail(world, o, (water % w) + 0.5, Math.floor(water / w) + 0.5)) continue;
     world.playerOrders.set(o, { kind: PlayerOrderKind.called, until: 0, through: false });
     world.station.delete(o);

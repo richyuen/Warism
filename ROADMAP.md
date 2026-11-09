@@ -1073,7 +1073,7 @@ at 8. No release: R55-B1 is fixed first, then the probes replayed (ADR-833) and 
 and not on `8d7d02fe` (a regression since run 54), but naval's findings are items, not the exit (ADR-833).
 
 - [ ] R54 **Run 55's findings.**
-  - [ ] R54a R55-B1 (blocking, naval): a player's landing click sails within READY_WAIT_HOURS of being ready, whatever
+  - [x] R54a R55-B1 (blocking, naval): a player's landing click sails within READY_WAIT_HOURS of being ready, whatever
     a click-mate in another landing does. 24033: t2004's click of 367 is 17.1 days against its best way of 10.1
     (landing 6 ready at Tokyo t2125, 367 alone in it from t2142 to t2315, sails t2393; the lead is `siblingWait`,
     unconfirmed). 26045 (both commits): t1358's click of 366, 9.5 days against 2.5 (123 h to reach Tokyo from 7 cells,
@@ -1081,6 +1081,11 @@ and not on `8d7d02fe` (a regression since run 54), but naval's findings are item
     in landingInvariants' line. AT: `npx tsx tools/diag/landingInvariants.ts 24033 3517 120 24033 30,90 2` and
     `… 26045 3517 120 26045 30,90 2` at 0 broken; `sh critic/scripts/c55_liab.sh` (26031–26049) still 0; the Malta
     spread (R53n's 21 seeds) unchanged.
+    Done (ADR-892): not `siblingWait`. 24033: ready at Tokyo short of room, the landing called a group 273 hours off and
+    stood for it; now a group called for room comes within the landing's wait, else those that fit sail. 26045: not a
+    stall: three of the click were already in China and walked, and their sea way set its best (2.5 days; 366's own,
+    10.2); the checker now reckons a click's best over those that cross. Both 0 broken; `c55_liab.sh`'s setups on
+    HEAD 33 of 33 at 0; the Malta endings the same on all 21; `landingRows all` 0; the pin unchanged.
   - Kept: `landingInvariants` and `landingRows` 0 broken.
 - Naval's design objections (ADR-843): a cancel hands the army to the AI at once (ADR-759): not taken, ADR-875, the
   user's call. Malta is never taken (18 seeds, held ~90 h then thrown back or broken off, nearly seed-independent):

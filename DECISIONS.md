@@ -7,6 +7,33 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-892 · 2026-11-09 · accepted — A group called to a landing for room comes within its wait; a click's best way is its crossers' (R54a)
+- **Context.** Critic run 55, R55-B1: `landingInvariants` `slowClick` broken on 24033 (HEAD only) and 26045 (both
+  commits). The critic's lead, `siblingWait`, is neither. **24033:** landing 6 (365, 367) was ready at Tokyo at t2125
+  with one group, 1144, too small for both; at its sail hour `noRoom` called Japan's only other group, 1136, busy 273
+  hours away (`callTransports(…, busy)`), and the landing waited for it. At t2141 a new click took 365 and, as ADR-830
+  frees those at the port first, 1144 with it; 367 sailed at t2393, 17.1 days after its click (best 10.1). **26045:**
+  t1358's click sent four; 364, 365 and 367 were already in China and walked, but the click's best way was 364's by
+  sea (2.5 days); 366, crossing from Honshu, had its own best of 10.2 and was still within it at the break.
+- **Decision.** (1) A group called to a gathering landing for room, at its sail hour (`noRoom`) or when a division
+  joins it at the click (`chooseTransports`), is one at its port within the landing's wait (`callWithin`): within
+  READY_WAIT_HOURS of the hour it was ready, or before then of the hour it could sail without it, as a division
+  marching is waited for (`waited`, ADR-846). `callTransports` takes the bound (`maxHours`). None such: those that fit
+  sail and the rest are told they go on the next voyage (R17b, R37a), as with no group at all. (2) The checker: a
+  click's best way (`clickBest`) is that of its divisions not on the landing's own landmass (`land`); one there walks.
+- **Stands on (ADR-803).** ADR-830 (joining; "frees the groups it no longer needs, those at its port first", R40-B1):
+  unchanged; `landingJoinsAboard1938` green before and after. R44-B1 / R45-B1 / R37a (room at the sail hour, a busy
+  group called): kept within the bound; `landingCallBound1938`'s near case (Liverpool, a group called, the three sail
+  together), `landingCall1938`, `landingPartResent1938` green. ADR-846 (READY_WAIT_HOURS): the same bound. ADR-843
+  (slowClick, a week over the best single-division way): the best of those that cross, as its wording says.
+- **Results.** `landingInvariants 24033 3517 120 24033 30,90 2` and `… 26045 …` 0 broken (the checker alone: 24033
+  still 1, 26045 0); critic run 55's setups (`c55_liab.sh`, 26031–26049 × 3, and 24033) 33 of 33 at 0; the Malta click
+  on R53n's 21 seeds the same endings; `landingRows all` 0 broken; `landingCallBound1938` (far case red before: the
+  landing never ready in 30 days); the pin of seed 99 unchanged (no player).
+- **Consequences.** A landing short of room with no group near sails what fits within its wait, and the rest follow on
+  the next voyage, instead of standing for a far group. The detach rule (ADR-830's "at its port first" when those left
+  are at the port too) is unchanged: with (1) it no longer leaves a ready landing waiting on a far group it called.
+
 ### ADR-891 · 2026-11-08 · accepted — At Max the units glide between snapshots from where they were drawn (R53p)
 - **Context.** The user's choice (b) after R53m (ADR-890): at Max a snapshot has no tick length (`tickMs` 0), so the
   view drew only when one came, about 33 a second on 7019's year-20 save, each about 6 hours on: the units hopped,

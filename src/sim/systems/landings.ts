@@ -239,7 +239,7 @@ export function chooseTransports(world: World, id: number, target: number): Land
       if (o !== 0) return { port, fleet: o };
     }
     if (roomOf(world, l) - menOf(world, l) >= men) return { join: l, port: l.port, fleet: 0 };
-    const o = freedGroup(world, nation, men, here)?.fleet || freeAtPort(world, nation, men, l.port) || callTransports(world, id, l.port);
+    const o = freedGroup(world, nation, men, here)?.fleet || freeAtPort(world, nation, men, l.port) || callTransports(world, id, l.port, false, callWithin(world, l));
     if (o !== 0) return { join: l, port: l.port, fleet: o };
     if (l.fleets.some((g) => transportRoom(world, g) >= men)) return { join: l, port: l.port, fleet: 0 };
   }
@@ -619,6 +619,15 @@ function readyHours(world: World, l: Landing): number {
 }
 
 /**
+ * The most hours a group called to gathering landing `l` for room may take to its port (ROADMAP R54a; critic run 55,
+ * R55-B1: ready at Tokyo, it called a group 273 hours off and stood for it 11 days): as a division marching is waited
+ * for (`waited`), within READY_WAIT_HOURS of the hour it was ready, or before then of the hour it could sail without it.
+ */
+function callWithin(world: World, l: Landing): number {
+  return l.ready >= 0 ? l.ready + READY_WAIT_HOURS - world.tick : readyHours(world, l) + READY_WAIT_HOURS;
+}
+
+/**
  * The hours landing `l` gathering has left to wait (ROADMAP R22d): the longest of the march of a division it
  * waits for and the voyage of a group still on its way to its port; Infinity while one does not go on.
  */
@@ -728,9 +737,12 @@ function gather(world: World, l: Landing): void {
   // its port or one called joins it (an idle one, else one busy on the AI's errands: R37a, critic run 45,
   // R45-B1), and it waits. None to be had anywhere: those that fit sail, the rest are told, and the groups
   // come back for them (R17b, `landingCall1938`).
+  // A group called is one there within the landing's wait (`callWithin`); none such: those that fit sail now and the
+  // groups come back for the rest (ROADMAP R54a).
   const unfit = noRoom(world, l, present);
   if (unfit.length > 0) {
-    const o = freeAtPort(world, l.nation, c.strength[unfit[0]!]!, l.port) || callTransports(world, unfit[0]!, l.port) || callTransports(world, unfit[0]!, l.port, true);
+    const within = callWithin(world, l);
+    const o = freeAtPort(world, l.nation, c.strength[unfit[0]!]!, l.port) || callTransports(world, unfit[0]!, l.port, false, within) || callTransports(world, unfit[0]!, l.port, true, within);
     if (o !== 0) {
       bindGroup(world, l, o);
       return;
