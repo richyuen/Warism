@@ -7,6 +7,31 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-908 · 2026-11-09 · accepted — A refused order takes no one from a click; a landing's groups lost before it sails are replaced only within its due window (R57a)
+- **Context.** Critic run 58, R58-B1 (blocking): `slowClick` broken on new seed 29043 (the UK, setup 15101), two
+  faults. (1) Two groups: t1068's click of 270–274 sailed with 271 and 272 and left 273 for the second voyage; at
+  t1195 271 and 272, aboard, were clicked onto the open sea beside their landing: refused (`OpenSea`, the landing keeps
+  its course, R44-B2), yet the checker took them from t1068's click at the click, before it read the hour's refusals,
+  and judged it by 273 alone: 11.3 days, best 3.4. (2) The default setup, not the critic's reading: t1055's click of
+  272 to port 550 (Hull); its only group, 1076, was sunk in a fight at the port at t1082, and `replaceGroups` called
+  the nearest other, 1069, with no bound: 355 hours away near the Levant. 272 stood at the port 11 days, due at
+  t1160.
+- **Decision.** (1) `slowClick` holds a click's takes from earlier clicks until `hour` reads its refusals: a division
+  whose new order is refused stays in its earlier click (the order changed nothing). (2) `Landing.sailed` (saved as the
+  optional section `world.landingSailed`): before its first voyage, a landing whose groups are lost calls a
+  replacement only within its due window (`dueLeft`, as R56a's marches: READY_WAIT_HOURS past `due`); none within it,
+  it is over and told (`TransportsSunk` 0 when sunk, else `NoTransports`), and the player re-clicks with a new bound.
+  After it has sailed, its next voyage calls one from anywhere, as R39a: `due` is never reset, so a bound there would
+  end every next voyage. With no group left `voyageHours` is 0: the bound counts the sail to the port, not the crossing
+  after it, inside READY_WAIT_HOURS' day of slack. R55g's "a group from anywhere when nothing would sail" (a division
+  larger than every group) is unchanged: it predates `due`, and its case has no group lost.
+- **Stands on (ADR-803).** ADR-843 (`slowClick`, the user's) unchanged in what it judges; ADR-903 (R56a's `due`,
+  `dueLeft`) extended to the call after a loss; ADR-839/R39a (a group called for the next voyage) unchanged after a
+  first voyage. Only player landings; seed 99's pin unchanged.
+- **Results.** `landingInvariants1938` R57a (29043 g2 and the default setup) red before, 0 broken now; R56a's 28037 and
+  28039 still 0; the critic's 306 setups (`c58_liab_head.sh`) all 0; `landingRows all` 115 cases 0; the 57 landing
+  test files green.
+
 ### ADR-907 · 2026-11-09 · accepted — Run 57's small items: a short landing counts its voyages; the sea battle check by side; a ship's flag whole above its deck (R56e)
 - **Context.** Critic run 57's small items (the user's call to take them, 2026-11-09): (1) the bar's "12 transports
   needed, 7 at hand" in red for the two left at Rome, which go one a voyage; (2) `seaBattlesLook` counted a battle seen

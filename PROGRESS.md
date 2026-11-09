@@ -2392,3 +2392,10 @@
   landing differently. Non-blocking: R58-N1 28037's 366 lands 19.4 days after its click; R58-N2 27125's 319 untold;
   R58-N3 the phone's greyed Offer peace without a reason. ADR-833: naval's findings are items. Filed as batch 12 (R57).
 - **Next:** R57a.
+
+## 2026-11-09 — R57a: a refused order takes no one from a click; a lost group replaced within the due window (ADR-908)
+- 29043's two breaks: the checker dropped 271 and 272 from their click on a sea click that was refused; and the
+  default setup's 272 waited 11 days at Hull for a group called from the Levant after its own was sunk. Now refusals
+  are read first, and before a first voyage a lost group is replaced only within the due window, else the landing ends,
+  told. 306 of 306 setups at 0; landingRows 0; the pin unchanged.
+- The user asked to take R58-N3 and run 58's small items: filed as R57d–f. **Next:** R57b.

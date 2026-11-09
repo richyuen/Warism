@@ -1228,21 +1228,33 @@ Critic run 58 (full, on `000a4731`): R57-B1 closed on its cases; one blocking is
 dimension at 8. Naval's findings are items, fixed, then the critic again (ADR-833). No release.
 
 - [ ] R57 **Run 58's naval findings.**
-  - [ ] R57a R58-B1 (blocking): `slowClick` breaks on new seed 29043 (setup 15101: t1068's click judged by 273 alone,
+  - [x] R57a R58-B1 (blocking): `slowClick` breaks on new seed 29043 (setup 15101: t1068's click judged by 273 alone,
     left at port for the second voyage, 8.0 days over its best way of 3.4; 271 and 272, aboard and clicked again onto
     the sea beside their landing, kept in it by the sim and dropped by the checker). One reading of "the same landing"
     in the sim and the checker, and a left division's next voyage held to its click's bound. AT:
     `npx tsx tools/diag/landingInvariants.ts 29043 15101 120 29043 30,90 2` and `… 29043 15101` at 0 broken;
     `sh critic/scripts/c58_liab_head.sh` (306 runs) all at 0; R57-B1's 28037 and 28039 cases still 0.
+    Done (ADR-908): two faults. The checker took 271 and 272 from t1068's click on a re-click refused `OpenSea`; it now
+    reads the hour's refusals first. The default setup's: 272's only group sunk at Hull, the replacement called from
+    355 hours away; before a first voyage a replacement is called only within the due window, else the landing is
+    over, told. Both commands 0; 306 of 306 at 0; R57-B1's two 0.
   - [ ] R57b R58-N1: a division a due landing sails without is told at that hour ("sails on the next voyage, in about
     N days"), and 28037's 366 not ashore 12.7 days over its best way. AT: `SEED=28037 ORDERDAYS=8 DIV=366 npx tsx
     critic/scripts/c58_orderdays.ts`; the last-ashore measure (`critic/scripts/c58_lastashore.ts`) no worse.
   - [ ] R57c R58-N2: every division a landing's end counts keeps its word: 27125's 319 ("Landed", no notice) told it
     came ashore near Palermo, away from Valletta. AT: `node critic/scripts/c58_whotold.mjs 27125 ITA ENG
     1095.5,344.5 1106.5,383.5 6 140`, all six told; 28113 still all six.
-- Not filed (UI, the user's call as in batch 11): R58-N3 the phone's greyed "Offer peace" gives no reason (a title
-  only); small: "sails in about a day · 0 at hand" six hours before the landing ends; "war weariness 40 of 40" at
-  39.97.
+  - [ ] R57d R58-N3 (the user's call, 2026-11-09): a greyed "Offer peace" says why where a touch can read it: the
+    reason as a line under the war row (Actions tab), not only a `title`. AT: `critic/scripts/c58_peacebtn.mjs` 29403
+    at 390 × 844, the reason visible on day 0; desk unchanged.
+  - [ ] R57e Run 58's small items (the user's call): (1) 27125's bar "sails in about a day · 12 transports needed, 0
+    at hand" six hours before the landing ends for want of transports: a gathering row with none at hand and none
+    coming says so, not a sail hour; (2) "war weariness 40 of 40" refused at 39.97: the reason's figures as the
+    verdict reads them (no rounding up to the bar).
+  - [ ] R57f Run 58's small naval item (the user's call): the AI feeds a squadron a week into a sea where the last
+    were sunk (28061 t19734–t21576, Japan in the Black Sea, 8 battles, 0 Soviet losses): a sea its fleets lost in
+    recently is not sent one alone. AT: `npx tsx tools/diag/seaBattles.ts 28061` no run of such losses; seed 99's pin
+    moved and logged if it moves.
 - Design objections: `slowClick` judges the first ashore (R57b takes the left one's word and bound); Malta never taken
   (the rules working); alliances ignore the map (carried). Ideas: a "next lift, about N days" line (R57b); a disabled
-  button's reason under it on a phone (R58-N3, not filed).
+  button's reason under it on a phone (R57d).

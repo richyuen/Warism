@@ -54,6 +54,8 @@ interface Click {
 /** The clicks of one run and their bound; `out` gets each broken one once. */
 export class SlowClicks {
   private open: Click[] = [];
+  /** Divisions a click of this hour takes from their earlier clicks, once its refusals are read (`hour`). */
+  private taken: { k: Click; id: number }[] = [];
   /** Clicks reckoned (a finite best way) and not (no way to reckon: not judged). */
   reckoned = 0;
   unreckoned = 0;
@@ -73,17 +75,21 @@ export class SlowClicks {
    * voyage (ROADMAP R56a, critic run 57: 28039's t853 click of four, 365 aboard at t995 clicked again and ashore 11.0
    * days after it, best 10.7, was judged by 366 alone, left at the port for the group's second voyage). One waiting
    * at the port is not kept: the new click is its bound (28041: kept, t668's 365 was judged by a next voyage).
+   * A division whose new order is refused stays in its earlier click: the order changed nothing (ROADMAP R57a, critic
+   * run 58: 29043's 271 and 272, aboard, clicked onto the open sea beside their landing, refused `OpenSea` and ashore
+   * with it, were taken from t1068's click, judged by 273 alone, left for the second voyage); so the takes wait for
+   * the hour's refusals (`hour`).
    */
   click(w: World, ids: readonly number[], water: number, land = -1): void {
     for (const k of this.open)
       for (const id of ids) {
-        if (water >= 0 && k.water === water && k.ids.has(id) && w.embarked.has(id) && landingOfDivision(w, id)?.water === water) {
+        if (!k.ids.has(id)) continue;
+        if (water >= 0 && k.water === water && w.embarked.has(id) && landingOfDivision(w, id)?.water === water) {
           this.kept++;
           continue;
         }
-        k.ids.delete(id);
+        this.taken.push({ k, id });
       }
-    this.open = this.open.filter((k) => k.ids.size > 0);
     if (water < 0 || ids.length === 0) return;
     const best = clickBest(w, ids, water, land);
     if (!Number.isFinite(best)) {
@@ -105,6 +111,9 @@ export class SlowClicks {
    */
   hour(w: World, landed: ReadonlySet<number>, refused: ReadonlySet<number>): void {
     const f = w.formations;
+    for (const { k, id } of this.taken) if (!refused.has(id)) k.ids.delete(id);
+    this.taken = [];
+    this.open = this.open.filter((k) => k.ids.size > 0);
     for (const k of this.open) {
       if (!k.read) {
         // Refused at the click: told why, and no landing of this click.

@@ -55,6 +55,19 @@ describe('a click lands within its week (ROADMAP R56a)', () => {
   }, 300_000);
 });
 
+// ROADMAP R57a (critic run 58, R58-B1). 29043, the UK at 15101: t1068's click of 270–274 sailed with 271 and 272 and
+// left 273 for the second voyage; at t1195 271 and 272, aboard, were clicked onto the open sea beside their landing,
+// refused (`OpenSea`) and kept in it, ashore 6.6 days after t1068's click (best 3.4). `slowClick` took them from the
+// click before it read the refusal and judged it by 273 alone: 11.3 days. A refused order takes no one from a click.
+describe('a refused click takes no one from a click (ROADMAP R57a)', () => {
+  it('seed 29043 (the UK, 2 groups): 120 days, none broken', () => {
+    expect(landingBreaks({ seed: 29043, setup: 15101, days: 120, orders: 29043, probeDays: [30, 90], groups: 2 })).toEqual([]);
+  }, 300_000);
+  it('seed 29043 (the UK): 120 days, none broken', () => {
+    expect(landingBreaks({ seed: 29043, setup: 15101, days: 120, orders: 29043, probeDays: [30, 90] })).toEqual([]);
+  }, 300_000);
+});
+
 // ADR-835 (the user's decision; critic run 48 on R47-N4): `stuck` counts a landing's days with no ground gained, not
 // its days gathering (19206's 367 marched ~70 cells to its click's landing at Kure and was counted stuck). The rule
 // is not blind: stalls planted by hand are still caught. Japan 3517, 60 days, the orders of seed 2 on the first day

@@ -72,6 +72,11 @@ export interface Landing {
    * their own wait (`callWithin`: bound by it, 3517's clicked-again four landed 28 hours apart). Infinity: none known.
    */
   due: number;
+  /**
+   * Whether it has sailed once (ROADMAP R57a): before, its groups lost are replaced only by one there within its due
+   * window (`replaceGroups`); after, its next voyage calls one from anywhere, as before (R39a).
+   */
+  sailed: boolean;
 }
 
 /** Hours within which a division joined with a landing's first (its click, `waited`): a day. */
@@ -355,7 +360,7 @@ export function bindDivision(world: World, id: number, target: number, choice: L
   let l = choice.join;
   if (!l) {
     const o = landingOf(world, target)!;
-    l = { id: world.nextLanding++, nation: c.nation[id]!, target, water: o.water, land: o.land, port: choice.port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick, ready: -1, due: Infinity };
+    l = { id: world.nextLanding++, nation: c.nation[id]!, target, water: o.water, land: o.land, port: choice.port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick, ready: -1, due: Infinity, sailed: false };
     world.landings.set(l.id, l);
   }
   if (choice.fleet !== 0 && !l.fleets.includes(choice.fleet)) {
@@ -812,7 +817,9 @@ function gather(world: World, l: Landing): void {
     if (c.moving[o] === 1 || c.engaged[o] === 1) continue;
     if (!orderSail(world, o, (water % w) + 0.5, Math.floor(water / w) + 0.5)) l.fleets.splice(l.fleets.indexOf(o), 1);
   }
-  if (l.fleets.length === 0 && !replaceGroups(world, l)) return;
+  // Its groups lost before its first voyage (sunk at its port): a group there within its due window, else over, told
+  // (ROADMAP R57a; critic run 58, 29043: 1076 sunk at Hull, 272 waited 11 days for 1069 sailing from the Levant).
+  if (l.fleets.length === 0 && !replaceGroups(world, l, l.sailed ? Infinity : dueLeft(world, l))) return;
   // First ready: its groups at its port and one of its divisions there (R44a: those marching are waited for from it).
   if (l.ready < 0 && l.fleets.every((o) => atPort(world, l, o)) && [...l.divisions.keys()].some((id) => c.moving[id] !== 1 && !world.embarked.has(id) && divisionAtPort(world, l, id))) l.ready = world.tick;
   // Its divisions: marching to the port, at it, or stalled short of it (told; not waited for).
@@ -911,6 +918,7 @@ function gather(world: World, l: Landing): void {
     l.fleets = l.fleets.filter((g) => carrying(world, g));
   }
   l.state = LandingState.sailing;
+  l.sailed = true;
 }
 
 /** Of landing `l`'s divisions `ids` at its port, those its groups have no room for, boarded first fit as at the sail hour. */
@@ -1255,15 +1263,15 @@ export function landingSystem(world: World): void {
  * (free there, or the nearest idle, or a busy one: `callTransports`), and it goes on; with none, it is over. Its
  * groups destroyed (`World.sunk`): its divisions are told so (`TransportsSunk`, x 1 another called, 0 over), not
  * "no transports ... at a port it can reach" (ROADMAP R39a; critic run 47, R47-B1: 1119 bombed at Norfolk, 1123
- * idle at San Francisco). Whether it goes on.
+ * idle at San Francisco). Whether it goes on. `maxHours`: the longest sail to its port of a group called (R57a).
  */
-function replaceGroups(world: World, l: Landing): boolean {
+function replaceGroups(world: World, l: Landing, maxHours = Infinity): boolean {
   const c = world.formations.cols;
   const sunk = world.sunk.has(l.id);
   const ids = [...l.divisions.keys()].filter((id) => world.formations.has(id)).sort((a, b) => a - b);
   // The largest first: the group called has room for it (`noRoom` calls more at the sail hour).
   const big = [...ids].sort((a, b) => c.strength[b]! - c.strength[a]! || a - b)[0];
-  const o = big === undefined ? 0 : freeAtPort(world, l.nation, c.strength[big]!, l.port) || callTransports(world, big, l.port) || callTransports(world, big, l.port, true);
+  const o = big === undefined ? 0 : freeAtPort(world, l.nation, c.strength[big]!, l.port) || callTransports(world, big, l.port, false, maxHours) || callTransports(world, big, l.port, true, maxHours);
   if (o !== 0) {
     l.fleets.push(o);
     world.playerOrders.set(o, { kind: PlayerOrderKind.called, until: 0, through: false });
@@ -1534,7 +1542,7 @@ export function migrateLegacyLandings(world: World): void {
     if (!o) continue;
     let l = [...world.landings.values()].find((x) => x.nation === c.nation[fleet] && x.port === port && x.target === first);
     if (!l) {
-      l = { id: world.nextLanding++, nation: c.nation[fleet]!, target: first, water: o.water, land: o.land, port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick - 1, ready: -1, due: Infinity };
+      l = { id: world.nextLanding++, nation: c.nation[fleet]!, target: first, water: o.water, land: o.land, port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick - 1, ready: -1, due: Infinity, sailed: false };
       world.landings.set(l.id, l);
     }
     l.fleets.push(fleet);
