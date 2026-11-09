@@ -7,6 +7,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-899 · 2026-11-09 · accepted — A landing none of whose divisions fits its groups calls one from anywhere, or tells them (R55g)
+- **Context.** R55d on 26039 Britain, orders for 8 days: 273 (12,412 men) stood 45 days at its port in gathering
+  landing 3 by its one group, 1076 (room 4,200), its row "sails now" (`stuck`). At the sail hour `noRoom` calls a group
+  only within the landing's wait (R54a, ADR-892); none was; nobody fitted, so nobody boarded and the hour returned,
+  each hour, untold.
+- **Decision.** When none of those at the port fits and none is aboard, nothing would sail: a group is called from
+  anywhere, idle else busy (as `replaceGroups`), and the landing waits for it (`slowClick` judges the way); with none,
+  those at the port are told there are no transports and leave the landing (ended if empty). Those that fit still
+  sail at once with the rest told (R54a).
+- **Stands on (ADR-803).** ADR-892 (a call bounded by the wait, so the rest sail now): unchanged where any sail. ADR-843
+  (a refusal days after a click is to be avoided): this one comes after the click's group shrank below the division;
+  told at once is better than 45 days "sails now".
+- **Results.** The case: 273 told at t238, 0 broken; added to the R55d suite, red before. The critic's 156 setups 156
+  at 0; `landingRows all` 0; pin unchanged.
+
 ### ADR-898 · 2026-11-09 · accepted — A landing gathers where its divisions are, and waits no longer for a sibling than for itself (R55f)
 - **Context.** R55d's checker found five clicks on the critic's seeds, measured, that critic run 56 had raised as an
   objection ("marches are slow against voyages"). Two causes: (B) 26041's L3, ready at its port, waited 29 days for its

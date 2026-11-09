@@ -1153,8 +1153,11 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
     a gathering landing all of whose divisions march to a port a week further than their own moves its port there;
     a click does not join such a landing. 155 of 156 at 0 (the one left is R55g); four cases in the R55d suite, red
     before; Malta the same on 21 seeds; `landingRows all` 0; pin unchanged.
-  - [ ] R55g Found by R55d: 26039 Britain, orders for 8 days (`… 26039 15101 120 26039 30 2 8`): t1318 `stuck`, 273 in
+  - [x] R55g Found by R55d: 26039 Britain, orders for 8 days (`… 26039 15101 120 26039 30 2 8`): t1318 `stuck`, 273 in
     gathering landing 3 with no ground gained for 45 days. Traced; 0 broken.
+    Done (ADR-899): 273 (12,412 men) waited on a group of 4,200 with none to call within the wait; nobody fitted, so
+    nothing sailed, untold. Now a group from anywhere is called, else those at the port are told. Red before, in the
+    R55d suite; 156 of 156 at 0.
   - Kept: `landingInvariants` and `landingRows` 0 broken; R55-B1's commands 0; the Malta endings.
 - Naval's design objections (ADR-843): a cancel hands the army to the AI at once (ADR-759): not taken, ADR-875, the
   user's call. Malta is never taken: not taken, the rules working (run 55). Marches are slow against voyages (a

@@ -2320,3 +2320,9 @@
   before. `landingRowAshore1938`'s "n of m ashore" moves to Valletta (27123 no longer has a next voyage).
 - Malta the same on 21 seeds; `landingRows all` 0; pin unchanged; landing specs by hand.
 - **Next:** R55g; then the probes replayed and critic run 57.
+
+## 2026-11-09 — R55g: a landing none of whose divisions fits its groups calls one from anywhere, or tells them (ADR-899)
+- 26039 Britain's 273 (12,412 men) stood 45 days by a group of 4,200, "sails now": no group within the wait, and
+  nobody fitted, so nothing sailed. Now a group from anywhere is called, else those at the port are told. The case in
+  the R55d suite, red before; the critic's 156 setups 156 at 0; `landingRows all` 0; pin unchanged.
+- **Next:** batch 10 is done: the critic's probes replayed (ADR-833), then critic run 57.

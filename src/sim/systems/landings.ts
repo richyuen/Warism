@@ -794,6 +794,21 @@ function gather(world: World, l: Landing): void {
       bindGroup(world, l, o);
       return;
     }
+    // None of them fits and none is aboard: nothing would sail (ROADMAP R55g; R55d on 26039 Britain: 273, 12,412 men,
+    // stood 45 days at its port by a group of 4,200, its row "sails now"). A group from anywhere, else they are told.
+    if (unfit.length === present.length && aboardOf(world, l).length === 0) {
+      const far = callTransports(world, unfit[0]!, l.port) || callTransports(world, unfit[0]!, l.port, true);
+      if (far !== 0) {
+        bindGroup(world, l, far);
+        return;
+      }
+      for (const id of present) {
+        l.divisions.delete(id);
+        world.out.emit(world.tick, EventKind.MoveRejected, id, c.nation[id]!, RejectReason.NoTransports, NaN);
+      }
+      if (l.divisions.size === 0) endLanding(world, l);
+      return;
+    }
   }
   // Another landing of its click for the same place, from another port: they go together (R37c).
   if (waitsForSiblings(world, l)) return;
