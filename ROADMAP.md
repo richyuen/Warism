@@ -1042,12 +1042,14 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     92,92,93 on ground 91,111,89) and over 40 from the enemy's figures; Poland's front as `tankSides1938` judges it
     still passes, and `infantryRanks1938`'s German men from the Polish.
     Done (ADR-888): a grey's tint judges the ground blended as drawn; the French border 73 apart, Poland's front 99.
-  - [ ] R53m The unit zooms on a late world: `node critic/scripts/c54_pf_lookfps.mjs 7019
-    critic/c54_seed7019_y20.bin`, alone, at 45 fps or more at 120 m/px in both looks (now 33–39; 30 m/px 39–48).
+  - [x] R53m The unit zooms on a late world: `tools/diag/lookFps.ts 7019 critic/c54_seed7019_y20.bin`, alone, at 45
+    frames a second or more at 120 m/px in both looks with a draw forced each frame, the fight picked again before each
+    row (ADR-890, the user's (a); was the critic's `c54_pf_lookfps.mjs` draws, 33–39, over an empty map). Done: 59.6–60,
+    a draw 0.9 ms.
   - [ ] R53n Before critic run 55: the critic's own probes on new seeds, and the spread of endings read, not one case:
     `c54_lhold.mjs` and `c54_lland.mjs` on the 11 Malta seeds and about 20 new ones, and the other landing families
     (Tokyo → Shanghai, Portsmouth → Bremerhaven, Germany → Norwich); then run 54's jobs replayed (ADR-833), and the
-    "what the bar needs" of R54-B1 and of each item above read item by item.
+    "what the bar needs" of R54-B1 and of each item above read item by item (R53m's `c54_pf_lookfps.mjs` by ADR-890).
   - Kept: `landingInvariants` and `landingRows` 0 broken; every dimension's evidence in run 54 kept (the pin of seed
     99 moves only with a logged rule change, R53k and R53l the likeliest).
 - Run 54's carried findings are R53g–R53m (the user's call, 2026-11-08), each from the report's "what the bar needs".

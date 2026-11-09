@@ -3,6 +3,21 @@
 The resolved entries of BLOCKERS.md, moved here on 2026-11-02 (ADR-804) in the order they stood. Searched, not
 read. New resolved entries are moved here when they are resolved.
 
+### RESOLVED 2026-11-08 (the user's choice: a, the measurement; ADR-890) · R53m: the probe's unit zooms look at an empty map; waits on the user (2026-11-08)
+- `c54_pf_lookfps.mjs` counts the view's draws (`view.frames`), not the browser's frames. The browser gives 60 a
+  second at every zoom (rAF gaps p95 18 ms), and a draw at 120 m/px takes 0.84 ms. The view skips a frame when nothing
+  changed (`frameAt`): at Max the worker sends `tickMs` 0, so nothing interpolates between snapshots, which come 33 a
+  second (gap p50 22 ms, p90 49 ms; about 200 ticks a second; `MAX_SLICE_MS` 12 and one snapshot in flight).
+- The fight is picked once at load. By 120 and 30 m/px it has moved on: 0 formations and 0 elements on the screen in
+  the critic's rows and in ours (`.cache/r53m/prof.mjs`, a screenshot: ground near Novorossiysk). Draws below 60
+  there are an idle map not drawn again, as designed.
+- With the fight picked again just before zooming (28 elements on the screen): 53.5 (balls) and 52.7 (classic) draws
+  a second at 120 m/px, over the bar of 45.
+- Options: (a) the bar re-picks the fight at each zoom and reads it there (53 now, no code); (b) interpolate at Max
+  over the measured snapshot gap (60, smooth motion at Max; changes "Max has no tick length", PLAN 2.7h, an ADR;
+  sprites' from-positions over a snapshot of ~6 ticks to check); (c) a shorter slice at Max (more snapshots, fewer
+  ticks a second). Recommended: (a), with (b) as its own item if motion at Max is to be smoother.
+
 ### RESOLVED 2026-11-08 (the user's choices: b, the bar by area; a, the reach to the other side; ADR-889) · R53k: Denmark's frozen share on 20899 is Greenland's ice counted in cells; the rule that would move it reaches Britain too (2026-11-08) — waits on the user
 - **The bar:** `c48_top.cjs` on 21099, 20899 and 24099 for 25 years: no top-5 holder within ±0.2 % of one share for
   20 years or more; 24099's first three not the same every year.

@@ -2212,4 +2212,10 @@
 - R53m: the probe's 120 and 30 m/px stops view an empty map (the fight picked at load has moved on), and it counts
   draws, which an idle view skips. With the fight picked again just before zooming: 53 draws a second at 120 m/px in
   both looks. BLOCKERS has the options; the user stopped the loop here.
-- **Next:** the user's call on R53m's bar, then R53n.
+
+## 2026-11-08 — R53m: the unit zooms' frame rate read with draws forced (ADR-890)
+- The user chose (a). The "53 with units on the screen" was one row and did not hold: picked again before each 4 s
+  row, most rows at 120 and 30 m/px still end with no formation on the screen (4 s at Max is about a month).
+- `tools/diag/lookFps.ts` reads each row twice, as the view runs and with a draw forced each frame. Forced: 59.6–60
+  frames a second at every zoom, a draw 0.9 ms at 120 m/px with up to 280 elements. No game code changed.
+- **Next:** R53n.

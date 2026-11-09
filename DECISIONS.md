@@ -7,6 +7,28 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-890 · 2026-11-08 · accepted — The unit zooms' frame rate is read with draws forced, on the fight of the moment (R53m)
+- **Context.** R53m (critic run 54, performance): `c54_pf_lookfps.mjs 7019 critic/c54_seed7019_y20.bin` read 33–39
+  draws a second at 120 m/px and 39–48 at 30 m/px, at Max. Its number is `view.frames` a second, the view's draws.
+- **Found.** The browser gives 60 frames a second at every zoom (gaps' p95 18 ms), and a draw at 120 m/px costs
+  0.84 ms. The view skips a frame when nothing changed (`MapView.frameAt`). At Max a snapshot has no tick length
+  (`tickMs` 0), so nothing moves between snapshots, which come about 33 a second (gap p50 22 ms, p90 49 ms; about 200
+  ticks a second, `MAX_SLICE_MS` 12, one snapshot in flight). And the probe picks its fight once, at load; by its
+  unit zooms (about 85 s at Max, two game years) the fight has moved on: its rows at 120 and 30 m/px, and ours, have 0
+  elements on the screen (a screenshot: ground near Novorossiysk). Its unit zooms read the snapshot cadence over an
+  empty map. One row with the fight picked just before the zoom read 53; it did not hold as a measure: picked again
+  before each 4 s row, most rows still had no formation on the screen by the end (4 s at Max is about a month).
+- **Decision** (the user's choice (a): fix the measurement, not the game). `tools/diag/lookFps.ts`: the probe's zooms
+  and pairs, the camera put on the busiest fight before each row, and each row read twice: 4 s as the view runs
+  (draws a second, the critic's number) and 4 s with a draw forced on every frame (the browser's frames a second, the
+  gaps, the draw's time). The bar: forced, 45 frames a second or more at 120 m/px in both looks.
+- **Results** (HEAD `23b78544`'s build, `.cache/r53m/lookFps-b.json`): forced 59.6–60 frames a second at every zoom,
+  the gaps' p95 18 ms; a draw 0.9 ms at 120 m/px with up to 280 elements on the screen at a row's start (longest 1.7),
+  2–3 ms at 600–3,000 m/px. The bar is met; no code of the game changed.
+- **Consequences.** The critic's probe will still read 33–48 at run 55: R53n's replay answers it with this ADR, not by
+  reopening R53m. Smoother motion at Max (sprites over the measured snapshot gap, (b)) or more snapshots ((c)) are
+  each their own item if wanted; neither is a frame-cost matter.
+
 ### ADR-889 · 2026-11-08 · accepted — Reach is to the other side, not only its leader's realm (R53k)
 - **Context.** R53k (critic run 54, emergent dynamics: no top-5 holder within ±0.2 % of the same share for 20 years or
   more; the user chose the bar by area, the game's ranking, as Denmark's share was Greenland's ice in cells). By area
