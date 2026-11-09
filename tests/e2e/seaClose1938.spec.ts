@@ -22,6 +22,9 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // Since ROADMAP R53l (ADR-887, who joins a war within reach) the rows of 156, 1195 and 1230 no longer happen; the same
 // scan (80 days) gives a British battle fleet against Italian submarines at 363, Soviet and Romanian destroyers at 949
 // and Nationalist Spanish cruisers against Portuguese destroyers at 1678.
+// Since ROADMAP R53k (ADR-889, reach to the other side) the rows of 949 and 1678 no longer happen; the same scan
+// (80 days) gives French and Soviet battle fleets at 1127, 5.4 km, and British destroyers against a Nationalist
+// Spanish cruiser squadron at 1305, 12 km.
 
 const id = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
 
@@ -30,8 +33,8 @@ const CASES = [
   { hour: 45, a: 'ENG', b: 'GER', what: 'destroyers against a battle fleet, 32 km' },
   { hour: 164, a: 'ENG', b: 'ITA', what: 'a carrier group against submarines, 12 km' },
   { hour: 363, a: 'ENG', b: 'ITA', what: 'a battle fleet against submarines, 6 km' },
-  { hour: 949, a: 'SOV', b: 'ROM', what: 'destroyers against destroyers, 11.5 km' },
-  { hour: 1678, a: 'NSP', b: 'POR', what: 'a cruiser squadron against destroyers, 12 km' },
+  { hour: 1127, a: 'FRA', b: 'SOV', what: 'a battle fleet against a battle fleet, 5.4 km' },
+  { hour: 1305, a: 'ENG', b: 'NSP', what: 'destroyers against a cruiser squadron, 12 km' },
 ] as const;
 
 /** After a flight of the camera: until it is over, and a snapshot of the new view. */

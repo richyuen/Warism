@@ -7,6 +7,29 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-889 · 2026-11-08 · accepted — Reach is to the other side, not only its leader's realm (R53k)
+- **Context.** R53k (critic run 54, emergent dynamics: no top-5 holder within ±0.2 % of the same share for 20 years or
+  more; the user chose the bar by area, the game's ranking, as Denmark's share was Greenland's ice in cells). By area
+  with ADR-887: 21099 passed (15 years); 20899 Australia 20 years at 4.36 %, 24099 Canada 20 years at 8.6–9.1 %;
+  before ADR-887 the same seeds 8 and 14. ADR-887's reach was to the other leader's realm only: a dominion beside an
+  enemy's ally (Australia by the Dutch East Indies, Egypt by Italy's Libya in Germany's war) stayed out, and fought
+  no war in 20 years. The user's choice (a), 2026-11-08: reach to any nation of the other side.
+- **Decision.** Who joins: the leaders, a named puppet, and the defenders' allies and guarantors stand; then, round
+  by round until neither side grows, an attacker's ally or a puppet of either side joins within WAR_REACH_KM of the
+  other side as it stands (its leader's realm, and every nation on it so far), a puppet only beside its overlord. The
+  bonds and pledges (ADR-797, ADR-808) are asked after it, and the reach again of those left: a colony near only a
+  guarantor that stays out (seed 5, the United Kingdom on Poland: France, its ally, by its pledge) stays out too.
+- **Rejected.** The stillness accepted (the bar on the nations that fought); a sea-borne reason for the AI to fight a
+  far, weak holder (a larger AI change); one round only (a chain from an ally's colony to the next is a front).
+- **Consequences.** Germany, allied to Italy, on the United Kingdom: Egypt, Sudan, Kenya and France's North and West
+  African colonies join against Italy beside them; Canada and Australia do not (`warReach1938`, red before). The
+  bars by area, 25 years: longest run of a still top-5 share 13 (21099), 12 (20899), 5 (24099), under 20; the first
+  three change on 24099. R53l's: at day 365 21129 and 24129 none over 4 to 1, 20887 the front the user accepted.
+  25 years summed on the three: nations a side 2.5 (ADR-887) → 2.7, capitals taken 725 → 876. diploInvariants 0 broken
+  on six seeds. Seed 99's pin `8f453ee7` → `e0da3e5f`. `alliances.test`: Italy, at France, joins Germany on Poland.
+  History cases found again: `fallen1938` division 555 → 565 (`contactPick 4242 21 21`), `seaClose1938` the rows of
+  949 and 1678 → 1127 (France–USSR) and 1305 (UK–Nationalist Spain) (`seaPairs 3613 80 GER:POL,GER:ENG`).
+
 ### ADR-888 · 2026-11-08 · accepted — A grey's tint judges the ground as drawn, blended (R53o)
 - **Context.** Found at R53l, the user's item: on seed 7781 the first German armoured division in contact with over 20
   enemy figures in its view (since ADR-887, on the French border: day 3, division 41) had its tanks' middles 13 of

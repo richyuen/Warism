@@ -418,23 +418,34 @@ export function declareWar(world: World, attacker: number, target: number, alone
     }
     for (const m of allies(attacker)) add(ATTACKERS, defender, m);
   }
-  // Within reach (ROADMAP R53l, ADR-887): an ally of the attacker, and a puppet of either side, join only near the other
-  // leader's realm; a puppet only beside its overlord. The leaders, the puppet the war is about, and the defenders'
-  // allies and guarantors stand whatever the distance.
-  {
-    const realm = (l: number): number[] => withPuppets(world, l).concat(l === defender && target !== defender ? [target] : []);
-    const near = [inReach(world, realm(defender)), inReach(world, realm(attacker))];
-    const defAllies = new Set(called[DEFENDERS].filter((x) => nc.overlord[x] === 0));
-    for (const s of [ATTACKERS, DEFENDERS]) {
-      const kept = called[s]!.filter((x) => {
-        if (x === attacker || x === defender || x === target) return true;
-        if (nc.overlord[x] === 0) return s === DEFENDERS ? defAllies.has(x) : near[s]!(x);
-        return near[s]!(x);
-      });
-      // A puppet stands only beside its overlord (a puppet that leads a side, or the war is about, stands).
-      called[s] = kept.filter((x) => x === attacker || x === defender || x === target || nc.overlord[x] === 0 || kept.includes(nc.overlord[x]!));
+  // Within reach (ROADMAP R53l, ADR-887; R53k, ADR-889): an ally of the attacker, and a puppet of either side, join only
+  // near the other side: its leader's realm, or any nation already on it, round by round until neither side grows (a
+  // colony beside an enemy's ally joins; one an ocean from every enemy does not). A puppet only beside its overlord.
+  // The leaders, the puppet the war is about, and the defenders' allies and guarantors stand whatever the distance.
+  // Asked before the bonds below (a far nation tears nobody) and again after them, of those left standing: a colony
+  // near only a guarantor that stays out, as the attacker's ally, stays out too (seed 5, the United Kingdom on Poland:
+  // its colonies by France's).
+  const realm = (l: number): number[] => withPuppets(world, l).concat(l === defender && target !== defender ? [target] : []);
+  const seeds: [number[], number[]] = [realm(attacker), realm(defender)];
+  const reach = (sides: [number[], number[]]): [number[], number[]] => {
+    const keep: [Set<number>, Set<number>] = [new Set([attacker]), new Set([defender, ...sides[DEFENDERS].filter((x) => nc.overlord[x] === 0)])];
+    if (sides[DEFENDERS].includes(target)) keep[DEFENDERS].add(target);
+    const placed = (x: number, s: number): boolean => nc.overlord[x] === 0 || x === target || keep[s]!.has(nc.overlord[x]!);
+    for (let grew = true; grew; ) {
+      grew = false;
+      for (const s of [ATTACKERS, DEFENDERS]) {
+        const o = s === ATTACKERS ? DEFENDERS : ATTACKERS;
+        const near = inReach(world, [...new Set([...seeds[o]!.filter((x) => sides[o]!.includes(x) || x === (o === ATTACKERS ? attacker : defender)), ...keep[o]!])]);
+        for (const x of sides[s]!) {
+          if (keep[s]!.has(x) || !placed(x, s) || !near(x)) continue;
+          keep[s]!.add(x);
+          grew = true;
+        }
+      }
     }
-  }
+    return [sides[ATTACKERS].filter((x) => keep[ATTACKERS].has(x)), sides[DEFENDERS].filter((x) => keep[DEFENDERS].has(x))];
+  };
+  [called[ATTACKERS], called[DEFENDERS]] = reach(called);
   // Nobody but the two leaders stands against a nation it has a bond with (PLAN 3.8c), or is at
   // war with: a nation torn between the sides stays out, with its puppets. In three steps, each on what the one
   // before left: who has a bond with the enemy's leader (a guarantor of the defender that is the
@@ -476,7 +487,7 @@ export function declareWar(world: World, attacker: number, target: number, alone
   };
   const step1 = without(called, () => true, (s) => [s === ATTACKERS ? attacker : defender]);
   const step2 = without(step1, (x) => nc.overlord[x] !== 0, (s, stand) => step1[s]!.filter((o) => stand.has(o)));
-  const [a, d] = without(step2, (x) => nc.overlord[x] === 0, (s, stand) => step2[s]!.filter((o) => stand.has(o)));
+  const [a, d] = reach(without(step2, (x) => nc.overlord[x] === 0, (s, stand) => step2[s]!.filter((o) => stand.has(o))));
   // A side fights to the death when its leader does (PLAN 1.40 tuning: any member used to pass it
   // on, so whole alliance blocs fought every later war forever and fronts froze).
   const ftd = (side: number[]): boolean => nc.fightToDeath[side[0]!] === 1;

@@ -64,9 +64,9 @@ describe('alliances (PLAN 1.17)', () => {
     s.command({ kind: 'declareWar', attacker: GER, defender: POL });
     run(s, 1);
     const war = s.world.wars.between(GER, POL)!.war;
-    // The attacker's allies come within reach of the defender's realm (ROADMAP R53l, ADR-887): Italy and Japan are not;
-    // the guarantor keeps its pledge wherever it is.
-    expect(war.sides[0]).toEqual([GER]);
+    // The attacker's allies come within reach of the other side (ROADMAP R53l, ADR-887; R53k, ADR-889): Italy at France,
+    // Poland's guarantor, Japan near none of them; the guarantor keeps its pledge wherever it is.
+    expect(war.sides[0]).toEqual([GER, ITA]);
     expect(war.sides[1]).toEqual(expect.arrayContaining([POL, FRA]));
     expect(war.sides[1]).not.toContain(ENG); // allies of a guarantor are not chained in v1
     // Within reach, an ally comes: Italy borders Yugoslavia. The unity is measured on that war, the allies fighting

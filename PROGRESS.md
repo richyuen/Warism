@@ -2195,3 +2195,13 @@
   lightness from the ground (was 13), Poland's front 99 as before. `tankSides1938` judges any front too (red before);
   `tint.test` the blend.
 - **Next:** R53k on the user's choice; R53m.
+
+## 2026-11-08 — R53k: reach is to the other side (ADR-889)
+- The user chose (a): an attacker's ally or a puppet joins within 500 km of the other side as it stands, round by round,
+  and the reach is asked again after the bonds (a bug found on the way: the UK's colonies joined on Poland beside France,
+  which then stayed out as the UK's ally). R53k by area: longest still share 13, 12, 5 years (was 15, 20, 20);
+  R53l's bar holds. diploInvariants 0 on six seeds; pin `8f453ee7` → `e0da3e5f`; `warReach1938` red before.
+- R53m begun and set aside for this: the critic's probe on HEAD reads 38 (balls) and 42 (classic) fps at 120 m/px,
+  60 from 600 m/px; the frame gaps' 95th percentile is 18 ms at 120 m/px, so the view skips drawing on frames the
+  browser gives it.
+- **Next:** the gate, then R53m.

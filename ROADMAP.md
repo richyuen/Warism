@@ -1024,10 +1024,12 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
   - [x] R53j A typed filter narrows the editor's nation list (one flat list of 100+ names; `c54_g_editor.mjs 24121`).
     Done (ADR-886): a box above the lists narrows them as typed, "n of N", typing a name picks it
     (`editorNationFilter1938`).
-  - [ ] R53k Emergent dynamics: on 21099 and 20899 for 25 years (`node critic/scripts/c48_top.cjs` on `npm run sim
+  - [x] R53k Emergent dynamics: on 21099 and 20899 for 25 years (`node critic/scripts/c48_top.cjs` on `npm run sim
     -- --scenario 1938 --seed <s> --years 25`), no top-5 holder within ±0.2 % of the same share for 20 or more years
     (Denmark at 5.4 % all 25 years); on 24099 the first three places are not the same three nations in the same
     order every year.
+    Done by area, the user's choice (b) (ADR-889, with the user's choice (a) of the reach): longest still share 13,
+    12 and 5 years; the first three change on 24099.
   - [x] R53l Year-one dogpiles: on 20887, 21129 and 24129 at day 365 (`node critic/scripts/c54_rg_relations.mjs
     <seed> 365 1600 900 desk '&heroes=on'`) no war chip with one side more than 4 times the other's count of nations
     ("Germany +6 ⚔ United Kingdom +36", "United Kingdom +35 ⚔ Brazil"); diploInvariants 0 broken on run 54's seeds.

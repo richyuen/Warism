@@ -3,6 +3,38 @@
 The resolved entries of BLOCKERS.md, moved here on 2026-11-02 (ADR-804) in the order they stood. Searched, not
 read. New resolved entries are moved here when they are resolved.
 
+### RESOLVED 2026-11-08 (the user's choices: b, the bar by area; a, the reach to the other side; ADR-889) · R53k: Denmark's frozen share on 20899 is Greenland's ice counted in cells; the rule that would move it reaches Britain too (2026-11-08) — waits on the user
+- **The bar:** `c48_top.cjs` on 21099, 20899 and 24099 for 25 years: no top-5 holder within ±0.2 % of one share for
+  20 years or more; 24099's first three not the same every year.
+- **Read on HEAD `8aad3be5`** (`.cache/r53k/head-*.json`): 24099 passes (France third by year 8, the USA first by
+  year 16); 21099 passes (Denmark out of the top 5 after year 11); 20899 fails: Denmark 5.0–5.5 % in 24 of 25 years.
+  R53g made these new worlds.
+- **Why** (`.cache/r53k/den.ts 20899`): Denmark is at war most years (with GER, SOV, ENG, CAN, USA …); its European
+  land falls from 74 cells to 10 by year 18, but it keeps Greenland and Iceland (33,861 cells) all 25 years. No
+  enemy lands there; a peace annexes only occupied land; and `overrun` (0.75), `SMALL_STATE_KM2` and `PUPPET_SHARE`
+  all weigh Greenland, so Denmark never capitulates.
+- **The measure:** the critic's share counts cells (`runner.ts` `controlled`). By area, the game's own ranking
+  (ADR-52), Denmark is 1.74 % of the land, not in the top 5; 27,677 of its 34,154 cells are ice.
+- **The reach of a homeland rule** (`.cache/r53k/scope.ts`, 1938, share of owned area off the capital's landmass):
+  Denmark 98 %, United Kingdom 87 %, Netherlands 72 %, Dutch East Indies 69 %, Japan 46 %, Philippines 62 %.
+- **Options for the user:** (a) a homeland rule: capitulation and the small-state annexation weigh the capital's
+  landmass, and a capitulated nation's cut-off land goes to the winners in the peace (Denmark's Greenland, but also
+  Britain's empire when Britain falls); a whole-game change, A/B on the sweep first. (b) The bar re-scoped to area,
+  the game's own ranking (the critic's script unchanged; the ADR says why). (c) Greenland's ice cap unowned in the
+  1938 data (the coast Danish).
+- **Left:** R53k waits on the user's choice; R53l onward go on meanwhile.
+- **The user chose (b), 2026-11-08.** By area at 4e448651 (with R53l; `.cache/r53k/top25.ts`, 25 years, longest run of a
+  top-5 holder within a 0.4-point band): 21099 15 years (Canada) passes; 20899 Australia 20 years at 4.36 %, 24099
+  Canada 20 years at 8.64–9.06 %: both fail by the bar's 20. On 24099 the first three change: passes. Before R53l
+  (77982f47~1) the same two seeds: 8 years (Australia) and 14 (Canada), both pass. R53l made them still: Australia
+  grew to 6.4 % fighting in Britain's wars near it (the Dutch East Indies, New Guinea); since R53l a puppet joins only
+  within reach of the other leader's realm, and an enemy's ally's colony beside it is not in that realm.
+- **Options for the user (2):** (a) reach measured to any nation of the other side, not only its leader's realm (a
+  dominion joins where an enemy, the leader's or an ally's, is near it); then R53k and R53l's bars measured again.
+  (b) Accept a far continent's stillness: the bar re-scoped to the nations that fought a war in the 20 years.
+  (c) Leave R53l's rule and add a sea-borne reason to fight a far, weak holder (a larger AI change).
+- **Resolved:** by area with ADR-889 the longest still share is 13, 12 and 5 years; R53k done.
+
 ### RESOLVED 2026-11-08 (ROADMAP R53o, ADR-888) · Germany's grey tanks on green ground: 13 of lightness from it at 10 m/px
 - **Seen:** `tankSides1938` (seed 7781, Germany on Poland), whose first armoured division in contact with over 20 enemy
   figures in view is, since ADR-887 (France fights beside Poland), on the French border on day 3 (division 41): German
