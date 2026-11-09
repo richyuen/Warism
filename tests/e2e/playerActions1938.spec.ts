@@ -86,6 +86,15 @@ test('player actions: build a formation, declare war, offer peace, propose an al
   // and the war goes on.
   await expect(page.getByTestId(`act-peace-${war.id}`)).toBeDisabled();
   await expect(page.getByTestId(`act-peace-${war.id}`)).toHaveAttribute('title', /^They refuse: lead the war score by 25/);
+  // The reason in a line under the war row, not only a title a touch cannot read (ROADMAP R57d; critic run 58, R58-N3):
+  // on the desk and on a phone.
+  await expect(page.getByTestId(`act-why-peace-${war.id}`)).toBeVisible();
+  await expect(page.getByTestId(`act-why-peace-${war.id}`)).toHaveText(/^They refuse: lead the war score by 25 \(now [+-]?\d+\), or wear them out/);
+  const desk = page.viewportSize()!;
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByTestId(`act-why-peace-${war.id}`).scrollIntoViewIfNeeded();
+  await expect(page.getByTestId(`act-why-peace-${war.id}`)).toBeInViewport();
+  await page.setViewportSize(desk);
   expect((await inspect(page)).wars.some((w) => w.id === war.id)).toBe(true);
 
   // Alliance: a nation in no alliance, no puppet and at peace with Poland accepts (picked now:

@@ -1249,9 +1249,11 @@ dimension at 8. Naval's findings are items, fixed, then the critic again (ADR-83
     1095.5,344.5 1106.5,383.5 6 140`, all six told; 28113 still all six.
     Done (ADR-910): five rows in one hour, the page keeps four, and the panel read its news from them. Each formation's
     newest news is kept for its panel apart: 27125 all six told, 319 "came ashore near Palermo"; 28113 all six.
-  - [ ] R57d R58-N3 (the user's call, 2026-11-09): a greyed "Offer peace" says why where a touch can read it: the
+  - [x] R57d R58-N3 (the user's call, 2026-11-09): a greyed "Offer peace" says why where a touch can read it: the
     reason as a line under the war row (Actions tab), not only a `title`. AT: `critic/scripts/c58_peacebtn.mjs` 29403
     at 390 × 844, the reason visible on day 0; desk unchanged.
+    Done (ADR-911): the reason as a line under the war row, desk and phone (the title kept); 29403 at 390 × 844 reads
+    it on day 0. (The desk shows the line too: a line beats a hover there as well.)
   - [ ] R57e Run 58's small items (the user's call): (1) 27125's bar "sails in about a day · 12 transports needed, 0
     at hand" six hours before the landing ends for want of transports: a gathering row with none at hand and none
     coming says so, not a sail hour; (2) "war weariness 40 of 40" refused at 39.97: the reason's figures as the

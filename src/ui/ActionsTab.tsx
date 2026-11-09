@@ -126,14 +126,22 @@ export function ActionsTab({ nation, nations, wars, templates, onCommand, wings,
         // was said): greyed while the enemy would refuse, the reason in its title (`peaceVerdict`, one rule with the sim).
         const verdict = peaceVerdict(w.score, w.exhaustion, w.toDeath, w.attackers.includes(n) ? 0 : 1);
         return (
-          <div class="god-row" key={w.id}>
-            <span class="god-war-name">
-              {nameOf(w.attackers[0] ?? 0)} {'⚔'} {nameOf(w.defenders[0] ?? 0)} ({mine >= 0 ? '+' : ''}
-              {Math.round(mine)})
-            </span>
-            <button type="button" class="god-btn" data-testid={`act-peace-${w.id}`} disabled={!verdict.accepted} title={peaceWhy(verdict) || undefined} onClick={() => onCommand({ kind: 'offerPeace', war: w.id, from: n })}>
-              {t('act.offerPeace')}
-            </button>
+          <div key={w.id}>
+            <div class="god-row">
+              <span class="god-war-name">
+                {nameOf(w.attackers[0] ?? 0)} {'⚔'} {nameOf(w.defenders[0] ?? 0)} ({mine >= 0 ? '+' : ''}
+                {Math.round(mine)})
+              </span>
+              <button type="button" class="god-btn" data-testid={`act-peace-${w.id}`} disabled={!verdict.accepted} title={peaceWhy(verdict) || undefined} onClick={() => onCommand({ kind: 'offerPeace', war: w.id, from: n })}>
+                {t('act.offerPeace')}
+              </button>
+            </div>
+            {/* The reason in a line under the row, read on a phone too: a touch shows no title (ROADMAP R57d; critic run 58, R58-N3). */}
+            {verdict.accepted ? null : (
+              <div class="panel-note act-why" data-testid={`act-why-peace-${w.id}`}>
+                {peaceWhy(verdict)}
+              </div>
+            )}
           </div>
         );
       })}

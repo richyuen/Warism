@@ -7,6 +7,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-911 · 2026-11-09 · accepted — A greyed "Offer peace" says why in a line under its war row (R57d)
+- **Context.** Critic run 58, R58-N3 (the user's call to take it, 2026-11-09): R56d greyed the Actions tab's "Offer
+  peace" while the enemy would refuse, its reason only in the button's `title`; on a phone a touch shows no title, so
+  29403's Germany at war with Poland had a grey button and no word.
+- **Decision.** Under each war row whose offer would be refused, the reason as a line (`act-why-peace-<war>`, the same
+  `peaceWhy` text), on the desk and on a phone; the title stays. Its test id does not begin `act-peace-`, which the
+  critic's probes read as the buttons. The right-click menu's item keeps its title (a menu is a desk's).
+- **Stands on (ADR-803).** ADR-906 (R56d, `peaceVerdict`, one rule with the sim) unchanged. Page only.
+- **Results.** `playerActions1938` red before (no line), now the line at 1600 × 900 and in view at 390 × 844;
+  `forceWar1938` green; the critic's `c58_peacebtn` on 29403 at 390 × 844 (copied to `.cache/r57c`): "They refuse: lead
+  the war score by 25 (now +0), or wear them out (war weariness 0 of 40)." under the row, 0 page errors.
+
 ### ADR-910 · 2026-11-09 · accepted — A formation's panel keeps its last order news whatever the ticker's rows keep (R57c)
 - **Context.** Critic run 58, R58-N2 (R57-N3 in another shape): 27125, Italy's six to Valletta, one hour: 319–322 told
   "its transports broke off; it came ashore near Palermo", 323 and 324 "transports sunk" (one row, R40c). Five rows;

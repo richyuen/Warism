@@ -2408,3 +2408,6 @@
 ## 2026-11-09 — R57c: a formation's panel keeps its last order news (ADR-910)
 - 27125's 319 said only "Landed": its row was the fifth of one hour and the panel read the ticker's four. The panel now
   keeps each formation's newest news apart; the critic's probe tells all six on 27125 and 28113. **Next:** R57d.
+
+## 2026-11-09 — R57d: a greyed "Offer peace" says why under its war row (ADR-911)
+- The refusal's reason is a line under the war row, so a phone shows it (29403 at 390 × 844, day 0). **Next:** R57e.
