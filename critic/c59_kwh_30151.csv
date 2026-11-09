@@ -1,0 +1,9 @@
+date,tick,type,a,aName,b,bName,text
+1938-01-01,0,WarDeclared,1,Germany,4,Poland,Germany declared war on Poland
+1938-01-01,0,WarJoined,19,France,4,Poland,"France joined the war on Poland's side, as its guarantor"
+1938-01-01,0,WarJoined,15,Italy,1,Germany,"Italy joined the war on Germany's side, as its ally"
+1938-01-01,0,AllianceJoined,83,Mexico,8,Coalition,Mexico founded a Coalition
+1938-01-01,0,AllianceJoined,90,Cuba,8,Coalition,Cuba joined the Coalition of Mexico
+1938-01-01,1,MajorBattleEnded,1,,1,Germany,A major battle was won by Germany
+1938-01-01,1,GodBreakthrough,1,Germany,1,Berlin,God opened a breakthrough for Germany near Berlin
+1938-01-02,24,AllianceJoined,27,Belgium,2,Anglo-French Entente,Belgium joined the Anglo-French Entente

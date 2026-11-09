@@ -1270,3 +1270,34 @@ dimension at 8. Naval's findings are items, fixed, then the critic again (ADR-83
 - Design objections: `slowClick` judges the first ashore (R57b takes the left one's word and bound); Malta never taken
   (the rules working); alliances ignore the map (carried). Ideas: a "next lift, about N days" line (R57b); a disabled
   button's reason under it on a phone (R57d).
+
+## Batch 13 — run 59's naval findings
+
+Critic run 59 (full, on `fe9b0e9e`): batch 12 done on every case run 58 named; one blocking issue, R59-B1; naval 7,
+every other dimension at 8. Naval's findings are items, fixed, then the critic again (ADR-833). No release.
+
+- [ ] R58 **Run 59's findings.**
+  - [ ] R58a R59-B1 (blocking): `slowClick` breaks on new seed 30041 (setup 3517, one group: t729's click of 364–366,
+    best way 5.9 days; 366 walks 11 cells to its port near Tokyo in 10.4 days, about a cell a day, and is ashore near
+    Shanghai at 15.4 days). R57a's checker rightly keeps 366 in that click past its refused t870 re-click; what it
+    exposes is a best way (`clickBest`, `Landing.due`) that reckons the march to the port about twice as fast as
+    divisions make it (28041's 367: 50 cells in 48 days). The best way and the march read alike, and a click that
+    cannot be ashore within the bound is told so at the click. AT: `npx tsx tools/diag/landingInvariants.ts 30041 3517
+    120 30041 30,90 1` at 0 broken with 366 kept in t729's click (no checker change that drops it); `P=2 sh
+    critic/scripts/c59_liab_new.sh` (90 runs) and `P=3 sh critic/scripts/c59_liab_head.sh` (306) all 0; R58-B1's and
+    R57-B1's cases, `c59_stuckret`, Malta's 18 unchanged.
+  - [ ] R58b R59-N1: a division left for the next voyage is told when, "in about N days" (R57b's own wording;
+    `order.nextVoyageBrief`, `formation.voyage.nextVoyage` have no figure); 29043's 273 (left at t1170, ashore t1340,
+    11.3 days after its t1068 click, best 3.4) waits no longer than the next voyage needs. AT: `critic/c59_told_29043_273.log`'s
+    case told with a figure that comes true within a day; `c59_od_29043_273` no later.
+  - [ ] R58c R59-N2 (UI): a panel's kept order news ages: dated, or dropped once the division has a new order. AT: 27125
+    at h400 (`critic/scripts/c58_whotold.mjs 27125 ITA ENG 1095.5,344.5 1106.5,383.5 6 400`): 323 and 324 "On the
+    march" not under a live-looking orange "the landing is over"; h140 still all six told.
+  - [ ] R58d Run 59's small UI item: at 844 × 390 the greyed "Offer peace" reason line cut at the panel's foot on day 0
+    (`critic/shots/c59pb_30403_GER_POL_844x390_disabled_d0.png`): whole and readable. AT: `c58_peacebtn` 30403 at
+    844 × 390, the line in view.
+- Not filed: the ticker keeping three of four "came ashore" rows in one hour (each panel tells its own, R57c); the
+  phone's nation panel over the breakthrough corridor (old); the editor probe's day-60 wait (the probe's).
+- Design objections: `slowClick` judges the first ashore while the last one ashore is what the player sees (273, 7.9
+  days over); Malta never taken; alliances ignore the map (carried). Ideas: "next lift in N days" (R58b); dated
+  notices (R58c).

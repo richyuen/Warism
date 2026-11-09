@@ -2423,3 +2423,13 @@
 - Batch 12 done. **Next:** the critic's probes replayed (ADR-833), then critic run 59.
 - R57g (Italy's warfleet at Sevastopol) looked at and dropped: it had destroyers; 16 anchored submarines outgun four
   destroyers' depth charges about 28 to 1, a balance question, two battles in three years (the user's call; ADR-913).
+
+## 2026-11-09 — Critic run 59 (full, on fe9b0e9e): R58-B1 closed; one blocking issue, naval 7
+- Scores: naval 7; the other 13 at 8. Batch 12 verified on every case run 58 named: R58-B1's commands 0, 306 of 306
+  setups 0, 366 told and ashore at 14.3 days, 319 told, the phone's peace reason on day 0, the bar's sail hour gone,
+  28061 46 → 37 sea battles; a save mid-landing loads to the same hash every hour. R59-B1 (blocking): `slowClick`
+  breaks on new seed 30041 (1 of 90 new setups; the sim the same as run 58's): R57a's checker now keeps 366 in its
+  click, and its 10.4-day walk to the port shows the best way reckons the march too fast. Non-blocking: R59-N1 the
+  left one told with no figure; R59-N2 kept panel news never ages; the peace line cut at 844 × 390. Filed as batch 13
+  (R58), with the UI items as in batch 12 (the user's call then).
+- **Next:** R58a.

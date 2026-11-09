@@ -1,0 +1,55 @@
+{
+ "seed": 27125,
+ "TAG": "ITA",
+ "FOE": "ENG",
+ "FROM": "1095.5,344.5",
+ "TO": "1106.5,383.5",
+ "N": 6,
+ "AT": 400,
+ "divs": {
+  "319": {
+   "status": "Holding",
+   "panel": "Infantry division 319 × Kind Infantry division Nation Italy Men 12,460 of 12,460 Supply 100% Org 100% Fuel on the march None Status Holding Escort with warships Infantry division 319: its transports broke off; it came ashore near Palermo, away from its target. ELEMENTS 24× Infantry 12,000 of 12,000 3× Artillery 36 of 36 1× Anti-tank guns 12 of 12"
+  },
+  "320": {
+   "status": "Holding",
+   "panel": "Infantry division 320 × Kind Infantry division Nation Italy Men 12,460 of 12,460 Supply 100% Org 100% Fuel on the march None Status Holding Escort with warships Infantry division 320: its transports broke off; it came ashore near Palermo, away from its target. ELEMENTS 24× Infantry 12,000 of 12,000 3× Artillery 36 of 36 1× Anti-tank guns 12 of 12"
+  },
+  "321": {
+   "status": "Holding",
+   "panel": "Infantry division 321 × Kind Infantry division Nation Italy Men 12,460 of 12,460 Supply 100% Org 100% Fuel on the march None Status Holding Escort with warships Infantry division 321: its transports broke off; it came ashore near Palermo, away from its target. ELEMENTS 24× Infantry 12,000 of 12,000 3× Artillery 36 of 36 1× Anti-tank guns 12 of 12"
+  },
+  "322": {
+   "status": "Holding",
+   "panel": "Infantry division 322 × Kind Infantry division Nation Italy Men 12,460 of 12,460 Supply 100% Org 100% Fuel on the march None Status Holding Escort with warships Infantry division 322: its transports broke off; it came ashore near Palermo, away from its target. ELEMENTS 24× Infantry 12,000 of 12,000 3× Artillery 36 of 36 1× Anti-tank guns 12 of 12"
+  },
+  "323": {
+   "status": "On the march",
+   "panel": "Infantry division 323 × Kind Infantry division Nation Italy Men 12,460 of 12,460 Supply 100% Org 100% Fuel on the march None Status On the march Escort with warships Infantry division 323: the transports of its landing were sunk, and no others of its nation can come to its port: the landing is over. ELEMENTS 24× Infantry 12,000 of 12,000 3× Artillery 36 of 36 1× Anti-tank guns 12 of 12"
+  },
+  "324": {
+   "status": "On the march",
+   "panel": "Infantry division 324 × Kind Infantry division Nation Italy Men 12,460 of 12,460 Supply 100% Org 100% Fuel on the march None Status On the march Escort with warships Infantry division 324: the transports of its landing were sunk, and no others of its nation can come to its port: the landing is over. ELEMENTS 24× Infantry 12,000 of 12,000 3× Artillery 36 of 36 1× Anti-tank guns 12 of 12"
+  }
+ },
+ "ids": [
+  319,
+  321,
+  322,
+  320,
+  323,
+  324
+ ],
+ "rows": [],
+ "ticker": [
+  "1 January 1938 Italy declared war on United Kingdom",
+  "3 January 1938 Japan declared war on Spanish Republic",
+  "5 January 1938 Soviet Union declared war on Romania",
+  "9 January 1938 China declared war on Tibet",
+  "Infantry division 320: its transports broke off; it came ashore near Palermo, away from its target.",
+  "Infantry division 321: its transports broke off; it came ashore near Palermo, away from its target.",
+  "Infantry division 322: its transports broke off; it came ashore near Palermo, away from its target.",
+  "2 divisions: the transports of their landing were sunk, and no others can come to their port: the landing is over (Infantry division 323, Infantry division 324)."
+ ],
+ "errors": []
+}

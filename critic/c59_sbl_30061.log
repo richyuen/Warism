@@ -1,0 +1,44 @@
+seen t107 SOV v ROM (Black Sea) at 40 m/px, tick 107: {"SOV":8,"ROM":8}
+seen t204 ENG v NED (North Sea) at 301 m/px, tick 204: {"ENG":10,"NED":8}
+seen t289 SOV v YUG (Sea of Azov) at 40 m/px, tick 289: {"SOV":7,"YUG":6}
+seen t316 NSP v REP (Alboran Sea) at 40 m/px, tick 316: {"NSP":8,"REP":8}
+seen t423 ENG v NED (South China Sea) at 40 m/px, tick 423: {"ENG":16,"NED":8}
+seen t432 ENG v NED (South China Sea) at 40 m/px, tick 432: {"ENG":16,"NED":8}
+seen t472 NSP v REP (Mediterranean Sea) at 40 m/px, tick 472: {"NSP":8,"REP":1}
+seen t759 AST v NED (Sulu Sea) at 40 m/px, tick 759: {"AST":8,"NED":1}
+seen t1352 ITA v DEN (Kattegat) at 40 m/px, tick 1352: {"ITA":32,"GER":16,"DEN":1}
+seen t2017 ENG v NSP (Molucca Sea) at 40 m/px, tick 2017: {"ENG":16,"NSP":6}
+seen t3516 ENG v ITA (Bight of Biafra) at 400 m/px, tick 3516: {"ENG":29,"ITA":16}
+seen t3555 ENG v JAP (Bight of Biafra) at 337 m/px, tick 3555: {"ENG":236,"JAP":30}
+seen t3656 ENG v JAP (Bight of Biafra) at 311 m/px, tick 3656: {"ENG":29,"JAP":32}
+seen t4055 ENG v JAP (South China Sea) at 40 m/px, tick 4055: {"ENG":12,"JAP":1}
+seen t4847 USA v GER (Gulf of Finland) at 70 m/px, tick 4847: {"USA":9,"GER":40}
+seen t4947 USA v JAP (Bo Hai) at 400 m/px, tick 4947: {"USA":166,"JAP":7}
+seen t5754 USA v GER (Adriatic Sea) at 40 m/px, tick 5754: {"USA":89,"GER":40}
+seen t5780 USA v GER (Mediterranean Sea) at 40 m/px, tick 5780: {"USA":2,"GER":5}
+seen t5786 USA v GER (Ionian Sea) at 400 m/px, tick 5786: {"USA":30,"GER":21}
+seen t5835 USA v GER (Mediterranean Sea) at 40 m/px, tick 5835: {"USA":12,"GER":3}
+seen t5876 USA v GER (Mediterranean Sea) at 42 m/px, tick 5876: {"USA":1,"GER":10}
+seen (one side listed) t5895 USA v GER (Mediterranean Sea) at 40 m/px, tick 5895: {"GER":3}
+seen t6090 USA v GER (English Channel) at 400 m/px, tick 6090: {"USA":20,"GER":10}
+seen t6117 USA v GER (North Sea) at 400 m/px, tick 6117: {"USA":30,"GER":2}
+seen t6158 USA v GER (Baltic Sea) at 400 m/px, tick 6158: {"USA":60,"GER":3}
+seen t7405 ITA v POR (North Atlantic Ocean) at 40 m/px, tick 7405: {"ITA":12,"POR":8}
+seen t8765 ENG v ITA (Mediterranean Sea) at 231 m/px, tick 8765: {"ENG":84,"ITA":80}
+seen t9209 ENG v BRA (South Atlantic Ocean) at 41 m/px, tick 9209: {"ENG":14,"BRA":8}
+seen t9316 ITA v POR (North Atlantic Ocean) at 40 m/px, tick 9316: {"ITA":24,"POR":8}
+seen t9849 SOV v TUR (Sea of Azov) at 40 m/px, tick 9849: {"SOV":8,"TUR":8}
+seen t10161 ENG v ITA (Mediterranean Sea) at 40 m/px, tick 10161: {"ENG":2,"ITA":12}
+seen t13982 JAP v SOV (Taiwan Strait) at 40 m/px, tick 13982: {"JAP":8,"SOV":18}
+seen t14611 GER v SOV (Baltic Sea) at 40 m/px, tick 14611: {"GER":12,"SOV":8}
+seen (one side listed) t14779 GER v SOV (Baltic Sea) at 40 m/px, tick 14779: {"SOV":16}
+seen t16815 SOV v NOR (Barents Sea) at 40 m/px, tick 16815: {"SOV":8,"NOR":5}
+seen (one side listed) t16915 SOV v NOR (Barents Sea) at 40 m/px, tick 16915: {"SOV":8}
+seen t17010 SOV v POL (White Sea) at 40 m/px, tick 17010: {"SOV":16,"POL":8}
+seen (one side listed) t18745 BEL v GER (Kattegat) at 40 m/px, tick 18745: {"BEL":16,"FRA":104}
+seen t21933 GER v SOV (Baltic Sea) at 60 m/px, tick 21933: {"GER":9,"SOV":40}
+seen t23457 SWE v SOV (Baltic Sea) at 51 m/px, tick 23457: {"SWE":32,"SOV":17}
+seen t23469 SOV v SWE (Baltic Sea) at 40 m/px, tick 23469: {"SOV":16,"SWE":8}
+seen t26130 FRA v ARG (Lagoa dos Patos) at 40 m/px, tick 26130: {"FRA":56,"ARG":16}
+seed 30061: 42 of 42 battles seen at their camera (4 listed with one side alone); page errors 0; critic/c59_sb_30061_look.json
+done:

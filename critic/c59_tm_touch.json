@@ -1,0 +1,33 @@
+{
+ "id": 364,
+ "before": {
+  "mark": null,
+  "tip": null,
+  "shot": "critic/shots/c59tm_before.png"
+ },
+ "after": {
+  "mark": {
+   "water": 845491,
+   "land": 843443,
+   "same": false
+  },
+  "f": null,
+  "shot": "critic/shots/c59tm_after.png"
+ },
+ "errors": [],
+ "perfNoSel": {
+  "asksPerS": 0,
+  "ticksPerS": 166.811633324323,
+  "fps": 59.33635263888864
+ },
+ "perfSel": {
+  "asksPerS": 0.2998875421716856,
+  "ticksPerS": 222.4165937773335,
+  "fps": 59.82756466325128
+ },
+ "perfNoSel2": {
+  "asksPerS": 0,
+  "ticksPerS": 230.6930792076925,
+  "fps": 59.64821055370116
+ }
+}

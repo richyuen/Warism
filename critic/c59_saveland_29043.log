@@ -1,0 +1,9 @@
+run: 0 broken, 2880 hours, 73 s
+save t24 (129 later commands; landings L1:0:-:270/271/272/273/274/277): same hash every hour to t2882
+save t400 (111 later commands; landings L4:0:-:272/274/277): same hash every hour to t2882
+save t1100 (70 later commands; landings L7:0:-:270/271/272/273): same hash every hour to t2882
+save t1200 (67 later commands; landings L7:1:s:271/273): same hash every hour to t2882
+save t1250 (66 later commands; landings L7:0:s:273): same hash every hour to t2882
+save t1300 (65 later commands; landings L7:1:s:273): same hash every hour to t2882
+save t1350 (60 later commands; landings L8:0:-:270/272/274): same hash every hour to t2882
+done:

@@ -1,0 +1,69 @@
+== c59_whotold 27125 ITA ENG 1095.5,344.5 1106.5,383.5 6 140 16:12:02
+   exit 0
+== c59_whotold 28113 GER ENG 1100.5,267.5 1031.5,266.5 6 120 16:12:10
+   exit 0
+== c59_peacebtn 29403 GER POL 60 5 390 844 16:12:18
+   exit 0
+== c59_peacebtn 29401 GER POL 45 5 1600 900 16:12:40
+   exit 0
+== c59_lhold 27125 ITA ENG 1095.5,344.5 1106.5,383.5 6 ita_malta6 140 16:13:04
+   exit 0
+== c59_lland 24105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:13:24
+   exit 0
+== c59_lland 24151 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:13:35
+   exit 0
+== c59_lland 24153 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:13:46
+   exit 0
+== c59_lland 24155 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:13:59
+   exit 0
+== c59_lland 24157 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:14:11
+   exit 0
+== c59_lland 24159 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:14:24
+   exit 0
+== c59_lland 24171 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:14:36
+   exit 0
+== c59_lland 24173 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:14:49
+   exit 0
+== c59_lland 24175 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:15:01
+   exit 0
+== c59_lland 26151 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:15:14
+   exit 0
+== c59_lland 26153 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:15:27
+   exit 0
+== c59_lland 26155 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:15:39
+   exit 0
+== c59_lland 26157 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:15:52
+   exit 0
+== c59_lland 26159 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:16:05
+   exit 0
+== c59_lland 26161 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:16:18
+   exit 0
+== c59_lland 26163 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:16:31
+   exit 0
+== c59_lland 23105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:16:43
+   exit 0
+== c59_lland 21105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 16:16:56
+   exit 0
+== c59_lland 30101 ITA ENG 1095.5,344.5 1106.5,383.5 6 ita_malta6 300 16:17:09
+   exit 0
+== c59_lland 30103 ITA ENG 1095.5,344.5 1106.5,383.5 6 ita_malta6 300 16:17:21
+   exit 0
+== c59_lland 30105 ENG GER 1023.5,275.5 1072.5,259.5 10 eng_br10 400 16:17:33
+   exit 0
+== c59_lland 30107 ENG GER 1023.5,275.5 1072.5,259.5 10 eng_br10 400 16:17:48
+   exit 0
+== c59_lland 30109 JAP CHI 1818.5,385.5 1715.5,413.5 8 jap_sh8 360 16:18:03
+   exit 0
+== c59_lland 30111 JAP CHI 1818.5,385.5 1715.5,413.5 8 jap_sh8 360 16:18:16
+   exit 0
+== c59_lland 30113 GER ENG 1100.5,267.5 1031.5,266.5 6 ger_norwich6 360 16:18:30
+   exit 0
+== c59_lland 30115 GER ENG 1100.5,267.5 1031.5,266.5 6 ger_norwich6 360 16:18:42
+   exit 0
+== c59_whotold 30101 ITA ENG 1095.5,344.5 1106.5,383.5 6 140 16:18:54
+   exit 0
+== c59_whotold 30113 GER ENG 1100.5,267.5 1031.5,266.5 6 120 16:19:03
+   exit 0
+== c59_turnback 30117 JAP CHI 1818.5,385.5 1715.5,413.5 6 jap_cancel6 40 240 16:19:13
+   exit 0
+SUITEADONE

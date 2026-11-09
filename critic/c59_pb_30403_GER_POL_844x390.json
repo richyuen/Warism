@@ -1,0 +1,1249 @@
+{
+ "seed": 30403,
+ "ME": "GER",
+ "FOE": "POL",
+ "samples": [
+  {
+   "day": 0,
+   "buttons": [
+    {
+     "id": "act-peace-3",
+     "row": "Germany ⚔ Poland (+0)Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 0, over 40 needed)."
+    }
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      23
+     ],
+     "d": [
+      24
+     ],
+     "score": 0,
+     "ex": [
+      0,
+      0
+     ],
+     "death": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      75,
+      71,
+      72
+     ],
+     "d": [
+      69,
+      70
+     ],
+     "score": 16,
+     "ex": [
+      0,
+      4.277612931226472
+     ],
+     "death": [
+      false,
+      true
+     ]
+    },
+    {
+     "id": 3,
+     "a": [
+      1,
+      15
+     ],
+     "d": [
+      4,
+      19,
+      44,
+      45,
+      48
+     ],
+     "score": 0,
+     "ex": [
+      0,
+      0
+     ],
+     "death": [
+      false,
+      false
+     ]
+    }
+   ],
+   "menu": [
+    {
+     "id": "nation-menu-peace",
+     "text": "Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 0, over 40 needed)."
+    },
+    {
+     "id": "nation-menu-take",
+     "text": "Take control",
+     "disabled": false,
+     "title": ""
+    }
+   ]
+  },
+  {
+   "day": 5,
+   "buttons": [
+    {
+     "id": "act-peace-3",
+     "row": "Germany ⚔ Poland (-1)Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now -1), or wear them out (war weariness 2, over 40 needed)."
+    }
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      23
+     ],
+     "d": [
+      24
+     ],
+     "score": 14,
+     "ex": [
+      2.0944832299421954,
+      9.061476370173954
+     ],
+     "death": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      75,
+      71,
+      72
+     ],
+     "d": [
+      69,
+      70
+     ],
+     "score": 16,
+     "ex": [
+      0.6498788999790582,
+      5.881269937671242
+     ],
+     "death": [
+      false,
+      true
+     ]
+    },
+    {
+     "id": 3,
+     "a": [
+      1,
+      15
+     ],
+     "d": [
+      4,
+      19,
+      44,
+      45,
+      48
+     ],
+     "score": -1,
+     "ex": [
+      1.2349847054250784,
+      2.327061338482925
+     ],
+     "death": [
+      false,
+      false
+     ]
+    }
+   ],
+   "menu": [
+    {
+     "id": "nation-menu-peace",
+     "text": "Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now -1), or wear them out (war weariness 2, over 40 needed)."
+    },
+    {
+     "id": "nation-menu-take",
+     "text": "Take control",
+     "disabled": false,
+     "title": ""
+    }
+   ]
+  },
+  {
+   "day": 10,
+   "buttons": [
+    {
+     "id": "act-peace-3",
+     "row": "Germany ⚔ Poland (-1)Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now -1), or wear them out (war weariness 6, over 40 needed)."
+    }
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      23
+     ],
+     "d": [
+      24
+     ],
+     "score": 33,
+     "ex": [
+      5.388192986761936,
+      25.34917588775329
+     ],
+     "death": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      75,
+      71,
+      72
+     ],
+     "d": [
+      69,
+      70
+     ],
+     "score": 16,
+     "ex": [
+      2.126180637956309,
+      8.34681037462419
+     ],
+     "death": [
+      false,
+      true
+     ]
+    },
+    {
+     "id": 3,
+     "a": [
+      1,
+      15
+     ],
+     "d": [
+      4,
+      19,
+      44,
+      45,
+      48
+     ],
+     "score": -1,
+     "ex": [
+      3.2014856158479756,
+      6.308479614968299
+     ],
+     "death": [
+      false,
+      false
+     ]
+    }
+   ],
+   "menu": [
+    {
+     "id": "nation-menu-peace",
+     "text": "Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now -1), or wear them out (war weariness 6, over 40 needed)."
+    },
+    {
+     "id": "nation-menu-take",
+     "text": "Take control",
+     "disabled": false,
+     "title": ""
+    }
+   ]
+  },
+  {
+   "day": 15,
+   "buttons": [
+    {
+     "id": "act-peace-3",
+     "row": "Germany ⚔ Poland (-1)Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now -1), or wear them out (war weariness 13, over 40 needed)."
+    }
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      23
+     ],
+     "d": [
+      24
+     ],
+     "score": 46,
+     "ex": [
+      7.644767570992482,
+      40.17999226090119
+     ],
+     "death": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      75,
+      71,
+      72
+     ],
+     "d": [
+      69,
+      70
+     ],
+     "score": 15,
+     "ex": [
+      4.062302296363512,
+      11.167849073777596
+     ],
+     "death": [
+      false,
+      true
+     ]
+    },
+    {
+     "id": 3,
+     "a": [
+      1,
+      15
+     ],
+     "d": [
+      4,
+      19,
+      44,
+      45,
+      48
+     ],
+     "score": -1,
+     "ex": [
+      6.651698639403962,
+      13.409931615879527
+     ],
+     "death": [
+      false,
+      false
+     ]
+    }
+   ],
+   "menu": [
+    {
+     "id": "nation-menu-peace",
+     "text": "Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now -1), or wear them out (war weariness 13, over 40 needed)."
+    },
+    {
+     "id": "nation-menu-take",
+     "text": "Take control",
+     "disabled": false,
+     "title": ""
+    }
+   ]
+  },
+  {
+   "day": 20,
+   "buttons": [
+    {
+     "id": "act-peace-3",
+     "row": "Germany ⚔ Poland (-1)Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now -1), or wear them out (war weariness 20, over 40 needed)."
+    }
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      23
+     ],
+     "d": [
+      24
+     ],
+     "score": 58,
+     "ex": [
+      8.926933043799904,
+      56.86124561226256
+     ],
+     "death": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      75,
+      71,
+      72
+     ],
+     "d": [
+      69,
+      70
+     ],
+     "score": 15,
+     "ex": [
+      9.080470440427163,
+      14.28312727824921
+     ],
+     "death": [
+      false,
+      true
+     ]
+    },
+    {
+     "id": 3,
+     "a": [
+      1,
+      15
+     ],
+     "d": [
+      4,
+      19,
+      44,
+      45,
+      48
+     ],
+     "score": -1,
+     "ex": [
+      9.43187501494744,
+      20.428767985868117
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 4,
+     "a": [
+      10
+     ],
+     "d": [
+      6,
+      7,
+      8
+     ],
+     "score": 0,
+     "ex": [
+      0.2,
+      0.5852327447833037
+     ],
+     "death": [
+      false,
+      false
+     ]
+    }
+   ],
+   "menu": [
+    {
+     "id": "nation-menu-peace",
+     "text": "Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now -1), or wear them out (war weariness 20, over 40 needed)."
+    },
+    {
+     "id": "nation-menu-take",
+     "text": "Take control",
+     "disabled": false,
+     "title": ""
+    }
+   ]
+  },
+  {
+   "day": 25,
+   "buttons": [
+    {
+     "id": "act-peace-3",
+     "row": "Germany ⚔ Poland (+0)Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 28, over 40 needed)."
+    }
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      23
+     ],
+     "d": [
+      24
+     ],
+     "score": 71,
+     "ex": [
+      9.618604629811195,
+      71.91534849640908
+     ],
+     "death": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      75,
+      71,
+      72
+     ],
+     "d": [
+      69,
+      70
+     ],
+     "score": 16,
+     "ex": [
+      13.10998778530048,
+      17.149546577625962
+     ],
+     "death": [
+      false,
+      true
+     ]
+    },
+    {
+     "id": 3,
+     "a": [
+      1,
+      15
+     ],
+     "d": [
+      4,
+      19,
+      44,
+      45,
+      48
+     ],
+     "score": 0,
+     "ex": [
+      12.679653534267512,
+      28.01926423732097
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 4,
+     "a": [
+      10
+     ],
+     "d": [
+      6,
+      7,
+      8
+     ],
+     "score": 7,
+     "ex": [
+      0.7023088325965227,
+      4.37990019807981
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 5,
+     "a": [
+      20,
+      42
+     ],
+     "d": [
+      43
+     ],
+     "score": 0,
+     "ex": [
+      0.34500000000000003,
+      0.30000000000000004
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 6,
+     "a": [
+      69
+     ],
+     "d": [
+      73
+     ],
+     "score": 0,
+     "ex": [
+      1.9810168009013538,
+      0.30000000000000004
+     ],
+     "death": [
+      true,
+      false
+     ]
+    }
+   ],
+   "menu": [
+    {
+     "id": "nation-menu-peace",
+     "text": "Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 28, over 40 needed)."
+    },
+    {
+     "id": "nation-menu-take",
+     "text": "Take control",
+     "disabled": false,
+     "title": ""
+    }
+   ]
+  },
+  {
+   "day": 30,
+   "buttons": [
+    {
+     "id": "act-peace-3",
+     "row": "Germany ⚔ Poland (+0)Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 35, over 40 needed)."
+    },
+    {
+     "id": "act-peace-7",
+     "row": "Germany ⚔ Lithuania (+0)Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 4, over 40 needed)."
+    }
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      23
+     ],
+     "d": [
+      24
+     ],
+     "score": 88,
+     "ex": [
+      10.466374589291242,
+      87.94610628252289
+     ],
+     "death": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      75,
+      71,
+      72
+     ],
+     "d": [
+      69,
+      70
+     ],
+     "score": 16,
+     "ex": [
+      15.57275703217701,
+      20.346224884971498
+     ],
+     "death": [
+      false,
+      true
+     ]
+    },
+    {
+     "id": 3,
+     "a": [
+      1,
+      15
+     ],
+     "d": [
+      4,
+      19,
+      44,
+      45,
+      48
+     ],
+     "score": 0,
+     "ex": [
+      16.406449314286945,
+      35.23520487714324
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 4,
+     "a": [
+      10
+     ],
+     "d": [
+      6,
+      7,
+      8
+     ],
+     "score": 11,
+     "ex": [
+      1.253227812671642,
+      12.524251719836254
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 5,
+     "a": [
+      20,
+      42
+     ],
+     "d": [
+      43
+     ],
+     "score": 0,
+     "ex": [
+      0.9199999999999999,
+      4.160000000000003
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 6,
+     "a": [
+      69
+     ],
+     "d": [
+      73
+     ],
+     "score": 0,
+     "ex": [
+      5.215539505906363,
+      0.8
+     ],
+     "death": [
+      true,
+      false
+     ]
+    },
+    {
+     "id": 7,
+     "a": [
+      1
+     ],
+     "d": [
+      6,
+      7,
+      8
+     ],
+     "score": 0,
+     "ex": [
+      5.625776934742583,
+      3.9333833594107555
+     ],
+     "death": [
+      false,
+      false
+     ]
+    }
+   ],
+   "menu": [
+    {
+     "id": "nation-menu-peace",
+     "text": "Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 35, over 40 needed)."
+    },
+    {
+     "id": "nation-menu-take",
+     "text": "Take control",
+     "disabled": false,
+     "title": ""
+    }
+   ]
+  },
+  {
+   "day": 35,
+   "buttons": [
+    {
+     "id": "act-peace-3",
+     "row": "Germany ⚔ Poland (+0)Offer peace",
+     "disabled": false,
+     "title": ""
+    },
+    {
+     "id": "act-peace-7",
+     "row": "Germany ⚔ Lithuania (+0)Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 24, over 40 needed)."
+    },
+    {
+     "id": "act-peace-9",
+     "row": "Italy ⚔ Austria (+0)Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 0, over 40 needed)."
+    }
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      23
+     ],
+     "d": [
+      24
+     ],
+     "score": 100,
+     "ex": [
+      11.215914985542659,
+      100
+     ],
+     "death": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      75,
+      71,
+      72
+     ],
+     "d": [
+      69,
+      70
+     ],
+     "score": 15,
+     "ex": [
+      18.238667201786832,
+      23.497908219213734
+     ],
+     "death": [
+      false,
+      true
+     ]
+    },
+    {
+     "id": 3,
+     "a": [
+      1,
+      15
+     ],
+     "d": [
+      4,
+      19,
+      44,
+      45,
+      48
+     ],
+     "score": 0,
+     "ex": [
+      19.927043412037914,
+      40.087440964978164
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 4,
+     "a": [
+      10
+     ],
+     "d": [
+      6,
+      7,
+      8
+     ],
+     "score": 16,
+     "ex": [
+      1.8432525679203424,
+      33.370273949250496
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 5,
+     "a": [
+      20,
+      42
+     ],
+     "d": [
+      43
+     ],
+     "score": -3,
+     "ex": [
+      1.554581131246921,
+      14.740000000000004
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 6,
+     "a": [
+      69
+     ],
+     "d": [
+      73
+     ],
+     "score": 0,
+     "ex": [
+      8.860326502752313,
+      1.3
+     ],
+     "death": [
+      true,
+      false
+     ]
+    },
+    {
+     "id": 7,
+     "a": [
+      1
+     ],
+     "d": [
+      6,
+      7,
+      8
+     ],
+     "score": 0,
+     "ex": [
+      13.620895730047353,
+      24.407199497610453
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 8,
+     "a": [
+      10
+     ],
+     "d": [
+      11,
+      14,
+      4
+     ],
+     "score": 0,
+     "ex": [
+      0.3523686726157764,
+      1.7938936790693858
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 9,
+     "a": [
+      15,
+      1
+     ],
+     "d": [
+      2,
+      30
+     ],
+     "score": 0,
+     "ex": [
+      0.7076593482056688,
+      0.1
+     ],
+     "death": [
+      false,
+      false
+     ]
+    }
+   ],
+   "menu": [
+    {
+     "id": "nation-menu-peace",
+     "text": "Offer peace",
+     "disabled": false,
+     "title": ""
+    },
+    {
+     "id": "nation-menu-take",
+     "text": "Take control",
+     "disabled": false,
+     "title": ""
+    }
+   ]
+  },
+  {
+   "day": 40,
+   "buttons": [
+    {
+     "id": "act-peace-7",
+     "row": "Germany ⚔ Lithuania (+0)Offer peace",
+     "disabled": false,
+     "title": ""
+    },
+    {
+     "id": "act-peace-9",
+     "row": "Italy ⚔ Austria (+0)Offer peace",
+     "disabled": true,
+     "title": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 2, over 40 needed)."
+    }
+   ],
+   "wars": [
+    {
+     "id": 1,
+     "a": [
+      23
+     ],
+     "d": [
+      24
+     ],
+     "score": 100,
+     "ex": [
+      11.846066319895968,
+      100
+     ],
+     "death": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": 2,
+     "a": [
+      75,
+      71,
+      72
+     ],
+     "d": [
+      69,
+      70
+     ],
+     "score": 13,
+     "ex": [
+      20.697829273399872,
+      25.287556878766203
+     ],
+     "death": [
+      false,
+      true
+     ]
+    },
+    {
+     "id": 4,
+     "a": [
+      10
+     ],
+     "d": [
+      6,
+      7,
+      8
+     ],
+     "score": 37,
+     "ex": [
+      2.4407482716551447,
+      71.16708085955513
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 5,
+     "a": [
+      20,
+      42
+     ],
+     "d": [
+      43
+     ],
+     "score": -7,
+     "ex": [
+      2.2146388009403593,
+      18.599999999999998
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 6,
+     "a": [
+      69
+     ],
+     "d": [
+      73
+     ],
+     "score": 0,
+     "ex": [
+      11.338328362864209,
+      1.8
+     ],
+     "death": [
+      true,
+      false
+     ]
+    },
+    {
+     "id": 7,
+     "a": [
+      1
+     ],
+     "d": [
+      6,
+      7,
+      8
+     ],
+     "score": 0,
+     "ex": [
+      16.279478070521236,
+      57.68598844078296
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 8,
+     "a": [
+      10
+     ],
+     "d": [
+      11,
+      14,
+      4
+     ],
+     "score": 0,
+     "ex": [
+      0.9702865445570213,
+      4.137769620332534
+     ],
+     "death": [
+      false,
+      false
+     ]
+    },
+    {
+     "id": 9,
+     "a": [
+      15,
+      1
+     ],
+     "d": [
+      2,
+      30
+     ],
+     "score": 0,
+     "ex": [
+      5.350488009306078,
+      1.8327399854546926
+     ],
+     "death": [
+      false,
+      false
+     ]
+    }
+   ],
+   "menu": [
+    {
+     "id": "nation-menu-war",
+     "text": "Force war",
+     "disabled": false,
+     "title": ""
+    },
+    {
+     "id": "nation-menu-ally",
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "one of them is in an alliance already; it must leave it first."
+    },
+    {
+     "id": "nation-menu-take",
+     "text": "Take control",
+     "disabled": false,
+     "title": ""
+    }
+   ]
+  }
+ ],
+ "hasPlayer": true,
+ "disabledClick": {
+  "button": {
+   "id": "act-peace-3",
+   "row": "Germany ⚔ Poland (+0)Offer peace",
+   "disabled": true,
+   "title": "They refuse: lead the war score by 25 (now +0), or wear them out (war weariness 0, over 40 needed)."
+  },
+  "warsBefore": 3,
+  "warsAfter": 3
+ },
+ "enabledClick": {
+  "day": 35,
+  "button": {
+   "id": "act-peace-3",
+   "row": "Germany ⚔ Poland (+0)Offer peace",
+   "disabled": false,
+   "title": ""
+  },
+  "before": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "after": [
+   1,
+   2,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "ticker": [
+   "5 February 1938 · Paused",
+   "5 February 1938 Germany made peace with Poland"
+  ]
+ },
+ "errors": []
+}

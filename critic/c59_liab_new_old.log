@@ -1,0 +1,91 @@
+head 30031 3517 g2 od8: seed 30031 setup 3517 orders 30031 for 8 days, 120 days: 0 broken, 19 s
+head 30031 3517 g1 od-: seed 30031 setup 3517 orders 30031, 120 days: 0 broken, 21 s
+head 30031 3517 g2 od-: seed 30031 setup 3517 orders 30031, 120 days: 0 broken, 22 s
+head 30031 15101 g2 od-: seed 30031 setup 15101 orders 30031, 120 days: 0 broken, 24 s
+head 30031 3517 g1 od8: seed 30031 setup 3517 orders 30031 for 8 days, 120 days: 0 broken, 19 s
+head 30033 3517 g2 od-: seed 30033 setup 3517 orders 30033, 120 days: 0 broken, 19 s
+head 30031 15101 g2 od8: seed 30031 setup 15101 orders 30031 for 8 days, 120 days: 0 broken, 22 s
+head 30033 15101 g2 od-: seed 30033 setup 15101 orders 30033, 120 days: 0 broken, 20 s
+head 30033 3517 g2 od8: seed 30033 setup 3517 orders 30033 for 8 days, 120 days: 0 broken, 17 s
+head 30033 15101 g2 od8: seed 30033 setup 15101 orders 30033 for 8 days, 120 days: 0 broken, 17 s
+head 30033 3517 g1 od-: seed 30033 setup 3517 orders 30033, 120 days: 0 broken, 20 s
+head 30033 3517 g1 od8: seed 30033 setup 3517 orders 30033 for 8 days, 120 days: 0 broken, 16 s
+head 30035 3517 g2 od8: seed 30035 setup 3517 orders 30035 for 8 days, 120 days: 0 broken, 17 s
+head 30035 3517 g2 od-: seed 30035 setup 3517 orders 30035, 120 days: 0 broken, 21 s
+head 30035 15101 g2 od-: seed 30035 setup 15101 orders 30035, 120 days: 0 broken, 21 s
+head 30035 3517 g1 od-: seed 30035 setup 3517 orders 30035, 120 days: 0 broken, 21 s
+head 30035 15101 g2 od8: seed 30035 setup 15101 orders 30035 for 8 days, 120 days: 0 broken, 19 s
+head 30035 3517 g1 od8: seed 30035 setup 3517 orders 30035 for 8 days, 120 days: 0 broken, 18 s
+head 30037 3517 g2 od-: seed 30037 setup 3517 orders 30037, 120 days: 0 broken, 21 s
+head 30037 15101 g2 od-: seed 30037 setup 15101 orders 30037, 120 days: 0 broken, 24 s
+head 30037 3517 g1 od-: seed 30037 setup 3517 orders 30037, 120 days: 0 broken, 21 s
+head 30037 3517 g2 od8: seed 30037 setup 3517 orders 30037 for 8 days, 120 days: 0 broken, 19 s
+head 30037 15101 g2 od8: seed 30037 setup 15101 orders 30037 for 8 days, 120 days: 0 broken, 22 s
+head 30037 3517 g1 od8: seed 30037 setup 3517 orders 30037 for 8 days, 120 days: 0 broken, 18 s
+head 30039 15101 g2 od-: seed 30039 setup 15101 orders 30039, 120 days: 0 broken, 23 s
+head 30039 3517 g2 od-: seed 30039 setup 3517 orders 30039, 120 days: 0 broken, 25 s
+head 30039 3517 g2 od8: seed 30039 setup 3517 orders 30039 for 8 days, 120 days: 0 broken, 22 s
+head 30039 3517 g1 od-: seed 30039 setup 3517 orders 30039, 120 days: 0 broken, 24 s
+head 30039 15101 g2 od8: seed 30039 setup 15101 orders 30039 for 8 days, 120 days: 0 broken, 20 s
+head 30039 3517 g1 od8: seed 30039 setup 3517 orders 30039 for 8 days, 120 days: 0 broken, 23 s
+head 30041 3517 g2 od-: seed 30041 setup 3517 orders 30041, 120 days: 0 broken, 19 s
+head 30041 15101 g2 od-: seed 30041 setup 15101 orders 30041, 120 days: 0 broken, 21 s
+head 30041 3517 g1 od-: seed 30041 setup 3517 orders 30041, 120 days: 0 broken, 19 s
+head 30041 3517 g2 od8: seed 30041 setup 3517 orders 30041 for 8 days, 120 days: 0 broken, 17 s
+head 30041 15101 g2 od8: seed 30041 setup 15101 orders 30041 for 8 days, 120 days: 0 broken, 20 s
+head 30041 3517 g1 od8: seed 30041 setup 3517 orders 30041 for 8 days, 120 days: 0 broken, 17 s
+head 30043 3517 g2 od-: seed 30043 setup 3517 orders 30043, 120 days: 0 broken, 21 s
+head 30043 15101 g2 od-: seed 30043 setup 15101 orders 30043, 120 days: 0 broken, 22 s
+head 30043 3517 g2 od8: seed 30043 setup 3517 orders 30043 for 8 days, 120 days: 0 broken, 18 s
+head 30043 3517 g1 od-: seed 30043 setup 3517 orders 30043, 120 days: 0 broken, 20 s
+head 30043 15101 g2 od8: seed 30043 setup 15101 orders 30043 for 8 days, 120 days: 0 broken, 20 s
+head 30043 3517 g1 od8: seed 30043 setup 3517 orders 30043 for 8 days, 120 days: 0 broken, 18 s
+head 30045 3517 g2 od-: seed 30045 setup 3517 orders 30045, 120 days: 0 broken, 19 s
+head 30045 15101 g2 od-: seed 30045 setup 15101 orders 30045, 120 days: 0 broken, 20 s
+head 30045 3517 g1 od-: seed 30045 setup 3517 orders 30045, 120 days: 0 broken, 19 s
+head 30045 3517 g2 od8: seed 30045 setup 3517 orders 30045 for 8 days, 120 days: 0 broken, 18 s
+head 30045 15101 g2 od8: seed 30045 setup 15101 orders 30045 for 8 days, 120 days: 0 broken, 19 s
+head 30045 3517 g1 od8: seed 30045 setup 3517 orders 30045 for 8 days, 120 days: 0 broken, 17 s
+head 30047 3517 g2 od-: seed 30047 setup 3517 orders 30047, 120 days: 0 broken, 22 s
+head 30047 3517 g1 od-: seed 30047 setup 3517 orders 30047, 120 days: 0 broken, 19 s
+head 30047 3517 g2 od8: seed 30047 setup 3517 orders 30047 for 8 days, 120 days: 0 broken, 19 s
+head 30047 15101 g2 od-: seed 30047 setup 15101 orders 30047, 120 days: 0 broken, 24 s
+head 30047 3517 g1 od8: seed 30047 setup 3517 orders 30047 for 8 days, 120 days: 0 broken, 18 s
+head 30047 15101 g2 od8: seed 30047 setup 15101 orders 30047 for 8 days, 120 days: 0 broken, 22 s
+head 30049 3517 g2 od-: seed 30049 setup 3517 orders 30049, 120 days: 0 broken, 22 s
+head 30049 15101 g2 od-: seed 30049 setup 15101 orders 30049, 120 days: 0 broken, 20 s
+head 30049 3517 g1 od-: seed 30049 setup 3517 orders 30049, 120 days: 0 broken, 20 s
+head 30049 3517 g2 od8: seed 30049 setup 3517 orders 30049 for 8 days, 120 days: 0 broken, 18 s
+head 30049 15101 g2 od8: seed 30049 setup 15101 orders 30049 for 8 days, 120 days: 0 broken, 18 s
+head 30049 3517 g1 od8: seed 30049 setup 3517 orders 30049 for 8 days, 120 days: 0 broken, 18 s
+head 30051 3517 g2 od-: seed 30051 setup 3517 orders 30051, 120 days: 0 broken, 21 s
+head 30051 15101 g2 od-: seed 30051 setup 15101 orders 30051, 120 days: 0 broken, 20 s
+head 30051 3517 g1 od-: seed 30051 setup 3517 orders 30051, 120 days: 0 broken, 19 s
+head 30051 3517 g2 od8: seed 30051 setup 3517 orders 30051 for 8 days, 120 days: 0 broken, 19 s
+head 30051 15101 g2 od8: seed 30051 setup 15101 orders 30051 for 8 days, 120 days: 0 broken, 18 s
+head 30051 3517 g1 od8: seed 30051 setup 3517 orders 30051 for 8 days, 120 days: 0 broken, 18 s
+head 30053 3517 g2 od-: seed 30053 setup 3517 orders 30053, 120 days: 0 broken, 18 s
+head 30053 15101 g2 od-: seed 30053 setup 15101 orders 30053, 120 days: 0 broken, 20 s
+head 30053 3517 g2 od8: seed 30053 setup 3517 orders 30053 for 8 days, 120 days: 0 broken, 18 s
+head 30053 3517 g1 od-: seed 30053 setup 3517 orders 30053, 120 days: 0 broken, 19 s
+head 30053 15101 g2 od8: seed 30053 setup 15101 orders 30053 for 8 days, 120 days: 0 broken, 19 s
+head 30053 3517 g1 od8: seed 30053 setup 3517 orders 30053 for 8 days, 120 days: 0 broken, 18 s
+head 30055 3517 g2 od-: seed 30055 setup 3517 orders 30055, 120 days: 0 broken, 19 s
+head 30055 3517 g2 od8: seed 30055 setup 3517 orders 30055 for 8 days, 120 days: 0 broken, 16 s
+head 30055 3517 g1 od-: seed 30055 setup 3517 orders 30055, 120 days: 0 broken, 19 s
+head 30055 15101 g2 od-: seed 30055 setup 15101 orders 30055, 120 days: 0 broken, 22 s
+head 30055 3517 g1 od8: seed 30055 setup 3517 orders 30055 for 8 days, 120 days: 0 broken, 17 s
+head 30055 15101 g2 od8: seed 30055 setup 15101 orders 30055 for 8 days, 120 days: 0 broken, 20 s
+head 30057 15101 g2 od-: seed 30057 setup 15101 orders 30057, 120 days: 0 broken, 19 s
+head 30057 3517 g2 od-: seed 30057 setup 3517 orders 30057, 120 days: 0 broken, 23 s
+head 30057 3517 g1 od-: seed 30057 setup 3517 orders 30057, 120 days: 0 broken, 20 s
+head 30057 15101 g2 od8: seed 30057 setup 15101 orders 30057 for 8 days, 120 days: 0 broken, 16 s
+head 30057 3517 g2 od8: seed 30057 setup 3517 orders 30057 for 8 days, 120 days: 0 broken, 20 s
+head 30057 3517 g1 od8: seed 30057 setup 3517 orders 30057 for 8 days, 120 days: 0 broken, 20 s
+head 30059 3517 g2 od-: seed 30059 setup 3517 orders 30059, 120 days: 0 broken, 17 s
+head 30059 3517 g1 od-: seed 30059 setup 3517 orders 30059, 120 days: 0 broken, 17 s
+head 30059 15101 g2 od-: seed 30059 setup 15101 orders 30059, 120 days: 0 broken, 18 s
+head 30059 3517 g2 od8: seed 30059 setup 3517 orders 30059 for 8 days, 120 days: 0 broken, 15 s
+head 30059 15101 g2 od8: seed 30059 setup 15101 orders 30059 for 8 days, 120 days: 0 broken, 15 s
+head 30059 3517 g1 od8: seed 30059 setup 3517 orders 30059 for 8 days, 120 days: 0 broken, 14 s
+done:

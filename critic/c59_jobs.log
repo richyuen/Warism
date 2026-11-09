@@ -1,0 +1,43 @@
+fin: 16:43:32 npx tsx tools/diag/diploInvariants.ts 30001 random 3650 > critic/c59_diploinv_30001r_10y.log 2>&1
+fin: 16:44:07 npx tsx tools/diag/diploInvariants.ts 30003 scenario 3650 --heroes > critic/c59_diploinv_30003s_h_10y.log 2>&1
+fin: 16:46:43 npx tsx tools/diag/diploInvariants.ts 30005 random 1825 --world random > critic/c59_diploinv_30005rw_5y.log 2>&1
+fin: 16:49:38 npx tsx tools/diag/diploInvariants.ts 30007 scenario 3650 > critic/c59_diploinv_30007s_10y.log 2>&1
+fin: 16:51:00 npx tsx tools/diag/diploInvariants.ts 30009 random 3650 --heroes > critic/c59_diploinv_30009r_h_10y.log 2>&1
+fin: 16:51:09 npx tsx critic/scripts/c59_topArea.ts 30099 25 critic/c59_toparea_30099.json > critic/c59_toparea_30099.log 2>&1
+fin: 16:51:15 npx tsx critic/scripts/c59_topArea.ts 30097 25 critic/c59_toparea_30097.json > critic/c59_toparea_30097.log 2>&1
+fin: 16:51:18 npx tsx tools/diag/landingInvariants.ts 30021 3517 > critic/c59_li_30021_jap.log 2>&1
+fin: 16:51:29 npx tsx tools/diag/landingInvariants.ts 30023 15101 > critic/c59_li_30023_eng.log 2>&1
+fin: 16:51:36 npx tsx tools/diag/worldInvariants.ts 30051 > critic/c59_wi_30051.log 2>&1
+fin: 16:51:56 npx tsx tools/diag/worldInvariants.ts 30053 365 --heroes > critic/c59_wi_30053h.log 2>&1
+fin: 16:51:59 npx tsx tools/diag/worldInvariants.ts 30057 365 --world random > critic/c59_wi_30057rw.log 2>&1
+fin: 16:53:05 npx tsx tools/diag/seaBattles.ts 30061 scenario --years 3 --out critic/c59_sb_30061.json > critic/c59_sb_30061.log 2>&1
+fin: 16:53:30 npx tsx tools/diag/diploInvariants.ts 30011 scenario 3650 > critic/c59_diploinv_30011s_10y.log 2>&1
+fin: 16:54:23 npx tsx tools/diag/seaBattles.ts 28061 scenario --years 3 --out critic/c59_sb_28061.json > critic/c59_sb_28061.log 2>&1
+fin: 16:54:31 npx tsx critic/scripts/c59_repulse.ts 30071 ENG GER 1023.5,275.5 1072.5,259.5 3 critic/c59_repulse_30071.json 500 12 > critic/c59_repulse_30071.log 2>&1
+fin: 16:54:38 npx tsx critic/scripts/c59_repulse.ts 30073 JAP CHI 1818.5,385.5 1715.5,413.5 3 critic/c59_repulse_30073.json 400 12 > critic/c59_repulse_30073.log 2>&1
+fin: 16:54:55 npx tsx tools/diag/worldInvariants.ts 30055 3650 > critic/c59_wi_30055_10y.log 2>&1
+fin: 16:54:59 sh -c 'SEED=28037 ORDERDAYS=8 DIV=366 npx tsx critic/scripts/c59_orderdays.ts > critic/c59_od_28037_366.log 2>&1'
+fin: 16:55:16 sh -c 'SEED=28037 ORDERDAYS=8 DIV=365 npx tsx critic/scripts/c59_orderdays.ts > critic/c59_od_28037_365.log 2>&1'
+fin: 16:55:18 sh -c 'SEED=29043 SETUP=15101 DIV=273 npx tsx critic/scripts/c59_orderdays3.ts > critic/c59_od_29043_273.log 2>&1'
+fin: 16:57:22 sh -c 'cd critic/old && npx tsx lc.ts 30201 6 > ../c59_lc/old_30201.log 2>&1'
+fin: 16:57:27 npx tsx critic/scripts/c59_landcount.ts 30201 6 > critic/c59_lc/head_30201.log 2>&1
+fin: 16:59:25 npx tsx critic/scripts/c59_landcount.ts 30203 6 > critic/c59_lc/head_30203.log 2>&1
+fin: 16:59:29 sh -c 'cd critic/old && npx tsx lc.ts 30203 6 > ../c59_lc/old_30203.log 2>&1'
+fin: 16:59:39 npx tsx tools/diag/workerDeterminism.ts 30059 4380 24 critic/c59_wd_30059.json > critic/c59_wd_30059.log 2>&1
+fin: 17:01:24 npx tsx critic/scripts/c59_landcount.ts 30205 6 > critic/c59_lc/head_30205.log 2>&1
+fin: 17:01:27 sh -c 'cd critic/old && npx tsx lc.ts 30205 6 > ../c59_lc/old_30205.log 2>&1'
+fin: 17:01:41 npx tsx critic/scripts/c59_landcount.ts 30207 6 > critic/c59_lc/head_30207.log 2>&1
+fin: 17:02:59 npx tsx tools/diag/landingRows.ts all critic/c59_lrows_all.json > critic/c59_lrows_all.log 2>&1
+fin: 17:03:31 sh -c 'cd critic/old && npx tsx lc.ts 30207 6 > ../c59_lc/old_30207.log 2>&1'
+fin: 17:03:33 npx tsx critic/scripts/c59_landcount.ts 30209 6 > critic/c59_lc/head_30209.log 2>&1
+fin: 17:03:36 sh -c 'cd critic/old && npx tsx lc.ts 30209 6 > ../c59_lc/old_30209.log 2>&1'
+fin: 17:04:44 npx tsx critic/scripts/c59_landcount.ts 28061 3 > critic/c59_lc/head_28061.log 2>&1
+fin: 17:04:48 sh -c 'cd critic/old && npx tsx lc.ts 28061 3 > ../c59_lc/old_28061.log 2>&1'
+fin: 17:05:09 npx tsx critic/scripts/c59_landcount.ts 30211 6 > critic/c59_lc/head_30211.log 2>&1
+fin: 17:05:30 sh -c 'cd critic/old && SEED=28037 ORDERDAYS=8 DIV=366 npx tsx orderdays.ts > ../c59_od_old_28037_366.log 2>&1'
+fin: 17:05:43 sh -c 'cd critic/old && npx tsx lc.ts 30211 6 > ../c59_lc/old_30211.log 2>&1'
+fin: 17:05:52 sh -c 'cd critic/old && SEED=29043 SETUP=15101 DIV=273 npx tsx orderdays3.ts > ../c59_od_old_29043_273.log 2>&1'
+fin: 17:06:06 sh -c 'SEED=29043 SETUP=15101 DIV=272 npx tsx critic/scripts/c59_orderdays3.ts > critic/c59_od_29043_272.log 2>&1'
+fin: 17:20:42 P=2 sh critic/scripts/c59_liab_new.sh > critic/c59_liab_new.log 2>&1
+fin: 17:32:08 P=2 sh critic/scripts/c59_sr.sh > critic/c59_sr.log 2>&1
+done:
