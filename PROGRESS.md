@@ -2347,3 +2347,12 @@
   controls off the screen. Now up to 40 rem wide and to the bar, Build four columns, Actions two. `buildTab1938` gains
   844 × 390, red before; `phoneLayout1938` green.
 - Batch 10 and R55h–j done. **Next:** the critic's probes replayed (ADR-833), then critic run 57.
+
+## 2026-11-09 — Critic run 57 (full, on d3519cb0): R56-B1 closed; one blocking issue, naval 7
+- Scores: naval 7; the other 13 at 8. R56-B1's probes pass on HEAD (returning-and-still spells 0 on 123 runs); R56-N1–N3,
+  R55-N1, R55-N2 and run 55's small items verified fixed. R57-B1 (blocking): `landingInvariants` `slowClick` breaks on
+  28037 g2, orders for 8 days (a click 0.5 day over its week: a marcher joined at a shared port), and on 28039 g1 on
+  both builds (a division already in China reckoned by sea). Non-blocking: R57-N1 "4 of 6 ashore" for four thrown
+  ashore near Palermo; R57-N2 the Actions tab's Offer peace silent when refused; R57-N3 an ended landing names 4 of 6.
+  ADR-833: naval's findings are items. Filed as batch 11 (R56).
+- **Next:** R56a.

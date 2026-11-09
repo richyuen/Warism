@@ -1182,3 +1182,25 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
   quicker): taken as R55f once R55d's checker measured it (five clicks up to 88.5 days); R55c bounds the case of a
   sailed landing's next voyage.
 - Carried: R55-N1, R55-N2 and run 55's small items: taken as R55h–j by the user's call (2026-11-09).
+
+## Batch 11 — run 57's naval findings
+
+Critic run 57 (full, on `d3519cb0`): R56-B1 closed; one blocking issue, R57-B1; naval 7, every other dimension at 8.
+Naval's findings are items, fixed, then the critic again (ADR-833). No release.
+
+- [ ] R56 **Run 57's naval findings.**
+  - [ ] R56a R57-B1 (blocking): a click's landing held past its best way. (i) `npx tsx tools/diag/landingInvariants.ts
+    28037 3517 120 28037 30 2 8` at 0 broken: a division whose march to a shared port would hold the click past its
+    bound splits or is left, told, so `SPLIT_SOONER_HOURS` and `slowClick` cannot disagree; (ii) `… 28039 3517 120
+    28039 30,90 1` at 0, or the checker shown wrong to reckon a sea way for a division already on the target's land
+    (ADR-892); (iii) `sh critic/scripts/c57_liab_head.sh` (246 runs) all at 0; `c57_stuckret` 0; Malta's 18 the same.
+  - [ ] R56b R57-N1: a landing whose first wave broke off says where they came ashore ("4 ashore near Palermo, away
+    from Valletta; 2 at Rome"), not "4 of 6 ashore". AT: `SHOTAT=114,120,132 node critic/scripts/c57_lhold.mjs 27125
+    ITA ENG 1095.5,344.5 1106.5,383.5 6 ita_malta6 140`.
+  - [ ] R56c R57-N3: an ended landing tells every division it counts (28113, six to Norwich: 1 and 2 untold). AT:
+    `node critic/scripts/c57_whotold.mjs 28113 GER ENG 1100.5,267.5 1031.5,266.5 6 120`.
+- Not naval, not taken this batch (ADR-829: only naval's findings are items under its bar): R57-N2 (the Actions tab's
+  Offer peace silent when refused; old, the menu greys it with the reason) and the small items (the two at Rome's
+  "transports needed" figure, `seaBattlesLook` counting one side's ships, two Spains' squadrons alike) carried.
+- Design objections: a cancel hands the army to the AI (ADR-875, the user's call); Malta never taken (the rules
+  working); "ashore" counts those thrown ashore away (R56b takes the words); alliances ignore the map (carried).

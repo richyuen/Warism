@@ -1,0 +1,461 @@
+{
+ "seed": 28401,
+ "ME": "GER",
+ "FOE": "POL",
+ "ALLIES": "ITA,JAP,HUN,ENG",
+ "DAYS": 30,
+ "steps": [
+  {
+   "step": "ally ITA",
+   "before": {
+    "standing": "Allied",
+    "war": {
+     "text": "Force war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "they are allies."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "clicked": false,
+   "after": {
+    "standing": "Allied",
+    "war": {
+     "text": "Force war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "they are allies."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "state": {
+    "tick": 2,
+    "wars": [
+     "1: NSP vs REP (0)",
+     "2: JAP+MAN+MEN vs CHI+CCP (16)"
+    ],
+    "ticker": []
+   }
+  },
+  {
+   "step": "ally JAP",
+   "before": {
+    "standing": "Allied",
+    "war": {
+     "text": "Force war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "they are allies."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "clicked": false,
+   "after": {
+    "standing": "Allied",
+    "war": {
+     "text": "Force war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "they are allies."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "state": {
+    "tick": 4,
+    "wars": [
+     "1: NSP vs REP (0)",
+     "2: JAP+MAN+MEN vs CHI+CCP (16)"
+    ],
+    "ticker": []
+   }
+  },
+  {
+   "step": "ally HUN",
+   "before": {
+    "standing": "Neutral",
+    "war": {
+     "text": "Declare war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": false,
+     "title": ""
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "clicked": true,
+   "after": {
+    "standing": "Allied",
+    "war": {
+     "text": "Force war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "they are allies."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "state": {
+    "tick": 6,
+    "wars": [
+     "1: NSP vs REP (0)",
+     "2: JAP+MAN+MEN vs CHI+CCP (16)"
+    ],
+    "ticker": []
+   }
+  },
+  {
+   "step": "ally ENG",
+   "before": {
+    "standing": "Neutral",
+    "war": {
+     "text": "Declare war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "one of them is in an alliance already; it must leave it first."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "clicked": false,
+   "after": {
+    "standing": "Neutral",
+    "war": {
+     "text": "Declare war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "one of them is in an alliance already; it must leave it first."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "state": {
+    "tick": 8,
+    "wars": [
+     "1: NSP vs REP (0)",
+     "2: JAP+MAN+MEN vs CHI+CCP (16)"
+    ],
+    "ticker": []
+   }
+  },
+  {
+   "step": "war POL",
+   "before": {
+    "standing": "Neutral",
+    "war": {
+     "text": "Declare war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": false,
+     "title": ""
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "after": {
+    "standing": "At war",
+    "war": {
+     "text": "Declare war",
+     "disabled": true
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": ""
+    },
+    "peace": [
+     "Germany ⚔ Poland (+0)Offer peace"
+    ],
+    "tickerText": [
+     "1 January 1938 · Paused",
+     "1 January 1938 Germany declared war on Poland"
+    ]
+   },
+   "state": {
+    "tick": 10,
+    "wars": [
+     "1: NSP vs REP (0)",
+     "2: JAP+MAN+MEN vs CHI+CCP (16)",
+     "3: GER+ITA+HUN vs POL+FRA+AOF+AEF+TUN (0)"
+    ],
+    "ticker": [
+     "{\"i\":3,\"tick\":8,\"kind\":12,\"a\":1,\"b\":4,\"x\":1143.4558577777777,\"y\":269.4766897854859,\"an\":\"nation.GER\",\"bn\":\"nation.POL\",\"of\":\"\"}"
+    ]
+   }
+  },
+  {
+   "step": "day 30",
+   "ui": {
+    "standing": "At war",
+    "war": {
+     "text": "Declare war",
+     "disabled": true
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "one of them is in an alliance already; it must leave it first."
+    },
+    "peace": [
+     "Germany ⚔ Poland (+0)Offer peace",
+     "Hungary ⚔ Austria (+0)Offer peace"
+    ],
+    "tickerText": [
+     "31 January 1938 · Paused",
+     "19 January 1938 Soviet Union declared war on Finland",
+     "30 January 1938 Hungary declared war on Austria"
+    ]
+   },
+   "state": {
+    "tick": 730,
+    "wars": [
+     "1: NSP vs REP (77)",
+     "2: JAP+MAN+MEN vs CHI+CCP (15)",
+     "3: GER+ITA+HUN vs POL+FRA+AOF+AEF+TUN (0)",
+     "4: CHI vs TIB (0)",
+     "5: SOV vs LIT+LAT+EST (23)",
+     "6: SOV vs FIN (0)",
+     "7: HUN+GER+ITA vs AUT (0)"
+    ],
+    "ticker": [
+     "{\"i\":19,\"tick\":192,\"kind\":12,\"a\":69,\"b\":73,\"x\":1542.2577777777778,\"y\":423.58478341296717,\"an\":\"nation.CHI\",\"bn\":\"nation.TIB\",\"of\":\"\"}",
+     "{\"i\":25,\"tick\":264,\"kind\":12,\"a\":10,\"b\":6,\"x\":1159.8506666666667,\"y\":248.52338763565294,\"an\":\"nation.SOV\",\"bn\":\"nation.LIT\",\"of\":\"\"}",
+     "{\"i\":35,\"tick\":432,\"kind\":12,\"a\":10,\"b\":9,\"x\":1165.8365155555555,\"y\":205.64651916196325,\"an\":\"nation.SOV\",\"bn\":\"nation.FIN\",\"of\":\"\"}",
+     "{\"i\":43,\"tick\":696,\"kind\":12,\"a\":13,\"b\":2,\"x\":1117.09696,\"y\":299.64262109967876,\"an\":\"nation.HUN\",\"bn\":\"nation.AUT\",\"of\":\"\"}"
+    ]
+   }
+  },
+  {
+   "step": "peace Germany ⚔ Poland (+0)Offer peace",
+   "ui": {
+    "standing": "At war",
+    "war": {
+     "text": "Declare war",
+     "disabled": true
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "one of them is in an alliance already; it must leave it first."
+    },
+    "peace": [
+     "Germany ⚔ Poland (+0)Offer peace",
+     "Hungary ⚔ Austria (+0)Offer peace"
+    ],
+    "tickerText": [
+     "31 January 1938 · Paused",
+     "19 January 1938 Soviet Union declared war on Finland",
+     "30 January 1938 Hungary declared war on Austria"
+    ]
+   },
+   "state": {
+    "tick": 732,
+    "wars": [
+     "1: NSP vs REP (77)",
+     "2: JAP+MAN+MEN vs CHI+CCP (15)",
+     "3: GER+ITA+HUN vs POL+FRA+AOF+AEF+TUN (0)",
+     "4: CHI vs TIB (0)",
+     "5: SOV vs LIT+LAT+EST (23)",
+     "6: SOV vs FIN (0)",
+     "7: HUN+GER+ITA vs AUT (0)"
+    ],
+    "ticker": [
+     "{\"i\":19,\"tick\":192,\"kind\":12,\"a\":69,\"b\":73,\"x\":1542.2577777777778,\"y\":423.58478341296717,\"an\":\"nation.CHI\",\"bn\":\"nation.TIB\",\"of\":\"\"}",
+     "{\"i\":25,\"tick\":264,\"kind\":12,\"a\":10,\"b\":6,\"x\":1159.8506666666667,\"y\":248.52338763565294,\"an\":\"nation.SOV\",\"bn\":\"nation.LIT\",\"of\":\"\"}",
+     "{\"i\":35,\"tick\":432,\"kind\":12,\"a\":10,\"b\":9,\"x\":1165.8365155555555,\"y\":205.64651916196325,\"an\":\"nation.SOV\",\"bn\":\"nation.FIN\",\"of\":\"\"}",
+     "{\"i\":43,\"tick\":696,\"kind\":12,\"a\":13,\"b\":2,\"x\":1117.09696,\"y\":299.64262109967876,\"an\":\"nation.HUN\",\"bn\":\"nation.AUT\",\"of\":\"\"}"
+    ]
+   }
+  },
+  {
+   "step": "peace Hungary ⚔ Austria (+0)Offer peace",
+   "ui": {
+    "standing": "At war",
+    "war": {
+     "text": "Declare war",
+     "disabled": true
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "one of them is in an alliance already; it must leave it first."
+    },
+    "peace": [
+     "Germany ⚔ Poland (+0)Offer peace",
+     "Hungary ⚔ Austria (+0)Offer peace"
+    ],
+    "tickerText": [
+     "31 January 1938 · Paused",
+     "19 January 1938 Soviet Union declared war on Finland",
+     "30 January 1938 Hungary declared war on Austria"
+    ]
+   },
+   "state": {
+    "tick": 734,
+    "wars": [
+     "1: NSP vs REP (77)",
+     "2: JAP+MAN+MEN vs CHI+CCP (15)",
+     "3: GER+ITA+HUN vs POL+FRA+AOF+AEF+TUN (0)",
+     "4: CHI vs TIB (0)",
+     "5: SOV vs LIT+LAT+EST (23)",
+     "6: SOV vs FIN (0)",
+     "7: HUN+GER+ITA vs AUT (0)"
+    ],
+    "ticker": [
+     "{\"i\":19,\"tick\":192,\"kind\":12,\"a\":69,\"b\":73,\"x\":1542.2577777777778,\"y\":423.58478341296717,\"an\":\"nation.CHI\",\"bn\":\"nation.TIB\",\"of\":\"\"}",
+     "{\"i\":25,\"tick\":264,\"kind\":12,\"a\":10,\"b\":6,\"x\":1159.8506666666667,\"y\":248.52338763565294,\"an\":\"nation.SOV\",\"bn\":\"nation.LIT\",\"of\":\"\"}",
+     "{\"i\":35,\"tick\":432,\"kind\":12,\"a\":10,\"b\":9,\"x\":1165.8365155555555,\"y\":205.64651916196325,\"an\":\"nation.SOV\",\"bn\":\"nation.FIN\",\"of\":\"\"}",
+     "{\"i\":43,\"tick\":696,\"kind\":12,\"a\":13,\"b\":2,\"x\":1117.09696,\"y\":299.64262109967876,\"an\":\"nation.HUN\",\"bn\":\"nation.AUT\",\"of\":\"\"}"
+    ]
+   }
+  },
+  {
+   "step": "after peace +48h",
+   "ui": {
+    "standing": "At war",
+    "war": {
+     "text": "Declare war",
+     "disabled": true
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "one of them is in an alliance already; it must leave it first."
+    },
+    "peace": [
+     "Germany ⚔ Poland (+0)Offer peace",
+     "Hungary ⚔ Austria (+0)Offer peace"
+    ],
+    "tickerText": [
+     "2 February 1938 · Paused",
+     "19 January 1938 Soviet Union declared war on Finland",
+     "30 January 1938 Hungary declared war on Austria"
+    ]
+   },
+   "state": {
+    "tick": 734,
+    "wars": [
+     "1: NSP vs REP (77)",
+     "2: JAP+MAN+MEN vs CHI+CCP (15)",
+     "3: GER+ITA+HUN vs POL+FRA+AOF+AEF+TUN (0)",
+     "4: CHI vs TIB (0)",
+     "5: SOV vs LIT+LAT+EST (23)",
+     "6: SOV vs FIN (0)",
+     "7: HUN+GER+ITA vs AUT (0)"
+    ],
+    "ticker": [
+     "{\"i\":19,\"tick\":192,\"kind\":12,\"a\":69,\"b\":73,\"x\":1542.2577777777778,\"y\":423.58478341296717,\"an\":\"nation.CHI\",\"bn\":\"nation.TIB\",\"of\":\"\"}",
+     "{\"i\":25,\"tick\":264,\"kind\":12,\"a\":10,\"b\":6,\"x\":1159.8506666666667,\"y\":248.52338763565294,\"an\":\"nation.SOV\",\"bn\":\"nation.LIT\",\"of\":\"\"}",
+     "{\"i\":35,\"tick\":432,\"kind\":12,\"a\":10,\"b\":9,\"x\":1165.8365155555555,\"y\":205.64651916196325,\"an\":\"nation.SOV\",\"bn\":\"nation.FIN\",\"of\":\"\"}",
+     "{\"i\":43,\"tick\":696,\"kind\":12,\"a\":13,\"b\":2,\"x\":1117.09696,\"y\":299.64262109967876,\"an\":\"nation.HUN\",\"bn\":\"nation.AUT\",\"of\":\"\"}"
+    ]
+   }
+  }
+ ],
+ "noAssist": true,
+ "history": [
+  "1 February 1938 Germany and Poland fought in the air this month: Germany lost 18 aircraft, Poland 102",
+  "1 February 1938 Italy and France fought in the air this month: Italy lost 36 aircraft, France 148",
+  "1 February 1938 Germany and France fought in the air this month: Germany lost 159 aircraft, France 168",
+  "1 February 1938 Italy's air force struck France this month: 11,512 men, guns and vehicles lost",
+  "1 February 1938 Japan's air force struck China this month: 18,423 men, guns and vehicles lost",
+  "1 February 1938 Germany's air force struck Poland this month: 24,205 men, guns and vehicles lost",
+  "1 February 1938 Ireland was freed from United Kingdom",
+  "1 February 1938 Iceland was freed from Denmark",
+  "31 January 1938 A major battle began near Rēzekne",
+  "30 January 1938 Hungary declared war on Austria",
+  "30 January 1938 Germany joined the war on Hungary's side, as its ally",
+  "30 January 1938 Italy joined the war on Hungary's side, as its ally",
+  "29 January 1938 France and Germany fought at sea: France lost 1 ship, Germany 0 ships",
+  "28 January 1938 A major battle began near Geneva",
+  "28 January 1938 France and Italy fought at sea: France lost 8 ships, Italy 1 ship",
+  "25 January 1938 France and Italy fought at sea: France lost 0 ships, Italy 1 ship",
+  "22 January 1938 The major battle near Poznań was won by Germany",
+  "21 January 1938 France and Italy fought at sea: France lost 0 ships, Italy 5 ships",
+  "21 January 1938 France and Italy fought at sea: France lost 12 ships, Italy 0 ships",
+  "19 January 1938 Soviet Union declared war on Finland",
+  "18 January 1938 A major battle began near Geneva",
+  "18 January 1938 The major battle near Geneva was won by Italy",
+  "15 January 1938 France and Germany fought at sea: France lost 6 ships, Germany 6 ships",
+  "15 January 1938 France and Italy fought at sea: France lost 25 ships, Italy 20 ships",
+  "14 January 1938 Nationalist Spain and Spanish Republic fought at sea: Nationalist Spain lost 0 ships, Spanish Republic 8 ships",
+  "14 January 1938 Luxembourg joined the Anglo-French Entente",
+  "12 January 1938 A major battle began near Poznań",
+  "12 January 1938 Soviet Union declared war on Lithuania",
+  "12 January 1938 Latvia joined the war on Lithuania's side, as its ally",
+  "12 January 1938 Estonia joined the war on Lithuania's side, as its ally",
+  "11 January 1938 A major battle began near Geneva",
+  "11 January 1938 Germany and Poland fought at sea: Germany lost 3 ships, Poland 8 ships",
+  "11 January 1938 Portugal founded a Defensive Pact",
+  "11 January 1938 Spanish Republic joined the Defensive Pact of Portugal",
+  "10 January 1938 Switzerland joined the Anglo-French Entente",
+  "9 January 1938 China declared war on Tibet",
+  "8 January 1938 Netherlands joined the Anglo-French Entente",
+  "7 January 1938 France and Italy fought at sea: France lost 0 ships, Italy 7 ships",
+  "7 January 1938 France and Italy fought at sea: France lost 2 ships, Italy 16 ships",
+  "7 January 1938 Iran joined the Balkan Entente",
+  "5 January 1938 France and Germany fought at sea: France lost 12 ships, Germany 14 ships",
+  "5 January 1938 France and Germany fought at sea: France lost 6 ships, Germany 0 ships",
+  "4 January 1938 France and Germany fought at sea: France lost 2 ships, Germany 10 ships",
+  "4 January 1938 A major battle began near Wuhu",
+  "4 January 1938 France and Germany fought at sea: France lost 14 ships, Germany 4 ships",
+  "4 January 1938 France and Germany fought at sea: France lost 7 ships, Germany 2 ships",
+  "4 January 1938 Poland joined the Little Entente",
+  "2 January 1938 Belgium joined the Anglo-French Entente",
+  "1 January 1938 Germany declared war on Poland",
+  "1 January 1938 France joined the war on Poland's side, as its guarantor",
+  "1 January 1938 Italy joined the war on Germany's side, as its ally",
+  "1 January 1938 Hungary joined the war on Germany's side, as its ally",
+  "1 January 1938 Hungary joined the Anti-Comintern Pact",
+  "1 January 1938 Mexico founded a Coalition",
+  "1 January 1938 Cuba joined the Coalition of Mexico"
+ ],
+ "errors": []
+}

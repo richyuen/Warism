@@ -1,6 +1,6 @@
 {
-  "commit": "d016ed2aa0f7cfa5dc1d76c6ffc2e3d5243dc4c1",
-  "mode": "focused",
+  "commit": "d3519cb087698522946dcb373361d1e90f385be9",
+  "mode": "full",
   "scores": {
     "mapVisuals": 8,
     "diplomacyWarDepth": 8,
@@ -19,11 +19,11 @@
   },
   "blocking": [
     {
-      "id": "R56-B1",
-      "title": "A landing turned back with a division left at its port never ends: the division stands frozen under 'turning back to Rome / they come back for it', the Cancel button's 'those ashore stop where they stand' is broken, re-clicks are swallowed, and no checker sees it (both commits)",
-      "evidence": "Page, HEAD, default 1938: Italy seed 27125, 6 nearest Rome to Valletta; h60 4 sail, 323/324 told no room; Cancel landing at h66; 324 to h300 still 'At Rome: no room on the transports that sailed; they come back for it', row 'turning back to Rome', ticker '324: waits for the next voyage' (critic/c56_tb_ita6_cancelbtn_27125.json, critic/shots/c56tb_ita6_cancelbtn_27125_end.png); the same on 715a5448 (critic/c56_tb_ita6_cancelbtn_OLD_27125.json). Click-cancel then re-click of 323,324 to Valletta at h198: nothing, no news, to h480 (critic/c56_rs_ita_malta6_reclick_27125.json). Headless critic/scripts/c56_stuckret.ts on the liab setups: 10 of 78 HEAD runs and 9 of 78 on 715a5448 have a returning landing standing still >= 30 days (27033 g1 113.7 d, 27053 g1 110.6, 27055 g1 108.9, 27041 g1 100.0, 27039 g1 99.2, 27035 g1 85.0, 26041 g1 84.7, 27051 g1 47.5, 24033 g2 43.3 HEAD only, 27037 g1 36.2), landingInvariants 0 broken on each (critic/c56_sr_ab.log). 24033 HEAD: landing 4 at Tokyo returning t1785-t2882 with 364/365/367 through 20 clicks (critic/c56_sr_24033_head.log, critic/c56_rows_24033.log).",
-      "fix": "A returning landing whose groups are at its port ends; divisions not aboard leave it (stand where they are, or take the order that cancelled it) and are told; a returning landing is not joined by a click (chooseTransports' `mine` has no state filter; comeBack releases only those embarked; cancelOrders sends a division standing on the port cell to that cell, which reads as part of the turn-back). landingInvariants' `stuck` counts a returning landing standing still. Bar: c56_turnback 27125 ITA ENG 1095.5,344.5 1106.5,383.5 6 x 66 300 frees 324 within hours of the groups' return with a 'cancelled' row; c56_retstuck with ORDERIDS=323,324 re-click forms a landing or is refused with a reason; c56_stuckret no spell >= 48 h on 24033 g2, 26041 g1, 27033 g1, 27035 g1, 27039 g1, 27053 g1; c56_liab.sh still 0 broken; Malta's 18 endings unchanged."
+      "id": "R57-B1",
+      "title": "landingInvariants' slowClick breaks on HEAD (28037, orders for 8 days: t179's click of 365,366 ashore after 14.2 days against a best way of 6.7; 0 on d016ed2a's sim with the same checker), and on both commits on 28039 g1 (366 already in China, reckoned by a sea way)",
+      "evidence": "npx tsx tools/diag/landingInvariants.ts 28037 3517 120 28037 30 2 8 -> 1 broken, twice (critic/c57_li/head_28037_3517_g2_od8.log, critic/c57_li_28037_rerun.log); HEAD checker on d016ed2a's sim (critic/wt2) 0 broken (critic/c57_li_28037_newchk_oldsim.log). Trace: 366 not joined at t31 on HEAD, marching toward Tokyo at t179, joins 365's landing at port 56 11 cells off; groups ready t273, sails t396 when 366 walks in (critic/c57_od_28037_365.log, critic/c57_od_28037_366.log). 28039 3517 120 28039 30,90 1: 'slowClick: t853's click of 366 not ashore after 17.7 days, its best way 10.7' on HEAD and on d016ed2a (critic/c57_li/head_28039_3517_g1_od-.log, critic/c57_li/old_28039_3517_g1_od-.log, critic/c57_od_28039_366.log). Scale: HEAD 2 of 246 runs broken; run 56's 156 setups 156 at 0; new seeds with orders for 8 days HEAD 1 of 45, d016ed2a's sim under HEAD's checker 11 of 45 (critic/c57_liab.log, critic/c57_liab_oldsim.log).",
+      "fix": "Lead (read, not proven): make the click's split rule and slowClick agree: a division whose march to a shared port would hold the landing past its best way splits to its own port (or the landing sails without it, told), so SPLIT_SOONER_HOURS and slowClick's week cannot disagree; the checker not reckoning a sea way for a division already on the target's landmass (ADR-892's intent), or the march judged by its own bound. Bar: landingInvariants 28037 3517 120 28037 30 2 8 at 0; sh critic/scripts/c57_liab_head.sh (HEAD only, 246 runs) all at 0 (28039 3517 g1 included or shown a checker error); c57_stuckret still 0; Malta's 18 the same."
     }
   ],
-  "timestamp": "2026-11-09T04:30:00-05:00"
+  "timestamp": "2026-11-09T10:00:00-05:00"
 }

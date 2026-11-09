@@ -1,0 +1,276 @@
+{
+ "seed": 28401,
+ "ME": "GER",
+ "FOE": "POL",
+ "ALLIES": "ITA,JAP,HUN,ENG",
+ "DAYS": 30,
+ "steps": [
+  {
+   "step": "ally ITA",
+   "before": {
+    "standing": "Allied",
+    "war": {
+     "text": "Force war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "they are allies."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "clicked": false,
+   "after": {
+    "standing": "Allied",
+    "war": {
+     "text": "Force war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "they are allies."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "state": {
+    "tick": 2,
+    "wars": [
+     "1: NSP vs REP (0)",
+     "2: JAP+MAN+MEN vs CHI+CCP (16)"
+    ],
+    "ticker": []
+   }
+  },
+  {
+   "step": "ally JAP",
+   "before": {
+    "standing": "Allied",
+    "war": {
+     "text": "Force war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "they are allies."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "clicked": false,
+   "after": {
+    "standing": "Allied",
+    "war": {
+     "text": "Force war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "they are allies."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "state": {
+    "tick": 4,
+    "wars": [
+     "1: NSP vs REP (0)",
+     "2: JAP+MAN+MEN vs CHI+CCP (16)"
+    ],
+    "ticker": []
+   }
+  },
+  {
+   "step": "ally HUN",
+   "before": {
+    "standing": "Neutral",
+    "war": {
+     "text": "Declare war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": false,
+     "title": ""
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "clicked": true,
+   "after": {
+    "standing": "Allied",
+    "war": {
+     "text": "Force war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "they are allies."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "state": {
+    "tick": 6,
+    "wars": [
+     "1: NSP vs REP (0)",
+     "2: JAP+MAN+MEN vs CHI+CCP (16)"
+    ],
+    "ticker": []
+   }
+  },
+  {
+   "step": "ally ENG",
+   "before": {
+    "standing": "Neutral",
+    "war": {
+     "text": "Declare war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "one of them is in an alliance already; it must leave it first."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "clicked": false,
+   "after": {
+    "standing": "Neutral",
+    "war": {
+     "text": "Declare war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "one of them is in an alliance already; it must leave it first."
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "state": {
+    "tick": 8,
+    "wars": [
+     "1: NSP vs REP (0)",
+     "2: JAP+MAN+MEN vs CHI+CCP (16)"
+    ],
+    "ticker": []
+   }
+  },
+  {
+   "step": "war POL",
+   "before": {
+    "standing": "Neutral",
+    "war": {
+     "text": "Declare war",
+     "disabled": false
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": false,
+     "title": ""
+    },
+    "peace": [],
+    "tickerText": [
+     "1 January 1938 · Paused"
+    ]
+   },
+   "after": {
+    "standing": "At war",
+    "war": {
+     "text": "Declare war",
+     "disabled": true
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": ""
+    },
+    "peace": [
+     "Germany ⚔ Poland (+0)Offer peace"
+    ],
+    "tickerText": [
+     "1 January 1938 · Paused",
+     "1 January 1938 Germany declared war on Poland"
+    ]
+   },
+   "state": {
+    "tick": 10,
+    "wars": [
+     "1: NSP vs REP (0)",
+     "2: JAP+MAN+MEN vs CHI+CCP (16)",
+     "3: GER+ITA+HUN vs POL+FRA+AOF+AEF+TUN (0)"
+    ],
+    "ticker": [
+     "{\"i\":3,\"tick\":8,\"kind\":12,\"a\":1,\"b\":4,\"x\":1143.4558577777777,\"y\":269.4766897854859,\"an\":\"nation.GER\",\"bn\":\"nation.POL\",\"of\":\"\"}"
+    ]
+   }
+  },
+  {
+   "step": "day 30",
+   "ui": {
+    "standing": "At war",
+    "war": {
+     "text": "Declare war",
+     "disabled": true
+    },
+    "ally": {
+     "text": "Propose alliance",
+     "disabled": true,
+     "title": "one of them is in an alliance already; it must leave it first."
+    },
+    "peace": [
+     "Germany ⚔ Poland (+0)Offer peace",
+     "Hungary ⚔ Austria (+0)Offer peace"
+    ],
+    "tickerText": [
+     "31 January 1938 · Paused",
+     "19 January 1938 Soviet Union declared war on Finland",
+     "30 January 1938 Hungary declared war on Austria"
+    ]
+   },
+   "state": {
+    "tick": 730,
+    "wars": [
+     "1: NSP vs REP (77)",
+     "2: JAP+MAN+MEN vs CHI+CCP (15)",
+     "3: GER+ITA+HUN vs POL+FRA+AOF+AEF+TUN (0)",
+     "4: CHI vs TIB (0)",
+     "5: SOV vs LIT+LAT+EST (23)",
+     "6: SOV vs FIN (0)",
+     "7: HUN+GER+ITA vs AUT (0)"
+    ],
+    "ticker": [
+     "{\"i\":16,\"tick\":192,\"kind\":12,\"a\":69,\"b\":73,\"x\":1542.2577777777778,\"y\":423.58478341296717,\"an\":\"nation.CHI\",\"bn\":\"nation.TIB\",\"of\":\"\"}",
+     "{\"i\":22,\"tick\":264,\"kind\":12,\"a\":10,\"b\":6,\"x\":1159.8506666666667,\"y\":248.52338763565294,\"an\":\"nation.SOV\",\"bn\":\"nation.LIT\",\"of\":\"\"}",
+     "{\"i\":30,\"tick\":432,\"kind\":12,\"a\":10,\"b\":9,\"x\":1165.8365155555555,\"y\":205.64651916196325,\"an\":\"nation.SOV\",\"bn\":\"nation.FIN\",\"of\":\"\"}",
+     "{\"i\":38,\"tick\":696,\"kind\":12,\"a\":13,\"b\":2,\"x\":1117.09696,\"y\":299.64262109967876,\"an\":\"nation.HUN\",\"bn\":\"nation.AUT\",\"of\":\"\"}"
+    ]
+   }
+  },
+  {
+   "step": "peace Germany ⚔ Poland (+0)Offer peac

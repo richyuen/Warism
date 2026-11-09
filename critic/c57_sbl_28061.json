@@ -1,0 +1,227 @@
+{
+ "seed": 28061,
+ "battles": 12,
+ "unseen": 0,
+ "errors": [],
+ "rows": [
+  {
+   "start": 275,
+   "a": "SOV",
+   "b": "ROM",
+   "sea": "Black Sea",
+   "camera": {
+    "cx": 1188.17,
+    "cy": 328.5,
+    "mpp": 40
+   },
+   "seen": {
+    "SOV": 8,
+    "ROM": 8
+   },
+   "mpp": 40,
+   "tick": 275,
+   "ok": true,
+   "shot": "critic\\seaBattles_28061_shots\\t275_SOV_ROM.png"
+  },
+  {
+   "start": 316,
+   "a": "NSP",
+   "b": "REP",
+   "sea": "Alboran Sea",
+   "camera": {
+    "cx": 999.06,
+    "cy": 379.5,
+    "mpp": 40
+   },
+   "seen": {
+    "NSP": 8,
+    "REP": 8
+   },
+   "mpp": 40,
+   "tick": 316,
+   "ok": true,
+   "shot": "critic\\seaBattles_28061_shots\\t316_NSP_REP.png"
+  },
+  {
+   "start": 457,
+   "a": "SOV",
+   "b": "YUG",
+   "sea": "Sea of Azov",
+   "camera": {
+    "cx": 1249.5,
+    "cy": 332.5,
+    "mpp": 40
+   },
+   "seen": {
+    "SOV": 3,
+    "YUG": 5
+   },
+   "mpp": 40,
+   "tick": 457,
+   "ok": true,
+   "shot": "critic\\seaBattles_28061_shots\\t457_SOV_YUG.png"
+  },
+  {
+   "start": 545,
+   "a": "ITA",
+   "b": "YUG",
+   "sea": "Adriatic Sea",
+   "camera": {
+    "cx": 1126.5,
+    "cy": 348,
+    "mpp": 363
+   },
+   "seen": {
+    "ITA": 72
+   },
+   "mpp": 363,
+   "tick": 545,
+   "ok": true,
+   "shot": "critic\\seaBattles_28061_shots\\t545_ITA_YUG.png"
+  },
+  {
+   "start": 653,
+   "a": "ENG",
+   "b": "GER",
+   "sea": "Alboran Sea",
+   "camera": {
+    "cx": 994.22,
+    "cy": 383,
+    "mpp": 40
+   },
+   "seen": {
+    "ENG": 8,
+    "GER": 16
+   },
+   "mpp": 40,
+   "tick": 653,
+   "ok": true
+  },
+  {
+   "start": 660,
+   "a": "ENG",
+   "b": "GER",
+   "sea": "Alboran Sea",
+   "camera": {
+    "cx": 994.9,
+    "cy": 382.1,
+    "mpp": 40
+   },
+   "seen": {
+    "ENG": 8,
+    "GER": 15
+   },
+   "mpp": 40,
+   "tick": 660,
+   "ok": true
+  },
+  {
+   "start": 700,
+   "a": "NSP",
+   "b": "REP",
+   "sea": "Bay of Biscay",
+   "camera": {
+    "cx": 1006.5,
+    "cy": 333.1,
+    "mpp": 40
+   },
+   "seen": {
+    "NSP": 8,
+    "REP": 3
+   },
+   "mpp": 40,
+   "tick": 700,
+   "ok": true
+  },
+  {
+   "start": 705,
+   "a": "ENG",
+   "b": "ITA",
+   "sea": "Mediterranean Sea",
+   "camera": {
+    "cx": 1098.5,
+    "cy": 402.15,
+    "mpp": 40
+   },
+   "seen": {
+    "ENG": 8
+   },
+   "mpp": 40,
+   "tick": 705,
+   "ok": true
+  },
+  {
+   "start": 705,
+   "a": "ENG",
+   "b": "GER",
+   "sea": "North Sea",
+   "camera": {
+    "cx": 1034.04,
+    "cy": 231.54,
+    "mpp": 361
+   },
+   "seen": {
+    "ENG": 10,
+    "GER": 32
+   },
+   "mpp": 361,
+   "tick": 705,
+   "ok": true
+  },
+  {
+   "start": 663,
+   "a": "ENG",
+   "b": "GER",
+   "sea": "English Channel",
+   "camera": {
+    "cx": 1100.24,
+    "cy": 380.24,
+    "mpp": 350
+   },
+   "seen": {
+    "ENG": 32,
+    "ITA": 37,
+    "GER": 5
+   },
+   "mpp": 350,
+   "tick": 705,
+   "ok": true
+  },
+  {
+   "start": 785,
+   "a": "ENG",
+   "b": "GER",
+   "sea": "Mediterranean Sea",
+   "camera": {
+    "cx": 1108,
+    "cy": 379.5,
+    "mpp": 335
+   },
+   "seen": {
+    "ENG": 17,
+    "ITA": 5
+   },
+   "mpp": 335,
+   "tick": 785,
+   "ok": true
+  },
+  {
+   "start": 809,
+   "a": "ENG",
+   "b": "GER",
+   "sea": "Skagerrak",
+   "camera": {
+    "cx": 1071,
+    "cy": 257.28,
+    "mpp": 100
+   },
+   "seen": {
+    "ENG": 138,
+    "FRA": 48
+   },
+   "mpp": 100,
+   "tick": 809,
+   "ok": true
+  }
+ ]
+}

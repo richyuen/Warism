@@ -1,0 +1,4 @@
+returning and still t933-t1248 (13.1 d): L6 port Tokyo target 1715,414 fleets 1144 divs +366+365+; clicks meanwhile: t1061 365,366->1716,415 ; t1082 365,366,367->1819,385 ; t1100 364,365,366->1715,414 ; t1248 364,365,366,367->1704,447
+returning and still t2090-t2145 (2.3 d): L12 port Shanghai target 1818,385 fleets 1136+1144 divs +364+; clicks meanwhile: t2145 364,367->1716,413
+seed 28031: 2 returning-still spells, longest 13.1 d; checker 0 broken
+done:

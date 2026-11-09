@@ -1,0 +1,142 @@
+{
+ "section": "mine",
+ "seed": 28309,
+ "W": 1600,
+ "H": 900,
+ "steps": [],
+ "countAll": "532 of 532 events",
+ "mineVisible": true,
+ "mineLabel": "My wars only",
+ "countMine": "37 of 532 events",
+ "rowsMine": [
+  "1 May 1939 France and Brazil fought in the air this month: France lost 6 aircraft, Brazil 21",
+  "1 May 1939 Brazil's air force struck France this month: 3,119 men, guns and vehicles lost",
+  "1 May 1939 France's air force struck Brazil this month: 3,212 men, guns and vehicles lost",
+  "1 April 1939 France and Brazil fought in the air this month: France lost 9 aircraft, Brazil 18",
+  "1 April 1939 Brazil's air force struck France this month: 4,345 men, guns and vehicles lost",
+  "4 March 1939 France captured Brazil's capital",
+  "3 October 1938 France declared war on Brazil",
+  "3 October 1938 United Kingdom joined the war on France's side, as its ally",
+  "3 October 1938 Netherlands joined the war on France's side, as its ally",
+  "19 September 1938 The major battle near Stuttgart was won by France",
+  "18 September 1938 Luxembourg made peace with Germany",
+  "13 September 1938 The major battle near Ulm was won by France",
+  "20 August 1938 The major battle near Zürich was won by France",
+  "14 August 1938 The major battle near Zürich was won by France",
+  "13 August 1938 The major battle near Vaduz was won by France",
+  "11 August 1938 The major battle near Vaduz was won by France",
+  "4 August 1938 The major battle near Vaduz was won by France",
+  "2 August 1938 The major battle near Zürich was won by France",
+  "1 August 1938 Italy and France fought in the air this month: Italy lost 154 aircraft, France 51",
+  "1 August 1938 Germany and France fought in the air this month: Germany lost 184 aircraft, France 102",
+  "25 July 1938 France and Italy fought at sea: France lost 1 ship, Italy 3 ships",
+  "19 July 1938 Italy and France fought at sea: Italy lost 3 ships, France 0 ships",
+  "12 July 1938 France and Italy fought at sea: France lost 10 ships, Italy 3 ships",
+  "2 July 1938 France and Italy fought at sea: France lost 0 ships, Italy 4 ships",
+  "1 July 1938 France and Italy fought at sea: France lost 0 ships, Italy 6 ships",
+  "1 July 1938 Germany and France fought in the air this month: Germany lost 40 aircraft, France 24",
+  "1 July 1938 Italy and France fought in the air this month: Italy lost 54 aircraft, France 36",
+  "29 June 1938 France and Germany fought at sea: France lost 0 ships, Germany 8 ships",
+  "29 June 1938 France and Italy fought at sea: France lost 1 ship, Italy 16 ships",
+  "28 June 1938 France and Italy fought at sea: France lost 0 ships, Italy 14 ships",
+  "28 June 1938 France and Germany fought at sea: France lost 5 ships, Germany 0 ships",
+  "28 June 1938 France and Italy fought at sea: France lost 7 ships, Italy 5 ships",
+  "28 June 1938 France and Italy fought at sea: France lost 12 ships, Italy 7 ships",
+  "28 June 1938 France and Germany fought at sea: France lost 11 ships, Germany 0 ships",
+  "27 June 1938 France and Germany fought at sea: France lost 7 ships, Germany 1 ship",
+  "24 June 1938 Germany declared war on Luxembourg",
+  "24 June 1938 France joined the war on Luxembourg's side, as its ally"
+ ],
+ "rowsMineN": 37,
+ "offscreen": [],
+ "byKindMine": [
+  {
+   "l": "Capital captured",
+   "count": "1 of 532 events"
+  },
+  {
+   "l": "Nation destroyed",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "War declared",
+   "count": "2 of 532 events"
+  },
+  {
+   "l": "Peace",
+   "count": "1 of 532 events"
+  },
+  {
+   "l": "Alliance left",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "Alliance dissolved",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "Union formed",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "Alliance joined",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "Puppet created",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "Puppet released",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "Major battle",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "Major battle ended",
+   "count": "8 of 532 events"
+  },
+  {
+   "l": "Annexation",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "Army disbanded",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "Land handed over",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "War ended",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "Sea battle",
+   "count": "13 of 532 events"
+  },
+  {
+   "l": "Convoys raided",
+   "count": "0 of 532 events"
+  },
+  {
+   "l": "Air war",
+   "count": "6 of 532 events"
+  },
+  {
+   "l": "Air raids",
+   "count": "3 of 532 events"
+  },
+  {
+   "l": "Joined a war",
+   "count": "3 of 532 events"
+  }
+ ],
+ "countAfter": "532 of 532 events",
+ "playerAfter": 0,
+ "mineAfterUnplay": 0,
+ "errors": []
+}

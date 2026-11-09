@@ -1,0 +1,22 @@
+npm run sim -- --scenario 1938 --seed 7019 --years 20 --save critic/c57_seed7019_y20.bin > critic/c57_seed7019_save.log 2>&1
+npx tsx critic/scripts/c57_topArea.ts 28099 25 critic/c57_toparea_28099.json > critic/c57_toparea_28099.log 2>&1
+npx tsx critic/scripts/c57_topArea.ts 28097 25 critic/c57_toparea_28097.json > critic/c57_toparea_28097.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 28001 random 3650 > critic/c57_diploinv_28001r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 28003 scenario 3650 --heroes > critic/c57_diploinv_28003s_h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 28005 random 1825 --world random > critic/c57_diploinv_28005rw_5y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 28007 scenario 3650 > critic/c57_diploinv_28007s_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 28009 random 3650 --heroes > critic/c57_diploinv_28009r_h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 28011 scenario 3650 > critic/c57_diploinv_28011s_10y.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 28021 3517 > critic/c57_li_28021_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 28023 15101 > critic/c57_li_28023_eng.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 28051 > critic/c57_wi_28051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 28053 365 --heroes > critic/c57_wi_28053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 28055 3650 > critic/c57_wi_28055_10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 28057 365 --world random > critic/c57_wi_28057rw.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 28059 4380 24 critic/c57_wd_28059.json > critic/c57_wd_28059.log 2>&1
+npx tsx tools/diag/seaBattles.ts 28061 scenario --years 3 --out critic/c57_sb_28061.json > critic/c57_sb_28061.log 2>&1
+npx tsx tools/diag/landingRows.ts all critic/c57_lrows_all.json > critic/c57_lrows_all.log 2>&1
+npx tsx critic/scripts/c57_repulse.ts 28071 ENG GER 1023.5,275.5 1072.5,259.5 3 critic/c57_repulse_28071.json 500 12 > critic/c57_repulse_28071.log 2>&1
+npx tsx critic/scripts/c57_repulse.ts 28073 JAP CHI 1818.5,385.5 1715.5,413.5 3 critic/c57_repulse_28073.json 400 12 > critic/c57_repulse_28073.log 2>&1
+npx tsx critic/scripts/c57_repland.ts 28081 scenario --years 3 critic/c57_repland_28081.json > critic/c57_repland_28081.log 2>&1
+env SEED=24033 ORDERDAYS=8 DIV=367 npx tsx critic/scripts/c57_orderdays.ts > critic/c57_od_24033_8.log 2>&1

@@ -1,0 +1,1128 @@
+{
+ "seed": 24151,
+ "TAG": "ITA",
+ "FOE": "ENG",
+ "FROM": "1095.5,344.5",
+ "TO": "1106.5,383.5",
+ "N": 2,
+ "label": "ita_malta",
+ "samples": [
+  {
+   "h": 0,
+   "tick": 1,
+   "rows": [
+    [
+     "gathering",
+     "Valletta from Rome",
+     "sails in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1095.2,
+      344.2
+     ],
+     0
+    ],
+    "321": [
+     [
+      1095.9,
+      346.1
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 6,
+   "tick": 7,
+   "rows": [
+    [
+     "gathering",
+     "Valletta from Rome",
+     "sails in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1095.2,
+      344.2
+     ],
+     0
+    ],
+    "321": [
+     [
+      1095.9,
+      346.1
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 12,
+   "tick": 13,
+   "rows": [
+    [
+     "gathering",
+     "Valletta from Rome",
+     "sails in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1095.2,
+      344.2
+     ],
+     0
+    ],
+    "321": [
+     [
+      1095.9,
+      346.1
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 18,
+   "tick": 19,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about 2 days",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1093.5,
+      346.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1093.5,
+      346.5
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 24,
+   "tick": 25,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about 2 days",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1093.5,
+      352.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1093.5,
+      352.5
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 30,
+   "tick": 31,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about 2 days",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1094.5,
+      358.2
+     ],
+     0
+    ],
+    "321": [
+     [
+      1094.5,
+      358.2
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 36,
+   "tick": 37,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1094.5,
+      364.1
+     ],
+     0
+    ],
+    "321": [
+     [
+      1094.5,
+      364.1
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 42,
+   "tick": 43,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1094.5,
+      366.1
+     ],
+     0
+    ],
+    "321": [
+     [
+      1094.5,
+      366.1
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 48,
+   "tick": 49,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1094.5,
+      372
+     ],
+     0
+    ],
+    "321": [
+     [
+      1094.5,
+      372
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 54,
+   "tick": 55,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 60,
+   "tick": 61,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 66,
+   "tick": 67,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 72,
+   "tick": 73,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 78,
+   "tick": 79,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 84,
+   "tick": 85,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 90,
+   "tick": 91,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 96,
+   "tick": 97,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 102,
+   "tick": 103,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 108,
+   "tick": 109,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 114,
+   "tick": 115,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 120,
+   "tick": 121,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 126,
+   "tick": 127,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 132,
+   "tick": 133,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 138,
+   "tick": 139,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: under attack by United Kingdom, held up",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1098,
+      376
+     ],
+     0
+    ],
+    "321": [
+     [
+      1098,
+      376
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 144,
+   "tick": 145,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1099.4,
+      377.4
+     ],
+     0
+    ],
+    "321": [
+     [
+      1099.4,
+      377.4
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 150,
+   "tick": 151,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "at sea: lands in about a day",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [],
+   "d": {
+    "319": [
+     [
+      1102.6,
+      379.6
+     ],
+     0
+    ],
+    "321": [
+     [
+      1102.6,
+      379.6
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 156,
+   "tick": 157,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "thrown back: sailing home to Catania",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry division 319: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 321: the landing was thrown back; the transports sail home and land it there."
+   ],
+   "d": {
+    "319": [
+     [
+      1105.5,
+      382.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1105.5,
+      382.5
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 162,
+   "tick": 163,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "thrown back: sailing home to Catania",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry division 319: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 321: the landing was thrown back; the transports sail home and land it there."
+   ],
+   "d": {
+    "319": [
+     [
+      1107.1,
+      384.9
+     ],
+     0
+    ],
+    "321": [
+     [
+      1107.1,
+      384.9
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 168,
+   "tick": 169,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "thrown back: sailing home to Catania",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry division 319: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 321: the landing was thrown back; the transports sail home and land it there."
+   ],
+   "d": {
+    "319": [
+     [
+      1111.7,
+      381.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1111.7,
+      381.5
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 174,
+   "tick": 175,
+   "rows": [
+    [
+     "sailing",
+     "Valletta from Rome",
+     "thrown back: sailing home to Catania",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry division 319: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 321: the landing was thrown back; the transports sail home and land it there."
+   ],
+   "d": {
+    "319": [
+     [
+      1113.5,
+      377.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1113.5,
+      377.5
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 180,
+   "tick": 181,
+   "rows": [
+    [
+     "over",
+     "Valletta from Rome",
+     "over: 2 thrown back; came ashore near Catania",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry division 319: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 321: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 319: thrown back; it came ashore near Catania.",
+    "Infantry division 321: thrown back; it came ashore near Catania."
+   ],
+   "d": {
+    "319": [
+     [
+      1109.5,
+      373.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1109.5,
+      373.8
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 186,
+   "tick": 187,
+   "rows": [
+    [
+     "over",
+     "Valletta from Rome",
+     "over: 2 thrown back; came ashore near Catania",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry division 319: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 321: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 319: thrown back; it came ashore near Catania.",
+    "Infantry division 321: thrown back; it came ashore near Catania."
+   ],
+   "d": {
+    "319": [
+     [
+      1109.5,
+      373.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1109.5,
+      373.8
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 192,
+   "tick": 193,
+   "rows": [
+    [
+     "over",
+     "Valletta from Rome",
+     "over: 2 thrown back; came ashore near Catania",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry division 319: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 321: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 319: thrown back; it came ashore near Catania.",
+    "Infantry division 321: thrown back; it came ashore near Catania."
+   ],
+   "d": {
+    "319": [
+     [
+      1109.5,
+      373.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1109.5,
+      373.8
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 198,
+   "tick": 199,
+   "rows": [
+    [
+     "over",
+     "Valletta from Rome",
+     "over: 2 thrown back; came ashore near Catania",
+     "1",
+     "1"
+    ]
+   ],
+   "news": [
+    "Infantry division 319: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 321: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 319: thrown back; it came ashore near Catania.",
+    "Infantry division 321: thrown back; it came ashore near Catania."
+   ],
+   "d": {
+    "319": [
+     [
+      1109.5,
+      373.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1109.5,
+      373.8
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 204,
+   "tick": 205,
+   "rows": [],
+   "news": [
+    "Infantry division 319: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 321: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 319: thrown back; it came ashore near Catania.",
+    "Infantry division 321: thrown back; it came ashore near Catania."
+   ],
+   "d": {
+    "319": [
+     [
+      1109.5,
+      373.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1109.5,
+      373.8
+     ],
+     0
+    ]
+   }
+  },
+  {
+   "h": 210,
+   "tick": 211,
+   "rows": [],
+   "news": [
+    "Infantry division 319: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 321: the landing was thrown back; the transports sail home and land it there.",
+    "Infantry division 319: thrown back; it came ashore near Catania.",
+    "Infantry division 321: thrown back; it came ashore near Catania."
+   ],
+   "d": {
+    "319": [
+     [
+      1109.5,
+      373.5
+     ],
+     0
+    ],
+    "321": [
+     [
+      1109.5,
+      373.8
+     ],
+     0
+    ]
+   }
+  }
+ ],
+ "shots": [
+  "critic/shots/c57lland_ita_malta_24151_over_1500m.png",
+  "critic/shots/c57lland_ita_malta_24151_over_250m.png",
+  "critic/shots/c57lland_ita_malta_24151_target_1500m.png"
+ ],
+ "ids": [
+  319,
+  321
+ ],
+ "overAt": 180,
+ "errors": []
+}

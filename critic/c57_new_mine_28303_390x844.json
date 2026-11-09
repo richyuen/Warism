@@ -1,0 +1,158 @@
+{
+ "section": "mine",
+ "seed": 28303,
+ "W": 390,
+ "H": 844,
+ "steps": [],
+ "countAll": "404 of 404 events",
+ "mineVisible": true,
+ "mineLabel": "My wars only",
+ "countMine": "57 of 404 events",
+ "rowsMine": [
+  "10 December 1938 Germany made peace with Hungary",
+  "4 December 1938 Germany captured Hungary's capital",
+  "1 December 1938 Germany and Philippines fought in the air this month: Germany lost 28 aircraft, Philippines 3",
+  "1 December 1938 Germany and United States fought in the air this month: Germany lost 68 aircraft, United States 57",
+  "1 December 1938 United States' air force struck Germany this month: 4,334 men, guns and vehicles lost",
+  "18 November 1938 Germany declared war on Hungary",
+  "16 November 1938 Italy made peace with Greece",
+  "14 November 1938 Land left by Poland went to Germany",
+  "1 November 1938 Germany and United States fought in the air this month: Germany lost 21 aircraft, United States 15",
+  "1 November 1938 Germany's air force struck United States this month: 10,654 men, guns and vehicles lost",
+  "31 October 1938 Germany captured Poland's capital",
+  "25 October 1938 Germany captured Poland's capital",
+  "1 October 1938 Germany's air force struck Turkey this month: 3,113 men, guns and vehicles lost",
+  "30 September 1938 Germany and United States fought at sea: Germany lost 17 ships, United States 0 ships",
+  "30 September 1938 Germany declared war on United States",
+  "30 September 1938 Italy joined the war on Germany's side, as its ally",
+  "30 September 1938 Japan joined the war on Germany's side, as its ally",
+  "12 September 1938 Germany made peace with Estonia",
+  "12 September 1938 Estonia was annexed by Germany",
+  "1 September 1938 Germany and Turkey fought in the air this month: Germany lost 0 aircraft, Turkey 6",
+  "1 September 1938 Germany and Czechoslovakia fought in the air this month: Germany lost 24 aircraft, Czechoslovakia 21",
+  "1 September 1938 Germany's air force struck Czechoslovakia this month: 9,059 men, guns and vehicles lost",
+  "19 August 1938 Germany declared war on Estonia",
+  "15 August 1938 Germany made peace with Latvia",
+  "8 August 1938 Germany made peace with Denmark",
+  "1 August 1938 Germany and Czechoslovakia fought in the air this month: Germany lost 24 aircraft, Czechoslovakia 3",
+  "30 July 1938 Germany captured Estonia's capital",
+  "15 July 1938 Italy declared war on Greece",
+  "15 July 1938 Germany joined the war on Italy's side, as its ally",
+  "9 July 1938 Germany captured Latvia's capital",
+  "24 June 1938 Germany declared war on Latvia",
+  "1 June 1938 Germany and Denmark fought in the air this month: Germany lost 36 aircraft, Denmark 27",
+  "1 June 1938 Germany's air force struck Hungary this month: 13,465 men, guns and vehicles lost",
+  "28 May 1938 Germany and Denmark fought at sea: Germany lost 5 ships, Denmark 8 ships",
+  "27 May 1938 Germany declared war on Denmark",
+  "20 May 1938 Japan made peace with Latvia",
+  "16 May 1938 Italy made peace with Hungary",
+  "9 May 1938 Japan declared war on Latvia",
+  "9 May 1938 Germany joined the war on Japan's side, as its ally",
+  "1 May 1938 Germany and Hungary fought in the air this month: Germany lost 3 aircraft, Hungary 15",
+  "29 April 1938 Italy declared war on Hungary",
+  "29 April 1938 Germany joined the war on Italy's side, as its ally",
+  "26 April 1938 Lithuania made peace with Germany",
+  "1 April 1938 Germany and Latvia fought in the air this month: Germany lost 72 aircraft, Latvia 63",
+  "1 April 1938 Germany's air force struck Lithuania this month: 8,789 men, guns and vehicles lost",
+  "1 March 1938 Germany and Latvia fought in the air this month: Germany lost 24 aircraft, Latvia 9",
+  "1 March 1938 Germany's air force struck Czechoslovakia this month: 3,226 men, guns and vehicles lost",
+  "25 February 1938 Germany declared war on Lithuania",
+  "6 February 1938 The major battle near České Budějovice was won by Germany",
+  "6 February 1938 Germany made peace with Austria",
+  "1 February 1938 Germany and Czechoslovakia fought in the air this month: Germany lost 12 aircraft, Czechoslovakia 147",
+  "1 February 1938 Germany's air force struck Czechoslovakia this month: 25,141 men, guns and vehicles lost",
+  "20 January 1938 Germany and Romania fought at sea: Germany lost 2 ships, Romania 2 ships",
+  "18 January 1938 Germany captured Czechoslovakia's capital",
+  "14 January 1938 Germany and Romania fought at sea: Germany lost 4 ships, Romania 6 ships",
+  "7 January 1938 Germany declared war on Austria",
+  "7 January 1938 Italy joined the war on Germany's side, as its ally"
+ ],
+ "rowsMineN": 57,
+ "offscreen": [],
+ "byKindMine": [
+  {
+   "l": "Capital captured",
+   "count": "6 of 404 events"
+  },
+  {
+   "l": "Nation destroyed",
+   "count": "0 of 404 events"
+  },
+  {
+   "l": "War declared",
+   "count": "10 of 404 events"
+  },
+  {
+   "l": "Peace",
+   "count": "9 of 404 events"
+  },
+  {
+   "l": "Alliance left",
+   "count": "0 of 404 events"
+  },
+  {
+   "l": "Alliance dissolved",
+   "count": "0 of 404 events"
+  },
+  {
+   "l": "Alliance joined",
+   "count": "0 of 404 events"
+  },
+  {
+   "l": "Puppet created",
+   "count": "0 of 404 events"
+  },
+  {
+   "l": "Puppet released",
+   "count": "0 of 404 events"
+  },
+  {
+   "l": "Major battle",
+   "count": "0 of 404 events"
+  },
+  {
+   "l": "Major battle ended",
+   "count": "1 of 404 events"
+  },
+  {
+   "l": "Annexation",
+   "count": "1 of 404 events"
+  },
+  {
+   "l": "Army disbanded",
+   "count": "0 of 404 events"
+  },
+  {
+   "l": "Land handed over",
+   "count": "1 of 404 events"
+  },
+  {
+   "l": "Sea battle",
+   "count": "4 of 404 events"
+  },
+  {
+   "l": "Convoys raided",
+   "count": "0 of 404 events"
+  },
+  {
+   "l": "Air war",
+   "count": "11 of 404 events"
+  },
+  {
+   "l": "Air raids",
+   "count": "8 of 404 events"
+  },
+  {
+   "l": "Sent home",
+   "count": "0 of 404 events"
+  },
+  {
+   "l": "Joined a war",
+   "count": "6 of 404 events"
+  }
+ ],
+ "countAfter": "404 of 404 events",
+ "playerAfter": 0,
+ "mineAfterUnplay": 0,
+ "errors": []
+}
