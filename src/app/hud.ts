@@ -20,8 +20,28 @@ import type { EconomyBreakdown, RefusedBase } from '../shared/protocol';
 import { RANK_LISTS, type RankList } from '../shared/ranking';
 import { SEA_PAIR_MARGIN } from './battleView';
 
-/** Order news kept on the screen at most (PLAN 4.9c). */
+/** Order news kept on the screen at most (PLAN 4.9c), a loss told of several in one hour counted once (`keepOrderNews`). */
 const ORDER_NEWS_KEPT = 4;
+
+/**
+ * The newest ORDER_NEWS_KEPT rows of order news, a loss told of several divisions in one hour (lost at sea, transports
+ * sunk: one row of the ticker, ROADMAP R40c) kept whole as one (ROADMAP R56c; critic run 57, R57-N3: six told their
+ * landing was over in one hour, the first two dropped from the four kept, their panels with no word of it).
+ */
+export function keepOrderNews<T extends Pick<OrderNews, 'kind' | 'tick' | 'reason'> & { seq: number }>(news: readonly T[]): T[] {
+  const key = (n: T): string => (n.kind === 'lostAtSea' || n.kind === 'transportsSunk' ? `${n.kind}|${n.tick}|${n.reason}` : `#${n.seq}`);
+  const rows = new Set<string>();
+  let from = news.length;
+  while (from > 0) {
+    const k = key(news[from - 1]!);
+    if (!rows.has(k) && rows.size === ORDER_NEWS_KEPT) break;
+    rows.add(k);
+    from--;
+  }
+  // A group cut by the bound is dropped whole: no row naming only some of it.
+  const cut = new Set(news.slice(0, from).map(key));
+  return news.slice(from).filter((n) => !cut.has(key(n)));
+}
 const KEY_LEVEL = 'warsim.speedLevel';
 const KEY_PAUSED = 'warsim.paused';
 const KEY_MAP_MODE = 'warsim.mapMode';
@@ -258,7 +278,7 @@ export class Hud {
     sim.onOrderNews((news) => {
       // Its name as the page knows it now: one lost at sea is gone by the next snapshot (ROADMAP R39b).
       const name = news.name ?? this.nameOf?.(news.id);
-      this.orderNews.value = [...this.orderNews.peek(), { ...news, ...(name === undefined ? {} : { name }), seq: this.orderSeq++ }].slice(-ORDER_NEWS_KEPT);
+      this.orderNews.value = keepOrderNews([...this.orderNews.peek(), { ...news, ...(name === undefined ? {} : { name }), seq: this.orderSeq++ }]);
     });
     effect(() => {
       const selected = this.selected.value;
@@ -618,7 +638,7 @@ export class Hud {
       const id = ids[0]!;
       const name = this.nameOf?.(id);
       const news: OrderNews = { kind: 'sameLanding', id, nation, reason: ids.length, x, y, tick: this.tick.peek() };
-      this.orderNews.value = [...this.orderNews.peek(), { ...news, ...(name === undefined ? {} : { name }), seq: this.orderSeq++ }].slice(-ORDER_NEWS_KEPT);
+      this.orderNews.value = keepOrderNews([...this.orderNews.peek(), { ...news, ...(name === undefined ? {} : { name }), seq: this.orderSeq++ }]);
     });
   }
 

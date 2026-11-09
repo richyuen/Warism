@@ -2363,3 +2363,13 @@
   with the checker's): 9.1 days. 28039 was the checker's: a division aboard clicked again onto its own landing left its
   first click. `landingInvariants1938` R56a red before; 246 of 246 of the critic's set at 0; Malta the same.
 - **Next:** R56b.
+
+## 2026-11-09 — R56b: a landing's row says where those ashore came ashore (ADR-904)
+- R57-N1: 27125's row read "4 of 6 ashore" while the four were near Palermo, their transports having broken off. Now
+  "4 came ashore near Palermo, away from Valletta; sails in …"; "n of m ashore" only for those at the target.
+  `landingRowAshore1938` red before. The over row names Palermo too (it read only the two left in the row).
+
+## 2026-11-09 — R56c: the page keeps a loss told of several in one hour whole (ADR-905)
+- R57-N3: 28113's six were all told their landing was over; the page kept four news, so 1 and 2 had no word and the
+  ticker named four of six. `keepOrderNews` counts the ticker's rows. The critic's probe on the build: all six told.
+- **Next:** R56d.

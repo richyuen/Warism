@@ -1200,11 +1200,15 @@ Naval's findings are items, fixed, then the critic again (ADR-833). No release.
     days after the click (best 6.7), 366 on the next voyage. 28039 was the checker's: 365, aboard, clicked again onto
     its landing, left t853's click, judged by 366 left for the second voyage (the critic's "in China" was a two-group
     trace, `GROUPS`); one aboard is kept in its click. (i), (ii) 0; (iii) 246 of 246 at 0, Malta's 21 the same.
-  - [ ] R56b R57-N1: a landing whose first wave broke off says where they came ashore ("4 ashore near Palermo, away
+  - [x] R56b R57-N1: a landing whose first wave broke off says where they came ashore ("4 ashore near Palermo, away
     from Valletta; 2 at Rome"), not "4 of 6 ashore". AT: `SHOTAT=114,120,132 node critic/scripts/c57_lhold.mjs 27125
     ITA ENG 1095.5,344.5 1106.5,383.5 6 ita_malta6 140`.
-  - [ ] R56c R57-N3: an ended landing tells every division it counts (28113, six to Norwich: 1 and 2 untold). AT:
+    Done (ADR-904): the row's `ashore` is those at the target; those away are `away`, named where all at one place:
+    "4 came ashore near Palermo, away from Valletta; sails in …". `landingRowAshore1938` red before.
+  - [x] R56c R57-N3: an ended landing tells every division it counts (28113, six to Norwich: 1 and 2 untold). AT:
     `node critic/scripts/c57_whotold.mjs 28113 GER ENG 1100.5,267.5 1031.5,266.5 6 120`.
+    Done (ADR-905): the worker told all six; the page kept the last four news. It keeps four rows of the ticker, a
+    loss of several in one hour as one: `c57_whotold` all six told, "6 divisions: … (1, 2, 3, 4, 5, 42)".
   - [ ] R56d R57-N2 (the user's call, 2026-11-09): the Actions tab's "Offer peace" the menu's: greyed when the enemy
     would refuse, the reason in its title (`peaceVerdict`/`peaceWhy`), not a silent no-op. AT: 28401 as Germany, day
     30, "Germany ⚔ Poland (+0)": the button disabled with the reason; at +32 it still makes peace.

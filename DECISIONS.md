@@ -7,6 +7,30 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-905 · 2026-11-09 · accepted — The page keeps order news by the ticker's rows: a loss told of several in one hour whole (R56c)
+- **Context.** Critic run 57, R57-N3: Germany's six to Norwich (28113): "over: its transports were sunk; 6 never
+  sailed", the ticker "4 divisions: … the landing is over (3, 4, 5, 42)", the panels of 1 and 2 with no word. The
+  worker told all six in the hour (headless: six `transportsSunk`); the page kept the last ORDER_NEWS_KEPT (4) news.
+- **Decision.** `keepOrderNews`: the newest four rows of the ticker, a loss told of several in one hour (lost at sea,
+  transports sunk, R40c's one row) counted once and kept whole; one cut by the bound goes whole.
+- **Results.** `orderNewsKept` (unit); the critic's `c57_whotold` on the build: all six panels told, the ticker "6
+  divisions: … (1, 2, 3, 4, 5, 42)".
+
+### ADR-904 · 2026-11-09 · accepted — A landing's row says where those ashore came ashore (R56b)
+- **Context.** Critic run 57, R57-N1: Italy's six to Valletta (27125): at h114 the four at sea broke off and came ashore
+  near Palermo, as their panels and the news said, while the row read "4 of 6 ashore; gathering" to h132. R55b
+  (ADR-894) counted "landed or away" as ashore; the over row already said "4 came ashore near Palermo, away from
+  Valletta" (R55h).
+- **Decision.** The row's `ashore` counts those ashore at the target; `away` and `awayAt` (one place for all, a city's
+  name) those that came ashore away from it. The row says "n of m ashore" for the first, "n came ashore near X, away
+  from T" for the second (the over row's words), then where the rest stand. The over row names the place from every
+  division its landing counts, not only those still in its row at its end (the four had left it: "4 came ashore away
+  from Valletta").
+- **Results.** `landingRowAshore1938`: 27125's row "4 came ashore near Palermo, away from Valletta; sails in …", not "of
+  6 ashore" (red before), its end "4 came ashore near Palermo, away from Valletta, 2 never sailed", and the row's words
+  for both kinds; `landingRows all` 0 broken; the critic's `c57_lhold` on the build: no "of 6 ashore" from h114 to
+  the end.
+
 ### ADR-903 · 2026-11-09 · accepted — A landing is due ashore by its click's best way; a click again onto the same landing keeps the first (R56a)
 - **Context.** Critic run 57, R57-B1 (blocking): `landingInvariants` `slowClick` broken on 28037 (Japan, two groups,
   orders for 8 days): t179's click of 365 (at Hiroshima's port, 56) and 366 (its own port 544) made one landing at 56;

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import type { LandingRow } from '../../src/shared/protocol';
 import { landingStatus } from '../../src/ui/landingStatus';
 import { nearestDivisions, RowRun } from '../helpers/landingRows';
 import { nationId } from '../helpers/sim1938';
@@ -10,6 +11,10 @@ import { nationId } from '../helpers/sim1938';
 // row with some of it ashore says how many. Since R55f (ADR-898) 27123's late marcher gathers at Liverpool, its own
 // port, and none waits for a next voyage there: the count is seen on Italy's six to Valletta (27125), four landed and two
 // left at the port.
+//
+// ROADMAP R56b (critic run 57, R57-N1): those four were not at Valletta: their transports broke off and put them ashore
+// near Palermo, as their panels and the news said, while the row read "4 of 6 ashore". Now the row says where: "4 came
+// ashore near Palermo, away from Valletta; sails in …"; "n of m ashore" is for those ashore at the target.
 
 const ENG = nationId('ENG');
 const GER = nationId('GER');
@@ -38,7 +43,7 @@ describe('a landing that sails without a marcher counts down, and says how many 
     expect(r.broken).toEqual([]);
   }, 300_000);
 
-  it('27125: the six nearest Rome to Valletta; the next voyage reads "4 of 6 ashore"', () => {
+  it('27125: the six nearest Rome to Valletta; the next voyage says the four came ashore near Palermo, not "4 of 6 ashore"', () => {
     const r = new RowRun(27125, ITA);
     r.cmds([{ kind: 'declareWar', attacker: ITA, defender: ENG }]);
     r.step();
@@ -46,12 +51,29 @@ describe('a landing that sails without a marcher counts down, and says how many 
     r.ids = ids;
     for (const id of ids) r.cmds([{ kind: 'moveFormation', id, x: 1106.5, y: 383.5, nation: ITA }]);
     let ashoreSeen = '';
-    for (let h = 0; h < 240 && !ashoreSeen; h++) {
+    let overSeen = '';
+    for (let h = 0; h < 240 && !overSeen; h++) {
       r.step();
       const row = r.rows.find((x) => x.state === 'gathering' && x.divisions.some((d) => ids.includes(d.id)));
-      if (row?.ashore && /sails in/.test(landingStatus(row))) ashoreSeen = landingStatus(row);
+      if (!ashoreSeen && (row?.ashore || row?.away) && /sails in/.test(landingStatus(row!))) ashoreSeen = landingStatus(row!);
+      const over = r.rows.find((x) => x.state === 'over' && x.outcome?.away);
+      if (over) overSeen = landingStatus(over);
     }
-    expect(ashoreSeen).toMatch(/^\d+ of \d+ ashore; sails in/);
+    expect(ashoreSeen).toMatch(/^4 came ashore near Palermo, away from Valletta; sails in/);
+    expect(ashoreSeen).not.toMatch(/of \d+ ashore/);
+    // Its end names the place too, the four gone from its row before it (R56b).
+    expect(overSeen).toMatch(/4 came ashore near Palermo, away from Valletta/);
     expect(r.broken).toEqual([]);
   }, 300_000);
+});
+
+describe('a row with some ashore says where (ROADMAP R55b, R56b)', () => {
+  const row = { id: 1, state: 'gathering', port: 'Rome', target: '=Valletta', land: [0, 0], to: [0, 0], portAt: [0, 0], divisions: [{ id: 5, voyage: null }, { id: 6, voyage: null }], ships: { need: 2, have: 2 }, sails: { days: 1 }, click: 1 } as unknown as LandingRow;
+  it('at the target: "n of m ashore"', () => {
+    expect(landingStatus({ ...row, ashore: 4 })).toBe('4 of 6 ashore; sails in about a day');
+  });
+  it('away from it: where, and those at the target first', () => {
+    expect(landingStatus({ ...row, away: 4, awayAt: 'Palermo' })).toBe('4 came ashore near Palermo, away from Valletta; sails in about a day');
+    expect(landingStatus({ ...row, ashore: 1, away: 3 })).toBe('1 of 6 ashore; 3 came ashore away from Valletta; sails in about a day');
+  });
 });

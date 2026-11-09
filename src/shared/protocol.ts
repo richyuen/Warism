@@ -931,8 +931,14 @@ export interface LandingRow {
   lands?: number;
   /** Turning back: the days until it is at its port, at least 1 (ROADMAP R50d). */
   back?: number;
-  /** Not over: how many of it are ashore already, landed or away (ROADMAP R55b; critic run 56, R56-N1: 7 landed and the row said only "sails in about 6 days"). */
+  /** Not over: how many of it are ashore already at its target (ROADMAP R55b; critic run 56, R56-N1: 7 landed and the row said only "sails in about 6 days"). */
   ashore?: number;
+  /**
+   * Not over: how many of it came ashore away from its target (its transports broke off), and where, a city's name, when
+   * all at one place (ROADMAP R56b; critic run 57, R57-N1: "4 of 6 ashore" while the four were near Palermo).
+   */
+  away?: number;
+  awayAt?: string;
   /** At sea, a group of it in a fight: held, its days to land not to be told (ROADMAP R50c); by whom, a nation's name key (R52c). */
   held?: true;
   heldBy?: string;

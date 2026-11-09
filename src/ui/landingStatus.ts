@@ -33,10 +33,15 @@ export function landingStatus(r: LandingRow): string {
     }
     return t(`landing.over.${o.kind}`);
   }
-  // Some of it ashore already (R55b; critic run 56, R56-N1): how many, then where the rest stand.
-  if (r.ashore) {
-    const { ashore, ...rest } = r;
-    return `${t('landing.group.ashore', { at: ashore, of: ashore + r.divisions.length })}; ${landingStatus(rest)}`;
+  // Some of it ashore already (R55b; critic run 56, R56-N1): how many, then where the rest stand. Those that came ashore
+  // away from the target, said so and where (R56b; critic run 57, R57-N1: "4 of 6 ashore" for four near Palermo).
+  if (r.ashore || r.away) {
+    const { ashore, away, awayAt, ...rest } = r;
+    const target = r.target.startsWith('=') ? r.target.slice(1) : t('landing.target');
+    const said: string[] = [];
+    if (ashore) said.push(t('landing.group.ashore', { at: ashore, of: ashore + (away ?? 0) + r.divisions.length }));
+    if (away) said.push(awayAt ? t('landing.more.awayAt', { n: away, target, at: awayAt }) : t('landing.more.away', { n: away, target }));
+    return `${said.join('; ')}; ${landingStatus(rest)}`;
   }
   // R48d: its days to land (R51-N6: "at sea" alone).
   // R50c: held in a fight, no days (R52-N3: "about a day" for four days on 21105).

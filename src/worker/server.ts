@@ -1280,8 +1280,13 @@ export class SimServer {
       // Thrown back (R53a): how many, and home to where; all of it so, no days to land and no hold.
       const thrown = r.divisions.filter((id) => this.thrownHome.has(id));
       const all = thrown.length > 0 && thrown.length === r.divisions.length;
-      // Already ashore from it, landed or away (R55b): the next voyage's row says so.
-      const ashore = [...(this.landingEnds.get(r.id)?.entries() ?? [])].filter(([d, k]) => (k === 'landed' || k === 'away') && !r.divisions.includes(d)).length;
+      // Already ashore from it (R55b): the next voyage's row says so; at its target, or away from it and where (R56b;
+      // critic run 57, R57-N1: "4 of 6 ashore" for four thrown ashore near Palermo).
+      const ended = [...(this.landingEnds.get(r.id)?.entries() ?? [])].filter(([d]) => !r.divisions.includes(d));
+      const ashore = ended.filter(([, k]) => k === 'landed').length;
+      const awayIds = ended.filter(([, k]) => k === 'away').map(([d]) => d);
+      const awayPlaces = new Set(awayIds.map((d) => this.awayAshore.get(d) ?? ''));
+      const awayAt = awayIds.length > 0 && awayPlaces.size === 1 && !awayPlaces.has('') ? { awayAt: [...awayPlaces][0]! } : {};
       return {
         id: r.id,
         state: r.state === LandingState.gathering ? 'gathering' : r.state === LandingState.sailing ? 'sailing' : 'returning',
@@ -1298,6 +1303,7 @@ export class SimServer {
         ...(r.held && !all ? { held: true as const, ...(r.heldBy !== 0 ? { heldBy: this.nameOf(r.heldBy) } : {}) } : {}),
         ...(r.backIn !== null ? { back: Math.max(1, Math.ceil(r.backIn / 24)) } : {}),
         ...(ashore > 0 ? { ashore } : {}),
+        ...(awayIds.length > 0 ? { away: awayIds.length, ...awayAt } : {}),
         click: this.clickOf(r.id, r.click),
       };
     });
@@ -1316,14 +1322,17 @@ export class SimServer {
       const thrown = last.divisions.map((d) => d.id).filter((d) => this.landingEnds.get(id)?.get(d) === 'repulsed');
       const places = new Set(thrown.map((d) => this.thrownAshore.get(d) ?? ''));
       const ashore = places.size === 1 && !places.has('') ? { ashore: [...places][0]! } : {};
-      // Those ashore away from the target all at one place: named too (R55h).
-      const awayPlaces = new Set(last.divisions.map((d) => d.id).filter((d) => this.landingEnds.get(id)?.get(d) === 'away').map((d) => this.awayAshore.get(d) ?? ''));
+      // Those ashore away from the target all at one place: named too (R55h); those that left its row ashore with them
+      // (R56b; critic run 57, 27125: "4 came ashore away from Valletta", the four gone from its row before its end).
+      const endedIds = [...(this.landingEnds.get(id)?.keys() ?? [])];
+      const awayPlaces = new Set(endedIds.filter((d) => this.landingEnds.get(id)?.get(d) === 'away').map((d) => this.awayAshore.get(d) ?? ''));
       const awayAt = t.away > 0 && awayPlaces.size === 1 && !awayPlaces.has('') ? { awayAt: [...awayPlaces][0]! } : {};
       for (const d of last.divisions) {
         this.thrownHome.delete(d.id);
         this.thrownAshore.delete(d.id);
         this.awayAshore.delete(d.id);
       }
+      for (const d of endedIds) this.awayAshore.delete(d);
       // Its divisions' voyages were the landing's: over, they say nothing of it (their panels say where they are now).
       this.landingsOver.set(id, { ...last, state: 'over', sails: null, divisions: last.divisions.map((d) => ({ id: d.id, voyage: null })), outcome: { kind, tick: world.tick, landed: t.landed, lost: t.lost, ...(t.away > 0 ? { away: t.away } : {}), ...(t.repulsed > 0 ? { repulsed: t.repulsed } : {}), ...(t.stayed > 0 ? { stayed: t.stayed } : {}), ...(t.repulsed > 0 ? ashore : {}), ...awayAt, ...(how ?? {}) } });
       this.landingEnds.delete(id);
