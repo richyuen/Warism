@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import terrain from '../../data/terrain.json' with { type: 'json' };
 import { NATIONS_1938 } from '../../src/sim/scenario1938';
-import { GREY_DARK, GREY_LIGHT, hueOf, isLightGround, leastLight, SEA_COLOR, SEA_HUE, SEA_HUE_FAR, SEA_HUE_NEAR, SHIP_SEA_LIGHT, shipTint, SPRITE_LIGHT, spriteTint } from '../../src/render/units/tint';
+import { GREY_DARK, GREY_LIGHT, hueOf, isLightGround, leastLight, lightGroundBlend, terrainLuma, SEA_COLOR, SEA_HUE, SEA_HUE_FAR, SEA_HUE_NEAR, SHIP_SEA_LIGHT, shipTint, SPRITE_LIGHT, spriteTint } from '../../src/render/units/tint';
 
 // PLAN 3.11e (the critic's R3-B3: "Soviet tanks are tinted pink, near Poland's own pink",
 // `critic/shots/c3j_12_tank_live_006m_2.png`): a sprite's tint was its nation's colour mixed
@@ -70,6 +70,24 @@ describe('the tint of a nation\'s sprites', () => {
   // ADR-676 (tankSides1938 at 9ffb0274: on a plain at seed 7781 German tanks 6.8 off the ground's
   // lightness, the bar 20): GREY_LIGHT is told from a forest, not from a plain. On a light ground a
   // grey is made dark; a colour with a hue is the same on either ground.
+  // ROADMAP R53o (ADR-888): the ground is judged as it is drawn, the terrain's luma blended over the four nearest
+  // cells' middles, not by the class of the cell under the point. A plains cell beside a forest cell (seed 7781's
+  // French border): by the class, the point just inside the forest light and the point just inside the plains dark,
+  // a ground between them under both; blended, the same on either side of the edge, and a cell's own class at its middle.
+  it('a grey is judged against the ground blended as drawn, not by the cell under it', () => {
+    const colour = (id: string): number => parseInt(terrain.terrain.find((t) => t.id === id)!.color.slice(1), 16);
+    const luma = [terrainLuma(colour('forest')), terrainLuma(colour('plains'))];
+    // Forest west of x = 10, plains from it.
+    const classAt = (cx: number): number => (cx < 10 ? 0 : 1);
+    expect(lightGroundBlend(9.95, 5.5, classAt, luma)).toBe(lightGroundBlend(10.05, 5.5, classAt, luma));
+    expect(lightGroundBlend(9.5, 5.5, classAt, luma), "a forest cell's middle").toBe(false);
+    expect(lightGroundBlend(10.5, 5.5, classAt, luma), "a plains cell's middle").toBe(true);
+    // Where the blend crosses LIGHT_GROUND_LUMA, between the two middles.
+    const cross = 9.5 + (125 - luma[0]!) / (luma[1]! - luma[0]!);
+    expect(lightGroundBlend(cross - 0.02, 5.5, classAt, luma)).toBe(false);
+    expect(lightGroundBlend(cross + 0.02, 5.5, classAt, luma)).toBe(true);
+  });
+
   it("on a light ground a grey is at GREY_DARK; a hue's tint is the same on either", () => {
     const colour = (id: string): number => parseInt(terrain.terrain.find((t) => t.id === id)!.color.slice(1), 16);
     for (const t of ['plains', 'grassland', 'hills', 'mountains', 'desert', 'tundra', 'marsh', 'urban', 'ice']) expect(isLightGround(colour(t)), t).toBe(true);

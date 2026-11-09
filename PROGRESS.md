@@ -2186,3 +2186,12 @@
   under another nation's); `tankSides1938` on Poland's front, the critic's case (its first pick was on the French
   border, where grey tanks are 13 of lightness from green ground: filed in BLOCKERS for the next batch).
 - **Next:** R53k (b), the bar by area.
+
+## 2026-11-08 — R53k by area waits on the user; R53o: a grey's tint by the ground as drawn (ADR-888)
+- R53k (b), by area, 25 years with R53l: 21099 passes (15 years); 20899 Australia and 24099 Canada still 20 years each;
+  before R53l 8 and 14. Filed with options; the user's to choose.
+- R53o: the French border's German tanks stood on a plains cell beside a forest cell, half tinted light and half dark
+  by the cell under each, on a ground drawn as the blend. `lightGroundBlend` judges the blend as drawn: 73 of
+  lightness from the ground (was 13), Poland's front 99 as before. `tankSides1938` judges any front too (red before);
+  `tint.test` the blend.
+- **Next:** R53k on the user's choice; R53m.

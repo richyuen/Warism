@@ -18,9 +18,35 @@ export const GREY_LIGHT = 0.8;
  */
 export const LIGHT_GROUND_LUMA = 125;
 
+/** The luma (0–255) of a terrain colour (0xRRGGBB). */
+export function terrainLuma(color: number): number {
+  return 0.2126 * ((color >> 16) & 255) + 0.7152 * ((color >> 8) & 255) + 0.0722 * (color & 255);
+}
+
 /** Whether a terrain colour (0xRRGGBB) is a light ground for a grey's tint (`LIGHT_GROUND_LUMA`). */
 export function isLightGround(color: number): boolean {
-  return 0.2126 * ((color >> 16) & 255) + 0.7152 * ((color >> 8) & 255) + 0.0722 * (color & 255) > LIGHT_GROUND_LUMA;
+  return terrainLuma(color) > LIGHT_GROUND_LUMA;
+}
+
+/**
+ * Whether the ground drawn at (`x`, `y`) (cells) is a light ground for a grey's tint (ROADMAP R53o, ADR-888): the
+ * terrain's luma blended over the four nearest cells as the ground of T2 and T3 is drawn (`mapShader`, the
+ * bilinear blend at the cell's middles), not the class of the cell under it. By the class alone a German armoured
+ * division on a plains cell beside a forest cell (seed 7781, the French border) had half its tanks light and half
+ * dark, each on a ground between the two: their middles 13 of lightness from it. `classAt` gives a cell's terrain
+ * class (x wrapped by the caller's map), `luma` each class's luma.
+ */
+export function lightGroundBlend(x: number, y: number, classAt: (cx: number, cy: number) => number, luma: readonly number[]): boolean {
+  const qx = x - 0.5;
+  const qy = y - 0.5;
+  const x0 = Math.floor(qx);
+  const y0 = Math.floor(qy);
+  const fx = qx - x0;
+  const fy = qy - y0;
+  const l = (cx: number, cy: number): number => luma[classAt(cx, cy)] ?? 0;
+  const top = l(x0, y0) * (1 - fx) + l(x0 + 1, y0) * fx;
+  const bottom = l(x0, y0 + 1) * (1 - fx) + l(x0 + 1, y0 + 1) * fx;
+  return top * (1 - fy) + bottom * fy > LIGHT_GROUND_LUMA;
 }
 
 /**

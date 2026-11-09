@@ -3,6 +3,15 @@
 The resolved entries of BLOCKERS.md, moved here on 2026-11-02 (ADR-804) in the order they stood. Searched, not
 read. New resolved entries are moved here when they are resolved.
 
+### RESOLVED 2026-11-08 (ROADMAP R53o, ADR-888) · Germany's grey tanks on green ground: 13 of lightness from it at 10 m/px
+- **Seen:** `tankSides1938` (seed 7781, Germany on Poland), whose first armoured division in contact with over 20 enemy
+  figures in view is, since ADR-887 (France fights beside Poland), on the French border on day 3 (division 41): German
+  tanks (92,92,93) on ground (91,111,89), lightness 13 apart, under the spec's 20 (GREY_LIGHT was set against the drab
+  ground of Poland's front). From the French figures (56,81,141) they stand 61 apart.
+- **Done meanwhile:** the spec looks on Poland's front, the critic's case (division 40 on day 4: 99 apart); the green
+  ground is not judged anywhere now.
+- **Resolved:** the tint judges the ground blended as drawn; 73 apart on the French border (ADR-888).
+
 ### RESOLVED 2026-11-08 (the user's decision: a, a front) · R53l: 20887's one war over 4 to 1 at day 365 is a front, not a pile
 - **The bar:** on 20887, 21129 and 24129 at day 365, no war chip with one side over 4 times the other's nations.
 - **Read with ADR-887** (`.cache/r53k/pile.ts`): 21129 and 24129 none. 20887: "Italy +1 ⚔ United Kingdom +10",

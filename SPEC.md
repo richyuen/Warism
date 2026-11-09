@@ -1735,7 +1735,8 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   treads, wheels, hull, helmet), eyes left or right to its order, a red ring while engaged.
 - **T2 element sprites:** one sprite an element at its slot (`slotPlace`, the sim's own pose), its
   facing and frame (`src/shared/unitLooks.ts`), tinted by its nation (`spriteTint`: hue and saturation
-  kept at least `SPRITE_LIGHT` lightness, greys to `GREY_LIGHT` or, on light ground, `GREY_DARK`; ships
+  kept at least `SPRITE_LIGHT` lightness, greys to `GREY_LIGHT` or, on light ground, `GREY_DARK`, the ground judged blended over the four nearest cells as
+  drawn (`lightGroundBlend`, ADR-888); ships
   `shipTint` against the sea). At least `ELEMENT_MIN_PX` (5) wide, a tank `TANK_ELEMENT_MIN_PX` (8), a
   ship's hull `SHIP_ELEMENT_MIN_HULL_PX` (13); small sprites swap to one mark between `SMALL_FULL_PX`
   (5.5) and `SMALL_NONE_PX` (8). A formation on the march is drawn at `SPRITE_ALPHA_MIN` (0.45) to 1. Tags

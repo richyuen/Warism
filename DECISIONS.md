@@ -7,6 +7,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-888 · 2026-11-08 · accepted — A grey's tint judges the ground as drawn, blended (R53o)
+- **Context.** Found at R53l, the user's item: on seed 7781 the first German armoured division in contact with over 20
+  enemy figures in its view (since ADR-887, on the French border: day 3, division 41) had its tanks' middles 13 of
+  lightness from the ground at 10 m/px (92,92,93 on 91,111,89; `tankSides1938`'s bar 20). Read: the division stands
+  on a plains cell (#9cae6b, luma 165) beside a forest cell; ADR-676 chose a grey's tint by the class of the cell under
+  each element, so half the tanks were light (#cccccc) and half dark (#2e2e2e), the mean between, while the ground of
+  T2 and T3 is drawn as the bilinear blend of the four nearest cells' terrain (and the border's fill cast).
+- **Decision.** `lightGroundBlend`: the terrain's luma blended over the four nearest cells' middles as `mapShader`
+  blends the colour, against `LIGHT_GROUND_LUMA` (125) as before. A cell's middle keeps its class's answer; between
+  two the answer turns where the drawn blend crosses 125, the same on either side of a cell's edge.
+- **Rejected.** A tint chosen by the luma of the drawn pixel with the fill's cast and hillshade (the shader's whole
+  sum on the CPU, per element each frame); an outline on a grey's tanks (a change of the look, unasked).
+- **Consequences.** The French border's case: all 339 tanks dark, 73 of lightness from the ground (was 13); Poland's
+  front unchanged (division 40, 99). `tankSides1938` judges both (red before on any front); `tint.test` the blend.
+  The sim is untouched (no pin change).
+
 ### ADR-887 · 2026-11-08 · accepted — A puppet, and an attacker's ally, join a war only within reach (R53l)
 - **Context.** Critic run 54 (Diplomacy "not 8", as in runs 51 and 53): year-one wars are dogpiles; on 21129 at day
   365 "United Kingdom +35 ⚔ Brazil", on 24129 "Nationalist Spain +35 ⚔ Greece +3". Read (`.cache/r53k/pile.ts`):

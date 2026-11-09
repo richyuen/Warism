@@ -65,7 +65,7 @@ import { SLOT_GAP_CELLS, shipElementMinPx, shipFrameMinPx, shipSideCells } from 
 import { appendWakes } from '../render/units/wakes';
 import { contactLines, drawContactLines, type ContactForm, type ContactLine } from '../render/units/contactLines';
 import { drawEnemyPointers, enemyPointers, POINTER_FONT, type EnemyPointer, type PointerSource } from '../render/units/enemyPointers';
-import { isLightGround, SEA_COLOR, shipTint, spriteTint } from '../render/units/tint';
+import { lightGroundBlend, SEA_COLOR, shipTint, spriteTint, terrainLuma } from '../render/units/tint';
 import { hash2 } from '../render/hash';
 import { CameraController } from './input/CameraController';
 import type { MapLayers, SimClient } from './simClient';
@@ -194,7 +194,7 @@ export class MapView {
   private terrainColors: number[] | null = null;
   /** The terrain of each cell, and of each terrain whether it is a light ground for a grey's tint (ADR-676). */
   private terrainCells: Uint8Array | null = null;
-  private lightTerrain: boolean[] = [];
+  private terrainLumas: number[] = [];
   /**
    * The fine land mask the worker sent, as its coast (PLAN 2.9b, 7.1l7): where nothing of the
    * scatter stands. The mask itself is on the GPU, for the coast of T2 and T3.
@@ -616,7 +616,7 @@ export class MapView {
       this.map.setTerrain(m.terrain.w, m.terrain.h, m.terrain.data, m.terrainColors);
       this.terrainColors = m.terrainColors;
       this.terrainCells = m.terrain.data;
-      this.lightTerrain = m.terrainColors.map(isLightGround);
+      this.terrainLumas = m.terrainColors.map(terrainLuma);
       this.cities = m.cities;
       this.templates = m.templates;
       this.map.setProvinces(this.geo.w, this.geo.h, m.province);
@@ -2874,14 +2874,12 @@ export class MapView {
     return [(col >> 16) & 255, (col >> 8) & 255, col & 255, 255];
   }
 
-  /** Whether the terrain of the cell at (`x`, `y`) is a light ground for a grey's tint (ADR-676). */
+  /** Whether the ground drawn at (`x`, `y`) is a light ground for a grey's tint (ADR-676; blended as drawn, ADR-888). */
   private lightGroundAt(x: number, y: number): boolean {
     const t = this.terrainCells;
     if (!t) return false;
     const { w, h } = this.geo;
-    const cx = ((Math.floor(x) % w) + w) % w;
-    const cy = Math.min(h - 1, Math.max(0, Math.floor(y)));
-    return this.lightTerrain[t[cy * w + cx]!] ?? false;
+    return lightGroundBlend(x, y, (cx, cy) => t[Math.min(h - 1, Math.max(0, cy)) * w + (((cx % w) + w) % w)]!, this.terrainLumas);
   }
 
   /** x on the side of prevX: across the seam of a looping map an interpolation must not sweep the whole map. */
