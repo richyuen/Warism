@@ -7,6 +7,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-907 · 2026-11-09 · accepted — Run 57's small items: a short landing counts its voyages; the sea battle check by side; a ship's flag whole above its deck (R56e)
+- **Context.** Critic run 57's small items (the user's call to take them, 2026-11-09): (1) the bar's "12 transports
+  needed, 7 at hand" in red for the two left at Rome, which go one a voyage; (2) `seaBattlesLook` counted a battle seen
+  with one side's ships alone (t809 ENG v GER: British and French, no German, two nations read as two sides); (3) a
+  destroyer of the Spanish Republic and a cruiser of Nationalist Spain looked alike at 40 m/px: a ship's ball sits in
+  its hull from 0.3 ball units down, and the bottom third of a flag (the Republic's purple) was under it.
+- **Decision.** (1) A landing short of room whose divisions each fit has `voyages` (`voyagesFor`, the largest first):
+  "12 transports needed, 7 at hand: 2 voyages", not marked short; short only when one does not fit. (2)
+  `seaBattles.ts` lists each fleet's side; `seaBattlesLook` judges by side, and tells a battle listed with one side
+  alone ("seen (one side listed)", counted in its summary): the other's fleets are not to be looked for there. (3) In a
+  hull the flag is drawn whole above the deck (`SHIP_FLAG_BOTTOM`), as under a helmet (R22-B1), in the shader and the
+  2D balls alike.
+- **Results.** `landingRowAshore1938`: 27125's next voyage `voyages` 2, `voyagesFor`'s cases; `ballShader` (the flag
+  above the deck); `countryballs1938` green; on 28061 (0.1 year) 16 of 16 battles seen, 4 listed with one side (t809
+  among them), and at t316 the Republic's ships show their purple stripe.
+
 ### ADR-906 · 2026-11-09 · accepted — The Actions tab's "Offer peace" is the menu's: greyed while refused, saying why (R56d)
 - **Context.** Critic run 57, R57-N2 (the user's call to take it, 2026-11-09): 28401 as Germany, day 30, "Germany ⚔
   Poland (+0) Offer peace" pressed: the war unchanged, no word, the button still live; the right-click menu greys the

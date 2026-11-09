@@ -50,6 +50,8 @@ const KM = kmPerCell(sim.world.cells.w);
 interface Fleet {
   id: number;
   nation: string;
+  /** Its side: `a`'s (its nation, or one at war with `b` and not `a`) or `b`'s (ROADMAP R56e: `seaBattlesLook` judges by side). */
+  side: 'a' | 'b';
   ships: number;
   x: number;
   y: number;
@@ -104,12 +106,17 @@ function fleetsNear(w: World, x: number, y: number, a: number, b: number): Fleet
   return w.formations
     .ids()
     .filter((id) => w.isFleet(id) && Math.hypot(c.x[id]! - x, c.y[id]! - y) <= NEAR_CELLS && side(c.nation[id]!))
-    .map((id) => ({ id, nation: tag(c.nation[id]!), ships: 0, x: c.x[id]!, y: c.y[id]! }));
+    .map((id) => ({ id, nation: tag(c.nation[id]!), side: sideOf(w, c.nation[id]!, a, b), ships: 0, x: c.x[id]!, y: c.y[id]! }));
+}
+
+/** The side of a battle between `a` and `b` a fleet of nation `n` fights on. */
+function sideOf(w: World, n: number, a: number, b: number): 'a' | 'b' {
+  return n === a || (n !== b && w.wars.atWar(n, b) && !w.wars.atWar(n, a)) ? 'a' : 'b';
 }
 
 function fleetsOf(w: World, rec: SeaBattle): Fleet[] {
   const c = w.formations.cols;
-  return rec.fleets.flatMap((id, k) => (w.formations.has(id) ? [{ id, nation: tag(c.nation[id]!), ships: rec.ships[k] ?? 0, x: c.x[id]!, y: c.y[id]! }] : []));
+  return rec.fleets.flatMap((id, k) => (w.formations.has(id) ? [{ id, nation: tag(c.nation[id]!), side: sideOf(w, c.nation[id]!, rec.a, rec.b), ships: rec.ships[k] ?? 0, x: c.x[id]!, y: c.y[id]! }] : []));
 }
 
 const tracks = new Map<SeaBattle, Track>();
@@ -122,7 +129,7 @@ for (let h = 0; h < hours; h++) {
     for (const rec of w.seaBattles) {
       let tr = tracks.get(rec);
       const now = fleetsOf(w, rec);
-      if (!tr) tracks.set(rec, (tr = { start: w.tick, fleets: new Map(), camera: camera(now.length > 0 ? now : [{ id: 0, nation: '', ships: 0, x: rec.x, y: rec.y }]) }));
+      if (!tr) tracks.set(rec, (tr = { start: w.tick, fleets: new Map(), camera: camera(now.length > 0 ? now : [{ id: 0, nation: '', side: 'a' as const, ships: 0, x: rec.x, y: rec.y }]) }));
       for (const f of now) if (!tr.fleets.has(f.id)) tr.fleets.set(f.id, f);
     }
     const ev = w.out.events;
@@ -154,7 +161,7 @@ for (let h = 0; h < hours; h++) {
           lostB: B.ships,
           oneHour: !tr,
           fleets: (tr ? [...tr.fleets.values()] : near).map((f) => ({ ...f, x: Math.round(f.x * 10) / 10, y: Math.round(f.y * 10) / 10 })),
-          camera: tr?.camera ?? camera([...near, { id: 0, nation: '', ships: 0, x, y }]),
+          camera: tr?.camera ?? camera([...near, { id: 0, nation: '', side: 'a' as const, ships: 0, x, y }]),
         };
         battles.push(b);
         process.stderr.write(

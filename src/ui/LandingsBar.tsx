@@ -77,6 +77,8 @@ export function LandingsBar({
           const gathering = parts.filter((p) => p.state === 'gathering');
           const have = gathering.reduce((n, p) => n + p.ships.have, 0);
           const need = gathering.reduce((n, p) => n + p.ships.need, 0);
+          // Short, but each part's divisions go in turns: how many voyages, not short (ROADMAP R56e).
+          const voyages = have < need && gathering.every((p) => p.ships.have >= p.ships.need || (p.ships.voyages ?? 0) > 1) ? Math.max(...gathering.map((p) => p.ships.voyages ?? 1)) : 0;
           const cancellable = parts.filter(live);
           const wait = many ? null : waitOf(r);
           return (
@@ -93,8 +95,8 @@ export function LandingsBar({
                     {groupStatus(parts)}
                   </span>
                   {gathering.length > 0 ? (
-                    <span class={have < need ? 'landing-ships short' : 'landing-ships'} data-testid="landing-ships">
-                      {t('landing.ships', { have, need })}
+                    <span class={have < need && voyages === 0 ? 'landing-ships short' : 'landing-ships'} data-testid="landing-ships">
+                      {voyages > 1 ? t('landing.shipsVoyages', { have, need, n: voyages }) : t('landing.ships', { have, need })}
                     </span>
                   ) : null}
                 </button>

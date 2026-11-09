@@ -2378,3 +2378,9 @@
 - R57-N2: pressed at +0, nothing happened and nothing was said. Now the menu's verdict: disabled, "They refuse: lead
   the war score by 25 …" in its title; enabled at the bar. `forceWar1938`, `playerActions1938` red before.
 - **Next:** R56e.
+
+## 2026-11-09 — R56e: run 57's small items (ADR-907)
+- A landing short of room counts its voyages ("…: 2 voyages", not red); `seaBattlesLook` judges by side and tells a
+  battle listed with one side (28061: 16 of 16 seen, 4 one side, t809 among them); a ship's flag drawn whole above its
+  deck, so the Spanish Republic's purple shows at 40 m/px.
+- Batch 11 done. **Next:** the critic's probes replayed (ADR-833), then critic run 58.

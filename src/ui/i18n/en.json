@@ -626,6 +626,7 @@
   "landing.returning.days": "turning back to {port}: there in about {days} days",
   "landing.returning.one": "turning back to {port}: there in about a day",
   "landing.ships": "{need} transports needed, {have} at hand",
+  "landing.shipsVoyages": "{need} transports needed, {have} at hand: {n} voyages",
   "landing.over.landed": "over: {n} landed",
   "landing.over.away": "over: its transports broke off; {n} came ashore away from {target}",
   "landing.over.awayAt": "over: its transports broke off; {n} came ashore near {at}, away from {target}",

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { ATLAS_FRAMES } from '../../src/render/units/atlas';
-import { BALL_QUAD, BALL_QUAD_MAX, BALL_R, BallClass, ballClassOf, BallState, GUN_BARREL, HURT_AT, HURT_SHIFT, hurtLevel, GUN_WHEEL, HELMET_AT, HELMET_BRIM_X, HELMET_BRIM_Y, HELMET_FLAG_TOP, HELMET_R, flagUv, propPoint, SHIP_HULL, TREADS, TURRET_BARREL_HALF, TURRET_BARREL_LEN, WINGS } from '../../src/render/units/ballShader';
+import { BALL_QUAD, BALL_QUAD_MAX, BALL_R, BallClass, ballClassOf, BallState, GUN_BARREL, HURT_AT, HURT_SHIFT, hurtLevel, GUN_WHEEL, HELMET_AT, HELMET_BRIM_X, HELMET_BRIM_Y, HELMET_FLAG_TOP, HELMET_R, flagUv, propPoint, SHIP_FLAG_BOTTOM, SHIP_HULL, TREADS, TURRET_BARREL_HALF, TURRET_BARREL_LEN, WINGS } from '../../src/render/units/ballShader';
 import { Frame, isShipFrame } from '../../src/shared/unitLooks';
 
 // PLAN 7.174d (ADR-777): what each frame's ball wears, and a quad that holds it.
@@ -90,5 +90,18 @@ describe('flagUv (PLAN 7.179, critic R22-B1)', () => {
     const [, a] = flagUv(0, 0.2, 0);
     const [, b] = flagUv(0, 0.2, 1);
     expect(flagUv(0, 0.2, 0.5)[1]).toBeCloseTo((a + b) / 2, 10);
+  });
+  // ROADMAP R56e (critic run 57: the Spanish Republic's destroyers looked as Nationalist Spain's at 40 m/px, the purple
+  // stripe under the hull): in a hull the whole flag is above its deck.
+  it('puts the whole flag above the deck in a hull: its top row at the top, its last at the deck', () => {
+    expect(SHIP_FLAG_BOTTOM).toBeLessThanOrEqual(SHIP_HULL.deck);
+    expect(flagUv(0, -BALL_R, 0, 1)[1]).toBe(0);
+    expect(flagUv(0, SHIP_FLAG_BOTTOM, 0, 1)[1]).toBe(1);
+    // A bottom stripe of a third (the Republic's purple) is seen above the deck, not under it.
+    const yLast = SHIP_FLAG_BOTTOM - (SHIP_FLAG_BOTTOM + BALL_R) / 3;
+    expect(flagUv(0, yLast + 0.01, 0, 1)[1]).toBeGreaterThan(2 / 3);
+    expect(yLast + 0.01).toBeLessThan(SHIP_HULL.deck);
+    // With no hull drawn, the disc's square.
+    expect(flagUv(0, 0.2, 0, 0)).toEqual(flagUv(0, 0.2, 0));
   });
 });

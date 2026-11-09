@@ -5,7 +5,7 @@
  * to the rim, a dark outline, two white eyes on the side it faces, and a prop for what it stands for
  * (a helmet, treads, wheels, a hull).
  */
-import { BALL_R, EYE_GAP, EYE_RX, EYE_RY, EYES_ACROSS, EYES_UP, HELMET_FLAG_TOP, HELMET_RGB, HULL_RGB, OUTLINE_RGB, STEEL_RGB, TREAD_RGB } from './ballShader';
+import { BALL_R, EYE_GAP, EYE_RX, EYE_RY, EYES_ACROSS, EYES_UP, HELMET_FLAG_TOP, HELMET_RGB, HULL_RGB, OUTLINE_RGB, SHIP_FLAG_BOTTOM, STEEL_RGB, TREAD_RGB } from './ballShader';
 
 /** What a 2D ball wears. */
 export type Prop2d = 'none' | 'helmet' | 'treads' | 'wheels' | 'hull';
@@ -78,6 +78,8 @@ export function drawBall2d(ctx: CanvasRenderingContext2D, x: number, y: number, 
     ctx.imageSmoothingEnabled = true;
     // Under a helmet, the whole flag below its brim (R22-B1), as the shader draws it.
     if (b.prop === 'helmet') ctx.drawImage(b.flag, x - r, y + HELMET_FLAG_TOP * u, 2 * r, (BALL_R - HELMET_FLAG_TOP) * u);
+    // In a hull, the whole flag above its deck (R56e).
+    else if (b.prop === 'hull') ctx.drawImage(b.flag, x - r, y - r, 2 * r, (BALL_R + SHIP_FLAG_BOTTOM) * u);
     else ctx.drawImage(b.flag, x - r, y - r, 2 * r, 2 * r);
   }
   const shade = ctx.createRadialGradient(x - 0.4 * r, y - 0.45 * r, 0, x, y, r);

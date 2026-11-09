@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { LandingRow } from '../../src/shared/protocol';
+import { voyagesFor } from '../../src/sim/systems/landings';
 import { landingStatus } from '../../src/ui/landingStatus';
 import { nearestDivisions, RowRun } from '../helpers/landingRows';
 import { nationId } from '../helpers/sim1938';
@@ -52,10 +53,12 @@ describe('a landing that sails without a marcher counts down, and says how many 
     for (const id of ids) r.cmds([{ kind: 'moveFormation', id, x: 1106.5, y: 383.5, nation: ITA }]);
     let ashoreSeen = '';
     let overSeen = '';
+    let short: LandingRow['ships'] | null = null;
     for (let h = 0; h < 240 && !overSeen; h++) {
       r.step();
       const row = r.rows.find((x) => x.state === 'gathering' && x.divisions.some((d) => ids.includes(d.id)));
       if (!ashoreSeen && (row?.ashore || row?.away) && /sails in/.test(landingStatus(row!))) ashoreSeen = landingStatus(row!);
+      if (!short && row && (row.ashore || row.away) && row.ships.have < row.ships.need) short = row.ships;
       const over = r.rows.find((x) => x.state === 'over' && x.outcome?.away);
       if (over) overSeen = landingStatus(over);
     }
@@ -63,8 +66,21 @@ describe('a landing that sails without a marcher counts down, and says how many 
     expect(ashoreSeen).not.toMatch(/of \d+ ashore/);
     // Its end names the place too, the four gone from its row before it (R56b).
     expect(overSeen).toMatch(/4 came ashore near Palermo, away from Valletta/);
+    // The two left at Rome, short of room for both, go one a voyage: so counted, not short (R56e; critic run 57: "12
+    // transports needed, 7 at hand" in red).
+    expect(short, 'the next voyage short of room for both').not.toBeNull();
+    expect(short!.voyages).toBe(2);
     expect(r.broken).toEqual([]);
   }, 300_000);
+});
+
+describe('the voyages a landing short of room makes (ROADMAP R56e)', () => {
+  it('largest first, each into the first voyage with room left; 0 when one does not fit', () => {
+    expect(voyagesFor([12460, 12460], 14000)).toBe(2);
+    expect(voyagesFor([12000, 6000, 6000], 18000)).toBe(2);
+    expect(voyagesFor([12000, 5000, 4000, 3000], 12000)).toBe(2);
+    expect(voyagesFor([20000], 14000)).toBe(0);
+  });
 });
 
 describe('a row with some ashore says where (ROADMAP R55b, R56b)', () => {

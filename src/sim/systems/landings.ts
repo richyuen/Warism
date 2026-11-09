@@ -1054,6 +1054,12 @@ export interface LandingRowData {
   /** Transport ships: those its divisions need (their men, `TRANSPORT_MEN` a ship) and its groups have. */
   need: number;
   have: number;
+  /**
+   * Short of room (`have` < `need`) but each division fits: the voyages its groups make to carry all (`voyagesFor`, the
+   * largest first); 0 when one does not fit. Undefined with room for all (ROADMAP R56e; critic run 57: "12 transports
+   * needed, 7 at hand" in red for the two left at Rome, which go one a voyage).
+   */
+  voyages?: number;
   /** Gathering: the hours until it sails and the sibling's port it waits for (`sailsIn`); null otherwise or unknown. */
   sailsIn: { hours: number; other?: number } | null;
   /** At sea: the hours until its groups are at its water (`voyageHours`, the longest); null otherwise or unknown (R48d). */
@@ -1114,6 +1120,21 @@ export function heldByFleet(world: World, l: Landing): { fleet: number; group: n
   return best === 0 ? 0 : { fleet: best, group };
 }
 
+/**
+ * The voyages groups of `room` men make to carry divisions of `men` (ROADMAP R56e): the largest first, each into the
+ * first voyage with room left; 0 when one is larger than the room.
+ */
+export function voyagesFor(men: readonly number[], room: number): number {
+  const left: number[] = [];
+  for (const m of [...men].sort((a, b) => b - a)) {
+    if (m > room) return 0;
+    const i = left.findIndex((r) => r >= m);
+    if (i >= 0) left[i]! -= m;
+    else left.push(room - m);
+  }
+  return left.length;
+}
+
 /** Nation `nation`'s landings in rows, by id (ROADMAP R47a). */
 export function landingRows(world: World, nation: number): LandingRowData[] {
   const c = world.formations.cols;
@@ -1123,6 +1144,7 @@ export function landingRows(world: World, nation: number): LandingRowData[] {
     .map((l) => {
       const divisions = [...l.divisions.keys()].filter((d) => world.formations.has(d)).sort((a, b) => a - b);
       const men = divisions.reduce((s, d) => s + c.strength[d]!, 0);
+      const room = roomOf(world, l);
       return {
         id: l.id,
         state: l.state,
@@ -1132,7 +1154,8 @@ export function landingRows(world: World, nation: number): LandingRowData[] {
         target: l.target,
         divisions,
         need: Math.ceil(men / TRANSPORT_MEN),
-        have: Math.floor(roomOf(world, l) / TRANSPORT_MEN),
+        have: Math.floor(room / TRANSPORT_MEN),
+        ...(room < men ? { voyages: voyagesFor(divisions.map((d) => c.strength[d]!), room) } : {}),
         sailsIn: sailsIn(world, l),
         landsIn: l.state === LandingState.sailing ? voyageHours(world, l) || null : null,
         held: l.state === LandingState.sailing && l.fleets.some((o) => world.formations.has(o) && c.engaged[o] === 1),

@@ -925,7 +925,8 @@ export interface LandingRow {
   to: [number, number];
   portAt: [number, number];
   divisions: { id: number; voyage: FormationDetail['voyage'] }[];
-  ships: { need: number; have: number };
+  /** Transports its divisions need and its groups have; `voyages`: short, but each fits, the voyages to carry all (R56e). */
+  ships: { need: number; have: number; voyages?: number };
   sails: { days: number; other?: string } | null;
   /** At sea: the days until it lands, at least 1 (ROADMAP R48d; critic run 51, R51-N6: it said only "at sea"). */
   lands?: number;

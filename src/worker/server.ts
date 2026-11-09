@@ -1296,7 +1296,7 @@ export class SimServer {
         to: cell(r.target),
         portAt: cell(world.ports[r.port]?.cell ?? r.land),
         divisions: r.divisions.map((id) => ({ id, voyage: this.voyageOf(world, id) })),
-        ships: { need: r.need, have: r.have },
+        ships: { need: r.need, have: r.have, ...(r.voyages !== undefined ? { voyages: r.voyages } : {}) },
         sails: r.sailsIn ? { days: Math.max(1, Math.ceil(r.sailsIn.hours / 24)), ...(r.sailsIn.other !== undefined ? { other: world.ports[r.sailsIn.other]?.name ?? '' } : {}) } : null,
         ...(r.landsIn !== null && !all ? { lands: Math.max(1, Math.ceil(r.landsIn / 24)) } : {}),
         ...(thrown.length > 0 ? { thrown: { n: thrown.length, home: this.thrownHome.get(thrown[0]!)! } } : {}),

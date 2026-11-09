@@ -1188,7 +1188,7 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
 Critic run 57 (full, on `d3519cb0`): R56-B1 closed; one blocking issue, R57-B1; naval 7, every other dimension at 8.
 Naval's findings are items, fixed, then the critic again (ADR-833). No release.
 
-- [ ] R56 **Run 57's naval findings.**
+- [x] R56 **Run 57's naval findings.**
   - [x] R56a R57-B1 (blocking): a click's landing held past its best way. (i) `npx tsx tools/diag/landingInvariants.ts
     28037 3517 120 28037 30 2 8` at 0 broken: a division whose march to a shared port would hold the click past its
     bound splits or is left, told, so `SPLIT_SOONER_HOURS` and `slowClick` cannot disagree; (ii) `… 28039 3517 120
@@ -1214,8 +1214,10 @@ Naval's findings are items, fixed, then the critic again (ADR-833). No release.
     30, "Germany ⚔ Poland (+0)": the button disabled with the reason; at +32 it still makes peace.
     Done (ADR-906): the tab's button takes `peaceVerdict`: disabled with `peaceWhy` in its title, enabled at the bar.
     `forceWar1938` checks it beside the menu's (day one, then +25); `playerActions1938` (red before, both).
-  - [ ] R56e Run 57's small items (the user's call, 2026-11-09): the bar's "12 transports needed, 7 at hand" for the
+  - [x] R56e Run 57's small items (the user's call, 2026-11-09): the bar's "12 transports needed, 7 at hand" for the
     two left at Rome counts what those two need; `seaBattlesLook` counts a battle seen only with both sides' ships
     drawn; a destroyer and a cruiser squadron told apart at 40 m/px.
+    Done (ADR-907): "12 transports needed, 7 at hand: 2 voyages", short only when a division does not fit; the
+    check judges by side and tells one-side battles (t809); a ship's flag whole above its deck (the Republic's purple).
 - Design objections: a cancel hands the army to the AI (ADR-875, the user's call); Malta never taken (the rules
   working); "ashore" counts those thrown ashore away (R56b takes the words); alliances ignore the map (carried).
