@@ -34,6 +34,16 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
   the game's own ranking (the critic's script unchanged; the ADR says why). (c) Greenland's ice cap unowned in the
   1938 data (the coast Danish).
 - **Left:** R53k waits on the user's choice; R53l onward go on meanwhile.
+- **The user chose (b), 2026-11-08.** By area at 4e448651 (with R53l; `.cache/r53k/top25.ts`, 25 years, longest run of a
+  top-5 holder within a 0.4-point band): 21099 15 years (Canada) passes; 20899 Australia 20 years at 4.36 %, 24099
+  Canada 20 years at 8.64–9.06 %: both fail by the bar's 20. On 24099 the first three change: passes. Before R53l
+  (77982f47~1) the same two seeds: 8 years (Australia) and 14 (Canada), both pass. R53l made them still: Australia
+  grew to 6.4 % fighting in Britain's wars near it (the Dutch East Indies, New Guinea); since R53l a puppet joins only
+  within reach of the other leader's realm, and an enemy's ally's colony beside it is not in that realm.
+- **Options for the user (2):** (a) reach measured to any nation of the other side, not only its leader's realm (a
+  dominion joins where an enemy, the leader's or an ally's, is near it); then R53k and R53l's bars measured again.
+  (b) Accept a far continent's stillness: the bar re-scoped to the nations that fought a war in the 20 years.
+  (c) Leave R53l's rule and add a sea-borne reason to fight a far, weak holder (a larger AI change).
 
 ### `seaRow1938`'s Speed x1 test red on this machine again, the code not its cause; on `tools/gate/knownRed.json` (2026-11-08, R53g)
 - **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
