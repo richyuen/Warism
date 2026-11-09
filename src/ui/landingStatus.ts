@@ -32,6 +32,11 @@ export function landingStatus(r: LandingRow): string {
     }
     return t(`landing.over.${o.kind}`);
   }
+  // Some of it ashore already (R55b; critic run 56, R56-N1): how many, then where the rest stand.
+  if (r.ashore) {
+    const { ashore, ...rest } = r;
+    return `${t('landing.group.ashore', { at: ashore, of: ashore + r.divisions.length })}; ${landingStatus(rest)}`;
+  }
   // R48d: its days to land (R51-N6: "at sea" alone).
   // R50c: held in a fight, no days (R52-N3: "about a day" for four days on 21105).
   // R53a: thrown back, sailing home (all of it: no days to land; some: said after the rest's).

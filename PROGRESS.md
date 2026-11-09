@@ -2280,3 +2280,15 @@
   `npm test` green but two timing tests under the suite's load, green alone.
 - Found on the way: the critic's run-56 preview server (its build of d016ed2a) was still on 5299; stopped.
 - **Next:** R55b.
+
+## 2026-11-09 — R55b: a landing at sea counts the groups carrying it; its row says how many are ashore (ADR-894)
+- 27123's "lands in about 3 days" stood 54 h: the group kept at Portsmouth for the next voyage counted its voyage
+  from the port each hour. `voyageHours` at sea is now the carriers'. The row counts those ashore (`ashore`): "7 of 8
+  ashore; sails in about 6 days" to "over: 8 landed".
+- The critic's `c56_lland.mjs` in the page (this build, checked by its asset name) on 27123, 27127, 27129: longest same
+  "lands in" 18 h. 78 of 78 setups at 0; Malta the same on 21 seeds; `landingRows all` 0; pin unchanged. Unit
+  `landingRowAshore1938` (red before); e2e by hand: landingsBar, landingVoyage, landingLeftTold, landingWait,
+  invasion, landingNearNews, landingHoldMark (15 passed).
+- Found on the way: a stopped preview task can leave its server on the port; a page probe then reads the build before.
+  Each page run now checks the served asset name against `dist/`.
+- **Next:** R55c.

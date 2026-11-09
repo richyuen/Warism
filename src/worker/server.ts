@@ -1276,6 +1276,8 @@ export class SimServer {
       // Thrown back (R53a): how many, and home to where; all of it so, no days to land and no hold.
       const thrown = r.divisions.filter((id) => this.thrownHome.has(id));
       const all = thrown.length > 0 && thrown.length === r.divisions.length;
+      // Already ashore from it, landed or away (R55b): the next voyage's row says so.
+      const ashore = [...(this.landingEnds.get(r.id)?.entries() ?? [])].filter(([d, k]) => (k === 'landed' || k === 'away') && !r.divisions.includes(d)).length;
       return {
         id: r.id,
         state: r.state === LandingState.gathering ? 'gathering' : r.state === LandingState.sailing ? 'sailing' : 'returning',
@@ -1291,6 +1293,7 @@ export class SimServer {
         ...(thrown.length > 0 ? { thrown: { n: thrown.length, home: this.thrownHome.get(thrown[0]!)! } } : {}),
         ...(r.held && !all ? { held: true as const, ...(r.heldBy !== 0 ? { heldBy: this.nameOf(r.heldBy) } : {}) } : {}),
         ...(r.backIn !== null ? { back: Math.max(1, Math.ceil(r.backIn / 24)) } : {}),
+        ...(ashore > 0 ? { ashore } : {}),
         click: this.clickOf(r.id, r.click),
       };
     });

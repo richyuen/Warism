@@ -7,6 +7,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-894 · 2026-11-09 · accepted — A landing at sea counts the groups carrying it; a row says how many are ashore (R55b)
+- **Context.** Critic run 56, R56-N1 (both builds): Britain (27123, 27127, 27129), ten to Bremerhaven, eight join and
+  seven sail at h90 with one still days from Portsmouth. The row read "at sea: lands in about 3 days" for 54 hours
+  without moving: `voyageHours` takes the longest of the landing's groups, and the group kept at the port for the next
+  voyage counted its whole voyage from the port each hour. After the seven landed the row said only "sails in about 6
+  days · transports 48, 6 needed", nothing of the seven ashore.
+- **Decision.** (1) `voyageHours` of a landing not gathering is the longest of the groups carrying it; none carrying,
+  none on the way (0: no days to land, and no sibling waits on it). (2) The row (`LandingRow.ashore`) counts those of it
+  already ashore, landed or away (the worker's `landingEnds`), and the bar says "7 of 8 ashore; sails in about 6 days"
+  (the group key `landing.group.ashore`, as Hearts of Iron's invasion list gives each division's state).
+- **Stands on (ADR-803).** R48d (its days to land) and R52b ("1 of 3 ashore; at sea"): the same words, now per row.
+  R37c / ADR-836 (`siblingWait` reads a sailing sibling's voyage left): the carriers' voyage left is what lands it.
+  `landingRow*`, `landingsBar1938`, `landingVoyage1938`, `invasion1938` green.
+- **Results.** `landingRowAshore1938` (red before: one "lands in" 59 h): at most 24 h, "7 of 8 ashore; sails in".
+  The critic's `c56_lland.mjs` on 27123, 27127, 27129 in the page: the longest same "lands in" 18 h (`c56_frozen.mjs`),
+  "7 of 8 ashore; sails in about 6 days" from h150 to "over: 8 landed" at h348. 78 of 78 setups at 0; Malta the same
+  on 21 seeds; `landingRows all` 0; the pin unchanged.
+
 ### ADR-893 · 2026-11-09 · accepted — A landing turned back is only those aboard (R55a)
 - **Context.** Critic run 56, R56-B1 (the same on `715a5448`): Italy (27125), six to Valletta, four sail at h60 and
   323 and 324 wait at Rome for the next voyage; Cancel at h66. `landingOrders` turns the four back first (the landing

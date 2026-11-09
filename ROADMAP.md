@@ -1119,10 +1119,13 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
     leaves it at its hour. (i) 324 "Holding" at h69, the row "cancelled: 4 back at Rome, 2 stopped where they stood"
     at h78; (ii) the re-click makes a new landing (h204), sails h324, ends "broke off" h348; (iii) 0 spells on the six,
     the new `stuck` breaking each before; (iv) 78 of 78 at 0, Malta the same on 21 seeds. `landingCancelFreed1938`.
-  - [ ] R55b R56-N1: a landing that sails without a marcher: the row's "lands in" counts down (not 54 h frozen on 27123),
+  - [x] R55b R56-N1: a landing that sails without a marcher: the row's "lands in" counts down (not 54 h frozen on 27123),
     and after the landing it says how many are ashore ("7 ashore · 1 marching to Portsmouth"; Hearts of Iron's
     invasion list). AT: `node critic/scripts/c56_frozen.mjs` on 27123, 27127, 27129: no "lands in" text over 24 h, the
     row naming those ashore after h144.
+    Done (ADR-894): its days to land are the carrying groups' (the one kept at the port counted its voyage each hour);
+    the row counts those ashore. In the page on the three: the longest same "lands in" 18 h, "7 of 8 ashore; sails in
+    about 6 days" from h150 to "over: 8 landed". `landingRowAshore1938` (59 h before).
   - [ ] R55c R56-N2: a click that joins a sailed landing's next voyage from far off is bounded as a new one is
     (`farPort`): 24033 with orders stopped after day 8 (`ORDERDAYS=8 npx tsx critic/scripts/c56_orderdays.ts`), 367 not
     77 days from click to shore.

@@ -830,7 +830,11 @@ function voyageHours(world: World, l: Landing): number {
   const [x, y] = pointOf(world, l.water);
   const from = portSeaOf(world)[l.port]!;
   const one = (o: number): number => (l.state === LandingState.gathering ? sailHoursFrom(world, o, from, x, y) : world.formations.cols.moving[o] === 1 ? sailHoursLeft(world, o) : sailHours(world, o, x, y));
-  return Math.max(0, ...l.fleets.map(one).filter(Number.isFinite));
+  // At sea, those carrying it: a group kept at the port for the next voyage is not on this one (ROADMAP R55b; critic
+  // run 56, R56-N1: 27123's "lands in about 3 days" stood 54 hours, the voyage from the port of a group left there).
+  // None carrying: none of it on the way.
+  const groups = l.state === LandingState.gathering ? l.fleets : l.fleets.filter((o) => carrying(world, o));
+  return Math.max(0, ...groups.map(one).filter(Number.isFinite));
 }
 
 /**
