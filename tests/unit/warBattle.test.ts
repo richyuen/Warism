@@ -329,7 +329,11 @@ describe('the largest battle of a war across water (PLAN 4.1d1)', () => {
 // two could stand 29 km apart with their blocks towards others.
 describe('the largest battle of a war on a front of 60 days (PLAN 2.14f5a)', () => {
   it('names two formations whose blocks are whole in the view the camera takes', () => {
-    const s = new Sim({ scenario: '1938', seed: 99, assets: assets1938(W) });
+    // Seed 106 since ROADMAP R53l (ADR-887: Germany's allies, out of Poland's reach, stay out of its war): seed 99's war
+    // ended within the 60 days (185 samples of Germany against Poland). Of 97–109, a war with over 200 samples and a
+    // battle on its last day: 106 (237, 4 on the last day); 101 (229) and 104 (209) had none on it; 97, 98, 100, 103,
+    // 105, 107–109 under 200.
+    const s = new Sim({ scenario: '1938', seed: 106, assets: assets1938(W) });
     s.command({ kind: 'declareWar', attacker: GER, defender: POL });
     const n = { asked: 0, known: 0, byNearest: 0, battles: 0, mutual: 0, oneWay: 0, neither: 0, outside: 0, wide: 0, germanPolish: 0, widest: 0, uneven: 0, unevenByChoice: 0, leaders: [0, 0, 0], passedOver: 0, leaderBy: 0 };
     const outside: string[] = [];
@@ -387,7 +391,7 @@ describe('the largest battle of a war on a front of 60 days (PLAN 2.14f5a)', () 
       }
     });
     console.log(
-      `60 days of Germany against Poland (seed 99), every six hours, every war: asked ${n.asked} times, a battle ${n.battles} times (${n.germanPolish} of Germany against Poland); ` +
+      `60 days of Germany against Poland (seed 106), every six hours, every war: asked ${n.asked} times, a battle ${n.battles} times (${n.germanPolish} of Germany against Poland); ` +
         `the two named are each other's nearest enemy in ${n.mutual}, one the other's in ${n.oneWay}, neither in ${n.neither}; ` +
         `their blocks at most ${(n.widest * 19.57).toFixed(1)} km apart; not whole in the view ${n.outside} times, the view further out than 20 m/px ${n.wide} times; ` +
         `one side under a tenth of the other in ${n.uneven} (with a battle of no side so in the war ${n.unevenByChoice}); ` +

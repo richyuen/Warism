@@ -28,17 +28,21 @@ describe('History: the newest hour first, each hour as logged (ROADMAP R49b)', (
     expect(newestHourFirst([])).toEqual([]);
   });
 
-  it("20441: a release's hour shows the release above the wars it left", { timeout: 600_000 }, () => {
-    const s = new Sim({ scenario: '1938', seed: 20441, assets: assets1938(W), options: { diplomacy: 'random' } });
-    let found: HistoryRow | undefined;
-    let rows: HistoryRow[] = [];
-    // To the first release with a war left in its hour (about 17 months on this seed), a day at a time.
-    for (let d = 0; d < 365 * 3 && !found; d++) {
-      s.step(24);
-      if (!s.world.history.rows.includes(EventKind.PuppetReleased)) continue;
-      rows = historyRows(s.world, nationName, cityName(s.world), defName);
-      found = rows.find((x) => x.kind === EventKind.PuppetReleased && rows.some((y) => y.tick === x.tick && y.kind === EventKind.WarLeft && y.a === x.a));
-    }
+  // Since ADR-887 (R53l: a puppet joins a war only within reach) none of 20429–20441 (odd) has a release in the hour of a
+  // war left in three years: the case is made, not found. The United Kingdom declares on Italy at the 1938 start
+  // (Egypt, at Libya, joins it); a day later Egypt forces war on the United Kingdom: it goes free and leaves the war it
+  // fought beside it in, in the hour (PLAN 7.191, as the critic's puppets did).
+  it("a release's hour shows the release above the wars it left", { timeout: 600_000 }, () => {
+    const s = new Sim({ scenario: '1938', seed: 20441, assets: assets1938(W) });
+    const id = (t: string): number => NATIONS_1938.findIndex((n) => n.tag === t) + 1;
+    const [ENG, ITA, EGY] = [id('ENG'), id('ITA'), id('EGY')];
+    s.command({ kind: 'declareWar', attacker: ENG, defender: ITA });
+    s.step(24);
+    expect(s.world.wars.atWar(EGY, ITA), 'Egypt in the war').toBe(true);
+    s.command({ kind: 'forceWar', attacker: EGY, defender: ENG });
+    s.step(1);
+    const rows: HistoryRow[] = historyRows(s.world, nationName, cityName(s.world), defName);
+    const found = rows.find((x) => x.kind === EventKind.PuppetReleased && rows.some((y) => y.tick === x.tick && y.kind === EventKind.WarLeft && y.a === x.a));
     expect(found, 'a release with its wars left').toBeDefined();
     const shown = newestHourFirst(rows).filter((x) => x.tick === found!.tick && x.a === found!.a && (x.kind === EventKind.PuppetReleased || x.kind === EventKind.WarLeft));
     expect(shown[0]!.kind, 'the release first in its hour').toBe(EventKind.PuppetReleased);

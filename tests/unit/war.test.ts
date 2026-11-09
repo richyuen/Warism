@@ -118,9 +118,11 @@ function occupyWest(w: World, share: number): number[] {
 describe('wars and peace (PLAN 1.16)', () => {
   it('a declaration starts a war with puppets on their leaders’ sides; invalid ones are rejected', () => {
     const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
-    const puppet = NATIONS_1938.findIndex((n) => n.overlord !== undefined) + 1;
-    const overlord = nationId(NATIONS_1938[puppet - 1]!.overlord!.tag);
-    s.command({ kind: 'declareWar', attacker: overlord, defender: POL === overlord ? GER : POL });
+    // A puppet within reach of the defender (ROADMAP R53l, ADR-887): Egypt, the United Kingdom's, at Italy's Libya.
+    const puppet = nationId('EGY');
+    const overlord = nationId('ENG');
+    expect(NATIONS_1938[puppet - 1]!.overlord!.tag).toBe('ENG');
+    s.command({ kind: 'declareWar', attacker: overlord, defender: nationId('ITA') });
     s.command({ kind: 'declareWar', attacker: GER, defender: GER });
     s.command({ kind: 'declareWar', attacker: puppet, defender: overlord });
     const ev = events(s, 1);

@@ -54,6 +54,11 @@ describe("the critic's Poland strikes (PLAN 7.18f, 7.18i)", () => {
     const [x, y] = w.cellPoint(warsaw!.cell);
     s.command({ kind: 'spawnWing', nation: POL, x, y, template: BUILD_MIX_1938.wings.strategic });
     s.command({ kind: 'grantWarheads', nation: POL, count: 10 });
+    // Poland alone, as the critic's was crushed: since ROADMAP R53l (ADR-887) Germany's allies, out of Poland's reach,
+    // stay out, and with France, its guarantor, beside it Poland made peace on day 47 with 245,000 men, never in
+    // extremity (`tools/diag/nukePolandGates.ts 5591`; it struck on 1 of 4001–4020).
+    w.alliances.guarantees = w.alliances.guarantees.filter((g) => g.target !== POL);
+    w.alliances.changed();
     s.command({ kind: 'declareWar', attacker: GER, defender: POL });
     s.step(1);
     expect(strategicWings(w), 'the bomber group is placed').toBe(before + 1);

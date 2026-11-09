@@ -2171,3 +2171,18 @@
   nation stays, and typing a name picks it. Spec `editorNationFilter1938` (desk and phone, red before; shots looked
   at). `editor1938`'s bucket click finds Polish ground clear of its line. UI only.
 - **Next:** R53k.
+
+## 2026-11-08 — R53k filed; R53l: who joins a war, within reach (ADR-887)
+- R53k: on HEAD 24099 and 21099 pass; 20899's Denmark is Greenland's ice counted in cells. Filed; the user chose (b),
+  the bar by area (to do after R53l, on its worlds).
+- R53l: a puppet of either side, and an attacker's ally, join a war only within `WAR_REACH_KM` (500) of the other
+  leader's realm; the defender's pact allies wherever they are. Day 365: 21129 and 24129 no pile; 20887 one front,
+  Italy against the United Kingdom's bordering colonies and allies: the user chose (a), a front, not a pile. Done. Three years on four seeds: nations a side 5.7 → 2.0, piles at the start 83 → 12, wars 225 → 240,
+  capitals taken 256 → 213. A bug found on the way (a puppet that declares was dropped from its own side) fixed
+  before the measures. diploInvariants 0 broken on six seeds. Pin `bd1b6944` → `8f453ee7`. Unit `warReach1938` (red
+  before); 15 tests moved to cases in reach or found again (ADR-887 lists them).
+- e2e found again: `fallen1938` division 555; `seaClose1938` rows at 363, 949 and 1678 for 156, 1195 and 1230;
+  `formationClickPanel1938` clicks a point of the marker no other marker covers (German 20's and 23's middles were
+  under another nation's); `tankSides1938` on Poland's front, the critic's case (its first pick was on the French
+  border, where grey tanks are 13 of lightness from green ground: filed in BLOCKERS for the next batch).
+- **Next:** R53k (b), the bar by area.

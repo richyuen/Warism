@@ -43,7 +43,10 @@ describe('a puppet is defended (PLAN 3.8e)', () => {
     expect(war.sides[0][0]).toBe(IRQ);
     expect(war.sides[1][0]).toBe(FRA);
     expect(war.sides[1]).toContain(SYR);
-    expect(war.sides[1]).toContain(AOF);
+    // France's other puppets within reach of Iraq's realm come (Lebanon); one across Africa does not (French West Africa;
+    // ROADMAP R53l, ADR-887).
+    expect(war.sides[1]).toContain(nationId('LEB'));
+    expect(war.sides[1]).not.toContain(AOF);
     // The war is the overlord's: the event names it.
     expect(eventKinds(runEvents(s, 1), EventKind.WarDeclared).filter((e) => e[0] === IRQ)).toEqual([[IRQ, FRA]]);
   });

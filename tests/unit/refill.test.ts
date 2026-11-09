@@ -180,6 +180,10 @@ describe("a formation is refilled from its nation's pool (PLAN 7.3e1)", () => {
       const { w, id } = bled();
       const nc = w.nations.cols;
       for (const o of w.production.ids()) if (w.production.cols.nation[o] === GER) w.production.remove(o);
+      // Poland alone (ROADMAP R53l, ADR-887): Germany's allies, out of Poland's reach, stay out, and with France, its
+      // guarantor, beside Poland, Germany's side would be outnumbered on land and levy cadres (ADR-745), another rule.
+      w.alliances.guarantees = w.alliances.guarantees.filter((g) => g.target !== POL);
+      w.alliances.changed();
       expect(declareWar(w, GER, POL)).not.toBeNull();
       const foes = new Set(w.wars.list.flatMap((war) => (war.sides[0].includes(GER) ? war.sides[1] : war.sides[1].includes(GER) ? war.sides[0] : [])));
       if (sink) w.formations.forEach((f) => void (w.isFleet(f) && foes.has(w.formations.cols.nation[f]!) && destroyFormation(w, f)));

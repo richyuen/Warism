@@ -26,11 +26,13 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // traits in the sim; 569 no longer in contact on day 21; 556 loses 929 on day 22, in contact all of it).
 // Division 565 since ROADMAP R53g (ADR-883, a Major Battle through a lull of a day; 556 no longer in contact on day 21;
 // 565 loses 569 on day 22, in contact all of it; `tools/diag/contactPick.ts 4242 21 21`).
+// Division 555 since ROADMAP R53l (ADR-887, who joins a war within reach; 565 no longer in contact on day 21; 555 loses
+// 1,677 on day 22, in contact all of it).
 
 const nation = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
 const GER = nation('GER');
 const POL = nation('POL');
-const POLE = 565;
+const POLE = 555;
 const VIEW = { width: 1600, height: 900 };
 const HOURS = 24;
 const key = (h: { element: number; figure: number }): string => `${h.element}:${h.figure}`;

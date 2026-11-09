@@ -7,6 +7,41 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-887 · 2026-11-08 · accepted — A puppet, and an attacker's ally, join a war only within reach (R53l)
+- **Context.** Critic run 54 (Diplomacy "not 8", as in runs 51 and 53): year-one wars are dogpiles; on 21129 at day
+  365 "United Kingdom +35 ⚔ Brazil", on 24129 "Nationalist Spain +35 ⚔ Greece +3". Read (`.cache/r53k/pile.ts`):
+  every pile was an attacker's whole bloc, 29–31 of the 35 puppets (the colonies of the United Kingdom and of
+  France, its ally), and on 20887 the Soviet Union's 8 puppets on Iran. A declaration called each leader's realm and
+  every alliance member's, wherever they stood; a colony an ocean away is at war, and no front can form there.
+- **Decision.** A puppet of either side, and an ally of the attacker, come only when land they control lies within
+  `WAR_REACH_KM` (500, a border or a short sea: `ISLAND_REACH_KM` is 450) of land the other leader's realm controls;
+  a puppet only beside its overlord. The defender's allies and guarantors keep their pact wherever they are (a
+  defensive promise), as do the leaders (a puppet that declares leads its side) and a puppet the war is about. There is no later joining (none before
+  either): a puppet left out stays at peace with that enemy for the war's life, which is the point, since it was out
+  of reach. The strategic AI's weighing of a war (`sides`, `ALLY_WEIGHT` 0.4 of every partner) is unchanged.
+- **Consequences.** Day 365, heroes on, the critic's three: 21129 and 24129 have no war chip over 4 to 1 ("France +2
+  ⚔ Brazil", "Soviet Union +3 ⚔ Japan +5"); 20887 has one, "Italy +1 ⚔ United Kingdom +10" (Italy declared on day
+  132): every one of the ten borders Italy's Libya or Ethiopia (Egypt, Sudan, Kenya, French West and Equatorial
+  Africa, Tunisia, the Belgian Congo) or is a pact ally (France, the Republic, the Netherlands), and Italy's army is
+  twice the United Kingdom's realm's (676,000 men against 338,000): a front, not a pile by strength. Filed for the
+  user with R53k. diploInvariants 0 broken on 20887, 21129, 24129 (heroes), 24001, 24003, 24007 to day 180. Unit
+  `warReach1938` (declared at the 1938 start; red before: Australia, India and Canada joined on Brazil). Seed 99's pin
+  `bd1b6944` → `8f453ee7`. Over three years on 7019, 24123, 20887 and 21129 (`.cache/r53k/ab.ts`, summed, HEAD →
+  this): wars declared 225 → 240, peaces 204 → 214, capitals captured 256 → 213, puppets made 83 → 91, nations
+  annexed 14 → 9, nations on a side 5.7 → 2.0 on average, wars over 4 to 1 at their start 83 → 12; the top five by
+  area the same nations, a few points either way. Smaller wars, a few more of them, fewer capitals taken. Tests whose
+  premise was a far puppet's or an attacker's ally's joining move to a pair in reach, their points kept (`alliances`,
+  `puppetDefended`, `realmWars`, `rebelWars`, `standing` and `war`: Germany on Yugoslavia, where Italy is in reach;
+  Egypt at Libya); Germany's war on Poland, now Germany alone against Poland and France, made peace on day 47, so
+  `nukePoland1938` and `refill` take Poland alone (no French guarantee) and `warBattle`'s 60 days of it moved to seed
+  106 (a war over 200 samples with a battle on its last day). `farWait1938` to seed 7 (formation 321 on day 200);
+  `historyHourOrder` makes its case (Egypt, in the United Kingdom's war on Italy, forces war on the United Kingdom)
+  where 20429–20441 had none in three years. Day 365 on run 54's seeds: 21129 and 24129 no chip over 4 to 1; 20887's one,
+  "Italy +1 ⚔ United Kingdom +10" (Italy's declaration; seven of the ten border its Libya or Ethiopia, three are pact
+  allies; Italy's army twice the British realm's), is a front: the user's decision (2026-11-08, option a) is that the
+  bar means no pile from beyond reach, and the AI's weighing of a war by nations, and a realm as one on the chip, were
+  not taken.
+
 ### ADR-886 · 2026-11-08 · accepted — The editor's nation lists have a typed filter (R53j)
 - **Context.** Critic run 54 (carried, Editor "not 8"): the editor's nation list is one flat list of 100+ names
   (`c54_g_editor.mjs 24121`).

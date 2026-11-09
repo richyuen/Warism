@@ -715,7 +715,10 @@ km², integers). A realm has one head: a puppet's overlord is never a puppet [AD
   side elsewhere), `Overrun` (a capitulating side). The AI's choice of target asks the same.
 - *War on a puppet is war on its overlord.* The call (in order): the attacker's realm, the
   defender's realm, the defender's allies, its guarantors, a target puppet's allies and guarantors,
-  the attacker's allies, each with its puppets. A nation then stays out when it is `bound` to the
+  the attacker's allies, each with its puppets. Of those, a puppet of either side and an ally of the
+  attacker come only within `WAR_REACH_KM` (500) of the other leader's realm (`inReach`: land it and
+  its puppets control, a spread over land and sea), and a puppet only beside its overlord; the
+  defender's allies and guarantors keep their pact wherever they are [ADR-887]. A nation then stays out when it is `bound` to the
   other side (at war with an enemy, a bond with it, a pledge either way, fighting beside it
   elsewhere) or is a `foe` of its own side (at war with one already on it) [ADR-808]; one in truce
   with the enemy leader is never called. The two leaders and a named puppet stand. A guarantee

@@ -84,7 +84,8 @@ describe('no war inside one realm or one alliance (PLAN 3.8)', () => {
     expect(french).toEqual([]);
     expect(war.sides[0][0]).toBe(ENG);
     expect(war.sides[1][0]).toBe(POL);
-    expect(war.sides[0]).toContain(nationId('EGY'));
+    // The United Kingdom's colonies are out of Poland's reach and stay at peace (ROADMAP R53l, ADR-887; Egypt was in).
+    expect(war.sides[0]).toEqual([ENG]);
     expect(realmWars(w, tag)).toEqual([]);
   });
 
@@ -126,17 +127,19 @@ describe('no war inside one realm or one alliance (PLAN 3.8)', () => {
   // stood with it against Japan (PLAN 7.188). PLAN 7.189 refused it (R25-B1), against ADR-780 (critic
   // run 26's R26-B1); since PLAN 7.191 the bond's break wins: Albania goes free, leaves the war it
   // fought beside Italy in (its row), and fights Italy; no nation stands on one side with its enemy.
+  // Since ROADMAP R53l (ADR-887) Albania joins only a war within reach: on Japan's war on Germany it stays at peace, so
+  // the case is Greece's, Albania's neighbour.
   it('a puppet that forces war on its overlord beside it in a war goes free, leaves that war, and fights it', () => {
     const s = world1938(5);
     const w = s.world;
-    const JAP = nationId('JAP');
-    forceWar(w, JAP, GER);
-    expect(w.wars.atWar(JAP, ALB)).toBe(true);
+    const GRE = nationId('GRE');
+    forceWar(w, GRE, GER);
+    expect(w.wars.atWar(GRE, ALB)).toBe(true);
     w.out.events.length = 0;
     expect(forceWar(w, ALB, ITA)).toBe(Refusal.None);
     expect(w.nations.cols.overlord[ALB]).toBe(0);
     expect(w.wars.atWar(ALB, ITA)).toBe(true);
-    expect(w.wars.atWar(ALB, JAP)).toBe(false);
+    expect(w.wars.atWar(ALB, GRE)).toBe(false);
     const ev = w.out.events;
     const kinds: number[] = [];
     for (let i = 0; i < ev.length; i += 6) kinds.push(ev[i + 1]!);
@@ -179,16 +182,17 @@ describe('no war inside one realm or one alliance (PLAN 3.8)', () => {
   // exit costs that war: no free exit of a partner with no bond (the test above).
   it("God's Force war on an ally beside it in a war: the alliance and that war left, war on the ally", () => {
     const w = world1938(5).world;
-    const POL = nationId('POL');
-    declareWar(w, GER, POL);
+    // Yugoslavia, in Italy's reach: Italy beside Germany (since ROADMAP R53l, ADR-887, not on Poland).
+    const YUG = nationId('YUG');
+    declareWar(w, GER, YUG);
     expect(w.wars.list.some((x) => x.sides[0].includes(GER) && x.sides[0].includes(ITA))).toBe(true);
     expect(w.alliances.allied(GER, ITA)).toBe(true);
     expect(whyNotWar(w, GER, ITA)).toBe(Refusal.Allied);
     expect(forceWar(w, GER, ITA)).toBe(Refusal.None);
     expect(w.alliances.allied(GER, ITA)).toBe(false);
     expect(w.wars.atWar(GER, ITA)).toBe(true);
-    expect(w.wars.atWar(GER, POL)).toBe(false);
-    expect(w.wars.atWar(ITA, POL)).toBe(true);
+    expect(w.wars.atWar(GER, YUG)).toBe(false);
+    expect(w.wars.atWar(ITA, YUG)).toBe(true);
   });
 
   // R26-B1 (the critic's PR on 7019): God's loyalty 0 for Manchukuo made a revolt and no war: the

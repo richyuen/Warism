@@ -15,6 +15,7 @@ import { eventKinds as kinds, nationId, runEvents as run } from '../helpers/sim1
 
 const W = SIZE_1938.w;
 const [GER, ITA, JAP, POL, FRA, ENG] = ['GER', 'ITA', 'JAP', 'POL', 'FRA', 'ENG'].map(nationId) as [number, number, number, number, number, number];
+const YUG = nationId('YUG');
 
 /** Ticks to the next 00:00 on day 1 of a month, from 1 Jan 1938 + `months`. */
 const MONTH_TICKS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31].map((d) => d * 24);
@@ -63,9 +64,17 @@ describe('alliances (PLAN 1.17)', () => {
     s.command({ kind: 'declareWar', attacker: GER, defender: POL });
     run(s, 1);
     const war = s.world.wars.between(GER, POL)!.war;
-    expect(war.sides[0]).toEqual(expect.arrayContaining([GER, ITA, JAP]));
+    // The attacker's allies come within reach of the defender's realm (ROADMAP R53l, ADR-887): Italy and Japan are not;
+    // the guarantor keeps its pledge wherever it is.
+    expect(war.sides[0]).toEqual([GER]);
     expect(war.sides[1]).toEqual(expect.arrayContaining([POL, FRA]));
     expect(war.sides[1]).not.toContain(ENG); // allies of a guarantor are not chained in v1
+    // Within reach, an ally comes: Italy borders Yugoslavia. The unity is measured on that war, the allies fighting
+    // together.
+    s.command({ kind: 'declareWar', attacker: GER, defender: YUG });
+    run(s, 1);
+    expect(s.world.wars.between(GER, YUG)!.war.sides[0]).toEqual(expect.arrayContaining([GER, ITA]));
+    expect(s.world.wars.between(GER, YUG)!.war.sides[0]).not.toContain(JAP);
     // Unity after a month at war vs a twin at peace.
     const peace = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
     peace.command({ kind: 'setSetting', key: 'aiEnabled', value: false });

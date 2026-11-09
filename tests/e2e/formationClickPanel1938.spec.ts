@@ -53,7 +53,16 @@ test('playing Germany at the front: each click opens the panel of the formation 
       const v = window.__warsim!.view!;
       const c = (document.getElementById('map') as HTMLCanvasElement).getBoundingClientRect();
       const r = v.markerRects.find((m) => m.alpha > 0.5 && (m.id === f || m.members.includes(f)));
-      return r ? ([c.left + r.x + r.w / 2, c.top + r.y + r.h / 2] as [number, number]) : null;
+      if (!r) return null;
+      // On a point of it no other marker covers, as a player clicks what is seen: since ROADMAP R53l (ADR-887) the
+      // front of day 60 moved, and German 20's and 23's middles were under another nation's marker (its panel opened).
+      const others = v.markerRects.filter((m) => m !== r && m.alpha > 0.5);
+      const free = (x: number, y: number): boolean => !others.some((m) => x >= m.x && x <= m.x + m.w && y >= m.y && y <= m.y + m.h);
+      const pts: [number, number][] = [];
+      for (let i = 1; i < 6; i++) for (let j = 1; j < 6; j++) pts.push([r.x + (r.w * i) / 6, r.y + (r.h * j) / 6]);
+      pts.sort((a, b) => Math.hypot(a[0] - r.x - r.w / 2, a[1] - r.y - r.h / 2) - Math.hypot(b[0] - r.x - r.w / 2, b[1] - r.y - r.h / 2));
+      const [x, y] = pts.find(([px, py]) => free(px, py)) ?? [r.x + r.w / 2, r.y + r.h / 2];
+      return [c.left + x, c.top + y] as [number, number];
     }, id);
     expect(box, `the marker of formation ${id}`).not.toBeNull();
     await page.mouse.click(box![0], box![1]);

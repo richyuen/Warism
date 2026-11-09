@@ -1028,9 +1028,12 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     -- --scenario 1938 --seed <s> --years 25`), no top-5 holder within ±0.2 % of the same share for 20 or more years
     (Denmark at 5.4 % all 25 years); on 24099 the first three places are not the same three nations in the same
     order every year.
-  - [ ] R53l Year-one dogpiles: on 20887, 21129 and 24129 at day 365 (`node critic/scripts/c54_rg_relations.mjs
+  - [x] R53l Year-one dogpiles: on 20887, 21129 and 24129 at day 365 (`node critic/scripts/c54_rg_relations.mjs
     <seed> 365 1600 900 desk '&heroes=on'`) no war chip with one side more than 4 times the other's count of nations
     ("Germany +6 ⚔ United Kingdom +36", "United Kingdom +35 ⚔ Brazil"); diploInvariants 0 broken on run 54's seeds.
+    Part done (ADR-887): a puppet, and an attacker's ally, join only within 500 km of the other leader's realm; 21129
+    and 24129 have no chip over 4 to 1 at day 365. 20887 has "Italy +1 ⚔ United Kingdom +10", a front (each of the ten
+    borders Italy's Africa or is a pact ally; Italy's army twice the United Kingdom's): a front, the user's decision (a).
   - [ ] R53m The unit zooms on a late world: `node critic/scripts/c54_pf_lookfps.mjs 7019
     critic/c54_seed7019_y20.bin`, alone, at 45 fps or more at 120 m/px in both looks (now 33–39; 30 m/px 39–48).
   - [ ] R53n Before critic run 55: the critic's own probes on new seeds, and the spread of endings read, not one case:

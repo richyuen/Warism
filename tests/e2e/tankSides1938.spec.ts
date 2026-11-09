@@ -76,20 +76,24 @@ test("T3: Germany's tanks are told from the enemy's figures and from the ground"
   // The critic's fight was the first German armoured division in contact. Green at `896ff779`, red at
   // `9ffb0274`: the first one's view at 10 m/px holds fewer than 20 enemy figures there, so the war is stepped a
   // day at a time, within 15 days, and each armoured division in contact is looked at in turn until a
-  // view holds more than 20 German tanks and more than 20 of the enemy's figures.
+  // view holds more than 20 German tanks and more than 20 of the enemy's figures. On Poland's front, as the critic's
+  // was: since ROADMAP R53l (ADR-887) France, Poland's guarantor, fights beside it, and the first such view was on the
+  // French border (day 3, division 41), on greener ground than the critic's (filed in BLOCKERS, not judged here).
   await page.evaluate(([g, p]) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: g!, defender: p! }), [GER, id('POL')]);
   let pick: { f: number; at: [number, number]; day: number } | null = null;
   let got: Awaited<ReturnType<typeof count>> | null = null;
   for (let day = 1; day <= 15 && pick === null; day++) {
-    const arm = await page.evaluate(async (g) => {
+    const arm = await page.evaluate(async ([g, p]) => {
       const { sim, view } = window.__warsim!;
       const tick = (await sim.step(24)).tick;
       await new Promise<void>((done) => {
         const wait = (): void => (view!.lastTick === tick ? done() : void setTimeout(wait, 5));
         wait();
       });
-      return view!.formationsOf(g).filter((f) => view!.formationEngaged(f) && /Armou?red|Panzer|Tank/i.test(view!.formationTitle(f)?.kind ?? '')).map((f) => ({ f, at: view!.formationPos(f)! }));
-    }, GER);
+      const poles = view!.formationsOf(p!).filter((f) => view!.formationEngaged(f)).map((f) => view!.formationPos(f)!);
+      const byPoles = (at: [number, number]): boolean => poles.some(([x, y]) => Math.hypot(x - at[0], y - at[1]) <= 2);
+      return view!.formationsOf(g!).filter((f) => view!.formationEngaged(f) && /Armou?red|Panzer|Tank/i.test(view!.formationTitle(f)?.kind ?? '') && byPoles(view!.formationPos(f)!)).map((f) => ({ f, at: view!.formationPos(f)! }));
+    }, [GER, id('POL')]);
     for (const a of arm) {
       await page.evaluate(({ x, y }) => {
         const v = window.__warsim!.view!;

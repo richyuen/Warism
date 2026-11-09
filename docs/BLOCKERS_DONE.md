@@ -3,6 +3,19 @@
 The resolved entries of BLOCKERS.md, moved here on 2026-11-02 (ADR-804) in the order they stood. Searched, not
 read. New resolved entries are moved here when they are resolved.
 
+### RESOLVED 2026-11-08 (the user's decision: a, a front) · R53l: 20887's one war over 4 to 1 at day 365 is a front, not a pile
+- **The bar:** on 20887, 21129 and 24129 at day 365, no war chip with one side over 4 times the other's nations.
+- **Read with ADR-887** (`.cache/r53k/pile.ts`): 21129 and 24129 none. 20887: "Italy +1 ⚔ United Kingdom +10",
+  Italy's declaration of day 132: Egypt, Sudan, Kenya (British East Africa), French West and Equatorial Africa,
+  Tunisia and the Belgian Congo each border Italy's Libya or Ethiopia; France, the Republic and the Netherlands are
+  the United Kingdom's pact allies. By the AI's own count Italy's army is twice the United Kingdom realm's (676,000
+  men against 338,000), with Germany's side 1.1 M against 0.47 M weighed.
+- **Options for the user:** (a) accept it as a front (the bar read as "no pile from beyond reach"); (b) the AI weighs
+  a war by the nations that would join as well as their men (Italy would not declare); (c) the war chip counts a
+  realm as one (the puppets beside their overlord: "Italy +1 ⚔ United Kingdom +4"), a change of what is shown.
+- **Resolved (the user's decision, 2026-11-08): (a).** A front of bordering colonies and pact allies is not a pile; the
+  bar reads "no pile from beyond reach". R53l done (ADR-887).
+
 ### RESOLVED 2026-11-03 (passed in the release review of 4c546398, 18 px against 17; off `knownRed.json`) · shipMarks1938's T3 test (the review before critic run 19): red twice in the review, green in 8 of 8 by hand; on `tools/gate/knownRed.json`
 - **The bar:** at 20 m/px on the fleets of seed 2251's first Italy–UK sea battle, a destroyer's median hull length
   over 17 px (`shipMarks1938.spec.ts`, PLAN 7.35c; about 19 by the rule).

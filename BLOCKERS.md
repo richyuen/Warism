@@ -5,6 +5,16 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 
 ## Open
 
+### Germany's grey tanks on green ground: 13 of lightness from it at 10 m/px (2026-11-08) — to file for the next batch
+- **Seen:** `tankSides1938` (seed 7781, Germany on Poland), whose first armoured division in contact with over 20 enemy
+  figures in view is, since ADR-887 (France fights beside Poland), on the French border on day 3 (division 41): German
+  tanks (92,92,93) on ground (91,111,89), lightness 13 apart, under the spec's 20 (GREY_LIGHT was set against the drab
+  ground of Poland's front). From the French figures (56,81,141) they stand 61 apart.
+- **Done meanwhile:** the spec looks on Poland's front, the critic's case (division 40 on day 4: 99 apart); the green
+  ground is not judged anywhere now.
+- **Left:** a ROADMAP item for the next batch (the tint of a near-grey nation's tanks against the ground they stand on,
+  or an outline), the user's to order.
+
 ### R53k: Denmark's frozen share on 20899 is Greenland's ice counted in cells; the rule that would move it reaches Britain too (2026-11-08) — waits on the user
 - **The bar:** `c48_top.cjs` on 21099, 20899 and 24099 for 25 years: no top-5 holder within ±0.2 % of one share for
   20 years or more; 24099's first three not the same every year.

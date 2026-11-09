@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { EventKind } from '../../src/shared/events';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
-import { declareWar } from '../../src/sim/systems/war';
+import { declareWar, inReach } from '../../src/sim/systems/war';
 import { navOf } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
 import { eventKinds, nationId, runEvents } from '../helpers/sim1938';
@@ -11,7 +11,7 @@ import { eventKinds, nationId, runEvents } from '../helpers/sim1938';
 // the two realms. The holder of a revolt declared on its rebels as on any nation, and its whole
 // alliance came with it; so did the alliance of an overlord whose puppet rose (ADR-184).
 
-const [FRA, ENG, ITA, GER, ALB, POL] = ['FRA', 'ENG', 'ITA', 'GER', 'ALB', 'POL'].map(nationId) as [number, number, number, number, number, number];
+const [FRA, ENG, ITA, GER, ALB] = ['FRA', 'ENG', 'ITA', 'GER', 'ALB'].map(nationId) as [number, number, number, number, number];
 const world1938 = (): Sim => new Sim({ scenario: '1938', seed: 5, assets: assets1938(SIZE_1938.w) });
 const realm = (s: Sim, n: number): number[] => [n, ...s.world.nations.ids().filter((m) => s.world.nations.cols.overlord[m] === n)];
 const sorted = (a: readonly number[]): number[] => [...a].sort((x, y) => x - y);
@@ -37,7 +37,11 @@ describe('a war of independence is the two realms’ (PLAN 3.8f)', () => {
     const [rebel, holder] = eventKinds(ev, EventKind.RevoltSpawned)[0]!;
     expect(holder).toBe(FRA);
     const war = s.world.wars.between(FRA, rebel!)!.war;
-    expect(sorted(war.sides[0])).toEqual(sorted(realm(s, FRA)));
+    // Its puppets within reach of the rebels' land (ROADMAP R53l, ADR-887): France's colonies an ocean away stay at peace.
+    const near = inReach(s.world, [rebel!]);
+    const fought = realm(s, FRA).filter((m) => m === FRA || near(m));
+    expect(fought.length).toBeLessThan(realm(s, FRA).length);
+    expect(sorted(war.sides[0])).toEqual(sorted(fought));
     expect(war.sides[1]).toEqual([rebel]);
     expect(s.world.wars.atWar(ENG, rebel!)).toBe(false);
   });
@@ -53,9 +57,10 @@ describe('a war of independence is the two realms’ (PLAN 3.8f)', () => {
     expect(s.world.wars.atWar(GER, ALB)).toBe(false);
   });
 
+  // Within reach (ROADMAP R53l, ADR-887): Yugoslavia borders Italy; on Poland, Italy stays out.
   it('any other declaration calls the alliances as before', () => {
     const s = world1938();
-    const war = declareWar(s.world, GER, POL)!;
+    const war = declareWar(s.world, GER, nationId('YUG'))!;
     expect(war.sides[0]).toContain(ITA);
   });
 });

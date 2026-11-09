@@ -5,7 +5,11 @@
  * overlord–puppet pair, allies, two puppets of one overlord, a nation and the puppet of its
  * ally (`bond`, PLAN 3.8), or when one of the two that would lead the sides is overrun (see
  * Capitulation; PLAN 3.12Rr1). Each leader brings its puppets and its alliance (PLAN 1.17);
- * the defender also gains its guarantors (each with its puppets). Of those, a nation with a bond
+ * the defender also gains its guarantors (each with its puppets). A puppet, of either side, and an
+ * ally of the attacker join only within WAR_REACH_KM of the other leader's realm (`inReach`, ROADMAP
+ * R53l, ADR-887): the defender's allies and guarantors keep their pact wherever they are; the
+ * colonies of either an ocean away stay at peace (critic run 54: "United Kingdom +35 ⚔ Brazil", 31
+ * of the 35 puppets). Of those, a nation with a bond
  * to a nation of the other side stays out, with its puppets (PLAN 3.8c). A side fights to the death when its
  * leader's (its first nation's) flag is set (God Mode can change it per war with `setWarFightToDeath`).
  *
@@ -70,6 +74,7 @@ import { warsWithFront } from './warFront';
 import { ATTACKERS, DEFENDERS, type War } from '../wars';
 import type { LandCounts } from '../landCounts';
 import { FlipCause, type World } from '../world';
+import { kmPerCell } from '../data/projection';
 
 export const WHITE_PEACE = 10;
 export const PUPPET_SCORE = 90;
@@ -121,6 +126,55 @@ export const GAIN_DAYS = 30;
 export function isFounded(world: World, n: number): boolean {
   const p = world.nations.cols.people[n]!;
   return p !== 0 && p !== n;
+}
+
+/**
+ * How far from the other leader's realm (the land it and its puppets control, km) a puppet of either side, or an ally of
+ * the attacker, still joins a war (ROADMAP R53l, ADR-887): a border, or a short sea (an airfield's island reach,
+ * ISLAND_REACH_KM 450, and some). Farther, it stays at peace.
+ */
+export const WAR_REACH_KM = 500;
+
+let reachScratch: Int16Array | null = null;
+
+/**
+ * Whether nation `x` controls land within WAR_REACH_KM of land the nations `of` control: a breadth-first spread from
+ * theirs over land and sea alike, the map looping east-west, WAR_REACH_KM / km a cell steps out.
+ */
+export function inReach(world: World, of: readonly number[]): (x: number) => boolean {
+  const { controller } = world.cells;
+  const W = world.cells.w;
+  const N = controller.length;
+  const H = N / W;
+  const R = Math.max(1, Math.round(WAR_REACH_KM / kmPerCell(W)));
+  if (!reachScratch || reachScratch.length !== N) reachScratch = new Int16Array(N);
+  const dist = reachScratch;
+  dist.fill(-1);
+  const set = new Set(of);
+  let frontier: number[] = [];
+  for (let c = 0; c < N; c++) {
+    if (!set.has(controller[c]!)) continue;
+    dist[c] = 0;
+    frontier.push(c);
+  }
+  for (let d = 1; d <= R && frontier.length > 0; d++) {
+    const next: number[] = [];
+    for (const c of frontier) {
+      const x = c % W;
+      const y = (c - x) / W;
+      const l = y * W + ((x + W - 1) % W);
+      const r = y * W + ((x + 1) % W);
+      for (const q of [l, r, y > 0 ? c - W : -1, y < H - 1 ? c + W : -1]) {
+        if (q < 0 || dist[q] !== -1) continue;
+        dist[q] = d;
+        next.push(q);
+      }
+    }
+    frontier = next;
+  }
+  const near = new Set<number>();
+  for (let c = 0; c < N; c++) if (dist[c] !== -1) near.add(controller[c]!);
+  return (x: number): boolean => near.has(x);
 }
 
 /** Leaders' puppets join their side. */
@@ -363,6 +417,23 @@ export function declareWar(world: World, attacker: number, target: number, alone
       for (const g of al.guarantorsOf(target)) add(DEFENDERS, attacker, g);
     }
     for (const m of allies(attacker)) add(ATTACKERS, defender, m);
+  }
+  // Within reach (ROADMAP R53l, ADR-887): an ally of the attacker, and a puppet of either side, join only near the other
+  // leader's realm; a puppet only beside its overlord. The leaders, the puppet the war is about, and the defenders'
+  // allies and guarantors stand whatever the distance.
+  {
+    const realm = (l: number): number[] => withPuppets(world, l).concat(l === defender && target !== defender ? [target] : []);
+    const near = [inReach(world, realm(defender)), inReach(world, realm(attacker))];
+    const defAllies = new Set(called[DEFENDERS].filter((x) => nc.overlord[x] === 0));
+    for (const s of [ATTACKERS, DEFENDERS]) {
+      const kept = called[s]!.filter((x) => {
+        if (x === attacker || x === defender || x === target) return true;
+        if (nc.overlord[x] === 0) return s === DEFENDERS ? defAllies.has(x) : near[s]!(x);
+        return near[s]!(x);
+      });
+      // A puppet stands only beside its overlord (a puppet that leads a side, or the war is about, stands).
+      called[s] = kept.filter((x) => x === attacker || x === defender || x === target || nc.overlord[x] === 0 || kept.includes(nc.overlord[x]!));
+    }
   }
   // Nobody but the two leaders stands against a nation it has a bond with (PLAN 3.8c), or is at
   // war with: a nation torn between the sides stays out, with its puppets. In three steps, each on what the one
