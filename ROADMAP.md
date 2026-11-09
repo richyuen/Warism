@@ -1131,15 +1131,28 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
     77 days from click to shore.
     Done (ADR-895): a far port's next voyage is joined only within a week's march of the nearest (`farVoyage`); else
     refused at the click, told why. 367 no longer joins; `landingFarVoyage1938` (73 days before).
-  - [ ] R55d R56-N3: the fuzz judges more clicks: a `landingInvariants` mode with orders that stop early (`orderDays`),
+  - [x] R55d R56-N3: the fuzz judges more clicks: a `landingInvariants` mode with orders that stop early (`orderDays`),
     in the checker's suite of seeds, so that R56-B1's and R56-N2's cases would have broken it.
+    Done (ADR-896): a click with no idle group is reckoned by its nation's other groups (from their leg's end); the
+    tool takes order days; the suite runs three cases with orders for 8 days. R56-N2's case breaks before R55c, not
+    after. On the critic's 26 seeds × 6 setups, 149 of 156 at 0; the 7 found are R55f and R55g.
   - [ ] R55e Small: after a cancel, 323's ticker says "left its landing for a new one"; the "they come back for it"
     news stays after the division has marched off (with R55a); "transports 48, 6 needed" when 48 are at hand reads as
     a shortage.
+  - [ ] R55f Found by R55d: a click's division walks weeks to a far port, no group free to come to its own (the
+    "marches are slow against voyages" objection, measured). `npx tsx tools/diag/landingInvariants.ts <seed> <setup>
+    120 <seed> <probe> <groups> [order days]` at 0 broken on: 26035 3517 30 2 8 (t188's 367, 44 days), 26039 3517 30 2 8
+    (t39's 366, 88.5 days: joined a landing at port 95, which sailed without it, walked ~80 days to its next voyage),
+    26041 3517 30 2 8 (t151's three, 32.9), 26041 3517 30,90 2 (t286's 366), 26041 3517 30,90 1 (t151's 365), 27045 3517
+    30 2 8 (t69's 365, 71.5). Each traced first; a rule (e.g. a late marcher whose march to the landing's port is over
+    SPLIT_SOONER_HOURS longer than to its nearest leaves it, told; or the next voyage gathers at its port) checked on the
+    156 setups.
+  - [ ] R55g Found by R55d: 26039 Britain, orders for 8 days (`… 26039 15101 120 26039 30 2 8`): t1318 `stuck`, 273 in
+    gathering landing 3 with no ground gained for 45 days. Traced; 0 broken.
   - Kept: `landingInvariants` and `landingRows` 0 broken; R55-B1's commands 0; the Malta endings.
 - Naval's design objections (ADR-843): a cancel hands the army to the AI at once (ADR-759): not taken, ADR-875, the
   user's call. Malta is never taken: not taken, the rules working (run 55). Marches are slow against voyages (a
   division walks about a cell a day, so the port decides weeks; a group sailing to the division would often be
-  quicker): not taken in this batch, a change of how a landing gathers that is the user's to weigh; R55c bounds its
-  worst case.
+  quicker): taken as R55f once R55d's checker measured it (five clicks up to 88.5 days); R55c bounds the case of a
+  sailed landing's next voyage.
 - Carried, not in this batch (dimensions at their bars): R55-N1, R55-N2 and run 55's small items (batch 9's list).

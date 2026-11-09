@@ -27,6 +27,17 @@ describe("the rules of the player's landings hold under random orders (ROADMAP R
   }
 });
 
+// ROADMAP R55d (critic run 56, R56-N3): orders only in the first 8 days, so the last clicks run undisturbed and are
+// judged (the fuzz re-clicks too often for most to be); a click with no idle group is reckoned by the nation's other
+// groups. 24033 two groups is R56-N2's case (367's 77 days, broken before R55c).
+describe('the rules hold with orders that stop early (ROADMAP R55d)', () => {
+  for (const [seed, setup, groups] of [[24033, 3517, 2], [26045, 3517, 2], [27031, 15101, 2]] as const) {
+    it(`seed ${seed} (${setup === 3517 ? 'Japan' : 'Britain'}, ${groups} groups), orders for 8 days: 120 days, none broken`, () => {
+      expect(landingBreaks({ seed, setup, days: 120, orders: seed, probeDays: [], groups, orderDays: 8 })).toEqual([]);
+    }, 300_000);
+  }
+});
+
 // ADR-835 (the user's decision; critic run 48 on R47-N4): `stuck` counts a landing's days with no ground gained, not
 // its days gathering (19206's 367 marched ~70 cells to its click's landing at Kure and was counted stuck). The rule
 // is not blind: stalls planted by hand are still caught. Japan 3517, 60 days, the orders of seed 2 on the first day

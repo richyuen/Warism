@@ -7,6 +7,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-896 · 2026-11-09 · accepted — The landing fuzz judges clicks with no idle group, and runs with orders that stop (R55d)
+- **Context.** Critic run 56, R56-N3: `slowClick` reckoned 369 of 2,488 clicks over 77 runs; R56-B1's and R56-N2's
+  cases passed at 0 broken. A click with no idle group of its nation had no best way (`bestWayHours` Infinity) and was
+  not judged; and the fuzz re-clicks so often that few clicks run to their end.
+- **Decision.** (1) `bestWayHours`: with no idle group to call, the best of any group of its nation with room, busy or
+  another landing's, from where it is now and not before its current leg's end (`sailHoursLeft`): a bound below the
+  true way (a group carrying others lands them first), so a break is a click at least a week over a way a group could
+  meet. (2) `tools/diag/landingInvariants.ts` takes the order days (random orders only in the first so many); the unit
+  suite runs three cases with orders for 8 days. The "not reckoned" left are mostly clicks wholly on the target's
+  landmass (ADR-892), which walk.
+- **Stands on (ADR-803).** ADR-843 (`slowClick`, a week over the best single-division way, a click refused at it not
+  slow): the same bound on more clicks. `slowClick1938` (20661, 20841: one click reckoned) green.
+- **Results.** R56-N2's case (24033, two groups, orders for 8 days) breaks on the code before R55c ("t173's click of
+  367 not ashore after 19.0 days, its best way 12.0") and not after. On the critic's 26 seeds × 6 setups (the three
+  standard and three with orders for 8 days), 149 of 156 at 0; the 7 broken are filed (R55f, R55g): five clicks walking
+  to a far port's next voyage (up to 88.5 days against 6.3), and 26039 Britain's 273 `stuck` 45 days. Two early breaks on
+  26041 were the bound taking a group 81 hours off with 97 left on its leg; counted now, they still break, later.
+
 ### ADR-895 · 2026-11-09 · accepted — A far port's next voyage is joined only within a week's march of the nearest (R55c)
 - **Context.** Critic run 56, R56-N2 (both builds): 24033 (Japan, two groups), orders only in the first 8 days. t173's
   click of 367, in Hokkaido, to China found no free group and none to call, and took `chooseTransports`' last way: the

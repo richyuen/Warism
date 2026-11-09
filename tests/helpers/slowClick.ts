@@ -10,11 +10,11 @@
  * division's (R43a), the late march (R31f). R49-N5 (20661, 26.3 days for a 5-day crossing) and R50-N1 (20841, 39.6
  * for 4) are its cases. Used by the fuzz (`landingBreaks`) and the grid (`gridCase`).
  */
-import { callCandidates, transportsPort } from '../../src/sim/systems/amphibious';
+import { callCandidates, transportRoom, transportsPort } from '../../src/sim/systems/amphibious';
 import { landingOfDivision } from '../../src/sim/systems/landings';
 import { octileKm } from '../../src/sim/nav/grid';
 import { MARCH_DUTY } from '../../src/sim/systems/movement';
-import { sailHours, sailHoursFrom } from '../../src/sim/systems/sail';
+import { sailHours, sailHoursFrom, sailHoursLeft } from '../../src/sim/systems/sail';
 import { navOf, portSeaOf, type World } from '../../src/sim/world';
 
 /** How many days a click's first division ashore may come after its best single-division way (a week). */
@@ -36,9 +36,20 @@ export function bestWayHours(w: World, id: number, water: number, port = transpo
   const k = portSeaOf(w)[port]!;
   const [kx, ky] = [(k % W) + 0.5, Math.floor(k / W) + 0.5];
   let best = Infinity;
-  for (const o of callCandidates(w, id, port)) {
-    const come = sailHours(w, o, kx, ky);
+  const way = (o: number, busy = false): void => {
+    // Busy: under way, not before its leg's end (26041 t151: 1136 81 hours from the port with 97 left on its leg).
+    const come = Math.max(sailHours(w, o, kx, ky), busy && c.moving[o] === 1 ? sailHoursLeft(w, o) : 0);
     if (Number.isFinite(come)) best = Math.min(best, Math.max(march, come) + sailHoursFrom(w, o, k, lx, ly));
+  };
+  for (const o of callCandidates(w, id, port)) way(o);
+  // None idle (ROADMAP R55d; critic run 56, R56-N3: such clicks went unreckoned, and R56-N2's 77 days with them): any
+  // group of its nation with room, busy or another landing's, from where it is now or its leg's end (a bound below the
+  // true way: a group carrying others lands them first).
+  if (best === Infinity) {
+    const men = c.strength[id]!;
+    w.formations.forEach((o) => {
+      if (w.isFleet(o) && c.nation[o] === c.nation[id] && transportRoom(w, o) >= men) way(o, true);
+    });
   }
   return best;
 }

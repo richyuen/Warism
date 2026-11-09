@@ -2299,3 +2299,10 @@
   else refused, told. `landingFarVoyage1938` (red before). Landing unit tests 57 files green; 78 of 78 setups at 0;
   Malta the same; `landingRows all` 0.
 - **Next:** R55d.
+
+## 2026-11-09 — R55d: the landing fuzz judges clicks with no idle group, and runs with orders that stop (ADR-896)
+- `bestWayHours` reckons a click with no idle group by its nation's other groups, from their leg's end; the diag tool
+  takes order days; the suite has three cases with orders for 8 days. R56-N2's case breaks before R55c, not after.
+- On the critic's 26 seeds × 6 setups: 149 of 156 at 0. The 7 found: five clicks walking weeks to a far port (up to
+  88.5 days), filed R55f; 26039 Britain's 273 `stuck` 45 days, filed R55g. The "marches are slow" objection is taken.
+- **Next:** R55e, R55f, R55g; then the probes replayed and critic run 57.

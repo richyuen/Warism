@@ -3,6 +3,7 @@
  * run with random landing orders.
  *
  * Usage: npx tsx tools/diag/landingInvariants.ts <seed> [setup 3517|15101] [days] [orders seed] [probe days, e.g. 30,90] [groups kept]
+ *        [order days: random orders only in the first so many, so the last clicks run undisturbed (ROADMAP R55d)]
  */
 import { landingBreaks } from '../../tests/helpers/landingInvariants';
 
@@ -12,13 +13,14 @@ const setup = Number(a[1] ?? 3517);
 const days = Number(a[2] ?? 120);
 const orders = Number(a[3] ?? seed);
 const probeDays = (a[4] ?? '30,90').split(',').map(Number);
-const groups = a[5] === undefined ? undefined : Number(a[5]);
+const groups = a[5] === undefined || a[5] === '-' ? undefined : Number(a[5]);
+const orderDays = a[6] === undefined ? undefined : Number(a[6]);
 const t = performance.now();
 const notes: string[] = [];
-const lines = landingBreaks({ seed, setup, days, orders, probeDays, notes, ...(groups === undefined ? {} : { groups }) });
+const lines = landingBreaks({ seed, setup, days, orders, probeDays, notes, ...(groups === undefined ? {} : { groups }), ...(orderDays === undefined ? {} : { orderDays }) });
 for (const l of lines) console.log(l);
 // Not broken (ADR-835): each division's longest gathering spell, and the part of it with no ground gained.
 for (const l of notes) console.log(l);
-console.log(`seed ${seed} setup ${setup} orders ${orders}, ${days} days: ${lines.length} broken, ${Math.round((performance.now() - t) / 1000)} s`);
+console.log(`seed ${seed} setup ${setup} orders ${orders}${orderDays === undefined ? '' : ` for ${orderDays} days`}, ${days} days: ${lines.length} broken, ${Math.round((performance.now() - t) / 1000)} s`);
 console.log('done:');
 process.exitCode = lines.length > 0 ? 1 : 0;
