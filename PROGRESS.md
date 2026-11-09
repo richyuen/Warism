@@ -2312,3 +2312,11 @@
   march is told "for its new order"; "6 transports needed, 48 at hand". `landingCancelFreed1938` +2 cases (red
   before); e2e by hand: landingsBar (its words follow), landingLeftTold, ticker (13 passed); `landingRows all` 0.
 - **Next:** R55f.
+
+## 2026-11-09 — R55f: a landing gathers where its divisions are, and waits no longer for a sibling than for itself (ADR-898)
+- `siblingWait` bounded by the landing's own wait, a sibling not ready read by its march (26041's 29 days at port);
+  `rePort` moves a landing whose divisions all march a week further than to their own port; a click does not join
+  such a landing. The critic's 156 setups: 155 at 0 (the one left is R55g). Four cases added to the R55d suite, red
+  before. `landingRowAshore1938`'s "n of m ashore" moves to Valletta (27123 no longer has a next voyage).
+- Malta the same on 21 seeds; `landingRows all` 0; pin unchanged; landing specs by hand.
+- **Next:** R55g; then the probes replayed and critic run 57.

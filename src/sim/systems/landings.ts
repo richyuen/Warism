@@ -34,7 +34,7 @@ import { octileKm } from '../nav/grid';
 import { navOf, PlayerOrderKind, portSeaOf, type World } from '../world';
 import { callCandidates, callTransports, carrying, landingOf, near, neutralLanding, SAME_LANDING_CELLS, TRANSPORT_MEN, transportRoom, transportsPort, tryLanding } from './amphibious';
 import { portShut } from './bombing';
-import { marchHoursLeft, marchKmPerHour, orderMove, overSeaFrom, snapTarget } from './movement';
+import { marchHoursLeft, marchKmPerHour, marchTo, orderMove, overSeaFrom, snapTarget } from './movement';
 import { AT_PORT_CELLS, sailHome } from './navalCombat';
 import { orderSail, sailHours, sailHoursFrom, sailHoursLeft } from './sail';
 
@@ -240,6 +240,9 @@ export function chooseTransports(world: World, id: number, target: number): Land
       const o = freeAtPort(world, nation, men, port) || callTransports(world, id, port);
       if (o !== 0) return { port, fleet: o };
     }
+    // Not one a week's march further than its own port (`farVoyage`; ROADMAP R55f: 26039's 367, in the north, joined
+    // its click's landing at port 239 and walked to it 15 days), as a sailed landing's next voyage is not (R55c).
+    if (far(l.port) && farVoyage(world, id, port, l.port)) continue;
     if (roomOf(world, l) - menOf(world, l) >= men) return { join: l, port: l.port, fleet: 0 };
     const o = freedGroup(world, nation, men, here)?.fleet || freeAtPort(world, nation, men, l.port) || callTransports(world, id, l.port, false, callWithin(world, l));
     if (o !== 0) return { join: l, port: l.port, fleet: o };
@@ -694,6 +697,28 @@ function ashoreAtPort(world: World, l: Landing, id: number): void {
   c.moving[id] = 0;
 }
 
+/**
+ * Gathering landing `l` moves its port to its divisions' own (ROADMAP R55f; critic run 56, the objection "marches are
+ * slow against voyages", measured by R55d: 26039's 366 walked ~80 days to port 95 for a next voyage, 26041's 365 15
+ * days to Tokyo): when none of them is at its port or aboard, all march there, and all have one nearest port of their
+ * land, another, which the march to the landing's is over SPLIT_SOONER_HOURS longer than (`farVoyage`), held by its
+ * nation and open. Its groups sail there and its divisions march there; its target is kept.
+ */
+function rePort(world: World, l: Landing): void {
+  const c = world.formations.cols;
+  const ids = [...l.divisions.keys()].filter((id) => world.formations.has(id)).sort((a, b) => a - b);
+  if (ids.length === 0 || ids.some((id) => world.embarked.has(id) || c.moving[id] !== 1 || divisionAtPort(world, l, id))) return;
+  const p = transportsPort(world, ids[0]!, false);
+  if (p < 0 || p === l.port || world.cells.controller[world.ports[p]!.cell] !== l.nation || portShut(world, p)) return;
+  if (!ids.every((id) => transportsPort(world, id, false) === p && farVoyage(world, id, p, l.port))) return;
+  const [px, py] = pointOf(world, world.ports[p]!.cell);
+  if (!ids.every((id) => marchTo(world, id, px, py))) return;
+  l.port = p;
+  l.ready = -1;
+  const [wx, wy] = pointOf(world, portSeaOf(world)[p]!);
+  for (const o of l.fleets) if (world.formations.has(o) && c.engaged[o] !== 1) orderSail(world, o, wx, wy);
+}
+
 /** A gathering landing's hour (`landingSystem`). */
 function gather(world: World, l: Landing): void {
   const f = world.formations;
@@ -709,6 +734,7 @@ function gather(world: World, l: Landing): void {
     endLanding(world, l, portShut(world, l.port) ? RejectReason.PortShut : RejectReason.NoPort);
     return;
   }
+  rePort(world, l);
   const w = world.cells.w;
   const water = portSeaOf(world)[l.port]!;
   // Its transports: at the port (those aboard go ashore there: a landing recalled to it), on their way, or
@@ -885,12 +911,19 @@ function siblingWait(world: World, l: Landing): { port: number; hours: number } 
   const sib = siblings(world, l);
   if (sib.length === 0) return null;
   const mine = voyageHours(world, l);
+  const within = callWithin(world, l);
   let out: { port: number; hours: number } | null = null;
   for (const o of sib) {
-    // A gathering one over a month from sailing (a march from afar, R31f) is not waited for: SIBLING_WAIT_HOURS.
-    const left = o.state === LandingState.gathering ? waitLeft(world, o) : 0;
+    // A gathering one over a month from sailing (a march from afar, R31f) is not waited for: SIBLING_WAIT_HOURS. One not
+    // yet ready sails no sooner than its first division is at its port (`readyHours`; ROADMAP R55f, critic run 56 via
+    // R55d: 26041's L1 had its group at Tokyo and its two a fortnight's march off, its wait read 0, and L3 stood ready
+    // at its port 29 days "sailing in about 12 hours").
+    const left = o.state !== LandingState.gathering ? 0 : o.ready >= 0 ? waitLeft(world, o) : Math.max(waitLeft(world, o), readyHours(world, o));
     if (!Number.isFinite(left) || left > SIBLING_WAIT_HOURS) continue;
     const hours = left + voyageHours(world, o) - mine - SIBLING_SLACK_HOURS;
+    // No longer than its own wait (`callWithin`, READY_WAIT_HOURS from its ready hour): `slowClick`'s week is the bound
+    // every wait keeps (ADR-843 over ADR-836's month).
+    if (hours > within) continue;
     if (hours > 0 && (!out || hours > out.hours)) out = { port: o.port, hours };
   }
   return out;

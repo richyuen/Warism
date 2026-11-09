@@ -7,6 +7,33 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-898 · 2026-11-09 · accepted — A landing gathers where its divisions are, and waits no longer for a sibling than for itself (R55f)
+- **Context.** R55d's checker found five clicks on the critic's seeds, measured, that critic run 56 had raised as an
+  objection ("marches are slow against voyages"). Two causes: (B) 26041's L3, ready at its port, waited 29 days for its
+  click's L1, whose group was at Tokyo and its two a fortnight's march off: L1's wait read 0 (`waitLeft` of a landing
+  with no division at its port), so L3 read "sails in about 12 hours" the whole time; (A) a division walking weeks to
+  a far port: 26035's 367 (44 days), 26039's 366 (~80 days to port 95 for a next voyage), 27045's 365 (71.5), and on
+  26039 a click's 367 in the north joining its landing at port 239 in the south and walking 15 days.
+- **Decision.** (1) `siblingWait`: a sibling not yet ready sails no sooner than its first division is at its port
+  (`readyHours`); and no sibling is waited for longer than the landing's own wait (`callWithin`, READY_WAIT_HOURS from
+  its ready hour): `slowClick`'s week is the bound every wait keeps (ADR-843 over ADR-836's month, which stays a cap).
+  (2) `rePort`: a gathering landing none of whose divisions is at its port or aboard, all marching, all with one
+  nearest port of their own (`transportsPort`), another, held by its nation and open, which the march to the landing's
+  port is over SPLIT_SOONER_HOURS longer than (`farVoyage`, R55c), moves its port there: its divisions march there
+  (`marchTo`, the march alone), its groups not fighting sail there; its target is kept. Not the late marcher leaving,
+  told: that is a refusal days after the click (R44-B2's class, ADR-843) and drops the order. (3) `chooseTransports`:
+  a click does not join a gathering landing whose port is a week's march further than its own (`farVoyage`), as a
+  sailed landing's next voyage is not (R55c).
+- **Stands on (ADR-803).** ADR-830 (the joining order: the rule is one more `continue` before the joins), R37c and
+  R43a/ADR-836 (siblings land within SIBLING_SLACK_HOURS: still, within the bound), R55c (`farVoyage`). No test pinned
+  the month (`grep SIBLING_WAIT_HOURS tests`). `landingRowAshore1938` (R55b): 27123's late marcher (275) now gathers at
+  Liverpool, its own port, so no row there has a next voyage; its "n of m ashore" check moves to Italy's six to
+  Valletta (27125, "4 of 6 ashore; sails in about a day"), the same assertion, and 27123 keeps the "lands in" one.
+- **Results.** The critic's 26 seeds × 6 setups: 155 of 156 at 0 (149 before); the one left is 26039 Britain's
+  `stuck` (R55g). The R55d suite gains 26035, 26039, 26041 and 27045 (orders for 8 days), red before. Malta's endings
+  the same on 21 seeds; `landingRows all` 0; pin unchanged. Remainder: 26039's first voyage still took 366 from near
+  its own port to port 95 for 5 days before sailing without it (a join within the week's bound); not taken here.
+
 ### ADR-897 · 2026-11-09 · accepted — Who leaves a landing is told why; the transports line says what is at hand (R55e)
 - **Context.** Critic run 56's small items: after a cancel, 323's ticker read "left its landing for a new one" (it
   stopped where it stood; no new one); and a gathering row's "transports 48, 6 needed" with 48 at hand read as a

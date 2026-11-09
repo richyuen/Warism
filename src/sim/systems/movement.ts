@@ -576,6 +576,14 @@ function seaConvoy(world: World, id: number, x: number, y: number, pass: Passage
 }
 
 /**
+ * A march of division `id` to (`x`, `y`) as its landing's own (ROADMAP R55f: a landing that moves its port sends its
+ * divisions there): the march alone, its landing untouched (`orderMove` would take it out of it).
+ */
+export function marchTo(world: World, id: number, x: number, y: number): boolean {
+  return order(world, id, x, y, undefined, 0);
+}
+
+/**
  * `orderMove`, or with `home` 1 the order of a march home, over any ground but an enemy's (ADR-169,
  * ADR-222; `pass` is then `homeward`'s). `why`: the reason a refusal for want of a way gives.
  */

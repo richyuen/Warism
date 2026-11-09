@@ -1141,7 +1141,7 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
     a shortage.
     Done (ADR-897): a cancel's stopped ones are not told they left (the row says so); one leaving for a march is told
     "for its new order"; "6 transports needed, 48 at hand". The stale "they come back for it" went with R55a.
-  - [ ] R55f Found by R55d: a click's division walks weeks to a far port, no group free to come to its own (the
+  - [x] R55f Found by R55d: a click's division walks weeks to a far port, no group free to come to its own (the
     "marches are slow against voyages" objection, measured). `npx tsx tools/diag/landingInvariants.ts <seed> <setup>
     120 <seed> <probe> <groups> [order days]` at 0 broken on: 26035 3517 30 2 8 (t188's 367, 44 days), 26039 3517 30 2 8
     (t39's 366, 88.5 days: joined a landing at port 95, which sailed without it, walked ~80 days to its next voyage),
@@ -1149,6 +1149,10 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
     30 2 8 (t69's 365, 71.5). Each traced first; a rule (e.g. a late marcher whose march to the landing's port is over
     SPLIT_SOONER_HOURS longer than to its nearest leaves it, told; or the next voyage gathers at its port) checked on the
     156 setups.
+    Done (ADR-898): a sibling is waited for no longer than the landing's own wait, and one not ready reads its march;
+    a gathering landing all of whose divisions march to a port a week further than their own moves its port there;
+    a click does not join such a landing. 155 of 156 at 0 (the one left is R55g); four cases in the R55d suite, red
+    before; Malta the same on 21 seeds; `landingRows all` 0; pin unchanged.
   - [ ] R55g Found by R55d: 26039 Britain, orders for 8 days (`… 26039 15101 120 26039 30 2 8`): t1318 `stuck`, 273 in
     gathering landing 3 with no ground gained for 45 days. Traced; 0 broken.
   - Kept: `landingInvariants` and `landingRows` 0 broken; R55-B1's commands 0; the Malta endings.
