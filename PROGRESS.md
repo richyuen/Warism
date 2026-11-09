@@ -2205,3 +2205,11 @@
   60 from 600 m/px; the frame gaps' 95th percentile is 18 ms at 120 m/px, so the view skips drawing on frames the
   browser gives it.
 - **Next:** the gate, then R53m.
+
+## 2026-11-08 — R53k committed; R53m waits on the user
+- R53k's gate green but two history cases, found again (fallen1938 division 565, seaClose1938 rows 1127 and 1305);
+  committed `6eadab9b`.
+- R53m: the probe's 120 and 30 m/px stops view an empty map (the fight picked at load has moved on), and it counts
+  draws, which an idle view skips. With the fight picked again just before zooming: 53 draws a second at 120 m/px in
+  both looks. BLOCKERS has the options; the user stopped the loop here.
+- **Next:** the user's call on R53m's bar, then R53n.

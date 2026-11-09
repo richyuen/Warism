@@ -5,6 +5,21 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 
 ## Open
 
+### R53m: the probe's unit zooms look at an empty map; waits on the user (2026-11-08)
+- `c54_pf_lookfps.mjs` counts the view's draws (`view.frames`), not the browser's frames. The browser gives 60 a
+  second at every zoom (rAF gaps p95 18 ms), and a draw at 120 m/px takes 0.84 ms. The view skips a frame when nothing
+  changed (`frameAt`): at Max the worker sends `tickMs` 0, so nothing interpolates between snapshots, which come 33 a
+  second (gap p50 22 ms, p90 49 ms; about 200 ticks a second; `MAX_SLICE_MS` 12 and one snapshot in flight).
+- The fight is picked once at load. By 120 and 30 m/px it has moved on: 0 formations and 0 elements on the screen in
+  the critic's rows and in ours (`.cache/r53m/prof.mjs`, a screenshot: ground near Novorossiysk). Draws below 60
+  there are an idle map not drawn again, as designed.
+- With the fight picked again just before zooming (28 elements on the screen): 53.5 (balls) and 52.7 (classic) draws
+  a second at 120 m/px, over the bar of 45.
+- Options: (a) the bar re-picks the fight at each zoom and reads it there (53 now, no code); (b) interpolate at Max
+  over the measured snapshot gap (60, smooth motion at Max; changes "Max has no tick length", PLAN 2.7h, an ADR;
+  sprites' from-positions over a snapshot of ~6 ticks to check); (c) a shorter slice at Max (more snapshots, fewer
+  ticks a second). Recommended: (a), with (b) as its own item if motion at Max is to be smoother.
+
 ### `seaRow1938`'s Speed x1 test red on this machine again, the code not its cause; on `tools/gate/knownRed.json` (2026-11-08, R53g)
 - **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
   with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a). Resolved once (docs/BLOCKERS_DONE.md,
