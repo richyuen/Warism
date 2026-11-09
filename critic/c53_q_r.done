@@ -1,3 +1,0 @@
-0 npx tsx critic/scripts/c53_repland.ts 23081 scenario --years 3 critic/c53_repland_23081.json > critic/c53_repland_23081.log 2>&1
-0 npx tsx critic/scripts/c53_repland.ts 23083 random --years 3 critic/c53_repland_23083r.json > critic/c53_repland_23083r.log 2>&1
-0 npx tsx critic/scripts/c53_repland.ts 7019 scenario --years 5 critic/c53_repland_7019.json > critic/c53_repland_7019.log 2>&1

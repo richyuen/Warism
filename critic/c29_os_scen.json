@@ -1,8 +1,0 @@
-{
- "oldMagic": "WARSIM-SCENARIO\n",
- "newMagic": "Error: ENOENT: no such file or directory, open 'C:\\Git\\Warism\\critic\\c29_critic_",
- "titleAccept": ".warism-scenario,.warsim-scenario",
- "pending": null,
- "fatal": "page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at C:\\Git\\Warism\\critic\\scripts\\c29_os_scen.mjs:20:27",
- "errors": []
-}

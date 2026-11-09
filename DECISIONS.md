@@ -7,7 +7,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
-### ADR-914 · 2026-11-09 · proposed, the user's decision — Naval after run 59: fuzz more than the critic, one budget per click
+### ADR-914 · 2026-11-09 · accepted (the user's decision) — Naval after run 59: fuzz more than the critic, one budget per click
 - **Context (the user asked, 2026-11-09: analyse the loop; can anything improve naval's chance of its bar?).**
   - Naval has been under its bar in every run since run 32, except run 53 (focused, 8), lost again on full run 54.
     Every other dimension is at its bar.
@@ -52,6 +52,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Not proposed again:** taking the landing out, or releasing at 7 (refused in ADR-827, 828, 829, 833). The run-59
   objection to judge the last ashore: not now (it raises the bar while the first-ashore one is not met).
 - **Recommended:** 2 as R58a's fix, then 1 and 3 before critic run 60; 5 at once; 4 only if 1 and 2 are not enough.
+- **Status.** Accepted 2026-11-09 by the user, after asking whether the 2,500-run fuzz pays for its hours and whether
+  the bar is the problem: "Yes, let's do a 5% threshold for now. Let's also do earlier proposals 2, 3, and 5. Also, do 5
+  first if that makes sense." So:
+  - 1 not taken as a 2,500-run gate: a smaller fuzz (about 300 runs, 15 minutes) serves 3 and the check before a run.
+  - 4 as a rate: `slowClick` blocks only when over 5 % of the critic's fresh `landingInvariants` runs break it (CRITIC_PROMPT).
+  - 5 done first: `.gitignore` keeps the critic's output on disk (14,791 files untracked, none deleted; the report, JSON,
+    `critic/scripts/` and scenario files stay tracked); PROMPT.md: a naval batch takes only the items its report filed,
+    and an item that only mends a rule an ADR states gets no ADR of its own.
+  - 3, then 2 (R58a widened).
 
 ### ADR-913 · 2026-11-09 · accepted — The AI lands at no enemy port an enemy fleet that fights stands by, submarines counted (R57f)
 - **Context.** Critic run 58's small naval item (the user's call to take it, 2026-11-09): on 28061 Japan lost a group of

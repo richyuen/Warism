@@ -1,1 +1,0 @@
-{"head":{"runs":100,"n":26,"last7":6,"first7":1,"worst":96},"old":{"runs":100,"n":27,"last7":6,"first7":2,"worst":96}}

@@ -32,7 +32,9 @@ game's assets or code.
   "go" means: the first unchecked item.
 - `SPEC.md`: how the game works (§1 and §2 first, the rest by section; searched).
 - `DECISIONS.md`: this month's ADRs, newest first; earlier months in `docs/history/` (searched).
-  Every design choice and every change of process gets an ADR; the user's are marked so.
+  Every design choice, new or changed rule or bound, and change of process gets an ADR; the user's are
+  marked so. An item that only mends a rule an ADR already states gets none: its ROADMAP tick and its
+  PROGRESS.md entry carry it, with the ADRs it stands on (ADR-914).
 - `PROGRESS.md`: this month's log, newest last (read the tail); earlier months in `docs/history/`.
 - `BLOCKERS.md`: open problems and the watch list; resolved ones in `docs/BLOCKERS_DONE.md`.
 - `CHANGELOG.md`: what each release brought, for players.
@@ -69,7 +71,8 @@ game's assets or code.
 
 Items come in batches (a ROADMAP section). After the last item of a batch:
 1. Spawn the `critic` subagent with no hints, wait for it, check that its report names HEAD, commit
-   `critic/` with a line in PROGRESS.md (scores, blocking count). That commit carries `critic/`,
+   `critic/` with a line in PROGRESS.md (scores, blocking count). Git takes only its report, JSON,
+   scripts and scenario files; its logs and dumps stay on disk (`.gitignore`, ADR-914). That commit carries `critic/`,
    PROGRESS.md, ROADMAP.md and DECISIONS.md only; a fix is a commit of its own.
    For each dimension under its bar, that commit also files every design objection and idea of the report
    in that dimension, and its "what the bar needs", as a one-line ROADMAP entry: taken, or the reason it
@@ -87,6 +90,9 @@ Items come in batches (a ROADMAP section). After the last item of a batch:
    Not for naval (ADR-833, the user's decision, 2026-11-06): its blocking issues and its non-blocking
    ones are items, fixed, then the critic again, until it is at its bar; before each critic run the
    critic's own probes (`critic/scripts`) are replayed on the code and what they find is fixed first.
+   A naval batch takes only the items its report's commit filed, so the next run can be focused; an
+   item the user adds, or one the batch finds, waits for the batch after unless the user says it comes
+   first (ADR-914).
 3. On a full report with no blocking issue and every score at its bar: `npm run check:review`, the
    soak (`npm run soak -- --scenario 1938 --seed 99 --minutes 30 --affinity 0xFFFF`), the sweep on
    unseen seeds (`npm run sweep -- --first <seed> --tag <name>`: borders still moving at the end

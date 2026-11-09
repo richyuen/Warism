@@ -1,7 +1,0 @@
-tick 13103 DEI loyalty 19.950962847133994 autonomy 29.5 overlord NED
-allied DEI-NED false
-alliances [{"id":8,"nameKey":"alliance.defensive","leader":87,"founder":87,"members":[87,88,89],"loyalty":[47.51973198539781,47.51973198539781,47.51973198539781],"unity":46,"union":false},{"id":9,"nameKey":"alliance.defensive","leader":96,"founder":96,"members":[96,98],"loyalty":[52.02709069088087,52.02709069088087],"unity":60.5,"union":false},{"id":10,"nameKey":"alliance.defensive","leader":10,"founder":10,"members":[10,4,18,17],"loyalty":[89.12966158756899,89.12966158756899,89.12966158756899,89.59020733833313],"unity":100,"union":true},{"id":11,"nameKey":"alliance.defensive","leader":97,"founder":97,"
-before: whyNotWar Subject
-after release+leave: whyNotWar Overrun wars of DEI 0
-wars of NED FRA+AOF+AEF+MAD+FMO+TUN+INC+BEL+BCO+SWI+REP+NED+GER vs ENG+EGY+SUD+BEA+SAF+SRH+PAL+TRJ+OMN+RAJ+BUR+CEY+MAL+SAR+AST+NZL+CAN+NFL+POR+ANG+MOZ ; GER+BEL+BCO+FRA+AOF+AEF+MAD+FMO+TUN+INC+SWI+REP+NSP+NED+ITA+BUL+YUG+ALB vs NOR+IRN+FIN+AFG
-done:

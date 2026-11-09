@@ -1,9 +1,0 @@
-whole 1.00 {"min":6,"med":6} 36 3  
-plus1 1.50 {"min":10,"med":10} 27 3  
-plus2 2.25 {"min":15,"med":15} 23 4  
-plus3 3.38 {"min":22,"med":22} 10 2  
-plus4 5.06 {"min":34,"med":34} 4 0  
-drag 5.06 {"min":34,"med":34} 6 0 0 
-tapNode 5.06 {"min":34,"med":34} 6 0  []
-pinch 5.00 {"min":33,"med":33} 4 0  
- 0

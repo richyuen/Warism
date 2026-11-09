@@ -1,9 +1,0 @@
-== two_s42 env NPX=0.01 NPY=42 node critic/scripts/c39_lwt5.mjs 3517 2 30 24 near 1600 900 two_s42 09:31:09
-   exit 0
-== four_alls42 env NPX=0.01 NPY=42 node critic/scripts/c39_lwt5.mjs 3517 4 60 24 allnear 1600 900 four_alls42 09:33:44
-   exit 0
-== two_w42 env NPX=-42 NPY=0 node critic/scripts/c39_lwt5.mjs 3517 2 30 24 near 1600 900 two_w42 09:38:39
-   exit 0
-== two_e14 env NPX=14 NPY=0 node critic/scripts/c39_lwt5.mjs 3517 2 30 24 near 1600 900 two_e14 09:41:22
-   exit 0
-SUITER5DONE

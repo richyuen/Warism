@@ -24,7 +24,8 @@ Practical notes:
   (e.g. `npx vite --port 5299 --strictPort`), and stop every server and browser you started before
   you finish.
 - Put scripts in `critic/scripts/`, screenshots in `critic/shots/`, logs and run output in
-  `critic/`. Overwrite the previous run's `CRITIC_REPORT.md` and `CRITIC_REPORT.json`.
+  `critic/` (kept on disk, not committed: only the report, its JSON, `critic/scripts/` and
+  scenario files are). Overwrite the previous run's `CRITIC_REPORT.md` and `CRITIC_REPORT.json`.
 - `commit` in the JSON is `git rev-parse HEAD` at the time you started.
 
 When done, reply with only: the commit, each dimension's score, and the blocking issue ids and

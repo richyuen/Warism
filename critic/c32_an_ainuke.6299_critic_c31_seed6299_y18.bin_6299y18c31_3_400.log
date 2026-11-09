@@ -1,9 +1,0 @@
-page.evaluate: Error: missing section nations.traits
-    at xi (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:499803)
-    at e.deserialize (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:502178)
-    at P_ (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:792192)
-    at px.load (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:868216)
-    at wx.handleInner (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:874360)
-    at wx.handle (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:871715)
-    at self.onmessage (http://127.0.0.1:5299/assets/entry-ByOsfZ__.js:1:908782)
-    at C:\Git\Warism\critic\scripts\c32_an_ainuke.mjs:18:14 []

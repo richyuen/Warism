@@ -1,7 +1,0 @@
-fin: 17:14:00 sh -c 'cd critic/old && npx tsx nc.ts 7019 22 > ../c59_lc/nold_7019.log 2>&1'
-fin: 17:14:57 npx tsx critic/scripts/c59_nukecount.ts 7019 22 > critic/c59_lc/nhead_7019.log 2>&1
-fin: 17:16:00 npx tsx critic/scripts/c59_nukecount.ts 30301 22 > critic/c59_lc/nhead_30301.log 2>&1
-fin: 17:19:03 sh -c 'cd critic/old && npx tsx nc.ts 30301 22 > ../c59_lc/nold_30301.log 2>&1'
-fin: 17:26:10 npx tsx critic/scripts/c59_nukecount.ts 30303 22 > critic/c59_lc/nhead_30303.log 2>&1
-fin: 17:26:45 sh -c 'cd critic/old && npx tsx nc.ts 30303 22 > ../c59_lc/nold_30303.log 2>&1'
-done:

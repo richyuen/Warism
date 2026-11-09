@@ -1,9 +1,0 @@
-{
- "seed": 29403,
- "ME": "JAP",
- "FOE": "CHI",
- "samples": [],
- "hasPlayer": true,
- "fail": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('act-war')\u001b[22m\n\u001b[2m    - locator resolved to <button disabled type=\"button\" data-force=\"0\" class=\"god-btn\" data-testid=\"act-war\">Declare war</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n",
- "errors": []
-}

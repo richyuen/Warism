@@ -1,9 +1,0 @@
-seed 3517: base at t4, divisions 364,365
-recall 72h +0 walking: split: 364@186 365@633
-recall 72h +1 walking: split: 364@186 365@633
-recall 72h +2 walking: split: 364@186 365@633
-recall 120h +0 walking: split: 364@186 365@633
-recall 120h +1 walking: split: 364@186 365@633
-recall 120h +2 walking: split: 364@186 365@633
-{"seed":3517,"ops":["reclick","redirect","recall","cancel"],"t0":4,"ids":[364,365],"cases":240,"run":240,"skipped":0,"broken":6,"byKind":{"split":6,"untold":0,"away":0,"mark":0,"idle":0,"home":0},"worstIdle":0,"worstWait":507,"seconds":547}
-done:

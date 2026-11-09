@@ -1,8 +1,0 @@
-war {"ticker":["1 January 1938 Germany declared war on Poland"]}
-fighter {"id":1258,"x":1071.5,"y":272.5,"warsaw":[1143.5235555555555,269.6437945543833],"km":1406}
-strike ordered {"w":{"id":1258,"template":25,"transport":false,"carrier":false,"base":"Gütersloh","fleet":0,"fleetTemplate":0,"mission":null,"flying":false,"ferryDays":0,"x":1071.5,"y":272.5},"ticker":["Strike","Strike","Strike"]}
-followed {"cls":"god-row act-wing followed"}
-samples x1_3000 {"n":58,"flyingWithMark":53,"noMark":0,"medianPx":32,"p90Px":87,"max":125,"first":{"tick":1,"flying":true,"mission":"patrol","wx":1053.48328157288,"wy":289.21170639888,"mark":[740,506],"nearestSortiePx":32,"sorties":26,"mpp":3000,"following":true},"last":{"tick":8,"flying":true,"mission":"patrol","w
-samples x1_250 {"n":57,"flyingWithMark":37,"noMark":1,"medianPx":70,"p90Px":701,"max":1253,"first":{"tick":9,"flying":true,"mission":"patrol","wx":1062.847478803109,"wy":280.52578973731784,"mark":[800,450],"nearestSortiePx":0,"sorties":2,"mpp":208,"following":true},"last":{"tick":16,"flying":true,"mission":"patrol
-samples x5_3000 {"n":57,"flyingWithMark":57,"noMark":0,"medianPx":31,"p90Px":100,"max":286,"first":{"tick":17,"flying":true,"mission":"patrol","wx":1071.5,"wy":272.5,"mark":[800,450],"nearestSortiePx":57,"sorties":14,"mpp":2989,"following":true},"last":{"tick":207,"flying":true,"mission":"patrol","wx":1066.31445852
-other panel open {"tick":212,"flying":true,"mission":"patrol","wx":1066.3144585235286,"wy":288.1281040256601,"mark":[800,450],"nearestSortiePx":31,"sorties":9,"mpp":3000,"following":true}

@@ -10,8 +10,13 @@ coverage/
 *.local
 .DS_Store
 Thumbs.db
-# The critic's screenshots (tens of MB a run; kept out as in runs 2 to 4)
-critic/shots/
+# The critic's output stays on disk, not in git (ADR-914): only its report, its JSON, its scripts and
+# its scenario files are committed. Logs, JSON dumps, screenshots and trace folders are read on disk.
+critic/*
+!critic/CRITIC_REPORT.md
+!critic/CRITIC_REPORT.json
+!critic/scripts/
+!critic/*.warsim-scenario
 # The critic's bulky byproducts: saved sim states and saves (hundreds of MB a run), build
 # copies of the game, and its git worktree. Its logs, JSON, scripts and scenarios stay committable.
 critic/*.bin

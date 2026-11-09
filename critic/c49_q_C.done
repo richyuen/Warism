@@ -1,6 +1,0 @@
-0 npx tsx critic/scripts/c49_risecount.ts 20681 random 3650 > critic/c49_risecount_20681r.log 2>&1
-0 npx tsx critic/scripts/c49_risecount.ts 20683 random 3650 > critic/c49_risecount_20683r.log 2>&1
-0 npx tsx critic/scripts/c49_risecount.ts 20429 random 600 > critic/c49_risecount_20429r_600.log 2>&1
-0 env TAG=JAP FOE=CHI FROM=139.69,35.69 TO=121.47,31.23 N=2 DAYS=150 npx tsx critic/scripts/c47_far.ts 20661 critic/c49_far_20661_jap_sh.json > critic/c49_far_20661_jap_sh.log 2>&1
-0 env TAG=ITA FOE=ENG FROM=12.5,41.9 TO=14.45,35.9 N=1 DAYS=150 npx tsx critic/scripts/c47_far.ts 20663 critic/c49_far_20663_ita_malta.json > critic/c49_far_20663_ita_malta.log 2>&1
-0 npx tsx critic/scripts/c49_risecount.ts 20685 scenario 3650 > critic/c49_risecount_20685s.log 2>&1

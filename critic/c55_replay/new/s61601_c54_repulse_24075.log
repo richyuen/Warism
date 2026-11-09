@@ -1,8 +1,0 @@
-t3 [{"click":1,"parts":[[1,"Hamburg","gathering","sails in about 10 days",null]],"says":"sails in about 10 days"}]
-t27 [{"click":1,"parts":[[1,"Hamburg","gathering","sails in about 9 days",null]],"says":"sails in about 9 days"}]
-t51 [{"click":1,"parts":[[1,"Hamburg","gathering","sails in about 8 days",null]],"says":"sails in about 8 days"}]
-t75 [{"click":1,"parts":[[1,"Hamburg","gathering","sails in about 7 days",null]],"says":"sails in about 7 days"}]
-t90 [{"click":1,"parts":[[1,"Hamburg","over","over: its transports were sunk; 2 never sailed",{"kind":"sunk","tick":90,"landed":0,"lost":0,"stayed":2}]],"says":"over: its transports were sunk; 2 never sailed"}]
-t114 []
-broken 0: []
-done:

@@ -35,6 +35,9 @@ no score.
   commit (`git worktree add critic/wt <commit>`; unlink a `node_modules` linked into it before
   `git worktree remove`, or the removal empties the repo's own), or marked "new seeds, not compared";
   a difference the same seeds do not show on both commits moves no score.
+- Your logs, JSON dumps, traces and screenshots stay on disk and are not committed (`.gitignore`, ADR-914);
+  only the report, its JSON, `critic/scripts/` and scenario files are. Put every script and job list a case
+  needs to be re-run in `critic/scripts/`.
 - Run the rule checkers on new seeds (`npx tsx tools/diag/diploInvariants.ts <seed> ...` and any
   other checker under `tools/diag/`); a broken rule they report is a finding.
 

@@ -1,9 +1,0 @@
-{
- "spot": {
-  "best": null,
-  "bn": -1,
-  "engaged": 0
- },
- "fatal": "TypeError: Cannot read properties of null (reading '0')\n    at file:///C:/Git/Warism/critic/scripts/c30_pf_lookfps.mjs:36:33",
- "errors": []
-}

@@ -1,5 +1,0 @@
-{"pair":"FRA>NED","whyNotWar":"Allied","bond":"Allied","beside":true,"overlordOfB":0,"overrunA":false,"overrunB":true,"owned":[2929125,170236],"lost":[527368,133103],"forceWar":"Overrun"}
-{"pair":"ENG>NED","whyNotWar":"Allied","bond":"Allied","beside":true,"overlordOfB":0,"overrunA":false,"overrunB":true,"owned":[2640620,170236],"lost":[79671,133103],"forceWar":"Overrun"}
-{"pair":"NED>ENG","whyNotWar":"Allied","bond":"Allied","beside":true,"overlordOfB":0,"overrunA":true,"overrunB":false,"owned":[170236,2640620],"lost":[133103,79671],"forceWar":"Overrun"}
-{"pair":"FRA>DEI","whyNotWar":"AlliedRealm","bond":"AlliedRealm","beside":true,"overlordOfB":28,"overrunA":false,"overrunB":true,"owned":[2929125,170236],"lost":[527368,133103],"forceWar":"Overrun"}
-done:

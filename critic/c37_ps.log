@@ -1,3 +1,0 @@
-t55 reject 274 reason 16 at (1017.5,280.5) ports [{"k":550,"name":"Portsmouth","d":0.7071067811865476,"holder":20,"dmg":0.6283699300300799,"shut":true}]
-t63 reject 270 reason 16 at (1017.5,280.5) ports [{"k":550,"name":"Portsmouth","d":0.7071067811865476,"holder":20,"dmg":0.9,"shut":true}]
-t87 reject 271 reason 16 at (1017.5,280.5) ports [{"k":550,"name":"Portsmouth","d":0.7071067811865476,"holder":20,"dmg":0.9,"shut":true}]

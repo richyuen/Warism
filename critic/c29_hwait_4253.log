@@ -1,2 +1,0 @@
-{"living":1,"cells":149484,"rows":[{"row":4,"nation":"SOV","t":"hero_sovetsky_soyuz","start":[1193.5,207.5],"alive":false,"returnAt":145654},{"row":5,"nation":"SOV","t":"hero_t42","start":[1237.979591111111,242.1368298667249],"alive":true,"returnAt":null}],"held":0,"heldNoBase":12,"lost":[["MEX",3],["GER",3]]}
-done:
