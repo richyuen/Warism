@@ -2433,3 +2433,13 @@
   left one told with no figure; R59-N2 kept panel news never ages; the peace line cut at 844 × 390. Filed as batch 13
   (R58), with the UI items as in batch 12 (the user's call then).
 - **Next:** R58a.
+
+## 2026-11-09 — ADR-914 (the user's): the loop's cost, slowClick's 5 % bar, the landing fuzz
+- 5: the critic's logs and dumps stay on disk (`.gitignore`; 14,791 files untracked, none deleted); naval batches take
+  only the items their report filed; an item that only mends a stated rule gets no ADR of its own.
+- The bar: `slowClick` blocks only over 5 % of the critic's fresh `landingInvariants` runs (CRITIC_PROMPT).
+- 3: `tools/diag/landingFuzz.ts`. HEAD `0abbcd5a`, seeds 187929–187977, 150 runs: 0 broken (15 min at 3 jobs).
+- 2 held for the user: R59-B1's 366 marched at the normal pace; the bound assumed a group the one-group pool did not
+  have. A route-based march reckoning was tried and reverted (it refused 366 `NoTransports` instead; 150 fresh runs the
+  same as HEAD). See ADR-914, "R59-B1 read again".
+- **Next:** the user's call on 2 and on R58a; then R58b–d.

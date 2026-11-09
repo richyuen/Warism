@@ -110,6 +110,10 @@ A feature the user asks for during a batch joins the next batch, unless the user
   (e.g. 6 h, 1, 2, 3, 5 days), the cell offset, which unit (the one aboard, one walking, all), how
   many, on two seeds, as R27c's fuzz does. Most of runs 34–43's blocking issues were a ticked item's
   own case with one of these moved (R31e's AT recalled at one day; the critic at 2, 3 and 5).
+- A change of a checker's reading (`tests/helpers/*Invariants.ts`, `tests/helpers/slowClick.ts`) or of a
+  landing rule runs `npx tsx tools/diag/landingFuzz.ts` (300 runs on seeds no one has used, about half an hour) in its own
+  item, and what that exposes is fixed in the same batch, not found by the critic (ADR-914). So does the
+  last item of a naval batch, before the critic runs.
 - A rule a fix adds is checked with the rules beside it: the feature's checker (step 5) runs on the
   fix, and a case the critic found goes into the checker or the fuzz, not only into one test.
 - Tune on small runs: `npm run sweep:quick` (10 seeds × 20 years); the full sweep once per item,

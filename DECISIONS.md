@@ -13,8 +13,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
     Every other dimension is at its bar.
   - Runs 55, 57, 58 and 59 were each blocked by `slowClick` (ADR-843), each time on a new seed and with a different
     cause: 55 `siblingWait` holding a ready landing; 57 a shared port against `SPLIT_SOONER_HOURS`; 58 the checker's
-    reading of "the same landing" and a second voyage; 59 `clickBest` reckoning the march to the port about twice as fast
-    as divisions make it. Each batch fixed its case and the critic's old seeds stayed at 0.
+    reading of "the same landing" and a second voyage; 59, read by the critic as `clickBest` reckoning the march to the
+    port about twice as fast as divisions make it (corrected below, "R59-B1 read again"). Each batch fixed its case and
+    the critic's old seeds stayed at 0.
   - The critic's fuzz is cheap and fresh: `c59_liab_new.sh` is 15 new seeds × 6 setups, 90 runs, about 17 s each,
     16 minutes at P=2. It found 1 break in 90. At a rate near 1 % a run of 90 finds at least one about 60 % of the
     time.
@@ -61,6 +62,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
     `critic/scripts/` and scenario files stay tracked); PROMPT.md: a naval batch takes only the items its report filed,
     and an item that only mends a rule an ADR states gets no ADR of its own.
   - 3, then 2 (R58a widened).
+- **3 done.** `tools/diag/landingFuzz.ts`: the critic's six shapes on N fresh seeds (300 runs at 3 jobs, about half an
+  hour); PROMPT.md "KEEPING WORK SHORT": a checker or landing-rule change, and a naval batch's end, run it.
+- **R59-B1 read again (2 held for the user).** On 30041 at t729, `bestWayHours` per division: 364 6.6 days, 365 8.2,
+  366 5.9 (HEAD). 366's walk of 11 cells in 10.4 days is the infantry's pace (`MARCH_DUTY`, about a cell a day), not a
+  slow march. The click's landing gathered at the port near Tokyo, where 364 stood; 366's best way is reckoned by its
+  own nearest port with a group sailing there, and the pool kept one group, carrying the others. The bound was out of
+  reach; the sim's choice (walk to the shared port, next voyage, 15.4 days) was a fair one.
+  - A march reckoned by its route (`marchHoursTo`, over `findRoute` and the ground, in `bestWayHours`, `farVoyage`,
+    `callSooner`) was tried: t729's best 5.9 → 6.1 days, every earlier click the same; R59-B1's case 0 broken only
+    because `farVoyage` now split 366 to its near port with no transports there, refused `NoTransports` at t729, t870
+    and t1126, never across. Worse for the player. On 150 fresh runs (seeds 187929–187977) HEAD and the change both
+    0 broken; 1,184 / 1,179 clicks reckoned, 345 / 342 ashore. Reverted, not committed.
+  - So HEAD's rate on fresh seeds is under about 2 % (0 of 150), and under the 5 % rule R59-B1 is non-blocking. The one
+    budget per click (2) is held: the cause it was proposed for is not R59-B1's, and each landing-rule change since run
+    54 made the next run's break.
 
 ### ADR-913 · 2026-11-09 · accepted — The AI lands at no enemy port an enemy fleet that fights stands by, submarines counted (R57f)
 - **Context.** Critic run 58's small naval item (the user's call to take it, 2026-11-09): on 28061 Japan lost a group of

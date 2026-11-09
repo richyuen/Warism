@@ -39,6 +39,8 @@ Frozen records, searched and never edited: `PLAN.md`, `docs/PLAN_DONE.md`, `docs
   check, each stage on its own, a failed test run again alone, resumable.
 - `npx tsx tools/diag/replayCritic.ts [--at head|report|<commit>] [--new K] [--jobs P]`: the last critic run's
   headless jobs again, compared with its outputs; `--new K` runs each family on K new seeds (ADR-851).
+- `npx tsx tools/diag/landingFuzz.ts [--seeds N] [--first S] [--jobs P]`: the landing checker on N fresh seeds × the
+  critic's six shapes (default 50, 300 runs, ~30 min at 3 jobs); a checker or landing-rule change and a naval batch's end run it (ADR-914).
 - `npx tsx tools/diag/seaBattles.ts <seed> [scenario|random] [--years N]`: each sea battle with its place, sides,
   ships and a camera; `tools/diag/seaBattlesLook.ts <its json>` (a preview on 4173) checks each is drawn (ADR-852).
 - `npx tsx tools/diag/landingRows.ts [grid|far|page|all]`: the landings bar's rows against the divisions' panels and
