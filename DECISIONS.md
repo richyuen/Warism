@@ -7,6 +7,33 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-893 · 2026-11-09 · accepted — A landing turned back is only those aboard (R55a)
+- **Context.** Critic run 56, R56-B1 (the same on `715a5448`): Italy (27125), six to Valletta, four sail at h60 and
+  323 and 324 wait at Rome for the next voyage; Cancel at h66. `landingOrders` turns the four back first (the landing
+  `returning`, `then` Rome's port cell); then 324's own order, the cancel's "stop where you stand", is for Rome's port
+  cell, which `orderMove` took as the returning landing's own way ("it stands"), so 324 stayed in it. `comeBack` put
+  ashore and freed only those aboard, so the landing never ended: 324 stood to h300 under "they come back for it". A
+  click to the old place joined the returning landing (`chooseTransports`' `mine`, "its next voyage") and was
+  swallowed. Headless, 10 of 78 runs had such a landing still for 30 to 114 days; `landingInvariants` 0 broken.
+- **Decision.** (1) `orderMove`: a division of a returning landing stands by an order for the landing's place or its
+  way home only if it is aboard; one ashore takes its order and leaves the landing (`detachDivision`). (2) A
+  returning landing is joined by none (`mine`). (3) `comeBack`: one not aboard leaves the landing and stops, as a
+  landing ended stops its marchers (`endLanding`). (4) The checker: `stuck` also counts a returning landing none of
+  whose groups is under way for RETURN_STILL_HOURS (48).
+- **Stands on (ADR-803).** ADR-830 and R48a (a cancel turns those aboard back and stops those ashore, each by its own
+  order): what it now does; `landingRow1938` (R48a's cancel), `landingRecallAtSea1938`, `landingRecallPanel1938` green, and
+  `landingsBar1938` (e2e, its cancel) run by hand. R23b / R23e (an
+  order for the landing it has: it stands): kept for gathering and sailing landings and for those aboard. ADR-875 (a
+  cancel hands the army to the AI): unchanged, the freed divisions are the AI's after the hour.
+- **Results.** `landingCancelFreed1938` (both cases red before). The critic's six (24033 g2, 26041, 27033, 27035,
+  27039, 27053 g1): the new `stuck` broke each before, 0 after, `c56_stuckret` 0 spells; the 78 setups (26031–26049,
+  27031–27059 × 3, 24033) 78 of 78 at 0; the page: `c56_turnback.mjs 27125 … 66 300`, 324 "Holding" at h69 and the
+  row "cancelled: 4 back at Rome, 2 stopped where they stood; the AI commands them again" at h78; `c56_retstuck.mjs`
+  (re-click at h198): a new landing gathering at h204, sailed h324, "broke off; 2 came ashore away from Valletta" at
+  h348. The Malta endings the same on 21 seeds; `landingRows all` 0; the pin unchanged.
+- **Consequences.** After a cancel the ticker still says "it leaves the landing it had for its new one" for those
+  ashore (R55e).
+
 ### ADR-892 · 2026-11-09 · accepted — A group called to a landing for room comes within its wait; a click's best way is its crossers' (R54a)
 - **Context.** Critic run 55, R55-B1: `landingInvariants` `slowClick` broken on 24033 (HEAD only) and 26045 (both
   commits). The critic's lead, `siblingWait`, is neither. **24033:** landing 6 (365, 367) was ready at Tokyo at t2125

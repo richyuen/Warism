@@ -214,7 +214,9 @@ export function chooseTransports(world: World, id: number, target: number): Land
   const men = c.strength[id]!;
   const here = cellOfPlace(world, id);
   const [tx, ty] = pointOf(world, target);
-  const mine = [...world.landings.values()].filter((l) => l.nation === nation && ownPort(world, nation, here, l.port) && sameLandingAs(world, l, tx, ty)).sort((a, b) => a.id - b.id);
+  // A landing turned back is joined by none (ROADMAP R55a; critic run 56, R56-B1: a click to its old place was its "next
+  // voyage", and the division stood in it at the port while it was over).
+  const mine = [...world.landings.values()].filter((l) => l.nation === nation && l.state !== LandingState.returning && ownPort(world, nation, here, l.port) && sameLandingAs(world, l, tx, ty)).sort((a, b) => a.id - b.id);
   const w = world.cells.w;
   const dist = (k: number): number => {
     let dx = Math.abs((k % w) - (here % w));
@@ -1012,11 +1014,25 @@ function menAboard(world: World, fleet: number): number {
   return men;
 }
 
-/** A returning landing's hour: at its port, those aboard go ashore and march where they were ordered. */
+/**
+ * A returning landing's hour: at its port, those aboard go ashore and march where they were ordered. One of it not
+ * aboard (left at the port for the next voyage) leaves it and stands (ROADMAP R55a; critic run 56, R56-B1: such a one
+ * stood in it for months, "they come back for it", and the landing never ended).
+ */
 function comeBack(world: World, l: Landing): void {
   const c = world.formations.cols;
   const water = portSeaOf(world)[l.port]!;
   const [x, y] = pointOf(world, l.then);
+  for (const id of [...l.divisions.keys()].sort((a, b) => a - b)) {
+    if (world.embarked.has(id)) continue;
+    // As a landing ended stops one marching to its port (`endLanding`).
+    l.divisions.delete(id);
+    if (c.moving[id] === 1) {
+      c.moving[id] = 0;
+      c.home[id] = 0;
+      world.paths.delete(id);
+    }
+  }
   for (const o of [...l.fleets]) {
     if (!atPort(world, l, o)) {
       if (c.moving[o] !== 1 && c.engaged[o] !== 1 && !orderSail(world, o, ...pointOf(world, water))) {

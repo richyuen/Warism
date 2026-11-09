@@ -473,9 +473,14 @@ export function orderMove(world: World, id: number, x: number, y: number, pass?:
   };
   const l = landingOfDivision(world, id);
   if (l) {
-    // For the landing it has (ROADMAP R23b, R23e), or one this hour's orders made so (`landingOrders`): it stands.
-    if (sameLandingAs(world, l, x, y)) return true;
-    if (l.state === LandingState.returning && l.then === Math.floor(y) * world.cells.w + Math.floor(x)) return true;
+    // For the landing it has (ROADMAP R23b, R23e), or one this hour's orders made so (`landingOrders`): it stands. A
+    // landing turned back is only those aboard (ROADMAP R55a; critic run 56, R56-B1: 324, left at Rome for the next
+    // voyage, was ordered by the cancel to where it stood, Rome's port, the landing's way home, and stayed in it for
+    // good): one ashore takes its order and leaves it.
+    const returning = l.state === LandingState.returning;
+    const stands = !returning || world.embarked.has(id);
+    if (stands && sameLandingAs(world, l, x, y)) return true;
+    if (stands && returning && l.then === Math.floor(y) * world.cells.w + Math.floor(x)) return true;
     // Aboard at sea it takes no order of its own: a landing at sea is ordered as one (ROADMAP R33b, R33c).
     if (world.embarked.has(id)) {
       refusedLong = false;

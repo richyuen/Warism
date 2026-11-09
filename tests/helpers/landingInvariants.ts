@@ -26,7 +26,8 @@
  *   nearer its port, none of its groups nearer its port's water, by a cell (ADR-835, the user's decision; critic
  *   run 48 on R47-N4: "`stuck` is a wait limit... nothing it is told is false": 19206's 367 walked ~70 cells to
  *   Kure at ~1 a day, its click's landing, and was counted stuck). A wait at the port for a mate on the march is
- *   the landing's ground gained; a stand with no one nearing is a stall, however its landings are re-clicked;
+ *   the landing's ground gained; a stand with no one nearing is a stall, however its landings are re-clicked. And a
+ *   landing turned back with none of its groups under way for RETURN_STILL_HOURS (ROADMAP R55a, R56-B1);
  * - `farPort`: a division that makes a landing alone (new in the hour, it its only division) at a port whose
  *   whole way to the landing's water (the march, the voyage) is over FAR_PORT_DAYS longer than by its land's nearest
  *   port of its nation (the march there or an idle group of its nation with room called there, `callCandidates`,
@@ -81,7 +82,12 @@ interface Track {
   landing: Map<number, number>;
   /** The landings of last hour (a landing not among them is new). */
   seen: Set<number>;
+  /** Per returning landing, the hour since which none of its groups has been under way (`stuck`, R55a). */
+  returnStill: Map<number, number>;
 }
+
+/** How long a landing turned back may stand with no group under way before `stuck` (two days; ROADMAP R55a). */
+export const RETURN_STILL_HOURS = 48;
 
 export interface LandingCase {
   /** The sim's seed. */
@@ -242,6 +248,18 @@ function check(w: World, n: number, idle: Map<number, number>, track: Track, orp
     track.longest.set(id, { hours: Math.max(most.hours, w.tick - s), still: Math.max(most.still, w.tick - g) });
     if (w.tick - g === STUCK_DAYS * 24) out.push(`${t} stuck: ${id} in gathering landing ${l}, no ground gained for ${STUCK_DAYS} days`);
   }
+  // `stuck`, turned back: a returning landing none of whose groups is under way for RETURN_STILL_HOURS (ROADMAP R55a;
+  // critic run 56, R56-B1: one with a division left at its port stood so for up to 114 days, and nothing broke).
+  for (const l of w.landings.values()) {
+    if (l.state !== LandingState.returning || l.fleets.some((o) => f.has(o) && c.moving[o] === 1)) {
+      track.returnStill.delete(l.id);
+      continue;
+    }
+    const s = track.returnStill.get(l.id) ?? w.tick;
+    track.returnStill.set(l.id, s);
+    if (w.tick - s === RETURN_STILL_HOURS) out.push(`${t} stuck: returning landing ${l.id} (${[...l.divisions.keys()].join(',')}) with no group under way for ${RETURN_STILL_HOURS} h`);
+  }
+  for (const id of [...track.returnStill.keys()]) if (!w.landings.has(id)) track.returnStill.delete(id);
   // `marchOn`: out of its gathering landing of last hour (`track.landing`) by no click, still marching to its port.
   for (const [id, l] of track.landing) {
     // On the retreat it is the fight's, not its landing's (ROADMAP R48a: 20829 t2325, 364 beaten at Jiaxing retreated
@@ -309,7 +327,7 @@ export function landingBreaks(k: LandingCase): string[] {
   const orphans = new Set<number>();
   const moored = new Set<number>();
   const idle = new Map<number, number>();
-  const track: Track = { best: new Map(), ground: new Map(), spell: new Map(), longest: new Map(), landing: new Map(), seen: new Set() };
+  const track: Track = { best: new Map(), ground: new Map(), spell: new Map(), longest: new Map(), landing: new Map(), seen: new Set(), returnStill: new Map() };
   const was = new Map<number, number>();
   const slow = new SlowClicks((line) => put(line.replace(/ of [\d,]+ .*$/, ''), line));
   let next = w.tick;

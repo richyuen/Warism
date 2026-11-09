@@ -2268,3 +2268,15 @@
   h66: 324 frozen to h300 under "they come back for it"; 10 of 78 headless runs a returning landing still for 30+
   days); the same on 715a5448. Naval 7 a third run; ADR-833: items, not the exit. Filed as batch 10 (R55).
 - **Next:** R55a.
+
+## 2026-11-09 — R55a: a landing turned back is only those aboard (ADR-893)
+- 27125's Cancel ordered 324, at Rome for the next voyage, to its own cell, Rome's port, the returning landing's way
+  home; `orderMove` took it as "it stands", and `comeBack` freed only those aboard, so the landing never ended. Now one
+  ashore in a returning landing takes its order and leaves, a returning landing is joined by none, and one not aboard
+  leaves it at its hour. `landingInvariants`' `stuck` counts a returning landing with no group under way for 48 h.
+- The report's AT: the page (the critic's two probes on this build) 324 freed at h69, the row "cancelled" at h78; the
+  re-click a new landing. The six seeds 0 (each broken before by the new rule); 78 of 78 setups at 0; Malta the same on
+  21 seeds; `landingRows all` 0; pin unchanged. Unit `landingCancelFreed1938` (red before); `landingsBar1938` by hand.
+  `npm test` green but two timing tests under the suite's load, green alone.
+- Found on the way: the critic's run-56 preview server (its build of d016ed2a) was still on 5299; stopped.
+- **Next:** R55b.

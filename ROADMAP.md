@@ -1104,7 +1104,7 @@ Critic run 56 (focused, on `d016ed2a`): R55-B1 closed; one blocking issue, R56-B
 findings are items, fixed, then the critic again (ADR-833), not the exit. No release.
 
 - [ ] R55 **Run 56's naval findings.**
-  - [ ] R55a R56-B1 (blocking): a returning landing whose groups are at its port ends; those not aboard leave it (stand,
+  - [x] R55a R56-B1 (blocking): a returning landing whose groups are at its port ends; those not aboard leave it (stand,
     or take the order that cancelled it), told; a returning landing is not joined (`chooseTransports`' `mine`); the
     "they come back for it" news goes when the division leaves; `landingInvariants`' `stuck` counts a returning landing
     standing still. AT (the report's): (i) `node critic/scripts/c56_turnback.mjs 27125 ITA ENG 1095.5,344.5
@@ -1114,6 +1114,11 @@ findings are items, fixed, then the critic again (ADR-833), not the exit. No rel
     forms a landing or is refused with a reason; (iii) `npx tsx critic/scripts/c56_stuckret.ts <seed> 3517 120 <seed>
     30,90 <g>` with no returning-and-still spell ≥ 48 h on 24033 g2, 26041 g1, 27033 g1, 27035 g1, 27039 g1, 27053 g1;
     (iv) `sh critic/scripts/c56_liab.sh` still 0 and the 18 Malta endings unchanged.
+    Done (ADR-893): the cancel's "stop where you stand" for 324 on Rome's port cell read as the landing's way home; one
+    ashore in a returning landing now takes its order and leaves, none joins a returning landing, and one not aboard
+    leaves it at its hour. (i) 324 "Holding" at h69, the row "cancelled: 4 back at Rome, 2 stopped where they stood"
+    at h78; (ii) the re-click makes a new landing (h204), sails h324, ends "broke off" h348; (iii) 0 spells on the six,
+    the new `stuck` breaking each before; (iv) 78 of 78 at 0, Malta the same on 21 seeds. `landingCancelFreed1938`.
   - [ ] R55b R56-N1: a landing that sails without a marcher: the row's "lands in" counts down (not 54 h frozen on 27123),
     and after the landing it says how many are ashore ("7 ashore · 1 marching to Portsmouth"; Hearts of Iron's
     invasion list). AT: `node critic/scripts/c56_frozen.mjs` on 27123, 27127, 27129: no "lands in" text over 24 h, the
