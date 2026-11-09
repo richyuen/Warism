@@ -7,6 +7,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-906 · 2026-11-09 · accepted — The Actions tab's "Offer peace" is the menu's: greyed while refused, saying why (R56d)
+- **Context.** Critic run 57, R57-N2 (the user's call to take it, 2026-11-09): 28401 as Germany, day 30, "Germany ⚔
+  Poland (+0) Offer peace" pressed: the war unchanged, no word, the button still live; the right-click menu greys the
+  same offer with its reason (PLAN 7.175c, `peaceVerdict`, `peaceWhy`). `playerActions1938` pinned the silent click
+  ("refused: the war goes on").
+- **Decision.** The tab's button takes the menu's verdict: disabled while the enemy would refuse, `peaceWhy` in its
+  title; enabled with no title once it would be accepted. One rule with the sim (`peace.ts`).
+- **Results.** `forceWar1938`'s greyed-peace test checks the tab's button beside the menu's, disabled with the reason on
+  day one and enabled at +25 (red before); `playerActions1938`'s step at an even score: disabled, the reason, the war
+  goes on (red before).
+
 ### ADR-905 · 2026-11-09 · accepted — The page keeps order news by the ticker's rows: a loss told of several in one hour whole (R56c)
 - **Context.** Critic run 57, R57-N3: Germany's six to Norwich (28113): "over: its transports were sunk; 6 never
   sailed", the ticker "4 divisions: … the landing is over (3, 4, 5, 42)", the panels of 1 and 2 with no word. The

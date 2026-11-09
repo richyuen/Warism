@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
@@ -108,7 +108,9 @@ test("God's war on two allies makes it: the United Kingdom on France", async ({ 
 // PLAN 7.175c (the user's request): the right-click menu's "Offer peace" is greyed out while the
 // enemy would refuse, its title saying why; once the war is won enough (German control painted
 // over Polish land with God's brush, a day at a time, until Germany leads by the bar), it is
-// enabled and its click makes the peace.
+// enabled and its click makes the peace. ROADMAP R56d (critic run 57, R57-N2: the Actions tab's "Offer peace" at +0 did
+// nothing and said nothing): the played nation's Actions tab's button is the menu's, greyed with the same reason, then
+// enabled.
 test('"Offer peace" greyed out while refused, saying why; enabled once they would accept, and its click the peace', async ({ page }) => {
   test.setTimeout(240_000);
   const POL = id('POL');
@@ -129,6 +131,17 @@ test('"Offer peace" greyed out while refused, saying why; enabled once they woul
   await expect(peace).toBeDisabled();
   await expect(peace).toHaveAttribute('title', /^They refuse: lead the war score by 25 \(now [+-]?\d+\), or wear them out/);
   await page.keyboard.press('Escape');
+  // The Actions tab's, the same (R56d).
+  const warId = await page.evaluate(([g, p]) => window.__warsim!.hud.stats.value!.wars.find((w) => w.attackers.includes(g!) && w.defenders.includes(p!))!.id, [GER, POL]);
+  const tabPeace = async (): Promise<Locator> => {
+    await page.evaluate((n) => window.__warsim!.view!.select(n), GER);
+    await page.getByTestId('tab-actions').click();
+    return page.getByTestId(`act-peace-${warId}`);
+  };
+  let act = await tabPeace();
+  await expect(act).toBeDisabled();
+  await expect(act).toHaveAttribute('title', /^They refuse: lead the war score by 25 \(now [+-]?\d+\), or wear them out/);
+  await page.evaluate(() => window.__warsim!.view!.select(0));
 
   // German control over Warsaw and about it, wider a day at a time, until Germany leads by 25.
   const warsaw = (await page.evaluate(async (p) => (await window.__warsim!.sim.inspect(true)).cities.find((c) => c.capitalOf === p)!, POL))!;
@@ -147,6 +160,10 @@ test('"Offer peace" greyed out while refused, saying why; enabled once they woul
   }
   expect(await score(), 'Germany leads by the bar').toBeGreaterThanOrEqual(25);
   expect(await atWar(page, GER, POL), 'the war goes on (no capitulation)').toBe(true);
+  act = await tabPeace();
+  await expect(act).toBeEnabled();
+  await expect(act).not.toHaveAttribute('title', /\S/);
+  await page.evaluate(() => window.__warsim!.view!.select(0));
 
   // Enabled, with no reason; its click makes the peace. (Polish ground found again: the first
   // spot may be under German control now, Germany's to the menu.)

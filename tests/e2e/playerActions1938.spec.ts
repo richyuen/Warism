@@ -82,9 +82,10 @@ test('player actions: build a formation, declare war, offer peace, propose an al
   await page.getByTestId('act-war').click();
   await expect.poll(async () => (await pol(page)).enemies).toContain(id('LIT'));
   const war = (await inspect(page)).wars.find((w) => w.attackers.includes(POL) && w.defenders.includes(id('LIT')))!;
-  // A peace offer at an even score is refused: the war goes on.
-  await page.getByTestId(`act-peace-${war.id}`).click();
-  await page.waitForTimeout(300);
+  // A peace offer at an even score would be refused: greyed, saying why (ROADMAP R56d; it was a click that did nothing),
+  // and the war goes on.
+  await expect(page.getByTestId(`act-peace-${war.id}`)).toBeDisabled();
+  await expect(page.getByTestId(`act-peace-${war.id}`)).toHaveAttribute('title', /^They refuse: lead the war score by 25/);
   expect((await inspect(page)).wars.some((w) => w.id === war.id)).toBe(true);
 
   // Alliance: a nation in no alliance, no puppet and at peace with Poland accepts (picked now:

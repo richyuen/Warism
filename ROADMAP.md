@@ -1209,9 +1209,11 @@ Naval's findings are items, fixed, then the critic again (ADR-833). No release.
     `node critic/scripts/c57_whotold.mjs 28113 GER ENG 1100.5,267.5 1031.5,266.5 6 120`.
     Done (ADR-905): the worker told all six; the page kept the last four news. It keeps four rows of the ticker, a
     loss of several in one hour as one: `c57_whotold` all six told, "6 divisions: … (1, 2, 3, 4, 5, 42)".
-  - [ ] R56d R57-N2 (the user's call, 2026-11-09): the Actions tab's "Offer peace" the menu's: greyed when the enemy
+  - [x] R56d R57-N2 (the user's call, 2026-11-09): the Actions tab's "Offer peace" the menu's: greyed when the enemy
     would refuse, the reason in its title (`peaceVerdict`/`peaceWhy`), not a silent no-op. AT: 28401 as Germany, day
     30, "Germany ⚔ Poland (+0)": the button disabled with the reason; at +32 it still makes peace.
+    Done (ADR-906): the tab's button takes `peaceVerdict`: disabled with `peaceWhy` in its title, enabled at the bar.
+    `forceWar1938` checks it beside the menu's (day one, then +25); `playerActions1938` (red before, both).
   - [ ] R56e Run 57's small items (the user's call, 2026-11-09): the bar's "12 transports needed, 7 at hand" for the
     two left at Rome counts what those two need; `seaBattlesLook` counts a battle seen only with both sides' ships
     drawn; a destroyer and a cruiser squadron told apart at 40 m/px.

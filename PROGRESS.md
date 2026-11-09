@@ -2373,3 +2373,8 @@
 - R57-N3: 28113's six were all told their landing was over; the page kept four news, so 1 and 2 had no word and the
   ticker named four of six. `keepOrderNews` counts the ticker's rows. The critic's probe on the build: all six told.
 - **Next:** R56d.
+
+## 2026-11-09 — R56d: the Actions tab's "Offer peace" greyed while refused, saying why (ADR-906)
+- R57-N2: pressed at +0, nothing happened and nothing was said. Now the menu's verdict: disabled, "They refuse: lead
+  the war score by 25 …" in its title; enabled at the bar. `forceWar1938`, `playerActions1938` red before.
+- **Next:** R56e.

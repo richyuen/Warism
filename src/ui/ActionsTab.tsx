@@ -4,7 +4,8 @@ import type { Command } from '../shared/commands';
 import type { NationStat, PlayerWing, TemplateInfo, WarStat } from '../shared/protocol';
 import { t, type MessageKey } from './i18n';
 import { displayName } from './NationPanel';
-import { allyWhy, standingOf, standingText } from './standing';
+import { peaceVerdict } from '../shared/peace';
+import { allyWhy, peaceWhy, standingOf, standingText } from './standing';
 import { UnitIcon } from './UnitIcon';
 
 export interface ActionsTabProps {
@@ -121,13 +122,16 @@ export function ActionsTab({ nation, nations, wars, templates, onCommand, wings,
       </div>
       {myWars.map((w) => {
         const mine = w.attackers.includes(n) ? w.score : -w.score;
+        // As the right-click menu's (ROADMAP R56d; critic run 57, R57-N2: pressed at +0, nothing happened and nothing
+        // was said): greyed while the enemy would refuse, the reason in its title (`peaceVerdict`, one rule with the sim).
+        const verdict = peaceVerdict(w.score, w.exhaustion, w.toDeath, w.attackers.includes(n) ? 0 : 1);
         return (
           <div class="god-row" key={w.id}>
             <span class="god-war-name">
               {nameOf(w.attackers[0] ?? 0)} {'⚔'} {nameOf(w.defenders[0] ?? 0)} ({mine >= 0 ? '+' : ''}
               {Math.round(mine)})
             </span>
-            <button type="button" class="god-btn" data-testid={`act-peace-${w.id}`} onClick={() => onCommand({ kind: 'offerPeace', war: w.id, from: n })}>
+            <button type="button" class="god-btn" data-testid={`act-peace-${w.id}`} disabled={!verdict.accepted} title={peaceWhy(verdict) || undefined} onClick={() => onCommand({ kind: 'offerPeace', war: w.id, from: n })}>
               {t('act.offerPeace')}
             </button>
           </div>
