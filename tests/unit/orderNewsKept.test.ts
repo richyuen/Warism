@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { keepOrderNews } from '../../src/app/hud';
+import { keepOrderNews, withLastNews, withoutNews } from '../../src/app/hud';
 
 // ROADMAP R56c (critic run 57, R57-N3): Germany's six to Norwich (28113) were all told their landing was over in one
 // hour, but the page kept the last four order news: the ticker's row named 3, 4, 5 and 42 while the over row counted
@@ -28,5 +28,34 @@ describe("order news kept by the ticker's rows (ROADMAP R56c)", () => {
   it('an older group past the bound goes whole, not in part', () => {
     const news = [sunk(1, 50), sunk(2, 50), refused(3), refused(4), refused(5), refused(6)];
     expect(keepOrderNews(news).map((n) => n.id)).toEqual([3, 4, 5, 6]);
+  });
+});
+
+// ROADMAP R57c (critic run 58, R58-N2): 27125's six to Valletta, in one hour: 319–322 "its transports broke off; it came
+// ashore near Palermo", 323 and 324 "transports sunk" (one row). Five rows: the ticker kept four, and 319's panel, which
+// read the ticker's news, said only "Landed". Each formation's newest news is kept for its panel apart from the rows.
+describe("a formation's last news kept for its panel (ROADMAP R57c)", () => {
+  type T = { kind: 'thrownAshore' | 'transportsSunk'; tick: number; reason: number; seq: number; id: number };
+  const thrown = (id: number): T => ({ kind: 'thrownAshore', tick: 140, reason: 0, seq: seq++, id });
+  const lost = (id: number): T => ({ kind: 'transportsSunk', tick: 140, reason: 0, seq: seq++, id });
+  it("the ticker's four rows drop 319; its panel keeps its news", () => {
+    let rows: T[] = [];
+    let last = new Map<number, T>();
+    for (const n of [thrown(319), thrown(321), thrown(322), thrown(320), lost(323), lost(324)]) {
+      rows = keepOrderNews([...rows, n]);
+      last = withLastNews(last, n);
+    }
+    expect(rows.map((n) => n.id)).toEqual([321, 322, 320, 323, 324]);
+    expect([...last.keys()].sort()).toEqual([319, 320, 321, 322, 323, 324]);
+    expect(last.get(319)!.kind).toBe('thrownAshore');
+  });
+  it('a later news of one formation replaces its earlier; a dismissed one goes', () => {
+    const a = thrown(5);
+    const b = lost(5);
+    let last = withLastNews(withLastNews(new Map<number, T>(), a), b);
+    expect(last.get(5)).toBe(b);
+    last = withoutNews(last, b.seq);
+    expect(last.has(5)).toBe(false);
+    expect(withoutNews(withLastNews(new Map<number, T>(), a), undefined).size).toBe(0);
   });
 });

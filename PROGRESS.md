@@ -2404,3 +2404,7 @@
 - 28037's 366 waited five days at the port beside an empty group of its landing for the other to come back; now it
   sails with the one there (ashore at 14.3 days, was 19.4), and is told as its landing sails without it. 306 setups 0;
   landingRows 0; the pin unchanged. **Next:** R57c.
+
+## 2026-11-09 — R57c: a formation's panel keeps its last order news (ADR-910)
+- 27125's 319 said only "Landed": its row was the fifth of one hour and the panel read the ticker's four. The panel now
+  keeps each formation's newest news apart; the critic's probe tells all six on 27125 and 28113. **Next:** R57d.

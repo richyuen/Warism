@@ -139,7 +139,8 @@ export function App({
           ? () => hud.setGodTool(null)
           : null;
   // The last news of the formation's order, while what it said still holds (ROADMAP R22f).
-  const lastNews = formationTitle ? orderNews.filter((n) => n.id === hud.formation.value).at(-1) : undefined;
+  // Kept apart from the ticker's rows (ROADMAP R57c): a fifth row of one hour still tells its formation's panel.
+  const lastNews = formationTitle ? hud.lastOrderNews.value.get(hud.formation.value) : undefined;
   const lastOrder = lastNews && !staleNotice(noticeSeen, lastNews, hud.formationInfo.value, hud.orderedAt.value.get(lastNews.id)) ? lastNews : undefined;
   return (
     <>

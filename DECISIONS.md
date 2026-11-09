@@ -7,6 +7,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-910 · 2026-11-09 · accepted — A formation's panel keeps its last order news whatever the ticker's rows keep (R57c)
+- **Context.** Critic run 58, R58-N2 (R57-N3 in another shape): 27125, Italy's six to Valletta, one hour: 319–322 told
+  "its transports broke off; it came ashore near Palermo", 323 and 324 "transports sunk" (one row, R40c). Five rows;
+  the page keeps four (`keepOrderNews`, R56c), so 319's went, and its panel, which read the newest news of it from the
+  same four rows, said only "Landed".
+- **Decision.** The page keeps each formation's newest order news apart (`Hud.lastOrderNews`, `withLastNews`): the
+  panel's notice reads it, so the ticker's bound decides only the ticker. A click on a ticker row still dismisses it from
+  both (`withoutNews`), and a notice still goes when it no longer holds (`staleNotice`). Grouping one more kind of row
+  (the critic's first suggestion) would mend this shape only; a sixth kind in one hour would strand the next. The panel's
+  status "Landed" stays: the notice beside it says where.
+- **Stands on (ADR-803).** ADR-905 (R56c: four rows, a group kept whole) unchanged for the ticker; R22f/R24c/R37b
+  (`staleNotice`) unchanged. Page only; the sim and the pin untouched.
+- **Results.** `orderNewsKept` R57c red before (no `withLastNews`); the critic's `c58_whotold` (copied to `.cache/r57c`,
+  a build on 5431): 27125 h140 all six panels told, 319 "its transports broke off; it came ashore near Palermo, away from
+  its target"; 28113 still all six. The nine e2e specs that read `formation-notice` green.
+
 ### ADR-909 · 2026-11-09 · accepted — A next voyage sails with the groups at its port that have room; one left marching is told as its landing sails (R57b)
 - **Context.** Critic run 58, R58-N1: on 28037 (Japan, two groups, orders for 8 days) R56a's due made t179's landing
   sail at t274 with 365 while 366 still marched to Hiroshima's port; 366 was told nothing that hour (its panel said

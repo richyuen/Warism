@@ -42,6 +42,21 @@ export function keepOrderNews<T extends Pick<OrderNews, 'kind' | 'tick' | 'reaso
   const cut = new Set(news.slice(0, from).map(key));
   return news.slice(from).filter((n) => !cut.has(key(n)));
 }
+/**
+ * Each formation's newest order news with `n` added (ROADMAP R57c; critic run 58, R58-N2: 27125's 319, its row the fifth
+ * of one hour, dropped by the ticker's bound, and its panel said only "Landed"): its panel's notice, whatever the
+ * ticker's rows keep.
+ */
+export function withLastNews<T extends { id: number }>(last: ReadonlyMap<number, T>, n: T): Map<number, T> {
+  const m = new Map(last);
+  m.set(n.id, n);
+  return m;
+}
+
+/** `last` without the news numbered `seq` (dismissed), or empty (`undefined`: all dismissed, a new game). */
+export function withoutNews<T extends { seq: number }>(last: ReadonlyMap<number, T>, seq: number | undefined): Map<number, T> {
+  return seq === undefined ? new Map() : new Map([...last].filter(([, n]) => n.seq !== seq));
+}
 const KEY_LEVEL = 'warsim.speedLevel';
 const KEY_PAUSED = 'warsim.paused';
 const KEY_MAP_MODE = 'warsim.mapMode';
@@ -278,7 +293,7 @@ export class Hud {
     sim.onOrderNews((news) => {
       // Its name as the page knows it now: one lost at sea is gone by the next snapshot (ROADMAP R39b).
       const name = news.name ?? this.nameOf?.(news.id);
-      this.orderNews.value = keepOrderNews([...this.orderNews.peek(), { ...news, ...(name === undefined ? {} : { name }), seq: this.orderSeq++ }]);
+      this.addOrderNews({ ...news, ...(name === undefined ? {} : { name }), seq: this.orderSeq++ });
     });
     effect(() => {
       const selected = this.selected.value;
@@ -568,6 +583,12 @@ export class Hud {
   readonly refusalBase = signal<RefusedBase | null | undefined>(undefined);
   /** What became of the player's orders of formations, the newest last (PLAN 4.9c; `seq` numbers them). */
   readonly orderNews = signal<(OrderNews & { seq: number })[]>([]);
+  /** Each formation's newest order news, for its panel: kept whatever the ticker's rows drop (ROADMAP R57c). */
+  readonly lastOrderNews = signal(new Map<number, OrderNews & { seq: number }>());
+  private addOrderNews(n: OrderNews & { seq: number }): void {
+    this.orderNews.value = keepOrderNews([...this.orderNews.peek(), n]);
+    this.lastOrderNews.value = withLastNews(this.lastOrderNews.peek(), n);
+  }
   /** The player's landings in rows (ROADMAP R47a): those under way, and those over for a day with their outcome. */
   readonly landings = signal<LandingRow[]>([]);
   /** A formation's name as the map last drew it (set by the game; ROADMAP R39b: a notice keeps it). */
@@ -582,6 +603,7 @@ export class Hud {
   /** Forgets the order news (a click on one, a new game). */
   dismissOrderNews(seq?: number): void {
     this.orderNews.value = seq === undefined ? [] : this.orderNews.peek().filter((n) => n.seq !== seq);
+    this.lastOrderNews.value = withoutNews(this.lastOrderNews.peek(), seq);
   }
   /** The selection when the last command was sent: a refusal is shown to that nation's panel only. */
   private commandFor = 0;
@@ -638,7 +660,7 @@ export class Hud {
       const id = ids[0]!;
       const name = this.nameOf?.(id);
       const news: OrderNews = { kind: 'sameLanding', id, nation, reason: ids.length, x, y, tick: this.tick.peek() };
-      this.orderNews.value = keepOrderNews([...this.orderNews.peek(), { ...news, ...(name === undefined ? {} : { name }), seq: this.orderSeq++ }]);
+      this.addOrderNews({ ...news, ...(name === undefined ? {} : { name }), seq: this.orderSeq++ });
     });
   }
 
