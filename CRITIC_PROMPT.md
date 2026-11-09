@@ -70,8 +70,12 @@ A new feature is scored under the dimension it belongs to (the relations graph u
 # OUTPUT
 1. `critic/CRITIC_REPORT.md`: the mode and why; per dimension: score, what you tested, evidence paths,
    what to fix. Then a prioritised list of BLOCKING issues (would make a player quit, contradicts a
-   claimed feature, or breaks a rule checker) and non-blocking issues. Then the last report's cases
-   re-run, the "Design objections", and ideas from other games (none of them scored).
+   claimed feature, or breaks a rule checker) and non-blocking issues. One exception (ADR-914, the user's
+   decision): `landingInvariants`' `slowClick` is a timing bound, not a contradiction. It is blocking only
+   when more than 5 % of this run's `landingInvariants` runs on seeds new to this run break it; give the
+   rate as "k of n". Under that, each break is a non-blocking issue with its case and figures, and does
+   not by itself hold naval under its bar. Every other rule a checker reports broken stays blocking.
+   Then the last report's cases re-run, the "Design objections", and ideas from other games (none of them scored).
 2. `critic/CRITIC_REPORT.json`: `{commit, mode, scores:{dimension:number}, blocking:[{id,title,
    evidence,fix}], timestamp}`, where commit is `git rev-parse HEAD` when you started and mode is
    `"full"` or `"focused"`.
