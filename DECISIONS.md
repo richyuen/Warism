@@ -7,6 +7,37 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-903 · 2026-11-09 · accepted — A landing is due ashore by its click's best way; a click again onto the same landing keeps the first (R56a)
+- **Context.** Critic run 57, R57-B1 (blocking): `landingInvariants` `slowClick` broken on 28037 (Japan, two groups,
+  orders for 8 days): t179's click of 365 (at Hiroshima's port, 56) and 366 (its own port 544) made one landing at 56;
+  `callSooner` reckoned 366's way by 56 89 hours worse than by its own port, under R43a's week, so it joined. Its
+  groups were there at t273 (94 hours after the click, the click's best way 160); the landing then waited for 366's
+  march (217 hours, reckoned 167) until t396, within READY_WAIT_HOURS of its ready hour: ashore 14.2 days after the
+  click, 7.5 over. The landing's waits were anchored on its ready hour, the checker's bound on the click: a ready hour
+  already late spent the week before any wait began. And 28039 (one group): t853's click of four, 365 and 367 clicked
+  again at t995 onto the same landing and ashore 11.0 days after it (best 10.7), was judged by 366 alone, left for the
+  group's second voyage: 17.7 days. (The critic's lead, "366 already in China", came from a two-group trace: its
+  `c57_orderdays.ts` reads `GROUPS`, a Bash variable.)
+- **Decision.** (1) `bestWayHours`, the best way alone of a division to a landing's water, moves from the checker into
+  `landings.ts`; the checker imports it (one rule, as `peace.ts`'s verdict). (2) `landingOrders` reckons it for each
+  division a player's hour orders over the sea, on the world before the orders (`World.clickWay`, not saved), and
+  `bindDivision` keeps on the landing `due`, the earliest of each join's hour plus its way (saved as the optional
+  section `world.landingDue`). (3) A landing waits for a march (`waited`) only while it can still land within
+  READY_WAIT_HOURS of `due` (`dueLeft`: a day inside the week, as READY_WAIT_HOURS is); one not waited for goes on the
+  next voyage, as before. A call and a sibling keep their wait (`callWithin`): bound by `due` too, at the first gate,
+  five landing tests went red (`landingSameAgain1938`'s clicked-again four 28 hours apart, `landingOwnPort1938`,
+  `landingPartResent1938`, `landingLeftTakesShips1938`): R37c's "together" is the user's rule as much as the week. (4) `slowClick` keeps a division aboard its landing, clicked again
+  onto the same water, in its earlier click too: that click changes nothing of its voyage (28039's 365, aboard at
+  t995). One waiting at the port is not kept, the new click its bound: kept, 28041's t668 click was judged by 365's
+  next voyage after the player turned 364, its first voyage, elsewhere (2 broken in the first wide run). `note()`
+  counts those kept.
+  R43a's week (`SPLIT_SOONER_HOURS`, the user's choice of 2026-11-06) is unchanged.
+- **Stands on (ADR-803).** ADR-846 (R44a: the wait from the ready hour) kept, now also bounded by `due`; ADR-836 and
+  ADR-898 (`siblingWait` reads `callWithin`) and R54a's `callWithin` (a group called within the wait): unchanged; ADR-892 (a division on the target's land walks and is not reckoned):
+  unchanged. Only player landings carry `due`; the AI's are untouched, and seed 99's pin does not move.
+- **Results.** `landingInvariants1938` R56a (28037 g2 orders for 8 days; 28039 g1) red before, 0 broken now: 28037
+  ashore 9.1 days after the click (2.4 over), 366 on the next voyage; 28039 worst 0.3 days over.
+
 ### ADR-902 · 2026-11-09 · accepted — A phone on its side: the nation panel wide and to the bar, Build in four columns, Actions in two (R55j)
 - **Context.** Critic run 55, R55-N2: at 844 × 390 the Build tab showed 2 of 10 infantry tiles in a 169-px panel, and
   the Actions tab put 8 air-wing controls below the screen; `buildTab1938` tested 390 × 844 and 1280 × 720 only. The

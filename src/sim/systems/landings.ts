@@ -34,7 +34,7 @@ import { octileKm } from '../nav/grid';
 import { navOf, PlayerOrderKind, portSeaOf, type World } from '../world';
 import { callCandidates, callTransports, carrying, landingOf, near, neutralLanding, SAME_LANDING_CELLS, TRANSPORT_MEN, transportRoom, transportsPort, tryLanding } from './amphibious';
 import { portShut } from './bombing';
-import { marchHoursLeft, marchKmPerHour, marchTo, orderMove, overSeaFrom, snapTarget } from './movement';
+import { MARCH_DUTY, marchHoursLeft, marchKmPerHour, marchTo, orderMove, overSeaFrom, snapTarget } from './movement';
 import { AT_PORT_CELLS, sailHome } from './navalCombat';
 import { orderSail, sailHours, sailHoursFrom, sailHoursLeft } from './sail';
 
@@ -65,6 +65,13 @@ export interface Landing {
    * marching counts from it (`waited`, ROADMAP R44a); -1 until then.
    */
   ready: number;
+  /**
+   * The hour its clicks are due ashore (ROADMAP R56a; critic run 57, R57-B1): the earliest of each join's hour plus
+   * that division's best way alone (`bestWayHours`, `World.clickWay`), the bound `slowClick` judges a click by.
+   * It waits for no march that would land it over READY_WAIT_HOURS past this (`dueLeft`); a call and a sibling keep
+   * their own wait (`callWithin`: bound by it, 3517's clicked-again four landed 28 hours apart). Infinity: none known.
+   */
+  due: number;
 }
 
 /** Hours within which a division joined with a landing's first (its click, `waited`): a day. */
@@ -348,7 +355,7 @@ export function bindDivision(world: World, id: number, target: number, choice: L
   let l = choice.join;
   if (!l) {
     const o = landingOf(world, target)!;
-    l = { id: world.nextLanding++, nation: c.nation[id]!, target, water: o.water, land: o.land, port: choice.port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick, ready: -1 };
+    l = { id: world.nextLanding++, nation: c.nation[id]!, target, water: o.water, land: o.land, port: choice.port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick, ready: -1, due: Infinity };
     world.landings.set(l.id, l);
   }
   if (choice.fleet !== 0 && !l.fleets.includes(choice.fleet)) {
@@ -363,6 +370,9 @@ export function bindDivision(world: World, id: number, target: number, choice: L
   const was = choice.join ? world.rejoined.get(id) : undefined;
   l.divisions.set(id, was !== undefined ? Math.min(was, world.tick) : world.tick);
   l.ordered = world.tick;
+  // Due ashore by the best way of the click's best division (ROADMAP R56a).
+  const way = world.clickWay.get(id);
+  if (way !== undefined && Number.isFinite(way)) l.due = Math.min(l.due, world.tick + way);
   return l;
 }
 
@@ -490,6 +500,15 @@ function sailAll(world: World, l: Landing, to: number): boolean {
 export function landingOrders(world: World, cmds: readonly { id: number; x: number; y: number; nation?: number }[]): void {
   world.rejoined.clear();
   world.freed.clear();
+  // Each division's best way alone to its order's landing, on the world before the hour's orders (ROADMAP R56a: the
+  // groups a call tries still idle, as `slowClick` reckons it): its landing is due ashore by it.
+  world.clickWay.clear();
+  const W = world.cells.w;
+  for (const { id, x, y, nation } of cmds) {
+    if (nation === undefined || !world.formations.has(id) || world.formations.cols.nation[id] !== nation || world.isFleet(id)) continue;
+    const to = landingOf(world, Math.floor(y) * W + Math.floor(x));
+    if (to) world.clickWay.set(id, bestWayHours(world, id, to.water));
+  }
   if (world.landings.size === 0) return;
   const last = new Map<number, { x: number; y: number }>();
   for (const { id, x, y, nation } of cmds) if (nation !== undefined && world.formations.has(id) && world.formations.cols.nation[id] === nation) last.set(id, { x, y });
@@ -618,6 +637,9 @@ const firstJoined = (l: Landing): number => Math.min(...l.divisions.values());
 export function waited(world: World, l: Landing, id: number): boolean {
   if (world.formations.cols.moving[id] !== 1) return true;
   const left = marchHoursLeft(world, id);
+  // Not past its clicks' due hour (ROADMAP R56a; critic run 57, 28037: ready 94 hours after the click, it waited five
+  // days more for 366's march and landed 7.5 days over the click's best way).
+  if (left > dueLeft(world, l)) return false;
   // Ready: there within READY_WAIT_HOURS of the hour it was first ready, or of its own joining if later (a fixed
   // hour: a bound read anew each hour let each come within it in turn, and 20827's landing waited 8 days more).
   if (l.ready >= 0) return world.tick + left <= Math.max(l.ready, l.divisions.get(id)!) + READY_WAIT_HOURS;
@@ -649,6 +671,49 @@ function readyHours(world: World, l: Landing): number {
  */
 function callWithin(world: World, l: Landing): number {
   return l.ready >= 0 ? l.ready + READY_WAIT_HOURS - world.tick : readyHours(world, l) + READY_WAIT_HOURS;
+}
+
+/**
+ * The hours landing `l` may still wait and land within READY_WAIT_HOURS of its due hour (`Landing.due`; ROADMAP R56a):
+ * a day inside `slowClick`'s week for the estimates' error, as READY_WAIT_HOURS is; less its voyage. Infinity for none.
+ */
+function dueLeft(world: World, l: Landing): number {
+  return Number.isFinite(l.due) ? l.due + READY_WAIT_HOURS - voyageHours(world, l) - world.tick : Infinity;
+}
+
+/**
+ * The hours of division `id`'s best way alone to a landing on `water` (a cell), as `farPort` reckons it (R39d's rule):
+ * the march to `port` (its land's nearest port of its nation by default) or the sail there of an idle group with
+ * room that a call tries (`callCandidates`), the later, then that group's voyage from the port's water; the best of
+ * the groups. Infinity for no group with a way, no port, or a division that does not march. The bound of a click's
+ * landing (`Landing.due`) and of the checker's `slowClick` (ROADMAP R56a: one rule, moved here from the checker).
+ */
+export function bestWayHours(w: World, id: number, water: number, port = transportsPort(w, id, false)): number {
+  const c = w.formations.cols;
+  const rule = w.rules?.templates[c.template[id]!];
+  if (port < 0 || !rule || rule.speedKmh <= 0) return Infinity;
+  const W = w.cells.w;
+  const march = octileKm(navOf(w).grid, Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!), w.ports[port]!.cell) / (rule.speedKmh * MARCH_DUTY);
+  const [lx, ly] = [(water % W) + 0.5, Math.floor(water / W) + 0.5];
+  const k = portSeaOf(w)[port]!;
+  const [kx, ky] = [(k % W) + 0.5, Math.floor(k / W) + 0.5];
+  let best = Infinity;
+  const way = (o: number, busy = false): void => {
+    // Busy: under way, not before its leg's end (26041 t151: 1136 81 hours from the port with 97 left on its leg).
+    const come = Math.max(sailHours(w, o, kx, ky), busy && c.moving[o] === 1 ? sailHoursLeft(w, o) : 0);
+    if (Number.isFinite(come)) best = Math.min(best, Math.max(march, come) + sailHoursFrom(w, o, k, lx, ly));
+  };
+  for (const o of callCandidates(w, id, port)) way(o);
+  // None idle (ROADMAP R55d; critic run 56, R56-N3: such clicks went unreckoned, and R56-N2's 77 days with them): any
+  // group of its nation with room, busy or another landing's, from where it is now or its leg's end (a bound below the
+  // true way: a group carrying others lands them first).
+  if (best === Infinity) {
+    const men = c.strength[id]!;
+    w.formations.forEach((o) => {
+      if (w.isFleet(o) && c.nation[o] === c.nation[id] && transportRoom(w, o) >= men) way(o, true);
+    });
+  }
+  return best;
 }
 
 /**
@@ -1446,7 +1511,7 @@ export function migrateLegacyLandings(world: World): void {
     if (!o) continue;
     let l = [...world.landings.values()].find((x) => x.nation === c.nation[fleet] && x.port === port && x.target === first);
     if (!l) {
-      l = { id: world.nextLanding++, nation: c.nation[fleet]!, target: first, water: o.water, land: o.land, port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick - 1, ready: -1 };
+      l = { id: world.nextLanding++, nation: c.nation[fleet]!, target: first, water: o.water, land: o.land, port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick - 1, ready: -1, due: Infinity };
       world.landings.set(l.id, l);
     }
     l.fleets.push(fleet);

@@ -40,6 +40,21 @@ describe('the rules hold with orders that stop early (ROADMAP R55d)', () => {
   }
 });
 
+// ROADMAP R56a (critic run 57, R57-B1). 28037, two groups, orders for 8 days: t179's click of 365 (at Hiroshima's port)
+// and 366 (a week's march off) sailed when 366 walked in, five days after its groups were there: ashore 14.2 days after
+// the click, its best way 6.7. Now a landing waits for a marcher only while it can still sail inside the click's week
+// (`Landing.due`). 28039, one group: t853's click of four, 365 and 367 clicked again onto the same landing and ashore
+// 11.0 days after it (best 10.7), was judged by 366 alone, left for the group's second voyage (`slowClick` keeps a click
+// whose divisions are clicked again onto the same landing).
+describe('a click lands within its week (ROADMAP R56a)', () => {
+  it('seed 28037 (Japan, 2 groups), orders for 8 days: 120 days, none broken', () => {
+    expect(landingBreaks({ seed: 28037, setup: 3517, days: 120, orders: 28037, probeDays: [], groups: 2, orderDays: 8 })).toEqual([]);
+  }, 300_000);
+  it('seed 28039 (Japan, 1 group): 120 days, none broken', () => {
+    expect(landingBreaks({ seed: 28039, setup: 3517, days: 120, orders: 28039, probeDays: [], groups: 1 })).toEqual([]);
+  }, 300_000);
+});
+
 // ADR-835 (the user's decision; critic run 48 on R47-N4): `stuck` counts a landing's days with no ground gained, not
 // its days gathering (19206's 367 marched ~70 cells to its click's landing at Kure and was counted stuck). The rule
 // is not blind: stalls planted by hand are still caught. Japan 3517, 60 days, the orders of seed 2 on the first day

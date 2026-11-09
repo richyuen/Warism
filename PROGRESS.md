@@ -2356,3 +2356,10 @@
   ashore near Palermo; R57-N2 the Actions tab's Offer peace silent when refused; R57-N3 an ended landing names 4 of 6.
   ADR-833: naval's findings are items. Filed as batch 11 (R56).
 - **Next:** R56a.
+
+## 2026-11-09 — R56a: a landing is due ashore by its click's best way (ADR-903)
+- R57-B1: 28037's landing was ready 94 hours after its click and then waited five days for 366's march (7.5 days over
+  the click's best way); its waits counted from the ready hour. Now from `Landing.due` (the click's best way, one rule
+  with the checker's): 9.1 days. 28039 was the checker's: a division aboard clicked again onto its own landing left its
+  first click. `landingInvariants1938` R56a red before; 246 of 246 of the critic's set at 0; Malta the same.
+- **Next:** R56b.

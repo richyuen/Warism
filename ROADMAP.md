@@ -1189,18 +1189,27 @@ Critic run 57 (full, on `d3519cb0`): R56-B1 closed; one blocking issue, R57-B1; 
 Naval's findings are items, fixed, then the critic again (ADR-833). No release.
 
 - [ ] R56 **Run 57's naval findings.**
-  - [ ] R56a R57-B1 (blocking): a click's landing held past its best way. (i) `npx tsx tools/diag/landingInvariants.ts
+  - [x] R56a R57-B1 (blocking): a click's landing held past its best way. (i) `npx tsx tools/diag/landingInvariants.ts
     28037 3517 120 28037 30 2 8` at 0 broken: a division whose march to a shared port would hold the click past its
     bound splits or is left, told, so `SPLIT_SOONER_HOURS` and `slowClick` cannot disagree; (ii) `… 28039 3517 120
     28039 30,90 1` at 0, or the checker shown wrong to reckon a sea way for a division already on the target's land
     (ADR-892); (iii) `sh critic/scripts/c57_liab_head.sh` (246 runs) all at 0; `c57_stuckret` 0; Malta's 18 the same.
+    Done (ADR-903): the landing's waits were anchored on its ready hour (28037's, 94 hours after the click), the
+    checker's on the click. Now a landing is due ashore by its click's best way (`Landing.due`, the checker's
+    `bestWayHours` moved into the sim) and waits for no march or call past READY_WAIT_HOURS of it: 28037 ashore 9.1
+    days after the click (best 6.7), 366 on the next voyage. 28039 was the checker's: 365, aboard, clicked again onto
+    its landing, left t853's click, judged by 366 left for the second voyage (the critic's "in China" was a two-group
+    trace, `GROUPS`); one aboard is kept in its click. (i), (ii) 0; (iii) 246 of 246 at 0, Malta's 21 the same.
   - [ ] R56b R57-N1: a landing whose first wave broke off says where they came ashore ("4 ashore near Palermo, away
     from Valletta; 2 at Rome"), not "4 of 6 ashore". AT: `SHOTAT=114,120,132 node critic/scripts/c57_lhold.mjs 27125
     ITA ENG 1095.5,344.5 1106.5,383.5 6 ita_malta6 140`.
   - [ ] R56c R57-N3: an ended landing tells every division it counts (28113, six to Norwich: 1 and 2 untold). AT:
     `node critic/scripts/c57_whotold.mjs 28113 GER ENG 1100.5,267.5 1031.5,266.5 6 120`.
-- Not naval, not taken this batch (ADR-829: only naval's findings are items under its bar): R57-N2 (the Actions tab's
-  Offer peace silent when refused; old, the menu greys it with the reason) and the small items (the two at Rome's
-  "transports needed" figure, `seaBattlesLook` counting one side's ships, two Spains' squadrons alike) carried.
+  - [ ] R56d R57-N2 (the user's call, 2026-11-09): the Actions tab's "Offer peace" the menu's: greyed when the enemy
+    would refuse, the reason in its title (`peaceVerdict`/`peaceWhy`), not a silent no-op. AT: 28401 as Germany, day
+    30, "Germany ⚔ Poland (+0)": the button disabled with the reason; at +32 it still makes peace.
+  - [ ] R56e Run 57's small items (the user's call, 2026-11-09): the bar's "12 transports needed, 7 at hand" for the
+    two left at Rome counts what those two need; `seaBattlesLook` counts a battle seen only with both sides' ships
+    drawn; a destroyer and a cruiser squadron told apart at 40 m/px.
 - Design objections: a cancel hands the army to the AI (ADR-875, the user's call); Malta never taken (the rules
   working); "ashore" counts those thrown ashore away (R56b takes the words); alliances ignore the map (carried).

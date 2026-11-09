@@ -10,49 +10,14 @@
  * division's (R43a), the late march (R31f). R49-N5 (20661, 26.3 days for a 5-day crossing) and R50-N1 (20841, 39.6
  * for 4) are its cases. Used by the fuzz (`landingBreaks`) and the grid (`gridCase`).
  */
-import { callCandidates, transportRoom, transportsPort } from '../../src/sim/systems/amphibious';
-import { landingOfDivision } from '../../src/sim/systems/landings';
-import { octileKm } from '../../src/sim/nav/grid';
-import { MARCH_DUTY } from '../../src/sim/systems/movement';
-import { sailHours, sailHoursFrom, sailHoursLeft } from '../../src/sim/systems/sail';
-import { navOf, portSeaOf, type World } from '../../src/sim/world';
+import { bestWayHours, landingOfDivision } from '../../src/sim/systems/landings';
+import { navOf, type World } from '../../src/sim/world';
+
+// The best way alone is the sim's own rule (ROADMAP R56a: a landing is due ashore by it, `Landing.due`).
+export { bestWayHours };
 
 /** How many days a click's first division ashore may come after its best single-division way (a week). */
 export const SLOW_CLICK_DAYS = 7;
-
-/**
- * The hours of division `id`'s best way alone to a landing on `water` (a cell), as `farPort` reckons it (R39d's rule):
- * the march to `port` (its land's nearest port of its nation by default) or the sail there of an idle group with
- * room that a call tries (`callCandidates`), the later, then that group's voyage from the port's water; the best of
- * the groups. Infinity for no group with a way, no port, or a division that does not march.
- */
-export function bestWayHours(w: World, id: number, water: number, port = transportsPort(w, id, false)): number {
-  const c = w.formations.cols;
-  const rule = w.rules?.templates[c.template[id]!];
-  if (port < 0 || !rule || rule.speedKmh <= 0) return Infinity;
-  const W = w.cells.w;
-  const march = octileKm(navOf(w).grid, Math.floor(c.y[id]!) * W + Math.floor(c.x[id]!), w.ports[port]!.cell) / (rule.speedKmh * MARCH_DUTY);
-  const [lx, ly] = [(water % W) + 0.5, Math.floor(water / W) + 0.5];
-  const k = portSeaOf(w)[port]!;
-  const [kx, ky] = [(k % W) + 0.5, Math.floor(k / W) + 0.5];
-  let best = Infinity;
-  const way = (o: number, busy = false): void => {
-    // Busy: under way, not before its leg's end (26041 t151: 1136 81 hours from the port with 97 left on its leg).
-    const come = Math.max(sailHours(w, o, kx, ky), busy && c.moving[o] === 1 ? sailHoursLeft(w, o) : 0);
-    if (Number.isFinite(come)) best = Math.min(best, Math.max(march, come) + sailHoursFrom(w, o, k, lx, ly));
-  };
-  for (const o of callCandidates(w, id, port)) way(o);
-  // None idle (ROADMAP R55d; critic run 56, R56-N3: such clicks went unreckoned, and R56-N2's 77 days with them): any
-  // group of its nation with room, busy or another landing's, from where it is now or its leg's end (a bound below the
-  // true way: a group carrying others lands them first).
-  if (best === Infinity) {
-    const men = c.strength[id]!;
-    w.formations.forEach((o) => {
-      if (w.isFleet(o) && c.nation[o] === c.nation[id] && transportRoom(w, o) >= men) way(o, true);
-    });
-  }
-  return best;
-}
 
 /**
  * A click's best single-division way to `water`, hours: the best of its divisions'. With `land` (the landing's land
@@ -74,6 +39,8 @@ export function clickBest(w: World, ids: readonly number[], water: number, land 
 interface Click {
   /** The hour of the click (the world before its step). */
   t0: number;
+  /** Its landing's water: a later click of its divisions to the same water keeps them in it (`click`). */
+  water: number;
   /** Its divisions still its own: not re-clicked since, not refused at it, alive. */
   ids: Set<number>;
   /** Its best single-division way, hours. */
@@ -90,6 +57,8 @@ export class SlowClicks {
   /** Clicks reckoned (a finite best way) and not (no way to reckon: not judged). */
   reckoned = 0;
   unreckoned = 0;
+  /** Divisions clicked again onto the same landing's water and kept in their earlier click (`click`). */
+  kept = 0;
   /** Clicks that came ashore, and the latest of them past its best way: hours over, and its line. */
   ashore = 0;
   worst: { over: number; line: string } | null = null;
@@ -99,10 +68,21 @@ export class SlowClicks {
   /**
    * A click of `ids` (call before the step that applies it). `water` is its landing's water (`landingOf`), or -1
    * for an order that is no landing (home, a march): it only takes the divisions from earlier clicks. `land`, the
-   * landing's land cell: those on its landmass walk and are not reckoned (`clickBest`).
+   * landing's land cell: those on its landmass walk and are not reckoned (`clickBest`). A division aboard its
+   * landing, clicked again onto the same water, stays in its earlier click too: the click changes nothing of its
+   * voyage (ROADMAP R56a, critic run 57: 28039's t853 click of four, 365 aboard at t995 clicked again and ashore 11.0
+   * days after it, best 10.7, was judged by 366 alone, left at the port for the group's second voyage). One waiting
+   * at the port is not kept: the new click is its bound (28041: kept, t668's 365 was judged by a next voyage).
    */
   click(w: World, ids: readonly number[], water: number, land = -1): void {
-    for (const k of this.open) for (const id of ids) k.ids.delete(id);
+    for (const k of this.open)
+      for (const id of ids) {
+        if (water >= 0 && k.water === water && k.ids.has(id) && w.embarked.has(id) && landingOfDivision(w, id)?.water === water) {
+          this.kept++;
+          continue;
+        }
+        k.ids.delete(id);
+      }
     this.open = this.open.filter((k) => k.ids.size > 0);
     if (water < 0 || ids.length === 0) return;
     const best = clickBest(w, ids, water, land);
@@ -110,13 +90,13 @@ export class SlowClicks {
       this.unreckoned++;
       return;
     }
-    this.add(w.tick, ids, best);
+    this.add(w.tick, ids, best, water);
   }
 
   /** A click made at `t0` whose best way was reckoned then (`clickBest`): a grid case's from its base's saved state. */
-  add(t0: number, ids: readonly number[], best: number): void {
+  add(t0: number, ids: readonly number[], best: number, water = -1): void {
     this.reckoned++;
-    this.open.push({ t0, ids: new Set(ids), best, read: false, broke: false });
+    this.open.push({ t0, water, ids: new Set(ids), best, read: false, broke: false });
   }
 
   /**
@@ -153,6 +133,6 @@ export class SlowClicks {
 
   /** The figure for a report: clicks reckoned, ashore, and the worst's hours over its best way. */
   note(): string {
-    return `slowClick: ${this.reckoned} clicks reckoned (${this.unreckoned} not), ${this.ashore} ashore; worst ${this.worst ? `${(this.worst.over / 24).toFixed(1)} days over its best way (${this.worst.line.replace(/^t\d+ slowClick: /, '')})` : 'none'}`;
+    return `slowClick: ${this.reckoned} clicks reckoned (${this.unreckoned} not, ${this.kept} divisions kept by a click to the same landing), ${this.ashore} ashore; worst ${this.worst ? `${(this.worst.over / 24).toFixed(1)} days over its best way (${this.worst.line.replace(/^t\d+ slowClick: /, '')})` : 'none'}`;
   }
 }

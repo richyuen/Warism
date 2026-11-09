@@ -436,6 +436,8 @@ class WorldCore implements Stateful {
       // The player's landings (ROADMAP R33b): [next id, then each: id, nation, target, water, land, port, state, then,
       // ordered, fleets n, ...fleets, divisions n, ...(id, joined)], only while there is one.
       ...(w.landings.size === 0 ? [] : [{ name: 'world.landings', dtype: 'f64' as const, data: Float64Array.from([w.nextLanding, ...[...w.landings.values()].sort((a, b) => a.id - b.id).flatMap((l) => [l.id, l.nation, l.target, l.water, l.land, l.port, l.state, l.then, l.ordered, l.fleets.length, ...l.fleets, l.divisions.size, ...[...l.divisions].sort((a, b) => a[0] - b[0]).flat()])]) }]),
+      // The hour each landing's clicks were due ashore by their best ways (ROADMAP R56a), where known.
+      ...([...w.landings.values()].some((l) => Number.isFinite(l.due)) ? [{ name: 'world.landingDue', dtype: 'f64' as const, data: Float64Array.from([...w.landings.values()].filter((l) => Number.isFinite(l.due)).sort((a, b) => a.id - b.id).flatMap((l) => [l.id, l.due])) }] : []),
       ...([...w.landings.values()].some((l) => l.ready >= 0) ? [{ name: 'world.landingReady', dtype: 'f64' as const, data: Float64Array.from([...w.landings.values()].filter((l) => l.ready >= 0).sort((a, b) => a.id - b.id).flatMap((l) => [l.id, l.ready])) }] : []),
       ...(w.escorts.size === 0 ? [] : [{ name: 'world.escorts', dtype: 'f64' as const, data: Float64Array.from([...w.escorts].sort((a, b) => a[0] - b[0]).flatMap(([k, e]) => [k, e.convoy, e.from])) }]),
       // The fleets placed by the editor that hold their place (PLAN 7.22c): [id, x, y] each, only while there is one.
@@ -579,7 +581,7 @@ class WorldCore implements Stateful {
         const nd = landings[at++]!;
         const divisions = new Map<number, number>();
         for (let k = 0; k < nd; k++, at += 2) divisions.set(landings[at]!, landings[at + 1]!);
-        w.landings.set(id!, { id: id!, nation: nation!, target: target!, water: water!, land: land!, port: port!, state: state! as LandingStateKind, then: then!, ordered: ordered!, fleets, divisions, ready: -1 });
+        w.landings.set(id!, { id: id!, nation: nation!, target: target!, water: water!, land: land!, port: port!, state: state! as LandingStateKind, then: then!, ordered: ordered!, fleets, divisions, ready: -1, due: Infinity });
       }
     }
     // The hour each landing was first ready (ROADMAP R44a), where it was: an optional section, absent before it.
@@ -587,6 +589,12 @@ class WorldCore implements Stateful {
     for (let at = 0; ready && at < ready.length; at += 2) {
       const l = w.landings.get(ready[at]!);
       if (l) l.ready = ready[at + 1]!;
+    }
+    // The hour each landing's clicks were due ashore (ROADMAP R56a): an optional section, absent before it.
+    const due = sections.find((s) => s.name === 'world.landingDue')?.data as Float64Array | undefined;
+    for (let at = 0; due && at < due.length; at += 2) {
+      const l = w.landings.get(due[at]!);
+      if (l) l.due = due[at + 1]!;
     }
     // A save from before ROADMAP R33b: its player's convoys, made landings at the next hour (`migrateLegacyLandings`).
     const legacy = (name: string): Float64Array | undefined => sections.find((s) => s.name === name)?.data as Float64Array | undefined;
@@ -1124,6 +1132,12 @@ export class World {
    * each joined the one they leave, kept in the one they join (ROADMAP R33d). Read within the hour, not saved.
    */
   rejoined = new Map<number, number>();
+  /**
+   * The hour's player's divisions ordered over the sea, each with its best way alone to its landing's water in hours,
+   * reckoned on the world before the hour's orders (`landingOrders`, `bestWayHours`; ROADMAP R56a): the landing it
+   * makes or joins is due ashore by it (`Landing.due`). Read within the hour, not saved.
+   */
+  clickWay = new Map<number, number>();
   /**
    * The hour's transport groups a division leaving a gathering landing freed (`detachDivision`), each with
    * that landing's port: the landing its order makes or joins takes them first (ROADMAP R37a; critic run 45,
