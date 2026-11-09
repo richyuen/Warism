@@ -511,7 +511,7 @@
   "bar.diplomacy": "Diplomacy",
   "bar.diplomacyHint": "Then tap a nation: its menu (war, peace, alliance)",
   "peace.refused.death": "They fight to the death: no peace while they do.",
-  "peace.refused.lead": "They refuse: lead the war score by {need} (now {lead}), or wear them out (war weariness {worn} of {bar}).",
+  "peace.refused.lead": "They refuse: lead the war score by {need} (now {lead}), or wear them out (war weariness {worn}, over {bar} needed).",
   "standing.war": "At war",
   "standing.beside": "Fights beside you",
   "standing.andBeside": "{s} · fights beside you",

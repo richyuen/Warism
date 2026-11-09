@@ -7,6 +7,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-912 · 2026-11-09 · accepted — No sail hour for a landing with no room; a refused peace's figures never read as at the bar (R57e)
+- **Context.** Critic run 58's small items (the user's call to take them, 2026-11-09): (1) 27125's bar read "sails in
+  about a day · 12 transports needed, 0 at hand" six hours before the landing ended for want of transports: in the hour
+  its last group was sunk, `waitLeft` counted no group away (none left) as ready, 0 hours, shown as a day; (2) 29401's
+  Offer peace refused at war weariness 39.97, its reason "war weariness 40 of 40" (rounded up to the bar; a lead of
+  24.6 would read "now +25" the same way).
+- **Decision.** (1) `sailsIn` gives no hour for a gathering landing with no room left (its groups sunk): the bar says
+  "gathering" with "0 at hand" until it ends or a group is called, the next hour. Display only (the bar and the order
+  tooltip); `waitLeft` is unchanged for the sim's waits. (2) `peaceWhy`'s lead never reads at the score needed while
+  under it, and the weariness reads "war weariness N, over 40 needed" (accepted only over 40: true at 40 too).
+- **Stands on (ADR-803).** ADR-906 (`peaceVerdict`) unchanged; R47/R48's `sailsIn` and R56b's row words unchanged but
+  for that hour. `landingRowAshore1938`'s R56b case read its "4 came ashore near Palermo …; sails in" from that very
+  hour, the only gathering hour with a sail hour; it now takes the first gathering hour with some away and checks the
+  words before the "; ". Seed 99's pin untouched (display only).
+- **Results.** `landingRowAshore1938` R57e and `peaceVerdict` red before, green now; the landing and peace test files
+  green; `landingRows all` 115 cases 0.
+
 ### ADR-911 · 2026-11-09 · accepted — A greyed "Offer peace" says why in a line under its war row (R57d)
 - **Context.** Critic run 58, R58-N3 (the user's call to take it, 2026-11-09): R56d greyed the Actions tab's "Offer
   peace" while the enemy would refuse, its reason only in the button's `title`; on a phone a touch shows no title, so

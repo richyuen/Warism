@@ -35,8 +35,16 @@ describe('the menu\'s peace verdict is the sim\'s (PLAN 7.175c)', () => {
 
   it('says why in words', () => {
     expect(peaceWhy(peaceVerdict(80, [0, 0], [false, true], 0))).toBe('They fight to the death: no peace while they do.');
-    expect(peaceWhy(peaceVerdict(12, [0, 30.4], [false, false], 0))).toBe(`They refuse: lead the war score by ${PEACE_ACCEPT_SCORE} (now +12), or wear them out (war weariness 30 of ${PEACE_ACCEPT_EXHAUSTION}).`);
+    expect(peaceWhy(peaceVerdict(12, [0, 30.4], [false, false], 0))).toBe(`They refuse: lead the war score by ${PEACE_ACCEPT_SCORE} (now +12), or wear them out (war weariness 30, over ${PEACE_ACCEPT_EXHAUSTION} needed).`);
     expect(peaceWhy(peaceVerdict(-8, [0, 0], [false, false], 0))).toContain('(now -8)');
     expect(peaceWhy(peaceVerdict(30, [0, 0], [false, false], 0))).toBe('');
+  });
+
+  // ROADMAP R57e (critic run 58): 29401's offer refused at war weariness 39.97 read "40 of 40". The figures never read
+  // as at the bar while the verdict is under it.
+  it('its figures never round up to the bar it refuses under', () => {
+    expect(peaceWhy(peaceVerdict(0, [0, 39.97], [false, false], 0))).toContain(`(war weariness 40, over ${PEACE_ACCEPT_EXHAUSTION} needed)`);
+    expect(peaceWhy(peaceVerdict(PEACE_ACCEPT_SCORE - 0.4, [0, 0], [false, false], 0))).toContain(`(now +${PEACE_ACCEPT_SCORE - 1})`);
+    expect(peaceWhy(peaceVerdict(-0.4, [0, 0], [false, false], 0))).toContain('(now +0)');
   });
 });

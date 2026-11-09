@@ -75,6 +75,11 @@ export function standingText(s: Standing): string {
 /** Why the enemy would refuse peace (PLAN 7.175c: the right-click menu's "Offer peace" title); '' when accepted. */
 export function peaceWhy(v: PeaceVerdict): string {
   if (v.why === 'death') return t('peace.refused.death');
-  if (v.why === 'lead') return t('peace.refused.lead', { need: PEACE_ACCEPT_SCORE, lead: `${v.lead >= 0 ? '+' : ''}${Math.round(v.lead)}`, worn: Math.round(v.exhaustion), bar: PEACE_ACCEPT_EXHAUSTION });
+  if (v.why === 'lead') {
+    // Never at the bar while under it (ROADMAP R57e; critic run 58: 39.97 read "40 of 40", refused): the lead shown
+    // below the score needed; the weariness worded as over the bar needed, true at the bar too.
+    const lead = Math.min(Math.round(v.lead), PEACE_ACCEPT_SCORE - 1) || 0;
+    return t('peace.refused.lead', { need: PEACE_ACCEPT_SCORE, lead: `${lead >= 0 ? '+' : ''}${lead}`, worn: Math.round(v.exhaustion), bar: PEACE_ACCEPT_EXHAUSTION });
+  }
   return '';
 }

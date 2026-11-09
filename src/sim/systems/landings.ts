@@ -1047,6 +1047,9 @@ function siblingWait(world: World, l: Landing): { port: number; hours: number } 
  */
 export function sailsIn(world: World, l: Landing): { hours: number; other?: number } | null {
   if (l.state !== LandingState.gathering) return null;
+  // No room left, its groups sunk: no sail hour (ROADMAP R57e; critic run 58: 27125's "sails in about a day · 0 at
+  // hand" in the hour before it ended for want of transports). It is over, or a group is called, at the next hour.
+  if (roomOf(world, l) <= 0) return null;
   const own = waitLeft(world, l);
   if (!Number.isFinite(own)) return null;
   const sib = siblingWait(world, l);

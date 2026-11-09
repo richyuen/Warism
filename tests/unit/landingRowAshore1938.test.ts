@@ -57,12 +57,14 @@ describe('a landing that sails without a marcher counts down, and says how many 
     for (let h = 0; h < 240 && !overSeen; h++) {
       r.step();
       const row = r.rows.find((x) => x.state === 'gathering' && x.divisions.some((d) => ids.includes(d.id)));
-      if (!ashoreSeen && (row?.ashore || row?.away) && /sails in/.test(landingStatus(row!))) ashoreSeen = landingStatus(row!);
+      // The first gathering hour with some away (R57e: the "sails in" this read came from the hour its last group was
+      // sunk, a sail hour with none at hand; there is none now).
+      if (!ashoreSeen && (row?.ashore || row?.away)) ashoreSeen = landingStatus(row!);
       if (!short && row && (row.ashore || row.away) && row.ships.have < row.ships.need) short = row.ships;
       const over = r.rows.find((x) => x.state === 'over' && x.outcome?.away);
       if (over) overSeen = landingStatus(over);
     }
-    expect(ashoreSeen).toMatch(/^4 came ashore near Palermo, away from Valletta; sails in/);
+    expect(ashoreSeen).toMatch(/^4 came ashore near Palermo, away from Valletta; \S/);
     expect(ashoreSeen).not.toMatch(/of \d+ ashore/);
     // Its end names the place too, the four gone from its row before it (R56b).
     expect(overSeen).toMatch(/4 came ashore near Palermo, away from Valletta/);
@@ -92,4 +94,28 @@ describe('a row with some ashore says where (ROADMAP R55b, R56b)', () => {
     expect(landingStatus({ ...row, away: 4, awayAt: 'Palermo' })).toBe('4 came ashore near Palermo, away from Valletta; sails in about a day');
     expect(landingStatus({ ...row, ashore: 1, away: 3 })).toBe('1 of 6 ashore; 3 came ashore away from Valletta; sails in about a day');
   });
+});
+
+// ROADMAP R57e (critic run 58): 27125's bar read "sails in about a day · 12 transports needed, 0 at hand" in the hour
+// the landing's last group was sunk, before it ended for want of transports: no group, no sail hour.
+describe('a gathering landing with no group gives no sail hour (ROADMAP R57e)', () => {
+  it('27125: no "sails in" with none at hand', () => {
+    const r = new RowRun(27125, ITA);
+    r.cmds([{ kind: 'declareWar', attacker: ITA, defender: ENG }]);
+    r.step();
+    const ids = nearestDivisions(r.world, ITA, [1095.5, 344.5], 6);
+    r.ids = ids;
+    for (const id of ids) r.cmds([{ kind: 'moveFormation', id, x: 1106.5, y: 383.5, nation: ITA }]);
+    const said: string[] = [];
+    let over = false;
+    for (let h = 0; h < 240 && !over; h++) {
+      r.step();
+      const row = r.rows.find((x) => x.divisions.some((d) => ids.includes(d.id)));
+      if (row?.state === 'over') over = true;
+      if (row?.state === 'gathering' && row.ships.have === 0) said.push(landingStatus(row));
+    }
+    expect(over, 'the landing ends').toBe(true);
+    expect(said.length, 'a gathering hour with none at hand').toBeGreaterThan(0);
+    for (const s of said) expect(s).not.toMatch(/sails in/);
+  }, 300_000);
 });

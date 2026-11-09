@@ -1254,10 +1254,12 @@ dimension at 8. Naval's findings are items, fixed, then the critic again (ADR-83
     at 390 × 844, the reason visible on day 0; desk unchanged.
     Done (ADR-911): the reason as a line under the war row, desk and phone (the title kept); 29403 at 390 × 844 reads
     it on day 0. (The desk shows the line too: a line beats a hover there as well.)
-  - [ ] R57e Run 58's small items (the user's call): (1) 27125's bar "sails in about a day · 12 transports needed, 0
+  - [x] R57e Run 58's small items (the user's call): (1) 27125's bar "sails in about a day · 12 transports needed, 0
     at hand" six hours before the landing ends for want of transports: a gathering row with none at hand and none
     coming says so, not a sail hour; (2) "war weariness 40 of 40" refused at 39.97: the reason's figures as the
     verdict reads them (no rounding up to the bar).
+    Done (ADR-912): no sail hour for a landing with no room left (the hour its last group was sunk); the lead never
+    reads at the bar while under it, the weariness "N, over 40 needed".
   - [ ] R57f Run 58's small naval item (the user's call): the AI feeds a squadron a week into a sea where the last
     were sunk (28061 t19734–t21576, Japan in the Black Sea, 8 battles, 0 Soviet losses): a sea its fleets lost in
     recently is not sent one alone. AT: `npx tsx tools/diag/seaBattles.ts 28061` no run of such losses; seed 99's pin

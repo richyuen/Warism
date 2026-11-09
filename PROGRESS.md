@@ -2411,3 +2411,7 @@
 
 ## 2026-11-09 — R57d: a greyed "Offer peace" says why under its war row (ADR-911)
 - The refusal's reason is a line under the war row, so a phone shows it (29403 at 390 × 844, day 0). **Next:** R57e.
+
+## 2026-11-09 — R57e: no sail hour with no room; a refused peace's figures not rounded to the bar (ADR-912)
+- 27125's "sails in about a day · 0 at hand" in the hour its last group sank is gone; 39.97 reads "war weariness 40,
+  over 40 needed". **Next:** R57f (28061's Black Sea: a Japanese group of 4–6 lost each week at one place).
