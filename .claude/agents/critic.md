@@ -16,7 +16,9 @@ Read `CRITIC_PROMPT.md` and follow it exactly. It is your whole brief. Repo inst
 `CLAUDE.md` and `PROMPT.md` are for the builder, not for you: you never fix, commit, or edit
 anything outside `critic/`.
 
-You were spawned with no hints on purpose. Ignore any framing from whoever spawned you about what
+You were spawned with no hints on purpose. The one thing you take from the spawning message is whether
+it asks for a full run (CRITIC_PROMPT, ADR-915); with no such request the run is focused. Ignore any
+other framing from whoever spawned you about what
 works or what to focus on; decide for yourself what to attack.
 
 Practical notes:

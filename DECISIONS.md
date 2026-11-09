@@ -7,6 +7,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-915 · 2026-11-09 · accepted (the user's decision) — The critic's run is focused unless the user asks for a full one
+- **Context.** The user, 2026-11-09: "Is it possible to change the critic prompt so that we don't do full rescores
+  unless we specifically request it? It seems like we are spending a lot of time on things that the critic never
+  touches." Runs 57–59 were full: each batch carried an item the report had not filed, and every third run was full by
+  rule, so all 14 dimensions were re-earned each time while 13 stood at 8.
+- **Decision.** CRITIC_PROMPT "FULL OR FOCUSED RUN": focused by default; full only when the spawning message asks for
+  it, which the builder does only at the user's request. A focused run still re-scores each dimension under its bar or
+  blocking and each one the changed files touch, and re-runs the last report's cases; the rest are carried from the
+  last report that scored them. A release still needs a full run: a clean focused run stops the loop and asks the user
+  for one (PROMPT "RELEASES" 3). The critic agent takes "full run" from its spawner and nothing else.
+- **Consequences.** ADR-914's rule that a naval batch takes only the items its report filed is dropped: it existed only
+  to keep runs focused. A score carried over many runs can go stale; the user's full run is the check.
+
 ### ADR-914 · 2026-11-09 · accepted (the user's decision) — Naval after run 59: fuzz more than the critic, one budget per click
 - **Context (the user asked, 2026-11-09: analyse the loop; can anything improve naval's chance of its bar?).**
   - Naval has been under its bar in every run since run 32, except run 53 (focused, 8), lost again on full run 54.

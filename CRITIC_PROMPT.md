@@ -41,21 +41,17 @@ no score.
 - Run the rule checkers on new seeds (`npx tsx tools/diag/diploInvariants.ts <seed> ...` and any
   other checker under `tools/diag/`); a broken rule they report is a finding.
 
-# FULL OR FOCUSED RUN (ADR-804, the user's decision)
-Decide this yourself, from git, before anything else. A run is **focused** when all of these hold:
-- the last report has a blocking issue or a score under its bar;
-- every commit since the last report's commit is one of two kinds: its subject names a ROADMAP item
-  that the commit adding that report filed (`git log -1 <that commit>`), or it changes no file under
-  `src/`, `data/` or `public/`;
-- the last three reports were not all focused (each JSON's `mode`; a report without one is full).
+# FULL OR FOCUSED RUN (ADR-804, ADR-915, the user's decisions)
+A run is **focused** unless the message that spawned you asks for a **full run**: only the user asks for
+one, and that request is the one framing from the spawner you follow. A run with no earlier report is full.
 
-Otherwise the run is **full**: the whole brief. A focused run re-runs every named case of the last
-report; scores afresh each dimension the last report scored under its bar or blocked on, and each one
-the changed files touch (`git diff --stat <last report's commit> HEAD`), exploring those freely with
-new seeds; and carries every other score, marked "carried". A defect met in passing still counts.
+A focused run re-runs every named case of the last report; scores afresh each dimension the last report
+scored under its bar or blocked on, and each one the changed files touch (`git diff --stat <last report's
+commit> HEAD`), exploring those freely with new seeds; and carries every other score, marked "carried",
+from the last report that scored it. A defect met in passing still counts. A full run is the whole brief.
 
-A release needs a full run with no blocking issue, so a clean focused run is followed by a full one.
-Say the mode and the reason at the top of the report.
+A release needs a full run with no blocking issue; the builder asks the user for it after a clean focused
+run. Say the mode and the reason at the top of the report.
 
 # DIMENSIONS (score 0–10)
 7 is solid: a demanding player finds nothing worth leaving the game over. 10 is the best this genre

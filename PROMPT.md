@@ -70,7 +70,8 @@ game's assets or code.
 # RELEASES (ADR-804, ADR-805)
 
 Items come in batches (a ROADMAP section). After the last item of a batch:
-1. Spawn the `critic` subagent with no hints, wait for it, check that its report names HEAD, commit
+1. Spawn the `critic` subagent with no hints (its run is focused; "full run" only when the user asked for
+   one, ADR-915), wait for it, check that its report names HEAD, commit
    `critic/` with a line in PROGRESS.md (scores, blocking count). Git takes only its report, JSON,
    scripts and scenario files; its logs and dumps stay on disk (`.gitignore`, ADR-914). That commit carries `critic/`,
    PROGRESS.md, ROADMAP.md and DECISIONS.md only; a fix is a commit of its own.
@@ -78,7 +79,7 @@ Items come in batches (a ROADMAP section). After the last item of a batch:
    in that dimension, and its "what the bar needs", as a one-line ROADMAP entry: taken, or the reason it
    is not (ADR-843).
 2. Each blocking issue becomes a ROADMAP item before the release item; fix them, then the critic
-   runs again (it decides itself whether the run is full or focused).
+   runs again (focused, ADR-915).
    **The exit (ADR-829).** The loop stops, and writes an ADR "proposed, the user's decision" that names
    the structural options (a redesign, taking the feature out of the release, the bar), when:
    - one dimension is under its bar, or blocks, in three critic runs in a row; or
@@ -90,10 +91,9 @@ Items come in batches (a ROADMAP section). After the last item of a batch:
    Not for naval (ADR-833, the user's decision, 2026-11-06): its blocking issues and its non-blocking
    ones are items, fixed, then the critic again, until it is at its bar; before each critic run the
    critic's own probes (`critic/scripts`) are replayed on the code and what they find is fixed first.
-   A naval batch takes only the items its report's commit filed, so the next run can be focused; an
-   item the user adds, or one the batch finds, waits for the batch after unless the user says it comes
-   first (ADR-914).
-3. On a full report with no blocking issue and every score at its bar: `npm run check:review`, the
+3. A focused report with no blocking issue and every score at its bar: the loop stops and asks the user
+   for a full run (the next message starts with it). On a full report with no blocking issue and every
+   score at its bar: `npm run check:review`, the
    soak (`npm run soak -- --scenario 1938 --seed 99 --minutes 30 --affinity 0xFFFF`), the sweep on
    unseen seeds (`npm run sweep -- --first <seed> --tag <name>`: borders still moving at the end
    on every seed), and `npm run bench -- G` (budgets PASS). A check that fails becomes a ROADMAP item.
