@@ -1759,7 +1759,8 @@ export class SimServer {
       // For another landing, or for a march (reason 1: no landing of its own now; ROADMAP R55e).
       tell('leftLanding', world.formations.has(id) && landingOfDivision(world, id) === undefined ? 1 : 0);
     } else if (kind === EventKind.NextVoyage) {
-      tell('nextVoyage', 0);
+      // Still marching as its landing sailed: 1 (ROADMAP R57b), else at the port with no room: 0.
+      tell('nextVoyage', world.formations.has(id) && c.moving[id] === 1 ? 1 : 0);
     } else if (kind === EventKind.LostAtSea) {
       tell('lostAtSea', 0);
     } else if (kind === EventKind.TransportsSunk) {

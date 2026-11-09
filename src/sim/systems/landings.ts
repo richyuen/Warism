@@ -820,6 +820,27 @@ function gather(world: World, l: Landing): void {
   // Its groups lost before its first voyage (sunk at its port): a group there within its due window, else over, told
   // (ROADMAP R57a; critic run 58, 29043: 1076 sunk at Hull, 272 waited 11 days for 1069 sailing from the Levant).
   if (l.fleets.length === 0 && !replaceGroups(world, l, l.sailed ? Infinity : dueLeft(world, l))) return;
+  // A next voyage: groups at its port with room for all of it there sail without the empty ones still coming back,
+  // which are the AI's again (ROADMAP R57b; critic run 58, R58-N1: 28037's 366 stood five days at Hiroshima beside
+  // 1144, kept there for it, while 1136 came back from the first voyage).
+  if (l.sailed) {
+    const here = l.fleets.filter((o) => atPort(world, l, o));
+    const back = l.fleets.filter((o) => !atPort(world, l, o) && !carrying(world, o));
+    const there = [...l.divisions.keys()].filter((id) => !world.embarked.has(id) && c.moving[id] !== 1 && divisionAtPort(world, l, id)).sort((a, b) => a - b);
+    if (here.length > 0 && back.length > 0 && there.length > 0 && there.length === [...l.divisions.keys()].filter((id) => !world.embarked.has(id)).length) {
+      const left = new Map(here.map((o) => [o, transportRoom(world, o) - menAboard(world, o)]));
+      const fits = there.every((id) => {
+        const o = here.find((g) => left.get(g)! >= c.strength[id]!);
+        if (o === undefined) return false;
+        left.set(o, left.get(o)! - c.strength[id]!);
+        return true;
+      });
+      if (fits) {
+        for (const o of back) world.playerOrders.delete(o);
+        l.fleets = here;
+      }
+    }
+  }
   // First ready: its groups at its port and one of its divisions there (R44a: those marching are waited for from it).
   if (l.ready < 0 && l.fleets.every((o) => atPort(world, l, o)) && [...l.divisions.keys()].some((id) => c.moving[id] !== 1 && !world.embarked.has(id) && divisionAtPort(world, l, id))) l.ready = world.tick;
   // Its divisions: marching to the port, at it, or stalled short of it (told; not waited for).
@@ -909,8 +930,9 @@ function gather(world: World, l: Landing): void {
     endLanding(world, l, RejectReason.NoSeaWay);
     return;
   }
-  // Those at the port with no room: told they go on the next voyage (R37a; critic runs 44–45: untold).
-  for (const id of present) if (l.divisions.has(id) && world.formations.has(id) && !isAboard(world, l, id)) world.out.emit(world.tick, EventKind.NextVoyage, id, c.nation[id]!, c.x[id]!, c.y[id]!);
+  // Those at the port with no room: told they go on the next voyage (R37a; critic runs 44–45: untold). And those still
+  // marching, not waited for (ROADMAP R57b; critic run 58, R58-N1: 28037's 366, untold as its landing sailed).
+  for (const id of [...l.divisions.keys()].sort((a, b) => a - b)) if (world.formations.has(id) && !isAboard(world, l, id) && (present.includes(id) || c.moving[id] === 1)) world.out.emit(world.tick, EventKind.NextVoyage, id, c.nation[id]!, c.x[id]!, c.y[id]!);
   // Groups carrying no one: kept for those left (the next voyage), else the AI's.
   const left = [...l.divisions.keys()].some((id) => !isAboard(world, l, id));
   if (!left) {

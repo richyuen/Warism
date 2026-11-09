@@ -754,6 +754,7 @@
   "order.transportsSunkCalledMany": "{count} divisions: the transports of their landing were sunk; others are on their way, and they wait for them ({name}).",
   "order.lostAtSea": "{name}: its transports were sunk at sea; it was lost with them.",
   "order.nextVoyage": "{name}: no room on the transports that sailed; it waits at the port, and they come back for it.",
+  "order.nextVoyageMarch": "{name}: its landing sailed before it reached the port; it goes on the next voyage.",
   "order.sentHome": "{name}: it stood on the ground of a nation outside its wars with no way home by land, and was sent home.",
   "order.sentHomeMany": "{name} and {more} more: they stood on the ground of nations outside your wars with no way home by land, and were sent home.",
   "order.toFormation": "Show the formation",

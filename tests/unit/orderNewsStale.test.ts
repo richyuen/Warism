@@ -77,3 +77,13 @@ describe('a single order row has a brief beside a panel (ROADMAP R43b)', () => {
     expect(seen.size).toBe(20);
   });
 });
+
+// ROADMAP R57b (critic run 58, R58-N1): one still marching as its landing sailed is told so, not "no room on the
+// transports that sailed; it waits at the port".
+describe('the next voyage of one still marching (ROADMAP R57b)', () => {
+  it('says its landing sailed before it reached the port', () => {
+    const marching = { ...news('nextVoyage', 1), reason: 1 };
+    expect(orderNewsText(marching, 'Infantry division 366')).toBe('Infantry division 366: its landing sailed before it reached the port; it goes on the next voyage.');
+    expect(orderNewsText(news('nextVoyage', 1), 'Infantry division 366')).toMatch(/no room on the transports that sailed/);
+  });
+});

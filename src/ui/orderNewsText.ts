@@ -13,7 +13,7 @@ export function orderNewsText(n: OrderNews, name: string, count = 1): string {
   if (n.kind === 'unescorted') return t('order.unescorted', { name });
   // Left for a march, not another landing (reason 1; ROADMAP R55e, critic run 56: "for a new one" with none).
   if (n.kind === 'leftLanding') return t(n.reason === 1 ? 'order.leftLandingMarch' : 'order.leftLanding', { name });
-  if (n.kind === 'nextVoyage') return t('order.nextVoyage', { name });
+  if (n.kind === 'nextVoyage') return t(n.reason === 1 ? 'order.nextVoyageMarch' : 'order.nextVoyage', { name });
   if (n.kind === 'sameLanding') return n.reason > 1 ? t('order.sameLandingMany', { name, more: n.reason - 1 }) : t('order.sameLanding', { name });
   if (n.kind === 'lostAtSea') return t('order.lostAtSea', { name });
   if (n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalled' : 'order.transportsSunk', { name });

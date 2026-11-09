@@ -109,6 +109,8 @@ export interface LandingCase {
   notes?: string[];
   /** Filled with the run's `slowClick` tracker (its figures: clicks reckoned, ashore, the worst). */
   slow?: SlowClicks;
+  /** Each hour's events (6 a record), before they are cleared (a test's look at what was told). */
+  events?: (w: World, ev: readonly number[]) => void;
   /** Each hour after the step, and each click (a tool's trace). */
   onHour?: (w: World, click?: { ids: number[]; x: number; y: number }) => void;
 }
@@ -284,6 +286,7 @@ export function landingBreaks(k: LandingCase): string[] {
   const refused = new Set<number>();
   const quiet = (x: World): void => {
     const ev = x.out.events;
+    k.events?.(x, ev);
     for (let i = 0; i < ev.length; i += 6) {
       const kind = ev[i + 1];
       if (kind === EventKind.NextVoyage) voyageTold.add(ev[i + 2]!);

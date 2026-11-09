@@ -1238,9 +1238,12 @@ dimension at 8. Naval's findings are items, fixed, then the critic again (ADR-83
     reads the hour's refusals first. The default setup's: 272's only group sunk at Hull, the replacement called from
     355 hours away; before a first voyage a replacement is called only within the due window, else the landing is
     over, told. Both commands 0; 306 of 306 at 0; R57-B1's two 0.
-  - [ ] R57b R58-N1: a division a due landing sails without is told at that hour ("sails on the next voyage, in about
+  - [x] R57b R58-N1: a division a due landing sails without is told at that hour ("sails on the next voyage, in about
     N days"), and 28037's 366 not ashore 12.7 days over its best way. AT: `SEED=28037 ORDERDAYS=8 DIV=366 npx tsx
     critic/scripts/c58_orderdays.ts`; the last-ashore measure (`critic/scripts/c58_lastashore.ts`) no worse.
+    Done (ADR-909): 366 stood five days beside 1144, an empty group of its landing at the port with room, waiting for
+    1136 to come back. A next voyage now sails with the groups at its port that have room; one marching as its landing
+    sails is told ("its landing sailed before it reached the port"). 366 ashore at 14.3 days; last-ashore the same.
   - [ ] R57c R58-N2: every division a landing's end counts keeps its word: 27125's 319 ("Landed", no notice) told it
     came ashore near Palermo, away from Valletta. AT: `node critic/scripts/c58_whotold.mjs 27125 ITA ENG
     1095.5,344.5 1106.5,383.5 6 140`, all six told; 28113 still all six.

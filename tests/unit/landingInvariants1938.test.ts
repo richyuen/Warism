@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { World } from '../../src/sim/world';
 import { LandingState } from '../../src/sim/systems/landings';
+import { EventKind } from '../../src/shared/events';
 import { landingBreaks } from '../helpers/landingInvariants';
 
 // ROADMAP R33d (ADR-830; as ADR-803's `diploInvariants`): the rules of the player's landings checked each hour
@@ -59,6 +60,33 @@ describe('a click lands within its week (ROADMAP R56a)', () => {
 // left 273 for the second voyage; at t1195 271 and 272, aboard, were clicked onto the open sea beside their landing,
 // refused (`OpenSea`) and kept in it, ashore 6.6 days after t1068's click (best 3.4). `slowClick` took them from the
 // click before it read the refusal and judged it by 273 alone: 11.3 days. A refused order takes no one from a click.
+// ROADMAP R57b (critic run 58, R58-N1). 28037, two groups, orders for 8 days: t179's landing sailed at t274 with 365
+// (R56a's due) while 366 still marched, untold; 366 reached Hiroshima's port at t397 beside 1144, an empty group of the
+// landing kept there with room for it, and waited five days for 1136 to come back from the first voyage: ashore at
+// t645, 19.4 days after the click (run 57's sim: both at 14.2). Now one left marching is told at the sail hour, and a
+// next voyage sails with the groups at its port when they have room for all there.
+describe('a division a landing sails without is told and not kept waiting (ROADMAP R57b)', () => {
+  it('seed 28037 (Japan, 2 groups), orders for 8 days: 366 told as it sails, ashore within 16 days of the click', () => {
+    let told = -1;
+    let ashore = -1;
+    const breaks = landingBreaks({
+      seed: 28037, setup: 3517, days: 120, orders: 28037, probeDays: [], groups: 2, orderDays: 8,
+      events: (w, ev) => {
+        for (let i = 0; i < ev.length; i += 6) {
+          if (ev[i + 2] !== 366) continue;
+          if (ev[i + 1] === EventKind.NextVoyage && told < 0 && w.formations.cols.moving[366] === 1) told = ev[i]!;
+          if (ev[i + 1] === EventKind.FormationLanded && ashore < 0 && ev[i]! > 179) ashore = ev[i]!;
+        }
+      },
+    });
+    expect(breaks).toEqual([]);
+    expect(told, '366 told the hour its landing sailed without it').toBeGreaterThan(179);
+    expect(told).toBeLessThan(300);
+    expect(ashore, '366 ashore').toBeGreaterThan(0);
+    expect((ashore - 179) / 24).toBeLessThan(16);
+  }, 300_000);
+});
+
 describe('a refused click takes no one from a click (ROADMAP R57a)', () => {
   it('seed 29043 (the UK, 2 groups): 120 days, none broken', () => {
     expect(landingBreaks({ seed: 29043, setup: 15101, days: 120, orders: 29043, probeDays: [30, 90], groups: 2 })).toEqual([]);

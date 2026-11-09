@@ -2399,3 +2399,8 @@
   are read first, and before a first voyage a lost group is replaced only within the due window, else the landing ends,
   told. 306 of 306 setups at 0; landingRows 0; the pin unchanged.
 - The user asked to take R58-N3 and run 58's small items: filed as R57d–f. **Next:** R57b.
+
+## 2026-11-09 — R57b: a next voyage sails with the groups at its port; one left marching is told (ADR-909)
+- 28037's 366 waited five days at the port beside an empty group of its landing for the other to come back; now it
+  sails with the one there (ashore at 14.3 days, was 19.4), and is told as its landing sails without it. 306 setups 0;
+  landingRows 0; the pin unchanged. **Next:** R57c.

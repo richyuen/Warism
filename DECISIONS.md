@@ -7,6 +7,27 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-909 · 2026-11-09 · accepted — A next voyage sails with the groups at its port that have room; one left marching is told as its landing sails (R57b)
+- **Context.** Critic run 58, R58-N1: on 28037 (Japan, two groups, orders for 8 days) R56a's due made t179's landing
+  sail at t274 with 365 while 366 still marched to Hiroshima's port; 366 was told nothing that hour (its panel said
+  "its landing sails before it is there"). It reached the port at t397, beside 1144, an empty group of the landing
+  kept there for it with room (12 transports, need 10), and stood five days: a gathering landing is ready only with
+  every group at its port, and 1136 was still coming back from the first voyage. Ashore at t645, 19.4 days after the
+  click (run 57's sim, waiting for 366: both at 14.2).
+- **Decision.** (1) A landing that has sailed once (`Landing.sailed`, R57a): when the groups at its port have room for
+  all of it not aboard, all at the port, first fit as at the sail hour, the empty groups still coming back leave it,
+  the AI's again, and it sails. Before its first voyage nothing changes (R44a's ready hour, R54a's calls). (2) At the
+  sail hour a division of it still marching is told `NextVoyage` too, as one at the port with no room (R37a); the
+  worker marks it (reason 1) and the page says "its landing sailed before it reached the port; it goes on the next
+  voyage", not "no room ... it waits at the port".
+- **Stands on (ADR-803).** ADR-903 (R56a's due: a marcher not waited for past it) unchanged; R37a/R38e (`NextVoyage`
+  at the sail hour) extended to marchers; R39a (a group called for a next voyage) unchanged. Only player landings;
+  seed 99's pin unchanged.
+- **Results.** `landingInvariants1938` R57b red before (366 untold), now 366 told at the sail hour and ashore at t522,
+  14.3 days after the click (7.6 over its best way: its march to Hiroshima's port, R43a's join, is most of it); the
+  critic's 306 setups 0; its last-ashore measure on its 100 setups the same as before (6 of 26 clicks over 7 days);
+  `landingRows all` 115 cases 0; the landing and order-news test files green; `orderNewsStale` gains the wording.
+
 ### ADR-908 · 2026-11-09 · accepted — A refused order takes no one from a click; a landing's groups lost before it sails are replaced only within its due window (R57a)
 - **Context.** Critic run 58, R58-B1 (blocking): `slowClick` broken on new seed 29043 (the UK, setup 15101), two
   faults. (1) Two groups: t1068's click of 270–274 sailed with 271 and 272 and left 273 for the second voyage; at
