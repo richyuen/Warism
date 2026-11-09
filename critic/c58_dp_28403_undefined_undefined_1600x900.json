@@ -1,0 +1,7 @@
+{
+ "seed": 28403,
+ "DAYS": 30,
+ "steps": [],
+ "fail": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('take-control')\u001b[22m\n\n    at C:\\Git\\Warism\\critic\\scripts\\c58_dip_player.mjs:37:42",
+ "errors": []
+}

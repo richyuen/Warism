@@ -1,0 +1,22 @@
+npm run sim -- --scenario 1938 --seed 7019 --years 20 --save critic/c58_seed7019_y20.bin > critic/c58_seed7019_save.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 28039 3517 120 28039 30,90 1 > critic/c58_li_28039_g1.log 2>&1
+npx tsx critic/scripts/c58_topArea.ts 29099 25 critic/c58_toparea_29099.json > critic/c58_toparea_29099.log 2>&1
+npx tsx critic/scripts/c58_topArea.ts 29097 25 critic/c58_toparea_29097.json > critic/c58_toparea_29097.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 29001 random 3650 > critic/c58_diploinv_29001r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 29003 scenario 3650 --heroes > critic/c58_diploinv_29003s_h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 29005 random 1825 --world random > critic/c58_diploinv_29005rw_5y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 29007 scenario 3650 > critic/c58_diploinv_29007s_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 29009 random 3650 --heroes > critic/c58_diploinv_29009r_h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 29011 scenario 3650 > critic/c58_diploinv_29011s_10y.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 29021 3517 > critic/c58_li_29021_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 29023 15101 > critic/c58_li_29023_eng.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 29051 > critic/c58_wi_29051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 29053 365 --heroes > critic/c58_wi_29053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 29055 3650 > critic/c58_wi_29055_10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 29057 365 --world random > critic/c58_wi_29057rw.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 29059 4380 24 critic/c58_wd_29059.json > critic/c58_wd_29059.log 2>&1
+npx tsx tools/diag/seaBattles.ts 29061 scenario --years 3 --out critic/c58_sb_29061.json > critic/c58_sb_29061.log 2>&1
+npx tsx tools/diag/seaBattles.ts 28061 scenario --years 3 --out critic/c58_sb_28061.json > critic/c58_sb_28061.log 2>&1
+npx tsx tools/diag/landingRows.ts all critic/c58_lrows_all.json > critic/c58_lrows_all.log 2>&1
+npx tsx critic/scripts/c58_repulse.ts 29071 ENG GER 1023.5,275.5 1072.5,259.5 3 critic/c58_repulse_29071.json 500 12 > critic/c58_repulse_29071.log 2>&1
+npx tsx critic/scripts/c58_repulse.ts 29073 JAP CHI 1818.5,385.5 1715.5,413.5 3 critic/c58_repulse_29073.json 400 12 > critic/c58_repulse_29073.log 2>&1

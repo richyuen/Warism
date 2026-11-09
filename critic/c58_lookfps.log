@@ -1,0 +1,41 @@
+3000 m/px balls: at the start 48 formations (6 engaged), 0 elements; idle 60.1 draws/s; forced 60 frames/s, p95 18.1 ms, worst 23, a draw 2.11 ms (longest 5)
+3000 m/px classic: at the start 47 formations (4 engaged), 0 elements; idle 60.1 draws/s; forced 60 frames/s, p95 18.2 ms, worst 20, a draw 2.21 ms (longest 3.9)
+3000 m/px classic: at the start 36 formations (4 engaged), 0 elements; idle 60 draws/s; forced 60 frames/s, p95 18.4 ms, worst 24, a draw 2.4 ms (longest 5.8)
+3000 m/px balls: at the start 53 formations (12 engaged), 0 elements; idle 60 draws/s; forced 60 frames/s, p95 18.2 ms, worst 25, a draw 2.5 ms (longest 6.6)
+3000 m/px balls: at the start 62 formations (2 engaged), 0 elements; idle 60.1 draws/s; forced 60 frames/s, p95 18 ms, worst 20, a draw 2.51 ms (longest 4.5)
+3000 m/px classic: at the start 65 formations (5 engaged), 0 elements; idle 60.1 draws/s; forced 60 frames/s, p95 18.2 ms, worst 21, a draw 2.54 ms (longest 4.6)
+1200 m/px balls: at the start 73 formations (2 engaged), 1325 elements; idle 60.1 draws/s; forced 59 frames/s, p95 17.9 ms, worst 106, a draw 2.5 ms (longest 6.4)
+1200 m/px classic: at the start 27 formations (0 engaged), 545 elements; idle 60 draws/s; forced 59.8 frames/s, p95 18.1 ms, worst 33, a draw 2.6 ms (longest 4.7)
+1200 m/px classic: at the start 26 formations (0 engaged), 385 elements; idle 60.1 draws/s; forced 60 frames/s, p95 17.9 ms, worst 25, a draw 2.58 ms (longest 3.2)
+1200 m/px balls: at the start 44 formations (4 engaged), 1044 elements; idle 59.9 draws/s; forced 60 frames/s, p95 17.8 ms, worst 27, a draw 2.89 ms (longest 3.6)
+1200 m/px balls: at the start 18 formations (3 engaged), 278 elements; idle 59.8 draws/s; forced 60 frames/s, p95 17.9 ms, worst 26, a draw 2.52 ms (longest 3.3)
+1200 m/px classic: at the start 16 formations (2 engaged), 401 elements; idle 60.2 draws/s; forced 60 frames/s, p95 17.6 ms, worst 19, a draw 2.85 ms (longest 3.7)
+600 m/px balls: at the start 15 formations (0 engaged), 220 elements; idle 60 draws/s; forced 60 frames/s, p95 17.9 ms, worst 25, a draw 2.18 ms (longest 3.1)
+600 m/px classic: at the start 6 formations (6 engaged), 111 elements; idle 60.1 draws/s; forced 58.8 frames/s, p95 17.8 ms, worst 104, a draw 2.23 ms (longest 3.2)
+600 m/px classic: at the start 19 formations (0 engaged), 492 elements; idle 60.2 draws/s; forced 60 frames/s, p95 17.9 ms, worst 32, a draw 2.3 ms (longest 3.8)
+600 m/px balls: at the start 7 formations (0 engaged), 136 elements; idle 60.2 draws/s; forced 60 frames/s, p95 17.9 ms, worst 18, a draw 2.28 ms (longest 3.3)
+600 m/px balls: at the start 6 formations (0 engaged), 140 elements; idle 60 draws/s; forced 60 frames/s, p95 17.7 ms, worst 18, a draw 2.29 ms (longest 3.1)
+600 m/px classic: at the start 10 formations (3 engaged), 140 elements; idle 60 draws/s; forced 60 frames/s, p95 17.9 ms, worst 31, a draw 2.25 ms (longest 2.9)
+120 m/px balls: at the start 4 formations (0 engaged), 68 elements; idle 58.3 draws/s; forced 60 frames/s, p95 17.7 ms, worst 21, a draw 0.68 ms (longest 1.4)
+120 m/px classic: at the start 0 formations (0 engaged), 0 elements; idle 55.4 draws/s; forced 60 frames/s, p95 17.9 ms, worst 22, a draw 0.66 ms (longest 1.3)
+120 m/px classic: at the start 9 formations (9 engaged), 153 elements; idle 60.1 draws/s; forced 58.8 frames/s, p95 17.9 ms, worst 116, a draw 0.94 ms (longest 2.2)
+120 m/px balls: at the start 4 formations (0 engaged), 40 elements; idle 60.1 draws/s; forced 60 frames/s, p95 17.6 ms, worst 29, a draw 0.79 ms (longest 1.5)
+120 m/px balls: at the start 2 formations (0 engaged), 56 elements; idle 60.1 draws/s; forced 60 frames/s, p95 17.9 ms, worst 30, a draw 0.73 ms (longest 1.6)
+120 m/px classic: at the start 9 formations (2 engaged), 180 elements; idle 60.2 draws/s; forced 60 frames/s, p95 18 ms, worst 28, a draw 0.77 ms (longest 1.5)
+30 m/px balls: at the start 0 formations (0 engaged), 14 elements; idle 60.2 draws/s; forced 60 frames/s, p95 17.8 ms, worst 21, a draw 0.84 ms (longest 1.3)
+30 m/px classic: at the start 6 formations (6 engaged), 98 elements; idle 60.1 draws/s; forced 60 frames/s, p95 17.8 ms, worst 19, a draw 1.56 ms (longest 2)
+30 m/px classic: at the start 3 formations (3 engaged), 56 elements; idle 60 draws/s; forced 59.8 frames/s, p95 17.9 ms, worst 34, a draw 1 ms (longest 1.7)
+30 m/px balls: at the start 12 formations (12 engaged), 168 elements; idle 60.2 draws/s; forced 58.8 frames/s, p95 17.8 ms, worst 116, a draw 1.8 ms (longest 3)
+30 m/px balls: at the start 8 formations (8 engaged), 232 elements; idle 60.1 draws/s; forced 59.8 frames/s, p95 20.4 ms, worst 38, a draw 2.06 ms (longest 6.3)
+30 m/px classic: at the start 0 formations (0 engaged), 69 elements; idle 60 draws/s; forced 60 frames/s, p95 17.7 ms, worst 21, a draw 0.82 ms (longest 1.4)
+3000_balls: forced 60 frames/s (least 60), p95 18.2 ms, a draw 2.4 ms (longest 6.6); idle 60.1 draws/s; most elements at a start 0
+3000_classic: forced 60 frames/s (least 60), p95 18.4 ms, a draw 2.4 ms (longest 5.8); idle 60.1 draws/s; most elements at a start 0
+1200_balls: forced 59.7 frames/s (least 59), p95 17.9 ms, a draw 2.6 ms (longest 6.4); idle 59.9 draws/s; most elements at a start 1325
+1200_classic: forced 59.9 frames/s (least 59.8), p95 18.1 ms, a draw 2.7 ms (longest 4.7); idle 60.1 draws/s; most elements at a start 545
+600_balls: forced 60 frames/s (least 60), p95 17.9 ms, a draw 2.3 ms (longest 3.3); idle 60.1 draws/s; most elements at a start 220
+600_classic: forced 59.6 frames/s (least 58.8), p95 17.9 ms, a draw 2.3 ms (longest 3.8); idle 60.1 draws/s; most elements at a start 492
+120_balls: forced 60 frames/s (least 60), p95 17.9 ms, a draw 0.7 ms (longest 1.6); idle 59.5 draws/s; most elements at a start 68
+120_classic: forced 59.6 frames/s (least 58.8), p95 18 ms, a draw 0.8 ms (longest 2.2); idle 58.6 draws/s; most elements at a start 180
+30_balls: forced 59.5 frames/s (least 58.8), p95 20.4 ms, a draw 1.6 ms (longest 6.3); idle 60.2 draws/s; most elements at a start 232
+30_classic: forced 59.9 frames/s (least 59.8), p95 17.9 ms, a draw 1.1 ms (longest 2); idle 60 draws/s; most elements at a start 98
+done: critic/c58_lookfps_7019.json

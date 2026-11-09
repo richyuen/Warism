@@ -1,5 +1,5 @@
 {
-  "commit": "d3519cb087698522946dcb373361d1e90f385be9",
+  "commit": "000a4731c9ef60089ad000ebae459891e44294de",
   "mode": "full",
   "scores": {
     "mapVisuals": 8,
@@ -19,11 +19,11 @@
   },
   "blocking": [
     {
-      "id": "R57-B1",
-      "title": "landingInvariants' slowClick breaks on HEAD (28037, orders for 8 days: t179's click of 365,366 ashore after 14.2 days against a best way of 6.7; 0 on d016ed2a's sim with the same checker), and on both commits on 28039 g1 (366 already in China, reckoned by a sea way)",
-      "evidence": "npx tsx tools/diag/landingInvariants.ts 28037 3517 120 28037 30 2 8 -> 1 broken, twice (critic/c57_li/head_28037_3517_g2_od8.log, critic/c57_li_28037_rerun.log); HEAD checker on d016ed2a's sim (critic/wt2) 0 broken (critic/c57_li_28037_newchk_oldsim.log). Trace: 366 not joined at t31 on HEAD, marching toward Tokyo at t179, joins 365's landing at port 56 11 cells off; groups ready t273, sails t396 when 366 walks in (critic/c57_od_28037_365.log, critic/c57_od_28037_366.log). 28039 3517 120 28039 30,90 1: 'slowClick: t853's click of 366 not ashore after 17.7 days, its best way 10.7' on HEAD and on d016ed2a (critic/c57_li/head_28039_3517_g1_od-.log, critic/c57_li/old_28039_3517_g1_od-.log, critic/c57_od_28039_366.log). Scale: HEAD 2 of 246 runs broken; run 56's 156 setups 156 at 0; new seeds with orders for 8 days HEAD 1 of 45, d016ed2a's sim under HEAD's checker 11 of 45 (critic/c57_liab.log, critic/c57_liab_oldsim.log).",
-      "fix": "Lead (read, not proven): make the click's split rule and slowClick agree: a division whose march to a shared port would hold the landing past its best way splits to its own port (or the landing sails without it, told), so SPLIT_SOONER_HOURS and slowClick's week cannot disagree; the checker not reckoning a sea way for a division already on the target's landmass (ADR-892's intent), or the march judged by its own bound. Bar: landingInvariants 28037 3517 120 28037 30 2 8 at 0; sh critic/scripts/c57_liab_head.sh (HEAD only, 246 runs) all at 0 (28039 3517 g1 included or shown a checker error); c57_stuckret still 0; Malta's 18 the same."
+      "id": "R58-B1",
+      "title": "landingInvariants' slowClick breaks on HEAD on new seed 29043 (setup 15101: t1068's click of 273 ashore after 11.3 days against a best way of 3.4); run 57's sim with its own checker 0 on the same commands",
+      "evidence": "npx tsx tools/diag/landingInvariants.ts 29043 15101 120 29043 30,90 2 -> 1 broken, twice (critic/c58_li/head_29043_15101_g2_od-.log, critic/c58_li_29043_g2_rerun.log); '… 29043 15101' (defaults) -> 1 broken, t1055's click of 272 (critic/c58_li_29043_15101_rerun.log). d3519cb0's sim (git archive to critic/old) with its checker: 0 and 0 (critic/c58_li_29043_g2_oldsim.log, critic/c58_li_29043_15101_oldsim.log); run 57's checker on HEAD's sim (critic/oc/li.ts): the same break. Trace (critic/c58_od_29043_273.log, c58_orderdays3.ts, DIV=271 for the sibling): landing L7 ready 4.2 days after the click, sails with 271 and 272 and leaves 273 for want of room; 271/272 clicked again at sea onto 1034.5,277.5 (a sea cell, landingOf none: critic/c58_water.ts) stay in L7 in the sim (ADR-903) and land 6.6 days after t1068, but the checker drops them as a 'no landing' order, so the click is judged by 273, landed on the second voyage at t1340. Scale: HEAD 1 of 306 (run 57's 246 setups all 0; new 29031-29049 x 6: 1), critic/c58_liab.log.",
+      "fix": "One reading of 'the same landing' in the sim and the checker (keep a division in its click while the sim keeps it in its landing, read after the step by landingOfDivision rather than the click cell's water), and a click short of room told at the click or its second voyage held to the bound. Bar: landingInvariants 29043 15101 120 29043 30,90 2 and 29043 15101 at 0 broken; P=3 sh critic/scripts/c58_liab_head.sh (306 runs) all 0; R57-B1's 28037 and 28039 cases still 0; c58_stuckret 0; Malta's 18 the same."
     }
   ],
-  "timestamp": "2026-11-09T10:00:00-05:00"
+  "timestamp": "2026-11-09T13:30:00-05:00"
 }

@@ -1,0 +1,13 @@
+== c58_retstuck 27125 ITA ENG 1095.5,344.5 1106.5,383.5 6 ita_malta6_reclick 480 12:19:44
+   exit 0
+== c58_lland 27123 ENG GER 1023.5,275.5 1072.5,259.5 10 eng_br10 400 12:20:11
+   exit 0
+== c58_lland 27127 ENG GER 1023.5,275.5 1072.5,259.5 10 eng_br10 400 12:20:27
+   exit 0
+== c58_lland 27129 ENG GER 1023.5,275.5 1072.5,259.5 10 eng_br10 400 12:20:43
+   exit 0
+== c58_dip_player 28403 GER POL HUN,ENG 30 12:20:59
+   exit 0
+== c58_peacebtn 29403 JAP CHI 120 5 390 844 12:21:48
+   exit 0
+SUITECDONE

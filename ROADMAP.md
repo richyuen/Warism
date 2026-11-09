@@ -1221,3 +1221,28 @@ Naval's findings are items, fixed, then the critic again (ADR-833). No release.
     check judges by side and tells one-side battles (t809); a ship's flag whole above its deck (the Republic's purple).
 - Design objections: a cancel hands the army to the AI (ADR-875, the user's call); Malta never taken (the rules
   working); "ashore" counts those thrown ashore away (R56b takes the words); alliances ignore the map (carried).
+
+## Batch 12 — run 58's naval findings
+
+Critic run 58 (full, on `000a4731`): R57-B1 closed on its cases; one blocking issue, R58-B1; naval 7, every other
+dimension at 8. Naval's findings are items, fixed, then the critic again (ADR-833). No release.
+
+- [ ] R57 **Run 58's naval findings.**
+  - [ ] R57a R58-B1 (blocking): `slowClick` breaks on new seed 29043 (setup 15101: t1068's click judged by 273 alone,
+    left at port for the second voyage, 8.0 days over its best way of 3.4; 271 and 272, aboard and clicked again onto
+    the sea beside their landing, kept in it by the sim and dropped by the checker). One reading of "the same landing"
+    in the sim and the checker, and a left division's next voyage held to its click's bound. AT:
+    `npx tsx tools/diag/landingInvariants.ts 29043 15101 120 29043 30,90 2` and `… 29043 15101` at 0 broken;
+    `sh critic/scripts/c58_liab_head.sh` (306 runs) all at 0; R57-B1's 28037 and 28039 cases still 0.
+  - [ ] R57b R58-N1: a division a due landing sails without is told at that hour ("sails on the next voyage, in about
+    N days"), and 28037's 366 not ashore 12.7 days over its best way. AT: `SEED=28037 ORDERDAYS=8 DIV=366 npx tsx
+    critic/scripts/c58_orderdays.ts`; the last-ashore measure (`critic/scripts/c58_lastashore.ts`) no worse.
+  - [ ] R57c R58-N2: every division a landing's end counts keeps its word: 27125's 319 ("Landed", no notice) told it
+    came ashore near Palermo, away from Valletta. AT: `node critic/scripts/c58_whotold.mjs 27125 ITA ENG
+    1095.5,344.5 1106.5,383.5 6 140`, all six told; 28113 still all six.
+- Not filed (UI, the user's call as in batch 11): R58-N3 the phone's greyed "Offer peace" gives no reason (a title
+  only); small: "sails in about a day · 0 at hand" six hours before the landing ends; "war weariness 40 of 40" at
+  39.97.
+- Design objections: `slowClick` judges the first ashore (R57b takes the left one's word and bound); Malta never taken
+  (the rules working); alliances ignore the map (carried). Ideas: a "next lift, about N days" line (R57b); a disabled
+  button's reason under it on a phone (R58-N3, not filed).

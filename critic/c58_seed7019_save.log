@@ -1,0 +1,25 @@
+
+> warism@0.0.1 sim
+> tsx tools/headless/cli.ts --scenario 1938 --seed 7019 --years 20 --save critic/c58_seed7019_y20.bin
+
+year   1  tick 8760  hash 7383572f  nations 94  formations 1045  flipped 31612  carrier-sunk 196.8  tick ms mean 4.9008 p95 12.0366  (43.02 s)
+year   2  tick 17520  hash 1fc5ebf2  nations 91  formations 896  flipped 37301  carrier-sunk 0.0  tick ms mean 3.0892 p95 10.2934  (27.11 s)
+year   3  tick 26280  hash e920b347  nations 90  formations 891  flipped 32915  carrier-sunk 0.0  tick ms mean 2.2537 p95 7.9942  (19.79 s)
+year   4  tick 35040  hash ff474e36  nations 91  formations 879  flipped 12342  carrier-sunk 0.0  tick ms mean 2.3986 p95 7.7572  (21.06 s)
+year   5  tick 43800  hash 69b3e37e  nations 90  formations 968  flipped 21532  carrier-sunk 0.0  tick ms mean 1.7961 p95 5.4027  (15.79 s)
+year   6  tick 52560  hash c8e83780  nations 86  formations 1004  flipped 16314  carrier-sunk 0.0  tick ms mean 2.6218 p95 7.1605  (23.02 s)
+year   7  tick 61320  hash 9608dc4f  nations 86  formations 1056  flipped 11149  carrier-sunk 0.0  tick ms mean 1.6584 p95 5.5164  (14.58 s)
+year   8  tick 70080  hash a840f7b4  nations 76  formations 1013  flipped 65543  carrier-sunk 183.4  tick ms mean 2.9369 p95 12.5629  (25.77 s)
+year   9  tick 78840  hash 9e191336  nations 76  formations 980  flipped 36312  carrier-sunk 0.0  tick ms mean 3.3077 p95 10.7536  (29.02 s)
+year  10  tick 87600  hash eb12ef13  nations 77  formations 927  flipped 21859  carrier-sunk 77.0  tick ms mean 3.2360 p95 10.8574  (28.40 s)
+year  11  tick 96360  hash 27998f79  nations 79  formations 919  flipped 31910  carrier-sunk 0.0  tick ms mean 3.0405 p95 10.7795  (26.69 s)
+year  12  tick 105120  hash e34c5c87  nations 79  formations 978  flipped 19560  carrier-sunk 3.0  tick ms mean 2.0781 p95 7.1145  (18.26 s)
+year  13  tick 113880  hash 3a9c7fa0  nations 80  formations 999  flipped 17275  carrier-sunk 0.0  tick ms mean 1.8800 p95 6.3421  (16.52 s)
+year  14  tick 122640  hash 2f41d1db  nations 78  formations 1063  flipped 24639  carrier-sunk 9.0  tick ms mean 2.7121 p95 8.2491  (23.81 s)
+year  15  tick 131400  hash 4657a388  nations 77  formations 977  flipped 34212  carrier-sunk 174.0  tick ms mean 4.2045 p95 13.8906  (36.88 s)
+year  16  tick 140160  hash c7a46b31  nations 76  formations 946  flipped 18545  carrier-sunk 0.0  tick ms mean 2.2429 p95 7.8590  (19.70 s)
+year  17  tick 148920  hash a76dc82e  nations 75  formations 908  flipped 33153  carrier-sunk 0.0  tick ms mean 3.7789 p95 14.7577  (33.15 s)
+year  18  tick 157680  hash 83c217a1  nations 77  formations 903  flipped 41094  carrier-sunk 0.0  tick ms mean 3.6990 p95 14.6006  (32.46 s)
+year  19  tick 166440  hash 1096df3e  nations 76  formations 907  flipped 22349  carrier-sunk 0.0  tick ms mean 2.0581 p95 6.9800  (18.08 s)
+year  20  tick 175200  hash 78d08a02  nations 76  formations 982  flipped 24371  carrier-sunk 0.0  tick ms mean 2.1476 p95 8.4290  (18.88 s)
+done: 20 years, 492.0 s wall, mean tick 2.8020 ms, final hash 78d08a02 → .cache/runs/1938-seed7019-20y.json

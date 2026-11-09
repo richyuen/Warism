@@ -2384,3 +2384,11 @@
   battle listed with one side (28061: 16 of 16 seen, 4 one side, t809 among them); a ship's flag drawn whole above its
   deck, so the Spanish Republic's purple shows at 40 m/px.
 - Batch 11 done. **Next:** the critic's probes replayed (ADR-833), then critic run 58.
+
+## 2026-11-09 — Critic run 58 (full, on 000a4731): R57-B1 closed; one blocking issue, naval 7
+- Scores: naval 7; the other 13 at 8. R57-B1's cases at 0 (246 of run 57's setups at 0); R57-N1–N3, N2's peace button
+  and run 57's small items verified fixed. R58-B1 (blocking): `slowClick` breaks on new seed 29043 (1 of 306 runs), a
+  click judged by the one left for the second voyage after the sim and the checker read a re-click beside its own
+  landing differently. Non-blocking: R58-N1 28037's 366 lands 19.4 days after its click; R58-N2 27125's 319 untold;
+  R58-N3 the phone's greyed Offer peace without a reason. ADR-833: naval's findings are items. Filed as batch 12 (R57).
+- **Next:** R57a.

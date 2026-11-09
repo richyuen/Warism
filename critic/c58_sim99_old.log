@@ -1,0 +1,7 @@
+pinned to CPUs 0xffff
+year   1  tick 8760  hash c64a53fb  nations 97  formations 1162  flipped 30086  carrier-sunk 159.2  tick ms mean 3.0958 p95 7.1764  (27.17 s)
+year   2  tick 17520  hash 2be7ab05  nations 93  formations 961  flipped 38284  carrier-sunk 88.5  tick ms mean 2.4428 p95 6.2872  (21.44 s)
+year   3  tick 26280  hash f6f6d340  nations 94  formations 903  flipped 31910  carrier-sunk 0.0  tick ms mean 2.1617 p95 6.8092  (18.98 s)
+year   4  tick 35040  hash e08d1604  nations 92  formations 948  flipped 38543  carrier-sunk 0.0  tick ms mean 1.8658 p95 5.9882  (16.39 s)
+year   5  tick 43800  hash 5d741080  nations 88  formations 1061  flipped 33549  carrier-sunk 0.0  tick ms mean 1.7159 p95 4.3866  (15.07 s)
+done: 5 years, 99.1 s wall, mean tick 2.2564 ms, final hash 5d741080 → .cache/runs/1938-seed99-5y.json

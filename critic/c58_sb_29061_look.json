@@ -1,0 +1,1016 @@
+{
+ "seed": 29061,
+ "battles": 53,
+ "unseen": 0,
+ "oneSide": 4,
+ "errors": [],
+ "rows": [
+  {
+   "start": 316,
+   "a": "NSP",
+   "b": "REP",
+   "sea": "Alboran Sea",
+   "camera": {
+    "cx": 999.06,
+    "cy": 379.5,
+    "mpp": 40
+   },
+   "seen": {
+    "NSP": 8,
+    "REP": 8
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 316,
+   "ok": true,
+   "shot": "critic\\seaBattles_29061_shots\\t316_NSP_REP.png"
+  },
+  {
+   "start": 640,
+   "a": "GER",
+   "b": "ROM",
+   "sea": "Mediterranean Sea",
+   "camera": {
+    "cx": 1100.94,
+    "cy": 381.63,
+    "mpp": 42
+   },
+   "seen": {
+    "GER": 16,
+    "ROM": 8
+   },
+   "sidesSeen": 2,
+   "mpp": 42,
+   "tick": 640,
+   "ok": true,
+   "shot": "critic\\seaBattles_29061_shots\\t640_GER_ROM.png"
+  },
+  {
+   "start": 700,
+   "a": "NSP",
+   "b": "REP",
+   "sea": "Bay of Biscay",
+   "camera": {
+    "cx": 1006.5,
+    "cy": 333.1,
+    "mpp": 40
+   },
+   "seen": {
+    "NSP": 8,
+    "REP": 2
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 700,
+   "ok": true,
+   "shot": "critic\\seaBattles_29061_shots\\t700_NSP_REP.png"
+  },
+  {
+   "start": 807,
+   "a": "GER",
+   "b": "ROM",
+   "sea": "Mediterranean Sea",
+   "camera": {
+    "cx": 1101.73,
+    "cy": 382.47,
+    "mpp": 43
+   },
+   "seen": {
+    "GER": 7,
+    "ROM": 3
+   },
+   "sidesSeen": 2,
+   "mpp": 43,
+   "tick": 807,
+   "ok": true
+  },
+  {
+   "start": 1018,
+   "a": "ITA",
+   "b": "POR",
+   "sea": "Mediterranean Sea",
+   "camera": {
+    "cx": 1092.88,
+    "cy": 401.62,
+    "mpp": 49
+   },
+   "seen": {
+    "ITA": 8,
+    "POR": 8
+   },
+   "sidesSeen": 2,
+   "mpp": 49,
+   "tick": 1018,
+   "ok": true
+  },
+  {
+   "start": 1327,
+   "a": "ENG",
+   "b": "NSP",
+   "sea": "Alboran Sea",
+   "camera": {
+    "cx": 994.4,
+    "cy": 383,
+    "mpp": 40
+   },
+   "seen": {
+    "ENG": 8,
+    "NSP": 8
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 1327,
+   "ok": true
+  },
+  {
+   "start": 2815,
+   "a": "ENG",
+   "b": "BRA",
+   "sea": "South Atlantic Ocean",
+   "camera": {
+    "cx": 695.51,
+    "cy": 919.99,
+    "mpp": 40
+   },
+   "seen": {
+    "ENG": 96,
+    "BRA": 2
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 2815,
+   "ok": true
+  },
+  {
+   "start": 3962,
+   "a": "SOV",
+   "b": "FIN",
+   "sea": "Gulf of Finland",
+   "camera": {
+    "cx": 1165.5,
+    "cy": 206.65,
+    "mpp": 40
+   },
+   "seen": {
+    "SOV": 31,
+    "FIN": 6
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 3962,
+   "ok": true
+  },
+  {
+   "start": 4288,
+   "a": "SOV",
+   "b": "TUR",
+   "sea": "Black Sea",
+   "camera": {
+    "cx": 1213.59,
+    "cy": 324,
+    "mpp": 40
+   },
+   "seen": {
+    "SOV": 20,
+    "TUR": 8
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 4288,
+   "ok": true
+  },
+  {
+   "start": 5809,
+   "a": "ITA",
+   "b": "POR",
+   "sea": "North Atlantic Ocean",
+   "camera": {
+    "cx": 972.42,
+    "cy": 341.28,
+    "mpp": 40
+   },
+   "seen": {
+    "ITA": 48,
+    "POR": 1
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 5809,
+   "ok": true
+  },
+  {
+   "start": 6117,
+   "a": "ITA",
+   "b": "ENG",
+   "sea": "South Atlantic Ocean",
+   "camera": {
+    "cx": 781.21,
+    "cy": 741.62,
+    "mpp": 366
+   },
+   "seen": {
+    "ITA": 48,
+    "ENG": 179
+   },
+   "sidesSeen": 2,
+   "mpp": 366,
+   "tick": 6117,
+   "ok": true
+  },
+  {
+   "start": 6156,
+   "a": "ENG",
+   "b": "ITA",
+   "sea": "South Atlantic Ocean",
+   "camera": {
+    "cx": 795.69,
+    "cy": 715.75,
+    "mpp": 42
+   },
+   "seen": {
+    "ENG": 64,
+    "ITA": 16
+   },
+   "sidesSeen": 2,
+   "mpp": 42,
+   "tick": 6156,
+   "ok": true
+  },
+  {
+   "start": 6772,
+   "a": "NSP",
+   "b": "ENG",
+   "sea": "Alboran Sea",
+   "camera": {
+    "cx": 970,
+    "cy": 385.16,
+    "mpp": 400
+   },
+   "seen": {
+    "NSP": 12,
+    "ENG": 30
+   },
+   "sidesSeen": 2,
+   "mpp": 400,
+   "tick": 6772,
+   "ok": true
+  },
+  {
+   "start": 6930,
+   "a": "ENG",
+   "b": "ITA",
+   "sea": "Ionian Sea",
+   "camera": {
+    "cx": 1110.9,
+    "cy": 373.9,
+    "mpp": 40
+   },
+   "seen": {
+    "ENG": 67,
+    "ITA": 6
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 6930,
+   "ok": true
+  },
+  {
+   "start": 7126,
+   "a": "ITA",
+   "b": "ENG",
+   "sea": "Tyrrhenian Sea",
+   "camera": {
+    "cx": 1100.42,
+    "cy": 380.42,
+    "mpp": 364
+   },
+   "seen": {
+    "ITA": 12,
+    "ENG": 30
+   },
+   "sidesSeen": 2,
+   "mpp": 364,
+   "tick": 7126,
+   "ok": true
+  },
+  {
+   "start": 7529,
+   "a": "ENG",
+   "b": "ITA",
+   "sea": "North Atlantic Ocean",
+   "camera": {
+    "cx": 932.32,
+    "cy": 413.68,
+    "mpp": 40
+   },
+   "seen": {
+    "ENG": 32,
+    "ITA": 4
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 7529,
+   "ok": true
+  },
+  {
+   "start": 9022,
+   "a": "SOV",
+   "b": "POL",
+   "sea": "Gulf of Finland",
+   "camera": {
+    "cx": 1165.16,
+    "cy": 206.84,
+    "mpp": 40
+   },
+   "seen": {
+    "SOV": 21,
+    "POL": 8
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 9022,
+   "ok": true
+  },
+  {
+   "start": 9187,
+   "a": "SOV",
+   "b": "NOR",
+   "sea": "Gulf of Bothnia",
+   "camera": {
+    "cx": 1145.14,
+    "cy": 180.82,
+    "mpp": 40
+   },
+   "seen": {
+    "SOV": 20,
+    "NOR": 8
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 9187,
+   "ok": true
+  },
+  {
+   "start": 9392,
+   "a": "GER",
+   "b": "TUR",
+   "sea": "Sea of Azov",
+   "camera": {
+    "cx": 1249.49,
+    "cy": 349,
+    "mpp": 40
+   },
+   "seen": {
+    "GER": 16,
+    "TUR": 2
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 9392,
+   "ok": true
+  },
+  {
+   "start": 9778,
+   "a": "GER",
+   "b": "ENG",
+   "sea": "Mediterranean Sea",
+   "camera": {
+    "cx": 1133.41,
+    "cy": 395.5,
+    "mpp": 400
+   },
+   "seen": {
+    "GER": 12,
+    "ENG": 30
+   },
+   "sidesSeen": 2,
+   "mpp": 400,
+   "tick": 9778,
+   "ok": true
+  },
+  {
+   "start": 9805,
+   "a": "GER",
+   "b": "ENG",
+   "sea": "Sea of Crete",
+   "camera": {
+    "cx": 1160.48,
+    "cy": 375.52,
+    "mpp": 253
+   },
+   "seen": {
+    "ENG": 125
+   },
+   "sidesSeen": 1,
+   "mpp": 253,
+   "tick": 9805,
+   "ok": true
+  },
+  {
+   "start": 9821,
+   "a": "ENG",
+   "b": "JAP",
+   "sea": "Taiwan Strait",
+   "camera": {
+    "cx": 1706.68,
+    "cy": 454.32,
+    "mpp": 233
+   },
+   "seen": {
+    "ENG": 16,
+    "JAP": 30
+   },
+   "sidesSeen": 2,
+   "mpp": 233,
+   "tick": 9821,
+   "ok": true
+  },
+  {
+   "start": 9948,
+   "a": "GER",
+   "b": "ENG",
+   "sea": "Mediterranean Sea",
+   "camera": {
+    "cx": 1148.21,
+    "cy": 387.29,
+    "mpp": 147
+   },
+   "seen": {
+    "GER": 16,
+    "ENG": 20
+   },
+   "sidesSeen": 2,
+   "mpp": 147,
+   "tick": 9948,
+   "ok": true
+  },
+  {
+   "start": 9964,
+   "a": "ENG",
+   "b": "JAP",
+   "sea": "Taiwan Strait",
+   "camera": {
+    "cx": 1698.52,
+    "cy": 457.41,
+    "mpp": 229
+   },
+   "seen": {
+    "ENG": 2,
+    "JAP": 26
+   },
+   "sidesSeen": 2,
+   "mpp": 229,
+   "tick": 9964,
+   "ok": true
+  },
+  {
+   "start": 9939,
+   "a": "ENG",
+   "b": "GER",
+   "sea": "Aegean Sea",
+   "camera": {
+    "cx": 1163,
+    "cy": 359.51,
+    "mpp": 363
+   },
+   "seen": {
+    "ENG": 10,
+    "GER": 23
+   },
+   "sidesSeen": 2,
+   "mpp": 363,
+   "tick": 9964,
+   "ok": true
+  },
+  {
+   "start": 9995,
+   "a": "ENG",
+   "b": "GER",
+   "sea": "Aegean Sea",
+   "camera": {
+    "cx": 1160.53,
+    "cy": 365.34,
+    "mpp": 313
+   },
+   "seen": {
+    "ENG": 30,
+    "GER": 1
+   },
+   "sidesSeen": 2,
+   "mpp": 313,
+   "tick": 9995,
+   "ok": true
+  },
+  {
+   "start": 10308,
+   "a": "ENG",
+   "b": "ITA",
+   "sea": "Mediterranean Sea",
+   "camera": {
+    "cx": 1112.03,
+    "cy": 387.22,
+    "mpp": 284
+   },
+   "seen": {
+    "ENG": 10,
+    "ITA": 80
+   },
+   "sidesSeen": 2,
+   "mpp": 284,
+   "tick": 10308,
+   "ok": true
+  },
+  {
+   "start": 10443,
+   "a": "ENG",
+   "b": "JAP",
+   "sea": "Mediterranean Sea",
+   "camera": {
+    "cx": 1120.45,
+    "cy": 400.5,
+    "mpp": 338
+   },
+   "seen": {
+    "ENG": 72,
+    "JAP": 28
+   },
+   "sidesSeen": 2,
+   "mpp": 338,
+   "tick": 10443,
+   "ok": true
+  },
+  {
+   "start": 10798,
+   "a": "ITA",
+   "b": "ENG",
+   "sea": "Mediterranean Sea",
+   "camera": {
+    "cx": 1109.46,
+    "cy": 396.96,
+    "mpp": 400
+   },
+   "seen": {
+    "ITA": 12,
+    "ENG": 17
+   },
+   "sidesSeen": 2,
+   "mpp": 400,
+   "tick": 10798,
+   "ok": true
+  },
+  {
+   "start": 10844,
+   "a": "FRA",
+   "b": "ARG",
+   "sea": "Lagoa dos Patos",
+   "camera": {
+    "cx": 727.83,
+    "cy": 784.5,
+    "mpp": 40
+   },
+   "seen": {
+    "FRA": 48,
+    "ARG": 16
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 10844,
+   "ok": true
+  },
+  {
+   "start": 10992,
+   "a": "FRA",
+   "b": "ARG",
+   "sea": "Río de la Plata",
+   "camera": {
+    "cx": 695.31,
+    "cy": 803.5,
+    "mpp": 45
+   },
+   "seen": {
+    "FRA": 40,
+    "ARG": 1
+   },
+   "sidesSeen": 2,
+   "mpp": 45,
+   "tick": 10992,
+   "ok": true
+  },
+  {
+   "start": 11291,
+   "a": "GER",
+   "b": "ENG",
+   "sea": "Persian Gulf",
+   "camera": {
+    "cx": 1307.17,
+    "cy": 428.67,
+    "mpp": 40
+   },
+   "seen": {
+    "GER": 8,
+    "ENG": 11
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 11291,
+   "ok": true
+  },
+  {
+   "start": 11405,
+   "a": "GER",
+   "b": "ENG",
+   "sea": "Persian Gulf",
+   "camera": {
+    "cx": 1298.18,
+    "cy": 425.25,
+    "mpp": 40
+   },
+   "seen": {
+    "GER": 8,
+    "ENG": 9
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 11405,
+   "ok": true
+  },
+  {
+   "start": 11522,
+   "a": "GER",
+   "b": "ENG",
+   "sea": "Persian Gulf",
+   "camera": {
+    "cx": 1298.4,
+    "cy": 425.28,
+    "mpp": 40
+   },
+   "seen": {
+    "GER": 8,
+    "ENG": 12
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 11522,
+   "ok": true
+  },
+  {
+   "start": 11690,
+   "a": "GER",
+   "b": "ENG",
+   "sea": "Persian Gulf",
+   "camera": {
+    "cx": 1298.33,
+    "cy": 425.33,
+    "mpp": 40
+   },
+   "seen": {
+    "ENG": 55
+   },
+   "sidesSeen": 1,
+   "mpp": 40,
+   "tick": 11690,
+   "ok": true
+  },
+  {
+   "start": 11745,
+   "a": "ENG",
+   "b": "JAP",
+   "sea": "Taiwan Strait",
+   "camera": {
+    "cx": 1697.99,
+    "cy": 464.77,
+    "mpp": 362
+   },
+   "seen": {
+    "ENG": 14,
+    "JAP": 23
+   },
+   "sidesSeen": 2,
+   "mpp": 362,
+   "tick": 11745,
+   "ok": true
+  },
+  {
+   "start": 12009,
+   "a": "ENG",
+   "b": "JAP",
+   "sea": "East China Sea",
+   "camera": {
+    "cx": 1715.24,
+    "cy": 428.26,
+    "mpp": 400
+   },
+   "seen": {
+    "ENG": 7,
+    "JAP": 13
+   },
+   "sidesSeen": 2,
+   "mpp": 400,
+   "tick": 12009,
+   "ok": true
+  },
+  {
+   "start": 12043,
+   "a": "ENG",
+   "b": "JAP",
+   "sea": "Taiwan Strait",
+   "camera": {
+    "cx": 1716.41,
+    "cy": 437.52,
+    "mpp": 162
+   },
+   "seen": {
+    "ENG": 2,
+    "JAP": 13
+   },
+   "sidesSeen": 2,
+   "mpp": 162,
+   "tick": 12043,
+   "ok": true
+  },
+  {
+   "start": 12195,
+   "a": "FRA",
+   "b": "SOV",
+   "sea": "Adriatic Sea",
+   "camera": {
+    "cx": 1130.5,
+    "cy": 341.58,
+    "mpp": 40
+   },
+   "seen": {
+    "FRA": 17,
+    "SOV": 39
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 12195,
+   "ok": true
+  },
+  {
+   "start": 12239,
+   "a": "FRA",
+   "b": "SOV",
+   "sea": "Adriatic Sea",
+   "camera": {
+    "cx": 1130.5,
+    "cy": 341.8,
+    "mpp": 40
+   },
+   "seen": {
+    "FRA": 23,
+    "SOV": 35
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 12239,
+   "ok": true
+  },
+  {
+   "start": 12316,
+   "a": "FRA",
+   "b": "SOV",
+   "sea": "Adriatic Sea",
+   "camera": {
+    "cx": 1130.5,
+    "cy": 342.29,
+    "mpp": 44
+   },
+   "seen": {
+    "FRA": 32,
+    "SOV": 31
+   },
+   "sidesSeen": 2,
+   "mpp": 44,
+   "tick": 12316,
+   "ok": true
+  },
+  {
+   "start": 12347,
+   "a": "FRA",
+   "b": "SOV",
+   "sea": "Mediterranean Sea",
+   "camera": {
+    "cx": 1150.66,
+    "cy": 383.67,
+    "mpp": 47
+   },
+   "seen": {
+    "FRA": 7,
+    "SOV": 2
+   },
+   "sidesSeen": 2,
+   "mpp": 47,
+   "tick": 12347,
+   "ok": true
+  },
+  {
+   "start": 12419,
+   "a": "FRA",
+   "b": "SOV",
+   "sea": "Black Sea",
+   "camera": {
+    "cx": 1187.5,
+    "cy": 328.5,
+    "mpp": 40
+   },
+   "seen": {
+    "FRA": 1,
+    "SOV": 1
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 12419,
+   "ok": true
+  },
+  {
+   "start": 12517,
+   "a": "FRA",
+   "b": "SOV",
+   "sea": "Black Sea",
+   "camera": {
+    "cx": 1187.5,
+    "cy": 329.05,
+    "mpp": 40
+   },
+   "seen": {
+    "FRA": 1
+   },
+   "sidesSeen": 1,
+   "mpp": 40,
+   "tick": 12517,
+   "ok": true
+  },
+  {
+   "start": 12521,
+   "a": "ENG",
+   "b": "JAP",
+   "sea": "Taiwan Strait",
+   "camera": {
+    "cx": 1714.67,
+    "cy": 440.26,
+    "mpp": 315
+   },
+   "seen": {
+    "ENG": 50,
+    "JAP": 13
+   },
+   "sidesSeen": 2,
+   "mpp": 315,
+   "tick": 12521,
+   "ok": true
+  },
+  {
+   "start": 12560,
+   "a": "ENG",
+   "b": "JAP",
+   "sea": "Taiwan Strait",
+   "camera": {
+    "cx": 1713.9,
+    "cy": 441.54,
+    "mpp": 387
+   },
+   "seen": {
+    "ENG": 43,
+    "JAP": 13
+   },
+   "sidesSeen": 2,
+   "mpp": 387,
+   "tick": 12560,
+   "ok": true
+  },
+  {
+   "start": 12637,
+   "a": "ENG",
+   "b": "JAP",
+   "sea": "Taiwan Strait",
+   "camera": {
+    "cx": 1713.07,
+    "cy": 442.89,
+    "mpp": 400
+   },
+   "seen": {
+    "ENG": 52,
+    "JAP": 13
+   },
+   "sidesSeen": 2,
+   "mpp": 400,
+   "tick": 12637,
+   "ok": true
+  },
+  {
+   "start": 16787,
+   "a": "FRA",
+   "b": "ARG",
+   "sea": "Río de la Plata",
+   "camera": {
+    "cx": 695.28,
+    "cy": 803.5,
+    "mpp": 43
+   },
+   "seen": {
+    "FRA": 34,
+    "ARG": 7
+   },
+   "sidesSeen": 2,
+   "mpp": 43,
+   "tick": 16787,
+   "ok": true
+  },
+  {
+   "start": 20346,
+   "a": "JAP",
+   "b": "FRA",
+   "sea": "Tyrrhenian Sea",
+   "camera": {
+    "cx": 1084.28,
+    "cy": 374,
+    "mpp": 212
+   },
+   "seen": {
+    "JAP": 13,
+    "FRA": 16
+   },
+   "sidesSeen": 2,
+   "mpp": 212,
+   "tick": 20346,
+   "ok": true
+  },
+  {
+   "start": 20577,
+   "a": "USA",
+   "b": "JAP",
+   "sea": "Gulf of Tonkin",
+   "camera": {
+    "cx": 1661.64,
+    "cy": 472.14,
+    "mpp": 40
+   },
+   "seen": {
+    "USA": 8,
+    "JAP": 12,
+    "PHI": 1
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 20577,
+   "ok": true
+  },
+  {
+   "start": 20714,
+   "a": "JAP",
+   "b": "NED",
+   "sea": "Skagerrak",
+   "camera": {
+    "cx": 1071,
+    "cy": 255.57,
+    "mpp": 40
+   },
+   "seen": {
+    "JAP": 9,
+    "NED": 24
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 20714,
+   "ok": true
+  },
+  {
+   "start": 20766,
+   "a": "JAP",
+   "b": "FRA",
+   "sea": "English Channel",
+   "camera": {
+    "cx": 1014,
+    "cy": 287.5,
+    "mpp": 40
+   },
+   "seen": {
+    "JAP": 2,
+    "FRA": 8
+   },
+   "sidesSeen": 2,
+   "mpp": 40,
+   "tick": 20766,
+   "ok": true
+  },
+  {
+   "start": 24092,
+   "a": "JAP",
+   "b": "SOV",
+   "sea": "Sea of Japan",
+   "camera": {
+    "cx": 1774.94,
+    "cy": 336.94,
+    "mpp": 40
+   },
+   "seen": {
+    "SOV": 24
+   },
+   "sidesSeen": 1,
+   "mpp": 40,
+   "tick": 24092,
+   "ok": true
+  }
+ ]
+}
