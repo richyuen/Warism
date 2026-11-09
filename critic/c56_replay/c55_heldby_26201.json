@@ -1,0 +1,15 @@
+{
+ "seed": 26201,
+ "diplomacy": "scenario",
+ "years": 2,
+ "SEE": 25,
+ "heldHours": 0,
+ "flags": {
+  "notFleet": 0,
+  "nameNotNear": 0,
+  "noFoeFleetNear": 0,
+  "none": 0
+ },
+ "landings": [],
+ "cases": []
+}

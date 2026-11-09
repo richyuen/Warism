@@ -2261,3 +2261,10 @@
   no break on any). 17 new seeds (60001–61601): every checker 0 broken, workerDeterminism the same on every arm.
   Nothing to fix.
 - **Next:** critic run 56.
+
+## 2026-11-09 — Critic run 56 (focused, on d016ed2a): R55-B1 closed; one blocking issue, naval 7
+- R55-B1's commands 0 broken (the rule fixed 24033, the checker 26045, as ADR-892 says); 77 landingInvariants runs 0.
+  R56-B1: a landing turned back with a division waiting at its port for the next voyage never ends (27125, Cancel at
+  h66: 324 frozen to h300 under "they come back for it"; 10 of 78 headless runs a returning landing still for 30+
+  days); the same on 715a5448. Naval 7 a third run; ADR-833: items, not the exit. Filed as batch 10 (R55).
+- **Next:** R55a.

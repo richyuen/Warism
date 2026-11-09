@@ -1,0 +1,54 @@
+t68 click -> 1818.7,385.3 364[cross Infinityd] 365[same 4.0d] 366[same 3.1d] 367[same 11.3d] | +6h 364:none 365:none 366:none 367:none
+t104 click -> 1716.0,413.7 366[cross 4.2d] | +6h 366:L1s
+t123 click -> 1818.7,385.3 365[same Infinityd] 367[same Infinityd] | +6h 365:none 367:none
+t173 click -> 1713.0,411.7 367[cross Infinityd] | +6h 367:L1s
+t235 click -> 1715.0,413.7 364[cross Infinityd] | +6h 364:none
+t288 click -> 1703.5,447.5 364[cross Infinityd] 365[cross Infinityd] 366[same Infinityd] 367[cross Infinityd] | +6h 364:none 365:L1g 366:none 367:L1g
+t390 click -> 1716.0,413.7 367[cross Infinityd] | +6h 367:L1g
+t445 click -> 1715.0,413.7 367[cross Infinityd] | +6h 367:L1g
+t498 click -> 1713.0,413.7 364[cross Infinityd] 365[cross Infinityd] 366[same Infinityd] 367[cross Infinityd] | +6h 364:none 365:L1g 366:none 367:L1g
+t549 click -> 1715.0,413.7 364[cross Infinityd] 365[cross Infinityd] 366[same Infinityd] 367[cross Infinityd] | +6h 364:none 365:L1g 366:none 367:L1g
+t639 click -> 1818.7,385.3 364[cross Infinityd] 365[same Infinityd] 366[cross Infinityd] | +6h 364:none 365:none 366:none
+t684 click -> 1715.0,413.7 364[cross Infinityd] | +6h 364:none
+t768 click -> 1818.7,385.3 364[cross Infinityd] 367[same Infinityd] | +6h 364:none 367:none
+t818 click -> 1716.0,414.7 364[cross Infinityd] 365[cross 5.9d] 366[same 3.6d] 367[cross 10.6d] | +6h 364:none 365:L2g 366:none 367:L2g
+t878 click -> 1818.7,385.3 364[cross Infinityd] 365[cross Infinityd] 366[cross Infinityd] | +6h 364:none 365:L2s 366:none
+t985 click -> 1703.5,448.5 365[same Infinityd] | +6h 365:none
+t1008 click -> 1712.0,416.7 364[cross Infinityd] 365[same Infinityd] 366[same Infinityd] 367[cross Infinityd] | +6h 364:none 365:none 366:none 367:L2g
+t1023 click -> 1715.0,413.7 364[cross Infinityd] 365[same Infinityd] 366[same Infinityd] 367[cross Infinityd] | +6h 364:none 365:none 366:none 367:L2g
+t1066 click -> 1715.0,413.7 364[cross Infinityd] 365[same Infinityd] 367[cross Infinityd] | +6h 364:none 365:none 367:L2g
+t1091 click -> 1715.0,413.7 366[same Infinityd] | +6h 366:none
+t1152 click -> 1715.5,413.5 364[cross Infinityd] 365[same Infinityd] | +6h 364:none 365:none
+t1169 click -> 1715.0,413.7 364[cross Infinityd] 365[same Infinityd] 366[same Infinityd] 367[cross Infinityd] | +6h 364:none 365:none 366:none 367:L2g
+t1283 click -> 1703.5,445.5 364[cross Infinityd] 365[same Infinityd] 367[cross Infinityd] | +6h 364:L2g 365:none 367:L2g
+t1320 click -> 1715.0,415.7 366[same Infinityd] 367[cross Infinityd] | +6h 366:none 367:L2g
+t1357 click -> 1713.0,413.7 364[cross Infinityd] 365[same Infinityd] 366[same Infinityd] | +6h 364:L2g 365:none 366:none
+t1397 click -> 1701.5,447.5 364[cross Infinityd] 365[same Infinityd] 366[same Infinityd] 367[cross Infinityd] | +6h 364:L2g 365:none 366:none 367:L2g
+t1425 click -> 1818.7,385.3 364[same Infinityd] 365[cross Infinityd] 367[same Infinityd] | +6h 364:none 365:none 367:none
+t1470 click -> 1818.7,385.3 364[same 3.5d] 365[cross 9.1d] 366[cross 9.1d] 367[same 5.0d] | +6h 364:none 365:L3g 366:L3g 367:none
+t1520 click -> 1715.0,415.7 367[cross Infinityd] | +6h 367:none
+t1547 click -> 1716.5,411.5 366[same Infinityd] 367[cross Infinityd] | +6h 366:none 367:none
+t1654 click -> 1713.0,413.7 364[cross Infinityd] | +6h 364:none
+t1726 click -> 1715.0,411.7 365[cross 5.1d] 366[same 5.1d] 367[cross 5.6d] | +6h 365:L4s 366:none 367:L4s
+t1785 click -> 1818.7,385.3 365[cross Infinityd] 366[cross Infinityd] 367[same Infinityd] | +6h 365:L4s 366:none 367:L4s
+t1803 click -> 1712.5,412.5 367[cross Infinityd] | +6h 367:L4s
+t1837 click -> 1714.0,412.7 364[cross Infinityd] 365[cross Infinityd] 366[same Infinityd] 367[cross Infinityd] | +6h 364:L4s 365:none 366:none 367:L4s
+t1897 click -> 1818.7,385.3 365[same Infinityd] 366[cross Infinityd] 367[same Infinityd] | +6h 365:none 366:none 367:L4s
+t1944 click -> 1818.7,385.3 364[same Infinityd] 365[same Infinityd] 367[same Infinityd] | +6h 364:L4s 365:none 367:L4s
+t2004 click -> 1715.0,411.7 365[cross Infinityd] 366[same Infinityd] 367[cross Infinityd] | +6h 365:L4s 366:none 367:L4s
+t2074 click -> 1703.5,444.5 364[cross Infinityd] 365[cross Infinityd] | +6h 364:L4s 365:L4s
+t2141 click -> 1703.5,445.5 365[cross Infinityd] 366[same Infinityd] | +6h 365:L4s 366:none
+t2173 click -> 1818.7,385.3 364[same Infinityd] 365[same Infinityd] 366[cross Infinityd] | +6h 364:L4s 365:L4s 366:none
+t2220 click -> 1703.5,446.5 365[cross Infinityd] | +6h 365:L4s
+t2314 click -> 1715.0,413.7 364[cross Infinityd] | +6h 364:L4s
+t2353 click -> 1818.7,385.3 364[same 6.7d] | +6h 364:L4s
+t2425 click -> 1818.7,385.3 364[same 6.0d] | +6h 364:L4s
+t2456 click -> 1818.7,385.3 364[same 6.0d] 365[same 6.0d] 367[same 6.0d] | +6h 364:L4s 365:L4s 367:L4s
+t2515 click -> 1716.0,413.7 364[cross 11.0d] | +6h 364:L4s
+t2538 click -> 1818.7,385.3 366[cross 19.2d] 367[same 6.0d] | +6h 366:L5g 367:L4s
+t2649 click -> 1715.0,411.7 367[cross 11.0d] | +6h 367:L4s
+t2702 click -> 1714.5,413.5 364[cross 11.0d] 366[same 13.7d] 367[cross 11.0d] | +6h 364:L4s 366:none 367:L4s
+t2752 click -> 1818.7,385.3 367[same 5.9d] | +6h 367:L4s
+t2817 click -> 1712.0,410.7 366[same 13.7d] | +6h 366:none
+same-landmass divisions clicked: 54; of them in a landing 6 h later: 13
+done:

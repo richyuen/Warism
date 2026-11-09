@@ -1,0 +1,3 @@
+returning and still t2519-t2882 (15.1 d): L6 port Tokyo target 1715,411 fleets 1136 divs +364+367+ (still at the end); clicks meanwhile: t2594 364,365,367->1714,411 ; t2702 364,366,367->1715,414 ; t2752 367->1819,385 ; t2879 364,365,366,367->1715,414
+seed 24033: 1 returning-still spells, longest 15.1 d; checker 1 broken
+done:

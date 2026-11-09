@@ -1072,7 +1072,7 @@ Critic run 55 (full, on `715a5448`): one blocking issue, R55-B1; naval 7 (under 
 at 8. No release: R55-B1 is fixed first, then the probes replayed (ADR-833) and critic run 56. R55-B1 broke on HEAD
 and not on `8d7d02fe` (a regression since run 54), but naval's findings are items, not the exit (ADR-833).
 
-- [ ] R54 **Run 55's findings.**
+- [x] R54 **Run 55's findings.**
   - [x] R54a R55-B1 (blocking, naval): a player's landing click sails within READY_WAIT_HOURS of being ready, whatever
     a click-mate in another landing does. 24033: t2004's click of 367 is 17.1 days against its best way of 10.1
     (landing 6 ready at Tokyo t2125, 367 alone in it from t2142 to t2315, sails t2393; the lead is `siblingWait`,
@@ -1096,3 +1096,40 @@ and not on `8d7d02fe` (a regression since run 54), but naval's findings are item
   controls off the screen; small: a phone Breakthrough's clicks land on the nation panel; the editor filter has no
   aliases ("uk", "ussr") and shows the chosen nation alone on a miss; "lost 1 ships", "United States's"; a broke-off
   landing's "away from Valletta" names no place.
+
+## Batch 10 — run 56's naval findings
+
+Critic run 56 (focused, on `d016ed2a`): R55-B1 closed; one blocking issue, R56-B1 (not a regression: the same on
+`715a5448`); naval 7, every other dimension carried at 8. Naval is under its bar for a third run (54–56), but naval's
+findings are items, fixed, then the critic again (ADR-833), not the exit. No release.
+
+- [ ] R55 **Run 56's naval findings.**
+  - [ ] R55a R56-B1 (blocking): a returning landing whose groups are at its port ends; those not aboard leave it (stand,
+    or take the order that cancelled it), told; a returning landing is not joined (`chooseTransports`' `mine`); the
+    "they come back for it" news goes when the division leaves; `landingInvariants`' `stuck` counts a returning landing
+    standing still. AT (the report's): (i) `node critic/scripts/c56_turnback.mjs 27125 ITA ENG 1095.5,344.5
+    1106.5,383.5 6 ita6_cancelbtn 66 300`: 324 freed within a few hours of the groups' return, the row "cancelled: back
+    at Rome …", its panel no longer "they come back for it"; (ii) `CANCELAT=66 ORDERAT=198 ORDERTO=1106.5,383.5
+    ORDERIDS=323,324 node critic/scripts/c56_retstuck.mjs 27125 ITA ENG 1095.5,344.5 1106.5,383.5 6 x 480`: the re-click
+    forms a landing or is refused with a reason; (iii) `npx tsx critic/scripts/c56_stuckret.ts <seed> 3517 120 <seed>
+    30,90 <g>` with no returning-and-still spell ≥ 48 h on 24033 g2, 26041 g1, 27033 g1, 27035 g1, 27039 g1, 27053 g1;
+    (iv) `sh critic/scripts/c56_liab.sh` still 0 and the 18 Malta endings unchanged.
+  - [ ] R55b R56-N1: a landing that sails without a marcher: the row's "lands in" counts down (not 54 h frozen on 27123),
+    and after the landing it says how many are ashore ("7 ashore · 1 marching to Portsmouth"; Hearts of Iron's
+    invasion list). AT: `node critic/scripts/c56_frozen.mjs` on 27123, 27127, 27129: no "lands in" text over 24 h, the
+    row naming those ashore after h144.
+  - [ ] R55c R56-N2: a click that joins a sailed landing's next voyage from far off is bounded as a new one is
+    (`farPort`): 24033 with orders stopped after day 8 (`ORDERDAYS=8 npx tsx critic/scripts/c56_orderdays.ts`), 367 not
+    77 days from click to shore.
+  - [ ] R55d R56-N3: the fuzz judges more clicks: a `landingInvariants` mode with orders that stop early (`orderDays`),
+    in the checker's suite of seeds, so that R56-B1's and R56-N2's cases would have broken it.
+  - [ ] R55e Small: after a cancel, 323's ticker says "left its landing for a new one"; the "they come back for it"
+    news stays after the division has marched off (with R55a); "transports 48, 6 needed" when 48 are at hand reads as
+    a shortage.
+  - Kept: `landingInvariants` and `landingRows` 0 broken; R55-B1's commands 0; the Malta endings.
+- Naval's design objections (ADR-843): a cancel hands the army to the AI at once (ADR-759): not taken, ADR-875, the
+  user's call. Malta is never taken: not taken, the rules working (run 55). Marches are slow against voyages (a
+  division walks about a cell a day, so the port decides weeks; a group sailing to the division would often be
+  quicker): not taken in this batch, a change of how a landing gathers that is the user's to weigh; R55c bounds its
+  worst case.
+- Carried, not in this batch (dimensions at their bars): R55-N1, R55-N2 and run 55's small items (batch 9's list).

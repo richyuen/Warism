@@ -1,6 +1,6 @@
 {
-  "commit": "715a5448d310cd829492f3a3fc5fbd08fb101262",
-  "mode": "full",
+  "commit": "d016ed2aa0f7cfa5dc1d76c6ffc2e3d5243dc4c1",
+  "mode": "focused",
   "scores": {
     "mapVisuals": 8,
     "diplomacyWarDepth": 8,
@@ -19,11 +19,11 @@
   },
   "blocking": [
     {
-      "id": "R55-B1",
-      "title": "slowClick broken: a player's landing click is held in port past its best way (24033: 17.1 days against 10.1, a ready landing sails 11 days after it was ready, 173 h of it alone; 26045: 9.5 against 2.5)",
-      "evidence": "npx tsx tools/diag/landingInvariants.ts 24033 3517 120 24033 30,90 2 -> 't2415 slowClick: t2004's click of 367 not ashore after 17.1 days, its best way 10.1', 1 broken on HEAD twice (critic/c55_replay/c54_li_24033_jap_g2.log, critic/c55_li_24033_rerun.log), 0 broken on 8d7d02fe (critic/c55_li_24033_at8d7d02fe.log). Trace (critic/scripts/c55_slow367.ts, critic/c55_slow367_wars.log): landing 6 at Tokyo ready at t2125 with its transports, 367 alone in it from t2142 to t2315 (173 h, past READY_WAIT_HOURS' 144; 365 went to another landing for 1703,445), 364 in it t2315-t2354, Japan at war with China throughout, sails only at t2393. Second case on both commits: landingInvariants 26045 3517 120 26045 30,90 2 -> 't1358's click of 366 not ashore after 9.5 days, its best way 2.5' (critic/c55_liab.log, critic/c55_slow366_26045.log).",
-      "fix": "A landing ready with its transports and no division of its own still marching sails within READY_WAIT_HOURS whatever a click-mate in another landing does (siblingWait, the likely cause, counting only siblings still bound to the same target). For 26045 find whether the 123 h march to Tokyo and the turn-back near the target are a stall or the checker reckoning a throw-back as slow, and say which in the checker's line. Bar: both commands at 0 broken and sh critic/scripts/c55_liab.sh all 0."
+      "id": "R56-B1",
+      "title": "A landing turned back with a division left at its port never ends: the division stands frozen under 'turning back to Rome / they come back for it', the Cancel button's 'those ashore stop where they stand' is broken, re-clicks are swallowed, and no checker sees it (both commits)",
+      "evidence": "Page, HEAD, default 1938: Italy seed 27125, 6 nearest Rome to Valletta; h60 4 sail, 323/324 told no room; Cancel landing at h66; 324 to h300 still 'At Rome: no room on the transports that sailed; they come back for it', row 'turning back to Rome', ticker '324: waits for the next voyage' (critic/c56_tb_ita6_cancelbtn_27125.json, critic/shots/c56tb_ita6_cancelbtn_27125_end.png); the same on 715a5448 (critic/c56_tb_ita6_cancelbtn_OLD_27125.json). Click-cancel then re-click of 323,324 to Valletta at h198: nothing, no news, to h480 (critic/c56_rs_ita_malta6_reclick_27125.json). Headless critic/scripts/c56_stuckret.ts on the liab setups: 10 of 78 HEAD runs and 9 of 78 on 715a5448 have a returning landing standing still >= 30 days (27033 g1 113.7 d, 27053 g1 110.6, 27055 g1 108.9, 27041 g1 100.0, 27039 g1 99.2, 27035 g1 85.0, 26041 g1 84.7, 27051 g1 47.5, 24033 g2 43.3 HEAD only, 27037 g1 36.2), landingInvariants 0 broken on each (critic/c56_sr_ab.log). 24033 HEAD: landing 4 at Tokyo returning t1785-t2882 with 364/365/367 through 20 clicks (critic/c56_sr_24033_head.log, critic/c56_rows_24033.log).",
+      "fix": "A returning landing whose groups are at its port ends; divisions not aboard leave it (stand where they are, or take the order that cancelled it) and are told; a returning landing is not joined by a click (chooseTransports' `mine` has no state filter; comeBack releases only those embarked; cancelOrders sends a division standing on the port cell to that cell, which reads as part of the turn-back). landingInvariants' `stuck` counts a returning landing standing still. Bar: c56_turnback 27125 ITA ENG 1095.5,344.5 1106.5,383.5 6 x 66 300 frees 324 within hours of the groups' return with a 'cancelled' row; c56_retstuck with ORDERIDS=323,324 re-click forms a landing or is refused with a reason; c56_stuckret no spell >= 48 h on 24033 g2, 26041 g1, 27033 g1, 27035 g1, 27039 g1, 27053 g1; c56_liab.sh still 0 broken; Malta's 18 endings unchanged."
     }
   ],
-  "timestamp": "2026-11-09T01:05:00-05:00"
+  "timestamp": "2026-11-09T04:30:00-05:00"
 }

@@ -1,0 +1,55 @@
+t2 CLICK 364,365,366,367 -> 1717.5,412.5
+t2 div 367 @1827.5,335.5 mv0 emb0 no landing
+t68 CLICK 364,365,366,367 -> 1818.7,385.3
+t72 div 367 @1827.4,335.6 mv1 emb0 no landing
+t104 CLICK 366 -> 1716.0,413.7
+t123 CLICK 365,367 -> 1818.7,385.3
+t144 div 367 @1824.3,337.7 mv1 emb0 no landing
+t173 CLICK 367 -> 1713.0,411.7
+t174 div 367 @1823.1,338.5 mv1 emb0 L1 st1 port 104 fleets 1144 divs 366+367 ready 104
+t185 div 367 @1822.5,338.5 mv1 emb0 L1 st1 port 104 fleets 1144 divs 367 ready 104
+t186 div 367 @1822.4,338.6 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t216 div 367 @1821.5,339.7 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t288 div 367 @1822.4,342.5 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t360 div 367 @1825.4,344.5 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t432 div 367 @1825.8,347.0 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t504 div 367 @1827.5,348.4 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t576 div 367 @1827.5,351.5 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t648 div 367 @1825.4,354.6 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t720 div 367 @1823.5,357.4 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t792 div 367 @1823.4,361.6 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t864 div 367 @1820.9,364.1 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t936 div 367 @1818.8,367.2 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1008 div 367 @1817.5,369.9 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1080 div 367 @1814.4,372.6 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1152 div 367 @1812.3,375.7 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1224 div 367 @1809.8,378.2 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1296 div 367 @1808.5,381.0 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1368 div 367 @1807.1,383.9 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1440 div 367 @1804.6,386.4 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1512 div 367 @1800.4,387.6 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1584 div 367 @1797.0,390.2 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1656 div 367 @1792.9,390.9 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1728 div 367 @1788.7,390.5 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1800 div 367 @1784.8,392.5 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1872 div 367 @1780.8,392.5 mv1 emb0 L1 st0 port 104 fleets 1144 divs 367 ready -1
+t1938 div 367 @1777.5,394.5 mv0 emb1 L1 st1 port 104 fleets 1144 divs 367 ready 1937
+t1944 div 367 @1776.2,399.5 mv0 emb1 L1 st1 port 104 fleets 1144 divs 367 ready 1937
+t2016 div 367 @1719.1,412.5 mv0 emb1 L1 st1 port 104 fleets 1144 divs 367 ready 1937
+t2019 div 367 @1716.5,411.5 mv0 emb0 no landing
+t2088 div 367 @1713.5,408.5 mv0 emb0 no landing
+t2160 div 367 @1713.5,408.1 mv1 emb0 no landing
+t2232 div 367 @1713.4,407.4 mv1 emb0 no landing
+t2304 div 367 @1711.9,405.9 mv1 emb0 no landing
+t2376 div 367 @1710.7,402.7 mv1 emb0 no landing
+t2448 div 367 @1710.2,401.2 mv1 emb0 no landing
+t2520 div 367 @1709.0,399.0 mv1 emb0 no landing
+t2592 div 367 @1707.7,397.7 mv1 emb0 no landing
+t2664 div 367 @1706.5,396.5 mv1 emb0 no landing
+t2736 div 367 @1704.4,394.4 mv1 emb0 no landing
+t2808 div 367 @1702.6,392.6 mv1 emb0 no landing
+t2880 div 367 @1702.1,392.1 mv1 emb0 no landing
+note slowClick: 1 clicks reckoned (1 not), 1 ashore; worst -0.8 days over its best way (t104's click of 366 ashore after 3.4 days, its best way 4.2)
+note note: 366 longest in a gathering landing 0.0 days, 0.0 of them with no ground gained
+note note: 367 longest in a gathering landing 73.0 days, 7.1 of them with no ground gained
+done:

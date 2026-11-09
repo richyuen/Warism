@@ -1,0 +1,106 @@
+t2 CLICK 364,365,366,367 -> 1717.5,412.5
+t68 CLICK 364,365,366,367 -> 1818.7,385.3
+t123 CLICK 365,367 -> 1818.7,385.3
+t173 CLICK 367 -> 1713.0,411.7
+t288 CLICK 364,365,366,367 -> 1703.5,447.5
+t390 CLICK 367 -> 1716.0,413.7
+t445 CLICK 367 -> 1715.0,413.7
+t498 CLICK 364,365,366,367 -> 1713.0,413.7
+t549 CLICK 364,365,366,367 -> 1715.0,413.7
+t747 CLICK 365,366,367 -> 1718.0,410.7
+t768 CLICK 364,367 -> 1818.7,385.3
+t818 CLICK 364,365,366,367 -> 1716.0,414.7
+t841 CLICK 364,367 -> 1715.5,412.5
+t1008 CLICK 364,365,366,367 -> 1712.0,416.7
+t1023 CLICK 364,365,366,367 -> 1715.0,413.7
+t1066 CLICK 364,365,367 -> 1715.0,413.7
+t1169 CLICK 364,365,366,367 -> 1715.0,413.7
+t1220 CLICK 367 -> 1715.0,416.7
+t1283 CLICK 364,365,367 -> 1703.5,445.5
+t1320 CLICK 366,367 -> 1715.0,415.7
+t1397 CLICK 364,365,366,367 -> 1701.5,447.5
+t1425 CLICK 364,365,367 -> 1818.7,385.3
+t1470 CLICK 364,365,366,367 -> 1818.7,385.3
+t1520 CLICK 367 -> 1715.0,415.7
+t1547 CLICK 366,367 -> 1716.5,411.5
+t1587 CLICK 364,365,366,367 -> 1716.0,412.7
+t1704 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | no landing
+t1710 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | no landing
+t1716 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | no landing
+t1722 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | no landing
+t1726 CLICK 365,366,367 -> 1715.0,411.7
+t1728 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st1 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1819.5,386.5 mv1 eng0
+t1734 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st1 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1817.9,391.1 mv1 eng0
+t1740 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st1 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1812.9,393.5 mv1 eng0
+t1746 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st1 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1807.9,396.1 mv1 eng0
+t1747 CLICK 364,365,366,367 -> 1717.5,412.5
+t1752 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st1 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1803.0,398.5 mv1 eng0
+t1758 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st1 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1798.0,401.0 mv1 eng0
+t1764 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st1 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1793.2,403.5 mv1 eng0
+t1770 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st1 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1788.2,405.8 mv1 eng0
+t1776 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st1 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1783.5,408.5 mv1 eng0
+t1782 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st1 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1778.4,410.6 mv1 eng0
+t1785 CLICK 365,366,367 -> 1818.7,385.3
+t1788 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1778.4,410.6 mv1 eng0
+t1794 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1783.5,408.5 mv1 eng0
+t1800 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1788.2,405.8 mv1 eng0
+t1803 CLICK 367 -> 1712.5,412.5
+t1806 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1793.2,403.5 mv1 eng0
+t1812 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1798.0,401.0 mv1 eng0
+t1818 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1803.0,398.5 mv1 eng0
+t1824 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1807.9,396.1 mv1 eng0
+t1830 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1812.9,393.5 mv1 eng0
+t1836 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 365+367 | g1144 1817.9,391.1 mv1 eng0
+t1837 CLICK 364,365,366,367 -> 1714.0,412.7
+t1842 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 365+367+364 | g1144 1819.5,386.5 mv1 eng0
+t1848 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1854 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1860 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1866 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1872 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1878 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1884 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1890 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1896 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1897 CLICK 365,366,367 -> 1818.7,385.3
+t1902 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1908 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1914 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1920 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1926 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1932 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1938 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1944 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1944 CLICK 364,365,367 -> 1818.7,385.3
+t1944 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1950 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1956 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1962 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364 | g1144 1819.5,386.5 mv0 eng0
+t1964 CLICK 364,365,366,367 -> 1706.5,448.5
+t1968 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367 | g1144 1819.5,386.5 mv0 eng0
+t1974 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367 | g1144 1819.5,386.5 mv0 eng0
+t1980 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367 | g1144 1819.5,386.5 mv0 eng0
+t1986 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367 | g1144 1819.5,386.5 mv0 eng0
+t1992 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367 | g1144 1819.5,386.5 mv0 eng0
+t1998 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367 | g1144 1819.5,386.5 mv0 eng0
+t2004 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367 | g1144 1819.5,386.5 mv0 eng0
+t2004 CLICK 365,366,367 -> 1715.0,411.7
+t2004 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367 | g1144 1819.5,386.5 mv0 eng0
+t2010 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367+365 | g1144 1819.5,386.5 mv0 eng0
+t2016 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367+365 | g1144 1819.5,386.5 mv0 eng0
+t2022 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367+365 | g1144 1819.5,386.5 mv0 eng0
+t2028 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367+365 | g1144 1819.5,386.5 mv0 eng0
+t2034 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367+365 | g1144 1819.5,386.5 mv0 eng0
+t2040 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367+365 | g1144 1819.5,386.5 mv0 eng0
+t2046 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367+365 | g1144 1819.5,386.5 mv0 eng0
+t2052 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367+365 | g1144 1819.5,386.5 mv0 eng0
+t2058 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367+365 | g1144 1819.5,386.5 mv0 eng0
+t2064 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367+365 | g1144 1819.5,386.5 mv0 eng0
+t2070 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 364+367+365 | g1144 1819.5,386.5 mv0 eng0
+t2076 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364+365 | g1144 1819.5,386.5 mv0 eng0
+t2082 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364+365 | g1144 1819.5,386.5 mv0 eng0
+t2088 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364+365 | g1144 1819.5,386.5 mv0 eng0
+t2094 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364+365 | g1144 1819.5,386.5 mv0 eng0
+t2100 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364+365 | g1144 1819.5,386.5 mv0 eng0
+t2106 div 367 1818.5,385.5 mv0 eng0 emb0 ctl75 | L4 st2 ready 1726 port 33 at 1819,385 ctl75 divs 367+364+365 | g1144 1819.5,386.5 mv0 eng0
+done:

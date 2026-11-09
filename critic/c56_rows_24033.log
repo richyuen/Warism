@@ -1,0 +1,9 @@
+t1850 [{"id":4,"state":2,"port":33,"water":845491,"land":843443,"target":843443,"divisions":[364,367],"need":20,"have":12,"sailsIn":null,"landsIn":null,"held":false,"heldBy":0,"backIn":null,"click":4}]
+   div 367 order: {"kind":0,"until":0,"through":false} moving 0 at 1818.5,385.5
+t2100 [{"id":4,"state":2,"port":33,"water":845491,"land":843443,"target":843443,"divisions":[364,365,367],"need":30,"have":12,"sailsIn":null,"landsIn":null,"held":false,"heldBy":0,"backIn":null,"click":4}]
+   div 367 order: {"kind":0,"until":0,"through":false} moving 0 at 1818.5,385.5
+t2400 [{"id":4,"state":2,"port":33,"water":845491,"land":843443,"target":843443,"divisions":[364,365,367],"need":30,"have":12,"sailsIn":null,"landsIn":null,"held":false,"heldBy":0,"backIn":null,"click":4}]
+   div 367 order: {"kind":0,"until":0,"through":false} moving 0 at 1818.5,385.5
+t2800 [{"id":4,"state":2,"port":33,"water":845491,"land":843443,"target":843443,"divisions":[364,365,367],"need":30,"have":12,"sailsIn":null,"landsIn":null,"held":false,"heldBy":0,"backIn":null,"click":4}]
+   div 367 order: {"kind":0,"until":0,"through":false} moving 0 at 1818.5,385.5
+done:

@@ -1,0 +1,67 @@
+t2 CLICK 364,365,366,367 -> 1717.5,412.5
+t68 CLICK 364,365,366,367 -> 1818.7,385.3
+t123 CLICK 365,367 -> 1818.7,385.3
+t173 CLICK 367 -> 1713.0,411.7
+t180 div 367 1822.8,338.5 mv1 eng0 emb0 ctl75 | L1 st1 ready 104 port 104 at 1777,393 ctl75 divs 366+367 | g1144 1721.3,412.5 mv1 eng0
+t192 div 367 1822.2,338.8 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1721.4,412.5 mv1 eng0
+t204 div 367 1821.8,339.2 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1732.8,413.5 mv1 eng0
+t216 div 367 1821.5,339.7 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1744.2,414.5 mv1 eng0
+t228 div 367 1821.5,340.3 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1756.1,414.5 mv1 eng0
+t240 div 367 1821.5,340.9 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1767.4,415.5 mv1 eng0
+t252 div 367 1821.5,341.5 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1774.0,408.0 mv1 eng0
+t264 div 367 1821.5,342.1 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1776.9,398.0 mv1 eng0
+t276 div 367 1821.7,342.5 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t288 div 367 1822.4,342.5 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t288 CLICK 364,365,366,367 -> 1703.5,447.5
+t288 div 367 1822.4,342.5 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t300 div 367 1822.8,342.8 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367+365 | g1144 1777.5,394.5 mv0 eng0
+t300 div 367 1822.8,342.8 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367+365 | g1144 1777.5,394.5 mv0 eng0
+t312 div 367 1823.3,343.3 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367+365 | g1144 1777.5,394.5 mv0 eng0
+t324 div 367 1824.0,343.7 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367+365 | g1144 1777.5,394.5 mv0 eng0
+t336 div 367 1824.9,344.1 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367+365 | g1144 1777.5,394.5 mv0 eng0
+t348 div 367 1825.2,344.3 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367+365 | g1144 1777.5,394.5 mv0 eng0
+t360 div 367 1825.4,344.5 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367+365 | g1144 1777.5,394.5 mv0 eng0
+t372 div 367 1825.6,344.7 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367+365 | g1144 1777.5,394.5 mv0 eng0
+t384 div 367 1825.8,344.9 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367+365 | g1144 1777.5,394.5 mv0 eng0
+t390 CLICK 367 -> 1716.0,413.7
+t396 div 367 1825.9,345.3 mv1 eng0 emb0 ctl0 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t408 div 367 1825.9,345.9 mv1 eng0 emb0 ctl0 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t420 div 367 1825.8,346.4 mv1 eng0 emb0 ctl0 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t432 div 367 1825.8,347.0 mv1 eng0 emb0 ctl0 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t444 div 367 1825.6,347.3 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t445 CLICK 367 -> 1715.0,413.7
+t456 div 367 1825.6,347.6 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t468 div 367 1826.1,348.1 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t480 div 367 1826.5,348.5 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t492 div 367 1827.0,348.2 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t498 CLICK 364,365,366,367 -> 1713.0,413.7
+t504 div 367 1827.5,348.4 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t516 div 367 1827.8,348.8 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t528 div 367 1827.9,349.4 mv1 eng0 emb0 ctl0 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t540 div 367 1827.8,349.9 mv1 eng0 emb0 ctl0 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t549 CLICK 364,365,366,367 -> 1715.0,413.7
+t552 div 367 1827.6,350.4 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t564 div 367 1827.5,350.9 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t576 div 367 1827.5,351.5 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t588 div 367 1827.5,352.4 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t600 div 367 1827.1,352.9 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t612 div 367 1826.7,353.3 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t624 div 367 1826.2,353.8 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t636 div 367 1825.8,354.2 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 365+367 | g1144 1777.5,394.5 mv0 eng0
+t648 div 367 1825.4,354.6 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t660 div 367 1825.0,355.0 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t672 div 367 1824.5,355.5 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t684 div 367 1824.1,355.9 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t684 div 367 1824.1,355.9 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t696 div 367 1823.7,356.3 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t708 div 367 1823.5,356.9 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t720 div 367 1823.5,357.4 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t732 div 367 1823.5,358.0 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t744 div 367 1823.5,358.6 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t747 CLICK 365,366,367 -> 1718.0,410.7
+t756 div 367 1823.5,359.2 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t768 div 367 1823.5,359.9 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t768 CLICK 364,367 -> 1818.7,385.3
+t768 div 367 1823.5,359.9 mv1 eng0 emb0 ctl75 | L1 st0 ready -1 port 104 at 1777,393 ctl75 divs 367 | g1144 1777.5,394.5 mv0 eng0
+t780 div 367 1823.5,360.8 mv1 eng0 emb0 ctl75 | no landing
+done:

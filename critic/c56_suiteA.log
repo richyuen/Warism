@@ -1,0 +1,49 @@
+== c56_lhold 23105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 200 02:08:14
+   exit 0
+== c56_lland 24151 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 02:08:42
+   exit 0
+== c56_lland 24157 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 02:08:53
+   exit 0
+== c56_lland 26151 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 02:09:04
+   exit 0
+== c56_lland 26163 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 240 02:09:15
+   exit 0
+== c56_lhold 21105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 200 02:09:26
+   exit 0
+== c56_lbar 22105 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br3_phone 390 844 14 4 02:09:48
+   exit 0
+== c56_turnback 20661 JAP CHI 1818.5,385.5 1715.5,413.5 2 jap_cancel 26 60 02:10:02
+   exit 0
+== c56_lland 22103 GER ENG 1100.5,267.5 1031.5,266.5 2 ger_norwich 130 02:10:18
+   exit 0
+== c56_lland 23109 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br3 240 02:10:29
+   exit 0
+== c56_lbox 21103 ENG GER 1023.5,275.5 1072.5,259.5 4 eng_br4 844 390 5 02:10:40
+   exit 0
+== c56_lland 26107 ENG GER 1023.5,275.5 1072.5,259.5 3 eng_br3 240 02:10:46
+   exit 0
+== c56_lland 26109 JAP CHI 1818.5,385.5 1715.5,413.5 3 jap_sh3 200 02:10:58
+   exit 0
+== c56_turnback 26101 JAP CHI 1818.5,385.5 1715.5,413.5 3 jap_cancel3 26 60 02:11:10
+   exit 0
+== c56_lbar 26105 JAP CHI 1818.5,385.5 1715.5,413.5 3 jap_sh3_phone 390 844 12 02:11:29
+   exit 0
+== c56_lland 27101 JAP CHI 1818.5,385.5 1715.5,413.5 6 jap_sh6 360 02:11:43
+   exit 0
+== c56_lland 27103 JAP CHI 1818.5,385.5 1715.5,413.5 6 jap_sh6 360 02:11:56
+   exit 0
+== c56_lland 27105 JAP CHI 1818.5,385.5 1715.5,413.5 6 jap_sh6 360 02:12:09
+   exit 0
+== c56_lland 27107 ENG GER 1023.5,275.5 1072.5,259.5 6 eng_br6 360 02:12:21
+   exit 0
+== c56_lland 27109 ENG GER 1023.5,275.5 1072.5,259.5 6 eng_br6 360 02:12:33
+   exit 0
+== c56_lland 27111 GER ENG 1100.5,267.5 1031.5,266.5 5 ger_norwich5 300 02:12:44
+   exit 0
+== c56_lland 27113 GER ENG 1100.5,267.5 1031.5,266.5 5 ger_norwich5 300 02:12:55
+   exit 0
+== c56_lland 27115 JAP CHI 1818.5,385.5 1715.5,413.5 4 jap_sh4 300 02:13:06
+   exit 0
+== c56_lland 27117 JAP CHI 1818.5,385.5 1715.5,413.5 4 jap_sh4 300 02:13:19
+   exit 0
+SUITEADONE
