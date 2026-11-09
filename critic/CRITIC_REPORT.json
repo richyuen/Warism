@@ -1,15 +1,15 @@
 {
-  "commit": "8d7d02fe6083771f8bd4b7bcfc7f1470a3bc5a0f",
+  "commit": "715a5448d310cd829492f3a3fc5fbd08fb101262",
   "mode": "full",
   "scores": {
     "mapVisuals": 8,
-    "diplomacyWarDepth": 7,
-    "emergentDynamics": 7,
+    "diplomacyWarDepth": 8,
+    "emergentDynamics": 8,
     "godMode": 8,
-    "editorScenarios": 7,
+    "editorScenarios": 8,
     "statsHistory": 8,
-    "uiUxPolish": 7,
-    "performance": 7,
+    "uiUxPolish": 8,
+    "performance": 8,
     "stability": 8,
     "semanticZoom": 8,
     "naval": 7,
@@ -19,11 +19,11 @@
   },
   "blocking": [
     {
-      "id": "R54-B1",
-      "title": "A thrown-back landing tells three stories: the bar reads 'lands in about a day' for a day after the throw-back, then 'over: 2 thrown back' beside a ticker and panel saying 'landed away from its target' (6 of 11 Rome → Valletta clicks)",
-      "evidence": "SHOTAT=162,168,174,180,186 node critic/scripts/c54_lhold.mjs 23105 ITA ENG 1095.5,344.5 1106.5,383.5 2 ita_malta 200 (critic/c54_lhold_23105_b.log; critic/shots/c54lh_ita_malta_23105_h174_1500m.png: bar 'at sea: lands in about a day', panel 'At sea, bound for its landing' above 'the landing was thrown back'; critic/shots/c54lh_ita_malta_23105_h186_1500m.png: bar 'over: 2 thrown back', ticker '319/321: landed away from its target', panel 'Landed', divisions ashore near Catania). Run 53 on the same seed and click ended 'broke off; 2 came ashore away from Valletta', agreeing with the ticker (critic/c53_lland_ita_malta_23105.json). The same on new 24151, 24153, 24155, 24159, 24171 (critic/c54_lland_ita_malta_241*.json). landingRows all: 0 broken (critic/c54_lrows_all.log), so the checker does not see it.",
-      "fix": "From the repulse, the row and the panels of those aboard say 'thrown back: sailing home' (the landing leaves sailing, or the row stops reading voyage hours). At the end, the bar, panel and ticker agree: e.g. '2 thrown back; came ashore near Catania', with a 'thrown back' news row for each division R52d counts, not only the one the event names. Add the Rome → Valletta case (23105 or 24151) to landingRows with a row/panel/last-news agreement check."
+      "id": "R55-B1",
+      "title": "slowClick broken: a player's landing click is held in port past its best way (24033: 17.1 days against 10.1, a ready landing sails 11 days after it was ready, 173 h of it alone; 26045: 9.5 against 2.5)",
+      "evidence": "npx tsx tools/diag/landingInvariants.ts 24033 3517 120 24033 30,90 2 -> 't2415 slowClick: t2004's click of 367 not ashore after 17.1 days, its best way 10.1', 1 broken on HEAD twice (critic/c55_replay/c54_li_24033_jap_g2.log, critic/c55_li_24033_rerun.log), 0 broken on 8d7d02fe (critic/c55_li_24033_at8d7d02fe.log). Trace (critic/scripts/c55_slow367.ts, critic/c55_slow367_wars.log): landing 6 at Tokyo ready at t2125 with its transports, 367 alone in it from t2142 to t2315 (173 h, past READY_WAIT_HOURS' 144; 365 went to another landing for 1703,445), 364 in it t2315-t2354, Japan at war with China throughout, sails only at t2393. Second case on both commits: landingInvariants 26045 3517 120 26045 30,90 2 -> 't1358's click of 366 not ashore after 9.5 days, its best way 2.5' (critic/c55_liab.log, critic/c55_slow366_26045.log).",
+      "fix": "A landing ready with its transports and no division of its own still marching sails within READY_WAIT_HOURS whatever a click-mate in another landing does (siblingWait, the likely cause, counting only siblings still bound to the same target). For 26045 find whether the 123 h march to Tokyo and the turn-back near the target are a stall or the checker reckoning a throw-back as slow, and say which in the checker's line. Bar: both commands at 0 broken and sh critic/scripts/c55_liab.sh all 0."
     }
   ],
-  "timestamp": "2026-11-08T07:55:00-05:00"
+  "timestamp": "2026-11-09T01:05:00-05:00"
 }

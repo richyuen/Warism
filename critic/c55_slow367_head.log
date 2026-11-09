@@ -1,0 +1,102 @@
+t2 CLICK ids=364,365,366,367 to 1717.5,412.5
+t68 CLICK ids=364,365,366,367 to 1818.6808888888888,385.26248756048625
+t123 CLICK ids=365,367 to 1818.6808888888888,385.26248756048625
+t173 CLICK ids=367 to 1713.0293333333334,411.6871822953925
+t288 CLICK ids=364,365,366,367 to 1703.5,447.5
+t390 CLICK ids=367 to 1716.0293333333334,413.6871822953925
+t445 CLICK ids=367 to 1715.0293333333334,413.6871822953925
+t498 CLICK ids=364,365,366,367 to 1713.0293333333334,413.6871822953925
+t549 CLICK ids=364,365,366,367 to 1715.0293333333334,413.6871822953925
+t747 CLICK ids=365,366,367 to 1718.0293333333334,410.6871822953925
+t768 CLICK ids=364,367 to 1818.6808888888888,385.26248756048625
+t818 CLICK ids=364,365,366,367 to 1716.0293333333334,414.6871822953925
+t841 CLICK ids=364,367 to 1715.5,412.5
+t1008 CLICK ids=364,365,366,367 to 1712.0293333333334,416.6871822953925
+t1023 CLICK ids=364,365,366,367 to 1715.0293333333334,413.6871822953925
+t1066 CLICK ids=364,365,367 to 1715.0293333333334,413.6871822953925
+t1169 CLICK ids=364,365,366,367 to 1715.0293333333334,413.6871822953925
+t1220 CLICK ids=367 to 1715.0293333333334,416.6871822953925
+t1283 CLICK ids=364,365,367 to 1703.5,445.5
+t1320 CLICK ids=366,367 to 1715.0293333333334,415.6871822953925
+t1397 CLICK ids=364,365,366,367 to 1701.5,447.5
+t1425 CLICK ids=364,365,367 to 1818.6808888888888,385.26248756048625
+t1470 CLICK ids=364,365,366,367 to 1818.6808888888888,385.26248756048625
+t1520 CLICK ids=367 to 1715.0293333333334,415.6871822953925
+t1547 CLICK ids=366,367 to 1716.5,411.5
+t1587 CLICK ids=364,365,366,367 to 1716.0293333333334,412.6871822953925
+t1726 CLICK ids=365,366,367 to 1715.0293333333334,411.6871822953925
+t1747 CLICK ids=364,365,366,367 to 1717.5,412.5
+t1785 CLICK ids=365,366,367 to 1818.6808888888888,385.26248756048625
+t1803 CLICK ids=367 to 1712.5,412.5
+t1837 CLICK ids=364,365,366,367 to 1714.0293333333334,412.6871822953925
+t1897 CLICK ids=365,366,367 to 1818.6808888888888,385.26248756048625
+t1944 CLICK ids=364,365,367 to 1818.6808888888888,385.26248756048625
+t1964 CLICK ids=364,365,366,367 to 1706.5,448.5
+t1990 alive ? at 1818.5,385.5 | landing none | wars 8
+t1992 alive ? at 1818.5,385.5 | landing none | wars 8
+t1993 alive ? at 1818.5,385.5 | landing none | wars 7
+t2004 CLICK ids=365,366,367 to 1715.0293333333334,411.6871822953925
+t2005 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1144 divs 365+367 ready -1 | wars 7
+t2016 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1144 divs 365+367 ready -1 | wars 7
+t2040 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1144 divs 365+367 ready -1 | wars 7
+t2064 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1144 divs 365+367 ready -1 | wars 7
+t2075 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1144 divs 367+365 ready -1 | wars 7
+t2088 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1144 divs 367+365 ready -1 | wars 7
+t2112 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1144 divs 367+365 ready -1 | wars 7
+t2126 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136+1144 divs 367+365 ready 2125 | wars 7
+t2136 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136+1144 divs 367+365 ready 2125 | wars 7
+t2137 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136+1144 divs 367+365 ready 2125 | wars 5
+t2142 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2160 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2184 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2208 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2232 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2256 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2280 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2304 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2315 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367+364 ready 2125 | wars 5
+t2328 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367+364 ready 2125 | wars 5
+t2352 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367+364 ready 2125 | wars 5
+t2354 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2376 alive ? at 1818.5,385.5 | landing 6 state 0 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2393 alive ? at 1819.5,386.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2394 alive ? at 1819.1,387.2 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2395 alive ? at 1819.1,388.8 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2396 alive ? at 1818.9,388.9 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2397 alive ? at 1818.5,389.4 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2398 alive ? at 1818.5,390.4 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2399 alive ? at 1817.9,391.1 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2400 alive ? at 1817.1,391.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2401 alive ? at 1816.2,391.8 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2402 alive ? at 1815.5,392.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2403 alive ? at 1814.5,392.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2404 alive ? at 1813.8,393.2 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2405 alive ? at 1812.9,393.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2406 alive ? at 1812.1,393.9 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2407 alive ? at 1811.3,394.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2408 alive ? at 1810.3,394.7 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2409 alive ? at 1809.6,395.4 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2410 alive ? at 1808.7,395.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2411 alive ? at 1807.9,396.1 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2412 alive ? at 1807.1,396.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2413 alive ? at 1806.2,396.8 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2414 alive ? at 1805.5,397.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2415 alive ? at 1804.5,397.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2416 alive ? at 1803.8,398.2 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2417 alive ? at 1803.0,398.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2418 alive ? at 1802.1,398.9 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2419 alive ? at 1801.4,399.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2420 alive ? at 1800.4,399.6 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2421 alive ? at 1799.7,400.3 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2422 alive ? at 1798.8,400.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2423 alive ? at 1798.0,401.0 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2424 alive ? at 1797.3,401.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2425 alive ? at 1796.3,401.7 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2426 alive ? at 1795.7,402.3 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2427 alive ? at 1794.7,402.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2428 alive ? at 1794.0,403.0 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2429 alive ? at 1793.2,403.5 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2430 alive ? at 1792.3,403.7 | landing 6 state 1 port 33 target 1715,411 fleets 1136 divs 367 ready 2125 | wars 5
+t2456 CLICK ids=364,365,367 to 1818.6808888888888,385.26248756048625
+BROKEN t2415 slowClick: t2004's click of 367 not ashore after 17.1 days, its best way 10.1
+done:

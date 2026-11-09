@@ -1,0 +1,351 @@
+{
+ "seed": 24071,
+ "TAG": "ENG",
+ "FOE": "GER",
+ "FROM": [
+  1023.5,
+  275.5
+ ],
+ "TO": [
+  1072.5,
+  259.5
+ ],
+ "N": 3,
+ "ids": [
+  270,
+  271,
+  274
+ ],
+ "samples": [
+  {
+   "t": 3,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Portsmouth",
+       "gathering",
+       "sails in about 4 days",
+       null
+      ]
+     ],
+     "says": "sails in about 4 days"
+    }
+   ]
+  },
+  {
+   "t": 15,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Portsmouth",
+       "gathering",
+       "sails in about 3 days",
+       null
+      ]
+     ],
+     "says": "sails in about 3 days"
+    }
+   ]
+  },
+  {
+   "t": 39,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Portsmouth",
+       "gathering",
+       "sails in about 2 days",
+       null
+      ]
+     ],
+     "says": "sails in about 2 days"
+    }
+   ]
+  },
+  {
+   "t": 63,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Portsmouth",
+       "gathering",
+       "sails in about a day",
+       null
+      ]
+     ],
+     "says": "sails in about a day"
+    }
+   ]
+  },
+  {
+   "t": 87,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Portsmouth",
+       "sailing",
+       "at sea: lands in about 3 days",
+       null
+      ]
+     ],
+     "says": "at sea: lands in about 3 days"
+    }
+   ]
+  },
+  {
+   "t": 95,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Portsmouth",
+       "sailing",
+       "at sea: lands in about 2 days",
+       null
+      ]
+     ],
+     "says": "at sea: lands in about 2 days"
+    }
+   ]
+  },
+  {
+   "t": 119,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Portsmouth",
+       "sailing",
+       "at sea: lands in about a day",
+       null
+      ]
+     ],
+     "says": "at sea: lands in about a day"
+    }
+   ]
+  },
+  {
+   "t": 143,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Portsmouth",
+       "sailing",
+       "thrown back: sailing home to Southend-on-Sea",
+       null
+      ]
+     ],
+     "says": "thrown back: sailing home to Southend-on-Sea"
+    }
+   ]
+  },
+  {
+   "t": 201,
+   "groups": [
+    {
+     "click": 1,
+     "parts": [
+      [
+       1,
+       "Portsmouth",
+       "over",
+       "over: 1 landed, 2 thrown back",
+       {
+        "kind": "landed",
+        "tick": 201,
+        "landed": 1,
+        "lost": 0,
+        "repulsed": 2,
+        "ashore": "Dover"
+       }
+      ]
+     ],
+     "says": "over: 1 landed, 2 thrown back"
+    }
+   ]
+  },
+  {
+   "t": 225,
+   "groups": []
+  }
+ ],
+ "events": [
+  {
+   "t": 142,
+   "id": 274,
+   "off": "ashore",
+   "p": [
+    1072.5,
+    258.5
+   ]
+  },
+  {
+   "t": 201,
+   "id": 270,
+   "off": "ashore",
+   "p": [
+    1030.5,
+    276.5
+   ]
+  },
+  {
+   "t": 201,
+   "id": 271,
+   "off": "ashore",
+   "p": [
+    1030.5,
+    276.5
+   ]
+  }
+ ],
+ "repulsedKind": 45,
+ "end": [
+  {
+   "id": 270,
+   "alive": true,
+   "p": [
+    1030.5,
+    276.5
+   ]
+  },
+  {
+   "id": 271,
+   "alive": true,
+   "p": [
+    1030.5,
+    276.5
+   ]
+  },
+  {
+   "id": 274,
+   "alive": true,
+   "p": [
+    1071.2403671601057,
+    260.7596328398943
+   ]
+  }
+ ],
+ "broken": [],
+ "evLog": [
+  [
+   54,
+   "FormationArrived",
+   274,
+   20,
+   1017.5,
+   280.5
+  ],
+  [
+   62,
+   "FormationArrived",
+   270,
+   20,
+   1017.5,
+   280.5
+  ],
+  [
+   86,
+   "FormationArrived",
+   271,
+   20,
+   1017.5,
+   280.5
+  ],
+  [
+   86,
+   "FormationEmbarked",
+   270,
+   20,
+   1019.5,
+   282.5
+  ],
+  [
+   86,
+   "FormationEmbarked",
+   271,
+   20,
+   1019.5,
+   282.5
+  ],
+  [
+   86,
+   "FormationEmbarked",
+   274,
+   20,
+   1020.5,
+   281.5
+  ],
+  [
+   141,
+   "FormationLanded",
+   274,
+   20,
+   1072.5,
+   258.5
+  ],
+  [
+   142,
+   "LandingRepulsed",
+   270,
+   1,
+   1071.5,
+   258.5
+  ],
+  [
+   200,
+   "FormationLanded",
+   270,
+   20,
+   1030.5,
+   276.5
+  ],
+  [
+   200,
+   "FormationLanded",
+   271,
+   20,
+   1030.5,
+   276.5
+  ]
+ ],
+ "news": [
+  [
+   143,
+   "{\"type\":\"orderNews\",\"news\":{\"kind\":\"repulsed\",\"id\":270,\"nation\":20,\"reason\":0,\"x\":1071.5,\"y\":258.5,\"tick\":142}}"
+  ],
+  [
+   143,
+   "{\"type\":\"orderNews\",\"news\":{\"kind\":\"repulsed\",\"id\":271,\"nation\":20,\"reason\":0,\"x\":1071.5,\"y\":258.5,\"tick\":142}}"
+  ],
+  [
+   201,
+   "{\"type\":\"orderNews\",\"news\":{\"kind\":\"thrownAshore\",\"id\":270,\"nation\":20,\"reason\":0,\"x\":1030.5,\"y\":276.5,\"tick\":200,\"at\":\"Dover\"}}"
+  ],
+  [
+   201,
+   "{\"type\":\"orderNews\",\"news\":{\"kind\":\"thrownAshore\",\"id\":271,\"nation\":20,\"reason\":0,\"x\":1030.5,\"y\":276.5,\"tick\":200,\"at\":\"Dover\"}}"
+  ]
+ ]
+}

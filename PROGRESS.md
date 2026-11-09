@@ -2237,3 +2237,9 @@
 - Seen, not filed as a bar: a broke-off ending names no place (ashore at Palermo on 25153), and Italy lands on Malta
   on none of the 21 (the British fleet holds every time).
 - **Next:** the batch's last item is done: critic run 55.
+
+## 2026-11-09 — Critic run 55 (full, on 715a5448): one blocking issue, naval 7
+- R54-B1 fixed on 18 Malta seeds; diplomacy, emergent dynamics, editor, UI and performance 7 → 8; every other
+  dimension at 8 but naval, 7. R55-B1: `landingInvariants` slowClick broken on 24033 (HEAD only) and 26045 (both
+  commits), a landing click held in port days past its best way. Filed as batch 9 (R54); no release.
+- **Next:** R54a.

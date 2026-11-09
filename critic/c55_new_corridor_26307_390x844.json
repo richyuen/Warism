@@ -1,0 +1,89 @@
+{
+ "section": "corridor",
+ "seed": 26307,
+ "W": 390,
+ "H": 844,
+ "steps": [
+  {
+   "h": 1,
+   "m": 6000,
+   "marks": 0
+  },
+  {
+   "h": 1,
+   "m": 3000,
+   "marks": 0
+  },
+  {
+   "h": 1,
+   "m": 600,
+   "marks": 0
+  },
+  {
+   "h": 1,
+   "m": 250,
+   "marks": 0
+  },
+  {
+   "h": 1,
+   "m": 60,
+   "marks": 0
+  },
+  {
+   "day": 3,
+   "tick": 72,
+   "marks": 0,
+   "ger": 0,
+   "ticker": [
+    "1 January 1938 Germany declared war on Poland"
+   ]
+  },
+  {
+   "day": 6,
+   "tick": 144,
+   "marks": 0,
+   "ger": 0,
+   "ticker": [
+    "5 January 1938 Soviet Union declared war on Romania"
+   ]
+  },
+  {
+   "day": 9,
+   "tick": 216,
+   "marks": 0,
+   "ger": 0,
+   "ticker": [
+    "5 January 1938 Soviet Union declared war on Romania"
+   ]
+  },
+  {
+   "day": 10,
+   "tick": 240,
+   "marks": 0,
+   "ger": 0,
+   "ticker": [
+    "5 January 1938 Soviet Union declared war on Romania"
+   ]
+  },
+  {
+   "day": 11,
+   "tick": 264,
+   "marks": 0,
+   "ger": 0,
+   "ticker": [
+    "5 January 1938 Soviet Union declared war on Romania"
+   ]
+  },
+  {
+   "day": 13,
+   "tick": 312,
+   "marks": 0,
+   "ger": 0,
+   "ticker": [
+    "5 January 1938 Soviet Union declared war on Romania"
+   ]
+  }
+ ],
+ "marks0": [],
+ "errors": []
+}

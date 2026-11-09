@@ -1,0 +1,7 @@
+d1 atWar false | 
+  t3432 d143 TechResearched a=FRA b=GER NaN NaN
+  t8376 d349 WarDeclared a=GER b=POL NaN NaN
+d350 atWar true | GER+EST+ITA+AUT+HUN+YUG+ALB vs POL+AFG+IRN+FRA+NSP+AOF+AEF+FMO+TUN
+  t9024 d376 PeaceSigned a=GER b=POL NaN NaN
+d377 atWar false | 
+done:

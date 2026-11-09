@@ -1,0 +1,261 @@
+{
+ "seed": 26131,
+ "days": 730,
+ "W": 390,
+ "H": 844,
+ "samples": [
+  {
+   "day": 0,
+   "openMs": 302,
+   "nodes": 80,
+   "kinds": {
+    "war": 9,
+    "alliance": 11,
+    "guarantee": 8,
+    "puppet": 40
+   },
+   "said": "Click a nation to select it, a line to read it. · 24 nations with no tie shown are left out",
+   "truth": {
+    "living": 102,
+    "wars": 2,
+    "warEdges": 9,
+    "alliances": [
+     3,
+     2,
+     3,
+     3,
+     2,
+     2,
+     3
+    ],
+    "puppet": 40,
+    "guarantee": 8,
+    "truce": 0,
+    "sample": [
+     {
+      "alliance": null,
+      "guarantees": [],
+      "truces": []
+     }
+    ]
+   },
+   "shot": "critic/shots/c55rg_26131_phone_d0.png",
+   "toggles": [
+    {
+     "kind": "war",
+     "edgesOff": 0,
+     "nodes": 77,
+     "moved": 0
+    },
+    {
+     "kind": "alliance",
+     "edgesOff": 0,
+     "nodes": 73,
+     "moved": 0
+    },
+    {
+     "kind": "guarantee",
+     "edgesOff": 0,
+     "nodes": 70,
+     "moved": 0
+    },
+    {
+     "kind": "puppet",
+     "edgesOff": 0,
+     "nodes": 34,
+     "moved": 0
+    },
+    {
+     "kind": "truce",
+     "edgesOff": 0,
+     "nodes": 80,
+     "moved": 0
+    }
+   ],
+   "clicks": [
+    {
+     "kind": "war",
+     "said": "Germany is at war alone on its side, against Austria · 24 nations with no tie shown are left out"
+    },
+    {
+     "kind": "alliance",
+     "said": "Austria is allied to Czechoslovakia, the leader of its alliance · 24 nations with no tie shown are left out"
+    },
+    {
+     "kind": "guarantee",
+     "said": "Poland guarantees Yemen · 24 nations with no tie shown are left out"
+    },
+    {
+     "kind": "puppet",
+     "said": "Albania is a puppet of Italy · 24 nations with no tie shown are left out"
+    }
+   ],
+   "focusOptions": 103,
+   "focus": {
+    "nation": "Germany",
+    "nodes": 5,
+    "edges": 4
+   },
+   "focusShot": "critic/shots/c55rg_26131_phone_d0_focus.png"
+  },
+  {
+   "day": 730,
+   "openMs": 193,
+   "nodes": 93,
+   "kinds": {
+    "war": 74,
+    "alliance": 30,
+    "truce": 33,
+    "puppet": 47,
+    "guarantee": 8
+   },
+   "said": "Click a nation to select it, a line to read it. · 13 nations with no tie shown are left out",
+   "truth": {
+    "living": 98,
+    "wars": 8,
+    "warEdges": 74,
+    "alliances": [
+     7,
+     2,
+     5,
+     4,
+     2,
+     2,
+     5,
+     9,
+     3
+    ],
+    "puppet": 47,
+    "guarantee": 8,
+    "truce": 36,
+    "sample": [
+     {
+      "alliance": {
+       "id": 16,
+       "name": "alliance.defensive",
+       "leader": 30,
+       "founder": 30,
+       "unity": 100,
+       "loyalty": 99.39198185774876,
+       "members": [
+        30,
+        19,
+        27,
+        29,
+        28,
+        24,
+        1
+       ]
+      },
+      "guarantees": [],
+      "truces": [
+       {
+        "with": 2,
+        "days": 42
+       },
+       {
+        "with": 3,
+        "days": 60
+       },
+       {
+        "with": 13,
+        "days": 69
+       },
+       {
+        "with": 17,
+        "days": 74
+       },
+       {
+        "with": 4,
+        "days": 146
+       },
+       {
+        "with": 25,
+        "days": 179
+       },
+       {
+        "with": 14,
+        "days": 253
+       },
+       {
+        "with": 26,
+        "days": 321
+       },
+       {
+        "with": 12,
+        "days": 390
+       },
+       {
+        "with": 15,
+        "days": 491
+       }
+      ]
+     }
+    ]
+   },
+   "shot": "critic/shots/c55rg_26131_phone_d730.png",
+   "toggles": [
+    {
+     "kind": "war",
+     "edgesOff": 0,
+     "nodes": 84,
+     "moved": 0
+    },
+    {
+     "kind": "alliance",
+     "edgesOff": 0,
+     "nodes": 86,
+     "moved": 0
+    },
+    {
+     "kind": "guarantee",
+     "edgesOff": 0,
+     "nodes": 91,
+     "moved": 0
+    },
+    {
+     "kind": "puppet",
+     "edgesOff": 0,
+     "nodes": 87,
+     "moved": 0
+    },
+    {
+     "kind": "truce",
+     "edgesOff": 0,
+     "nodes": 93,
+     "moved": 0
+    }
+   ],
+   "clicks": [
+    {
+     "kind": "war",
+     "said": "China is at war alone on its side, against United Kingdom · 13 nations with no tie shown are left out"
+    },
+    {
+     "kind": "alliance",
+     "said": "Germany is allied to Denmark, the leader of its alliance · 13 nations with no tie shown are left out"
+    },
+    {
+     "kind": "guarantee",
+     "said": "Poland guarantees Yemen · 13 nations with no tie shown are left out"
+    },
+    {
+     "kind": "puppet",
+     "said": "Austria is a puppet of Germany · 13 nations with no tie shown are left out"
+    },
+    {
+     "kind": "truce",
+     "said": "Germany and Austria are at truce, 42 days left · 13 nations with no tie shown are left out"
+    }
+   ],
+   "focusOptions": 99,
+   "focus": {
+    "nation": "Germany",
+    "nodes": 19,
+    "edges": 21
+   },
+   "focusShot": "critic/shots/c55rg_26131_phone_d730_focus.png"
+  }
+ ],
+ "errors": []
+}

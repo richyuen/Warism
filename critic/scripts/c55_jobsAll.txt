@@ -1,0 +1,27 @@
+npm run sim -- --scenario 1938 --seed 7019 --years 20 --save critic/c55_seed7019_y20.bin > critic/c55_seed7019_save.log 2>&1
+npx tsx critic/scripts/c55_topArea.ts 21099 25 critic/c55_toparea_21099.json > critic/c55_toparea_21099.log 2>&1
+npx tsx critic/scripts/c55_topArea.ts 20899 25 critic/c55_toparea_20899.json > critic/c55_toparea_20899.log 2>&1
+npx tsx critic/scripts/c55_topArea.ts 24099 25 critic/c55_toparea_24099.json > critic/c55_toparea_24099.log 2>&1
+npx tsx critic/scripts/c55_topArea.ts 26099 25 critic/c55_toparea_26099.json > critic/c55_toparea_26099.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 26001 random 3650 > critic/c55_diploinv_26001r_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 26003 scenario 3650 --heroes > critic/c55_diploinv_26003s_h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 26005 random 1825 --world random > critic/c55_diploinv_26005rw_5y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 26007 scenario 3650 > critic/c55_diploinv_26007s_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 26009 random 3650 --heroes > critic/c55_diploinv_26009r_h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 26011 scenario 3650 > critic/c55_diploinv_26011s_10y.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 26021 3517 > critic/c55_li_26021_jap.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 26023 15101 > critic/c55_li_26023_eng.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 26025 3517 120 26025 30,90 1 > critic/c55_li_26025_jap_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 26027 15101 120 26027 30,90 2 > critic/c55_li_26027_eng_g2.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 26051 > critic/c55_wi_26051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 26053 365 --heroes > critic/c55_wi_26053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 26055 3650 > critic/c55_wi_26055_10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 26057 365 --world random > critic/c55_wi_26057rw.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 26059 4380 24 critic/c55_wd_26059.json > critic/c55_wd_26059.log 2>&1
+npx tsx tools/diag/seaBattles.ts 26061 scenario --years 3 --out critic/c55_sb_26061.json > critic/c55_sb_26061.log 2>&1
+npx tsx tools/diag/landingRows.ts all critic/c55_lrows_all.json > critic/c55_lrows_all.log 2>&1
+env TAG=GER FOE=ENG FROM=13.4,52.5 TO=1.3,52.6 N=3 DAYS=150 npx tsx critic/scripts/c47_far.ts 26043 critic/c55_far_26043_ger_norwich3.json > critic/c55_far_26043_ger_norwich3.log 2>&1
+npx tsx critic/scripts/c55_repulse.ts 26071 ENG GER 1023.5,275.5 1072.5,259.5 3 critic/c55_repulse_26071.json 500 12 > critic/c55_repulse_26071.log 2>&1
+npx tsx critic/scripts/c55_repulse.ts 26073 JAP CHI 1818.5,385.5 1715.5,413.5 3 critic/c55_repulse_26073.json 400 12 > critic/c55_repulse_26073.log 2>&1
+npx tsx critic/scripts/c55_repland.ts 26081 scenario --years 3 critic/c55_repland_26081.json > critic/c55_repland_26081.log 2>&1
+npx tsx critic/scripts/c55_heldby.ts 26201 scenario --years 2 critic/c55_heldby_26201.json > critic/c55_heldby_26201.log 2>&1

@@ -1,0 +1,4740 @@
+{
+ "seed": 24061,
+ "diplomacy": "scenario",
+ "world": "1938",
+ "years": 3,
+ "battles": [
+  {
+   "start": 316,
+   "end": 321,
+   "day": 13,
+   "at": [
+    999.6,
+    379.5
+   ],
+   "zone": 3,
+   "sea": "Alboran Sea",
+   "a": "NSP",
+   "b": "REP",
+   "lostA": 0,
+   "lostB": 5,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1238,
+     "nation": "NSP",
+     "ships": 8,
+     "x": 999.6,
+     "y": 379.5
+    },
+    {
+     "id": 1239,
+     "nation": "REP",
+     "ships": 8,
+     "x": 998.5,
+     "y": 379.5
+    }
+   ],
+   "camera": {
+    "cx": 999.06,
+    "cy": 379.5,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 324,
+   "end": 325,
+   "day": 13,
+   "at": [
+    1131.5,
+    342.6
+   ],
+   "zone": 1,
+   "sea": "Adriatic Sea",
+   "a": "ITA",
+   "b": "YUG",
+   "lostA": 0,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1181,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1131.5,
+     "y": 342.6
+    },
+    {
+     "id": 1248,
+     "nation": "YUG",
+     "ships": 3,
+     "x": 1130.5,
+     "y": 341.5
+    }
+   ],
+   "camera": {
+    "cx": 1131,
+    "cy": 342.06,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 472,
+   "end": 489,
+   "day": 19,
+   "at": [
+    1101.5,
+    381.5
+   ],
+   "zone": 191,
+   "sea": "Mediterranean Sea",
+   "a": "GER",
+   "b": "ROM",
+   "lostA": 13,
+   "lostB": 7,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1200,
+     "nation": "GER",
+     "ships": 8,
+     "x": 1101.5,
+     "y": 381.5
+    },
+    {
+     "id": 1247,
+     "nation": "ROM",
+     "ships": 8,
+     "x": 1100.4,
+     "y": 382.4
+    },
+    {
+     "id": 1204,
+     "nation": "GER",
+     "ships": 8,
+     "x": 1101.1,
+     "y": 381.4
+    },
+    {
+     "id": 1080,
+     "nation": "ENG",
+     "ships": 10,
+     "x": 1106.5,
+     "y": 385.5
+    }
+   ],
+   "camera": {
+    "cx": 1100.94,
+    "cy": 381.94,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 537,
+   "end": 540,
+   "day": 22,
+   "at": [
+    1098.5,
+    402.2
+   ],
+   "zone": 191,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "ITA",
+   "lostA": 0,
+   "lostB": 12,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1083,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1098.5,
+     "y": 402.2
+    },
+    {
+     "id": 1191,
+     "nation": "ITA",
+     "ships": 12,
+     "x": 1098.5,
+     "y": 402.5
+    }
+   ],
+   "camera": {
+    "cx": 1098.5,
+    "cy": 402.33,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 537,
+   "end": 542,
+   "day": 22,
+   "at": [
+    1027.6,
+    228.6
+   ],
+   "zone": 263,
+   "sea": "North Sea",
+   "a": "ENG",
+   "b": "GER",
+   "lostA": 9,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1057,
+     "nation": "ENG",
+     "ships": 10,
+     "x": 1027.6,
+     "y": 228.6
+    },
+    {
+     "id": 1201,
+     "nation": "GER",
+     "ships": 8,
+     "x": 1040.5,
+     "y": 234.5
+    },
+    {
+     "id": 1202,
+     "nation": "GER",
+     "ships": 8,
+     "x": 1040.5,
+     "y": 234.5
+    },
+    {
+     "id": 1205,
+     "nation": "GER",
+     "ships": 8,
+     "x": 1040.5,
+     "y": 234.5
+    },
+    {
+     "id": 1206,
+     "nation": "GER",
+     "ships": 8,
+     "x": 1040.5,
+     "y": 234.5
+    }
+   ],
+   "camera": {
+    "cx": 1034.04,
+    "cy": 231.54,
+    "mpp": 361
+   }
+  },
+  {
+   "start": 543,
+   "end": 544,
+   "day": 22,
+   "at": [
+    1025.8,
+    375.5
+   ],
+   "zone": 190,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "GER",
+   "lostA": 0,
+   "lostB": 2,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1078,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1025.8,
+     "y": 375.5
+    },
+    {
+     "id": 1203,
+     "nation": "GER",
+     "ships": 3,
+     "x": 1025.9,
+     "y": 375.5
+    }
+   ],
+   "camera": {
+    "cx": 1025.86,
+    "cy": 375.5,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 546,
+   "end": 548,
+   "day": 22,
+   "at": [
+    1030,
+    374.5
+   ],
+   "zone": 190,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "ITA",
+   "lostA": 8,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1078,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1030,
+     "y": 374.5
+    },
+    {
+     "id": 1190,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1030.1,
+     "y": 373.5
+    },
+    {
+     "id": 1189,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1029.9,
+     "y": 373.8
+    }
+   ],
+   "camera": {
+    "cx": 1030.02,
+    "cy": 374,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 634,
+   "end": 634,
+   "day": 26,
+   "at": [
+    1017.5,
+    282.5
+   ],
+   "zone": 65,
+   "sea": "English Channel",
+   "a": "ENG",
+   "b": "GER",
+   "lostA": 0,
+   "lostB": 1,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 1066,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 1018.5,
+     "y": 283.5
+    },
+    {
+     "id": 1067,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 1017.5,
+     "y": 282.5
+    },
+    {
+     "id": 1069,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 1020.5,
+     "y": 281.5
+    },
+    {
+     "id": 1076,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 1030.5,
+     "y": 274.5
+    },
+    {
+     "id": 1176,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1014.5,
+     "y": 287.5
+    }
+   ],
+   "camera": {
+    "cx": 1022.5,
+    "cy": 281,
+    "mpp": 400
+   }
+  },
+  {
+   "start": 493,
+   "end": 649,
+   "day": 20,
+   "at": [
+    1106.5,
+    385.5
+   ],
+   "zone": 191,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "GER",
+   "lostA": 30,
+   "lostB": 116,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1080,
+     "nation": "ENG",
+     "ships": 10,
+     "x": 1106.5,
+     "y": 385.5
+    },
+    {
+     "id": 1203,
+     "nation": "GER",
+     "ships": 8,
+     "x": 1093,
+     "y": 375
+    },
+    {
+     "id": 1181,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1116.2,
+     "y": 373.8
+    },
+    {
+     "id": 1182,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1116.2,
+     "y": 373.8
+    },
+    {
+     "id": 1187,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1116.4,
+     "y": 373.6
+    },
+    {
+     "id": 1192,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1116.4,
+     "y": 373.6
+    },
+    {
+     "id": 1180,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1116.8,
+     "y": 373.3
+    },
+    {
+     "id": 1186,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1117,
+     "y": 373.1
+    },
+    {
+     "id": 1179,
+     "nation": "ITA",
+     "ships": 16,
+     "x": 1117,
+     "y": 373.1
+    },
+    {
+     "id": 1184,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1113.4,
+     "y": 380.1
+    },
+    {
+     "id": 1183,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1113.8,
+     "y": 379.7
+    },
+    {
+     "id": 1185,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1113.2,
+     "y": 379.6
+    },
+    {
+     "id": 1079,
+     "nation": "ENG",
+     "ships": 16,
+     "x": 1107,
+     "y": 384.8
+    },
+    {
+     "id": 1082,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1107.5,
+     "y": 384.5
+    },
+    {
+     "id": 1199,
+     "nation": "GER",
+     "ships": 16,
+     "x": 1092.8,
+     "y": 374.6
+    },
+    {
+     "id": 1197,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1115.3,
+     "y": 384.5
+    },
+    {
+     "id": 1081,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1095.3,
+     "y": 374.8
+    },
+    {
+     "id": 1196,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1112.3,
+     "y": 378.5
+    }
+   ],
+   "camera": {
+    "cx": 1099.75,
+    "cy": 380.25,
+    "mpp": 377
+   }
+  },
+  {
+   "start": 660,
+   "end": 668,
+   "day": 27,
+   "at": [
+    1105.8,
+    385
+   ],
+   "zone": 191,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "ITA",
+   "lostA": 2,
+   "lostB": 5,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1080,
+     "nation": "ENG",
+     "ships": 10,
+     "x": 1105.8,
+     "y": 385
+    },
+    {
+     "id": 1183,
+     "nation": "ITA",
+     "ships": 1,
+     "x": 1112.4,
+     "y": 376.6
+    },
+    {
+     "id": 1184,
+     "nation": "ITA",
+     "ships": 2,
+     "x": 1112.4,
+     "y": 376.6
+    },
+    {
+     "id": 1185,
+     "nation": "ITA",
+     "ships": 2,
+     "x": 1112.4,
+     "y": 376.6
+    }
+   ],
+   "camera": {
+    "cx": 1109.1,
+    "cy": 380.81,
+    "mpp": 233
+   }
+  },
+  {
+   "start": 670,
+   "end": 677,
+   "day": 27,
+   "at": [
+    1024.3,
+    375.5
+   ],
+   "zone": 190,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "GER",
+   "lostA": 2,
+   "lostB": 3,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1077,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1024.3,
+     "y": 375.5
+    },
+    {
+     "id": 1199,
+     "nation": "GER",
+     "ships": 4,
+     "x": 1024.6,
+     "y": 375.5
+    }
+   ],
+   "camera": {
+    "cx": 1024.44,
+    "cy": 375.5,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 676,
+   "end": 677,
+   "day": 28,
+   "at": [
+    1029.9,
+    373.9
+   ],
+   "zone": 190,
+   "sea": "Mediterranean Sea",
+   "a": "ITA",
+   "b": "ROM",
+   "lostA": 0,
+   "lostB": 1,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1189,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1029.9,
+     "y": 373.9
+    },
+    {
+     "id": 1190,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1030,
+     "y": 374
+    },
+    {
+     "id": 1247,
+     "nation": "ROM",
+     "ships": 1,
+     "x": 1030.4,
+     "y": 374.5
+    }
+   ],
+   "camera": {
+    "cx": 1030.15,
+    "cy": 374.22,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 686,
+   "end": 693,
+   "day": 28,
+   "at": [
+    1109.7,
+    380.1
+   ],
+   "zone": 191,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "ITA",
+   "lostA": 0,
+   "lostB": 8,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1080,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1109.7,
+     "y": 380.1
+    },
+    {
+     "id": 1198,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1121.6,
+     "y": 389.6
+    }
+   ],
+   "camera": {
+    "cx": 1115.62,
+    "cy": 384.84,
+    "mpp": 332
+   }
+  },
+  {
+   "start": 699,
+   "end": 700,
+   "day": 29,
+   "at": [
+    1030.3,
+    374.5
+   ],
+   "zone": 190,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "ITA",
+   "lostA": 5,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1077,
+     "nation": "ENG",
+     "ships": 6,
+     "x": 1030.3,
+     "y": 374.5
+    },
+    {
+     "id": 1189,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1030.1,
+     "y": 374.2
+    },
+    {
+     "id": 1190,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1030.2,
+     "y": 374.2
+    }
+   ],
+   "camera": {
+    "cx": 1030.21,
+    "cy": 374.35,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 700,
+   "end": 702,
+   "day": 29,
+   "at": [
+    1006.5,
+    332.7
+   ],
+   "zone": 28,
+   "sea": "Bay of Biscay",
+   "a": "NSP",
+   "b": "REP",
+   "lostA": 0,
+   "lostB": 2,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1238,
+     "nation": "NSP",
+     "ships": 8,
+     "x": 1006.5,
+     "y": 332.7
+    },
+    {
+     "id": 1239,
+     "nation": "REP",
+     "ships": 3,
+     "x": 1006.5,
+     "y": 333.5
+    }
+   ],
+   "camera": {
+    "cx": 1006.5,
+    "cy": 333.1,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 782,
+   "end": 783,
+   "day": 32,
+   "at": [
+    1017.5,
+    282.5
+   ],
+   "zone": 65,
+   "sea": "English Channel",
+   "a": "ENG",
+   "b": "GER",
+   "lostA": 0,
+   "lostB": 1,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1067,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1017.5,
+     "y": 282.5
+    },
+    {
+     "id": 1199,
+     "nation": "GER",
+     "ships": 1,
+     "x": 1016.7,
+     "y": 282.5
+    }
+   ],
+   "camera": {
+    "cx": 1017.08,
+    "cy": 282.5,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 883,
+   "end": 883,
+   "day": 36,
+   "at": [
+    1030.1,
+    374.5
+   ],
+   "zone": 190,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "ITA",
+   "lostA": 1,
+   "lostB": 0,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 1069,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 1033.7,
+     "y": 375.3
+    },
+    {
+     "id": 1076,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 1019.5,
+     "y": 378.5
+    },
+    {
+     "id": 1174,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1020.5,
+     "y": 383.5
+    },
+    {
+     "id": 1189,
+     "nation": "ITA",
+     "ships": 0,
+     "x": 1030.1,
+     "y": 374.2
+    },
+    {
+     "id": 1190,
+     "nation": "ITA",
+     "ships": 0,
+     "x": 1030.2,
+     "y": 374.2
+    }
+   ],
+   "camera": {
+    "cx": 1026.59,
+    "cy": 378.85,
+    "mpp": 397
+   }
+  },
+  {
+   "start": 886,
+   "end": 887,
+   "day": 36,
+   "at": [
+    1036.5,
+    349.7
+   ],
+   "zone": 19,
+   "sea": "Balearic Sea",
+   "a": "NSP",
+   "b": "REP",
+   "lostA": 0,
+   "lostB": 1,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1238,
+     "nation": "NSP",
+     "ships": 8,
+     "x": 1036.5,
+     "y": 349.7
+    },
+    {
+     "id": 1239,
+     "nation": "REP",
+     "ships": 1,
+     "x": 1036.5,
+     "y": 348.5
+    }
+   ],
+   "camera": {
+    "cx": 1036.5,
+    "cy": 349.11,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 2105,
+   "end": 2108,
+   "day": 87,
+   "at": [
+    1096.5,
+    243.3
+   ],
+   "zone": 175,
+   "sea": "Kattegat",
+   "a": "POL",
+   "b": "DEN",
+   "lostA": 5,
+   "lostB": 4,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1243,
+     "nation": "POL",
+     "ships": 8,
+     "x": 1096.5,
+     "y": 243.3
+    },
+    {
+     "id": 1245,
+     "nation": "DEN",
+     "ships": 8,
+     "x": 1096.5,
+     "y": 242.5
+    }
+   ],
+   "camera": {
+    "cx": 1096.5,
+    "cy": 242.89,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 2273,
+   "end": 2274,
+   "day": 94,
+   "at": [
+    1096.5,
+    242.6
+   ],
+   "zone": 175,
+   "sea": "Kattegat",
+   "a": "POL",
+   "b": "DEN",
+   "lostA": 2,
+   "lostB": 2,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1243,
+     "nation": "POL",
+     "ships": 3,
+     "x": 1096.5,
+     "y": 242.6
+    },
+    {
+     "id": 1245,
+     "nation": "DEN",
+     "ships": 4,
+     "x": 1096.5,
+     "y": 242.9
+    }
+   ],
+   "camera": {
+    "cx": 1096.5,
+    "cy": 242.75,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 2441,
+   "end": 2441,
+   "day": 101,
+   "at": [
+    1096.5,
+    242.6
+   ],
+   "zone": 175,
+   "sea": "Kattegat",
+   "a": "POL",
+   "b": "DEN",
+   "lostA": 1,
+   "lostB": 0,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 1245,
+     "nation": "DEN",
+     "ships": 0,
+     "x": 1096.5,
+     "y": 242.9
+    }
+   ],
+   "camera": {
+    "cx": 1096.5,
+    "cy": 242.75,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 2784,
+   "end": 2799,
+   "day": 116,
+   "at": [
+    696.1,
+    919.9
+   ],
+   "zone": 317,
+   "sea": "South Atlantic Ocean",
+   "a": "NED",
+   "b": "BRA",
+   "lostA": 6,
+   "lostB": 5,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1224,
+     "nation": "NED",
+     "ships": 8,
+     "x": 696.1,
+     "y": 919.9
+    },
+    {
+     "id": 1236,
+     "nation": "BRA",
+     "ships": 8,
+     "x": 695.5,
+     "y": 920.5
+    }
+   ],
+   "camera": {
+    "cx": 695.8,
+    "cy": 920.2,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 3065,
+   "end": 3065,
+   "day": 127,
+   "at": [
+    695.5,
+    920.5
+   ],
+   "zone": 317,
+   "sea": "South Atlantic Ocean",
+   "a": "ENG",
+   "b": "BRA",
+   "lostA": 1,
+   "lostB": 3,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 1059,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 695.5,
+     "y": 920.5
+    },
+    {
+     "id": 1060,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 695.5,
+     "y": 920.5
+    },
+    {
+     "id": 1061,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 695.5,
+     "y": 920.5
+    },
+    {
+     "id": 1064,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 695.5,
+     "y": 920.5
+    },
+    {
+     "id": 1065,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 695.5,
+     "y": 920.5
+    },
+    {
+     "id": 1071,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 695.5,
+     "y": 920.5
+    },
+    {
+     "id": 1073,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 695.5,
+     "y": 920.5
+    },
+    {
+     "id": 1075,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 695.5,
+     "y": 920.5
+    },
+    {
+     "id": 1083,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 695.5,
+     "y": 920.5
+    },
+    {
+     "id": 1086,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 695.5,
+     "y": 920.5
+    }
+   ],
+   "camera": {
+    "cx": 695.54,
+    "cy": 920.46,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 3321,
+   "end": 3322,
+   "day": 138,
+   "at": [
+    1218.5,
+    439.4
+   ],
+   "zone": 274,
+   "sea": "Red Sea",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 7,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1068,
+     "nation": "ENG",
+     "ships": 12,
+     "x": 1218.5,
+     "y": 439.4
+    },
+    {
+     "id": 1132,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1217.9,
+     "y": 438.9
+    },
+    {
+     "id": 1133,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1217.9,
+     "y": 438.9
+    },
+    {
+     "id": 1140,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1217.9,
+     "y": 438.9
+    },
+    {
+     "id": 1141,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1217.9,
+     "y": 438.9
+    },
+    {
+     "id": 1147,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1217.9,
+     "y": 438.9
+    },
+    {
+     "id": 1148,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1217.9,
+     "y": 438.9
+    },
+    {
+     "id": 1153,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1217.9,
+     "y": 438.9
+    },
+    {
+     "id": 1155,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1217.9,
+     "y": 438.9
+    }
+   ],
+   "camera": {
+    "cx": 1218.18,
+    "cy": 439.13,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 3405,
+   "end": 3405,
+   "day": 141,
+   "at": [
+    1165.7,
+    401.5
+   ],
+   "zone": 192,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 8,
+   "lostB": 0,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 1069,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 1165.7,
+     "y": 401.5
+    },
+    {
+     "id": 1131,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 1166.5,
+     "y": 401.5
+    },
+    {
+     "id": 1139,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 1166.5,
+     "y": 401.5
+    },
+    {
+     "id": 1146,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 1166.5,
+     "y": 401.5
+    },
+    {
+     "id": 1154,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 1166.5,
+     "y": 401.5
+    },
+    {
+     "id": 1156,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 1166.5,
+     "y": 401.5
+    }
+   ],
+   "camera": {
+    "cx": 1166.1,
+    "cy": 401.49,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 3517,
+   "end": 3517,
+   "day": 146,
+   "at": [
+    971.1,
+    375.1
+   ],
+   "zone": 3,
+   "sea": "Alboran Sea",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 6,
+   "lostB": 0,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 1072,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 971.1,
+     "y": 375.1
+    },
+    {
+     "id": 1130,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 984.4,
+     "y": 381.5
+    },
+    {
+     "id": 1131,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 971,
+     "y": 371
+    },
+    {
+     "id": 1138,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 984.4,
+     "y": 381.5
+    },
+    {
+     "id": 1139,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 971,
+     "y": 371
+    },
+    {
+     "id": 1145,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 984.4,
+     "y": 381.5
+    },
+    {
+     "id": 1146,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 971,
+     "y": 371
+    },
+    {
+     "id": 1154,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 971,
+     "y": 371
+    },
+    {
+     "id": 1156,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 971,
+     "y": 371
+    }
+   ],
+   "camera": {
+    "cx": 977.69,
+    "cy": 376.23,
+    "mpp": 376
+   }
+  },
+  {
+   "start": 3541,
+   "end": 3541,
+   "day": 147,
+   "at": [
+    970.5,
+    353.4
+   ],
+   "zone": 205,
+   "sea": "North Atlantic Ocean",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 6,
+   "lostB": 0,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 1130,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 965.2,
+     "y": 347.2
+    },
+    {
+     "id": 1131,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 973.1,
+     "y": 341.1
+    },
+    {
+     "id": 1138,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 965.2,
+     "y": 347.2
+    },
+    {
+     "id": 1139,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 973.1,
+     "y": 341.1
+    },
+    {
+     "id": 1145,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 965.2,
+     "y": 347.2
+    },
+    {
+     "id": 1146,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 973.1,
+     "y": 341.1
+    },
+    {
+     "id": 1154,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 973.1,
+     "y": 341.1
+    },
+    {
+     "id": 1156,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 973.1,
+     "y": 341.1
+    }
+   ],
+   "camera": {
+    "cx": 969.12,
+    "cy": 347.22,
+    "mpp": 344
+   }
+  },
+  {
+   "start": 3892,
+   "end": 3892,
+   "day": 162,
+   "at": [
+    1157.3,
+    399.5
+   ],
+   "zone": 192,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 9,
+   "lostB": 0,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 1076,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 1157.3,
+     "y": 399.5
+    },
+    {
+     "id": 1129,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 1156.2,
+     "y": 399.5
+    },
+    {
+     "id": 1137,
+     "nation": "JAP",
+     "ships": 0,
+     "x": 1156.2,
+     "y": 399.5
+    }
+   ],
+   "camera": {
+    "cx": 1156.77,
+    "cy": 399.5,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 3947,
+   "end": 3955,
+   "day": 164,
+   "at": [
+    1217.5,
+    438.5
+   ],
+   "zone": 274,
+   "sea": "Red Sea",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 3,
+   "lostB": 17,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1055,
+     "nation": "ENG",
+     "ships": 16,
+     "x": 1217.5,
+     "y": 438.5
+    },
+    {
+     "id": 1056,
+     "nation": "ENG",
+     "ships": 16,
+     "x": 1217.5,
+     "y": 438.5
+    },
+    {
+     "id": 1062,
+     "nation": "ENG",
+     "ships": 16,
+     "x": 1217.5,
+     "y": 438.5
+    },
+    {
+     "id": 1129,
+     "nation": "JAP",
+     "ships": 11,
+     "x": 1217.5,
+     "y": 437.4
+    },
+    {
+     "id": 1137,
+     "nation": "JAP",
+     "ships": 12,
+     "x": 1217.5,
+     "y": 437.4
+    }
+   ],
+   "camera": {
+    "cx": 1217.5,
+    "cy": 437.93,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 4003,
+   "end": 4005,
+   "day": 166,
+   "at": [
+    1248.9,
+    507.1
+   ],
+   "zone": 276,
+   "sea": "Red Sea",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 0,
+   "lostB": 5,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1063,
+     "nation": "ENG",
+     "ships": 10,
+     "x": 1248.9,
+     "y": 507.1
+    },
+    {
+     "id": 1080,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1248.9,
+     "y": 507.1
+    },
+    {
+     "id": 1129,
+     "nation": "JAP",
+     "ships": 3,
+     "x": 1253,
+     "y": 496
+    },
+    {
+     "id": 1137,
+     "nation": "JAP",
+     "ships": 3,
+     "x": 1252.5,
+     "y": 494.7
+    }
+   ],
+   "camera": {
+    "cx": 1250.96,
+    "cy": 500.9,
+    "mpp": 345
+   }
+  },
+  {
+   "start": 4146,
+   "end": 4153,
+   "day": 172,
+   "at": [
+    1702.5,
+    456.5
+   ],
+   "zone": 397,
+   "sea": "Taiwan Strait",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 15,
+   "lostB": 8,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1087,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1702.5,
+     "y": 456.5
+    },
+    {
+     "id": 1088,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1702.5,
+     "y": 456.5
+    },
+    {
+     "id": 1130,
+     "nation": "JAP",
+     "ships": 10,
+     "x": 1702.1,
+     "y": 464.9
+    },
+    {
+     "id": 1138,
+     "nation": "JAP",
+     "ships": 10,
+     "x": 1702.1,
+     "y": 464.9
+    },
+    {
+     "id": 1145,
+     "nation": "JAP",
+     "ships": 10,
+     "x": 1702.1,
+     "y": 464.9
+    }
+   ],
+   "camera": {
+    "cx": 1702.32,
+    "cy": 460.68,
+    "mpp": 234
+   }
+  },
+  {
+   "start": 4249,
+   "end": 4251,
+   "day": 177,
+   "at": [
+    1694.8,
+    462.5
+   ],
+   "zone": 397,
+   "sea": "Taiwan Strait",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 1,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1087,
+     "nation": "ENG",
+     "ships": 1,
+     "x": 1694.8,
+     "y": 462.5
+    },
+    {
+     "id": 1130,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1702.5,
+     "y": 457.8
+    },
+    {
+     "id": 1138,
+     "nation": "JAP",
+     "ships": 7,
+     "x": 1702.5,
+     "y": 457.8
+    },
+    {
+     "id": 1145,
+     "nation": "JAP",
+     "ships": 7,
+     "x": 1702.5,
+     "y": 457.8
+    }
+   ],
+   "camera": {
+    "cx": 1698.64,
+    "cy": 460.14,
+    "mpp": 216
+   }
+  },
+  {
+   "start": 4535,
+   "end": 4563,
+   "day": 188,
+   "at": [
+    1696.5,
+    469.4
+   ],
+   "zone": 397,
+   "sea": "Taiwan Strait",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 53,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1059,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 469.4
+    },
+    {
+     "id": 1060,
+     "nation": "ENG",
+     "ships": 7,
+     "x": 1696.5,
+     "y": 469.4
+    },
+    {
+     "id": 1061,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 469.4
+    },
+    {
+     "id": 1064,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 469.4
+    },
+    {
+     "id": 1065,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 469.4
+    },
+    {
+     "id": 1071,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 469.4
+    },
+    {
+     "id": 1073,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 469.4
+    },
+    {
+     "id": 1075,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 469.4
+    },
+    {
+     "id": 1083,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 469.4
+    },
+    {
+     "id": 1086,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 469.4
+    },
+    {
+     "id": 1130,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1695.5,
+     "y": 455.5
+    },
+    {
+     "id": 1138,
+     "nation": "JAP",
+     "ships": 7,
+     "x": 1695.5,
+     "y": 455.5
+    },
+    {
+     "id": 1145,
+     "nation": "JAP",
+     "ships": 7,
+     "x": 1695.5,
+     "y": 455.5
+    }
+   ],
+   "camera": {
+    "cx": 1696,
+    "cy": 462.44,
+    "mpp": 388
+   }
+  },
+  {
+   "start": 4567,
+   "end": 4572,
+   "day": 190,
+   "at": [
+    1696.5,
+    468.7
+   ],
+   "zone": 397,
+   "sea": "Taiwan Strait",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 1,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1058,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 468.7
+    },
+    {
+     "id": 1070,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 468.7
+    },
+    {
+     "id": 1081,
+     "nation": "ENG",
+     "ships": 2,
+     "x": 1696.5,
+     "y": 468.7
+    },
+    {
+     "id": 1085,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 468.7
+    },
+    {
+     "id": 1089,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 468.7
+    },
+    {
+     "id": 1090,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1696.5,
+     "y": 468.7
+    },
+    {
+     "id": 1130,
+     "nation": "JAP",
+     "ships": 7,
+     "x": 1695.5,
+     "y": 455.7
+    },
+    {
+     "id": 1138,
+     "nation": "JAP",
+     "ships": 6,
+     "x": 1695.5,
+     "y": 455.7
+    },
+    {
+     "id": 1145,
+     "nation": "JAP",
+     "ships": 7,
+     "x": 1695.5,
+     "y": 455.7
+    }
+   ],
+   "camera": {
+    "cx": 1696.01,
+    "cy": 462.22,
+    "mpp": 364
+   }
+  },
+  {
+   "start": 4574,
+   "end": 4585,
+   "day": 190,
+   "at": [
+    1697.5,
+    467.3
+   ],
+   "zone": 397,
+   "sea": "Taiwan Strait",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 1,
+   "lostB": 12,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1057,
+     "nation": "ENG",
+     "ships": 1,
+     "x": 1697.5,
+     "y": 467.3
+    },
+    {
+     "id": 1063,
+     "nation": "ENG",
+     "ships": 10,
+     "x": 1697.5,
+     "y": 467.3
+    },
+    {
+     "id": 1080,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1697.5,
+     "y": 467.3
+    },
+    {
+     "id": 1130,
+     "nation": "JAP",
+     "ships": 5,
+     "x": 1695.5,
+     "y": 455.7
+    },
+    {
+     "id": 1138,
+     "nation": "JAP",
+     "ships": 5,
+     "x": 1695.5,
+     "y": 455.7
+    },
+    {
+     "id": 1145,
+     "nation": "JAP",
+     "ships": 5,
+     "x": 1695.5,
+     "y": 455.7
+    }
+   ],
+   "camera": {
+    "cx": 1696.51,
+    "cy": 461.48,
+    "mpp": 323
+   }
+  },
+  {
+   "start": 4605,
+   "end": 4609,
+   "day": 191,
+   "at": [
+    1702.5,
+    459.5
+   ],
+   "zone": 397,
+   "sea": "Taiwan Strait",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 0,
+   "lostB": 3,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1063,
+     "nation": "ENG",
+     "ships": 10,
+     "x": 1702.5,
+     "y": 459.5
+    },
+    {
+     "id": 1080,
+     "nation": "ENG",
+     "ships": 7,
+     "x": 1702.5,
+     "y": 459.5
+    },
+    {
+     "id": 1130,
+     "nation": "JAP",
+     "ships": 2,
+     "x": 1707.5,
+     "y": 459.5
+    }
+   ],
+   "camera": {
+    "cx": 1705,
+    "cy": 459.5,
+    "mpp": 140
+   }
+  },
+  {
+   "start": 4783,
+   "end": 4788,
+   "day": 199,
+   "at": [
+    1718.5,
+    372.5
+   ],
+   "zone": 40,
+   "sea": "Bo Hai",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 0,
+   "lostB": 36,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1061,
+     "nation": "ENG",
+     "ships": 4,
+     "x": 1718.5,
+     "y": 372.5
+    },
+    {
+     "id": 1064,
+     "nation": "ENG",
+     "ships": 4,
+     "x": 1718.5,
+     "y": 372.5
+    },
+    {
+     "id": 1083,
+     "nation": "ENG",
+     "ships": 4,
+     "x": 1718.5,
+     "y": 372.5
+    },
+    {
+     "id": 1086,
+     "nation": "ENG",
+     "ships": 4,
+     "x": 1718.5,
+     "y": 372.5
+    },
+    {
+     "id": 1136,
+     "nation": "JAP",
+     "ships": 12,
+     "x": 1718.5,
+     "y": 372.5
+    },
+    {
+     "id": 1144,
+     "nation": "JAP",
+     "ships": 12,
+     "x": 1718.5,
+     "y": 372.5
+    },
+    {
+     "id": 1151,
+     "nation": "JAP",
+     "ships": 12,
+     "x": 1718.5,
+     "y": 372.5
+    }
+   ],
+   "camera": {
+    "cx": 1718.52,
+    "cy": 372.5,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 4899,
+   "end": 4901,
+   "day": 204,
+   "at": [
+    1014.5,
+    287.5
+   ],
+   "zone": 65,
+   "sea": "English Channel",
+   "a": "FRA",
+   "b": "GER",
+   "lostA": 0,
+   "lostB": 6,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1176,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1014.5,
+     "y": 287.5
+    },
+    {
+     "id": 1311,
+     "nation": "GER",
+     "ships": 8,
+     "x": 1013.9,
+     "y": 287.1
+    }
+   ],
+   "camera": {
+    "cx": 1014.22,
+    "cy": 287.28,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 4905,
+   "end": 4906,
+   "day": 204,
+   "at": [
+    1697.3,
+    364.5
+   ],
+   "zone": 40,
+   "sea": "Bo Hai",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 0,
+   "lostB": 1,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1060,
+     "nation": "ENG",
+     "ships": 1,
+     "x": 1697.3,
+     "y": 364.5
+    },
+    {
+     "id": 1061,
+     "nation": "ENG",
+     "ships": 1,
+     "x": 1697.3,
+     "y": 364.5
+    },
+    {
+     "id": 1064,
+     "nation": "ENG",
+     "ships": 2,
+     "x": 1697.3,
+     "y": 364.5
+    },
+    {
+     "id": 1073,
+     "nation": "ENG",
+     "ships": 1,
+     "x": 1697.3,
+     "y": 364.5
+    },
+    {
+     "id": 1075,
+     "nation": "ENG",
+     "ships": 1,
+     "x": 1697.3,
+     "y": 364.5
+    },
+    {
+     "id": 1083,
+     "nation": "ENG",
+     "ships": 2,
+     "x": 1697.3,
+     "y": 364.5
+    },
+    {
+     "id": 1086,
+     "nation": "ENG",
+     "ships": 2,
+     "x": 1697.3,
+     "y": 364.5
+    },
+    {
+     "id": 1129,
+     "nation": "JAP",
+     "ships": 1,
+     "x": 1695.5,
+     "y": 364.5
+    }
+   ],
+   "camera": {
+    "cx": 1696.41,
+    "cy": 364.5,
+    "mpp": 51
+   }
+  },
+  {
+   "start": 5300,
+   "end": 5303,
+   "day": 220,
+   "at": [
+    1777.1,
+    397.9
+   ],
+   "zone": 162,
+   "sea": "Inner Sea",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 10,
+   "lostB": 3,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1060,
+     "nation": "ENG",
+     "ships": 1,
+     "x": 1777.1,
+     "y": 397.9
+    },
+    {
+     "id": 1061,
+     "nation": "ENG",
+     "ships": 1,
+     "x": 1777.1,
+     "y": 397.9
+    },
+    {
+     "id": 1064,
+     "nation": "ENG",
+     "ships": 2,
+     "x": 1777.1,
+     "y": 397.9
+    },
+    {
+     "id": 1073,
+     "nation": "ENG",
+     "ships": 1,
+     "x": 1777.1,
+     "y": 397.9
+    },
+    {
+     "id": 1075,
+     "nation": "ENG",
+     "ships": 1,
+     "x": 1777.1,
+     "y": 397.9
+    },
+    {
+     "id": 1083,
+     "nation": "ENG",
+     "ships": 2,
+     "x": 1777.1,
+     "y": 397.9
+    },
+    {
+     "id": 1086,
+     "nation": "ENG",
+     "ships": 2,
+     "x": 1777.1,
+     "y": 397.9
+    },
+    {
+     "id": 1142,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1777.5,
+     "y": 397.5
+    }
+   ],
+   "camera": {
+    "cx": 1777.3,
+    "cy": 397.7,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 5305,
+   "end": 5315,
+   "day": 221,
+   "at": [
+    1775.5,
+    403.2
+   ],
+   "zone": 162,
+   "sea": "Inner Sea",
+   "a": "ENG",
+   "b": "JAP",
+   "lostA": 20,
+   "lostB": 13,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1063,
+     "nation": "ENG",
+     "ships": 7,
+     "x": 1775.5,
+     "y": 403.2
+    },
+    {
+     "id": 1142,
+     "nation": "JAP",
+     "ships": 5,
+     "x": 1777.4,
+     "y": 397.6
+    },
+    {
+     "id": 1143,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1776.6,
+     "y": 396.1
+    },
+    {
+     "id": 1058,
+     "nation": "ENG",
+     "ships": 4,
+     "x": 1777.1,
+     "y": 397.8
+    },
+    {
+     "id": 1070,
+     "nation": "ENG",
+     "ships": 4,
+     "x": 1777.1,
+     "y": 397.8
+    },
+    {
+     "id": 1085,
+     "nation": "ENG",
+     "ships": 3,
+     "x": 1777.1,
+     "y": 397.8
+    },
+    {
+     "id": 1089,
+     "nation": "ENG",
+     "ships": 4,
+     "x": 1777.1,
+     "y": 397.8
+    },
+    {
+     "id": 1090,
+     "nation": "ENG",
+     "ships": 2,
+     "x": 1777.1,
+     "y": 397.8
+    }
+   ],
+   "camera": {
+    "cx": 1776.43,
+    "cy": 399.61,
+    "mpp": 198
+   }
+  },
+  {
+   "start": 5593,
+   "end": 5593,
+   "day": 233,
+   "at": [
+    1082.5,
+    252.5
+   ],
+   "zone": 175,
+   "sea": "Kattegat",
+   "a": "GER",
+   "b": "FRA",
+   "lostA": 12,
+   "lostB": 0,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 1158,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1159,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1160,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1161,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1165,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1166,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1167,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1168,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1173,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1175,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1224,
+     "nation": "NED",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1226,
+     "nation": "NED",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    },
+    {
+     "id": 1227,
+     "nation": "NED",
+     "ships": 0,
+     "x": 1082.5,
+     "y": 252.5
+    }
+   ],
+   "camera": {
+    "cx": 1082.5,
+    "cy": 252.5,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 6342,
+   "end": 6344,
+   "day": 264,
+   "at": [
+    1084.1,
+    225.5
+   ],
+   "zone": 294,
+   "sea": "Skagerrak",
+   "a": "POL",
+   "b": "SOV",
+   "lostA": 5,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 371,
+     "nation": "POL",
+     "ships": 5,
+     "x": 1084.1,
+     "y": 225.5
+    },
+    {
+     "id": 1209,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1086.4,
+     "y": 224.4
+    },
+    {
+     "id": 1215,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1086.4,
+     "y": 224.4
+    },
+    {
+     "id": 1219,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1086.4,
+     "y": 224.4
+    }
+   ],
+   "camera": {
+    "cx": 1085.26,
+    "cy": 224.96,
+    "mpp": 65
+   }
+  },
+  {
+   "start": 6523,
+   "end": 6528,
+   "day": 271,
+   "at": [
+    1162.8,
+    211.5
+   ],
+   "zone": 96,
+   "sea": "Gulf of Finland",
+   "a": "SOV",
+   "b": "NOR",
+   "lostA": 0,
+   "lostB": 7,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1209,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1162.8,
+     "y": 211.5
+    },
+    {
+     "id": 1215,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1162.8,
+     "y": 211.5
+    },
+    {
+     "id": 1219,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1162.8,
+     "y": 211.5
+    },
+    {
+     "id": 1244,
+     "nation": "NOR",
+     "ships": 8,
+     "x": 1164.1,
+     "y": 211.1
+    }
+   ],
+   "camera": {
+    "cx": 1163.44,
+    "cy": 211.28,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 6650,
+   "end": 6652,
+   "day": 277,
+   "at": [
+    1165.5,
+    207.6
+   ],
+   "zone": 96,
+   "sea": "Gulf of Finland",
+   "a": "SOV",
+   "b": "FIN",
+   "lostA": 3,
+   "lostB": 8,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1208,
+     "nation": "SOV",
+     "ships": 16,
+     "x": 1165.5,
+     "y": 207.6
+    },
+    {
+     "id": 1209,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1165.3,
+     "y": 206.7
+    },
+    {
+     "id": 1214,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1165.5,
+     "y": 206.8
+    },
+    {
+     "id": 1215,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1165.3,
+     "y": 206.7
+    },
+    {
+     "id": 1219,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1165.3,
+     "y": 206.7
+    },
+    {
+     "id": 1246,
+     "nation": "FIN",
+     "ships": 8,
+     "x": 1165.5,
+     "y": 206.5
+    }
+   ],
+   "camera": {
+    "cx": 1165.38,
+    "cy": 207.03,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 6833,
+   "end": 6833,
+   "day": 284,
+   "at": [
+    1142.9,
+    236.5
+   ],
+   "zone": 21,
+   "sea": "Baltic Sea",
+   "a": "SOV",
+   "b": "NOR",
+   "lostA": 1,
+   "lostB": 1,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 1208,
+     "nation": "SOV",
+     "ships": 0,
+     "x": 1142.5,
+     "y": 229.5
+    },
+    {
+     "id": 1209,
+     "nation": "SOV",
+     "ships": 0,
+     "x": 1142.9,
+     "y": 236.5
+    },
+    {
+     "id": 1214,
+     "nation": "SOV",
+     "ships": 0,
+     "x": 1140.4,
+     "y": 235.6
+    },
+    {
+     "id": 1215,
+     "nation": "SOV",
+     "ships": 0,
+     "x": 1142.9,
+     "y": 236.5
+    },
+    {
+     "id": 1219,
+     "nation": "SOV",
+     "ships": 0,
+     "x": 1142.9,
+     "y": 236.5
+    }
+   ],
+   "camera": {
+    "cx": 1141.66,
+    "cy": 232.98,
+    "mpp": 194
+   }
+  },
+  {
+   "start": 14736,
+   "end": 14738,
+   "day": 614,
+   "at": [
+    1102.1,
+    381.5
+   ],
+   "zone": 191,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "ITA",
+   "lostA": 5,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1063,
+     "nation": "ENG",
+     "ships": 5,
+     "x": 1102.1,
+     "y": 381.5
+    },
+    {
+     "id": 1188,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1104.5,
+     "y": 389.5
+    },
+    {
+     "id": 1189,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1104.5,
+     "y": 389.5
+    },
+    {
+     "id": 1190,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1104.5,
+     "y": 389.5
+    },
+    {
+     "id": 1193,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1104.5,
+     "y": 389.5
+    },
+    {
+     "id": 1194,
+     "nation": "ITA",
+     "ships": 8,
+     "x": 1104.5,
+     "y": 389.5
+    }
+   ],
+   "camera": {
+    "cx": 1103.28,
+    "cy": 385.5,
+    "mpp": 224
+   }
+  },
+  {
+   "start": 14911,
+   "end": 14923,
+   "day": 621,
+   "at": [
+    1187.5,
+    329.5
+   ],
+   "zone": 39,
+   "sea": "Black Sea",
+   "a": "SOV",
+   "b": "TUR",
+   "lostA": 22,
+   "lostB": 13,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1209,
+     "nation": "SOV",
+     "ships": 6,
+     "x": 1187.5,
+     "y": 329.5
+    },
+    {
+     "id": 1215,
+     "nation": "SOV",
+     "ships": 7,
+     "x": 1187.5,
+     "y": 329.5
+    },
+    {
+     "id": 1219,
+     "nation": "SOV",
+     "ships": 7,
+     "x": 1187.5,
+     "y": 329.5
+    },
+    {
+     "id": 1241,
+     "nation": "TUR",
+     "ships": 8,
+     "x": 1187.5,
+     "y": 328.5
+    },
+    {
+     "id": 1242,
+     "nation": "GRE",
+     "ships": 8,
+     "x": 1187.5,
+     "y": 328.5
+    },
+    {
+     "id": 1214,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1187.5,
+     "y": 329.9
+    },
+    {
+     "id": 1208,
+     "nation": "SOV",
+     "ships": 16,
+     "x": 1187.5,
+     "y": 330.1
+    }
+   ],
+   "camera": {
+    "cx": 1187.5,
+    "cy": 329.02,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 14944,
+   "end": 14944,
+   "day": 622,
+   "at": [
+    1187.5,
+    328.5
+   ],
+   "zone": 39,
+   "sea": "Black Sea",
+   "a": "SOV",
+   "b": "GRE",
+   "lostA": 0,
+   "lostB": 1,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 1208,
+     "nation": "SOV",
+     "ships": 0,
+     "x": 1187.5,
+     "y": 328.5
+    },
+    {
+     "id": 1214,
+     "nation": "SOV",
+     "ships": 0,
+     "x": 1187.5,
+     "y": 328.5
+    }
+   ],
+   "camera": {
+    "cx": 1187.5,
+    "cy": 328.5,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 15245,
+   "end": 15249,
+   "day": 635,
+   "at": [
+    1707.5,
+    459.5
+   ],
+   "zone": 397,
+   "sea": "Taiwan Strait",
+   "a": "JAP",
+   "b": "FRA",
+   "lostA": 12,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 18,
+     "nation": "JAP",
+     "ships": 12,
+     "x": 1707.5,
+     "y": 459.5
+    },
+    {
+     "id": 1160,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1706.4,
+     "y": 459.6
+    },
+    {
+     "id": 1161,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1706.4,
+     "y": 459.6
+    },
+    {
+     "id": 1167,
+     "nation": "FRA",
+     "ships": 5,
+     "x": 1706.4,
+     "y": 459.6
+    },
+    {
+     "id": 1168,
+     "nation": "FRA",
+     "ships": 3,
+     "x": 1706.4,
+     "y": 459.6
+    },
+    {
+     "id": 1173,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1706.4,
+     "y": 459.6
+    },
+    {
+     "id": 1175,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1706.4,
+     "y": 459.6
+    }
+   ],
+   "camera": {
+    "cx": 1706.97,
+    "cy": 459.53,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 15387,
+   "end": 15392,
+   "day": 641,
+   "at": [
+    1765.8,
+    396.5
+   ],
+   "zone": 177,
+   "sea": "Korea Strait",
+   "a": "FRA",
+   "b": "JAP",
+   "lostA": 1,
+   "lostB": 8,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 253,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1765.8,
+     "y": 396.5
+    },
+    {
+     "id": 937,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1767.1,
+     "y": 396.1
+    },
+    {
+     "id": 1159,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1765.8,
+     "y": 396.5
+    },
+    {
+     "id": 1166,
+     "nation": "FRA",
+     "ships": 1,
+     "x": 1765.8,
+     "y": 396.5
+    }
+   ],
+   "camera": {
+    "cx": 1766.44,
+    "cy": 396.28,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 19401,
+   "end": 19412,
+   "day": 808,
+   "at": [
+    1112.5,
+    240.5
+   ],
+   "zone": 21,
+   "sea": "Baltic Sea",
+   "a": "SOV",
+   "b": "SWE",
+   "lostA": 5,
+   "lostB": 24,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1208,
+     "nation": "SOV",
+     "ships": 16,
+     "x": 1112.5,
+     "y": 240.5
+    },
+    {
+     "id": 1214,
+     "nation": "SOV",
+     "ships": 6,
+     "x": 1112.5,
+     "y": 240.5
+    },
+    {
+     "id": 1230,
+     "nation": "SWE",
+     "ships": 8,
+     "x": 1115.2,
+     "y": 239.5
+    },
+    {
+     "id": 1231,
+     "nation": "SWE",
+     "ships": 8,
+     "x": 1112.5,
+     "y": 239.5
+    },
+    {
+     "id": 1233,
+     "nation": "SWE",
+     "ships": 8,
+     "x": 1113.5,
+     "y": 239.6
+    }
+   ],
+   "camera": {
+    "cx": 1113.87,
+    "cy": 240,
+    "mpp": 76
+   }
+  },
+  {
+   "start": 19594,
+   "end": 19595,
+   "day": 816,
+   "at": [
+    1112.5,
+    239.5
+   ],
+   "zone": 21,
+   "sea": "Baltic Sea",
+   "a": "SOV",
+   "b": "SWE",
+   "lostA": 1,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1214,
+     "nation": "SOV",
+     "ships": 1,
+     "x": 1112.5,
+     "y": 239.5
+    },
+    {
+     "id": 1232,
+     "nation": "SWE",
+     "ships": 8,
+     "x": 1111.5,
+     "y": 239.5
+    }
+   ],
+   "camera": {
+    "cx": 1112,
+    "cy": 239.5,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 19730,
+   "end": 19736,
+   "day": 822,
+   "at": [
+    1112.5,
+    240.5
+   ],
+   "zone": 21,
+   "sea": "Baltic Sea",
+   "a": "SOV",
+   "b": "SWE",
+   "lostA": 1,
+   "lostB": 8,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1208,
+     "nation": "SOV",
+     "ships": 16,
+     "x": 1112.5,
+     "y": 240.5
+    },
+    {
+     "id": 1232,
+     "nation": "SWE",
+     "ships": 8,
+     "x": 1111.9,
+     "y": 239.5
+    }
+   ],
+   "camera": {
+    "cx": 1112.23,
+    "cy": 240,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 20960,
+   "end": 20962,
+   "day": 873,
+   "at": [
+    1212.3,
+    386.5
+   ],
+   "zone": 193,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "TUR",
+   "lostA": 0,
+   "lostB": 2,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 214,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1212.3,
+     "y": 386.5
+    },
+    {
+     "id": 642,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1212.3,
+     "y": 386.5
+    },
+    {
+     "id": 1241,
+     "nation": "TUR",
+     "ships": 2,
+     "x": 1213.9,
+     "y": 387.1
+    }
+   ],
+   "camera": {
+    "cx": 1213.12,
+    "cy": 386.78,
+    "mpp": 46
+   }
+  },
+  {
+   "start": 23460,
+   "end": 23462,
+   "day": 977,
+   "at": [
+    1198.5,
+    378.5
+   ],
+   "zone": 193,
+   "sea": "Mediterranean Sea",
+   "a": "SOV",
+   "b": "RAJ",
+   "lostA": 1,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1218,
+     "nation": "SOV",
+     "ships": 1,
+     "x": 1198.5,
+     "y": 378.5
+    },
+    {
+     "id": 1420,
+     "nation": "RAJ",
+     "ships": 8,
+     "x": 1200.5,
+     "y": 379.5
+    }
+   ],
+   "camera": {
+    "cx": 1199.5,
+    "cy": 379,
+    "mpp": 56
+   }
+  },
+  {
+   "start": 24193,
+   "end": 24201,
+   "day": 1008,
+   "at": [
+    1818.9,
+    388.9
+   ],
+   "zone": 230,
+   "sea": "North Pacific Ocean",
+   "a": "JAP",
+   "b": "USA",
+   "lostA": 8,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 538,
+     "nation": "JAP",
+     "ships": 8,
+     "x": 1818.9,
+     "y": 388.9
+    },
+    {
+     "id": 1096,
+     "nation": "USA",
+     "ships": 10,
+     "x": 1811.5,
+     "y": 390.5
+    },
+    {
+     "id": 1097,
+     "nation": "USA",
+     "ships": 10,
+     "x": 1811.5,
+     "y": 390.5
+    },
+    {
+     "id": 1113,
+     "nation": "USA",
+     "ships": 10,
+     "x": 1811.5,
+     "y": 390.5
+    }
+   ],
+   "camera": {
+    "cx": 1815.22,
+    "cy": 389.72,
+    "mpp": 208
+   }
+  },
+  {
+   "start": 24391,
+   "end": 24395,
+   "day": 1016,
+   "at": [
+    997.4,
+    382.5
+   ],
+   "zone": 3,
+   "sea": "Alboran Sea",
+   "a": "SOV",
+   "b": "NED",
+   "lostA": 3,
+   "lostB": 9,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1208,
+     "nation": "SOV",
+     "ships": 15,
+     "x": 997.4,
+     "y": 382.5
+    },
+    {
+     "id": 1224,
+     "nation": "NED",
+     "ships": 2,
+     "x": 997.5,
+     "y": 382.5
+    },
+    {
+     "id": 1226,
+     "nation": "NED",
+     "ships": 8,
+     "x": 997.5,
+     "y": 382.5
+    }
+   ],
+   "camera": {
+    "cx": 997.43,
+    "cy": 382.5,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 24436,
+   "end": 24436,
+   "day": 1018,
+   "at": [
+    1061.9,
+    367.1
+   ],
+   "zone": 189,
+   "sea": "Mediterranean Sea",
+   "a": "ENG",
+   "b": "SOV",
+   "lostA": 4,
+   "lostB": 0,
+   "oneHour": true,
+   "fleets": [
+    {
+     "id": 12,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 1061.9,
+     "y": 367.1
+    },
+    {
+     "id": 1076,
+     "nation": "ENG",
+     "ships": 0,
+     "x": 1072.7,
+     "y": 364.5
+    },
+    {
+     "id": 1169,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1068.5,
+     "y": 376.5
+    },
+    {
+     "id": 1170,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1068.5,
+     "y": 376.5
+    },
+    {
+     "id": 1171,
+     "nation": "FRA",
+     "ships": 0,
+     "x": 1068.5,
+     "y": 376.5
+    },
+    {
+     "id": 1208,
+     "nation": "SOV",
+     "ships": 0,
+     "x": 1062.5,
+     "y": 367.5
+    }
+   ],
+   "camera": {
+    "cx": 1067.31,
+    "cy": 370.5,
+    "mpp": 335
+   }
+  },
+  {
+   "start": 24648,
+   "end": 24656,
+   "day": 1027,
+   "at": [
+    1198.1,
+    380.9
+   ],
+   "zone": 193,
+   "sea": "Mediterranean Sea",
+   "a": "FRA",
+   "b": "SOV",
+   "lostA": 13,
+   "lostB": 1,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 253,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1198.1,
+     "y": 380.9
+    },
+    {
+     "id": 1159,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1198.1,
+     "y": 380.9
+    },
+    {
+     "id": 1208,
+     "nation": "SOV",
+     "ships": 11,
+     "x": 1199.5,
+     "y": 380.9
+    }
+   ],
+   "camera": {
+    "cx": 1198.78,
+    "cy": 380.91,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 24657,
+   "end": 24671,
+   "day": 1027,
+   "at": [
+    1198.5,
+    378.5
+   ],
+   "zone": 193,
+   "sea": "Mediterranean Sea",
+   "a": "FRA",
+   "b": "SOV",
+   "lostA": 29,
+   "lostB": 8,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1160,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1198.5,
+     "y": 378.5
+    },
+    {
+     "id": 1161,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1198.5,
+     "y": 378.5
+    },
+    {
+     "id": 1167,
+     "nation": "FRA",
+     "ships": 5,
+     "x": 1198.5,
+     "y": 378.5
+    },
+    {
+     "id": 1168,
+     "nation": "FRA",
+     "ships": 3,
+     "x": 1198.5,
+     "y": 378.5
+    },
+    {
+     "id": 1173,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1198.5,
+     "y": 378.5
+    },
+    {
+     "id": 1175,
+     "nation": "FRA",
+     "ships": 8,
+     "x": 1198.5,
+     "y": 378.5
+    },
+    {
+     "id": 1208,
+     "nation": "SOV",
+     "ships": 10,
+     "x": 1199.5,
+     "y": 379.3
+    },
+    {
+     "id": 1158,
+     "nation": "FRA",
+     "ships": 16,
+     "x": 1198.2,
+     "y": 380.8
+    },
+    {
+     "id": 1165,
+     "nation": "FRA",
+     "ships": 4,
+     "x": 1198.2,
+     "y": 380.8
+    }
+   ],
+   "camera": {
+    "cx": 1199,
+    "cy": 378.88,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 24679,
+   "end": 24689,
+   "day": 1028,
+   "at": [
+    1096.1,
+    244.9
+   ],
+   "zone": 175,
+   "sea": "Kattegat",
+   "a": "GER",
+   "b": "DEN",
+   "lostA": 0,
+   "lostB": 8,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 922,
+     "nation": "GER",
+     "ships": 8,
+     "x": 1096.1,
+     "y": 244.9
+    },
+    {
+     "id": 1357,
+     "nation": "DEN",
+     "ships": 8,
+     "x": 1096.5,
+     "y": 242.5
+    }
+   ],
+   "camera": {
+    "cx": 1096.3,
+    "cy": 243.7,
+    "mpp": 67
+   }
+  },
+  {
+   "start": 24740,
+   "end": 24742,
+   "day": 1030,
+   "at": [
+    1042,
+    235
+   ],
+   "zone": 263,
+   "sea": "North Sea",
+   "a": "ENG",
+   "b": "SOV",
+   "lostA": 16,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 214,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1042,
+     "y": 235
+    },
+    {
+     "id": 642,
+     "nation": "ENG",
+     "ships": 8,
+     "x": 1042,
+     "y": 235
+    },
+    {
+     "id": 1210,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1040.5,
+     "y": 234.5
+    },
+    {
+     "id": 1211,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1040.5,
+     "y": 234.5
+    },
+    {
+     "id": 1212,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1040.5,
+     "y": 234.5
+    },
+    {
+     "id": 1213,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1040.5,
+     "y": 234.5
+    },
+    {
+     "id": 1223,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1040.5,
+     "y": 234.5
+    }
+   ],
+   "camera": {
+    "cx": 1041.27,
+    "cy": 234.73,
+    "mpp": 43
+   }
+  },
+  {
+   "start": 24763,
+   "end": 24765,
+   "day": 1031,
+   "at": [
+    1042.5,
+    234.4
+   ],
+   "zone": 263,
+   "sea": "North Sea",
+   "a": "ENG",
+   "b": "SOV",
+   "lostA": 1,
+   "lostB": 0,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1080,
+     "nation": "ENG",
+     "ships": 1,
+     "x": 1042.5,
+     "y": 234.4
+    },
+    {
+     "id": 1210,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1041.2,
+     "y": 234.7
+    },
+    {
+     "id": 1211,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1041.2,
+     "y": 234.7
+    },
+    {
+     "id": 1212,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1041.2,
+     "y": 234.7
+    },
+    {
+     "id": 1213,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1041.2,
+     "y": 234.7
+    },
+    {
+     "id": 1223,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1041.2,
+     "y": 234.7
+    }
+   ],
+   "camera": {
+    "cx": 1041.84,
+    "cy": 234.54,
+    "mpp": 40
+   }
+  },
+  {
+   "start": 24796,
+   "end": 24805,
+   "day": 1033,
+   "at": [
+    1041.5,
+    235.6
+   ],
+   "zone": 263,
+   "sea": "North Sea",
+   "a": "ENG",
+   "b": "SOV",
+   "lostA": 12,
+   "lostB": 35,
+   "oneHour": false,
+   "fleets": [
+    {
+     "id": 1055,
+     "nation": "ENG",
+     "ships": 13,
+     "x": 1041.5,
+     "y": 235.6
+    },
+    {
+     "id": 1056,
+     "nation": "ENG",
+     "ships": 13,
+     "x": 1041.5,
+     "y": 235.6
+    },
+    {
+     "id": 1062,
+     "nation": "ENG",
+     "ships": 13,
+     "x": 1041.5,
+     "y": 235.6
+    },
+    {
+     "id": 1210,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1041.8,
+     "y": 234.5
+    },
+    {
+     "id": 1211,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1041.8,
+     "y": 234.5
+    },
+    {
+     "id": 1212,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1041.8,
+     "y": 234.5
+    },
+    {
+     "id": 1213,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1041.8,
+     "y": 234.5
+    },
+    {
+     "id": 1223,
+     "nation": "SOV",
+     "ships": 8,
+     "x": 1041.8,
+     "y": 234.5
+    }
+   ],
+   "camera": {
+    "cx": 1041.65,
+    "cy": 235.08,
+    "mpp": 40
+   }
+  }
+ ],
+ "sinkings": [
+  {
+   "tick": 489,
+   "day": 20,
+   "nation": "ENG",
+   "ships": 5,
+   "at": [
+    1101.5,
+    381.5
+   ]
+  },
+  {
+   "tick": 491,
+   "day": 20,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1082.5,
+    250.5
+   ]
+  },
+  {
+   "tick": 491,
+   "day": 20,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1081.5,
+    251.5
+   ]
+  },
+  {
+   "tick": 649,
+   "day": 27,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1106.5,
+    385.5
+   ]
+  },
+  {
+   "tick": 680,
+   "day": 28,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1105.5,
+    353.5
+   ]
+  },
+  {
+   "tick": 685,
+   "day": 28,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1105.5,
+    353.5
+   ]
+  },
+  {
+   "tick": 693,
+   "day": 28,
+   "nation": "ENG",
+   "ships": 4,
+   "at": [
+    1109.7,
+    380.1
+   ]
+  },
+  {
+   "tick": 2577,
+   "day": 107,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    971.5,
+    366.5
+   ]
+  },
+  {
+   "tick": 2577,
+   "day": 107,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    971.5,
+    366.5
+   ]
+  },
+  {
+   "tick": 2577,
+   "day": 107,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    971.5,
+    366.5
+   ]
+  },
+  {
+   "tick": 2583,
+   "day": 107,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    971.5,
+    366.5
+   ]
+  },
+  {
+   "tick": 2583,
+   "day": 107,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    971.5,
+    366.5
+   ]
+  },
+  {
+   "tick": 3414,
+   "day": 142,
+   "nation": "JAP",
+   "ships": 3,
+   "at": [
+    1213.9,
+    387.1
+   ]
+  },
+  {
+   "tick": 3414,
+   "day": 142,
+   "nation": "JAP",
+   "ships": 1,
+   "at": [
+    1213.9,
+    387.1
+   ]
+  },
+  {
+   "tick": 3414,
+   "day": 142,
+   "nation": "JAP",
+   "ships": 1,
+   "at": [
+    1213.9,
+    387.1
+   ]
+  },
+  {
+   "tick": 3511,
+   "day": 146,
+   "nation": "JAP",
+   "ships": 3,
+   "at": [
+    973.1,
+    341.1
+   ]
+  },
+  {
+   "tick": 3517,
+   "day": 146,
+   "nation": "JAP",
+   "ships": 3,
+   "at": [
+    973.1,
+    341.1
+   ]
+  },
+  {
+   "tick": 3517,
+   "day": 146,
+   "nation": "JAP",
+   "ships": 2,
+   "at": [
+    973.1,
+    341.1
+   ]
+  },
+  {
+   "tick": 3517,
+   "day": 146,
+   "nation": "JAP",
+   "ships": 4,
+   "at": [
+    971.1,
+    375.1
+   ]
+  },
+  {
+   "tick": 3541,
+   "day": 147,
+   "nation": "JAP",
+   "ships": 4,
+   "at": [
+    970.5,
+    353.4
+   ]
+  },
+  {
+   "tick": 3704,
+   "day": 154,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    973.1,
+    341.1
+   ]
+  },
+  {
+   "tick": 3711,
+   "day": 154,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    973.1,
+    341.1
+   ]
+  },
+  {
+   "tick": 3747,
+   "day": 156,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1079.5,
+    329.5
+   ]
+  },
+  {
+   "tick": 3749,
+   "day": 156,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1079.5,
+    329.5
+   ]
+  },
+  {
+   "tick": 3749,
+   "day": 156,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1079.5,
+    329.5
+   ]
+  },
+  {
+   "tick": 3750,
+   "day": 156,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1079.5,
+    329.5
+   ]
+  },
+  {
+   "tick": 3753,
+   "day": 156,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1079.5,
+    329.5
+   ]
+  },
+  {
+   "tick": 3754,
+   "day": 156,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1079.5,
+    329.5
+   ]
+  },
+  {
+   "tick": 4005,
+   "day": 166,
+   "nation": "ENG",
+   "ships": 5,
+   "at": [
+    1248.9,
+    507.1
+   ]
+  },
+  {
+   "tick": 4563,
+   "day": 190,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1695.5,
+    455.7
+   ]
+  },
+  {
+   "tick": 4563,
+   "day": 190,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1695.5,
+    455.7
+   ]
+  },
+  {
+   "tick": 4573,
+   "day": 190,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1695.5,
+    455.7
+   ]
+  },
+  {
+   "tick": 4573,
+   "day": 190,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1695.5,
+    455.7
+   ]
+  },
+  {
+   "tick": 4585,
+   "day": 191,
+   "nation": "ENG",
+   "ships": 4,
+   "at": [
+    1697.5,
+    467.3
+   ]
+  },
+  {
+   "tick": 4609,
+   "day": 192,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1702.5,
+    459.5
+   ]
+  },
+  {
+   "tick": 4660,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4660,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4660,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4660,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4665,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4665,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4665,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4665,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4670,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4670,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4670,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4670,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4675,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4675,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4675,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4675,
+   "day": 194,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4680,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4680,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4680,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4685,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4685,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4685,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4685,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4690,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4690,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4690,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4690,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4695,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4695,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4695,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4695,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4700,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4700,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4700,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4700,
+   "day": 195,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4705,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4705,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4705,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4705,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4710,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4710,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4710,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4710,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4715,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4715,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4715,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4715,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4720,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4720,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4720,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4720,
+   "day": 196,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1711.9,
+    434.9
+   ]
+  },
+  {
+   "tick": 4947,
+   "day": 206,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1702.5,
+    390.5
+   ]
+  },
+  {
+   "tick": 4952,
+   "day": 206,
+   "nation": "ENG",
+   "ships": 3,
+   "at": [
+    1702.5,
+    390.5
+   ]
+  },
+  {
+   "tick": 4956,
+   "day": 206,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1702.5,
+    390.5
+   ]
+  },
+  {
+   "tick": 4960,
+   "day": 206,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1702.5,
+    390.5
+   ]
+  },
+  {
+   "tick": 4964,
+   "day": 206,
+   "nation": "ENG",
+   "ships": 2,
+   "at": [
+    1702.5,
+    390.5
+   ]
+  },
+  {
+   "tick": 4969,
+   "day": 207,
+   "nation": "ENG",
+   "ships": 1,
+   "at": [
+    1702.5,
+    390.5
+   ]
+  },
+  {
+   "tick": 18770,
+   "day": 782,
+   "nation": "USA",
+   "ships": 2,
+   "at": [
+    1818.9,
+    388.9
+   ]
+  },
+  {
+   "tick": 18770,
+   "day": 782,
+   "nation": "USA",
+   "ships": 2,
+   "at": [
+    1818.9,
+    388.9
+   ]
+  },
+  {
+   "tick": 18770,
+   "day": 782,
+   "nation": "USA",
+   "ships": 3,
+   "at": [
+    1818.9,
+    388.9
+   ]
+  },
+  {
+   "tick": 18770,
+   "day": 782,
+   "nation": "USA",
+   "ships": 3,
+   "at": [
+    1818.9,
+    388.9
+   ]
+  },
+  {
+   "tick": 18770,
+   "day": 782,
+   "nation": "USA",
+   "ships": 2,
+   "at": [
+    1818.9,
+    388.9
+   ]
+  },
+  {
+   "tick": 24201,
+   "day": 1008,
+   "nation": "USA",
+   "ships": 4,
+   "at": [
+    1818.9,
+    388.9
+   ]
+  }
+ ],
+ "wallS": 81
+}

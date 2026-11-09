@@ -1,0 +1,28 @@
+{
+ "seed": 24081,
+ "diplomacy": "scenario",
+ "years": 3,
+ "repulsed": 1,
+ "landedWithin48h": 1,
+ "within3cells": 0,
+ "cases": [
+  {
+   "id": 208,
+   "nation": "ENG",
+   "holder": "USA",
+   "repulsedAt": 20663,
+   "at": [
+    641.5,
+    492.5
+   ],
+   "landedAt": 20710,
+   "landed": [
+    674.5,
+    508.5
+   ],
+   "cells": 36.7,
+   "player": false,
+   "controllerNow": "ENG"
+  }
+ ]
+}

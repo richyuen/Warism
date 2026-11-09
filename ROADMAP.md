@@ -966,7 +966,7 @@ code of this month's; fixed first, then critic run 54 (full).
 Critic run 54 (full, on `8d7d02fe`): one blocking issue, R54-B1; naval 7 (under its bar of 8); every other dimension
 at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833) and critic run 55.
 
-- [ ] R53 **Run 54's findings.**
+- [x] R53 **Run 54's findings.**
   - [x] R53a R54-B1 (blocking): a thrown-back landing tells one story in the bar, the panels and the ticker. Rome →
     Valletta (23105; 24151, 24153, 24155, 24159, 24171) is thrown back at h156–162, then reads "at sea: lands in about
     a day" for 18–24 h; one panel says "At sea, bound for its landing" above "the landing was thrown back"; at the
@@ -1065,3 +1065,29 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
   - Kept: `landingInvariants` and `landingRows` 0 broken; every dimension's evidence in run 54 kept (the pin of seed
     99 moves only with a logged rule change, R53k and R53l the likeliest).
 - Run 54's carried findings are R53g–R53m (the user's call, 2026-11-08), each from the report's "what the bar needs".
+
+## Batch 9 — run 55's findings
+
+Critic run 55 (full, on `715a5448`): one blocking issue, R55-B1; naval 7 (under its bar of 8); every other dimension
+at 8. No release: R55-B1 is fixed first, then the probes replayed (ADR-833) and critic run 56. R55-B1 broke on HEAD
+and not on `8d7d02fe` (a regression since run 54), but naval's findings are items, not the exit (ADR-833).
+
+- [ ] R54 **Run 55's findings.**
+  - [ ] R54a R55-B1 (blocking, naval): a player's landing click sails within READY_WAIT_HOURS of being ready, whatever
+    a click-mate in another landing does. 24033: t2004's click of 367 is 17.1 days against its best way of 10.1
+    (landing 6 ready at Tokyo t2125, 367 alone in it from t2142 to t2315, sails t2393; the lead is `siblingWait`,
+    unconfirmed). 26045 (both commits): t1358's click of 366, 9.5 days against 2.5 (123 h to reach Tokyo from 7 cells,
+    turned back near the target): find whether it is a stall or a throw-back the checker reckons as slow, and say which
+    in landingInvariants' line. AT: `npx tsx tools/diag/landingInvariants.ts 24033 3517 120 24033 30,90 2` and
+    `… 26045 3517 120 26045 30,90 2` at 0 broken; `sh critic/scripts/c55_liab.sh` (26031–26049) still 0; the Malta
+    spread (R53n's 21 seeds) unchanged.
+  - Kept: `landingInvariants` and `landingRows` 0 broken.
+- Naval's design objections (ADR-843): a cancel hands the army to the AI at once (ADR-759): not taken, ADR-875, the
+  user's call. Malta is never taken (18 seeds, held ~90 h then thrown back or broken off, nearly seed-independent):
+  not taken, it is the rules working (a two-division landing under a superior fleet fails); the user may ask for it.
+- Filed, not in this batch (dimensions at their bars): R55-N1, a war joined by guarantee or alliance leaves no History
+  row, and "My wars only" drops the war's own rows (Hearts of Iron's "honours its guarantee" row, Europa Universalis'
+  wars outliner); R55-N2, landscape phone (844 × 390) Build tab shows 2 of 10 tiles and Actions puts 8 air-wing
+  controls off the screen; small: a phone Breakthrough's clicks land on the nation panel; the editor filter has no
+  aliases ("uk", "ussr") and shows the chosen nation alone on a miss; "lost 1 ships", "United States's"; a broke-off
+  landing's "away from Valletta" names no place.

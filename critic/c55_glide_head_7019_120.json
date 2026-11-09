@@ -1,0 +1,422 @@
+{
+ "seed": 7019,
+ "bin": "critic/c55_seed7019_y20.bin",
+ "M": 120,
+ "label": "head",
+ "spot": {
+  "best": [
+   1707.85077163654,
+   615.3039909386123
+  ],
+  "bn": 7,
+  "engaged": 14
+ },
+ "sample": {
+  "rafs": 241,
+  "draws": 241,
+  "ticksShown": 151,
+  "gapP50": 16.5,
+  "gapP95": 17.7,
+  "tProgress": [
+   0.55,
+   1,
+   0.271,
+   0.21,
+   0.264,
+   0.993,
+   0.556,
+   0.172,
+   0.139,
+   0.921,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   0.306,
+   0.315,
+   0.724,
+   0.248,
+   0.261,
+   0.168,
+   0.19,
+   0.811,
+   0.313,
+   0.289,
+   0.281,
+   0.214,
+   1,
+   0.368
+  ],
+  "per": [
+   {
+    "id": 2568,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 12.68,
+    "max": 81.27,
+    "total": 510.7
+   },
+   {
+    "id": 2571,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 13.33,
+    "max": 81.24,
+    "total": 522
+   },
+   {
+    "id": 2576,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 11.63,
+    "max": 89.35,
+    "total": 518.1
+   },
+   {
+    "id": 2588,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 11.34,
+    "max": 87.81,
+    "total": 511.4
+   },
+   {
+    "id": 3749,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 11.11,
+    "max": 88.06,
+    "total": 517.5
+   },
+   {
+    "id": 3754,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 12.53,
+    "max": 76.5,
+    "total": 497.6
+   },
+   {
+    "id": 3757,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 13.24,
+    "max": 76.02,
+    "total": 511
+   },
+   {
+    "id": 3761,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 10.97,
+    "max": 85.44,
+    "total": 504.6
+   },
+   {
+    "id": 3764,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 11.56,
+    "max": 86.93,
+    "total": 518.9
+   },
+   {
+    "id": 5035,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 11.68,
+    "max": 83.71,
+    "total": 498.7
+   },
+   {
+    "id": 12769,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 11.67,
+    "max": 81.91,
+    "total": 492.7
+   },
+   {
+    "id": 15865,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 11.98,
+    "max": 81.35,
+    "total": 497.7
+   },
+   {
+    "id": 21670,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 13.7,
+    "max": 86.28,
+    "total": 538.9
+   },
+   {
+    "id": 23171,
+    "frames": 77,
+    "still": 48,
+    "moving": 29,
+    "median": 13.07,
+    "max": 86.48,
+    "total": 527.4
+   },
+   {
+    "id": 1592,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 20.2,
+    "max": 160.55,
+    "total": 854.9
+   },
+   {
+    "id": 1593,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 20.2,
+    "max": 159.36,
+    "total": 853.2
+   },
+   {
+    "id": 1972,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 20.2,
+    "max": 161.28,
+    "total": 861.5
+   },
+   {
+    "id": 3273,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 20.2,
+    "max": 158.36,
+    "total": 843.7
+   },
+   {
+    "id": 3275,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 20.2,
+    "max": 155.76,
+    "total": 835.9
+   },
+   {
+    "id": 3620,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 21.71,
+    "max": 159.54,
+    "total": 858.8
+   },
+   {
+    "id": 15055,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 20.2,
+    "max": 164.76,
+    "total": 866.7
+   },
+   {
+    "id": 21336,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 20.2,
+    "max": 164.43,
+    "total": 867.2
+   },
+   {
+    "id": 23058,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 20.2,
+    "max": 154.39,
+    "total": 834.7
+   },
+   {
+    "id": 23460,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 20.2,
+    "max": 155.37,
+    "total": 839
+   },
+   {
+    "id": 23820,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 20.2,
+    "max": 157.02,
+    "total": 837
+   },
+   {
+    "id": 24017,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 21.71,
+    "max": 152.79,
+    "total": 835.8
+   },
+   {
+    "id": 25633,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 20.2,
+    "max": 146.73,
+    "total": 808.6
+   },
+   {
+    "id": 25634,
+    "frames": 49,
+    "still": 22,
+    "moving": 27,
+    "median": 21.71,
+    "max": 147.32,
+    "total": 814.3
+   },
+   {
+    "id": 313,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 20.62,
+    "max": 56.97,
+    "total": 1210.2
+   },
+   {
+    "id": 326,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 20.58,
+    "max": 56.97,
+    "total": 1233.5
+   },
+   {
+    "id": 5143,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 20.05,
+    "max": 56.97,
+    "total": 1238.4
+   },
+   {
+    "id": 5145,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 20.14,
+    "max": 56.97,
+    "total": 1205.6
+   },
+   {
+    "id": 5147,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 20.42,
+    "max": 56.97,
+    "total": 1274.2
+   },
+   {
+    "id": 5148,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 19.83,
+    "max": 56.97,
+    "total": 1200.7
+   },
+   {
+    "id": 5151,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 20.14,
+    "max": 56.97,
+    "total": 1168
+   },
+   {
+    "id": 5153,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 20.86,
+    "max": 56.97,
+    "total": 1194
+   },
+   {
+    "id": 7617,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 20.84,
+    "max": 56.97,
+    "total": 1230.3
+   },
+   {
+    "id": 7636,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 21.47,
+    "max": 56.97,
+    "total": 1251.1
+   },
+   {
+    "id": 11330,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 20.56,
+    "max": 56.97,
+    "total": 1194.1
+   },
+   {
+    "id": 17244,
+    "frames": 136,
+    "still": 79,
+    "moving": 57,
+    "median": 20.08,
+    "max": 56.97,
+    "total": 1265.1
+   }
+  ]
+ },
+ "summary": {
+  "elementsMoving": 40,
+  "stillShareMedian": 0.58,
+  "maxOverMedianMedian": 7.02,
+  "maxOverMedianWorst": 8.16
+ },
+ "errors": []
+}

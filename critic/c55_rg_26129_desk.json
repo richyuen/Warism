@@ -1,0 +1,232 @@
+{
+ "seed": 26129,
+ "days": 365,
+ "W": 1600,
+ "H": 900,
+ "samples": [
+  {
+   "day": 0,
+   "openMs": 238,
+   "nodes": 67,
+   "kinds": {
+    "war": 7,
+    "alliance": 11,
+    "guarantee": 8,
+    "puppet": 40
+   },
+   "said": "Click a nation to select it, a line to read it. · 37 nations with no tie shown are left out",
+   "truth": {
+    "living": 102,
+    "wars": 2,
+    "warEdges": 7,
+    "alliances": [
+     3,
+     3,
+     3,
+     3,
+     2,
+     2,
+     2
+    ],
+    "puppet": 40,
+    "guarantee": 8,
+    "truce": 0,
+    "sample": [
+     {
+      "alliance": {
+       "id": 1,
+       "name": "alliance.anti_comintern",
+       "leader": 1,
+       "founder": 1,
+       "unity": 55,
+       "loyalty": 60,
+       "members": [
+        1,
+        15,
+        75
+       ]
+      },
+      "guarantees": [],
+      "truces": []
+     }
+    ]
+   },
+   "shot": "critic/shots/c55rg_26129_desk_d0.png",
+   "toggles": [
+    {
+     "kind": "war",
+     "edgesOff": 0,
+     "nodes": 63,
+     "moved": 0
+    },
+    {
+     "kind": "alliance",
+     "edgesOff": 0,
+     "nodes": 59,
+     "moved": 0
+    },
+    {
+     "kind": "guarantee",
+     "edgesOff": 0,
+     "nodes": 65,
+     "moved": 0
+    },
+    {
+     "kind": "puppet",
+     "edgesOff": 0,
+     "nodes": 28,
+     "moved": 0
+    },
+    {
+     "kind": "truce",
+     "edgesOff": 0,
+     "nodes": 67,
+     "moved": 0
+    }
+   ],
+   "clicks": [
+    {
+     "kind": "war",
+     "said": "Nationalist Spain is at war alone on its side, against Spanish Republic · 37 nations with no tie shown are left out"
+    },
+    {
+     "kind": "alliance",
+     "said": "Lithuania is allied to Latvia, the leader of its alliance · 37 nations with no tie shown are left out"
+    },
+    {
+     "kind": "guarantee",
+     "said": "Soviet Union guarantees Czechoslovakia · 37 nations with no tie shown are left out"
+    },
+    {
+     "kind": "puppet",
+     "said": "Albania is a puppet of Italy · 37 nations with no tie shown are left out"
+    }
+   ],
+   "focusOptions": 103,
+   "focus": {
+    "nation": "Germany",
+    "nodes": 3,
+    "edges": 2
+   },
+   "focusShot": "critic/shots/c55rg_26129_desk_d0_focus.png"
+  },
+  {
+   "day": 365,
+   "openMs": 203,
+   "nodes": 81,
+   "kinds": {
+    "war": 33,
+    "truce": 17,
+    "alliance": 19,
+    "puppet": 44,
+    "guarantee": 8
+   },
+   "said": "Click a nation to select it, a line to read it. · 25 nations with no tie shown are left out",
+   "truth": {
+    "living": 97,
+    "wars": 9,
+    "warEdges": 33,
+    "alliances": [
+     3,
+     4,
+     3,
+     3,
+     4,
+     6,
+     2,
+     2
+    ],
+    "puppet": 44,
+    "guarantee": 8,
+    "truce": 18,
+    "sample": [
+     {
+      "alliance": {
+       "id": 1,
+       "name": "alliance.anti_comintern",
+       "leader": 1,
+       "founder": 1,
+       "unity": 70,
+       "loyalty": 64.80622527003288,
+       "members": [
+        1,
+        15,
+        75
+       ]
+      },
+      "guarantees": [],
+      "truces": [
+       {
+        "with": 30,
+        "days": 549
+       }
+      ]
+     }
+    ]
+   },
+   "shot": "critic/shots/c55rg_26129_desk_d365.png",
+   "toggles": [
+    {
+     "kind": "war",
+     "edgesOff": 0,
+     "nodes": 70,
+     "moved": 0
+    },
+    {
+     "kind": "alliance",
+     "edgesOff": 0,
+     "nodes": 77,
+     "moved": 0
+    },
+    {
+     "kind": "guarantee",
+     "edgesOff": 0,
+     "nodes": 80,
+     "moved": 0
+    },
+    {
+     "kind": "puppet",
+     "edgesOff": 0,
+     "nodes": 48,
+     "moved": 0
+    },
+    {
+     "kind": "truce",
+     "edgesOff": 0,
+     "nodes": 80,
+     "moved": 0
+    }
+   ],
+   "clicks": [
+    {
+     "kind": "war",
+     "said": "Japan leads its side, with Manchukuo and 1 more, against China · 25 nations with no tie shown are left out"
+    },
+    {
+     "kind": "alliance",
+     "said": "Poland is allied to Finland, the leader of its alliance · 25 nations with no tie shown are left out"
+    },
+    {
+     "kind": "guarantee",
+     "said": "Soviet Union guarantees Czechoslovakia · 25 nations with no tie shown are left out"
+    },
+    {
+     "kind": "puppet",
+     "said": "Estonia is a puppet of Italy · 25 nations with no tie shown are left out"
+    },
+    {
+     "kind": "truce",
+     "said": "Germany and Denmark are at truce, 549 days left · 25 nations with no tie shown are left out"
+    }
+   ],
+   "focusOptions": 98,
+   "focus": {
+    "nation": "Germany",
+    "nodes": 8,
+    "edges": 7
+   },
+   "focusShot": "critic/shots/c55rg_26129_desk_d365_focus.png"
+  }
+ ],
+ "errors": []
+}

@@ -1,0 +1,878 @@
+{
+ "seed": 7019,
+ "bin": "critic/c55_seed7019_y20.bin",
+ "rows": [
+  {
+   "m": 3000,
+   "look": "balls",
+   "k": 0,
+   "seen": {
+    "on": 48,
+    "engaged": 6,
+    "el": 0
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 17.9,
+    "worst": 23,
+    "drawMs": 2.11,
+    "drawMax": 5.4
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.5,
+    "worst": 20,
+    "drawMs": 2.15,
+    "drawMax": 5.3
+   }
+  },
+  {
+   "m": 3000,
+   "look": "classic",
+   "k": 0,
+   "seen": {
+    "on": 47,
+    "engaged": 4,
+    "el": 0
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 17.7,
+    "worst": 19,
+    "drawMs": 2.19,
+    "drawMax": 3.6
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 19,
+    "drawMs": 2.17,
+    "drawMax": 3.8
+   }
+  },
+  {
+   "m": 3000,
+   "look": "classic",
+   "k": 1,
+   "seen": {
+    "on": 34,
+    "engaged": 4,
+    "el": 0
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 2.3,
+    "drawMax": 3.9
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 18.2,
+    "worst": 19,
+    "drawMs": 2.32,
+    "drawMax": 4.1
+   }
+  },
+  {
+   "m": 3000,
+   "look": "balls",
+   "k": 1,
+   "seen": {
+    "on": 53,
+    "engaged": 12,
+    "el": 0
+   },
+   "idle": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 18,
+    "worst": 21,
+    "drawMs": 2.19,
+    "drawMax": 5.6
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 18,
+    "worst": 20,
+    "drawMs": 2.39,
+    "drawMax": 4.3
+   }
+  },
+  {
+   "m": 3000,
+   "look": "balls",
+   "k": 2,
+   "seen": {
+    "on": 61,
+    "engaged": 5,
+    "el": 0
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 17.8,
+    "worst": 20,
+    "drawMs": 2.7,
+    "drawMax": 4.7
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 19,
+    "drawMs": 2.7,
+    "drawMax": 5
+   }
+  },
+  {
+   "m": 3000,
+   "look": "classic",
+   "k": 2,
+   "seen": {
+    "on": 65,
+    "engaged": 3,
+    "el": 0
+   },
+   "idle": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 22,
+    "drawMs": 2.49,
+    "drawMax": 4.6
+   },
+   "forced": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 17.9,
+    "worst": 20,
+    "drawMs": 2.49,
+    "drawMax": 4.5
+   }
+  },
+  {
+   "m": 1200,
+   "look": "balls",
+   "k": 0,
+   "seen": {
+    "on": 40,
+    "engaged": 5,
+    "el": 748
+   },
+   "idle": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 18,
+    "worst": 19,
+    "drawMs": 2.74,
+    "drawMax": 5
+   },
+   "forced": {
+    "draws": 58.8,
+    "frames": 58.8,
+    "p95": 17.7,
+    "worst": 111,
+    "drawMs": 2.63,
+    "drawMax": 6.3
+   }
+  },
+  {
+   "m": 1200,
+   "look": "classic",
+   "k": 0,
+   "seen": {
+    "on": 22,
+    "engaged": 4,
+    "el": 397
+   },
+   "idle": {
+    "draws": 60.2,
+    "frames": 60.2,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 2.44,
+    "drawMax": 3.8
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 2.32,
+    "drawMax": 3.1
+   }
+  },
+  {
+   "m": 1200,
+   "look": "classic",
+   "k": 1,
+   "seen": {
+    "on": 22,
+    "engaged": 5,
+    "el": 385
+   },
+   "idle": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 19,
+    "drawMs": 2.52,
+    "drawMax": 3.5
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 19,
+    "drawMs": 2.52,
+    "drawMax": 3.3
+   }
+  },
+  {
+   "m": 1200,
+   "look": "balls",
+   "k": 1,
+   "seen": {
+    "on": 44,
+    "engaged": 9,
+    "el": 951
+   },
+   "idle": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.7,
+    "worst": 19,
+    "drawMs": 2.88,
+    "drawMax": 3.9
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.9,
+    "worst": 20,
+    "drawMs": 2.81,
+    "drawMax": 5.2
+   }
+  },
+  {
+   "m": 1200,
+   "look": "balls",
+   "k": 2,
+   "seen": {
+    "on": 29,
+    "engaged": 5,
+    "el": 436
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 2.61,
+    "drawMax": 3.5
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 2.63,
+    "drawMax": 3.6
+   }
+  },
+  {
+   "m": 1200,
+   "look": "classic",
+   "k": 2,
+   "seen": {
+    "on": 18,
+    "engaged": 6,
+    "el": 473
+   },
+   "idle": {
+    "draws": 60.2,
+    "frames": 60.2,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 2.87,
+    "drawMax": 3.6
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 18,
+    "drawMs": 2.83,
+    "drawMax": 3.4
+   }
+  },
+  {
+   "m": 600,
+   "look": "balls",
+   "k": 0,
+   "seen": {
+    "on": 19,
+    "engaged": 0,
+    "el": 399
+   },
+   "idle": {
+    "draws": 60.2,
+    "frames": 60.2,
+    "p95": 17.8,
+    "worst": 20,
+    "drawMs": 2.8,
+    "drawMax": 3.5
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 2.68,
+    "drawMax": 3.4
+   }
+  },
+  {
+   "m": 600,
+   "look": "classic",
+   "k": 0,
+   "seen": {
+    "on": 23,
+    "engaged": 3,
+    "el": 400
+   },
+   "idle": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.7,
+    "worst": 19,
+    "drawMs": 2.48,
+    "drawMax": 3.1
+   },
+   "forced": {
+    "draws": 59,
+    "frames": 59,
+    "p95": 17.7,
+    "worst": 113,
+    "drawMs": 2.21,
+    "drawMax": 3.2
+   }
+  },
+  {
+   "m": 600,
+   "look": "classic",
+   "k": 1,
+   "seen": {
+    "on": 7,
+    "engaged": 0,
+    "el": 104
+   },
+   "idle": {
+    "draws": 60.2,
+    "frames": 60.2,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 2.14,
+    "drawMax": 3.4
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.7,
+    "worst": 19,
+    "drawMs": 2.11,
+    "drawMax": 3.2
+   }
+  },
+  {
+   "m": 600,
+   "look": "balls",
+   "k": 1,
+   "seen": {
+    "on": 12,
+    "engaged": 2,
+    "el": 223
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 2.25,
+    "drawMax": 3.1
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 19,
+    "drawMs": 2.24,
+    "drawMax": 2.7
+   }
+  },
+  {
+   "m": 600,
+   "look": "balls",
+   "k": 2,
+   "seen": {
+    "on": 6,
+    "engaged": 2,
+    "el": 168
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 2.28,
+    "drawMax": 3.4
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 19,
+    "drawMs": 2.27,
+    "drawMax": 2.9
+   }
+  },
+  {
+   "m": 600,
+   "look": "classic",
+   "k": 2,
+   "seen": {
+    "on": 13,
+    "engaged": 4,
+    "el": 280
+   },
+   "idle": {
+    "draws": 60.2,
+    "frames": 60.2,
+    "p95": 17.8,
+    "worst": 18,
+    "drawMs": 2.34,
+    "drawMax": 3.2
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 19,
+    "drawMs": 2.39,
+    "drawMax": 3.2
+   }
+  },
+  {
+   "m": 120,
+   "look": "balls",
+   "k": 0,
+   "seen": {
+    "on": 5,
+    "engaged": 1,
+    "el": 112
+   },
+   "idle": {
+    "draws": 59.8,
+    "frames": 60.1,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 0.98,
+    "drawMax": 3.2
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 26,
+    "drawMs": 0.77,
+    "drawMax": 1.8
+   }
+  },
+  {
+   "m": 120,
+   "look": "classic",
+   "k": 0,
+   "seen": {
+    "on": 0,
+    "engaged": 0,
+    "el": 0
+   },
+   "idle": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.7,
+    "worst": 19,
+    "drawMs": 0.71,
+    "drawMax": 1.2
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.5,
+    "worst": 18,
+    "drawMs": 0.72,
+    "drawMax": 1.3
+   }
+  },
+  {
+   "m": 120,
+   "look": "classic",
+   "k": 1,
+   "seen": {
+    "on": 4,
+    "engaged": 0,
+    "el": 112
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 17.6,
+    "worst": 18,
+    "drawMs": 1.11,
+    "drawMax": 1.7
+   },
+   "forced": {
+    "draws": 59,
+    "frames": 59,
+    "p95": 18,
+    "worst": 106,
+    "drawMs": 0.85,
+    "drawMax": 2.3
+   }
+  },
+  {
+   "m": 120,
+   "look": "balls",
+   "k": 1,
+   "seen": {
+    "on": 2,
+    "engaged": 0,
+    "el": 154
+   },
+   "idle": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 0.84,
+    "drawMax": 2.5
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.6,
+    "worst": 18,
+    "drawMs": 0.76,
+    "drawMax": 1.6
+   }
+  },
+  {
+   "m": 120,
+   "look": "balls",
+   "k": 2,
+   "seen": {
+    "on": 0,
+    "engaged": 0,
+    "el": 0
+   },
+   "idle": {
+    "draws": 57.6,
+    "frames": 60.1,
+    "p95": 17.7,
+    "worst": 19,
+    "drawMs": 0.74,
+    "drawMax": 1.4
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 19,
+    "drawMs": 0.74,
+    "drawMax": 1.4
+   }
+  },
+  {
+   "m": 120,
+   "look": "classic",
+   "k": 2,
+   "seen": {
+    "on": 2,
+    "engaged": 0,
+    "el": 70
+   },
+   "idle": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.7,
+    "worst": 18,
+    "drawMs": 0.84,
+    "drawMax": 1.4
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.7,
+    "worst": 19,
+    "drawMs": 0.77,
+    "drawMax": 1.6
+   }
+  },
+  {
+   "m": 30,
+   "look": "balls",
+   "k": 0,
+   "seen": {
+    "on": 0,
+    "engaged": 0,
+    "el": 0
+   },
+   "idle": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 18,
+    "drawMs": 0.82,
+    "drawMax": 2.1
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.6,
+    "worst": 19,
+    "drawMs": 0.78,
+    "drawMax": 1.6
+   }
+  },
+  {
+   "m": 30,
+   "look": "classic",
+   "k": 0,
+   "seen": {
+    "on": 6,
+    "engaged": 6,
+    "el": 97
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 17.7,
+    "worst": 19,
+    "drawMs": 1.4,
+    "drawMax": 2.1
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.6,
+    "worst": 18,
+    "drawMs": 1.27,
+    "drawMax": 2.2
+   }
+  },
+  {
+   "m": 30,
+   "look": "classic",
+   "k": 1,
+   "seen": {
+    "on": 0,
+    "engaged": 0,
+    "el": 0
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 18,
+    "worst": 32,
+    "drawMs": 1.2,
+    "drawMax": 3.2
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.8,
+    "worst": 19,
+    "drawMs": 1.2,
+    "drawMax": 2
+   }
+  },
+  {
+   "m": 30,
+   "look": "balls",
+   "k": 1,
+   "seen": {
+    "on": 12,
+    "engaged": 12,
+    "el": 167
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 18.1,
+    "worst": 19,
+    "drawMs": 2.14,
+    "drawMax": 3.6
+   },
+   "forced": {
+    "draws": 58.8,
+    "frames": 58.8,
+    "p95": 17.7,
+    "worst": 120,
+    "drawMs": 1.79,
+    "drawMax": 2.3
+   }
+  },
+  {
+   "m": 30,
+   "look": "balls",
+   "k": 2,
+   "seen": {
+    "on": 4,
+    "engaged": 0,
+    "el": 119
+   },
+   "idle": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 18.8,
+    "worst": 22,
+    "drawMs": 1.48,
+    "drawMax": 6.4
+   },
+   "forced": {
+    "draws": 60.1,
+    "frames": 60.1,
+    "p95": 18.4,
+    "worst": 21,
+    "drawMs": 1.41,
+    "drawMax": 5.9
+   }
+  },
+  {
+   "m": 30,
+   "look": "classic",
+   "k": 2,
+   "seen": {
+    "on": 8,
+    "engaged": 0,
+    "el": 235
+   },
+   "idle": {
+    "draws": 60.2,
+    "frames": 60.2,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 1.06,
+    "drawMax": 3.8
+   },
+   "forced": {
+    "draws": 60,
+    "frames": 60,
+    "p95": 17.9,
+    "worst": 19,
+    "drawMs": 0.95,
+    "drawMax": 1.7
+   }
+  }
+ ],
+ "agg": {
+  "3000_balls": {
+   "idle": 60.1,
+   "forced": 60,
+   "least": 60,
+   "p95": 18,
+   "drawMs": 2.4,
+   "drawMax": 5.3,
+   "elements": 0
+  },
+  "3000_classic": {
+   "idle": 60.1,
+   "forced": 60,
+   "least": 60,
+   "p95": 18.2,
+   "drawMs": 2.3,
+   "drawMax": 4.5,
+   "elements": 0
+  },
+  "1200_balls": {
+   "idle": 60,
+   "forced": 59.6,
+   "least": 58.8,
+   "p95": 17.9,
+   "drawMs": 2.7,
+   "drawMax": 6.3,
+   "elements": 951
+  },
+  "1200_classic": {
+   "idle": 60.1,
+   "forced": 60,
+   "least": 60,
+   "p95": 17.9,
+   "drawMs": 2.6,
+   "drawMax": 3.4,
+   "elements": 473
+  },
+  "600_balls": {
+   "idle": 60.1,
+   "forced": 60,
+   "least": 60,
+   "p95": 17.9,
+   "drawMs": 2.4,
+   "drawMax": 3.4,
+   "elements": 399
+  },
+  "600_classic": {
+   "idle": 60.1,
+   "forced": 59.7,
+   "least": 59,
+   "p95": 17.8,
+   "drawMs": 2.2,
+   "drawMax": 3.2,
+   "elements": 400
+  },
+  "120_balls": {
+   "idle": 59.1,
+   "forced": 60,
+   "least": 60,
+   "p95": 17.8,
+   "drawMs": 0.8,
+   "drawMax": 1.8,
+   "elements": 154
+  },
+  "120_classic": {
+   "idle": 60,
+   "forced": 59.7,
+   "least": 59,
+   "p95": 18,
+   "drawMs": 0.8,
+   "drawMax": 2.3,
+   "elements": 112
+  },
+  "30_balls": {
+   "idle": 60.1,
+   "forced": 59.6,
+   "least": 58.8,
+   "p95": 18.4,
+   "drawMs": 1.3,
+   "drawMax": 5.9,
+   "elements": 167
+  },
+  "30_classic": {
+   "idle": 60.1,
+   "forced": 60,
+   "least": 60,
+   "p95": 17.9,
+   "drawMs": 1.1,
+   "drawMax": 2.2,
+   "elements": 235
+  }
+ }
+}

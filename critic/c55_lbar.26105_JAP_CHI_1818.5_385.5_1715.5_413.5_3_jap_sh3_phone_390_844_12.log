@@ -1,0 +1,10 @@
+{"d":0,"bar":[["gathering","sails in about 2 days","transports 36, 30 needed",null]],"panel":{"364":"At Tokyo, all of the landing there: it sails when its transports and escort are ready","365":"Waiting at Ōsaka for transports","366":"Waiting at Hiroshima for transports"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":1,"bar":[["gathering","2 of 3 at sea; the last sails in about a day","transports 12, 10 needed",null]],"panel":{"364":"At sea, bound for its landing","365":"At sea, bound for its landing","366":"Waiting at Hiroshima for transports"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":2,"bar":[["sailing","at sea: lands in about 4 days",null,null]],"panel":{"364":"At sea, bound for its landing","365":"At sea, bound for its landing","366":"At sea, bound for its landing"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":3,"bar":[["sailing","at sea: lands in about 3 days",null,null]],"panel":{"364":"At sea, bound for its landing","365":"At sea, bound for its landing","366":"At sea, bound for its landing"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":4,"bar":[["sailing","at sea: lands in about 2 days",null,null]],"panel":{"364":"At sea, bound for its landing","365":"At sea, bound for its landing","366":"At sea, bound for its landing"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":5,"bar":[["sailing","1 of 3 ashore; at sea: lands in about a day",null,null]],"panel":{"364":"At sea, bound for its landing","365":"Landed","366":"At sea, bound for its landing"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":6,"bar":[["over","over: 3 landed",null,null]],"panel":{"364":"Landed","365":"On the march","366":"Landed"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":7,"panel":{"364":"On the march","365":"On the march","366":"On the march"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":8,"panel":{"364":"On the march","365":"On the march","366":"On the march"},"afloat":{"364":0,"365":0,"366":0}}
+{"d":9,"panel":{"364":"On the march","365":"On the march","366":"On the march"},"afloat":{"364":0,"365":0,"366":0}}

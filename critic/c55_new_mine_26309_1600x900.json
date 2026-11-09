@@ -1,0 +1,114 @@
+{
+ "section": "mine",
+ "seed": 26309,
+ "W": 1600,
+ "H": 900,
+ "steps": [],
+ "countAll": "408 of 408 events",
+ "mineVisible": true,
+ "mineLabel": "My wars only",
+ "countMine": "18 of 408 events",
+ "rowsMine": [
+  "17 April 1939 France declared war on Brazil",
+  "1 April 1939 France's submarines raided the convoys of Portugal over three months: 10 gold of cargo taken",
+  "1 April 1939 France's air force struck Portugal this month: 9,301 men, guns and vehicles lost",
+  "25 March 1939 Portugal made peace with France",
+  "1 March 1939 France's air force struck Portugal this month: 9,039 men, guns and vehicles lost",
+  "1 February 1939 Germany and France fought in the air this month: Germany lost 15 aircraft, France 51",
+  "1 February 1939 Germany's air force struck France this month: 3,056 men, guns and vehicles lost",
+  "1 February 1939 France's air force struck Portugal this month: 11,034 men, guns and vehicles lost",
+  "9 January 1939 France and Portugal fought at sea: France lost 1 ships, Portugal 8",
+  "1 January 1939 Germany and France fought in the air this month: Germany lost 36 aircraft, France 38",
+  "1 January 1939 France's air force struck Portugal this month: 5,912 men, guns and vehicles lost",
+  "23 December 1938 Germany and France fought at sea: Germany lost 7 ships, France 0",
+  "12 December 1938 France declared war on Portugal",
+  "17 October 1938 France made peace with Nationalist Spain",
+  "10 October 1938 France captured Nationalist Spain's capital",
+  "1 October 1938 France's air force struck Nationalist Spain this month: 6,013 men, guns and vehicles lost",
+  "19 September 1938 The major battle near Pamplona was won by France",
+  "15 August 1938 France declared war on Nationalist Spain"
+ ],
+ "rowsMineN": 18,
+ "offscreen": [],
+ "byKindMine": [
+  {
+   "l": "Capital captured",
+   "count": "1 of 408 events"
+  },
+  {
+   "l": "Nation destroyed",
+   "count": "0 of 408 events"
+  },
+  {
+   "l": "War declared",
+   "count": "3 of 408 events"
+  },
+  {
+   "l": "Peace",
+   "count": "2 of 408 events"
+  },
+  {
+   "l": "Alliance left",
+   "count": "0 of 408 events"
+  },
+  {
+   "l": "Alliance joined",
+   "count": "0 of 408 events"
+  },
+  {
+   "l": "Puppet created",
+   "count": "0 of 408 events"
+  },
+  {
+   "l": "Puppet released",
+   "count": "0 of 408 events"
+  },
+  {
+   "l": "Major battle",
+   "count": "0 of 408 events"
+  },
+  {
+   "l": "Major battle ended",
+   "count": "1 of 408 events"
+  },
+  {
+   "l": "Annexation",
+   "count": "0 of 408 events"
+  },
+  {
+   "l": "Army disbanded",
+   "count": "0 of 408 events"
+  },
+  {
+   "l": "Land handed over",
+   "count": "0 of 408 events"
+  },
+  {
+   "l": "Sea battle",
+   "count": "2 of 408 events"
+  },
+  {
+   "l": "Convoys raided",
+   "count": "1 of 408 events"
+  },
+  {
+   "l": "Air war",
+   "count": "2 of 408 events"
+  },
+  {
+   "l": "Air raids",
+   "count": "6 of 408 events"
+  },
+  {
+   "l": "Guarantee lapsed",
+   "count": "0 of 408 events"
+  },
+  {
+   "l": "War left",
+   "count": "0 of 408 events"
+  }
+ ],
+ "countAfter": "408 of 408 events",
+ "mineAfterUnplay": 0,
+ "errors": []
+}

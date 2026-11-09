@@ -1,0 +1,36 @@
+{
+ "seed": 26137,
+ "D": 200,
+ "extra": "",
+ "atSave": {
+  "tick": 4800,
+  "hash": 3215990627
+ },
+ "saveBytes": 3847512,
+ "A": {
+  "tick": 9600,
+  "hash": 3008165651
+ },
+ "shotA": "critic/shots/c55sl_plain_26137_A.png",
+ "afterLoad": {
+  "tick": 4800,
+  "hash": 3215990627
+ },
+ "B": {
+  "tick": 9600,
+  "hash": 3008165651
+ },
+ "shotB": "critic/shots/c55sl_plain_26137_B.png",
+ "same": true,
+ "afterLoad2": {
+  "tick": 4800,
+  "hash": 3215990627
+ },
+ "C": {
+  "tick": 9600,
+  "hash": 3008165651
+ },
+ "same2": true,
+ "date": "5 February 1939 · Paused",
+ "errors": []
+}

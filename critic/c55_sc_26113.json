@@ -1,0 +1,18 @@
+{
+ "seed": 26113,
+ "shots": [
+  "critic/shots/c55sc_26113_click.png",
+  "critic/shots/c55sc_26113_600m.png",
+  "critic/shots/c55sc_26113_150m.png",
+  "critic/shots/c55sc_26113_40m.png"
+ ],
+ "day": 20,
+ "row": "⚓ Sea battle: Germany against Romania",
+ "cam": {
+  "cx": 1101.39516519686,
+  "cy": 381.9372863769531,
+  "scale": 321.2289812825845,
+  "mpp": 60.915646575911474
+ },
+ "errors": []
+}

@@ -1,0 +1,17 @@
+{"speed":"max","m":900,"look":"balls","raf":60,"draws":60,"p95":17.8,"worst":20,"el":3085,"ind":0}
+{"speed":"max","m":900,"look":"classic","raf":60,"draws":60,"p95":17.9,"worst":19,"el":4943,"ind":0}
+{"speed":"max","m":250,"look":"balls","raf":60.1,"draws":52.6,"p95":18,"worst":19,"el":0,"ind":0}
+{"speed":"max","m":250,"look":"classic","raf":60,"draws":43.8,"p95":18.1,"worst":19,"el":0,"ind":0}
+{"speed":"max","m":120,"look":"balls","raf":60,"draws":47.8,"p95":18.1,"worst":20,"el":0,"ind":0}
+{"speed":"max","m":120,"look":"classic","raf":60,"draws":60,"p95":17.9,"worst":19,"el":16,"ind":0}
+{"speed":"max","m":30,"look":"balls","raf":60,"draws":60,"p95":17.8,"worst":19,"el":0,"ind":0}
+{"speed":"max","m":30,"look":"classic","raf":60.2,"draws":60.2,"p95":17.7,"worst":18,"el":0,"ind":0}
+{"speed":"x1","m":900,"look":"balls","raf":60,"draws":60,"p95":17.7,"worst":18,"el":494,"ind":0}
+{"speed":"x1","m":900,"look":"classic","raf":60.2,"draws":60.2,"p95":18,"worst":19,"el":494,"ind":0}
+{"speed":"x1","m":250,"look":"balls","raf":59.3,"draws":59.3,"p95":18,"worst":96,"el":28,"ind":0}
+{"speed":"x1","m":250,"look":"classic","raf":60.1,"draws":60.1,"p95":17.9,"worst":23,"el":28,"ind":0}
+{"speed":"x1","m":120,"look":"balls","raf":60.2,"draws":60.2,"p95":17.9,"worst":18,"el":0,"ind":0}
+{"speed":"x1","m":120,"look":"classic","raf":60.1,"draws":60.1,"p95":18,"worst":18,"el":0,"ind":0}
+{"speed":"x1","m":30,"look":"balls","raf":60,"draws":60,"p95":17.9,"worst":18,"el":0,"ind":0}
+{"speed":"x1","m":30,"look":"classic","raf":60.2,"draws":60.2,"p95":17.8,"worst":18,"el":0,"ind":0}
+{"spot":{"best":[1118.291381264959,273.5133912164615],"bn":17,"engaged":34},"errors":[]}

@@ -1,0 +1,26 @@
+{
+ "seed": 26309,
+ "TAG": "FRA",
+ "statsKeys": [
+  "type",
+  "tick",
+  "nations",
+  "wars",
+  "dead",
+  "lives",
+  "aiEnabled",
+  "nukesEnabled",
+  "rules",
+  "player",
+  "playerAi",
+  "edits",
+  "ticker",
+  "news",
+  "strikes",
+  "world",
+  "wings"
+ ],
+ "wars": "[{\"id\":2,\"attackers\":[75,71,72],\"defenders\":[69,70],\"score\":-100,\"startTick\":0,\"battle\":true,\"toDeath\":[false,true],\"exhaustion\":[100,80.02789184474344]},{\"id\":8,\"attackers\":[69],\"defenders\":[73],\"score\":100,\"startTick\":1032,\"battle\":false,\"toDeath\":[true,false],\"exhaustion\":[65.05169067168858,100]},{\"id\":22,\"attackers\":[97],\"defenders\":[93],\"score\":4,\"startTick\":3888,\"battle\":false,\"toDeath\":[false,false],\"exhaustion\":[19.72913087564116,22.081989593964185]},{\"id\":24,\"attackers\":[96],\"defenders\":[93],\"score\":12,\"startTick\":4080,\"battle\":false,\"toDeath\":[false,false],\"exhaustion\":[62.05848020325507,22.028766386341882]},{\"id\":30,\"attackers\":[53],\"defenders\":[18,17],\"score\":11,\"startTick\":6456,\"battle\":false,\"toDeath\":[false,false],\"exhaustion\":[57.20821018062398,11.360403763159322]},{\"id\":31,\"attackers\":[10,11,74],\"defenders\":[57,58,4],\"score\":7,\"startTick\":6480,\"battle\":true,\"toDeath\":[false,false],\"exhaustion\":[19.061515444341953,76.57647652077885]},{\"id\":34,\"attackers\":[20,51,52],\"defenders\":[53],\"score\":75,\"startTick\":7248,\"battle\":false,\"toDeath\":[false,false],\"exhaustion\":[5.635,68.95864553919108]},{\"id\":35,\"attackers\":[10],\"defenders\":[31,32],\"score\":2,\"startTick\":7320,\"battle\":false,\"toDeath\":[false,false],\"exhaustion\":[11.911405828357056,14.087192443142207]},{\"id\":36,\"attackers\":[15],\"defenders\":[25,20,33,34,35,41],\"score\":-6,\"startTick\":7368,\"battle\":false,\"toDeath\":[false,false],\"exhaustion\":[7.3897839638411975,4.4]},{\"id\":37,\"attackers\":[75,11],\"defenders\":[18],\"score\":0,\"startTick\":7944,\"battle\":false,\"toDeath\":[false,false],\"exhaustion\":[1.7,2]},{\"id\":38,\"attackers\":[19,44,45,46,47],\"defenders\":[25,37,38],\"score\":0,\"startTick\":8280,\"battle\":false,\"toDeath\":[false,false],\"exhaustion\":[0.8219572229531454,2.156955046948502]},{\"id\":39,\"attackers\":[1,8,15,2,13,14,16],\"defenders\":[4,58,57,19,23,44,45,47,48],\"score\":0,\"startTick\":8376,\"battle\":false,\"toDeath\":[false,false],\"exhaustion\":[0.31037486722334695,2.1261934308214636]}]",
+ "panel": "France\n×\nRelease control\nOverview\nEconomy\nActions\nBuild\nFortifier\nDemocratic\nLand (km²)\n3,184,773\nShare of world land\n2.4%\nArmy (men)\n601,049 (95)\nAIR WAR\nAircraft (wings)\n465 (16)\nAircraft lost\n15\nLost to air strikes\n276\nCombat efficiency\n70%\nANGLO-FRENCH ENTENTE\nAlliance unity\n52\nLoyalty to the alliance\n52\nALLIES\nUnited Kingdom\nNetherlands\nSwitzerland\nLuxembourg\nBelgium\nPUPPETS\nNationalist Spain\nFrench West Africa\nFrench Equatorial Africa\nMadagascar\nFrench Morocco\nTunisia\nSyria\nLebanon\nFrench Indochina\nGUARANTEES\nCzechoslovakia\nPoland\nBelgium\nAT WAR WITH\nPortugal\nAngola\nMozambique\nGermany\nEstonia\nItaly\nAustria\nHungary\nYugoslavia\nAlbania",
+ "errors": []
+}

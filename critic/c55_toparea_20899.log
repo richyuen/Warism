@@ -1,0 +1,28 @@
+y1 hash a4c6d0d living 98 | SOV 16.19%, USA 6.98%, CAN 6.84%, AST 6.11%, BRA 5.01%
+y2 hash 842f92a0 living 95 | SOV 16.73%, USA 6.97%, CAN 6.84%, AST 6.11%, BRA 4.34%
+y3 hash ba768345 living 96 | SOV 16.81%, USA 7.42%, CAN 6.84%, AST 6.11%, BRA 4.48%
+y4 hash 2b5337da living 96 | SOV 16.86%, USA 7.61%, CAN 6.84%, AST 6.11%, FRA 4.91%
+y5 hash 2fe2e323 living 92 | SOV 16.82%, USA 8.81%, CAN 6.84%, AST 6.11%, FRA 5.12%
+y6 hash 41af67d8 living 90 | SOV 16.86%, USA 9.38%, CAN 6.98%, AST 6.11%, FRA 5.19%
+y7 hash 1f69b1d living 89 | SOV 16.90%, USA 9.20%, CAN 6.98%, AST 6.11%, FRA 5.15%
+y8 hash 4a378a85 living 82 | FRA 14.83%, SOV 10.58%, USA 10.53%, ENG 10.01%, CAN 6.98%
+y9 hash de5f190b living 82 | FRA 14.45%, USA 10.49%, SOV 10.31%, ENG 10.00%, CAN 6.98%
+y10 hash 5f560868 living 79 | FRA 18.40%, USA 10.42%, SOV 8.94%, ENG 7.29%, CAN 6.98%
+y11 hash 1d03c3a5 living 81 | FRA 16.64%, USA 10.41%, SOV 8.94%, ENG 7.77%, CAN 6.98%
+y12 hash b7fae478 living 80 | USA 12.69%, ENG 10.31%, FRA 10.14%, CAN 7.17%, AST 6.11%
+y13 hash 5c6b9f8b living 77 | USA 13.09%, ENG 10.34%, FRA 9.67%, CAN 7.35%, AST 6.11%
+y14 hash 54038985 living 77 | USA 13.14%, ENG 10.75%, FRA 8.33%, CAN 7.30%, AST 6.11%
+y15 hash 5cd5dbe6 living 75 | USA 20.13%, ENG 11.43%, AST 6.11%, RAJ 5.79%, FRA 5.61%
+y16 hash 2a1025c4 living 74 | USA 19.07%, ENG 13.11%, FRA 7.43%, AST 6.11%, RAJ 5.89%
+y17 hash cf911c72 living 71 | USA 22.10%, SOV 7.86%, FRA 7.70%, ENG 6.69%, AST 6.11%
+y18 hash 2f702a30 living 72 | USA 23.74%, SOV 8.20%, ENG 6.35%, AST 6.11%, RAJ 5.91%
+y19 hash a6db76e9 living 68 | USA 20.84%, FRA 8.88%, SOV 8.23%, ENG 6.50%, AST 6.11%
+y20 hash 7324000f living 66 | USA 23.26%, SOV 8.58%, ENG 6.60%, FRA 6.37%, AST 6.11%
+y21 hash 8cc86347 living 68 | USA 22.92%, SOV 8.70%, GER 6.89%, ENG 6.30%, AST 6.11%
+y22 hash c4fec6e1 living 68 | USA 25.36%, SOV 8.45%, FRA 6.25%, AST 6.11%, ENG 5.82%
+y23 hash 9cfe31e6 living 77 | USA 25.64%, SOV 8.53%, FRA 6.98%, ENG 6.31%, AST 6.11%
+y24 hash 57676ec5 living 83 | USA 20.72%, FRA 9.31%, SOV 8.68%, ENG 6.36%, AST 6.11%
+y25 hash 387a1e living 83 | USA 21.29%, SOV 10.41%, ENG 7.09%, AST 6.11%, FRA 5.97%
+longest still: AST 14, CAN 11, SOV 6, USA 4, FRA 3
+first three changed 13 times; distinct orders 9
+done: critic/c55_toparea_20899.json
