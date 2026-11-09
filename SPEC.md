@@ -1806,7 +1806,8 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   (`splitCoord`). No shader sees an absolute coordinate.
 - **Units on the GPU** (`src/render/units/ProxyRenderer.ts`): instanced, each with its place before and
   now, facing, frame, tint and alpha, interpolated by `tickProgress` (the tick's length from the speed;
-  none when paused or at the fastest); premultiplied atlas. The view redraws only on a change, and once
+  none when paused). At the fastest a snapshot is several ticks on: its step is the gap between snapshots,
+  smoothed, and starts where the sprites were drawn when it came [ADR-891]; premultiplied atlas. The view redraws only on a change, and once
   more after an animation ends (`ANIM_TAIL_MS`).
 
 ### 8.6 Performance budgets

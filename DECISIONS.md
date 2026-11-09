@@ -7,6 +7,27 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-891 · 2026-11-08 · accepted — At Max the units glide between snapshots from where they were drawn (R53p)
+- **Context.** The user's choice (b) after R53m (ADR-890): at Max a snapshot has no tick length (`tickMs` 0), so the
+  view drew only when one came, about 33 a second on 7019's year-20 save, each about 6 hours on: the units hopped,
+  and the critic's probe read the cadence (33–48 at the unit zooms).
+- **Decision.** In the view (`MapView`), not the worker: the protocol is as it was. (1) At Max the step is the gap
+  between snapshots of new ticks, smoothed (`stepMs`: weight 0.25, a gap counted as a second at most), so
+  `tickProgress` runs between snapshots and the view draws there. (2) A snapshot at Max starts its sprites where those
+  before were drawn when it came (`glideFrom`: elements by id, formations and their blocks by id and generation; one
+  not in the snapshot before stands). Its own places an hour before would glide one hour of the six and jump the rest.
+  A wrong pace makes a step slower or faster, never a jump. (3) A pause at Max comes with the ticks the worker ran
+  before it: that snapshot is a step at the pace too, then the sprites stand (PLAN 2.7y holds). (4) Tracers and
+  turrets keep the snapshot's own `tickMs` (0 at Max): shots are not spread over a slice.
+- **Results.** `maxGlide1938` (red before: sprites partway in 0 of 40 frames, starting up to 8.7 cells from where
+  drawn): partway in 40 of 40, starting within 0.006 cells (the hook's clock against the view's), a pause finishing its
+  step. The critic's `c54_pf_lookfps.mjs` on 7019's save: 120 m/px 50.3–54.5 (was 33–43), 30 m/px 54–55, the far
+  zooms 60; its empty-map rows are not a flat 60 as the 49 ms gaps of a long tick still leave idle frames.
+  `tools/diag/lookFps.ts`: idle draws 60 at every zoom, as its forced. `tickClock`, `lateFrame1938`, `turrets1938`
+  and the specs that drive Max pass. No sim change; the pin stands.
+- **Consequences.** On screen, at Max, units are drawn up to a snapshot's gap (about 30 ms) behind the sim. Sorties
+  and order arrows read the same `tickProgress`, so they move between snapshots too.
+
 ### ADR-890 · 2026-11-08 · accepted — The unit zooms' frame rate is read with draws forced, on the fight of the moment (R53m)
 - **Context.** R53m (critic run 54, performance): `c54_pf_lookfps.mjs 7019 critic/c54_seed7019_y20.bin` read 33–39
   draws a second at 120 m/px and 39–48 at 30 m/px, at Max. Its number is `view.frames` a second, the view's draws.

@@ -37,6 +37,9 @@ import { battleViewM, SEA_VIEW_MAX_M } from './battleView';
 /** Flags are drawn at capitals from this zoom (px per cell), at this size (PLAN 1.37b). */
 /** How often the panels over the map are read again for the hero counters (ROADMAP R34e), ms. */
 const COVER_MS = 250;
+/** At Max (R53p): a gap between snapshots is taken as at most this (a stall is not the pace); and a new gap's weight. */
+const MAX_GAP_CAP_MS = 1000;
+const MAX_GAP_WEIGHT = 0.25;
 /** The panels that lie over the map (ROADMAP R34e): a hero's counter under one is drawn beside it. */
 const COVER_SELECTOR = '.topbar, .bottombar, .stats-ranking, .nation-panel, .formation-panel, .history-panel, .relations-panel, .editor-panel, .settings-panel, .map-legend, .landings-bar';
 const FLAG_MIN_SCALE = 3;
@@ -278,6 +281,9 @@ export class MapView {
   private snapArrival = 0;
   /** The length of the step the sprites are on, ms; 0: they stand where the tick has them. */
   private tickMs = 0;
+  /** At Max (R53p, ADR-891): the gap between snapshots of new ticks, smoothed, ms (0: none yet), and when the last came. */
+  private maxGapMs = 0;
+  private maxArrival = -1;
   private lastFrame = -1;
   /** Something changed since the last draw (snapshot, resize, camera). */
   private dirty = true;
@@ -685,6 +691,10 @@ export class MapView {
     // The living nations' flags, before the sprites take their slots (PLAN 7.174b).
     this.syncFlagAtlas();
     const f = s.formations;
+    const arrived = performance.now();
+    // At Max a snapshot is some ticks on from the one before: its sprites go from where they are drawn now (R53p).
+    // So does the one of a pause at Max, which the worker sends after the ticks it was running.
+    if (s.tick !== this.lastTick && s.tickMs <= 0 && s.speed === 'max' && !this.loaded && (!s.paused || this.maxArrival >= 0)) this.glideFrom(s, this.tickProgress(arrived));
     // Copies for picking and selection rings (the snapshot buffers go back to the pool).
     // The selected ids' generations before, to tell a formation from one that took its id.
     const genBefore = new Map<number, number>();
@@ -782,19 +792,20 @@ export class MapView {
     this.uploadElements(s.elements);
     this.formationPips(s.elements);
     this.dirty = true;
-    const arrived = performance.now();
     // The sprites' clock starts with a new tick. A snapshot of the tick in hand (a new
     // subscription, a pause, another speed) brings the same step again: they go on from where
     // they are, at the new tick length (PLAN 2.7h).
     // A pause has no tick length. The sprites finish the step they are on at the length it had,
     // and then stand (PLAN 2.7y): put at the tick's end at once, every marching sprite jumped by
     // the rest of its step in the frame of the pause.
+    // At Max the step is as long as snapshots of new ticks come apart (R53p, ADR-891).
+    const step = this.stepMs(s, arrived);
     if (s.tick !== this.lastTick) {
       this.snapArrival = arrived;
-      this.tickMs = s.tickMs;
-    } else if (s.tickMs > 0 && s.tickMs !== this.tickMs) {
-      this.snapArrival = arrived - this.tickProgress(arrived) * s.tickMs;
-      this.tickMs = s.tickMs;
+      this.tickMs = step;
+    } else if (step > 0 && step !== this.tickMs) {
+      this.snapArrival = arrived - this.tickProgress(arrived) * step;
+      this.tickMs = step;
     }
     const shots = this.fire.add(s.fires.count, s.fires.data, arrived, s.tickMs, this.geo, this.figureOfShooter());
     if (shots > 0) this.turretAims.add(this.fire.shots.slice(-shots), arrived, s.tickMs);
@@ -835,9 +846,83 @@ export class MapView {
   }
 
   /**
+   * The length of the step a snapshot starts, ms: its tick's length at a fixed speed; at Max (R53p, ADR-891) the gap
+   * between snapshots of new ticks, smoothed, and so for the pause's snapshot of new ticks at Max; else 0 paused.
+   * A snapshot of the tick in hand leaves the gap as it was.
+   */
+  private stepMs(s: Snapshot, arrived: number): number {
+    if (s.tickMs > 0) {
+      this.maxArrival = -1;
+      return s.tickMs;
+    }
+    if (s.speed !== 'max') {
+      this.maxArrival = -1;
+      return 0;
+    }
+    if (s.paused) {
+      // A pause at Max comes with the ticks run before it: they are a step of the pace, and then the sprites stand.
+      const step = s.tick !== this.lastTick && this.maxArrival >= 0 ? this.maxGapMs : 0;
+      this.maxArrival = -1;
+      return step;
+    }
+    if (s.tick !== this.lastTick) {
+      const gap = this.maxArrival < 0 ? 0 : arrived - this.maxArrival;
+      // A stall (a hidden tab, a busy machine) counts as a second at most. A pace taken wrong makes the sprites slower
+      // or faster, never jump: each step starts where they are drawn.
+      const g = Math.min(gap, MAX_GAP_CAP_MS);
+      if (g > 0) this.maxGapMs = this.maxGapMs > 0 ? this.maxGapMs + (g - this.maxGapMs) * MAX_GAP_WEIGHT : g;
+      this.maxArrival = arrived;
+    }
+    return this.maxGapMs;
+  }
+
+  /**
+   * At Max (R53p, ADR-891): the snapshot's sprites start their step where those of the snapshot before are drawn at
+   * `t`, by element id and by formation id and generation; one not in the snapshot before stands where it is. The
+   * snapshot's own places a tick before would make each glide an hour of the several the snapshot is on and jump the
+   * rest. Its arrays are written in place: the worker writes them all again for the next.
+   */
+  private glideFrom(s: Snapshot, t: number): void {
+    const e = s.elements;
+    const before = new Map<number, number>();
+    for (let j = 0; j < this.elementId.length; j++) before.set(this.elementId[j]!, j);
+    for (let i = 0; i < e.count; i++) {
+      const j = before.get(e.id[i]!);
+      if (j === undefined) {
+        e.prevX[i] = e.x[i]!;
+        e.prevY[i] = e.y[i]!;
+        continue;
+      }
+      const px = this.elementPrevX[j]!;
+      const x = this.unwrapped(this.elementX[j]!, px);
+      e.prevX[i] = this.unwrapped(px + (x - px) * t, e.x[i]!);
+      e.prevY[i] = this.elementPrevY[j]! + (this.elementY[j]! - this.elementPrevY[j]!) * t;
+    }
+    const f = s.formations;
+    const formBefore = new Map<number, number>();
+    for (let j = 0; j < this.formIds.length; j++) formBefore.set(this.formIds[j]!, j);
+    const lerp = (a: number, b: number): number => a + (b - a) * t;
+    for (let i = 0; i < f.count; i++) {
+      const o = i * BLOCK_STRIDE;
+      const j = formBefore.get(f.id[i]!);
+      if (j === undefined || this.formGen[j] !== f.generation[i]) {
+        f.prevX[i] = f.x[i]!;
+        f.prevY[i] = f.y[i]!;
+        f.block[o + 2] = f.block[o]!;
+        f.block[o + 3] = f.block[o + 1]!;
+        continue;
+      }
+      f.prevX[i] = this.unwrapped(lerp(this.formPrevX[j]!, this.unwrapped(this.formX[j]!, this.formPrevX[j]!)), f.x[i]!);
+      f.prevY[i] = lerp(this.formPrevY[j]!, this.formY[j]!);
+      f.block[o + 2] = this.unwrapped(lerp(this.blockPrevX[j]!, this.unwrapped(this.blockX[j]!, this.blockPrevX[j]!)), f.block[o]!);
+      f.block[o + 3] = lerp(this.blockPrevY[j]!, this.blockY[j]!);
+    }
+  }
+
+  /**
    * How far the sprites are on their way from the tick before to the tick in hand at `now`, 0–1.
-   * A tick that came while the game was paused or at full speed has no length: they stand where
-   * it has them. A pause in a tick with a length lets them finish the step (PLAN 2.7y).
+   * A tick that came while the game was paused has no length: they stand where it has them. At Max the step is the
+   * gap between snapshots (R53p). A pause in a tick with a length lets them finish the step (PLAN 2.7y).
    */
   tickProgress(now = performance.now()): number {
     return this.tickMs > 0 ? Math.max(0, Math.min(1, (now - this.snapArrival) / this.tickMs)) : 1;
@@ -1265,6 +1350,9 @@ export class MapView {
   private elementIdBefore = new Uint32Array(0);
   private elementNationBefore = new Uint16Array(0);
   elementY = new Float64Array(0);
+  /** Where each element's step starts, as uploaded (at Max where it was drawn when the snapshot came; R53p). */
+  elementPrevX = new Float64Array(0);
+  elementPrevY = new Float64Array(0);
   elementStrength = new Uint16Array(0);
   /** The flags of each element's formation, as the snapshot carried them (`FormationFlag`; tests). */
   elementFlags = new Uint8Array(0);
@@ -1362,6 +1450,8 @@ export class MapView {
     this.elementNation = e.nation.slice(0, e.count);
     this.elementX = e.x.slice(0, e.count);
     this.elementY = e.y.slice(0, e.count);
+    this.elementPrevX = e.prevX.slice(0, e.count);
+    this.elementPrevY = e.prevY.slice(0, e.count);
     this.elementStrength = e.strength.slice(0, e.count);
     this.elementFlags = e.flags.slice(0, e.count);
     this.elementSize = e.size.slice(0, e.count);

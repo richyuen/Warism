@@ -1046,12 +1046,12 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     frames a second or more at 120 m/px in both looks with a draw forced each frame, the fight picked again before each
     row (ADR-890, the user's (a); was the critic's `c54_pf_lookfps.mjs` draws, 33–39, over an empty map). Done: 59.6–60,
     a draw 0.9 ms.
-  - [ ] R53p Units glide at Max (the user's, 2026-11-08, after R53m): at Max the view draws only on a snapshot (about
+  - [x] R53p Units glide at Max (the user's, 2026-11-08, after R53m): at Max the view draws only on a snapshot (about
     33 a second, each about 6 hours), so units hop. Between snapshots at Max the sprites go from where they were drawn
     to where the snapshot has them, over the measured gap between snapshots (PLAN 2.7h's "Max has no tick length" no
     longer). The bar: the critic's `c54_pf_lookfps.mjs 7019 critic/c54_seed7019_y20.bin`, alone, at 45 or more at 120
     m/px in both looks; `tools/diag/lookFps.ts`'s idle draws as its forced; tracers as now; a pause still lets the step
-    finish (PLAN 2.7y).
+    finish (PLAN 2.7y). Done (ADR-891): the critic's probe 50–55 at 120 m/px, 54–55 at 30; `maxGlide1938` red before.
   - [ ] R53n Before critic run 55: the critic's own probes on new seeds, and the spread of endings read, not one case:
     `c54_lhold.mjs` and `c54_lland.mjs` on the 11 Malta seeds and about 20 new ones, and the other landing families
     (Tokyo → Shanghai, Portsmouth → Bremerhaven, Germany → Norwich); then run 54's jobs replayed (ADR-833), and the

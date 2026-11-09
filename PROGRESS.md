@@ -2218,4 +2218,10 @@
   row, most rows at 120 and 30 m/px still end with no formation on the screen (4 s at Max is about a month).
 - `tools/diag/lookFps.ts` reads each row twice, as the view runs and with a draw forced each frame. Forced: 59.6–60
   frames a second at every zoom, a draw 0.9 ms at 120 m/px with up to 280 elements. No game code changed.
+
+## 2026-11-08 — R53p: units glide at Max (ADR-891)
+- The user chose (b) after R53m. At Max the view now takes the gap between snapshots as the step and starts each
+  where the sprites were drawn; a pause at Max finishes its step. View only; the pin stands.
+- The critic's probe: 120 m/px 50–55 (was 33–43), 30 m/px 54–55. `maxGlide1938` red before (0 of 40 frames partway,
+  8.7 cells off). Under parallel load gaps passed half a second and were dropped as stalls: now counted as 1 s at most.
 - **Next:** R53n.
