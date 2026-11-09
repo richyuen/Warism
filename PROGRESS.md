@@ -2254,3 +2254,10 @@
   `landingRows all` 0; pin unchanged. Unit: `landingCallBound1938` (far case red before), `slowClick1938`'s new case.
   `npm test`: all green but `snapshot-perf` under the suite's load, green alone.
 - **Next:** the probes replayed (ADR-833), then critic run 56.
+
+## 2026-11-09 — Run 55's probes replayed on bacd2f6a (ADR-833)
+- `replayCritic.ts --at head --new 1`: 27 jobs, 0 failed; 17 the same, 10 differ only in output paths and in
+  `slowClick`'s "clicks reckoned" (a click wholly on its target's landmass walks and is no longer reckoned, ADR-892;
+  no break on any). 17 new seeds (60001–61601): every checker 0 broken, workerDeterminism the same on every arm.
+  Nothing to fix.
+- **Next:** critic run 56.
