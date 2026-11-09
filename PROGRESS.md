@@ -2421,3 +2421,5 @@
   not count. The landing AI now skips a port an enemy warfleet or flotilla stands by: 46 sea battles → 37. Left: Italy's
   warfleet lost to the same flotillas twice (the sortie's power test leaves submarines out too).
 - Batch 12 done. **Next:** the critic's probes replayed (ADR-833), then critic run 59.
+- R57g (Italy's warfleet at Sevastopol) looked at and dropped: it had destroyers; 16 anchored submarines outgun four
+  destroyers' depth charges about 28 to 1, a balance question, two battles in three years (the user's call; ADR-913).

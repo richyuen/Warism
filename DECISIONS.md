@@ -28,8 +28,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   green now; from 28061's t20100 save to t21700, Japan's losses by Sevastopol 2040 strength in 7 hours before, 0 now;
   `seaBattles 28061` 3 years: 46 sea battles → 37, none of Japan's at Sevastopol; the invasion and naval test files
   green; the pin unchanged. Left: Italy's warfleet 1018 lost 6 of 8, then its last 2, to the same flotillas (t19140,
-  t19305): the naval AI's sortie, whose power test leaves submarines out too, and warships that cannot hurt submarines
-  there, a question of the sea fight's rules, not filed here.
+  t19305): the naval AI's sortie, whose power test leaves submarines out too. 1018 had four destroyers with depth charges
+  (traced from a t19100 save): 16 submarines at anchor outgun them about 28 to 1 (torpedo 70 against a destroyer's 150
+  hit points, depth charges 10 against a submarine's 100), and it broke off before sinking one. A rule of the sea fight's
+  balance, not an AI's; two battles in three years: not filed (the user's call, 2026-11-09).
 
 ### ADR-912 · 2026-11-09 · accepted — No sail hour for a landing with no room; a refused peace's figures never read as at the bar (R57e)
 - **Context.** Critic run 58's small items (the user's call to take them, 2026-11-09): (1) 27125's bar read "sails in
