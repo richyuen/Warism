@@ -2415,3 +2415,9 @@
 ## 2026-11-09 — R57e: no sail hour with no room; a refused peace's figures not rounded to the bar (ADR-912)
 - 27125's "sails in about a day · 0 at hand" in the hour its last group sank is gone; 39.97 reads "war weariness 40,
   over 40 needed". **Next:** R57f (28061's Black Sea: a Japanese group of 4–6 lost each week at one place).
+
+## 2026-11-09 — R57f: the AI lands at no enemy port a fighting fleet stands by (ADR-913)
+- 28061's weekly Japanese losses were its landing at Sevastopol sunk by two Soviet submarine flotillas sea control does
+  not count. The landing AI now skips a port an enemy warfleet or flotilla stands by: 46 sea battles → 37. Left: Italy's
+  warfleet lost to the same flotillas twice (the sortie's power test leaves submarines out too).
+- Batch 12 done. **Next:** the critic's probes replayed (ADR-833), then critic run 59.

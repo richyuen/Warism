@@ -85,7 +85,7 @@ function carries(world: World, id: number): boolean {
 }
 
 /** Whether fleet `id` has a live submarine. */
-function hasBoats(world: World, id: number): boolean {
+export function hasBoats(world: World, id: number): boolean {
   const units = world.rules!.units;
   const ec = world.elements.cols;
   return (elementIndex(world).get(id) ?? []).some((e) => ec.strength[e]! > 0 && units[ec.unit[e]!]!.cls === 'ss');

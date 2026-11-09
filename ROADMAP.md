@@ -1227,7 +1227,7 @@ Naval's findings are items, fixed, then the critic again (ADR-833). No release.
 Critic run 58 (full, on `000a4731`): R57-B1 closed on its cases; one blocking issue, R58-B1; naval 7, every other
 dimension at 8. Naval's findings are items, fixed, then the critic again (ADR-833). No release.
 
-- [ ] R57 **Run 58's naval findings.**
+- [x] R57 **Run 58's naval findings.**
   - [x] R57a R58-B1 (blocking): `slowClick` breaks on new seed 29043 (setup 15101: t1068's click judged by 273 alone,
     left at port for the second voyage, 8.0 days over its best way of 3.4; 271 and 272, aboard and clicked again onto
     the sea beside their landing, kept in it by the sim and dropped by the checker). One reading of "the same landing"
@@ -1260,10 +1260,13 @@ dimension at 8. Naval's findings are items, fixed, then the critic again (ADR-83
     verdict reads them (no rounding up to the bar).
     Done (ADR-912): no sail hour for a landing with no room left (the hour its last group was sunk); the lead never
     reads at the bar while under it, the weariness "N, over 40 needed".
-  - [ ] R57f Run 58's small naval item (the user's call): the AI feeds a squadron a week into a sea where the last
+  - [x] R57f Run 58's small naval item (the user's call): the AI feeds a squadron a week into a sea where the last
     were sunk (28061 t19734–t21576, Japan in the Black Sea, 8 battles, 0 Soviet losses): a sea its fleets lost in
     recently is not sent one alone. AT: `npx tsx tools/diag/seaBattles.ts 28061` no run of such losses; seed 99's pin
     moved and logged if it moves.
+    Done (ADR-913): not squadrons but Japan's landing at Sevastopol, each week, into two Soviet submarine flotillas at
+    its water (sea control leaves submarines out). The landing AI takes no enemy port an enemy fleet that fights stands
+    by: 28061 46 sea battles → 37, none of those; the pin unchanged. Italy's warfleet's two losses there left (ADR-913).
 - Design objections: `slowClick` judges the first ashore (R57b takes the left one's word and bound); Malta never taken
   (the rules working); alliances ignore the map (carried). Ideas: a "next lift, about N days" line (R57b); a disabled
   button's reason under it on a phone (R57d).

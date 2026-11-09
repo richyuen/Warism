@@ -7,6 +7,30 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-913 · 2026-11-09 · accepted — The AI lands at no enemy port an enemy fleet that fights stands by, submarines counted (R57f)
+- **Context.** Critic run 58's small naval item (the user's call to take it, 2026-11-09): on 28061 Japan lost a group of
+  4–6 ships at one place in the Black Sea each week for eight weeks, 0 Soviet losses (t19734–t21576). The critic read it
+  as squadrons fed into a lost sea. Traced (`who.ts`, a hook on `world.paths.set`): Japan, holding Constanța and Varna,
+  had its invasion AI's `planLanding` board troops each week for Sevastopol, the nearest enemy port; two Soviet
+  submarine flotillas of eight boats stood at its water; the transports were hit on arrival, broke off and sailed home
+  (`breakOff`), and the next week the same. `planLanding` skips a port whose zone an enemy holds (`seaHolder`), but sea
+  control leaves submarines out (by design, PLAN 4.6d: they raid, they do not hold), so the sea read open. Italy lost 8
+  there the same way at t19140.
+- **Decision.** `planLanding` takes no enemy port (nor capital's coast) whose water an enemy fleet that fights stands
+  by: one at war with the nation, not under way, with warships (`fleetPower` > 0) or a live submarine (`hasBoats`, now
+  exported from `naval.ts`), within AT_PORT_CELLS ('guarded', a new reason for the probe). It aims at the next port in
+  reach, or none. Stateless: no memory of past losses (the critic's suggestion) to save and age; a guard that sails away
+  frees the port at the next plan. Sea control is unchanged (submarines still hold no sea), and `planNormandy`, which
+  reads whole zones for its beaches, is unchanged.
+- **Stands on (ADR-803).** PLAN 7.56b/7.69 (the landing's target: nearest enemy port or capital coast in open water)
+  narrowed by one test; PLAN 4.6d (submarines raid, hold no sea) unchanged. Seed 99's pin does not move.
+- **Results.** `landingGuarded1938` red before (Japan at war with the US lands on Guam with a US flotilla at its water),
+  green now; from 28061's t20100 save to t21700, Japan's losses by Sevastopol 2040 strength in 7 hours before, 0 now;
+  `seaBattles 28061` 3 years: 46 sea battles → 37, none of Japan's at Sevastopol; the invasion and naval test files
+  green; the pin unchanged. Left: Italy's warfleet 1018 lost 6 of 8, then its last 2, to the same flotillas (t19140,
+  t19305): the naval AI's sortie, whose power test leaves submarines out too, and warships that cannot hurt submarines
+  there, a question of the sea fight's rules, not filed here.
+
 ### ADR-912 · 2026-11-09 · accepted — No sail hour for a landing with no room; a refused peace's figures never read as at the bar (R57e)
 - **Context.** Critic run 58's small items (the user's call to take them, 2026-11-09): (1) 27125's bar read "sails in
   about a day · 12 transports needed, 0 at hand" six hours before the landing ended for want of transports: in the hour

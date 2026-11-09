@@ -55,12 +55,13 @@ import { AT_PORT_CELLS, keyAt, seaKm, waterKeys } from '../systems/navalCombat';
 import { portShut } from '../systems/bombing';
 import { capitalCell } from '../systems/capitals';
 import { orderSail } from '../systems/sail';
-import { seaHolder } from '../systems/seaControl';
+import { fleetPower, seaHolder } from '../systems/seaControl';
 import { beachReach } from '../systems/seaSupply';
 import { basinOf, navOf, portSeaOf, seaOf, type World } from '../world';
 import { AiLayer, aiRuns, playerHeld } from './layers';
 import { DEPLOY_RANGE_CELLS, groundReader, reachOnLand, reachesOnLand } from './operational';
 import { STAGGER } from './strategic';
+import { hasBoats } from './naval';
 
 
 export function invasionAi(world: World): void {
@@ -555,6 +556,14 @@ function planLanding(world: World, n: number, foes: ReadonlySet<number>, front: 
   let target = -1;
   let best = Infinity;
   const seen: Watched | undefined = LANDING_PROBE.watch && LANDING_PROBE.plan ? {} : undefined;
+  // The enemy's fleets that fight standing on the water (warships, or submarines, which sea control leaves out: ROADMAP
+  // R57f; critic run 58, 28061: Japan's landing at Sevastopol sunk each week by two Soviet flotillas at its water).
+  const guards: number[] = [];
+  world.formations.forEach((id) => {
+    if (!world.isFleet(id) || c.moving[id] === 1 || !world.wars.atWar(c.nation[id]!, n)) return;
+    if (fleetPower(world, id) > 0 || hasBoats(world, id)) guards.push(Math.floor(c.y[id]!) * w + Math.floor(c.x[id]!));
+  });
+  const guardR = world.atSize(AT_PORT_CELLS);
   // The km to the water at a cell, or why a landing does not sail there.
   const reach = (at: number): number | string => {
     const zone = z.zoneOf[at]!;
@@ -563,6 +572,8 @@ function planLanding(world: World, n: number, foes: ReadonlySet<number>, front: 
     if (keys[zone] !== mine) return 'otherWater';
     const sea = seaHolder(world, zone);
     if (sea !== 0 && world.wars.atWar(sea, n)) return 'seaHeld';
+    // An enemy fleet standing by the water: the transports, unescorted, are sunk there (R57f).
+    if (guards.some((g) => near(world, g, at, guardR))) return 'guarded';
     return seaKm(world, c.x[fleet]!, c.y[fleet]!, (at % w) + 0.5, Math.floor(at / w) + 0.5);
   };
   const open = (at: number): number => {
