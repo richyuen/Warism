@@ -1052,10 +1052,10 @@ at its bar. No release: R54-B1 is fixed first, then the probes replayed (ADR-833
     longer). The bar: the critic's `c54_pf_lookfps.mjs 7019 critic/c54_seed7019_y20.bin`, alone, at 45 or more at 120
     m/px in both looks; `tools/diag/lookFps.ts`'s idle draws as its forced; tracers as now; a pause still lets the step
     finish (PLAN 2.7y). Done (ADR-891): the critic's probe 50–55 at 120 m/px, 54–55 at 30; `maxGlide1938` red before.
-  - [ ] R53n Before critic run 55: the critic's own probes on new seeds, and the spread of endings read, not one case:
-    `c54_lhold.mjs` and `c54_lland.mjs` on the 11 Malta seeds and about 20 new ones, and the other landing families
-    (Tokyo → Shanghai, Portsmouth → Bremerhaven, Germany → Norwich); then run 54's jobs replayed (ADR-833), and the
-    "what the bar needs" of R54-B1 and of each item above read item by item (R53m's `c54_pf_lookfps.mjs` by ADR-890).
+  - [ ] R53n Before critic run 55, the landings only (the user's call, 2026-11-08: R53k and R53l remade every seed's
+    wars, and the landing fixes were read on the histories before): `c54_lhold.mjs` and `c54_lland.mjs` on the 11
+    Malta seeds and about 10 new ones, the spread of endings read, not one case. A landing short of its bar is an item
+    before the run. No replay of run 54's jobs (the critic runs them); the other bars were read as each item closed.
   - Kept: `landingInvariants` and `landingRows` 0 broken; every dimension's evidence in run 54 kept (the pin of seed
     99 moves only with a logged rule change, R53k and R53l the likeliest).
 - Run 54's carried findings are R53g–R53m (the user's call, 2026-11-08), each from the report's "what the bar needs".
