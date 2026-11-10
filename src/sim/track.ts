@@ -142,13 +142,17 @@ export class Track {
 
   /**
    * Whether nations `a` and `b` stand on the two sides of a held front (R62f2): a hold that has begun (its event
-   * applied) and not ended. False at once in a timeline without holds.
+   * applied) and not ended. A side holds its nations' puppets too (`overlord`, R62g0). False at once in a timeline
+   * without holds.
    */
-  held(a: number, b: number, tick: number): boolean {
+  held(a: number, b: number, tick: number, overlord: ArrayLike<number>): boolean {
     if (this.holdAt.length === 0 || this.ended || TRACK_PROBE.holdsOff) return false;
+    const oa = overlord[a] ?? 0;
+    const ob = overlord[b] ?? 0;
+    const on = (s: ReadonlySet<number>, n: number, o: number): boolean => s.has(n) || (o !== 0 && s.has(o));
     for (const h of this.holdAt) {
       if (h.i >= this.next || tick >= h.until) continue;
-      if ((h.a.has(a) && h.b.has(b)) || (h.a.has(b) && h.b.has(a))) return true;
+      if ((on(h.a, a, oa) && on(h.b, b, ob)) || (on(h.a, b, ob) && on(h.b, a, oa))) return true;
     }
     return false;
   }

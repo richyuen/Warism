@@ -5,6 +5,9 @@
  * of the land the map changed since the start, the share the world has so (did the timeline move it right); and the
  * land the world changed that the map did not, as a share of all land (did anything else move it).
  *
+ * R62g0: the same three columns for control, where a map says who held what (`occupied`): the reference's holders are
+ * its owners but where `occupied` puts another, set against the start's holders.
+ *
  * Usage: `npx tsx tools/diag/historyMatch.ts [until YYYY-MM-DD]`; one line a map and a line of what differs most, the
  * events passed over, then `done:`. About two minutes a simulated year.
  */
@@ -49,6 +52,33 @@ export function referenceOwners(start: Uint16Array, province: Uint16Array, terra
   return out;
 }
 
+/** The holders of map `k`: its owners (`ref`), but where its `occupied` puts another. */
+export function referenceHolders(ref: Uint16Array, province: Uint16Array, terrain: Uint8Array, meta: readonly Admin1Meta[], map: HistoryMap, tags: readonly string[], w: number, h: number): Uint16Array {
+  const id = (t: string): number => tags.indexOf(t) + 1;
+  const out = ref.slice();
+  const land = (c: number): boolean => terrain[c]! >= Terrain.Plains;
+  for (const o of map.occupied ?? []) {
+    const by = id(o.by);
+    const of = new Set(o.of.map(id));
+    const countries = new Set(o.countries ?? []);
+    const provinces = new Set(o.provinces ?? []);
+    if (countries.size + provinces.size > 0) {
+      for (let c = 0; c < out.length; c++) {
+        const p = province[c]!;
+        if (p === 0 || !land(c) || !of.has(ref[c]!)) continue;
+        const pm = meta[p - 1]!;
+        if (provinces.has(pm.adm1) || countries.has(pm.adm0)) out[c] = by;
+      }
+    }
+    for (const r of o.rings ?? []) {
+      forEachCellInRing(r, w, h, (c) => {
+        if (land(c) && of.has(ref[c]!)) out[c] = by;
+      });
+    }
+  }
+  return out;
+}
+
 export interface MatchColumns {
   /** Land cells. */
   land: number;
@@ -85,14 +115,19 @@ export function matchColumns(world: Uint16Array, ref: Uint16Array, start: Uint16
 }
 
 /** Runs 1938h (its own seed) through each map's day at noon, then to `until` (a date); the columns of each, and the events passed over. */
-export function runMatch(timeline: TimelineFile = TIMELINE_1938H, log: (s: string) => void = () => {}, until?: string): { maps: { date: string; cols: MatchColumns }[]; skipped: number[]; sim: Sim } {
+export function runMatch(
+  timeline: TimelineFile = TIMELINE_1938H,
+  log: (s: string) => void = () => {},
+  until?: string,
+): { maps: { date: string; cols: MatchColumns; control?: MatchColumns }[]; skipped: number[]; sim: Sim } {
   const assets = loadAssets1938(SIZE_1938.w);
   const meta = JSON.parse(new TextDecoder().decode(assets.admin1Meta)) as Admin1Meta[];
   const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets }, timeline);
   const w = sim.world;
   const start = w.cells.owner.slice();
+  const startHeld = w.cells.controller.slice();
   const day0 = dayOfIso('1938-01-01');
-  const out: { date: string; cols: MatchColumns }[] = [];
+  const out: { date: string; cols: MatchColumns; control?: MatchColumns }[] = [];
   const skipped: number[] = [];
   const to = (tick: number): void => {
     while (sim.tick < tick) {
@@ -107,10 +142,19 @@ export function runMatch(timeline: TimelineFile = TIMELINE_1938H, log: (s: strin
     to((dayOfIso(m.date) - day0) * 24 + 12);
     const ref = referenceOwners(start, w.cells.province, w.cells.terrain, meta, timeline.maps!, k, TAGS_1938H, w.cells.w, w.cells.h);
     const cols = matchColumns(w.cells.owner, ref, start, w.cells.terrain);
-    out.push({ date: m.date, cols });
     const tag = (n: number): string => TAGS_1938H[n - 1] ?? (n === 0 ? '-' : String(n));
-    log(`${m.date}: whole ${(100 * cols.whole).toFixed(2)} %, moved ${cols.moved} cells, ${(100 * cols.movedRight).toFixed(1)} % right; stray ${(100 * cols.strayShare).toFixed(2)} % of land`);
-    log(`  differs: ${cols.worst.map(([a, b, n]) => `${tag(a)} for ${tag(b)} ${n}`).join(', ')}`);
+    const say = (what: string, c: MatchColumns): void => {
+      log(`${m.date} ${what}: whole ${(100 * c.whole).toFixed(2)} %, moved ${c.moved} cells, ${(100 * c.movedRight).toFixed(1)} % right; stray ${(100 * c.strayShare).toFixed(2)} % of land`);
+      log(`  differs: ${c.worst.map(([a, b, n]) => `${tag(a)} for ${tag(b)} ${n}`).join(', ')}`);
+    };
+    say('owners', cols);
+    let control: MatchColumns | undefined;
+    if (m.occupied) {
+      const held = referenceHolders(ref, w.cells.province, w.cells.terrain, meta, m, TAGS_1938H, w.cells.w, w.cells.h);
+      control = matchColumns(w.cells.controller, held, startHeld, w.cells.terrain);
+      say('control', control);
+    }
+    out.push(control ? { date: m.date, cols, control } : { date: m.date, cols });
   });
   if (until !== undefined) to((dayOfIso(until) - day0) * 24);
   log(`events passed over: ${skipped.length === 0 ? 'none' : skipped.map((i) => `${i + 1} (${timeline.events[i]!.date} ${timeline.events[i]!.kind})`).join(', ')}`);

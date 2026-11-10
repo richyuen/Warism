@@ -169,6 +169,29 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     Yugoslavia (Croatia), North Africa, Barbarossa, Iran, Pearl Harbor and the Pacific opening. AT: each event on its
     date; Paris taken within 30 days of 14 June 1940; owners match history on 1 July 1940 ≥ 90 % and control on
     1 December 1941 ≥ 75 % of land cells.
+    Split in measured slices (2026-11-10), each its own commit; R62g is ticked with the last. The whole-land shares
+    alone say little (an empty timeline scores 98.8 % on owners), so each slice's bar is also on the land moved and
+    the land strayed, owners and control (a control layer in `maps`):
+  - [x] R62g0 What 1938-39 left: Japan's occupation of China before the hold (`occupy` rings on 1 November 1938:
+    North China, the Yangtze to Wuhan, Canton) kept by it; the hold started and ended mid-run (attacks stop and resume)
+    and saved and loaded mid-hold (the same hash); a hold by place (an optional ring: the West quiet to 10 May 1940
+    while Norway is fought); the Winter War's peace (13 March 1940) and Karelia; a control layer in `maps` and
+    `historyMatch`. AT: Japan controls ≥ 15 % of China on 1 December 1939; a hold's attacks stop and resume on their
+    hours; a save mid-hold replays to the same hash; R62f's run still clean.
+    Done (ADR-930): China by stages under a hold from the start, Japan 15.2 % of China a year on (37.4 % without, the
+    Communists dead); a hold's puppets; the Phoney War held (not a hold by place: one cost, Norway's Anglo-German
+    land fighting); the Winter War's peace and Karelia; `occupied` in `maps`, control 95.3 % right, stray 0.05 % on 1
+    October 1939; a hold stops and resumes on its hours and replays from a save mid-hold
+    (`tests/unit/trackLevers1938h.test.ts`, `tests/sweep/chinaFront1938h.test.ts`, `historyMatch1938h.test.ts`).
+  - [ ] R62g1 To 9 April 1940 and the West to 1 July 1940: Denmark and Norway, the Low Countries, France (Paris, the
+    armistice, Vichy born, the occupied zone), Italy's entry. AT: each event on its date; Paris taken within 30 days of
+    14 June 1940; the 1 July 1940 map: owners ≥ 90 % of land, the moved land ≥ 90 % right, stray < 0.5 %.
+  - [ ] R62g2 The Baltics, Bessarabia, the Second Vienna Award, the Tripartite Pact, Greece and Yugoslavia (Croatia),
+    North Africa, Iraq, Syria, Iran. AT: each event on its date; a 1 June 1941 map, the same bars.
+  - [ ] R62g3 Barbarossa to 1 December 1941. AT: control on 1 December 1941 ≥ 75 % of land, the land moved in
+    control ≥ 75 % right, stray control < 2 %.
+  - [ ] R62g4 Pearl Harbor and the Pacific opening (to 31 December 1941). AT: each event on its date; the
+    belligerents of 11 December 1941 as history had them.
   - [ ] R62h 1942–45: the Pacific, Stalingrad, El Alamein and Torch, Italy's surrender and the Italian Social Republic,
     Bagration, D-Day, the switches of Romania, Bulgaria and Finland, Germany's surrender (8 May 1945), Hiroshima and
     Nagasaki, Manchuria, Japan's surrender (2 September 1945). AT: each event on its date; control matches history on

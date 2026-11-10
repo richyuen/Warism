@@ -211,3 +211,14 @@
 - Left: Japan holds 1 % of China, not history's fifth; the maps measure owners, so R62k's checker takes occupation.
 - Evidence: `tests/sweep/chinaFront1938h.test.ts`, `tests/sweep/historyMatch1938h.test.ts`, the hold case in
   `tests/unit/trackLevers1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62g0: what 1938-39 left, and control measured (ADR-930)
+
+- R62g split in measured slices (g0-g4): the whole-land shares say little, so each has bars on the land moved and
+  strayed, owners and control.
+- China: held from the start, Japan's 1938 gains in `occupy` stages (no arrivals): 15.2 % held a year on, the
+  Communists and Manchukuo living. A hold now holds puppets; the Phoney War held to 10 May 1940 (without it Germany
+  held 1,525 French cells by May); the Winter War's peace and Karelia.
+- The maps' `occupied` and control columns in `historyMatch`: 1 October 1939, control 95.3 % right, stray 0.05 %.
+- Seen for R62g3: quiet armies disbanded by the books (China 771k to 402k, the Soviet Union 1.55M to 0.93M).
+- Evidence: `tests/unit/trackLevers1938h.test.ts` (a hold mid-run, a save mid-hold), the two sweep tests. Gate.

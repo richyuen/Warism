@@ -9,6 +9,30 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-930 · 2026-11-10 · accepted — what 1938-39 left, and control measured (R62g0)
+- **China by stages, not by fighting.** The front with Nationalist China is held from the start (ADR-929's hold of
+  November 1938 moved to 1 January 1938), and Japan's gains are `occupy` rings on their dates: North China and
+  Shanghai-Nanjing at the start (taken in 1937), Xuzhou (19 May 1938), Canton (21 October), Wuhan (25 October).
+  ADR-929's Japanese and Chinese arrivals and the Wuhan and Canton objectives are gone: before the hold, China took
+  1,090 cells of Manchukuo in 1938 (control, which the owners' maps did not see), and the arrivals only moved which
+  army melted. Japan holds 15.2 % of China from November 1938, unmoved a year on; without the holds 37.4 %, China's
+  army 15k and the Communists dead.
+- **A hold holds puppets** (`Track.held` reads `overlord`): a side's nations and theirs. Land only: ships and aircraft
+  fight on (combat.ts is land combat; naval and air combat are not gated).
+- **The Phoney War** as a hold of Germany against France and Britain (with their empires) from 3 September 1939 to 10
+  May 1940. Measured without it: Germany held 1,525 French cells and Australia 331 German ones by 9 May 1940; with it,
+  one cell. Not a hold by place: Norway's fighting (from 9 April) is Germany against Norway, and the Anglo-German land
+  fighting there held to 10 May is the one cost, smaller than a ring on every hold (R62g0's item had asked for one).
+- **The Winter War ends:** a white peace on 13 March 1940 and Karelia (the Isthmus, Viipuri, north of Ladoga) ceded.
+- **Control measured.** A map's `occupied` (who held what on the date, where not its owner; admin codes and rings,
+  each map's own) gives `historyMatch` the same three columns for control. 1 October 1939, Japan's occupation drawn
+  from provinces (Beijing, Tianjin, Hebei, Shandong, Shanghai, Jiangsu) and six rings of its own: whole 99.91 %, the
+  land whose holder moved 95.3 % right, stray 0.05 %. The bars (`historyMatch1938h.test.ts`): ≥ 90 % right and < 0.5 %
+  stray for control; the owners' bars as before.
+- **Seen, for R62g3:** with no fighting China's army falls 771k to 402k in a year and the Soviet Union's 1.55M to 0.93M
+  in March-May 1940: armies the books do not carry, disbanded (the economic AI's step 1, a rule of every world).
+  Barbarossa will need the Soviet Union's and Germany's armies of June 1941.
+
 ### ADR-929 · 2026-11-10 · accepted — the China front held (R62f2)
 - **Why the armies melt** (a probe of the economic AI's refills, step 3a, on the empty timeline): Japan's refills are
   bounded by gold, its treasury spent on new orders to under the reserve of three months' income (340 against

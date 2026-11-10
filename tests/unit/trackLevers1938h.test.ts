@@ -62,11 +62,11 @@ describe("the historical track's levers (ROADMAP R62f)", () => {
 });
 
 describe("the historical track's hold (ROADMAP R62f2)", () => {
-  it('a front held from its hour until its date, both ways, and only between its sides', () => {
+  it("a front held from its hour until its date, both ways, between its sides and their puppets only", () => {
     const tl: TimelineFile = {
       events: [
         { date: '1938-01-02', kind: 'war', attackers: ['GER'], defenders: ['POL'] },
-        { date: '1938-01-02', hour: 1, kind: 'hold', sides: [['GER'], ['POL', 'LIT']], until: '1938-01-04' },
+        { date: '1938-01-02', hour: 1, kind: 'hold', sides: [['GER'], ['POL', 'ENG']], until: '1938-01-04' },
       ],
     };
     const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
@@ -78,8 +78,53 @@ describe("the historical track's hold (ROADMAP R62f2)", () => {
     expect(w.holds(GER, POL)).toBe(true);
     expect(w.holds(POL, GER)).toBe(true);
     expect(w.holds(GER, FRA)).toBe(false);
+    // A side's puppets with it (R62g0): Australia beside Britain.
+    expect(w.holds(id('AST'), GER)).toBe(true);
+    expect(w.holds(id('AST'), POL)).toBe(false);
     while (sim.tick < 3 * 24) sim.step(1, quiet);
     expect(w.holds(GER, POL)).toBe(false);
     expect(w.wars.atWar(GER, POL)).toBe(true);
+  });
+});
+
+describe('a hold mid-run (ROADMAP R62g0)', () => {
+  const tl: TimelineFile = {
+    events: [
+      { date: '1938-01-02', kind: 'war', attackers: ['GER'], defenders: ['POL'] },
+      { date: '1938-01-06', kind: 'hold', sides: [['GER'], ['POL']], until: '1938-01-09' },
+    ],
+  };
+  const make = (): Sim => new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
+  /** Formations of Germany and Poland in combat this hour. */
+  const engaged = (w: World): number => {
+    let n = 0;
+    const f = w.formations.cols;
+    w.formations.forEach((i) => {
+      if ((f.nation[i] === id('GER') || f.nation[i] === id('POL')) && f.engaged[i] === 1) n++;
+    });
+    return n;
+  };
+  const most = (sim: Sim, to: number): number => {
+    let top = 0;
+    while (sim.tick < to) {
+      sim.step(1, quiet);
+      top = Math.max(top, engaged(sim.world));
+    }
+    return top;
+  };
+
+  it('the fighting stops on its hour and resumes on its date; a save mid-hold replays the same', () => {
+    const a = make();
+    expect(most(a, 5 * 24)).toBeGreaterThan(0);
+    // The hold's hour (tick 120): its fighting is over within it, then none to its date (tick 192).
+    most(a, 5 * 24 + 1);
+    expect(most(a, 6 * 24)).toBe(0);
+    const bytes = a.save();
+    const b = make();
+    b.load(bytes);
+    expect(most(a, 8 * 24)).toBe(0);
+    expect(most(a, 10 * 24)).toBeGreaterThan(0);
+    most(b, 10 * 24);
+    expect(b.hash()).toBe(a.hash());
   });
 });

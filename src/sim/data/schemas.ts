@@ -549,8 +549,9 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    */
   z.strictObject({ ...when, kind: z.literal('forces'), nation: tag, template: id, count: z.number().int().min(1).max(60), at: lonLat }),
   /**
-   * A front held (R62f2): until `until` the nations of `sides[0]` and of `sides[1]` stay at war but do not fight: no
-   * combat between them, no land taken by either from the other, no plan of attack on the other.
+   * A front held (R62f2): until `until` the nations of `sides[0]` and of `sides[1]`, and their puppets, stay at war but
+   * do not fight on land: no land combat between them, no land taken by either from the other, no plan of attack on
+   * the other. Ships and aircraft fight on.
    */
   z.strictObject({ ...when, kind: z.literal('hold'), sides: z.tuple([tags, tags]), until: date }),
 ]);
@@ -573,6 +574,21 @@ export const TimelineFile = z.strictObject({
         byCountry: z.record(z.string().regex(/^[A-Z0-9]{3}$/), tag).optional(),
         byProvince: z.record(z.string(), tag).optional(),
         regions: z.array(z.strictObject({ owner: tag, onlyFrom: tags, ring })).optional(),
+        /**
+         * Who held what on the date, where it was not its owner (R62g0): the land of `of` in these countries,
+         * provinces and rings held by `by`. Each map's own, not laid over the map before it.
+         */
+        occupied: z
+          .array(
+            z.strictObject({
+              by: tag,
+              of: tags,
+              countries: z.array(z.string().regex(/^[A-Z0-9]{3}$/)).optional(),
+              provinces: z.array(z.string()).optional(),
+              rings: z.array(ring).optional(),
+            }),
+          )
+          .optional(),
       }),
     )
     .optional(),
@@ -1006,7 +1022,12 @@ export function validateDataSet(files: Readonly<Record<string, unknown>>): strin
     (t.maps ?? []).forEach((m, i) => {
       if (m.date <= lastMap) errors.push(`${f}: maps[${i}]: ${m.date} is not after the map above it`);
       lastMap = m.date;
-      const named = [...Object.values(m.byCountry ?? {}), ...Object.values(m.byProvince ?? {}), ...(m.regions ?? []).flatMap((r) => [r.owner, ...r.onlyFrom])];
+      const named = [
+        ...Object.values(m.byCountry ?? {}),
+        ...Object.values(m.byProvince ?? {}),
+        ...(m.regions ?? []).flatMap((r) => [r.owner, ...r.onlyFrom]),
+        ...(m.occupied ?? []).flatMap((o) => [o.by, ...o.of]),
+      ];
       for (const x of named) if (known.size > 0 && !known.has(x)) errors.push(`${f}: maps[${i}]: unknown nation '${x}'`);
     });
   }

@@ -7,9 +7,9 @@ import { TRACK_PROBE } from '../../src/sim/track';
 import type { World } from '../../src/sim/world';
 import { loadAssets1938 } from '../../tools/headless/assets';
 
-// ROADMAP R62f2 (ADR-929): the China front held. From one save on 1 November 1938 (the hold's hour past), 12 months with
-// the hold and without (TRACK_PROBE.holdsOff): with it, Japan's share of China within 5 points of its start, China's
-// army not under half of it, the Communists and Manchukuo living.
+// ROADMAP R62f2 (ADR-929), R62g0 (ADR-930): the China front held. From one save on 1 November 1938, 12 months with the
+// holds and without (TRACK_PROBE.holdsOff): with them, Japan's share of China within 5 points of its start and at least
+// 15 % (its occupation of 1938, by stages), China's army not under half of it, the Communists and Manchukuo living.
 
 const id = (t: string): number => TAGS_1938H.indexOf(t) + 1;
 const [JAP, MAN, MEN, CHI, CCP] = ['JAP', 'MAN', 'MEN', 'CHI', 'CCP'].map(id) as [number, number, number, number, number];
@@ -56,6 +56,7 @@ it('the China front holds a year from November 1938, and does not without the ho
   const say = (f: ReturnType<typeof front>): string => `Japan holds ${(100 * f.share).toFixed(1)} % of China, China's army ${Math.round(f.army / 1000)}k, Communists ${f.ccp ? 'living' : 'dead'}, Manchukuo ${f.man ? 'living' : 'dead'}`;
   process.stderr.write(`1 Nov 1938: ${say(start)}\na year held: ${say(held)}\na year without: ${say(loose)}\n`);
   expect(Math.abs(held.share - start.share)).toBeLessThanOrEqual(0.05);
+  expect(held.share).toBeGreaterThanOrEqual(0.15);
   expect(held.army).toBeGreaterThanOrEqual(start.army / 2);
   expect(held.ccp).toBe(true);
   expect(held.man).toBe(true);
