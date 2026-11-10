@@ -1440,6 +1440,14 @@ export class World {
     return this.track !== null && !this.track.ended;
   }
 
+  /**
+   * Whether `a` and `b` hold their front (ROADMAP R62f2): at war, they do not fight, take land or plan attacks on each
+   * other while the historical track says so. False in every other world.
+   */
+  holds(a: number, b: number): boolean {
+    return this.track !== null && this.track.held(a, b, this.tick);
+  }
+
   /** The weight of a place (cells) to nation `n`'s plans: the historical track's objectives (ROADMAP R62e), else 1. */
   objectiveWeight(n: number, x: number, y: number): number {
     return this.track ? this.track.objectiveWeight(n, x, y, this.tick, this.cells.w, this.cells.h) : 1;

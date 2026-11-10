@@ -548,6 +548,11 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * set down for `nation` at `at` (its land point), as God Mode's spawn places one.
    */
   z.strictObject({ ...when, kind: z.literal('forces'), nation: tag, template: id, count: z.number().int().min(1).max(60), at: lonLat }),
+  /**
+   * A front held (R62f2): until `until` the nations of `sides[0]` and of `sides[1]` stay at war but do not fight: no
+   * combat between them, no land taken by either from the other, no plan of attack on the other.
+   */
+  z.strictObject({ ...when, kind: z.literal('hold'), sides: z.tuple([tags, tags]), until: date }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;
 export const TimelineFile = z.strictObject({
@@ -605,6 +610,8 @@ export function timelineTags(e: TimelineEvent): string[] {
     case 'buff':
     case 'forces':
       return [e.nation];
+    case 'hold':
+      return [...e.sides[0], ...e.sides[1]];
   }
 }
 

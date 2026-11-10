@@ -648,7 +648,8 @@ function foesOf(world: World, m: number, fighting: Set<number>, stand: Standings
   let mask = stand.foes.get(m);
   if (!mask) {
     mask = new Uint8Array(world.nations.highWater);
-    for (const e of fighting) if (world.wars.atWar(m, e)) mask[e] = 1;
+    // Not a foe across a held front (ROADMAP R62f2): no plan of attack on it.
+    for (const e of fighting) if (world.wars.atWar(m, e) && !world.holds(m, e)) mask[e] = 1;
     stand.foes.set(m, mask);
   }
   return mask;

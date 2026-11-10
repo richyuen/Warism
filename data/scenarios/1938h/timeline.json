@@ -3,11 +3,62 @@
  "end": "1953-07-27",
  "events": [
   {
+   "date": "1938-01-01",
+   "kind": "hold",
+   "sides": [
+    [
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    [
+     "CCP"
+    ]
+   ],
+   "until": "1945-08-15",
+   "note": "The Communists' base areas"
+  },
+  {
+   "date": "1938-02-01",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 4,
+   "at": [
+    116.4,
+    39.9
+   ],
+   "note": "Japanese reinforcements, North China"
+  },
+  {
    "date": "1938-03-12",
    "kind": "annex",
    "annexer": "GER",
    "target": "AUT",
    "note": "The Anschluss"
+  },
+  {
+   "date": "1938-04-01",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 4,
+   "at": [
+    121.47,
+    31.23
+   ],
+   "note": "Central China"
+  },
+  {
+   "date": "1938-06-01",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 4,
+   "at": [
+    116.4,
+    39.9
+   ]
   },
   {
    "date": "1938-06-01",
@@ -20,6 +71,28 @@
    "km": 350,
    "until": "1938-10-26",
    "note": "Wuhan"
+  },
+  {
+   "date": "1938-08-01",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 4,
+   "at": [
+    121.47,
+    31.23
+   ]
+  },
+  {
+   "date": "1938-10-01",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 4,
+   "at": [
+    116.4,
+    39.9
+   ]
   },
   {
    "date": "1938-10-01",
@@ -232,6 +305,34 @@
    "note": "Canton"
   },
   {
+   "date": "1938-11-01",
+   "kind": "hold",
+   "sides": [
+    [
+     "JAP",
+     "MAN",
+     "MEN"
+    ],
+    [
+     "CHI"
+    ]
+   ],
+   "until": "1944-04-17",
+   "note": "The China front holds after Wuhan and Canton"
+  },
+  {
+   "date": "1938-11-01",
+   "kind": "forces",
+   "nation": "CHI",
+   "template": "light_infantry_div",
+   "count": 10,
+   "at": [
+    106.55,
+    29.56
+   ],
+   "note": "China's armies rebuilt"
+  },
+  {
    "date": "1938-11-02",
    "kind": "transfer",
    "to": "HUN",
@@ -309,6 +410,17 @@
     ]
    ],
    "note": "The First Vienna Award"
+  },
+  {
+   "date": "1939-02-01",
+   "kind": "forces",
+   "nation": "CHI",
+   "template": "light_infantry_div",
+   "count": 10,
+   "at": [
+    106.55,
+    29.56
+   ]
   },
   {
    "date": "1939-03-14",
@@ -488,6 +600,17 @@
    "note": "Albania"
   },
   {
+   "date": "1939-05-01",
+   "kind": "forces",
+   "nation": "CHI",
+   "template": "light_infantry_div",
+   "count": 10,
+   "at": [
+    106.55,
+    29.56
+   ]
+  },
+  {
    "date": "1939-05-11",
    "kind": "war",
    "attackers": [
@@ -497,6 +620,17 @@
     "MAN"
    ],
    "note": "Nomonhan"
+  },
+  {
+   "date": "1939-08-01",
+   "kind": "forces",
+   "nation": "CHI",
+   "template": "light_infantry_div",
+   "count": 10,
+   "at": [
+    106.55,
+    29.56
+   ]
   },
   {
    "date": "1939-09-01",
@@ -860,6 +994,17 @@
    "kind": "guarantee",
    "guarantor": "SOV",
    "target": "LIT"
+  },
+  {
+   "date": "1939-11-01",
+   "kind": "forces",
+   "nation": "CHI",
+   "template": "light_infantry_div",
+   "count": 10,
+   "at": [
+    106.55,
+    29.56
+   ]
   },
   {
    "date": "1939-11-30",

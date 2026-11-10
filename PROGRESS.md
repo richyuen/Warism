@@ -198,3 +198,16 @@
   Nomonhan war and peace are passed over. Probes: refills unpaid while the pools grow; buffs and arrivals flip the
   front from one collapse to the other. The cause is R62f2; R62f re-scoped by the user (ADR-928) and ticked.
 - Evidence: `tests/unit/trackLevers1938h.test.ts`, the sweep test, the data-schemas case. Gate.
+
+## 2026-11-10 — R62f2: the China front held (ADR-929)
+
+- Read: neither Japan nor China refills while its manpower pool grows: Japan's gold is spent under the reserve,
+  China's army upkeep over its war share. A rule of every world, left as it is.
+- `hold` in the timeline: two sides at war that do not fight, take land or plan attacks until a date (combat,
+  territory, the operational AI's foes); inert without a track. 1938-39: the Communists held from the start, Japan's
+  arrivals to October 1938, the front with China held from November 1938, China's arrivals.
+- A year from one save at 1 November 1938: held, the front unmoved, China's army 203k to 459k, the Communists and
+  Manchukuo living; without, the Communists dead. The 1938-39 match: stray 0.00 %, no event passed over.
+- Left: Japan holds 1 % of China, not history's fifth; the maps measure owners, so R62k's checker takes occupation.
+- Evidence: `tests/sweep/chinaFront1938h.test.ts`, `tests/sweep/historyMatch1938h.test.ts`, the hold case in
+  `tests/unit/trackLevers1938h.test.ts`. Gate.

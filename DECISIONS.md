@@ -9,6 +9,29 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-929 · 2026-11-10 · accepted — the China front held (R62f2)
+- **Why the armies melt** (a probe of the economic AI's refills, step 3a, on the empty timeline): Japan's refills are
+  bounded by gold, its treasury spent on new orders to under the reserve of three months' income (340 against
+  2,481), and China's by its books, the army's upkeep over its war share of income and the balance below need. So
+  neither refills while its pool grows. A rule of every world; not changed here.
+- **The lever, `hold`** (`timeline.json`, `Track.held`, `World.holds`): from its hour to its date two sides stay at war
+  and do not fight: no pairing in combat (`combat.ts`), no land taken across (`territory.ts`), no foe in the
+  operational AI's plans (`foesOf`). False in every world without a track and in a track without holds: the pin
+  unmoved. The track does not end the war (the wars of its timeline end by its events), and land may still change
+  by the timeline's own events.
+- **1938-39:** the Communists' base held against Japan, Manchukuo and Mengjiang from the start to 1945; Japanese
+  arrivals of 4 square divisions every two months to October 1938; the front with Nationalist China held from 1
+  November 1938 (after Wuhan and Canton) to the Ichigo offensive (17 April 1944); Chinese arrivals of 10 light
+  divisions every quarter from November 1938.
+- **Measured** (`tests/sweep/chinaFront1938h.test.ts`, one save at 1 November 1938, a year each way): held, Japan
+  holds 1.1 % of China as at the start, China's army 203k to 459k, the Communists and Manchukuo living; without the
+  hold, 18.3 %, China's army 88k, the Communists dead. R62f's run: 100.00 / 99.99 / 99.98 % of land, stray 0.00 %,
+  no event passed over.
+- **Left:** Japan holds 1 % of China in November 1938 where history had about a fifth (the coast, the Yangtze to Wuhan,
+  Canton): its arrivals and objectives took the cities but not the land between. The maps measure owners, not
+  occupation, so the bar does not see it; more arrivals (6-8 a time) reached 9-12 % by May and 19-28 % by November
+  only by destroying China's army before the hold. A front's occupation, measured, is R62k's (the checker).
+
 ### ADR-928 · 2026-11-10 · accepted (its re-scope the user's decision, 2026-11-10) — 1938-39 on the track, measured (R62f)
 - **The period** (`data/scenarios/1938h/timeline.json`, 32 events, our own summary of public history): the
   Anschluss; the Sudetenland (1 October 1938), Zaolzie, the First Vienna Award; Slovakia born and Germany's puppet,

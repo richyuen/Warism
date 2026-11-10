@@ -60,3 +60,26 @@ describe("the historical track's levers (ROADMAP R62f)", () => {
     expect(w.buffs.sum('attack', 'nation', GER)).toBe(0);
   });
 });
+
+describe("the historical track's hold (ROADMAP R62f2)", () => {
+  it('a front held from its hour until its date, both ways, and only between its sides', () => {
+    const tl: TimelineFile = {
+      events: [
+        { date: '1938-01-02', kind: 'war', attackers: ['GER'], defenders: ['POL'] },
+        { date: '1938-01-02', hour: 1, kind: 'hold', sides: [['GER'], ['POL', 'LIT']], until: '1938-01-04' },
+      ],
+    };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
+    const w = sim.world;
+    const [GER, POL, FRA] = [id('GER'), id('POL'), id('FRA')];
+    sim.step(25, quiet);
+    expect(w.holds(GER, POL)).toBe(false);
+    sim.step(1, quiet);
+    expect(w.holds(GER, POL)).toBe(true);
+    expect(w.holds(POL, GER)).toBe(true);
+    expect(w.holds(GER, FRA)).toBe(false);
+    while (sim.tick < 3 * 24) sim.step(1, quiet);
+    expect(w.holds(GER, POL)).toBe(false);
+    expect(w.wars.atWar(GER, POL)).toBe(true);
+  });
+});

@@ -191,7 +191,8 @@ export function findBattles(world: World): number[][] {
     return r;
   };
   const pair = (a: number, b: number): void => {
-    if (b <= a || !world.wars.atWar(c.nation[a]!, c.nation[b]!)) return;
+    // A held front (ROADMAP R62f2): at war, they do not fight.
+    if (b <= a || !world.wars.atWar(c.nation[a]!, c.nation[b]!) || world.holds(c.nation[a]!, c.nation[b]!)) return;
     const d = dist(world, c.x[a]!, c.y[a]!, c.x[b]!, c.y[b]!);
     if (d > world.atSize(CONTACT_CELLS)) return;
     // Each one's nearest enemy in contact (the lower id on a tie): where its block deploys (`deployOf`).

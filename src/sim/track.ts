@@ -32,8 +32,8 @@ import { FlipCause, navOf, type World } from './world';
  */
 export const OBJECTIVE_WEIGHT = 6;
 
-/** Tests' switch (an A/B from one save): objectives weigh nothing. */
-export const TRACK_PROBE: { objectivesOff?: boolean } = {};
+/** Tests' switches (an A/B from one save): objectives weigh nothing; no front holds. */
+export const TRACK_PROBE: { objectivesOff?: boolean; holdsOff?: boolean } = {};
 
 /** The section of the track's state. */
 export const TRACK_SECTION = 'world.track';
@@ -82,6 +82,8 @@ export class Track {
   private readonly start: number;
   /** The revivals a born nation has, as its scenario's nations do (R62d). */
   revivals = 0;
+  /** The holds' events, by index: the tick each ends and its two sides' nations (R62f2). */
+  private readonly holdAt: readonly { i: number; until: number; a: ReadonlySet<number>; b: ReadonlySet<number> }[];
   /** The objectives' events, by index, with the tick each ends (R62e). */
   private readonly objectiveAt: readonly { i: number; until: number }[];
   /** Their places in cells and radii² at a map's width (derived, not state). */
@@ -95,6 +97,10 @@ export class Track {
     this.hash = timelineHash(file);
     this.endTick = file.end === undefined ? Infinity : (dayOfIso(file.end) - start) * 24;
     this.objectiveAt = file.events.flatMap((e, i) => (e.kind === 'objective' ? [{ i, until: (dayOfIso(e.until) - start) * 24 }] : []));
+    const ids = new Map(tags.map((t, k) => [t, k + 1]));
+    this.holdAt = file.events.flatMap((e, i) =>
+      e.kind === 'hold' ? [{ i, until: (dayOfIso(e.until) - start) * 24, a: new Set(e.sides[0].map((x) => ids.get(x) ?? 0)), b: new Set(e.sides[1].map((x) => ids.get(x) ?? 0)) }] : [],
+    );
     this.ids = new Map(tags.map((t, i) => [t, i + 1]));
   }
 
@@ -132,6 +138,19 @@ export class Track {
   /** The tick of a date's first hour. */
   tickOf(date: string): number {
     return (dayOfIso(date) - this.start) * 24;
+  }
+
+  /**
+   * Whether nations `a` and `b` stand on the two sides of a held front (R62f2): a hold that has begun (its event
+   * applied) and not ended. False at once in a timeline without holds.
+   */
+  held(a: number, b: number, tick: number): boolean {
+    if (this.holdAt.length === 0 || this.ended || TRACK_PROBE.holdsOff) return false;
+    for (const h of this.holdAt) {
+      if (h.i >= this.next || tick >= h.until) continue;
+      if ((h.a.has(a) && h.b.has(b)) || (h.a.has(b) && h.b.has(a))) return true;
+    }
+    return false;
   }
 
   /** The nation of a tag (0: none such). */
@@ -413,6 +432,9 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
     case 'objective':
       // It weighs from now on (`objectiveWeight`); a nation not living has none.
       return whyNot(world, id(e.nation));
+    case 'hold':
+      // It holds from now on (`held`) while its nations live.
+      return whyNot(world, id(e.sides[0][0]!)) || whyNot(world, id(e.sides[1][0]!));
     case 'forces': {
       const template = t.templates.get(e.template);
       if (template === undefined) return Refusal.NoSuch;
@@ -456,6 +478,8 @@ function firstNation(t: Track, e: TimelineEvent): number {
     case 'buff':
     case 'forces':
       return t.id(e.nation);
+    case 'hold':
+      return t.id(e.sides[0][0]!);
   }
 }
 

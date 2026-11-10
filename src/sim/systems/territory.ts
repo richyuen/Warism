@@ -336,7 +336,8 @@ export function territorySystem(world: World): void {
       }
       for (const a of neighbours(world, c, nb)) {
         const an = controller[a]!;
-        if (an === 0 || an === bestNation || !wars.atWar(an, d)) continue;
+        // A held front (ROADMAP R62f2): no land taken across it.
+        if (an === 0 || an === bestNation || !wars.atWar(an, d) || world.holds(an, d)) continue;
         let own = 0;
         let mine = 0;
         for (let e = first; e !== -1; e = entryNext[e]!) {

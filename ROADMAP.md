@@ -156,11 +156,14 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     `tools/diag/historyMatch.ts`, the `buff`, `forces` and `without` levers; 100.00 / 98.81 / 98.79 % of land, the moved
     land 97-98 % right (`tests/sweep/historyMatch1938h.test.ts`). The Nomonhan war and peace (passed over) and the 1.19 %
     of land strayed, China having overrun Manchukuo in February 1939, are R62f2's.
-  - [ ] R62f2 The China front (R62f's cause): why formations under strength are not refilled while the manpower pool
+  - [x] R62f2 The China front (R62f's cause): why formations under strength are not refilled while the manpower pool
     grows (the economic AI's refill step), and a dated hold on a front read where the AI attacks (inert elsewhere, the
     pin unmoved). AT: from one save at 1 November 1938, 12 months with the hold and without: with it Japan's share of
     China within 5 points of its start, China's army not under half, the Communists and Manchukuo living; then R62f's
     run: no event passed over, stray land under 0.2 %.
+    Done (ADR-929): the `hold` kind; held a year, Japan's share 1.1 % unmoved, China's army 203k to 459k, the
+    Communists and Manchukuo living (without: 18.3 %, 88k, the Communists dead; `tests/sweep/chinaFront1938h.test.ts`);
+    R62f's run 100.00 / 99.99 / 99.98 %, stray 0.00 %, no event passed over (`tests/sweep/historyMatch1938h.test.ts`).
   - [ ] R62g 1940–41: Denmark and Norway, the Low Countries and France (the armistice, Vichy and the occupied zone),
     Italy's entry, the Baltic annexations and Bessarabia, the Second Vienna Award, the Tripartite Pact, Greece and
     Yugoslavia (Croatia), North Africa, Barbarossa, Iran, Pearl Harbor and the Pacific opening. AT: each event on its
