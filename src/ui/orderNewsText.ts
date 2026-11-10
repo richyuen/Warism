@@ -49,6 +49,12 @@ export function orderNewsBrief(n: OrderNews, count: number, name: string): strin
   return t('order.refusedBrief', { name: tag, why: t(`order.whyBrief.${n.reason}` as MessageKey) });
 }
 
+/** How many hours a panel's notice is news; after, it is drawn as history, muted (ROADMAP R58c): three days. */
+export const NOTICE_OLD_HOURS = 72;
+
+/** Whether a notice of news at hour `newsTick` is history at hour `now` (ROADMAP R58c). */
+export const noticeOld = (now: number, newsTick: number): boolean => now - newsTick > NOTICE_OLD_HOURS;
+
 /** What a formation is doing, as its panel's status says it: its voyage, march, fight and retreat. */
 function stateOf(info: FormationDetail): string {
   return `${info.voyage?.state ?? '-'}|${info.moving ? (info.goal ?? 1) : '-'}|${info.engaged ? 1 : 0}|${info.retreat > 0 ? 1 : 0}`;

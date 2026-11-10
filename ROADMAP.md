@@ -1294,7 +1294,9 @@ every other dimension at 8. Naval's findings are items, fixed, then the critic a
     `order.nextVoyageBrief`, `formation.voyage.nextVoyage` have no figure); 29043's 273 (left at t1170, ashore t1340,
     11.3 days after its t1068 click, best 3.4) waits no longer than the next voyage needs. AT: `critic/c59_told_29043_273.log`'s
     case told with a figure that comes true within a day; `c59_od_29043_273` no later.
-  - [ ] R58c R59-N2 (UI): a panel's kept order news ages: dated, or dropped once the division has a new order. AT: 27125
+  - [x] R58c (done: the panel's notice dated as the ticker dates a row, muted after NOTICE_OLD_HOURS, 3 days; 27125
+    h400: 323 and 324 "6 January 1938 … the landing is over" in grey; h140 all six told, orange, 0 page errors (the
+    critic's `c58_whotold.mjs`, run from a copy in `.cache/probe`); `orderNews1938.spec.ts`) R59-N2 (UI): a panel's kept order news ages: dated, or dropped once the division has a new order. AT: 27125
     at h400 (`critic/scripts/c58_whotold.mjs 27125 ITA ENG 1095.5,344.5 1106.5,383.5 6 400`): 323 and 324 "On the
     march" not under a live-looking orange "the landing is over"; h140 still all six told.
   - [ ] R58d Run 59's small UI item: at 844 × 390 the greyed "Offer peace" reason line cut at the panel's foot on day 0

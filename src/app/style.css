@@ -1217,6 +1217,13 @@ textarea,
   color: #f4d58d;
   font-size: 0.78rem;
 }
+/* An old notice is history, not news (ROADMAP R58c). */
+.formation-notice.old {
+  color: var(--ui-muted);
+}
+.formation-notice-date {
+  opacity: 0.8;
+}
 /* The sea battles going on (PLAN 4.10b). */
 .ticker-row.sea-battle {
   border-left-color: #8ec5ff;

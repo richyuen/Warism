@@ -40,6 +40,10 @@ test('a refused order says why, in the ticker and in the formation\'s panel', as
   await page.evaluate(() => window.__warsim!.sim.step(2));
   await page.waitForTimeout(1500);
   await expect(page.getByTestId('formation-notice')).toContainText('no port');
+  // Dated as the ticker dates a row, and news, not history, for its first three days (ROADMAP R58c; critic run 59,
+  // R59-N2: "the landing is over" in the warning colour 11 days on; `noticeOld` in `orderNewsStale.test.ts`).
+  await expect(page.getByTestId('formation-notice')).toContainText('January 1938');
+  await expect(page.getByTestId('formation-notice')).toHaveAttribute('data-old', '0');
   await page.evaluate(() => window.__warsim!.hud.selectFormation(0));
 
   // A click flies to the division and forgets the row.

@@ -2452,3 +2452,11 @@
 - Stands on ADR-909 (R57b: told as its landing sails), ADR-910 (R57c: the panel keeps its news): unchanged.
 - Tests: `tests/unit/nextVoyageDays1938.test.ts` (new), `orderNewsStale`; `npx playwright test
   tests/e2e/orderRowsBrief1938.spec.ts` (3 passed). Not looked at in the page: the words are one line in the panel.
+
+## 2026-11-09 — R58c: a panel's kept notice is dated, and muted once old
+- `FormationPanel`: the notice opens with its date ("6 January 1938"), and after NOTICE_OLD_HOURS (72) is drawn in the
+  muted colour (`data-old`). No sim change.
+- The critic's `c58_whotold.mjs` (copied to `.cache/probe`, its outputs there) on a preview build: 27125 h400, 323 and
+  324 "On the march" under a grey "6 January 1938 … the landing is over"; h140, all six told, orange; 0 page errors.
+  Shots looked at (`.cache/probe/shots/c58wt_27125_323_h{140,400}.png`).
+- Tests: `npx playwright test tests/e2e/orderNews1938.spec.ts tests/e2e/landingNearNews1938.spec.ts` (6 passed); the three-day age in `orderNewsStale.test.ts` (`noticeOld`).

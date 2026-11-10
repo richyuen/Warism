@@ -29,6 +29,8 @@ export function FormationPanel({
   onFight,
   onClose,
   notice = null,
+  noticeDate = null,
+  noticeOld = false,
   escort = null,
   aiBack = false,
 }: {
@@ -45,6 +47,12 @@ export function FormationPanel({
   onClose: () => void;
   /** What became of the player's last order of it (PLAN 4.9c), or null. */
   notice?: string | null;
+  /**
+   * The notice's date, as the ticker writes one, and whether it is old: past NOTICE_OLD_HOURS it is history, drawn
+   * muted (ROADMAP R58c; critic run 59, R59-N2: "the landing is over" in orange 11 days on, read as live news).
+   */
+  noticeDate?: string | null;
+  noticeOld?: boolean;
   /** The player's land formation (ROADMAP R17d): whether its orders over the sea take an escort, and the change; the setting's, remembered. */
   escort?: { on: boolean; onChange: (on: boolean) => void } | null;
   /**
@@ -140,7 +148,9 @@ export function FormationPanel({
             </label>
           ) : null}
           {notice ? (
-            <div class="panel-row formation-notice" data-testid="formation-notice" role="status">
+            <div class={noticeOld ? 'panel-row formation-notice old' : 'panel-row formation-notice'} data-testid="formation-notice" data-old={noticeOld ? '1' : '0'} role="status">
+              {noticeDate ? <span class="formation-notice-date">{noticeDate}</span> : null}
+              {noticeDate ? ' ' : null}
               {notice}
             </div>
           ) : null}

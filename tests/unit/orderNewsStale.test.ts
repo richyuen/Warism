@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { FormationDetail, OrderNews } from '../../src/shared/protocol';
-import { orderNewsBrief, orderNewsText, staleNotice } from '../../src/ui/orderNewsText';
+import { NOTICE_OLD_HOURS, noticeOld, orderNewsBrief, orderNewsText, staleNotice } from '../../src/ui/orderNewsText';
 
 // ROADMAP R37b (critic run 44, R44-N1): the panel's notice "it leaves the landing it had for its new one ... it will
 // not land with them" stood 20+ days after a recall that rejoined that landing. It now goes at the next order sent
@@ -85,5 +85,16 @@ describe('the next voyage of one still marching (ROADMAP R57b)', () => {
     const marching = { ...news('nextVoyage', 1), reason: 1 };
     expect(orderNewsText(marching, 'Infantry division 366')).toBe('Infantry division 366: its landing sailed before it reached the port; it goes on the next voyage.');
     expect(orderNewsText(news('nextVoyage', 1), 'Infantry division 366')).toMatch(/no room on the transports that sailed/);
+  });
+});
+
+// ROADMAP R58c (critic run 59, R59-N2): a kept notice is news for three days, then history, drawn muted.
+describe('a notice ages (ROADMAP R58c)', () => {
+  it('is news for NOTICE_OLD_HOURS, history after', () => {
+    expect(NOTICE_OLD_HOURS).toBe(72);
+    expect(noticeOld(100, 100)).toBe(false);
+    expect(noticeOld(172, 100)).toBe(false);
+    expect(noticeOld(173, 100)).toBe(true);
+    expect(noticeOld(100 + 11 * 24, 100)).toBe(true);
   });
 });

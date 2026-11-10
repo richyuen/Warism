@@ -20,7 +20,7 @@ import { Ticker } from '../ui/Ticker';
 import { LandingsBar } from '../ui/LandingsBar';
 import { NukeAlerts } from '../ui/NukeAlert';
 import { GodToolbar } from '../ui/GodToolbar';
-import { orderNewsBrief, orderNewsText, staleNotice } from '../ui/orderNewsText';
+import { noticeOld, orderNewsBrief, orderNewsText, staleNotice } from '../ui/orderNewsText';
 import { TopBar } from '../ui/TopBar';
 import type { Hud } from './hud';
 import type { PlayerControl } from './player';
@@ -142,6 +142,7 @@ export function App({
   // Kept apart from the ticker's rows (ROADMAP R57c): a fifth row of one hour still tells its formation's panel.
   const lastNews = formationTitle ? hud.lastOrderNews.value.get(hud.formation.value) : undefined;
   const lastOrder = lastNews && !staleNotice(noticeSeen, lastNews, hud.formationInfo.value, hud.orderedAt.value.get(lastNews.id)) ? lastNews : undefined;
+  const dateText = (d: { day: number; month: number; year: number }): string => t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year });
   return (
     <>
       <TopBar
@@ -378,6 +379,8 @@ export function App({
           onFight={() => hud.toFight()}
           onClose={() => hud.selectFormation(0)}
           notice={lastOrder ? orderNewsText(lastOrder, formationTitle.name) : null}
+          noticeDate={lastOrder ? dateText(dateOfTick(hud.startDay, lastOrder.tick)) : null}
+          noticeOld={lastOrder !== undefined && noticeOld(hud.tick.value, lastOrder.tick)}
           aiBack={hud.formationInfo.value?.aiRun === true && lastOrder?.kind !== 'refused'}
           escort={
             player && formationTitle.nation === player.nation.value && hud.formationInfo.value && hud.templates.value[hud.formationInfo.value.template]?.domain === 0
