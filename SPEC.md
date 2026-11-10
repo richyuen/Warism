@@ -1925,7 +1925,8 @@ builds).
   war" rows, R42d), deaths deduplicated, a peace with its annexation one row
   (`tickerRows`); the player's order news (refusals, repulsed or distant landings, `ORDER_NEWS_KEPT` 4; beside a
   panel the last two, the sea row then given way, R42b, ADR-754's room; on a phone the last, or the last two in place
-  of the newest event, ADR-837;
+  of the newest event, ADR-837; a row whose words hold a figure from its hour, "in about N days", dated as an
+  event's row, R59c;
   the formation's panel shows its last as a notice, and a refusal's only while the formation's
   voyage, march (and the cell it is for: a new order taken ends it, R23c), fight and retreat stay as
   when the panel first showed it, and no order of it has been sent since, `staleNotice`, ROADMAP R22f,

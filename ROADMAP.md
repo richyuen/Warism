@@ -39,8 +39,11 @@ setups broke `slowClick`); every dimension at its bar. A full run and the releas
     Done (this commit, ADR-921): those a voyage left at the port board first (`boardOrder`, `Landing.left`); 272 boards at
     t510, its group's next voyage, 3.6 days after "about 4 days"; checker `leftAgain` 2 before, 0 after; c60_nv's 168
     runs 48 of 48 within a day (46 of 47 before), breaks the same two `slowClick` runs.
-  - [ ] R59c R60-N3: ticker order rows with a relative figure dated as war rows are. AT: 31211's "about 6 days" row
+  - [x] R59c R60-N3: ticker order rows with a relative figure dated as war rows are. AT: 31211's "about 6 days" row
     dated at h114.
+    Done (this commit): an order row with a figure from its hour carries its tick and the ticker dates it as an event's
+    row ("3 January 1938 328: next voyage in about 6 days"); rows without one are not dated. `orderRowsBrief1938.spec.ts`
+    (6 green): whole beside a panel at 1600 × 900, 844 × 390 and 390 × 844, screenshots looked at.
   - [ ] R59d R60-N4: at landscape sizes (667 × 375 to 1024 × 500) the nation panel's foot above the bottom bar. AT:
     `c58_peacebtn` 30403 at those sizes, the last row whole.
   - [ ] R59e R60-N5: `seaBattlesLook` does not fail a listed battle with no fleets left to draw (31501 t17369). AT:

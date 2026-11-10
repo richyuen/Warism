@@ -46,3 +46,13 @@
   `c60_nvtrue.ts` on its 168 runs: 48 of 48 sailings within a day of the figure (46 of 47 after R59a), the checker's
   breaks the same two runs (30041, 31157 `_3517_g1`, the `slowClick` tail). Gate green (the whole unit suite).
 - Also: SPEC §7.7 named two unbuilt things in code spans, red in `specRefs` (`eb30054b`, its own commit).
+
+## 2026-11-10 — R59c: order rows with a figure from their hour are dated (R60-N3)
+
+- `src/app/App.tsx` passes the news tick for an order row whose words hold "in about N days" (today the next voyage);
+  `src/ui/Ticker.tsx` draws its date first, as an event row's (`ticker-date`). A row told on 3 January no longer reads
+  as today's on the 5th. Rows with no such figure are not dated (their words stay true).
+- Evidence: `npx playwright test tests/e2e/orderRowsBrief1938.spec.ts --project=chromium`: 6 green (the new case at
+  desk, landscape phone and phone: dated, whole beside a panel, an undated refusal beside it); screenshots
+  `test-results/orderRowDated-{phone,land}.png` looked at. SPEC §9.2's ticker line. Gate green. UI only: no tick or
+  frame budget touched.

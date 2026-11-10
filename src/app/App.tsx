@@ -104,7 +104,9 @@ export function App({
     if (of.length > 1 && of.at(-1)!.seq !== n.seq) continue;
     groups.set(n.seq, of.map((o) => o.seq));
     const names = of.map((o) => o.name ?? orderName(o.id));
-    orders.push({ seq: n.seq, kind: n.kind, text: of.length > 1 ? orderNewsText(n, names.join(', '), of.length) : orderNewsText(n, names[0]!), brief: orderNewsBrief(n, of.length, names[0]!) });
+    // A row with a figure from its hour ("in about N days") is dated, as an event's row (ROADMAP R59c; critic run 60,
+    // R60-N3: "328: next voyage in about 6 days", told on 3 January, still read so on the 5th).
+    orders.push({ seq: n.seq, kind: n.kind, text: of.length > 1 ? orderNewsText(n, names.join(', '), of.length) : orderNewsText(n, names[0]!), brief: orderNewsBrief(n, of.length, names[0]!), ...(n.days !== undefined ? { tick: n.tick } : {}) });
   }
   // The sea battles going on (PLAN 4.10b), each by its two sides' names: those with two fleets
   // within reach of a ship's weapon (PLAN 7.19b), then those a carrier's wings fight alone, by

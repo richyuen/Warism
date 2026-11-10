@@ -43,8 +43,11 @@ export function Ticker({
   compact?: boolean;
   startDay: number;
   onPlace: (x: number, y: number) => void;
-  /** What became of the player's orders (PLAN 4.9c), after the events: beside a panel the last two; `brief`, the row's words there (R42b). */
-  orders?: { seq: number; kind: string; text: string; brief?: string }[];
+  /**
+   * What became of the player's orders (PLAN 4.9c), after the events: beside a panel the last two; `brief`, the row's
+   * words there (R42b); `tick`, the hour of a row whose words hold a figure from then, dated as an event's row (R59c).
+   */
+  orders?: { seq: number; kind: string; text: string; brief?: string; tick?: number }[];
   onOrder?: (seq: number) => void;
   /** The sea battles going on (PLAN 4.10b), before the orders: beside a panel the first only. */
   /** `kind`: two fleets within reach (`pair`), a carrier's strike in a battle, one out of a battle (`raid`, PLAN 7.154a), or its fleets closing (PLAN 7.41a); its tooltip says what the click shows. */
@@ -57,6 +60,10 @@ export function Ticker({
   // The order row a phone's tap has opened to its full words (R43c), by its `seq`.
   const [opened, setOpened] = useState<number | null>(null);
   const lastOrders = orders.slice(-2);
+  const dateOf = (tick: number): string => {
+    const d = dateOfTick(startDay, tick);
+    return t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year });
+  };
   const phoneSea = lastOrders.length === 0 ? merged.slice(0, 1) : [];
   const [evs, ss, os] = compact
     ? [lastOrders.length > 1 ? [] : rows.slice(lastOrders.length + phoneSea.length > 0 ? -1 : -TICKER_SHORT), phoneSea, lastOrders]
@@ -67,12 +74,11 @@ export function Ticker({
     <div class={compact ? 'ticker short compact' : short ? 'ticker short' : 'ticker'} data-testid="ticker" role="log" aria-live="polite" aria-label={t('ticker.title')}>
       <ol>
         {evs.map((r) => {
-          const d = dateOfTick(startDay, r.tick);
           return (
             <li key={r.i}>
               <button type="button" class="ticker-row" data-testid="ticker-row" data-kind={r.kind} data-kind-name={kindName(r.kind)} title={t('ticker.toPlace')} onClick={() => onPlace(r.x, r.y)}>
                 <span class="ticker-line">
-                  <span class="ticker-date">{t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year })}</span> {historyText(r)}
+                  <span class="ticker-date">{dateOf(r.tick)}</span> {historyText(r)}
                 </span>
               </button>
             </li>
@@ -106,7 +112,10 @@ ${t('order.toFormation')}` : t('order.toFormation')}
                   else onOrder(o.seq);
                 }}
               >
-                <span class="ticker-line">{brief && !open ? o.brief : o.text}</span>
+                <span class="ticker-line">
+                  {o.tick !== undefined ? <span class="ticker-date">{dateOf(o.tick)} </span> : null}
+                  {brief && !open ? o.brief : o.text}
+                </span>
               </button>
             </li>
           );

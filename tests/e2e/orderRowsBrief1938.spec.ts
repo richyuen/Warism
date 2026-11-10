@@ -79,3 +79,37 @@ for (const [view, width, height] of [['desk', 1600, 900], ['land', 844, 390], ['
     await expect(order).toHaveText('365: not done, no coast to land on');
   });
 }
+
+// ROADMAP R59c (critic run 60, R60-N3): an order row with a figure from its hour ("next voyage in about 6 days", told on
+// 3 January) is dated as an event's row, so on the 5th it does not read as today's; whole beside a panel at each size.
+for (const [view, width, height] of [['desk', 1600, 900], ['land', 844, 390], ['phone', 390, 844]] as const) {
+  test(`${view}: a next voyage's row with its days is dated, whole beside a panel`, async ({ page }) => {
+    test.setTimeout(120_000);
+    await page.setViewportSize({ width, height });
+    await page.goto('/?scenario=1938&paused=1&seed=1');
+    await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+    await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), JAP);
+    await expect(page.getByTestId('nation-panel')).toBeVisible();
+    const order = page.getByTestId('order-news');
+    for (const [reason, days] of [[0, 6], [1, 9], [0, 1]] as const) {
+      await page.evaluate((v) => {
+        (window.__warsim!.hud as unknown as { orderNews: { value: unknown[] } }).orderNews.value = v;
+      }, [
+        { kind: 'nextVoyage', id: 328, nation: JAP, reason, x: 1790, y: 400, tick: 60, seq: 1, days, name: 'Square infantry division 328' },
+        { kind: 'refused', id: 329, nation: JAP, reason: 7, x: 1790, y: 400, tick: 61, seq: 2, name: 'Square infantry division 329' },
+      ]);
+      await expect(order.nth(0)).toHaveText(new RegExp(`^3 January 1938 328: .*${days === 1 ? 'a day' : `${days} days`}`));
+      // A row with no figure from its hour is not dated.
+      await expect(order.nth(1)).toHaveText(/^329: /);
+      const r = await order.nth(0).evaluate((e) => {
+        const line = e.querySelector('.ticker-line')!;
+        const b = e.getBoundingClientRect();
+        return { cut: line.scrollWidth > line.clientWidth + 1, bottom: b.bottom, right: b.right, title: e.getAttribute('title') ?? '' };
+      });
+      expect(r.cut, `reason ${reason}, ${days} days: whole`).toBe(false);
+      expect(r.bottom).toBeLessThanOrEqual(height);
+      expect(r.right).toBeLessThanOrEqual(width);
+      if (reason === 0 && days === 6) await page.screenshot({ path: `test-results/orderRowDated-${view}.png` });
+    }
+  });
+}
