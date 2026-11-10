@@ -45,6 +45,9 @@ const CUE_OF_KIND: Readonly<Record<number, Cue>> = {
   // A hero lost (ROADMAP R12): a fall, as a capital's; back: a return.
   [EventKind.HeroLost]: 'capital',
   [EventKind.HeroReturned]: 'return',
+  // An event of the historical track by its name (ROADMAP R62j1): soft, as a town's; what it did (a war, an annexation)
+  // has its own rows in the same hour, louder.
+  [EventKind.TrackEvent]: 'town',
 };
 
 /** The cue of an event kind (null: the event is silent). Every kind of the ticker has one. */

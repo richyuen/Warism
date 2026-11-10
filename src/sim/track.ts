@@ -632,5 +632,30 @@ function applyDue(world: World, t: Track): void {
     const e = t.events[i]!;
     const why = apply(world, t, e);
     if (why !== Refusal.None) world.out.emit(world.tick, EventKind.TrackSkipped, firstNation(t, e), i + 1, NaN, why);
+    else if (e.note !== undefined) {
+      const [x, y] = placeOf(world, t, e);
+      world.out.emit(world.tick, EventKind.TrackEvent, i + 1, firstNation(t, e), x, y);
+    }
   }
+}
+
+/** Where an event is told (R62j1): its ring's middle, its point, else the capital of the nation it names first. */
+function placeOf(world: World, t: Track, e: TimelineEvent): [number, number] {
+  const { w, h } = world.cells;
+  const ring = 'ring' in e ? e.ring : 'from' in e && e.kind === 'redeploy' ? e.from : null;
+  if (ring) {
+    let [su, sv] = [0, 0];
+    for (const [lon, lat] of ring) {
+      const [u, v] = project(lon, lat);
+      su += u;
+      sv += v;
+    }
+    return [(su / ring.length) * w, (sv / ring.length) * h];
+  }
+  if ('at' in e && Array.isArray(e.at)) {
+    const [u, v] = project(e.at[0], e.at[1]);
+    return [u * w, v * h];
+  }
+  const n = firstNation(t, e);
+  return [world.nations.cols.capitalX[n] ?? 0, world.nations.cols.capitalY[n] ?? 0];
 }

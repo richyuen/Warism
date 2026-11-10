@@ -67,6 +67,7 @@ import {
   type WarStat,
   type OrderNews,
   type PlayerWing,
+  type TrackNext,
   VoyageState,
 } from '../shared/protocol';
 import { geometryOf, SCENARIO_INFO } from '../shared/scenarios';
@@ -756,7 +757,7 @@ export class SimServer {
     const news = this.newsFrom < 0 ? [] : tickerNews(world, this.newsFrom);
     const strikes = this.newsFrom < 0 ? [] : strikeRows(world, this.newsFrom, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? '');
     this.newsFrom = world.history.length;
-    this.post({ type: 'nationStats', tick: world.tick, nations, wars, dead, lives: this.lives.of(world), aiEnabled: world.settings.aiEnabled, nukesEnabled: world.settings.nukesEnabled, rules: { winnerTakesAll: world.settings.winnerTakesAll, revoltMode: world.settings.revoltMode, ceMode: world.settings.ceMode }, player: world.settings.player, playerAi: world.playerAi, edits: { undo: world.edits.undo.length, redo: world.edits.redo.length }, ticker: tickerRows(world, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? ''), news, strikes, world: this.worldNo, wings: playerWings(world) }, []);
+    this.post({ type: 'nationStats', tick: world.tick, nations, wars, dead, lives: this.lives.of(world), aiEnabled: world.settings.aiEnabled, nukesEnabled: world.settings.nukesEnabled, rules: { winnerTakesAll: world.settings.winnerTakesAll, revoltMode: world.settings.revoltMode, ceMode: world.settings.ceMode }, player: world.settings.player, playerAi: world.playerAi, edits: { undo: world.edits.undo.length, redo: world.edits.redo.length }, ticker: tickerRows(world, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? ''), news, strikes, world: this.worldNo, wings: playerWings(world), ...trackNext(world) }, []);
   }
 
   /**
@@ -2247,4 +2248,15 @@ function playerWings(world: World): PlayerWing[] {
     out.push({ id, template: c.template[id]!, transport: isTransport(world, id), carrier: base < 0, base: base > 0 ? (world.airbases[base - 1]?.name ?? '') : '', fleet, fleetTemplate: fleet !== 0 ? c.template[fleet]! : 0, mission: world.wingMission.get(id)?.kind ?? null, flying: world.sorties.has(id), ferryDays: ferryDays(world, id), x, y: at.y });
   }
   return out;
+}
+
+/** The historical track's next event that has a name, while it runs (ROADMAP R62j1): the line under the date. */
+function trackNext(world: World): { trackNext?: TrackNext } {
+  const t = world.track;
+  if (!t || t.ended) return {};
+  for (let i = t.next; i < t.events.length; i++) {
+    const note = t.events[i]!.note;
+    if (note !== undefined) return { trackNext: { note, tick: t.ticks[i]! } };
+  }
+  return {};
 }

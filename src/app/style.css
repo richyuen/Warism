@@ -222,6 +222,26 @@ textarea,
   font-variant-numeric: tabular-nums;
 }
 
+/* While the historical track runs (ROADMAP R62j1): its next event under the date, of a fixed width (the bar is
+   centred: a line that changed its width would move every button), a long name cut short, whole in its tooltip. */
+.bar-date.has-track {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+}
+.bar-track {
+  display: block;
+  width: 17em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 0.72em;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
 /* The room of the widest text an element will hold, a line each in `data-reserve`: the bar is
    centred, and a label that changes its width moves every button (PLAN 3.12Rh1). */
 .bar-reserve::after {

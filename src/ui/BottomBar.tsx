@@ -8,6 +8,8 @@ import { t, type MessageKey } from './i18n';
 
 export interface BottomBarProps {
   date: SimDate;
+  /** While the historical track runs (ROADMAP R62j1): its next event that has a name, and its date, under the date. */
+  trackNext?: { note: string; date: SimDate } | undefined;
   mapMode: MapMode;
   /** A map mode picked from the map button's menu. */
   onMapMode: (mode: MapMode) => void;
@@ -63,7 +65,7 @@ function speedLabels(): string {
  * Bottom bar (PLAN 1.8), in the user's order (ADR-763): Cancel when there is something to cancel,
  * Pause/Resume, speed, God Mode, map, Statistics, History, Editor, the date, Settings.
  */
-export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, mapMode, onMapMode, showStats, onToggleStats, godMode, onToggleGod, showHistory, onToggleHistory, showRelations, onToggleRelations, showEditor, onToggleEditor, showSettings, onToggleSettings, godTools, onCancel, diplomacy }: BottomBarProps) {
+export function BottomBar({ date, trackNext, speedLevel, paused, onTogglePause, onSpeed, mapMode, onMapMode, showStats, onToggleStats, godMode, onToggleGod, showHistory, onToggleHistory, showRelations, onToggleRelations, showEditor, onToggleEditor, showSettings, onToggleSettings, godTools, onCancel, diplomacy }: BottomBarProps) {
   const isMax = SPEED_LEVELS[speedLevel] === 'max';
   // How far the bar's top is from the view's bottom, for what stands above it (PLAN 7.4f25): the
   // bar wraps onto rows where it is narrow.
@@ -141,9 +143,16 @@ export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, ma
           {t('bar.editor')}
         </button>
       ) : null}
-      <span class="bar-date bar-reserve" data-testid="date-label" data-reserve={widestDates(date.year)}>
-        {t('date.format', { day: date.day, month: t(`month.${date.month}` as MessageKey), year: date.year })}
-        {paused ? <span class="bar-paused"> · {t('bar.paused')}</span> : null}
+      <span class={trackNext ? 'bar-date bar-reserve has-track' : 'bar-date bar-reserve'} data-testid="date-label" data-reserve={widestDates(date.year)}>
+        <span>
+          {t('date.format', { day: date.day, month: t(`month.${date.month}` as MessageKey), year: date.year })}
+          {paused ? <span class="bar-paused"> · {t('bar.paused')}</span> : null}
+        </span>
+        {trackNext ? (
+          <span class="bar-track" data-testid="track-next" title={trackLine(trackNext)}>
+            {trackLine(trackNext)}
+          </span>
+        ) : null}
       </span>
       {onToggleSettings ? (
         <button type="button" class="bar-btn" data-testid="settings-btn" aria-pressed={showSettings} onClick={onToggleSettings}>
@@ -152,6 +161,11 @@ export function BottomBar({ date, speedLevel, paused, onTogglePause, onSpeed, ma
       ) : null}
     </footer>
   );
+}
+
+/** The track's next event under the date (ROADMAP R62j1): "Next, 12 March 1938: The Anschluss". */
+function trackLine({ note, date }: { note: string; date: SimDate }): string {
+  return t('bar.trackNext', { date: t('date.format', { day: date.day, month: t(`month.${date.month}` as MessageKey), year: date.year }), note });
 }
 
 /** The key of each map mode, by its place in MAP_MODES (`game.tsx`'s MODE_KEYS: 1 to 9, then 0). */

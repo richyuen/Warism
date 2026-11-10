@@ -350,3 +350,9 @@
 - R62j split (j0 the end, j1 the view). The first command applied while the track runs ends it in that hour and
   reseeds; a refused one does not; the History's row names the intervention.
 - Evidence: `tests/unit/trackIntervention1938h.test.ts` (13 kinds at 6 h, 1, 30 and 365 days). Gate.
+
+## 2026-11-10 — R62j1: the player's view of the track (ADR-946); R62j done
+
+- A line under the date: the track's next named event and its date, gone at its end.
+- `TrackEvent` rows: the ticker and the History tell the track's events by their historical names.
+- Evidence: `tests/e2e/trackView1938h.spec.ts`; screenshots in `docs/evidence/R62j/` (desktop, phone). Gate.

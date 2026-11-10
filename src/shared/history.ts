@@ -124,6 +124,8 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.TrackEnded]: ['nation', 'number'],
   // A nation born on the track's date (ROADMAP R62d): it, the nation that gave it most land.
   [EventKind.NationBorn]: ['nation', 'nation'],
+  // An event of the track by its name (ROADMAP R62j1): its number, the nation it names first.
+  [EventKind.TrackEvent]: ['number', 'nation'],
 };
 
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */
@@ -159,6 +161,8 @@ export interface HistoryRow {
   cn?: string;
   /** The city nearest a nuclear strike or a decision to strike, as a name ('=' + literal; PLAN 6.11c, 7.25c), where the log knows one. */
   near?: string;
+  /** An event of the historical track's name, its timeline's `note` (ROADMAP R62j1). */
+  note?: string;
   /**
    * What a nuclear strike destroyed of the forces there (PLAN 7.32b): its `NukeToll`, the row after
    * it in the log. Absent in a game saved before: its sentence then has the dead alone.
@@ -196,6 +200,8 @@ export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.NuclearPower,
   // The bonds a forced war broke (PLAN 7.175a), told before its declaration.
   EventKind.BondsBroken,
+  // The historical track's events by their names (ROADMAP R62j1).
+  EventKind.TrackEvent,
   // A war a nation left while it goes on, and a puppet's revolt (PLAN 7.192, critic run 26's 1).
   EventKind.WarLeft,
   EventKind.PuppetRevolt,

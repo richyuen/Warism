@@ -264,7 +264,7 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     Done (ADR-944): the AI's first war within 0-15 days of the end on 10 of 10 seeds; the burst the AI's opening (15-19
     wars in the first quarter, an ordinary 1938 game 12-13) (`tests/sweep/freeWorld1938h.test.ts`). R62i done with
     its slices.
-  - [ ] R62j Intervention and the player's view: the first God Mode act, editor edit or taking of a nation (a command
+  - [x] R62j Intervention and the player's view: the first God Mode act, editor edit or taking of a nation (a command
     of the pending queue of those kinds; listed in a test) ends the track and reseeds at that hour; a line under the
     date while the track runs (the next event and its date), the end's row in the History, the events' rows in the
     ticker with their historical names. AT: each listed kind, given at 6 h, 1, 30 and 365 days, ends it, reseeds, and
@@ -274,8 +274,10 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     given at 6 h, 1, 30 and 365 days, ends it, reseeds, and no event fires after.
     Done (ADR-945): every command applied is an intervention; 13 kinds listed at the four times
     (`tests/unit/trackIntervention1938h.test.ts`).
-  - [ ] R62j1 The player's view: a line under the date while the track runs (the next event and its date), the
+  - [x] R62j1 The player's view: a line under the date while the track runs (the next event and its date), the
     events' rows in the ticker with their historical names. AT: screenshots at world zoom on phone and desktop sizes.
+    Done (ADR-946): `TrackEvent` rows by the timeline's notes; the bar's line; `tests/e2e/trackView1938h.spec.ts`,
+    `docs/evidence/R62j/`. R62j done with its slices.
   - [ ] R62k The checker and the accuracy measure: `historyTrack` in `tests/helpers/` (no timeline event refused but
     those skipped by rule, no war or peace not on the timeline while it runs, diploInvariants through the track) on 5
     seeds and on the scenario's own; `tools/diag/historyMatch` printing each checkpoint's share of land cells matching

@@ -292,6 +292,12 @@ export const EventKind = {
    * (x, y) = its capital.
    */
   NationBorn: 81,
+  /**
+   * An event of the historical track applied that has a name (its `note`; ROADMAP R62j1): told in the ticker and the
+   * History by that name. a = the event's number in its timeline (1 on), b = the nation it names first, (x, y) = its
+   * place: its ring's middle, its point, else that nation's capital.
+   */
+  TrackEvent: 82,
 } as const;
 
 /** Why a nation joined a war (`WarJoined`'s y). */

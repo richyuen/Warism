@@ -9,6 +9,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-946 · 2026-11-10 · accepted — The player's view of the track (R62j1)
+- **The line under the date:** while the track runs, the stats carry its next event that has a name (`trackNext`: its
+  `note` and hour) and the bar draws "Next, 19 May 1938: Xuzhou" under the date, in a smaller type, of a fixed width
+  (the bar is centred), a long name cut short and whole in its tooltip. It goes when the track ends.
+- **The events by their names:** an event applied that has a `note` (429 of 505) logs a `TrackEvent` row (its number,
+  the nation it names first, its place: its ring's middle, its point, else that nation's capital); the ticker and the
+  History tell it by the note ("The Anschluss"), beside the sim's own rows of what it did ("Austria was annexed by
+  Germany"): the name is history's, the row the game's.
+- **Measured** (`tests/e2e/trackView1938h.spec.ts`, desktop 1400×800 and phone 390×844): the line names the Anschluss
+  and its date, then the next after it; the ticker's row; the line gone after a God Mode act. Screenshots at world
+  zoom: `docs/evidence/R62j/`.
+- **R62j done** with its slices.
+
 ### ADR-945 · 2026-11-10 · accepted — The track ends at the first intervention (R62j0)
 - **R62j split:** j0 the intervention's end (the sim and the History's row); j1 the player's view (the line under the
   date, the events' rows in the ticker by their historical names, the screenshots).

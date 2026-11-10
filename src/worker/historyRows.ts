@@ -184,6 +184,8 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     const toll = kind === EventKind.NukeCasualties ? tollAfter(rows, i) : undefined;
     if (toll) row.toll = toll;
     if (kind === EventKind.BondsBroken) [row.bonds, row.y] = [y, null];
+    // An event of the historical track by its name (ROADMAP R62j1).
+    if (kind === EventKind.TrackEvent) row.note = world.track?.events[a - 1]?.note ?? '';
     // Why it joined (ROADMAP R55i): its own sentence.
     // The historical track's end (ROADMAP R62d): its sentence by why.
     if (kind === EventKind.TrackEnded) row.as = b === TrackEnd.date ? 'date' : b === TrackEnd.intervention ? 'intervention' : 'changed';
@@ -294,6 +296,7 @@ function tickerRowAt(world: World, i: number, nation: (v: number) => string, cit
   const toll = kind === EventKind.NukeCasualties ? tollAfter(rows, i) : undefined;
   if (toll) row.toll = toll;
   if (kind === EventKind.BondsBroken) row.bonds = y;
+  if (kind === EventKind.TrackEvent) row.note = world.track?.events[a - 1]?.note ?? '';
   return row;
 }
 

@@ -70,6 +70,8 @@ export const HISTORY_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.TrackSkipped,
   EventKind.TrackEnded,
   EventKind.NationBorn,
+  // Its events by their names (ROADMAP R62j1).
+  EventKind.TrackEvent,
 ]);
 
 export class History implements Stateful {
