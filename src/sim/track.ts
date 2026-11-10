@@ -250,12 +250,48 @@ function peace(world: World, a: number, b: number, terms: 'white' | 'score'): Re
   return Refusal.None;
 }
 
-/** A guarantee of `target` by `guarantor`, as one of the scenario's. */
-function guarantee(world: World, guarantor: number, target: number): Refusal {
+/** The nation's own city nearest `at` its capital (R62i2); passed over when it is already, or it holds no city. */
+function moveCapital(world: World, n: number, at: readonly [number, number]): Refusal {
+  const why = whyNot(world, n);
+  if (why) return why;
+  const { owner, w, h } = world.cells;
+  const [u, v] = project(at[0], at[1]);
+  const cc = world.cities.cols;
+  let best = 0;
+  let bestD = Infinity;
+  world.cities.forEach((ci) => {
+    if (owner[cc.cell[ci]!] !== n || (cc.capitalOf[ci] !== 0 && cc.capitalOf[ci] !== n)) return;
+    let dx = Math.abs(cc.x[ci]! - u * w);
+    dx = Math.min(dx, w - dx);
+    const dy = cc.y[ci]! - v * h;
+    const d = dx * dx + dy * dy;
+    if (d < bestD) [best, bestD] = [ci, d];
+  });
+  if (best === 0 || cc.capitalOf[best] === n) return best === 0 ? Refusal.NoSuch : Refusal.NoEffect;
+  world.cities.forEach((ci) => {
+    if (cc.capitalOf[ci] === n) cc.capitalOf[ci] = 0;
+  });
+  cc.capitalOf[best] = n;
+  const nc = world.nations.cols;
+  nc.capitalX[n] = cc.x[best]!;
+  nc.capitalY[n] = cc.y[best]!;
+  world.out.emit(world.tick, EventKind.CapitalMoved, n, best, cc.x[best]!, cc.y[best]!);
+  return Refusal.None;
+}
+
+/** A guarantee of `target` by `guarantor`, as one of the scenario's; with `end` (R62i2), withdrawn. */
+function guarantee(world: World, guarantor: number, target: number, end = false): Refusal {
   const why = whyNot(world, guarantor) || whyNot(world, target);
   if (why) return why;
   if (guarantor === target) return Refusal.SameNation;
   const al = world.alliances;
+  if (end) {
+    const kept = al.guarantees.filter((g) => g.guarantor !== guarantor || g.target !== target);
+    if (kept.length === al.guarantees.length) return Refusal.NoEffect;
+    al.guarantees = kept;
+    al.changed();
+    return Refusal.None;
+  }
   if (al.guarantees.some((g) => g.guarantor === guarantor && g.target === target)) return Refusal.NoEffect;
   al.guarantees.push({ guarantor, target });
   al.changed();
@@ -429,7 +465,7 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
     case 'allianceLeave':
       return applyCommand(world, { kind: 'leaveAlliance', nation: id(e.nation) });
     case 'guarantee':
-      return guarantee(world, id(e.guarantor), id(e.target));
+      return guarantee(world, id(e.guarantor), id(e.target), e.end === true);
     case 'transfer':
       return transfer(world, id(e.to), e.from.map(id), e.ring);
     case 'occupy':
@@ -456,6 +492,8 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       for (let k = 0; k < e.count && why === Refusal.None; k++) why = applyCommand(world, { kind: 'spawnFormation', nation: id(e.nation), x: u * world.cells.w, y: v * world.cells.h, strength: 1, template });
       return why;
     }
+    case 'capital':
+      return moveCapital(world, id(e.nation), e.at);
     case 'nuke': {
       const n = id(e.nation);
       const why = whyNot(world, n);
@@ -547,6 +585,7 @@ function firstNation(t: Track, e: TimelineEvent): number {
     case 'redeploy':
     case 'withdraw':
     case 'nuke':
+    case 'capital':
       return t.id(e.nation);
     case 'hold':
       return t.id(e.sides[0][0]!);

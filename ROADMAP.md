@@ -244,8 +244,10 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
   - [x] R62i1 1946–49: the Philippines, India and Pakistan, Burma, Ceylon, Israel and its war, Indonesia, the two
     Germanies, the two Koreas. AT: each event on its date.
     Done (ADR-940): no event passed over to 2 January 1950; the new states living, no war left on 1 January 1950.
-  - [ ] R62i2 The Chinese civil war: the People's Republic, the Republic on Taiwan. AT: each event on its date; owners
+  - [x] R62i2 The Chinese civil war: the People's Republic, the Republic on Taiwan. AT: each event on its date; owners
     on 1 January 1950 ≥ 90 % of land cells.
+    Done (ADR-941): owners on 1 January 1950 99.77 %, 98.7 % of the moved land right; no event passed over; the seats
+    at Beijing and Taipei (`capital`), the Soviet pledge ended (`guarantee` `end`).
   - [ ] R62i3 The Korean War to the armistice; Japan's sovereignty (1952). AT: each event on its date; owners on 27
     July 1953 ≥ 90 % of land cells.
   - [ ] R62i4 The new nations' names, colours and flags; renames as state (a save mid-run the same hash). AT: each

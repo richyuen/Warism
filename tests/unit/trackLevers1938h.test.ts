@@ -282,3 +282,56 @@ describe('a surrender (ROADMAP R62i0)', () => {
     expect(land1).toBeGreaterThan(0);
   });
 });
+
+describe('a guarantee withdrawn (ROADMAP R62i2)', () => {
+  it("guarantee with end: the scenario's pledge is gone on its hour; one not given is passed over", () => {
+    const TLG: TimelineFile = {
+      events: [
+        { date: '1938-01-03', kind: 'guarantee', guarantor: 'SOV', target: 'CHI', end: true },
+        { date: '1938-01-04', kind: 'guarantee', guarantor: 'SOV', target: 'CHI', end: true },
+      ],
+    };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, TLG);
+    const w = sim.world;
+    const pledged = (): boolean => w.alliances.guarantees.some((g) => g.guarantor === id('SOV') && g.target === id('CHI'));
+    let skipped = 0;
+    const step = (h: number): void =>
+      sim.step(h, (x) => {
+        for (let i = 0; i < x.out.events.length; i += 6) if (x.out.events[i + 1] === EventKind.TrackSkipped) skipped++;
+        quiet(x);
+      });
+    step(25);
+    expect(pledged()).toBe(true);
+    step(24);
+    expect(pledged()).toBe(false);
+    expect(skipped).toBe(0);
+    step(24);
+    expect(skipped).toBe(1);
+  });
+});
+
+describe('a seat moved (ROADMAP R62i2)', () => {
+  it("capital: the nation's own city nearest the place is its one capital on the event's hour", () => {
+    const TLC: TimelineFile = { events: [{ date: '1938-01-02', kind: 'capital', nation: 'CHI', at: [104.07, 30.67] }] };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, TLC);
+    const w = sim.world;
+    const CHI = id('CHI');
+    const seats = (): number[] => {
+      const out: number[] = [];
+      w.cities.forEach((ci) => {
+        if (w.cities.cols.capitalOf[ci] === CHI) out.push(ci);
+      });
+      return out;
+    };
+    sim.step(24, quiet);
+    const before = seats();
+    expect(before.length).toBe(1);
+    sim.step(1, quiet);
+    const after = seats();
+    expect(after.length).toBe(1);
+    expect(after[0]).not.toBe(before[0]);
+    const [u, v] = project(104.07, 30.67);
+    expect(Math.abs(w.nations.cols.capitalX[CHI]! - u * w.cells.w)).toBeLessThan(4);
+    expect(Math.abs(w.nations.cols.capitalY[CHI]! - v * w.cells.h)).toBeLessThan(4);
+  });
+});

@@ -315,3 +315,10 @@
 - Releases (Syria, Transjordan, Lebanon, the Philippines, India, Burma, Ceylon); Pakistan, Israel (and the Arab
   states' war, held), the two Koreas, the two Germanies, Indonesia born; Sakhalin and the Kurils Soviet; Iran freed.
 - Evidence: `tests/sweep/historyMatch1938h.test.ts` (to 2 January 1950, 3 minutes). Gate.
+
+## 2026-11-10 — R62i2: the Chinese civil war (ADR-941)
+
+- The Red Army out of Manchuria; the civil war by five stages of transfer; Xinjiang, Hainan, Tibet; the Republic
+  to Taipei; the Sino-Soviet treaty.
+- `capital` and `guarantee` `end` kinds. 1 January 1950: owners 99.77 % of land, 98.7 % of the moved land right.
+- Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`. Gate.

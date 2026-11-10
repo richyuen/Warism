@@ -44,6 +44,13 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const NEW: [string, number][] = [['ISR', 1], ['PAL', 0], ['PAK', 1], ['KOR', 1], ['PRK', 1], ['FRG', 1], ['GDR', 1], ['IDN', 1], ['DEI', 1]];
   let born: number[] = [];
   let wars1950 = -1;
+  // The civil war (R62i2): the seats at Beijing and Taipei on 1 June 1950, the fighting over, no Soviet pledge to the Republic.
+  const seat = (lon: number, lat: number): [number, number] => {
+    const [u, v] = project(lon, lat);
+    return [u * SIZE_1938.w, v * SIZE_1938.h];
+  };
+  let seats: number[] = [];
+  let china = '';
   // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
   let axisPact = true;
   const fleets = new Map<string, number>();
@@ -61,7 +68,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const { maps, skipped, nukes } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1950-01-02',
+    '1951-06-01',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
@@ -70,6 +77,15 @@ it('1938-39: the land owned as history had it, and the events fire on their date
       if (date === '1945-06-01') living = STATES.map(([t]) => w.nations.cols.living[id(t)]!);
       if (date === '1945-05-07' || date === '1945-05-09') fleets.set(`SOV ${date}`, fleetOf(w, 'SOV'));
       if (date === '1945-09-03') fleets.set('JAP', fleetOf(w, 'JAP'));
+      if (date === '1950-06-01') {
+        const nc = w.nations.cols;
+        const far = (t: string, lon: number, lat: number): number => {
+          const [x, y] = seat(lon, lat);
+          return Math.hypot(nc.capitalX[id(t)]! - x, nc.capitalY[id(t)]! - y);
+        };
+        seats = [far('CCP', 116.4, 39.9), far('CHI', 121.56, 25.04)];
+        china = `${w.wars.atWar(id('CHI'), id('CCP'))} ${w.alliances.guarantees.some((g) => g.target === id('CHI'))}`;
+      }
       if (date === '1950-01-01') {
         born = NEW.map(([t]) => w.nations.cols.living[id(t)]!);
         wars1950 = w.wars.list.length;
@@ -94,12 +110,15 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(10);
+  expect(maps.length).toBe(11);
   expect(asia).toEqual(ASIA.map((x) => x[1]));
   expect(japFoes).toBe(0);
   expect(axisPact).toBe(false);
   expect(born).toEqual(NEW.map((x) => x[1]));
-  expect(wars1950).toBe(0);
+  expect(wars1950).toBe(1);
+  for (const d of seats) expect(d).toBeLessThan(4);
+  expect(seats.length).toBe(2);
+  expect(china).toBe('false false');
   expect(fleets.get('JAP')).toBe(0);
   expect(fleets.get('SOV 1945-05-09')).toBe(fleets.get('SOV 1945-05-07'));
   // The two scripted strikes, the only nuclear ones (R62h3): the United States', on their hours, where they were.

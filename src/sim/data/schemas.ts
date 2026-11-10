@@ -520,7 +520,8 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
   /** `nation` joins `leader`'s alliance; one is made, named `nameKey`, when the leader has none. */
   z.strictObject({ ...when, kind: z.literal('allianceJoin'), nation: tag, leader: tag, nameKey: key }),
   z.strictObject({ ...when, kind: z.literal('allianceLeave'), nation: tag }),
-  z.strictObject({ ...when, kind: z.literal('guarantee'), guarantor: tag, target: tag }),
+  /** A guarantee given, or with `end` (R62i2) withdrawn. */
+  z.strictObject({ ...when, kind: z.literal('guarantee'), guarantor: tag, target: tag, end: z.boolean().optional(), note: z.string().optional() }),
   /**
    * The land inside `ring` that one of `from` owns becomes `to`'s, owned and held (a treaty's cession, R62c). The ring
    * as `ownership.json`'s regions: lon/lat, a cell taken when its centre is inside.
@@ -575,6 +576,8 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * its effects a launch's, with no stockpile, bomber or toggle asked. The AI strikes nothing while the track steers.
    */
   z.strictObject({ ...when, kind: z.literal('nuke'), nation: tag, at: lonLat, note: z.string().optional() }),
+  /** A seat moved (R62i2: Beijing, Taipei): the nation's own city nearest `at` becomes its capital. */
+  z.strictObject({ ...when, kind: z.literal('capital'), nation: tag, at: lonLat, note: z.string().optional() }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;
 export const TimelineFile = z.strictObject({
@@ -649,6 +652,7 @@ export function timelineTags(e: TimelineEvent): string[] {
     case 'redeploy':
     case 'withdraw':
     case 'nuke':
+    case 'capital':
       return [e.nation];
     case 'hold':
       return [...e.sides[0], ...e.sides[1]];

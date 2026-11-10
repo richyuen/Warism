@@ -1405,20 +1405,20 @@
    ],
    "ring": [
     [
-     -25.0,
-     67.0
+     -24.6,
+     66.6
     ],
     [
-     -12.0,
-     67.0
+     -13.4,
+     66.6
     ],
     [
-     -12.0,
-     63.0
+     -13.4,
+     63.3
     ],
     [
-     -25.0,
-     63.0
+     -24.6,
+     63.3
     ]
    ],
    "note": "Iceland occupied by Britain"
@@ -14581,6 +14581,112 @@
    "note": "Syria independent: the French leave"
   },
   {
+   "date": "1946-05-03",
+   "kind": "occupy",
+   "by": "CHI",
+   "of": [
+    "CHI"
+   ],
+   "ring": [
+    [
+     113.0,
+     53.6
+    ],
+    [
+     135.5,
+     53.6
+    ],
+    [
+     135.5,
+     38.0
+    ],
+    [
+     124.3,
+     38.0
+    ],
+    [
+     124.3,
+     38.6
+    ],
+    [
+     119.9,
+     38.6
+    ],
+    [
+     119.9,
+     40.0
+    ],
+    [
+     117.0,
+     40.4
+    ],
+    [
+     117.0,
+     41.6
+    ],
+    [
+     113.0,
+     41.6
+    ]
+   ],
+   "note": "The Red Army leaves Manchuria"
+  },
+  {
+   "date": "1946-05-03",
+   "kind": "transfer",
+   "to": "CHI",
+   "from": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     120.8,
+     40.0
+    ],
+    [
+     122.6,
+     40.0
+    ],
+    [
+     122.6,
+     38.6
+    ],
+    [
+     120.8,
+     38.6
+    ]
+   ],
+   "note": "Kwantung to China"
+  },
+  {
+   "date": "1946-05-03",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "CCP",
+   "from": [
+    "CHI"
+   ],
+   "ring": [
+    [
+     121.0,
+     53.6
+    ],
+    [
+     135.5,
+     53.6
+    ],
+    [
+     135.5,
+     45.0
+    ],
+    [
+     121.0,
+     45.0
+    ]
+   ],
+   "note": "Harbin: the Communists hold northern Manchuria"
+  },
+  {
    "date": "1946-05-09",
    "kind": "occupy",
    "by": "IRN",
@@ -14614,6 +14720,39 @@
    "note": "Transjordan independent"
   },
   {
+   "date": "1946-06-26",
+   "kind": "allianceLeave",
+   "nation": "CCP",
+   "note": "The united front ends"
+  },
+  {
+   "date": "1946-06-26",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "CHI"
+    ],
+    [
+     "CCP"
+    ]
+   ],
+   "until": "1950-05-02",
+   "note": "The civil war: the timeline's stages"
+  },
+  {
+   "date": "1946-06-26",
+   "hour": 2,
+   "kind": "war",
+   "attackers": [
+    "CHI"
+   ],
+   "defenders": [
+    "CCP"
+   ],
+   "note": "The Chinese civil war"
+  },
+  {
    "date": "1946-07-04",
    "kind": "release",
    "subject": "PHI",
@@ -14624,6 +14763,33 @@
    "kind": "release",
    "subject": "LEB",
    "note": "Lebanon: the French gone"
+  },
+  {
+   "date": "1947-04-08",
+   "kind": "occupy",
+   "by": "ICE",
+   "of": [
+    "ICE"
+   ],
+   "ring": [
+    [
+     -24.6,
+     66.6
+    ],
+    [
+     -13.4,
+     66.6
+    ],
+    [
+     -13.4,
+     63.3
+    ],
+    [
+     -24.6,
+     63.3
+    ]
+   ],
+   "note": "Iceland: the foreign troops gone"
   },
   {
    "date": "1947-08-15",
@@ -14999,6 +15165,160 @@
    "note": "The Democratic People's Republic of Korea"
   },
   {
+   "date": "1948-11-02",
+   "kind": "withdraw",
+   "nation": "CHI",
+   "ring": [
+    [
+     113.0,
+     53.6
+    ],
+    [
+     135.5,
+     53.6
+    ],
+    [
+     135.5,
+     38.0
+    ],
+    [
+     124.3,
+     38.0
+    ],
+    [
+     124.3,
+     38.6
+    ],
+    [
+     119.9,
+     38.6
+    ],
+    [
+     119.9,
+     40.0
+    ],
+    [
+     117.0,
+     40.4
+    ],
+    [
+     117.0,
+     41.6
+    ],
+    [
+     113.0,
+     41.6
+    ]
+   ],
+   "captured": true,
+   "note": "Liaoshen: Manchuria: the Nationalist armies there lost"
+  },
+  {
+   "date": "1948-11-02",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "CCP",
+   "from": [
+    "CHI"
+   ],
+   "ring": [
+    [
+     113.0,
+     53.6
+    ],
+    [
+     135.5,
+     53.6
+    ],
+    [
+     135.5,
+     38.0
+    ],
+    [
+     124.3,
+     38.0
+    ],
+    [
+     124.3,
+     38.6
+    ],
+    [
+     119.9,
+     38.6
+    ],
+    [
+     119.9,
+     40.0
+    ],
+    [
+     117.0,
+     40.4
+    ],
+    [
+     117.0,
+     41.6
+    ],
+    [
+     113.0,
+     41.6
+    ]
+   ],
+   "note": "Liaoshen: Manchuria"
+  },
+  {
+   "date": "1949-01-31",
+   "kind": "withdraw",
+   "nation": "CHI",
+   "ring": [
+    [
+     105.5,
+     54.0
+    ],
+    [
+     136.0,
+     54.0
+    ],
+    [
+     136.0,
+     32.3
+    ],
+    [
+     105.5,
+     32.3
+    ]
+   ],
+   "captured": true,
+   "note": "Huaihai and Pingjin: Beijing: the Nationalist armies there lost"
+  },
+  {
+   "date": "1949-01-31",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "CCP",
+   "from": [
+    "CHI"
+   ],
+   "ring": [
+    [
+     105.5,
+     54.0
+    ],
+    [
+     136.0,
+     54.0
+    ],
+    [
+     136.0,
+     32.3
+    ],
+    [
+     105.5,
+     32.3
+    ]
+   ],
+   "note": "Huaihai and Pingjin: Beijing"
+  },
+  {
    "date": "1949-02-24",
    "kind": "leave",
    "nations": [
@@ -15193,6 +15513,59 @@
    "note": "The French zone (the Saar apart)"
   },
   {
+   "date": "1949-05-27",
+   "kind": "withdraw",
+   "nation": "CHI",
+   "ring": [
+    [
+     110.0,
+     32.3
+    ],
+    [
+     123.0,
+     32.3
+    ],
+    [
+     123.0,
+     28.5
+    ],
+    [
+     110.0,
+     28.5
+    ]
+   ],
+   "captured": true,
+   "note": "The Yangtze crossed: Nanjing, Wuhan, Shanghai: the Nationalist armies there lost"
+  },
+  {
+   "date": "1949-05-27",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "CCP",
+   "from": [
+    "CHI"
+   ],
+   "ring": [
+    [
+     110.0,
+     32.3
+    ],
+    [
+     123.0,
+     32.3
+    ],
+    [
+     123.0,
+     28.5
+    ],
+    [
+     110.0,
+     28.5
+    ]
+   ],
+   "note": "The Yangtze crossed: Nanjing, Wuhan, Shanghai"
+  },
+  {
    "date": "1949-07-20",
    "kind": "leave",
    "nations": [
@@ -15210,6 +15583,105 @@
    ],
    "against": "ISR",
    "note": "Iraq withdraws"
+  },
+  {
+   "date": "1949-09-25",
+   "kind": "withdraw",
+   "nation": "CHI",
+   "ring": [
+    [
+     73.0,
+     54.0
+    ],
+    [
+     105.5,
+     54.0
+    ],
+    [
+     105.5,
+     32.3
+    ],
+    [
+     73.0,
+     32.3
+    ]
+   ],
+   "captured": true,
+   "note": "The northwest: Xian, Lanzhou, Ningxia: the Nationalist armies there lost"
+  },
+  {
+   "date": "1949-09-25",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "CCP",
+   "from": [
+    "CHI"
+   ],
+   "ring": [
+    [
+     73.0,
+     54.0
+    ],
+    [
+     105.5,
+     54.0
+    ],
+    [
+     105.5,
+     32.3
+    ],
+    [
+     73.0,
+     32.3
+    ]
+   ],
+   "note": "The northwest: Xian, Lanzhou, Ningxia"
+  },
+  {
+   "date": "1949-09-25",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "CCP",
+   "from": [
+    "SIN"
+   ],
+   "ring": [
+    [
+     73.0,
+     49.5
+    ],
+    [
+     96.5,
+     49.5
+    ],
+    [
+     96.5,
+     34.3
+    ],
+    [
+     73.0,
+     34.3
+    ]
+   ],
+   "note": "Xinjiang joins"
+  },
+  {
+   "date": "1949-10-01",
+   "kind": "capital",
+   "nation": "CCP",
+   "at": [
+    116.4,
+    39.9
+   ],
+   "note": "The People's Republic proclaimed at Beijing"
+  },
+  {
+   "date": "1949-10-02",
+   "kind": "guarantee",
+   "guarantor": "SOV",
+   "target": "CHI",
+   "end": true,
+   "note": "The Soviet Union recognises the People's Republic"
   },
   {
    "date": "1949-10-07",
@@ -15291,6 +15763,16 @@
    "note": "The German Democratic Republic"
   },
   {
+   "date": "1949-12-07",
+   "kind": "capital",
+   "nation": "CHI",
+   "at": [
+    121.56,
+    25.04
+   ],
+   "note": "The Republic's seat to Taipei"
+  },
+  {
    "date": "1949-12-27",
    "kind": "born",
    "nation": "IDN",
@@ -15316,6 +15798,173 @@
     ]
    ],
    "note": "Indonesia: sovereignty transferred (New Guinea Dutch still)"
+  },
+  {
+   "date": "1949-12-27",
+   "kind": "withdraw",
+   "nation": "CHI",
+   "ring": [
+    [
+     73.0,
+     32.3
+    ],
+    [
+     123.0,
+     32.3
+    ],
+    [
+     123.0,
+     25.5
+    ],
+    [
+     119.7,
+     25.5
+    ],
+    [
+     119.7,
+     20.25
+    ],
+    [
+     73.0,
+     20.25
+    ]
+   ],
+   "captured": true,
+   "note": "Guangzhou, Chongqing, Chengdu: the Republic to Taiwan: the Nationalist armies there lost"
+  },
+  {
+   "date": "1949-12-27",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "CCP",
+   "from": [
+    "CHI"
+   ],
+   "ring": [
+    [
+     73.0,
+     32.3
+    ],
+    [
+     123.0,
+     32.3
+    ],
+    [
+     123.0,
+     25.5
+    ],
+    [
+     119.7,
+     25.5
+    ],
+    [
+     119.7,
+     20.25
+    ],
+    [
+     73.0,
+     20.25
+    ]
+   ],
+   "note": "Guangzhou, Chongqing, Chengdu: the Republic to Taiwan"
+  },
+  {
+   "date": "1950-02-14",
+   "kind": "allianceJoin",
+   "nation": "CCP",
+   "leader": "SOV",
+   "nameKey": "alliance.comintern",
+   "note": "The Sino-Soviet treaty"
+  },
+  {
+   "date": "1950-05-01",
+   "kind": "withdraw",
+   "nation": "CHI",
+   "ring": [
+    [
+     108.5,
+     20.25
+    ],
+    [
+     111.2,
+     20.25
+    ],
+    [
+     111.2,
+     18.0
+    ],
+    [
+     108.5,
+     18.0
+    ]
+   ],
+   "captured": true,
+   "note": "Hainan: the Nationalist armies there lost"
+  },
+  {
+   "date": "1950-05-01",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "CCP",
+   "from": [
+    "CHI"
+   ],
+   "ring": [
+    [
+     108.5,
+     20.25
+    ],
+    [
+     111.2,
+     20.25
+    ],
+    [
+     111.2,
+     18.0
+    ],
+    [
+     108.5,
+     18.0
+    ]
+   ],
+   "note": "Hainan"
+  },
+  {
+   "date": "1950-05-01",
+   "hour": 2,
+   "kind": "leave",
+   "nations": [
+    "CHI"
+   ],
+   "against": "CCP",
+   "note": "The civil war's fighting ends, no peace signed"
+  },
+  {
+   "date": "1951-05-23",
+   "kind": "transfer",
+   "to": "CCP",
+   "from": [
+    "TIB"
+   ],
+   "ring": [
+    [
+     78.0,
+     36.5
+    ],
+    [
+     99.5,
+     36.5
+    ],
+    [
+     99.5,
+     26.8
+    ],
+    [
+     78.0,
+     26.8
+    ]
+   ],
+   "note": "Tibet annexed"
   }
  ],
  "maps": [
@@ -19245,6 +19894,165 @@
         26.0
        ]
       ]
+     ]
+    }
+   ]
+  },
+  {
+   "date": "1950-01-01",
+   "note": "The People's Republic on the mainland, the Republic on Taiwan and Hainan; the new states of 1946-49",
+   "byCountry": {
+    "CHN": "CCP",
+    "KOR": "KOR",
+    "PRK": "PRK",
+    "ISR": "ISR",
+    "PSX": "ISR",
+    "PAK": "PAK",
+    "BGD": "PAK",
+    "IDN": "IDN"
+   },
+   "byProvince": {
+    "DEU-1601": "GDR",
+    "DEU-3487": "GDR",
+    "DEU-3488": "GDR",
+    "DEU-1577": "GDR",
+    "DEU-1600": "GDR",
+    "DEU-1599": "GDR",
+    "DEU-1591": "FRG",
+    "DEU-1574": "FRG",
+    "DEU-1575": "FRG",
+    "DEU-1573": "FRG",
+    "DEU-1580": "FRG",
+    "DEU-1579": "FRG",
+    "DEU-1576": "FRG",
+    "DEU-1572": "FRG",
+    "DEU-1578": "FRG",
+    "DEU-1581": "FRA",
+    "RUS-2616": "SOV",
+    "CHN-1775": "CHI",
+    "CHN-1662": "TIB",
+    "IDN-558": "DEI",
+    "IDN-1933": "DEI"
+   },
+   "regions": [
+    {
+     "owner": "TRJ",
+     "onlyFrom": [
+      "ISR"
+     ],
+     "ring": [
+      [
+       35.0,
+       32.5
+      ],
+      [
+       35.55,
+       32.5
+      ],
+      [
+       35.55,
+       31.4
+      ],
+      [
+       35.0,
+       31.4
+      ]
+     ]
+    },
+    {
+     "owner": "EGY",
+     "onlyFrom": [
+      "ISR"
+     ],
+     "ring": [
+      [
+       34.22,
+       31.58
+      ],
+      [
+       34.58,
+       31.58
+      ],
+      [
+       34.58,
+       31.22
+      ],
+      [
+       34.22,
+       31.22
+      ]
+     ]
+    }
+   ],
+   "occupied": [
+    {
+     "by": "SOV",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2330",
+      "AUT-2322",
+      "AUT-2331"
+     ]
+    },
+    {
+     "by": "USA",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2326",
+      "AUT-2327"
+     ]
+    },
+    {
+     "by": "ENG",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2325",
+      "AUT-2323"
+     ]
+    },
+    {
+     "by": "FRA",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2329",
+      "AUT-2320"
+     ]
+    },
+    {
+     "by": "SOV",
+     "of": [
+      "HUN"
+     ],
+     "countries": [
+      "HUN"
+     ]
+    },
+    {
+     "by": "USA",
+     "of": [
+      "JAP"
+     ],
+     "countries": [
+      "JPN"
+     ]
+    },
+    {
+     "by": "ENG",
+     "of": [
+      "ITA"
+     ],
+     "countries": [
+      "LBY",
+      "ERI",
+      "SOM"
      ]
     }
    ]

@@ -9,6 +9,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-941 · 2026-11-10 · accepted — The Chinese civil war (R62i2)
+- **The events:** the Red Army out of Manchuria and Kwantung China's (May 1946), the Communists holding the north of
+  it; the united front left and the civil war declared (26 June 1946), held between its stages; five stages, each the
+  Nationalist armies in its ring taken and its land the Communists' (Liaoshen, Huaihai and Pingjin, the Yangtze, the
+  northwest with Xinjiang joining, the south and southwest to Chengdu); Hainan (1 May 1950), then the Republic leaves
+  the war (its fighting over; no peace was signed, so after 1953 the AI may take it up again or not); Tibet annexed
+  (1951); the Sino-Soviet treaty (the People's Republic in the Soviet pact); Iceland's foreign troops gone.
+- **Two kinds:** `guarantee` with `end` withdraws a pledge (the Soviet Union's of the Republic, 2 October 1949: a
+  guarantor joins wars against its target once the AI is free, and it was the scenario's of 1938); `capital` makes
+  the nation's own city nearest a place its seat (Beijing on 1 October 1949, Taipei on 7 December; a capital held by
+  an enemy at war moves again at once, as any captured one).
+- **Transfers, not occupation:** a stage takes the land outright, so no nation stands at war with all its land held
+  (which capitulates it, annexed: Manchukuo's and Hungary's lesson).
+- **Measured** (`historyMatch1938h.test.ts`, to 1 June 1951): owners on 1 January 1950 99.77 % of land (bar 90 %),
+  98.7 % of the moved land right, stray 0.13 %; control 98.4 % right; the seats at Beijing and Taipei; no war between
+  the two Chinas and no pledge to the Republic on 1 June 1950; no event passed over. Unit tests of both kinds.
+
 ### ADR-940 · 2026-11-10 · accepted — 1946-49 on the historical track (R62i1)
 - **The events:** southern Sakhalin and the Kurils Soviet; Syria, Transjordan, Lebanon and the Philippines released;
   the Soviet and British armies out of Iran; India released and Pakistan born from it (the west with Kashmir as the
