@@ -178,7 +178,7 @@ export function inReach(world: World, of: readonly number[]): (x: number) => boo
 }
 
 /** Leaders' puppets join their side. */
-function withPuppets(world: World, leader: number): number[] {
+export function withPuppets(world: World, leader: number): number[] {
   const out = [leader];
   world.nations.forEach((n) => {
     if (n !== leader && world.nations.cols.overlord[n] === leader && world.nations.cols.living[n] === 1) out.push(n);

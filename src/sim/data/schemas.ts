@@ -494,6 +494,59 @@ export type FlagsFile = { flags: Record<string, FlagSpec> };
 
 // ── file table + validation ──────────────────────────────────────────────────
 
+// ── the historical track's timeline (data/scenarios/<id>/timeline.json, ROADMAP R62b, ADR-919) ──
+
+/** An event's when: its day, and the hour of that day (0 when not given). */
+const when = { date, hour: z.number().int().min(0).max(23).optional() };
+const tags = z.array(tag).min(1);
+
+/**
+ * One event of the timeline (SPEC §7.7), its parties by tag. The kinds of R62b; territory, births, strikes and
+ * objectives come with R62c-e.
+ */
+export const TimelineEvent = z.discriminatedUnion('kind', [
+  /** A war of these sides alone (each leader first, its puppets with it): the sim's calls of allies do not apply. */
+  z.strictObject({ ...when, kind: z.literal('war'), attackers: tags, defenders: tags }),
+  /** `nation` (with its puppets) joins the war between `beside` and `against`, on `beside`'s side. */
+  z.strictObject({ ...when, kind: z.literal('join'), nation: tag, beside: tag, against: tag }),
+  /** The war between `a` and `b` ends: white (each keeps its own) or on its score, as the sim's peace (its terms). */
+  z.strictObject({ ...when, kind: z.literal('peace'), a: tag, b: tag, terms: z.enum(['white', 'score']) }),
+  z.strictObject({ ...when, kind: z.literal('annex'), annexer: tag, target: tag }),
+  z.strictObject({ ...when, kind: z.literal('puppet'), overlord: tag, subject: tag, autonomy: z.number().int().min(0).max(100) }),
+  z.strictObject({ ...when, kind: z.literal('release'), subject: tag }),
+  /** `nation` joins `leader`'s alliance; one is made, named `nameKey`, when the leader has none. */
+  z.strictObject({ ...when, kind: z.literal('allianceJoin'), nation: tag, leader: tag, nameKey: key }),
+  z.strictObject({ ...when, kind: z.literal('allianceLeave'), nation: tag }),
+  z.strictObject({ ...when, kind: z.literal('guarantee'), guarantor: tag, target: tag }),
+]);
+export type TimelineEvent = z.infer<typeof TimelineEvent>;
+export const TimelineFile = z.strictObject({ comment: z.string().optional(), events: z.array(TimelineEvent) });
+export type TimelineFile = z.infer<typeof TimelineFile>;
+
+/** The tags an event names. */
+export function timelineTags(e: TimelineEvent): string[] {
+  switch (e.kind) {
+    case 'war':
+      return [...e.attackers, ...e.defenders];
+    case 'join':
+      return [e.nation, e.beside, e.against];
+    case 'peace':
+      return [e.a, e.b];
+    case 'annex':
+      return [e.annexer, e.target];
+    case 'puppet':
+      return [e.overlord, e.subject];
+    case 'release':
+      return [e.subject];
+    case 'allianceJoin':
+      return [e.nation, e.leader];
+    case 'allianceLeave':
+      return [e.nation];
+    case 'guarantee':
+      return [e.guarantor, e.target];
+  }
+}
+
 /** Paths are relative to `data/`, with `/` separators. */
 export const DATA_FILES: readonly { pattern: RegExp; schema: z.ZodType }[] = [
   { pattern: /^terrain\.json$/, schema: TerrainFile },
@@ -510,6 +563,7 @@ export const DATA_FILES: readonly { pattern: RegExp; schema: z.ZodType }[] = [
   { pattern: /^maps\/[a-z0-9_]+\/passages\.json$/, schema: PassagesFile },
   { pattern: /^scenarios\/[a-z0-9_]+\/scenario\.json$/, schema: ScenarioMeta },
   { pattern: /^scenarios\/[a-z0-9_]+\/nations\.json$/, schema: NationsFile },
+  { pattern: /^scenarios\/[a-z0-9_]+\/timeline\.json$/, schema: TimelineFile },
   { pattern: /^scenarios\/[a-z0-9_]+\/ownership\.json$/, schema: OwnershipFile },
   { pattern: /^scenarios\/[a-z0-9_]+\/diplomacy\.json$/, schema: DiplomacyFile },
   { pattern: /^scenarios\/[a-z0-9_]+\/city-rules\.json$/, schema: CityRulesFile },
@@ -861,6 +915,24 @@ export function validateDataSet(files: Readonly<Record<string, unknown>>): strin
     if (!m) errors.push(`${f}: map: unknown map '${s.map}'`);
     else if (s.size !== undefined && !m.sizes.some((z) => z.id === s.size)) errors.push(`${f}: size: map '${s.map}' has no size '${s.size}'`);
     if (m && s.settings.loopingMap && !m.wrapX) errors.push(`${f}: settings.loopingMap: map '${s.map}' does not wrap`);
+    if (s.base !== undefined && !(`scenarios/${s.base}/scenario.json` in ok)) errors.push(`${f}: base: no scenario '${s.base}'`);
+  }
+  // A timeline (ROADMAP R62b): its events in date order, naming the nations of its scenario's table (its base's, then
+  // its own).
+  for (const [f, t] of of<TimelineFile>(/^scenarios\/[a-z0-9_]+\/timeline\.json$/)) {
+    const dir = f.split('/')[1]!;
+    const meta = ok[`scenarios/${dir}/scenario.json`] as ScenarioMeta | undefined;
+    const tables = [meta?.base, dir].flatMap((d) => (d === undefined ? [] : [ok[`scenarios/${d}/nations.json`] as z.infer<typeof NationsFile> | undefined]));
+    const known = new Set(tables.flatMap((n) => n?.nations.map((x) => x.tag) ?? []));
+    if (known.size === 0) errors.push(`${f}: no valid nations.json for its scenario`);
+    let last = '';
+    t.events.forEach((e, i) => {
+      const at = `${e.date} ${String(e.hour ?? 0).padStart(2, '0')}`;
+      if (at < last) errors.push(`${f}: events[${i}]: ${e.date} is before the event above it`);
+      last = at;
+      if (meta && e.date < meta.startDate) errors.push(`${f}: events[${i}]: ${e.date} is before the scenario's start`);
+      for (const x of timelineTags(e)) if (known.size > 0 && !known.has(x)) errors.push(`${f}: events[${i}]: unknown nation '${x}'`);
+    });
   }
   return errors;
 }

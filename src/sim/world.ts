@@ -28,6 +28,7 @@ import { History } from './history';
 import { StatSeries } from './stats';
 import { EditStack } from './editor';
 import { CE_MODES, type CeMode } from './systems/efficiency';
+import type { Track } from './track';
 import { Wars } from './wars';
 import { PLAYER_AI_DEFAULT } from './ai/layers';
 import { LandCounts } from './landCounts';
@@ -441,6 +442,8 @@ class WorldCore implements Stateful {
       // The landings that have sailed once (ROADMAP R57a), by id.
       ...([...w.landings.values()].some((l) => l.sailed) ? [{ name: 'world.landingSailed', dtype: 'f64' as const, data: Float64Array.from([...w.landings.values()].filter((l) => l.sailed).map((l) => l.id).sort((a, b) => a - b)) }] : []),
       // The divisions its voyages left at its port (ROADMAP R59b): (landing, division, tick left), while any.
+      // The historical track's state (ROADMAP R62b): in a world with a track only.
+      ...(w.track ? w.track.serialize() : []),
       ...([...w.landings.values()].some((l) => l.left.size > 0) ? [{ name: 'world.landingLeft', dtype: 'f64' as const, data: Float64Array.from([...w.landings.values()].sort((a, b) => a.id - b.id).flatMap((l) => [...l.left].sort((a, b) => a[0] - b[0]).flatMap(([id, t]) => [l.id, id, t]))) }] : []),
       ...([...w.landings.values()].some((l) => l.ready >= 0) ? [{ name: 'world.landingReady', dtype: 'f64' as const, data: Float64Array.from([...w.landings.values()].filter((l) => l.ready >= 0).sort((a, b) => a.id - b.id).flatMap((l) => [l.id, l.ready])) }] : []),
       ...(w.escorts.size === 0 ? [] : [{ name: 'world.escorts', dtype: 'f64' as const, data: Float64Array.from([...w.escorts].sort((a, b) => a[0] - b[0]).flatMap(([k, e]) => [k, e.convoy, e.from])) }]),
@@ -606,6 +609,8 @@ class WorldCore implements Stateful {
       if (l) l.sailed = true;
     }
     // The divisions each landing's voyages left at its port (ROADMAP R59b): an optional section, absent before it.
+    // The historical track's state (ROADMAP R62b): its timeline is the world's own, not the save's.
+    w.track?.deserialize(sections, w.tick);
     const left = sections.find((s) => s.name === 'world.landingLeft')?.data as Float64Array | undefined;
     for (let at = 0; left && at < left.length; at += 3) w.landings.get(left[at]!)?.left.set(left[at + 1]!, left[at + 2]!);
     // A save from before ROADMAP R33b: its player's convoys, made landings at the next hour (`migrateLegacyLandings`).
@@ -1419,6 +1424,11 @@ export class World {
   seaBound = new Map<number, number>();
   /** The player's landings (ROADMAP R33b, `systems/landings.ts`), by id: state, saved while not empty. */
   landings = new Map<number, Landing>();
+  /**
+   * The historical track (ROADMAP R62b, SPEC §7.7): its timeline, bound by the scenario, and what it has done (state,
+   * its own section). null in every other world.
+   */
+  track: Track | null = null;
   nextLanding = 1;
   /** A save from before ROADMAP R33b: its player's convoys' sections, read into landings at the next hour (`migrateLegacyLandings`). Not state. */
   legacyConvoys: { fetch: Float64Array; fetchAt: Float64Array; ports: Float64Array } | null = null;

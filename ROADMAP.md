@@ -108,13 +108,21 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     registry's own, checked hidden now). `scenario1938h.test.ts` (12 dormant after 1938's 103, the same land, a month on
     none born, save and load bit-identical and the run after equal); `scenario1938h.spec.ts` (the URL's seed and options
     change no hash; the form's note, no seed field; shot looked at); the pin in the gate.
-  - [ ] R62b The runner and its state: `timeline.json`'s schema checked by `npm run data -- --check`; a system right
+  - [x] R62b The runner and its state: `timeline.json`'s schema checked by `npm run data -- --check`; a system right
     after the hour's commands applies each due event of the command-backed kinds (war and its sides, peace white or
     with terms, annex, puppet, release, alliance join or leave, guarantee) through `applyCommand`, not the command log;
     one that no longer applies is skipped with a History row; the track's state (next event, running, the second seed)
     an optional section, absent in other worlds; a timeline hash in it, a save of another timeline told. AT: a test
     timeline of every such kind fires each on its hour (all, 0 late); save and load mid-track bit-identical and the run
     after equal to the uninterrupted one; seed 99's pin unmoved.
+    Done (this commit, ADR-924): `src/sim/track.ts` (`Track`, `runTrack`), `TimelineFile` and its cross checks, the
+    section `world.track`, `TrackSkipped` and `TrackEnded`. Amended: war, join, white peace and guarantee are not
+    commands (none does just that); the schema is checked with every data file by `data-schemas.test.ts` (the data
+    pipeline bakes, it validates nothing); a save of another timeline ends the track, told, and loads. Evidence:
+    `trackRunner1938h.test.ts` (12 events of the 9 kinds, each due on its hour after every tick, none late; the second
+    peace passed over with its row; each kind's state; a save at t73 loads bit-identical, the run after equal, events
+    too; a save of another timeline: `TrackEnded` at the next hour, its war never declared, ended kept by a save);
+    the data-schemas case (order, start, unknown tag); seed 99's pin in the gate.
   - [ ] R62c Territory: transfers and occupations by lon/lat rings (with the nations they may take from), rasterised
     at the event's hour, owners and control set as a cession does (`LandCeded`), not through the editor's undo. AT: a
     test transfer and occupation each set exactly the cells their rings hold (counted against a rasteriser of its own).

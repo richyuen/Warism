@@ -7,7 +7,8 @@ import type { ScenarioId, SimInit } from '../shared/protocol';
 import { loadBytes, saveBytes, stateHash } from './core/state';
 import { applyPendingCommands, step, type System } from './tick';
 import { addHeroes1938, BUILD_MIX_1938, createWorld1938, ECONOMY_TABLES_1938, size1938 } from './scenario1938';
-import { addDormantNations1938h } from './scenario1938h';
+import { addDormantNations1938h, startTrack1938h } from './scenario1938h';
+import type { TimelineFile } from './data/schemas';
 import { allianceSystem } from './systems/alliances';
 import { economicAi, startAir } from './ai/economic';
 import { operationalAiOf } from './ai/operational';
@@ -70,7 +71,8 @@ export class Sim {
   /** The scenario the world was made as; a load keeps it (a save is of the same scenario). */
   readonly scenario: ScenarioId;
 
-  constructor(init: SimInit) {
+  /** `timeline`: a 1938h world's in place of its scenario's (tests of the track's runner, ROADMAP R62b). */
+  constructor(init: SimInit, timeline?: TimelineFile) {
     this.scenario = init.scenario;
     switch (init.scenario) {
       case 'toy':
@@ -87,7 +89,10 @@ export class Sim {
         const size = size1938(init.options?.size);
         this.world = init.scenario === 'random' ? createRandomWorld(init.seed, init.options?.nations, init.assets, size) : createWorld1938(init.seed, init.assets, size);
         // The historical track (ROADMAP R62a): 1938's world with the nations history made after it, dormant.
-        if (init.scenario === '1938h') addDormantNations1938h(this.world);
+        if (init.scenario === '1938h') {
+          addDormantNations1938h(this.world);
+          startTrack1938h(this.world, timeline);
+        }
         if (init.options) applyGameOptions(this.world, init.options);
         // The heroes (PLAN 7.184): the 1938 world's, after every other formation.
         if (init.scenario === '1938' && init.options?.heroes === 'on') addHeroes1938(this.world);

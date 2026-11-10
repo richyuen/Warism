@@ -163,3 +163,13 @@
   a month on; save and load bit-identical and the run after equal; its seed and hidden); `tests/e2e/scenario1938h.spec.ts`
   (the URL's seed 5 and random options change no hash; the settings' note, no seed field; shot looked at); seed 99's
   pin green run alone; gate green. DATA_SOURCES.md, SPEC §7.7.
+
+## 2026-11-10 — R62b: the historical track's runner and its state (ADR-924; ADR-923 records R62a's hiding)
+
+- `src/sim/track.ts`: `Track` (the timeline, its hash, the next event, ended, the seed for after, the nations unborn)
+  and `runTrack`, called in `step` after the hour's commands. Annex, puppet, release and alliances through
+  `applyCommand` (exported); a war of the timeline's sides, a join, a white peace and a guarantee by the war's and
+  alliances' own parts. A refused event: `TrackSkipped`. A save of another timeline: `TrackEnded` at the next hour.
+- `TimelineFile` in `src/sim/data/schemas.ts` with its cross checks; `data/scenarios/1938h/timeline.json` (empty until
+  R62f); `startTrack1938h` binds it in the Sim (a test may give its own). The dead list leaves out the unborn.
+- Evidence: `tests/unit/trackRunner1938h.test.ts` (4), the data-schemas case; gate.

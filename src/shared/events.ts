@@ -276,10 +276,24 @@ export const EventKind = {
    * `WarDeclared`, in the same hour. Not the leaders, nor puppets (with their overlords).
    */
   WarJoined: 78,
+  /**
+   * An event of the historical track that no longer applies (ROADMAP R62b, SPEC §7.7: a party dead, a war already
+   * over) was passed over. a = the first nation it names (0: none living by its tag), b = its number in the timeline
+   * (from 1), x = NaN, y = why (`Refusal`).
+   */
+  TrackSkipped: 79,
+  /**
+   * The historical track ended (ROADMAP R62b, SPEC §7.7): the world goes on by its usual rules. a = 0, b = why
+   * (`TrackEnd`), x = y = NaN.
+   */
+  TrackEnded: 80,
 } as const;
 
 /** Why a nation joined a war (`WarJoined`'s y). */
-export const JoinedBy = { alliance: 1, guarantee: 2 } as const;
+export const JoinedBy = { alliance: 1, guarantee: 2, track: 3 } as const;
+
+/** Why the historical track ended (`TrackEnded`'s b; ROADMAP R62b, R62j). */
+export const TrackEnd = { timelineChanged: 1 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */
 export const Bond = { truce: 1, alliance: 2, puppet: 4 } as const;

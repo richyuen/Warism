@@ -1704,16 +1704,21 @@ to 27 July 1953, then sets the world free.
   with no land, core or revival left until the track gives them their land. Every id of plain 1938 holds. Its seed
   and options are its own whatever the URL (`ScenarioInfo.fixedSeed`); its new-game form offers neither and says why.
   Hidden (opened by `?scenario=1938h` only) until the track replays its first period (R62f).
-- **Timeline** (a timeline file in the scenario's data, to be made by R62a): events in date order, each a date, a kind and its
+- **Timeline** (`data/scenarios/1938h/timeline.json`, the schema `TimelineFile`, R62b; empty until R62f): events in
+  date order, each a date (and an hour), a kind and its
   parties: war (with its sides joining), peace (white, or with terms: annexation, puppet, a transfer),
   annex, puppet, release, alliance join or leave, guarantee, transfer of territory (lon/lat rings with the
   nations it may take from, as `ownership.json`'s regions), occupation (control without ownership), a new
   nation (a nation of the scenario dormant until its date, with its cores), scripted nuclear strikes, and
   war objectives (below). The data pipeline bakes rings to cells. Our own summary of public history.
-- **Runner:** a system right after the hour's commands applies each due event as the commands it stands for,
-  directly, not through the command log (the log stays the player's input); the timeline and the track's saved
-  state reproduce it (§2.6). An event that no longer applies (a party dead, a war
-  already over) is skipped and its row says so; the track's state (its next event, on or ended) is saved.
+- **Runner** (built, R62b, ADR-924): `runTrack` (`src/sim/track.ts`), in `step` right after the hour's commands,
+  applies each event due by the hour in the timeline's order, directly, not through the command log (the log stays the
+  player's input): through `applyCommand` where a command stands for it (annex, puppet, release, alliance join or
+  leave), by the war's and alliances' own parts where none does (a war of the timeline's sides alone, a join, a white
+  peace, a guarantee). Nations by tag, resolved at the hour. An event that no longer applies (a party dead, a war
+  already over) is passed over with a `TrackSkipped` row. The track's state (`world.track`: the timeline's hash, the
+  next event, ended, the seed for after, the nations unborn) is a section of its own; a save of another timeline ends
+  the track at the next hour with a `TrackEnded` row.
 - **Steering while the track runs:** the strategic AI's own declarations, stalemate peace, threat pacts,
   coalitions and rival drift are off, and so are collapse and revival unless an event asks for them; the
   AI's own nuclear decision is off. Each war phase names objectives (cells or regions, with a date): the

@@ -116,6 +116,24 @@ describe('invalid data fails with readable paths (PLAN 1.1)', () => {
     expect(validateDataSet({ ...data, 'scenarios/bad/scenario.json': s })).toEqual(["scenarios/bad/scenario.json: size: map 'earth' has no size 'XXL'"]);
   });
 
+  it("a timeline names its scenario's nations (its base's and its own), in date order from the start (ROADMAP R62b)", () => {
+    const tl = {
+      events: [
+        { date: '1938-03-12', kind: 'annex', annexer: 'GER', target: 'AUT' },
+        { date: '1939-03-14', kind: 'puppet', overlord: 'GER', subject: 'SLO', autonomy: 30 },
+        { date: '1939-01-01', kind: 'release', subject: 'XXX' },
+        { date: '1937-12-31', kind: 'allianceLeave', nation: 'ROM' },
+      ],
+    };
+    expect(validateDataSet({ ...data, 'scenarios/1938h/timeline.json': tl })).toEqual([
+      'scenarios/1938h/timeline.json: events[2]: 1939-01-01 is before the event above it',
+      "scenarios/1938h/timeline.json: events[2]: unknown nation 'XXX'",
+      'scenarios/1938h/timeline.json: events[3]: 1937-12-31 is before the event above it',
+      "scenarios/1938h/timeline.json: events[3]: 1937-12-31 is before the scenario's start",
+    ]);
+    expect(validateFile('scenarios/1938h/timeline.json', { events: [{ date: '1938-01-01', kind: 'war', attackers: [], defenders: ['POL'] }] }).length).toBeGreaterThan(0);
+  });
+
   it('a file under an unknown path has no schema and is rejected', () => {
     expect(schemaFor('misc/notes.json')).toBeUndefined();
     expect(validateFile('misc/notes.json', {})[0]).toMatch(/^misc\/notes\.json: no schema matches this path/);

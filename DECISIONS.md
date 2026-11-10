@@ -9,6 +9,35 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-924 · 2026-11-10 · accepted — The track's runner: its kinds, by tag, and a save of another timeline (R62b)
+- **Context.** ADR-919 (amended) had every event go through `applyCommand`. Of R62b's kinds, a war of the timeline's
+  sides has no command: `declareWar` and `forceWar` call in allies and guarantors and drop members by reach and bonds,
+  so the sides would be the sim's, not history's; `forcePeace` settles on the score (no white peace); no command gives
+  a guarantee; none adds a nation to a war that goes on.
+- **Decision.** The kinds a command stands for go through `applyCommand` (annex, puppet, release, alliance join or
+  leave; a join to a leader with no alliance makes one). A war of given sides (each leader's puppets with it), a join,
+  a white peace (score set to 0, then the sim's `makePeace`: each keeps its own, a truce) and a guarantee are done in
+  `src/sim/track.ts` with the war's and the alliances' own parts, with the rows a declaration has (`WarDeclared`,
+  `WarJoined` with `JoinedBy.track`, `GuaranteeLapsed`). No command kind is added for the track: the player's API does
+  not grow. Events name nations by tag, wars by two of their nations, an alliance by its leader, resolved at the
+  event's hour. Each event due by the hour runs in file order right after the hour's commands (`step`), not when
+  commands are applied while paused. One refused is passed over: `TrackSkipped` (its first nation, its number, why).
+- **A save of another timeline.** The section `world.track` keeps the timeline's hash (canonical, key-sorted: not the
+  file's bytes or line ends). A save whose hash is another's is loaded and the track ends at the next hour with a
+  `TrackEnded` row (`TrackEnd.timelineChanged`); it does not throw. The timeline will change with R62f-i, each a push
+  that deploys: a throw would leave every player's Continue unloadable; ending the track keeps the game, and says why.
+- **Its records.** The timeline is validated with every data file by `data-schemas.test.ts` (not by `npm run data --
+  --check`, which bakes; R62b's wording amended): date order, after the start, tags of the base's and its own tables.
+  The track's own nations are `unborn` (state) until R62d: not in the dead list sent to the UI, so not offered to revive.
+- **Consequences.** `trackRunner1938h.test.ts`, the data-schemas case. Plain 1938 has no track: its pin unmoved.
+
+### ADR-923 · 2026-11-10 · accepted — 1938h hidden until its first period (R62a)
+- **Context.** R62a's AT asked the title screen to list "1938 — Historical". With no timeline yet, the world it opens
+  is plain 1938 under another name, and a push to `main` deploys.
+- **Decision.** `hidden` in its `scenario.json` until R62f replays 1938-39; it opens by `?scenario=1938h` only.
+  `scenario1938h.test.ts` asserts it hidden; R62f removes both.
+- **Consequences.** R62a's AT amended (ROADMAP); no player meets a "Historical" world that is not one (PROMPT rule 6).
+
 ### ADR-922 · 2026-11-10 · accepted — History marks the rows that follow one of their hour (R60e)
 - **Context.** Critic run 61, R61-N5: on 32019's 2 December 1957 History read "United States made peace with Free San
   Salvador", "Free San Salvador was annexed by United States", "Free San Salvador was destroyed": one hour (t174600),

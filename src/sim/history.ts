@@ -66,6 +66,9 @@ export const HISTORY_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.NationDefaulted,
   // The player's formations sent home across the sea in one day start (ROADMAP R21d).
   EventKind.FormationsSentHome,
+  // The historical track's events passed over, and its end (ROADMAP R62b).
+  EventKind.TrackSkipped,
+  EventKind.TrackEnded,
 ]);
 
 export class History implements Stateful {

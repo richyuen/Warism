@@ -119,6 +119,9 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.NationDefaulted]: ['nation', 'number'],
   // The player's formations sent home (ROADMAP R21d): the nation, how many.
   [EventKind.FormationsSentHome]: ['nation', 'number'],
+  // The historical track (ROADMAP R62b): an event passed over (the nation it names first, its number); its end (why).
+  [EventKind.TrackSkipped]: ['nation', 'number'],
+  [EventKind.TrackEnded]: ['nation', 'number'],
 };
 
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */
@@ -256,6 +259,7 @@ export const WAR_KINDS: ReadonlySet<number> = new Set([
   EventKind.GuaranteeLapsed,
   EventKind.HeroLost,
   EventKind.WarJoined,
+  EventKind.TrackEnded,
 ]);
 
 export const NO_FILTER: HistoryFilter = { kind: null, nation: null, fromYear: null, toYear: null, mine: null };

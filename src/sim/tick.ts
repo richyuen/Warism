@@ -2,6 +2,7 @@
  * Tick orchestration (SPEC §2.5). Systems run in a fixed order; each is `(world) => void`
  * and reads no wall-clock time, render state or subscriptions.
  */
+import { runTrack } from './track';
 import { orderMission, orderRebase } from './systems/air';
 import { orderParadrop } from './systems/airLift';
 import { landingOrders, migrateLegacyLandings, tellLandingsLeft } from './systems/landings';
@@ -82,7 +83,7 @@ function whyNotNation(world: World, n: number): Refusal {
  * it was. The offers of a player (`offerPeace`, `proposeAlliance`), an order to march and an
  * order to build have events of their own for a "no" and count as carried out here.
  */
-function applyCommand(world: World, cmd: Command): Refusal {
+export function applyCommand(world: World, cmd: Command): Refusal {
   if (!finiteCommand(cmd)) return Refusal.NotANumber;
   if (!inRange(cmd, world.cells.w, world.cells.h)) return Refusal.OutOfRange;
   const done = (ok: boolean, why: Refusal = Refusal.NoEffect): Refusal => (ok ? Refusal.None : why);
@@ -494,6 +495,8 @@ export function step(world: World, systems: readonly System[]): void {
   // A save from before ROADMAP R33b: its convoys made landings.
   migrateLegacyLandings(world);
   applyPendingCommands(world);
+  // The historical track's events due by this hour (ROADMAP R62b): after the hour's commands, as they are.
+  if (world.track) runTrack(world);
   for (const s of systems) s(world);
   tellMeansLost(world, held);
   world.tick++;

@@ -5,10 +5,12 @@
  */
 import nations1938h from '../../data/scenarios/1938h/nations.json' with { type: 'json' };
 import scenario1938h from '../../data/scenarios/1938h/scenario.json' with { type: 'json' };
-import type { NationDef } from './data/schemas';
+import timeline1938h from '../../data/scenarios/1938h/timeline.json' with { type: 'json' };
+import type { NationDef, TimelineFile } from './data/schemas';
 import { NATIONS_1938 } from './scenario1938';
 import { traitMask } from '../shared/traits';
 import { staticCe } from './systems/efficiency';
+import { Track } from './track';
 import type { World } from './world';
 
 /** The nations it adds after 1938's, in their file's order: ids `NATIONS_1938.length + 1` on. */
@@ -22,6 +24,9 @@ export const TAGS_1938H: readonly string[] = NATIONS_1938H.map((n) => n.tag);
 
 /** Its seed, the same every game (a replay): not offered on its form. */
 export const SEED_1938H: number = scenario1938h.seed;
+
+/** Its timeline (ROADMAP R62b): our own summary of public history, filled by period from R62f. */
+export const TIMELINE_1938H = timeline1938h as unknown as TimelineFile;
 
 /** "#rrggbb" as the nation table's packed colour. */
 function colorOf(hex: string): number {
@@ -53,4 +58,16 @@ export function addDormantNations1938h(world: World): void {
     n.efficiency[id] = 1;
     n.revivalsLeft[id] = 0;
   });
+  // Named by its table, as 1938's are (a rename to '' restores the name).
+  if (world.rules) world.rules = { ...world.rules, namedNations: NATIONS_1938H.length };
+}
+
+/**
+ * The track of a 1938h world (ROADMAP R62b): its timeline (`file`, the scenario's unless a test gives one), its own
+ * nations unborn.
+ */
+export function startTrack1938h(world: World, file: TimelineFile = TIMELINE_1938H): void {
+  const t = new Track(file, TAGS_1938H, scenario1938h.startDate);
+  for (let i = 0; i < ADDED_1938H.length; i++) t.unborn.add(NATIONS_1938.length + i + 1);
+  world.track = t;
 }

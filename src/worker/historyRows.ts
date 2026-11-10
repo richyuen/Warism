@@ -185,7 +185,11 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     if (toll) row.toll = toll;
     if (kind === EventKind.BondsBroken) [row.bonds, row.y] = [y, null];
     // Why it joined (ROADMAP R55i): its own sentence.
-    if (kind === EventKind.WarJoined) [row.as, row.y] = [y === JoinedBy.guarantee ? 'guarantee' : 'alliance', null];
+    // One the historical track adds to its side (ROADMAP R62b) is told as plainly joining.
+    if (kind === EventKind.WarJoined) {
+      row.y = null;
+      if (y === JoinedBy.guarantee || y === JoinedBy.alliance) row.as = y === JoinedBy.guarantee ? 'guarantee' : 'alliance';
+    }
     out.push(row);
   }
   // A release before the wars it left, as the ticker tells it (ROADMAP R49b; critic run 51, R51-N5).

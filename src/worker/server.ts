@@ -750,7 +750,8 @@ export class SimServer {
     const { nations, wars } = this.buildStats(world, false);
     const dead: { id: number; name: string; color: number }[] = [];
     world.nations.forEach((id) => {
-      if (world.nations.cols.living[id] !== 1) dead.push({ id, name: this.nameOf(id), color: world.nations.cols.color[id]! });
+      // Not one the historical track has yet to bring into being (ROADMAP R62b): it never lived.
+      if (world.nations.cols.living[id] !== 1 && !world.track?.unborn.has(id)) dead.push({ id, name: this.nameOf(id), color: world.nations.cols.color[id]! });
     });
     const news = this.newsFrom < 0 ? [] : tickerNews(world, this.newsFrom);
     const strikes = this.newsFrom < 0 ? [] : strikeRows(world, this.newsFrom, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? '');
