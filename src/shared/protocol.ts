@@ -463,7 +463,7 @@ export type FromWorker =
    */
   | { type: 'landMask'; mask: LandMask }
   /** Custom pixel flags (PLAN 1.37b): [nation, runs][] (runs as in `setFlag`), after init and on change. */
-  | { type: 'flags'; custom: [number, number[]][] }
+  | { type: 'flags'; custom: [number, number[]][]; identities: [number, string][] }
   /** City dots and names again after editor city edits (PLAN 1.36). */
   | { type: 'cityLayer'; cities: { id: number; name: string; x: number; y: number; size: number; capital: boolean }[] }
   /** The terrain layer again after editor terrain edits (PLAN 1.35). */

@@ -123,6 +123,8 @@ describe('invalid data fails with readable paths (PLAN 1.1)', () => {
         { date: '1939-03-14', kind: 'puppet', overlord: 'GER', subject: 'SLO', autonomy: 30 },
         { date: '1939-01-01', kind: 'release', subject: 'XXX' },
         { date: '1937-12-31', kind: 'allianceLeave', nation: 'ROM' },
+        // The identities the track gives, whose flags its flags.json holds (R62i4).
+        ...(data['scenarios/1938h/timeline.json'] as { events: { kind: string }[] }).events.filter((e) => e.kind === 'rename'),
       ],
     };
     expect(validateDataSet({ ...data, 'scenarios/1938h/timeline.json': tl })).toEqual([
@@ -132,6 +134,12 @@ describe('invalid data fails with readable paths (PLAN 1.1)', () => {
       "scenarios/1938h/timeline.json: events[3]: 1937-12-31 is before the scenario's start",
     ]);
     expect(validateFile('scenarios/1938h/timeline.json', { events: [{ date: '1938-01-01', kind: 'war', attackers: [], defenders: ['POL'] }] }).length).toBeGreaterThan(0);
+  });
+
+  it('an identity a timeline gives has a flag in its scenario (ROADMAP R62i4)', () => {
+    const real = data['scenarios/1938h/timeline.json'] as { events: unknown[] };
+    const tl = { ...real, events: [...real.events, { date: '1953-07-27', hour: 5, kind: 'rename', nation: 'FRG', as: 'ZZZ' }] };
+    expect(validateDataSet({ ...data, 'scenarios/1938h/timeline.json': tl })).toEqual(["scenarios/1938h/flags.json: flags: no flag for the identity 'ZZZ' its timeline gives"]);
   });
 
   it('a file under an unknown path has no schema and is rejected', () => {

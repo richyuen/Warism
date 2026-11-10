@@ -576,6 +576,11 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * its effects a launch's, with no stockpile, bomber or toggle asked. The AI strikes nothing while the track steers.
    */
   z.strictObject({ ...when, kind: z.literal('nuke'), nation: tag, at: lonLat, note: z.string().optional() }),
+  /**
+   * A new name and flag (R62i4): from now on the nation bears the identity `as` (`nation.<as>` and its flag), as Siam
+   * Thailand, British India India, Communist China the People's Republic.
+   */
+  z.strictObject({ ...when, kind: z.literal('rename'), nation: tag, as: z.string().regex(/^[A-Z]{3}$/), note: z.string().optional() }),
   /** A seat moved (R62i2: Beijing, Taipei): the nation's own city nearest `at` becomes its capital. */
   z.strictObject({ ...when, kind: z.literal('capital'), nation: tag, at: lonLat, note: z.string().optional() }),
 ]);
@@ -653,6 +658,7 @@ export function timelineTags(e: TimelineEvent): string[] {
     case 'withdraw':
     case 'nuke':
     case 'capital':
+    case 'rename':
       return [e.nation];
     case 'hold':
       return [...e.sides[0], ...e.sides[1]];
@@ -939,7 +945,11 @@ export function validateDataSet(files: Readonly<Record<string, unknown>>): strin
       nf.nations.forEach((n, i) => {
         if (!fl.flags[n.tag]) errors.push(`${flF}: flags: no flag for nations[${i}] '${n.tag}'`);
       });
-      for (const t of Object.keys(fl.flags).sort()) if (!byTag.has(t)) errors.push(`${flF}: flags.${t}: unknown nation`);
+      // The identities its timeline gives (R62i4, `rename`) have their flags here too.
+      const tl = ok[f.replace(/nations\.json$/, 'timeline.json')] as TimelineFile | undefined;
+      const identities = new Set((tl?.events ?? []).flatMap((e) => (e.kind === 'rename' ? [e.as] : [])));
+      for (const t of Object.keys(fl.flags).sort()) if (!byTag.has(t) && !identities.has(t)) errors.push(`${flF}: flags.${t}: unknown nation`);
+      for (const t of [...identities].sort()) if (!fl.flags[t]) errors.push(`${flF}: flags: no flag for the identity '${t}' its timeline gives`);
       const presets = (ok['flags/presets.json'] as { presets: Record<string, unknown> } | undefined)?.presets ?? {};
       const walk = (layers: readonly FlagLayerT[], where: string): void => {
         layers.forEach((l, i) => {

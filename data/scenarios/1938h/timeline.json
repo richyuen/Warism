@@ -718,6 +718,13 @@
    "note": "Nomonhan"
   },
   {
+   "date": "1939-06-24",
+   "kind": "rename",
+   "nation": "SIA",
+   "as": "THA",
+   "note": "Siam becomes Thailand"
+  },
+  {
    "date": "1939-09-01",
    "kind": "annex",
    "annexer": "GER",
@@ -14720,6 +14727,13 @@
    "note": "Transjordan independent"
   },
   {
+   "date": "1946-06-02",
+   "kind": "rename",
+   "nation": "ITA",
+   "as": "ITR",
+   "note": "The Italian Republic"
+  },
+  {
    "date": "1946-06-26",
    "kind": "allianceLeave",
    "nation": "CCP",
@@ -14796,6 +14810,13 @@
    "kind": "release",
    "subject": "RAJ",
    "note": "India independent"
+  },
+  {
+   "date": "1947-08-15",
+   "kind": "rename",
+   "nation": "RAJ",
+   "as": "IND",
+   "note": "India"
   },
   {
    "date": "1947-08-15",
@@ -15373,6 +15394,13 @@
    "note": "With Transjordan"
   },
   {
+   "date": "1949-04-26",
+   "kind": "rename",
+   "nation": "TRJ",
+   "as": "JOR",
+   "note": "The Hashemite Kingdom of Jordan"
+  },
+  {
    "date": "1949-05-23",
    "kind": "born",
    "nation": "FRG",
@@ -15703,6 +15731,13 @@
    "note": "The People's Republic proclaimed at Beijing"
   },
   {
+   "date": "1949-10-01",
+   "kind": "rename",
+   "nation": "CCP",
+   "as": "PRC",
+   "note": "The People's Republic of China"
+  },
+  {
    "date": "1949-10-02",
    "kind": "guarantee",
    "guarantor": "SOV",
@@ -15798,6 +15833,13 @@
     25.04
    ],
    "note": "The Republic's seat to Taipei"
+  },
+  {
+   "date": "1949-12-07",
+   "kind": "rename",
+   "nation": "CHI",
+   "as": "ROC",
+   "note": "The Republic of China on Taiwan"
   },
   {
    "date": "1949-12-27",

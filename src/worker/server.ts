@@ -771,7 +771,9 @@ export class SimServer {
     if (world.flagsVersion !== this.flagsSent) {
       this.flagsSent = world.flagsVersion;
       const custom = [...world.flags].sort((x, y) => x[0] - y[0]).map(([n, px]) => [n, encodeRuns(px)] as [number, number[]]);
-      this.post({ type: 'flags', custom }, []);
+      // The identities taken on the historical track (R62i4): whose flag a nation bears.
+      const identities = [...world.identities].sort((x, y) => x[0] - y[0]);
+      this.post({ type: 'flags', custom, identities }, []);
     }
     // Cities after editor edits (PLAN 1.36): dots and names follow.
     if (this.citiesSent >= 0 && world.citiesVersion !== this.citiesSent) {
@@ -1493,6 +1495,9 @@ export class SimServer {
     const sim = this.requireSim();
     const custom = sim.world.names.get(id);
     if (custom !== undefined) return `=${custom}`; // God Mode rename (PLAN 1.32)
+    // A name taken on the historical track (R62i4).
+    const as = sim.world.identities.get(id);
+    if (as !== undefined) return `nation.${as}`;
     // The tables there are, 1938's and the historical track's (1938's and its own after them, R62a), name the nations
     // of the scenarios with their tags.
     const def = SCENARIO_INFO[sim.scenario].nationTags[id - 1] !== undefined ? NATIONS_1938H[id - 1] : undefined;

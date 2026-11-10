@@ -335,3 +335,25 @@ describe('a seat moved (ROADMAP R62i2)', () => {
     expect(Math.abs(w.nations.cols.capitalY[CHI]! - v * w.cells.h)).toBeLessThan(4);
   });
 });
+
+describe('a new name and flag (ROADMAP R62i4)', () => {
+  it('rename: the identity from its hour, kept in a save (the same hash after), and the worker names the nation by it', () => {
+    const TLR: TimelineFile = { events: [{ date: '1938-01-02', kind: 'rename', nation: 'CCP', as: 'PRC' }] };
+    const make = (): Sim => new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, TLR);
+    const a = make();
+    a.step(24, quiet);
+    expect(a.world.identities.size).toBe(0);
+    const names = a.world.namesVersion;
+    const flags = a.world.flagsVersion;
+    a.step(1, quiet);
+    expect([...a.world.identities]).toEqual([[id('CCP'), 'PRC']]);
+    expect(a.world.namesVersion).toBeGreaterThan(names);
+    expect(a.world.flagsVersion).toBeGreaterThan(flags);
+    const b = make();
+    b.load(a.save());
+    expect([...b.world.identities]).toEqual([[id('CCP'), 'PRC']]);
+    a.step(24, quiet);
+    b.step(24, quiet);
+    expect(b.hash()).toBe(a.hash());
+  });
+});

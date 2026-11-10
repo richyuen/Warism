@@ -7,11 +7,13 @@
  */
 import presetsJson from '../../data/flags/presets.json' with { type: 'json' };
 import flagsJson from '../../data/scenarios/1938/flags.json' with { type: 'json' };
+import flags1938h from '../../data/scenarios/1938h/flags.json' with { type: 'json' };
 import type { FlagPresets, FlagSpec } from '../shared/flags';
 import { FLAG_H, FLAG_W, foundedFlag, specToPixels } from '../shared/flagPixels';
 import { decodeRunsU32 } from '../shared/mapImport';
 
-const SPECS = flagsJson.flags as unknown as Record<string, FlagSpec>;
+// 1938's flags and the historical track's (R62i4: its own nations' and the identities it gives), by tag.
+const SPECS = { ...flagsJson.flags, ...flags1938h.flags } as unknown as Record<string, FlagSpec>;
 const PRESETS = presetsJson.presets as unknown as FlagPresets;
 /** What a cached flag was made from: a painted flag, the scenario's, or (0 and up) a colour. */
 const CUSTOM = -1;
@@ -21,6 +23,8 @@ const UNKNOWN = 0x888888;
 
 export class FlagStore {
   private custom = new Map<number, Uint32Array>();
+  /** The identities taken on the historical track (R62i4): the tag whose flag a nation flies instead of its table's. */
+  private identities = new Map<number, string>();
   private pixels = new Map<number, Uint32Array>();
   private madeFrom = new Map<number, number>();
   private canvases = new Map<number, HTMLCanvasElement>();
@@ -39,7 +43,8 @@ export class FlagStore {
     private readonly tagOf: (id: number) => string | undefined,
   ) {}
 
-  setCustom(custom: [number, number[]][]): void {
+  setCustom(custom: [number, number[]][], identities: [number, string][] = []): void {
+    this.identities = new Map(identities);
     this.custom = new Map();
     for (const [n, runs] of custom) {
       const px = decodeRunsU32(runs, FLAG_W * FLAG_H);
@@ -55,7 +60,7 @@ export class FlagStore {
   /** The 36×24 pixels of nation `id`'s flag (a copy is safe to edit). */
   pixelsOf(id: number): Uint32Array {
     const custom = this.custom.get(id);
-    const tag = this.foundedOf(id) ? undefined : this.tagOf(id);
+    const tag = this.foundedOf(id) ? undefined : (this.identities.get(id) ?? this.tagOf(id));
     const spec = tag ? SPECS[tag] : undefined;
     const colour = (this.colorOf(id) ?? UNKNOWN) & 0xffffff;
     // A made flag follows the nation's colour and whether it was founded: a flag asked for

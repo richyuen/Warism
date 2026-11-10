@@ -494,6 +494,16 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
     }
     case 'capital':
       return moveCapital(world, id(e.nation), e.at);
+    case 'rename': {
+      const n = id(e.nation);
+      const why = whyNot(world, n);
+      if (why) return why;
+      if (world.identities.get(n) === e.as) return Refusal.NoEffect;
+      world.identities.set(n, e.as);
+      world.namesVersion++;
+      world.flagsVersion++;
+      return Refusal.None;
+    }
     case 'nuke': {
       const n = id(e.nation);
       const why = whyNot(world, n);
@@ -586,6 +596,7 @@ function firstNation(t: Track, e: TimelineEvent): number {
     case 'withdraw':
     case 'nuke':
     case 'capital':
+    case 'rename':
       return t.id(e.nation);
     case 'hold':
       return t.id(e.sides[0][0]!);

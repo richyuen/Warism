@@ -96,7 +96,8 @@ export class SimClient {
     }
     if (msg.type === 'flags') {
       this.customFlags = msg.custom;
-      for (const l of this.flagListeners) l(msg.custom);
+      this.identities = msg.identities;
+      for (const l of this.flagListeners) l(msg.custom, msg.identities);
       return;
     }
     if (msg.type === 'cityLayer') {
@@ -224,10 +225,12 @@ export class SimClient {
 
   /** Custom pixel flags (PLAN 1.37b); late listeners get the last set at once. */
   customFlags: [number, number[]][] | null = null;
-  private readonly flagListeners = new Set<(custom: [number, number[]][]) => void>();
-  onFlags(l: (custom: [number, number[]][]) => void): () => void {
+  /** The identities nations took on the historical track (R62i4), sent with the flags. */
+  identities: [number, string][] = [];
+  private readonly flagListeners = new Set<(custom: [number, number[]][], identities: [number, string][]) => void>();
+  onFlags(l: (custom: [number, number[]][], identities: [number, string][]) => void): () => void {
     this.flagListeners.add(l);
-    if (this.customFlags) l(this.customFlags);
+    if (this.customFlags) l(this.customFlags, this.identities);
     return () => this.flagListeners.delete(l);
   }
 

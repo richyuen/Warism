@@ -471,6 +471,8 @@ class WorldCore implements Stateful {
       ...(w.airMonth.length === 0 ? [] : [{ name: 'world.airMonth', dtype: 'f64' as const, data: Float64Array.from(w.airMonth.flatMap((t) => [t.fight, t.a, t.b, t.va, t.vb, t.x, t.y])) }]),
       // The quarter's raids on convoys (PLAN 7.33a): [raider, bloc, zone, gold] each, only while there is one.
       ...(w.convoyQuarter.length === 0 ? [] : [{ name: 'world.convoyQuarter', dtype: 'f64' as const, data: Float64Array.from(w.convoyQuarter.flatMap((t) => [...t.zones].flatMap(([z, g]) => [t.raider, t.bloc, z, g]))) }]),
+      // The identities taken on the historical track (R62i4), only while there is one.
+      ...(w.identities.size === 0 ? [] : [{ name: 'world.identities', dtype: 'u8' as const, data: new TextEncoder().encode(JSON.stringify([...w.identities].sort((a, b) => a[0] - b[0]))) }]),
       // The nations barred from nuclear weapons (PLAN 6.1a), only while there is one.
       ...(w.nukesBanned.size === 0 ? [] : [{ name: 'world.nukesBanned', dtype: 'f64' as const, data: Float64Array.from([...w.nukesBanned].sort((a, b) => a - b)) }]),
       // The warheads in flight (PLAN 6.2): [next id, then id, nation, missile, wing, bx, by, tx, ty, launch, arrive each], only while there is one.
@@ -661,6 +663,8 @@ class WorldCore implements Stateful {
     const cq = sections.find((s) => s.name === 'world.convoyQuarter')?.data as Float64Array | undefined;
     for (let at = 0; cq && at + 4 <= cq.length; at += 4) addConvoyTake(w, cq[at]!, cq[at + 1]!, cq[at + 2]!, cq[at + 3]!);
     w.nukesBanned = new Set(Array.from((sections.find((s) => s.name === 'world.nukesBanned')?.data as Float64Array | undefined) ?? []));
+    const ids = sections.find((s) => s.name === 'world.identities')?.data as Uint8Array | undefined;
+    w.identities = new Map(ids ? (JSON.parse(new TextDecoder().decode(ids)) as [number, string][]) : []);
     w.nukeLaunches = [];
     const nl = sections.find((s) => s.name === 'world.nukeLaunches')?.data as Float64Array | undefined;
     w.nextLaunchId = nl && nl.length > 0 ? nl[0]! : 1;
@@ -1555,6 +1559,11 @@ export class World {
   commandLog: LoggedCommand[] = [];
   /** Custom nation names from God Mode (PLAN 1.32); state, saved with the core. */
   names = new Map<number, string>();
+  /**
+   * The identity a nation of the scenario's table took on the historical track (R62i4: British India India,
+   * Communist China the People's Republic): a tag whose `nation.<tag>` name and flag it bears from then on. State.
+   */
+  identities = new Map<number, string>();
   /** Names of cities placed in the editor (PLAN 1.36), by city row; state, saved with `names`. */
   cityNames = new Map<number, string>();
   /** Commands queued since the last tick boundary, applied in seq order at the next tick. */

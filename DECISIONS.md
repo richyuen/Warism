@@ -9,6 +9,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-943 · 2026-11-10 · accepted — The track's names and flags (R62i4)
+- **`rename`**, a timeline kind: from its hour the nation bears the identity `as`, a tag whose `nation.<as>` name and
+  flag it shows (`World.identities`, state, a section of its own only while there is one: older saves load, the pin
+  unmoved). The worker names it by the identity after a God Mode name; the flags message carries the identities and
+  the flag store flies the identity's flag. A rename is not a new nation: its wars, pacts and land stay.
+- **The renames:** Siam Thailand (1939), the Italian Republic (1946), India (1947), Jordan (1949), the People's
+  Republic of China (1 October 1949), the Republic of China on Taiwan (7 December 1949: the two Chinas named apart).
+- **Flags:** `data/scenarios/1938h/flags.json`, the track's own nations' (Slovakia, Croatia, Vichy, the Social
+  Republic, the two Germanies, the two Koreas, Israel, Pakistan, Indonesia, Vietnam) and its identities'; the flag
+  store reads it after 1938's. Our own simplified designs. East Germany's arms are those of 1959, for a flag of its own
+  (from 1949 to 1959 it flew the Federal Republic's). The cross-checks: a scenario's flags name its nations or the
+  identities its timeline gives, and each identity has its flag.
+- **Measured:** each nation of the track has a flag of its own (the store's pixels its spec's), a name and an
+  adjective, as each identity has; no two nations share a colour; a rename kept in a save (the same hash after); the
+  worker names a renamed nation by its identity; no event passed over to 1953.
+
 ### ADR-942 · 2026-11-10 · accepted — The Korean War to the armistice; Japan sovereign (R62i3)
 - **The war:** North Korea's invasion (25 June 1950), held to the armistice; the United Nations' contingents by
   `join` (the United States, Britain with Canada, Australia, New Zealand and South Africa and without its other

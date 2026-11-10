@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import presetsJson from '../../data/flags/presets.json' with { type: 'json' };
 import flagsJson from '../../data/scenarios/1938/flags.json' with { type: 'json' };
+import flags1938h from '../../data/scenarios/1938h/flags.json' with { type: 'json' };
+import nations1938h from '../../data/scenarios/1938h/nations.json' with { type: 'json' };
+import nations1938 from '../../data/scenarios/1938/nations.json' with { type: 'json' };
+import timeline1938h from '../../data/scenarios/1938h/timeline.json' with { type: 'json' };
+import en from '../../src/ui/i18n/en.json' with { type: 'json' };
 import { FlagStore } from '../../src/app/flagStore';
 import type { FlagPresets, FlagSpec } from '../../src/shared/flags';
 import { FLAG_H, FLAG_W, foundedFlag, specToPixels } from '../../src/shared/flagPixels';
@@ -18,6 +23,7 @@ const PIXELS = FLAG_W * FLAG_H;
 const SPECS = flagsJson.flags as unknown as Record<string, FlagSpec>;
 const PRESETS = presetsJson.presets as unknown as FlagPresets;
 const COLOUR = 0x3b6fb6;
+const EN = en as Record<string, string>;
 
 /** The colours of a flag that hold a twentieth of it or more (not the edge of a shape). */
 function colours(px: Uint32Array): number[] {
@@ -94,5 +100,43 @@ describe('names by scenario (PLAN 2.16b)', () => {
   it('the nations of the 1938 world have the names of 1938', () => {
     const rows = names({ scenario: '1938', seed: 7, assets: assets1938(SIZE_1938.w) });
     expect(rows.map((n) => n.name)).toEqual(NATIONS_1938.map((n) => n.nameKey));
+  });
+});
+
+describe("the historical track's names and flags (ROADMAP R62i4)", () => {
+  const H = flags1938h.flags as unknown as Record<string, FlagSpec>;
+  const tags = SCENARIO_INFO['1938h'].nationTags;
+  const idOf = (t: string): number => tags.indexOf(t) + 1;
+
+  it('each nation of its own flies a flag of its own, and one renamed that of its identity', () => {
+    const store = storeOf('1938h');
+    for (const { tag } of nations1938h.nations) expect(store.pixelsOf(idOf(tag)), tag).toEqual(specToPixels(H[tag]!, PRESETS));
+    const prc = specToPixels(H.PRC!, PRESETS);
+    expect(store.pixelsOf(idOf('CCP'))).not.toEqual(prc);
+    store.setCustom([], [[idOf('CCP'), 'PRC']]);
+    expect(store.pixelsOf(idOf('CCP'))).toEqual(prc);
+  });
+
+  it('each nation of the track and each identity it gives has a name and an adjective; no two nations share a colour', () => {
+    const identities = (timeline1938h.events as { kind: string; as?: string }[]).flatMap((e) => (e.kind === 'rename' ? [e.as!] : []));
+    expect(identities.length).toBeGreaterThan(0);
+    for (const t of [...tags, ...identities]) {
+      expect(EN[`nation.${t}`], t).toBeTruthy();
+      expect(EN[`nation.${t}.adj`], t).toBeTruthy();
+    }
+    const colours = [...nations1938.nations, ...nations1938h.nations].map((n) => n.color.toLowerCase());
+    expect(new Set(colours).size).toBe(colours.length);
+  });
+
+  it('the worker names a renamed nation by its identity', () => {
+    const replies: FromWorker[] = [];
+    const server = new SimServer((m) => replies.push(m));
+    server.handle({ type: 'init', reqId: 1, init: { scenario: '1938h', seed: 1938, assets: assets1938(SIZE_1938.w) } }, 0);
+    (server as unknown as { sim: { world: { identities: Map<number, string> } } }).sim.world.identities.set(idOf('RAJ'), 'IND');
+    server.handle({ type: 'inspect', reqId: 2 }, 0);
+    const r = replies.find((m) => m.type === 'reply' && m.reqId === 2);
+    if (!r || r.type !== 'reply' || !r.bytes) throw new Error('no reply with bytes');
+    const rows = (JSON.parse(new TextDecoder().decode(r.bytes)) as Inspection).nations;
+    expect(rows.find((n) => n.id === idOf('RAJ'))?.name).toBe('nation.IND');
   });
 });

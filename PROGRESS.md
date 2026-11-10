@@ -329,3 +329,11 @@
   transfer. Hungary sovereign (1947), Japan sovereign (1952), Somalia, Eritrea.
 - 27 July 1953: owners 99.78 % of land, 98.9 % of the moved land right; no war on 28 July; no event passed over.
 - Evidence: `tests/sweep/historyMatch1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62i4: the track's names and flags (ADR-943)
+
+- `rename` kind (`World.identities`, saved): Thailand, the Italian Republic, India, Jordan, the People's Republic,
+  the Republic of China on Taiwan; names and flags follow it in the worker and the flag store.
+- Flags for the track's 12 nations and 6 identities (`data/scenarios/1938h/flags.json`), checked by eye in a grid.
+- Evidence: `tests/unit/flagsByScenario.test.ts`, `tests/unit/trackLevers1938h.test.ts`, `tests/unit/data-schemas.test.ts`,
+  `tests/sweep/historyMatch1938h.test.ts`. Gate.

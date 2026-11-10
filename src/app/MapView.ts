@@ -532,8 +532,8 @@ export class MapView {
       this.labelData = { data: m.data, names: m.names.map((k) => (k.startsWith('=') ? k.slice(1) : t(k as MessageKey))) };
       this.dirty = true;
     });
-    sim.onFlags((custom) => {
-      this.flags.setCustom(custom);
+    sim.onFlags((custom, identities) => {
+      this.flags.setCustom(custom, identities);
       this.dirty = true;
     });
     sim.onCities((cities) => {
