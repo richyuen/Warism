@@ -27,7 +27,7 @@ Rules:
 Critic run 60 (focused, on `91d11424`): no blocking issue; naval 8 (its bar, by ADR-914's 5 % rule: 1 of 300 new
 setups broke `slowClick`); every dimension at its bar. A full run and the release come first (ADR-916); these after.
 
-- [ ] R59 **Run 60's non-blocking findings.**
+- [x] R59 **Run 60's non-blocking findings.**
   - [x] R59a R60-N1: "they come back for it in about a day" for 4.3 days with an empty group idle at the port (31173,
     setup 3517, two groups; `critic/scripts/c60_nvtrace.ts`): the figure counts what holds the empty group, or the
     empty group sails for the one waiting. AT: 31173's 366 told a figure that comes true within a day.
@@ -49,8 +49,11 @@ setups broke `slowClick`); every dimension at its bar. A full run and the releas
     Done (this commit): the landscape panel's height counts its padding and border (`box-sizing: border-box`; they took
     the 0.4 rem gap and 10 px more). `panelFootLandscape1938.spec.ts` (new, seed 30403, Germany, every tab): the foot
     above the bar at 667 × 375, 740 × 360, 844 × 390, 932 × 430, 1024 × 500 (red before at all five, by 9.6–11.1 px).
-  - [ ] R59e R60-N5: `seaBattlesLook` does not fail a listed battle with no fleets left to draw (31501 t17369). AT:
+  - [x] R59e R60-N5: `seaBattlesLook` does not fail a listed battle with no fleets left to draw (31501 t17369). AT:
     `seaBattlesLook` on 31501 exit 0, that battle "no fleet to see".
+    Done (this commit): a battle listed with no fleet told "no fleet to see" and counted, not failed; the list looked at
+    in order of first hours (31501's t6243, listed after t6257, had been looked at 14 h late, the second miss). On the
+    critic's `c60_sb_31501.json`: exit 0, 44 of 44 seen, 1 with no fleet, page errors 0.
 - [ ] R60 **Run 61's non-blocking findings** (the full run, on `d971a46b`: no blocking issue, every dimension at 8).
   - [ ] R60a R61-N1: at landscape sizes (844 × 390, 932 × 430, 1024 × 500) an ordered landing's bar lies over the nation
     panel's ×, so a tap on × opens the landing (21103, England's four from Portsmouth to Bremerhaven; a regression since

@@ -66,3 +66,13 @@
   layout specs beside it green: `buildTab1938`, `phoneLayout1938`, `nationPanel1938`, `orderRowsBrief1938`,
   `orderRowsPanel1938`, `orderRowsTap1938` (31). The critic's own `c58_peacebtn` page script not run (its server
   setup); the spec reads the same seed, nation and sizes. Gate green.
+
+## 2026-11-10 — R59e: seaBattlesLook tells a battle with no fleet to see, and looks in order (R60-N5)
+
+- `tools/diag/seaBattlesLook.ts`: a battle listed with no fleet (31501's t17369 NED v USA, the Dutch all sunk in its
+  hour) is told "no fleet to see" and counted in the summary, not failed; the battles are looked at in the order of
+  their first hours, the page stepping only forward (the list had t6243 after t6257, looked at 14 h late: the run's
+  other miss). `docs/TOOLS.md`'s line.
+- Evidence: on the critic's `critic/c60_sb_31501.json` (a preview on 4173): exit 0, "44 of 44 battles seen ... 1 with
+  no fleet to see", t6243 seen at its own hour with both sides (ENG 96, ITA 16), page errors 0 (was 43 of 45, exit 1).
+  A tool only: no sim or page code. Gate green. R59 done.

@@ -7,6 +7,10 @@
  * Usage: `npm run build`, `npx vite preview --port 4173`, then
  * `npx tsx tools/diag/seaBattlesLook.ts <seaBattles json> [--max N] [--shots K] [--out file.json]`.
  * One line a battle, a summary, then `done:`; exit 1 when a battle is not seen.
+ * Looked at in the order of their first hours, the page stepping only forward (ROADMAP R59e; critic run 60: 31501's
+ * t6243 listed after t6257 was looked at 14 hours late). A battle listed with no fleet (both sides sunk or out of
+ * `seaBattles`' search in its one hour: 31501's t17369 NED v USA, the Dutch all sunk) has nothing to look at: told
+ * "no fleet to see" and counted, not failed (R59e; critic run 60, R60-N5).
  */
 /* eslint-disable @typescript-eslint/no-explicit-any -- the page's debug handle, `window.__warsim`, is read untyped */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -95,25 +99,28 @@ const rows: unknown[] = [];
 let unseen = 0;
 /** Battles listed with one side's fleets alone: seen with that side, and so told (the other's are not to be looked for). */
 let oneSide = 0;
-const list = src.battles.slice(0, max);
+let noFleet = 0;
+const list = [...src.battles].sort((a, b) => a.start - b.start).slice(0, max);
 for (const [k, b] of list.entries()) {
   await toTick(b.start);
   const r = await look(b);
   const sides = new Set(b.fleets.map(sideKey));
-  // No fleet listed is not seen: a battle with nothing to look at is what the check is for. A battle listed with one
-  // side's fleets alone (the other's all sunk in its hour, `fleetsNear`) is seen with that side.
-  const ok = sides.size > 0 && r.sidesSeen >= Math.min(2, sides.size);
+  // A battle listed with one side's fleets alone (the other's all sunk in its hour, `fleetsNear`) is seen with that
+  // side; one listed with none has nothing to look at (R59e).
+  const none = sides.size === 0;
+  const ok = none || r.sidesSeen >= Math.min(2, sides.size);
   if (!ok) unseen++;
+  if (none) noFleet++;
   if (sides.size === 1) oneSide++;
   let shot: string | undefined;
   if (k < shots || !ok) {
     shot = path.join(shotDir, `t${b.start}_${b.a}_${b.b}.png`);
     await page.screenshot({ path: shot });
   }
-  rows.push({ start: b.start, a: b.a, b: b.b, sea: b.sea, camera: b.camera, ...r, ok, shot });
-  process.stderr.write(`${ok ? (sides.size === 1 ? 'seen (one side listed)' : 'seen') : 'NOT SEEN'} t${b.start} ${b.a} v ${b.b} (${b.sea}) at ${r.mpp} m/px, tick ${r.tick}: ${JSON.stringify(r.seen)}\n`);
+  rows.push({ start: b.start, a: b.a, b: b.b, sea: b.sea, camera: b.camera, ...r, ok, ...(none ? { noFleet: true } : {}), shot });
+  process.stderr.write(`${none ? 'no fleet to see' : ok ? (sides.size === 1 ? 'seen (one side listed)' : 'seen') : 'NOT SEEN'} t${b.start} ${b.a} v ${b.b} (${b.sea}) at ${r.mpp} m/px, tick ${r.tick}: ${JSON.stringify(r.seen)}\n`);
 }
-writeFileSync(outFile, JSON.stringify({ seed: src.seed, battles: list.length, unseen, oneSide, errors, rows }, null, 1));
+writeFileSync(outFile, JSON.stringify({ seed: src.seed, battles: list.length, unseen, oneSide, noFleet, errors, rows }, null, 1));
 await browser.close();
-process.stdout.write(`seed ${src.seed}: ${list.length - unseen} of ${list.length} battles seen at their camera (${oneSide} listed with one side alone); page errors ${errors.length}; ${outFile}\ndone:\n`);
+process.stdout.write(`seed ${src.seed}: ${list.length - unseen - noFleet} of ${list.length - noFleet} battles seen at their camera (${oneSide} listed with one side alone, ${noFleet} with no fleet to see); page errors ${errors.length}; ${outFile}\ndone:\n`);
 process.exitCode = unseen > 0 ? 1 : 0;
