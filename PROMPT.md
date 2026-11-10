@@ -70,8 +70,8 @@ game's assets or code.
 # RELEASES (ADR-804, ADR-805)
 
 Items come in batches (a ROADMAP section). After the last item of a batch:
-1. Spawn the `critic` subagent with no hints (its run is focused; "full run" only when the user asked for
-   one, ADR-915), wait for it, check that its report names HEAD, commit
+1. Spawn the `critic` subagent with no hints (its run is focused; "full run" only as step 3 says, ADR-915,
+   ADR-916), wait for it, check that its report names HEAD, commit
    `critic/` with a line in PROGRESS.md (scores, blocking count). Git takes only its report, JSON,
    scripts and scenario files; its logs and dumps stay on disk (`.gitignore`, ADR-914). That commit carries `critic/`,
    PROGRESS.md, ROADMAP.md and DECISIONS.md only; a fix is a commit of its own.
@@ -91,8 +91,8 @@ Items come in batches (a ROADMAP section). After the last item of a batch:
    Not for naval (ADR-833, the user's decision, 2026-11-06): its blocking issues and its non-blocking
    ones are items, fixed, then the critic again, until it is at its bar; before each critic run the
    critic's own probes (`critic/scripts`) are replayed on the code and what they find is fixed first.
-3. A focused report with no blocking issue and every score at its bar: the loop stops and asks the user
-   for a full run (the next message starts with it). On a full report with no blocking issue and every
+3. Focused runs until one has no blocking issue and every score at its bar; then the critic is spawned
+   with "full run" (ADR-916, the user's decision). On a full report with no blocking issue and every
    score at its bar: `npm run check:review`, the
    soak (`npm run soak -- --scenario 1938 --seed 99 --minutes 30 --affinity 0xFFFF`), the sweep on
    unseen seeds (`npm run sweep -- --first <seed> --tag <name>`: borders still moving at the end
@@ -110,10 +110,6 @@ A feature the user asks for during a batch joins the next batch, unless the user
   (e.g. 6 h, 1, 2, 3, 5 days), the cell offset, which unit (the one aboard, one walking, all), how
   many, on two seeds, as R27c's fuzz does. Most of runs 34–43's blocking issues were a ticked item's
   own case with one of these moved (R31e's AT recalled at one day; the critic at 2, 3 and 5).
-- A change of a checker's reading (`tests/helpers/*Invariants.ts`, `tests/helpers/slowClick.ts`) or of a
-  landing rule runs `npx tsx tools/diag/landingFuzz.ts` (300 runs on seeds no one has used, about half an hour) in its own
-  item, and what that exposes is fixed in the same batch, not found by the critic (ADR-914). So does the
-  last item of a naval batch, before the critic runs.
 - A rule a fix adds is checked with the rules beside it: the feature's checker (step 5) runs on the
   fix, and a case the critic found goes into the checker or the fuzz, not only into one test.
 - Tune on small runs: `npm run sweep:quick` (10 seeds × 20 years); the full sweep once per item,

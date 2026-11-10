@@ -7,6 +7,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-916 · 2026-11-09 · accepted (the user's decision) — Focused runs until the bars; then one full run and the release; no fuzz step
+- **The user, 2026-11-09:** "let's do focused runs until we pass the bars, and then we do a full run/release. Let's not
+  do the fuzz, I don't think it's worth it time-wise - we should just do focused runs until we pass the bar, instead
+  of the doing full runs like we did the prior few times."
+- **Decision.** The critic runs focused until a run has no blocking issue and every score at its bar; then the builder
+  spawns it with "full run", and on a clean full run takes PROMPT "RELEASES" 3 and 4 (no stop to ask; ADR-915's ask
+  replaced). The landing fuzz is no step of the loop (ADR-914 (3) withdrawn): `tools/diag/landingFuzz.ts` stays, by hand.
+- **Consequences.** Critic run 60 (focused, `91d11424`) met every bar, so the next run is the full one.
+
 ### ADR-915 · 2026-11-09 · accepted (the user's decision) — The critic's run is focused unless the user asks for a full one
 - **Context.** The user, 2026-11-09: "Is it possible to change the critic prompt so that we don't do full rescores
   unless we specifically request it? It seems like we are spending a lot of time on things that the critic never
