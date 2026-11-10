@@ -204,7 +204,7 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     belligerents of 11 December 1941 as history had them.
     Done (ADR-934): fifteen pairs at war or at peace as history had them at the end of 11 December 1941; no event
     passed over to 1 January 1942 (`tests/sweep/historyMatch1938h.test.ts`). R62g done with its slices.
-  - [ ] R62h 1942–45: the Pacific, Stalingrad, El Alamein and Torch, Italy's surrender and the Italian Social Republic,
+  - [x] R62h 1942–45: the Pacific, Stalingrad, El Alamein and Torch, Italy's surrender and the Italian Social Republic,
     Bagration, D-Day, the switches of Romania, Bulgaria and Finland, Germany's surrender (8 May 1945), Hiroshima and
     Nagasaki, Manchuria, Japan's surrender (2 September 1945). AT: each event on its date; control matches history on
     1 November 1942 and 6 June 1944 ≥ 75 %, owners and control on 1 June 1945 ≥ 85 % of land cells; the two scripted
@@ -231,7 +231,8 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     September 1945). AT: each event on its date; the two scripted strikes the only nuclear ones.
     Done (ADR-938): two warheads burst to 26 October 1945, Hiroshima's and Nagasaki's on their hours; no event passed
     over; owners 97.2 % right, control 97.2 % right (`tests/sweep/historyMatch1938h.test.ts`, `nuke` in
-    `tests/unit/trackLevers1938h.test.ts`).
+    `tests/unit/trackLevers1938h.test.ts`). R62h done with its slices (ticked late, after R62i4: its last slice's
+    commit left it open).
   - [ ] R62i 1945–53: the occupation zones, Poland moved west, Austria, the Philippines, India and Pakistan, Burma,
     Ceylon, Israel, Indonesia, the Chinese civil war (the People's Republic, the Republic on Taiwan), the two Germanies,
     the two Koreas and the Korean War to the armistice, Japan's sovereignty (1952); the new nations' names, colours and
