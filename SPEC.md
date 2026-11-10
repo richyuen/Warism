@@ -1738,6 +1738,9 @@ to 27 July 1953, then sets the world free.
   seed, rolled by the form (`?after=`) and kept in the state, is taken when the track ends (in 1953 or at
   the intervention): every RNG stream is derived again from it, so the world after the track differs from
   run to run.
+- **The 1938-39 period** (R62f, ADR-928): its events, objectives and the `maps` it is measured against
+  (`tools/diag/historyMatch.ts`); `buff` and `forces` events (phase buffs, arrivals); `without` on `war` and `join`.
+  Open: the China front (R62f2).
 - **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is
   reached by the timeline's steering (objectives, dates, historical arrivals of forces and phase buffs),
   tuned per period against a match tool (R62h). The shared rules do not change for the track.

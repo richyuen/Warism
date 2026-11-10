@@ -7,7 +7,7 @@ import nations1938h from '../../data/scenarios/1938h/nations.json' with { type: 
 import scenario1938h from '../../data/scenarios/1938h/scenario.json' with { type: 'json' };
 import timeline1938h from '../../data/scenarios/1938h/timeline.json' with { type: 'json' };
 import type { NationDef, TimelineFile } from './data/schemas';
-import { NATIONS_1938 } from './scenario1938';
+import { NATIONS_1938, TEMPLATES_1938 } from './scenario1938';
 import { traitMask } from '../shared/traits';
 import { staticCe } from './systems/efficiency';
 import { Track } from './track';
@@ -72,5 +72,6 @@ export function startTrack1938h(world: World, file: TimelineFile = TIMELINE_1938
   for (let i = 0; i < ADDED_1938H.length; i++) t.unborn.add(NATIONS_1938.length + i + 1);
   t.capitals = NATIONS_1938H.map((n) => n.capital.lonLat as [number, number]);
   t.revivals = scenario1938h.settings.revival.maxPerNation;
+  t.templates = new Map(TEMPLATES_1938.map((x, i) => [x.id, i]));
   world.track = t;
 }

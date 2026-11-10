@@ -9,6 +9,35 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-928 · 2026-11-10 · accepted (its re-scope the user's decision, 2026-11-10) — 1938-39 on the track, measured (R62f)
+- **The period** (`data/scenarios/1938h/timeline.json`, 32 events, our own summary of public history): the
+  Anschluss; the Sudetenland (1 October 1938), Zaolzie, the First Vienna Award; Slovakia born and Germany's puppet,
+  Carpatho-Ukraine to Hungary, the Protectorate (Czechoslovakia annexed), Memel; the end of the Spanish war (the
+  Republic annexed, 1 April 1939); Albania annexed; Nomonhan (Mongolia and Manchukuo alone, a white peace on 16
+  September); Danzig; Germany and Slovakia on Poland, Britain (Ireland and Egypt neutral, `without`) and France joining,
+  the Soviet Union's war on Poland, the partition on the line of 28 September, Poland's remnant annexed; Vilnius to
+  Lithuania; the Baltic bases as Soviet guarantees; the Winter War. Objectives: Wuhan and Canton (Japan), Warsaw
+  (Germany), Lwów and Viipuri (the Soviet Union). The pact of August 1939 and the Anti-Comintern joins have no event:
+  no land or war of theirs, and an alliance would call members into wars the timeline names itself.
+- **Two kinds for the fighting** (SPEC §7.7, "historical arrivals of forces and phase buffs"): `buff` (God Mode's
+  `grantBuff`, named "History's course", until a date) and `forces` (formations of a template set down at a place, God
+  Mode's spawn). Neither is used in 1938-39 (see below). `without` on `war` and `join`: puppets left neutral.
+- **The measure.** The timeline's `maps` (the land on 1 October 1938, 1 April and 1 October 1939: admin-0 and admin-1
+  codes, rings only where a border cuts a province, drawn on their own and not from the events' rings) laid over the
+  start's owners; `tools/diag/historyMatch.ts` gives three columns a date: all land owned as on the map; the land the
+  map moved since the start, the share moved so; the land the world moved and the map did not. The whole-land share
+  alone says little (an empty timeline scores 98.8 %): the moved and stray columns carry it.
+- **Measured:** 100.00 / 98.81 / 98.79 % of all land; moved 97.6 / 98.1 / 97.1 % right; stray 0 / 1.19 / 1.19 %, all
+  China's conquest of Manchukuo and Mengjiang; events 15 and 21 (Nomonhan) passed over, Manchukuo dead. R62f's bar is
+  not met (BLOCKERS); the item stays open and its cause is R62f2.
+- **The re-scope, the user's decision** ("Lets go with your proposal", 2026-11-10): R62f's bar is the period's own
+  events and land; the Nomonhan events and the China front's stray land are R62f2's (the China front's item), so the
+  1938-39 data counts as done while the front is worked on. 1938h stays hidden: listed with events to 1939 only, it
+  would be steered to 1953 with nothing to end its wars.
+- **Not taken:** buffs or arrivals for Japan in this period: each tried flipped the front from Japan's collapse to
+  China's (the Communists dead by 1939), worse for 1940-45 than the stray land; keeping an overrun nation alive while
+  steered: it only hides the front in the owners column.
+
 ### ADR-927 · 2026-11-10 · accepted — The track's steering: the world's diplomacy off, objectives weighting plans (R62e)
 - **Off while the track runs** (`World.steered`): the strategic AI whole (its wars, stalemate peaces, threat pacts,
   coalitions, rivals apart: it does nothing else); every peace of the war rules (capitulation, the longest war, no

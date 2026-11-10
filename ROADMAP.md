@@ -147,11 +147,20 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     AI's sectors and naming the invasion AI's landings. AT: on a test war with one objective, the attacker's allotted
     strength in sectors facing it ≥ 2× the plain AI's on the same save (A/B from one `sim.save()`); in a 2-year headless
     run no war, peace, pact or nuke but the timeline's.
-  - [ ] R62f 1938–39: the Anschluss, Munich and the Sudetenland, the First Vienna Award, the end of Czechoslovakia
+  - [x] R62f 1938–39: the Anschluss, Munich and the Sudetenland, the First Vienna Award, the end of Czechoslovakia
     (the Protectorate, Slovakia, Carpatho-Ukraine), Memel, Albania, the end of the Spanish war, Nomonhan, the pact and
     the partition of Poland, the Baltic bases, the Winter War. AT: every 1938–39 event fires on its date; land owned as
     history had it on 1 October 1938, 1 April 1939 and 1 October 1939 ≥ 95 % of land cells (the historical maps as
     rings, in the timeline's data).
+    Done for the period's own events and land, re-scoped by the user (ADR-928): the data, the maps,
+    `tools/diag/historyMatch.ts`, the `buff`, `forces` and `without` levers; 100.00 / 98.81 / 98.79 % of land, the moved
+    land 97-98 % right (`tests/sweep/historyMatch1938h.test.ts`). The Nomonhan war and peace (passed over) and the 1.19 %
+    of land strayed, China having overrun Manchukuo in February 1939, are R62f2's.
+  - [ ] R62f2 The China front (R62f's cause): why formations under strength are not refilled while the manpower pool
+    grows (the economic AI's refill step), and a dated hold on a front read where the AI attacks (inert elsewhere, the
+    pin unmoved). AT: from one save at 1 November 1938, 12 months with the hold and without: with it Japan's share of
+    China within 5 points of its start, China's army not under half, the Communists and Manchukuo living; then R62f's
+    run: no event passed over, stray land under 0.2 %.
   - [ ] R62g 1940–41: Denmark and Norway, the Low Countries and France (the armistice, Vichy and the occupied zone),
     Italy's entry, the Baltic annexations and Bessarabia, the Second Vienna Award, the Tripartite Pact, Greece and
     Yugoslavia (Croatia), North Africa, Barbarossa, Iran, Pearl Harbor and the Pacific opening. AT: each event on its

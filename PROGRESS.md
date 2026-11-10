@@ -188,3 +188,13 @@
   world's seed and streams anew from the second seed; `GameOptions.after` (`?after=`), rolled by the form's Start.
 - Evidence: `tests/unit/trackBirth1938h.test.ts` (3); a probe, 5 seeds × a year: no unborn nation alive on any day;
   `tests/e2e/scenario1938h.spec.ts` (Start's URL has `after`). Gate.
+
+## 2026-11-10 — R62f: 1938-39 on the track, measured; its bar not met (ADR-928, BLOCKERS)
+
+- `data/scenarios/1938h/timeline.json`: 32 events of 1938-39 and three reference `maps`; `tools/diag/historyMatch.ts`
+  (all land / moved right / stray); `buff`, `forces` and `without` in the timeline.
+- Measured (`tests/sweep/historyMatch1938h.test.ts`): 100.00 / 98.81 / 98.79 % of land as history had it, the moved
+  land 97-98 % right. Not met: China overruns Manchukuo (February 1939) and Mengjiang, 1.19 % of land strays, the
+  Nomonhan war and peace are passed over. Probes: refills unpaid while the pools grow; buffs and arrivals flip the
+  front from one collapse to the other. The cause is R62f2; R62f re-scoped by the user (ADR-928) and ticked.
+- Evidence: `tests/unit/trackLevers1938h.test.ts`, the sweep test, the data-schemas case. Gate.

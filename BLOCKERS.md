@@ -5,6 +5,25 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 
 ## Open
 
+### R62f: 1938h's China front has no stalemate; Manchukuo falls in February 1939 (2026-11-10)
+- **The bar** (R62f): every 1938-39 event on its date; owned as history had it on 1 October 1938, 1 April and 1 October
+  1939 ≥ 95 % of land. Met: 100.00, 98.81, 98.79 % of all land, the land the maps moved 97.6-98.1 % right
+  (`tests/sweep/historyMatch1938h.test.ts`, `tools/diag/historyMatch.ts`). Not met: the Nomonhan war and its peace
+  (events 15, 21) are passed over, Manchukuo dead; China's conquest of Manchukuo and Mengjiang strays 1.19 % of land.
+- **What was read** (`.cache/probe/` probes on the empty timeline and the R62f one): Japan's army falls from about 570k
+  to about 100k men in 7 months, China's from 850k to 365k; nobody stands in Manchukuo and China walks in (day 421).
+  Japan's manpower pool grows unused (959k to 1.16M); +300 % income left 25k gold unspent and the army as small: the
+  pay is not what is short. Of the land formations under strength, many pass `refillable` (China 52-105, Japan 2-10 a
+  week) and are not refilled; 9-36 a week are engaged (contact alone sets it, `combat.ts`). Every rule-made peace is off
+  while the track runs (ADR-927), so a war ends with one army gone: Japanese arrivals (3-15 divisions every 2-3
+  months), +0.15-0.5 attack and defence, Chinese defence +0.5-1 and arrivals all flipped the front from one collapse to
+  the other (China's army 0k by month 6, the Communists dead by month 9-12), never a line held.
+- **Left:** ROADMAP R62f2 (the cause, its own item): why under-strength formations are not refilled while the pool
+  grows (the economic AI's refill step, `economic.ts` step 3a), and a dated hold on a front for the track (a lever
+  read where the AI attacks, inert elsewhere), measured A/B from one save at 1 November 1938. Then R62f's run again.
+  R62f re-scoped by the user (ADR-928): its data done, the Nomonhan events and the stray land R62f2's. 1938h stays
+  hidden.
+
 ### `seaRow1938`'s Speed x1 test red on this machine again, the code not its cause; on `tools/gate/knownRed.json` (2026-11-08, R53g)
 - **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
   with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a). Resolved once (docs/BLOCKERS_DONE.md,

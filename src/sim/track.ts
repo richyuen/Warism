@@ -76,6 +76,10 @@ export class Track {
   readonly endTick: number;
   /** Each nation's capital in its table, lon/lat, by id − 1 (a born nation's seat, R62d). */
   capitals: readonly (readonly [number, number])[] = [];
+  /** The scenario's templates, index by id (forces arriving, R62f). */
+  templates: ReadonlyMap<string, number> = new Map();
+  /** The scenario's first day (`dayOfIso`). */
+  private readonly start: number;
   /** The revivals a born nation has, as its scenario's nations do (R62d). */
   revivals = 0;
   /** The objectives' events, by index, with the tick each ends (R62e). */
@@ -86,6 +90,7 @@ export class Track {
   constructor(file: TimelineFile, tags: readonly string[], startDate: string) {
     this.events = file.events;
     const start = dayOfIso(startDate);
+    this.start = start;
     this.ticks = file.events.map((e) => (dayOfIso(e.date) - start) * 24 + (e.hour ?? 0));
     this.hash = timelineHash(file);
     this.endTick = file.end === undefined ? Infinity : (dayOfIso(file.end) - start) * 24;
@@ -122,6 +127,11 @@ export class Track {
       if (dx * dx + dy * dy <= p.r2) return OBJECTIVE_WEIGHT;
     }
     return 1;
+  }
+
+  /** The tick of a date's first hour. */
+  tickOf(date: string): number {
+    return (dayOfIso(date) - this.start) * 24;
   }
 
   /** The nation of a tag (0: none such). */
@@ -161,12 +171,12 @@ function whyNot(world: World, n: number): Refusal {
 }
 
 /** A war of these sides alone, each leader first with its puppets (the sim's calls of allies do not apply). */
-function war(world: World, attackers: readonly number[], defenders: readonly number[]): Refusal {
+function war(world: World, attackers: readonly number[], defenders: readonly number[], without: readonly number[] = []): Refusal {
   for (const n of [...attackers, ...defenders]) {
     const why = whyNot(world, n);
     if (why) return why;
   }
-  const side = (ns: readonly number[]): number[] => [...new Set(ns.flatMap((n) => withPuppets(world, n)))];
+  const side = (ns: readonly number[]): number[] => [...new Set(ns.flatMap((n) => withPuppets(world, n)))].filter((x) => ns.includes(x) || !without.includes(x));
   const a = side(attackers);
   const d = side(defenders);
   if (a.some((x) => d.includes(x))) return Refusal.SameNation;
@@ -189,13 +199,13 @@ function war(world: World, attackers: readonly number[], defenders: readonly num
 }
 
 /** `n` with its puppets joins the war between `beside` and `against`, on `beside`'s side. */
-function join(world: World, n: number, beside: number, against: number): Refusal {
+function join(world: World, n: number, beside: number, against: number, without: readonly number[] = []): Refusal {
   const why = whyNot(world, n) || whyNot(world, beside) || whyNot(world, against);
   if (why) return why;
   const at = world.wars.between(beside, against);
   if (!at) return Refusal.NoSuch;
   const { war: w, side } = at;
-  const joining = withPuppets(world, n).filter((x) => !w.sides[ATTACKERS].includes(x) && !w.sides[DEFENDERS].includes(x));
+  const joining = withPuppets(world, n).filter((x) => (x === n || !without.includes(x)) && !w.sides[ATTACKERS].includes(x) && !w.sides[DEFENDERS].includes(x));
   if (!joining.includes(n)) return Refusal.NoEffect;
   const own = w.sides[side]!;
   const foes = w.sides[side === ATTACKERS ? DEFENDERS : ATTACKERS]!;
@@ -373,9 +383,9 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
   const id = (tag: string): number => t.id(tag);
   switch (e.kind) {
     case 'war':
-      return war(world, e.attackers.map(id), e.defenders.map(id));
+      return war(world, e.attackers.map(id), e.defenders.map(id), (e.without ?? []).map(id));
     case 'join':
-      return join(world, id(e.nation), id(e.beside), id(e.against));
+      return join(world, id(e.nation), id(e.beside), id(e.against), (e.without ?? []).map(id));
     case 'peace':
       return peace(world, id(e.a), id(e.b), e.terms);
     case 'annex':
@@ -403,6 +413,18 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
     case 'objective':
       // It weighs from now on (`objectiveWeight`); a nation not living has none.
       return whyNot(world, id(e.nation));
+    case 'forces': {
+      const template = t.templates.get(e.template);
+      if (template === undefined) return Refusal.NoSuch;
+      const [u, v] = project(e.at[0], e.at[1]);
+      let why: Refusal = Refusal.None;
+      for (let k = 0; k < e.count && why === Refusal.None; k++) why = applyCommand(world, { kind: 'spawnFormation', nation: id(e.nation), x: u * world.cells.w, y: v * world.cells.h, strength: 1, template });
+      return why;
+    }
+    case 'buff': {
+      const hours = t.tickOf(e.until) - world.tick;
+      return whyNot(world, id(e.nation)) || applyCommand(world, { kind: 'grantBuff', targetKind: 'nation', target: id(e.nation), buff: e.buff, magnitude: e.magnitude, hours, nameKey: 'buff.history' });
+    }
   }
 }
 
@@ -431,6 +453,8 @@ function firstNation(t: Track, e: TimelineEvent): number {
       return t.id(e.by);
     case 'born':
     case 'objective':
+    case 'buff':
+    case 'forces':
       return t.id(e.nation);
   }
 }

@@ -1,0 +1,123 @@
+/**
+ * ROADMAP R62f (SPEC §7.7, ADR-928): how the historical track's land matches history. The timeline's `maps` (the land
+ * as history had it on a date, drawn on their own from admin codes and a few rings) are laid over the start's owners;
+ * the world on each map's day at noon is set against them. Three columns: the share of all land owned as on the map;
+ * of the land the map changed since the start, the share the world has so (did the timeline move it right); and the
+ * land the world changed that the map did not, as a share of all land (did anything else move it).
+ *
+ * Usage: `npx tsx tools/diag/historyMatch.ts [until YYYY-MM-DD]`; one line a map and a line of what differs most, the
+ * events passed over, then `done:`. About two minutes a simulated year.
+ */
+import { pathToFileURL } from 'node:url';
+import type { Admin1Meta } from '../../src/shared/admin1';
+import { dayOfIso } from '../../src/shared/calendar';
+import { EventKind } from '../../src/shared/events';
+import { Terrain } from '../../src/shared/terrain';
+import { forEachCellInRing } from '../../src/sim/data/ownership';
+import type { TimelineFile } from '../../src/sim/data/schemas';
+import { SIZE_1938 } from '../../src/sim/scenario1938';
+import { SEED_1938H, TAGS_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
+import { Sim } from '../../src/sim/sim';
+import { loadAssets1938 } from '../headless/assets';
+
+type HistoryMap = NonNullable<TimelineFile['maps']>[number];
+
+/** The owners of map `k` and those before it, laid over `start` (land cells only). */
+export function referenceOwners(start: Uint16Array, province: Uint16Array, terrain: Uint8Array, meta: readonly Admin1Meta[], maps: readonly HistoryMap[], k: number, tags: readonly string[], w: number, h: number): Uint16Array {
+  const id = (t: string): number => tags.indexOf(t) + 1;
+  const out = start.slice();
+  const land = (c: number): boolean => terrain[c]! >= Terrain.Plains;
+  for (let m = 0; m <= k; m++) {
+    const map = maps[m]!;
+    const byCountry = new Map(Object.entries(map.byCountry ?? {}).map(([a, t]) => [a, id(t)]));
+    const byProvince = new Map(Object.entries(map.byProvince ?? {}).map(([a, t]) => [a, id(t)]));
+    for (let c = 0; c < out.length; c++) {
+      const p = province[c]!;
+      if (p === 0 || !land(c)) continue;
+      const pm = meta[p - 1]!;
+      const to = byProvince.get(pm.adm1) ?? byCountry.get(pm.adm0);
+      if (to !== undefined) out[c] = to;
+    }
+    for (const r of map.regions ?? []) {
+      const from = new Set(r.onlyFrom.map(id));
+      const to = id(r.owner);
+      forEachCellInRing(r.ring, w, h, (c) => {
+        if (land(c) && from.has(out[c]!)) out[c] = to;
+      });
+    }
+  }
+  return out;
+}
+
+export interface MatchColumns {
+  /** Land cells. */
+  land: number;
+  /** Of all land, the share owned as on the map. */
+  whole: number;
+  /** Land the map changed since the start, and of it the share the world owns so. */
+  moved: number;
+  movedRight: number;
+  /** Land the world changed since the start that the map did not, as a share of all land. */
+  strayShare: number;
+  /** What differs most: [world's owner, map's owner, cells], the largest first. */
+  worst: [number, number, number][];
+}
+
+export function matchColumns(world: Uint16Array, ref: Uint16Array, start: Uint16Array, terrain: Uint8Array): MatchColumns {
+  let land = 0;
+  let same = 0;
+  let moved = 0;
+  let movedRight = 0;
+  let stray = 0;
+  const diff = new Map<number, number>();
+  for (let c = 0; c < world.length; c++) {
+    if (terrain[c]! < Terrain.Plains || start[c] === 0) continue;
+    land++;
+    if (world[c] === ref[c]) same++;
+    else diff.set(world[c]! * 65536 + ref[c]!, (diff.get(world[c]! * 65536 + ref[c]!) ?? 0) + 1);
+    if (ref[c] !== start[c]) {
+      moved++;
+      if (world[c] === ref[c]) movedRight++;
+    } else if (world[c] !== start[c]) stray++;
+  }
+  const worst = [...diff].sort((a, b) => b[1] - a[1] || a[0] - b[0]).slice(0, 6).map(([k, n]) => [Math.floor(k / 65536), k % 65536, n] as [number, number, number]);
+  return { land, whole: same / land, moved, movedRight: moved > 0 ? movedRight / moved : 1, strayShare: stray / land, worst };
+}
+
+/** Runs 1938h (its own seed) through each map's day at noon, then to `until` (a date); the columns of each, and the events passed over. */
+export function runMatch(timeline: TimelineFile = TIMELINE_1938H, log: (s: string) => void = () => {}, until?: string): { maps: { date: string; cols: MatchColumns }[]; skipped: number[]; sim: Sim } {
+  const assets = loadAssets1938(SIZE_1938.w);
+  const meta = JSON.parse(new TextDecoder().decode(assets.admin1Meta)) as Admin1Meta[];
+  const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets }, timeline);
+  const w = sim.world;
+  const start = w.cells.owner.slice();
+  const day0 = dayOfIso('1938-01-01');
+  const out: { date: string; cols: MatchColumns }[] = [];
+  const skipped: number[] = [];
+  const to = (tick: number): void => {
+    while (sim.tick < tick) {
+      sim.step(1, (x) => {
+        for (let i = 0; i < x.out.events.length; i += 6) if (x.out.events[i + 1] === EventKind.TrackSkipped) skipped.push(x.out.events[i + 3]! - 1);
+        x.out.events.length = 0;
+        x.out.fires.length = 0;
+      });
+    }
+  };
+  (timeline.maps ?? []).forEach((m, k) => {
+    to((dayOfIso(m.date) - day0) * 24 + 12);
+    const ref = referenceOwners(start, w.cells.province, w.cells.terrain, meta, timeline.maps!, k, TAGS_1938H, w.cells.w, w.cells.h);
+    const cols = matchColumns(w.cells.owner, ref, start, w.cells.terrain);
+    out.push({ date: m.date, cols });
+    const tag = (n: number): string => TAGS_1938H[n - 1] ?? (n === 0 ? '-' : String(n));
+    log(`${m.date}: whole ${(100 * cols.whole).toFixed(2)} %, moved ${cols.moved} cells, ${(100 * cols.movedRight).toFixed(1)} % right; stray ${(100 * cols.strayShare).toFixed(2)} % of land`);
+    log(`  differs: ${cols.worst.map(([a, b, n]) => `${tag(a)} for ${tag(b)} ${n}`).join(', ')}`);
+  });
+  if (until !== undefined) to((dayOfIso(until) - day0) * 24);
+  log(`events passed over: ${skipped.length === 0 ? 'none' : skipped.map((i) => `${i + 1} (${timeline.events[i]!.date} ${timeline.events[i]!.kind})`).join(', ')}`);
+  return { maps: out, skipped, sim };
+}
+
+if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
+  runMatch(TIMELINE_1938H, (s) => process.stdout.write(`${s}\n`), process.argv[2]);
+  process.stdout.write('done:\n');
+}

@@ -496,8 +496,8 @@ export type FlagsFile = { flags: Record<string, FlagSpec> };
 
 // ── the historical track's timeline (data/scenarios/<id>/timeline.json, ROADMAP R62b, ADR-919) ──
 
-/** An event's when: its day, and the hour of that day (0 when not given). */
-const when = { date, hour: z.number().int().min(0).max(23).optional() };
+/** An event's when: its day, and the hour of that day (0 when not given); a note of what it is, for readers. */
+const when = { date, hour: z.number().int().min(0).max(23).optional(), note: z.string().optional() };
 const tags = z.array(tag).min(1);
 
 /**
@@ -505,10 +505,13 @@ const tags = z.array(tag).min(1);
  * objectives come with R62c-e.
  */
 export const TimelineEvent = z.discriminatedUnion('kind', [
-  /** A war of these sides alone (each leader first, its puppets with it): the sim's calls of allies do not apply. */
-  z.strictObject({ ...when, kind: z.literal('war'), attackers: tags, defenders: tags }),
-  /** `nation` (with its puppets) joins the war between `beside` and `against`, on `beside`'s side. */
-  z.strictObject({ ...when, kind: z.literal('join'), nation: tag, beside: tag, against: tag }),
+  /**
+   * A war of these sides alone (each leader first, its puppets with it but those `without`, which stay neutral, R62f):
+   * the sim's calls of allies do not apply.
+   */
+  z.strictObject({ ...when, kind: z.literal('war'), attackers: tags, defenders: tags, without: tags.optional() }),
+  /** `nation` (with its puppets but those `without`) joins the war between `beside` and `against`, on `beside`'s side. */
+  z.strictObject({ ...when, kind: z.literal('join'), nation: tag, beside: tag, against: tag, without: tags.optional() }),
   /** The war between `a` and `b` ends: white (each keeps its own) or on its score, as the sim's peace (its terms). */
   z.strictObject({ ...when, kind: z.literal('peace'), a: tag, b: tag, terms: z.enum(['white', 'score']) }),
   z.strictObject({ ...when, kind: z.literal('annex'), annexer: tag, target: tag }),
@@ -535,6 +538,16 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * and its invasion AI the cities there it may land by, OBJECTIVE_WEIGHT times.
    */
   z.strictObject({ ...when, kind: z.literal('objective'), nation: tag, at: lonLat, km: z.number().positive().max(3000), until: date, note: z.string().optional() }),
+  /**
+   * A phase's buff (R62f, SPEC §7.7 "phase buffs"): `nation`'s attack, defence, manpower, income or speed + `magnitude`
+   * until `until`, granted as God Mode's are (`grantBuff`, named "History's course").
+   */
+  z.strictObject({ ...when, kind: z.literal('buff'), nation: tag, buff: z.enum(['attack', 'defense', 'manpower', 'income', 'speed']), magnitude: z.number().min(-0.9).max(3), until: date }),
+  /**
+   * Forces arriving (R62f, SPEC §7.7 "historical arrivals of forces"): `count` formations of land template `template`
+   * set down for `nation` at `at` (its land point), as God Mode's spawn places one.
+   */
+  z.strictObject({ ...when, kind: z.literal('forces'), nation: tag, template: id, count: z.number().int().min(1).max(60), at: lonLat }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;
 export const TimelineFile = z.strictObject({
@@ -542,6 +555,22 @@ export const TimelineFile = z.strictObject({
   /** The day the track ends, after that day's first hour's events (R62d; absent: it runs until an intervention). */
   end: date.optional(),
   events: z.array(TimelineEvent),
+  /**
+   * The land as history had it on dates (R62f), each the one before it with its own changes, over the start's owners:
+   * whole countries and provinces by admin code, then rings where a border cuts one (`onlyFrom` as `ownership.json`'s).
+   * Drawn on their own, not from the events' rings: `tools/diag/historyMatch` measures the track against them.
+   */
+  maps: z
+    .array(
+      z.strictObject({
+        date,
+        note: z.string().optional(),
+        byCountry: z.record(z.string().regex(/^[A-Z0-9]{3}$/), tag).optional(),
+        byProvince: z.record(z.string(), tag).optional(),
+        regions: z.array(z.strictObject({ owner: tag, onlyFrom: tags, ring })).optional(),
+      }),
+    )
+    .optional(),
 });
 export type TimelineFile = z.infer<typeof TimelineFile>;
 
@@ -549,9 +578,9 @@ export type TimelineFile = z.infer<typeof TimelineFile>;
 export function timelineTags(e: TimelineEvent): string[] {
   switch (e.kind) {
     case 'war':
-      return [...e.attackers, ...e.defenders];
+      return [...e.attackers, ...e.defenders, ...(e.without ?? [])];
     case 'join':
-      return [e.nation, e.beside, e.against];
+      return [e.nation, e.beside, e.against, ...(e.without ?? [])];
     case 'peace':
       return [e.a, e.b];
     case 'annex':
@@ -573,6 +602,8 @@ export function timelineTags(e: TimelineEvent): string[] {
     case 'born':
       return [e.nation, ...e.from];
     case 'objective':
+    case 'buff':
+    case 'forces':
       return [e.nation];
   }
 }
@@ -963,6 +994,13 @@ export function validateDataSet(files: Readonly<Record<string, unknown>>): strin
       if (meta && e.date < meta.startDate) errors.push(`${f}: events[${i}]: ${e.date} is before the scenario's start`);
       for (const x of timelineTags(e)) if (known.size > 0 && !known.has(x)) errors.push(`${f}: events[${i}]: unknown nation '${x}'`);
       if (t.end !== undefined && e.date > t.end) errors.push(`${f}: events[${i}]: ${e.date} is after the track's end`);
+    });
+    let lastMap = '';
+    (t.maps ?? []).forEach((m, i) => {
+      if (m.date <= lastMap) errors.push(`${f}: maps[${i}]: ${m.date} is not after the map above it`);
+      lastMap = m.date;
+      const named = [...Object.values(m.byCountry ?? {}), ...Object.values(m.byProvince ?? {}), ...(m.regions ?? []).flatMap((r) => [r.owner, ...r.onlyFrom])];
+      for (const x of named) if (known.size > 0 && !known.has(x)) errors.push(`${f}: maps[${i}]: unknown nation '${x}'`);
     });
   }
   return errors;
