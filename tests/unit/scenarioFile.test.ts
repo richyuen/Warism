@@ -53,6 +53,14 @@ describe('scenario files (PLAN 1.38)', () => {
     await expect(decodeScenarioFile(await packSave(new TextEncoder().encode('hello')))).rejects.toThrow('not a Warism scenario file');
     const future = await encodeScenarioFile({ format: 99, name: 'x', base: '1938', w: 1, h: 1, tick: 0, hash: 0 }, new Uint8Array([1]));
     await expect(decodeScenarioFile(future)).rejects.toThrow('format 99');
+    // Cut short (ROADMAP R60c; critic run 61, R61-N3: told "Failed to fetch"), or a byte of its stream changed.
+    let x = 7;
+    const body = Uint8Array.from({ length: 60_000 }, () => (x = (Math.imul(x, 1103515245) + 12345) >>> 0) >>> 24);
+    const whole = await encodeScenarioFile({ format: SCENARIO_FORMAT, name: 'x', base: '1938', w: 1, h: 1, tick: 0, hash: 0 }, body);
+    await expect(decodeScenarioFile(whole.slice(0, 2_000))).rejects.toThrow('the file is damaged or incomplete');
+    const bent = whole.slice();
+    bent[bent.length - 40] = bent[bent.length - 40]! ^ 0xff;
+    await expect(decodeScenarioFile(bent)).rejects.toThrow('the file is damaged or incomplete');
   });
 
   it('writes the Warism magic and still reads a file from before the rename', async () => {

@@ -38,7 +38,11 @@ export async function encodeScenarioFile(header: ScenarioHeader, bytes: Uint8Arr
 
 /** Parses a scenario file; throws a readable error on anything else. */
 export async function decodeScenarioFile(file: Uint8Array): Promise<{ header: ScenarioHeader; bytes: Uint8Array }> {
-  const raw = await unpackSave(file);
+  // A cut or damaged gzip stream fails in the platform's own words, "Failed to fetch" in Chromium (ROADMAP R60c; critic
+  // run 61, R61-N3: an exported file's first 2,000 bytes): told as what it is.
+  const raw = await unpackSave(file).catch(() => {
+    throw new Error('the file is damaged or incomplete');
+  });
   const startsWith = (m: string): boolean => {
     const b = new TextEncoder().encode(m);
     for (let i = 0; i < b.length; i++) if (raw[i] !== b[i]) return false;

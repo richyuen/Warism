@@ -269,6 +269,11 @@ test('a scenario file chosen on the title screen starts its game; a file that do
   damaged[damaged.length - 40] = damaged[damaged.length - 40]! ^ 0xff;
   await pick('damaged.warism-scenario', damaged);
   await expect(error).toContainText('Could not load');
+  await expect(error).toContainText('damaged or incomplete');
+  // Its first 2,000 bytes (ROADMAP R60c; critic run 61, R61-N3: told "Failed to fetch").
+  await pick('cut.warism-scenario', file.subarray(0, 2_000));
+  await expect(error).toContainText('the file is damaged or incomplete');
+  await expect(error).not.toContainText('fetch');
   await pick('other.warism-scenario', Buffer.from('hello'));
   await expect(error).toContainText('not a Warism scenario file');
   // A size its map has not (PLAN 7.1b8: a file at S or L starts its game at that size).

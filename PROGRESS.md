@@ -101,3 +101,12 @@
   the chooser's words, the input unseen, Cancel styled as Random, the Start back after Cancel); with
   `scenarioUpgrade1938`, `randomWorld`, `editorForces1938`: 19 green; the confirm shot looked at. The critic's
   `MAINSTART=1 c61_x_editor` would now find the main Start disabled: the AT's second branch. Gate green.
+
+## 2026-11-10 — R60c: a cut scenario file is told damaged or incomplete (R61-N3)
+
+- `src/shared/scenarioFile.ts`: `decodeScenarioFile` catches a gzip stream that fails to unpack (cut short, or a byte
+  changed) and throws "the file is damaged or incomplete", not the platform's words ("Failed to fetch" in
+  Chromium). The title screen and the editor load through it (`src/app/scenarioFiles.ts`).
+- Evidence: `tests/unit/scenarioFile.test.ts` (an exported file's first 2,000 bytes, and one with a byte changed:
+  red before, green); `tests/e2e/title.spec.ts` (the cut file on the title screen: "Could not load: the file is
+  damaged or incomplete", no "fetch"); with `scenarioFile1938`, `scenarioUpgrade1938`: 13 green. Gate green.
