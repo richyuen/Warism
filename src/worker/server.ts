@@ -6,7 +6,8 @@
  * Subscriptions only change what is *sent*; the sim never sees them (invariant I4).
  */
 import { LABEL_STRIDE } from '../shared/nationLabels';
-import { ECONOMY_TABLES_1938, NATIONS_1938, TEMPLATES_1938, UNIT_IDS_1938 } from '../sim/scenario1938';
+import { ECONOMY_TABLES_1938, TEMPLATES_1938, UNIT_IDS_1938 } from '../sim/scenario1938';
+import { NATIONS_1938H } from '../sim/scenario1938h';
 import { deriveNationLabels } from './deriveLabels';
 import terrainJson from '../../data/terrain.json' with { type: 'json' };
 import cities1938 from '../../data/scenarios/1938/cities.json' with { type: 'json' };
@@ -1491,8 +1492,9 @@ export class SimServer {
     const sim = this.requireSim();
     const custom = sim.world.names.get(id);
     if (custom !== undefined) return `=${custom}`; // God Mode rename (PLAN 1.32)
-    // The one table there is, is that of 1938: it names the nations of the scenarios with its tags.
-    const def = SCENARIO_INFO[sim.scenario].nationTags[id - 1] !== undefined ? NATIONS_1938[id - 1] : undefined;
+    // The tables there are, 1938's and the historical track's (1938's and its own after them, R62a), name the nations
+    // of the scenarios with their tags.
+    const def = SCENARIO_INFO[sim.scenario].nationTags[id - 1] !== undefined ? NATIONS_1938H[id - 1] : undefined;
     if (def) return def.nameKey;
     const origins = sim.world.nations.cols.origin;
     return `=${foundedName(id, origins[id] ?? 0, this.provinceNames, foundedNth(id, origins, this.provinceNames))}`;

@@ -9,6 +9,8 @@ import toyMap from '../../data/maps/toy/map.json' with { type: 'json' };
 import toyScenario from '../../data/scenarios/toy/scenario.json' with { type: 'json' };
 import earthMap from '../../data/maps/earth/map.json' with { type: 'json' };
 import scenario1938 from '../../data/scenarios/1938/scenario.json' with { type: 'json' };
+import scenario1938h from '../../data/scenarios/1938h/scenario.json' with { type: 'json' };
+import nations1938h from '../../data/scenarios/1938h/nations.json' with { type: 'json' };
 import scenarioRandom from '../../data/scenarios/random/scenario.json' with { type: 'json' };
 import nations1938 from '../../data/scenarios/1938/nations.json' with { type: 'json' };
 import diplomacy1938 from '../../data/scenarios/1938/diplomacy.json' with { type: 'json' };
@@ -55,6 +57,11 @@ export interface ScenarioInfo {
   diplomacy: boolean;
   /** It has a roster of heroes (PLAN 7.184d, `data/scenarios/1938/heroes.json`): the new-game form offers them. */
   heroes: boolean;
+  /**
+   * Its seed, the same every game (the historical track, ROADMAP R62a): the new-game form offers neither the seed nor
+   * an option, and a game's URL cannot change them.
+   */
+  fixedSeed?: number;
 }
 
 /** A size of a map: its id and its cells across and down. */
@@ -76,6 +83,7 @@ interface ScenarioJson {
   hidden?: boolean;
   size?: string;
   startDate: string;
+  seed?: number;
   settings: { loopingMap: boolean };
 }
 
@@ -100,12 +108,14 @@ export function geometryOf(scenario: ScenarioId, size?: string): ScenarioGeometr
 const MAPS: Record<ScenarioId, readonly [MapJson, ScenarioJson]> = {
   toy: [toyMap, toyScenario],
   '1938': [earthMap, scenario1938],
+  '1938h': [earthMap, scenario1938h],
   random: [earthMap, scenarioRandom],
 };
 
 export const SCENARIO_GEOMETRY: Record<ScenarioId, ScenarioGeometry> = {
   toy: geometry(toyMap, toyScenario),
   '1938': geometry(earthMap, scenario1938),
+  '1938h': geometry(earthMap, scenario1938h),
   random: geometry(earthMap, scenarioRandom),
 };
 
@@ -123,6 +133,7 @@ function info(id: ScenarioId, map: MapJson, scenario: ScenarioJson, nations: num
     defaultSize: scenario.size ?? map.defaultSize,
     diplomacy,
     heroes,
+    ...(scenario.seed !== undefined ? { fixedSeed: scenario.seed } : {}),
   };
 }
 
@@ -130,12 +141,14 @@ export const SCENARIO_INFO: Record<ScenarioId, ScenarioInfo> = {
   // The toy world's two nations are code (src/sim/toy.ts), not a nations file.
   toy: info('toy', toyMap, toyScenario, 2),
   '1938': info('1938', earthMap, scenario1938, (nations1938.nations as { alive?: boolean }[]).filter((n) => n.alive !== false).length, nations1938.nations.map((n) => n.tag), diplomacy1938.alliances.length + diplomacy1938.wars.length > 0, heroes1938.heroes.length > 0),
+  // The historical track (ROADMAP R62a): 1938's world and nations, its own appended after them, dormant at the start.
+  '1938h': info('1938h', earthMap, scenario1938h, (nations1938.nations as { alive?: boolean }[]).filter((n) => n.alive !== false).length, [...nations1938.nations, ...nations1938h.nations].map((n) => n.tag)),
   // Its nations are made by the seed (src/sim/randomWorld.ts); this is how many when none is asked for.
   random: { ...info('random', earthMap, scenarioRandom, RANDOM_NATIONS.default), nationsRange: RANDOM_NATIONS },
 };
 
 /** The scenarios the title screen offers, in its order (PLAN 1.43). */
-export const LISTED_SCENARIOS: readonly ScenarioId[] = (['1938', 'random', 'toy'] as const).filter((id) => !SCENARIO_INFO[id].hidden);
+export const LISTED_SCENARIOS: readonly ScenarioId[] = (['1938', '1938h', 'random', 'toy'] as const).filter((id) => !SCENARIO_INFO[id].hidden);
 
 /**
  * Where a listed scenario's preview image is served, relative to the page (PLAN 1.43c): the

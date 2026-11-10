@@ -23,6 +23,11 @@ export interface NewGameFormProps {
   startLabel: string;
   /** Why the start button is not offered now, said under it and in its title (ROADMAP R60b: a scenario file pending). */
   blocked?: string | undefined;
+  /**
+   * The scenario's own seed (the historical track, ROADMAP R62a): no seed and no option are offered, it says why, and
+   * Start starts that seed with the scenario's own options.
+   */
+  fixedSeed?: number | undefined;
   onStart: (seed: number, options: GameOptions) => void;
 }
 
@@ -41,7 +46,7 @@ function withCe(opts: GameOptions, v: string): GameOptions {
  * The seed (or a random one) and the new-game options of PLAN 1.39b1, with the button that starts
  * the game. Shared by the title screen (PLAN 1.43) and the settings panel.
  */
-export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', diplomacy = false, heroes = false, startLabel, blocked, onStart }: NewGameFormProps) {
+export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', diplomacy = false, heroes = false, startLabel, blocked, fixedSeed, onStart }: NewGameFormProps) {
   const [next, setNext] = useState(String(seed));
   const [count, setCount] = useState(String(options.nations ?? nationsRange?.default ?? ''));
   const [opts, setOpts] = useState<GameOptions>(options);
@@ -64,6 +69,23 @@ export function NewGameForm({ seed, options, nationsRange, rangeHint = true, siz
     const own = heroes && opts.heroes === 'on' ? { ...drawn, heroes: 'on' as const } : drawn;
     return nationsRange ? { ...own, nations: Number(count) } : own;
   };
+  if (fixedSeed !== undefined) {
+    return (
+      <div class="new-game">
+        <p class="panel-note" data-testid="settings-fixed">
+          {t('settings.fixedSeed')}
+        </p>
+        <button type="button" class="start-btn" data-testid="settings-new-game" disabled={blocked !== undefined} title={blocked} onClick={() => onStart(fixedSeed, {})}>
+          {startLabel}
+        </button>
+        {blocked !== undefined ? (
+          <p class="panel-note" data-testid="start-blocked">
+            {blocked}
+          </p>
+        ) : null}
+      </div>
+    );
+  }
   return (
     <div class="new-game">
       <label class="form-row">

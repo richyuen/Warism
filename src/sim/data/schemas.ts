@@ -331,6 +331,13 @@ export const ScenarioMeta = z.strictObject({
   /** Map size id; absent = the map's default size. */
   size: z.string().optional(),
   startDate: date,
+  /**
+   * A scenario built from another's files (ROADMAP R62a, ADR-919: the historical track, `1938h`, from 1938's), with
+   * only what it adds in its own directory.
+   */
+  base: z.string().regex(/^[a-z0-9_]+$/).optional(),
+  /** A seed of its own, the same every game, not offered on its form (the historical track: a replay). */
+  seed: z.number().int().min(0).max(0xffffffff).optional(),
   settings: ScenarioSettings,
 });
 

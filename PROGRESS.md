@@ -149,3 +149,17 @@
   twice); `1938h` a scenario id of its own, its nations after 1938's 103; the reseed's AT compares every section but
   the track's own (the second seed is in it from the start). SPEC §2.6 names the reseed as the one exception to
   streams seeded from the world seed alone; §7.7's runner. Documents only.
+
+## 2026-11-10 — R62a: the historical track's scenario, `1938h` (ADR-919)
+
+- `1938h` (`data/scenarios/1938h/`: `scenario.json` with `base` 1938 and `seed` 1938, `nations.json` with 12 nations
+  born 1939–1949): built from 1938's own files; `addDormantNations1938h` (`src/sim/scenario1938h.ts`) appends its
+  nations after 1938's 103, dead with no land, core or revival. Through the registry (`ScenarioId`, `SCENARIO_INFO`
+  with `fixedSeed`), the sim's init, the worker's names (`NATIONS_1938H`), the app (its seed and no option whatever the
+  URL), `NewGameForm` (`fixedSeed`: a note, Start), the CLI and the preview. The schema takes `base` and `seed`.
+- Hidden until R62f (R62a's AT amended): listing a "Historical" world that plays as plain 1938 would be a feature
+  faked (PROMPT rule 6), and a push deploys.
+- Evidence: `tests/unit/scenario1938h.test.ts` (3: the 12 after the 103, the same land and nations as 1938, none born
+  a month on; save and load bit-identical and the run after equal; its seed and hidden); `tests/e2e/scenario1938h.spec.ts`
+  (the URL's seed 5 and random options change no hash; the settings' note, no seed field; shot looked at); seed 99's
+  pin green run alone; gate green. DATA_SOURCES.md, SPEC §7.7.

@@ -89,8 +89,11 @@ export const previewPath = (scenario: ScenarioId): string => `public/${scenarioP
  */
 export function writePreviews(root: string, check: boolean): string[] {
   const changed: string[] = [];
-    const previews: [ScenarioId, Uint8Array][] = [
-    ['1938', preview1938()],
+    const start1938 = preview1938();
+  const previews: [ScenarioId, Uint8Array][] = [
+    ['1938', start1938],
+    // The historical track starts as 1938 does (ROADMAP R62a).
+    ['1938h', start1938],
     ['random', previewRandom(loadAssets1938(SIZE_1938.w))],
   ];
   for (const [scenario, rgb] of previews) {

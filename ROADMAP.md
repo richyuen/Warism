@@ -98,10 +98,16 @@ by the player's first intervention or on 27 July 1953, then reseeded. Then the c
 Split finer before any part was ticked (2026-11-10, the advisor's review: the first R62a held six pieces of work).
 
 - [ ] R62 **The historical track.**
-  - [ ] R62a The scenario: `1938h` a `ScenarioId` built from 1938's own files (no copy), its own nations appended after
+  - [x] R62a The scenario: `1938h` a `ScenarioId` built from 1938's own files (no copy), its own nations appended after
     1938's 103 (dormant until their date), listed on the title screen ("1938 — Historical", its preview, its seed fixed
     and not offered on its form). AT: `?scenario=1938h` starts; the title lists it; plain 1938's seed-99 pin unmoved and
     its nation count 103; a save of `1938h` loads bit-identical.
+    Done (this commit): `src/sim/scenario1938h.ts`, its data, the id through the registry, sim, worker names, app (its seed
+    and no option whatever the URL), the form (`fixedSeed`), the CLI and the preview. Amended: **hidden** until R62f (a
+    "Historical" world that is plain 1938 on the title would be a feature faked, PROMPT rule 6; the listing is the
+    registry's own, checked hidden now). `scenario1938h.test.ts` (12 dormant after 1938's 103, the same land, a month on
+    none born, save and load bit-identical and the run after equal); `scenario1938h.spec.ts` (the URL's seed and options
+    change no hash; the form's note, no seed field; shot looked at); the pin in the gate.
   - [ ] R62b The runner and its state: `timeline.json`'s schema checked by `npm run data -- --check`; a system right
     after the hour's commands applies each due event of the command-backed kinds (war and its sides, peace white or
     with terms, annex, puppet, release, alliance join or leave, guarantee) through `applyCommand`, not the command log;

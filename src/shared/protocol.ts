@@ -14,7 +14,7 @@ import type { TickerRow } from './history';
 /** `restraintOf`'s reasons but `none` (PLAN 7.37f; `src/sim/systems/nuclear.ts`, `RestraintReason`). */
 export type RestraintWhy = 'puppet' | 'aiOff' | 'nukesOff' | 'avenging' | 'paused' | 'noThreat' | 'noPlace' | 'mad' | 'deterred' | 'alliance' | 'outrage' | 'taboo' | 'dead' | 'noValue' | 'notDesperate' | 'doctrine' | 'noMeans' | 'outOfRange' | 'strikes';
 
-export type ScenarioId = 'toy' | '1938' | 'random';
+export type ScenarioId = 'toy' | '1938' | '1938h' | 'random';
 
 /** Decoded map assets a real-map scenario is built from (PLAN 1.9a). */
 export interface ScenarioAssets {

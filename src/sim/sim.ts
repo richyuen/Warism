@@ -7,6 +7,7 @@ import type { ScenarioId, SimInit } from '../shared/protocol';
 import { loadBytes, saveBytes, stateHash } from './core/state';
 import { applyPendingCommands, step, type System } from './tick';
 import { addHeroes1938, BUILD_MIX_1938, createWorld1938, ECONOMY_TABLES_1938, size1938 } from './scenario1938';
+import { addDormantNations1938h } from './scenario1938h';
 import { allianceSystem } from './systems/alliances';
 import { economicAi, startAir } from './ai/economic';
 import { operationalAiOf } from './ai/operational';
@@ -78,12 +79,15 @@ export class Sim {
         this.systemNames = TOY_SYSTEMS.map((s) => s.name);
         break;
       case '1938':
+      case '1938h':
       case 'random': {
         if (!init.assets) throw new Error(`scenario '${init.scenario}' needs its map assets`);
         // The random world has the map, the units and the rules of 1938, and nations of its own.
         // At the map's size the options ask (PLAN 7.1b6); the assets are of that size.
         const size = size1938(init.options?.size);
-        this.world = init.scenario === '1938' ? createWorld1938(init.seed, init.assets, size) : createRandomWorld(init.seed, init.options?.nations, init.assets, size);
+        this.world = init.scenario === 'random' ? createRandomWorld(init.seed, init.options?.nations, init.assets, size) : createWorld1938(init.seed, init.assets, size);
+        // The historical track (ROADMAP R62a): 1938's world with the nations history made after it, dormant.
+        if (init.scenario === '1938h') addDormantNations1938h(this.world);
         if (init.options) applyGameOptions(this.world, init.options);
         // The heroes (PLAN 7.184): the 1938 world's, after every other formation.
         if (init.scenario === '1938' && init.options?.heroes === 'on') addHeroes1938(this.world);

@@ -1,4 +1,4 @@
-// `npm run sim -- [--scenario toy|1938|random] [--nations 60] [--size S|M|L|XL] [--seed 7] [--years 10] [--out run.json] [--save state.bin] [--load state.bin] [--affinity 0xFFFF] [--profile]`
+// `npm run sim -- [--scenario toy|1938|1938h|random] [--nations 60] [--size S|M|L|XL] [--seed 7] [--years 10] [--out run.json] [--save state.bin] [--load state.bin] [--affinity 0xFFFF] [--profile]`
 // Runs a scenario headless in Node and writes per-year metrics JSON (SPEC §10, PLAN 0.20).
 // Checkpoints: `--save` writes the final state; `--load` continues from one (saves are
 // bit-identical, so years 11–20 from a year-10 checkpoint equal years 11–20 of a 20-year run:
@@ -28,7 +28,7 @@ const load = arg('load', '');
 const affinity = arg('affinity', '');
 const profile = process.argv.includes('--profile');
 if (load && !existsSync(load)) throw new Error(`--load: no file '${load}'`);
-if (scenario !== 'toy' && scenario !== '1938' && scenario !== 'random') throw new Error(`unknown scenario '${scenario}' (available: toy, 1938, random)`);
+if (scenario !== 'toy' && scenario !== '1938' && scenario !== '1938h' && scenario !== 'random') throw new Error(`unknown scenario '${scenario}' (available: toy, 1938, 1938h, random)`);
 if (!Number.isInteger(seed) || !Number.isInteger(years) || years < 1) throw new Error('--seed and --years must be integers, years ≥ 1');
 if (affinity) {
   const mask = parseAffinity(affinity);

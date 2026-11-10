@@ -1699,6 +1699,11 @@ months. The sweep judges the result (§10.4).
 ### 7.7 The historical track [ADR-919] (designed; built by ROADMAP R62)
 The scenario "1938 — Historical" (`1938h`) is the 1938 world with a timeline that replays 1 January 1938
 to 27 July 1953, then sets the world free.
+- **The scenario** (built, R62a): `data/scenarios/1938h/scenario.json` (`base` 1938, `seed` its own) and its own
+  nations (`nations.json`), appended after 1938's 103 by `addDormantNations1938h` (`src/sim/scenario1938h.ts`): dead,
+  with no land, core or revival left until the track gives them their land. Every id of plain 1938 holds. Its seed
+  and options are its own whatever the URL (`ScenarioInfo.fixedSeed`); its new-game form offers neither and says why.
+  Hidden (opened by `?scenario=1938h` only) until the track replays its first period (R62f).
 - **Timeline** (a timeline file in the scenario's data, to be made by R62a): events in date order, each a date, a kind and its
   parties: war (with its sides joining), peace (white, or with terms: annexation, puppet, a transfer),
   annex, puppet, release, alliance join or leave, guarantee, transfer of territory (lon/lat rings with the

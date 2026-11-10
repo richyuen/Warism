@@ -38,11 +38,12 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     return;
   }
   // The seed the settings panel shows: the URL's, or a loaded world's own.
-  const seed = signal(Number(params.get('seed') ?? 1938) >>> 0);
-  const sim = new SimClient();
   const scenario = SCENARIO_INFO[scenarioId];
+  // A scenario with a seed of its own (the historical track, ROADMAP R62a) takes it, and no option, whatever the URL.
+  const seed = signal((scenario.fixedSeed ?? Number(params.get('seed') ?? 1938)) >>> 0);
+  const sim = new SimClient();
   // New-game options (PLAN 1.39b1); a non-looping map also renders without wrap copies.
-  const options = optionsFromUrl(params);
+  const options = scenario.fixedSeed !== undefined ? {} : optionsFromUrl(params);
   // At the size the options ask, one of its map's (PLAN 7.1b6); the scenario's own otherwise.
   // A scenario file at another size than its scenario's own starts the game at its size (PLAN 7.1b8).
   if (staged?.size !== undefined) options.size = staged.size;

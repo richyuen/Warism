@@ -1,0 +1,16 @@
+{
+  "nations": [
+    { "tag": "SLO", "nameKey": "nation.SLO", "adjectiveKey": "nation.SLO.adj", "color": "#5a86b0", "government": "fascism", "traits": [], "aggression": 20, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Bratislava", "lonLat": [17.11, 48.15] }, "alive": false },
+    { "tag": "CRO", "nameKey": "nation.CRO", "adjectiveKey": "nation.CRO.adj", "color": "#b5475a", "government": "fascism", "traits": [], "aggression": 30, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Zagreb", "lonLat": [15.98, 45.81] }, "alive": false },
+    { "tag": "VIC", "nameKey": "nation.VIC", "adjectiveKey": "nation.VIC.adj", "color": "#7f93c9", "government": "authoritarian", "traits": [], "aggression": 10, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Vichy", "lonLat": [3.43, 46.13] }, "alive": false },
+    { "tag": "RSI", "nameKey": "nation.RSI", "adjectiveKey": "nation.RSI.adj", "color": "#2f6b3a", "government": "fascism", "traits": [], "aggression": 40, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Salò", "lonLat": [10.52, 45.61] }, "alive": false },
+    { "tag": "FRG", "nameKey": "nation.FRG", "adjectiveKey": "nation.FRG.adj", "color": "#8c95a3", "government": "democracy", "traits": [], "aggression": 10, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Bonn", "lonLat": [7.1, 50.73] }, "alive": false },
+    { "tag": "GDR", "nameKey": "nation.GDR", "adjectiveKey": "nation.GDR.adj", "color": "#a8443f", "government": "communism", "traits": [], "aggression": 20, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Berlin", "lonLat": [13.4, 52.52] }, "alive": false },
+    { "tag": "KOR", "nameKey": "nation.KOR", "adjectiveKey": "nation.KOR.adj", "color": "#3f74b0", "government": "authoritarian", "traits": [], "aggression": 30, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Seoul", "lonLat": [126.98, 37.57] }, "alive": false },
+    { "tag": "PRK", "nameKey": "nation.PRK", "adjectiveKey": "nation.PRK.adj", "color": "#93302f", "government": "communism", "traits": [], "aggression": 70, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Pyongyang", "lonLat": [125.75, 39.02] }, "alive": false },
+    { "tag": "ISR", "nameKey": "nation.ISR", "adjectiveKey": "nation.ISR.adj", "color": "#5d93d6", "government": "democracy", "traits": [], "aggression": 40, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Tel Aviv", "lonLat": [34.78, 32.08] }, "alive": false },
+    { "tag": "PAK", "nameKey": "nation.PAK", "adjectiveKey": "nation.PAK.adj", "color": "#2f8050", "government": "democracy", "traits": [], "aggression": 40, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Karachi", "lonLat": [67.01, 24.86] }, "alive": false },
+    { "tag": "IDN", "nameKey": "nation.IDN", "adjectiveKey": "nation.IDN.adj", "color": "#c4473b", "government": "democracy", "traits": [], "aggression": 30, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Jakarta", "lonLat": [106.85, -6.21] }, "alive": false },
+    { "tag": "VIE", "nameKey": "nation.VIE", "adjectiveKey": "nation.VIE.adj", "color": "#d6a521", "government": "communism", "traits": [], "aggression": 60, "incomeBonus": 0, "fightToDeath": false, "capital": { "name": "Hanoi", "lonLat": [105.85, 21.03] }, "alive": false }
+  ]
+}
