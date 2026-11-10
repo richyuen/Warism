@@ -1,6 +1,6 @@
 {
-  "commit": "fe9b0e9ef618bf114a8ef5b35aaaad903e031411",
-  "mode": "full",
+  "commit": "91d114240ee9f71e223d1866d61f40ca4d5c05f6",
+  "mode": "focused",
   "scores": {
     "mapVisuals": 8,
     "diplomacyWarDepth": 8,
@@ -12,18 +12,11 @@
     "performance": 8,
     "stability": 8,
     "semanticZoom": 8,
-    "naval": 7,
+    "naval": 8,
     "tanks": 8,
     "aircraft": 8,
     "aiNukes": 8
   },
-  "blocking": [
-    {
-      "id": "R59-B1",
-      "title": "landingInvariants' slowClick breaks on HEAD on new seed 30041 (setup 3517, one group: t729's click of 366 ashore after 15.4 days against a best way of 5.9); run 58's tree 0 on the same command, the sim the same",
-      "evidence": "npx tsx tools/diag/landingInvariants.ts 30041 3517 120 30041 30,90 1 -> 1 broken, five times (critic/c59_li/new_30041_3517_g1_od-.log, critic/c59_li_30041_g1_rerun.log, critic/c59_hookab_{none,noop,events}.log). 000a4731's sim and checker: 0 broken (critic/c59_li_30041_g1_oldsim.log). 366's hourly trace t600-t1110 is the same on both commits (critic/c59_h366_30041.log, critic/c59_h366_old_30041.log; KEEPG=1, not GROUPS: GROUPS is a Git Bash shell variable). 366 joins landing L4 at t730 at 1808.9,389.5 on Japan's land, walks 11 cells to its port near Tokyo in 10.4 days (about a cell a day, moving, never engaged: critic/c59_h366d_30041.log), boards at t980, lands near Shanghai on China's land at t1099; re-clicked at t870 and refused (MoveRejected t871, critic/c59_told_30041_all.log). Run 58's checker dropped 366 from t729's click at the re-click; R57a's reading (ADR-908) keeps it, so the slow walk is judged. Scale: HEAD 1 of 90 new setups (30031-30059 x 6, critic/c59_liab_new.log), run 58's tree 0 of the same 90 (critic/c59_liab_new_old.log); run 58's 306 setups 306 at 0 on HEAD.",
-      "fix": "The best way (clickBest, Landing.due) and the march to the port read alike: the walk reckoned at the pace divisions make, or the division not that slow on its own roads; if the slowness is right, a click that cannot be ashore within the bound told so at the click. Bar: landingInvariants 30041 3517 120 30041 30,90 1 at 0 broken with 366 kept in t729's click; P=2 sh critic/scripts/c59_liab_new.sh (90) and P=3 sh critic/scripts/c59_liab_head.sh (306) all 0; R58-B1's and R57-B1's cases still 0."
-    }
-  ],
-  "timestamp": "2026-11-09T17:50:00-05:00"
+  "blocking": [],
+  "timestamp": "2026-11-09T20:35:00-05:00"
 }

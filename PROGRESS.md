@@ -2480,3 +2480,8 @@
   (`nextVoyageHours`), no rule, so its 42 jobs read the same worlds. Its page probes of what changed ran in R58c
   (`c58_whotold`) and R58d (`c58_peacebtn`).
 - **Next:** critic run 60 (focused, ADR-915).
+
+## 2026-11-09 — Critic run 60 (focused, on 91d11424): no blocking issue, every dimension at its bar
+- Naval 8 (was 7): by ADR-914's 5 % rule (1 of 300 new setups broke `slowClick`, 31099); the landing sim the same as
+  run 59's (396 setups text-identical). uiUxPolish 8, diplomacyWarDepth 8, stability 8 scored afresh; ten carried at 8.
+- Non-blocking R60-N1–N5 filed as batch 14 (R59), after the release. **Next:** the full run (ADR-916), then the release.

@@ -1309,3 +1309,23 @@ every other dimension at 8. Naval's findings are items, fixed, then the critic a
 - Design objections: `slowClick` judges the first ashore while the last one ashore is what the player sees (273, 7.9
   days over); Malta never taken; alliances ignore the map (carried). Ideas: "next lift in N days" (R58b); dated
   notices (R58c).
+
+## Batch 14 — run 60's findings (after the release, the user's call)
+
+Critic run 60 (focused, on `91d11424`): no blocking issue; naval 8 (its bar, by ADR-914's 5 % rule: 1 of 300 new
+setups broke `slowClick`); every dimension at its bar. A full run and the release come first (ADR-916); these after.
+
+- [ ] R59 **Run 60's non-blocking findings.**
+  - [ ] R59a R60-N1: "they come back for it in about a day" for 4.3 days with an empty group idle at the port (31173,
+    setup 3517, two groups; `critic/scripts/c60_nvtrace.ts`): the figure counts what holds the empty group, or the
+    empty group sails for the one waiting. AT: 31173's 366 told a figure that comes true within a day.
+  - [ ] R59b R60-N2: the transports come back and sail again without the one told it waits for them (31127, setup
+    15101, one group; 272 sails 8.5 days after "about 4 days"). AT: 272 on the next voyage of its group.
+  - [ ] R59c R60-N3: ticker order rows with a relative figure dated as war rows are. AT: 31211's "about 6 days" row
+    dated at h114.
+  - [ ] R59d R60-N4: at landscape sizes (667 × 375 to 1024 × 500) the nation panel's foot above the bottom bar. AT:
+    `c58_peacebtn` 30403 at those sizes, the last row whole.
+  - [ ] R59e R60-N5: `seaBattlesLook` does not fail a listed battle with no fleets left to draw (31501 t17369). AT:
+    `seaBattlesLook` on 31501 exit 0, that battle "no fleet to see".
+- Not filed: R60-SC, the `slowClick` tail (30041, 31099, 203997, 204017, all Japan's 366/367 from Tokyo), under the 5 %
+  rule; ADR-914's proposal 2 held. The old small items (27125's ticker rows, the phone's panel over the corridor).
