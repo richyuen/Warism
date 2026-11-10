@@ -190,8 +190,11 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     Done (ADR-931): `leave` and `redeploy`; owners 99.90 %, 98.0 % right, stray 0.04 %; control 97.3 % right, stray
     0.12 %; Paris by the fighting on 14 June, 648 French cells held on 22 June; no event passed over
     (`tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`).
-  - [ ] R62g2 The Baltics annexed, the Second Vienna Award, the Tripartite Pact, Greece and Yugoslavia (Croatia),
+  - [x] R62g2 The Baltics annexed, the Second Vienna Award, the Tripartite Pact, Greece and Yugoslavia (Croatia),
     North Africa, Iraq, Syria, Iran. AT: each event on its date; a 1 June 1941 map, the same bars.
+    Done (ADR-932): owners 99.83 %, 97.4 % right, stray 0.06 %; control 99.65 %, 96.7 % right, stray 0.19 %; no event
+    passed over to October 1941; `withdraw`, an owner's `occupy`, a revival by `born`
+    (`tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`).
   - [ ] R62g3 Barbarossa to 1 December 1941. AT: control on 1 December 1941 ≥ 75 % of land, the land moved in
     control ≥ 75 % right, stray control < 2 %.
   - [ ] R62g4 Pearl Harbor and the Pacific opening (to 31 December 1941). AT: each event on its date; the

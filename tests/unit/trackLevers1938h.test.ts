@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { EventKind } from '../../src/shared/events';
 import type { TimelineFile } from '../../src/sim/data/schemas';
+import { project } from '../../src/sim/data/projection';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TAGS_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
@@ -163,5 +164,49 @@ describe('a redeployment (ROADMAP R62g1)', () => {
     sim.step(1, quiet);
     expect(ordered()).toBeGreaterThan(0);
     for (const i of w.playerOrders.keys()) expect(w.formations.cols.nation[i]).toBe(id('GER'));
+  });
+});
+
+describe('an evacuation, a revival, land taken back (ROADMAP R62g2)', () => {
+  it("withdraw takes a nation's land formations in the ring home to its pool; born brings back a dead nation; occupy by an owner takes its land back", () => {
+    const ring: [number, number][] = [[10.0, 55.0], [16.0, 55.0], [16.0, 50.0], [10.0, 50.0]];
+    const tl: TimelineFile = {
+      events: [
+        { date: '1938-01-02', kind: 'withdraw', nation: 'GER', ring },
+        { date: '1938-01-03', kind: 'occupy', by: 'POL', of: ['GER'], ring },
+        { date: '1938-01-04', kind: 'occupy', by: 'GER', of: ['GER'], ring },
+        { date: '1938-01-05', kind: 'born', nation: 'ETH', from: ['ITA'], ring: [[36.0, 12.0], [42.0, 12.0], [42.0, 6.0], [36.0, 6.0]] },
+      ],
+    };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
+    const w = sim.world;
+    const GER = id('GER');
+    const inRing = (): number => {
+      let n = 0;
+      w.formations.forEach((i) => {
+        const f = w.formations.cols;
+        if (f.nation[i] === GER && w.rules?.templates[f.template[i]!]?.domain === 0) {
+          const [u0, v0] = project(10, 55);
+          const [u1, v1] = project(16, 50);
+          if (f.x[i]! >= u0 * w.cells.w && f.x[i]! <= u1 * w.cells.w && f.y[i]! >= v0 * w.cells.h && f.y[i]! <= v1 * w.cells.h) n++;
+        }
+      });
+      return n;
+    };
+    sim.step(24, quiet);
+    expect(inRing()).toBeGreaterThan(0);
+    const pool = w.nations.cols.manpower[GER]!;
+    sim.step(1, quiet);
+    expect(inRing()).toBe(0);
+    expect(w.nations.cols.manpower[GER]!).toBeGreaterThan(pool);
+    const [bu, bv] = project(13.4, 52.5);
+    const berlin = Math.floor(bv * w.cells.h) * w.cells.w + Math.floor(bu * w.cells.w);
+    sim.step(24, quiet);
+    expect(w.cells.controller[berlin]).toBe(id('POL'));
+    sim.step(24, quiet);
+    expect(w.cells.controller[berlin]).toBe(GER);
+    expect(w.nations.cols.living[id('ETH')]).toBe(0);
+    sim.step(24, quiet);
+    expect(w.nations.cols.living[id('ETH')]).toBe(1);
   });
 });

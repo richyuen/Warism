@@ -9,6 +9,27 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-932 · 2026-11-10 · accepted — 1940-41 from the Baltics to Iran (R62g2)
+- **The events:** the Baltic states annexed (3-6 August 1940); the Second Vienna Award and Southern Dobruja; Japan in
+  northern (September 1940) and southern Indochina (July 1941), occupations at peace of Vichy's colony; Hungary,
+  Romania (leaving the Little Entente first), Slovakia and Bulgaria into the Axis alliance (the start's Anti-Comintern
+  one, which already holds Germany, Italy and Japan); Italy on Greece; Yugoslavia and Greece invaded (German arrivals
+  in Bulgaria and Styria, objectives Belgrade, Salonika, Athens), Croatia born and Germany's puppet, the partitions
+  (Slovenia, Dalmatia, Montenegro, Kosovo, Bačka, Macedonia, Thrace, Salonika), Serbia annexed by Germany and Greece by
+  Italy at their capitulations (ADR-931's convention), Crete to Germany on 1 June; the Anglo-Iraqi war and its
+  armistice; Ethiopia restored (5 May 1941) and Eritrea and Somalia held by Britain; Syria and Lebanon invaded and,
+  at the armistice of Acre, Free France's; Iran invaded and its zones held at peace.
+- **Holds:** Italy against the Sudan and Kenya to May 1943 (Italy had taken 2,084 Sudanese cells by January 1941,
+  history only Kassala); Germany against Britain on land from 25 June 1940 to Rommel's offensive of 21 January 1942
+  (Britain's invasion AI landed in northern Norway, 765 German cells by June 1941, and Germany on Svalbard; the
+  evacuations tried for it found no army to move and were dropped). North Africa is Italy against Britain until then.
+- **New:** `withdraw` (a nation's land formations in a ring leave, their men back to its pool), `occupy` by an owner
+  of its own land (its control taken back), `born` of a dead nation (a revival: Ethiopia).
+- **Measured** (`historyMatch1938h.test.ts`), 1 June 1941: owners 99.83 %, the land moved 97.4 % right (26,159
+  cells), stray 0.06 %; control 99.65 %, 96.7 % right (30,291), stray 0.19 %; no event passed over to October 1941.
+  Left: Indian divisions hold 354 cells of Italy's Somalia and Eritrea that the map gives Britain (a puppet's
+  conquest; the map names one holder); the Tonkin rings (176); the demarcation line (149).
+
 ### ADR-931 · 2026-11-10 · accepted — the West in 1940 (R62g1)
 - **The convention for a nation overrun:** annexed at its capitulation, its land the conqueror's (as Poland's in
   1939), its colonies released first (the Indies, the Congo) or handed to the Allies (the Dutch Americas, Svalbard);

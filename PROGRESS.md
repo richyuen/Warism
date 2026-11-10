@@ -234,3 +234,14 @@
 - 1 July 1940: owners 99.90 %, 98.0 % right, stray 0.04 %; control 97.3 % right, stray 0.12 %; no event passed over.
 - Paris's date is chaotic (two of five nearby settings miss it): the test also reads the land taken.
 - Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts` (leave, redeploy). Gate.
+
+## 2026-11-10 — R62g2: 1940-41 from the Baltics to Iran (ADR-932)
+
+- The Baltic annexations, the Vienna Award and Dobruja, Indochina, the Axis's joiners, the Balkans (Croatia born,
+  Yugoslavia and Greece partitioned), Iraq, Ethiopia restored, Syria and Lebanon, Iran.
+- Holds: Italy against the Sudan and Kenya; Germany against Britain on land to January 1942 (Britain's landings in
+  northern Norway, Germany's on Svalbard).
+- New: `withdraw`, an owner's `occupy`, a revival by `born`.
+- 1 June 1941: owners 99.83 %, 97.4 % right, stray 0.06 %; control 99.65 %, 96.7 % right, stray 0.19 %; no event
+  passed over to October 1941.
+- Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`. Gate.

@@ -1744,7 +1744,8 @@ to 27 July 1953, then sets the world free.
   take land or plan attacks on each other until a date; Japan's gains in China by `occupy` stages; the Phoney War a
   hold; the maps' `occupied`, measured as control (R62g0, ADR-930). 1940 in the West (R62g1, ADR-931): a nation
   overrun is annexed at its capitulation (Denmark a puppet), Vichy born, the occupied zone held at peace; `leave` (an
-  armistice) and `redeploy` (a front moved by rail).
+  armistice) and `redeploy` (a front moved by rail). 1940-41 to Iran (R62g2, ADR-932): `withdraw` (an evacuation),
+  an owner's `occupy` (land taken back), `born` of a dead nation (a revival).
 - **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is
   reached by the timeline's steering (objectives, dates, historical arrivals of forces and phase buffs),
   tuned per period against a match tool (R62h). The shared rules do not change for the track.

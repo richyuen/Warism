@@ -526,7 +526,7 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * as `ownership.json`'s regions: lon/lat, a cell taken when its centre is inside.
    */
   z.strictObject({ ...when, kind: z.literal('transfer'), to: tag, from: tags, ring, note: z.string().optional() }),
-  /** The land inside `ring` that one of `of` owns is held by `by`, its owner unchanged (an occupation, R62c). */
+  /** The land inside `ring` that one of `of` owns is held by `by`, its owner unchanged (an occupation, R62c); `by` among `of` takes its own back (R62g2). */
   z.strictObject({ ...when, kind: z.literal('occupy'), by: tag, of: tags, ring, note: z.string().optional() }),
   /**
    * A nation of the scenario dormant until now is born (R62d) on the land in `ring` that one of `from` owns: owned
@@ -563,6 +563,10 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * A front moved by rail (R62g1): of `nation`'s land formations in `from`, the `share` first by id march to the places
    * of `to` in turn, as a player's orders (the AI leaves each alone until it is there).
    */
+  /**
+   * An evacuation (R62g2): `nation`'s land formations in `ring` leave the theatre, their men back to its pool.
+   */
+  z.strictObject({ ...when, kind: z.literal('withdraw'), nation: tag, ring, note: z.string().optional() }),
   z.strictObject({ ...when, kind: z.literal('redeploy'), nation: tag, from: ring, to: z.array(lonLat).min(1), share: z.number().gt(0).max(1) }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;
@@ -636,6 +640,7 @@ export function timelineTags(e: TimelineEvent): string[] {
     case 'buff':
     case 'forces':
     case 'redeploy':
+    case 'withdraw':
       return [e.nation];
     case 'hold':
       return [...e.sides[0], ...e.sides[1]];

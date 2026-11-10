@@ -314,7 +314,8 @@ function occupy(world: World, by: number, of: readonly number[], ring: readonly 
   const why = whyNot(world, by);
   if (why) return why;
   const { owner, controller } = world.cells;
-  const owners = new Set(of.filter((n) => n !== 0 && n !== by));
+  // `by` among `of`: its own land taken back (R62g2).
+  const owners = new Set(of.filter((n) => n !== 0));
   let held = 0;
   for (const c of ringCells(world, ring)) {
     if (!owners.has(owner[c]!) || controller[c] === by) continue;
@@ -325,14 +326,15 @@ function occupy(world: World, by: number, of: readonly number[], ring: readonly 
 }
 
 /**
- * A nation of the scenario born (R62d): unborn until now, it takes the land in the ring of `from` as a transfer does,
+ * A nation of the scenario born (R62d): unborn until now (or dead, brought back: R62g2), it takes the land in the ring of `from` as a transfer does,
  * with cores on the provinces whose centre it holds, its capital the city of its own nearest its table's (else
  * `relocateCapital`), the techs of the nation that gave most (the nuclear aside), START_GOLD and the scenario's
  * revivals. `NationBorn` after its land's `LandCeded` rows.
  */
 function born(world: World, t: Track, n: number, from: readonly number[], ring: readonly (readonly [number, number])[]): Refusal {
   if (n === 0 || !world.nations.has(n)) return Refusal.NoNation;
-  if (!t.unborn.has(n)) return Refusal.Alive;
+  // Unborn, or dead and brought back (R62g2: Ethiopia restored).
+  if (world.nations.cols.living[n] === 1) return Refusal.Alive;
   const { owner } = world.cells;
   const before = new Map<number, number>();
   const cells = ringCells(world, ring).filter((c) => from.includes(owner[c]!) && owner[c] !== n);
@@ -453,6 +455,24 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       for (let k = 0; k < e.count && why === Refusal.None; k++) why = applyCommand(world, { kind: 'spawnFormation', nation: id(e.nation), x: u * world.cells.w, y: v * world.cells.h, strength: 1, template });
       return why;
     }
+    case 'withdraw': {
+      const n = id(e.nation);
+      const why = whyNot(world, n);
+      if (why) return why;
+      const inRing = new Set(ringCells(world, e.ring));
+      const f = world.formations.cols;
+      const { w } = world.cells;
+      const gone: number[] = [];
+      world.formations.forEach((i) => {
+        if (f.nation[i] !== n || world.rules?.templates[f.template[i]!]?.domain !== Domain.land) return;
+        if (inRing.has(Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w)) gone.push(i);
+      });
+      for (const i of gone.sort((a, b) => a - b)) {
+        world.nations.cols.manpower[n] = world.nations.cols.manpower[n]! + f.strength[i]!;
+        applyCommand(world, { kind: 'removeFormation', id: i });
+      }
+      return gone.length > 0 ? Refusal.None : Refusal.NoEffect;
+    }
     case 'redeploy': {
       const n = id(e.nation);
       const why = whyNot(world, n);
@@ -509,6 +529,7 @@ function firstNation(t: Track, e: TimelineEvent): number {
     case 'buff':
     case 'forces':
     case 'redeploy':
+    case 'withdraw':
       return t.id(e.nation);
     case 'hold':
       return t.id(e.sides[0][0]!);
