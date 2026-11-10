@@ -164,7 +164,7 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     Done (ADR-929): the `hold` kind; held a year, Japan's share 1.1 % unmoved, China's army 203k to 459k, the
     Communists and Manchukuo living (without: 18.3 %, 88k, the Communists dead; `tests/sweep/chinaFront1938h.test.ts`);
     R62f's run 100.00 / 99.99 / 99.98 %, stray 0.00 %, no event passed over (`tests/sweep/historyMatch1938h.test.ts`).
-  - [ ] R62g 1940–41: Denmark and Norway, the Low Countries and France (the armistice, Vichy and the occupied zone),
+  - [x] R62g 1940–41: Denmark and Norway, the Low Countries and France (the armistice, Vichy and the occupied zone),
     Italy's entry, the Baltic annexations and Bessarabia, the Second Vienna Award, the Tripartite Pact, Greece and
     Yugoslavia (Croatia), North Africa, Barbarossa, Iran, Pearl Harbor and the Pacific opening. AT: each event on its
     date; Paris taken within 30 days of 14 June 1940; owners match history on 1 July 1940 ≥ 90 % and control on
@@ -200,8 +200,10 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     Done (ADR-933): by stages (the lines of 10 July, 20 August, 30 September, 1 December, the pockets taken), the
     fighting alone holding at most 2,789 Soviet cells; control 99.45 %, 94.9 % right, stray 0.22 %; 7,599 Soviet cells
     held by the Axis; no event passed over (`tests/sweep/historyMatch1938h.test.ts`).
-  - [ ] R62g4 Pearl Harbor and the Pacific opening (to 31 December 1941). AT: each event on its date; the
+  - [x] R62g4 Pearl Harbor and the Pacific opening (to 31 December 1941). AT: each event on its date; the
     belligerents of 11 December 1941 as history had them.
+    Done (ADR-934): fifteen pairs at war or at peace as history had them at the end of 11 December 1941; no event
+    passed over to 1 January 1942 (`tests/sweep/historyMatch1938h.test.ts`). R62g done with its slices.
   - [ ] R62h 1942–45: the Pacific, Stalingrad, El Alamein and Torch, Italy's surrender and the Italian Social Republic,
     Bagration, D-Day, the switches of Romania, Bulgaria and Finland, Germany's surrender (8 May 1945), Hiroshima and
     Nagasaki, Manchuria, Japan's surrender (2 September 1945). AT: each event on its date; control matches history on

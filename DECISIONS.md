@@ -9,6 +9,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-934 · 2026-11-10 · accepted — the Pacific opening (R62g4); R62g done
+- **The events:** Japan's war on the United States (Pearl Harbor, 7 December 1941, its puppets and the Philippines
+  with the sides), Britain and its Empire (Ireland and Egypt neutral) and the Netherlands Indies joining on 8
+  December; Germany and Italy's own war on the United States on 11 December (a war of its own: `join` refuses a
+  nation already at war with one of the other side, and Germany is at war with Britain), Romania, Hungary and
+  Bulgaria joining it; Thailand into the Axis alliance (21 December); Guam, Kuching, Hong Kong, northern Malaya, northern
+  Luzon and Davao by stages on their dates, objectives Singapore, Manila and Hong Kong for the fighting between.
+- **Measured** (`historyMatch1938h.test.ts`): at the end of 11 December 1941 fifteen pairs at war or at peace as
+  history had them (Japan with the United States, Britain, Australia, the Indies, China and the Philippines; Germany
+  and Italy with the United States; Japan not with the Soviet Union; Ireland, Denmark and Thailand out); no event
+  passed over to 1 January 1942. The Pacific's land is measured from R62h's first map.
+- **R62g** (1940-41) is done with its five slices (ADR-930-934).
+
 ### ADR-933 · 2026-11-10 · accepted — Barbarossa by its stages (R62g3)
 - **Measured first:** on 21 June 1941 Germany had 1.55M men, 1.2M of them in France, and the Soviet Union 930k, flat
   since December 1940 with a pool of 4.9M and 6,142 gold unspent. With 75 % of the army moved east (`redeploy`, 1

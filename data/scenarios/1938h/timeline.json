@@ -4249,6 +4249,286 @@
     ]
    ],
    "note": "The line of 1941-12-01"
+  },
+  {
+   "date": "1941-12-07",
+   "hour": 18,
+   "kind": "war",
+   "attackers": [
+    "JAP"
+   ],
+   "defenders": [
+    "USA"
+   ],
+   "note": "Pearl Harbor"
+  },
+  {
+   "date": "1941-12-08",
+   "kind": "join",
+   "nation": "ENG",
+   "beside": "USA",
+   "against": "JAP",
+   "without": [
+    "IRE",
+    "EGY"
+   ],
+   "note": "Britain and its Empire"
+  },
+  {
+   "date": "1941-12-08",
+   "kind": "join",
+   "nation": "DEI",
+   "beside": "USA",
+   "against": "JAP",
+   "note": "The Netherlands Indies"
+  },
+  {
+   "date": "1941-12-08",
+   "hour": 1,
+   "kind": "objective",
+   "nation": "JAP",
+   "at": [
+    103.8,
+    1.35
+   ],
+   "km": 400,
+   "until": "1942-02-15",
+   "note": "Singapore"
+  },
+  {
+   "date": "1941-12-08",
+   "hour": 1,
+   "kind": "objective",
+   "nation": "JAP",
+   "at": [
+    120.98,
+    14.6
+   ],
+   "km": 300,
+   "until": "1942-01-02",
+   "note": "Manila"
+  },
+  {
+   "date": "1941-12-08",
+   "hour": 1,
+   "kind": "objective",
+   "nation": "JAP",
+   "at": [
+    114.17,
+    22.3
+   ],
+   "km": 100,
+   "until": "1941-12-25",
+   "note": "Hong Kong"
+  },
+  {
+   "date": "1941-12-10",
+   "kind": "occupy",
+   "by": "JAP",
+   "of": [
+    "USA"
+   ],
+   "ring": [
+    [
+     144.5,
+     13.8
+    ],
+    [
+     145.1,
+     13.8
+    ],
+    [
+     145.1,
+     13.1
+    ],
+    [
+     144.5,
+     13.1
+    ]
+   ],
+   "note": "Guam"
+  },
+  {
+   "date": "1941-12-11",
+   "kind": "war",
+   "attackers": [
+    "GER",
+    "ITA"
+   ],
+   "defenders": [
+    "USA"
+   ],
+   "without": [
+    "DEN"
+   ],
+   "note": "Germany and Italy declare war on the United States"
+  },
+  {
+   "date": "1941-12-12",
+   "kind": "join",
+   "nation": "ROM",
+   "beside": "GER",
+   "against": "USA",
+   "note": "Romania"
+  },
+  {
+   "date": "1941-12-13",
+   "kind": "join",
+   "nation": "HUN",
+   "beside": "GER",
+   "against": "USA",
+   "note": "Hungary"
+  },
+  {
+   "date": "1941-12-13",
+   "kind": "join",
+   "nation": "BUL",
+   "beside": "GER",
+   "against": "USA",
+   "note": "Bulgaria"
+  },
+  {
+   "date": "1941-12-21",
+   "kind": "allianceJoin",
+   "nation": "SIA",
+   "leader": "GER",
+   "nameKey": "alliance.anti_comintern",
+   "note": "Thailand's alliance with Japan"
+  },
+  {
+   "date": "1941-12-24",
+   "kind": "occupy",
+   "by": "JAP",
+   "of": [
+    "SAR"
+   ],
+   "ring": [
+    [
+     109.5,
+     2.5
+    ],
+    [
+     112.5,
+     2.5
+    ],
+    [
+     112.5,
+     0.8
+    ],
+    [
+     109.5,
+     0.8
+    ]
+   ],
+   "note": "Kuching"
+  },
+  {
+   "date": "1941-12-25",
+   "kind": "occupy",
+   "by": "JAP",
+   "of": [
+    "ENG"
+   ],
+   "ring": [
+    [
+     113.8,
+     22.6
+    ],
+    [
+     114.5,
+     22.6
+    ],
+    [
+     114.5,
+     22.1
+    ],
+    [
+     113.8,
+     22.1
+    ]
+   ],
+   "note": "Hong Kong"
+  },
+  {
+   "date": "1941-12-31",
+   "kind": "occupy",
+   "by": "JAP",
+   "of": [
+    "MAL"
+   ],
+   "ring": [
+    [
+     99.5,
+     6.8
+    ],
+    [
+     104.5,
+     6.8
+    ],
+    [
+     104.5,
+     4.3
+    ],
+    [
+     99.5,
+     4.3
+    ]
+   ],
+   "note": "Northern Malaya"
+  },
+  {
+   "date": "1941-12-31",
+   "kind": "occupy",
+   "by": "JAP",
+   "of": [
+    "PHI"
+   ],
+   "ring": [
+    [
+     119.5,
+     18.8
+    ],
+    [
+     122.6,
+     18.8
+    ],
+    [
+     122.6,
+     15.5
+    ],
+    [
+     119.5,
+     15.5
+    ]
+   ],
+   "note": "Northern Luzon"
+  },
+  {
+   "date": "1941-12-31",
+   "kind": "occupy",
+   "by": "JAP",
+   "of": [
+    "PHI"
+   ],
+   "ring": [
+    [
+     125.0,
+     7.6
+    ],
+    [
+     126.2,
+     7.6
+    ],
+    [
+     126.2,
+     6.6
+    ],
+    [
+     125.0,
+     6.6
+    ]
+   ],
+   "note": "Davao"
   }
  ],
  "maps": [

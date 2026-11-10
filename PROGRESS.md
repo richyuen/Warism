@@ -256,3 +256,11 @@
 - 1 December 1941: control 99.45 %, 94.9 % right, stray 0.22 %; 7,599 Soviet cells held by the Axis; no event passed
   over. Left for R62h: the Soviet army is 498k (history about 4M).
 - Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62g4: the Pacific opening; R62g done (ADR-934)
+
+- Pearl Harbor and the war's widening: Japan on the United States, Britain's Empire and the Indies joining,
+  Germany and Italy's own war on the United States, Romania, Hungary, Bulgaria; Thailand into the Axis; Guam, Kuching,
+  Hong Kong, northern Malaya and Luzon, Davao by stages.
+- The belligerents at the end of 11 December 1941 as history had them (fifteen pairs); no event passed over to 1942.
+- Evidence: `tests/sweep/historyMatch1938h.test.ts`. Gate.
