@@ -1390,7 +1390,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   (`gathering`, "At {port}, waiting for the rest of the landing"), with how many it waits for are at the
   port of how many and the days the furthest has left to march (`marchHoursLeft`); all there, ready
   (`ready`, for its escort or the hour; `sibling`, waiting for the landing from another port for the same
-  place, with its port and the days, R38b); left at the port by a voyage (`nextVoyage`); at sea (also aboard
+  place, with its port and the days, R38b); left at the port by a voyage (`nextVoyage`, with the days until a
+  group can be at the port for it and all aboard are ashore, `nextVoyageHours`: the landing gathers for the
+  next voyage only then, R58b, R59a); at sea (also aboard
   transports sunk this hour, R38a); aboard,
   sailing back to its port (a cancel, or a recall to a landing gathering there: R37b, critic run 44,
   R44-N1). The notice of a landing left goes at the next order; a next voyage's, as a refusal's, at the

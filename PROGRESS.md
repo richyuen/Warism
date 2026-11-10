@@ -22,3 +22,14 @@
 - The reseed at the track's end (the user's, ADR-919): a second seed rolled by the form and kept in the state,
   taken by every RNG stream when the track ends, in 1953 or at the intervention; and how the land is matched (by
   the scenario's timeline data, never the shared rules). SPEC §7.7, R62a and R62g's ATs.
+
+## 2026-11-10 — R59a: the next voyage's days count the voyage out (R60-N1)
+
+- `nextVoyageHours` (`src/sim/systems/landings.ts`): the soonest group at the port, and no sooner than all aboard are
+  ashore, since a sailing landing gathers for its next voyage only then (`landingSystem`). 31173's 366 (setup 3517,
+  two groups), told "about a day" for 4.3 days beside an empty group at Tokyo, is now told 5 days at t831 and counts
+  down; it boards at t935. A display figure only: no sim rule, no hash moved. Mends R58b's rule (ADR-914: no ADR).
+- Evidence: `tests/unit/nextVoyageDays1938.test.ts` (new case red before, green after; with `landingCall1938`,
+  `landingSunk1938`, `orderNewsStale`: 22 tests green); critic run 60's `c60_nvtrue.ts` on its 168 runs: 46 of 47
+  sailings within a day of the figure (45 before; the miss left is 31127's 272, R59b), landing checker 166 × 0,
+  2 × 1 as before (the `slowClick` tail). SPEC §6.2's `nextVoyage` line. Gate green.

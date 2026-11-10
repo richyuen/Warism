@@ -28,9 +28,12 @@ Critic run 60 (focused, on `91d11424`): no blocking issue; naval 8 (its bar, by 
 setups broke `slowClick`); every dimension at its bar. A full run and the release come first (ADR-916); these after.
 
 - [ ] R59 **Run 60's non-blocking findings.**
-  - [ ] R59a R60-N1: "they come back for it in about a day" for 4.3 days with an empty group idle at the port (31173,
+  - [x] R59a R60-N1: "they come back for it in about a day" for 4.3 days with an empty group idle at the port (31173,
     setup 3517, two groups; `critic/scripts/c60_nvtrace.ts`): the figure counts what holds the empty group, or the
     empty group sails for the one waiting. AT: 31173's 366 told a figure that comes true within a day.
+    Done (this commit): `nextVoyageHours` no sooner than all aboard are ashore (the landing gathers only then); 366 told
+    5, 4, 3, 2, 1 days from t831, boards t935, every hour within a day (`nextVoyageDays1938.test.ts`); c60_nv's 168 runs
+    46 of 47 within a day (45 before; the miss R59b's 31127), checker results unchanged.
   - [ ] R59b R60-N2: the transports come back and sail again without the one told it waits for them (31127, setup
     15101, one group; 272 sails 8.5 days after "about 4 days"). AT: 272 on the next voyage of its group.
   - [ ] R59c R60-N3: ticker order rows with a relative figure dated as war rows are. AT: 31211's "about 6 days" row

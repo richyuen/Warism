@@ -1489,22 +1489,26 @@ export function landingHeld(world: World, id: number): { water: number; land: nu
 
 /**
  * The hours until a group of landing `l` can be at its port for those it left (ROADMAP R58b; critic run 59, R59-N1:
- * "waits for the next voyage" with no figure): 0 with an empty group there; else, of its groups, the soonest of a
- * carrying one's voyage out and its sail back from the landing's water, and an empty one's sail to the port. Not
- * counted: a fight at the beach, and the hour the landing turns to gather again. Infinity with no group.
+ * "waits for the next voyage" with no figure): of its groups, the soonest at the port (0 for an empty one there, an
+ * empty one's sail to it, a carrying one's voyage out and its sail back from the landing's water), and no sooner than
+ * all aboard are ashore: the landing gathers for the next voyage only then (`landingSystem`; ROADMAP R59a, critic run
+ * 60, R60-N1: an empty group idle at the port, "about a day" for 4.3 days). Not counted: a fight at the beach, and
+ * the hour the landing turns to gather again. Infinity with no group.
  */
 export function nextVoyageHours(world: World, l: Landing): number {
   const c = world.formations.cols;
   const [px, py] = pointOf(world, portSeaOf(world)[l.port]!);
   let best = Infinity;
+  let ashore = 0;
   for (const o of l.fleets) {
     if (!world.formations.has(o)) continue;
     const full = carrying(world, o);
-    if (!full && atPort(world, l, o)) return 0;
-    const hours = full ? (c.moving[o] === 1 ? sailHoursLeft(world, o) : 0) + sailHoursFrom(world, o, l.water, px, py) : c.moving[o] === 1 ? sailHoursLeft(world, o) : sailHours(world, o, px, py);
+    const out = full && c.moving[o] === 1 ? sailHoursLeft(world, o) : 0;
+    if (full) ashore = Math.max(ashore, out);
+    const hours = full ? out + sailHoursFrom(world, o, l.water, px, py) : atPort(world, l, o) ? 0 : c.moving[o] === 1 ? sailHoursLeft(world, o) : sailHours(world, o, px, py);
     if (Number.isFinite(hours)) best = Math.min(best, hours);
   }
-  return best;
+  return Number.isFinite(best) ? Math.max(best, ashore) : best;
 }
 
 /**

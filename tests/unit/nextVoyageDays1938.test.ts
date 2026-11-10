@@ -43,4 +43,34 @@ describe('the next voyage is told with when (ROADMAP R58b)', () => {
     const t = told as unknown as { tick: number; days: number };
     expect(Math.abs((sailed - t.tick) / 24 - t.days), `told ${t.days} days at t${t.tick}, sailed t${sailed}`).toBeLessThanOrEqual(1);
   });
+
+  // ROADMAP R59a (critic run 60, R60-N1): 31173's 366 (setup 3517, two groups) waited at Tokyo beside an empty group
+  // while the other carried the landing out; it was told "about a day" for 4.3 days, the landing gathering for the next
+  // voyage only once all aboard were ashore. Every hour's figure comes true within a day.
+  it("31173's 366: each hour's figure beside an empty group at the port comes true within a day", { timeout: 300_000 }, () => {
+    const told: { tick: number; days: number }[] = [];
+    let sailed = -1;
+    let idle = 0;
+    landingBreaks({
+      seed: 31173, setup: 3517, days: 41, orders: 31173, probeDays: [30, 90], groups: 2, notes: [],
+      onHour: (w, click) => {
+        if (click || sailed >= 0 || !w.formations.has(366)) return;
+        const v = voyageOf(w, 366);
+        if (v?.state === 'atSea') {
+          sailed = w.tick;
+          return;
+        }
+        if (v?.state !== 'nextVoyage' || v.days === undefined) return;
+        const l = landingOfDivision(w, 366)!;
+        const c = w.formations.cols;
+        if (l.fleets.some((o) => w.formations.has(o) && c.moving[o] !== 1 && ![...w.embarked.values()].some((e) => e.fleet === o))) idle++;
+        told.push({ tick: w.tick, days: v.days });
+      },
+    });
+    expect(told.length, '366 left for the next voyage').toBeGreaterThan(0);
+    expect(idle, 'with an empty group standing by').toBeGreaterThan(24);
+    expect(sailed, '366 sails on it').toBeGreaterThan(0);
+    const off = told.filter((t) => Math.abs((sailed - t.tick) / 24 - t.days) > 1);
+    expect(off.map((t) => `t${t.tick}: ${t.days} days`), `sailed t${sailed}`).toEqual([]);
+  });
 });
