@@ -2491,3 +2491,24 @@
   landing setups text-identical). `slowClick` 3 of 300 new runs (1.0 %), under ADR-914's 5 %; every other checker 0.
 - Non-blocking R61-N1–N5 filed as R60 in batch 14, after the release. `npm run bench -- G` left to the release step
   (it writes `docs/bench/`). **Next:** ADR-917 (the critic's time bounds), then RELEASES steps 3–4.
+
+## 2026-11-10 — The release checks after critic run 61; release-2026-11-10
+- **Unit by hand first:** 2353 of 2353 (`snapshot-perf` timed out in the whole run, green alone; a timing test in
+  BLOCKERS); sweep config 18 of 18.
+- **check:review** (492b59a3): RED, 1 not known, red twice: `orderRowsTap1938`'s land case, red since R55j (`d3519cb0`;
+  green on `5671d6c1`). The gate runs only changed specs; critic runs 55–61 did not run it. Filed and fixed as R61a
+  (4165b39b): the news beside the landscape panel. check:review again (4165b39b): green, 1 known red (`seaRow1938`'s
+  Speed x1), 0 not known. The review's specs rewrote evidence PNGs; restored.
+- **Soak** (1938, seed 99, 30 min, P-cores): green, 39.60 years (346,920 ticks), 5 saves and loads, no desync; final hash
+  09440288 (last release 36.45 years).
+- **Sweep** (`--first 1561 --tag done61`, 1561–1570 × 50 years, unseen): land changing controller in the last 5 years
+  32.9–69.2 %, ≥ 1 % on 10 of 10 (the release's condition). Its own limits 7 of 10 (largest income over 40 % on 1562,
+  1564, 1567, as at the last release); riser, faller, no break-up 10 of 10; nukes in 10 of 10, fallout at most 1.20 %.
+  `docs/sweeps/2026-11-10-sweep-done61.md`.
+- **Bench** (`bench -- G` alone): T0 311.4 fps (budget 60; last release 322.3), p95 5.0 ms; T2 170.9 fps with 10,752
+  sprites (budget 30; last 173.4), p95 9.1 ms; SPEC GPU 0.51 / 1.11 ms, draw CPU p50 2.2 / 4.5 ms: PASS.
+- The tag is on R61a's CSS beyond the commit run 61 judged (`d971a46b`); no other critic run (PROMPT's step 3 does not
+  ask one). CHANGELOG entry; Later and Batches 3–13 moved to `docs/history/ROADMAP-release-2026-11-10.md`. Tag
+  `release-2026-11-10`.
+- **Next:** Batch 14 (R59, R60), after the release.
+

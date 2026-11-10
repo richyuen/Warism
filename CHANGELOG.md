@@ -2,6 +2,43 @@
 
 What each release of Warism brought, for players. Play it at https://richyuen.github.io/Warism/
 
+## release-2026-11-10 — landings you order, and the landings bar
+
+**New**
+- Landings you can order: select divisions and click a coast across the sea. Transports come to
+  the troops at a port, an escort sails with them, and the voyage is drawn on the map. The
+  divisions of one click land together, and a click again on the same landing keeps it.
+- The landing is marked on the map while you choose it, with a pointer from the screen's edge when
+  it is off the screen. Escape takes the mark away; on a touch screen an order over the sea takes
+  two taps.
+- The landings bar: a row for each landing, saying when it sails and lands, how many are ashore and
+  where, who holds it up in a sea battle and when it turns back. Open a row to cancel the landing.
+- Every order that is refused or changed says why: a port refusing or bombed shut, troops lost with
+  their sunk transports, a division left for the next voyage "in about 5 days". A formation's
+  panel keeps its last notice, dated, and greys it after three days.
+- The nation you play has a Build tab for its production, by kind of unit.
+- History has "My wars only" for the nation you play, shows the newest hour first, and tells a war
+  an ally was pulled into.
+- In the Actions tab, Offer peace is greyed while the enemy would refuse, with the reason under the
+  war's row.
+- Nation traits now do what they say, are shown on the panel, and God can set them.
+- Breakthrough corridors are drawn on the map, and God's Breakthrough is told in the ticker.
+- The editor's nation lists have a typed filter; a scenario file without nation traits starts.
+
+**Changed**
+- Allies and puppets join a war only when they can reach it. The AI no longer lands at an enemy port
+  that an enemy fleet guards, and a rising against an overrun overlord frees the nation.
+- On a phone on its side the nation panel is wide and tall, with Build in four columns and Actions in
+  two, and the news stands beside it. On a phone a tap opens an order row to its full words.
+- At the fastest speed, units glide between updates.
+- The relations graph's labels never cover one another and answer a tap; the ranking and the History
+  keep their text whole.
+
+**Fixes**
+- A landing on a neutral coast is no longer undone overnight.
+- Two blocks of troops no longer stand inside each other.
+- A sunk sea hero does not come back under an enemy fleet.
+
 ## release-2026-11-03b — the relations graph, and heroes you can follow
 
 **New**
