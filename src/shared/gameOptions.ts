@@ -19,4 +19,9 @@ export interface GameOptions {
   ceMode?: 'dynamic' | 'progressive' | 'static' | 'locked' | 'random';
   /** The map's size, an id of its map's `sizes` (PLAN 7.1b6): the scenario's own when not given. */
   size?: string;
+  /**
+   * The historical track's second seed (ROADMAP R62d, SPEC §7.7): every stream is derived again from it when the track
+   * ends, so the world after it differs from game to game. Rolled by the new-game form; 0 or absent: none.
+   */
+  after?: number;
 }

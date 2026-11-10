@@ -130,11 +130,18 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     `trackTerritory1938h.test.ts` (a Sudetenland ring: each of its Czechoslovak land cells by the test's own
     point-in-polygon Germany's, owned and held, at t28, none other of the two's changed, one `LandCeded`; western Poland
     held by Germany at t55, owners kept, nothing else of Poland's); a probe: the occupation held 3 days at peace.
-  - [ ] R62d Birth and the end: a dormant nation born on its date with its cores and land (nothing revives or spawns it
+  - [x] R62d Birth and the end: a dormant nation born on its date with its cores and land (nothing revives or spawns it
     before); the second seed (`?after=`, rolled by the form) taken by every RNG stream when the track ends, in 1953 or
     early; what reads the seed outside the sim (URL, Continue, settings, autosave) checked. AT: two runs with one seed
     and different second seeds equal in every section but the track's own until the end, and differing within a year
     after; no unborn nation alive before its date on 5 seeds.
+    Done (this commit, ADR-926): `born`, `TimelineFile.end` (1953-07-27), `endTrack` (the world's seed and streams
+    from the second), `GameOptions.after` through the URL, the form and the game. Evidence: `trackBirth1938h.test.ts`
+    (Slovakia born at t30, not before, with land, cores, Bratislava's city its seat, `LandCeded` then `NationBorn`;
+    born again passed over; seconds seeds 111 and 222: no section but the track's, the seed's and the rng's differs to
+    t72, the end at t72, apart on the first day after (casualties, strength); with none the seed stays); a probe on
+    seeds 1, 7, 99, 1938, 31127, a year each: no unborn nation alive on any day; `scenario1938h.spec.ts` (Start's
+    URL has `after`).
   - [ ] R62e The steering: while the track runs, the strategic AI's own declarations, stalemate peace, pacts,
     coalitions, rival drift, collapse, revival and nuclear decision off; war-phase objectives weighting the operational
     AI's sectors and naming the invasion AI's landings. AT: on a test war with one objective, the attacker's allotted

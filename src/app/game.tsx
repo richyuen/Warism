@@ -8,6 +8,7 @@ import { Autosave } from './autosave';
 import { Hud } from './hud';
 import { MapView } from './MapView';
 import { PlayerControl } from './player';
+import type { GameOptions } from '../shared/gameOptions';
 import { loadFailedUrl, optionsFromUrl, withLooping } from './gameUrl';
 import { importScenarioFile, readStagedScenario } from './scenarioFiles';
 import { saveScreenshot, Settings } from './settings';
@@ -43,7 +44,9 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
   const seed = signal((scenario.fixedSeed ?? Number(params.get('seed') ?? 1938)) >>> 0);
   const sim = new SimClient();
   // New-game options (PLAN 1.39b1); a non-looping map also renders without wrap copies.
-  const options = scenario.fixedSeed !== undefined ? {} : optionsFromUrl(params);
+  // Its second seed alone (R62d): the URL's, or one rolled here for a game opened without one, kept by the autosave.
+  const fixedAfter = (): GameOptions => ({ after: optionsFromUrl(params).after ?? ((Math.random() * 0xffffffff) >>> 0 || 1) });
+  const options = scenario.fixedSeed !== undefined ? fixedAfter() : optionsFromUrl(params);
   // At the size the options ask, one of its map's (PLAN 7.1b6); the scenario's own otherwise.
   // A scenario file at another size than its scenario's own starts the game at its size (PLAN 7.1b8).
   if (staged?.size !== undefined) options.size = staged.size;

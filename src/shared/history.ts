@@ -122,6 +122,8 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   // The historical track (ROADMAP R62b): an event passed over (the nation it names first, its number); its end (why).
   [EventKind.TrackSkipped]: ['nation', 'number'],
   [EventKind.TrackEnded]: ['nation', 'number'],
+  // A nation born on the track's date (ROADMAP R62d): it, the nation that gave it most land.
+  [EventKind.NationBorn]: ['nation', 'nation'],
 };
 
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */
@@ -166,7 +168,7 @@ export interface HistoryRow {
   bonds?: number;
 }
 
-export type HistoryAs = 'revived' | 'joined' | 'left' | 'founded' | 'puppet' | 'alliance' | 'guarantee';
+export type HistoryAs = 'revived' | 'joined' | 'left' | 'founded' | 'puppet' | 'alliance' | 'guarantee' | 'changed' | 'date';
 
 /** The major events, which the ticker tells as they happen (PLAN 3.12c): war, peace, a capital taken, a nation's death or return. */
 export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([
@@ -260,6 +262,7 @@ export const WAR_KINDS: ReadonlySet<number> = new Set([
   EventKind.HeroLost,
   EventKind.WarJoined,
   EventKind.TrackEnded,
+  EventKind.NationBorn,
 ]);
 
 export const NO_FILTER: HistoryFilter = { kind: null, nation: null, fromYear: null, toYear: null, mine: null };

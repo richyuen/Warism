@@ -16,12 +16,15 @@ import type { Section } from './core/sections';
 import { hashString } from './core/hash';
 import type { TimelineEvent, TimelineFile } from './data/schemas';
 import { Terrain } from '../shared/terrain';
+import { RngStreams } from './core/rng';
 import { forEachCellInRing } from './data/ownership';
+import { project } from './data/projection';
+import { nuclearMask, START_GOLD } from './systems/revolts';
 import { relocateCapital } from './systems/capitals';
 import { makePeace, withPuppets } from './systems/war';
 import { applyCommand } from './tick';
 import { ATTACKERS, DEFENDERS } from './wars';
-import { FlipCause, type World } from './world';
+import { FlipCause, navOf, type World } from './world';
 
 /** The section of the track's state. */
 export const TRACK_SECTION = 'world.track';
@@ -60,12 +63,19 @@ export class Track {
   unborn = new Set<number>();
   /** A save of another timeline was loaded: the runner ends the track at the next hour, with its row. */
   changed = false;
+  /** The tick it ends at, after that hour's events (R62d; Infinity: none). */
+  readonly endTick: number;
+  /** Each nation's capital in its table, lon/lat, by id − 1 (a born nation's seat, R62d). */
+  capitals: readonly (readonly [number, number])[] = [];
+  /** The revivals a born nation has, as its scenario's nations do (R62d). */
+  revivals = 0;
 
   constructor(file: TimelineFile, tags: readonly string[], startDate: string) {
     this.events = file.events;
     const start = dayOfIso(startDate);
     this.ticks = file.events.map((e) => (dayOfIso(e.date) - start) * 24 + (e.hour ?? 0));
     this.hash = timelineHash(file);
+    this.endTick = file.end === undefined ? Infinity : (dayOfIso(file.end) - start) * 24;
     this.ids = new Map(tags.map((t, i) => [t, i + 1]));
   }
 
@@ -236,6 +246,83 @@ function occupy(world: World, by: number, of: readonly number[], ring: readonly 
   return held > 0 ? Refusal.None : Refusal.NoEffect;
 }
 
+/**
+ * A nation of the scenario born (R62d): unborn until now, it takes the land in the ring of `from` as a transfer does,
+ * with cores on the provinces whose centre it holds, its capital the city of its own nearest its table's (else
+ * `relocateCapital`), the techs of the nation that gave most (the nuclear aside), START_GOLD and the scenario's
+ * revivals. `NationBorn` after its land's `LandCeded` rows.
+ */
+function born(world: World, t: Track, n: number, from: readonly number[], ring: readonly (readonly [number, number])[]): Refusal {
+  if (n === 0 || !world.nations.has(n)) return Refusal.NoNation;
+  if (!t.unborn.has(n)) return Refusal.Alive;
+  const { owner } = world.cells;
+  const before = new Map<number, number>();
+  const cells = ringCells(world, ring).filter((c) => from.includes(owner[c]!) && owner[c] !== n);
+  if (cells.length === 0) return Refusal.NoCoreLand;
+  for (const c of cells) before.set(owner[c]!, (before.get(owner[c]!) ?? 0) + 1);
+  let giver = 0;
+  for (const [g, k] of [...before].sort((a, b) => a[0] - b[0])) if (giver === 0 || k > before.get(giver)!) giver = g;
+  const nc = world.nations.cols;
+  nc.living[n] = 1;
+  nc.bankrupt[n] = 0;
+  nc.gold[n] = START_GOLD;
+  nc.people[n] = n;
+  nc.revivalsLeft[n] = t.revivals;
+  const [n0, n1] = nuclearMask(world);
+  nc.tech0[n] = (nc.tech0[giver]! & ~n0) >>> 0;
+  nc.tech1[n] = (nc.tech1[giver]! & ~n1) >>> 0;
+  t.unborn.delete(n);
+  transfer(world, n, from, ring);
+  // Its cores: the provinces whose centre it now holds.
+  const { province, w, h } = world.cells;
+  const mine = new Set<number>();
+  for (const c of cells) if (owner[c] === n) mine.add(province[c]!);
+  const g = navOf(world).graph;
+  const centre = (p: number): number => g.centre[p] ?? -1;
+  for (const p of [...mine].sort((a, b) => a - b)) {
+    if (p === 0) continue;
+    const c = centre(p);
+    if (c < 0 || owner[c] === n) world.provinces.core[p] = n;
+  }
+  // Its seat: its own city nearest its table's capital.
+  const [lon, lat] = t.capitals[n - 1] ?? [0, 0];
+  const [u, v] = project(lon, lat);
+  const cc = world.cities.cols;
+  let best = 0;
+  let bestD = Infinity;
+  world.cities.forEach((ci) => {
+    if (owner[cc.cell[ci]!] !== n || cc.capitalOf[ci] !== 0) return;
+    let dx = Math.abs(cc.x[ci]! - u * w);
+    dx = Math.min(dx, w - dx);
+    const dy = cc.y[ci]! - v * h;
+    const d = dx * dx + dy * dy;
+    if (d < bestD) [best, bestD] = [ci, d];
+  });
+  if (best !== 0) {
+    cc.capitalOf[best] = n;
+    nc.capitalX[n] = cc.x[best]!;
+    nc.capitalY[n] = cc.y[best]!;
+  } else relocateCapital(world, n);
+  world.out.emit(world.tick, EventKind.NationBorn, n, giver, nc.capitalX[n]!, nc.capitalY[n]!);
+  return Refusal.None;
+}
+
+/**
+ * The track ends for good (R62d; the intervention's end is R62j): a `TrackEnded` row, and every stream of chance is
+ * derived again from the second seed, so what follows differs from game to game (none rolled: the seed stays).
+ */
+export function endTrack(world: World, why: number): void {
+  const t = world.track;
+  if (!t || t.ended) return;
+  t.ended = true;
+  t.changed = false;
+  world.out.emit(world.tick, EventKind.TrackEnded, 0, why, NaN, NaN);
+  if (t.afterSeed !== 0) {
+    world.seed = t.afterSeed >>> 0;
+    world.rng = new RngStreams(world.seed);
+  }
+}
+
 /** Applies one event; why not when it no longer applies (the state then as it was). */
 function apply(world: World, t: Track, e: TimelineEvent): Refusal {
   const id = (tag: string): number => t.id(tag);
@@ -266,6 +353,8 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       return transfer(world, id(e.to), e.from.map(id), e.ring);
     case 'occupy':
       return occupy(world, id(e.by), e.of.map(id), e.ring);
+    case 'born':
+      return born(world, t, id(e.nation), e.from.map(id), e.ring);
   }
 }
 
@@ -292,6 +381,8 @@ function firstNation(t: Track, e: TimelineEvent): number {
       return t.id(e.to);
     case 'occupy':
       return t.id(e.by);
+    case 'born':
+      return t.id(e.nation);
   }
 }
 
@@ -303,12 +394,16 @@ export function runTrack(world: World): void {
   const t = world.track;
   if (!t || t.ended) return;
   if (t.changed) {
-    t.changed = false;
-    t.ended = true;
-    world.out.emit(world.tick, EventKind.TrackEnded, 0, TrackEnd.timelineChanged, NaN, NaN);
+    endTrack(world, TrackEnd.timelineChanged);
     return;
   }
-  if (t.next >= t.events.length || t.ticks[t.next]! > world.tick) return;
+  if (t.next < t.events.length && t.ticks[t.next]! <= world.tick) applyDue(world, t);
+  // Its last day (R62d): after that hour's events.
+  if (world.tick >= t.endTick) endTrack(world, TrackEnd.date);
+}
+
+/** The events due by this hour, in the timeline's order. */
+function applyDue(world: World, t: Track): void {
   // An event may make, end or move what stands in contact: worked out again from the state, as after commands.
   world.contacts = null;
   world.deployed = null;

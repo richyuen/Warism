@@ -9,6 +9,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-926 · 2026-11-10 · accepted — Births, the track's last day and the second seed (R62d)
+- **Birth.** A `born` event (nation, from, ring) brings an unborn nation of the scenario to life: the land of its ring
+  as a transfer gives it (`LandCeded` rows), cores on the provinces whose centre it holds (their core nation becomes
+  it), its seat the city of its own nearest its table's capital (none: `relocateCapital`), START_GOLD, the techs of the
+  nation that gave most land (the nuclear aside, as a rebel's), the scenario's revivals; then `NationBorn`. One born
+  already is passed over (`Alive`). Until its event, an unborn nation has no core, land or revival: no rule brings it.
+- **The end.** `TimelineFile.end` (1953-07-27): after that day's first hour's events the track ends (`TrackEnded`,
+  `TrackEnd.date`); a save of another timeline ends it the same way (`timelineChanged`); R62j adds the intervention.
+- **The second seed.** `GameOptions.after` (`?after=`), rolled by the new-game form's Start (or by the game when the
+  URL has none, then kept by the autosave's options), is kept in the track's section. At the end `world.seed` becomes
+  it and `world.rng` is made anew from it, so every stream, hashed (`hash32(world.seed, …)`) or drawn, is derived from
+  it. With none (0) the seed stays. Until the end, two games of the scenario differ in the track's section alone.
+- **Readers outside the sim.** Continue loads the autosave's bytes (its track and seed with them). The settings show
+  the world's seed: after the end, the second. A new game of the scenario always starts its own seed; the URL's
+  `seed` and options other than `after` are ignored (ADR-923's R62a).
+- **Consequences.** `trackBirth1938h.test.ts`; a probe (5 seeds × a year: no unborn nation alive on any day);
+  `scenario1938h.spec.ts` (Start's URL carries `after`).
+
 ### ADR-925 · 2026-11-10 · accepted — The track's land: rings at the hour, a cession as land handed over (R62c)
 - **Decision.** A `transfer` (to, from, ring) gives the land cells whose centre is inside the lon/lat ring and whose
   owner is one of `from` to `to`, owned and held (`setOwner`, `setController`), as `defect` hands land over: a

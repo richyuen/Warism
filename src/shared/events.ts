@@ -287,13 +287,18 @@ export const EventKind = {
    * (`TrackEnd`), x = y = NaN.
    */
   TrackEnded: 80,
+  /**
+   * A nation of the historical track born on its date (ROADMAP R62d): a = it, b = the nation that gave it most land,
+   * (x, y) = its capital.
+   */
+  NationBorn: 81,
 } as const;
 
 /** Why a nation joined a war (`WarJoined`'s y). */
 export const JoinedBy = { alliance: 1, guarantee: 2, track: 3 } as const;
 
 /** Why the historical track ended (`TrackEnded`'s b; ROADMAP R62b, R62j). */
-export const TrackEnd = { timelineChanged: 1 } as const;
+export const TrackEnd = { timelineChanged: 1, date: 2 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */
 export const Bond = { truce: 1, alliance: 2, puppet: 4 } as const;

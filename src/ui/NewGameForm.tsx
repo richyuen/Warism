@@ -75,7 +75,7 @@ export function NewGameForm({ seed, options, nationsRange, rangeHint = true, siz
         <p class="panel-note" data-testid="settings-fixed">
           {t('settings.fixedSeed')}
         </p>
-        <button type="button" class="start-btn" data-testid="settings-new-game" disabled={blocked !== undefined} title={blocked} onClick={() => onStart(fixedSeed, {})}>
+        <button type="button" class="start-btn" data-testid="settings-new-game" disabled={blocked !== undefined} title={blocked} onClick={() => onStart(fixedSeed, { after: randomSeed() || 1 })}>
           {startLabel}
         </button>
         {blocked !== undefined ? (

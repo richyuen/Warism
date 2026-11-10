@@ -181,3 +181,10 @@
   giver and moves a capital in it, an occupation holds only.
 - Evidence: `tests/unit/trackTerritory1938h.test.ts` (exact cells against its own point-in-polygon); a probe: an
   occupation at peace held 127 of 127 cells three days on. Gate.
+
+## 2026-11-10 — R62d: births, the track's end and the second seed (ADR-926)
+
+- `born` events (land, cores, seat, `NationBorn`); `TimelineFile.end` (1953-07-27 in 1938h's); `endTrack` makes the
+  world's seed and streams anew from the second seed; `GameOptions.after` (`?after=`), rolled by the form's Start.
+- Evidence: `tests/unit/trackBirth1938h.test.ts` (3); a probe, 5 seeds × a year: no unborn nation alive on any day;
+  `tests/e2e/scenario1938h.spec.ts` (Start's URL has `after`). Gate.

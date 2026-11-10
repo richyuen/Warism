@@ -91,7 +91,7 @@ export class Sim {
         // The historical track (ROADMAP R62a): 1938's world with the nations history made after it, dormant.
         if (init.scenario === '1938h') {
           addDormantNations1938h(this.world);
-          startTrack1938h(this.world, timeline);
+          startTrack1938h(this.world, timeline, init.options?.after);
         }
         if (init.options) applyGameOptions(this.world, init.options);
         // The heroes (PLAN 7.184): the 1938 world's, after every other formation.

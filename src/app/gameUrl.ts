@@ -25,6 +25,9 @@ export function optionsFromUrl(params: URLSearchParams): GameOptions {
   // The map's size (PLAN 7.1b6); the game checks it against the map's sizes.
   const size = params.get('size');
   if (size !== null && /^[A-Z]{1,3}$/.test(size)) o.size = size;
+  // The historical track's second seed (ROADMAP R62d).
+  const after = params.get('after');
+  if (after !== null && /^\d{1,10}$/.test(after) && Number(after) <= 0xffffffff) o.after = Number(after);
   return o;
 }
 
@@ -40,6 +43,7 @@ export function newGameUrl(base: string, seed: number, o: GameOptions): string {
   if (o.ceMode) q.set('ce', o.ceMode);
   if (o.nations !== undefined) q.set('nations', String(o.nations));
   if (o.size !== undefined) q.set('size', o.size);
+  if (o.after !== undefined && o.after !== 0) q.set('after', String(o.after));
   return `?${q.toString()}`;
 }
 

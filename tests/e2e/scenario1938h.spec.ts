@@ -15,9 +15,9 @@ test('1938h starts with its own seed; its new game offers no seed or option', as
   await page.setViewportSize({ width: 1400, height: 800 });
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
-  const own = await open(page, '&seed=1938');
+  const own = await open(page, '&seed=1938&after=7');
   // Another seed and a random option in the URL change nothing.
-  expect(await open(page, '&seed=5&aggr=random&traits=random')).toBe(own);
+  expect(await open(page, '&seed=5&aggr=random&traits=random&after=7')).toBe(own);
   expect(await page.evaluate(() => window.__warsim!.hud.stats.value!.nations.length)).toBe(102);
   await page.getByTestId('settings-btn').click();
   await expect(page.getByTestId('settings-panel')).toBeVisible();
@@ -25,5 +25,11 @@ test('1938h starts with its own seed; its new game offers no seed or option', as
   await expect(page.getByTestId('settings-seed')).toHaveCount(0);
   await expect(page.getByTestId('settings-new-game')).toBeEnabled();
   await page.screenshot({ path: test.info().outputPath('settings-1938h.png') });
+  // A new game rolls its second seed (R62d): the seed stays the scenario's.
+  await page.getByTestId('settings-new-game').click();
+  await page.waitForURL(/after=\d+/);
+  const url = new URL(page.url());
+  expect(url.searchParams.get('scenario')).toBe('1938h');
+  expect(Number(url.searchParams.get('after'))).toBeGreaterThan(0);
   expect(errors).toEqual([]);
 });

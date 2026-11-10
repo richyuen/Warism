@@ -66,8 +66,11 @@ export function addDormantNations1938h(world: World): void {
  * The track of a 1938h world (ROADMAP R62b): its timeline (`file`, the scenario's unless a test gives one), its own
  * nations unborn.
  */
-export function startTrack1938h(world: World, file: TimelineFile = TIMELINE_1938H): void {
+export function startTrack1938h(world: World, file: TimelineFile = TIMELINE_1938H, after = 0): void {
   const t = new Track(file, TAGS_1938H, scenario1938h.startDate);
+  t.afterSeed = after >>> 0;
   for (let i = 0; i < ADDED_1938H.length; i++) t.unborn.add(NATIONS_1938.length + i + 1);
+  t.capitals = NATIONS_1938H.map((n) => n.capital.lonLat as [number, number]);
+  t.revivals = scenario1938h.settings.revival.maxPerNation;
   world.track = t;
 }

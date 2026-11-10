@@ -497,7 +497,7 @@ function heldKm2(world: World, holder: number): (p: number) => number {
 }
 
 /** The techs of the nuclear category (`data/tech/nuclear.json`), as a mask (PLAN 6.12c). */
-function nuclearMask(world: World): TechMask {
+export function nuclearMask(world: World): TechMask {
   const techs = world.rules?.techs ?? [];
   return techMask(techs.flatMap((t, i) => (t.category === 'nuclear' ? [i] : [])));
 }

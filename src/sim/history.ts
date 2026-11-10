@@ -69,6 +69,7 @@ export const HISTORY_KINDS: ReadonlySet<number> = new Set<number>([
   // The historical track's events passed over, and its end (ROADMAP R62b).
   EventKind.TrackSkipped,
   EventKind.TrackEnded,
+  EventKind.NationBorn,
 ]);
 
 export class History implements Stateful {

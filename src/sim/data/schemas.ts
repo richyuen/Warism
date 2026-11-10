@@ -525,9 +525,19 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
   z.strictObject({ ...when, kind: z.literal('transfer'), to: tag, from: tags, ring, note: z.string().optional() }),
   /** The land inside `ring` that one of `of` owns is held by `by`, its owner unchanged (an occupation, R62c). */
   z.strictObject({ ...when, kind: z.literal('occupy'), by: tag, of: tags, ring, note: z.string().optional() }),
+  /**
+   * A nation of the scenario dormant until now is born (R62d) on the land in `ring` that one of `from` owns: owned
+   * and held, its cores, its capital the city of its own nearest its table's capital.
+   */
+  z.strictObject({ ...when, kind: z.literal('born'), nation: tag, from: tags, ring, note: z.string().optional() }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;
-export const TimelineFile = z.strictObject({ comment: z.string().optional(), events: z.array(TimelineEvent) });
+export const TimelineFile = z.strictObject({
+  comment: z.string().optional(),
+  /** The day the track ends, after that day's first hour's events (R62d; absent: it runs until an intervention). */
+  end: date.optional(),
+  events: z.array(TimelineEvent),
+});
 export type TimelineFile = z.infer<typeof TimelineFile>;
 
 /** The tags an event names. */
@@ -555,6 +565,8 @@ export function timelineTags(e: TimelineEvent): string[] {
       return [e.to, ...e.from];
     case 'occupy':
       return [e.by, ...e.of];
+    case 'born':
+      return [e.nation, ...e.from];
   }
 }
 
@@ -943,6 +955,7 @@ export function validateDataSet(files: Readonly<Record<string, unknown>>): strin
       last = at;
       if (meta && e.date < meta.startDate) errors.push(`${f}: events[${i}]: ${e.date} is before the scenario's start`);
       for (const x of timelineTags(e)) if (known.size > 0 && !known.has(x)) errors.push(`${f}: events[${i}]: unknown nation '${x}'`);
+      if (t.end !== undefined && e.date > t.end) errors.push(`${f}: events[${i}]: ${e.date} is after the track's end`);
     });
   }
   return errors;
