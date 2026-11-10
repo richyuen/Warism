@@ -233,7 +233,7 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     over; owners 97.2 % right, control 97.2 % right (`tests/sweep/historyMatch1938h.test.ts`, `nuke` in
     `tests/unit/trackLevers1938h.test.ts`). R62h done with its slices (ticked late, after R62i4: its last slice's
     commit left it open).
-  - [ ] R62i 1945–53: the occupation zones, Poland moved west, Austria, the Philippines, India and Pakistan, Burma,
+  - [x] R62i 1945–53: the occupation zones, Poland moved west, Austria, the Philippines, India and Pakistan, Burma,
     Ceylon, Israel, Indonesia, the Chinese civil war (the People's Republic, the Republic on Taiwan), the two Germanies,
     the two Koreas and the Korean War to the armistice, Japan's sovereignty (1952); the new nations' names, colours and
     flags. AT: each event on its date; owners match history on 1 January 1950 and 27 July 1953 ≥ 90 % of land cells;
@@ -257,10 +257,13 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     nation living on the track from 1938 to 1953 has a name, a colour of its own and a flag of its own.
     Done (ADR-943): `rename` (`World.identities`); `data/scenarios/1938h/flags.json`; `flagsByScenario.test.ts`,
     `trackLevers1938h.test.ts`, the data cross-checks.
-  - [ ] R62i5 The world free after the last event. AT: a war of the AI's own (declared after the end) within 5 years
+  - [x] R62i5 The world free after the last event. AT: a war of the AI's own (declared after the end) within 5 years
     on most of 10 seeds loaded from 1953.
     Read early (ADR-939, the timeline to 1945 and the track run to its end): 79-99 wars in 5 years on each of 10
     seeds, a dozen in the first 3 months; the bar met, the burst at the end to be judged here.
+    Done (ADR-944): the AI's first war within 0-15 days of the end on 10 of 10 seeds; the burst the AI's opening (15-19
+    wars in the first quarter, an ordinary 1938 game 12-13) (`tests/sweep/freeWorld1938h.test.ts`). R62i done with
+    its slices.
   - [ ] R62j Intervention and the player's view: the first God Mode act, editor edit or taking of a nation (a command
     of the pending queue of those kinds; listed in a test) ends the track and reseeds at that hour; a line under the
     date while the track runs (the next event and its date), the end's row in the History, the events' rows in the

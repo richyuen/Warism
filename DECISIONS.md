@@ -9,6 +9,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-944 · 2026-11-10 · accepted — The world free after the track (R62i5)
+- **Measured** (`tests/sweep/freeWorld1938h.test.ts`): the track's world stepped to 26 July 1953 and saved, then
+  loaded with ten seeds for after it (`Track.afterSeed`, as a game of each seed sets it): the track ends on 27 July and
+  the AI's first war of its own follows within 0-15 days on all ten (bar: within 5 years on most).
+- **The burst after the end is the AI's opening, not a pent-up one:** wars declared by quarter over two years, three
+  seeds each: from 1953 15-19 in the first quarter and 52-62 in all; an ordinary 1938 game from its start 12-13 and
+  49-54. The same shape; the first quarter up to 40 % busier in a world of more nations. No rule changed.
+- **A probe's trap:** `runMatch` runs to each map's date before its `until`, and the last map is the track's end; a
+  save meant for before the end is stepped to its hour instead (the test's own run, and the early reading of ADR-939
+  reseeded by hand after the end).
+- **R62i done** with its slices i0-i5.
+
 ### ADR-943 · 2026-11-10 · accepted — The track's names and flags (R62i4)
 - **`rename`**, a timeline kind: from its hour the nation bears the identity `as`, a tag whose `nation.<as>` name and
   flag it shows (`World.identities`, state, a section of its own only while there is one: older saves load, the pin

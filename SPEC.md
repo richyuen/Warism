@@ -1756,7 +1756,8 @@ to 27 July 1953, then sets the world free.
   their wars held on them. The Chinese civil war by stages of transfer (R62i2, ADR-941): `capital` (a seat
   moved) and `guarantee` with `end` (a pledge withdrawn). The Korean War to the armistice, its line drawn by
   transfer on the track's last day (R62i3, ADR-942). `rename` gives a nation a new name and flag (an identity,
-  state; R62i4, ADR-943); the track's nations and identities fly flags of their own (`1938h/flags.json`).
+  state; R62i4, ADR-943); the track's nations and identities fly flags of their own (`1938h/flags.json`). After its
+  end the world is the AI's: its wars resume at an ordinary game's opening pace (R62i5, ADR-944).
 - **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is
   reached by the timeline's steering (objectives, dates, historical arrivals of forces and phase buffs),
   tuned per period against a match tool (R62h). The shared rules do not change for the track.

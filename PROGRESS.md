@@ -337,3 +337,10 @@
 - Flags for the track's 12 nations and 6 identities (`data/scenarios/1938h/flags.json`), checked by eye in a grid.
 - Evidence: `tests/unit/flagsByScenario.test.ts`, `tests/unit/trackLevers1938h.test.ts`, `tests/unit/data-schemas.test.ts`,
   `tests/sweep/historyMatch1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62i5: the world free after the track (ADR-944); R62i done
+
+- From 26 July 1953 with ten after-seeds: the AI's first war within 0-15 days of the end on all ten.
+- The burst after the end matches an ordinary game's opening (15-19 wars in the first quarter vs 12-13).
+- Found: the early reading's save was half a day after the end (`runMatch` runs to the last map, the end's date).
+- Evidence: `tests/sweep/freeWorld1938h.test.ts`. Gate.
