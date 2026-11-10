@@ -2474,6 +2474,15 @@ button.unit-icon.on {
   #ui:has(.nation-panel) .war-banners {
     left: calc(var(--side-panel-w) + 2.5rem);
   }
+  /* The landings beside the panel, not over its head (ROADMAP R60a; critic run 61, R61-N1: at 844 × 390 the bar, top
+     middle, lay over the panel's ×, so a tap on it opened the landing). The room the panel leaves on its right. */
+  #ui:has(.nation-panel) .landings-bar {
+    left: calc(var(--side-panel-w) + 1rem);
+    right: 0.5rem;
+    width: auto;
+    min-width: 0;
+    transform: none;
+  }
   .nation-panel .build-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }

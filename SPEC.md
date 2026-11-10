@@ -1920,6 +1920,10 @@ builds).
 - **War banners** (`src/ui/WarBanners.tsx`): at most `MAX_BANNERS` (6, `PHONE_BANNERS` 2 on a phone) and
   "+N": the sides' leaders and allies, the score, swords lit while it has a battle; a click flies to the
   war's battle (up to `BATTLE_VIEW_MAX_M` 250 m/px).
+- **Landings bar** (`src/ui/LandingsBar.tsx`): the player's landings, a row each, top middle; it gives way to the
+  History, Relations, Settings and Editor panels and a nuclear alert. On a short view (a phone on its side) it
+  stands to the right of an open nation panel, never over its head (R60a). On a phone's width it gives way to the
+  nation panel.
 - **Ticker** (`src/ui/Ticker.tsx`, bottom left, newest last, `role="log"`): the `TICKER_ROWS` (5) latest of
   `TICKER_KINDS` within `TICKER_HOURS` (720; a puppet freed among them, `PuppetReleased`, the cause of its "left its
   war" rows, R42d), deaths deduplicated, a peace with its annexation one row

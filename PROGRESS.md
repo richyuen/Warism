@@ -76,3 +76,16 @@
 - Evidence: on the critic's `critic/c60_sb_31501.json` (a preview on 4173): exit 0, "44 of 44 battles seen ... 1 with
   no fleet to see", t6243 seen at its own hour with both sides (ENG 96, ITA 16), page errors 0 (was 43 of 45, exit 1).
   A tool only: no sim or page code. Gate green. R59 done.
+
+## 2026-11-10 — R60a: the landings bar beside the landscape nation panel, its × in reach (R61-N1)
+
+- `src/app/style.css`, `@media (max-height: 500px)`: with the nation panel open the landings bar stands on its right
+  (`left: var(--side-panel-w) + 1rem` to the view's edge, no centring), not over its head; the panel (R55j, R61a)
+  had widened under the bar since run 55. SPEC §9.2 gains the bar's entry (where it stands, what it gives way to).
+- Evidence: the critic's probes, run from copies under `.cache/cr` (their output kept out of `critic/`) on a preview:
+  `c61_x_closeblock.mjs 21103` at 844 × 390, 932 × 430, 1024 × 500, 667 × 375: the element at the × is
+  `nation-close`, `clickOk` true, the bar 7 px right of the panel, page errors 0; `c55_lbox.mjs 21103` and `32223`
+  at 844 × 390: six days, the Cancel in view, inside the bar and topmost each day, as run 55's file, day 6 "over:
+  4 landed". `tests/e2e/landingsBarPanel1938.spec.ts` (new): red at all four sizes before ("landing-toggle" at the
+  ×), green after; `landingsBar1938`, `phoneLayout1938`, `orderRowsTap1938`, `panelFootLandscape1938` green (29);
+  the 844 × 390 shot looked at. Gate green.
