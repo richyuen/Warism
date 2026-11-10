@@ -468,7 +468,7 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
         if (inRing.has(Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w)) gone.push(i);
       });
       for (const i of gone.sort((a, b) => a - b)) {
-        world.nations.cols.manpower[n] = world.nations.cols.manpower[n]! + f.strength[i]!;
+        if (e.captured !== true) world.nations.cols.manpower[n] = world.nations.cols.manpower[n]! + f.strength[i]!;
         applyCommand(world, { kind: 'removeFormation', id: i });
       }
       return gone.length > 0 ? Refusal.None : Refusal.NoEffect;

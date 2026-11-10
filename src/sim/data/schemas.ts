@@ -564,9 +564,10 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * of `to` in turn, as a player's orders (the AI leaves each alone until it is there).
    */
   /**
-   * An evacuation (R62g2): `nation`'s land formations in `ring` leave the theatre, their men back to its pool.
+   * An evacuation (R62g2): `nation`'s land formations in `ring` leave the theatre, their men back to its pool; or a
+   * pocket (`captured`, R62g3): they are taken, their men lost.
    */
-  z.strictObject({ ...when, kind: z.literal('withdraw'), nation: tag, ring, note: z.string().optional() }),
+  z.strictObject({ ...when, kind: z.literal('withdraw'), nation: tag, ring, captured: z.boolean().optional(), note: z.string().optional() }),
   z.strictObject({ ...when, kind: z.literal('redeploy'), nation: tag, from: ring, to: z.array(lonLat).min(1), share: z.number().gt(0).max(1) }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;

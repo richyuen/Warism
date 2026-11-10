@@ -9,6 +9,29 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-933 · 2026-11-10 · accepted — Barbarossa by its stages (R62g3)
+- **Measured first:** on 21 June 1941 Germany had 1.55M men, 1.2M of them in France, and the Soviet Union 930k, flat
+  since December 1940 with a pool of 4.9M and 6,142 gold unspent. With 75 % of the army moved east (`redeploy`, 1
+  March), the western districts' arrivals (50 rifle divisions on 1 June), the mobilisation's (15 a month), +100-300 %
+  attack and the campaign's objectives (Minsk, Smolensk, Leningrad, Kiev, Kharkov, the Crimea, Rostov, Moscow), the
+  Axis held 1-2,789 Soviet cells of 170,606 on 1 December; with the Soviet arrivals Germany's army fell to 733k. The
+  fighting does not make Barbarossa, as it did not make the fall of France without a lever (ADR-931).
+- **So by stages, as China (ADR-930):** the Axis lines of 10 July, 20 August, 30 September and 1 December 1941, each
+  on its date an `occupy` of the Soviet land west of it, the Soviet formations there taken first (`withdraw` with
+  `captured`, new: the men lost, the great pockets). The fighting fills the time between. Finland's front is held
+  from its entry (the Soviets had overrun northern Finland by September without it) and its advance a stage (Karelia
+  and East Karelia to the Svir, 1 September). Bessarabia back to Romania (26 July). Japan in all of Indochina from
+  July 1941.
+- **The bar:** the item's (control ≥ 75 % of land, the land moved in control ≥ 75 % right, stray < 2 %) passes on the
+  failed invasion too (78.4 %), so the test also reads the Axis's Soviet cells after the last stage (≥ 6,000). The
+  1 December map's line is drawn on its own, not from the stages' lines.
+- **Measured** (`historyMatch1938h.test.ts`), 1 December 1941: owners 99.84 %, 97.5 % right, stray 0.06 %; control
+  99.45 %, the land moved 94.9 % right (40,558 cells), stray 0.22 %; 7,599 Soviet cells held by the Axis; no event
+  passed over.
+- **Left, for R62h:** the Soviet army is 498k on 1 December (history about 4M): the Moscow counter-offensive and 1942
+  will need the Soviet Union's mobilisation as arrivals, and the stages' pattern for the fronts the fighting cannot
+  move.
+
 ### ADR-932 · 2026-11-10 · accepted — 1940-41 from the Baltics to Iran (R62g2)
 - **The events:** the Baltic states annexed (3-6 August 1940); the Second Vienna Award and Southern Dobruja; Japan in
   northern (September 1940) and southern Indochina (July 1941), occupations at peace of Vichy's colony; Hungary,

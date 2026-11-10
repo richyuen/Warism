@@ -195,8 +195,11 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     Done (ADR-932): owners 99.83 %, 97.4 % right, stray 0.06 %; control 99.65 %, 96.7 % right, stray 0.19 %; no event
     passed over to October 1941; `withdraw`, an owner's `occupy`, a revival by `born`
     (`tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`).
-  - [ ] R62g3 Barbarossa to 1 December 1941. AT: control on 1 December 1941 ≥ 75 % of land, the land moved in
+  - [x] R62g3 Barbarossa to 1 December 1941. AT: control on 1 December 1941 ≥ 75 % of land, the land moved in
     control ≥ 75 % right, stray control < 2 %.
+    Done (ADR-933): by stages (the lines of 10 July, 20 August, 30 September, 1 December, the pockets taken), the
+    fighting alone holding at most 2,789 Soviet cells; control 99.45 %, 94.9 % right, stray 0.22 %; 7,599 Soviet cells
+    held by the Axis; no event passed over (`tests/sweep/historyMatch1938h.test.ts`).
   - [ ] R62g4 Pearl Harbor and the Pacific opening (to 31 December 1941). AT: each event on its date; the
     belligerents of 11 December 1941 as history had them.
   - [ ] R62h 1942–45: the Pacific, Stalingrad, El Alamein and Torch, Italy's surrender and the Italian Social Republic,

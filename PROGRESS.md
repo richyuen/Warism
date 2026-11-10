@@ -245,3 +245,14 @@
 - 1 June 1941: owners 99.83 %, 97.4 % right, stray 0.06 %; control 99.65 %, 96.7 % right, stray 0.19 %; no event
   passed over to October 1941.
 - Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62g3: Barbarossa by its stages (ADR-933)
+
+- Measured: the fighting alone, with Germany's army moved east, Soviet arrivals and +100-300 % attack, held at most
+  2,789 of 170,606 Soviet cells by 1 December 1941.
+- So by stages: the Axis lines of 10 July, 20 August, 30 September and 1 December, the pockets taken first (`withdraw`
+  `captured`); Finland held from its entry and advanced by a stage; Bessarabia back to Romania; Japan in all of
+  Indochina.
+- 1 December 1941: control 99.45 %, 94.9 % right, stray 0.22 %; 7,599 Soviet cells held by the Axis; no event passed
+  over. Left for R62h: the Soviet army is 498k (history about 4M).
+- Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`. Gate.

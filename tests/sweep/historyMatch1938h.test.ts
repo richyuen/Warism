@@ -20,11 +20,19 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   // Paris (R62g1): who holds it each day from 14 June 1940, and whether the fighting took it before the timeline did.
   let parisFell = '';
   let taken = 0;
-  const { maps, skipped, sim } = runMatch(
+  let peace: number[] = [];
+  let east = 0;
+  const axis = new Set(['GER', 'FIN', 'ROM', 'HUN', 'ITA'].map(id));
+  const [ru, rv] = project(24.1, 56.95);
+  const riga = Math.floor(rv * SIZE_1938.h) * SIZE_1938.w + Math.floor(ru * SIZE_1938.w);
+  const { maps, skipped } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1940-08-02',
+    '1941-12-03',
     (w, date) => {
+      // Occupations at peace past a month's start (1 August 1940): the occupied zone and the Baltic states held.
+      if (date === '1940-08-01') peace = [w.cells.controller[paris]!, w.cells.owner[paris]!, w.cells.controller[riga]!];
+      if (date === '1941-12-02') for (let c = 0; c < w.cells.owner.length; c++) if (w.cells.owner[c] === id('SOV') && axis.has(w.cells.controller[c]!)) east++;
       if (parisFell === '' && date >= '1940-06-01' && w.cells.controller[paris] === id('GER')) parisFell = date;
       // The land of France Germany took by the fighting, on the armistice's day.
       if (date === '1940-06-22') for (let c = 0; c < w.cells.owner.length; c++) if (w.cells.owner[c] === id('FRA') && w.cells.controller[c] === id('GER')) taken++;
@@ -32,7 +40,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(5);
+  expect(maps.length).toBe(6);
   for (const { date, cols } of maps) {
     expect(cols.whole, date).toBeGreaterThanOrEqual(0.95);
     expect(cols.movedRight, date).toBeGreaterThanOrEqual(0.95);
@@ -46,13 +54,11 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   expect(parisFell < '1940-06-22').toBe(true);
   // The robust measure (the date of Paris is chaotic; ADR-931): the offensive took ≥ 500 cells of France.
   expect(taken).toBeGreaterThanOrEqual(500);
-  // Occupations at peace past a month's start (1 August 1940): the occupied zone and the Baltic states held.
-  const w = sim.world;
-  expect(w.cells.controller[paris]).toBe(id('GER'));
-  expect(w.cells.owner[paris]).toBe(id('VIC'));
-  const [ru, rv] = project(24.1, 56.95);
-  const riga = Math.floor(rv * SIZE_1938.h) * SIZE_1938.w + Math.floor(ru * SIZE_1938.w);
-  expect(w.cells.controller[riga]).toBe(id('SOV'));
+  expect(peace).toEqual([id('GER'), id('VIC'), id('SOV')]);
+  // Barbarossa (R62g3): the Axis holds ≥ 6,000 Soviet cells after the stage of 1 December 1941.
+  process.stderr.write(`Soviet cells held by the Axis after the stage of 1 December 1941: ${east}
+`);
+  expect(east).toBeGreaterThanOrEqual(6000);
   for (const { date, control } of maps) {
     if (!control) continue;
     expect(control.movedRight, date).toBeGreaterThanOrEqual(0.9);

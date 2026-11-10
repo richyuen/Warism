@@ -210,3 +210,25 @@ describe('an evacuation, a revival, land taken back (ROADMAP R62g2)', () => {
     expect(w.nations.cols.living[id('ETH')]).toBe(1);
   });
 });
+
+describe('a pocket (ROADMAP R62g3)', () => {
+  it('withdraw captured: the formations in the ring are gone and their men with them', () => {
+    const ring: [number, number][] = [[10.0, 55.0], [16.0, 55.0], [16.0, 50.0], [10.0, 50.0]];
+    const tl: TimelineFile = { events: [{ date: '1938-01-02', kind: 'withdraw', nation: 'GER', ring, captured: true }] };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
+    const w = sim.world;
+    const GER = id('GER');
+    const land = (): number => {
+      let n = 0;
+      w.formations.forEach((i) => {
+        if (w.formations.cols.nation[i] === GER && w.rules?.templates[w.formations.cols.template[i]!]?.domain === 0) n++;
+      });
+      return n;
+    };
+    sim.step(24, quiet);
+    const [before, pool] = [land(), w.nations.cols.manpower[GER]!];
+    sim.step(1, quiet);
+    expect(land()).toBeLessThan(before);
+    expect(w.nations.cols.manpower[GER]!).toBeLessThanOrEqual(pool + 1);
+  });
+});
