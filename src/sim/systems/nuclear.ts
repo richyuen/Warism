@@ -1672,7 +1672,8 @@ export function restraintOf(world: World, n: number, war: War, side: number, ind
 
 /** The day's decisions to strike (PLAN 6.4b): see the head of the file. */
 function nukeDecisions(world: World): void {
-  if (!world.settings.aiEnabled || world.warheads.size === 0) return;
+  // The historical track's strikes are its timeline's (ROADMAP R62e; Hiroshima and Nagasaki, R62h).
+  if (!world.settings.aiEnabled || world.warheads.size === 0 || world.steered) return;
   const industry = industryOnce(world);
   for (const n of [...world.warheads.keys()].sort((a, b) => a - b)) {
     if (!weighsStrikes(world, n)) continue;

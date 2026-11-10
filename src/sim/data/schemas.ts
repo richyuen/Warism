@@ -530,6 +530,11 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * and held, its cores, its capital the city of its own nearest its table's capital.
    */
   z.strictObject({ ...when, kind: z.literal('born'), nation: tag, from: tags, ring, note: z.string().optional() }),
+  /**
+   * A war's objective (R62e): until `until`, `nation`'s operational AI weights the front sectors within `km` of `at`,
+   * and its invasion AI the cities there it may land by, OBJECTIVE_WEIGHT times.
+   */
+  z.strictObject({ ...when, kind: z.literal('objective'), nation: tag, at: lonLat, km: z.number().positive().max(3000), until: date, note: z.string().optional() }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;
 export const TimelineFile = z.strictObject({
@@ -567,6 +572,8 @@ export function timelineTags(e: TimelineEvent): string[] {
       return [e.by, ...e.of];
     case 'born':
       return [e.nation, ...e.from];
+    case 'objective':
+      return [e.nation];
   }
 }
 

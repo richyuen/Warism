@@ -658,6 +658,8 @@ export function warSystem(world: World): void {
         shocked[s] = true;
       }
     }
+    // The historical track's peaces are its timeline's (ROADMAP R62e): the score and exhaustion go on, told.
+    if (world.steered) continue;
     // Capitulation: an overrun side has lost, whatever its stance.
     const dDown = oAD.share >= CAPITULATE || overrun(land, D[0]!);
     const aDown = oDA.share >= CAPITULATE || overrun(land, A[0]!);

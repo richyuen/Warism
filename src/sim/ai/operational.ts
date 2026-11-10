@@ -1268,8 +1268,10 @@ function planNation(world: World, n: number, fighting: Set<number>, frontier: Ma
     for (let k = 0; k < front.length; k++) (list[front[k]!]!.threat > 0 ? hot : cold).push(k);
     const nearHot = new Set(hot.length > 0 ? ids.filter((id) => hot.some((k) => dist2(id, list[front[k]!]!) <= range2)) : []);
     const near = nearHot.size;
-    const given = allot(hot, (k) => list[front[k]!]!.threat, pool, near, counts);
-    allot(cold, (k) => 1 + list[front[k]!]!.threat / THREAT_UNIT, pool, ids.length - given, counts);
+    // × the historical track's objectives (ROADMAP R62e): 1 in every other world.
+    const aim = (k: number): number => world.objectiveWeight(n, list[front[k]!]!.cx, list[front[k]!]!.cy);
+    const given = allot(hot, (k) => list[front[k]!]!.threat * aim(k), pool, near, counts);
+    allot(cold, (k) => (1 + list[front[k]!]!.threat / THREAT_UNIT) * aim(k), pool, ids.length - given, counts);
     const seen = OP_PROBE.sectors
       ? {
           ids: ids.length,

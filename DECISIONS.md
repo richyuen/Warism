@@ -9,6 +9,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-927 · 2026-11-10 · accepted — The track's steering: the world's diplomacy off, objectives weighting plans (R62e)
+- **Off while the track runs** (`World.steered`): the strategic AI whole (its wars, stalemate peaces, threat pacts,
+  coalitions, rivals apart: it does nothing else); every peace of the war rules (capitulation, the longest war, no
+  front, suing; the score and exhaustion are still reckoned); alliances breaking up; the puppets' month (drift,
+  release, revolt, integration); revolts and kin unions, collapse, and so revival; the AI's nuclear decision. Not off:
+  the fighting and what it does by itself, a nation with no land left is eliminated and what it occupied goes to its
+  occupier (`NationEliminated`, `LandCeded`). The spec's list named "stalemate peace"; every rule-made peace is off
+  because a capitulation or a frontless war's end is a peace history did not have on that day: the timeline's peace
+  ends each war.
+- **Objectives.** An `objective` (nation, at, km, until) weighs from its event to `until`: the operational AI's
+  allotment (`allot`) weights the sectors within it OBJECTIVE_WEIGHT (6) times, threatened or not; the invasion AI's
+  landing worth of a city within it the same. `World.objectiveWeight` is 1 in every other world, and the factor 1
+  leaves the products bit-identical, so plain 1938 is unmoved. Objectives are derived from the timeline and the
+  track's next event: no state of their own.
+- **Consequences.** `trackSteering1938h.test.ts` (Germany on Poland, Warsaw within 300 km, from one save at t120 over 6
+  days: 1.30M of 2.61M allotted near it with the objective, 0.58M of 2.60M without, 2.26×); a probe of 1938h, seeds
+  1938 and 99, 2 years: no WarDeclared, PeaceSigned, alliance, puppet, revolt, union or nuclear row (plain 1938, seed
+  1938: 48 wars, 43 peaces, 18 alliance joins, 12 puppets); the eliminations of the fighting (2 and 3) remain.
+
 ### ADR-926 · 2026-11-10 · accepted — Births, the track's last day and the second seed (R62d)
 - **Birth.** A `born` event (nation, from, ring) brings an unborn nation of the scenario to life: the land of its ring
   as a transfer gives it (`LandCeded` rows), cores on the provinces whose centre it holds (their core nation becomes

@@ -141,7 +141,8 @@ function atWar(world: World, n: number): boolean {
 export function revoltSystem(world: World): void {
   const garrisonCells = world.atSizeWhole(GARRISON_CELLS);
   const pv = world.provinces;
-  if (pv.count === 0 || !isMonthStart(world.startDay, world.tick)) return;
+  // No revolt, and so no rebels' war or revival, while the historical track runs (ROADMAP R62e).
+  if (pv.count === 0 || !isMonthStart(world.startDay, world.tick) || world.steered) return;
   kinUnion(world);
   const g = navOf(world).graph;
   // Taken anew after every revolt below: one that founds a nation may move the table (PLAN 2.12).

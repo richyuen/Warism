@@ -18,13 +18,22 @@ import type { TimelineEvent, TimelineFile } from './data/schemas';
 import { Terrain } from '../shared/terrain';
 import { RngStreams } from './core/rng';
 import { forEachCellInRing } from './data/ownership';
-import { project } from './data/projection';
+import { kmPerCell, project } from './data/projection';
 import { nuclearMask, START_GOLD } from './systems/revolts';
 import { relocateCapital } from './systems/capitals';
 import { makePeace, withPuppets } from './systems/war';
 import { applyCommand } from './tick';
 import { ATTACKERS, DEFENDERS } from './wars';
 import { FlipCause, navOf, type World } from './world';
+
+/**
+ * How many times a front sector, or a city to land by, within a war objective weighs (R62e). Its sectors take this many
+ * times their share of the formations the threat leaves; a landing city this many times its worth.
+ */
+export const OBJECTIVE_WEIGHT = 6;
+
+/** Tests' switch (an A/B from one save): objectives weigh nothing. */
+export const TRACK_PROBE: { objectivesOff?: boolean } = {};
 
 /** The section of the track's state. */
 export const TRACK_SECTION = 'world.track';
@@ -69,6 +78,10 @@ export class Track {
   capitals: readonly (readonly [number, number])[] = [];
   /** The revivals a born nation has, as its scenario's nations do (R62d). */
   revivals = 0;
+  /** The objectives' events, by index, with the tick each ends (R62e). */
+  private readonly objectiveAt: readonly { i: number; until: number }[];
+  /** Their places in cells and radii² at a map's width (derived, not state). */
+  private placed: { w: number; at: { nation: number; x: number; y: number; r2: number }[] } | null = null;
 
   constructor(file: TimelineFile, tags: readonly string[], startDate: string) {
     this.events = file.events;
@@ -76,7 +89,39 @@ export class Track {
     this.ticks = file.events.map((e) => (dayOfIso(e.date) - start) * 24 + (e.hour ?? 0));
     this.hash = timelineHash(file);
     this.endTick = file.end === undefined ? Infinity : (dayOfIso(file.end) - start) * 24;
+    this.objectiveAt = file.events.flatMap((e, i) => (e.kind === 'objective' ? [{ i, until: (dayOfIso(e.until) - start) * 24 }] : []));
     this.ids = new Map(tags.map((t, i) => [t, i + 1]));
+  }
+
+  /**
+   * The weight of a place (x, y in cells) to nation `n`'s plans: OBJECTIVE_WEIGHT within one of its objectives that
+   * has begun (its event applied) and not ended, 1 elsewhere.
+   */
+  objectiveWeight(n: number, x: number, y: number, tick: number, w: number, h: number): number {
+    if (this.ended || this.objectiveAt.length === 0 || TRACK_PROBE.objectivesOff) return 1;
+    if (this.placed?.w !== w) {
+      const km = kmPerCell(w);
+      this.placed = {
+        w,
+        at: this.objectiveAt.map(({ i }) => {
+          const e = this.events[i] as Extract<TimelineEvent, { kind: 'objective' }>;
+          const [u, v] = project(e.at[0], e.at[1]);
+          const r = e.km / km;
+          return { nation: this.id(e.nation), x: u * w, y: v * h, r2: r * r };
+        }),
+      };
+    }
+    for (let k = 0; k < this.objectiveAt.length; k++) {
+      const o = this.objectiveAt[k]!;
+      if (o.i >= this.next || tick >= o.until) continue;
+      const p = this.placed.at[k]!;
+      if (p.nation !== n) continue;
+      let dx = Math.abs(x - p.x);
+      dx = Math.min(dx, w - dx);
+      const dy = y - p.y;
+      if (dx * dx + dy * dy <= p.r2) return OBJECTIVE_WEIGHT;
+    }
+    return 1;
   }
 
   /** The nation of a tag (0: none such). */
@@ -355,6 +400,9 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       return occupy(world, id(e.by), e.of.map(id), e.ring);
     case 'born':
       return born(world, t, id(e.nation), e.from.map(id), e.ring);
+    case 'objective':
+      // It weighs from now on (`objectiveWeight`); a nation not living has none.
+      return whyNot(world, id(e.nation));
   }
 }
 
@@ -382,6 +430,7 @@ function firstNation(t: Track, e: TimelineEvent): number {
     case 'occupy':
       return t.id(e.by);
     case 'born':
+    case 'objective':
       return t.id(e.nation);
   }
 }

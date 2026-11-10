@@ -178,7 +178,8 @@ function annexInto(world: World, to: number, from: number): void {
 }
 
 export function puppetSystem(world: World): void {
-  if (!isMonthStart(world.startDay, world.tick)) return;
+  // The historical track's puppets are its timeline's (ROADMAP R62e): no drift, release or revolt of their own.
+  if (!isMonthStart(world.startDay, world.tick) || world.steered) return;
   const nc = world.nations.cols;
   world.nations.forEach((n) => {
     const o = nc.overlord[n]!;

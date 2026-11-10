@@ -28,7 +28,8 @@ function sharedWars(world: World, a: Alliance): number {
 }
 
 export function allianceSystem(world: World): void {
-  if (!isMonthStart(world.startDay, world.tick)) return;
+  // The historical track's alliances are its timeline's (ROADMAP R62e).
+  if (!isMonthStart(world.startDay, world.tick) || world.steered) return;
   const al = world.alliances;
   for (const a of [...al.list]) {
     a.unity = Math.max(0, Math.min(100, a.unity + SHARED_WAR_UNITY * sharedWars(world, a) + MEMBER_UNITY * (a.members.length - 1) - UNITY_DECAY));

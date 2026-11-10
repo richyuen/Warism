@@ -435,7 +435,8 @@ function planNormandy(world: World, n: number, faced: ReadonlySet<number>, front
     if (d2Front <= r * r) return watchFail(seen, holder, 'nearFront');
     // Near the enemy's front's rear (PLAN 7.73a): the worth falls as the city lies farther from n's
     // front, DEPLOY_RANGE_CELLS over its straight distance (under 1, as it is beyond that range).
-    const worth = ((cc.capitalOf[city] === holder ? NORMANDY_CAPITAL_WORTH : 1) * r) / Math.sqrt(d2Front);
+    // × the historical track's objectives (ROADMAP R62e): the landing it names.
+    const worth = ((cc.capitalOf[city] === holder ? NORMANDY_CAPITAL_WORTH : 1) * r * world.objectiveWeight(n, cc.x[city]!, cc.y[city]!)) / Math.sqrt(d2Front);
     const s = worth / (1 + enemiesNear(cell));
     watchBest(seen, holder, s, (a, b) => a > b);
     if (s < score) return;

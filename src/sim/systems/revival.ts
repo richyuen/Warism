@@ -487,7 +487,8 @@ function neighbourOf(world: World, area: number[], c: number): number {
 
 /** Monthly: bankruptcy streaks and collapse. */
 export function collapseSystem(world: World): void {
-  if (world.provinces.count === 0 || !isMonthStart(world.startDay, world.tick)) return;
+  // No collapse, and so no revival, while the historical track runs (ROADMAP R62e).
+  if (world.provinces.count === 0 || !isMonthStart(world.startDay, world.tick) || world.steered) return;
   world.nations.forEach((n) => {
     const nc = world.nations.cols; // anew for each nation: a collapse founds nations (PLAN 2.12)
     if (nc.living[n] !== 1) return;

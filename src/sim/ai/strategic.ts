@@ -312,7 +312,8 @@ export function warTarget(world: World, n: number, neighbours: readonly number[]
 }
 
 export function strategicAi(world: World): void {
-  if (!world.settings.aiEnabled || !isDayStart(world.tick)) return;
+  // The historical track's wars, peaces and pacts are its timeline's (ROADMAP R62e).
+  if (!world.settings.aiEnabled || !isDayStart(world.tick) || world.steered) return;
   const day = world.tick / 24;
   const nc = world.nations.cols;
   // Stalemates end (all wars, daily).

@@ -1429,6 +1429,21 @@ export class World {
    * its own section). null in every other world.
    */
   track: Track | null = null;
+
+  /**
+   * Whether the historical track runs (ROADMAP R62e, SPEC §7.7): the world's own diplomacy is off (the strategic AI's
+   * wars, stalemate peaces, pacts, coalitions and rivals; the peaces the war rules make; alliances that break up;
+   * puppets' drift and revolts; revolts, collapse and revival; the AI's nuclear decision). Wars, peaces, pacts and
+   * births are the timeline's; the fighting is the sim's own.
+   */
+  get steered(): boolean {
+    return this.track !== null && !this.track.ended;
+  }
+
+  /** The weight of a place (cells) to nation `n`'s plans: the historical track's objectives (ROADMAP R62e), else 1. */
+  objectiveWeight(n: number, x: number, y: number): number {
+    return this.track ? this.track.objectiveWeight(n, x, y, this.tick, this.cells.w, this.cells.h) : 1;
+  }
   nextLanding = 1;
   /** A save from before ROADMAP R33b: its player's convoys' sections, read into landings at the next hour (`migrateLegacyLandings`). Not state. */
   legacyConvoys: { fetch: Float64Array; fetchAt: Float64Array; ports: Float64Array } | null = null;
