@@ -222,3 +222,15 @@
 - The maps' `occupied` and control columns in `historyMatch`: 1 October 1939, control 95.3 % right, stray 0.05 %.
 - Seen for R62g3: quiet armies disbanded by the books (China 771k to 402k, the Soviet Union 1.55M to 0.93M).
 - Evidence: `tests/unit/trackLevers1938h.test.ts` (a hold mid-run, a save mid-hold), the two sweep tests. Gate.
+
+## 2026-11-10 — R62g1: the West in 1940 (ADR-931)
+
+- Denmark a protectorate; Norway, the Low Countries annexed at their capitulations (colonies released or handed to
+  the Allies); Italy in; the armistice: Alsace-Lorraine, Vichy born on France and Algeria, the occupied zone held at
+  peace, Vichy's colonies out of the war (`leave`); the Baltic states occupied, Bessarabia ceded.
+- Germany could not take France: 927k of its army idle in Poland on 9 May (the AI does not move armies between
+  fronts). `redeploy` moves 85 % of it to the Rhine over the winter; with +200 % attack for the campaign and its
+  objectives, Paris falls on 14 June to the fighting and 648 French cells are held at the armistice.
+- 1 July 1940: owners 99.90 %, 98.0 % right, stray 0.04 %; control 97.3 % right, stray 0.12 %; no event passed over.
+- Paris's date is chaotic (two of five nearby settings miss it): the test also reads the land taken.
+- Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts` (leave, redeploy). Gate.

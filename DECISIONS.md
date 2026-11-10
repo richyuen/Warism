@@ -9,6 +9,34 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-931 · 2026-11-10 · accepted — the West in 1940 (R62g1)
+- **The convention for a nation overrun:** annexed at its capitulation, its land the conqueror's (as Poland's in
+  1939), its colonies released first (the Indies, the Congo) or handed to the Allies (the Dutch Americas, Svalbard);
+  brought back by the timeline when it was freed (R62h-i, `reviveNation` or `born`). Luxembourg (10 May), the
+  Netherlands (15 May), Belgium (28 May), Norway (10 June). Denmark a protectorate (Germany's puppet, Iceland released
+  first, then held by Britain at peace), kept out of Germany's wars by `without`.
+- **France:** Alsace-Lorraine to Germany; the French State born on metropolitan France and Algeria; Germany holding
+  the occupied zone at peace (`occupy`, held across the month's start); the colonies but Equatorial Africa Vichy's
+  puppets and out of the war by `leave` (new: nations leave their wars against a foe, the land each side held going
+  back as at a white peace). France itself, left with its scraps overseas, leaves the war: Free France's war resumes
+  in 1944 (R62h). Italy joins on 10 June; the Baltic states occupied (17 June, annexed in August, R62g2) and
+  Bessarabia ceded (28 June), moved here from R62g2 to stand on the 1 July map.
+- **Why Germany could not take France, measured:** on 9 May 1940, 927k of Germany's 1.4M men stood idle in Poland,
+  where the Polish campaign left them: the operational AI does not move armies between fronts, and through the Phoney
+  War's hold Germany had no foe to plan against. Keeping held foes in the plans moved nothing (812k still in Poland)
+  and was reverted. With 500k in the West, Germany held no French cell by 21 June at any buff to +300 %, France
+  holding 150-660 German ones.
+- **`redeploy`** (new): of a nation's land formations in a ring, a share marched to places by player's orders (the AI
+  leaves each alone until it arrives): 85 % of the army in Poland to the Rhine on 15 November 1939, 1.23M in the West
+  by 9 May. With it and "the armour massed" (+200 % attack, 10 May-25 June) and objectives (Rotterdam, Brussels,
+  Dunkirk, Paris from 25 May), Germany holds 648 French cells on 22 June and Paris from 14 June.
+- **Paris is chaotic:** of five settings near this one, two leave Paris French on 22 June while the land taken stays
+  638-697 cells. The test reads both: Paris before the armistice's hour (the item's bar; a later rule may flip it
+  without a defect), and ≥ 500 French cells held on 22 June (the robust one).
+- **Measured** (`historyMatch1938h.test.ts`), 1 July 1940: owners 99.90 % of land, the land moved 98.0 % right
+  (20,191 cells), stray 0.04 %; control 99.78 %, 97.3 % right, stray 0.12 %; no event passed over. Left: Italy takes
+  Kassala's corner of Sudan (113 cells), as Italy did in July 1940; the demarcation line's split departments (149).
+
 ### ADR-930 · 2026-11-10 · accepted — what 1938-39 left, and control measured (R62g0)
 - **China by stages, not by fighting.** The front with Nationalist China is held from the start (ADR-929's hold of
   November 1938 moved to 1 January 1938), and Japan's gains are `occupy` rings on their dates: North China and

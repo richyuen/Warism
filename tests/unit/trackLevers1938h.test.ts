@@ -128,3 +128,40 @@ describe('a hold mid-run (ROADMAP R62g0)', () => {
     expect(b.hash()).toBe(a.hash());
   });
 });
+
+describe('an armistice: leave (ROADMAP R62g1)', () => {
+  it('nations leave the wars against a foe with their puppets; the war goes on without them', () => {
+    const tl: TimelineFile = {
+      events: [
+        { date: '1938-01-02', kind: 'war', attackers: ['GER'], defenders: ['POL'] },
+        { date: '1938-01-02', hour: 1, kind: 'join', nation: 'FRA', beside: 'POL', against: 'GER' },
+        { date: '1938-01-03', kind: 'leave', nations: ['FRA'], against: 'GER' },
+      ],
+    };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
+    const w = sim.world;
+    const [GER, POL, FRA, TUN] = [id('GER'), id('POL'), id('FRA'), id('TUN')];
+    sim.step(26, quiet);
+    expect(w.wars.atWar(FRA, GER)).toBe(true);
+    expect(w.wars.atWar(TUN, GER)).toBe(true);
+    sim.step(24, quiet);
+    expect(w.wars.atWar(FRA, GER)).toBe(false);
+    expect(w.wars.atWar(TUN, GER)).toBe(false);
+    expect(w.wars.atWar(POL, GER)).toBe(true);
+  });
+});
+
+describe('a redeployment (ROADMAP R62g1)', () => {
+  it("the share of a nation's land formations in the ring march by player's orders; none else", () => {
+    const ring: [number, number][] = [[10.0, 55.0], [16.0, 55.0], [16.0, 50.0], [10.0, 50.0]];
+    const tl: TimelineFile = { events: [{ date: '1938-01-02', kind: 'redeploy', nation: 'GER', from: ring, to: [[7.0, 50.4]], share: 0.5 }] };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
+    const w = sim.world;
+    sim.step(24, quiet);
+    const ordered = (): number => [...w.playerOrders.keys()].filter((i) => w.formations.cols.nation[i] === id('GER')).length;
+    expect(ordered()).toBe(0);
+    sim.step(1, quiet);
+    expect(ordered()).toBeGreaterThan(0);
+    for (const i of w.playerOrders.keys()) expect(w.formations.cols.nation[i]).toBe(id('GER'));
+  });
+});

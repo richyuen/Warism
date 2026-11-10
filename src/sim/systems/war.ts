@@ -341,6 +341,14 @@ export function leaveWarsBeside(world: World, n: number, partners: readonly numb
   leaveWars(world, n, (own) => partners.some((p) => p !== n && own.includes(p)));
 }
 
+/**
+ * `n` and its puppets of its side leave every war in which `foe` fights on the other side (ROADMAP R62g1: the historical
+ * track's armistices), as `leaveBondedWars` leaves.
+ */
+export function leaveWarsAgainst(world: World, n: number, foe: number): void {
+  leaveWars(world, n, (_own, enemies) => enemies.includes(foe));
+}
+
 /** `n` and its puppets of a side leave each war `leaves(its side, the enemies)` names (`leaveBondedWars`). */
 function leaveWars(world: World, n: number, leaves: (own: readonly number[], enemies: readonly number[]) => boolean): void {
   const realm = withPuppets(world, n);

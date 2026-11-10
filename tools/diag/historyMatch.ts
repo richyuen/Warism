@@ -119,6 +119,7 @@ export function runMatch(
   timeline: TimelineFile = TIMELINE_1938H,
   log: (s: string) => void = () => {},
   until?: string,
+  daily?: (w: Sim['world'], date: string) => void,
 ): { maps: { date: string; cols: MatchColumns; control?: MatchColumns }[]; skipped: number[]; sim: Sim } {
   const assets = loadAssets1938(SIZE_1938.w);
   const meta = JSON.parse(new TextDecoder().decode(assets.admin1Meta)) as Admin1Meta[];
@@ -131,6 +132,7 @@ export function runMatch(
   const skipped: number[] = [];
   const to = (tick: number): void => {
     while (sim.tick < tick) {
+      if (daily && sim.tick % 24 === 0) daily(sim.world, new Date((day0 + sim.tick / 24) * 864e5).toISOString().slice(0, 10));
       sim.step(1, (x) => {
         for (let i = 0; i < x.out.events.length; i += 6) if (x.out.events[i + 1] === EventKind.TrackSkipped) skipped.push(x.out.events[i + 3]! - 1);
         x.out.events.length = 0;

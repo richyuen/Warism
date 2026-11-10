@@ -183,10 +183,14 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     land fighting); the Winter War's peace and Karelia; `occupied` in `maps`, control 95.3 % right, stray 0.05 % on 1
     October 1939; a hold stops and resumes on its hours and replays from a save mid-hold
     (`tests/unit/trackLevers1938h.test.ts`, `tests/sweep/chinaFront1938h.test.ts`, `historyMatch1938h.test.ts`).
-  - [ ] R62g1 To 9 April 1940 and the West to 1 July 1940: Denmark and Norway, the Low Countries, France (Paris, the
-    armistice, Vichy born, the occupied zone), Italy's entry. AT: each event on its date; Paris taken within 30 days of
-    14 June 1940; the 1 July 1940 map: owners ≥ 90 % of land, the moved land ≥ 90 % right, stray < 0.5 %.
-  - [ ] R62g2 The Baltics, Bessarabia, the Second Vienna Award, the Tripartite Pact, Greece and Yugoslavia (Croatia),
+  - [x] R62g1 To 9 April 1940 and the West to 1 July 1940: Denmark and Norway, the Low Countries, France (Paris, the
+    armistice, Vichy born, the occupied zone), Italy's entry; the Baltic states occupied and Bessarabia (moved from
+    R62g2: they stand on the 1 July map). AT: each event on its date; Paris taken within 30 days of 14 June 1940; the
+    1 July 1940 map: owners ≥ 90 % of land, the moved land ≥ 90 % right, stray < 0.5 %.
+    Done (ADR-931): `leave` and `redeploy`; owners 99.90 %, 98.0 % right, stray 0.04 %; control 97.3 % right, stray
+    0.12 %; Paris by the fighting on 14 June, 648 French cells held on 22 June; no event passed over
+    (`tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`).
+  - [ ] R62g2 The Baltics annexed, the Second Vienna Award, the Tripartite Pact, Greece and Yugoslavia (Croatia),
     North Africa, Iraq, Syria, Iran. AT: each event on its date; a 1 June 1941 map, the same bars.
   - [ ] R62g3 Barbarossa to 1 December 1941. AT: control on 1 December 1941 ≥ 75 % of land, the land moved in
     control ≥ 75 % right, stray control < 2 %.

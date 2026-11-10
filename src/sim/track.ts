@@ -21,10 +21,10 @@ import { forEachCellInRing } from './data/ownership';
 import { kmPerCell, project } from './data/projection';
 import { nuclearMask, START_GOLD } from './systems/revolts';
 import { relocateCapital } from './systems/capitals';
-import { makePeace, withPuppets } from './systems/war';
+import { leaveWarsAgainst, makePeace, withPuppets } from './systems/war';
 import { applyCommand } from './tick';
 import { ATTACKERS, DEFENDERS } from './wars';
-import { FlipCause, navOf, type World } from './world';
+import { Domain, FlipCause, navOf, type World } from './world';
 
 /**
  * How many times a front sector, or a city to land by, within a war objective weighs (R62e). Its sectors take this many
@@ -439,6 +439,12 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
     case 'hold':
       // It holds from now on (`held`) while its nations live.
       return whyNot(world, id(e.sides[0][0]!)) || whyNot(world, id(e.sides[1][0]!));
+    case 'leave': {
+      const foe = id(e.against);
+      const left = e.nations.map(id).filter((n) => world.nations.cols.living[n] === 1 && world.wars.atWar(n, foe));
+      for (const n of left) leaveWarsAgainst(world, n, foe);
+      return left.length > 0 ? Refusal.None : Refusal.NoEffect;
+    }
     case 'forces': {
       const template = t.templates.get(e.template);
       if (template === undefined) return Refusal.NoSuch;
@@ -446,6 +452,27 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       let why: Refusal = Refusal.None;
       for (let k = 0; k < e.count && why === Refusal.None; k++) why = applyCommand(world, { kind: 'spawnFormation', nation: id(e.nation), x: u * world.cells.w, y: v * world.cells.h, strength: 1, template });
       return why;
+    }
+    case 'redeploy': {
+      const n = id(e.nation);
+      const why = whyNot(world, n);
+      if (why) return why;
+      const inRing = new Set(ringCells(world, e.from));
+      const f = world.formations.cols;
+      const { w, h } = world.cells;
+      const ids: number[] = [];
+      world.formations.forEach((i) => {
+        if (f.nation[i] !== n || world.rules?.templates[f.template[i]!]?.domain !== Domain.land) return;
+        const c = Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w;
+        if (inRing.has(c)) ids.push(i);
+      });
+      ids.sort((a, b) => a - b);
+      let sent = 0;
+      ids.slice(0, Math.round(ids.length * e.share)).forEach((i, k) => {
+        const [u, v] = project(...e.to[k % e.to.length]!);
+        if (applyCommand(world, { kind: 'moveFormation', id: i, x: u * w, y: v * h, nation: n }) === Refusal.None) sent++;
+      });
+      return sent > 0 ? Refusal.None : Refusal.NoEffect;
     }
     case 'buff': {
       const hours = t.tickOf(e.until) - world.tick;
@@ -481,9 +508,12 @@ function firstNation(t: Track, e: TimelineEvent): number {
     case 'objective':
     case 'buff':
     case 'forces':
+    case 'redeploy':
       return t.id(e.nation);
     case 'hold':
       return t.id(e.sides[0][0]!);
+    case 'leave':
+      return t.id(e.nations[0]!);
   }
 }
 

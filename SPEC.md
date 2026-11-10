@@ -1742,7 +1742,9 @@ to 27 July 1953, then sets the world free.
   (`tools/diag/historyMatch.ts`); `buff` and `forces` events (phase buffs, arrivals); `without` on `war` and `join`.
   The China front (R62f2, ADR-929): `hold` events, two sides (and their puppets) at war that do not fight on land,
   take land or plan attacks on each other until a date; Japan's gains in China by `occupy` stages; the Phoney War a
-  hold; the maps' `occupied`, measured as control (R62g0, ADR-930).
+  hold; the maps' `occupied`, measured as control (R62g0, ADR-930). 1940 in the West (R62g1, ADR-931): a nation
+  overrun is annexed at its capitulation (Denmark a puppet), Vichy born, the occupied zone held at peace; `leave` (an
+  armistice) and `redeploy` (a front moved by rail).
 - **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is
   reached by the timeline's steering (objectives, dates, historical arrivals of forces and phase buffs),
   tuned per period against a match tool (R62h). The shared rules do not change for the track.

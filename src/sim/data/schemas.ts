@@ -554,6 +554,16 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * the other. Ships and aircraft fight on.
    */
   z.strictObject({ ...when, kind: z.literal('hold'), sides: z.tuple([tags, tags]), until: date }),
+  /**
+   * Each of `nations` (with its puppets of its side) leaves every war `against` fights on the other side (R62g1: an
+   * armistice); the land each side held of the other goes back, as at a white peace.
+   */
+  z.strictObject({ ...when, kind: z.literal('leave'), nations: tags, against: tag }),
+  /**
+   * A front moved by rail (R62g1): of `nation`'s land formations in `from`, the `share` first by id march to the places
+   * of `to` in turn, as a player's orders (the AI leaves each alone until it is there).
+   */
+  z.strictObject({ ...when, kind: z.literal('redeploy'), nation: tag, from: ring, to: z.array(lonLat).min(1), share: z.number().gt(0).max(1) }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;
 export const TimelineFile = z.strictObject({
@@ -625,9 +635,12 @@ export function timelineTags(e: TimelineEvent): string[] {
     case 'objective':
     case 'buff':
     case 'forces':
+    case 'redeploy':
       return [e.nation];
     case 'hold':
       return [...e.sides[0], ...e.sides[1]];
+    case 'leave':
+      return [...e.nations, e.against];
   }
 }
 
