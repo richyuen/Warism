@@ -117,25 +117,30 @@ export function TitleScreen({ scenarios, previewUrl, onStart, readSave, onContin
           <section class="title-card">
             <h2 class="title-sub">{t('scenario.file')}</h2>
             <p class="title-desc">{t('title.fileHint')}</p>
-            <input
-              class="title-file"
-              data-testid="title-scenario-file"
-              type="file"
-              accept=".warism-scenario,.warsim-scenario"
-              aria-label={t('scenario.import')}
-              onChange={(e) => {
-                const input = e.currentTarget as HTMLInputElement;
-                const file = input.files?.[0];
-                input.value = '';
-                if (!file) return;
-                setFileError(null);
-                setFailed(false);
-                setPending(null);
-                void checkScenarioFile(file)
-                  .then((h) => setPending({ file, ...h }))
-                  .catch((err: unknown) => setFileError(t('scenario.failed', { error: err instanceof Error ? err.message : String(err) })));
-              }}
-            />
+            {/* A button of the game's, not the browser's "Choose File / No file chosen": the input is emptied once read, so
+                its own words read "No file chosen" beside the file chosen (ROADMAP R60b; critic run 61, R61-N2). */}
+            <label class="god-btn title-file-btn">
+              {t('title.fileChoose')}
+              <input
+                class="title-file"
+                data-testid="title-scenario-file"
+                type="file"
+                accept=".warism-scenario,.warsim-scenario"
+                aria-label={t('scenario.import')}
+                onChange={(e) => {
+                  const input = e.currentTarget as HTMLInputElement;
+                  const file = input.files?.[0];
+                  input.value = '';
+                  if (!file) return;
+                  setFileError(null);
+                  setFailed(false);
+                  setPending(null);
+                  void checkScenarioFile(file)
+                    .then((h) => setPending({ file, ...h }))
+                    .catch((err: unknown) => setFileError(t('scenario.failed', { error: err instanceof Error ? err.message : String(err) })));
+                }}
+              />
+            </label>
             {pending ? (
               <div class="title-file-pending" data-testid="title-file-pending">
                 <div class="title-scenario-name" data-testid="title-file-name">
@@ -162,7 +167,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, readSave, onContin
                   >
                     {t('title.fileStart')}
                   </button>
-                  <button type="button" data-testid="title-file-cancel" onClick={() => setPending(null)}>
+                  <button type="button" class="god-btn" data-testid="title-file-cancel" onClick={() => setPending(null)}>
                     {t('title.fileCancel')}
                   </button>
                 </div>
@@ -198,7 +203,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, readSave, onContin
                 <span data-testid="title-nations">{info.nationsRange ? t('settings.nationsRange', { min: info.nationsRange.min, max: info.nationsRange.max }) : info.nations}</span>
               </div>
             </div>
-            <NewGameForm key={chosen} seed={seed} options={{}} nationsRange={info.nationsRange} sizes={info.sizes} defaultSize={info.defaultSize} diplomacy={info.diplomacy} heroes={info.heroes} rangeHint={false} startLabel={t('title.start')} onStart={(s, o) => onStart(chosen, s, o)} />
+            <NewGameForm key={chosen} seed={seed} options={{}} nationsRange={info.nationsRange} sizes={info.sizes} defaultSize={info.defaultSize} diplomacy={info.diplomacy} heroes={info.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} onStart={(s, o) => onStart(chosen, s, o)} />
           </div>
         </section>
       </div>

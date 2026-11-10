@@ -1062,11 +1062,24 @@ textarea,
   gap: 1rem;
   min-width: 0;
 }
+/* The file chooser, a button of the game's (ROADMAP R60b): the browser's input inside it, out of sight but in reach of
+   a click on the label and of the keyboard. */
+.title-file-btn {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.title-file-btn:focus-within {
+  outline: 2px solid #e9c46a;
+  outline-offset: 2px;
+}
 .title-file {
-  max-width: 100%;
-  font: inherit;
-  font-size: 0.85rem;
-  color: inherit;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
 .title-file-pending {
   margin-top: 10px;

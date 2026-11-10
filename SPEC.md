@@ -1862,7 +1862,8 @@ builds).
   an older format or a failed load); the listed scenarios (`LISTED_SCENARIOS`: 1938, random; the toy world
   hidden), each with its preview (`preview.png`, 1024 × 512, `npm run data -- --previews`; the random
   world's from seed `PREVIEW_RANDOM_SEED` 7), description, start date, map and nations; the new-game form;
-  and a scenario file to load (checked, shown with Start and Cancel, staged in IndexedDB and opened with
+  and a scenario file to load (chosen by a button of the game's; checked, shown with Start and Cancel, the form's Start
+  not offered while it is pending and saying why, R60b; staged in IndexedDB and opened with
   `?load=scenario`; a failure goes back with `?failed=scenario`).
 - **New-game form** (`src/ui/NewGameForm.tsx`, `src/shared/gameOptions.ts`, URL by `newGameUrl`), each
   option the scenario's own by default, applied once at the start from the seed:

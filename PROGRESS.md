@@ -89,3 +89,15 @@
   4 landed". `tests/e2e/landingsBarPanel1938.spec.ts` (new): red at all four sizes before ("landing-toggle" at the
   ×), green after; `landingsBar1938`, `phoneLayout1938`, `orderRowsTap1938`, `panelFootLandscape1938` green (29);
   the 844 × 390 shot looked at. Gate green.
+
+## 2026-11-10 — R60b: a pending scenario file's Start is the only one (R61-N2)
+
+- `src/ui/NewGameForm.tsx`: a `blocked` reason disables the form's Start and is said under it and in its title;
+  `src/ui/TitleScreen.tsx` passes it while a file is pending ("A scenario file is chosen: start it or cancel it under
+  Scenario file."). The file chooser is a button of the game's (`title-file-btn`, "Choose a file") with the browser's
+  input inside it, out of sight (it read "No file chosen" beside the file, the input being emptied once read); the
+  card's Cancel takes `god-btn`. SPEC §9.1.
+- Evidence: `tests/e2e/title.spec.ts` (the scenario-file case: the main Start disabled with its reason while pending,
+  the chooser's words, the input unseen, Cancel styled as Random, the Start back after Cancel); with
+  `scenarioUpgrade1938`, `randomWorld`, `editorForces1938`: 19 green; the confirm shot looked at. The critic's
+  `MAINSTART=1 c61_x_editor` would now find the main Start disabled: the AT's second branch. Gate green.

@@ -21,6 +21,8 @@ export interface NewGameFormProps {
   heroes?: boolean | undefined;
   /** Label of the start button. */
   startLabel: string;
+  /** Why the start button is not offered now, said under it and in its title (ROADMAP R60b: a scenario file pending). */
+  blocked?: string | undefined;
   onStart: (seed: number, options: GameOptions) => void;
 }
 
@@ -39,7 +41,7 @@ function withCe(opts: GameOptions, v: string): GameOptions {
  * The seed (or a random one) and the new-game options of PLAN 1.39b1, with the button that starts
  * the game. Shared by the title screen (PLAN 1.43) and the settings panel.
  */
-export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', diplomacy = false, heroes = false, startLabel, onStart }: NewGameFormProps) {
+export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', diplomacy = false, heroes = false, startLabel, blocked, onStart }: NewGameFormProps) {
   const [next, setNext] = useState(String(seed));
   const [count, setCount] = useState(String(options.nations ?? nationsRange?.default ?? ''));
   const [opts, setOpts] = useState<GameOptions>(options);
@@ -152,9 +154,14 @@ export function NewGameForm({ seed, options, nationsRange, rangeHint = true, siz
         <span class="form-name">{t('settings.ce')}</span>
         {sel('opt-ce', opts.ceMode ?? 'scenario', ['scenario', 'dynamic', 'progressive', 'static', 'locked', 'random'], (v) => `settings.ce.${v}` as MessageKey, (v) => setOpts(withCe(opts, v)))}
       </label>
-      <button type="button" class="start-btn" data-testid="settings-new-game" disabled={!seedValid || !countValid} onClick={() => onStart(Number(next) >>> 0, chosen())}>
+      <button type="button" class="start-btn" data-testid="settings-new-game" disabled={!seedValid || !countValid || blocked !== undefined} title={blocked} onClick={() => onStart(Number(next) >>> 0, chosen())}>
         {startLabel}
       </button>
+      {blocked !== undefined ? (
+        <p class="panel-note" data-testid="start-blocked">
+          {blocked}
+        </p>
+      ) : null}
     </div>
   );
 }

@@ -63,9 +63,12 @@ setups broke `slowClick`); every dimension at its bar. A full run and the releas
     at 844 × 390, 932 × 430, 1024 × 500 and 667 × 375: `atClose` `nation-close`, `clickOk` true, page errors 0;
     `c55_lbox` 21103 and 32223 at 844 × 390: six days, the Cancel in view, in the bar and topmost each day as run 55's.
     `landingsBarPanel1938.spec.ts` (new): red at all four before, green after.
-  - [ ] R60b R61-N2: with a scenario file chosen on the title screen, the big Start starts plain 1938 and drops the file
+  - [x] R60b R61-N2: with a scenario file chosen on the title screen, the big Start starts plain 1938 and drops the file
     (32441); "No file chosen" beside the chosen file; the card's Cancel unstyled. AT: `MAINSTART=1 node
     critic/scripts/c61_x_editor.mjs 32441` keeps the paint, or the main Start is not offered while a file is pending.
+    Done (this commit): while a file is pending the form's Start is disabled and says why (under it and in its title);
+    the chooser a game button ("Choose a file", the browser's input hidden in it); Cancel `god-btn`. `title.spec.ts`'s
+    scenario-file case checks all three and the Start back after Cancel; 19 title and file specs green; shot looked at.
   - [ ] R60c R61-N3: a truncated scenario file is told "Could not load: Failed to fetch". AT: the first 2,000 bytes of an
     exported file told the file is damaged or incomplete.
   - [ ] R60d R61-N4: random worlds of 2 or 3 nations have no war in 10–15 years (32403). AT: 3 nations sharing a border

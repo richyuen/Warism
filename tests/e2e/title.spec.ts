@@ -290,9 +290,23 @@ test('a scenario file chosen on the title screen starts its game; a file that do
   expect(new URL(page.url()).search).toBe('');
   expect(page.workers()).toHaveLength(0);
   await page.screenshot({ path: path.join(evidence(info), 'title-file-confirm.png') });
+  // While it is pending its Start is the only one (ROADMAP R60b; critic run 61, R61-N2: the big Start started plain
+  // 1938 and dropped the file): the form's is not offered, and says why; the chooser is the game's button, with no
+  // "No file chosen" beside the file chosen; Cancel is a button of the game's style, as Start beside it.
+  const mainStart = page.getByTestId('settings-new-game');
+  await expect(mainStart).toBeDisabled();
+  await expect(page.getByTestId('start-blocked')).toHaveText(/start it or cancel it/);
+  await expect(mainStart).toHaveAttribute('title', /start it or cancel it/);
+  await expect(page.locator('.title-file-btn')).toHaveText('Choose a file');
+  expect(await page.getByTestId('title-scenario-file').evaluate((e) => getComputedStyle(e).opacity)).toBe('0');
+  const look = (id: string): Promise<string> => page.getByTestId(id).evaluate((e) => getComputedStyle(e).backgroundColor);
+  expect(await look('title-file-cancel'), 'Cancel styled').not.toBe('rgb(255, 255, 255)');
+  expect(await look('title-file-cancel')).toBe(await page.getByTestId('settings-random-seed').evaluate((e) => getComputedStyle(e).backgroundColor));
   await page.getByTestId('title-file-cancel').click();
   await expect(page.getByTestId('title-file-pending')).toHaveCount(0);
   expect(new URL(page.url()).search).toBe('');
+  await expect(mainStart).toBeEnabled();
+  await expect(page.getByTestId('start-blocked')).toHaveCount(0);
 
   // A file whose state is not the one its header names passes the title screen and is refused
   // by the game, which returns to the title screen.
