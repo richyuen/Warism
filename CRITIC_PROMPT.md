@@ -28,18 +28,28 @@ no score.
   and is never blocking. A behaviour that contradicts SPEC.md, or that the design does not cover, is
   judged as any other.
 - Start where the last report ended. If `critic/CRITIC_REPORT.md` exists, first re-run each of its
-  named cases (the seeds, the scenarios, the probes behind its blocking issues and its scores under
-  the bar) on the current build, and say per case what changed. Then explore freely, with new seeds.
+  named cases (the seeds, the scenarios, the probes behind its blocking issues, its non-blocking issues and
+  its scores under the bar) on the current build, and say per case what changed. Then explore freely, with
+  new seeds. A bulk set of the last report (a script or list of many runs: its landing setups, its
+  stuck-return runs, its landing-row cases, Malta's landings) is re-run only when the sim changed since that
+  report's commit (`git diff --stat <commit> HEAD -- src/sim data public/data` not empty); otherwise it is
+  marked "sim unchanged, carried" (ADR-917).
 - Every score that differs from the last report's says why, with evidence from the same case on both
-  builds where you can. A count over seeds is compared with the same count on the last report's
-  commit (`git worktree add critic/wt <commit>`; unlink a `node_modules` linked into it before
-  `git worktree remove`, or the removal empties the repo's own), or marked "new seeds, not compared";
-  a difference the same seeds do not show on both commits moves no score.
+  builds where you can. The last report's commit is built and run beside HEAD (`git worktree add critic/wt
+  <commit>`; unlink a `node_modules` linked into it before `git worktree remove`, or the removal empties the
+  repo's own) only for a case whose figure on HEAD differs from the last report's, or whose score moves
+  (ADR-917); else a count over seeds is compared with the last report's own figure, or marked "new seeds,
+  not compared". A difference the same seeds do not show on both commits moves no score.
 - Your logs, JSON dumps, traces and screenshots stay on disk and are not committed (`.gitignore`, ADR-914);
   only the report, its JSON, `critic/scripts/` and scenario files are. Put every script and job list a case
   needs to be re-run in `critic/scripts/`.
 - Run the rule checkers on new seeds (`npx tsx tools/diag/diploInvariants.ts <seed> ...` and any
-  other checker under `tools/diag/`); a broken rule they report is a finding.
+  other checker under `tools/diag/`); a broken rule they report is a finding. For each dimension scored
+  afresh, three new seeds of five years a checker (ADR-917). `landingInvariants` on new seeds: 90 runs,
+  15 seeds × its six shapes (setups 3517 and 15101 with two groups, 3517 with one; each with orders
+  throughout and for 8 days), as `tools/diag/landingFuzz.ts --seeds 15` runs them.
+- **Time (ADR-917).** A focused run aims to finish in about an hour: the dimensions scored afresh first,
+  then exploring. Say at the top of the report what was left out for time. A full run is not bounded.
 
 # FULL OR FOCUSED RUN (ADR-804, ADR-915, the user's decisions)
 A run is **focused** unless the message that spawned you asks for a **full run**: the builder asks for one
@@ -68,7 +78,7 @@ A new feature is scored under the dimension it belongs to (the relations graph u
    what to fix. Then a prioritised list of BLOCKING issues (would make a player quit, contradicts a
    claimed feature, or breaks a rule checker) and non-blocking issues. One exception (ADR-914, the user's
    decision): `landingInvariants`' `slowClick` is a timing bound, not a contradiction. It is blocking only
-   when more than 5 % of this run's `landingInvariants` runs on seeds new to this run break it; give the
+   when more than 5 % of this run's 90 `landingInvariants` runs on new seeds break it (5 or more); give the
    rate as "k of n". Under that, each break is a non-blocking issue with its case and figures, and does
    not by itself hold naval under its bar. Every other rule a checker reports broken stays blocking.
    Then the last report's cases re-run, the "Design objections", and ideas from other games (none of them scored).

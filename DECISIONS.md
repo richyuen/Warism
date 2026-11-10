@@ -7,6 +7,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 > The ADRs of earlier months are in `docs/history/DECISIONS-<YYYY-MM>.md` (ADR-805), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
+### ADR-917 · 2026-11-09 · accepted (the user's decision) — The critic's run bounded in time
+- **Context.** Critic run 60 (focused) took about an hour: about 700 landing runs (300 new by its own choice, the 5 %
+  rule's denominator, and all 396 of run 59's setups, text-identical, the sim unchanged), and run 59's commit built
+  beside HEAD for its counts. The user asked why 300 and not 90, and "anything else that we can do to bound the time?"
+- **Decision (CRITIC_PROMPT, the user's choices).**
+  1. `landingInvariants` on new seeds: 90 runs (15 seeds × six shapes); 5 or more broken by `slowClick` is blocking.
+  2. A bulk set of the last report is re-run only when the sim changed since its commit; else "sim unchanged, carried".
+     The single cases behind its findings are re-run always.
+  3. The last report's commit run beside HEAD only for a case whose figure differs, or a score that moves.
+  4. A focused run aims at about an hour, the dimensions scored afresh first; what was left out is said. Full runs
+     unbounded.
+  5. Rule checkers on new seeds: three seeds of five years a checker, for each dimension scored afresh.
+- **Consequences.** From critic run 62 (run 61, the full run, was under way). Fewer seeds read rates more roughly: 90
+  runs tell 5 % from 1 % but not 1 % from 0.3 %.
+
 ### ADR-916 · 2026-11-09 · accepted (the user's decision) — Focused runs until the bars; then one full run and the release; no fuzz step
 - **The user, 2026-11-09:** "let's do focused runs until we pass the bars, and then we do a full run/release. Let's not
   do the fuzz, I don't think it's worth it time-wise - we should just do focused runs until we pass the bar, instead
