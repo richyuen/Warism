@@ -309,3 +309,9 @@
   Soviet by the annex.
 - The Axis pact left by each member as it changes sides; `withdraw` `fleets` takes the surrendered ships and wings.
 - Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62i1: 1946-49 (ADR-940)
+
+- Releases (Syria, Transjordan, Lebanon, the Philippines, India, Burma, Ceylon); Pakistan, Israel (and the Arab
+  states' war, held), the two Koreas, the two Germanies, Indonesia born; Sakhalin and the Kurils Soviet; Iran freed.
+- Evidence: `tests/sweep/historyMatch1938h.test.ts` (to 2 January 1950, 3 minutes). Gate.

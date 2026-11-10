@@ -40,6 +40,10 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   // After Japan's surrender (R62h3): its foes, and the nations living or not on 26 October 1945.
   const ASIA: [string, number][] = [['JAP', 1], ['MAN', 0], ['MEN', 0], ['MAL', 1], ['SAR', 1], ['DEI', 1]];
   let japFoes = -1;
+  // 1946-49 (R62i1): the new states living, the old ones gone, and no war left on 1 January 1950.
+  const NEW: [string, number][] = [['ISR', 1], ['PAL', 0], ['PAK', 1], ['KOR', 1], ['PRK', 1], ['FRG', 1], ['GDR', 1], ['IDN', 1], ['DEI', 1]];
+  let born: number[] = [];
+  let wars1950 = -1;
   // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
   let axisPact = true;
   const fleets = new Map<string, number>();
@@ -57,7 +61,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const { maps, skipped, nukes } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1945-10-27',
+    '1950-01-02',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
@@ -66,6 +70,10 @@ it('1938-39: the land owned as history had it, and the events fire on their date
       if (date === '1945-06-01') living = STATES.map(([t]) => w.nations.cols.living[id(t)]!);
       if (date === '1945-05-07' || date === '1945-05-09') fleets.set(`SOV ${date}`, fleetOf(w, 'SOV'));
       if (date === '1945-09-03') fleets.set('JAP', fleetOf(w, 'JAP'));
+      if (date === '1950-01-01') {
+        born = NEW.map(([t]) => w.nations.cols.living[id(t)]!);
+        wars1950 = w.wars.list.length;
+      }
       if (date === '1945-10-26') {
         axisPact = w.alliances.list.some((a) => a.nameKey === 'alliance.anti_comintern');
         asia = ASIA.map(([t]) => w.nations.cols.living[id(t)]!);
@@ -90,6 +98,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   expect(asia).toEqual(ASIA.map((x) => x[1]));
   expect(japFoes).toBe(0);
   expect(axisPact).toBe(false);
+  expect(born).toEqual(NEW.map((x) => x[1]));
+  expect(wars1950).toBe(0);
   expect(fleets.get('JAP')).toBe(0);
   expect(fleets.get('SOV 1945-05-09')).toBe(fleets.get('SOV 1945-05-07'));
   // The two scripted strikes, the only nuclear ones (R62h3): the United States', on their hours, where they were.
@@ -130,4 +140,4 @@ it('1938-39: the land owned as history had it, and the events fire on their date
     expect(control.movedRight, date).toBeGreaterThanOrEqual(0.9);
     expect(control.strayShare, date).toBeLessThan(0.005);
   }
-}, 1_800_000);
+}, 3_600_000);

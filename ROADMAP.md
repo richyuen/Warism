@@ -241,8 +241,9 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
   - [x] R62i0 The war's loose ends: the Axis pact left by each member as it changes sides; the surrendered fleets and
     wings taken, not handed on. AT: no Axis pact on 26 October 1945; the Soviet ships and wings not grown by Germany's.
     Done (ADR-939): `withdraw` `fleets`; the pact gone, Japan's fleet gone, the Soviet one unchanged by the annex.
-  - [ ] R62i1 1946–49: the Philippines, India and Pakistan, Burma, Ceylon, Israel and its war, Indonesia, the two
+  - [x] R62i1 1946–49: the Philippines, India and Pakistan, Burma, Ceylon, Israel and its war, Indonesia, the two
     Germanies, the two Koreas. AT: each event on its date.
+    Done (ADR-940): no event passed over to 2 January 1950; the new states living, no war left on 1 January 1950.
   - [ ] R62i2 The Chinese civil war: the People's Republic, the Republic on Taiwan. AT: each event on its date; owners
     on 1 January 1950 ≥ 90 % of land cells.
   - [ ] R62i3 The Korean War to the armistice; Japan's sovereignty (1952). AT: each event on its date; owners on 27

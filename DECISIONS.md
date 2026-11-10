@@ -9,6 +9,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-940 · 2026-11-10 · accepted — 1946-49 on the historical track (R62i1)
+- **The events:** southern Sakhalin and the Kurils Soviet; Syria, Transjordan, Lebanon and the Philippines released;
+  the Soviet and British armies out of Iran; India released and Pakistan born from it (the west with Kashmir as the
+  ceasefire of 1949 left it, then East Bengal); Burma and Ceylon released; Israel born from Palestine, the West Bank
+  Transjordan's and Gaza Egypt's as the armistice left them, the Arab states' war (Egypt, Transjordan, Syria, Iraq,
+  Lebanon) held on those lines and left by each on its armistice's date; the two Koreas born from Japan's Korea on
+  either side of the 38th parallel; the Federal Republic born from the three western zones (the Saar French), the
+  Democratic Republic from the Soviet one; Indonesia born from the Indies (New Guinea Dutch still).
+- **Lines, not fighting:** a state born takes its land as history drew it; its wars (Israel's, Kashmir's) are held on
+  those lines. The Indonesian and Indochinese wars of independence are not played: the first ends in a transfer, the
+  second lies past 1953's end in its outcome (1954).
+- **Measured** (`historyMatch1938h.test.ts`, run to 2 January 1950): the new states living, Palestine dead, the Indies
+  Dutch New Guinea; no war on 1 January 1950; no event passed over. The run's timeout raised to an hour (it took 3
+  minutes).
+
 ### ADR-939 · 2026-11-10 · accepted — R62i in slices; the war's loose ends (R62i0)
 - **R62i split** as R62g and R62h were: i0 the war's loose ends; i1 1946-49 (the Philippines, India and Pakistan,
   Burma, Ceylon, Israel and its war, Indonesia, the two Germanies, the two Koreas); i2 the Chinese civil war to the
