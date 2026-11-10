@@ -30,18 +30,25 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   ];
   let at11: boolean[] = [];
   let soviet = 0;
+  // The states of Europe after Germany's surrender (R62h2), living or not on 1 June 1945.
+  const STATES: [string, number][] = [
+    ['GER', 0], ['VIC', 0], ['RSI', 0], ['SLO', 0], ['CRO', 0],
+    ['FRA', 1], ['POL', 1], ['CZS', 1], ['YUG', 1], ['AUT', 1], ['NOR', 1], ['NED', 1], ['BEL', 1], ['GRE', 1], ['ALB', 1], ['HUN', 1],
+  ];
+  let living: number[] = [];
   const axis = new Set(['GER', 'FIN', 'ROM', 'HUN', 'ITA'].map(id));
   const [ru, rv] = project(24.1, 56.95);
   const riga = Math.floor(rv * SIZE_1938.h) * SIZE_1938.w + Math.floor(ru * SIZE_1938.w);
   const { maps, skipped } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1944-06-06',
+    '1945-06-02',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
         if (w.formations.cols.nation[i] === id('SOV') && w.rules?.templates[w.formations.cols.template[i]!]?.domain === 0) soviet += w.formations.cols.strength[i]!;
       });
+      if (date === '1945-06-01') living = STATES.map(([t]) => w.nations.cols.living[id(t)]!);
       // The belligerents at the end of 11 December 1941 (R62g4).
       if (date === '1941-12-12') at11 = WARS.map(([a, b]) => w.wars.atWar(id(a), id(b)));
       // Occupations at peace past a month's start (1 August 1940): the occupied zone and the Baltic states held.
@@ -54,7 +61,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(8);
+  expect(maps.length).toBe(9);
+  expect(living).toEqual(STATES.map((x) => x[1]));
   for (const { date, cols } of maps) {
     expect(cols.whole, date).toBeGreaterThanOrEqual(0.95);
     expect(cols.movedRight, date).toBeGreaterThanOrEqual(0.95);

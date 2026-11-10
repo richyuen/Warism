@@ -284,3 +284,12 @@
 - 5 June 1944: owners 99.81 %, 97.4 % right, stray 0.08 %; control 99.40 %, 95.5 % right, stray 0.29 %; no event
   passed over.
 - Evidence: `tests/sweep/historyMatch1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62h2: D-Day to Germany's surrender (ADR-937)
+
+- D-Day, Paris, France freed; Bagration and the Vistula-Oder by stages; Romania, Bulgaria, Finland and Hungary leave
+  the Axis; Italy's north freed; the occupied states born again; Germany's armies taken, its land in four zones.
+- Found: a nation at war with all its land held capitulates and is annexed (Hungary went Soviet) — Hungary leaves the
+  war first; `annex` hands the target's army to the annexer — the Wehrmacht taken first.
+- 1 June 1945: owners 96.9 % right, stray 0.09 %; control 95.7 % right, stray 0.28 %; no event passed over.
+- Evidence: `tests/sweep/historyMatch1938h.test.ts`. Gate.

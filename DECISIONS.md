@@ -9,6 +9,30 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-937 · 2026-11-10 · accepted — D-Day to Germany's surrender (R62h2)
+- **The West:** the fronts against Germany held from D-Day to 9 May 1945 and moved by the timeline: the Normandy
+  beachhead, Paris (25 August), Belgium and Luxembourg born again from Germany's land, Vichy's last colonies France's
+  puppets, France freed (15 September, the Provisional Government taking Vichy's land), Alsace and Lorraine.
+- **Italy:** to the Gothic line; the north freed on 25 April (the Social Republic ends); Istria and Trieste Italian
+  until the treaty.
+- **The East:** two stages (31 August 1944: Bagration, Lvov-Sandomierz, Romania; 31 January 1945: the Vistula-Oder,
+  Budapest besieged); Romania's and Bulgaria's coups (`leave`, then `join` beside the Soviet Union, a hold on their new
+  fronts); Finland's armistice and Petsamo; Bessarabia Soviet again; Greece and Albania born again; Memel and
+  Königsberg Soviet; Northern Transylvania back to Romania; Hungary's armistice (20 January 1945) then Hungary held by
+  the Red Army at peace: at war, its land all held, it capitulated and was annexed by the Soviet Union.
+- **The surrender (5–8 May):** Denmark released; the Netherlands (with Suriname, Curaçao and Aruba), Norway (with
+  Svalbard), Poland between the Curzon line and the Oder-Neisse, Czechoslovakia and Yugoslavia born again; Austria born
+  and held in four zones; Carpatho-Ukraine Soviet in fact; Slovakia annexed by Czechoslovakia; the Wehrmacht taken (a
+  `withdraw` with `captured`: `annex` hands the target's formations and puppets to the annexer, and the Soviet army
+  rose by 0.7M with them); Germany's zones by `transfer` to the four powers, what is left (between the zones and the
+  Oder) annexed by the Soviet Union. A zone is a transfer for now; R62i decides the occupation's form.
+- **Asia:** Ichigo's later stages (Changsha, Guilin), Sansapor, Guam, Leyte, Manila (the Commonwealth restored, Japan
+  holding the north of Luzon and Mindanao), Mandalay and Rangoon (Burma born again, Britain's puppet). Saipan,
+  Tinian and Iwo Jima have no land cell at the map's size: no event.
+- **Measured** (`historyMatch1938h.test.ts`), 1 June 1945: owners 99.84 %, 96.9 % right, stray 0.09 %; control 99.51 %,
+  95.7 % right, stray 0.28 %; Germany, Vichy, the Social Republic, Slovakia and Croatia dead and the restored states
+  living; no event passed over.
+
 ### ADR-936 · 2026-11-10 · accepted — November 1942 to June 1944 (R62h1)
 - **The Eastern Front** by stages both ways, each a line on its date: the Soviet Union takes back what is east of it
   (the Germans there falling back) and the Axis takes what is west (the Soviet armies there taken): 31 December 1942

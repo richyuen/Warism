@@ -222,9 +222,11 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     bars.
     Done (ADR-936): owners 99.81 %, 97.4 % right, stray 0.08 %; control 99.40 %, 95.5 % right, stray 0.29 % on 5
     June 1944; no event passed over (`tests/sweep/historyMatch1938h.test.ts`).
-  - [ ] R62h2 D-Day to Germany's surrender: Normandy and France (France revived), Bagration, the switches of Romania,
+  - [x] R62h2 D-Day to Germany's surrender: Normandy and France (France revived), Bagration, the switches of Romania,
     Bulgaria and Finland, the Bulge, Berlin, 8 May 1945. AT: each event on its date; owners and control on 1 June 1945
     ≥ 85 %, the land moved ≥ 85 % right, stray < 2 %.
+    Done (ADR-937): owners 99.84 %, 96.9 % right, stray 0.09 %; control 99.51 %, 95.7 % right, stray 0.28 % on 1 June
+    1945; no event passed over (`tests/sweep/historyMatch1938h.test.ts`).
   - [ ] R62h3 The Pacific's end: the Philippines, Okinawa, Hiroshima and Nagasaki, Manchuria, Japan's surrender (2
     September 1945). AT: each event on its date; the two scripted strikes the only nuclear ones.
   - [ ] R62i 1945–53: the occupation zones, Poland moved west, Austria, the Philippines, India and Pakistan, Burma,
