@@ -32,8 +32,9 @@ save and load, deterministic seeds); fast (≥ 60 fps at world zoom with 100+ na
 tactical zoom with 10,000+ unit sprites).
 
 **Non-goals.** Multiplayer networking (deterministic replay would make lockstep possible later). A
-server: the game is static files. Historical railroading: the 1938 start is plausible, and history
-then diverges freely.
+server: the game is static files. Historical railroading of the free worlds: in 1938 and the random
+world the start is plausible and history then diverges freely. The one exception is the historical
+scenario, which follows a scripted 1938–1953 until it ends or the player intervenes (§7.7, ADR-919).
 
 **Origins.** The game was first built to match *Ages of Conflict: World War Simulator* and go
 beyond it; its observations of that game and the measure kept against it are frozen in
@@ -1686,6 +1687,28 @@ A stable top is a valid world [ADR-750]; the world keeps changing through the ru
 leader: admin cost by area held (§3.4), unrest on land not one's own and overextension (§4.6), coalitions
 against a hegemon (§7.2), puppets drifting free (§3.5), revivals (§3.4), collapse after six bankrupt
 months. The sweep judges the result (§10.4).
+
+### 7.7 The historical track [ADR-919] (designed; built by ROADMAP R62)
+The scenario "1938 — Historical" (`1938h`) is the 1938 world with a timeline that replays 1 January 1938
+to 27 July 1953, then sets the world free.
+- **Timeline** (`data/scenarios/1938h/timeline.json`): events in date order, each a date, a kind and its
+  parties: war (with its sides joining), peace (white, or with terms: annexation, puppet, a transfer),
+  annex, puppet, release, alliance join or leave, guarantee, transfer of territory (lon/lat rings with the
+  nations it may take from, as `ownership.json`'s regions), occupation (control without ownership), a new
+  nation (a nation of the scenario dormant until its date, with its cores), scripted nuclear strikes, and
+  war objectives (below). The data pipeline bakes rings to cells. Our own summary of public history.
+- **Runner:** at an event's hour it is given as the commands it stands for, through the command log, so it
+  saves, loads and replays like any command (§2.6). An event that no longer applies (a party dead, a war
+  already over) is skipped and its row says so; the track's state (its next event, on or ended) is saved.
+- **Steering while the track runs:** the strategic AI's own declarations, stalemate peace, threat pacts,
+  coalitions and rival drift are off, and so are collapse and revival unless an event asks for them; the
+  AI's own nuclear decision is off. Each war phase names objectives (cells or regions, with a date): the
+  operational AI weights sectors toward them, the invasion AI picks the named landings. The fighting is
+  the sim's own.
+- **The end:** on 27 July 1953, or at the first intervention (a God Mode act, an editor edit, the taking of
+  a nation), the track ends for good: every switch returns to the usual rules, and the History has a row
+  saying when and why.
+- **Seed:** fixed by the scenario and not offered on its form; the track is the same each run.
 
 ---
 

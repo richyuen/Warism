@@ -53,6 +53,58 @@ setups broke `slowClick`); every dimension at its bar. A full run and the releas
     at war within 10 years on most seeds, or the count's floor raised to where wars start (SPEC says which).
   - [ ] R60e R61-N5: History's same-day rows can read backwards (32019, 2 December 1957: the peace above the
     annexation). AT: same-day rows in the order they happened.
+- Batch 14 ends with no critic run (ADR-920): the next run comes after Batch 15.
 - Not filed: R61-SC, 3 of 300 (1.0 %; 32167 Japan's 366 twice, and 32115 England's 274, the first not Japan's: both
   transport groups sailed full without it, its "about 5 days" true). R60-SC, the `slowClick` tail (30041, 31099, 203997, 204017, all Japan's 366/367 from Tokyo), under the 5 %
   rule; ADR-914's proposal 2 held. The old small items (27125's ticker rows, the phone's panel over the corridor).
+
+## Batch 15 — the historical track (the user's request, ADR-919, ADR-920)
+
+A replay of 1938–1953 as it went, as SPEC §7.7 designs it: a scenario of its own, a dated timeline given as commands,
+the AI's free choices off and its offensives steered while the track runs, ended for good by the player's first
+intervention or on 27 July 1953. Then the critic (one run for Batches 14 and 15).
+
+- [ ] R62 **The historical track.**
+  - [ ] R62a The scenario and the runner: `1938h` listed on the title screen ("1938 — Historical", its preview, fixed
+    seed, no seed on its form); `timeline.json`'s schema and its check in `npm run data -- --check`; rings baked to
+    cells; the runner giving each due event as commands at its hour, skipping one that no longer applies with a row
+    saying so; the track's state saved; dormant nations born on their date. AT: a test timeline of every event kind
+    fires each on its hour (all of them, 0 late); save and load mid-track bit-identical and the run after the load
+    equal to the uninterrupted one; plain 1938's seed-99 pin unmoved (or moved in its own commit by a section the
+    track adds, ADR-919).
+  - [ ] R62b The steering: while the track runs, the strategic AI's own declarations, stalemate peace, pacts,
+    coalitions, rival drift, collapse, revival and nuclear decision off; war-phase objectives weighting the
+    operational AI's sectors and naming the invasion AI's landings. AT: on a test war with one objective, the
+    attacker's allotted strength in sectors facing it ≥ 2× the plain AI's on the same save (A/B from one
+    `sim.save()`); in a 2-year headless run no war, peace, pact or nuke but the timeline's.
+  - [ ] R62c 1938–39: the Anschluss, Munich and the Sudetenland, the First Vienna Award, the end of Czechoslovakia
+    (the Protectorate, Slovakia, Carpatho-Ukraine), Memel, Albania, the end of the Spanish war, Nomonhan, the pact
+    and the partition of Poland, the Baltic bases, the Winter War. AT: every 1938–39 event fires on its date; land
+    owned as history had it on 1 October 1938, 1 April 1939 and 1 October 1939 ≥ 95 % of land cells (the
+    historical maps as rings, in the timeline's data).
+  - [ ] R62d 1940–41: Denmark and Norway, the Low Countries and France (the armistice, Vichy and the occupied zone),
+    Italy's entry, the Baltic annexations and Bessarabia, the Second Vienna Award, the Tripartite Pact, Greece and
+    Yugoslavia (Croatia), North Africa, Barbarossa, Iran, Pearl Harbor and the Pacific opening. AT: each event on its
+    date; Paris taken within 30 days of 14 June 1940; owners match history on 1 July 1940 ≥ 90 % and control on
+    1 December 1941 ≥ 75 % of land cells.
+  - [ ] R62e 1942–45: the Pacific, Stalingrad, El Alamein and Torch, Italy's surrender and the Italian Social
+    Republic, Bagration, D-Day, the switches of Romania, Bulgaria and Finland, Germany's surrender (8 May 1945),
+    Hiroshima and Nagasaki, Manchuria, Japan's surrender (2 September 1945). AT: each event on its date; control
+    matches history on 1 November 1942 and 6 June 1944 ≥ 75 %, owners and control on 1 June 1945 ≥ 85 % of land
+    cells; the two scripted strikes the only nuclear ones.
+  - [ ] R62f 1945–53: the occupation zones, Poland moved west, Austria, the Philippines, India and Pakistan, Burma,
+    Ceylon, Israel, Indonesia, the Chinese civil war (the People's Republic, the Republic on Taiwan), the two
+    Germanies, the two Koreas and the Korean War to the armistice, Japan's sovereignty (1952); the new nations'
+    names, colours and flags. AT: each event on its date; owners match history on 1 January 1950 and 27 July 1953
+    ≥ 90 % of land cells; the world free after the last event (a war of the AI's own within 5 years on most of 10
+    seeds loaded from the 1953 state).
+  - [ ] R62g Intervention and the player's view: the first God Mode act, editor edit or taking of a nation ends the
+    track (each command kind listed in a test); a line under the date while the track runs (the next event and its
+    date), the end's row in the History, the events' rows in the ticker with their historical names. AT: each of the
+    listed kinds, given at 6 h, 1, 30 and 365 days, ends it and no event fires after; screenshots at world zoom on
+    phone and desktop sizes.
+  - [ ] R62h The checker and the accuracy measure: `historyTrack` in `tests/helpers/` (no timeline event refused
+    but those skipped by rule, no war or peace not on the timeline while it runs, diploInvariants through the track)
+    on 5 seeds and on the scenario's own; `tools/diag/historyMatch` printing each checkpoint's share of land cells
+    matching history (owners, control). AT: the checker green on all 6; `historyMatch` meets R62c–f's bars on the
+    scenario's seed; tick time over the track within 5 % of plain 1938's (`npm run sim -- --affinity 0xFFFF`).
