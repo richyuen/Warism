@@ -134,3 +134,9 @@
   guarantors' rows under it, in the page; 4 green), with `historyMine1938`, `historyWrap1938`: 8 green; the panel shot
   looked at. Gate green.
 - Batch 14 (R59, R60) done. No critic run now (ADR-920); next, Batch 15 (R62a).
+
+## 2026-11-10 — R59b's saved section checked while it holds a division
+
+- `tests/unit/nextVoyageDays1938.test.ts`, 31127's case: a save on day 19 (t458), inside 272's wait at Cardiff, with
+  `world.landingLeft` not empty, loads bit-identical (the probes before were on days 30 and 90, after the landing was
+  over, so the section was never saved with anything in it). Green; gate green.

@@ -80,9 +80,12 @@ describe('the next voyage is told with when (ROADMAP R58b)', () => {
   it("31127's 272: on its group's next voyage, within a day of its figure", { timeout: 300_000 }, () => {
     let told: { tick: number; days: number } | null = null;
     let sailed = -1;
+    let leftAtProbe = 0;
     const breaks = landingBreaks({
-      seed: 31127, setup: 15101, days: 30, orders: 31127, probeDays: [30, 90], groups: 1, notes: [],
+      // Day 19 (t458): a save while 272 waits, `world.landingLeft` not empty, loads bit-identical (`save`).
+      seed: 31127, setup: 15101, days: 30, orders: 31127, probeDays: [19, 30, 90], groups: 1, notes: [],
       onHour: (w, click) => {
+        if (!click && w.tick === 458) for (const l of w.landings.values()) leftAtProbe += l.left.size;
         if (click || sailed >= 0 || !w.formations.has(272)) return;
         const v = voyageOf(w, 272);
         if (told === null && v?.state === 'nextVoyage' && v.days !== undefined) told = { tick: w.tick, days: v.days };
@@ -90,6 +93,8 @@ describe('the next voyage is told with when (ROADMAP R58b)', () => {
       },
     });
     expect(breaks.filter((b) => b.includes('leftAgain')), 'no division left again').toEqual([]);
+    expect(leftAtProbe, 'the day-19 save holds a division left').toBeGreaterThan(0);
+    expect(breaks.filter((b) => b.includes('save')), 'that save loads bit-identical').toEqual([]);
     expect(told, '272 left for the next voyage').not.toBeNull();
     const t = told as unknown as { tick: number; days: number };
     expect(sailed, '272 sails on the next voyage').toBeGreaterThan(0);
