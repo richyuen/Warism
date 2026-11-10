@@ -74,14 +74,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
   6. **Entry:** a listed scenario of its own, "1938 — Historical", beside 1938 and Random; plain 1938 is unchanged.
 - **Decision (the loop's, within the above).**
   - The track is data: a dated timeline (`data/scenarios/1938h/timeline.json`, our own summary of public history,
-    in DATA_SOURCES.md) whose events become ordinary commands at their hour, so they are logged, saved and replay
-    like any command (SPEC §2.6). Territory by lon/lat rings, as the 1938 ownership is drawn (`ownership.json`).
+    in DATA_SOURCES.md). Its runner, a system right after the hour's commands, applies each due event through
+    `applyCommand`, **not** through the command log (amended 2026-11-10, the advisor's review: the log is saved, hashed
+    input, and a replay that fed logged track events would apply them twice). A run is reproduced by the timeline and
+    the track's saved state (next event, running, the second seed, the timeline's hash), the log staying the player's
+    input alone, which is how an intervention is told (R62j). Territory by lon/lat rings, as the 1938 ownership is
+    drawn (`ownership.json`).
+  - `1938h` is a scenario id of its own built from 1938's files, its new nations appended after 1938's 103 so every
+    id of plain 1938 holds and its pin does not move (R62a).
   - "Deterministic": the scenario's seed is fixed and not offered on its form; a run is the same each time.
   - **Reseed at the end (the user's, 2026-11-10):** when the track ends, on 27 July 1953 or early at the first
     intervention, the world takes a second seed and every RNG stream is derived again from it (§2.6), so the free
     world after the track differs from run to run while the track itself does not. The second seed is rolled by
     the new-game form at the start (random once a visit, as the seed is; `?after=` in the URL) and kept in the
-    state, so the reseed is part of the run and replays and loads like the rest.
+    state, so the reseed is part of the run and replays and loads like the rest. Two runs that differ only in it are equal in every
+    section but the track's own until the end (the second seed is in that section from the start).
   - **How the land is matched:** by the scenario's own data, never by the shared rules. Borders that changed by
     treaty (Munich, the partitions, Vichy, the post-war borders) are transfers on their date and match by
     construction; land that changed by fighting is reached by steering: each war phase's objectives, dates and the

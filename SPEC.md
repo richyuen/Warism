@@ -287,7 +287,8 @@ it is spent on.
 - RNG: PCG32 implemented with `Math.imul` and 32-bit ops. One stream per subsystem
   (`scenario`, `combat`, `ai`, `diplomacy`, `revolt`, `weather`, `nuclear`, `naval`, `air`,
   `toy`) is seeded from `xxhash32(name, worldSeed ^ k)` only, so a new subsystem doesn't perturb
-  existing ones. Order-independent draws use `hash32(seed, tick, entityId, salt)`.
+  existing ones. The one exception (designed, §7.7, ADR-919): the historical scenario's track, as it ends,
+  derives every stream again from its second seed. Order-independent draws use `hash32(seed, tick, entityId, salt)`.
   `dmath` = fdlibm ports (polynomial kernels + atan table), golden bits pinned in Node and Chromium.
 - Iteration is always in ascending id order. Entity ids come from free lists in
   deterministic order. `Map`/`Set` are allowed only with insertion order derived from id order.
@@ -1704,8 +1705,9 @@ to 27 July 1953, then sets the world free.
   nations it may take from, as `ownership.json`'s regions), occupation (control without ownership), a new
   nation (a nation of the scenario dormant until its date, with its cores), scripted nuclear strikes, and
   war objectives (below). The data pipeline bakes rings to cells. Our own summary of public history.
-- **Runner:** at an event's hour it is given as the commands it stands for, through the command log, so it
-  saves, loads and replays like any command (§2.6). An event that no longer applies (a party dead, a war
+- **Runner:** a system right after the hour's commands applies each due event as the commands it stands for,
+  directly, not through the command log (the log stays the player's input); the timeline and the track's saved
+  state reproduce it (§2.6). An event that no longer applies (a party dead, a war
   already over) is skipped and its row says so; the track's state (its next event, on or ended) is saved.
 - **Steering while the track runs:** the strategic AI's own declarations, stalemate peace, threat pacts,
   coalitions and rival drift are off, and so are collapse and revival unless an event asks for them; the

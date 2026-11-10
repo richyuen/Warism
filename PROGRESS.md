@@ -140,3 +140,12 @@
 - `tests/unit/nextVoyageDays1938.test.ts`, 31127's case: a save on day 19 (t458), inside 272's wait at Cardiff, with
   `world.landingLeft` not empty, loads bit-identical (the probes before were on days 30 and 90, after the landing was
   over, so the section was never saved with anything in it). Green; gate green.
+
+## 2026-11-10 — Batch 15 split finer; ADR-919's runner and reseed amended (the advisor's review)
+
+- R62 re-split into R62a–k before any part was ticked: the scenario; the runner and its state; territory; birth and
+  the end (reseed); the steering; four periods; intervention and the view; the checker. ADR-919 amended: the runner
+  applies events through `applyCommand`, not the command log (a replay feeding logged track events would apply them
+  twice); `1938h` a scenario id of its own, its nations after 1938's 103; the reseed's AT compares every section but
+  the track's own (the second seed is in it from the start). SPEC §2.6 names the reseed as the one exception to
+  streams seeded from the world seed alone; §7.7's runner. Documents only.
