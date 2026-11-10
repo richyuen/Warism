@@ -12,10 +12,11 @@ on source and writes only to `critic/`.
 There is no memory between sessions. Read:
 - `ROADMAP.md`: what is to do, the item at hand.
 - `SPEC.md`: §1 and §2, and the sections the item touches; search the rest.
-- `PROGRESS.md`: this month's log; read the tail.
-- `BLOCKERS.md`: the open entries and the watch list (resolved ones in `docs/BLOCKERS_DONE.md`, searched).
-- `DECISIONS.md`: this month's ADRs, newest first; search the rest by number or rule name in
-  `docs/history/DECISIONS-<YYYY-MM>.md`.
+- `PROGRESS.md`: the log since the last release tag; read the tail.
+- `BLOCKERS.md`: the open entries (the watch list in `docs/BLOCKERS_WATCH.md`, resolved ones in
+  `docs/BLOCKERS_DONE.md`, searched).
+- `DECISIONS.md`: the ADRs since the last release tag, newest first; search the rest by number or rule
+  name in `docs/history/DECISIONS-*.md` (rotated at each release tag, ADR-918).
 - `critic/CRITIC_REPORT.md`: the last critic run's findings on the item.
 
 Frozen records, searched and never edited: `PLAN.md`, `docs/PLAN_DONE.md`, `docs/PARITY.md`,
@@ -37,16 +38,7 @@ Frozen records, searched and never edited: `PLAN.md`, `docs/PLAN_DONE.md`, `docs
     `tests/sweep/baselineHash.test.ts`: a rule change updates the pin and logs it in DECISIONS.
 - `npm run check:full`: every stage, whatever changed. `npm run check:review`: the same as a release
   check, each stage on its own, a failed test run again alone, resumable.
-- `npx tsx tools/diag/replayCritic.ts [--at head|report|<commit>] [--new K] [--jobs P]`: the last critic run's
-  headless jobs again, compared with its outputs; `--new K` runs each family on K new seeds (ADR-851).
-- `npx tsx tools/diag/landingFuzz.ts [--seeds N] [--first S] [--jobs P]`: the landing checker on N fresh seeds × the
-  critic's six shapes (default 50, 300 runs, ~30 min at 3 jobs); by hand only, not a step of the loop (ADR-916).
-- `npx tsx tools/diag/seaBattles.ts <seed> [scenario|random] [--years N]`: each sea battle with its place, sides,
-  ships and a camera; `tools/diag/seaBattlesLook.ts <its json>` (a preview on 4173) checks each is drawn (ADR-852).
-- `npx tsx tools/diag/landingRows.ts [grid|far|page|all]`: the landings bar's rows against the divisions' panels and
-  their order news, hour by hour, on the critic's landing cases (ADR-856, ADR-879).
-- `npx tsx tools/diag/diploInvariants.ts <seed> [scenario|random] [--heroes] [--world random]`: the
-  rules of war and peace on one run, as `tests/unit/diploInvariants*.test.ts` check them (ADR-803).
+- Diagnostic tools (`tools/diag/`: replayCritic, landingFuzz, seaBattles, landingRows, diploInvariants): `docs/TOOLS.md`.
 - `npm run typecheck`: `src/`, `tools/` and `tests/` (a bare `tsc --noEmit -p .` checks nothing).
 - Unit tests make each 1938 world after a file's first from a template, and load pure runs from
   `.cache/checkpoints/` (`tests/helpers/checkpoint.ts`; ADR-279). `NOTEMPLATES=1` builds every world.

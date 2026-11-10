@@ -31,12 +31,15 @@ game's assets or code.
 - `ROADMAP.md`: what is to do, top-down, each item with its acceptance test. "continue", "next" or
   "go" means: the first unchecked item.
 - `SPEC.md`: how the game works (§1 and §2 first, the rest by section; searched).
-- `DECISIONS.md`: this month's ADRs, newest first; earlier months in `docs/history/` (searched).
+- `DECISIONS.md`: the ADRs since the last release tag, newest first; earlier ones in `docs/history/`
+  (searched; ADR-918).
   Every design choice, new or changed rule or bound, and change of process gets an ADR; the user's are
   marked so. An item that only mends a rule an ADR already states gets none: its ROADMAP tick and its
   PROGRESS.md entry carry it, with the ADRs it stands on (ADR-914).
-- `PROGRESS.md`: this month's log, newest last (read the tail); earlier months in `docs/history/`.
-- `BLOCKERS.md`: open problems and the watch list; resolved ones in `docs/BLOCKERS_DONE.md`.
+- `PROGRESS.md`: the log since the last release tag, newest last (read the tail); earlier in
+  `docs/history/` (ADR-918).
+- `BLOCKERS.md`: open problems; the watch list in `docs/BLOCKERS_WATCH.md` and resolved ones in
+  `docs/BLOCKERS_DONE.md` (searched).
 - `CHANGELOG.md`: what each release brought, for players.
 - `critic/CRITIC_REPORT.md` and `.json`: the last critic run.
 - Frozen records, searched only: PLAN.md, `docs/PLAN_DONE.md`, `docs/PARITY.md`.
@@ -98,7 +101,9 @@ Items come in batches (a ROADMAP section). After the last item of a batch:
    unseen seeds (`npm run sweep -- --first <seed> --tag <name>`: borders still moving at the end
    on every seed), and `npm run bench -- G` (budgets PASS). A check that fails becomes a ROADMAP item.
 4. When all hold: a CHANGELOG.md entry, then tag the commit `release-<YYYY-MM-DD>` (`git tag -a`,
-   `git push --tags`).
+   `git push --tags`). In the tag's commit, DECISIONS.md's ADRs and PROGRESS.md's entries move to
+   `docs/history/DECISIONS-<tag>.md` and `PROGRESS-<tag>.md`, as the batch's items move to `ROADMAP-<tag>.md`
+   (ADR-918); the release's own PROGRESS entry goes last before the move.
 
 A feature the user asks for during a batch joins the next batch, unless the user says it comes first.
 
