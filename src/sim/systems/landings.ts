@@ -77,6 +77,12 @@ export interface Landing {
    * window (`replaceGroups`); after, its next voyage calls one from anywhere, as before (R39a).
    */
   sailed: boolean;
+  /**
+   * Its divisions left at its port by a voyage, by id: the tick first left (ROADMAP R59b; critic run 60, R60-N2: 31127's
+   * 272, left at t423, was left again at t510 as 270 and 271, come later, boarded first by id). They board first at
+   * the next sail hour (`boardOrder`); one aboard, or out of the landing, is no longer of it.
+   */
+  left: Map<number, number>;
 }
 
 /** Hours within which a division joined with a landing's first (its click, `waited`): a day. */
@@ -360,7 +366,7 @@ export function bindDivision(world: World, id: number, target: number, choice: L
   let l = choice.join;
   if (!l) {
     const o = landingOf(world, target)!;
-    l = { id: world.nextLanding++, nation: c.nation[id]!, target, water: o.water, land: o.land, port: choice.port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick, ready: -1, due: Infinity, sailed: false };
+    l = { id: world.nextLanding++, nation: c.nation[id]!, target, water: o.water, land: o.land, port: choice.port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick, ready: -1, due: Infinity, sailed: false, left: new Map() };
     world.landings.set(l.id, l);
   }
   if (choice.fleet !== 0 && !l.fleets.includes(choice.fleet)) {
@@ -588,6 +594,7 @@ function redirectGathering(world: World, l: Landing, last: ReadonlyMap<number, {
   const join = [...world.landings.values()].sort((a, b) => a.id - b.id).find((o) => o.id !== l.id && o.nation === l.nation && o.state === LandingState.gathering && o.port === l.port && sameLandingAs(world, o, x, y));
   if (join) {
     for (const [id, at] of l.divisions) join.divisions.set(id, at);
+    for (const [id, at] of l.left) join.left.set(id, Math.min(at, join.left.get(id) ?? at));
     for (const o of l.fleets) if (!join.fleets.includes(o)) join.fleets.push(o);
     join.fleets.sort((a, b) => a - b);
     join.ordered = world.tick;
@@ -826,7 +833,7 @@ function gather(world: World, l: Landing): void {
   if (l.sailed) {
     const here = l.fleets.filter((o) => atPort(world, l, o));
     const back = l.fleets.filter((o) => !atPort(world, l, o) && !carrying(world, o));
-    const there = [...l.divisions.keys()].filter((id) => !world.embarked.has(id) && c.moving[id] !== 1 && divisionAtPort(world, l, id)).sort((a, b) => a - b);
+    const there = boardOrder(l, [...l.divisions.keys()].filter((id) => !world.embarked.has(id) && c.moving[id] !== 1 && divisionAtPort(world, l, id)));
     if (here.length > 0 && back.length > 0 && there.length > 0 && there.length === [...l.divisions.keys()].filter((id) => !world.embarked.has(id)).length) {
       const left = new Map(here.map((o) => [o, transportRoom(world, o) - menAboard(world, o)]));
       const fits = there.every((id) => {
@@ -865,6 +872,7 @@ function gather(world: World, l: Landing): void {
     if (c.engaged[id] === 1) waits = true;
     present.push(id);
   }
+  boardOrder(l, present);
   if (l.divisions.size === 0) {
     endLanding(world, l);
     return;
@@ -933,6 +941,9 @@ function gather(world: World, l: Landing): void {
   // Those at the port with no room: told they go on the next voyage (R37a; critic runs 44–45: untold). And those still
   // marching, not waited for (ROADMAP R57b; critic run 58, R58-N1: 28037's 366, untold as its landing sailed).
   for (const id of [...l.divisions.keys()].sort((a, b) => a - b)) if (world.formations.has(id) && !isAboard(world, l, id) && (present.includes(id) || c.moving[id] === 1)) world.out.emit(world.tick, EventKind.NextVoyage, id, c.nation[id]!, c.x[id]!, c.y[id]!);
+  // Those aboard are no longer left; those at the port left by this voyage board first at the next (R59b).
+  for (const id of [...l.left.keys()]) if (isAboard(world, l, id)) l.left.delete(id);
+  for (const id of present) if (l.divisions.has(id) && !isAboard(world, l, id) && !l.left.has(id)) l.left.set(id, world.tick);
   // Groups carrying no one: kept for those left (the next voyage), else the AI's.
   const left = [...l.divisions.keys()].some((id) => !isAboard(world, l, id));
   if (!left) {
@@ -941,6 +952,15 @@ function gather(world: World, l: Landing): void {
   }
   l.state = LandingState.sailing;
   l.sailed = true;
+}
+
+/**
+ * Landing `l`'s divisions `ids` (sorted in place) in the order they board at the sail hour: those its voyages left at
+ * its port first, the first left first, then the rest; each by id (ROADMAP R59b; critic run 60, R60-N2).
+ */
+function boardOrder(l: Landing, ids: number[]): number[] {
+  const at = (id: number): number => l.left.get(id) ?? Infinity;
+  return ids.sort((a, b) => at(a) - at(b) || a - b);
 }
 
 /** Of landing `l`'s divisions `ids` at its port, those its groups have no room for, boarded first fit as at the sail hour. */
@@ -1265,6 +1285,12 @@ export function landingSystem(world: World): void {
       if (!f.has(id) || (e !== undefined && !f.has(e.fleet))) l.divisions.delete(id);
     }
     l.fleets = l.fleets.filter((o) => f.has(o));
+    for (const id of [...l.left.keys()]) if (!l.divisions.has(id) || world.embarked.has(id)) l.left.delete(id);
+    // At its port while it is at sea: left for the next voyage, from this hour (R59b: 31127's 272, come while the group
+    // was away, before 270 and 271 that came after it was back).
+    if (l.state === LandingState.sailing) {
+      for (const id of [...l.divisions.keys()].sort((a, b) => a - b)) if (!l.left.has(id) && f.has(id) && !world.embarked.has(id) && f.cols.moving[id] !== 1 && divisionAtPort(world, l, id)) l.left.set(id, world.tick);
+    }
     if (l.divisions.size === 0) {
       endLanding(world, l);
       continue;
@@ -1595,7 +1621,7 @@ export function migrateLegacyLandings(world: World): void {
     if (!o) continue;
     let l = [...world.landings.values()].find((x) => x.nation === c.nation[fleet] && x.port === port && x.target === first);
     if (!l) {
-      l = { id: world.nextLanding++, nation: c.nation[fleet]!, target: first, water: o.water, land: o.land, port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick - 1, ready: -1, due: Infinity, sailed: false };
+      l = { id: world.nextLanding++, nation: c.nation[fleet]!, target: first, water: o.water, land: o.land, port, state: LandingState.gathering, fleets: [], divisions: new Map(), then: -1, ordered: world.tick - 1, ready: -1, due: Infinity, sailed: false, left: new Map() };
       world.landings.set(l.id, l);
     }
     l.fleets.push(fleet);

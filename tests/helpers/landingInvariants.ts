@@ -21,6 +21,9 @@
  * - `leftBehind`: at the hour a landing sails, one of its divisions standing ashore (critic run 44, R44-B1: a part
  *   re-sent kept too few transports; the rest stood at the port, untold, and landed alone weeks later); bar one
  *   told `NextVoyage` that hour (R17b's next voyage, told; ROADMAP R38e, critic run 46, R46-N4);
+ * - `leftAgain`: at the hour a landing sails, one of its divisions that stood at its port while it was at sea standing ashore
+ *   again, while one that did not boards with room it would have fitted (ROADMAP R59b; critic run 60, R60-N2: 31127's
+ *   272, left at t423, left again at t510 as 270 and 271, come after the group was back, boarded first);
  * - `escort`: an escort for no landing two hours running (one ending this hour is let go the next);
  * - `stuck`: a division in a gathering landing that has gained no ground for STUCK_DAYS: none of its divisions
  *   nearer its port, none of its groups nearer its port's water, by a cell (ADR-835, the user's decision; critic
@@ -130,7 +133,7 @@ function rng(seed: number): () => number {
 const DIRS: [number, number][] = [[0, 0], [1, 0], [0, 1], [-1, 0], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
 
 /** The rules each hour on `w` for player `n`; `idle` and `since` carry spells between hours. */
-function check(w: World, n: number, idle: Map<number, number>, track: Track, orphans: Set<number>, moored: Set<number>, was: Map<number, number>, told: Set<number>, clicked: ReadonlySet<number>, put: (key: string, line: string) => void): void {
+function check(w: World, n: number, idle: Map<number, number>, track: Track, orphans: Set<number>, moored: Set<number>, was: Map<number, number>, told: Set<number>, clicked: ReadonlySet<number>, put: (key: string, line: string) => void, waitedAt: Map<number, number>): void {
   const t = `t${w.tick}`;
   const out = { push: (line: string): void => put(line.replace(/^t\d+ /, '').replace(/ (aboard|standing|for|in|,|has|gathering).*$/, ''), line) };
   const f = w.formations;
@@ -160,10 +163,23 @@ function check(w: World, n: number, idle: Map<number, number>, track: Track, orp
     if (l.state === LandingState.returning && l.then >= 0 && !isLand(w.cells.terrain[l.then]!)) out.push(`${t} cancelWater: landing ${l.id} returning for a march onto water`);
     if (l.state === LandingState.sailing && was.get(l.id) === LandingState.gathering) {
       for (const id of l.divisions.keys()) if (f.has(id) && !w.embarked.has(id) && c.moving[id] !== 1 && !told.has(id)) out.push(`${t} leftBehind: ${id} ashore as landing ${l.id} sails`);
+      // Those that waited at the port while it was at sea, ashore again, while one that did not took room they fit.
+      for (const id of l.divisions.keys()) {
+        if (waitedAt.get(id) !== l.id || !f.has(id) || w.embarked.has(id)) continue;
+        for (const b of l.divisions.keys()) {
+          const e = w.embarked.get(b);
+          if (e === undefined || waitedAt.get(b) === l.id || !f.has(e.fleet)) continue;
+          let free = transportRoom(w, e.fleet);
+          for (const [a, x] of w.embarked) if (x.fleet === e.fleet && f.has(a)) free -= c.strength[a]!;
+          if (c.strength[id]! <= free + c.strength[b]!) out.push(`${t} leftAgain: ${id} ashore again as landing ${l.id} sails, ${b} aboard`);
+        }
+      }
     }
+    if (l.state === LandingState.sailing) for (const id of l.divisions.keys()) if (f.has(id) && !w.embarked.has(id) && c.moving[id] !== 1) waitedAt.set(id, l.id);
   }
   was.clear();
   for (const l of w.landings.values()) was.set(l.id, l.state);
+  for (const [id, l] of [...waitedAt]) if (divs.get(id) !== l || w.embarked.has(id)) waitedAt.delete(id);
   // An escort let go is forgotten: "two hours running" is two hours in a row (20405 t1694: one orphaned an hour
   // twice, a month apart, was told).
   for (const o of [...orphans]) if (!w.escorts.has(o)) orphans.delete(o);
@@ -332,6 +348,7 @@ export function landingBreaks(k: LandingCase): string[] {
   const idle = new Map<number, number>();
   const track: Track = { best: new Map(), ground: new Map(), spell: new Map(), longest: new Map(), landing: new Map(), seen: new Set(), returnStill: new Map() };
   const was = new Map<number, number>();
+  const waitedAt = new Map<number, number>();
   const slow = new SlowClicks((line) => put(line.replace(/ of [\d,]+ .*$/, ''), line));
   let next = w.tick;
   const clicked = new Set<number>();
@@ -362,7 +379,7 @@ export function landingBreaks(k: LandingCase): string[] {
     ashore.clear();
     refused.clear();
     sim.step(1, quiet);
-    check(w, n, idle, track, orphans, moored, was, voyageTold, clicked, put);
+    check(w, n, idle, track, orphans, moored, was, voyageTold, clicked, put, waitedAt);
     slow.hour(w, ashore, refused);
     clicked.clear();
     k.hour?.(w);

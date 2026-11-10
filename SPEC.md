@@ -1334,7 +1334,9 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
   for six hours after its last order while another landing of its click gathers (`CLICK_HOLD_HOURS`, R43a: a
   click's orders, one by one, find their siblings before one sails), unless that one's own wait is over
   `SIBLING_WAIT_HOURS` (a month, R41, ADR-836; a week before) (`waitsForSiblings`; R37c, critic run 44, R44-N2: two clicks in one hour, two ports, the
-  nearer landed alone a week early). Those at the port board then, first fit (`tryLanding` with `via`:
+  nearer landed alone a week early). Those at the port board then, first fit, those its voyages left at the
+  port first (at the port while it was at sea, or there with no room as it sailed; the first left first, then
+  by id: `boardOrder`, `Landing.left`, saved as `world.landingLeft`; ROADMAP R59b [ADR-921]) (`tryLanding` with `via`:
   "loading" is that hour, not a state), and the groups carrying them sail for its water (no sea way:
   `NoSeaWay`, over). Those that do not fit (no group to be had anywhere, R17b; or still marching) go on the
   next voyage, and the groups come back for them; one left at the port is told (`NextVoyage`, the news

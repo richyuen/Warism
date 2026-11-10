@@ -440,6 +440,8 @@ class WorldCore implements Stateful {
       ...([...w.landings.values()].some((l) => Number.isFinite(l.due)) ? [{ name: 'world.landingDue', dtype: 'f64' as const, data: Float64Array.from([...w.landings.values()].filter((l) => Number.isFinite(l.due)).sort((a, b) => a.id - b.id).flatMap((l) => [l.id, l.due])) }] : []),
       // The landings that have sailed once (ROADMAP R57a), by id.
       ...([...w.landings.values()].some((l) => l.sailed) ? [{ name: 'world.landingSailed', dtype: 'f64' as const, data: Float64Array.from([...w.landings.values()].filter((l) => l.sailed).map((l) => l.id).sort((a, b) => a - b)) }] : []),
+      // The divisions its voyages left at its port (ROADMAP R59b): (landing, division, tick left), while any.
+      ...([...w.landings.values()].some((l) => l.left.size > 0) ? [{ name: 'world.landingLeft', dtype: 'f64' as const, data: Float64Array.from([...w.landings.values()].sort((a, b) => a.id - b.id).flatMap((l) => [...l.left].sort((a, b) => a[0] - b[0]).flatMap(([id, t]) => [l.id, id, t]))) }] : []),
       ...([...w.landings.values()].some((l) => l.ready >= 0) ? [{ name: 'world.landingReady', dtype: 'f64' as const, data: Float64Array.from([...w.landings.values()].filter((l) => l.ready >= 0).sort((a, b) => a.id - b.id).flatMap((l) => [l.id, l.ready])) }] : []),
       ...(w.escorts.size === 0 ? [] : [{ name: 'world.escorts', dtype: 'f64' as const, data: Float64Array.from([...w.escorts].sort((a, b) => a[0] - b[0]).flatMap(([k, e]) => [k, e.convoy, e.from])) }]),
       // The fleets placed by the editor that hold their place (PLAN 7.22c): [id, x, y] each, only while there is one.
@@ -583,7 +585,7 @@ class WorldCore implements Stateful {
         const nd = landings[at++]!;
         const divisions = new Map<number, number>();
         for (let k = 0; k < nd; k++, at += 2) divisions.set(landings[at]!, landings[at + 1]!);
-        w.landings.set(id!, { id: id!, nation: nation!, target: target!, water: water!, land: land!, port: port!, state: state! as LandingStateKind, then: then!, ordered: ordered!, fleets, divisions, ready: -1, due: Infinity, sailed: false });
+        w.landings.set(id!, { id: id!, nation: nation!, target: target!, water: water!, land: land!, port: port!, state: state! as LandingStateKind, then: then!, ordered: ordered!, fleets, divisions, ready: -1, due: Infinity, sailed: false, left: new Map() });
       }
     }
     // The hour each landing was first ready (ROADMAP R44a), where it was: an optional section, absent before it.
@@ -603,6 +605,9 @@ class WorldCore implements Stateful {
       const l = w.landings.get(id);
       if (l) l.sailed = true;
     }
+    // The divisions each landing's voyages left at its port (ROADMAP R59b): an optional section, absent before it.
+    const left = sections.find((s) => s.name === 'world.landingLeft')?.data as Float64Array | undefined;
+    for (let at = 0; left && at < left.length; at += 3) w.landings.get(left[at]!)?.left.set(left[at + 1]!, left[at + 2]!);
     // A save from before ROADMAP R33b: its player's convoys, made landings at the next hour (`migrateLegacyLandings`).
     const legacy = (name: string): Float64Array | undefined => sections.find((s) => s.name === name)?.data as Float64Array | undefined;
     const ports = legacy('world.convoyPort');

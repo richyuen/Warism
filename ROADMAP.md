@@ -34,8 +34,11 @@ setups broke `slowClick`); every dimension at its bar. A full run and the releas
     Done (this commit): `nextVoyageHours` no sooner than all aboard are ashore (the landing gathers only then); 366 told
     5, 4, 3, 2, 1 days from t831, boards t935, every hour within a day (`nextVoyageDays1938.test.ts`); c60_nv's 168 runs
     46 of 47 within a day (45 before; the miss R59b's 31127), checker results unchanged.
-  - [ ] R59b R60-N2: the transports come back and sail again without the one told it waits for them (31127, setup
+  - [x] R59b R60-N2: the transports come back and sail again without the one told it waits for them (31127, setup
     15101, one group; 272 sails 8.5 days after "about 4 days"). AT: 272 on the next voyage of its group.
+    Done (this commit, ADR-921): those a voyage left at the port board first (`boardOrder`, `Landing.left`); 272 boards at
+    t510, its group's next voyage, 3.6 days after "about 4 days"; checker `leftAgain` 2 before, 0 after; c60_nv's 168
+    runs 48 of 48 within a day (46 of 47 before), breaks the same two `slowClick` runs.
   - [ ] R59c R60-N3: ticker order rows with a relative figure dated as war rows are. AT: 31211's "about 6 days" row
     dated at h114.
   - [ ] R59d R60-N4: at landscape sizes (667 × 375 to 1024 × 500) the nation panel's foot above the bottom bar. AT:

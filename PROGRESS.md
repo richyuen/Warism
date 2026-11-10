@@ -33,3 +33,16 @@
   `landingSunk1938`, `orderNewsStale`: 22 tests green); critic run 60's `c60_nvtrue.ts` on its 168 runs: 46 of 47
   sailings within a day of the figure (45 before; the miss left is 31127's 272, R59b), landing checker 166 × 0,
   2 × 1 as before (the `slowClick` tail). SPEC §6.2's `nextVoyage` line. Gate green.
+
+## 2026-11-10 — R59b: those a voyage left at the port board first (R60-N2, ADR-921)
+
+- `boardOrder` (`src/sim/systems/landings.ts`): at the sail hour those its voyages left at the port (`Landing.left`: at
+  the port while the landing was at sea, or there with no room as it sailed) board first, the first left first, then
+  by id; `noRoom` and ADR-909's room check the same. Saved as the optional `world.landingLeft` (absent while empty:
+  older saves load; seed 99's pin held in the gate). 31127's 272 (setup 15101, one group), left at t423 and left again
+  at t510 by 270 and 271, come after it, now boards at t510.
+- Checker (ADR-804): `landingInvariants`' `leftAgain`, red on 31127 before (2), 0 after.
+- Evidence: `tests/unit/nextVoyageDays1938.test.ts` (31127 red before, green after; 4 tests); critic run 60's
+  `c60_nvtrue.ts` on its 168 runs: 48 of 48 sailings within a day of the figure (46 of 47 after R59a), the checker's
+  breaks the same two runs (30041, 31157 `_3517_g1`, the `slowClick` tail). Gate green (the whole unit suite).
+- Also: SPEC §7.7 named two unbuilt things in code spans, red in `specRefs` (`eb30054b`, its own commit).

@@ -73,4 +73,26 @@ describe('the next voyage is told with when (ROADMAP R58b)', () => {
     const off = told.filter((t) => Math.abs((sailed - t.tick) / 24 - t.days) > 1);
     expect(off.map((t) => `t${t.tick}: ${t.days} days`), `sailed t${sailed}`).toEqual([]);
   });
+
+  // ROADMAP R59b (critic run 60, R60-N2): 31127's 272 (setup 15101, one group) came to Cardiff while the group was away
+  // (t423, "about 4 days"); at t510 the group came back and sailed with 270 and 271, come after it, boarding first by
+  // id, and 272 sailed 8.5 days after its figure. Those left by a voyage board first: 272 goes on the group's next voyage.
+  it("31127's 272: on its group's next voyage, within a day of its figure", { timeout: 300_000 }, () => {
+    let told: { tick: number; days: number } | null = null;
+    let sailed = -1;
+    const breaks = landingBreaks({
+      seed: 31127, setup: 15101, days: 30, orders: 31127, probeDays: [30, 90], groups: 1, notes: [],
+      onHour: (w, click) => {
+        if (click || sailed >= 0 || !w.formations.has(272)) return;
+        const v = voyageOf(w, 272);
+        if (told === null && v?.state === 'nextVoyage' && v.days !== undefined) told = { tick: w.tick, days: v.days };
+        if (told !== null && v?.state === 'atSea') sailed = w.tick;
+      },
+    });
+    expect(breaks.filter((b) => b.includes('leftAgain')), 'no division left again').toEqual([]);
+    expect(told, '272 left for the next voyage').not.toBeNull();
+    const t = told as unknown as { tick: number; days: number };
+    expect(sailed, '272 sails on the next voyage').toBeGreaterThan(0);
+    expect(Math.abs((sailed - t.tick) / 24 - t.days), `told ${t.days} days at t${t.tick}, sailed t${sailed}`).toBeLessThanOrEqual(1);
+  });
 });

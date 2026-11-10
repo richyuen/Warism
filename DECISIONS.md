@@ -9,6 +9,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-921 · 2026-11-10 · accepted — Those a voyage left at the port board first at the next (R59b)
+- **Context.** Critic run 60, R60-N2: on 31127 (setup 15101, one group of 25,200 men) 272 reached Cardiff at t423 while
+  the group was out, and was told "next voyage, about 4 days". The group came back at t510; 270 and 271, which reached
+  the port after it, boarded first by id (two of about 12,200 each fill it), and 272 was left again, sailing at t626,
+  8.5 days after its figure.
+- **Decision.** At the sail hour a landing's divisions at its port board in `boardOrder`: those its voyages left first
+  (`Landing.left`: the tick each stood at the port while the landing was at sea, or stayed there with no room as it
+  sailed), the first left first, then the rest, each by id. `noRoom` and R57b's "room for all" check (ADR-909) use the
+  same order. A division aboard or out of the landing leaves `left`. Saved as an optional section `world.landingLeft`
+  (landing, division, tick), absent while empty, so older saves load and seed 99's pin, with no player landing, holds.
+- **Stands on (ADR-803).** ADR-909 (a next voyage's room check, first fit as at the sail hour: the same order on both)
+  and R37a/R38e's `NextVoyage` telling (unchanged); R44a's ready hour and R56a's due (unchanged: which divisions are
+  waited for is not touched, only the order of those present). Player landings only.
+- **Checker (ADR-804).** `landingInvariants`' `leftAgain`: at a sail hour, one that stood at the port while its landing
+  was at sea, ashore again while one that did not boarded with room it would fit. Red on 31127 before (t510, 272 for
+  270 and 271), 0 after.
+- **Consequences.** 272 boards at t510 and its landing is over by t567.
+
 ### ADR-920 · 2026-11-10 · accepted (the user's decision) — No critic run before the historical track is built; Batch 14 before it
 - **Context.** The user asked for the historical track (ADR-919) while Batch 14 (R59, R60: runs 60 and 61's
   non-blocking findings) was open, and said no critic run is to come before the track is implemented, the order of
