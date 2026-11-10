@@ -638,7 +638,10 @@ the Sim; the page opens it with `?scenario=1938`.
 1938 terrain, cities, ports, airbases, economy, units, templates, rules and start date, and nations
 made by the seed (`hash32(seed, …)`, not the world's streams; the same seed and count give the same
 world):
-- *count:* the option `nations`, 2 to 200, 60 when none is asked (`RANDOM_NATIONS`);
+- *count:* the option `nations`, 2 to 200, 60 when none is asked (`RANDOM_NATIONS`). A world of few may stay at
+  peace: two near-equal neighbours never pass `DECLARE_AT` by restlessness alone (`RESTLESS` is under it, §7.2), and
+  a nation alone on its land fights only over the sea. Measured (ROADMAP R60d, seeds 32401–32430, 10 years): of 3
+  nations, 24 of 30 worlds at war; of 2, 6 of 10; of 4, 9 of 10; of 5 to 8, all;
 - *capitals:* of `CAPITAL_TRIES` (12) cities drawn, the one farthest from the capitals so far; one a
   province, none on land under `HOME_CELLS` (12, scaled);
 - *land:* a province goes to the nation that reaches it first over the province graph, each

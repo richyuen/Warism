@@ -13,3 +13,5 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   their order news, hour by hour, on the critic's landing cases (ADR-856, ADR-879).
 - `npx tsx tools/diag/diploInvariants.ts <seed> [scenario|random] [--heroes] [--world random]`: the
   rules of war and peace on one run, as `tests/unit/diploInvariants*.test.ts` check them (ADR-803).
+- `npx tsx tools/diag/fewNationWars.ts <N> <S0> [K] [Y]`: random worlds of N nations on K seeds, the day of each one's
+  first war over Y years (R60d; ~25 s a seed at N = 3).

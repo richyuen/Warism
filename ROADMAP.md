@@ -74,8 +74,12 @@ setups broke `slowClick`); every dimension at its bar. A full run and the releas
     Done (this commit): `decodeScenarioFile` tells a stream that fails to unpack "the file is damaged or incomplete"
     (title screen and editor alike). `scenarioFile.test.ts` (2,000 bytes and a changed byte; red before) and
     `title.spec.ts` (the cut file in Chromium, no "fetch"); 13 title and file specs green.
-  - [ ] R60d R61-N4: random worlds of 2 or 3 nations have no war in 10–15 years (32403). AT: 3 nations sharing a border
+  - [x] R60d R61-N4: random worlds of 2 or 3 nations have no war in 10–15 years (32403). AT: 3 nations sharing a border
     at war within 10 years on most seeds, or the count's floor raised to where wars start (SPEC says which).
+    Done (this commit): the first branch holds on HEAD, measured with `tools/diag/fewNationWars.ts` (new): 3 nations at
+    war within 10 years on 24 of 30 seeds (32401–32430); 2 on 6 of 10, 4 on 9 of 10, 5 to 8 on 10 of 10. No rule or
+    floor changed; SPEC §3.4's random world says why a few stay at peace (32403: two near-equals under `DECLARE_AT`,
+    restlessness capped at 0.3; the third alone on its land).
   - [ ] R60e R61-N5: History's same-day rows can read backwards (32019, 2 December 1957: the peace above the
     annexation). AT: same-day rows in the order they happened.
 - Batch 14 ends with no critic run (ADR-920): the next run comes after Batch 15.

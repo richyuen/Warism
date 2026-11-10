@@ -110,3 +110,14 @@
 - Evidence: `tests/unit/scenarioFile.test.ts` (an exported file's first 2,000 bytes, and one with a byte changed:
   red before, green); `tests/e2e/title.spec.ts` (the cut file on the title screen: "Could not load: the file is
   damaged or incomplete", no "fetch"); with `scenarioFile1938`, `scenarioUpgrade1938`: 13 green. Gate green.
+
+## 2026-11-10 — R60d: small random worlds measured; the AT holds on HEAD (R61-N4)
+
+- `tools/diag/fewNationWars.ts` (new; `docs/TOOLS.md`): random worlds of N nations, the day of the first war. Over 10
+  years, seeds 32401–32410: 2 nations 6 of 10 at war, 3 nations 7, 4 nations 9, 5 to 8 nations 10 each; 3 nations
+  on 20 more (32411–32430): 17. So 3 nations: 24 of 30, "most seeds": the AT's first branch, no change needed.
+- Why the quiet ones stay quiet (32403, 3 nations, a probe of `warUtility` yearly): nations 2 and 3 are near equals
+  (strength term −0.10 and +0.03) and restlessness grows to `RESTLESS` 0.3 at most, under `DECLARE_AT` 0.5; nation
+  1, the strongest, has no land neighbour and no target over the sea. The rules work as ADR-481 set them; raising
+  `RESTLESS` would move every world (and the pin) for a few small ones, so not taken. SPEC §3.4 says it, with the
+  figures. Documents and a tool only; gate green.
