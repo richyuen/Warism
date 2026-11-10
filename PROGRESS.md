@@ -344,3 +344,9 @@
 - The burst after the end matches an ordinary game's opening (15-19 wars in the first quarter vs 12-13).
 - Found: the early reading's save was half a day after the end (`runMatch` runs to the last map, the end's date).
 - Evidence: `tests/sweep/freeWorld1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62j0: the track ends at the first intervention (ADR-945)
+
+- R62j split (j0 the end, j1 the view). The first command applied while the track runs ends it in that hour and
+  reseeds; a refused one does not; the History's row names the intervention.
+- Evidence: `tests/unit/trackIntervention1938h.test.ts` (13 kinds at 6 h, 1, 30 and 365 days). Gate.

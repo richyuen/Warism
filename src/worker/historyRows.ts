@@ -186,7 +186,7 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     if (kind === EventKind.BondsBroken) [row.bonds, row.y] = [y, null];
     // Why it joined (ROADMAP R55i): its own sentence.
     // The historical track's end (ROADMAP R62d): its sentence by why.
-    if (kind === EventKind.TrackEnded) row.as = b === TrackEnd.date ? 'date' : 'changed';
+    if (kind === EventKind.TrackEnded) row.as = b === TrackEnd.date ? 'date' : b === TrackEnd.intervention ? 'intervention' : 'changed';
     // One the historical track adds to its side (ROADMAP R62b) is told as plainly joining.
     if (kind === EventKind.WarJoined) {
       row.y = null;

@@ -9,6 +9,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-945 · 2026-11-10 · accepted — The track ends at the first intervention (R62j0)
+- **R62j split:** j0 the intervention's end (the sim and the History's row); j1 the player's view (the line under the
+  date, the events' rows in the ticker by their historical names, the screenshots).
+- **The rule:** the first command applied while the track runs ends it in that hour (`TrackEnd.intervention`), before
+  the hour's events, and the world's streams are drawn again from the seed for after. Every command is an
+  intervention: each is a God Mode act, an editor edit or the taking of a nation, and a player's own orders come only
+  after a nation is taken. A command refused changed nothing and ends nothing. The app sends no command of its own
+  (the taking of a nation is the player's click). The History's row: "History's course ended at your first
+  intervention".
+- **Measured** (`tests/unit/trackIntervention1938h.test.ts`): 13 kinds listed (taking a nation, rename, recolour,
+  gold, a nation's AI, its nukes, a world setting, a formation set down, God's warhead, a forced war, a nation
+  collapsed, the editor's paint, a city placed), each given 6 hours, 1, 30 and 365 days in: the track ends that hour
+  by intervention, the seed is the one for after, no event fires to past the next one's hour; a refused command ends
+  nothing.
+
 ### ADR-944 · 2026-11-10 · accepted — The world free after the track (R62i5)
 - **Measured** (`tests/sweep/freeWorld1938h.test.ts`): the track's world stepped to 26 July 1953 and saved, then
   loaded with ten seeds for after it (`Track.afterSeed`, as a game of each seed sets it): the track ends on 27 July and

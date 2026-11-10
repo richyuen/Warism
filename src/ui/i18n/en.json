@@ -941,6 +941,7 @@
   "history.TrackEnded": "History's course ended, and the world goes its own way",
   "history.TrackEnded.changed": "History's course ended: the game was saved with another timeline, and the world goes its own way",
   "history.TrackEnded.date": "History's course ended on its last day, and the world goes its own way",
+  "history.TrackEnded.intervention": "History's course ended at your first intervention, and the world goes its own way",
   "history.type.NationBorn": "Nation born",
   "history.NationBorn": "{a} came into being on land of {b}",
   "history.type.GuaranteeLapsed": "Guarantee lapsed",

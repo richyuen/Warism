@@ -269,6 +269,13 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     date while the track runs (the next event and its date), the end's row in the History, the events' rows in the
     ticker with their historical names. AT: each listed kind, given at 6 h, 1, 30 and 365 days, ends it, reseeds, and
     no event fires after; screenshots at world zoom on phone and desktop sizes.
+    In slices (ADR-945):
+  - [x] R62j0 The first intervention ends the track and reseeds; the end's row in the History. AT: each listed kind,
+    given at 6 h, 1, 30 and 365 days, ends it, reseeds, and no event fires after.
+    Done (ADR-945): every command applied is an intervention; 13 kinds listed at the four times
+    (`tests/unit/trackIntervention1938h.test.ts`).
+  - [ ] R62j1 The player's view: a line under the date while the track runs (the next event and its date), the
+    events' rows in the ticker with their historical names. AT: screenshots at world zoom on phone and desktop sizes.
   - [ ] R62k The checker and the accuracy measure: `historyTrack` in `tests/helpers/` (no timeline event refused but
     those skipped by rule, no war or peace not on the timeline while it runs, diploInvariants through the track) on 5
     seeds and on the scenario's own; `tools/diag/historyMatch` printing each checkpoint's share of land cells matching

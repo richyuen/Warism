@@ -1733,7 +1733,8 @@ to 27 July 1953, then sets the world free.
   the sim's own.
 - **The end:** on 27 July 1953, or at the first intervention (a God Mode act, an editor edit, the taking of
   a nation), the track ends for good: every switch returns to the usual rules, and the History has a row
-  saying when and why.
+  saying when and why. Built (R62j0, ADR-945): the first command applied while it runs ends it in that hour, before
+  the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none.
 - **Seed:** fixed by the scenario and not offered on its form; the track is the same each run. A second
   seed, rolled by the form (`?after=`) and kept in the state, is taken when the track ends (in 1953 or at
   the intervention): every RNG stream is derived again from it, so the world after the track differs from

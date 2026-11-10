@@ -168,7 +168,7 @@ export interface HistoryRow {
   bonds?: number;
 }
 
-export type HistoryAs = 'revived' | 'joined' | 'left' | 'founded' | 'puppet' | 'alliance' | 'guarantee' | 'changed' | 'date';
+export type HistoryAs = 'revived' | 'joined' | 'left' | 'founded' | 'puppet' | 'alliance' | 'guarantee' | 'changed' | 'date' | 'intervention';
 
 /** The major events, which the ticker tells as they happen (PLAN 3.12c): war, peace, a capital taken, a nation's death or return. */
 export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([

@@ -2,12 +2,12 @@
  * Tick orchestration (SPEC §2.5). Systems run in a fixed order; each is `(world) => void`
  * and reads no wall-clock time, render state or subscriptions.
  */
-import { runTrack } from './track';
+import { endTrack, runTrack } from './track';
 import { orderMission, orderRebase } from './systems/air';
 import { orderParadrop } from './systems/airLift';
 import { landingOrders, migrateLegacyLandings, tellLandingsLeft } from './systems/landings';
 import { finiteCommand, inRange, Refusal, type Command } from '../shared/commands';
-import { EventKind } from '../shared/events';
+import { EventKind, TrackEnd } from '../shared/events';
 import { destroyFormation, equipFormation } from './systems/elements';
 import { declareWar, forceWar, makePeace, offerPeace, whyNotWar } from './systems/war';
 import { canJoin, leaveAlliance, noWarAmong, proposeAlliance } from './systems/alliances';
@@ -483,6 +483,9 @@ export function applyPendingCommands(world: World): void {
     // After the command's own events: which of the two it is, is known only then (PLAN 2.17a).
     const why = applyCommand(world, cmd);
     world.out.emit(world.tick, why === Refusal.None ? EventKind.CommandApplied : EventKind.CommandRefused, seq, why, NaN, NaN);
+    // The first intervention ends the historical track (R62j, SPEC §7.7): every command is a God Mode act, an editor
+    // edit or the taking of a nation (a player's own orders come only after that). One refused changed nothing.
+    if (why === Refusal.None && world.track && !world.track.ended) endTrack(world, TrackEnd.intervention);
   }
   // A division taken off its transports while others stay with them is told (ROADMAP R27c).
   tellLandingsLeft(world);
