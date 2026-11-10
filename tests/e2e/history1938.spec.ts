@@ -152,3 +152,36 @@ test('a nation that returns took its land back: its rows do not say it broke awa
   mkdirSync(ev, { recursive: true });
   await page.screenshot({ path: path.join(ev, 'b1-history-returned.png') });
 });
+
+// ROADMAP R60e (critic run 61, R61-N5): rows of one hour that follow a row naming a nation of theirs are drawn under it,
+// marked, so a list read newest first does not read them backwards (32019: "made peace" above "was annexed" and "was
+// destroyed"). Germany's war on Poland: the guarantors' "joined the war" rows of its hour under the declaration.
+test('rows that follow one of their hour are marked under it, the hour cause first', async ({ page }, info) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  await page.evaluate(({ g, p }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: g, defender: p }), { g: GER, p: POL });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  const rows = await page.evaluate(() => window.__warsim!.sim.history());
+  const decl = rows.find((r) => r.kind === EventKind.WarDeclared && r.a === GER && r.b === POL)!;
+  const joined = rows.filter((r) => r.tick === decl.tick && r.kind === EventKind.WarJoined && r.b === POL);
+  expect(joined.length, 'a guarantor joins in its hour').toBeGreaterThan(0);
+  await page.getByTestId('history-btn').click();
+  await expect(page.getByTestId('history-panel')).toBeVisible();
+  const shown = await page.getByTestId('history-row').evaluateAll((els) => els.map((e) => ({ kind: Number(e.getAttribute('data-kind')), then: e.getAttribute('data-then') === '1', date: e.querySelector('.history-date')!.textContent ?? '', title: e.getAttribute('title') ?? '' })));
+  const at = shown.findIndex((r) => r.kind === EventKind.WarDeclared);
+  expect(at).toBeGreaterThanOrEqual(0);
+  expect(shown[at]!.then, 'the declaration heads its rows').toBe(false);
+  expect(shown[at]!.date).toMatch(/1938/);
+  const under = shown.slice(at + 1, at + 1 + joined.length);
+  for (const r of under) {
+    expect(r.kind).toBe(EventKind.WarJoined);
+    expect(r.then, 'marked under it').toBe(true);
+    expect(r.date.trim()).toBe('↳');
+    expect(r.title).toContain('following the row above');
+  }
+  const out = info.outputPath();
+  mkdirSync(out, { recursive: true });
+  await page.getByTestId('history-panel').screenshot({ path: path.join(out, 'history-then.png') });
+});

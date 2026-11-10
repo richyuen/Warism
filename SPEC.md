@@ -2032,8 +2032,9 @@ God's commands apply at once (`applyNow`), refused like any command (`inRange`, 
   men, casualties, aircraft, aircraft lost, warheads, nuclear dead, fallout).
 - **History** (`src/sim/history.ts`, `HISTORY_STRIDE` 6 a row; kinds in `src/shared/history.ts`): recorded
   as events are emitted, names resolved by `HISTORY_ROLES` (`src/worker/historyRows.ts`), God's acts and
-  towns too. The panel (`src/ui/HistoryPanel.tsx`): newest first, the last `SHOWN` (400) by kind, nation
-  (living or dead) and years; exported as CSV and JSON.
+  towns too. The panel (`src/ui/HistoryPanel.tsx`): the newest hour first, each hour cause first (ADR-865), a row that
+  follows one of its hour naming a nation of it marked under it (`followsAbove`, R60e [ADR-922]); the last `SHOWN` (400)
+  by kind, nation (living or dead) and years; exported as CSV and JSON.
 
 ---
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import cities1938 from '../../data/scenarios/1938/cities.json' with { type: 'json' };
 import { EventKind } from '../../src/shared/events';
-import { newestHourFirst, type HistoryRow } from '../../src/shared/history';
+import { followsAbove, newestHourFirst, type HistoryRow } from '../../src/shared/history';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import type { World } from '../../src/sim/world';
@@ -26,6 +26,26 @@ describe('History: the newest hour first, each hour as logged (ROADMAP R49b)', (
     const rows = [r(1, 1), r(2, 10), r(2, 11), r(2, 12), r(3, 5), r(5, 7), r(5, 8)];
     expect(newestHourFirst(rows).map((x) => `${x.tick}:${x.kind}`)).toEqual(['5:7', '5:8', '3:5', '2:10', '2:11', '2:12', '1:1']);
     expect(newestHourFirst([])).toEqual([]);
+  });
+
+  // ROADMAP R60e (critic run 61, R61-N5): 32019's t174600 (2 December 1957), as logged: Japan's war on Burma and the
+  // Philippines joining it, then the United States' peace with Free San Salvador, its annexation and its end. In a list
+  // read newest first the peace stood above the annexation, "a peace made after the nation was gone": each row that
+  // follows one of its hour naming a nation of it is marked under it, the peace and the war each heading their own.
+  it('marks a row that follows the one above in its hour, by a nation they name', () => {
+    const row = (tick: number, kind: number, a: number, b: number): HistoryRow => ({ tick, kind, a, b, x: null, y: null, an: '', bn: '', of: '' } as HistoryRow);
+    const hour = [
+      row(174600, EventKind.WarDeclared, 75, 60),
+      row(174600, EventKind.WarJoined, 68, 60),
+      row(174600, EventKind.PeaceSigned, 82, 118),
+      row(174600, EventKind.NationAnnexed, 118, 82),
+      row(174600, EventKind.NationEliminated, 118, 0),
+    ];
+    const order = newestHourFirst([row(174592, EventKind.CapitalCaptured, 118, 82), ...hour, row(174601, EventKind.MajorBattleEnded, 62, 82)]);
+    expect(order.map((r) => r.kind)).toEqual([EventKind.MajorBattleEnded, ...hour.map((r) => r.kind), EventKind.CapitalCaptured]);
+    // Not across hours, though the battle's and the capital's rows name the United States too.
+    expect(followsAbove(order)).toEqual([false, false, true, false, true, true, false]);
+    expect(followsAbove([])).toEqual([]);
   });
 
   // Since ADR-887 (R53l: a puppet joins a war only within reach) none of 20429–20441 (odd) has a release in the hour of a

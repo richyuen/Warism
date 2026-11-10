@@ -54,7 +54,7 @@ setups broke `slowClick`); every dimension at its bar. A full run and the releas
     Done (this commit): a battle listed with no fleet told "no fleet to see" and counted, not failed; the list looked at
     in order of first hours (31501's t6243, listed after t6257, had been looked at 14 h late, the second miss). On the
     critic's `c60_sb_31501.json`: exit 0, 44 of 44 seen, 1 with no fleet, page errors 0.
-- [ ] R60 **Run 61's non-blocking findings** (the full run, on `d971a46b`: no blocking issue, every dimension at 8).
+- [x] R60 **Run 61's non-blocking findings** (the full run, on `d971a46b`: no blocking issue, every dimension at 8).
   - [x] R60a R61-N1: at landscape sizes (844 × 390, 932 × 430, 1024 × 500) an ordered landing's bar lies over the nation
     panel's ×, so a tap on × opens the landing (21103, England's four from Portsmouth to Bremerhaven; a regression since
     run 55, the panel widened under the bar). AT: `node critic/scripts/c61_x_closeblock.mjs 21103 844 390` gives
@@ -80,8 +80,11 @@ setups broke `slowClick`); every dimension at its bar. A full run and the releas
     war within 10 years on 24 of 30 seeds (32401–32430); 2 on 6 of 10, 4 on 9 of 10, 5 to 8 on 10 of 10. No rule or
     floor changed; SPEC §3.4's random world says why a few stay at peace (32403: two near-equals under `DECLARE_AT`,
     restlessness capped at 0.3; the third alone on its land).
-  - [ ] R60e R61-N5: History's same-day rows can read backwards (32019, 2 December 1957: the peace above the
+  - [x] R60e R61-N5: History's same-day rows can read backwards (32019, 2 December 1957: the peace above the
     annexation). AT: same-day rows in the order they happened.
+    Done (this commit, ADR-922): ADR-865's cause-first hour kept; a row following one of its hour that names a nation of
+    it is drawn under it, "↳" for its date (`followsAbove`). `historyHourOrder` (the critic's hour: the war and its
+    joiner, the peace and its annexation and end) and `history1938` (the guarantors under Germany's declaration).
 - Batch 14 ends with no critic run (ADR-920): the next run comes after Batch 15.
 - Not filed: R61-SC, 3 of 300 (1.0 %; 32167 Japan's 366 twice, and 32115 England's 274, the first not Japan's: both
   transport groups sailed full without it, its "about 5 days" true). R60-SC, the `slowClick` tail (30041, 31099, 203997, 204017, all Japan's 366/367 from Tokyo), under the 5 %

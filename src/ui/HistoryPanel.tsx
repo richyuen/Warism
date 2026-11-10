@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 import { dateOfTick } from '../shared/calendar';
-import { filterHistory, kindName, newestHourFirst, NO_FILTER, toCsv, toExport, type HistoryFilter, type HistoryRow } from '../shared/history';
+import { filterHistory, followsAbove, kindName, newestHourFirst, NO_FILTER, toCsv, toExport, type HistoryFilter, type HistoryRow } from '../shared/history';
 import { t, type MessageKey } from './i18n';
 import { historyText } from './historyText';
 import { displayName } from './NationPanel';
@@ -97,14 +97,19 @@ export function HistoryPanel({ load, refreshKey, startDay, nations, player = 0, 
         </button>
       </div>
       <ol class="history-list">
-        {newestHourFirst(shown.slice(-SHOWN)).map((r, i) => {
-          const d = dateOfTick(startDay, r.tick);
-          return (
-            <li key={`${r.tick}:${i}`} data-testid="history-row" data-kind={r.kind}>
-              <span class="history-date">{t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year })}</span> <span class="history-text">{historyText(r)}</span>
-            </li>
-          );
-        })}
+        {(() => {
+          const order = newestHourFirst(shown.slice(-SHOWN));
+          // A row that follows the one above in its hour (R60e): under it, marked, its date that row's.
+          const then = followsAbove(order);
+          return order.map((r, i) => {
+            const d = dateOfTick(startDay, r.tick);
+            return (
+              <li key={`${r.tick}:${i}`} class={then[i] ? 'history-then' : undefined} data-testid="history-row" data-kind={r.kind} data-then={then[i] ? '1' : undefined} title={then[i] ? t('history.then') : undefined}>
+                <span class="history-date">{then[i] ? <span aria-hidden="true">{'↳'}</span> : t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year })}</span> <span class="history-text">{historyText(r)}</span>
+              </li>
+            );
+          });
+        })()}
       </ol>
     </aside>
   );

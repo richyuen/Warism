@@ -833,6 +833,7 @@
   "relations.side.attackers": "Attackers",
   "relations.side.defenders": "Defenders",
   "history.title": "History",
+  "history.then": "The same hour, following the row above",
   "history.allTypes": "All types",
   "history.allNations": "All nations",
   "history.from": "From year",

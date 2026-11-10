@@ -283,6 +283,30 @@ export function newestHourFirst<T extends { tick: number }>(rows: readonly T[]):
   return out;
 }
 
+/**
+ * For rows in the order History shows them (`newestHourFirst`): whether each follows the row above, of its hour and
+ * naming a nation the rows it follows name (ROADMAP R60e; critic run 61, R61-N5: "made peace with Free San Salvador"
+ * above "was annexed" and "was destroyed", one hour, read as a peace after the nation was gone in a list read newest
+ * first). Such a row is drawn under its cause, marked; each hour stays cause first (ADR-865). Rows of one hour that name
+ * no nation in common start a group of their own.
+ */
+export function followsAbove(rows: readonly HistoryRow[]): boolean[] {
+  const out: boolean[] = [];
+  let group = new Set<number>();
+  const nationsOf = (r: HistoryRow): number[] => {
+    const [ra, rb] = HISTORY_ROLES[r.kind] ?? ['number', 'number'];
+    return [roleNation(ra, r.a), roleNation(rb, r.b)].filter((n) => n !== 0);
+  };
+  for (const [i, r] of rows.entries()) {
+    const ns = nationsOf(r);
+    const follows = i > 0 && rows[i - 1]!.tick === r.tick && ns.some((n) => group.has(n));
+    if (!follows) group = new Set();
+    for (const n of ns) group.add(n);
+    out.push(follows);
+  }
+  return out;
+}
+
 export function filterHistory(rows: readonly HistoryRow[], f: HistoryFilter, startDay: number): HistoryRow[] {
   const joined = f.mine !== null ? joinedWarRows(rows, f.mine) : new Set<HistoryRow>();
   return rows.filter((r) => {

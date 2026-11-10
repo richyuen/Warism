@@ -9,6 +9,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-922 · 2026-11-10 · accepted — History marks the rows that follow one of their hour (R60e)
+- **Context.** Critic run 61, R61-N5: on 32019's 2 December 1957 History read "United States made peace with Free San
+  Salvador", "Free San Salvador was annexed by United States", "Free San Salvador was destroyed": one hour (t174600),
+  logged in that order and shown cause first (ADR-865), but in a list read newest first the peace stood above, "made
+  after the nation was gone". Run 51 asked cause first (a release above its "left its war" rows); run 61 read it
+  backwards. Both readings come from one list with two directions: newest first by hour, cause first within it.
+- **Decision.** ADR-865's order stays. A row that follows the row above in its hour and names a nation the rows it
+  follows name (`followsAbove`, `src/shared/history.ts`) is drawn under it: "↳" in the dates' column, its title "The same
+  hour, following the row above". Rows of one hour naming no nation in common head their own group. The CSV and JSON are
+  unchanged.
+- **Not taken.** Reversing each hour (run 51's finding again); merging a peace with its annexation into one row as the
+  ticker does (`tickerRows`): the type filter and the exports count each event.
+- **Consequences.** `historyHourOrder` (the critic's hour: war, joined; peace, annexed, destroyed), `history1938` (the
+  guarantors' rows under Germany's declaration, in the page).
+
 ### ADR-921 · 2026-11-10 · accepted — Those a voyage left at the port board first at the next (R59b)
 - **Context.** Critic run 60, R60-N2: on 31127 (setup 15101, one group of 25,200 men) 272 reached Cardiff at t423 while
   the group was out, and was told "next voyage, about 4 days". The group came back at t510; 270 and 271, which reached

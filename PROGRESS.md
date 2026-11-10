@@ -121,3 +121,16 @@
   1, the strongest, has no land neighbour and no target over the sea. The rules work as ADR-481 set them; raising
   `RESTLESS` would move every world (and the pin) for a few small ones, so not taken. SPEC §3.4 says it, with the
   figures. Documents and a tool only; gate green.
+
+## 2026-11-10 — R60e: History marks the rows that follow one of their hour (R61-N5, ADR-922); Batch 14 done
+
+- The critic's case read from its save (`critic/c61_seed32019_y20.bin`): "made peace", "was annexed", "was destroyed"
+  are one hour (t174600), logged and shown cause first (ADR-865); read newest first the peace seemed after the end.
+  `followsAbove` (`src/shared/history.ts`): a row following one of its hour that names a nation of it is drawn under
+  it in `HistoryPanel`, "↳" in the dates' column, its title "The same hour, following the row above". The order and the
+  exports are unchanged. SPEC §9.6.
+- Evidence: `tests/unit/historyHourOrder.test.ts` (the critic's hour: the war and its joiner, the peace with its
+  annexation and end marked, nothing across hours); `tests/e2e/history1938.spec.ts` (Germany's declaration and the
+  guarantors' rows under it, in the page; 4 green), with `historyMine1938`, `historyWrap1938`: 8 green; the panel shot
+  looked at. Gate green.
+- Batch 14 (R59, R60) done. No critic run now (ADR-920); next, Batch 15 (R62a).
