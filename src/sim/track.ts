@@ -15,10 +15,13 @@ import { EventKind, JoinedBy, TrackEnd } from '../shared/events';
 import type { Section } from './core/sections';
 import { hashString } from './core/hash';
 import type { TimelineEvent, TimelineFile } from './data/schemas';
+import { Terrain } from '../shared/terrain';
+import { forEachCellInRing } from './data/ownership';
+import { relocateCapital } from './systems/capitals';
 import { makePeace, withPuppets } from './systems/war';
 import { applyCommand } from './tick';
 import { ATTACKERS, DEFENDERS } from './wars';
-import type { World } from './world';
+import { FlipCause, type World } from './world';
 
 /** The section of the track's state. */
 export const TRACK_SECTION = 'world.track';
@@ -170,6 +173,69 @@ function guarantee(world: World, guarantor: number, target: number): Refusal {
   return Refusal.None;
 }
 
+/** The land cells inside a lon/lat ring (centre inside, as `ownership.json`'s regions), in index order. */
+function ringCells(world: World, ring: readonly (readonly [number, number])[]): number[] {
+  const { w, h, terrain } = world.cells;
+  const out: number[] = [];
+  forEachCellInRing(ring, w, h, (c) => {
+    if (terrain[c]! >= Terrain.Plains) out.push(c);
+  });
+  return out.sort((a, b) => a - b);
+}
+
+/**
+ * A cession (R62c): the land in the ring owned by one of `from` becomes `to`'s, owned and held, as land handed over is
+ * (`defect`): a `LandCeded` row for each nation that gave some, a capital in it moved.
+ */
+function transfer(world: World, to: number, from: readonly number[], ring: readonly (readonly [number, number])[]): Refusal {
+  const why = whyNot(world, to);
+  if (why) return why;
+  const { owner, w } = world.cells;
+  const of = new Set(from.filter((n) => n !== 0 && n !== to));
+  const gave = new Map<number, { cells: number; sx: number; sy: number }>();
+  for (const c of ringCells(world, ring)) {
+    const o = owner[c]!;
+    if (!of.has(o)) continue;
+    world.setOwner(c, to);
+    world.setController(c, to, false, FlipCause.peace);
+    const g = gave.get(o) ?? { cells: 0, sx: 0, sy: 0 };
+    g.cells++;
+    g.sx += (c % w) + 0.5;
+    g.sy += Math.floor(c / w) + 0.5;
+    gave.set(o, g);
+  }
+  if (gave.size === 0) return Refusal.NoEffect;
+  const cc = world.cities.cols;
+  for (const n of [...gave.keys()].sort((a, b) => a - b)) {
+    let lost = false;
+    world.cities.forEach((ci) => {
+      if (cc.capitalOf[ci] === n && owner[cc.cell[ci]!] === to) {
+        cc.capitalOf[ci] = 0;
+        lost = true;
+      }
+    });
+    if (lost && world.nations.cols.living[n] === 1) relocateCapital(world, n);
+    const g = gave.get(n)!;
+    world.out.emit(world.tick, EventKind.LandCeded, to, n, g.sx / g.cells, g.sy / g.cells);
+  }
+  return Refusal.None;
+}
+
+/** An occupation (R62c): the land in the ring owned by one of `of` is held by `by`, its owner unchanged. */
+function occupy(world: World, by: number, of: readonly number[], ring: readonly (readonly [number, number])[]): Refusal {
+  const why = whyNot(world, by);
+  if (why) return why;
+  const { owner, controller } = world.cells;
+  const owners = new Set(of.filter((n) => n !== 0 && n !== by));
+  let held = 0;
+  for (const c of ringCells(world, ring)) {
+    if (!owners.has(owner[c]!) || controller[c] === by) continue;
+    world.setController(c, by, false, FlipCause.other);
+    held++;
+  }
+  return held > 0 ? Refusal.None : Refusal.NoEffect;
+}
+
 /** Applies one event; why not when it no longer applies (the state then as it was). */
 function apply(world: World, t: Track, e: TimelineEvent): Refusal {
   const id = (tag: string): number => t.id(tag);
@@ -196,6 +262,10 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       return applyCommand(world, { kind: 'leaveAlliance', nation: id(e.nation) });
     case 'guarantee':
       return guarantee(world, id(e.guarantor), id(e.target));
+    case 'transfer':
+      return transfer(world, id(e.to), e.from.map(id), e.ring);
+    case 'occupy':
+      return occupy(world, id(e.by), e.of.map(id), e.ring);
   }
 }
 
@@ -218,6 +288,10 @@ function firstNation(t: Track, e: TimelineEvent): number {
       return t.id(e.subject);
     case 'guarantee':
       return t.id(e.guarantor);
+    case 'transfer':
+      return t.id(e.to);
+    case 'occupy':
+      return t.id(e.by);
   }
 }
 

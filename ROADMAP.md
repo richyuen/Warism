@@ -123,9 +123,13 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     peace passed over with its row; each kind's state; a save at t73 loads bit-identical, the run after equal, events
     too; a save of another timeline: `TrackEnded` at the next hour, its war never declared, ended kept by a save);
     the data-schemas case (order, start, unknown tag); seed 99's pin in the gate.
-  - [ ] R62c Territory: transfers and occupations by lon/lat rings (with the nations they may take from), rasterised
+  - [x] R62c Territory: transfers and occupations by lon/lat rings (with the nations they may take from), rasterised
     at the event's hour, owners and control set as a cession does (`LandCeded`), not through the editor's undo. AT: a
     test transfer and occupation each set exactly the cells their rings hold (counted against a rasteriser of its own).
+    Done (this commit, ADR-925): `transfer` and `occupy` in `TimelineFile` and `src/sim/track.ts`. Evidence:
+    `trackTerritory1938h.test.ts` (a Sudetenland ring: each of its Czechoslovak land cells by the test's own
+    point-in-polygon Germany's, owned and held, at t28, none other of the two's changed, one `LandCeded`; western Poland
+    held by Germany at t55, owners kept, nothing else of Poland's); a probe: the occupation held 3 days at peace.
   - [ ] R62d Birth and the end: a dormant nation born on its date with its cores and land (nothing revives or spawns it
     before); the second seed (`?after=`, rolled by the form) taken by every RNG stream when the track ends, in 1953 or
     early; what reads the seed outside the sim (URL, Continue, settings, autosave) checked. AT: two runs with one seed

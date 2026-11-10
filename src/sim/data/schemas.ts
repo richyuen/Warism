@@ -518,6 +518,13 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
   z.strictObject({ ...when, kind: z.literal('allianceJoin'), nation: tag, leader: tag, nameKey: key }),
   z.strictObject({ ...when, kind: z.literal('allianceLeave'), nation: tag }),
   z.strictObject({ ...when, kind: z.literal('guarantee'), guarantor: tag, target: tag }),
+  /**
+   * The land inside `ring` that one of `from` owns becomes `to`'s, owned and held (a treaty's cession, R62c). The ring
+   * as `ownership.json`'s regions: lon/lat, a cell taken when its centre is inside.
+   */
+  z.strictObject({ ...when, kind: z.literal('transfer'), to: tag, from: tags, ring, note: z.string().optional() }),
+  /** The land inside `ring` that one of `of` owns is held by `by`, its owner unchanged (an occupation, R62c). */
+  z.strictObject({ ...when, kind: z.literal('occupy'), by: tag, of: tags, ring, note: z.string().optional() }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;
 export const TimelineFile = z.strictObject({ comment: z.string().optional(), events: z.array(TimelineEvent) });
@@ -544,6 +551,10 @@ export function timelineTags(e: TimelineEvent): string[] {
       return [e.nation];
     case 'guarantee':
       return [e.guarantor, e.target];
+    case 'transfer':
+      return [e.to, ...e.from];
+    case 'occupy':
+      return [e.by, ...e.of];
   }
 }
 

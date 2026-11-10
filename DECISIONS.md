@@ -9,6 +9,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-925 · 2026-11-10 · accepted — The track's land: rings at the hour, a cession as land handed over (R62c)
+- **Decision.** A `transfer` (to, from, ring) gives the land cells whose centre is inside the lon/lat ring and whose
+  owner is one of `from` to `to`, owned and held (`setOwner`, `setController`), as `defect` hands land over: a
+  `LandCeded` row for each nation that gave some, a capital in it moved (`relocateCapital`). An `occupy` (by, of,
+  ring) sets the holder of those cells only. Rasterised at the event's hour by `forEachCellInRing`, the rule of
+  `ownership.json`'s regions (one rule for the start's borders and history's), not baked: a ring is a few points and
+  the map's size is the game's. Not through the editor's paint and its undo stack: an event is no edit. A ring that
+  takes nothing is passed over (`TrackSkipped`, NoEffect).
+- **Consequences.** `trackTerritory1938h.test.ts`. An occupation at peace stands (a probe: 127 of 127 cells held three
+  days on); what ends one is the timeline's peace or transfer (R62f-i).
+
 ### ADR-924 · 2026-11-10 · accepted — The track's runner: its kinds, by tag, and a save of another timeline (R62b)
 - **Context.** ADR-919 (amended) had every event go through `applyCommand`. Of R62b's kinds, a war of the timeline's
   sides has no command: `declareWar` and `forceWar` call in allies and guarantors and drop members by reach and bonds,

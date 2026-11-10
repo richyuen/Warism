@@ -1710,7 +1710,7 @@ to 27 July 1953, then sets the world free.
   annex, puppet, release, alliance join or leave, guarantee, transfer of territory (lon/lat rings with the
   nations it may take from, as `ownership.json`'s regions), occupation (control without ownership), a new
   nation (a nation of the scenario dormant until its date, with its cores), scripted nuclear strikes, and
-  war objectives (below). The data pipeline bakes rings to cells. Our own summary of public history.
+  war objectives (below). Rings are rasterised at the event's hour (R62c). Our own summary of public history.
 - **Runner** (built, R62b, ADR-924): `runTrack` (`src/sim/track.ts`), in `step` right after the hour's commands,
   applies each event due by the hour in the timeline's order, directly, not through the command log (the log stays the
   player's input): through `applyCommand` where a command stands for it (annex, puppet, release, alliance join or
@@ -1719,6 +1719,9 @@ to 27 July 1953, then sets the world free.
   already over) is passed over with a `TrackSkipped` row. The track's state (`world.track`: the timeline's hash, the
   next event, ended, the seed for after, the nations unborn) is a section of its own; a save of another timeline ends
   the track at the next hour with a `TrackEnded` row.
+- **Land** (built, R62c, ADR-925): a `transfer` gives the land in its ring owned by one of `from` to `to`, owned and
+  held, with a `LandCeded` row per giver; an `occupy` sets the holder only. Rings are rasterised at the hour by the
+  rule of `ownership.json`'s regions (a cell whose centre is inside).
 - **Steering while the track runs:** the strategic AI's own declarations, stalemate peace, threat pacts,
   coalitions and rival drift are off, and so are collapse and revival unless an event asks for them; the
   AI's own nuclear decision is off. Each war phase names objectives (cells or regions, with a date): the

@@ -173,3 +173,11 @@
 - `TimelineFile` in `src/sim/data/schemas.ts` with its cross checks; `data/scenarios/1938h/timeline.json` (empty until
   R62f); `startTrack1938h` binds it in the Sim (a test may give its own). The dead list leaves out the unborn.
 - Evidence: `tests/unit/trackRunner1938h.test.ts` (4), the data-schemas case; gate.
+
+## 2026-11-10 — R62c: the track's land by rings (ADR-925)
+
+- `transfer` and `occupy` events (`TimelineFile`, `src/sim/track.ts`): land cells in a lon/lat ring owned by the
+  nations named, rasterised at the hour by `forEachCellInRing`; a transfer owns and holds with a `LandCeded` row per
+  giver and moves a capital in it, an occupation holds only.
+- Evidence: `tests/unit/trackTerritory1938h.test.ts` (exact cells against its own point-in-polygon); a probe: an
+  occupation at peace held 127 of 127 cells three days on. Gate.
