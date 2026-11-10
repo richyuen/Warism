@@ -569,6 +569,11 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    */
   z.strictObject({ ...when, kind: z.literal('withdraw'), nation: tag, ring, captured: z.boolean().optional(), note: z.string().optional() }),
   z.strictObject({ ...when, kind: z.literal('redeploy'), nation: tag, from: ring, to: z.array(lonLat).min(1), share: z.number().gt(0).max(1) }),
+  /**
+   * A nuclear strike of the timeline's (R62h3: Hiroshima, Nagasaki): a fission warhead of `nation`'s bursts at `at`,
+   * its effects a launch's, with no stockpile, bomber or toggle asked. The AI strikes nothing while the track steers.
+   */
+  z.strictObject({ ...when, kind: z.literal('nuke'), nation: tag, at: lonLat, note: z.string().optional() }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;
 export const TimelineFile = z.strictObject({
@@ -642,6 +647,7 @@ export function timelineTags(e: TimelineEvent): string[] {
     case 'forces':
     case 'redeploy':
     case 'withdraw':
+    case 'nuke':
       return [e.nation];
     case 'hold':
       return [...e.sides[0], ...e.sides[1]];

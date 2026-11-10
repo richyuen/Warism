@@ -293,3 +293,12 @@
   war first; `annex` hands the target's army to the annexer — the Wehrmacht taken first.
 - 1 June 1945: owners 96.9 % right, stray 0.09 %; control 95.7 % right, stray 0.28 %; no event passed over.
 - Evidence: `tests/sweep/historyMatch1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62h3: The Pacific's end and Japan's surrender (ADR-938)
+
+- `nuke` timeline kind (a scripted fission burst); Hiroshima and Nagasaki the only strikes on the track.
+- Okinawa, the Soviet entry and Manchuria (Manchukuo dissolved first, or the Red Army annexes it at capitulation),
+  Sakhalin, the Kurils; the surrender: Japan's forces taken, its wars left, Malaya, Sarawak and the Indies back,
+  Japan, Korea and Manchuria occupied; Taiwan to China.
+- `runMatch` reports each detonation. 26 October 1945: owners and control 97.2 % right; no event passed over.
+- Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`. Gate.

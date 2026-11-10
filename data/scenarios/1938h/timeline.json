@@ -31,7 +31,7 @@
      "CHI"
     ]
    ],
-   "until": "1945-08-15",
+   "until": "1945-09-02",
    "note": "The China front: Japan advances by its stages"
   },
   {
@@ -13719,6 +13719,773 @@
    "annexer": "SOV",
    "target": "GER",
    "note": "The Reich ends: what is left of it, between the zones and the Oder"
+  },
+  {
+   "date": "1945-06-22",
+   "kind": "occupy",
+   "by": "USA",
+   "of": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     123.0,
+     31.0
+    ],
+    [
+     131.0,
+     31.0
+    ],
+    [
+     131.0,
+     24.0
+    ],
+    [
+     123.0,
+     24.0
+    ]
+   ],
+   "note": "Okinawa"
+  },
+  {
+   "date": "1945-08-06",
+   "hour": 8,
+   "kind": "nuke",
+   "nation": "USA",
+   "at": [
+    132.46,
+    34.39
+   ],
+   "note": "Hiroshima"
+  },
+  {
+   "date": "1945-08-08",
+   "kind": "hold",
+   "sides": [
+    [
+     "JAP"
+    ],
+    [
+     "SOV"
+    ]
+   ],
+   "until": "1945-09-02",
+   "note": "The Soviet offensive: the timeline's stages"
+  },
+  {
+   "date": "1945-08-08",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "SOV"
+   ],
+   "defenders": [
+    "JAP"
+   ],
+   "note": "The Soviet Union declares war on Japan"
+  },
+  {
+   "date": "1945-08-09",
+   "hour": 11,
+   "kind": "nuke",
+   "nation": "USA",
+   "at": [
+    129.87,
+    32.75
+   ],
+   "note": "Nagasaki"
+  },
+  {
+   "date": "1945-08-18",
+   "kind": "withdraw",
+   "nation": "MAN",
+   "ring": [
+    [
+     105.0,
+     54.0
+    ],
+    [
+     136.0,
+     54.0
+    ],
+    [
+     136.0,
+     38.6
+    ],
+    [
+     105.0,
+     38.6
+    ]
+   ],
+   "captured": true,
+   "note": "Puyi abdicates: Manchukuo's army gone"
+  },
+  {
+   "date": "1945-08-18",
+   "kind": "withdraw",
+   "nation": "MEN",
+   "ring": [
+    [
+     105.0,
+     54.0
+    ],
+    [
+     136.0,
+     54.0
+    ],
+    [
+     136.0,
+     38.6
+    ],
+    [
+     105.0,
+     38.6
+    ]
+   ],
+   "captured": true
+  },
+  {
+   "date": "1945-08-18",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "CHI",
+   "from": [
+    "MAN",
+    "MEN"
+   ],
+   "ring": [
+    [
+     105.0,
+     54.0
+    ],
+    [
+     136.0,
+     54.0
+    ],
+    [
+     136.0,
+     38.6
+    ],
+    [
+     105.0,
+     38.6
+    ]
+   ],
+   "note": "Manchukuo and Mengjiang dissolved: China in name"
+  },
+  {
+   "date": "1945-08-20",
+   "kind": "withdraw",
+   "nation": "JAP",
+   "ring": [
+    [
+     113.0,
+     53.6
+    ],
+    [
+     135.5,
+     53.6
+    ],
+    [
+     135.5,
+     38.0
+    ],
+    [
+     124.3,
+     38.0
+    ],
+    [
+     124.3,
+     38.6
+    ],
+    [
+     119.9,
+     38.6
+    ],
+    [
+     119.9,
+     40.0
+    ],
+    [
+     117.0,
+     40.4
+    ],
+    [
+     117.0,
+     41.6
+    ],
+    [
+     113.0,
+     41.6
+    ]
+   ],
+   "captured": true,
+   "note": "Manchuria: the Kwantung Army taken"
+  },
+  {
+   "date": "1945-08-20",
+   "hour": 1,
+   "kind": "occupy",
+   "by": "SOV",
+   "of": [
+    "CHI",
+    "JAP"
+   ],
+   "ring": [
+    [
+     113.0,
+     53.6
+    ],
+    [
+     135.5,
+     53.6
+    ],
+    [
+     135.5,
+     38.0
+    ],
+    [
+     124.3,
+     38.0
+    ],
+    [
+     124.3,
+     38.6
+    ],
+    [
+     119.9,
+     38.6
+    ],
+    [
+     119.9,
+     40.0
+    ],
+    [
+     117.0,
+     40.4
+    ],
+    [
+     117.0,
+     41.6
+    ],
+    [
+     113.0,
+     41.6
+    ]
+   ],
+   "note": "Manchuria, Inner Mongolia and Korea to the 38th parallel"
+  },
+  {
+   "date": "1945-08-25",
+   "kind": "occupy",
+   "by": "SOV",
+   "of": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     141.5,
+     50.2
+    ],
+    [
+     144.9,
+     50.2
+    ],
+    [
+     144.9,
+     45.8
+    ],
+    [
+     141.5,
+     45.8
+    ]
+   ],
+   "note": "Southern Sakhalin"
+  },
+  {
+   "date": "1945-09-01",
+   "kind": "occupy",
+   "by": "SOV",
+   "of": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     145.4,
+     51.0
+    ],
+    [
+     157.0,
+     51.0
+    ],
+    [
+     157.0,
+     43.3
+    ],
+    [
+     145.4,
+     43.3
+    ]
+   ],
+   "note": "The Kurils"
+  },
+  {
+   "date": "1945-09-02",
+   "kind": "withdraw",
+   "nation": "JAP",
+   "ring": [
+    [
+     60.0,
+     60.0
+    ],
+    [
+     179.0,
+     60.0
+    ],
+    [
+     179.0,
+     -15.0
+    ],
+    [
+     60.0,
+     -15.0
+    ]
+   ],
+   "captured": true,
+   "note": "Japan's surrender: its forces disarmed"
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 1,
+   "kind": "leave",
+   "nations": [
+    "JAP"
+   ],
+   "against": "ENG",
+   "note": "Japan out of its wars"
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 1,
+   "kind": "leave",
+   "nations": [
+    "JAP"
+   ],
+   "against": "SOV"
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 1,
+   "kind": "leave",
+   "nations": [
+    "JAP"
+   ],
+   "against": "CHI"
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 2,
+   "kind": "born",
+   "nation": "MAL",
+   "from": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     99.6,
+     6.8
+    ],
+    [
+     102.2,
+     6.3
+    ],
+    [
+     104.4,
+     2.5
+    ],
+    [
+     104.4,
+     1.2
+    ],
+    [
+     103.4,
+     1.15
+    ],
+    [
+     101.0,
+     2.6
+    ],
+    [
+     100.2,
+     4.0
+    ],
+    [
+     99.6,
+     6.4
+    ]
+   ],
+   "note": "Malaya and Singapore: the British back"
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 2,
+   "kind": "born",
+   "nation": "SAR",
+   "from": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     109.0,
+     2.1
+    ],
+    [
+     109.6,
+     1.9
+    ],
+    [
+     110.5,
+     0.9
+    ],
+    [
+     111.8,
+     1.0
+    ],
+    [
+     112.5,
+     1.5
+    ],
+    [
+     113.8,
+     1.4
+    ],
+    [
+     114.6,
+     2.0
+    ],
+    [
+     115.1,
+     2.7
+    ],
+    [
+     115.6,
+     4.1
+    ],
+    [
+     115.6,
+     5.1
+    ],
+    [
+     109.0,
+     5.1
+    ]
+   ],
+   "note": "Sarawak"
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 2,
+   "kind": "born",
+   "nation": "DEI",
+   "from": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     94.5,
+     6.5
+    ],
+    [
+     141.1,
+     6.5
+    ],
+    [
+     141.1,
+     -11.2
+    ],
+    [
+     94.5,
+     -11.2
+    ]
+   ],
+   "note": "The Netherlands Indies: the Dutch claim"
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 2,
+   "kind": "occupy",
+   "by": "INC",
+   "of": [
+    "INC"
+   ],
+   "ring": [
+    [
+     100.0,
+     23.5
+    ],
+    [
+     110.0,
+     23.5
+    ],
+    [
+     110.0,
+     8.3
+    ],
+    [
+     100.0,
+     8.3
+    ]
+   ],
+   "note": "Indochina"
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 3,
+   "kind": "puppet",
+   "overlord": "ENG",
+   "subject": "MAL",
+   "autonomy": 35
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 3,
+   "kind": "puppet",
+   "overlord": "ENG",
+   "subject": "SAR",
+   "autonomy": 70
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 3,
+   "kind": "puppet",
+   "overlord": "NED",
+   "subject": "DEI",
+   "autonomy": 25
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 3,
+   "kind": "occupy",
+   "by": "USA",
+   "of": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     130.0,
+     45.6
+    ],
+    [
+     146.0,
+     45.6
+    ],
+    [
+     146.0,
+     30.9
+    ],
+    [
+     128.8,
+     30.9
+    ],
+    [
+     128.8,
+     34.6
+    ],
+    [
+     130.0,
+     34.6
+    ]
+   ],
+   "note": "Japan occupied"
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 3,
+   "kind": "occupy",
+   "by": "USA",
+   "of": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     123.0,
+     31.0
+    ],
+    [
+     131.0,
+     31.0
+    ],
+    [
+     131.0,
+     24.0
+    ],
+    [
+     123.0,
+     24.0
+    ]
+   ],
+   "note": "Okinawa"
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 4,
+   "kind": "occupy",
+   "by": "SOV",
+   "of": [
+    "CHI",
+    "JAP"
+   ],
+   "ring": [
+    [
+     113.0,
+     53.6
+    ],
+    [
+     135.5,
+     53.6
+    ],
+    [
+     135.5,
+     38.0
+    ],
+    [
+     124.3,
+     38.0
+    ],
+    [
+     124.3,
+     38.6
+    ],
+    [
+     119.9,
+     38.6
+    ],
+    [
+     119.9,
+     40.0
+    ],
+    [
+     117.0,
+     40.4
+    ],
+    [
+     117.0,
+     41.6
+    ],
+    [
+     113.0,
+     41.6
+    ]
+   ],
+   "note": "Manchuria, Kwantung and northern Korea held by the Red Army"
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 4,
+   "kind": "occupy",
+   "by": "SOV",
+   "of": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     141.5,
+     50.2
+    ],
+    [
+     144.9,
+     50.2
+    ],
+    [
+     144.9,
+     45.8
+    ],
+    [
+     141.5,
+     45.8
+    ]
+   ]
+  },
+  {
+   "date": "1945-09-02",
+   "hour": 4,
+   "kind": "occupy",
+   "by": "SOV",
+   "of": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     145.4,
+     51.0
+    ],
+    [
+     157.0,
+     51.0
+    ],
+    [
+     157.0,
+     43.3
+    ],
+    [
+     145.4,
+     43.3
+    ]
+   ]
+  },
+  {
+   "date": "1945-09-08",
+   "kind": "occupy",
+   "by": "USA",
+   "of": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     124.3,
+     38.0
+    ],
+    [
+     130.0,
+     38.0
+    ],
+    [
+     130.0,
+     33.0
+    ],
+    [
+     124.3,
+     33.0
+    ]
+   ],
+   "note": "Korea south of the 38th parallel"
+  },
+  {
+   "date": "1945-10-25",
+   "kind": "transfer",
+   "to": "CHI",
+   "from": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     119.3,
+     25.5
+    ],
+    [
+     122.2,
+     25.5
+    ],
+    [
+     122.2,
+     21.7
+    ],
+    [
+     119.3,
+     21.7
+    ]
+   ],
+   "note": "Taiwan to China"
   }
  ],
  "maps": [
@@ -17269,6 +18036,333 @@
         -6.4
        ]
       ]
+     ]
+    },
+    {
+     "by": "SOV",
+     "of": [
+      "IRN"
+     ],
+     "rings": [
+      [
+       [
+        44.5,
+        39.5
+       ],
+       [
+        61.0,
+        38.0
+       ],
+       [
+        60.0,
+        35.6
+       ],
+       [
+        44.5,
+        35.9
+       ]
+      ]
+     ]
+    },
+    {
+     "by": "ENG",
+     "of": [
+      "IRN"
+     ],
+     "rings": [
+      [
+       [
+        44.0,
+        34.6
+       ],
+       [
+        56.5,
+        34.6
+       ],
+       [
+        56.5,
+        26.0
+       ],
+       [
+        44.0,
+        26.0
+       ]
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "date": "1945-10-26",
+   "note": "After Japan's surrender: Manchuria China's and held by the Red Army, Japan and Korea occupied, the colonies back",
+   "byCountry": {
+    "MYS": "MAL",
+    "SGP": "MAL",
+    "IDN": "DEI",
+    "TWN": "CHI"
+   },
+   "byProvince": {},
+   "regions": [
+    {
+     "owner": "ENG",
+     "onlyFrom": [
+      "MAL"
+     ],
+     "ring": [
+      [
+       115.3,
+       7.5
+      ],
+      [
+       119.6,
+       7.5
+      ],
+      [
+       119.6,
+       4.0
+      ],
+      [
+       115.3,
+       4.0
+      ]
+     ]
+    },
+    {
+     "owner": "SAR",
+     "onlyFrom": [
+      "MAL"
+     ],
+     "ring": [
+      [
+       109.0,
+       2.1
+      ],
+      [
+       109.6,
+       1.9
+      ],
+      [
+       110.5,
+       0.9
+      ],
+      [
+       111.8,
+       1.0
+      ],
+      [
+       112.5,
+       1.5
+      ],
+      [
+       113.8,
+       1.4
+      ],
+      [
+       114.6,
+       2.0
+      ],
+      [
+       115.1,
+       2.7
+      ],
+      [
+       115.6,
+       4.1
+      ],
+      [
+       115.6,
+       5.1
+      ],
+      [
+       109.0,
+       5.1
+      ]
+     ]
+    },
+    {
+     "owner": "CHI",
+     "onlyFrom": [
+      "MAN",
+      "MEN"
+     ],
+     "ring": [
+      [
+       105.0,
+       54.0
+      ],
+      [
+       136.0,
+       54.0
+      ],
+      [
+       136.0,
+       38.6
+      ],
+      [
+       105.0,
+       38.6
+      ]
+     ]
+    }
+   ],
+   "occupied": [
+    {
+     "by": "SOV",
+     "of": [
+      "CHI",
+      "JAP"
+     ],
+     "rings": [
+      [
+       [
+        113.1,
+        53.5
+       ],
+       [
+        135.4,
+        53.5
+       ],
+       [
+        135.4,
+        38.1
+       ],
+       [
+        124.4,
+        38.1
+       ],
+       [
+        124.4,
+        38.7
+       ],
+       [
+        120.0,
+        38.7
+       ],
+       [
+        120.0,
+        40.1
+       ],
+       [
+        117.1,
+        40.5
+       ],
+       [
+        117.1,
+        41.7
+       ],
+       [
+        113.1,
+        41.7
+       ]
+      ]
+     ]
+    },
+    {
+     "by": "SOV",
+     "of": [
+      "JAP"
+     ],
+     "provinces": [
+      "RUS-2616"
+     ]
+    },
+    {
+     "by": "USA",
+     "of": [
+      "JAP"
+     ],
+     "countries": [
+      "JPN"
+     ],
+     "rings": [
+      [
+       [
+        124.4,
+        37.9
+       ],
+       [
+        129.9,
+        37.9
+       ],
+       [
+        129.9,
+        33.1
+       ],
+       [
+        124.4,
+        33.1
+       ]
+      ]
+     ]
+    },
+    {
+     "by": "SOV",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2330",
+      "AUT-2322",
+      "AUT-2331"
+     ]
+    },
+    {
+     "by": "USA",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2326",
+      "AUT-2327"
+     ]
+    },
+    {
+     "by": "ENG",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2325",
+      "AUT-2323"
+     ]
+    },
+    {
+     "by": "FRA",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2329",
+      "AUT-2320"
+     ]
+    },
+    {
+     "by": "SOV",
+     "of": [
+      "HUN"
+     ],
+     "countries": [
+      "HUN"
+     ]
+    },
+    {
+     "by": "ENG",
+     "of": [
+      "ITA"
+     ],
+     "countries": [
+      "LBY",
+      "ERI",
+      "SOM"
+     ]
+    },
+    {
+     "by": "ENG",
+     "of": [
+      "ICE"
+     ],
+     "countries": [
+      "ISL"
      ]
     },
     {

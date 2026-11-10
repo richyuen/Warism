@@ -21,6 +21,7 @@ import { forEachCellInRing } from './data/ownership';
 import { kmPerCell, project } from './data/projection';
 import { nuclearMask, START_GOLD } from './systems/revolts';
 import { relocateCapital } from './systems/capitals';
+import { detonate } from './systems/nuclear';
 import { leaveWarsAgainst, makePeace, withPuppets } from './systems/war';
 import { applyCommand } from './tick';
 import { ATTACKERS, DEFENDERS } from './wars';
@@ -455,6 +456,14 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       for (let k = 0; k < e.count && why === Refusal.None; k++) why = applyCommand(world, { kind: 'spawnFormation', nation: id(e.nation), x: u * world.cells.w, y: v * world.cells.h, strength: 1, template });
       return why;
     }
+    case 'nuke': {
+      const n = id(e.nation);
+      const why = whyNot(world, n);
+      if (why) return why;
+      const [u, v] = project(e.at[0], e.at[1]);
+      detonate(world, n, 1, u * world.cells.w, v * world.cells.h);
+      return Refusal.None;
+    }
     case 'withdraw': {
       const n = id(e.nation);
       const why = whyNot(world, n);
@@ -531,6 +540,7 @@ function firstNation(t: Track, e: TimelineEvent): number {
     case 'forces':
     case 'redeploy':
     case 'withdraw':
+    case 'nuke':
       return t.id(e.nation);
     case 'hold':
       return t.id(e.sides[0][0]!);

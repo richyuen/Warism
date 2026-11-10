@@ -227,8 +227,11 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     ≥ 85 %, the land moved ≥ 85 % right, stray < 2 %.
     Done (ADR-937): owners 99.84 %, 96.9 % right, stray 0.09 %; control 99.51 %, 95.7 % right, stray 0.28 % on 1 June
     1945; no event passed over (`tests/sweep/historyMatch1938h.test.ts`).
-  - [ ] R62h3 The Pacific's end: the Philippines, Okinawa, Hiroshima and Nagasaki, Manchuria, Japan's surrender (2
+  - [x] R62h3 The Pacific's end: the Philippines, Okinawa, Hiroshima and Nagasaki, Manchuria, Japan's surrender (2
     September 1945). AT: each event on its date; the two scripted strikes the only nuclear ones.
+    Done (ADR-938): two warheads burst to 26 October 1945, Hiroshima's and Nagasaki's on their hours; no event passed
+    over; owners 97.2 % right, control 97.2 % right (`tests/sweep/historyMatch1938h.test.ts`, `nuke` in
+    `tests/unit/trackLevers1938h.test.ts`).
   - [ ] R62i 1945–53: the occupation zones, Poland moved west, Austria, the Philippines, India and Pakistan, Burma,
     Ceylon, Israel, Indonesia, the Chinese civil war (the People's Republic, the Republic on Taiwan), the two Germanies,
     the two Koreas and the Korean War to the armistice, Japan's sovereignty (1952); the new nations' names, colours and

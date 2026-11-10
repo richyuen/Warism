@@ -9,6 +9,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-938 · 2026-11-10 · accepted — The Pacific's end and Japan's surrender (R62h3)
+- **`nuke`**, a timeline kind: a fission warhead of the nation's bursts at its place on its hour (`detonate`, its
+  effects a launch's), with no stockpile, bomber or toggle asked. The AI strikes nothing while the track steers
+  (`world.steered`, R62e), so the timeline's are the only strikes: Hiroshima (6 August 1945, hour 8) and Nagasaki (9
+  August, hour 11), the United States'.
+- **The events:** Okinawa; the Soviet Union at war with Japan (8 August, the front held to the surrender); Manchukuo
+  and Mengjiang dissolved into China on 18 August, their armies gone, before the Red Army holds Manchuria, Inner
+  Mongolia's north and Korea to the 38th parallel (20 August: a nation at war with its land all held capitulates and
+  is annexed, and the Soviet Union took Manchukuo so); the Kwantung Army taken; southern Sakhalin, the Kurils.
+- **The surrender (2 September):** Japan's forces disarmed (`withdraw` `captured`, Asia and the Pacific); Japan leaves
+  its wars against Britain, the Soviet Union and China (the other foes stood in those wars: a `leave` against each
+  was passed over), which gives back the land each side held of the other; Malaya, Sarawak and the Netherlands Indies
+  born again (Japan had annexed them at their fall) and their overlords' puppets again; Indochina its own; Japan and
+  Okinawa held by the United States, Manchuria, Kwantung, northern Korea, southern Sakhalin and the Kurils by the Soviet
+  Union; Korea's south by the United States (8 September); Taiwan China's (25 October). The China front held to the
+  surrender. Korea, the Indies' independence and the occupations' end are R62i's.
+- **Measured** (`historyMatch1938h.test.ts`), 26 October 1945: owners 99.85 %, 97.2 % right, stray 0.08 %; control
+  99.73 %, 97.2 % right, stray 0.13 %; two warheads burst, the scripted ones; Japan at war with no one; no event passed
+  over.
+
 ### ADR-937 · 2026-11-10 · accepted — D-Day to Germany's surrender (R62h2)
 - **The West:** the fronts against Germany held from D-Day to 9 May 1945 and moved by the timeline: the Normandy
   beachhead, Paris (25 August), Belgium and Luxembourg born again from Germany's land, Vichy's last colonies France's

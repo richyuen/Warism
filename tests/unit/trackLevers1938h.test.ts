@@ -232,3 +232,25 @@ describe('a pocket (ROADMAP R62g3)', () => {
     expect(w.nations.cols.manpower[GER]!).toBeLessThanOrEqual(pool + 1);
   });
 });
+
+describe('a scripted strike (ROADMAP R62h3)', () => {
+  it('nuke: a fission warhead of the nation bursts at its place on its hour, no launch and no stockpile asked', () => {
+    const TLN: TimelineFile = { events: [{ date: '1938-01-02', hour: 5, kind: 'nuke', nation: 'USA', at: [132.46, 34.39] }] };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, TLN);
+    const w = sim.world;
+    const [u, v] = project(132.46, 34.39);
+    const bursts: number[][] = [];
+    let launches = 0;
+    sim.step(24 + 6, (x) => {
+      const ev = x.out.events;
+      for (let i = 0; i < ev.length; i += 6) {
+        if (ev[i + 1] === EventKind.NukeDetonated) bursts.push([ev[i]!, ev[i + 2]!, ev[i + 3]!, ev[i + 4]!, ev[i + 5]!]);
+        if (ev[i + 1] === EventKind.NukeLaunched) launches++;
+      }
+      quiet(x);
+    });
+    expect(bursts).toEqual([[24 + 5, id('USA'), 1, u * w.cells.w, v * w.cells.h]]);
+    expect(launches).toBe(0);
+    expect(w.warheads.get(id('USA'))?.stock ?? 0).toBe(0);
+  });
+});

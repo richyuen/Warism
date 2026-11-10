@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest';
+import { dayOfIso } from '../../src/shared/calendar';
 import { project } from '../../src/sim/data/projection';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { TAGS_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
@@ -36,19 +37,30 @@ it('1938-39: the land owned as history had it, and the events fire on their date
     ['FRA', 1], ['POL', 1], ['CZS', 1], ['YUG', 1], ['AUT', 1], ['NOR', 1], ['NED', 1], ['BEL', 1], ['GRE', 1], ['ALB', 1], ['HUN', 1],
   ];
   let living: number[] = [];
+  // After Japan's surrender (R62h3): its foes, and the nations living or not on 26 October 1945.
+  const ASIA: [string, number][] = [['JAP', 1], ['MAN', 0], ['MEN', 0], ['MAL', 1], ['SAR', 1], ['DEI', 1]];
+  let japFoes = -1;
+  let asia: number[] = [];
   const axis = new Set(['GER', 'FIN', 'ROM', 'HUN', 'ITA'].map(id));
   const [ru, rv] = project(24.1, 56.95);
   const riga = Math.floor(rv * SIZE_1938.h) * SIZE_1938.w + Math.floor(ru * SIZE_1938.w);
-  const { maps, skipped } = runMatch(
+  const { maps, skipped, nukes } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1945-06-02',
+    '1945-10-27',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
         if (w.formations.cols.nation[i] === id('SOV') && w.rules?.templates[w.formations.cols.template[i]!]?.domain === 0) soviet += w.formations.cols.strength[i]!;
       });
       if (date === '1945-06-01') living = STATES.map(([t]) => w.nations.cols.living[id(t)]!);
+      if (date === '1945-10-26') {
+        asia = ASIA.map(([t]) => w.nations.cols.living[id(t)]!);
+        japFoes = 0;
+        w.nations.forEach((n) => {
+          if (w.nations.cols.living[n] === 1 && w.wars.atWar(id('JAP'), n)) japFoes++;
+        });
+      }
       // The belligerents at the end of 11 December 1941 (R62g4).
       if (date === '1941-12-12') at11 = WARS.map(([a, b]) => w.wars.atWar(id(a), id(b)));
       // Occupations at peace past a month's start (1 August 1940): the occupied zone and the Baltic states held.
@@ -61,7 +73,19 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(9);
+  expect(maps.length).toBe(10);
+  expect(asia).toEqual(ASIA.map((x) => x[1]));
+  expect(japFoes).toBe(0);
+  // The two scripted strikes, the only nuclear ones (R62h3): the United States', on their hours, where they were.
+  const at = (lon: number, lat: number): [number, number] => {
+    const [u, v] = project(lon, lat);
+    return [u * SIZE_1938.w, v * SIZE_1938.h];
+  };
+  const hour = (iso: string, h: number): number => (dayOfIso(iso) - dayOfIso('1938-01-01')) * 24 + h;
+  expect(nukes).toEqual([
+    [hour('1945-08-06', 8), id('USA'), 1, ...at(132.46, 34.39)],
+    [hour('1945-08-09', 11), id('USA'), 1, ...at(129.87, 32.75)],
+  ]);
   expect(living).toEqual(STATES.map((x) => x[1]));
   for (const { date, cols } of maps) {
     expect(cols.whole, date).toBeGreaterThanOrEqual(0.95);
