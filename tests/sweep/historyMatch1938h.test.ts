@@ -29,14 +29,19 @@ it('1938-39: the land owned as history had it, and the events fire on their date
     ['JAP', 'SOV', false], ['USA', 'SOV', false], ['IRE', 'JAP', false], ['DEN', 'USA', false], ['SIA', 'ENG', false],
   ];
   let at11: boolean[] = [];
+  let soviet = 0;
   const axis = new Set(['GER', 'FIN', 'ROM', 'HUN', 'ITA'].map(id));
   const [ru, rv] = project(24.1, 56.95);
   const riga = Math.floor(rv * SIZE_1938.h) * SIZE_1938.w + Math.floor(ru * SIZE_1938.w);
   const { maps, skipped } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1942-01-01',
+    '1942-11-02',
     (w, date) => {
+      // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
+      if (date === '1942-11-01') w.formations.forEach((i) => {
+        if (w.formations.cols.nation[i] === id('SOV') && w.rules?.templates[w.formations.cols.template[i]!]?.domain === 0) soviet += w.formations.cols.strength[i]!;
+      });
       // The belligerents at the end of 11 December 1941 (R62g4).
       if (date === '1941-12-12') at11 = WARS.map(([a, b]) => w.wars.atWar(id(a), id(b)));
       // Occupations at peace past a month's start (1 August 1940): the occupied zone and the Baltic states held.
@@ -49,7 +54,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(6);
+  expect(maps.length).toBe(7);
   for (const { date, cols } of maps) {
     expect(cols.whole, date).toBeGreaterThanOrEqual(0.95);
     expect(cols.movedRight, date).toBeGreaterThanOrEqual(0.95);
@@ -69,6 +74,9 @@ it('1938-39: the land owned as history had it, and the events fire on their date
 `);
   expect(east).toBeGreaterThanOrEqual(6000);
   expect(at11).toEqual(WARS.map((x) => x[2]));
+  process.stderr.write(`The Soviet army on 1 November 1942: ${Math.round(soviet / 1000)}k men
+`);
+  expect(soviet).toBeGreaterThanOrEqual(2_000_000);
   for (const { date, control } of maps) {
     if (!control) continue;
     expect(control.movedRight, date).toBeGreaterThanOrEqual(0.9);

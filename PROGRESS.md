@@ -264,3 +264,13 @@
   Hong Kong, northern Malaya and Luzon, Davao by stages.
 - The belligerents at the end of 11 December 1941 as history had them (fifteen pairs); no event passed over to 1942.
 - Evidence: `tests/sweep/historyMatch1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62h0: 1942, the fronts held between their stages (ADR-935)
+
+- R62h split in slices (h0-h3). 1942: the Moscow counter-offensive, Case Blue to Stalingrad and the Caucasus by
+  stages; Japan's conquests by stages; Rommel to El Alamein.
+- Without holds the armies were spent between the stages (Germany 1.26M to 77k): the Eastern Front, Germany against
+  Britain and the United States, Japan against the Allies held, the fronts moving by their stages alone.
+- The Soviet army: arrivals were disbanded for want of pay; +100 % income from December 1941 carries them (3.47M).
+- 1 November 1942: control 99.41 %, 95.3 % right, stray 0.21 %; no event passed over.
+- Evidence: `tests/sweep/historyMatch1938h.test.ts`. Gate.

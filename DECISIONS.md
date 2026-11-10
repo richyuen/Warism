@@ -9,6 +9,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-935 · 2026-11-10 · accepted — 1942, the fronts held between their stages (R62h0)
+- **The events:** the Moscow counter-offensive (the Soviet Union taking back its land east of the January 1942 line,
+  the Germans there falling back; Kerch), the Axis lines of 24 July (Kharkov, Sevastopol, Case Blue to the Don), 25
+  August (to Stalingrad and the Caucasus) and 31 October 1942 (Stalingrad, Nalchik), each with its pockets; Japan's
+  conquests by stages (Rabaul, British Borneo, Malaya and Singapore, the Indies, the Philippines, Burma, the
+  Aleutians, northern New Guinea), the armies in each taken or, from Burma, back to India; the Afrika Korps and Rommel
+  to El Alamein (Egypt's west held at peace: Egypt is not at war).
+- **Holds, the fronts between their stages:** run without them, Germany's army fell from 1.26M to 77k by October 1942
+  and Italy's from 644k to 87k against a Soviet army rebuilt to 2.5M, Britain's landings took 2,959 German cells and
+  the Allies' Japanese islands. The fronts move by the stages alone, so the fighting between them only spent the
+  armies. Held now: the Eastern Front (Germany, Italy, Romania, Hungary against the Soviet Union, from 1 December 1941
+  to 9 May 1945), Germany against Britain and against the United States on land to D-Day, Japan against the United
+  States and Britain from 22 July 1942, Japan against India and Burma to Imphal. Ships and aircraft fight on.
+- **The Soviet army:** with arrivals (30 rifle divisions a month, 30 behind Stalingrad from August) it rose to 2.5M
+  and fell to 1.58M by November: more divisions than its books carry are disbanded (the economic AI's step 1). With
+  "the war economy and Lend-Lease" (+100 % income from 15 December 1941) it is 3.47M on 1 November 1942.
+- **Measured** (`historyMatch1938h.test.ts`), 1 November 1942: owners 99.81 %, 97.9 % right, stray 0.08 %; control
+  99.41 %, the land moved 95.3 % right (51,189 cells), stray 0.21 %; the Soviet army 3.47M; no event passed over.
+  `withdraw` is applied however many it finds (an empty pocket is no event passed over).
+
 ### ADR-934 · 2026-11-10 · accepted — the Pacific opening (R62g4); R62g done
 - **The events:** Japan's war on the United States (Pearl Harbor, 7 December 1941, its puppets and the Philippines
   with the sides), Britain and its Empire (Ireland and Egypt neutral) and the Netherlands Indies joining on 8

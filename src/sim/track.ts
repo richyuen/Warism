@@ -471,7 +471,8 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
         if (e.captured !== true) world.nations.cols.manpower[n] = world.nations.cols.manpower[n]! + f.strength[i]!;
         applyCommand(world, { kind: 'removeFormation', id: i });
       }
-      return gone.length > 0 ? Refusal.None : Refusal.NoEffect;
+      // Applied however many it found: a ring cleared (an empty pocket is no event passed over).
+      return Refusal.None;
     }
     case 'redeploy': {
       const n = id(e.nation);

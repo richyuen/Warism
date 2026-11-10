@@ -209,6 +209,22 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     Nagasaki, Manchuria, Japan's surrender (2 September 1945). AT: each event on its date; control matches history on
     1 November 1942 and 6 June 1944 ≥ 75 %, owners and control on 1 June 1945 ≥ 85 % of land cells; the two scripted
     strikes the only nuclear ones.
+    Split in measured slices (2026-11-10) as R62g, each its own commit; the bars also on the land moved and strayed
+    (ADR-930), the fronts the fighting cannot move by stages (ADR-933):
+  - [x] R62h0 1942: the Moscow counter-offensive, Kharkov and the Crimea, Case Blue to Stalingrad and the Caucasus;
+    Japan's conquests (Malaya and Singapore, the Philippines, the Indies, Burma, New Guinea, the Aleutians); Rommel to
+    El Alamein. AT: each event on its date; control on 1 November 1942 ≥ 75 % of land, the land moved ≥ 75 % right,
+    stray < 2 %; the Soviet army rebuilt (≥ 2M men on 1 November 1942).
+    Done (ADR-935): the fronts held between their stages; control 99.41 %, 95.3 % right, stray 0.21 %; the Soviet army
+    3.47M; no event passed over (`tests/sweep/historyMatch1938h.test.ts`).
+  - [ ] R62h1 November 1942 to 5 June 1944: Torch and Tunisia, Stalingrad, Kursk and Ukraine, Sicily, Italy's surrender
+    and the Italian Social Republic, the Pacific's islands. AT: each event on its date; control on 6 June 1944, the same
+    bars.
+  - [ ] R62h2 D-Day to Germany's surrender: Normandy and France (France revived), Bagration, the switches of Romania,
+    Bulgaria and Finland, the Bulge, Berlin, 8 May 1945. AT: each event on its date; owners and control on 1 June 1945
+    ≥ 85 %, the land moved ≥ 85 % right, stray < 2 %.
+  - [ ] R62h3 The Pacific's end: the Philippines, Okinawa, Hiroshima and Nagasaki, Manchuria, Japan's surrender (2
+    September 1945). AT: each event on its date; the two scripted strikes the only nuclear ones.
   - [ ] R62i 1945–53: the occupation zones, Poland moved west, Austria, the Philippines, India and Pakistan, Burma,
     Ceylon, Israel, Indonesia, the Chinese civil war (the People's Republic, the Republic on Taiwan), the two Germanies,
     the two Koreas and the Korean War to the armistice, Japan's sovereignty (1952); the new nations' names, colours and
