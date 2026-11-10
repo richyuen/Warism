@@ -55,10 +55,14 @@ setups broke `slowClick`); every dimension at its bar. A full run and the releas
     in order of first hours (31501's t6243, listed after t6257, had been looked at 14 h late, the second miss). On the
     critic's `c60_sb_31501.json`: exit 0, 44 of 44 seen, 1 with no fleet, page errors 0.
 - [ ] R60 **Run 61's non-blocking findings** (the full run, on `d971a46b`: no blocking issue, every dimension at 8).
-  - [ ] R60a R61-N1: at landscape sizes (844 × 390, 932 × 430, 1024 × 500) an ordered landing's bar lies over the nation
+  - [x] R60a R61-N1: at landscape sizes (844 × 390, 932 × 430, 1024 × 500) an ordered landing's bar lies over the nation
     panel's ×, so a tap on × opens the landing (21103, England's four from Portsmouth to Bremerhaven; a regression since
     run 55, the panel widened under the bar). AT: `node critic/scripts/c61_x_closeblock.mjs 21103 844 390` gives
     `atClose` the `nation-close` button and `clickOk` true; `c55_lbox` 21103 and 32223 at 844 × 390 run their six days.
+    Done (`501d2499`): on a short view the landings bar stands right of an open nation panel. `c61_x_closeblock` 21103
+    at 844 × 390, 932 × 430, 1024 × 500 and 667 × 375: `atClose` `nation-close`, `clickOk` true, page errors 0;
+    `c55_lbox` 21103 and 32223 at 844 × 390: six days, the Cancel in view, in the bar and topmost each day as run 55's.
+    `landingsBarPanel1938.spec.ts` (new): red at all four before, green after.
   - [ ] R60b R61-N2: with a scenario file chosen on the title screen, the big Start starts plain 1938 and drops the file
     (32441); "No file chosen" beside the chosen file; the card's Cancel unstyled. AT: `MAINSTART=1 node
     critic/scripts/c61_x_editor.mjs 32441` keeps the paint, or the main Start is not offered while a file is pending.
