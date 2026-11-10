@@ -1693,7 +1693,7 @@ months. The sweep judges the result (§10.4).
 ### 7.7 The historical track [ADR-919] (designed; built by ROADMAP R62)
 The scenario "1938 — Historical" (`1938h`) is the 1938 world with a timeline that replays 1 January 1938
 to 27 July 1953, then sets the world free.
-- **Timeline** (`data/scenarios/1938h/timeline.json`): events in date order, each a date, a kind and its
+- **Timeline** (a timeline file in the scenario's data, to be made by R62a): events in date order, each a date, a kind and its
   parties: war (with its sides joining), peace (white, or with terms: annexation, puppet, a transfer),
   annex, puppet, release, alliance join or leave, guarantee, transfer of territory (lon/lat rings with the
   nations it may take from, as `ownership.json`'s regions), occupation (control without ownership), a new
@@ -1716,7 +1716,7 @@ to 27 July 1953, then sets the world free.
   run to run.
 - **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is
   reached by the timeline's steering (objectives, dates, historical arrivals of forces and phase buffs),
-  tuned per period against `historyMatch`. The shared rules do not change for the track.
+  tuned per period against a match tool (R62h). The shared rules do not change for the track.
 
 ---
 
