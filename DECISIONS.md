@@ -9,6 +9,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-942 · 2026-11-10 · accepted — The Korean War to the armistice; Japan sovereign (R62i3)
+- **The war:** North Korea's invasion (25 June 1950), held to the armistice; the United Nations' contingents by
+  `join` (the United States, Britain with Canada, Australia, New Zealand and South Africa and without its other
+  puppets, France and the Netherlands without their colonies, Turkey, Greece, Belgium, Luxembourg, the Philippines,
+  Thailand, Colombia, Ethiopia); China's volunteers (19 October 1950). The fronts by stages of occupation: Seoul, the
+  Pusan perimeter, Inchon (the North Korean army in the south lost), the Yalu, the Chinese offensives (Seoul lost
+  again), Seoul retaken, the line of June 1951. The armistice (27 July 1953, the track's last day, hour 0): North
+  Korea and China leave the war, and the line is drawn by `transfer` (a `leave` gives the occupations back).
+- **Others:** Hungary sovereign (the Paris treaties, 15 September 1947: the Red Army's occupation had stood since
+  1945); Somalia's trusteeship; Japan sovereign (28 April 1952, Okinawa American still); Eritrea federated with
+  Ethiopia. Libya's independence (1951) has no nation of the scenario to be: it stays Italy's, held by Britain.
+- **Measured** (`historyMatch1938h.test.ts`, to 29 July 1953): owners on 27 July 1953 99.78 % of land (bar 90 %),
+  98.9 % of the moved land right, stray 0.13 %; control 98.8 % right, stray 0.13 %; on 28 July no war, the track
+  ended, both Koreas living; no event passed over.
+
 ### ADR-941 · 2026-11-10 · accepted — The Chinese civil war (R62i2)
 - **The events:** the Red Army out of Manchuria and Kwantung China's (May 1946), the Communists holding the north of
   it; the united front left and the civil war declared (26 June 1946), held between its stages; five stages, each the

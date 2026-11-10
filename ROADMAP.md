@@ -248,8 +248,10 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     on 1 January 1950 ≥ 90 % of land cells.
     Done (ADR-941): owners on 1 January 1950 99.77 %, 98.7 % of the moved land right; no event passed over; the seats
     at Beijing and Taipei (`capital`), the Soviet pledge ended (`guarantee` `end`).
-  - [ ] R62i3 The Korean War to the armistice; Japan's sovereignty (1952). AT: each event on its date; owners on 27
+  - [x] R62i3 The Korean War to the armistice; Japan's sovereignty (1952). AT: each event on its date; owners on 27
     July 1953 ≥ 90 % of land cells.
+    Done (ADR-942): owners on 27 July 1953 99.78 %, 98.9 % of the moved land right; no event passed over; no war on
+    28 July, the track ended.
   - [ ] R62i4 The new nations' names, colours and flags; renames as state (a save mid-run the same hash). AT: each
     nation living on the track from 1938 to 1953 has a name, a colour of its own and a flag of its own.
   - [ ] R62i5 The world free after the last event. AT: a war of the AI's own (declared after the end) within 5 years

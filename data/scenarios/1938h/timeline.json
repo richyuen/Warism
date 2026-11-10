@@ -14982,6 +14982,33 @@
    "note": "East Bengal"
   },
   {
+   "date": "1947-09-15",
+   "kind": "occupy",
+   "by": "HUN",
+   "of": [
+    "HUN"
+   ],
+   "ring": [
+    [
+     16.0,
+     48.6
+    ],
+    [
+     22.9,
+     48.6
+    ],
+    [
+     22.9,
+     45.7
+    ],
+    [
+     16.0,
+     45.7
+    ]
+   ],
+   "note": "The Paris treaties in force: Hungary sovereign"
+  },
+  {
    "date": "1948-01-04",
    "kind": "release",
    "subject": "BUR",
@@ -15877,6 +15904,57 @@
    "note": "The Sino-Soviet treaty"
   },
   {
+   "date": "1950-04-01",
+   "kind": "occupy",
+   "by": "ITA",
+   "of": [
+    "ITA"
+   ],
+   "ring": [
+    [
+     41.0,
+     -1.8
+    ],
+    [
+     41.0,
+     4.0
+    ],
+    [
+     41.9,
+     4.0
+    ],
+    [
+     45.0,
+     5.0
+    ],
+    [
+     47.9,
+     8.0
+    ],
+    [
+     49.0,
+     9.5
+    ],
+    [
+     51.5,
+     11.9
+    ],
+    [
+     52.0,
+     11.0
+    ],
+    [
+     48.0,
+     4.0
+    ],
+    [
+     42.5,
+     -1.8
+    ]
+   ],
+   "note": "Somalia: the Italian trusteeship"
+  },
+  {
    "date": "1950-05-01",
    "kind": "withdraw",
    "nation": "CHI",
@@ -15940,6 +16018,429 @@
    "note": "The civil war's fighting ends, no peace signed"
   },
   {
+   "date": "1950-06-25",
+   "kind": "hold",
+   "sides": [
+    [
+     "PRK",
+     "CCP"
+    ],
+    [
+     "KOR",
+     "USA",
+     "ENG",
+     "FRA",
+     "NED",
+     "TUR",
+     "GRE",
+     "BEL",
+     "LUX",
+     "PHI",
+     "SIA",
+     "COL",
+     "ETH"
+    ]
+   ],
+   "until": "1953-07-28",
+   "note": "The Korean War: the timeline's stages"
+  },
+  {
+   "date": "1950-06-25",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "PRK"
+   ],
+   "defenders": [
+    "KOR"
+   ],
+   "note": "North Korea invades"
+  },
+  {
+   "date": "1950-06-27",
+   "kind": "join",
+   "nation": "USA",
+   "beside": "KOR",
+   "against": "PRK",
+   "note": "The United Nations: the United States"
+  },
+  {
+   "date": "1950-06-28",
+   "kind": "occupy",
+   "by": "PRK",
+   "of": [
+    "KOR"
+   ],
+   "ring": [
+    [
+     124.3,
+     38.0
+    ],
+    [
+     130.0,
+     38.0
+    ],
+    [
+     130.0,
+     37.0
+    ],
+    [
+     124.3,
+     37.0
+    ]
+   ],
+   "note": "Seoul falls"
+  },
+  {
+   "date": "1950-06-29",
+   "kind": "join",
+   "nation": "ENG",
+   "beside": "KOR",
+   "against": "PRK",
+   "without": [
+    "IRE",
+    "EGY",
+    "SUD",
+    "BEA",
+    "SRH",
+    "NIG",
+    "GCO",
+    "OMN",
+    "MAL",
+    "SAR",
+    "NFL"
+   ],
+   "note": "Britain, Canada, Australia, New Zealand, South Africa"
+  },
+  {
+   "date": "1950-07-31",
+   "kind": "join",
+   "nation": "FRA",
+   "beside": "KOR",
+   "against": "PRK",
+   "without": [
+    "AOF",
+    "AEF",
+    "MAD",
+    "FMO",
+    "TUN",
+    "INC"
+   ],
+   "note": "The other contingents"
+  },
+  {
+   "date": "1950-07-31",
+   "kind": "join",
+   "nation": "NED",
+   "beside": "KOR",
+   "against": "PRK",
+   "without": [
+    "DEI"
+   ]
+  },
+  {
+   "date": "1950-07-31",
+   "kind": "join",
+   "nation": "TUR",
+   "beside": "KOR",
+   "against": "PRK"
+  },
+  {
+   "date": "1950-07-31",
+   "kind": "join",
+   "nation": "GRE",
+   "beside": "KOR",
+   "against": "PRK"
+  },
+  {
+   "date": "1950-07-31",
+   "kind": "join",
+   "nation": "BEL",
+   "beside": "KOR",
+   "against": "PRK"
+  },
+  {
+   "date": "1950-07-31",
+   "kind": "join",
+   "nation": "LUX",
+   "beside": "KOR",
+   "against": "PRK"
+  },
+  {
+   "date": "1950-07-31",
+   "kind": "join",
+   "nation": "PHI",
+   "beside": "KOR",
+   "against": "PRK"
+  },
+  {
+   "date": "1950-07-31",
+   "kind": "join",
+   "nation": "SIA",
+   "beside": "KOR",
+   "against": "PRK"
+  },
+  {
+   "date": "1950-07-31",
+   "kind": "join",
+   "nation": "COL",
+   "beside": "KOR",
+   "against": "PRK"
+  },
+  {
+   "date": "1950-07-31",
+   "kind": "join",
+   "nation": "ETH",
+   "beside": "KOR",
+   "against": "PRK"
+  },
+  {
+   "date": "1950-08-01",
+   "kind": "occupy",
+   "by": "PRK",
+   "of": [
+    "KOR"
+   ],
+   "ring": [
+    [
+     124.3,
+     38.0
+    ],
+    [
+     130.0,
+     38.0
+    ],
+    [
+     130.0,
+     36.1
+    ],
+    [
+     128.3,
+     36.1
+    ],
+    [
+     128.3,
+     34.2
+    ],
+    [
+     124.3,
+     34.2
+    ]
+   ],
+   "note": "The Pusan perimeter"
+  },
+  {
+   "date": "1950-09-28",
+   "kind": "withdraw",
+   "nation": "PRK",
+   "ring": [
+    [
+     124.3,
+     38.0
+    ],
+    [
+     130.0,
+     38.0
+    ],
+    [
+     130.0,
+     33.0
+    ],
+    [
+     124.3,
+     33.0
+    ]
+   ],
+   "captured": true,
+   "note": "Inchon: the North Korean army in the south lost"
+  },
+  {
+   "date": "1950-09-28",
+   "hour": 1,
+   "kind": "occupy",
+   "by": "KOR",
+   "of": [
+    "KOR"
+   ],
+   "ring": [
+    [
+     124.3,
+     38.0
+    ],
+    [
+     130.0,
+     38.0
+    ],
+    [
+     130.0,
+     33.0
+    ],
+    [
+     124.3,
+     33.0
+    ]
+   ],
+   "note": "Seoul retaken"
+  },
+  {
+   "date": "1950-10-19",
+   "kind": "join",
+   "nation": "CCP",
+   "beside": "PRK",
+   "against": "KOR",
+   "note": "The People's Volunteers"
+  },
+  {
+   "date": "1950-11-24",
+   "kind": "withdraw",
+   "nation": "PRK",
+   "ring": [
+    [
+     124.0,
+     40.3
+    ],
+    [
+     127.5,
+     40.3
+    ],
+    [
+     129.8,
+     41.0
+    ],
+    [
+     130.0,
+     41.0
+    ],
+    [
+     130.0,
+     38.0
+    ],
+    [
+     124.0,
+     38.0
+    ]
+   ],
+   "captured": true,
+   "note": "To the Yalu"
+  },
+  {
+   "date": "1950-11-24",
+   "hour": 1,
+   "kind": "occupy",
+   "by": "KOR",
+   "of": [
+    "PRK"
+   ],
+   "ring": [
+    [
+     124.0,
+     40.3
+    ],
+    [
+     127.5,
+     40.3
+    ],
+    [
+     129.8,
+     41.0
+    ],
+    [
+     130.0,
+     41.0
+    ],
+    [
+     130.0,
+     38.0
+    ],
+    [
+     124.0,
+     38.0
+    ]
+   ],
+   "note": "The north held by the United Nations"
+  },
+  {
+   "date": "1951-01-04",
+   "kind": "occupy",
+   "by": "PRK",
+   "of": [
+    "PRK"
+   ],
+   "ring": [
+    [
+     124.0,
+     43.1
+    ],
+    [
+     131.0,
+     43.1
+    ],
+    [
+     131.0,
+     38.0
+    ],
+    [
+     124.0,
+     38.0
+    ]
+   ],
+   "note": "The Chinese offensives: the north back"
+  },
+  {
+   "date": "1951-01-04",
+   "kind": "occupy",
+   "by": "PRK",
+   "of": [
+    "KOR"
+   ],
+   "ring": [
+    [
+     124.3,
+     38.0
+    ],
+    [
+     130.0,
+     38.0
+    ],
+    [
+     130.0,
+     37.0
+    ],
+    [
+     124.3,
+     37.0
+    ]
+   ],
+   "note": "Seoul lost again"
+  },
+  {
+   "date": "1951-03-15",
+   "kind": "occupy",
+   "by": "KOR",
+   "of": [
+    "KOR"
+   ],
+   "ring": [
+    [
+     124.3,
+     38.0
+    ],
+    [
+     130.0,
+     38.0
+    ],
+    [
+     130.0,
+     33.0
+    ],
+    [
+     124.3,
+     33.0
+    ]
+   ],
+   "note": "Seoul retaken"
+  },
+  {
    "date": "1951-05-23",
    "kind": "transfer",
    "to": "CCP",
@@ -15965,6 +16466,232 @@
     ]
    ],
    "note": "Tibet annexed"
+  },
+  {
+   "date": "1951-06-15",
+   "kind": "occupy",
+   "by": "KOR",
+   "of": [
+    "PRK"
+   ],
+   "ring": [
+    [
+     126.9,
+     38.0
+    ],
+    [
+     127.1,
+     38.2
+    ],
+    [
+     127.6,
+     38.3
+    ],
+    [
+     128.1,
+     38.3
+    ],
+    [
+     128.4,
+     38.6
+    ],
+    [
+     128.65,
+     38.62
+    ],
+    [
+     129.0,
+     38.0
+    ]
+   ],
+   "note": "The line of 1951 to the armistice"
+  },
+  {
+   "date": "1951-06-15",
+   "kind": "occupy",
+   "by": "PRK",
+   "of": [
+    "KOR"
+   ],
+   "ring": [
+    [
+     126.0,
+     38.0
+    ],
+    [
+     126.9,
+     38.0
+    ],
+    [
+     126.7,
+     37.9
+    ],
+    [
+     126.1,
+     37.7
+    ],
+    [
+     126.0,
+     37.75
+    ]
+   ]
+  },
+  {
+   "date": "1952-04-28",
+   "kind": "occupy",
+   "by": "JAP",
+   "of": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     130.0,
+     45.6
+    ],
+    [
+     146.0,
+     45.6
+    ],
+    [
+     146.0,
+     30.9
+    ],
+    [
+     128.8,
+     30.9
+    ],
+    [
+     128.8,
+     34.6
+    ],
+    [
+     130.0,
+     34.6
+    ]
+   ],
+   "note": "The Treaty of San Francisco: Japan sovereign (Okinawa American still)"
+  },
+  {
+   "date": "1952-09-15",
+   "kind": "transfer",
+   "to": "ETH",
+   "from": [
+    "ITA"
+   ],
+   "ring": [
+    [
+     36.3,
+     18.1
+    ],
+    [
+     43.2,
+     18.1
+    ],
+    [
+     43.2,
+     12.6
+    ],
+    [
+     41.6,
+     13.0
+    ],
+    [
+     40.0,
+     14.4
+    ],
+    [
+     38.5,
+     14.0
+    ],
+    [
+     37.5,
+     14.3
+    ],
+    [
+     36.5,
+     14.5
+    ]
+   ],
+   "note": "Eritrea federated with Ethiopia"
+  },
+  {
+   "date": "1953-07-27",
+   "kind": "leave",
+   "nations": [
+    "PRK",
+    "CCP"
+   ],
+   "against": "KOR",
+   "note": "The armistice at Panmunjom"
+  },
+  {
+   "date": "1953-07-27",
+   "kind": "transfer",
+   "to": "KOR",
+   "from": [
+    "PRK"
+   ],
+   "ring": [
+    [
+     126.9,
+     38.0
+    ],
+    [
+     127.1,
+     38.2
+    ],
+    [
+     127.6,
+     38.3
+    ],
+    [
+     128.1,
+     38.3
+    ],
+    [
+     128.4,
+     38.6
+    ],
+    [
+     128.65,
+     38.62
+    ],
+    [
+     129.0,
+     38.0
+    ]
+   ],
+   "note": "The demarcation line"
+  },
+  {
+   "date": "1953-07-27",
+   "kind": "transfer",
+   "to": "PRK",
+   "from": [
+    "KOR"
+   ],
+   "ring": [
+    [
+     126.0,
+     38.0
+    ],
+    [
+     126.9,
+     38.0
+    ],
+    [
+     126.7,
+     37.9
+    ],
+    [
+     126.1,
+     37.7
+    ],
+    [
+     126.0,
+     37.75
+    ]
+   ]
   }
  ],
  "maps": [
@@ -20027,15 +20754,6 @@
      ]
     },
     {
-     "by": "SOV",
-     "of": [
-      "HUN"
-     ],
-     "countries": [
-      "HUN"
-     ]
-    },
-    {
      "by": "USA",
      "of": [
       "JAP"
@@ -20053,6 +20771,70 @@
       "LBY",
       "ERI",
       "SOM"
+     ]
+    }
+   ]
+  },
+  {
+   "date": "1953-07-27",
+   "note": "The armistice: the two Koreas on the demarcation line; Tibet and Hainan the People's Republic's; Eritrea Ethiopia's",
+   "byCountry": {
+    "ERI": "ETH"
+   },
+   "byProvince": {
+    "CHN-1775": "CCP",
+    "CHN-1662": "CCP"
+   },
+   "regions": [],
+   "occupied": [
+    {
+     "by": "SOV",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2330",
+      "AUT-2322",
+      "AUT-2331"
+     ]
+    },
+    {
+     "by": "USA",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2326",
+      "AUT-2327"
+     ]
+    },
+    {
+     "by": "ENG",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2325",
+      "AUT-2323"
+     ]
+    },
+    {
+     "by": "FRA",
+     "of": [
+      "AUT"
+     ],
+     "provinces": [
+      "AUT-2329",
+      "AUT-2320"
+     ]
+    },
+    {
+     "by": "ENG",
+     "of": [
+      "ITA"
+     ],
+     "countries": [
+      "LBY"
      ]
     }
    ]

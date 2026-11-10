@@ -322,3 +322,10 @@
   to Taipei; the Sino-Soviet treaty.
 - `capital` and `guarantee` `end` kinds. 1 January 1950: owners 99.77 % of land, 98.7 % of the moved land right.
 - Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62i3: the Korean War to the armistice (ADR-942)
+
+- The invasion, the United Nations' contingents, China's volunteers; the fronts by stages; the armistice's line by
+  transfer. Hungary sovereign (1947), Japan sovereign (1952), Somalia, Eritrea.
+- 27 July 1953: owners 99.78 % of land, 98.9 % of the moved land right; no war on 28 July; no event passed over.
+- Evidence: `tests/sweep/historyMatch1938h.test.ts`. Gate.

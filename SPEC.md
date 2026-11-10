@@ -1754,7 +1754,8 @@ to 27 July 1953, then sets the world free.
   Hiroshima and Nagasaki the only ones: the AI strikes nothing while the track steers), the Soviet entry, Japan's
   surrender, the colonies born again. 1946-49 (R62i1, ADR-940): the new states born on the lines history drew,
   their wars held on them. The Chinese civil war by stages of transfer (R62i2, ADR-941): `capital` (a seat
-  moved) and `guarantee` with `end` (a pledge withdrawn).
+  moved) and `guarantee` with `end` (a pledge withdrawn). The Korean War to the armistice, its line drawn by
+  transfer on the track's last day (R62i3, ADR-942).
 - **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is
   reached by the timeline's steering (objectives, dates, historical arrivals of forces and phase buffs),
   tuned per period against a match tool (R62h). The shared rules do not change for the track.
