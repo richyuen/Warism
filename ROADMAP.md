@@ -1310,6 +1310,16 @@ every other dimension at 8. Naval's findings are items, fixed, then the critic a
   days over); Malta never taken; alliances ignore the map (carried). Ideas: "next lift in N days" (R58b); dated
   notices (R58c).
 
+## The release checks after critic run 61
+
+`npm run check:review` on `492b59a3` was red on one spec not on `knownRed.json`, twice: the gate runs only the specs a
+commit changes, and critic runs 55–61 did not run it.
+
+- [x] R61a `orderRowsTap1938`'s land case (844 × 390, the panel open): the nation panel lay over the ticker's order rows,
+  so a tap could not open one. Red since R55j (`d3519cb0`: green on `5671d6c1`, red on it), which stood the landscape
+  panel over the news. Now the ticker and the war banners stand beside the panel, the panel leaving them 17 rem. The
+  same landscape rule is behind R61-N1 (R60a) and R60-N4 (R59d), left to batch 14. AT: the spec green.
+
 ## Batch 14 — run 60's findings (after the release, the user's call)
 
 Critic run 60 (focused, on `91d11424`): no blocking issue; naval 8 (its bar, by ADR-914's 5 % rule: 1 of 300 new

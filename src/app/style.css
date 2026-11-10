@@ -2457,9 +2457,19 @@ button.unit-icon.on {
    open, and the Build grid has four columns. */
 @media (max-height: 500px) {
   .nation-panel {
-    width: min(40rem, calc(100% - 1rem));
+    width: var(--side-panel-w);
     max-height: calc(100% - 3.4rem - var(--bar-top, 2.8rem) - 0.4rem);
     z-index: 3;
+  }
+  /* The news beside the panel, not under it (ROADMAP R61a; the release check of run 61: at 844 × 390 the panel lay
+     over the ticker's order rows, so a tap could not open one, orderRowsTap1938 red since R55j). The panel leaves the
+     ticker 17 rem on its right (the panel stands 0.5 rem in, with its padding and border). */
+  #ui {
+    --side-panel-w: min(40rem, calc(100vw - 20rem));
+  }
+  #ui:has(.nation-panel) .ticker.compact,
+  #ui:has(.nation-panel) .war-banners {
+    left: calc(var(--side-panel-w) + 2.5rem);
   }
   .nation-panel .build-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
