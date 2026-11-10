@@ -237,6 +237,22 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     the two Koreas and the Korean War to the armistice, Japan's sovereignty (1952); the new nations' names, colours and
     flags. AT: each event on its date; owners match history on 1 January 1950 and 27 July 1953 ≥ 90 % of land cells;
     the world free after the last event (a war of the AI's own within 5 years on most of 10 seeds loaded from 1953).
+    In slices (ADR-939), each with its part of the AT:
+  - [x] R62i0 The war's loose ends: the Axis pact left by each member as it changes sides; the surrendered fleets and
+    wings taken, not handed on. AT: no Axis pact on 26 October 1945; the Soviet ships and wings not grown by Germany's.
+    Done (ADR-939): `withdraw` `fleets`; the pact gone, Japan's fleet gone, the Soviet one unchanged by the annex.
+  - [ ] R62i1 1946–49: the Philippines, India and Pakistan, Burma, Ceylon, Israel and its war, Indonesia, the two
+    Germanies, the two Koreas. AT: each event on its date.
+  - [ ] R62i2 The Chinese civil war: the People's Republic, the Republic on Taiwan. AT: each event on its date; owners
+    on 1 January 1950 ≥ 90 % of land cells.
+  - [ ] R62i3 The Korean War to the armistice; Japan's sovereignty (1952). AT: each event on its date; owners on 27
+    July 1953 ≥ 90 % of land cells.
+  - [ ] R62i4 The new nations' names, colours and flags; renames as state (a save mid-run the same hash). AT: each
+    nation living on the track from 1938 to 1953 has a name, a colour of its own and a flag of its own.
+  - [ ] R62i5 The world free after the last event. AT: a war of the AI's own (declared after the end) within 5 years
+    on most of 10 seeds loaded from 1953.
+    Read early (ADR-939, the timeline to 1945 and the track run to its end): 79-99 wars in 5 years on each of 10
+    seeds, a dozen in the first 3 months; the bar met, the burst at the end to be judged here.
   - [ ] R62j Intervention and the player's view: the first God Mode act, editor edit or taking of a nation (a command
     of the pending queue of those kinds; listed in a test) ends the track and reseeds at that hour; a line under the
     date while the track runs (the next event and its date), the end's row in the History, the events' rows in the

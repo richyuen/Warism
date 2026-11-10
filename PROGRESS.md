@@ -302,3 +302,10 @@
   Japan, Korea and Manchuria occupied; Taiwan to China.
 - `runMatch` reports each detonation. 26 October 1945: owners and control 97.2 % right; no event passed over.
 - Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62i0: the war's loose ends (ADR-939)
+
+- R62i split in slices (i0-i5). Measured what the maps do not: the Axis pact alive in October 1945, Germany's ships
+  Soviet by the annex.
+- The Axis pact left by each member as it changes sides; `withdraw` `fleets` takes the surrendered ships and wings.
+- Evidence: `tests/sweep/historyMatch1938h.test.ts`, `tests/unit/trackLevers1938h.test.ts`. Gate.

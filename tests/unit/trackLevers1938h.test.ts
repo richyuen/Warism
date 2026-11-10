@@ -254,3 +254,31 @@ describe('a scripted strike (ROADMAP R62h3)', () => {
     expect(w.warheads.get(id('USA'))?.stock ?? 0).toBe(0);
   });
 });
+
+describe('a surrender (ROADMAP R62i0)', () => {
+  it("withdraw with fleets: the nation's ships and air wings go wherever they are, its land formations only in the ring", () => {
+    const BERLIN: [number, number][] = [[12.5, 53.2], [14.5, 53.2], [14.5, 51.8], [12.5, 51.8]];
+    const TLF: TimelineFile = { events: [{ date: '1938-01-02', kind: 'withdraw', nation: 'GER', ring: BERLIN, captured: true, fleets: true }] };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, TLF);
+    const w = sim.world;
+    const GER = id('GER');
+    const count = (): [number, number] => {
+      let land = 0;
+      let other = 0;
+      w.formations.forEach((i) => {
+        if (w.formations.cols.nation[i] !== GER) return;
+        if (w.rules?.templates[w.formations.cols.template[i]!]?.domain === 0) land++;
+        else other++;
+      });
+      return [land, other];
+    };
+    sim.step(24, quiet);
+    const [land0, other0] = count();
+    expect(other0).toBeGreaterThan(0);
+    sim.step(1, quiet);
+    const [land1, other1] = count();
+    expect(other1).toBe(0);
+    expect(land1).toBeLessThan(land0);
+    expect(land1).toBeGreaterThan(0);
+  });
+});

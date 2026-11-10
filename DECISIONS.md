@@ -9,6 +9,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-939 · 2026-11-10 · accepted — R62i in slices; the war's loose ends (R62i0)
+- **R62i split** as R62g and R62h were: i0 the war's loose ends; i1 1946-49 (the Philippines, India and Pakistan,
+  Burma, Ceylon, Israel and its war, Indonesia, the two Germanies, the two Koreas); i2 the Chinese civil war to the
+  People's Republic and the Republic on Taiwan, the map of 1 January 1950; i3 the Korean War to the armistice, Japan's
+  sovereignty, the map of 27 July 1953; i4 the new nations' names, colours and flags (Slovakia, Croatia, Vichy and the
+  Social Republic too), renames as state; i5 the world free after the last event (10 seeds loaded from 1953). The bars
+  are R62i's, each in its slice.
+- **Measured what the maps do not** (October 1945): no war left; the Axis pact alive under Italy with Japan, Hungary,
+  Romania, Bulgaria and Thailand in it; Germany's 2 ships Soviet by the annex; no warheads anywhere.
+- **The Axis pact:** each member leaves on the day it changes sides (Italy 8 September 1943, Romania, Bulgaria,
+  Hungary, Thailand on 16 August 1945); with Japan alone in it, it dissolves.
+- **`withdraw` with `fleets`:** the nation's ships and air wings go too, wherever they are (a ring holds land cells
+  only). Germany's and Japan's surrenders take theirs.
+- **Measured** (`historyMatch1938h.test.ts`): on 26 October 1945 no Axis pact; Japan with no ships or wings on 3
+  September; the Soviet ships and wings the same on 9 May as on 7 May 1945. A unit test of `fleets`.
+
 ### ADR-938 · 2026-11-10 · accepted — The Pacific's end and Japan's surrender (R62h3)
 - **`nuke`**, a timeline kind: a fission warhead of the nation's bursts at its place on its hour (`detonate`, its
   effects a launch's), with no stockpile, bomber or toggle asked. The AI strikes nothing while the track steers

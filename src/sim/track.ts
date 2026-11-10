@@ -473,11 +473,17 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       const { w } = world.cells;
       const gone: number[] = [];
       world.formations.forEach((i) => {
-        if (f.nation[i] !== n || world.rules?.templates[f.template[i]!]?.domain !== Domain.land) return;
+        if (f.nation[i] !== n) return;
+        const land = world.rules?.templates[f.template[i]!]?.domain === Domain.land;
+        if (!land) {
+          if (e.fleets === true) gone.push(i);
+          return;
+        }
         if (inRing.has(Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w)) gone.push(i);
       });
       for (const i of gone.sort((a, b) => a - b)) {
-        if (e.captured !== true) world.nations.cols.manpower[n] = world.nations.cols.manpower[n]! + f.strength[i]!;
+        const land = world.rules?.templates[f.template[i]!]?.domain === Domain.land;
+        if (e.captured !== true && land) world.nations.cols.manpower[n] = world.nations.cols.manpower[n]! + f.strength[i]!;
         applyCommand(world, { kind: 'removeFormation', id: i });
       }
       // Applied however many it found: a ring cleared (an empty pocket is no event passed over).

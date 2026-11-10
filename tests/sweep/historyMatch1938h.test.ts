@@ -40,6 +40,16 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   // After Japan's surrender (R62h3): its foes, and the nations living or not on 26 October 1945.
   const ASIA: [string, number][] = [['JAP', 1], ['MAN', 0], ['MEN', 0], ['MAL', 1], ['SAR', 1], ['DEI', 1]];
   let japFoes = -1;
+  // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
+  let axisPact = true;
+  const fleets = new Map<string, number>();
+  const fleetOf = (w: Parameters<NonNullable<Parameters<typeof runMatch>[3]>>[0], t: string): number => {
+    let k = 0;
+    w.formations.forEach((i) => {
+      if (w.formations.cols.nation[i] === id(t) && w.rules?.templates[w.formations.cols.template[i]!]?.domain !== 0) k++;
+    });
+    return k;
+  };
   let asia: number[] = [];
   const axis = new Set(['GER', 'FIN', 'ROM', 'HUN', 'ITA'].map(id));
   const [ru, rv] = project(24.1, 56.95);
@@ -54,7 +64,10 @@ it('1938-39: the land owned as history had it, and the events fire on their date
         if (w.formations.cols.nation[i] === id('SOV') && w.rules?.templates[w.formations.cols.template[i]!]?.domain === 0) soviet += w.formations.cols.strength[i]!;
       });
       if (date === '1945-06-01') living = STATES.map(([t]) => w.nations.cols.living[id(t)]!);
+      if (date === '1945-05-07' || date === '1945-05-09') fleets.set(`SOV ${date}`, fleetOf(w, 'SOV'));
+      if (date === '1945-09-03') fleets.set('JAP', fleetOf(w, 'JAP'));
       if (date === '1945-10-26') {
+        axisPact = w.alliances.list.some((a) => a.nameKey === 'alliance.anti_comintern');
         asia = ASIA.map(([t]) => w.nations.cols.living[id(t)]!);
         japFoes = 0;
         w.nations.forEach((n) => {
@@ -76,6 +89,9 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   expect(maps.length).toBe(10);
   expect(asia).toEqual(ASIA.map((x) => x[1]));
   expect(japFoes).toBe(0);
+  expect(axisPact).toBe(false);
+  expect(fleets.get('JAP')).toBe(0);
+  expect(fleets.get('SOV 1945-05-09')).toBe(fleets.get('SOV 1945-05-07'));
   // The two scripted strikes, the only nuclear ones (R62h3): the United States', on their hours, where they were.
   const at = (lon: number, lat: number): [number, number] => {
     const [u, v] = project(lon, lat);

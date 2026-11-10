@@ -565,9 +565,10 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    */
   /**
    * An evacuation (R62g2): `nation`'s land formations in `ring` leave the theatre, their men back to its pool; or a
-   * pocket (`captured`, R62g3): they are taken, their men lost.
+   * pocket (`captured`, R62g3): they are taken, their men lost. With `fleets` (a surrender, R62i0) its ships and air
+   * wings go too, wherever they are.
    */
-  z.strictObject({ ...when, kind: z.literal('withdraw'), nation: tag, ring, captured: z.boolean().optional(), note: z.string().optional() }),
+  z.strictObject({ ...when, kind: z.literal('withdraw'), nation: tag, ring, captured: z.boolean().optional(), fleets: z.boolean().optional(), note: z.string().optional() }),
   z.strictObject({ ...when, kind: z.literal('redeploy'), nation: tag, from: ring, to: z.array(lonLat).min(1), share: z.number().gt(0).max(1) }),
   /**
    * A nuclear strike of the timeline's (R62h3: Hiroshima, Nagasaki): a fission warhead of `nation`'s bursts at `at`,

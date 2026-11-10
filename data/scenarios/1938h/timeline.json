@@ -9689,6 +9689,13 @@
    ]
   },
   {
+   "date": "1943-09-08",
+   "hour": 1,
+   "kind": "allianceLeave",
+   "nation": "ITA",
+   "note": "Italy out of the Axis"
+  },
+  {
    "date": "1943-09-09",
    "kind": "transfer",
    "to": "GER",
@@ -11241,6 +11248,12 @@
   },
   {
    "date": "1944-08-23",
+   "kind": "allianceLeave",
+   "nation": "ROM",
+   "note": "Romania out of the Axis"
+  },
+  {
+   "date": "1944-08-23",
    "hour": 1,
    "kind": "hold",
    "sides": [
@@ -11721,6 +11734,12 @@
   },
   {
    "date": "1944-09-09",
+   "kind": "allianceLeave",
+   "nation": "BUL",
+   "note": "Bulgaria out of the Axis"
+  },
+  {
+   "date": "1944-09-09",
    "hour": 1,
    "kind": "join",
    "nation": "BUL",
@@ -12094,6 +12113,12 @@
     "HUN"
    ],
    "against": "USA"
+  },
+  {
+   "date": "1945-01-20",
+   "kind": "allianceLeave",
+   "nation": "HUN",
+   "note": "Hungary out of the Axis"
   },
   {
    "date": "1945-01-28",
@@ -13710,7 +13735,8 @@
     ]
    ],
    "captured": true,
-   "note": "The surrender: the Wehrmacht taken"
+   "fleets": true,
+   "note": "The surrender: the Wehrmacht taken, its ships and wings too"
   },
   {
    "date": "1945-05-08",
@@ -13794,6 +13820,12 @@
     32.75
    ],
    "note": "Nagasaki"
+  },
+  {
+   "date": "1945-08-16",
+   "kind": "allianceLeave",
+   "nation": "SIA",
+   "note": "Thailand's declaration of war void: the Axis ends, Japan left alone in it"
   },
   {
    "date": "1945-08-18",
@@ -14052,7 +14084,8 @@
     ]
    ],
    "captured": true,
-   "note": "Japan's surrender: its forces disarmed"
+   "fleets": true,
+   "note": "Japan's surrender: its forces disarmed, its ships and wings too"
   },
   {
    "date": "1945-09-02",
