@@ -2464,16 +2464,21 @@ button.unit-icon.on {
   .nation-panel .build-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  /* The Actions tab in two columns, each row whole in one (304 px of rows in a 200 px box). */
+  /* The Actions tab in two columns, each row whole in one (304 px of rows in a 200 px box): diplomacy and the wars on
+     the left from the top, so a war's row and the reason its peace is refused are in view as the war starts (ROADMAP
+     R58d; critic run 59: balanced columns put that line at the panel's foot, cut); the assist and the air on the right. */
   .nation-panel .actions-tab {
-    column-count: 2;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 1rem;
+    align-items: start;
   }
-  .nation-panel .actions-tab > * {
-    break-inside: avoid;
+  .nation-panel .act-part-diplomacy {
+    grid-column: 1;
+    grid-row: 1 / span 2;
   }
-  /* A heading stays with its first row. */
-  .nation-panel .actions-tab > .panel-sub {
-    break-after: avoid;
+  .nation-panel .act-part-assist,
+  .nation-panel .act-part-air {
+    grid-column: 2;
   }
 }

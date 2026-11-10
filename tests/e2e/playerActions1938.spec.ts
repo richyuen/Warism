@@ -94,6 +94,13 @@ test('player actions: build a formation, declare war, offer peace, propose an al
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByTestId(`act-why-peace-${war.id}`).scrollIntoViewIfNeeded();
   await expect(page.getByTestId(`act-why-peace-${war.id}`)).toBeInViewport();
+  // On its side, whole within the panel as it opens, unscrolled (ROADMAP R58d; critic run 59: cut at the panel's foot).
+  await page.setViewportSize({ width: 844, height: 390 });
+  await page.locator('.nation-panel').evaluate((e) => (e.scrollTop = 0));
+  await page.waitForTimeout(300);
+  const why = (await page.getByTestId(`act-why-peace-${war.id}`).boundingBox())!;
+  const panel = (await page.locator('.nation-panel').boundingBox())!;
+  expect(why.y + why.height, 'the reason line within the panel at 844 × 390').toBeLessThanOrEqual(panel.y + panel.height);
   await page.setViewportSize(desk);
   expect((await inspect(page)).wars.some((w) => w.id === war.id)).toBe(true);
 

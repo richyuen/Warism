@@ -79,8 +79,10 @@ export function ActionsTab({ nation, nations, wars, templates, onCommand, wings,
   };
   return (
     <section class="god-tab actions-tab" data-testid="panel-actions">
+      {/* Three parts, in this order on a phone upright; on its side diplomacy and the wars take the left column, the
+          assist and the air the right, so a war's row and its reason stand at the top (ROADMAP R58d). */}
       {assist ? (
-        <>
+        <div class="act-part act-part-assist">
           <div class="panel-sub" title={t('act.assistHint')}>
             {t('act.assist')}
           </div>
@@ -92,62 +94,64 @@ export function ActionsTab({ nation, nations, wars, templates, onCommand, wings,
               </label>
             ))}
           </div>
-        </>
-      ) : null}
-      <div class="panel-sub">{t('god.diplomacy')}</div>
-      <div class="god-row">
-        <select data-testid="act-target" value={tgt} onChange={(e) => setTarget(Number((e.currentTarget as HTMLSelectElement).value))}>
-          <option value={0} disabled>
-            {t('act.chooseNation')}
-          </option>
-          {others.map((o) => (
-            <option key={o.id} value={o.id}>
-              {displayName(o.name)}
-            </option>
-          ))}
-        </select>
-      </div>
-      {standing ? (
-        <div class={`panel-note standing-${standing.kind}`} data-testid="act-standing" data-standing={standing.kind}>
-          {standingText(standing)}
         </div>
       ) : null}
-      <div class="god-row">
-        <button type="button" class="god-btn" data-testid="act-war" data-force={standing?.bond ? 1 : 0} disabled={tgt === 0 || standing?.kind === 'war' || standing?.kind === 'beside'} title={standing?.kind === 'beside' ? t('refusal.beside') : undefined} onClick={() => onCommand({ kind: 'forceWar', attacker: n, defender: tgt })}>
-          {t(standing?.bond ? 'act.forceWar' : 'god.war')}
-        </button>
-        <button type="button" class="god-btn" data-testid="act-ally" disabled={tgt === 0 || standing?.kind === 'war' || allyNo !== ''} title={allyNo || undefined} onClick={() => onCommand({ kind: 'proposeAlliance', from: n, to: tgt })}>
-          {t('act.proposeAlliance')}
-        </button>
-      </div>
-      {myWars.map((w) => {
-        const mine = w.attackers.includes(n) ? w.score : -w.score;
-        // As the right-click menu's (ROADMAP R56d; critic run 57, R57-N2: pressed at +0, nothing happened and nothing
-        // was said): greyed while the enemy would refuse, the reason in its title (`peaceVerdict`, one rule with the sim).
-        const verdict = peaceVerdict(w.score, w.exhaustion, w.toDeath, w.attackers.includes(n) ? 0 : 1);
-        return (
-          <div key={w.id}>
-            <div class="god-row">
-              <span class="god-war-name">
-                {nameOf(w.attackers[0] ?? 0)} {'⚔'} {nameOf(w.defenders[0] ?? 0)} ({mine >= 0 ? '+' : ''}
-                {Math.round(mine)})
-              </span>
-              <button type="button" class="god-btn" data-testid={`act-peace-${w.id}`} disabled={!verdict.accepted} title={peaceWhy(verdict) || undefined} onClick={() => onCommand({ kind: 'offerPeace', war: w.id, from: n })}>
-                {t('act.offerPeace')}
-              </button>
-            </div>
-            {/* The reason in a line under the row, read on a phone too: a touch shows no title (ROADMAP R57d; critic run 58, R58-N3). */}
-            {verdict.accepted ? null : (
-              <div class="panel-note act-why" data-testid={`act-why-peace-${w.id}`}>
-                {peaceWhy(verdict)}
-              </div>
-            )}
+      <div class="act-part act-part-diplomacy">
+        <div class="panel-sub">{t('god.diplomacy')}</div>
+        <div class="god-row">
+          <select data-testid="act-target" value={tgt} onChange={(e) => setTarget(Number((e.currentTarget as HTMLSelectElement).value))}>
+            <option value={0} disabled>
+              {t('act.chooseNation')}
+            </option>
+            {others.map((o) => (
+              <option key={o.id} value={o.id}>
+                {displayName(o.name)}
+              </option>
+            ))}
+          </select>
+        </div>
+        {standing ? (
+          <div class={`panel-note standing-${standing.kind}`} data-testid="act-standing" data-standing={standing.kind}>
+            {standingText(standing)}
           </div>
-        );
-      })}
+        ) : null}
+        <div class="god-row">
+          <button type="button" class="god-btn" data-testid="act-war" data-force={standing?.bond ? 1 : 0} disabled={tgt === 0 || standing?.kind === 'war' || standing?.kind === 'beside'} title={standing?.kind === 'beside' ? t('refusal.beside') : undefined} onClick={() => onCommand({ kind: 'forceWar', attacker: n, defender: tgt })}>
+            {t(standing?.bond ? 'act.forceWar' : 'god.war')}
+          </button>
+          <button type="button" class="god-btn" data-testid="act-ally" disabled={tgt === 0 || standing?.kind === 'war' || allyNo !== ''} title={allyNo || undefined} onClick={() => onCommand({ kind: 'proposeAlliance', from: n, to: tgt })}>
+            {t('act.proposeAlliance')}
+          </button>
+        </div>
+        {myWars.map((w) => {
+          const mine = w.attackers.includes(n) ? w.score : -w.score;
+          // As the right-click menu's (ROADMAP R56d; critic run 57, R57-N2: pressed at +0, nothing happened and nothing
+          // was said): greyed while the enemy would refuse, the reason in its title (`peaceVerdict`, one rule with the sim).
+          const verdict = peaceVerdict(w.score, w.exhaustion, w.toDeath, w.attackers.includes(n) ? 0 : 1);
+          return (
+            <div key={w.id}>
+              <div class="god-row">
+                <span class="god-war-name">
+                  {nameOf(w.attackers[0] ?? 0)} {'⚔'} {nameOf(w.defenders[0] ?? 0)} ({mine >= 0 ? '+' : ''}
+                  {Math.round(mine)})
+                </span>
+                <button type="button" class="god-btn" data-testid={`act-peace-${w.id}`} disabled={!verdict.accepted} title={peaceWhy(verdict) || undefined} onClick={() => onCommand({ kind: 'offerPeace', war: w.id, from: n })}>
+                  {t('act.offerPeace')}
+                </button>
+              </div>
+              {/* The reason in a line under the row, read on a phone too: a touch shows no title (ROADMAP R57d; critic run 58, R58-N3). */}
+              {verdict.accepted ? null : (
+                <div class="panel-note act-why" data-testid={`act-why-peace-${w.id}`}>
+                  {peaceWhy(verdict)}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
 
       {wings.length > 0 ? (
-        <>
+        <div class="act-part act-part-air">
           <div class="panel-sub">{t('act.air')}</div>
           {wingOrder || dropArmed ? (
             <div class="panel-note" data-testid="act-wing-armed">
@@ -224,7 +228,7 @@ export function ActionsTab({ nation, nations, wars, templates, onCommand, wings,
               </div>
             </div>
           ))}
-        </>
+        </div>
       ) : null}
 
     </section>

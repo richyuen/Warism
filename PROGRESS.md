@@ -2460,3 +2460,13 @@
   324 "On the march" under a grey "6 January 1938 … the landing is over"; h140, all six told, orange; 0 page errors.
   Shots looked at (`.cache/probe/shots/c58wt_27125_323_h{140,400}.png`).
 - Tests: `npx playwright test tests/e2e/orderNews1938.spec.ts tests/e2e/landingNearNews1938.spec.ts` (6 passed); the three-day age in `orderNewsStale.test.ts` (`noticeOld`).
+
+## 2026-11-09 — R58d: the refused peace's reason whole on a phone on its side
+- `ActionsTab`: three parts (assist, diplomacy with the wars, air), in the same order upright; at a height of 500 px or
+  less a grid, diplomacy and the wars in the left column from the top, the assist and the air in the right (the
+  balanced columns had put the war row at the left column's foot).
+- 30403, Germany at war with Poland, day 0, 844 × 390: the reason line at 241–267 px, the panel's foot 335 (was
+  321–347, cut); 390 × 844 the same as before. Shots looked at (`.cache/probe/shots/r58d_30403_*`); 0 page errors.
+- Tests: `playerActions1938.spec.ts` (the line within the unscrolled panel at 844 × 390: red on the old layout, green),
+  `buildTab1938`, `forceWar1938`, `airOrders1938` by hand (20 passed).
+- Batch 13 done. **Next:** the landing fuzz on a block of fresh seeds, then critic run 60 (focused, ADR-915).

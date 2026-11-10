@@ -1299,7 +1299,9 @@ every other dimension at 8. Naval's findings are items, fixed, then the critic a
     critic's `c58_whotold.mjs`, run from a copy in `.cache/probe`); `orderNews1938.spec.ts`) R59-N2 (UI): a panel's kept order news ages: dated, or dropped once the division has a new order. AT: 27125
     at h400 (`critic/scripts/c58_whotold.mjs 27125 ITA ENG 1095.5,344.5 1106.5,383.5 6 400`): 323 and 324 "On the
     march" not under a live-looking orange "the landing is over"; h140 still all six told.
-  - [ ] R58d Run 59's small UI item: at 844 × 390 the greyed "Offer peace" reason line cut at the panel's foot on day 0
+  - [x] R58d (done: the Actions tab in three parts; on a phone on its side diplomacy and the wars the left column from
+    the top, the assist and the air the right; 30403 at 844 × 390 the line at 241–267 px in a panel to 335 (was 321–347,
+    cut); upright unchanged; `playerActions1938.spec.ts` red on the old layout, green now) Run 59's small UI item: at 844 × 390 the greyed "Offer peace" reason line cut at the panel's foot on day 0
     (`critic/shots/c59pb_30403_GER_POL_844x390_disabled_d0.png`): whole and readable. AT: `c58_peacebtn` 30403 at
     844 × 390, the line in view.
 - Not filed: the ticker keeping three of four "came ashore" rows in one hour (each panel tells its own, R57c); the
