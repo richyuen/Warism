@@ -9,6 +9,28 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-936 · 2026-11-10 · accepted — November 1942 to June 1944 (R62h1)
+- **The Eastern Front** by stages both ways, each a line on its date: the Soviet Union takes back what is east of it
+  (the Germans there falling back) and the Axis takes what is west (the Soviet armies there taken): 31 December 1942
+  (Uranus and Little Saturn; the Sixth Army and the Romanians at Stalingrad taken that day, a month before their
+  surrender), 31 March 1943 (the Caucasus left, Kharkov retaken by the Germans; the Kuban bridgehead held), 31 August
+  1943 (Kursk to Taganrog, east only), 31 December 1943 (Smolensk, the Dnieper, Kiev), 31 May 1944 (Leningrad freed,
+  Ukraine, Odessa, the Crimea). Soviet arrivals every other month.
+- **Africa and France:** El Alamein (Egypt cleared), Torch (Morocco and Algeria held by the Allies, then Algeria
+  France's and Morocco and West Africa its puppets), Case Anton (all of Vichy's France held by Germany, Italy's zone
+  and Corsica Italy's), France back at war (held against Germany to D-Day), Tunisia held by the Axis at peace then
+  taken with its army (13 May 1943, Tunisia France's puppet), Libya held by Britain. Italy held against the Allies
+  between the stages.
+- **Italy:** Sicily; the armistice (`leave` against Britain, the United States and the Soviet Union); Germany taking
+  Italy's Balkans, Greece, the Adriatic coast and Italy's zone of France; the Italian Social Republic born north of
+  the Gustav line and Germany's puppet; the Kingdom at war with Germany (held); Rome on 4 June 1944. The armistice's
+  `leave` gives back the land each side held of the other, so Libya, Eritrea and Somalia are held by Britain again
+  the hour after; Sicily is the Kingdom's (as from February 1944).
+- **The Pacific and China:** Buna and Gona, the Aleutians, Lae and Salamaua retaken; Hollandia; Ichigo's first stage
+  (Henan). The China hold now runs to Japan's surrender, Ichigo by stages.
+- **Measured** (`historyMatch1938h.test.ts`), 5 June 1944: owners 99.81 %, 97.4 % right, stray 0.08 %; control
+  99.40 %, the land moved 95.5 % right (43,173 cells), stray 0.29 %; no event passed over.
+
 ### ADR-935 · 2026-11-10 · accepted — 1942, the fronts held between their stages (R62h0)
 - **The events:** the Moscow counter-offensive (the Soviet Union taking back its land east of the January 1942 line,
   the Germans there falling back; Kerch), the Axis lines of 24 July (Kharkov, Sevastopol, Case Blue to the Don), 25

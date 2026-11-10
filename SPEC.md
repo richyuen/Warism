@@ -1748,7 +1748,8 @@ to 27 July 1953, then sets the world free.
   an owner's `occupy` (land taken back), `born` of a dead nation (a revival). Barbarossa by stages (R62g3,
   ADR-933): the Axis lines on their dates, the pockets taken (`withdraw` with `captured`). The Pacific opening
   (R62g4, ADR-934): Pearl Harbor, 11 December's declarations, the first month's conquests by stages. From 1942 the
-  fronts are held between their stages and move by them alone (R62h0, ADR-935).
+  fronts are held between their stages and move by them alone (R62h0, ADR-935); stages both ways, Italy's
+  armistice and the Italian Social Republic (R62h1, ADR-936).
 - **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is
   reached by the timeline's steering (objectives, dates, historical arrivals of forces and phase buffs),
   tuned per period against a match tool (R62h). The shared rules do not change for the track.

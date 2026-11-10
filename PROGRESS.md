@@ -274,3 +274,13 @@
 - The Soviet army: arrivals were disbanded for want of pay; +100 % income from December 1941 carries them (3.47M).
 - 1 November 1942: control 99.41 %, 95.3 % right, stray 0.21 %; no event passed over.
 - Evidence: `tests/sweep/historyMatch1938h.test.ts`. Gate.
+
+## 2026-11-10 — R62h1: November 1942 to June 1944 (ADR-936)
+
+- The Eastern Front by stages both ways (Stalingrad, Kharkov, Kursk, the Dnieper, Leningrad freed, the Crimea);
+  El Alamein, Torch, Case Anton, Tunisia; Sicily, Italy's armistice, the Italian Social Republic, Rome; New Guinea, the
+  Aleutians, Hollandia; Ichigo's first stage.
+- Italy's armistice gave back Britain's occupations (`leave`): held again the hour after.
+- 5 June 1944: owners 99.81 %, 97.4 % right, stray 0.08 %; control 99.40 %, 95.5 % right, stray 0.29 %; no event
+  passed over.
+- Evidence: `tests/sweep/historyMatch1938h.test.ts`. Gate.

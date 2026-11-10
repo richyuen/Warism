@@ -36,7 +36,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const { maps, skipped } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1942-11-02',
+    '1944-06-06',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
@@ -54,7 +54,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(7);
+  expect(maps.length).toBe(8);
   for (const { date, cols } of maps) {
     expect(cols.whole, date).toBeGreaterThanOrEqual(0.95);
     expect(cols.movedRight, date).toBeGreaterThanOrEqual(0.95);
