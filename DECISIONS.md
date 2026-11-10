@@ -44,6 +44,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
     in DATA_SOURCES.md) whose events become ordinary commands at their hour, so they are logged, saved and replay
     like any command (SPEC §2.6). Territory by lon/lat rings, as the 1938 ownership is drawn (`ownership.json`).
   - "Deterministic": the scenario's seed is fixed and not offered on its form; a run is the same each time.
+  - **Reseed at the end (the user's, 2026-11-10):** when the track ends, on 27 July 1953 or early at the first
+    intervention, the world takes a second seed and every RNG stream is derived again from it (§2.6), so the free
+    world after the track differs from run to run while the track itself does not. The second seed is rolled by
+    the new-game form at the start (random once a visit, as the seed is; `?after=` in the URL) and kept in the
+    state, so the reseed is part of the run and replays and loads like the rest.
+  - **How the land is matched:** by the scenario's own data, never by the shared rules. Borders that changed by
+    treaty (Munich, the partitions, Vichy, the post-war borders) are transfers on their date and match by
+    construction; land that changed by fighting is reached by steering: each war phase's objectives, dates and the
+    historical arrivals of forces (formations placed, buffs for a phase) in the timeline, tuned by period
+    (R62c–f) against `historyMatch`. No rule of plain 1938 or the random world changes for the track (ADR-803).
+    A period whose bar steering cannot reach is a BLOCKERS entry and a question to the user, not a rule change.
   - Built as Batch 15 (R62, lettered parts) after Batch 14 (ADR-920).
 - **Consequences.** SPEC §1's non-goal is narrowed: plain 1938 and the random world still diverge freely; the
   historical scenario does not until the track ends. SPEC §7.7 holds the design. The seed-99 pin of plain 1938 must

@@ -19,3 +19,6 @@
   off, the track ended by the first intervention, a listed scenario of its own (ADR-919); no critic run before it
   is built, Batch 14 first (ADR-920). SPEC §1's non-goal narrowed and §7.7 added; ROADMAP Batch 15 (R62a–h).
   Documents only: the gate has nothing to run.
+- The reseed at the track's end (the user's, ADR-919): a second seed rolled by the form and kept in the state,
+  taken by every RNG stream when the track ends, in 1953 or at the intervention; and how the land is matched (by
+  the scenario's timeline data, never the shared rules). SPEC §7.7, R62a and R62g's ATs.

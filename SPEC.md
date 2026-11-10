@@ -1708,7 +1708,13 @@ to 27 July 1953, then sets the world free.
 - **The end:** on 27 July 1953, or at the first intervention (a God Mode act, an editor edit, the taking of
   a nation), the track ends for good: every switch returns to the usual rules, and the History has a row
   saying when and why.
-- **Seed:** fixed by the scenario and not offered on its form; the track is the same each run.
+- **Seed:** fixed by the scenario and not offered on its form; the track is the same each run. A second
+  seed, rolled by the form (`?after=`) and kept in the state, is taken when the track ends (in 1953 or at
+  the intervention): every RNG stream is derived again from it, so the world after the track differs from
+  run to run.
+- **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is
+  reached by the timeline's steering (objectives, dates, historical arrivals of forces and phase buffs),
+  tuned per period against `historyMatch`. The shared rules do not change for the track.
 
 ---
 

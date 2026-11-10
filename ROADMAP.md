@@ -68,7 +68,9 @@ intervention or on 27 July 1953. Then the critic (one run for Batches 14 and 15)
   - [ ] R62a The scenario and the runner: `1938h` listed on the title screen ("1938 — Historical", its preview, fixed
     seed, no seed on its form); `timeline.json`'s schema and its check in `npm run data -- --check`; rings baked to
     cells; the runner giving each due event as commands at its hour, skipping one that no longer applies with a row
-    saying so; the track's state saved; dormant nations born on their date. AT: a test timeline of every event kind
+    saying so; the track's state saved; dormant nations born on their date; the second seed (`?after=`, rolled by the
+    form, kept in the state) taken by every RNG stream when the track ends. AT: two runs with one seed and different
+    second seeds hash equal up to the end and differ within a year after it; a test timeline of every event kind
     fires each on its hour (all of them, 0 late); save and load mid-track bit-identical and the run after the load
     equal to the uninterrupted one; plain 1938's seed-99 pin unmoved (or moved in its own commit by a section the
     track adds, ADR-919).
@@ -101,7 +103,7 @@ intervention or on 27 July 1953. Then the critic (one run for Batches 14 and 15)
   - [ ] R62g Intervention and the player's view: the first God Mode act, editor edit or taking of a nation ends the
     track (each command kind listed in a test); a line under the date while the track runs (the next event and its
     date), the end's row in the History, the events' rows in the ticker with their historical names. AT: each of the
-    listed kinds, given at 6 h, 1, 30 and 365 days, ends it and no event fires after; screenshots at world zoom on
+    listed kinds, given at 6 h, 1, 30 and 365 days, ends it, reseeds at that hour, and no event fires after; screenshots at world zoom on
     phone and desktop sizes.
   - [ ] R62h The checker and the accuracy measure: `historyTrack` in `tests/helpers/` (no timeline event refused
     but those skipped by rule, no war or peace not on the timeline while it runs, diploInvariants through the track)
