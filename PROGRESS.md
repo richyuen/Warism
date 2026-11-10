@@ -56,3 +56,13 @@
   desk, landscape phone and phone: dated, whole beside a panel, an undated refusal beside it); screenshots
   `test-results/orderRowDated-{phone,land}.png` looked at. SPEC §9.2's ticker line. Gate green. UI only: no tick or
   frame budget touched.
+
+## 2026-11-10 — R59d: the landscape nation panel ends above the bar (R60-N4)
+
+- `src/app/style.css`, `@media (max-height: 500px)`: the nation panel is `box-sizing: border-box`, so its max-height
+  holds its padding and border; before, they ran it 9.6–11.1 px past the bar's top, the last row half hidden.
+- Evidence: `tests/e2e/panelFootLandscape1938.spec.ts` (new; seed 30403, Germany played, each tab scrolled to its
+  end): red at all five critic sizes before, green after; screenshots at 667 × 375 and 932 × 430 looked at. The
+  layout specs beside it green: `buildTab1938`, `phoneLayout1938`, `nationPanel1938`, `orderRowsBrief1938`,
+  `orderRowsPanel1938`, `orderRowsTap1938` (31). The critic's own `c58_peacebtn` page script not run (its server
+  setup); the spec reads the same seed, nation and sizes. Gate green.
