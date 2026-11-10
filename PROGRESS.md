@@ -2470,3 +2470,13 @@
 - Tests: `playerActions1938.spec.ts` (the line within the unscrolled panel at 844 × 390: red on the old layout, green),
   `buildTab1938`, `forceWar1938`, `airOrders1938` by hand (20 passed).
 - Batch 13 done. **Next:** the landing fuzz on a block of fresh seeds, then critic run 60 (focused, ADR-915).
+
+## 2026-11-09 — Before critic run 60: the landing fuzz; the replay not needed
+- `landingFuzz.ts` at `d0007e69`, seeds 203951–204049 (50), 300 runs, 26 min at 3 jobs: **2 of 300 broken (0.7 %)**,
+  both `slowClick`, both Japan's (setup 3517), best way 5.6 days: `landingInvariants.ts 203997 3517 120 203997 30,90 2`
+  (t158's click of 366, 12.6 days) and `… 204017 3517 120 204017 30 2 8` (t2's click of 367, 12.9 days). Under ADR-914's
+  5 % they are non-blocking; no landing rule changed for them (the user's call after R59-B1).
+- The critic's headless replay (ADR-833) not run: since run 59's `fe9b0e9e` the sim gained one read
+  (`nextVoyageHours`), no rule, so its 42 jobs read the same worlds. Its page probes of what changed ran in R58c
+  (`c58_whotold`) and R58d (`c58_peacebtn`).
+- **Next:** critic run 60 (focused, ADR-915).
