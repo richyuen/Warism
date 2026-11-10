@@ -2485,3 +2485,9 @@
 - Naval 8 (was 7): by ADR-914's 5 % rule (1 of 300 new setups broke `slowClick`, 31099); the landing sim the same as
   run 59's (396 setups text-identical). uiUxPolish 8, diplomacyWarDepth 8, stability 8 scored afresh; ten carried at 8.
 - Non-blocking R60-N1–N5 filed as batch 14 (R59), after the release. **Next:** the full run (ADR-916), then the release.
+
+## 2026-11-09 — Critic run 61 (full, on d971a46b): no blocking issue, all 14 dimensions at 8
+- The release check ADR-916 asks for: every dimension scored afresh, none carried; the source the same as run 60's (396
+  landing setups text-identical). `slowClick` 3 of 300 new runs (1.0 %), under ADR-914's 5 %; every other checker 0.
+- Non-blocking R61-N1–N5 filed as R60 in batch 14, after the release. `npm run bench -- G` left to the release step
+  (it writes `docs/bench/`). **Next:** ADR-917 (the critic's time bounds), then RELEASES steps 3–4.

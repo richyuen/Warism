@@ -1327,5 +1327,20 @@ setups broke `slowClick`); every dimension at its bar. A full run and the releas
     `c58_peacebtn` 30403 at those sizes, the last row whole.
   - [ ] R59e R60-N5: `seaBattlesLook` does not fail a listed battle with no fleets left to draw (31501 t17369). AT:
     `seaBattlesLook` on 31501 exit 0, that battle "no fleet to see".
-- Not filed: R60-SC, the `slowClick` tail (30041, 31099, 203997, 204017, all Japan's 366/367 from Tokyo), under the 5 %
+- [ ] R60 **Run 61's non-blocking findings** (the full run, on `d971a46b`: no blocking issue, every dimension at 8).
+  - [ ] R60a R61-N1: at landscape sizes (844 × 390, 932 × 430, 1024 × 500) an ordered landing's bar lies over the nation
+    panel's ×, so a tap on × opens the landing (21103, England's four from Portsmouth to Bremerhaven; a regression since
+    run 55, the panel widened under the bar). AT: `node critic/scripts/c61_x_closeblock.mjs 21103 844 390` gives
+    `atClose` the `nation-close` button and `clickOk` true; `c55_lbox` 21103 and 32223 at 844 × 390 run their six days.
+  - [ ] R60b R61-N2: with a scenario file chosen on the title screen, the big Start starts plain 1938 and drops the file
+    (32441); "No file chosen" beside the chosen file; the card's Cancel unstyled. AT: `MAINSTART=1 node
+    critic/scripts/c61_x_editor.mjs 32441` keeps the paint, or the main Start is not offered while a file is pending.
+  - [ ] R60c R61-N3: a truncated scenario file is told "Could not load: Failed to fetch". AT: the first 2,000 bytes of an
+    exported file told the file is damaged or incomplete.
+  - [ ] R60d R61-N4: random worlds of 2 or 3 nations have no war in 10–15 years (32403). AT: 3 nations sharing a border
+    at war within 10 years on most seeds, or the count's floor raised to where wars start (SPEC says which).
+  - [ ] R60e R61-N5: History's same-day rows can read backwards (32019, 2 December 1957: the peace above the
+    annexation). AT: same-day rows in the order they happened.
+- Not filed: R61-SC, 3 of 300 (1.0 %; 32167 Japan's 366 twice, and 32115 England's 274, the first not Japan's: both
+  transport groups sailed full without it, its "about 5 days" true). R60-SC, the `slowClick` tail (30041, 31099, 203997, 204017, all Japan's 366/367 from Tokyo), under the 5 %
   rule; ADR-914's proposal 2 held. The old small items (27125's ticker rows, the phone's panel over the corridor).
