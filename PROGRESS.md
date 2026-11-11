@@ -23,3 +23,8 @@
   in 99.7 % of 1,092 samples (75.5 % before), never past.
 - Evidence: `tests/e2e/trackView1938h.spec.ts` (≥ 95 % present; red before, 0.77), `tests/unit/trackShown.test.ts`. Gate.
 
+## 2026-11-11 — R65b: the God tab says it ends the replay (ADR-961)
+
+- A note at the God tab's head while the track runs; the bar's and the tab's words "Any God Mode act ends the replay of
+  history." Evidence: `tests/e2e/trackView1938h.spec.ts` (in view, gone at the end). Gate.
+

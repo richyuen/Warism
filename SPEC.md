@@ -1735,7 +1735,9 @@ to 27 July 1953, then sets the world free.
 - **The end:** on 27 July 1953, or at the first intervention (a God Mode act, an editor edit, the taking of
   a nation), the track ends for good: every switch returns to the usual rules, and the History has a row
   saying when and why. Built (R62j0, ADR-945): the first command applied while it runs ends it in that hour, before
-  the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none.
+  the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none. While it
+  runs, the scenario's form, Take control, the God Mode bar, the nation's God tab (at its head) and the editor say
+  so (R64a, R65b; ADR-952, ADR-961); the end is told in the ticker.
 - **The player's view** (built, R62j1, ADR-946): while the track runs a line under the date names its next event that
   has a name and its date (not the steering's: `hold`, `objective`, `buff`, `redeploy`), the first of the next and the
   `TRACK_AHEAD` (8) after it that the stats carry whose hour is not behind the shown one (R64f, R65a, ADR-960;

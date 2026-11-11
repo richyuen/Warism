@@ -63,3 +63,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   before), never past, at most 2 blank in a row. `tests/e2e/trackView1938h.spec.ts` "at Max…" now asks ≥ 95 % present
   (red on the code before: 0.77); `tests/unit/trackShown.test.ts`.
 
+### ADR-961 · 2026-11-11 · accepted — The God tab says it ends the replay (R65b, R63-N2)
+- **Cause** (critic run 63, `c63_h_godtab.mjs`): the nation's God tab, about 40 controls, said nothing; the Take
+  control note was scrolled out, and the bar's "Any act here ends the replay of history." stood under "Map tools", read
+  as those tools' alone. One tick of "World AI" ended the replay.
+- **Rule:** the God tab has the note at its head while the track runs (`god-tab-ends-track`), and the bar and the tab
+  say "Any God Mode act ends the replay of history." (`track.anyGodAct`); the editor keeps "Any act here…".
+- **Measured:** `tests/e2e/trackView1938h.spec.ts` ("what ends the replay…"): Germany's God tab's note in view at
+  1400 × 800, gone with the replay's end.
+

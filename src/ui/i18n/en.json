@@ -1184,6 +1184,7 @@
   "settings.fixedSeed": "A replay of history: the same world every game, with no seed or option to choose. Taking a nation, a God Mode act or an editor edit ends the replay, and the world goes its own way.",
   "track.endsIt": "Ends the replay of history: the world then goes its own way.",
   "track.anyAct": "Any act here ends the replay of history.",
+  "track.anyGodAct": "Any God Mode act ends the replay of history.",
   "settings.seed": "Seed",
   "settings.nations": "Nations",
   "settings.nationsRange": "{min} to {max}",

@@ -449,6 +449,7 @@ export function App({
                   rules: stats.rules,
                   refusal: hud.refusal.value,
                   onCommand: (c) => hud.command(c),
+                  endsTrack: stats.trackNext !== undefined,
                   place: player
                     ? { templates: hud.templates.value, armed: player.placeFor.value === nation.id ? player.placing.value : null, onArm: (t) => player.armPlace(t, nation.id) }
                     : null,

@@ -32,9 +32,10 @@ Rules:
     samples while the track runs, and never past.
     Done (ADR-960): the stats carry 8 events ahead; 99.7 % present, never past; `trackView1938h.spec.ts`,
     `tests/unit/trackShown.test.ts`.
-  - [ ] R65b R63-N2: the God tab ends the replay unsaid ("World AI" and its 40 controls, the note scrolled out or read
+  - [x] R65b R63-N2: the God tab ends the replay unsaid ("World AI" and its 40 controls, the note scrolled out or read
     as the map tools'). AT: in `node critic/scripts/c63_h_godtab.mjs 1600 900 god-world-ai` a note that an act ends the
     replay in view at the God tab's head.
+    Done (ADR-961): the note at the tab's head, "Any God Mode act…" there and on the bar; `trackView1938h.spec.ts`.
   - [ ] R65c Small, from run 63: the 18 August 1945 Manchukuo triple in the History; the bar's note grey where the
     panel's is red; the track's line ~10 px on a phone; a started scenario file grey for 2-3 s. AT: each seen fixed in
     its probe (`c63_hist.mjs`, `c63_h_god.mjs`, `c63_h_phone.mjs`, `c63_x_loadfile.mjs`).

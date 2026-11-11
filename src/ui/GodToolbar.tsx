@@ -36,7 +36,7 @@ export function GodToolbar({ tool, onTool, spawnSize, onSpawnSize, thermonuclear
       <span class="god-tools-name">{t('god.tools')}</span>
       {endsTrack ? (
         <span class="god-tools-hint panel-warn" data-testid="god-ends-track">
-          {t('track.anyAct')}
+          {t('track.anyGodAct')}
         </span>
       ) : null}
       {TOOLS.map((k) => (

@@ -85,11 +85,20 @@ test('what ends the replay is said before; the end is told in the ticker', async
   await page.evaluate((n) => window.__warsim!.view!.select(n), ger);
   await expect(page.getByTestId('take-ends-track')).toContainText(/ends the replay/i);
   await page.screenshot({ path: path.join(out, 'take-ends-track.png') });
+  // R65b (critic run 63, R63-N2): the God tab says it at its head, in view with the tab's controls.
+  await page.getByTestId('god-btn').click();
+  await page.getByTestId('tab-god').click();
+  await expect(page.getByTestId('god-tab-ends-track')).toContainText(/God Mode act ends the replay/i);
+  await expect(page.getByTestId('god-tab-ends-track')).toBeInViewport();
+  await expect(page.getByTestId('god-ends-track')).toContainText(/God Mode act ends the replay/i);
+  await page.screenshot({ path: path.join(out, 'god-tab-ends-track.png') });
   await page.getByTestId('take-control').click();
   await stepTo(page, 32);
   await expect(page.getByTestId('ticker')).toContainText('ended at your first intervention');
   await expect(page.getByTestId('track-next')).toHaveCount(0);
   await expect(page.getByTestId('take-ends-track')).toHaveCount(0);
+  await expect(page.getByTestId('god-tab-ends-track')).toHaveCount(0);
+  await expect(page.getByTestId('god-ends-track')).toHaveCount(0);
   await page.screenshot({ path: path.join(out, 'ended-in-ticker.png') });
   expect(errors).toEqual([]);
 });

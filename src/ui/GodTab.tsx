@@ -63,6 +63,8 @@ export interface GodTabProps {
   onCommand: (cmd: Command) => void;
   /** "Place at once" for this nation (PLAN 7.176b), with the scenario's templates; null without a player control. */
   place?: { templates: readonly TemplateInfo[]; armed: number | null; onArm: (template: number) => void } | null;
+  /** While the historical track runs (ROADMAP R65b): any act of the tab ends it, said at its head. */
+  endsTrack?: boolean;
 }
 
 /**
@@ -70,7 +72,7 @@ export interface GodTabProps {
  * nation, plus map tools (revolt, breakthrough, territory brush) that take the next map clicks.
  * Kill asks for a second click instead of a browser dialog.
  */
-export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, rules, refusal, onCommand, place }: GodTabProps) {
+export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, rules, refusal, onCommand, place, endsTrack = false }: GodTabProps) {
   const n = nation.id;
   const others = nations.filter((o) => o.id !== n).sort((a, b) => displayName(a.name).localeCompare(displayName(b.name)));
   // The name typed and the armed Kill are this nation's (PLAN 2.17e3): each is kept with the
@@ -116,6 +118,11 @@ export function GodTab({ nation, nations, wars, dead, aiEnabled, nukesEnabled, r
   );
   return (
     <section class="god-tab" data-testid="panel-god">
+      {endsTrack ? (
+        <p class="panel-note panel-warn" data-testid="god-tab-ends-track">
+          {t('track.anyGodAct')}
+        </p>
+      ) : null}
       {/* Place at once first (PLAN 7.177a, the user's request). */}
       {place ? <PlaceSection templates={place.templates} place={{ armed: place.armed, onArm: place.onArm, refusal }} /> : null}
       {refusal !== 0 ? (
