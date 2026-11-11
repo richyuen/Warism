@@ -44,6 +44,24 @@ Rules:
     the world after 1953 forgetting the blocs; the same history every game (ADR-919); a confirm before the first act
     (ADR-952 chose notes). Each a design question for the user, not an item.
 
+## Batch 19 — run 64's findings (focused, on `a90c7f57`: no blocking issue, every dimension at 8)
+
+Before Batch 18: two are regressions of Batch 17's own fixes.
+
+- [ ] R70 **Run 64's non-blocking findings.**
+  - [ ] R70a R64-N3: `transferTold` hides land rows of other events in the hour (8 May 1945: "Czechoslovakia took land
+    from Hungary", "Yugoslavia took land from Hungary"): it matches the giver, not the receiver. AT:
+    `npx tsx critic/scripts/c64_transfer.ts` shows no row hidden but a told transfer's own (its `to` and `from`), and a
+    death's only in the hour after; `tests/unit/historyTransferTold1938h.test.ts` gains the case.
+  - [ ] R70b R64-N1: on a phone the track's line shows ~8 letters of its note (11 px in 150 px: "Next, 12 March 1938:
+    The An…"). AT: in `node critic/scripts/c64_h_phone.mjs 390 844` and `844 390` the Anschluss's line whole, its
+    text ≥ 11 px.
+  - [ ] R70c Small, from run 64: a paused start's bar says "Pause" while the world builds; Slovakia's "annexed" and
+    "destroyed" in one hour (8 May 1945); the "Next" line blank ~0.4 s when over 9 named events fall in a second. AT:
+    each seen fixed in its probe (`c64_*`), or the reason it is left in the item.
+  - Not taken: R64-N2, one `slowClick` on new seed 36105 (no sim file changed since run 63; the known tail R61-SC).
+    Design objections as run 63's (Batch 18 takes the fronts and the blocs); a confirm before the first act (ADR-952).
+
 ## Batch 18 — after release-2026-11-11 (the user's decision, ADR-958)
 
 In this order, after Batch 17. Each split into lettered parts with their ATs when started.

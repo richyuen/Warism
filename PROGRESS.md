@@ -36,3 +36,8 @@
 - Evidence: `tests/unit/historyTransferTold1938h.test.ts`, `tests/e2e/worldBuilding1938.spec.ts`. Gate.
 - Batch 17 done; next Batch 18 (R66: armies on the replay's fronts).
 
+## 2026-11-11 — Critic run 64 (focused, on `a90c7f57`): no blocking issue, all 14 dimensions at 8
+
+- Filed: Batch 19, R70a-c, before Batch 18 (R64-N3 and R64-N1 are regressions of R65c's own fixes: land rows of other
+  events hidden; the phone's line cut to ~8 letters). R64-N2 a known `slowClick` on a new seed, not taken.
+
