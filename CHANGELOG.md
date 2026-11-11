@@ -2,6 +2,29 @@
 
 What each release of Warism brought, for players. Play it at https://richyuen.github.io/Warism/
 
+## release-2026-11-11 — history replayed: 1938 to 1953
+
+**New**
+- **World, 1938 — Historical**, on the title screen: the Second World War and the start of the Cold War as they went,
+  from March 1938 to the Korean armistice on 27 July 1953. Each event comes on its day: the Anschluss, Munich, the
+  invasion of Poland, the fall of France by mid-June 1940, Barbarossa, Pearl Harbor, Stalingrad, D-Day, Hiroshima and
+  Nagasaki, the zones of Germany, India's and Israel's independence, the Chinese civil war and Korea.
+- A line under the date names the next event and its day; the History and the ticker tell the events in their own
+  words, and the replay's turning points have their sound.
+- Your first act ends the replay — taking a nation, a God Mode act, an edit, a command — and the world goes on from
+  there as a game of its own. The form, Take control, the God Mode bar and the editor say so before; the ticker
+  tells when it ends. Left alone, the replay ends in July 1953 and the world is the AI's.
+
+**Changed**
+- Landings: the notices of a landing waiting for its transports say when they come back, and the transports sail
+  again only with the troops told they wait for them.
+- On a phone on its side, the nation panel's foot and a landing's bar no longer cover the bottom bar or each other.
+
+**Fixes**
+- A scenario file chosen on the title screen starts with the big Start; a broken file is told as broken.
+- History's rows of the same day read in order; ticker order rows are dated as the war rows are.
+- A strike whose dead fall on no nation's land says so plainly.
+
 ## release-2026-11-10 — landings you order, and the landings bar
 
 **New**
