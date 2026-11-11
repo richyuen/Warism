@@ -48,7 +48,7 @@ Rules:
 
 Before Batch 18: two are regressions of Batch 17's own fixes.
 
-- [ ] R70 **Run 64's non-blocking findings.**
+- [x] R70 **Run 64's non-blocking findings.**
   - [x] R70a R64-N3: `transferTold` hides land rows of other events in the hour (8 May 1945: "Czechoslovakia took land
     from Hungary", "Yugoslavia took land from Hungary"): it matches the giver, not the receiver. AT:
     `npx tsx critic/scripts/c64_transfer.ts` shows no row hidden but a told transfer's own (its `to` and `from`), and a
@@ -58,9 +58,11 @@ Before Batch 18: two are regressions of Batch 17's own fixes.
     The An…"). AT: in `node critic/scripts/c64_h_phone.mjs 390 844` and `844 390` the Anschluss's line whole, its
     text ≥ 11 px.
     Done (ADR-964): "12 Mar 1938: …" on two rows on a phone, whole at both sizes; `trackView1938h.spec.ts`.
-  - [ ] R70c Small, from run 64: a paused start's bar says "Pause" while the world builds; Slovakia's "annexed" and
+  - [x] R70c Small, from run 64: a paused start's bar says "Pause" while the world builds; Slovakia's "annexed" and
     "destroyed" in one hour (8 May 1945); the "Next" line blank ~0.4 s when over 9 named events fall in a second. AT:
     each seen fixed in its probe (`c64_*`), or the reason it is left in the item.
+    Done (ADR-965): "Resume" from the first frame (12f5c03a); `TRACK_AHEAD` 16, 0 blank at Max; Slovakia's pair left
+    (History is every game's whole log, the ticker tells it once).
   - Not taken: R64-N2, one `slowClick` on new seed 36105 (no sim file changed since run 63; the known tail R61-SC).
     Design objections as run 63's (Batch 18 takes the fronts and the blocs); a confirm before the first act (ADR-952).
 

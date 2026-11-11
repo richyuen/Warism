@@ -108,3 +108,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   Japan's occupation: North China" whole on two rows; `tests/e2e/trackView1938h.spec.ts` asks the line whole at both
   sizes and ≥ 11 px on a phone; the bar's and the phone's layout specs green.
 
+### ADR-965 · 2026-11-11 · accepted — Run 64's small findings (R70c)
+- **A paused start:** `?paused=1` was applied after the world was built, the bar saying "Pause" (a game left running)
+  until then; now as the HUD is made (`game.tsx`). `tests/e2e/worldBuilding1938.spec.ts` (27 samples said "Pause" on
+  the code before, none now).
+- **The "Next" line at Max:** `TRACK_AHEAD` 16 (8): April 1941 has more than 9 named events in a second at Max. The
+  probe at Max for 120 s: 0 blank of 1,096 samples (3 before), never past.
+- **Not changed: Slovakia "annexed" and "destroyed" in one hour** (8 May 1945). History is the whole log: every game's
+  annexation is followed there by the nation's end, and `tests/unit/history.test.ts` has it so; the ticker tells such
+  a death once (PLAN 3.12Rg2). A rule of every game's History, not the track's; left.
+

@@ -52,3 +52,9 @@
 - "12 Mar 1938: The Anschluss" whole at 390 × 844 and 844 × 390 (was "Next, 12 March 1938: The An…"), 11 px.
 - Evidence: `tests/e2e/trackView1938h.spec.ts` (whole, ≥ 11 px), the critic's `c64_h_phone.mjs`. Gate.
 
+## 2026-11-11 — R70c: run 64's small findings (ADR-965); R70 done
+
+- A forced paused start says "Resume" while the world is built (12f5c03a); the stats carry 16 named events ahead: 0
+  blank of 1,096 samples at Max. Slovakia's "annexed"/"destroyed" pair left: History is every game's whole log.
+- Evidence: `tests/e2e/worldBuilding1938.spec.ts`, the critic's `c63_h_blank.mjs`. Gate. Batch 19 done.
+

@@ -493,8 +493,8 @@ export interface TrackNext {
   ahead: { note: string; tick: number }[];
 }
 
-/** How many named events after the next one the stats carry (R65a). */
-export const TRACK_AHEAD = 8;
+/** How many named events after the next one the stats carry (R65a; 16 from R70c: April 1941 has more than 9 in a second at Max). */
+export const TRACK_AHEAD = 16;
 
 /** A buildable land template for the production UI (PLAN 1.33b). */
 export interface TemplateInfo {
