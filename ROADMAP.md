@@ -303,3 +303,21 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
   Done (ADR-951): the track's steering, not a rule of every game: a sector within one of its objectives taken as
   threatened. Paris by the fighting on 10-14 June on all 6 seeds (own seed 14 June); R62g1's bar restored; the 1938h
   sweep tests green, no warning; 2.10 against plain 1938's 2.42 ms a tick (2.143/2.061 and 2.332/2.498, swapped pairs), plain 1938's hash unchanged.
+
+## Batch 16 — run 62's findings (focused, on `9e094f50`: no blocking issue, every dimension at 8)
+
+- [ ] R64 **Run 62's non-blocking findings** (the historical track).
+  - [ ] R64a R62-N1: one click ends the replay, unwarned and untold in the ticker (taking a nation, a God Mode act).
+    AT: while the track runs the scenario's form, the Take control button and the God Mode bar say that it ends the
+    replay; the end has its ticker row (`node critic/scripts/c62_h_interv.mjs 1600 900`, `c62_h_god.mjs`).
+  - [ ] R64b R62-N2: builder's words in the news ("the timeline's stages") and events told twice (a war's row and its
+    note, a stage and its pocket, "India independent" and "India"). AT: no note with "timeline" or "stage" in the
+    player's rows; on `c62_hist.mjs`'s samples one row an event.
+  - [ ] R64c R62-N3: "The mobilisation" ×22 with no nation. AT: the Soviet arrivals named as the Soviet Union's, or left
+    out of the History and the "Next" line.
+  - [ ] R64d R62-N4: "Germany was annexed by Soviet Union" on 8 May 1945 after the zones. AT: the remnant's row reads as
+    the timeline's note, or the remnant goes to the zones' holders.
+  - [ ] R64e R62-N5: Nagasaki's burst on a sea cell, "where no nation holds the land" beside 72,000 dead. AT: both strikes
+    on Japan's land (`critic/scripts/c62_nagasaki.ts`); no strike row pairs "no nation holds the land" with civilians.
+  - [ ] R64f R62-N6: at Max the "Next" line names an event already past (14 of 60 samples). AT: no "Next" dated before
+    the date beside it in `c62_h_watch.mjs`'s 60 samples at Max.

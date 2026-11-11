@@ -393,3 +393,9 @@
   none. Now a sector within a track objective counts as threatened (1 in other worlds: no other game changes).
 - Paris by the fighting 10-14 June on all 6 seeds (own seed 14 June); R62g1's "before 22 June" restored.
   `historyMatch1938h`, `historyTrack1938h` (no warning), `chinaFront1938h`, `freeWorld1938h` green. 2.10 against plain 1938's 2.42 ms a tick (2.143/2.061 and 2.332/2.498, swapped pairs), plain 1938's hash unchanged.
+
+## 2026-11-10 — Critic run 62 (focused, `9e094f50`): no blocking issue, every dimension at 8
+
+- Scores: all 14 dimensions 8 (7 scored afresh, 7 carried). 0 blocking. The track's checker 0 broken on its own seed
+  and two new ones; diploInvariants, worldInvariants and landingInvariants 0 on new seeds; 0 page errors.
+- Six non-blocking findings on the historical track filed as R64a-f (Batch 16); run 61's and 60's findings re-run fixed.
