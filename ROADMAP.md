@@ -26,7 +26,7 @@ Rules:
 
 ## Batch 17 — run 63's findings (full, on `78b082b4`: no blocking issue, every dimension at 8)
 
-- [ ] R65 **Run 63's non-blocking findings** (the historical track).
+- [x] R65 **Run 63's non-blocking findings** (the historical track).
   - [x] R65a R63-N1: at Max the "Next" line is missing in 24.5 % of samples (hidden from its event's hour to the next
     stats, R64f's fix). AT: in `node critic/scripts/c63_h_blank.mjs 120 1600 900 99` the line present in ≥ 95 % of
     samples while the track runs, and never past.
@@ -36,9 +36,10 @@ Rules:
     as the map tools'). AT: in `node critic/scripts/c63_h_godtab.mjs 1600 900 god-world-ai` a note that an act ends the
     replay in view at the God tab's head.
     Done (ADR-961): the note at the tab's head, "Any God Mode act…" there and on the bar; `trackView1938h.spec.ts`.
-  - [ ] R65c Small, from run 63: the 18 August 1945 Manchukuo triple in the History; the bar's note grey where the
+  - [x] R65c Small, from run 63: the 18 August 1945 Manchukuo triple in the History; the bar's note grey where the
     panel's is red; the track's line ~10 px on a phone; a started scenario file grey for 2-3 s. AT: each seen fixed in
     its probe (`c63_hist.mjs`, `c63_h_god.mjs`, `c63_h_phone.mjs`, `c63_x_loadfile.mjs`).
+    Done (ADR-962): the note told alone; the bar's note red; 11 px on a phone; "Building the world…" at a start.
   - Not taken (design objections, no score lowered): the 1942-44 battles painted, not fought (SPEC §7.7, ADR-935);
     the world after 1953 forgetting the blocs; the same history every game (ADR-919); a confirm before the first act
     (ADR-952 chose notes). Each a design question for the user, not an item.

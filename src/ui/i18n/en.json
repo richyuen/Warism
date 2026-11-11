@@ -1,6 +1,7 @@
 {
   "app.title": "Warism",
   "app.tagline": "World war simulator",
+  "app.building": "Building the world…",
   "settings.language": "Language",
   "locale.en": "English",
   "locale.qps": "Pseudo-locale (i18n test)",

@@ -28,3 +28,11 @@
 - A note at the God tab's head while the track runs; the bar's and the tab's words "Any God Mode act ends the replay of
   history." Evidence: `tests/e2e/trackView1938h.spec.ts` (in view, gone at the end). Gate.
 
+## 2026-11-11 — R65c: run 63's small findings (ADR-962); R65 done
+
+- A transfer told by its note is not told again as land handed over or a nation destroyed (Manchukuo's triple); the
+  God Mode bar's note red; the track's line 11 px on a phone (8.8); "Building the world…" over the map until the first
+  stats at a start (2 s grey before, plain 1938 too).
+- Evidence: `tests/unit/historyTransferTold1938h.test.ts`, `tests/e2e/worldBuilding1938.spec.ts`. Gate.
+- Batch 17 done; next Batch 18 (R66: armies on the replay's fronts).
+

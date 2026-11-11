@@ -155,6 +155,13 @@ export function App({
             : null
         }
       />
+      {/* The world built in the worker (R65c; critic run 63: a grey map, no nations, for 2 s at a start, a file's or
+          plain 1938's): said over the map until its first stats. The toy world has none. */}
+      {!stats && scenarioIdOf(base) !== 'toy' ? (
+        <div class="world-building" data-testid="world-building">
+          {t('app.building')}
+        </div>
+      ) : null}
       <BottomBar
         date={hud.date()}
         // Not one already past (R64f; critic run 62, R62-N6): the stats come once a second, the date every frame.

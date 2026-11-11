@@ -222,6 +222,21 @@ textarea,
   font-variant-numeric: tabular-nums;
 }
 
+/* The world being built at a start (R65c): over the map's middle, under the bars, never in the way of a click. */
+.world-building {
+  position: fixed;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  background: rgba(20, 24, 32, 0.85);
+  color: #e8d4b0;
+  font-weight: 700;
+  pointer-events: none;
+  z-index: 5;
+}
+
 /* While the historical track runs (ROADMAP R62j1): its next event under the date, of a fixed width (the bar is
    centred: a line that changed its width would move every button), a long name cut short, whole in its tooltip. */
 .bar-date.has-track {

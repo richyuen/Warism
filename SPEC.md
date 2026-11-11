@@ -1743,7 +1743,8 @@ to 27 July 1953, then sets the world free.
   `TRACK_AHEAD` (8) after it that the stats carry whose hour is not behind the shown one (R64f, R65a, ADR-960;
   `src/app/trackShown.ts`); an event applied that the game
   tells no other way (a transfer, an occupation, a pocket, an arrival, a seat moved, a rename) is a `TrackEvent` row,
-  told in the ticker and the History by its note, once a day (R64b, ADR-953); a war, peace or annexation by the game's
+  told in the ticker and the History by its note, once a day (R64b, ADR-953), a transfer so told not again as the
+  land handed over or the end of a nation it took from (R65c, ADR-962); a war, peace or annexation by the game's
   own row.
 - **Seed:** fixed by the scenario and not offered on its form; the track is the same each run. A second
   seed, rolled by the form (`?after=`) and kept in the state, is taken when the track ends (in 1953 or at
@@ -1929,7 +1930,8 @@ builds).
   (`?looping=0`); aggression (`?aggr=random`); traits (`?traits=random`, 1–3, exclusions kept); diplomacy
   where the scenario has any (`?diplo=random`); heroes where it has any (`?heroes=on`); gold (`?gold=`
   random 0.25–2× or equal to the median); efficiency mode (`?ce=`, §5.3). A game starts paused
-  (`paused=1`). A loaded world keeps its own seed and options.
+  (`paused=1`). A loaded world keeps its own seed and options. Until the world built in the worker sends
+  its first stats (about 2 s), "Building the world…" stands over the map (R65c, ADR-962; not the toy world).
 - **Settings** (`src/ui/SettingsPanel.tsx`, `src/app/settings.ts`, kept in `localStorage`): UI size
   (`UI_SCALES` 85–130 %), unit size (`UNIT_SCALES` 50–200 %), unit look (balls or classic, §8.2), volume
   (`VOLUMES`, 0.5) and mute, pause on a nuclear burst (on); Screenshot (or F2: the map with its overlays,

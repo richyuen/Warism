@@ -72,3 +72,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Measured:** `tests/e2e/trackView1938h.spec.ts` ("what ends the replay…"): Germany's God tab's note in view at
   1400 × 800, gone with the replay's end.
 
+### ADR-962 · 2026-11-11 · accepted — Run 63's small findings (R65c)
+- **The bar's note red** (`.god-tools-hint.panel-warn`): `.god-tools-hint`'s grey, later in `style.css`, took the
+  `panel-warn` red; now red as the panels'.
+- **The track's line on a phone:** 0.72 em of the bar was 8.8 px at 390 × 844, 844 × 390 and 667 × 375; 11 px there
+  (`max-width: 600px` or `max-height: 500px`), in the same 150 px (the bar does not move; a long name is cut sooner).
+- **Manchukuo's triple** (18 August 1945: "Manchukuo was destroyed", "Mengjiang was destroyed", and the note
+  "Manchukuo and Mengjiang dissolved: China in name"): a timeline transfer told by its note is not told again as the
+  land handed over (its hour) or as a nation it took from destroyed (the hour after) (`transferTold`,
+  `src/worker/historyRows.ts`; History and ticker). The note kept, not the game's rows: on the own seed it also
+  covers "France freed: the Provisional Government" (Vichy), "The north freed: the Italian Social Republic ends",
+  "Xinjiang joins" and "Tibet annexed", whose notes say more than "… was destroyed". The sim unchanged.
+- **The grey world at a start:** not a file's alone. Plain 1938 shows the map with no nations for 2.0 s, a file 2.1 s
+  (the world built in the worker; its stats are sent at once when it is). "Building the world…" stands over the map
+  until the first stats (not in the toy world, which has none).
+- **Measured:** `tests/unit/historyTransferTold1938h.test.ts` (red on the rows' code before);
+  `tests/e2e/worldBuilding1938.spec.ts` (the notice in every sample with the map drawn and no stats, gone with them);
+  the font and the colour by a probe at four sizes and a shot.
+
