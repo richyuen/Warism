@@ -20,6 +20,8 @@ export interface GodToolbarProps {
   nationSelected: boolean;
   /** Why the last command of a tool's click was refused (R34d; 0: none). */
   refused?: number;
+  /** While the historical track runs (ROADMAP R64a): any act ends it, said on the bar. */
+  endsTrack?: boolean;
 }
 
 /**
@@ -28,10 +30,15 @@ export interface GodToolbarProps {
  * shown as soon as God Mode is on, a nation selected or not. A nation's own God powers stay in the
  * God tab of its panel.
  */
-export function GodToolbar({ tool, onTool, spawnSize, onSpawnSize, thermonuclear, onThermonuclear, nationSelected, refused = 0 }: GodToolbarProps) {
+export function GodToolbar({ tool, onTool, spawnSize, onSpawnSize, thermonuclear, onThermonuclear, nationSelected, refused = 0, endsTrack = false }: GodToolbarProps) {
   return (
     <div class="god-tools" data-testid="god-tools">
       <span class="god-tools-name">{t('god.tools')}</span>
+      {endsTrack ? (
+        <span class="god-tools-hint panel-warn" data-testid="god-ends-track">
+          {t('track.anyAct')}
+        </span>
+      ) : null}
       {TOOLS.map((k) => (
         <button key={k} type="button" class={tool === k ? 'bar-btn active' : 'bar-btn'} data-testid={`god-tool-${k}`} aria-pressed={tool === k} onClick={() => onTool(k)}>
           {t(`god.tool.${k}` as MessageKey)}

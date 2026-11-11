@@ -9,6 +9,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-952 · 2026-11-10 · accepted — What ends the replay said before; its end in the ticker (R64a, R62-N1)
+- **Said before:** while the track runs, the scenario's form ("Taking a nation, a God Mode act or an editor edit ends
+  the replay"), a red note under Take control (and its tooltip), and a line on the God Mode bar and at the editor's head
+  ("Any act here ends the replay of history"). Not a confirm: the act is one click by design, and a confirm on every
+  God tool would stand in the way of a game that has left the track; the notes go when it ends.
+- **Told after:** `TrackEnded` is a ticker kind (its sentence by why, as in History; placed at the world's middle; the
+  "return" cue, the world free).
+- **Measured:** `tests/e2e/trackView1938h.spec.ts` ("what ends the replay…"): the four notes, Take control ends it,
+  the ticker's row, the notes and the "Next" line gone. Screenshots: `docs/evidence/R64/`.
+
 ### ADR-951 · 2026-11-10 · accepted — The track's objectives taken as threatened (R63)
 - **The cause** (`.cache/probe/r63a.ts`, the own seed, 6-22 June 1940): Germany's front sectors facing Paris (3.6-3.8°E,
   48.4-49.0°N, 8 cells out) had no threat and got no formation. The operational AI's allotment (PLAN 7.79b, threatened

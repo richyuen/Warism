@@ -178,6 +178,7 @@ export function App({
               onThermonuclear={(on) => (hud.nukeThermonuclear.value = on)}
               nationSelected={hud.selected.value !== 0}
               refused={hud.toolRefusal.value}
+              endsTrack={stats.trackNext !== undefined}
             />
           ) : null
         }
@@ -282,6 +283,7 @@ export function App({
       {stats && hud.showEditor.value ? (
         <EditorPanel
           state={hud.editor.value}
+          endsTrack={stats.trackNext !== undefined}
           nations={stats.nations}
           dead={stats.dead}
           undo={stats.edits.undo}
@@ -428,6 +430,7 @@ export function App({
             player
               ? {
                   controlled: player.nation.value === nation.id,
+                  endsTrack: stats?.trackNext !== undefined,
                   onTake: () => player.take(nation.id),
                   onRelease: () => player.release(),
                 }

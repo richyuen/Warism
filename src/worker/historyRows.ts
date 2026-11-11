@@ -297,6 +297,11 @@ function tickerRowAt(world: World, i: number, nation: (v: number) => string, cit
   if (toll) row.toll = toll;
   if (kind === EventKind.BondsBroken) row.bonds = y;
   if (kind === EventKind.TrackEvent) row.note = world.track?.events[a - 1]?.note ?? '';
+  // The historical track's end (ROADMAP R64a): its sentence by why, as in History; no place, so the world's middle.
+  if (kind === EventKind.TrackEnded) {
+    row.as = b === TrackEnd.date ? 'date' : b === TrackEnd.intervention ? 'intervention' : 'changed';
+    [row.x, row.y] = [world.cells.w / 2, world.cells.h / 2];
+  }
   return row;
 }
 

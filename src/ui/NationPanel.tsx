@@ -24,6 +24,8 @@ type Tab = 'overview' | 'economy' | 'actions' | 'build' | 'god';
 export interface ControlProps {
   /** Whether the player controls this nation (PLAN 1.33a). */
   controlled: boolean;
+  /** While the historical track runs (ROADMAP R64a): taking the nation ends it, said under the button. */
+  endsTrack?: boolean;
   onTake: () => void;
   onRelease: () => void;
 }
@@ -115,9 +117,16 @@ export function NationPanel({
             {t('player.release')}
           </button>
         ) : (
-          <button type="button" class="god-btn panel-control" data-testid="take-control" onClick={control.onTake}>
-            {t('player.take')}
-          </button>
+          <>
+            <button type="button" class="god-btn panel-control" data-testid="take-control" title={control.endsTrack ? t('track.endsIt') : undefined} onClick={control.onTake}>
+              {t('player.take')}
+            </button>
+            {control.endsTrack ? (
+              <p class="panel-note panel-warn" data-testid="take-ends-track">
+                {t('track.endsIt')}
+              </p>
+            ) : null}
+          </>
         )
       ) : null}
       <nav class="panel-tabs">

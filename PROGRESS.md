@@ -399,3 +399,10 @@
 - Scores: all 14 dimensions 8 (7 scored afresh, 7 carried). 0 blocking. The track's checker 0 broken on its own seed
   and two new ones; diploInvariants, worldInvariants and landingInvariants 0 on new seeds; 0 page errors.
 - Six non-blocking findings on the historical track filed as R64a-f (Batch 16); run 61's and 60's findings re-run fixed.
+
+## 2026-11-10 — R64a: what ends the replay said before; its end in the ticker (ADR-952)
+
+- Notes on the 1938h form, under Take control, on the God Mode bar and at the editor's head while the track runs;
+  `TrackEnded` a ticker row with a cue.
+- Evidence: `npx playwright test tests/e2e/trackView1938h.spec.ts tests/e2e/scenario1938h.spec.ts` (5 passed);
+  `docs/evidence/R64/`. Gate.

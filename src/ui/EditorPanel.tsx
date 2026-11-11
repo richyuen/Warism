@@ -19,6 +19,8 @@ const FORCE_TOOLS = [
 
 export interface EditorPanelProps {
   state: EditorState;
+  /** While the historical track runs (ROADMAP R64a): any edit ends it, said at the panel's head. */
+  endsTrack?: boolean;
   nations: NationStat[];
   /** Dead nations (cores for preset revolts, PLAN 1.36). */
   dead: { id: number; name: string }[];
@@ -103,7 +105,7 @@ function nationIs(name: string, key: string): boolean {
   return fold(displayName(name)) === key || (tag !== '' && (tag.toLowerCase() === key || (ALIASES[tag] ?? []).includes(key)));
 }
 
-export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onChange, onUndo, onRedo, onClose, onGold, onAnnex, onImport, flagOf, onFlag, onExportScenario, onImportScenario, scenarioStatus, templates, onWarheads, refusal, refusalBase }: EditorPanelProps) {
+export function EditorPanel({ state, endsTrack = false, nations, dead, undo, redo, lineStarted, onChange, onUndo, onRedo, onClose, onGold, onAnnex, onImport, flagOf, onFlag, onExportScenario, onImportScenario, scenarioStatus, templates, onWarheads, refusal, refusalBase }: EditorPanelProps) {
   const [warheads, setWarheads] = useState('1');
   const [scenarioName, setScenarioName] = useState('');
   const [flagOpen, setFlagOpen] = useState(false);
@@ -173,6 +175,11 @@ export function EditorPanel({ state, nations, dead, undo, redo, lineStarted, onC
           ×
         </button>
       </header>
+      {endsTrack ? (
+        <p class="panel-note panel-warn" data-testid="editor-ends-track">
+          {t('track.anyAct')}
+        </p>
+      ) : null}
       <div class="god-row">
         {(['brush', 'line', 'bucket'] as const).map((tool) => (
           <button key={tool} type="button" class={state.tool === tool ? 'god-btn active' : 'god-btn'} data-testid={`editor-tool-${tool}`} onClick={() => set({ tool })}>

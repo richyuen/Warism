@@ -53,3 +53,38 @@ for (const size of SIZES) {
     expect(errors).toEqual([]);
   });
 }
+
+// ROADMAP R64a (critic run 62, R62-N1): while the track runs, the form, Take control, the God Mode bar and the editor
+// say that an act ends the replay; taking a nation ends it, told in the ticker; the warnings go with it.
+test('what ends the replay is said before; the end is told in the ticker', async ({ page }, info) => {
+  test.setTimeout(240_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/R64') : info.outputPath();
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto('/');
+  await page.getByTestId('title-scenario-1938h').click();
+  await expect(page.getByTestId('settings-fixed')).toContainText(/ends the replay/i);
+  await page.goto('/?scenario=1938h&paused=1&after=7');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await stepTo(page, 30);
+  await page.getByTestId('god-btn').click();
+  await expect(page.getByTestId('god-ends-track')).toContainText(/ends the replay/i);
+  await page.screenshot({ path: path.join(out, 'god-ends-track.png') });
+  await page.getByTestId('god-btn').click();
+  await page.getByTestId('editor-btn').click();
+  await expect(page.getByTestId('editor-ends-track')).toContainText(/ends the replay/i);
+  await page.getByTestId('editor-close').click();
+  const ger = await page.evaluate(() => window.__warsim!.hud.stats.value!.nations.find((n) => n.name === 'nation.GER')?.id ?? 0);
+  expect(ger).toBeGreaterThan(0);
+  await page.evaluate((n) => window.__warsim!.view!.select(n), ger);
+  await expect(page.getByTestId('take-ends-track')).toContainText(/ends the replay/i);
+  await page.screenshot({ path: path.join(out, 'take-ends-track.png') });
+  await page.getByTestId('take-control').click();
+  await stepTo(page, 32);
+  await expect(page.getByTestId('ticker')).toContainText('ended at your first intervention');
+  await expect(page.getByTestId('track-next')).toHaveCount(0);
+  await expect(page.getByTestId('take-ends-track')).toHaveCount(0);
+  await page.screenshot({ path: path.join(out, 'ended-in-ticker.png') });
+  expect(errors).toEqual([]);
+});

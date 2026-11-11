@@ -200,8 +200,9 @@ export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.NuclearPower,
   // The bonds a forced war broke (PLAN 7.175a), told before its declaration.
   EventKind.BondsBroken,
-  // The historical track's events by their names (ROADMAP R62j1).
+  // The historical track's events by their names (ROADMAP R62j1), and its end (R64a).
   EventKind.TrackEvent,
+  EventKind.TrackEnded,
   // A war a nation left while it goes on, and a puppet's revolt (PLAN 7.192, critic run 26's 1).
   EventKind.WarLeft,
   EventKind.PuppetRevolt,

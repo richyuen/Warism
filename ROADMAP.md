@@ -307,9 +307,11 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
 ## Batch 16 — run 62's findings (focused, on `9e094f50`: no blocking issue, every dimension at 8)
 
 - [ ] R64 **Run 62's non-blocking findings** (the historical track).
-  - [ ] R64a R62-N1: one click ends the replay, unwarned and untold in the ticker (taking a nation, a God Mode act).
+  - [x] R64a R62-N1: one click ends the replay, unwarned and untold in the ticker (taking a nation, a God Mode act).
     AT: while the track runs the scenario's form, the Take control button and the God Mode bar say that it ends the
     replay; the end has its ticker row (`node critic/scripts/c62_h_interv.mjs 1600 900`, `c62_h_god.mjs`).
+    Done (ADR-952): notes on the form, under Take control, on the God Mode bar and the editor; `TrackEnded` in the
+    ticker; `tests/e2e/trackView1938h.spec.ts`, `docs/evidence/R64/`.
   - [ ] R64b R62-N2: builder's words in the news ("the timeline's stages") and events told twice (a war's row and its
     note, a stage and its pocket, "India independent" and "India"). AT: no note with "timeline" or "stage" in the
     player's rows; on `c62_hist.mjs`'s samples one row an event.
