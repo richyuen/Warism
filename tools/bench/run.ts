@@ -3,9 +3,11 @@
 // GPU with these flags). Results → docs/bench/<name>.json, screenshots → docs/bench/*.png.
 // G is the game itself (PLAN 7.1j, `game.ts`): the frame budgets on this machine's GPU, judged,
 // and on the software rasteriser beside it; it exits 1 when the judged budgets are not met.
+// `--gpu-only` runs G on the GPU alone (the release check, ADR-959): the software rasteriser is reported, never judged,
+// and takes most of G's time; its last figures and pictures are kept.
 import { chromium, type Page } from '@playwright/test';
 import { spawn, execSync, type ChildProcess } from 'node:child_process';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import type {} from '../../src/app/bench/benchApi';
 import { FRAME_CPU_MS, gameBench, HEROES, T0_FPS, T0_GPU_MS, T2_FPS, T2_GPU_MS, T2_PROXIES, type Setting } from './game';
@@ -133,8 +135,10 @@ async function main(): Promise<void> {
 
 /** Bench G: each setting in a browser of its own; the report says the budget and pass or fail. */
 async function runGame(): Promise<void> {
+  const gpuOnly = process.argv.includes('--gpu-only');
+  const run = GAME_SETTINGS.filter((s) => !gpuOnly || s.judged);
   const settings = [];
-  for (const setting of GAME_SETTINGS) {
+  for (const setting of run) {
     const b = await chromium.launch({ args: setting.args });
     try {
       const shot = async (page: Page, name: string): Promise<void> => {
@@ -147,6 +151,15 @@ async function runGame(): Promise<void> {
     }
   }
   const judged = settings.flatMap((s) => s.cases.filter((c) => c.pass !== null));
+  // With --gpu-only the unjudged settings keep their last record, so the file always holds every setting.
+  if (gpuOnly) {
+    try {
+      const last = JSON.parse(readFileSync(path.join(outDir, 'G-game.json'), 'utf8')) as { date?: string; settings?: { setting: string; kept?: string }[] };
+      for (const s of last.settings ?? []) if (!run.some((r) => r.name === s.setting)) settings.push({ ...s, kept: s.kept ?? last.date ?? '?' } as unknown as (typeof settings)[number]);
+    } catch {
+      /* no last record */
+    }
+  }
   const record = {
     bench: 'G',
     date: new Date().toISOString(),
@@ -161,7 +174,7 @@ async function runGame(): Promise<void> {
   for (const s of settings)
     for (const c of s.cases)
       console.log(
-        `${s.setting} ${c.tier}: ${c.fps.toFixed(1)} fps (budget ${c.budgetFps}), p95 ${c.frameMsP95.toFixed(1)} ms, ${c.proxiesOnScreen} sprites on screen, ${c.nations} nations: ${c.pass === null ? 'reported' : c.pass ? 'PASS' : 'FAIL'}` +
+        `${s.setting}${'kept' in s ? ` (kept from ${String(s.kept)})` : ''} ${c.tier}: ${c.fps.toFixed(1)} fps (budget ${c.budgetFps}), p95 ${c.frameMsP95.toFixed(1)} ms, ${c.proxiesOnScreen} sprites on screen, ${c.nations} nations: ${c.pass === null ? 'reported' : c.pass ? 'PASS' : 'FAIL'}` +
           ` | SPEC gpu ${c.specGpuMs.value.toFixed(3)} ${c.specGpuMs.within ? '<=' : '>'} ${c.specGpuMs.budget} (30 whole draws ${c.gpuDrawsMs.toFixed(3)}), draw cpu p50 ${c.specCpuMs.value.toFixed(2)} ${c.specCpuMs.within ? '<=' : '>'} ${c.specCpuMs.budget}`,
       );
   if (!record.pass) process.exitCode = 1;
