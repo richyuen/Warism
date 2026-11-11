@@ -9,6 +9,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-949 · 2026-11-10 · accepted — No landings of the AI's own while the track steers; Paris by the armistice (R62l)
+- **The user's decision** (2026-11-10, option b of ADR-947's blocker): keep the rule, re-scope the Paris bar.
+- **The rule** (`src/sim/ai/invasion.ts`, `named`): while the historical track steers, `planLanding` and `planNormandy`
+  pick a target only within an objective of the lander's that has begun (SPEC §7.7, "the invasion AI picks the named
+  landings"); the ferry to a nation's own or an ally's front is as before. Seed 4: no Italian landing in Palestine,
+  Israel born on its date.
+- **The bar re-scoped** (`historyMatch1938h`, R62g1's): Paris German by the armistice (22 June 1940, read at the next
+  midnight), from "taken by the fighting before 22 June"; the robust measure kept (≥ 500 French cells taken by the
+  fighting on 22 June: 562 on the own seed). With the rule the Commonwealth's and the colonies' armies, which before
+  were lost in landings on Germany's coast in 1939-40, ferry to France, and the front stops short of Paris on some
+  seeds (own seed 23 June).
+- **Measured:** `historyTrack1938h` green on all 6 seeds (seed 4's mark taken out); `historyMatch1938h` green to its
+  last bar (the Axis 7,937 Soviet cells on 2 December 1941, the Soviet army 2.91M men on 1 November 1942);
+  `chinaFront1938h`, `freeWorld1938h` green. Tick time: 15 years of the track against plain 1938 (seed 99), swapped
+  pairs: 2.00 against 2.41 ms a tick (2.038/2.324, 1.962/2.504), plain 1938's hash unchanged; bar within 5 %. Seed 99's pin unchanged (the rule acts only while a track steers).
+- **Left:** the operational AI does not take an undefended objective it does not border (the front 7 cells short of
+  an empty Paris for two weeks): ROADMAP R62n, a rule of every game, not the track's.
+- R62k and R62l done; R62 done with its items.
+
 ### ADR-948 · 2026-11-10 · accepted — The historical track on the title screen (R62m)
 - **The user's decision** (2026-11-10, "add the scenario to the game"): `1938h` is listed, its `hidden` out of its
   scenario file. Hidden since R62a until the track replayed its years (a "Historical" world that was plain 1938 would

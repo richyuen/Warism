@@ -372,3 +372,11 @@
 - The user's decision: `1938h` listed, second after the 1938 world, with its preview, description and no seed field.
 - Evidence: `tests/unit/scenario1938h.test.ts`; `npx playwright test tests/e2e/scenario1938h.spec.ts tests/e2e/title.spec.ts`
   (13 passed); screenshots in `docs/evidence/R62m/`. Gate.
+
+## 2026-11-10 — R62l: no landings of the AI's own while the track steers (ADR-949); R62 done
+
+- The user's option b: landings only within the lander's objectives while steered; R62g1's Paris bar re-scoped to
+  "by the armistice" (≥ 500 French cells taken by the fighting kept). BLOCKERS entry resolved.
+- `historyTrack1938h` green on all 6 seeds (seed 4: Israel born); `historyMatch1938h`, `chinaFront1938h`,
+  `freeWorld1938h` green. Tick time 2.00 against 2.41 ms a tick (2.038/2.324, 1.962/2.504), plain 1938's hash unchanged.
+- New: R62n, the operational AI and an undefended objective (a rule of every game).

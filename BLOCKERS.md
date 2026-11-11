@@ -5,19 +5,6 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 
 ## Open
 
-### R62k/R62l: seed 4's Italian landing in Palestine; the rule that bars it slows the fall of France (2026-11-10)
-- **The bar:** R62k's checker green on the scenario's own seed and 5 others (`tests/sweep/historyTrack1938h.test.ts`),
-  with R62g1's "Paris taken by the fighting before 22 June 1940" (`historyMatch1938h`) kept.
-- **What moved:** the checker is built and green on 5 of 6. Seed 4: Italy lands at Palestine's coast on 29 August
-  1941 (`planLanding`, which weighs no objective), annexes it, holds it to 1948; Israel's birth is passed over.
-  Landings only within an objective while steered fixes seed 4 but moves the Commonwealth's and the colonies' armies
-  from futile landings on Germany's coast to France by Nice; the German front then stalls short of an empty Paris and
-  it falls after 22 June on 3 of 6 seeds (own seed 23 June). Five variants tried (ADR-947); none meets both.
-- **What is left (the user's decision):** (a) keep the rule and retune 1940 in the West until Paris falls by the bar
-  on all seeds, maybe a longer piece of work in the operational AI's pull to an undefended objective; (b) keep the
-  rule and re-scope R62g1's Paris bar (e.g. by the armistice on the own seed); (c) keep HEAD's landings and accept
-  seed 4's deviation (the checker's seed 4 then left out). Until then seed 4 is marked failing in the test.
-
 ### `seaRow1938`'s Speed x1 test red on this machine again, the code not its cause; on `tools/gate/knownRed.json` (2026-11-08, R53g)
 - **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
   with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a). Resolved once (docs/BLOCKERS_DONE.md,

@@ -390,6 +390,7 @@ function planNormandy(world: World, n: number, faced: ReadonlySet<number>, front
     const cell = cc.cell[city]!;
     const holder = ctl[cell]!;
     if (!enemies.has(holder)) return;
+    if (!named(world, n, cc.x[city]!, cc.y[city]!)) return watchFail(seen, holder, 'notNamed');
     const land = comp[cell]!;
     if (land === 0) return watchFail(seen, holder, 'noLand');
     // The water it goes ashore by: the nearest open one within the shore's reach (looked for before
@@ -523,6 +524,16 @@ type AtPorts = () => readonly { fleet: number; room: number; port: number }[];
  * (PLAN 7.64, ADR-617: no army at the port nor on its land; before, the turn was taken all the same,
  * on 970 of the 1,521 days of the nations fronted through an ally alone on the critic's 48 saves).
  */
+/**
+ * Whether n may land at (x, y): anywhere, but while the historical track steers only within an objective of n's that
+ * has begun (ROADMAP R62l, ADR-949, SPEC §7.7: the invasion AI picks the named landings). Before, a Normandy of its own
+ * was weighed 1 and a landing at the nearest enemy port not weighed at all: on seed 4 Italy landed in Palestine in
+ * August 1941, took Jerusalem and held it to 1948, and Israel could not be born.
+ */
+function named(world: World, n: number, x: number, y: number): boolean {
+  return !world.steered || world.objectiveWeight(n, x, y) > 1;
+}
+
 function planLanding(world: World, n: number, foes: ReadonlySet<number>, front: readonly number[], atPorts: AtPorts): boolean {
   const c = world.formations.cols;
   const w = world.cells.w;
@@ -585,6 +596,7 @@ function planLanding(world: World, n: number, foes: ReadonlySet<number>, front: 
     const holder = ctl[p.cell]!;
     const at = water[i]!;
     if (holder === 0 || !foes.has(holder)) return;
+    if (!named(world, n, (p.cell % w) + 0.5, Math.floor(p.cell / w) + 0.5)) return watchFail(seen, holder, 'notNamed');
     if (at < 0) return watchFail(seen, holder, 'noWater');
     const d = reach(at);
     if (typeof d === 'string') watchFail(seen, holder, d);
@@ -596,6 +608,7 @@ function planLanding(world: World, n: number, foes: ReadonlySet<number>, front: 
     if (world.nations.cols.living[e] !== 1) continue;
     const cap = capitalCell(world, e);
     if (cap < 0 || cap >= ctl.length || !foes.has(ctl[cap]!)) continue;
+    if (!named(world, n, (cap % w) + 0.5, Math.floor(cap / w) + 0.5)) continue;
     for (const q of neighbours4(cap, w, world.cells.h, world.settings.loopingMap, nb)) {
       const d = open(q);
       if (d < best) [best, target] = [d, cap];

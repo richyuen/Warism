@@ -3,6 +3,19 @@
 The resolved entries of BLOCKERS.md, moved here on 2026-11-02 (ADR-804) in the order they stood. Searched, not
 read. New resolved entries are moved here when they are resolved.
 
+### RESOLVED 2026-11-10 (R62l, ADR-949: the user's option b, the rule kept and the Paris bar re-scoped) · R62k/R62l: seed 4's Italian landing in Palestine; the rule that bars it slows the fall of France (2026-11-10)
+- **The bar:** R62k's checker green on the scenario's own seed and 5 others (`tests/sweep/historyTrack1938h.test.ts`),
+  with R62g1's "Paris taken by the fighting before 22 June 1940" (`historyMatch1938h`) kept.
+- **What moved:** the checker is built and green on 5 of 6. Seed 4: Italy lands at Palestine's coast on 29 August
+  1941 (`planLanding`, which weighs no objective), annexes it, holds it to 1948; Israel's birth is passed over.
+  Landings only within an objective while steered fixes seed 4 but moves the Commonwealth's and the colonies' armies
+  from futile landings on Germany's coast to France by Nice; the German front then stalls short of an empty Paris and
+  it falls after 22 June on 3 of 6 seeds (own seed 23 June). Five variants tried (ADR-947); none meets both.
+- **What is left (the user's decision):** (a) keep the rule and retune 1940 in the West until Paris falls by the bar
+  on all seeds, maybe a longer piece of work in the operational AI's pull to an undefended objective; (b) keep the
+  rule and re-scope R62g1's Paris bar (e.g. by the armistice on the own seed); (c) keep HEAD's landings and accept
+  seed 4's deviation (the checker's seed 4 then left out). Until then seed 4 is marked failing in the test.
+
 ### RESOLVED 2026-11-10 (R62f2, ADR-929: a dated hold on the front) · R62f: 1938h's China front has no stalemate; Manchukuo falls in February 1939 (2026-11-10)
 - **The bar** (R62f): every 1938-39 event on its date; owned as history had it on 1 October 1938, 1 April and 1 October
   1939 ≥ 95 % of land. Met: 100.00, 98.81, 98.79 % of all land, the land the maps moved 97.6-98.1 % right

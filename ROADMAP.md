@@ -97,7 +97,7 @@ applies at each event's hour, the AI's free choices off and its offensives steer
 by the player's first intervention or on 27 July 1953, then reseeded. Then the critic (one run for Batches 14 and 15).
 Split finer before any part was ticked (2026-11-10, the advisor's review: the first R62a held six pieces of work).
 
-- [ ] R62 **The historical track.**
+- [x] R62 **The historical track.**
   - [x] R62a The scenario: `1938h` a `ScenarioId` built from 1938's own files (no copy), its own nations appended after
     1938's 103 (dormant until their date), listed on the title screen ("1938 — Historical", its preview, its seed fixed
     and not offered on its form). AT: `?scenario=1938h` starts; the title lists it; plain 1938's seed-99 pin unmoved and
@@ -278,18 +278,23 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     events' rows in the ticker with their historical names. AT: screenshots at world zoom on phone and desktop sizes.
     Done (ADR-946): `TrackEvent` rows by the timeline's notes; the bar's line; `tests/e2e/trackView1938h.spec.ts`,
     `docs/evidence/R62j/`. R62j done with its slices.
-  - [ ] R62k The checker and the accuracy measure: `historyTrack` in `tests/helpers/` (no timeline event refused but
+  - [x] R62k The checker and the accuracy measure: `historyTrack` in `tests/helpers/` (no timeline event refused but
     those skipped by rule, no war or peace not on the timeline while it runs, diploInvariants through the track) on 5
     seeds and on the scenario's own; `tools/diag/historyMatch` printing each checkpoint's share of land cells matching
     history (owners, control). AT: the checker green on all 6; `historyMatch` meets R62f–i's bars on the scenario's
     seed; tick time over the track within 5 % of plain 1938's (`npm run sim -- --affinity 0xFFFF`).
     Built (ADR-947): the checker and its test; green on the own seed and seeds 1, 2, 3, 5; `historyMatch1938h` green;
-    1.87 ms a tick against plain 1938's 2.39. Open: seed 4 red (R62l, BLOCKERS).
+    1.87 ms a tick against plain 1938's 2.39. Seed 4 green with R62l: done (ADR-949).
   - [x] R62m The historical track on the title screen (the user's decision of 2026-11-10): listed after 1938.
     Done (ADR-948): `hidden` out; `scenario1938h.test.ts`, `scenario1938h.spec.ts`, `title.spec.ts`;
     `docs/evidence/R62m/`.
-  - [ ] R62l Seed 4: no landing of the AI's own while the track steers. Italy lands in Palestine in August 1941
+  - [x] R62l Seed 4: no landing of the AI's own while the track steers. Italy lands in Palestine in August 1941
     (`planLanding`, no objective weighed), holds it to 1948, Israel is not born. The rule "only within an objective"
     makes seed 4 green but sends the Commonwealth's armies to France by sea, and Paris falls after 22 June on 3 of 6
     seeds (ADR-947). AT: `historyTrack1938h` green on all 6 with `historyMatch1938h`'s bars kept; Paris before 22 June on
     the 6 seeds. The user's decision (BLOCKERS): the rule with France retuned, or the bar re-scoped.
+    Done (ADR-949; the user's option b): the rule; Paris by the armistice, ≥ 500 cells kept; `historyTrack1938h` green
+    on all 6, `historyMatch1938h`, `chinaFront1938h`, `freeWorld1938h` green; 2.00 against 2.41 ms a tick (2.038/2.324, 1.962/2.504), plain 1938's hash unchanged.
+  - [ ] R62n The operational AI takes an undefended objective it does not border (ADR-949: on 1938h's own seed the
+    German front stood 7 cells short of an empty Paris from 6 to 22 June 1940). A rule of every game. AT: on 1938h's
+    6 seeds Paris taken by the fighting before 22 June again, and seed 99's sweep within its bands.
