@@ -178,3 +178,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   they do not): both sides near at 14 of the 21 on the own seed. After R66c: 8 (seeds 1 and 2: 10, 10). Replaces
   "≥ 20 of the 33 large stages" (ADR-967), which counted handovers.
 
+### ADR-970 · 2026-11-11 · accepted — the census measured before a stage's date; ADR-967-969's figures restated
+- **The fault:** `tools/diag/trackFronts.ts` measured at the hour of each `occupy`, an hour after the stage's own
+  `withdraw` had taken its pockets or evacuated its defenders (Libya's, the Netherlands Indies'): their defenders
+  counted 0. It now measures at the first hour of the stage's date, before any event of that date.
+- **Restated** (seeds 1938, 1, 2; before R66c `9dff3d7f`, after it `6970dc24`): the large Eastern fronts' smaller side
+  near 1.22M, 1.08M, 1.20M before R66c and 3.24M, 5.78M, 2.62M after (ADR-968 said 618k → 2.88M on seed 1938);
+  of the large land fronts, both sides near at 9, 10, 11 before and 10, 11, 12 after (ADR-969 said 8, 10, 10 of 21).
+  R66b's bar stands: 14 of the own seed's 21.
+- **Not settled by it:** ADR-968's ablation used the old measure (its arm with no set-down had Germans deleted an hour
+  before the count); the three rules it dropped are not shown to be noise, only not kept.
+

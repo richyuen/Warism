@@ -1,6 +1,6 @@
 /**
  * ROADMAP R66a: the historical track's stages and the armies at them (`tests/helpers/trackFronts.ts`). On 1938h (its own
- * seed unless given), at the hour of each `occupy` stage in the dates (before it applies): the land it gives, who holds
+ * seed unless given), at the first hour of the date of each `occupy` stage in the dates (before any event of that date): the land it gives, who holds
  * it, and each side's land formations within BAND_KM of it, their men and how many are engaged. A stage its sides'
  * armies reach by fighting has both near; one painted on empty land has neither.
  *
@@ -24,12 +24,15 @@ const LARGE = 200;
   const sim = new Sim({ scenario: '1938h', seed, assets: assets1938(SIZE_1938.w) });
   const t = sim.world.track!;
   const stages = t.events.flatMap((e, i) => (e.kind === 'occupy' && e.date >= from && e.date < to ? [i] : []));
-  const end = Math.max(...stages.map((i) => t.ticks[i]!));
+  // Measured at the first hour of the stage's date, before any of that date's events (ADR-970): a stage's `withdraw`
+  // comes an hour before its `occupy`, and measured at the occupy the defenders it took were gone.
+  const at = new Map(stages.map((i) => [i, t.tickOf(t.events[i]!.date)]));
+  const end = Math.max(...at.values());
   const rows: (StageArmies & { date: string; note: string; by: string })[] = [];
   const tag = (n: number): string => TAGS_1938H[n - 1] ?? `#${n}`;
   while (sim.tick <= end && !t.ended) {
     for (const i of stages) {
-      if (t.ticks[i] !== sim.tick) continue;
+      if (at.get(i) !== sim.tick) continue;
       const e = t.events[i]! as Extract<(typeof t.events)[number], { kind: 'occupy' }>;
       const m = stageArmies(sim.world, t.id(e.by), e.of.map((g) => t.id(g)), e.ring);
       rows.push({ date: e.date, note: e.note ?? '', by: e.by, ...m });

@@ -92,3 +92,8 @@
   Libya's and Austria's handovers are not); both sides near at 8, 10, 10 of the 21 on seeds 1938, 1, 2. Empty: Japan's
   conquests of 1942 and Ichigo's last two, the German attacker at Case Blue and Stalingrad.
 
+## 2026-11-11 — R66b: the census measured before a stage's date (ADR-970)
+
+- It measured an hour after a stage's own `withdraw`. Restated: R66c's Eastern gain on seed 1938 1.22M → 3.24M (not
+  618k → 2.88M); large land fronts with both sides near 10 of 21 (not 8). The bar stays 14.
+

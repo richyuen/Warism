@@ -84,13 +84,13 @@ Batches 19 and 18 together (ADR-966).
   - [ ] R66b Armies on the held fronts: while the track steers, the armies of both sides stand at the land of the stages
     to come, never attacking across a hold. AT (the user's, ADR-969): `tools/diag/trackFronts.ts` on the own seed, of
     the large stages (≥ 200 cells) that are land fronts (the taker at war with a holder, the land joined over land to
-    the taker's side's), both sides near at ≥ 2/3 (14 of 21; 8 after R66c, seeds 1 and 2 10 and 10), those left named
+    the taker's side's), both sides near at ≥ 2/3 (14 of 21; 10 after R66c, seeds 1 and 2 11 and 12; ADR-970), those left named
     with why; none engaged across a hold; the bars above.
   - [x] R66c What a stage does to the armies in its ring: what `withdraw` removes and what an `occupy` leaves behind
     the new line, measured; formations of the losing side that are not a pocket of history's (`captured`) fall back to
     the line, not lost or stranded. AT: the measure before and after; the bars above. Done (ADR-968): under a hold,
-    set down on their own nearest land, two to a cell; the large Eastern stages' smaller side 618k → 2.9M men near
-    (seeds 1 and 2 5.1M, 2.4M); the bars green with `historyMatch1938h`'s strays under 1 % and `chinaFront1938h`'s
+    set down on their own nearest land, two to a cell; the large Eastern stages' smaller side 1.22M → 3.24M men
+    near (seeds 1 and 2 1.08M → 5.78M, 1.20M → 2.62M; ADR-970); the bars green with `historyMatch1938h`'s strays under 1 % and `chinaFront1938h`'s
     army at 40 % (the user's decision); the replay's tick 2.42 ms, plain 1938's 2.51 (HEAD's replay 1.96).
   - [ ] R66d Fighting before a stage: in a window before each large land stage the hold is lifted for its pair inside
     the stage's land and band; the taker strengthened only where the rest of the replay is unharmed; the stage applies
