@@ -25,3 +25,30 @@ from AoC are tagged **[AoC-DEVIATION]**.
      replay or free from there.
   4. **The replay past 1953 (R69).**
 - Each is split into lettered parts with their ATs when it is started (ROADMAP's rule).
+
+### ADR-959 · 2026-11-11 · accepted (the user's decision) — The release made shorter; the replay to 1962
+- **Context.** release-2026-11-11 took about 5½ hours after the last item: the critic's full run about 1 h 50 m
+  (about 720 bulk landing runs re-run because only the track's files had changed), `check:review` 2 h 20 m (its sweep
+  stage 22 m, the historical track's six seeds one after another), the soak 30 m, the sweep 32 m, `bench -- G` over
+  10 m (most of it the software rasteriser, reported, never judged). The user asked for trade-offs and took the four
+  that lose little or nothing (2026-11-11: "Let's do your 1-4").
+- **Decision.**
+  1. `historyTrack1938h`'s five other seeds a file each (`tests/sweep/historyTrack1938hSeed1-5.test.ts`,
+     `tests/helpers/historyTrackWarn.ts`), so they run side by side: the six together 4 m 05 s (22 m before).
+  2. `npm run bench -- G --gpu-only` at a release: the GPU's budgets judged as before, the software rasteriser's last
+     figures and pictures kept and marked with their date: 31 s with the build (over 10 m before).
+  3. No soak of its own at a release: the sweep takes the soak's checks on its way (`tools/sweep/reload.ts`): every
+     10 years, the first in year 1 to 10 by the seed, the world saved gzipped, loaded into a fresh sim of another
+     seed and saved again to the same bytes; the loaded twin and the world 30 days side by side to one hash, the run
+     going on with the loaded one; a NaN or an infinity looked for each year's end; any break fails the sweep. Ten
+     seeds and 50 loads where the soak had one seed and 5. Checked: green on a 3-year run; red with the twin nudged a
+     tick before the bytes' check, and again after it (the hashes 30 days on). The soak of its own still runs
+     every night (`.github/workflows/nightly.yml`, green 2026-11-08 to 11).
+  4. The critic carries a bulk set of plain 1938 runs when its two 20-year saves end at the last report's hashes and
+     the diff touches nothing under `src/sim/systems/`, `src/sim/ai/`, `src/sim/nav/`, nor `tick.ts` or `sim.ts`
+     (`CRITIC_PROMPT.md`).
+- **Not taken** (they lose coverage): no full critic run, or one every other release; the e2e beside the critic (the
+  CPU shared, timing specs and the critic's measures upset); only the changed e2e specs (the last release's
+  `orderRowsTap1938` red was found only so).
+- **Also decided:** R69's replay runs to 1962 for now (the user's "let's try 1962").
+

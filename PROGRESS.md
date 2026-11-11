@@ -9,3 +9,11 @@
 - Batch 18 filed: R66 armies on the replay's fronts (the script decides; armies fight it out where harmless), R67 Cold
   War blocs, R68 a start from any date of the replay, R69 the replay past 1953. After Batch 17.
 
+## 2026-11-11 — The release made shorter (ADR-959, the user's decision)
+
+- `historyTrack1938h`'s seeds a file each: 4 m 05 s for the six (22 m). `bench -- G --gpu-only`: 31 s (10 m+). The
+  soak's checks in the sweep (a save and load every 10 years, the twins compared 30 days on; red when broken, both
+  ways checked); the release's soak dropped (it runs nightly). The critic carries plain 1938's bulk sets when its
+  hashes and the paths they take are unchanged. PROMPT RELEASES step 3, SPEC §10.4 and §10.6, CRITIC_PROMPT.
+- R69 to 1962 for now.
+

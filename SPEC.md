@@ -2179,6 +2179,11 @@ every test red twice is on the known reds [ADR-297].
     no day of any seed fallout on more than 50 % of the land.
   - *Reported, not judged:* stasis (the longest run of the same five largest by land; ADR-750), new
     nations in the top ten, and the leader's share range.
+  - *Save and load on the way* (`tools/sweep/reload.ts`, the soak's checks [ADR-959]): every
+    `RELOAD_YEARS` (10) years, the first in year 1 to 10 by the seed, the world is saved gzipped,
+    loaded into a fresh sim of another seed and saved again to the same bytes; the loaded twin and the
+    world run `TWIN_DAYS` (30) days side by side to one hash, and the run goes on with the loaded
+    one. Each year's end the world is searched for a NaN or an infinity. Any break fails the sweep.
   A release needs land moving on every seed; the largest nation's share is reported, not a
   release's condition [ADR-740]. `npm run sweep:quick` (10 × 20 years, report in `.cache/`) is for
   tuning.
@@ -2187,7 +2192,8 @@ every test red twice is on the known reds [ADR-297].
   `bench.html?b=A` (map), `B` and `BP` (proxies), `P` (precision, run by an e2e spec), `R` (the
   province raster). `G` is the game itself, judged against the frame budgets of §1 on this
   machine's GPU, with the software rasteriser reported beside it (`tools/bench/game.ts`); it exits 1
-  when a judged budget is missed. Results and screenshots go to `docs/bench/`.
+  when a judged budget is missed. `--gpu-only` leaves the software rasteriser out, its last figures
+  and pictures kept (the release's run, ADR-959). Results and screenshots go to `docs/bench/`.
 
 ### 10.5 The nightly run
 `.github/workflows/nightly.yml`, every night on `main` (no GPU, so no e2e or bench): typecheck, lint,
@@ -2201,6 +2207,6 @@ sweep. Its reports are kept 30 days.
 A batch of ROADMAP ends with the critic (`.claude/agents/critic.md`, `CRITIC_PROMPT.md`): an
 independent agent that plays the built game, judges it by the goals, scores each dimension and
 writes `critic/CRITIC_REPORT.md` and `.json`; each blocking issue becomes a ROADMAP item. On a full
-report with no blocking issue: `npm run check:review`, the soak (1938, seed 99, 30 minutes), the
-sweep on unseen seeds, and `npm run bench -- G`; then a CHANGELOG entry and the tag
-`release-<YYYY-MM-DD>` [ADR-804, ADR-805, ADR-820].
+report with no blocking issue: `npm run check:review`, the sweep on unseen seeds (with the soak's
+checks on the way; the soak of its own runs nightly), and `npm run bench -- G --gpu-only`; then a
+CHANGELOG entry and the tag `release-<YYYY-MM-DD>` [ADR-804, ADR-805, ADR-820, ADR-959].

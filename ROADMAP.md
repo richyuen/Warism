@@ -53,5 +53,5 @@ In this order, after Batch 17. Each split into lettered parts with their ATs whe
   the blocs' leaders in N years on the own seed and others; the sweep's bands kept.
 - [ ] R68 **A start from any date of the replay.** A timeline slider in place of "World, 1938" and "World, 1938 —
   Historical"; continue the replay or free from there.
-- [ ] R69 **The replay past 1953.** Its end date the user's when started.
+- [ ] R69 **The replay past 1953**, to 1962 for now (the user's decision, ADR-959).
 

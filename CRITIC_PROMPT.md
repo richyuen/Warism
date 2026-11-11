@@ -33,7 +33,11 @@ no score.
   new seeds. A bulk set of the last report (a script or list of many runs: its landing setups, its
   stuck-return runs, its landing-row cases, Malta's landings) is re-run only when the sim changed since that
   report's commit (`git diff --stat <commit> HEAD -- src/sim data public/data` not empty); otherwise it is
-  marked "sim unchanged, carried" (ADR-917).
+  marked "sim unchanged, carried" (ADR-917). A set of plain 1938 runs is also carried, marked "plain 1938
+  unchanged, carried" (ADR-959), when the sim changed only outside the paths it takes: the two 20-year saves
+  of plain 1938 (seeds 7019 and 32019) end at the last report's hashes, and the diff touches no file under
+  `src/sim/systems/`, `src/sim/ai/` or `src/sim/nav/`, nor `src/sim/tick.ts` or `src/sim/sim.ts` (where
+  orders, landings, sailing and the sea fights run).
 - Every score that differs from the last report's says why, with evidence from the same case on both
   builds where you can. The last report's commit is built and run beside HEAD (`git worktree add critic/wt
   <commit>`; unlink a `node_modules` linked into it before `git worktree remove`, or the removal empties the
