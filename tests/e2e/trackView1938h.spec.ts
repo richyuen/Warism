@@ -96,7 +96,8 @@ test('what ends the replay is said before; the end is told in the ticker', async
 
 // ROADMAP R64f (critic run 62, R62-N6): at Max the "Next" line never names an event dated before the date beside it
 // (the stats come once a second, the date every frame; before, 14 of 60 samples were past, by up to 28 days).
-test('at Max the "Next" line names no event already past', async ({ page }) => {
+// ROADMAP R65a: and it is there, moving on to the next event at its hour.
+test('at Max the "Next" line names no event already past, and is there', async ({ page }) => {
   test.setTimeout(180_000);
   await page.setViewportSize({ width: 1400, height: 800 });
   await page.goto('/?scenario=1938h&paused=1&after=7');
@@ -122,7 +123,9 @@ test('at Max the "Next" line names no event already past', async ({ page }) => {
   });
   const day = (s: string): number => Date.parse(`${s.replace(/ ·.*$/, '').trim()} UTC`);
   const withNext = samples.filter((s) => s.next !== '');
-  expect(withNext.length).toBeGreaterThan(100);
+  // R65a (critic run 63, R63-N1): the line is there while the track runs, not blank from each event's hour to the next
+  // stats (before, 24.5 % of the critic's samples at Max were blank).
+  expect(withNext.length / samples.length).toBeGreaterThanOrEqual(0.95);
   // A year and more at Max: the line moved on through several events.
   expect(new Set(withNext.map((s) => s.next)).size).toBeGreaterThan(3);
   for (const s of withNext) {

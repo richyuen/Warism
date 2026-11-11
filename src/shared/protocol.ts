@@ -486,7 +486,15 @@ export type FromWorker =
 export interface TrackNext {
   note: string;
   tick: number;
+  /**
+   * The named events after it, up to `TRACK_AHEAD` (R65a): the stats come once a second, so at the fastest speed the
+   * line moves on to the next of these at its hour instead of going blank until the next stats.
+   */
+  ahead: { note: string; tick: number }[];
 }
+
+/** How many named events after the next one the stats carry (R65a). */
+export const TRACK_AHEAD = 8;
 
 /** A buildable land template for the production UI (PLAN 1.33b). */
 export interface TemplateInfo {

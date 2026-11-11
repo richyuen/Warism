@@ -1737,7 +1737,9 @@ to 27 July 1953, then sets the world free.
   saying when and why. Built (R62j0, ADR-945): the first command applied while it runs ends it in that hour, before
   the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none.
 - **The player's view** (built, R62j1, ADR-946): while the track runs a line under the date names its next event that
-  has a name and its date (not the steering's: `hold`, `objective`, `buff`, `redeploy`); an event applied that the game
+  has a name and its date (not the steering's: `hold`, `objective`, `buff`, `redeploy`), the first of the next and the
+  `TRACK_AHEAD` (8) after it that the stats carry whose hour is not behind the shown one (R64f, R65a, ADR-960;
+  `src/app/trackShown.ts`); an event applied that the game
   tells no other way (a transfer, an occupation, a pocket, an arrival, a seat moved, a rename) is a `TrackEvent` row,
   told in the ticker and the History by its note, once a day (R64b, ADR-953); a war, peace or annexation by the game's
   own row.

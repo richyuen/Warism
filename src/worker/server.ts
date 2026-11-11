@@ -69,6 +69,7 @@ import {
   type OrderNews,
   type PlayerWing,
   type TrackNext,
+  TRACK_AHEAD,
   VoyageState,
 } from '../shared/protocol';
 import { geometryOf, SCENARIO_INFO } from '../shared/scenarios';
@@ -2255,10 +2256,12 @@ function playerWings(world: World): PlayerWing[] {
 function trackNext(world: World): { trackNext?: TrackNext } {
   const t = world.track;
   if (!t || t.ended) return {};
-  for (let i = t.next; i < t.events.length; i++) {
+  const named: { note: string; tick: number }[] = [];
+  for (let i = t.next; i < t.events.length && named.length <= TRACK_AHEAD; i++) {
     const { note, kind } = t.events[i]!;
     // Not the steering's (R64b): its notes are the builder's.
-    if (note !== undefined && !STEERING_KINDS.has(kind)) return { trackNext: { note, tick: t.ticks[i]! } };
+    if (note !== undefined && !STEERING_KINDS.has(kind)) named.push({ note, tick: t.ticks[i]! });
   }
-  return {};
+  const [first, ...ahead] = named;
+  return first ? { trackNext: { ...first, ahead } } : {};
 }

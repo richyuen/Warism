@@ -17,3 +17,9 @@
   hashes and the paths they take are unchanged. PROMPT RELEASES step 3, SPEC §10.4 and §10.6, CRITIC_PROMPT.
 - R69 to 1962 for now.
 
+## 2026-11-11 — R65a: the "Next" line moves on at Max (ADR-960)
+
+- The stats carry the next 8 named events; the line shows the first not yet past. The critic's probe at Max: present
+  in 99.7 % of 1,092 samples (75.5 % before), never past.
+- Evidence: `tests/e2e/trackView1938h.spec.ts` (≥ 95 % present; red before, 0.77), `tests/unit/trackShown.test.ts`. Gate.
+

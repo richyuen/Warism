@@ -27,9 +27,11 @@ Rules:
 ## Batch 17 — run 63's findings (full, on `78b082b4`: no blocking issue, every dimension at 8)
 
 - [ ] R65 **Run 63's non-blocking findings** (the historical track).
-  - [ ] R65a R63-N1: at Max the "Next" line is missing in 24.5 % of samples (hidden from its event's hour to the next
+  - [x] R65a R63-N1: at Max the "Next" line is missing in 24.5 % of samples (hidden from its event's hour to the next
     stats, R64f's fix). AT: in `node critic/scripts/c63_h_blank.mjs 120 1600 900 99` the line present in ≥ 95 % of
     samples while the track runs, and never past.
+    Done (ADR-960): the stats carry 8 events ahead; 99.7 % present, never past; `trackView1938h.spec.ts`,
+    `tests/unit/trackShown.test.ts`.
   - [ ] R65b R63-N2: the God tab ends the replay unsaid ("World AI" and its 40 controls, the note scrolled out or read
     as the map tools'). AT: in `node critic/scripts/c63_h_godtab.mjs 1600 900 god-world-ai` a note that an act ends the
     replay in view at the God tab's head.

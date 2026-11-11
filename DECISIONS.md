@@ -52,3 +52,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   `orderRowsTap1938` red was found only so).
 - **Also decided:** R69's replay runs to 1962 for now (the user's "let's try 1962").
 
+### ADR-960 · 2026-11-11 · accepted — The "Next" line moves on at Max (R65a, R63-N1)
+- **Cause** (critic run 63, `c63_h_blank.mjs`): R64f hides the line while its event's hour is behind the shown hour,
+  and the stats that name the next come once a second; at Max the line was blank from each event's hour to the next
+  stats, 24.5 % of the samples.
+- **Rule:** the stats carry the next named event and up to `TRACK_AHEAD` (8) after it (`TrackNext.ahead`,
+  `src/worker/server.ts`); the line shows the first whose hour is not behind the shown one (`nextShown`,
+  `src/app/trackShown.ts`); none only when all are past.
+- **Measured:** the probe at Max for 120 s (1938 to July 1943): the line in 1,089 of 1,092 samples (99.7 %; 75.5 %
+  before), never past, at most 2 blank in a row. `tests/e2e/trackView1938h.spec.ts` "at Max…" now asks ≥ 95 % present
+  (red on the code before: 0.77); `tests/unit/trackShown.test.ts`.
+

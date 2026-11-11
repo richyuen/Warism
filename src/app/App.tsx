@@ -11,6 +11,7 @@ import { RelationsPanel } from '../ui/RelationsPanel';
 import { StatsChart } from '../ui/StatsChart';
 import { EditorPanel } from '../ui/EditorPanel';
 import { dateOfTick } from '../shared/calendar';
+import { nextShown } from './trackShown';
 import { displayName, t, type MessageKey } from '../ui/i18n';
 import { NationPanel } from '../ui/NationPanel';
 import { StatsRanking } from '../ui/StatsRanking';
@@ -157,7 +158,7 @@ export function App({
       <BottomBar
         date={hud.date()}
         // Not one already past (R64f; critic run 62, R62-N6): the stats come once a second, the date every frame.
-        trackNext={stats?.trackNext && stats.trackNext.tick >= hud.tick.value ? { note: stats.trackNext.note, date: dateOfTick(hud.startDay, stats.trackNext.tick) } : undefined}
+        trackNext={nextShown(stats?.trackNext, hud.tick.value, hud.startDay)}
         speedLevel={hud.speedLevel.value}
         paused={hud.paused.value}
         onTogglePause={() => hud.togglePause()}
