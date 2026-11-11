@@ -18,6 +18,7 @@ import type { TimelineEvent, TimelineFile } from './data/schemas';
 import { Terrain } from '../shared/terrain';
 import { RngStreams } from './core/rng';
 import { forEachCellInRing } from './data/ownership';
+import { neighbours4 } from './nav/grid';
 import { kmPerCell, project } from './data/projection';
 import { nuclearMask, START_GOLD } from './systems/revolts';
 import { relocateCapital } from './systems/capitals';
@@ -350,16 +351,53 @@ function transfer(world: World, to: number, from: readonly number[], ring: reado
 function occupy(world: World, by: number, of: readonly number[], ring: readonly (readonly [number, number])[]): Refusal {
   const why = whyNot(world, by);
   if (why) return why;
-  const { owner, controller } = world.cells;
+  const { owner, controller, w } = world.cells;
   // `by` among `of`: its own land taken back (R62g2).
   const owners = new Set(of.filter((n) => n !== 0));
-  let held = 0;
+  const taken = new Set<number>();
+  const losers = new Set<number>();
   for (const c of ringCells(world, ring)) {
     if (!owners.has(owner[c]!) || controller[c] === by) continue;
+    losers.add(controller[c]!);
     world.setController(c, by, false, FlipCause.other);
-    held++;
+    taken.add(c);
   }
-  return held > 0 ? Refusal.None : Refusal.NoEffect;
+  // The land formations of a loser held off from `by` (a hold: they cannot fight their way out) left on the land taken
+  // are set down behind the new line (R66c, ADR-968), as a withdraw's are; history's pockets were taken by the stage's
+  // `withdraw` an hour before. Before, they were left behind it, out of supply, and starved. Where the two fight (1941),
+  // the fighting decides, as before: set down on the line, they were beaten there and the line overrun.
+  for (const n of [...losers]) if (!world.holds(n, by)) losers.delete(n);
+  const f = world.formations.cols;
+  const left: number[] = [];
+  world.formations.forEach((i) => {
+    if (!losers.has(f.nation[i]!) || world.rules?.templates[f.template[i]!]?.domain !== Domain.land || world.embarked.has(i)) return;
+    if (taken.has(Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w)) left.push(i);
+  });
+  const placed = new Map<number, number>();
+  for (const i of left.sort((a, b) => a - b)) setDownBehind(world, i, taken, placed);
+  return taken.size > 0 ? Refusal.None : Refusal.NoEffect;
+}
+
+/**
+ * Sets land formation `i` down on the nearest land of its nation's outside `lost` (`fallBackCell`), off any march, as a
+ * landing sets one down (R66c, ADR-968); false where there is none within FALL_BACK_CELLS.
+ */
+function setDownBehind(world: World, i: number, lost: ReadonlySet<number>, placed: Map<number, number>): boolean {
+  const f = world.formations.cols;
+  const { w } = world.cells;
+  if (world.embarked.has(i)) return false;
+  const to = fallBackCell(world, Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w, f.nation[i]!, lost, placed);
+  if (to < 0) return false;
+  placed.set(to, (placed.get(to) ?? 0) + 1);
+  f.home[i] = 0;
+  f.moving[i] = 0;
+  f.retreat[i] = 0;
+  f.engaged[i] = 0;
+  world.paths.delete(i);
+  world.playerOrders.delete(i);
+  f.x[i] = (to % w) + 0.5;
+  f.y[i] = Math.floor(to / w) + 0.5;
+  return true;
 }
 
 /**
@@ -518,6 +556,19 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       const why = whyNot(world, n);
       if (why) return why;
       const inRing = new Set(ringCells(world, e.ring));
+      // Set down behind the line only where a hold keeps `n` from fighting (R66c): else an evacuation, as before.
+      // Held off from a foe that holds land next to the ring: the one taking it (not any foe of n's anywhere).
+      const { w: cw, h: ch, controller: ctl } = world.cells;
+      const nb: number[] = [];
+      let held = false;
+      for (const c of inRing) {
+        for (const k of neighbours4(c, cw, ch, world.settings.loopingMap, nb)) {
+          const m = ctl[k]!;
+          if (m !== 0 && m !== n && !inRing.has(k) && world.wars.atWar(n, m) && world.holds(n, m)) held = true;
+        }
+        if (held) break;
+      }
+      const placed = new Map<number, number>();
       const f = world.formations.cols;
       const { w } = world.cells;
       const gone: number[] = [];
@@ -532,7 +583,13 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       });
       for (const i of gone.sort((a, b) => a - b)) {
         const land = world.rules?.templates[f.template[i]!]?.domain === Domain.land;
-        if (e.captured !== true && land) world.nations.cols.manpower[n] = world.nations.cols.manpower[n]! + f.strength[i]!;
+        // A fall-back (R66c, ADR-968): set down on the nearest land of its own behind the line, and not lost to the
+        // front; only one with none within FALL_BACK_CELLS (an evacuation over the sea: Dunkirk) leaves the theatre,
+        // its men back to the pool.
+        if (e.captured !== true && land) {
+          if (held && setDownBehind(world, i, inRing, placed)) continue;
+          world.nations.cols.manpower[n] = world.nations.cols.manpower[n]! + f.strength[i]!;
+        }
         applyCommand(world, { kind: 'removeFormation', id: i });
       }
       // Applied however many it found: a ring cleared (an empty pocket is no event passed over).
@@ -564,6 +621,43 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       return whyNot(world, id(e.nation)) || applyCommand(world, { kind: 'grantBuff', targetKind: 'nation', target: id(e.nation), buff: e.buff, magnitude: e.magnitude, hours, nameKey: 'buff.history' });
     }
   }
+}
+
+/** How many formations a stage sets down on one cell (R66c): a stage's along its line, not all on its nearest cell. */
+export const SET_DOWN_PER_CELL = 2;
+
+/** How far over land (cells at the 1938 map's size, `World.atSize`) a formation looks for its own land behind a stage's line (R66c). */
+export const FALL_BACK_CELLS = 40;
+
+/**
+ * The nearest land cell (4-neighbour steps over land, within FALL_BACK_CELLS; the lowest index of equals) that `n`
+ * holds, that is not in the ring and that has fewer than SET_DOWN_PER_CELL of this stage's set down on it (`placed`),
+ * from `start`; -1 for none.
+ */
+function fallBackCell(world: World, start: number, n: number, inRing: ReadonlySet<number>, placed: ReadonlyMap<number, number>): number {
+  const { w, h, terrain, controller } = world.cells;
+  const wrap = world.settings.loopingMap;
+  const seen = new Set<number>([start]);
+  let ring = [start];
+  const far = world.atSize(FALL_BACK_CELLS);
+  for (let step = 0; step <= far && ring.length > 0; step++) {
+    let best = -1;
+    for (const c of ring) if (controller[c] === n && !inRing.has(c) && (placed.get(c) ?? 0) < SET_DOWN_PER_CELL && (best < 0 || c < best)) best = c;
+    if (best >= 0) return best;
+    const next: number[] = [];
+    for (const c of ring) {
+      const x = c % w;
+      const y = Math.floor(c / w);
+      const nbs = [y > 0 ? c - w : -1, y < h - 1 ? c + w : -1, x > 0 ? c - 1 : wrap ? c + w - 1 : -1, x < w - 1 ? c + 1 : wrap ? c - w + 1 : -1];
+      for (const k of nbs) {
+        if (k < 0 || seen.has(k) || terrain[k]! < Terrain.Plains) continue;
+        seen.add(k);
+        next.push(k);
+      }
+    }
+    ring = next;
+  }
+  return -1;
 }
 
 /** The first nation an event names. */

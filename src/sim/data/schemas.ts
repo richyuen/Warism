@@ -531,7 +531,11 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * as `ownership.json`'s regions: lon/lat, a cell taken when its centre is inside.
    */
   z.strictObject({ ...when, kind: z.literal('transfer'), to: tag, from: tags, ring, note: z.string().optional() }),
-  /** The land inside `ring` that one of `of` owns is held by `by`, its owner unchanged (an occupation, R62c); `by` among `of` takes its own back (R62g2). */
+  /**
+   * The land inside `ring` that one of `of` owns is held by `by`, its owner unchanged (an occupation, R62c); `by` among
+   * `of` takes its own back (R62g2). The land formations there of those who held it, held off from `by` (a hold), are
+   * set down on their own nearest land behind the new line (R66c).
+   */
   z.strictObject({ ...when, kind: z.literal('occupy'), by: tag, of: tags, ring, note: z.string().optional() }),
   /**
    * A nation of the scenario dormant until now is born (R62d) on the land in `ring` that one of `from` owns: owned
@@ -569,8 +573,9 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * of `to` in turn, as a player's orders (the AI leaves each alone until it is there).
    */
   /**
-   * An evacuation (R62g2): `nation`'s land formations in `ring` leave the theatre, their men back to its pool; or a
-   * pocket (`captured`, R62g3): they are taken, their men lost. With `fleets` (a surrender, R62i0) its ships and air
+   * An evacuation (R62g2): `nation`'s land formations in `ring` leave the theatre, their men back to its pool; held off
+   * from a foe beside the ring (a hold, R66c), set down on its nearest land outside it where it has any within reach
+   * over land. Or a pocket (`captured`, R62g3): they are taken, their men lost. With `fleets` (a surrender, R62i0) its ships and air
    * wings go too, wherever they are.
    */
   z.strictObject({ ...when, kind: z.literal('withdraw'), nation: tag, ring, captured: z.boolean().optional(), fleets: z.boolean().optional(), note: z.string().optional() }),

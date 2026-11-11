@@ -9,7 +9,7 @@ import { loadAssets1938 } from '../../tools/headless/assets';
 
 // ROADMAP R62f2 (ADR-929), R62g0 (ADR-930): the China front held. From one save on 1 November 1938, 12 months with the
 // holds and without (TRACK_PROBE.holdsOff): with them, Japan's share of China within 5 points of its start and at least
-// 15 % (its occupation of 1938, by stages), China's army not under half of it, the Communists and Manchukuo living.
+// 15 % (its occupation of 1938, by stages), China's army not under 40 % of it, the Communists and Manchukuo living.
 
 const id = (t: string): number => TAGS_1938H.indexOf(t) + 1;
 const [JAP, MAN, MEN, CHI, CCP] = ['JAP', 'MAN', 'MEN', 'CHI', 'CCP'].map(id) as [number, number, number, number, number];
@@ -57,7 +57,9 @@ it('the China front holds a year from November 1938, and does not without the ho
   process.stderr.write(`1 Nov 1938: ${say(start)}\na year held: ${say(held)}\na year without: ${say(loose)}\n`);
   expect(Math.abs(held.share - start.share)).toBeLessThanOrEqual(0.05);
   expect(held.share).toBeGreaterThanOrEqual(0.15);
-  expect(held.army).toBeGreaterThanOrEqual(start.army / 2);
+  // At least 40 % of it (ADR-968; half before): China's army a year on is held by its monthly budget (379-402k from
+  // starts of 719-856k in every tree of R66c), not by the front; without the hold it is 12-29k.
+  expect(held.army).toBeGreaterThanOrEqual(start.army * 0.4);
   expect(held.ccp).toBe(true);
   expect(held.man).toBe(true);
 }, 1_800_000);

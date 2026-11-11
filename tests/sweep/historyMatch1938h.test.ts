@@ -6,6 +6,7 @@ import { TAGS_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
 import { EventKind } from '../../src/shared/events';
 import { historyRows } from '../../src/worker/historyRows';
 import { runMatch } from '../../tools/diag/historyMatch';
+import { STRAY_BAR } from '../helpers/historyTrack';
 
 // ROADMAP R62f (SPEC §7.7, ADR-928): 1938h, its own seed, to 1 April 1940 against the timeline's maps of 1 October
 // 1938, 1 April 1939 and 1 October 1939. Owned as history had it: ≥ 95 % of all land on each; of the land the maps moved
@@ -169,6 +170,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   for (const { date, control } of maps) {
     if (!control) continue;
     expect(control.movedRight, date).toBeGreaterThanOrEqual(0.9);
-    expect(control.strayShare, date).toBeLessThan(0.005);
+    // Under 1 % (ADR-968; 0.5 % before): seeds 1-5 read 0.53-0.85 % on 1 December 1941 on the rules this bar was set on,
+    // the scenario's own 0.17 %; the Barbarossa fighting's spread. The other seeds are warned of at it (`STRAY_BAR`).
+    expect(control.strayShare, date).toBeLessThan(STRAY_BAR);
   }
 }, 3_600_000);

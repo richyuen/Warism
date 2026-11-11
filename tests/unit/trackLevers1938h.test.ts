@@ -168,10 +168,13 @@ describe('a redeployment (ROADMAP R62g1)', () => {
 });
 
 describe('an evacuation, a revival, land taken back (ROADMAP R62g2)', () => {
-  it("withdraw takes a nation's land formations in the ring home to its pool; born brings back a dead nation; occupy by an owner takes its land back", () => {
+  it("withdraw sets a nation's land formations in the ring down on its land outside it (R66c); born brings back a dead nation; occupy by an owner takes its land back", () => {
     const ring: [number, number][] = [[10.0, 55.0], [16.0, 55.0], [16.0, 50.0], [10.0, 50.0]];
     const tl: TimelineFile = {
       events: [
+        // Held off from Poland, on the ring's eastern edge (R66c: else an evacuation, as before).
+        { date: '1938-01-01', kind: 'war', attackers: ['GER'], defenders: ['POL'] },
+        { date: '1938-01-01', kind: 'hold', sides: [['GER'], ['POL']], until: '1939-01-01' },
         { date: '1938-01-02', kind: 'withdraw', nation: 'GER', ring },
         { date: '1938-01-03', kind: 'occupy', by: 'POL', of: ['GER'], ring },
         { date: '1938-01-04', kind: 'occupy', by: 'GER', of: ['GER'], ring },
@@ -188,17 +191,34 @@ describe('an evacuation, a revival, land taken back (ROADMAP R62g2)', () => {
         if (f.nation[i] === GER && w.rules?.templates[f.template[i]!]?.domain === 0) {
           const [u0, v0] = project(10, 55);
           const [u1, v1] = project(16, 50);
-          if (f.x[i]! >= u0 * w.cells.w && f.x[i]! <= u1 * w.cells.w && f.y[i]! >= v0 * w.cells.h && f.y[i]! <= v1 * w.cells.h) n++;
+          // By its cell's centre, as the ring takes a cell (R66c: one set down on the row past the ring's edge is out).
+          const [x, y] = [Math.floor(f.x[i]!) + 0.5, Math.floor(f.y[i]!) + 0.5];
+          if (x >= u0 * w.cells.w && x <= u1 * w.cells.w && y >= v0 * w.cells.h && y <= v1 * w.cells.h) n++;
         }
       });
       return n;
     };
+    const land = (): number => {
+      let n = 0;
+      w.formations.forEach((i) => {
+        if (w.formations.cols.nation[i] === GER && w.rules?.templates[w.formations.cols.template[i]!]?.domain === 0) n++;
+      });
+      return n;
+    };
     sim.step(24, quiet);
+    expect(w.holds(GER, id('POL'))).toBe(true);
     expect(inRing()).toBeGreaterThan(0);
     const pool = w.nations.cols.manpower[GER]!;
+    const all = land();
     sim.step(1, quiet);
+    // Out of the ring, on German land, every one of them: none sent home to the pool (R66c, ADR-968).
     expect(inRing()).toBe(0);
-    expect(w.nations.cols.manpower[GER]!).toBeGreaterThan(pool);
+    expect(land()).toBe(all);
+    expect(w.nations.cols.manpower[GER]!).toBe(pool);
+    w.formations.forEach((i) => {
+      const f = w.formations.cols;
+      if (f.nation[i] === GER && w.rules?.templates[f.template[i]!]?.domain === 0 && !w.embarked.has(i)) expect(w.cells.controller[Math.floor(f.y[i]!) * w.cells.w + Math.floor(f.x[i]!)]).toBe(GER);
+    });
     const [bu, bv] = project(13.4, 52.5);
     const berlin = Math.floor(bv * w.cells.h) * w.cells.w + Math.floor(bu * w.cells.w);
     sim.step(24, quiet);
@@ -208,6 +228,83 @@ describe('an evacuation, a revival, land taken back (ROADMAP R62g2)', () => {
     expect(w.nations.cols.living[id('ETH')]).toBe(0);
     sim.step(24, quiet);
     expect(w.nations.cols.living[id('ETH')]).toBe(1);
+  });
+});
+
+describe('an evacuation; an occupation behind its line (ROADMAP R66c)', () => {
+  const landOf = (w: World, n: number): number[] => {
+    const out: number[] = [];
+    w.formations.forEach((i) => {
+      if (w.formations.cols.nation[i] === n && w.rules?.templates[w.formations.cols.template[i]!]?.domain === 0 && !w.embarked.has(i)) out.push(i);
+    });
+    return out;
+  };
+  const cellOf = (w: World, i: number): number => Math.floor(w.formations.cols.y[i]!) * w.cells.w + Math.floor(w.formations.cols.x[i]!);
+
+  it('withdraw with no hold: home to the pool, as before R66c', () => {
+    // All of Great Britain, at peace.
+    const ring: [number, number][] = [[-6.4, 59.0], [2.0, 59.0], [2.0, 49.8], [-6.4, 49.8]];
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, { events: [{ date: '1938-01-02', kind: 'withdraw', nation: 'ENG', ring }] });
+    const w = sim.world;
+    const ENG = id('ENG');
+    const [u0, v0] = project(-6.4, 59.0);
+    const [u1, v1] = project(2.0, 49.8);
+    const inside = (): number[] => landOf(w, ENG).filter((i) => w.formations.cols.x[i]! >= u0 * w.cells.w && w.formations.cols.x[i]! <= u1 * w.cells.w && w.formations.cols.y[i]! >= v0 * w.cells.h && w.formations.cols.y[i]! <= v1 * w.cells.h);
+    sim.step(24, quiet);
+    expect(inside().length).toBeGreaterThan(0);
+    const pool = w.nations.cols.manpower[ENG]!;
+    sim.step(1, quiet);
+    expect(inside()).toEqual([]);
+    expect(w.nations.cols.manpower[ENG]!).toBeGreaterThan(pool);
+  });
+
+  it('withdraw held, with none of its own land beyond the ring within reach over land: home to the pool', () => {
+    // Italy out of Libya, held off from France (Tunisia beside it): Italy's other land is over the sea or far.
+    const ring: [number, number][] = [[9.0, 33.5], [25.5, 33.5], [25.5, 19.0], [9.0, 19.0]];
+    const tl: TimelineFile = {
+      events: [
+        { date: '1938-01-01', kind: 'war', attackers: ['ITA'], defenders: ['FRA'] },
+        { date: '1938-01-01', kind: 'hold', sides: [['ITA'], ['FRA']], until: '1939-01-01' },
+        { date: '1938-01-02', kind: 'withdraw', nation: 'ITA', ring },
+      ],
+    };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
+    const w = sim.world;
+    const ITA = id('ITA');
+    const [u0, v0] = project(9.0, 33.5);
+    const [u1, v1] = project(25.5, 19.0);
+    const inside = (): number[] => landOf(w, ITA).filter((i) => w.formations.cols.x[i]! >= u0 * w.cells.w && w.formations.cols.x[i]! <= u1 * w.cells.w && w.formations.cols.y[i]! >= v0 * w.cells.h && w.formations.cols.y[i]! <= v1 * w.cells.h);
+    sim.step(24, quiet);
+    expect(w.holds(ITA, id('FRA'))).toBe(true);
+    expect(inside().length).toBeGreaterThan(0);
+    const pool = w.nations.cols.manpower[ITA]!;
+    sim.step(1, quiet);
+    expect(inside()).toEqual([]);
+    expect(w.nations.cols.manpower[ITA]!).toBeGreaterThan(pool);
+  });
+
+  it("occupy: the formations of those who held the land taken are set down on their own land behind the new line, not left on it", () => {
+    // Western Poland taken by Germany: the Polish formations there end on Polish land, as many as before.
+    const ring: [number, number][] = [[14.0, 54.5], [19.0, 54.5], [19.0, 50.0], [14.0, 50.0]];
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, {
+      events: [
+        { date: '1938-01-01', kind: 'war', attackers: ['GER'], defenders: ['POL'] },
+        { date: '1938-01-01', kind: 'hold', sides: [['GER'], ['POL']], until: '1939-01-01' },
+        { date: '1938-01-02', kind: 'occupy', by: 'GER', of: ['POL'], ring },
+      ],
+    });
+    const w = sim.world;
+    const POL = id('POL');
+    sim.step(24, quiet);
+    expect(w.holds(POL, id('GER'))).toBe(true);
+    const before = landOf(w, POL);
+    const [u0, v0] = project(14.0, 54.5);
+    const [u1, v1] = project(19.0, 50.0);
+    const there = before.filter((i) => w.formations.cols.x[i]! >= u0 * w.cells.w && w.formations.cols.x[i]! <= u1 * w.cells.w && w.formations.cols.y[i]! >= v0 * w.cells.h && w.formations.cols.y[i]! <= v1 * w.cells.h && w.cells.owner[cellOf(w, i)] === POL);
+    expect(there.length).toBeGreaterThan(0);
+    sim.step(1, quiet);
+    expect(landOf(w, POL).length).toBe(before.length);
+    for (const i of there) expect(w.cells.controller[cellOf(w, i)], `formation ${i}`).toBe(POL);
   });
 });
 

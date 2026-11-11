@@ -1,9 +1,12 @@
+import type { Admin1Meta } from '../../src/shared/admin1';
+import { dayOfIso } from '../../src/shared/calendar';
 import { Refusal } from '../../src/shared/commands';
 import { EventKind } from '../../src/shared/events';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
-import { SEED_1938H, TAGS_1938H } from '../../src/sim/scenario1938h';
+import { SEED_1938H, TAGS_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
 import type { World } from '../../src/sim/world';
+import { matchColumns, referenceHolders, referenceOwners } from '../../tools/diag/historyMatch';
 import { Breaks, bondsOf, membersOf, silentExits, useTags, worldBreaks } from './diploInvariants';
 import { assets1938 } from './earth';
 
@@ -15,6 +18,12 @@ import { assets1938 } from './earth';
 //   exit, realm, held  the diplomatic rules of `diploInvariants` (ADR-803) through the track, `held` save the land
 //           the timeline occupies at peace (an armistice's line, a zone of occupation): its holder is then the
 //           timeline's, as its maps' `occupied`.
+//   strays  on another seed than the scenario's: on each of the timeline's maps with `occupied`, land held by another
+//           than history's where history had it unchanged from the start under STRAY_BAR (ADR-968; the scenario's own
+//           seed is held to it by `historyMatch1938h`).
+
+/** The share of land held astray at a map's date (`MatchColumns.strayShare`) a seed is held to (ADR-968). */
+export const STRAY_BAR = 0.01;
 
 const tag = (n: number): string => TAGS_1938H[n - 1] ?? `#${n}`;
 /** The refusals of an event that no longer applies on a seed (`TrackSkipped`'s why). */
@@ -38,9 +47,16 @@ export interface TrackRun {
  */
 export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle?: (w: World) => void): TrackRun {
   useTags(tag);
-  const sim = new Sim({ scenario: '1938h', seed, assets: assets1938(SIZE_1938.w) });
+  const assets = assets1938(SIZE_1938.w);
+  const sim = new Sim({ scenario: '1938h', seed, assets });
   const t = sim.world.track!;
   const own = seed === SEED_1938H;
+  // The strays (ADR-968): each map with `occupied`, at noon of its date.
+  const meta = JSON.parse(new TextDecoder().decode(assets.admin1Meta)) as Admin1Meta[];
+  const maps = TIMELINE_1938H.maps ?? [];
+  const mapAt = new Map(maps.flatMap((m, k) => (m.occupied && !own ? [[(dayOfIso(m.date) - dayOfIso('1938-01-01')) * 24 + 12, k] as const] : [])));
+  const startOwner = sim.world.cells.owner.slice();
+  const startHeld = sim.world.cells.controller.slice();
   const due = new Set(t.ticks);
   const breaks = new Breaks();
   const skipped: [number, number][] = [];
@@ -68,6 +84,14 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
       }
       breaks.add(where, silentExits(w, before, bonds.overlord, ev));
       if (w.tick % 24 === 0) breaks.add(where, worldBreaks(w).filter((l) => !l.startsWith('held') || !heldByTimeline(w, l)));
+      const k = mapAt.get(w.tick);
+      if (k !== undefined) {
+        const { province, terrain, w: cw, h: ch } = w.cells;
+        const ref = referenceOwners(startOwner, province, terrain, meta, maps, k, TAGS_1938H, cw, ch);
+        const held = referenceHolders(ref, province, terrain, meta, maps[k]!, TAGS_1938H, cw, ch);
+        const c = matchColumns(w.cells.controller, held, startHeld, terrain);
+        if (c.strayShare >= STRAY_BAR) breaks.add(`${label} ${maps[k]!.date}`, [`strays: ${(100 * c.strayShare).toFixed(2)} % of land held astray (bar ${100 * STRAY_BAR} %)`]);
+      }
       ev.length = 0;
       w.out.fires.length = 0;
       before = membersOf(w);

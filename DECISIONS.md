@@ -144,3 +144,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
   rings (R66c); fighting in a window before a stage, the stage still deciding (R66d, the user's "middle ground",
   ADR-958); the 1946-53 stages (R66e).
 
+### ADR-968 · 2026-11-11 · accepted — R66c: a stage's cut-off formations set down behind its line; two replay bars re-scoped (the user's decision)
+- **The rule** (`src/sim/track.ts`, `setDownBehind`, `fallBackCell`): an `occupy` sets the land formations of those
+  who held its land, held off from its taker (a hold), down on their own nearest land outside the land taken (4-steps
+  over land, within FALL_BACK_CELLS at the 1938 size, at most SET_DOWN_PER_CELL = 2 a cell, the lowest cell of
+  equals); a `withdraw` (not `captured`) of a nation held off from a foe that holds land beside the ring does the
+  same, the pool only for one with no own land within reach (Italy out of Libya). With no hold, both are as before:
+  where the two fight (1941), set down on the line they were beaten there and the line overrun.
+- **Before:** they were left behind the line, out of supply, starving or deleted (China's formations caught in the
+  Wuhan and Canton rings of 1938: 120k men starved in two months).
+- **Measured** (`tools/diag/trackFronts.ts`, the large Eastern stages of 1942-45, the smaller side's men within 120 km):
+  seed 1938 618k on HEAD → 2.88M; seeds 1 and 2 5.12M and 2.39M; both sides near at 8, 9, 9 of 15 (7 on HEAD's
+  seed 1938). Tick over five years of the replay 2.42 ms against plain 1938's 2.51 (paired, swapped); HEAD's replay
+  1.96, the difference the armies kept.
+- **Tried and dropped** (an ablation on three seeds, each rule off in turn): held foes in a partner's foes while a
+  stage is due, a sector with no threat and only held foes left out of the allotment, the land of the coming stages
+  weighed in it. Each moved the census within its noise both ways.
+- **The bars, re-scoped by the user** (BLOCKERS 2026-11-11, resolved): `historyMatch1938h`'s control strays under 1 %
+  (0.5 % before): the rules it was set on read 0.53-0.85 % on seeds 1-5 and 0.17 % on seed 1938 on 1 December 1941,
+  the spread of the Barbarossa fighting (China's 1938 set-downs alone moved seed 1938 to 0.55 %); 0.28 % now. The other
+  seeds are warned of at the same line (`STRAY_BAR`, `tests/helpers/historyTrack.ts`: `strays` on each map with
+  `occupied`). `chinaFront1938h`'s China army a year on at least 40 % of its start (half before): the monthly budget
+  holds it at 379-402k from starts of 719-856k in every tree tried; without the hold 12-29k; 383k of 762k now.
+

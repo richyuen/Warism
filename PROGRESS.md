@@ -78,3 +78,10 @@
   (seeds 1-5 all over the bar on HEAD) and the second by 4 %, China's army held by its budget. Kept as
   `docs/patches/R66c-set-down.patch`; the bars are the user's decision (BLOCKERS).
 
+## 2026-11-11 — R66c: a stage's cut-off formations set down behind its line (ADR-968)
+
+- The user re-scoped the two replay bars (strays under 1 %, warned on seeds 1-5; China's army 40 %). Under a hold an
+  `occupy` or a `withdraw` sets the formations it leaves behind down on their own land: the large Eastern stages'
+  smaller side 618k → 2.9M men near (seed 1938). The nine replay tests green; the unit suite green (two timing tests
+  red under its load, green alone); the replay's tick 4 % under plain 1938's.
+

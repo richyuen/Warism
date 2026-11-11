@@ -1759,7 +1759,9 @@ to 27 July 1953, then sets the world free.
   overrun is annexed at its capitulation (Denmark a puppet), Vichy born, the occupied zone held at peace; `leave` (an
   armistice) and `redeploy` (a front moved by rail). 1940-41 to Iran (R62g2, ADR-932): `withdraw` (an evacuation),
   an owner's `occupy` (land taken back), `born` of a dead nation (a revival). Barbarossa by stages (R62g3,
-  ADR-933): the Axis lines on their dates, the pockets taken (`withdraw` with `captured`). The Pacific opening
+  ADR-933): the Axis lines on their dates, the pockets taken (`withdraw` with `captured`); under a hold, the other
+  formations a stage leaves behind its line, of `withdraw` or `occupy`, set down on their own nearest land, two to a
+  cell at most, the pool only for one with none within reach over land (R66c, ADR-968). The Pacific opening
   (R62g4, ADR-934): Pearl Harbor, 11 December's declarations, the first month's conquests by stages. From 1942 the
   fronts are held between their stages and move by them alone (R62h0, ADR-935); stages both ways, Italy's
   armistice and the Italian Social Republic (R62h1, ADR-936); D-Day to Germany's surrender, the states restored and
