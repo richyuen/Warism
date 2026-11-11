@@ -36,3 +36,30 @@ it("a transfer told by its note: not again as land handed over or a nation destr
     expect(rows.filter((r) => r.kind === EventKind.LandCeded)).toEqual([]);
   }
 });
+
+// ROADMAP R70a (critic run 64, R64-N3): only the told transfer's own land rows go. On 8 May 1945 Hungary's land went to
+// the Soviet Union at 00:00 ("Carpatho-Ukraine…") and to Czechoslovakia, born, at 01:00; that row was hidden too.
+it("a told transfer hides no other land row of its hour or the next", () => {
+  const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) });
+  const w = sim.world;
+  const t = w.track!;
+  const j = t.events.findIndex((e) => e.note?.startsWith('Carpatho-Ukraine, Soviet in fact'));
+  expect(j).toBeGreaterThanOrEqual(0);
+  const id = (tag: string): number => TAGS_1938H.indexOf(tag) + 1;
+  const [sov, hun, czs] = [id('SOV'), id('HUN'), id('CZS')];
+  const at = t.ticks[j]!;
+  w.history.rows.length = 0;
+  w.history.record(at, EventKind.LandCeded, sov, hun, 10, 10);
+  w.history.record(at, EventKind.TrackEvent, j + 1, sov, 10, 10);
+  w.history.record(at, EventKind.LandCeded, czs, hun, 10, 10);
+  w.history.record(at + 1, EventKind.LandCeded, czs, hun, 10, 10);
+  w.tick = at + 2;
+  const name = (n: number): string => `nation.${TAGS_1938H[n - 1]}`;
+  // History's (land handed over is not a ticker row).
+  const ceded = historyRows(w, name, () => '')
+    .filter((r) => r.kind === EventKind.LandCeded)
+    .map((r) => [r.tick, r.a, r.b]);
+  expect(ceded).not.toContainEqual([at, sov, hun]);
+  expect(ceded).toContainEqual([at, czs, hun]);
+  expect(ceded).toContainEqual([at + 1, czs, hun]);
+});

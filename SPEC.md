@@ -1743,8 +1743,9 @@ to 27 July 1953, then sets the world free.
   `TRACK_AHEAD` (8) after it that the stats carry whose hour is not behind the shown one (R64f, R65a, ADR-960;
   `src/app/trackShown.ts`); an event applied that the game
   tells no other way (a transfer, an occupation, a pocket, an arrival, a seat moved, a rename) is a `TrackEvent` row,
-  told in the ticker and the History by its note, once a day (R64b, ADR-953), a transfer so told not again as the
-  land handed over or the end of a nation it took from (R65c, ADR-962); a war, peace or annexation by the game's
+  told in the ticker and the History by its note, once a day (R64b, ADR-953), a transfer so told not again as its own
+  land handed over (its giver and receiver, its hour) or the end of a nation it took from (R65c, R70a; ADR-962,
+  ADR-963); a war, peace or annexation by the game's
   own row.
 - **Seed:** fixed by the scenario and not offered on its form; the track is the same each run. A second
   seed, rolled by the form (`?after=`) and kept in the state, is taken when the track ends (in 1953 or at

@@ -90,3 +90,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   `tests/e2e/worldBuilding1938.spec.ts` (the notice in every sample with the map drawn and no stats, gone with them);
   the font and the colour by a probe at four sizes and a shot.
 
+### ADR-963 · 2026-11-11 · accepted — A told transfer hides only its own rows (R70a, R64-N3)
+- **Cause** (critic run 64, `c64_transfer.ts`): ADR-962's `transferTold` hid any `LandCeded` whose giver a told
+  transfer took from, in its hour or the next: on 8 May 1945 "Carpatho-Ukraine, Soviet in fact" (Hungary's land to the
+  Soviet Union, 00:00) hid "Czechoslovakia took land from Hungary" and "Yugoslavia took land from Hungary" (01:00).
+- **Rule:** a land row is hidden only when its giver and receiver are the transfer's and it is of the transfer's own
+  hour; a nation's end, in that hour or the next, as before.
+- **Measured:** `c64_transfer.ts` shows both rows again; `tests/unit/historyTransferTold1938h.test.ts` gains the case
+  (red on the code before).
+

@@ -162,7 +162,7 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     // A burst's forces destroyed are its strike's row (PLAN 7.32b), not a row of their own.
     if (kind === EventKind.NukeToll && i > 0 && tollAfter(rows, i - HISTORY_STRIDE)) continue;
     // A transfer the timeline tells by its note (R65c): not told again as land handed over, nor as a nation destroyed.
-    if ((kind === EventKind.NationEliminated && transferTold(world, tick, a)) || (kind === EventKind.LandCeded && transferTold(world, tick, b))) continue;
+    if ((kind === EventKind.NationEliminated && transferTold(world, tick, a)) || (kind === EventKind.LandCeded && transferTold(world, tick, b, a))) continue;
     if (kind === EventKind.LandCeded) {
       if (tick !== cededAt) ceded.clear();
       cededAt = tick;
@@ -236,7 +236,7 @@ export function tickerRows(world: World, nationName: (id: number) => string, cit
     const [tick, kind, a, b] = [rows[i]!, rows[i + 1]!, rows[i + 2]!, rows[i + 3]!];
     if (world.tick - tick > TICKER_HOURS) break;
     if (!TICKER_KINDS.has(kind)) continue;
-    if ((kind === EventKind.NationEliminated && transferTold(world, tick, a)) || (kind === EventKind.LandCeded && transferTold(world, tick, b))) continue;
+    if ((kind === EventKind.NationEliminated && transferTold(world, tick, a)) || (kind === EventKind.LandCeded && transferTold(world, tick, b, a))) continue;
     if (TICKER_ONE_AN_HOUR.has(kind)) {
       if (taken.has(tick * 256 + kind)) continue;
       taken.add(tick * 256 + kind);
@@ -281,17 +281,19 @@ function roseThen(rows: ArrayLike<number>, i: number, rebel: number, holder: num
 }
 
 /**
- * Whether a timeline transfer from `from`, told by its note, was applied at `tick` or the hour before (R65c; critic run
- * 63: "Manchukuo was destroyed", "Mengjiang was destroyed" and "Manchukuo and Mengjiang dissolved: China in name" on 18
- * August 1945). Then the note, the history's words, tells it: not the game's rows of the land handed over (in the
- * hour) or of the nation's end (the hour after).
+ * Whether a timeline transfer told by its note tells the row (R65c; critic run 63: "Manchukuo was destroyed",
+ * "Mengjiang was destroyed" and "Manchukuo and Mengjiang dissolved: China in name" on 18 August 1945): the land `from`
+ * handed to `to` in the transfer's own hour (`to` given), or the end of `from` in that hour or the one after (`to`
+ * absent). Only that transfer's rows (R70a; critic run 64, R64-N3: on 8 May 1945 "Czechoslovakia took land from
+ * Hungary" was hidden by the hour's transfer of Hungarian land to the Soviet Union).
  */
-function transferTold(world: World, tick: number, from: number): boolean {
+function transferTold(world: World, tick: number, from: number, to?: number): boolean {
   const t = world.track;
   if (!t) return false;
   for (let j = 0; j < t.events.length; j++) {
     const e = t.events[j]!;
-    if (e.kind === 'transfer' && (t.ticks[j] === tick || t.ticks[j] === tick - 1) && e.from.some((g) => t.id(g) === from) && toldByNote(t, j)) return true;
+    if (e.kind !== 'transfer' || !e.from.some((g) => t.id(g) === from) || !toldByNote(t, j)) continue;
+    if (to === undefined ? t.ticks[j] === tick || t.ticks[j] === tick - 1 : t.ticks[j] === tick && t.id(e.to) === to) return true;
   }
   return false;
 }
