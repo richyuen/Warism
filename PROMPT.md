@@ -99,7 +99,8 @@ Items come in batches (a ROADMAP section). After the last item of a batch:
    score at its bar: `npm run check:review`, the
    soak (`npm run soak -- --scenario 1938 --seed 99 --minutes 30 --affinity 0xFFFF`), the sweep on
    unseen seeds (`npm run sweep -- --first <seed> --tag <name>`: borders still moving at the end
-   on every seed), and `npm run bench -- G` (budgets PASS). A check that fails becomes a ROADMAP item.
+   on every seed), and `npm run bench -- G` (budgets PASS). A check that fails becomes a ROADMAP item, and so does each
+   `WARNING historyTrack` line in check:review's output (the historical track's other seeds, ADR-950).
 4. When all hold: a CHANGELOG.md entry, then tag the commit `release-<YYYY-MM-DD>` (`git tag -a`,
    `git push --tags`). In the tag's commit, DECISIONS.md's ADRs and PROGRESS.md's entries move to
    `docs/history/DECISIONS-<tag>.md` and `PROGRESS-<tag>.md`, as the batch's items move to `ROADMAP-<tag>.md`

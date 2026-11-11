@@ -380,3 +380,9 @@
 - `historyTrack1938h` green on all 6 seeds (seed 4: Israel born); `historyMatch1938h`, `chinaFront1938h`,
   `freeWorld1938h` green. Tick time 2.00 against 2.41 ms a tick (2.038/2.324, 1.962/2.504), plain 1938's hash unchanged.
 - New: R63, the operational AI and an undefended objective (a rule of every game).
+
+## 2026-11-10 — The historical track's bar is its own seed; seeds 1-5 warn (ADR-950, the user's decision)
+
+- `historyTrack1938h`: seed 1938 the bar; seeds 1-5 print `WARNING historyTrack` lines (a release's check:review files
+  each as a ROADMAP item), failing only if the track does not end. R63's AT so.
+- Evidence: `npx vitest run tests/sweep/historyTrack1938h.test.ts --config vitest.sweep.config.ts -t "seed 1:|not have"`.

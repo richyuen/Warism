@@ -9,6 +9,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-950 · 2026-11-10 · accepted (the user's decision) — The historical track's bar is its own seed; other seeds warn
+- **The user, 2026-11-10:** "let's do the middle ground, as I do see your point about the fragility" (every game of
+  1938h plays seed 1938 until the track ends; the other seeds only show steering that holds by luck).
+- **Decision.** `historyTrack1938h`: the scenario's own seed is the bar (nothing passed over, no line broken); seeds
+  1-5 run in `npm run check:full` and print what the checker finds as `WARNING historyTrack` lines, failing only if the
+  track does not reach its end. Each such line at a release's check:review becomes a ROADMAP item (PROMPT "RELEASES"
+  3). `historyMatch1938h`'s bars were the own seed's already. R63's AT so: Paris on the own seed, the others a warning.
+- **Consequences.** A rule change elsewhere that breaks the track on another seed no longer stops the gate; it shows at
+  the next release. The own seed still stops it.
+
 ### ADR-949 · 2026-11-10 · accepted — No landings of the AI's own while the track steers; Paris by the armistice (R62l)
 - **The user's decision** (2026-11-10, option b of ADR-947's blocker): keep the rule, re-scope the Paris bar.
 - **The rule** (`src/sim/ai/invasion.ts`, `named`): while the historical track steers, `planLanding` and `planNormandy`
