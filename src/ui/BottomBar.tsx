@@ -5,6 +5,7 @@ import type { SimDate } from '../shared/calendar';
 import { MAP_MODES, type MapMode } from '../shared/mapModes';
 import { SPEED_LEVELS } from '../shared/speed';
 import { t, type MessageKey } from './i18n';
+import { usePhone } from './usePhone';
 
 export interface BottomBarProps {
   date: SimDate;
@@ -67,6 +68,7 @@ function speedLabels(): string {
  */
 export function BottomBar({ date, trackNext, speedLevel, paused, onTogglePause, onSpeed, mapMode, onMapMode, showStats, onToggleStats, godMode, onToggleGod, showHistory, onToggleHistory, showRelations, onToggleRelations, showEditor, onToggleEditor, showSettings, onToggleSettings, godTools, onCancel, diplomacy }: BottomBarProps) {
   const isMax = SPEED_LEVELS[speedLevel] === 'max';
+  const phone = usePhone();
   // How far the bar's top is from the view's bottom, for what stands above it (PLAN 7.4f25): the
   // bar wraps onto rows where it is narrow.
   const bar = useRef<HTMLElement>(null);
@@ -150,7 +152,7 @@ export function BottomBar({ date, trackNext, speedLevel, paused, onTogglePause, 
         </span>
         {trackNext ? (
           <span class="bar-track" data-testid="track-next" title={trackLine(trackNext)}>
-            {trackLine(trackNext)}
+            {phone ? trackLineShort(trackNext) : trackLine(trackNext)}
           </span>
         ) : null}
       </span>
@@ -166,6 +168,14 @@ export function BottomBar({ date, trackNext, speedLevel, paused, onTogglePause, 
 /** The track's next event under the date (ROADMAP R62j1): "Next, 12 March 1938: The Anschluss". */
 function trackLine({ note, date }: { note: string; date: SimDate }): string {
   return t('bar.trackNext', { date: t('date.format', { day: date.day, month: t(`month.${date.month}` as MessageKey), year: date.year }), note });
+}
+
+/**
+ * On a phone (R70b; critic run 64, R64-N1: at 11 px in 150 px "Next, 12 March 1938: The An…"): "12 Mar 1938: The
+ * Anschluss", on two rows of the bar's (style.css); whole in the tooltip as before.
+ */
+function trackLineShort({ note, date }: { note: string; date: SimDate }): string {
+  return t('bar.trackNextShort', { date: t('date.format', { day: date.day, month: t(`monthShort.${date.month}` as MessageKey), year: date.year }), note });
 }
 
 /** The key of each map mode, by its place in MAP_MODES (`game.tsx`'s MODE_KEYS: 1 to 9, then 0). */

@@ -37,7 +37,11 @@ for (const size of SIZES) {
     await stepTo(page, 2);
     const line = page.getByTestId('track-next');
     await expect(line).toContainText('The Anschluss');
-    await expect(line).toContainText('12 March 1938');
+    // On a phone the date is short (R70b: "12 Mar 1938: The Anschluss", on two rows), the line whole and ≥ 11 px.
+    await expect(line).toContainText(size.name === 'phone' ? '12 Mar 1938' : '12 March 1938');
+    const fit = await line.evaluate((e) => ({ whole: e.scrollWidth <= e.clientWidth && e.scrollHeight <= e.clientHeight, px: parseFloat(getComputedStyle(e).fontSize) }));
+    expect(fit.whole).toBe(true);
+    if (size.name === 'phone') expect(fit.px).toBeGreaterThanOrEqual(11);
     // An event the game tells no other way is told by its name (R62j1): Japan's occupation on the first day.
     await expect(page.getByTestId('ticker')).toContainText('Shanghai and Nanjing');
     await page.screenshot({ path: path.join(out, `track-next-${size.name}.png`) });

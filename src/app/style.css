@@ -256,11 +256,18 @@ textarea,
   font-weight: 400;
   opacity: 0.85;
 }
-/* On a phone 0.72em is under 9 px (R65c): 11 px, in the same width (17 × 0.72 em of the bar's 12.24 px). */
+/* On a phone 0.72em is under 9 px (R65c): 11 px, in the same width (17 × 0.72 em of the bar's 12.24 px), on two
+   rows of a fixed height (R70b: one row held ~8 letters of a note after the date; the bar keeps its height). */
 @media (max-width: 600px), (max-height: 500px) {
   .bar-track {
     font-size: 11px;
     width: 150px;
+    height: 2.3em;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 }
 

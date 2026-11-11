@@ -47,3 +47,8 @@
   from Hungary" shown again (`c64_transfer.ts`). Evidence: `tests/unit/historyTransferTold1938h.test.ts` (cb35c27a;
   its tick and this entry a commit after, the script that wrote them stopped on the tick's text). Gate.
 
+## 2026-11-11 — R70b: the track's line on a phone, short and on two rows (ADR-964)
+
+- "12 Mar 1938: The Anschluss" whole at 390 × 844 and 844 × 390 (was "Next, 12 March 1938: The An…"), 11 px.
+- Evidence: `tests/e2e/trackView1938h.spec.ts` (whole, ≥ 11 px), the critic's `c64_h_phone.mjs`. Gate.
+

@@ -99,3 +99,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Measured:** `c64_transfer.ts` shows both rows again; `tests/unit/historyTransferTold1938h.test.ts` gains the case
   (red on the code before).
 
+### ADR-964 · 2026-11-11 · accepted — The track's line on a phone: short, on two rows (R70b, R64-N1)
+- **Cause** (critic run 64, `c64_h_phone.mjs`): ADR-962's 11 px in the same 150 px held ~29 characters, 21 of them
+  "Next, 12 March 1938: ": "The An…" (the notes' median is 46 characters; a phone has no hover for the tooltip).
+- **Rule:** on a phone (`PHONE_QUERY`) the line reads "12 Mar 1938: The Anschluss" (`bar.trackNextShort`,
+  `monthShort.*`) on two rows of a fixed height (the bar does not change its height with the note); the tooltip whole.
+- **Measured:** the probe at 390 × 844 and 844 × 390: "12 Mar 1938: The Anschluss" whole (150 of 150 px); "1 Jan 1938:
+  Japan's occupation: North China" whole on two rows; `tests/e2e/trackView1938h.spec.ts` asks the line whole at both
+  sizes and ≥ 11 px on a phone; the bar's and the phone's layout specs green.
+
