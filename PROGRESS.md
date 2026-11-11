@@ -413,3 +413,9 @@
   a war, peace or annexation by the game's own row. "India" now "British India becomes India".
 - Evidence: `tests/unit/trackTold1938h.test.ts`; `npx playwright test tests/e2e/trackView1938h.spec.ts` (3 passed);
   `docs/evidence/R62j/` shot again. Gate.
+
+## 2026-11-11 — R64c: the track's arrivals told once, by whose (ADR-954)
+
+- "The mobilisation" ×22 → "The Soviet mobilisation: reserves to Moscow" once, its repeats unnamed; the Stalingrad
+  reserves and Norway's landings likewise; each arrival names its army.
+- Evidence: `tests/unit/trackTold1938h.test.ts`. Gate.

@@ -9,6 +9,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-954 · 2026-11-11 · accepted — The track's arrivals told once, by whose (R64c, R62-N3)
+- **Before:** 22 Soviet arrivals noted "The mobilisation" (15 July 1941 to 15 May 1944), each a row and the "Next"
+  line's quarter after quarter, whose not said; "Behind Stalingrad" ×3; "Trondheim", "Bergen", "The army in Bulgaria".
+- **Now:** the first of a series named by whose and where ("The Soviet mobilisation: reserves to Moscow", "Soviet
+  reserves gather behind Stalingrad", "German landings at Oslo, Trondheim and Bergen"); its repeats unnamed (not rows,
+  not the "Next" line: the critic's second fix); the others name their army ("The German army in Bulgaria"). The
+  arrivals themselves unchanged.
+- **Measured:** `tests/unit/trackTold1938h.test.ts` (each arrival's note once, naming its army).
+
 ### ADR-953 · 2026-11-10 · accepted — The track's rows: the player's words, one an event (R64b, R62-N2)
 - **Told by its note** (`TOLD_KINDS`, `toldByNote` in `src/sim/track.ts`): only an event the game tells no other way:
   a transfer, an occupation, a pocket or an evacuation (`withdraw`), an arrival (`forces`), a seat moved, a rename;

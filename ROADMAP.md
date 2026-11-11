@@ -317,8 +317,9 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     player's rows; on `c62_hist.mjs`'s samples one row an event.
     Done (ADR-953): notes told only for kinds the game tells no other way, once a day; the steering's never;
     `tests/unit/trackTold1938h.test.ts`, `tests/e2e/trackView1938h.spec.ts`.
-  - [ ] R64c R62-N3: "The mobilisation" ×22 with no nation. AT: the Soviet arrivals named as the Soviet Union's, or left
+  - [x] R64c R62-N3: "The mobilisation" ×22 with no nation. AT: the Soviet arrivals named as the Soviet Union's, or left
     out of the History and the "Next" line.
+    Done (ADR-954): a series' first named by whose, its repeats unnamed; `tests/unit/trackTold1938h.test.ts`.
   - [ ] R64d R62-N4: "Germany was annexed by Soviet Union" on 8 May 1945 after the zones. AT: the remnant's row reads as
     the timeline's note, or the remnant goes to the zones' holders.
   - [ ] R64e R62-N5: Nagasaki's burst on a sea cell, "where no nation holds the land" beside 72,000 dead. AT: both strikes

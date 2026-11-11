@@ -26,3 +26,13 @@ it("the track's rows by note: the player's words, one an event", () => {
   expect(notes.filter((n) => n!.startsWith('The Vistula-Oder')).length).toBe(1);
   expect(notes.filter((n) => n!.includes('India')).length).toBeLessThanOrEqual(2);
 });
+
+// ROADMAP R64c (critic run 62, R62-N3): an arrival (`forces`) is told once, by whose it is; its repeats have no name
+// ("The mobilisation" ×22 before, whose not said).
+it("the track's arrivals: each told once, by whose", () => {
+  const t = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }).world.track!;
+  const arrivals = t.events.filter((e) => e.kind === 'forces' && e.note !== undefined).map((e) => e.note!);
+  expect(new Set(arrivals).size).toBe(arrivals.length);
+  for (const n of arrivals) expect(/German|Soviet|Afrika Korps/.test(n), n).toBe(true);
+  expect(arrivals).not.toContain('The mobilisation');
+});
