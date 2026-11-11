@@ -39,3 +39,19 @@ Rules:
   - Not taken (design objections, no score lowered): the 1942-44 battles painted, not fought (SPEC §7.7, ADR-935);
     the world after 1953 forgetting the blocs; the same history every game (ADR-919); a confirm before the first act
     (ADR-952 chose notes). Each a design question for the user, not an item.
+
+## Batch 18 — after release-2026-11-11 (the user's decision, ADR-958)
+
+In this order, after Batch 17. Each split into lettered parts with their ATs when started.
+
+- [ ] R66 **Armies on the replay's fronts.** The script decides the outcome; armies stand and fight on each stage's
+  front (Stalingrad, Normandy and the rest), strong enough to win it by the fighting where that leaves the rest of the
+  replay unharmed (`historyMatch1938h`, `historyTrack1938h` green). AT (to be split): critic run 63's census
+  (`critic/scripts/c63_census.ts`) finds the stage's sides' formations in its box at its dates.
+- [ ] R67 **Cold War blocs in the sim.** Lasting blocs under the strongest powers; war between their leaders held back
+  by deterrence; rivalry by proxies. A rule of every game. AT (to be split): after the replay's end no war between
+  the blocs' leaders in N years on the own seed and others; the sweep's bands kept.
+- [ ] R68 **A start from any date of the replay.** A timeline slider in place of "World, 1938" and "World, 1938 —
+  Historical"; continue the replay or free from there.
+- [ ] R69 **The replay past 1953.** Its end date the user's when started.
+
