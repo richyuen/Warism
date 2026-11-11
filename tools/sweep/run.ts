@@ -19,6 +19,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { TAGS_1938 } from '../../src/sim/scenario1938';
 import { ALIVE_MAX, ALIVE_MIN, BREAKUP_RISE, BREAKUP_YEARS, DYNAMISM_QUORUM, STASIS_YEARS, FALLOUT_MAX_LAND, NUKES_USED_SEEDS, DYNAMISM_YEARS, FALLER_KEPT, judge, judgeSweep, MAX_INCOME, MAX_LAND, MOVING_MIN, ratio, RISER_GROWTH, RISER_MIN_SHARE, WAR_YEARS, type LandChange, type Verdict } from './criteria';
+import { RELOAD_YEARS, TWIN_DAYS } from './reload';
 import type { SeedResult } from './seed';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
@@ -105,7 +106,16 @@ async function main(): Promise<void> {
     `Nukes used in ${used} of ${n} seeds (at least ${NUKES_USED_SEEDS}: ${mark(used >= NUKES_USED_SEEDS)}); the most land under fallout on a day ${(worstFallout * 100).toFixed(2)}% (at most ${pct(FALLOUT_MAX_LAND)}: ${mark(worstFallout <= FALLOUT_MAX_LAND)}).`,
     '',
   ];
-  const status = !sweep.limits ? 'FAILING (limits)' : !sweep.judged ? `LIMITS GREEN (dynamism not judged: runs shorter than ${DYNAMISM_YEARS} years)` : sweep.ok ? 'ALL GREEN' : 'FAILING (dynamism)';
+  // The soak's checks on the way (ADR-959): a save and load every RELOAD_YEARS years, the twins equal after TWIN_DAYS.
+  const checked = results.filter((r) => r.reloads !== undefined);
+  const broken = checked.flatMap((r) => [...(r.reloads ?? []).filter((c) => !c.ok).map((c) => `${r.seed} year ${c.year}: ${c.failure ?? 'apart'}`), ...(r.notFinite ? [`${r.seed} ${r.notFinite}`] : [])]);
+  const loads = checked.reduce((t, r) => t + (r.reloads?.length ?? 0), 0);
+  const reloadsOk = broken.length === 0;
+  const reloadLine =
+    checked.length === 0
+      ? 'Save and load on the way (ADR-959): not run in these runs.'
+      : `Save and load on the way (the soak's checks, ADR-959): ${loads} saves loaded into a fresh world on ${checked.length} seeds, every ${RELOAD_YEARS} years, the twins compared ${TWIN_DAYS} days after; no NaN or infinity at a year's end: ${reloadsOk ? 'pass' : `**FAIL** (${broken.join('; ')})`}.`;
+  const status = !reloadsOk ? 'FAILING (save and load)' : !sweep.limits ? 'FAILING (limits)' : !sweep.judged ? `LIMITS GREEN (dynamism not judged: runs shorter than ${DYNAMISM_YEARS} years)` : sweep.ok ? 'ALL GREEN' : 'FAILING (dynamism)';
   const md = [
     `# Sweep ${date}: seeds ${first}–${first + seeds - 1} × ${years} years${size ? `, map size ${size}` : ''}${heroes ? ', heroes on' : ''} — ${status}`,
     ...(from ? ['', `Judged again from \`${path.relative(ROOT, fromPath).split(path.sep).join('/')}\` (no run).`] : []),
@@ -119,13 +129,15 @@ async function main(): Promise<void> {
     `Limits: ${verdicts.filter((v) => v.limits).length} of ${n} seeds. Riser: ${sweep.risers} of ${n}. Faller: ${sweep.fallers} of ${n}. No stasis (reported): ${sweep.changing} of ${n}. No break-up: ${sweep.together} of ${n}.${sweep.judged ? ` Needed: ${sweep.needed} of ${n} each.` : ` Not judged at ${years} years.`}`,
     '',
     ...nukeTable,
+    reloadLine,
+    '',
     `Wall time ${((from ? Math.max(...results.map((r) => r.wallS)) * 1000 : Date.now() - t0) / 60000).toFixed(1)} min${from ? ' (the report’s longest seed)' : ''} with ${parallel} processes (per seed: ${results.map((r) => `${r.seed}: ${(r.wallS / 60).toFixed(1)} min`).join(', ')}).`,
     '',
   ].join('\n');
   writeFileSync(`${base}.md`, md);
-  writeFileSync(`${base}.json`, JSON.stringify({ date, seeds, years, sweep, verdicts, results: results.map((r) => ({ seed: r.seed, wallS: r.wallS, landKm2: r.landKm2, realmStart: r.realmStart, realmEnd: r.realmEnd, samples: r.samples })) }, null, 1));
+  writeFileSync(`${base}.json`, JSON.stringify({ date, seeds, years, sweep, verdicts, results: results.map((r) => ({ seed: r.seed, wallS: r.wallS, landKm2: r.landKm2, realmStart: r.realmStart, realmEnd: r.realmEnd, samples: r.samples, ...(r.reloads ? { reloads: r.reloads } : {}), ...(r.notFinite ? { notFinite: r.notFinite } : {}) })) }, null, 1));
   console.log(md);
-  if (!sweep.ok || !nukesOk) process.exitCode = 1;
+  if (!sweep.ok || !nukesOk || !reloadsOk) process.exitCode = 1;
 }
 
 void main();
