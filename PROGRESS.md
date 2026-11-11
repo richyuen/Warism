@@ -425,3 +425,10 @@
 - "Germany was annexed by Soviet Union" on 8 May 1945 is now "The Reich ends: the four zones, and the rest under
   Soviet rule to the Oder" (`annex`'s `tell: 'note'`).
 - Evidence: `tests/sweep/historyMatch1938h.test.ts` (green), `tests/unit/historyTrackText.test.ts`. Gate.
+
+## 2026-11-11 — R64e: the track's strikes on land (ADR-956)
+
+- Nagasaki's burst moved from a sea cell to the nearest land cell (Japan's); a strike with its dead on no nation's land
+  no longer reads "where no nation holds the land".
+- Evidence: `npx tsx critic/scripts/c62_nagasaki.ts`; `historyMatch1938h`, `historyTrack1938h` (no warning),
+  `freeWorld1938h` green; `tests/unit/historyTrackText.test.ts`. Gate.

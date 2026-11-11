@@ -9,6 +9,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-956 · 2026-11-11 · accepted — The track's strikes on land; no "no nation holds the land" beside the dead (R64e, R62-N5)
+- **Before:** Nagasaki's point [129.87, 32.75] rasterised to a sea cell (owner 0): "United States set off an atomic bomb
+  near Nagasaki where no nation holds the land: 72,000 civilians killed".
+- **Now:** a timeline `nuke` bursts on the nearest land cell within 4 cells when its own is water (`landNear`):
+  Nagasaki's at (1762.5, 403.5), Japan's land; Hiroshima's unchanged. And any strike told with no nation struck but
+  people killed reads without "where no nation holds the land" (`history.NukeCasualties.offshore`); one that killed
+  nobody keeps it.
+- **Measured:** `critic/scripts/c62_nagasaki.ts` (both bursts on JAP/JAP land); `tests/sweep/historyMatch1938h.test.ts`
+  (the burst's place pinned anew, every bar green), `historyTrack1938h` (no warning), `freeWorld1938h`;
+  `tests/unit/historyTrackText.test.ts`.
+
 ### ADR-955 · 2026-11-11 · accepted — The Reich's end told by its note (R64d, R62-N4)
 - **Before:** on 8 May 1945 the zones are transfers at hours 2-4, then the remnant is annexed by the Soviet Union (the
   track's way to end the Reich: `annex` hands on its formations and puppets); the player read "Germany was annexed by

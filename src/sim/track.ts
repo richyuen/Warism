@@ -509,7 +509,8 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       const why = whyNot(world, n);
       if (why) return why;
       const [u, v] = project(e.at[0], e.at[1]);
-      detonate(world, n, 1, u * world.cells.w, v * world.cells.h);
+      const [x, y] = landNear(world, u * world.cells.w, v * world.cells.h);
+      detonate(world, n, 1, x, y);
       return Refusal.None;
     }
     case 'withdraw': {
@@ -662,6 +663,32 @@ export function toldByNote(t: Track, i: number): boolean {
     if (o.note !== undefined && TOLD_KINDS.has(o.kind) && (o.note.startsWith(e.note) || e.note.startsWith(o.note))) return false;
   }
   return true;
+}
+
+/** Burst on the land a strike was aimed at (R64e; critic run 62, R62-N5: Nagasaki's point fell on a sea cell). */
+const LAND_SNAP_CELLS = 4;
+
+/**
+ * (x, y), or the middle of the nearest land cell within LAND_SNAP_CELLS when its own is water (the lower row, then
+ * the lower column, on a tie): a city on a coast whose point the grid puts in the sea.
+ */
+function landNear(world: World, x: number, y: number): [number, number] {
+  const { w, h, terrain } = world.cells;
+  const cx = Math.floor(x);
+  const cy = Math.floor(y);
+  const land = (c: number): boolean => terrain[c]! >= Terrain.Plains;
+  if (cx >= 0 && cx < w && cy >= 0 && cy < h && land(cy * w + cx)) return [x, y];
+  let best = -1;
+  let d2 = Infinity;
+  for (let dy = -LAND_SNAP_CELLS; dy <= LAND_SNAP_CELLS; dy++) {
+    for (let dx = -LAND_SNAP_CELLS; dx <= LAND_SNAP_CELLS; dx++) {
+      const qx = cx + dx;
+      const qy = cy + dy;
+      if (qx < 0 || qx >= w || qy < 0 || qy >= h || dx * dx + dy * dy >= d2 || !land(qy * w + qx)) continue;
+      [best, d2] = [qy * w + qx, dx * dx + dy * dy];
+    }
+  }
+  return best < 0 ? [x, y] : [(best % w) + 0.5, Math.floor(best / w) + 0.5];
 }
 
 /** Where an event is told (R62j1): its ring's middle, its point, else the capital of the nation it names first. */

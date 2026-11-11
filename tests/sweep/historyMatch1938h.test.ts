@@ -138,7 +138,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const hour = (iso: string, h: number): number => (dayOfIso(iso) - dayOfIso('1938-01-01')) * 24 + h;
   expect(nukes).toEqual([
     [hour('1945-08-06', 8), id('USA'), 1, ...at(132.46, 34.39)],
-    [hour('1945-08-09', 11), id('USA'), 1, ...at(129.87, 32.75)],
+    // Nagasaki's point falls on a sea cell of the grid: the burst on the nearest land cell, Japan's (R64e, ADR-956).
+    [hour('1945-08-09', 11), id('USA'), 1, 1762.5, 403.5],
   ]);
   expect(living).toEqual(STATES.map((x) => x[1]));
   for (const { date, cols } of maps) {

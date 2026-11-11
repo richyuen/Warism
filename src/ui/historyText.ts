@@ -102,6 +102,8 @@ export function historyText(r: HistoryRow): string {
   // A month's raids on convoys (PLAN 7.33a): the gold taken, {gold}; a row of a game saved before has none.
   const took = r.kind === EventKind.ConvoyRaided ? convoyTake(r.b).gold : 0;
   const key = r.as && `${kind}.${r.as}` in en ? `${kind}.${r.as}` : rb === 'strike' && r.a === 0 ? `${kind}.god` : took > 0 ? `${kind}.took` : kind;
+  // A strike on no nation's land that killed people (R64e; critic run 62, R62-N5): not "where no nation holds the land".
+  const offshore = r.kind === EventKind.NukeCasualties && !r.bn && nukeStrike(r.b).dead > 0;
   const none = `${key}.none`;
   // A sea battle's sides carry the ships each lost (PLAN 4.3c), the air's rows their aircraft or
   // what their bombs took (PLAN 5.11a): {na} and {nb}.
@@ -125,6 +127,6 @@ export function historyText(r: HistoryRow): string {
   const decided = r.kind === EventKind.NukeDecided ?{ near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '', weighed: t(nukeWeighed(r.b / 1000)) } : {};
   // An event of the historical track: its name (ROADMAP R62j1).
   if (r.kind === EventKind.TrackEvent || r.as === 'track') return t('history.TrackEvent', { note: r.note ?? '' });
-  const s = t((!r.bn && rb !== 'number' && rb !== 'side' && none in en ? none : key) as MessageKey, { a: part(ra, r.a, r.an), b: part(rb, r.b, r.bn), c: r.cn ? displayName(r.cn) : '', ...ships, ...strike, ...lost, ...decided, ...hero, ...means, ...power, ...broke, gold: gold(took) });
+  const s = t((offshore ? `${key}.offshore` : !r.bn && rb !== 'number' && rb !== 'side' && none in en ? none : key) as MessageKey, { a: part(ra, r.a, r.an), b: part(rb, r.b, r.bn), c: r.cn ? displayName(r.cn) : '', ...ships, ...strike, ...lost, ...decided, ...hero, ...means, ...power, ...broke, gold: gold(took) });
   return s.charAt(0).toLocaleUpperCase() + s.slice(1);
 }
