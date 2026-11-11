@@ -68,7 +68,8 @@ Before Batch 18: two are regressions of Batch 17's own fixes.
 
 ## Batch 18 — after release-2026-11-11 (the user's decision, ADR-958)
 
-In this order, after Batch 17. Each split into lettered parts with their ATs when started.
+In this order, after Batch 17. Each split into lettered parts with their ATs when started. The critic runs after its last item, for
+Batches 19 and 18 together (ADR-966).
 
 - [ ] R66 **Armies on the replay's fronts.** The script decides the outcome; armies stand and fight on each stage's
   front (Stalingrad, Normandy and the rest), strong enough to win it by the fighting where that leaves the rest of the

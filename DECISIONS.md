@@ -118,3 +118,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   annexation is followed there by the nation's end, and `tests/unit/history.test.ts` has it so; the ticker tells such
   a death once (PLAN 3.12Rg2). A rule of every game's History, not the track's; left.
 
+### ADR-966 · 2026-11-11 · accepted (the user's decision) — Batch 19's critic run deferred to after Batch 18
+- The user, as the focused run after Batch 19 (run 65) began: "let's stop the critic and defer till after batch 18".
+  Run 65 stopped unfinished, no report; its partial files moved to `.cache/critic-c65-aborted/` (not committed).
+- The next critic run comes after Batch 18's last item and judges Batches 19 and 18 together (PROMPT RELEASES step 1
+  for this pair of batches).
+- Seen in passing by run 65 before it stopped, for that run to check: a title-screen start uses `paused=1`, so a
+  Resume clicked while the world is built is undone when `hud.apply` forces the pause at the end of the build (as
+  before R70c).
+

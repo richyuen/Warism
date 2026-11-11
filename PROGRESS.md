@@ -58,3 +58,8 @@
   blank of 1,096 samples at Max. Slovakia's "annexed"/"destroyed" pair left: History is every game's whole log.
 - Evidence: `tests/e2e/worldBuilding1938.spec.ts`, the critic's `c63_h_blank.mjs`. Gate. Batch 19 done.
 
+## 2026-11-11 — Critic run 65 stopped; deferred to after Batch 18 (ADR-966, the user's decision)
+
+- Run 65 (focused, after Batch 19) stopped unfinished at the user's word; its processes stopped, its files in
+  `.cache/critic-c65-aborted/`. The next critic run after Batch 18. Next: R66, armies on the replay's fronts.
+
