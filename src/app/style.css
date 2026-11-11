@@ -241,6 +241,13 @@ textarea,
   font-weight: 400;
   opacity: 0.85;
 }
+/* On a phone 0.72em is under 9 px (R65c): 11 px, in the same width (17 × 0.72 em of the bar's 12.24 px). */
+@media (max-width: 600px), (max-height: 500px) {
+  .bar-track {
+    font-size: 11px;
+    width: 150px;
+  }
+}
 
 /* The room of the widest text an element will hold, a line each in `data-reserve`: the bar is
    centred, and a label that changes its width moves every button (PLAN 3.12Rh1). */
