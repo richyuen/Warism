@@ -9,8 +9,7 @@ import { historyTrack } from '../helpers/historyTrack';
 // seeds warn of steering that holds by luck alone (a rule changed anywhere moves the own seed's course as a new seed
 // would): their broken lines are printed, `WARNING historyTrack`, and each one found at a release check becomes a
 // ROADMAP item; they fail only if the track does not run to its end. Seed 4 found R62l's landing in Palestine so.
-
-const OTHERS = [1, 2, 3, 4, 5];
+// They are `historyTrack1938hSeed1.test.ts` to `Seed5`, a file a seed, so they run side by side (ADR-959).
 
 describe('the historical track checked to its end (ROADMAP R62k)', () => {
   it(`seed ${SEED_1938H} (the scenario's own): nothing passed over, no war or peace off the timeline, the diplomatic rules kept`, () => {
@@ -19,14 +18,6 @@ describe('the historical track checked to its end (ROADMAP R62k)', () => {
     expect(run.lines).toEqual([]);
     expect(run.skipped).toEqual([]);
   });
-
-  for (const seed of OTHERS) {
-    it(`seed ${seed}: a warning of what the checker finds, the track run to its end`, () => {
-      const run = historyTrack(seed);
-      expect(run.sim.world.track!.ended).toBe(true);
-      for (const l of run.lines) process.stderr.write(`WARNING historyTrack (not a gate failure; ADR-950): ${l}\n`);
-    });
-  }
 
   it('a war the timeline does not have is found', () => {
     const [swe, swi] = [TAGS_1938H.indexOf('SWE') + 1, TAGS_1938H.indexOf('SWI') + 1];
