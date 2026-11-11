@@ -9,6 +9,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-957 · 2026-11-11 · accepted — No "Next" already past (R64f, R62-N6); R64 done
+- **Before:** the "Next" line rode on the stats, posted at most once a second (`STATS_INTERVAL_MS`), while the date moves
+  every frame: at Max it named an event dated before the date beside it in 14 of the critic's 60 samples.
+- **Now:** the bar shows the line only while its event's hour is not behind the shown hour; between that hour and the
+  next stats (under a second) it is hidden, then names the next one. Not the tick sent with each frame: one guard in the
+  view, nothing more sent.
+- **Measured:** `tests/e2e/trackView1938h.spec.ts` ("at Max…"): 200 samples at 100 ms, more than three events named,
+  none dated before the shown date; on the code before, red (a "Next" 7 days past).
+- R64 done with its items: run 62's six findings.
+
 ### ADR-956 · 2026-11-11 · accepted — The track's strikes on land; no "no nation holds the land" beside the dead (R64e, R62-N5)
 - **Before:** Nagasaki's point [129.87, 32.75] rasterised to a sea cell (owner 0): "United States set off an atomic bomb
   near Nagasaki where no nation holds the land: 72,000 civilians killed".

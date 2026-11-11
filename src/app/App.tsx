@@ -156,7 +156,8 @@ export function App({
       />
       <BottomBar
         date={hud.date()}
-        trackNext={stats?.trackNext ? { note: stats.trackNext.note, date: dateOfTick(hud.startDay, stats.trackNext.tick) } : undefined}
+        // Not one already past (R64f; critic run 62, R62-N6): the stats come once a second, the date every frame.
+        trackNext={stats?.trackNext && stats.trackNext.tick >= hud.tick.value ? { note: stats.trackNext.note, date: dateOfTick(hud.startDay, stats.trackNext.tick) } : undefined}
         speedLevel={hud.speedLevel.value}
         paused={hud.paused.value}
         onTogglePause={() => hud.togglePause()}

@@ -432,3 +432,9 @@
   no longer reads "where no nation holds the land".
 - Evidence: `npx tsx critic/scripts/c62_nagasaki.ts`; `historyMatch1938h`, `historyTrack1938h` (no warning),
   `freeWorld1938h` green; `tests/unit/historyTrackText.test.ts`. Gate.
+
+## 2026-11-11 — R64f: no "Next" already past (ADR-957); R64 done
+
+- The "Next" line hidden while its event's hour is behind the shown hour (the stats come once a second).
+- Evidence: `npx playwright test tests/e2e/trackView1938h.spec.ts` ("at Max…": 200 samples, none past; red on the code
+  before). Gate.

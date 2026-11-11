@@ -93,3 +93,41 @@ test('what ends the replay is said before; the end is told in the ticker', async
   await page.screenshot({ path: path.join(out, 'ended-in-ticker.png') });
   expect(errors).toEqual([]);
 });
+
+// ROADMAP R64f (critic run 62, R62-N6): at Max the "Next" line never names an event dated before the date beside it
+// (the stats come once a second, the date every frame; before, 14 of 60 samples were past, by up to 28 days).
+test('at Max the "Next" line names no event already past', async ({ page }) => {
+  test.setTimeout(180_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto('/?scenario=1938h&paused=1&after=7');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  const samples = await page.evaluate(async () => {
+    const { hud } = window.__warsim!;
+    hud.setSpeedLevel(99);
+    if (hud.paused.value) hud.togglePause();
+    const out: { date: string; next: string }[] = [];
+    await new Promise<void>((done) => {
+      const id = setInterval(() => {
+        const label = document.querySelector('[data-testid=date-label]');
+        const next = document.querySelector('[data-testid=track-next]');
+        if (label) out.push({ date: (label.firstElementChild as HTMLElement | null)?.innerText ?? '', next: (next as HTMLElement | null)?.innerText ?? '' });
+        if (out.length >= 200) {
+          clearInterval(id);
+          done();
+        }
+      }, 100);
+    });
+    if (!hud.paused.value) hud.togglePause();
+    return out;
+  });
+  const day = (s: string): number => Date.parse(`${s.replace(/ ·.*$/, '').trim()} UTC`);
+  const withNext = samples.filter((s) => s.next !== '');
+  expect(withNext.length).toBeGreaterThan(100);
+  // A year and more at Max: the line moved on through several events.
+  expect(new Set(withNext.map((s) => s.next)).size).toBeGreaterThan(3);
+  for (const s of withNext) {
+    const m = /^Next, (.+?): /.exec(s.next);
+    expect(m, s.next).not.toBeNull();
+    expect(day(m![1]!), `${s.date} · ${s.next}`).toBeGreaterThanOrEqual(day(s.date));
+  }
+});

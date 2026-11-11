@@ -306,7 +306,7 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
 
 ## Batch 16 — run 62's findings (focused, on `9e094f50`: no blocking issue, every dimension at 8)
 
-- [ ] R64 **Run 62's non-blocking findings** (the historical track).
+- [x] R64 **Run 62's non-blocking findings** (the historical track).
   - [x] R64a R62-N1: one click ends the replay, unwarned and untold in the ticker (taking a nation, a God Mode act).
     AT: while the track runs the scenario's form, the Take control button and the God Mode bar say that it ends the
     replay; the end has its ticker row (`node critic/scripts/c62_h_interv.mjs 1600 900`, `c62_h_god.mjs`).
@@ -326,5 +326,6 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
   - [x] R64e R62-N5: Nagasaki's burst on a sea cell, "where no nation holds the land" beside 72,000 dead. AT: both strikes
     on Japan's land (`critic/scripts/c62_nagasaki.ts`); no strike row pairs "no nation holds the land" with civilians.
     Done (ADR-956): the track's strikes snap to land; the offshore sentence; the 1938h sweep tests green.
-  - [ ] R64f R62-N6: at Max the "Next" line names an event already past (14 of 60 samples). AT: no "Next" dated before
+  - [x] R64f R62-N6: at Max the "Next" line names an event already past (14 of 60 samples). AT: no "Next" dated before
     the date beside it in `c62_h_watch.mjs`'s 60 samples at Max.
+    Done (ADR-957): the line hidden while its hour is past; `tests/e2e/trackView1938h.spec.ts` (200 samples at Max).
