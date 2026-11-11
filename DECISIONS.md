@@ -167,3 +167,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   `occupied`). `chinaFront1938h`'s China army a year on at least 40 % of its start (half before): the monthly budget
   holds it at 379-402k from starts of 719-856k in every tree tried; without the hold 12-29k; 383k of 762k now.
 
+### ADR-969 · 2026-11-11 · accepted — R66b's bar: both sides near at two thirds of the large land fronts (the user's decision)
+- **The measure** (`StageArmies.front`, `landFront`): a stage is a front when its taker is at war with a holder of its
+  land at its hour, a land front when that land is joined over land (4-neighbours, no crossing) to land the taker's
+  side holds. Of the 33 large stages of 1942 to mid-1945, 21 are fronts (Torch, Case Anton, El Alamein against a
+  neutral Egypt, the handovers of Libya and Austria are not), and all 21 land fronts: Japan holds part of each island
+  before its 1942 stage (British Borneo before the Netherlands Indies, footholds on Luzon). The stages over the sea
+  are small (Rabaul, Attu, Guam, Leyte, Hollandia, Sansapor).
+- **The bar** (the user's choice of "land fronts, two thirds", asked when the island stages were thought to drop out;
+  they do not): both sides near at 14 of the 21 on the own seed. After R66c: 8 (seeds 1 and 2: 10, 10). Replaces
+  "≥ 20 of the 33 large stages" (ADR-967), which counted handovers.
+

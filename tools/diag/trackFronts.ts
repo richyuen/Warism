@@ -34,7 +34,7 @@ const LARGE = 200;
       const m = stageArmies(sim.world, t.id(e.by), e.of.map((g) => t.id(g)), e.ring);
       rows.push({ date: e.date, note: e.note ?? '', by: e.by, ...m });
       const s = (x: Side): string => `${x.formations} f ${Math.round(x.men / 1000)}k (${x.engaged} engaged)`;
-      process.stdout.write(`${e.date} ${e.by} of ${e.of.join(',')}, held by ${m.holders.map(tag).join(',')}${m.front ? '' : ' (no front)'}: ${m.cells} cells; attacker ${s(m.attacker)}; defender ${s(m.defender)}; ${e.note ?? ''}\n`);
+      process.stdout.write(`${e.date} ${e.by} of ${e.of.join(',')}, held by ${m.holders.map(tag).join(',')}${m.front ? (m.landFront ? '' : ' (over the sea)') : ' (no front)'}: ${m.cells} cells; attacker ${s(m.attacker)}; defender ${s(m.defender)}; ${e.note ?? ''}\n`);
     }
     sim.step(1, (w) => {
       w.out.events.length = 0;
@@ -48,5 +48,6 @@ const LARGE = 200;
   const large = rows.filter((r) => r.cells >= LARGE);
   const fronts = large.filter((r) => r.front);
   const both = (rs: typeof rows): number => rs.filter((r) => r.attacker.men > 0 && r.defender.men > 0).length;
-  process.stdout.write(`large (≥ ${LARGE} cells) ${large.length}, both sides near ${both(large)}; of them fronts ${fronts.length}, both sides near ${both(fronts)}\n`);
+  const lands = fronts.filter((r) => r.landFront);
+  process.stdout.write(`large (≥ ${LARGE} cells) ${large.length}, both sides near ${both(large)}; of them fronts ${fronts.length}, both sides near ${both(fronts)}; land fronts ${lands.length}, both sides near ${both(lands)}\n`);
 }

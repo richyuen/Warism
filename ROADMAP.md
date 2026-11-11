@@ -81,10 +81,11 @@ Batches 19 and 18 together (ADR-966).
     with the taker). Baseline, own seed, 62 stages 1942 to mid-1945: both sides near at 10 (7 of the 33 of ≥ 200
     cells), neither at 36, none engaged; the Eastern Front's Soviet stages 2-3M Soviet men near, 0-256k Axis. Cause
     found: a held enemy is no foe to the operational AI (`foesOf`, R62f2), so no front faces it and none mans it.
-  - [ ] R66b Armies on the held fronts: while the track steers, a held enemy is a front to man (sectors made, allotted,
-    its strength a threat) but never attacked across the hold. AT: on the own seed both sides near at ≥ 20 of the 33
-    large stages (7 now), those left named with why (an island with no land route); no fighting across a hold
-    (none engaged); the bars above.
+  - [ ] R66b Armies on the held fronts: while the track steers, the armies of both sides stand at the land of the stages
+    to come, never attacking across a hold. AT (the user's, ADR-969): `tools/diag/trackFronts.ts` on the own seed, of
+    the large stages (≥ 200 cells) that are land fronts (the taker at war with a holder, the land joined over land to
+    the taker's side's), both sides near at ≥ 2/3 (14 of 21; 8 after R66c, seeds 1 and 2 10 and 10), those left named
+    with why; none engaged across a hold; the bars above.
   - [x] R66c What a stage does to the armies in its ring: what `withdraw` removes and what an `occupy` leaves behind
     the new line, measured; formations of the losing side that are not a pocket of history's (`captured`) fall back to
     the line, not lost or stranded. AT: the measure before and after; the bars above. Done (ADR-968): under a hold,

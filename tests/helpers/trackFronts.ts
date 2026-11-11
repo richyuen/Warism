@@ -26,6 +26,12 @@ export interface StageArmies {
    * Vichy lands, an armistice's zone, land given back to its owner).
    */
   front: boolean;
+  /**
+   * A land front (R66b, ADR-969): a front whose land is joined over land (4-neighbours, no crossing of the sea) to land
+   * held by the taker's side (`by` and those at war with a holder). Not one: an island taken over the
+   * sea (the Netherlands Indies, the Philippines).
+   */
+  landFront: boolean;
   attacker: Side;
   defender: Side;
 }
@@ -73,5 +79,51 @@ export function stageArmies(w: World, by: number, of: readonly number[], ring: r
     x.men += f.strength[i]!;
     if (f.engaged[i] === 1) x.engaged++;
   });
-  return { cells: take.length, holders: held.sort((a, b) => a - b), front: held.some((d) => w.wars.atWar(by, d)), attacker, defender };
+  const front = held.some((d) => w.wars.atWar(by, d));
+  let landFront = false;
+  if (front) {
+    const comp = landComponents(w);
+    const mine = new Set(take.map((c) => comp[c]!).filter((k) => k !== 0));
+    const taken = new Set(take);
+    const ours = new Map<number, boolean>();
+    for (let c = 0; c < controller.length && !landFront; c++) {
+      const n = controller[c]!;
+      if (n === 0 || comp[c] === 0 || !mine.has(comp[c]!) || taken.has(c)) continue;
+      let a = ours.get(n);
+      if (a === undefined) ours.set(n, (a = sideOf(n) === 'a'));
+      landFront = a;
+    }
+  }
+  return { cells: take.length, holders: held.sort((a, b) => a - b), front, landFront, attacker, defender };
 }
+
+const COMPONENTS = new WeakMap<Uint8Array, Uint32Array>();
+
+/** Each land cell's landmass (4-neighbours over land, no crossing; 0 for water), once per map. */
+function landComponents(w: World): Uint32Array {
+  const { w: W, h: H, terrain } = w.cells;
+  let comp = COMPONENTS.get(terrain);
+  if (comp) return comp;
+  comp = new Uint32Array(W * H);
+  const wrap = w.settings.loopingMap;
+  let next = 0;
+  const stack: number[] = [];
+  for (let s = 0; s < W * H; s++) {
+    if (comp[s] !== 0 || terrain[s]! < Terrain.Plains) continue;
+    comp[s] = ++next;
+    stack.push(s);
+    while (stack.length > 0) {
+      const c = stack.pop()!;
+      const x = c % W;
+      const y = Math.floor(c / W);
+      for (const k of [y > 0 ? c - W : -1, y < H - 1 ? c + W : -1, x > 0 ? c - 1 : wrap ? c + W - 1 : -1, x < W - 1 ? c + 1 : wrap ? c - W + 1 : -1]) {
+        if (k < 0 || comp[k] !== 0 || terrain[k]! < Terrain.Plains) continue;
+        comp[k] = next;
+        stack.push(k);
+      }
+    }
+  }
+  COMPONENTS.set(terrain, comp);
+  return comp;
+}
+
