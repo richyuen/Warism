@@ -85,3 +85,10 @@
   smaller side 618k → 2.9M men near (seed 1938). The nine replay tests green; the unit suite green (two timing tests
   red under its load, green alone); the replay's tick 4 % under plain 1938's.
 
+## 2026-11-11 — R66b: the census tells fronts from handovers
+
+- `tools/diag/trackFronts.ts` marks a stage a front when its taker is at war with a holder of its land at its hour
+  (`StageArmies.front`): of the 33 large stages 21 are fronts (Torch, Case Anton, El Alamein against a neutral Egypt,
+  Libya's and Austria's handovers are not); both sides near at 8, 10, 10 of the 21 on seeds 1938, 1, 2. Empty: Japan's
+  conquests of 1942 and Ichigo's last two, the German attacker at Case Blue and Stalingrad.
+

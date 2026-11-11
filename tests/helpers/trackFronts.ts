@@ -21,6 +21,11 @@ export interface StageArmies {
   cells: number;
   /** The nations that hold them. */
   holders: number[];
+  /**
+   * A front: `by` at war with one of the holders at the stage's hour (R66b). Not one: a handover at peace (Torch's
+   * Vichy lands, an armistice's zone, land given back to its owner).
+   */
+  front: boolean;
   attacker: Side;
   defender: Side;
 }
@@ -68,5 +73,5 @@ export function stageArmies(w: World, by: number, of: readonly number[], ring: r
     x.men += f.strength[i]!;
     if (f.engaged[i] === 1) x.engaged++;
   });
-  return { cells: take.length, holders: held.sort((a, b) => a - b), attacker, defender };
+  return { cells: take.length, holders: held.sort((a, b) => a - b), front: held.some((d) => w.wars.atWar(by, d)), attacker, defender };
 }

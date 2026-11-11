@@ -17,6 +17,8 @@ const seed = Number(process.argv[2] ?? SEED_1938H);
 const from = process.argv[3] ?? '1942-01-01';
 const to = process.argv[4] ?? '1945-06-01';
 const out = process.argv[5] ?? `.cache/trackFronts_${seed}.json`;
+/** A large stage (R66b): of this many cells or more. */
+const LARGE = 200;
 
 {
   const sim = new Sim({ scenario: '1938h', seed, assets: assets1938(SIZE_1938.w) });
@@ -32,7 +34,7 @@ const out = process.argv[5] ?? `.cache/trackFronts_${seed}.json`;
       const m = stageArmies(sim.world, t.id(e.by), e.of.map((g) => t.id(g)), e.ring);
       rows.push({ date: e.date, note: e.note ?? '', by: e.by, ...m });
       const s = (x: Side): string => `${x.formations} f ${Math.round(x.men / 1000)}k (${x.engaged} engaged)`;
-      process.stdout.write(`${e.date} ${e.by} of ${e.of.join(',')}, held by ${m.holders.map(tag).join(',')}: ${m.cells} cells; attacker ${s(m.attacker)}; defender ${s(m.defender)}; ${e.note ?? ''}\n`);
+      process.stdout.write(`${e.date} ${e.by} of ${e.of.join(',')}, held by ${m.holders.map(tag).join(',')}${m.front ? '' : ' (no front)'}: ${m.cells} cells; attacker ${s(m.attacker)}; defender ${s(m.defender)}; ${e.note ?? ''}\n`);
     }
     sim.step(1, (w) => {
       w.out.events.length = 0;
@@ -42,4 +44,9 @@ const out = process.argv[5] ?? `.cache/trackFronts_${seed}.json`;
   writeFileSync(out, JSON.stringify(rows, null, 1));
   const empty = rows.filter((r) => r.cells > 0 && r.attacker.men + r.defender.men === 0).length;
   process.stdout.write(`stages ${rows.length}, giving land ${rows.filter((r) => r.cells > 0).length}, with no army of either side near ${empty} → ${out}\n`);
+  // R66b's measure: of the large stages (≥ LARGE cells), those that are fronts, and of those both sides near.
+  const large = rows.filter((r) => r.cells >= LARGE);
+  const fronts = large.filter((r) => r.front);
+  const both = (rs: typeof rows): number => rs.filter((r) => r.attacker.men > 0 && r.defender.men > 0).length;
+  process.stdout.write(`large (≥ ${LARGE} cells) ${large.length}, both sides near ${both(large)}; of them fronts ${fronts.length}, both sides near ${both(fronts)}\n`);
 }
