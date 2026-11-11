@@ -312,9 +312,11 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     replay; the end has its ticker row (`node critic/scripts/c62_h_interv.mjs 1600 900`, `c62_h_god.mjs`).
     Done (ADR-952): notes on the form, under Take control, on the God Mode bar and the editor; `TrackEnded` in the
     ticker; `tests/e2e/trackView1938h.spec.ts`, `docs/evidence/R64/`.
-  - [ ] R64b R62-N2: builder's words in the news ("the timeline's stages") and events told twice (a war's row and its
+  - [x] R64b R62-N2: builder's words in the news ("the timeline's stages") and events told twice (a war's row and its
     note, a stage and its pocket, "India independent" and "India"). AT: no note with "timeline" or "stage" in the
     player's rows; on `c62_hist.mjs`'s samples one row an event.
+    Done (ADR-953): notes told only for kinds the game tells no other way, once a day; the steering's never;
+    `tests/unit/trackTold1938h.test.ts`, `tests/e2e/trackView1938h.spec.ts`.
   - [ ] R64c R62-N3: "The mobilisation" ×22 with no nation. AT: the Soviet arrivals named as the Soviet Union's, or left
     out of the History and the "Next" line.
   - [ ] R64d R62-N4: "Germany was annexed by Soviet Union" on 8 May 1945 after the zones. AT: the remnant's row reads as

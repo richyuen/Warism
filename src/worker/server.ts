@@ -8,6 +8,7 @@
 import { LABEL_STRIDE } from '../shared/nationLabels';
 import { ECONOMY_TABLES_1938, TEMPLATES_1938, UNIT_IDS_1938 } from '../sim/scenario1938';
 import { NATIONS_1938H } from '../sim/scenario1938h';
+import { STEERING_KINDS } from '../sim/track';
 import { deriveNationLabels } from './deriveLabels';
 import terrainJson from '../../data/terrain.json' with { type: 'json' };
 import cities1938 from '../../data/scenarios/1938/cities.json' with { type: 'json' };
@@ -2255,8 +2256,9 @@ function trackNext(world: World): { trackNext?: TrackNext } {
   const t = world.track;
   if (!t || t.ended) return {};
   for (let i = t.next; i < t.events.length; i++) {
-    const note = t.events[i]!.note;
-    if (note !== undefined) return { trackNext: { note, tick: t.ticks[i]! } };
+    const { note, kind } = t.events[i]!;
+    // Not the steering's (R64b): its notes are the builder's.
+    if (note !== undefined && !STEERING_KINDS.has(kind)) return { trackNext: { note, tick: t.ticks[i]! } };
   }
   return {};
 }

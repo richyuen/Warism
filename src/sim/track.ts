@@ -632,11 +632,36 @@ function applyDue(world: World, t: Track): void {
     const e = t.events[i]!;
     const why = apply(world, t, e);
     if (why !== Refusal.None) world.out.emit(world.tick, EventKind.TrackSkipped, firstNation(t, e), i + 1, NaN, why);
-    else if (e.note !== undefined) {
+    else if (toldByNote(t, i)) {
       const [x, y] = placeOf(world, t, e);
       world.out.emit(world.tick, EventKind.TrackEvent, i + 1, firstNation(t, e), x, y);
     }
   }
+}
+
+/**
+ * The kinds of event told by their note (ROADMAP R64b; critic run 62, R62-N2): those the game tells no other way.
+ * Not a war, peace, annexation, birth, release, join, leave, pact or strike: their own rows tell them ("Soviet Union
+ * declared war on Japan" beside "The Soviet Union declares war on Japan" was told twice). Not the steering (`hold`,
+ * `objective`, `buff`, `redeploy`): its notes are the builder's ("the timeline's stages").
+ */
+export const TOLD_KINDS: ReadonlySet<TimelineEvent['kind']> = new Set(['transfer', 'occupy', 'withdraw', 'forces', 'capital', 'rename']);
+/** The steering's kinds: never the "Next" line's (R64b). */
+export const STEERING_KINDS: ReadonlySet<TimelineEvent['kind']> = new Set(['hold', 'objective', 'buff', 'redeploy']);
+
+/**
+ * Whether event i is told by its note: of a told kind, and not one of its day's told before it whose note begins as
+ * its or as which it begins (a pocket's `withdraw` and its stage's `occupy`: "The Vistula-Oder; Budapest besieged"
+ * and "…: the Germans fall back").
+ */
+export function toldByNote(t: Track, i: number): boolean {
+  const e = t.events[i]!;
+  if (e.note === undefined || !TOLD_KINDS.has(e.kind)) return false;
+  for (let j = i - 1; j >= 0 && t.events[j]!.date === e.date; j--) {
+    const o = t.events[j]!;
+    if (o.note !== undefined && TOLD_KINDS.has(o.kind) && (o.note.startsWith(e.note) || e.note.startsWith(o.note))) return false;
+  }
+  return true;
 }
 
 /** Where an event is told (R62j1): its ring's middle, its point, else the capital of the nation it names first. */

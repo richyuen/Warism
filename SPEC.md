@@ -1737,8 +1737,10 @@ to 27 July 1953, then sets the world free.
   saying when and why. Built (R62j0, ADR-945): the first command applied while it runs ends it in that hour, before
   the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none.
 - **The player's view** (built, R62j1, ADR-946): while the track runs a line under the date names its next event that
-  has a name and its date; each event applied that has a name (its `note`) is a `TrackEvent` row, told in the ticker
-  and the History by that name.
+  has a name and its date (not the steering's: `hold`, `objective`, `buff`, `redeploy`); an event applied that the game
+  tells no other way (a transfer, an occupation, a pocket, an arrival, a seat moved, a rename) is a `TrackEvent` row,
+  told in the ticker and the History by its note, once a day (R64b, ADR-953); a war, peace or annexation by the game's
+  own row.
 - **Seed:** fixed by the scenario and not offered on its form; the track is the same each run. A second
   seed, rolled by the form (`?after=`) and kept in the state, is taken when the track ends (in 1953 or at
   the intervention): every RNG stream is derived again from it, so the world after the track differs from

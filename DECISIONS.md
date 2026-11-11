@@ -9,6 +9,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-953 · 2026-11-10 · accepted — The track's rows: the player's words, one an event (R64b, R62-N2)
+- **Told by its note** (`TOLD_KINDS`, `toldByNote` in `src/sim/track.ts`): only an event the game tells no other way:
+  a transfer, an occupation, a pocket or an evacuation (`withdraw`), an arrival (`forces`), a seat moved, a rename;
+  226 notes of the 505 events (249 of those kinds, 23 a day's repeat). A war, peace, annexation, birth, release, join, leave, pact or strike is told by the
+  game's own row ("Austria was annexed by Germany"), its name in the "Next" line before it ("Next, 12 March 1938:
+  The Anschluss"). R62j1 (ADR-946) told every note, and so twice those.
+- **The steering's notes** (`hold`, `objective`, `buff`, `redeploy`: "the timeline's stages", "Rotterdam") are never
+  rows nor the "Next" line: they are the builder's.
+- **Once a day:** of a day's told notes, one that begins as another, or that another begins as, is told once (a pocket
+  and its stage, "The Vistula-Oder; Budapest besieged" and "…: the Germans fall back"). India's rename now reads
+  "British India becomes India".
+- **Measured:** `tests/unit/trackTold1938h.test.ts` (no steering note, no "timeline" or "stage", no same-day pair,
+  the critic's three doubles gone); `tests/e2e/trackView1938h.spec.ts` (the Anschluss told by the game's row, the
+  first day's occupation by its note; `docs/evidence/R62j/` shot again).
+
 ### ADR-952 · 2026-11-10 · accepted — What ends the replay said before; its end in the ticker (R64a, R62-N1)
 - **Said before:** while the track runs, the scenario's form ("Taking a nation, a God Mode act or an editor edit ends
   the replay"), a red note under Take control (and its tooltip), and a line on the God Mode bar and at the editor's head

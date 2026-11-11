@@ -38,10 +38,15 @@ for (const size of SIZES) {
     const line = page.getByTestId('track-next');
     await expect(line).toContainText('The Anschluss');
     await expect(line).toContainText('12 March 1938');
+    // An event the game tells no other way is told by its name (R62j1): Japan's occupation on the first day.
+    await expect(page.getByTestId('ticker')).toContainText('Shanghai and Nanjing');
     await page.screenshot({ path: path.join(out, `track-next-${size.name}.png`) });
     // A day after it: the ticker tells it by its name, and the line names the next.
     await stepTo(page, (31 + 28 + 12) * 24 + 2);
-    await expect(page.getByTestId('ticker')).toContainText('The Anschluss');
+    // An annexation is told by the game's own row, its name only in the line before it (R64b: one row an event).
+    await expect(page.getByTestId('ticker')).toContainText('Austria was annexed by Germany');
+    await expect(page.getByTestId('ticker')).not.toContainText('The Anschluss');
+
     await expect(line).not.toContainText('The Anschluss');
     await page.screenshot({ path: path.join(out, `track-event-${size.name}.png`) });
     // The first intervention ends the track: the line goes.

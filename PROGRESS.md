@@ -406,3 +406,10 @@
   `TrackEnded` a ticker row with a cue.
 - Evidence: `npx playwright test tests/e2e/trackView1938h.spec.ts tests/e2e/scenario1938h.spec.ts` (5 passed);
   `docs/evidence/R64/`. Gate.
+
+## 2026-11-10 — R64b: the track's rows in the player's words, one an event (ADR-953)
+
+- Notes told only for kinds the game tells no other way (226 of 505), once a day; the steering's notes never shown;
+  a war, peace or annexation by the game's own row. "India" now "British India becomes India".
+- Evidence: `tests/unit/trackTold1938h.test.ts`; `npx playwright test tests/e2e/trackView1938h.spec.ts` (3 passed);
+  `docs/evidence/R62j/` shot again. Gate.
