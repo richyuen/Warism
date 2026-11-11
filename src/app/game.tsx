@@ -55,6 +55,8 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
   const geometry = options.loopingMap === false ? { ...sized, wrapX: false } : sized;
   const view = params.get('view') === '0' ? null : new MapView(canvas, geometry, sim, scenario.nationTags, Number(params.get('maxTexture') ?? 0));
   const hud = new Hud(sim, scenario.startDay);
+  // A forced paused start is shown so while the world is built (R70c; critic run 64: the bar said "Pause" until then).
+  if (params.get('paused') === '1') hud.paused.value = true;
   if (view) hud.nameOf = (id) => view.formationTitle(id)?.name;
   let player: PlayerControl | null = null;
   hud.installKeys(window);

@@ -31,3 +31,29 @@ test('a start says the world is being built until its first stats', async ({ pag
   await expect(page.getByTestId('world-building')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
+
+// ROADMAP R70c (critic run 64): a paused start (`?paused=1`) after a game left running said "Pause" on its bar while
+// the world was built; now "Resume" from the first frame.
+test('a paused start says so while the world is built', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.addInitScript(() => localStorage.setItem('warsim.paused', '0'));
+  await page.goto('/?scenario=1938&paused=1');
+  const seen = await page.evaluate(async () => {
+    const out = { samples: 0, saidPause: 0 };
+    const t0 = performance.now();
+    for (;;) {
+      const w = window.__warsim;
+      if ((w?.hud.stats.value ?? null) !== null || performance.now() - t0 > 90_000) break;
+      const b = document.querySelector('[data-testid=pause-btn]') as HTMLElement | null;
+      if (b) {
+        out.samples++;
+        if (b.innerText.trim() === 'Pause') out.saidPause++;
+      }
+      await new Promise((r) => setTimeout(r, 25));
+    }
+    return out;
+  });
+  expect(seen.samples).toBeGreaterThan(0);
+  expect(seen.saidPause).toBe(0);
+  await expect(page.getByTestId('pause-btn')).toHaveText('Resume');
+});
