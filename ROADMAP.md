@@ -329,3 +329,19 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
   - [x] R64f R62-N6: at Max the "Next" line names an event already past (14 of 60 samples). AT: no "Next" dated before
     the date beside it in `c62_h_watch.mjs`'s 60 samples at Max.
     Done (ADR-957): the line hidden while its hour is past; `tests/e2e/trackView1938h.spec.ts` (200 samples at Max).
+
+## Batch 17 — run 63's findings (full, on `78b082b4`: no blocking issue, every dimension at 8)
+
+- [ ] R65 **Run 63's non-blocking findings** (the historical track).
+  - [ ] R65a R63-N1: at Max the "Next" line is missing in 24.5 % of samples (hidden from its event's hour to the next
+    stats, R64f's fix). AT: in `node critic/scripts/c63_h_blank.mjs 120 1600 900 99` the line present in ≥ 95 % of
+    samples while the track runs, and never past.
+  - [ ] R65b R63-N2: the God tab ends the replay unsaid ("World AI" and its 40 controls, the note scrolled out or read
+    as the map tools'). AT: in `node critic/scripts/c63_h_godtab.mjs 1600 900 god-world-ai` a note that an act ends the
+    replay in view at the God tab's head.
+  - [ ] R65c Small, from run 63: the 18 August 1945 Manchukuo triple in the History; the bar's note grey where the
+    panel's is red; the track's line ~10 px on a phone; a started scenario file grey for 2-3 s. AT: each seen fixed in
+    its probe (`c63_hist.mjs`, `c63_h_god.mjs`, `c63_h_phone.mjs`, `c63_x_loadfile.mjs`).
+  - Not taken (design objections, no score lowered): the 1942-44 battles painted, not fought (SPEC §7.7, ADR-935);
+    the world after 1953 forgetting the blocs; the same history every game (ADR-919); a confirm before the first act
+    (ADR-952 chose notes). Each a design question for the user, not an item.

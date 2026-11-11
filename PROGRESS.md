@@ -438,3 +438,10 @@
 - The "Next" line hidden while its event's hour is behind the shown hour (the stats come once a second).
 - Evidence: `npx playwright test tests/e2e/trackView1938h.spec.ts` ("at Max…": 200 samples, none past; red on the code
   before). Gate.
+
+## 2026-11-11 — Critic run 63 (full, on `78b082b4`): no blocking issue, all 14 dimensions at 8
+
+- Interrupted by a reboot at 01:31; its unfinished jobs re-run after (listed in the report).
+- Plain 1938 bit-identical to runs 61-62; 90 new landingFuzz runs, 0 broken; run 62's six findings fixed.
+- Filed: Batch 17, R65a-c (the "Next" line's gaps at Max, the God tab's unsaid end, small ones). Release checks next
+  (PROMPT RELEASES step 3).

@@ -1,0 +1,11 @@
+npx tsx tools/diag/landingInvariants.ts 30041 3517 120 30041 30,90 1 > critic/c63_li_30041_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 31099 3517 120 31099 30,90 1 > critic/c63_li_31099_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 203997 3517 120 203997 30,90 2 > critic/c63_li_203997.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 204017 3517 120 204017 30 2 8 > critic/c63_li_204017.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 29043 15101 120 29043 30,90 2 > critic/c63_li_29043_15101.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 28037 3517 120 28037 30 2 8 > critic/c63_li_28037_od8.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 28039 3517 120 28039 30,90 1 > critic/c63_li_28039_g1.log 2>&1
+env SEED=31173 SETUP=3517 KEEPG=2 DIV=366 FROM=800 TO=940 npx tsx critic/scripts/c61_nvtrace.ts > critic/c63_nvtrace_31173_366.log 2>&1
+env SEED=31127 SETUP=15101 KEEPG=1 DIV=272 FROM=420 TO=640 npx tsx critic/scripts/c61_nvtrace.ts > critic/c63_nvtrace_31127_272.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 33509 1825 > critic/c63_wi_33509.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 33511 1825 --heroes > critic/c63_wi_33511h.log 2>&1

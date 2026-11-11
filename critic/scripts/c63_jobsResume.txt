@@ -1,0 +1,46 @@
+npx tsx critic/scripts/c63_nagasaki.ts > critic/c63_nagasaki.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 34003 random 1825 > critic/c63_diploinv_34003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 34005 scenario 1825 --heroes > critic/c63_diploinv_34005sh.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 34007 random 1825 --world random > critic/c63_diploinv_34007rw.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 34009 scenario 3650 > critic/c63_diploinv_34009s_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 34011 random 3650 --heroes > critic/c63_diploinv_34011r_h_10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 34051 1825 > critic/c63_wi_34051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 34053 1825 --heroes > critic/c63_wi_34053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 34055 1825 --world random > critic/c63_wi_34055rw.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 34059 4380 24 critic/c63_wd_34059.json > critic/c63_wd_34059.log 2>&1
+npx tsx tools/diag/seaBattles.ts 34061 scenario --years 3 --out critic/c63_sb_34061.json > critic/c63_sb_34061.log 2>&1
+npx tsx tools/diag/seaBattles.ts 34063 random --years 2 --out critic/c63_sb_34063r.json > critic/c63_sb_34063r.log 2>&1
+npx tsx tools/diag/landingRows.ts all critic/c63_lrows_all.json > critic/c63_lrows_all.log 2>&1
+npx tsx critic/scripts/c63_topArea.ts 34099 25 critic/c63_toparea_34099.json > critic/c63_toparea_34099.log 2>&1
+npx tsx critic/scripts/c63_topArea.ts 34097 25 critic/c63_toparea_34097.json > critic/c63_toparea_34097.log 2>&1
+npx tsx critic/scripts/c63_piles.ts 365 --plain 34139 34141 34143 34145 34147 > critic/c63_piles_p.log 2>&1
+npx tsx critic/scripts/c63_repulse.ts 34071 ENG GER 1023.5,275.5 1072.5,259.5 3 critic/c63_repulse_34071.json 500 12 > critic/c63_repulse_34071.log 2>&1
+npx tsx critic/scripts/c63_repulse.ts 34073 JAP CHI 1818.5,385.5 1715.5,413.5 3 critic/c63_repulse_34073.json 400 12 > critic/c63_repulse_34073.log 2>&1
+npx tsx critic/scripts/c63_nukecount.ts 34501 22 > critic/c63_nc/nhead_34501.log 2>&1
+npx tsx critic/scripts/c63_nukecount.ts 34503 22 > critic/c63_nc/nhead_34503.log 2>&1
+npx tsx critic/scripts/c63_nukecount.ts 34507 22 > critic/c63_nc/nhead_34507.log 2>&1
+npm run sim -- --scenario 1938 --seed 34505 --years 13 --save critic/c63_seed34505_y13.bin > critic/c63_seed34505_save.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 34401 6 10 > critic/c63_few3.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33501 scenario 1825 > critic/c63_diploinv_33501s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33503 random 1825 > critic/c63_diploinv_33503r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33505 scenario 1825 --heroes > critic/c63_diploinv_33505sh.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 33507 1825 > critic/c63_wi_33507.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 33509 1825 > critic/c63_wi_33509.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 33511 1825 --heroes > critic/c63_wi_33511h.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 32167 3517 120 32167 30,90 2 > critic/c63_li_32167_g2.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 32167 3517 120 32167 30,90 1 > critic/c63_li_32167_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 32115 15101 120 32115 30,90 2 > critic/c63_li_32115_15101_g2.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 30041 3517 120 30041 30,90 1 > critic/c63_li_30041_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 31099 3517 120 31099 30,90 1 > critic/c63_li_31099_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 203997 3517 120 203997 30,90 2 > critic/c63_li_203997.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 204017 3517 120 204017 30 2 8 > critic/c63_li_204017.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 29043 15101 120 29043 30,90 2 > critic/c63_li_29043_15101.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 28037 3517 120 28037 30 2 8 > critic/c63_li_28037_od8.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 28039 3517 120 28039 30,90 1 > critic/c63_li_28039_g1.log 2>&1
+env SEED=31173 SETUP=3517 KEEPG=2 DIV=366 FROM=800 TO=940 npx tsx critic/scripts/c63_nvtrace.ts > critic/c63_nvtrace_31173_366.log 2>&1
+env SEED=31127 SETUP=15101 KEEPG=1 DIV=272 FROM=420 TO=640 npx tsx critic/scripts/c63_nvtrace.ts > critic/c63_nvtrace_31127_272.log 2>&1
+npx tsx tools/diag/seaBattles.ts 32061 scenario --years 3 --out critic/c63_sb_32061.json > critic/c63_sb_32061.log 2>&1
+npx tsx tools/diag/seaBattles.ts 32063 random --years 2 --out critic/c63_sb_32063r.json > critic/c63_sb_32063r.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 32059 4380 24 critic/c63_wd_32059.json > critic/c63_wd_32059.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 32001 random 3650 > critic/c63_diploinv_32001r_10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 32055 3650 > critic/c63_wi_32055_10y.log 2>&1

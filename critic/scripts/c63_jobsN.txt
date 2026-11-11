@@ -1,0 +1,4 @@
+npx tsx critic/scripts/c63_nukecount.ts 30301 22 > critic/c63_nc/nhead_30301.log 2>&1
+npx tsx critic/scripts/c63_nukecount.ts 32501 22 > critic/c63_nc/nhead_32501.log 2>&1
+npx tsx critic/scripts/c63_nukecount.ts 32503 22 > critic/c63_nc/nhead_32503.log 2>&1
+npm run sim -- --scenario 1938 --seed 32505 --years 12 --save critic/c63_seed32505_y12.bin > critic/c63_seed32505_save.log 2>&1

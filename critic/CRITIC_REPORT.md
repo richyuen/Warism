@@ -1,234 +1,217 @@
-# Critic report, run 62 (focused): Batches 14 and 15, the historical track
+# Critic report, run 63 (full): batch 16, run 62's findings on the historical track
 
-- **Mode: focused.** The spawning message asked for a run "per CRITIC_PROMPT.md" and not for a full run, so the run is
-  focused (ADR-804, ADR-915).
-  - Run 61 (full, `d971a46b`) had no blocking issue and every dimension at its bar.
-  - So the dimensions scored afresh are those the changed files touch (`git diff --stat d971a46b HEAD`, 224 files).
-  - The batch is the historical track (`1938h`, R62a–R62m, R63) plus run 61's findings (R59a–e, R60a–e).
-  - The sim changed (`src/sim`: `landings.ts`, `track.ts`, `world.ts`, the AI and eleven systems gated on
-    `world.steered` / `world.holds`), so the bulk sets were due to be re-run.
-- **Commit judged:** `9e094f50a56e285fab163341343346549c919c80`, HEAD at the start, on a clean tree (`critic/c62_commit.txt`).
+- **Mode: full.** The spawning message asked for one ("Full run. Run the critic per CRITIC_PROMPT.md…"): the request
+  ADR-916 has the builder make after a focused run with no blocking issue and every score at its bar, which run 62 was.
+  Every dimension is scored afresh; nothing is carried.
+- **Commit judged:** `78b082b4f0b6cc98638c9b263cc498a1524e2519`, HEAD at the start, on a clean tree
+  (`critic/c63_commit.txt`).
+- **What changed since run 62 (`9e094f50`):** six commits, R64a–f, run 62's six findings (54 files).
+  - The sim changed only for the track: `src/sim/track.ts`, `src/sim/data/schemas.ts`,
+    `data/scenarios/1938h/timeline.json`.
+  - The UI changed for the track: the notes that end the replay, `TrackEnded` in the ticker, the hidden past "Next",
+    the offshore strike sentence.
+  - **Plain 1938 is bit-identical to runs 61 and 62:** 7019 ends its 20 years at `99caf939` and 32019 at `4702acef`
+    (`critic/c63_seed7019_save.log`, `critic/c63_seed32019_save.log`). The sim changed, so run 61's bulk landing
+    sets are re-run (ADR-917), below.
+- **The run was interrupted by a reboot of the machine at 01:31** (it started 01:16).
+  - Everything I had running died: the preview, the browsers, the headless queue, the job chains.
+  - Finished before it: the build; the four track checkers (1938, 33301, 34301, 34303); the two 20-year saves;
+    diploInvariants 34001; 88 of the 90 `landingFuzz` runs; and suite T up to its 14th probe.
+  - Also finished: my own probes `c63_h_blank`, `c63_h_continue`, `c63_h_godtab`, `c63_h_pauseblank` and
+    `c63_x_loadfile`.
+  - **Re-run after the reboot (from 06:10):**
+    - the 46 unfinished jobs of `critic/scripts/c63_jobsAll.txt`, as `c63_jobsResume.txt`, 4 at a time (6 before);
+    - the two cut `landingFuzz` runs (34129 3517 g1 od8, 34129 15101 g2 od8), each alone
+      (`critic/c63_lf_34129_*.log`);
+    - suite T's last probe (the track watch, `c63_suiteT2.sh`) and the whole of suite B;
+    - then run 61's bulk landing sets (396 + 153 + 168);
+    - the performance chain, alone;
+    - then Malta's 18 and R60-N5's seaBattlesLook 31501 (`c63_after.sh`);
+    - and the editor probe 32443 once more on the quiet machine.
+  - **Left out:**
+    - `c63_heavyfps` (it lost its fight in run 61);
+    - `npm run bench -- G`, which writes the tracked `docs/bench/`;
+    - `c63_g_editor`'s wait on a strike pause, stopped after 15 min (its fleet and refusal steps were saved).
+  - Every figure in this report comes from a run that finished. A log that was cut short is not used.
 - **Setup:**
-  - Build: `vite build --outDir critic/c62_dist`, exit 0 (`critic/c62_build.log`).
-  - Server: `vite preview` on 127.0.0.1:5299.
+  - Build: `vite build --outDir critic/c63_dist`, exit 0 (`critic/c63_build.log`).
+  - Server: `vite preview` on 127.0.0.1:5363.
   - Browser: Playwright Chromium at 1600 × 900, 390 × 844, 844 × 390, 932 × 430, 1024 × 500 and 667 × 375.
-  - Probes: `critic/scripts/c62_*` (new ones `c62_h_*.mjs`, `c62_track.ts`, `c62_nagasaki.ts`; run 61's page probes
-    copied as `c62_*` and pointed at 5299).
-  - Run 61's headless job list was replayed on HEAD by `tools/diag/replayCritic.ts --run 61 --jobs 4 --out
-    critic/c62_replay61` (`critic/c62_replay61.log`).
-- **What was left out for time (ADR-917, about an hour aimed at):**
-  - Run 61's bulk landing sets were not re-run: the 396 named setups (`c61_liab.sh named`), the 153 stuck-return runs,
-    the 168 next-voyage runs and Malta's 18. In their place:
-    - the required 90 `landingInvariants` runs on new seeds;
-    - run 61's three `slowClick` breaks;
-    - run 61's seven named `landingInvariants` cases and the R60-N1 / R60-N2 next-voyage traces, run directly
-      (`critic/scripts/c62_jobsNamed.txt`);
-    - the part of run 61's 37-job replay that finished (listed below).
-  - The replay of run 61's 37 jobs was stopped after 15 of them to free the machine for the named cases. The jobs it
-    finished are compared below; the rest (landingRows `all`, seaBattles 31501 and 28061, workerDeterminism 31401,
-    topArea, piles, the repulse and held-by probes) are not claimed.
-  - Not measured:
-    - performance alone: no quiet machine, so every page figure here was taken beside 4 to 8 headless sims;
-    - `seaBattlesLook` (R60-N5);
-    - an editor edit as the track's intervention (Take control and a God Mode revolt were driven);
-    - save and Continue mid-track in the page.
-  - The dimensions not touched by the batch's game code for plain worlds are **carried**:
-    - `semanticZoom`, `tanks`, `aircraft`, `aiNukes` and `performance` (see each row for why).
-    - `world.steered` and `world.holds` are false in every world without a track and once a track has ended
-      (`src/sim/world.ts`, `Track.held` returns false when `ended`).
-    - Plain 1938's 20-year worlds are bit-identical to run 61's: 7019 ends at `99caf939` and 32019 at `4702acef`, as in
-      run 61 (`critic/c62_replay61/c61_seed7019_save.log`, `…/c61_seed32019_save.log`).
+  - Probes: `critic/scripts/c63_*` (run 61's and 62's as `c63_*`, pointed at 5363). My new ones are
+    `c63_h_blank`, `c63_h_pauseblank`, `c63_h_continue`, `c63_h_godtab`, `c63_h_zoom` and `c63_x_loadfile`.
+  - Headless: `c63_jobsAll.txt` (53 jobs), run by `c63_runq.sh`.
+  - Page suites: `c63_suiteT.sh` / `c63_suiteT2.sh` (run 62's named cases), `c63_suiteB.sh` (the whole brief on
+    new seeds 35xxx).
+  - Bulk: `c63_chainBulk.sh` (run 61's 396 + 153 + 168). Performance: `c63_chainP.sh`, alone after every other job.
+  - The builder's preview on 5398 was up before the run and was left alone; after the reboot nothing of the builder's
+    was up. My 5363 preview and every browser I opened are stopped.
 
 ## Verdict
 
 **No blocking issue. Every dimension is at its bar (8).**
 
 - **No checker breaks a rule on new seeds:**
-  - `landingInvariants` via `landingFuzz --seeds 15 --first 33101`: **0 of 90 runs broken** (0.0 %), with R59b's new
-    `leftAgain` rule (`critic/c62_landingFuzz_summary.txt`, logs in `critic/c62_lf/`).
-  - diploInvariants: 0 broken on 33501 (1938, 5 y), 33503 (random, 5 y) and 33505 (heroes, 5 y)
-    (`critic/c62_diploinv_*.log`).
-  - worldInvariants: 0 broken on 33507, 33509 and 33511 (heroes), 5 years each, every rule set (`critic/c62_wi_*.log`).
-  - **The historical track's checker** (`tests/helpers/historyTrack.ts`, run by `critic/scripts/c62_track.ts`):
-    - the scenario's own seed 1938: 0 broken lines, 0 events passed over, the track ended on 27 July 1953
-      (`critic/c62_track_1938.log`);
-    - new seeds 33301 and 33303 (warnings only, ADR-950): 0 broken, one event passed over by rule (event 18, the
-      Spanish war's end, the Republic already dead) (`critic/c62_track_33301.log`, `critic/c62_track_33303.log`).
-- **Every finding of runs 60 and 61 that the batch set out to fix, and this run re-ran, is fixed on this build.** Case
-  by case (the table at the end):
-  - R61-N1, R61-N2, R61-N3 and R61-N5;
-  - R60-N1, R60-N2, R60-N3 and R60-N4.
-
-  R61-N4 is now specified and holds on new seeds. R60-N5 (seaBattlesLook's "no fleet") was not run.
-- **The historical track works as specified and is the best thing in this build to watch.** Its own seed was played
-  from the title screen by mouse at Max to February 1954 with 0 page errors (`critic/c62_hw_desk.json`).
-  - It holds history's dates: Paris German on 14 June 1940 and French again on 26 August 1944.
-  - Its births fall on history's days: Slovakia 15 March 1939, Vichy 23 June 1940, Israel 15 May 1948, the two Koreas
-    in August and September 1948, the two Germanys in 1949, Indonesia on 28 December 1949.
-- **What it gets wrong is in the telling, not in the rules** (non-blocking, below):
-  - One click ends it. "Take control" on day 3, or one God Mode revolt, ends the 15-year replay for good.
-    - No warning comes first: not on the button, the God Mode bar or the form, and no confirm.
-    - The ticker gives no row of it; only the History has one (R62-N1).
-  - Rows written for the builder reach the player ("The Pacific: the timeline's stages, island by island"), and some
-    news is told twice (R62-N2).
-  - "The mobilisation" is named 22 times without saying whose (R62-N3).
-  - On 8 May 1945 the player reads "Germany was annexed by Soviet Union" an hour after the four zones were drawn (R62-N4).
+  - `landingInvariants` via `landingFuzz --seeds 15 --first 34101`: **0 of 90 runs broken** (88 in the fuzz, the two
+    killed by the reboot re-run alone: 0 broken each). `slowClick` included. Logs: `critic/c63_landingFuzz.log`,
+    `.cache/landingFuzz/78b082b4-34101/`, `critic/c63_lf_34129_*.log`.
+  - diploInvariants, 0 broken on:
+    - 34001 (1938), 34003 (random), 34005 (heroes) and 34007 (random world), 5 years each;
+    - 34009 (1938) and 34011 (random, heroes), 10 years each (`critic/c63_diploinv_340*.log`).
+  - worldInvariants, every rule set, 0 broken on 34051, 34053 (heroes) and 34055 (random world), 5 years each
+    (`critic/c63_wi_340*.log`).
+  - workerDeterminism 34059: one hash `7ee67ce6` on every arm (`critic/c63_wd_34059.log`).
+  - landingRows `all`: 115 cases, 20,321 hours, 0 broken (`critic/c63_lrows_all.log`).
+  - seaBattlesLook 34061: **50 of 50 battles seen**, 0 with no fleet (`critic/c63_sbl_34061.log`).
+  - Staged repulses 34071 and 34073: 0 broken (`critic/c63_repulse_*.log`).
+  - **The track's checker:** own seed 1938, 0 broken, 0 passed over, ended 27 July 1953. New seeds 34301 and 34303
+    (warnings only, ADR-950): 0 broken, one event passed over by rule (18, the Spanish war's end)
+    (`critic/c63_track_*.log`).
+- **All six of run 62's findings are fixed on the probes that found them** (the table at the end). R62-N6's fix brings
+  a new, smaller fault (R63-N1).
+- **The full brief on new seeds found no player-stopping fault.** In a full run's page probes:
+  - 0 page errors in 90 probe outputs;
+  - save, load and Continue give the same hash as an unbroken game, plain and mid-track;
+  - the God Mode tools, the editor's path, landings, sea battles, AI and God strikes and the two 12-year watches all
+    work.
+- **What it found, all non-blocking:**
+  - **R63-N1 (UI):** at Max, the track's "Next" line is now missing a quarter of the time, for up to 2 s.
+  - A design objection, with a census behind it (lowers no score): from 1942 the track's fronts are held and move by
+    paint, as SPEC §7.7 says. So D-Day is an empty box, Stalingrad has no army, and 2.6 million Allied and German
+    soldiers stand idle together in the Low Countries in June 1944.
+  - **R63-N2 (UI, track):** the nation panel's God tab ends the replay with one checkbox and says nothing of it.
 
 ## Scores
 
-| Dimension | Run 61 | Run 62 | |
+| Dimension | Run 62 | Run 63 | |
 |---|---|---|---|
-| Map visuals and readability | 8 | 8 | **Carried, with new sight of the track's maps.** `MapView.ts` and `flagStore.ts` changed only for the track's flags and names. <ul><li>The track's maps read as history: October 1940, Vichy France beside an occupied, hatched north, Slovakia, Hungary and Romania (`critic/shots/c62hw_desk_10_europe.png`).</li><li>August 1950: People's China, India, the two Koreas (`critic/shots/c62hw_desk_48_world.png`).</li><li>Flags of the track's own nations: Vichy, Croatia, People's China.</li></ul> **Not 9 (old):** run 61's corridor, Caribbean chip pile and relations hairball were not re-shot (carried). The track's line under the date is 0.72 em, about 9 px on a phone (`critic/shots/c62hp_390x844_bar.png`). |
-| Diplomacy, war, alliance, puppet, revolt depth | 8 | 8 | **Scored afresh.** <ul><li>**diploInvariants and worldInvariants, 0 broken on new seeds:** 33501, 33503 (random), 33505 (heroes); worldInvariants on 33507, 33509 and 33511 (heroes), every rule set (`critic/c62_diploinv_*.log`, `critic/c62_wi_33507.log`).</li><li>Run 61's 10-year diploInvariants cases 32001–32011: all 0 again (`critic/c62_replay61/c61_diploinv_*.log`).</li><li>**The track's checker: 0 broken** on its own seed and on 33301 and 33303. No war or peace off the timeline, the rules of exit, realm and held kept for 15½ years (`critic/c62_track_*.log`).</li><li>The track's wars and peaces arrive on their days in the page, for example "28 October 1940 Italy declared war on Greece" (`critic/c62_hn_greece.json`). The Korean War opens with "North Korea ⚔ South Korea +6" and closes at Panmunjom on 27 July 1953 (`critic/c62_hw_desk.json`, samples 48–60).</li><li>After the track the world's own diplomacy resumes. On the own seed, 48 wars in two years and 2 detonations (`critic/c62_track_1938.log`).</li></ul> **Not 9:** <ul><li>R62-N4: "Germany was annexed by Soviet Union" at the surrender.</li><li>The world after 1953 forgets the blocs at once: the Soviet Union declares war on Norway two days after the armistice (Design objections).</li><li>Run 61's "alliances ignore the map" is not re-checked (plain 1938 unchanged, `99caf939`).</li></ul> |
-| Emergent world dynamics | 8 | 8 | **Scored afresh.** <ul><li>**1938h is a world worth watching for 15 years:**<ul><li>the fronts move by the track's stages (`critic/shots/c62hw_desk_17_world.png`, Case Blue, Lae and Salamaua in July 1942);</li><li>the Reich's end (`critic/shots/c62hw_desk_27_europe.png`, February 1945);</li><li>the Chinese civil war's chips renamed as the People's Republic is proclaimed (sample 45);</li><li>Korea (sample 48).</li></ul></li><li>The fighting is the sim's own. Paris falls by the fighting on 14 June on 1938 and 33301 and on 15 June on 33303 (R63's claim holds on my new seeds).</li><li>**R61-N4 re-run:** 32403 still has no war in 10 years with 3 nations, nor in 15 with 2 (`critic/c62_few.log`). SPEC §3.4 now says why. On new seeds 33403–33408 with 3 nations, **6 of 6** went to war: on days 6–454, and 2,386 once.</li><li>Plain 1938's 20-year worlds are bit-identical to run 61's.</li></ul> **Not 9:** <ul><li>The same history every game: the track's seed is fixed by design (Design objections).</li><li>After 1953 the world falls into 39–48 wars in a year (new seeds 33301, 33303 and the own seed).</li></ul> |
-| God Mode | 8 | 8 | **Carried, with the batch's one change to it checked.** God Mode's tools are not changed; a God act now ends the track. <ul><li>On 1938h, opening and closing the Editor and God Mode panels leaves the "Next" line.</li><li>One revolt by mouse (Bavaria, day 2) is applied ("Free Saxony broke away from Germany", "Germany declared war on Free Saxony") and ends the track that hour, told in History (`critic/c62_hg.json`, `critic/shots/c62hg_history.png`).</li></ul> **Not 9 (old, plus R62-N1):** the God Mode bar says nothing of its tools ending the replay (`critic/shots/c62hg_god_open.png`). |
-| Editor and scenarios | 8 | 8 | **Scored afresh.** <ul><li>**R61-N2 fixed:** with a file pending, the 1938 Start is disabled with "A scenario file is chosen: start it or cancel it under Scenario file". The browser's "No file chosen" is replaced by the game's "Choose a file", and Cancel is styled (`critic/shots/c62xe_32441_title.png`; `MAINSTART=1 node critic/scripts/c62_x_editor.mjs 32441` times out on the disabled button).</li><li>The editor's path end to end on 32443: paint, undo, redo, export (591,613 bytes, as in run 61), load, start, the paint there (`critic/c62_xe_32443.json` and its log).</li><li>**R61-N3 fixed:** a cut file is told "Could not load: the file is damaged or incomplete"; plain text is still told "not a Warism scenario file" (`critic/c62_xb_trunc.json`, `critic/shots/c62xb_trunc.png`).</li><li>**The new scenario:** "World, 1938 — Historical" is listed on the title. Its form says "A replay of history: the same world every game, with no seed or option to choose" (`critic/shots/c62hw_desk_title.png`). Its seed is its own whatever the URL: `?seed=5`, `?seed=77` and none give hash `4149540175` at day 30, and `?after=22` differs only in the track's section (`critic/c62_hseed.json`).</li></ul> **Not 9:** <ul><li>R62-N1: the form does not say that taking a nation, a God Mode act or an editor edit ends the replay.</li><li>The track defines a nation it never uses: `VIE` (Hanoi) is in `1938h/nations.json` and no event names it, so it is never born on any seed (`critic/c62_track_*.log`, "never: VIE").</li></ul> |
-| Stats and history | 8 | 8 | **Scored afresh.** <ul><li>**R61-N5 fixed:** on 32019's year-20 save, the same hour's rows follow their head with "↳". "United States made peace with Free San Salvador" now reads before "↳ … was annexed" and "↳ … was destroyed" (`critic/shots/c62hi_32019_history.png`). History opens in 168 ms with 3,129 events, as run 61 had (`critic/c62_hi_32019.json`).</li><li>The track's events reach History and the ticker by name: "History's events", "History ended", and "History's course ended at your first intervention, and the world goes its own way" (`critic/shots/c62hi_1600x900_history.png`).</li></ul> **Not 9:** <ul><li>R62-N2: builder's words in the rows, and double rows.</li><li>R62-N3: "The mobilisation" ×22.</li><li>R62-N5: the Nagasaki strike's row (below).</li></ul> |
-| UI/UX and polish | 8 | 8 | **Scored afresh.** <ul><li>**R61-N1 fixed:** after a landing order, the landings bar stands beside the panel at 844 × 390 (bar 558–837, panel to 551), 932 × 430, 1024 × 500 and 667 × 375. The element at the ×'s centre is the × and a click closes the panel at every size (`critic/c62_xcb_21103_*.json`, `critic/shots/c62xcb_21103_844x390.png`).</li><li>**R60-N4 fixed:** at 667 × 375 the panel ends at 305, above the bar, and its last row is reachable (`critic/c62_mw_31201_GER_667x375.json`, `critic/shots/c62mw_31201_GER_667x375_last.png`).</li><li>**R60-N3 fixed:** the order rows are dated ("3 January 1938 Infantry division 326: …") (`critic/c62_wt_ITA_31211_h114.json`).</li><li>The track's "Next, 12 March 1938: The Anschluss" line fits the bar at 390 × 844 and 844 × 390, with no overflow (`critic/c62_hp_*.json`, `critic/shots/c62hp_390x844_bar.png`). Stepped by 6 hours, it moves on in the step its event fires in (`critic/c62_hn_greece.json`).</li><li>0 page errors in every c62 page probe.</li></ul> **Not 9:** <ul><li>R62-N1: the one-click end of the track, unwarned and untold in the ticker.</li><li>R62-N6: at Max the "Next" line names an event already past in 14 of 60 samples.</li><li>The order rows dated 3 January stand after a 4 January row in the ticker (`critic/c62_wt_ITA_31211_h114.json`).</li><li>The track's line is small on a phone.</li></ul> |
-| Performance | 8 | 8 | **Carried; nothing measured alone.** <ul><li>The whole track in the page at Max, 1600 × 900, measured beside 4–8 headless sims: 58.3–60.2 fps in each of 63 quarter-year spans, longest gap between frames 100 ms, 0 frames over 500 ms (`critic/c62_hw_desk.json`).</li><li>The track's 15½ years headless with its checker took 279–398 s for 136,465 ticks, about 2.0–2.9 ms a tick including the checker, under load (`critic/c62_track_*.log`); the budget is 6.5 ms.</li><li>Plain 1938's 7019 20-year run: mean tick 3.03 ms under load against run 61's 2.86 (`critic/c62_replay61/c61_seed7019_save.log`): same hash, a busier machine.</li></ul> |
-| Stability | 8 | 8 | **Scored afresh.** <ul><li>**Determinism across commits:** 7019 and 32019 end their 20 years at `99caf939` and `4702acef`, as on run 61's commit.</li><li>The three `slowClick` cases of run 61 give the same lines word for word (`critic/c62_li_*.log`).</li><li>**The track is the same each run:** one hash for three URLs' seeds (`critic/c62_hseed.json`). The page's own run ends 1953 with the timeline's births and wars, as headless.</li><li>The second seed is taken at the intervention: two pages with `?after=11` and `?after=22`, both taking Germany on day 3, are at different hashes 200 days on (`critic/c62_hi_1600x900.json`).</li><li>The page ran 1938 → 1954 at Max with 0 page errors (`critic/c62_hw_desk.json`).</li><li>All c62 page probes record 0 page errors.</li></ul> **Not 9:** save and Continue mid-track in the page not driven this run (left out for time). |
-| Semantic zoom to unit level (needs 8) | 8 | 8 | **Carried.** No render or zoom code changed but `MapView.ts`'s flag lookup (4 lines). Plain 1938 worlds are bit-identical to run 61's. |
-| Naval warfare (needs 8) | 8 | 8 | **Scored afresh** (`landings.ts` changed: R59a's next-voyage days, R59b's boarding order). <ul><li>**landingInvariants on new seeds: 0 of 90 broken** (33101–33129 odd × six shapes), `slowClick` included, under the checker's new `leftAgain` rule (`critic/c62_landingFuzz_summary.txt`).</li><li>Run 61's `slowClick` cases (R61-SC) are unchanged word for word: 32167 g2 and g1 ("t450's click of 366 not ashore after 13.2 / 12.8 days") and 32115 15101 g2 ("t562's click of 274 … 9.3 days") (`critic/c62_li_*.log`).</li><li>Run 61's seven named cases (30041 g1, 31099 g1, 203997, 204017, 29043 15101, 28037 od8, 28039 g1) are text-identical to run 61's logs: four with their old `slowClick` line, three at 0 (`critic/c62_li_*.log`).</li><li>**R60-N1 fixed** (31173's 366, R59a): run 61 told "next voyage, about 1 day" from t831 to t934. Now it says "about 5 days" at t831 and counts down 4, 3, 2, 1 to the voyage at t935, which is the truth (`critic/c62_nvtrace_31173_366.log`).</li><li>**R60-N2 fixed** (31127's 272, R59b): left at the port at t423, it now boards the group's next voyage at t510 and is ashore by t567. Run 61's 272 was left again at t510 and told "about 5 days" more (`critic/c62_nvtrace_31127_272.log`).</li><li>The next voyage told as dated rows in the ticker (`critic/c62_wt_ITA_31211_h114.json`).</li><li>The track's war at sea is on: carrier strikes of the United States on Japan's ships, sea battles, the Pacific by stages (`critic/c62_hw_desk.json`).</li></ul> **Not 9 (old):** the `slowClick` tail of R61-SC; Malta never taken (not re-run, sim of landings unchanged for AI worlds by hash). |
-| Tanks (needs 8) | 8 | 8 | **Carried.** `combat.ts` changed by one gate (`world.holds`), false outside a running track; plain 1938 bit-identical. |
-| Aircraft (needs 8) | 8 | 8 | **Carried.** No air code changed. The track's air war is told monthly ("People's China and United States fought in the air this month", 1951–53, `critic/c62_hw_desk.json`). |
-| AI nuclear use (needs 8) | 8 | 8 | **Carried.** `nuclear.ts` changed by one gate (`world.steered`): the AI strikes nothing while the track runs, as SPEC §7.7 says. Plain 1938 is bit-identical. After the track the AI strikes again: 2 detonations in two years on the own seed, 1 in a year on 33301 (`critic/c62_track_*.log`). The track's own two strikes are a timeline event; their telling is R62-N5. |
+| Map visuals and readability | 8 | 8 | **Scored afresh.** <ul><li>A 150-nation large random map from the title, run at Max for 90 s: 56.8–60 fps, every chip drawn (`critic/c63_xp_rnd_large.json`).</li><li>The 12-year world with heroes (35141): the USA, the Soviet Union and Germany leading; hero chips (Yamato, Bismarck, Maus, P.100 Ercole, TOG II) where they fight (`critic/shots/c63lwhon_35141_y12_world.png`).</li><li>The track's maps at Max: Vichy beside the hatched north in 1940; the Reich's four zones in 1945 (`critic/shots/c63hw_desk_*_europe.png`).</li><li>The God H-bomb on Paris (35117): mushroom, ring, the alert with "Go to", 3,329,000 civilians, the same figures as run 61 (`critic/shots/c63a_35117_13_paris_h_strike.png`).</li><li>Corridor drawn on day 3 at 1600 × 900 and 390 × 844 (`critic/c63_new.corridor_35307_*.log`).</li><li>The relations graph opens in 175–198 ms with 67–73 nodes (`critic/c63_rg_relations.*.log`).</li></ul> **Not 9 (old):** <ul><li>The ranking's Land figure still has no unit (`critic/shots/c63hi_1600x900_notinterv.png`).</li><li>The track's line under the date is about 10 px high on a phone (`critic/c63_hp_390x844.json`: top 822, bottom 832).</li><li>An AI A-bomb's place at 937 m/px is a dark smudge beside the chips (`critic/shots/c63an_34501y12_0_goto.png`).</li></ul> |
+| Diplomacy, war, alliance, puppet, revolt depth | 8 | 8 | **Scored afresh.** <ul><li>diploInvariants on 6 new runs and worldInvariants on 3: 0 broken (above).</li><li>Run 62's 33501, 33503 and 33505, and run 61's 32001 (10 y): all 0 again (`critic/c63_diploinv_33*.log`, `critic/c63_diploinv_32001r_10y.log`).</li><li>**A player's war by mouse only (35421):** click German land, Take control, right-click Poland, "Declare war", Shift-drag a box (7 selected), click Warsaw. All 7 got a way, and 6 were closer after 10 days (`critic/c63_xm_35421_1600x900.json`).</li><li>The peace button at 844 × 390 and 1600 × 900 on 35217: greyed with its reason, then taken on day 35 (`critic/c63_peacebtn.35217_*.log`).</li><li>Force war (35135) (`critic/c63_fw2_35135.json`).</li><li>The track's wars and peace on their days: the Reich's end now reads "8 May 1945 The Reich ends: the four zones, and the rest under Soviet rule to the Oder" (`critic/c63_hw_desk.json`, sample 28). R62-N4 fixed.</li></ul> **Not 9:** <ul><li>Dogpiles at day 365: on 34145, France with 15 against Germany with 3; the other four seeds have none over 4:1 (`critic/c63_piles_p.log`).</li><li>After 1953 the world forgets the blocs: the Soviet Union declares war on Norway two days after Panmunjom, as in run 62 (`critic/c63_track_1938.log`).</li></ul> |
+| Emergent world dynamics | 8 | 8 | **Scored afresh.** <ul><li>**Top three by area over 25 years:** they change 8 times on 34099 and 14 times on 34097. In year 25 the USA and the Soviet Union stand at 11.6 % each on 34097 (`critic/c63_toparea_*.log`).</li><li>The 12-year watches: 95 → 77 nations with heroes and 96 → 79 plain, with war and peace each month (`critic/c63_lwhon_35141.json`, `critic/c63_lwplain_35143.json`).</li><li>Year 20: in 1957 the UK is at war with British India and the US annexes Free San Salvador (`critic/shots/c63hi_32019_history.png`).</li><li>The track runs 1938 → 1953 on its days (Paris German 13–14 June 1940 and free 26 August 1944 on 1938, 34301 and 34303).</li><li>Small worlds: 3-nation random worlds 34401–34406, 4 of 6 at war in 10 years (days 4–60), 2 never. SPEC §3.4 covers this (`critic/c63_few3.log`).</li></ul> **Not 9:** <ul><li>The track's fronts of 1942–44 are painted, not fought, as specified (a design objection, below; no score lowered).</li><li>39–54 wars in the first one to two years after 1953 (`critic/c63_track_*.log`; Design objections).</li></ul> |
+| God Mode | 8 | 8 | **Scored afresh.** <ul><li>H-bomb on Paris (35117), as above.</li><li>Revolt, Spawn, Found and Raze each told in the ticker (`critic/c63_q_35119.json`).</li><li>Breakthrough at war: engaged 0 → 4 → …, told in the ticker; in History, the CSV and the JSON (`critic/c63_kw_breakthrough.35123.log`, `critic/c63_kwhist.35151.log`).</li><li>On the track a God act ends it and is told: "3 January 1938 History's course ended at your first intervention, and the world goes its own way" (`critic/c63_hg.json`).</li><li>The bar says "Any act here ends the replay of history." (`critic/shots/c63hg_god_open.png`).</li></ul> **Not 9:** <ul><li>R63-N2: the God tab's ~40 controls say nothing of the replay.</li><li>God's tools still reach only the selected side, and there is no undo (old).</li></ul> |
+| Editor and scenarios | 8 | 8 | **Scored afresh.** <ul><li>**By mouse (32443):** brush, undo, redo, export (591,613 bytes, as runs 61 and 62), choose the file, "Start this scenario". The painted cells are Germany's in the started game: `[1,1,1]` on the probe re-run after the reboot (`critic/c63_x_editor.32443.again.log`, `critic/c63_xe_32443.json`). The first run, on the overloaded machine, read before the world came: `[0,0,0]`, with the world there at 11.8 s (`critic/c63_xl_32443.json`).</li><li>Fleets and a bomber placed; a fleet at Berlin refused ("Not done: no water of a sea is near the place.") (`critic/c63_g_35121.json`).</li><li>The run-26 scenario file still loads (`critic/c63_os2_scen.*.log`).</li><li>R61-N2 holds: with a file chosen, the main Start is disabled with its reason (`critic/c63_x_editor.32441.log`).</li><li>Refusals: a cut file is told "the file is damaged or incomplete" and plain text "not a Warism scenario file" (`critic/c63_x_badfiles.log`).</li><li>The track's form now says "Taking a nation, a God Mode act or an editor edit ends the replay" at every size (`critic/c63_hp_390x844.json`).</li></ul> **Not 9:** <ul><li>`VIE` is defined in `1938h/nations.json` and never born on any seed (`critic/c63_track_*.log`, "never: VIE"; old).</li><li>A started scenario file shows a grey map with no nations and a short bar until its stats come: over 3 s on the machine loaded before the reboot (`critic/shots/c63xl_32443_2s.png`, stats at 11.8 s), 2–3 s afterwards (`critic/c63_xl_32443b.json`).</li><li>`c63_g_editor`'s Poland-with-warheads scenario paused on an AI strike and the probe waited on it (run 61's known case); I stopped it after 15 min.</li></ul> |
+| Stats and history | 8 | 8 | **Scored afresh.** <ul><li>History on the year-20 saves: 7019 opens in 123 ms with 3,284 events and 32019 in 122 ms with 3,129, as run 61 had. Same-day rows follow their head with "↳" (`critic/c63_hi_*.json`, `critic/shots/c63hi_32019_history.png`).</li><li>CSV 3,130 lines (`critic/c63_dl_32019.csv`).</li><li>My wars only: 60 of 386 for Germany on 35303 (`critic/c63_new.mine_35303_*.log`).</li><li>**The track's rows (R62-N2, N3, N5 fixed):**<ul><li>no "timeline" or "stage" in 158 distinct ticker rows of the 15-year watch;</li><li>the Soviet arrivals named once ("15 July 1941 The Soviet mobilisation: reserves to Moscow");</li><li>Nagasaki on Japan's land, (1762.5, 403.5), JAP/JAP (`critic/c63_hw_desk.json`, `critic/c63_nagasaki.log`).</li></ul></li></ul> **Not 9:** <ul><li>One event still told three ways: on 18 August 1945, "Manchukuo was destroyed", "Mengjiang was destroyed" and "Manchukuo and Mengjiang dissolved: China in name". Two days later come two Manchuria rows (`critic/c63_hw_desk.json`, sample 29).</li><li>"0 civilians killed" beside 18,628 men (old, `critic/shots/c63an_34501y12_0_goto.png`).</li></ul> |
+| UI/UX and polish | 8 | 8 | **Scored afresh.** <ul><li>**R62-N1 fixed:** a red note under Take control, "Ends the replay of history: the world then goes its own way", at 1600 × 900 and 390 × 844 (`critic/shots/c63hi_1600x900_notinterv.png`, `critic/shots/c63hi_390x844_notinterv.png`). The bar's note and the form's sentence are there too.</li><li>After a take, the ticker tells "History's course ended at your first intervention", and the notes and the line go (`critic/c63_hi_1600x900.json`).</li><li>R61-N1 holds: the × is topmost and closes the panel at 844 × 390, 932 × 430, 1024 × 500 and 667 × 375 (`critic/c63_xcb_21103_*.json`).</li><li>Run 61's 31211 h114 and run 60's 31201 at 667 × 375 give run 62's outputs byte for byte (`critic/c63_wt_ITA_31211_h114.json`, `critic/c63_mw_31201_GER_667x375.json`).</li><li>Keys: Space pauses and resumes with History focused (`critic/c63_xk.json`).</li><li>Build tiles whole at 390 × 844 and 844 × 390 (`critic/c63_new.build_35301_*.log`).</li><li>0 page errors in 90 outputs.</li></ul> **Not 9:** <ul><li>R63-N1: the "Next" line flickers at Max.</li><li>R63-N2: the God tab has no note.</li><li>The bar's note is grey, where the panel's is red (`critic/shots/c63hg_god_open.png`).</li></ul> |
+| Performance | 8 | 8 | **Scored afresh, alone after every other job** (`critic/scripts/c63_chainP.sh`, 07:44–07:55; nothing else of mine running). <ul><li>**7019's year-20 save** (`99caf939`), `c63_pf_lookfps.mjs` at Max: 3,000–600 m/px 58.5–60.2 fps; 120 m/px 54.6–57.3; 30 m/px 54.0–56.3 (`critic/c63_pf_7019.json`). Run 61 had 58.0–60.1, 52.5–57.2 and 52.8–56.0 on the same world.</li><li>`tools/diag/lookFps.ts`, a draw forced each frame: 59.6–60 frames/s at every zoom, p95 about 18 ms, a draw 0.8–1.9 ms (`critic/c63_lookfps.log`).</li><li>**The tactical goal:** 60 fps at 28 m/px with 14,212 individual figures in view, and 60 at Max with 12,378 (p95 16.8 ms). 59.6–60 at 18 and 12 m/px (`critic/c63_xi_32111.json`).</li><li>Touch: 59.6 fps (`critic/c63_tm_touch.alone.log`).</li><li>**Tick, seed 99, 5 years, pinned:** mean 2.2463 ms, hash `6471c3a5`, as run 61's 2.2370 ms; year 1 is 3.10 ms against the 6.5 ms budget (`critic/c63_tick99.log`).</li><li>Beside other jobs:<ul><li>the track's 15 years at Max, 58.5–60.7 fps a quarter, longest gap 83 ms (`critic/c63_hw_desk.json`);</li><li>two 12-year watches at 59.8–60 fps, 0 frames over 500 ms;</li><li>a 150-nation large random map at 56.8–60.</li></ul></li></ul> **Not 9:** <ul><li>120 and 30 m/px over the late world still dip to 54–57 fps.</li><li>SPEC §2's older tick figures are stale text (old).</li></ul> |
+| Stability | 8 | 8 | **Scored afresh.** <ul><li>**Determinism across commits:** 7019 and 32019, 20 years, `99caf939` and `4702acef` as in runs 61 and 62. workerDeterminism 32059 gives `cf5a4a7f` on every arm, as in runs 61 and 62, and new 34059 gives `7ee67ce6`.</li><li>**Run 61's bulk sets are re-run as due:**<ul><li>395 of the 396 named setups are text-identical to run 61's. The one that differs (30037 3517 g1) has 0 broken in both and counts one more click (17 against 16). The difference dates from after run 61, not from this batch: this batch's sim change is the track's alone, and plain hashes match run 62's. Not bisected; run 62 did not run this set (`critic/c63_liab_named_cmp.txt`).</li><li>All 153 stuck-return runs are identical (`critic/c63_sr_cmp.txt`).</li><li>The 168 next-voyage runs are compared by their own truth, since `landings.ts` changed after run 61 (R59a). There are 120 tellings of "next voyage in about N days". The 48 followed by a voyage all sail within a day of the days told (−0.9 to +1.0); run 61 had 47, up to 4.5 days late. The same two runs break the landing checker as in run 61 (30041 and 31157, 3517 g1) (`critic/c63_nv_cmp.txt`, `critic/c63_nv/`).</li></ul></li><li>**Save mid-track:** 1938h saved by Settings > Main menu on 5 February 1939 continues at the same tick and hash (9600, `2004257376`) with its "Next" line. 120 days on it matches an unbroken page with the same `?after=` (`80410916` both; `critic/c63_hc_400_120.json`).</li><li>Plain save and load (35137): the same hash twice (`critic/c63_sl_plain_35137.json`). The player's Continue (35415) matches an unbroken game 60 days on (`critic/c63_xc_35415_GER.json`).</li><li>The two 12-year watches: 0 frames over 500 ms. 0 page errors in 90 outputs.</li></ul> |
+| Semantic zoom to unit level (needs 8) | 8 | 8 | **Scored afresh.** <ul><li>Z 35111: one wheel zoom from 6,000 to 3 m/px over the opening battle. Elements from 1,573 m/px (7,965); individual figures from 28.3 m/px (13,832); no error. These are run 61's figures to within 5 (`critic/c63_z_35111.json`).</li><li>Phone 35133: 30,000 → 25 m/px, no horizontal overflow at any tier (`critic/c63_phz_35133.json`).</li><li>Sea battle 20885 t107 in both looks (`critic/c63_sb_seaballs.*.log`).</li></ul> **Not 9:** <ul><li>Tiers seen on the track: Normandy on 20 June 1944 and Stalingrad on 15 September 1942 at 6,000 → 12 m/px. The tiers draw, but there is nothing fighting to zoom into, by design (Design objections; `critic/shots/c63hz_*.png`).</li></ul> |
+| Naval warfare (needs 8) | 8 | 8 | **Scored afresh.** <ul><li>landingInvariants on new seeds: 0 of 90 broken, no `slowClick`.</li><li>Run 61's three `slowClick` cases and seven named cases are text-identical to run 62's (`critic/c63_li_*.log`).</li><li>R60-N1 and R60-N2's traces are identical to run 62's fixed ones (`critic/c63_nvtrace_*.log`).</li><li>seaBattles: run 61's 32061 and 32063 give 75 and 87, as before. New 34061 has 50 in 3 years, all 50 seen in the page; 34063 (random diplomacy) has 54 (`critic/c63_sb_*.log`, `critic/c63_sbl_34061.log`). **R60-N5 (31501):** 45 battles as in run 61. 44 of 44 are seen and 1 is told "no fleet to see" (NED v USA, t17369), where run 61 saw 43 of 45 (`critic/c63_sbl_31501.log`).</li><li>**Landings on new seeds (page):**<ul><li>35107 England to Bremerhaven: "over: 3 landed";</li><li>35109 Japan to Shanghai: "over: 3 landed";</li><li>35103 Germany to Norwich: "the transports of their landing were sunk… the landing is over";</li><li>35105 Rome to Valletta: "its transports broke off; 2 came ashore near Palermo";</li><li>35101 a cancel: "2 back at Tokyo, Ōsaka, 1 stopped where they stood" (`critic/c63_lland.*.log`, `critic/c63_lhold.*.log`, `critic/c63_turnback.*.log`).</li></ul></li><li>Next-voyage tellings on 35211 ("Marching to Rome, about 12 days: its landing sails before it is there…", `critic/c63_nvpage_ITA_35211_12_1600x900.json`).</li></ul> **Not 9 (old):** <ul><li>Malta is never taken: run 61's 18 page runs re-run, 18 of 18 over with Valletta not taken (11 thrown back to Catania, 7 broken off to Palermo; `critic/c63_malta.log`), and new 35105 broke off.</li><li>The run-61 `slowClick` tail is still there, unchanged.</li><li>On the track D-Day is an `occupy` with no landing (a design objection).</li></ul> |
+| Tanks (needs 8) | 8 | 8 | **Scored afresh.** <ul><li>7781 and 35115, day 4: the same opening scene as run 61's, armoured divisions 40 and 42 picked, 0 errors (`critic/c63_c_7781.json`, `critic/c63_c_35115.json`).</li><li>`combat.ts` is unchanged since run 62.</li></ul> **Not 9 (old):** German and Polish labels share one style at 80 m/px. |
+| Aircraft (needs 8) | 8 | 8 | **Scored afresh.** <ul><li>PL 35125: plane marks at every tier from 3,000 to 25 m/px in both looks (42 marks at 3,000, 1 at 25; `critic/c63_pl_planes.35125_GER_POL_5363.log`).</li><li>W 35127: the followed fighter marked in 56 of 61 samples at 3,000 m/px (median 32 px) and in 61 of 61 at ×5 (`critic/c63_w_wing.35127.log`).</li><li>The air war told monthly in every watch.</li></ul> **Not 9 (old):** at 250 m/px the followed fighter's mark is 94 px from its sorties at the median and up to 1,256 px, and only 37 of its 59 samples have a flying mark, 1 flying with none (`critic/c63_w_wing.35127.log`, "x1_250"). |
+| AI nuclear use (needs 8) | 8 | 8 | **Scored afresh, in a world made this run.** <ul><li>**34501**, saved at year 12 by this run (`critic/c63_seed34501_y12.bin`): on 9 April 1950 the page pauses on "United States struck Canada with an atomic bomb near Duluth: 0 civilians killed; 18,628 men and 68 guns lost", with its alert, "Go to" and ticker row (`critic/c63_an_34501y12.json`, `critic/shots/c63an_34501y12_0_goto.png`).</li><li>**Detonations over 22 years** (`critic/scripts/c63_nukecount.ts`): new seeds 34501, 34503 and 34507 give 12, 2 and 12, with 7 interceptions on 34507 (`critic/c63_nc/*.log`).</li><li>On the track, the AI strikes nothing until 1953 (`critic/c63_track_*.log`).</li></ul> **Not 9:** <ul><li>No strike in the 400 days after year 20 on 7019 or 32019, nor after year 13 on 34505 (`critic/c63_an_*.json`; old).</li><li>"0 civilians killed" beside large military losses (old).</li><li>The burst's place is a smudge at 937 m/px.</li></ul> |
 
 ## Blocking issues
 
 None.
 
-- `landingInvariants` on 90 new runs: 0 broken (no `slowClick` either).
-- diploInvariants on 3 new seeds and run 61's 6, worldInvariants on 3 new seeds and run 61's 4: 0 broken.
-- The track's checker on its own seed and 2 new seeds: 0 broken.
+- `landingInvariants` on 90 new runs: 0 broken, no `slowClick`.
+- diploInvariants on 6 new runs and 4 named ones; worldInvariants on 3 new runs and 4 named ones: 0 broken.
+- workerDeterminism: one hash on every arm, on 2 seeds.
+- landingRows (115 cases), seaBattlesLook (50 of 50) and the staged repulses: 0 broken.
+- The track's checker on its own seed and 3 more: 0 broken.
 - 0 page errors.
 
 ## Non-blocking issues (prioritised)
 
-1. **R62-N1 (UI, track, new): one click ends the historical replay, unwarned and untold in the ticker.**
-   - The case: `node critic/scripts/c62_h_interv.mjs 1600 900`. Open 1938h, select Germany, click "Take control" on
-     day 3.
-   - The "Next, 12 March 1938: The Anschluss" line vanishes and the track has ended for good.
-     - Before: `critic/shots/c62hi_1600x900_notinterv.png`. After: `critic/shots/c62hi_1600x900_taken.png`.
-   - Nothing said beforehand that it would:
-     - the button reads "Take control" as in any world;
-     - the form says only "A replay of history: the same world every game, with no seed or option to choose"
-       (`critic/shots/c62hw_desk_title.png`).
-   - The ticker has no row of it. The History alone has "History's course ended at your first intervention, and the
-     world goes its own way" (`critic/shots/c62hi_1600x900_history.png`).
-   - The same happens with one God Mode revolt by mouse on day 2 (`critic/c62_hg.json`).
-     - The track ends that hour; the ticker tells the revolt, not the end.
-     - The God Mode bar has no word that its tools end the replay (`critic/shots/c62hg_god_open.png`).
-   - These do not end it, as SPEC says (checked: the line stays; `afterNotInterv` in `critic/c62_hi_1600x900.json`, and
-     `critic/c62_hg.json`):
-     - pause, speed and selection;
-     - History and Statistics;
-     - opening the Editor and God Mode panels without an act.
-   - **Fix:** while the track runs, say on the form and on the first act's button (or by a confirm) that it ends the
-     replay. Tell the end in the ticker.
-2. **R62-N2 (stats/readability, track, new): builder's words and double rows in the player's news.**
-   - Rows the player reads:
-     - "The Pacific: the timeline's stages, island by island";
-     - "The China front: Japan advances by its stages";
-     - "The Soviet offensive: the timeline's stages" (`critic/c62_hw_desk.json`, samples 17, 29; the ticker in
-       `critic/shots/c62hw_desk_17_world.png`).
-   - Doubled news:
-     - "Soviet Union declared war on Japan" beside "The Soviet Union declares war on Japan";
-     - "31 January 1945 The Vistula-Oder; Budapest besieged: the Germans fall back" beside "… Budapest besieged";
-     - "Kharkov, Sevastopol, Case Blue to the Don and Rostov: the pockets" beside "… to the Don and Rostov";
-     - "India independent" beside "India" (samples 27, 17, 29, 37).
-   - **Fix:** notes are player text: drop "the timeline's", and tell one event once (the war's own row or the note,
-     not both; a `withdraw` with its stage, not twice).
-3. **R62-N3 (readability, track, new): "The mobilisation" ×22, whose not said.**
-   - 22 `forces` events of the Soviet Union, 15 July 1941 to 15 May 1944, are all noted "The mobilisation". So the line
-     under the date reads "Next, 15 March 1944: The mobilisation" quarter after quarter (`critic/c62_hw_desk.json`,
-     samples 17–24), and the History says so 22 times without the Soviet Union's name.
-   - **Fix:** "Soviet reserves: 15 rifle divisions at Moscow", or leave the arrivals unnamed and out of the "Next" line.
-4. **R62-N4 (diplomacy readability, track, new): "Germany was annexed by Soviet Union" at the surrender.**
-   - On 8 May 1945 the timeline draws the four zones at hours 2–4. Then event 381 annexes what is left of the Reich to
-     the Soviet Union ("The Reich ends: what is left of it, between the zones and the Oder").
-   - The player's ticker reads "8 May 1945 Germany was annexed by Soviet Union" (`critic/c62_hw_desk.json`, sample 28).
-     A viewer takes it as the Soviet Union taking Germany.
-   - **Fix:** tell that row by its note alone, or give the remnant to the zones' holders by ring.
-5. **R62-N5 (nukes readability, track, new): Nagasaki "where no nation holds the land".**
-   - The page's ticker on 15 August 1945 reads "9 August 1945 United States set off an atomic bomb near Nagasaki where
-     no nation holds the land: 72,000 civilians killed; no troops in the blast" (`critic/c62_hw_desk.json`, sample 29).
-   - Nagasaki was Japan's.
-   - Hiroshima's burst, three days before, is on Japan's held land (`critic/c62_nagasaki.log`: t66584, every cell
-     around it JAP/JAP).
-   - Nagasaki's burst (t66659) is on a sea cell, owner 0 and holder 0, with Japan's held land on the next cells
-     (`critic/c62_nagasaki.log`). The timeline's `at` [129.87, 32.75] rasterises to water, so the row says no nation's
-     land beside 72,000 dead.
-   - **Fix:** put the timeline's `at` on land (or snap a strike to its nearest land cell), and never pair "no nation
-     holds the land" with civilians killed.
-6. **R62-N6 (UI, track, new): at Max the "Next" line names an event already past.**
-   - In the page's watch at Max, 14 of 60 samples read a "Next" dated before the date beside it, by up to 28 days.
-     Examples (`critic/c62_hw_desk.json`):
-     - "26 February 1946 · Next, 2 February 1946: Southern Sakhalin annexed";
-     - "18 August 1950 · Next, 31 July 1950: The other contingents".
-   - The cause: the line rides on `nationStats`, which is posted at most once a second (`STATS_INTERVAL_MS`,
-     `src/worker/server.ts`), while the date moves every frame.
-   - A second later the line is right. The bar in the later shot reads "27 February 1946 · Next, 17 April 1946: Syria
-     independent" (`critic/shots/c62hw_desk_31_bar_crop.png`).
-   - **Fix:** do not show a "Next" whose date is before the shown date, or send the next event's tick with the frame.
-7. **R61-SC (naval, carried as is): run 61's three `slowClick` breaks, word for word** (`critic/c62_li_*.log`). 0 new
-   breaks in 90 runs.
-8. **Small:**
-   - Ticker order rows out of date order: "4 January 1938 Romania declared war on Bulgaria" above "3 January 1938
-     Infantry division 326: …" (`critic/c62_wt_ITA_31211_h114.json`).
+1. **R63-N1 (UI, track, new, from R64f's fix): at Max, the "Next" line is missing a quarter of the time.**
+   - `node critic/scripts/c63_h_blank.mjs 120 1600 900 99`: 1,084 samples about 110 ms apart, 1938 → December 1941
+     (`critic/c63_hb_1600x900_s99.json`).
+     - The line is absent in **266 (24.5 %)** of them, in runs of up to 18 samples (about 2 s).
+     - It is never past (0 of 1,084), so R62-N6 is fixed.
+   - The stats come once a second (median 997 ms apart). At Max the line hides from its event's hour until the next
+     stats, so it blinks off at every event (`critic/shots/c63hb_1600x900_blank0.png`).
+   - In the page watch, 19 of 62 samples taken just after a pause have no line; run 62 had 3 of 63
+     (`critic/c63_hw_desk.json` against `critic/c62_hw_desk.json`). Paused, it comes back within about 1.5 s
+     (`critic/c63_hpb.json`).
+   - **Fix:** send the next few events' ticks and notes with the stats, so the bar moves on to the next one at the
+     right hour instead of hiding.
+2. **R63-N2 (UI, track, new): the God tab ends the replay unsaid.**
+   - `node critic/scripts/c63_h_godtab.mjs 1600 900 god-world-ai`: 1938h, God Mode on, Germany's God tab.
+   - In view: about 40 controls (traits, efficiency, "World AI", "Winner takes all", diplomacy) and no note.
+     - The Take control note is scrolled out of the panel.
+     - The bar's "Any act here ends the replay of history." stands under "Map tools", which reads as those tools only
+       (`critic/shots/c63hgt_1600x900_box.png`).
+   - One click on "World AI" ends the track that hour (`critic/c63_hgt_1600x900_god-world-ai.json`). It is told
+     after, in the ticker (`critic/shots/c63hgt_1600x900_after.png`).
+   - **Fix:** the note at the head of the God tab too (as the editor's), or word the bar's note "Any God Mode act".
+3. **R61-SC (naval, carried as is):** run 61's three `slowClick` breaks, word for word (`critic/c63_li_32167_*.log`,
+   `critic/c63_li_32115_15101_g2.log`). 0 new breaks in 90 runs.
+4. **Small:**
+   - The 18 August 1945 Manchukuo triple (statsHistory row).
+   - Ticker order rows dated 3 January still stand under a 4 January row on 31211 h114 (byte-identical to run 62,
+     `critic/c63_wt_ITA_31211_h114.json`).
+   - The bar's note is grey, where the panel's is red.
+   - A started scenario file shows a grey world for 2–3 s (`critic/shots/c63xl_32443_2s.png`).
    - `VIE` defined and never born.
-   - The track's line is about 9 px on a phone.
-9. **Old, carried (not re-run, plain 1938 unchanged by hash):** the phone's panel over the corridor; alliances
-   ignoring the map; "0 civilians killed" beside large military losses; the ranking's Land figure has no unit; Malta
-   never taken.
+   - The track's line is ~10 px on a phone.
+   - The ranking's Land figure has no unit.
+   - "0 civilians killed" beside large losses.
+   - No late strike after year 20.
+   - **Old, not re-checked this run:** alliances ignoring the map (run 61's 32415); the phone's panel over the corridor
+     (run 61's 30307). Their probes were not re-run, and nothing in this batch touched them.
 
-## Run 61's cases re-run
+## Run 62's cases re-run
 
-| Run 61 case | Run 61 (`d971a46b`) | Run 62 (`9e094f50`) | Evidence |
+| Run 62 case | Run 62 (`9e094f50`) | Run 63 (`78b082b4`) | Evidence |
 |---|---|---|---|
-| R61-N1 `c61_x_closeblock 21103` at 844 × 390, 932 × 430, 1024 × 500 | bar over the ×, click fails | **fixed**: bar beside the panel, × topmost, click closes, at all three and 667 × 375 | `critic/c62_xcb_21103_*.json`, `critic/shots/c62xcb_21103_844x390.png` |
-| R61-N2 `MAINSTART=1 c61_x_editor 32441` | main Start drops the file | **fixed**: main Start disabled with its reason; "Choose a file" | `critic/shots/c62xe_32441_title.png` |
-| Editor by mouse 32443 | paint kept, 591,613 bytes | the same | `critic/c62_xe_32443.json` |
-| R61-N3 cut file | "Failed to fetch" | **fixed**: "the file is damaged or incomplete" | `critic/c62_xb_trunc.json` |
-| R61-N4 32403, 3 and 2 nations | 0 wars in 10 / 15 years | the same; now in SPEC §3.4. New 33403–33408: 6 of 6 at war | `critic/c62_few.log` |
-| R61-N5 32019 y20 History | same-day rows backwards | **fixed**: "↳" rows under their head, in order | `critic/shots/c62hi_32019_history.png` |
-| R61-SC 32167 g2, g1; 32115 15101 g2 | 1 `slowClick` each | the same lines | `critic/c62_li_*.log` |
-| R60-N3 31211 h114 ticker | order rows undated | **fixed**: dated | `critic/c62_wt_ITA_31211_h114.json` |
-| R60-N4 31201 at 667 × 375 | the panel's foot under the bar | **fixed**: panel ends at 305, above the bar | `critic/shots/c62mw_31201_GER_667x375_last.png` |
-| 7019 and 32019, 20 years | `99caf939`, `4702acef` | the same | `critic/c62_replay61/c61_seed*_save.log` |
-| diploInvariants 32001–32011 (6 runs) | 0 | 0 | `critic/c62_replay61/c61_diploinv_*.log` |
-| worldInvariants 32051, 32053h, 32055, 32057rw | 0 | 0 on all four | `critic/c62_replay61/c61_wi_*.log` |
-| seaBattles 32061, 32063r | 75, 87 battles | 75, 87 | `critic/c62_replay61/c61_sb_*.log` |
-| workerDeterminism 32059 | `cf5a4a7f` on every arm | the same | `critic/c62_replay61/c61_wd_32059.log` |
-| Named landingInvariants: 30041 g1, 31099 g1, 203997, 204017, 29043 15101, 28037 od8, 28039 g1 | 4 with a `slowClick`, 3 at 0 | text-identical | `critic/c62_li_*.log` |
-| R60-N1 31173 366 | "about 1 day" for 4.3 days | **fixed**: 5, 4, 3, 2, 1 days, then sails | `critic/c62_nvtrace_31173_366.log` |
-| R60-N2 31127 272 | left again at t510 | **fixed**: boards at t510, ashore by t567 | `critic/c62_nvtrace_31127_272.log` |
-| The rest of run 61's 37 jobs (landingRows all, seaBattles 31501/28061, workerDeterminism 31401, topArea, piles, repulse, held-by) | | replay stopped; not claimed | `critic/c62_replay61.log` |
-| The 396 named setups, 153 stuck-return, 168 next-voyage, Malta's 18 | | **not re-run, for time** | — |
+| R62-N1 `c62_h_interv 1600 900`, `c62_h_god` | one click ends the track, unwarned, untold in the ticker | **fixed**: notes under Take control, on the bar, at the editor's head and on the form; the ticker row "History's course ended…"; a revolt and a take each end it that hour | `critic/c63_hi_1600x900.json`, `critic/c63_hg.json`, `critic/shots/c63hi_390x844_notinterv.png` |
+| R62-N2 builder's words, doubles | "the timeline's stages", 4 doubles | **fixed**: none in 158 distinct rows of the watch; one triple of another kind remains (Manchukuo) | `critic/c63_hw_desk.json` |
+| R62-N3 "The mobilisation" ×22 | whose not said | **fixed**: "The Soviet mobilisation: reserves to Moscow", once | `critic/c63_hw_desk.json` |
+| R62-N4 8 May 1945 | "Germany was annexed by Soviet Union" | **fixed**: "The Reich ends: the four zones, and the rest under Soviet rule to the Oder" | `critic/c63_hw_desk.json`, sample 28 |
+| R62-N5 `c62_nagasaki.ts` | sea cell, "no nation holds the land" | **fixed**: (1762.5, 403.5), JAP/JAP | `critic/c63_nagasaki.log` |
+| R62-N6 `c62_h_watch` at Max | a past "Next" in 14 of 60 samples | **fixed** (0 of 62), but no line in 19 of 62 (R63-N1) | `critic/c63_hw_desk.json` |
+| `c62_h_next` Greece, 6-hour steps | moves on in its step | the same, with 2 steps blank between | `critic/c63_hn_greece.json` |
+| `c62_h_phone` 390 × 844, 844 × 390 | line fits | fits; the form's sentence now whole | `critic/c63_hp_*.json` |
+| `c62_h_seed` | one hash for three URLs | ran; the same | `critic/c63_hseed.json` |
+| Save and Continue mid-track | not driven | **same hash, track on** | `critic/c63_hc_400_120.json` |
+| Track checker 1938, 33301, 33303 | 0 broken | 0 broken; 33301's hash moved (Nagasaki's burst moved) | `critic/c63_track_*.log` |
+| R61-N1 closeblock 21103 ×4 sizes | fixed | the same | `critic/c63_xcb_21103_*.json` |
+| R61-N2 / R61-N3 editor, bad files | fixed | the same | `critic/c63_x_editor.32441.log`, `critic/c63_x_badfiles.log` |
+| Editor 32443 | paint kept | paint kept, `[1,1,1]` on the re-run (the first run read too early under load) | `critic/c63_x_editor.32443.again.log` |
+| R60-N3 31211 h114, R60-N4 31201 667 × 375 | fixed | byte-identical outputs | `critic/c63_wt_ITA_31211_h114.json`, `critic/c63_mw_31201_GER_667x375.json` |
+| 7019, 32019 20 y | `99caf939`, `4702acef` | the same | `critic/c63_seed*_save.log` |
+| diploInvariants 33501/3/5, worldInvariants 33507/9/11 | 0 | 0 | `critic/c63_diploinv_33*.log`, `critic/c63_wi_33*.log` |
+| Named landingInvariants ×7, R61-SC ×3, nvtraces ×2 | as run 61 | text-identical | `critic/c63_li_*.log`, `critic/c63_nvtrace_*.log` |
+| seaBattles 32061, 32063r; workerDeterminism 32059 | 75, 87; `cf5a4a7f` | the same | `critic/c63_sb_*.log`, `critic/c63_wd_32059.log` |
+| Malta's 18 (run 61's) | | 18 of 18 not taken, as run 61 | `critic/c63_malta.log` |
+| R60-N5 seaBattlesLook 31501 (not run by run 62) | run 61: 43 of 45 | **fixed**: 44 of 44 seen, 1 told "no fleet to see" | `critic/c63_sbl_31501.log` |
+| Run 61's bulk sets (not run by run 62) | | 395 of 396 and 153 of 153 identical to run 61; next voyage: 48 of 48 within a day (run 61: up to 4.5 days) | `critic/c63_*_cmp.txt` |
 
 ## Design objections (none blocking, no score lowered)
 
-- **The world after 1953 forgets the Cold War at once.** On the own seed the Soviet Union declares war on Norway on 29
-  July 1953, two days after Panmunjom, and the United Kingdom on Italy six days after. On new seeds Italy invades
-  Ethiopia again on 31 July 1953. In all, 39–48 wars come in the first year after the track (`critic/c62_track_*.log`).
-  - ADR-944 measures this as an ordinary game's opening pace, and that is true. But a viewer who has watched 15 years
-    of history sees it fall apart in a week.
-  - The blocs the track built (NATO, the Warsaw Pact) are not in its timeline, so nothing holds the world after.
-- **The same history every game** (the seed fixed, ADR-919): replays differ only after the end or the first
-  intervention, and a viewer who has seen it once has seen it all.
+- **The historical track's great land battles of 1942–44 are painted, not fought.** This is specified: "From 1942 the
+  fronts are held between their stages and move by them alone" (SPEC §7.7, R62h0, ADR-935). A `hold` keeps "The
+  Western Front" from 6 June 1944, and D-Day is an `occupy` with no `forces` (`data/scenarios/1938h/timeline.json`).
+  What it gives a viewer who zooms in:
+  - **Census** (`npx tsx critic/scripts/c63_census.ts 1938`, `critic/c63_census_1938.log`; land formations by box):
+    - 15 September 1942: no land formation of any nation between 38°E and 47°E, 46.5°N and 51.5°N: Stalingrad and
+      the Don bend.
+    - 20 June 1944: none in the Normandy beachhead, and no German one anywhere in France.
+    - In the Low Countries box, Germany has 1.31M men (164 formations), the UK 571k (83) and the US 720k (69), all 0
+      engaged. They are the stacks at Amsterdam in `critic/shots/c63hz_normandy_01500.png`.
+    - 26 August 1944, "Paris liberated": the same, the UK with 25k in France (`critic/shots/c63hw_desk_25_europe.png`).
+  - **Sight:**
+    - the beachhead an empty hatched box (`critic/shots/c63hz_normandy_00250.png`);
+    - at Stalingrad a few scattered marks (`critic/shots/c63hz_stalingrad_00120.png`, `node critic/scripts/c63_h_zoom.mjs`).
+  - The fault is the design's: a replay at unit zoom shows its turning points as paint. Some armies there, even ones
+    the `hold` keeps from fighting, would make it read as history.
+- **The world after 1953 forgets the Cold War at once** (as run 62). On the own seed the Soviet Union declares war on
+  Norway on 29 July 1953, and 54 wars come in two years (`critic/c63_track_1938.log`).
+- **The same history every game** (ADR-919).
+- **A confirm before the first act would cost less than a note** (ADR-952 chose notes). A player who has read none of
+  the four notes loses fifteen years with one checkbox (R63-N2).
 
 ## Ideas from other games (not scored)
 
-- Hearts of Iron asks before a player leaves "historical focus" mode; Warism could ask once before the first act that
-  ends the replay.
-- Paradox games name a mobilisation by its country and size in the event log ("Soviet Union: 15 divisions raised").
+- Hearts of Iron's historical AI moves real armies to the historical fronts, rather than painting them. That is the
+  way to give D-Day a fight.
+- Paradox games keep a "next event" list for the player, a few ahead, not only the next one.
 
 ## Strengths (verified)
 
-- **The historical track is faithful to its dates and clean to the checker.** On its own seed it runs 1938 → 1953 with:
-  - 0 broken lines and 0 events passed over;
-  - Paris German on 14 June 1940 and free on 26 August 1944;
-  - every birth on history's day.
-
-  It does so in the page at Max at 58–60 fps with 0 page errors (`critic/c62_track_1938.log`, `critic/c62_hw_desk.json`).
-- **The batch fixed what it set out to fix.** Six of run 61's findings are fixed on the same probes that found them,
-  and the 90 new landing runs are clean.
+- **The batch fixed all six of its findings, on the probes that found them,** with no rule broken anywhere:
+  - 90 new landing runs at 0;
+  - 6 new diplomacy runs and 3 new world runs at 0;
+  - the track's checker at 0.
+- **The game is deterministic and holds across saves.** Plain 1938 is bit-identical over two batches (`99caf939`), and
+  395 of run 61's 396 landing setups and all 153 stuck-return runs are text-identical. A 1938h game saved mid-track
+  continues to the same hash as an unbroken one (`critic/c63_hc_400_120.json`).

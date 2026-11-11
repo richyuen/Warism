@@ -1,6 +1,6 @@
 {
-  "commit": "9e094f50a56e285fab163341343346549c919c80",
-  "mode": "focused",
+  "commit": "78b082b4f0b6cc98638c9b263cc498a1524e2519",
+  "mode": "full",
   "scores": {
     "mapVisuals": 8,
     "diplomacyWarDepth": 8,
@@ -18,5 +18,5 @@
     "aiNukes": 8
   },
   "blocking": [],
-  "timestamp": "2026-11-10T23:25:53-05:00"
+  "timestamp": "2026-11-11T07:58:56-05:00"
 }

@@ -1,0 +1,5 @@
+env SEED=30041 SETUP=3517 KEEPG=1 DIV=366 FROM=725 TO=1040 npx tsx critic/scripts/c63_h366d.ts > critic/c63_h366d_30041.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 31303 scenario 3650 --heroes > critic/c63_diploinv_31303.log 2>&1
+npx tsx critic/scripts/c63_nukecount.ts 32507 22 > critic/c63_nc/nhead_32507.log 2>&1
+npx tsx critic/scripts/c63_nukecount.ts 32509 22 > critic/c63_nc/nhead_32509.log 2>&1
+npm run sim -- --scenario 1938 --seed 32503 --years 13 --save critic/c63_seed32503_y13.bin > critic/c63_seed32503_save.log 2>&1
