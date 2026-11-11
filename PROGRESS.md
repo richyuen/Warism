@@ -379,4 +379,4 @@
   "by the armistice" (≥ 500 French cells taken by the fighting kept). BLOCKERS entry resolved.
 - `historyTrack1938h` green on all 6 seeds (seed 4: Israel born); `historyMatch1938h`, `chinaFront1938h`,
   `freeWorld1938h` green. Tick time 2.00 against 2.41 ms a tick (2.038/2.324, 1.962/2.504), plain 1938's hash unchanged.
-- New: R62n, the operational AI and an undefended objective (a rule of every game).
+- New: R63, the operational AI and an undefended objective (a rule of every game).

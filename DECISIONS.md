@@ -25,7 +25,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
   `chinaFront1938h`, `freeWorld1938h` green. Tick time: 15 years of the track against plain 1938 (seed 99), swapped
   pairs: 2.00 against 2.41 ms a tick (2.038/2.324, 1.962/2.504), plain 1938's hash unchanged; bar within 5 %. Seed 99's pin unchanged (the rule acts only while a track steers).
 - **Left:** the operational AI does not take an undefended objective it does not border (the front 7 cells short of
-  an empty Paris for two weeks): ROADMAP R62n, a rule of every game, not the track's.
+  an empty Paris for two weeks): ROADMAP R63, a rule of every game, not the track's.
 - R62k and R62l done; R62 done with its items.
 
 ### ADR-948 · 2026-11-10 · accepted — The historical track on the title screen (R62m)

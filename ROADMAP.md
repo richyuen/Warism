@@ -295,6 +295,6 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     the 6 seeds. The user's decision (BLOCKERS): the rule with France retuned, or the bar re-scoped.
     Done (ADR-949; the user's option b): the rule; Paris by the armistice, ≥ 500 cells kept; `historyTrack1938h` green
     on all 6, `historyMatch1938h`, `chinaFront1938h`, `freeWorld1938h` green; 2.00 against 2.41 ms a tick (2.038/2.324, 1.962/2.504), plain 1938's hash unchanged.
-  - [ ] R62n The operational AI takes an undefended objective it does not border (ADR-949: on 1938h's own seed the
-    German front stood 7 cells short of an empty Paris from 6 to 22 June 1940). A rule of every game. AT: on 1938h's
-    6 seeds Paris taken by the fighting before 22 June again, and seed 99's sweep within its bands.
+- [ ] R63 The operational AI takes an undefended objective it does not border (ADR-949: on 1938h's own seed the
+  German front stood 7 cells short of an empty Paris from 6 to 22 June 1940). A rule of every game. AT: on 1938h's 6
+  seeds Paris taken by the fighting before 22 June again, and seed 99's sweep within its bands.
