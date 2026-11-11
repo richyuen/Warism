@@ -320,8 +320,9 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
   - [x] R64c R62-N3: "The mobilisation" ×22 with no nation. AT: the Soviet arrivals named as the Soviet Union's, or left
     out of the History and the "Next" line.
     Done (ADR-954): a series' first named by whose, its repeats unnamed; `tests/unit/trackTold1938h.test.ts`.
-  - [ ] R64d R62-N4: "Germany was annexed by Soviet Union" on 8 May 1945 after the zones. AT: the remnant's row reads as
+  - [x] R64d R62-N4: "Germany was annexed by Soviet Union" on 8 May 1945 after the zones. AT: the remnant's row reads as
     the timeline's note, or the remnant goes to the zones' holders.
+    Done (ADR-955): `annex` with `tell: 'note'`, the Reich's row its note; `historyMatch1938h`, `historyTrackText.test.ts`.
   - [ ] R64e R62-N5: Nagasaki's burst on a sea cell, "where no nation holds the land" beside 72,000 dead. AT: both strikes
     on Japan's land (`critic/scripts/c62_nagasaki.ts`); no strike row pairs "no nation holds the land" with civilians.
   - [ ] R64f R62-N6: at Max the "Next" line names an event already past (14 of 60 samples). AT: no "Next" dated before

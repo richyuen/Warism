@@ -9,6 +9,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-955 · 2026-11-11 · accepted — The Reich's end told by its note (R64d, R62-N4)
+- **Before:** on 8 May 1945 the zones are transfers at hours 2-4, then the remnant is annexed by the Soviet Union (the
+  track's way to end the Reich: `annex` hands on its formations and puppets); the player read "Germany was annexed by
+  Soviet Union", as the Soviet Union taking Germany.
+- **Now:** an `annex` may carry `tell: 'note'`: its `NationAnnexed` row (History and ticker) is told by the note alone
+  (`as: 'track'`). Only the Reich's: "The Reich ends: the four zones, and the rest under Soviet rule to the Oder". The
+  remnant not split among the zones by ring: then "Germany was destroyed", no better, and the 1945 maps unchanged.
+- **Measured:** `tests/sweep/historyMatch1938h.test.ts` (the Reich's row on 9 May 1945 by its note, every bar as before);
+  `tests/unit/historyTrackText.test.ts` (the note alone; another annexation as before).
+
 ### ADR-954 · 2026-11-11 · accepted — The track's arrivals told once, by whose (R64c, R62-N3)
 - **Before:** 22 Soviet arrivals noted "The mobilisation" (15 July 1941 to 15 May 1944), each a row and the "Next"
   line's quarter after quarter, whose not said; "Behind Stalingrad" ×3; "Trondheim", "Bergen", "The army in Bulgaria".

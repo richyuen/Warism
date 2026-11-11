@@ -186,6 +186,9 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     if (kind === EventKind.BondsBroken) [row.bonds, row.y] = [y, null];
     // An event of the historical track by its name (ROADMAP R62j1).
     if (kind === EventKind.TrackEvent) row.note = world.track?.events[a - 1]?.note ?? '';
+    // An annexation the timeline tells by its note (R64d).
+    const told = kind === EventKind.NationAnnexed ? annexNote(world, rows[i]!, a, b) : '';
+    if (told) [row.as, row.note] = ['track', told];
     // Why it joined (ROADMAP R55i): its own sentence.
     // The historical track's end (ROADMAP R62d): its sentence by why.
     if (kind === EventKind.TrackEnded) row.as = b === TrackEnd.date ? 'date' : b === TrackEnd.intervention ? 'intervention' : 'changed';
@@ -273,6 +276,20 @@ function roseThen(rows: ArrayLike<number>, i: number, rebel: number, holder: num
   return -1;
 }
 
+/**
+ * The note of the timeline's annexation of `target` by `annexer` at `tick` that is told by its note (`tell: 'note'`,
+ * ROADMAP R64d; critic run 62, R62-N4: "Germany was annexed by Soviet Union" after the four zones), else ''.
+ */
+function annexNote(world: World, tick: number, target: number, annexer: number): string {
+  const t = world.track;
+  if (!t) return '';
+  for (let j = 0; j < t.events.length; j++) {
+    const e = t.events[j]!;
+    if (e.kind === 'annex' && e.tell === 'note' && e.note !== undefined && t.ticks[j] === tick && t.id(e.target) === target && t.id(e.annexer) === annexer) return e.note;
+  }
+  return '';
+}
+
 /** The ticker's row of the log's row at `i` (an index into `rows`, a multiple of HISTORY_STRIDE). */
 function tickerRowAt(world: World, i: number, nation: (v: number) => string, cityName: (row: number) => string, defName: (def: number) => string): TickerRow {
   const rows = world.history.rows;
@@ -297,6 +314,8 @@ function tickerRowAt(world: World, i: number, nation: (v: number) => string, cit
   if (toll) row.toll = toll;
   if (kind === EventKind.BondsBroken) row.bonds = y;
   if (kind === EventKind.TrackEvent) row.note = world.track?.events[a - 1]?.note ?? '';
+  const told = kind === EventKind.NationAnnexed ? annexNote(world, tick, a, b) : '';
+  if (told) [row.as, row.note] = ['track', told];
   // The historical track's end (ROADMAP R64a): its sentence by why, as in History; no place, so the world's middle.
   if (kind === EventKind.TrackEnded) {
     row.as = b === TrackEnd.date ? 'date' : b === TrackEnd.intervention ? 'intervention' : 'changed';

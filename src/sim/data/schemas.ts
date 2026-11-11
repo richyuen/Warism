@@ -514,7 +514,11 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
   z.strictObject({ ...when, kind: z.literal('join'), nation: tag, beside: tag, against: tag, without: tags.optional() }),
   /** The war between `a` and `b` ends: white (each keeps its own) or on its score, as the sim's peace (its terms). */
   z.strictObject({ ...when, kind: z.literal('peace'), a: tag, b: tag, terms: z.enum(['white', 'score']) }),
-  z.strictObject({ ...when, kind: z.literal('annex'), annexer: tag, target: tag }),
+  /**
+   * `target` annexed by `annexer`. `tell: 'note'` (R64d): its row is told by the note alone, where "{a} was annexed by
+   * {b}" would mislead (the Reich's remnant after the zones: not the Soviet Union taking Germany).
+   */
+  z.strictObject({ ...when, kind: z.literal('annex'), annexer: tag, target: tag, tell: z.literal('note').optional() }),
   z.strictObject({ ...when, kind: z.literal('puppet'), overlord: tag, subject: tag, autonomy: z.number().int().min(0).max(100) }),
   z.strictObject({ ...when, kind: z.literal('release'), subject: tag }),
   /** `nation` joins `leader`'s alliance; one is made, named `nameKey`, when the leader has none. */

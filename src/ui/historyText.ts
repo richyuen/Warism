@@ -124,7 +124,7 @@ export function historyText(r: HistoryRow): string {
   const hero = r.kind === EventKind.HeroLost || r.kind === EventKind.HeroReturned ? { near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '' } : {};
   const decided = r.kind === EventKind.NukeDecided ?{ near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '', weighed: t(nukeWeighed(r.b / 1000)) } : {};
   // An event of the historical track: its name (ROADMAP R62j1).
-  if (r.kind === EventKind.TrackEvent) return t('history.TrackEvent', { note: r.note ?? '' });
+  if (r.kind === EventKind.TrackEvent || r.as === 'track') return t('history.TrackEvent', { note: r.note ?? '' });
   const s = t((!r.bn && rb !== 'number' && rb !== 'side' && none in en ? none : key) as MessageKey, { a: part(ra, r.a, r.an), b: part(rb, r.b, r.bn), c: r.cn ? displayName(r.cn) : '', ...ships, ...strike, ...lost, ...decided, ...hero, ...means, ...power, ...broke, gold: gold(took) });
   return s.charAt(0).toLocaleUpperCase() + s.slice(1);
 }

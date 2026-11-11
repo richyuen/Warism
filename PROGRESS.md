@@ -419,3 +419,9 @@
 - "The mobilisation" ×22 → "The Soviet mobilisation: reserves to Moscow" once, its repeats unnamed; the Stalingrad
   reserves and Norway's landings likewise; each arrival names its army.
 - Evidence: `tests/unit/trackTold1938h.test.ts`. Gate.
+
+## 2026-11-11 — R64d: the Reich's end told by its note (ADR-955)
+
+- "Germany was annexed by Soviet Union" on 8 May 1945 is now "The Reich ends: the four zones, and the rest under
+  Soviet rule to the Oder" (`annex`'s `tell: 'note'`).
+- Evidence: `tests/sweep/historyMatch1938h.test.ts` (green), `tests/unit/historyTrackText.test.ts`. Gate.

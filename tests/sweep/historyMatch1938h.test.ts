@@ -3,6 +3,8 @@ import { dayOfIso } from '../../src/shared/calendar';
 import { project } from '../../src/sim/data/projection';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { TAGS_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
+import { EventKind } from '../../src/shared/events';
+import { historyRows } from '../../src/worker/historyRows';
 import { runMatch } from '../../tools/diag/historyMatch';
 
 // ROADMAP R62f (SPEC §7.7, ADR-928): 1938h, its own seed, to 1 April 1940 against the timeline's maps of 1 October
@@ -20,6 +22,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   })();
   // Paris (R62g1): who holds it each day from 14 June 1940, and whether the fighting took it before the timeline did.
   let parisFell = '';
+  let reich: string[] = [];
   let taken = 0;
   let peace: number[] = [];
   let east = 0;
@@ -78,6 +81,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
       });
       if (date === '1945-06-01') living = STATES.map(([t]) => w.nations.cols.living[id(t)]!);
       if (date === '1945-05-07' || date === '1945-05-09') fleets.set(`SOV ${date}`, fleetOf(w, 'SOV'));
+      // The Reich's end told by its note, not as the Soviet Union's annexation of Germany (R64d, critic run 62's R62-N4).
+      if (date === '1945-05-09') reich = historyRows(w, (n) => TAGS_1938H[n - 1] ?? '', () => '').filter((r) => r.kind === EventKind.NationAnnexed && r.a === id('GER')).map((r) => `${r.as ?? ''} ${r.note ?? ''}`);
       if (date === '1945-09-03') fleets.set('JAP', fleetOf(w, 'JAP'));
       if (date === '1953-07-28') end53 = `${w.wars.list.length} ${w.track?.ended} ${w.nations.cols.living[id('KOR')]} ${w.nations.cols.living[id('PRK')]}`;
       if (date === '1950-06-01') {
@@ -146,6 +151,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   expect(maps.some((m) => m.control)).toBe(true);
   // Paris within 30 days of 14 June 1940, taken by the fighting: before the armistice's occupied zone (22 June). Re-scoped
   // to "by the armistice" in R62l (ADR-949); restored by R63 (ADR-951), the track's objectives taken as threatened.
+  expect(reich).toEqual(['track The Reich ends: the four zones, and the rest under Soviet rule to the Oder']);
   expect(parisFell).not.toBe('');
   expect(parisFell < '1940-06-22').toBe(true);
   // The robust measure (the date of Paris is chaotic; ADR-931): the offensive took ≥ 500 cells of France.

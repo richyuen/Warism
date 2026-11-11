@@ -13726,7 +13726,8 @@
    "kind": "annex",
    "annexer": "SOV",
    "target": "GER",
-   "note": "The Reich ends: what is left of it, between the zones and the Oder"
+   "tell": "note",
+   "note": "The Reich ends: the four zones, and the rest under Soviet rule to the Oder"
   },
   {
    "date": "1945-06-22",
