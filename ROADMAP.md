@@ -81,6 +81,8 @@ Batches 19 and 18 together (ADR-966).
     with the taker). Baseline, own seed, 62 stages 1942 to mid-1945: both sides near at 10 (7 of the 33 of ≥ 200
     cells), neither at 36, none engaged; the Eastern Front's Soviet stages 2-3M Soviet men near, 0-256k Axis. Cause
     found: a held enemy is no foe to the operational AI (`foesOf`, R62f2), so no front faces it and none mans it.
+  - Waits on the user (BLOCKERS 2026-11-11): two replay bars HEAD passes on seed 1938's luck; R66c's set-down is
+    `docs/patches/R66c-set-down.patch`.
   - [ ] R66b Armies on the held fronts: while the track steers, a held enemy is a front to man (sectors made, allotted,
     its strength a threat) but never attacked across the hold. AT: on the own seed both sides near at ≥ 20 of the 33
     large stages (7 now), those left named with why (an island with no land route); no fighting across a hold

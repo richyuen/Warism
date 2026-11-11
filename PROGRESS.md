@@ -69,3 +69,12 @@
   near at 10, neither at 36, none engaged. Cause: a held enemy is no foe to the operational AI, so no front faces it.
 - R66 split into b (armies on the held fronts), c (the stages' rings), d (fighting before a stage), e (1946-53).
 
+## 2026-11-11 — R66b/c: the set-down measured; two replay bars wait on the user
+
+- An `occupy` and a `withdraw` set the formations they leave behind the line down on their own land (R66c): on seed
+  1938 the smaller side's men at the large Eastern stages 618k → 3.85M. Three manning rules tried with it dropped
+  (their effect within the census's noise on three seeds).
+- It turns `historyMatch1938h` (1941-12-01 strays) and `chinaFront1938h` red; HEAD passes the first on seed 1938 alone
+  (seeds 1-5 all over the bar on HEAD) and the second by 4 %, China's army held by its budget. Kept as
+  `docs/patches/R66c-set-down.patch`; the bars are the user's decision (BLOCKERS).
+

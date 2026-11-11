@@ -5,6 +5,29 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 
 ## Open
 
+### R66b/c: the fronts' armies wait on two replay bars that HEAD passes on seed 1938's luck alone (2026-11-11)
+- **The change** (`docs/patches/R66c-set-down.patch`, off `9dff3d7f`; `git apply` it): an `occupy` sets the land
+  formations of those who held its land down on their own nearest land behind the new line, and a `withdraw` (not a
+  pocket) does the same, the pool only for one with no own land within reach over land (Dunkirk). Before, they were
+  left behind the line, out of supply, and starved or were deleted. With unit cases in `trackLevers1938h`.
+- **What it does** (`tools/diag/trackFronts.ts`, the large Eastern stages of 1942-45, the smaller side's men near
+  summed): seed 1938 618k on HEAD → 3.85M; seeds 1 and 2 1.86M and 3.98M; both sides near at 10 of 15 (7 on HEAD).
+  Three other rules tried with it (held foes as a partner's foes when a stage is due, a sector with no threat and only
+  held foes left out, the land of the coming stages weighed) moved the census within its noise both ways on three
+  seeds (ablation); dropped.
+- **The bars it turns red:** `historyMatch1938h`'s control strays on 1941-12-01 under 0.5 % (0.17 % on HEAD; 0.55-0.68
+  % with it) and `chinaFront1938h`'s China army a year after November 1938 at least half its start (HEAD 402k of
+  771k, 4 % over; with it 379k of 767k, 1 % under).
+- **Why it is not the change:** the run is the same as HEAD's to 1941-06-01 (strays 0.13 % in every variant); China's
+  1938 set-downs alone move Russia's 1941-12-01 strays from 0.17 to 0.55 % (the Barbarossa fighting of June to
+  December, three years on). On HEAD seeds 1-5 read 0.53, 0.85, 0.63, 0.61, 0.53 %: every one over the bar (with the
+  change 0.78, 0.59, 0.65, 0.76, 0.57 %). China's army a year on is held by its monthly budget (the start 719-856k
+  and the end 379-402k in every tree tried): the 120k the change saves from starving are disbanded at the month's start.
+- **Waits on the user:** whether the 1941-12-01 strays bar is read over seeds (or raised to what seeds 1-5 show), and
+  China's army bar given its budget; the change is applied and R66 goes on when they are. Not worked around by
+  another rule (a tree picked for its luck).
+- **Left in the patch:** the withdraw's gate asks a hold of `n` with anyone, not with who takes the ring; the
+  set-down puts a stage's formations on one cell (`fallBackCell`'s nearest), to be spread.
 ### `seaRow1938`'s Speed x1 test red on this machine again, the code not its cause; on `tools/gate/knownRed.json` (2026-11-08, R53g)
 - **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
   with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a). Resolved once (docs/BLOCKERS_DONE.md,
