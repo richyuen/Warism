@@ -33,3 +33,28 @@ test('1938h starts with its own seed; its new game offers no seed or option', as
   expect(Number(url.searchParams.get('after'))).toBeGreaterThan(0);
   expect(errors).toEqual([]);
 });
+
+// ROADMAP R62m (ADR-948): the title screen lists the historical track after the 1938 world, with its own map and
+// words; its Start opens it, with a seed for after it and none of its own asked.
+test('the title lists 1938h after 1938; Start opens it', async ({ page }) => {
+  test.setTimeout(180_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto('/');
+  const items = page.locator('[data-testid^="title-scenario-"]');
+  await expect(items.nth(0)).toHaveAttribute('data-testid', 'title-scenario-1938');
+  await expect(items.nth(1)).toHaveAttribute('data-testid', 'title-scenario-1938h');
+  await page.getByTestId('title-scenario-1938h').click();
+  await expect(page.getByTestId('title-chosen')).toHaveText('World, 1938 — Historical');
+  await expect(page.getByTestId('title-detail')).toContainText('Korean armistice');
+  await expect(page.getByTestId('title-start-date')).toHaveText('1 January 1938');
+  await expect(page.getByTestId('settings-seed')).toHaveCount(0);
+  await page.screenshot({ path: test.info().outputPath('title-1938h.png') });
+  await Promise.all([page.waitForURL(/scenario=1938h/), page.getByTestId('settings-new-game').click()]);
+  expect(Number(new URL(page.url()).searchParams.get('after'))).toBeGreaterThan(0);
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await expect(page.getByTestId('track-next')).toBeVisible();
+  await page.screenshot({ path: test.info().outputPath('started-1938h.png') });
+  expect(errors).toEqual([]);
+});

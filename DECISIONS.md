@@ -9,6 +9,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-948 · 2026-11-10 · accepted — The historical track on the title screen (R62m)
+- **The user's decision** (2026-11-10, "add the scenario to the game"): `1938h` is listed, its `hidden` out of its
+  scenario file. Hidden since R62a until the track replayed its years (a "Historical" world that was plain 1938 would
+  have been a feature faked); it now runs from 1938 to the Korean armistice. R62k's seed 4 (R62l) does not hold it back:
+  the scenario's own seed, the one every game plays, is green.
+- **The list:** 1938, then 1938 — Historical, then the random world (the registry's order). Its card: its own preview,
+  its description, no seed field; Start opens `?scenario=1938h` with a seed for after it.
+- **Measured:** `tests/unit/scenario1938h.test.ts` (listed second); `tests/e2e/scenario1938h.spec.ts` (the card, Start,
+  the line under the date in the game); `tests/e2e/title.spec.ts`'s list of three (the random world third).
+  Screenshots: `docs/evidence/R62m/`.
+
 ### ADR-947 · 2026-11-10 · accepted — The track's checker; seed 4's landing in Palestine (R62k)
 - **The checker** (`tests/helpers/historyTrack.ts`), hour by hour from 1938 to the track's end on any seed:
   - *skip:* no event passed over but by rule, one that no longer applies on that seed (a party dead or not born, a

@@ -1703,7 +1703,8 @@ to 27 July 1953, then sets the world free.
   nations (`nations.json`), appended after 1938's 103 by `addDormantNations1938h` (`src/sim/scenario1938h.ts`): dead,
   with no land, core or revival left until the track gives them their land. Every id of plain 1938 holds. Its seed
   and options are its own whatever the URL (`ScenarioInfo.fixedSeed`); its new-game form offers neither and says why.
-  Hidden (opened by `?scenario=1938h` only) until the track replays its first period (R62f).
+  Hidden (opened by `?scenario=1938h` only) until the track replays its first period (R62f); listed on the title
+  screen after the 1938 world since the track runs to 1953 (R62m, ADR-948).
 - **Timeline** (`data/scenarios/1938h/timeline.json`, the schema `TimelineFile`, R62b; empty until R62f): events in
   date order, each a date (and an hour), a kind and its
   parties: war (with its sides joining), peace (white, or with terms: annexation, puppet, a transfer),

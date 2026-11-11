@@ -366,3 +366,9 @@
   committed: R62l and a BLOCKERS entry, the user's decision.
 - Tick time 1.87 ms against plain 1938's 2.39 (swapped pairs). `historyMatch1938h` green at HEAD.
 - Evidence: `tests/sweep/historyTrack1938h.test.ts` (seed 4 marked failing). Gate.
+
+## 2026-11-10 — R62m: the historical track on the title screen (ADR-948)
+
+- The user's decision: `1938h` listed, second after the 1938 world, with its preview, description and no seed field.
+- Evidence: `tests/unit/scenario1938h.test.ts`; `npx playwright test tests/e2e/scenario1938h.spec.ts tests/e2e/title.spec.ts`
+  (13 passed); screenshots in `docs/evidence/R62m/`. Gate.

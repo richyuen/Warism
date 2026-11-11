@@ -56,14 +56,13 @@ describe("the historical track's scenario (ROADMAP R62a)", () => {
     expect(b.save()).toEqual(a.save());
   });
 
-  it('has a seed of its own and is offered with no seed or option; hidden until its first period (R62f)', () => {
+  it('has a seed of its own and is offered with no seed or option; listed on the title screen (R62m)', () => {
     expect(SCENARIO_INFO['1938h'].fixedSeed).toBe(SEED_1938H);
     expect(SCENARIO_INFO['1938'].fixedSeed).toBeUndefined();
     expect(SCENARIO_INFO['1938h'].startDay).toBe(SCENARIO_INFO['1938'].startDay);
     expect(SCENARIO_INFO['1938h'].geometry).toEqual(SCENARIO_INFO['1938'].geometry);
-    // Not offered while the track has no period to replay: a "Historical" world that is plain 1938 would be a feature
-    // faked (PROMPT.md, rule 6). R62f takes `hidden` out of its scenario file and this line with it.
-    expect(SCENARIO_INFO['1938h'].hidden).toBe(true);
-    expect(LISTED_SCENARIOS).not.toContain('1938h');
+    // Hidden until the track replayed its years (R62a); listed after 1938 since the track runs to 1953 (R62m, ADR-948).
+    expect(SCENARIO_INFO['1938h'].hidden).toBe(false);
+    expect(LISTED_SCENARIOS.slice(0, 2)).toEqual(['1938', '1938h']);
   });
 });
