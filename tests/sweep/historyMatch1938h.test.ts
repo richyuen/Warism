@@ -144,11 +144,10 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   expect(skipped.map(named), 'passed over').toEqual([]);
   for (const { date, cols } of maps) expect(cols.strayShare, date).toBeLessThan(0.002);
   expect(maps.some((m) => m.control)).toBe(true);
-  // Paris German by the armistice (22 June 1940, read at the next midnight). Re-scoped by the user's decision of
-  // 2026-11-10 (ROADMAP R62l, ADR-949) from "taken by the fighting before 22 June": with no landings of the AI's own
-  // while the track steers, the Commonwealth's armies go to France, and the front stops short of Paris on some seeds.
+  // Paris within 30 days of 14 June 1940, taken by the fighting: before the armistice's occupied zone (22 June). Re-scoped
+  // to "by the armistice" in R62l (ADR-949); restored by R63 (ADR-951), the track's objectives taken as threatened.
   expect(parisFell).not.toBe('');
-  expect(parisFell <= '1940-06-23').toBe(true);
+  expect(parisFell < '1940-06-22').toBe(true);
   // The robust measure (the date of Paris is chaotic; ADR-931): the offensive took ≥ 500 cells of France.
   expect(taken).toBeGreaterThanOrEqual(500);
   expect(peace).toEqual([id('GER'), id('VIC'), id('SOV')]);

@@ -386,3 +386,10 @@
 - `historyTrack1938h`: seed 1938 the bar; seeds 1-5 print `WARNING historyTrack` lines (a release's check:review files
   each as a ROADMAP item), failing only if the track does not end. R63's AT so.
 - Evidence: `npx vitest run tests/sweep/historyTrack1938h.test.ts --config vitest.sweep.config.ts -t "seed 1:|not have"`.
+
+## 2026-11-10 — R63: the track's objectives taken as threatened (ADR-951)
+
+- Cause: the operational AI gives threatened sectors every formation in reach; the empty sectors facing Paris got
+  none. Now a sector within a track objective counts as threatened (1 in other worlds: no other game changes).
+- Paris by the fighting 10-14 June on all 6 seeds (own seed 14 June); R62g1's "before 22 June" restored.
+  `historyMatch1938h`, `historyTrack1938h` (no warning), `chinaFront1938h`, `freeWorld1938h` green. 2.10 against plain 1938's 2.42 ms a tick (2.143/2.061 and 2.332/2.498, swapped pairs), plain 1938's hash unchanged.

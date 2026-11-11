@@ -1266,12 +1266,16 @@ function planNation(world: World, n: number, fighting: Set<number>, frontier: Ma
     const counts = front.map(() => 0);
     const hot: number[] = [];
     const cold: number[] = [];
-    for (let k = 0; k < front.length; k++) (list[front[k]!]!.threat > 0 ? hot : cold).push(k);
-    const nearHot = new Set(hot.length > 0 ? ids.filter((id) => hot.some((k) => dist2(id, list[front[k]!]!) <= range2)) : []);
-    const near = nearHot.size;
     // × the historical track's objectives (ROADMAP R62e): 1 in every other world.
     const aim = (k: number): number => world.objectiveWeight(n, list[front[k]!]!.cx, list[front[k]!]!.cy);
-    const given = allot(hot, (k) => list[front[k]!]!.threat * aim(k), pool, near, counts);
+    // A sector within one of the track's objectives is taken as threatened (ROADMAP R63, ADR-951): the timeline names
+    // it to be taken, empty or not. Before, the threatened sectors took every formation within their reach, and an
+    // objective's empty land had none (1938h: the front 7 cells short of an empty Paris from 6 to 22 June 1940).
+    const heat = (k: number): number => Math.max(list[front[k]!]!.threat, aim(k) > 1 ? THREAT_UNIT : 0);
+    for (let k = 0; k < front.length; k++) (heat(k) > 0 ? hot : cold).push(k);
+    const nearHot = new Set(hot.length > 0 ? ids.filter((id) => hot.some((k) => dist2(id, list[front[k]!]!) <= range2)) : []);
+    const near = nearHot.size;
+    const given = allot(hot, (k) => heat(k) * aim(k), pool, near, counts);
     allot(cold, (k) => (1 + list[front[k]!]!.threat / THREAT_UNIT) * aim(k), pool, ids.length - given, counts);
     const seen = OP_PROBE.sectors
       ? {

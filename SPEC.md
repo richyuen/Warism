@@ -1765,7 +1765,8 @@ to 27 July 1953, then sets the world free.
   end the world is the AI's: its wars resume at an ordinary game's opening pace (R62i5, ADR-944). Checked on any seed
   by `tests/helpers/historyTrack.ts` (R62k, ADR-947): no event passed over but by rule, no war or peace off the
   timeline, the diplomatic rules kept. While it steers the invasion AI lands only within an objective of the lander's
-  (R62l, ADR-949).
+  (R62l, ADR-949), and the operational AI takes a front sector within one of its objectives as threatened, empty or not
+  (R63, ADR-951).
 - **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is
   reached by the timeline's steering (objectives, dates, historical arrivals of forces and phase buffs),
   tuned per period against a match tool (R62h). The shared rules do not change for the track.

@@ -9,6 +9,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-951 · 2026-11-10 · accepted — The track's objectives taken as threatened (R63)
+- **The cause** (`.cache/probe/r63a.ts`, the own seed, 6-22 June 1940): Germany's front sectors facing Paris (3.6-3.8°E,
+  48.4-49.0°N, 8 cells out) had no threat and got no formation. The operational AI's allotment (PLAN 7.79b, threatened
+  first, ADR-634) gives the threatened sectors every formation within their reach, the rest of the front what is
+  left; with the Canadian and French remnants by Lille and in Burgundy to chase, nothing was left, and an objective's
+  weight multiplied a pool of none. Not the Commonwealth's armies drawing the Germans south: their sectors were where
+  the enemy stood.
+- **The rule** (`src/sim/ai/operational.ts`): a sector within one of the track's objectives that has begun is taken as
+  threatened (at least THREAT_UNIT), weighed by the objective as before. The timeline names that land to be taken,
+  defended or not. `objectiveWeight` is 1 in every other world, so no other game changes (seed 99's pin unchanged).
+- **Measured:** Paris taken by the fighting on 10-14 June on all 6 seeds (the own seed 14 June, as history had it;
+  before 23 June on 3 of them), 739-932 French cells taken by 22 June (543-700 before). R62g1's bar restored on the own
+  seed ("before 22 June", ADR-949's re-scope undone). `historyMatch1938h` green to its last bar (the Axis 7,433 Soviet
+  cells on 2 December 1941, the Soviet army 3.14M men on 1 November 1942); `historyTrack1938h` green, no warning on
+  seeds 1-5; `chinaFront1938h`, `freeWorld1938h` green. Tick time: 2.10 against plain 1938's 2.42 ms a tick (2.143/2.061 and 2.332/2.498, swapped pairs), plain 1938's hash unchanged.
+- Not a rule of every game: the empty land an army leaves behind while it chases remnants stays a question for the
+  critic and the user, not changed here.
+
 ### ADR-950 · 2026-11-10 · accepted (the user's decision) — The historical track's bar is its own seed; other seeds warn
 - **The user, 2026-11-10:** "let's do the middle ground, as I do see your point about the fragility" (every game of
   1938h plays seed 1938 until the track ends; the other seeds only show steering that holds by luck).
