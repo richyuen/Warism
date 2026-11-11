@@ -41,3 +41,9 @@
 - Filed: Batch 19, R70a-c, before Batch 18 (R64-N3 and R64-N1 are regressions of R65c's own fixes: land rows of other
   events hidden; the phone's line cut to ~8 letters). R64-N2 a known `slowClick` on a new seed, not taken.
 
+## 2026-11-11 — R70a: a told transfer hides only its own rows (ADR-963)
+
+- `transferTold` matches the land row's giver, receiver and hour; 8 May 1945's "Czechoslovakia/Yugoslavia took land
+  from Hungary" shown again (`c64_transfer.ts`). Evidence: `tests/unit/historyTransferTold1938h.test.ts` (cb35c27a;
+  its tick and this entry a commit after, the script that wrote them stopped on the tick's text). Gate.
+

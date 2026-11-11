@@ -49,10 +49,11 @@ Rules:
 Before Batch 18: two are regressions of Batch 17's own fixes.
 
 - [ ] R70 **Run 64's non-blocking findings.**
-  - [ ] R70a R64-N3: `transferTold` hides land rows of other events in the hour (8 May 1945: "Czechoslovakia took land
+  - [x] R70a R64-N3: `transferTold` hides land rows of other events in the hour (8 May 1945: "Czechoslovakia took land
     from Hungary", "Yugoslavia took land from Hungary"): it matches the giver, not the receiver. AT:
     `npx tsx critic/scripts/c64_transfer.ts` shows no row hidden but a told transfer's own (its `to` and `from`), and a
     death's only in the hour after; `tests/unit/historyTransferTold1938h.test.ts` gains the case.
+    Done (ADR-963, cb35c27a): giver, receiver and hour matched; both 8 May rows shown again.
   - [ ] R70b R64-N1: on a phone the track's line shows ~8 letters of its note (11 px in 150 px: "Next, 12 March 1938:
     The An…"). AT: in `node critic/scripts/c64_h_phone.mjs 390 844` and `844 390` the Anschluss's line whole, its
     text ≥ 11 px.
