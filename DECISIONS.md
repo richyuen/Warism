@@ -127,3 +127,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
   Resume clicked while the world is built is undone when `hud.apply` forces the pause at the end of the build (as
   before R70c).
 
+### ADR-967 · 2026-11-11 · accepted — R66 split; the measure of the armies at the stages (R66a)
+- **The measure** (`tests/helpers/trackFronts.ts`, `stageArmies`; `tools/diag/trackFronts.ts`): at the hour of an
+  `occupy` stage, before it applies, the land it gives (its ring's cells owned by an `of`, not held by `by`) and the
+  land formations within `BAND_KM` (120) of that land, by side: the defenders those who hold it and the nations at war
+  with `by`, the attackers `by` and the nations at war with a holder (by who holds it: a first count by `of` put the
+  Germans with the Soviet attacker on "SOV of SOV").
+- **Baseline** (own seed, 1942 to June 1945, 62 stages): both sides near at 10, the attacker alone at 7, the defender
+  alone at 9, neither at 36; of the 33 stages of ≥ 200 cells, both at 7; no formation engaged at any stage (the holds).
+  Stalingrad (31 October 1942): 151k Soviet, no German; D-Day: nobody; the Soviet stages of 1943-45: 1.9-2.9M Soviet
+  men, 0-256k Axis.
+- **Cause:** while a hold stands between two nations (R62f2), the operational AI does not count the other as a foe
+  (`foesOf`): no front cell faces it, no sector is made or allotted there, and its armies stand elsewhere (run 63's
+  census: 1.31M German men in the Low Countries in June 1944).
+- **The split** (ROADMAP R66b-e): presence first, the holds kept (R66b); what the stages do to the armies in their
+  rings (R66c); fighting in a window before a stage, the stage still deciding (R66d, the user's "middle ground",
+  ADR-958); the 1946-53 stages (R66e).
+

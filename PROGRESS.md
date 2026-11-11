@@ -63,3 +63,9 @@
 - Run 65 (focused, after Batch 19) stopped unfinished at the user's word; its processes stopped, its files in
   `.cache/critic-c65-aborted/`. The next critic run after Batch 18. Next: R66, armies on the replay's fronts.
 
+## 2026-11-11 — R66a: the armies at the replay's stages measured (ADR-967); R66 split
+
+- `tools/diag/trackFronts.ts` and `tests/helpers/trackFronts.ts`: own seed, 62 stages 1942 to mid-1945: both sides
+  near at 10, neither at 36, none engaged. Cause: a held enemy is no foe to the operational AI, so no front faces it.
+- R66 split into b (armies on the held fronts), c (the stages' rings), d (fighting before a stage), e (1946-53).
+

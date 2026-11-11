@@ -73,8 +73,27 @@ Batches 19 and 18 together (ADR-966).
 
 - [ ] R66 **Armies on the replay's fronts.** The script decides the outcome; armies stand and fight on each stage's
   front (Stalingrad, Normandy and the rest), strong enough to win it by the fighting where that leaves the rest of the
-  replay unharmed (`historyMatch1938h`, `historyTrack1938h` green). AT (to be split): critic run 63's census
-  (`critic/scripts/c63_census.ts`) finds the stage's sides' formations in its box at its dates.
+  replay unharmed. Split (ADR-967). Every part with a sim change: `historyMatch1938h`, `historyTrack1938h` and its
+  five seed files, `chinaFront1938h`, `freeWorld1938h` green, run by hand (the gate runs seed 99's pin alone); tick
+  time over the track within 5 % of plain 1938's (paired runs); seed 99's pin unchanged (track-only rules).
+  - [x] R66a The measure: `tools/diag/trackFronts.ts`, `tests/helpers/trackFronts.ts` (`stageArmies`): at each `occupy`
+    stage, the land it gives and each side's land formations within 120 km (defenders: who holds it, and those at war
+    with the taker). Baseline, own seed, 62 stages 1942 to mid-1945: both sides near at 10 (7 of the 33 of ≥ 200
+    cells), neither at 36, none engaged; the Eastern Front's Soviet stages 2-3M Soviet men near, 0-256k Axis. Cause
+    found: a held enemy is no foe to the operational AI (`foesOf`, R62f2), so no front faces it and none mans it.
+  - [ ] R66b Armies on the held fronts: while the track steers, a held enemy is a front to man (sectors made, allotted,
+    its strength a threat) but never attacked across the hold. AT: on the own seed both sides near at ≥ 20 of the 33
+    large stages (7 now), those left named with why (an island with no land route); no fighting across a hold
+    (none engaged); the bars above.
+  - [ ] R66c What a stage does to the armies in its ring: what `withdraw` removes and what an `occupy` leaves behind
+    the new line, measured; formations of the losing side that are not a pocket of history's (`captured`) fall back to
+    the line, not lost or stranded. AT: the measure before and after; the bars above.
+  - [ ] R66d Fighting before a stage: in a window before each large land stage the hold is lifted for its pair inside
+    the stage's land and band; the taker strengthened only where the rest of the replay is unharmed; the stage applies
+    at its date as now. AT: both sides engaged at ≥ 2/3 of the large land stages; the share of each stage's land taken
+    by the fighting before its date reported; the bars above.
+  - [ ] R66e The 1946-53 stages (the civil war in China, Korea: `transfer`s) measured as R66a's; their armies by
+    R66b-d's rules where those apply, or the reason not.
 - [ ] R67 **Cold War blocs in the sim.** Lasting blocs under the strongest powers; war between their leaders held back
   by deterrence; rivalry by proxies. A rule of every game. AT (to be split): after the replay's end no war between
   the blocs' leaders in N years on the own seed and others; the sweep's bands kept.
