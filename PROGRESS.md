@@ -356,3 +356,13 @@
 - A line under the date: the track's next named event and its date, gone at its end.
 - `TrackEvent` rows: the ticker and the History tell the track's events by their historical names.
 - Evidence: `tests/e2e/trackView1938h.spec.ts`; screenshots in `docs/evidence/R62j/` (desktop, phone). Gate.
+
+## 2026-11-10 — R62k: the track's checker (ADR-947); seed 4 red, R62l and a BLOCKERS entry
+
+- `historyTrack` checker: skips by rule only, no war or peace off the timeline, diploInvariants through the track
+  (land the timeline occupies at peace allowed). Green on the own seed and seeds 1, 2, 3, 5; a stray war is found.
+- Seed 4: Italy's landing in Palestine (Aug 1941) holds it to 1948, Israel not born. Barring landings off the
+  objectives fixes it but Paris then falls after 22 June on 3 of 6 seeds; five variants tried, none meets both. Not
+  committed: R62l and a BLOCKERS entry, the user's decision.
+- Tick time 1.87 ms against plain 1938's 2.39 (swapped pairs). `historyMatch1938h` green at HEAD.
+- Evidence: `tests/sweep/historyTrack1938h.test.ts` (seed 4 marked failing). Gate.

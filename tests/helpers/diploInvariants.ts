@@ -26,18 +26,22 @@ import { realmWars } from './realmWars';
 const tag1938 = (n: number): string => TAGS_1938[n - 1] ?? `#${n}`;
 /** The names in the lines: the 1938 tags, or the ids of a random world's nations (set per case). */
 let tag: (n: number) => string = tag1938;
+/** The names in the lines of a world of other tags (the historical track's, ROADMAP R62k). */
+export function useTags(f: (n: number) => string): void {
+  tag = f;
+}
 const assets = assets1938(SIZE_1938.w);
 
 /** Whether a and b fight on one side in a war (as `beside` in the war system, kept here so the checker runs on builds before it). */
 const beside = (w: World, a: number, b: number): boolean => w.wars.list.some((war) => war.sides.some((side) => side.includes(a) && side.includes(b)));
 
 /** The members of each war, by its id. */
-function membersOf(w: World): Map<number, number[]> {
+export function membersOf(w: World): Map<number, number[]> {
   return new Map(w.wars.list.map((war) => [war.id, [...war.sides[0], ...war.sides[1]]]));
 }
 
 /** What a day's rows and the world may show of the wars before: the lines of each `exit` broken. */
-function silentExits(w: World, before: Map<number, number[]>, overlordBefore: Int32Array | number[], events: number[]): string[] {
+export function silentExits(w: World, before: Map<number, number[]>, overlordBefore: Int32Array | number[], events: number[]): string[] {
   const out: string[] = [];
   const nc = w.nations.cols;
   const dead = (n: number): boolean => !w.nations.has(n) || nc.living[n] !== 1;
@@ -62,15 +66,15 @@ function silentExits(w: World, before: Map<number, number[]>, overlordBefore: In
 }
 
 /** A puppet's bond, voice and loyalty, as they were the hour before. */
-interface Bonds {
+export interface Bonds {
   overlord: number[];
   autonomy: number[];
   loyalty: number[];
 }
-const bondsOf = (w: World): Bonds => ({ overlord: Array.from(w.nations.cols.overlord), autonomy: Array.from(w.nations.cols.autonomy), loyalty: Array.from(w.nations.cols.loyalty) });
+export const bondsOf = (w: World): Bonds => ({ overlord: Array.from(w.nations.cols.overlord), autonomy: Array.from(w.nations.cols.autonomy), loyalty: Array.from(w.nations.cols.loyalty) });
 
 /** The lines of `rise` an hour broke: `was` the bonds before it, `events` its rows (the tick has moved on). */
-function riseBreaks(w: World, was: Bonds, events: number[]): string[] {
+export function riseBreaks(w: World, was: Bonds, events: number[]): string[] {
   const out: string[] = [];
   const nc = w.nations.cols;
   const alive = (n: number): boolean => w.nations.has(n) && nc.living[n] === 1;
@@ -99,7 +103,7 @@ function riseBreaks(w: World, was: Bonds, events: number[]): string[] {
 }
 
 /** The lines of `held` and `realm` the world breaks now. */
-function worldBreaks(w: World): string[] {
+export function worldBreaks(w: World): string[] {
   const out: string[] = [];
   const { owner, controller } = w.cells;
   const pairs = new Map<string, number>();

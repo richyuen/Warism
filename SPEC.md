@@ -1761,7 +1761,10 @@ to 27 July 1953, then sets the world free.
   moved) and `guarantee` with `end` (a pledge withdrawn). The Korean War to the armistice, its line drawn by
   transfer on the track's last day (R62i3, ADR-942). `rename` gives a nation a new name and flag (an identity,
   state; R62i4, ADR-943); the track's nations and identities fly flags of their own (`1938h/flags.json`). After its
-  end the world is the AI's: its wars resume at an ordinary game's opening pace (R62i5, ADR-944).
+  end the world is the AI's: its wars resume at an ordinary game's opening pace (R62i5, ADR-944). Checked on any seed
+  by `tests/helpers/historyTrack.ts` (R62k, ADR-947): no event passed over but by rule, no war or peace off the
+  timeline, the diplomatic rules kept. Open (R62l): the invasion AI still makes landings of its own while the track
+  steers (`planLanding` weighs no objective).
 - **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is
   reached by the timeline's steering (objectives, dates, historical arrivals of forces and phase buffs),
   tuned per period against a match tool (R62h). The shared rules do not change for the track.

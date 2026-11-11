@@ -283,3 +283,10 @@ Split finer before any part was ticked (2026-11-10, the advisor's review: the fi
     seeds and on the scenario's own; `tools/diag/historyMatch` printing each checkpoint's share of land cells matching
     history (owners, control). AT: the checker green on all 6; `historyMatch` meets R62f–i's bars on the scenario's
     seed; tick time over the track within 5 % of plain 1938's (`npm run sim -- --affinity 0xFFFF`).
+    Built (ADR-947): the checker and its test; green on the own seed and seeds 1, 2, 3, 5; `historyMatch1938h` green;
+    1.87 ms a tick against plain 1938's 2.39. Open: seed 4 red (R62l, BLOCKERS).
+  - [ ] R62l Seed 4: no landing of the AI's own while the track steers. Italy lands in Palestine in August 1941
+    (`planLanding`, no objective weighed), holds it to 1948, Israel is not born. The rule "only within an objective"
+    makes seed 4 green but sends the Commonwealth's armies to France by sea, and Paris falls after 22 June on 3 of 6
+    seeds (ADR-947). AT: `historyTrack1938h` green on all 6 with `historyMatch1938h`'s bars kept; Paris before 22 June on
+    the 6 seeds. The user's decision (BLOCKERS): the rule with France retuned, or the bar re-scoped.

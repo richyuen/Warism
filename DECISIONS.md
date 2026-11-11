@@ -9,6 +9,34 @@ from AoC are tagged **[AoC-DEVIATION]**.
 > `DECISIONS-<release tag>.md` from November on (ADR-805, ADR-918), in the order they had here. Search them by number (`grep -rn "ADR-623 " DECISIONS.md docs/history/`).
 
 
+### ADR-947 · 2026-11-10 · accepted — The track's checker; seed 4's landing in Palestine (R62k)
+- **The checker** (`tests/helpers/historyTrack.ts`), hour by hour from 1938 to the track's end on any seed:
+  - *skip:* no event passed over but by rule, one that no longer applies on that seed (a party dead or not born, a
+    war already joined, nothing to do: `BY_RULE`); on the scenario's own seed none at all;
+  - *course:* no war declared and no peace made while the track runs but in an hour of a timeline event or with a
+    party's death in that hour (the fighting's own);
+  - *exit, realm, held:* `diploInvariants`' rules (ADR-803, its checks exported), `held` save a pair the timeline
+    occupies at peace (an `occupy` by the holder of the owner's land: zones, armistice lines, Iceland, Iran).
+- **Measured** (`tests/sweep/historyTrack1938h.test.ts`, 4-5 minutes a seed): green on the scenario's own seed and on
+  seeds 1, 2, 3 and 5; a war set off by hand (Sweden on Switzerland) is found. On seeds 1 and 2 the Republic's
+  annexation (event 18, 1 April 1939) is passed over by rule: the Nationalists had taken Spain in the fighting.
+- **Seed 4 red:** on 29 August 1941 two Italian divisions land on Palestine's coast by a landing of the AI's own
+  (`planLanding`: the nearest enemy port, no objective weighed), take Jerusalem, annex Palestine and hold it to 1948;
+  Israel's birth (14 May 1948) is passed over (`NoCoreLand`). SPEC §7.7 says the invasion AI picks the named
+  landings; `planNormandy` only weighs them (× OBJECTIVE_WEIGHT) and `planLanding` ignores them.
+- **Tried, not taken:** while steered, a landing only within an objective of the lander's (`planLanding` and
+  `planNormandy`). Seed 4 then green, but the Commonwealth's and the French colonies' armies, which before landed on
+  Germany's coasts in 1939-40 (30-odd landings, lost), ferry to France by Nice instead; the German front stalls 7 cells
+  from an empty Paris from 6 June, and Paris falls after 22 June (R62g1's bar, `historyMatch1938h`) on 3 of 6 seeds
+  (own seed 23 June; before, 12-17 June on all 6). Bisected: the `planLanding` guard alone does both; Germany's
+  invasion turns are the same. Retuned and not enough: Dunkirk's evacuation, Paris's objective to the armistice, a
+  60 km objective on the city, no ferry to an ally's front while steered (own seed 19 June, seeds 2 and 4 still late).
+  Left as R62l, a BLOCKERS entry; the rule not committed.
+- **Tick time:** 15 years of the track against plain 1938 (seed 99), at once on separate P-cores and swapped: 1.87
+  against 2.39 ms a tick (1.905/2.308, 1.832/2.465), the track's world 22 % cheaper (fewer wars of the AI's own). Bar:
+  within 5 %.
+- R62k open: its AT (green on all 6) waits on R62l.
+
 ### ADR-946 · 2026-11-10 · accepted — The player's view of the track (R62j1)
 - **The line under the date:** while the track runs, the stats carry its next event that has a name (`trackNext`: its
   `note` and hour) and the bar draws "Next, 19 May 1938: Xuzhou" under the date, in a smaller type, of a fixed width
