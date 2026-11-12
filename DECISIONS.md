@@ -326,3 +326,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
   20 `occupy` fronts on seed 1938 (seeds 1, 2: 8, 9). The nine replay tests green (strays 0.52 % 1941, 0.12 % 1950,
   0.13 % 1953; no event passed over); pin unchanged.
 
+### ADR-979 · 2026-11-12 · accepted — R67 split; the world after the track measured
+- **The measure** (`tools/diag/afterTrack.ts`, saves the world at the track's end, `.cache/afterTrack_<seed>.sav.gz`):
+  20 years after 27 July 1953 on seeds 1938, 1, 2: 279, 265 and 309 wars declared; great powers declaring on great
+  powers 13, 19, 13; great powers at war at some year's end in 14, 15 and 17 of the 20 years (the United States and
+  Britain, France and the United States among them). Year 1 holds 36-41 declarations, later years 5-20.
+- **Why** (seed 1938): the track ends with two alliances, Britain's (Britain, France, Switzerland) and the Comintern
+  (the Soviet Union, Mongolia, Tannu Tuva, Communist China); no NATO, no Soviet bloc: the people's democracies are
+  neither puppets nor allies. The Soviet Union declares on Norway, Czechoslovakia, Poland and Finland in its first
+  year (seed 1: Norway, Poland, Finland, Romania, Turkey, Hungary), the United States and Britain join against it, and
+  its army falls from 1.92M men to 0.2M in four years (seed 1: 0.13M); Communist China's from 0.63M to 0.05M. Its
+  treasury at the end is 99 gold (income 1,344 a month, expenses 1,303; the United States 422,037): the month-start
+  budget disbands 57 formations in the first months (seed 1: 80).
+- **Split** (ROADMAP): R67b the blocs handed over (NATO, the Soviet bloc, as the timeline's alliances); R67c lasting
+  blocs (rivals apart does not part an alliance led by a nuclear power); R67d deterrence (no war between two sides
+  each with a nuclear arsenal); R67e proxies, its AT once the rest is measured. N = 20 years. R67c and R67d rules of
+  every game: plain 1938's sweep bands kept, and keyed to arsenals, the pin (one year, none) unchanged.
+- **The cost of R66** (`--profile`, 1938h seed 1938, five years): the replay's tick 3.01 ms against plain's 2.48;
+  year 5 (1942-43) 7.2 ms, combat 4.67 ms of it. From one save of 17 July 1942, 14 days: 11.6-12.0 ms a tick with the
+  windows, 9.4-9.5 ms without: the armies now on the held fronts make the cost (combat's pairs, found and refused across
+  a hold), the windows a quarter more.
+

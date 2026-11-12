@@ -13,8 +13,13 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   their order news, hour by hour, on the critic's landing cases (ADR-856, ADR-879).
 - `npx tsx tools/diag/diploInvariants.ts <seed> [scenario|random] [--heroes] [--world random]`: the
   rules of war and peace on one run, as `tests/unit/diploInvariants*.test.ts` check them (ADR-803).
-- `npx tsx tools/diag/trackFronts.ts [seed] [from] [to] [out.json]`: 1938h's `occupy` stages in the dates (1942 to
-  mid-1945 by default) and each side's land formations within 120 km of the land each gives, just before it
-  (`tests/helpers/trackFronts.ts`; R66a, ~5 min).
+- `npx tsx tools/diag/trackFronts.ts [seed] [from] [to] [out.json]`: 1938h's `occupy` and `transfer` stages in the
+  dates (1942 to mid-1945 by default) and each side's land formations within 120 km of the land each gives, fixed at
+  its window's opening (R66d): men near and engaged at the stage's hour, the cohort's losses in the window, both sides
+  engaged through it (`tests/helpers/trackFronts.ts`; R66a, ~5 min; 1945-53 ~12 min).
+- `npx tsx tools/diag/afterTrack.ts [seed] [years = 20] [out.json]`: the world after 1938h's track ends: its
+  alliances, great and nuclear powers, then every war declared, those between great powers and between blocs, the
+  leaders' men and disbandings monthly for five years. Saves the world at the track's end to
+  `.cache/afterTrack_<seed>.sav.gz` and loads it from there after (R67a; ~10 min the first time).
 - `npx tsx tools/diag/fewNationWars.ts <N> <S0> [K] [Y]`: random worlds of N nations on K seeds, the day of each one's
   first war over Y years (R60d; ~25 s a seed at N = 3).

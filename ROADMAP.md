@@ -111,6 +111,19 @@ Batches 19 and 18 together (ADR-966).
 - [ ] R67 **Cold War blocs in the sim.** Lasting blocs under the strongest powers; war between their leaders held back
   by deterrence; rivalry by proxies. A rule of every game. AT (to be split): after the replay's end no war between
   the blocs' leaders in N years on the own seed and others; the sweep's bands kept.
+  Split (ADR-979; measured by `tools/diag/afterTrack.ts`, which saves the world at the track's end):
+  - [x] R67a The measure: the 20 years after the track on seeds 1938, 1, 2 (ADR-979's baseline).
+  - [ ] R67b The blocs the replay hands over: NATO (1949; Greece and Turkey 1952) under the United States and the
+    Soviet bloc (the people's democracies, 1947-49) under the Soviet Union, as alliances of the timeline. AT: at the
+    track's end both stand with their members; the nine replay tests.
+  - [ ] R67c Lasting blocs, every game: an alliance led by a nuclear power keeps its great powers (rivals apart,
+    PLAN 7.53b, does not part them). AT: on seeds 1938, 1, 2 both blocs stand 20 years after the track (leader living,
+    half its members of the track's end still in it); plain 1938's sweep bands kept; the pin unchanged.
+  - [ ] R67d Deterrence, every game: no nation declares war on a side holding a nuclear power's arsenal while its own
+    side holds one too, nor joins one against it. AT: no hour in 20 years after the track on seeds 1938, 1, 2 with the
+    blocs' leaders on opposite sides of a war; plain 1938's sweep bands kept (nukes used in ≥ 1 seed with nukes on);
+    the pin unchanged.
+  - [ ] R67e Proxies: rivalry in the blocs' leaders' wars on others. Its AT set once R67b-d are measured.
 - [ ] R68 **A start from any date of the replay.** A timeline slider in place of "World, 1938" and "World, 1938 —
   Historical"; continue the replay or free from there.
 - [ ] R69 **The replay past 1953**, to 1962 for now (the user's decision, ADR-959).

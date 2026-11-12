@@ -138,3 +138,9 @@
   disbanded before their stage (Liaoshen's 109k lost to the budget now 3k). 1945-53: both engaged at the hour at 2 of
   10 (seeds 1, 2: 4), most fighting in their windows; reasons for the rest. Nine replay tests green.
 
+## 2026-11-12 — R67a: the world after the track measured; R67 split (ADR-979)
+
+- `tools/diag/afterTrack.ts`: 265-309 wars in 20 years after 1953, great powers at war in 14-17 of them; the replay
+  hands over no NATO and no Soviet bloc, the Soviet Union nearly broke, and it attacks its own satellites. R67 split
+  into b (blocs handed over), c (lasting blocs), d (deterrence), e (proxies).
+
