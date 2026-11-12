@@ -9,6 +9,8 @@
  * sides, a nation joining one, a white peace and a guarantee have no command that does just that (the commands call
  * in allies, settle on the score), so the runner does them with the war's and the alliances' own parts.
  */
+import { incomeRankOf } from './systems/research';
+import { grantTechs, knowsTechs, techMask } from './tech';
 import { dayOfIso } from '../shared/calendar';
 import { Refusal } from '../shared/commands';
 import { EventKind, JoinedBy, TrackEnd } from '../shared/events';
@@ -116,6 +118,22 @@ export class Track {
   readonly endTick: number;
   /** Each nation's capital in its table, lon/lat, by id − 1 (a born nation's seat, R62d). */
   capitals: readonly (readonly [number, number])[] = [];
+  /** The nations a `bomb` event has named by `next` (R69f; derived from the events applied, not state). */
+  private bombs: { next: number; set: Set<number> } | null = null;
+
+  /** Whether nation `n` may go for the bomb while the track steers: a `bomb` event applied names it (R69f, ADR-989). */
+  bombCleared(n: number): boolean {
+    if (this.bombs?.next !== this.next) {
+      const set = new Set<number>();
+      for (let i = 0; i < this.next; i++) {
+        const e = this.events[i]!;
+        if (e.kind === 'bomb') set.add(this.id(e.nation));
+      }
+      this.bombs = { next: this.next, set };
+    }
+    return this.bombs.set.has(n);
+  }
+
   /** Each province's admin codes (index: province id − 1), for land named by them (R69b; derived, not state). */
   codes: readonly { adm0: string; adm1: string }[] = [];
   /** The scenario's templates, index by id (forces arriving, R62f). */
@@ -747,6 +765,19 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       world.flagsVersion++;
       return Refusal.None;
     }
+    case 'bomb': {
+      // The test (R69f, ADR-989): the nation knows the bomb from now (a `NuclearPower` row, as research's), and
+      // `bombCleared` lets it build while the track steers.
+      const n = id(e.nation);
+      const why = whyNot(world, n);
+      if (why) return why;
+      const bomb = world.rules?.techs.findIndex((x) => x.id === 'atomic_bomb') ?? -1;
+      if (bomb < 0 || knowsTechs(world, n, techMask([bomb]))) return Refusal.None;
+      grantTechs(world, n, techMask([bomb]));
+      const nc = world.nations.cols;
+      world.out.emit(world.tick, EventKind.NuclearPower, n, incomeRankOf(world, n), nc.capitalX[n]!, nc.capitalY[n]!);
+      return Refusal.None;
+    }
     case 'nuke': {
       const n = id(e.nation);
       const why = whyNot(world, n);
@@ -897,6 +928,7 @@ function firstNation(t: Track, e: TimelineEvent): number {
     case 'redeploy':
     case 'withdraw':
     case 'nuke':
+    case 'bomb':
     case 'capital':
     case 'rename':
       return t.id(e.nation);

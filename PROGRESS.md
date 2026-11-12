@@ -181,4 +181,7 @@
   Cameroons, Albania's break, the Sino-Indian war; a 15th map.
 - R69e (ADR-988): from the 1962 handover the blocs' leaders never at war in 20 years and both blocs whole on three
   seeds. Found: West Germany holds an arsenal at the track's end (R69f).
+- R69f, R69 done (ADR-989): the timeline's `bomb` events (USA 1945, the Soviet Union 1949, Britain 1952, France 1960)
+  grant the bomb; while the track steers no other nation goes for it. At the end of 1962 the arsenals are history's
+  on seeds 1938 and 1-5.
 

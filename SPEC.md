@@ -1728,6 +1728,8 @@ to 27 July 1953, then sets the world free.
   rule of `ownership.json`'s regions (a cell whose centre is inside). A `transfer` or `born` may name its land by the
   map's codes instead or as well (R69b, ADR-985): whole countries (`adm0`) and provinces (`adm1`); a transfer so named
   is a handover, with no window of fighting.
+- **Bombs** (R69f, ADR-989): a `bomb` event is a nation's test: it knows the bomb from then; while the track steers no
+  nation it has not named goes for the bomb (researches it or builds warheads).
 - **Births and the end** (built, R62d, ADR-926): a `born` event gives an unborn nation its ring's land, its cores, its
   seat (its city nearest its table's capital) and a `NationBorn` row. The timeline's `end` (1962-12-31; 1953-07-27 before R69a) ends the track
   after that day's first hour (`TrackEnded`); then the world's seed becomes the second seed (`GameOptions.after`,

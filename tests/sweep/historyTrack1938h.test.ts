@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { SEED_1938H, TAGS_1938H } from '../../src/sim/scenario1938h';
 import { declareWar } from '../../src/sim/systems/war';
-import { historyTrack } from '../helpers/historyTrack';
+import { arsenals, historyTrack } from '../helpers/historyTrack';
 
 // ROADMAP R62k (ADR-947): the historical track's checker (`tests/helpers/historyTrack.ts`) from 1938 to the track's
 // end; and red on a war the timeline does not have. At its end the blocs it hands over stand (R67b).
@@ -17,6 +17,8 @@ describe('the historical track checked to its end (ROADMAP R62k)', () => {
     expect(run.sim.world.track!.ended).toBe(true);
     expect(run.lines).toEqual([]);
     expect(run.skipped).toEqual([]);
+    // R69f (ADR-989): the arsenals of 1962 history's: no West German, none before its nation's bomb.
+    expect(arsenals(run.sim.world)).toEqual(['ENG', 'FRA', 'SOV', 'USA']);
     // R67b (ADR-980): the blocs it hands over, each under its leader with its members (West Germany in NATO from 1955,
     // R69b, ADR-985; China out of the Soviet bloc at the split of 1960, R69c, ADR-986; Albania in 1961, R69d, ADR-987).
     const w = run.sim.world;

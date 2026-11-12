@@ -476,3 +476,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - The free world from 1953 (`freeWorld1938h`, left by `leaveTrack`) stays the test of the AI's own wars; from 1962 the
   measure above (wars declared every year on each seed).
 
+### ADR-989 · 2026-11-12 · accepted — R69f: the bombs of the timeline
+- **Found** (ADR-988): any nation of income enough researched the bomb while the track steered: France held 10
+  warheads by 1950 (its test was in 1960) and West Germany built from 1953 (never, in history).
+- **The rule:** a `bomb` event is a nation's test (the United States 16 July 1945, the Soviet Union 29 August 1949,
+  Britain 3 October 1952, France 13 February 1960): it knows the bomb from then (a `NuclearPower` row) and may build.
+  While the track steers, `goesForBomb` holds for none other (`Track.bombCleared`, from the events applied; derived,
+  not state), so none researches it or builds; after the track, the usual rules. A clearance alone left France with
+  none by 1962 (the research is years): the event grants the tech, as the test was.
+- **Measured:** on seed 1938 and seeds 1-5, the arsenals at the track's end the United States', the Soviet Union's,
+  Britain's and France's (a hard check on every seed: a rule, not luck). The maps of 1941-45 moved within their bars
+  (control on 1 December 1941 96.3 % right against 96.4, its strays 0.43 % against 0.52; the others the same or
+  better); 1950-62 unchanged.
+

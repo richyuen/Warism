@@ -593,6 +593,11 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    */
   z.strictObject({ ...when, kind: z.literal('nuke'), nation: tag, at: lonLat, note: z.string().optional() }),
   /**
+   * A nation's atomic bomb (R69f, ADR-989): its test. It knows the bomb from now and may build warheads; while the
+   * track steers, no nation it has not named may go for the bomb; after it, the usual rules.
+   */
+  z.strictObject({ ...when, kind: z.literal('bomb'), nation: tag }),
+  /**
    * A new name and flag (R62i4): from now on the nation bears the identity `as` (`nation.<as>` and its flag), as Siam
    * Thailand, British India India, Communist China the People's Republic.
    */
@@ -678,6 +683,7 @@ export function timelineTags(e: TimelineEvent): string[] {
     case 'redeploy':
     case 'withdraw':
     case 'nuke':
+    case 'bomb':
     case 'capital':
     case 'rename':
       return [e.nation];

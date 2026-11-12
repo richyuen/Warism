@@ -13975,6 +13975,12 @@
    "note": "Okinawa"
   },
   {
+   "date": "1945-07-16",
+   "kind": "bomb",
+   "nation": "USA",
+   "note": "Trinity: the United States' atomic bomb"
+  },
+  {
    "date": "1945-08-06",
    "hour": 8,
    "kind": "nuke",
@@ -16047,6 +16053,12 @@
    "kept": "1949-09-25"
   },
   {
+   "date": "1949-08-29",
+   "kind": "bomb",
+   "nation": "SOV",
+   "note": "The Soviet Union's atomic bomb"
+  },
+  {
    "date": "1949-09-25",
    "kind": "withdraw",
    "nation": "CHI",
@@ -17114,6 +17126,12 @@
    "note": "Eritrea federated with Ethiopia"
   },
   {
+   "date": "1952-10-03",
+   "kind": "bomb",
+   "nation": "ENG",
+   "note": "Hurricane: Britain's atomic bomb"
+  },
+  {
    "date": "1953-07-27",
    "kind": "leave",
    "nations": [
@@ -17654,6 +17672,12 @@
     "CMR"
    ],
    "note": "Cameroon independent"
+  },
+  {
+   "date": "1960-02-13",
+   "kind": "bomb",
+   "nation": "FRA",
+   "note": "Gerboise Bleue: France's atomic bomb"
   },
   {
    "date": "1960-04-27",

@@ -45,6 +45,11 @@ export interface TrackRun {
  * Runs 1938h on `seed` to the track's end (or `hours`), checked hour by hour; held and realm each day. `meddle` acts on
  * the world before each hour, not by a command (a test of the checker itself: a command would end the track).
  */
+/** The nations holding warheads (R69f, ADR-989), by tag, sorted. */
+export function arsenals(w: World): string[] {
+  return [...w.warheads.entries()].filter(([, s]) => s.stock > 0).map(([n]) => TAGS_1938H[n - 1]!).sort();
+}
+
 export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle?: (w: World) => void): TrackRun {
   useTags(tag);
   const assets = assets1938(SIZE_1938.w);

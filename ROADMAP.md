@@ -137,7 +137,7 @@ Batches 19 and 18 together (ADR-966).
   - [x] R68c The card: "World, 1938 — Historical" offers the years of `years.json` (1938 alone without it) and the
     choice to continue the replay or play free. AT: e2e of the card (year and mode reach the game); the title
     screen's specs.
-- [ ] R69 **The replay past 1953**, to 1962 for now (the user's decision, ADR-959).
+- [x] R69 **The replay past 1953**, to 1962 for now (the user's decision, ADR-959).
   Split (1938-53 first, then the new years by period; dates and borders from sources, cited in the timeline's notes):
   - [x] R69a The end moved to 31 December 1962 and the nations born 1953-62 added dormant, with no new event. AT: the
     1938-53 replay unchanged (the nine replay tests, the 12 maps' scores and the yearly hashes to 1953 as before or
@@ -156,7 +156,7 @@ Batches 19 and 18 together (ADR-966).
     nukes only where scripted to the track's end.
   - [x] R69e The world after 1962 (ADR-988): R67c-d's blocs re-measured from the 1962 handover: their leaders never
     at war in 20 years, both blocs whole, on seeds 1938, 1, 2.
-  - [ ] R69f West Germany's arsenal (ADR-988): at the track's end West Germany holds nuclear weapons; history's had
+  - [x] R69f West Germany's arsenal (ADR-988, done ADR-989: `bomb` events, none other while the track steers): at the track's end West Germany holds nuclear weapons; history's had
     none. Find how it came by them (research, a gift, a capture) and keep the arsenals of 1962 history's (the United
     States, the Soviet Union, Britain, France). AT: on seed 1938 and seeds 1-5, no arsenal at the track's end but those.
 - [ ] R67 (after R69, the user's decision, ADR-982):

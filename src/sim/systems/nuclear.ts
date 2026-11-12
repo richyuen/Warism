@@ -184,6 +184,8 @@ export function nukesAllowed(world: World, n: number): boolean {
 
 /** Whether nation `n` runs a nuclear programme: allowed, and the income of a great power. */
 export function goesForBomb(world: World, n: number): boolean {
+  // While the historical track steers, only the nations its timeline has given the bomb by now (R69f, ADR-989).
+  if (world.steered && !world.track!.bombCleared(n)) return false;
   return nukesAllowed(world, n) && world.nations.cols.income[n]! >= NUKE_PROGRAMME_INCOME;
 }
 
