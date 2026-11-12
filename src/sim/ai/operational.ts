@@ -387,6 +387,8 @@ interface SectorShape {
   rows: Int32Array;
   /** The sectors by threat, most first, then by key (`threat` as it is; null: not asked since it was summed). */
   order: Int32Array | null;
+  /** Made with the planner's own front kept apart (a frozen front, R66b): its part is the holder's `|own`. */
+  manned: boolean;
 }
 
 /**
@@ -410,15 +412,24 @@ function sectorShape(world: World, side: number[], frontier: Map<number, Front>,
     SHAPE.gen = 1;
   }
   const { stamp, at, gen } = SHAPE;
+  const manned = world.steered && enemies.some((m) => world.frozenFront(n, m));
   for (const holder of side) {
     let held = stand.fronts.get(holder);
     if (!held) stand.fronts.set(holder, (held = new Map()));
-    let part = held.get(enemyKey);
+    // A planner with a frozen front (`World.frozenFront`: the Eastern Front, China, the Pacific) has its own front cached
+    // apart from its front as a partner's (`foesOf`, without held foes) (R66b, ADR-971): before, whichever planner of
+    // the tick came first set it for both, and when a partner planned before Germany, Germany's plan had no sector
+    // against the Soviet Union (1 July 1942: 23 sectors, all in Africa). Otherwise shared, as before: kept apart in the
+    // Phoney War, Germany's army was not on the French border in May 1940 and Paris fell on 20-23 June on six seeds,
+    // not by the fighting on 11-15.
+    const partKey = holder === n && manned ? `${enemyKey}|own` : enemyKey;
+    let part = held.get(partKey);
     if (!part) {
       const theirs = holder === n ? enemyOf : foesOf(world, holder, fighting, stand);
       const foe = new Uint8Array(world.nations.highWater);
-      for (const m of enemies) if (theirs[m] === 1) foe[m] = 1;
-      held.set(enemyKey, (part = frontPart(world, frontier.get(holder)!, foe, bw)));
+      // Its own, kept apart: it faces a held foe only across a frozen front (`World.frozenFront`).
+      for (const m of enemies) if (theirs[m] === 1 && (partKey === enemyKey || !world.holds(n, m) || world.frozenFront(n, m))) foe[m] = 1;
+      held.set(partKey, (part = frontPart(world, frontier.get(holder)!, foe, bw)));
     }
     for (let j = 0; j < part.keys.length; j++) {
       const key = part.keys[j]!;
@@ -456,7 +467,7 @@ function sectorShape(world: World, side: number[], frontier: Map<number, Front>,
     while (i < list.length && list[i]!.key < r * bw) i++;
     rows[r] = i;
   }
-  return { list, threat: [], threatAt: -1, rows, order: null };
+  return { list, threat: [], threatAt: -1, rows, order: null, manned };
 }
 
 /**
@@ -762,7 +773,9 @@ function planNation(world: World, n: number, fighting: Set<number>, frontier: Ma
   // they are made once, and each plan has its own copy of what it writes in them.
   const side: number[] = [];
   for (const holder of frontier.keys()) if (holder === n || wars.sameSide(holder, n)) side.push(holder);
-  const sideKey = `${enemyKey}|${side.join(',')}`;
+  // Under the historical track a planner's sectors are its own (R66b, ADR-971): its front faces its held foes, a
+  // partner's does not (`sectorShape`), so a shape made by a partner first is not its own.
+  const sideKey = world.steered ? `${enemyKey}|${side.join(',')}|${n}` : `${enemyKey}|${side.join(',')}`;
   let shape = stand.sectors.get(sideKey);
   if (!shape) stand.sectors.set(sideKey, (shape = sectorShape(world, side, frontier, enemyKey, enemyOf, enemies, n, fighting, stand, w, bw)));
   if (shape.list.length === 0) return;
@@ -798,7 +811,7 @@ function planNation(world: World, n: number, fighting: Set<number>, frontier: Ma
   }
   // n's own: the sectors of its front cells (a holder of the sector, `sectorShape`), by key.
   if (side.includes(n)) {
-    for (const key of stand.fronts.get(n)!.get(enemyKey)!.keys) owned.push(slotAt[key]!);
+    for (const key of stand.fronts.get(n)!.get(shape.manned ? `${enemyKey}|own` : enemyKey)!.keys) owned.push(slotAt[key]!);
     owned.sort((a, b) => a - b);
     for (const i of owned) list[i]!.own = true;
   }

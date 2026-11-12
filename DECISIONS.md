@@ -189,3 +189,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Not settled by it:** ADR-968's ablation used the old measure (its arm with no set-down had Germans deleted an hour
   before the count); the three rules it dropped are not shown to be noise, only not kept.
 
+### ADR-971 · 2026-11-11 · accepted — R66b: a planner's own front across a frozen hold, not a partner's copy
+- **The fault:** the operational AI cached a holder's front cells once a tick by the enemies' key alone, and the
+  sectors once a side; a holder's own plan reads its held foes as enemies, a partner's (`foesOf`) does not. Whichever
+  planner came first set them for all: on 1 July 1942 Germany's plan had 23 sectors, all in Africa, none against the
+  Soviet Union, and the German attacker was missing at Case Blue and Stalingrad.
+- **The rule** (`operational.ts`): while the track steers, each planner makes its own sectors; a planner with a
+  frozen front (`World.frozenFront`, `Track.frozen`) has its own front cells cached apart, facing its held foes across
+  frozen fronts only. A hold is frozen unless the timeline begins its war on its date (a `war` or `join` naming both
+  sides that day: the Phoney War, Germany and the United States, the wars of 1945-50), or it stands from the first
+  hour (China's war of 1937). With no track nothing changes (seed 99's pin unchanged).
+- **Not kept:** the own front apart for every planner (the Phoney War then manned by its own rule: Germany was not on
+  the French border in May 1940 and Paris fell on 20-23 June on six seeds, 11-15 on HEAD); judging a frozen hold by
+  its war's start tick (Britain and France join the Polish war of 1 September, so the Phoney War read as frozen).
+- **Measured:** large land fronts with both sides near 11 of 19 on seed 1938 (10 before), 11 and 11 on seeds 1 and 2;
+  Germany's sectors on 1 July 1942 130 in the East. Paris on 14 June 1940 (seed 1938), 9-12 on seeds 2-5, the 23rd on
+  seed 1 (15th on HEAD; the date is chaotic, ADR-931). The nine replay tests green (1941 strays 0.65 %, China 388k
+  of 716k); the replay's tick 2.06 ms, plain 1938's 2.52.
+

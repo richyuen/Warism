@@ -454,3 +454,24 @@ describe('a new name and flag (ROADMAP R62i4)', () => {
     expect(b.hash()).toBe(a.hash());
   });
 });
+
+describe('a frozen front (ROADMAP R66b, ADR-971)', () => {
+  it("a hold on a war in progress is a frozen front; one whose war the timeline begins on its date is not", () => {
+    const tl: TimelineFile = {
+      events: [
+        { date: '1938-01-02', kind: 'war', attackers: ['GER'], defenders: ['POL'] },
+        { date: '1938-01-02', hour: 1, kind: 'hold', sides: [['GER'], ['POL']], until: '1939-01-01' },
+        { date: '1938-01-02', kind: 'war', attackers: ['ITA'], defenders: ['FRA'] },
+        { date: '1938-01-03', kind: 'hold', sides: [['ITA'], ['FRA']], until: '1939-01-01' },
+      ],
+    };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
+    const w = sim.world;
+    sim.step(3 * 24, quiet);
+    expect(w.holds(id('GER'), id('POL'))).toBe(true);
+    expect(w.frozenFront(id('GER'), id('POL'))).toBe(false);
+    expect(w.holds(id('ITA'), id('FRA'))).toBe(true);
+    expect(w.frozenFront(id('ITA'), id('FRA'))).toBe(true);
+    expect(w.frozenFront(id('GER'), id('FRA'))).toBe(false);
+  });
+});

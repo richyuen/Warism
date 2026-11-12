@@ -85,7 +85,7 @@ export class Track {
   /** The revivals a born nation has, as its scenario's nations do (R62d). */
   revivals = 0;
   /** The holds' events, by index: the tick each ends and its two sides' nations (R62f2). */
-  private readonly holdAt: readonly { i: number; until: number; a: ReadonlySet<number>; b: ReadonlySet<number> }[];
+  private readonly holdAt: readonly { i: number; until: number; a: ReadonlySet<number>; b: ReadonlySet<number>; frozen: boolean }[];
   /** The objectives' events, by index, with the tick each ends (R62e). */
   private readonly objectiveAt: readonly { i: number; until: number }[];
   /** Their places in cells and radii² at a map's width (derived, not state). */
@@ -100,8 +100,22 @@ export class Track {
     this.endTick = file.end === undefined ? Infinity : (dayOfIso(file.end) - start) * 24;
     this.objectiveAt = file.events.flatMap((e, i) => (e.kind === 'objective' ? [{ i, until: (dayOfIso(e.until) - start) * 24 }] : []));
     const ids = new Map(tags.map((t, k) => [t, k + 1]));
+    // A hold whose war the timeline begins on its date (a `war` or `join` that day naming both its sides: the Phoney War,
+    // Germany and the United States, the wars of 1945-50) freezes no war in progress (`frozen`, R66b).
+    const warsOn = (date: string): string[][] =>
+      file.events.flatMap((w) => (w.date !== date ? [] : w.kind === 'war' ? [[...w.attackers, ...w.defenders]] : w.kind === 'join' ? [[w.nation, w.beside, w.against]] : []));
     this.holdAt = file.events.flatMap((e, i) =>
-      e.kind === 'hold' ? [{ i, until: (dayOfIso(e.until) - start) * 24, a: new Set(e.sides[0].map((x) => ids.get(x) ?? 0)), b: new Set(e.sides[1].map((x) => ids.get(x) ?? 0)) }] : [],
+      e.kind === 'hold'
+        ? [
+            {
+              i,
+              until: (dayOfIso(e.until) - start) * 24,
+              a: new Set(e.sides[0].map((x) => ids.get(x) ?? 0)),
+              b: new Set(e.sides[1].map((x) => ids.get(x) ?? 0)),
+              frozen: !warsOn(e.date).some((named) => e.sides[0].some((x) => named.includes(x)) && e.sides[1].some((x) => named.includes(x))),
+            },
+          ]
+        : [],
     );
     this.ids = new Map(tags.map((t, i) => [t, i + 1]));
   }
@@ -155,6 +169,22 @@ export class Track {
     for (const h of this.holdAt) {
       if (h.i >= this.next || tick >= h.until) continue;
       if ((on(h.a, a, oa) && on(h.b, b, ob)) || (on(h.a, b, ob) && on(h.b, a, oa))) return true;
+    }
+    return false;
+  }
+
+  /**
+   * Whether the hold between `a` and `b` that stands at `tick` (`held`'s) freezes a war in progress (R66b, ADR-971): one
+   * whose war the timeline does not begin on its date (the Eastern Front, China, the Pacific; not the Phoney War).
+   */
+  frozen(a: number, b: number, tick: number, overlord: ArrayLike<number>): boolean {
+    if (this.holdAt.length === 0 || this.ended || TRACK_PROBE.holdsOff) return false;
+    const oa = overlord[a] ?? 0;
+    const ob = overlord[b] ?? 0;
+    const on = (s: ReadonlySet<number>, n: number, o: number): boolean => s.has(n) || (o !== 0 && s.has(o));
+    for (const h of this.holdAt) {
+      if (h.i >= this.next || tick >= h.until) continue;
+      if ((on(h.a, a, oa) && on(h.b, b, ob)) || (on(h.a, b, ob) && on(h.b, a, oa))) return h.frozen;
     }
     return false;
   }

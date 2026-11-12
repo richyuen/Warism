@@ -1452,6 +1452,14 @@ export class World {
     return this.track !== null && this.track.held(a, b, this.tick, this.nations.cols.overlord);
   }
 
+  /**
+   * Whether `a` and `b` hold a frozen front (R66b, ADR-971): a hold of the timeline's on a war in progress (`Track.frozen`:
+   * the Eastern Front, China, the Pacific), not one from its war's first day (the Phoney War). False in every other world.
+   */
+  frozenFront(a: number, b: number): boolean {
+    return this.track !== null && this.track.frozen(a, b, this.tick, this.nations.cols.overlord);
+  }
+
   /** The weight of a place (cells) to nation `n`'s plans: the historical track's objectives (ROADMAP R62e), else 1. */
   objectiveWeight(n: number, x: number, y: number): number {
     return this.track ? this.track.objectiveWeight(n, x, y, this.tick, this.cells.w, this.cells.h) : 1;

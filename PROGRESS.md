@@ -97,3 +97,9 @@
 - It measured an hour after a stage's own `withdraw`. Restated: R66c's Eastern gain on seed 1938 1.22M → 3.24M (not
   618k → 2.88M); large land fronts with both sides near 10 of 21 (not 8). The bar stays 14.
 
+## 2026-11-11 — R66b: a planner's own front across a frozen hold (ADR-971)
+
+- Germany's plan had no Eastern sector when a partner planned first; each planner now makes its own sectors while the
+  track steers, its own front facing its held foes across frozen holds only (not the Phoney War). Land fronts with
+  both sides near 11 of 19 (seed 1938); Paris 14 June 1940; the nine replay tests green; the pin unchanged.
+
