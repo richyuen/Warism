@@ -194,7 +194,7 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     if (told) [row.as, row.note] = ['track', told];
     // Why it joined (ROADMAP R55i): its own sentence.
     // The historical track's end (ROADMAP R62d): its sentence by why.
-    if (kind === EventKind.TrackEnded) row.as = b === TrackEnd.date ? 'date' : b === TrackEnd.intervention ? 'intervention' : 'changed';
+    if (kind === EventKind.TrackEnded) row.as = b === TrackEnd.date ? 'date' : b === TrackEnd.intervention ? 'intervention' : b === TrackEnd.free ? 'free' : 'changed';
     // One the historical track adds to its side (ROADMAP R62b) is told as plainly joining.
     if (kind === EventKind.WarJoined) {
       row.y = null;
@@ -340,7 +340,7 @@ function tickerRowAt(world: World, i: number, nation: (v: number) => string, cit
   if (told) [row.as, row.note] = ['track', told];
   // The historical track's end (ROADMAP R64a): its sentence by why, as in History; no place, so the world's middle.
   if (kind === EventKind.TrackEnded) {
-    row.as = b === TrackEnd.date ? 'date' : b === TrackEnd.intervention ? 'intervention' : 'changed';
+    row.as = b === TrackEnd.date ? 'date' : b === TrackEnd.intervention ? 'intervention' : b === TrackEnd.free ? 'free' : 'changed';
     [row.x, row.y] = [world.cells.w / 2, world.cells.h / 2];
   }
   return row;

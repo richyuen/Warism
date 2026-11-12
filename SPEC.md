@@ -1741,6 +1741,11 @@ to 27 July 1953, then sets the world free.
   the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none. While it
   runs, the scenario's form, Take control, the God Mode bar, the nation's God tab (at its head) and the editor say
   so (R64a, R65b; ADR-952, ADR-961); the end is told in the ticker.
+- **A start from a year** (R68, ADR-983): the world of 1 January of each year of the track, built at deploy
+  (`npm run saves`: a gzipped save a year and their index, in the site's 1938h start folder; never committed), loaded into the new game with the
+  game's own second seed (`?year=Y&mode=replay|free`, `src/app/replayStart.ts`); for a free game the track is left at
+  once by its own command (`leaveTrack`, logged; `TrackEnd.free`). A year not built, or of another state format, is
+  refused (the title's notice, `?failed=save`).
 - **The player's view** (built, R62j1, ADR-946): while the track runs a line under the date names its next event that
   has a name and its date (not the steering's: `hold`, `objective`, `buff`, `redeploy`), the first of the next and the
   `TRACK_AHEAD` (16) after it that the stats carry whose hour is not behind the shown one (R64f, R65a, ADR-960;

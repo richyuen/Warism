@@ -482,10 +482,13 @@ export class SimClient {
     return { bytes: r.bytes, status: r.status };
   }
 
-  /** `upgrade`: a scenario file of an older version, its missing parts added (ROADMAP R53i; `SimStatus.upgraded`). */
-  async load(bytes: Uint8Array, upgrade = false): Promise<SimStatus> {
+  /**
+   * `upgrade`: a scenario file of an older version, its missing parts added (ROADMAP R53i; `SimStatus.upgraded`).
+   * `after`: the historical track's second seed for the loaded world (R68b, a start from a year).
+   */
+  async load(bytes: Uint8Array, upgrade = false, after?: number): Promise<SimStatus> {
     const copy = bytes.slice();
-    const status = (await this.status({ type: 'load', bytes: copy, ...(upgrade ? { upgrade } : {}) }, [copy.buffer])).status;
+    const status = (await this.status({ type: 'load', bytes: copy, ...(upgrade ? { upgrade } : {}), ...(after !== undefined ? { after } : {}) }, [copy.buffer])).status;
     for (const l of this.loadListeners) l();
     return status;
   }

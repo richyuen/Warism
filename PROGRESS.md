@@ -160,4 +160,7 @@
 - The user: a start each 1 January, built at deploy, never committed; a year on the card, no day; the replay or free.
   `npm run saves` (tools/data/replaySaves.ts): 16 saves 1938-53, ~1 MB each, 7 min; the Pages workflow runs it into
   `dist`. A year's save loaded into a fresh world plays on to the unbroken run's hash (unit test).
+- R68b: `?scenario=1938h&year=Y&mode=replay|free` loads year Y's start with the game's second seed; `free` leaves the
+  track by `leaveTrack` (logged, `TrackEnd.free`, its own History sentence). Unit test of the command; e2e of both
+  modes and a year not built (`tests/e2e/replayYear1938h.spec.ts`, the start served by the test).
 

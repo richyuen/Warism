@@ -415,6 +415,9 @@ export class SimServer {
         // A scenario file of an older version: the parts it lacks that this one can add (ROADMAP R53i).
         const up = msg.upgrade ? upgradeState(msg.bytes) : null;
         this.requireSim().load(up ? up.bytes : msg.bytes);
+        // A start from a year of the historical track (R68b): the game's own second seed, not the built save's.
+        const track = this.requireSim().world.track;
+        if (msg.after !== undefined && track) track.afterSeed = msg.after >>> 0;
         this.worldNo++;
         this.newsFrom = -1;
         this.labelVersion = -1; // the controller layer was replaced wholesale

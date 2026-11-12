@@ -130,7 +130,7 @@ Batches 19 and 18 together (ADR-966).
     to `public/data/scenarios/1938h/start/<year>.sav` (gzipped `Sim.save()`) and a `years.json`; gitignored; the Pages
     workflow runs it into `dist`. AT: one save per year to the track's end; each loaded into a fresh world plays on 30
     days to the hash of the unbroken run (a unit test on one year); the workflow's step.
-  - [ ] R68b A game from a year: `?scenario=1938h&year=Y&mode=replay|free` starts the world, fetches and loads year
+  - [x] R68b A game from a year: `?scenario=1938h&year=Y&mode=replay|free` starts the world, fetches and loads year
     Y's save, and for `free` ends the track by a command (`leaveTrack`, logged; `TrackEnded`, a reason of its own);
     the second seed (`after`) the game's own. A missing or unfit save goes to `?failed=save`. AT: unit tests of the
     command and the load; an e2e start from a year in each mode.

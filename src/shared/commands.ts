@@ -75,6 +75,8 @@ export type Command =
   | { kind: 'paintControl'; nation: number; x: number; y: number; r: number; x2?: number; y2?: number }
   /** PLAN 1.16: `attacker` declares war on `defender` (each brings its puppets). */
   | { kind: 'declareWar'; attacker: number; defender: number }
+  /** Ends the historical track (R68b): a game started from a year of it to play free. NoEffect with none running. */
+  | { kind: 'leaveTrack' }
   /**
    * PLAN 7.175a (ADR-780): the player's and God's war. The truce, alliance or puppet bond in its
    * way is broken (the attacker leaves its alliance, a puppet goes free, a truce ends) and war is
@@ -187,6 +189,7 @@ export const COMMAND_KINDS: Record<Command['kind'], true> = {
   forceBreakthrough: true,
   collapseNation: true,
   paintControl: true,
+  leaveTrack: true,
   declareWar: true,
   forceWar: true,
   forcePeace: true,

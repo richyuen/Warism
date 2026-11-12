@@ -949,6 +949,7 @@
   "bar.trackNextShort": "{date}: {note}",
   "history.TrackEvent": "{note}",
   "history.TrackEnded.intervention": "History's course ended at your first intervention, and the world goes its own way",
+  "history.TrackEnded.free": "History's course left at the start of your game, and the world goes its own way",
   "history.type.NationBorn": "Nation born",
   "history.NationBorn": "{a} came into being on land of {b}",
   "history.type.GuaranteeLapsed": "Guarantee lapsed",

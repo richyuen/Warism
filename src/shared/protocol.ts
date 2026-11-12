@@ -96,7 +96,8 @@ export type ToWorker =
   | { type: 'save'; reqId: number }
   /** PLAN 1.38: the world as a scenario (run history dropped): state bytes + their hash. */
   | { type: 'exportScenario'; reqId: number }
-  | { type: 'load'; reqId: number; bytes: Uint8Array; upgrade?: boolean }
+  /** `after` (R68b): the historical track's second seed set on the loaded world (a start from a year). */
+  | { type: 'load'; reqId: number; bytes: Uint8Array; upgrade?: boolean; after?: number }
   | { type: 'speed'; speed: Speed }
   | { type: 'pause'; paused: boolean }
   /** Whether the worker pauses itself at the tick of a nuclear strike (PLAN 7.109a: the host's pause came a second late, ~155 game hours at Max). */

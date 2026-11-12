@@ -10,6 +10,7 @@ import { MapView } from './MapView';
 import { PlayerControl } from './player';
 import type { GameOptions } from '../shared/gameOptions';
 import { loadFailedUrl, optionsFromUrl, withLooping } from './gameUrl';
+import { startFromYear } from './replayStart';
 import { importScenarioFile, readStagedScenario } from './scenarioFiles';
 import { saveScreenshot, Settings } from './settings';
 import { screenshotLabel } from './screenshotLabel';
@@ -344,6 +345,16 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     }
     if (tick !== null) console.info(`Warism: resumed autosave at tick ${tick}`);
     loaded = tick !== null;
+  } else if (scenarioId === '1938h' && params.get('year') !== null) {
+    // A start from a year of the historical replay (ROADMAP R68b): its world of 1 January, the replay going on or left.
+    try {
+      await startFromYear(sim, Number(params.get('year')), options.after, params.get('mode') === 'free');
+      loaded = true;
+    } catch (err) {
+      console.warn(`Warism: the start of ${params.get('year')} could not be loaded: ${err instanceof Error ? err.message : String(err)}`);
+      location.replace(loadFailedUrl('save'));
+      return;
+    }
   }
   if (loaded) {
     // The loaded world has its own looping setting, and the map view was built from the URL

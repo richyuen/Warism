@@ -305,7 +305,8 @@ export const JoinedBy = { alliance: 1, guarantee: 2, track: 3 } as const;
 
 /** Why the historical track ended (`TrackEnded`'s b; ROADMAP R62b, R62j). */
 /** `intervention` (R62j): the first command applied while it runs, a God Mode act, an editor edit or a nation taken. */
-export const TrackEnd = { timelineChanged: 1, date: 2, intervention: 3 } as const;
+/** `free` (R68b): a game started from a year of it to play free (`leaveTrack`). */
+export const TrackEnd = { timelineChanged: 1, date: 2, intervention: 3, free: 4 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */
 export const Bond = { truce: 1, alliance: 2, puppet: 4 } as const;

@@ -260,6 +260,10 @@ export function applyCommand(world: World, cmd: Command): Refusal {
       if (!why) paintControl(world, cmd.nation, cmd.x, cmd.y, cmd.r, cmd.x2, cmd.y2);
       return why;
     }
+    case 'leaveTrack':
+      if (!world.track || world.track.ended) return Refusal.NoEffect;
+      endTrack(world, TrackEnd.free);
+      return Refusal.None;
     case 'declareWar': {
       const why = whyNotWar(world, cmd.attacker, cmd.defender);
       declareWar(world, cmd.attacker, cmd.defender); // a refused one has its event (`WarRejected`)
