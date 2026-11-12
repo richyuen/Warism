@@ -223,3 +223,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Seen, not changed:** the AI ships two of the 25th Army's three divisions off towards the objectives of Manila and
   Borneo; R66d's fighting before a stage will want them kept to their stage.
 
+### ADR-973 · 2026-11-11 · accepted — R66c: a stage sets down its taker's held foes' allies too, onto their side's land
+- **The gap:** an `occupy` set down only the formations of the nations that held its land; their allies on it were
+  left behind the line (1 March 1942: 56 Italian formations, 167k men, in Soviet land after the Moscow stage, the
+  cells Germany's), and `fallBackCell` sought only a nation's own land (Italy has none in Russia).
+- **The rule:** an `occupy` sets down every land formation on its land of a nation at war with its taker and held off
+  from it; `fallBackCell` takes the nearest land of the nation's own or of an ally's in its war (`Wars.sameSide`).
+- **Measured:** formations on a held foe's land on 1 March 1942 2 (58 before); the census and the nine replay tests
+  as ADR-972 (16 of 20; 1941 strays 0.65 %; Paris 14 June; China 388k); a unit case (a Lithuanian ally in western
+  Poland), red before.
+

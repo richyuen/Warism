@@ -475,3 +475,43 @@ describe('a frozen front (ROADMAP R66b, ADR-971)', () => {
     expect(w.frozenFront(id('GER'), id('FRA'))).toBe(false);
   });
 });
+
+describe("an occupation behind its line: an ally's formations too (ROADMAP R66c, ADR-973)", () => {
+  it("occupy sets an ally of the holders' down on its side's land, held off from the taker as they are", () => {
+    const ring: [number, number][] = [[14.0, 54.5], [19.0, 54.5], [19.0, 50.0], [14.0, 50.0]];
+    const tl: TimelineFile = {
+      events: [
+        { date: '1938-01-01', kind: 'war', attackers: ['GER'], defenders: ['POL', 'LIT'] },
+        { date: '1938-01-01', kind: 'hold', sides: [['GER'], ['POL', 'LIT']], until: '1939-01-01' },
+        { date: '1938-01-02', kind: 'forces', nation: 'LIT', template: 'infantry_div', count: 2, at: [16.9, 52.4] },
+        { date: '1938-01-03', kind: 'occupy', by: 'GER', of: ['POL'], ring },
+      ],
+    };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
+    const w = sim.world;
+    const LIT = id('LIT');
+    // To the stage's hour (2 January: arrived; the occupy at the first hour of the 3rd).
+    sim.step(2 * 24, quiet);
+    const lit = (): number[] => {
+      const out: number[] = [];
+      w.formations.forEach((i) => {
+        if (w.formations.cols.nation[i] === LIT && w.rules?.templates[w.formations.cols.template[i]!]?.domain === 0) out.push(i);
+      });
+      return out;
+    };
+    const [u0, v0] = project(14.0, 54.5);
+    const [u1, v1] = project(19.0, 50.0);
+    const inRing = (i: number): boolean => {
+      const [x, y] = [Math.floor(w.formations.cols.x[i]!) + 0.5, Math.floor(w.formations.cols.y[i]!) + 0.5];
+      return x >= u0 * w.cells.w && x <= u1 * w.cells.w && y >= v0 * w.cells.h && y <= v1 * w.cells.h;
+    };
+    const there = lit().filter(inRing);
+    expect(there.length).toBe(2);
+    sim.step(24, quiet);
+    expect(lit().length).toBeGreaterThanOrEqual(2);
+    for (const i of there) {
+      const held = w.cells.controller[Math.floor(w.formations.cols.y[i]!) * w.cells.w + Math.floor(w.formations.cols.x[i]!)]!;
+      expect([id('POL'), LIT], `formation ${i}`).toContain(held);
+    }
+  });
+});

@@ -385,22 +385,21 @@ function occupy(world: World, by: number, of: readonly number[], ring: readonly 
   // `by` among `of`: its own land taken back (R62g2).
   const owners = new Set(of.filter((n) => n !== 0));
   const taken = new Set<number>();
-  const losers = new Set<number>();
   for (const c of ringCells(world, ring)) {
     if (!owners.has(owner[c]!) || controller[c] === by) continue;
-    losers.add(controller[c]!);
     world.setController(c, by, false, FlipCause.other);
     taken.add(c);
   }
-  // The land formations of a loser held off from `by` (a hold: they cannot fight their way out) left on the land taken
-  // are set down behind the new line (R66c, ADR-968), as a withdraw's are; history's pockets were taken by the stage's
-  // `withdraw` an hour before. Before, they were left behind it, out of supply, and starved. Where the two fight (1941),
-  // the fighting decides, as before: set down on the line, they were beaten there and the line overrun.
-  for (const n of [...losers]) if (!world.holds(n, by)) losers.delete(n);
+  // The land formations left on the land taken of a nation held off from `by` (a hold: they cannot fight their way out;
+  // a holder of it or an ally of one: the Italians on Germany's line, ADR-973) are set down behind the new line (R66c,
+  // ADR-968), as a withdraw's are; history's pockets were taken by the stage's `withdraw` an hour before. Before, they
+  // were left behind it, out of supply, and starved. Where the two fight (1941), the fighting decides, as before: set
+  // down on the line, they were beaten there and the line overrun.
   const f = world.formations.cols;
   const left: number[] = [];
   world.formations.forEach((i) => {
-    if (!losers.has(f.nation[i]!) || world.rules?.templates[f.template[i]!]?.domain !== Domain.land || world.embarked.has(i)) return;
+    const n = f.nation[i]!;
+    if (n === by || !world.wars.atWar(n, by) || !world.holds(n, by) || world.rules?.templates[f.template[i]!]?.domain !== Domain.land || world.embarked.has(i)) return;
     if (taken.has(Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w)) left.push(i);
   });
   const placed = new Map<number, number>();
@@ -661,7 +660,7 @@ export const FALL_BACK_CELLS = 40;
 
 /**
  * The nearest land cell (4-neighbour steps over land, within FALL_BACK_CELLS; the lowest index of equals) that `n`
- * holds, that is not in the ring and that has fewer than SET_DOWN_PER_CELL of this stage's set down on it (`placed`),
+ * or an ally of its in a war holds, that is not in the ring and that has fewer than SET_DOWN_PER_CELL of this stage's set down on it (`placed`),
  * from `start`; -1 for none.
  */
 function fallBackCell(world: World, start: number, n: number, inRing: ReadonlySet<number>, placed: ReadonlyMap<number, number>): number {
@@ -670,9 +669,11 @@ function fallBackCell(world: World, start: number, n: number, inRing: ReadonlySe
   const seen = new Set<number>([start]);
   let ring = [start];
   const far = world.atSize(FALL_BACK_CELLS);
+  // Its own land, or an ally's in its war (ADR-973: the Italians in Russia have none of their own within reach).
+  const ours = (m: number): boolean => m === n || (m !== 0 && world.wars.sameSide(m, n));
   for (let step = 0; step <= far && ring.length > 0; step++) {
     let best = -1;
-    for (const c of ring) if (controller[c] === n && !inRing.has(c) && (placed.get(c) ?? 0) < SET_DOWN_PER_CELL && (best < 0 || c < best)) best = c;
+    for (const c of ring) if (ours(controller[c]!) && !inRing.has(c) && (placed.get(c) ?? 0) < SET_DOWN_PER_CELL && (best < 0 || c < best)) best = c;
     if (best >= 0) return best;
     const next: number[] = [];
     for (const c of ring) {
