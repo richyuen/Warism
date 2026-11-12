@@ -233,3 +233,34 @@ from AoC are tagged **[AoC-DEVIATION]**.
   as ADR-972 (16 of 20; 1941 strays 0.65 %; Paris 14 June; China 388k); a unit case (a Lithuanian ally in western
   Poland), red before.
 
+### ADR-974 · 2026-11-11 · accepted — R66d: a short, guarded window of fighting before a stage (the user's decision)
+- **Measured first** (`.cache/probe/r66d.ts`, from one save 30 days before, every hold lifted against none): Kursk the
+  Soviets 1.83M → 1.00M and the Germans 1.18M → 0.20M near, the Germans gaining; Case Blue the Germans 804k → 228k,
+  the Soviets gaining; in the first 5 days the Germans lost 65k at Kursk. Fronts with no hold (the Netherlands Indies,
+  Lae) hardly fought: contact and the attack rule limit the fighting as well as the holds.
+- **The user's choice** of four (a guarded short window; the same with a buff for the taker; battles shown only;
+  R66 closed at presence): the hold lifted for about 5-7 days before each stage, inside its area only, land to the
+  taker's side only and only of the stage's own land, no buff at first. R66d's AT rewritten to it (ROADMAP).
+- **Read as written:** "both sides engaged at the stage's hour" on the large land fronts (ADR-969's 20 or 21), the
+  only reading in which fighting is possible.
+
+### ADR-975 · 2026-11-11 · accepted — R66d: the window of fighting before a stage
+- **The rule** (`Track.fightOpen`, `Track.takeOpen`; `World.holdsAt`, `World.holdsLand`; combat and territory): for
+  FIGHT_DAYS = 7 before an `occupy` stage not yet applied, a hold is lifted between a formation of its taker's side (the
+  taker or an ally in its war) and one of a nation at war with the taker when both stand in its area (the ring's box
+  grown by FIGHT_BAND_KM = 120); across it land goes only to the taker's side and only of the stage's land (ring cells
+  owned by one of its `of`). Derived from the tick and the timeline, no state; with no track nothing changes (the pin).
+- **The stage:** its land held already by its taker's side is fulfilled, not passed over (a Korean stage of 1951 taken
+  whole in its window); its taker's held foes on any of its land, taken now or in the window, are set down (R66c).
+- **The measure** (`tools/diag/trackFronts.ts`): each stage's land, size and front fixed at its window's opening, the
+  band round that land; men lost counted on the opening's formations by id (one gone, all its men); both sides
+  engaged sampled every 6 hours through the window. Before (the band round the land left), men walking out of a
+  shrinking band were counted lost: Kursk 868k Soviet, 635k German, against 45k and 119k by the cohort.
+- **Measured** (seed 1938): both sides engaged at the stage's hour at 8 of 20 large land fronts (seeds 1, 2: 7, 9);
+  in the window Kursk 45k of 1.43M Soviet lost and 119k of 798k German, 195 of its 244 cells taken by the fighting;
+  the Dnieper 37k and 136k, 406 of 2,067; Case Blue (the taker outnumbered) 180k German of 1.07M and 112k Soviet. With
+  `TRACK_PROBE.fightOff` 0 engaged, 16 near (ADR-972). The nine replay tests green (1941 strays 0.47 %; Paris 11 June
+  1940; China 378k; the Soviet army 3.58M on 1 November 1942); the replay's tick 2.48 ms, plain 1938's 2.52.
+- **Short of R66d's 14** (the user's plan of the same day): the arrivals of the timeline kept at their stage next, then
+  the bar set to what is measured, if at least 9.
+

@@ -14,6 +14,8 @@ export interface Side {
   formations: number;
   men: number;
   engaged: number;
+  /** Its formations, with their men (R66d: a window's cohort). */
+  ids: [number, number][];
 }
 
 export interface StageArmies {
@@ -36,16 +38,21 @@ export interface StageArmies {
   defender: Side;
 }
 
-export function stageArmies(w: World, by: number, of: readonly number[], ring: readonly (readonly [number, number])[]): StageArmies {
+/**
+ * `fixed`: the land and holders taken as given (R66d: a window's, fixed at its opening), the band drawn round them;
+ * else the stage's land now.
+ */
+export function stageArmies(w: World, by: number, of: readonly number[], ring: readonly (readonly [number, number])[], fixed?: { take: readonly number[]; holders: readonly number[] }): StageArmies & { take: number[] } {
   const { w: W, h: H, owner, controller, terrain } = w.cells;
   const ofs = new Set(of);
-  const take: number[] = [];
-  const holders = new Set<number>();
-  forEachCellInRing(ring, W, H, (c) => {
-    if (terrain[c]! < Terrain.Plains || !ofs.has(owner[c]!) || controller[c] === by) return;
-    take.push(c);
-    if (controller[c] !== 0) holders.add(controller[c]!);
-  });
+  const take: number[] = fixed ? [...fixed.take] : [];
+  const holders = new Set<number>(fixed?.holders ?? []);
+  if (!fixed)
+    forEachCellInRing(ring, W, H, (c) => {
+      if (terrain[c]! < Terrain.Plains || !ofs.has(owner[c]!) || controller[c] === by) return;
+      take.push(c);
+      if (controller[c] !== 0) holders.add(controller[c]!);
+    });
   const r = Math.max(1, Math.round(BAND_KM / kmPerCell(W)));
   const band = new Uint8Array(W * H);
   for (const c of take) {
@@ -65,8 +72,8 @@ export function stageArmies(w: World, by: number, of: readonly number[], ring: r
     if (w.wars.atWar(n, by)) return 'd';
     return null;
   };
-  const attacker: Side = { formations: 0, men: 0, engaged: 0 };
-  const defender: Side = { formations: 0, men: 0, engaged: 0 };
+  const attacker: Side = { formations: 0, men: 0, engaged: 0, ids: [] };
+  const defender: Side = { formations: 0, men: 0, engaged: 0, ids: [] };
   const f = w.formations.cols;
   w.formations.forEach((i) => {
     if (w.rules?.templates[f.template[i]!]?.domain !== Domain.land || w.embarked.has(i)) return;
@@ -77,6 +84,7 @@ export function stageArmies(w: World, by: number, of: readonly number[], ring: r
     const x = s === 'a' ? attacker : defender;
     x.formations++;
     x.men += f.strength[i]!;
+    x.ids.push([i, f.strength[i]!]);
     if (f.engaged[i] === 1) x.engaged++;
   });
   const front = held.some((d) => w.wars.atWar(by, d));
@@ -94,7 +102,7 @@ export function stageArmies(w: World, by: number, of: readonly number[], ring: r
       landFront = a;
     }
   }
-  return { cells: take.length, holders: held.sort((a, b) => a - b), front, landFront, attacker, defender };
+  return { cells: take.length, holders: held.sort((a, b) => a - b), front, landFront, attacker, defender, take };
 }
 
 const COMPONENTS = new WeakMap<Uint8Array, Uint32Array>();

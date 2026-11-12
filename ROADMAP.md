@@ -95,10 +95,12 @@ Batches 19 and 18 together (ADR-966).
     set down on their own nearest land, two to a cell; the large Eastern stages' smaller side 1.22M → 3.24M men
     near (seeds 1 and 2 1.08M → 5.78M, 1.20M → 2.62M; ADR-970); the bars green with `historyMatch1938h`'s strays under 1 % and `chinaFront1938h`'s
     army at 40 % (the user's decision); the replay's tick 2.42 ms, plain 1938's 2.51 (HEAD's replay 1.96).
-  - [ ] R66d Fighting before a stage: in a window before each large land stage the hold is lifted for its pair inside
-    the stage's land and band; the taker strengthened only where the rest of the replay is unharmed; the stage applies
-    at its date as now. AT: both sides engaged at ≥ 2/3 of the large land stages; the share of each stage's land taken
-    by the fighting before its date reported; the bars above.
+  - [ ] R66d Fighting before a stage (the user's choice, ADR-974): for FIGHT_DAYS (about 5-7) before each stage the
+    hold is lifted inside the stage's area (its ring's box and 120 km) for its taker's side and their foes there; land
+    changes hands across it only to the taker's side, only of the land the stage gives; no buff at first; the stage
+    applies at its date as now. AT: both sides engaged at the stage's hour at ≥ 2/3 of the large land fronts (the
+    census, its land and size fixed at the window's opening); each side's men lost in the window and the share of the
+    stage's land taken by the fighting reported; the bars above.
   - [ ] R66e The 1946-53 stages (the civil war in China, Korea: `transfer`s) measured as R66a's; their armies by
     R66b-d's rules where those apply, or the reason not.
 - [ ] R67 **Cold War blocs in the sim.** Lasting blocs under the strongest powers; war between their leaders held back

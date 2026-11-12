@@ -33,9 +33,26 @@ import { Domain, FlipCause, navOf, type World } from './world';
  * times their share of the formations the threat leaves; a landing city this many times its worth.
  */
 export const OBJECTIVE_WEIGHT = 6;
+/** How long before an `occupy` stage its area's hold is lifted for its taker's side and their foes (R66d, ADR-974). */
+export const FIGHT_DAYS = 7;
+/** How far around a stage's ring its area reaches (R66d). */
+export const FIGHT_BAND_KM = 120;
+
+/** An `occupy` stage open to fighting (R66d). */
+interface OpenStage {
+  by: number;
+  of: ReadonlySet<number>;
+  inArea: (c: number) => boolean;
+  inRing: (c: number) => boolean;
+}
+
+/** Whether `n` is of `by`'s side: `by`, or an ally in its war. */
+function takerSide(world: World, n: number, by: number): boolean {
+  return n === by || world.wars.sameSide(n, by);
+}
 
 /** Tests' switches (an A/B from one save): objectives weigh nothing; no front holds. */
-export const TRACK_PROBE: { objectivesOff?: boolean; holdsOff?: boolean } = {};
+export const TRACK_PROBE: { objectivesOff?: boolean; holdsOff?: boolean; fightOff?: boolean } = {};
 
 /** The section of the track's state. */
 export const TRACK_SECTION = 'world.track';
@@ -88,6 +105,10 @@ export class Track {
   private readonly holdAt: readonly { i: number; until: number; a: ReadonlySet<number>; b: ReadonlySet<number>; frozen: boolean }[];
   /** The objectives' events, by index, with the tick each ends (R62e). */
   private readonly objectiveAt: readonly { i: number; until: number }[];
+  /** The stages open to fighting at a tick (R66d; derived, not state). */
+  private open: { tick: number; w: number; list: OpenStage[] } | null = null;
+  /** The `occupy` stages' areas at a map's width, by event index (geometry; derived, not state). */
+  private readonly areas = new Map<number, { w: number; x0: number; x1: number; y0: number; y1: number; ring: ReadonlySet<number> }>();
   /** Their places in cells and radii² at a map's width (derived, not state). */
   private placed: { w: number; at: { nation: number; x: number; y: number; r2: number }[] } | null = null;
 
@@ -161,6 +182,76 @@ export class Track {
    * applied) and not ended. A side holds its nations' puppets too (`overlord`, R62g0). False at once in a timeline
    * without holds.
    */
+  /**
+   * Whether a hold between `a` (its formation in cell `ca`) and `b` (in `cb`) is lifted (R66d, ADR-974): within
+   * FIGHT_DAYS before an `occupy` stage not yet applied, both cells inside its area (its ring's box grown by
+   * FIGHT_BAND_KM), one of them of its taker's side (the taker or an ally in its war) and the other at war with it.
+   */
+  fightOpen(world: World, a: number, b: number, ca: number, cb: number): boolean {
+    for (const s of this.openStages(world)) {
+      if (!s.inArea(ca) || !s.inArea(cb)) continue;
+      if ((takerSide(world, a, s.by) && world.wars.atWar(b, s.by)) || (takerSide(world, b, s.by) && world.wars.atWar(a, s.by))) return true;
+    }
+    return false;
+  }
+
+  /**
+   * Whether `an` may take cell `c` from `d` across their hold (R66d): within FIGHT_DAYS before an `occupy` stage not
+   * yet applied, `an` of its taker's side, `d` at war with it, and `c` of the land the stage gives (in its ring, owned
+   * by one of its `of`).
+   */
+  takeOpen(world: World, an: number, d: number, c: number): boolean {
+    for (const s of this.openStages(world)) {
+      if (!takerSide(world, an, s.by) || !world.wars.atWar(d, s.by) || !s.of.has(world.cells.owner[c]!)) continue;
+      if (s.inRing(c)) return true;
+    }
+    return false;
+  }
+
+  /** The `occupy` stages within FIGHT_DAYS of `world.tick` not yet applied, with their areas (derived, not state). */
+  private openStages(world: World): readonly OpenStage[] {
+    if (this.ended || TRACK_PROBE.fightOff) return [];
+    const tick = world.tick;
+    if (this.open?.tick === tick && this.open.w === world.cells.w) return this.open.list;
+    const list: OpenStage[] = [];
+    for (let i = this.next; i < this.events.length; i++) {
+      const due = this.ticks[i]!;
+      if (due - tick > FIGHT_DAYS * 24) break;
+      const e = this.events[i]!;
+      if (e.kind !== 'occupy') continue;
+      list.push(this.area(world, i, e));
+    }
+    this.open = { tick, w: world.cells.w, list };
+    return list;
+  }
+
+  /** A stage's area at a map's size (geometry only: cached). */
+  private area(world: World, i: number, e: Extract<TimelineEvent, { kind: 'occupy' }>): OpenStage {
+    const { w, h } = world.cells;
+    let a = this.areas.get(i);
+    if (a?.w !== w) {
+      const band = FIGHT_BAND_KM / kmPerCell(w);
+      let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity];
+      for (const [lo, la] of e.ring) {
+        const [u, v] = project(lo, la);
+        [x0, x1, y0, y1] = [Math.min(x0, u * w), Math.max(x1, u * w), Math.min(y0, v * h), Math.max(y1, v * h)];
+      }
+      a = { w, x0: x0 - band, x1: x1 + band, y0: y0 - band, y1: y1 + band, ring: new Set(ringCells(world, e.ring)) };
+      this.areas.set(i, a);
+    }
+    const box = a;
+    return {
+      by: this.id(e.by),
+      of: new Set(e.of.map((g) => this.id(g))),
+      inArea: (c: number) => {
+        const x = (c % w) + 0.5;
+        const y = Math.floor(c / w) + 0.5;
+        return x >= box.x0 && x <= box.x1 && y >= box.y0 && y <= box.y1;
+      },
+      inRing: (c: number) => box.ring.has(c),
+    };
+  }
+
   held(a: number, b: number, tick: number, overlord: ArrayLike<number>): boolean {
     if (this.holdAt.length === 0 || this.ended || TRACK_PROBE.holdsOff) return false;
     const oa = overlord[a] ?? 0;
@@ -385,12 +476,18 @@ function occupy(world: World, by: number, of: readonly number[], ring: readonly 
   // `by` among `of`: its own land taken back (R62g2).
   const owners = new Set(of.filter((n) => n !== 0));
   const taken = new Set<number>();
+  // Its land held already by its taker's side: fulfilled (R66d: taken by the fighting of its window), not passed over;
+  // with what it takes, the land its taker's foes are set down from (`lost`).
+  const lost = new Set<number>();
   for (const c of ringCells(world, ring)) {
-    if (!owners.has(owner[c]!) || controller[c] === by) continue;
+    if (!owners.has(owner[c]!)) continue;
+    if (takerSide(world, controller[c]!, by)) lost.add(c);
+    if (controller[c] === by) continue;
     world.setController(c, by, false, FlipCause.other);
     taken.add(c);
+    lost.add(c);
   }
-  // The land formations left on the land taken of a nation held off from `by` (a hold: they cannot fight their way out;
+  // The land formations left on the stage's land (taken now, or by its window's fighting) of a nation held off from `by` (a hold: they cannot fight their way out;
   // a holder of it or an ally of one: the Italians on Germany's line, ADR-973) are set down behind the new line (R66c,
   // ADR-968), as a withdraw's are; history's pockets were taken by the stage's `withdraw` an hour before. Before, they
   // were left behind it, out of supply, and starved. Where the two fight (1941), the fighting decides, as before: set
@@ -400,11 +497,11 @@ function occupy(world: World, by: number, of: readonly number[], ring: readonly 
   world.formations.forEach((i) => {
     const n = f.nation[i]!;
     if (n === by || !world.wars.atWar(n, by) || !world.holds(n, by) || world.rules?.templates[f.template[i]!]?.domain !== Domain.land || world.embarked.has(i)) return;
-    if (taken.has(Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w)) left.push(i);
+    if (lost.has(Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w)) left.push(i);
   });
   const placed = new Map<number, number>();
-  for (const i of left.sort((a, b) => a - b)) setDownBehind(world, i, taken, placed);
-  return taken.size > 0 ? Refusal.None : Refusal.NoEffect;
+  for (const i of left.sort((a, b) => a - b)) setDownBehind(world, i, lost, placed);
+  return lost.size > 0 ? Refusal.None : Refusal.NoEffect;
 }
 
 /**

@@ -114,3 +114,9 @@
 - The Moscow stage left 56 Italian formations in Soviet land; an `occupy` now sets down every held foe's formation on
   its land, onto its own or an ally's land. 2 left on 1 March 1942; the replay's tests as before.
 
+## 2026-11-11 — R66d: the window of fighting before a stage (ADR-975)
+
+- Seven days before a stage its area's hold is lifted for its taker's side; land only to it, only of the stage's.
+  Both sides engaged at 8 of 20 large land fronts (seed 1938); losses by cohort moderate (Kursk 45k / 119k). The
+  census fixed (the band at the opening, losses by formation). The nine replay tests green; the tick 2 % under plain.
+

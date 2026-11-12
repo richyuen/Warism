@@ -190,9 +190,12 @@ export function findBattles(world: World): number[][] {
     }
     return r;
   };
+  const cw = world.cells.w;
+  /** A formation's cell (the stage windows' areas, R66d). */
+  const cellOf = (i: number): number => Math.floor(c.y[i]!) * cw + ((Math.floor(c.x[i]!) % cw) + cw) % cw;
   const pair = (a: number, b: number): void => {
-    // A held front (ROADMAP R62f2): at war, they do not fight.
-    if (b <= a || !world.wars.atWar(c.nation[a]!, c.nation[b]!) || world.holds(c.nation[a]!, c.nation[b]!)) return;
+    // A held front (ROADMAP R62f2): at war, they do not fight, but where a stage's window lifts it (R66d).
+    if (b <= a || !world.wars.atWar(c.nation[a]!, c.nation[b]!) || (world.holds(c.nation[a]!, c.nation[b]!) && world.holdsAt(c.nation[a]!, c.nation[b]!, cellOf(a), cellOf(b)))) return;
     const d = dist(world, c.x[a]!, c.y[a]!, c.x[b]!, c.y[b]!);
     if (d > world.atSize(CONTACT_CELLS)) return;
     // Each one's nearest enemy in contact (the lower id on a tie): where its block deploys (`deployOf`).

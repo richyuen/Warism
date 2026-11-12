@@ -1460,6 +1460,19 @@ export class World {
     return this.track !== null && this.track.frozen(a, b, this.tick, this.nations.cols.overlord);
   }
 
+  /**
+   * Whether `a` (its formation in cell `ca`) and `b` (in `cb`) do not fight on land (ROADMAP R62f2): a hold stands
+   * between them, not lifted there in the days before a stage (R66d, `Track.fightOpen`).
+   */
+  holdsAt(a: number, b: number, ca: number, cb: number): boolean {
+    return this.holds(a, b) && !this.track!.fightOpen(this, a, b, ca, cb);
+  }
+
+  /** Whether `an` takes no cell `c` from `d` (R62f2): a hold stands, not lifted for that cell (R66d, `Track.takeOpen`). */
+  holdsLand(an: number, d: number, c: number): boolean {
+    return this.holds(an, d) && !this.track!.takeOpen(this, an, d, c);
+  }
+
   /** The weight of a place (cells) to nation `n`'s plans: the historical track's objectives (ROADMAP R62e), else 1. */
   objectiveWeight(n: number, x: number, y: number): number {
     return this.track ? this.track.objectiveWeight(n, x, y, this.tick, this.cells.w, this.cells.h) : 1;
