@@ -174,7 +174,7 @@ Batches 19 and 18 together (ADR-966).
     Iraq 1958, Pakistan 1958, Cuba 1959 (and the Soviet guarantee of 1961), South Korea 1960-61, Turkey 1960, Burma
     1962. AT: a unit test of the event; on seed 1938
     each fired on its date; the 1938-62 maps' scores and the nine replay tests as before or explained.
-  - [ ] R71b Rebels as nations: an insurgency is a dormant nation born on the land it holds, at war with its
+  - [x] R71b Rebels as nations: an insurgency is a dormant nation born on the land it holds, at war with its
     government (the Viet Cong, the Pathet Lao, the Khmer Rouge, Biafra...), its end an annexation or its own
     victory. The nations of 1963-75 added dormant (rebels and new states), the end moved to 31 December 1975 with no
     new event. AT: as R69a: 1938-62 unchanged; the yearly starts to 1975 within the workflow's time.

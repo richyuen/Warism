@@ -3,4 +3,4 @@ import { warnTrack } from '../helpers/historyTrackWarn';
 
 // ROADMAP R62k (ADR-947, ADR-950): the historical track's checker on seed 5, a warning of what it finds (ADR-959: a
 // file a seed, run side by side).
-it('seed 5: a warning of what the checker finds, the track run to its end', () => warnTrack(5), 900_000);
+it('seed 5: a warning of what the checker finds, the track run to its end', () => warnTrack(5), 1_800_000);

@@ -39,6 +39,12 @@ export interface TrackRun {
   /** The hour the track ended (or the last stepped). */
   end: number;
   sim: Sim;
+  /**
+   * The alliances the track hands over, each its leader's tag to its members' tags, sorted: read before the hour that
+   * ends it, since the free AI's first day runs in that hour (R71b, ADR-993: on 31 December 1975 it made India a
+   * member of NATO). Empty when the run stops before the end.
+   */
+  handover: Map<string, string[]>;
 }
 
 /**
@@ -69,8 +75,10 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
   let bonds = bondsOf(sim.world);
   const label = `seed ${seed}`;
   breaks.add(`${label} day 0`, worldBreaks(sim.world).filter((l) => !l.startsWith('held')));
+  let handover = new Map<string, string[]>();
   while (!t.ended && sim.tick < hours) {
     meddle?.(sim.world);
+    if (sim.tick >= t.endTick) handover = new Map(sim.world.alliances.list.map((a) => [tag(a.leader), a.members.map(tag).sort()]));
     sim.step(1, (w: World) => {
       const ev = w.out.events;
       const where = `${label} day ${Math.floor((w.tick - 1) / 24)}`;
@@ -103,7 +111,7 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
       bonds = bondsOf(w);
     });
   }
-  return { lines: breaks.lines, skipped, end: sim.tick, sim };
+  return { lines: breaks.lines, skipped, end: sim.tick, sim, handover };
 }
 
 /** Whether a `held` line ("held: K on O, n cells at peace") is of land the timeline occupies: an `occupy` by K of O's. */

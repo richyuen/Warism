@@ -21,14 +21,12 @@ describe('the historical track checked to its end (ROADMAP R62k)', () => {
     expect(arsenals(run.sim.world)).toEqual(['ENG', 'FRA', 'SOV', 'USA']);
     // R67b (ADR-980): the blocs it hands over, each under its leader with its members (West Germany in NATO from 1955,
     // R69b, ADR-985; China out of the Soviet bloc at the split of 1960, R69c, ADR-986; Albania in 1961, R69d, ADR-987).
-    const w = run.sim.world;
-    const id = (t: string): number => TAGS_1938H.indexOf(t) + 1;
-    const members = (leader: string): string[] => (w.alliances.allianceOf(id(leader))?.members ?? []).map((n) => TAGS_1938H[n - 1]!).sort();
-    expect(w.alliances.allianceOf(id('USA'))?.leader).toBe(id('USA'));
+    // As handed over, before the free AI's first day (R71b, ADR-993).
+    const members = (leader: string): string[] | undefined => run.handover.get(leader);
     expect(members('USA')).toEqual(['BEL', 'DEN', 'ENG', 'FRA', 'FRG', 'GRE', 'ICE', 'ITA', 'LUX', 'NED', 'NOR', 'POR', 'TUR', 'USA'].sort());
-    expect(w.alliances.allianceOf(id('SOV'))?.leader).toBe(id('SOV'));
     expect(members('SOV')).toEqual(['BUL', 'CZS', 'GDR', 'HUN', 'MON', 'POL', 'ROM', 'SOV'].sort());
-  });
+    // To 1975 since R71b (ADR-993): a longer run than the default timeout.
+  }, 1_800_000);
 
   it('a war the timeline does not have is found', () => {
     const [swe, swi] = [TAGS_1938H.indexOf('SWE') + 1, TAGS_1938H.indexOf('SWI') + 1];

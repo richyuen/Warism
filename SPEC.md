@@ -1736,7 +1736,7 @@ to 27 July 1953, then sets the world free.
 - **Bombs** (R69f, ADR-989): a `bomb` event is a nation's test: it knows the bomb from then; while the track steers no
   nation it has not named goes for the bomb (researches it or builds warheads).
 - **Births and the end** (built, R62d, ADR-926): a `born` event gives an unborn nation its ring's land, its cores, its
-  seat (its city nearest its table's capital) and a `NationBorn` row. The timeline's `end` (1962-12-31; 1953-07-27 before R69a) ends the track
+  seat (its city nearest its table's capital) and a `NationBorn` row. The timeline's `end` (1975-12-31; 1962-12-31 before R71b, 1953-07-27 before R69a) ends the track
   after that day's first hour (`TrackEnded`); then the world's seed becomes the second seed (`GameOptions.after`,
   `?after=`, rolled by the form) and its streams are made anew from it.
 - **Steering while the track runs:** the strategic AI's own declarations, stalemate peace, threat pacts,
@@ -1744,7 +1744,7 @@ to 27 July 1953, then sets the world free.
   AI's own nuclear decision is off. Each war phase names objectives (cells or regions, with a date): the
   operational AI weights sectors toward them, the invasion AI picks the named landings. The fighting is
   the sim's own.
-- **The end:** on 31 December 1962 (27 July 1953 before R69a, ADR-984), or at the first intervention (a God Mode act, an editor edit, the taking of
+- **The end:** on 31 December 1975 (31 December 1962 before R71b, ADR-993; 27 July 1953 before R69a, ADR-984), or at the first intervention (a God Mode act, an editor edit, the taking of
   a nation), the track ends for good: every switch returns to the usual rules, and the History has a row
   saying when and why. Built (R62j0, ADR-945): the first command applied while it runs ends it in that hour, before
   the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none. While it

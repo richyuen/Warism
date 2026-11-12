@@ -532,3 +532,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   on seed 1938, the blocs' leaders never on opposite sides of a war (the guarantee of Cuba under deterrence), both
   blocs whole. `docs/research/1963-75.md`: the next period's research (part of its dates checked against the web).
 
+### ADR-993 · 2026-11-12 · accepted — R71b: the replay to 1975, its new nations dormant
+- **The end** moves to 31 December 1975 with no new event yet (1963-75 steered with nothing scheduled, as R69a did
+  for 1953-62); the card says "the end of 1975".
+- **Nations** (49, dormant): the 33 states of 1963-75 (Zanzibar to East Timor), Libya (independent in 1951 and never
+  yet in the replay), and 15 rebel movements, each a nation born on the land it holds, at war with its government:
+  the existing births, wars and annexations, no new rule (the NLF, the Pathet Lao, the Khmer Rouge, Biafra, the
+  Eritrean front, the Simba, Dhofar, FROLINAT, Iraqi Kurdistan, FRELIMO, the MPLA, FNLA and UNITA, the Polisario,
+  the Turkish Cypriot State). Every one's country has land cells on the map; colours all distinct; our own simplified
+  flags. Renamed identities (Malaysia, Tanzania, Rhodesia...) come with their events.
+- **Found:** the track ends at the first hour of its last day, and the free AI's first day runs in that hour; the
+  seed-1938 check read the blocs after it (on 31 December 1975 India joined NATO, the Soviet Union declared war on
+  Finland). The check now reads the alliances handed over before that hour (`TrackRun.handover`); its bar unchanged.
+- **Measured:** the 1938-62 maps' lines identical, the pin unchanged; the replay tests' timeouts 30 minutes (13 more
+  years).
+
