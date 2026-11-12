@@ -191,3 +191,9 @@
   aids nations at war with the other bloc's members, with gold and volunteers: the US 26-34 nations, the Soviet Union
   47-59 in 20 years on three seeds; the leaders never at war; both blocs whole.
 
+## 2026-11-12 — R71: the replay to 1975 (ADR-991, ADR-992)
+
+- Planned with the user: no new units; regime changes, rebels as nations, later techs, 1963-75 in three periods.
+- R71a (ADR-992): a `regime` event (aggression and command efficiency, told); ten coups and revolutions of 1952-62
+  and the Soviet guarantee of Cuba. The maps unchanged; the blocs' leaders still never at war after the track.
+

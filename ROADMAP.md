@@ -168,10 +168,11 @@ Batches 19 and 18 together (ADR-966).
     historical track's games only.
 - [ ] R71 **The replay to 1975** (the user's decision of 2026-11-12, ADR-991; before the critic of Batches 18-19).
   Split (as R69: 1938-62 kept, then the new years by period; research in `docs/research/1963-75.md`):
-  - [ ] R71a Regime change: a timeline event that sets a nation's government, aggression and alignment (a bloc
-    joined or left) at once (a nation's government drives no rule today; what a coup changes in the game is these).
-    Its first uses 1953-62's: Iran 1953, Guatemala 1954, Iraq 1958, Cuba 1959 and 1961 (to the Soviet side), and the
-    smaller (Pakistan 1958, Turkey 1960, South Korea 1960-61, Burma 1962). AT: a unit test of the event; on seed 1938
+  - [x] R71a Regime change (ADR-992): a `regime` event sets a nation's aggression (and its static command
+    efficiency), told by its note; no government label (none is stored, shown or read); its alignment the same day's
+    `allianceJoin`, `allianceLeave` or `guarantee`. Its first uses 1952-62's: Egypt 1952, Iran 1953, Guatemala 1954,
+    Iraq 1958, Pakistan 1958, Cuba 1959 (and the Soviet guarantee of 1961), South Korea 1960-61, Turkey 1960, Burma
+    1962. AT: a unit test of the event; on seed 1938
     each fired on its date; the 1938-62 maps' scores and the nine replay tests as before or explained.
   - [ ] R71b Rebels as nations: an insurgency is a dormant nation born on the land it holds, at war with its
     government (the Viet Cong, the Pathet Lao, the Khmer Rouge, Biafra...), its end an annexation or its own

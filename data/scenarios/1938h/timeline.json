@@ -17083,6 +17083,13 @@
    "note": "The Treaty of San Francisco: Japan sovereign (Okinawa American still)"
   },
   {
+   "date": "1952-07-23",
+   "kind": "regime",
+   "nation": "EGY",
+   "aggression": 45,
+   "note": "The Free Officers' revolution: King Farouk deposed"
+  },
+  {
    "date": "1952-09-15",
    "kind": "transfer",
    "to": "ETH",
@@ -17211,6 +17218,13 @@
    ]
   },
   {
+   "date": "1953-08-19",
+   "kind": "regime",
+   "nation": "IRN",
+   "aggression": 30,
+   "note": "The coup in Iran: Mosaddegh deposed, the Shah restored"
+  },
+  {
    "date": "1953-10-22",
    "kind": "born",
    "nation": "LAO",
@@ -17260,6 +17274,13 @@
     ]
    ],
    "note": "The Amami Islands returned to Japan (Okinawa American still)"
+  },
+  {
+   "date": "1954-06-27",
+   "kind": "regime",
+   "nation": "GUA",
+   "aggression": 20,
+   "note": "Árbenz overthrown in a coup the United States backed"
   },
   {
    "date": "1954-07-21",
@@ -17650,6 +17671,13 @@
    "note": "Tarfaya (Cape Juby) to Morocco"
   },
   {
+   "date": "1958-07-14",
+   "kind": "regime",
+   "nation": "IRQ",
+   "aggression": 45,
+   "note": "The 14 July Revolution: Iraq's monarchy overthrown"
+  },
+  {
    "date": "1958-10-02",
    "kind": "born",
    "nation": "GUI",
@@ -17660,6 +17688,20 @@
     "GIN"
    ],
    "note": "Guinea votes no, and is independent"
+  },
+  {
+   "date": "1958-10-27",
+   "kind": "regime",
+   "nation": "PAK",
+   "aggression": 45,
+   "note": "Ayub Khan takes power in Pakistan"
+  },
+  {
+   "date": "1959-01-01",
+   "kind": "regime",
+   "nation": "CUB",
+   "aggression": 50,
+   "note": "The Cuban Revolution: Batista flees, Castro in power"
   },
   {
    "date": "1960-01-01",
@@ -17680,6 +17722,13 @@
    "note": "Gerboise Bleue: France's atomic bomb"
   },
   {
+   "date": "1960-04-26",
+   "kind": "regime",
+   "nation": "KOR",
+   "aggression": 25,
+   "note": "Rhee resigns after the April Revolution"
+  },
+  {
    "date": "1960-04-27",
    "kind": "born",
    "nation": "TOG",
@@ -17690,6 +17739,13 @@
     "TGO"
    ],
    "note": "Togo independent"
+  },
+  {
+   "date": "1960-05-27",
+   "kind": "regime",
+   "nation": "TUR",
+   "aggression": 35,
+   "note": "The army's coup in Turkey"
   },
   {
    "date": "1960-06-26",
@@ -17877,6 +17933,13 @@
    "note": "Mauritania independent"
   },
   {
+   "date": "1961-04-16",
+   "kind": "guarantee",
+   "guarantor": "SOV",
+   "target": "CUB",
+   "note": "Castro declares the revolution socialist: the Soviet Union stands by Cuba"
+  },
+  {
    "date": "1961-04-27",
    "kind": "born",
    "nation": "SLE",
@@ -17887,6 +17950,13 @@
     "SLE"
    ],
    "note": "Sierra Leone independent"
+  },
+  {
+   "date": "1961-05-16",
+   "kind": "regime",
+   "nation": "KOR",
+   "aggression": 35,
+   "note": "Park Chung-hee's coup"
   },
   {
    "date": "1961-06-19",
@@ -17966,6 +18036,13 @@
     "WSM"
    ],
    "note": "Western Samoa independent"
+  },
+  {
+   "date": "1962-03-02",
+   "kind": "regime",
+   "nation": "BUR",
+   "aggression": 15,
+   "note": "Ne Win's coup: the Burmese Way to Socialism"
   },
   {
    "date": "1962-07-01",

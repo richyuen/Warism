@@ -598,6 +598,12 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    */
   z.strictObject({ ...when, kind: z.literal('bomb'), nation: tag }),
   /**
+   * A regime change (R71a, ADR-992): a coup or a revolution. The nation's aggression (and its static command
+   * efficiency, as at the start) becomes `aggression`; told by its note. A nation's government drives no rule, so it is
+   * not set; its alignment is the `allianceJoin`, `allianceLeave` or `guarantee` of the same day.
+   */
+  z.strictObject({ ...when, kind: z.literal('regime'), nation: tag, aggression: z.number().int().min(0).max(100), note: z.string() }),
+  /**
    * A new name and flag (R62i4): from now on the nation bears the identity `as` (`nation.<as>` and its flag), as Siam
    * Thailand, British India India, Communist China the People's Republic.
    */
@@ -684,6 +690,7 @@ export function timelineTags(e: TimelineEvent): string[] {
     case 'withdraw':
     case 'nuke':
     case 'bomb':
+    case 'regime':
     case 'capital':
     case 'rename':
       return [e.nation];

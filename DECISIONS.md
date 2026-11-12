@@ -517,3 +517,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   on the land they hold (R71b), so the insurgencies of the period (Vietnam, Laos, Cambodia, Biafra) are the
   existing births, wars and annexations.
 
+### ADR-992 · 2026-11-12 · accepted — R71a: regime change
+- **Found:** a nation's government (the scenario's `government`) is stored nowhere in the world, shown nowhere and
+  read by no rule; what a coup can change in the game is a nation's aggression (peacetime army spending, the war AI
+  after the track, nuclear retaliation) and the static command efficiency the start derives from it, and its
+  alignment (alliances, guarantees: the existing events).
+- **The rule:** a `regime` event sets the nation's aggression and `ceStatic` (`staticCe`, as the start), told by its
+  note (a told kind); a nation not living is refused. No government label (a change of what ADR-991 said: nothing would
+  show it). Alignment: the same day's `allianceJoin`, `allianceLeave` or `guarantee`.
+- **Its first uses** (1952-62): Egypt 1952 (45), Iran 1953 (30), Guatemala 1954 (20), Iraq 1958 (45), Pakistan 1958
+  (45), Cuba 1959 (50) and the Soviet guarantee of Cuba (16 April 1961), South Korea 1960 (25) and 1961 (35), Turkey
+  1960 (35), Burma 1962 (15).
+- **Measured:** the nine replay tests and the pin green, the 1938-62 maps' lines identical; 20 years after the track
+  on seed 1938, the blocs' leaders never on opposite sides of a war (the guarantee of Cuba under deterrence), both
+  blocs whole. `docs/research/1963-75.md`: the next period's research (part of its dates checked against the web).
+

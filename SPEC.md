@@ -1731,6 +1731,8 @@ to 27 July 1953, then sets the world free.
   rule of `ownership.json`'s regions (a cell whose centre is inside). A `transfer` or `born` may name its land by the
   map's codes instead or as well (R69b, ADR-985): whole countries (`adm0`) and provinces (`adm1`); a transfer so named
   is a handover, with no window of fighting.
+- **Regime changes** (R71a, ADR-992): a `regime` event (a coup, a revolution) sets a nation's aggression and its static
+  command efficiency, told by its note; its alignment is the same day's alliance or guarantee events.
 - **Bombs** (R69f, ADR-989): a `bomb` event is a nation's test: it knows the bomb from then; while the track steers no
   nation it has not named goes for the bomb (researches it or builds warheads).
 - **Births and the end** (built, R62d, ADR-926): a `born` event gives an unborn nation its ring's land, its cores, its

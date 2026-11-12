@@ -9,6 +9,7 @@
  * sides, a nation joining one, a white peace and a guarantee have no command that does just that (the commands call
  * in allies, settle on the score), so the runner does them with the war's and the alliances' own parts.
  */
+import { staticCe } from './systems/efficiency';
 import { incomeRankOf } from './systems/research';
 import { grantTechs, knowsTechs, techMask } from './tech';
 import { dayOfIso } from '../shared/calendar';
@@ -765,6 +766,16 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       world.flagsVersion++;
       return Refusal.None;
     }
+    case 'regime': {
+      // A coup or a revolution (R71a, ADR-992): its aggression, and the command efficiency it sets at the start.
+      const n = id(e.nation);
+      const why = whyNot(world, n);
+      if (why) return why;
+      const nc = world.nations.cols;
+      nc.aggression[n] = e.aggression;
+      nc.ceStatic[n] = staticCe(e.aggression);
+      return Refusal.None;
+    }
     case 'bomb': {
       // The test (R69f, ADR-989): the nation knows the bomb from now (a `NuclearPower` row, as research's), and
       // `bombCleared` lets it build while the track steers.
@@ -929,6 +940,7 @@ function firstNation(t: Track, e: TimelineEvent): number {
     case 'withdraw':
     case 'nuke':
     case 'bomb':
+    case 'regime':
     case 'capital':
     case 'rename':
       return t.id(e.nation);
@@ -979,7 +991,7 @@ function applyDue(world: World, t: Track): void {
  * declared war on Japan" beside "The Soviet Union declares war on Japan" was told twice). Not the steering (`hold`,
  * `objective`, `buff`, `redeploy`): its notes are the builder's ("the timeline's stages").
  */
-export const TOLD_KINDS: ReadonlySet<TimelineEvent['kind']> = new Set(['transfer', 'occupy', 'withdraw', 'forces', 'capital', 'rename']);
+export const TOLD_KINDS: ReadonlySet<TimelineEvent['kind']> = new Set(['transfer', 'occupy', 'withdraw', 'forces', 'capital', 'rename', 'regime']);
 /** The steering's kinds: never the "Next" line's (R64b). */
 export const STEERING_KINDS: ReadonlySet<TimelineEvent['kind']> = new Set(['hold', 'objective', 'buff', 'redeploy']);
 
