@@ -621,3 +621,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **R71 done:** the replay runs from 1938 to the end of 1975 (ADR-991 to ADR-998). Next, by PROMPT's RELEASES: the
   critic of Batches 18 and 19 (held for R71 by the user's decision, ADR-991).
 
+
+### ADR-999 · 2026-11-12 · accepted (the user's decision) — The replay's starts cached in the deploy
+- **Context.** The Pages deploy took 20 minutes, 18 of them `npm run saves` (the replay stepped 1938-1975, serial,
+  about 28 s a year on the runner). Half of the last 60 commits changed nothing the sim reads.
+- **Decision.** `pages.yml` caches `dist/data/scenarios/1938h/start` (`actions/cache`), keyed on a hash of every input
+  of the sim: `src/sim`, `src/shared`, `data`, `public/data`, `tools/data`, `tools/headless`, `tests/helpers`, the
+  package and lock files, the tsconfigs. On a hit the saves are not built (a deploy of about 2 minutes).
+- **Consequences.** A sim input outside the key would deploy stale starts; the game's hash check
+  (`src/app/replayStart.ts`) throws on such a start rather than playing it. A new input of the sim outside those
+  paths joins the key. Speeding the sim itself is a separate question (not on the ROADMAP).

@@ -21,8 +21,16 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      # The historical replay's yearly starts (ROADMAP R68a, ADR-983): built here, never committed.
-      - run: npm run saves -- dist/data/scenarios/1938h/start
+      # The historical replay's yearly starts (ROADMAP R68a, ADR-983): built here, never committed. ~18 min, so
+      # cached on every input the sim reads; a push that changes none of them reuses the last build. A missed
+      # input would not pass silently: the game throws on a start whose hash is not the world built.
+      - id: saves-cache
+        uses: actions/cache@v4
+        with:
+          path: dist/data/scenarios/1938h/start
+          key: replay-saves-${{ hashFiles('src/sim/**', 'src/shared/**', 'data/**', 'public/data/**', 'tools/data/**', 'tools/headless/**', 'tests/helpers/**', 'package.json', 'package-lock.json', 'tsconfig*.json') }}
+      - if: steps.saves-cache.outputs.cache-hit != 'true'
+        run: npm run saves -- dist/data/scenarios/1938h/start
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

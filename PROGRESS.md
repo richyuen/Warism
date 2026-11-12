@@ -211,3 +211,5 @@
 - R71g, R71 done (ADR-998): 20 years after the 1975 handover on three seeds, the blocs whole and their leaders never
   at war; the aid flowing (the US 30-51 nations, the Soviet Union 45-62). The replay runs 1938-1975.
 
+- ADR-999 (the user's decision): the deploy caches the replay's starts on a hash of the sim's inputs; a push that
+  changes none of them deploys in about 2 minutes, not 20.
