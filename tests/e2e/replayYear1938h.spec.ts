@@ -48,42 +48,51 @@ test('a start from a year: the replay goes on, or is left; a year not built is r
   expect(errors).toEqual([]);
 });
 
-// ROADMAP R68c (ADR-983): the card of the historical replay offers 1938 and the years built for the site, and the
-// choice to replay on or play free; the year and the choice reach the game (1938 replayed on is the plain new game).
-test('the card: a year and replay or free reach the game', async ({ page }) => {
+// ROADMAP R68c (ADR-983; the user's decision of 2026-11-12: one card for 1938, a slider of years under its map): the
+// 1938 card offers 1938 and the years built for the site, and replay history or play free. Free from 1938 is the plain
+// 1938 game (its seed and options); the replay, or a later year free, the historical world with year and choice.
+test('the 1938 card: a slider of years, replay or free, reach the game', async ({ page }) => {
   test.setTimeout(240_000);
   await page.setViewportSize({ width: 1400, height: 800 });
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.route('**/data/scenarios/1938h/start/years.json', (r) => r.fulfill({ json: { format: STATE_FORMAT, seed: 1938, years: [{ year: 1938, tick: 0, hash: 0 }, { year: 1941, tick: 1, hash: 0 }] } }));
-  await page.goto('/');
-  await page.getByTestId('title-scenario-1938h').click();
-  const year = page.getByTestId('title-start-year');
-  await expect(year.locator('option')).toHaveText(['1 January 1938', '1 January 1941']);
-  await expect(page.getByTestId('title-mode-replay')).toHaveAttribute('aria-checked', 'true');
-  await page.screenshot({ path: test.info().outputPath('card-years.png') });
-  // 1938, replayed on: the new game, no year asked.
-  await Promise.all([page.waitForURL(/scenario=1938h/), page.getByTestId('settings-new-game').click()]);
-  let url = new URL(page.url());
-  expect([url.searchParams.get('year'), url.searchParams.get('mode')]).toEqual([null, null]);
-  // 1938, free: the new game, the track left at once.
-  await page.goto('/');
-  await page.getByTestId('title-scenario-1938h').click();
-  await page.getByTestId('title-mode-free').click();
-  await Promise.all([page.waitForURL(/mode=free/), page.getByTestId('settings-new-game').click()]);
-  url = new URL(page.url());
-  expect([url.searchParams.get('year'), url.searchParams.get('mode')]).toEqual(['1938', 'free']);
-  await ready(page);
-  await page.evaluate(() => window.__warsim!.sim.step(1));
-  await page.waitForFunction(() => (window.__warsim!.hud.stats.value?.tick ?? 0) > 0, null, { timeout: 30_000 });
-  expect(await page.evaluate(() => window.__warsim!.hud.stats.value!.trackNext)).toBeUndefined();
-  // 1941, replayed on: the year in the URL.
-  await page.goto('/');
-  await page.getByTestId('title-scenario-1938h').click();
-  await page.getByTestId('title-start-year').selectOption('1941');
   await page.route('**/data/scenarios/1938h/start/1941.sav', (r) => r.abort());
-  await Promise.all([page.waitForURL(/year=1941/), page.getByTestId('settings-new-game').click()]);
-  url = new URL(page.url());
-  expect([url.searchParams.get('year'), url.searchParams.get('mode')]).toEqual(['1941', 'replay']);
+  const card = async (): Promise<void> => {
+    await page.goto('/');
+    await expect(page.getByTestId('title-scenario-1938h')).toHaveCount(0);
+    await expect(page.getByTestId('title-chosen')).toHaveText('World, 1938');
+  };
+  const started = async (want: RegExp): Promise<URLSearchParams> => {
+    await Promise.all([page.waitForURL(want), page.getByTestId('settings-new-game').click()]);
+    return new URL(page.url()).searchParams;
+  };
+  // Free from 1938 (the card's own default): the plain 1938 game, its seed offered.
+  await card();
+  const slider = page.getByTestId('title-start-year');
+  await expect(slider).toHaveAttribute('min', '1938');
+  await expect(slider).toHaveAttribute('max', '1941');
+  await expect(page.getByTestId('title-mode-free')).toHaveAttribute('aria-checked', 'true');
+  await expect(page.getByTestId('settings-seed')).toBeVisible();
+  await page.screenshot({ path: test.info().outputPath('card-free-1938.png') });
+  let q = await started(/scenario=1938&/);
+  expect([q.get('year'), q.get('mode')]).toEqual([null, null]);
+  // Replay from 1938: the historical world, no seed offered, no year asked.
+  await card();
+  await page.getByTestId('title-mode-replay').click();
+  await expect(page.getByTestId('settings-seed')).toHaveCount(0);
+  await expect(page.getByTestId('settings-fixed')).toContainText('replay of history');
+  q = await started(/scenario=1938h/);
+  expect([q.get('year'), q.get('mode')]).toEqual([null, null]);
+  // 1941, replayed and free.
+  for (const mode of ['replay', 'free'] as const) {
+    await card();
+    await slider.fill('1941');
+    await expect(page.getByTestId('title-start-date')).toHaveText('1 January 1941');
+    await page.getByTestId(`title-mode-${mode}`).click();
+    if (mode === 'replay') await page.screenshot({ path: test.info().outputPath('card-replay-1941.png') });
+    q = await started(/year=1941/);
+    expect([q.get('scenario'), q.get('mode')]).toEqual(['1938h', mode]);
+  }
   expect(errors).toEqual([]);
 });

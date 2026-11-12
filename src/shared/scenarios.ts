@@ -147,8 +147,11 @@ export const SCENARIO_INFO: Record<ScenarioId, ScenarioInfo> = {
   random: { ...info('random', earthMap, scenarioRandom, RANDOM_NATIONS.default), nationsRange: RANDOM_NATIONS },
 };
 
-/** The scenarios the title screen offers, in its order (PLAN 1.43). */
-export const LISTED_SCENARIOS: readonly ScenarioId[] = (['1938', '1938h', 'random', 'toy'] as const).filter((id) => !SCENARIO_INFO[id].hidden);
+/**
+ * The scenarios the title screen offers, in its order (PLAN 1.43). The historical replay is 1938's card's (R68c, the
+ * user's decision of 2026-11-12: one card, a slider of years), not a scenario of its own on the list.
+ */
+export const LISTED_SCENARIOS: readonly ScenarioId[] = (['1938', 'random', 'toy'] as const).filter((id) => !SCENARIO_INFO[id].hidden);
 
 /**
  * Where a listed scenario's preview image is served, relative to the page (PLAN 1.43c): the

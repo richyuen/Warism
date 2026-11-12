@@ -56,13 +56,15 @@ describe("the historical track's scenario (ROADMAP R62a)", () => {
     expect(b.save()).toEqual(a.save());
   });
 
-  it('has a seed of its own and is offered with no seed or option; listed on the title screen (R62m)', () => {
+  it("has a seed of its own and is offered with no seed or option; the 1938 card's replay, not on the list (R62m, R68c)", () => {
     expect(SCENARIO_INFO['1938h'].fixedSeed).toBe(SEED_1938H);
     expect(SCENARIO_INFO['1938'].fixedSeed).toBeUndefined();
     expect(SCENARIO_INFO['1938h'].startDay).toBe(SCENARIO_INFO['1938'].startDay);
     expect(SCENARIO_INFO['1938h'].geometry).toEqual(SCENARIO_INFO['1938'].geometry);
-    // Hidden until the track replayed its years (R62a); listed after 1938 since the track runs to 1953 (R62m, ADR-948).
+    // Offered since the track runs to 1953 (R62m, ADR-948); as the 1938 card's "Replay history", not an entry of the
+    // title's list (R68c, ADR-983: the user's decision of 2026-11-12, one card).
     expect(SCENARIO_INFO['1938h'].hidden).toBe(false);
-    expect(LISTED_SCENARIOS.slice(0, 2)).toEqual(['1938', '1938h']);
+    expect(LISTED_SCENARIOS[0]).toBe('1938');
+    expect(LISTED_SCENARIOS).not.toContain('1938h');
   });
 });

@@ -165,4 +165,7 @@
   modes and a year not built (`tests/e2e/replayYear1938h.spec.ts`, the start served by the test).
 - R68c, R68 done: the 1938h card's "Start on" (1938 and the built years) and "Replay on" / "Play free"; 1938 needs no
   save (free: the track left at once). e2e of the card; the title and settings specs unchanged and green.
+- The user: a slider and one card. The title lists "World, 1938" and the random world; the 1938 card has the year
+  slider and "Replay history" / "Play free". A start's world is checked against `years.json`'s hash. The blocs gated
+  on the track's end, as ADR-981 said (nine replay tests green, pin unchanged).
 

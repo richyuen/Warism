@@ -34,19 +34,18 @@ test('1938h starts with its own seed; its new game offers no seed or option', as
   expect(errors).toEqual([]);
 });
 
-// ROADMAP R62m (ADR-948): the title screen lists the historical track after the 1938 world, with its own map and
-// words; its Start opens it, with a seed for after it and none of its own asked.
-test('the title lists 1938h after 1938; Start opens it', async ({ page }) => {
+// ROADMAP R62m (ADR-948), R68c (the user's decision of 2026-11-12): the historical track is the 1938 card's "Replay
+// history", with its own words; its Start opens it, with a seed for after it and none of its own asked.
+test('the 1938 card replays history; Start opens it', async ({ page }) => {
   test.setTimeout(180_000);
   await page.setViewportSize({ width: 1400, height: 800 });
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('/');
-  const items = page.locator('[data-testid^="title-scenario-"]');
-  await expect(items.nth(0)).toHaveAttribute('data-testid', 'title-scenario-1938');
-  await expect(items.nth(1)).toHaveAttribute('data-testid', 'title-scenario-1938h');
-  await page.getByTestId('title-scenario-1938h').click();
-  await expect(page.getByTestId('title-chosen')).toHaveText('World, 1938 — Historical');
+  await expect(page.getByTestId('title-scenario-1938h')).toHaveCount(0);
+  await page.getByTestId('title-scenario-1938').click();
+  await page.getByTestId('title-mode-replay').click();
+  await expect(page.getByTestId('title-chosen')).toHaveText('World, 1938');
   await expect(page.getByTestId('title-detail')).toContainText('Korean armistice');
   await expect(page.getByTestId('title-start-date')).toHaveText('1 January 1938');
   await expect(page.getByTestId('settings-seed')).toHaveCount(0);

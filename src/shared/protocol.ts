@@ -132,6 +132,8 @@ export interface SimStatus {
   hash: number;
   /** A load with `upgrade` (a scenario file, ROADMAP R53i): the hash of the bytes as given, and the sections added. */
   upgraded?: { fileHash: number; added: string[] };
+  /** A load with `after` (a start from a year, R68b): the world's hash as loaded, before the second seed was set. */
+  built?: number;
 }
 
 /** Per-nation record in `Snapshot.nations` (stride NATION_STRIDE). */

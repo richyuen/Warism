@@ -2575,3 +2575,18 @@ button.unit-icon.on {
     grid-column: 2;
   }
 }
+
+/* The replay's years under the 1938 card's map (ROADMAP R68c). */
+.title-years {
+  margin: 0.4rem 0 0.2rem;
+}
+.title-year-slider {
+  width: 100%;
+  accent-color: var(--ui-accent, #e8b84a);
+}
+.title-year-ends {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--ui-muted);
+}

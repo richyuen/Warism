@@ -417,6 +417,7 @@ export class SimServer {
         this.requireSim().load(up ? up.bytes : msg.bytes);
         // A start from a year of the historical track (R68b): the game's own second seed, not the built save's.
         const track = this.requireSim().world.track;
+        const built = msg.after !== undefined ? this.requireSim().hash() : undefined;
         if (msg.after !== undefined && track) track.afterSeed = msg.after >>> 0;
         this.worldNo++;
         this.newsFrom = -1;
@@ -439,6 +440,9 @@ export class SimServer {
         if (up) {
           const s = this.requireSim();
           this.post({ type: 'reply', reqId: msg.reqId, status: { tick: s.tick, hash: s.hash(), upgraded: { fileHash: up.fileHash, added: up.added } } }, []);
+        } else if (built !== undefined) {
+          const s = this.requireSim();
+          this.post({ type: 'reply', reqId: msg.reqId, status: { tick: s.tick, hash: s.hash(), built } }, []);
         } else this.reply(msg.reqId);
         this.warmLanes();
         break;

@@ -394,4 +394,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   workflow on each push to `main` and published with the site, never committed; the card picks a year, not a day
   (no fast-forward): a player lets the replay run to the exact point wanted. On the card, with the year, the choice
   of continuing the replay or playing free from it.
+- **Then (the user, 2026-11-12, after R68c's first card):** a slider under the map, not a list; and one card, not
+  "World, 1938" beside "World, 1938 — Historical". R68's "in place of" both cards: the historical one leaves the title's
+  list, its replay the 1938 card's "Replay history"; "Play free" from 1938 is the plain 1938 game, from a later year the
+  historical world left at once. Tests of the list (its count; the historical entry) changed with it.
+- **The blocs' gate** (ADR-981 said "once it has ended or been left", the code read any track): `world.track?.ended`,
+  so no bloc rule acts while the track steers (R69's nine more steered years). Nine replay tests and the pin unchanged.
 

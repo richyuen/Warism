@@ -54,6 +54,7 @@ if (scenarioId !== null) {
         scenarios={LISTED_SCENARIOS.map((id) => ({ id, info: SCENARIO_INFO[id] }))}
         previewUrl={(id) => new URL(scenarioPreviewPath(id), document.baseURI).href}
         onStart={(id, seed, options, start) => location.assign(newGameUrl(id, seed, options, start))}
+        replays={{ '1938': { id: '1938h', info: SCENARIO_INFO['1938h'] } }}
         startYears={replayYears}
         readSave={readSave}
         onContinue={() => {

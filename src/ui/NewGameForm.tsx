@@ -28,18 +28,7 @@ export interface NewGameFormProps {
    * Start starts that seed with the scenario's own options.
    */
   fixedSeed?: number | undefined;
-  /**
-   * With `fixedSeed`, the years of the historical replay a game can start from (ROADMAP R68c, ADR-983: 1 January of each
-   * one built for the site; 1938, the new world itself, always), and the choice to go on with the replay or play free.
-   */
-  startYears?: readonly number[] | undefined;
-  onStart: (seed: number, options: GameOptions, start?: ReplayStart) => void;
-}
-
-/** A game of the historical replay started from 1 January of `year`, the replay going on or left (`free`; R68c). */
-export interface ReplayStart {
-  year: number;
-  free: boolean;
+  onStart: (seed: number, options: GameOptions) => void;
 }
 
 /** A seed for a game nobody chose one for (app side only: it reaches the sim as the chosen seed). */
@@ -57,10 +46,8 @@ function withCe(opts: GameOptions, v: string): GameOptions {
  * The seed (or a random one) and the new-game options of PLAN 1.39b1, with the button that starts
  * the game. Shared by the title screen (PLAN 1.43) and the settings panel.
  */
-export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', diplomacy = false, heroes = false, startLabel, blocked, fixedSeed, startYears, onStart }: NewGameFormProps) {
+export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', diplomacy = false, heroes = false, startLabel, blocked, fixedSeed, onStart }: NewGameFormProps) {
   const [next, setNext] = useState(String(seed));
-  const [year, setYear] = useState(1938);
-  const [free, setFree] = useState(false);
   const [count, setCount] = useState(String(options.nations ?? nationsRange?.default ?? ''));
   const [opts, setOpts] = useState<GameOptions>(options);
   const sel = (testid: string, value: string, values: readonly string[], key: (v: string) => MessageKey, set: (v: string) => void) => (
@@ -83,36 +70,12 @@ export function NewGameForm({ seed, options, nationsRange, rangeHint = true, siz
     return nationsRange ? { ...own, nations: Number(count) } : own;
   };
   if (fixedSeed !== undefined) {
-    const years = startYears ? [...new Set([1938, ...startYears])].sort((a, b) => a - b) : null;
-    const start = (): ReplayStart | undefined => (years && (year !== 1938 || free) ? { year, free } : undefined);
     return (
       <div class="new-game">
         <p class="panel-note" data-testid="settings-fixed">
           {t('settings.fixedSeed')}
         </p>
-        {years ? (
-          <>
-            <label class="form-row">
-              <span class="form-name">{t('title.startYear')}</span>
-              <select data-testid="title-start-year" value={String(year)} onChange={(e) => setYear(Number((e.currentTarget as HTMLSelectElement).value))}>
-                {years.map((y) => (
-                  <option key={y} value={String(y)}>
-                    {t('title.startYearOption', { year: y })}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <div class="panel-tabs" role="radiogroup" aria-label={t('title.startMode')}>
-              <button type="button" role="radio" aria-checked={!free} class={free ? 'tab' : 'tab active'} data-testid="title-mode-replay" onClick={() => setFree(false)}>
-                {t('title.mode.replay')}
-              </button>
-              <button type="button" role="radio" aria-checked={free} class={free ? 'tab active' : 'tab'} data-testid="title-mode-free" onClick={() => setFree(true)}>
-                {t('title.mode.free')}
-              </button>
-            </div>
-          </>
-        ) : null}
-        <button type="button" class="start-btn" data-testid="settings-new-game" disabled={blocked !== undefined} title={blocked} onClick={() => onStart(fixedSeed, { after: randomSeed() || 1 }, start())}>
+        <button type="button" class="start-btn" data-testid="settings-new-game" disabled={blocked !== undefined} title={blocked} onClick={() => onStart(fixedSeed, { after: randomSeed() || 1 })}>
           {startLabel}
         </button>
         {blocked !== undefined ? (

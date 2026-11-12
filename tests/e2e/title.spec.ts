@@ -376,13 +376,14 @@ test('the title screen starts a random world with the chosen number of nations, 
   await page.setViewportSize({ width: 1400, height: 800 });
   await page.goto('/');
 
-  // Third on the list, after the 1938 world and its historical track (R62m); the 1938 world has no field for the number.
+  // Second on the list, after the 1938 world (its historical track the 1938 card's, R68c); the 1938 world has no field
+  // for the number.
   const items = page.locator('button[data-testid^="title-scenario-"]');
-  await expect(items).toHaveCount(3);
-  await expect(items.nth(2)).toHaveAttribute('data-testid', 'title-scenario-random');
-  await expect(items.nth(2)).toContainText('Random world');
+  await expect(items).toHaveCount(2);
+  await expect(items.nth(1)).toHaveAttribute('data-testid', 'title-scenario-random');
+  await expect(items.nth(1)).toContainText('Random world');
   await expect(page.getByTestId('settings-nations')).toHaveCount(0);
-  await items.nth(2).click();
+  await items.nth(1).click();
   await expect(page.getByTestId('title-chosen')).toHaveText('Random world');
   await expect(page.getByTestId('title-nations')).toHaveText('2 to 200');
   await expect(page.getByTestId('title-map')).toHaveText('Earth · 2048 × 1024');

@@ -72,7 +72,7 @@ test('what ends the replay is said before; the end is told in the ticker', async
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('/');
-  await page.getByTestId('title-scenario-1938h').click();
+  await page.getByTestId('title-mode-replay').click();
   await expect(page.getByTestId('settings-fixed')).toContainText(/ends the replay/i);
   await page.goto('/?scenario=1938h&paused=1&after=7');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });

@@ -4,7 +4,7 @@ import type { GameOptions } from '../shared/gameOptions';
 import type { ScenarioId } from '../shared/protocol';
 import type { ScenarioInfo } from '../shared/scenarios';
 import { t, type MessageKey } from './i18n';
-import { NewGameForm, type ReplayStart, randomSeed } from './NewGameForm';
+import { NewGameForm, randomSeed } from './NewGameForm';
 
 /** What the title screen shows of a saved game. */
 export interface SavedGame {
@@ -24,7 +24,11 @@ export interface TitleScreenProps {
   previewUrl: (id: ScenarioId) => string;
   /** Starts a new game of scenario `id` with `seed` and the new-game options. */
   onStart: (id: ScenarioId, seed: number, options: GameOptions, start?: ReplayStart) => void;
-  /** The years the historical replay can start from on this site (ROADMAP R68c; none without its built starts). */
+  /**
+   * A scenario's replay of history (ROADMAP R68c, the user's decision of 2026-11-12: one card for 1938, a slider of years
+   * under its map): the scenario it starts, and the years built for this site to start it from (1938 always).
+   */
+  replays?: Partial<Record<ScenarioId, { id: ScenarioId; info: ScenarioInfo }>>;
   startYears?: () => Promise<number[]>;
   /** The saved game to offer as Continue, if there is one (PLAN 1.43b). */
   readSave: () => Promise<SavedGame | null>;
@@ -48,7 +52,13 @@ export interface TitleScreenProps {
  * the scenario file loader; on the right the chosen scenario (a map of its start, its facts) with
  * its new-game form. No world runs behind it.
  */
-export function TitleScreen({ scenarios, previewUrl, onStart, startYears, readSave, onContinue, checkScenarioFile, onScenarioFile, loadFailed, saveFailed = false }: TitleScreenProps) {
+/** A game of the replay from 1 January of `year`, the replay going on or left (`free`; R68b-c). */
+export interface ReplayStart {
+  year: number;
+  free: boolean;
+}
+
+export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, startYears, readSave, onContinue, checkScenarioFile, onScenarioFile, loadFailed, saveFailed = false }: TitleScreenProps) {
   const [chosen, setChosen] = useState<ScenarioId>(scenarios[0]!.id);
   // A new seed per visit, so two games started without touching the field differ.
   const [seed] = useState(randomSeed);
@@ -61,7 +71,10 @@ export function TitleScreen({ scenarios, previewUrl, onStart, startYears, readSa
   // once, with no confirmation").
   const [pending, setPending] = useState<{ file: File; name: string; scenario: ScenarioId; startDay: number; tick: number; upgraded?: readonly 'traits'[] } | null>(null);
   // The replay's years built for this site (R68c); 1938 alone until read, or without them.
-  const [years, setYears] = useState<number[]>([]);
+  const [built, setYears] = useState<number[]>([]);
+  // On a card with a replay: replay history (or play free), from 1 January of `year`.
+  const [history, setHistory] = useState(false);
+  const [year, setYear] = useState(1938);
   useEffect(() => {
     void startYears?.()
       .then(setYears)
@@ -76,7 +89,12 @@ export function TitleScreen({ scenarios, previewUrl, onStart, startYears, readSa
     const d = dateOfTick(startDay, tick);
     return t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year });
   };
-  const info = scenarios.find((s) => s.id === chosen)!.info;
+  const own = scenarios.find((s) => s.id === chosen)!.info;
+  const replay = replays[chosen];
+  const years = replay ? [...new Set([1938, ...built])].sort((a, b) => a - b) : [];
+  // The replay's world: history replayed, or a later year's world played free.
+  const replayed = replay !== undefined && (history || year > 1938);
+  const info = replayed ? replay.info : own;
   return (
     <main class="title-screen" data-testid="title-screen" data-save={save === undefined ? 'reading' : save ? 'found' : 'none'}>
       <header class="title-head">
@@ -191,15 +209,24 @@ export function TitleScreen({ scenarios, previewUrl, onStart, startYears, readSa
         </div>
         <section class="title-card title-detail" data-testid="title-detail">
           <h2 class="title-sub" data-testid="title-chosen">
-            {t(info.nameKey as MessageKey)}
+            {t(own.nameKey as MessageKey)}
           </h2>
           <div class="title-detail-grid">
             <div>
               <img class="title-preview" data-testid="title-preview" src={previewUrl(chosen)} width={1024} height={512} alt={t(info.nationsRange ? 'title.previewAltExample' : 'title.previewAlt', { name: t(info.nameKey as MessageKey) })} />
-              <p class="title-desc">{t(info.descKey as MessageKey)}</p>
+              {replay && years.length > 1 ? (
+                <div class="title-years">
+                  <input type="range" class="title-year-slider" data-testid="title-start-year" min={years[0]} max={years.at(-1)} step={1} value={year} aria-label={t('title.startYear')} onInput={(e) => setYear(Number((e.currentTarget as HTMLInputElement).value))} />
+                  <div class="title-year-ends">
+                    <span>{years[0]}</span>
+                    <span>{years.at(-1)}</span>
+                  </div>
+                </div>
+              ) : null}
+              <p class="title-desc">{t((history && replay ? replay.info : own).descKey as MessageKey)}</p>
               <div class="form-row">
                 <span class="form-name">{t('title.startDate')}</span>
-                <span data-testid="title-start-date">{dateAt(info.startDay, 0)}</span>
+                <span data-testid="title-start-date">{replay ? t('title.startYearOption', { year }) : dateAt(info.startDay, 0)}</span>
               </div>
               <div class="form-row">
                 <span class="form-name">{t('title.map')}</span>
@@ -212,7 +239,23 @@ export function TitleScreen({ scenarios, previewUrl, onStart, startYears, readSa
                 <span data-testid="title-nations">{info.nationsRange ? t('settings.nationsRange', { min: info.nationsRange.min, max: info.nationsRange.max }) : info.nations}</span>
               </div>
             </div>
-            <NewGameForm key={chosen} seed={seed} options={{}} nationsRange={info.nationsRange} sizes={info.sizes} defaultSize={info.defaultSize} diplomacy={info.diplomacy} heroes={info.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={info.fixedSeed} startYears={info.fixedSeed !== undefined && startYears ? years : undefined} onStart={(s, o, start) => onStart(chosen, s, o, start)} />
+            <div>
+              {replay ? (
+                <div class="panel-tabs" role="radiogroup" aria-label={t('title.startMode')}>
+                  <button type="button" role="radio" aria-checked={history} class={history ? 'tab active' : 'tab'} data-testid="title-mode-replay" onClick={() => setHistory(true)}>
+                    {t('title.mode.replay')}
+                  </button>
+                  <button type="button" role="radio" aria-checked={!history} class={history ? 'tab' : 'tab active'} data-testid="title-mode-free" onClick={() => setHistory(false)}>
+                    {t('title.mode.free')}
+                  </button>
+                </div>
+              ) : null}
+              {replay && replayed ? (
+                <NewGameForm key={`${chosen}-replay`} seed={seed} options={{}} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={replay.info.fixedSeed} onStart={(s, o) => onStart(replay.id, s, o, history && year === 1938 ? undefined : { year, free: !history })} />
+              ) : (
+                <NewGameForm key={chosen} seed={seed} options={{}} nationsRange={info.nationsRange} sizes={info.sizes} defaultSize={info.defaultSize} diplomacy={info.diplomacy} heroes={info.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={info.fixedSeed} onStart={(s, o) => onStart(chosen, s, o)} />
+              )}
+            </div>
           </div>
         </section>
       </div>
