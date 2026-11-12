@@ -4,7 +4,7 @@ import { declareWar } from '../../src/sim/systems/war';
 import { historyTrack } from '../helpers/historyTrack';
 
 // ROADMAP R62k (ADR-947): the historical track's checker (`tests/helpers/historyTrack.ts`) from 1938 to the track's
-// end; and red on a war the timeline does not have.
+// end; and red on a war the timeline does not have. At its end the blocs it hands over stand (R67b).
 // The bar is the scenario's own seed, the one every game plays (ADR-950, the user's decision of 2026-11-10). Five other
 // seeds warn of steering that holds by luck alone (a rule changed anywhere moves the own seed's course as a new seed
 // would): their broken lines are printed, `WARNING historyTrack`, and each one found at a release check becomes a
@@ -17,6 +17,14 @@ describe('the historical track checked to its end (ROADMAP R62k)', () => {
     expect(run.sim.world.track!.ended).toBe(true);
     expect(run.lines).toEqual([]);
     expect(run.skipped).toEqual([]);
+    // R67b (ADR-980): the blocs it hands over, each under its leader with its members.
+    const w = run.sim.world;
+    const id = (t: string): number => TAGS_1938H.indexOf(t) + 1;
+    const members = (leader: string): string[] => (w.alliances.allianceOf(id(leader))?.members ?? []).map((n) => TAGS_1938H[n - 1]!).sort();
+    expect(w.alliances.allianceOf(id('USA'))?.leader).toBe(id('USA'));
+    expect(members('USA')).toEqual(['BEL', 'DEN', 'ENG', 'FRA', 'GRE', 'ICE', 'ITA', 'LUX', 'NED', 'NOR', 'POR', 'TUR', 'USA'].sort());
+    expect(w.alliances.allianceOf(id('SOV'))?.leader).toBe(id('SOV'));
+    expect(members('SOV')).toEqual(['ALB', 'BUL', 'CCP', 'CZS', 'GDR', 'HUN', 'MON', 'POL', 'ROM', 'SOV'].sort());
   });
 
   it('a war the timeline does not have is found', () => {

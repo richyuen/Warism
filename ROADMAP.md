@@ -113,7 +113,7 @@ Batches 19 and 18 together (ADR-966).
   the blocs' leaders in N years on the own seed and others; the sweep's bands kept.
   Split (ADR-979; measured by `tools/diag/afterTrack.ts`, which saves the world at the track's end):
   - [x] R67a The measure: the 20 years after the track on seeds 1938, 1, 2 (ADR-979's baseline).
-  - [ ] R67b The blocs the replay hands over: NATO (1949; Greece and Turkey 1952) under the United States and the
+  - [x] R67b The blocs the replay hands over (ADR-980): NATO (1949; Greece and Turkey 1952) under the United States and the
     Soviet bloc (the people's democracies, 1947-49) under the Soviet Union, as alliances of the timeline. AT: at the
     track's end both stand with their members; the nine replay tests.
   - [ ] R67c Lasting blocs, every game: an alliance led by a nuclear power keeps its great powers (rivals apart,

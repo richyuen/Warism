@@ -144,3 +144,8 @@
   hands over no NATO and no Soviet bloc, the Soviet Union nearly broke, and it attacks its own satellites. R67 split
   into b (blocs handed over), c (lasting blocs), d (deterrence), e (proxies).
 
+## 2026-11-12 — R67b: NATO and the Eastern Bloc handed over (ADR-980)
+
+- The timeline forms the Eastern Bloc (1947-50) and NATO (1949, 1952); both stand at the track's end with their
+  members (checked by `historyTrack1938h`). Nine replay tests green.
+

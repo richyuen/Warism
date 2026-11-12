@@ -15224,6 +15224,71 @@
    "note": "The Paris treaties in force: Hungary sovereign"
   },
   {
+   "date": "1947-09-22",
+   "kind": "allianceLeave",
+   "nation": "SOV",
+   "note": "The Comintern's pact ends: the Eastern Bloc"
+  },
+  {
+   "date": "1947-09-22",
+   "kind": "allianceLeave",
+   "nation": "MON"
+  },
+  {
+   "date": "1947-09-22",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "POL",
+   "leader": "SOV",
+   "nameKey": "alliance.eastern_bloc",
+   "note": "The Cominform: Poland"
+  },
+  {
+   "date": "1947-09-22",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "CZS",
+   "leader": "SOV",
+   "nameKey": "alliance.eastern_bloc",
+   "note": "Czechoslovakia"
+  },
+  {
+   "date": "1947-09-22",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "HUN",
+   "leader": "SOV",
+   "nameKey": "alliance.eastern_bloc",
+   "note": "Hungary"
+  },
+  {
+   "date": "1947-09-22",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "ROM",
+   "leader": "SOV",
+   "nameKey": "alliance.eastern_bloc",
+   "note": "Romania"
+  },
+  {
+   "date": "1947-09-22",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "BUL",
+   "leader": "SOV",
+   "nameKey": "alliance.eastern_bloc",
+   "note": "Bulgaria"
+  },
+  {
+   "date": "1947-09-22",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "MON",
+   "leader": "SOV",
+   "nameKey": "alliance.eastern_bloc",
+   "note": "Mongolia"
+  },
+  {
    "date": "1948-01-04",
    "kind": "release",
    "subject": "BUR",
@@ -15587,6 +15652,14 @@
    "note": "Huaihai and Pingjin: Beijing"
   },
   {
+   "date": "1949-02-22",
+   "kind": "allianceJoin",
+   "nation": "ALB",
+   "leader": "SOV",
+   "nameKey": "alliance.eastern_bloc",
+   "note": "Comecon: Albania"
+  },
+  {
    "date": "1949-02-24",
    "kind": "leave",
    "nations": [
@@ -15612,6 +15685,94 @@
    ],
    "against": "ISR",
    "note": "With Transjordan"
+  },
+  {
+   "date": "1949-04-04",
+   "kind": "allianceLeave",
+   "nation": "ENG",
+   "note": "The Anglo-French pact gives way to NATO (France left alone in it, it ends)"
+  },
+  {
+   "date": "1949-04-04",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "ENG",
+   "leader": "USA",
+   "nameKey": "alliance.nato",
+   "note": "The North Atlantic Treaty: Britain"
+  },
+  {
+   "date": "1949-04-04",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "FRA",
+   "leader": "USA",
+   "nameKey": "alliance.nato",
+   "note": "France"
+  },
+  {
+   "date": "1949-04-04",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "BEL",
+   "leader": "USA",
+   "nameKey": "alliance.nato"
+  },
+  {
+   "date": "1949-04-04",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "NED",
+   "leader": "USA",
+   "nameKey": "alliance.nato"
+  },
+  {
+   "date": "1949-04-04",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "LUX",
+   "leader": "USA",
+   "nameKey": "alliance.nato"
+  },
+  {
+   "date": "1949-04-04",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "NOR",
+   "leader": "USA",
+   "nameKey": "alliance.nato"
+  },
+  {
+   "date": "1949-04-04",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "DEN",
+   "leader": "USA",
+   "nameKey": "alliance.nato"
+  },
+  {
+   "date": "1949-04-04",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "ITA",
+   "leader": "USA",
+   "nameKey": "alliance.nato"
+  },
+  {
+   "date": "1949-04-04",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "POR",
+   "leader": "USA",
+   "nameKey": "alliance.nato"
+  },
+  {
+   "date": "1949-04-04",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "ICE",
+   "leader": "USA",
+   "nameKey": "alliance.nato"
   },
   {
    "date": "1949-04-10",
@@ -16201,7 +16362,7 @@
    "kind": "allianceJoin",
    "nation": "CCP",
    "leader": "SOV",
-   "nameKey": "alliance.comintern",
+   "nameKey": "alliance.eastern_bloc",
    "note": "The Sino-Soviet treaty"
   },
   {
@@ -16584,6 +16745,14 @@
    "note": "Seoul retaken"
   },
   {
+   "date": "1950-09-29",
+   "kind": "allianceJoin",
+   "nation": "GDR",
+   "leader": "SOV",
+   "nameKey": "alliance.eastern_bloc",
+   "note": "Comecon: East Germany"
+  },
+  {
    "date": "1950-10-19",
    "kind": "join",
    "nation": "CCP",
@@ -16849,6 +17018,22 @@
      37.75
     ]
    ]
+  },
+  {
+   "date": "1952-02-18",
+   "kind": "allianceJoin",
+   "nation": "GRE",
+   "leader": "USA",
+   "nameKey": "alliance.nato",
+   "note": "NATO: Greece"
+  },
+  {
+   "date": "1952-02-18",
+   "kind": "allianceJoin",
+   "nation": "TUR",
+   "leader": "USA",
+   "nameKey": "alliance.nato",
+   "note": "NATO: Turkey"
   },
   {
    "date": "1952-04-28",

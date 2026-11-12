@@ -347,3 +347,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   windows, 9.4-9.5 ms without: the armies now on the held fronts make the cost (combat's pairs, found and refused across
   a hold), the windows a quarter more.
 
+### ADR-980 · 2026-11-12 · accepted — R67b: NATO and the Eastern Bloc in the timeline
+- **The events:** on 22 September 1947 (the Cominform) the Soviet Union and Mongolia leave the Comintern's pact of 1938
+  and the Eastern Bloc forms under the Soviet Union with Poland, Czechoslovakia, Hungary, Romania, Bulgaria and
+  Mongolia; Albania joins on 22 February 1949 and East Germany on 29 September 1950 (Comecon), Communist China on
+  14 February 1950 (the Sino-Soviet treaty, joined before to the Comintern's pact). On 4 April 1949 Britain leaves the
+  Anglo-French pact (France left alone in it, it ends) and the North Atlantic Treaty forms under the United States
+  with Britain, France, Belgium, the Netherlands, Luxembourg, Norway, Denmark, Italy, Portugal and Iceland (Canada a
+  dominion of Britain's); Greece and Turkey join on 18 February 1952. Yugoslavia, out of the Cominform in 1948, in
+  neither. Names `alliance.nato`, `alliance.eastern_bloc`.
+- **AT:** `historyTrack1938h` checks both at the track's end, each under its leader with these members. The nine replay
+  tests green, no event passed over; pin unchanged. A first try had France leave the Anglo-French pact too, refused
+  (it had ended with Britain's leaving).
+
