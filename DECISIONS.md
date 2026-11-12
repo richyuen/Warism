@@ -304,3 +304,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
   Japanese cohort lost on seed 1938 is outside any window (no hold there before July 1942). `kept` on `redeploy` has
   no data now (R66e uses it or removes it).
 
+### ADR-978 · 2026-11-12 · accepted — R66e: the 1945-53 stages; R66 done
+- **Windows for `transfer`s:** a `transfer` is a stage as an `occupy` is (`Track.openStages`): its `to` the taker of
+  its `from`'s land, its window the same (FIGHT_DAYS, the area, land only to the taker's side and of its land, shut
+  while far outnumbered). A transfer changes owners, so its land is never already given; it sets nobody down. Those
+  between nations at peace have no foes and no window.
+- **The armies** (`forces`, `kept`): the Communist Northeast Field Army at Harbin for Liaoshen (30 divisions), the
+  armies for Huaihai and Pingjin at Jinzhou (30), the Second and Third Field Armies at Bengbu for the Yangtze (30), the
+  First at Tianshui for the northwest (15), the Fourth at Yueyang for the south (30), the People's Volunteers over the
+  Yalu on 19 October 1950 (30, kept for the offensives of 4 January 1951).
+- **Kept to the stage:** a kept arrival is the AI's from its window's opening (`playerHeld`) but its order lasts to
+  the stage, and the month-start budget disbands no formation on an order (`economic.ts`). Before, on seed 1938 the
+  Communists, unable to pay for them, disbanded 15 of the Liaoshen arrivals on 1 November 1948 (lost 109k of 212k,
+  the Nationalists 2k); now 3k. `kept` on `redeploy` removed (no data used it, ADR-977).
+- **Measured** (`tools/diag/trackFronts.ts 1945-09-01 1953-08-01`): 10 large land fronts; both sides near at 7; both
+  engaged at the stage's hour at 2 (seeds 1, 2: 4, 4; before, 2, 1, 0), both engaged through most of the window at
+  Liaoshen, the Yangtze, the northwest, the south, the north of Korea and the Chinese offensives. The reasons not:
+  Japan occupied and Korea south of the 38th parallel (1945) are surrenders, no army of Japan's there; Seoul retaken
+  has no North Korean army near (the Inchon landing would give the taker men, not a defender); Huaihai's Communists
+  stand outside the band at its window's opening (Jinzhou) and reach it late. 1942-45 unchanged above the bar: 12 of
+  20 `occupy` fronts on seed 1938 (seeds 1, 2: 8, 9). The nine replay tests green (strays 0.52 % 1941, 0.12 % 1950,
+  0.13 % 1953; no event passed over); pin unchanged.
+

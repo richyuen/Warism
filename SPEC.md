@@ -1763,8 +1763,9 @@ to 27 July 1953, then sets the world free.
   formations a stage leaves behind its line, of `withdraw` or `occupy`, set down on the nearest land of their own or
   an ally's in the war, two to a cell at most, the pool only for one with none within reach over land (R66c, ADR-968). For FIGHT_DAYS (7) before an `occupy` stage the hold is lifted in its
   area (its ring's box and 120 km) for its taker's side and their foes; land goes across it only to the taker's side and
-  only of the stage's land; no window opens while its taker's side has under a third of its foes' men on land in the area (ADR-977); a stage whose land its taker's side holds already is fulfilled (R66d, ADR-975). A `forces` or `redeploy` event's `kept` date keeps its
-  formations from the AI until that stage's window opens; a `forces` arrival on an enemy's land makes its cell its own, a
+  only of the stage's land; no window opens while its taker's side has under a third of its foes' men on land in the area (ADR-977); a stage whose land its taker's side holds already is fulfilled (R66d, ADR-975). A `forces` event's `kept` date keeps its formations
+  from the AI until that stage's window opens and from disbanding until the stage (R66e); a `transfer` between nations
+  at war has a window as an `occupy` has (ADR-978); a `forces` arrival on an enemy's land makes its cell its own, a
   beachhead (R66d, ADR-976). The Pacific opening
   (R62g4, ADR-934): Pearl Harbor, 11 December's declarations, the first month's conquests by stages. From 1942 the
   fronts are held between their stages and move by them alone (R62h0, ADR-935); stages both ways, Italy's

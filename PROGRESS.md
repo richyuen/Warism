@@ -132,3 +132,9 @@
 - Moscow's Soviets were destroyed in their window (305k of 305k); a window now opens only while its taker's side has a
   third of its foes' men there. Moscow 11-13 % lost; 11 of 20 fronts fought on seed 1938. Corrections to ADR-976.
 
+## 2026-11-12 — R66e done: the 1945-53 stages (ADR-978); R66 done
+
+- Windows for `transfer`s; Communist field armies and the People's Volunteers as kept arrivals; kept arrivals not
+  disbanded before their stage (Liaoshen's 109k lost to the budget now 3k). 1945-53: both engaged at the hour at 2 of
+  10 (seeds 1, 2: 4), most fighting in their windows; reasons for the rest. Nine replay tests green.
+

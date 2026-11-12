@@ -579,7 +579,7 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * wings go too, wherever they are.
    */
   z.strictObject({ ...when, kind: z.literal('withdraw'), nation: tag, ring, captured: z.boolean().optional(), fleets: z.boolean().optional(), note: z.string().optional() }),
-  z.strictObject({ ...when, kind: z.literal('redeploy'), nation: tag, from: ring, to: z.array(lonLat).min(1), share: z.number().gt(0).max(1), kept: date.optional() }),
+  z.strictObject({ ...when, kind: z.literal('redeploy'), nation: tag, from: ring, to: z.array(lonLat).min(1), share: z.number().gt(0).max(1) }),
   /**
    * A nuclear strike of the timeline's (R62h3: Hiroshima, Nagasaki): a fission warhead of `nation`'s bursts at `at`,
    * its effects a launch's, with no stockpile, bomber or toggle asked. The AI strikes nothing while the track steers.

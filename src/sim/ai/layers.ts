@@ -10,7 +10,8 @@
  * move until it arrives, a wing's rebase until it lands, a wing's mission for a day. The AI then
  * has it back, and may undo the order at once.
  */
-import type { World } from '../world';
+import { FIGHT_DAYS } from '../track';
+import { PlayerOrderKind, type World } from '../world';
 
 export const AiLayer = {
   /** Fronts, invasions, merging hollow divisions. */
@@ -38,7 +39,11 @@ export function aiRuns(world: World, n: number, layer: AiLayer): boolean {
   return world.nations.cols.aiOff[n] !== 1 && (n !== world.settings.player || n === 0 || (world.playerAi & layer) !== 0);
 }
 
-/** Whether formation `id` is on a direct order of the player's, which the AI leaves alone. */
+/**
+ * Whether formation `id` is on a direct order of the player's, which the AI leaves alone; or an arrival of the historical
+ * track kept for its stage until the stage's window of fighting opens (R66d, `PlayerOrderKind.kept`).
+ */
 export function playerHeld(world: World, id: number): boolean {
-  return world.playerOrders.has(id);
+  const o = world.playerOrders.get(id);
+  return o !== undefined && (o.kind !== PlayerOrderKind.kept || world.tick < o.until - FIGHT_DAYS * 24);
 }

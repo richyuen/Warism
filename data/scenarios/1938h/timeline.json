@@ -15407,6 +15407,19 @@
    "note": "The Democratic People's Republic of Korea"
   },
   {
+   "date": "1948-09-12",
+   "kind": "forces",
+   "nation": "CCP",
+   "template": "light_infantry_div",
+   "count": 30,
+   "at": [
+    126.6,
+    45.75
+   ],
+   "note": "The Chinese Communist Northeast Field Army for Liaoshen",
+   "kept": "1948-11-02"
+  },
+  {
    "date": "1948-11-02",
    "kind": "withdraw",
    "nation": "CHI",
@@ -15508,6 +15521,19 @@
    "note": "Liaoshen: Manchuria"
   },
   {
+   "date": "1948-12-20",
+   "kind": "forces",
+   "nation": "CCP",
+   "template": "light_infantry_div",
+   "count": 30,
+   "at": [
+    121.1,
+    41.1
+   ],
+   "note": "The Chinese Communist armies for Huaihai and Pingjin",
+   "kept": "1949-01-31"
+  },
+  {
    "date": "1949-01-31",
    "kind": "withdraw",
    "nation": "CHI",
@@ -15586,6 +15612,19 @@
    ],
    "against": "ISR",
    "note": "With Transjordan"
+  },
+  {
+   "date": "1949-04-10",
+   "kind": "forces",
+   "nation": "CCP",
+   "template": "light_infantry_div",
+   "count": 30,
+   "at": [
+    117.4,
+    32.95
+   ],
+   "note": "The Chinese Communist Second and Third Field Armies at the Yangtze",
+   "kept": "1949-05-27"
   },
   {
    "date": "1949-04-26",
@@ -15834,6 +15873,19 @@
    "note": "Iraq withdraws"
   },
   {
+   "date": "1949-08-10",
+   "kind": "forces",
+   "nation": "CCP",
+   "template": "light_infantry_div",
+   "count": 15,
+   "at": [
+    106.0,
+    34.5
+   ],
+   "note": "The Chinese Communist First Field Army for the northwest",
+   "kept": "1949-09-25"
+  },
+  {
    "date": "1949-09-25",
    "kind": "withdraw",
    "nation": "CHI",
@@ -16017,6 +16069,19 @@
     ]
    ],
    "note": "The German Democratic Republic"
+  },
+  {
+   "date": "1949-11-10",
+   "kind": "forces",
+   "nation": "CCP",
+   "template": "light_infantry_div",
+   "count": 30,
+   "at": [
+    113.1,
+    29.4
+   ],
+   "note": "The Chinese Communist Fourth Field Army for the south",
+   "kept": "1949-12-27"
   },
   {
    "date": "1949-12-07",
@@ -16525,6 +16590,19 @@
    "beside": "PRK",
    "against": "KOR",
    "note": "The People's Volunteers"
+  },
+  {
+   "date": "1950-10-19",
+   "kind": "forces",
+   "nation": "CCP",
+   "template": "light_infantry_div",
+   "count": 30,
+   "at": [
+    124.4,
+    40.15
+   ],
+   "note": "The Chinese People's Volunteers cross the Yalu",
+   "kept": "1951-01-04"
   },
   {
    "date": "1950-11-24",

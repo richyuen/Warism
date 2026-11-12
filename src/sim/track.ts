@@ -67,11 +67,6 @@ function outnumbered(world: World, s: OpenStage): boolean {
   return mine < theirs * FIGHT_OUTNUMBERED;
 }
 
-/** The hour a `kept` arrival is the AI's again (R66d): its stage's window of fighting opens. */
-function keptUntil(t: Track, date: string): number {
-  return t.tickOf(date) - FIGHT_DAYS * 24;
-}
-
 /** Whether `n` is of `by`'s side: `by`, or an ally in its war. */
 function takerSide(world: World, n: number, by: number): boolean {
   return n === by || world.wars.sameSide(n, by);
@@ -253,8 +248,9 @@ export class Track {
       const due = this.ticks[i]!;
       if (due - tick > FIGHT_DAYS * 24) break;
       const e = this.events[i]!;
-      if (e.kind !== 'occupy') continue;
-      const s = this.area(world, i, e);
+      // An `occupy`, or a `transfer` (R66e, ADR-978: the civil war in China): its `to` the taker of its `from`'s land.
+      if (e.kind !== 'occupy' && e.kind !== 'transfer') continue;
+      const s = e.kind === 'occupy' ? this.area(world, i, e.by, e.of, e.ring) : this.area(world, i, e.to, e.from, e.ring);
       // Not while its taker's side is far outnumbered in its area (ADR-977): the Soviets before Moscow, a fifth of
       // the Germans there, were destroyed in the window, every man of 305k, before their own stage.
       if (outnumbered(world, s)) continue;
@@ -265,23 +261,23 @@ export class Track {
   }
 
   /** A stage's area at a map's size (geometry only: cached). */
-  private area(world: World, i: number, e: Extract<TimelineEvent, { kind: 'occupy' }>): OpenStage {
+  private area(world: World, i: number, by: string, of: readonly string[], ring: readonly (readonly [number, number])[]): OpenStage {
     const { w, h } = world.cells;
     let a = this.areas.get(i);
     if (a?.w !== w) {
       const band = FIGHT_BAND_KM / kmPerCell(w);
       let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity];
-      for (const [lo, la] of e.ring) {
+      for (const [lo, la] of ring) {
         const [u, v] = project(lo, la);
         [x0, x1, y0, y1] = [Math.min(x0, u * w), Math.max(x1, u * w), Math.min(y0, v * h), Math.max(y1, v * h)];
       }
-      a = { w, x0: x0 - band, x1: x1 + band, y0: y0 - band, y1: y1 + band, ring: new Set(ringCells(world, e.ring)) };
+      a = { w, x0: x0 - band, x1: x1 + band, y0: y0 - band, y1: y1 + band, ring: new Set(ringCells(world, ring)) };
       this.areas.set(i, a);
     }
     const box = a;
     return {
-      by: this.id(e.by),
-      of: new Set(e.of.map((g) => this.id(g))),
+      by: this.id(by),
+      of: new Set(of.map((g) => this.id(g))),
       inArea: (c: number) => {
         const x = (c % w) + 0.5;
         const y = Math.floor(c / w) + 0.5;
@@ -702,10 +698,11 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       const holder = world.cells.controller[cell]!;
       if (why === Refusal.None && holder !== 0 && world.wars.atWar(holder, id(e.nation))) world.setController(cell, id(e.nation), false, FlipCause.landing);
       // Kept where they arrive for the stage they came for (`kept`, R66d, ADR-976): the AI leaves them be until its
-      // window of fighting opens (FIGHT_DAYS before its date), then has them for the attack. Before, it shipped two of
-      // the Japanese 25th Army's three divisions to the objectives of Manila and Borneo before Malaya's stage.
+      // window of fighting opens (FIGHT_DAYS before its date, `playerHeld`), then has them for the attack; nobody
+      // disbands them before the stage (R66e, ADR-978). Before, the AI shipped two of the Japanese 25th Army's three
+      // divisions to the objectives of Manila and Borneo before Malaya's stage.
       if (e.kept !== undefined) {
-        const until = keptUntil(t, e.kept);
+        const until = t.tickOf(e.kept);
         world.formations.forEach((i) => {
           if (!before.has(i)) world.playerOrders.set(i, { kind: PlayerOrderKind.kept, until, through: false });
         });
@@ -794,10 +791,7 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       let sent = 0;
       ids.slice(0, Math.round(ids.length * e.share)).forEach((i, k) => {
         const [u, v] = project(...e.to[k % e.to.length]!);
-        if (applyCommand(world, { kind: 'moveFormation', id: i, x: u * w, y: v * h, nation: n }) !== Refusal.None) return;
-        sent++;
-        // Kept on the march and where it ends until its stage (R66d): a march of the AI's would be undone the next hour.
-        if (e.kept !== undefined) world.playerOrders.set(i, { kind: PlayerOrderKind.kept, until: keptUntil(t, e.kept), through: false });
+        if (applyCommand(world, { kind: 'moveFormation', id: i, x: u * w, y: v * h, nation: n }) === Refusal.None) sent++;
       });
       return sent > 0 ? Refusal.None : Refusal.NoEffect;
     }

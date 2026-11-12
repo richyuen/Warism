@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { playerHeld } from '../../src/sim/ai/layers';
 import type { TimelineFile } from '../../src/sim/data/schemas';
 import { kmPerCell, project } from '../../src/sim/data/projection';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
@@ -71,7 +72,7 @@ describe('a window of fighting before a stage (ROADMAP R66d)', () => {
     expect(fought).toBeGreaterThan(0);
   });
 
-  it("the timeline's arrivals on an enemy's land: a beachhead, and kept from the AI until the window opens", () => {
+  it("the timeline's arrivals on an enemy's land: a beachhead, kept from the AI until the window opens, on an order to the stage", () => {
     // Twelve German divisions put down at Łódź, in Poland's land, on 2 January for the stage of the 15th.
     const at: [number, number] = [19.46, 51.76];
     const tl: TimelineFile = { events: [...TL.events.slice(0, 2), { date: '1938-01-02', kind: 'forces', nation: 'GER', template: 'infantry_div', count: 12, at, kept: '1938-01-15' }, ...TL.events.slice(2)] };
@@ -94,6 +95,10 @@ describe('a window of fighting before a stage (ROADMAP R66d)', () => {
       expect(Math.hypot(f.x[i]! - start[k]![0], f.y[i]! - start[k]![1])).toBeLessThan(1.5);
     });
     sim.step(2, quiet);
+    // The AI's from the window's opening; the order, which keeps them from the budget's disbanding, over at the stage.
+    for (const i of kept) expect(playerHeld(w, i)).toBe(false);
+    for (const i of kept) if (w.formations.has(i)) expect(w.playerOrders.has(i)).toBe(true);
+    sim.step(STAGE + 1 - sim.tick, quiet);
     for (const i of kept) expect(w.playerOrders.has(i)).toBe(false);
   });
 

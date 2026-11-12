@@ -470,7 +470,8 @@ export function economicAi(tables: EconomyTables, mix: BuildMix): (world: World)
           laid++;
         }
         if (laid > 0) world.out.emit(world.tick, EventKind.FleetsLaidUp, n, laid, NaN, NaN);
-        const idle = (own.get(n) ?? []).filter((id) => f.engaged[id] !== 1 && !playerHeld(world, id) && !world.heroes.has(id)).sort((a, b) => armourOf(a) - armourOf(b) || f.strength[a]! - f.strength[b]! || a - b);
+        // Not one on an order (the player's; the historical track's arrivals until their stage, R66e).
+        const idle = (own.get(n) ?? []).filter((id) => f.engaged[id] !== 1 && !world.playerOrders.has(id) && !world.heroes.has(id)).sort((a, b) => armourOf(a) - armourOf(b) || f.strength[a]! - f.strength[b]! || a - b);
         let cut = 0;
         for (const id of idle) {
           if (balance >= need || nc.gold[n]! >= RUNWAY_MONTHS * (need - balance)) break;

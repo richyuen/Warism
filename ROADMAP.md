@@ -71,7 +71,7 @@ Before Batch 18: two are regressions of Batch 17's own fixes.
 In this order, after Batch 17. Each split into lettered parts with their ATs when started. The critic runs after its last item, for
 Batches 19 and 18 together (ADR-966).
 
-- [ ] R66 **Armies on the replay's fronts.** The script decides the outcome; armies stand and fight on each stage's
+- [x] R66 **Armies on the replay's fronts.** The script decides the outcome; armies stand and fight on each stage's
   front (Stalingrad, Normandy and the rest), strong enough to win it by the fighting where that leaves the rest of the
   replay unharmed. Split (ADR-967). Every part with a sim change: `historyMatch1938h`, `historyTrack1938h` and its
   five seed files, `chinaFront1938h`, `freeWorld1938h` green, run by hand (the gate runs seed 99's pin alone); tick
@@ -104,8 +104,10 @@ Batches 19 and 18 together (ADR-966).
     census, its land and size fixed at the window's opening), seeds 1 and 2 reported; each side's men lost in the
     window and the share of the stage's land taken by the fighting reported; the bars above. Met: 10 of 19 (seeds 1, 2:
     12 of 19, 10 of 19).
-  - [ ] R66e The 1946-53 stages (the civil war in China, Korea: `transfer`s) measured as R66a's; their armies by
-    R66b-d's rules where those apply, or the reason not.
+  - [x] R66e The 1946-53 stages (the civil war in China, Korea: `transfer`s) measured as R66a's; their armies by
+    R66b-d's rules where those apply, or the reason not. Done (ADR-978): windows for `transfer`s; the Communist field
+    armies and the People's Volunteers as kept arrivals; 10 large land fronts 1945-53, both sides engaged at the
+    stage's hour at 2 (seeds 1, 2: 4, 4), most fighting through their windows; the reasons not in the ADR.
 - [ ] R67 **Cold War blocs in the sim.** Lasting blocs under the strongest powers; war between their leaders held back
   by deterrence; rivalry by proxies. A rule of every game. AT (to be split): after the replay's end no war between
   the blocs' leaders in N years on the own seed and others; the sweep's bands kept.
