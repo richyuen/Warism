@@ -205,4 +205,7 @@
 - R71e (ADR-996): 1968-71 in the replay: the Gulf states and the small states, Bangladesh, Biafra's end; the Khmer
   Rouge, the Kurds, FROLINAT and Dhofar as nations; 19 coups. Libya independent from 1951 (a gap since R62). The map
   of 1971 99.4 % right.
+- R71f (ADR-997): 1972-75 in the replay: Saigon, Phnom Penh and Laos; Yom Kippur and Sinai; Cyprus; Portugal's
+  empire and Angola's war; Western Sahara and East Timor; China's bomb (built whatever its income while the track
+  steers). The map of the track's end 99.5 % right.
 

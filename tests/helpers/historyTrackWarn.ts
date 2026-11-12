@@ -10,6 +10,6 @@ export function warnTrack(seed: number): void {
   const run = historyTrack(seed);
   expect(run.sim.world.track!.ended).toBe(true);
   // R69f (ADR-989): at the track's end the arsenals are history's, whatever the seed (a rule, not the luck of one).
-  expect(arsenals(run.sim.world)).toEqual(['ENG', 'FRA', 'SOV', 'USA']);
+  expect(arsenals(run.sim.world)).toEqual(['CCP', 'ENG', 'FRA', 'SOV', 'USA']);
   for (const l of run.lines) process.stderr.write(`WARNING historyTrack (not a gate failure; ADR-950): ${l}\n`);
 }

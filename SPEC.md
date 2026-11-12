@@ -1734,7 +1734,8 @@ to 27 July 1953, then sets the world free.
 - **Regime changes** (R71a, ADR-992): a `regime` event (a coup, a revolution) sets a nation's aggression and its static
   command efficiency, told by its note; its alignment is the same day's alliance or guarantee events.
 - **Bombs** (R69f, ADR-989): a `bomb` event is a nation's test: it knows the bomb from then; while the track steers no
-  nation it has not named goes for the bomb (researches it or builds warheads).
+  nation it has not named goes for the bomb (researches it or builds warheads). A nation it has named goes for it whatever its income
+  (R71f, ADR-997: China's of 1964).
 - **Births and the end** (built, R62d, ADR-926): a `born` event gives an unborn nation its ring's land, its cores, its
   seat (its city nearest its table's capital) and a `NationBorn` row. The timeline's `end` (1975-12-31; 1962-12-31 before R71b, 1953-07-27 before R69a) ends the track
   after that day's first hour (`TrackEnded`); then the world's seed becomes the second seed (`GameOptions.after`,

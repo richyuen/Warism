@@ -184,8 +184,10 @@ export function nukesAllowed(world: World, n: number): boolean {
 
 /** Whether nation `n` runs a nuclear programme: allowed, and the income of a great power. */
 export function goesForBomb(world: World, n: number): boolean {
-  // While the historical track steers, only the nations its timeline has given the bomb by now (R69f, ADR-989).
-  if (world.steered && !world.track!.bombCleared(n)) return false;
+  // While the historical track steers, only the nations its timeline has given the bomb by now (R69f, ADR-989), and
+  // each of those whatever its income: its test was history's (R71f, ADR-997: China's of 1964, of an income under
+  // NUKE_PROGRAMME_INCOME). Its stockpile stays under STOCKPILE_SHARE of its income as any's.
+  if (world.steered) return world.track!.bombCleared(n) && nukesAllowed(world, n);
   return nukesAllowed(world, n) && world.nations.cols.income[n]! >= NUKE_PROGRAMME_INCOME;
 }
 

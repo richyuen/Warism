@@ -590,3 +590,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
   1953 and 1956 (98.9 to 99.0 %), the rest unchanged; nothing passed over; `state71` as history; seeds 1-5 within the
   bars; the pin unchanged.
 
+### ADR-997 · 2026-11-12 · accepted — R71f: 1972-75 in the replay, to the track's end
+- **Events:** Indochina's end (the Easter Offensive's provinces; the Paris Accords, the United States and its allies
+  leaving; the Highlands, Huế and Da Nang; Saigon, the Viet Cong's government annexing the South; Phnom Penh to the
+  Khmer Rouge; the Vientiane Agreement, then the Pathet Lao annexing Laos); the Yom Kippur War (Egypt across the
+  canal) and the Sinai agreements (transfers back to Egypt); Cyprus (Turkey's north, then the Turkish Cypriot State
+  its puppet); Portugal's empire (Guinea-Bissau, FRELIMO in the north then Mozambique released and FRELIMO's,
+  Cape Verde, São Tomé; Angola released to the MPLA, UNITA and the FNLA born at war with it, Cuba and South Africa
+  in); the Comoros, Papua New Guinea, Suriname, the Bahamas, Grenada; the Aouzou Strip Libya's; Iraq's Kurds
+  annexed at the Algiers Agreement, Dhofar won; the Eritrean fronts; Western Sahara (Morocco's north, Mauritania's
+  south, the Polisario east); East Timor (Fretilin, then Indonesia's invasion). 14 regime changes (Pinochet,
+  Portugal's Carnation Revolution, the Derg, Greece's junta's fall, Franco's death...). Wars of the end left held
+  past it (Chad, Eritrea, Angola, East Timor, Western Sahara): the free world takes them over.
+- **Fixed on the way:** Cyprus born in 1960 of both its map codes (`CYP`, `CYN`: the north had stayed Britain's);
+  the canal's rings reach Israel's Sinai (the canal governorates span both banks).
+- **China's bomb** (16 October 1964, a `bomb` event): its income (about 490) is under NUKE_PROGRAMME_INCOME (1000),
+  so it never built. While the track steers, a nation its timeline has given the bomb goes for it whatever its income
+  (its test was history's); its stockpile kept under STOCKPILE_SHARE of its income as any's. After the track, the
+  usual rule.
+- **Measured:** the maps of 31 December 1973 (99.4 %) and 30 December 1975 (99.5 %) right, strays 0.12 %; the
+  earlier maps within 0.01 point; nothing passed over; `state75` as history; the arsenals at the end the United
+  States', the Soviet Union's, Britain's, France's and China's on every seed; the pin unchanged.
+

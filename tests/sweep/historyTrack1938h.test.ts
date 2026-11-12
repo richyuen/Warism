@@ -17,8 +17,9 @@ describe('the historical track checked to its end (ROADMAP R62k)', () => {
     expect(run.sim.world.track!.ended).toBe(true);
     expect(run.lines).toEqual([]);
     expect(run.skipped).toEqual([]);
-    // R69f (ADR-989): the arsenals of 1962 history's: no West German, none before its nation's bomb.
-    expect(arsenals(run.sim.world)).toEqual(['ENG', 'FRA', 'SOV', 'USA']);
+    // R69f (ADR-989): the arsenals of the track's end history's: no West German, none before its nation's bomb (China's
+    // of 1964 since R71f, ADR-997).
+    expect(arsenals(run.sim.world)).toEqual(['CCP', 'ENG', 'FRA', 'SOV', 'USA']);
     // R67b (ADR-980): the blocs it hands over, each under its leader with its members (West Germany in NATO from 1955,
     // R69b, ADR-985; China out of the Soviet bloc at the split of 1960, R69c, ADR-986; Albania in 1961, R69d, ADR-987).
     // As handed over, before the free AI's first day (R71b, ADR-993).

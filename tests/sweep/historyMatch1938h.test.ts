@@ -73,6 +73,10 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   // R71e (ADR-996): on 30 December 1971, the states of 1968-71 (Bangladesh among them), Libya (from 1951) and the
   // rebels of 1968-70 living, Biafra gone; the five wars of the end of 1971.
   let state71 = '';
+  // R71f (ADR-997): on 30 December 1975, the day before the track's end: South Vietnam the Viet Cong's government's,
+  // Cambodia the Khmer Rouge's, Laos the Pathet Lao's (their old states gone, with the Kurds and Dhofar); the states of
+  // 1973-75 and Eritrea's and Angola's rebels living; Mozambique and Angola free, the Turkish Cypriots Turkey's.
+  let state75 = '';
   // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
   let axisPact = true;
   const fleets = new Map<string, number>();
@@ -90,7 +94,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const { maps, skipped, nukes } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1971-12-31',
+    '1975-12-31',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
@@ -127,6 +131,15 @@ it('1938-39: the land owned as history had it, and the events fire on their date
           ['SLE', 'KUW', 'SYR', 'TGK', 'SAM', 'RWA', 'BDI', 'ALG', 'JAM', 'TRI', 'UGA'].map((t) => nc.living[id(t)]).join(''),
           w.alliances.allianceOf(id('ALB'))?.leader === id('SOV'),
           w.wars.list.length,
+        ].join(' ');
+      }
+      if (date === '1975-12-30') {
+        const nc = w.nations.cols;
+        state75 = [
+          ['INC', 'CAM', 'LAO', 'KUR', 'DHO', 'FRE'].map((t) => nc.living[id(t)]).join(''),
+          ['VCG', 'KHR', 'PTL', 'BHS', 'GNB', 'GRN', 'CPV', 'COM', 'STP', 'PNG', 'SUR', 'ETL', 'TCY', 'ELF', 'UNT', 'FNL', 'PLS'].map((t) => nc.living[id(t)]).join(''),
+          ['MOZ', 'ANG'].map((t) => nc.overlord[id(t)]).join(''),
+          nc.overlord[id('TCY')] === id('TUR'),
         ].join(' ');
       }
       if (date === '1971-12-30') {
@@ -182,7 +195,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(18);
+  expect(maps.length).toBe(20);
+  expect(state75).toBe('000000 11111111111111111 00 true');
   expect(state71).toBe('111111111111111 0 5');
   expect(state67).toBe('111111111111111 0000 0 MYS,TZA,RHO 3 true');
   expect(state62).toBe('11111111111 false 0');

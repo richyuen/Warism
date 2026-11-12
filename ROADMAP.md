@@ -184,7 +184,7 @@ Batches 19 and 18 together (ADR-966).
   - [x] R71d 1963-67 (Malaysia, Kenya, Tanzania, the Vietnam War's escalation, the Six-Day War...). AT: a map of the
     period's end matched as the earlier maps; each event on its date, seeds 1-5 within the bars.
   - [x] R71e 1968-71 (Czechoslovakia, Biafra's end, Bangladesh, the Gulf states...). AT: as R71d.
-  - [ ] R71f 1972-75 (Okinawa, the Paris Accords, Yom Kippur, the Portuguese colonies, Saigon, Cambodia, Laos, the
+  - [x] R71f 1972-75 (Okinawa, the Paris Accords, Yom Kippur, the Portuguese colonies, Saigon, Cambodia, Laos, the
     Western Sahara, East Timor). AT: as R71d; the arsenals at the end history's (China's bomb 1964).
   - [ ] R71g The world after 1975: the blocs and their aid re-measured from the 1975 handover.
 

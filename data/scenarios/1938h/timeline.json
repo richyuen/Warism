@@ -17885,7 +17885,8 @@
     "ENG"
    ],
    "countries": [
-    "CYP"
+    "CYP",
+    "CYN"
    ],
    "note": "Cyprus independent (the British bases kept)"
   },
@@ -18519,6 +18520,11 @@
     "MLT"
    ],
    "note": "Malta independent"
+  },
+  {
+   "date": "1964-10-16",
+   "kind": "bomb",
+   "nation": "CCP"
   },
   {
    "date": "1964-10-24",
@@ -19625,6 +19631,1011 @@
    "nation": "PAK",
    "aggression": 40,
    "note": "Bhutto takes Pakistan"
+  },
+  {
+   "date": "1972-01-13",
+   "kind": "regime",
+   "nation": "GCO",
+   "aggression": 30,
+   "note": "Acheampong's coup in Ghana"
+  },
+  {
+   "date": "1972-04-01",
+   "kind": "transfer",
+   "to": "VCG",
+   "from": [
+    "INC"
+   ],
+   "provinces": [
+    "VNM-489",
+    "VNM-484"
+   ],
+   "note": "The Easter Offensive: Quảng Trị and Lộc Ninh"
+  },
+  {
+   "date": "1972-06-01",
+   "kind": "born",
+   "nation": "FRE",
+   "from": [
+    "MOZ"
+   ],
+   "provinces": [
+    "MOZ-1198",
+    "MOZ-1199"
+   ],
+   "note": "FRELIMO holds Mozambique's north"
+  },
+  {
+   "date": "1972-06-01",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "FRE"
+   ],
+   "defenders": [
+    "MOZ"
+   ],
+   "note": "Mozambique's war of independence"
+  },
+  {
+   "date": "1972-06-01",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "FRE"
+    ],
+    [
+     "MOZ"
+    ]
+   ],
+   "until": "1974-09-07"
+  },
+  {
+   "date": "1972-09-23",
+   "kind": "regime",
+   "nation": "PHI",
+   "aggression": 35,
+   "note": "Marcos's martial law in the Philippines"
+  },
+  {
+   "date": "1972-10-17",
+   "kind": "regime",
+   "nation": "KOR",
+   "aggression": 40,
+   "note": "Park's Yushin constitution"
+  },
+  {
+   "date": "1972-10-26",
+   "kind": "regime",
+   "nation": "DAH",
+   "aggression": 40,
+   "note": "Kérékou's coup in Dahomey"
+  },
+  {
+   "date": "1973-01-27",
+   "kind": "leave",
+   "nations": [
+    "USA",
+    "KOR",
+    "SIA",
+    "PHI"
+   ],
+   "against": "VCG",
+   "note": "The Paris Peace Accords: the Americans leave Vietnam"
+  },
+  {
+   "date": "1973-01-27",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "VCG",
+     "VIE"
+    ],
+    [
+     "INC"
+    ]
+   ],
+   "until": "1975-04-30"
+  },
+  {
+   "date": "1973-02-21",
+   "kind": "peace",
+   "a": "PTL",
+   "b": "LAO",
+   "terms": "white",
+   "note": "The Vientiane Agreement: the Pathet Lao keep their zone"
+  },
+  {
+   "date": "1973-06-01",
+   "kind": "transfer",
+   "to": "KHR",
+   "from": [
+    "CAM"
+   ],
+   "provinces": [
+    "KHM-1788",
+    "KHM-1784",
+    "KHM-1790",
+    "KHM-1801",
+    "KHM-1802",
+    "KHM-1797",
+    "KHM-1779",
+    "KHM-1780",
+    "KHM-1781",
+    "KHM-1782"
+   ],
+   "note": "The Khmer Rouge hold most of Cambodia's countryside"
+  },
+  {
+   "date": "1973-06-01",
+   "kind": "transfer",
+   "to": "LBY",
+   "from": [
+    "CHD",
+    "FRO"
+   ],
+   "ring": [
+    [
+     15.98,
+     23.45
+    ],
+    [
+     24.0,
+     19.5
+    ],
+    [
+     24.0,
+     18.6
+    ],
+    [
+     15.98,
+     22.5
+    ]
+   ],
+   "note": "Libya occupies the Aouzou Strip"
+  },
+  {
+   "date": "1973-06-27",
+   "kind": "regime",
+   "nation": "URU",
+   "aggression": 35,
+   "note": "Bordaberry's self-coup in Uruguay"
+  },
+  {
+   "date": "1973-07-10",
+   "kind": "born",
+   "nation": "BHS",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "BHS"
+   ],
+   "note": "The Bahamas independent"
+  },
+  {
+   "date": "1973-07-17",
+   "kind": "regime",
+   "nation": "AFG",
+   "aggression": 35,
+   "note": "Daoud's coup: Afghanistan a republic"
+  },
+  {
+   "date": "1973-09-11",
+   "kind": "regime",
+   "nation": "CHL",
+   "aggression": 45,
+   "note": "Pinochet's coup in Chile"
+  },
+  {
+   "date": "1973-09-24",
+   "kind": "born",
+   "nation": "GNB",
+   "from": [
+    "POR"
+   ],
+   "provinces": [
+    "GNB-777",
+    "GNB-778",
+    "GNB-773",
+    "GNB-772"
+   ],
+   "note": "Guinea-Bissau declares its independence at Madina do Boé"
+  },
+  {
+   "date": "1973-09-24",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "GNB"
+   ],
+   "defenders": [
+    "POR"
+   ],
+   "note": "Guinea-Bissau's war of independence"
+  },
+  {
+   "date": "1973-09-24",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "GNB"
+    ],
+    [
+     "POR"
+    ]
+   ],
+   "until": "1974-09-10"
+  },
+  {
+   "date": "1973-10-06",
+   "hour": 14,
+   "kind": "war",
+   "attackers": [
+    "EGY"
+   ],
+   "defenders": [
+    "ISR"
+   ],
+   "note": "The Yom Kippur War: Egypt and Syria attack"
+  },
+  {
+   "date": "1973-10-06",
+   "hour": 15,
+   "kind": "join",
+   "nation": "SYR",
+   "beside": "EGY",
+   "against": "ISR"
+  },
+  {
+   "date": "1973-10-06",
+   "hour": 16,
+   "kind": "hold",
+   "sides": [
+    [
+     "EGY",
+     "SYR"
+    ],
+    [
+     "ISR"
+    ]
+   ],
+   "until": "1973-10-25"
+  },
+  {
+   "date": "1973-10-07",
+   "kind": "transfer",
+   "to": "EGY",
+   "from": [
+    "ISR"
+   ],
+   "ring": [
+    [
+     32.25,
+     31.3
+    ],
+    [
+     32.85,
+     31.3
+    ],
+    [
+     32.85,
+     29.85
+    ],
+    [
+     32.25,
+     29.85
+    ]
+   ],
+   "note": "Egypt across the canal: the Bar Lev line taken"
+  },
+  {
+   "date": "1973-10-12",
+   "kind": "join",
+   "nation": "IRQ",
+   "beside": "SYR",
+   "against": "ISR"
+  },
+  {
+   "date": "1973-10-12",
+   "kind": "regime",
+   "nation": "ARG",
+   "aggression": 30,
+   "note": "Perón president of Argentina again"
+  },
+  {
+   "date": "1973-10-12",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "EGY",
+     "SYR",
+     "IRQ"
+    ],
+    [
+     "ISR"
+    ]
+   ],
+   "until": "1973-10-25"
+  },
+  {
+   "date": "1973-10-14",
+   "kind": "regime",
+   "nation": "SIA",
+   "aggression": 20,
+   "note": "The October uprising in Thailand"
+  },
+  {
+   "date": "1973-10-25",
+   "kind": "peace",
+   "a": "EGY",
+   "b": "ISR",
+   "terms": "white",
+   "note": "The ceasefire of the Yom Kippur War"
+  },
+  {
+   "date": "1974-01-18",
+   "kind": "transfer",
+   "to": "EGY",
+   "from": [
+    "ISR"
+   ],
+   "ring": [
+    [
+     32.25,
+     31.3
+    ],
+    [
+     33.1,
+     31.3
+    ],
+    [
+     33.1,
+     29.85
+    ],
+    [
+     32.25,
+     29.85
+    ]
+   ],
+   "note": "Sinai I: Israel back from the canal"
+  },
+  {
+   "date": "1974-02-07",
+   "kind": "born",
+   "nation": "GRN",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "GRD"
+   ],
+   "note": "Grenada independent"
+  },
+  {
+   "date": "1974-03-11",
+   "kind": "war",
+   "attackers": [
+    "IRQ"
+   ],
+   "defenders": [
+    "KUR"
+   ],
+   "note": "The second Iraqi-Kurdish war"
+  },
+  {
+   "date": "1974-03-11",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "IRQ"
+    ],
+    [
+     "KUR"
+    ]
+   ],
+   "until": "1975-03-23"
+  },
+  {
+   "date": "1974-04-25",
+   "kind": "regime",
+   "nation": "POR",
+   "aggression": 15,
+   "note": "The Carnation Revolution in Portugal"
+  },
+  {
+   "date": "1974-07-15",
+   "kind": "regime",
+   "nation": "CYP",
+   "aggression": 40,
+   "note": "The junta's coup in Cyprus"
+  },
+  {
+   "date": "1974-07-20",
+   "kind": "war",
+   "attackers": [
+    "TUR"
+   ],
+   "defenders": [
+    "CYP"
+   ],
+   "note": "Turkey invades Cyprus"
+  },
+  {
+   "date": "1974-07-20",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "TUR"
+    ],
+    [
+     "CYP"
+    ]
+   ],
+   "until": "1974-08-16"
+  },
+  {
+   "date": "1974-07-24",
+   "kind": "regime",
+   "nation": "GRE",
+   "aggression": 25,
+   "note": "The junta falls: Karamanlis returns to Greece"
+  },
+  {
+   "date": "1974-08-16",
+   "kind": "transfer",
+   "to": "TUR",
+   "from": [
+    "CYP"
+   ],
+   "countries": [
+    "CYN"
+   ],
+   "note": "Turkey holds the north of Cyprus"
+  },
+  {
+   "date": "1974-08-16",
+   "hour": 1,
+   "kind": "peace",
+   "a": "TUR",
+   "b": "CYP",
+   "terms": "white",
+   "note": "The ceasefire on the Attila line"
+  },
+  {
+   "date": "1974-09-07",
+   "kind": "peace",
+   "a": "FRE",
+   "b": "MOZ",
+   "terms": "white",
+   "note": "The Lusaka Accord"
+  },
+  {
+   "date": "1974-09-10",
+   "kind": "transfer",
+   "to": "GNB",
+   "from": [
+    "POR"
+   ],
+   "countries": [
+    "GNB"
+   ],
+   "note": "Portugal recognises Guinea-Bissau"
+  },
+  {
+   "date": "1974-09-10",
+   "hour": 1,
+   "kind": "peace",
+   "a": "GNB",
+   "b": "POR",
+   "terms": "white"
+  },
+  {
+   "date": "1974-09-12",
+   "kind": "regime",
+   "nation": "ETH",
+   "aggression": 55,
+   "note": "The Derg deposes Haile Selassie"
+  },
+  {
+   "date": "1975-02-01",
+   "kind": "born",
+   "nation": "ELF",
+   "from": [
+    "ETH"
+   ],
+   "provinces": [
+    "ERI-1560",
+    "ERI-1561",
+    "ERI-1563",
+    "ERI-1562"
+   ],
+   "note": "The Eritrean fronts hold the countryside, Asmara besieged"
+  },
+  {
+   "date": "1975-02-01",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "ELF"
+   ],
+   "defenders": [
+    "ETH"
+   ],
+   "note": "The Eritrean war of independence"
+  },
+  {
+   "date": "1975-02-01",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "ELF"
+    ],
+    [
+     "ETH"
+    ]
+   ],
+   "until": "1991-05-24"
+  },
+  {
+   "date": "1975-02-13",
+   "kind": "born",
+   "nation": "TCY",
+   "from": [
+    "TUR"
+   ],
+   "countries": [
+    "CYN"
+   ],
+   "note": "The Turkish Federated State of Cyprus"
+  },
+  {
+   "date": "1975-02-13",
+   "hour": 1,
+   "kind": "puppet",
+   "overlord": "TUR",
+   "subject": "TCY",
+   "autonomy": 60
+  },
+  {
+   "date": "1975-03-10",
+   "kind": "transfer",
+   "to": "VCG",
+   "from": [
+    "INC"
+   ],
+   "provinces": [
+    "VNM-477",
+    "VNM-478",
+    "VNM-480",
+    "VNM-4835"
+   ],
+   "note": "Ban Mê Thuột falls: the Central Highlands abandoned"
+  },
+  {
+   "date": "1975-03-23",
+   "kind": "annex",
+   "annexer": "IRQ",
+   "target": "KUR",
+   "tell": "note",
+   "note": "The Algiers Agreement: the Kurdish revolt collapses"
+  },
+  {
+   "date": "1975-03-29",
+   "kind": "transfer",
+   "to": "VCG",
+   "from": [
+    "INC"
+   ],
+   "provinces": [
+    "VNM-490",
+    "VNM-491",
+    "VNM-487",
+    "VNM-488"
+   ],
+   "note": "Huế and Da Nang fall"
+  },
+  {
+   "date": "1975-04-17",
+   "kind": "annex",
+   "annexer": "KHR",
+   "target": "CAM",
+   "tell": "note",
+   "note": "The Khmer Rouge take Phnom Penh"
+  },
+  {
+   "date": "1975-04-30",
+   "kind": "annex",
+   "annexer": "VCG",
+   "target": "INC",
+   "tell": "note",
+   "note": "Saigon falls: the Provisional Revolutionary Government in the South"
+  },
+  {
+   "date": "1975-06-25",
+   "kind": "release",
+   "subject": "MOZ",
+   "note": "Mozambique independent"
+  },
+  {
+   "date": "1975-06-25",
+   "hour": 1,
+   "kind": "annex",
+   "annexer": "MOZ",
+   "target": "FRE",
+   "tell": "note",
+   "note": "FRELIMO's People's Republic"
+  },
+  {
+   "date": "1975-06-25",
+   "hour": 2,
+   "kind": "regime",
+   "nation": "MOZ",
+   "aggression": 50,
+   "note": "Machel's FRELIMO government"
+  },
+  {
+   "date": "1975-07-05",
+   "kind": "born",
+   "nation": "CPV",
+   "from": [
+    "POR"
+   ],
+   "countries": [
+    "CPV"
+   ],
+   "note": "Cape Verde independent"
+  },
+  {
+   "date": "1975-07-06",
+   "kind": "born",
+   "nation": "COM",
+   "from": [
+    "MAD",
+    "FRA"
+   ],
+   "countries": [
+    "COM"
+   ],
+   "note": "The Comoros independent"
+  },
+  {
+   "date": "1975-07-12",
+   "kind": "born",
+   "nation": "STP",
+   "from": [
+    "POR"
+   ],
+   "countries": [
+    "STP"
+   ],
+   "note": "São Tomé and Príncipe independent"
+  },
+  {
+   "date": "1975-08-15",
+   "kind": "regime",
+   "nation": "BAN",
+   "aggression": 35,
+   "note": "Mujib killed: the army's coups in Bangladesh"
+  },
+  {
+   "date": "1975-09-04",
+   "kind": "transfer",
+   "to": "EGY",
+   "from": [
+    "ISR"
+   ],
+   "ring": [
+    [
+     32.6,
+     30.0
+    ],
+    [
+     33.3,
+     30.0
+    ],
+    [
+     33.3,
+     28.8
+    ],
+    [
+     32.6,
+     28.8
+    ]
+   ],
+   "note": "Sinai II: the passes and the Abu Rudeis oilfields"
+  },
+  {
+   "date": "1975-09-16",
+   "kind": "born",
+   "nation": "PNG",
+   "from": [
+    "AST"
+   ],
+   "countries": [
+    "PNG"
+   ],
+   "note": "Papua New Guinea independent"
+  },
+  {
+   "date": "1975-11-11",
+   "kind": "release",
+   "subject": "ANG",
+   "note": "Angola independent: the MPLA's People's Republic in Luanda"
+  },
+  {
+   "date": "1975-11-11",
+   "kind": "born",
+   "nation": "UNT",
+   "from": [
+    "ANG"
+   ],
+   "provinces": [
+    "AGO-1890",
+    "AGO-1887",
+    "AGO-1886",
+    "AGO-1891",
+    "AGO-1888",
+    "AGO-1889",
+    "AGO-1893",
+    "AGO-1879"
+   ],
+   "note": "UNITA holds Angola's south from Huambo"
+  },
+  {
+   "date": "1975-11-11",
+   "kind": "born",
+   "nation": "FNL",
+   "from": [
+    "ANG"
+   ],
+   "provinces": [
+    "AGO-1881",
+    "AGO-1882"
+   ],
+   "note": "The FNLA holds Angola's north"
+  },
+  {
+   "date": "1975-11-11",
+   "hour": 1,
+   "kind": "regime",
+   "nation": "ANG",
+   "aggression": 55,
+   "note": "Neto's MPLA government"
+  },
+  {
+   "date": "1975-11-11",
+   "hour": 2,
+   "kind": "war",
+   "attackers": [
+    "UNT"
+   ],
+   "defenders": [
+    "ANG"
+   ],
+   "note": "The Angolan civil war"
+  },
+  {
+   "date": "1975-11-11",
+   "hour": 3,
+   "kind": "join",
+   "nation": "FNL",
+   "beside": "UNT",
+   "against": "ANG"
+  },
+  {
+   "date": "1975-11-11",
+   "hour": 4,
+   "kind": "join",
+   "nation": "CUB",
+   "beside": "ANG",
+   "against": "UNT",
+   "note": "Operation Carlota: Cuban troops for the MPLA"
+  },
+  {
+   "date": "1975-11-11",
+   "hour": 5,
+   "kind": "join",
+   "nation": "SAF",
+   "beside": "UNT",
+   "against": "ANG",
+   "note": "Operation Savannah: South Africa beside UNITA"
+  },
+  {
+   "date": "1975-11-11",
+   "hour": 6,
+   "kind": "hold",
+   "sides": [
+    [
+     "UNT",
+     "FNL",
+     "SAF"
+    ],
+    [
+     "ANG",
+     "CUB"
+    ]
+   ],
+   "until": "1976-03-27"
+  },
+  {
+   "date": "1975-11-22",
+   "kind": "regime",
+   "nation": "NSP",
+   "aggression": 20,
+   "note": "Franco dies: Juan Carlos king of Spain"
+  },
+  {
+   "date": "1975-11-25",
+   "kind": "born",
+   "nation": "SUR",
+   "from": [
+    "NED",
+    "ENG"
+   ],
+   "countries": [
+    "SUR"
+   ],
+   "note": "Suriname independent"
+  },
+  {
+   "date": "1975-11-28",
+   "kind": "born",
+   "nation": "ETL",
+   "from": [
+    "POR"
+   ],
+   "countries": [
+    "TLS"
+   ],
+   "note": "Fretilin declares East Timor independent"
+  },
+  {
+   "date": "1975-12-02",
+   "kind": "regime",
+   "nation": "PTL",
+   "aggression": 60,
+   "note": "The Lao People's Democratic Republic: the monarchy abolished"
+  },
+  {
+   "date": "1975-12-02",
+   "hour": 1,
+   "kind": "annex",
+   "annexer": "PTL",
+   "target": "LAO",
+   "tell": "note",
+   "note": "The Pathet Lao take all of Laos"
+  },
+  {
+   "date": "1975-12-07",
+   "kind": "war",
+   "attackers": [
+    "IDN"
+   ],
+   "defenders": [
+    "ETL"
+   ],
+   "note": "Indonesia invades East Timor"
+  },
+  {
+   "date": "1975-12-07",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "IDN"
+    ],
+    [
+     "ETL"
+    ]
+   ],
+   "until": "1999-10-25"
+  },
+  {
+   "date": "1975-12-10",
+   "kind": "transfer",
+   "to": "IDN",
+   "from": [
+    "ETL"
+   ],
+   "provinces": [
+    "TLS-541",
+    "TLS-546",
+    "TLS-547",
+    "TLS-543",
+    "TLS-553",
+    "TLS-542",
+    "TLS-550",
+    "TLS-548"
+   ],
+   "note": "Dili and Baucau taken: Fretilin to the interior"
+  },
+  {
+   "date": "1975-12-11",
+   "kind": "annex",
+   "annexer": "OMN",
+   "target": "DHO",
+   "tell": "note",
+   "note": "The Sultan declares the Dhofar rebellion won"
+  },
+  {
+   "date": "1975-12-11",
+   "kind": "born",
+   "nation": "PLS",
+   "from": [
+    "NSP"
+   ],
+   "countries": [
+    "SAH"
+   ],
+   "note": "The Polisario in the desert east"
+  },
+  {
+   "date": "1975-12-11",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "FMO",
+   "from": [
+    "NSP"
+   ],
+   "provinces": [
+    "MAR-3456"
+   ],
+   "note": "The Madrid Accords: the Moroccans in Laayoune"
+  },
+  {
+   "date": "1975-12-11",
+   "hour": 2,
+   "kind": "war",
+   "attackers": [
+    "FMO"
+   ],
+   "defenders": [
+    "PLS"
+   ],
+   "note": "The Western Sahara war"
+  },
+  {
+   "date": "1975-12-11",
+   "hour": 3,
+   "kind": "hold",
+   "sides": [
+    [
+     "FMO",
+     "MRT"
+    ],
+    [
+     "PLS"
+    ]
+   ],
+   "until": "1991-09-06"
+  },
+  {
+   "date": "1975-12-20",
+   "kind": "transfer",
+   "to": "MRT",
+   "from": [
+    "NSP"
+   ],
+   "provinces": [
+    "MAR-3469"
+   ],
+   "note": "Mauritania takes the Sahara's south"
+  },
+  {
+   "date": "1975-12-20",
+   "hour": 1,
+   "kind": "join",
+   "nation": "MRT",
+   "beside": "FMO",
+   "against": "PLS"
   }
  ],
  "maps": [
@@ -23882,7 +24893,8 @@
     "GAB": "GAB",
     "MLI": "MLI",
     "MRT": "MRT",
-    "SYR": "EGY"
+    "SYR": "EGY",
+    "CYN": "CYP"
    },
    "byProvince": {
     "DEU-1581": "FRG"
@@ -24048,6 +25060,243 @@
      "owner": "DHO",
      "onlyFrom": [
       "OMN"
+     ],
+     "ring": [
+      [
+       52.0,
+       18.3
+      ],
+      [
+       53.9,
+       18.3
+      ],
+      [
+       53.9,
+       17.15
+      ],
+      [
+       52.0,
+       16.6
+      ]
+     ]
+    }
+   ],
+   "occupied": []
+  },
+  {
+   "date": "1973-12-31",
+   "note": "After the Paris Accords and the Yom Kippur War: the Viet Cong's zones, the Pathet Lao's, the Khmer Rouge holding most of Cambodia's countryside; Egypt east of the canal; Guinea-Bissau's liberated zones; the Bahamas independent; the Aouzou Strip Libyan",
+   "byCountry": {
+    "BHS": "BHS"
+   },
+   "byProvince": {
+    "VNM-489": "VCG",
+    "VNM-484": "VCG",
+    "KHM-1788": "KHR",
+    "KHM-1784": "KHR",
+    "KHM-1790": "KHR",
+    "KHM-1801": "KHR",
+    "KHM-1802": "KHR",
+    "KHM-1797": "KHR",
+    "KHM-1779": "KHR",
+    "KHM-1780": "KHR",
+    "KHM-1781": "KHR",
+    "KHM-1782": "KHR",
+    "GNB-777": "GNB",
+    "GNB-778": "GNB",
+    "GNB-773": "GNB",
+    "GNB-772": "GNB",
+    "MOZ-1198": "FRE",
+    "MOZ-1199": "FRE"
+   },
+   "regions": [
+    {
+     "owner": "EGY",
+     "onlyFrom": [
+      "ISR"
+     ],
+     "ring": [
+      [
+       32.25,
+       31.3
+      ],
+      [
+       32.85,
+       31.3
+      ],
+      [
+       32.85,
+       29.85
+      ],
+      [
+       32.25,
+       29.85
+      ]
+     ]
+    },
+    {
+     "owner": "LBY",
+     "onlyFrom": [
+      "CHD",
+      "FRO"
+     ],
+     "ring": [
+      [
+       15.98,
+       23.45
+      ],
+      [
+       24.0,
+       19.5
+      ],
+      [
+       24.0,
+       18.6
+      ],
+      [
+       15.98,
+       22.5
+      ]
+     ]
+    }
+   ],
+   "occupied": []
+  },
+  {
+   "date": "1975-12-30",
+   "note": "The track's end: Vietnam's South under the Provisional Revolutionary Government, Cambodia the Khmer Rouge's, Laos the Pathet Lao's; Portugal's empire gone (Angola at war), Cyprus divided, the Sahara partitioned, East Timor invaded; Sinai partly Egyptian again",
+   "byCountry": {
+    "KHM": "KHR",
+    "LAO": "PTL",
+    "GNB": "GNB",
+    "MOZ": "MOZ",
+    "CPV": "CPV",
+    "STP": "STP",
+    "COM": "COM",
+    "PNG": "PNG",
+    "SUR": "SUR",
+    "TLS": "ETL",
+    "CYN": "TCY",
+    "GRD": "GRN",
+    "SAH": "PLS",
+    "AGO": "ANG"
+   },
+   "byProvince": {
+    "VNM-502": "VCG",
+    "VNM-507": "VCG",
+    "VNM-498": "VCG",
+    "VNM-506": "VCG",
+    "VNM-499": "VCG",
+    "VNM-500": "VCG",
+    "VNM-505": "VCG",
+    "VNM-510": "VCG",
+    "VNM-508": "VCG",
+    "VNM-444": "VCG",
+    "VNM-503": "VCG",
+    "VNM-4834": "VCG",
+    "VNM-509": "VCG",
+    "VNM-504": "VCG",
+    "VNM-483": "VCG",
+    "VNM-501": "VCG",
+    "VNM-484": "VCG",
+    "VNM-489": "VCG",
+    "VNM-497": "VCG",
+    "VNM-495": "VCG",
+    "VNM-490": "VCG",
+    "VNM-4835": "VCG",
+    "VNM-486": "VCG",
+    "VNM-487": "VCG",
+    "VNM-491": "VCG",
+    "VNM-480": "VCG",
+    "VNM-496": "VCG",
+    "VNM-477": "VCG",
+    "VNM-478": "VCG",
+    "VNM-488": "VCG",
+    "VNM-481": "VCG",
+    "VNM-485": "VCG",
+    "VNM-479": "VCG",
+    "VNM-482": "VCG",
+    "AGO-1890": "UNT",
+    "AGO-1887": "UNT",
+    "AGO-1886": "UNT",
+    "AGO-1891": "UNT",
+    "AGO-1888": "UNT",
+    "AGO-1889": "UNT",
+    "AGO-1893": "UNT",
+    "AGO-1879": "UNT",
+    "AGO-1881": "FNL",
+    "AGO-1882": "FNL",
+    "TLS-541": "IDN",
+    "TLS-546": "IDN",
+    "TLS-547": "IDN",
+    "TLS-543": "IDN",
+    "TLS-553": "IDN",
+    "TLS-542": "IDN",
+    "TLS-550": "IDN",
+    "TLS-548": "IDN",
+    "MAR-3456": "FMO",
+    "MAR-3469": "MRT",
+    "IRQ-3046": "IRQ",
+    "IRQ-3050": "IRQ",
+    "IRQ-3242": "IRQ",
+    "ERI-1560": "ELF",
+    "ERI-1561": "ELF",
+    "ERI-1563": "ELF",
+    "ERI-1562": "ELF"
+   },
+   "regions": [
+    {
+     "owner": "EGY",
+     "onlyFrom": [
+      "ISR"
+     ],
+     "ring": [
+      [
+       32.25,
+       31.3
+      ],
+      [
+       33.1,
+       31.3
+      ],
+      [
+       33.1,
+       29.85
+      ],
+      [
+       32.25,
+       29.85
+      ]
+     ]
+    },
+    {
+     "owner": "EGY",
+     "onlyFrom": [
+      "ISR"
+     ],
+     "ring": [
+      [
+       32.6,
+       30.0
+      ],
+      [
+       33.3,
+       30.0
+      ],
+      [
+       33.3,
+       28.8
+      ],
+      [
+       32.6,
+       28.8
+      ]
+     ]
+    },
+    {
+     "owner": "OMN",
+     "onlyFrom": [
+      "DHO"
      ],
      "ring": [
       [
