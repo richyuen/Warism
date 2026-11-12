@@ -213,3 +213,4 @@
 
 - ADR-999 (the user's decision): the deploy caches the replay's starts on a hash of the sim's inputs; a push that
   changes none of them deploys in about 2 minutes, not 20.
+- ADR-1000 (the user's decision): R72, a faster tick for the replay's deploy, added before the critic.

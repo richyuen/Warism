@@ -630,4 +630,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   package and lock files, the tsconfigs. On a hit the saves are not built (a deploy of about 2 minutes).
 - **Consequences.** A sim input outside the key would deploy stale starts; the game's hash check
   (`src/app/replayStart.ts`) throws on such a start rather than playing it. A new input of the sim outside those
-  paths joins the key. Speeding the sim itself is a separate question (not on the ROADMAP).
+  paths joins the key. Speeding the sim itself: R72 (ADR-1000).
+
+### ADR-1000 · 2026-11-12 · accepted (the user's decision) — R72: a faster tick, before the critic
+- **Context.** After ADR-999 a push that changes a sim input still deploys in about 20 minutes: the replay's starts
+  are stepped 1938-1975 in one thread. Combat is 42 % of 1938h's tick in its war years.
+- **Decision.** The user: "let's add it to the roadmap before the critic". R72 in Batch 18, after R71 and before the
+  critic of Batches 18-19: speed-ups of the tick with no rule change, `npm run saves` to 1975 in at most 2/3 of its
+  time, every result bit for bit as before (the starts' hashes, the pin of seed 99).
+- **Consequences.** The critic waits for R72. Split from a profile of combat by function when it is started.
