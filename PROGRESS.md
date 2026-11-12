@@ -103,3 +103,9 @@
   track steers, its own front facing its held foes across frozen holds only (not the Phoney War). Land fronts with
   both sides near 11 of 19 (seed 1938); Paris 14 June 1940; the nine replay tests green; the pin unchanged.
 
+## 2026-11-11 — R66b done: the Pacific's armies of 1941-42 (ADR-972)
+
+- Twelve `forces` in the timeline: Malaya's and Burma's defenders, Japan's armies at Singora, Miri, Lingayen, Borneo,
+  Thailand, Palembang, Java and Lae. Large land fronts with both sides near 16 of 20 (bar 14); the nine replay tests
+  green; the pin unchanged; the replay's tick 17 % under plain 1938's.
+

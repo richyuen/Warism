@@ -207,3 +207,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
   seed 1 (15th on HEAD; the date is chaotic, ADR-931). The nine replay tests green (1941 strays 0.65 %, China 388k
   of 716k); the replay's tick 2.06 ms, plain 1938's 2.52.
 
+### ADR-972 · 2026-11-11 · accepted — R66b done: the Pacific's armies of 1941-42 by `forces`
+- **The cause:** Japan's whole army stood in northern China at every date; its conquests of 1942 came by stages alone,
+  with no Japanese formation near them and few defenders (none in Burma, 8k in Malaya).
+- **The data** (`timeline.json`, twelve `forces` at history's places and dates, as the Afrika Korps and the Germans
+  in Norway): Malaya's garrison (a British, two Indian, an Australian division) and the Burma Corps on 1 December
+  1941; the Japanese 25th Army at Singora (three divisions, 8 December), at Miri, the 14th Army at Lingayen (two), the
+  16th Army in Borneo, the 15th Army from Thailand (two), at Palembang, on Java (two), at Lae. Two points moved inland
+  (Singora to Hat Yai, Tarakan to inland Borneo): refused at sea on the map's grid. Each note says whose (R64c's rule;
+  its test's list of nations widened to Japanese, British, Australian).
+- **Measured:** of the large land fronts, both sides near at 16 of 20 on the own seed (bar 14, ADR-969), 14 and 16 on
+  seeds 1 and 2; none engaged at a stage. Left: the Philippines, Burma, Ichigo's Changsha and Guilin (ROADMAP). The
+  nine replay tests green, no warning (1941 strays 0.65 %, November 1942 0.27 %; Paris 14 June 1940; China 388k);
+  the pin unchanged; the replay's tick 2.08 ms, plain 1938's 2.50.
+- **Seen, not changed:** the AI ships two of the 25th Army's three divisions off towards the objectives of Manila and
+  Borneo; R66d's fighting before a stage will want them kept to their stage.
+

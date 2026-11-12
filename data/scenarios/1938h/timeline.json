@@ -4097,6 +4097,54 @@
   },
   {
    "date": "1941-12-01",
+   "kind": "forces",
+   "nation": "ENG",
+   "template": "infantry_div",
+   "count": 1,
+   "at": [
+    103.8,
+    1.4
+   ],
+   "note": "The British garrison of Singapore"
+  },
+  {
+   "date": "1941-12-01",
+   "kind": "forces",
+   "nation": "RAJ",
+   "template": "infantry_div_colonial",
+   "count": 2,
+   "at": [
+    101.7,
+    3.2
+   ],
+   "note": "The British III Corps in northern Malaya"
+  },
+  {
+   "date": "1941-12-01",
+   "kind": "forces",
+   "nation": "AST",
+   "template": "infantry_div",
+   "count": 1,
+   "at": [
+    102.9,
+    2.1
+   ],
+   "note": "The Australian 8th Division in Johore"
+  },
+  {
+   "date": "1941-12-01",
+   "kind": "forces",
+   "nation": "RAJ",
+   "template": "infantry_div_colonial",
+   "count": 1,
+   "at": [
+    96.2,
+    16.9
+   ],
+   "note": "The British Burma Corps at Rangoon"
+  },
+  {
+   "date": "1941-12-01",
    "hour": 1,
    "kind": "occupy",
    "by": "GER",
@@ -4357,6 +4405,19 @@
    "note": "Hong Kong"
   },
   {
+   "date": "1941-12-08",
+   "hour": 2,
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 3,
+   "at": [
+    100.47,
+    7.0
+   ],
+   "note": "The Japanese 25th Army lands at Singora and Kota Bharu"
+  },
+  {
    "date": "1941-12-10",
    "kind": "occupy",
    "by": "JAP",
@@ -4458,12 +4519,36 @@
    "note": "The war economy and Lend-Lease: the army the books carry"
   },
   {
+   "date": "1941-12-16",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 1,
+   "at": [
+    114.0,
+    4.4
+   ],
+   "note": "Japanese landings at Miri, British Borneo"
+  },
+  {
    "date": "1941-12-21",
    "kind": "allianceJoin",
    "nation": "SIA",
    "leader": "GER",
    "nameKey": "alliance.anti_comintern",
    "note": "Thailand's alliance with Japan"
+  },
+  {
+   "date": "1941-12-22",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 2,
+   "at": [
+    120.4,
+    16.0
+   ],
+   "note": "The Japanese 14th Army lands at Lingayen Gulf"
   },
   {
    "date": "1941-12-24",
@@ -4977,6 +5062,18 @@
    "note": "Kerch retaken"
   },
   {
+   "date": "1942-01-11",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 1,
+   "at": [
+    116.5,
+    -0.8
+   ],
+   "note": "The Japanese 16th Army at Tarakan and Balikpapan"
+  },
+  {
    "date": "1942-01-15",
    "kind": "forces",
    "nation": "SOV",
@@ -4986,6 +5083,18 @@
     37.62,
     55.75
    ]
+  },
+  {
+   "date": "1942-01-15",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 2,
+   "at": [
+    99.0,
+    16.8
+   ],
+   "note": "The Japanese 15th Army crosses into Burma"
   },
   {
    "date": "1942-01-23",
@@ -5041,6 +5150,18 @@
     ]
    ],
    "note": "British Borneo"
+  },
+  {
+   "date": "1942-02-14",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 1,
+   "at": [
+    104.8,
+    -2.95
+   ],
+   "note": "Japanese paratroops at Palembang"
   },
   {
    "date": "1942-02-15",
@@ -5177,6 +5298,30 @@
     ]
    ],
    "note": "Malaya and Singapore"
+  },
+  {
+   "date": "1942-03-01",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 2,
+   "at": [
+    111.4,
+    -6.7
+   ],
+   "note": "The Japanese 16th Army lands on Java"
+  },
+  {
+   "date": "1942-03-08",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 1,
+   "at": [
+    147.0,
+    -6.73
+   ],
+   "note": "The Japanese South Seas Detachment at Lae and Salamaua"
   },
   {
    "date": "1942-03-09",
