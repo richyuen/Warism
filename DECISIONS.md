@@ -448,3 +448,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   the UAR, the colonies released free of their overlords, China outside the Soviet bloc; the Eastern Bloc at the
   track's end without China.
 
+### ADR-987 · 2026-11-12 · accepted — R69d: 1961-62 in the replay, to the track's end
+- **The events** (from `docs/research/1953-62.md`): Sierra Leone, Kuwait, Tanganyika, Western Samoa, Rwanda and
+  Burundi (of the Belgian Congo's land in this world), Algeria (of France's own land), Jamaica, Trinidad and Tobago
+  and Uganda born; Syria born again of the UAR's land (a dead nation brought back); the Southern Cameroons (Nigeria's
+  land in the map's `CMR`) to Cameroon; Goa, Daman and Diu to India by their provinces (its note names Operation Vijay; the annexation, not its day of
+  war: a war on Portugal would call its NATO allies); Albania leaves the Soviet bloc. The Sino-Indian War: China's war
+  on India, the Kameng sector held from Bomdila's fall, the ceasefire a white peace (China's withdrawal); Aksai Chin is
+  China's on the map already.
+- **Not modelled:** the Cuban Missile Crisis (no war), the Yemen civil war (no royalist state), the Bay of Pigs and
+  the Kuwait and Bizerte crises (no land changed), West New Guinea (under the UN at the end of 1962; Indonesian in
+  1963), the coups.
+- **Measured:** a map of 30 December 1962 (the day before the track's end) matched as the earlier maps; that day the
+  states born 1961-62 living, Albania outside the Soviet bloc, no war; the two scripted strikes still the only nuclear
+  ones to the track's end; the Eastern Bloc at the end without China or Albania.
+

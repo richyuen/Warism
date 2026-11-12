@@ -177,4 +177,6 @@
   the two Vietnams, Egypt, Sudan, Morocco, Tunisia released, Austria free, West Germany in NATO, Suez); a 13th map.
 - R69c (ADR-986): 1957-60 in the timeline: the Saar, Ghana, Malaya, the UAR, Tarfaya, Guinea, the African states of
   1960, Somalia, Cyprus, the Congo, the Sino-Soviet split; a 14th map.
+- R69d (ADR-987): 1961-62 in the timeline to the track's end: ten states born, Syria again, Goa, the Southern
+  Cameroons, Albania's break, the Sino-Indian war; a 15th map.
 

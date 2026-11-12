@@ -150,9 +150,10 @@ Batches 19 and 18 together (ADR-966).
   - [x] R69c 1957-60 (ADR-986): Ghana, Malaya, Guinea, the United Arab Republic, the Saar, Tarfaya, the Sino-Soviet
     split, the African states of 1960, Somalia, Cyprus, the Congo. Not Iraq 1958 or Cuba 1959 (no event changes a
     government). AT met: a map of 31 December 1960, as R69b.
-  - [ ] R69d 1961-62: Sierra Leone, Tanganyika, Kuwait, Goa, Algeria, Rwanda, Burundi, Uganda, Jamaica, Trinidad,
-    West New Guinea, the Sino-Indian war, the Cuban crisis (no war). AT: a map of the end of 1962, as R69b; the
-    nukes only where scripted (none after Nagasaki) to the track's end.
+  - [x] R69d 1961-62 (ADR-987): Sierra Leone, Tanganyika, Kuwait, Goa, Syria out of the UAR, Algeria, Rwanda, Burundi,
+    Uganda, Jamaica, Trinidad, Samoa, the Southern Cameroons, Albania's break, the Sino-Indian war. Not West New
+    Guinea (the UN's at the end of 1962) or the Cuban crisis (no war). AT met: a map of 30 December 1962, as R69b; the
+    nukes only where scripted to the track's end.
   - [ ] R69e The world after 1962: R67c-d's blocs re-measured from the 1962 handover (tools/diag/afterTrack.ts).
 - [ ] R67 (after R69, the user's decision, ADR-982):
   - [ ] R67e Proxies: rivalry in the blocs' leaders' wars on others. Its AT set once R67b-d are measured.

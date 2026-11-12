@@ -63,6 +63,9 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   // R69c (ADR-986): on 31 December 1960, the states born 1958-60 living, Syria in the United Arab Republic, the colonies
   // released free, China out of the Soviet bloc.
   let state60 = '';
+  // R69d (ADR-987): on 30 December 1962, the day before the track's end, the states born 1961-62 living, Albania out
+  // of the Soviet bloc, no war (the Sino-Indian war's ceasefire).
+  let state62 = '';
   // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
   let axisPact = true;
   const fleets = new Map<string, number>();
@@ -80,7 +83,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const { maps, skipped, nukes } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1961-01-01',
+    '1962-12-31',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
@@ -109,6 +112,14 @@ it('1938-39: the land owned as history had it, and the events fire on their date
           nc.living[id('SYR')],
           ['GCO', 'MAL', 'MAD', 'AEF', 'AOF', 'NIG'].map((t) => nc.overlord[id(t)]).join(''),
           w.alliances.allianceOf(id('CCP'))?.leader === id('SOV'),
+        ].join(' ');
+      }
+      if (date === '1962-12-30') {
+        const nc = w.nations.cols;
+        state62 = [
+          ['SLE', 'KUW', 'SYR', 'TGK', 'SAM', 'RWA', 'BDI', 'ALG', 'JAM', 'TRI', 'UGA'].map((t) => nc.living[id(t)]).join(''),
+          w.alliances.allianceOf(id('ALB'))?.leader === id('SOV'),
+          w.wars.list.length,
         ].join(' ');
       }
       if (date === '1953-07-28') end53 = `${w.wars.list.length} ${w.track?.ended} ${w.nations.cols.living[id('KOR')]} ${w.nations.cols.living[id('PRK')]}`;
@@ -145,7 +156,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(14);
+  expect(maps.length).toBe(15);
+  expect(state62).toBe('11111111111 false 0');
   expect(state60).toBe('11111111111111 0 000000 false');
   expect(state56).toBe('111 00000 true true');
   expect(end53).toBe('0 false 1 1');

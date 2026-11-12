@@ -17851,6 +17851,216 @@
     "MRT"
    ],
    "note": "Mauritania independent"
+  },
+  {
+   "date": "1961-04-27",
+   "kind": "born",
+   "nation": "SLE",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "SLE"
+   ],
+   "note": "Sierra Leone independent"
+  },
+  {
+   "date": "1961-06-19",
+   "kind": "born",
+   "nation": "KUW",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "KWT"
+   ],
+   "note": "Kuwait independent"
+  },
+  {
+   "date": "1961-09-28",
+   "kind": "born",
+   "nation": "SYR",
+   "from": [
+    "EGY"
+   ],
+   "countries": [
+    "SYR"
+   ],
+   "note": "Syria leaves the United Arab Republic"
+  },
+  {
+   "date": "1961-10-01",
+   "kind": "transfer",
+   "to": "CMR",
+   "from": [
+    "NIG"
+   ],
+   "countries": [
+    "CMR"
+   ],
+   "note": "The Southern Cameroons join Cameroon"
+  },
+  {
+   "date": "1961-12-03",
+   "kind": "allianceLeave",
+   "nation": "ALB",
+   "note": "Albania breaks with the Soviet Union"
+  },
+  {
+   "date": "1961-12-09",
+   "kind": "born",
+   "nation": "TGK",
+   "from": [
+    "BEA"
+   ],
+   "countries": [
+    "TZA"
+   ],
+   "note": "Tanganyika independent"
+  },
+  {
+   "date": "1961-12-19",
+   "kind": "transfer",
+   "to": "RAJ",
+   "from": [
+    "POR"
+   ],
+   "provinces": [
+    "IND-3265",
+    "IND-2445"
+   ],
+   "note": "Goa, Daman and Diu taken from Portugal (Operation Vijay)"
+  },
+  {
+   "date": "1962-01-01",
+   "kind": "born",
+   "nation": "SAM",
+   "from": [
+    "NZL"
+   ],
+   "countries": [
+    "WSM"
+   ],
+   "note": "Western Samoa independent"
+  },
+  {
+   "date": "1962-07-01",
+   "kind": "born",
+   "nation": "RWA",
+   "from": [
+    "BCO"
+   ],
+   "countries": [
+    "RWA"
+   ],
+   "note": "Rwanda independent"
+  },
+  {
+   "date": "1962-07-01",
+   "kind": "born",
+   "nation": "BDI",
+   "from": [
+    "BCO"
+   ],
+   "countries": [
+    "BDI"
+   ],
+   "note": "Burundi independent"
+  },
+  {
+   "date": "1962-07-05",
+   "kind": "born",
+   "nation": "ALG",
+   "from": [
+    "FRA"
+   ],
+   "countries": [
+    "DZA"
+   ],
+   "note": "Algeria independent: the Évian Accords"
+  },
+  {
+   "date": "1962-08-06",
+   "kind": "born",
+   "nation": "JAM",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "JAM"
+   ],
+   "note": "Jamaica independent"
+  },
+  {
+   "date": "1962-08-31",
+   "kind": "born",
+   "nation": "TRI",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "TTO"
+   ],
+   "note": "Trinidad and Tobago independent"
+  },
+  {
+   "date": "1962-10-09",
+   "kind": "born",
+   "nation": "UGA",
+   "from": [
+    "BEA"
+   ],
+   "countries": [
+    "UGA"
+   ],
+   "note": "Uganda independent"
+  },
+  {
+   "date": "1962-10-20",
+   "hour": 5,
+   "kind": "war",
+   "attackers": [
+    "CCP"
+   ],
+   "defenders": [
+    "RAJ"
+   ],
+   "note": "The Sino-Indian War"
+  },
+  {
+   "date": "1962-11-18",
+   "kind": "occupy",
+   "by": "CCP",
+   "of": [
+    "RAJ"
+   ],
+   "ring": [
+    [
+     91.55,
+     26.95
+    ],
+    [
+     92.95,
+     26.95
+    ],
+    [
+     92.95,
+     28.05
+    ],
+    [
+     91.55,
+     28.05
+    ]
+   ],
+   "note": "The Chinese at Bomdila"
+  },
+  {
+   "date": "1962-11-21",
+   "kind": "peace",
+   "a": "CCP",
+   "b": "RAJ",
+   "terms": "white",
+   "note": "China's ceasefire, and its withdrawal to the McMahon line"
   }
  ],
  "maps": [
@@ -22160,6 +22370,39 @@
      ]
     }
    ],
+   "occupied": [
+    {
+     "by": "ENG",
+     "of": [
+      "ITA"
+     ],
+     "countries": [
+      "LBY"
+     ]
+    }
+   ]
+  },
+  {
+   "date": "1962-12-30",
+   "note": "The track's end: Sierra Leone, Kuwait, Tanganyika, Samoa, Rwanda, Burundi, Algeria, Jamaica, Trinidad and Uganda independent; Syria out of the UAR; Goa Indian; the Southern Cameroons Cameroon's",
+   "byCountry": {
+    "SLE": "SLE",
+    "KWT": "KUW",
+    "SYR": "SYR",
+    "TZA": "TGK",
+    "WSM": "SAM",
+    "RWA": "RWA",
+    "BDI": "BDI",
+    "DZA": "ALG",
+    "JAM": "JAM",
+    "TTO": "TRI",
+    "UGA": "UGA",
+    "CMR": "CMR"
+   },
+   "byProvince": {
+    "IND-3265": "RAJ",
+    "IND-2445": "RAJ"
+   },
    "occupied": [
     {
      "by": "ENG",
