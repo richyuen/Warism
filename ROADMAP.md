@@ -166,4 +166,24 @@ Batches 19 and 18 together (ADR-966).
     blocs whole; plain games unchanged (the pin).
   - [x] R67f A Cold War for every game: closed (the user's decision of 2026-11-12, ADR-990): the bloc rules stay in the
     historical track's games only.
+- [ ] R71 **The replay to 1975** (the user's decision of 2026-11-12, ADR-991; before the critic of Batches 18-19).
+  Split (as R69: 1938-62 kept, then the new years by period; research in `docs/research/1963-75.md`):
+  - [ ] R71a Regime change: a timeline event that sets a nation's government, aggression and alignment (a bloc
+    joined or left) at once (a nation's government drives no rule today; what a coup changes in the game is these).
+    Its first uses 1953-62's: Iran 1953, Guatemala 1954, Iraq 1958, Cuba 1959 and 1961 (to the Soviet side), and the
+    smaller (Pakistan 1958, Turkey 1960, South Korea 1960-61, Burma 1962). AT: a unit test of the event; on seed 1938
+    each fired on its date; the 1938-62 maps' scores and the nine replay tests as before or explained.
+  - [ ] R71b Rebels as nations: an insurgency is a dormant nation born on the land it holds, at war with its
+    government (the Viet Cong, the Pathet Lao, the Khmer Rouge, Biafra...), its end an annexation or its own
+    victory. The nations of 1963-75 added dormant (rebels and new states), the end moved to 31 December 1975 with no
+    new event. AT: as R69a: 1938-62 unchanged; the yearly starts to 1975 within the workflow's time.
+  - [ ] R71c Later techs (about 1955-75) as stat upgrades of the existing units, so the great powers keep an edge
+    over the new states; no new unit. AT: the techs researched by 1975 by the great powers and not by most new
+    states; the pin moved only as the techs explain, logged.
+  - [ ] R71d 1963-67 (Malaysia, Kenya, Tanzania, the Vietnam War's escalation, the Six-Day War...). AT: a map of the
+    period's end matched as the earlier maps; each event on its date, seeds 1-5 within the bars.
+  - [ ] R71e 1968-71 (Czechoslovakia, Biafra's end, Bangladesh, the Gulf states...). AT: as R71d.
+  - [ ] R71f 1972-75 (Okinawa, the Paris Accords, Yom Kippur, the Portuguese colonies, Saigon, Cambodia, Laos, the
+    Western Sahara, East Timor). AT: as R71d; the arsenals at the end history's (China's bomb 1964).
+  - [ ] R71g The world after 1975: the blocs and their aid re-measured from the 1975 handover.
 

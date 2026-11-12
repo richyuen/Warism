@@ -506,3 +506,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Tests:** `tests/unit/blocAid1938h.test.ts` (the gold and its row; volunteers while losing; none to a foe, none
   with one bloc).
 
+### ADR-991 · 2026-11-12 · accepted (the user's decisions) — R71: the replay to 1975, before the critic
+- **The user:** stop before the critic of Batches 18-19 and extend the replay; asked whether new units are needed,
+  then "let's try to 1975"; and that coups and revolutions of the earlier period get an item too.
+- **Units:** none new. The roster (mechanised infantry, MBTs, jets, ballistic missiles, the navy) carries 1963-75;
+  the tech tree ends in 1952, so later techs come as stat upgrades (R71c). Missile submarines and helicopters are
+  left for a longer horizon.
+- **What the period needs instead:** a regime change (R71a: a nation's government drives no rule today, so the event
+  sets its aggression and alignment with it), its first uses 1953-62's coups and revolutions; rebels as nations born
+  on the land they hold (R71b), so the insurgencies of the period (Vietnam, Laos, Cambodia, Biafra) are the
+  existing births, wars and annexations.
+
