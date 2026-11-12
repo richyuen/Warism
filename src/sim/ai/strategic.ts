@@ -373,7 +373,7 @@ export function strategicAi(world: World): void {
   // The two blocs (R67c-d): in a game of the historical track only (the user's decision of 2026-11-12, ADR-981: in
   // every game the two blocs, never at war with each other, took the rest of the world: one nation over 40 % of the
   // world's income on 5 of the sweep's 10 seeds), once it has ended or been left; none before any nation holds an arsenal.
-  const blocs = world.track && world.warheads.size > 0 ? blocsOf(world, str) : new Set<number>();
+  const blocs = world.track?.ended && world.warheads.size > 0 ? blocsOf(world, str) : new Set<number>();
   // The great powers, once rivals part (PLAN 7.53b; none before: no join is refused for them).
   const greats = rivalsPart(world) ? greatPowers(world, str) : new Set<number>();
   for (const n of actors) {
