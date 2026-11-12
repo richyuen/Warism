@@ -1,0 +1,18 @@
+{
+  "techs": [
+    { "id": "petrochemicals", "nameKey": "tech.petrochemicals", "category": "industry", "year": 1955, "cost": { "gold": 300, "industry": 120, "days": 330 }, "prereqs": ["industrial_automation"], "modifiers": {"industry": 0.1, "supply": 0.05} },
+    { "id": "containerisation", "nameKey": "tech.containerisation", "category": "industry", "year": 1965, "cost": { "gold": 420, "industry": 170, "days": 390 }, "prereqs": ["petrochemicals"], "modifiers": {"supply": 0.1, "buildSpeed": 0.05} },
+    { "id": "assault_rifles", "nameKey": "tech.assault_rifles", "category": "land", "year": 1955, "cost": { "gold": 300, "industry": 110, "days": 330 }, "prereqs": ["infantry_weapons_2"], "modifiers": {"landAttack": 0.05, "landDefense": 0.05} },
+    { "id": "helicopters", "nameKey": "tech.helicopters", "category": "land", "year": 1962, "cost": { "gold": 380, "industry": 150, "days": 370 }, "prereqs": ["mechanisation", "jet_engines"], "modifiers": {"landAttack": 0.05, "supply": 0.05} },
+    { "id": "guided_anti_tank", "nameKey": "tech.guided_anti_tank", "category": "land", "year": 1965, "cost": { "gold": 420, "industry": 160, "days": 390 }, "prereqs": ["anti_tank_guns", "transistors"], "modifiers": {"landDefense": 0.1} },
+    { "id": "armor_mbt_2", "nameKey": "tech.armor_mbt_2", "category": "armor", "year": 1960, "cost": { "gold": 350, "industry": 150, "days": 360 }, "prereqs": ["armor_mbt"], "modifiers": {"armorAttack": 0.1} },
+    { "id": "armor_mbt_3", "nameKey": "tech.armor_mbt_3", "category": "armor", "year": 1970, "cost": { "gold": 480, "industry": 200, "days": 420 }, "prereqs": ["armor_mbt_2"], "modifiers": {"armorAttack": 0.05, "landDefense": 0.05} },
+    { "id": "anti_ship_missiles", "nameKey": "tech.anti_ship_missiles", "category": "naval", "year": 1960, "cost": { "gold": 350, "industry": 140, "days": 360 }, "prereqs": ["sonar", "transistors"], "modifiers": {"navalAttack": 0.1} },
+    { "id": "supersonic_jets", "nameKey": "tech.supersonic_jets", "category": "air", "year": 1955, "cost": { "gold": 320, "industry": 130, "days": 340 }, "prereqs": ["jet_engines"], "modifiers": {"airAttack": 0.1} },
+    { "id": "multirole_jets", "nameKey": "tech.multirole_jets", "category": "air", "year": 1965, "cost": { "gold": 420, "industry": 170, "days": 390 }, "prereqs": ["supersonic_jets", "transistors"], "modifiers": {"airAttack": 0.05, "airDefense": 0.05} },
+    { "id": "transistors", "nameKey": "tech.transistors", "category": "electronics", "year": 1955, "cost": { "gold": 300, "industry": 110, "days": 330 }, "prereqs": ["computing"], "modifiers": {"research": 0.1} },
+    { "id": "surface_to_air_missiles", "nameKey": "tech.surface_to_air_missiles", "category": "electronics", "year": 1957, "cost": { "gold": 320, "industry": 130, "days": 340 }, "prereqs": ["radar", "jet_engines"], "modifiers": {"aaStrength": 0.2, "airDefense": 0.05} },
+    { "id": "electronic_warfare", "nameKey": "tech.electronic_warfare", "category": "electronics", "year": 1962, "cost": { "gold": 380, "industry": 150, "days": 370 }, "prereqs": ["transistors", "radar"], "modifiers": {"airDefense": 0.05, "aaStrength": 0.1} },
+    { "id": "integrated_circuits", "nameKey": "tech.integrated_circuits", "category": "electronics", "year": 1965, "cost": { "gold": 420, "industry": 160, "days": 390 }, "prereqs": ["transistors"], "modifiers": {"research": 0.1, "industry": 0.05} }
+  ]
+}

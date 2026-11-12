@@ -29,6 +29,7 @@ import techIndustry from '../../data/tech/industry.json' with { type: 'json' };
 import techLand from '../../data/tech/land.json' with { type: 'json' };
 import techNaval from '../../data/tech/naval.json' with { type: 'json' };
 import techNuclear from '../../data/tech/nuclear.json' with { type: 'json' };
+import techPostwar from '../../data/tech/postwar.json' with { type: 'json' };
 import templatesLand from '../../data/templates/land.json' with { type: 'json' };
 import templatesSea from '../../data/templates/sea.json' with { type: 'json' };
 import templatesAir from '../../data/templates/air.json' with { type: 'json' };
@@ -166,11 +167,12 @@ export const BUILD_MIX_1938 = {
   },
 };
 /**
- * The tech tree (PLAN 3.1a), the files in the order of the schema's categories. A tech's place
+ * The tech tree (PLAN 3.1a), the files in the order of the schema's categories, then the techs of 1955-70 (R71c,
+ * ADR-994: `postwar.json`, of every category, last so that no older tech's bit moves). A tech's place
  * here is its bit in a nation's state: a tech put in before the last one moves the bits of
  * those after it, and a save from before then means other techs by them.
  */
-const TECH_DEFS = [techIndustry, techLand, techArmor, techNaval, techAir, techElectronics, techNuclear].flatMap((f) => f.techs as { id: string; category: string; year: number; cost: { gold: number; days: number }; prereqs: string[] }[]);
+const TECH_DEFS = [techIndustry, techLand, techArmor, techNaval, techAir, techElectronics, techNuclear, techPostwar].flatMap((f) => f.techs as { id: string; category: string; year: number; cost: { gold: number; days: number }; prereqs: string[] }[]);
 if (TECH_DEFS.length > MAX_TECHS) throw new Error(`${TECH_DEFS.length} techs: a nation's techs are ${MAX_TECHS} bits`);
 const techIndex = new Map(TECH_DEFS.map((t, i) => [t.id, i]));
 const TECHS_1938: readonly TechRule[] = TECH_DEFS.map((t) => ({ id: t.id, year: t.year, prereqs: t.prereqs.map((p) => techIndex.get(p)!), category: t.category, gold: t.cost.gold, days: t.cost.days }));

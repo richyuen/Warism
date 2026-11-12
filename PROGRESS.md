@@ -198,4 +198,5 @@
   and the Soviet guarantee of Cuba. The maps unchanged; the blocs' leaders still never at war after the track.
 - R71b (ADR-993): the end at 31 December 1975; 49 nations dormant (the states of 1963-75, Libya, 15 rebel movements).
   The replay check reads the blocs as handed over, before the free AI's first day.
+- R71c (ADR-994): 14 techs of 1955-70 as stat upgrades; by 1975 the great powers know all, most new states none.
 

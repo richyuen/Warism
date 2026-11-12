@@ -547,3 +547,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Measured:** the 1938-62 maps' lines identical, the pin unchanged; the replay tests' timeouts 30 minutes (13 more
   years).
 
+### ADR-994 · 2026-11-12 · accepted — R71c: the techs of 1955-70
+- **The rule:** 14 techs dated 1955-70 (`data/tech/postwar.json`), nation-wide modifiers of 5-20 % as the older ones,
+  no new unit: petrochemicals, containerisation; assault rifles, helicopter assault, anti-tank guided missiles;
+  second- and third-generation tanks; anti-ship missiles; supersonic and multirole jets; transistors, surface-to-air
+  missiles, electronic warfare, integrated circuits. None in the held nuclear category, none needing a nuclear tech.
+  The file loads last, so no older tech's bit moves (a save keeps its techs); 58 of the 64 bits.
+- **Measured** (seed 1938, the track's end in 1975): the six great powers, both Germanys and Italy know all 14; India
+  10, the Netherlands 11, Australia 9; most new states none, six born of Britain or France 5-7 (a nation born knows
+  what it leaves knew, PLAN 3.1a). The 1938-62 maps' lines and the pin unchanged (nothing is researched before its
+  year).
+

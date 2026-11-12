@@ -178,7 +178,7 @@ Batches 19 and 18 together (ADR-966).
     government (the Viet Cong, the Pathet Lao, the Khmer Rouge, Biafra...), its end an annexation or its own
     victory. The nations of 1963-75 added dormant (rebels and new states), the end moved to 31 December 1975 with no
     new event. AT: as R69a: 1938-62 unchanged; the yearly starts to 1975 within the workflow's time.
-  - [ ] R71c Later techs (about 1955-75) as stat upgrades of the existing units, so the great powers keep an edge
+  - [x] R71c Later techs (about 1955-75) as stat upgrades of the existing units, so the great powers keep an edge
     over the new states; no new unit. AT: the techs researched by 1975 by the great powers and not by most new
     states; the pin moved only as the techs explain, logged.
   - [ ] R71d 1963-67 (Malaysia, Kenya, Tanzania, the Vietnam War's escalation, the Six-Day War...). AT: a map of the

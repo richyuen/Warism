@@ -887,7 +887,7 @@ take no diplomatic turn). The checkers hold these rules together (§10.1).
   with each held so, it waits ("enemy ships hold its ports"). Its rules are a checker's (§10.1).
 
 ### 3.7 Tech & production
-**Techs** (`data/tech/*.json`: 7 files, 43 techs, 1936–1952; `src/sim/tech.ts`): a rule
+**Techs** (`data/tech/*.json`: 8 files, 58 techs, 1936–1970, `postwar.json` last so no older bit moves, R71c; `src/sim/tech.ts`): a rule
 `TechRule` {id, year, prereqs, category, gold, days}, indexed by the schema's categories (industry,
 land, armor, naval, air, electronics, nuclear), the index a bit of `tech0`/`tech1` (64 at most).
 Techs gate templates (a template needs its units' `techReq` and their prerequisites: tank
