@@ -202,4 +202,7 @@
 - R71d (ADR-995): 1963-67 in the replay: the period's states, Malaysia, Tanzania, Rhodesia; the Viet Cong, the Pathet
   Lao, the Simba and Biafra as nations; Vietnam, the Konfrontasi, 1965, the Six-Day War; 18 coups. Maps of 1964 and
   1967 99.4 % right.
+- R71e (ADR-996): 1968-71 in the replay: the Gulf states and the small states, Bangladesh, Biafra's end; the Khmer
+  Rouge, the Kurds, FROLINAT and Dhofar as nations; 19 coups. Libya independent from 1951 (a gap since R62). The map
+  of 1971 99.4 % right.
 

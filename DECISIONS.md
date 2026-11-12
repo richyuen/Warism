@@ -576,3 +576,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
   lines unchanged; nothing passed over; the 1967 state check (`state67`) as history; seeds 1-5 within the bars.
   Identities Malaysia, Tanzania, Rhodesia with names and flags.
 
+### ADR-996 · 2026-11-12 · accepted — R71e: 1968-71 in the replay; Libya from 1951
+- **Libya** (a known gap since R62: Italy's, under British occupation, to the track's end): born on 24 December 1951
+  of Italy's land in Libya (the transfer sets its holder too, ending the occupation); the maps from 1953 own it Libya's.
+- **Events:** Nauru, Mauritius, Swaziland, Equatorial Guinea, Tonga, Fiji, Bahrain, Qatar and the United Arab Emirates
+  born; Biafra cut from the sea and annexed (12 January 1970); Bangladesh born in its border belts, at war with
+  Pakistan, India beside it on 3 December 1971, the whole of it its own at Dhaka's surrender. Rebels as nations
+  (R71b): FROLINAT in Chad's north (held past the track's end), the Dhofar rebels on the Jebel (a ring), Iraqi
+  Kurdistan at the autonomy agreement of 1970, the Khmer Rouge in Cambodia's northeast. Short wars held and ended
+  white: the Sino-Soviet border war (March-September 1969), the Football War, Syria in Jordan (Black September). 19
+  regime changes (Iraq's Ba'ath, Czechoslovakia 1968, Gaddafi, Lon Nol, Sadat, Allende, Assad, Amin, Bhutto...).
+- **Measured:** the map of 31 December 1971 99.4 % right, strays 0.12 %; Libya's own raises the owners' scores of
+  1953 and 1956 (98.9 to 99.0 %), the rest unchanged; nothing passed over; `state71` as history; seeds 1-5 within the
+  bars; the pin unchanged.
+

@@ -17032,6 +17032,18 @@
    ]
   },
   {
+   "date": "1951-12-24",
+   "kind": "born",
+   "nation": "LBY",
+   "from": [
+    "ITA"
+   ],
+   "countries": [
+    "LBY"
+   ],
+   "note": "Libya independent: the United Kingdom of Libya"
+  },
+  {
    "date": "1952-02-18",
    "kind": "allianceJoin",
    "nation": "GRE",
@@ -19035,6 +19047,584 @@
     "YEM-334"
    ],
    "note": "South Yemen independent: the British leave Aden"
+  },
+  {
+   "date": "1968-01-31",
+   "kind": "born",
+   "nation": "NRU",
+   "from": [
+    "AST"
+   ],
+   "countries": [
+    "NRU"
+   ],
+   "note": "Nauru independent"
+  },
+  {
+   "date": "1968-03-12",
+   "kind": "born",
+   "nation": "MAU",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "MUS"
+   ],
+   "note": "Mauritius independent"
+  },
+  {
+   "date": "1968-05-19",
+   "kind": "transfer",
+   "to": "NIG",
+   "from": [
+    "BIA"
+   ],
+   "provinces": [
+    "NGA-2844",
+    "NGA-2845",
+    "NGA-2842"
+   ],
+   "note": "Port Harcourt falls: Biafra cut from the sea"
+  },
+  {
+   "date": "1968-07-17",
+   "kind": "regime",
+   "nation": "IRQ",
+   "aggression": 55,
+   "note": "The Ba'ath return in Iraq: al-Bakr and Saddam Hussein"
+  },
+  {
+   "date": "1968-08-21",
+   "kind": "regime",
+   "nation": "CZS",
+   "aggression": 20,
+   "note": "The Warsaw Pact invades Czechoslovakia: the Prague Spring crushed"
+  },
+  {
+   "date": "1968-09-06",
+   "kind": "born",
+   "nation": "SWA",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "SWZ"
+   ],
+   "note": "Swaziland independent"
+  },
+  {
+   "date": "1968-10-03",
+   "kind": "regime",
+   "nation": "PRU",
+   "aggression": 30,
+   "note": "Velasco's coup in Peru"
+  },
+  {
+   "date": "1968-10-12",
+   "kind": "born",
+   "nation": "EQG",
+   "from": [
+    "NSP"
+   ],
+   "countries": [
+    "GNQ"
+   ],
+   "note": "Equatorial Guinea independent"
+  },
+  {
+   "date": "1968-12-01",
+   "kind": "born",
+   "nation": "FRO",
+   "from": [
+    "CHD"
+   ],
+   "provinces": [
+    "TCD-5578",
+    "TCD-5577",
+    "TCD-5579"
+   ],
+   "note": "FROLINAT holds the north of Chad"
+  },
+  {
+   "date": "1968-12-01",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "FRO"
+   ],
+   "defenders": [
+    "CHD"
+   ],
+   "note": "The Chadian civil war"
+  },
+  {
+   "date": "1968-12-01",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "FRO"
+    ],
+    [
+     "CHD"
+    ]
+   ],
+   "until": "1979-03-23"
+  },
+  {
+   "date": "1969-01-01",
+   "kind": "born",
+   "nation": "DHO",
+   "from": [
+    "OMN"
+   ],
+   "ring": [
+    [
+     52.0,
+     18.3
+    ],
+    [
+     53.9,
+     18.3
+    ],
+    [
+     53.9,
+     17.15
+    ],
+    [
+     52.0,
+     16.6
+    ]
+   ],
+   "note": "The Dhofar rebels hold the Jebel"
+  },
+  {
+   "date": "1969-01-01",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "DHO"
+   ],
+   "defenders": [
+    "OMN"
+   ],
+   "note": "The Dhofar rebellion"
+  },
+  {
+   "date": "1969-01-01",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "DHO"
+    ],
+    [
+     "OMN"
+    ]
+   ],
+   "until": "1975-12-11"
+  },
+  {
+   "date": "1969-03-02",
+   "kind": "war",
+   "attackers": [
+    "CCP"
+   ],
+   "defenders": [
+    "SOV"
+   ],
+   "note": "The Sino-Soviet border war: Zhenbao Island"
+  },
+  {
+   "date": "1969-03-02",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "CCP"
+    ],
+    [
+     "SOV"
+    ]
+   ],
+   "until": "1969-09-11"
+  },
+  {
+   "date": "1969-03-25",
+   "kind": "regime",
+   "nation": "PAK",
+   "aggression": 45,
+   "note": "Yahya Khan's martial law in Pakistan"
+  },
+  {
+   "date": "1969-05-25",
+   "kind": "regime",
+   "nation": "SUD",
+   "aggression": 40,
+   "note": "Nimeiry's coup in Sudan"
+  },
+  {
+   "date": "1969-06-22",
+   "kind": "regime",
+   "nation": "SYE",
+   "aggression": 55,
+   "note": "South Yemen's Corrective Move: the left takes the NLF"
+  },
+  {
+   "date": "1969-07-14",
+   "kind": "war",
+   "attackers": [
+    "ELS"
+   ],
+   "defenders": [
+    "HON"
+   ],
+   "note": "The Football War"
+  },
+  {
+   "date": "1969-07-14",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "ELS"
+    ],
+    [
+     "HON"
+    ]
+   ],
+   "until": "1969-07-18"
+  },
+  {
+   "date": "1969-07-18",
+   "kind": "peace",
+   "a": "ELS",
+   "b": "HON",
+   "terms": "white",
+   "note": "The OAS ceasefire"
+  },
+  {
+   "date": "1969-09-01",
+   "kind": "regime",
+   "nation": "LBY",
+   "aggression": 60,
+   "note": "Gaddafi's revolution: Libya's king deposed"
+  },
+  {
+   "date": "1969-09-11",
+   "kind": "peace",
+   "a": "CCP",
+   "b": "SOV",
+   "terms": "white",
+   "note": "Kosygin and Zhou in Beijing: the border war ends"
+  },
+  {
+   "date": "1969-10-21",
+   "kind": "regime",
+   "nation": "SOM",
+   "aggression": 50,
+   "note": "Siad Barre's coup in Somalia"
+  },
+  {
+   "date": "1970-01-12",
+   "kind": "annex",
+   "annexer": "NIG",
+   "target": "BIA",
+   "tell": "note",
+   "note": "Biafra surrenders"
+  },
+  {
+   "date": "1970-03-11",
+   "kind": "born",
+   "nation": "KUR",
+   "from": [
+    "IRQ"
+   ],
+   "provinces": [
+    "IRQ-3046",
+    "IRQ-3050",
+    "IRQ-3242"
+   ],
+   "note": "The autonomy agreement: Iraqi Kurdistan"
+  },
+  {
+   "date": "1970-03-18",
+   "kind": "regime",
+   "nation": "CAM",
+   "aggression": 35,
+   "note": "Lon Nol deposes Sihanouk: the Khmer Republic"
+  },
+  {
+   "date": "1970-05-05",
+   "kind": "born",
+   "nation": "KHR",
+   "from": [
+    "CAM"
+   ],
+   "provinces": [
+    "KHM-1795",
+    "KHM-1794",
+    "KHM-1792",
+    "KHM-1793",
+    "KHM-1791"
+   ],
+   "note": "The Khmer Rouge and the North Vietnamese hold Cambodia's northeast"
+  },
+  {
+   "date": "1970-05-05",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "KHR"
+   ],
+   "defenders": [
+    "CAM"
+   ],
+   "note": "The Cambodian civil war"
+  },
+  {
+   "date": "1970-05-05",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "KHR"
+    ],
+    [
+     "CAM"
+    ]
+   ],
+   "until": "1975-04-17"
+  },
+  {
+   "date": "1970-06-04",
+   "kind": "born",
+   "nation": "TON",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "TON"
+   ],
+   "note": "Tonga independent"
+  },
+  {
+   "date": "1970-07-23",
+   "kind": "regime",
+   "nation": "OMN",
+   "aggression": 30,
+   "note": "Qaboos deposes his father in Oman"
+  },
+  {
+   "date": "1970-09-18",
+   "kind": "war",
+   "attackers": [
+    "SYR"
+   ],
+   "defenders": [
+    "TRJ"
+   ],
+   "note": "Black September: Syrian tanks at Irbid"
+  },
+  {
+   "date": "1970-09-18",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "SYR"
+    ],
+    [
+     "TRJ"
+    ]
+   ],
+   "until": "1970-09-23"
+  },
+  {
+   "date": "1970-09-23",
+   "kind": "peace",
+   "a": "SYR",
+   "b": "TRJ",
+   "terms": "white",
+   "note": "The Syrians fall back from Jordan"
+  },
+  {
+   "date": "1970-09-28",
+   "kind": "regime",
+   "nation": "EGY",
+   "aggression": 45,
+   "note": "Nasser dies: Sadat"
+  },
+  {
+   "date": "1970-10-10",
+   "kind": "born",
+   "nation": "FIJ",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "FJI"
+   ],
+   "note": "Fiji independent"
+  },
+  {
+   "date": "1970-11-03",
+   "kind": "regime",
+   "nation": "CHL",
+   "aggression": 20,
+   "note": "Allende president of Chile"
+  },
+  {
+   "date": "1970-11-13",
+   "kind": "regime",
+   "nation": "SYR",
+   "aggression": 55,
+   "note": "The Corrective Movement: Assad takes Syria"
+  },
+  {
+   "date": "1971-01-25",
+   "kind": "regime",
+   "nation": "UGA",
+   "aggression": 50,
+   "note": "Amin ousts Obote in Uganda"
+  },
+  {
+   "date": "1971-03-12",
+   "kind": "regime",
+   "nation": "TUR",
+   "aggression": 35,
+   "note": "The Turkish army's memorandum"
+  },
+  {
+   "date": "1971-03-26",
+   "kind": "born",
+   "nation": "BAN",
+   "from": [
+    "PAK"
+   ],
+   "provinces": [
+    "BGD-2488",
+    "BGD-5492"
+   ],
+   "note": "Bangladesh declares its independence"
+  },
+  {
+   "date": "1971-03-26",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "PAK"
+   ],
+   "defenders": [
+    "BAN"
+   ],
+   "note": "Operation Searchlight: the Bangladesh war"
+  },
+  {
+   "date": "1971-03-26",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "PAK"
+    ],
+    [
+     "BAN"
+    ]
+   ],
+   "until": "1971-12-16"
+  },
+  {
+   "date": "1971-08-15",
+   "kind": "born",
+   "nation": "BHR",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "BHR"
+   ],
+   "note": "Bahrain independent"
+  },
+  {
+   "date": "1971-09-03",
+   "kind": "born",
+   "nation": "QAT",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "QAT"
+   ],
+   "note": "Qatar independent"
+  },
+  {
+   "date": "1971-12-02",
+   "kind": "born",
+   "nation": "UAE",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "ARE"
+   ],
+   "note": "The United Arab Emirates"
+  },
+  {
+   "date": "1971-12-03",
+   "kind": "join",
+   "nation": "RAJ",
+   "beside": "BAN",
+   "against": "PAK",
+   "note": "India's war for Bangladesh"
+  },
+  {
+   "date": "1971-12-03",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "PAK"
+    ],
+    [
+     "BAN",
+     "RAJ"
+    ]
+   ],
+   "until": "1971-12-17"
+  },
+  {
+   "date": "1971-12-16",
+   "kind": "transfer",
+   "to": "BAN",
+   "from": [
+    "PAK"
+   ],
+   "provinces": [
+    "BGD-2476",
+    "BGD-2488",
+    "BGD-1806",
+    "BGD-5492",
+    "BGD-3255",
+    "BGD-2432",
+    "BGD-2475"
+   ],
+   "note": "Dhaka: Pakistan's army in the east surrenders"
+  },
+  {
+   "date": "1971-12-17",
+   "kind": "peace",
+   "a": "PAK",
+   "b": "BAN",
+   "terms": "white",
+   "note": "The ceasefire in the west"
+  },
+  {
+   "date": "1971-12-20",
+   "kind": "regime",
+   "nation": "PAK",
+   "aggression": 40,
+   "note": "Bhutto takes Pakistan"
   }
  ],
  "maps": [
@@ -23120,9 +23710,10 @@
   },
   {
    "date": "1953-07-27",
-   "note": "The armistice: the two Koreas on the demarcation line; Tibet and Hainan the People's Republic's; Eritrea Ethiopia's",
+   "note": "The armistice: the two Koreas on the demarcation line; Tibet and Hainan the People's Republic's; Eritrea Ethiopia's; Libya independent",
    "byCountry": {
-    "ERI": "ETH"
+    "ERI": "ETH",
+    "LBY": "LBY"
    },
    "byProvince": {
     "CHN-1775": "CCP",
@@ -23170,15 +23761,6 @@
       "AUT-2329",
       "AUT-2320"
      ]
-    },
-    {
-     "by": "ENG",
-     "of": [
-      "ITA"
-     ],
-     "countries": [
-      "LBY"
-     ]
     }
    ]
   },
@@ -23219,15 +23801,6 @@
     }
    ],
    "occupied": [
-    {
-     "by": "ENG",
-     "of": [
-      "ITA"
-     ],
-     "countries": [
-      "LBY"
-     ]
-    },
     {
      "by": "ISR",
      "of": [
@@ -23344,17 +23917,7 @@
      ]
     }
    ],
-   "occupied": [
-    {
-     "by": "ENG",
-     "of": [
-      "ITA"
-     ],
-     "countries": [
-      "LBY"
-     ]
-    }
-   ]
+   "occupied": []
   },
   {
    "date": "1962-12-30",
@@ -23377,17 +23940,7 @@
     "IND-3265": "RAJ",
     "IND-2445": "RAJ"
    },
-   "occupied": [
-    {
-     "by": "ENG",
-     "of": [
-      "ITA"
-     ],
-     "countries": [
-      "LBY"
-     ]
-    }
-   ]
+   "occupied": []
   },
   {
    "date": "1964-12-31",
@@ -23414,17 +23967,7 @@
     "LAO-3288": "PTL",
     "LAO-3286": "PTL"
    },
-   "occupied": [
-    {
-     "by": "ENG",
-     "of": [
-      "ITA"
-     ],
-     "countries": [
-      "LBY"
-     ]
-    }
-   ]
+   "occupied": []
   },
   {
    "date": "1967-12-31",
@@ -23461,17 +24004,72 @@
     "SYR-145": "ISR",
     "SYR-5261": "ISR"
    },
-   "occupied": [
+   "occupied": []
+  },
+  {
+   "date": "1971-12-31",
+   "note": "Bangladesh independent; Biafra gone; the Gulf states, Mauritius, Swaziland, Equatorial Guinea, Nauru, Tonga and Fiji independent; the Khmer Rouge in Cambodia's northeast, the Kurds' autonomy, FROLINAT in Chad's north, the Dhofar rebels on the Jebel",
+   "byCountry": {
+    "BGD": "BAN",
+    "NRU": "NRU",
+    "MUS": "MAU",
+    "SWZ": "SWA",
+    "GNQ": "EQG",
+    "TON": "TON",
+    "FJI": "FIJ",
+    "BHR": "BHR",
+    "QAT": "QAT",
+    "ARE": "UAE"
+   },
+   "byProvince": {
+    "NGA-2857": "NIG",
+    "NGA-2862": "NIG",
+    "NGA-2863": "NIG",
+    "NGA-2843": "NIG",
+    "NGA-2841": "NIG",
+    "NGA-2844": "NIG",
+    "NGA-2845": "NIG",
+    "NGA-2847": "NIG",
+    "NGA-2842": "NIG",
+    "KHM-1795": "KHR",
+    "KHM-1794": "KHR",
+    "KHM-1792": "KHR",
+    "KHM-1793": "KHR",
+    "KHM-1791": "KHR",
+    "IRQ-3046": "KUR",
+    "IRQ-3050": "KUR",
+    "IRQ-3242": "KUR",
+    "TCD-5578": "FRO",
+    "TCD-5577": "FRO",
+    "TCD-5579": "FRO"
+   },
+   "regions": [
     {
-     "by": "ENG",
-     "of": [
-      "ITA"
+     "owner": "DHO",
+     "onlyFrom": [
+      "OMN"
      ],
-     "countries": [
-      "LBY"
+     "ring": [
+      [
+       52.0,
+       18.3
+      ],
+      [
+       53.9,
+       18.3
+      ],
+      [
+       53.9,
+       17.15
+      ],
+      [
+       52.0,
+       16.6
+      ]
      ]
     }
-   ]
+   ],
+   "occupied": []
   }
  ]
 }

@@ -70,6 +70,9 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   // Lao, Biafra) living; Zanzibar, the Simba, Sarawak and the Dutch Indies gone; Rhodesia free; Malaysia, Tanzania and
   // Rhodesia so named; the three wars of the end of 1967, the United States in South Vietnam's.
   let state67 = '';
+  // R71e (ADR-996): on 30 December 1971, the states of 1968-71 (Bangladesh among them), Libya (from 1951) and the
+  // rebels of 1968-70 living, Biafra gone; the five wars of the end of 1971.
+  let state71 = '';
   // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
   let axisPact = true;
   const fleets = new Map<string, number>();
@@ -87,7 +90,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const { maps, skipped, nukes } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1967-12-31',
+    '1971-12-31',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
@@ -123,6 +126,14 @@ it('1938-39: the land owned as history had it, and the events fire on their date
         state62 = [
           ['SLE', 'KUW', 'SYR', 'TGK', 'SAM', 'RWA', 'BDI', 'ALG', 'JAM', 'TRI', 'UGA'].map((t) => nc.living[id(t)]).join(''),
           w.alliances.allianceOf(id('ALB'))?.leader === id('SOV'),
+          w.wars.list.length,
+        ].join(' ');
+      }
+      if (date === '1971-12-30') {
+        const nc = w.nations.cols;
+        state71 = [
+          ['NRU', 'MAU', 'SWA', 'EQG', 'TON', 'FIJ', 'BHR', 'QAT', 'UAE', 'BAN', 'LBY', 'KHR', 'KUR', 'FRO', 'DHO'].map((t) => nc.living[id(t)]).join(''),
+          nc.living[id('BIA')],
           w.wars.list.length,
         ].join(' ');
       }
@@ -171,7 +182,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(17);
+  expect(maps.length).toBe(18);
+  expect(state71).toBe('111111111111111 0 5');
   expect(state67).toBe('111111111111111 0000 0 MYS,TZA,RHO 3 true');
   expect(state62).toBe('11111111111 false 0');
   expect(state60).toBe('11111111111111 0 000000 false');
