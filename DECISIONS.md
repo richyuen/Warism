@@ -612,3 +612,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   earlier maps within 0.01 point; nothing passed over; `state75` as history; the arsenals at the end the United
   States', the Soviet Union's, Britain's, France's and China's on every seed; the pin unchanged.
 
+### ADR-998 · 2026-11-12 · accepted — R71g: the world after 1975 measured; R71 done
+- **Measured** (`tools/diag/afterTrack.ts`, seeds 1938, 1, 2, 20 years from the 1975 handover): the blocs' leaders
+  never on opposite sides of a war; both blocs whole all 20 years (the Soviet bloc 8 of 8; NATO 14 or 15, the
+  fifteenth India on seeds 1938 and 1, joined on the free AI's first day, which this tool reads as the handover,
+  ADR-993); 354-499 wars declared; the United States aided 30-51 nations, the Soviet Union 45-62 (R67e's aid).
+  China's arsenal handed over (ADR-997). As after 1962 (ADR-988, ADR-990): no new item.
+- **R71 done:** the replay runs from 1938 to the end of 1975 (ADR-991 to ADR-998). Next, by PROMPT's RELEASES: the
+  critic of Batches 18 and 19 (held for R71 by the user's decision, ADR-991).
+

@@ -208,4 +208,6 @@
 - R71f (ADR-997): 1972-75 in the replay: Saigon, Phnom Penh and Laos; Yom Kippur and Sinai; Cyprus; Portugal's
   empire and Angola's war; Western Sahara and East Timor; China's bomb (built whatever its income while the track
   steers). The map of the track's end 99.5 % right.
+- R71g, R71 done (ADR-998): 20 years after the 1975 handover on three seeds, the blocs whole and their leaders never
+  at war; the aid flowing (the US 30-51 nations, the Soviet Union 45-62). The replay runs 1938-1975.
 

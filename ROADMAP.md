@@ -166,7 +166,7 @@ Batches 19 and 18 together (ADR-966).
     blocs whole; plain games unchanged (the pin).
   - [x] R67f A Cold War for every game: closed (the user's decision of 2026-11-12, ADR-990): the bloc rules stay in the
     historical track's games only.
-- [ ] R71 **The replay to 1975** (the user's decision of 2026-11-12, ADR-991; before the critic of Batches 18-19).
+- [x] R71 **The replay to 1975** (the user's decision of 2026-11-12, ADR-991; before the critic of Batches 18-19).
   Split (as R69: 1938-62 kept, then the new years by period; research in `docs/research/1963-75.md`):
   - [x] R71a Regime change (ADR-992): a `regime` event sets a nation's aggression (and its static command
     efficiency), told by its note; no government label (none is stored, shown or read); its alignment the same day's
@@ -186,5 +186,5 @@ Batches 19 and 18 together (ADR-966).
   - [x] R71e 1968-71 (Czechoslovakia, Biafra's end, Bangladesh, the Gulf states...). AT: as R71d.
   - [x] R71f 1972-75 (Okinawa, the Paris Accords, Yom Kippur, the Portuguese colonies, Saigon, Cambodia, Laos, the
     Western Sahara, East Timor). AT: as R71d; the arsenals at the end history's (China's bomb 1964).
-  - [ ] R71g The world after 1975: the blocs and their aid re-measured from the 1975 handover.
+  - [x] R71g The world after 1975: the blocs and their aid re-measured from the 1975 handover.
 
