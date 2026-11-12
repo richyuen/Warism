@@ -163,4 +163,6 @@
 - R68b: `?scenario=1938h&year=Y&mode=replay|free` loads year Y's start with the game's second seed; `free` leaves the
   track by `leaveTrack` (logged, `TrackEnd.free`, its own History sentence). Unit test of the command; e2e of both
   modes and a year not built (`tests/e2e/replayYear1938h.spec.ts`, the start served by the test).
+- R68c, R68 done: the 1938h card's "Start on" (1938 and the built years) and "Replay on" / "Play free"; 1938 needs no
+  save (free: the track left at once). e2e of the card; the title and settings specs unchanged and green.
 

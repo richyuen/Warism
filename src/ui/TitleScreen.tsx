@@ -4,7 +4,7 @@ import type { GameOptions } from '../shared/gameOptions';
 import type { ScenarioId } from '../shared/protocol';
 import type { ScenarioInfo } from '../shared/scenarios';
 import { t, type MessageKey } from './i18n';
-import { NewGameForm, randomSeed } from './NewGameForm';
+import { NewGameForm, type ReplayStart, randomSeed } from './NewGameForm';
 
 /** What the title screen shows of a saved game. */
 export interface SavedGame {
@@ -23,7 +23,9 @@ export interface TitleScreenProps {
   /** The image of a scenario's start (its political map, PLAN 1.43c). */
   previewUrl: (id: ScenarioId) => string;
   /** Starts a new game of scenario `id` with `seed` and the new-game options. */
-  onStart: (id: ScenarioId, seed: number, options: GameOptions) => void;
+  onStart: (id: ScenarioId, seed: number, options: GameOptions, start?: ReplayStart) => void;
+  /** The years the historical replay can start from on this site (ROADMAP R68c; none without its built starts). */
+  startYears?: () => Promise<number[]>;
   /** The saved game to offer as Continue, if there is one (PLAN 1.43b). */
   readSave: () => Promise<SavedGame | null>;
   onContinue: () => void;
@@ -46,7 +48,7 @@ export interface TitleScreenProps {
  * the scenario file loader; on the right the chosen scenario (a map of its start, its facts) with
  * its new-game form. No world runs behind it.
  */
-export function TitleScreen({ scenarios, previewUrl, onStart, readSave, onContinue, checkScenarioFile, onScenarioFile, loadFailed, saveFailed = false }: TitleScreenProps) {
+export function TitleScreen({ scenarios, previewUrl, onStart, startYears, readSave, onContinue, checkScenarioFile, onScenarioFile, loadFailed, saveFailed = false }: TitleScreenProps) {
   const [chosen, setChosen] = useState<ScenarioId>(scenarios[0]!.id);
   // A new seed per visit, so two games started without touching the field differ.
   const [seed] = useState(randomSeed);
@@ -58,6 +60,13 @@ export function TitleScreen({ scenarios, previewUrl, onStart, readSave, onContin
   // A file chosen and read, waiting for Start (PLAN 7.13b, critic run 7: "a file starts the game at
   // once, with no confirmation").
   const [pending, setPending] = useState<{ file: File; name: string; scenario: ScenarioId; startDay: number; tick: number; upgraded?: readonly 'traits'[] } | null>(null);
+  // The replay's years built for this site (R68c); 1938 alone until read, or without them.
+  const [years, setYears] = useState<number[]>([]);
+  useEffect(() => {
+    void startYears?.()
+      .then(setYears)
+      .catch(() => setYears([]));
+  }, []);
   useEffect(() => {
     void readSave()
       .then(setSave)
@@ -203,7 +212,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, readSave, onContin
                 <span data-testid="title-nations">{info.nationsRange ? t('settings.nationsRange', { min: info.nationsRange.min, max: info.nationsRange.max }) : info.nations}</span>
               </div>
             </div>
-            <NewGameForm key={chosen} seed={seed} options={{}} nationsRange={info.nationsRange} sizes={info.sizes} defaultSize={info.defaultSize} diplomacy={info.diplomacy} heroes={info.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={info.fixedSeed} onStart={(s, o) => onStart(chosen, s, o)} />
+            <NewGameForm key={chosen} seed={seed} options={{}} nationsRange={info.nationsRange} sizes={info.sizes} defaultSize={info.defaultSize} diplomacy={info.diplomacy} heroes={info.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={info.fixedSeed} startYears={info.fixedSeed !== undefined && startYears ? years : undefined} onStart={(s, o, start) => onStart(chosen, s, o, start)} />
           </div>
         </section>
       </div>

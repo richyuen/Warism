@@ -123,7 +123,7 @@ Batches 19 and 18 together (ADR-966).
   - [x] R67d Deterrence (ADR-981; as R67c): no nation of one of the two blocs declares on a side the other stands on.
     Met: no day in 20 years after the track on seeds 1938, 1, 2 with the blocs' leaders on opposite sides of a war.
   - R67e and R67f deferred to after R69 (the user's decision, ADR-982).
-- [ ] R68 **A start from any date of the replay.** A timeline slider in place of "World, 1938" and "World, 1938 —
+- [x] R68 **A start from any date of the replay.** A timeline slider in place of "World, 1938" and "World, 1938 —
   Historical"; continue the replay or free from there.
   Split (ADR-983, the user's decisions: a start each 1 January, built at deploy, never committed):
   - [x] R68a The yearly saves: `npm run saves` writes 1938h's world (its seed) on 1 January of each year of the track
@@ -134,7 +134,7 @@ Batches 19 and 18 together (ADR-966).
     Y's save, and for `free` ends the track by a command (`leaveTrack`, logged; `TrackEnded`, a reason of its own);
     the second seed (`after`) the game's own. A missing or unfit save goes to `?failed=save`. AT: unit tests of the
     command and the load; an e2e start from a year in each mode.
-  - [ ] R68c The card: "World, 1938 — Historical" offers the years of `years.json` (1938 alone without it) and the
+  - [x] R68c The card: "World, 1938 — Historical" offers the years of `years.json` (1938 alone without it) and the
     choice to continue the replay or play free. AT: e2e of the card (year and mode reach the game); the title
     screen's specs.
 - [ ] R69 **The replay past 1953**, to 1962 for now (the user's decision, ADR-959).

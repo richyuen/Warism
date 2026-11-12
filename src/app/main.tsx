@@ -6,6 +6,7 @@ import { TitleScreen } from '../ui/TitleScreen';
 import { readAutosave, type SaveRecord } from './autosave';
 import { startGame } from './game';
 import { continueUrl, newGameUrl, stagedScenarioUrl } from './gameUrl';
+import { replayYears } from './replayStart';
 import { checkScenarioFile, stageScenarioFile } from './scenarioFiles';
 import { missingSections } from '../shared/stateCheck';
 import { applyUiScale } from './settings';
@@ -52,7 +53,8 @@ if (scenarioId !== null) {
       <TitleScreen
         scenarios={LISTED_SCENARIOS.map((id) => ({ id, info: SCENARIO_INFO[id] }))}
         previewUrl={(id) => new URL(scenarioPreviewPath(id), document.baseURI).href}
-        onStart={(id, seed, options) => location.assign(newGameUrl(id, seed, options))}
+        onStart={(id, seed, options, start) => location.assign(newGameUrl(id, seed, options, start))}
+        startYears={replayYears}
         readSave={readSave}
         onContinue={() => {
           if (save) location.assign(continueUrl(save));

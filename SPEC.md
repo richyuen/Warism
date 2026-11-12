@@ -1746,6 +1746,8 @@ to 27 July 1953, then sets the world free.
   game's own second seed (`?year=Y&mode=replay|free`, `src/app/replayStart.ts`); for a free game the track is left at
   once by its own command (`leaveTrack`, logged; `TrackEnd.free`). A year not built, or of another state format, is
   refused (the title's notice, `?failed=save`).
+  The card (R68c): "Start on" lists 1 January 1938 (the new world itself, nothing loaded) and each year the site has
+  built; "Replay on" or "Play free" (a segmented control). 1938 replayed on is the plain new game.
 - **The player's view** (built, R62j1, ADR-946): while the track runs a line under the date names its next event that
   has a name and its date (not the steering's: `hold`, `objective`, `buff`, `redeploy`), the first of the next and the
   `TRACK_AHEAD` (16) after it that the stats carry whose hour is not behind the shown one (R64f, R65a, ADR-960;

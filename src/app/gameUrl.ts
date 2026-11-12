@@ -31,7 +31,8 @@ export function optionsFromUrl(params: URLSearchParams): GameOptions {
   return o;
 }
 
-export function newGameUrl(base: string, seed: number, o: GameOptions): string {
+/** `start` (ROADMAP R68c): the historical replay from 1 January of a year, going on or free (`?year=&mode=`). */
+export function newGameUrl(base: string, seed: number, o: GameOptions, start?: { year: number; free: boolean }): string {
   // A new game starts paused, so the new world can be looked at first.
   const q = new URLSearchParams({ scenario: base, seed: String(seed), paused: '1' });
   if (o.loopingMap === false) q.set('looping', '0');
@@ -44,6 +45,10 @@ export function newGameUrl(base: string, seed: number, o: GameOptions): string {
   if (o.nations !== undefined) q.set('nations', String(o.nations));
   if (o.size !== undefined) q.set('size', o.size);
   if (o.after !== undefined && o.after !== 0) q.set('after', String(o.after));
+  if (start) {
+    q.set('year', String(start.year));
+    q.set('mode', start.free ? 'free' : 'replay');
+  }
   return `?${q.toString()}`;
 }
 

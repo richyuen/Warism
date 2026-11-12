@@ -20,11 +20,18 @@ export async function replayYears(): Promise<number[]> {
   }
 }
 
-/** Loads year `year`'s world into `sim` with second seed `after`; `free` leaves the track. Throws when it cannot. */
-export async function startFromYear(sim: SimClient, year: number, after: number | undefined, free: boolean): Promise<void> {
-  if (!(await replayYears()).includes(year)) throw new Error(`no start built for ${year}`);
-  const res = await fetch(new URL(`data/scenarios/1938h/start/${year}.sav`, document.baseURI));
-  if (!res.ok) throw new Error(`the start of ${year}: ${res.status}`);
-  await sim.load(await unpackSave(new Uint8Array(await res.arrayBuffer())), false, after);
+/**
+ * Loads year `year`'s world into `sim` with second seed `after`; `free` leaves the track. 1938's is the new world itself:
+ * nothing loaded. Whether a world was loaded; throws when it cannot be.
+ */
+export async function startFromYear(sim: SimClient, year: number, after: number | undefined, free: boolean): Promise<boolean> {
+  const load = year !== 1938;
+  if (load) {
+    if (!(await replayYears()).includes(year)) throw new Error(`no start built for ${year}`);
+    const res = await fetch(new URL(`data/scenarios/1938h/start/${year}.sav`, document.baseURI));
+    if (!res.ok) throw new Error(`the start of ${year}: ${res.status}`);
+    await sim.load(await unpackSave(new Uint8Array(await res.arrayBuffer())), false, after);
+  }
   if (free) sim.command({ kind: 'leaveTrack' }, true);
+  return load;
 }
