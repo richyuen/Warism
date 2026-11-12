@@ -127,3 +127,8 @@
   engaged at 10 of 19 large land fronts (seeds 1, 2: 12, 10), the user's bar 9. Nine replay tests green; tick 2.75 ms
   (plain 2.52).
 
+## 2026-11-11 — R66d: no window for a taker far outnumbered (ADR-977)
+
+- Moscow's Soviets were destroyed in their window (305k of 305k); a window now opens only while its taker's side has a
+  third of its foes' men there. Moscow 11-13 % lost; 11 of 20 fronts fought on seed 1938. Corrections to ADR-976.
+

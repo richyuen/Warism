@@ -46,6 +46,27 @@ interface OpenStage {
   inRing: (c: number) => boolean;
 }
 
+/** A window stays shut while its taker's side has under this share of its foes' men in the area (ADR-977). */
+export const FIGHT_OUTNUMBERED = 1 / 3;
+
+/** Whether a stage's taker's side has under FIGHT_OUTNUMBERED of its foes' men on land in its area, this hour. */
+function outnumbered(world: World, s: OpenStage): boolean {
+  const f = world.formations.cols;
+  const { w } = world.cells;
+  let mine = 0;
+  let theirs = 0;
+  world.formations.forEach((i) => {
+    if (world.offLand(i) || world.rules?.templates[f.template[i]!]?.domain !== Domain.land) return;
+    const n = f.nation[i]!;
+    const side = takerSide(world, n, s.by);
+    if (!side && !world.wars.atWar(n, s.by)) return;
+    if (!s.inArea(Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w)) return;
+    if (side) mine += f.strength[i]!;
+    else theirs += f.strength[i]!;
+  });
+  return mine < theirs * FIGHT_OUTNUMBERED;
+}
+
 /** The hour a `kept` arrival is the AI's again (R66d): its stage's window of fighting opens. */
 function keptUntil(t: Track, date: string): number {
   return t.tickOf(date) - FIGHT_DAYS * 24;
@@ -233,7 +254,11 @@ export class Track {
       if (due - tick > FIGHT_DAYS * 24) break;
       const e = this.events[i]!;
       if (e.kind !== 'occupy') continue;
-      list.push(this.area(world, i, e));
+      const s = this.area(world, i, e);
+      // Not while its taker's side is far outnumbered in its area (ADR-977): the Soviets before Moscow, a fifth of
+      // the Germans there, were destroyed in the window, every man of 305k, before their own stage.
+      if (outnumbered(world, s)) continue;
+      list.push(s);
     }
     this.open = { tick, w: world.cells.w, list };
     return list;

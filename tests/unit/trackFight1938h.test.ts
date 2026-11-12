@@ -4,8 +4,8 @@ import { kmPerCell, project } from '../../src/sim/data/projection';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TAGS_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
-import { FIGHT_BAND_KM, FIGHT_DAYS } from '../../src/sim/track';
-import { PlayerOrderKind, type World } from '../../src/sim/world';
+import { FIGHT_BAND_KM, FIGHT_DAYS, FIGHT_OUTNUMBERED } from '../../src/sim/track';
+import { Domain, PlayerOrderKind, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
 
 // ROADMAP R66d (ADR-974): for FIGHT_DAYS before an `occupy` stage its area's hold is lifted for its taker's side and
@@ -95,6 +95,45 @@ describe('a window of fighting before a stage (ROADMAP R66d)', () => {
     });
     sim.step(2, quiet);
     for (const i of kept) expect(w.playerOrders.has(i)).toBe(false);
+  });
+
+  it('no window while its taker is far outnumbered in the area (ADR-977)', () => {
+    // Luxembourg to take the German land by Trier on the 15th, the front held: far fewer Luxembourgers than Germans there.
+    const ring: [number, number][] = [[6.4, 50.3], [7.2, 50.3], [7.2, 49.4], [6.4, 49.4]];
+    const tl: TimelineFile = {
+      events: [
+        { date: '1938-01-01', kind: 'war', attackers: ['LUX'], defenders: ['GER'] },
+        { date: '1938-01-01', hour: 1, kind: 'hold', sides: [['LUX'], ['GER']], until: '1939-01-01' },
+        { date: '1938-01-15', hour: 1, kind: 'occupy', by: 'LUX', of: ['GER'], ring },
+      ],
+    };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
+    const w = sim.world;
+    const f = w.formations.cols;
+    const [LUX, GER] = [id('LUX'), id('GER')];
+    sim.step(OPEN + 1, quiet);
+    // The area: the ring's box grown by FIGHT_BAND_KM.
+    const band = FIGHT_BAND_KM / kmPerCell(w.cells.w);
+    const [u0, v0] = project(6.4, 50.3);
+    const [u1, v1] = project(7.2, 49.4);
+    const inArea = (i: number): boolean =>
+      f.x[i]! >= u0 * w.cells.w - band && f.x[i]! <= u1 * w.cells.w + band && f.y[i]! >= v0 * w.cells.h - band && f.y[i]! <= v1 * w.cells.h + band;
+    const men = (n: number): number => {
+      let m = 0;
+      w.formations.forEach((i) => {
+        if (f.nation[i] === n && w.rules?.templates[f.template[i]!]?.domain === Domain.land && inArea(i)) m += f.strength[i]!;
+      });
+      return m;
+    };
+    // The Luxembourgers in the area are under a third of the Germans there.
+    expect(men(LUX)).toBeLessThan(men(GER) * FIGHT_OUTNUMBERED);
+    expect(w.holdsAt(LUX, GER, 0, 0)).toBe(true);
+    while (sim.tick < STAGE) {
+      sim.step(1, quiet);
+      w.formations.forEach((i) => {
+        if (f.nation[i] === LUX) expect(f.engaged[i], `formation ${i} of Luxembourg fought at hour ${sim.tick}`).toBe(0);
+      });
+    }
   });
 
   it('a save within the window plays on as the run it came from', () => {

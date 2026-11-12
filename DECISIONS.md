@@ -286,3 +286,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **The bar** (the user: "as long as it's at least 9 after step 2"): ≥ 9 on seed 1938. Not fought still: Borneo, the
   Netherlands Indies, the Philippines, New Guinea, Stalingrad, Guilin, Libya, Uranus, Moscow, the Vistula at the hour.
 
+### ADR-977 · 2026-11-11 · accepted — R66d: no window for a taker far outnumbered; corrections to ADR-976
+- **The rule** (`FIGHT_OUTNUMBERED` = 1/3, `outnumbered` in `Track.openStages`): a stage's window is shut in an hour in
+  which its taker's side has under a third of the men of the nations at war with the taker on land in its area. Read
+  each hour from the state, it also stops a window's fighting once the taker has fallen that far behind.
+- **Why:** before the Moscow counter-offensive the Soviets near Moscow, a fifth of the Germans there at the window's
+  opening, lost their whole cohort in it on seed 1938 (305k of 305k) and on seed 2 (309k of 319k): the ill effect on
+  the rest of the replay the user ruled out. Now 11-13 %. The ratios at the openings (`.cache/r66x_*.json`): Moscow
+  0.19-0.26, the Philippines 0.07 (shut); Case Blue 0.37-0.83 and Libya 0.67-1.03 (open).
+- **Measured:** both sides engaged at the stage's hour at 11 of the 20 large `occupy` land fronts (seeds 1, 2: 8, 9);
+  the census now reads `transfer`s too (R66e), adding four of 1944-45 with no fighting (24 in all). The nine replay
+  tests green (1941 strays 0.44 %, Paris 14 June, China 381k, the Soviet army 3.35M on 1 November 1942); pin unchanged.
+  Unit case: Luxembourg to take the land by Trier fights nothing (red with the guard's check off).
+- **Corrections to ADR-976:** Malaya is not among the fronts counted (its land at its window's opening 184 cells,
+  under 200: Japan took most of it before, with no hold there); Libya is counted (one formation of each side engaged),
+  as are Burma (1/1) and Changsha (1/3): the margin over 9 is of single formations. The Philippines' 43 % of the
+  Japanese cohort lost on seed 1938 is outside any window (no hold there before July 1942). `kept` on `redeploy` has
+  no data now (R66e uses it or removes it).
+

@@ -19,14 +19,22 @@ const from = process.argv[3] ?? '1942-01-01';
 const to = process.argv[4] ?? '1945-06-01';
 const out = process.argv[5] ?? `.cache/trackFronts_${seed}.json`;
 /** A stage's row: its armies at its hour; its land, size and front at its window's opening (`left`: its land then). */
-type Row = StageArmies & { date: string; note: string; by: string; left: number; opening: { attacker: number; defender: number }; lost: { attacker: number; defender: number }; window: { samples: number; both: number } };
+type Row = StageArmies & { date: string; note: string; by: string; kind: string; left: number; opening: { attacker: number; defender: number }; lost: { attacker: number; defender: number }; window: { samples: number; both: number } };
 /** A large stage (R66b): of this many cells or more. */
 const LARGE = 200;
 
 {
   const sim = new Sim({ scenario: '1938h', seed, assets: assets1938(SIZE_1938.w) });
   const t = sim.world.track!;
-  const stages = t.events.flatMap((e, i) => (e.kind === 'occupy' && e.date >= from && e.date < to ? [i] : []));
+  // The `occupy` stages and (R66e) the `transfer`s: a transfer's `to` takes the land of its `from`.
+  const stages = t.events.flatMap((e, i) => ((e.kind === 'occupy' || e.kind === 'transfer') && e.date >= from && e.date < to ? [i] : []));
+  type Stage = { date: string; note?: string | undefined; by: string; of: readonly string[]; ring: readonly (readonly [number, number])[]; kind: string };
+  const stageOf = (i: number): Stage => {
+    const e = t.events[i]!;
+    if (e.kind === 'occupy') return { date: e.date, note: e.note, by: e.by, of: e.of, ring: e.ring, kind: e.kind };
+    if (e.kind === 'transfer') return { date: e.date, note: e.note, by: e.to, of: e.from, ring: e.ring, kind: e.kind };
+    throw new Error(`not a stage: ${i}`);
+  };
   // Measured at the first hour of the stage's date, before any of that date's events (ADR-970): a stage's `withdraw`
   // comes an hour before its `occupy`, and measured at the occupy the defenders it took were gone. Its land, size and
   // front fixed at the opening of its window of fighting (R66d, FIGHT_DAYS before), the men there then too.
@@ -42,7 +50,7 @@ const LARGE = 200;
     side.ids.reduce((t, [id, men]) => t + (sim.world.formations.has(id) && f.nation[id] === nation.get(id) ? Math.max(0, men - f.strength[id]!) : men), 0);
   while (sim.tick <= end && !t.ended) {
     for (const i of stages) {
-      const e = t.events[i]! as Extract<(typeof t.events)[number], { kind: 'occupy' }>;
+      const e = stageOf(i);
       const args = [sim.world, t.id(e.by), e.of.map((g) => t.id(g)), e.ring] as const;
       if (opens.get(i) === sim.tick && !first.has(i)) {
         const o = stageArmies(...args);
@@ -68,6 +76,7 @@ const LARGE = 200;
         date: e.date,
         note: e.note ?? '',
         by: e.by,
+        kind: e.kind,
         cells: o.cells,
         holders: o.holders,
         front: o.front,
