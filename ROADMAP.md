@@ -143,9 +143,10 @@ Batches 19 and 18 together (ADR-966).
     1938-53 replay unchanged (the nine replay tests, the 12 maps' scores and the yearly hashes to 1953 as before or
     explained); the tests of 1953's end state kept as checks on 27 July 1953; the card's words and the year slider to
     1962; the build of the yearly starts within the Pages workflow's time.
-  - [ ] R69b 1953-56: Indochina's end (the Vietnams, Laos, Cambodia), Austria and West Germany sovereign, the Warsaw
-    Pact and West Germany in NATO, Sudan, Morocco, Tunisia, Suez and Hungary. AT: a map of late 1956 matched as the
-    earlier maps are; each event fired on its date on seed 1938 and on seeds 1-5 within the bars.
+  - [x] R69b 1953-56 (ADR-985): Indochina's end (the Vietnams, Laos, Cambodia), Austria free, West Germany in NATO,
+    Egypt, Sudan, Morocco, Tunisia, Suez; land named by the map's codes. Not Hungary (its land unchanged) or the
+    Warsaw Pact (the Eastern Bloc stands for it). AT met: a map of 1 December 1956 matched as the earlier maps; each
+    event fired on its date on seed 1938 (none passed over) and seeds 1-5 within the bars.
   - [ ] R69c 1957-60: Ghana, Malaya, Guinea, the United Arab Republic, Iraq 1958, Cuba 1959, the Sino-Soviet split,
     the African states of 1960, Cyprus, the Congo. AT: a map of the end of 1960, as R69b.
   - [ ] R69d 1961-62: Sierra Leone, Tanganyika, Kuwait, Goa, Algeria, Rwanda, Burundi, Uganda, Jamaica, Trinidad,

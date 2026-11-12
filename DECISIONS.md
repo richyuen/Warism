@@ -414,3 +414,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
   1953 is left there by `leaveTrack` (as a free start from a year), the world after 1962 R69e's. The card's words,
   SPEC's end and the yearly starts (to 1962) follow.
 
+### ADR-985 · 2026-11-12 · accepted — R69b: 1953-56 in the replay; land named by the map's codes
+- **Land by codes:** a `transfer` or `born` names its land by a ring, whole countries (admin-1 `adm0`) or provinces
+  (`adm1`), any of them (the schema refuses none); the track holds the provinces' codes (`Track.codes`, derived, from
+  the map's `Admin1Meta` when the Sim builds it). A transfer by codes is a handover: no window of fighting. The map's
+  `MAR` is Morocco with the Spanish Sahara, so Spain's zone is named by its province (`MAR-1445`, Tangier-Tetouan).
+- **The events** (from `docs/research/1953-62.md`): Laos and Cambodia born of Indochina's land; at Geneva North Vietnam
+  born north of the 17th parallel and Indochina renamed South Vietnam (`SVN`; its seat goes to Saigon with Hanoi, so no
+  `capital` event), released on the Republic's proclamation; the Amami Islands back to Japan; Egypt released at the
+  Canal Zone agreement (a British puppet in this world since 1938); West Germany in NATO; Austria's zones end; Sudan,
+  Morocco (`MOR`, with the Spanish zone) and Tunisia released. Suez: Israel's war on Egypt, Britain and France beside
+  it, the Sinai and Port Said held; the ceasefire a `hold` to Israel's withdrawal (a peace ends the whole war and
+  returns what it held: on 8 March 1957), Port Said given back on 22 December. Not modelled: the war in Indochina before
+  Geneva (no Viet Minh state), the Algerian War (no Algerian state before 1962), Hungary (already in the Soviet bloc;
+  its land does not change), French India and Port Arthur (no cells, or already the receiver's).
+- **Measured:** a map of 1 December 1956 (the new states, Austria free, the Sinai and Port Said held) matched as the
+  earlier maps; on that day the new states living, the released free, West Germany in NATO, Vienna Austria's.
+

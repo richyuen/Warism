@@ -173,4 +173,6 @@
 
 - Research for 1953-62 (`docs/research/1953-62.md`). The end on 31 December 1962; 26 nations born 1953-62 added
   dormant. 1938-53 unchanged: the 12 maps' scores identical, nine replay tests green, pin unchanged.
+- R69b (ADR-985): births and transfers name land by countries and provinces; 1953-56 in the timeline (Laos, Cambodia,
+  the two Vietnams, Egypt, Sudan, Morocco, Tunisia released, Austria free, West Germany in NATO, Suez); a 13th map.
 

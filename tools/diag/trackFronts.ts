@@ -27,12 +27,12 @@ const LARGE = 200;
   const sim = new Sim({ scenario: '1938h', seed, assets: assets1938(SIZE_1938.w) });
   const t = sim.world.track!;
   // The `occupy` stages and (R66e) the `transfer`s: a transfer's `to` takes the land of its `from`.
-  const stages = t.events.flatMap((e, i) => ((e.kind === 'occupy' || e.kind === 'transfer') && e.date >= from && e.date < to ? [i] : []));
+  const stages = t.events.flatMap((e, i) => ((e.kind === 'occupy' || (e.kind === 'transfer' && e.ring)) && e.date >= from && e.date < to ? [i] : []));
   type Stage = { date: string; note?: string | undefined; by: string; of: readonly string[]; ring: readonly (readonly [number, number])[]; kind: string };
   const stageOf = (i: number): Stage => {
     const e = t.events[i]!;
     if (e.kind === 'occupy') return { date: e.date, note: e.note, by: e.by, of: e.of, ring: e.ring, kind: e.kind };
-    if (e.kind === 'transfer') return { date: e.date, note: e.note, by: e.to, of: e.from, ring: e.ring, kind: e.kind };
+    if (e.kind === 'transfer') return { date: e.date, note: e.note, by: e.to, of: e.from, ring: e.ring!, kind: e.kind };
     throw new Error(`not a stage: ${i}`);
   };
   // Measured at the first hour of the stage's date, before any of that date's events (ADR-970): a stage's `withdraw`

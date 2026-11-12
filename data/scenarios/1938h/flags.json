@@ -44,6 +44,8 @@
     "TGK": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#1eb53a", "#fcd116", "#000000", "#fcd116", "#1eb53a"], "weights": [3, 0.3, 1.4, 0.3, 3]}]},
     "UGA": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#000000", "#fcdc04", "#d90000", "#000000", "#fcdc04", "#d90000"]}, {"t": "disc", "cx": 0.5, "cy": 0.5, "r": 0.18, "color": "#ffffff"}]},
     "ALG": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "v", "colors": ["#006233", "#ffffff"]}, {"t": "crescent", "cx": 0.5, "cy": 0.5, "r": 0.24, "color": "#d21034", "cut": "#ffffff", "offset": 0.07, "cutR": 0.2}, {"t": "star", "cx": 0.58, "cy": 0.5, "r": 0.1, "color": "#d21034"}]},
-    "SAM": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ce1126"]}, {"t": "rect", "x": 0, "y": 0, "w": 0.5, "h": 0.5, "color": "#002b7f"}, {"t": "star", "cx": 0.25, "cy": 0.25, "r": 0.1, "color": "#ffffff"}]}
+    "SAM": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ce1126"]}, {"t": "rect", "x": 0, "y": 0, "w": 0.5, "h": 0.5, "color": "#002b7f"}, {"t": "star", "cx": 0.25, "cy": 0.25, "r": 0.1, "color": "#ffffff"}]},
+    "SVN": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ffc400"]}, {"t": "rect", "x": 0, "y": 0.36, "w": 1, "h": 0.07, "color": "#da251d"}, {"t": "rect", "x": 0, "y": 0.465, "w": 1, "h": 0.07, "color": "#da251d"}, {"t": "rect", "x": 0, "y": 0.57, "w": 1, "h": 0.07, "color": "#da251d"}]},
+    "MOR": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#c1272d"]}, {"t": "star", "cx": 0.5, "cy": 0.5, "r": 0.24, "color": "#006233"}]}
   }
 }

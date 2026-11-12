@@ -1725,9 +1725,11 @@ to 27 July 1953, then sets the world free.
   the track at the next hour with a `TrackEnded` row.
 - **Land** (built, R62c, ADR-925): a `transfer` gives the land in its ring owned by one of `from` to `to`, owned and
   held, with a `LandCeded` row per giver; an `occupy` sets the holder only. Rings are rasterised at the hour by the
-  rule of `ownership.json`'s regions (a cell whose centre is inside).
+  rule of `ownership.json`'s regions (a cell whose centre is inside). A `transfer` or `born` may name its land by the
+  map's codes instead or as well (R69b, ADR-985): whole countries (`adm0`) and provinces (`adm1`); a transfer so named
+  is a handover, with no window of fighting.
 - **Births and the end** (built, R62d, ADR-926): a `born` event gives an unborn nation its ring's land, its cores, its
-  seat (its city nearest its table's capital) and a `NationBorn` row. The timeline's `end` (1953-07-27) ends the track
+  seat (its city nearest its table's capital) and a `NationBorn` row. The timeline's `end` (1962-12-31; 1953-07-27 before R69a) ends the track
   after that day's first hour (`TrackEnded`); then the world's seed becomes the second seed (`GameOptions.after`,
   `?after=`, rolled by the form) and its streams are made anew from it.
 - **Steering while the track runs:** the strategic AI's own declarations, stalemate peace, threat pacts,

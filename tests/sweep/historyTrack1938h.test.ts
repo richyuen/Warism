@@ -17,12 +17,13 @@ describe('the historical track checked to its end (ROADMAP R62k)', () => {
     expect(run.sim.world.track!.ended).toBe(true);
     expect(run.lines).toEqual([]);
     expect(run.skipped).toEqual([]);
-    // R67b (ADR-980): the blocs it hands over, each under its leader with its members.
+    // R67b (ADR-980): the blocs it hands over, each under its leader with its members (West Germany in NATO from 1955,
+    // R69b, ADR-985).
     const w = run.sim.world;
     const id = (t: string): number => TAGS_1938H.indexOf(t) + 1;
     const members = (leader: string): string[] => (w.alliances.allianceOf(id(leader))?.members ?? []).map((n) => TAGS_1938H[n - 1]!).sort();
     expect(w.alliances.allianceOf(id('USA'))?.leader).toBe(id('USA'));
-    expect(members('USA')).toEqual(['BEL', 'DEN', 'ENG', 'FRA', 'GRE', 'ICE', 'ITA', 'LUX', 'NED', 'NOR', 'POR', 'TUR', 'USA'].sort());
+    expect(members('USA')).toEqual(['BEL', 'DEN', 'ENG', 'FRA', 'FRG', 'GRE', 'ICE', 'ITA', 'LUX', 'NED', 'NOR', 'POR', 'TUR', 'USA'].sort());
     expect(w.alliances.allianceOf(id('SOV'))?.leader).toBe(id('SOV'));
     expect(members('SOV')).toEqual(['ALB', 'BUL', 'CCP', 'CZS', 'GDR', 'HUN', 'MON', 'POL', 'ROM', 'SOV'].sort());
   });

@@ -499,6 +499,11 @@ export type FlagsFile = { flags: Record<string, FlagSpec> };
 /** An event's when: its day, and the hour of that day (0 when not given); a note of what it is, for readers. */
 const when = { date, hour: z.number().int().min(0).max(23).optional(), note: z.string().optional() };
 const tags = z.array(tag).min(1);
+/**
+ * Land named by the map's codes (R69b, ADR-985): whole countries (admin-1 `adm0`) and provinces (`adm1`), beside or in
+ * place of a ring; a cell is in when its province is.
+ */
+const byCode = { countries: z.array(z.string().regex(/^[A-Z0-9]{3}$/)).min(1).optional(), provinces: z.array(z.string().min(1)).min(1).optional() };
 
 /**
  * One event of the timeline (SPEC §7.7), its parties by tag. The kinds of R62b; territory, births, strikes and
@@ -528,9 +533,10 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
   z.strictObject({ ...when, kind: z.literal('guarantee'), guarantor: tag, target: tag, end: z.boolean().optional(), note: z.string().optional() }),
   /**
    * The land inside `ring` that one of `from` owns becomes `to`'s, owned and held (a treaty's cession, R62c). The ring
-   * as `ownership.json`'s regions: lon/lat, a cell taken when its centre is inside.
+   * as `ownership.json`'s regions: lon/lat, a cell taken when its centre is inside. Or the land of `countries` and
+   * `provinces` (R69b): a handover, with no window of fighting.
    */
-  z.strictObject({ ...when, kind: z.literal('transfer'), to: tag, from: tags, ring, note: z.string().optional() }),
+  z.strictObject({ ...when, kind: z.literal('transfer'), to: tag, from: tags, ring: ring.optional(), ...byCode, note: z.string().optional() }),
   /**
    * The land inside `ring` that one of `of` owns is held by `by`, its owner unchanged (an occupation, R62c); `by` among
    * `of` takes its own back (R62g2). The land formations there of those who held it, held off from `by` (a hold), are
@@ -539,9 +545,10 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
   z.strictObject({ ...when, kind: z.literal('occupy'), by: tag, of: tags, ring, note: z.string().optional() }),
   /**
    * A nation of the scenario dormant until now is born (R62d) on the land in `ring` that one of `from` owns: owned
-   * and held, its cores, its capital the city of its own nearest its table's capital.
+   * and held, its cores, its capital the city of its own nearest its table's capital. Its land by `countries` and
+   * `provinces` (R69b) beside or in place of the ring.
    */
-  z.strictObject({ ...when, kind: z.literal('born'), nation: tag, from: tags, ring, note: z.string().optional() }),
+  z.strictObject({ ...when, kind: z.literal('born'), nation: tag, from: tags, ring: ring.optional(), ...byCode, note: z.string().optional() }),
   /**
    * A war's objective (R62e): until `until`, `nation`'s operational AI weights the front sectors within `km` of `at`,
    * and its invasion AI the cities there it may land by, OBJECTIVE_WEIGHT times.
@@ -598,7 +605,12 @@ export const TimelineFile = z.strictObject({
   comment: z.string().optional(),
   /** The day the track ends, after that day's first hour's events (R62d; absent: it runs until an intervention). */
   end: date.optional(),
-  events: z.array(TimelineEvent),
+  events: z.array(TimelineEvent).superRefine((events, ctx) => {
+    // A transfer or a birth names its land (R69b): a ring, countries or provinces.
+    events.forEach((e, i) => {
+      if ((e.kind === 'transfer' || e.kind === 'born') && !e.ring && !e.countries && !e.provinces) ctx.addIssue({ code: 'custom', path: [i], message: `a ${e.kind} names its land: a ring, countries or provinces` });
+    });
+  }),
   /**
    * The land as history had it on dates (R62f), each the one before it with its own changes, over the start's owners:
    * whole countries and provinces by admin code, then rings where a border cuts one (`onlyFrom` as `ownership.json`'s).

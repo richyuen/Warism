@@ -58,6 +58,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   // The Korean War's end (R62i3): on 28 July 1953, the day after the armistice, no war; both Koreas. The track runs on
   // (to 1962 since R69a, ADR-984).
   let end53 = '';
+  // R69b (ADR-985): on 1 December 1956, the new states of 1953-56 living and free, West Germany in NATO, Austria free.
+  let state56 = '';
   // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
   let axisPact = true;
   const fleets = new Map<string, number>();
@@ -75,7 +77,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const { maps, skipped, nukes } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1953-07-29',
+    '1956-12-02',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
@@ -86,6 +88,17 @@ it('1938-39: the land owned as history had it, and the events fire on their date
       // The Reich's end told by its note, not as the Soviet Union's annexation of Germany (R64d, critic run 62's R62-N4).
       if (date === '1945-05-09') reich = historyRows(w, (n) => TAGS_1938H[n - 1] ?? '', () => '').filter((r) => r.kind === EventKind.NationAnnexed && r.a === id('GER')).map((r) => `${r.as ?? ''} ${r.note ?? ''}`);
       if (date === '1945-09-03') fleets.set('JAP', fleetOf(w, 'JAP'));
+      if (date === '1956-12-01') {
+        const nc = w.nations.cols;
+        const [vu, vv] = project(16.37, 48.21);
+        const vienna = Math.floor(vv * SIZE_1938.h) * SIZE_1938.w + Math.floor(vu * SIZE_1938.w);
+        state56 = [
+          ['LAO', 'CAM', 'VIE'].map((t) => nc.living[id(t)]).join(''),
+          ['INC', 'SUD', 'FMO', 'TUN', 'EGY'].map((t) => nc.overlord[id(t)]).join(''),
+          w.alliances.allianceOf(id('FRG'))?.leader === id('USA'),
+          w.cells.controller[vienna] === id('AUT'),
+        ].join(' ');
+      }
       if (date === '1953-07-28') end53 = `${w.wars.list.length} ${w.track?.ended} ${w.nations.cols.living[id('KOR')]} ${w.nations.cols.living[id('PRK')]}`;
       if (date === '1950-06-01') {
         const nc = w.nations.cols;
@@ -120,7 +133,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(12);
+  expect(maps.length).toBe(13);
+  expect(state56).toBe('111 00000 true true');
   expect(end53).toBe('0 false 1 1');
   expect(asia).toEqual(ASIA.map((x) => x[1]));
   expect(japFoes).toBe(0);

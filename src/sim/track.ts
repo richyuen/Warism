@@ -116,6 +116,8 @@ export class Track {
   readonly endTick: number;
   /** Each nation's capital in its table, lon/lat, by id − 1 (a born nation's seat, R62d). */
   capitals: readonly (readonly [number, number])[] = [];
+  /** Each province's admin codes (index: province id − 1), for land named by them (R69b; derived, not state). */
+  codes: readonly { adm0: string; adm1: string }[] = [];
   /** The scenario's templates, index by id (forces arriving, R62f). */
   templates: ReadonlyMap<string, number> = new Map();
   /** The scenario's first day (`dayOfIso`). */
@@ -250,6 +252,8 @@ export class Track {
       const e = this.events[i]!;
       // An `occupy`, or a `transfer` (R66e, ADR-978: the civil war in China): its `to` the taker of its `from`'s land.
       if (e.kind !== 'occupy' && e.kind !== 'transfer') continue;
+      // A transfer of land named by its codes (R69b): a handover, no fighting.
+      if (!e.ring) continue;
       const s = e.kind === 'occupy' ? this.area(world, i, e.by, e.of, e.ring) : this.area(world, i, e.to, e.from, e.ring);
       // Not while its taker's side is far outnumbered in its area (ADR-977): the Soviets before Moscow, a fifth of
       // the Germans there, were destroyed in the window, every man of 305k, before their own stage.
@@ -465,17 +469,39 @@ function ringCells(world: World, ring: readonly (readonly [number, number])[]): 
   return out.sort((a, b) => a - b);
 }
 
+/** Land named by a ring, by countries and by provinces (R69b, ADR-985): the land cells of any, in order. */
+export interface Land {
+  ring?: readonly (readonly [number, number])[] | undefined;
+  countries?: readonly string[] | undefined;
+  provinces?: readonly string[] | undefined;
+}
+
+function landCells(world: World, t: Track, land: Land): number[] {
+  const cells = new Set(land.ring ? ringCells(world, land.ring) : []);
+  if (land.countries || land.provinces) {
+    const countries = new Set(land.countries ?? []);
+    const provinces = new Set(land.provinces ?? []);
+    const named = new Uint8Array(t.codes.length + 1);
+    t.codes.forEach((c, i) => {
+      if (countries.has(c.adm0) || provinces.has(c.adm1)) named[i + 1] = 1;
+    });
+    const { province, terrain } = world.cells;
+    for (let c = 0; c < province.length; c++) if (named[province[c]!] === 1 && terrain[c]! >= Terrain.Plains) cells.add(c);
+  }
+  return [...cells].sort((a, b) => a - b);
+}
+
 /**
  * A cession (R62c): the land in the ring owned by one of `from` becomes `to`'s, owned and held, as land handed over is
  * (`defect`): a `LandCeded` row for each nation that gave some, a capital in it moved.
  */
-function transfer(world: World, to: number, from: readonly number[], ring: readonly (readonly [number, number])[]): Refusal {
+function transfer(world: World, t: Track, to: number, from: readonly number[], land: Land): Refusal {
   const why = whyNot(world, to);
   if (why) return why;
   const { owner, w } = world.cells;
   const of = new Set(from.filter((n) => n !== 0 && n !== to));
   const gave = new Map<number, { cells: number; sx: number; sy: number }>();
-  for (const c of ringCells(world, ring)) {
+  for (const c of landCells(world, t, land)) {
     const o = owner[c]!;
     if (!of.has(o)) continue;
     world.setOwner(c, to);
@@ -567,13 +593,13 @@ function setDownBehind(world: World, i: number, lost: ReadonlySet<number>, place
  * `relocateCapital`), the techs of the nation that gave most (the nuclear aside), START_GOLD and the scenario's
  * revivals. `NationBorn` after its land's `LandCeded` rows.
  */
-function born(world: World, t: Track, n: number, from: readonly number[], ring: readonly (readonly [number, number])[]): Refusal {
+function born(world: World, t: Track, n: number, from: readonly number[], land: Land): Refusal {
   if (n === 0 || !world.nations.has(n)) return Refusal.NoNation;
   // Unborn, or dead and brought back (R62g2: Ethiopia restored).
   if (world.nations.cols.living[n] === 1) return Refusal.Alive;
   const { owner } = world.cells;
   const before = new Map<number, number>();
-  const cells = ringCells(world, ring).filter((c) => from.includes(owner[c]!) && owner[c] !== n);
+  const cells = landCells(world, t, land).filter((c) => from.includes(owner[c]!) && owner[c] !== n);
   if (cells.length === 0) return Refusal.NoCoreLand;
   for (const c of cells) before.set(owner[c]!, (before.get(owner[c]!) ?? 0) + 1);
   let giver = 0;
@@ -588,7 +614,7 @@ function born(world: World, t: Track, n: number, from: readonly number[], ring: 
   nc.tech0[n] = (nc.tech0[giver]! & ~n0) >>> 0;
   nc.tech1[n] = (nc.tech1[giver]! & ~n1) >>> 0;
   t.unborn.delete(n);
-  transfer(world, n, from, ring);
+  transfer(world, t, n, from, land);
   // Its cores: the provinces whose centre it now holds.
   const { province, w, h } = world.cells;
   const mine = new Set<number>();
@@ -666,11 +692,11 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
     case 'guarantee':
       return guarantee(world, id(e.guarantor), id(e.target), e.end === true);
     case 'transfer':
-      return transfer(world, id(e.to), e.from.map(id), e.ring);
+      return transfer(world, t, id(e.to), e.from.map(id), e);
     case 'occupy':
       return occupy(world, id(e.by), e.of.map(id), e.ring);
     case 'born':
-      return born(world, t, id(e.nation), e.from.map(id), e.ring);
+      return born(world, t, id(e.nation), e.from.map(id), e);
     case 'objective':
       // It weighs from now on (`objectiveWeight`); a nation not living has none.
       return whyNot(world, id(e.nation));
