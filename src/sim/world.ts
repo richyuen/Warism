@@ -865,7 +865,7 @@ import type { SeaControl } from './systems/seaControl';
  * mission; `called`: transports a player's landing called or holds (ROADMAP R33d, R43-N1), the AI's again
  * when standing with no landing and nobody aboard, where a fleet the player ordered keeps its order.
  */
-export const PlayerOrderKind = { march: 0, rebase: 1, mission: 2, called: 3 } as const;
+export const PlayerOrderKind = { march: 0, rebase: 1, mission: 2, called: 3, kept: 4 } as const;
 export type PlayerOrderKind = (typeof PlayerOrderKind)[keyof typeof PlayerOrderKind];
 
 /**
@@ -1466,6 +1466,11 @@ export class World {
    */
   holdsAt(a: number, b: number, ca: number, cb: number): boolean {
     return this.holds(a, b) && !this.track!.fightOpen(this, a, b, ca, cb);
+  }
+
+  /** Whether `a` plans no attack on `b` (R62f2): a hold stands, no stage's window open between them (R66d). */
+  holdsPlan(a: number, b: number): boolean {
+    return this.holds(a, b) && !this.track!.pairOpen(this, a, b);
   }
 
   /** Whether `an` takes no cell `c` from `d` (R62f2): a hold stands, not lifted for that cell (R66d, `Track.takeOpen`). */

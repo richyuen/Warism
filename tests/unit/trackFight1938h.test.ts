@@ -5,7 +5,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TAGS_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
 import { FIGHT_BAND_KM, FIGHT_DAYS } from '../../src/sim/track';
-import type { World } from '../../src/sim/world';
+import { PlayerOrderKind, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
 
 // ROADMAP R66d (ADR-974): for FIGHT_DAYS before an `occupy` stage its area's hold is lifted for its taker's side and
@@ -69,6 +69,32 @@ describe('a window of fighting before a stage (ROADMAP R66d)', () => {
     }
     // The window fought.
     expect(fought).toBeGreaterThan(0);
+  });
+
+  it("the timeline's arrivals on an enemy's land: a beachhead, and kept from the AI until the window opens", () => {
+    // Twelve German divisions put down at Łódź, in Poland's land, on 2 January for the stage of the 15th.
+    const at: [number, number] = [19.46, 51.76];
+    const tl: TimelineFile = { events: [...TL.events.slice(0, 2), { date: '1938-01-02', kind: 'forces', nation: 'GER', template: 'infantry_div', count: 12, at, kept: '1938-01-15' }, ...TL.events.slice(2)] };
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, tl);
+    const w = sim.world;
+    const GER = id('GER');
+    sim.step(24 + 2, quiet);
+    const f = w.formations.cols;
+    const [u, v] = project(...at);
+    const [sx, sy] = w.standPoint(u * w.cells.w, v * w.cells.h);
+    expect(w.cells.controller[Math.floor(sy) * w.cells.w + Math.floor(sx)]).toBe(GER);
+    const kept = [...w.playerOrders].filter(([i, o]) => o.kind === PlayerOrderKind.kept && f.nation[i] === GER).map(([i]) => i);
+    expect(kept.length).toBe(12);
+    const start = kept.map((i) => [f.x[i]!, f.y[i]!] as const);
+    // The AI leaves them where they are until the window opens; then they are its own again.
+    sim.step(OPEN - 1 - sim.tick, quiet);
+    kept.forEach((i, k) => {
+      if (!w.formations.has(i)) return;
+      expect(f.moving[i], `formation ${i} ordered before the window`).toBe(0);
+      expect(Math.hypot(f.x[i]! - start[k]![0], f.y[i]! - start[k]![1])).toBeLessThan(1.5);
+    });
+    sim.step(2, quiet);
+    for (const i of kept) expect(w.playerOrders.has(i)).toBe(false);
   });
 
   it('a save within the window plays on as the run it came from', () => {

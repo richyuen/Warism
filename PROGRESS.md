@@ -120,3 +120,10 @@
   Both sides engaged at 8 of 20 large land fronts (seed 1938); losses by cohort moderate (Kursk 45k / 119k). The
   census fixed (the band at the opening, losses by formation). The nine replay tests green; the tick 2 % under plain.
 
+## 2026-11-11 — R66d done: arrivals kept for their stage (ADR-976)
+
+- `kept` on `forces`/`redeploy`: the AI leaves them until the window opens; arrivals on enemy land take a beachhead;
+  planners see foes across an open window. Malaya, Burma, the Ichigo arrivals placed where they can fight. Both sides
+  engaged at 10 of 19 large land fronts (seeds 1, 2: 12, 10), the user's bar 9. Nine replay tests green; tick 2.75 ms
+  (plain 2.52).
+

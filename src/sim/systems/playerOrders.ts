@@ -8,7 +8,8 @@
  *   the formation stops and fights (a march of the AI's only pauses). Given in a fight, it goes
  *   on through it (`through`, `movementSystem`) until the formation is first out of contact;
  * - a wing's rebase: over when the wing is at its new base (no ferry flight);
- * - a wing's mission: over after PLAYER_MISSION_HOURS, or when the mission is.
+ * - a wing's mission: over after PLAYER_MISSION_HOURS, or when the mission is;
+ * - the historical track's arrival kept for its stage (R66d): over at the opening of its stage's window of fighting.
  * The AI has the formation back from the next hour, and may undo the order at once.
  * Nothing to do while there is no order: a world with no player is as it was.
  */
@@ -30,6 +31,11 @@ export function playerOrderSystem(world: World): void {
     }
     if (o.kind === PlayerOrderKind.mission) {
       if (world.tick >= o.until || !world.wingMission.has(id)) world.playerOrders.delete(id);
+      continue;
+    }
+    // The historical track's arrivals, kept for their stage (R66d, ADR-976): the AI's again when its window of fighting opens.
+    if (o.kind === PlayerOrderKind.kept) {
+      if (world.tick >= o.until) world.playerOrders.delete(id);
       continue;
     }
     if (o.kind === PlayerOrderKind.rebase) {

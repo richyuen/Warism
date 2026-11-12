@@ -4412,10 +4412,11 @@
    "template": "infantry_div_square",
    "count": 3,
    "at": [
-    100.47,
-    7.0
+    102.24,
+    6.13
    ],
-   "note": "The Japanese 25th Army lands at Singora and Kota Bharu"
+   "note": "The Japanese 25th Army lands at Singora and Kota Bharu",
+   "kept": "1942-02-15"
   },
   {
    "date": "1941-12-10",
@@ -4528,7 +4529,8 @@
     114.0,
     4.4
    ],
-   "note": "Japanese landings at Miri, British Borneo"
+   "note": "Japanese landings at Miri, British Borneo",
+   "kept": "1942-02-01"
   },
   {
    "date": "1941-12-21",
@@ -4548,7 +4550,8 @@
     120.4,
     16.0
    ],
-   "note": "The Japanese 14th Army lands at Lingayen Gulf"
+   "note": "The Japanese 14th Army lands at Lingayen Gulf",
+   "kept": "1942-05-06"
   },
   {
    "date": "1941-12-24",
@@ -5071,7 +5074,8 @@
     116.5,
     -0.8
    ],
-   "note": "The Japanese 16th Army at Tarakan and Balikpapan"
+   "note": "The Japanese 16th Army at Tarakan and Balikpapan",
+   "kept": "1942-03-09"
   },
   {
    "date": "1942-01-15",
@@ -5091,10 +5095,11 @@
    "template": "infantry_div_square",
    "count": 2,
    "at": [
-    99.0,
-    16.8
+    98.25,
+    14.1
    ],
-   "note": "The Japanese 15th Army crosses into Burma"
+   "note": "The Japanese 15th Army crosses into Burma",
+   "kept": "1942-05-20"
   },
   {
    "date": "1942-01-23",
@@ -5161,7 +5166,8 @@
     104.8,
     -2.95
    ],
-   "note": "Japanese paratroops at Palembang"
+   "note": "Japanese paratroops at Palembang",
+   "kept": "1942-03-09"
   },
   {
    "date": "1942-02-15",
@@ -5309,7 +5315,8 @@
     111.4,
     -6.7
    ],
-   "note": "The Japanese 16th Army lands on Java"
+   "note": "The Japanese 16th Army lands on Java",
+   "kept": "1942-03-09"
   },
   {
    "date": "1942-03-08",
@@ -5321,7 +5328,8 @@
     147.0,
     -6.73
    ],
-   "note": "The Japanese South Seas Detachment at Lae and Salamaua"
+   "note": "The Japanese South Seas Detachment at Lae and Salamaua",
+   "kept": "1942-07-21"
   },
   {
    "date": "1942-03-09",
@@ -5474,6 +5482,19 @@
     ]
    ],
    "note": "The Philippines"
+  },
+  {
+   "date": "1942-05-08",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 2,
+   "at": [
+    97.63,
+    16.49
+   ],
+   "note": "The Japanese 18th and 56th Divisions reach Burma",
+   "kept": "1942-05-20"
   },
   {
    "date": "1942-05-15",
@@ -11200,6 +11221,19 @@
    "note": "Leningrad freed, Ukraine, Odessa, the Crimea: west of the line"
   },
   {
+   "date": "1944-06-01",
+   "kind": "forces",
+   "nation": "CHI",
+   "template": "light_infantry_div",
+   "count": 4,
+   "at": [
+    113.0,
+    28.2
+   ],
+   "note": "The Chinese Ninth War Area at Changsha",
+   "kept": "1944-06-18"
+  },
+  {
    "date": "1944-06-04",
    "kind": "occupy",
    "by": "ITA",
@@ -11274,6 +11308,19 @@
     ]
    ],
    "note": "D-Day: the Normandy beachhead"
+  },
+  {
+   "date": "1944-06-08",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 4,
+   "at": [
+    113.1,
+    29.4
+   ],
+   "note": "The Japanese 11th Army at Yueyang, south for Changsha",
+   "kept": "1944-06-18"
   },
   {
    "date": "1944-06-18",
@@ -12083,6 +12130,32 @@
     ]
    ],
    "note": "Greece freed"
+  },
+  {
+   "date": "1944-10-15",
+   "kind": "forces",
+   "nation": "CHI",
+   "template": "light_infantry_div",
+   "count": 3,
+   "at": [
+    110.3,
+    25.3
+   ],
+   "note": "The Chinese Fourth War Area at Guilin",
+   "kept": "1944-11-24"
+  },
+  {
+   "date": "1944-11-14",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 3,
+   "at": [
+    112.6,
+    26.9
+   ],
+   "note": "The Japanese 11th Army at Hengyang, on for Guilin",
+   "kept": "1944-11-24"
   },
   {
    "date": "1944-11-23",

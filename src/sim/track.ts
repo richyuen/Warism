@@ -26,7 +26,7 @@ import { detonate } from './systems/nuclear';
 import { leaveWarsAgainst, makePeace, withPuppets } from './systems/war';
 import { applyCommand } from './tick';
 import { ATTACKERS, DEFENDERS } from './wars';
-import { Domain, FlipCause, navOf, type World } from './world';
+import { Domain, FlipCause, navOf, PlayerOrderKind, type World } from './world';
 
 /**
  * How many times a front sector, or a city to land by, within a war objective weighs (R62e). Its sectors take this many
@@ -44,6 +44,11 @@ interface OpenStage {
   of: ReadonlySet<number>;
   inArea: (c: number) => boolean;
   inRing: (c: number) => boolean;
+}
+
+/** The hour a `kept` arrival is the AI's again (R66d): its stage's window of fighting opens. */
+function keptUntil(t: Track, date: string): number {
+  return t.tickOf(date) - FIGHT_DAYS * 24;
 }
 
 /** Whether `n` is of `by`'s side: `by`, or an ally in its war. */
@@ -192,6 +197,15 @@ export class Track {
       if (!s.inArea(ca) || !s.inArea(cb)) continue;
       if ((takerSide(world, a, s.by) && world.wars.atWar(b, s.by)) || (takerSide(world, b, s.by) && world.wars.atWar(a, s.by))) return true;
     }
+    return false;
+  }
+
+  /**
+   * Whether a stage's window is open between `a` and `b` anywhere (R66d): one of its taker's side, the other at war
+   * with its taker. The planners plan attacks on such a foe; the fighting is still only in the area (`fightOpen`).
+   */
+  pairOpen(world: World, a: number, b: number): boolean {
+    for (const s of this.openStages(world)) if ((takerSide(world, a, s.by) && world.wars.atWar(b, s.by)) || (takerSide(world, b, s.by) && world.wars.atWar(a, s.by))) return true;
     return false;
   }
 
@@ -652,8 +666,25 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       const template = t.templates.get(e.template);
       if (template === undefined) return Refusal.NoSuch;
       const [u, v] = project(e.at[0], e.at[1]);
+      const before = new Set<number>();
+      world.formations.forEach((i) => before.add(i));
       let why: Refusal = Refusal.None;
       for (let k = 0; k < e.count && why === Refusal.None; k++) why = applyCommand(world, { kind: 'spawnFormation', nation: id(e.nation), x: u * world.cells.w, y: v * world.cells.h, strength: 1, template });
+      // On an enemy's land, its cell theirs: a beachhead for the front to spread from, as a landing's (PLAN 4.5b; R66d,
+      // ADR-976). Before, arrivals inside an enemy's land took none of it: land is taken from a neighbouring cell held.
+      const [sx, sy] = world.standPoint(u * world.cells.w, v * world.cells.h);
+      const cell = Math.floor(sy) * world.cells.w + Math.floor(sx);
+      const holder = world.cells.controller[cell]!;
+      if (why === Refusal.None && holder !== 0 && world.wars.atWar(holder, id(e.nation))) world.setController(cell, id(e.nation), false, FlipCause.landing);
+      // Kept where they arrive for the stage they came for (`kept`, R66d, ADR-976): the AI leaves them be until its
+      // window of fighting opens (FIGHT_DAYS before its date), then has them for the attack. Before, it shipped two of
+      // the Japanese 25th Army's three divisions to the objectives of Manila and Borneo before Malaya's stage.
+      if (e.kept !== undefined) {
+        const until = keptUntil(t, e.kept);
+        world.formations.forEach((i) => {
+          if (!before.has(i)) world.playerOrders.set(i, { kind: PlayerOrderKind.kept, until, through: false });
+        });
+      }
       return why;
     }
     case 'capital':
@@ -738,7 +769,10 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       let sent = 0;
       ids.slice(0, Math.round(ids.length * e.share)).forEach((i, k) => {
         const [u, v] = project(...e.to[k % e.to.length]!);
-        if (applyCommand(world, { kind: 'moveFormation', id: i, x: u * w, y: v * h, nation: n }) === Refusal.None) sent++;
+        if (applyCommand(world, { kind: 'moveFormation', id: i, x: u * w, y: v * h, nation: n }) !== Refusal.None) return;
+        sent++;
+        // Kept on the march and where it ends until its stage (R66d): a march of the AI's would be undone the next hour.
+        if (e.kept !== undefined) world.playerOrders.set(i, { kind: PlayerOrderKind.kept, until: keptUntil(t, e.kept), through: false });
       });
       return sent > 0 ? Refusal.None : Refusal.NoEffect;
     }

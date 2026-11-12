@@ -264,3 +264,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Short of R66d's 14** (the user's plan of the same day): the arrivals of the timeline kept at their stage next, then
   the bar set to what is measured, if at least 9.
 
+### ADR-976 · 2026-11-11 · accepted — R66d: the timeline's arrivals kept for their stage; R66d done
+- **`kept`** (optional date on `forces` and `redeploy`): its formations carry a `kept` order (`PlayerOrderKind.kept`,
+  the AI leaves them be, `playerHeld`) to the opening of that date's window of fighting (FIGHT_DAYS before), then are
+  the AI's for the attack. Explicit, not inferred: keeping every arrival for the first stage of its nation whose area
+  held it kept the Soviet reserves of 1941-42 standing for months (both engaged 8 → 7).
+- **A beachhead:** a `forces` arrival on the land of a nation at war with it makes its cell its own (`FlipCause.landing`,
+  as a landing's, PLAN 4.5b). Land is taken from a neighbouring cell held, so an arrival inside an enemy's land took
+  none (Yueyang, in this run's Chinese land: 67k Japanese a week beside 28k Chinese, nothing fought).
+- **Planners:** a foe across a hold is a foe to plan against while a stage's window is open between them
+  (`World.holdsPlan`, `Track.pairOpen`; `foesOf`, the frozen front's own part); the fighting stays in the area.
+- **The timeline:** the 25th Army lands at Kota Bharu (British, at war) not Singora (Thailand, neutral until 1942: the
+  day-start repatriation sent it to Japan); the 15th Army crosses at Tavoy, and the 18th and 56th Divisions reach
+  Moulmein on 8 May; the Ichigo moves by rail from Henan (stopped short of Chinese-held Wuhan) replaced by arrivals at
+  Yueyang (8 June) and Hengyang (14 November); Chinese defenders at Changsha and Guilin. Each kept for its stage.
+- **Measured** (seed 1938): both sides engaged at the stage's hour at 10 of 19 large land fronts (seeds 1, 2: 12, 10;
+  Malaya, Burma and Changsha fight now); both near 15. In the Moscow window the Soviets, outnumbered, lost 305k of
+  their opening cohort (50k before). The nine replay tests green: 1941 strays 0.44 %, Paris 14 June 1940, China 381k,
+  the Soviet army 3.81M on 1 November 1942, no event passed over. The replay's tick 2.75 ms against plain 1938's 2.52
+  (2.48 before: the fighting of the windows). Pin unchanged.
+- **The bar** (the user: "as long as it's at least 9 after step 2"): ≥ 9 on seed 1938. Not fought still: Borneo, the
+  Netherlands Indies, the Philippines, New Guinea, Stalingrad, Guilin, Libya, Uranus, Moscow, the Vistula at the hour.
+

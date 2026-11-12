@@ -556,7 +556,7 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * Forces arriving (R62f, SPEC §7.7 "historical arrivals of forces"): `count` formations of land template `template`
    * set down for `nation` at `at` (its land point), as God Mode's spawn places one.
    */
-  z.strictObject({ ...when, kind: z.literal('forces'), nation: tag, template: id, count: z.number().int().min(1).max(60), at: lonLat }),
+  z.strictObject({ ...when, kind: z.literal('forces'), nation: tag, template: id, count: z.number().int().min(1).max(60), at: lonLat, kept: date.optional() }),
   /**
    * A front held (R62f2): until `until` the nations of `sides[0]` and of `sides[1]`, and their puppets, stay at war but
    * do not fight on land: no land combat between them, no land taken by either from the other, no plan of attack on
@@ -579,7 +579,7 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * wings go too, wherever they are.
    */
   z.strictObject({ ...when, kind: z.literal('withdraw'), nation: tag, ring, captured: z.boolean().optional(), fleets: z.boolean().optional(), note: z.string().optional() }),
-  z.strictObject({ ...when, kind: z.literal('redeploy'), nation: tag, from: ring, to: z.array(lonLat).min(1), share: z.number().gt(0).max(1) }),
+  z.strictObject({ ...when, kind: z.literal('redeploy'), nation: tag, from: ring, to: z.array(lonLat).min(1), share: z.number().gt(0).max(1), kept: date.optional() }),
   /**
    * A nuclear strike of the timeline's (R62h3: Hiroshima, Nagasaki): a fission warhead of `nation`'s bursts at `at`,
    * its effects a launch's, with no stockpile, bomber or toggle asked. The AI strikes nothing while the track steers.

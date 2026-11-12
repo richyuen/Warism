@@ -428,7 +428,7 @@ function sectorShape(world: World, side: number[], frontier: Map<number, Front>,
       const theirs = holder === n ? enemyOf : foesOf(world, holder, fighting, stand);
       const foe = new Uint8Array(world.nations.highWater);
       // Its own, kept apart: it faces a held foe only across a frozen front (`World.frozenFront`).
-      for (const m of enemies) if (theirs[m] === 1 && (partKey === enemyKey || !world.holds(n, m) || world.frozenFront(n, m))) foe[m] = 1;
+      for (const m of enemies) if (theirs[m] === 1 && (partKey === enemyKey || !world.holdsPlan(n, m) || world.frozenFront(n, m))) foe[m] = 1;
       held.set(partKey, (part = frontPart(world, frontier.get(holder)!, foe, bw)));
     }
     for (let j = 0; j < part.keys.length; j++) {
@@ -659,8 +659,9 @@ function foesOf(world: World, m: number, fighting: Set<number>, stand: Standings
   let mask = stand.foes.get(m);
   if (!mask) {
     mask = new Uint8Array(world.nations.highWater);
-    // Not a foe across a held front (ROADMAP R62f2): no plan of attack on it.
-    for (const e of fighting) if (world.wars.atWar(m, e) && !world.holds(m, e)) mask[e] = 1;
+    // Not a foe across a held front (ROADMAP R62f2): no plan of attack on it, but while a stage's window is open
+    // between them (R66d).
+    for (const e of fighting) if (world.wars.atWar(m, e) && !world.holdsPlan(m, e)) mask[e] = 1;
     stand.foes.set(m, mask);
   }
   return mask;
