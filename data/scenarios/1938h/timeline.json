@@ -17547,12 +17547,310 @@
    "note": "Suez: the last Anglo-French troops leave Port Said"
   },
   {
+   "date": "1957-01-01",
+   "kind": "transfer",
+   "to": "FRG",
+   "from": [
+    "FRA"
+   ],
+   "provinces": [
+    "DEU-1581"
+   ],
+   "note": "The Saar joins West Germany"
+  },
+  {
+   "date": "1957-03-06",
+   "kind": "rename",
+   "nation": "GCO",
+   "as": "GHA",
+   "note": "Ghana"
+  },
+  {
+   "date": "1957-03-06",
+   "kind": "release",
+   "subject": "GCO",
+   "note": "Ghana independent, with British Togoland"
+  },
+  {
    "date": "1957-03-08",
    "kind": "peace",
    "a": "ISR",
    "b": "EGY",
    "terms": "white",
    "note": "Suez: Israel leaves Gaza and Sharm el-Sheikh"
+  },
+  {
+   "date": "1957-08-31",
+   "kind": "release",
+   "subject": "MAL",
+   "note": "The Federation of Malaya independent"
+  },
+  {
+   "date": "1958-02-01",
+   "kind": "annex",
+   "annexer": "EGY",
+   "target": "SYR",
+   "tell": "note",
+   "note": "The United Arab Republic: Egypt and Syria one state"
+  },
+  {
+   "date": "1958-02-01",
+   "kind": "rename",
+   "nation": "EGY",
+   "as": "UAR",
+   "note": "The United Arab Republic"
+  },
+  {
+   "date": "1958-04-10",
+   "kind": "transfer",
+   "to": "FMO",
+   "from": [
+    "NSP"
+   ],
+   "ring": [
+    [
+     -13.3,
+     27.66
+    ],
+    [
+     -8.67,
+     27.66
+    ],
+    [
+     -8.67,
+     28.75
+    ],
+    [
+     -11.4,
+     28.75
+    ],
+    [
+     -13.3,
+     28.05
+    ]
+   ],
+   "note": "Tarfaya (Cape Juby) to Morocco"
+  },
+  {
+   "date": "1958-10-02",
+   "kind": "born",
+   "nation": "GUI",
+   "from": [
+    "AOF"
+   ],
+   "countries": [
+    "GIN"
+   ],
+   "note": "Guinea votes no, and is independent"
+  },
+  {
+   "date": "1960-01-01",
+   "kind": "born",
+   "nation": "CMR",
+   "from": [
+    "AEF"
+   ],
+   "countries": [
+    "CMR"
+   ],
+   "note": "Cameroon independent"
+  },
+  {
+   "date": "1960-04-27",
+   "kind": "born",
+   "nation": "TOG",
+   "from": [
+    "AOF"
+   ],
+   "countries": [
+    "TGO"
+   ],
+   "note": "Togo independent"
+  },
+  {
+   "date": "1960-06-26",
+   "kind": "release",
+   "subject": "MAD",
+   "note": "Madagascar independent"
+  },
+  {
+   "date": "1960-06-30",
+   "kind": "rename",
+   "nation": "BCO",
+   "as": "CGL",
+   "note": "The Congo independent of Belgium"
+  },
+  {
+   "date": "1960-07-01",
+   "kind": "born",
+   "nation": "SOM",
+   "from": [
+    "ITA",
+    "ENG"
+   ],
+   "countries": [
+    "SOM",
+    "SOL"
+   ],
+   "note": "Somalia: the Italian trust territory and British Somaliland one republic"
+  },
+  {
+   "date": "1960-07-16",
+   "kind": "allianceLeave",
+   "nation": "CCP",
+   "note": "The Sino-Soviet split: the Soviet advisers recalled"
+  },
+  {
+   "date": "1960-08-01",
+   "kind": "born",
+   "nation": "DAH",
+   "from": [
+    "AOF"
+   ],
+   "countries": [
+    "BEN"
+   ],
+   "note": "Dahomey independent"
+  },
+  {
+   "date": "1960-08-03",
+   "kind": "born",
+   "nation": "NGE",
+   "from": [
+    "AOF"
+   ],
+   "countries": [
+    "NER"
+   ],
+   "note": "Niger independent"
+  },
+  {
+   "date": "1960-08-05",
+   "kind": "born",
+   "nation": "UVO",
+   "from": [
+    "AOF"
+   ],
+   "countries": [
+    "BFA"
+   ],
+   "note": "Upper Volta independent"
+  },
+  {
+   "date": "1960-08-07",
+   "kind": "born",
+   "nation": "CIV",
+   "from": [
+    "AOF"
+   ],
+   "countries": [
+    "CIV"
+   ],
+   "note": "Ivory Coast independent"
+  },
+  {
+   "date": "1960-08-11",
+   "kind": "born",
+   "nation": "CHD",
+   "from": [
+    "AEF"
+   ],
+   "countries": [
+    "TCD"
+   ],
+   "note": "Chad independent"
+  },
+  {
+   "date": "1960-08-13",
+   "kind": "born",
+   "nation": "CAF",
+   "from": [
+    "AEF"
+   ],
+   "countries": [
+    "CAF"
+   ],
+   "note": "The Central African Republic independent"
+  },
+  {
+   "date": "1960-08-15",
+   "kind": "rename",
+   "nation": "AEF",
+   "as": "CGB",
+   "note": "The Congo (Brazzaville)"
+  },
+  {
+   "date": "1960-08-15",
+   "kind": "release",
+   "subject": "AEF",
+   "note": "The Congo (Brazzaville) independent"
+  },
+  {
+   "date": "1960-08-16",
+   "kind": "born",
+   "nation": "CYP",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "CYP"
+   ],
+   "note": "Cyprus independent (the British bases kept)"
+  },
+  {
+   "date": "1960-08-17",
+   "kind": "born",
+   "nation": "GAB",
+   "from": [
+    "AEF"
+   ],
+   "countries": [
+    "GAB"
+   ],
+   "note": "Gabon independent"
+  },
+  {
+   "date": "1960-08-20",
+   "kind": "rename",
+   "nation": "AOF",
+   "as": "SEN",
+   "note": "Senegal leaves the Mali Federation"
+  },
+  {
+   "date": "1960-08-20",
+   "kind": "release",
+   "subject": "AOF",
+   "note": "Senegal independent"
+  },
+  {
+   "date": "1960-09-22",
+   "kind": "born",
+   "nation": "MLI",
+   "from": [
+    "AOF"
+   ],
+   "countries": [
+    "MLI"
+   ],
+   "note": "The Republic of Mali"
+  },
+  {
+   "date": "1960-10-01",
+   "kind": "release",
+   "subject": "NIG",
+   "note": "Nigeria independent"
+  },
+  {
+   "date": "1960-11-28",
+   "kind": "born",
+   "nation": "MRT",
+   "from": [
+    "AOF"
+   ],
+   "countries": [
+    "MRT"
+   ],
+   "note": "Mauritania independent"
   }
  ],
  "maps": [
@@ -21804,6 +22102,72 @@
         31.4
        ]
       ]
+     ]
+    }
+   ]
+  },
+  {
+   "date": "1960-12-31",
+   "note": "The year of Africa: the French and Belgian colonies independent, Somalia, Cyprus; Ghana, Malaya, Guinea; the United Arab Republic; the Saar German, Tarfaya Moroccan",
+   "byCountry": {
+    "GIN": "GUI",
+    "CMR": "CMR",
+    "TGO": "TOG",
+    "SOM": "SOM",
+    "SOL": "SOM",
+    "BEN": "DAH",
+    "NER": "NGE",
+    "BFA": "UVO",
+    "CIV": "CIV",
+    "TCD": "CHD",
+    "CAF": "CAF",
+    "CYP": "CYP",
+    "GAB": "GAB",
+    "MLI": "MLI",
+    "MRT": "MRT",
+    "SYR": "EGY"
+   },
+   "byProvince": {
+    "DEU-1581": "FRG"
+   },
+   "regions": [
+    {
+     "owner": "FMO",
+     "onlyFrom": [
+      "NSP"
+     ],
+     "ring": [
+      [
+       -13.3,
+       27.66
+      ],
+      [
+       -8.67,
+       27.66
+      ],
+      [
+       -8.67,
+       28.75
+      ],
+      [
+       -11.4,
+       28.75
+      ],
+      [
+       -13.3,
+       28.05
+      ]
+     ]
+    }
+   ],
+   "occupied": [
+    {
+     "by": "ENG",
+     "of": [
+      "ITA"
+     ],
+     "countries": [
+      "LBY"
      ]
     }
    ]

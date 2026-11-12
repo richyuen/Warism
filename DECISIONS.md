@@ -431,3 +431,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Measured:** a map of 1 December 1956 (the new states, Austria free, the Sinai and Port Said held) matched as the
   earlier maps; on that day the new states living, the released free, West Germany in NATO, Vienna Austria's.
 
+### ADR-986 · 2026-11-12 · accepted — R69c: 1957-60 in the replay
+- **The events** (from `docs/research/1953-62.md`): the Saar to West Germany (its province); Ghana (`GHA`, the Gold
+  Coast renamed and released, British Togoland in its land already) and Malaya released; the United Arab Republic
+  (Syria annexed by Egypt, told by its note; Egypt renamed `UAR`); Tarfaya to Morocco; Guinea born; in 1960 Cameroon,
+  Togo, Somalia (the Italian trust territory and British Somaliland, the map's `SOM` and `SOL`), Dahomey, Niger, Upper
+  Volta, Ivory Coast, Chad, the Central African Republic, Cyprus, Gabon, Mali and Mauritania born; Madagascar and
+  Nigeria released; French Equatorial Africa's remainder the Congo (Brazzaville, `CGB`) and French West Africa's
+  Senegal (`SEN`), both released; the Belgian Congo renamed (`CGL`; no overlord in this world); the Sino-Soviet split
+  (China leaves the Soviet bloc, 16 July 1960). Five identities with names and flags of their own.
+- **Not modelled:** the revolutions in Iraq (1958) and Cuba (1959) and the coups (no event kind changes a
+  government); the interventions in Lebanon and Jordan and the Taiwan crisis (no land changed); Katanga and the Congo
+  Crisis (no state for the secession); the Mali Federation's two months (Senegal and Mali from AOF directly); the
+  Ifni War (Sidi Ifni stays Spanish).
+- **Measured:** a map of 31 December 1960 matched as the earlier maps; on that day the 14 states born living, Syria in
+  the UAR, the colonies released free of their overlords, China outside the Soviet bloc; the Eastern Bloc at the
+  track's end without China.
+

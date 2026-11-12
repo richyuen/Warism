@@ -147,8 +147,9 @@ Batches 19 and 18 together (ADR-966).
     Egypt, Sudan, Morocco, Tunisia, Suez; land named by the map's codes. Not Hungary (its land unchanged) or the
     Warsaw Pact (the Eastern Bloc stands for it). AT met: a map of 1 December 1956 matched as the earlier maps; each
     event fired on its date on seed 1938 (none passed over) and seeds 1-5 within the bars.
-  - [ ] R69c 1957-60: Ghana, Malaya, Guinea, the United Arab Republic, Iraq 1958, Cuba 1959, the Sino-Soviet split,
-    the African states of 1960, Cyprus, the Congo. AT: a map of the end of 1960, as R69b.
+  - [x] R69c 1957-60 (ADR-986): Ghana, Malaya, Guinea, the United Arab Republic, the Saar, Tarfaya, the Sino-Soviet
+    split, the African states of 1960, Somalia, Cyprus, the Congo. Not Iraq 1958 or Cuba 1959 (no event changes a
+    government). AT met: a map of 31 December 1960, as R69b.
   - [ ] R69d 1961-62: Sierra Leone, Tanganyika, Kuwait, Goa, Algeria, Rwanda, Burundi, Uganda, Jamaica, Trinidad,
     West New Guinea, the Sino-Indian war, the Cuban crisis (no war). AT: a map of the end of 1962, as R69b; the
     nukes only where scripted (none after Nagasaki) to the track's end.

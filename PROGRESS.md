@@ -175,4 +175,6 @@
   dormant. 1938-53 unchanged: the 12 maps' scores identical, nine replay tests green, pin unchanged.
 - R69b (ADR-985): births and transfers name land by countries and provinces; 1953-56 in the timeline (Laos, Cambodia,
   the two Vietnams, Egypt, Sudan, Morocco, Tunisia released, Austria free, West Germany in NATO, Suez); a 13th map.
+- R69c (ADR-986): 1957-60 in the timeline: the Saar, Ghana, Malaya, the UAR, Tarfaya, Guinea, the African states of
+  1960, Somalia, Cyprus, the Congo, the Sino-Soviet split; a 14th map.
 

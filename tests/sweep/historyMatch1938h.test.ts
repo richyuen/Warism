@@ -60,6 +60,9 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   let end53 = '';
   // R69b (ADR-985): on 1 December 1956, the new states of 1953-56 living and free, West Germany in NATO, Austria free.
   let state56 = '';
+  // R69c (ADR-986): on 31 December 1960, the states born 1958-60 living, Syria in the United Arab Republic, the colonies
+  // released free, China out of the Soviet bloc.
+  let state60 = '';
   // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
   let axisPact = true;
   const fleets = new Map<string, number>();
@@ -77,7 +80,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const { maps, skipped, nukes } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1956-12-02',
+    '1961-01-01',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
@@ -97,6 +100,15 @@ it('1938-39: the land owned as history had it, and the events fire on their date
           ['INC', 'SUD', 'FMO', 'TUN', 'EGY'].map((t) => nc.overlord[id(t)]).join(''),
           w.alliances.allianceOf(id('FRG'))?.leader === id('USA'),
           w.cells.controller[vienna] === id('AUT'),
+        ].join(' ');
+      }
+      if (date === '1960-12-31') {
+        const nc = w.nations.cols;
+        state60 = [
+          ['GUI', 'CMR', 'TOG', 'SOM', 'DAH', 'NGE', 'UVO', 'CIV', 'CHD', 'CAF', 'CYP', 'GAB', 'MLI', 'MRT'].map((t) => nc.living[id(t)]).join(''),
+          nc.living[id('SYR')],
+          ['GCO', 'MAL', 'MAD', 'AEF', 'AOF', 'NIG'].map((t) => nc.overlord[id(t)]).join(''),
+          w.alliances.allianceOf(id('CCP'))?.leader === id('SOV'),
         ].join(' ');
       }
       if (date === '1953-07-28') end53 = `${w.wars.list.length} ${w.track?.ended} ${w.nations.cols.living[id('KOR')]} ${w.nations.cols.living[id('PRK')]}`;
@@ -133,7 +145,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(13);
+  expect(maps.length).toBe(14);
+  expect(state60).toBe('11111111111111 0 000000 false');
   expect(state56).toBe('111 00000 true true');
   expect(end53).toBe('0 false 1 1');
   expect(asia).toEqual(ASIA.map((x) => x[1]));

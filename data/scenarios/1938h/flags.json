@@ -46,6 +46,11 @@
     "ALG": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "v", "colors": ["#006233", "#ffffff"]}, {"t": "crescent", "cx": 0.5, "cy": 0.5, "r": 0.24, "color": "#d21034", "cut": "#ffffff", "offset": 0.07, "cutR": 0.2}, {"t": "star", "cx": 0.58, "cy": 0.5, "r": 0.1, "color": "#d21034"}]},
     "SAM": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ce1126"]}, {"t": "rect", "x": 0, "y": 0, "w": 0.5, "h": 0.5, "color": "#002b7f"}, {"t": "star", "cx": 0.25, "cy": 0.25, "r": 0.1, "color": "#ffffff"}]},
     "SVN": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ffc400"]}, {"t": "rect", "x": 0, "y": 0.36, "w": 1, "h": 0.07, "color": "#da251d"}, {"t": "rect", "x": 0, "y": 0.465, "w": 1, "h": 0.07, "color": "#da251d"}, {"t": "rect", "x": 0, "y": 0.57, "w": 1, "h": 0.07, "color": "#da251d"}]},
-    "MOR": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#c1272d"]}, {"t": "star", "cx": 0.5, "cy": 0.5, "r": 0.24, "color": "#006233"}]}
+    "MOR": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#c1272d"]}, {"t": "star", "cx": 0.5, "cy": 0.5, "r": 0.24, "color": "#006233"}]},
+    "GHA": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ce1126", "#fcd116", "#006b3f"]}, {"t": "star", "cx": 0.5, "cy": 0.5, "r": 0.15, "color": "#000000"}]},
+    "UAR": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ce1126", "#ffffff", "#000000"]}, {"t": "star", "cx": 0.38, "cy": 0.5, "r": 0.1, "color": "#007a3d"}, {"t": "star", "cx": 0.62, "cy": 0.5, "r": 0.1, "color": "#007a3d"}]},
+    "CGL": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#0085ca"]}, {"t": "star", "cx": 0.5, "cy": 0.5, "r": 0.2, "color": "#f7d618"}, {"t": "star", "cx": 0.08, "cy": 0.15, "r": 0.04, "color": "#f7d618"}, {"t": "star", "cx": 0.08, "cy": 0.32, "r": 0.04, "color": "#f7d618"}, {"t": "star", "cx": 0.08, "cy": 0.5, "r": 0.04, "color": "#f7d618"}, {"t": "star", "cx": 0.08, "cy": 0.68, "r": 0.04, "color": "#f7d618"}, {"t": "star", "cx": 0.08, "cy": 0.85, "r": 0.04, "color": "#f7d618"}]},
+    "CGB": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "v", "colors": ["#009543", "#fbde4a", "#dc241f"]}]},
+    "SEN": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "v", "colors": ["#00853f", "#fdef42", "#e31b23"]}, {"t": "star", "cx": 0.5, "cy": 0.5, "r": 0.12, "color": "#00853f"}]}
   }
 }
