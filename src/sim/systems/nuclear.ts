@@ -761,6 +761,11 @@ function assured(world: World, nations: readonly number[]): boolean {
   return nations.some((m) => warheadsOf(world, m) >= MAD_WARHEADS && answers(world, m));
 }
 
+/** Whether `n` leads its alliance as a nuclear power with an assured second strike (R67c, ADR-981): a bloc. */
+export function blocLeader(world: World, n: number): boolean {
+  return world.warheads.size > 0 && assured(world, [n]);
+}
+
 /** Whether `war` is between two sides that each, with their allies, have an assured second strike (PLAN 6.8: MAD). */
 export function madWar(world: World, war: War): boolean {
   return world.warheads.size > 1 && assured(world, ownCoalition(world, war, 0)) && assured(world, ownCoalition(world, war, 1));

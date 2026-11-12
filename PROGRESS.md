@@ -149,3 +149,9 @@
 - The timeline forms the Eastern Bloc (1947-50) and NATO (1949, 1952); both stand at the track's end with their
   members (checked by `historyTrack1938h`). Nine replay tests green.
 
+## 2026-11-12 — R67c-d: two blocs, lasting and deterred, in the track's games (ADR-981)
+
+- After the track the two strongest nuclear-led alliances keep their great powers and never go to war with each
+  other: 0 days of the leaders at war in 20 years, NATO and the Eastern Bloc whole, on three seeds. In every game they
+  broke the sweep (5 of 10); the user kept them to the track's games, R67f for every game later.
+

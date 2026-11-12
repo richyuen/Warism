@@ -116,13 +116,15 @@ Batches 19 and 18 together (ADR-966).
   - [x] R67b The blocs the replay hands over (ADR-980): NATO (1949; Greece and Turkey 1952) under the United States and the
     Soviet bloc (the people's democracies, 1947-49) under the Soviet Union, as alliances of the timeline. AT: at the
     track's end both stand with their members; the nine replay tests.
-  - [ ] R67c Lasting blocs, every game: an alliance led by a nuclear power keeps its great powers (rivals apart,
-    PLAN 7.53b, does not part them). AT: on seeds 1938, 1, 2 both blocs stand 20 years after the track (leader living,
-    half its members of the track's end still in it); plain 1938's sweep bands kept; the pin unchanged.
-  - [ ] R67d Deterrence, every game: no nation declares war on a side holding a nuclear power's arsenal while its own
-    side holds one too, nor joins one against it. AT: no hour in 20 years after the track on seeds 1938, 1, 2 with the
-    blocs' leaders on opposite sides of a war; plain 1938's sweep bands kept (nukes used in ≥ 1 seed with nukes on);
-    the pin unchanged.
+  - [x] R67c Lasting blocs (ADR-981; the user's decisions of 2026-11-12: the two strongest alliances led by a nuclear
+    power only, in the historical track's games only): those two keep their great powers (rivals apart, PLAN 7.53b,
+    does not part them). Met: on seeds 1938, 1, 2 both blocs whole 20 years after the track (the Eastern Bloc 10 of
+    10, NATO 13 of 13); plain games' code path unchanged (the sweep with the rules off 10 of 10); the pin unchanged.
+  - [x] R67d Deterrence (ADR-981; as R67c): no nation of one of the two blocs declares on a side the other stands on.
+    Met: no day in 20 years after the track on seeds 1938, 1, 2 with the blocs' leaders on opposite sides of a war.
+  - [ ] R67f A Cold War for every game (the user's decision, ADR-981): the two-bloc rules in every game need a
+    counterweight to the blocs that, never at war with each other, took the rest of the world (one nation over 40 %
+    of the world's income on 5 of the sweep's 10 seeds). AT to be set with the user.
   - [ ] R67e Proxies: rivalry in the blocs' leaders' wars on others. Its AT set once R67b-d are measured.
 - [ ] R68 **A start from any date of the replay.** A timeline slider in place of "World, 1938" and "World, 1938 —
   Historical"; continue the replay or free from there.

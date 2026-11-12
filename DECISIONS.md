@@ -360,3 +360,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
   tests green, no event passed over; pin unchanged. A first try had France leave the Anglo-French pact too, refused
   (it had ended with Britain's leaving).
 
+### ADR-981 · 2026-11-12 · accepted (the user's decisions) — R67c-d: two blocs, lasting and deterred, in the track's games
+- **The rules** (`src/sim/ai/strategic.ts`): the blocs (`blocsOf`) are the two strongest alliances (their members'
+  men) led by a nation with an assured second strike (`blocLeader`, `nuclear.ts`, as MAD reckons one: MAD_WARHEADS and
+  means to deliver, no overlord). R67c: rivals apart parts no great power from them. R67d: the strategic AI weighs no
+  war of a nation of one bloc on a side the other stands on (`deterred`: the target, the overlord that would lead its
+  defence, a guarantor of either), on land or over the sea (`warTarget`). Only in a game of the historical track
+  (`world.track`), once it has ended or been left; `BLOC_PROBE` switches each off for a measure.
+- **Measured from the worlds at the track's end** (`tools/diag/afterTrack.ts`, `BLOCS=`; seeds 1938, 1, 2; days with
+  the leaders of the blocs at the track's end on opposite sides of a war in 20 years / members still in at year 20):
+  neither rule 1,191-3,652 days, the Soviet Union dead or out of its bloc on two seeds; lasting alone 438-998 days,
+  the Soviet Union dead on all three; deterrence alone 0 days, the blocs 3-7 of 10 and 2-7 of 13; both 0 days, 10 of
+  10 and 13 of 13, about 180 wars still declared on each seed.
+- **The user's two decisions.** First, any two sides each with an assured strike deterred, and every alliance led by
+  one lasting: the sweep (seeds 1571-1580, 50 years) 8 of 10 seeds within the limits against 10 of 10 (land moving in
+  the last five years 1-37 % against 21-68 %, under 1 % on two; nukes used on 7 seeds against 10). The user: two blocs
+  only. That, in every game: 5 of 10 (one nation over 40 % of the world's income on five); lasting alone 9, deterrence
+  alone 7; both off 10 of 10 (the same as `2026-11-11-sweep-done63`). The user: the track's games only; a Cold War for
+  every game a later item (R67f), needing a counterweight. This narrows ADR-585's rivals apart in those games only.
+- **Tests:** `tests/unit/blocs1938.test.ts` (deterred: the other bloc's leader, member and guarantee; not a nation of
+  neither; none with one bloc). Plain games' path is the old one (no track: no blocs); the pin unchanged.
+

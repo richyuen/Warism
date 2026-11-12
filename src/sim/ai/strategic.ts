@@ -37,7 +37,7 @@ import { EventKind } from '../../shared/events';
 import { hash32, hashToUnit } from '../core/hash';
 import { makePeace, declareWar, whyNotWar } from '../systems/war';
 import { canJoin, LEAVE_LOYALTY, leaveAlliance, noWarAmong } from '../systems/alliances';
-import { relationHit, worstPariah } from '../systems/nuclear';
+import { blocLeader, relationHit, worstPariah } from '../systems/nuclear';
 import { transportGroupsAtPort } from '../systems/amphibious';
 import { keyAt, waterKeys } from '../systems/navalCombat';
 import { forceMen, seaHolder } from '../systems/seaControl';
@@ -240,11 +240,13 @@ function peerWarInCommon(world: World, a: number, b: number, greats: Set<number>
 }
 
 /** Monthly (PLAN 7.53b): the great powers of an alliance but its first lose RIVAL_LOYALTY while they fight no great power together with it. */
-export function rivalsApart(world: World, str: Float64Array, greats: Set<number>): void {
+export function rivalsApart(world: World, str: Float64Array, greats: Set<number>, blocs: ReadonlySet<number> = new Set()): void {
   if (!rivalsPart(world)) return;
   for (const a of [...world.alliances.list]) {
     const mine = a.members.filter((m) => greats.has(m));
     if (mine.length < 2) continue;
+    // One of the two blocs (R67c, ADR-981) keeps its great powers.
+    if (!BLOC_PROBE.lastingOff && blocs.has(a.id)) continue;
     const first = greats.has(a.leader) ? a.leader : mine.sort((x, y) => str[y]! - str[x]! || x - y)[0]!;
     const leaving: number[] = [];
     for (let i = 0; i < a.members.length; i++) {
@@ -297,12 +299,14 @@ export function seaTargets(world: World, n: number): number[] {
  * over the bar on 77–84 of its turns. Land wars come first: the sea's targets only on a turn none is.
  * `attack` is `n`'s strength with its allies, `defence` a target's (`sides`).
  */
-export function warTarget(world: World, n: number, neighbours: readonly number[], attack: number, defence: (t: number) => number, wars: number, restless: number): number {
+export function warTarget(world: World, n: number, neighbours: readonly number[], attack: number, defence: (t: number) => number, wars: number, restless: number, blocs: ReadonlySet<number> = new Set()): number {
   const pick = (among: readonly number[], skip?: ReadonlySet<number>): number => {
     let best = 0;
     let bestU = DECLARE_AT;
     for (const t of among) {
       if (skip?.has(t) || whyNotWar(world, n, t) !== Refusal.None) continue;
+      // Deterrence (R67d, ADR-981): no war between the two blocs.
+      if (!BLOC_PROBE.deterrenceOff && deterred(world, n, t, blocs)) continue;
       const u = warUtility(world, n, t, attack, defence(t), wars, restless).u;
       if (u > bestU) [bestU, best] = [u, t];
     }
@@ -310,6 +314,40 @@ export function warTarget(world: World, n: number, neighbours: readonly number[]
   };
   return pick(neighbours) || pick(seaTargets(world, n), new Set(neighbours));
 }
+
+/**
+ * The blocs (R67c-d, ADR-981; the user's choices of 2026-11-12: two only, in the historical track's games only): of
+ * the alliances led by a nation with an
+ * assured second strike (`blocLeader`), the two strongest (their members' men, `strengths`; the lower id on ties).
+ * Their ids; one or none while fewer are so led.
+ */
+export function blocsOf(world: World, str: Float64Array): Set<number> {
+  const led = world.alliances.list.filter((a) => blocLeader(world, a.leader));
+  const men = (a: (typeof led)[number]): number => a.members.reduce((t, m) => t + (str[m] ?? 0), 0);
+  return new Set(led.sort((a, b) => men(b) - men(a) || a.id - b.id).slice(0, 2).map((a) => a.id));
+}
+
+/**
+ * Whether a war of `n` on `t` would set the two blocs against each other (R67d, ADR-981): `n` of one, and of `t`'s
+ * side (`t`, the overlord that would lead its defence, their alliances and guarantors: `declareWar`'s callers) one of
+ * the other.
+ */
+export function deterred(world: World, n: number, t: number, blocs: ReadonlySet<number>): boolean {
+  if (blocs.size < 2) return false;
+  const al = world.alliances;
+  const mine = al.allianceOf(n);
+  if (!mine || !blocs.has(mine.id)) return false;
+  const d = world.nations.cols.overlord[t] || t;
+  const other = (x: number): boolean => {
+    const a = al.allianceOf(x);
+    return a !== undefined && a.id !== mine.id && blocs.has(a.id);
+  };
+  for (const x of [t, d]) if (other(x) || al.guarantorsOf(x).some(other)) return true;
+  return false;
+}
+
+/** Switches for measurement (R67c-d): the blocs' rules off. Never set in the game. */
+export const BLOC_PROBE: { lastingOff?: boolean; deterrenceOff?: boolean } = {};
 
 export function strategicAi(world: World): void {
   // The historical track's wars, peaces and pacts are its timeline's (ROADMAP R62e).
@@ -332,6 +370,10 @@ export function strategicAi(world: World): void {
   const str = strengths(world);
   const al = world.alliances;
   const { withAllies, defence } = sides(world, str);
+  // The two blocs (R67c-d): in a game of the historical track only (the user's decision of 2026-11-12, ADR-981: in
+  // every game the two blocs, never at war with each other, took the rest of the world: one nation over 40 % of the
+  // world's income on 5 of the sweep's 10 seeds), once it has ended or been left; none before any nation holds an arsenal.
+  const blocs = world.track && world.warheads.size > 0 ? blocsOf(world, str) : new Set<number>();
   // The great powers, once rivals part (PLAN 7.53b; none before: no join is refused for them).
   const greats = rivalsPart(world) ? greatPowers(world, str) : new Set<number>();
   for (const n of actors) {
@@ -339,7 +381,7 @@ export function strategicAi(world: World): void {
     // War.
     const wars = warsOf(world, n);
     if (wars < MAX_WARS && nc.aggression[n]! >= PACIFIST_BELOW && nc.gold[n]! >= 0 && nc.bankrupt[n] !== 1) {
-      const best = warTarget(world, n, neighbours, withAllies(n), defence, wars, wars === 0 ? restlessOf(world, n) : 0);
+      const best = warTarget(world, n, neighbours, withAllies(n), defence, wars, wars === 0 ? restlessOf(world, n) : 0, blocs);
       if (best !== 0 && hashToUnit(hash32(world.seed, day, n, SALT_WAR)) < (DECLARE_P * nc.aggression[n]!) / 100) declareWar(world, n, best);
     }
     // Alliances against a threat.
@@ -360,7 +402,7 @@ export function strategicAi(world: World): void {
   }
   if (isMonthStart(world.startDay, world.tick)) {
     coalition(world, nb, str, greats);
-    rivalsApart(world, str, greats);
+    rivalsApart(world, str, greats, blocs);
   }
 }
 

@@ -1629,6 +1629,9 @@ production and research. `src/sim/ai/`.
   great power; unity 50); a pariah league against the worst nuclear pariah (§6.4); and rivals apart: of the
   `GREAT_POWERS` (6) largest, after `RIVAL_GRACE_YEARS` (3), a great power in an alliance with another
   loses `RIVAL_LOYALTY` (30) loyalty a month (with its diplomacy layer) and leaves under 25.
+- **The blocs (the historical track's games only, after it, R67c-d, ADR-981):** the two strongest alliances led by a
+  nation with an assured second strike (§6.4); rivals apart does not part them, and no nation of one declares war on
+  a side the other stands on (the target, the overlord leading its defence, a guarantor of either).
 
 ### 7.3 Operational AI
 `src/sim/ai/operational.ts`; every 6 hours, each nation at war with its army layer once a day
