@@ -1735,7 +1735,7 @@ to 27 July 1953, then sets the world free.
   AI's own nuclear decision is off. Each war phase names objectives (cells or regions, with a date): the
   operational AI weights sectors toward them, the invasion AI picks the named landings. The fighting is
   the sim's own.
-- **The end:** on 27 July 1953, or at the first intervention (a God Mode act, an editor edit, the taking of
+- **The end:** on 31 December 1962 (27 July 1953 before R69a, ADR-984), or at the first intervention (a God Mode act, an editor edit, the taking of
   a nation), the track ends for good: every switch returns to the usual rules, and the History has a row
   saying when and why. Built (R62j0, ADR-945): the first command applied while it runs ends it in that hour, before
   the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none. While it

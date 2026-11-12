@@ -169,3 +169,8 @@
   slider and "Replay history" / "Play free". A start's world is checked against `years.json`'s hash. The blocs gated
   on the track's end, as ADR-981 said (nine replay tests green, pin unchanged).
 
+## 2026-11-12 — R69 split; R69a the track to 1962 (ADR-984)
+
+- Research for 1953-62 (`docs/research/1953-62.md`). The end on 31 December 1962; 26 nations born 1953-62 added
+  dormant. 1938-53 unchanged: the 12 maps' scores identical, nine replay tests green, pin unchanged.
+

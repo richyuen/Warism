@@ -46,7 +46,7 @@ test('the 1938 card replays history; Start opens it', async ({ page }) => {
   await page.getByTestId('title-scenario-1938').click();
   await page.getByTestId('title-mode-replay').click();
   await expect(page.getByTestId('title-chosen')).toHaveText('World, 1938');
-  await expect(page.getByTestId('title-detail')).toContainText('Korean armistice');
+  await expect(page.getByTestId('title-detail')).toContainText('the end of 1962');
   await expect(page.getByTestId('title-start-date')).toHaveText('1 January 1938');
   await expect(page.getByTestId('settings-seed')).toHaveCount(0);
   await page.screenshot({ path: test.info().outputPath('title-1938h.png') });

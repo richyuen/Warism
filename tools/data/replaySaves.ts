@@ -1,6 +1,6 @@
 /**
  * ROADMAP R68a (ADR-983, the user's decisions): the historical replay's yearly starts. 1938h's world (its own seed)
- * on 1 January of each year of the track, from 1938 to the year of its last event, written gzipped
+ * on 1 January of each year of the track, from 1938 to the year of its end, written gzipped
  * (`<out>/<year>.sav`, `Sim.save()` as `packSave` writes it) with `<out>/years.json`: the years, the state format,
  * and each save's tick and hash. Built by the Pages workflow on each push to `main` into the site, never committed;
  * by hand for a local game (`public/data/scenarios/1938h/start/`, gitignored). About 7-10 minutes.
@@ -12,7 +12,7 @@ import path from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { STATE_FORMAT } from '../../src/shared/saveFormat';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
-import { SEED_1938H } from '../../src/sim/scenario1938h';
+import { SEED_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
 import type { World } from '../../src/sim/world';
 import { assets1938 } from '../../tests/helpers/earth';
@@ -29,11 +29,11 @@ const quiet = (w: World): void => {
   w.out.fires.length = 0;
 };
 
-/** The track's years: 1 January of each from its start to the year of its last event (`last` caps it). */
+/** The track's years: 1 January of each from its start to the year of its end (`last` caps it). */
 export function replayYears(sim: Sim, last = Infinity): number[] {
   const t = sim.world.track!;
   const first = Number(t.events[0]!.date.slice(0, 4));
-  const end = Math.min(last, Number(t.events.at(-1)!.date.slice(0, 4)));
+  const end = Math.min(last, Number((TIMELINE_1938H.end ?? t.events.at(-1)!.date).slice(0, 4)));
   const out: number[] = [];
   for (let y = Math.max(1938, first); y <= end; y++) out.push(y);
   return out;

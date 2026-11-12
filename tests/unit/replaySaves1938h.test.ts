@@ -1,13 +1,13 @@
 import { gunzipSync, gzipSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
-import { SEED_1938H } from '../../src/sim/scenario1938h';
+import { SEED_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
 import type { World } from '../../src/sim/world';
 import { buildReplaySaves, replayYears } from '../../tools/data/replaySaves';
 import { assets1938 } from '../helpers/earth';
 
-// ROADMAP R68a (ADR-983): the replay's yearly starts. One a year from 1938 to the track's last event; a year's save,
+// ROADMAP R68a (ADR-983): the replay's yearly starts. One a year from 1938 to the track's end (R69a); a year's save,
 // gzipped as the site serves it, loaded into a fresh world, plays on as the unbroken run.
 
 const quiet = (w: World): void => {
@@ -16,11 +16,11 @@ const quiet = (w: World): void => {
 };
 
 describe("the replay's yearly starts (ROADMAP R68a)", () => {
-  it('one a year from 1938 to the year of the track\'s last event', () => {
+  it("one a year from 1938 to the year of the track's end", () => {
     const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) });
     const years = replayYears(sim);
     expect(years[0]).toBe(1938);
-    expect(years.at(-1)).toBe(Number(sim.world.track!.events.at(-1)!.date.slice(0, 4)));
+    expect(years.at(-1)).toBe(Number(TIMELINE_1938H.end!.slice(0, 4)));
     expect(years.every((y, i) => i === 0 || y === years[i - 1]! + 1)).toBe(true);
   });
 

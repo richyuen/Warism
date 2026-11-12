@@ -401,3 +401,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **The blocs' gate** (ADR-981 said "once it has ended or been left", the code read any track): `world.track?.ended`,
   so no bloc rule acts while the track steers (R69's nine more steered years). Nine replay tests and the pin unchanged.
 
+### ADR-984 · 2026-11-12 · accepted — R69a: the track to 1962, its new nations dormant
+- **Split** (ROADMAP R69a-e): 1938-53 kept first, then the new years by period, each with a map; the research behind
+  them in `docs/research/1953-62.md` (sourced; who held each future state's land on 1 January 1953).
+- **The end** moves to 31 December 1962 (`timeline.json` `end`), with no new event yet. Most of 1953-62's new states
+  are in a colony nation of 1938 (AOF, AEF, INC, BCO, BEA...) and come of it by release (and rename) or by birth; 26
+  nations added dormant for the births (LAO CAM GUI TOG DAH NGE UVO CIV MLI MRT CMR CHD CAF GAB SOM RWA BDI CYP SLE
+  KUW JAM TRI TGK UGA ALG SAM), their flags our own simple layers.
+- **Measured:** the 12 maps' scores the same to the hundredth as before (`historyMatch1938h`); the nine replay tests
+  green, the track checks run to 1962 with no war off the timeline; the pin unchanged. Tests of 1953's end kept on
+  27 July 1953: the armistice's day checks no war and both Koreas with the track running on; the free world from
+  1953 is left there by `leaveTrack` (as a free start from a year), the world after 1962 R69e's. The card's words,
+  SPEC's end and the yearly starts (to 1962) follow.
+

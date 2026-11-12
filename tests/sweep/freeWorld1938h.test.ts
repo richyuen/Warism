@@ -6,9 +6,10 @@ import { SEED_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
 import { assets1938 } from '../helpers/earth';
 
-// ROADMAP R62i5 (ADR-944): the world free after the track's last event. The track's world on 26 July 1953, loaded
-// with ten seeds for after it (the track ends on 27 July and draws its chance from that seed, as a game of each seed
-// does): a war of the AI's own, declared after the end, within 5 years on most of them.
+// ROADMAP R62i5 (ADR-944): the world free after the Korean armistice. The track's world on 26 July 1953, loaded
+// with ten seeds for after it, left on 27 July (since R69a the track runs to 1962, ADR-984: left as a free start from
+// a year leaves it, `leaveTrack`, and draws its chance from that seed, as a game of each seed does): a war of the AI's
+// own, declared after the end, within 5 years on most of them. The world after 1962: R69e.
 
 const SEEDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const YEARS = 5;
@@ -27,6 +28,11 @@ it('after 27 July 1953 the AI makes wars of its own on most of ten seeds', () =>
     const sim = new Sim({ scenario: '1938h', seed: 1938, assets: assets1938(SIZE_1938.w) }, TIMELINE_1938H);
     sim.load(bytes);
     sim.world.track!.afterSeed = seed;
+    sim.step(24, (w) => {
+      w.out.events.length = 0;
+      w.out.fires.length = 0;
+    });
+    sim.command({ kind: 'leaveTrack' });
     let end = -1;
     let war = -1;
     for (let day = 0; day < YEARS * 365 && war < 0; day++) {

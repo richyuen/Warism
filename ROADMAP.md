@@ -138,6 +138,20 @@ Batches 19 and 18 together (ADR-966).
     choice to continue the replay or play free. AT: e2e of the card (year and mode reach the game); the title
     screen's specs.
 - [ ] R69 **The replay past 1953**, to 1962 for now (the user's decision, ADR-959).
+  Split (1938-53 first, then the new years by period; dates and borders from sources, cited in the timeline's notes):
+  - [x] R69a The end moved to 31 December 1962 and the nations born 1953-62 added dormant, with no new event. AT: the
+    1938-53 replay unchanged (the nine replay tests, the 12 maps' scores and the yearly hashes to 1953 as before or
+    explained); the tests of 1953's end state kept as checks on 27 July 1953; the card's words and the year slider to
+    1962; the build of the yearly starts within the Pages workflow's time.
+  - [ ] R69b 1953-56: Indochina's end (the Vietnams, Laos, Cambodia), Austria and West Germany sovereign, the Warsaw
+    Pact and West Germany in NATO, Sudan, Morocco, Tunisia, Suez and Hungary. AT: a map of late 1956 matched as the
+    earlier maps are; each event fired on its date on seed 1938 and on seeds 1-5 within the bars.
+  - [ ] R69c 1957-60: Ghana, Malaya, Guinea, the United Arab Republic, Iraq 1958, Cuba 1959, the Sino-Soviet split,
+    the African states of 1960, Cyprus, the Congo. AT: a map of the end of 1960, as R69b.
+  - [ ] R69d 1961-62: Sierra Leone, Tanganyika, Kuwait, Goa, Algeria, Rwanda, Burundi, Uganda, Jamaica, Trinidad,
+    West New Guinea, the Sino-Indian war, the Cuban crisis (no war). AT: a map of the end of 1962, as R69b; the
+    nukes only where scripted (none after Nagasaki) to the track's end.
+  - [ ] R69e The world after 1962: R67c-d's blocs re-measured from the 1962 handover (tools/diag/afterTrack.ts).
 - [ ] R67 (after R69, the user's decision, ADR-982):
   - [ ] R67e Proxies: rivalry in the blocs' leaders' wars on others. Its AT set once R67b-d are measured.
   - [ ] R67f A Cold War for every game (the user's decision, ADR-981): the two-bloc rules in every game need a

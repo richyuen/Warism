@@ -55,7 +55,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   };
   let seats: number[] = [];
   let china = '';
-  // The Korean War's end (R62i3): on 28 July 1953, the day after the armistice and the track's end, no war; both Koreas.
+  // The Korean War's end (R62i3): on 28 July 1953, the day after the armistice, no war; both Koreas. The track runs on
+  // (to 1962 since R69a, ADR-984).
   let end53 = '';
   // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
   let axisPact = true;
@@ -120,7 +121,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
   expect(maps.length).toBe(12);
-  expect(end53).toBe('0 true 1 1');
+  expect(end53).toBe('0 false 1 1');
   expect(asia).toEqual(ASIA.map((x) => x[1]));
   expect(japFoes).toBe(0);
   expect(axisPact).toBe(false);
