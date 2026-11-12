@@ -179,4 +179,6 @@
   1960, Somalia, Cyprus, the Congo, the Sino-Soviet split; a 14th map.
 - R69d (ADR-987): 1961-62 in the timeline to the track's end: ten states born, Syria again, Goa, the Southern
   Cameroons, Albania's break, the Sino-Indian war; a 15th map.
+- R69e (ADR-988): from the 1962 handover the blocs' leaders never at war in 20 years and both blocs whole on three
+  seeds. Found: West Germany holds an arsenal at the track's end (R69f).
 

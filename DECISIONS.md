@@ -463,3 +463,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   states born 1961-62 living, Albania outside the Soviet bloc, no war; the two scripted strikes still the only nuclear
   ones to the track's end; the Eastern Bloc at the end without China or Albania.
 
+### ADR-988 · 2026-11-12 · accepted — R69e: the world after 1962 measured; R69 done
+- **Measured** (`tools/diag/afterTrack.ts`, seeds 1938, 1, 2, 20 years from the track's end on 31 December 1962): the
+  great powers USA, Britain, the Soviet Union, China, Japan, France; the blocs at the end the Eastern Bloc (8: the
+  Soviet Union, Poland, Czechoslovakia, Hungary, Romania, Bulgaria, Mongolia, East Germany) and NATO (14, West Germany
+  in it). No day in 20 years with their leaders on opposite sides of a war; both whole at year 20 (8 of 8, 14 of 14) on
+  every seed; 276-317 wars declared (from 1953: about 180, the new nations more to fight), one or two between members
+  of the two blocs (deterrence holds the sides the other bloc stands on, not every member's quarrel), great powers at
+  war in at most one year. R67c-d's rules hold from the new handover.
+- **Found:** West Germany holds an arsenal at the track's end (the nuclear powers USA, Britain, the Soviet Union,
+  France and West Germany); history's had none. An item of its own (R69f), not this one's.
+- The free world from 1953 (`freeWorld1938h`, left by `leaveTrack`) stays the test of the AI's own wars; from 1962 the
+  measure above (wars declared every year on each seed).
+

@@ -154,7 +154,11 @@ Batches 19 and 18 together (ADR-966).
     Uganda, Jamaica, Trinidad, Samoa, the Southern Cameroons, Albania's break, the Sino-Indian war. Not West New
     Guinea (the UN's at the end of 1962) or the Cuban crisis (no war). AT met: a map of 30 December 1962, as R69b; the
     nukes only where scripted to the track's end.
-  - [ ] R69e The world after 1962: R67c-d's blocs re-measured from the 1962 handover (tools/diag/afterTrack.ts).
+  - [x] R69e The world after 1962 (ADR-988): R67c-d's blocs re-measured from the 1962 handover: their leaders never
+    at war in 20 years, both blocs whole, on seeds 1938, 1, 2.
+  - [ ] R69f West Germany's arsenal (ADR-988): at the track's end West Germany holds nuclear weapons; history's had
+    none. Find how it came by them (research, a gift, a capture) and keep the arsenals of 1962 history's (the United
+    States, the Soviet Union, Britain, France). AT: on seed 1938 and seeds 1-5, no arsenal at the track's end but those.
 - [ ] R67 (after R69, the user's decision, ADR-982):
   - [ ] R67e Proxies: rivalry in the blocs' leaders' wars on others. Its AT set once R67b-d are measured.
   - [ ] R67f A Cold War for every game (the user's decision, ADR-981): the two-bloc rules in every game need a
