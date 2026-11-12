@@ -23,3 +23,6 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   `.cache/afterTrack_<seed>.sav.gz` and loads it from there after (R67a; ~10 min the first time).
 - `npx tsx tools/diag/fewNationWars.ts <N> <S0> [K] [Y]`: random worlds of N nations on K seeds, the day of each one's
   first war over Y years (R60d; ~25 s a seed at N = 3).
+- `npm run saves [-- <out> [last year]]`: 1938h's world on 1 January of each year of the track, gzipped, with
+  `years.json` (format, seed, each year's tick and hash), for a start from a year (R68a, ADR-983); the Pages workflow
+  builds them into `dist`; locally into `public/data/scenarios/1938h/start/` (gitignored). ~7 min, ~1 MB a year.

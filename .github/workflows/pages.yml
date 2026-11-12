@@ -21,6 +21,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      # The historical replay's yearly starts (ROADMAP R68a, ADR-983): built here, never committed.
+      - run: npm run saves -- dist/data/scenarios/1938h/start
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

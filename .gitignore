@@ -25,3 +25,5 @@ critic/*_dist/
 critic/*_olddist/
 critic/*_wtdist/
 critic/wt/
+# The replay's yearly starts (R68a, ADR-983): built at deploy, never committed.
+public/data/scenarios/1938h/start/

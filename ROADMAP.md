@@ -125,6 +125,18 @@ Batches 19 and 18 together (ADR-966).
   - R67e and R67f deferred to after R69 (the user's decision, ADR-982).
 - [ ] R68 **A start from any date of the replay.** A timeline slider in place of "World, 1938" and "World, 1938 —
   Historical"; continue the replay or free from there.
+  Split (ADR-983, the user's decisions: a start each 1 January, built at deploy, never committed):
+  - [x] R68a The yearly saves: `npm run saves` writes 1938h's world (its seed) on 1 January of each year of the track
+    to `public/data/scenarios/1938h/start/<year>.sav` (gzipped `Sim.save()`) and a `years.json`; gitignored; the Pages
+    workflow runs it into `dist`. AT: one save per year to the track's end; each loaded into a fresh world plays on 30
+    days to the hash of the unbroken run (a unit test on one year); the workflow's step.
+  - [ ] R68b A game from a year: `?scenario=1938h&year=Y&mode=replay|free` starts the world, fetches and loads year
+    Y's save, and for `free` ends the track by a command (`leaveTrack`, logged; `TrackEnded`, a reason of its own);
+    the second seed (`after`) the game's own. A missing or unfit save goes to `?failed=save`. AT: unit tests of the
+    command and the load; an e2e start from a year in each mode.
+  - [ ] R68c The card: "World, 1938 — Historical" offers the years of `years.json` (1938 alone without it) and the
+    choice to continue the replay or play free. AT: e2e of the card (year and mode reach the game); the title
+    screen's specs.
 - [ ] R69 **The replay past 1953**, to 1962 for now (the user's decision, ADR-959).
 - [ ] R67 (after R69, the user's decision, ADR-982):
   - [ ] R67e Proxies: rivalry in the blocs' leaders' wars on others. Its AT set once R67b-d are measured.

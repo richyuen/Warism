@@ -387,3 +387,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (a start from any date) and R69 (the replay to 1962): 1953-62's own proxy conflicts come with R69's timeline and
   will show what is missing. R67 stays open until they are done.
 
+### ADR-983 · 2026-11-12 · accepted (the user's decisions) — R68: yearly starts, built at deploy
+- **Asked** how a world at a chosen date is made (saved worlds shipped; fast-forward; both) and where saves live. A
+  saved world is about 1 MB gzipped; the replay runs about 26 s a simulated year in Node.
+- **The user:** a saved world of 1 January of each year of the replay (16 to 1953, 25 with R69), built by the deploy
+  workflow on each push to `main` and published with the site, never committed; the card picks a year, not a day
+  (no fast-forward): a player lets the replay run to the exact point wanted. On the card, with the year, the choice
+  of continuing the replay or playing free from it.
+

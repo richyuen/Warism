@@ -18,6 +18,7 @@
     "check:full": "npm run typecheck && npm run lint && npm test && npm run test:sweep && npm run build && npm run e2e",
     "bench": "tsx tools/bench/run.ts",
     "data": "tsx tools/data/run.ts",
+    "saves": "tsx tools/data/replaySaves.ts",
     "sim": "tsx tools/headless/cli.ts",
     "soak": "tsx tools/soak/cli.ts",
     "sweep": "tsx tools/sweep/run.ts",

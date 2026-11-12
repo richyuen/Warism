@@ -155,3 +155,9 @@
   other: 0 days of the leaders at war in 20 years, NATO and the Eastern Bloc whole, on three seeds. In every game they
   broke the sweep (5 of 10); the user kept them to the track's games, R67f for every game later.
 
+## 2026-11-12 — R68 split; R68a the replay's yearly starts (ADR-983)
+
+- The user: a start each 1 January, built at deploy, never committed; a year on the card, no day; the replay or free.
+  `npm run saves` (tools/data/replaySaves.ts): 16 saves 1938-53, ~1 MB each, 7 min; the Pages workflow runs it into
+  `dist`. A year's save loaded into a fresh world plays on to the unbroken run's hash (unit test).
+
