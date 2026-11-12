@@ -298,6 +298,11 @@ export const EventKind = {
    * place: its ring's middle, its point, else that nation's capital.
    */
   TrackEvent: 82,
+  /**
+   * A bloc's leader aids a nation of neither bloc at war with the other bloc (R67e, ADR-990): a = the giver, b = the
+   * aided, x/y = the aided's capital. Monthly while the war lasts; with volunteers, a division queued for the aided.
+   */
+  BlocAid: 83,
 } as const;
 
 /** Why a nation joined a war (`WarJoined`'s y). */

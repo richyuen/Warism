@@ -126,6 +126,7 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.NationBorn]: ['nation', 'nation'],
   // An event of the track by its name (ROADMAP R62j1): its number, the nation it names first.
   [EventKind.TrackEvent]: ['number', 'nation'],
+  [EventKind.BlocAid]: ['nation', 'nation'],
 };
 
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */

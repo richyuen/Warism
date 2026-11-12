@@ -1632,6 +1632,9 @@ production and research. `src/sim/ai/`.
 - **The blocs (the historical track's games only, after it, R67c-d, ADR-981):** the two strongest alliances led by a
   nation with an assured second strike (§6.4); rivals apart does not part them, and no nation of one declares war on
   a side the other stands on (the target, the overlord leading its defence, a guarantor of either).
+  Monthly, a bloc's leader aids a nation of neither bloc at war with a member of the other (R67e, ADR-990): AID_SHARE
+  (5 %) of its income in gold, and while that side is losing a division of volunteers of its men and gold; at most
+  AID_WARS (3) wars a month; a `BlocAid` row.
 
 ### 7.3 Operational AI
 `src/sim/ai/operational.ts`; every 6 hours, each nation at war with its army layer once a day

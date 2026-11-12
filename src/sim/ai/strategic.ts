@@ -36,12 +36,14 @@ import { Refusal } from '../../shared/commands';
 import { EventKind } from '../../shared/events';
 import { hash32, hashToUnit } from '../core/hash';
 import { makePeace, declareWar, whyNotWar } from '../systems/war';
+import { levyFormation } from '../systems/production';
 import { canJoin, LEAVE_LOYALTY, leaveAlliance, noWarAmong } from '../systems/alliances';
 import { blocLeader, relationHit, worstPariah } from '../systems/nuclear';
 import { transportGroupsAtPort } from '../systems/amphibious';
 import { keyAt, waterKeys } from '../systems/navalCombat';
 import { forceMen, seaHolder } from '../systems/seaControl';
 import { navOf, portSeaOf, seaOf, type World } from '../world';
+import { ATTACKERS } from '../wars';
 import { AiLayer, aiRuns } from './layers';
 
 export const STAGGER = 7;
@@ -403,7 +405,66 @@ export function strategicAi(world: World): void {
   if (isMonthStart(world.startDay, world.tick)) {
     coalition(world, nb, str, greats);
     rivalsApart(world, str, greats, blocs);
+    if (blocs.size === 2) blocAid(world, blocs);
   }
+}
+
+/** The share of its income a bloc's leader gives a month to each war it aids (R67e, ADR-990). */
+export const AID_SHARE = 0.05;
+/** The most wars a bloc's leader aids in a month. */
+export const AID_WARS = 3;
+/** The template of the volunteers, raised from the giver's men and gold for the aided. */
+const VOLUNTEERS = 'infantry_div';
+
+/**
+ * Rivalry by proxies (R67e, ADR-990; the user's choice of 2026-11-12): monthly, in a war where a side of nations of
+ * neither bloc faces a member of one, the other bloc's leader aids that side's first nation (its leader, else the
+ * first free one): AID_SHARE of its income in gold, and while the side is losing (its score) a division of
+ * volunteers, its men and price the giver's, queued for the aided. At most AID_WARS wars a giver a month, by war id; a
+ * giver at war with the aided, or not living, gives nothing. A `BlocAid` row each month it gives.
+ */
+export function blocAid(world: World, blocs: ReadonlySet<number>): void {
+  const nc = world.nations.cols;
+  const al = world.alliances;
+  const blocOf = (n: number): number => {
+    const a = al.allianceOf(n);
+    return a && blocs.has(a.id) ? a.id : 0;
+  };
+  const leader = new Map([...blocs].map((id) => [id, al.list.find((a) => a.id === id)!.leader]));
+  const given = new Map<number, number>();
+  for (const war of [...world.wars.list].sort((a, b) => a.id - b.id)) {
+    for (const s of [0, 1] as const) {
+      const [mine, theirs] = [war.sides[s], war.sides[1 - s]!];
+      const foe = theirs.map(blocOf).find((b) => b !== 0) ?? 0;
+      if (foe === 0 || mine.some((n) => blocOf(n) !== 0)) continue;
+      const aided = mine.find((n) => nc.living[n] === 1 && nc.overlord[n] === 0);
+      const giver = leader.get([...blocs].find((b) => b !== foe)!)!;
+      if (aided === undefined || nc.living[giver] !== 1 || world.wars.atWar(giver, aided) || (given.get(giver) ?? 0) >= AID_WARS) continue;
+      const gold = Math.min(AID_SHARE * Math.max(0, nc.income[giver]!), Math.max(0, nc.gold[giver]!));
+      if (gold <= 0) continue;
+      given.set(giver, (given.get(giver) ?? 0) + 1);
+      nc.gold[giver] = nc.gold[giver]! - gold;
+      nc.gold[aided] = nc.gold[aided]! + gold;
+      const losing = (s === ATTACKERS ? war.score : -war.score) < 0;
+      if (losing) volunteers(world, giver, aided);
+      world.out.emit(world.tick, EventKind.BlocAid, giver, aided, nc.capitalX[aided]!, nc.capitalY[aided]!);
+    }
+  }
+}
+
+/** A division of VOLUNTEERS for `aided`, its men and gold `giver`'s, queued as a levy is; false when it cannot pay. */
+function volunteers(world: World, giver: number, aided: number): boolean {
+  const rules = world.rules;
+  // By the track's ids (aid comes only in its games).
+  const t = world.track?.templates.get(VOLUNTEERS) ?? -1;
+  const rule = t >= 0 ? rules!.templates[t]! : undefined;
+  const nc = world.nations.cols;
+  if (!rule || nc.manpower[giver]! < rule.manpower || nc.gold[giver]! < rule.gold) return false;
+  nc.manpower[giver] = nc.manpower[giver]! - rule.manpower;
+  nc.gold[giver] = nc.gold[giver]! - rule.gold;
+  // Queued for the aided with its own men put back: the giver's men stand in for them.
+  nc.manpower[aided] = nc.manpower[aided]! + rule.manpower;
+  return levyFormation(world, aided, t) !== 0;
 }
 
 /** Monthly: unaligned neighbours of a hegemon (> HEGEMON_SHARE of world income) ally; and of the worst nuclear pariah (PLAN 6.5b). */

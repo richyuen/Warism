@@ -159,9 +159,11 @@ Batches 19 and 18 together (ADR-966).
   - [x] R69f West Germany's arsenal (ADR-988, done ADR-989: `bomb` events, none other while the track steers): at the track's end West Germany holds nuclear weapons; history's had
     none. Find how it came by them (research, a gift, a capture) and keep the arsenals of 1962 history's (the United
     States, the Soviet Union, Britain, France). AT: on seed 1938 and seeds 1-5, no arsenal at the track's end but those.
-- [ ] R67 (after R69, the user's decision, ADR-982):
-  - [ ] R67e Proxies: rivalry in the blocs' leaders' wars on others. Its AT set once R67b-d are measured.
-  - [ ] R67f A Cold War for every game (the user's decision, ADR-981): the two-bloc rules in every game need a
-    counterweight to the blocs that, never at war with each other, took the rest of the world (one nation over 40 %
-    of the world's income on 5 of the sweep's 10 seeds). AT to be set with the user.
+- [x] R67 (after R69, the user's decision, ADR-982):
+  - [x] R67e Proxies (ADR-990, the user's choice: aid to the other side): monthly, a bloc's leader aids a nation of
+    neither bloc at war with a member of the other bloc, with gold and, while it is losing, volunteers. AT: in 20 years
+    after the track on seeds 1938, 1, 2, each bloc's leader aids at least 3 nations; the leaders never at war, both
+    blocs whole; plain games unchanged (the pin).
+  - [x] R67f A Cold War for every game: closed (the user's decision of 2026-11-12, ADR-990): the bloc rules stay in the
+    historical track's games only.
 

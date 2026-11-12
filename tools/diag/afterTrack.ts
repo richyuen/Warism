@@ -9,6 +9,7 @@
  *
  * Daily, whether the leaders of the blocs at the track's end (alliances of 4 or more) are on opposite sides of a war.
  * `BLOCS=off|lasting|deterrence` switches R67c-d's rules off for a measure (`BLOC_PROBE`): off both, or that one.
+ * R67e: the months each bloc's leader aided a nation at war with the other bloc, and the nations it aided.
  *
  * Usage: npx tsx tools/diag/afterTrack.ts [seed = SEED_1938H] [years = 20] [out.json]
  */
@@ -69,6 +70,9 @@ interface Declared {
 const declared: Declared[] = [];
 // The leaders at the track's end, followed by name: their men and the formations they disbanded, monthly.
 const followed = [...gpAtEnd];
+// R67e (ADR-990): the months of aid by giver, and the nations each aided.
+const aidMonths = new Map<string, number>();
+const aidedBy = new Map<string, Set<string>>();
 const disbanded = new Map<number, number>();
 const men = (n: number): number => {
   let m = 0;
@@ -87,6 +91,11 @@ for (let y = 1; y <= years; y++) {
       const gp = greats();
       const gpBloc = new Set([...gp].map(blocOf).filter((b) => b !== 0));
       for (let i = 0; i < ev.length; i += 6) {
+        if (ev[i + 1] === EventKind.BlocAid) {
+          const [g, r] = [tag(ev[i + 2]!), tag(ev[i + 3]!)];
+          aidMonths.set(g, (aidMonths.get(g) ?? 0) + 1);
+          aidedBy.set(g, (aidedBy.get(g) ?? new Set()).add(r));
+        }
         if (ev[i + 1] === EventKind.FormationsDisbanded) disbanded.set(ev[i + 2]!, (disbanded.get(ev[i + 2]!) ?? 0) + ev[i + 3]!);
         if (ev[i + 1] !== EventKind.WarDeclared) continue;
         const [a, b] = [ev[i + 2]!, ev[i + 3]!];
@@ -120,6 +129,8 @@ for (let y = 1; y <= years; y++) {
 }
 writeFileSync(out, JSON.stringify({ seed, end, declared, yearly }, null, 1));
 const sum = (k: 'declared' | 'gp' | 'blocs'): number => yearly.reduce((s, r) => s + r[k], 0);
+process.stdout.write(`aid: ${[...aidMonths].map(([g, k]) => `${g} ${k} months to ${[...aidedBy.get(g)!].sort().join(' ')}`).join('; ') || 'none'}
+`);
 process.stdout.write(`days with the blocs' leaders on opposite sides: ${leadersAtWar}
 `);
 process.stdout.write(`done: ${years} years, declared ${sum('declared')}, GP ${sum('gp')}, blocs ${sum('blocs')}, years with great powers at war ${yearly.filter((r) => r.gpPairs.length > 0).length} → ${out}\n`);

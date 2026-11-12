@@ -489,3 +489,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (control on 1 December 1941 96.3 % right against 96.4, its strays 0.43 % against 0.52; the others the same or
   better); 1950-62 unchanged.
 
+### ADR-990 · 2026-11-12 · accepted (the user's decisions) — R67e: aid to the other side; R67f closed
+- **Asked** what rivalry by proxies should be (aid to the other side; the blocs pulling in the unaligned; none), and
+  whether R67f (the bloc rules in every game) goes on. **The user:** aid to the other side; R67f closed, the bloc
+  rules staying in the track's games only.
+- **The rule** (`blocAid`, `src/sim/ai/strategic.ts`): monthly, where the blocs are (the track's games after it), in
+  each war, by id, a side of nations of neither bloc facing a member of one is aided by the other bloc's leader: its
+  first free nation gets AID_SHARE (5 %) of the giver's income in gold, and while its side is losing (the war's score)
+  a division of volunteers (`infantry_div`, its men and price the giver's) queued for it. At most AID_WARS (3) wars a
+  giver a month; none to a nation the giver is at war with. A `BlocAid` row ("Cold War aid"). No state: it reads the
+  wars each month.
+- **Measured** (`tools/diag/afterTrack.ts`, seeds 1938, 1, 2, 20 years from the track's end; the handovers made again
+  after ADR-989): the United States aided 26-34 nations (163-244 months), the Soviet Union 47-59 (247-292), most at war
+  with NATO's colonial powers; the leaders never on opposite sides of a war; both blocs whole (8 of 8, 14 of 14);
+  279-298 wars declared. Plain games' path unchanged (no track, no blocs, no aid; the pin).
+- **Tests:** `tests/unit/blocAid1938h.test.ts` (the gold and its row; volunteers while losing; none to a foe, none
+  with one bloc).
+

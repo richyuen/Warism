@@ -185,3 +185,9 @@
   grant the bomb; while the track steers no other nation goes for it. At the end of 1962 the arsenals are history's
   on seeds 1938 and 1-5.
 
+## 2026-11-12 — R67e: aid to the other side; R67f closed (ADR-990)
+
+- The user: proxies are aid; R67f closed (the bloc rules in the track's games only). After the track a bloc's leader
+  aids nations at war with the other bloc's members, with gold and volunteers: the US 26-34 nations, the Soviet Union
+  47-59 in 20 years on three seeds; the leaders never at war; both blocs whole.
+
