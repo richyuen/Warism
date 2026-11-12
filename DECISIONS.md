@@ -381,3 +381,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Tests:** `tests/unit/blocs1938.test.ts` (deterred: the other bloc's leader, member and guarantee; not a nation of
   neither; none with one bloc). Plain games' path is the old one (no track: no blocs); the pin unchanged.
 
+### ADR-982 · 2026-11-12 · accepted (the user's decision) — R67e and R67f after R69
+- Asked what "rivalry by proxies" should be (aid to the other side of a bloc's war on an outsider; the blocs pulling
+  the unaligned in; or deferring), the user deferred R67e, and with it R67f (a Cold War for every game), to after R68
+  (a start from any date) and R69 (the replay to 1962): 1953-62's own proxy conflicts come with R69's timeline and
+  will show what is missing. R67 stays open until they are done.
+

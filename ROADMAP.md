@@ -122,11 +122,13 @@ Batches 19 and 18 together (ADR-966).
     10, NATO 13 of 13); plain games' code path unchanged (the sweep with the rules off 10 of 10); the pin unchanged.
   - [x] R67d Deterrence (ADR-981; as R67c): no nation of one of the two blocs declares on a side the other stands on.
     Met: no day in 20 years after the track on seeds 1938, 1, 2 with the blocs' leaders on opposite sides of a war.
-  - [ ] R67f A Cold War for every game (the user's decision, ADR-981): the two-bloc rules in every game need a
-    counterweight to the blocs that, never at war with each other, took the rest of the world (one nation over 40 %
-    of the world's income on 5 of the sweep's 10 seeds). AT to be set with the user.
-  - [ ] R67e Proxies: rivalry in the blocs' leaders' wars on others. Its AT set once R67b-d are measured.
+  - R67e and R67f deferred to after R69 (the user's decision, ADR-982).
 - [ ] R68 **A start from any date of the replay.** A timeline slider in place of "World, 1938" and "World, 1938 —
   Historical"; continue the replay or free from there.
 - [ ] R69 **The replay past 1953**, to 1962 for now (the user's decision, ADR-959).
+- [ ] R67 (after R69, the user's decision, ADR-982):
+  - [ ] R67e Proxies: rivalry in the blocs' leaders' wars on others. Its AT set once R67b-d are measured.
+  - [ ] R67f A Cold War for every game (the user's decision, ADR-981): the two-bloc rules in every game need a
+    counterweight to the blocs that, never at war with each other, took the rest of the world (one nation over 40 %
+    of the world's income on 5 of the sweep's 10 seeds). AT to be set with the user.
 
