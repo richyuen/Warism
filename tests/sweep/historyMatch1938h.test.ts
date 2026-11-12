@@ -66,6 +66,10 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   // R69d (ADR-987): on 30 December 1962, the day before the track's end, the states born 1961-62 living, Albania out
   // of the Soviet bloc, no war (the Sino-Indian war's ceasefire).
   let state62 = '';
+  // R71d (ADR-995): on 30 December 1967, the states of 1963-67 and the rebels holding land (the Viet Cong, the Pathet
+  // Lao, Biafra) living; Zanzibar, the Simba, Sarawak and the Dutch Indies gone; Rhodesia free; Malaysia, Tanzania and
+  // Rhodesia so named; the three wars of the end of 1967, the United States in South Vietnam's.
+  let state67 = '';
   // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
   let axisPact = true;
   const fleets = new Map<string, number>();
@@ -83,7 +87,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const { maps, skipped, nukes } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1962-12-31',
+    '1967-12-31',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
@@ -122,6 +126,17 @@ it('1938-39: the land owned as history had it, and the events fire on their date
           w.wars.list.length,
         ].join(' ');
       }
+      if (date === '1967-12-30') {
+        const nc = w.nations.cols;
+        state67 = [
+          ['KEN', 'MLW', 'ZAM', 'MLT', 'GAM', 'MDV', 'SGP', 'GUY', 'BOT', 'LES', 'BRB', 'SYE', 'VCG', 'PTL', 'BIA'].map((t) => nc.living[id(t)]).join(''),
+          ['ZAN', 'SIM', 'SAR', 'DEI'].map((t) => nc.living[id(t)]).join(''),
+          nc.overlord[id('SRH')],
+          ['MAL', 'TGK', 'SRH'].map((t) => w.identities.get(id(t)) ?? '-').join(','),
+          w.wars.list.length,
+          w.wars.between(id('USA'), id('VCG')) !== undefined,
+        ].join(' ');
+      }
       if (date === '1953-07-28') end53 = `${w.wars.list.length} ${w.track?.ended} ${w.nations.cols.living[id('KOR')]} ${w.nations.cols.living[id('PRK')]}`;
       if (date === '1950-06-01') {
         const nc = w.nations.cols;
@@ -156,7 +171,8 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(15);
+  expect(maps.length).toBe(17);
+  expect(state67).toBe('111111111111111 0000 0 MYS,TZA,RHO 3 true');
   expect(state62).toBe('11111111111 false 0');
   expect(state60).toBe('11111111111111 0 000000 false');
   expect(state56).toBe('111 00000 true true');

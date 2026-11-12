@@ -18162,6 +18162,879 @@
    "b": "RAJ",
    "terms": "white",
    "note": "China's ceasefire, and its withdrawal to the McMahon line"
+  },
+  {
+   "date": "1963-01-13",
+   "kind": "regime",
+   "nation": "TOG",
+   "aggression": 30,
+   "note": "Olympio killed: Togo's coup"
+  },
+  {
+   "date": "1963-02-08",
+   "kind": "regime",
+   "nation": "IRQ",
+   "aggression": 50,
+   "note": "The Ramadan Revolution: the Ba'ath take power in Iraq"
+  },
+  {
+   "date": "1963-03-01",
+   "kind": "born",
+   "nation": "VCG",
+   "from": [
+    "INC"
+   ],
+   "provinces": [
+    "VNM-507",
+    "VNM-506",
+    "VNM-502",
+    "VNM-504",
+    "VNM-500",
+    "VNM-444"
+   ],
+   "note": "The National Liberation Front holds the Mekong countryside"
+  },
+  {
+   "date": "1963-03-01",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "VCG"
+   ],
+   "defenders": [
+    "INC"
+   ],
+   "note": "The Viet Cong's war on South Vietnam"
+  },
+  {
+   "date": "1963-03-01",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "VCG"
+    ],
+    [
+     "INC"
+    ]
+   ],
+   "until": "1973-01-27"
+  },
+  {
+   "date": "1963-03-08",
+   "kind": "regime",
+   "nation": "SYR",
+   "aggression": 55,
+   "note": "The Ba'ath coup in Syria"
+  },
+  {
+   "date": "1963-03-31",
+   "kind": "regime",
+   "nation": "GUA",
+   "aggression": 25,
+   "note": "Peralta's coup in Guatemala"
+  },
+  {
+   "date": "1963-04-06",
+   "kind": "born",
+   "nation": "PTL",
+   "from": [
+    "LAO"
+   ],
+   "provinces": [
+    "LAO-3291",
+    "LAO-3288",
+    "LAO-3286"
+   ],
+   "note": "The coalition breaks: the Pathet Lao hold the Plain of Jars"
+  },
+  {
+   "date": "1963-04-06",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "PTL"
+   ],
+   "defenders": [
+    "LAO"
+   ],
+   "note": "The Laotian civil war"
+  },
+  {
+   "date": "1963-04-06",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "PTL"
+    ],
+    [
+     "LAO"
+    ]
+   ],
+   "until": "1973-02-21"
+  },
+  {
+   "date": "1963-05-01",
+   "kind": "annex",
+   "annexer": "IDN",
+   "target": "DEI",
+   "tell": "note",
+   "note": "West New Guinea to Indonesia"
+  },
+  {
+   "date": "1963-09-16",
+   "kind": "annex",
+   "annexer": "MAL",
+   "target": "SAR",
+   "tell": "note",
+   "note": "Malaysia: Malaya, Sarawak, Sabah and Singapore"
+  },
+  {
+   "date": "1963-09-16",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "MAL",
+   "from": [
+    "ENG"
+   ],
+   "provinces": [
+    "MYS-1186",
+    "MYS-4833"
+   ],
+   "note": "Sabah joins Malaysia"
+  },
+  {
+   "date": "1963-09-16",
+   "hour": 2,
+   "kind": "rename",
+   "nation": "MAL",
+   "as": "MYS",
+   "note": "Malaysia"
+  },
+  {
+   "date": "1963-09-17",
+   "kind": "war",
+   "attackers": [
+    "IDN"
+   ],
+   "defenders": [
+    "MAL"
+   ],
+   "note": "The Konfrontasi: Indonesia against Malaysia"
+  },
+  {
+   "date": "1963-09-17",
+   "hour": 1,
+   "kind": "join",
+   "nation": "ENG",
+   "beside": "MAL",
+   "against": "IDN",
+   "note": "Britain defends Malaysia in Borneo"
+  },
+  {
+   "date": "1963-09-17",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "IDN"
+    ],
+    [
+     "MAL",
+     "ENG"
+    ]
+   ],
+   "until": "1966-08-11"
+  },
+  {
+   "date": "1963-10-08",
+   "kind": "war",
+   "attackers": [
+    "ALG"
+   ],
+   "defenders": [
+    "FMO"
+   ],
+   "note": "The Sand War"
+  },
+  {
+   "date": "1963-10-08",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "ALG"
+    ],
+    [
+     "FMO"
+    ]
+   ],
+   "until": "1964-02-20"
+  },
+  {
+   "date": "1963-11-01",
+   "kind": "regime",
+   "nation": "INC",
+   "aggression": 40,
+   "note": "Diệm overthrown and killed in Saigon"
+  },
+  {
+   "date": "1963-11-18",
+   "kind": "regime",
+   "nation": "IRQ",
+   "aggression": 45,
+   "note": "Arif ousts the Ba'ath"
+  },
+  {
+   "date": "1963-12-10",
+   "kind": "born",
+   "nation": "ZAN",
+   "from": [
+    "TGK"
+   ],
+   "provinces": [
+    "TZA-3337",
+    "TZA-3383",
+    "TZA-3384",
+    "TZA-3381",
+    "TZA-3380"
+   ],
+   "note": "Zanzibar independent"
+  },
+  {
+   "date": "1963-12-12",
+   "kind": "born",
+   "nation": "KEN",
+   "from": [
+    "BEA"
+   ],
+   "countries": [
+    "KEN"
+   ],
+   "note": "Kenya independent"
+  },
+  {
+   "date": "1964-01-12",
+   "kind": "regime",
+   "nation": "ZAN",
+   "aggression": 40,
+   "note": "The Zanzibar Revolution: the sultan overthrown"
+  },
+  {
+   "date": "1964-02-20",
+   "kind": "peace",
+   "a": "ALG",
+   "b": "FMO",
+   "terms": "white",
+   "note": "The Bamako ceasefire: the Sand War ends"
+  },
+  {
+   "date": "1964-03-31",
+   "kind": "regime",
+   "nation": "BRA",
+   "aggression": 35,
+   "note": "Brazil's military coup"
+  },
+  {
+   "date": "1964-04-26",
+   "kind": "annex",
+   "annexer": "TGK",
+   "target": "ZAN",
+   "tell": "note",
+   "note": "Tanganyika and Zanzibar united"
+  },
+  {
+   "date": "1964-07-06",
+   "kind": "born",
+   "nation": "MLW",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "MWI"
+   ],
+   "note": "Malawi independent"
+  },
+  {
+   "date": "1964-08-05",
+   "kind": "born",
+   "nation": "SIM",
+   "from": [
+    "BCO"
+   ],
+   "provinces": [
+    "COD-1559",
+    "COD-1895",
+    "COD-1894"
+   ],
+   "note": "The Simba take Stanleyville"
+  },
+  {
+   "date": "1964-08-05",
+   "hour": 2,
+   "kind": "war",
+   "attackers": [
+    "SIM"
+   ],
+   "defenders": [
+    "BCO"
+   ],
+   "note": "The Simba rebellion"
+  },
+  {
+   "date": "1964-08-05",
+   "hour": 3,
+   "kind": "hold",
+   "sides": [
+    [
+     "SIM"
+    ],
+    [
+     "BCO"
+    ]
+   ],
+   "until": "1964-11-24"
+  },
+  {
+   "date": "1964-09-21",
+   "kind": "born",
+   "nation": "MLT",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "MLT"
+   ],
+   "note": "Malta independent"
+  },
+  {
+   "date": "1964-10-24",
+   "kind": "born",
+   "nation": "ZAM",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "ZMB"
+   ],
+   "note": "Zambia independent"
+  },
+  {
+   "date": "1964-10-29",
+   "kind": "rename",
+   "nation": "TGK",
+   "as": "TZA",
+   "note": "Tanzania"
+  },
+  {
+   "date": "1964-11-24",
+   "kind": "annex",
+   "annexer": "BCO",
+   "target": "SIM",
+   "tell": "note",
+   "note": "Dragon Rouge: Stanleyville retaken, the Simba broken"
+  },
+  {
+   "date": "1964-12-15",
+   "kind": "join",
+   "nation": "VIE",
+   "beside": "VCG",
+   "against": "INC",
+   "note": "North Vietnam's army in the South"
+  },
+  {
+   "date": "1964-12-15",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "VCG",
+   "from": [
+    "INC"
+   ],
+   "provinces": [
+    "VNM-486",
+    "VNM-478"
+   ],
+   "note": "The Viet Cong in the Central Highlands"
+  },
+  {
+   "date": "1964-12-15",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "VCG",
+     "VIE"
+    ],
+    [
+     "INC"
+    ]
+   ],
+   "until": "1973-01-27"
+  },
+  {
+   "date": "1965-02-18",
+   "kind": "born",
+   "nation": "GAM",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "GMB"
+   ],
+   "note": "The Gambia independent"
+  },
+  {
+   "date": "1965-03-08",
+   "kind": "join",
+   "nation": "USA",
+   "beside": "INC",
+   "against": "VCG",
+   "note": "The Marines land at Da Nang"
+  },
+  {
+   "date": "1965-03-08",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "VCG",
+     "VIE"
+    ],
+    [
+     "INC",
+     "USA"
+    ]
+   ],
+   "until": "1973-01-27"
+  },
+  {
+   "date": "1965-06-19",
+   "kind": "regime",
+   "nation": "ALG",
+   "aggression": 45,
+   "note": "Boumediène ousts Ben Bella"
+  },
+  {
+   "date": "1965-07-26",
+   "kind": "born",
+   "nation": "MDV",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "MDV"
+   ],
+   "note": "The Maldives independent"
+  },
+  {
+   "date": "1965-08-05",
+   "kind": "war",
+   "attackers": [
+    "PAK"
+   ],
+   "defenders": [
+    "RAJ"
+   ],
+   "note": "The Indo-Pakistani war of 1965"
+  },
+  {
+   "date": "1965-08-05",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "PAK"
+    ],
+    [
+     "RAJ"
+    ]
+   ],
+   "until": "1965-09-23"
+  },
+  {
+   "date": "1965-08-09",
+   "kind": "born",
+   "nation": "SGP",
+   "from": [
+    "MAL"
+   ],
+   "countries": [
+    "SGP"
+   ],
+   "note": "Singapore leaves Malaysia"
+  },
+  {
+   "date": "1965-09-01",
+   "kind": "join",
+   "nation": "KOR",
+   "beside": "INC",
+   "against": "VCG",
+   "note": "South Korea's divisions in Vietnam"
+  },
+  {
+   "date": "1965-09-01",
+   "hour": 1,
+   "kind": "join",
+   "nation": "SIA",
+   "beside": "INC",
+   "against": "VCG"
+  },
+  {
+   "date": "1965-09-01",
+   "hour": 2,
+   "kind": "join",
+   "nation": "PHI",
+   "beside": "INC",
+   "against": "VCG"
+  },
+  {
+   "date": "1965-09-01",
+   "hour": 3,
+   "kind": "hold",
+   "sides": [
+    [
+     "VCG",
+     "VIE"
+    ],
+    [
+     "INC",
+     "USA",
+     "KOR",
+     "SIA",
+     "PHI"
+    ]
+   ],
+   "until": "1973-01-27"
+  },
+  {
+   "date": "1965-09-23",
+   "kind": "peace",
+   "a": "PAK",
+   "b": "RAJ",
+   "terms": "white",
+   "note": "The ceasefire of 1965 (Tashkent, January 1966)"
+  },
+  {
+   "date": "1965-10-01",
+   "kind": "regime",
+   "nation": "IDN",
+   "aggression": 40,
+   "note": "The 30 September Movement crushed: Suharto takes the army"
+  },
+  {
+   "date": "1965-11-11",
+   "kind": "release",
+   "subject": "SRH",
+   "note": "Rhodesia declares its independence"
+  },
+  {
+   "date": "1965-11-11",
+   "hour": 1,
+   "kind": "rename",
+   "nation": "SRH",
+   "as": "RHO",
+   "note": "Rhodesia"
+  },
+  {
+   "date": "1965-11-24",
+   "kind": "regime",
+   "nation": "BCO",
+   "aggression": 40,
+   "note": "Mobutu takes power in the Congo"
+  },
+  {
+   "date": "1966-01-15",
+   "kind": "regime",
+   "nation": "NIG",
+   "aggression": 35,
+   "note": "Nigeria's first coup"
+  },
+  {
+   "date": "1966-02-23",
+   "kind": "regime",
+   "nation": "SYR",
+   "aggression": 60,
+   "note": "The neo-Ba'athist coup in Syria"
+  },
+  {
+   "date": "1966-02-24",
+   "kind": "regime",
+   "nation": "GCO",
+   "aggression": 20,
+   "note": "Nkrumah overthrown in Ghana"
+  },
+  {
+   "date": "1966-03-11",
+   "kind": "regime",
+   "nation": "IDN",
+   "aggression": 30,
+   "note": "Supersemar: Sukarno's power to Suharto"
+  },
+  {
+   "date": "1966-05-26",
+   "kind": "born",
+   "nation": "GUY",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "GUY"
+   ],
+   "note": "Guyana independent"
+  },
+  {
+   "date": "1966-06-28",
+   "kind": "regime",
+   "nation": "ARG",
+   "aggression": 35,
+   "note": "Onganía's coup in Argentina"
+  },
+  {
+   "date": "1966-07-29",
+   "kind": "regime",
+   "nation": "NIG",
+   "aggression": 45,
+   "note": "The counter-coup: Gowon"
+  },
+  {
+   "date": "1966-08-11",
+   "kind": "peace",
+   "a": "IDN",
+   "b": "MAL",
+   "terms": "white",
+   "note": "The Konfrontasi ends"
+  },
+  {
+   "date": "1966-09-30",
+   "kind": "born",
+   "nation": "BOT",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "BWA"
+   ],
+   "note": "Botswana independent"
+  },
+  {
+   "date": "1966-10-04",
+   "kind": "born",
+   "nation": "LES",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "LSO"
+   ],
+   "note": "Lesotho independent"
+  },
+  {
+   "date": "1966-11-30",
+   "kind": "born",
+   "nation": "BRB",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "BRB"
+   ],
+   "note": "Barbados independent"
+  },
+  {
+   "date": "1967-04-21",
+   "kind": "regime",
+   "nation": "GRE",
+   "aggression": 40,
+   "note": "The Colonels' coup in Greece"
+  },
+  {
+   "date": "1967-05-30",
+   "kind": "born",
+   "nation": "BIA",
+   "from": [
+    "NIG"
+   ],
+   "provinces": [
+    "NGA-2857",
+    "NGA-2862",
+    "NGA-2863",
+    "NGA-2843",
+    "NGA-2841",
+    "NGA-2844",
+    "NGA-2845",
+    "NGA-2847",
+    "NGA-2842"
+   ],
+   "note": "Biafra secedes"
+  },
+  {
+   "date": "1967-06-05",
+   "hour": 7,
+   "kind": "war",
+   "attackers": [
+    "ISR"
+   ],
+   "defenders": [
+    "EGY"
+   ],
+   "note": "The Six-Day War"
+  },
+  {
+   "date": "1967-06-05",
+   "hour": 8,
+   "kind": "join",
+   "nation": "TRJ",
+   "beside": "EGY",
+   "against": "ISR"
+  },
+  {
+   "date": "1967-06-05",
+   "hour": 9,
+   "kind": "join",
+   "nation": "SYR",
+   "beside": "EGY",
+   "against": "ISR"
+  },
+  {
+   "date": "1967-06-05",
+   "hour": 10,
+   "kind": "join",
+   "nation": "IRQ",
+   "beside": "EGY",
+   "against": "ISR"
+  },
+  {
+   "date": "1967-06-05",
+   "hour": 11,
+   "kind": "hold",
+   "sides": [
+    [
+     "ISR"
+    ],
+    [
+     "EGY",
+     "TRJ",
+     "SYR",
+     "IRQ"
+    ]
+   ],
+   "until": "1967-06-11"
+  },
+  {
+   "date": "1967-06-07",
+   "kind": "transfer",
+   "to": "ISR",
+   "from": [
+    "TRJ"
+   ],
+   "provinces": [
+    "WEB+00?"
+   ],
+   "note": "The West Bank and East Jerusalem taken"
+  },
+  {
+   "date": "1967-06-08",
+   "kind": "transfer",
+   "to": "ISR",
+   "from": [
+    "EGY"
+   ],
+   "provinces": [
+    "EGY-1558",
+    "EGY-1557",
+    "GAZ+00?"
+   ],
+   "note": "Gaza and the Sinai taken, to the canal"
+  },
+  {
+   "date": "1967-06-10",
+   "kind": "transfer",
+   "to": "ISR",
+   "from": [
+    "SYR"
+   ],
+   "provinces": [
+    "SYR-145",
+    "SYR-5261"
+   ],
+   "note": "The Golan Heights taken"
+  },
+  {
+   "date": "1967-06-10",
+   "hour": 18,
+   "kind": "peace",
+   "a": "ISR",
+   "b": "EGY",
+   "terms": "white",
+   "note": "The ceasefire: Israel holds the lands it took"
+  },
+  {
+   "date": "1967-07-06",
+   "kind": "war",
+   "attackers": [
+    "NIG"
+   ],
+   "defenders": [
+    "BIA"
+   ],
+   "note": "The Nigerian civil war"
+  },
+  {
+   "date": "1967-07-06",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "NIG"
+    ],
+    [
+     "BIA"
+    ]
+   ],
+   "until": "1970-01-12"
+  },
+  {
+   "date": "1967-10-04",
+   "kind": "transfer",
+   "to": "NIG",
+   "from": [
+    "BIA"
+   ],
+   "provinces": [
+    "NGA-2862"
+   ],
+   "note": "Enugu falls"
+  },
+  {
+   "date": "1967-10-18",
+   "kind": "transfer",
+   "to": "NIG",
+   "from": [
+    "BIA"
+   ],
+   "provinces": [
+    "NGA-2847"
+   ],
+   "note": "Calabar falls"
+  },
+  {
+   "date": "1967-11-30",
+   "kind": "born",
+   "nation": "SYE",
+   "from": [
+    "ENG"
+   ],
+   "provinces": [
+    "YEM-3497",
+    "YEM-332",
+    "YEM-157",
+    "YEM-3510",
+    "YEM-3511",
+    "YEM-336",
+    "YEM-334"
+   ],
+   "note": "South Yemen independent: the British leave Aden"
   }
  ],
  "maps": [
@@ -22503,6 +23376,90 @@
    "byProvince": {
     "IND-3265": "RAJ",
     "IND-2445": "RAJ"
+   },
+   "occupied": [
+    {
+     "by": "ENG",
+     "of": [
+      "ITA"
+     ],
+     "countries": [
+      "LBY"
+     ]
+    }
+   ]
+  },
+  {
+   "date": "1964-12-31",
+   "note": "Malaysia; Kenya, Tanzania, Malawi, Zambia and Malta independent; West New Guinea Indonesian; the Viet Cong in the Mekong and the Highlands, the Pathet Lao on the Plain of Jars; the Simba broken",
+   "byCountry": {
+    "KEN": "KEN",
+    "MWI": "MLW",
+    "ZMB": "ZAM",
+    "MLT": "MLT",
+    "IDN": "IDN",
+    "MYS": "MAL",
+    "SGP": "MAL"
+   },
+   "byProvince": {
+    "VNM-507": "VCG",
+    "VNM-506": "VCG",
+    "VNM-502": "VCG",
+    "VNM-504": "VCG",
+    "VNM-500": "VCG",
+    "VNM-444": "VCG",
+    "VNM-486": "VCG",
+    "VNM-478": "VCG",
+    "LAO-3291": "PTL",
+    "LAO-3288": "PTL",
+    "LAO-3286": "PTL"
+   },
+   "occupied": [
+    {
+     "by": "ENG",
+     "of": [
+      "ITA"
+     ],
+     "countries": [
+      "LBY"
+     ]
+    }
+   ]
+  },
+  {
+   "date": "1967-12-31",
+   "note": "After the Six-Day War: Sinai, Gaza, the West Bank and the Golan Israeli-held; Biafra without Enugu and Calabar; Singapore, Guyana, Botswana, Lesotho, the Gambia, Barbados, the Maldives and South Yemen independent",
+   "byCountry": {
+    "SGP": "SGP",
+    "GMB": "GAM",
+    "MDV": "MDV",
+    "GUY": "GUY",
+    "BWA": "BOT",
+    "LSO": "LES",
+    "BRB": "BRB",
+    "PSX": "ISR"
+   },
+   "byProvince": {
+    "NGA-2857": "BIA",
+    "NGA-2863": "BIA",
+    "NGA-2843": "BIA",
+    "NGA-2841": "BIA",
+    "NGA-2844": "BIA",
+    "NGA-2845": "BIA",
+    "NGA-2842": "BIA",
+    "YEM-3497": "SYE",
+    "YEM-332": "SYE",
+    "YEM-157": "SYE",
+    "YEM-3510": "SYE",
+    "YEM-3511": "SYE",
+    "YEM-336": "SYE",
+    "YEM-334": "SYE",
+    "EGY-1558": "ISR",
+    "EGY-1557": "ISR",
+    "GAZ+00?": "ISR",
+    "WEB+00?": "ISR",
+    "SYR-145": "ISR",
+    "SYR-5261": "ISR"
    },
    "occupied": [
     {

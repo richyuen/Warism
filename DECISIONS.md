@@ -558,3 +558,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
   what it leaves knew, PLAN 3.1a). The 1938-62 maps' lines and the pin unchanged (nothing is researched before its
   year).
 
+### ADR-995 · 2026-11-12 · accepted — R71d: 1963-67 in the replay
+- **Events** (`docs/research/1963-75.md`): the states of 1963-67 born of their rulers' land (Kenya, Zanzibar, Malawi,
+  Malta, Zambia, the Gambia, the Maldives, Singapore, Guyana, Botswana, Lesotho, Barbados, South Yemen); Malaysia
+  (Sarawak annexed, Sabah transferred, renamed), Zanzibar into Tanganyika, renamed Tanzania; Rhodesia released and
+  renamed; West New Guinea Indonesia's (the Dutch Indies annexed: a transfer by country left it 17 coastal cells of no
+  country). Rebels as nations (R71b): the Viet Cong in the Mekong, then the Highlands; the Pathet Lao on the Plain of
+  Jars; the Simba (born, held, annexed at Stanleyville); Biafra (Enugu and Calabar lost). Wars held (`hold`): the
+  Konfrontasi, the Sand War, Vietnam (North Vietnam beside the Viet Cong; the United States, South Korea, Thailand and
+  the Philippines beside the South), Laos, India and Pakistan in 1965, Nigeria and Biafra; the Six-Day War's
+  conquests as transfers before its white peace (a white peace gives occupied land back). 18 regime changes (Iraq,
+  Syria, Brazil, Indonesia, the Congo, Nigeria, Ghana, Argentina, Greece...).
+- **Found:** a nation at war with a foe's side cannot join it (`join` refuses: AtWar). A separate Gulf of Tonkin war
+  (the United States on North Vietnam, 1964) kept the United States out of the South's war; the Tonkin raids are left
+  out, the United States enters at Da Nang (8 March 1965), each joiner held from its day.
+- **Measured:** the maps of 31 December 1964 and 1967 99.4 % right, strays 0.13 and 0.12 %; the 1938-62 maps'
+  lines unchanged; nothing passed over; the 1967 state check (`state67`) as history; seeds 1-5 within the bars.
+  Identities Malaysia, Tanzania, Rhodesia with names and flags.
+

@@ -181,7 +181,7 @@ Batches 19 and 18 together (ADR-966).
   - [x] R71c Later techs (about 1955-75) as stat upgrades of the existing units, so the great powers keep an edge
     over the new states; no new unit. AT: the techs researched by 1975 by the great powers and not by most new
     states; the pin moved only as the techs explain, logged.
-  - [ ] R71d 1963-67 (Malaysia, Kenya, Tanzania, the Vietnam War's escalation, the Six-Day War...). AT: a map of the
+  - [x] R71d 1963-67 (Malaysia, Kenya, Tanzania, the Vietnam War's escalation, the Six-Day War...). AT: a map of the
     period's end matched as the earlier maps; each event on its date, seeds 1-5 within the bars.
   - [ ] R71e 1968-71 (Czechoslovakia, Biafra's end, Bangladesh, the Gulf states...). AT: as R71d.
   - [ ] R71f 1972-75 (Okinawa, the Paris Accords, Yom Kippur, the Portuguese colonies, Saigon, Cambodia, Laos, the

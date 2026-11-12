@@ -138,7 +138,7 @@ describe('invalid data fails with readable paths (PLAN 1.1)', () => {
 
   it('an identity a timeline gives has a flag in its scenario (ROADMAP R62i4)', () => {
     const real = data['scenarios/1938h/timeline.json'] as { events: unknown[] };
-    const tl = { ...real, events: [...real.events, { date: '1962-12-31', hour: 5, kind: 'rename', nation: 'FRG', as: 'ZZZ' }] };
+    const tl = { ...real, events: [...real.events, { date: '1975-12-31', hour: 5, kind: 'rename', nation: 'FRG', as: 'ZZZ' }] };
     expect(validateDataSet({ ...data, 'scenarios/1938h/timeline.json': tl })).toEqual(["scenarios/1938h/flags.json: flags: no flag for the identity 'ZZZ' its timeline gives"]);
   });
 
