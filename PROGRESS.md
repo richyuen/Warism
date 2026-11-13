@@ -245,3 +245,5 @@
 - R74c (R65-N5, ADR-1007): the 1944-75 names and capitals: Madrid and "Spain", Tuva and Newfoundland annexed,
   Bonn founded as West Germany's seat, "Sudan", British East Africa's last cells; no revival after the track for a
   nation history ended. The nine replay tests 10 of 10; `trackEndRevivals1938h.test.ts`.
+- R74d (R65-N1, ADR-1008): post-war regimes with traits: Spain 1939, Italy 1946, Japan 1947 (replay tests 10 of 10). No JAP or ITA war in
+  the first 30 days of six late free starts; no Japanese declaration in 10 years after the track on two seeds.

@@ -67,9 +67,15 @@ The critic runs again (focused) after the batch.
     revival (Manchukuo; Poland kept in an early end). Mongolia's 1947 `allianceLeave` taken out (the pact dissolves
     with the Soviet leave, Tuva gone); the reference maps of 1945, 1950 and 1964 given the changes.
     `tests/unit/trackEndRevivals1938h.test.ts`; the nine replay tests 10 of 10.
-  - [ ] R74d R65-N1: post-war regimes for the Axis: Japan (1947), Italy (1946), West Germany at its birth, Spain (1975),
+  - [x] R74d R65-N1: post-war regimes for the Axis: Japan (1947), Italy (1946), West Germany at its birth, Spain (1975),
     their aggression and traits a post-war democracy's. AT: `c65_freeburst.ts` from 1954, 1963 and 1975 on two seeds
     with no JAP>KOR in the first 30 days; `afterTrack` 37601 and 37603 with no JAP-USA war in 10 years.
+    Done (ADR-1008): a `regime` names its `traits` (in place of the nation's; checked against the traits file);
+    Spain's of 1939 (30, authoritarian), Italy's of 1946 (15, democratic), Japan's of 1947 (10, pacifist,
+    industrial, democratic), Spain's of 1975 its traits cleared; West Germany born at 10 already. Free starts of 1954,
+    1963 and 1975 on 5151 and 6161 (the critic's `c65_freeburst.ts` on starts built with it): no JAP or ITA
+    declaration in the first 30 days of any; `afterTrack` 37601 and 37603: no declaration of Japan's in 10 years,
+    no great power at war. Seen, for R74f/R75a: Italy (15) declares from the third year after the track on both.
   - [ ] R74e R65-N2: the blocs at the handover take in no neutral of the replay's and none of the other bloc's sphere;
     no war declared in the track's end hour. AT: `c65_endhours.ts` on four seeds with no join of a bloc by a nation
     outside it at the end, no declaration in the end hour; R67's bars kept.

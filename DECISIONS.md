@@ -719,3 +719,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   1947 taken out (its pact dissolves with the Soviet leave).
 - **Consequences.** Plain games unchanged (the pin). The revival rule touches every game of the track ended early.
   Free worlds after the track lose the revivals of the nations history ended (no Manchukuo, Mengjiang, Tuva).
+
+### ADR-1008 · 2026-11-13 · accepted — R74d: a regime names its traits; the Axis's post-war regimes
+- **Context.** Critic run 65's R65-N1: Japan and Italy kept their 1938 aggression (85, 80) and traits (militarist,
+  expansionist, naval tradition) to 1975; Japan declared on South Korea within days in 6 of 6 late free starts.
+- **Decision.** A `regime` event may name `traits`, which replace the nation's (`applyTraits`; the cross-file check
+  holds them to the traits file and its exclusions). New regimes: Spain 1939-04-01 (aggression 30, authoritarian:
+  neutral, worn out by its war), Italy 1946-06-02 (15, democratic), Japan 1947-05-03 (10, pacifist, industrial,
+  democratic); Spain's of 1975 clears its traits. West Germany is born at 10 with none (unchanged).
+- **Consequences.** Plain games unchanged. After the track Japan declares nothing in 10 years on two seeds; Italy,
+  at 15, still declares from the third year (for R74f and R75a).

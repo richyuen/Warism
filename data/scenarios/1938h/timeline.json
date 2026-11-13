@@ -720,6 +720,17 @@
    "note": "The Spanish State"
   },
   {
+   "date": "1939-04-01",
+   "hour": 2,
+   "kind": "regime",
+   "nation": "NSP",
+   "aggression": 30,
+   "traits": [
+    "authoritarian"
+   ],
+   "note": "Franco's Spain: worn out by its war, it stays out of the next"
+  },
+  {
    "date": "1939-04-12",
    "kind": "annex",
    "annexer": "ITA",
@@ -14961,6 +14972,17 @@
    "note": "The Italian Republic"
   },
   {
+   "date": "1946-06-02",
+   "hour": 1,
+   "kind": "regime",
+   "nation": "ITA",
+   "aggression": 15,
+   "traits": [
+    "democratic"
+   ],
+   "note": "Italy votes the monarchy out"
+  },
+  {
    "date": "1946-06-26",
    "kind": "allianceLeave",
    "nation": "CCP",
@@ -15031,6 +15053,18 @@
     ]
    ],
    "note": "Iceland: the foreign troops gone"
+  },
+  {
+   "date": "1947-05-03",
+   "kind": "regime",
+   "nation": "JAP",
+   "aggression": 10,
+   "traits": [
+    "pacifist",
+    "industrial",
+    "democratic"
+   ],
+   "note": "Japan's new constitution renounces war"
   },
   {
    "date": "1947-08-15",
@@ -20583,7 +20617,8 @@
    "kind": "regime",
    "nation": "NSP",
    "aggression": 20,
-   "note": "Franco dies: Juan Carlos king of Spain"
+   "note": "Franco dies: Juan Carlos king of Spain",
+   "traits": []
   },
   {
    "date": "1975-11-25",

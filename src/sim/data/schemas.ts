@@ -602,7 +602,8 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * efficiency, as at the start) becomes `aggression`; told by its note. A nation's government drives no rule, so it is
    * not set; its alignment is the `allianceJoin`, `allianceLeave` or `guarantee` of the same day.
    */
-  z.strictObject({ ...when, kind: z.literal('regime'), nation: tag, aggression: z.number().int().min(0).max(100), note: z.string() }),
+  // `traits` (R74d): the regime's traits in place of the nation's (post-war Japan and Italy are not militarist).
+  z.strictObject({ ...when, kind: z.literal('regime'), nation: tag, aggression: z.number().int().min(0).max(100), traits: z.array(id).max(4).optional(), note: z.string() }),
   /**
    * A new name and flag (R62i4): from now on the nation bears the identity `as` (`nation.<as>` and its flag), as Siam
    * Thailand, British India India, Communist China the People's Republic.
@@ -1092,6 +1093,13 @@ export function validateDataSet(files: Readonly<Record<string, unknown>>): strin
       if (meta && e.date < meta.startDate) errors.push(`${f}: events[${i}]: ${e.date} is before the scenario's start`);
       for (const x of timelineTags(e)) if (known.size > 0 && !known.has(x)) errors.push(`${f}: events[${i}]: unknown nation '${x}'`);
       if (t.end !== undefined && e.date > t.end) errors.push(`${f}: events[${i}]: ${e.date} is after the track's end`);
+      // A regime's traits (R74d) exist and are compatible, as a nation's.
+      if (e.kind === 'regime')
+        e.traits?.forEach((x, j) => {
+          const def = traits.get(x);
+          if (!def) errors.push(`${f}: events[${i}].traits[${j}]: unknown trait '${x}'`);
+          else for (const y of def.excludes) if (e.traits!.includes(y)) errors.push(`${f}: events[${i}].traits: '${x}' excludes '${y}'`);
+        });
     });
     let lastMap = '';
     (t.maps ?? []).forEach((m, i) => {

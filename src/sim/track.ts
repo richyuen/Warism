@@ -26,6 +26,8 @@ import { kmPerCell, project } from './data/projection';
 import { nuclearMask, START_GOLD } from './systems/revolts';
 import { relocateCapital } from './systems/capitals';
 import { spawnCity } from './scenarioEdit';
+import { applyTraits } from './traits';
+import { traitMask } from '../shared/traits';
 import { detonate } from './systems/nuclear';
 import { leaveWarsAgainst, makePeace, withPuppets } from './systems/war';
 import { applyCommand } from './tick';
@@ -819,6 +821,8 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       const nc = world.nations.cols;
       nc.aggression[n] = e.aggression;
       nc.ceStatic[n] = staticCe(e.aggression);
+      // And its traits, where it names them (R74d, critic run 65 R65-N1: Japan and Italy militarist to 1975).
+      if (e.traits) applyTraits(world, n, traitMask(e.traits));
       return Refusal.None;
     }
     case 'bomb': {
