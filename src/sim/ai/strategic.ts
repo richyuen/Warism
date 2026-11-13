@@ -348,6 +348,27 @@ export function deterred(world: World, n: number, t: number, blocs: ReadonlySet<
   return false;
 }
 
+/** The years of the historical focus after the track (R74e-f, R75a; `focusAfterTrack`). */
+export const FOCUS_YEARS = 3;
+/** The share of its declarations a nation makes on the focus's second day, rising from it to all at its end. */
+export const FOCUS_FLOOR = 0.4;
+
+/**
+ * The historical focus after the track (ROADMAP R75a, as Hearts of Iron IV's; critic run 65, R65-N2 and N3): the
+ * share of its usual declarations the AI makes, 1 in a game that has no track or has not ended it. None on the day the
+ * track ends (R65-N2: NATO's war on Yugoslavia in the end hour), then FOCUS_FLOOR, rising to 1 over FOCUS_YEARS: the
+ * wars 38 years of the track held back come by degrees, not at once (R65-N3). While it is under 1 the blocs are closed
+ * (`strategicAi`): no nation joins or founds an alliance a bloc's leader leads, so the world keeps the alignment the
+ * track gave it (R65-N2: India and Austria in the blocs within the hour).
+ */
+export function focusAfterTrack(world: World): number {
+  const t = world.track;
+  if (!t?.ended || !Number.isFinite(t.endedAt)) return 1;
+  const since = world.tick - t.endedAt;
+  if (since < 24) return 0;
+  return Math.min(1, FOCUS_FLOOR + ((1 - FOCUS_FLOOR) * since) / (FOCUS_YEARS * 8760));
+}
+
 /** Switches for measurement (R67c-d): the blocs' rules off. Never set in the game. */
 export const BLOC_PROBE: { lastingOff?: boolean; deterrenceOff?: boolean } = {};
 
@@ -378,24 +399,27 @@ export function strategicAi(world: World): void {
   const blocs = world.track?.ended && world.warheads.size > 0 ? blocsOf(world, str) : new Set<number>();
   // The great powers, once rivals part (PLAN 7.53b; none before: no join is refused for them).
   const greats = rivalsPart(world) ? greatPowers(world, str) : new Set<number>();
+  // The historical focus (R75a): declarations eased in, the blocs closed while it lasts.
+  const focus = focusAfterTrack(world);
+  const open = (a: { leader: number }): boolean => focus >= 1 || !blocLeader(world, a.leader);
   for (const n of actors) {
     const neighbours = [...(nb.get(n) ?? [])].sort((a, b) => a - b);
     // War.
     const wars = warsOf(world, n);
     if (wars < MAX_WARS && nc.aggression[n]! >= PACIFIST_BELOW && nc.gold[n]! >= 0 && nc.bankrupt[n] !== 1) {
       const best = warTarget(world, n, neighbours, withAllies(n), defence, wars, wars === 0 ? restlessOf(world, n) : 0, blocs);
-      if (best !== 0 && hashToUnit(hash32(world.seed, day, n, SALT_WAR)) < (DECLARE_P * nc.aggression[n]!) / 100) declareWar(world, n, best);
+      if (best !== 0 && hashToUnit(hash32(world.seed, day, n, SALT_WAR)) < (focus * DECLARE_P * nc.aggression[n]!) / 100) declareWar(world, n, best);
     }
     // Alliances against a threat.
     if (!al.allianceOf(n)) {
       const threat = neighbours.find((t) => nc.aggression[t]! >= THREAT_AGGRESSION && str[t]! > THREAT_RATIO * Math.max(1, str[n]!) && !world.wars.atWar(n, t));
       if (threat !== undefined && hashToUnit(hash32(world.seed, day, n, SALT_ALLY)) < ALLY_P) {
         // A great power does not join one that holds another (PLAN 7.53b: rivals apart).
-        const options = neighbours.map((m) => al.allianceOf(m)).filter((a) => a && !a.members.includes(threat) && canJoin(world, n, a) && !(greats.has(n) && a.members.some((m) => greats.has(m))));
+        const options = neighbours.map((m) => al.allianceOf(m)).filter((a) => a && open(a) && !a.members.includes(threat) && canJoin(world, n, a) && !(greats.has(n) && a.members.some((m) => greats.has(m))));
         const join = options.sort((a, b) => b!.members.reduce((s, m) => s + str[m]!, 0) - a!.members.reduce((s, m) => s + str[m]!, 0) || a!.id - b!.id)[0];
         if (join && al.join(n, join)) world.out.emit(world.tick, EventKind.AllianceJoined, n, join.id, NaN, NaN);
         else {
-          const partner = [...(nb.get(threat) ?? [])].sort((a, b) => a - b).find((m) => m !== n && nc.living[m] === 1 && !al.allianceOf(m) && nc.overlord[m] === 0 && !(greats.has(n) && greats.has(m)) && noWarAmong(world, [n, m]));
+          const partner = [...(nb.get(threat) ?? [])].sort((a, b) => a - b).find((m) => m !== n && nc.living[m] === 1 && !al.allianceOf(m) && nc.overlord[m] === 0 && !(greats.has(n) && greats.has(m)) && noWarAmong(world, [n, m]) && open({ leader: n }));
           const a = partner !== undefined ? al.create(n, [partner], 'alliance.defensive', 40) : null;
           if (a) for (const m of a.members) world.out.emit(world.tick, EventKind.AllianceJoined, m, a.id, NaN, NaN);
         }
@@ -403,7 +427,7 @@ export function strategicAi(world: World): void {
     }
   }
   if (isMonthStart(world.startDay, world.tick)) {
-    coalition(world, nb, str, greats);
+    coalition(world, nb, str, greats, open);
     rivalsApart(world, str, greats, blocs);
     if (blocs.size === 2) blocAid(world, blocs);
   }
@@ -468,7 +492,7 @@ function volunteers(world: World, giver: number, aided: number): boolean {
 }
 
 /** Monthly: unaligned neighbours of a hegemon (> HEGEMON_SHARE of world income) ally; and of the worst nuclear pariah (PLAN 6.5b). */
-function coalition(world: World, nb: Map<number, Set<number>>, str: Float64Array, greats: Set<number>): void {
+function coalition(world: World, nb: Map<number, Set<number>>, str: Float64Array, greats: Set<number>, open: (a: { leader: number }) => boolean): void {
   const nc = world.nations.cols;
   let total = 0;
   let top = 0;
@@ -478,16 +502,16 @@ function coalition(world: World, nb: Map<number, Set<number>>, str: Float64Array
     if (top === 0 || nc.income[n]! > nc.income[top]!) top = n;
   });
   const hegemon = top !== 0 && total > 0 && nc.income[top]! / total > HEGEMON_SHARE ? top : 0;
-  if (hegemon !== 0) coalitionAbout(world, nb, str, greats, hegemon);
+  if (hegemon !== 0) coalitionAbout(world, nb, str, greats, open, hegemon);
   const pariah = worstPariah(world);
-  if (pariah !== 0 && pariah !== hegemon) coalitionAbout(world, nb, str, greats, pariah, 'alliance.pariah');
+  if (pariah !== 0 && pariah !== hegemon) coalitionAbout(world, nb, str, greats, open, pariah, 'alliance.pariah');
 }
 
 /**
  * The unaligned neighbours of `top` form or join an alliance named `nameKey`: a coalition about a
  * hegemon, the first of its name; a league about a pariah (PLAN 6.5b), one that does not have it.
  */
-function coalitionAbout(world: World, nb: Map<number, Set<number>>, str: Float64Array, greats: Set<number>, top: number, nameKey = 'alliance.coalition'): void {
+function coalitionAbout(world: World, nb: Map<number, Set<number>>, str: Float64Array, greats: Set<number>, open: (a: { leader: number }) => boolean, top: number, nameKey = 'alliance.coalition'): void {
   const nc = world.nations.cols;
   const al = world.alliances;
   const members = [...(nb.get(top) ?? [])]
@@ -499,7 +523,7 @@ function coalitionAbout(world: World, nb: Map<number, Set<number>>, str: Float64
     if (existing) {
       // A great power does not join one that holds another (PLAN 7.53b).
       if (greats.has(m) && existing.members.some((x) => greats.has(x))) continue;
-      if (canJoin(world, m, existing) && al.join(m, existing)) world.out.emit(world.tick, EventKind.AllianceJoined, m, existing.id, NaN, NaN);
+      if (open(existing) && canJoin(world, m, existing) && al.join(m, existing)) world.out.emit(world.tick, EventKind.AllianceJoined, m, existing.id, NaN, NaN);
     }
   }
   if (!existing) {
@@ -511,7 +535,7 @@ function coalitionAbout(world: World, nb: Map<number, Set<number>>, str: Float64
       if (great) return false;
       return (great = true);
     });
-    if (free.length >= 2 && noWarAmong(world, free)) {
+    if (free.length >= 2 && noWarAmong(world, free) && open({ leader: free[0]! })) {
       const a = al.create(free[0]!, free.slice(1), nameKey, 50);
       if (a) for (const m of a.members) world.out.emit(world.tick, EventKind.AllianceJoined, m, a.id, NaN, NaN);
     }

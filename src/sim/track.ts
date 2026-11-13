@@ -123,6 +123,11 @@ export class Track {
   next = 0;
   /** Over for good: no event is applied again (ROADMAP R62j adds its ends at 1953 and at an intervention). */
   ended = false;
+  /**
+   * The tick it ended at (R74e-f, R75a: the historical focus after it, `focusAfterTrack`); -Infinity while it runs, or
+   * for a save from before R75a that ended it with no tick (the focus then over). Saved in `ended`'s slot.
+   */
+  endedAt = -Infinity;
   /** The seed every stream is derived from again when the track ends (R62d; 0: none rolled). */
   afterSeed = 0;
   /** Nations of the scenario not yet born (R62d): no dead nation, offered nowhere. */
@@ -375,7 +380,7 @@ export class Track {
 
   serialize(): Section[] {
     const unborn = [...this.unborn].sort((a, b) => a - b);
-    return [{ name: TRACK_SECTION, dtype: 'f64', data: Float64Array.from([this.hash, this.next, this.ended ? 1 : 0, this.afterSeed, ...unborn]) }];
+    return [{ name: TRACK_SECTION, dtype: 'f64', data: Float64Array.from([this.hash, this.next, !this.ended ? 0 : Number.isFinite(this.endedAt) ? 2 + this.endedAt : 1, this.afterSeed, ...unborn]) }];
   }
 
   /**
@@ -388,10 +393,13 @@ export class Track {
     if (!s) {
       this.next = this.ticks.filter((t) => t < tick).length;
       this.ended = false;
+      this.endedAt = -Infinity;
       return;
     }
     this.next = s[1]!;
-    this.ended = s[2] === 1;
+    // 0 running; 1 ended, with no tick (a save from before R75a); 2 + the tick it ended at.
+    this.ended = s[2]! >= 1;
+    this.endedAt = s[2]! >= 2 ? s[2]! - 2 : -Infinity;
     this.afterSeed = s[3]!;
     this.unborn = new Set(Array.from(s.subarray(4)));
     if (s[0] !== this.hash && !this.ended) this.changed = true;
@@ -716,6 +724,7 @@ export function endTrack(world: World, why: number): void {
   const t = world.track;
   if (!t || t.ended) return;
   t.ended = true;
+  t.endedAt = world.tick;
   t.changed = false;
   // A nation history ended for good comes back no more (R74c, critic run 65: Manchukuo revived in 1979): dead at the
   // end, and no event of the rest of the timeline brings it back.

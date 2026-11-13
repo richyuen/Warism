@@ -247,3 +247,6 @@
   nation history ended. The nine replay tests 10 of 10; `trackEndRevivals1938h.test.ts`.
 - R74d (R65-N1, ADR-1008): post-war regimes with traits: Spain 1939, Italy 1946, Japan 1947 (replay tests 10 of 10). No JAP or ITA war in
   the first 30 days of six late free starts; no Japanese declaration in 10 years after the track on two seeds.
+- R74e, R74f, R75a (ADR-1009): a historical focus after the track: no declaration on the end's day, then 40 % rising to
+  all over three years, the blocs closed meanwhile. End hours on four seeds: no bloc join, no declaration; late free
+  starts' first month 0.5-0.9 times plain 1938 per nation; years 1-2 after the end 1.25 times an ordinary opening.

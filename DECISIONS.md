@@ -729,3 +729,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
   democratic); Spain's of 1975 clears its traits. West Germany is born at 10 with none (unchanged).
 - **Consequences.** Plain games unchanged. After the track Japan declares nothing in 10 years on two seeds; Italy,
   at 15, still declares from the third year (for R74f and R75a).
+
+### ADR-1009 · 2026-11-13 · accepted — R74e, R74f, R75a: a historical focus after the track
+- **Context.** Critic run 65's R65-N2 (India, Austria, Kuwait, Iran and Pakistan in the blocs within hours of the end;
+  NATO's war on Yugoslavia in the end hour), R65-N3 (a free game from 1963 or 1975 opening at 1.4-2.6 times plain
+  1938's declarations per nation; 83-98 in the year after the end) and its idea from Hearts of Iron IV (the AI keeps
+  its history's alignment for a while after the script).
+- **Decision.** `focusAfterTrack` (`src/sim/ai/strategic.ts`): after the track ends (by its date, an intervention or
+  a free start) the strategic AI declares no war that day, then FOCUS_FLOOR (0.4) of its usual chance, rising to all
+  over FOCUS_YEARS (3); while it is under 1 no nation joins or founds an alliance a bloc's leader leads
+  (`blocLeader`). The end's tick is kept in the track's section, in the slot of `ended` (2 + the tick; 1 in an older
+  save, read as the focus over): no new state format, the starts to 1975 hash as before.
+- **Read.** As each item's line in ROADMAP. Plain games unchanged (the pin); the nine replay tests green.
+- **Consequences.** A free game from a late year is quieter for its first years; the blocs grow by none for three
+  years after the end, and then by the strategic AI's usual joins.

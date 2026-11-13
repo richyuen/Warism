@@ -76,12 +76,20 @@ The critic runs again (focused) after the batch.
     1963 and 1975 on 5151 and 6161 (the critic's `c65_freeburst.ts` on starts built with it): no JAP or ITA
     declaration in the first 30 days of any; `afterTrack` 37601 and 37603: no declaration of Japan's in 10 years,
     no great power at war. Seen, for R74f/R75a: Italy (15) declares from the third year after the track on both.
-  - [ ] R74e R65-N2: the blocs at the handover take in no neutral of the replay's and none of the other bloc's sphere;
+  - [x] R74e R65-N2: the blocs at the handover take in no neutral of the replay's and none of the other bloc's sphere;
     no war declared in the track's end hour. AT: `c65_endhours.ts` on four seeds with no join of a bloc by a nation
     outside it at the end, no declaration in the end hour; R67's bars kept.
-  - [ ] R74f R65-N3: a free game from a late year opens without a burst of wars (the 38 years of held declarations
+    Done with R75a (ADR-1009): `c65_endhours.ts` on 999, 5151, 6161, 31337 (from a 1975 start built with it): no
+    join of NATO (9) or the Eastern Bloc (8) and no declaration in the end hours; the joins there found new pacts
+    (India with Afghanistan, Mexico with Cuba). R67: both blocs whole and their leaders never at war in 10 years on
+    1938, 1, 2; each leader aids 25 nations or more.
+  - [x] R74f R65-N3: a free game from a late year opens without a burst of wars (the 38 years of held declarations
     at once). AT: the first 30 days' declarations per living nation from 1963 and 1975 on two seeds at most 1.2 times
     plain 1938's (now 1.4-2.6); the declarations of the years after the track's own end within the sweep's band.
+    Done with R75a (ADR-1009): the first 30 days per living nation 0.50 times plain 1938's from 1963 (4 and 4 of 125)
+    and 0.51 and 0.92 from 1975 (5 and 9 of 154; plain 7 and 6 of 102). After the track's end, on 1938, 1, 2: 65, 66,
+    57 declared in the first year (the critic's 83-98), 38, 32, 39 in the second, 11-31 a year after; the first two
+    years 1.25 times an ordinary 1938 game's per nation, within ADR-944's band (its first quarter up to 40 % busier).
   - [ ] R74g R65-N4: D-Day and Stalingrad fought, not painted: German formations in France and an Allied army that
     lands in June 1944; Soviet and Axis armies at Stalingrad in November-December 1942 (R66's rules, ADR-969). AT:
     `trackFronts` on two seeds with both sides engaged at both stages' hours; the shots of
@@ -91,12 +99,15 @@ The critic runs again (focused) after the batch.
     air war. AT: each seen fixed in its probe, or the reason it is left in the item.
 
 - [ ] R75 **Run 65's ideas from other games** (the user's decision of 2026-11-12, ADR-1006).
-  - [ ] R75a A historical focus after the track (as Hearts of Iron IV's): for some years after the replay ends (by its
+  - [x] R75a A historical focus after the track (as Hearts of Iron IV's): for some years after the replay ends (by its
     date or a free start), each nation's AI keeps the alignment history gave it (its bloc or its non-alignment, its
     allies and its foes), easing into its own choices, instead of choosing afresh in the first hour. With R74e and
     R74f. AT: in the 10 years after the track on seeds 1938, 1, 2, no nation joins the bloc it was not in at the end
     in the first 3 years, and the year's declarations ease from the end's level into the sweep's band; plain games
     unchanged (the pin).
+    Done (ADR-1009): `focusAfterTrack`: none on the end's day, then 40 % of its declarations rising to all over three
+    years, the blocs closed while it lasts; the end's tick kept in the track's section. In 3 years after the end on
+    1938, 1, 2: no join of either bloc, both with their 1975 members. `tests/unit/trackFocus1938h.test.ts`.
   - [ ] R75b The start card names the year's great powers (as Paradox's bookmarks; the year's map is R74b): the
     strongest nations of each start, from `years.json`. AT: the card at 1938, 1960 and 1975 lists its great powers
     (at 1960 the United States and the Soviet Union first); `replayYear1938h.spec.ts`.
