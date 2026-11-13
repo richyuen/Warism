@@ -127,6 +127,11 @@ function attackTable(units: readonly UnitRule[]): Float64Array {
  * empty, 4 % of year 1.
  */
 const scratch = { full: new Uint8Array(0), head: new Int32Array(0), next: new Int32Array(0), key: new Int32Array(0) };
+/** `findBattles`' nation pairs, kept between calls (not state; R72c): `highWater`² of them, 0 at a call's start. */
+let relations = new Uint8Array(0);
+const NOT_AT_WAR = 1;
+const FIGHT = 2;
+const HELD = 3;
 
 /** Groups formations into battles (ascending ids); sets `engaged`. */
 export function findBattles(world: World): number[][] {
@@ -193,11 +198,35 @@ export function findBattles(world: World): number[][] {
   const cw = world.cells.w;
   /** A formation's cell (the stage windows' areas, R66d). */
   const cellOf = (i: number): number => Math.floor(c.y[i]!) * cw + ((Math.floor(c.x[i]!) % cw) + cw) % cw;
+  // R72c: what two nations are to each other in this call (it changes no war, hold or overlord), by nation pair: 0 not
+  // yet asked, NOT_AT_WAR, FIGHT, or HELD (a hold stands: asked again by the cells, `holdsAt`). Was asked of each pair
+  // of formations, most of a front's pairs of one nation or of allies.
+  const hw = world.nations.highWater;
+  if (relations.length < hw * hw) relations = new Uint8Array(hw * hw);
+  else relations.fill(0, 0, hw * hw);
+  const rel = relations;
+  const contact = world.atSize(CONTACT_CELLS);
+  // A pair farther than this is out of contact whatever `sqrt` rounds to (the margin); nearer, `dist` decides as before.
+  const far2 = contact * contact * (1 + 1e-9);
+  const looping = world.settings.loopingMap;
   const pair = (a: number, b: number): void => {
-    // A held front (ROADMAP R62f2): at war, they do not fight, but where a stage's window lifts it (R66d).
-    if (b <= a || !world.wars.atWar(c.nation[a]!, c.nation[b]!) || (world.holds(c.nation[a]!, c.nation[b]!) && world.holdsAt(c.nation[a]!, c.nation[b]!, cellOf(a), cellOf(b)))) return;
+    if (b <= a) return;
+    const ma = c.nation[a]!;
+    const mb = c.nation[b]!;
+    let r = rel[ma * hw + mb]!;
+    if (r === 0) {
+      // A held front (ROADMAP R62f2): at war, they do not fight, but where a stage's window lifts it (R66d).
+      r = !world.wars.atWar(ma, mb) ? NOT_AT_WAR : world.holds(ma, mb) ? HELD : FIGHT;
+      rel[ma * hw + mb] = r;
+      rel[mb * hw + ma] = r;
+    }
+    if (r === NOT_AT_WAR || (r === HELD && world.holdsAt(ma, mb, cellOf(a), cellOf(b)))) return;
+    let dx = Math.abs(c.x[a]! - c.x[b]!);
+    if (dx > w / 2 && looping) dx = w - dx;
+    const dy = c.y[a]! - c.y[b]!;
+    if (dx * dx + dy * dy > far2) return;
     const d = dist(world, c.x[a]!, c.y[a]!, c.x[b]!, c.y[b]!);
-    if (d > world.atSize(CONTACT_CELLS)) return;
+    if (d > contact) return;
     // Each one's nearest enemy in contact (the lower id on a tie): where its block deploys (`deployOf`).
     const na = near.get(a);
     if (!na || d < na[1] || (d === na[1] && b < na[0])) near.set(a, [b, d]);

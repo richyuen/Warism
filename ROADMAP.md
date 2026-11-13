@@ -207,5 +207,9 @@ Batches 19 and 18 together (ADR-966).
     Done: `tests/unit/trackHeld.test.ts` (each hour a hold begins or ends and each month, 75 nations' pairs with
     puppets; red with the cache's `next` key taken out); the 38 years' hashes the same; the whole build 383.1 →
     376.6 s (bundles, swapped pairs), −1.7 %, 1952-54 (Korea's holds) −12 to −16 %. R72's bar is read after R72c.
-  - [ ] R72c What the profile of the bundle shows next (`findBattles`, the fire's loop), re-profiled after R72b.
+  - [x] R72c What the profile of the bundle shows next (`findBattles`, the fire's loop), re-profiled after R72b.
+    Done: the bundle's profile (R72b): `findBattles` 19 % inclusive, its `pair` 12 % (the war and hold of each pair of
+    formations); then air strikes 10 %, supply 11 %, movement 10 %, territory 7.5 %. `findBattles` asks the war and
+    hold once a nation pair a call (`relations`), and leaves a pair clearly out of reach before the `sqrt` (a margin of
+    1e-9; nearer, `dist` decides as before). The 38 years' hashes the same; the build 372.5 → 359.7 s (swapped pairs).
 

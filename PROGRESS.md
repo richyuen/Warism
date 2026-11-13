@@ -220,3 +220,6 @@
 - R72b: `Track.held` and `frozen` from the holds standing at the tick, found once a tick (`standing`), no closure a
   call; `tests/unit/trackHeld.test.ts` against the old loop. Hashes the same; the build −1.7 % (1952-54 −12 to −16 %):
   without tsx's `__name` the old loop was cheap. Mends R62f2's rule (ADR-1001's profile); no ADR (ADR-914).
+- R72c: `findBattles` asks the war and the hold once a nation pair a call, not each pair of formations, and leaves a
+  pair clearly out of reach before the `sqrt`. Hashes the same; the build −3.4 % (372.5 → 359.7 s, swapped pairs).
+  Mends PLAN 7.1d's pairing (no rule changed); no ADR (ADR-914).
