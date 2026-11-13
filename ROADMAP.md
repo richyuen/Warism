@@ -100,7 +100,7 @@ batch (ADR-1016, the user's decision; ADR-916).
     desperation; 3 × 22 years (37501, 37503, 37507) launches 8/5/5, detonations 5/3/4 alike with and without it, and
     the case unchanged; not kept (no case it changes).
 
-- [ ] R77 **A stage's own window of fighting (`fightDays`)** (the user, 2026-11-13, on R76d's D-Day: "why does the hold
+- [x] R77 **A stage's own window of fighting (`fightDays`)** (the user, 2026-11-13, on R76d's D-Day: "why does the hold
   need to be 7 days in all cases?"; in Batch 21, before the release, at the user's word). Every `occupy` and `transfer` stage lifts its hold for FIGHT_DAYS (7) before it (ADR-975),
   whatever the battle: a two-day crossing and a months-long siege alike; D-Day's stage had to move to 12 June for its
   window to open at the landing (ADR-1018). An optional `fightDays` on a stage (schema, `Track.openStages`, the timeline
@@ -109,6 +109,13 @@ batch (ADR-1016, the user's decision; ADR-916).
   `trackFronts` reads each stage's own window (its samples 4 a day over it); on 1938, 37701 and 38701 D-Day both engaged
   in at least a third of its samples, Uranus at its hour as R76d; on 1938 the large land fronts both engaged at the
   stage's hour ≥ 9 (R66's bar); the nine replay tests green; plain games and seed 99's pin unchanged (no track).
+  Done (ADR-1021): `fightDays` (1-120) on `occupy` and `transfer` (schema), `fightDaysOf`, `Track.openStages` looking as
+  far as the timeline's longest window; `trackFronts` reads each stage's own window. Normandy's beachhead stage on 25
+  July (Cobra), `fightDays` 50, its window from the landing. `trackFronts` 1938 / 37701 / 38701: D-Day both engaged 144,
+  80, 78 of 200 samples (72, 40, 39 %); the landed divisions worn from 52k to 5-11k by 25 July, the Germans 13-21k
+  lost, no cell taken by the fighting (the stage gives the beachhead); Uranus at its hour 5/8, 24/9, 10/8 as R76d; the
+  whole range on 1938 10 of 23 large land fronts (bar 9). `trackFight1938h.test.ts` 5 of 5 (3, 10 and 7 days; red on
+  the old code); the nine replay tests green; pin unchanged.
 
 ## Batch 20 — run 65's findings (focused, on `5ee3e035`: 1 blocking issue, every dimension at its bar)
 

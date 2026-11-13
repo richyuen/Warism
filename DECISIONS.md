@@ -870,3 +870,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Tried, not kept.** No first use more likely stopped than delivered: it broke PLAN 7.18i's Poland; with extreme
   desperation exempt it changed nothing, on the case or in 3 × 22 years of plain 1938 (launches and detonations equal
   with and without it). No rule is added for a case the rules intend; R76g's AT allows the case answered.
+
+### ADR-1021 · 2026-11-13 · accepted — R77: a stage's own window of fighting
+- **Context.** The user, on R76d's D-Day: "why does the hold need to be 7 days in all cases?" ADR-975's window was one
+  length, FIGHT_DAYS, for a crossing and a months-long campaign alike; D-Day's stage had been moved to 12 June so its
+  week opened at the landing. Moved into Batch 21 at the user's word.
+- **Decision.** An optional `fightDays` (1-120 days) on an `occupy` or `transfer` stage; FIGHT_DAYS (7) when absent.
+  ADR-977's outnumbered rule unchanged; the `kept` orders still free their formations FIGHT_DAYS before their date.
+  First use: Normandy's beachhead on 25 July, the window of 50 days from the landing.
+- **Read.** As ROADMAP's R77 line. Without reinforcements the six landed divisions are worn to 5-11k over the seven
+  weeks; arrivals for the Normandy build-up would be the next step if the critic asks for the beachhead to be won.
+  Track-only data: plain games and the pin unchanged.

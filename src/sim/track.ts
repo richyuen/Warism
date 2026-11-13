@@ -86,6 +86,11 @@ function outnumbered(world: World, s: OpenStage): boolean {
   return mine < theirs * FIGHT_OUTNUMBERED;
 }
 
+/** A stage's window of fighting in days (R77): its own `fightDays`, else FIGHT_DAYS. */
+export function fightDaysOf(e: { fightDays?: number | undefined }): number {
+  return e.fightDays ?? FIGHT_DAYS;
+}
+
 /** Whether `n` is of `by`'s side: `by`, or an ally in its war. */
 function takerSide(world: World, n: number, by: number): boolean {
   return n === by || world.wars.sameSide(n, by);
@@ -172,6 +177,8 @@ export class Track {
   private readonly objectiveAt: readonly { i: number; until: number }[];
   /** The stages open to fighting at a tick (R66d; derived, not state). */
   private open: { tick: number; w: number; list: OpenStage[] } | null = null;
+  /** The longest window of fighting of the timeline's stages, in days (R77): how far ahead `openStages` looks. */
+  private readonly longestWindow: number;
   /** The `occupy` stages' areas at a map's width, by event index (geometry; derived, not state). */
   private readonly areas = new Map<number, { w: number; x0: number; x1: number; y0: number; y1: number; ring: ReadonlySet<number> }>();
   /** Their places in cells and radii² at a map's width (derived, not state). */
@@ -190,6 +197,7 @@ export class Track {
     // Germany and the United States, the wars of 1945-50) freezes no war in progress (`frozen`, R66b).
     const warsOn = (date: string): string[][] =>
       file.events.flatMap((w) => (w.date !== date ? [] : w.kind === 'war' ? [[...w.attackers, ...w.defenders]] : w.kind === 'join' ? [[w.nation, w.beside, w.against]] : []));
+    this.longestWindow = Math.max(FIGHT_DAYS, ...this.events.map((e) => (e.kind === 'occupy' || e.kind === 'transfer' ? fightDaysOf(e) : 0)));
     this.holdAt = file.events.flatMap((e, i) =>
       e.kind === 'hold'
         ? [
@@ -283,7 +291,10 @@ export class Track {
     return false;
   }
 
-  /** The `occupy` stages within FIGHT_DAYS of `world.tick` not yet applied, with their areas (derived, not state). */
+  /**
+   * The `occupy` stages within their window of `world.tick` not yet applied (FIGHT_DAYS, or the stage's own `fightDays`,
+   * R77), with their areas (derived, not state).
+   */
   private openStages(world: World): readonly OpenStage[] {
     if (this.ended || TRACK_PROBE.fightOff) return [];
     const tick = world.tick;
@@ -291,10 +302,11 @@ export class Track {
     const list: OpenStage[] = [];
     for (let i = this.next; i < this.events.length; i++) {
       const due = this.ticks[i]!;
-      if (due - tick > FIGHT_DAYS * 24) break;
+      if (due - tick > this.longestWindow * 24) break;
       const e = this.events[i]!;
       // An `occupy`, or a `transfer` (R66e, ADR-978: the civil war in China): its `to` the taker of its `from`'s land.
       if (e.kind !== 'occupy' && e.kind !== 'transfer') continue;
+      if (due - tick > fightDaysOf(e) * 24) continue;
       // A transfer of land named by its codes (R69b): a handover, no fighting.
       if (!e.ring) continue;
       const s = e.kind === 'occupy' ? this.area(world, i, e.by, e.of, e.ring) : this.area(world, i, e.to, e.from, e.ring);

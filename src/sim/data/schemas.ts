@@ -497,6 +497,11 @@ export type FlagsFile = { flags: Record<string, FlagSpec> };
 // ── the historical track's timeline (data/scenarios/<id>/timeline.json, ROADMAP R62b, ADR-919) ──
 
 /** An event's when: its day, and the hour of that day (0 when not given); a note of what it is, for readers. */
+/**
+ * A stage's own window of fighting (ROADMAP R77, the user's question of 2026-11-13: "why does the hold need to be 7
+ * days in all cases?"): the days before it its area's hold is lifted (`Track.openStages`); FIGHT_DAYS when absent.
+ */
+const fightDays = z.number().int().min(1).max(120).optional();
 const when = { date, hour: z.number().int().min(0).max(23).optional(), note: z.string().optional() };
 const tags = z.array(tag).min(1);
 /**
@@ -536,13 +541,13 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    * as `ownership.json`'s regions: lon/lat, a cell taken when its centre is inside. Or the land of `countries` and
    * `provinces` (R69b): a handover, with no window of fighting.
    */
-  z.strictObject({ ...when, kind: z.literal('transfer'), to: tag, from: tags, ring: ring.optional(), ...byCode, note: z.string().optional() }),
+  z.strictObject({ ...when, kind: z.literal('transfer'), to: tag, from: tags, ring: ring.optional(), ...byCode, fightDays, note: z.string().optional() }),
   /**
    * The land inside `ring` that one of `of` owns is held by `by`, its owner unchanged (an occupation, R62c); `by` among
    * `of` takes its own back (R62g2). The land formations there of those who held it, held off from `by` (a hold), are
    * set down on their own nearest land behind the new line (R66c).
    */
-  z.strictObject({ ...when, kind: z.literal('occupy'), by: tag, of: tags, ring, note: z.string().optional() }),
+  z.strictObject({ ...when, kind: z.literal('occupy'), by: tag, of: tags, ring, fightDays, note: z.string().optional() }),
   /**
    * A nation of the scenario dormant until now is born (R62d) on the land in `ring` that one of `from` owns: owned
    * and held, its cores, its capital the city of its own nearest its table's capital. Its land by `countries` and

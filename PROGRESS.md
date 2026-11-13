@@ -278,3 +278,5 @@
 - R76f (ADR-1019, the user's decision): the start card's measure kept; Spain stays on the 1940s cards by its army.
 - R76g (ADR-1020): China's four intercepted warheads in 1975 answered: extreme desperation (PLAN 7.18i) and a stopped
   launch not counting (PLAN 7.28); a no-likely-loss rule tried, changing nothing outside desperation, not kept.
+- R77 (ADR-1021): a stage's own window of fighting (`fightDays`); Normandy fought from the landing to 25 July (both
+  engaged in 39-72 % of its samples on three seeds). Batch 21 done; next the full critic run (ADR-1016).

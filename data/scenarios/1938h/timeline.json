@@ -11471,33 +11471,6 @@
    "kept": "1944-06-18"
   },
   {
-   "date": "1944-06-12",
-   "kind": "occupy",
-   "by": "ENG",
-   "of": [
-    "VIC"
-   ],
-   "ring": [
-    [
-     -1.9,
-     49.75
-    ],
-    [
-     0.4,
-     49.5
-    ],
-    [
-     0.4,
-     48.9
-    ],
-    [
-     -1.9,
-     48.9
-    ]
-   ],
-   "note": "D-Day: the Normandy beachhead"
-  },
-  {
    "date": "1944-06-18",
    "kind": "occupy",
    "by": "JAP",
@@ -11523,6 +11496,34 @@
     ]
    ],
    "note": "Ichigo: Changsha"
+  },
+  {
+   "date": "1944-07-25",
+   "kind": "occupy",
+   "by": "ENG",
+   "of": [
+    "VIC"
+   ],
+   "ring": [
+    [
+     -1.9,
+     49.75
+    ],
+    [
+     0.4,
+     49.5
+    ],
+    [
+     0.4,
+     48.9
+    ],
+    [
+     -1.9,
+     48.9
+    ]
+   ],
+   "note": "D-Day: the Normandy beachhead",
+   "fightDays": 50
   },
   {
    "date": "1944-07-30",

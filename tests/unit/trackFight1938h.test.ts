@@ -141,6 +141,24 @@ describe('a window of fighting before a stage (ROADMAP R66d)', () => {
     }
   });
 
+  it("a stage's own window (R77): `fightDays` N opens N days before its hour and not N+1; without it FIGHT_DAYS", () => {
+    const assets = assets1938(SIZE_1938.w);
+    const [GER, POL] = [id('GER'), id('POL')];
+    const withDays = (days: number): TimelineFile => ({ events: [...TL.events.slice(0, 2), { ...(TL.events[2] as Extract<TimelineFile['events'][number], { kind: 'occupy' }>), fightDays: days }] });
+    for (const [days, tl] of [
+      [3, withDays(3)],
+      [10, withDays(10)],
+      [FIGHT_DAYS, TL],
+    ] as const) {
+      const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets }, tl);
+      const w = sim.world;
+      sim.step(STAGE - days * 24 - 1, quiet);
+      expect(w.track!.pairOpen(w, GER, POL), `${days} days: an hour before its window`).toBe(false);
+      sim.step(1, quiet);
+      expect(w.track!.pairOpen(w, GER, POL), `${days} days: its window's first hour`).toBe(true);
+    }
+  });
+
   it('a save within the window plays on as the run it came from', () => {
     const assets = assets1938(SIZE_1938.w);
     const a = new Sim({ scenario: '1938h', seed: SEED_1938H, assets }, TL);

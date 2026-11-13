@@ -10,7 +10,7 @@ import { writeFileSync } from 'node:fs';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TAGS_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
-import { FIGHT_DAYS } from '../../src/sim/track';
+import { fightDaysOf } from '../../src/sim/track';
 import { assets1938 } from '../../tests/helpers/earth';
 import { stageArmies, type Side, type StageArmies } from '../../tests/helpers/trackFronts';
 
@@ -37,9 +37,10 @@ const LARGE = 200;
   };
   // Measured at the first hour of the stage's date, before any of that date's events (ADR-970): a stage's `withdraw`
   // comes an hour before its `occupy`, and measured at the occupy the defenders it took were gone. Its land, size and
-  // front fixed at the opening of its window of fighting (R66d, FIGHT_DAYS before), the men there then too.
+  // front fixed at the opening of its window of fighting (R66d, FIGHT_DAYS before, or its own `fightDays`, R77), the men there then too.
   const at = new Map(stages.map((i) => [i, t.tickOf(t.events[i]!.date)]));
-  const opens = new Map(stages.map((i) => [i, Math.max(0, at.get(i)! - FIGHT_DAYS * 24)]));
+  // Each stage's own window (R77: its `fightDays`, else FIGHT_DAYS).
+  const opens = new Map(stages.map((i) => { const e = t.events[i]!; return [i, Math.max(0, at.get(i)! - (e.kind === 'occupy' || e.kind === 'transfer' ? fightDaysOf(e) : 0) * 24)]; }));
   const first = new Map<number, { o: StageArmies & { take: number[] }; nation: Map<number, number>; samples: number; both: number }>();
   const end = Math.max(...at.values());
   const rows: Row[] = [];
