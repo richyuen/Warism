@@ -19,6 +19,8 @@
     "IND": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ff9933", "#ffffff", "#138808"]}, {"t": "disc", "cx": 0.5, "cy": 0.5, "r": 0.13, "color": "#000080"}, {"t": "disc", "cx": 0.5, "cy": 0.5, "r": 0.105, "color": "#ffffff"}, {"t": "disc", "cx": 0.5, "cy": 0.5, "r": 0.03, "color": "#000080"}]},
     "PRC": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#de2910"]}, {"t": "star", "cx": 0.167, "cy": 0.25, "r": 0.15, "color": "#ffde00"}, {"t": "star", "cx": 0.333, "cy": 0.1, "r": 0.05, "color": "#ffde00", "rotation": 23}, {"t": "star", "cx": 0.4, "cy": 0.2, "r": 0.05, "color": "#ffde00", "rotation": 45}, {"t": "star", "cx": 0.4, "cy": 0.35, "r": 0.05, "color": "#ffde00"}, {"t": "star", "cx": 0.333, "cy": 0.45, "r": 0.05, "color": "#ffde00", "rotation": 20}]},
     "ITR": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "v", "colors": ["#009246", "#ffffff", "#ce2b37"]}]},
+    "SPN": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#c60b1e", "#ffc400", "#ffc400", "#c60b1e"]}]},
+    "SDN": {"aspect": 2, "layers": [{"t": "stripes", "dir": "h", "colors": ["#0b3d91", "#f5d300", "#2e8b3a"]}]},
     "LAO": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ce1126"]}, {"t": "disc", "cx": 0.5, "cy": 0.5, "r": 0.2, "color": "#ffffff"}]},
     "CAM": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#032ea1", "#ce1126", "#032ea1"], "weights": [1, 2, 1]}, {"t": "rect", "x": 0.38, "y": 0.36, "w": 0.24, "h": 0.28, "color": "#ffffff"}]},
     "GUI": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "v", "colors": ["#ce1126", "#fcd116", "#009e49"]}]},

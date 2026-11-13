@@ -704,3 +704,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   great powers (the year's map is R74b's).
 - **Consequences.** The release waits on R75 too. Whether ideas from other games join every release as non-blocking
   issues do (ADR-1005) is not decided here: these two by the user's word.
+
+### ADR-1007 · 2026-11-12 · accepted — R74c: the seat founded where the map has none; no revival for a nation history ended
+- **Context.** Critic run 65's R65-N5: West Germany's seat labelled Gießen (the map has no Bonn); Manchukuo revived in
+  a free world in 1979; Tuva, Newfoundland and British East Africa's last cells separate in 1975; "Nationalist Spain"
+  at Burgos and "Anglo-Egyptian Sudan" to the end.
+- **Decision.** (a) A `capital` event may name its `city`: founded on the nation's own land at the seat (size 2, as the
+  editor places one) when it has no city within CAPITAL_CITY_KM (15) there. (b) When the track ends, a nation dead
+  then that no later event of the timeline brings back (`born`) has no revivals left; one a later `born` brings back
+  keeps them (Poland in an end of 1940), unborn ones as they are. Applied at the end, not at each death: the
+  replay's starts to 1975 hash as before up to the new events. (c) The events: Madrid and the Spanish State
+  (1939-04-01), Tuva (1944-10-11), Newfoundland (1949-03-31), Bonn (1949-05-23), the Republic of the Sudan
+  (1956-01-01), Lamu, Zanzibar's coast and the rest of British East Africa (1963-12-12); Mongolia's own leave of
+  1947 taken out (its pact dissolves with the Soviet leave).
+- **Consequences.** Plain games unchanged (the pin). The revival rule touches every game of the track ended early.
+  Free worlds after the track lose the revivals of the nations history ended (no Manchukuo, Mengjiang, Tuva).

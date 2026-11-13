@@ -700,6 +700,26 @@
    "note": "The end of the Spanish war"
   },
   {
+   "date": "1939-04-01",
+   "hour": 1,
+   "kind": "capital",
+   "nation": "NSP",
+   "at": [
+    -3.7,
+    40.42
+   ],
+   "city": "Madrid",
+   "note": "Madrid the capital again"
+  },
+  {
+   "date": "1939-04-01",
+   "hour": 1,
+   "kind": "rename",
+   "nation": "NSP",
+   "as": "SPN",
+   "note": "The Spanish State"
+  },
+  {
    "date": "1939-04-12",
    "kind": "annex",
    "annexer": "ITA",
@@ -12032,6 +12052,13 @@
    "note": "Petsamo"
   },
   {
+   "date": "1944-10-11",
+   "kind": "annex",
+   "annexer": "SOV",
+   "target": "TAN",
+   "note": "Tuva joins the Soviet Union"
+  },
+  {
    "date": "1944-10-12",
    "kind": "born",
    "nation": "GRE",
@@ -15237,11 +15264,6 @@
   },
   {
    "date": "1947-09-22",
-   "kind": "allianceLeave",
-   "nation": "MON"
-  },
-  {
-   "date": "1947-09-22",
    "hour": 1,
    "kind": "allianceJoin",
    "nation": "POL",
@@ -15684,6 +15706,13 @@
    "note": "With Lebanon"
   },
   {
+   "date": "1949-03-31",
+   "kind": "annex",
+   "annexer": "CAN",
+   "target": "NFL",
+   "note": "Newfoundland joins Canada"
+  },
+  {
    "date": "1949-04-03",
    "kind": "leave",
    "nations": [
@@ -15966,6 +15995,18 @@
     ]
    ],
    "note": "The French zone (the Saar apart)"
+  },
+  {
+   "date": "1949-05-23",
+   "hour": 2,
+   "kind": "capital",
+   "nation": "FRG",
+   "at": [
+    7.1,
+    50.73
+   ],
+   "city": "Bonn",
+   "note": "Bonn the seat of government"
   },
   {
    "date": "1949-05-27",
@@ -17434,6 +17475,14 @@
    "note": "Sudan independent"
   },
   {
+   "date": "1956-01-01",
+   "hour": 1,
+   "kind": "rename",
+   "nation": "SUD",
+   "as": "SDN",
+   "note": "The Republic of the Sudan"
+  },
+  {
    "date": "1956-03-02",
    "kind": "rename",
    "nation": "FMO",
@@ -18426,6 +18475,70 @@
     "KEN"
    ],
    "note": "Kenya independent"
+  },
+  {
+   "date": "1963-12-12",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "KEN",
+   "from": [
+    "BEA"
+   ],
+   "ring": [
+    [
+     40.5,
+     -1.6
+    ],
+    [
+     41.6,
+     -1.6
+    ],
+    [
+     41.6,
+     -2.5
+    ],
+    [
+     40.5,
+     -2.5
+    ]
+   ],
+   "note": "Lamu to Kenya"
+  },
+  {
+   "date": "1963-12-12",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "ZAN",
+   "from": [
+    "BEA"
+   ],
+   "ring": [
+    [
+     39.0,
+     -5.5
+    ],
+    [
+     39.9,
+     -5.5
+    ],
+    [
+     39.9,
+     -6.6
+    ],
+    [
+     39.0,
+     -6.6
+    ]
+   ],
+   "note": "Zanzibar's coast"
+  },
+  {
+   "date": "1963-12-12",
+   "hour": 2,
+   "kind": "annex",
+   "annexer": "TGK",
+   "target": "BEA",
+   "note": "The last of British East Africa"
   },
   {
    "date": "1964-01-12",
@@ -23759,6 +23872,30 @@
        4.0
       ]
      ]
+    },
+    {
+     "owner": "SOV",
+     "onlyFrom": [
+      "TAN"
+     ],
+     "ring": [
+      [
+       88,
+       54
+      ],
+      [
+       100,
+       54
+      ],
+      [
+       100,
+       49.5
+      ],
+      [
+       88,
+       49.5
+      ]
+     ]
     }
    ],
    "occupied": [
@@ -24653,6 +24790,30 @@
        31.22
       ]
      ]
+    },
+    {
+     "owner": "CAN",
+     "onlyFrom": [
+      "NFL"
+     ],
+     "ring": [
+      [
+       -68,
+       61
+      ],
+      [
+       -52,
+       61
+      ],
+      [
+       -52,
+       46
+      ],
+      [
+       -68,
+       46
+      ]
+     ]
     }
    ],
    "occupied": [
@@ -24979,7 +25140,57 @@
     "LAO-3288": "PTL",
     "LAO-3286": "PTL"
    },
-   "occupied": []
+   "occupied": [],
+   "regions": [
+    {
+     "owner": "KEN",
+     "onlyFrom": [
+      "BEA"
+     ],
+     "ring": [
+      [
+       40.5,
+       -1.6
+      ],
+      [
+       41.6,
+       -1.6
+      ],
+      [
+       41.6,
+       -2.5
+      ],
+      [
+       40.5,
+       -2.5
+      ]
+     ]
+    },
+    {
+     "owner": "TGK",
+     "onlyFrom": [
+      "BEA"
+     ],
+     "ring": [
+      [
+       38,
+       -4
+      ],
+      [
+       42,
+       -4
+      ],
+      [
+       42,
+       -11.5
+      ],
+      [
+       38,
+       -11.5
+      ]
+     ]
+    }
+   ]
   },
   {
    "date": "1967-12-31",

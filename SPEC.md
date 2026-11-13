@@ -1747,7 +1747,8 @@ to 27 July 1953, then sets the world free.
   the sim's own.
 - **The end:** on 31 December 1975 (31 December 1962 before R71b, ADR-993; 27 July 1953 before R69a, ADR-984), or at the first intervention (a God Mode act, an editor edit, the taking of
   a nation), the track ends for good: every switch returns to the usual rules, and the History has a row
-  saying when and why. Built (R62j0, ADR-945): the first command applied while it runs ends it in that hour, before
+  saying when and why. A nation dead at the end that no later event brings back (`born`) has no revival left:
+  history ended it (R74c; Manchukuo, Tannu Tuva, Newfoundland). Built (R62j0, ADR-945): the first command applied while it runs ends it in that hour, before
   the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none. While it
   runs, the scenario's form, Take control, the God Mode bar, the nation's God tab (at its head) and the editor say
   so (R64a, R65b; ADR-952, ADR-961); the end is told in the ticker.
@@ -1760,7 +1761,7 @@ to 27 July 1953, then sets the world free.
   The card (R68c; the user's decision of 2026-11-12): no entry of its own on the title's list; the "World, 1938" card
   has a slider of years under its map (1938 and each year the site has built) and "Replay history" / "Play free".
   At a later year the card is that year's (R74b): its map (`<year>.png`, drawn at deploy beside the start), its
-  living nations (`years.json`), "World, <year>" for its heading, the year over the slider's thumb; a site built
+  living nations (the starts' index, `tools/data/replaySaves.ts`), "World, <year>" for its heading, the year over the slider's thumb; a site built
   before them shows 1938's map and count.
   Free from 1938 is the plain 1938 game (its seed and options); the replay, or a later year free, the historical world
   (1938 replayed: no save loaded). A year's world is checked against its index's hash (`SimStatus.built`).
@@ -1800,7 +1801,7 @@ to 27 July 1953, then sets the world free.
   Hiroshima and Nagasaki the only ones: the AI strikes nothing while the track steers), the Soviet entry, Japan's
   surrender, the colonies born again. 1946-49 (R62i1, ADR-940): the new states born on the lines history drew,
   their wars held on them. The Chinese civil war by stages of transfer (R62i2, ADR-941): `capital` (a seat
-  moved) and `guarantee` with `end` (a pledge withdrawn). The Korean War to the armistice, its line drawn by
+  moved; with `city`, R74c, that city founded where the nation has none of its own within 15 km: Bonn) and `guarantee` with `end` (a pledge withdrawn). The Korean War to the armistice, its line drawn by
   transfer on the track's last day (R62i3, ADR-942). `rename` gives a nation a new name and flag (an identity,
   state; R62i4, ADR-943); the track's nations and identities fly flags of their own (`1938h/flags.json`). After its
   end the world is the AI's: its wars resume at an ordinary game's opening pace (R62i5, ADR-944). Checked on any seed

@@ -56,10 +56,17 @@ The critic runs again (focused) after the batch.
     card's map, "World, <year>", Nations and a label over the thumb follow the slider. The probe on a build with the
     starts: 1960 103 nations, 1965 (390 × 844) 131, 1975 free 157, each its own map (shots looked at); the 38 years'
     hashes the same. `replayYear1938h.spec.ts` 4 of 4 (an older index: 1938's map and count).
-  - [ ] R74c R65-N5: names and capitals of 1944-75: Sudan renamed at its release; Newfoundland to Canada (1949) and
+  - [x] R74c R65-N5: names and capitals of 1944-75: Sudan renamed at its release; Newfoundland to Canada (1949) and
     Tannu Tuva to the Soviet Union (1944); British East Africa's last cells; Bonn a city (West Germany's capital, not
     Gießen); Spain's capital Madrid (1939) and its name after the war; no "Manchukuo" revived in a free world after
     the track. AT: the 1975 start with none of those, `critic/scripts/c65_landof` and the 1965 replay's shots.
+    Done (ADR-1007): nine events (Madrid and "Spain" 1939, Tuva to the Soviet Union 1944, Newfoundland to Canada
+    1949, Bonn 1949, "Sudan" 1956, British East Africa's last cells 1963), all applied on seed 1938 (run to 1964:
+    TAN, NFL, BEA 0 cells, NSP and SUD renamed, FRG's seat Bonn, Spain's Madrid); a `capital` event's `city` founds
+    the seat where the map has none (Bonn); a nation dead at the track's end that no later `born` brings back has no
+    revival (Manchukuo; Poland kept in an early end). Mongolia's 1947 `allianceLeave` taken out (the pact dissolves
+    with the Soviet leave, Tuva gone); the reference maps of 1945, 1950 and 1964 given the changes.
+    `tests/unit/trackEndRevivals1938h.test.ts`; the nine replay tests 10 of 10.
   - [ ] R74d R65-N1: post-war regimes for the Axis: Japan (1947), Italy (1946), West Germany at its birth, Spain (1975),
     their aggression and traits a post-war democracy's. AT: `c65_freeburst.ts` from 1954, 1963 and 1975 on two seeds
     with no JAP>KOR in the first 30 days; `afterTrack` 37601 and 37603 with no JAP-USA war in 10 years.

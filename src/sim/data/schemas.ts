@@ -609,7 +609,8 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
    */
   z.strictObject({ ...when, kind: z.literal('rename'), nation: tag, as: z.string().regex(/^[A-Z]{3}$/), note: z.string().optional() }),
   /** A seat moved (R62i2: Beijing, Taipei): the nation's own city nearest `at` becomes its capital. */
-  z.strictObject({ ...when, kind: z.literal('capital'), nation: tag, at: lonLat, note: z.string().optional() }),
+  // `city` (R74c): the seat's name, a city founded there when the nation has none of its own within CAPITAL_CITY_KM.
+  z.strictObject({ ...when, kind: z.literal('capital'), nation: tag, at: lonLat, city: z.string().optional(), note: z.string().optional() }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;
 export const TimelineFile = z.strictObject({

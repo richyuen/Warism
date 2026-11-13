@@ -25,6 +25,7 @@ import { neighbours4 } from './nav/grid';
 import { kmPerCell, project } from './data/projection';
 import { nuclearMask, START_GOLD } from './systems/revolts';
 import { relocateCapital } from './systems/capitals';
+import { spawnCity } from './scenarioEdit';
 import { detonate } from './systems/nuclear';
 import { leaveWarsAgainst, makePeace, withPuppets } from './systems/war';
 import { applyCommand } from './tick';
@@ -40,6 +41,8 @@ export const OBJECTIVE_WEIGHT = 6;
 export const FIGHT_DAYS = 7;
 /** How far around a stage's ring its area reaches (R66d). */
 export const FIGHT_BAND_KM = 120;
+/** A `capital` event's `city` is founded when the nation has no city of its own this near its seat (R74c). */
+export const CAPITAL_CITY_KM = 15;
 
 /** A hold's event (R62f2): its index, the tick it ends, its two sides' nations, whether it freezes a war (R66b). */
 interface Hold {
@@ -456,12 +459,12 @@ function peace(world: World, a: number, b: number, terms: 'white' | 'score'): Re
 }
 
 /** The nation's own city nearest `at` its capital (R62i2); passed over when it is already, or it holds no city. */
-function moveCapital(world: World, n: number, at: readonly [number, number]): Refusal {
+function moveCapital(world: World, n: number, at: readonly [number, number], city?: string): Refusal {
   const why = whyNot(world, n);
   if (why) return why;
   const { owner, w, h } = world.cells;
   const [u, v] = project(at[0], at[1]);
-  const cc = world.cities.cols;
+  let cc = world.cities.cols;
   let best = 0;
   let bestD = Infinity;
   world.cities.forEach((ci) => {
@@ -472,6 +475,16 @@ function moveCapital(world: World, n: number, at: readonly [number, number]): Re
     const d = dx * dx + dy * dy;
     if (d < bestD) [best, bestD] = [ci, d];
   });
+  // A seat the map has no city for (R74c: Bonn, West Germany's, was labelled Gießen): founded, on its own land.
+  const reach = CAPITAL_CITY_KM / kmPerCell(w);
+  const near = reach * reach;
+  if (city !== undefined && (best === 0 || bestD > near) && owner[Math.floor(v * h) * w + Math.floor(u * w)] === n) {
+    const made = spawnCity(world, u * w, v * h, city, 2);
+    if (made !== 0) {
+      best = made;
+      cc = world.cities.cols; // a create may move the table to new arrays
+    }
+  }
   if (best === 0 || cc.capitalOf[best] === n) return best === 0 ? Refusal.NoSuch : Refusal.NoEffect;
   world.cities.forEach((ci) => {
     if (cc.capitalOf[ci] === n) cc.capitalOf[ci] = 0;
@@ -702,6 +715,13 @@ export function endTrack(world: World, why: number): void {
   if (!t || t.ended) return;
   t.ended = true;
   t.changed = false;
+  // A nation history ended for good comes back no more (R74c, critic run 65: Manchukuo revived in 1979): dead at the
+  // end, and no event of the rest of the timeline brings it back.
+  const nc = world.nations.cols;
+  const later = new Set(t.events.slice(t.next).flatMap((e) => (e.kind === 'born' ? [t.id(e.nation)] : [])));
+  world.nations.forEach((n) => {
+    if (nc.living[n] === 0 && !t.unborn.has(n) && !later.has(n)) nc.revivalsLeft[n] = 0;
+  });
   world.out.emit(world.tick, EventKind.TrackEnded, 0, why, NaN, NaN);
   if (t.afterSeed !== 0) {
     world.seed = t.afterSeed >>> 0;
@@ -780,7 +800,7 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       return why;
     }
     case 'capital':
-      return moveCapital(world, id(e.nation), e.at);
+      return moveCapital(world, id(e.nation), e.at, e.city);
     case 'rename': {
       const n = id(e.nation);
       const why = whyNot(world, n);
