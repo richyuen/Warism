@@ -187,7 +187,7 @@ Batches 19 and 18 together (ADR-966).
   - [x] R71f 1972-75 (Okinawa, the Paris Accords, Yom Kippur, the Portuguese colonies, Saigon, Cambodia, Laos, the
     Western Sahara, East Timor). AT: as R71d; the arsenals at the end history's (China's bomb 1964).
   - [x] R71g The world after 1975: the blocs and their aid re-measured from the 1975 handover.
-- [ ] R72 **A faster tick, for the replay's deploy** (the user's decision of 2026-11-12, ADR-1000; before the critic of
+- [x] R72 **A faster tick, for the replay's deploy** (the user's decision of 2026-11-12, ADR-1000; before the critic of
   Batches 18-19). The deploy's `npm run saves` steps 1938h from 1938 to 1975 in one thread, about 18 minutes on the
   runner (28 s a year), on each push that changes a sim input (ADR-999). In the profile of 1938h's war years combat
   is 42 % of the tick (`--profile`, 3 years: combat 0.97 ms, territory, air and movement 0.21-0.25 ms each,
@@ -212,4 +212,8 @@ Batches 19 and 18 together (ADR-966).
     formations); then air strikes 10 %, supply 11 %, movement 10 %, territory 7.5 %. `findBattles` asks the war and
     hold once a nation pair a call (`relations`), and leaves a pair clearly out of reach before the `sqrt` (a margin of
     1e-9; nearer, `dist` decides as before). The 38 years' hashes the same; the build 372.5 → 359.7 s (swapped pairs).
+  - R72 met (ADR-1002): `npm run saves` to 1975 570.8 s at `fa16420b` (tsx) against 360.7 s at `9583cfc0` (the
+    bundle), 0.63 of it (bar 2/3), both at once on separate P-cores and swapped (578.7/351.8, 562.8/369.6); each of
+    the 38 years' hashes the same; the pin of seed 99 unchanged. The runner's step 9.8 min before, 12.3, 9.4, 11.9
+    after R72a, b, c: its noise (18 min the night before) larger than the change.
 

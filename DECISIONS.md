@@ -650,3 +650,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Consequences.** Each of the 38 years' hashes the same as tsx's; to 1941 −31 % (31.5 s against 45.8 s, swapped
   pairs on separate P-cores). The other tools (`npm run sim`, the sweep, the soak) still run under tsx and pay the
   same tax; their timings are the budgets' (goal 5) and are left as they are.
+
+### ADR-1002 · 2026-11-12 · accepted — R72 met: the replay's starts in 0.63 of their time
+- **Context.** R72's bar (ADR-1000): `npm run saves` to 1975 in at most 2/3 of its time at `fa16420b`, every result
+  bit for bit as before.
+- **Read.** 570.8 s at `fa16420b` under tsx against 360.7 s at `9583cfc0` from the bundle: 0.63. Both at once on
+  separate P-cores, then swapped (578.7 against 351.8 s, 562.8 against 369.6 s); each of the 38 years' tick and hash
+  the same; the pin of seed 99 unchanged in each part's gate. By part (bundles, swapped pairs): R72a (no `keepNames`)
+  −31 % to 1941; R72b (the holds standing) −1.7 %; R72c (`findBattles`' nation pairs) −3.4 %.
+- **The runner.** The deploy's step was 9.8 min on R72's planning commit (before R72a), then 12.3, 9.4 and 11.9 min
+  after R72a, b and c, and 18.2 min the night before on the same code: a shared runner's noise is larger than the
+  change, so the bar is read on this machine, as ADR-1000 set it.
+- **Consequences.** Next by PROMPT's RELEASES: the critic of Batches 18 and 19 (ADR-991). What the profile shows past
+  combat (air strikes 10 %, supply 11 %, movement 10 %, territory 7.5 %, the bundle's profile of R72b) is no item: the
+  bar is met.

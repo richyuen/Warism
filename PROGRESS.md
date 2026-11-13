@@ -223,3 +223,6 @@
 - R72c: `findBattles` asks the war and the hold once a nation pair a call, not each pair of formations, and leaves a
   pair clearly out of reach before the `sqrt`. Hashes the same; the build −3.4 % (372.5 → 359.7 s, swapped pairs).
   Mends PLAN 7.1d's pairing (no rule changed); no ADR (ADR-914).
+- R72 done (ADR-1002): `npm run saves` to 1975 in 0.63 of its time at `fa16420b` (570.8 → 360.7 s, swapped pairs on
+  separate P-cores), every year's hash the same, the pin unchanged. The runner's step 9.4-12.3 min after the parts, 9.8
+  before: its noise larger than the change. Next: the critic of Batches 18 and 19.
