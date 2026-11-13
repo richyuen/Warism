@@ -9,6 +9,7 @@ import { isLand } from '../../src/shared/terrain';
 import { buildPoliticalMap } from '../../src/sim/data/politicalMap';
 import { createRandomWorld } from '../../src/sim/randomWorld';
 import { NATIONS_1938, politicalMapInput1938, SIZE_1938 } from '../../src/sim/scenario1938';
+import type { World } from '../../src/sim/world';
 import { loadAssets1938 } from '../headless/assets';
 import { decodePng, encodePng } from './png';
 
@@ -62,8 +63,15 @@ export const PREVIEW_RANDOM_SEED = 7;
  * (at the game's size, from `assets`), every second cell of every second row.
  */
 export function previewRandom(assets: ScenarioAssets, seed = PREVIEW_RANDOM_SEED, nations: number = RANDOM_NATIONS.default): Uint8Array {
-  const world = createRandomWorld(seed, nations, assets);
-  const { w, h } = SIZE_1938;
+  return previewOfWorld(createRandomWorld(seed, nations, assets));
+}
+
+/**
+ * A world's political map at the preview size, every second cell of every second row at the game's size: the random
+ * world's, and each year's start of the replay (ROADMAP R74b: the 1938 card shows the year chosen).
+ */
+export function previewOfWorld(world: World): Uint8Array {
+  const { w, h } = world.cells;
   const step = w / PREVIEW_W;
   if (step !== Math.floor(step) || h / step !== PREVIEW_H) throw new Error(`the preview is not a whole fraction of ${w}×${h}`);
   const holder = new Uint16Array(PREVIEW_W * PREVIEW_H);

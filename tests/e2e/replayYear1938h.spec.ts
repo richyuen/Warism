@@ -97,8 +97,12 @@ test('the 1938 card: a slider of years, replay or free, reach the game', async (
   await page.setViewportSize({ width: 1400, height: 800 });
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
-  await page.route('**/data/scenarios/1938h/start/years.json', (r) => r.fulfill({ json: { format: STATE_FORMAT, seed: 1938, years: [{ year: 1938, tick: 0, hash: 0 }, { year: 1941, tick: 1, hash: 0 }] } }));
+  await page.route('**/data/scenarios/1938h/start/years.json', (r) =>
+    r.fulfill({ json: { format: STATE_FORMAT, seed: 1938, years: [{ year: 1938, tick: 0, hash: 0, nations: 102 }, { year: 1941, tick: 1, hash: 0, nations: 77 }] } }),
+  );
   await page.route('**/data/scenarios/1938h/start/1941.sav', (r) => r.abort());
+  // 1941's map: the random world's preview stands in for it.
+  await page.route('**/data/scenarios/1938h/start/1941.png', (r) => r.fulfill({ path: 'public/data/scenarios/random/preview.png', contentType: 'image/png' }));
   const card = async (): Promise<void> => {
     await page.goto('/');
     await expect(page.getByTestId('title-scenario-1938h')).toHaveCount(0);
@@ -125,15 +129,38 @@ test('the 1938 card: a slider of years, replay or free, reach the game', async (
   await expect(page.getByTestId('settings-fixed')).toContainText('replay of history');
   q = await started(/scenario=1938h/);
   expect([q.get('year'), q.get('mode')]).toEqual([null, null]);
-  // 1941, replayed and free.
+  // 1941, replayed and free: the card shows 1941's world (R74b): its map, its nations, its name, the year on the thumb.
   for (const mode of ['replay', 'free'] as const) {
     await card();
+    await expect(page.getByTestId('title-year-thumb')).toHaveText('1938');
     await slider.fill('1941');
     await expect(page.getByTestId('title-start-date')).toHaveText('1 January 1941');
+    await expect(page.getByTestId('title-chosen')).toHaveText('World, 1941');
+    await expect(page.getByTestId('title-nations')).toHaveText('77');
+    await expect(page.getByTestId('title-year-thumb')).toHaveText('1941');
+    await expect(page.getByTestId('title-preview')).toHaveAttribute('src', /start\/1941\.png$/);
+    await page.waitForFunction(() => (document.querySelector('[data-testid=title-preview]') as HTMLImageElement).complete);
     await page.getByTestId(`title-mode-${mode}`).click();
     if (mode === 'replay') await page.screenshot({ path: test.info().outputPath('card-replay-1941.png') });
     q = await started(/year=1941/);
     expect([q.get('scenario'), q.get('mode')]).toEqual(['1938h', mode]);
   }
+  expect(errors).toEqual([]);
+});
+
+// ROADMAP R74b: a site whose starts were built before their maps and counts (an index without `nations`, no PNG) shows
+// the 1938 card's own map and count at a later year, its name and date the year's.
+test('the 1938 card at a later year of an older index: the map and count of 1938', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.route('**/data/scenarios/1938h/start/years.json', (r) => r.fulfill({ json: { format: STATE_FORMAT, seed: 1938, years: [{ year: 1938, tick: 0, hash: 0 }, { year: 1960, tick: 1, hash: 0 }] } }));
+  await page.route('**/data/scenarios/1938h/start/1960.png', (r) => r.fulfill({ status: 404, body: 'no' }));
+  await page.goto('/');
+  await page.getByTestId('title-start-year').fill('1960');
+  await expect(page.getByTestId('title-chosen')).toHaveText('World, 1960');
+  await expect(page.getByTestId('title-nations')).toHaveText('102');
+  await expect(page.getByTestId('title-preview')).toHaveAttribute('src', /scenarios\/1938\/preview\.png$/);
   expect(errors).toEqual([]);
 });

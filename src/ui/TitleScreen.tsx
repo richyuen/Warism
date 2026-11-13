@@ -29,7 +29,9 @@ export interface TitleScreenProps {
    * under its map): the scenario it starts, and the years built for this site to start it from (1938 always).
    */
   replays?: Partial<Record<ScenarioId, { id: ScenarioId; info: ScenarioInfo }>>;
-  startYears?: () => Promise<number[]>;
+  startYears?: () => Promise<{ year: number; nations?: number }[]>;
+  /** The map of a later year's start (R74b, critic run 65 R65-N6); the scenario's own where it has none. */
+  yearPreviewUrl?: (year: number) => string;
   /** The saved game to offer as Continue, if there is one (PLAN 1.43b). */
   readSave: () => Promise<SavedGame | null>;
   onContinue: () => void;
@@ -63,7 +65,7 @@ export interface ReplayStart {
   free: boolean;
 }
 
-export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, startYears, readSave, onContinue, checkScenarioFile, onScenarioFile, loadFailed, saveFailed = false, startFailed }: TitleScreenProps) {
+export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, startYears, readSave, onContinue, checkScenarioFile, onScenarioFile, loadFailed, saveFailed = false, startFailed, yearPreviewUrl }: TitleScreenProps) {
   // A refused start opens on the card that offers the replay, its notice there (R73).
   const [chosen, setChosen] = useState<ScenarioId>(() => (startFailed !== undefined ? (scenarios.find((s) => replays[s.id])?.id ?? scenarios[0]!.id) : scenarios[0]!.id));
   const [startError, setStartError] = useState(startFailed);
@@ -78,7 +80,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
   // once, with no confirmation").
   const [pending, setPending] = useState<{ file: File; name: string; scenario: ScenarioId; startDay: number; tick: number; upgraded?: readonly 'traits'[] } | null>(null);
   // The replay's years built for this site (R68c); 1938 alone until read, or without them.
-  const [built, setYears] = useState<number[]>([]);
+  const [built, setYears] = useState<{ year: number; nations?: number }[]>([]);
   // On a card with a replay: replay history (or play free), from 1 January of `year`.
   const [history, setHistory] = useState(false);
   const [year, setYear] = useState(1938);
@@ -98,7 +100,11 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
   };
   const own = scenarios.find((s) => s.id === chosen)!.info;
   const replay = replays[chosen];
-  const years = replay ? [...new Set([1938, ...built])].sort((a, b) => a - b) : [];
+  const years = replay ? [...new Set([1938, ...built.map((y) => y.year)])].sort((a, b) => a - b) : [];
+  // A later year chosen on a card with a replay: its map, its nations and its name are that year's (R74b).
+  const later = replay !== undefined && year > 1938 ? built.find((y) => y.year === year) : undefined;
+  const ownPreview = previewUrl(chosen);
+  const preview = later && yearPreviewUrl ? yearPreviewUrl(later.year) : ownPreview;
   // The replay's world: history replayed, or a later year's world played free.
   const replayed = replay !== undefined && (history || year > 1938);
   const info = replayed ? replay.info : own;
@@ -216,13 +222,29 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
         </div>
         <section class="title-card title-detail" data-testid="title-detail">
           <h2 class="title-sub" data-testid="title-chosen">
-            {t(own.nameKey as MessageKey)}
+            {later ? t('title.worldOfYear', { year: later.year }) : t(own.nameKey as MessageKey)}
           </h2>
           <div class="title-detail-grid">
             <div>
-              <img class="title-preview" data-testid="title-preview" src={previewUrl(chosen)} width={1024} height={512} alt={t(info.nationsRange ? 'title.previewAltExample' : 'title.previewAlt', { name: t(info.nameKey as MessageKey) })} />
+              <img
+                class="title-preview"
+                data-testid="title-preview"
+                src={preview}
+                width={1024}
+                height={512}
+                alt={later ? t('title.previewAltYear', { year: later.year }) : t(info.nationsRange ? 'title.previewAltExample' : 'title.previewAlt', { name: t(info.nameKey as MessageKey) })}
+                onError={(e) => {
+                  // A site whose starts were built before their maps: the scenario's own.
+                  const img = e.currentTarget;
+                  if (img.src !== ownPreview) img.src = ownPreview;
+                }}
+              />
               {replay && years.length > 1 ? (
                 <div class="title-years">
+                  {/* The year on the thumb (R74b): 38 years in ~270 px on a phone. */}
+                  <span class="title-year-thumb" data-testid="title-year-thumb" style={{ left: `calc(${(year - years[0]!) / (years.at(-1)! - years[0]!)} * (100% - 16px) + 8px)` }}>
+                    {year}
+                  </span>
                   <input type="range" class="title-year-slider" data-testid="title-start-year" min={years[0]} max={years.at(-1)} step={1} value={year} aria-label={t('title.startYear')} onInput={(e) => {
                       setYear(Number((e.currentTarget as HTMLInputElement).value));
                       setStartError(undefined);
@@ -251,7 +273,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
               </div>
               <div class="form-row">
                 <span class="form-name">{t('title.nations')}</span>
-                <span data-testid="title-nations">{info.nationsRange ? t('settings.nationsRange', { min: info.nationsRange.min, max: info.nationsRange.max }) : info.nations}</span>
+                <span data-testid="title-nations">{info.nationsRange ? t('settings.nationsRange', { min: info.nationsRange.min, max: info.nationsRange.max }) : (later?.nations ?? info.nations)}</span>
               </div>
             </div>
             <div>

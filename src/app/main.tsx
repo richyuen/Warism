@@ -6,7 +6,7 @@ import { TitleScreen } from '../ui/TitleScreen';
 import { readAutosave, type SaveRecord } from './autosave';
 import { startGame } from './game';
 import { continueUrl, newGameUrl, stagedScenarioUrl } from './gameUrl';
-import { replayYears } from './replayStart';
+import { replayYears, yearPreviewUrl } from './replayStart';
 import { checkScenarioFile, stageScenarioFile } from './scenarioFiles';
 import { missingSections } from '../shared/stateCheck';
 import { applyUiScale } from './settings';
@@ -56,6 +56,7 @@ if (scenarioId !== null) {
         onStart={(id, seed, options, start) => location.assign(newGameUrl(id, seed, options, start))}
         replays={{ '1938': { id: '1938h', info: SCENARIO_INFO['1938h'] } }}
         startYears={replayYears}
+        yearPreviewUrl={yearPreviewUrl}
         readSave={readSave}
         onContinue={() => {
           if (save) location.assign(continueUrl(save));

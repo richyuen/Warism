@@ -48,10 +48,14 @@ The critic runs again (focused) after the batch.
     The probe: Resume in the build, `afterClick` and `after3s` both running (3 January 1938 three seconds on).
     `worldBuilding1938.spec.ts` gains Resume at 0 and 1000 ms and Pause in a running start (the 0 ms case red on the
     old code), 5 of 5.
-  - [ ] R74b R65-N6: the start card shows the year chosen: its map (a preview per year, built at deploy beside the
+  - [x] R74b R65-N6: the start card shows the year chosen: its map (a preview per year, built at deploy beside the
     starts), its nation count (from `years.json`), its heading, and the year on the slider's thumb. AT:
     `node critic/scripts/c65_x_replaycard.mjs 1960 replay` (and 1965 on a phone, 1975 free) with that year's map and
     count.
+    Done: `npm run saves` draws `<year>.png` (`previewOfWorld`) and counts the living nations into `years.json`; the
+    card's map, "World, <year>", Nations and a label over the thumb follow the slider. The probe on a build with the
+    starts: 1960 103 nations, 1965 (390 × 844) 131, 1975 free 157, each its own map (shots looked at); the 38 years'
+    hashes the same. `replayYear1938h.spec.ts` 4 of 4 (an older index: 1938's map and count).
   - [ ] R74c R65-N5: names and capitals of 1944-75: Sudan renamed at its release; Newfoundland to Canada (1949) and
     Tannu Tuva to the Soviet Union (1944); British East Africa's last cells; Bonn a city (West Germany's capital, not
     Gießen); Spain's capital Madrid (1939) and its name after the war; no "Manchukuo" revived in a free world after

@@ -2,9 +2,10 @@
  * ROADMAP R68a (ADR-983, the user's decisions): the historical replay's yearly starts. 1938h's world (its own seed)
  * on 1 January of each year of the track, from 1938 to the year of its end, written gzipped
  * (`<out>/<year>.sav`, `Sim.save()` as `packSave` writes it) with `<out>/years.json`: the years, the state format,
- * and each save's tick and hash. Built by the Pages workflow on each push to `main` into the site, never committed;
- * by hand for a local game (`public/data/scenarios/1938h/start/`, gitignored). `npm run saves` runs it from a bundle
- * (`saves.ts`, R72a): about 6-7 minutes.
+ * and each save's tick, hash and living nations, beside each year's map (`<year>.png`, R74b). Built by the Pages
+ * workflow on each push to `main` into the site, never committed; by hand for a local game
+ * (`public/data/scenarios/1938h/start/`, gitignored). `npm run saves` runs it from a bundle (`saves.ts`, R72a): about
+ * 6-7 minutes.
  *
  * Usage: npm run saves [-- <out dir> [last year]]
  */
@@ -17,12 +18,24 @@ import { SEED_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
 import type { World } from '../../src/sim/world';
 import { assets1938 } from '../../tests/helpers/earth';
+import { encodePng } from './png';
+import { PREVIEW_H, PREVIEW_W, previewOfWorld } from './preview';
 
 /** What `years.json` holds. */
 export interface ReplayYears {
   format: number;
   seed: number;
-  years: { year: number; tick: number; hash: number }[];
+  /** Each year's start: its tick and hash, and its living nations (the title's card, R74b). */
+  years: { year: number; tick: number; hash: number; nations: number }[];
+}
+
+/** The nations living in a world (the title's "Nations", R74b). */
+export function livingNations(w: World): number {
+  let n = 0;
+  w.nations.forEach((id) => {
+    if (w.nations.cols.living[id] === 1) n++;
+  });
+  return n;
 }
 
 const quiet = (w: World): void => {
@@ -61,7 +74,9 @@ if (/replaySaves\.(ts|mjs)$/.test(process.argv[1] ?? '')) {
   buildReplaySaves((year, sim) => {
     const bytes = gzipSync(sim.save());
     writeFileSync(path.join(out, `${year}.sav`), bytes);
-    index.years.push({ year, tick: sim.tick, hash: sim.hash() });
+    // The year's map for the title's card (R74b), as the scenarios' previews are drawn.
+    writeFileSync(path.join(out, `${year}.png`), encodePng(previewOfWorld(sim.world), PREVIEW_W, PREVIEW_H));
+    index.years.push({ year, tick: sim.tick, hash: sim.hash(), nations: livingNations(sim.world) });
     process.stdout.write(`${year}: tick ${sim.tick}, ${Math.round(bytes.length / 1024)} KB, ${Math.round((Date.now() - t0) / 1000)} s\n`);
   }, last);
   writeFileSync(path.join(out, 'years.json'), JSON.stringify(index, null, 1) + '\n');

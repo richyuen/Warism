@@ -2578,7 +2578,19 @@ button.unit-icon.on {
 
 /* The replay's years under the 1938 card's map (ROADMAP R68c). */
 .title-years {
+  position: relative;
   margin: 0.4rem 0 0.2rem;
+  padding-top: 1.1rem;
+}
+/* The year chosen, over the slider's thumb (R74b). */
+.title-year-thumb {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ui-accent, #e8b84a);
+  pointer-events: none;
 }
 .title-year-slider {
   width: 100%;

@@ -1759,6 +1759,9 @@ to 27 July 1953, then sets the world free.
   game's card and its Continue left as they are.
   The card (R68c; the user's decision of 2026-11-12): no entry of its own on the title's list; the "World, 1938" card
   has a slider of years under its map (1938 and each year the site has built) and "Replay history" / "Play free".
+  At a later year the card is that year's (R74b): its map (`<year>.png`, drawn at deploy beside the start), its
+  living nations (`years.json`), "World, <year>" for its heading, the year over the slider's thumb; a site built
+  before them shows 1938's map and count.
   Free from 1938 is the plain 1938 game (its seed and options); the replay, or a later year free, the historical world
   (1938 replayed: no save loaded). A year's world is checked against its index's hash (`SimStatus.built`).
 - **The player's view** (built, R62j1, ADR-946): while the track runs a line under the date names its next event that

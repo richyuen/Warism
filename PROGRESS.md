@@ -238,3 +238,6 @@
   R68b (ADR-983); no ADR (ADR-914).
 - R74a (R65-N7): a choice of pause made while the world is built holds; the boot's second forced pause taken out
   (`hud.apply()`). `c65_x_buildpause.mjs 1600 900 1` running after Resume; `worldBuilding1938.spec.ts` 5 of 5.
+- R74b (R65-N6): the 1938 card shows the year chosen: its map (drawn by `npm run saves` beside its start), its living
+  nations (`years.json`), "World, <year>", the year over the thumb. `c65_x_replaycard.mjs` 1960 / 1965 phone / 1975
+  free with their maps and counts (103, 131, 157); `replayYear1938h.spec.ts` 4 of 4.
