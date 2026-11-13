@@ -275,3 +275,4 @@
   (24 of 28 samples on three seeds), Uranus engaged at its hour on all three; Stalingrad's stage a handover (the user's
   decision: its window shut by ADR-977's rule).
 - R76e: a refused start's card opens at its year and in its mode, the notice in view (on a phone with a saved game too).
+- R76f (ADR-1019, the user's decision): the start card's measure kept; Spain stays on the 1940s cards by its army.

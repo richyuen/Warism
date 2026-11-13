@@ -81,9 +81,14 @@ batch (ADR-1016, the user's decision; ADR-916).
     390 × 844: slider and date at 1960 and 1975 in all eight cases of a built year, the notice in view (at 390 × 844
     with a saved game y 401-458 of 844), Continue kept; 1977 (not built) at 1938, its notice in view.
     `replayYear1938h.spec.ts` (replay at 1400 × 800, free at 390 × 844: year, date, mode, `toBeInViewport`) 5 of 5.
-  - [ ] R76f R66-N6: `cardPowers` puts Spain among the great powers in 1941-49 and leaves China out in 1941-43 and 1945.
+  - [x] R76f R66-N6: `cardPowers` puts Spain among the great powers in 1941-49 and leaves China out in 1941-43 and 1945.
     AT: `years.json`'s `powers` for 1941-49 without SPN, with China (CHI) in 1941-45; 1938, 1960 and 1975's orders as
     R75b/R75c's (`tests/unit/replaySaves1938h.test.ts`).
+    Answered, not met (the user's decision, ADR-1019): the card's measure kept. Spain's army is about 5 % of the world's
+    men at peace in the 1940s (its income 1.1-1.3 %), China's 3-4.5 % at war: by the sim's own figures Spain ranks
+    seventh. Tried on run 66's 38 starts (`.cache/r76/cardparts.ts`): a peacetime army at half (Britain over the Soviet
+    Union 1964-66, 1960's and 1975's orders moved), at 0.75 (1941-43 and 1945 as the AT, but Italy out of 1938, 1950
+    reordered, Spain still in 1944 and 1946-48), capped at twice its income share (Italy out of 1938, Spain kept).
   - [ ] R76g R66 small: People's China in a free 1975 (after 6161) launches its four warheads at one place over five days
     and all are intercepted; not a reasoned use. AT: `npx tsx critic/scripts/c66_nukes75.ts` kind of run on 6161: no
     nation launches more warheads at one target in a week than one more than were intercepted there before, or the

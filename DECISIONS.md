@@ -850,3 +850,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   the AT rescoped: the Sixth Army there at the stage's hour, the city's battle fought as Uranus.
 - **Read.** As ROADMAP's R76d line. Track-only data: plain games and the pin unchanged. Still a handover: the
   beachhead's 51 cells are given on 12 June (0 taken in the window: the divisions are kept, so they defend, not push).
+
+### ADR-1019 · 2026-11-13 · accepted — R76f: the start card's measure kept; Spain stays (the user's decision)
+- **Context.** R66-N6: `cardPowers` names Spain among the great powers in 1941-49 and leaves China out in 1941-43 and
+  1945. Spain's army is about 5 % of the world's men, at peace (income 1.1-1.3 %); China's 3-4.5 %, at war.
+- **Options measured** on the 38 starts: a peacetime army weighed at 0.5, at 0.75, or capped at twice the nation's
+  income share. Each moved Spain out of 1941-43, and each broke other years: 1938 without Italy, 1950's or 1960-75's
+  orders moved (R75b-c's), Spain still in 1944 and 1946-48.
+- **Decision.** The user: option 1, the measure kept. The card reads the sim's own figures; the critic's finding is
+  answered, not met.
