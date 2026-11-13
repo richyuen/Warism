@@ -157,11 +157,11 @@ function missions(world: World, wings: Map<number, number[]>, engaged: readonly 
       continue;
     }
     const own = engaged.filter((g) => c.nation[g] === n);
-    const enemy = engaged.filter((g) => world.wars.atWar(n, c.nation[g]!));
+    const enemy = engaged.filter((g) => world.airFoes(n, c.nation[g]!));
     // The enemy's land forces, in contact or not (PLAN 5.12b): made when a wing has none of the front in range.
     let enemyLand: number[] | null = null;
-    const enemyForces = (): number[] => (enemyLand ??= land.filter((g) => world.wars.atWar(n, c.nation[g]!)));
-    const enemyFleets = fleets.filter((g) => world.wars.atWar(n, c.nation[g]!) && !world.embarked.has(g));
+    const enemyForces = (): number[] => (enemyLand ??= land.filter((g) => world.airFoes(n, c.nation[g]!)));
+    const enemyFleets = fleets.filter((g) => world.airFoes(n, c.nation[g]!) && !world.embarked.has(g));
     // The nation's wings sent to each formation this day, by what they fly (PLAN 7.24a): the next goes where fewest are.
     const patrols = new Map<number, number>();
     const strikes = new Map<number, number>();
@@ -508,7 +508,7 @@ function industry(world: World, id: number, n: number, b: Bombable, rich: () => 
   const all = rich();
   while (b.read < all.length) {
     const cell = all[b.read++]!;
-    if (!b.won.has(zones[cell]!) || !world.wars.atWar(n, controller[cell]!)) continue;
+    if (!b.won.has(zones[cell]!) || !world.airFoes(n, controller[cell]!)) continue;
     b.cells.push(cell);
     const at = inRange(cell);
     if (at) return at;

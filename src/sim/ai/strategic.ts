@@ -40,7 +40,7 @@ import { levyFormation } from '../systems/production';
 import { canJoin, LEAVE_LOYALTY, leaveAlliance, noWarAmong } from '../systems/alliances';
 import { blocLeader, relationHit, worstPariah } from '../systems/nuclear';
 import { transportGroupsAtPort } from '../systems/amphibious';
-import { keyAt, waterKeys } from '../systems/navalCombat';
+import { keyAt, seaKm, waterKeys } from '../systems/navalCombat';
 import { forceMen, seaHolder } from '../systems/seaControl';
 import { navOf, portSeaOf, seaOf, type World } from '../world';
 import { ATTACKERS } from '../wars';
@@ -66,6 +66,12 @@ export const THREAT_AGGRESSION = 50;
 export const THREAT_RATIO = 1.5;
 export const ALLY_P = 0.3;
 export const HEGEMON_SHARE = 0.25;
+/**
+ * How far over the sea a nation that is no great power lands (R74h, km from a transport group of its at its port): the
+ * Mediterranean's length, the Bay of Bengal's crossing; not the Pacific or the Atlantic.
+ */
+export const SEA_REACH_KM = 4000;
+
 /** The war utility's weight of a neighbour's nuclear outrage (PLAN 6.5b). */
 export const PARIAH_WAR = 0.5;
 /**
@@ -265,9 +271,10 @@ export function rivalsApart(world: World, str: Float64Array, greats: Set<number>
  * The nations `n` could land on (PLAN 7.82d, ADR-670): those holding a port on a water where a
  * transport group of `n`'s stands at a port of its own (`transportGroupsAtPort`), as `planLanding`
  * reaches them: the same water (`waterKeys`), not a sea ice closes, not one an enemy of `n` holds.
- * Ascending, `n` left out; none without such a group.
+ * Ascending, `n` left out; none without such a group. With `reach` (R74h), only ports within `reach` km of such a
+ * group.
  */
-export function seaTargets(world: World, n: number): number[] {
+export function seaTargets(world: World, n: number, reach = Infinity): number[] {
   const groups = transportGroupsAtPort(world, n);
   if (groups.length === 0) return [];
   const c = world.formations.cols;
@@ -285,6 +292,10 @@ export function seaTargets(world: World, n: number): number[] {
     if (zone === 0 || z.closed[zone] === 1 || !lift.has(keys[zone]!)) return;
     const sea = seaHolder(world, zone);
     if (sea !== 0 && world.wars.atWar(sea, n)) return;
+    if (reach < Infinity) {
+      const [px, py] = [(p.cell % world.cells.w) + 0.5, Math.floor(p.cell / world.cells.w) + 0.5];
+      if (!groups.some((g) => seaKm(world, c.x[g.fleet]!, c.y[g.fleet]!, px, py) <= reach)) return;
+    }
     out.add(holder);
   });
   return [...out].sort((a, b) => a - b);
@@ -299,9 +310,11 @@ export function seaTargets(world: World, n: number): number[] {
  * had no land neighbour over the bar for 19 years, and held their cells to 2 % at peace; the Soviet
  * Union, its transports at its ports on their water, scored 1.0–1.7 on them and had no land target
  * over the bar on 77–84 of its turns. Land wars come first: the sea's targets only on a turn none is.
- * `attack` is `n`'s strength with its allies, `defence` a target's (`sides`).
+ * `attack` is `n`'s strength with its allies, `defence` a target's (`sides`). R74h: a nation that is no great power
+ * (`powers`) lands only within SEA_REACH_KM of its transports (critic run 65: the Republic of China on Taiwan
+ * declaring on the Ivory Coast and Liberia, 13,000 km off; People's China on Panama).
  */
-export function warTarget(world: World, n: number, neighbours: readonly number[], attack: number, defence: (t: number) => number, wars: number, restless: number, blocs: ReadonlySet<number> = new Set()): number {
+export function warTarget(world: World, n: number, neighbours: readonly number[], attack: number, defence: (t: number) => number, wars: number, restless: number, blocs: ReadonlySet<number> = new Set(), powers?: ReadonlySet<number>): number {
   const pick = (among: readonly number[], skip?: ReadonlySet<number>): number => {
     let best = 0;
     let bestU = DECLARE_AT;
@@ -314,7 +327,7 @@ export function warTarget(world: World, n: number, neighbours: readonly number[]
     }
     return best;
   };
-  return pick(neighbours) || pick(seaTargets(world, n), new Set(neighbours));
+  return pick(neighbours) || pick(seaTargets(world, n, powers === undefined || powers.has(n) ? Infinity : SEA_REACH_KM), new Set(neighbours));
 }
 
 /**
@@ -402,12 +415,15 @@ export function strategicAi(world: World): void {
   // The historical focus (R75a): declarations eased in, the blocs closed while it lasts.
   const focus = focusAfterTrack(world);
   const open = (a: { leader: number }): boolean => focus >= 1 || !blocLeader(world, a.leader);
+  // The great powers, who land across any sea (R74h): made at the first declaration weighed.
+  let powers: ReadonlySet<number> | undefined;
   for (const n of actors) {
     const neighbours = [...(nb.get(n) ?? [])].sort((a, b) => a - b);
     // War.
     const wars = warsOf(world, n);
     if (wars < MAX_WARS && nc.aggression[n]! >= PACIFIST_BELOW && nc.gold[n]! >= 0 && nc.bankrupt[n] !== 1) {
-      const best = warTarget(world, n, neighbours, withAllies(n), defence, wars, wars === 0 ? restlessOf(world, n) : 0, blocs);
+      powers ??= greats.size > 0 ? greats : greatPowers(world, str);
+      const best = warTarget(world, n, neighbours, withAllies(n), defence, wars, wars === 0 ? restlessOf(world, n) : 0, blocs, powers);
       if (best !== 0 && hashToUnit(hash32(world.seed, day, n, SALT_WAR)) < (focus * DECLARE_P * nc.aggression[n]!) / 100) declareWar(world, n, best);
     }
     // Alliances against a threat.

@@ -256,6 +256,14 @@ textarea,
   font-weight: 400;
   opacity: 0.85;
 }
+/* On a screen of 1280 px or more (R74h; critic run 65: "Next, 1 January 1960: Cameroon ind…"), the bar's room: 36em
+   holds 91 % of the timeline's notes whole (17em, 12 %), and the bar (1245 px) stays on one row. Under it a wider line
+   wraps the bar. */
+@media (min-width: 1280px) {
+  .bar-track {
+    width: 36em;
+  }
+}
 /* On a phone 0.72em is under 9 px (R65c): 11 px, in the same width (17 × 0.72 em of the bar's 12.24 px), on two
    rows of a fixed height (R70b: one row held ~8 letters of a note after the date; the bar keeps its height). */
 @media (max-width: 600px), (max-height: 500px) {

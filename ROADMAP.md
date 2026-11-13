@@ -100,9 +100,17 @@ The critic runs again (focused) after the batch.
     D-Day. Engaged at the stage's hour, attacker/defender, seeds 1938, 1, 2: Uranus 9/6, 1/4, 3/4 (before 0/0 on
     each); D-Day 4/6 on each (before none near). The shots: German divisions about Caen and on the Cotentin on
     1 June, the Americans, British and Canadians ashore and engaged on 6 June. The nine replay tests green.
-  - [ ] R74h Small, from run 65: the desktop "Next" line cut ("Cameroon ind…"); wars with no way to reach (the
+  - [x] R74h Small, from run 65: the desktop "Next" line cut ("Cameroon ind…"); wars with no way to reach (the
     Republic of China taking Albania's capital, Poland against Australia); the Sino-Soviet clash of 1969 a months-long
     air war. AT: each seen fixed in its probe, or the reason it is left in the item.
+    Done (ADR-1011): the desktop line 36em from 1280 px wide: 91 % of the timeline's notes whole (17em: 12 %), the bar
+    one row (`trackView1938h.spec.ts`: the critic's note whole at 1400 × 800). Wars with no way to reach: a nation
+    that is no great power declares over the sea only within SEA_REACH_KM (4000) of its transports; free starts from
+    1975 (after 6161, 5151, 999) and 1963 (6161), two years: the Republic of China's declarations on the Ivory Coast
+    and Liberia and People's China's on Panama gone; the far captures left are a great power's or an ally's in a war
+    joined. The sweep (1571-1580) as before: limits 5 of 10, riser, faller 10, stasis 9; the pin moved. 1969: a hold
+    with `air` holds the air too; from the 1969 start, aircraft lost by the Soviet Union and China in the hold 153
+    and 210 before, 0 and 0.
 
 - [ ] R75 **Run 65's ideas from other games** (the user's decision of 2026-11-12, ADR-1006).
   - [x] R75a A historical focus after the track (as Hearts of Iron IV's): for some years after the replay ends (by its

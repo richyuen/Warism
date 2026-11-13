@@ -1618,7 +1618,8 @@ production and research. `src/sim/ai/`.
   (0.3) × min(1, years since its last war ÷ `RESTLESS_YEARS` 10) when at peace. Attack and defence are the
   two realms' strength plus `ALLY_WEIGHT` (0.4) of their partners' and guarantors' (defence at least 1).
   With no neighbour over `DECLARE_AT` (0.5) it tries targets across the sea (holders of ports its
-  transports at port reach, not iced or held by an enemy). It declares on the best with probability
+  transports at port reach, not iced or held by an enemy; a nation that is no great power only those within
+  `SEA_REACH_KM`, 4000, of such a group, R74h). It declares on the best with probability
   `DECLARE_P` (0.25) × aggression ÷ 100.
 - **Threat pacts:** an unaligned nation whose neighbour of aggression ≥ `THREAT_AGGRESSION` (50) is over
   `THREAT_RATIO` (1.5) times stronger and not yet at war with it, with probability `ALLY_P` (0.3), joins
@@ -1781,7 +1782,8 @@ to 27 July 1953, then sets the world free.
 - **The 1938-39 period** (R62f, ADR-928): its events, objectives and the `maps` it is measured against
   (`tools/diag/historyMatch.ts`); `buff` and `forces` events (phase buffs, arrivals); `without` on `war` and `join`.
   The China front (R62f2, ADR-929): `hold` events, two sides (and their puppets) at war that do not fight on land,
-  take land or plan attacks on each other until a date; Japan's gains in China by `occupy` stages; the Phoney War a
+  take land or plan attacks on each other until a date (with `air`, R74h, nor fly at each other: the Sino-Soviet
+  border war of 1969); Japan's gains in China by `occupy` stages; the Phoney War a
   hold; the maps' `occupied`, measured as control (R62g0, ADR-930). 1940 in the West (R62g1, ADR-931): a nation
   overrun is annexed at its capitulation (Denmark a puppet), Vichy born, the occupied zone held at peace; `leave` (an
   armistice) and `redeploy` (a front moved by rail). 1940-41 to Iran (R62g2, ADR-932): `withdraw` (an evacuation),

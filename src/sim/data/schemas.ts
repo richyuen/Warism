@@ -567,9 +567,10 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
   /**
    * A front held (R62f2): until `until` the nations of `sides[0]` and of `sides[1]`, and their puppets, stay at war but
    * do not fight on land: no land combat between them, no land taken by either from the other, no plan of attack on
-   * the other. Ships and aircraft fight on.
+   * the other. Ships and aircraft fight on; with `air` (R74h: the Sino-Soviet border war of 1969, a clash on the
+   * Ussuri) no aircraft of either side flies at the other's either.
    */
-  z.strictObject({ ...when, kind: z.literal('hold'), sides: z.tuple([tags, tags]), until: date }),
+  z.strictObject({ ...when, kind: z.literal('hold'), sides: z.tuple([tags, tags]), until: date, air: z.boolean().optional() }),
   /**
    * Each of `nations` (with its puppets of its side) leaves every war `against` fights on the other side (R62g1: an
    * armistice); the land each side held of the other goes back, as at a white peace.

@@ -54,7 +54,7 @@ export function airCombat(world: World, byZone: Map<number, number[]>): void {
     // Who meets whom (PLAN 5.7d): a zone is wide, and a sortie fights only the enemy's sorties
     // within `INTERCEPT_KM` of it this hour.
     const at = wings.map((id) => sortieAt(world.sorties.get(id)!, world.tick, loopW(world)));
-    const foesOf = wings.map((a, i) => wings.filter((b, j) => world.wars.atWar(fc.nation[a]!, fc.nation[b]!) && seaKm(world, at[i]!.x, at[i]!.y, at[j]!.x, at[j]!.y) <= INTERCEPT_KM));
+    const foesOf = wings.map((a, i) => wings.filter((b, j) => world.airFoes(fc.nation[a]!, fc.nation[b]!) && seaKm(world, at[i]!.x, at[i]!.y, at[j]!.x, at[j]!.y) <= INTERCEPT_KM));
     // The fights: wings joined by such meetings (each its lowest id's).
     const root = new Map<number, number>();
     const find = (a: number): number => {
@@ -151,7 +151,7 @@ export function fightPlace(world: World, wings: readonly number[]): { x: number;
   let bd = Infinity;
   for (let i = 0; i < wings.length; i++) {
     for (let j = i + 1; j < wings.length; j++) {
-      if (!world.wars.atWar(fc.nation[wings[i]!]!, fc.nation[wings[j]!]!)) continue;
+      if (!world.airFoes(fc.nation[wings[i]!]!, fc.nation[wings[j]!]!)) continue;
       const dx = wrapDx(world, at[i]!.x, at[j]!.x);
       const dy = at[j]!.y - at[i]!.y;
       const d = dx * dx + dy * dy;
@@ -228,7 +228,7 @@ export function antiAir(world: World): void {
       for (let dx = -aaCells; dx <= aaCells; dx++) {
         const x = cellX(world, gx + dx);
         if (x === null) continue;
-        for (const id of above.get(y * w + x) ?? []) if (world.wars.atWar(fc.nation[g]!, fc.nation[id]!)) targets.push(id);
+        for (const id of above.get(y * w + x) ?? []) if (world.airFoes(fc.nation[g]!, fc.nation[id]!)) targets.push(id);
       }
     }
     if (targets.length === 0) return;
@@ -460,7 +460,7 @@ export function strikes(world: World): void {
     const targets: number[] = [];
     for (const g of groundAt.near(tx, ty)) {
       // The land's formations, and fleets (PLAN 5.4c); not wings, nor what is aboard a fleet.
-      if (!world.formations.has(g) || world.isWing(g) || world.embarked.has(g) || !world.wars.atWar(fc.nation[id]!, fc.nation[g]!)) continue;
+      if (!world.formations.has(g) || world.isWing(g) || world.embarked.has(g) || !world.airFoes(fc.nation[id]!, fc.nation[g]!)) continue;
       const dx = Math.abs(wrapDx(world, tx, Math.floor(fc.x[g]!)));
       const dy = Math.abs(Math.min(h - 1, Math.floor(fc.y[g]!)) - ty);
       if (dx > aaCells || dy > aaCells) continue;

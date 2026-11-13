@@ -42,6 +42,24 @@ for (const size of SIZES) {
     const fit = await line.evaluate((e) => ({ whole: e.scrollWidth <= e.clientWidth && e.scrollHeight <= e.clientHeight, px: parseFloat(getComputedStyle(e).fontSize) }));
     expect(fit.whole).toBe(true);
     if (size.name === 'phone') expect(fit.px).toBeGreaterThanOrEqual(11);
+    // R74h (critic run 65: "Next, 1 January 1960: Cameroon ind…" at 1600 × 900): on a desktop the line holds the
+    // critic's note and a long one whole, and the bar stays one row inside the screen. Set by hand (the layout's), the
+    // line's own text node put back after.
+    if (size.name === 'desktop') {
+      const long = await line.evaluate((e) => {
+        const was = [...e.childNodes];
+        const bar = e.closest('footer')!;
+        const h = bar.getBoundingClientRect().height;
+        const out = ['Next, 1 January 1960: Cameroon independent', 'Next, 6 June 1944: D-Day: the British and Canadians at Gold, Juno and Sword'].map((s) => {
+          e.textContent = s;
+          const r = bar.getBoundingClientRect();
+          return e.scrollWidth <= e.clientWidth && r.height === h && r.left >= 0 && r.right <= innerWidth;
+        });
+        e.replaceChildren(...was);
+        return out;
+      });
+      expect(long).toEqual([true, true]);
+    }
     // An event the game tells no other way is told by its name (R62j1): Japan's occupation on the first day.
     await expect(page.getByTestId('ticker')).toContainText('Shanghai and Nanjing');
     await page.screenshot({ path: path.join(out, `track-next-${size.name}.png`) });

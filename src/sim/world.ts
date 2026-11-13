@@ -1453,6 +1453,14 @@ export class World {
   }
 
   /**
+   * Whether `a`'s and `b`'s aircraft fight each other (R74h): at war, and no hold of the timeline's with `air` between
+   * them (the Sino-Soviet border war of 1969). In every other world, whether they are at war.
+   */
+  airFoes(a: number, b: number): boolean {
+    return this.wars.atWar(a, b) && (this.track === null || !this.track.heldAir(a, b, this.tick, this.nations.cols.overlord));
+  }
+
+  /**
    * Whether `a` and `b` hold a frozen front (R66b, ADR-971): a hold of the timeline's on a war in progress (`Track.frozen`:
    * the Eastern Front, China, the Pacific), not one from its war's first day (the Phoney War). False in every other world.
    */

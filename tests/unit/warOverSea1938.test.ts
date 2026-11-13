@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DECLARE_AT, RESTLESS, neighbourMap, seaTargets, sides, strengths, warTarget, warUtility } from '../../src/sim/ai/strategic';
+import { DECLARE_AT, RESTLESS, SEA_REACH_KM, neighbourMap, seaTargets, sides, strengths, warTarget, warUtility } from '../../src/sim/ai/strategic';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { destroyFormation } from '../../src/sim/systems/elements';
@@ -64,6 +64,19 @@ describe('a war across the sea (PLAN 7.82d)', () => {
     if (land.some((t) => valid(t) && u(t) > DECLARE_AT)) expect(land).toContain(warTarget(w, ENG, land, attack, defence, 0, RESTLESS));
     const other = over.find((t) => t !== ICE && valid(t) && u(t) > DECLARE_AT);
     if (other !== undefined) expect(warTarget(w, ENG, [other], attack, defence, 0, RESTLESS)).toBe(other);
+    // R74h (ADR-1011): a nation that is no great power lands only within SEA_REACH_KM of its transports. From
+    // Glasgow Iceland (1,300 km) is in reach, Japan and Australia are not; a great power reaches them all.
+    const near = seaTargets(w, ENG, SEA_REACH_KM);
+    expect(near).toContain(ICE);
+    expect(over).toContain(id('JAP'));
+    expect(near).not.toContain(id('JAP'));
+    expect(near).not.toContain(id('AST'));
+    expect(near.every((t) => over.includes(t))).toBe(true);
+    const all = new Set(over);
+    const pickFrom = (powers: ReadonlySet<number>): number => warTarget(w, ENG, [], attack, defence, 0, RESTLESS, new Set(), powers);
+    expect(pickFrom(new Set([ENG]))).toBe(best);
+    const minor = pickFrom(new Set());
+    expect(minor === 0 || (near.includes(minor) && all.has(minor))).toBe(true);
     // The group sails away from the port: nothing across the sea.
     c.moving[tp!] = 1;
     expect(seaTargets(w, ENG)).toEqual([]);

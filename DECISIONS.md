@@ -756,3 +756,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   well as its holder (the Americans on Vichy's land, held by the Germans, broke `historyTrack1938h`'s "held at
   peace" check); no arrival before took a neutral owner's cell, so the replay tests are unchanged by it.
 - **Read.** As ROADMAP's line; the pin unchanged (track-only).
+
+### ADR-1011 · 2026-11-13 · accepted — R74h: the Next line, the sea's reach, the air held in 1969
+- **Context.** Critic run 65's small findings: the desktop Next line cut ("Cameroon ind…"); wars with no way to
+  reach (the Republic of China capturing Albania's capital in a free 1975; Poland against Australia); the Sino-Soviet
+  clash of 1969 a months-long air war.
+- **Decision.** (1) `.bar-track` 36em from 1280 px wide (the bar 1245 px, one row); under it 17em as before, and the
+  phone's two rows. (2) `warTarget`'s sea targets: a nation that is no great power (`greatPowers`) only within
+  SEA_REACH_KM (4000) of a transport group of its at its port (`seaTargets(world, n, reach)`); great powers across
+  any sea, as before (ADR-670's case: the United States and the Soviet Union). A rule of every game: the pin moves
+  c64a53fb → aa59b1ab; the sweep on 1571-1580 keeps its verdicts (`docs/sweeps/2026-11-13-sweep-r74h.md`, against
+  `2026-11-12-sweep-r67two.md`). Allies called into a far war still fight it (ADR-887's reach is the join's). (3) A
+  `hold` with `air`: its sides' aircraft fly at each other no more (`World.airFoes`, in the air AI's targets and air
+  combat); 1969's has it. The Western Front's and the others' keep their air war.
+- **Read.** As ROADMAP's line. The nine replay tests green. `farWait1938` on seed 5 from day 180 (seed 7 has no wait
+  in 400 days on the new history; `tools/diag/firstWait.ts`).

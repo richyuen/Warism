@@ -253,3 +253,5 @@
 - R74g (ADR-1010): armies at Stalingrad (the Sixth Army, Uranus's fronts) and in Normandy (the Seventh Army, the D-Day
   divisions) as kept arrivals; both sides engaged at both stages' hours on seeds 1938, 1, 2; arrivals take no cell of
   an owner at peace.
+- R74h (ADR-1011): the desktop Next line 36em from 1280 px; sea targets of a nation no great power within 4000 km of
+  its transports (pin c64a53fb → aa59b1ab, sweep's verdicts kept); a hold with `air` (1969: no aircraft lost).

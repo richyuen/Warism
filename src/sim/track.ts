@@ -53,6 +53,8 @@ interface Hold {
   a: ReadonlySet<number>;
   b: ReadonlySet<number>;
   frozen: boolean;
+  /** Its sides' aircraft fly at each other no more (`air`, R74h). */
+  air: boolean;
 }
 
 /** An `occupy` stage open to fighting (R66d). */
@@ -197,6 +199,7 @@ export class Track {
               a: new Set(e.sides[0].map((x) => ids.get(x) ?? 0)),
               b: new Set(e.sides[1].map((x) => ids.get(x) ?? 0)),
               frozen: !warsOn(e.date).some((named) => e.sides[0].some((x) => named.includes(x)) && e.sides[1].some((x) => named.includes(x))),
+              air: e.air === true,
             },
           ]
         : [],
@@ -371,6 +374,11 @@ export class Track {
    */
   frozen(a: number, b: number, tick: number, overlord: ArrayLike<number>): boolean {
     return this.holdOf(a, b, tick, overlord)?.frozen ?? false;
+  }
+
+  /** Whether the hold between `a` and `b` that stands at `tick` holds the air too (`air`, R74h). */
+  heldAir(a: number, b: number, tick: number, overlord: ArrayLike<number>): boolean {
+    return this.holdOf(a, b, tick, overlord)?.air ?? false;
   }
 
   /** The nation of a tag (0: none such). */
