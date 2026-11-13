@@ -250,3 +250,6 @@
 - R74e, R74f, R75a (ADR-1009): a historical focus after the track: no declaration on the end's day, then 40 % rising to
   all over three years, the blocs closed meanwhile. End hours on four seeds: no bloc join, no declaration; late free
   starts' first month 0.5-0.9 times plain 1938 per nation; years 1-2 after the end 1.25 times an ordinary opening.
+- R74g (ADR-1010): armies at Stalingrad (the Sixth Army, Uranus's fronts) and in Normandy (the Seventh Army, the D-Day
+  divisions) as kept arrivals; both sides engaged at both stages' hours on seeds 1938, 1, 2; arrivals take no cell of
+  an owner at peace.

@@ -33,7 +33,7 @@ it("the track's arrivals: each told once, by whose", () => {
   const t = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }).world.track!;
   const arrivals = t.events.filter((e) => e.kind === 'forces' && e.note !== undefined).map((e) => e.note!);
   expect(new Set(arrivals).size).toBe(arrivals.length);
-  // R66b (ADR-972), R66d (ADR-976): the Pacific's and China's arrivals by the same rule.
-  for (const n of arrivals) expect(/German|Soviet|Afrika Korps|Japanese|British|Australian|Chinese/.test(n), n).toBe(true);
+  // R66b (ADR-972), R66d (ADR-976): the Pacific's and China's arrivals by the same rule; R74g (ADR-1010) D-Day's.
+  for (const n of arrivals) expect(/German|Soviet|Afrika Korps|Japanese|British|Australian|Chinese|American/.test(n), n).toBe(true);
   expect(arrivals).not.toContain('The mobilisation');
 });

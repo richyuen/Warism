@@ -90,10 +90,16 @@ The critic runs again (focused) after the batch.
     and 0.51 and 0.92 from 1975 (5 and 9 of 154; plain 7 and 6 of 102). After the track's end, on 1938, 1, 2: 65, 66,
     57 declared in the first year (the critic's 83-98), 38, 32, 39 in the second, 11-31 a year after; the first two
     years 1.25 times an ordinary 1938 game's per nation, within ADR-944's band (its first quarter up to 40 % busier).
-  - [ ] R74g R65-N4: D-Day and Stalingrad fought, not painted: German formations in France and an Allied army that
+  - [x] R74g R65-N4: D-Day and Stalingrad fought, not painted: German formations in France and an Allied army that
     lands in June 1944; Soviet and Axis armies at Stalingrad in November-December 1942 (R66's rules, ADR-969). AT:
     `trackFronts` on two seeds with both sides engaged at both stages' hours; the shots of
     `c65_x_stage.mjs normandy` with formations on both sides; the nine replay tests.
+    Done (ADR-1010): arrivals of the timeline's, kept for their stage: the Sixth Army and the Fourth Panzer Army at
+    Stalingrad (1 November 1942), Uranus's fronts on the Don and south of the city (15 November, in place of 20 at
+    Moscow), the Seventh Army and Panzer Group West in Normandy (April 1944), the Allies on the beaches the hour before
+    D-Day. Engaged at the stage's hour, attacker/defender, seeds 1938, 1, 2: Uranus 9/6, 1/4, 3/4 (before 0/0 on
+    each); D-Day 4/6 on each (before none near). The shots: German divisions about Caen and on the Cotentin on
+    1 June, the Americans, British and Canadians ashore and engaged on 6 June. The nine replay tests green.
   - [ ] R74h Small, from run 65: the desktop "Next" line cut ("Cameroon ind…"); wars with no way to reach (the
     Republic of China taking Albania's capital, Poland against Australia); the Sino-Soviet clash of 1969 a months-long
     air war. AT: each seen fixed in its probe, or the reason it is left in the item.

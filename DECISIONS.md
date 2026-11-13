@@ -743,3 +743,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Read.** As each item's line in ROADMAP. Plain games unchanged (the pin); the nine replay tests green.
 - **Consequences.** A free game from a late year is quieter for its first years; the blocs grow by none for three
   years after the end, and then by the strategic AI's usual joins.
+
+### ADR-1010 · 2026-11-13 · accepted — R74g: armies at Stalingrad and in Normandy
+- **Context.** Critic run 65's R65-N4: Uranus and D-Day painted on land with no army of either side near
+  (`trackFronts`: none engaged at either stage's hour; at D-Day no formation within 120 km).
+- **Decision.** Timeline arrivals (`forces`, kept for their stage, R66d's rules): the Sixth Army (12 divisions) and the
+  Fourth Panzer Army (2) at Stalingrad on 1 November 1942, kept to 7 January; Uranus's 20 rifle divisions at the Don
+  bend and south of the city on 15 November (in place of 20 at Moscow), kept to the stage; 6 German infantry and 2
+  panzer divisions in Normandy on 1 April 1944, kept to 13 June; 3 American, 2 British and 1 Canadian division ashore
+  at hour 23 of 5 June. A first try moving the German army in the south to the city (`redeploy`) left nobody there by
+  November: the AI moved them on. An arrival takes its cell only when its nation is at war with the cell's owner as
+  well as its holder (the Americans on Vichy's land, held by the Germans, broke `historyTrack1938h`'s "held at
+  peace" check); no arrival before took a neutral owner's cell, so the replay tests are unchanged by it.
+- **Read.** As ROADMAP's line; the pin unchanged (track-only).

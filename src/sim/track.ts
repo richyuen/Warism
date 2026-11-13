@@ -797,7 +797,11 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       const [sx, sy] = world.standPoint(u * world.cells.w, v * world.cells.h);
       const cell = Math.floor(sy) * world.cells.w + Math.floor(sx);
       const holder = world.cells.controller[cell]!;
-      if (why === Refusal.None && holder !== 0 && world.wars.atWar(holder, id(e.nation))) world.setController(cell, id(e.nation), false, FlipCause.landing);
+      // Not of an owner it is at peace with (R74g: the Americans landing in Normandy on 5 June 1944, the land Vichy's,
+      // held by the Germans): they stand on it, and the stage gives it.
+      const owner = world.cells.owner[cell]!;
+      const ownerFoe = owner === holder || owner === 0 || world.wars.atWar(owner, id(e.nation));
+      if (why === Refusal.None && holder !== 0 && ownerFoe && world.wars.atWar(holder, id(e.nation))) world.setController(cell, id(e.nation), false, FlipCause.landing);
       // Kept where they arrive for the stage they came for (`kept`, R66d, ADR-976): the AI leaves them be until its
       // window of fighting opens (FIGHT_DAYS before its date, `playerHeld`), then has them for the attack; nobody
       // disbands them before the stage (R66e, ADR-978). Before, the AI shipped two of the Japanese 25th Army's three

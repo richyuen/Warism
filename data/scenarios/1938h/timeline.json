@@ -7225,6 +7225,44 @@
    "note": "Stalingrad and Nalchik"
   },
   {
+   "date": "1942-11-01",
+   "kind": "forces",
+   "nation": "GER",
+   "template": "infantry_div",
+   "count": 8,
+   "at": [
+    43.3,
+    48.9
+   ],
+   "kept": "1943-01-07",
+   "note": "The German Sixth Army at Stalingrad"
+  },
+  {
+   "date": "1942-11-01",
+   "kind": "forces",
+   "nation": "GER",
+   "template": "infantry_div",
+   "count": 4,
+   "at": [
+    43.2,
+    49.2
+   ],
+   "kept": "1943-01-07"
+  },
+  {
+   "date": "1942-11-01",
+   "kind": "forces",
+   "nation": "GER",
+   "template": "panzer_div",
+   "count": 2,
+   "at": [
+    43.4,
+    48.65
+   ],
+   "kept": "1943-01-07",
+   "note": "The German Fourth Panzer Army at Stalingrad"
+  },
+  {
    "date": "1942-11-04",
    "kind": "withdraw",
    "nation": "GER",
@@ -7541,17 +7579,6 @@
   },
   {
    "date": "1942-11-15",
-   "kind": "forces",
-   "nation": "SOV",
-   "template": "rifle_div_soviet",
-   "count": 20,
-   "at": [
-    37.62,
-    55.75
-   ]
-  },
-  {
-   "date": "1942-11-15",
    "kind": "occupy",
    "by": "GER",
    "of": [
@@ -7576,6 +7603,32 @@
     ]
    ],
    "note": "Tunisia: the Axis bridgehead"
+  },
+  {
+   "date": "1942-11-15",
+   "kind": "forces",
+   "nation": "SOV",
+   "template": "rifle_div_soviet",
+   "count": 10,
+   "at": [
+    43.5,
+    50.0
+   ],
+   "kept": "1942-12-31",
+   "note": "Uranus: the Soviet Southwestern Front on the Don"
+  },
+  {
+   "date": "1942-11-15",
+   "kind": "forces",
+   "nation": "SOV",
+   "template": "rifle_div_soviet",
+   "count": 10,
+   "at": [
+    44.2,
+    48.55
+   ],
+   "kept": "1942-12-31",
+   "note": "Uranus: the Soviet Stalingrad Front south of the city"
   },
   {
    "date": "1942-11-23",
@@ -10730,6 +10783,44 @@
    ]
   },
   {
+   "date": "1944-04-01",
+   "kind": "forces",
+   "nation": "GER",
+   "template": "infantry_div",
+   "count": 3,
+   "at": [
+    -0.37,
+    49.18
+   ],
+   "kept": "1944-06-13",
+   "note": "The German Seventh Army in Normandy"
+  },
+  {
+   "date": "1944-04-01",
+   "kind": "forces",
+   "nation": "GER",
+   "template": "infantry_div",
+   "count": 3,
+   "at": [
+    -1.25,
+    49.25
+   ],
+   "kept": "1944-06-13"
+  },
+  {
+   "date": "1944-04-01",
+   "kind": "forces",
+   "nation": "GER",
+   "template": "panzer_div",
+   "count": 2,
+   "at": [
+    0.1,
+    49.1
+   ],
+   "kept": "1944-06-13",
+   "note": "The German Panzer Group West in Normandy"
+  },
+  {
    "date": "1944-04-24",
    "kind": "occupy",
    "by": "USA",
@@ -11294,6 +11385,60 @@
     ]
    ],
    "note": "Rome"
+  },
+  {
+   "date": "1944-06-05",
+   "hour": 23,
+   "kind": "forces",
+   "nation": "USA",
+   "template": "infantry_div",
+   "count": 2,
+   "at": [
+    -0.9,
+    49.37
+   ],
+   "kept": "1944-06-13",
+   "note": "D-Day: the American divisions at Omaha and Utah"
+  },
+  {
+   "date": "1944-06-05",
+   "hour": 23,
+   "kind": "forces",
+   "nation": "USA",
+   "template": "infantry_div",
+   "count": 1,
+   "at": [
+    -1.25,
+    49.35
+   ],
+   "kept": "1944-06-13"
+  },
+  {
+   "date": "1944-06-05",
+   "hour": 23,
+   "kind": "forces",
+   "nation": "ENG",
+   "template": "infantry_div",
+   "count": 2,
+   "at": [
+    -0.45,
+    49.33
+   ],
+   "kept": "1944-06-13",
+   "note": "D-Day: the British and Canadians at Gold, Juno and Sword"
+  },
+  {
+   "date": "1944-06-05",
+   "hour": 23,
+   "kind": "forces",
+   "nation": "CAN",
+   "template": "infantry_div",
+   "count": 1,
+   "at": [
+    -0.4,
+    49.32
+   ],
+   "kept": "1944-06-13"
   },
   {
    "date": "1944-06-06",
