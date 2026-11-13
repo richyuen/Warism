@@ -14507,6 +14507,16 @@
   },
   {
    "date": "1945-09-02",
+   "hour": 1,
+   "kind": "buff",
+   "nation": "SOV",
+   "buff": "income",
+   "magnitude": 1,
+   "until": "1991-12-26",
+   "note": "The Five-Year Plans: the Soviet economy rebuilt and grown after the war"
+  },
+  {
+   "date": "1945-09-02",
    "hour": 2,
    "kind": "born",
    "nation": "MAL",

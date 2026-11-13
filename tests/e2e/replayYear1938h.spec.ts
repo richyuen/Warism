@@ -169,7 +169,7 @@ test('the 1938 card at a later year of an older index: the map and count of 1938
 
 // ROADMAP R75b (critic run 65's idea, as Paradox's bookmarks): the card names each start's great powers, strongest
 // first, from the index (`cardPowers` in tools/data/replaySaves.ts; the lists here are its own on the starts of 1938,
-// 1960 and 1975 built on 2026-11-13).
+// 1960 and 1975 built on 2026-11-13 with R75c's Soviet economy: at 1960 the United States and the Soviet Union first).
 test("the 1938 card names the year's great powers", async ({ page }) => {
   test.setTimeout(120_000);
   await page.setViewportSize({ width: 1400, height: 800 });
@@ -177,8 +177,8 @@ test("the 1938 card names the year's great powers", async ({ page }) => {
   page.on('pageerror', (e) => errors.push(e.message));
   const years = [
     { year: 1938, tick: 0, hash: 0, nations: 102, powers: ['USA', 'SOV', 'GER', 'ENG', 'FRA', 'ITA', 'JAP'] },
-    { year: 1960, tick: 1, hash: 0, nations: 124, powers: ['USA', 'ENG', 'SOV', 'FRA', 'FRG', 'PRC', 'ITR'] },
-    { year: 1975, tick: 2, hash: 0, nations: 154, powers: ['USA', 'ENG', 'SOV', 'FRA', 'PRC', 'FRG', 'ITR'] },
+    { year: 1960, tick: 1, hash: 0, nations: 124, powers: ['USA', 'SOV', 'ENG', 'FRA', 'FRG', 'PRC', 'ITR'] },
+    { year: 1975, tick: 2, hash: 0, nations: 154, powers: ['USA', 'SOV', 'ENG', 'FRA', 'FRG', 'PRC', 'ITR'] },
   ];
   await page.route('**/data/scenarios/1938h/start/years.json', (r) => r.fulfill({ json: { format: STATE_FORMAT, seed: 1938, years } }));
   await page.route('**/data/scenarios/1938h/start/*.png', (r) => r.fulfill({ path: 'public/data/scenarios/random/preview.png', contentType: 'image/png' }));
@@ -188,9 +188,9 @@ test("the 1938 card names the year's great powers", async ({ page }) => {
   await page.screenshot({ path: test.info().outputPath('card-powers-1938.png') });
   await page.getByTestId('title-start-year').fill('1960');
   await expect(page.getByTestId('title-chosen')).toHaveText('World, 1960');
-  await expect(powers).toHaveText("United States, United Kingdom, Soviet Union, France, West Germany, People's China, Italy");
+  await expect(powers).toHaveText("United States, Soviet Union, United Kingdom, France, West Germany, People's China, Italy");
   await page.getByTestId('title-start-year').fill('1975');
-  await expect(powers).toHaveText("United States, United Kingdom, Soviet Union, France, People's China, West Germany, Italy");
+  await expect(powers).toHaveText("United States, Soviet Union, United Kingdom, France, West Germany, People's China, Italy");
   await page.screenshot({ path: test.info().outputPath('card-powers-1975.png') });
   // The row stays inside the card, wrapped: nothing beyond the screen.
   const box = await powers.boundingBox();

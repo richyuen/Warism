@@ -257,3 +257,5 @@
   its transports (pin c64a53fb → aa59b1ab, sweep's verdicts kept); a hold with `air` (1969: no aircraft lost).
 - R75b built (ADR-1012): the start card names its great powers (`cardPowers`, `years.json`'s `powers`); open on
   1960's order (Britain second): R75c, the Soviet Union's strength after the war, planned first (the user's decision).
+- R75c (ADR-1013): the Soviet economy after the war (the war's income buff on to 1991): second power on every start
+  from 1946; R75b closed (the card at 1960: the United States, the Soviet Union first).

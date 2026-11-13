@@ -122,7 +122,7 @@ The critic runs again (focused) after the batch.
     Done (ADR-1009): `focusAfterTrack`: none on the end's day, then 40 % of its declarations rising to all over three
     years, the blocs closed while it lasts; the end's tick kept in the track's section. In 3 years after the end on
     1938, 1, 2: no join of either bloc, both with their 1975 members. `tests/unit/trackFocus1938h.test.ts`.
-  - [ ] R75b The start card names the year's great powers (as Paradox's bookmarks; the year's map is R74b): the
+  - [x] R75b The start card names the year's great powers (as Paradox's bookmarks; the year's map is R74b): the
     strongest nations of each start, from `years.json`. AT: the card at 1938, 1960 and 1975 lists its great powers
     (at 1960 the United States and the Soviet Union first); `replayYear1938h.spec.ts`.
     Built (ADR-1012): `cardPowers` (share of strength + income + warheads, seven), `years.json`'s `powers`, the card's
@@ -130,12 +130,19 @@ The critic runs again (focused) after the batch.
     and 1975 the United Kingdom is second, the Soviet Union third (the sim's 1960: strength 2.14M against 1.73M,
     warheads 24 against 13, income second against fourth). The user's decision (2026-11-13): fix the Soviet strength
     first (R75c), then close R75b on its AT.
-  - [ ] R75c The Soviet Union a superpower in the replay after the war (the user's decision, ADR-1012): its army,
+  - [x] R75c The Soviet Union a superpower in the replay after the war (the user's decision, ADR-1012): its army,
     economy and arsenal from 1946 to 1975 brought toward history's, the second power after the United States on the
     starts of 1950, 1960 and 1975 (`cardPowers`), its warheads over Britain's from 1955. Find first why it falls
     behind Britain (income, industry, the army's men, the warheads' cap of a share of income), then the timeline's
     means (`buff`, `forces`) or a rule of the track's. AT: on the built starts the Soviet Union second at 1950, 1960
     and 1975, Britain's arsenal under its from 1955; the nine replay tests; seed 99's pin unchanged (track-only).
+    Done (ADR-1013): the cause, the sim's economy fixed at 1938's (the Soviet Union's 201bn of industry to Britain's
+    500bn), its gold spent on its army's upkeep: no warheads paid for, the army 2.47M in 1950 to 1.73M in 1955. The
+    war years' income buff (+100 %) goes on from 2 September 1945 to 26 December 1991 (the Five-Year Plans). On the
+    starts: the Soviet Union second of `cardPowers` in 1946, 1950, 1955, 1960 and 1975; income 2,624 to Britain's
+    2,412 in 1960; warheads 21 to 9 in 1955, 26 to 24 from 1960; the army 2.5-2.8M. The nine replay tests green; plain
+    games untouched (the timeline's). R75b closed on its AT with it (`replayYear1938h.spec.ts`, the lists of these
+    starts).
 ## Batch 17 — run 63's findings (full, on `78b082b4`: no blocking issue, every dimension at 8)
 
 - [x] R65 **Run 63's non-blocking findings** (the historical track).

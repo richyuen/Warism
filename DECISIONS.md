@@ -782,3 +782,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (13 to 24: a stockpile's upkeep is capped by a share of income).
 - **The user's decision (2026-11-13), asked:** fix the Soviet strength first (R75c), not the card's measure nor a
   curated list; R75b closes on its AT after it.
+
+### ADR-1013 · 2026-11-13 · accepted — R75c: the Soviet economy after the war; R75b closed
+- **Context.** ADR-1012: in the replay's 1960 Britain is the second power. Read on the starts: the sim's industry is
+  1938's to the end (`cells.econ`, no growth); the Soviet Union's 1938 measure (GDP × per head's share) gives it 201bn
+  to Britain's 500bn with its empire; after the war-economy buff ends (2 September 1945) its income is 1,312 to
+  Britain's 2,412, its gold near none after its army's upkeep, so warheads go unpaid (13 to 24) and the army shrinks.
+- **Decision.** The timeline's `buff` (income, +1) for the Soviet Union from 2 September 1945, hour 1, to 26 December
+  1991: the Five-Year Plans. It lasts past the track's end into a free world (no collapse at the handover), to the
+  Union's own end. Track-only data: plain games and seed 99's pin unchanged. Britain's own figures not touched (the
+  user's decision was the Soviet side).
+- **Read.** As ROADMAP's R75c line. R75b's card spec carries the new starts' lists.
