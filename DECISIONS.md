@@ -678,3 +678,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   ones. R65-N3 (the burst of wars in a free game from a late year) and R65-N4 (D-Day and Stalingrad on empty land;
   ADR-969's bar counts land fronts) are design questions for the user, not items.
 - **Consequences.** The release waits on R73 and a focused run with no blocking issue, then the full run (ADR-916).
+
+### ADR-1004 · 2026-11-12 · accepted (the user's decision) — Run 65's non-blocking findings before the release
+- **Context.** ADR-1003 put run 65's non-blocking findings after the release, and R65-N3 and R65-N4 as design
+  questions.
+- **Decision.** The user: "let's do all the non-blocking findings too". R74 in Batch 20 after R73, before the critic:
+  R65-N7, N6, N5, N1, N2, N3, N4 and the small ones (R74a-h), each with its AT. Supersedes ADR-1003's "after it".
+- **Consequences.** The release waits on R73-R74 and a focused run with no blocking issue, then the full run.

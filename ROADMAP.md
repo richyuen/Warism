@@ -26,7 +26,8 @@ Rules:
 
 ## Batch 20 — run 65's findings (focused, on `5ee3e035`: 1 blocking issue, every dimension at its bar)
 
-Before the release (PROMPT's RELEASES step 2, ADR-1003). The critic runs again (focused) after it.
+Before the release (PROMPT's RELEASES step 2, ADR-1003; the non-blocking findings too, the user's decision, ADR-1004).
+The critic runs again (focused) after the batch.
 
 - [ ] R73 **B1: a start from a year that cannot be loaded is told, and leaves the saved game alone** (R68b, SPEC §7.7).
   A refused start (a year not built, a 404, bytes not the world built) goes to `?failed=save`, which the title shows
@@ -35,6 +36,34 @@ Before the release (PROMPT's RELEASES step 2, ADR-1003). The critic runs again (
   `node critic/scripts/c65_x_badyear.mjs` each of the three cases shows a notice naming the year; in
   `node critic/scripts/c65_x_badyearsave.mjs` that notice, and the saved game's card with its Continue; a Playwright
   spec of both.
+- [ ] R74 **Run 65's non-blocking findings** (the user's decision of 2026-11-12, ADR-1004: all of them).
+  - [ ] R74a R65-N7: Resume pressed during "Building the world…" on `?paused=1` is undone at the first stats. AT: in
+    `node critic/scripts/c65_x_buildpause.mjs 1600 900 1` the player's choice made during the build kept (or the
+    button disabled until the world is built), `afterClick` equal to `after3s`.
+  - [ ] R74b R65-N6: the start card shows the year chosen: its map (a preview per year, built at deploy beside the
+    starts), its nation count (from `years.json`), its heading, and the year on the slider's thumb. AT:
+    `node critic/scripts/c65_x_replaycard.mjs 1960 replay` (and 1965 on a phone, 1975 free) with that year's map and
+    count.
+  - [ ] R74c R65-N5: names and capitals of 1944-75: Sudan renamed at its release; Newfoundland to Canada (1949) and
+    Tannu Tuva to the Soviet Union (1944); British East Africa's last cells; Bonn a city (West Germany's capital, not
+    Gießen); Spain's capital Madrid (1939) and its name after the war; no "Manchukuo" revived in a free world after
+    the track. AT: the 1975 start with none of those, `critic/scripts/c65_landof` and the 1965 replay's shots.
+  - [ ] R74d R65-N1: post-war regimes for the Axis: Japan (1947), Italy (1946), West Germany at its birth, Spain (1975),
+    their aggression and traits a post-war democracy's. AT: `c65_freeburst.ts` from 1954, 1963 and 1975 on two seeds
+    with no JAP>KOR in the first 30 days; `afterTrack` 37601 and 37603 with no JAP-USA war in 10 years.
+  - [ ] R74e R65-N2: the blocs at the handover take in no neutral of the replay's and none of the other bloc's sphere;
+    no war declared in the track's end hour. AT: `c65_endhours.ts` on four seeds with no join of a bloc by a nation
+    outside it at the end, no declaration in the end hour; R67's bars kept.
+  - [ ] R74f R65-N3: a free game from a late year opens without a burst of wars (the 38 years of held declarations
+    at once). AT: the first 30 days' declarations per living nation from 1963 and 1975 on two seeds at most 1.2 times
+    plain 1938's (now 1.4-2.6); the declarations of the years after the track's own end within the sweep's band.
+  - [ ] R74g R65-N4: D-Day and Stalingrad fought, not painted: German formations in France and an Allied army that
+    lands in June 1944; Soviet and Axis armies at Stalingrad in November-December 1942 (R66's rules, ADR-969). AT:
+    `trackFronts` on two seeds with both sides engaged at both stages' hours; the shots of
+    `c65_x_stage.mjs normandy` with formations on both sides; the nine replay tests.
+  - [ ] R74h Small, from run 65: the desktop "Next" line cut ("Cameroon ind…"); wars with no way to reach (the
+    Republic of China taking Albania's capital, Poland against Australia); the Sino-Soviet clash of 1969 a months-long
+    air war. AT: each seen fixed in its probe, or the reason it is left in the item.
 
 ## Batch 17 — run 63's findings (full, on `78b082b4`: no blocking issue, every dimension at 8)
 

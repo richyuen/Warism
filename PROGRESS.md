@@ -230,3 +230,4 @@
   8, godMode 8, editorScenarios 7, statsHistory 8, uiUxPolish 8, performance 8, stability 8, semanticZoom 8, naval 8,
   tanks 8, aircraft 8, aiNukes 8); 1 blocking (B1, R68b's refused start not told). R73 filed before the release
   (ADR-1003); the non-blocking findings after it.
+- ADR-1004 (the user's decision): R74, all of run 65's non-blocking findings (R74a-h), before the critic.
