@@ -367,6 +367,7 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     }
   }
   autosave.start(() => !hud.paused.value);
-  // Persisted speed and pause (PLAN 1.8); ?paused=1 forces a paused start (tests).
-  hud.apply(params.get('paused') === '1');
+  // Persisted speed and pause (PLAN 1.8). ?paused=1 paused the start at boot (above, R70c); not forced again here, or a
+  // Resume pressed while the world was building would be undone (ROADMAP R74a, critic run 65 R65-N7).
+  hud.apply();
 }

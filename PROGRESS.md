@@ -236,3 +236,5 @@
   card naming the year; the saved game's card and its Continue left alone. The critic's `c65_x_badyear.mjs` and
   `c65_x_badyearsave.mjs` pass on a build with the starts; specs `replayYear1938h.spec.ts`, `title.spec.ts`. Mends
   R68b (ADR-983); no ADR (ADR-914).
+- R74a (R65-N7): a choice of pause made while the world is built holds; the boot's second forced pause taken out
+  (`hud.apply()`). `c65_x_buildpause.mjs 1600 900 1` running after Resume; `worldBuilding1938.spec.ts` 5 of 5.

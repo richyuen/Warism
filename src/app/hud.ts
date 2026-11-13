@@ -327,10 +327,12 @@ export class Hud {
     return dateOfTick(this.startDay, this.tick.value);
   }
 
-  /** Sends the persisted speed and pause to the worker; `forcePaused` (e.g. ?paused=1) wins. */
-  apply(forcePaused: boolean): void {
+  /**
+   * Sends the speed and pause to the worker: the persisted ones, or a forced paused start's (?paused=1, set at boot), or
+   * what the player chose while the world was built (R74a).
+   */
+  apply(): void {
     this.sim.setSpeed(speedOfLevel(this.speedLevel.value));
-    if (forcePaused) this.paused.value = true;
     this.sim.setPaused(this.paused.value);
   }
 

@@ -57,3 +57,27 @@ test('a paused start says so while the world is built', async ({ page }) => {
   expect(seen.saidPause).toBe(0);
   await expect(page.getByTestId('pause-btn')).toHaveText('Resume');
 });
+
+// ROADMAP R74a (critic run 65, R65-N7): Resume pressed while a paused start's world is built held; the start was paused
+// again at the first stats. Pressed as the overlay comes up and a second later; and Pause pressed in a running start.
+for (const { paused, wait } of [
+  { paused: true, wait: 0 },
+  { paused: true, wait: 1000 },
+  { paused: false, wait: 0 },
+]) {
+  test(`a choice made while the world is built holds (${paused ? 'paused start, Resume' : 'running start, Pause'}, after ${wait} ms)`, async ({ page }) => {
+    test.setTimeout(120_000);
+    await page.addInitScript((p) => localStorage.setItem('warsim.paused', p), '0');
+    await page.goto(`/?scenario=1938${paused ? '&paused=1' : ''}`);
+    await page.getByTestId('world-building').waitFor({ timeout: 60_000 });
+    await page.waitForTimeout(wait);
+    expect(await page.evaluate(() => window.__warsim!.hud.stats.value), 'still building').toBeNull();
+    await page.getByTestId('pause-btn').click();
+    await page.waitForFunction(() => window.__warsim!.hud.stats.value !== null, null, { timeout: 90_000 });
+    await page.waitForTimeout(3000);
+    const want = !paused;
+    expect(await page.evaluate(() => window.__warsim!.hud.paused.value)).toBe(want);
+    expect(await page.evaluate(() => window.__warsim!.hud.worker.value?.paused)).toBe(want);
+    await expect(page.getByTestId('pause-btn')).toHaveText(want ? 'Resume' : 'Pause');
+  });
+}

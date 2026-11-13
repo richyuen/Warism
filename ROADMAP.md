@@ -41,9 +41,13 @@ The critic runs again (focused) after the batch.
   and `c65_x_badyearsave.mjs` (Continue kept) on a build with the starts; `replayYear1938h.spec.ts` (1400 × 800 and
   390 × 844, shots looked at), `title.spec.ts` 11 of 11.
 - [ ] R74 **Run 65's non-blocking findings** (the user's decision of 2026-11-12, ADR-1004: all of them).
-  - [ ] R74a R65-N7: Resume pressed during "Building the world…" on `?paused=1` is undone at the first stats. AT: in
+  - [x] R74a R65-N7: Resume pressed during "Building the world…" on `?paused=1` is undone at the first stats. AT: in
     `node critic/scripts/c65_x_buildpause.mjs 1600 900 1` the player's choice made during the build kept (or the
     button disabled until the world is built), `afterClick` equal to `after3s`.
+    Done: the boot no longer forces the pause again after the build (`hud.apply()`; ?paused=1 pauses at boot, R70c).
+    The probe: Resume in the build, `afterClick` and `after3s` both running (3 January 1938 three seconds on).
+    `worldBuilding1938.spec.ts` gains Resume at 0 and 1000 ms and Pause in a running start (the 0 ms case red on the
+    old code), 5 of 5.
   - [ ] R74b R65-N6: the start card shows the year chosen: its map (a preview per year, built at deploy beside the
     starts), its nation count (from `years.json`), its heading, and the year on the slider's thumb. AT:
     `node critic/scripts/c65_x_replaycard.mjs 1960 replay` (and 1965 on a phone, 1975 free) with that year's map and
