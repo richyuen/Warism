@@ -1759,7 +1759,8 @@ to 27 July 1953, then sets the world free.
   (`npm run saves`: a gzipped save a year and their index, in the site's 1938h start folder; never committed), loaded into the new game with the
   game's own second seed (`?year=Y&mode=replay|free`, `src/app/replayStart.ts`); for a free game the track is left at
   once by its own command (`leaveTrack`, logged; `TrackEnd.free`). A year not built, or of another state format, is
-  refused: the title opens on the 1938 card with a notice naming the year (`?failed=start&year=Y`; R73), the saved
+  refused: the title opens on the 1938 card with a notice naming the year (`?failed=start&year=Y&mode=M`; R73), at that
+  year when the site has built it and in the mode asked for, the notice scrolled into view (R76e, R66-N5), the saved
   game's card and its Continue left as they are.
   The card (R68c; the user's decision of 2026-11-12): no entry of its own on the title's list; the "World, 1938" card
   has a slider of years under its map (1938 and each year the site has built) and "Replay history" / "Play free".

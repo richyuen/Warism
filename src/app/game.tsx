@@ -352,7 +352,7 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     } catch (err) {
       console.warn(`Warism: the start of ${params.get('year')} could not be loaded: ${err instanceof Error ? err.message : String(err)}`);
       // Its own notice (R73): the player's saved game is not what failed.
-      location.replace(startFailedUrl(params.get('year')));
+      location.replace(startFailedUrl(params.get('year'), params.get('mode')));
       return;
     }
   }

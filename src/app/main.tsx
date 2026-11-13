@@ -69,6 +69,7 @@ if (scenarioId !== null) {
         loadFailed={params.get('failed') === 'scenario'}
         saveFailed={params.get('failed') === 'save'}
         startFailed={params.get('failed') === 'start' ? (params.get('year') ?? '') : undefined}
+        startFailedFree={params.get('failed') === 'start' && params.get('mode') === 'free'}
       />,
       uiRoot,
     );

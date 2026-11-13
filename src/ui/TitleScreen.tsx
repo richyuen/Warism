@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { dateOfTick } from '../shared/calendar';
 import type { GameOptions } from '../shared/gameOptions';
 import type { ScenarioId } from '../shared/protocol';
@@ -52,6 +52,8 @@ export interface TitleScreenProps {
    * the card that offers the replay; the saved game is not what failed.
    */
   startFailed?: string | undefined;
+  /** The refused start was asked to be played free, not replayed (R76e): the card opens in that mode. */
+  startFailedFree?: boolean;
 }
 
 /**
@@ -65,7 +67,7 @@ export interface ReplayStart {
   free: boolean;
 }
 
-export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, startYears, readSave, onContinue, checkScenarioFile, onScenarioFile, loadFailed, saveFailed = false, startFailed, yearPreviewUrl }: TitleScreenProps) {
+export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, startYears, readSave, onContinue, checkScenarioFile, onScenarioFile, loadFailed, saveFailed = false, startFailed, startFailedFree = false, yearPreviewUrl }: TitleScreenProps) {
   // A refused start opens on the card that offers the replay, its notice there (R73).
   const [chosen, setChosen] = useState<ScenarioId>(() => (startFailed !== undefined ? (scenarios.find((s) => replays[s.id])?.id ?? scenarios[0]!.id) : scenarios[0]!.id));
   const [startError, setStartError] = useState(startFailed);
@@ -81,14 +83,24 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
   const [pending, setPending] = useState<{ file: File; name: string; scenario: ScenarioId; startDay: number; tick: number; upgraded?: readonly 'traits'[] } | null>(null);
   // The replay's years built for this site (R68c); 1938 alone until read, or without them.
   const [built, setYears] = useState<{ year: number; nations?: number; powers?: string[] }[]>([]);
-  // On a card with a replay: replay history (or play free), from 1 January of `year`.
-  const [history, setHistory] = useState(false);
+  // On a card with a replay: replay history (or play free), from 1 January of `year`. A refused start opens in the mode
+  // it was asked in, and at its year once the site's years are read and it is one of them (R76e, critic run 66 R66-N5).
+  const [history, setHistory] = useState(startFailed !== undefined && !startFailedFree);
   const [year, setYear] = useState(1938);
+  const notice = useRef<HTMLDivElement>(null);
   useEffect(() => {
     void startYears?.()
-      .then(setYears)
+      .then((ys) => {
+        setYears(ys);
+        const refused = Number(startFailed);
+        if (startFailed && ys.some((y) => y.year === refused)) setYear(refused);
+      })
       .catch(() => setYears([]));
   }, []);
+  // The notice in view (R76e: on a phone with a saved game it was below the fold), once the card's rows are laid out.
+  useEffect(() => {
+    if (startFailed !== undefined) notice.current?.scrollIntoView?.({ block: 'center' });
+  }, [built, save]);
   useEffect(() => {
     void readSave()
       .then(setSave)
@@ -259,7 +271,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
               ) : null}
               <p class="title-desc" data-testid="title-desc">{later && !history ? t('title.freeYearDesc', { year: later.year }) : t((history && replay ? replay.info : own).descKey as MessageKey)}</p>
               {replay && startError !== undefined ? (
-                <div class="panel-warn" data-testid="title-start-error">
+                <div class="panel-warn" data-testid="title-start-error" ref={notice}>
                   {startError ? t('title.startFailed', { year: startError }) : t('title.startFailedAny')}
                 </div>
               ) : null}

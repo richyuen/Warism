@@ -75,9 +75,11 @@ export function loadFailedUrl(what: 'scenario' | 'save' = 'scenario'): string {
  * The title screen, saying that the replay's start of 1 January `year` could not be loaded (ROADMAP R73, critic run 65
  * B1): its own notice, on the card that offers it, not the saved game's (`loadFailedUrl('save')`).
  */
-export function startFailedUrl(year: string | null): string {
+export function startFailedUrl(year: string | null, mode: string | null = null): string {
   const q = new URLSearchParams({ failed: 'start' });
   if (year !== null && /^\d{1,4}$/.test(year)) q.set('year', year);
+  // The mode it was asked in (R76e, critic run 66 R66-N5): the card opens on it.
+  if (mode === 'replay' || mode === 'free') q.set('mode', mode);
   return `?${q.toString()}`;
 }
 

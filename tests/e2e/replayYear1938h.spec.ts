@@ -68,17 +68,21 @@ test('a start that cannot be loaded is told by its year, and the saved game keep
     r.fulfill({ json: { format: STATE_FORMAT, seed: 1938, years: [{ year: 1938, tick: 0, hash: 0 }, { year: 1960, tick: 1, hash: 1 }] } }),
   );
   await page.route('**/data/scenarios/1938h/start/1960.sav', (r) => r.fulfill({ status: 404, body: 'no' }));
-  for (const sizes of [
-    { width: 1400, height: 800 },
-    { width: 390, height: 844 },
-  ]) {
+  // R76e (critic run 66, R66-N5): the card opens at the year and in the mode refused, its notice in view unscrolled (on
+  // a phone with a saved game it was below the fold).
+  for (const [sizes, mode] of [
+    [{ width: 1400, height: 800 }, 'replay'],
+    [{ width: 390, height: 844 }, 'free'],
+  ] as const) {
     await page.setViewportSize(sizes);
-    await page.goto('/?scenario=1938h&paused=1&after=9&year=1960&mode=replay');
+    await page.goto(`/?scenario=1938h&paused=1&after=9&year=1960&mode=${mode}`);
     await page.waitForURL(/failed=start&year=1960/, { timeout: 60_000 });
-    await expect(page.getByTestId('title-chosen')).toHaveText('World, 1938');
     await expect(page.getByTestId('title-start-error')).toContainText('1 January 1960');
-    await page.getByTestId('title-start-error').scrollIntoViewIfNeeded();
-    await expect(page.getByTestId('title-start-error')).toBeVisible();
+    await expect(page.getByTestId('title-chosen')).toHaveText('World, 1960');
+    await expect(page.getByTestId('title-start-date')).toHaveText('1 January 1960');
+    await expect(page.getByTestId('title-start-year')).toHaveValue('1960');
+    await expect(page.getByTestId(`title-mode-${mode}`)).toHaveAttribute('aria-checked', 'true');
+    await expect(page.getByTestId('title-start-error')).toBeInViewport();
     await expect(page.getByTestId('title-continue')).toBeVisible();
     await expect(page.getByTestId('title-save-error')).toHaveCount(0);
     await page.screenshot({ path: test.info().outputPath(`start-failed-${sizes.width}.png`), fullPage: true });

@@ -72,10 +72,15 @@ batch (ADR-1016, the user's decision; ADR-916).
     10/8 (38701 0/0 before); D-Day both engaged 24, 24, 24 of 28 (0 before), the Germans 6-7k lost; over the whole range on 1938 10 of 23 large
     land fronts both engaged at the hour (run 66: 10; bar 9). The nine
     replay tests green.
-  - [ ] R76e R66-N5: after a refused start the card is back at 1938 in "Play free" while the notice names another year
+  - [x] R76e R66-N5: after a refused start the card is back at 1938 in "Play free" while the notice names another year
     and mode; at 390 × 844 with a saved game the notice is below the fold. AT: in `node
     critic/scripts/c66_x_badyear2.mjs` the slider and date at the year refused, the mode asked for, the notice in view
     at both sizes.
+    Done: `startFailedUrl` carries the mode; the card opens at the refused year (when the site's index has it) and in
+    its mode, the notice scrolled into view. `c66_x_badyear2.mjs` on a build with run 66's starts, 1600 × 900 and
+    390 × 844: slider and date at 1960 and 1975 in all eight cases of a built year, the notice in view (at 390 × 844
+    with a saved game y 401-458 of 844), Continue kept; 1977 (not built) at 1938, its notice in view.
+    `replayYear1938h.spec.ts` (replay at 1400 × 800, free at 390 × 844: year, date, mode, `toBeInViewport`) 5 of 5.
   - [ ] R76f R66-N6: `cardPowers` puts Spain among the great powers in 1941-49 and leaves China out in 1941-43 and 1945.
     AT: `years.json`'s `powers` for 1941-49 without SPN, with China (CHI) in 1941-45; 1938, 1960 and 1975's orders as
     R75b/R75c's (`tests/unit/replaySaves1938h.test.ts`).

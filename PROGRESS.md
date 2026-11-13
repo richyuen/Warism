@@ -274,3 +274,4 @@
 - R76d (ADR-1018): the Sixth Army at Stalingrad from 24 October, D-Day's beachhead stage on 12 June: D-Day fought
   (24 of 28 samples on three seeds), Uranus engaged at its hour on all three; Stalingrad's stage a handover (the user's
   decision: its window shut by ADR-977's rule).
+- R76e: a refused start's card opens at its year and in its mode, the notice in view (on a phone with a saved game too).
