@@ -39,10 +39,14 @@ Before the release (PROMPT's RELEASES step 2, ADR-1005: every non-blocking findi
     and 6161 32 and 28 in the year, day for day plain 1938's (32, 28); 1975 5 and 9 in the first month (0.47 and 0.99 ×
     plain 1938's per nation), 71 and 59 in the year, as run 66. `trackFocus1938h.test.ts` 2 of 2 (1938's end none,
     the curve from 1946).
-  - [ ] R76b R66-N2: the card in "Play free" at a later year shows 1938's description and the replay's fixed-seed note.
+  - [x] R76b R66-N2: the card in "Play free" at a later year shows 1938's description and the replay's fixed-seed note.
     A free game's description from that year, the fixed-seed note only under "Replay history". AT: in
     `node critic/scripts/c66_x_replaycard.mjs 1975 free` (and 1960 at 390 × 844) the description names the year and no
     "same world every game" line shows; a Playwright check of both modes.
+    Done: `title.freeYearDesc` and `title.freeYearNote` for a later year free (`NewGameForm`'s `fixedNote`). The probe
+    on a build with run 66's starts, 1975 free at 1600 × 900 and 1960 free at 390 × 844: "The world as history left it
+    on 1 January <year>…", the note "The world of 1 January <year> is the same in every game…", no replay line (shots
+    looked at). `replayYear1938h.spec.ts` checks both modes at 1941; 5 of 5.
   - [ ] R76c R66-N3: the sea reach (R74h, ADR-1011) keys on the sim's `greatPowers`, which leaves the United States out
     of plain 1938's first year and Japan out of years 1-3, and lets Republican China land anywhere. Key it on a measure
     that counts the powers it names (income, `cardPowers`' kind, or lift and navy). AT: on 7019 (`npx tsx

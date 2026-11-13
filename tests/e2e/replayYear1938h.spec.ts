@@ -141,6 +141,18 @@ test('the 1938 card: a slider of years, replay or free, reach the game', async (
     await expect(page.getByTestId('title-preview')).toHaveAttribute('src', /start\/1941\.png$/);
     await page.waitForFunction(() => (document.querySelector('[data-testid=title-preview]') as HTMLImageElement).complete);
     await page.getByTestId(`title-mode-${mode}`).click();
+    // The description and the note are the mode's (R76b, critic run 66's R66-N2): the replay's under "Replay history";
+    // a free game of the year's world under "Play free", with no "same world every game".
+    if (mode === 'replay') {
+      await expect(page.getByTestId('title-desc')).toContainText('as they went');
+      await expect(page.getByTestId('settings-fixed')).toContainText('replay of history');
+    } else {
+      await expect(page.getByTestId('title-desc')).toContainText('as history left it on 1 January 1941');
+      await expect(page.getByTestId('title-desc')).not.toContainText('eve of the Second World War');
+      await expect(page.getByTestId('settings-fixed')).toContainText('1 January 1941 is the same in every game');
+      await expect(page.getByTestId('settings-fixed')).not.toContainText(/replay|same world every game/);
+      await page.screenshot({ path: test.info().outputPath('card-free-1941.png') });
+    }
     if (mode === 'replay') await page.screenshot({ path: test.info().outputPath('card-replay-1941.png') });
     q = await started(/year=1941/);
     expect([q.get('scenario'), q.get('mode')]).toEqual(['1938h', mode]);

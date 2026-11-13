@@ -265,3 +265,5 @@
   (ADR-1014).
 - R76a (ADR-1015): the historical focus only for an end of the track from 1946; a replay left in 1938 declares as
   plain 1938 (32 and 28 on 5151 and 6161), 1975's quiet first month kept.
+- R76b: the start card at a later year under "Play free" has its own description and note, the replay's only under
+  "Replay history".

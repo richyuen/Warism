@@ -28,6 +28,8 @@ export interface NewGameFormProps {
    * Start starts that seed with the scenario's own options.
    */
   fixedSeed?: number | undefined;
+  /** The note over a fixed seed's start, when not the replay's own (R76b: a later year played free). */
+  fixedNote?: string | undefined;
   onStart: (seed: number, options: GameOptions) => void;
 }
 
@@ -46,7 +48,7 @@ function withCe(opts: GameOptions, v: string): GameOptions {
  * The seed (or a random one) and the new-game options of PLAN 1.39b1, with the button that starts
  * the game. Shared by the title screen (PLAN 1.43) and the settings panel.
  */
-export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', diplomacy = false, heroes = false, startLabel, blocked, fixedSeed, onStart }: NewGameFormProps) {
+export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', diplomacy = false, heroes = false, startLabel, blocked, fixedSeed, fixedNote, onStart }: NewGameFormProps) {
   const [next, setNext] = useState(String(seed));
   const [count, setCount] = useState(String(options.nations ?? nationsRange?.default ?? ''));
   const [opts, setOpts] = useState<GameOptions>(options);
@@ -73,7 +75,7 @@ export function NewGameForm({ seed, options, nationsRange, rangeHint = true, siz
     return (
       <div class="new-game">
         <p class="panel-note" data-testid="settings-fixed">
-          {t('settings.fixedSeed')}
+          {fixedNote ?? t('settings.fixedSeed')}
         </p>
         <button type="button" class="start-btn" data-testid="settings-new-game" disabled={blocked !== undefined} title={blocked} onClick={() => onStart(fixedSeed, { after: randomSeed() || 1 })}>
           {startLabel}

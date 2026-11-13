@@ -1378,6 +1378,8 @@
   "title.loadFailed": "The scenario file could not be loaded. Choose it again.",
   "title.worldOfYear": "World, {year}",
   "title.previewAltYear": "The political map of the world on 1 January {year}",
+  "title.freeYearDesc": "The world as history left it on 1 January {year}, played on from there on its own course: no event of history is applied after it.",
+  "title.freeYearNote": "The world of 1 January {year} is the same in every game; what follows it is drawn anew each game.",
   "title.startFailed": "The world of 1 January {year} could not be loaded: this site has not built it, or it is not whole. Choose another year.",
   "title.startFailedAny": "That year's world could not be loaded. Choose another year.",
   "title.saveFailed": "This saved game could not be loaded: it is not whole, or it was made by an older version of Warism. Start a new game.",

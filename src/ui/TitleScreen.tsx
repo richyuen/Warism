@@ -257,7 +257,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
                   </div>
                 </div>
               ) : null}
-              <p class="title-desc">{t((history && replay ? replay.info : own).descKey as MessageKey)}</p>
+              <p class="title-desc" data-testid="title-desc">{later && !history ? t('title.freeYearDesc', { year: later.year }) : t((history && replay ? replay.info : own).descKey as MessageKey)}</p>
               {replay && startError !== undefined ? (
                 <div class="panel-warn" data-testid="title-start-error">
                   {startError ? t('title.startFailed', { year: startError }) : t('title.startFailedAny')}
@@ -296,7 +296,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
                 </div>
               ) : null}
               {replay && replayed ? (
-                <NewGameForm key={`${chosen}-replay`} seed={seed} options={{}} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={replay.info.fixedSeed} onStart={(s, o) => onStart(replay.id, s, o, history && year === 1938 ? undefined : { year, free: !history })} />
+                <NewGameForm key={`${chosen}-replay`} seed={seed} options={{}} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={replay.info.fixedSeed} fixedNote={history ? undefined : t('title.freeYearNote', { year })} onStart={(s, o) => onStart(replay.id, s, o, history && year === 1938 ? undefined : { year, free: !history })} />
               ) : (
                 <NewGameForm key={chosen} seed={seed} options={{}} nationsRange={info.nationsRange} sizes={info.sizes} defaultSize={info.defaultSize} diplomacy={info.diplomacy} heroes={info.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={info.fixedSeed} onStart={(s, o) => onStart(chosen, s, o)} />
               )}
