@@ -77,6 +77,20 @@ batch (ADR-1016, the user's decision; ADR-916).
     nation launches more warheads at one target in a week than one more than were intercepted there before, or the
     rule that drives it named and the case answered in DECISIONS.
 
+## Batch 22 — after Batch 21 (the user's requests during it)
+
+A feature the user asks for during a batch joins the next batch (PROMPT).
+
+- [ ] R77 **A stage's own window of fighting (`fightDays`)** (the user, 2026-11-13, on R76d's D-Day: "why does the hold need
+  to be 7 days in all cases?"). Every `occupy` and `transfer` stage lifts its hold for FIGHT_DAYS (7) before it (ADR-975),
+  whatever the battle: a two-day crossing and a months-long siege alike; D-Day's stage had to move to 12 June for its
+  window to open at the landing (ADR-1018). An optional `fightDays` on a stage (schema, `Track.openStages`, the timeline
+  check), 7 when absent; ADR-977's outnumbered rule unchanged. First use: D-Day's beachhead on its date, its window from
+  the landing. AT: a unit test (a stage with `fightDays` N opens N days before its hour and not N+1; one without, 7);
+  `trackFronts` reads each stage's own window (its samples 4 a day over it); on 1938, 37701 and 38701 D-Day both engaged
+  in at least a third of its samples, Uranus at its hour as R76d; on 1938 the large land fronts both engaged at the
+  stage's hour ≥ 9 (R66's bar); the nine replay tests green; plain games and seed 99's pin unchanged (no track).
+
 ## Batch 20 — run 65's findings (focused, on `5ee3e035`: 1 blocking issue, every dimension at its bar)
 
 Before the release (PROMPT's RELEASES step 2, ADR-1003; the non-blocking findings too, the user's decision, ADR-1004).
