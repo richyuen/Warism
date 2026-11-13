@@ -1618,8 +1618,10 @@ production and research. `src/sim/ai/`.
   (0.3) × min(1, years since its last war ÷ `RESTLESS_YEARS` 10) when at peace. Attack and defence are the
   two realms' strength plus `ALLY_WEIGHT` (0.4) of their partners' and guarantors' (defence at least 1).
   With no neighbour over `DECLARE_AT` (0.5) it tries targets across the sea (holders of ports its
-  transports at port reach, not iced or held by an enemy; a nation that is no great power only those within
-  `SEA_REACH_KM`, 4000, of such a group, R74h). It declares on the best with probability
+  transports at port reach, not iced or held by an enemy; a nation not among the powers only those within
+  `SEA_REACH_KM`, 4000, of such a group, R74h). The powers (`seaPowers`, R76c): the seven of `worldPowers` (a
+  share of the world's strength plus its income plus its warheads, the start card's measure) and the seven largest
+  navies. It declares on the best with probability
   `DECLARE_P` (0.25) × aggression ÷ 100.
 - **Threat pacts:** an unaligned nation whose neighbour of aggression ≥ `THREAT_AGGRESSION` (50) is over
   `THREAT_RATIO` (1.5) times stronger and not yet at war with it, with probability `ALLY_P` (0.3), joins

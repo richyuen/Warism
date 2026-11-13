@@ -12,7 +12,11 @@ import { assets1938 } from '../helpers/earth';
 // whole way (5–6 ms), and was asked again every MARCH_DAYS: the operational AI's largest cost.
 
 describe('a refused march from afar waits (PLAN 7.117, ADR-703)', () => {
-  it('seed 5: the first formation refused waits FAR_RETRY_DAYS with no order refused, and the wait is saved', () => {
+  it('seed 7: the first formation refused waits FAR_RETRY_DAYS with no order refused, and the wait is saved', () => {
+    // Seed 7 from day 180 since R76c (the powers of the world and the sea land across any sea): seed 4 has none in its
+    // first 400 days on that history; 1 on day 155, 2 on 176, 3 on 222, 5 on 201 (formation 352: while it waits, the
+    // plan's orders to its sectors are refused 76 times, as seed 3's 820 below), 6 on 312, 7 on 200 (formation 321;
+    // `tools/diag/firstWait.ts`).
     // Seed 5 from day 180 since ADR-1011 (R74h, a nation no great power declares over the sea only within reach): seeds
     // 3, 4 and 7 have none in their first 400 days on that history; 1 on day 155, 2 on 135, 5 on 298 (formation 342),
     // 6 on 297 (`tools/diag/firstWait.ts`); 1's and 2's are before day 180.
@@ -35,7 +39,7 @@ describe('a refused march from afar waits (PLAN 7.117, ADR-703)', () => {
     // Seed 4 from day 180 since ADR-723 (PLAN 7.133, the wings over the sea): seeds 7 and 99 have none in
     // their first 400 days on that history, seeds 1-6 each one (4: day 185; `tools/diag/firstWait.ts`).
     // Seed 7 from day 180 since ADR-711 (PLAN 7.5 before critic run 15); before, seed 99 from day 90.
-    const s = at1938(5, 180 * 24);
+    const s = at1938(7, 180 * 24);
     const w = s.world;
     const refused = new Map<number, number[]>();
     const step = (): void =>
@@ -52,7 +56,7 @@ describe('a refused march from afar waits (PLAN 7.117, ADR-703)', () => {
         ww.out.fires.length = 0;
       });
     // Day by day to the first wait (seed 99 on 2026-10-25's rules: formation 571 on day 117; seed 7 on
-    // ADR-711's: formation 35 on day 198; seed 4 on ADR-723's: formation 32 on day 185; seed 7 on ADR-738's: formation 732 on day 261; seed 5 on ADR-739's: formation 544 on day 129; seed 4 on ADR-797's: formation 729 on day 255; seed 6 on ADR-883's: formation 307 on day 254; seed 7 on ADR-887's: formation 321 on day 200; seed 5 on ADR-1011's: formation 342 on day 298).
+    // ADR-711's: formation 35 on day 198; seed 4 on ADR-723's: formation 32 on day 185; seed 7 on ADR-738's: formation 732 on day 261; seed 5 on ADR-739's: formation 544 on day 129; seed 4 on ADR-797's: formation 729 on day 255; seed 6 on ADR-883's: formation 307 on day 254; seed 7 on ADR-887's: formation 321 on day 200; seed 5 on ADR-1011's: formation 342 on day 298; seed 7 on R76c's: formation 321 on day 200).
     let id = -1;
     let until = -1;
     for (let d = 0; d < 120 && id < 0; d++) {

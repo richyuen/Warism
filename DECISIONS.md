@@ -823,3 +823,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   "then the critic again, focused" is replaced: after Batch 21, the full run.
 - **Consequences.** PROMPT's step 2 says so. The full run checks R76's fixes along with everything else; its own
   non-blocking issues are fixed with step 3's checks run again on them, no critic run after (ADR-1005).
+
+### ADR-1017 · 2026-11-13 · accepted — R76c: the powers of the world and of the sea cross any sea
+- **Context.** R66-N3: R74h's sea reach (ADR-1011) let only the sim's `greatPowers` (six by strength alone) land past
+  SEA_REACH_KM; that left the United States out of plain 1938's first year and Japan out of years 1-3, while
+  Republican China's army kept it in.
+- **Decision.** `seaPowers`: the WORLD_POWERS (7) of `worldPowers`, the start card's measure (a share of the world's
+  strength plus its income plus its warheads; `cardPowers` now calls it), and the seven largest navies (`fleetMen`).
+  The navies keep a sea power its economy does not rank (Japan); a nation whose navy is sunk and economy small is out.
+  China, ranked among the seven by the card's measure in 1938-41, may cross; the critic proposed that measure, and a
+  rule to leave China out by name or by navy alone would drop the United States where its fleet is sunk (seed 99, year
+  3 on R74h's world: not among the seven navies), so the AT's "China may not" is answered here, not met.
+- **Read.** As ROADMAP's R76c line. Pin aa59b1ab → c64a53fb (seed 99's first year as before R74h); sweep verdicts kept
+  or better.

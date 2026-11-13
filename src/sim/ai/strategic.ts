@@ -41,7 +41,7 @@ import { canJoin, LEAVE_LOYALTY, leaveAlliance, noWarAmong } from '../systems/al
 import { blocLeader, relationHit, worstPariah } from '../systems/nuclear';
 import { transportGroupsAtPort } from '../systems/amphibious';
 import { keyAt, seaKm, waterKeys } from '../systems/navalCombat';
-import { forceMen, seaHolder } from '../systems/seaControl';
+import { fleetMen, forceMen, seaHolder } from '../systems/seaControl';
 import { navOf, portSeaOf, seaOf, type World } from '../world';
 import { ATTACKERS } from '../wars';
 import { AiLayer, aiRuns } from './layers';
@@ -67,7 +67,7 @@ export const THREAT_RATIO = 1.5;
 export const ALLY_P = 0.3;
 export const HEGEMON_SHARE = 0.25;
 /**
- * How far over the sea a nation that is no great power lands (R74h, km from a transport group of its at its port): the
+ * How far over the sea a nation that is not among the powers (`seaPowers`) lands (R74h, km from a transport group of its at its port): the
  * Mediterranean's length, the Bay of Bengal's crossing; not the Pacific or the Atlantic.
  */
 export const SEA_REACH_KM = 4000;
@@ -232,6 +232,57 @@ export function warUtility(world: World, n: number, t: number, attack: number, d
   return { strength, opportunity, claim, exhaustion, wars: warsTerm, pariah, restless, u };
 }
 
+/** How many powers of the world and of the sea land across any sea (R76c), as the start card names (R75b): 1938's seven. */
+export const WORLD_POWERS = 7;
+
+/**
+ * The world's powers (R75b's card, R76c's sea reach): the `k` living nations that are no puppet with the highest share
+ * of the world's strength (`str`, `strengths`) plus their share of its income and of its warheads, strongest first,
+ * lowest id on ties. Unlike `greatPowers` (strength alone), it keeps the United States in 1938 and leaves out a large
+ * army at peace with no economy behind it.
+ */
+export function worldPowers(world: World, str: Float64Array, k = WORLD_POWERS): number[] {
+  const nc = world.nations.cols;
+  const live: number[] = [];
+  world.nations.forEach((n) => {
+    if (nc.living[n] === 1 && nc.overlord[n] === 0) live.push(n);
+  });
+  let s = 0;
+  let inc = 0;
+  let heads = 0;
+  for (const n of live) {
+    s += str[n]!;
+    inc += Math.max(0, nc.income[n]!);
+  }
+  for (const [, v] of world.warheads) heads += v.stock;
+  const score = (n: number): number => (s > 0 ? str[n]! / s : 0) + (inc > 0 ? Math.max(0, nc.income[n]!) / inc : 0) + (heads > 0 ? (world.warheads.get(n)?.stock ?? 0) / heads : 0);
+  const scored = live.map((n) => ({ n, v: score(n) }));
+  scored.sort((a, b) => b.v - a.v || a.n - b.n);
+  return scored.slice(0, k).map(({ n }) => n);
+}
+
+/**
+ * Who lands across any sea (R76c; critic run 66, R66-N3): the WORLD_POWERS of `worldPowers` and the WORLD_POWERS with
+ * the largest navies (`fleetMen`, a puppet's to its overlord). By `greatPowers` (R74h) the United States was out of
+ * plain 1938's first year and Japan out of years 1-3; by the world's measure alone, Japan out in years 1-2 on most
+ * seeds, its navy third in the world.
+ */
+export function seaPowers(world: World, str: Float64Array): Set<number> {
+  const nc = world.nations.cols;
+  const navy = new Float64Array(world.nations.highWater + 1);
+  world.formations.forEach((id) => {
+    if (!world.isFleet(id)) return;
+    const n = world.formations.cols.nation[id]!;
+    navy[nc.overlord[n] || n]! += fleetMen(world, id);
+  });
+  const fleets: number[] = [];
+  world.nations.forEach((n) => {
+    if (nc.living[n] === 1 && nc.overlord[n] === 0 && navy[n]! > 0) fleets.push(n);
+  });
+  fleets.sort((a, b) => navy[b]! - navy[a]! || a - b);
+  return new Set([...worldPowers(world, str), ...fleets.slice(0, WORLD_POWERS)]);
+}
+
 /** The great powers: the GREAT_POWERS strongest living nations that are no puppet, by `str` (`strengths`), lowest id on ties. */
 export function greatPowers(world: World, str: Float64Array): Set<number> {
   const nc = world.nations.cols;
@@ -310,9 +361,9 @@ export function seaTargets(world: World, n: number, reach = Infinity): number[] 
  * had no land neighbour over the bar for 19 years, and held their cells to 2 % at peace; the Soviet
  * Union, its transports at its ports on their water, scored 1.0–1.7 on them and had no land target
  * over the bar on 77–84 of its turns. Land wars come first: the sea's targets only on a turn none is.
- * `attack` is `n`'s strength with its allies, `defence` a target's (`sides`). R74h: a nation that is no great power
- * (`powers`) lands only within SEA_REACH_KM of its transports (critic run 65: the Republic of China on Taiwan
- * declaring on the Ivory Coast and Liberia, 13,000 km off; People's China on Panama).
+ * `attack` is `n`'s strength with its allies, `defence` a target's (`sides`). R74h: a nation that is not among the
+ * powers (`powers`, `seaPowers` since R76c) lands only within SEA_REACH_KM of its transports (critic run 65: the
+ * Republic of China on Taiwan declaring on the Ivory Coast and Liberia, 13,000 km off; People's China on Panama).
  */
 export function warTarget(world: World, n: number, neighbours: readonly number[], attack: number, defence: (t: number) => number, wars: number, restless: number, blocs: ReadonlySet<number> = new Set(), powers?: ReadonlySet<number>): number {
   const pick = (among: readonly number[], skip?: ReadonlySet<number>): number => {
@@ -422,14 +473,14 @@ export function strategicAi(world: World): void {
   // The historical focus (R75a): declarations eased in, the blocs closed while it lasts.
   const focus = focusAfterTrack(world);
   const open = (a: { leader: number }): boolean => focus >= 1 || !blocLeader(world, a.leader);
-  // The great powers, who land across any sea (R74h): made at the first declaration weighed.
+  // The powers of the world and the sea, who land across any sea (R74h, R76c): made at the first declaration weighed.
   let powers: ReadonlySet<number> | undefined;
   for (const n of actors) {
     const neighbours = [...(nb.get(n) ?? [])].sort((a, b) => a - b);
     // War.
     const wars = warsOf(world, n);
     if (wars < MAX_WARS && nc.aggression[n]! >= PACIFIST_BELOW && nc.gold[n]! >= 0 && nc.bankrupt[n] !== 1) {
-      powers ??= greats.size > 0 ? greats : greatPowers(world, str);
+      powers ??= seaPowers(world, str);
       const best = warTarget(world, n, neighbours, withAllies(n), defence, wars, wars === 0 ? restlessOf(world, n) : 0, blocs, powers);
       if (best !== 0 && hashToUnit(hash32(world.seed, day, n, SALT_WAR)) < (focus * DECLARE_P * nc.aggression[n]!) / 100) declareWar(world, n, best);
     }

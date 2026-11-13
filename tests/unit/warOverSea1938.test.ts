@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DECLARE_AT, RESTLESS, SEA_REACH_KM, neighbourMap, seaTargets, sides, strengths, warTarget, warUtility } from '../../src/sim/ai/strategic';
+import { DECLARE_AT, RESTLESS, SEA_REACH_KM, WORLD_POWERS, greatPowers, neighbourMap, seaPowers, seaTargets, sides, strengths, warTarget, warUtility, worldPowers } from '../../src/sim/ai/strategic';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { destroyFormation } from '../../src/sim/systems/elements';
@@ -81,5 +81,33 @@ describe('a war across the sea (PLAN 7.82d)', () => {
     c.moving[tp!] = 1;
     expect(seaTargets(w, ENG)).toEqual([]);
     expect(warTarget(w, ENG, [], attack, defence, 0, RESTLESS)).toBe(0);
+  }, 300_000);
+
+  it("the powers who land across any sea: the world's seven and the sea's seven (R76c)", () => {
+    // Critic run 66, R66-N3: by `greatPowers` (strength alone) plain 1938 on day 0 left out the United States, and Japan
+    // from year 1, its navy the third. The world's measure (strength, income, warheads) names 1938's seven; the navies
+    // keep a sea power its economy does not rank.
+    const s = new Sim({ scenario: '1938', seed: 7019, assets: assets1938(W) });
+    const w = s.world;
+    const str = strengths(w);
+    expect(greatPowers(w, str).has(id('USA'))).toBe(false);
+    const world7 = worldPowers(w, str);
+    expect(world7).toHaveLength(WORLD_POWERS);
+    expect(new Set(world7)).toEqual(new Set(['USA', 'SOV', 'GER', 'ENG', 'FRA', 'ITA', 'JAP'].map(id)));
+    const sea = seaPowers(w, str);
+    for (const tag of ['USA', 'JAP', 'ENG']) expect(sea.has(id(tag)), tag).toBe(true);
+    // Republican China, its army large and its navy none, is not among them in 1938.
+    expect(sea.has(id('CHI'))).toBe(false);
+    // A navy alone: Japan with no income and no army is out of the world's seven, and kept by its fleet.
+    const jap = id('JAP');
+    w.nations.cols.income[jap] = 0;
+    const weak = Float64Array.from(str);
+    weak[jap] = 0;
+    expect(worldPowers(w, weak)).not.toContain(jap);
+    expect(seaPowers(w, weak).has(jap)).toBe(true);
+    // Puppets are never among them.
+    w.nations.forEach((n) => {
+      if (sea.has(n)) expect(w.nations.cols.overlord[n]).toBe(0);
+    });
   }, 300_000);
 });

@@ -13,7 +13,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { STATE_FORMAT } from '../../src/shared/saveFormat';
-import { strengths } from '../../src/sim/ai/strategic';
+import { strengths, WORLD_POWERS, worldPowers } from '../../src/sim/ai/strategic';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TAGS_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
@@ -40,33 +40,17 @@ export function livingNations(w: World): number {
 }
 
 /** How many great powers a start's card names (R75b): 1938's seven. */
-export const CARD_POWERS = 7;
+export const CARD_POWERS = WORLD_POWERS;
 
 /**
  * The great powers of a world for its start's card (R75b, as Paradox's bookmarks name a start's nations): the living
  * nations that are no puppet, by their share of the world's strength (`strengths`) plus their share of its income and
  * of its warheads, strongest first, CARD_POWERS of them, each by the tag it bears then (`identities`: Spain, the
- * People's Republic). Of the card alone: the sim's own great powers (`greatPowers`, by strength) are its rules'.
+ * People's Republic). The sim's `worldPowers`, which the sea's reach takes too (R76c); its `greatPowers` (by strength)
+ * are its other rules'.
  */
 export function cardPowers(w: World): string[] {
-  const nc = w.nations.cols;
-  const str = strengths(w);
-  const live: number[] = [];
-  w.nations.forEach((n) => {
-    if (nc.living[n] === 1 && nc.overlord[n] === 0) live.push(n);
-  });
-  let s = 0;
-  let inc = 0;
-  let heads = 0;
-  for (const n of live) {
-    s += str[n]!;
-    inc += Math.max(0, nc.income[n]!);
-  }
-  for (const [, v] of w.warheads) heads += v.stock;
-  const score = (n: number): number => (s > 0 ? str[n]! / s : 0) + (inc > 0 ? Math.max(0, nc.income[n]!) / inc : 0) + (heads > 0 ? (w.warheads.get(n)?.stock ?? 0) / heads : 0);
-  const scored = live.map((n) => ({ n, v: score(n) }));
-  scored.sort((a, b) => b.v - a.v || a.n - b.n);
-  return scored.slice(0, CARD_POWERS).map(({ n }) => w.identities.get(n) ?? (TAGS_1938H as readonly string[])[n - 1]!);
+  return worldPowers(w, strengths(w), CARD_POWERS).map((n) => w.identities.get(n) ?? (TAGS_1938H as readonly string[])[n - 1]!);
 }
 
 const quiet = (w: World): void => {

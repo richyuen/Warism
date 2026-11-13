@@ -47,11 +47,19 @@ batch (ADR-1016, the user's decision; ADR-916).
     on a build with run 66's starts, 1975 free at 1600 × 900 and 1960 free at 390 × 844: "The world as history left it
     on 1 January <year>…", the note "The world of 1 January <year> is the same in every game…", no replay line (shots
     looked at). `replayYear1938h.spec.ts` checks both modes at 1941; 5 of 5.
-  - [ ] R76c R66-N3: the sea reach (R74h, ADR-1011) keys on the sim's `greatPowers`, which leaves the United States out
+  - [x] R76c R66-N3: the sea reach (R74h, ADR-1011) keys on the sim's `greatPowers`, which leaves the United States out
     of plain 1938's first year and Japan out of years 1-3, and lets Republican China land anywhere. Key it on a measure
     that counts the powers it names (income, `cardPowers`' kind, or lift and navy). AT: on 7019 (`npx tsx
     critic/scripts/c66_greats.ts 7019 3` kind of probe) the United States and Japan may cross any sea from day 0 to year
     3 and China may not; the sweep's verdicts kept, the pin's move logged.
+    Done (ADR-1017): `seaPowers`, the seven of `worldPowers` (the card's measure, now the sim's) and the seven largest
+    navies. Quarterly to year 3 on 7019, 99 and 5151 (`.cache/r76/seapow.ts`): the United States in 39 of 39; Japan in
+    every sample while it has warships (on 7019 from day 364 its navy is sunk by the United States, 0 men aboard, and
+    it is out). China is in from the first quarter: by the card's measure, the critic's own proposal, its army and
+    income rank it among the seven; the AT's "China may not" is not met, and the measure is kept (ADR-1017). Pin
+    aa59b1ab → c64a53fb (R55i's again); sweep on 1571-1580 (`docs/sweeps/2026-11-13-sweep-r76c.md`): limits 7 of 10
+    (R74h 5), riser and faller 10, no stasis 10 (9), no break-up 10. `warOverSea1938.test.ts` 2 of 2;
+    `farWait1938.test.ts` to seed 7 (formation 321, day 200).
   - [ ] R76d R66-N4: Stalingrad's stage (31 October 1942) has no German army (the Sixth Army comes 1 November), Uranus is
     not engaged on 38701, and D-Day's beachhead is handed over at the hour, not fought. Arrivals a few days before their
     stage; the beachhead taken by the landed divisions over the window. AT: `trackFronts` on 1938, 37701 and 38701 with

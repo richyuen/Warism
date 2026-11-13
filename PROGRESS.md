@@ -269,3 +269,5 @@
   "Replay history".
 - ADR-1016 (the user's decision): a focused run with no blocking issue, its non-blocking issues fixed, is followed by
   the full run; after Batch 21, the full run.
+- R76c (ADR-1017): the sea reach keys on `seaPowers` (the card's seven and the seven largest navies): the United
+  States always, Japan while it has a fleet. Pin aa59b1ab → c64a53fb; sweep 1571-1580 limits 7 of 10 (5), the rest kept.
