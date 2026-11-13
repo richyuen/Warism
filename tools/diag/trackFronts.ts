@@ -65,6 +65,18 @@ const LARGE = 200;
         const m = stageArmies(...args, { take: w0.o.take, holders: w0.o.holders });
         w0.samples++;
         if (m.attacker.engaged > 0 && m.defender.engaged > 0) w0.both++;
+        // A formation that comes into the band in the window joins its side's cohort with its men then (R78a, critic run
+        // 67: the Allies landed in Normandy after the window opened read "of 0k lost 0k" while losing 70k).
+        for (const [side, now] of [
+          [w0.o.attacker, m.attacker],
+          [w0.o.defender, m.defender],
+        ] as const)
+          for (const [id, men] of now.ids)
+            if (!w0.nation.has(id)) {
+              w0.nation.set(id, f.nation[id]!);
+              side.ids.push([id, men]);
+              side.men += men;
+            }
       }
       if (at.get(i) !== sim.tick) continue;
       const o = w0?.o ?? stageArmies(...args);

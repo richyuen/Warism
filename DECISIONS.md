@@ -899,3 +899,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   user's decisions or ADR-17) are not named as issues, and no dimension is under its bar (ADR-843): none filed.
 - **Decision.** Batch 22, R78a-e, each with the critic's AT; then step 3's checks once on the fixed code (ADR-1022),
   no critic run after.
+
+### ADR-1024 · 2026-11-13 · accepted — R78a: the Normandy build-up
+- **Context.** R67-N1: R77's 50-day window let the Germans destroy the six landed divisions (74.6k to 5.2k by 26 July
+  on 1938); Paris and France were then handed to 5k Americans. `trackFronts` read the Allies "of 0k lost 0k": its
+  cohort was fixed at the window's opening, before the landing.
+- **Decision.** Data: the Allied follow-up divisions as `forces` over June and July (the build-up ADR-1021 named), all
+  kept with the D-Day divisions to Cobra's stage, and the Third Army at Avranches on 1 August kept to Paris. Tool: a
+  formation that comes into a stage's band in its window joins its side's cohort with its men then.
+- **Read.** As ROADMAP's R78a line. Track-only data and a diagnostic: plain games and the pin unchanged.

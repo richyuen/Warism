@@ -11397,7 +11397,7 @@
     -0.9,
     49.37
    ],
-   "kept": "1944-06-20",
+   "kept": "1944-07-25",
    "note": "D-Day: the American divisions at Omaha and Utah"
   },
   {
@@ -11411,7 +11411,7 @@
     -1.25,
     49.35
    ],
-   "kept": "1944-06-20"
+   "kept": "1944-07-25"
   },
   {
    "date": "1944-06-05",
@@ -11424,7 +11424,7 @@
     -0.45,
     49.33
    ],
-   "kept": "1944-06-20",
+   "kept": "1944-07-25",
    "note": "D-Day: the British and Canadians at Gold, Juno and Sword"
   },
   {
@@ -11438,7 +11438,7 @@
     -0.4,
     49.32
    ],
-   "kept": "1944-06-20"
+   "kept": "1944-07-25"
   },
   {
    "date": "1944-06-06",
@@ -11471,6 +11471,32 @@
    "kept": "1944-06-18"
   },
   {
+   "date": "1944-06-10",
+   "kind": "forces",
+   "nation": "USA",
+   "template": "infantry_div",
+   "count": 2,
+   "at": [
+    -1.0,
+    49.3
+   ],
+   "kept": "1944-07-25",
+   "note": "The Normandy build-up: the American First Army's follow-up divisions"
+  },
+  {
+   "date": "1944-06-10",
+   "kind": "forces",
+   "nation": "ENG",
+   "template": "infantry_div",
+   "count": 2,
+   "at": [
+    -0.5,
+    49.25
+   ],
+   "kept": "1944-07-25",
+   "note": "The Normandy build-up: the British Second Army's follow-up divisions"
+  },
+  {
    "date": "1944-06-18",
    "kind": "occupy",
    "by": "JAP",
@@ -11496,6 +11522,104 @@
     ]
    ],
    "note": "Ichigo: Changsha"
+  },
+  {
+   "date": "1944-06-20",
+   "kind": "forces",
+   "nation": "USA",
+   "template": "infantry_div",
+   "count": 2,
+   "at": [
+    -1.3,
+    49.35
+   ],
+   "kept": "1944-07-25"
+  },
+  {
+   "date": "1944-06-20",
+   "kind": "forces",
+   "nation": "ENG",
+   "template": "infantry_div",
+   "count": 1,
+   "at": [
+    -0.6,
+    49.22
+   ],
+   "kept": "1944-07-25"
+  },
+  {
+   "date": "1944-06-20",
+   "kind": "forces",
+   "nation": "ENG",
+   "template": "panzer_div",
+   "count": 1,
+   "at": [
+    -0.45,
+    49.22
+   ],
+   "kept": "1944-07-25",
+   "note": "The British armour before Caen"
+  },
+  {
+   "date": "1944-07-01",
+   "kind": "forces",
+   "nation": "USA",
+   "template": "infantry_div",
+   "count": 2,
+   "at": [
+    -1.1,
+    49.2
+   ],
+   "kept": "1944-07-25"
+  },
+  {
+   "date": "1944-07-01",
+   "kind": "forces",
+   "nation": "USA",
+   "template": "panzer_div",
+   "count": 1,
+   "at": [
+    -1.05,
+    49.25
+   ],
+   "kept": "1944-07-25",
+   "note": "The American armour for Cobra"
+  },
+  {
+   "date": "1944-07-01",
+   "kind": "forces",
+   "nation": "CAN",
+   "template": "infantry_div",
+   "count": 1,
+   "at": [
+    -0.4,
+    49.25
+   ],
+   "kept": "1944-07-25"
+  },
+  {
+   "date": "1944-07-15",
+   "kind": "forces",
+   "nation": "ENG",
+   "template": "infantry_div",
+   "count": 1,
+   "at": [
+    -0.55,
+    49.2
+   ],
+   "kept": "1944-07-25"
+  },
+  {
+   "date": "1944-07-15",
+   "kind": "forces",
+   "nation": "USA",
+   "template": "infantry_div",
+   "count": 1,
+   "at": [
+    -1.2,
+    49.2
+   ],
+   "kept": "1944-07-25"
   },
   {
    "date": "1944-07-25",
@@ -11551,6 +11675,31 @@
     ]
    ],
    "note": "Sansapor"
+  },
+  {
+   "date": "1944-08-01",
+   "kind": "forces",
+   "nation": "USA",
+   "template": "infantry_div",
+   "count": 3,
+   "at": [
+    -1.3,
+    48.95
+   ],
+   "kept": "1944-08-25",
+   "note": "The American Third Army (Patton) at Avranches"
+  },
+  {
+   "date": "1944-08-01",
+   "kind": "forces",
+   "nation": "USA",
+   "template": "panzer_div",
+   "count": 1,
+   "at": [
+    -1.25,
+    48.95
+   ],
+   "kept": "1944-08-25"
   },
   {
    "date": "1944-08-10",

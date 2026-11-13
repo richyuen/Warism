@@ -30,12 +30,20 @@ Before the release checks (ADR-1005, ADR-1022: a full run's non-blocking finding
 once; no critic run after them).
 
 - [ ] R78 **Run 67's non-blocking findings.**
-  - [ ] R78a R67-N1: the replay's D-Day is fought and lost (R77's 50-day window, no build-up): on 1938 the Allies fall
+  - [x] R78a R67-N1: the replay's D-Day is fought and lost (R77's 50-day window, no build-up): on 1938 the Allies fall
     from 74.6k landed to 5.2k by 26 July; Paris and France are handed to 5k Americans. The Allied build-up of June and
     July (the follow-up divisions, the Third Army by 1 August) as `forces` arrivals; `trackFronts` counts an attacker
     who arrives inside the window. AT: `npx tsx critic/scripts/c67_dday.ts 1938`: the Allied men in the Normandy box on
     24 July at least 74.6k and over the Germans'; `c67_census.ts 1938`: on 26 August the France box holds Allied armies
     of at least 100k; `trackFronts` 1938, 37701, 38701: D-Day both engaged in ≥ 1/3 of its samples; the nine replay
+    tests green.
+    Done (ADR-1024): the build-up as `forces` (10 June-15 July: 11 American, British and Canadian infantry divisions and
+    two armoured, kept with the D-Day divisions to Cobra's stage of 25 July; the American Third Army (Patton), three infantry and one
+    armoured, at Avranches on 1 August, kept to Paris); `trackFronts` counts a formation that comes into the band in
+    the window. `c67_dday.ts 1938`: on 24 July 97.0k Allied (USA 50.0k, ENG 35.5k, CAN 11.5k) against 16.7k German;
+    `c67_census.ts 1938`: on 26 August 139k Allied in the France box; `trackFronts` 1938 / 37701 / 38701: D-Day both
+    engaged 162, 159, 190 of 200, the Allied cohort 235k of which 140k lost, the German 83-85k of which 26-39k;
+    the whole range on 1938 10 of 23 large land fronts (bar 9), Uranus 5/8 at its hour as before. The nine replay
     tests green.
   - [ ] R78b R67-N2: a great power declares across the world on a far minor (ADR-670's sea targets): Japan on a European
     state in the first 60 days on 9 of 10 seeds, the United States on Lithuania once. A sea target weighed by its

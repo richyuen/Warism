@@ -284,3 +284,5 @@
 - Critic run 67 (full, `6e0e46f3`): every dimension at 8 (mapVisuals 8, diplomacyWarDepth 8, emergentDynamics 8, godMode
   8, editorScenarios 8, statsHistory 8, uiUxPolish 8, performance 8, stability 8, semanticZoom 8, naval 8, tanks 8,
   aircraft 8, aiNukes 8); 0 blocking. Its findings filed as Batch 22, R78a-e, before the release checks (ADR-1023).
+- R78a (ADR-1024): the Normandy build-up and the Third Army: 97k Allied against 16.7k German in Normandy on 24 July,
+  139k in France on 26 August; `trackFronts` counts arrivals in a window.
