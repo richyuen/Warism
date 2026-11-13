@@ -40,7 +40,7 @@ The critic runs again (focused) after the batch.
   not be loaded…", cleared by the slider; the saved game's card untouched. `c65_x_badyear.mjs` (wrong bytes, 404, 1977)
   and `c65_x_badyearsave.mjs` (Continue kept) on a build with the starts; `replayYear1938h.spec.ts` (1400 × 800 and
   390 × 844, shots looked at), `title.spec.ts` 11 of 11.
-- [ ] R74 **Run 65's non-blocking findings** (the user's decision of 2026-11-12, ADR-1004: all of them).
+- [x] R74 **Run 65's non-blocking findings** (the user's decision of 2026-11-12, ADR-1004: all of them).
   - [x] R74a R65-N7: Resume pressed during "Building the world…" on `?paused=1` is undone at the first stats. AT: in
     `node critic/scripts/c65_x_buildpause.mjs 1600 900 1` the player's choice made during the build kept (or the
     button disabled until the world is built), `afterClick` equal to `after3s`.
@@ -112,7 +112,7 @@ The critic runs again (focused) after the batch.
     with `air` holds the air too; from the 1969 start, aircraft lost by the Soviet Union and China in the hold 153
     and 210 before, 0 and 0.
 
-- [ ] R75 **Run 65's ideas from other games** (the user's decision of 2026-11-12, ADR-1006).
+- [x] R75 **Run 65's ideas from other games** (the user's decision of 2026-11-12, ADR-1006).
   - [x] R75a A historical focus after the track (as Hearts of Iron IV's): for some years after the replay ends (by its
     date or a free start), each nation's AI keeps the alignment history gave it (its bloc or its non-alignment, its
     allies and its foes), easing into its own choices, instead of choosing afresh in the first hour. With R74e and
@@ -227,7 +227,7 @@ Batches 19 and 18 together (ADR-966).
     R66b-d's rules where those apply, or the reason not. Done (ADR-978): windows for `transfer`s; the Communist field
     armies and the People's Volunteers as kept arrivals; 10 large land fronts 1945-53, both sides engaged at the
     stage's hour at 2 (seeds 1, 2: 4, 4), most fighting through their windows; the reasons not in the ADR.
-- [ ] R67 **Cold War blocs in the sim.** Lasting blocs under the strongest powers; war between their leaders held back
+- [x] R67 **Cold War blocs in the sim.** Lasting blocs under the strongest powers; war between their leaders held back
   by deterrence; rivalry by proxies. A rule of every game. AT (to be split): after the replay's end no war between
   the blocs' leaders in N years on the own seed and others; the sweep's bands kept.
   Split (ADR-979; measured by `tools/diag/afterTrack.ts`, which saves the world at the track's end):
