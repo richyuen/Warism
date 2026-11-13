@@ -771,3 +771,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   combat); 1969's has it. The Western Front's and the others' keep their air war.
 - **Read.** As ROADMAP's line. The nine replay tests green. `farWait1938` on seed 5 from day 180 (seed 7 has no wait
   in 400 days on the new history; `tools/diag/firstWait.ts`).
+
+### ADR-1012 · 2026-11-13 · accepted — R75b built; the Soviet Union's strength first (R75c)
+- **Built.** The start card's "Great powers": `cardPowers` (tools/data/replaySaves.ts), each living nation that is no
+  puppet by its share of the world's strength, income and warheads, seven, strongest first, by the tag it bears then;
+  written to `years.json` as `powers`; no row from an older index. A card's measure, not a rule: the sim's
+  `greatPowers` (by strength alone) gave 1938 without the United States or Britain and China second.
+- **Read.** 1938: the seven of history. 1960 and 1975: the United States, the United Kingdom, the Soviet Union. In the
+  sim's 1960 the Soviet Union is behind Britain in strength (1.73M to 2.14M), income (fourth to second) and warheads
+  (13 to 24: a stockpile's upkeep is capped by a share of income).
+- **The user's decision (2026-11-13), asked:** fix the Soviet strength first (R75c), not the card's measure nor a
+  curated list; R75b closes on its AT after it.

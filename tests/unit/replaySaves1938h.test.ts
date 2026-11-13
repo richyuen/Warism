@@ -4,7 +4,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
 import type { World } from '../../src/sim/world';
-import { buildReplaySaves, replayYears } from '../../tools/data/replaySaves';
+import { buildReplaySaves, CARD_POWERS, cardPowers, replayYears } from '../../tools/data/replaySaves';
 import { assets1938 } from '../helpers/earth';
 
 // ROADMAP R68a (ADR-983): the replay's yearly starts. One a year from 1938 to the track's end (R69a); a year's save,
@@ -37,5 +37,26 @@ describe("the replay's yearly starts (ROADMAP R68a)", () => {
     sim.step(30 * 24, quiet);
     twin.step(30 * 24, quiet);
     expect(twin.hash()).toBe(sim.hash());
+  });
+});
+
+// ROADMAP R75b: a start's card names its great powers (`cardPowers`): by share of strength, income and warheads,
+// strongest first. 1938's are the seven of history; a puppet or the dead never one; the tag a nation bears then.
+describe("a start's great powers (ROADMAP R75b)", () => {
+  it("1938's seven, the United States first; a nation renamed by its name then", () => {
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) });
+    const w = sim.world;
+    const p = cardPowers(w);
+    expect(p).toHaveLength(CARD_POWERS);
+    expect(p[0]).toBe('USA');
+    expect([...p].sort()).toEqual(['ENG', 'FRA', 'GER', 'ITA', 'JAP', 'SOV', 'USA']);
+    // Germany dead: not one; Italy renamed: by its new tag.
+    const ids = (tag: string): number => w.track!.id(tag);
+    w.nations.cols.living[ids('GER')] = 0;
+    w.identities.set(ids('ITA'), 'ITR');
+    const q = cardPowers(w);
+    expect(q).not.toContain('GER');
+    expect(q).toContain('ITR');
+    expect(q).not.toContain('ITA');
   });
 });

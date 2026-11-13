@@ -255,3 +255,5 @@
   an owner at peace.
 - R74h (ADR-1011): the desktop Next line 36em from 1280 px; sea targets of a nation no great power within 4000 km of
   its transports (pin c64a53fb → aa59b1ab, sweep's verdicts kept); a hold with `air` (1969: no aircraft lost).
+- R75b built (ADR-1012): the start card names its great powers (`cardPowers`, `years.json`'s `powers`); open on
+  1960's order (Britain second): R75c, the Soviet Union's strength after the war, planned first (the user's decision).

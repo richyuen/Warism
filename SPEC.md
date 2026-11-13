@@ -1763,7 +1763,9 @@ to 27 July 1953, then sets the world free.
   has a slider of years under its map (1938 and each year the site has built) and "Replay history" / "Play free".
   At a later year the card is that year's (R74b): its map (`<year>.png`, drawn at deploy beside the start), its
   living nations (the starts' index, `tools/data/replaySaves.ts`), "World, <year>" for its heading, the year over the slider's thumb; a site built
-  before them shows 1938's map and count.
+  before them shows 1938's map and count. Each year's card, 1938's too, names its great powers (R75b, "Great powers"):
+  the index's `powers`, `cardPowers`'s seven by share of the world's strength, income and warheads, strongest first,
+  by the names they bear then; no row from an index built before them.
   Free from 1938 is the plain 1938 game (its seed and options); the replay, or a later year free, the historical world
   (1938 replayed: no save loaded). A year's world is checked against its index's hash (`SimStatus.built`).
 - **The player's view** (built, R62j1, ADR-946): while the track runs a line under the date names its next event that

@@ -14,6 +14,8 @@ interface Built {
   hash: number;
   /** Its living nations (R74b; none in an index built before it). */
   nations?: number;
+  /** Its great powers' tags, strongest first (R75b; none in an index built before it). */
+  powers?: string[];
 }
 
 /** The starts built for this site (`years.json`), or none where it has none (a local game without `npm run saves`). */
@@ -28,9 +30,16 @@ async function built(): Promise<Built[]> {
   }
 }
 
-/** The years built for this site, with their living nations where the index has them (the title's card, R74b). */
-export async function replayYears(): Promise<{ year: number; nations?: number }[]> {
-  return (await built()).map((y) => (y.nations === undefined ? { year: y.year } : { year: y.year, nations: y.nations }));
+/** A built year as the title's card reads it: its living nations (R74b) and great powers (R75b) where the index has them. */
+export interface ReplayYear {
+  year: number;
+  nations?: number;
+  powers?: string[];
+}
+
+/** The years built for this site, with what the index has of each for the title's card (R74b, R75b). */
+export async function replayYears(): Promise<ReplayYear[]> {
+  return (await built()).map((y) => ({ year: y.year, ...(y.nations === undefined ? {} : { nations: y.nations }), ...(Array.isArray(y.powers) ? { powers: y.powers.filter((p) => typeof p === 'string') } : {}) }));
 }
 
 /** The map of a year's start, built beside it (`tools/data/replaySaves.ts`, R74b). */

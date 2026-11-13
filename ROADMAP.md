@@ -125,6 +125,17 @@ The critic runs again (focused) after the batch.
   - [ ] R75b The start card names the year's great powers (as Paradox's bookmarks; the year's map is R74b): the
     strongest nations of each start, from `years.json`. AT: the card at 1938, 1960 and 1975 lists its great powers
     (at 1960 the United States and the Soviet Union first); `replayYear1938h.spec.ts`.
+    Built (ADR-1012): `cardPowers` (share of strength + income + warheads, seven), `years.json`'s `powers`, the card's
+    "Great powers" row; 1938: United States, Soviet Union, Germany, United Kingdom, France, Italy, Japan. Open: at 1960
+    and 1975 the United Kingdom is second, the Soviet Union third (the sim's 1960: strength 2.14M against 1.73M,
+    warheads 24 against 13, income second against fourth). The user's decision (2026-11-13): fix the Soviet strength
+    first (R75c), then close R75b on its AT.
+  - [ ] R75c The Soviet Union a superpower in the replay after the war (the user's decision, ADR-1012): its army,
+    economy and arsenal from 1946 to 1975 brought toward history's, the second power after the United States on the
+    starts of 1950, 1960 and 1975 (`cardPowers`), its warheads over Britain's from 1955. Find first why it falls
+    behind Britain (income, industry, the army's men, the warheads' cap of a share of income), then the timeline's
+    means (`buff`, `forces`) or a rule of the track's. AT: on the built starts the Soviet Union second at 1950, 1960
+    and 1975, Britain's arsenal under its from 1955; the nine replay tests; seed 99's pin unchanged (track-only).
 ## Batch 17 — run 63's findings (full, on `78b082b4`: no blocking issue, every dimension at 8)
 
 - [x] R65 **Run 63's non-blocking findings** (the historical track).

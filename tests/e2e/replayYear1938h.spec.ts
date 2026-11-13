@@ -162,5 +162,38 @@ test('the 1938 card at a later year of an older index: the map and count of 1938
   await expect(page.getByTestId('title-chosen')).toHaveText('World, 1960');
   await expect(page.getByTestId('title-nations')).toHaveText('102');
   await expect(page.getByTestId('title-preview')).toHaveAttribute('src', /scenarios\/1938\/preview\.png$/);
+  // No great powers in an index built before them (R75b): no row.
+  await expect(page.getByTestId('title-powers')).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+// ROADMAP R75b (critic run 65's idea, as Paradox's bookmarks): the card names each start's great powers, strongest
+// first, from the index (`cardPowers` in tools/data/replaySaves.ts; the lists here are its own on the starts of 1938,
+// 1960 and 1975 built on 2026-11-13).
+test("the 1938 card names the year's great powers", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  const years = [
+    { year: 1938, tick: 0, hash: 0, nations: 102, powers: ['USA', 'SOV', 'GER', 'ENG', 'FRA', 'ITA', 'JAP'] },
+    { year: 1960, tick: 1, hash: 0, nations: 124, powers: ['USA', 'ENG', 'SOV', 'FRA', 'FRG', 'PRC', 'ITR'] },
+    { year: 1975, tick: 2, hash: 0, nations: 154, powers: ['USA', 'ENG', 'SOV', 'FRA', 'PRC', 'FRG', 'ITR'] },
+  ];
+  await page.route('**/data/scenarios/1938h/start/years.json', (r) => r.fulfill({ json: { format: STATE_FORMAT, seed: 1938, years } }));
+  await page.route('**/data/scenarios/1938h/start/*.png', (r) => r.fulfill({ path: 'public/data/scenarios/random/preview.png', contentType: 'image/png' }));
+  await page.goto('/');
+  const powers = page.getByTestId('title-powers');
+  await expect(powers).toHaveText('United States, Soviet Union, Germany, United Kingdom, France, Italy, Japan');
+  await page.screenshot({ path: test.info().outputPath('card-powers-1938.png') });
+  await page.getByTestId('title-start-year').fill('1960');
+  await expect(page.getByTestId('title-chosen')).toHaveText('World, 1960');
+  await expect(powers).toHaveText("United States, United Kingdom, Soviet Union, France, West Germany, People's China, Italy");
+  await page.getByTestId('title-start-year').fill('1975');
+  await expect(powers).toHaveText("United States, United Kingdom, Soviet Union, France, People's China, West Germany, Italy");
+  await page.screenshot({ path: test.info().outputPath('card-powers-1975.png') });
+  // The row stays inside the card, wrapped: nothing beyond the screen.
+  const box = await powers.boundingBox();
+  expect(box!.x + box!.width).toBeLessThanOrEqual(1400);
   expect(errors).toEqual([]);
 });

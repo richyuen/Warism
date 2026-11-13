@@ -29,7 +29,7 @@ export interface TitleScreenProps {
    * under its map): the scenario it starts, and the years built for this site to start it from (1938 always).
    */
   replays?: Partial<Record<ScenarioId, { id: ScenarioId; info: ScenarioInfo }>>;
-  startYears?: () => Promise<{ year: number; nations?: number }[]>;
+  startYears?: () => Promise<{ year: number; nations?: number; powers?: string[] }[]>;
   /** The map of a later year's start (R74b, critic run 65 R65-N6); the scenario's own where it has none. */
   yearPreviewUrl?: (year: number) => string;
   /** The saved game to offer as Continue, if there is one (PLAN 1.43b). */
@@ -80,7 +80,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
   // once, with no confirmation").
   const [pending, setPending] = useState<{ file: File; name: string; scenario: ScenarioId; startDay: number; tick: number; upgraded?: readonly 'traits'[] } | null>(null);
   // The replay's years built for this site (R68c); 1938 alone until read, or without them.
-  const [built, setYears] = useState<{ year: number; nations?: number }[]>([]);
+  const [built, setYears] = useState<{ year: number; nations?: number; powers?: string[] }[]>([]);
   // On a card with a replay: replay history (or play free), from 1 January of `year`.
   const [history, setHistory] = useState(false);
   const [year, setYear] = useState(1938);
@@ -103,6 +103,8 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
   const years = replay ? [...new Set([1938, ...built.map((y) => y.year)])].sort((a, b) => a - b) : [];
   // A later year chosen on a card with a replay: its map, its nations and its name are that year's (R74b).
   const later = replay !== undefined && year > 1938 ? built.find((y) => y.year === year) : undefined;
+  // The year's great powers on a card with a replay (R75b), 1938's too, where the index has them.
+  const powers = replay !== undefined ? built.find((y) => y.year === year)?.powers : undefined;
   const ownPreview = previewUrl(chosen);
   const preview = later && yearPreviewUrl ? yearPreviewUrl(later.year) : ownPreview;
   // The replay's world: history replayed, or a later year's world played free.
@@ -275,6 +277,12 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
                 <span class="form-name">{t('title.nations')}</span>
                 <span data-testid="title-nations">{info.nationsRange ? t('settings.nationsRange', { min: info.nationsRange.min, max: info.nationsRange.max }) : (later?.nations ?? info.nations)}</span>
               </div>
+              {powers && powers.length > 0 ? (
+                <div class="form-row">
+                  <span class="form-name title-powers-name">{t('title.greatPowers')}</span>
+                  <span data-testid="title-powers">{powers.map((tag) => t(`nation.${tag}` as MessageKey)).join(', ')}</span>
+                </div>
+              ) : null}
             </div>
             <div>
               {replay ? (

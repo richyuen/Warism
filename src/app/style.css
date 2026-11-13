@@ -2591,6 +2591,11 @@ button.unit-icon.on {
   padding-top: 1.1rem;
 }
 /* The year chosen, over the slider's thumb (R74b). */
+/* The start's great powers (R75b): the label on one row, the names wrapped beside it. */
+.title-powers-name {
+  white-space: nowrap;
+  margin-right: 1em;
+}
 .title-year-thumb {
   position: absolute;
   top: 0;

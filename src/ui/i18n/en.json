@@ -1358,6 +1358,7 @@
   "title.startDate": "Start date",
   "title.map": "Map",
   "title.nations": "Nations",
+  "title.greatPowers": "Great powers",
   "title.previewAlt": "Political map of {name}",
   "title.previewAltExample": "Political map of one {name}; every seed gives another",
   "title.startYear": "Start on",
