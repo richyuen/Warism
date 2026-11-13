@@ -24,6 +24,18 @@ Rules:
 - `release-2026-11-11` (2026-11-11): Batches 14–16 (R59, R60, R61a's follow-ups, R62 the historical track, R63, R64), in
   CHANGELOG.md for players; the items with their evidence in `docs/history/ROADMAP-release-2026-11-11.md`.
 
+## Batch 20 — run 65's findings (focused, on `5ee3e035`: 1 blocking issue, every dimension at its bar)
+
+Before the release (PROMPT's RELEASES step 2, ADR-1003). The critic runs again (focused) after it.
+
+- [ ] R73 **B1: a start from a year that cannot be loaded is told, and leaves the saved game alone** (R68b, SPEC §7.7).
+  A refused start (a year not built, a 404, bytes not the world built) goes to `?failed=save`, which the title shows
+  only in the saved game's card: with no save nothing is said, with one that save is blamed and its Continue removed.
+  Its own failure (`?failed=start&year=`) and a notice of its own on the 1938 card naming the year. AT: in
+  `node critic/scripts/c65_x_badyear.mjs` each of the three cases shows a notice naming the year; in
+  `node critic/scripts/c65_x_badyearsave.mjs` that notice, and the saved game's card with its Continue; a Playwright
+  spec of both.
+
 ## Batch 17 — run 63's findings (full, on `78b082b4`: no blocking issue, every dimension at 8)
 
 - [x] R65 **Run 63's non-blocking findings** (the historical track).

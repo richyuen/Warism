@@ -664,3 +664,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Consequences.** Next by PROMPT's RELEASES: the critic of Batches 18 and 19 (ADR-991). What the profile shows past
   combat (air strikes 10 %, supply 11 %, movement 10 %, territory 7.5 %, the bundle's profile of R72b) is no item: the
   bar is met.
+
+### ADR-1003 · 2026-11-12 · accepted — Critic run 65: B1 before the release, the rest after it
+- **Context.** Critic run 65 (focused, on `5ee3e035`, Batches 18-19 and R72): every dimension at its bar
+  (`diplomacyWarDepth` and `editorScenarios` 8 → 7, at their bar of 7), one blocking issue, B1 (R68b's refused start
+  not told; with a saved game, the save blamed and its Continue removed). Not an exit (ADR-829): no dimension under its
+  bar, B1 a gap of R68b's own, not a ticked fix that broke another.
+- **Decision.** B1 is R73 (Batch 20), before the release; then the critic again, focused (ADR-915). The non-blocking
+  findings move no score under its bar (ADR-843 asks for none to be filed) and wait for after the release, where
+  they are filed as items: R65-N1 (post-war Japan and Italy at their 1938 aggression), R65-N2 (India and Austria taken
+  into the blocs at the handover; NATO's war on Yugoslavia in the end hour), R65-N5 (names and capitals of 1956-75),
+  R65-N6 (the start card's preview and count not the year's), R65-N7 (Resume during the build undone), and the small
+  ones. R65-N3 (the burst of wars in a free game from a late year) and R65-N4 (D-Day and Stalingrad on empty land;
+  ADR-969's bar counts land fronts) are design questions for the user, not items.
+- **Consequences.** The release waits on R73 and a focused run with no blocking issue, then the full run (ADR-916).

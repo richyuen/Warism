@@ -226,3 +226,7 @@
 - R72 done (ADR-1002): `npm run saves` to 1975 in 0.63 of its time at `fa16420b` (570.8 → 360.7 s, swapped pairs on
   separate P-cores), every year's hash the same, the pin unchanged. The runner's step 9.4-12.3 min after the parts, 9.8
   before: its noise larger than the change. Next: the critic of Batches 18 and 19.
+- Critic run 65 (focused, `5ee3e035`): every dimension at its bar (mapVisuals 8, diplomacyWarDepth 7, emergentDynamics
+  8, godMode 8, editorScenarios 7, statsHistory 8, uiUxPolish 8, performance 8, stability 8, semanticZoom 8, naval 8,
+  tanks 8, aircraft 8, aiNukes 8); 1 blocking (B1, R68b's refused start not told). R73 filed before the release
+  (ADR-1003); the non-blocking findings after it.
