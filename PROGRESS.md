@@ -241,3 +241,4 @@
 - R74b (R65-N6): the 1938 card shows the year chosen: its map (drawn by `npm run saves` beside its start), its living
   nations (`years.json`), "World, <year>", the year over the thumb. `c65_x_replaycard.mjs` 1960 / 1965 phone / 1975
   free with their maps and counts (103, 131, 157); `replayYear1938h.spec.ts` 4 of 4.
+- ADR-1006 (the user's decision): R75, run 65's ideas from other games (a historical focus after the track; the great powers on the start card), before the release.

@@ -77,6 +77,16 @@ The critic runs again (focused) after the batch.
     Republic of China taking Albania's capital, Poland against Australia); the Sino-Soviet clash of 1969 a months-long
     air war. AT: each seen fixed in its probe, or the reason it is left in the item.
 
+- [ ] R75 **Run 65's ideas from other games** (the user's decision of 2026-11-12, ADR-1006).
+  - [ ] R75a A historical focus after the track (as Hearts of Iron IV's): for some years after the replay ends (by its
+    date or a free start), each nation's AI keeps the alignment history gave it (its bloc or its non-alignment, its
+    allies and its foes), easing into its own choices, instead of choosing afresh in the first hour. With R74e and
+    R74f. AT: in the 10 years after the track on seeds 1938, 1, 2, no nation joins the bloc it was not in at the end
+    in the first 3 years, and the year's declarations ease from the end's level into the sweep's band; plain games
+    unchanged (the pin).
+  - [ ] R75b The start card names the year's great powers (as Paradox's bookmarks; the year's map is R74b): the
+    strongest nations of each start, from `years.json`. AT: the card at 1938, 1960 and 1975 lists its great powers
+    (at 1960 the United States and the Soviet Union first); `replayYear1938h.spec.ts`.
 ## Batch 17 — run 63's findings (full, on `78b082b4`: no blocking issue, every dimension at 8)
 
 - [x] R65 **Run 63's non-blocking findings** (the historical track).

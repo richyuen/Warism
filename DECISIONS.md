@@ -695,3 +695,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   release then goes on with no critic run after them: `npm run check:review`, the sweep on unseen seeds and the bench
   (step 3) are run again on the fixes (the user's choice of the end, of three put to them).
 - **Consequences.** A release waits on every finding of its runs. ADR-1004 (run 65's) is the first case.
+
+### ADR-1006 · 2026-11-12 · accepted (the user's decision) — Run 65's ideas from other games before the release
+- **Context.** Critic run 65's "Ideas from other games" (not scored): Hearts of Iron IV's historical focus after the
+  scripted years, and Paradox's bookmarks (each start's map and great powers on the start screen).
+- **Decision.** The user: "Can we also add the ideas from other games?" R75 in Batch 20 after R74: R75a the AI keeps
+  its history's alignment for some years after the track, easing into its own; R75b the start card names the year's
+  great powers (the year's map is R74b's).
+- **Consequences.** The release waits on R75 too. Whether ideas from other games join every release as non-blocking
+  issues do (ADR-1005) is not decided here: these two by the user's word.
