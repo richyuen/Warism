@@ -1780,7 +1780,9 @@ to 27 July 1953, then sets the world free.
 - **Seed:** fixed by the scenario and not offered on its form; the track is the same each run. A second
   seed, rolled by the form (`?after=`) and kept in the state, is taken when the track ends (in 1953 or at
   the intervention): every RNG stream is derived again from it, so the world after the track differs from
-  run to run.
+  run to run. An end from 1 January 1946 on has the historical focus (R75a, ADR-1009; `focusAfterTrack`): no
+  declaration on its day, then 40 % of the AI's rising to all over three years, the blocs closed while it lasts. An end
+  before 1946 has none: the world goes on as plain 1938 would (R76a, R66-N1).
 - **The 1938-39 period** (R62f, ADR-928): its events, objectives and the `maps` it is measured against
   (`tools/diag/historyMatch.ts`); `buff` and `forces` events (phase buffs, arrivals); `without` on `war` and `join`.
   The China front (R62f2, ADR-929): `hold` events, two sides (and their puppets) at war that do not fight on land,

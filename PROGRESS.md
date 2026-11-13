@@ -263,3 +263,5 @@
   godMode 8, editorScenarios 8, statsHistory 8, uiUxPolish 8, performance 8, stability 8, semanticZoom 8, naval 8, tanks
   8, aircraft 8, aiNukes 8); 0 blocking. Its non-blocking findings filed as Batch 21, R76a-g, before the release
   (ADR-1014).
+- R76a (ADR-1015): the historical focus only for an end of the track from 1946; a replay left in 1938 declares as
+  plain 1938 (32 and 28 on 5151 and 6161), 1975's quiet first month kept.

@@ -31,7 +31,7 @@
  * alliance that holds another (against a threat, or a coalition).
  * God Mode can switch the AI off globally (setting `aiEnabled`) or per nation (`setAi`).
  */
-import { isDayStart, isMonthStart } from '../../shared/calendar';
+import { dayOfIso, isDayStart, isMonthStart } from '../../shared/calendar';
 import { Refusal } from '../../shared/commands';
 import { EventKind } from '../../shared/events';
 import { hash32, hashToUnit } from '../core/hash';
@@ -365,6 +365,11 @@ export function deterred(world: World, n: number, t: number, blocs: ReadonlySet<
 export const FOCUS_YEARS = 3;
 /** The share of its declarations a nation makes on the focus's second day, rising from it to all at its end. */
 export const FOCUS_FLOOR = 0.4;
+/**
+ * The first day of the bloc era (R76a; critic run 66, R66-N1): a track that ends before it held back no blocs and no
+ * years of wars, and history's alignment there is the world at war, so it has no focus after it.
+ */
+export const FOCUS_FROM_DAY = dayOfIso('1946-01-01');
 
 /**
  * The historical focus after the track (ROADMAP R75a, as Hearts of Iron IV's; critic run 65, R65-N2 and N3): the
@@ -372,11 +377,13 @@ export const FOCUS_FLOOR = 0.4;
  * track ends (R65-N2: NATO's war on Yugoslavia in the end hour), then FOCUS_FLOOR, rising to 1 over FOCUS_YEARS: the
  * wars 38 years of the track held back come by degrees, not at once (R65-N3). While it is under 1 the blocs are closed
  * (`strategicAi`): no nation joins or founds an alliance a bloc's leader leads, so the world keeps the alignment the
- * track gave it (R65-N2: India and Austria in the blocs within the hour).
+ * track gave it (R65-N2: India and Austria in the blocs within the hour). Only for an end from FOCUS_FROM_DAY on
+ * (R76a, R66-N1): a replay left in 1938-45 goes on as plain 1938 would.
  */
 export function focusAfterTrack(world: World): number {
   const t = world.track;
   if (!t?.ended || !Number.isFinite(t.endedAt)) return 1;
+  if (world.startDay + Math.floor(t.endedAt / 24) < FOCUS_FROM_DAY) return 1;
   const since = world.tick - t.endedAt;
   if (since < 24) return 0;
   return Math.min(1, FOCUS_FLOOR + ((1 - FOCUS_FLOOR) * since) / (FOCUS_YEARS * 8760));

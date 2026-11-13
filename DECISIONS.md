@@ -804,3 +804,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
   Then the critic again, focused (ADR-915); on a clean focused run, the full run (ADR-916).
 - **Note.** The critic's cleanup stopped three `msedgewebview2.exe` processes and an `msedge.exe` crash handler not its
   own (its kill filter matched "chromium"); nothing in the repo was touched.
+
+### ADR-1015 · 2026-11-13 · accepted — R76a: the historical focus only after the war
+- **Context.** R66-N1: R75a's focus (ADR-1009) damped every end of the track, a replay left in 1938-41 too, where
+  nothing was held back and history's alignment is the world at war (19 declarations in the year against plain 1938's
+  32 and 28).
+- **Decision.** `focusAfterTrack` is 1 for an end before 1 January 1946 (`FOCUS_FROM_DAY`), the bloc era's start; from
+  then on as ADR-1009. A cut, not a ramp: the war's end is the line the track's held years and blocs begin at.
+- **Read.** As ROADMAP's R76a line. Plain games and seed 99's pin unchanged (no track).

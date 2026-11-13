@@ -30,11 +30,15 @@ Before the release (PROMPT's RELEASES step 2, ADR-1005: every non-blocking findi
 (focused) after the batch; then the full run (ADR-916).
 
 - [ ] R76 **Run 66's non-blocking findings.**
-  - [ ] R76a R66-N1: the focus after the track (R75a, ADR-1009) also damps a replay left in 1938-41, when history's
+  - [x] R76a R66-N1: the focus after the track (R75a, ADR-1009) also damps a replay left in 1938-41, when history's
     alignment is the Axis at war (left on day 1: 19 and 19 declarations in the year on 5151 and 6161, plain 1938 32 and
     28). Scale the focus by what the track held back (the bloc era, from 1946) or apply it only to an end after the war.
     AT: `npx tsx critic/scripts/c66_freeburst.ts 1938 5151` and `1938 6161` declare within ±10 % of `c66_freeburst.ts 0
     5151` and `0 6161` in the year, while `1975 5151/6161` keep their first month at ≤ 1.2 × plain 1938's per nation.
+    Done: the focus only for an end from 1 January 1946 (`FOCUS_FROM_DAY`). `c66_freeburst.ts`: left in 1938 on 5151
+    and 6161 32 and 28 in the year, day for day plain 1938's (32, 28); 1975 5 and 9 in the first month (0.47 and 0.99 ×
+    plain 1938's per nation), 71 and 59 in the year, as run 66. `trackFocus1938h.test.ts` 2 of 2 (1938's end none,
+    the curve from 1946).
   - [ ] R76b R66-N2: the card in "Play free" at a later year shows 1938's description and the replay's fixed-seed note.
     A free game's description from that year, the fixed-seed note only under "Replay history". AT: in
     `node critic/scripts/c66_x_replaycard.mjs 1975 free` (and 1960 at 390 × 844) the description names the year and no
