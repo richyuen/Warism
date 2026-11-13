@@ -85,7 +85,9 @@ Items come in batches (a ROADMAP section). After the last item of a batch:
    runs again (focused, ADR-915). So does each non-blocking issue of every run, with its AT, design
    objections named as issues among them (ADR-1005, the user's decision): fixed before the release, not
    after it. The full run's own non-blocking issues (step 3) are fixed too, and the release goes on with
-   no critic run after them: step 3's checks are run again on the fixes instead.
+   no critic run after them: step 3's checks are run again on the fixes instead. A focused run with no
+   blocking issue: its non-blocking issues fixed, the next run is the full run (step 3), not another
+   focused one (ADR-1016, the user's decision).
    **The exit (ADR-829).** The loop stops, and writes an ADR "proposed, the user's decision" that names
    the structural options (a redesign, taking the feature out of the release, the bar), when:
    - one dimension is under its bar, or blocks, in three critic runs in a row; or

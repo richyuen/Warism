@@ -812,3 +812,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Decision.** `focusAfterTrack` is 1 for an end before 1 January 1946 (`FOCUS_FROM_DAY`), the bloc era's start; from
   then on as ADR-1009. A cut, not a ramp: the war's end is the line the track's held years and blocs begin at.
 - **Read.** As ROADMAP's R76a line. Plain games and seed 99's pin unchanged (no track).
+
+### ADR-1016 · 2026-11-13 · accepted — After a focused run's non-blocking fixes, the full run
+- **Context.** PROMPT's RELEASES step 2 had the critic run again focused after any batch of fixes, and step 3 the full
+  run once a focused run had no blocking issue and every score at its bar. Run 66 was such a run, yet ADR-1014 planned
+  a focused run after Batch 21 and the full one after it: one critic run more (run 66 took about 100 minutes). The
+  user: "For non-blocking issues from a focused run, let's always go to full run after fixing".
+- **Decision.** When a focused run has no blocking issue, its non-blocking issues are fixed and the next run is the
+  full run (step 3). A focused run with a blocking issue is followed by a focused run, as before (ADR-915). ADR-1014's
+  "then the critic again, focused" is replaced: after Batch 21, the full run.
+- **Consequences.** PROMPT's step 2 says so. The full run checks R76's fixes along with everything else; its own
+  non-blocking issues are fixed with step 3's checks run again on them, no critic run after (ADR-1005).

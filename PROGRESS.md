@@ -267,3 +267,5 @@
   plain 1938 (32 and 28 on 5151 and 6161), 1975's quiet first month kept.
 - R76b: the start card at a later year under "Play free" has its own description and note, the replay's only under
   "Replay history".
+- ADR-1016 (the user's decision): a focused run with no blocking issue, its non-blocking issues fixed, is followed by
+  the full run; after Batch 21, the full run.

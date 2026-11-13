@@ -26,8 +26,8 @@ Rules:
 
 ## Batch 21 — run 66's findings (focused, on `a0880be6`: no blocking issue, every dimension at 8)
 
-Before the release (PROMPT's RELEASES step 2, ADR-1005: every non-blocking finding, ADR-1014). The critic runs again
-(focused) after the batch; then the full run (ADR-916).
+Before the release (PROMPT's RELEASES step 2, ADR-1005: every non-blocking finding, ADR-1014). The full run follows the
+batch (ADR-1016, the user's decision; ADR-916).
 
 - [ ] R76 **Run 66's non-blocking findings.**
   - [x] R76a R66-N1: the focus after the track (R75a, ADR-1009) also damps a replay left in 1938-41, when history's
