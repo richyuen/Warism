@@ -280,3 +280,4 @@
   launch not counting (PLAN 7.28); a no-likely-loss rule tried, changing nothing outside desperation, not kept.
 - R77 (ADR-1021): a stage's own window of fighting (`fightDays`); Normandy fought from the landing to 25 July (both
   engaged in 39-72 % of its samples on three seeds). Batch 21 done; next the full critic run (ADR-1016).
+- ADR-1022 (the user's decision): a full run's non-blocking findings are fixed before the release checks, which run once.

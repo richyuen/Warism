@@ -881,3 +881,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Read.** As ROADMAP's R77 line. Without reinforcements the six landed divisions are worn to 5-11k over the seven
   weeks; arrivals for the Normandy build-up would be the next step if the critic asks for the beachhead to be won.
   Track-only data: plain games and the pin unchanged.
+
+### ADR-1022 · 2026-11-13 · accepted — The full run's non-blocking findings fixed before the release checks
+- **Context.** PROMPT's RELEASES ran step 3's checks (check:review, the sweep on unseen seeds, the GPU bench) on a full
+  report with no blocking issue, then again on the fixes of its non-blocking findings: the checks twice. The user:
+  "if non-blocking findings come back, they get fixed first, then release checks get run? So we don't have to run the
+  release checks twice."
+- **Decision.** On a full run with no blocking issue and every score at its bar, its non-blocking findings are filed and
+  fixed first (ADR-1005), then step 3's checks run once on the fixed code; no critic run after the fixes, as before. A
+  check that fails is still an item, fixed, and the checks it touched run again.

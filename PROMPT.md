@@ -84,8 +84,9 @@ Items come in batches (a ROADMAP section). After the last item of a batch:
 2. Each blocking issue becomes a ROADMAP item before the release item; fix them, then the critic
    runs again (focused, ADR-915). So does each non-blocking issue of every run, with its AT, design
    objections named as issues among them (ADR-1005, the user's decision): fixed before the release, not
-   after it. The full run's own non-blocking issues (step 3) are fixed too, and the release goes on with
-   no critic run after them: step 3's checks are run again on the fixes instead. A focused run with no
+   after it. The full run's own non-blocking issues (step 3) are fixed too, before step 3's checks, and the
+   release goes on with no critic run after them: the checks run once, on the fixed code (ADR-1022, the user's
+   decision). A focused run with no
    blocking issue: its non-blocking issues fixed, the next run is the full run (step 3), not another
    focused one (ADR-1016, the user's decision).
    **The exit (ADR-829).** The loop stops, and writes an ADR "proposed, the user's decision" that names
@@ -101,7 +102,7 @@ Items come in batches (a ROADMAP section). After the last item of a batch:
    critic's own probes (`critic/scripts`) are replayed on the code and what they find is fixed first.
 3. Focused runs until one has no blocking issue and every score at its bar; then the critic is spawned
    with "full run" (ADR-916, the user's decision). On a full report with no blocking issue and every
-   score at its bar: `npm run check:review`, the sweep on
+   score at its bar, its non-blocking issues fixed first (step 2; ADR-1022), then: `npm run check:review`, the sweep on
    unseen seeds (`npm run sweep -- --first <seed> --tag <name>`: borders still moving at the end
    on every seed, and its save-and-load checks green: the soak's, ADR-959; the soak of its own runs
    nightly), and `npm run bench -- G --gpu-only` (budgets PASS). A check that fails becomes a ROADMAP item, and so does each
