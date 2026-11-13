@@ -836,3 +836,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
   3 on R74h's world: not among the seven navies), so the AT's "China may not" is answered here, not met.
 - **Read.** As ROADMAP's R76c line. Pin aa59b1ab → c64a53fb (seed 99's first year as before R74h); sweep verdicts kept
   or better.
+
+### ADR-1018 · 2026-11-13 · accepted — R76d: D-Day and Uranus fought; Stalingrad's stage a handover (the user's decision)
+- **Context.** R66-N4: Stalingrad's stage of 31 October 1942 had no German army (the Sixth Army arrived 1 November);
+  Uranus was not engaged at its hour on 38701; D-Day's beachhead was given at hour 2 of 6 June, three hours after the
+  landing, its window (30 May-6 June) over before anyone was ashore and the Western Front's hold on from then.
+- **Decision.** Data only: the Sixth Army and the Fourth Panzer Army arrive 24 October; D-Day's stage is 12 June, so
+  its window opens as the divisions land (kept to 20 June). Stalingrad's own stage stays a handover: its ring is the
+  whole Eastern line, so its area holds every Soviet army (1,220k German side against 4,040k on seed 1938, 0.30 under
+  ADR-977's 1/3) and its window never opens. Tried and dropped: the Sixth Army in the city (0/0 at the hour; Uranus 0/0
+  on 1938), a city-only stage (fought on 37701 only; 756k Soviets near on 38701). Changing ADR-977's measure moves
+  every stage's window. Options put to the user: that rule change, the AT rescoped, or R76d left open; the user chose
+  the AT rescoped: the Sixth Army there at the stage's hour, the city's battle fought as Uranus.
+- **Read.** As ROADMAP's R76d line. Track-only data: plain games and the pin unchanged. Still a handover: the
+  beachhead's 51 cells are given on 12 June (0 taken in the window: the divisions are kept, so they defend, not push).

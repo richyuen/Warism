@@ -6740,6 +6740,44 @@
    ]
   },
   {
+   "date": "1942-10-24",
+   "kind": "forces",
+   "nation": "GER",
+   "template": "infantry_div",
+   "count": 8,
+   "at": [
+    43.3,
+    48.9
+   ],
+   "kept": "1943-01-07",
+   "note": "The German Sixth Army at Stalingrad"
+  },
+  {
+   "date": "1942-10-24",
+   "kind": "forces",
+   "nation": "GER",
+   "template": "infantry_div",
+   "count": 4,
+   "at": [
+    43.2,
+    49.2
+   ],
+   "kept": "1943-01-07"
+  },
+  {
+   "date": "1942-10-24",
+   "kind": "forces",
+   "nation": "GER",
+   "template": "panzer_div",
+   "count": 2,
+   "at": [
+    43.4,
+    48.65
+   ],
+   "kept": "1943-01-07",
+   "note": "The German Fourth Panzer Army at Stalingrad"
+  },
+  {
    "date": "1942-10-31",
    "kind": "withdraw",
    "nation": "SOV",
@@ -7223,44 +7261,6 @@
     ]
    ],
    "note": "Stalingrad and Nalchik"
-  },
-  {
-   "date": "1942-11-01",
-   "kind": "forces",
-   "nation": "GER",
-   "template": "infantry_div",
-   "count": 8,
-   "at": [
-    43.3,
-    48.9
-   ],
-   "kept": "1943-01-07",
-   "note": "The German Sixth Army at Stalingrad"
-  },
-  {
-   "date": "1942-11-01",
-   "kind": "forces",
-   "nation": "GER",
-   "template": "infantry_div",
-   "count": 4,
-   "at": [
-    43.2,
-    49.2
-   ],
-   "kept": "1943-01-07"
-  },
-  {
-   "date": "1942-11-01",
-   "kind": "forces",
-   "nation": "GER",
-   "template": "panzer_div",
-   "count": 2,
-   "at": [
-    43.4,
-    48.65
-   ],
-   "kept": "1943-01-07",
-   "note": "The German Fourth Panzer Army at Stalingrad"
   },
   {
    "date": "1942-11-04",
@@ -11397,7 +11397,7 @@
     -0.9,
     49.37
    ],
-   "kept": "1944-06-13",
+   "kept": "1944-06-20",
    "note": "D-Day: the American divisions at Omaha and Utah"
   },
   {
@@ -11411,7 +11411,7 @@
     -1.25,
     49.35
    ],
-   "kept": "1944-06-13"
+   "kept": "1944-06-20"
   },
   {
    "date": "1944-06-05",
@@ -11424,7 +11424,7 @@
     -0.45,
     49.33
    ],
-   "kept": "1944-06-13",
+   "kept": "1944-06-20",
    "note": "D-Day: the British and Canadians at Gold, Juno and Sword"
   },
   {
@@ -11438,7 +11438,7 @@
     -0.4,
     49.32
    ],
-   "kept": "1944-06-13"
+   "kept": "1944-06-20"
   },
   {
    "date": "1944-06-06",
@@ -11458,8 +11458,20 @@
    "note": "The Western Front: the timeline's stages"
   },
   {
-   "date": "1944-06-06",
-   "hour": 2,
+   "date": "1944-06-08",
+   "kind": "forces",
+   "nation": "JAP",
+   "template": "infantry_div_square",
+   "count": 4,
+   "at": [
+    113.1,
+    29.4
+   ],
+   "note": "The Japanese 11th Army at Yueyang, south for Changsha",
+   "kept": "1944-06-18"
+  },
+  {
+   "date": "1944-06-12",
    "kind": "occupy",
    "by": "ENG",
    "of": [
@@ -11484,19 +11496,6 @@
     ]
    ],
    "note": "D-Day: the Normandy beachhead"
-  },
-  {
-   "date": "1944-06-08",
-   "kind": "forces",
-   "nation": "JAP",
-   "template": "infantry_div_square",
-   "count": 4,
-   "at": [
-    113.1,
-    29.4
-   ],
-   "note": "The Japanese 11th Army at Yueyang, south for Changsha",
-   "kept": "1944-06-18"
   },
   {
    "date": "1944-06-18",

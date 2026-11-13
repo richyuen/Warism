@@ -271,3 +271,6 @@
   the full run; after Batch 21, the full run.
 - R76c (ADR-1017): the sea reach keys on `seaPowers` (the card's seven and the seven largest navies): the United
   States always, Japan while it has a fleet. Pin aa59b1ab → c64a53fb; sweep 1571-1580 limits 7 of 10 (5), the rest kept.
+- R76d (ADR-1018): the Sixth Army at Stalingrad from 24 October, D-Day's beachhead stage on 12 June: D-Day fought
+  (24 of 28 samples on three seeds), Uranus engaged at its hour on all three; Stalingrad's stage a handover (the user's
+  decision: its window shut by ADR-977's rule).

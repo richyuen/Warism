@@ -60,11 +60,18 @@ batch (ADR-1016, the user's decision; ADR-916).
     aa59b1ab → c64a53fb (R55i's again); sweep on 1571-1580 (`docs/sweeps/2026-11-13-sweep-r76c.md`): limits 7 of 10
     (R74h 5), riser and faller 10, no stasis 10 (9), no break-up 10. `warOverSea1938.test.ts` 2 of 2;
     `farWait1938.test.ts` to seed 7 (formation 321, day 200).
-  - [ ] R76d R66-N4: Stalingrad's stage (31 October 1942) has no German army (the Sixth Army comes 1 November), Uranus is
+  - [x] R76d R66-N4: Stalingrad's stage (31 October 1942) has no German army (the Sixth Army comes 1 November), Uranus is
     not engaged on 38701, and D-Day's beachhead is handed over at the hour, not fought. Arrivals a few days before their
-    stage; the beachhead taken by the landed divisions over the window. AT: `trackFronts` on 1938, 37701 and 38701 with
-    Stalingrad's stage both engaged at its hour, Uranus both engaged at its hour on all three, and D-Day both engaged in
-    at least a third of its 28 samples.
+    stage; the beachhead taken by the landed divisions over the window. AT (rescoped, the user's decision, ADR-1018):
+    `trackFronts` on 1938, 37701 and 38701 with the German Sixth Army near Stalingrad's stage at its hour (a handover:
+    its window is shut by ADR-977's rule, the city's battle fought as Uranus), Uranus both engaged at its hour on all
+    three, and D-Day both engaged in at least a third of its 28 samples.
+    Done: the Sixth Army and Fourth Panzer Army from 24 October (not 1 November); D-Day's beachhead stage on 12 June
+    (not 6 June at hour 2), the landed divisions kept to 20 June. `trackFronts` (`.cache/r76/tf_*.log`), 1938 / 37701
+    / 38701: Stalingrad attacker 14 f 161k near at the hour on each (0 before); Uranus engaged at its hour 5/8, 24/9,
+    10/8 (38701 0/0 before); D-Day both engaged 24, 24, 24 of 28 (0 before), the Germans 6-7k lost; over the whole range on 1938 10 of 23 large
+    land fronts both engaged at the hour (run 66: 10; bar 9). The nine
+    replay tests green.
   - [ ] R76e R66-N5: after a refused start the card is back at 1938 in "Play free" while the notice names another year
     and mode; at 390 × 844 with a saved game the notice is below the fold. AT: in `node
     critic/scripts/c66_x_badyear2.mjs` the slider and date at the year refused, the mode asked for, the notice in view
