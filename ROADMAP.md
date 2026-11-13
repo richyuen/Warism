@@ -202,7 +202,10 @@ Batches 19 and 18 together (ADR-966).
     `years.json` the same as tsx's; the time to 1941 down (paired).
     Done (ADR-1001): `tools/data/saves.ts`; the 38 years' hashes the same as tsx's; to 1941 31.5 s against 45.8 s
     (pairs on separate P-cores, swapped: 33.2/44.9, 29.8/46.7), −31 %; the whole build 378 s (573 s profiled under tsx).
-  - [ ] R72b `Track.held`: the holds standing at the tick found once a tick, not each of 50 for every pair; no closure
+  - [x] R72b `Track.held`: the holds standing at the tick found once a tick, not each of 50 for every pair; no closure
     made a call. AT: as R72's, on the bundle; a unit test of `held` against the old loop over the track's dates.
+    Done: `tests/unit/trackHeld.test.ts` (each hour a hold begins or ends and each month, 75 nations' pairs with
+    puppets; red with the cache's `next` key taken out); the 38 years' hashes the same; the whole build 383.1 →
+    376.6 s (bundles, swapped pairs), −1.7 %, 1952-54 (Korea's holds) −12 to −16 %. R72's bar is read after R72c.
   - [ ] R72c What the profile of the bundle shows next (`findBattles`, the fire's loop), re-profiled after R72b.
 

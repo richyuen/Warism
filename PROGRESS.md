@@ -217,3 +217,6 @@
 - R72a (ADR-1001): `npm run saves` from an esbuild bundle (`tools/data/saves.ts`), not under tsx's `keepNames`: the 38
   years' hashes the same, to 1941 −31 % (swapped pairs), the whole build 378 s locally. R72 split (a, b, c) from the
   profile of the build: `Track.held` and tsx's `__name` a quarter, `findBattles` 37 % inclusive.
+- R72b: `Track.held` and `frozen` from the holds standing at the tick, found once a tick (`standing`), no closure a
+  call; `tests/unit/trackHeld.test.ts` against the old loop. Hashes the same; the build −1.7 % (1952-54 −12 to −16 %):
+  without tsx's `__name` the old loop was cheap. Mends R62f2's rule (ADR-1001's profile); no ADR (ADR-914).

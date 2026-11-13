@@ -41,6 +41,15 @@ export const FIGHT_DAYS = 7;
 /** How far around a stage's ring its area reaches (R66d). */
 export const FIGHT_BAND_KM = 120;
 
+/** A hold's event (R62f2): its index, the tick it ends, its two sides' nations, whether it freezes a war (R66b). */
+interface Hold {
+  i: number;
+  until: number;
+  a: ReadonlySet<number>;
+  b: ReadonlySet<number>;
+  frozen: boolean;
+}
+
 /** An `occupy` stage open to fighting (R66d). */
 interface OpenStage {
   by: number;
@@ -144,7 +153,9 @@ export class Track {
   /** The revivals a born nation has, as its scenario's nations do (R62d). */
   revivals = 0;
   /** The holds' events, by index: the tick each ends and its two sides' nations (R62f2). */
-  private readonly holdAt: readonly { i: number; until: number; a: ReadonlySet<number>; b: ReadonlySet<number>; frozen: boolean }[];
+  private readonly holdAt: readonly Hold[];
+  /** The holds standing at a tick with `next` events applied, in `holdAt`'s order (R72b; derived, not state). */
+  private live: { tick: number; next: number; list: readonly Hold[] } | null = null;
   /** The objectives' events, by index, with the tick each ends (R62e). */
   private readonly objectiveAt: readonly { i: number; until: number }[];
   /** The stages open to fighting at a tick (R66d; derived, not state). */
@@ -311,15 +322,37 @@ export class Track {
   }
 
   held(a: number, b: number, tick: number, overlord: ArrayLike<number>): boolean {
-    if (this.holdAt.length === 0 || this.ended || TRACK_PROBE.holdsOff) return false;
+    return this.holdOf(a, b, tick, overlord) !== null;
+  }
+
+  /**
+   * The first hold standing at `tick` between `a` and `b` (`held`'s, `frozen`'s), or null. R72b: the holds standing
+   * found once a tick (`standing`), and no closure made a call; asked for each pair of formations each hour.
+   */
+  private holdOf(a: number, b: number, tick: number, overlord: ArrayLike<number>): Hold | null {
+    if (this.holdAt.length === 0 || this.ended || TRACK_PROBE.holdsOff) return null;
+    const list = this.standing(tick);
+    if (list.length === 0) return null;
     const oa = overlord[a] ?? 0;
     const ob = overlord[b] ?? 0;
-    const on = (s: ReadonlySet<number>, n: number, o: number): boolean => s.has(n) || (o !== 0 && s.has(o));
-    for (const h of this.holdAt) {
-      if (h.i >= this.next || tick >= h.until) continue;
-      if ((on(h.a, a, oa) && on(h.b, b, ob)) || (on(h.a, b, ob) && on(h.b, a, oa))) return true;
+    for (const h of list) {
+      const aInA = h.a.has(a) || (oa !== 0 && h.a.has(oa));
+      const bInB = h.b.has(b) || (ob !== 0 && h.b.has(ob));
+      if (aInA && bInB) return h;
+      const bInA = h.a.has(b) || (ob !== 0 && h.a.has(ob));
+      const aInB = h.b.has(a) || (oa !== 0 && h.b.has(oa));
+      if (bInA && aInB) return h;
     }
-    return false;
+    return null;
+  }
+
+  /** The holds begun (their events applied) and not ended at `tick`, in their order (R72b). */
+  private standing(tick: number): readonly Hold[] {
+    const live = this.live;
+    if (live !== null && live.tick === tick && live.next === this.next) return live.list;
+    const list = this.holdAt.filter((h) => h.i < this.next && tick < h.until);
+    this.live = { tick, next: this.next, list };
+    return list;
   }
 
   /**
@@ -327,15 +360,7 @@ export class Track {
    * whose war the timeline does not begin on its date (the Eastern Front, China, the Pacific; not the Phoney War).
    */
   frozen(a: number, b: number, tick: number, overlord: ArrayLike<number>): boolean {
-    if (this.holdAt.length === 0 || this.ended || TRACK_PROBE.holdsOff) return false;
-    const oa = overlord[a] ?? 0;
-    const ob = overlord[b] ?? 0;
-    const on = (s: ReadonlySet<number>, n: number, o: number): boolean => s.has(n) || (o !== 0 && s.has(o));
-    for (const h of this.holdAt) {
-      if (h.i >= this.next || tick >= h.until) continue;
-      if ((on(h.a, a, oa) && on(h.b, b, ob)) || (on(h.a, b, ob) && on(h.b, a, oa))) return h.frozen;
-    }
-    return false;
+    return this.holdOf(a, b, tick, overlord)?.frozen ?? false;
   }
 
   /** The nation of a tag (0: none such). */
