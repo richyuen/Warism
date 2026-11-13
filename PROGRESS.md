@@ -231,3 +231,4 @@
   tanks 8, aircraft 8, aiNukes 8); 1 blocking (B1, R68b's refused start not told). R73 filed before the release
   (ADR-1003); the non-blocking findings after it.
 - ADR-1004 (the user's decision): R74, all of run 65's non-blocking findings (R74a-h), before the critic.
+- ADR-1005 (the user's decision): every critic run's non-blocking issues fixed before the release (PROMPT.md RELEASES step 2); the full run's too, then step 3's checks again, no critic run after them.

@@ -685,3 +685,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Decision.** The user: "let's do all the non-blocking findings too". R74 in Batch 20 after R73, before the critic:
   R65-N7, N6, N5, N1, N2, N3, N4 and the small ones (R74a-h), each with its AT. Supersedes ADR-1003's "after it".
 - **Consequences.** The release waits on R73-R74 and a focused run with no blocking issue, then the full run.
+
+### ADR-1005 · 2026-11-12 · accepted (the user's decision) — Every critic run's non-blocking issues fixed before the release
+- **Context.** Until now a critic run's non-blocking issues were filed as the batch saw fit, and ADR-843 asked only for
+  the ideas of a dimension under its bar. The user: "Can we make a rule to always do non-blocking findings before
+  release?" Most runs find some, the full run that clears a release among them, so the rule needs an end.
+- **Decision** (PROMPT.md, RELEASES step 2). Each non-blocking issue of every critic run becomes a ROADMAP item with
+  its AT, before the release, as a blocking one does. The full run's own non-blocking issues are fixed too, and the
+  release then goes on with no critic run after them: `npm run check:review`, the sweep on unseen seeds and the bench
+  (step 3) are run again on the fixes (the user's choice of the end, of three put to them).
+- **Consequences.** A release waits on every finding of its runs. ADR-1004 (run 65's) is the first case.
