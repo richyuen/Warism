@@ -859,3 +859,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   orders moved (R75b-c's), Spain still in 1944 and 1946-48.
 - **Decision.** The user: option 1, the measure kept. The card reads the sim's own figures; the critic's finding is
   answered, not met.
+
+### ADR-1020 · 2026-11-13 · accepted — R76g: China's four lost warheads answered by the rules that drive them
+- **Context.** Run 66: in a free 1975 (after 6161) People's China launched its four warheads at one point on 6-10
+  October; all four were intercepted ("not a reasoned use").
+- **Read.** At each launch China was in extreme desperation; the chance of interception 0.56-0.75, the utility
+  0.03-0.07, over its floor. Two rules drive it: a launch stopped short does not count as the side's strike, so it may
+  strike again the next day (PLAN 7.28), and extreme desperation strikes under the enemy's air (PLAN 7.18i, Poland at
+  0.20 through, `nukePoland1938.test.ts`).
+- **Tried, not kept.** No first use more likely stopped than delivered: it broke PLAN 7.18i's Poland; with extreme
+  desperation exempt it changed nothing, on the case or in 3 × 22 years of plain 1938 (launches and detonations equal
+  with and without it). No rule is added for a case the rules intend; R76g's AT allows the case answered.

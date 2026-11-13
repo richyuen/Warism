@@ -29,7 +29,7 @@ Rules:
 Before the release (PROMPT's RELEASES step 2, ADR-1005: every non-blocking finding, ADR-1014; R77 the user's request). The full run follows the
 batch (ADR-1016, the user's decision; ADR-916).
 
-- [ ] R76 **Run 66's non-blocking findings.**
+- [x] R76 **Run 66's non-blocking findings.**
   - [x] R76a R66-N1: the focus after the track (R75a, ADR-1009) also damps a replay left in 1938-41, when history's
     alignment is the Axis at war (left on day 1: 19 and 19 declarations in the year on 5151 and 6161, plain 1938 32 and
     28). Scale the focus by what the track held back (the bloc era, from 1946) or apply it only to an end after the war.
@@ -89,10 +89,16 @@ batch (ADR-1016, the user's decision; ADR-916).
     seventh. Tried on run 66's 38 starts (`.cache/r76/cardparts.ts`): a peacetime army at half (Britain over the Soviet
     Union 1964-66, 1960's and 1975's orders moved), at 0.75 (1941-43 and 1945 as the AT, but Italy out of 1938, 1950
     reordered, Spain still in 1944 and 1946-48), capped at twice its income share (Italy out of 1938, Spain kept).
-  - [ ] R76g R66 small: People's China in a free 1975 (after 6161) launches its four warheads at one place over five days
+  - [x] R76g R66 small: People's China in a free 1975 (after 6161) launches its four warheads at one place over five days
     and all are intercepted; not a reasoned use. AT: `npx tsx critic/scripts/c66_nukes75.ts` kind of run on 6161: no
     nation launches more warheads at one target in a week than one more than were intercepted there before, or the
     rule that drives it named and the case answered in DECISIONS.
+    Answered, the rules named (ADR-1020): at each of its four launches (6, 7, 8 and 10 October) People's China was in
+    extreme desperation, the chance of interception 0.56-0.75, the utility 0.03-0.07 (`.cache/r76/nk.ts`). A launch
+    stopped short does not count as its side's strike (PLAN 7.28), and extreme desperation strikes under the enemy's air
+    (PLAN 7.18i: Poland at 0.20 through). Tried: no first use more likely stopped than delivered, but in extreme
+    desperation; 3 × 22 years (37501, 37503, 37507) launches 8/5/5, detonations 5/3/4 alike with and without it, and
+    the case unchanged; not kept (no case it changes).
 
 - [ ] R77 **A stage's own window of fighting (`fightDays`)** (the user, 2026-11-13, on R76d's D-Day: "why does the hold
   need to be 7 days in all cases?"; in Batch 21, before the release, at the user's word). Every `occupy` and `transfer` stage lifts its hold for FIGHT_DAYS (7) before it (ADR-975),

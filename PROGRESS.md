@@ -276,3 +276,5 @@
   decision: its window shut by ADR-977's rule).
 - R76e: a refused start's card opens at its year and in its mode, the notice in view (on a phone with a saved game too).
 - R76f (ADR-1019, the user's decision): the start card's measure kept; Spain stays on the 1940s cards by its army.
+- R76g (ADR-1020): China's four intercepted warheads in 1975 answered: extreme desperation (PLAN 7.18i) and a stopped
+  launch not counting (PLAN 7.28); a no-likely-loss rule tried, changing nothing outside desperation, not kept.
