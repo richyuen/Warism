@@ -890,3 +890,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Decision.** On a full run with no blocking issue and every score at its bar, its non-blocking findings are filed and
   fixed first (ADR-1005), then step 3's checks run once on the fixed code; no critic run after the fixes, as before. A
   check that fails is still an item, fixed, and the checks it touched run again.
+
+### ADR-1023 · 2026-11-13 · accepted — Critic run 67 (full): no blocking issue; its findings before the release checks
+- **Context.** Critic run 67, full (ADR-1016), on `6e0e46f3` (HEAD moved to `43e6642e` during it, docs only): every
+  dimension at 8, no blocking issue. Four non-blocking findings (R67-N1 D-Day fought and lost, N2 far declarations on
+  European minors, N3 Japan's fleets lost out of battle, N4 People's China's army collapsing after the track) and small
+  ones. Its design objections (the free world's far conquests after 1975; Stalingrad, Spain and the dominions, the
+  user's decisions or ADR-17) are not named as issues, and no dimension is under its bar (ADR-843): none filed.
+- **Decision.** Batch 22, R78a-e, each with the critic's AT; then step 3's checks once on the fixed code (ADR-1022),
+  no critic run after.

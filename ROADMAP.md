@@ -24,6 +24,39 @@ Rules:
 - `release-2026-11-11` (2026-11-11): Batches 14–16 (R59, R60, R61a's follow-ups, R62 the historical track, R63, R64), in
   CHANGELOG.md for players; the items with their evidence in `docs/history/ROADMAP-release-2026-11-11.md`.
 
+## Batch 22 — run 67's findings (full, on `6e0e46f3`: no blocking issue, every dimension at 8)
+
+Before the release checks (ADR-1005, ADR-1022: a full run's non-blocking findings fixed first, then step 3's checks
+once; no critic run after them).
+
+- [ ] R78 **Run 67's non-blocking findings.**
+  - [ ] R78a R67-N1: the replay's D-Day is fought and lost (R77's 50-day window, no build-up): on 1938 the Allies fall
+    from 74.6k landed to 5.2k by 26 July; Paris and France are handed to 5k Americans. The Allied build-up of June and
+    July (the follow-up divisions, the Third Army by 1 August) as `forces` arrivals; `trackFronts` counts an attacker
+    who arrives inside the window. AT: `npx tsx critic/scripts/c67_dday.ts 1938`: the Allied men in the Normandy box on
+    24 July at least 74.6k and over the Germans'; `c67_census.ts 1938`: on 26 August the France box holds Allied armies
+    of at least 100k; `trackFronts` 1938, 37701, 38701: D-Day both engaged in ≥ 1/3 of its samples; the nine replay
+    tests green.
+  - [ ] R78b R67-N2: a great power declares across the world on a far minor (ADR-670's sea targets): Japan on a European
+    state in the first 60 days on 9 of 10 seeds, the United States on Lithuania once. A sea target weighed by its
+    distance (or a claim, a neighbour's war, an ally's enemy). AT: `npx tsx critic/scripts/c67_firstdecl.ts 60` on
+    39821-39839: no Japanese declaration on a European state, ≤ 5 declarations over 6,000 km; the sweep's verdicts
+    kept, the pin's move logged.
+  - [ ] R78c R67-N3: Japan's fleets are lost out of battle far from home (39061: 194 ships, 56 in the Channel on days
+    307-460; 32061: 179). A fleet losing ships month after month with no battle comes home or is laid up; the cause
+    (strikes, shore fire, air) named first. AT: `seaBattles 39061 scenario --years 3` and `32061` under 60 Japanese
+    ships sunk out of battle, none in the Channel.
+  - [ ] R78d R67-N4: People's China's army collapses after the track (about 650k to 18-90k within two years on 37601,
+    37603, 38601 and 1938: it attacks India and is struck by the Soviet Union). AT: `critic/scripts/c67_atx` kind of
+    run on those four: its army after two years at least a third of its end strength, or the rule that drives the
+    collapse named and the case answered in DECISIONS.
+  - [ ] R78e R67 small: (1) Uranus not engaged at its hour on 39701 (both engaged 9 of 28 samples); (2) the 1958 burst
+    on Hokkaido named for Nevelsk, across the strait; (3) Germany's 1938 flag told from Poland's only by a 2-px band at
+    250 m/px; (4) the Land ranking counts owners (Germany at its height not in the 1942 top 15) and has no unit. AT:
+    (1) `trackFronts 39701` Uranus both engaged at its hour, 1938, 37701 and 38701 kept; (2) a burst named for the
+    nearest city of the struck nation's land (a unit case); (3) the two flags differ in more than a band at 250 m/px
+    (a shot looked at); (4) the ranking's land by holder with its unit (km²), a spec.
+
 ## Batch 21 — run 66's findings (focused, on `a0880be6`: no blocking issue, every dimension at 8)
 
 Before the release (PROMPT's RELEASES step 2, ADR-1005: every non-blocking finding, ADR-1014; R77 the user's request). The full run follows the

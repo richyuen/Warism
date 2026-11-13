@@ -281,3 +281,6 @@
 - R77 (ADR-1021): a stage's own window of fighting (`fightDays`); Normandy fought from the landing to 25 July (both
   engaged in 39-72 % of its samples on three seeds). Batch 21 done; next the full critic run (ADR-1016).
 - ADR-1022 (the user's decision): a full run's non-blocking findings are fixed before the release checks, which run once.
+- Critic run 67 (full, `6e0e46f3`): every dimension at 8 (mapVisuals 8, diplomacyWarDepth 8, emergentDynamics 8, godMode
+  8, editorScenarios 8, statsHistory 8, uiUxPolish 8, performance 8, stability 8, semanticZoom 8, naval 8, tanks 8,
+  aircraft 8, aiNukes 8); 0 blocking. Its findings filed as Batch 22, R78a-e, before the release checks (ADR-1023).
