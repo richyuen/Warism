@@ -232,3 +232,7 @@
   (ADR-1003); the non-blocking findings after it.
 - ADR-1004 (the user's decision): R74, all of run 65's non-blocking findings (R74a-h), before the critic.
 - ADR-1005 (the user's decision): every critic run's non-blocking issues fixed before the release (PROMPT.md RELEASES step 2); the full run's too, then step 3's checks again, no critic run after them.
+- R73 (B1 of run 65): a refused start from a year has its own failure (`?failed=start&year=Y`) and notice on the 1938
+  card naming the year; the saved game's card and its Continue left alone. The critic's `c65_x_badyear.mjs` and
+  `c65_x_badyearsave.mjs` pass on a build with the starts; specs `replayYear1938h.spec.ts`, `title.spec.ts`. Mends
+  R68b (ADR-983); no ADR (ADR-914).

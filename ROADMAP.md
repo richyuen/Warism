@@ -29,13 +29,17 @@ Rules:
 Before the release (PROMPT's RELEASES step 2, ADR-1003; the non-blocking findings too, the user's decision, ADR-1004).
 The critic runs again (focused) after the batch.
 
-- [ ] R73 **B1: a start from a year that cannot be loaded is told, and leaves the saved game alone** (R68b, SPEC §7.7).
+- [x] R73 **B1: a start from a year that cannot be loaded is told, and leaves the saved game alone** (R68b, SPEC §7.7).
   A refused start (a year not built, a 404, bytes not the world built) goes to `?failed=save`, which the title shows
   only in the saved game's card: with no save nothing is said, with one that save is blamed and its Continue removed.
   Its own failure (`?failed=start&year=`) and a notice of its own on the 1938 card naming the year. AT: in
   `node critic/scripts/c65_x_badyear.mjs` each of the three cases shows a notice naming the year; in
   `node critic/scripts/c65_x_badyearsave.mjs` that notice, and the saved game's card with its Continue; a Playwright
   spec of both.
+  Done: `?failed=start&year=Y` (`startFailedUrl`), the title on the 1938 card with "The world of 1 January Y could
+  not be loaded…", cleared by the slider; the saved game's card untouched. `c65_x_badyear.mjs` (wrong bytes, 404, 1977)
+  and `c65_x_badyearsave.mjs` (Continue kept) on a build with the starts; `replayYear1938h.spec.ts` (1400 × 800 and
+  390 × 844, shots looked at), `title.spec.ts` 11 of 11.
 - [ ] R74 **Run 65's non-blocking findings** (the user's decision of 2026-11-12, ADR-1004: all of them).
   - [ ] R74a R65-N7: Resume pressed during "Building the world…" on `?paused=1` is undone at the first stats. AT: in
     `node critic/scripts/c65_x_buildpause.mjs 1600 900 1` the player's choice made during the build kept (or the

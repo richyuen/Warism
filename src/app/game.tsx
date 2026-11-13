@@ -9,7 +9,7 @@ import { Hud } from './hud';
 import { MapView } from './MapView';
 import { PlayerControl } from './player';
 import type { GameOptions } from '../shared/gameOptions';
-import { loadFailedUrl, optionsFromUrl, withLooping } from './gameUrl';
+import { loadFailedUrl, optionsFromUrl, startFailedUrl, withLooping } from './gameUrl';
 import { startFromYear } from './replayStart';
 import { importScenarioFile, readStagedScenario } from './scenarioFiles';
 import { saveScreenshot, Settings } from './settings';
@@ -351,7 +351,8 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       loaded = await startFromYear(sim, Number(params.get('year')), options.after, params.get('mode') === 'free');
     } catch (err) {
       console.warn(`Warism: the start of ${params.get('year')} could not be loaded: ${err instanceof Error ? err.message : String(err)}`);
-      location.replace(loadFailedUrl('save'));
+      // Its own notice (R73): the player's saved game is not what failed.
+      location.replace(startFailedUrl(params.get('year')));
       return;
     }
   }

@@ -72,6 +72,16 @@ export function loadFailedUrl(what: 'scenario' | 'save' = 'scenario'): string {
 }
 
 /**
+ * The title screen, saying that the replay's start of 1 January `year` could not be loaded (ROADMAP R73, critic run 65
+ * B1): its own notice, on the card that offers it, not the saved game's (`loadFailedUrl('save')`).
+ */
+export function startFailedUrl(year: string | null): string {
+  const q = new URLSearchParams({ failed: 'start' });
+  if (year !== null && /^\d{1,4}$/.test(year)) q.set('year', year);
+  return `?${q.toString()}`;
+}
+
+/**
  * The URL `params` with the looping option made `looping`. A loaded world brings its own setting,
  * and the map view is built from the URL before the world is there.
  */

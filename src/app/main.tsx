@@ -67,6 +67,7 @@ if (scenarioId !== null) {
         onScenarioFile={async (file) => location.assign(stagedScenarioUrl(await stageScenarioFile(new Uint8Array(await file.arrayBuffer()))))}
         loadFailed={params.get('failed') === 'scenario'}
         saveFailed={params.get('failed') === 'save'}
+        startFailed={params.get('failed') === 'start' ? (params.get('year') ?? '') : undefined}
       />,
       uiRoot,
     );

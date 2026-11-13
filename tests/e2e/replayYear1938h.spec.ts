@@ -4,7 +4,7 @@ import { STATE_FORMAT } from '../../src/shared/saveFormat';
 
 // ROADMAP R68b (ADR-983): a game of the historical replay started from a year: its world of 1 January (built at deploy;
 // here a world saved two days in, served as 1939's) loaded into the new game, the replay going on (`mode=replay`) or
-// left at once (`mode=free`); a year not built goes to the title's notice.
+// left at once (`mode=free`); a year not built goes to the title's notice of its own (R73).
 
 const ready = async (page: Page): Promise<void> => {
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
@@ -42,9 +42,50 @@ test('a start from a year: the replay goes on, or is left; a year not built is r
     await page.screenshot({ path: test.info().outputPath(`year-${mode}.png`) });
   }
 
-  // A year the site has not built.
+  // A year the site has not built: the title's notice names it (R73, critic run 65 B1).
   await page.goto('/?scenario=1938h&paused=1&after=9&year=1950&mode=replay');
-  await page.waitForURL(/failed=save/, { timeout: 60_000 });
+  await page.waitForURL(/failed=start&year=1950/, { timeout: 60_000 });
+  await expect(page.getByTestId('title-start-error')).toContainText('1 January 1950');
+  expect(errors).toEqual([]);
+});
+
+// ROADMAP R73 (critic run 65, B1): a refused start is told on the 1938 card, naming its year, and leaves the player's
+// saved game alone (its card, its Continue); moving the slider clears the notice.
+test('a start that cannot be loaded is told by its year, and the saved game keeps its Continue', async ({ page }) => {
+  test.setTimeout(240_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  // A saved game: the toy world a day in, Settings > Main menu.
+  await page.goto('/?scenario=toy&paused=1&seed=7');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.worker.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(() => window.__warsim!.sim.step(24));
+  await page.getByTestId('settings-btn').click();
+  await Promise.all([page.waitForURL((u) => u.search === ''), page.getByTestId('settings-menu').click()]);
+  await expect(page.getByTestId('title-continue')).toBeVisible();
+  // 1960 in the index, its file missing (a 404).
+  await page.route('**/data/scenarios/1938h/start/years.json', (r) =>
+    r.fulfill({ json: { format: STATE_FORMAT, seed: 1938, years: [{ year: 1938, tick: 0, hash: 0 }, { year: 1960, tick: 1, hash: 1 }] } }),
+  );
+  await page.route('**/data/scenarios/1938h/start/1960.sav', (r) => r.fulfill({ status: 404, body: 'no' }));
+  for (const sizes of [
+    { width: 1400, height: 800 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(sizes);
+    await page.goto('/?scenario=1938h&paused=1&after=9&year=1960&mode=replay');
+    await page.waitForURL(/failed=start&year=1960/, { timeout: 60_000 });
+    await expect(page.getByTestId('title-chosen')).toHaveText('World, 1938');
+    await expect(page.getByTestId('title-start-error')).toContainText('1 January 1960');
+    await page.getByTestId('title-start-error').scrollIntoViewIfNeeded();
+    await expect(page.getByTestId('title-start-error')).toBeVisible();
+    await expect(page.getByTestId('title-continue')).toBeVisible();
+    await expect(page.getByTestId('title-save-error')).toHaveCount(0);
+    await page.screenshot({ path: test.info().outputPath(`start-failed-${sizes.width}.png`), fullPage: true });
+  }
+  // The slider moved: the notice is gone.
+  await page.getByTestId('title-start-year').fill('1938');
+  await expect(page.getByTestId('title-start-error')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
 

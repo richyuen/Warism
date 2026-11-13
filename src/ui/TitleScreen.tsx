@@ -45,6 +45,11 @@ export interface TitleScreenProps {
   loadFailed: boolean;
   /** The saved game could not be loaded after Continue (PLAN 7.149): it is not offered again. */
   saveFailed?: boolean;
+  /**
+   * A start of the replay from a year could not be loaded (ROADMAP R73): that year ('' when the URL named none). Told on
+   * the card that offers the replay; the saved game is not what failed.
+   */
+  startFailed?: string | undefined;
 }
 
 /**
@@ -58,8 +63,10 @@ export interface ReplayStart {
   free: boolean;
 }
 
-export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, startYears, readSave, onContinue, checkScenarioFile, onScenarioFile, loadFailed, saveFailed = false }: TitleScreenProps) {
-  const [chosen, setChosen] = useState<ScenarioId>(scenarios[0]!.id);
+export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, startYears, readSave, onContinue, checkScenarioFile, onScenarioFile, loadFailed, saveFailed = false, startFailed }: TitleScreenProps) {
+  // A refused start opens on the card that offers the replay, its notice there (R73).
+  const [chosen, setChosen] = useState<ScenarioId>(() => (startFailed !== undefined ? (scenarios.find((s) => replays[s.id])?.id ?? scenarios[0]!.id) : scenarios[0]!.id));
+  const [startError, setStartError] = useState(startFailed);
   // A new seed per visit, so two games started without touching the field differ.
   const [seed] = useState(randomSeed);
   // undefined while the store is being read.
@@ -216,7 +223,10 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
               <img class="title-preview" data-testid="title-preview" src={previewUrl(chosen)} width={1024} height={512} alt={t(info.nationsRange ? 'title.previewAltExample' : 'title.previewAlt', { name: t(info.nameKey as MessageKey) })} />
               {replay && years.length > 1 ? (
                 <div class="title-years">
-                  <input type="range" class="title-year-slider" data-testid="title-start-year" min={years[0]} max={years.at(-1)} step={1} value={year} aria-label={t('title.startYear')} onInput={(e) => setYear(Number((e.currentTarget as HTMLInputElement).value))} />
+                  <input type="range" class="title-year-slider" data-testid="title-start-year" min={years[0]} max={years.at(-1)} step={1} value={year} aria-label={t('title.startYear')} onInput={(e) => {
+                      setYear(Number((e.currentTarget as HTMLInputElement).value));
+                      setStartError(undefined);
+                    }} />
                   <div class="title-year-ends">
                     <span>{years[0]}</span>
                     <span>{years.at(-1)}</span>
@@ -224,6 +234,11 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
                 </div>
               ) : null}
               <p class="title-desc">{t((history && replay ? replay.info : own).descKey as MessageKey)}</p>
+              {replay && startError !== undefined ? (
+                <div class="panel-warn" data-testid="title-start-error">
+                  {startError ? t('title.startFailed', { year: startError }) : t('title.startFailedAny')}
+                </div>
+              ) : null}
               <div class="form-row">
                 <span class="form-name">{t('title.startDate')}</span>
                 <span data-testid="title-start-date">{replay ? t('title.startYearOption', { year }) : dateAt(info.startDay, 0)}</span>
