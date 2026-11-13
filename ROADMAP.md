@@ -194,5 +194,15 @@ Batches 19 and 18 together (ADR-966).
   operationalAi 0.16, supply 0.15). Speed-ups only: no rule changes, every result bit for bit as before. AT: `npm run
   saves` to 1975 in at most 2/3 of its time on the commit before R72a (both run at once on separate P-cores, then
   swapped); every hash of `years.json` and the pin of seed 99 unchanged; the runner's step time reported in the ADR.
-  Split when started: first a profile of combat (and the next systems) by function, the parts named from what it shows.
+  Split from the profile of the whole build (V8's `--cpu-prof`, 573 s under tsx at `fa16420b`): `Track.held` and
+  tsx's `__name` (each closure the sim makes named, under tsx's `keepNames`; the game's build and vitest keep none)
+  about a quarter; `findBattles` 37 % inclusive, most of it the hold checks of each pair; then air, movement, supply,
+  territory.
+  - [x] R72a `npm run saves` from an esbuild bundle without `keepNames`, as the game runs. AT: each hash of
+    `years.json` the same as tsx's; the time to 1941 down (paired).
+    Done (ADR-1001): `tools/data/saves.ts`; the 38 years' hashes the same as tsx's; to 1941 31.5 s against 45.8 s
+    (pairs on separate P-cores, swapped: 33.2/44.9, 29.8/46.7), −31 %; the whole build 378 s (573 s profiled under tsx).
+  - [ ] R72b `Track.held`: the holds standing at the tick found once a tick, not each of 50 for every pair; no closure
+    made a call. AT: as R72's, on the bundle; a unit test of `held` against the old loop over the track's dates.
+  - [ ] R72c What the profile of the bundle shows next (`findBattles`, the fire's loop), re-profiled after R72b.
 

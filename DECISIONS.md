@@ -639,3 +639,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   critic of Batches 18-19: speed-ups of the tick with no rule change, `npm run saves` to 1975 in at most 2/3 of its
   time, every result bit for bit as before (the starts' hashes, the pin of seed 99).
 - **Consequences.** The critic waits for R72. Split from a profile of combat by function when it is started.
+
+### ADR-1001 · 2026-11-12 · accepted — R72a: the replay's starts built from a bundle, not under tsx
+- **Context.** R72's profile of `npm run saves` (V8's `--cpu-prof`, the 38 years, 573 s): about a quarter in tsx's
+  `__name`, the call `keepNames` wraps around each function made, so that a closure made in a hot loop (`Track.held`'s,
+  for each pair of formations each hour) names itself at each call. The game's build (Vite) and vitest keep no names.
+- **Decision.** `npm run saves` runs `tools/data/saves.ts`: it bundles `replaySaves.ts` with esbuild (`keepNames` off,
+  into `.cache/saves/`, two levels under the root as the earth's assets are found from the bundle's place) and runs it
+  with node. esbuild, until now Vite's and tsx's, a dev dependency of its own at the same version.
+- **Consequences.** Each of the 38 years' hashes the same as tsx's; to 1941 −31 % (31.5 s against 45.8 s, swapped
+  pairs on separate P-cores). The other tools (`npm run sim`, the sweep, the soak) still run under tsx and pay the
+  same tax; their timings are the budgets' (goal 5) and are left as they are.

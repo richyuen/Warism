@@ -3,7 +3,8 @@
  * on 1 January of each year of the track, from 1938 to the year of its end, written gzipped
  * (`<out>/<year>.sav`, `Sim.save()` as `packSave` writes it) with `<out>/years.json`: the years, the state format,
  * and each save's tick and hash. Built by the Pages workflow on each push to `main` into the site, never committed;
- * by hand for a local game (`public/data/scenarios/1938h/start/`, gitignored). About 7-10 minutes.
+ * by hand for a local game (`public/data/scenarios/1938h/start/`, gitignored). `npm run saves` runs it from a bundle
+ * (`saves.ts`, R72a): about 6-7 minutes.
  *
  * Usage: npm run saves [-- <out dir> [last year]]
  */
@@ -50,7 +51,8 @@ export function buildReplaySaves(each: (year: number, sim: Sim) => void, last = 
   }
 }
 
-if (process.argv[1]?.endsWith('replaySaves.ts')) {
+// Run as a script: by `npm run saves` from its bundle (`saves.ts`, `.cache/saves/replaySaves.mjs`), or by tsx.
+if (/replaySaves\.(ts|mjs)$/.test(process.argv[1] ?? '')) {
   const out = process.argv[2] ?? 'public/data/scenarios/1938h/start';
   const last = process.argv[3] ? Number(process.argv[3]) : Infinity;
   mkdirSync(out, { recursive: true });
