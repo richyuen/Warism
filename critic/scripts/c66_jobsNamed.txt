@@ -1,0 +1,42 @@
+npx tsx tools/diag/landingInvariants.ts 30041 3517 120 30041 30,90 1 > critic/c66_li_30041_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 31099 3517 120 31099 30,90 1 > critic/c66_li_31099_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 203997 3517 120 203997 30,90 2 > critic/c66_li_203997.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 204017 3517 120 204017 30 2 8 > critic/c66_li_204017.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 29043 15101 120 29043 30,90 2 > critic/c66_li_29043_15101.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 28037 3517 120 28037 30 2 8 > critic/c66_li_28037_od8.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 28039 3517 120 28039 30,90 1 > critic/c66_li_28039_g1.log 2>&1
+env SEED=31173 SETUP=3517 KEEPG=2 DIV=366 FROM=800 TO=940 npx tsx critic/scripts/c61_nvtrace.ts > critic/c66_nvtrace_31173_366.log 2>&1
+env SEED=31127 SETUP=15101 KEEPG=1 DIV=272 FROM=420 TO=640 npx tsx critic/scripts/c61_nvtrace.ts > critic/c66_nvtrace_31127_272.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 32115 15101 120 32115 30,90 2 > critic/c66_li_32115_15101_g2.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 32167 3517 120 32167 30,90 1 > critic/c66_li_32167_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 32167 3517 120 32167 30,90 2 > critic/c66_li_32167_g2.log 2>&1
+npx tsx tools/diag/seaBattles.ts 32061 scenario --years 3 --out critic/c66_sb_32061.json > critic/c66_sb_32061.log 2>&1
+npx tsx tools/diag/seaBattles.ts 32063 random --years 2 --out critic/c66_sb_32063r.json > critic/c66_sb_32063r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33501 scenario 1825 > critic/c66_diploinv_33501s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33503 random 1825 > critic/c66_diploinv_33503r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33505 scenario 1825 --heroes > critic/c66_diploinv_33505sh.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 36009 1825 > critic/c66_wi_36009.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 36011 1825 --heroes > critic/c66_wi_36011h.log 2>&1
+npm run sim -- --scenario 1938 --seed 7019 --years 20 --save critic/c66_seed7019_y20.bin > critic/c66_seed7019_save.log 2>&1
+npm run sim -- --scenario 1938 --seed 32019 --years 20 --save critic/c66_seed32019_y20.bin > critic/c66_seed32019_save.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 32059 4380 24 critic/c66_wd_32059.json > critic/c66_wd_32059.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 37001 scenario 1825 > critic/c66_diploinv_37001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 37003 random 1825 > critic/c66_diploinv_37003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 37005 scenario 1825 --heroes > critic/c66_diploinv_37005sh.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 37007 1825 > critic/c66_wi_37007.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 37011 1825 --heroes > critic/c66_wi_37011h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 38001 scenario 1825 > critic/c66_diploinv_38001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 38003 random 1825 > critic/c66_diploinv_38003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 38005 scenario 1825 --heroes > critic/c66_diploinv_38005sh.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 38007 1825 > critic/c66_wi_38007.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 38009 1825 > critic/c66_wi_38009.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 38011 1825 --heroes > critic/c66_wi_38011h.log 2>&1
+npx tsx critic/scripts/c64_track.ts 1938 365 > critic/c66_track_1938.log 2>&1
+npx tsx critic/scripts/c64_track.ts 38301 365 > critic/c66_track_38301.log 2>&1
+npx tsx critic/scripts/c64_track.ts 38303 365 > critic/c66_track_38303.log 2>&1
+npx tsx tools/diag/trackFronts.ts 37701 > critic/c66_tf_37701.log 2>&1
+npx tsx tools/diag/trackFronts.ts 38701 > critic/c66_tf_38701.log 2>&1
+npx tsx critic/scripts/c66_afterTrack.ts 37601 10 critic/c66_atx_37601.json > critic/c66_atx_37601.log 2>&1
+npx tsx critic/scripts/c66_afterTrack.ts 38601 10 critic/c66_atx_38601.json > critic/c66_atx_38601.log 2>&1
+npx tsx critic/scripts/c66_transfer.ts > critic/c66_transfer_head.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 36105 3517 120 36105 30 2 8 > critic/c66_li_36105_3517_g2_od8.log 2>&1

@@ -24,6 +24,43 @@ Rules:
 - `release-2026-11-11` (2026-11-11): Batches 14–16 (R59, R60, R61a's follow-ups, R62 the historical track, R63, R64), in
   CHANGELOG.md for players; the items with their evidence in `docs/history/ROADMAP-release-2026-11-11.md`.
 
+## Batch 21 — run 66's findings (focused, on `a0880be6`: no blocking issue, every dimension at 8)
+
+Before the release (PROMPT's RELEASES step 2, ADR-1005: every non-blocking finding, ADR-1014). The critic runs again
+(focused) after the batch; then the full run (ADR-916).
+
+- [ ] R76 **Run 66's non-blocking findings.**
+  - [ ] R76a R66-N1: the focus after the track (R75a, ADR-1009) also damps a replay left in 1938-41, when history's
+    alignment is the Axis at war (left on day 1: 19 and 19 declarations in the year on 5151 and 6161, plain 1938 32 and
+    28). Scale the focus by what the track held back (the bloc era, from 1946) or apply it only to an end after the war.
+    AT: `npx tsx critic/scripts/c66_freeburst.ts 1938 5151` and `1938 6161` declare within ±10 % of `c66_freeburst.ts 0
+    5151` and `0 6161` in the year, while `1975 5151/6161` keep their first month at ≤ 1.2 × plain 1938's per nation.
+  - [ ] R76b R66-N2: the card in "Play free" at a later year shows 1938's description and the replay's fixed-seed note.
+    A free game's description from that year, the fixed-seed note only under "Replay history". AT: in
+    `node critic/scripts/c66_x_replaycard.mjs 1975 free` (and 1960 at 390 × 844) the description names the year and no
+    "same world every game" line shows; a Playwright check of both modes.
+  - [ ] R76c R66-N3: the sea reach (R74h, ADR-1011) keys on the sim's `greatPowers`, which leaves the United States out
+    of plain 1938's first year and Japan out of years 1-3, and lets Republican China land anywhere. Key it on a measure
+    that counts the powers it names (income, `cardPowers`' kind, or lift and navy). AT: on 7019 (`npx tsx
+    critic/scripts/c66_greats.ts 7019 3` kind of probe) the United States and Japan may cross any sea from day 0 to year
+    3 and China may not; the sweep's verdicts kept, the pin's move logged.
+  - [ ] R76d R66-N4: Stalingrad's stage (31 October 1942) has no German army (the Sixth Army comes 1 November), Uranus is
+    not engaged on 38701, and D-Day's beachhead is handed over at the hour, not fought. Arrivals a few days before their
+    stage; the beachhead taken by the landed divisions over the window. AT: `trackFronts` on 1938, 37701 and 38701 with
+    Stalingrad's stage both engaged at its hour, Uranus both engaged at its hour on all three, and D-Day both engaged in
+    at least a third of its 28 samples.
+  - [ ] R76e R66-N5: after a refused start the card is back at 1938 in "Play free" while the notice names another year
+    and mode; at 390 × 844 with a saved game the notice is below the fold. AT: in `node
+    critic/scripts/c66_x_badyear2.mjs` the slider and date at the year refused, the mode asked for, the notice in view
+    at both sizes.
+  - [ ] R76f R66-N6: `cardPowers` puts Spain among the great powers in 1941-49 and leaves China out in 1941-43 and 1945.
+    AT: `years.json`'s `powers` for 1941-49 without SPN, with China (CHI) in 1941-45; 1938, 1960 and 1975's orders as
+    R75b/R75c's (`tests/unit/replaySaves1938h.test.ts`).
+  - [ ] R76g R66 small: People's China in a free 1975 (after 6161) launches its four warheads at one place over five days
+    and all are intercepted; not a reasoned use. AT: `npx tsx critic/scripts/c66_nukes75.ts` kind of run on 6161: no
+    nation launches more warheads at one target in a week than one more than were intercepted there before, or the
+    rule that drives it named and the case answered in DECISIONS.
+
 ## Batch 20 — run 65's findings (focused, on `5ee3e035`: 1 blocking issue, every dimension at its bar)
 
 Before the release (PROMPT's RELEASES step 2, ADR-1003; the non-blocking findings too, the user's decision, ADR-1004).

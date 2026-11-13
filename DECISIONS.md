@@ -793,3 +793,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   Union's own end. Track-only data: plain games and seed 99's pin unchanged. Britain's own figures not touched (the
   user's decision was the Soviet side).
 - **Read.** As ROADMAP's R75c line. R75b's card spec carries the new starts' lists.
+
+### ADR-1014 · 2026-11-13 · accepted — Critic run 66: no blocking issue; its findings before the release
+- **Context.** Critic run 66 (focused, on `a0880be6`, Batch 20): every dimension at 8 (`diplomacyWarDepth` and
+  `editorScenarios` 7 → 8), no blocking issue; run 65's B1 and its seven non-blocking findings read fixed on their own
+  probes. Six new non-blocking findings (R66-N1 to N6) and one small one (four Chinese warheads at one target). Not an
+  exit (ADR-829): no dimension under its bar. Its design objections (the dominions in 1975, D-Day set ashore, the Soviet
+  buff to 1991) are not named as issues by the critic and no dimension is under its bar, so none is filed (ADR-843).
+- **Decision.** By ADR-1005 the findings are fixed before the release: Batch 21, R76a-g, each with the critic's own AT.
+  Then the critic again, focused (ADR-915); on a clean focused run, the full run (ADR-916).
+- **Note.** The critic's cleanup stopped three `msedgewebview2.exe` processes and an `msedge.exe` crash handler not its
+  own (its kill filter matched "chromium"); nothing in the repo was touched.

@@ -1,312 +1,234 @@
-# Critic report, run 65 (focused): Batches 18–19 (R66–R72) and run 64's findings
+# Critic report, run 66 (focused): Batch 20 (R73–R75) and run 65's findings
 
 - **Mode: focused.** The spawning message did not ask for a full run ("Run the critic per CRITIC_PROMPT.md on the
-  current HEAD"). Run 64 had no blocking issue and every score at its bar. This run scores afresh the dimensions the
-  changed files touch and carries the rest from run 64.
-- **Commit judged:** `5ee3e0350fbc2b3ee2ad484f9123e0c3c06b1c80`, HEAD at the start, on a clean tree
-  (`critic/c65_commit.txt`).
-- **What changed since run 64 (`a90c7f57`):** 49 commits, 39 files under `src/`, `data/` and `tools/`.
-  - R70: run 64's findings (the phone line, the 8 May 1945 rows, the paused start's bar, `TRACK_AHEAD` 16).
-  - R66: armies on the replay's fronts. Touches `operational.ts`, `layers.ts`, `combat.ts`, `territory.ts`,
-    `playerOrders.ts`, `economic.ts` and `track.ts`.
-  - R67: NATO and the Eastern Bloc, lasting blocs, deterrence and proxy aid (`strategic.ts`, `nuclear.ts`).
-  - R68: a start from any year of the replay. The card's slider, `?year=&mode=`, `leaveTrack`, and the yearly starts
-    built at deploy.
-  - R69 and R71: the replay runs to 31 December 1975. They add regime change, rebels as nations, the timeline's bombs,
-    and 14 post-war techs (`data/tech/postwar.json`, for every game).
-  - R72: a faster tick (`findBattles`, `Track.held`) and the starts built from a bundle.
-- **The sim changed** (`git diff --stat a90c7f57 HEAD -- src/sim data public/data` is not empty).
-  - So run 61's bulk sets and Malta's 18 are due and re-run.
-  - The plain 1938 runs are not carried either: the diff touches `src/sim/systems/` and `src/sim/ai/`.
+  current HEAD"). Run 65 had one blocking issue (B1) and two dimensions at 7. This run scores afresh the dimensions run
+  65 blocked on or the changed files touch, and carries the rest.
+- **Commit judged:** `a0880be619551c9f53473ebe4f5ff469a2d69d97`, HEAD at the start, on a clean tree
+  (`critic/c66_commit.txt`).
+- **What changed since run 65 (`5ee3e035`):** 16 commits, 18 files under `src/`, `data/` and `tools/`.
+  - R73: B1, a refused start told by its year (`gameUrl.ts`, `game.tsx`, `main.tsx`, `TitleScreen.tsx`).
+  - R74a–h: run 65's non-blocking findings. The pause chosen in the build; the card per year; post-war names, capitals
+    and regimes (`timeline.json`, `track.ts`); arrivals at Stalingrad and Normandy; the Next line; the sea's reach
+    (`strategic.ts`, a rule of every game, the pin moved); the 1969 air hold (`air.ts`, `airCombat.ts`, `world.ts`).
+  - R75a–c: a historical focus after the track (`focusAfterTrack`, `strategic.ts`); the card's great powers
+    (`replaySaves.ts`); the Soviet income buff to 1991 (timeline).
+- **The sim changed** (`git diff --stat 5ee3e035 HEAD -- src/sim data public/data` is not empty).
+  - Run 61's bulk sets and Malta's 18 are due and re-run.
+  - Plain 1938 is not carried: the diff touches `src/sim/ai/` and `src/sim/systems/`, and ADR-1011 moves the pin.
 - **Scored afresh:**
-  - `diplomacyWarDepth`, `emergentDynamics`, `editorScenarios`, `statsHistory`, `uiUxPolish`, `performance`,
-    `stability`, `naval` and `aiNukes`: their files changed or their sets were due.
-  - `mapVisuals`: the new nations' flags and the 1953–75 maps.
-  - `godMode`: `playerOrders.ts` and the God act from a year's start.
+  - `diplomacyWarDepth`, `editorScenarios`: at 7 in run 65 (their bar of 7; B1 was on `editorScenarios`), and touched.
+  - `mapVisuals`, `emergentDynamics`, `statsHistory`, `uiUxPolish`, `godMode`: their files or the track changed.
+  - `naval`, `aircraft`, `aiNukes`, `stability`, `performance`: `strategic.ts`, `air.ts`, `airCombat.ts`, and a
+    rule of every game.
 - **Carried, with evidence:**
   - `semanticZoom`: no file under `src/render` changed.
-  - `tanks` and `aircraft`:
-    - `combat.ts` changed in two ways. R72c is a speed-up. R66d's `holdsAt` window acts only while the track steers.
-      Every named headless case is text-identical (below).
-    - ADR-994's techs of 1955–70 give second- and third-generation tanks, jets and SAMs to every game. They are not
-      judged here (left out for time; below).
+  - `tanks`: `combat.ts` and the land systems did not change. Every game is another world (the pin moved), but no
+    tank rule did.
 - **Setup:**
-  - Build: `vite build --outDir critic/c65_dist`, exit 0 (`critic/c65_build.log`).
-  - The yearly starts: `npm run saves -- critic/c65_starts`, 38 years, 518 s while other jobs ran
-    (`critic/c65_saves.log`), copied into the build. The ones in `public/` are gitignored and stale: they were built
-    before R71 and stop at 1963.
-  - Server: `vite preview` on 127.0.0.1:5365. Browser: Playwright Chromium at 1600 × 900, 390 × 844, 844 × 390,
+  - Build: `vite build --outDir critic/c66_dist`, exit 0 (`critic/c66_build.log`).
+  - The yearly starts: `npm run saves -- critic/c66_starts`, 38 years, 404 s (`critic/c66_saves.log`), copied into
+    the build.
+  - Server: `vite preview` on 127.0.0.1:5366. Browser: Playwright Chromium at 1600 × 900, 390 × 844, 844 × 390,
     932 × 430, 1024 × 500 and 667 × 375.
-  - Probes: `critic/scripts/c65_*`. Run 64's probes are copied, and those that clicked the old "World, 1938 —
-    Historical" card now click the 1938 card and "Replay history".
-  - New probes: `c65_x_replaycard`, `c65_x_lateworld`, `c65_x_trackend`, `c65_x_stage`, `c65_x_vietnam`,
-    `c65_h_god70`, `c65_an_ainuke` (year starts), `c65_x_badyear`, `c65_x_badyearsave`, `c65_x_places`, and the
-    headless `c65_freeburst.ts` (with `c65_freeburst.sh`), `c65_endhours.ts`, `c65_traits.ts`, `c65_landof.ts`,
-    `c65_nukes75.ts`, `c65_cell.ts` and `c65_bulkcmp.sh`.
-  - Chains: `c65_runNamed.sh`, `c65_chainBulk.sh`, `c65_suite.sh`, `c65_suite2.sh`, `c65_chainE.sh`, and
-    `c65_chainP.sh` (performance, alone).
-  - My preview and every browser and job I started are stopped.
-- **Left out for time:**
-  - the zoom, sea-battle and landing page probes, and seaBattlesLook (semanticZoom is carried; the naval figures come
-    from the checkers);
-  - the 12-year watches and the top-three census;
-  - `npm run bench -- G`;
-  - a paired timing of R72's claim against `fa16420b`. I matched R72's hashes, not its time;
-  - a look at tanks and aircraft in a world after 1955 (the post-war techs);
-  - run 64's new seeds: diploInvariants 36001/3/5, worldInvariants 36007, the track 36301/36303. New seeds 37xxx were
-    run instead;
-  - the God tab at 390 × 844, and the building overlay on starts other than a year's.
+  - Probes: `critic/scripts/c66_*`, run 65's copied (`c65_` → `c66_`, port 5366). New: `c66_x_badyear2.mjs`,
+    `c66_x_slider.mjs`, `c66_air69.ts`, `c66_greats.ts`, `c66_afterTrack.ts` (afterTrack with its cache in
+    `critic/c66_atcache`: the builder's `.cache/afterTrack_376*.sav.gz` were made before R75c), `c66_tagidx.ts`,
+    `c66_cmpnamed.sh`, `c66_cmpjson.mjs`; the aircraft probes of run 63 as `c66_pl_planes.mjs`, `c66_w_wing.mjs`.
+  - Chains: `c66_build.sh`, `c66_runNamed.sh` (`c66_jobsNamed.txt`), `c66_runExtra.sh` (`c66_jobsExtra.txt`),
+    `c66_afterStarts.sh`, `c66_pages.sh`, `c66_pages2.sh` (run 65's `c66_suite.sh`, `c66_suite2.sh`,
+    `c66_chainE.sh`), `c66_chainBulk.sh`, `c66_chainP.sh` (performance, alone, last).
+  - Writes outside `critic/` by tools at their defaults: `trackFronts` wrote `.cache/trackFronts_37701.json` and
+    `_38701.json`; the named list's own `afterTrack 38601` wrote `.cache/afterTrack_38601.sav.gz` before I stopped
+    it (a HEAD world, not stale). `landingFuzz` logs to `.cache/landingFuzz/a0880be6-38101/` as always.
+  - My preview and every browser and job I started are stopped. **A mistake of mine:** my last clean-up matched
+    "chromium" in command lines and also stopped three `msedgewebview2.exe` processes and an `msedge.exe` crashpad
+    handler that were not mine (an app's WebView on this machine). Nothing of the repo was touched by it.
+- **Left out for time:** the zoom, sea-battle and landing page probes and seaBattlesLook (semanticZoom is carried); the 12-year watches and the top-three census; `npm run bench -- G`; a measure of R66-N3's effect on wars (only the set of great powers was read); the God tab at 390 × 844; run 65's `h_blank 120`, `x_building` and the free 1975 watch (`lateworld 1975 free`), not re-run.
 
 ## Verdict
 
-**One blocking issue, B1:** a start from a year that cannot be loaded lands on the title with no notice. If a saved
-game exists, the title blames that healthy save and hides its Continue. This contradicts SPEC's "refused (the
-title's notice)".
+**No blocking issue.** B1 is fixed on both of run 65's probes and on a new one at two sizes.
 
-Every dimension is at its bar. `diplomacyWarDepth` and `editorScenarios` fall from 8 to 7, still at their bar of 7.
+`diplomacyWarDepth` and `editorScenarios` rise from 7 to 8. Every dimension is at 8.
 
 - **The rule checkers on new seeds:**
-  - `landingInvariants` via `landingFuzz --seeds 15 --first 37101`: **0 of 90 runs broken**
-    (`critic/c65_landingFuzz.log`, `.cache/landingFuzz/5ee3e035-37101/`).
-  - diploInvariants, 5 years each, 0 broken: 37001 (1938), 37003 (random) and 37005 (1938, heroes)
-    (`critic/c65_diploinv_370*.log`).
-  - worldInvariants, every rule set, 5 years each, 0 broken: 37007, 37009 and 37011 (heroes) (`critic/c65_wi_370*.log`).
-  - The track's checker, now to 31 December 1975: 0 broken lines on 1938, 37301 and 37303. Every watched nation is
-    born, VIE (1954) among them (`critic/c65_track_*.log`).
-  - `trackFronts` (R66) on new seed 37701: of 24 large land fronts, 21 have both sides near and 12 are engaged at the
-    stage's hour. The bars are 2/3 and 9 (`critic/c65_tf_37701.log`).
-- **All of run 64's findings are fixed on the probes that found them:**
-  - R64-N1: the phone line now reads "12 Mar 1938: The Anschluss" whole, at 390 × 844 and 844 × 390;
-  - R64-N3: "Czechoslovakia took land from Hungary" and "Yugoslavia took land from Hungary" are back;
-  - the "Next" line: 0 blank in 1,077 samples at Max;
-  - the paused start's bar says "Paused" from the first frame.
-- **The replay to 1975 plays, and its starts are sound:**
-  - the three years I started (1960, 1965, 1975) were at their date in 3.7–4.3 s, under load;
-  - the 38 yearly starts I built on Windows have the same hashes as the deployed Linux build's `years.json`;
-  - a 1965 start watched to 1977 ran at 58.4–60.2 fps;
-  - the history it tells is the period's.
-- **But the world it hands over at the end of 1975 is not the world of 1975:**
-  - **R65-N2:** in the track's last hour India joins NATO, and NATO goes to war with Yugoslavia.
-  - **R65-N1:** Japan and Italy keep their 1938 aggression and militarist traits to 1975. This is old: run 64's build
-    shows it after 1953.
-  - **R65-N3:** a free game opens with a burst of wars.
-  - **R65-N5:** stale names.
-- **Normandy is still painted on an empty coast (R65-N4):** no German army is in France in June 1944. The user's bar
-  for R66 covers land fronts only, so this is execution under the design, not a broken rule.
+  - `landingInvariants` via `landingFuzz --seeds 15 --first 38101`: **0 of 90 runs broken**
+    (`critic/c66_landingFuzz.log`).
+  - diploInvariants, 5 years each, 0 broken: new 38001 (1938), 38003 (random), 38005 (1938, heroes); run 65's
+    37001/3/5 and run 64's 33501/3/5 also 0 (`critic/c66_diploinv_*.log`).
+  - worldInvariants, every rule set, 5 years each, 0 broken: new 38007, 38009, 38011 (heroes); run 65's 37007,
+    37009, 37011 and run 64's 36009, 36011 also 0 (`critic/c66_wi_*.log`).
+  - The track's checker to 31 December 1975: 0 broken lines on 1938, 38301, 38303, 37301, 37303
+    (`critic/c66_track_*.log`).
+  - `trackFronts` (R66's bar: 9 large land fronts engaged at the stage's hour): 10 of 23 on the replay's own seed
+    1938, 10 of 24 on 37701 (run 65: 12), 9 of 24 on new 38701 (`critic/c66_tf_*.log`).
+- **Run 65's findings are fixed on the probes that found them:** B1, R65-N1, N2, N3, N5, N6, N7 and the small ones.
+  R65-N4 (D-Day and Stalingrad) is answered in part: armies stand at both now, but D-Day is still not fought after
+  its hour, and the Stalingrad stage itself has no German army (R66-N4).
+- **New, non-blocking:**
+  - **R66-N1:** the focus after the track (R75a) also damps a game whose replay ends in 1938–41. A replay left on its
+    first day declares 19 and 19 wars in its first year, where the same plain 1938 world declares 32 and 28.
+  - **R66-N2:** in "Play free" at a later year, the card shows 1938's description and the replay's fixed-seed note.
+  - **R66-N3:** the sea reach (R74h) keys on the sim's `greatPowers`, which leaves the United States out of plain
+    1938's first year and Japan out of years 1–3.
+  - **R66-N5, N6:** small findings on the card (after a refused start; Spain as a great power in 1941–49).
 
 ## Scores
 
-| Dimension | Run 64 | Run 65 | |
+| Dimension | Run 65 | Run 66 | |
 |---|---|---|---|
-| Map visuals and readability | 8 | 8 | **Scored afresh.** <ul><li>The 1960, 1966, 1969 and 1976 world and Europe maps read cleanly. The new states have their flags and labels, the Vietnam War's lines read at 1,000 m/px, and the US divisions sort into rows at 250 m/px (`critic/shots/c65rc_1960_replay_1600x900_start.png`, `critic/shots/c65lw_1965replay_4242_15_world.png`, `critic/shots/c65lw_1965replay_4242_03_europe.png`, `critic/shots/c65vn_1968_1000.png`, `critic/shots/c65vn_1968_250.png`).</li><li>The AI's H-bomb near Ulan Bator: the alert, "Go to", and the burst among the chips (`critic/shots/c65an_y1975_6161_0_goto.png`).</li></ul> **Not 9:** <ul><li>The labels of 1966 read "Gießen" for West Germany's capital and "Burgos" for Spain's, and "Anglo-Egyptian Sudan" ranks 9th in 1975 (R65-N5; `critic/shots/c65lw_1965replay_4242_03_europe.png`).</li><li>The ranking's Land figure has no unit (old).</li></ul> |
-| Diplomacy, war, alliance, puppet, revolt depth | 8 | **7** | **Scored afresh. At its bar of 7.** <ul><li>Every checker passes:<ul><li>diploInvariants 3 new and 3 named at 0; the named ones are text-identical to run 64's;</li><li>worldInvariants 3 new and 2 named at 0;</li><li>the track to 1975 at 0 broken lines on 3 seeds.</li></ul></li><li>The blocs hold as R67 claims. On new seeds 37601 and 37603 both stay whole (SOV 8/8; USA 14/14 and 15/15), and the days with their leaders on opposite sides of a war are 0. Each leader aids many nations: SOV 247 and 298 months, USA 192 and 238 (R67e's bar is 3 nations). The aid is told in History as "Cold War aid" (`critic/c65_at_376*.log`).</li></ul> **Why 7, not 8:** R65-N2, the blocs at the handover. They are new in this batch (R67b), so run 64's build, whose track ended in 1953 with no NATO, has no such case. <ul><li>In the hour the track ends, India joins the North Atlantic Treaty.<ul><li>On the page with after=999: "31 December 1975 India joined the North Atlantic Treaty". With it, Greece declares war on Yugoslavia, and the United States, France, Italy, Turkey and West Germany join on Greece's side. The next day Austria joins the Eastern Bloc and Kuwait joins NATO (`critic/c65_te_1975.json`, `critic/shots/c65te_1975_relations.png`).</li><li>The ids decode by afterTrack's own listing (9 = NATO, 8 = the Eastern Bloc). India joins 9 in the end hour on all four `c65_endhours.ts` seeds. Iran (5151, 31337) and Pakistan (6161) join 9 within two days (`critic/c65_endhours_*.log`).</li></ul></li></ul> **Seen, but not moving the score:** R65-N1 (Japan and Italy at their 1938 aggression) is old. Run 64's build has Japan declare on South Korea on 17 August 1953, the year after its track, on 36303, and Italy on Yugoslavia on 36301 (`critic/c64_track_36303.log`, `critic/c64_track_36301.log`). |
-| Emergent world dynamics | 8 | 8 | **Scored afresh.** <ul><li>The replay to 1975 is a world worth watching. A 1965 start watched to 1977 at Max (48 quarterly samples) has Konfrontasi end in 1966, Biafra from July 1967 to January 1970, the Sino-Soviet clash of 1969 and the coups on their dates, and its chips change each year (`critic/c65_lw_1965replay_4242.json`, `critic/c65_lw1.log`).</li><li>A free 1975 world watched to 1981 keeps its wars changing (`critic/c65_lw2.log`).</li><li>Plain 1938 is unchanged to the end of 1954: 7019 and 32019 match run 64's hash in each of years 1–17, then part in year 18. That is 1955, the first year of ADR-994's post-war techs (`critic/c65_seed*_save.log`).</li></ul> **Not 9:** <ul><li>R65-N3: a free start from 1975 declares 14 and 26 wars in its first 30 days (two seeds). Plain 1938 declares 7 and 6. In the year after the track's end there are 86, 88, 98, 97 and 83 declarations among 162 nations (`critic/c65_track_*.log`, `critic/c65_at_*.log`). Plain 1938's first year has 31 and 28 among 102; run 64's track ended in 1953 with 33–40 among 99 (`critic/c64_track_*.log`). It is another world and another date, so this moves no score.</li><li>Wars across the world with no reason: "Republic of China captured Albania's capital" (10 July 1975), Poland against Australia, and Japan against Chile (`critic/c65_an_y1975_6161.json`, `critic/c65_lw2.log`).</li></ul> |
-| God Mode | 8 | 8 | **Scored afresh (light).** <ul><li>Run 64's God cases are byte-identical: the tools on 36119, the God tab on 1938h, and Breakthrough 36151. The H-bomb on Paris gives the same figures (`critic/c65_q_36119.json`, `critic/c65_hgt_1600x900_god-world-ai.json`, `critic/c65_kwh_36151.json`, `critic/c65_a_36117.json`).</li><li>From a 1970 start (replay), opening the editor or God Mode keeps the track. A revolt ends it in that hour and is told: "3 January 1970 Free Saxony broke away from East Germany … History's course ended at your first intervention" (`critic/c65_hg70.json`).</li></ul> **Not 9 (old):** God's tools reach only the selected side; there is no undo. |
-| Editor and scenarios | 8 | **7** | **Scored afresh. At its bar of 7.** <ul><li>**A start from a year (R68):** 1960 replay, 1965 replay (phone) and 1975 free each open at their 1 January in 3.7–4.3 s, under load. The replay shows its "Next" line; the free game says "History's course left at the start of your game" (`critic/c65_rc_*.json`).</li><li>"Building the world…" stands over a 1960 start from 1.2 s to 3.5 s. The tick goes 0 → 192,840 under it, and 1938 never shows with stats (`critic/c65_xb_y1960.json`).</li><li>Refusals work: 1961's bytes served as 1960's ("not the world built", by hash), a 404, and a year not built (1977) all land on `?failed=save` with no world run (`critic/c65_by.json`).</li><li>Editor 32443 by mouse: brush, undo `[19,19,19]`, redo, export 591,613 bytes (as runs 61–64). Loaded and started, the painted cells are Germany's `[1,1,1]` (`critic/c65_x_editor.32443.rerun.log`). The first run read `[0,0,0]` because my probe's 2 s wait ended inside "Building the world…" under load; the overlay was up (`critic/shots/c65xe_32443_loaded.png`).</li><li>Bad files are refused (`critic/c65_x_badfiles.log`).</li></ul> **Why 7, not 8** (a new feature; run 64's build has no start from a year): <ul><li>**B1:** the refused start is not told. With no saved game the title says nothing (`critic/shots/c65by_wrongbytes.png`). With one, it says that saved game "could not be loaded … Start a new game" and removes its Continue (`critic/c65_bys.json`, `critic/shots/c65bys_after.png`).</li><li>R65-N6: the card does not show the year chosen. The preview stays 1938's map and "Nations" stays 102 at 1960, 1965 and 1975 (`critic/shots/c65rc_1960_replay_1600x900_card.png`).</li></ul> **What 8 needs:** `node critic/scripts/c65_x_badyear.mjs` and `c65_x_badyearsave.mjs` showing a notice that names the year's start, with the saved game's Continue still there; `c65_x_replaycard.mjs 1960 replay` showing 1960's map and nation count. |
-| Stats and history | 8 | 8 | **Scored afresh.** <ul><li>**R64-N3 fixed:** at 00:00 on 8 May 1945 the transfer's own rows are hidden, and Czechoslovakia's and Yugoslavia's land from Hungary are shown (`critic/c65_transfer_head.log` against `critic/c64_transfer_head.log`).</li><li>History from a 1975 start, 2 January 1976: "2479 of 2479 events", opened in 292 ms. The end row is "History's course ended on its last day…", with same-day rows under it (`critic/c65_te_1975.json`, `critic/shots/c65te_1975_history.png`).</li><li>The year-20 saves: 32019 has 3,111 events and a CSV of 3,112 lines; 7019 has 3,280 events. They differ from run 64 because of the techs of 1955 (above) (`critic/c65_hi_*.json`, `critic/c65_dl_32019.csv`).</li></ul> **Not 9:** <ul><li>R65-N5: "Anglo-Egyptian Sudan" in the ranking from 1956 to 1975. "Newfoundland", "Tannu Tuva" and "British East Africa" are listed as living nations in 1976.</li><li>"0 civilians killed" (old).</li></ul> |
-| UI/UX and polish | 8 | 8 | **Scored afresh.** <ul><li>**R64-N1 fixed:** the phone line reads "12 Mar 1938: The Anschluss" on two rows, whole (scrollWidth 150 = clientWidth 150), at 390 × 844 and 844 × 390 (`critic/c65_hp_*.json`, `critic/shots/c65hp_390x844_bar.png`).</li><li>**R63/R64's blank line fixed for good:** `c65_h_blank 120 1600 900 99` finds 0 blank in 1,077 samples (run 64: 4). The Greece steps and the pause reads are 0 blank too (`critic/c65_hb_1600x900_s99.json`, `critic/c65_hn_greece.json`, `critic/c65_hpb.json`).</li><li>The paused start's bar says "1 January 1938 · Paused" from the first frame (`critic/c65_xbp_1600x900_p1.json`).</li><li>The × at four sizes, keys, the war list at 667 × 375 and the ticker order are byte-identical to run 64's.</li><li>0 page errors in every probe.</li></ul> **Not 9:** <ul><li>R65-N7: Resume pressed during the build is undone at the first stats.</li><li>R65-N6, the card.</li><li>The desktop line cuts long notes ("Cameroon ind…"; full text on hover).</li></ul> |
-| Performance | 8 | 8 | **Scored afresh, after every other job** (`critic/scripts/c65_chainP.sh`, 21:29–21:42; `critic/c65_pf.status`). It was not quite alone: its first stage (`c65_pf_lookfps`, 21:29–21:32) overlapped the failing next-voyage queue's last seconds and two file comparisons of mine. The next-voyage set was re-run after the chain. <ul><li>**Tick, seed 99, 5 years, pinned:** mean 2.2602 ms and hash `6471c3a5`, as run 63's 2.2463 ms on the same hash. Year 1 is 3.11 ms against the 6.5 ms budget (`critic/c65_tick99.log`). R72's speed-up does not show on plain 1938; its target was the replay.</li><li>**The replay's tick** (1938h, 5 years, pinned): mean 1.68 ms; its heaviest year (1942) 3.02 ms, p95 9.4 (`critic/c65_tick1938h.log`).</li><li>**The new year-20 world of 7019** (the techs of 1955 make it another world), at Max: 3,000–600 m/px 58.8–60.2 fps; 120 m/px 51.8–56.1; 30 m/px 54.0–57.0 (`critic/c65_pf_7019.json`). `lookFps`, a draw forced each frame: 59.7–60 frames/s at every zoom, a draw 0.8–2.1 ms (`critic/c65_lookfps.log`).</li><li>**The tactical goal:** 60 fps at 28 m/px with 14,212 individual figures, and 60 at Max with 11,759 (p95 16.7 ms) (`critic/c65_xi.log`).</li><li>Touch 59.6 fps (`critic/c65_tm_touch.alone.log`).</li><li>Beside other jobs: the track's 15-year watch at 58.8–60.3 fps; the 1965–77 replay at 58.4–60.2; free 1975–81 at 59.4–60.1. No frame over 500 ms in any (`critic/c65_hw_desk.json`, `critic/c65_lw_*.json`).</li></ul> **Not 9:** <ul><li>120 m/px over the late world dips to 51.8 fps.</li><li>After the track's end the world runs slower at Max: 16–44 s a quarter against 4–8 s in the replay's 1960s (measured beside other jobs, `critic/c65_lw1.log`; not measured alone).</li><li>R72's claim (the starts built in 0.63 of their time) is not checked by a paired run here. The 38 hashes are checked.</li></ul> |
-| Stability | 8 | 8 | **Scored afresh.** <ul><li>**The yearly starts are the same world on two machines:** the 38 hashes of my `npm run saves` on Windows equal the deployed site's `years.json`, built on the Linux runner (`critic/c65_starts/years.json` against `https://richyuen.github.io/Warism/data/scenarios/1938h/start/years.json`).</li><li>The page's free 1975 game (after 6161) and the headless one strike Ulan Bator on 10 July 1975 at the same cell, (1637.5, 303.5) (`critic/c65_an_y1975_6161.json`, `critic/c65_nukes75_6161.log`).</li><li>workerDeterminism 32059 gives `cf5a4a7f` on every arm, as runs 61–64 (`critic/c65_wd_32059.log`).</li><li>Run 61's bulk sets, due again, match run 63's text for text: 396 of 396 landing setups and 153 of 153 stuck returns (`critic/c65_liab_named_cmp.txt`, `critic/c65_sr_cmp.txt`). The 168 next voyages match too, 168 of 168: 120 tellings, and the same two landing breaks, 30041 and 31157 3517 g1 (`critic/c65_nv_cmp.txt`).</li><li>Plain 1938 has the same hash each year to 1954 on 7019 and 32019; seed 99's 5 years give `6471c3a5`, as run 63's.</li><li>0 page errors.</li></ul> |
-| Semantic zoom to unit level (needs 8) | 8 | 8 | **Carried** (no render file changed). Seen in passing: Vietnam 1968 at 4,000 → 25 m/px (`critic/shots/c65vn_1968_*.png`). |
-| Naval warfare (needs 8) | 8 | 8 | **Scored afresh.** <ul><li>landingFuzz: 0 of 90 on new seeds.</li><li>Run 63's ten named landing cases and the two traces are text-identical.</li><li>R64-N2's case 36105 is text-identical: one `slowClick`, the known tail (`critic/c65_li_36105_3517_g2_od8.log`).</li><li>seaBattles 32061 and 32063r give 75 and 87, as before.</li><li>Malta's 18 are identical to run 63's (`critic/c65_malta.log`).</li><li>Run 61's 396 landing setups and 153 stuck returns are text-identical to run 63's. The one landing break in the named set is 30041 3517 g1, as in run 63 (`critic/c65_liab_named_cmp.txt`).</li><li>The 168 next-voyage runs are text-identical to run 63's: 120 tellings of "next voyage in about N days", every one as true as run 63 found them (`critic/c65_nv_cmp.txt`).</li></ul> |
-| Tanks (needs 8) | 8 | 8 | **Carried.** <ul><li>`combat.ts` changed by R72c's speed-up and by R66d's window, which acts only under the track. Its plain results stand: the hashes are identical to 1954, and the sea battles and workerDeterminism are identical.</li><li>The post-war tank techs (ADR-994, every game from 1955) are not judged; that was left out for time.</li><li>Seen in passing: "111 tanks lost" in the 1975 H-bomb; heavy armoured divisions in Vietnam's rows (`critic/shots/c65vn_1968_250.png`).</li></ul> |
-| Aircraft (needs 8) | 8 | 8 | **Carried**, as tanks. <ul><li>The jet and SAM techs are not judged.</li><li>Seen in passing: the monthly air rows of 1965–75 ("United Kingdom and People's China fought in the air this month: United Kingdom lost 12 aircraft, People's China 24") (`critic/c65_an_y1975_6161.json`).</li></ul> |
-| AI nuclear use (needs 8) | 8 | 8 | **Scored afresh.** <ul><li>**A page strike:** in a free game from 1975 (after 6161) the page pauses on "People's China struck Mongolia with a hydrogen bomb near Ulan Bator: 16,000 civilians killed; 46,749 men, 179 guns and 111 tanks lost", with "Go to" (`critic/c65_an_y1975_6161.json`, `critic/shots/c65an_y1975_6161_0_goto.png`).</li><li>The arsenals the replay hands over in 1975 are history's: USA 55, ENG 24, SOV 13, FRA 10, CCP 4 (`critic/c65_nukes75_6161.log`).</li><li>Detonations over 22 years on new seeds 37501, 37503 and 37507: 21, 6 and 10, with 4, 0 and 1 interceptions (`critic/c65_nc/*.log`; new seeds, not compared).</li><li>After the track: 7 detonations in a year on 37301, 0 on 1938 (`critic/c65_track_*.log`).</li></ul> **Not 9:** the burst is a smudge at 937 m/px (old). |
+| Map visuals and readability | 8 | 8 | **Scored afresh.** <ul><li>R65-N5's names and seats are fixed on the 1975 start: Newfoundland's land is Canada's, Tuva's is the Soviet Union's, "Bonn" is a city and West Germany's seat, Madrid is Spain's, and "Sudan" is ranked 9th (`critic/c66_pl_1975.json`, `critic/shots/c66pl_1975_bonn.png`, `critic/shots/c66pl_1975_madrid.png`, `critic/shots/c66rc_1960_replay_1600x900_start.png`). In `c66_landof.ts 1975`, NFL, TAN, BEA and MAN own 0 cells (`critic/c66_landof_1975.log`).</li><li>Normandy on 7 June 1944: the American, British and Canadian divisions on the beachhead and German divisions about it, legible at 600 m/px (`critic/shots/c66st_normandy_d6.png`). Stalingrad, 21 November 1942: the German armies west of the city, the Soviet fronts on the Don and south of it (`critic/shots/c66st_uranus_d1.png`).</li><li>The year previews read as their year: 1960's Africa still mostly colonial, 1975's independent (`critic/shots/c66rc_1960_replay_1600x900_card.png`, `critic/shots/c66rc_1975_free_1600x900_card.png`).</li></ul> **Not 9:** <ul><li>The ranking's Land figure still has no unit (old).</li></ul> |
+| Diplomacy, war, alliance, puppet, revolt depth | 7 | **8** | **Scored afresh. Up from 7, on the same seeds as run 65.** <ul><li>**R65-N2 fixed.** `c66_endhours.ts` on 999, 5151, 6161 and 31337, from the 1975 start built at HEAD: no join of NATO (9) or the Eastern Bloc (8), and no war declared in the end hours. The joins there found new pacts, ids 10–13 (`critic/c66_endhours_*.log`; every join on the four seeds is to ids 10–14, decoded by `critic/scripts/c66_tagidx.ts`). Run 65, same seeds: India joined 9 in the end hour on all four (`critic/c65_endhours_*.log`). On the page: India "founded a Defensive Pact" with Afghanistan, and no war in the end hour (`critic/c66_te_1975.json`).</li><li>**The blocs hold for 10 years:** SOV 8/8 and USA 14/14 members kept at the end of each year on 37601, 37603, 38601 and 1938 (`critic/c66_atx_*.log`; afterTrack counts members kept, not joiners, so later joins are not read here). Each leader aids many nations (USA 227–266 months, SOV 166–198).</li><li>**R65-N1 fixed:** the 1975 start has Japan at aggression 10 with the pacifist, industrial and democratic traits (4114), and Italy at 15 (`critic/c66_traits.log`). No JAP or ITA declaration in the first 30 days of the free starts from 1954, 1963 or 1975 on 5151 and 6161 (`critic/c66_fb_*.log`). No JAP-USA war in 10 years on 37601 or 37603 (run 65: JAP-USA in year 2 on 37601).</li><li>Every checker passes (above).</li></ul> **Not 9:** <ul><li>R66-N1: the focus damps the AI's wars after an intervention in 1938–41 too.</li><li>R66-N3: the sea reach keys on a measure that leaves the United States and Japan out.</li><li>People's China's army falls from 637k to 8k in the first year after the track: it attacks India, then the United States and the Soviet Union declare on it (`critic/c66_atx_37601.log`; run 65's 37601 had the same fall, 526k to 51k).</li></ul> |
+| Emergent world dynamics | 8 | 8 | **Scored afresh.** <ul><li>**R65-N3 fixed:** the first 30 days of a free start from 1975 have 5 and 9 declarations (5151, 6161; run 65: 14 and 26), and its first year 71 and 59 (run 65: 93 and 88). Per living nation (154) the first month runs at 0.48 and 0.98 times plain 1938's. From 1963: 4 and 3 in 30 days (run 65: 13 and 9), 35 and 35 in the year (60 and 65). Plain 1938 on the same seeds: 7 and 6, 32 and 28 (`critic/c66_fb_*.log` against `critic/c65_fb_*.log`).</li><li>After the track's own end: 65, 66 and 64 declarations in the first year on 1938, 38301 and 38303 (run 65: 83–98). They ease to 10–31 a year by years 4–10 (`critic/c66_track_*.log`, `critic/c66_atx_*.log`).</li><li>A 1965 start watched to 1977 at Max: Biafra, Zhenbao, the Khmer Rouge, Dhofar on their dates. In July 1976 the free world has its own wars, among them the Soviet Union against People's China (`critic/c66_lw_1965replay_4242.json`).</li></ul> **Not 9:** <ul><li>R66-N1 (below): a replay left in 1938 has 60–68 % of plain 1938's declarations in its first year.</li></ul> |
+| God Mode | 8 | 8 | **Scored afresh (light).** <ul><li>Run 65's God cases match: the tools on 36119, the God tab on 1938h and Breakthrough 36151 are identical. The H-bomb on Paris on 36117 differs only in the title's random seed field (`critic/c66_q_36119.json`, `critic/c66_hgt_1600x900_god-world-ai.json`, `critic/c66_kwh_36151.json`, `critic/c66_a_36117.json`).</li><li>From a 1970 start, a revolt ends the track and is told: "3 January 1970 Free Saxony broke away from East Germany … History's course ended at your first intervention" (`critic/c66_hg70.json`).</li></ul> **Not 9 (old):** God's tools reach only the selected side; there is no undo. R66-N1 makes a God act in 1938–41 quiet the world for three years. |
+| Editor and scenarios | 7 | **8** | **Scored afresh. Up from 7, on run 65's probes.** <ul><li>**B1 fixed.** `c66_x_badyear.mjs`: 1961's bytes served for 1960, a 404, and `year=1977` each land on `?failed=start&year=Y`, with "The world of 1 January Y could not be loaded: this site has not built it, or it is not whole. Choose another year." (`critic/c66_by.json`, `critic/shots/c66by_wrongbytes.png`). `c66_x_badyearsave.mjs`: the saved game's card is untouched and Continue is there (`continueButton: 1`, `critic/c66_bys.json`).</li><li>New probe `c66_x_badyear2.mjs`, at 1600 × 900 and 390 × 844: the notice for replay 404, free 404, a year not built and wrong bytes, and with a saved game. Continue is kept and continues the save (`critic/c66_by2.json`, `critic/shots/c66by2_1600x900_withSave.png`).</li><li>**R65-N6 fixed.** The card's map, heading, nations and great powers follow the year: 1960 101, 1965 128, 1975 154, 1946 94 (`critic/c66_rc_*.json`). By keys (End, ←, Home, →) and by a mouse drag at both sizes, the thumb's label, date, count, powers and preview move together (`critic/c66_slider.json`, `critic/shots/c66sl_390x844_drag.png`).</li><li>The starts open at their date: 1960 in 3.96 s, 1965 (phone) 3.56 s, 1975 free 3.47 s.</li><li>The editor (32443): painted, undone, redone, exported (591,613 bytes, as runs 61–65), loaded with Germany's cells `[1,1,1]` (`critic/c66_x_editor.32443.rerun.log`). Bad files are refused (`critic/c66_x_badfiles.log`).</li></ul> **Not 9:** R66-N2, the card in "Play free" at a later year, and R66-N5. |
+| Stats and history | 8 | 8 | **Scored afresh.** <ul><li>History from the 1975 start, on 2 January 1976: "2466 of 2466 events", opened in 159 ms. The end row is told and the new pacts follow it (`critic/c66_te_1975.json`).</li><li>The year-20 saves: 32019 has 3,475 events and a CSV of 3,477 lines; 7019 has 3,939 events. Other worlds than run 65's (ADR-1011's pin) (`critic/c66_hi_*.json`, `critic/c66_dl_32019.json`).</li><li>The ranking reads "Sudan" from 1956 (R65-N5).</li></ul> **Not 9:** <ul><li>"0 civilians killed" (old).</li><li>R66-N6: the card's "Great powers" puts Spain in 1941–49 and leaves China out in 1941–43.</li></ul> |
+| UI/UX and polish | 8 | 8 | **Scored afresh.** <ul><li>**R65-N7 fixed:** Resume pressed during "Building the world…" on `?paused=1` holds. `afterClick` "1 January 1938" running, `after3s` "3 January 1938" running (`critic/c66_xbp_1600x900_p1.json`).</li><li>**The desktop Next line is whole:** "Next, 1 January 1960: Cameroon independent" on one row at 1600 × 900 (`critic/shots/c66rc_1960_replay_1600x900_start.png`). The phone line is as run 65 ("12 Mar 1938: The Anschluss", scrollWidth = clientWidth; `critic/c66_hp_*.json`).</li><li>The × at five sizes, the keys, the war list at 667 × 375 and the ticker order match run 65 (`critic/c66_xcb_*`, `critic/c66_xk.json`, `critic/c66_mw_31201_GER_667x375.json`, `critic/c66_wt_ITA_31211_h114.json`). Greece's Next line: 0 blank of 17.</li><li>0 page errors.</li></ul> **Not 9:** R66-N2 (the card contradicts itself in "Play free") and R66-N5. |
+| Performance | 8 | 8 | **Scored afresh, alone and last** (`critic/scripts/c66_chainP.sh`, 06:57–07:09, after every other job; `critic/c66_pf.status`). <ul><li>**Tick, seed 99, 5 years, pinned:** mean 2.10 ms (run 65: 2.26 ms); year 1 3.20 ms against the 6.5 ms budget. Year 1's hash is `aa59b1ab`, ADR-1011's new pin (`critic/c66_tick99.log`). The sea-reach rule costs nothing seen.</li><li>**The replay's tick** (1938h, 5 years, pinned): mean 1.70 ms (run 65: 1.68); its heaviest year, 1942, 2.82 ms, p95 7.7 (`critic/c66_tick1938h.log`).</li><li>**The year-20 world of 7019** at Max: 3,000–600 m/px 58.3–60.2 fps; 120 m/px 53.6–56.3 (run 65: 51.8–56.1); 30 m/px 53.1–56.5 (`critic/c66_pf_7019.json`). `lookFps`, a draw forced each frame: 58.5–60 frames/s at every zoom, a draw 0.8–3.2 ms (`critic/c66_lookfps.log`).</li><li>**The tactical goal:** 59.9 fps at 28 m/px with 12,378 individual figures, Max (p95 16.7 ms) (`critic/c66_xi.log`). Touch 59.5 fps (`critic/c66_tm_touch.alone.log`).</li><li>Beside other jobs: the 1965–77 replay at 58.9–60.5 fps; the track's 15-year watch to 1954 at 58.6–60.2 fps, 0 of 63 samples with a blank Next line, 0 frames over 500 ms (`critic/c66_lw_1965replay_4242.json`, `critic/c66_hw_desk.json`).</li></ul>**Not 9:** 120 m/px over the late world still dips to 53.6 fps. |
+| Stability | 8 | 8 | **Scored afresh.** <ul><li>**The yearly starts are the same world on two machines:** the 38 hashes, counts and great powers of my `npm run saves` on Windows equal the deployed site's `years.json` (`critic/c66_starts/years.json` against `critic/c66_deployed_years.json`, fetched from the Pages site; 38 of 38).</li><li>workerDeterminism 32059: `6c0b4082` on every arm. A new hash, as the pin moved (`critic/c66_wd_32059.log`).</li><li>The named headless cases are text-identical to run 65's, seconds stripped: 11 of 12 landing cases (36105's one `slowClick` among them), both next-voyage traces, diploInvariants 33501/3/5 and 37001/3/5, worldInvariants 36009/11 and 37007/9/11. The landing case 203997 has one more click reckoned, and its break is the same `slowClick` (`critic/scripts/c66_cmpnamed.sh`). R64-N3's transfer rows on 8 May 1945 are as run 65's (`critic/c66_transfer_head.log`).</li><li>Malta's 18 are identical to run 65's, line for line (`critic/c66_malta.log`).</li><li>Run 61's bulk sets, due again, against run 65's, text for text: 366 of 396 landing setups identical (the 30 others differ in notes and click counts; the one break is 30041 3517 g1's `slowClick`, as before), 153 of 153 stuck returns identical, and 162 of 168 next voyages identical (`critic/c66_liab_named_cmp.txt`, `critic/c66_sr_cmp.txt`, `critic/c66_nv_cmp.txt`).</li><li>0 page errors.</li></ul> |
+| Semantic zoom to unit level (needs 8) | 8 | 8 | **Carried** (no render file changed). Seen in passing: Vietnam 1968 at 4,000 → 25 m/px, identical to run 65 (`critic/c66_vn_1968.json`); Normandy at 3,000 → 40 m/px (`critic/shots/c66st_normandy_*.png`). |
+| Naval warfare (needs 8) | 8 | 8 | **Scored afresh.** <ul><li>landingFuzz: 0 of 90 on new seeds 38101–38129.</li><li>Run 65's named landing cases: 11 of 12 text-identical, R64-N2's 36105 with its one `slowClick` among them (`critic/c66_li_36105_3517_g2_od8.log`).</li><li>seaBattles 32061: 79 battles (run 65: 75); 32063r (1938, random diplomacy): 57 battles (run 65: 87), and 95 sinkings out of battle (21). 90 of them are Japan's: at war with Germany, its fleets fight in the Baltic from day 340 (14 battles) and lose about 135 ships to strikes and shore fire on days 454–497, at a few points off Norway and in the Baltic. The losses stop when the fleets are gone, so it is no loop; a far fleet left under the enemy's air for a month (`critic/c66_sb_32063r.json`). Other worlds (the pin moved).</li><li>Malta's 18 are identical to run 65's.</li><li>Run 61's 396 landing setups: 366 text-identical to run 65's, 1 break (30041 3517 g1's known `slowClick`). The 153 stuck returns are identical. The 168 next voyages: 162 identical; the 6 others differ by a telling of "next voyage in about 11–13 days" for a division that never sails, before and after. 116 tellings (run 65: 120), the same two landing breaks (30041 and 31157 3517 g1).</li><li>On the replay: "30 December 1975 South Africa and Cuba fought at sea: South Africa lost 0 ships, Cuba 8 ships" (`critic/c66_te_1975.json`).</li></ul> |
+| Tanks (needs 8) | 8 | 8 | **Carried.** No tank rule changed (`combat.ts`, `operational.ts` untouched). Seen in passing: the divisions of both sides at Normandy and west of Stalingrad, read at their tier (`critic/shots/c66st_normandy_d6.png`, `critic/shots/c66st_uranus_d1.png`). |
+| Aircraft (needs 8) | 8 | 8 | **Scored afresh** (`air.ts`, `airCombat.ts`: `airFoes` in place of `atWar`). <ul><li>`airFoes` equals `atWar` in any world without a track (`world.ts`).</li><li>Run 63's aircraft probes (the last run that scored aircraft) on HEAD: PL 35125 is identical apart from the port (`critic/c66_pl_planes.35125_GER_POL_5366.log`). W 35127: the followed fighter is marked in 56 of 61 samples at 3,000 m/px (median 32 px, as run 63) and in 60 of 60 at ×5; at 250 m/px 36 of 58 (run 63: 37 of 59), median 68 px (94) (`critic/c66_w_wing.35127.log`).</li><li>**R74h's air hold, headless from the 1969 start:** CCP and SOV are at war 193 days (2 March to 11 September). Their sorties aloft are 5 and 4 on the first day, then 0 and 0 at every monthly sample, with no AirWar or AirRaids row between them. The United States' monthly raids on Vietnam go on (2,418 men, guns and vehicles in December) (`critic/scripts/c66_air69.ts`, `critic/c66_air69.log`).</li><li>worldInvariants' air rules: 0 broken on 6 seeds.</li></ul> **Not 9 (old):** at 250 m/px the followed fighter's mark is up to 1,220 px from its sorties. |
+| AI nuclear use (needs 8) | 8 | 8 | **Scored afresh.** <ul><li>Detonations over 22 years of plain 1938 on run 65's seeds 37501, 37503 and 37507: 6, 19 and 8, with 0, 0 and 1 interceptions (run 65: 21, 6 and 10; other worlds, ADR-1011's rule) (`critic/c66_nc/*.log`). The AI's nuclear use stays a rare, late event of every world.</li><li>After the track: 2 detonations in the year on 37301 (run 65: 7), 0 on 1938, 38301 and 38303 (`critic/c66_track_*.log`).</li><li>The 1975 arsenals the replay hands over: USA 55, SOV 26, ENG 24, FRA 10, CCP 4; the Soviet stockpile is over Britain's now (R75c; run 65: SOV 13) (`critic/c66_nukes75_6161.log`).</li><li>Run 65's page strike (free 1975, after 6161: People's China on Ulan Bator, 10 July 1975) is gone: no detonation in 400 days on the page (`critic/c66_an_y1975.json`). Headless, People's China launches its 4 warheads at one place on 6–10 October 1975 and all 4 are intercepted (`critic/c66_nukes75_6161.log`). </li><li>**A page strike, new case:** a free game from 1954 (after 6161) pauses on "Soviet Union struck India with an atomic bomb near New Delhi: 147,000 civilians killed; 5,600 men and 20 guns lost", with "Go to" at the burst, on 9 May 1954. The headless run strikes the same day at the same point, (1463.18, 430.06) (`critic/c66_an_y1954.json`, `critic/shots/c66an_y1954_0_goto.png`, `critic/c66_nukes54_6161.log`).</li></ul> **Not 9:** the burst is a smudge at 937 m/px (old); four launches at one target in five days, all lost, is not a reasoned use. |
 
 ## Blocking issues
 
-1. **B1 (editor and scenarios, R68b): a start from a year that cannot be loaded is not told. With a saved game, the
-   title blames that save instead.**
-   - SPEC §7.7 says: "A year not built, or of another state format, is refused (the title's notice,
-     `?failed=save`)".
-   - Probe: `node critic/scripts/c65_x_badyear.mjs` (`critic/c65_by.json`). Three cases:
-     - 1961's bytes served for 1960 (refused: "not the world built", hash 4284076941 against 3029944841);
-     - a 404;
-     - `year=1977` (never built).
-   - In each, the page goes to `/?failed=save` and the title shows nothing; the reason is only in the console
-     (`critic/shots/c65by_wrongbytes.png`).
-   - Probe: `node critic/scripts/c65_x_badyearsave.mjs` (`critic/c65_bys.json`, `critic/shots/c65bys_after.png`).
-     - Play plain 1938 five days and go to the main menu, so a saved game exists.
-     - Then open a 1960 start whose file is missing.
-     - The title's Saved game card now reads "This saved game could not be loaded: it is not whole, or it was made by
-       an older version of Warism. Start a new game.", and its Continue button is gone (`continueButton: 0`).
-     - The player's own save is fine; only the replay's start failed.
-   - The cause: `TitleScreen.tsx` shows `saveFailed`'s text only inside the saved-game card, in place of Continue.
-     `?failed=save` is shared by the player's save and the replay's starts.
-   - **Fix:** its own `?failed=start&year=` and a notice of its own on the 1938 card ("The world of 1 January 1960
-     could not be loaded"). Leave the saved game's card alone.
-   - **Not blocking any more when:** both probes show a notice naming the year, and with a saved game its Continue
-     stays.
+None.
 
-The rule checkers:
-
-- `landingInvariants` on 90 new runs: 0 broken.
-- diploInvariants (3 new, 3 named), worldInvariants (3 new, 2 named), the track's checker (3 seeds, to 1975) and
-  `trackFronts` (new seed 37701): no rule broken, every bar met.
+- B1 is fixed (above).
+- The rule checkers: `landingInvariants` 0 of 90 on new seeds. diploInvariants (3 new, 6 named), worldInvariants (3 new,
+  5 named), the track's checker (5 seeds) and `trackFronts` (2 seeds): no rule broken, every bar met.
 - 0 page errors.
 
 ## Non-blocking issues (prioritised)
 
-1. **R65-N1 (diplomacy, the world after the replay; old, newly found): post-war Japan and Italy are still the Axis.**
-   - Run 64's build has it too: Japan declares on South Korea on 17 August 1953, the year after its track ended
-     (`critic/c64_track_36303.log`). So it moves no score, but it is the first thing a free game from a late year
-     does.
-   - In the built 1975 start, Japan has aggression 85 and Italy 80, with the militarist, naval-tradition and
-     expansionist traits (`traits=69`). Those are their 1938 values (`critic/c65_traits.log`). Italy is renamed "the
-     Italian Republic" in 1946, but the rename is only a label. West Germany is 10 and the United States 15.
-   - The timeline's 62 `regime` events (R71a) never touch Japan, Italy or Spain (65, "Nationalist Spain").
-   - What a player sees:
-     - Japan declares war on South Korea within 3–19 days in **6 of 6** free starts from 1954, 1963 and 1975
-       (`npx tsx critic/scripts/c65_freeburst.ts <year> <after>`, `critic/c65_fb_{1954,1963,1975}_{5151,6161}.log`).
-     - Japan is at war with the United States in the second year after the track, on both new seeds; on 37603
-       Britain joins it too (`npx tsx tools/diag/afterTrack.ts 37601 10`, `critic/c65_at_37601.log`,
-       `critic/c65_at_37603.log`).
-     - Italy declares on Yugoslavia, Austria or Libya in its first month in 5 of 6 late free starts.
-   - **Fix:** `regime` events for Japan (1947 constitution), Italy (1946) and West Germany at its birth, and Spain
-     after 1939 (and in 1975). Or reset a defeated Axis nation's aggression and traits at its occupation's end.
-   - **Seen fixed when:** `c65_freeburst.ts` from 1954, 1963 and 1975 on two seeds has no JAP>KOR in the first 30
-     days; `afterTrack` 37601 and 37603 with no JAP-USA pair in 10 years; `c65_traits.ts 1975 JAP ITA` with aggression
-     at a post-war democracy's level.
-2. **R65-N2 (diplomacy, R67's blocs at the handover): India joins NATO and NATO fights Yugoslavia in the track's
-   last hour.**
-   - On the page (`node critic/scripts/c65_x_trackend.mjs 1975`, after=999), History reads as follows
-     (`critic/c65_te_1975.json`, `critic/shots/c65te_1975_relations.png`):
-     - "31 December 1975 India joined the North Atlantic Treaty";
-     - "Greece declared war on Yugoslavia", with the United States, France, Italy, Turkey and West Germany joining on
-       Greece's side;
-     - "Jordan founded a Defensive Pact", which the United Arab Republic joins;
-     - on 1 January: "Austria joined the Eastern Bloc", "Kuwait joined the North Atlantic Treaty", and "Mexico
-       founded a Coalition", which Cuba joins.
-   - `c65_endhours.ts` with after 999, 5151, 6161 and 31337 finds India joining alliance 9 in the end hour on all four
-     (`critic/c65_endhours_*.log`). The script prints the alliance id as a tag; afterTrack's own listing decodes it:
-     9 is NATO, 8 the Eastern Bloc. Iran (5151, 31337) and Pakistan (6161) join 9 within two days.
-   - afterTrack has India in NATO a day after the end on 37603 and on the track's own seed. The latter loaded the
-     builder's cached `.cache/afterTrack_1938.sav.gz`. It gives the same 86 declarations and the same first wars as
-     my own run of the track to 1975 (`critic/c65_track_1938.log`).
-   - The rule R67c-d claims (the leaders never at war, both blocs whole) holds. But the blocs the replay hands over
-     take in neutral India and Austria at once. That is not 1976's world, and the first thing the free world does is a
-     NATO war on non-aligned Yugoslavia.
-   - **Fix:** while the blocs stand, admit to a bloc only nations its leader would (no neutral of the replay's, none
-     across the other bloc's sphere). Or hold the strategic AI's joins and declarations for a settling month after the
-     end.
-   - **What 8 needs:** `c65_endhours.ts` on four seeds with no join of a bloc by a nation outside it at the end, and
-     no war declared in the end hour.
-3. **R65-N3 (emergent): a free game from a late year opens with a burst of wars.**
-   - Free from 1975: 14 and 26 declarations in the first 30 days, and 93 and 88 in the year (`c65_fb_1975_*.log`).
-   - From 1963: 13 and 9 in the first 30 days, 60 and 65 in the year.
-   - Plain 1938: 7 and 6 in the first 30 days, 31 and 28 in the year.
-   - Per living nation (157 in 1975, 102 in 1938) the first month runs at 1.4–2.6 times plain 1938's rate.
-   - After the track's natural end: 86, 88, 98, 97 and 83 declarations in the first year among 162 nations
-     (`critic/c65_track_*.log`, `critic/c65_at_*.log`). Run 64's track, ending in 1953, gave 33–40 among 99.
-   - The replay holds the AI's own declarations for 38 years, and they come all at once.
-   - The burst settles: on 37603 the declarations run 83, 45, 30, then 14–25 a year in years 5–10, with 4–14 wars
-     running (`critic/c65_at_37603.log`).
-4. **R65-N4 (the replay, R66): D-Day and Stalingrad are still painted on empty land.**
-   - Normandy, 1 June 1944 at 3,000 m/px: there is no German formation in France and no Allied army in Britain, apart
-     from one 44k chip at sea.
-   - Normandy, 2–8 June at 600 m/px: no chip on either side. On 6 June the beachhead appears as a drawn box from the
-     Cotentin to Le Havre (`node critic/scripts/c65_x_stage.mjs normandy 1944 1944-06-01 1020.6 291.6 7`,
-     `critic/shots/c65st_normandy_3000.png`, `critic/shots/c65st_normandy_d5.png`, `critic/shots/c65st_normandy_d7.png`).
-   - `trackFronts` on new seed 37701 agrees: "1944-06-06 ENG of VIC, held by GER: 51 cells … attacker 0 f 0k …
-     defender 0 f 0k … D-Day: the Normandy beachhead" (`critic/c65_tf_37701.log`).
-   - Stalingrad, 24–31 December 1942: the Soviet armies stand 300 km north. At 600 m/px the city has no formation of
-     either side (`critic/shots/c65st_uranus_3000.png`, `critic/shots/c65st_uranus_d4.png`). `trackFronts` 37701
-     counts Uranus as 94k against 36k men near, 0 engaged.
-   - R66's bar (the user's, ADR-969) covers land fronts, and the 1943–44 Eastern stages are fought: Kursk 27 of 28
-     samples engaged, 132k Axis lost; the Dnieper 215k (`critic/c65_tf_37701.log`). But ROADMAP's R66 names
-     "Stalingrad, Normandy" as its examples, and both are what a viewer would look at first.
-5. **R65-N5 (stats and map): the 1956–75 world keeps names and capitals that history changed.**
-   - "Anglo-Egyptian Sudan" is released in 1956 and never renamed. It ranks 9th through 1975, and the war chips read
-     "Anglo-Egyptian Sudan ⚔ Kenya" (`critic/shots/c65lw_1965replay_4242_15_world.png`, `critic/c65_lw1.log`).
-   - **Newfoundland** (2,360 cells, a British puppet) and **Tannu Tuva** (941 cells, a Soviet puppet) are separate
-     nations in 1975. History joined them to Canada in 1949 and to the Soviet Union in 1944
-     (`critic/c65_landof_1975.log`, `critic/shots/c65pl_1975_newfoundland.png`, `critic/shots/c65pl_1975_tuva.png`).
-   - British East Africa lives on with 4 cells.
-   - West Germany's capital is labelled "Gießen": `nations.json` says Bonn, and the seat is the nearest city on the
-     map. Spain's capital stays "Burgos" to 1975, and the nation stays "Nationalist Spain"
-     (`critic/shots/c65lw_1965replay_4242_03_europe.png`).
-   - Free worlds revive "Manchukuo" in 1979 (`critic/c65_lw2.log`).
-   - **Fix:** `rename` SUD with its release; `annex` or `transfer` for NFL (1949) and TAN (1944); a `capital` event for
-     Spain (Madrid, 1939) and a city at Bonn.
-6. **R65-N6 (UI, editor and scenarios, R68c): the card does not show the year it starts.**
-   - With the slider at 1960, 1965 or 1975 the preview is 1938's map (`data/scenarios/1938/preview.png`). "Nations"
-     reads 102, and the heading reads "World, 1938". Only "Start date: 1 January 1960" changes
-     (`critic/c65_rc_*.json`, `critic/shots/c65rc_1960_replay_1600x900_card.png`,
-     `critic/shots/c65rc_1965_replay_390x844_card.png`).
-   - The thumb has no label. On a phone the 38 years share about 270 px of track, about 7 px a year.
-   - My probe set the slider by script, so the drag itself was not judged.
-   - **Fix:** a preview per year (`npm run data -- --previews` at deploy beside the starts), the nation count from
-     `years.json`, and the year on the thumb.
-7. **R65-N7 (UI, new, from R70c): Resume pressed during the build is undone.**
-   - On `?paused=1` the bar says "Paused" from the first frame (fixed). But a press of Resume during "Building the
-     world…" makes the bar say "1 January 1938" (running), and 3 s later it is "Paused" again.
-   - Probe: `node critic/scripts/c65_x_buildpause.mjs 1600 900 1`, `critic/c65_xbp_1600x900_p1.json` (`afterClick`
-     against `after3s`).
-   - **Fix:** keep the player's choice made during the build, or disable the button until the world is built.
-8. **Small:**
-   - The desktop line cuts long notes ("Next, 1 January 1960: Cameroon ind…"; `critic/shots/c65rc_1960_replay_1600x900_start.png`).
-   - "Republic of China captured Albania's capital" (10 July 1975, free, after 6161), and Poland against Australia:
-     wars with no way to reach.
-   - The Sino-Soviet clash of March 1969 becomes a months-long air war (the Soviet Union lost 27 aircraft, China 0 in
-     July 1969; `critic/c65_lw_1965replay_4242.json`).
+1. **R66-N1 (diplomacy, emergent; new, R75a): the focus after the track damps a game whose replay ends in 1938–41.**
+   - `focusAfterTrack` applies to every end of the track: its date, an intervention, or a free start (ADR-1009). It
+     was made for the 38 years of held declarations at a late end (R65-N3). At an early end there is nothing held, yet
+     the AI makes 40 % of its declarations, rising to all over three years.
+   - **The same world, with and without it:** the replay left at 1 January 1938 (a God act, an edit or a nation taken on day 1;
+     "Play free" at 1938 starts the plain scenario, with no track) is plain 1938's world on the same seed. Its first declarations fall on the same
+     days: on 5151, TUR>BUL on day 3 and IRN>AFG on day 13 in both.
+     - 5151: plain 1938 declares 32 wars in the year (7 in 30 days); left on day 1, 19 (4).
+     - 6161: 28 (6); left on day 1, 19 (3).
+     - Lost on 5151: SOV>ROM day 4, ITA>YUG day 6, JAP>ROM day 9, SOV>TUR day 18 (`npx tsx
+       critic/scripts/c66_freeburst.ts 0 5151` against `... 1938 5151`; `critic/c66_fb_0_*.log`, `critic/c66_fb_1938_*.log`).
+   - Left at 1939 or 1941: 20, 24, 15 and 17 declarations in the year; the 1941 start declares 0 and 2 in its first 30
+     days (`critic/c66_fb_1939_*.log`, `critic/c66_fb_1941_*.log`; new, not compared).
+   - What a player sees: a God act or a nation taken in the replay's 1938 quiets the coming war for three years. R75a's
+     own words are "keeps the alignment history gave it". In 1938–41, history's alignment is the Axis at war.
+   - **Fix:** scale the focus by what the track held back, e.g. the years since 1945 or the bloc era. Or apply it only
+     to an end after the war (by its date, or a start from 1946 on).
+   - **Seen fixed when:** `c66_freeburst.ts 1938 5151` and `1938 6161` declare within ±10 % of `c66_freeburst.ts 0
+     5151` and `0 6161`, while `1975 5151/6161` keep their quiet first month (≤ 1.2 × plain 1938's per nation).
+2. **R66-N2 (UI, editor and scenarios; new, R74b): the card in "Play free" at a later year contradicts itself.**
+   - With the slider at 1975 and "Play free" chosen, the heading reads "World, 1975" and the map, nations and powers are
+     1975's. But the description is 1938's: "The world on the eve of the Second World War."
+   - Beside it, under "Play free", the panel says "A replay of history: the same world every game, with no seed or option
+     to choose. Taking a nation, a God Mode act or an editor edit ends the replay…" (`critic/shots/c66rc_1975_free_1600x900_card.png`;
+     at 390 × 844 at 1960, `critic/shots/c66sl_390x844_drag.png`).
+   - The cause: `TitleScreen.tsx` takes the description from `history && replay ? replay.info : own`, while the heading
+     and form take `replayed` (`history || year > 1938`).
+   - **Fix:** a description of a free game from a year ("The world of 1 January 1975, played from there on its own
+     course"); the fixed-seed note only under "Replay history".
+3. **R66-N3 (diplomacy; new, R74h): the sea reach keys on a measure that leaves out the powers it names.**
+   - ADR-1011: "great powers across any sea, as before (ADR-670's case: the United States and the Soviet Union)". Its
+     test is the sim's `greatPowers`, the six strongest by `strengths`. ADR-1012 already found that this measure leaves
+     the United States and Britain out of 1938.
+   - In plain 1938 on 7019, `greatPowers` is SOV CHI ITA FRA JAP GER on day 0, then SOV ITA ENG CHI GER FRA at year 1.
+     The United States is out until year 2, and Japan is out in years 1–3 (`npx tsx critic/scripts/c66_greats.ts 7019 3`,
+     printed in the run).
+   - So in those years the United States and Japan land only within 4,000 km of their transports: no Pacific crossing.
+     Republican China, by the same measure, may land anywhere.
+   - The effect on wars is not measured here.
+   - **Fix:** the card's `cardPowers` measure (strength, income, warheads), or the top ten by income, for the reach.
+     Or key it on the transports' lift and the navy rather than rank.
+4. **R66-N4 (the replay, R74g; R65-N4 answered in part): D-Day's beachhead is still given, not fought, and Stalingrad's
+   own stage has no German army.**
+   - Not blocking: on the replay's own seed, the only world a player sees (`trackFronts 1938`, `critic/c66_tf_1938.log`),
+     R74g's bar holds. Uranus: 9 against 6 engaged at the hour, both engaged in 27 of 28 samples, 7k and 16k lost.
+     D-Day: 4 against 6 at the hour. Its 23 large land fronts: 10 engaged at the stage's hour (bar 9).
+   - **D-Day** (`trackFronts` on 1938, 37701 and 38701 alike): "ENG of VIC, held by GER: 51 cells, 0 taken in the window; attacker
+     6 f 75k (4 engaged), of 0k lost 0k; defender 8 f 81k (6 engaged), of 82k lost 1k; both engaged 0 of 28 samples".
+     - The armies are there and touch at the hour, which is R74g's bar (`critic/shots/c66st_normandy_d6.png`).
+     - But in the week after, neither side is engaged in any sample. The Allies lose no men. The 51 cells are handed
+       over at the hour.
+   - **"Stalingrad and Nalchik" (31 October 1942):** attacker 0 formations, 0 of 28 samples on 1938, 37701 and 38701
+     (run 65 on 37701: 1 formation, 3k). The Sixth Army's arrival is dated 1 November, the day after the stage. Uranus is fought on 1938 and 37701
+     (7 against 4 engaged, 4 of 28 samples) but not on new seed 38701 (0 and 0 engaged at the hour, 35 formations and 24
+     near).
+   - **Fix:** the arrivals a few days before their stage (the Sixth Army by 25 October). For D-Day, the beachhead taken
+     by the landed divisions over the window rather than handed over at the hour.
+   - **Seen fixed when:** `trackFronts` on 1938, 37701 and 38701 with Stalingrad's stage both engaged at its hour, Uranus
+     both engaged at its hour on all three, and D-Day both engaged in at least a third of its 28 samples.
+5. **R66-N5 (UI; new, R73): after a refused start the card no longer shows the year it names.**
+   - The notice reads "The world of 1 January 1960 could not be loaded…". But the slider is back at 1938, the date reads
+     "1 January 1938", and the mode is "Play free" though the start asked for "Replay history" (`critic/c66_by2.json`:
+     slider 1938, date "1 January 1938" in all ten cases).
+   - At 390 × 844 with a saved game, the notice is below the fold (top 920 px of 844).
+   - **Fix:** open the card at the year and mode refused, the notice in view.
+6. **R66-N6 (stats, card; new, R75b): the card's great powers name Spain for 1941–49.**
+   - `years.json`'s `powers` (`cardPowers`): Spain (SPN, the renamed Nationalist Spain) is 7th in 1941–43, 6th in 1944,
+     7th in 1945 above China, and in the list to 1949. China is missing in 1941–43 and 1945 (`critic/c66_starts/years.json`).
+   - A neutral Spain worn out by its war (ADR-1008's own words) reads as one of the great powers of the Second World War.
+   - **Fix:** weigh a nation at war more, or cap a measure of strength from a standing army at peace.
+7. **Small:**
+   - The arsenals the replay hands over in 1975 are SOV 26, USA 55, ENG 24, FRA 10, CCP 4 (run 65: SOV 13). People's
+     China, in a free 1975 after 6161, launches its four warheads at one place over five days in October; all four are
+     intercepted (`critic/c66_nukes75_6161.log`).
    - **Old, carried:**
      - the ranking's Land unit and "0 civilians killed";
-     - R61-SC's three `slowClick` breaks and R64-N2's 36105 (text-identical);
-     - Malta never taken (18 of 18 as run 63).
+     - R61-SC's three `slowClick` breaks and R64-N2's 36105;
+     - Malta never taken (18 of 18 as run 65).
 
-## Run 64's cases re-run
+## Run 65's cases re-run
 
-| Run 64 case | Run 64 (`a90c7f57`) | Run 65 (`5ee3e035`) | Evidence |
+| Run 65 case | Run 65 (`5ee3e035`) | Run 66 (`a0880be6`) | Evidence |
 |---|---|---|---|
-| R64-N1 `h_phone 390 844`, `844 390` | "Next, 12 March 1938: The An…" cut, 11 px | **fixed**: "12 Mar 1938: The Anschluss" on two rows, scrollWidth = clientWidth (150) | `critic/c65_hp_*.json`, `critic/shots/c65hp_390x844_bar.png` |
-| R64-N3 `c64_transfer.ts` | CZS and YUG from HUN hidden on 8 May 1945 | **fixed**: both shown, the transfer's own rows hidden. The rest of the diff is R66's changed track | `critic/c65_transfer_head.log` |
-| R64-N2 landingInvariants 36105 3517 g2 od8 | 1 `slowClick` | text-identical | `critic/c65_li_36105_3517_g2_od8.log` |
-| `h_blank 120 1600 900 99` | 4 blank of 1,088 | **0 of 1,077**, never past (reached January 1942 under load, run 64 March 1943) | `critic/c65_hb_1600x900_s99.json` |
-| Paused start's bar (`x_buildpause 1600 900 1`) | "Pause" during the build | **fixed**: "Paused" from the first frame; a Resume pressed in the build is now undone (R65-N7) | `critic/c65_xbp_1600x900_p1.json` |
-| Slovakia's "annexed" and "destroyed" in one hour | both | left by R70c (History is the whole log) | — |
-| `h_next` Greece, `h_pauseblank` | 0 blank | 0 of 17, 0 of 5; the dates differ by R66's track | `critic/c65_hn_greece.json`, `critic/c65_hpb.json` |
-| `h_godtab`, `h_god`, `h_interv` ×2, `h_seed` | notes; the track ends and is told; one hash for three URLs | the same (godtab byte-identical; the track's hashes differ by R66) | `critic/c65_hgt_*.json`, `critic/c65_hg.json`, `critic/c65_hi_*.json`, `critic/c65_hseed.json` |
-| `h_continue 400 120` | same hash | same hash | `critic/c65_hc_400_120.json` |
-| `h_watch` desk, 15 years at Max | 0 of 57 blank, 59–60.5 fps | 0 of 62 pre-1954 samples blank, 58.8–60.3 fps, longest gap 100 ms, 0 over 500 ms | `critic/c65_hw_desk.json` |
-| 31211 h114 ticker; 31201 at 667 × 375; closeblock 21103 ×5 sizes; keys 36423; continue 36415 | as run 63 | byte-identical | `critic/c65_wt_*`, `critic/c65_mw_*`, `critic/c65_xcb_*`, `critic/c65_xk.json`, `critic/c65_xc_36415_GER.json` |
-| Editor 32443, 32441; bad files | paint kept, 591,613 bytes | the same (32443 on a re-run with the probe waiting for the build) | `critic/c65_x_editor.*.rerun.log`, `critic/c65_x_badfiles.log` |
-| God tools 36119, H-bomb 36117, Breakthrough 36151 | told; 3,329,000 civilians | byte-identical | `critic/c65_q_36119.json`, `critic/c65_a_36117.json`, `critic/c65_kwh_36151.json` |
-| History and CSV on the year-20 saves | 3,129 events, 3,130 lines (32019) | 3,111 events, 3,112 lines; the world differs from 1955 (techs) | `critic/c65_hi_32019.json`, `critic/c65_dl_32019.csv` |
-| 7019 / 32019, 20 years | `99caf939`, `4702acef` | `6f3905d6`, `9239b548`: the same hash each year 1–17, apart from year 18 (1955, ADR-994's first techs) | `critic/c65_seed*_save.log` |
-| Named landingInvariants ×10, nvtraces ×2 | as run 61 | text-identical (bar the seconds) | `critic/c65_li_*.log`, `critic/c65_nvtrace_*.log` |
-| diploInvariants 33501/3/5, worldInvariants 36009/36011 | 0 | 0, text-identical | `critic/c65_diploinv_335*.log`, `critic/c65_wi_360*.log` |
-| seaBattles 32061, 32063r; workerDeterminism 32059 | 75, 87; `cf5a4a7f` | the same | `critic/c65_sb_*.log`, `critic/c65_wd_32059.log` |
-| Track checker 1938 (365 free days) | 0 broken; Soviet war on Norway 29 July 1953 | 0 broken to 31 December 1975; VIE born; 86 wars declared in the year after | `critic/c65_track_1938.log` |
-| Malta's 18 (due: the sim changed) | run 63: 18 not taken | identical to run 63's line for line | `critic/c65_malta.log` |
-| Run 61's bulk sets (due) | run 63: 395 of 396 identical; 153 identical; 168 true | **396 of 396 landing setups and 153 of 153 stuck returns text-identical to run 63's**; the 168 next voyages are text-identical too (120 tellings, the same two landing breaks); the first try failed on a missing copy of `c63_nvtrue.ts` and was re-run |  `critic/c65_li/`, `critic/c65_sr/`, `critic/c65_nv/` |
-| worldInvariants 33507, track 33301 etc., perf chain of run 63 | carried | worldInvariants and the track on new seeds instead; perf chain re-run (above) | — |
+| B1 `c65_x_badyear` (3 cases) | `?failed=save`, no notice | **fixed**: `?failed=start&year=Y`, a notice naming the year in each | `critic/c66_by.json` |
+| B1 `c65_x_badyearsave` | the save blamed, Continue gone | **fixed**: the save's card untouched, Continue 1 | `critic/c66_bys.json` |
+| R65-N1 `freeburst` 1954/1963/1975 × 5151/6161; traits 1975 | JAP>KOR in 6 of 6; JAP 85, ITA 80 | **fixed**: no JAP or ITA declaration in 30 days; JAP 10, ITA 15 | `critic/c66_fb_*.log`, `critic/c66_traits.log` |
+| R65-N2 `c65_endhours` 999/5151/6161/31337 | India joins NATO in the end hour on all four | **fixed**: no join of 8 or 9, no declaration in the end hours | `critic/c66_endhours_*.log` |
+| R65-N3 first 30 days of free 1963/1975; year after the track | 13/9 and 14/26; 83–98 | 4/3 and 5/9; 64–66 | `critic/c66_fb_*.log`, `critic/c66_track_*.log` |
+| R65-N4 `x_stage normandy`, `uranus`; `trackFronts` 37701 | no army near; D-Day 0/0 | armies on both sides, engaged at the hour (D-Day 4/6, Uranus 7/4); D-Day not fought after the hour; Stalingrad's stage without Germans (R66-N4) | `critic/c66_st_*.json`, `critic/c66_tf_37701.log` |
+| R65-N5 `landof 1975`, places | NFL, TAN, BEA alive; Gießen; Burgos | **fixed**: 0 cells each; Bonn; Madrid; Sudan | `critic/c66_landof_1975.log`, `critic/c66_pl_1975.json` |
+| R65-N6 `x_replaycard` 1960/1965/1975 | 1938's map and 102 | **fixed**: 1960 101, 1965 128, 1975 154, each its map | `critic/c66_rc_*.json` |
+| R65-N7 `x_buildpause 1600 900 1` | Resume undone | **fixed**: running after 3 s | `critic/c66_xbp_1600x900_p1.json` |
+| Small: the desktop Next line | "Cameroon ind…" | whole | `critic/shots/c66rc_1960_replay_1600x900_start.png` |
+| Small: Sino-Soviet air war of 1969 | 27 Soviet aircraft lost in July | **fixed**: no air fight in the hold | `critic/c66_air69.log` |
+| Small: the 1975 H-bomb near Ulan Bator (after 6161) | 10 July 1975, on the page and headless | no detonation in 400 days on the page; headless, 4 CCP launches all intercepted in October | `critic/c66_an_y1975.json`, `critic/c66_nukes75_6161.log` |
+| afterTrack 37601, 37603 (own cache) | 97/70 declared in year 1; JAP-USA in year 2 on 37601 | 64/70; no JAP-USA; blocs whole 10 years | `critic/c66_atx_*.log` |
+| Named landing ×12, nvtraces ×2, diploInvariants 33501/3/5, 37001/3/5, worldInvariants 36009/11, 37007/9/11 | as run 64 | text-identical but 203997 (one click more, same break); all 0 broken | `critic/scripts/c66_cmpnamed.sh` |
+| seaBattles 32061, 32063r | 75, 87 | 79, 57 (another world; sinkings out of battle 95, run 65: 21: Japan's fleets lost in the Baltic, see naval) | `critic/c66_sb_*.log` |
+| workerDeterminism 32059 | `cf5a4a7f` every arm | `6c0b4082` every arm | `critic/c66_wd_32059.log` |
+| 7019 / 32019, 20 years | `6f3905d6`, `9239b548` | `970a8195`, `a6398fdb` (from year 1: ADR-1011's rule) | `critic/c66_seed*_save.log` |
+| Run 65's page suites (God, UI, editor, stats) | — | identical where the world is (q_36119, godtab, kwh, keys, continue, closeblock ×5, war list, ticker); the rest differ by the world or the card's new rows | `critic/scripts/c66_cmpjson.mjs` |
+| Malta's 18 (due) | 18 not taken | identical | `critic/c66_malta.log` |
+| Run 61's bulk sets (due) | 396/153/168 identical to run 63 | **366 of 396** landing setups identical (one break, 30041 g1, as before); **153 of 153** stuck returns; **162 of 168** next voyages (6 differ by an unsailed telling) | `critic/c66_liab_named_cmp.txt`, `critic/c66_sr_cmp.txt`, `critic/c66_nv_cmp.txt` |
+| Perf chain | see run 65 | tick 99 2.10 ms (2.26), replay 1.70 (1.68), 120 m/px 53.6–56.3 (51.8–56.1), lookFps 58.5–60, figures 59.9 fps | `critic/c66_pf.status` |
 
 ## Design objections (none blocking, no score lowered)
 
-- Run 63's "the track's fronts are painted, not fought" is now answered for the large Eastern land fronts of 1943–44,
-  but not for landings or Stalingrad (R65-N4). The user's bar (ADR-969) counts land fronts only. A viewer judges by
-  D-Day.
-- The blocs are lasting by rule (ADR-981), yet any nation may join them (R65-N2). A bloc that a neutral joins in an
-  hour does not read as the Cold War.
-- The same history every game; a free start from a year is the only branch. With R65-N1 and R65-N3, the branch opens
-  with an Axis Japan and a burst of wars.
+- Canada, Australia and South Africa are still Britain's puppets in 1975 (`npx tsx critic/scripts/c66_landof.ts 1975 CAN
+  AST SAF`: overlord ENG), so Canada is in no NATO. ADR-17 and the R67b note ("Canada a dominion of Britain's") decide
+  it. A free 1975 game starts with three sovereign states as Britain's puppets.
+- The Allied divisions on D-Day are set ashore by the timeline at hour 23 of 5 June, not landed by the sea (ADR-1010).
+  It reads well at 3,000 m/px. At 120 m/px there is no crossing to watch.
+- The Soviet income buff runs to 26 December 1991, past the track's end and into every free game from a late year. On
+  four seeds the Soviet Union does not run away in the ten years after (2.6–2.9M men, behind the United States).
 
 ## Ideas from other games (not scored)
 
-- Hearts of Iron IV's "historical focus" for the AI after the scripted years: the AI keeps the alignment of its
-  history for a while after the script ends, instead of choosing afresh in the first hour.
-- Paradox's bookmarks show each start's map and its great powers on the start screen: a picture per year would answer
-  R65-N6.
+- Hearts of Iron IV ties its historical focus to the date and the nation's state, not to the moment the script stops.
+  An Axis focus in 1939 is to fight, not to wait (R66-N1).
+- Civilization's era screens: the card could say in one line what a later year's world is about ("1960: the Cold War;
+  Africa's independences"), in place of 1938's line (R66-N2).
 
 ## Strengths (verified)
 
-- **The replay's starts are the same world everywhere.** The 38 yearly starts built here on Windows hash the same as
-  the deployed site's, built on the Linux runner. A free 1975 game strikes Ulan Bator on 10 July 1975 at the same cell
-  on the page and headless (`critic/c65_starts/years.json`, `critic/c65_an_y1975_6161.json`,
-  `critic/c65_nukes75_6161.log`).
-- **The 1953–75 replay is history on its dates, and it plays.**
-  - From a 1965 start: Konfrontasi ends in 1966, then come Biafra (July 1967 – January 1970), Zhenbao, Nasser's
-    death and Sadat, and Lon Nol.
-  - The track checker is clean on 3 seeds.
-  - The 1943–44 Eastern stages are fought: 27 of 28 samples engaged at Kursk and the Dnieper on a new seed
-    (`critic/c65_lw1.log`, `critic/c65_tf_37701.log`).
+- **The batch fixed what it was asked to fix, on the critic's own probes.** All seven of run 65's non-blocking findings
+  and B1 read fixed on the same seeds and cases: the end hours on four seeds, the free bursts on six, the names on the
+  1975 start, the card at four years, the pause in the build (table above).
+- **The replay's starts are the same world everywhere.** 38 of 38 yearly starts built here hash, count and rank their
+  great powers as the deployed Linux build does (`critic/c66_starts/years.json`, `critic/c66_deployed_years.json`).

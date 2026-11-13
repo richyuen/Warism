@@ -1,0 +1,10 @@
+npx tsx critic/scripts/c66_afterTrack.ts 37601 10 critic/c66_atx_37601.json > critic/c66_atx_37601.log 2>&1
+npx tsx critic/scripts/c66_afterTrack.ts 37603 10 critic/c66_atx_37603.json > critic/c66_atx_37603.log 2>&1
+npx tsx critic/scripts/c66_afterTrack.ts 38601 10 critic/c66_atx_38601.json > critic/c66_atx_38601.log 2>&1
+npx tsx critic/scripts/c66_afterTrack.ts 1938 10 critic/c66_atx_1938.json > critic/c66_atx_1938.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 37009 1825 > critic/c66_wi_37009.log 2>&1
+npx tsx critic/scripts/c64_track.ts 37301 365 > critic/c66_track_37301.log 2>&1
+npx tsx critic/scripts/c64_track.ts 37303 365 > critic/c66_track_37303.log 2>&1
+npx tsx critic/scripts/c66_nukecount.ts 37501 22 > critic/c66_nc/37501.log 2>&1
+npx tsx critic/scripts/c66_nukecount.ts 37503 22 > critic/c66_nc/37503.log 2>&1
+npx tsx critic/scripts/c66_nukecount.ts 37507 22 > critic/c66_nc/37507.log 2>&1

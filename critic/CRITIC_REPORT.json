@@ -1,12 +1,12 @@
 {
-  "commit": "5ee3e0350fbc2b3ee2ad484f9123e0c3c06b1c80",
+  "commit": "a0880be619551c9f53473ebe4f5ff469a2d69d97",
   "mode": "focused",
   "scores": {
     "mapVisuals": 8,
-    "diplomacyWarDepth": 7,
+    "diplomacyWarDepth": 8,
     "emergentDynamics": 8,
     "godMode": 8,
-    "editorScenarios": 7,
+    "editorScenarios": 8,
     "statsHistory": 8,
     "uiUxPolish": 8,
     "performance": 8,
@@ -17,13 +17,6 @@
     "aircraft": 8,
     "aiNukes": 8
   },
-  "blocking": [
-    {
-      "id": "B1",
-      "title": "A start from a year that cannot be loaded is not told; with a saved game the title blames that save and hides its Continue",
-      "evidence": "node critic/scripts/c65_x_badyear.mjs (critic/c65_by.json, critic/shots/c65by_wrongbytes.png): 1961's bytes served for 1960, a 404, and year=1977 each land on /?failed=save with no notice on the title. node critic/scripts/c65_x_badyearsave.mjs (critic/c65_bys.json, critic/shots/c65bys_after.png): with a saved plain-1938 game present, a failed 1960 start makes the Saved game card read 'This saved game could not be loaded: it is not whole, or it was made by an older version of Warism. Start a new game.' and removes Continue (continueButton 0). SPEC 7.7: 'A year not built, or of another state format, is refused (the title's notice, ?failed=save)'. Cause: ?failed=save is shared with the player's save; TitleScreen shows saveFailed only inside the saved-game card.",
-      "fix": "Give the replay's start its own failure (e.g. ?failed=start&year=Y) and a notice on the 1938 card naming the year; leave the saved game's card and Continue untouched. Both probes must then show the notice, and Continue must remain."
-    }
-  ],
-  "timestamp": "2026-11-12T21:55:12-05:00"
+  "blocking": [],
+  "timestamp": "2026-11-13T07:12:00-05:00"
 }

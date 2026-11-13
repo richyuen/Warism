@@ -259,3 +259,7 @@
   1960's order (Britain second): R75c, the Soviet Union's strength after the war, planned first (the user's decision).
 - R75c (ADR-1013): the Soviet economy after the war (the war's income buff on to 1991): second power on every start
   from 1946; R75b closed (the card at 1960: the United States, the Soviet Union first).
+- Critic run 66 (focused, `a0880be6`): every dimension at 8 (mapVisuals 8, diplomacyWarDepth 8, emergentDynamics 8,
+  godMode 8, editorScenarios 8, statsHistory 8, uiUxPolish 8, performance 8, stability 8, semanticZoom 8, naval 8, tanks
+  8, aircraft 8, aiNukes 8); 0 blocking. Its non-blocking findings filed as Batch 21, R76a-g, before the release
+  (ADR-1014).
