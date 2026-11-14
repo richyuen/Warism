@@ -62,3 +62,9 @@
 - The critic's case on 39915, 7781, 39917 at 250 m/px: 25 tags for 25 formations, 0 overlapping, 0 unplaced, the 10
   engaged all named, none of their 292 elements under a tag. No change; whether to thin the tags of formations not in
   contact at a battle is put to the user. `tools/diag/battleTags.ts`.
+
+## 2026-11-14 — R81g: the followed fighter marked on its planes (ADR-1038)
+
+- The mark stood at the patrol's middle while its planes circle at a radius of the view's. A sortie's row carries
+  its wing now (stride 12) and the mark stands on the wing's drawn planes: at 250 m/px the median 70 → 0 px (39927),
+  265 → 0 (35127), 0 on 39929; 3,000 m/px 0. The 14 sortie and wing specs green. `tools/diag/wingMark.ts`.

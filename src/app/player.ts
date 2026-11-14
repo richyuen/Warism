@@ -100,6 +100,7 @@ export class PlayerControl {
       view.requestDraw();
     };
     // The selected wing's mark on the map (ADR-767) stands where the camera follows it.
+    view.markedWingId = () => this.followedWing.peek();
     view.markedWing = () => {
       const id = this.followedWing.peek();
       if (id === null) return null;

@@ -356,9 +356,9 @@ export interface Snapshot {
   raids: Float32Array;
   /**
    * The sorties in the air (PLAN 5.7a), SORTIE_STRIDE each: [bx, by, tx, ty, launch, kmh, km,
-   * over, nation, aircraft, role]: a sortie as `shared/sorties` has it, its launch as hours from
+   * over, nation, aircraft, role, wing]: a sortie as `shared/sorties` has it, its launch as hours from
    * the snapshot's tick (so that a float holds it to the second), its wing's nation and aircraft,
-   * and its role (`SortieRole`). Where it is at a frame is `sortieAt`'s, at −1 + the frame's
+   * its role (`SortieRole`), and its wing's id (ROADMAP R81g: a followed wing is marked on its own planes). Where it is at a frame is `sortieAt`'s, at −1 + the frame's
    * share of the tick: the hour the snapshot ends.
    */
   sorties: Float32Array;
@@ -998,6 +998,6 @@ export const SEA_STRIDE = 24;
 /** Numbers per carrier strike out of a sea battle in a snapshot's `raids` (PLAN 7.154a). */
 export const RAID_STRIDE = 12;
 /** A sortie in a snapshot (PLAN 5.7a): [bx, by, tx, ty, launch, kmh, km, over, nation, aircraft, role]. */
-export const SORTIE_STRIDE = 11;
+export const SORTIE_STRIDE = 12;
 /** A sortie's role, by its aircraft's class (PLAN 5.7a): what the page draws. */
 export const SortieRole = { fighter: 0, closeSupport: 1, bomber: 2, heavyBomber: 3, navalBomber: 4, transport: 5 } as const;

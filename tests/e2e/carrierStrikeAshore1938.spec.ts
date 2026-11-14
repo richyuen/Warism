@@ -20,8 +20,8 @@ test("a carrier's naval bombers strike a Chinese division from the deck, drawn f
   mkdirSync(out, { recursive: true });
   const jap = id('JAP');
   // Hour by hour to a Japanese naval bomber sortie launched at sea (from a Japanese fleet's place) at a land
-  // formation of an enemy, over its target: the sorties of the snapshot (SORTIE_STRIDE 11: bx, by, tx, ty,
-  // launch, kmh, km, over, nation, aircraft, role) against the formations' places.
+  // formation of an enemy, over its target: the sorties of the snapshot (SORTIE_STRIDE 12: bx, by, tx, ty,
+  // launch, kmh, km, over, nation, aircraft, role, wing) against the formations' places.
   const find = (jap: number): Promise<{ tick: number; bx: number; by: number; tx: number; ty: number; over: boolean } | null> =>
     (async () => {
       const { sim, view } = window.__warsim!;
@@ -34,7 +34,7 @@ test("a carrier's naval bombers strike a Chinese division from the deck, drawn f
       const all = (await sim.inspect(true)).formations as { id: number; x: number; y: number; nation: number }[];
       const fleets = all.filter((f) => f.nation === jap && view!.formationAfloat(f.id));
       const land = all.filter((f) => f.nation !== jap && !view!.formationAfloat(f.id));
-      for (let i = 0; i + 11 <= rows.length; i += 11) {
+      for (let i = 0; i + 12 <= rows.length; i += 12) {
         const [bx, by, tx, ty, launch, kmh, km] = [rows[i]!, rows[i + 1]!, rows[i + 2]!, rows[i + 3]!, rows[i + 4]!, rows[i + 5]!, rows[i + 6]!];
         if (rows[i + 8] !== jap || rows[i + 10] !== 4) continue;
         if (!fleets.some((f) => Math.hypot(f.x - bx, f.y - by) < 1.5)) continue;

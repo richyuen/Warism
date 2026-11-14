@@ -2322,10 +2322,10 @@ export function sortieSection(world: World): Float32Array {
     if (!world.formations.has(id) || sortieEnd(s) <= world.tick - 1 || s.launch > world.tick) continue;
     const first = world.rules.templates[c.template[id]!]?.elements[0];
     const role = first ? (ROLE_OF_CLASS[world.rules.units[first.unit]!.cls] ?? SortieRole.fighter) : SortieRole.fighter;
-    rows.push(s.bx, s.by, s.tx, s.ty, s.launch - world.tick, s.kmh, s.km, s.over, c.nation[id]!, aircraftOf(world, id), role);
+    rows.push(s.bx, s.by, s.tx, s.ty, s.launch - world.tick, s.kmh, s.km, s.over, c.nation[id]!, aircraftOf(world, id), role, id);
   }
   // A carrier's strikes in its sea battle (PLAN 4.12b): their flights, as sorties of naval bombers.
-  for (const { wing, nation, sortie: s } of carrierStrikes(world)) rows.push(s.bx, s.by, s.tx, s.ty, s.launch - world.tick, s.kmh, s.km, s.over, nation, aircraftOf(world, wing), SortieRole.navalBomber);
+  for (const { wing, nation, sortie: s } of carrierStrikes(world)) rows.push(s.bx, s.by, s.tx, s.ty, s.launch - world.tick, s.kmh, s.km, s.over, nation, aircraftOf(world, wing), SortieRole.navalBomber, wing);
   return Float32Array.from(rows);
 }
 

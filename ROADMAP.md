@@ -81,6 +81,10 @@ Rules:
     (`tools/diag/battleTags.ts`). The crowding is the count; fewer tags at a battle is put to the user (ADR-1037).
   - [ ] R81g The followed fighter's mark at 250 m/px (aircraft): its median distance from its sorties at most 40 px (the
     critic: 392 on 39927, 68 on 35127), 3,000 m/px as before (median ≤ 32). AT: `w_wing` on both seeds and one new.
+    Done (ADR-1038): a patrol's planes are drawn circling at a radius of the view's, and the mark stood at the circle's
+    middle (the wing's place). A sortie's row now carries its wing (`SORTIE_STRIDE` 12) and the mark stands on the
+    followed wing's planes as drawn. `tools/diag/wingMark.ts` (the critic's `w_wing`): at 250 m/px the median 70 → 0 px
+    on 39927, 265 → 0 on 35127, 0 on new 39929; at 3,000 m/px 31-32 → 0.
   - [ ] R81h 120 m/px over the late world (performance): 7019's year-20 world at Max, 52.5-55.8 fps there (60 at the
     other zooms). Profiled first. AT: the minimum of the critic's samples at 120 m/px at least 57 fps, the other zooms
     kept; or the cause answered with numbers in BLOCKERS (PROMPT step 10).

@@ -26,7 +26,7 @@ describe("a patrol's circle at T3 (PLAN 7.24c)", () => {
     const geo = { w: 2048, h: 1024, kmPerCell: 19.57, wrapX: true };
     // The widest circle a sortie has (1.3 of ORBIT_CELLS): its own phase by base and launch.
     const rows: number[] = [];
-    for (let k = 0; k < 40; k++) rows.push(10 + k * 0.137, 12, 20, 10, 0, 100, 1000, 3, 1, 36, SortieRole.fighter);
+    for (let k = 0; k < 40; k++) rows.push(10 + k * 0.137, 12, 20, 10, 0, 100, 1000, 3, 1, 36, SortieRole.fighter, 100 + k);
     for (const m of [80, 25]) {
       const cam = { cx: 20, cy: 10, scale: (19.57 * 1000) / m };
       let drawn = 0;
@@ -49,7 +49,7 @@ describe("a patrol's circle at T3 (PLAN 7.24c)", () => {
 });
 
 describe('sorties drawn (PLAN 5.7a)', () => {
-  it('the snapshot\'s rows: a sortie in the air, its launch from the tick, nation, aircraft, role; none at home', () => {
+  it('the snapshot\'s rows: a sortie in the air, its launch from the tick, nation, aircraft, role, wing; none at home', () => {
     const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
     const w = s.world;
     w.settings.aiEnabled = false;
@@ -61,7 +61,7 @@ describe('sorties drawn (PLAN 5.7a)', () => {
     const rows = sortieSection(w);
     expect(rows).toHaveLength(SORTIE_STRIDE);
     const o = w.sorties.get(wing)!;
-    expect(Array.from(rows)).toEqual(Array.from(Float32Array.from([o.bx, o.by, o.tx, o.ty, o.launch - w.tick, o.kmh, o.km, o.over, GER, aircraftOf(w, wing), SortieRole.fighter])));
+    expect(Array.from(rows)).toEqual(Array.from(Float32Array.from([o.bx, o.by, o.tx, o.ty, o.launch - w.tick, o.kmh, o.km, o.over, GER, aircraftOf(w, wing), SortieRole.fighter, wing])));
     // The page's place is the sim's, at the tick and between ticks.
     for (const t of [0, 0.25, 0.5, 0.99]) {
       const p = sortiePlace(rows, 0, t, W)!;
@@ -72,7 +72,7 @@ describe('sorties drawn (PLAN 5.7a)', () => {
   });
 
   it('out it heads for its target, back for its base; over its target it circles; home, it is not drawn', () => {
-    const row = [10, 10, 20, 10, 0, 100, 1000, 2, 1, 36, SortieRole.fighter];
+    const row = [10, 10, 20, 10, 0, 100, 1000, 2, 1, 36, SortieRole.fighter, 7];
     const out = sortiePlace(row, 0, 5, 2048)!;
     expect(out.leg).toBe(Leg.Out);
     expect(out.heading).toBeCloseTo(0, 9);
@@ -84,7 +84,7 @@ describe('sorties drawn (PLAN 5.7a)', () => {
     expect(r[0]! / ORBIT_CELLS).toBeGreaterThanOrEqual(0.7);
     expect(r[0]! / ORBIT_CELLS).toBeLessThanOrEqual(1.3);
     // Two sorties over one target from other bases: elsewhere on the circle.
-    const other = sortiePlace([12, 14, 20, 10, 0, 100, 1000, 2, 1, 36, SortieRole.fighter], 0, 11, 2048)!;
+    const other = sortiePlace([12, 14, 20, 10, 0, 100, 1000, 2, 1, 36, SortieRole.fighter, 8], 0, 11, 2048)!;
     expect(Math.hypot(other.x - over[0]!.x, other.y - over[0]!.y)).toBeGreaterThan(0.05);
     expect(over[0]!.x).not.toBeCloseTo(over[1]!.x, 3);
     const back = sortiePlace(row, 0, 15, 2048)!;
@@ -93,7 +93,7 @@ describe('sorties drawn (PLAN 5.7a)', () => {
     expect(sortiePlace(row, 0, -1, 2048)).toBeNull();
     expect(sortiePlace(row, 0, 23, 2048)).toBeNull();
     // Over the seam, the short way.
-    const seam = [2040, 10, 6, 10, 0, 100, 1000, 0, 1, 36, SortieRole.fighter];
+    const seam = [2040, 10, 6, 10, 0, 100, 1000, 0, 1, 36, SortieRole.fighter, 9];
     const p = sortiePlace(seam, 0, 5, 2048)!;
     expect(p.x).toBeCloseTo(2047, 6);
     expect(p.heading).toBeCloseTo(0, 9);

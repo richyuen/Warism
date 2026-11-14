@@ -1076,6 +1076,8 @@ export class MapView {
   selectionMarks: { kind: 'ring' | 'marker' | 'frame' | 'wing'; x0: number; y0: number; x1: number; y1: number }[] = [];
   /** Where the wing selected in the Actions tab is (world cells), for its mark (ADR-767); null: none. */
   markedWing: (() => [number, number] | null) | null = null;
+  /** The followed wing's id (ROADMAP R81g): while its planes are drawn in the view, its mark stands on them. */
+  markedWingId: (() => number | null) | null = null;
   private formIds = new Uint32Array(0);
   /** Each formation's `generation` (PLAN 7.4f23): which formation of an id was selected. */
   private formGen = new Uint32Array(0);
@@ -2785,8 +2787,12 @@ export class MapView {
     const r = WING_MARK_PX;
     const turn = (now / 4000) * Math.PI * 2;
     ctx.save();
-    for (const off of wrapOffsets(cam, this.geo, w, SEAM_MARGIN)) {
-      const [px, py] = worldToScreen(cam, at[0] + off, at[1], w, h);
+    // Its planes as drawn this frame (R81g: a patrol's are drawn circling at a radius of the view's, so at 250 m/px the
+    // wing's own place, the circle's middle, stood hundreds of px from them); else its place.
+    const id = this.markedWingId?.() ?? null;
+    const flying = id === null ? [] : this.sortieMarks.filter((m) => m.wing === id).map((m): [number, number] => [m.x, m.y]);
+    const places = flying.length > 0 ? flying : wrapOffsets(cam, this.geo, w, SEAM_MARGIN).map((off) => worldToScreen(cam, at[0] + off, at[1], w, h));
+    for (const [px, py] of places) {
       if (px < -40 || py < -40 || px > w + 40 || py > h + 40) continue;
       const path = (): void => {
         ctx.beginPath();

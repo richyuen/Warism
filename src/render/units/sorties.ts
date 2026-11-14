@@ -72,6 +72,8 @@ export const planeZoom = (scale: number): number => Math.min(1, Math.max(ZOOM_LE
 export interface PlacedSortie {
   x: number;
   y: number;
+  /** Its wing's id (ROADMAP R81g). */
+  wing: number;
   heading: number;
   leg: Leg;
   planes: number;
@@ -193,7 +195,7 @@ export function drawSorties(
         [x, y] = [ox + r * Math.cos(at.orbit.angle), oy + r * Math.sin(at.orbit.angle)];
       }
       if (x < -3 * span || y < -3 * span || x > vw + 3 * span || y > vh + 3 * span) continue;
-      const placed: PlacedSortie = { x, y, heading: at.heading, leg: at.leg, planes: n, nation: rows[i + 8]!, span: hand < 0.5 ? symbol : wing, at: [], handover: hand, trueSpan: wing, role };
+      const placed: PlacedSortie = { x, y, wing: rows[i + 11]!, heading: at.heading, leg: at.leg, planes: n, nation: rows[i + 8]!, span: hand < 0.5 ? symbol : wing, at: [], handover: hand, trueSpan: wing, role };
       out.push(placed);
       ctx.fillStyle = colour(rows[i + 8]!);
       const ball: Ball2d | undefined = flagOf ? { flag: flagOf(rows[i + 8]!), tint: colour(rows[i + 8]!), look: Math.cos(at.heading) >= 0 ? 1 : -1, prop: 'none' } : undefined;

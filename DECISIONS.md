@@ -68,6 +68,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1038 · 2026-11-14 · accepted — R81g: a followed wing is marked on its planes
+- **Found:** the followed wing's mark stood at the wing's place in the stats; a patrolling wing's planes are drawn
+  circling it at a radius of the view's (`ORBIT_VIEW`, PLAN 7.24c), so the closer the zoom the farther from the mark:
+  at 3,000 m/px a median 31-32 px (the critic's and HEAD's), at 250 m/px 70 on 39927 and 265 on 35127 (HEAD,
+  `tools/diag/wingMark.ts`, the critic's `w_wing` as a tool; the critic's own 392 and 68).
+- **Decision:** a sortie's snapshot row carries its wing's id (`SORTIE_STRIDE` 11 → 12; the specs that index rows by
+  hand and `sortiesDrawn.test.ts` with it); `PlacedSortie.wing`; the mark stands on the followed wing's planes as drawn
+  this frame (`MapView.markedWingId`), and at its place when none are in the view. The camera's follow keeps the
+  place, so the circle stays in the view.
+- **Read after:** median 0 px at 250 and 3,000 m/px on 39927, 35127 and new 39929 (p90 the samples whose planes are
+  out of the view). The critic's probes that index sortie rows by 11 need 12.
+
 ### ADR-1037 · 2026-11-14 · proposed, the user's decision — R81f met on HEAD; fewer tags at a battle?
 - **Read** (`tools/diag/battleTags.ts`, the critic's `c_battle` case: Germany at war with Poland, the camera at
   250 m/px on the first engaged German armour, day 4, and on its infantry; seeds 39915, 7781, 39917, alike to the

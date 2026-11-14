@@ -112,7 +112,7 @@ test('the first sea battle of the critic\'s war: marked through its hours, liste
       if ((f.nation === b.a || f.nation === b.b) && p && w.formationAfloat(f.id) && w.formationEngaged(f.id)) fleets.push(p);
     }
     let fromFleets = 0;
-    for (let i = 0; i + 11 <= v.sorties.length; i += 11) if (fleets.some(([x, y]) => Math.hypot(v.sorties[i]! - x, v.sorties[i + 1]! - y) < 0.5)) fromFleets++;
+    for (let i = 0; i + 12 <= v.sorties.length; i += 12) if (fleets.some(([x, y]) => Math.hypot(v.sorties[i]! - x, v.sorties[i + 1]! - y) < 0.5)) fromFleets++;
     return { shots: v.fire.shots.length, marks: v.seaMarks.length, battles: v.seaBattles().length, planes: v.sortieMarks.length > 0 ? fromFleets : 0 };
   };
   for (let h = 0; h < 8 && (await page.evaluate(() => window.__warsim!.view!.seaBattles().length)) > 0; h++) {

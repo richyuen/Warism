@@ -23,6 +23,10 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   alliances, great and nuclear powers, then every war declared, those between great powers and between blocs, the
   leaders' men and disbandings monthly for five years. Saves the world at the track's end to
   `.cache/afterTrack_<seed>.sav.gz` and loads it from there after (R67a; ~10 min the first time).
+- `npx tsx tools/diag/wingMark.ts <seed> [out dir]` (after `npm run build` and `npx vite preview --port 5355 --host
+  127.0.0.1`): the critic's `w_wing` as a tool: Germany played, at war with Poland, its farthest fighter group sent
+  to strike near Warsaw and followed; at ×1 at 3,000 and 250 m/px and ×5 at 3,000 m/px, 8 s each, the followed
+  wing's mark against the nearest German sortie drawn, median and p90 (ROADMAP R81g).
 - `npx tsx tools/diag/battleTags.ts [seeds = 39915] [m/px = 250] [out dir]` (after `npm run build` and `npx vite
   preview --port 5355 --host 127.0.0.1`): the critic's `c_battle` case (Germany on Poland, the first engaged German
   armour and infantry) at a zoom: the tags, the pairs overlapping, the formations in view and those left unplaced, the
