@@ -277,3 +277,10 @@
   fourth-generation jets, composite armour, attack helicopters, cruise missiles. The tech bits are all used (64/64).
 - `tools/diag/techsBy.ts` (new): from the 1975 start to the 1991 end, the great powers know all six (with Italy,
   Japan, East Germany), the Netherlands 3, India 2, the rest none.
+
+## 2026-11-14 — A stage's land: an owner on the taker's side has it back (ADR-1049)
+
+- Found by R80f's replay checks: `historyTrack1938h` red on seed 1938 since R82b (China's volunteers holding North
+  Korea's land at peace, the Americans Normandy's Vichy cells). `territory.ts` frees a retaken cell to an owner on the
+  taker's side again; `heldByTimeline` excuses a stage's land held by the stage's side. Seed 1938 and seeds 1-5 to
+  1991: no line, no warning.

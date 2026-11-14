@@ -68,6 +68,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1049 · 2026-11-14 · accepted — A stage's land: the taker's side keeps it, an owner of that side has it back
+- **Found** (R80f's run of the replay checks): `historyTrack1938h` red on seed 1938 since R82b (ADR-1040), and the
+  same two lines warned on seeds 1-5: "USA on VIC, 4 cells at peace" (Normandy, 1944-06) and "CCP on PRK, 4 cells at
+  peace" (Korea, 1950-12); ROM on SOV (1944-08) on seeds 4-5. The gate runs only the pin of the sweep tests, so no
+  commit since saw it; HEAD's own timeline gives the same lines.
+- **Decision.** (1) The rule (`territory.ts`): a cell taken in a stage's window goes to its taker, as R82b says, but
+  one whose owner fights on the taker's side is freed to its owner, as before R82b (North Korea's land, retaken by
+  China's volunteers, was China's at peace with its owner). (2) The checker (`heldByTimeline`): a stage excuses land
+  held by its nation or by one fighting beside it (the Americans on Normandy's Vichy cells for the British stage, which
+  ADR-1040 meant).
+- **Measured:** `historyTrack1938h` and seeds 1-5 to the 1991 end: no line, no warning; `historyMatch1938h` within its
+  bars on every map. Track-only (`takeOpen` is false outside a track's window): plain games and the pin unchanged.
+
 ### ADR-1048 · 2026-11-14 · accepted — R80e: the techs of 1975-83, the last six bits
 - **The rule** (ADR-1031's answer 4: no new unit, the period's techs as stat upgrades): six techs appended to
   `data/tech/postwar.json` (loaded last, so no older bit moves; a save keeps its techs), nation-wide modifiers of

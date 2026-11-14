@@ -114,9 +114,14 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
   return { lines: breaks.lines, skipped, end: sim.tick, sim, handover };
 }
 
-/** Whether a `held` line ("held: K on O, n cells at peace") is of land the timeline occupies: an `occupy` by K of O's. */
+/**
+ * Whether a `held` line ("held: K on O, n cells at peace") is of land the timeline occupies: an `occupy` of O's by K,
+ * or by a nation K fights beside (R82b, ADR-1040: a stage's land taken in its window goes to its taker's side, so the
+ * Americans hold Normandy's Vichy cells for the British stage; ADR-1049).
+ */
 function heldByTimeline(w: World, line: string): boolean {
   const m = /^held: (\S+) on (\S+),/.exec(line);
   if (!m) return false;
-  return w.track!.events.some((e) => e.kind === 'occupy' && e.by === m[1] && e.of.includes(m[2]!));
+  const k = TAGS_1938H.indexOf(m[1]!) + 1;
+  return w.track!.events.some((e) => e.kind === 'occupy' && e.of.includes(m[2]!) && (e.by === m[1] || w.wars.sameSide(k, TAGS_1938H.indexOf(e.by) + 1)));
 }

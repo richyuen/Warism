@@ -373,8 +373,10 @@ export function territorySystem(world: World): void {
     flipping.delete(c);
     const o = owner[c]!;
     // Freed to its owner at peace with the taker, but a stage's land in its window, which goes to the taker as the stage
-    // will give it (R82b: Normandy's cells, Vichy's, taken from the Germans by the Allies in D-Day's window).
-    const freed = o !== 0 && o !== n && living[o] === 1 && !world.wars.atWar(n, o) && !(world.track?.takeOpen(world, n, controller[c]!, c) ?? false);
+    // will give it (R82b: Normandy's cells, Vichy's, taken from the Germans by the Allies in D-Day's window). An owner on
+    // the taker's side has its land back as before (ADR-1049: North Korea's, retaken by China's volunteers in 1950, was
+    // China's at peace with its owner).
+    const freed = o !== 0 && o !== n && living[o] === 1 && !world.wars.atWar(n, o) && (world.wars.sameSide(n, o) || !(world.track?.takeOpen(world, n, controller[c]!, c) ?? false));
     world.setController(c, freed ? o : n, true, why);
   }
   // Local frontier upkeep around flipped cells.
