@@ -68,6 +68,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1039 · 2026-11-14 · accepted (the user's decision) — The critic runs when every batch is done
+- **The user:** "Can we make a rule to not run the critic until all open batches are done?"
+- **Decision:** the critic is spawned only when no batch in ROADMAP.md has an open item (PROMPT.md "RELEASES", the
+  critic agent's description). A batch finished while another is open goes on to the other's items; the items a
+  critic run files are done with every other open item before it runs again. The rest of RELEASES is as it was.
+- **Why:** a run judged between batches judges code the next batch changes (Batch 24 rewrites the replay to 1991
+  after Batch 25), and a run costs hours.
+- **Now:** a run was spawned after Batch 25 under the old rule while Batch 24 and R81i are open.
+
 ### ADR-1038 · 2026-11-14 · accepted — R81g: a followed wing is marked on its planes
 - **Found:** the followed wing's mark stood at the wing's place in the stats; a patrolling wing's planes are drawn
   circling it at a radius of the view's (`ORBIT_VIEW`, PLAN 7.24c), so the closer the zoom the farther from the mark:

@@ -72,7 +72,9 @@ game's assets or code.
 
 # RELEASES (ADR-804, ADR-805)
 
-Items come in batches (a ROADMAP section). After the last item of a batch:
+Items come in batches (a ROADMAP section). The critic runs only when no batch in ROADMAP.md has an open item
+(ADR-1039, the user's decision): a batch done while another is open goes on to that one's items, and a fix filed
+from a critic run is done with every other open item before the critic runs again. Then:
 1. Spawn the `critic` subagent with no hints (its run is focused; "full run" only as step 3 says, ADR-915,
    ADR-916), wait for it, check that its report names HEAD, commit
    `critic/` with a line in PROGRESS.md (scores, blocking count). Git takes only its report, JSON,

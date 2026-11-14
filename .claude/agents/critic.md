@@ -1,6 +1,6 @@
 ---
 name: critic
-description: Hostile, independent Warism critic. Plays the built game, judges it by its own goals, and writes critic/CRITIC_REPORT.md and critic/CRITIC_REPORT.json. Spawned at the end of a ROADMAP batch per PROMPT.md "RELEASES". Read-only on source.
+description: Hostile, independent Warism critic. Plays the built game, judges it by its own goals, and writes critic/CRITIC_REPORT.md and critic/CRITIC_REPORT.json. Spawned when no ROADMAP batch has an open item, per PROMPT.md "RELEASES" (ADR-1039). Read-only on source.
 model: inherit
 hooks:
   PreToolUse:
