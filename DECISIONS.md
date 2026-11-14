@@ -68,6 +68,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1037 · 2026-11-14 · proposed, the user's decision — R81f met on HEAD; fewer tags at a battle?
+- **Read** (`tools/diag/battleTags.ts`, the critic's `c_battle` case: Germany at war with Poland, the camera at
+  250 m/px on the first engaged German armour, day 4, and on its infantry; seeds 39915, 7781, 39917, alike to the
+  element): 25 tags for the 25 formations in view, none overlapping, none left unplaced, the 10 engaged all named,
+  none of the engaged formations' 292 elements in view under a tag. R81f's bar holds with no change; it is closed.
+- **What the critic saw** ("the 250 m/px labels crowd a battle", `critic/shots/c67c_39915_arm_0250m.png`): every
+  formation in view has its tag by it, so a front of 25 formations at 1600 × 900 shows 25 boxes and their lines.
+- **The question:** whether, at 250 m/px and nearer with a battle in view, the tags of formations not in contact
+  should fade to their flag and strength (one line, no name) or go, leaving the fighting ones whole. It shows less
+  (a reserve's name is read by a tap), so it is the user's to choose; nothing is changed until then.
+
 ### ADR-1036 · 2026-11-14 · accepted — R81e: the relations graph names everyone tied; a truce its own line
 - **Read first** (`tests/e2e/relationsNamed1938.spec.ts` on HEAD, 39939/41/43 a year on): of the 37-43 nations at
   war or allied, 20-27 unnamed in the whole graph at a desk and on a phone. Below zoom 2 a node was named only if

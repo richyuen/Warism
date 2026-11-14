@@ -56,3 +56,9 @@
   sixteen directions at eight distances and covers no node; the shown nodes fill the drawing, 900 high on a phone. Two
   lines of a pair bend apart, so a puppet's truce is seen. 39939/41/43, desk and phone, whole and on Germany: all
   named, no overlap. R11's phone check now reads every nation in the zoomed view named. Relations specs 17/17.
+
+## 2026-11-14 — R81f: a battle's labels met on HEAD (ADR-1037, proposed)
+
+- The critic's case on 39915, 7781, 39917 at 250 m/px: 25 tags for 25 formations, 0 overlapping, 0 unplaced, the 10
+  engaged all named, none of their 292 elements under a tag. No change; whether to thin the tags of formations not in
+  contact at a battle is put to the user. `tools/diag/battleTags.ts`.

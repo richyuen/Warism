@@ -72,9 +72,13 @@ Rules:
     shown stretched to fill the drawing; a phone's drawing 900 high, not 440. Lines of one pair bent apart (a puppet's
     truce lay under its bond). 39939, 39941, 39943 a year on, desk and phone, whole and on Germany: every one named,
     none overlapping, every truce its own line (`tests/e2e/relationsNamed1938.spec.ts`).
-  - [ ] R81f A battle's labels at 250 m/px (semantic zoom; 39915 day 5): no label over another, and each engaged
+  - [x] R81f A battle's labels at 250 m/px (semantic zoom; 39915 day 5): no label over another, and each engaged
     formation's (or its stack's) shown. AT: the overlaps counted on the critic's case and two seeds, 0; the labels'
     count no lower than the stacks in view.
+    Met on HEAD, no change (ADR-1037): on 39915, 7781 and 39917 (the war forced, German armour engaged on day 4; the
+    three alike to the element) at the armour and the infantry: 25 tags for 25 formations in view, 0 overlapping, 0
+    left unplaced, 10 engaged all named; of the engaged formations' 292 elements in view none under a tag
+    (`tools/diag/battleTags.ts`). The crowding is the count; fewer tags at a battle is put to the user (ADR-1037).
   - [ ] R81g The followed fighter's mark at 250 m/px (aircraft): its median distance from its sorties at most 40 px (the
     critic: 392 on 39927, 68 on 35127), 3,000 m/px as before (median ≤ 32). AT: `w_wing` on both seeds and one new.
   - [ ] R81h 120 m/px over the late world (performance): 7019's year-20 world at Max, 52.5-55.8 fps there (60 at the
