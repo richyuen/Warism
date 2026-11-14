@@ -148,6 +148,7 @@
     "PMR": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#b0102a", "#00843d", "#b0102a"], "weights": [2, 1, 2]}, {"t": "star", "cx": 0.12, "cy": 0.2, "r": 0.06, "color": "#fcd116"}]},
     "NKR": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#d90012", "#0033a0", "#f2a800"]}, {"t": "poly", "points": [[1, 0], [1, 1], [0.6, 0.5]], "color": "#ffffff"}]},
     "RSK": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#c6363c", "#0c4076", "#ffffff"]}]},
-    "CHC": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#3a7d44", "#ffffff", "#c8102e"], "weights": [4, 1, 1]}]}
+    "CHC": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#3a7d44", "#ffffff", "#c8102e"], "weights": [4, 1, 1]}]},
+    "ZWE": {"aspect": 2, "layers": [{"t": "stripes", "dir": "h", "colors": ["#319208", "#ffd200", "#de2010", "#000000", "#de2010", "#ffd200", "#319208"]}, {"t": "triangle", "color": "#ffffff", "depth": 0.4}, {"t": "star", "cx": 0.12, "cy": 0.5, "r": 0.08, "color": "#de2010"}]}
   }
 }

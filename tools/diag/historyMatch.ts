@@ -9,9 +9,13 @@
  * its owners but where `occupied` puts another, set against the start's holders.
  *
  * Usage: `npx tsx tools/diag/historyMatch.ts [until YYYY-MM-DD]`; one line a map and a line of what differs most, the
- * events passed over, then `done:`. About two minutes a simulated year.
+ * events passed over, then `done:`. About two minutes a simulated year. `MATCH_FROM=<year>` (ROADMAP R80f) starts
+ * from that year's start of the replay (`npm run saves`; valid while no event before it changed), the maps before it
+ * left out: a period's events checked in minutes.
  */
+import { readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
+import { gunzipSync } from 'node:zlib';
 import type { Admin1Meta } from '../../src/shared/admin1';
 import { dayOfIso } from '../../src/shared/calendar';
 import { EventKind } from '../../src/shared/events';
@@ -128,6 +132,14 @@ export function runMatch(
   const start = w.cells.owner.slice();
   const startHeld = w.cells.controller.slice();
   const day0 = dayOfIso('1938-01-01');
+  const from = process.env.MATCH_FROM;
+  if (from) {
+    const raw = readFileSync(`public/data/scenarios/1938h/start/${from}.sav`);
+    sim.load(new Uint8Array(raw[0] === 0x1f && raw[1] === 0x8b ? gunzipSync(raw) : raw));
+    // A save of another timeline ends its track on its first hour (`TrackEnd.timelineChanged`): the timeline after the
+    // start is what is checked here, so the track goes on.
+    if (sim.world.track) sim.world.track.changed = false;
+  }
   const out: { date: string; cols: MatchColumns; control?: MatchColumns }[] = [];
   const skipped: number[] = [];
   // Each warhead that burst (R62h3): [tick, nation, yield, x, y].
@@ -147,6 +159,7 @@ export function runMatch(
     }
   };
   (timeline.maps ?? []).forEach((m, k) => {
+    if ((dayOfIso(m.date) - day0) * 24 + 12 < sim.tick) return;
     to((dayOfIso(m.date) - day0) * 24 + 12);
     const ref = referenceOwners(start, w.cells.province, w.cells.terrain, meta, timeline.maps!, k, TAGS_1938H, w.cells.w, w.cells.h);
     const cols = matchColumns(w.cells.owner, ref, start, w.cells.terrain);

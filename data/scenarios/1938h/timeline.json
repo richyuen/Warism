@@ -21089,6 +21089,817 @@
    "nation": "MRT",
    "beside": "FMO",
    "against": "PLS"
+  },
+  {
+   "date": "1976-02-08",
+   "kind": "transfer",
+   "to": "ANG",
+   "from": [
+    "UNT"
+   ],
+   "provinces": [
+    "AGO-1890",
+    "AGO-1887",
+    "AGO-1886",
+    "AGO-1891",
+    "AGO-1889",
+    "AGO-1893",
+    "AGO-1879"
+   ],
+   "note": "The MPLA and the Cubans take Huambo: UNITA to the bush of the southeast"
+  },
+  {
+   "date": "1976-02-12",
+   "kind": "annex",
+   "annexer": "ANG",
+   "target": "FNL",
+   "tell": "note",
+   "note": "The conventional war over: the FNLA's north the MPLA's"
+  },
+  {
+   "date": "1976-03-27",
+   "kind": "leave",
+   "nations": [
+    "SAF"
+   ],
+   "against": "ANG",
+   "note": "South Africa's army out of Angola"
+  },
+  {
+   "date": "1976-03-27",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "UNT"
+    ],
+    [
+     "ANG",
+     "CUB"
+    ]
+   ],
+   "until": "1991-05-31"
+  },
+  {
+   "date": "1976-06-29",
+   "kind": "born",
+   "nation": "SEY",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "SYC"
+   ],
+   "note": "Seychelles independent"
+  },
+  {
+   "date": "1976-07-02",
+   "kind": "annex",
+   "annexer": "VIE",
+   "target": "VCG",
+   "tell": "note",
+   "note": "The Socialist Republic of Vietnam: the North and the South one state"
+  },
+  {
+   "date": "1976-10-06",
+   "kind": "regime",
+   "nation": "SIA",
+   "aggression": 30,
+   "note": "The Thammasat massacre: the army's coup in Thailand"
+  },
+  {
+   "date": "1977-06-27",
+   "kind": "born",
+   "nation": "DJI",
+   "from": [
+    "FRA"
+   ],
+   "countries": [
+    "DJI"
+   ],
+   "note": "Djibouti independent"
+  },
+  {
+   "date": "1977-07-05",
+   "kind": "regime",
+   "nation": "PAK",
+   "aggression": 45,
+   "note": "Zia's coup: martial law in Pakistan"
+  },
+  {
+   "date": "1977-07-13",
+   "kind": "war",
+   "attackers": [
+    "SOM"
+   ],
+   "defenders": [
+    "ETH"
+   ],
+   "note": "Somalia invades the Ogaden"
+  },
+  {
+   "date": "1977-07-13",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "SOM"
+    ],
+    [
+     "ETH"
+    ]
+   ],
+   "until": "1978-03-09"
+  },
+  {
+   "date": "1977-07-21",
+   "kind": "war",
+   "attackers": [
+    "EGY"
+   ],
+   "defenders": [
+    "LBY"
+   ],
+   "note": "The Egyptian-Libyan war"
+  },
+  {
+   "date": "1977-07-21",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "EGY"
+    ],
+    [
+     "LBY"
+    ]
+   ],
+   "until": "1977-07-24"
+  },
+  {
+   "date": "1977-07-24",
+   "kind": "peace",
+   "a": "EGY",
+   "b": "LBY",
+   "terms": "white",
+   "note": "The ceasefire on the Libyan border"
+  },
+  {
+   "date": "1977-09-12",
+   "kind": "transfer",
+   "to": "SOM",
+   "from": [
+    "ETH"
+   ],
+   "provinces": [
+    "ETH-3134"
+   ],
+   "note": "Jijiga falls: Somalia holds the Ogaden"
+  },
+  {
+   "date": "1978-01-23",
+   "kind": "join",
+   "nation": "CUB",
+   "beside": "ETH",
+   "against": "SOM",
+   "note": "Cuban armour for Ethiopia's counter-offensive"
+  },
+  {
+   "date": "1978-03-09",
+   "kind": "transfer",
+   "to": "ETH",
+   "from": [
+    "SOM"
+   ],
+   "provinces": [
+    "ETH-3134"
+   ],
+   "note": "Barre orders the retreat: the Ogaden Ethiopia's again"
+  },
+  {
+   "date": "1978-03-09",
+   "hour": 1,
+   "kind": "peace",
+   "a": "SOM",
+   "b": "ETH",
+   "terms": "white",
+   "note": "Somalia out of the Ogaden"
+  },
+  {
+   "date": "1978-04-27",
+   "kind": "regime",
+   "nation": "AFG",
+   "aggression": 50,
+   "note": "The Saur Revolution: the PDPA's Afghanistan"
+  },
+  {
+   "date": "1978-07-07",
+   "kind": "born",
+   "nation": "SOI",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "SLB"
+   ],
+   "note": "The Solomon Islands independent"
+  },
+  {
+   "date": "1978-07-10",
+   "kind": "regime",
+   "nation": "MRT",
+   "aggression": 30,
+   "note": "The army deposes Ould Daddah in Mauritania"
+  },
+  {
+   "date": "1978-10-01",
+   "kind": "born",
+   "nation": "TUV",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "TUV"
+   ],
+   "note": "Tuvalu independent"
+  },
+  {
+   "date": "1978-10-30",
+   "kind": "war",
+   "attackers": [
+    "UGA"
+   ],
+   "defenders": [
+    "TGK"
+   ],
+   "note": "Amin invades the Kagera salient"
+  },
+  {
+   "date": "1978-10-30",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "UGA"
+    ],
+    [
+     "TGK"
+    ]
+   ],
+   "until": "1979-06-03"
+  },
+  {
+   "date": "1978-10-30",
+   "hour": 2,
+   "kind": "occupy",
+   "by": "UGA",
+   "of": [
+    "TGK"
+   ],
+   "ring": [
+    [
+     30.4,
+     -0.95
+    ],
+    [
+     31.8,
+     -0.95
+    ],
+    [
+     31.8,
+     -1.35
+    ],
+    [
+     30.4,
+     -1.35
+    ]
+   ],
+   "note": "Uganda in Kagera north of the river"
+  },
+  {
+   "date": "1978-11-03",
+   "kind": "born",
+   "nation": "DMA",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "DMA"
+   ],
+   "note": "Dominica independent"
+  },
+  {
+   "date": "1978-11-23",
+   "kind": "occupy",
+   "by": "TGK",
+   "of": [
+    "TGK"
+   ],
+   "ring": [
+    [
+     30.4,
+     -0.95
+    ],
+    [
+     31.8,
+     -0.95
+    ],
+    [
+     31.8,
+     -1.35
+    ],
+    [
+     30.4,
+     -1.35
+    ]
+   ],
+   "note": "Tanzania retakes Kagera"
+  },
+  {
+   "date": "1978-12-25",
+   "kind": "war",
+   "attackers": [
+    "VIE"
+   ],
+   "defenders": [
+    "KHR"
+   ],
+   "note": "Vietnam invades Democratic Kampuchea"
+  },
+  {
+   "date": "1978-12-25",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "VIE"
+    ],
+    [
+     "KHR"
+    ]
+   ],
+   "until": "1989-09-26"
+  },
+  {
+   "date": "1979-01-07",
+   "kind": "born",
+   "nation": "CAM",
+   "from": [
+    "KHR"
+   ],
+   "provinces": [
+    "KHM-1795",
+    "KHM-1794",
+    "KHM-1793",
+    "KHM-1784",
+    "KHM-1801",
+    "KHM-1790",
+    "KHM-1786",
+    "KHM-1802",
+    "KHM-1797",
+    "KHM-1791",
+    "KHM-1781",
+    "KHM-1779",
+    "KHM-1780",
+    "KHM-1778",
+    "KHM-1792",
+    "KHM-1800",
+    "KHM-1798",
+    "KHM-1785",
+    "KHM-1788",
+    "KHM-1787",
+    "KHM-1789"
+   ],
+   "note": "Phnom Penh falls: the People's Republic of Kampuchea; the Khmer Rouge to the Thai border"
+  },
+  {
+   "date": "1979-01-07",
+   "hour": 1,
+   "kind": "puppet",
+   "overlord": "VIE",
+   "subject": "CAM",
+   "autonomy": 30
+  },
+  {
+   "date": "1979-01-07",
+   "hour": 2,
+   "kind": "regime",
+   "nation": "CAM",
+   "aggression": 40,
+   "note": "Heng Samrin's People's Republic, Vietnam's"
+  },
+  {
+   "date": "1979-01-07",
+   "hour": 3,
+   "kind": "join",
+   "nation": "CAM",
+   "beside": "VIE",
+   "against": "KHR"
+  },
+  {
+   "date": "1979-01-21",
+   "kind": "occupy",
+   "by": "TGK",
+   "of": [
+    "UGA"
+   ],
+   "ring": [
+    [
+     29.5,
+     0.15
+    ],
+    [
+     35.1,
+     0.15
+    ],
+    [
+     35.1,
+     -1.5
+    ],
+    [
+     29.5,
+     -1.5
+    ]
+   ],
+   "fightDays": 80,
+   "note": "Tanzania into Uganda's south; Kampala falls on 11 April"
+  },
+  {
+   "date": "1979-02-11",
+   "kind": "regime",
+   "nation": "IRN",
+   "aggression": 60,
+   "note": "The revolution wins: the Shah gone, Khomeini's Islamic Republic"
+  },
+  {
+   "date": "1979-02-12",
+   "kind": "hold",
+   "sides": [
+    [
+     "FRO"
+    ],
+    [
+     "CHD"
+    ]
+   ],
+   "until": "1980-12-16",
+   "note": "The battle of N'Djamena: Habré against Malloum, the north FROLINAT's"
+  },
+  {
+   "date": "1979-02-17",
+   "kind": "war",
+   "attackers": [
+    "CCP"
+   ],
+   "defenders": [
+    "VIE"
+   ],
+   "without": [
+    "CAM"
+   ],
+   "note": "China invades Vietnam's north"
+  },
+  {
+   "date": "1979-02-17",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "CCP"
+    ],
+    [
+     "VIE"
+    ]
+   ],
+   "until": "1979-03-16"
+  },
+  {
+   "date": "1979-02-22",
+   "kind": "born",
+   "nation": "LCA",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "LCA"
+   ],
+   "note": "Saint Lucia independent"
+  },
+  {
+   "date": "1979-03-05",
+   "kind": "occupy",
+   "by": "CCP",
+   "of": [
+    "VIE"
+   ],
+   "ring": [
+    [
+     103.6,
+     22.9
+    ],
+    [
+     104.3,
+     22.3
+    ],
+    [
+     105.9,
+     22.8
+    ],
+    [
+     106.7,
+     21.7
+    ],
+    [
+     107.4,
+     21.8
+    ],
+    [
+     106.8,
+     23.1
+    ],
+    [
+     105.4,
+     23.4
+    ],
+    [
+     104.4,
+     23.0
+    ]
+   ],
+   "note": "Lang Son, Cao Bang and Lao Cai taken"
+  },
+  {
+   "date": "1979-03-13",
+   "kind": "regime",
+   "nation": "GRN",
+   "aggression": 35,
+   "note": "The New JEWEL revolution in Grenada"
+  },
+  {
+   "date": "1979-03-16",
+   "kind": "peace",
+   "a": "CCP",
+   "b": "VIE",
+   "terms": "white",
+   "note": "China's army out of Vietnam"
+  },
+  {
+   "date": "1979-04-11",
+   "kind": "regime",
+   "nation": "UGA",
+   "aggression": 30,
+   "note": "Kampala falls: Amin gone, the UNLF's government"
+  },
+  {
+   "date": "1979-06-03",
+   "kind": "peace",
+   "a": "UGA",
+   "b": "TGK",
+   "terms": "white",
+   "note": "The Uganda-Tanzania war over"
+  },
+  {
+   "date": "1979-07-12",
+   "kind": "born",
+   "nation": "KIR",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "KIR"
+   ],
+   "note": "Kiribati independent"
+  },
+  {
+   "date": "1979-07-19",
+   "kind": "regime",
+   "nation": "NIC",
+   "aggression": 45,
+   "note": "The Sandinistas in Managua: Somoza gone"
+  },
+  {
+   "date": "1979-08-05",
+   "kind": "leave",
+   "nations": [
+    "MRT"
+   ],
+   "against": "PLS",
+   "note": "Mauritania's peace with the Polisario"
+  },
+  {
+   "date": "1979-08-11",
+   "kind": "transfer",
+   "to": "FMO",
+   "from": [
+    "MRT"
+   ],
+   "provinces": [
+    "MAR-3469"
+   ],
+   "note": "Morocco annexes Tiris al-Gharbia"
+  },
+  {
+   "date": "1979-10-27",
+   "kind": "born",
+   "nation": "VCT",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "VCT"
+   ],
+   "note": "Saint Vincent and the Grenadines independent"
+  },
+  {
+   "date": "1979-12-12",
+   "kind": "regime",
+   "nation": "KOR",
+   "aggression": 40,
+   "note": "Park assassinated, then Chun Doo-hwan's coup"
+  },
+  {
+   "date": "1979-12-25",
+   "kind": "born",
+   "nation": "MUJ",
+   "from": [
+    "AFG"
+   ],
+   "provinces": [
+    "AFG-1760",
+    "AFG-1762",
+    "AFG-1761",
+    "AFG-3413",
+    "AFG-1759",
+    "AFG-1743",
+    "AFG-1747",
+    "AFG-1752",
+    "AFG-1753"
+   ],
+   "note": "The mujahideen hold the mountains"
+  },
+  {
+   "date": "1979-12-25",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "MUJ"
+   ],
+   "defenders": [
+    "AFG"
+   ],
+   "note": "The Afghan war"
+  },
+  {
+   "date": "1979-12-25",
+   "hour": 2,
+   "kind": "join",
+   "nation": "SOV",
+   "beside": "AFG",
+   "against": "MUJ",
+   "note": "The Soviet army into Afghanistan"
+  },
+  {
+   "date": "1979-12-25",
+   "hour": 3,
+   "kind": "hold",
+   "sides": [
+    [
+     "MUJ"
+    ],
+    [
+     "AFG",
+     "SOV"
+    ]
+   ],
+   "until": "1989-02-15"
+  },
+  {
+   "date": "1980-04-12",
+   "kind": "regime",
+   "nation": "LIB",
+   "aggression": 45,
+   "note": "Doe's coup in Liberia"
+  },
+  {
+   "date": "1980-04-18",
+   "kind": "rename",
+   "nation": "SRH",
+   "as": "ZWE",
+   "note": "Zimbabwe independent"
+  },
+  {
+   "date": "1980-04-18",
+   "hour": 1,
+   "kind": "regime",
+   "nation": "SRH",
+   "aggression": 35,
+   "note": "Mugabe's government"
+  },
+  {
+   "date": "1980-07-30",
+   "kind": "born",
+   "nation": "VAN",
+   "from": [
+    "ENG",
+    "FRA"
+   ],
+   "countries": [
+    "VUT"
+   ],
+   "note": "Vanuatu independent"
+  },
+  {
+   "date": "1980-09-12",
+   "kind": "regime",
+   "nation": "TUR",
+   "aggression": 35,
+   "note": "The army's coup in Turkey"
+  },
+  {
+   "date": "1980-09-22",
+   "kind": "war",
+   "attackers": [
+    "IRQ"
+   ],
+   "defenders": [
+    "IRN"
+   ],
+   "note": "Iraq invades Iran"
+  },
+  {
+   "date": "1980-09-22",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "IRQ"
+    ],
+    [
+     "IRN"
+    ]
+   ],
+   "until": "1988-08-20"
+  },
+  {
+   "date": "1980-09-22",
+   "hour": 2,
+   "kind": "occupy",
+   "by": "IRQ",
+   "of": [
+    "IRN"
+   ],
+   "ring": [
+    [
+     47.6,
+     32.5
+    ],
+    [
+     48.6,
+     32.3
+    ],
+    [
+     48.7,
+     31.3
+    ],
+    [
+     48.4,
+     30.3
+    ],
+    [
+     47.9,
+     29.9
+    ],
+    [
+     47.6,
+     31.0
+    ]
+   ],
+   "fightDays": 40,
+   "note": "Khorramshahr taken, Abadan besieged"
+  },
+  {
+   "date": "1980-12-16",
+   "kind": "annex",
+   "annexer": "FRO",
+   "target": "CHD",
+   "tell": "note",
+   "note": "Libya's troops take N'Djamena for Goukouni's GUNT"
+  },
+  {
+   "date": "1980-12-16",
+   "hour": 1,
+   "kind": "rename",
+   "nation": "FRO",
+   "as": "CHD",
+   "note": "The GUNT, Chad's government"
+  },
+  {
+   "date": "1980-12-16",
+   "hour": 2,
+   "kind": "regime",
+   "nation": "FRO",
+   "aggression": 50,
+   "note": "Goukouni's Transitional Government of National Unity"
   }
  ],
  "maps": [
@@ -25870,6 +26681,109 @@
     }
    ],
    "occupied": []
+  },
+  {
+   "date": "1980-12-31",
+   "note": "Vietnam one state, in Cambodia (the PRK; the Khmer Rouge on the Thai border); the MPLA's Angola, UNITA in the southeast; the Ogaden Ethiopia's; Amin gone; Iran's revolution and Iraq in Khuzestan; the Soviet army in Afghanistan; Zimbabwe; the Sahara's south Moroccan; the GUNT in N'Djamena; the new island states",
+   "byCountry": {
+    "VNM": "VIE",
+    "KHM": "CAM",
+    "SYC": "SEY",
+    "DJI": "DJI",
+    "SLB": "SOI",
+    "TUV": "TUV",
+    "DMA": "DMA",
+    "LCA": "LCA",
+    "KIR": "KIR",
+    "VCT": "VCT",
+    "VUT": "VAN"
+   },
+   "byProvince": {
+    "KHM-1777": "KHR",
+    "KHM-1782": "KHR",
+    "KHM-1783": "KHR",
+    "AGO-1890": "ANG",
+    "AGO-1887": "ANG",
+    "AGO-1886": "ANG",
+    "AGO-1891": "ANG",
+    "AGO-1889": "ANG",
+    "AGO-1893": "ANG",
+    "AGO-1879": "ANG",
+    "AGO-1881": "ANG",
+    "AGO-1882": "ANG",
+    "MAR-3469": "FMO",
+    "AFG-1760": "MUJ",
+    "AFG-1762": "MUJ",
+    "AFG-1761": "MUJ",
+    "AFG-3413": "MUJ",
+    "AFG-1759": "MUJ",
+    "AFG-1743": "MUJ",
+    "AFG-1747": "MUJ",
+    "AFG-1752": "MUJ",
+    "AFG-1753": "MUJ"
+   },
+   "regions": [
+    {
+     "owner": "FRO",
+     "onlyFrom": [
+      "CHD"
+     ],
+     "ring": [
+      [
+       13.4,
+       23.5
+      ],
+      [
+       24.1,
+       23.5
+      ],
+      [
+       24.1,
+       7.4
+      ],
+      [
+       13.4,
+       7.4
+      ]
+     ]
+    }
+   ],
+   "occupied": [
+    {
+     "by": "IRQ",
+     "of": [
+      "IRN"
+     ],
+     "rings": [
+      [
+       [
+        47.6,
+        32.5
+       ],
+       [
+        48.6,
+        32.3
+       ],
+       [
+        48.7,
+        31.3
+       ],
+       [
+        48.4,
+        30.3
+       ],
+       [
+        47.9,
+        29.9
+       ],
+       [
+        47.6,
+        31.0
+       ]
+      ]
+     ]
+    }
+   ]
   }
  ]
 }

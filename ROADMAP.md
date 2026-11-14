@@ -219,6 +219,11 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
   - [ ] R80f 1976-80: Angola's war and Cuba's troops, the Ogaden, Vietnam into Cambodia and China into Vietnam, Uganda
     and Tanzania, Iran's revolution, the Soviet Union into Afghanistan, Nicaragua, Zimbabwe. AT: as R71d: the map of
     the period's end matched as the earlier maps; each event on its date; seeds 1-5 within the bars.
+    Done (ADR-1050): 65 events of 1976-80 and the map of 31 December 1980 (see the ADR); the identity Zimbabwe.
+    `historyMatch1938h` (to 1980, its `state80`): every map within its bars, the 1980 one 99.79 % whole, 99.5 % right,
+    strays 0.12 %; nothing passed over. `historyTrack1938h` and seeds 1-5 to the 1991 end: no line, no warning (after
+    ADR-1049). Left out: Sinai (all of it on 1982-04-25, R80g), the Litani operation (no war with Lebanon, no land
+    kept), the Canal Zone (no land of its own on the map).
   - [ ] R80g 1981-85: Iran and Iraq, the Falklands, Lebanon, Grenada, Poland's martial law, Chad and Libya. AT: as R80f.
   - [ ] R80h 1986-89: Chad's war against Libya won, the Soviet Union out of Afghanistan, Panama, the revolutions of
     1989 (regimes and the Eastern Bloc left). AT: as R80f.

@@ -284,3 +284,10 @@
   Korea's land at peace, the Americans Normandy's Vichy cells). `territory.ts` frees a retaken cell to an owner on the
   taker's side again; `heldByTimeline` excuses a stage's land held by the stage's side. Seed 1938 and seeds 1-5 to
   1991: no line, no warning.
+
+## 2026-11-14 — R80f: 1976-80 in the replay (ADR-1050)
+
+- 65 events appended to `data/scenarios/1938h/timeline.json` (by a script from the research's rows) and the map of
+  1980-12-31; the identity Zimbabwe (`ZWE`: name, adjective, flag). `data-schemas.test`'s appended identity dated 1991.
+- `historyMatch1938h` to 1980 with `state80`; `historyTrack1938h` and seeds 1-5 to 1991: green, no warning.
+- `historyMatch` gains `MATCH_FROM` (a period checked in minutes from a yearly start); `provinces.ts`, `owners.ts`.

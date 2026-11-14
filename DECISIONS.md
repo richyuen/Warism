@@ -68,6 +68,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1050 · 2026-11-14 · accepted — R80f: 1976-80 in the replay
+- **Events** (`docs/research/1976-91.md`'s 1976-80 rows; 65): Angola (the MPLA and Cuba take Huambo, the FNLA annexed,
+  South Africa out, UNITA held in Cuando Cubango to 1991-05-31); Vietnam one state (the NLF annexed); the Ogaden
+  (Somalia's war, the Somali region taken and lost, Cuba beside Ethiopia, a white peace); the Egyptian-Libyan war;
+  Uganda and Tanzania (Kagera taken and retaken, Tanzania in Uganda's south, Amin gone, a white peace); Vietnam into
+  Cambodia (Cambodia born again of the Khmer Rouge's land as Vietnam's puppet, the Khmer Rouge on the Thai border,
+  held to 1989-09-26); China into Vietnam (the border towns, a white peace on 1979-03-16); Iran's revolution, the Saur
+  revolution, the Sandinistas, Zia, Thailand's, Mauritania's, Grenada's, South Korea's, Liberia's and Turkey's coups;
+  the mujahideen born on the mountains and the Soviet army beside Afghanistan's government (held to 1989-02-15);
+  Mauritania out of the Sahara, Morocco in its south; Zimbabwe (Southern Rhodesia renamed); Chad: FROLINAT's north held
+  from the battle of N'Djamena, then the GUNT (FROLINAT annexing Chad's state, renamed Chad) with Libya's troops on
+  1980-12-16; Iraq into Iran (Khuzestan's west occupied, held to 1988-08-20); nine island and small states born.
+- **Found:** an occupation of all of Uganda took Kampala and ended its state, so the regime and the peace after it were
+  passed over: Tanzania's occupation stops south of Kampala. FROLINAT's hold of 1968 ran out on 1979-03-23 and Chad's
+  army annexed it: a hold from the battle of N'Djamena keeps the north to the GUNT's day.
+- **Tools:** `historyMatch` takes `MATCH_FROM=<year>` (a yearly start; its track kept though its timeline differs);
+  `tools/diag/provinces.ts` (a country's adm1 codes), `tools/diag/owners.ts` (who owns and holds a country at a start).
+- **Measured:** see ROADMAP R80f; 1938-75 unchanged (no event before 1976 moved).
+
 ### ADR-1049 · 2026-11-14 · accepted — A stage's land: the taker's side keeps it, an owner of that side has it back
 - **Found** (R80f's run of the replay checks): `historyTrack1938h` red on seed 1938 since R82b (ADR-1040), and the
   same two lines warned on seeds 1-5: "USA on VIC, 4 cells at peace" (Normandy, 1944-06) and "CCP on PRK, 4 cells at

@@ -77,6 +77,11 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   // Cambodia the Khmer Rouge's, Laos the Pathet Lao's (their old states gone, with the Kurds and Dhofar); the states of
   // 1973-75 and Eritrea's and Angola's rebels living; Mozambique and Angola free, the Turkish Cypriots Turkey's.
   let state75 = '';
+  // R80f (ADR-1050): on 30 December 1980, Vietnam one state (the NLF gone) and in Cambodia (the PRK its puppet, the
+  // Khmer Rouge living on the border), the FNLA gone, the states of 1976-80 and the mujahideen living, FROLINAT Chad's
+  // government (Chad's old state gone); the wars of Angola, Eritrea, Cambodia, Afghanistan, the Sahara and Iraq on
+  // Iran running, the Soviet Union in Afghanistan's.
+  let state80 = '';
   // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
   let axisPact = true;
   const fleets = new Map<string, number>();
@@ -94,7 +99,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const { maps, skipped, nukes } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1975-12-31',
+    '1980-12-31',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
@@ -140,6 +145,16 @@ it('1938-39: the land owned as history had it, and the events fire on their date
           ['VCG', 'KHR', 'PTL', 'BHS', 'GNB', 'GRN', 'CPV', 'COM', 'STP', 'PNG', 'SUR', 'ETL', 'TCY', 'ELF', 'UNT', 'FNL', 'PLS'].map((t) => nc.living[id(t)]).join(''),
           ['MOZ', 'ANG'].map((t) => nc.overlord[id(t)]).join(''),
           nc.overlord[id('TCY')] === id('TUR'),
+        ].join(' ');
+      }
+      if (date === '1980-12-30') {
+        const nc = w.nations.cols;
+        const at = (a: string, b: string): number => (w.wars.atWar(id(a), id(b)) ? 1 : 0);
+        state80 = [
+          ['VCG', 'FNL', 'CHD'].map((t) => nc.living[id(t)]).join(''),
+          ['SEY', 'DJI', 'SOI', 'TUV', 'DMA', 'LCA', 'KIR', 'VCT', 'VAN', 'CAM', 'KHR', 'MUJ', 'FRO', 'UNT'].map((t) => nc.living[id(t)]).join(''),
+          nc.overlord[id('CAM')] === id('VIE'),
+          [at('UNT', 'ANG'), at('ELF', 'ETH'), at('VIE', 'KHR'), at('MUJ', 'AFG'), at('MUJ', 'SOV'), at('FMO', 'PLS'), at('IRQ', 'IRN')].join(''),
         ].join(' ');
       }
       if (date === '1971-12-30') {
@@ -195,8 +210,9 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(20);
+  expect(maps.length).toBe(21);
   expect(state75).toBe('000000 11111111111111111 00 true');
+  expect(state80).toBe('000 11111111111111 true 1111111');
   expect(state71).toBe('111111111111111 0 5');
   expect(state67).toBe('111111111111111 0000 0 MYS,TZA,RHO 3 true');
   expect(state62).toBe('11111111111 false 0');
