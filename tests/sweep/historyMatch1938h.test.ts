@@ -86,6 +86,11 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   // SPLA, the Tigers, the GUNT) living and at war with their governments, France beside Habré's Chad; Iran and Iraq at
   // war; Israel in Lebanon; the Falklands' and the Agacher Strip's wars over; Sinai Egypt's, Stanley Britain's.
   let state85 = '';
+  // R80h (ADR-1052): on 30 December 1989, the Marshall Islands, Micronesia and the NPFL living, the GUNT gone; the
+  // Soviet Union out of Afghanistan's war, Vietnam out of Cambodia's (Cambodia free), Iran and Iraq and Chad and Libya
+  // at peace; the United States at war with Panama, India with the Tigers; the Eastern Bloc down to East Germany,
+  // Mongolia and the Soviet Union.
+  let state89 = '';
   // The war's loose ends (R62i0): the Axis pact gone, the surrendered fleets and wings not handed on.
   let axisPact = true;
   const fleets = new Map<string, number>();
@@ -103,7 +108,7 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   const { maps, skipped, nukes, sim } = runMatch(
     TIMELINE_1938H,
     (s) => log.push(s),
-    '1985-12-31',
+    '1989-12-31',
     (w, date) => {
       // The Soviet army rebuilt (R62h0): its land formations' men on 1 November 1942.
       if (date === '1942-11-01') w.formations.forEach((i) => {
@@ -149,6 +154,16 @@ it('1938-39: the land owned as history had it, and the events fire on their date
           ['VCG', 'KHR', 'PTL', 'BHS', 'GNB', 'GRN', 'CPV', 'COM', 'STP', 'PNG', 'SUR', 'ETL', 'TCY', 'ELF', 'UNT', 'FNL', 'PLS'].map((t) => nc.living[id(t)]).join(''),
           ['MOZ', 'ANG'].map((t) => nc.overlord[id(t)]).join(''),
           nc.overlord[id('TCY')] === id('TUR'),
+        ].join(' ');
+      }
+      if (date === '1989-12-30') {
+        const nc = w.nations.cols;
+        const at = (a: string, b: string): number => (w.wars.atWar(id(a), id(b)) ? 1 : 0);
+        state89 = [
+          ['MHL', 'FSM', 'NPF', 'CHD'].map((t) => nc.living[id(t)]).join(''),
+          [at('MUJ', 'AFG'), at('SOV', 'MUJ'), at('VIE', 'KHR'), at('KHR', 'CAM'), at('IRQ', 'IRN'), at('LBY', 'FRO'), at('USA', 'PAN'), at('NPF', 'LIB'), at('RAJ', 'LTE')].join(''),
+          nc.overlord[id('CAM')],
+          (w.alliances.allianceOf(id('SOV'))?.members ?? []).map((n) => TAGS_1938H[n - 1]).sort().join(','),
         ].join(' ');
       }
       if (date === '1985-12-30') {
@@ -229,10 +244,11 @@ it('1938-39: the land owned as history had it, and the events fire on their date
   );
   log.push(`Paris held by Germany from ${parisFell}; French cells held by Germany on 22 June 1940: ${taken}`);
   process.stderr.write(`${log.join('\n')}\n`);
-  expect(maps.length).toBe(22);
+  expect(maps.length).toBe(23);
   expect(state75).toBe('000000 11111111111111111 00 true');
   expect(state80).toBe('000 11111111111111 true 1111111');
   expect(state85).toBe('111111111 11111111 0 true true');
+  expect(state89).toBe('1110 100100111 0 GDR,MON,SOV');
   // The Agacher Strip war's ceasefire on 30 December 1985, read on the world the run ends with (31 December).
   expect(sim.world.wars.atWar(id('MLI'), id('UVO'))).toBe(false);
   expect(state71).toBe('111111111111111 0 5');

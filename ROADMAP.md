@@ -232,6 +232,10 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
     would end its state: a war, a hold and a white peace).
   - [ ] R80h 1986-89: Chad's war against Libya won, the Soviet Union out of Afghanistan, Panama, the revolutions of
     1989 (regimes and the Eastern Bloc left). AT: as R80f.
+    Done (ADR-1052): 45 events of 1986-89 (and January 1990's end of Just Cause) and the map of 31 December 1989.
+    From the 1986 start the 1989 map 99.79 % whole, 99.5 % right, strays 0.12 %, nothing passed over;
+    `historyMatch1938h` (to 1989, `state89`) and the replay checks to 1991 in PROGRESS. The Eastern Bloc's members
+    leave it on the research's dates (Poland, Hungary, Bulgaria, Romania, Czechoslovakia); East Germany with the union.
   - [ ] R80i 1990-91: Namibia, Germany and Yemen united, Kuwait taken and freed, the Baltic states, Slovenia and Croatia,
     the Soviet Union's end. AT: as R80f; the arsenals at the end as ADR-1031's answer 2.
   - [ ] R80j The world after 1991: the blocs, the historical focus and aid re-measured from the 1991 handover, as R71g;

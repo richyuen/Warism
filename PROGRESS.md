@@ -297,3 +297,9 @@
 - 52 events and the map of 1985-12-31 (a script from the research's rows); the identities GUN, TRN, BFA.
 - From the 1981 start (`MATCH_FROM`, the starts rebuilt with R80f's events): 99.79 % whole, 99.5 % right, nothing
   passed over. `historyMatch1938h` to 1985 (`state85`); `historyTrack1938h` and seeds 1-5 to 1991 green, no warning.
+
+## 2026-11-14 — R80h: 1986-89 in the replay (ADR-1052)
+
+- 45 events and the map of 1989-12-31 (a script from the research's rows); the starts rebuilt with R80g's events.
+- From the 1986 start: 99.79 % whole, nothing passed over. `historyMatch1938h` to 1989 (`state89`); seeds 1-5 to 1991
+  green, no warning; `historyTrack1938h`'s handover now the Soviet bloc of East Germany, Mongolia and the Soviet Union.

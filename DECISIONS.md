@@ -68,6 +68,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1052 · 2026-11-14 · accepted — R80h: 1986-89 in the replay
+- **Events** (`docs/research/1976-91.md`'s 1986-89 rows; 45): Chad's Toyota War (Fada, then Faya-Largeau: the GUNT's
+  north Chad's, the GUNT gone), the ceasefire with Libya on 1987-09-11 (Aouzou Libyan); the Soviet Union out of
+  Afghanistan on 1989-02-15, the mujahideen and the government held after it; Vietnam out of Cambodia (Cambodia
+  released, the Khmer Rouge and Cambodia held to Paris, 1991-10-23); al-Faw taken by Iran and retaken, the Iran-Iraq
+  ceasefire (the old border); India's peacekeepers beside Sri Lanka against the Tigers (to 1990-03-24); Panama (a war
+  held to 1990-01-31, a white peace and Endara's government: no occupation, as Grenada's); the NPFL born in Nimba; the
+  Marshall Islands and Micronesia born (their cells Japan's since 1945 on the map: born from Japan's or the United
+  States' land); the revolutions of 1989 as regimes, each member leaving the Eastern Bloc on the research's date
+  (`allianceLeave`; East Germany's is the union, R80i); coups and changes in South Yemen, Uganda, the Philippines,
+  Fiji, Burkina Faso, Tunisia, Pakistan (two), Burma, Paraguay, Sudan.
+- **Measured:** see ROADMAP R80h; nothing before 1986 moved.
+
 ### ADR-1051 · 2026-11-14 · accepted — R80g: 1981-85 in the replay
 - **Events** (`docs/research/1976-91.md`'s 1981-85 rows; 52): the FMLN (Chalatenango, Morazán), the Contras
   (Jinotega, Nueva Segovia), the SPLA (Jonglei, Upper Nile) and the Tigers (Jaffna, Kilinochchi, Mullaitivu) born at

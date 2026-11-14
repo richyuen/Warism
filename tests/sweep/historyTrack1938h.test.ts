@@ -25,7 +25,8 @@ describe('the historical track checked to its end (ROADMAP R62k)', () => {
     // As handed over, before the free AI's first day (R71b, ADR-993).
     const members = (leader: string): string[] | undefined => run.handover.get(leader);
     expect(members('USA')).toEqual(['BEL', 'DEN', 'ENG', 'FRA', 'FRG', 'GRE', 'ICE', 'ITA', 'LUX', 'NED', 'NOR', 'POR', 'TUR', 'USA'].sort());
-    expect(members('SOV')).toEqual(['BUL', 'CZS', 'GDR', 'HUN', 'MON', 'POL', 'ROM', 'SOV'].sort());
+    // The revolutions of 1989 (R80h, ADR-1052): Poland, Hungary, Bulgaria, Romania and Czechoslovakia out of it.
+    expect(members('SOV')).toEqual(['GDR', 'MON', 'SOV']);
     // To 1991 since R80d (ADR-1047; 1975 since R71b, ADR-993): a longer run than the default timeout.
   }, 3_600_000);
 

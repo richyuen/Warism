@@ -22587,6 +22587,469 @@
    "b": "UVO",
    "terms": "white",
    "note": "The ceasefire"
+  },
+  {
+   "date": "1986-01-13",
+   "kind": "regime",
+   "nation": "SYE",
+   "aggression": 50,
+   "note": "South Yemen's civil war: Ali Nasser out"
+  },
+  {
+   "date": "1986-01-26",
+   "kind": "regime",
+   "nation": "UGA",
+   "aggression": 35,
+   "note": "The NRA takes Kampala: Museveni"
+  },
+  {
+   "date": "1986-02-11",
+   "kind": "occupy",
+   "by": "IRN",
+   "of": [
+    "IRQ"
+   ],
+   "ring": [
+    [
+     47.95,
+     30.35
+    ],
+    [
+     48.8,
+     30.35
+    ],
+    [
+     48.8,
+     29.75
+    ],
+    [
+     47.95,
+     29.75
+    ]
+   ],
+   "note": "Iran takes al-Faw"
+  },
+  {
+   "date": "1986-02-25",
+   "kind": "regime",
+   "nation": "PHI",
+   "aggression": 20,
+   "note": "People Power: Marcos leaves the Philippines"
+  },
+  {
+   "date": "1986-10-21",
+   "kind": "born",
+   "nation": "MHL",
+   "from": [
+    "JAP",
+    "USA"
+   ],
+   "countries": [
+    "MHL"
+   ],
+   "note": "The Marshall Islands free in association with the United States"
+  },
+  {
+   "date": "1986-11-03",
+   "kind": "born",
+   "nation": "FSM",
+   "from": [
+    "JAP",
+    "USA"
+   ],
+   "countries": [
+    "FSM"
+   ],
+   "note": "Micronesia free in association with the United States"
+  },
+  {
+   "date": "1987-01-02",
+   "kind": "transfer",
+   "to": "FRO",
+   "from": [
+    "CHD"
+   ],
+   "ring": [
+    [
+     20.0,
+     19.0
+    ],
+    [
+     24.1,
+     19.0
+    ],
+    [
+     24.1,
+     16.0
+    ],
+    [
+     20.0,
+     16.0
+    ]
+   ],
+   "note": "The Toyota War: Chad takes Fada"
+  },
+  {
+   "date": "1987-03-27",
+   "kind": "transfer",
+   "to": "FRO",
+   "from": [
+    "CHD"
+   ],
+   "ring": [
+    [
+     15.0,
+     23.5
+    ],
+    [
+     24.1,
+     23.5
+    ],
+    [
+     24.1,
+     16.0
+    ],
+    [
+     15.0,
+     16.0
+    ]
+   ],
+   "note": "Faya-Largeau: the north Chad's but Aouzou"
+  },
+  {
+   "date": "1987-05-14",
+   "kind": "regime",
+   "nation": "FIJ",
+   "aggression": 35,
+   "note": "Rabuka's coups in Fiji"
+  },
+  {
+   "date": "1987-07-30",
+   "kind": "join",
+   "nation": "RAJ",
+   "beside": "CEY",
+   "against": "LTE",
+   "note": "The Indian Peace Keeping Force lands"
+  },
+  {
+   "date": "1987-07-30",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "LTE"
+    ],
+    [
+     "RAJ"
+    ]
+   ],
+   "until": "1990-03-24"
+  },
+  {
+   "date": "1987-09-11",
+   "kind": "peace",
+   "a": "LBY",
+   "b": "FRO",
+   "terms": "white",
+   "note": "The ceasefire: the Aouzou strip Libyan"
+  },
+  {
+   "date": "1987-10-15",
+   "kind": "regime",
+   "nation": "UVO",
+   "aggression": 35,
+   "note": "Compaoré's coup: Sankara killed"
+  },
+  {
+   "date": "1987-11-07",
+   "kind": "regime",
+   "nation": "TUN",
+   "aggression": 25,
+   "note": "Ben Ali in Tunisia"
+  },
+  {
+   "date": "1988-04-18",
+   "kind": "occupy",
+   "by": "IRQ",
+   "of": [
+    "IRQ"
+   ],
+   "ring": [
+    [
+     47.95,
+     30.35
+    ],
+    [
+     48.8,
+     30.35
+    ],
+    [
+     48.8,
+     29.75
+    ],
+    [
+     47.95,
+     29.75
+    ]
+   ],
+   "note": "Iraq retakes al-Faw"
+  },
+  {
+   "date": "1988-08-17",
+   "kind": "regime",
+   "nation": "PAK",
+   "aggression": 35,
+   "note": "Zia killed"
+  },
+  {
+   "date": "1988-08-20",
+   "kind": "peace",
+   "a": "IRQ",
+   "b": "IRN",
+   "terms": "white",
+   "note": "The Iran-Iraq ceasefire: the old border"
+  },
+  {
+   "date": "1988-09-18",
+   "kind": "regime",
+   "nation": "BUR",
+   "aggression": 45,
+   "note": "The SLORC's coup in Burma"
+  },
+  {
+   "date": "1988-12-02",
+   "kind": "regime",
+   "nation": "PAK",
+   "aggression": 30,
+   "note": "Benazir Bhutto: democracy in Pakistan"
+  },
+  {
+   "date": "1989-02-03",
+   "kind": "regime",
+   "nation": "PAR",
+   "aggression": 25,
+   "note": "Stroessner overthrown"
+  },
+  {
+   "date": "1989-02-15",
+   "kind": "leave",
+   "nations": [
+    "SOV"
+   ],
+   "against": "MUJ",
+   "note": "The last Soviet troops out of Afghanistan"
+  },
+  {
+   "date": "1989-02-15",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "MUJ"
+    ],
+    [
+     "AFG"
+    ]
+   ],
+   "until": "1992-04-28"
+  },
+  {
+   "date": "1989-06-30",
+   "kind": "regime",
+   "nation": "SUD",
+   "aggression": 55,
+   "note": "Bashir's coup in Sudan"
+  },
+  {
+   "date": "1989-08-24",
+   "kind": "regime",
+   "nation": "POL",
+   "aggression": 15,
+   "note": "Mazowiecki prime minister: Poland leaves communism"
+  },
+  {
+   "date": "1989-08-24",
+   "hour": 1,
+   "kind": "allianceLeave",
+   "nation": "POL",
+   "note": "Poland out of the Eastern Bloc"
+  },
+  {
+   "date": "1989-09-26",
+   "kind": "release",
+   "subject": "CAM",
+   "note": "Vietnam's last troops out of Cambodia"
+  },
+  {
+   "date": "1989-09-26",
+   "hour": 1,
+   "kind": "leave",
+   "nations": [
+    "VIE"
+   ],
+   "against": "KHR"
+  },
+  {
+   "date": "1989-09-26",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "KHR"
+    ],
+    [
+     "CAM"
+    ]
+   ],
+   "until": "1991-10-23"
+  },
+  {
+   "date": "1989-10-18",
+   "kind": "regime",
+   "nation": "GDR",
+   "aggression": 25,
+   "note": "Honecker resigns"
+  },
+  {
+   "date": "1989-10-23",
+   "kind": "regime",
+   "nation": "HUN",
+   "aggression": 15,
+   "note": "The Republic of Hungary: democracy"
+  },
+  {
+   "date": "1989-10-23",
+   "hour": 1,
+   "kind": "allianceLeave",
+   "nation": "HUN",
+   "note": "Hungary out of the Eastern Bloc"
+  },
+  {
+   "date": "1989-11-09",
+   "kind": "regime",
+   "nation": "GDR",
+   "aggression": 15,
+   "note": "The Berlin Wall opened"
+  },
+  {
+   "date": "1989-11-10",
+   "kind": "regime",
+   "nation": "BUL",
+   "aggression": 20,
+   "note": "Zhivkov removed"
+  },
+  {
+   "date": "1989-11-10",
+   "hour": 1,
+   "kind": "allianceLeave",
+   "nation": "BUL",
+   "note": "Bulgaria out of the Eastern Bloc"
+  },
+  {
+   "date": "1989-11-17",
+   "kind": "regime",
+   "nation": "CZS",
+   "aggression": 15,
+   "note": "The Velvet Revolution"
+  },
+  {
+   "date": "1989-12-20",
+   "kind": "war",
+   "attackers": [
+    "USA"
+   ],
+   "defenders": [
+    "PAN"
+   ],
+   "note": "Operation Just Cause"
+  },
+  {
+   "date": "1989-12-20",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "USA"
+    ],
+    [
+     "PAN"
+    ]
+   ],
+   "until": "1990-01-31"
+  },
+  {
+   "date": "1989-12-22",
+   "kind": "regime",
+   "nation": "ROM",
+   "aggression": 20,
+   "note": "Ceaușescu flees Bucharest: the revolution"
+  },
+  {
+   "date": "1989-12-22",
+   "hour": 1,
+   "kind": "allianceLeave",
+   "nation": "ROM",
+   "note": "Romania out of the Eastern Bloc"
+  },
+  {
+   "date": "1989-12-24",
+   "kind": "born",
+   "nation": "NPF",
+   "from": [
+    "LIB"
+   ],
+   "provinces": [
+    "LBR-791"
+   ],
+   "note": "Taylor's NPFL invades Nimba"
+  },
+  {
+   "date": "1989-12-24",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "NPF"
+   ],
+   "defenders": [
+    "LIB"
+   ],
+   "note": "The Liberian civil war"
+  },
+  {
+   "date": "1989-12-24",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "NPF"
+    ],
+    [
+     "LIB"
+    ]
+   ],
+   "until": "1997-07-19"
+  },
+  {
+   "date": "1989-12-29",
+   "kind": "allianceLeave",
+   "nation": "CZS",
+   "note": "Havel president: Czechoslovakia out of the Eastern Bloc"
+  },
+  {
+   "date": "1990-01-31",
+   "kind": "peace",
+   "a": "USA",
+   "b": "PAN",
+   "terms": "white",
+   "note": "Just Cause over: Endara's Panama"
+  },
+  {
+   "date": "1990-01-31",
+   "hour": 1,
+   "kind": "regime",
+   "nation": "PAN",
+   "aggression": 15,
+   "note": "Endara's government"
   }
  ],
  "maps": [
@@ -27544,6 +28007,43 @@
         35.05,
         33.35
        ]
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "date": "1989-12-31",
+   "note": "Chad whole but Aouzou; the Soviets out of Afghanistan; Vietnam out of Cambodia; Iran and Iraq at the old border; the Marshall Islands and Micronesia free; the NPFL in Nimba",
+   "byCountry": {
+    "MHL": "MHL",
+    "FSM": "FSM"
+   },
+   "byProvince": {
+    "LBR-791": "NPF"
+   },
+   "regions": [
+    {
+     "owner": "FRO",
+     "onlyFrom": [
+      "CHD"
+     ],
+     "ring": [
+      [
+       15.0,
+       23.5
+      ],
+      [
+       24.1,
+       23.5
+      ],
+      [
+       24.1,
+       16.0
+      ],
+      [
+       15.0,
+       16.0
       ]
      ]
     }
