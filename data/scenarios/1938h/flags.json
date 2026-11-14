@@ -149,6 +149,9 @@
     "NKR": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#d90012", "#0033a0", "#f2a800"]}, {"t": "poly", "points": [[1, 0], [1, 1], [0.6, 0.5]], "color": "#ffffff"}]},
     "RSK": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#c6363c", "#0c4076", "#ffffff"]}]},
     "CHC": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#3a7d44", "#ffffff", "#c8102e"], "weights": [4, 1, 1]}]},
-    "ZWE": {"aspect": 2, "layers": [{"t": "stripes", "dir": "h", "colors": ["#319208", "#ffd200", "#de2010", "#000000", "#de2010", "#ffd200", "#319208"]}, {"t": "triangle", "color": "#ffffff", "depth": 0.4}, {"t": "star", "cx": 0.12, "cy": 0.5, "r": 0.08, "color": "#de2010"}]}
+    "ZWE": {"aspect": 2, "layers": [{"t": "stripes", "dir": "h", "colors": ["#319208", "#ffd200", "#de2010", "#000000", "#de2010", "#ffd200", "#319208"]}, {"t": "triangle", "color": "#ffffff", "depth": 0.4}, {"t": "star", "cx": 0.12, "cy": 0.5, "r": 0.08, "color": "#de2010"}]},
+    "GUN": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "v", "colors": ["#002664", "#fecb00", "#c60c30"]}, {"t": "star", "cx": 0.5, "cy": 0.5, "r": 0.12, "color": "#000000"}]},
+    "TRN": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ffffff"]}, {"t": "crescent", "cx": 0.45, "cy": 0.5, "r": 0.18, "color": "#e30a17", "cut": "#ffffff", "offset": 0.06}, {"t": "star", "cx": 0.6, "cy": 0.5, "r": 0.07, "color": "#e30a17"}]},
+    "BFA": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ef2b2d", "#009e49"]}, {"t": "star", "cx": 0.5, "cy": 0.5, "r": 0.16, "color": "#fcd116"}]}
   }
 }

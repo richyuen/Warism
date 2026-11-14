@@ -225,6 +225,11 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
     ADR-1049). Left out: Sinai (all of it on 1982-04-25, R80g), the Litani operation (no war with Lebanon, no land
     kept), the Canal Zone (no land of its own on the map).
   - [ ] R80g 1981-85: Iran and Iraq, the Falklands, Lebanon, Grenada, Poland's martial law, Chad and Libya. AT: as R80f.
+    Done (ADR-1051): 52 events of 1981-85 and the map of 31 December 1985; the identities GUNT, the TRNC, Burkina
+    Faso. From the 1981 start the 1985 map 99.79 % whole, 99.5 % right, strays 0.12 %, nothing passed over;
+    `historyMatch1938h` (to 1985, `state85`) and `historyTrack1938h` with seeds 1-5 to 1991 green, no warning. Left
+    out: the Golan law (Israel's already), Osirak and the Libya-Chad merger (no land), Grenada's one cell occupied (it
+    would end its state: a war, a hold and a white peace).
   - [ ] R80h 1986-89: Chad's war against Libya won, the Soviet Union out of Afghanistan, Panama, the revolutions of
     1989 (regimes and the Eastern Bloc left). AT: as R80f.
   - [ ] R80i 1990-91: Namibia, Germany and Yemen united, Kuwait taken and freed, the Baltic states, Slovenia and Croatia,

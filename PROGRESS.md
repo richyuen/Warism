@@ -291,3 +291,9 @@
   1980-12-31; the identity Zimbabwe (`ZWE`: name, adjective, flag). `data-schemas.test`'s appended identity dated 1991.
 - `historyMatch1938h` to 1980 with `state80`; `historyTrack1938h` and seeds 1-5 to 1991: green, no warning.
 - `historyMatch` gains `MATCH_FROM` (a period checked in minutes from a yearly start); `provinces.ts`, `owners.ts`.
+
+## 2026-11-14 — R80g: 1981-85 in the replay (ADR-1051)
+
+- 52 events and the map of 1985-12-31 (a script from the research's rows); the identities GUN, TRN, BFA.
+- From the 1981 start (`MATCH_FROM`, the starts rebuilt with R80f's events): 99.79 % whole, 99.5 % right, nothing
+  passed over. `historyMatch1938h` to 1985 (`state85`); `historyTrack1938h` and seeds 1-5 to 1991 green, no warning.

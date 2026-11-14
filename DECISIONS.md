@@ -68,6 +68,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1051 · 2026-11-14 · accepted — R80g: 1981-85 in the replay
+- **Events** (`docs/research/1976-91.md`'s 1981-85 rows; 52): the FMLN (Chalatenango, Morazán), the Contras
+  (Jinotega, Nueva Segovia), the SPLA (Jonglei, Upper Nile) and the Tigers (Jaffna, Kilinochchi, Mullaitivu) born at
+  war with their governments, each front held to its history's end; the Falklands (occupied, retaken, a white peace);
+  Sinai Egypt's in one step on 1982-04-25 (the research's choice); Khorramshahr and the rest of Khuzestan Iran's again;
+  Israel into Lebanon (the south occupied, held), back to its security zone on 1985-06-10; Chad: Habré's regime in
+  N'Djamena (FROLINAT's state), the GUNT born north of the 16th parallel with Libya (Chad's old tag, the identity
+  GUNT), France beside Habré, held to 1987; Grenada (Bishop's fall, the United States' war, an interim government);
+  the TRNC and Burkina Faso (renames); Belize, Antigua, St Kitts, Brunei; the Agacher Strip war; coups and returns to
+  democracy in Egypt, Poland, Argentina, Nigeria (two), Uruguay, Brazil, Uganda.
+- **Found:** the GUNT born by whole provinces left 68 cells off the map's 16th parallel; born by the parallel's ring.
+  A state check read on its day's morning sees that day's peace not yet made: the Agacher peace of 30 December is
+  read on the run's last world.
+- **Measured:** see ROADMAP R80g; nothing before 1981 moved.
+
 ### ADR-1050 · 2026-11-14 · accepted — R80f: 1976-80 in the replay
 - **Events** (`docs/research/1976-91.md`'s 1976-80 rows; 65): Angola (the MPLA and Cuba take Huambo, the FNLA annexed,
   South Africa out, UNITA held in Cuando Cubango to 1991-05-31); Vietnam one state (the NLF annexed); the Ogaden

@@ -21900,6 +21900,693 @@
    "nation": "FRO",
    "aggression": 50,
    "note": "Goukouni's Transitional Government of National Unity"
+  },
+  {
+   "date": "1981-01-10",
+   "kind": "born",
+   "nation": "FMN",
+   "from": [
+    "ELS"
+   ],
+   "provinces": [
+    "SLV-1357",
+    "SLV-1351"
+   ],
+   "note": "The FMLN's final offensive: Chalatenango and Morazán"
+  },
+  {
+   "date": "1981-01-10",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "FMN"
+   ],
+   "defenders": [
+    "ELS"
+   ],
+   "note": "The Salvadoran civil war"
+  },
+  {
+   "date": "1981-01-10",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "FMN"
+    ],
+    [
+     "ELS"
+    ]
+   ],
+   "until": "1992-01-16"
+  },
+  {
+   "date": "1981-09-21",
+   "kind": "born",
+   "nation": "BLZ",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "BLZ"
+   ],
+   "note": "Belize independent"
+  },
+  {
+   "date": "1981-10-06",
+   "kind": "regime",
+   "nation": "EGY",
+   "aggression": 25,
+   "note": "Sadat assassinated: Mubarak"
+  },
+  {
+   "date": "1981-11-01",
+   "kind": "born",
+   "nation": "ATG",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "ATG"
+   ],
+   "note": "Antigua and Barbuda independent"
+  },
+  {
+   "date": "1981-12-13",
+   "kind": "regime",
+   "nation": "POL",
+   "aggression": 30,
+   "note": "Martial law in Poland: Jaruzelski against Solidarity"
+  },
+  {
+   "date": "1982-03-14",
+   "kind": "born",
+   "nation": "CTR",
+   "from": [
+    "NIC"
+   ],
+   "provinces": [
+    "NIC-656",
+    "NIC-667"
+   ],
+   "note": "The Contras in Nicaragua's north"
+  },
+  {
+   "date": "1982-03-14",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "CTR"
+   ],
+   "defenders": [
+    "NIC"
+   ],
+   "note": "The Contra war"
+  },
+  {
+   "date": "1982-03-14",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "CTR"
+    ],
+    [
+     "NIC"
+    ]
+   ],
+   "until": "1990-02-25"
+  },
+  {
+   "date": "1982-04-02",
+   "kind": "war",
+   "attackers": [
+    "ARG"
+   ],
+   "defenders": [
+    "ENG"
+   ],
+   "note": "Argentina takes the Falklands"
+  },
+  {
+   "date": "1982-04-02",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "ARG"
+    ],
+    [
+     "ENG"
+    ]
+   ],
+   "until": "1982-06-14"
+  },
+  {
+   "date": "1982-04-02",
+   "hour": 2,
+   "kind": "occupy",
+   "by": "ARG",
+   "of": [
+    "ENG"
+   ],
+   "ring": [
+    [
+     -61.6,
+     -50.9
+    ],
+    [
+     -57.6,
+     -50.9
+    ],
+    [
+     -57.6,
+     -52.5
+    ],
+    [
+     -61.6,
+     -52.5
+    ]
+   ],
+   "note": "Stanley taken"
+  },
+  {
+   "date": "1982-04-25",
+   "kind": "transfer",
+   "to": "EGY",
+   "from": [
+    "ISR"
+   ],
+   "provinces": [
+    "EGY-1558",
+    "EGY-1557"
+   ],
+   "note": "Israel's withdrawal from Sinai complete"
+  },
+  {
+   "date": "1982-05-24",
+   "kind": "occupy",
+   "by": "IRN",
+   "of": [
+    "IRN"
+   ],
+   "ring": [
+    [
+     47.9,
+     30.95
+    ],
+    [
+     48.7,
+     30.95
+    ],
+    [
+     48.7,
+     30.2
+    ],
+    [
+     47.9,
+     30.2
+    ]
+   ],
+   "note": "Iran retakes Khorramshahr"
+  },
+  {
+   "date": "1982-06-06",
+   "kind": "war",
+   "attackers": [
+    "ISR"
+   ],
+   "defenders": [
+    "LEB"
+   ],
+   "note": "Israel invades Lebanon"
+  },
+  {
+   "date": "1982-06-06",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "ISR"
+    ],
+    [
+     "LEB"
+    ]
+   ],
+   "until": "2000-05-24"
+  },
+  {
+   "date": "1982-06-06",
+   "hour": 2,
+   "kind": "occupy",
+   "by": "ISR",
+   "of": [
+    "LEB"
+   ],
+   "ring": [
+    [
+     35.05,
+     33.05
+    ],
+    [
+     35.95,
+     33.25
+    ],
+    [
+     35.95,
+     33.9
+    ],
+    [
+     35.45,
+     33.95
+    ],
+    [
+     35.05,
+     33.4
+    ]
+   ],
+   "fightDays": 10,
+   "note": "The south to Beirut's edge"
+  },
+  {
+   "date": "1982-06-07",
+   "kind": "regime",
+   "nation": "FRO",
+   "aggression": 55,
+   "note": "Habré takes N'Djamena: the GUNT to the north"
+  },
+  {
+   "date": "1982-06-14",
+   "kind": "occupy",
+   "by": "ENG",
+   "of": [
+    "ENG"
+   ],
+   "ring": [
+    [
+     -61.6,
+     -50.9
+    ],
+    [
+     -57.6,
+     -50.9
+    ],
+    [
+     -57.6,
+     -52.5
+    ],
+    [
+     -61.6,
+     -52.5
+    ]
+   ],
+   "note": "The Argentine surrender at Stanley"
+  },
+  {
+   "date": "1982-06-14",
+   "hour": 1,
+   "kind": "peace",
+   "a": "ARG",
+   "b": "ENG",
+   "terms": "white",
+   "note": "The Falklands War over"
+  },
+  {
+   "date": "1982-06-29",
+   "kind": "occupy",
+   "by": "IRN",
+   "of": [
+    "IRN"
+   ],
+   "ring": [
+    [
+     47.6,
+     32.5
+    ],
+    [
+     48.6,
+     32.3
+    ],
+    [
+     48.7,
+     31.3
+    ],
+    [
+     48.4,
+     30.3
+    ],
+    [
+     47.9,
+     29.9
+    ],
+    [
+     47.6,
+     31.0
+    ]
+   ],
+   "note": "Iraq's army back to the border"
+  },
+  {
+   "date": "1983-05-16",
+   "kind": "born",
+   "nation": "SPL",
+   "from": [
+    "SUD"
+   ],
+   "provinces": [
+    "SDS-870",
+    "SDS-869"
+   ],
+   "note": "The Bor mutiny: the SPLA"
+  },
+  {
+   "date": "1983-05-16",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "SPL"
+   ],
+   "defenders": [
+    "SUD"
+   ],
+   "note": "The second Sudanese civil war"
+  },
+  {
+   "date": "1983-05-16",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "SPL"
+    ],
+    [
+     "SUD"
+    ]
+   ],
+   "until": "2005-01-09"
+  },
+  {
+   "date": "1983-06-24",
+   "kind": "born",
+   "nation": "CHD",
+   "from": [
+    "FRO"
+   ],
+   "note": "Goukouni's GUNT and Libya take Faya-Largeau: the north to the 16th parallel",
+   "ring": [
+    [
+     15.0,
+     23.5
+    ],
+    [
+     24.1,
+     23.5
+    ],
+    [
+     24.1,
+     16.0
+    ],
+    [
+     15.0,
+     16.0
+    ]
+   ]
+  },
+  {
+   "date": "1983-06-24",
+   "hour": 1,
+   "kind": "rename",
+   "nation": "CHD",
+   "as": "GUN",
+   "note": "The GUNT in the north"
+  },
+  {
+   "date": "1983-06-24",
+   "hour": 2,
+   "kind": "war",
+   "attackers": [
+    "CHD",
+    "LBY"
+   ],
+   "defenders": [
+    "FRO"
+   ],
+   "note": "The GUNT and Libya against Habré"
+  },
+  {
+   "date": "1983-06-24",
+   "hour": 3,
+   "kind": "hold",
+   "sides": [
+    [
+     "CHD",
+     "LBY"
+    ],
+    [
+     "FRO"
+    ]
+   ],
+   "until": "1987-01-02"
+  },
+  {
+   "date": "1983-07-23",
+   "kind": "born",
+   "nation": "LTE",
+   "from": [
+    "CEY"
+   ],
+   "provinces": [
+    "LKA-2459",
+    "LKA-2460",
+    "LKA-2458"
+   ],
+   "note": "Black July: the Tigers in Jaffna"
+  },
+  {
+   "date": "1983-07-23",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "LTE"
+   ],
+   "defenders": [
+    "CEY"
+   ],
+   "note": "The Sri Lankan civil war"
+  },
+  {
+   "date": "1983-07-23",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "LTE"
+    ],
+    [
+     "CEY"
+    ]
+   ],
+   "until": "2009-05-18"
+  },
+  {
+   "date": "1983-08-09",
+   "kind": "join",
+   "nation": "FRA",
+   "beside": "FRO",
+   "against": "CHD",
+   "note": "Operation Manta: France holds the line"
+  },
+  {
+   "date": "1983-09-19",
+   "kind": "born",
+   "nation": "SKN",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "KNA"
+   ],
+   "note": "Saint Kitts and Nevis independent"
+  },
+  {
+   "date": "1983-10-19",
+   "kind": "regime",
+   "nation": "GRN",
+   "aggression": 50,
+   "note": "Bishop killed: the Revolutionary Military Council"
+  },
+  {
+   "date": "1983-10-25",
+   "kind": "war",
+   "attackers": [
+    "USA"
+   ],
+   "defenders": [
+    "GRN"
+   ],
+   "note": "Operation Urgent Fury"
+  },
+  {
+   "date": "1983-10-25",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "USA"
+    ],
+    [
+     "GRN"
+    ]
+   ],
+   "until": "1983-11-02"
+  },
+  {
+   "date": "1983-11-02",
+   "kind": "peace",
+   "a": "USA",
+   "b": "GRN",
+   "terms": "white",
+   "note": "The fighting over in Grenada"
+  },
+  {
+   "date": "1983-11-02",
+   "hour": 1,
+   "kind": "regime",
+   "nation": "GRN",
+   "aggression": 20,
+   "note": "An interim government"
+  },
+  {
+   "date": "1983-11-15",
+   "kind": "rename",
+   "nation": "TCY",
+   "as": "TRN",
+   "note": "The Turkish Republic of Northern Cyprus declared"
+  },
+  {
+   "date": "1983-12-10",
+   "kind": "regime",
+   "nation": "ARG",
+   "aggression": 20,
+   "note": "Alfonsín: democracy in Argentina"
+  },
+  {
+   "date": "1983-12-31",
+   "kind": "regime",
+   "nation": "NIG",
+   "aggression": 40,
+   "note": "Buhari's coup in Nigeria"
+  },
+  {
+   "date": "1984-01-01",
+   "kind": "born",
+   "nation": "BRU",
+   "from": [
+    "ENG"
+   ],
+   "countries": [
+    "BRN"
+   ],
+   "note": "Brunei independent"
+  },
+  {
+   "date": "1984-08-04",
+   "kind": "rename",
+   "nation": "UVO",
+   "as": "BFA",
+   "note": "Upper Volta becomes Burkina Faso"
+  },
+  {
+   "date": "1985-03-01",
+   "kind": "regime",
+   "nation": "URU",
+   "aggression": 15,
+   "note": "Sanguinetti: democracy in Uruguay"
+  },
+  {
+   "date": "1985-03-15",
+   "kind": "regime",
+   "nation": "BRA",
+   "aggression": 20,
+   "note": "Sarney: civilian rule in Brazil"
+  },
+  {
+   "date": "1985-06-10",
+   "kind": "occupy",
+   "by": "LEB",
+   "of": [
+    "LEB"
+   ],
+   "ring": [
+    [
+     35.05,
+     33.35
+    ],
+    [
+     35.95,
+     33.4
+    ],
+    [
+     35.95,
+     33.95
+    ],
+    [
+     35.45,
+     33.95
+    ],
+    [
+     35.05,
+     33.5
+    ]
+   ],
+   "note": "Israel back to its security zone"
+  },
+  {
+   "date": "1985-07-27",
+   "kind": "regime",
+   "nation": "UGA",
+   "aggression": 40,
+   "note": "Okello's coup in Uganda"
+  },
+  {
+   "date": "1985-08-27",
+   "kind": "regime",
+   "nation": "NIG",
+   "aggression": 35,
+   "note": "Babangida's coup in Nigeria"
+  },
+  {
+   "date": "1985-12-25",
+   "kind": "war",
+   "attackers": [
+    "MLI"
+   ],
+   "defenders": [
+    "UVO"
+   ],
+   "note": "The Agacher Strip war"
+  },
+  {
+   "date": "1985-12-25",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "MLI"
+    ],
+    [
+     "UVO"
+    ]
+   ],
+   "until": "1985-12-30"
+  },
+  {
+   "date": "1985-12-30",
+   "kind": "peace",
+   "a": "MLI",
+   "b": "UVO",
+   "terms": "white",
+   "note": "The ceasefire"
   }
  ],
  "maps": [
@@ -26779,6 +27466,83 @@
        [
         47.6,
         31.0
+       ]
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "date": "1985-12-31",
+   "note": "The Falklands British; Sinai all Egyptian; Israel's security zone in south Lebanon; Iran and Iraq near the old border; Chad split, the GUNT in the north; the FMLN, the Contras, the SPLA and the Tigers holding land; Belize, Antigua, St Kitts and Brunei independent",
+   "byCountry": {
+    "BLZ": "BLZ",
+    "ATG": "ATG",
+    "KNA": "SKN",
+    "BRN": "BRU"
+   },
+   "byProvince": {
+    "EGY-1558": "EGY",
+    "EGY-1557": "EGY",
+    "SLV-1357": "FMN",
+    "SLV-1351": "FMN",
+    "LKA-2459": "LTE",
+    "LKA-2460": "LTE",
+    "LKA-2458": "LTE",
+    "SDS-870": "SPL",
+    "SDS-869": "SPL",
+    "NIC-656": "CTR",
+    "NIC-667": "CTR"
+   },
+   "regions": [
+    {
+     "owner": "CHD",
+     "onlyFrom": [
+      "FRO"
+     ],
+     "ring": [
+      [
+       15.0,
+       23.5
+      ],
+      [
+       24.1,
+       23.5
+      ],
+      [
+       24.1,
+       16.0
+      ],
+      [
+       15.0,
+       16.0
+      ]
+     ]
+    }
+   ],
+   "occupied": [
+    {
+     "by": "ISR",
+     "of": [
+      "LEB"
+     ],
+     "rings": [
+      [
+       [
+        35.05,
+        33.05
+       ],
+       [
+        35.95,
+        33.25
+       ],
+       [
+        35.95,
+        33.4
+       ],
+       [
+        35.05,
+        33.35
        ]
       ]
      ]
