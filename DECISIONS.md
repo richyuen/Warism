@@ -922,3 +922,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   logged in `tests/sweep/baselineHash.test.ts`. Tried and dropped: no cost on a power's land (limits 3 of 10).
 - **With it.** R34e's hero counters kept clear of panels on an idle map too: a frame is drawn when a panel over the map
   moves and the last frame drew a hero (the gate's `heroesClear1938` 5521 red 2 of 3, on HEAD 1 of 3).
+
+### ADR-1026 · 2026-11-13 · accepted — R78c: Japan's "ships lost out of battle" were the ships its carriers sank
+- **Context.** R67-N3 tallied `seaBattles`' sinkings out of battle as Japan's fleets lost (39061: 194; 32061: 179) and
+  asked for a fleet losing ships with no battle to come home.
+- **Read.** Those sinkings are `CarrierSunk` events in an hour with no sea battle, and `CarrierSunk`'s nation is the
+  carrier's whose wings sank the ships (PLAN 7.154a). Japan's own losses on 39061 over 3 years: 270 to 185 of sea
+  strength. Its carriers strike in the Red Sea, the Black Sea and the Adriatic: far, but sinking, not sunk.
+- **Decision.** No rule change; the tool's field named `by` and its report line and TOOLS.md say whose. The AT's numbers
+  on HEAD are met (44 and 54, none in the Channel), though they measure Japan's carriers' hits.

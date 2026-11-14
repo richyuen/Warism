@@ -121,7 +121,9 @@ function fleetsOf(w: World, rec: SeaBattle): Fleet[] {
 
 const tracks = new Map<SeaBattle, Track>();
 const battles: Battle[] = [];
-const sinkings: { tick: number; day: number; nation: string; ships: number; at: [number, number] }[] = [];
+// Ships sunk from the air in an hour with no sea battle (`CarrierSunk`): `by` is the CARRIER's nation, whose wings sank
+// them, not the nation that lost them (R78c: critic run 67's R67-N3 read Japan's 194 as Japan's ships lost).
+const sinkings: { tick: number; day: number; by: string; ships: number; at: [number, number] }[] = [];
 const hours = Math.round(years * 365 * 24);
 const t0 = performance.now();
 for (let h = 0; h < hours; h++) {
@@ -168,7 +170,7 @@ for (let h = 0; h < hours; h++) {
           `t${b.start}-${b.end} day ${b.day} ${b.a} v ${b.b} at ${b.at} (${b.sea || `zone ${zone}`}): ships ${b.fleets.map((f) => `${f.nation}:${f.ships}`).join(' ')}, lost ${b.lostA}/${b.lostB}; camera ${b.camera.cx},${b.camera.cy} ${b.camera.mpp} m/px\n`,
         );
       } else if (kind === EventKind.CarrierSunk && w.seaBattles.length === 0) {
-        sinkings.push({ tick: w.tick, day: Math.floor(w.tick / 24), nation: tag(ev[i + 2]!), ships: ev[i + 3]!, at: [Math.round(x * 10) / 10, Math.round(y * 10) / 10] });
+        sinkings.push({ tick: w.tick, day: Math.floor(w.tick / 24), by: tag(ev[i + 2]!), ships: ev[i + 3]!, at: [Math.round(x * 10) / 10, Math.round(y * 10) / 10] });
       }
     }
     // Records merged into another this hour leave no row: let them go.
@@ -179,5 +181,5 @@ for (let h = 0; h < hours; h++) {
 }
 const report = { seed, diplomacy, world, years, battles, sinkings, wallS: Math.round((performance.now() - t0) / 1000) };
 writeFileSync(out, JSON.stringify(report, null, 1));
-process.stderr.write(`seed ${seed} ${world} ${diplomacy}, ${years} years: ${battles.length} sea battles, ${sinkings.length} sinkings out of battle; ${out}\n`);
+process.stderr.write(`seed ${seed} ${world} ${diplomacy}, ${years} years: ${battles.length} sea battles, ${sinkings.length} sinkings out of battle (by a carrier's wings, "by" its nation);${out}\n`);
 process.stdout.write('done:\n');

@@ -62,10 +62,15 @@ once; no critic run after them).
     `heroesClear1938` on 5521 was red 2 of 3 alone, and 1 of 3 on HEAD before R78b: a paused desk start's Ranking came
     after the last frame, and an idle map is not drawn again, so Japan's two heroes stayed under it. An idle map that
     drew a hero is drawn again when a panel over it moves (`MapView.frameAt`): 5 of 5.
-  - [ ] R78c R67-N3: Japan's fleets are lost out of battle far from home (39061: 194 ships, 56 in the Channel on days
+  - [x] R78c R67-N3: Japan's fleets are lost out of battle far from home (39061: 194 ships, 56 in the Channel on days
     307-460; 32061: 179). A fleet losing ships month after month with no battle comes home or is laid up; the cause
     (strikes, shore fire, air) named first. AT: `seaBattles 39061 scenario --years 3` and `32061` under 60 Japanese
     ships sunk out of battle, none in the Channel.
+    Answered (ADR-1026): the count is not Japan's losses. `seaBattles`' out-of-battle sinkings are `CarrierSunk` events,
+    whose nation is the carrier's (`src/shared/events.ts`): the 194 were ships Japan's wings sank. On HEAD
+    (`.cache/r76/jfleet.ts` 39061, 3 years): Japan's wings sank 87 (44 with no battle anywhere, in the Red Sea, the
+    Black Sea, the Adriatic), and Japan's own sea strength went from 270 to 185. The AT's measure on HEAD: 39061 44,
+    32061 54 (under 60), none in the Channel. The tool's field renamed `by`, its line and `docs/TOOLS.md` saying whose.
   - [ ] R78d R67-N4: People's China's army collapses after the track (about 650k to 18-90k within two years on 37601,
     37603, 38601 and 1938: it attacks India and is struck by the Soviet Union). AT: `critic/scripts/c67_atx` kind of
     run on those four: its army after two years at least a third of its end strength, or the rule that drives the
