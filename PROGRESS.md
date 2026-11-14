@@ -208,3 +208,31 @@
   reference carrying short tags). Specs by hand, chromium and swiftshader, 37 green: battleView, countryballs,
   formationPanel, heroes, heroesRead, seamFight, tags, tagsCrowd, tankBattle, toBattle, battleTags.
 - Frame time: the same layout, less text drawn; the hover read on a mouse move over the last frame's tags.
+
+## 2026-11-14 — R80a: the research for 1976-91
+
+- `docs/research/1976-91.md`. Each date of the Events table read from two fetched pages, the English Wikipedia
+  article and one other (state.gov's Office of the Historian, UPI's 1986-91 archive, the Library of Congress country
+  studies, the UN, PA-X, UCDP, HRW, national sites; weak ones marked). Five agents were given the events' names and
+  articles, not dates, and quoted the sentence each date came from; the dates were compared with the draft here.
+  Where they differ: (d), both dates, the one to use in bold (27). A day from one page with the month from the other:
+  † (18). One page only: the Unverified list (20), not the table.
+- The AT, R80f-i's events and their rows: Angola and Cuba's troops (1976-02-08 Huambo, Cuito Cuanavale 1987-88,
+  1991-05-25 the Cubans out, 1991-05-31 Bicesse); the Ogaden (1977-07-13, 1978-02-01, 1978-03-09); Vietnam into
+  Cambodia (1978-12-25, 1979-01-07) and China into Vietnam (1979-02-17 → 03-16); Uganda and Tanzania (1978-10-30,
+  1978-11-23, 1979-04-11); Iran's revolution (1979-01-16, 02-11); the Soviets into Afghanistan (1979-12-25); Nicaragua
+  (1979-07-19); Zimbabwe (1979-12-21, 1980-04-18). Iran and Iraq (1980-09-22 to 1988-08-20); the Falklands
+  (1982-04-02, 05-21, 06-14); Lebanon (1982-06-06, 08-21, 1985-06-10); Grenada (1983-10-19, 10-25 → 11-02); Poland's
+  martial law (1981-12-13); Chad and Libya (1980-12-16 to 1983-08-09). Chad's war won (1987-01-02 to 09-11); the
+  Soviets out (1989-02-15); Panama (1989-12-20); 1989's revolutions (Poland, Hungary, East Germany, Czechoslovakia,
+  Bulgaria, Romania). Namibia (1990-03-21), Germany (1990-10-03), Yemen (1990-05-22), Kuwait (1990-08-02 to
+  1991-02-28), the Baltic states (declared 1990-03-11, 1991-08-20, 08-21; recognised 1991-09-06), Slovenia and
+  Croatia (1991-06-25, 06-27 → 07-07, 11-18, 12-19), the Soviet Union's end (the republics, 1991-12-08, 12-21, 12-26).
+- Nations: 30 to add (16 small states 1976-86 and Namibia, Slovenia, Macedonia, Somaliland, the eleven Soviet
+  successors), with adm0, adm1 names from the metadata and capitals; reused: RHO (ADR-1031 said there was no Rhodesia
+  tag; there is), TCY, UVO, SOV, FRG, YEM, VIE. The map files Crimea under RUS: Ukraine's in 1991.
+- For the later items: which of two dates the track uses (the Baltic land on the recognition, the other republics on
+  1991-12-26, Sinai in one step on 1982-04-25, Macedonia dormant unless a second source turns up); India's 1974 test
+  has no `bomb` event in the track (R80e to decide); the dominions' dates (R80k): Australia 1942-10-09 (from
+  1939-09-03), New Zealand 1947-11-25, South Africa 1961-05-31, Canada 1982-04-17, Australia 1986-03-03.
+- Documents only: no gate stage runs.
