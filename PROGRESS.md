@@ -174,3 +174,16 @@
   at day 365 153 → 152. The critic's ten at day 365 by nations: ITA vs POR 1:5 and IRQ vs SAU 7:1 left, 1:2 and 2:1
   by realm. Seed 99 unchanged to year 5. `diploInvariants` gains `pile`; the joining tests and the three checker
   suites green (21); `pileRefused1938.test.ts` (the critic's Spain on France's alliance, off and on).
+
+## 2026-11-14 — R82i: a burst's ground under the units (ADR-1044)
+
+- `NukeFx.draw` in two parts: the ground (ground zero's mark, the shockwave, the cloud's stem and skirt) drawn on the
+  overlay before the unit markers; the flash and the cloud's cap last, over the tags (ADR-389). Past the flash the cap
+  stays over a blast radius above ground zero (`nukeFx.test.ts`, 0.7-9 s).
+- `tests/e2e/burstCounter1938.spec.ts` (new): a burst on the counter nearest the middle, 937 and 3,000 m/px, held at 2,
+  4, 8, 10 and 15 s: 0 of its own pixels (631, 364; those it draws over a ground painted magenta) changed; with
+  ADR-389's order 513-988 (red). The critic's `c68_aimark.mjs critic/c68_seed7019_y20.bin 180746 99` on the dev server
+  at HEAD: the strike falls at tick 185762 near Shizuishan; the US stack (x21, 33.8k) read over the mark at about 5
+  and 11 s, shots looked at (kept off `critic/`). Specs by hand: `burstCounter1938`, `burstMark1938`, `nukeFx1938`,
+  `nukeRuins1938`, `nukeYield1938`, `nukeDemo1938` (chromium, 6 green).
+- Frame time: the same drawing split in two calls; with no burst the added call returns at once (no bench moved).

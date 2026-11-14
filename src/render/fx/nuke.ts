@@ -11,6 +11,9 @@
  * - The mark (MARK_MS; ROADMAP R81c, critic run 67 "the burst is a smudge at 937 m/px"): ground zero's ring, the blast
  *   radius, dark-edged amber about a dot, under the cloud and after it, fading in its last MARK_FADE_MS: at a world
  *   zoom the cloud is gone in nine seconds and the fallout's shade is no mark.
+ * - Two layers (ROADMAP R82i, critic run 68 "the mark at 10 s sits over the struck stack's counter"): what lies on the
+ *   ground (the mark, the shockwave, the cloud's stem and skirt) is drawn under the units' counters and tags, so the
+ *   struck stack reads through it; the flash and the cloud's cap over everything (ADR-389: a tag stood on the cap).
  *
  * Sizes follow the blast radius (sim's BLAST_KM × the yield's cube root; the equator's km per cell,
  * so a burst far from it is drawn smaller than it is: at 50° two-thirds) at the camera's scale, at
@@ -76,9 +79,15 @@ export class NukeFx {
     return Math.max(MIN_PX, ((BLAST_KM * Math.cbrt(yieldOf(b.yieldN))) / kmPerCell) * cam.scale);
   }
 
-  draw(ctx: CanvasRenderingContext2D, cam: Camera, geo: MapGeometry, vw: number, vh: number, now: number): void {
-    this.shown = [0, 0, 0, 0];
+  /**
+   * The bursts at `now`: `part` 'ground' the mark, the shockwave and the cloud's foot (under the units), 'air' the flash
+   * and the cloud's cap (over all), 'all' both. `shown` is reset by a part with the ground in it; 'air' adds to it.
+   */
+  draw(ctx: CanvasRenderingContext2D, cam: Camera, geo: MapGeometry, vw: number, vh: number, now: number, part: 'all' | 'ground' | 'air' = 'all'): void {
+    if (part !== 'air') this.shown = [0, 0, 0, 0];
     if (this.bursts.length === 0) return;
+    const ground = part !== 'air';
+    const air = part !== 'ground';
     const offs = itemOffsets(cam, geo, vw);
     ctx.save();
     for (const b of this.bursts) {
@@ -89,19 +98,24 @@ export class NukeFx {
         const [x, y] = worldToScreen(cam, b.x + off, b.y, vw, vh);
         const reach = r * (SHOCK_RADII + 1);
         if (x < -reach || y < -reach || x > vw + reach || y > vh + reach) continue;
-        mark(ctx, x, y, r, age);
-        this.shown[3]!++;
-        if (age < FLASH_MS) {
-          flash(ctx, x, y, r, age / FLASH_MS, vw, vh);
-          this.shown[0]!++;
+        if (ground) {
+          mark(ctx, x, y, r, age);
+          this.shown[3]!++;
+          if (age < SHOCK_MS) {
+            ring(ctx, x, y, r, age / SHOCK_MS);
+            this.shown[1]!++;
+          }
+          if (age < CLOUD_MS) cloudFoot(ctx, x, y, r, age / CLOUD_MS);
         }
-        if (age < SHOCK_MS) {
-          ring(ctx, x, y, r, age / SHOCK_MS);
-          this.shown[1]!++;
-        }
-        if (age < CLOUD_MS) {
-          cloud(ctx, x, y, r, age / CLOUD_MS);
-          this.shown[2]!++;
+        if (air) {
+          if (age < FLASH_MS) {
+            flash(ctx, x, y, r, age / FLASH_MS, vw, vh);
+            this.shown[0]!++;
+          }
+          if (age < CLOUD_MS) {
+            cloudCap(ctx, x, y, r, age / CLOUD_MS);
+            this.shown[2]!++;
+          }
         }
       }
     }
@@ -172,16 +186,19 @@ function ring(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, t:
   ctx.stroke();
 }
 
-/** The mushroom cloud, t of its time: a fireball rising on its stem into a cap, orange to smoke. */
-function cloud(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, t: number): void {
+/** The cloud's shape at t of its time (`cloudFoot`, `cloudCap`). */
+function cloudShape(y: number, r: number, t: number): { grow: number; fade: number; fire: number; top: number; capR: number; drift: number } {
   const rise = Math.min(1, t / 0.35);
   const grow = 1 - (1 - rise) * (1 - rise);
   const fade = t < 0.75 ? 1 : 1 - (t - 0.75) / 0.25;
   // Fire's share of the colour: all at first, none by half its time.
   const fire = Math.max(0, 1 - t / 0.45);
-  const top = y - r * (0.6 + 2.6 * grow);
-  const capR = r * (0.55 + 0.95 * grow);
-  const drift = r * 0.6 * Math.max(0, t - 0.6);
+  return { grow, fade, fire, top: y - r * (0.6 + 2.6 * grow), capR: r * (0.55 + 0.95 * grow), drift: r * 0.6 * Math.max(0, t - 0.6) };
+}
+
+/** The mushroom cloud's foot, t of its time: the stem from the ground to under the cap, and the skirt of dust. */
+function cloudFoot(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, t: number): void {
+  const { grow, fade, fire, top, capR, drift } = cloudShape(y, r, t);
   // The stem: from the ground to under the cap, narrowing up.
   const sw = r * (0.22 + 0.12 * grow);
   ctx.globalAlpha = 0.85 * fade;
@@ -202,7 +219,11 @@ function cloud(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, t
   ctx.beginPath();
   ctx.ellipse(x, y, r * (0.5 + 0.9 * grow), r * (0.18 + 0.2 * grow), 0, 0, Math.PI * 2);
   ctx.fill();
-  // The cap: billows about an ellipse, lit from below while it burns.
+}
+
+/** The mushroom cloud's cap, t of its time: a fireball rising into billows, orange to smoke, lit from below while it burns. */
+function cloudCap(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, t: number): void {
+  const { fade, fire, top, capR, drift } = cloudShape(y, r, t);
   const cx = x + drift;
   const lobes = 7;
   for (let k = 0; k < lobes; k++) {

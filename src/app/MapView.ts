@@ -3071,6 +3071,11 @@ export class MapView {
     // Unit markers below capital flags, so capitals stay readable (PLAN 2.1); the flags keep
     // clear of the T0 counters (PLAN 1.45c), and the city names of the flags and of the unit
     // layer that is shown, counters or markers (PLAN 2.7r, 2.7u).
+    // A nuclear burst's ground (its mark, shockwave and the cloud's foot) under the units, so a struck stack's counter
+    // reads through it (R82i).
+    const vw = this.canvas.clientWidth;
+    const vh = this.canvas.clientHeight;
+    this.nukeFx.draw(this.overlay.getContext('2d')!, cam, this.geo, vw, vh, now, 'ground');
     this.drawUnitMarkers(cam, now);
     this.drawCloseOrders(cam, now);
     this.drawFormationTags(cam);
@@ -3080,9 +3085,9 @@ export class MapView {
     this.drawSelection(cam);
     this.drawWingMark(cam, now);
     this.drawBox();
-    // A nuclear burst's flash, shockwave and cloud (PLAN 6.6b): over all of the overlay, the
-    // formations' tags too, at every tier.
-    this.nukeFx.draw(this.overlay.getContext('2d')!, cam, this.geo, this.canvas.clientWidth, this.canvas.clientHeight, now);
+    // A nuclear burst's flash and the cloud's cap (PLAN 6.6b): over all of the overlay, the formations' tags too, at
+    // every tier (ADR-389).
+    this.nukeFx.draw(this.overlay.getContext('2d')!, cam, this.geo, vw, vh, now, 'air');
     this.frames++;
   }
 

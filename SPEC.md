@@ -1578,7 +1578,9 @@ combat, AA.
   coalition from `PARIAH_COALITION`).
 - **Shown** (§9): flash, ring and cloud at every tier (`src/render/fx/nuke.ts`; the cloud 9 s on the page's clock),
   and ground zero's mark, the blast radius's dark-edged amber ring about a dot, at least `MIN_PX` (18) in radius, for
-  `MARK_MS` (20 s, the last 4 fading; ROADMAP R81c): a burst read at a world zoom after its cloud; an alert with Go to (`nukeAlert.ts`, at most 3,
+  `MARK_MS` (20 s, the last 4 fading; ROADMAP R81c): a burst read at a world zoom after its cloud. The ground (mark,
+  shockwave, the cloud's stem and skirt) is drawn under the units' counters and tags, the flash and the cloud's cap over
+  all (ADR-1044): a struck stack reads through its burst; an alert with Go to (`nukeAlert.ts`, at most 3,
   72 hours of game time and 8 s on screen), the game paused on a burst (`nukePause`, on by default); the
   fallout map mode; ruins that darken; the decision's row worded by its utility (`NUKE_WEIGHED_LONG` 0.1, `NUKE_WEIGHED_NONE` 0.5).
 - **God** (`tick.ts`): nukes on or off (`nukesEnabled`, `setNukes` a nation), `grantWarheads` (0–100), a

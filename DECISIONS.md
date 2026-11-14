@@ -68,6 +68,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1044 · 2026-11-14 · accepted — R82i: a burst's ground under the units, its cap and flash over them
+- **Context.** Critic run 68's AI nukes "not 9" (the user's choice to take it): on 7019's year-20 world at 938 m/px
+  ground zero's mark (R81c) sat over the struck stack's marker at 10 s, its dot on the flag and its amber over the
+  number; at 2 s the cloud's stem and skirt over it too. ADR-389 drew the whole burst last on the overlay, over the
+  formations' tags, because a tag stood on the cloud's cap at T2.
+- **Decision.** `NukeFx.draw` in two parts: 'ground' (the mark, the shockwave, the cloud's stem and skirt), drawn on the
+  overlay before the unit markers, so the counters, markers and tags stand on it; 'air' (the flash, whitening the view,
+  and the cloud's cap), drawn last as ADR-389. Past the flash (0.7 s) the cap stays over a blast radius above ground
+  zero, so the struck stack's box is under nothing. `draw` with no part draws both (tests, probes).
+- **Rejected.** The mark without its dot, or paler, where a counter stands (the counter still under the amber and the
+  stem); the whole burst under the units (a tag on the cap again, ADR-389).
+- **Results.** `burstCounter1938.spec.ts` (new): a burst put on the counter nearest the middle at 937 m/px (T1's
+  marker) and 3,000 m/px (T0's counter), held at 2, 4, 8, 10 and 15 s: 0 of the counter's own pixels (631 and 364)
+  differ from the frame without it; with ADR-389's order 513-988 of them differ (red). The critic's `c68_aimark.mjs` on
+  its 7019 year-20 save at Max at HEAD: Germany's strike near Shizuishan (tick 185762), the United States' stack (x21,
+  33.8k) read over the mark in its shots at about 5 and 11 s, the stem behind it; 0 page errors.
+
 ### ADR-1043 · 2026-11-14 · accepted — R82h: owned land named apart; a chart's lines at least ΔE 30 apart
 - **Context.** Critic run 68's stats "not 9" (the user's choice to take it): the chart's "Land (km²)" (owned) beside the
   Ranking's "Land held (km²)" (held, R78e) read as one measure; France's (#3f5fbf) and the United States' (#2a4d8f)

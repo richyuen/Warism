@@ -73,9 +73,12 @@ Rules:
     white or black, dashed when none clears). 32019's year-20 world (HEAD's save), France selected: France #95a7dc,
     ΔE 37.5 from the United States (was 19); every pair ≥ 31.9; shot looked at. `tools/diag/chartBlues.ts`,
     `chartColours.test.ts`, `charts1938.spec.ts`.
-  - [ ] R82i (run 68's AI nukes "not 9"; the user's choice) The ground-zero mark (R81c) sits over the struck stack's
+  - [x] R82i (run 68's AI nukes "not 9"; the user's choice) The ground-zero mark (R81c) sits over the struck stack's
     counter at about 10 s: the counter read through or beside it. AT: the critic's `c68_aimark.mjs` on 7019's year-20
     world: the counter of the stack at ground zero readable (not covered) at 2, 8 and 10 s; shots looked at.
+    Done (ADR-1044): the burst's ground (mark, shockwave, the cloud's foot) under the units, its flash and cap over all.
+    `burstCounter1938.spec.ts`: at 937 and 3,000 m/px, 2-15 s, 0 of the struck counter's pixels changed (was 513-988);
+    `c68_aimark.mjs` on the critic's save at HEAD: the struck US stack read over the mark at about 5 and 11 s.
   - Filed, not taken (one line each, ADR-843):
     - The free 1975 world's far conquests (Britain takes Beijing on 4 of 5 seeds): ADR-1033's re-scoped bar is met
       (×1.17); a Cold War rule for the free world after 1975 is a design of its own, to be asked of the user.
