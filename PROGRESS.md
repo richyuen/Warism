@@ -121,3 +121,8 @@
   `nukeRuins1938`, red since R81c (not this rule): its ground-zero dot, MARK_MS of the clock on the same overlay, sat
   on Berlin's middle; the spec reads the ruin once the mark's time is over. `shipMarks1938` T3 red once, green twice
   alone (GPU).
+
+## 2026-11-14 — Three of run 68's "not 9" notes filed (the user's choice)
+
+- R82g (no AI warhead intercepted, 0 of 47), R82h (the two land measures' names; France's and the United States'
+  chart blues), R82i (the ground-zero mark over the struck stack's counter), after R82e-f.

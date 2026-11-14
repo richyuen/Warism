@@ -47,6 +47,17 @@ Rules:
     from 2 to 25 July. AT: `c68_nextline.mjs` on the Normandy stage: no line names D-Day after 6 June.
   - [ ] R82f (R68-N5) Pile-ons at day 365: Germany against the Netherlands with 9-13 on the Dutch side on 4 of 5 new
     seeds. AT: `c68_piles.ts 365 --plain` on 39139-39147 and 41139-41147: no war over 4:1.
+  - [ ] R82g (run 68's AI nukes "not 9"; the user's choice, 2026-11-14) No AI warhead intercepted: 47 launches on
+    37501/3 and 41501/3 over 22 years, 0 intercepted (run 67: 6 of 13 on 37501/3/7). Find whether a rule since run 67
+    moved it (the pin moved with ADR-1025, ADR-1033, ADR-1041). AT: the interceptions on those seeds by `c68_nc`'s
+    probe, with the cause named; if a regression, fixed and the share back to run 67's order.
+  - [ ] R82h (run 68's stats "not 9"; the user's choice) The chart's "Land (km²)" (by owner) beside the Ranking's "Land
+    held (km²)" (by holder, R78e): names that tell them apart; France's and the United States' chart lines in
+    near-identical blues: told apart. AT: on 32019's year-20 save the two names differ in their first word, and the two
+    lines' colours differ by a set contrast; shots looked at.
+  - [ ] R82i (run 68's AI nukes "not 9"; the user's choice) The ground-zero mark (R81c) sits over the struck stack's
+    counter at about 10 s: the counter read through or beside it. AT: the critic's `c68_aimark.mjs` on 7019's year-20
+    world: the counter of the stack at ground zero readable (not covered) at 2, 8 and 10 s; shots looked at.
   - Filed, not taken (one line each, ADR-843):
     - The free 1975 world's far conquests (Britain takes Beijing on 4 of 5 seeds): ADR-1033's re-scoped bar is met
       (×1.17); a Cold War rule for the free world after 1975 is a design of its own, to be asked of the user.
