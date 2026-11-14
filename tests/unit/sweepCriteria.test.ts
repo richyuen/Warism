@@ -37,18 +37,27 @@ describe('sweep criteria (PLAN 1.40, ADR-54)', () => {
     const base = lively();
     const frozen = base.map((y, i) => (i >= 45 ? { ...y, changedKm2: 100_000 } : y)); // 0.5% < 1%
     expect(judge(run(frozen)).pass.moving).toBe(false);
-    const hegemon = base.map((y, i) => (i === 49 ? { ...y, topLand: 0.4 } : y));
-    expect(judge(run(hegemon)).pass.land).toBe(false);
-    const rich = base.map((y, i) => (i === 49 ? { ...y, topIncome: 0.45 } : y));
-    expect(judge(run(rich)).pass.income).toBe(false);
     const fewDipOnce = base.map((y, i) => (i === 20 ? { ...y, alive: 19 } : y));
     expect(judge(run(fewDipOnce)).pass.alive).toBe(false);
     const peaceful = base.map((y, i) => (i % 4 === 0 ? { ...y, warDays: 0 } : y)); // 75% < 80%
     expect(judge(run(peaceful)).pass.war).toBe(false);
-    for (const r of [frozen, hegemon, rich, fewDipOnce, peaceful]) {
+    for (const r of [frozen, fewDipOnce, peaceful]) {
       const v = judge(run(r));
       expect(v.limits).toBe(false);
       expect(v.ok).toBe(false);
+    }
+  });
+
+  it('the largest nation’s shares are reported, not judged (ADR-1030)', () => {
+    const base = lively();
+    const hegemon = base.map((y, i) => (i === 49 ? { ...y, topLand: 0.4 } : y));
+    const rich = base.map((y, i) => (i === 49 ? { ...y, topIncome: 0.45 } : y));
+    expect(judge(run(hegemon)).pass.land).toBe(false);
+    expect(judge(run(rich)).pass.income).toBe(false);
+    for (const r of [hegemon, rich]) {
+      const v = judge(run(r));
+      expect(v.limits).toBe(true);
+      expect(v.ok).toBe(true);
     }
   });
 
@@ -162,7 +171,7 @@ describe('sweep verdict (ADR-54)', () => {
   // A stable top (ADR-750): reported, the seed still passes.
   const stuck: Verdict = { ...good, pass: { ...good.pass, stasis: false } };
   const shattered: Verdict = { ...good, pass: { ...good.pass, breakup: false }, ok: false };
-  const broken: Verdict = { ...good, pass: { ...good.pass, land: false }, limits: false, ok: false };
+  const broken: Verdict = { ...good, pass: { ...good.pass, moving: false }, limits: false, ok: false };
   const of = (...parts: [Verdict, number][]): Verdict[] => parts.flatMap(([v, n]) => Array.from({ length: n }, () => v));
 
   it('riser and faller each need 8 of 10 seeds', () => {

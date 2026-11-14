@@ -2,13 +2,15 @@
  * SPEC §10 sweep criteria (PLAN 1.40; rewritten 2026-10-03, ADR-54). Land is km² of true area
  * (ADR-52).
  *
- * Limits, per seed; every seed must keep all five:
+ * Limits, per seed; every seed must keep all three:
  *   moving   — land changing controller in the last 5 years ≥ MOVING_MIN of the land
  *              (SPEC leaves the threshold open; 1% ≈ 1.35 M km² ≈ a mid-sized country);
- *   land     — the largest nation holds < 35% of owned land at the end;
- *   income   — the largest income is < 40% of world income at the end;
  *   alive    — living nations stay within [20, 250] every year;
  *   war      — at least one war is active in ≥ 80% of the years.
+ * Reported, not judged since ADR-1030 (the user's decision: a sweep read FAILING on them alone in 55 of the 61 limit
+ * failures of its reports, a hegemon at the end being a valid world, as a stable top is, ADR-750):
+ *   land     — the largest nation holds < 35% of owned land at the end (`pass.land`);
+ *   income   — the largest income is < 40% of world income at the end (`pass.income`).
  *
  * Dynamism, per seed, judged over the sweep (critic B1: the limits passed on a world whose large
  * nations never changed). Both are measured on realms: a nation with no overlord, with the land
@@ -85,7 +87,7 @@ export interface Verdict {
   churn: number;
   swing: number;
   pass: { moving: boolean; land: boolean; income: boolean; alive: boolean; war: boolean; riser: boolean; faller: boolean; stasis: boolean; breakup: boolean };
-  /** The five limits. */
+  /** The three limits (moving, alive, war; land and income reported, ADR-1030). */
   limits: boolean;
   /** Limits, riser, faller and break-up (stasis reported, ADR-750). */
   ok: boolean;
@@ -144,12 +146,12 @@ export function judge(r: SeedResult): Verdict {
     stasis: stasis < STASIS_YEARS,
     breakup: breakup <= BREAKUP_RISE,
   };
-  const limits = pass.moving && pass.land && pass.income && pass.alive && pass.war;
+  const limits = pass.moving && pass.alive && pass.war;
   return { seed: r.seed, moving, topLand: last.topLand, topIncome: last.topIncome, aliveMin, aliveMax, warYears, riser, faller, stasis, breakup, churn, swing, pass, limits, ok: limits && pass.riser && pass.faller && pass.breakup };
 }
 
 export interface SweepVerdict {
-  /** Every seed keeps the five limits. */
+  /** Every seed keeps the three limits. */
   limits: boolean;
   /** Whether the runs are long enough for riser and faller to be judged. */
   judged: boolean;

@@ -2223,10 +2223,9 @@ every test red twice is on the known reds [ADR-297].
   `--from <report.json>` judges a written report again; reports in `docs/sweeps/` (`--scratch`:
   `.cache/`). Land is km² of true area, never cells (`src/sim/landArea.ts`) [ADR-52]. Criteria
   [ADR-54]:
-  - *Limits, every seed* (`MOVING_MIN`, `MAX_LAND`, `MAX_INCOME`, `ALIVE_MIN`, `ALIVE_MAX`,
-    `WAR_YEARS`): land changing controller in the last 5 years ≥ 1 %; the largest nation < 35 % of
-    the land and < 40 % of the income at the end; 20 to 250 nations alive every year; a war in
-    ≥ 80 % of the years.
+  - *Limits, every seed* (`MOVING_MIN`, `ALIVE_MIN`, `ALIVE_MAX`, `WAR_YEARS`): land changing
+    controller in the last 5 years ≥ 1 %; 20 to 250 nations alive every year; a war in ≥ 80 % of
+    the years.
   - *Dynamism, each in ≥ 80 % of the seeds of runs of ≥ 50 years* (`DYNAMISM_QUORUM`), on realms (a
     nation with no overlord, with its puppets' land): a riser (ends with ≥ 1 % of the land and
     ≥ 1.5 × its land after year 1), a faller (one of the ten largest after year 1 ending with ≤ 2/3
@@ -2234,7 +2233,9 @@ every test red twice is on the known reds [ADR-297].
     20 or more years before) [ADR-428].
   - *Nuclear weapons* (`NUKES_USED_SEEDS`, `FALLOUT_MAX_LAND`): used in at least one seed, and on
     no day of any seed fallout on more than 50 % of the land.
-  - *Reported, not judged:* stasis (the longest run of the same five largest by land; ADR-750), new
+  - *Reported, not judged:* the largest nation's share of the land (`MAX_LAND`, 35 %) and of the
+    income (`MAX_INCOME`, 40 %) at the end, under or over [ADR-1030]; stasis (the longest run of the
+    same five largest by land; ADR-750), new
     nations in the top ten, and the leader's share range.
   - *Save and load on the way* (`tools/sweep/reload.ts`, the soak's checks [ADR-959]): every
     `RELOAD_YEARS` (10) years, the first in year 1 to 10 by the seed, the world is saved gzipped,

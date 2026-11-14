@@ -26,3 +26,38 @@ Rules:
 - `release-2026-11-13` (2026-11-13): Batches 17–23 (R65–R79: armies on the replay's fronts, Cold War blocs, a start from any
   year, the replay to 1975, a faster tick, runs 63–67's findings, the gate on the GPU), in CHANGELOG.md for players; the
   items with their evidence in `docs/history/ROADMAP-release-2026-11-13.md`.
+
+## Batch 24 — the replay to 1991 (the user's request, 2026-11-14; ADR-1031: planned, waits on the user's answers)
+
+Split as R69 and R71 were (1938-75 kept bit for bit, then the new years by period). Each item's AT keeps the nine replay
+tests and the track's checker green, and the 38 yearly starts of 1938-75 at their hashes unless the item says why not.
+
+- [ ] R80 **The replay to 1991.**
+  - [ ] R80a The research: `docs/research/1976-91.md`, as `1963-75.md`: each event by date (checked against a second
+    source), the nations to add with their land, the regimes, the wars and their fronts, the arsenals, and the maps
+    to match at each period's end. AT: every event of R80f-i in it with its date and source; the nations' list.
+  - [ ] R80b A bloc that ends: an event dissolves a bloc (the Warsaw Pact, 1 July 1991) and members leave it before
+    (1989-90); the Cold War's rules (ADR-981 deterrence, ADR-990 aid) with one leader left, as ADR-1031's answer 3. AT: a
+    unit test of the event; the blocs' checker on four seeds; 10 years after a 1991 end, the rule the answer names.
+  - [ ] R80c A great power's breakup and two unions: the Soviet Union into fifteen on 26 December 1991 (its army, navy
+    and air by the land they stand on; its arsenal as ADR-1031's answer 2), Germany on 3 October 1990, Yemen on 22 May
+    1990, with the existing `transfer`, births and annexations where they serve. AT: unit tests of each; worldInvariants
+    on the end hour of four seeds; no formation of a dead nation left.
+  - [ ] R80d The nations of 1976-91 added dormant (the Soviet successors, Macedonia, Namibia, Zimbabwe, Eritrea's and
+    the period's rebel movements), the end moved to 31 December 1991 with no new event. AT: 1938-75 unchanged; the
+    yearly starts to 1991 built and their time on the Pages workflow measured (the deploy within its limit).
+  - [ ] R80e Later techs (about 1976-91) as stat upgrades of the existing units (or the unit ADR-1031's answer 4 names).
+    AT: the techs held by 1991 by the great powers and by few new states; the pin moved only as the techs explain.
+  - [ ] R80f 1976-80: Angola's war and Cuba's troops, the Ogaden, Vietnam into Cambodia and China into Vietnam, Uganda
+    and Tanzania, Iran's revolution, the Soviet Union into Afghanistan, Nicaragua, Zimbabwe. AT: as R71d: the map of
+    the period's end matched as the earlier maps; each event on its date; seeds 1-5 within the bars.
+  - [ ] R80g 1981-85: Iran and Iraq, the Falklands, Lebanon, Grenada, Poland's martial law, Chad and Libya. AT: as R80f.
+  - [ ] R80h 1986-89: Chad's war against Libya won, the Soviet Union out of Afghanistan, Panama, the revolutions of
+    1989 (regimes and the Eastern Bloc left). AT: as R80f.
+  - [ ] R80i 1990-91: Namibia, Germany and Yemen united, Kuwait taken and freed, the Baltic states, Slovenia and Croatia,
+    the Soviet Union's end. AT: as R80f; the arsenals at the end as ADR-1031's answer 2.
+  - [ ] R80j The world after 1991: the blocs, the historical focus and aid re-measured from the 1991 handover, as R71g;
+    the start card's powers and previews for each new year. AT: as R71g's; the card's powers per year equal the
+    deployed `years.json`.
+  - [ ] R80k (if ADR-1031's answer 5 frees them) The dominions free on their date in the track's data, the 1938 start
+    unchanged. AT: Canada, Australia and South Africa no one's puppets at the yearly starts after it; the replay tests.

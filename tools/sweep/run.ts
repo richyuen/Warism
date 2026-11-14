@@ -9,7 +9,7 @@
  * `--tag` names the report docs/sweeps/<date>-sweep-<tag>, so a second run on one day keeps the
  * first report. `--scratch` writes the report to .cache/sweep/reports instead (tuning runs:
  * `npm run sweep:quick` is 10 seeds × 20 years there; only the final sweep belongs in docs/).
- * Runs shorter than 50 years are judged by the five limits alone; riser, faller, stasis and
+ * Runs shorter than 50 years are judged by the three limits alone; riser, faller, stasis and
  * break-up are reported. `--from` judges the runs of a written report again by today's criteria
  * (PLAN 7.3a) instead of running any: seeds, years and wall times are the report's.
  */
@@ -77,11 +77,13 @@ async function main(): Promise<void> {
   const base = path.join(outDir, `${date}-sweep${tag}`);
   const pct = (v: number): string => `${(v * 100).toFixed(1)}%`;
   const mark = (b: boolean): string => (b ? 'pass' : '**FAIL**');
+  // The largest nation's shares: reported, not judged (ADR-1030): over its bar, "over".
+  const shown = (b: boolean): string => (b ? 'under' : 'over');
   // Riser and faller are marked per seed only when the runs are long enough to be judged by them.
   const dyn = (b: boolean): string => (sweep.judged ? ` ${b ? 'yes' : '**no**'}` : '');
   const mkm = (km2: number): string => (km2 / 1e6).toFixed(2);
   const change = (c: LandChange | null): string => (c ? `${TAGS_1938[c.nation - 1] ?? `#${c.nation}`} × ${ratio(c).toFixed(2)} (${mkm(c.from)} → ${mkm(c.to)})` : 'none');
-  const rows = verdicts.map((v: Verdict) => `| ${v.seed} | ${pct(v.moving)} ${mark(v.pass.moving)} | ${pct(v.topLand)} ${mark(v.pass.land)} | ${pct(v.topIncome)} ${mark(v.pass.income)} | ${v.aliveMin}–${v.aliveMax} ${mark(v.pass.alive)} | ${pct(v.warYears)} ${mark(v.pass.war)} | ${change(v.riser)}${dyn(v.pass.riser)} | ${change(v.faller)}${dyn(v.pass.faller)} | ${v.stasis} y${dyn(v.pass.stasis)} | × ${v.breakup.toFixed(2)}${dyn(v.pass.breakup)} | ${v.churn} | ${pct(v.swing)} |`);
+  const rows = verdicts.map((v: Verdict) => `| ${v.seed} | ${pct(v.moving)} ${mark(v.pass.moving)} | ${pct(v.topLand)} ${shown(v.pass.land)} | ${pct(v.topIncome)} ${shown(v.pass.income)} | ${v.aliveMin}–${v.aliveMax} ${mark(v.pass.alive)} | ${pct(v.warYears)} ${mark(v.pass.war)} | ${change(v.riser)}${dyn(v.pass.riser)} | ${change(v.faller)}${dyn(v.pass.faller)} | ${v.stasis} y${dyn(v.pass.stasis)} | × ${v.breakup.toFixed(2)}${dyn(v.pass.breakup)} | ${v.churn} | ${pct(v.swing)} |`);
   const n = verdicts.length;
   // The nuclear years (PLAN 6.8).
   const startYear = 1938;
@@ -120,13 +122,13 @@ async function main(): Promise<void> {
     `# Sweep ${date}: seeds ${first}–${first + seeds - 1} × ${years} years${size ? `, map size ${size}` : ''}${heroes ? ', heroes on' : ''} — ${status}`,
     ...(from ? ['', `Judged again from \`${path.relative(ROOT, fromPath).split(path.sep).join('/')}\` (no run).`] : []),
     '',
-    `Criteria (SPEC §10, tools/sweep/criteria.ts, ADR-54; land by area in km², ADR-52). Limits, every seed: land changing controller in the last 5 years ≥ ${pct(MOVING_MIN)}; largest nation < ${pct(MAX_LAND)} of land and < ${pct(MAX_INCOME)} of income at the end; ${ALIVE_MIN}–${ALIVE_MAX} nations alive every year; a war active in ≥ ${pct(WAR_YEARS)} of the years. Dynamism, by realm (a nation with no overlord, with its puppets' land), each in ≥ ${pct(DYNAMISM_QUORUM)} of the seeds of runs of ≥ ${DYNAMISM_YEARS} years: a riser (a realm ending with ≥ ${pct(RISER_MIN_SHARE)} of the land and ≥ ${RISER_GROWTH} × its land after year 1) and a faller (one of the ten largest realms after year 1 ending with ≤ ${pct(FALLER_KEPT)} of its land then); no break-up (the living nations never more than ${BREAKUP_RISE} × the most they were ${BREAKUP_YEARS} years or more before; ADR-428). Reported, not judged: stasis (the longest run of the same five largest by land, as a set; ✓ under ${STASIS_YEARS} years; ADR-750) and the last two columns.`,
+    `Criteria (SPEC §10, tools/sweep/criteria.ts, ADR-54; land by area in km², ADR-52). Limits, every seed: land changing controller in the last 5 years ≥ ${pct(MOVING_MIN)}; ${ALIVE_MIN}–${ALIVE_MAX} nations alive every year; a war active in ≥ ${pct(WAR_YEARS)} of the years. Dynamism, by realm (a nation with no overlord, with its puppets' land), each in ≥ ${pct(DYNAMISM_QUORUM)} of the seeds of runs of ≥ ${DYNAMISM_YEARS} years: a riser (a realm ending with ≥ ${pct(RISER_MIN_SHARE)} of the land and ≥ ${RISER_GROWTH} × its land after year 1) and a faller (one of the ten largest realms after year 1 ending with ≤ ${pct(FALLER_KEPT)} of its land then); no break-up (the living nations never more than ${BREAKUP_RISE} × the most they were ${BREAKUP_YEARS} years or more before; ADR-428). Reported, not judged: the largest nation's share of land and of income at the end (under or over ${pct(MAX_LAND)} and ${pct(MAX_INCOME)}; ADR-1030), stasis (the longest run of the same five largest by land, as a set; ✓ under ${STASIS_YEARS} years; ADR-750) and the last two columns.`,
     '',
     '| Seed | Land moving (last 5 y) | Largest land | Largest income | Alive (min–max) | Years with war | Largest riser (realm, M km²) | Largest faller (realm, M km²) | One top five (longest) | Alive over the most 20 y before | New in top 10 | Leader share range |',
     '|---|---|---|---|---|---|---|---|---|---|---|---|',
     ...rows,
     '',
-    `Limits: ${verdicts.filter((v) => v.limits).length} of ${n} seeds. Riser: ${sweep.risers} of ${n}. Faller: ${sweep.fallers} of ${n}. No stasis (reported): ${sweep.changing} of ${n}. No break-up: ${sweep.together} of ${n}.${sweep.judged ? ` Needed: ${sweep.needed} of ${n} each.` : ` Not judged at ${years} years.`}`,
+    `Limits: ${verdicts.filter((v) => v.limits).length} of ${n} seeds. Largest share over its bar (reported): land ${verdicts.filter((v) => !v.pass.land).length}, income ${verdicts.filter((v) => !v.pass.income).length} of ${n}. Riser: ${sweep.risers} of ${n}. Faller: ${sweep.fallers} of ${n}. No stasis (reported): ${sweep.changing} of ${n}. No break-up: ${sweep.together} of ${n}.${sweep.judged ? ` Needed: ${sweep.needed} of ${n} each.` : ` Not judged at ${years} years.`}`,
     '',
     ...nukeTable,
     reloadLine,
