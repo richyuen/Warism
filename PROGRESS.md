@@ -215,8 +215,8 @@
   article and one other (state.gov's Office of the Historian, UPI's 1986-91 archive, the Library of Congress country
   studies, the UN, PA-X, UCDP, HRW, national sites; weak ones marked). Five agents were given the events' names and
   articles, not dates, and quoted the sentence each date came from; the dates were compared with the draft here.
-  Where they differ: (d), both dates, the one to use in bold (27). A day from one page with the month from the other:
-  † (18). One page only: the Unverified list (20), not the table.
+  Where they differ: (d), both dates, the one to use in bold (31). A day from one page with the month from the other:
+  † (17). One page only: the Unverified list (11 cases), not the table; 187 rows in all.
 - The AT, R80f-i's events and their rows: Angola and Cuba's troops (1976-02-08 Huambo, Cuito Cuanavale 1987-88,
   1991-05-25 the Cubans out, 1991-05-31 Bicesse); the Ogaden (1977-07-13, 1978-02-01, 1978-03-09); Vietnam into
   Cambodia (1978-12-25, 1979-01-07) and China into Vietnam (1979-02-17 → 03-16); Uganda and Tanzania (1978-10-30,

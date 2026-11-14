@@ -172,9 +172,9 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
   - [x] R80a The research: `docs/research/1976-91.md`, as `1963-75.md`: each event by date (checked against a second
     source), the nations to add with their land, the regimes, the wars and their fronts, the arsenals, and the maps
     to match at each period's end. AT: every event of R80f-i in it with its date and source; the nations' list.
-    Done: 150 dated rows, each read from its Wikipedia article and one page that is not Wikipedia (five agents given
-    the names, not the dates; compared here): 27 disagreements marked (d) with the date to use, 18 rows with the day
-    from one page (†), 20 dates left Unverified. Every event R80f-i names has a row (PROGRESS lists them); 30 nations
+    Done: 187 dated rows, each read from its Wikipedia article and one page that is not Wikipedia (five agents given
+    the names, not the dates; compared here): 31 disagreements marked (d) with the date to use, 17 rows with the day
+    from one page (†), 11 cases (about 20 dates) left Unverified. Every event R80f-i names has a row (PROGRESS lists them); 30 nations
     to add with their adm1 provinces and capitals, 15 rebel movements, the fronts at peak and period's end, four
     checkpoints, the arsenals, the dominions' dates for R80k.
   - [ ] R80b A bloc that ends: an event dissolves a bloc (the Warsaw Pact, 1 July 1991) and members leave it before
