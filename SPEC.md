@@ -2025,7 +2025,9 @@ builds).
   load.
 - **Ranking** (`src/ui/StatsRanking.tsx`): the top `ROWS` (15) of a list, flag and bar: now (land, army,
   income, treasury, manpower, wars, puppets, aircraft, warheads) or lifetime (age, wars, revolts, the dead
-  marked †); hidden while the editor is open; Charts opens the statistics chart.
+  marked †); hidden while the editor is open; Charts opens the statistics chart. Its land is land held, km²
+  by the cells' controller (`heldAreas`, R78e); shares and the sweep count land owned (ADR-52). A nuclear
+  strike's row names the nearest city of the struck land's holder within 12 cells, else the nearest of any.
 - **War banners** (`src/ui/WarBanners.tsx`): at most `MAX_BANNERS` (6, `PHONE_BANNERS` 2 on a phone) and
   "+N": the sides' leaders and allies, the score, swords lit while it has a battle; a click flies to the
   war's battle (up to `BATTLE_VIEW_MAX_M` 250 m/px).

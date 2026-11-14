@@ -60,22 +60,41 @@ function overlordThen(rows: readonly number[], i: number): number {
   return 0;
 }
 
-/** The city nearest (x, y) on the map, its row, 0 when there is none. */
-export function nearestCity(world: World, x: number, y: number): number {
+/**
+ * The city nearest (x, y) on the map, its row, 0 when there is none; with `holder`, the nearest of the cities whose cell
+ * it controls.
+ */
+export function nearestCity(world: World, x: number, y: number, holder = 0): number {
   const cc = world.cities.cols;
+  const ctl = world.cells.controller;
   let best = 0;
   let bd = Infinity;
   world.cities.forEach((id) => {
+    if (holder !== 0 && ctl[cc.cell[id]!] !== holder) return;
     const d = (cc.x[id]! - x) * (cc.x[id]! - x) + (cc.y[id]! - y) * (cc.y[id]! - y);
     if (d < bd) [bd, best] = [d, id];
   });
   return best;
 }
 
+/**
+ * How far a strike's city of the struck land's holder may be, in cells, and still name it before a nearer one of
+ * another holder (R78e; critic run 67: the 1958 burst on Hokkaido named for Nevelsk across the strait).
+ */
+const NEAR_HOLDER_CELLS = 12;
+
 /** The name ('=' + literal) of the city nearest a strike at (x, y), '' when it has none (PLAN 6.11c). */
-function strikeNear(world: World, x: number, y: number, cityName: (row: number) => string): string {
+export function strikeNear(world: World, x: number, y: number, cityName: (row: number) => string): string {
   if (Number.isNaN(x) || Number.isNaN(y)) return '';
-  const c = nearestCity(world, x, y);
+  // The struck land's own city where one lies near; else the nearest of any holder (a burst at sea, or far inland).
+  const { w, h } = world.cells;
+  const cx = Math.floor(x);
+  const cy = Math.floor(y);
+  const holder = cx >= 0 && cx < w && cy >= 0 && cy < h ? world.cells.controller[cy * w + cx]! : 0;
+  const own = holder !== 0 ? nearestCity(world, x, y, holder) : 0;
+  const cc = world.cities.cols;
+  const ownNear = own !== 0 && (cc.x[own]! - x) ** 2 + (cc.y[own]! - y) ** 2 <= NEAR_HOLDER_CELLS ** 2;
+  const c = ownNear ? own : nearestCity(world, x, y);
   const n = c !== 0 ? cityName(c) : '';
   return n ? `=${n}` : '';
 }

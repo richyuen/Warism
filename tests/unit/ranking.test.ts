@@ -8,6 +8,7 @@ const nation = (id: number, v: number): NationStat => ({
   color: 0,
   cells: v * 7,
   area: v,
+  held: v,
   landShare: 0,
   gold: v * 2,
   income: v * 3,
@@ -69,6 +70,14 @@ describe('statistics ranking (PLAN 1.31b)', () => {
     // PLAN 7.4f11: the wars it is in (its enemies), its puppets, its aircraft, its warheads.
     expect([rankValue(n, 'wars'), rankValue(n, 'puppets'), rankValue(n, 'aircraft'), rankValue(n, 'warheads')]).toEqual([7, 7, 42, 56]);
     expect(RANK_METRICS).toHaveLength(9);
+  });
+
+  it("ranks land by what a nation holds, not what it owns (ROADMAP R78e)", () => {
+    // Germany in 1942 holds far more than it owns: by owner it left the top 15 (critic run 67).
+    const occupier = { ...nation(1, 2), held: 50 };
+    const owner = { ...nation(2, 10), held: 3 };
+    expect(rankValue(occupier, 'land')).toBe(50);
+    expect(rankNations([owner, occupier], 'land').map((n) => n.id)).toEqual([1, 2]);
   });
 
   // PLAN 7.4f28: the lists of a life, which have the dead in them.

@@ -8,7 +8,8 @@ import type { NationLife, NationStat } from './protocol';
 export const RANK_METRICS = ['land', 'army', 'income', 'gold', 'manpower', 'wars', 'puppets', 'aircraft', 'warheads'] as const;
 export type RankMetric = (typeof RANK_METRICS)[number];
 const VALUE: Record<RankMetric, (n: NationStat) => number> = {
-  land: (n) => n.area,
+  // Land held (ROADMAP R78e; critic run 67: by owner, Germany at its height of 1942 was not in the top 15).
+  land: (n) => n.held,
   army: (n) => n.men,
   income: (n) => n.income,
   gold: (n) => n.gold,

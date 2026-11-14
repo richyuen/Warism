@@ -81,7 +81,7 @@ import { loadTerrain, type StraitDef } from '../sim/data/terrain';
 import earthStraits from '../../data/maps/earth/straits.json' with { type: 'json' };
 import { buildPoliticalMap } from '../sim/data/politicalMap';
 import { politicalMapInput1938, TAGS_1938 } from '../sim/scenario1938';
-import { landStandings } from '../sim/landArea';
+import { heldAreas, landStandings } from '../sim/landArea';
 import { Sim } from '../sim/sim';
 import { CONTACT_CELLS, cellDist, contactsOf, deployOf, elementFacing, elementIndex, slotCount, slotPlace, wrapDx } from '../sim/systems/elements';
 import { blockReach, SLOT_SPACING } from '../sim/core/pose';
@@ -945,6 +945,7 @@ export class SimServer {
       if (nc.living[id] === 1 && o !== 0) puppets.set(o, [...(puppets.get(o) ?? []), id]);
     });
     const land = landStandings(world);
+    const held = heldAreas(world);
     // Why each holder of warheads at war does not strike (PLAN 7.37f): its war whose best place weighs most.
     const industry = dayIndustry(world);
     const restraint = (id: number): NationStat['restraint'] => {
@@ -990,6 +991,7 @@ export class SimServer {
         color: nc.color[id]!,
         cells: nc.cells[id]!,
         area: land.area[id]!,
+        held: held[id]!,
         landShare: nc.living[id] === 1 && land.owned > 0 ? land.area[id]! / land.owned : 0,
         gold: nc.gold[id]!,
         income: nc.income[id]!,

@@ -87,7 +87,7 @@ export function StatsRanking({
             <optgroup key={g} label={t(g === 0 ? 'stats.now' : 'stats.lifetime')}>
               {group.map((m) => (
                 <option key={m} value={m}>
-                  {t(`stats.${m}` as MessageKey)}
+                  {t(m === 'land' ? 'stats.landHeld' : (`stats.${m}` as MessageKey))}
                 </option>
               ))}
             </optgroup>

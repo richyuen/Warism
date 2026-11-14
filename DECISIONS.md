@@ -942,3 +942,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   war); its economy is 1953 China's.
 - **Decision.** No rule change. A floor on a power's army, or slots by army size rather than income, would hold a
   track-made army the economy cannot pay for; the free world after the track plays on from what the track left.
+
+### ADR-1028 · 2026-11-13 · accepted — R78e: a strike's city on the struck land; the Ranking's land held
+- **Context.** Critic run 67's small findings: the 1958 burst on Hokkaido named for Nevelsk across the strait; the Land
+  ranking by owner (Germany at its height not in 1942's top 15) and with no unit; Uranus not engaged at its hour on
+  39701; Germany's and Poland's 1938 flags told apart only by a 2-px band.
+- **Decision.** A strike's `near` is the nearest city whose cell the struck land's holder controls, within
+  NEAR_HOLDER_CELLS (12), else the nearest of any. The Ranking's Land list ranks by land held (the controller), labelled
+  "Land held (km²)"; every share and the sweep stay by owner (ADR-52). Uranus on 39701: its window is fought, the
+  attack through by its hour (ADR-1018). Germany's 1938 flag kept as it is: the user's decision (the labels differ also
+  in the nation-colour strip about the chip).

@@ -622,6 +622,8 @@ export interface NationStat {
   /** Owned land in km² and as a share of all owned land (ADR-52: area, not cells). */
   area: number;
   landShare: number;
+  /** Land held in km², by the cells' controller (ROADMAP R78e): the Ranking's Land list; at war it differs from `area`. */
+  held: number;
   gold: number;
   income: number;
   expenses: number;

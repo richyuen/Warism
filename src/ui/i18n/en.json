@@ -617,6 +617,7 @@
   "stats.unfold": "Show the ranking",
   "stats.metric": "Ranking metric",
   "stats.land": "Land",
+  "stats.landHeld": "Land held (km²)",
   "stats.army": "Army",
   "stats.income": "Income",
   "stats.gold": "Treasury",

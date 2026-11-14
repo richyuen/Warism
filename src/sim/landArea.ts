@@ -43,3 +43,9 @@ export function landStandings(world: World): LandStandings {
   ranked.sort((a, b) => area[b]! - area[a]! || a - b);
   return { area, owned, ranked };
 }
+
+/** km² held (by the cells' controller) per nation id (ROADMAP R78e: the Ranking's Land list; shares stay by owner). */
+export function heldAreas(world: World): Float64Array {
+  const { controller, w, h } = world.cells;
+  return ownedAreas(controller, w, h, world.nations.highWater);
+}

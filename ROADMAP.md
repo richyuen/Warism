@@ -29,7 +29,7 @@ Rules:
 Before the release checks (ADR-1005, ADR-1022: a full run's non-blocking findings fixed first, then step 3's checks
 once; no critic run after them).
 
-- [ ] R78 **Run 67's non-blocking findings.**
+- [x] R78 **Run 67's non-blocking findings.**
   - [x] R78a R67-N1: the replay's D-Day is fought and lost (R77's 50-day window, no build-up): on 1938 the Allies fall
     from 74.6k landed to 5.2k by 26 July; Paris and France are handed to 5k Americans. The Allied build-up of June and
     July (the follow-up divisions, the Third Army by 1 August) as `forces` arrivals; `trackFronts` counts an attacker
@@ -82,12 +82,19 @@ once; no critic run after them).
     AI's pace, 1 + income / PARALLEL_INCOME (400) orders in training (2, then 1 as its income falls to 353): the gate on
     day 120 gold (1,456 against a division's 1,001 and the reserve), on days 480 and 600 slots, its two orders due in
     7-68 days. No rule broken: an army the track set, worn by the wars it chose and the two it met.
-  - [ ] R78e R67 small: (1) Uranus not engaged at its hour on 39701 (both engaged 9 of 28 samples); (2) the 1958 burst
+  - [x] R78e R67 small: (1) Uranus not engaged at its hour on 39701 (both engaged 9 of 28 samples); (2) the 1958 burst
     on Hokkaido named for Nevelsk, across the strait; (3) Germany's 1938 flag told from Poland's only by a 2-px band at
     250 m/px; (4) the Land ranking counts owners (Germany at its height not in the 1942 top 15) and has no unit. AT:
     (1) `trackFronts 39701` Uranus both engaged at its hour, 1938, 37701 and 38701 kept; (2) a burst named for the
     nearest city of the struck nation's land (a unit case); (3) the two flags differ in more than a band at 250 m/px
     (a shot looked at); (4) the ranking's land by holder with its unit (km²), a spec.
+    (2) and (4) done (ADR-1028): a strike is named for the struck land's own city within 12 cells, else the nearest of
+    any (`strikeNear`; `tests/unit/strikeNear1938.test.ts`: Hokkaido with Sakhalin Soviet names a Japanese city, not
+    Nevelsk); the Ranking's Land list is "Land held (km²)", by the cells' controller (`heldAreas`, NationStat `held`;
+    `tests/unit/ranking.test.ts`), the shares and the sweep still by owner (ADR-52). (1) answered: on 39701 Uranus's
+    window is fought (both engaged 9 of 28 samples, 125 of 313 cells taken, the defenders 185k to 156k) and at its hour
+    the attack has gone through; the stage is ADR-1018's, rescoped by the user. (3) answered by the user: Germany's
+    1938 flag kept as it is (the labels differ also in the nation-colour strip about the chip, grey and pink).
 
 ## Batch 21 — run 66's findings (focused, on `a0880be6`: no blocking issue, every dimension at 8)
 
