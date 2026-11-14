@@ -294,3 +294,8 @@
 - R79a (ADR-1029, the user's request): the browser suite on the GPU at 8 workers (the whole of it 8.6 min, about 8 h in
   the review's chunks on SwiftShader); `check:review`'s suite one step; a pin move runs the 187 specs that step the sim;
   the landing specs wait for the camera's flight. Two pixel tests on SwiftShader (`@swiftshader`) until R79b.
+- R79b (ADR-1029): the two GPU-only reds answered. `fades1938`: a pop of the markers' flag chip at the morph's first
+  frame on a GPU (nearest sampling on the edge of two flag pixels, taken differently by the GPU overlay and the CPU
+  sprite); the chip made in JavaScript and drawn one to one: T1 → T2 37.0 on the GPU (148.4). `countryballs1938`: the
+  read came under the day's air strike; read after `settle`, 0.64 on the GPU as on SwiftShader. `@swiftshader` off
+  both; `fades1938`, `countryballs1938`, `morphRatio1938` and the 30 marker specs green on both renderers. R79 done.

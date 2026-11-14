@@ -275,7 +275,57 @@ function boxArt(ctx: CanvasRenderingContext2D, m: MarkerInput, x: number, y: num
   ctx.lineWidth = 1.3;
   symbolPath(ctx, m.symbol, x + 4, y + 3, BOX_W - 8, BOX_H - 6);
   const flag = flagOf(m.nation);
-  if (flag) ctx.drawImage(flag, x + 1, y + 1, CHIP_W, CHIP_H);
+  if (flag) {
+    // The chip in device px, drawn one to one on a whole device pixel: the same pixels on every
+    // renderer (ROADMAP R79b). Sampled to its size at draw time, nearest, the flag's 36 × 24 into
+    // 9 × 6 put each sample on the edge of two of its pixels, which the GPU and the CPU take on
+    // different sides: the overlay (on the GPU) and the box's picture (`boxSprite`, on the CPU)
+    // had two flags, a jump of 148 of 255 at the morph's first frame.
+    const t = ctx.getTransform();
+    const chip = chipOf(flag, Math.max(1, Math.round(CHIP_W * t.a)), Math.max(1, Math.round(CHIP_H * t.d)));
+    const [dx, dy] = [Math.round(t.a * (x + 1) + t.e), Math.round(t.d * (y + 1) + t.f)];
+    ctx.drawImage(chip, (dx - t.e) / t.a, (dy - t.f) / t.d, chip.width / t.a, chip.height / t.d);
+  }
+}
+
+/** Flag chips made, by flag and size in device px. */
+const chips = new WeakMap<object, Map<number, HTMLCanvasElement>>();
+
+/**
+ * `flag` as a chip of `w` × `h` device px, each pixel the mean of the flag's pixels it covers (a
+ * box filter, in JavaScript: no renderer's sampling in it).
+ */
+function chipOf(flag: CanvasImageSource, w: number, h: number): HTMLCanvasElement {
+  let made = chips.get(flag);
+  if (!made) chips.set(flag, (made = new Map()));
+  const key = w * 4096 + h;
+  const have = made.get(key);
+  if (have) return have;
+  const src = flag as { width: number | SVGAnimatedLength; height: number | SVGAnimatedLength };
+  const [sw, sh] = [typeof src.width === 'number' ? src.width : src.width.baseVal.value, typeof src.height === 'number' ? src.height : src.height.baseVal.value];
+  const read = document.createElement('canvas');
+  [read.width, read.height] = [Math.max(1, Math.round(sw)), Math.max(1, Math.round(sh))];
+  const rg = read.getContext('2d', { willReadFrequently: true })!;
+  rg.drawImage(flag, 0, 0);
+  const s = rg.getImageData(0, 0, read.width, read.height).data;
+  const c = document.createElement('canvas');
+  [c.width, c.height] = [w, h];
+  const g = c.getContext('2d')!;
+  const out = g.createImageData(w, h);
+  for (let j = 0; j < h; j++)
+    for (let i = 0; i < w; i++) {
+      // The flag's pixels whose centres fall in this one's square.
+      const [x0, x1] = [Math.floor((i * read.width) / w), Math.max(Math.floor((i * read.width) / w) + 1, Math.floor(((i + 1) * read.width) / w))];
+      const [y0, y1] = [Math.floor((j * read.height) / h), Math.max(Math.floor((j * read.height) / h) + 1, Math.floor(((j + 1) * read.height) / h))];
+      const sum = [0, 0, 0, 0];
+      for (let y = y0; y < Math.min(y1, read.height); y++)
+        for (let x = x0; x < Math.min(x1, read.width); x++) for (let ch = 0; ch < 4; ch++) sum[ch]! += s[(y * read.width + x) * 4 + ch]!;
+      const n = (Math.min(y1, read.height) - y0) * (Math.min(x1, read.width) - x0);
+      for (let ch = 0; ch < 4; ch++) out.data[(j * w + i) * 4 + ch] = Math.round(sum[ch]! / n);
+    }
+  g.putImageData(out, 0, 0);
+  made.set(key, c);
+  return c;
 }
 
 /** Room around the box in its picture, CSS px (the engaged outline reaches half a pixel out). */

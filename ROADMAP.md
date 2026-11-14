@@ -26,7 +26,7 @@ Rules:
 
 ## Batch 23 — the gate on the GPU (the user's request, 2026-11-13, ADR-1029)
 
-- [ ] R79 **Faster gates.**
+- [x] R79 **Faster gates.**
   - [x] R79a The browser suite on the GPU (8 workers), the review's suite one step, a pin move's e2e the specs that step
     the sim. AT: the whole chromium project on the GPU in under 15 min with every red green alone or on
     `tools/gate/knownRed.json`; `historySpecs()` leaves out only specs green on a build whose `step` throws; the gate
@@ -35,10 +35,20 @@ Rules:
     step. The gate in full on the GPU: 436 of 437 in 8.6 min, `relations1938` red by load and green alone; perf green.
     187 of 223 specs step the sim; the 36 others green on a build whose `step` throws (`battleView1938` red on it). The
     five landing specs 13 of 13 on the GPU and on SwiftShader.
-  - [ ] R79b `countryballs1938`'s helmet bands and `fades1938`'s cross-fades red on the GPU alone (148 for ≤ 48): a pop or
+  - [x] R79b `countryballs1938`'s helmet bands and `fades1938`'s cross-fades red on the GPU alone (148 for ≤ 48): a pop or
     a colour the player sees on a GPU, or the measure's readback (the WebGL canvas drawn into a 2D one). AT: each answered
     with the frame looked at on both renderers; a pop fixed in the game, a readback fixed in the spec; the tag
     `@swiftshader` off both, green on the GPU and on SwiftShader.
+    Done: `fades1938`'s 148 a pop in the game: the markers' flag chip (36 × 24 into 9 × 6, nearest) had each sample on
+    the edge of two flag pixels, taken on different sides by the overlay on the GPU and the box's picture (`boxSprite`,
+    a small canvas on the CPU), so the chip changed at the morph's first frame. The chip is now made in JavaScript (a box
+    filter, in device px) and drawn one to one on a whole device pixel (`chipOf`, `markers.ts`): largest jump T1 → T2
+    on the GPU 37.0 (148.4), on SwiftShader 43.1; `morphRatio1938` at 1.25 and 1.5 0 px differing on the GPU (50 and 98
+    of 131k and 186k on SwiftShader). `countryballs1938`'s helmet band the measure's timing: on the GPU the read came
+    while the day's air strike (`airFx`) was over a Polish ball (0.38 of its band white); read after `settle`, 0.64,
+    0.63, 0.65 on the GPU as on SwiftShader. Frames looked at on both renderers. Both tags off; the 30 marker specs green
+    on the GPU (76) and on SwiftShader (76; `fire1938`'s T2 fire and `morphRatio1938` at 1.25 red once by load, green
+    alone).
 
 ## Batch 22 — run 67's findings (full, on `6e0e46f3`: no blocking issue, every dimension at 8)
 

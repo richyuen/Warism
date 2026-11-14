@@ -9,6 +9,7 @@ import { FormationFlag, SortieRole } from '../../src/shared/protocol';
 import { Frame } from '../../src/shared/unitLooks';
 import { cellOf } from '../../src/sim/data/terrain';
 import { NATIONS_1938, SIZE_1938, TEMPLATES_LAND } from '../../src/sim/scenario1938';
+import { settle } from './settle';
 
 // PLAN 7.174c (ADR-777): the element sprites as countryballs. A German and a Polish infantry
 // division brought into contact west of Poznań; at 100 m/px (T2) and 15 m/px (T3, where a ball is
@@ -736,9 +737,8 @@ test('countryballs show their losses: cracks and plasters by the share of men le
 // thirds), at 10 m/px (T3, its eyes left out) and at 600 m/px (T1, the markers' balls, eyes and
 // all): the share of its pixels within 60 of its flag's top colour (≥ 0.4: its top shows), and the
 // share of black (≥ 0.2 on no Polish ball: the control). On 4a977fdb the German band was white.
-// On SwiftShader (ADR-1029, ROADMAP R79b): on the GPU this measure reads otherwise; until that is answered, the
-// picture it was written for.
-test('countryballs under a helmet show the flag that names them: German and Polish infantry apart', { tag: '@swiftshader' }, async ({ page }, info) => {
+// On the GPU and on SwiftShader alike (ROADMAP R79b): read once the day's air raids are over.
+test('countryballs under a helmet show the flag that names them: German and Polish infantry apart', async ({ page }, info) => {
   test.setTimeout(400_000);
   await page.setViewportSize({ width: 1400, height: 800 });
   await page.addInitScript(() => localStorage.setItem('warsim.unitLook', 'balls'));
@@ -770,6 +770,10 @@ test('countryballs under a helmet show the flag that names them: German and Poli
       v.controller.set({ cx: p[0], cy: p[1], scale: (v.metresPerPx * v.controller.cam.scale) / m });
     }, { p: pick!, m });
     await page.waitForTimeout(1500);
+    // And the day's air raids over (`airFx`, up to DOGFIGHT_MS from the snapshot): on the GPU the read came 1.5 s after
+    // the day's last step, a strike's smoke over a Polish ball (0.38 of its band white; 0.64 once over), where
+    // SwiftShader's slower frames read after it (ROADMAP R79b).
+    await settle(page);
   };
   // Each flag's top colour: the middle of its top row.
   const top = await page.evaluate(

@@ -54,9 +54,9 @@ const CROSSINGS: Crossing[] = [
   crossing('T1 → T0', 2000, 'markers', false),
 ];
 
-// On SwiftShader (ADR-1029, ROADMAP R79b): on the GPU this measure reads otherwise; until that is answered, the
-// picture it was written for.
-test('no popping: every tier change is a cross-fade whose frames differ by little, in both directions', { tag: '@swiftshader' }, async ({ page }, info) => {
+// On the GPU and on SwiftShader alike (ROADMAP R79b): the markers' flag chips are made in JavaScript and drawn one to
+// one, so the box and its picture (`boxSprite`) have the same pixels on every renderer.
+test('no popping: every tier change is a cross-fade whose frames differ by little, in both directions', async ({ page }, info) => {
   test.setTimeout(240_000);
   const evidence = process.env['EVIDENCE'] !== undefined;
   const out = evidence ? path.resolve(import.meta.dirname, '../../docs/evidence/2.7') : info.outputPath();
