@@ -196,6 +196,12 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
     and air by the land they stand on; its arsenal as ADR-1031's answer 2), Germany on 3 October 1990, Yemen on 22 May
     1990, with the existing `transfer`, births and annexations where they serve. AT: unit tests of each; worldInvariants
     on the end hour of four seeds; no formation of a dead nation left.
+    Done (ADR-1046): `born` gains `forces` (`handForces`: land formations by their ground, fleets by their nearest port,
+    wings by their airbase or carrier; heroes and warheads stay); the unions are the existing `annex`, which moves land,
+    cores and forces. `breakup1938h.test.ts` (a Ukraine box born from the Soviet Union, a stand-in tag: its army,
+    the Black Sea fleets, Kiev's wings; the warheads Soviet; without `forces` none; FRG-GDR and YEM-SYE). `worldInvariants`
+    exports `hourChecks`. `tools/diag/breakup.ts` (the three events on the 1975 track's last day, MPL Ukraine's
+    stand-in), seeds 1-4, every hour to the end and 30 days on: 0 broken lines, no formation of a dead nation.
   - [ ] R80d The nations of 1976-91 added dormant (the Soviet successors, Macedonia, Namibia, Zimbabwe, Eritrea's and
     the period's rebel movements), the end moved to 31 December 1991 with no new event. AT: 1938-75 unchanged; the
     yearly starts to 1991 built and their time on the Pages workflow measured (the deploy within its limit).

@@ -33,7 +33,7 @@ import { detonate } from './systems/nuclear';
 import { leaveWarsAgainst, makePeace, withPuppets } from './systems/war';
 import { applyCommand } from './tick';
 import { ATTACKERS, DEFENDERS } from './wars';
-import { Domain, FlipCause, navOf, PlayerOrderKind, type World } from './world';
+import { Domain, FlipCause, navOf, PlayerOrderKind, portSeaOf, type World } from './world';
 
 /**
  * How many times a front sector, or a city to land by, within a war objective weighs (R62e). Its sectors take this many
@@ -754,6 +754,60 @@ function born(world: World, t: Track, n: number, from: readonly number[], land: 
 }
 
 /**
+ * A breakup's forces (R80c, ADR-1046): of the givers `from`, each land formation standing on `n`'s land, each fleet
+ * whose nearest port (by its water) is on `n`'s land, with the formations aboard, and each air wing at an airbase on
+ * `n`'s land or on a carrier handed over, becomes `n`'s; a wing handed over flies no mission or sortie it had. A hero is
+ * its roster nation's and stays (ADR-812). The warheads are not forces: they stay the givers' (ADR-1031's answer 2).
+ */
+export function handForces(world: World, n: number, from: readonly number[]): void {
+  const of = new Set(from.filter((x) => x !== n));
+  const f = world.formations.cols;
+  const { owner, w } = world.cells;
+  const loop = world.settings.loopingMap;
+  const water = portSeaOf(world);
+  const cellOf = (id: number): number => Math.floor(f.y[id]!) * w + ((Math.floor(f.x[id]!) % w) + w) % w;
+  const nearestPort = (cell: number): number => {
+    let best = -1;
+    let bestD = Infinity;
+    world.ports.forEach((_, i) => {
+      const at = water[i]!;
+      if (at < 0) return;
+      let dx = Math.abs((at % w) - (cell % w));
+      if (loop && dx > w / 2) dx = w - dx;
+      const dy = Math.floor(at / w) - Math.floor(cell / w);
+      const d = dx * dx + dy * dy;
+      if (d < bestD) [best, bestD] = [i, d];
+    });
+    return best;
+  };
+  const fleets = new Set<number>();
+  const hand: number[] = [];
+  world.formations.forEach((id) => {
+    if (!of.has(f.nation[id]!) || world.heroes.has(id) || world.embarked.has(id) || world.isWing(id)) return;
+    if (world.isFleet(id)) {
+      const p = nearestPort(cellOf(id));
+      if (p >= 0 && owner[world.ports[p]!.cell] === n) {
+        fleets.add(id);
+        hand.push(id);
+      }
+    } else if (owner[cellOf(id)] === n) hand.push(id);
+  });
+  world.formations.forEach((id) => {
+    if (!of.has(f.nation[id]!) || world.heroes.has(id)) return;
+    const e = world.embarked.get(id);
+    if (e && fleets.has(e.fleet)) hand.push(id);
+    if (!world.isWing(id)) return;
+    const base = world.wingBase.get(id) ?? 0;
+    if ((base > 0 && owner[world.airbases[base - 1]!.cell] === n) || (base < 0 && fleets.has(-base))) {
+      hand.push(id);
+      world.wingMission.delete(id);
+      world.sorties.delete(id);
+    }
+  });
+  for (const id of hand) f.nation[id] = n;
+}
+
+/**
  * The track ends for good (R62d; the intervention's end is R62j): a `TrackEnded` row, and every stream of chance is
  * derived again from the second seed, so what follows differs from game to game (none rolled: the seed stays).
  */
@@ -815,8 +869,11 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       return transfer(world, t, id(e.to), e.from.map(id), e);
     case 'occupy':
       return occupy(world, id(e.by), e.of.map(id), e.ring);
-    case 'born':
-      return born(world, t, id(e.nation), e.from.map(id), e);
+    case 'born': {
+      const why = born(world, t, id(e.nation), e.from.map(id), e);
+      if (why === Refusal.None && e.forces) handForces(world, id(e.nation), e.from.map(id));
+      return why;
+    }
     case 'objective':
       // It weighs from now on (`objectiveWeight`); a nation not living has none.
       return whyNot(world, id(e.nation));

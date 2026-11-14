@@ -68,6 +68,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1046 · 2026-11-14 · accepted — R80c: a breakup's forces (`born` with `forces`); the unions by `annex`
+- **Context.** ADR-1031: the Soviet Union's army, navy and air divided on 26 December 1991 by the land they stand on,
+  its arsenal Russia's alone (answer 2); Germany and Yemen unite in 1990. A `born` moved land alone: the giver's
+  formations on the new land stayed the giver's, a foreign army inside a new state.
+- **Decision.** `born` takes `forces` (`handForces`): of the givers, each land formation on the new nation's land, each
+  fleet whose nearest port (by its water) is on that land, with the formations aboard, and each wing at an airbase on
+  it or on a carrier so handed, become the new nation's; a wing handed over drops its mission and sortie. Heroes are
+  their roster nation's (ADR-812) and stay; warheads are not forces and stay (Russia is the Soviet Union renamed, so its
+  arsenal is Russia's). The unions need nothing new: `annex` (`annexNation`) moves land, cores and every formation
+  (ADR-112, ADR-269) and the annexed dies.
+- **Stands on, checked (ADR-803):** ADR-926 (births), ADR-812 (heroes), ADR-1031. No timeline event uses `forces` yet,
+  so 1938-75 and the pin are as before.
+- **Results.** `breakup1938h.test.ts` (4). `tools/diag/breakup.ts`, the 1975 track's last day with GDR into FRG, SYE
+  into YEM and MPL born from the Soviet Union on a box of Ukraine with `forces`, seeds 1-4: West Germany 37→53 land
+  formations and 16→23 wings; the stand-in 0-3 land formations, 4 fleets (the Black Sea's), 4-5 wings; the Soviet 26
+  warheads stay Soviet; every rule set of `worldInvariants` and no dead nation's formation, each hour to 30 days after
+  the end: 0 broken lines. The Soviet army of 1975 stands mostly off Ukraine (0-3 of 218-275 formations there).
+
 ### ADR-1045 · 2026-11-14 · accepted — R80b: a bloc that ends (the track's `allianceEnd`)
 - **Context.** ADR-1031's answer 3 (the user's): after 1991 NATO the one lasting bloc, Russia and the CIS a pact outside
   the deterrence rule. R67's blocs (ADR-981) are derived each month, the two strongest alliances led by a nation with an

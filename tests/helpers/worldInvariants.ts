@@ -427,7 +427,26 @@ export function worldBreaks(c: WorldCase): string[] {
     const n = TAGS_1938.indexOf(t) + 1;
     if (n > 0) s.world.nations.cols.gold[n] = gold;
   }
-  let b = before(s.world);
+  const h = hourChecks(s.world, rules, tag, label, breaks);
+  let day = 0;
+  for (const { day: at, act } of [...(c.acts ?? [])].sort((p, q) => p.day - q.day)) {
+    if (at > c.days) break;
+    s.step(24 * (at - day), h.check);
+    day = at;
+    act(s);
+    h.reset(s.world);
+  }
+  s.step(24 * (c.days - day), h.check);
+  return breaks.lines;
+}
+
+/**
+ * The hourly checks of `rules` on a world stepped by the caller (ROADMAP R80c: a world loaded at the track's end):
+ * `check` is a `step` callback (it empties the hour's events), `reset` starts the next hour from the world as it is
+ * after an act between steps.
+ */
+export function hourChecks(start: World, rules: ReadonlySet<RuleSet>, tag: (n: number) => string, label: string, breaks: Breaks): { check: (w: World) => void; reset: (w: World) => void } {
+  let b = before(start);
   const sunk = new Set<number>();
   const late = new Map<number, number>();
   const fought = new Set<number>();
@@ -443,14 +462,5 @@ export function worldBreaks(c: WorldCase): string[] {
     w.out.fires.length = 0;
     b = before(w);
   };
-  let day = 0;
-  for (const { day: at, act } of [...(c.acts ?? [])].sort((p, q) => p.day - q.day)) {
-    if (at > c.days) break;
-    s.step(24 * (at - day), check);
-    day = at;
-    act(s);
-    b = before(s.world);
-  }
-  s.step(24 * (c.days - day), check);
-  return breaks.lines;
+  return { check, reset: (w) => (b = before(w)) };
 }

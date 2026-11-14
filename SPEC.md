@@ -1755,7 +1755,10 @@ to 27 July 1953, then sets the world free.
   nation it has not named goes for the bomb (researches it or builds warheads). A nation it has named goes for it whatever its income
   (R71f, ADR-997: China's of 1964).
 - **Births and the end** (built, R62d, ADR-926): a `born` event gives an unborn nation its ring's land, its cores, its
-  seat (its city nearest its table's capital) and a `NationBorn` row. The timeline's `end` (1975-12-31; 1962-12-31 before R71b, 1953-07-27 before R69a) ends the track
+  seat (its city nearest its table's capital) and a `NationBorn` row. With `forces` (a great power's breakup, R80c,
+  ADR-1046; `handForces`) the givers' forces there are its: a land formation on its land, a fleet whose nearest port is
+  on it (with the formations aboard), a wing at an airbase on it or on such a fleet; heroes and warheads stay the
+  givers' (ADR-1031's answer 2: the Soviet arsenal Russia's). A union is an `annex` (land, cores, forces). The timeline's `end` (1975-12-31; 1962-12-31 before R71b, 1953-07-27 before R69a) ends the track
   after that day's first hour (`TrackEnded`); then the world's seed becomes the second seed (`GameOptions.after`,
   `?after=`, rolled by the form) and its streams are made anew from it.
 - **Steering while the track runs:** the strategic AI's own declarations, stalemate peace, threat pacts,

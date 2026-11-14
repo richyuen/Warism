@@ -250,3 +250,14 @@
   side 1, 0, 3, 3. Its `held` lines (France 20 cells of Austria, the United States 1 of Austria and 6 of Japan,
   Britain 2 of Italy, every seed) are in `.cache/afterTrack_1.sav.gz` of 2026-11-13 too: the track's end, filed R80l.
 - Tick: `blocsOf` reads a cached set (rebuilt when the track's `next` moves); nothing else runs more.
+
+## 2026-11-14 — R80c: a breakup and two unions (ADR-1046)
+
+- `born` gains `forces` (`handForces` in `src/sim/track.ts`): the givers' land formations on the new land, fleets
+  whose nearest port is on it, wings based on it; heroes and warheads stay. The unions are the existing `annex`.
+- `tests/unit/breakup1938h.test.ts` (new, 4): a stand-in Ukraine born from the Soviet Union takes its army there, the
+  Black Sea fleets and Kiev's wings, the warheads stay; without `forces` nothing moves; FRG takes GDR, YEM SYE, no
+  formation of a dead nation.
+- `worldInvariants` exports `hourChecks` (the hourly rule sets on a world the caller steps). `tools/diag/breakup.ts`
+  on seeds 1-4 (the three events on the 1975 track's last day): 0 broken lines to 30 days after the end.
+- No timeline event uses `forces` yet: the pin and 1938-75 stand. Tick: nothing new runs per hour.

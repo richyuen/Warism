@@ -557,9 +557,11 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
   /**
    * A nation of the scenario dormant until now is born (R62d) on the land in `ring` that one of `from` owns: owned
    * and held, its cores, its capital the city of its own nearest its table's capital. Its land by `countries` and
-   * `provinces` (R69b) beside or in place of the ring.
+   * `provinces` (R69b) beside or in place of the ring. With `forces` (R80c, ADR-1046: a great power's breakup) the
+   * givers' forces there are its too: a land formation on its land, a fleet whose nearest port is its, an air wing at
+   * an airbase on its land or on such a fleet; the givers' warheads stay theirs (ADR-1031's answer 2).
    */
-  z.strictObject({ ...when, kind: z.literal('born'), nation: tag, from: tags, ring: ring.optional(), ...byCode, note: z.string().optional() }),
+  z.strictObject({ ...when, kind: z.literal('born'), nation: tag, from: tags, ring: ring.optional(), ...byCode, forces: z.boolean().optional(), note: z.string().optional() }),
   /**
    * A war's objective (R62e): until `until`, `nation`'s operational AI weights the front sectors within `km` of `at`,
    * and its invasion AI the cities there it may land by, OBJECTIVE_WEIGHT times.
