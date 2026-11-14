@@ -212,6 +212,10 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
     7 min 13 s locally (6 min 17 s to 1975), 54 starts, 63 MB (41 MB); the Pages run in PROGRESS.
   - [ ] R80e Later techs (about 1976-91) as stat upgrades of the existing units (or the unit ADR-1031's answer 4 names).
     AT: the techs held by 1991 by the great powers and by few new states; the pin moved only as the techs explain.
+    Done (ADR-1048): six techs of 1975-83 in `postwar.json` (microprocessors, precision-guided munitions,
+    fourth-generation jets, composite armour, attack helicopters, cruise missiles: 5-10 % modifiers, no new unit), the
+    last six of the 64 bits. `tools/diag/techsBy.ts` from the 1975 start to the 1991 end: the six great powers (SOV FRA
+    ENG CCP USA FRG), Italy, Japan and East Germany all six; the Netherlands 3, India 2; 145 living none.
   - [ ] R80f 1976-80: Angola's war and Cuba's troops, the Ogaden, Vietnam into Cambodia and China into Vietnam, Uganda
     and Tanzania, Iran's revolution, the Soviet Union into Afghanistan, Nicaragua, Zimbabwe. AT: as R71d: the map of
     the period's end matched as the earlier maps; each event on its date; seeds 1-5 within the bars.

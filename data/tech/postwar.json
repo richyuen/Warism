@@ -13,6 +13,12 @@
     { "id": "transistors", "nameKey": "tech.transistors", "category": "electronics", "year": 1955, "cost": { "gold": 300, "industry": 110, "days": 330 }, "prereqs": ["computing"], "modifiers": {"research": 0.1} },
     { "id": "surface_to_air_missiles", "nameKey": "tech.surface_to_air_missiles", "category": "electronics", "year": 1957, "cost": { "gold": 320, "industry": 130, "days": 340 }, "prereqs": ["radar", "jet_engines"], "modifiers": {"aaStrength": 0.2, "airDefense": 0.05} },
     { "id": "electronic_warfare", "nameKey": "tech.electronic_warfare", "category": "electronics", "year": 1962, "cost": { "gold": 380, "industry": 150, "days": 370 }, "prereqs": ["transistors", "radar"], "modifiers": {"airDefense": 0.05, "aaStrength": 0.1} },
-    { "id": "integrated_circuits", "nameKey": "tech.integrated_circuits", "category": "electronics", "year": 1965, "cost": { "gold": 420, "industry": 160, "days": 390 }, "prereqs": ["transistors"], "modifiers": {"research": 0.1, "industry": 0.05} }
+    { "id": "integrated_circuits", "nameKey": "tech.integrated_circuits", "category": "electronics", "year": 1965, "cost": { "gold": 420, "industry": 160, "days": 390 }, "prereqs": ["transistors"], "modifiers": {"research": 0.1, "industry": 0.05} },
+    { "id": "microprocessors", "nameKey": "tech.microprocessors", "category": "electronics", "year": 1975, "cost": { "gold": 500, "industry": 190, "days": 420 }, "prereqs": ["integrated_circuits"], "modifiers": {"research": 0.1, "industry": 0.05} },
+    { "id": "precision_munitions", "nameKey": "tech.precision_munitions", "category": "air", "year": 1975, "cost": { "gold": 500, "industry": 190, "days": 420 }, "prereqs": ["multirole_jets", "integrated_circuits"], "modifiers": {"airAttack": 0.1} },
+    { "id": "fourth_generation_jets", "nameKey": "tech.fourth_generation_jets", "category": "air", "year": 1978, "cost": { "gold": 540, "industry": 210, "days": 430 }, "prereqs": ["multirole_jets", "microprocessors"], "modifiers": {"airAttack": 0.05, "airDefense": 0.05} },
+    { "id": "composite_armour", "nameKey": "tech.composite_armour", "category": "armor", "year": 1980, "cost": { "gold": 540, "industry": 220, "days": 430 }, "prereqs": ["armor_mbt_3"], "modifiers": {"armorAttack": 0.05, "landDefense": 0.05} },
+    { "id": "attack_helicopters", "nameKey": "tech.attack_helicopters", "category": "land", "year": 1983, "cost": { "gold": 560, "industry": 220, "days": 440 }, "prereqs": ["helicopters", "guided_anti_tank"], "modifiers": {"landAttack": 0.1} },
+    { "id": "cruise_missiles", "nameKey": "tech.cruise_missiles", "category": "naval", "year": 1983, "cost": { "gold": 560, "industry": 220, "days": 440 }, "prereqs": ["anti_ship_missiles", "microprocessors"], "modifiers": {"navalAttack": 0.1} }
   ]
 }

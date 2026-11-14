@@ -268,4 +268,12 @@
   movements; written by a script from `docs/research/1976-91.md`'s table); the end 1991-12-31, no new event.
 - 1938-75 unchanged: the 30 December 1975 world of seeds 1938 and 1 hashes the same on HEAD (a worktree) and this tree.
 - `npm run saves` to 1991: 7 min 13 s, 54 starts (1991's: 158 nations living, the powers USA SOV ENG FRA PRC FRG ITR),
-  63 MB. The replay tests' timeouts an hour.
+  63 MB. The replay tests' timeouts an hour. On the Pages workflow (run 43631356453): the saves 11 min 41 s, the
+  whole deploy 12 min 50 s, green (the job's limit 6 h); to 1975 the run before (43628434456) took 11 min 25 s.
+
+## 2026-11-14 — R80e: the techs of 1975-83 (ADR-1048)
+
+- Six techs appended to `data/tech/postwar.json` (and `en.json`): microprocessors, precision-guided munitions,
+  fourth-generation jets, composite armour, attack helicopters, cruise missiles. The tech bits are all used (64/64).
+- `tools/diag/techsBy.ts` (new): from the 1975 start to the 1991 end, the great powers know all six (with Italy,
+  Japan, East Germany), the Netherlands 3, India 2, the rest none.

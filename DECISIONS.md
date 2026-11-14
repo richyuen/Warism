@@ -68,6 +68,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1048 · 2026-11-14 · accepted — R80e: the techs of 1975-83, the last six bits
+- **The rule** (ADR-1031's answer 4: no new unit, the period's techs as stat upgrades): six techs appended to
+  `data/tech/postwar.json` (loaded last, so no older bit moves; a save keeps its techs), nation-wide modifiers of
+  5-10 % as R71c's (ADR-994): microprocessors (1975; research, industry), precision-guided munitions (1975; air
+  attack), fourth-generation jets (1978), composite armour (1980), attack helicopters (1983; land attack, the unit
+  ADR-991 left out as a tech), cruise missiles (1983; naval attack). None nuclear, none needing a nuclear tech.
+- **The cap:** 64 of the 64 bits (`MAX_TECHS`, a nation's `tech0`/`tech1`). A later tech needs the columns widened,
+  a change of the save's layout (a format step); none is planned.
+- **Measured** (`tools/diag/techsBy.ts`, seed 1938 from the 1975 start to the 1991 end): the six great powers, Italy,
+  Japan and East Germany know all six; the Netherlands 3, India 2; 145 living nations none. Nothing is researched
+  before its year: the pin (seed 99, 1938-39) and 1938-74 unchanged; 1975's two techs can be begun in 1975.
+
 ### ADR-1047 · 2026-11-14 · accepted — R80d: the replay to 1991, its new nations dormant
 - **The end** moves to 31 December 1991 with no new event yet (1976-91 steered with nothing scheduled, as R71b did
   for 1963-75); the card says "the end of 1991". The replay tests to the end get an hour (`historyTrack1938h*`).
