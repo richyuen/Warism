@@ -261,3 +261,11 @@
 - `worldInvariants` exports `hourChecks` (the hourly rule sets on a world the caller steps). `tools/diag/breakup.ts`
   on seeds 1-4 (the three events on the 1975 track's last day): 0 broken lines to 30 days after the end.
 - No timeline event uses `forces` yet: the pin and 1938-75 stand. Tick: nothing new runs per hour.
+
+## 2026-11-14 — R80d: the replay to 1991, its new nations dormant (ADR-1047)
+
+- 44 nations added dormant to `data/scenarios/1938h/` (nations, flags) and `en.json` (30 states of 1976-91, 14 rebel
+  movements; written by a script from `docs/research/1976-91.md`'s table); the end 1991-12-31, no new event.
+- 1938-75 unchanged: the 30 December 1975 world of seeds 1938 and 1 hashes the same on HEAD (a worktree) and this tree.
+- `npm run saves` to 1991: 7 min 13 s, 54 starts (1991's: 158 nations living, the powers USA SOV ENG FRA PRC FRG ITR),
+  63 MB. The replay tests' timeouts an hour.

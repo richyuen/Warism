@@ -26,8 +26,8 @@ describe('the historical track checked to its end (ROADMAP R62k)', () => {
     const members = (leader: string): string[] | undefined => run.handover.get(leader);
     expect(members('USA')).toEqual(['BEL', 'DEN', 'ENG', 'FRA', 'FRG', 'GRE', 'ICE', 'ITA', 'LUX', 'NED', 'NOR', 'POR', 'TUR', 'USA'].sort());
     expect(members('SOV')).toEqual(['BUL', 'CZS', 'GDR', 'HUN', 'MON', 'POL', 'ROM', 'SOV'].sort());
-    // To 1975 since R71b (ADR-993): a longer run than the default timeout.
-  }, 1_800_000);
+    // To 1991 since R80d (ADR-1047; 1975 since R71b, ADR-993): a longer run than the default timeout.
+  }, 3_600_000);
 
   it('a war the timeline does not have is found', () => {
     const [swe, swi] = [TAGS_1938H.indexOf('SWE') + 1, TAGS_1938H.indexOf('SWI') + 1];

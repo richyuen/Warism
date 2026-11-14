@@ -68,6 +68,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1047 · 2026-11-14 · accepted — R80d: the replay to 1991, its new nations dormant
+- **The end** moves to 31 December 1991 with no new event yet (1976-91 steered with nothing scheduled, as R71b did
+  for 1963-75); the card says "the end of 1991". The replay tests to the end get an hour (`historyTrack1938h*`).
+- **Nations** (44, dormant; `docs/research/1976-91.md`'s table and its rebels): the 30 states of 1976-91 (Seychelles
+  to Tajikistan, the eleven Soviet successors beside Russia, which is the Soviet Union renamed), and 14 rebel movements,
+  each a nation born on the land it holds (the mujahideen, the Contras, the FMLN, RENAMO, the SPLA, the LTTE, the NPFL,
+  the RUF, the EPRDF, the USC, Transnistria, Nagorno-Karabakh, the Krajina, Chechnya; GUNT is FROLINAT's FRO, reused).
+  Zimbabwe is RHO renamed and Eritrea's EPLF the ELF, both in already. Colours distinct from every other nation's; our
+  own simplified flags; tags none of 1938's.
+- **Measured:** 1938-75 unchanged (seeds 1938 and 1 on 30 December 1975, the old tree and this one: the same hashes of
+  owner, controller, formations, the living and gold); the pin unchanged (1938h is not the pin's scenario).
+  `npm run saves` to 1991: 7 min 13 s locally (6 min 17 s to 1975), 63 MB for 54 starts (41 MB).
+
 ### ADR-1046 · 2026-11-14 · accepted — R80c: a breakup's forces (`born` with `forces`); the unions by `annex`
 - **Context.** ADR-1031: the Soviet Union's army, navy and air divided on 26 December 1991 by the land they stand on,
   its arsenal Russia's alone (answer 2); Germany and Yemen unite in 1990. A `born` moved land alone: the giver's

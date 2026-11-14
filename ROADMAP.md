@@ -205,6 +205,11 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
   - [ ] R80d The nations of 1976-91 added dormant (the Soviet successors, Macedonia, Namibia, Zimbabwe, Eritrea's and
     the period's rebel movements), the end moved to 31 December 1991 with no new event. AT: 1938-75 unchanged; the
     yearly starts to 1991 built and their time on the Pages workflow measured (the deploy within its limit).
+    Done (ADR-1047): 44 nations dormant (30 states, 14 rebel movements; Zimbabwe is RHO renamed, Eritrea's front ELF,
+    both in), their colours distinct, simplified flags, names; the end 1991-12-31; the card says 1991. 1938-75
+    unchanged: seeds 1938 and 1 on 30 December 1975, HEAD and this tree at once, owner, controller, formations
+    (2,414 and 2,381: nation, place, strength), the living and the treasuries hash the same. `npm run saves` to 1991:
+    7 min 13 s locally (6 min 17 s to 1975), 54 starts, 63 MB (41 MB); the Pages run in PROGRESS.
   - [ ] R80e Later techs (about 1976-91) as stat upgrades of the existing units (or the unit ADR-1031's answer 4 names).
     AT: the techs held by 1991 by the great powers and by few new states; the pin moved only as the techs explain.
   - [ ] R80f 1976-80: Angola's war and Cuba's troops, the Ogaden, Vietnam into Cambodia and China into Vietnam, Uganda
