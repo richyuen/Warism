@@ -82,3 +82,15 @@
   leave the undone burst's ruins and fallout drawn. Non-blocking R68-N1-N5. Batch 25 seen working (R81a's bar ×1.17,
   R81c-e, g; R81h's answer borne out: frames 59-60 at 120 m/px). Filed as Batch 26, R82a-f, before Batch 25's R81i;
   the critic runs again when no batch is open (ADR-1039). HEAD had moved by two document commits (ADR-1037, ADR-1039).
+
+## 2026-11-14 — R82a: Undo and load redraw the burst layers (R68-B1, blocking)
+
+- Cause as the critic said: `server.ts` sent fallout and ruins only while the world or the last sent had some, and
+  `loaded()`/`startSim` reset the sent counts to -1, so an empty layer was never sent and the page kept the burst's.
+  Now the counts are `Infinity` after a load or a start: both layers go once, empty too, then by their change as before.
+- `tests/e2e/godUndoPicture1938.spec.ts` (the critic's `c68_undo2` and `c68_loadruins` as a spec, its 40-over pixel
+  measure in the map clear of the bars): nuke, revolt, nation, city and raze on 41211, each act undone, the picture
+  against the one before: **0 px** each (before the fix the nuke left 13,391 px); a save of before a burst loaded over
+  the game that had it, against the same save in a fresh page (41203): **0 px** (before: 13,298). A city's name that
+  takes its other free place after the load is left out of the count (its two boxes), and every city named before must
+  be named again: a layout matter, not the world's.

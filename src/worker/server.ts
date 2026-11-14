@@ -206,9 +206,9 @@ export class SimServer {
   private labelVersion = -1;
   private lastLabelMs = -1;
   private unrestVersion = -1;
-  /** The fallout last sent (PLAN 6.3c): its day and how many cells, -1 for none sent. */
+  /** The fallout last sent (PLAN 6.3c): its day and how many cells; Infinity after a load, to send it once (R82a). */
   private falloutSent = { day: -1, cells: -1 };
-  /** The ruins last sent (PLAN 7.11b): their day and how many bursts, -1 for none sent. */
+  /** The ruins last sent (PLAN 7.11b): their day and how many bursts; Infinity after a load, to send them once (R82a). */
   private ruinsSent = { day: -1, count: -1 };
   /** The sea control last sent (PLAN 4.7a): the zones' object and the holders, as a key. */
   private seaZonesSent: unknown = null;
@@ -281,8 +281,9 @@ export class SimServer {
     this.newsFrom = -1;
     this.labelVersion = -1; // the controller layer was replaced wholesale
     this.unrestVersion = -1;
-    this.falloutSent = { day: -1, cells: -1 };
-    this.ruinsSent = { day: -1, count: -1 };
+    // Sent once whatever the world holds (R82a, critic run 68's R68-B1): an empty layer too, or the page keeps the last world's.
+    this.falloutSent = { day: -1, cells: Infinity };
+    this.ruinsSent = { day: -1, count: Infinity };
     this.seaZonesSent = null;
     this.seaHoldersSent = '';
     // The loaded game's holders, at once (PLAN 5.8n); `airShown` outlives it, as `seaShown`.
@@ -620,8 +621,9 @@ export class SimServer {
     this.labelVersion = -1;
     this.lastLabelMs = -1;
     this.unrestVersion = -1;
-    this.falloutSent = { day: -1, cells: -1 };
-    this.ruinsSent = { day: -1, count: -1 };
+    // Sent once whatever the world holds (R82a, critic run 68's R68-B1): an empty layer too, or the page keeps the last world's.
+    this.falloutSent = { day: -1, cells: Infinity };
+    this.ruinsSent = { day: -1, count: Infinity };
     this.seaZonesSent = null;
     this.seaHoldersSent = '';
     this.airZonesSent = null;

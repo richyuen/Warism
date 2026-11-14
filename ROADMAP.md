@@ -29,7 +29,7 @@ Rules:
 
 ## Batch 26 — critic run 68's issues (2026-11-14; RELEASES step 2, ADR-1005, ADR-1039: done with the open batches before the critic runs again)
 
-  - [ ] R82a (R68-B1, blocking; God Mode 7) Undo, and any load, leaves the undone burst's ruins and fallout drawn: the
+  - [x] R82a (R68-B1, blocking; God Mode 7) Undo, and any load, leaves the undone burst's ruins and fallout drawn: the
     worker sends the fallout and ruins layers only when the world or the last sent had some, and `loaded()` resets the
     sent counts, so an empty layer is never sent and the page keeps the old one. After a load or an Undo both layers
     are sent once, empty too. AT: the critic's `c68_undo2.mjs 41211` (nuke undone: 0 px differing from before) and
