@@ -289,3 +289,4 @@
 - R78b (ADR-1025): a war across the sea costs 0.1 per 1,000 km to the target's capital: no Japanese declaration on a
   European state on the critic's ten seeds, 2 declarations over 6,000 km (17). Pin 95d9261f; sweep limits 5 of 10.
 - R78c (ADR-1026): answered: the critic's out-of-battle sinkings are ships Japan's carriers sank, not its losses (270 → 185 in 3 years on 39061); `seaBattles` names the field `by`.
+- R78d (ADR-1027): answered: People's China's army after the track is worn by its wars (with the Soviet Union from day 420, a coalition from day 570) and rebuilt at 1 + income / 400 orders at a time.

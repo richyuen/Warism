@@ -71,10 +71,17 @@ once; no critic run after them).
     (`.cache/r76/jfleet.ts` 39061, 3 years): Japan's wings sank 87 (44 with no battle anywhere, in the Red Sea, the
     Black Sea, the Adriatic), and Japan's own sea strength went from 270 to 185. The AT's measure on HEAD: 39061 44,
     32061 54 (under 60), none in the Channel. The tool's field renamed `by`, its line and `docs/TOOLS.md` saying whose.
-  - [ ] R78d R67-N4: People's China's army collapses after the track (about 650k to 18-90k within two years on 37601,
+  - [x] R78d R67-N4: People's China's army collapses after the track (about 650k to 18-90k within two years on 37601,
     37603, 38601 and 1938: it attacks India and is struck by the Soviet Union). AT: `critic/scripts/c67_atx` kind of
     run on those four: its army after two years at least a third of its end strength, or the rule that drives the
     collapse named and the case answered in DECISIONS.
+    Answered (ADR-1027), on HEAD's 1938 (`.cache/r76/ccp.ts`, `tools/diag/armyGates.ts` on days 120, 480, 600): the
+    track leaves People's China 651k men in 158 formations on an income of 492. It declares on Pakistan, Burma, Vietnam,
+    Korea and the Philippines in its first year; the Soviet Union and Mongolia are at war with it from day 420, Britain,
+    France and three more from day 570: 425k on day 570, 86k on day 660, 51k on day 720. It rebuilds at the economic
+    AI's pace, 1 + income / PARALLEL_INCOME (400) orders in training (2, then 1 as its income falls to 353): the gate on
+    day 120 gold (1,456 against a division's 1,001 and the reserve), on days 480 and 600 slots, its two orders due in
+    7-68 days. No rule broken: an army the track set, worn by the wars it chose and the two it met.
   - [ ] R78e R67 small: (1) Uranus not engaged at its hour on 39701 (both engaged 9 of 28 samples); (2) the 1958 burst
     on Hokkaido named for Nevelsk, across the strait; (3) Germany's 1938 flag told from Poland's only by a 2-px band at
     250 m/px; (4) the Land ranking counts owners (Germany at its height not in the 1942 top 15) and has no unit. AT:

@@ -931,3 +931,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   strength. Its carriers strike in the Red Sea, the Black Sea and the Adriatic: far, but sinking, not sunk.
 - **Decision.** No rule change; the tool's field named `by` and its report line and TOOLS.md say whose. The AT's numbers
   on HEAD are met (44 and 54, none in the Channel), though they measure Japan's carriers' hits.
+
+### ADR-1027 · 2026-11-13 · accepted — R78d: People's China after the track, answered
+- **Context.** R67-N4: People's China's army from about 650k at the track's end to 18-90k within two years on 37601,
+  37603, 38601 and 1938 (it attacks India, is struck by the Soviet Union).
+- **Read.** On HEAD's 1938: 651k on an income of 492 at the end; its own wars on its neighbours in the first year, the
+  Soviet Union's and Mongolia's from day 420 and a coalition of Britain, France and three more from day 570, 340k lost
+  in 90 days. Its rebuilding is bounded by `PARALLEL_INCOME`: 1 + income / 400 orders in training (2, then 1), the
+  orders delivered in their time. The army is the track's (ADR-1015's focus eases declarations, not the AI's choice of
+  war); its economy is 1953 China's.
+- **Decision.** No rule change. A floor on a power's army, or slots by army size rather than income, would hold a
+  track-made army the economy cannot pay for; the free world after the track plays on from what the track left.
