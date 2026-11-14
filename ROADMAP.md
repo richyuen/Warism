@@ -243,8 +243,15 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
     `historyMatch1938h` (to the track's end, `state91`) and `historyTrack1938h` with seeds 1-5 green, no warning. The
     arsenals at the end CCP, ENG, FRA, SOV (Russia), USA: no warhead to a successor (answer 2); the handover NATO and
     the CIS of eleven.
-  - [ ] R80j The world after 1991: the blocs, the historical focus and aid re-measured from the 1991 handover, as R71g;
+  - [x] R80j The world after 1991: the blocs, the historical focus and aid re-measured from the 1991 handover, as R71g;
     the start card's powers and previews for each new year. AT: as R71g's; the card's powers per year equal the
     deployed `years.json`.
+    Done (ADR-1054; `afterTrack.ts`, seeds 1938, 1, 2, 20 years from the 1991 handover): NATO the bloc, whole on
+    1938 and 2 (14 of 14), 13 on seed 1 (Turkey, in year 9, taken by its own puppet Iran's rising: a war of
+    independence calls no ally, PLAN 3.8f; `callWhy.ts`); the CIS 11 at the end, 7 after 20 years (outside the lasting
+    rule, answer 3); the United States and Russia opposed 0, 662 and 0 days (seed 1: two American wars on Cuba, Russia
+    beside it; outside deterrence, answer 3); 355-379 wars declared (after 1975: 354-499); no aid (no other bloc to
+    aid against). The card's powers per year: the deployed `years.json` equal to the local build, 54 of 54 years by
+    hash and powers (1991: USA SOV ENG FRA DEU PRC ITR); the previews of 1990 and 1991 served.
   - [ ] R80k (ADR-1031's answer 5) The dominions free on their date in the track's data, the 1938 start
     unchanged. AT: Canada, Australia and South Africa no one's puppets at the yearly starts after it; the replay tests.

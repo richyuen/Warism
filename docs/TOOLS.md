@@ -22,7 +22,15 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
 - `npx tsx tools/diag/afterTrack.ts [seed] [years = 20] [out.json]`: the world after 1938h's track ends: its
   alliances, great and nuclear powers, then every war declared, those between great powers and between blocs, the
   leaders' men and disbandings monthly for five years. Saves the world at the track's end to
-  `.cache/afterTrack_<seed>.sav.gz` and loads it from there after (R67a; ~10 min the first time).
+  `.cache/afterTrack_<seed>.sav.gz` and loads it from there after (R67a; ~10 min the first time). The save is keyed by the seed alone: delete it after a
+  change of the timeline or the rules, or it measures the old end (R80j).
+- `WATCH=TUR,CUB npx tsx tools/diag/afterTrackWhy.ts [seed = 1] [years = 20]`: from `afterTrack.ts`'s saved world, each
+  member that leaves a bloc of the track's end (living, its alliance, who holds its capital, its wars) and each war
+  with the blocs' leaders on opposite sides; `WATCH` prints each change of those nations' wars with each side's men
+  (R80j).
+- `npx tsx tools/diag/callWhy.ts <seed> <day> <attacker> <target> <who>`: from the same save, the hour before a
+  declaration: `who`'s alliance and the blocs, truces, wars, guarantees, overlords, and `callSides`' sides; that
+  hour's world kept in `.cache/callWhy_<seed>_<day>.sav.gz` (R80j).
 - `npx tsx tools/diag/lookFps.ts <seed> <save.bin> [out.json]` (after `npm run build` and `npx vite preview --port
   5354 --host 127.0.0.1`; `BASE` for another port): a save at Max, at 3,000 to 30 m/px, three pairs of the two looks:
   the view's draws a second, then a draw forced on every frame (frames a second, gaps, the draw's time). The camera

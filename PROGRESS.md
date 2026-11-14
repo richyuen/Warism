@@ -309,3 +309,10 @@
 - 78 events and the map of 1991-12-30; the identities DEU, RUS and the CIS's name; the starts rebuilt with R80h's.
 - From the 1990 start: 99.80 % whole, 99.6 % right, nothing passed over. `historyMatch1938h` to the end (`state91`);
   `historyTrack1938h` (the handover NATO and the CIS of eleven) and seeds 1-5 green, no warning, on the first run.
+
+## 2026-11-14 — R80j: the world after 1991 measured (ADR-1054)
+
+- `afterTrack.ts` on seeds 1938, 1, 2 for 20 years from the 1991 handover: NATO whole but seed 1's Turkey (its puppet
+  Iran's rising), the CIS 11 to 7, the leaders opposed only on seed 1 (Cuba's wars), 355-379 wars, no aid.
+- The deployed `years.json` equal to the local build (54 years); the previews served. Tools `afterTrackWhy.ts` and
+  `callWhy.ts`.

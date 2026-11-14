@@ -68,6 +68,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1054 · 2026-11-14 · accepted — R80j: the world after 1991 measured
+- **Measured:** see ROADMAP R80j. As after 1975 (ADR-998) but by ADR-1031's answer 3: one lasting bloc (NATO), the
+  CIS a pact the deterrence, lasting and aid rules do not cover, so its members' leaving and Russia's wars beside
+  the United States' enemies are the rule's, not a fault.
+- **Found:** NATO's one loss (seed 1, Turkey) is Iran's rising: Turkey had made it its puppet in year 2; a puppet's
+  war on its overlord calls no ally (PLAN 3.8f), and Turkey, its army 117k at the handover and 53k then, fighting
+  Spain's 159k, fell in 21 days. No rule changed. Russia dropped from the great powers within a few years on two
+  seeds (the successors' share of the Soviet forces, ADR-1046), Belarus one on seed 1938 in year 4.
+- **Tools:** `tools/diag/afterTrackWhy.ts`, `tools/diag/callWhy.ts` (`docs/TOOLS.md`). `afterTrack.ts`'s save is
+  keyed by the seed alone; the 1975 ones were deleted for this measure.
+
 ### ADR-1053 · 2026-11-14 · accepted — R80i: 1990-91 in the replay
 - **Events** (`docs/research/1976-91.md`'s 1990-91 rows; 78): the Contras' end (Chamorro; `annex`); Namibia; Yemen
   united (`annex`, the research's FED); Iraq's war on Kuwait and its annexation, Desert Storm (the United States,
