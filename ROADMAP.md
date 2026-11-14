@@ -91,6 +91,11 @@ Rules:
     Answered in BLOCKERS (2026-11-14): the critic's number is the view's draws over an empty spot (48.8-57.5 here);
     the browser's frames 60.0-60.2, a forced draw 0.7 ms and 58.8-60 frames/s. The view skips a draw when nothing on
     screen can change (`frameAt`). `tools/diag/lookFps.ts` `FIXED=1` reads it the critic's way.
+  - [ ] R81i The tags at a battle (semantic zoom; ADR-1037, the user's decision): at 250 m/px and nearer, with an
+    engaged formation in view, a formation not in contact has a one-line tag (flag and strength); the engaged ones,
+    and a selected or hovered one, keep the whole tag; elsewhere as now. AT: on the critic's case and two seeds
+    (`tools/diag/battleTags.ts`), the tags' area in view at least 40 % less, every engaged formation's tag whole, 0
+    overlapping, each formation in view tagged; shots before and after looked at.
 
 ## Batch 24 — the replay to 1991 (the user's request, 2026-11-14; ADR-1031, after Batch 25)
 

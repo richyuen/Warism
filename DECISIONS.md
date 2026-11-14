@@ -80,7 +80,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Read after:** median 0 px at 250 and 3,000 m/px on 39927, 35127 and new 39929 (p90 the samples whose planes are
   out of the view). The critic's probes that index sortie rows by 11 need 12.
 
-### ADR-1037 · 2026-11-14 · proposed, the user's decision — R81f met on HEAD; fewer tags at a battle?
+### ADR-1037 · 2026-11-14 · accepted (the user's decision) — R81f met on HEAD; the tags not in contact one line at a battle
 - **Read** (`tools/diag/battleTags.ts`, the critic's `c_battle` case: Germany at war with Poland, the camera at
   250 m/px on the first engaged German armour, day 4, and on its infantry; seeds 39915, 7781, 39917, alike to the
   element): 25 tags for the 25 formations in view, none overlapping, none left unplaced, the 10 engaged all named,
@@ -90,6 +90,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **The question:** whether, at 250 m/px and nearer with a battle in view, the tags of formations not in contact
   should fade to their flag and strength (one line, no name) or go, leaving the fighting ones whole. It shows less
   (a reserve's name is read by a tap), so it is the user's to choose; nothing is changed until then.
+- **The user:** asked for a recommendation, then "Yes" to it: at 250 m/px and nearer, with an engaged formation in
+  view, a tag of a formation not in contact is one line, its flag and strength (no name); the engaged ones keep the
+  whole tag; a selected or hovered formation's tag whole. Not hidden (a reserve's place and strength are what is
+  read next), not faded at full size (the space is the crowding). Zoomed out, or no battle in view, as now. ROADMAP
+  R81i, after the critic's run.
 
 ### ADR-1036 · 2026-11-14 · accepted — R81e: the relations graph names everyone tied; a truce its own line
 - **Read first** (`tests/e2e/relationsNamed1938.spec.ts` on HEAD, 39939/41/43 a year on): of the 37-43 nations at
