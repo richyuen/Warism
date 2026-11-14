@@ -27,6 +27,27 @@ it("the track's rows by note: the player's words, one an event", () => {
   expect(notes.filter((n) => n!.includes('India')).length).toBeLessThanOrEqual(2);
 });
 
+// ROADMAP R82e (critic run 68, R68-N3: "Next, 25 July 1944: D-Day: the Normandy beachhead" from 2 to 25 July): a stage
+// with a window of its own (`fightDays`) is dated at its handover and the Next line names it from the window's middle,
+// so its note names what happens at the handover, not what opened the window: its name (before a colon) is no named
+// event's of the window or the day before it.
+it("a stage with its own window is named for its handover, not for what opened its window", () => {
+  const t = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }).world.track!;
+  const name = (n: string): string => n.split(':')[0]!.trim();
+  const day = (d: string): number => Date.parse(`${d}T00:00:00Z`) / 86_400_000;
+  const stages = t.events.filter((e) => e.kind === 'occupy' && e.fightDays !== undefined && e.note !== undefined);
+  expect(stages.length).toBeGreaterThan(0);
+  for (const s of stages) {
+    const end = day(s.date);
+    const open = end - (s.kind === 'occupy' ? s.fightDays! : 0) - 1;
+    for (const e of t.events) {
+      if (e === s || e.note === undefined || STEERING_KINDS.has(e.kind)) continue;
+      const d = day(e.date);
+      if (d >= open && d < end) expect(name(e.note), `${s.date} "${s.note}" beside ${e.date} "${e.note}"`).not.toBe(name(s.note!));
+    }
+  }
+});
+
 // ROADMAP R64c (critic run 62, R62-N3): an arrival (`forces`) is told once, by whose it is; its repeats have no name
 // ("The mobilisation" ×22 before, whose not said).
 it("the track's arrivals: each told once, by whose", () => {

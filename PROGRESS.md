@@ -126,3 +126,13 @@
 
 - R82g (no AI warhead intercepted, 0 of 47), R82h (the two land measures' names; France's and the United States'
   chart blues), R82i (the ground-zero mark over the struck stack's counter), after R82e-f.
+
+## 2026-11-14 — R82e: the Normandy stage named for its handover (R68-N3)
+
+- The one stage with a window of its own (`fightDays` 50) is dated at its handover, 25 July, so from 2 July the Next
+  line read "Next, 25 July 1944: D-Day: the Normandy beachhead", and its History row on 25 July said D-Day too. Its
+  note is now "The Normandy beachhead held: Cobra breaks out" (a note is text only: no hash, no start moves).
+- `c68_x_stage normandy 1944 1944-06-05 … 50` on the dev server (the yearly starts rebuilt to 1944 first: stale since
+  R82b) and `c68_nextline`: no day 6 June-25 July names D-Day (was 24 days), 0 page errors; the line fits the bar at
+  1600 px. `tests/unit/trackTold1938h.test.ts`: a stage with its own window has no name (before a colon) of a named
+  event of its window or the day before; red on the old note, green now.

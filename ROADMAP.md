@@ -43,8 +43,12 @@ Rules:
   - [x] R82d (R68-N2) European powers at war with Brazil in 1938: France takes Brazil's capital in two years on 4 of 5
     seeds. AT: `c68_farConquests.ts 0 6161,41161,41163,41165,41167`, France takes it on at most 1; the first-60-day
     declarations over 6,000 km on 41821-41839 at most run 68's elsewhere.
-  - [ ] R82e (R68-N3) The Next line names D-Day's stage for what follows 6 June ("the beachhead secured"), not "D-Day"
+  - [x] R82e (R68-N3) The Next line names D-Day's stage for what follows 6 June ("the beachhead secured"), not "D-Day"
     from 2 to 25 July. AT: `c68_nextline.mjs` on the Normandy stage: no line names D-Day after 6 June.
+    Done: the stage (dated at its 25 July handover, its 50-day window from 5 June) is "The Normandy beachhead held:
+    Cobra breaks out". The critic's `c68_x_stage` 5 June + 50 days and `c68_nextline`: 0 of 50 days name D-Day (was
+    24, 2-25 July), 0 page errors; shot at 6 July looked at. `trackTold1938h.test.ts`: a stage with its own window is
+    not named as an event of its window (red on the old note).
   - [ ] R82f (R68-N5) Pile-ons at day 365: Germany against the Netherlands with 9-13 on the Dutch side on 4 of 5 new
     seeds. AT: `c68_piles.ts 365 --plain` on 39139-39147 and 41139-41147: no war over 4:1.
   - [ ] R82g (run 68's AI nukes "not 9"; the user's choice, 2026-11-14) No AI warhead intercepted: 47 launches on
