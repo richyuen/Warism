@@ -154,7 +154,21 @@ test('ROADMAP R11: the relations graph names a war line\'s side, and zooms on a 
   await page.getByTestId('relations-zoom-in').click();
   await page.getByTestId('relations-zoom-in').click();
   await expect(graph).toHaveAttribute('data-zoom', '2.25');
-  expect(await labels(), 'every nation named at 2.25×').toBeGreaterThan(before);
+  // Every nation in view named (R81e: the whole graph names all those at war or allied and the rest as room allows, so
+  // zooming in cannot name more than it; it names every one in its view).
+  const unnamed = await page.evaluate(() => {
+    const g = document.querySelector('[data-testid="relations-graph"]')!.getBoundingClientRect();
+    return [...document.querySelectorAll('.relations-nation')]
+      .filter((n) => {
+        const r = n.getBoundingClientRect();
+        const [x, y] = [r.left + r.width / 2, r.top + r.height / 2];
+        return x >= g.left && x <= g.right && y >= g.top && y <= g.bottom;
+      })
+      .map((n) => n.getAttribute('data-testid')!.replace('relations-node-', ''))
+      .filter((k) => !document.querySelector(`[data-testid="relations-label-${k}"]`));
+  });
+  expect(unnamed, 'every nation named at 2.25×').toEqual([]);
+  expect(before, 'the whole graph named').toBeGreaterThan(0);
   expect(await size(), 'a name readable, zoomed in').toBeGreaterThanOrEqual(10);
   await page.screenshot({ path: path.join(out, 'r11-phone-graph-zoomed.png') });
   // A drag moves the view; it opens nothing.

@@ -68,6 +68,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1036 · 2026-11-14 · accepted — R81e: the relations graph names everyone tied; a truce its own line
+- **Read first** (`tests/e2e/relationsNamed1938.spec.ts` on HEAD, 39939/41/43 a year on): of the 37-43 nations at
+  war or allied, 20-27 unnamed in the whole graph at a desk and on a phone. Below zoom 2 a node was named only if
+  large or with four lines. The truces all had their dashed line; one with a nation also tied otherwise (Lithuania,
+  Germany's puppet, in the critic's shot) lay exactly under the other line, so only the footer told it.
+- **Decision:** every nation a label candidate, ranked: the chosen, the focus, those at war or allied, the rest by
+  size. `placeLabels` tries sixteen directions at eight distances (a leader to one off the rim) and puts no label over
+  another nation's node. The nodes shown are drawn stretched to fill the drawing (each axis at most 2.5 times; the
+  layout's forces have one size at any height), and on a phone (≤ 600 px) the drawing is 900 high, not 440 (the panel
+  then about 490 px of graph). Two or more lines of one pair are bent apart (`BEND_PX`).
+- **A test changed with the feature:** R11's phone case (`heroesRead1938.spec.ts`) required zooming in to name more
+  than the whole graph; the whole graph now names all 72, so it checks what its message says, every nation in the
+  zoomed view named.
+- **Read after:** every case named, none overlapping, every truce between living nations its own line (12-18).
+
 ### ADR-1035 · 2026-11-14 · accepted — R81d: the bar passed on HEAD; the label flag framed light
 - **Read first** (`tools/diag/flagPairs.ts`, 39915 day 5, 250 m/px, the flags read from the overlay as drawn): Germany's
   and Poland's flags differ in 60 % of their pixels by over 60, over R81d's bar (30 %) with no change. The bar, my own,

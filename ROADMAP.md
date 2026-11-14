@@ -64,9 +64,14 @@ Rules:
     light (`TAG_FLAG_EDGE`): the edge 100 %, the pixels 70 %. Under 30 % in year 1, listed: 39915 SWI-TUN 13, SOV-TUR
     16, LAT-SOV 23; 7019 TUR-OMN 8, SOV-TUR 16, ALB-TUR 21, LAT-SOV 23, CZS-POL 25 (red flags with a white device, the
     pictures the data gives). `tools/diag/flagPairs.ts`; shots looked at.
-  - [ ] R81e The relations graph (UI/UX): more nodes named, and a truce on its own edge, not only in the footer. AT: on
+  - [x] R81e The relations graph (UI/UX): more nodes named, and a truce on its own edge, not only in the footer. AT: on
     39939 and two seeds, desk 1600 × 900 and phone 390 × 844: every nation at war or in a pact named (or the 15
     largest, whichever more), no two labels overlapping; each truce's edge drawn as a truce.
+    Done (ADR-1036): on HEAD 20-27 of 37-43 at war or allied went unnamed. Every nation a candidate (those at war or
+    allied first), sixteen directions at eight distances with a leader, no label over another nation; the nodes
+    shown stretched to fill the drawing; a phone's drawing 900 high, not 440. Lines of one pair bent apart (a puppet's
+    truce lay under its bond). 39939, 39941, 39943 a year on, desk and phone, whole and on Germany: every one named,
+    none overlapping, every truce its own line (`tests/e2e/relationsNamed1938.spec.ts`).
   - [ ] R81f A battle's labels at 250 m/px (semantic zoom; 39915 day 5): no label over another, and each engaged
     formation's (or its stack's) shown. AT: the overlaps counted on the critic's case and two seeds, 0; the labels'
     count no lower than the stacks in view.

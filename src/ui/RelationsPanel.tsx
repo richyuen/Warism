@@ -8,7 +8,10 @@ import { placeLabels, type LabelItem } from './relationLabels';
 
 /** The drawing's own size (the SVG scales it to the panel). */
 const W = 640;
-const H = 440;
+/** The drawing's height: 440 beside W at a desk; on a phone's narrow panel taller (R81e: at 390 px wide the graph was
+ * 230 px high, and its names covered it), the room below the panel's head. */
+const H_WIDE = 440;
+const H_TALL = 900;
 
 /** Each kind's colour; a war's two sides apart. */
 export const EDGE_COLOR: Record<EdgeKind, string> = { war: '#c0392b', alliance: '#2e9e5b', guarantee: '#3498db', puppet: '#9b59b6', truce: '#b4b4ac' };
@@ -26,8 +29,6 @@ export interface RelationsPanelProps {
 
 /** How far the graph zooms in (ROADMAP R11: on a phone the whole world's graph is too small to read). */
 const MAX_ZOOM = 6;
-/** From this zoom every nation is named. */
-const NAME_ALL_ZOOM = 2;
 
 /** The part of the drawing in view: its middle and zoom (1: all of it). */
 interface Zoom {
@@ -35,15 +36,36 @@ interface Zoom {
   cx: number;
   cy: number;
 }
-const WHOLE: Zoom = { z: 1, cx: W / 2, cy: H / 2 };
+const whole = (h: number): Zoom => ({ z: 1, cx: W / 2, cy: h / 2 });
+
+/** The margin `fitted` leaves, drawing units: a node's radius and a short label. */
+const FIT_MARGIN = 28;
+/** The most `fitted` stretches an axis. */
+const MAX_FIT = 2.5;
+
+/** `pos` stretched on each axis to fill `w × h` less FIT_MARGIN (R81e), at most MAX_FIT times, and centred. */
+function fitted(pos: ReadonlyMap<string, Pos>, w: number, h: number): Map<string, Pos> {
+  let [x0, y0, x1, y1] = [Infinity, Infinity, -Infinity, -Infinity];
+  for (const p of pos.values()) [x0, y0, x1, y1] = [Math.min(x0, p.x), Math.min(y0, p.y), Math.max(x1, p.x), Math.max(y1, p.y)];
+  // Each axis stretched to fill, at most MAX_FIT times (a few nodes are not thrown to the corners), and centred.
+  const sx = x1 - x0 > 1 ? Math.min(MAX_FIT, (w - 2 * FIT_MARGIN) / (x1 - x0)) : 1;
+  const sy = y1 - y0 > 1 ? Math.min(MAX_FIT, (h - 2 * FIT_MARGIN) / (y1 - y0)) : 1;
+  const [mx, my] = [(x0 + x1) / 2, (y0 + y1) / 2];
+  const out = new Map<string, Pos>();
+  for (const [k, p] of pos) out.set(k, { x: w / 2 + (p.x - mx) * sx, y: h / 2 + (p.y - my) * sy });
+  return out;
+}
 
 /** `zoom` kept inside the drawing: never further out than all of it, never past its edges. */
-function clampZoom(zoom: Zoom): Zoom {
+function clampZoom(zoom: Zoom, H: number): Zoom {
   const z = Math.max(1, Math.min(MAX_ZOOM, zoom.z));
   const hw = W / z / 2;
   const hh = H / z / 2;
   return { z, cx: Math.max(hw, Math.min(W - hw, zoom.cx)), cy: Math.max(hh, Math.min(H - hh, zoom.cy)) };
 }
+
+/** How far apart two lines of one pair are bent, screen px at their middle (R81e). */
+const BEND_PX = 9;
 
 /** A label's size on the screen, whatever the zoom (ROADMAP R34a: at 10 drawing units it was 6 px on a phone). */
 const LABEL_PX = 11;
@@ -83,7 +105,8 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
   const [focus, setFocus] = useState(0);
   const [said, setSaid] = useState<string | null>(null);
   // Zoom and pan (ROADMAP R11, R29-N8): the wheel, a pinch, a drag, and the buttons for a tap.
-  const [zoom, setZoom] = useState<Zoom>(WHOLE);
+  const [H] = useState(() => (typeof matchMedia === 'function' && matchMedia('(max-width: 600px)').matches ? H_TALL : H_WIDE));
+  const [zoom, setZoom] = useState<Zoom>(() => whole(H));
   const svg = useRef<SVGSVGElement>(null);
   // The drawing's width on the screen (labels keep one size on the screen: R34a).
   const [svgPx, setSvgPx] = useState(0);
@@ -117,7 +140,7 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
   const zoomBy = (f: number, p: { x: number; y: number } = { x: zoom.cx, y: zoom.cy }): void => {
     const z = Math.max(1, Math.min(MAX_ZOOM, zoom.z * f));
     const s = zoom.z / z;
-    setZoom(clampZoom({ z, cx: p.x + (zoom.cx - p.x) * s, cy: p.y + (zoom.cy - p.y) * s }));
+    setZoom(clampZoom({ z, cx: p.x + (zoom.cx - p.x) * s, cy: p.y + (zoom.cy - p.y) * s }, H));
   };
   const onWheel = (e: WheelEvent): void => {
     e.preventDefault();
@@ -145,7 +168,7 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
       if (Math.abs(dx) + Math.abs(dy) > 3) dragged.current = true;
       if (dragged.current) {
         const k = unitsPerPx();
-        setZoom(clampZoom({ ...zoom, cx: zoom.cx - dx * k, cy: zoom.cy - dy * k }));
+        setZoom(clampZoom({ ...zoom, cx: zoom.cx - dx * k, cy: zoom.cy - dy * k }, H));
       }
     }
     if (dragged.current || pointers.current.size === 2) pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
@@ -174,7 +197,7 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
     const next = layoutGraph(all, places.current, { width: W, height: H, steps: places.current.size === 0 ? 300 : 40 });
     places.current = next;
     return next;
-  }, [all]);
+  }, [all, H]);
   const shown: RelationGraph = useMemo(() => {
     const g = buildRelationGraph(nations, wars, kinds);
     if (focus === 0) return g;
@@ -184,6 +207,15 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
     const keep = new Set(edges.flatMap((e) => [e.from, e.to]));
     return { nodes: g.nodes.filter((n) => keep.has(n.key)), edges, untied: g.untied };
   }, [nations, wars, kinds, focus]);
+  // The lines of each pair of nodes, by index in `shown.edges` (R81e: two of a pair are bent apart).
+  const pairs = useMemo(() => {
+    const m = new Map<string, number[]>();
+    shown.edges.forEach((e, i) => {
+      const key = e.from < e.to ? `${e.from}|${e.to}` : `${e.to}|${e.from}`;
+      m.set(key, [...(m.get(key) ?? []), i]);
+    });
+    return m;
+  }, [shown]);
   const warById = useMemo(() => new Map(wars.map((w) => [w.id, w])), [wars]);
   // A nation's lines: one with many is named whatever its size (an empire's centre, a war's leader).
   const degree = useMemo(() => {
@@ -225,19 +257,30 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
     setKinds(next);
   };
   const sorted = [...nations].sort((x, y) => displayName(x.name).localeCompare(displayName(y.name)));
-  const at = (key: string): Pos => pos.get(key) ?? { x: W / 2, y: H / 2 };
+  // The nodes shown drawn stretched to fill the drawing (R81e: the forces' size is the same at any height, so a phone's
+  // taller drawing was left empty about the graph, and the graph on one nation sat in a corner); the places kept are
+  // the layout's own.
+  const drawn = useMemo(() => fitted(new Map(shown.nodes.flatMap((n) => (pos.has(n.key) ? [[n.key, pos.get(n.key)!] as const] : []))), W, H), [pos, shown, H]);
+  const at = (key: string): Pos => drawn.get(key) ?? { x: W / 2, y: H / 2 };
   // The labels (R34a): one size on the screen; those that would print over another left out, in order of
-  // importance (the one chosen, the focus, then the largest and most tied); zooming in names more.
+  // importance (the one chosen, the focus, those at war or allied (R81e), then the largest and most tied); zooming in
+  // names more.
   const k = W / zoom.z / (svgPx > 0 ? svgPx : W);
   const fontUnits = LABEL_PX * k;
+  const tied = new Set(shown.edges.filter((e) => e.kind === 'war' || e.kind === 'alliance').flatMap((e) => [e.from, e.to]));
   const labelled = shown.nodes
-    .filter((n) => n.kind === 'nation' && (zoom.z >= NAME_ALL_ZOOM || nodeRadius(n.weight) >= 12 || (degree.get(n.key) ?? 0) >= 4 || n.id === selected || n.id === focus))
-    .map((n) => ({ n, rank: n.id === selected ? 0 : n.id === focus ? 1 : 2 }))
+    .filter((n) => n.kind === 'nation')
+    .map((n) => ({ n, rank: n.id === selected ? 0 : n.id === focus ? 1 : tied.has(n.key) ? 2 : 3 }))
     .sort((a, b) => a.rank - b.rank || b.n.weight - a.n.weight || (degree.get(b.n.key) ?? 0) - (degree.get(a.n.key) ?? 0) || a.n.key.localeCompare(b.n.key));
   const items: LabelItem[] = labelled.map(({ n }) => ({ key: n.key, ...at(n.key), r: nodeRadius(n.weight), w: textPx(name(n.id)) * k, h: fontUnits }));
   const halfW = W / zoom.z / 2;
   const halfH = H / zoom.z / 2;
-  const labels = placeLabels(items, { x0: zoom.cx - halfW, y0: zoom.cy - halfH, x1: zoom.cx + halfW, y1: zoom.cy + halfH }, LABEL_GAP_PX * k);
+  const nodeBoxes = shown.nodes.map((n) => {
+    const p = at(n.key);
+    const r = n.kind === 'nation' ? nodeRadius(n.weight) : 8;
+    return { key: n.key, box: { x0: p.x - r, y0: p.y - r, x1: p.x + r, y1: p.y + r } };
+  });
+  const labels = placeLabels(items, { x0: zoom.cx - halfW, y0: zoom.cy - halfH, x1: zoom.cx + halfW, y1: zoom.cy + halfH }, LABEL_GAP_PX * k, nodeBoxes);
 
   return (
     <aside class="history-panel relations-panel" data-testid="relations-panel">
@@ -271,7 +314,7 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
         <button type="button" class="bar-btn" data-testid="relations-zoom-in" aria-label={t('relations.zoomIn')} title={t('relations.zoomIn')} disabled={zoom.z >= MAX_ZOOM} onClick={() => zoomBy(1.5)}>
           +
         </button>
-        <button type="button" class="bar-btn" data-testid="relations-zoom-reset" title={t('relations.zoomReset')} disabled={zoom.z <= 1} onClick={() => setZoom(WHOLE)}>
+        <button type="button" class="bar-btn" data-testid="relations-zoom-reset" title={t('relations.zoomReset')} disabled={zoom.z <= 1} onClick={() => setZoom(whole(H))}>
           {t('relations.zoomReset')}
         </button>
         <span class="relations-zoom-hint">{t('relations.zoomHint')}</span>
@@ -320,17 +363,27 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
           {shown.edges.map((e, i) => {
             const p = at(e.from);
             const q = at(e.to);
+            // Two or more lines of one pair (a puppet at truce with its overlord; R81e) bend apart, each its own.
+            const pair = e.from < e.to ? `${e.from}|${e.to}` : `${e.to}|${e.from}`;
+            const many = pairs.get(pair)!;
+            const j = many.indexOf(i);
+            const d0 = Math.hypot(q.x - p.x, q.y - p.y) || 1;
+            // The normal of the pair's line, one way whichever end it is drawn from.
+            const sgn = e.from < e.to ? 1 : -1;
+            const bend = many.length > 1 ? (j - (many.length - 1) / 2) * BEND_PX * k * sgn : 0;
+            const c = { x: (p.x + q.x) / 2 - ((q.y - p.y) / d0) * bend * 2, y: (p.y + q.y) / 2 + ((q.x - p.x) / d0) * bend * 2 };
             // A directed line ends at the rim of its target, where the arrow shows.
             const target = shown.nodes.find((n) => n.key === e.to);
             const r = target?.kind === 'nation' ? nodeRadius(target.weight) + 2 : 8;
-            const d = Math.hypot(q.x - p.x, q.y - p.y) || 1;
-            const end = { x: q.x - ((q.x - p.x) / d) * r, y: q.y - ((q.y - p.y) / d) * r };
+            const d = Math.hypot(q.x - c.x, q.y - c.y) || 1;
+            const end = { x: q.x - ((q.x - c.x) / d) * r, y: q.y - ((q.y - c.y) / d) * r };
+            const path = `M ${p.x} ${p.y} Q ${c.x} ${c.y} ${end.x} ${end.y}`;
             const color = e.kind === 'war' && e.side === 1 ? DEFENDER_COLOR : EDGE_COLOR[e.kind];
             const directed = e.kind === 'guarantee' || e.kind === 'puppet';
             return (
               <g key={`${e.kind}-${e.from}-${e.to}-${i}`} class="relations-edge" data-kind={e.kind} data-from={e.from} data-to={e.to} onClick={() => setSaid(edgeText(e))}>
-                <line x1={p.x} y1={p.y} x2={end.x} y2={end.y} stroke={color} stroke-opacity={e.kind === 'war' ? 0.75 : 1} stroke-width={e.kind === 'alliance' || e.kind === 'puppet' ? 2.5 : 1.8} stroke-dasharray={e.kind === 'truce' ? '5 4' : undefined} marker-end={directed ? `url(#rg-arrow-${e.kind})` : undefined} />
-                <line class="relations-hit" x1={p.x} y1={p.y} x2={end.x} y2={end.y} stroke="transparent" stroke-width="10" />
+                <path class="relations-line" d={path} fill="none" stroke={color} stroke-opacity={e.kind === 'war' ? 0.75 : 1} stroke-width={e.kind === 'alliance' || e.kind === 'puppet' ? 2.5 : 1.8} stroke-dasharray={e.kind === 'truce' ? '5 4' : undefined} marker-end={directed ? `url(#rg-arrow-${e.kind})` : undefined} />
+                <path class="relations-hit" d={path} fill="none" stroke="transparent" stroke-width="10" />
               </g>
             );
           })}
@@ -372,11 +425,23 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
           })}
         </g>
         <g class="relations-labels" style={{ fontSize: `${fontUnits}px`, strokeWidth: `${3 * k}px` }}>
-          {[...labels].map(([key, l]) => (
-            <text key={key} class="relations-label" data-testid={`relations-label-${key}`} x={l.x} y={l.y} text-anchor={l.anchor}>
-              {name(idOf(key))}
-            </text>
-          ))}
+          {[...labels].map(([key, l]) => {
+            // A label set off its node (R81e): a leader from the node's rim to the label's near edge.
+            const p = at(key);
+            const node = shown.nodes.find((n) => n.key === key);
+            const lx = l.x;
+            const ly = l.y - fontUnits * 0.3;
+            const d = Math.hypot(lx - p.x, ly - p.y) || 1;
+            const rim = (node ? nodeRadius(node.weight) : 8) + 1;
+            return (
+              <g key={key}>
+                {l.far ? <line class="relations-leader" x1={p.x + ((lx - p.x) / d) * rim} y1={p.y + ((ly - p.y) / d) * rim} x2={lx} y2={ly} stroke="rgba(220, 220, 210, 0.55)" stroke-width={k} /> : null}
+                <text class="relations-label" data-testid={`relations-label-${key}`} x={l.x} y={l.y} text-anchor={l.anchor}>
+                  {name(idOf(key))}
+                </text>
+              </g>
+            );
+          })}
         </g>
       </svg>
       <footer class="relations-footer" data-testid="relations-said">

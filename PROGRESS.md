@@ -49,3 +49,10 @@
 - The bar (30 % of pixels differing) read 60 % on HEAD; the fault was Germany's black third lost on the tag's dark
   ground (its edge seen: 0 %). The tag's flag framed light: edge 100 %, pixels 70 %; shots looked at. Pairs under the
   bar in year 1 listed (red flags with a white device, Latvia's against the Soviet Union's). The ten tag specs green.
+
+## 2026-11-14 — R81e: the relations graph names every nation at war or allied (ADR-1036)
+
+- HEAD left 20-27 of 37-43 such nations unnamed. All nations are candidates now (the tied first), the placer tries
+  sixteen directions at eight distances and covers no node; the shown nodes fill the drawing, 900 high on a phone. Two
+  lines of a pair bend apart, so a puppet's truce is seen. 39939/41/43, desk and phone, whole and on Germany: all
+  named, no overlap. R11's phone check now reads every nation in the zoomed view named. Relations specs 17/17.

@@ -894,7 +894,7 @@ textarea,
 .relations-war {
   cursor: pointer;
 }
-.relations-edge:hover line:first-child {
+.relations-edge:hover path:first-child {
   stroke-width: 4;
 }
 .relations-war text {
