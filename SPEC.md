@@ -1625,7 +1625,9 @@ production and research. `src/sim/ai/`.
   share of the world's strength plus its income plus its warheads, the start card's measure) and the seven largest
   navies. A target across the sea scores its utility less `SEA_KM_COST` (0.1) for each 1,000 km to its realm's capital
   from the nearest transport group, or to its nearest port if further (R78b). It declares on the best with probability
-  `DECLARE_P` (0.25) × aggression ÷ 100.
+  `DECLARE_P` (0.25) × aggression ÷ 100, unless the side `declareWar` would call against it (`callSides`) has over
+  `PILE_REALMS` (4) realms (nations that are no puppet) for each of its own: then on its next best so judged, or none
+  (R82f, ADR-1042).
 - **Threat pacts:** an unaligned nation whose neighbour of aggression ≥ `THREAT_AGGRESSION` (50) is over
   `THREAT_RATIO` (1.5) times stronger and not yet at war with it, with probability `ALLY_P` (0.3), joins
   the strongest neighbouring alliance without that neighbour that `canJoin` allows (a great power avoids

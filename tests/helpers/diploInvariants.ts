@@ -2,6 +2,7 @@ import { isMonthStart } from '../../src/shared/calendar';
 import { Refusal } from '../../src/shared/commands';
 import { EventKind } from '../../src/shared/events';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
+import { PILE_REALMS } from '../../src/sim/ai/strategic';
 import { Sim } from '../../src/sim/sim';
 import { FREE_ABOVE, PROTEST_FROM, puppetSystem, REVOLT_LOYALTY } from '../../src/sim/systems/puppets';
 import { declareWar, forceWar, whyNotWar } from '../../src/sim/systems/war';
@@ -22,6 +23,8 @@ import { realmWars } from './realmWars';
 //           PROTEST_FROM) and loyalty under REVOLT_LOYALTY the hour before, and is then at war with
 //           its old overlord; and every puppet so placed at a month's start rises, is freed or
 //           ends in that hour (ROADMAP R2, ADR-807).
+//   pile    no war the sim declares in its own hours (the AI's; God's and a player's are acts) sets over PILE_REALMS
+//           realms (nations that are no puppet) against each of the declarer's (ROADMAP R82f, ADR-1042).
 
 const tag1938 = (n: number): string => TAGS_1938[n - 1] ?? `#${n}`;
 /** The names in the lines: the 1938 tags, or the ids of a random world's nations (set per case). */
@@ -144,7 +147,23 @@ export class Breaks {
   }
 }
 
-/** Steps `s` by `ticks` hours, checking `exit` and `rise` every hour and `held` and `realm` each day. */
+/** The wars declared in the hour's `events` (`WarDeclared`, attacker and defender) that set over PILE_REALMS realms against the declarer's (R82f). */
+export function pileBreaks(w: World, events: number[]): string[] {
+  const out: string[] = [];
+  const nc = w.nations.cols;
+  const realms = (side: readonly number[]): number => side.filter((x) => nc.overlord[x] === 0).length;
+  for (let i = 0; i < events.length; i += 6) {
+    if (events[i + 1] !== EventKind.WarDeclared) continue;
+    const [a, d] = [events[i + 2]!, events[i + 3]!];
+    const war = w.wars.list.find((x) => x.sides[0][0] === a && x.sides[1][0] === d);
+    if (!war) continue;
+    const [ra, rd] = [realms(war.sides[0]), realms(war.sides[1])];
+    if (rd > PILE_REALMS * Math.max(1, ra)) out.push(`pile: ${tag(a)} declared on ${tag(d)}, ${ra} realms against ${rd}`);
+  }
+  return out;
+}
+
+/** Steps `s` by `ticks` hours, checking `exit`, `rise` and `pile` every hour and `held` and `realm` each day. */
 function stepChecked(s: Sim, ticks: number, breaks: Breaks, label: string): void {
   let before = membersOf(s.world);
   let bonds = bondsOf(s.world);
@@ -152,6 +171,7 @@ function stepChecked(s: Sim, ticks: number, breaks: Breaks, label: string): void
     const where = `${label} day ${Math.floor(w.tick / 24)}`;
     breaks.add(where, silentExits(w, before, bonds.overlord, w.out.events));
     breaks.add(where, riseBreaks(w, bonds, w.out.events));
+    breaks.add(where, pileBreaks(w, w.out.events));
     if (w.tick % 24 === 0) breaks.add(where, worldBreaks(w));
     w.out.events.length = 0;
     w.out.fires.length = 0;

@@ -35,7 +35,7 @@ import { dayOfIso, isDayStart, isMonthStart } from '../../shared/calendar';
 import { Refusal } from '../../shared/commands';
 import { EventKind } from '../../shared/events';
 import { hash32, hashToUnit } from '../core/hash';
-import { makePeace, declareWar, whyNotWar } from '../systems/war';
+import { callSides, makePeace, declareWar, whyNotWar } from '../systems/war';
 import { levyFormation } from '../systems/production';
 import { canJoin, LEAVE_LOYALTY, leaveAlliance, noWarAmong } from '../systems/alliances';
 import { blocLeader, relationHit, worstPariah } from '../systems/nuclear';
@@ -78,6 +78,11 @@ export const SEA_REACH_KM = 4000;
  * 1.1 for Washington from Japan's ports; 0.2 for 2,000 km.
  */
 export const SEA_KM_COST = 0.1;
+/**
+ * The most realms (nations that are no puppet, a colony counted with its ruler) the side against an AI's declaration
+ * may have for each realm of its own (ROADMAP R82f, ADR-1042: critic run 68's bar, no war over 4 to 1, by realm).
+ */
+export const PILE_REALMS = 4;
 
 /** The war utility's weight of a neighbour's nuclear outrage (PLAN 6.5b). */
 export const PARIAH_WAR = 0.5;
@@ -415,12 +420,12 @@ export function seaTargetKm(world: World, n: number, reach = Infinity): Map<numb
  * powers (`powers`, `seaPowers` since R76c) lands only within SEA_REACH_KM of its transports (critic run 65: the
  * Republic of China on Taiwan declaring on the Ivory Coast and Liberia, 13,000 km off; People's China on Panama).
  */
-export function warTarget(world: World, n: number, neighbours: readonly number[], attack: number, defence: (t: number) => number, wars: number, restless: number, blocs: ReadonlySet<number> = new Set(), powers?: ReadonlySet<number>): number {
+export function warTarget(world: World, n: number, neighbours: readonly number[], attack: number, defence: (t: number) => number, wars: number, restless: number, blocs: ReadonlySet<number> = new Set(), powers?: ReadonlySet<number>, refused: ReadonlySet<number> = new Set()): number {
   const pick = (among: readonly number[], skip?: ReadonlySet<number>, cost: (t: number) => number = () => 0): number => {
     let best = 0;
     let bestU = DECLARE_AT;
     for (const t of among) {
-      if (skip?.has(t) || whyNotWar(world, n, t) !== Refusal.None) continue;
+      if (skip?.has(t) || refused.has(t) || whyNotWar(world, n, t) !== Refusal.None) continue;
       // Deterrence (R67d, ADR-981): no war between the two blocs.
       if (!BLOC_PROBE.deterrenceOff && deterred(world, n, t, blocs)) continue;
       const u = warUtility(world, n, t, attack, defence(t), wars, restless).u - cost(t);
@@ -440,6 +445,47 @@ export function warTarget(world: World, n: number, neighbours: readonly number[]
   // Indies, every target weaker than it scoring alike (the strength term capped).
   const far = seaTargetKm(world, n, powers === undefined || powers.has(n) ? Infinity : SEA_REACH_KM);
   return pick([...far.keys()].sort((a, b) => a - b), new Set(neighbours), (t) => seaWarCost(world, n, t, far.get(t)!));
+}
+
+/**
+ * A war it would fight outnumbered (ROADMAP R82f, ADR-1042, the user's choice (a); critic run 68's R68-N5): the realms
+ * (nations that are no puppet) of the side `declareWar` would call against `n` over PILE_REALMS times its own side's.
+ * The AI weighs the target's allies at ALLY_WEIGHT, and they join whole: Nationalist Spain declared on France (and
+ * Britain, the Netherlands, Switzerland and Belgium), Hungary on Austria and its five allies.
+ */
+export function outnumbered(world: World, n: number, t: number): boolean {
+  const nc = world.nations.cols;
+  // The most realms the defence can have: of `declareWar`'s callers only the defender, the target, their allies and
+  // their guarantors are no puppet. At most PILE_REALMS, against the attacker's one at least: not asked further (the
+  // sides' reach is the dearest part of the AI's turn; seed 99's strategic AI +37 % asked at every declaration).
+  const al = world.alliances;
+  const d0 = nc.overlord[t] || t;
+  const could = new Set<number>([d0, t]);
+  for (const x of [d0, t]) {
+    for (const m of al.allianceOf(x)?.members ?? []) could.add(m);
+    for (const g of al.guarantorsOf(x)) could.add(g);
+  }
+  let free = 0;
+  for (const x of could) if (nc.overlord[x] === 0) free++;
+  if (free <= PILE_REALMS) return false;
+  const [a, d] = callSides(world, n, t);
+  const realms = (side: readonly number[]): number => side.filter((x) => nc.overlord[x] === 0).length;
+  return realms(d) > PILE_REALMS * Math.max(1, realms(a));
+}
+
+/**
+ * The target `n` declares on (R82f): `pick`'s (`warTarget`'s), or, while it is one `n` would fight `outnumbered`, its
+ * pick with those refused; 0 for none. Asked once a declaration is to be made (the sides' rules are the dearest part of
+ * the turn: asked of every candidate over the bar, the tick of seed 99 was 37 % slower).
+ */
+export function firstNotOutnumbered(world: World, n: number, pick: (refused: ReadonlySet<number>) => number): number {
+  const refused = new Set<number>();
+  let t = pick(refused);
+  while (t !== 0 && !PILE_PROBE.off && outnumbered(world, n, t)) {
+    refused.add(t);
+    t = pick(refused);
+  }
+  return t;
 }
 
 /** What a war on `t`, a neighbour of `n`'s by a colony only, costs `n` (R82d): SEA_KM_COST a 1,000 km from capital to capital of `t`'s realm. */
@@ -525,6 +571,8 @@ export function focusAfterTrack(world: World): number {
 
 /** Switches for measurement (R67c-d): the blocs' rules off. Never set in the game. */
 export const BLOC_PROBE: { lastingOff?: boolean; deterrenceOff?: boolean } = {};
+/** Diagnostics only (`tools/diag/pileSides.ts`): `off` declares as before R82f, the sides not asked. */
+export const PILE_PROBE: { off?: boolean } = {};
 
 export function strategicAi(world: World): void {
   // The historical track's wars, peaces and pacts are its timeline's (ROADMAP R62e).
@@ -564,8 +612,13 @@ export function strategicAi(world: World): void {
     const wars = warsOf(world, n);
     if (wars < MAX_WARS && nc.aggression[n]! >= PACIFIST_BELOW && nc.gold[n]! >= 0 && nc.bankrupt[n] !== 1) {
       powers ??= seaPowers(world, str);
-      const best = warTarget(world, n, neighbours, withAllies(n), defence, wars, wars === 0 ? restlessOf(world, n) : 0, blocs, powers);
-      if (best !== 0 && hashToUnit(hash32(world.seed, day, n, SALT_WAR)) < (focus * DECLARE_P * nc.aggression[n]!) / 100) declareWar(world, n, best);
+      const target = (refused: ReadonlySet<number>): number => warTarget(world, n, neighbours, withAllies(n), defence, wars, wars === 0 ? restlessOf(world, n) : 0, blocs, powers, refused);
+      const best = target(new Set());
+      if (best !== 0 && hashToUnit(hash32(world.seed, day, n, SALT_WAR)) < (focus * DECLARE_P * nc.aggression[n]!) / 100) {
+        // Not one it would fight outnumbered over PILE_REALMS realms to 1 (R82f, ADR-1042): its next best, if any.
+        const t = firstNotOutnumbered(world, n, (refused) => (refused.size === 0 ? best : target(refused)));
+        if (t !== 0) declareWar(world, n, t);
+      }
     }
     // Alliances against a threat.
     if (!al.allianceOf(n)) {

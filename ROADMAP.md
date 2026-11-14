@@ -49,10 +49,13 @@ Rules:
     Cobra breaks out". The critic's `c68_x_stage` 5 June + 50 days and `c68_nextline`: 0 of 50 days name D-Day (was
     24, 2-25 July), 0 page errors; shot at 6 July looked at. `trackTold1938h.test.ts`: a stage with its own window is
     not named as an event of its window (red on the old note).
-  - [ ] R82f (R68-N5) Pile-ons at day 365: Germany against the Netherlands with 9-13 on the Dutch side on 4 of 5 new
+  - [x] R82f (R68-N5) Pile-ons at day 365: Germany against the Netherlands with 9-13 on the Dutch side on 4 of 5 new
     seeds. AT: `c68_piles.ts 365 --plain` on 39139-39147 and 41139-41147: no war over 4:1.
-    Waits on the user (ADR-1042, proposed): HEAD has 3 over 4:1 on the ten; at birth 16 on 20 seeds by nations, 3 by
-    realm; 0 by nations means narrowing ADR-887/889 (the user's) or fewer of 1938's wars. `tools/diag/pileSides.ts`.
+    Done (ADR-1042, the user's choice (a)): the bar by realm (a colony with its ruler); the AI declares on no target
+    whose side `declareWar` would call (`callSides`) has over 4 realms for each of its own. 20 seeds (the critic's ten
+    and 43101-43119), off against on: born over 4:1 by realm 5 → 0, at day 365 1 → 0; declarations 586 → 579, wars
+    at day 365 153 → 152; the tick held (2.30-2.36 against 2.28-2.33 ms). `diploInvariants`' `pile`;
+    `pileRefused1938.test.ts`; `tools/diag/pileSides.ts`.
   - [x] R82g (run 68's AI nukes "not 9"; the user's choice, 2026-11-14) No AI warhead intercepted: 47 launches on
     37501/3 and 41501/3 over 22 years, 0 intercepted (run 67: 6 of 13 on 37501/3/7). Find whether a rule since run 67
     moved it (the pin moved with ADR-1025, ADR-1033, ADR-1041). AT: the interceptions on those seeds by `c68_nc`'s

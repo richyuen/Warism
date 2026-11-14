@@ -84,7 +84,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
   names' first words differ; the shot looked at. Every six of 1938's nations in list order: each line ≥ 30 from those
   above or dashed, under 5 % dashed (`chartColours.test.ts`); `charts1938.spec.ts` (new case) green.
 
-### ADR-1042 · 2026-11-14 · proposed, the user's decision — R82f: what "a pile-on" counts
+### ADR-1042 · 2026-11-14 · accepted (the user's decision: (a)) — R82f: a pile-on counted by realm; the AI judges the sides it would call
 - **Context.** R82f (critic run 68's R68-N5): `c68_piles.ts 365 --plain` on 39139-39147 and 41139-41147, no war over
   4:1 by count of nations. HEAD (after R82d) has 3 on those ten (ITA vs POR 1:5, IRQ vs SAU 7:1, NSP vs FRA 1:9), not
   run 68's (each run's ten seeds read different wars; R82d moved the worlds). Read at their birth
@@ -111,7 +111,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
   - (c) The bar as it stands, and the AI refuses any war whose sides by nations would be over 4:1: Italy's and
     Germany's 1938 wars on the West mostly not declared (goal 1).
   - (d) R82f closed as answered: the piles are fronts, as R53l's (a) said.
-- **Until the user decides** R82f waits (ROADMAP), and the loop takes R82g.
+- **The user's decision (2026-11-14): (a).** The bar by realm; the AI's declaration judged by the sides `declareWar`
+  would call.
+- **Built.** `callSides` (`src/sim/systems/war.ts`): `declareWar`'s calling, unchanged, with no change to the world
+  (its own commit, the pin unchanged). The AI (`firstNotOutnumbered`, `outnumbered`, `src/sim/ai/strategic.ts`), once
+  its roll says it declares: not on a target whose side would have over PILE_REALMS (4) realms for each of its own; its
+  next best so judged, or none. Asked only then, and only where the target's alliances and guarantors could make five
+  realms: asked of every candidate over the bar, seed 99's tick was 37 % slower (3.19 against 2.38 ms).
+- **Stands on (ADR-803).** ADR-887, ADR-889 (who joins, within reach), ADR-797, ADR-808 (bonds, pledges), ADR-230,
+  ADR-1033 (blocs), ADR-1041 (a colony's war costs): the calling unchanged; `warReach1938`, `alliances.test`,
+  `historyWarJoined1938`, `blocDefensive1938h`, the three `diploInvariants*` suites green after (21 tests).
+- **Results.** `pileSides.ts 365 --all` on the critic's ten and 43101-43119 (odd), the rule off against on: wars born
+  over 4:1 by realm 5 → 0, at day 365 1 → 0 (by nations 15 → 13 born, 6 → 5 at day 365: the colonies, the bar
+  re-scoped); declarations 586 → 579 (−1.2 %), wars at day 365 153 → 152. The checker's new `pile` line
+  (`diploInvariants`: no war the sim declares sets over 4 realms against 1). Seed 99 unchanged to year 5 (no refusal):
+  the pin stays `401d6856`. The tick, both at once on separate cores and swapped: 2.30 against 2.33 ms, 2.36 against
+  2.28; the strategic AI 0.095 against 0.096 ms.
 
 ### ADR-1041 · 2026-11-14 · accepted — R82d: a war on a neighbour by a colony costs its distance
 - **Context.** R68-N2: France took Brazil's capital within two years of plain 1938 on 4 of 5 seeds (6161, 41161, 41163,

@@ -161,3 +161,16 @@
 - 32019's year-20 world (built at HEAD), `tools/diag/chartBlues.mjs` with France selected: France #95a7dc, ΔE 37.5 from
   the United States (was 19); the United Kingdom #dc7373, 31.9 from the Soviet Union; shot looked at. Specs:
   `npx playwright test tests/e2e/charts1938.spec.ts --project=chromium` (2 green); `chartColours.test.ts` new.
+
+## 2026-11-14 — R82f: no AI war outnumbered over 4 realms to 1 (ADR-1042, the user's choice (a))
+
+- `callSides` (`4a1c9be8`): `declareWar`'s calling as a pure function, the pin unchanged. The AI, once its roll says it
+  declares, judges the sides it would call: a target whose side has over 4 realms (a colony with its ruler) for each
+  of its own is refused for its next best. Asked of every candidate it cost seed 99's tick 37 % (3.19 against 2.38
+  ms); asked only at a declaration, and only where the target's allies and guarantors could make five realms, the
+  tick held: 2.30 against 2.33 and 2.36 against 2.28 ms (both at once, separate cores, swapped; strategic AI 0.095).
+- `pileSides.ts 365 --all` on 39139-39147, 41139-41147, 43101-43119 (odd), off against on: born over 4:1 by realm
+  5 → 0, at day 365 1 → 0; by nations 15 → 13 and 6 → 5 (colonies, the bar re-scoped); declarations 586 → 579, wars
+  at day 365 153 → 152. The critic's ten at day 365 by nations: ITA vs POR 1:5 and IRQ vs SAU 7:1 left, 1:2 and 2:1
+  by realm. Seed 99 unchanged to year 5. `diploInvariants` gains `pile`; the joining tests and the three checker
+  suites green (21); `pileRefused1938.test.ts` (the critic's Spain on France's alliance, off and on).

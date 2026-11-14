@@ -2,8 +2,9 @@
 // declared is read in the hour it begins: its two sides by count of nations, each member and why it is there (the
 // leader, a puppet of whom, an ally, a guarantor of the defender), and the declarer's utility terms (`warUtility`, with
 // its wars and restlessness of the hour before). At DAY, the wars over 4 to 1 then, against their sides at birth.
-// Usage: npx tsx tools/diag/pileSides.ts <day> <seed>... [--all] (--all: every declaration, not only those born over 4:1)
-import { restlessOf, sides, strengths, warsOf, warUtility } from '../../src/sim/ai/strategic';
+// Usage: npx tsx tools/diag/pileSides.ts <day> <seed>... [--all] [--off] (--all: every declaration, not only those born
+// over 4:1; --off: the AI declares as before R82f, the sides it would call not asked)
+import { PILE_PROBE, restlessOf, sides, strengths, warsOf, warUtility } from '../../src/sim/ai/strategic';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import type { World } from '../../src/sim/world';
@@ -11,11 +12,12 @@ import { assets1938 } from '../../tests/helpers/earth';
 
 const args = process.argv.slice(2);
 const all = args.includes('--all');
-const [dayS, ...seedS] = args.filter((a) => a !== '--all');
+PILE_PROBE.off = args.includes('--off');
+const [dayS, ...seedS] = args.filter((a) => a !== '--all' && a !== '--off');
 const day = Number(dayS);
 const tag = (n: number): string => TAGS_1938[n - 1] ?? `#${n}`;
 const over = (a: number, d: number): boolean => Math.max(a, d) > 4 * Math.max(1, Math.min(a, d));
-const totals = { declared: 0, bornOver: 0, over365: 0, wars365: 0 };
+const totals = { declared: 0, bornOver: 0, bornOverRealms: 0, over365: 0, over365Realms: 0, wars365: 0 };
 
 function why(w: World, x: number, lead: number, defender: boolean): string {
   if (x === lead) return 'leader';
@@ -57,6 +59,7 @@ for (const seed of seedS.map(Number)) {
       const born = `${a.length}:${d.length} (realms ${realms(a)}:${realms(d)}${over(realms(a), realms(d)) ? ' OVER' : ''})`;
       birth.set(war.id, born);
       if (over(a.length, d.length)) totals.bornOver++;
+      if (over(realms(a), realms(d))) totals.bornOverRealms++;
       if (!all && !over(a.length, d.length)) continue;
       const str = strengths(w);
       const sd = sides(w, str);
@@ -71,11 +74,13 @@ for (const seed of seedS.map(Number)) {
   }
   const at = w.wars.list.map((x) => {
     const [a, d] = x.sides;
-    return { s: `${tag(a[0]!)} vs ${tag(d[0]!)} ${a.length}:${d.length} (born ${birth.get(x.id) ?? 'before'})`, o: over(a.length, d.length) };
+    const r = (side: readonly number[]): number => side.filter((y) => w.nations.cols.overlord[y] === 0).length;
+    return { s: `${tag(a[0]!)} vs ${tag(d[0]!)} ${a.length}:${d.length} (born ${birth.get(x.id) ?? 'before'})`, o: over(a.length, d.length), or: over(r(a), r(d)) };
   });
   totals.wars365 += at.length;
   totals.over365 += at.filter((x) => x.o).length;
+  totals.over365Realms += at.filter((x) => x.or).length;
   console.log(`seed ${seed} day ${day}: ${at.length} wars; over 4:1: ${at.filter((x) => x.o).map((x) => x.s).join(', ') || 'none'}`);
   for (const l of lines) console.log(l);
 }
-console.log(`done: ${seedS.length} seeds, ${totals.declared} declared, ${totals.bornOver} born over 4:1; at day ${day} ${totals.wars365} wars, ${totals.over365} over 4:1`);
+console.log(`done: ${JSON.stringify({ seeds: seedS.length, ...totals })}`);

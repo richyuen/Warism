@@ -59,7 +59,8 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   stopped; the stops against their expected sum (R82g; ~25 min a seed).
 - `npx tsx tools/diag/pileSides.ts <day> <seed>... [--all]`: plain 1938 hour by hour to `day`; each declaration in its
   hour with its sides by nations and by realm (a puppet with its overlord), why each member is there, and the
-  declarer's utility terms; `--all` every declaration, else those born over 4:1 (R82f, ADR-1042; ~10 min a seed).
+  declarer's utility terms; `--all` every declaration, else those born over 4:1; `--off` the AI as before R82f; a
+  JSON line of totals (born over 4:1 by nations and by realm, wars at `day`) (R82f, ADR-1042; ~10 min a seed).
 - `npx tsx tools/diag/fewNationWars.ts <N> <S0> [K] [Y]`: random worlds of N nations on K seeds, the day of each one's
   first war over Y years (R60d; ~25 s a seed at N = 3).
 - `npm run saves [-- <out> [last year]]`: 1938h's world on 1 January of each year of the track, gzipped, with
