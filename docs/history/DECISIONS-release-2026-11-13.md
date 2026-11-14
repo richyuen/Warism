@@ -1,0 +1,973 @@
+# Decisions: `release-2026-11-11` to `release-2026-11-13` (archived, ADR-805, ADR-918), in the order they had
+
+### ADR-958 · 2026-11-11 · accepted (the user's decision) — After release-2026-11-11: armies on the replay's fronts, Cold War blocs, a start from any date, the replay past 1953
+- **Context.** Critic run 63's design objections: the replay's battles of 1942–44 are moved by its stages with no
+  armies there (SPEC §7.7, ADR-935), and the world after 1953 forgets the blocs at once (54 wars in two years on the own
+  seed). The user's ideas (2026-11-11): do something about the empty fronts; extend the replay; model the Cold War in
+  the sim; replace "World, 1938" and "World, 1938 — Historical" by a timeline slider, a start from any point of the
+  replay, continuing it or free.
+- **Decision** (the user: "that order looks good, and let's include 4"), in this order after Batch 17:
+  1. **Armies on the replay's fronts (R66).** The script decides each front's outcome; the armies stand on the
+     fronts at each stage and fight there. Where they can be made strong enough to win the stage's outcome by the
+     fighting without ill effects on the rest of the replay (`historyMatch1938h`'s and `historyTrack1938h`'s bars
+     kept), they should; otherwise the stage moves the line as now (the user's "middle ground").
+  2. **Cold War blocs in the sim (R67):** lasting blocs under the strongest powers, war between their leaders held
+     back by deterrence, rivalry by proxies; a rule of every game, not the track's.
+  3. **A start from any date of the replay (R68):** the timeline slider in place of the two 1938 cards; continue the
+     replay or free from there.
+  4. **The replay past 1953 (R69).**
+- Each is split into lettered parts with their ATs when it is started (ROADMAP's rule).
+
+### ADR-959 · 2026-11-11 · accepted (the user's decision) — The release made shorter; the replay to 1962
+- **Context.** release-2026-11-11 took about 5½ hours after the last item: the critic's full run about 1 h 50 m
+  (about 720 bulk landing runs re-run because only the track's files had changed), `check:review` 2 h 20 m (its sweep
+  stage 22 m, the historical track's six seeds one after another), the soak 30 m, the sweep 32 m, `bench -- G` over
+  10 m (most of it the software rasteriser, reported, never judged). The user asked for trade-offs and took the four
+  that lose little or nothing (2026-11-11: "Let's do your 1-4").
+- **Decision.**
+  1. `historyTrack1938h`'s five other seeds a file each (`tests/sweep/historyTrack1938hSeed1-5.test.ts`,
+     `tests/helpers/historyTrackWarn.ts`), so they run side by side: the six together 4 m 05 s (22 m before).
+  2. `npm run bench -- G --gpu-only` at a release: the GPU's budgets judged as before, the software rasteriser's last
+     figures and pictures kept and marked with their date: 31 s with the build (over 10 m before).
+  3. No soak of its own at a release: the sweep takes the soak's checks on its way (`tools/sweep/reload.ts`): every
+     10 years, the first in year 1 to 10 by the seed, the world saved gzipped, loaded into a fresh sim of another
+     seed and saved again to the same bytes; the loaded twin and the world 30 days side by side to one hash, the run
+     going on with the loaded one; a NaN or an infinity looked for each year's end; any break fails the sweep. Ten
+     seeds and 50 loads where the soak had one seed and 5. Checked: green on a 3-year run; red with the twin nudged a
+     tick before the bytes' check, and again after it (the hashes 30 days on). The soak of its own still runs
+     every night (`.github/workflows/nightly.yml`, green 2026-11-08 to 11).
+  4. The critic carries a bulk set of plain 1938 runs when its two 20-year saves end at the last report's hashes and
+     the diff touches nothing under `src/sim/systems/`, `src/sim/ai/`, `src/sim/nav/`, nor `tick.ts` or `sim.ts`
+     (`CRITIC_PROMPT.md`).
+- **Not taken** (they lose coverage): no full critic run, or one every other release; the e2e beside the critic (the
+  CPU shared, timing specs and the critic's measures upset); only the changed e2e specs (the last release's
+  `orderRowsTap1938` red was found only so).
+- **Also decided:** R69's replay runs to 1962 for now (the user's "let's try 1962").
+
+### ADR-960 · 2026-11-11 · accepted — The "Next" line moves on at Max (R65a, R63-N1)
+- **Cause** (critic run 63, `c63_h_blank.mjs`): R64f hides the line while its event's hour is behind the shown hour,
+  and the stats that name the next come once a second; at Max the line was blank from each event's hour to the next
+  stats, 24.5 % of the samples.
+- **Rule:** the stats carry the next named event and up to `TRACK_AHEAD` (8) after it (`TrackNext.ahead`,
+  `src/worker/server.ts`); the line shows the first whose hour is not behind the shown one (`nextShown`,
+  `src/app/trackShown.ts`); none only when all are past.
+- **Measured:** the probe at Max for 120 s (1938 to July 1943): the line in 1,089 of 1,092 samples (99.7 %; 75.5 %
+  before), never past, at most 2 blank in a row. `tests/e2e/trackView1938h.spec.ts` "at Max…" now asks ≥ 95 % present
+  (red on the code before: 0.77); `tests/unit/trackShown.test.ts`.
+
+### ADR-961 · 2026-11-11 · accepted — The God tab says it ends the replay (R65b, R63-N2)
+- **Cause** (critic run 63, `c63_h_godtab.mjs`): the nation's God tab, about 40 controls, said nothing; the Take
+  control note was scrolled out, and the bar's "Any act here ends the replay of history." stood under "Map tools", read
+  as those tools' alone. One tick of "World AI" ended the replay.
+- **Rule:** the God tab has the note at its head while the track runs (`god-tab-ends-track`), and the bar and the tab
+  say "Any God Mode act ends the replay of history." (`track.anyGodAct`); the editor keeps "Any act here…".
+- **Measured:** `tests/e2e/trackView1938h.spec.ts` ("what ends the replay…"): Germany's God tab's note in view at
+  1400 × 800, gone with the replay's end.
+
+### ADR-962 · 2026-11-11 · accepted — Run 63's small findings (R65c)
+- **The bar's note red** (`.god-tools-hint.panel-warn`): `.god-tools-hint`'s grey, later in `style.css`, took the
+  `panel-warn` red; now red as the panels'.
+- **The track's line on a phone:** 0.72 em of the bar was 8.8 px at 390 × 844, 844 × 390 and 667 × 375; 11 px there
+  (`max-width: 600px` or `max-height: 500px`), in the same 150 px (the bar does not move; a long name is cut sooner).
+- **Manchukuo's triple** (18 August 1945: "Manchukuo was destroyed", "Mengjiang was destroyed", and the note
+  "Manchukuo and Mengjiang dissolved: China in name"): a timeline transfer told by its note is not told again as the
+  land handed over (its hour) or as a nation it took from destroyed (the hour after) (`transferTold`,
+  `src/worker/historyRows.ts`; History and ticker). The note kept, not the game's rows: on the own seed it also
+  covers "France freed: the Provisional Government" (Vichy), "The north freed: the Italian Social Republic ends",
+  "Xinjiang joins" and "Tibet annexed", whose notes say more than "… was destroyed". The sim unchanged.
+- **The grey world at a start:** not a file's alone. Plain 1938 shows the map with no nations for 2.0 s, a file 2.1 s
+  (the world built in the worker; its stats are sent at once when it is). "Building the world…" stands over the map
+  until the first stats (not in the toy world, which has none).
+- **Measured:** `tests/unit/historyTransferTold1938h.test.ts` (red on the rows' code before);
+  `tests/e2e/worldBuilding1938.spec.ts` (the notice in every sample with the map drawn and no stats, gone with them);
+  the font and the colour by a probe at four sizes and a shot.
+
+### ADR-963 · 2026-11-11 · accepted — A told transfer hides only its own rows (R70a, R64-N3)
+- **Cause** (critic run 64, `c64_transfer.ts`): ADR-962's `transferTold` hid any `LandCeded` whose giver a told
+  transfer took from, in its hour or the next: on 8 May 1945 "Carpatho-Ukraine, Soviet in fact" (Hungary's land to the
+  Soviet Union, 00:00) hid "Czechoslovakia took land from Hungary" and "Yugoslavia took land from Hungary" (01:00).
+- **Rule:** a land row is hidden only when its giver and receiver are the transfer's and it is of the transfer's own
+  hour; a nation's end, in that hour or the next, as before.
+- **Measured:** `c64_transfer.ts` shows both rows again; `tests/unit/historyTransferTold1938h.test.ts` gains the case
+  (red on the code before).
+
+### ADR-964 · 2026-11-11 · accepted — The track's line on a phone: short, on two rows (R70b, R64-N1)
+- **Cause** (critic run 64, `c64_h_phone.mjs`): ADR-962's 11 px in the same 150 px held ~29 characters, 21 of them
+  "Next, 12 March 1938: ": "The An…" (the notes' median is 46 characters; a phone has no hover for the tooltip).
+- **Rule:** on a phone (`PHONE_QUERY`) the line reads "12 Mar 1938: The Anschluss" (`bar.trackNextShort`,
+  `monthShort.*`) on two rows of a fixed height (the bar does not change its height with the note); the tooltip whole.
+- **Measured:** the probe at 390 × 844 and 844 × 390: "12 Mar 1938: The Anschluss" whole (150 of 150 px); "1 Jan 1938:
+  Japan's occupation: North China" whole on two rows; `tests/e2e/trackView1938h.spec.ts` asks the line whole at both
+  sizes and ≥ 11 px on a phone; the bar's and the phone's layout specs green.
+
+### ADR-965 · 2026-11-11 · accepted — Run 64's small findings (R70c)
+- **A paused start:** `?paused=1` was applied after the world was built, the bar saying "Pause" (a game left running)
+  until then; now as the HUD is made (`game.tsx`). `tests/e2e/worldBuilding1938.spec.ts` (27 samples said "Pause" on
+  the code before, none now).
+- **The "Next" line at Max:** `TRACK_AHEAD` 16 (8): April 1941 has more than 9 named events in a second at Max. The
+  probe at Max for 120 s: 0 blank of 1,096 samples (3 before), never past.
+- **Not changed: Slovakia "annexed" and "destroyed" in one hour** (8 May 1945). History is the whole log: every game's
+  annexation is followed there by the nation's end, and `tests/unit/history.test.ts` has it so; the ticker tells such
+  a death once (PLAN 3.12Rg2). A rule of every game's History, not the track's; left.
+
+### ADR-966 · 2026-11-11 · accepted (the user's decision) — Batch 19's critic run deferred to after Batch 18
+- The user, as the focused run after Batch 19 (run 65) began: "let's stop the critic and defer till after batch 18".
+  Run 65 stopped unfinished, no report; its partial files moved to `.cache/critic-c65-aborted/` (not committed).
+- The next critic run comes after Batch 18's last item and judges Batches 19 and 18 together (PROMPT RELEASES step 1
+  for this pair of batches).
+- Seen in passing by run 65 before it stopped, for that run to check: a title-screen start uses `paused=1`, so a
+  Resume clicked while the world is built is undone when `hud.apply` forces the pause at the end of the build (as
+  before R70c).
+
+### ADR-967 · 2026-11-11 · accepted — R66 split; the measure of the armies at the stages (R66a)
+- **The measure** (`tests/helpers/trackFronts.ts`, `stageArmies`; `tools/diag/trackFronts.ts`): at the hour of an
+  `occupy` stage, before it applies, the land it gives (its ring's cells owned by an `of`, not held by `by`) and the
+  land formations within `BAND_KM` (120) of that land, by side: the defenders those who hold it and the nations at war
+  with `by`, the attackers `by` and the nations at war with a holder (by who holds it: a first count by `of` put the
+  Germans with the Soviet attacker on "SOV of SOV").
+- **Baseline** (own seed, 1942 to June 1945, 62 stages): both sides near at 10, the attacker alone at 7, the defender
+  alone at 9, neither at 36; of the 33 stages of ≥ 200 cells, both at 7; no formation engaged at any stage (the holds).
+  Stalingrad (31 October 1942): 151k Soviet, no German; D-Day: nobody; the Soviet stages of 1943-45: 1.9-2.9M Soviet
+  men, 0-256k Axis.
+- **Cause:** while a hold stands between two nations (R62f2), the operational AI does not count the other as a foe
+  (`foesOf`): no front cell faces it, no sector is made or allotted there, and its armies stand elsewhere (run 63's
+  census: 1.31M German men in the Low Countries in June 1944).
+- **The split** (ROADMAP R66b-e): presence first, the holds kept (R66b); what the stages do to the armies in their
+  rings (R66c); fighting in a window before a stage, the stage still deciding (R66d, the user's "middle ground",
+  ADR-958); the 1946-53 stages (R66e).
+
+### ADR-968 · 2026-11-11 · accepted — R66c: a stage's cut-off formations set down behind its line; two replay bars re-scoped (the user's decision)
+- **The rule** (`src/sim/track.ts`, `setDownBehind`, `fallBackCell`): an `occupy` sets the land formations of those
+  who held its land, held off from its taker (a hold), down on their own nearest land outside the land taken (4-steps
+  over land, within FALL_BACK_CELLS at the 1938 size, at most SET_DOWN_PER_CELL = 2 a cell, the lowest cell of
+  equals); a `withdraw` (not `captured`) of a nation held off from a foe that holds land beside the ring does the
+  same, the pool only for one with no own land within reach (Italy out of Libya). With no hold, both are as before:
+  where the two fight (1941), set down on the line they were beaten there and the line overrun.
+- **Before:** they were left behind the line, out of supply, starving or deleted (China's formations caught in the
+  Wuhan and Canton rings of 1938: 120k men starved in two months).
+- **Measured** (`tools/diag/trackFronts.ts`, the large Eastern stages of 1942-45, the smaller side's men within 120 km):
+  seed 1938 618k on HEAD → 2.88M; seeds 1 and 2 5.12M and 2.39M; both sides near at 8, 9, 9 of 15 (7 on HEAD's
+  seed 1938). Tick over five years of the replay 2.42 ms against plain 1938's 2.51 (paired, swapped); HEAD's replay
+  1.96, the difference the armies kept.
+- **Tried and dropped** (an ablation on three seeds, each rule off in turn): held foes in a partner's foes while a
+  stage is due, a sector with no threat and only held foes left out of the allotment, the land of the coming stages
+  weighed in it. Each moved the census within its noise both ways.
+- **The bars, re-scoped by the user** (BLOCKERS 2026-11-11, resolved): `historyMatch1938h`'s control strays under 1 %
+  (0.5 % before): the rules it was set on read 0.53-0.85 % on seeds 1-5 and 0.17 % on seed 1938 on 1 December 1941,
+  the spread of the Barbarossa fighting (China's 1938 set-downs alone moved seed 1938 to 0.55 %); 0.28 % now. The other
+  seeds are warned of at the same line (`STRAY_BAR`, `tests/helpers/historyTrack.ts`: `strays` on each map with
+  `occupied`). `chinaFront1938h`'s China army a year on at least 40 % of its start (half before): the monthly budget
+  holds it at 379-402k from starts of 719-856k in every tree tried; without the hold 12-29k; 383k of 762k now.
+
+### ADR-969 · 2026-11-11 · accepted — R66b's bar: both sides near at two thirds of the large land fronts (the user's decision)
+- **The measure** (`StageArmies.front`, `landFront`): a stage is a front when its taker is at war with a holder of its
+  land at its hour, a land front when that land is joined over land (4-neighbours, no crossing) to land the taker's
+  side holds. Of the 33 large stages of 1942 to mid-1945, 21 are fronts (Torch, Case Anton, El Alamein against a
+  neutral Egypt, the handovers of Libya and Austria are not), and all 21 land fronts: Japan holds part of each island
+  before its 1942 stage (British Borneo before the Netherlands Indies, footholds on Luzon). The stages over the sea
+  are small (Rabaul, Attu, Guam, Leyte, Hollandia, Sansapor).
+- **The bar** (the user's choice of "land fronts, two thirds", asked when the island stages were thought to drop out;
+  they do not): both sides near at 14 of the 21 on the own seed. After R66c: 8 (seeds 1 and 2: 10, 10). Replaces
+  "≥ 20 of the 33 large stages" (ADR-967), which counted handovers.
+
+### ADR-970 · 2026-11-11 · accepted — the census measured before a stage's date; ADR-967-969's figures restated
+- **The fault:** `tools/diag/trackFronts.ts` measured at the hour of each `occupy`, an hour after the stage's own
+  `withdraw` had taken its pockets or evacuated its defenders (Libya's, the Netherlands Indies'): their defenders
+  counted 0. It now measures at the first hour of the stage's date, before any event of that date.
+- **Restated** (seeds 1938, 1, 2; before R66c `9dff3d7f`, after it `6970dc24`): the large Eastern fronts' smaller side
+  near 1.22M, 1.08M, 1.20M before R66c and 3.24M, 5.78M, 2.62M after (ADR-968 said 618k → 2.88M on seed 1938);
+  of the large land fronts, both sides near at 9, 10, 11 before and 10, 11, 12 after (ADR-969 said 8, 10, 10 of 21).
+  R66b's bar stands: 14 of the own seed's 21.
+- **Not settled by it:** ADR-968's ablation used the old measure (its arm with no set-down had Germans deleted an hour
+  before the count); the three rules it dropped are not shown to be noise, only not kept.
+
+### ADR-971 · 2026-11-11 · accepted — R66b: a planner's own front across a frozen hold, not a partner's copy
+- **The fault:** the operational AI cached a holder's front cells once a tick by the enemies' key alone, and the
+  sectors once a side; a holder's own plan reads its held foes as enemies, a partner's (`foesOf`) does not. Whichever
+  planner came first set them for all: on 1 July 1942 Germany's plan had 23 sectors, all in Africa, none against the
+  Soviet Union, and the German attacker was missing at Case Blue and Stalingrad.
+- **The rule** (`operational.ts`): while the track steers, each planner makes its own sectors; a planner with a
+  frozen front (`World.frozenFront`, `Track.frozen`) has its own front cells cached apart, facing its held foes across
+  frozen fronts only. A hold is frozen unless the timeline begins its war on its date (a `war` or `join` naming both
+  sides that day: the Phoney War, Germany and the United States, the wars of 1945-50), or it stands from the first
+  hour (China's war of 1937). With no track nothing changes (seed 99's pin unchanged).
+- **Not kept:** the own front apart for every planner (the Phoney War then manned by its own rule: Germany was not on
+  the French border in May 1940 and Paris fell on 20-23 June on six seeds, 11-15 on HEAD); judging a frozen hold by
+  its war's start tick (Britain and France join the Polish war of 1 September, so the Phoney War read as frozen).
+- **Measured:** large land fronts with both sides near 11 of 19 on seed 1938 (10 before), 11 and 11 on seeds 1 and 2;
+  Germany's sectors on 1 July 1942 130 in the East. Paris on 14 June 1940 (seed 1938), 9-12 on seeds 2-5, the 23rd on
+  seed 1 (15th on HEAD; the date is chaotic, ADR-931). The nine replay tests green (1941 strays 0.65 %, China 388k
+  of 716k); the replay's tick 2.06 ms, plain 1938's 2.52.
+
+### ADR-972 · 2026-11-11 · accepted — R66b done: the Pacific's armies of 1941-42 by `forces`
+- **The cause:** Japan's whole army stood in northern China at every date; its conquests of 1942 came by stages alone,
+  with no Japanese formation near them and few defenders (none in Burma, 8k in Malaya).
+- **The data** (`timeline.json`, twelve `forces` at history's places and dates, as the Afrika Korps and the Germans
+  in Norway): Malaya's garrison (a British, two Indian, an Australian division) and the Burma Corps on 1 December
+  1941; the Japanese 25th Army at Singora (three divisions, 8 December), at Miri, the 14th Army at Lingayen (two), the
+  16th Army in Borneo, the 15th Army from Thailand (two), at Palembang, on Java (two), at Lae. Two points moved inland
+  (Singora to Hat Yai, Tarakan to inland Borneo): refused at sea on the map's grid. Each note says whose (R64c's rule;
+  its test's list of nations widened to Japanese, British, Australian).
+- **Measured:** of the large land fronts, both sides near at 16 of 20 on the own seed (bar 14, ADR-969), 14 and 16 on
+  seeds 1 and 2; none engaged at a stage. Left: the Philippines, Burma, Ichigo's Changsha and Guilin (ROADMAP). The
+  nine replay tests green, no warning (1941 strays 0.65 %, November 1942 0.27 %; Paris 14 June 1940; China 388k);
+  the pin unchanged; the replay's tick 2.08 ms, plain 1938's 2.50.
+- **Seen, not changed:** the AI ships two of the 25th Army's three divisions off towards the objectives of Manila and
+  Borneo; R66d's fighting before a stage will want them kept to their stage.
+
+### ADR-973 · 2026-11-11 · accepted — R66c: a stage sets down its taker's held foes' allies too, onto their side's land
+- **The gap:** an `occupy` set down only the formations of the nations that held its land; their allies on it were
+  left behind the line (1 March 1942: 56 Italian formations, 167k men, in Soviet land after the Moscow stage, the
+  cells Germany's), and `fallBackCell` sought only a nation's own land (Italy has none in Russia).
+- **The rule:** an `occupy` sets down every land formation on its land of a nation at war with its taker and held off
+  from it; `fallBackCell` takes the nearest land of the nation's own or of an ally's in its war (`Wars.sameSide`).
+- **Measured:** formations on a held foe's land on 1 March 1942 2 (58 before); the census and the nine replay tests
+  as ADR-972 (16 of 20; 1941 strays 0.65 %; Paris 14 June; China 388k); a unit case (a Lithuanian ally in western
+  Poland), red before.
+
+### ADR-974 · 2026-11-11 · accepted — R66d: a short, guarded window of fighting before a stage (the user's decision)
+- **Measured first** (`.cache/probe/r66d.ts`, from one save 30 days before, every hold lifted against none): Kursk the
+  Soviets 1.83M → 1.00M and the Germans 1.18M → 0.20M near, the Germans gaining; Case Blue the Germans 804k → 228k,
+  the Soviets gaining; in the first 5 days the Germans lost 65k at Kursk. Fronts with no hold (the Netherlands Indies,
+  Lae) hardly fought: contact and the attack rule limit the fighting as well as the holds.
+- **The user's choice** of four (a guarded short window; the same with a buff for the taker; battles shown only;
+  R66 closed at presence): the hold lifted for about 5-7 days before each stage, inside its area only, land to the
+  taker's side only and only of the stage's own land, no buff at first. R66d's AT rewritten to it (ROADMAP).
+- **Read as written:** "both sides engaged at the stage's hour" on the large land fronts (ADR-969's 20 or 21), the
+  only reading in which fighting is possible.
+
+### ADR-975 · 2026-11-11 · accepted — R66d: the window of fighting before a stage
+- **The rule** (`Track.fightOpen`, `Track.takeOpen`; `World.holdsAt`, `World.holdsLand`; combat and territory): for
+  FIGHT_DAYS = 7 before an `occupy` stage not yet applied, a hold is lifted between a formation of its taker's side (the
+  taker or an ally in its war) and one of a nation at war with the taker when both stand in its area (the ring's box
+  grown by FIGHT_BAND_KM = 120); across it land goes only to the taker's side and only of the stage's land (ring cells
+  owned by one of its `of`). Derived from the tick and the timeline, no state; with no track nothing changes (the pin).
+- **The stage:** its land held already by its taker's side is fulfilled, not passed over (a Korean stage of 1951 taken
+  whole in its window); its taker's held foes on any of its land, taken now or in the window, are set down (R66c).
+- **The measure** (`tools/diag/trackFronts.ts`): each stage's land, size and front fixed at its window's opening, the
+  band round that land; men lost counted on the opening's formations by id (one gone, all its men); both sides
+  engaged sampled every 6 hours through the window. Before (the band round the land left), men walking out of a
+  shrinking band were counted lost: Kursk 868k Soviet, 635k German, against 45k and 119k by the cohort.
+- **Measured** (seed 1938): both sides engaged at the stage's hour at 8 of 20 large land fronts (seeds 1, 2: 7, 9);
+  in the window Kursk 45k of 1.43M Soviet lost and 119k of 798k German, 195 of its 244 cells taken by the fighting;
+  the Dnieper 37k and 136k, 406 of 2,067; Case Blue (the taker outnumbered) 180k German of 1.07M and 112k Soviet. With
+  `TRACK_PROBE.fightOff` 0 engaged, 16 near (ADR-972). The nine replay tests green (1941 strays 0.47 %; Paris 11 June
+  1940; China 378k; the Soviet army 3.58M on 1 November 1942); the replay's tick 2.48 ms, plain 1938's 2.52.
+- **Short of R66d's 14** (the user's plan of the same day): the arrivals of the timeline kept at their stage next, then
+  the bar set to what is measured, if at least 9.
+
+### ADR-976 · 2026-11-11 · accepted — R66d: the timeline's arrivals kept for their stage; R66d done
+- **`kept`** (optional date on `forces` and `redeploy`): its formations carry a `kept` order (`PlayerOrderKind.kept`,
+  the AI leaves them be, `playerHeld`) to the opening of that date's window of fighting (FIGHT_DAYS before), then are
+  the AI's for the attack. Explicit, not inferred: keeping every arrival for the first stage of its nation whose area
+  held it kept the Soviet reserves of 1941-42 standing for months (both engaged 8 → 7).
+- **A beachhead:** a `forces` arrival on the land of a nation at war with it makes its cell its own (`FlipCause.landing`,
+  as a landing's, PLAN 4.5b). Land is taken from a neighbouring cell held, so an arrival inside an enemy's land took
+  none (Yueyang, in this run's Chinese land: 67k Japanese a week beside 28k Chinese, nothing fought).
+- **Planners:** a foe across a hold is a foe to plan against while a stage's window is open between them
+  (`World.holdsPlan`, `Track.pairOpen`; `foesOf`, the frozen front's own part); the fighting stays in the area.
+- **The timeline:** the 25th Army lands at Kota Bharu (British, at war) not Singora (Thailand, neutral until 1942: the
+  day-start repatriation sent it to Japan); the 15th Army crosses at Tavoy, and the 18th and 56th Divisions reach
+  Moulmein on 8 May; the Ichigo moves by rail from Henan (stopped short of Chinese-held Wuhan) replaced by arrivals at
+  Yueyang (8 June) and Hengyang (14 November); Chinese defenders at Changsha and Guilin. Each kept for its stage.
+- **Measured** (seed 1938): both sides engaged at the stage's hour at 10 of 19 large land fronts (seeds 1, 2: 12, 10;
+  Malaya, Burma and Changsha fight now); both near 15. In the Moscow window the Soviets, outnumbered, lost 305k of
+  their opening cohort (50k before). The nine replay tests green: 1941 strays 0.44 %, Paris 14 June 1940, China 381k,
+  the Soviet army 3.81M on 1 November 1942, no event passed over. The replay's tick 2.75 ms against plain 1938's 2.52
+  (2.48 before: the fighting of the windows). Pin unchanged.
+- **The bar** (the user: "as long as it's at least 9 after step 2"): ≥ 9 on seed 1938. Not fought still: Borneo, the
+  Netherlands Indies, the Philippines, New Guinea, Stalingrad, Guilin, Libya, Uranus, Moscow, the Vistula at the hour.
+
+### ADR-977 · 2026-11-11 · accepted — R66d: no window for a taker far outnumbered; corrections to ADR-976
+- **The rule** (`FIGHT_OUTNUMBERED` = 1/3, `outnumbered` in `Track.openStages`): a stage's window is shut in an hour in
+  which its taker's side has under a third of the men of the nations at war with the taker on land in its area. Read
+  each hour from the state, it also stops a window's fighting once the taker has fallen that far behind.
+- **Why:** before the Moscow counter-offensive the Soviets near Moscow, a fifth of the Germans there at the window's
+  opening, lost their whole cohort in it on seed 1938 (305k of 305k) and on seed 2 (309k of 319k): the ill effect on
+  the rest of the replay the user ruled out. Now 11-13 %. The ratios at the openings (`.cache/r66x_*.json`): Moscow
+  0.19-0.26, the Philippines 0.07 (shut); Case Blue 0.37-0.83 and Libya 0.67-1.03 (open).
+- **Measured:** both sides engaged at the stage's hour at 11 of the 20 large `occupy` land fronts (seeds 1, 2: 8, 9);
+  the census now reads `transfer`s too (R66e), adding four of 1944-45 with no fighting (24 in all). The nine replay
+  tests green (1941 strays 0.44 %, Paris 14 June, China 381k, the Soviet army 3.35M on 1 November 1942); pin unchanged.
+  Unit case: Luxembourg to take the land by Trier fights nothing (red with the guard's check off).
+- **Corrections to ADR-976:** Malaya is not among the fronts counted (its land at its window's opening 184 cells,
+  under 200: Japan took most of it before, with no hold there); Libya is counted (one formation of each side engaged),
+  as are Burma (1/1) and Changsha (1/3): the margin over 9 is of single formations. The Philippines' 43 % of the
+  Japanese cohort lost on seed 1938 is outside any window (no hold there before July 1942). `kept` on `redeploy` has
+  no data now (R66e uses it or removes it).
+
+### ADR-978 · 2026-11-12 · accepted — R66e: the 1945-53 stages; R66 done
+- **Windows for `transfer`s:** a `transfer` is a stage as an `occupy` is (`Track.openStages`): its `to` the taker of
+  its `from`'s land, its window the same (FIGHT_DAYS, the area, land only to the taker's side and of its land, shut
+  while far outnumbered). A transfer changes owners, so its land is never already given; it sets nobody down. Those
+  between nations at peace have no foes and no window.
+- **The armies** (`forces`, `kept`): the Communist Northeast Field Army at Harbin for Liaoshen (30 divisions), the
+  armies for Huaihai and Pingjin at Jinzhou (30), the Second and Third Field Armies at Bengbu for the Yangtze (30), the
+  First at Tianshui for the northwest (15), the Fourth at Yueyang for the south (30), the People's Volunteers over the
+  Yalu on 19 October 1950 (30, kept for the offensives of 4 January 1951).
+- **Kept to the stage:** a kept arrival is the AI's from its window's opening (`playerHeld`) but its order lasts to
+  the stage, and the month-start budget disbands no formation on an order (`economic.ts`). Before, on seed 1938 the
+  Communists, unable to pay for them, disbanded 15 of the Liaoshen arrivals on 1 November 1948 (lost 109k of 212k,
+  the Nationalists 2k); now 3k. `kept` on `redeploy` removed (no data used it, ADR-977).
+- **Measured** (`tools/diag/trackFronts.ts 1945-09-01 1953-08-01`): 10 large land fronts; both sides near at 7; both
+  engaged at the stage's hour at 2 (seeds 1, 2: 4, 4; before, 2, 1, 0), both engaged through most of the window at
+  Liaoshen, the Yangtze, the northwest, the south, the north of Korea and the Chinese offensives. The reasons not:
+  Japan occupied and Korea south of the 38th parallel (1945) are surrenders, no army of Japan's there; Seoul retaken
+  has no North Korean army near (the Inchon landing would give the taker men, not a defender); Huaihai's Communists
+  stand outside the band at its window's opening (Jinzhou) and reach it late. 1942-45 unchanged above the bar: 12 of
+  20 `occupy` fronts on seed 1938 (seeds 1, 2: 8, 9). The nine replay tests green (strays 0.52 % 1941, 0.12 % 1950,
+  0.13 % 1953; no event passed over); pin unchanged.
+
+### ADR-979 · 2026-11-12 · accepted — R67 split; the world after the track measured
+- **The measure** (`tools/diag/afterTrack.ts`, saves the world at the track's end, `.cache/afterTrack_<seed>.sav.gz`):
+  20 years after 27 July 1953 on seeds 1938, 1, 2: 279, 265 and 309 wars declared; great powers declaring on great
+  powers 13, 19, 13; great powers at war at some year's end in 14, 15 and 17 of the 20 years (the United States and
+  Britain, France and the United States among them). Year 1 holds 36-41 declarations, later years 5-20.
+- **Why** (seed 1938): the track ends with two alliances, Britain's (Britain, France, Switzerland) and the Comintern
+  (the Soviet Union, Mongolia, Tannu Tuva, Communist China); no NATO, no Soviet bloc: the people's democracies are
+  neither puppets nor allies. The Soviet Union declares on Norway, Czechoslovakia, Poland and Finland in its first
+  year (seed 1: Norway, Poland, Finland, Romania, Turkey, Hungary), the United States and Britain join against it, and
+  its army falls from 1.92M men to 0.2M in four years (seed 1: 0.13M); Communist China's from 0.63M to 0.05M. Its
+  treasury at the end is 99 gold (income 1,344 a month, expenses 1,303; the United States 422,037): the month-start
+  budget disbands 57 formations in the first months (seed 1: 80).
+- **Split** (ROADMAP): R67b the blocs handed over (NATO, the Soviet bloc, as the timeline's alliances); R67c lasting
+  blocs (rivals apart does not part an alliance led by a nuclear power); R67d deterrence (no war between two sides
+  each with a nuclear arsenal); R67e proxies, its AT once the rest is measured. N = 20 years. R67c and R67d rules of
+  every game: plain 1938's sweep bands kept, and keyed to arsenals, the pin (one year, none) unchanged.
+- **The cost of R66** (`--profile`, 1938h seed 1938, five years): the replay's tick 3.01 ms against plain's 2.48;
+  year 5 (1942-43) 7.2 ms, combat 4.67 ms of it. From one save of 17 July 1942, 14 days: 11.6-12.0 ms a tick with the
+  windows, 9.4-9.5 ms without: the armies now on the held fronts make the cost (combat's pairs, found and refused across
+  a hold), the windows a quarter more.
+
+### ADR-980 · 2026-11-12 · accepted — R67b: NATO and the Eastern Bloc in the timeline
+- **The events:** on 22 September 1947 (the Cominform) the Soviet Union and Mongolia leave the Comintern's pact of 1938
+  and the Eastern Bloc forms under the Soviet Union with Poland, Czechoslovakia, Hungary, Romania, Bulgaria and
+  Mongolia; Albania joins on 22 February 1949 and East Germany on 29 September 1950 (Comecon), Communist China on
+  14 February 1950 (the Sino-Soviet treaty, joined before to the Comintern's pact). On 4 April 1949 Britain leaves the
+  Anglo-French pact (France left alone in it, it ends) and the North Atlantic Treaty forms under the United States
+  with Britain, France, Belgium, the Netherlands, Luxembourg, Norway, Denmark, Italy, Portugal and Iceland (Canada a
+  dominion of Britain's); Greece and Turkey join on 18 February 1952. Yugoslavia, out of the Cominform in 1948, in
+  neither. Names `alliance.nato`, `alliance.eastern_bloc`.
+- **AT:** `historyTrack1938h` checks both at the track's end, each under its leader with these members. The nine replay
+  tests green, no event passed over; pin unchanged. A first try had France leave the Anglo-French pact too, refused
+  (it had ended with Britain's leaving).
+
+### ADR-981 · 2026-11-12 · accepted (the user's decisions) — R67c-d: two blocs, lasting and deterred, in the track's games
+- **The rules** (`src/sim/ai/strategic.ts`): the blocs (`blocsOf`) are the two strongest alliances (their members'
+  men) led by a nation with an assured second strike (`blocLeader`, `nuclear.ts`, as MAD reckons one: MAD_WARHEADS and
+  means to deliver, no overlord). R67c: rivals apart parts no great power from them. R67d: the strategic AI weighs no
+  war of a nation of one bloc on a side the other stands on (`deterred`: the target, the overlord that would lead its
+  defence, a guarantor of either), on land or over the sea (`warTarget`). Only in a game of the historical track
+  (`world.track`), once it has ended or been left; `BLOC_PROBE` switches each off for a measure.
+- **Measured from the worlds at the track's end** (`tools/diag/afterTrack.ts`, `BLOCS=`; seeds 1938, 1, 2; days with
+  the leaders of the blocs at the track's end on opposite sides of a war in 20 years / members still in at year 20):
+  neither rule 1,191-3,652 days, the Soviet Union dead or out of its bloc on two seeds; lasting alone 438-998 days,
+  the Soviet Union dead on all three; deterrence alone 0 days, the blocs 3-7 of 10 and 2-7 of 13; both 0 days, 10 of
+  10 and 13 of 13, about 180 wars still declared on each seed.
+- **The user's two decisions.** First, any two sides each with an assured strike deterred, and every alliance led by
+  one lasting: the sweep (seeds 1571-1580, 50 years) 8 of 10 seeds within the limits against 10 of 10 (land moving in
+  the last five years 1-37 % against 21-68 %, under 1 % on two; nukes used on 7 seeds against 10). The user: two blocs
+  only. That, in every game: 5 of 10 (one nation over 40 % of the world's income on five); lasting alone 9, deterrence
+  alone 7; both off 10 of 10 (the same as `2026-11-11-sweep-done63`). The user: the track's games only; a Cold War for
+  every game a later item (R67f), needing a counterweight. This narrows ADR-585's rivals apart in those games only.
+- **Tests:** `tests/unit/blocs1938.test.ts` (deterred: the other bloc's leader, member and guarantee; not a nation of
+  neither; none with one bloc). Plain games' path is the old one (no track: no blocs); the pin unchanged.
+
+### ADR-982 · 2026-11-12 · accepted (the user's decision) — R67e and R67f after R69
+- Asked what "rivalry by proxies" should be (aid to the other side of a bloc's war on an outsider; the blocs pulling
+  the unaligned in; or deferring), the user deferred R67e, and with it R67f (a Cold War for every game), to after R68
+  (a start from any date) and R69 (the replay to 1962): 1953-62's own proxy conflicts come with R69's timeline and
+  will show what is missing. R67 stays open until they are done.
+
+### ADR-983 · 2026-11-12 · accepted (the user's decisions) — R68: yearly starts, built at deploy
+- **Asked** how a world at a chosen date is made (saved worlds shipped; fast-forward; both) and where saves live. A
+  saved world is about 1 MB gzipped; the replay runs about 26 s a simulated year in Node.
+- **The user:** a saved world of 1 January of each year of the replay (16 to 1953, 25 with R69), built by the deploy
+  workflow on each push to `main` and published with the site, never committed; the card picks a year, not a day
+  (no fast-forward): a player lets the replay run to the exact point wanted. On the card, with the year, the choice
+  of continuing the replay or playing free from it.
+- **Then (the user, 2026-11-12, after R68c's first card):** a slider under the map, not a list; and one card, not
+  "World, 1938" beside "World, 1938 — Historical". R68's "in place of" both cards: the historical one leaves the title's
+  list, its replay the 1938 card's "Replay history"; "Play free" from 1938 is the plain 1938 game, from a later year the
+  historical world left at once. Tests of the list (its count; the historical entry) changed with it.
+- **The blocs' gate** (ADR-981 said "once it has ended or been left", the code read any track): `world.track?.ended`,
+  so no bloc rule acts while the track steers (R69's nine more steered years). Nine replay tests and the pin unchanged.
+
+### ADR-984 · 2026-11-12 · accepted — R69a: the track to 1962, its new nations dormant
+- **Split** (ROADMAP R69a-e): 1938-53 kept first, then the new years by period, each with a map; the research behind
+  them in `docs/research/1953-62.md` (sourced; who held each future state's land on 1 January 1953).
+- **The end** moves to 31 December 1962 (`timeline.json` `end`), with no new event yet. Most of 1953-62's new states
+  are in a colony nation of 1938 (AOF, AEF, INC, BCO, BEA...) and come of it by release (and rename) or by birth; 26
+  nations added dormant for the births (LAO CAM GUI TOG DAH NGE UVO CIV MLI MRT CMR CHD CAF GAB SOM RWA BDI CYP SLE
+  KUW JAM TRI TGK UGA ALG SAM), their flags our own simple layers.
+- **Measured:** the 12 maps' scores the same to the hundredth as before (`historyMatch1938h`); the nine replay tests
+  green, the track checks run to 1962 with no war off the timeline; the pin unchanged. Tests of 1953's end kept on
+  27 July 1953: the armistice's day checks no war and both Koreas with the track running on; the free world from
+  1953 is left there by `leaveTrack` (as a free start from a year), the world after 1962 R69e's. The card's words,
+  SPEC's end and the yearly starts (to 1962) follow.
+
+### ADR-985 · 2026-11-12 · accepted — R69b: 1953-56 in the replay; land named by the map's codes
+- **Land by codes:** a `transfer` or `born` names its land by a ring, whole countries (admin-1 `adm0`) or provinces
+  (`adm1`), any of them (the schema refuses none); the track holds the provinces' codes (`Track.codes`, derived, from
+  the map's `Admin1Meta` when the Sim builds it). A transfer by codes is a handover: no window of fighting. The map's
+  `MAR` is Morocco with the Spanish Sahara, so Spain's zone is named by its province (`MAR-1445`, Tangier-Tetouan).
+- **The events** (from `docs/research/1953-62.md`): Laos and Cambodia born of Indochina's land; at Geneva North Vietnam
+  born north of the 17th parallel and Indochina renamed South Vietnam (`SVN`; its seat goes to Saigon with Hanoi, so no
+  `capital` event), released on the Republic's proclamation; the Amami Islands back to Japan; Egypt released at the
+  Canal Zone agreement (a British puppet in this world since 1938); West Germany in NATO; Austria's zones end; Sudan,
+  Morocco (`MOR`, with the Spanish zone) and Tunisia released. Suez: Israel's war on Egypt, Britain and France beside
+  it, the Sinai and Port Said held; the ceasefire a `hold` to Israel's withdrawal (a peace ends the whole war and
+  returns what it held: on 8 March 1957), Port Said given back on 22 December. Not modelled: the war in Indochina before
+  Geneva (no Viet Minh state), the Algerian War (no Algerian state before 1962), Hungary (already in the Soviet bloc;
+  its land does not change), French India and Port Arthur (no cells, or already the receiver's).
+- **Measured:** a map of 1 December 1956 (the new states, Austria free, the Sinai and Port Said held) matched as the
+  earlier maps; on that day the new states living, the released free, West Germany in NATO, Vienna Austria's.
+
+### ADR-986 · 2026-11-12 · accepted — R69c: 1957-60 in the replay
+- **The events** (from `docs/research/1953-62.md`): the Saar to West Germany (its province); Ghana (`GHA`, the Gold
+  Coast renamed and released, British Togoland in its land already) and Malaya released; the United Arab Republic
+  (Syria annexed by Egypt, told by its note; Egypt renamed `UAR`); Tarfaya to Morocco; Guinea born; in 1960 Cameroon,
+  Togo, Somalia (the Italian trust territory and British Somaliland, the map's `SOM` and `SOL`), Dahomey, Niger, Upper
+  Volta, Ivory Coast, Chad, the Central African Republic, Cyprus, Gabon, Mali and Mauritania born; Madagascar and
+  Nigeria released; French Equatorial Africa's remainder the Congo (Brazzaville, `CGB`) and French West Africa's
+  Senegal (`SEN`), both released; the Belgian Congo renamed (`CGL`; no overlord in this world); the Sino-Soviet split
+  (China leaves the Soviet bloc, 16 July 1960). Five identities with names and flags of their own.
+- **Not modelled:** the revolutions in Iraq (1958) and Cuba (1959) and the coups (no event kind changes a
+  government); the interventions in Lebanon and Jordan and the Taiwan crisis (no land changed); Katanga and the Congo
+  Crisis (no state for the secession); the Mali Federation's two months (Senegal and Mali from AOF directly); the
+  Ifni War (Sidi Ifni stays Spanish).
+- **Measured:** a map of 31 December 1960 matched as the earlier maps; on that day the 14 states born living, Syria in
+  the UAR, the colonies released free of their overlords, China outside the Soviet bloc; the Eastern Bloc at the
+  track's end without China.
+
+### ADR-987 · 2026-11-12 · accepted — R69d: 1961-62 in the replay, to the track's end
+- **The events** (from `docs/research/1953-62.md`): Sierra Leone, Kuwait, Tanganyika, Western Samoa, Rwanda and
+  Burundi (of the Belgian Congo's land in this world), Algeria (of France's own land), Jamaica, Trinidad and Tobago
+  and Uganda born; Syria born again of the UAR's land (a dead nation brought back); the Southern Cameroons (Nigeria's
+  land in the map's `CMR`) to Cameroon; Goa, Daman and Diu to India by their provinces (its note names Operation Vijay; the annexation, not its day of
+  war: a war on Portugal would call its NATO allies); Albania leaves the Soviet bloc. The Sino-Indian War: China's war
+  on India, the Kameng sector held from Bomdila's fall, the ceasefire a white peace (China's withdrawal); Aksai Chin is
+  China's on the map already.
+- **Not modelled:** the Cuban Missile Crisis (no war), the Yemen civil war (no royalist state), the Bay of Pigs and
+  the Kuwait and Bizerte crises (no land changed), West New Guinea (under the UN at the end of 1962; Indonesian in
+  1963), the coups.
+- **Measured:** a map of 30 December 1962 (the day before the track's end) matched as the earlier maps; that day the
+  states born 1961-62 living, Albania outside the Soviet bloc, no war; the two scripted strikes still the only nuclear
+  ones to the track's end; the Eastern Bloc at the end without China or Albania.
+
+### ADR-988 · 2026-11-12 · accepted — R69e: the world after 1962 measured; R69 done
+- **Measured** (`tools/diag/afterTrack.ts`, seeds 1938, 1, 2, 20 years from the track's end on 31 December 1962): the
+  great powers USA, Britain, the Soviet Union, China, Japan, France; the blocs at the end the Eastern Bloc (8: the
+  Soviet Union, Poland, Czechoslovakia, Hungary, Romania, Bulgaria, Mongolia, East Germany) and NATO (14, West Germany
+  in it). No day in 20 years with their leaders on opposite sides of a war; both whole at year 20 (8 of 8, 14 of 14) on
+  every seed; 276-317 wars declared (from 1953: about 180, the new nations more to fight), one or two between members
+  of the two blocs (deterrence holds the sides the other bloc stands on, not every member's quarrel), great powers at
+  war in at most one year. R67c-d's rules hold from the new handover.
+- **Found:** West Germany holds an arsenal at the track's end (the nuclear powers USA, Britain, the Soviet Union,
+  France and West Germany); history's had none. An item of its own (R69f), not this one's.
+- The free world from 1953 (`freeWorld1938h`, left by `leaveTrack`) stays the test of the AI's own wars; from 1962 the
+  measure above (wars declared every year on each seed).
+
+### ADR-989 · 2026-11-12 · accepted — R69f: the bombs of the timeline
+- **Found** (ADR-988): any nation of income enough researched the bomb while the track steered: France held 10
+  warheads by 1950 (its test was in 1960) and West Germany built from 1953 (never, in history).
+- **The rule:** a `bomb` event is a nation's test (the United States 16 July 1945, the Soviet Union 29 August 1949,
+  Britain 3 October 1952, France 13 February 1960): it knows the bomb from then (a `NuclearPower` row) and may build.
+  While the track steers, `goesForBomb` holds for none other (`Track.bombCleared`, from the events applied; derived,
+  not state), so none researches it or builds; after the track, the usual rules. A clearance alone left France with
+  none by 1962 (the research is years): the event grants the tech, as the test was.
+- **Measured:** on seed 1938 and seeds 1-5, the arsenals at the track's end the United States', the Soviet Union's,
+  Britain's and France's (a hard check on every seed: a rule, not luck). The maps of 1941-45 moved within their bars
+  (control on 1 December 1941 96.3 % right against 96.4, its strays 0.43 % against 0.52; the others the same or
+  better); 1950-62 unchanged.
+
+### ADR-990 · 2026-11-12 · accepted (the user's decisions) — R67e: aid to the other side; R67f closed
+- **Asked** what rivalry by proxies should be (aid to the other side; the blocs pulling in the unaligned; none), and
+  whether R67f (the bloc rules in every game) goes on. **The user:** aid to the other side; R67f closed, the bloc
+  rules staying in the track's games only.
+- **The rule** (`blocAid`, `src/sim/ai/strategic.ts`): monthly, where the blocs are (the track's games after it), in
+  each war, by id, a side of nations of neither bloc facing a member of one is aided by the other bloc's leader: its
+  first free nation gets AID_SHARE (5 %) of the giver's income in gold, and while its side is losing (the war's score)
+  a division of volunteers (`infantry_div`, its men and price the giver's) queued for it. At most AID_WARS (3) wars a
+  giver a month; none to a nation the giver is at war with. A `BlocAid` row ("Cold War aid"). No state: it reads the
+  wars each month.
+- **Measured** (`tools/diag/afterTrack.ts`, seeds 1938, 1, 2, 20 years from the track's end; the handovers made again
+  after ADR-989): the United States aided 26-34 nations (163-244 months), the Soviet Union 47-59 (247-292), most at war
+  with NATO's colonial powers; the leaders never on opposite sides of a war; both blocs whole (8 of 8, 14 of 14);
+  279-298 wars declared. Plain games' path unchanged (no track, no blocs, no aid; the pin).
+- **Tests:** `tests/unit/blocAid1938h.test.ts` (the gold and its row; volunteers while losing; none to a foe, none
+  with one bloc).
+
+### ADR-991 · 2026-11-12 · accepted (the user's decisions) — R71: the replay to 1975, before the critic
+- **The user:** stop before the critic of Batches 18-19 and extend the replay; asked whether new units are needed,
+  then "let's try to 1975"; and that coups and revolutions of the earlier period get an item too.
+- **Units:** none new. The roster (mechanised infantry, MBTs, jets, ballistic missiles, the navy) carries 1963-75;
+  the tech tree ends in 1952, so later techs come as stat upgrades (R71c). Missile submarines and helicopters are
+  left for a longer horizon.
+- **What the period needs instead:** a regime change (R71a: a nation's government drives no rule today, so the event
+  sets its aggression and alignment with it), its first uses 1953-62's coups and revolutions; rebels as nations born
+  on the land they hold (R71b), so the insurgencies of the period (Vietnam, Laos, Cambodia, Biafra) are the
+  existing births, wars and annexations.
+
+### ADR-992 · 2026-11-12 · accepted — R71a: regime change
+- **Found:** a nation's government (the scenario's `government`) is stored nowhere in the world, shown nowhere and
+  read by no rule; what a coup can change in the game is a nation's aggression (peacetime army spending, the war AI
+  after the track, nuclear retaliation) and the static command efficiency the start derives from it, and its
+  alignment (alliances, guarantees: the existing events).
+- **The rule:** a `regime` event sets the nation's aggression and `ceStatic` (`staticCe`, as the start), told by its
+  note (a told kind); a nation not living is refused. No government label (a change of what ADR-991 said: nothing would
+  show it). Alignment: the same day's `allianceJoin`, `allianceLeave` or `guarantee`.
+- **Its first uses** (1952-62): Egypt 1952 (45), Iran 1953 (30), Guatemala 1954 (20), Iraq 1958 (45), Pakistan 1958
+  (45), Cuba 1959 (50) and the Soviet guarantee of Cuba (16 April 1961), South Korea 1960 (25) and 1961 (35), Turkey
+  1960 (35), Burma 1962 (15).
+- **Measured:** the nine replay tests and the pin green, the 1938-62 maps' lines identical; 20 years after the track
+  on seed 1938, the blocs' leaders never on opposite sides of a war (the guarantee of Cuba under deterrence), both
+  blocs whole. `docs/research/1963-75.md`: the next period's research (part of its dates checked against the web).
+
+### ADR-993 · 2026-11-12 · accepted — R71b: the replay to 1975, its new nations dormant
+- **The end** moves to 31 December 1975 with no new event yet (1963-75 steered with nothing scheduled, as R69a did
+  for 1953-62); the card says "the end of 1975".
+- **Nations** (49, dormant): the 33 states of 1963-75 (Zanzibar to East Timor), Libya (independent in 1951 and never
+  yet in the replay), and 15 rebel movements, each a nation born on the land it holds, at war with its government:
+  the existing births, wars and annexations, no new rule (the NLF, the Pathet Lao, the Khmer Rouge, Biafra, the
+  Eritrean front, the Simba, Dhofar, FROLINAT, Iraqi Kurdistan, FRELIMO, the MPLA, FNLA and UNITA, the Polisario,
+  the Turkish Cypriot State). Every one's country has land cells on the map; colours all distinct; our own simplified
+  flags. Renamed identities (Malaysia, Tanzania, Rhodesia...) come with their events.
+- **Found:** the track ends at the first hour of its last day, and the free AI's first day runs in that hour; the
+  seed-1938 check read the blocs after it (on 31 December 1975 India joined NATO, the Soviet Union declared war on
+  Finland). The check now reads the alliances handed over before that hour (`TrackRun.handover`); its bar unchanged.
+- **Measured:** the 1938-62 maps' lines identical, the pin unchanged; the replay tests' timeouts 30 minutes (13 more
+  years).
+
+### ADR-994 · 2026-11-12 · accepted — R71c: the techs of 1955-70
+- **The rule:** 14 techs dated 1955-70 (`data/tech/postwar.json`), nation-wide modifiers of 5-20 % as the older ones,
+  no new unit: petrochemicals, containerisation; assault rifles, helicopter assault, anti-tank guided missiles;
+  second- and third-generation tanks; anti-ship missiles; supersonic and multirole jets; transistors, surface-to-air
+  missiles, electronic warfare, integrated circuits. None in the held nuclear category, none needing a nuclear tech.
+  The file loads last, so no older tech's bit moves (a save keeps its techs); 58 of the 64 bits.
+- **Measured** (seed 1938, the track's end in 1975): the six great powers, both Germanys and Italy know all 14; India
+  10, the Netherlands 11, Australia 9; most new states none, six born of Britain or France 5-7 (a nation born knows
+  what it leaves knew, PLAN 3.1a). The 1938-62 maps' lines and the pin unchanged (nothing is researched before its
+  year).
+
+### ADR-995 · 2026-11-12 · accepted — R71d: 1963-67 in the replay
+- **Events** (`docs/research/1963-75.md`): the states of 1963-67 born of their rulers' land (Kenya, Zanzibar, Malawi,
+  Malta, Zambia, the Gambia, the Maldives, Singapore, Guyana, Botswana, Lesotho, Barbados, South Yemen); Malaysia
+  (Sarawak annexed, Sabah transferred, renamed), Zanzibar into Tanganyika, renamed Tanzania; Rhodesia released and
+  renamed; West New Guinea Indonesia's (the Dutch Indies annexed: a transfer by country left it 17 coastal cells of no
+  country). Rebels as nations (R71b): the Viet Cong in the Mekong, then the Highlands; the Pathet Lao on the Plain of
+  Jars; the Simba (born, held, annexed at Stanleyville); Biafra (Enugu and Calabar lost). Wars held (`hold`): the
+  Konfrontasi, the Sand War, Vietnam (North Vietnam beside the Viet Cong; the United States, South Korea, Thailand and
+  the Philippines beside the South), Laos, India and Pakistan in 1965, Nigeria and Biafra; the Six-Day War's
+  conquests as transfers before its white peace (a white peace gives occupied land back). 18 regime changes (Iraq,
+  Syria, Brazil, Indonesia, the Congo, Nigeria, Ghana, Argentina, Greece...).
+- **Found:** a nation at war with a foe's side cannot join it (`join` refuses: AtWar). A separate Gulf of Tonkin war
+  (the United States on North Vietnam, 1964) kept the United States out of the South's war; the Tonkin raids are left
+  out, the United States enters at Da Nang (8 March 1965), each joiner held from its day.
+- **Measured:** the maps of 31 December 1964 and 1967 99.4 % right, strays 0.13 and 0.12 %; the 1938-62 maps'
+  lines unchanged; nothing passed over; the 1967 state check (`state67`) as history; seeds 1-5 within the bars.
+  Identities Malaysia, Tanzania, Rhodesia with names and flags.
+
+### ADR-996 · 2026-11-12 · accepted — R71e: 1968-71 in the replay; Libya from 1951
+- **Libya** (a known gap since R62: Italy's, under British occupation, to the track's end): born on 24 December 1951
+  of Italy's land in Libya (the transfer sets its holder too, ending the occupation); the maps from 1953 own it Libya's.
+- **Events:** Nauru, Mauritius, Swaziland, Equatorial Guinea, Tonga, Fiji, Bahrain, Qatar and the United Arab Emirates
+  born; Biafra cut from the sea and annexed (12 January 1970); Bangladesh born in its border belts, at war with
+  Pakistan, India beside it on 3 December 1971, the whole of it its own at Dhaka's surrender. Rebels as nations
+  (R71b): FROLINAT in Chad's north (held past the track's end), the Dhofar rebels on the Jebel (a ring), Iraqi
+  Kurdistan at the autonomy agreement of 1970, the Khmer Rouge in Cambodia's northeast. Short wars held and ended
+  white: the Sino-Soviet border war (March-September 1969), the Football War, Syria in Jordan (Black September). 19
+  regime changes (Iraq's Ba'ath, Czechoslovakia 1968, Gaddafi, Lon Nol, Sadat, Allende, Assad, Amin, Bhutto...).
+- **Measured:** the map of 31 December 1971 99.4 % right, strays 0.12 %; Libya's own raises the owners' scores of
+  1953 and 1956 (98.9 to 99.0 %), the rest unchanged; nothing passed over; `state71` as history; seeds 1-5 within the
+  bars; the pin unchanged.
+
+### ADR-997 · 2026-11-12 · accepted — R71f: 1972-75 in the replay, to the track's end
+- **Events:** Indochina's end (the Easter Offensive's provinces; the Paris Accords, the United States and its allies
+  leaving; the Highlands, Huế and Da Nang; Saigon, the Viet Cong's government annexing the South; Phnom Penh to the
+  Khmer Rouge; the Vientiane Agreement, then the Pathet Lao annexing Laos); the Yom Kippur War (Egypt across the
+  canal) and the Sinai agreements (transfers back to Egypt); Cyprus (Turkey's north, then the Turkish Cypriot State
+  its puppet); Portugal's empire (Guinea-Bissau, FRELIMO in the north then Mozambique released and FRELIMO's,
+  Cape Verde, São Tomé; Angola released to the MPLA, UNITA and the FNLA born at war with it, Cuba and South Africa
+  in); the Comoros, Papua New Guinea, Suriname, the Bahamas, Grenada; the Aouzou Strip Libya's; Iraq's Kurds
+  annexed at the Algiers Agreement, Dhofar won; the Eritrean fronts; Western Sahara (Morocco's north, Mauritania's
+  south, the Polisario east); East Timor (Fretilin, then Indonesia's invasion). 14 regime changes (Pinochet,
+  Portugal's Carnation Revolution, the Derg, Greece's junta's fall, Franco's death...). Wars of the end left held
+  past it (Chad, Eritrea, Angola, East Timor, Western Sahara): the free world takes them over.
+- **Fixed on the way:** Cyprus born in 1960 of both its map codes (`CYP`, `CYN`: the north had stayed Britain's);
+  the canal's rings reach Israel's Sinai (the canal governorates span both banks).
+- **China's bomb** (16 October 1964, a `bomb` event): its income (about 490) is under NUKE_PROGRAMME_INCOME (1000),
+  so it never built. While the track steers, a nation its timeline has given the bomb goes for it whatever its income
+  (its test was history's); its stockpile kept under STOCKPILE_SHARE of its income as any's. After the track, the
+  usual rule.
+- **Measured:** the maps of 31 December 1973 (99.4 %) and 30 December 1975 (99.5 %) right, strays 0.12 %; the
+  earlier maps within 0.01 point; nothing passed over; `state75` as history; the arsenals at the end the United
+  States', the Soviet Union's, Britain's, France's and China's on every seed; the pin unchanged.
+
+### ADR-998 · 2026-11-12 · accepted — R71g: the world after 1975 measured; R71 done
+- **Measured** (`tools/diag/afterTrack.ts`, seeds 1938, 1, 2, 20 years from the 1975 handover): the blocs' leaders
+  never on opposite sides of a war; both blocs whole all 20 years (the Soviet bloc 8 of 8; NATO 14 or 15, the
+  fifteenth India on seeds 1938 and 1, joined on the free AI's first day, which this tool reads as the handover,
+  ADR-993); 354-499 wars declared; the United States aided 30-51 nations, the Soviet Union 45-62 (R67e's aid).
+  China's arsenal handed over (ADR-997). As after 1962 (ADR-988, ADR-990): no new item.
+- **R71 done:** the replay runs from 1938 to the end of 1975 (ADR-991 to ADR-998). Next, by PROMPT's RELEASES: the
+  critic of Batches 18 and 19 (held for R71 by the user's decision, ADR-991).
+
+
+### ADR-999 · 2026-11-12 · accepted (the user's decision) — The replay's starts cached in the deploy
+- **Context.** The Pages deploy took 20 minutes, 18 of them `npm run saves` (the replay stepped 1938-1975, serial,
+  about 28 s a year on the runner). Half of the last 60 commits changed nothing the sim reads.
+- **Decision.** `pages.yml` caches `dist/data/scenarios/1938h/start` (`actions/cache`), keyed on a hash of every input
+  of the sim: `src/sim`, `src/shared`, `data`, `public/data`, `tools/data`, `tools/headless`, `tests/helpers`, the
+  package and lock files, the tsconfigs. On a hit the saves are not built (a deploy of about 2 minutes).
+- **Consequences.** A sim input outside the key would deploy stale starts; the game's hash check
+  (`src/app/replayStart.ts`) throws on such a start rather than playing it. A new input of the sim outside those
+  paths joins the key. Speeding the sim itself: R72 (ADR-1000).
+
+### ADR-1000 · 2026-11-12 · accepted (the user's decision) — R72: a faster tick, before the critic
+- **Context.** After ADR-999 a push that changes a sim input still deploys in about 20 minutes: the replay's starts
+  are stepped 1938-1975 in one thread. Combat is 42 % of 1938h's tick in its war years.
+- **Decision.** The user: "let's add it to the roadmap before the critic". R72 in Batch 18, after R71 and before the
+  critic of Batches 18-19: speed-ups of the tick with no rule change, `npm run saves` to 1975 in at most 2/3 of its
+  time, every result bit for bit as before (the starts' hashes, the pin of seed 99).
+- **Consequences.** The critic waits for R72. Split from a profile of combat by function when it is started.
+
+### ADR-1001 · 2026-11-12 · accepted — R72a: the replay's starts built from a bundle, not under tsx
+- **Context.** R72's profile of `npm run saves` (V8's `--cpu-prof`, the 38 years, 573 s): about a quarter in tsx's
+  `__name`, the call `keepNames` wraps around each function made, so that a closure made in a hot loop (`Track.held`'s,
+  for each pair of formations each hour) names itself at each call. The game's build (Vite) and vitest keep no names.
+- **Decision.** `npm run saves` runs `tools/data/saves.ts`: it bundles `replaySaves.ts` with esbuild (`keepNames` off,
+  into `.cache/saves/`, two levels under the root as the earth's assets are found from the bundle's place) and runs it
+  with node. esbuild, until now Vite's and tsx's, a dev dependency of its own at the same version.
+- **Consequences.** Each of the 38 years' hashes the same as tsx's; to 1941 −31 % (31.5 s against 45.8 s, swapped
+  pairs on separate P-cores). The other tools (`npm run sim`, the sweep, the soak) still run under tsx and pay the
+  same tax; their timings are the budgets' (goal 5) and are left as they are.
+
+### ADR-1002 · 2026-11-12 · accepted — R72 met: the replay's starts in 0.63 of their time
+- **Context.** R72's bar (ADR-1000): `npm run saves` to 1975 in at most 2/3 of its time at `fa16420b`, every result
+  bit for bit as before.
+- **Read.** 570.8 s at `fa16420b` under tsx against 360.7 s at `9583cfc0` from the bundle: 0.63. Both at once on
+  separate P-cores, then swapped (578.7 against 351.8 s, 562.8 against 369.6 s); each of the 38 years' tick and hash
+  the same; the pin of seed 99 unchanged in each part's gate. By part (bundles, swapped pairs): R72a (no `keepNames`)
+  −31 % to 1941; R72b (the holds standing) −1.7 %; R72c (`findBattles`' nation pairs) −3.4 %.
+- **The runner.** The deploy's step was 9.8 min on R72's planning commit (before R72a), then 12.3, 9.4 and 11.9 min
+  after R72a, b and c, and 18.2 min the night before on the same code: a shared runner's noise is larger than the
+  change, so the bar is read on this machine, as ADR-1000 set it.
+- **Consequences.** Next by PROMPT's RELEASES: the critic of Batches 18 and 19 (ADR-991). What the profile shows past
+  combat (air strikes 10 %, supply 11 %, movement 10 %, territory 7.5 %, the bundle's profile of R72b) is no item: the
+  bar is met.
+
+### ADR-1003 · 2026-11-12 · accepted — Critic run 65: B1 before the release, the rest after it
+- **Context.** Critic run 65 (focused, on `5ee3e035`, Batches 18-19 and R72): every dimension at its bar
+  (`diplomacyWarDepth` and `editorScenarios` 8 → 7, at their bar of 7), one blocking issue, B1 (R68b's refused start
+  not told; with a saved game, the save blamed and its Continue removed). Not an exit (ADR-829): no dimension under its
+  bar, B1 a gap of R68b's own, not a ticked fix that broke another.
+- **Decision.** B1 is R73 (Batch 20), before the release; then the critic again, focused (ADR-915). The non-blocking
+  findings move no score under its bar (ADR-843 asks for none to be filed) and wait for after the release, where
+  they are filed as items: R65-N1 (post-war Japan and Italy at their 1938 aggression), R65-N2 (India and Austria taken
+  into the blocs at the handover; NATO's war on Yugoslavia in the end hour), R65-N5 (names and capitals of 1956-75),
+  R65-N6 (the start card's preview and count not the year's), R65-N7 (Resume during the build undone), and the small
+  ones. R65-N3 (the burst of wars in a free game from a late year) and R65-N4 (D-Day and Stalingrad on empty land;
+  ADR-969's bar counts land fronts) are design questions for the user, not items.
+- **Consequences.** The release waits on R73 and a focused run with no blocking issue, then the full run (ADR-916).
+
+### ADR-1004 · 2026-11-12 · accepted (the user's decision) — Run 65's non-blocking findings before the release
+- **Context.** ADR-1003 put run 65's non-blocking findings after the release, and R65-N3 and R65-N4 as design
+  questions.
+- **Decision.** The user: "let's do all the non-blocking findings too". R74 in Batch 20 after R73, before the critic:
+  R65-N7, N6, N5, N1, N2, N3, N4 and the small ones (R74a-h), each with its AT. Supersedes ADR-1003's "after it".
+- **Consequences.** The release waits on R73-R74 and a focused run with no blocking issue, then the full run.
+
+### ADR-1005 · 2026-11-12 · accepted (the user's decision) — Every critic run's non-blocking issues fixed before the release
+- **Context.** Until now a critic run's non-blocking issues were filed as the batch saw fit, and ADR-843 asked only for
+  the ideas of a dimension under its bar. The user: "Can we make a rule to always do non-blocking findings before
+  release?" Most runs find some, the full run that clears a release among them, so the rule needs an end.
+- **Decision** (PROMPT.md, RELEASES step 2). Each non-blocking issue of every critic run becomes a ROADMAP item with
+  its AT, before the release, as a blocking one does. The full run's own non-blocking issues are fixed too, and the
+  release then goes on with no critic run after them: `npm run check:review`, the sweep on unseen seeds and the bench
+  (step 3) are run again on the fixes (the user's choice of the end, of three put to them).
+- **Consequences.** A release waits on every finding of its runs. ADR-1004 (run 65's) is the first case.
+
+### ADR-1006 · 2026-11-12 · accepted (the user's decision) — Run 65's ideas from other games before the release
+- **Context.** Critic run 65's "Ideas from other games" (not scored): Hearts of Iron IV's historical focus after the
+  scripted years, and Paradox's bookmarks (each start's map and great powers on the start screen).
+- **Decision.** The user: "Can we also add the ideas from other games?" R75 in Batch 20 after R74: R75a the AI keeps
+  its history's alignment for some years after the track, easing into its own; R75b the start card names the year's
+  great powers (the year's map is R74b's).
+- **Consequences.** The release waits on R75 too. Whether ideas from other games join every release as non-blocking
+  issues do (ADR-1005) is not decided here: these two by the user's word.
+
+### ADR-1007 · 2026-11-12 · accepted — R74c: the seat founded where the map has none; no revival for a nation history ended
+- **Context.** Critic run 65's R65-N5: West Germany's seat labelled Gießen (the map has no Bonn); Manchukuo revived in
+  a free world in 1979; Tuva, Newfoundland and British East Africa's last cells separate in 1975; "Nationalist Spain"
+  at Burgos and "Anglo-Egyptian Sudan" to the end.
+- **Decision.** (a) A `capital` event may name its `city`: founded on the nation's own land at the seat (size 2, as the
+  editor places one) when it has no city within CAPITAL_CITY_KM (15) there. (b) When the track ends, a nation dead
+  then that no later event of the timeline brings back (`born`) has no revivals left; one a later `born` brings back
+  keeps them (Poland in an end of 1940), unborn ones as they are. Applied at the end, not at each death: the
+  replay's starts to 1975 hash as before up to the new events. (c) The events: Madrid and the Spanish State
+  (1939-04-01), Tuva (1944-10-11), Newfoundland (1949-03-31), Bonn (1949-05-23), the Republic of the Sudan
+  (1956-01-01), Lamu, Zanzibar's coast and the rest of British East Africa (1963-12-12); Mongolia's own leave of
+  1947 taken out (its pact dissolves with the Soviet leave).
+- **Consequences.** Plain games unchanged (the pin). The revival rule touches every game of the track ended early.
+  Free worlds after the track lose the revivals of the nations history ended (no Manchukuo, Mengjiang, Tuva).
+
+### ADR-1008 · 2026-11-13 · accepted — R74d: a regime names its traits; the Axis's post-war regimes
+- **Context.** Critic run 65's R65-N1: Japan and Italy kept their 1938 aggression (85, 80) and traits (militarist,
+  expansionist, naval tradition) to 1975; Japan declared on South Korea within days in 6 of 6 late free starts.
+- **Decision.** A `regime` event may name `traits`, which replace the nation's (`applyTraits`; the cross-file check
+  holds them to the traits file and its exclusions). New regimes: Spain 1939-04-01 (aggression 30, authoritarian:
+  neutral, worn out by its war), Italy 1946-06-02 (15, democratic), Japan 1947-05-03 (10, pacifist, industrial,
+  democratic); Spain's of 1975 clears its traits. West Germany is born at 10 with none (unchanged).
+- **Consequences.** Plain games unchanged. After the track Japan declares nothing in 10 years on two seeds; Italy,
+  at 15, still declares from the third year (for R74f and R75a).
+
+### ADR-1009 · 2026-11-13 · accepted — R74e, R74f, R75a: a historical focus after the track
+- **Context.** Critic run 65's R65-N2 (India, Austria, Kuwait, Iran and Pakistan in the blocs within hours of the end;
+  NATO's war on Yugoslavia in the end hour), R65-N3 (a free game from 1963 or 1975 opening at 1.4-2.6 times plain
+  1938's declarations per nation; 83-98 in the year after the end) and its idea from Hearts of Iron IV (the AI keeps
+  its history's alignment for a while after the script).
+- **Decision.** `focusAfterTrack` (`src/sim/ai/strategic.ts`): after the track ends (by its date, an intervention or
+  a free start) the strategic AI declares no war that day, then FOCUS_FLOOR (0.4) of its usual chance, rising to all
+  over FOCUS_YEARS (3); while it is under 1 no nation joins or founds an alliance a bloc's leader leads
+  (`blocLeader`). The end's tick is kept in the track's section, in the slot of `ended` (2 + the tick; 1 in an older
+  save, read as the focus over): no new state format, the starts to 1975 hash as before.
+- **Read.** As each item's line in ROADMAP. Plain games unchanged (the pin); the nine replay tests green.
+- **Consequences.** A free game from a late year is quieter for its first years; the blocs grow by none for three
+  years after the end, and then by the strategic AI's usual joins.
+
+### ADR-1010 · 2026-11-13 · accepted — R74g: armies at Stalingrad and in Normandy
+- **Context.** Critic run 65's R65-N4: Uranus and D-Day painted on land with no army of either side near
+  (`trackFronts`: none engaged at either stage's hour; at D-Day no formation within 120 km).
+- **Decision.** Timeline arrivals (`forces`, kept for their stage, R66d's rules): the Sixth Army (12 divisions) and the
+  Fourth Panzer Army (2) at Stalingrad on 1 November 1942, kept to 7 January; Uranus's 20 rifle divisions at the Don
+  bend and south of the city on 15 November (in place of 20 at Moscow), kept to the stage; 6 German infantry and 2
+  panzer divisions in Normandy on 1 April 1944, kept to 13 June; 3 American, 2 British and 1 Canadian division ashore
+  at hour 23 of 5 June. A first try moving the German army in the south to the city (`redeploy`) left nobody there by
+  November: the AI moved them on. An arrival takes its cell only when its nation is at war with the cell's owner as
+  well as its holder (the Americans on Vichy's land, held by the Germans, broke `historyTrack1938h`'s "held at
+  peace" check); no arrival before took a neutral owner's cell, so the replay tests are unchanged by it.
+- **Read.** As ROADMAP's line; the pin unchanged (track-only).
+
+### ADR-1011 · 2026-11-13 · accepted — R74h: the Next line, the sea's reach, the air held in 1969
+- **Context.** Critic run 65's small findings: the desktop Next line cut ("Cameroon ind…"); wars with no way to
+  reach (the Republic of China capturing Albania's capital in a free 1975; Poland against Australia); the Sino-Soviet
+  clash of 1969 a months-long air war.
+- **Decision.** (1) `.bar-track` 36em from 1280 px wide (the bar 1245 px, one row); under it 17em as before, and the
+  phone's two rows. (2) `warTarget`'s sea targets: a nation that is no great power (`greatPowers`) only within
+  SEA_REACH_KM (4000) of a transport group of its at its port (`seaTargets(world, n, reach)`); great powers across
+  any sea, as before (ADR-670's case: the United States and the Soviet Union). A rule of every game: the pin moves
+  c64a53fb → aa59b1ab; the sweep on 1571-1580 keeps its verdicts (`docs/sweeps/2026-11-13-sweep-r74h.md`, against
+  `2026-11-12-sweep-r67two.md`). Allies called into a far war still fight it (ADR-887's reach is the join's). (3) A
+  `hold` with `air`: its sides' aircraft fly at each other no more (`World.airFoes`, in the air AI's targets and air
+  combat); 1969's has it. The Western Front's and the others' keep their air war.
+- **Read.** As ROADMAP's line. The nine replay tests green. `farWait1938` on seed 5 from day 180 (seed 7 has no wait
+  in 400 days on the new history; `tools/diag/firstWait.ts`).
+
+### ADR-1012 · 2026-11-13 · accepted — R75b built; the Soviet Union's strength first (R75c)
+- **Built.** The start card's "Great powers": `cardPowers` (tools/data/replaySaves.ts), each living nation that is no
+  puppet by its share of the world's strength, income and warheads, seven, strongest first, by the tag it bears then;
+  written to `years.json` as `powers`; no row from an older index. A card's measure, not a rule: the sim's
+  `greatPowers` (by strength alone) gave 1938 without the United States or Britain and China second.
+- **Read.** 1938: the seven of history. 1960 and 1975: the United States, the United Kingdom, the Soviet Union. In the
+  sim's 1960 the Soviet Union is behind Britain in strength (1.73M to 2.14M), income (fourth to second) and warheads
+  (13 to 24: a stockpile's upkeep is capped by a share of income).
+- **The user's decision (2026-11-13), asked:** fix the Soviet strength first (R75c), not the card's measure nor a
+  curated list; R75b closes on its AT after it.
+
+### ADR-1013 · 2026-11-13 · accepted — R75c: the Soviet economy after the war; R75b closed
+- **Context.** ADR-1012: in the replay's 1960 Britain is the second power. Read on the starts: the sim's industry is
+  1938's to the end (`cells.econ`, no growth); the Soviet Union's 1938 measure (GDP × per head's share) gives it 201bn
+  to Britain's 500bn with its empire; after the war-economy buff ends (2 September 1945) its income is 1,312 to
+  Britain's 2,412, its gold near none after its army's upkeep, so warheads go unpaid (13 to 24) and the army shrinks.
+- **Decision.** The timeline's `buff` (income, +1) for the Soviet Union from 2 September 1945, hour 1, to 26 December
+  1991: the Five-Year Plans. It lasts past the track's end into a free world (no collapse at the handover), to the
+  Union's own end. Track-only data: plain games and seed 99's pin unchanged. Britain's own figures not touched (the
+  user's decision was the Soviet side).
+- **Read.** As ROADMAP's R75c line. R75b's card spec carries the new starts' lists.
+
+### ADR-1014 · 2026-11-13 · accepted — Critic run 66: no blocking issue; its findings before the release
+- **Context.** Critic run 66 (focused, on `a0880be6`, Batch 20): every dimension at 8 (`diplomacyWarDepth` and
+  `editorScenarios` 7 → 8), no blocking issue; run 65's B1 and its seven non-blocking findings read fixed on their own
+  probes. Six new non-blocking findings (R66-N1 to N6) and one small one (four Chinese warheads at one target). Not an
+  exit (ADR-829): no dimension under its bar. Its design objections (the dominions in 1975, D-Day set ashore, the Soviet
+  buff to 1991) are not named as issues by the critic and no dimension is under its bar, so none is filed (ADR-843).
+- **Decision.** By ADR-1005 the findings are fixed before the release: Batch 21, R76a-g, each with the critic's own AT.
+  Then the critic again, focused (ADR-915); on a clean focused run, the full run (ADR-916).
+- **Note.** The critic's cleanup stopped three `msedgewebview2.exe` processes and an `msedge.exe` crash handler not its
+  own (its kill filter matched "chromium"); nothing in the repo was touched.
+
+### ADR-1015 · 2026-11-13 · accepted — R76a: the historical focus only after the war
+- **Context.** R66-N1: R75a's focus (ADR-1009) damped every end of the track, a replay left in 1938-41 too, where
+  nothing was held back and history's alignment is the world at war (19 declarations in the year against plain 1938's
+  32 and 28).
+- **Decision.** `focusAfterTrack` is 1 for an end before 1 January 1946 (`FOCUS_FROM_DAY`), the bloc era's start; from
+  then on as ADR-1009. A cut, not a ramp: the war's end is the line the track's held years and blocs begin at.
+- **Read.** As ROADMAP's R76a line. Plain games and seed 99's pin unchanged (no track).
+
+### ADR-1016 · 2026-11-13 · accepted — After a focused run's non-blocking fixes, the full run
+- **Context.** PROMPT's RELEASES step 2 had the critic run again focused after any batch of fixes, and step 3 the full
+  run once a focused run had no blocking issue and every score at its bar. Run 66 was such a run, yet ADR-1014 planned
+  a focused run after Batch 21 and the full one after it: one critic run more (run 66 took about 100 minutes). The
+  user: "For non-blocking issues from a focused run, let's always go to full run after fixing".
+- **Decision.** When a focused run has no blocking issue, its non-blocking issues are fixed and the next run is the
+  full run (step 3). A focused run with a blocking issue is followed by a focused run, as before (ADR-915). ADR-1014's
+  "then the critic again, focused" is replaced: after Batch 21, the full run.
+- **Consequences.** PROMPT's step 2 says so. The full run checks R76's fixes along with everything else; its own
+  non-blocking issues are fixed with step 3's checks run again on them, no critic run after (ADR-1005).
+
+### ADR-1017 · 2026-11-13 · accepted — R76c: the powers of the world and of the sea cross any sea
+- **Context.** R66-N3: R74h's sea reach (ADR-1011) let only the sim's `greatPowers` (six by strength alone) land past
+  SEA_REACH_KM; that left the United States out of plain 1938's first year and Japan out of years 1-3, while
+  Republican China's army kept it in.
+- **Decision.** `seaPowers`: the WORLD_POWERS (7) of `worldPowers`, the start card's measure (a share of the world's
+  strength plus its income plus its warheads; `cardPowers` now calls it), and the seven largest navies (`fleetMen`).
+  The navies keep a sea power its economy does not rank (Japan); a nation whose navy is sunk and economy small is out.
+  China, ranked among the seven by the card's measure in 1938-41, may cross; the critic proposed that measure, and a
+  rule to leave China out by name or by navy alone would drop the United States where its fleet is sunk (seed 99, year
+  3 on R74h's world: not among the seven navies), so the AT's "China may not" is answered here, not met.
+- **Read.** As ROADMAP's R76c line. Pin aa59b1ab → c64a53fb (seed 99's first year as before R74h); sweep verdicts kept
+  or better.
+
+### ADR-1018 · 2026-11-13 · accepted — R76d: D-Day and Uranus fought; Stalingrad's stage a handover (the user's decision)
+- **Context.** R66-N4: Stalingrad's stage of 31 October 1942 had no German army (the Sixth Army arrived 1 November);
+  Uranus was not engaged at its hour on 38701; D-Day's beachhead was given at hour 2 of 6 June, three hours after the
+  landing, its window (30 May-6 June) over before anyone was ashore and the Western Front's hold on from then.
+- **Decision.** Data only: the Sixth Army and the Fourth Panzer Army arrive 24 October; D-Day's stage is 12 June, so
+  its window opens as the divisions land (kept to 20 June). Stalingrad's own stage stays a handover: its ring is the
+  whole Eastern line, so its area holds every Soviet army (1,220k German side against 4,040k on seed 1938, 0.30 under
+  ADR-977's 1/3) and its window never opens. Tried and dropped: the Sixth Army in the city (0/0 at the hour; Uranus 0/0
+  on 1938), a city-only stage (fought on 37701 only; 756k Soviets near on 38701). Changing ADR-977's measure moves
+  every stage's window. Options put to the user: that rule change, the AT rescoped, or R76d left open; the user chose
+  the AT rescoped: the Sixth Army there at the stage's hour, the city's battle fought as Uranus.
+- **Read.** As ROADMAP's R76d line. Track-only data: plain games and the pin unchanged. Still a handover: the
+  beachhead's 51 cells are given on 12 June (0 taken in the window: the divisions are kept, so they defend, not push).
+
+### ADR-1019 · 2026-11-13 · accepted — R76f: the start card's measure kept; Spain stays (the user's decision)
+- **Context.** R66-N6: `cardPowers` names Spain among the great powers in 1941-49 and leaves China out in 1941-43 and
+  1945. Spain's army is about 5 % of the world's men, at peace (income 1.1-1.3 %); China's 3-4.5 %, at war.
+- **Options measured** on the 38 starts: a peacetime army weighed at 0.5, at 0.75, or capped at twice the nation's
+  income share. Each moved Spain out of 1941-43, and each broke other years: 1938 without Italy, 1950's or 1960-75's
+  orders moved (R75b-c's), Spain still in 1944 and 1946-48.
+- **Decision.** The user: option 1, the measure kept. The card reads the sim's own figures; the critic's finding is
+  answered, not met.
+
+### ADR-1020 · 2026-11-13 · accepted — R76g: China's four lost warheads answered by the rules that drive them
+- **Context.** Run 66: in a free 1975 (after 6161) People's China launched its four warheads at one point on 6-10
+  October; all four were intercepted ("not a reasoned use").
+- **Read.** At each launch China was in extreme desperation; the chance of interception 0.56-0.75, the utility
+  0.03-0.07, over its floor. Two rules drive it: a launch stopped short does not count as the side's strike, so it may
+  strike again the next day (PLAN 7.28), and extreme desperation strikes under the enemy's air (PLAN 7.18i, Poland at
+  0.20 through, `nukePoland1938.test.ts`).
+- **Tried, not kept.** No first use more likely stopped than delivered: it broke PLAN 7.18i's Poland; with extreme
+  desperation exempt it changed nothing, on the case or in 3 × 22 years of plain 1938 (launches and detonations equal
+  with and without it). No rule is added for a case the rules intend; R76g's AT allows the case answered.
+
+### ADR-1021 · 2026-11-13 · accepted — R77: a stage's own window of fighting
+- **Context.** The user, on R76d's D-Day: "why does the hold need to be 7 days in all cases?" ADR-975's window was one
+  length, FIGHT_DAYS, for a crossing and a months-long campaign alike; D-Day's stage had been moved to 12 June so its
+  week opened at the landing. Moved into Batch 21 at the user's word.
+- **Decision.** An optional `fightDays` (1-120 days) on an `occupy` or `transfer` stage; FIGHT_DAYS (7) when absent.
+  ADR-977's outnumbered rule unchanged; the `kept` orders still free their formations FIGHT_DAYS before their date.
+  First use: Normandy's beachhead on 25 July, the window of 50 days from the landing.
+- **Read.** As ROADMAP's R77 line. Without reinforcements the six landed divisions are worn to 5-11k over the seven
+  weeks; arrivals for the Normandy build-up would be the next step if the critic asks for the beachhead to be won.
+  Track-only data: plain games and the pin unchanged.
+
+### ADR-1022 · 2026-11-13 · accepted — The full run's non-blocking findings fixed before the release checks
+- **Context.** PROMPT's RELEASES ran step 3's checks (check:review, the sweep on unseen seeds, the GPU bench) on a full
+  report with no blocking issue, then again on the fixes of its non-blocking findings: the checks twice. The user:
+  "if non-blocking findings come back, they get fixed first, then release checks get run? So we don't have to run the
+  release checks twice."
+- **Decision.** On a full run with no blocking issue and every score at its bar, its non-blocking findings are filed and
+  fixed first (ADR-1005), then step 3's checks run once on the fixed code; no critic run after the fixes, as before. A
+  check that fails is still an item, fixed, and the checks it touched run again.
+
+### ADR-1023 · 2026-11-13 · accepted — Critic run 67 (full): no blocking issue; its findings before the release checks
+- **Context.** Critic run 67, full (ADR-1016), on `6e0e46f3` (HEAD moved to `43e6642e` during it, docs only): every
+  dimension at 8, no blocking issue. Four non-blocking findings (R67-N1 D-Day fought and lost, N2 far declarations on
+  European minors, N3 Japan's fleets lost out of battle, N4 People's China's army collapsing after the track) and small
+  ones. Its design objections (the free world's far conquests after 1975; Stalingrad, Spain and the dominions, the
+  user's decisions or ADR-17) are not named as issues, and no dimension is under its bar (ADR-843): none filed.
+- **Decision.** Batch 22, R78a-e, each with the critic's AT; then step 3's checks once on the fixed code (ADR-1022),
+  no critic run after.
+
+### ADR-1024 · 2026-11-13 · accepted — R78a: the Normandy build-up
+- **Context.** R67-N1: R77's 50-day window let the Germans destroy the six landed divisions (74.6k to 5.2k by 26 July
+  on 1938); Paris and France were then handed to 5k Americans. `trackFronts` read the Allies "of 0k lost 0k": its
+  cohort was fixed at the window's opening, before the landing.
+- **Decision.** Data: the Allied follow-up divisions as `forces` over June and July (the build-up ADR-1021 named), all
+  kept with the D-Day divisions to Cobra's stage, and the Third Army at Avranches on 1 August kept to Paris. Tool: a
+  formation that comes into a stage's band in its window joins its side's cohort with its men then.
+- **Read.** As ROADMAP's R78a line. Track-only data and a diagnostic: plain games and the pin unchanged.
+
+### ADR-1025 · 2026-11-13 · accepted — R78b: a war across the sea costs its distance
+- **Context.** R67-N2: ADR-670 lets a power with no land target over the bar take the best sea target, and to a great
+  power every coast is one, the weakest scoring best: Japan on a European state in plain 1938's first 60 days on 9 of
+  10 seeds (the Spanish Republic, 12,739 km, on day 2).
+- **Decision.** The sea target's utility less `SEA_KM_COST` (0.1) per 1,000 km to the capital of its realm (its
+  overlord's for a puppet) from the nearest transport group at port, or to its nearest port if that is further
+  (`seaWarCost`). Measured to the port alone, the cost only moved Japan to the United States by Guam and the
+  Netherlands by the Indies: the war is with the nation.
+- **Read.** As ROADMAP's R78b line. The sweep's limits fall from 7 of 10 to 5 (R74h's), each on the largest income;
+  the column's mean is inside the spread of the last rule changes on these seeds, so no cause is named. The pin's move
+  logged in `tests/sweep/baselineHash.test.ts`. Tried and dropped: no cost on a power's land (limits 3 of 10).
+- **With it.** R34e's hero counters kept clear of panels on an idle map too: a frame is drawn when a panel over the map
+  moves and the last frame drew a hero (the gate's `heroesClear1938` 5521 red 2 of 3, on HEAD 1 of 3).
+
+### ADR-1026 · 2026-11-13 · accepted — R78c: Japan's "ships lost out of battle" were the ships its carriers sank
+- **Context.** R67-N3 tallied `seaBattles`' sinkings out of battle as Japan's fleets lost (39061: 194; 32061: 179) and
+  asked for a fleet losing ships with no battle to come home.
+- **Read.** Those sinkings are `CarrierSunk` events in an hour with no sea battle, and `CarrierSunk`'s nation is the
+  carrier's whose wings sank the ships (PLAN 7.154a). Japan's own losses on 39061 over 3 years: 270 to 185 of sea
+  strength. Its carriers strike in the Red Sea, the Black Sea and the Adriatic: far, but sinking, not sunk.
+- **Decision.** No rule change; the tool's field named `by` and its report line and TOOLS.md say whose. The AT's numbers
+  on HEAD are met (44 and 54, none in the Channel), though they measure Japan's carriers' hits.
+
+### ADR-1027 · 2026-11-13 · accepted — R78d: People's China after the track, answered
+- **Context.** R67-N4: People's China's army from about 650k at the track's end to 18-90k within two years on 37601,
+  37603, 38601 and 1938 (it attacks India, is struck by the Soviet Union).
+- **Read.** On HEAD's 1938: 651k on an income of 492 at the end; its own wars on its neighbours in the first year, the
+  Soviet Union's and Mongolia's from day 420 and a coalition of Britain, France and three more from day 570, 340k lost
+  in 90 days. Its rebuilding is bounded by `PARALLEL_INCOME`: 1 + income / 400 orders in training (2, then 1), the
+  orders delivered in their time. The army is the track's (ADR-1015's focus eases declarations, not the AI's choice of
+  war); its economy is 1953 China's.
+- **Decision.** No rule change. A floor on a power's army, or slots by army size rather than income, would hold a
+  track-made army the economy cannot pay for; the free world after the track plays on from what the track left.
+
+### ADR-1028 · 2026-11-13 · accepted — R78e: a strike's city on the struck land; the Ranking's land held
+- **Context.** Critic run 67's small findings: the 1958 burst on Hokkaido named for Nevelsk across the strait; the Land
+  ranking by owner (Germany at its height not in 1942's top 15) and with no unit; Uranus not engaged at its hour on
+  39701; Germany's and Poland's 1938 flags told apart only by a 2-px band.
+- **Decision.** A strike's `near` is the nearest city whose cell the struck land's holder controls, within
+  NEAR_HOLDER_CELLS (12), else the nearest of any. The Ranking's Land list ranks by land held (the controller), labelled
+  "Land held (km²)"; every share and the sweep stay by owner (ADR-52). Uranus on 39701: its window is fought, the
+  attack through by its hour (ADR-1018). Germany's 1938 flag kept as it is: the user's decision (the labels differ also
+  in the nation-colour strip about the chip).
+
+### ADR-1029 · 2026-11-13 · accepted (the user's decision) — R79a: the browser suite on the GPU; the review's suite one step; a pin move runs the specs that step
+- **Context.** The user asked for faster gates, the e2e of a pin move and `check:review` first. The pages drew on
+  SwiftShader (headless Chromium's default) on a machine with an RTX 4070 Ti, held to 4 workers because SwiftShader
+  starves its neighbours (PLAN 1.42f); the review ran the suite in 12 chunks of 20 spec files at about 40 min each.
+  Measured 2026-11-13, eight heavy 1938 specs: SwiftShader at 4 workers 222 s, the GPU at 4 83 s, at 8 56 s; the whole
+  chromium project on the GPU at 8 workers 8.7 min (437 tests). On the GPU five were red: `relations1938` by load
+  (green alone); `landingMark1938` and `landingMarkMore1938`'s tap by their own timing, a fixed 500 ms after
+  `showPlace` whose flight lasts 1-2 s (the camera still moving on both renderers; green on both once they wait for
+  the flight's end); `countryballs1938`'s helmet bands and `fades1938`'s tier cross-fades by their pixel measures
+  (148 for ≤ 48), red alone on the GPU and green on SwiftShader.
+- **Decision** (the user: "Yes, let's also do 3 too").
+  1. The pages draw on the GPU on Windows (`--enable-gpu --ignore-gpu-blocklist --use-angle=d3d11`,
+     `tools/gate/render.ts`), at up to 8 workers; elsewhere, or with `E2E_RENDER=software`, on SwiftShader at up to
+     4 as before. A test whose measure is SwiftShader's picture carries the tag `@swiftshader` and runs on the
+     `swiftshader` project, always on SwiftShader: the two above until R79b answers them. The perf specs stay on
+     SwiftShader (their budgets were set there). The gate's and the review's runs name both projects (`SUITE`).
+  2. `check:review` runs the browser suite as one step (`e2e`) on the GPU; in chunks of `E2E_CHUNK` on SwiftShader.
+  3. A move of the pin of seed 99 runs the specs whose world can move past its start (`runsTheSim`: a step, the
+     clock started, a game loaded or begun, a page not opened as a paused world) and the changed ones, not every
+     spec: 187 of 223. The 36 left out were each green on a build whose `step` throws (the probe live: `battleView1938`
+     red on it). A spec the rule misses is run by `check:review` before the release.
+  4. The landing specs wait for the camera's flight to end, not 500 ms (`landingClickWait`, `landingMark`,
+     `landingMarkMore`, `landingNeutral`, `landingVoyage`): no assertion changed.
+- **Consequences.** The gate's full e2e about 9 min here, a pin move's about 8; the review's suite about 9 min in
+  place of about 8 h. `relations1938` may be red by load at 8 workers and green alone, as the gate already judges.
+  Supersedes the 4-worker cap here (PLAN 1.42f still holds on SwiftShader) and amends ADR-825's "all of it".

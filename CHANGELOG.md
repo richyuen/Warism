@@ -2,6 +2,34 @@
 
 What each release of Warism brought, for players. Play it at https://richyuen.github.io/Warism/
 
+## release-2026-11-13 — history to 1975, a start from any year, and the Cold War
+
+**New**
+- **History replayed to 1975.** The historical track goes on past the Korean armistice: Indochina's end, the
+  Suez and Hungarian crises, the end of the empires in Africa and Asia, the Six-Day War, Vietnam's escalation and
+  Saigon's fall, Yom Kippur, the Portuguese colonies. Regimes change on their day, rebels are nations of their own on
+  the land they hold, and the great powers' units gain the later techs of the 1950s to the 1970s.
+- **A start from any year of the replay.** "World, 1938 — Historical" offers a year on a slider: the replay goes on
+  from there, or the world plays free from it. The card shows the year's map and names its great powers.
+- **Armies on the replay's fronts.** Stalingrad, Normandy and the other great battles are fought by armies standing on
+  them: the Sixth Army at Stalingrad, the D-Day divisions, their build-up over June and July and Patton's Third Army.
+- **The Cold War in every game.** NATO and the Eastern Bloc are handed over by the replay and kept; their leaders hold
+  back from war with each other under the bomb and aid the other side in each other's wars instead.
+- **A historical focus after the replay.** For a few years after the track ends the world keeps to its course, and
+  wars come back slowly rather than all at once.
+
+**Changed**
+- A great power no longer declares war across the world on a far small nation: a war over the sea costs its distance.
+- The Soviet Union stays the second power after the war.
+- A strike is named for the struck land's own city; the Ranking's land list is by land held, in km².
+- The flag chips on the unit markers are drawn the same on every graphics card, so they no longer jump as a marker
+  turns into its units.
+
+**Fixes**
+- A start from a year that cannot be loaded says so and leaves your saved game alone.
+- On a phone the "Next" line shows its event; Resume pressed while the world builds holds.
+- Names and capitals after 1944: Madrid and Spain, Bonn for West Germany, Sudan, Newfoundland in Canada.
+
 ## release-2026-11-11 — history replayed: 1938 to 1953
 
 **New**

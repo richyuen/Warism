@@ -1,6 +1,6 @@
 {
   "bench": "G",
-  "date": "2026-11-11T15:53:10.499Z",
+  "date": "2026-11-14T04:41:29.520Z",
   "heroes": false,
   "budgets": {
     "t0Fps": 60,
@@ -25,22 +25,22 @@
           "elements": 0,
           "nations": 102,
           "metresPerPx": 20614.711934156378,
-          "frames": 2531,
-          "seconds": 8.004699999999255,
-          "fps": 316.1892388222214,
-          "rafFps": 316.06431221660216,
-          "frameMsP50": 2.7999999999992724,
+          "frames": 2507,
+          "seconds": 8.002200000000187,
+          "fps": 313.28884556746164,
+          "rafFps": 313.1638799330111,
+          "frameMsP50": 2.800000000000182,
           "frameMsP95": 4.800000000001091,
-          "frameMsMax": 22.700000000000728,
+          "frameMsMax": 15,
           "cpuMsP50": 2.199999999254942,
-          "cpuMsP95": 2.800000000745058,
-          "gpuFrameMs": 0.5150549333333333,
-          "gpuDrawsMs": 0.5136384,
+          "cpuMsP95": 2.699999999254942,
+          "gpuFrameMs": 0.5127509333333333,
+          "gpuDrawsMs": 0.5149696,
           "gpuPasses": 60,
           "budgetFps": 60,
           "specGpuMs": {
             "budget": 1,
-            "value": 0.5150549333333333,
+            "value": 0.5127509333333333,
             "within": true
           },
           "specCpuMs": {
@@ -56,27 +56,27 @@
           "elements": 10752,
           "nations": 102,
           "metresPerPx": 200,
-          "frames": 1393,
-          "seconds": 8.009800000000745,
-          "fps": 173.9119578516156,
-          "rafFps": 173.78711078926696,
-          "frameMsP50": 5.099999999998545,
-          "frameMsP95": 9.099999999998545,
-          "frameMsMax": 14.100000000002183,
-          "cpuMsP50": 4.599999997764826,
-          "cpuMsP95": 5.5,
-          "gpuFrameMs": 1.07968,
-          "gpuDrawsMs": 1.069568,
-          "gpuPasses": 32,
+          "frames": 1370,
+          "seconds": 8.014200000000185,
+          "fps": 170.94656983853264,
+          "rafFps": 170.82179132040233,
+          "frameMsP50": 5.19999999999709,
+          "frameMsP95": 9.19999999999709,
+          "frameMsMax": 15.899999999997817,
+          "cpuMsP50": 4.6000000005587935,
+          "cpuMsP95": 5.599999999627471,
+          "gpuFrameMs": 1.0715694545454546,
+          "gpuDrawsMs": 1.0799786666666666,
+          "gpuPasses": 33,
           "budgetFps": 30,
           "specGpuMs": {
             "budget": 2,
-            "value": 1.07968,
+            "value": 1.0715694545454546,
             "within": true
           },
           "specCpuMs": {
             "budget": 6,
-            "value": 4.599999997764826,
+            "value": 4.6000000005587935,
             "within": true
           },
           "stage": {
@@ -175,7 +175,8 @@
           },
           "pass": null
         }
-      ]
+      ],
+      "kept": "2026-11-11T15:53:10.499Z"
     }
   ]
 }
