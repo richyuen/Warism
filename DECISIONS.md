@@ -68,6 +68,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1053 · 2026-11-14 · accepted — R80i: 1990-91 in the replay
+- **Events** (`docs/research/1976-91.md`'s 1990-91 rows; 78): the Contras' end (Chamorro; `annex`); Namibia; Yemen
+  united (`annex`, the research's FED); Iraq's war on Kuwait and its annexation, Desert Storm (the United States,
+  Britain, France, Saudi Arabia, Egypt, Syria) and Kuwait born again on 1991-02-28; ECOMOG beside Liberia's
+  government, the NPFL's Liberia but Monrovia, Doe's death; Germany united (`annex`, West Germany renamed Germany);
+  the USC in Mogadishu, Somaliland apart; the RUF in Kailahun; Khost the mujahideen's; Eritrea the EPLF's and its war
+  over; the Cubans out of Angola, Bicesse; Slovenia and Croatia born with their forces (`born`'s `forces`, ADR-1046),
+  the Ten-Day War and Brioni, Croatia's war, Vukovar, the Krajina at Yugoslavia's side; the Warsaw Pact dissolved
+  (`allianceEnd`, 1991-07-01); the Baltic three on the State Council's recognition (1991-09-06) and the other eleven
+  successors on the union's end (1991-12-26, the track's date; the research's "Which of two dates": a declaration
+  without the land's handover is not the land's change), Crimea Ukraine's, Transnistria, Nagorno-Karabakh and
+  Chechnya apart; the Soviet Union renamed Russia (its arsenal its alone: answer 2); the CIS of the Alma-Ata Protocol
+  as Russia's pact (`allianceJoin` after the end: a pact outside deterrence and aid, answer 3); the Kurds' north of
+  Iraq (October, on its last day); Lebanon's Taif order, Haiti's coup, Gorbachev's resignation.
+- **Left out:** the August coup (three days, no land), the Iraqi uprisings (crushed in a month), Comecon and South
+  Africa's NPT accession (no rule they change), Georgia's April declaration (born with the union's end, as the rest).
+- **Measured:** see ROADMAP R80i; nothing before 1990 moved.
+
 ### ADR-1052 · 2026-11-14 · accepted — R80h: 1986-89 in the replay
 - **Events** (`docs/research/1976-91.md`'s 1986-89 rows; 45): Chad's Toyota War (Fada, then Faya-Largeau: the GUNT's
   north Chad's, the GUNT gone), the ceasefire with Libya on 1987-09-11 (Aouzou Libyan); the Soviet Union out of

@@ -303,3 +303,9 @@
 - 45 events and the map of 1989-12-31 (a script from the research's rows); the starts rebuilt with R80g's events.
 - From the 1986 start: 99.79 % whole, nothing passed over. `historyMatch1938h` to 1989 (`state89`); seeds 1-5 to 1991
   green, no warning; `historyTrack1938h`'s handover now the Soviet bloc of East Germany, Mongolia and the Soviet Union.
+
+## 2026-11-14 — R80i: 1990-91 in the replay (ADR-1053)
+
+- 78 events and the map of 1991-12-30; the identities DEU, RUS and the CIS's name; the starts rebuilt with R80h's.
+- From the 1990 start: 99.80 % whole, 99.6 % right, nothing passed over. `historyMatch1938h` to the end (`state91`);
+  `historyTrack1938h` (the handover NATO and the CIS of eleven) and seeds 1-5 green, no warning, on the first run.

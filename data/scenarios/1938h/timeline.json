@@ -23050,6 +23050,907 @@
    "nation": "PAN",
    "aggression": 15,
    "note": "Endara's government"
+  },
+  {
+   "date": "1990-02-25",
+   "kind": "regime",
+   "nation": "NIC",
+   "aggression": 20,
+   "note": "Chamorro elected: the Sandinistas out"
+  },
+  {
+   "date": "1990-02-25",
+   "hour": 1,
+   "kind": "annex",
+   "annexer": "NIC",
+   "target": "CTR",
+   "tell": "note",
+   "note": "The Contras demobilised"
+  },
+  {
+   "date": "1990-03-18",
+   "kind": "regime",
+   "nation": "GDR",
+   "aggression": 15,
+   "note": "East Germany's free election"
+  },
+  {
+   "date": "1990-03-21",
+   "kind": "born",
+   "nation": "NAM",
+   "from": [
+    "SAF"
+   ],
+   "countries": [
+    "NAM"
+   ],
+   "note": "Namibia independent"
+  },
+  {
+   "date": "1990-03-24",
+   "kind": "leave",
+   "nations": [
+    "RAJ"
+   ],
+   "against": "LTE",
+   "note": "The last Indian peacekeepers leave Sri Lanka"
+  },
+  {
+   "date": "1990-05-22",
+   "kind": "annex",
+   "annexer": "YEM",
+   "target": "SYE",
+   "tell": "note",
+   "note": "Yemen united"
+  },
+  {
+   "date": "1990-08-02",
+   "kind": "war",
+   "attackers": [
+    "IRQ"
+   ],
+   "defenders": [
+    "KUW"
+   ],
+   "note": "Iraq invades Kuwait"
+  },
+  {
+   "date": "1990-08-02",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "IRQ"
+    ],
+    [
+     "KUW"
+    ]
+   ],
+   "until": "1990-08-28"
+  },
+  {
+   "date": "1990-08-24",
+   "kind": "join",
+   "nation": "NIG",
+   "beside": "LIB",
+   "against": "NPF",
+   "note": "ECOMOG lands at Monrovia"
+  },
+  {
+   "date": "1990-08-24",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "NPF"
+    ],
+    [
+     "NIG"
+    ]
+   ],
+   "until": "1997-07-19"
+  },
+  {
+   "date": "1990-08-28",
+   "kind": "annex",
+   "annexer": "IRQ",
+   "target": "KUW",
+   "tell": "note",
+   "note": "Iraq annexes Kuwait, its 19th province"
+  },
+  {
+   "date": "1990-09-02",
+   "kind": "born",
+   "nation": "PMR",
+   "from": [
+    "SOV"
+   ],
+   "provinces": [
+    "MDA-1628",
+    "MDA-1638"
+   ],
+   "note": "Transnistria proclaimed"
+  },
+  {
+   "date": "1990-09-09",
+   "kind": "transfer",
+   "to": "NPF",
+   "from": [
+    "LIB"
+   ],
+   "provinces": [
+    "LBR-786",
+    "LBR-1459",
+    "LBR-787",
+    "LBR-791",
+    "LBR-793",
+    "LBR-1458",
+    "LBR-781",
+    "LBR-784",
+    "LBR-783",
+    "LBR-789",
+    "LBR-785",
+    "LBR-792",
+    "LBR-782",
+    "LBR-780"
+   ],
+   "note": "The NPFL holds Liberia but Monrovia"
+  },
+  {
+   "date": "1990-09-09",
+   "hour": 1,
+   "kind": "regime",
+   "nation": "LIB",
+   "aggression": 30,
+   "note": "Doe killed: the interim government in Monrovia"
+  },
+  {
+   "date": "1990-10-03",
+   "kind": "annex",
+   "annexer": "FRG",
+   "target": "GDR",
+   "tell": "note",
+   "note": "Germany united"
+  },
+  {
+   "date": "1990-10-03",
+   "hour": 1,
+   "kind": "rename",
+   "nation": "FRG",
+   "as": "DEU",
+   "note": "The Federal Republic of Germany, one state"
+  },
+  {
+   "date": "1990-10-13",
+   "kind": "regime",
+   "nation": "LEB",
+   "aggression": 25,
+   "note": "Aoun ousted: the Taif order in Lebanon"
+  },
+  {
+   "date": "1991-01-17",
+   "kind": "war",
+   "attackers": [
+    "USA",
+    "ENG",
+    "FRA",
+    "SAU",
+    "EGY",
+    "SYR"
+   ],
+   "defenders": [
+    "IRQ"
+   ],
+   "without": [
+    "SAF"
+   ],
+   "note": "Desert Storm"
+  },
+  {
+   "date": "1991-01-17",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "USA",
+     "ENG",
+     "FRA",
+     "SAU",
+     "EGY",
+     "SYR"
+    ],
+    [
+     "IRQ"
+    ]
+   ],
+   "until": "1991-02-28"
+  },
+  {
+   "date": "1991-01-26",
+   "kind": "born",
+   "nation": "USC",
+   "from": [
+    "SOM"
+   ],
+   "provinces": [
+    "SOM-2407",
+    "SOM-2409",
+    "SOM-2410"
+   ],
+   "note": "Barre flees Mogadishu: the USC"
+  },
+  {
+   "date": "1991-01-26",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "USC"
+   ],
+   "defenders": [
+    "SOM"
+   ],
+   "note": "Somalia's civil war"
+  },
+  {
+   "date": "1991-01-26",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "USC"
+    ],
+    [
+     "SOM"
+    ]
+   ],
+   "until": "1992-12-09"
+  },
+  {
+   "date": "1991-02-28",
+   "kind": "born",
+   "nation": "KUW",
+   "from": [
+    "IRQ"
+   ],
+   "countries": [
+    "KWT"
+   ],
+   "note": "Kuwait freed"
+  },
+  {
+   "date": "1991-02-28",
+   "hour": 1,
+   "kind": "peace",
+   "a": "USA",
+   "b": "IRQ",
+   "terms": "white",
+   "note": "The Gulf War's ceasefire"
+  },
+  {
+   "date": "1991-03-23",
+   "kind": "born",
+   "nation": "RUF",
+   "from": [
+    "SLE"
+   ],
+   "provinces": [
+    "SLE-790"
+   ],
+   "note": "The RUF enters Kailahun from Liberia"
+  },
+  {
+   "date": "1991-03-23",
+   "hour": 1,
+   "kind": "war",
+   "attackers": [
+    "RUF"
+   ],
+   "defenders": [
+    "SLE"
+   ],
+   "note": "The Sierra Leone civil war"
+  },
+  {
+   "date": "1991-03-23",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "RUF"
+    ],
+    [
+     "SLE"
+    ]
+   ],
+   "until": "2002-01-18"
+  },
+  {
+   "date": "1991-03-31",
+   "kind": "transfer",
+   "to": "MUJ",
+   "from": [
+    "AFG"
+   ],
+   "provinces": [
+    "AFG-1758"
+   ],
+   "note": "The mujahideen take Khost"
+  },
+  {
+   "date": "1991-05-18",
+   "kind": "born",
+   "nation": "SML",
+   "from": [
+    "SOM"
+   ],
+   "countries": [
+    "SOL"
+   ],
+   "note": "Somaliland declares independence"
+  },
+  {
+   "date": "1991-05-24",
+   "kind": "transfer",
+   "to": "ELF",
+   "from": [
+    "ETH",
+    "ITA"
+   ],
+   "countries": [
+    "ERI"
+   ],
+   "note": "The EPLF takes Asmara: Eritrea its own"
+  },
+  {
+   "date": "1991-05-25",
+   "kind": "leave",
+   "nations": [
+    "CUB"
+   ],
+   "against": "UNT",
+   "note": "The last Cuban troops out of Angola"
+  },
+  {
+   "date": "1991-05-28",
+   "kind": "regime",
+   "nation": "ETH",
+   "aggression": 35,
+   "note": "The EPRDF takes Addis Ababa"
+  },
+  {
+   "date": "1991-05-28",
+   "hour": 1,
+   "kind": "peace",
+   "a": "ELF",
+   "b": "ETH",
+   "terms": "white",
+   "note": "Eritrea's war over"
+  },
+  {
+   "date": "1991-05-31",
+   "kind": "peace",
+   "a": "UNT",
+   "b": "ANG",
+   "terms": "white",
+   "note": "The Bicesse Accords"
+  },
+  {
+   "date": "1991-06-25",
+   "kind": "born",
+   "nation": "SVO",
+   "from": [
+    "YUG",
+    "ITA",
+    "SOV"
+   ],
+   "countries": [
+    "SVN"
+   ],
+   "forces": true,
+   "note": "Slovenia independent"
+  },
+  {
+   "date": "1991-06-25",
+   "hour": 1,
+   "kind": "born",
+   "nation": "CRO",
+   "from": [
+    "YUG",
+    "ITA",
+    "SOV"
+   ],
+   "countries": [
+    "HRV"
+   ],
+   "forces": true,
+   "note": "Croatia independent"
+  },
+  {
+   "date": "1991-06-25",
+   "hour": 2,
+   "kind": "war",
+   "attackers": [
+    "YUG"
+   ],
+   "defenders": [
+    "CRO"
+   ],
+   "note": "The Croatian war"
+  },
+  {
+   "date": "1991-06-25",
+   "hour": 3,
+   "kind": "hold",
+   "sides": [
+    [
+     "YUG"
+    ],
+    [
+     "CRO"
+    ]
+   ],
+   "until": "1992-01-03"
+  },
+  {
+   "date": "1991-06-27",
+   "kind": "war",
+   "attackers": [
+    "YUG"
+   ],
+   "defenders": [
+    "SVO"
+   ],
+   "note": "The Ten-Day War"
+  },
+  {
+   "date": "1991-06-27",
+   "hour": 1,
+   "kind": "hold",
+   "sides": [
+    [
+     "YUG"
+    ],
+    [
+     "SVO"
+    ]
+   ],
+   "until": "1991-07-07"
+  },
+  {
+   "date": "1991-07-01",
+   "kind": "allianceEnd",
+   "leader": "SOV",
+   "note": "The Warsaw Pact dissolved"
+  },
+  {
+   "date": "1991-07-07",
+   "kind": "peace",
+   "a": "YUG",
+   "b": "SVO",
+   "terms": "white",
+   "note": "The Brioni Accords"
+  },
+  {
+   "date": "1991-09-02",
+   "kind": "born",
+   "nation": "NKR",
+   "from": [
+    "SOV"
+   ],
+   "provinces": [
+    "AZE-1739",
+    "AZE-5565",
+    "AZE-1734"
+   ],
+   "note": "The Nagorno-Karabakh Republic proclaimed"
+  },
+  {
+   "date": "1991-09-06",
+   "kind": "born",
+   "nation": "EST",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "EST"
+   ],
+   "forces": true,
+   "note": "The Soviet State Council recognises Estonia"
+  },
+  {
+   "date": "1991-09-06",
+   "hour": 1,
+   "kind": "born",
+   "nation": "LAT",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "LVA"
+   ],
+   "forces": true,
+   "note": "and Latvia"
+  },
+  {
+   "date": "1991-09-06",
+   "hour": 2,
+   "kind": "born",
+   "nation": "LIT",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "LTU"
+   ],
+   "forces": true,
+   "note": "and Lithuania"
+  },
+  {
+   "date": "1991-09-06",
+   "hour": 3,
+   "kind": "peace",
+   "a": "FMO",
+   "b": "PLS",
+   "terms": "white",
+   "note": "The Western Sahara ceasefire"
+  },
+  {
+   "date": "1991-09-30",
+   "kind": "regime",
+   "nation": "HAI",
+   "aggression": 45,
+   "note": "Aristide overthrown: Cédras"
+  },
+  {
+   "date": "1991-10-23",
+   "kind": "peace",
+   "a": "KHR",
+   "b": "CAM",
+   "terms": "white",
+   "note": "The Paris Peace Agreements"
+  },
+  {
+   "date": "1991-10-31",
+   "kind": "born",
+   "nation": "KUR",
+   "from": [
+    "IRQ"
+   ],
+   "provinces": [
+    "IRQ-3046",
+    "IRQ-3050",
+    "IRQ-3242"
+   ],
+   "note": "Iraq withdraws from Duhok, Erbil and Sulaymaniyah: the Kurds' (October)"
+  },
+  {
+   "date": "1991-11-01",
+   "kind": "born",
+   "nation": "CHC",
+   "from": [
+    "SOV"
+   ],
+   "provinces": [
+    "RUS-2416"
+   ],
+   "note": "Chechnya declares independence"
+  },
+  {
+   "date": "1991-11-18",
+   "kind": "occupy",
+   "by": "YUG",
+   "of": [
+    "CRO"
+   ],
+   "ring": [
+    [
+     18.6,
+     45.5
+    ],
+    [
+     19.45,
+     45.5
+    ],
+    [
+     19.45,
+     44.85
+    ],
+    [
+     18.6,
+     44.85
+    ]
+   ],
+   "fightDays": 60,
+   "note": "Vukovar falls to the JNA"
+  },
+  {
+   "date": "1991-12-19",
+   "kind": "born",
+   "nation": "RSK",
+   "from": [
+    "CRO"
+   ],
+   "provinces": [
+    "HRV-1584",
+    "HRV-1491",
+    "HRV-1587",
+    "HRV-1605"
+   ],
+   "note": "The Republic of Serbian Krajina proclaimed"
+  },
+  {
+   "date": "1991-12-19",
+   "hour": 1,
+   "kind": "join",
+   "nation": "RSK",
+   "beside": "YUG",
+   "against": "CRO"
+  },
+  {
+   "date": "1991-12-19",
+   "hour": 2,
+   "kind": "hold",
+   "sides": [
+    [
+     "RSK"
+    ],
+    [
+     "CRO"
+    ]
+   ],
+   "until": "1995-08-07"
+  },
+  {
+   "date": "1991-12-25",
+   "kind": "regime",
+   "nation": "SOV",
+   "aggression": 30,
+   "note": "Gorbachev resigns"
+  },
+  {
+   "date": "1991-12-26",
+   "kind": "born",
+   "nation": "UKR",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "UKR"
+   ],
+   "forces": true,
+   "note": "The Soviet Union dissolved: Ukraine",
+   "provinces": [
+    "RUS-283",
+    "RUS-5482"
+   ]
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 1,
+   "kind": "born",
+   "nation": "BLR",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "BLR"
+   ],
+   "forces": true,
+   "note": "The Soviet Union dissolved: Belarus"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 2,
+   "kind": "born",
+   "nation": "MDA",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "MDA"
+   ],
+   "forces": true,
+   "note": "The Soviet Union dissolved: Moldova"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 3,
+   "kind": "born",
+   "nation": "GEO",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "GEO"
+   ],
+   "forces": true,
+   "note": "The Soviet Union dissolved: Georgia"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 4,
+   "kind": "born",
+   "nation": "ARM",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "ARM"
+   ],
+   "forces": true,
+   "note": "The Soviet Union dissolved: Armenia"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 5,
+   "kind": "born",
+   "nation": "AZE",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "AZE"
+   ],
+   "forces": true,
+   "note": "The Soviet Union dissolved: Azerbaijan"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 6,
+   "kind": "born",
+   "nation": "KAZ",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "KAZ"
+   ],
+   "forces": true,
+   "note": "The Soviet Union dissolved: Kazakhstan"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 7,
+   "kind": "born",
+   "nation": "UZB",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "UZB"
+   ],
+   "forces": true,
+   "note": "The Soviet Union dissolved: Uzbekistan"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 8,
+   "kind": "born",
+   "nation": "TKM",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "TKM"
+   ],
+   "forces": true,
+   "note": "The Soviet Union dissolved: Turkmenistan"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 9,
+   "kind": "born",
+   "nation": "KGZ",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "KGZ"
+   ],
+   "forces": true,
+   "note": "The Soviet Union dissolved: Kyrgyzstan"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 10,
+   "kind": "born",
+   "nation": "TJK",
+   "from": [
+    "SOV"
+   ],
+   "countries": [
+    "TJK"
+   ],
+   "forces": true,
+   "note": "The Soviet Union dissolved: Tajikistan"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 11,
+   "kind": "rename",
+   "nation": "SOV",
+   "as": "RUS",
+   "note": "Russia, the Soviet Union's heir: its arsenal Russia's alone"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 12,
+   "kind": "allianceJoin",
+   "nation": "UKR",
+   "leader": "SOV",
+   "nameKey": "alliance.cis"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 13,
+   "kind": "allianceJoin",
+   "nation": "BLR",
+   "leader": "SOV",
+   "nameKey": "alliance.cis"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 14,
+   "kind": "allianceJoin",
+   "nation": "MDA",
+   "leader": "SOV",
+   "nameKey": "alliance.cis"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 15,
+   "kind": "allianceJoin",
+   "nation": "ARM",
+   "leader": "SOV",
+   "nameKey": "alliance.cis"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 16,
+   "kind": "allianceJoin",
+   "nation": "AZE",
+   "leader": "SOV",
+   "nameKey": "alliance.cis"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 17,
+   "kind": "allianceJoin",
+   "nation": "KAZ",
+   "leader": "SOV",
+   "nameKey": "alliance.cis"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 18,
+   "kind": "allianceJoin",
+   "nation": "UZB",
+   "leader": "SOV",
+   "nameKey": "alliance.cis"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 19,
+   "kind": "allianceJoin",
+   "nation": "TKM",
+   "leader": "SOV",
+   "nameKey": "alliance.cis"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 20,
+   "kind": "allianceJoin",
+   "nation": "KGZ",
+   "leader": "SOV",
+   "nameKey": "alliance.cis"
+  },
+  {
+   "date": "1991-12-26",
+   "hour": 21,
+   "kind": "allianceJoin",
+   "nation": "TJK",
+   "leader": "SOV",
+   "nameKey": "alliance.cis"
   }
  ],
  "maps": [
@@ -28044,6 +28945,118 @@
       [
        15.0,
        16.0
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "date": "1991-12-30",
+   "note": "The track's end: the Soviet Union gone (fifteen states, Russia its heir, Crimea Ukraine's; Transnistria, Nagorno-Karabakh and Chechnya apart), the Warsaw Pact dissolved; Germany one; Yemen one; Namibia independent; Kuwait free, the Kurds in Iraq's north; Slovenia free, Croatia at war, the Krajina Serb; Eritrea the EPLF's; Somaliland apart, the USC in Mogadishu; Liberia the NPFL's but Monrovia; the RUF in Sierra Leone's east; Khost the mujahideen's",
+   "byCountry": {
+    "UKR": "UKR",
+    "BLR": "BLR",
+    "MDA": "MDA",
+    "GEO": "GEO",
+    "ARM": "ARM",
+    "AZE": "AZE",
+    "KAZ": "KAZ",
+    "UZB": "UZB",
+    "TKM": "TKM",
+    "KGZ": "KGZ",
+    "TJK": "TJK",
+    "EST": "EST",
+    "LVA": "LAT",
+    "LTU": "LIT",
+    "SVN": "SVO",
+    "HRV": "CRO",
+    "KWT": "KUW",
+    "NAM": "NAM",
+    "SOL": "SML",
+    "ERI": "ELF"
+   },
+   "byProvince": {
+    "RUS-283": "UKR",
+    "RUS-5482": "UKR",
+    "MDA-1628": "PMR",
+    "MDA-1638": "PMR",
+    "AZE-1739": "NKR",
+    "AZE-5565": "NKR",
+    "AZE-1734": "NKR",
+    "RUS-2416": "CHC",
+    "HRV-1584": "RSK",
+    "HRV-1491": "RSK",
+    "HRV-1587": "RSK",
+    "HRV-1605": "RSK",
+    "SOM-2407": "USC",
+    "SOM-2409": "USC",
+    "SOM-2410": "USC",
+    "LBR-786": "NPF",
+    "LBR-1459": "NPF",
+    "LBR-787": "NPF",
+    "LBR-791": "NPF",
+    "LBR-793": "NPF",
+    "LBR-1458": "NPF",
+    "LBR-781": "NPF",
+    "LBR-784": "NPF",
+    "LBR-783": "NPF",
+    "LBR-789": "NPF",
+    "LBR-785": "NPF",
+    "LBR-792": "NPF",
+    "LBR-782": "NPF",
+    "LBR-780": "NPF",
+    "SLE-790": "RUF",
+    "IRQ-3046": "KUR",
+    "IRQ-3050": "KUR",
+    "IRQ-3242": "KUR",
+    "AFG-1758": "MUJ"
+   },
+   "regions": [
+    {
+     "owner": "FRG",
+     "onlyFrom": [
+      "GDR"
+     ],
+     "ring": [
+      [
+       9.8,
+       55.2
+      ],
+      [
+       15.2,
+       55.2
+      ],
+      [
+       15.2,
+       50.1
+      ],
+      [
+       9.8,
+       50.1
+      ]
+     ]
+    },
+    {
+     "owner": "YEM",
+     "onlyFrom": [
+      "SYE"
+     ],
+     "ring": [
+      [
+       41.5,
+       19.5
+      ],
+      [
+       54.0,
+       19.5
+      ],
+      [
+       54.0,
+       12.0
+      ],
+      [
+       41.5,
+       12.0
       ]
      ]
     }

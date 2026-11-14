@@ -224,20 +224,25 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
     strays 0.12 %; nothing passed over. `historyTrack1938h` and seeds 1-5 to the 1991 end: no line, no warning (after
     ADR-1049). Left out: Sinai (all of it on 1982-04-25, R80g), the Litani operation (no war with Lebanon, no land
     kept), the Canal Zone (no land of its own on the map).
-  - [ ] R80g 1981-85: Iran and Iraq, the Falklands, Lebanon, Grenada, Poland's martial law, Chad and Libya. AT: as R80f.
+  - [x] R80g 1981-85: Iran and Iraq, the Falklands, Lebanon, Grenada, Poland's martial law, Chad and Libya. AT: as R80f.
     Done (ADR-1051): 52 events of 1981-85 and the map of 31 December 1985; the identities GUNT, the TRNC, Burkina
     Faso. From the 1981 start the 1985 map 99.79 % whole, 99.5 % right, strays 0.12 %, nothing passed over;
     `historyMatch1938h` (to 1985, `state85`) and `historyTrack1938h` with seeds 1-5 to 1991 green, no warning. Left
     out: the Golan law (Israel's already), Osirak and the Libya-Chad merger (no land), Grenada's one cell occupied (it
     would end its state: a war, a hold and a white peace).
-  - [ ] R80h 1986-89: Chad's war against Libya won, the Soviet Union out of Afghanistan, Panama, the revolutions of
+  - [x] R80h 1986-89: Chad's war against Libya won, the Soviet Union out of Afghanistan, Panama, the revolutions of
     1989 (regimes and the Eastern Bloc left). AT: as R80f.
     Done (ADR-1052): 45 events of 1986-89 (and January 1990's end of Just Cause) and the map of 31 December 1989.
     From the 1986 start the 1989 map 99.79 % whole, 99.5 % right, strays 0.12 %, nothing passed over;
     `historyMatch1938h` (to 1989, `state89`) and the replay checks to 1991 in PROGRESS. The Eastern Bloc's members
     leave it on the research's dates (Poland, Hungary, Bulgaria, Romania, Czechoslovakia); East Germany with the union.
-  - [ ] R80i 1990-91: Namibia, Germany and Yemen united, Kuwait taken and freed, the Baltic states, Slovenia and Croatia,
+  - [x] R80i 1990-91: Namibia, Germany and Yemen united, Kuwait taken and freed, the Baltic states, Slovenia and Croatia,
     the Soviet Union's end. AT: as R80f; the arsenals at the end as ADR-1031's answer 2.
+    Done (ADR-1053): 78 events of 1990-91 and the map of 30 December 1991; the identities Germany and Russia, the
+    CIS's name. From the 1990 start the 1991 map 99.80 % whole, 99.6 % right, strays 0.12 %, nothing passed over;
+    `historyMatch1938h` (to the track's end, `state91`) and `historyTrack1938h` with seeds 1-5 green, no warning. The
+    arsenals at the end CCP, ENG, FRA, SOV (Russia), USA: no warhead to a successor (answer 2); the handover NATO and
+    the CIS of eleven.
   - [ ] R80j The world after 1991: the blocs, the historical focus and aid re-measured from the 1991 handover, as R71g;
     the start card's powers and previews for each new year. AT: as R71g's; the card's powers per year equal the
     deployed `years.json`.
