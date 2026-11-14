@@ -7,7 +7,8 @@
  * A row a carrier fleet, while a wing of it on a strike mission is in the air (the hour before the tick or at it, as
  * the snapshot's sorties are): of its wings in the air, the lowest id's. Its target is the formation of a nation at
  * war with the carrier's nearest the mission's point within the reach of a strike's bombs (`AA_CELLS`), a fleet or
- * the land's; with none there, the holder of the point's cell, ashore when the cell is land. A fleet in a sea battle
+ * the land's; with none there, the holder of the point's cell if at war with the carrier's (R82c), ashore when the cell is
+ * land; else no row. A fleet in a sea battle
  * has no row here: its strikes are its battle's row. Each row RAID_STRIDE numbers (`shared/protocol`).
  */
 import { AA_CELLS } from '../sim/systems/airCombat';
@@ -50,7 +51,10 @@ export function carrierRaids(world: World): number[] {
     });
     if (on === 0) {
       const cell = ty * w + ((tx % w) + w) % w;
-      on = world.cells.controller[cell]!;
+      // An enemy's (R82c, critic run 68's R68-N1: "Carrier strike ashore: United States on United States", the point's
+      // cell its own): else no row, as the strike is on no one.
+      const holder = world.cells.controller[cell]!;
+      on = holder !== 0 && world.wars.atWar(by, holder) ? holder : 0;
       ashore = isLand(world.cells.terrain[cell]!) ? 1 : 0;
     }
     if (on === 0) continue;

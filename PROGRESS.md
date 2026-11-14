@@ -102,3 +102,10 @@
   stage land goes to the taker. `trackFronts` D-Day (51 cells): 1938 23 taken, Allies lost 26k vs 45k (was 0, 140k vs
   26k); 37701 23, 34k vs 58k; 38701 22, 19k vs 53k; 39701 17, 34k vs 46k; 41701 15, 32k vs 36k. Kept-release at the
   stage's own window tried, no difference, dropped. Gate green (two timing tests red in the run, green alone).
+
+## 2026-11-14 — R82c: no carrier row on its own nation (R68-N1)
+
+- `worker/carrierRaids.ts`: with no enemy formation in reach of the strike's point, the point cell's holder is named
+  only if at war with the striker; else no row. Unit test (`carrierRaid1938.test.ts`, the strike's point on Britain's
+  own land): red on the old rule, green now. Every row each hour of 20 years on 32019, 41019 and 7019: 87,697, 56,289
+  and 98,471 rows, 0 on the striker's own nation, 0 on one at peace.

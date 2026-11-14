@@ -38,7 +38,7 @@ Rules:
   - [x] R82b (R68-N4) Normandy fought for: the Allies take ground in D-Day's window (at least the Cotentin and Caen) and
     lose under 2 × the Germans. AT: `trackFronts` on 1938, 37701, 38701, 39701, 41701: D-Day's cells taken > 0 before
     the handover and the Allied loss under 2 × the German; the stage's other bars kept.
-  - [ ] R82c (R68-N1) "Carrier strike ashore: United States on United States": the row names the enemy the wings were
+  - [x] R82c (R68-N1) "Carrier strike ashore: United States on United States": the row names the enemy the wings were
     sent against (or none). AT: no carrier row names the striker as its target on 32019 to year 20 and two seeds.
   - [ ] R82d (R68-N2) European powers at war with Brazil in 1938: France takes Brazil's capital in two years on 4 of 5
     seeds. AT: `c68_farConquests.ts 0 6161,41161,41163,41165,41167`, France takes it on at most 1; the first-60-day

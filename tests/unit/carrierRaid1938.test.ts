@@ -79,6 +79,21 @@ describe("a carrier's strike out of a sea battle (PLAN 7.154a)", () => {
     expect(rows(w).filter((x) => x.fleet === fleet)).toEqual([]);
   });
 
+  it('ashore with no enemy at its point: no row names the carrier\'s own nation as its target (R82c)', () => {
+    // Critic run 68, R68-N1: "Carrier strike ashore: United States on United States". The strike's point, on Scotland,
+    // has no enemy formation in reach once the division there is gone: the cell is Britain's own.
+    const { w, wing, fleet, target } = setup(false);
+    airAi(w);
+    airSystem(w);
+    expect(w.sorties.has(wing)).toBe(true);
+    destroyFormation(w, target);
+    const s = w.sorties.get(wing)!;
+    expect(w.cells.controller[Math.floor(s.ty) * w.cells.w + Math.floor(s.tx)]).toBe(ENG);
+    // Its fleet's row at this point is gone (another wing of it may strike elsewhere), and no row is on its own nation.
+    expect(rows(w).filter((x) => x.fleet === fleet && x.tx === s.tx && x.ty === s.ty)).toEqual([]);
+    expect(rows(w).filter((x) => x.on === x.by)).toEqual([]);
+  });
+
   it("at a fleet: the row names the fleet's nation, and the ships its wings sink are told (CarrierSunk), every one", () => {
     const { w, fleet, target } = setup(true);
     const had = ships(w, target);
