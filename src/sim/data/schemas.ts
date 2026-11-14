@@ -534,6 +534,12 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
   /** `nation` joins `leader`'s alliance; one is made, named `nameKey`, when the leader has none. */
   z.strictObject({ ...when, kind: z.literal('allianceJoin'), nation: tag, leader: tag, nameKey: key }),
   z.strictObject({ ...when, kind: z.literal('allianceLeave'), nation: tag }),
+  /**
+   * The alliance `leader` leads is dissolved, every member out (R80b, ADR-1045: the Warsaw Pact, 1 July 1991). From then
+   * on a bloc led by `leader` is none: the blocs are one, the strongest other (`blocsOf`), and a pact `leader` leads
+   * later stands outside deterrence and aid (ADR-1031's answer 3).
+   */
+  z.strictObject({ ...when, kind: z.literal('allianceEnd'), leader: tag }),
   /** A guarantee given, or with `end` (R62i2) withdrawn. */
   z.strictObject({ ...when, kind: z.literal('guarantee'), guarantor: tag, target: tag, end: z.boolean().optional(), note: z.string().optional() }),
   /**
@@ -683,6 +689,8 @@ export function timelineTags(e: TimelineEvent): string[] {
       return [e.nation, e.leader];
     case 'allianceLeave':
       return [e.nation];
+    case 'allianceEnd':
+      return [e.leader];
     case 'guarantee':
       return [e.guarantor, e.target];
     case 'transfer':

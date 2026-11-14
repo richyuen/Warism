@@ -24,6 +24,7 @@ import { forEachCellInRing } from './data/ownership';
 import { neighbours4 } from './nav/grid';
 import { kmPerCell, project } from './data/projection';
 import { nuclearMask, START_GOLD } from './systems/revolts';
+import { leaveAlliance } from './systems/alliances';
 import { relocateCapital } from './systems/capitals';
 import { spawnCity } from './scenarioEdit';
 import { applyTraits } from './traits';
@@ -159,6 +160,22 @@ export class Track {
       this.bombs = { next: this.next, set };
     }
     return this.bombs.set.has(n);
+  }
+
+  /** The leaders whose bloc an `allianceEnd` applied by `next` ended (R80b; derived from the events applied, not state). */
+  private blocEnds: { next: number; set: Set<number> } | null = null;
+
+  /** The leaders whose bloc has ended (R80b, ADR-1045): an `allianceEnd` naming them applied. */
+  blocsEnded(): ReadonlySet<number> {
+    if (this.blocEnds?.next !== this.next) {
+      const set = new Set<number>();
+      for (let i = 0; i < this.next; i++) {
+        const e = this.events[i]!;
+        if (e.kind === 'allianceEnd') set.add(this.id(e.leader));
+      }
+      this.blocEnds = { next: this.next, set };
+    }
+    return this.blocEnds.set;
   }
 
   /** Each province's admin codes (index: province id − 1), for land named by them (R69b; derived, not state). */
@@ -784,6 +801,14 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
     }
     case 'allianceLeave':
       return applyCommand(world, { kind: 'leaveAlliance', nation: id(e.nation) });
+    case 'allianceEnd': {
+      // Every member out, the leader last: the last but it leaving dissolves it (R80b).
+      const l = id(e.leader);
+      const a = world.alliances.allianceOf(l);
+      if (!a || a.leader !== l) return Refusal.NoAlliance;
+      for (const m of a.members.filter((x) => x !== l)) leaveAlliance(world, m);
+      return Refusal.None;
+    }
     case 'guarantee':
       return guarantee(world, id(e.guarantor), id(e.target), e.end === true);
     case 'transfer':
@@ -1002,6 +1027,8 @@ function firstNation(t: Track, e: TimelineEvent): number {
     case 'allianceJoin':
     case 'allianceLeave':
       return t.id(e.nation);
+    case 'allianceEnd':
+      return t.id(e.leader);
     case 'peace':
       return t.id(e.a);
     case 'annex':

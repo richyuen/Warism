@@ -517,9 +517,12 @@ export function seaWarCost(world: World, n: number, t: number, portKm: number): 
  * Their ids; one or none while fewer are so led.
  */
 export function blocsOf(world: World, str: Float64Array): Set<number> {
-  const led = world.alliances.list.filter((a) => blocLeader(world, a.leader));
+  // A bloc that ended (R80b, ADR-1045; ADR-1031's answer 3): none led by its leader is a bloc again, and the blocs are
+  // one, the strongest of the rest: after the Warsaw Pact NATO, Russia's pact outside deterrence and aid.
+  const ended = world.track?.blocsEnded() ?? new Set<number>();
+  const led = world.alliances.list.filter((a) => blocLeader(world, a.leader) && !ended.has(a.leader));
   const men = (a: (typeof led)[number]): number => a.members.reduce((t, m) => t + (str[m] ?? 0), 0);
-  return new Set(led.sort((a, b) => men(b) - men(a) || a.id - b.id).slice(0, 2).map((a) => a.id));
+  return new Set(led.sort((a, b) => men(b) - men(a) || a.id - b.id).slice(0, ended.size > 0 ? 1 : 2).map((a) => a.id));
 }
 
 /**

@@ -1648,6 +1648,11 @@ production and research. `src/sim/ai/`.
   A bloc is a defensive pact (R81a, ADR-1033): none of it is called to a member's war of its own making (the attacker's
   allies are not called when the attacker is of a bloc); to a member's defence its leader comes at any distance and its
   other members only within reach, as an attacker's ally does; guarantors as before.
+  A bloc that ends (R80b, ADR-1045; ADR-1031's answer 3): the track's `allianceEnd` dissolves the alliance its `leader`
+  leads (every member out, `AllianceDissolved`). From then on no alliance that leader leads is a bloc, and the blocs
+  are one, the strongest of the rest (after the Warsaw Pact, NATO): with one, no deterrence and no aid, and a pact the
+  ended leader founds (the CIS) is an alliance as any, its members called to their own wars. Checked by
+  `diploInvariants`' `bloc`.
 
 ### 7.3 Operational AI
 `src/sim/ai/operational.ts`; every 6 hours, each nation at war with its army layer once a day

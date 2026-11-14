@@ -181,6 +181,17 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
     (1989-90); after it NATO the one lasting bloc, Russia and the CIS a pact outside the deterrence rule (ADR-1031's
     answer 3). AT: a
     unit test of the event; the blocs' checker on four seeds; 10 years after a 1991 end, the rule the answer names.
+    Done (ADR-1045): the `allianceEnd` event (the members leave, the alliance dissolves); once applied no alliance its
+    leader leads is a bloc and the blocs are one, the strongest of the rest (`blocsOf`). `blocEnd1938h.test.ts` (the
+    event, the one bloc, the CIS-like pact outside deterrence, aid and the defensive pact; the control two blocs).
+    `diploInvariants` gains `bloc`. `tools/diag/blocEnd.ts` (the event on the 1975 end, the 1991 end not yet in the
+    track) on seeds 1-4, 10 years: at most 1 bloc (NATO, the United States', 14-15 members), the Soviet pact never a
+    bloc, 0 aid rows, 0 `bloc` lines; wars between NATO's members and the Soviet side 1, 0, 3, 3 (deterrence gone).
+    The members' exits of 1989-90 are R80h's events (`allianceLeave`, which exists).
+  - [ ] R80l (found by R80b's run) The track's end leaves land held at peace: on the 1975 end hour of every seed (and in
+    a save of 2026-11-13) France holds 20 cells of Austria, the United States 1 of Austria and 6 of Japan, Britain 2 of
+    Italy, at peace with their owners (`diploInvariants`' `held`; during the track the timeline's `occupy` excuses
+    them). AT: `held` 0 on the end hour of four seeds, the land returned or its holder's hold explained and checked.
   - [ ] R80c A great power's breakup and two unions: the Soviet Union into fifteen on 26 December 1991 (its army, navy
     and air by the land they stand on; its arsenal as ADR-1031's answer 2), Germany on 3 October 1990, Yemen on 22 May
     1990, with the existing `transfer`, births and annexations where they serve. AT: unit tests of each; worldInvariants

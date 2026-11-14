@@ -236,3 +236,17 @@
   has no `bomb` event in the track (R80e to decide); the dominions' dates (R80k): Australia 1942-10-09 (from
   1939-09-03), New Zealand 1947-11-25, South Africa 1961-05-31, Canada 1982-04-17, Australia 1986-03-03.
 - Documents only: no gate stage runs.
+
+## 2026-11-14 — R80b: a bloc that ends (ADR-1045)
+
+- The track's `allianceEnd` (`leader`) dissolves the alliance it leads; `Track.blocsEnded` (derived from the events
+  applied) makes `blocsOf` leave out the ended leader's alliances and keep one bloc. No rule moves before the event:
+  the timeline has none yet (R80h-i add the Warsaw Pact's), so the pin and 1938-75 stand.
+- `tests/unit/blocEnd1938h.test.ts` (new; a two-day test timeline): the Comintern dissolved on its hour, told; one bloc
+  after it; a pact the Soviet Union founds with Mongolia not deterred, no aid, its member's war calls the Soviet Union
+  (the control: Mongolia in the Comintern, a bloc, goes alone). The bloc tests of ADR-981/990/1033 green (30).
+- `diploInvariants` gains `bloc`. `tools/diag/blocEnd.ts` (the event on the 1975 end) on seeds 1-4, 10 years: at most
+  1 bloc (NATO), the Soviet pact never one, 0 aid rows, 0 `bloc` lines; wars between NATO's members and the Soviet
+  side 1, 0, 3, 3. Its `held` lines (France 20 cells of Austria, the United States 1 of Austria and 6 of Japan,
+  Britain 2 of Italy, every seed) are in `.cache/afterTrack_1.sav.gz` of 2026-11-13 too: the track's end, filed R80l.
+- Tick: `blocsOf` reads a cached set (rebuilt when the track's `next` moves); nothing else runs more.

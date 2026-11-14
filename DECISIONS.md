@@ -68,6 +68,28 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1045 · 2026-11-14 · accepted — R80b: a bloc that ends (the track's `allianceEnd`)
+- **Context.** ADR-1031's answer 3 (the user's): after 1991 NATO the one lasting bloc, Russia and the CIS a pact outside
+  the deterrence rule. R67's blocs (ADR-981) are derived each month, the two strongest alliances led by a nation with an
+  assured second strike, so a Soviet-led CIS would have been the second bloc again.
+- **Decision.** A track event `allianceEnd` (`leader`): every member of the alliance `leader` leads leaves it, so it
+  dissolves (`AllianceDissolved`); refused when `leader` leads none. Derived from the events applied (`Track.blocsEnded`,
+  as `bombCleared`, not state): once one has been applied, `blocsOf` leaves out every alliance led by an ended leader
+  and returns one bloc, the strongest of the rest. With one bloc there is no deterrence (`deterred` needs two), no aid
+  (`blocAid` runs for two), and an alliance the ended leader founds calls its members as any alliance does (the
+  defensive pact of ADR-1033 is a bloc's). A game that leaves the track before the event keeps its two blocs.
+- **Stands on, checked (ADR-803):** ADR-981 (the blocs), ADR-990 (aid), ADR-1033 (a bloc a defensive pact), ADR-1031.
+  Their tests green before and after (`blocs1938`, `blocAid1938h`, `blocDefensive1938h`, `rivalsApart1938`,
+  `trackFocus1938h`, `trackRunner1938h`, `nukeRestraint1938`, `nukeUndeterred1938`: 30): the timeline has no
+  `allianceEnd` yet, so 1938-75 and the pin are as before.
+- **Checker (ADR-804):** `diploInvariants`' `bloc`: at most two blocs, one after an end, none led by an ended leader, no
+  `BlocAid` with fewer than two.
+- **Results.** `tools/diag/blocEnd.ts`, the event added on the 1975 end (the track's last day until R80d), seeds 1-4,
+  10 years: at most one bloc (the United States', 14-15 members), the Soviet pact (7 members on seed 1) never a bloc,
+  0 aid rows, 0 `bloc` lines; wars between NATO's members and the Soviet side 1, 0, 3, 3 (seed 1: France and the
+  Caribbean against Cuba, Canada, Mexico, the Soviet Union and the Philippines, year 5). Its `held` lines (four, the
+  same on every seed) are the track's end's, in a save of the day before: ROADMAP R80l.
+
 ### ADR-1044 · 2026-11-14 · accepted — R82i: a burst's ground under the units, its cap and flash over them
 - **Context.** Critic run 68's AI nukes "not 9" (the user's choice to take it): on 7019's year-20 world at 938 m/px
   ground zero's mark (R81c) sat over the struck stack's marker at 10 s, its dot on the flag and its amber over the

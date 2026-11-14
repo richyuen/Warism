@@ -2,7 +2,7 @@ import { isMonthStart } from '../../src/shared/calendar';
 import { Refusal } from '../../src/shared/commands';
 import { EventKind } from '../../src/shared/events';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
-import { PILE_REALMS } from '../../src/sim/ai/strategic';
+import { blocsOf, PILE_REALMS, strengths } from '../../src/sim/ai/strategic';
 import { Sim } from '../../src/sim/sim';
 import { FREE_ABOVE, PROTEST_FROM, puppetSystem, REVOLT_LOYALTY } from '../../src/sim/systems/puppets';
 import { declareWar, forceWar, whyNotWar } from '../../src/sim/systems/war';
@@ -25,6 +25,8 @@ import { realmWars } from './realmWars';
 //           ends in that hour (ROADMAP R2, ADR-807).
 //   pile    no war the sim declares in its own hours (the AI's; God's and a player's are acts) sets over PILE_REALMS
 //           realms (nations that are no puppet) against each of the declarer's (ROADMAP R82f, ADR-1042).
+//   bloc    where the blocs are (`blocsOf`), at most two; once an `allianceEnd` has been applied, at most one, and none
+//           led by a leader whose bloc ended; no `BlocAid` in an hour with fewer than two blocs (ROADMAP R80b, ADR-1045).
 
 const tag1938 = (n: number): string => TAGS_1938[n - 1] ?? `#${n}`;
 /** The names in the lines: the 1938 tags, or the ids of a random world's nations (set per case). */
@@ -122,6 +124,20 @@ export function worldBreaks(w: World): string[] {
   for (const war of w.wars.list)
     for (const side of war.sides)
       for (const a of side) for (const b of side) if (a < b && w.wars.atWar(a, b)) out.push(`realm: ${tag(a)} and ${tag(b)} beside each other in war ${war.id} and at war`);
+  return out;
+}
+
+/** The lines of `bloc` the world and the hour's `events` break (R80b): the blocs as `blocsOf` gives them now. */
+export function blocBreaks(w: World, events: number[]): string[] {
+  const out: string[] = [];
+  const blocs = blocsOf(w, strengths(w));
+  const ended = w.track?.blocsEnded() ?? new Set<number>();
+  if (blocs.size > (ended.size > 0 ? 1 : 2)) out.push(`bloc: ${blocs.size} blocs${ended.size > 0 ? ' after a bloc ended' : ''}`);
+  for (const id of blocs) {
+    const a = w.alliances.list.find((x) => x.id === id);
+    if (a && ended.has(a.leader)) out.push(`bloc: alliance ${id} led by ${tag(a.leader)}, whose bloc ended, is a bloc`);
+  }
+  if (blocs.size < 2) for (let i = 0; i < events.length; i += 6) if (events[i + 1] === EventKind.BlocAid) out.push(`bloc: aid by ${tag(events[i + 2]!)} with ${blocs.size} bloc(s)`);
   return out;
 }
 
