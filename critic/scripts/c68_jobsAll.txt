@@ -1,0 +1,107 @@
+npx tsx tools/diag/landingInvariants.ts 30041 3517 120 30041 30,90 1 > critic/c68_li_30041_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 31099 3517 120 31099 30,90 1 > critic/c68_li_31099_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 203997 3517 120 203997 30,90 2 > critic/c68_li_203997.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 204017 3517 120 204017 30 2 8 > critic/c68_li_204017.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 29043 15101 120 29043 30,90 2 > critic/c68_li_29043_15101.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 28037 3517 120 28037 30 2 8 > critic/c68_li_28037_od8.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 28039 3517 120 28039 30,90 1 > critic/c68_li_28039_g1.log 2>&1
+env SEED=31173 SETUP=3517 KEEPG=2 DIV=366 FROM=800 TO=940 npx tsx critic/scripts/c61_nvtrace.ts > critic/c68_nvtrace_31173_366.log 2>&1
+env SEED=31127 SETUP=15101 KEEPG=1 DIV=272 FROM=420 TO=640 npx tsx critic/scripts/c61_nvtrace.ts > critic/c68_nvtrace_31127_272.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 32115 15101 120 32115 30,90 2 > critic/c68_li_32115_15101_g2.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 32167 3517 120 32167 30,90 1 > critic/c68_li_32167_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 32167 3517 120 32167 30,90 2 > critic/c68_li_32167_g2.log 2>&1
+npx tsx tools/diag/seaBattles.ts 32061 scenario --years 3 --out critic/c68_sb_32061.json > critic/c68_sb_32061.log 2>&1
+npx tsx tools/diag/seaBattles.ts 32063 random --years 2 --out critic/c68_sb_32063r.json > critic/c68_sb_32063r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33501 scenario 1825 > critic/c68_diploinv_33501s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33503 random 1825 > critic/c68_diploinv_33503r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33505 scenario 1825 --heroes > critic/c68_diploinv_33505sh.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 36009 1825 > critic/c68_wi_36009.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 36011 1825 --heroes > critic/c68_wi_36011h.log 2>&1
+npm run sim -- --scenario 1938 --seed 7019 --years 20 --save critic/c68_seed7019_y20.bin > critic/c68_seed7019_save.log 2>&1
+npm run sim -- --scenario 1938 --seed 32019 --years 20 --save critic/c68_seed32019_y20.bin > critic/c68_seed32019_save.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 32059 4380 24 critic/c68_wd_32059.json > critic/c68_wd_32059.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 37001 scenario 1825 > critic/c68_diploinv_37001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 37003 random 1825 > critic/c68_diploinv_37003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 37005 scenario 1825 --heroes > critic/c68_diploinv_37005sh.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 37007 1825 > critic/c68_wi_37007.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 37011 1825 --heroes > critic/c68_wi_37011h.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 38001 scenario 1825 > critic/c68_diploinv_38001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 38003 random 1825 > critic/c68_diploinv_38003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 38005 scenario 1825 --heroes > critic/c68_diploinv_38005sh.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 38007 1825 > critic/c68_wi_38007.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 38009 1825 > critic/c68_wi_38009.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 38011 1825 --heroes > critic/c68_wi_38011h.log 2>&1
+npx tsx critic/scripts/c64_track.ts 1938 365 > critic/c68_track_1938.log 2>&1
+npx tsx critic/scripts/c64_track.ts 38301 365 > critic/c68_track_38301.log 2>&1
+npx tsx critic/scripts/c64_track.ts 38303 365 > critic/c68_track_38303.log 2>&1
+npx tsx tools/diag/trackFronts.ts 37701 > critic/c68_tf_37701.log 2>&1
+npx tsx tools/diag/trackFronts.ts 38701 > critic/c68_tf_38701.log 2>&1
+npx tsx critic/scripts/c68_transfer.ts > critic/c68_transfer_head.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 36105 3517 120 36105 30 2 8 > critic/c68_li_36105_3517_g2_od8.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 37009 1825 > critic/c68_wi_37009.log 2>&1
+npx tsx critic/scripts/c64_track.ts 37301 365 > critic/c68_track_37301.log 2>&1
+npx tsx critic/scripts/c64_track.ts 37303 365 > critic/c68_track_37303.log 2>&1
+npx tsx tools/diag/trackFronts.ts 1938 > critic/c68_tf_1938.log 2>&1
+npx tsx critic/scripts/c68_afterTrack.ts 37601 10 critic/c68_atx_37601.json > critic/c68_atx_37601.log 2>&1
+npx tsx critic/scripts/c68_afterTrack.ts 37603 10 critic/c68_atx_37603.json > critic/c68_atx_37603.log 2>&1
+npx tsx critic/scripts/c68_afterTrack.ts 38601 10 critic/c68_atx_38601.json > critic/c68_atx_38601.log 2>&1
+npx tsx critic/scripts/c68_afterTrack.ts 1938 10 critic/c68_atx_1938.json > critic/c68_atx_1938.log 2>&1
+npx tsx critic/scripts/c68_nukecount.ts 37501 22 > critic/c68_nc/37501.log 2>&1
+npx tsx critic/scripts/c68_nukecount.ts 37503 22 > critic/c68_nc/37503.log 2>&1
+npx tsx critic/scripts/c68_nukecount.ts 37507 22 > critic/c68_nc/37507.log 2>&1
+npx tsx critic/scripts/c68_greats.ts 7019 3 > critic/c68_greats_7019.log 2>&1
+npx tsx critic/scripts/c68_seapowers.ts 7019 5 > critic/c68_seapowers_7019.log 2>&1
+npx tsx critic/scripts/c68_seapowers.ts 39801 5 > critic/c68_seapowers_39801.log 2>&1
+npx tsx critic/scripts/c68_air69.ts > critic/c68_air69.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 39001 scenario 1825 > critic/c68_diploinv_39001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 39003 random 1825 > critic/c68_diploinv_39003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 39005 scenario 1825 --heroes > critic/c68_diploinv_39005sh.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 39007 random 1825 --world random > critic/c68_diploinv_39007rw.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 39009 scenario 3650 > critic/c68_diploinv_39009s_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 39011 random 3650 --heroes > critic/c68_diploinv_39011r_h_10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 39051 1825 > critic/c68_wi_39051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 39053 1825 --heroes > critic/c68_wi_39053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 39055 1825 --world random > critic/c68_wi_39055rw.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 39059 4380 24 critic/c68_wd_39059.json > critic/c68_wd_39059.log 2>&1
+npx tsx tools/diag/seaBattles.ts 39061 scenario --years 3 --out critic/c68_sb_39061.json > critic/c68_sb_39061.log 2>&1
+npx tsx tools/diag/seaBattles.ts 39063 random --years 2 --out critic/c68_sb_39063r.json > critic/c68_sb_39063r.log 2>&1
+npx tsx tools/diag/landingRows.ts all critic/c68_lrows_all.json > critic/c68_lrows_all.log 2>&1
+npx tsx critic/scripts/c68_topArea.ts 39099 25 critic/c68_toparea_39099.json > critic/c68_toparea_39099.log 2>&1
+npx tsx critic/scripts/c68_topArea.ts 39097 25 critic/c68_toparea_39097.json > critic/c68_toparea_39097.log 2>&1
+npx tsx critic/scripts/c68_piles.ts 365 --plain 39139 39141 39143 39145 39147 > critic/c68_piles_p.log 2>&1
+npx tsx critic/scripts/c68_repulse.ts 39071 ENG GER 1023.5,275.5 1072.5,259.5 3 critic/c68_repulse_39071.json 500 12 > critic/c68_repulse_39071.log 2>&1
+npx tsx critic/scripts/c68_repulse.ts 39073 JAP CHI 1818.5,385.5 1715.5,413.5 3 critic/c68_repulse_39073.json 400 12 > critic/c68_repulse_39073.log 2>&1
+npx tsx critic/scripts/c68_nukecount.ts 39501 22 > critic/c68_nc/39501.log 2>&1
+npx tsx critic/scripts/c68_nukecount.ts 39503 22 > critic/c68_nc/39503.log 2>&1
+npx tsx critic/scripts/c68_nukecount.ts 39507 22 > critic/c68_nc/39507.log 2>&1
+npm run sim -- --scenario 1938 --seed 39505 --years 13 --save critic/c68_seed39505_y13.bin > critic/c68_seed39505_save.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 39401 6 10 > critic/c68_few3.log 2>&1
+npx tsx critic/scripts/c64_track.ts 39301 365 > critic/c68_track_39301.log 2>&1
+npx tsx critic/scripts/c64_track.ts 39303 365 > critic/c68_track_39303.log 2>&1
+npx tsx tools/diag/trackFronts.ts 39701 > critic/c68_tf_39701.log 2>&1
+npx tsx critic/scripts/c68_afterTrack.ts 39601 10 critic/c68_atx_39601.json > critic/c68_atx_39601.log 2>&1
+npx tsx critic/scripts/c68_census.ts 1938 > critic/c68_census_1938.log 2>&1
+npx tsx critic/scripts/c68_dday.ts 1938 > critic/c68_dday_1938.log 2>&1
+npx tsx critic/scripts/c68_dday.ts 37701 > critic/c68_dday_37701.log 2>&1
+npx tsx critic/scripts/c68_dday.ts 41701 > critic/c68_dday_41701.log 2>&1
+npx tsx critic/scripts/c68_census.ts 41701 > critic/c68_census_41701.log 2>&1
+npx tsx critic/scripts/c68_firstdecl.ts 60 39821 39823 39825 39827 39829 39831 39833 39835 39837 39839 > critic/c68_firstdecl.log 2>&1
+npx tsx critic/scripts/c68_firstdecl.ts 60 41821 41823 41825 41827 41829 41831 41833 41835 41837 41839 > critic/c68_firstdecl_41.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 41001 scenario 1825 > critic/c68_diploinv_41001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 41003 random 1825 > critic/c68_diploinv_41003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 41005 scenario 1825 --heroes > critic/c68_diploinv_41005sh.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 41007 random 1825 --world random > critic/c68_diploinv_41007rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 41051 1825 > critic/c68_wi_41051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 41053 1825 --heroes > critic/c68_wi_41053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 41055 1825 --world random > critic/c68_wi_41055rw.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 41059 4380 24 critic/c68_wd_41059.json > critic/c68_wd_41059.log 2>&1
+npx tsx tools/diag/seaBattles.ts 41061 scenario --years 3 --out critic/c68_sb_41061.json > critic/c68_sb_41061.log 2>&1
+npx tsx tools/diag/seaBattles.ts 41063 random --years 2 --out critic/c68_sb_41063r.json > critic/c68_sb_41063r.log 2>&1
+npx tsx critic/scripts/c64_track.ts 41301 365 > critic/c68_track_41301.log 2>&1
+npx tsx tools/diag/trackFronts.ts 41701 > critic/c68_tf_41701.log 2>&1
+npx tsx critic/scripts/c68_afterTrack.ts 41601 10 critic/c68_atx_41601.json > critic/c68_atx_41601.log 2>&1
+npx tsx critic/scripts/c68_nukecount.ts 41501 22 > critic/c68_nc/41501.log 2>&1
+npx tsx critic/scripts/c68_nukecount.ts 41503 22 > critic/c68_nc/41503.log 2>&1
+npx tsx critic/scripts/c68_piles.ts 365 --plain 41139 41141 41143 41145 41147 > critic/c68_piles_p.log 2>&1
+npx tsx critic/scripts/c68_topArea.ts 41097 25 critic/c68_toparea_41097.json > critic/c68_toparea_41097.log 2>&1
+npm run sim -- --scenario 1938 --seed 41019 --years 20 --save critic/c68_seed41019_y20.bin > critic/c68_seed41019_save.log 2>&1

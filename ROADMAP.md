@@ -27,6 +27,36 @@ Rules:
   year, the replay to 1975, a faster tick, runs 63–67's findings, the gate on the GPU), in CHANGELOG.md for players; the
   items with their evidence in `docs/history/ROADMAP-release-2026-11-13.md`.
 
+## Batch 26 — critic run 68's issues (2026-11-14; RELEASES step 2, ADR-1005, ADR-1039: done with the open batches before the critic runs again)
+
+  - [ ] R82a (R68-B1, blocking; God Mode 7) Undo, and any load, leaves the undone burst's ruins and fallout drawn: the
+    worker sends the fallout and ruins layers only when the world or the last sent had some, and `loaded()` resets the
+    sent counts, so an empty layer is never sent and the page keeps the old one. After a load or an Undo both layers
+    are sent once, empty too. AT: the critic's `c68_undo2.mjs 41211` (nuke undone: 0 px differing from before) and
+    `c68_loadruins.mjs 41203` (shot 02 equal to the fresh page's 04), as a spec comparing the picture before an act
+    and after its Undo, not only the hash; every God tool in `godUndo1938.spec.ts` compared by picture too.
+  - [ ] R82b (R68-N4) Normandy fought for: the Allies take ground in D-Day's window (at least the Cotentin and Caen) and
+    lose under 2 × the Germans. AT: `trackFronts` on 1938, 37701, 38701, 39701, 41701: D-Day's cells taken > 0 before
+    the handover and the Allied loss under 2 × the German; the stage's other bars kept.
+  - [ ] R82c (R68-N1) "Carrier strike ashore: United States on United States": the row names the enemy the wings were
+    sent against (or none). AT: no carrier row names the striker as its target on 32019 to year 20 and two seeds.
+  - [ ] R82d (R68-N2) European powers at war with Brazil in 1938: France takes Brazil's capital in two years on 4 of 5
+    seeds. AT: `c68_farConquests.ts 0 6161,41161,41163,41165,41167`, France takes it on at most 1; the first-60-day
+    declarations over 6,000 km on 41821-41839 at most run 68's elsewhere.
+  - [ ] R82e (R68-N3) The Next line names D-Day's stage for what follows 6 June ("the beachhead secured"), not "D-Day"
+    from 2 to 25 July. AT: `c68_nextline.mjs` on the Normandy stage: no line names D-Day after 6 June.
+  - [ ] R82f (R68-N5) Pile-ons at day 365: Germany against the Netherlands with 9-13 on the Dutch side on 4 of 5 new
+    seeds. AT: `c68_piles.ts 365 --plain` on 39139-39147 and 41139-41147: no war over 4:1.
+  - Filed, not taken (one line each, ADR-843):
+    - The free 1975 world's far conquests (Britain takes Beijing on 4 of 5 seeds): ADR-1033's re-scoped bar is met
+      (×1.17); a Cold War rule for the free world after 1975 is a design of its own, to be asked of the user.
+    - The followed wing's p90 at 250 m/px (552-712 px): the probe cannot tell the wing's sorties from other German ones;
+      R81g's own probe (by wing id) reads median 0; a lead, not a fault.
+    - `slowClick` breaks (41101, 27037, 31175 g1): ADR-914's timing bounds, non-blocking; the 31175 row "next voyage in
+      about 7 days" that sailed after 18.9 goes with the landing items when one is next filed.
+    - Probe faults (`an_ainuke`'s settle, the replay page's second seed per game): the critic's.
+    - Carried (ADR-1027 People's China, zero-ship sea battles, Malta): as filed before.
+
 ## Batch 25 — run 67's "not 9" items (the user's decision, 2026-11-14, ADR-1032: before Batch 24)
 
 - [ ] R81 **Run 67's "not 9" items.**
@@ -79,7 +109,7 @@ Rules:
     three alike to the element) at the armour and the infantry: 25 tags for 25 formations in view, 0 overlapping, 0
     left unplaced, 10 engaged all named; of the engaged formations' 292 elements in view none under a tag
     (`tools/diag/battleTags.ts`). The crowding is the count; fewer tags at a battle is put to the user (ADR-1037).
-  - [ ] R81g The followed fighter's mark at 250 m/px (aircraft): its median distance from its sorties at most 40 px (the
+  - [x] R81g The followed fighter's mark at 250 m/px (aircraft): its median distance from its sorties at most 40 px (the
     critic: 392 on 39927, 68 on 35127), 3,000 m/px as before (median ≤ 32). AT: `w_wing` on both seeds and one new.
     Done (ADR-1038): a patrol's planes are drawn circling at a radius of the view's, and the mark stood at the circle's
     middle (the wing's place). A sortie's row now carries its wing (`SORTIE_STRIDE` 12) and the mark stands on the

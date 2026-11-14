@@ -74,3 +74,11 @@
 - The critic's 52.5-55.8 at 120 m/px is draws a second over a spot left empty (its fight picked once at load): here
   48.8-57.5, while the browser draws 60.0-60.2 frames and a forced draw takes 0.7 ms (58.8-60 frames/s). The view
   skips a draw that would change nothing (`frameAt`). No change; BLOCKERS has the numbers. `lookFps.ts` `FIXED=1`.
+
+## 2026-11-14 — Critic run 68 (focused, after Batch 25; on `bfda9503`)
+
+- Scores: map 8, diplomacy 8, emergent 8, God Mode **7**, editor 8, stats 8, UI 8, performance 8, stability 8,
+  semantic zoom 8, naval 8, tanks 8 (carried), aircraft 8, AI nukes 8. **1 blocking:** R68-B1, Undo and any load
+  leave the undone burst's ruins and fallout drawn. Non-blocking R68-N1-N5. Batch 25 seen working (R81a's bar ×1.17,
+  R81c-e, g; R81h's answer borne out: frames 59-60 at 120 m/px). Filed as Batch 26, R82a-f, before Batch 25's R81i;
+  the critic runs again when no batch is open (ADR-1039). HEAD had moved by two document commits (ADR-1037, ADR-1039).

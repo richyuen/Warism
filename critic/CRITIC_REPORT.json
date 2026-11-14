@@ -1,11 +1,11 @@
 {
-  "commit": "6e0e46f37ddd91ba447d2c2d22239a8572601ba6",
-  "mode": "full",
+  "commit": "bfda95033836b9afc30bfbd1d5197f3885eabd1d",
+  "mode": "focused",
   "scores": {
     "mapVisuals": 8,
     "diplomacyWarDepth": 8,
     "emergentDynamics": 8,
-    "godMode": 8,
+    "godMode": 7,
     "editorScenarios": 8,
     "statsHistory": 8,
     "uiUxPolish": 8,
@@ -17,6 +17,13 @@
     "aircraft": 8,
     "aiNukes": 8
   },
-  "blocking": [],
-  "timestamp": "2026-11-13T14:03:17-05:00"
+  "blocking": [
+    {
+      "id": "R68-B1",
+      "title": "Undo (and any load) leaves the undone burst's ruins and fallout drawn on the map",
+      "evidence": "node critic/scripts/c68_undo.mjs 41201 30: hash 3597411667 before the H-bomb on Berlin and after Undo, yet the burned disc and ruins stay (critic/shots/c68u_41201_04_berlin_937_undone.png, c68u_41201_06_berlin_150_undone.png, c68u_41201_08_berlin_937_after_undo_48h.png vs c68u_41201_00_berlin_937_before.png). c68_undo2.mjs 41211 + c68_pixdiff.py: nuke undone after 2 s differs by 7,028 px from before, other tools 0-31 px (critic/shots/c68u2_41211_nuke_pair.png). c68_loadruins.mjs 41203: a load of a pre-burst save keeps the scar (c68lr_41203_02_loaded_937.png) while a fresh page with the same save and hash 149009271 is clean (c68lr_41203_04_fresh_937.png). Cause: src/worker/server.ts ~902/910 sends fallout and ruins only when the world has some or the last sent had some; loaded() resets the sent counts to -1, so an empty layer is never sent and the client keeps the old one (same guard at 6e0e46f3, so the load path is old; R81b makes it one click). The same load case on run 67's build (6e0e46f3, critic/wt) shows the identical 2,519 px scar (critic/shots/c68lr6e0e_41203_02_crop.png): the load path is old; R81b's Undo is the new way to it.",
+      "fix": "After loaded() (load or Undo), always send the fallout and ruins layers once, empty included; add a spec that compares the picture before an act and after its Undo, not only the hash. Seen fixed when c68_undo2.mjs 41211 shows 0 px differing for the nuke and c68_loadruins.mjs 41203 shot 02 equals shot 04."
+    }
+  ],
+  "timestamp": "2026-11-14T07:48:15-05:00"
 }
