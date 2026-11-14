@@ -68,6 +68,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1035 · 2026-11-14 · accepted — R81d: the bar passed on HEAD; the label flag framed light
+- **Read first** (`tools/diag/flagPairs.ts`, 39915 day 5, 250 m/px, the flags read from the overlay as drawn): Germany's
+  and Poland's flags differ in 60 % of their pixels by over 60, over R81d's bar (30 %) with no change. The bar, my own,
+  did not name the critic's fault: Germany's black third sits on the tag's dark ground inside a dark outline, so the
+  flag's top edge is lost and what is seen is white over red with a thin dark band.
+- **The column added:** the ring one pixel out of the flag against the tag's ground: the share of its pixels over 60
+  from it. HEAD 0 % for both flags.
+- **Decision:** the tag's flag framed light (`TAG_FLAG_EDGE`, rgba(196, 202, 210, 0.95)) for the dark one: the edge
+  100 % for both, the pixels 70 %; the shots before and after looked at, the German tricolour read as one.
+- **Listed, not changed:** the pairs at war in year 1 under 30 % (on 39915 and 7019) are red flags with a white
+  device (SOV-TUR, TUR-OMN, ALB-TUR), red-white-red (LAT-SOV) and Switzerland's cross against Tunisia's crescent; the
+  pictures are the nations' own, and their name and colour bar stand beside them on the tag.
+
 ### ADR-1034 · 2026-11-14 · accepted — R81b: the God Mode undo; what it tells, and the replay
 - **The conflict:** R81b's line said the undo is "told in the bar and the ticker" and "ends nothing the act did not (the
   replay stays ended)"; ADR-1032's bar 5, the user's, says after an undo the hash is the one before the act and the run

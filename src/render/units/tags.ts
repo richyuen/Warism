@@ -69,6 +69,8 @@ export interface PlacedTag {
 
 export const TAG_FLAG_W = 15;
 export const TAG_FLAG_H = 10;
+/** The flag's frame on a tag: light on the dark ground, so a flag's dark stripe at its edge is seen as the flag's. */
+export const TAG_FLAG_EDGE = 'rgba(196, 202, 210, 0.95)';
 export const TAG_PAD = 3;
 /** Between a formation's elements and its tag, and between two tags, px. */
 export const TAG_GAP = 4;
@@ -325,7 +327,9 @@ export function drawTags(ctx: CanvasRenderingContext2D, tags: PlacedTag[], alpha
     const flag = flagOf(t.nation);
     if (flag) {
       ctx.drawImage(flag, fx, fy, TAG_FLAG_W * scale, TAG_FLAG_H * scale);
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.6)';
+      // A light edge (ROADMAP R81d, critic run 67): a dark band at the flag's edge is part of the flag, not the tag's dark
+      // ground (Germany's black third read as a thin band over Poland's white and red).
+      ctx.strokeStyle = TAG_FLAG_EDGE;
       ctx.lineWidth = 1;
       ctx.strokeRect(fx - 0.5, fy - 0.5, TAG_FLAG_W * scale + 1, TAG_FLAG_H * scale + 1);
     }

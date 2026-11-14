@@ -23,6 +23,10 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   alliances, great and nuclear powers, then every war declared, those between great powers and between blocs, the
   leaders' men and disbandings monthly for five years. Saves the world at the track's end to
   `.cache/afterTrack_<seed>.sav.gz` and loads it from there after (R67a; ~10 min the first time).
+- `npx tsx tools/diag/flagPairs.ts [seed = 39915] [days = 5] [seeds = 39915,7019] [bar = 0.3] [out dir]` (after
+  `npm run build` and `npx vite preview --port 5355 --host 127.0.0.1`): Germany's and Poland's label flags read from the
+  overlay as drawn at 250 m/px, the share of pixels differing by over 60, the flag's edge against the tag's ground, the
+  two tags' shots; then the flags of every pair at war in year 1 on `seeds`, those under the bar listed (ROADMAP R81d).
 - `npx tsx tools/diag/burstMark.ts <seed> <save.bin> [out dir]` (after `npm run build` and `npx vite preview --port
   5355 --host 127.0.0.1`): a save run at Max to its first burst, then Speed ×1; the burst's effect drawn alone at 937
   and 3,000 m/px at 1-10.3 s, its extent, and shots (ROADMAP R81c).

@@ -56,9 +56,14 @@ Rules:
     3,000 (`tests/e2e/burstMark1938.spec.ts`); 7019's year-20 world at HEAD has its first AI burst in August 1958, an
     atomic one (the critic's run 67 world had an H-bomb in March): 58 and 42 px at 10.3 s
     (`tools/diag/burstMark.ts`). Shots looked at.
-  - [ ] R81d Germany's and Poland's flags at 250 m/px (map visuals; the critic's 39915 day 5): the label flags told
+  - [x] R81d Germany's and Poland's flags at 250 m/px (map visuals; the critic's 39915 day 5): the label flags told
     apart at a glance. AT: of the two flags as drawn at 250 m/px, at least 30 % of their pixels differ by over 60; the
     other 1938 pairs at war in year 1 on two seeds read the same way, or listed.
+    Done (ADR-1035): the bar read 60 % on HEAD, so a column was added that names the fault (Germany's black third lost
+    on the tag's dark ground in a dark outline): the flag's edge against the ground, 0 % on HEAD. The tag's flag framed
+    light (`TAG_FLAG_EDGE`): the edge 100 %, the pixels 70 %. Under 30 % in year 1, listed: 39915 SWI-TUN 13, SOV-TUR
+    16, LAT-SOV 23; 7019 TUR-OMN 8, SOV-TUR 16, ALB-TUR 21, LAT-SOV 23, CZS-POL 25 (red flags with a white device, the
+    pictures the data gives). `tools/diag/flagPairs.ts`; shots looked at.
   - [ ] R81e The relations graph (UI/UX): more nodes named, and a truce on its own edge, not only in the footer. AT: on
     39939 and two seeds, desk 1600 × 900 and phone 390 × 844: every nation at war or in a pact named (or the 15
     largest, whichever more), no two labels overlapping; each truce's edge drawn as a truce.

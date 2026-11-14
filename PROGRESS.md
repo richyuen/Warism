@@ -43,3 +43,9 @@
   on Paris 202 px across at 937 m/px and 66 at 3,000; 7019 year 20's first AI burst (atomic, August 1958) 58 and 42.
   `tests/e2e/burstMark1938.spec.ts`, `tools/diag/burstMark.ts`; `nukeFx` unit and e2e tests take the fourth part.
   Bench G on the GPU: T0 313.1 fps, T2 170.0 (release 313.3, 170.9).
+
+## 2026-11-14 — R81d: Germany's label flag told from Poland's (ADR-1035)
+
+- The bar (30 % of pixels differing) read 60 % on HEAD; the fault was Germany's black third lost on the tag's dark
+  ground (its edge seen: 0 %). The tag's flag framed light: edge 100 %, pixels 70 %; shots looked at. Pairs under the
+  bar in year 1 listed (red flags with a white device, Latvia's against the Soviet Union's). The ten tag specs green.
