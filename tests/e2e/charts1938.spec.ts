@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
+import { CHART_MIN_DE, deltaE, parseHex } from '../../src/shared/color';
 import { CHART_METRICS, SERIES_STRIDE } from '../../src/shared/statSeries';
 import { NATIONS_1938 } from '../../src/sim/scenario1938';
 
@@ -9,6 +10,8 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // the latest sample plus the nation selected on the map, one line each with one point a month (from the first tick).
 
 const POL = NATIONS_1938.findIndex((n) => n.tag === 'POL') + 1;
+const FRA = NATIONS_1938.findIndex((n) => n.tag === 'FRA') + 1;
+const USA = NATIONS_1938.findIndex((n) => n.tag === 'USA') + 1;
 
 test('statistics charts: top nations plus the selected one, every metric', async ({ page }, info) => {
   test.setTimeout(150_000);
@@ -80,4 +83,26 @@ test('statistics charts: top nations plus the selected one, every metric', async
   await expect(page.getByTestId('history-panel')).toHaveCount(0);
   await page.getByTestId('chart-close').click();
   await expect(page.getByTestId('stats-chart')).toHaveCount(0);
+});
+
+// ROADMAP R82h (critic run 68, stats "not 9"): the chart's land (owned) and the Ranking's (held) named apart by their
+// first word; France's and the United States' lines (#3f5fbf and #2a4d8f, ΔE 19) told apart, at least CHART_MIN_DE.
+test('charts: owned land named apart from land held; France and the United States in colours told apart', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  if ((await page.getByTestId('stats-ranking').count()) === 0) await page.getByTestId('stats-btn').click();
+  const held = (await page.getByTestId('rank-metric').locator('option[value="land"]').textContent())!.trim();
+  await page.getByTestId('ranking-charts').click();
+  await page.evaluate(() => window.__warsim!.sim.step(24 * 62));
+  await page.evaluate((n) => window.__warsim!.view!.select(n), FRA);
+  const owned = (await page.getByTestId('chart-metric').locator('option[value="land"]').textContent())!.trim();
+  expect(owned.split(' ')[0]).not.toBe(held.split(' ')[0]);
+  const stroke = (n: number): Promise<string | null> => page.locator(`[data-testid=chart-line][data-nation="${n}"]`).getAttribute('stroke');
+  await expect.poll(async () => (await stroke(FRA)) !== null && (await stroke(USA)) !== null, { timeout: 20_000 }).toBe(true);
+  const [f, u] = [await stroke(FRA), await stroke(USA)];
+  expect(deltaE(parseHex(f!), parseHex(u!))).toBeGreaterThanOrEqual(CHART_MIN_DE);
+  // The legend's swatches in the lines' colours.
+  for (const [n, c] of [[FRA, f], [USA, u]] as const) await expect(page.locator(`[data-testid=chart-legend][data-nation="${n}"]`)).toHaveAttribute('data-colour', c!);
 });

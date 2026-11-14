@@ -68,6 +68,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1043 · 2026-11-14 · accepted — R82h: owned land named apart; a chart's lines at least ΔE 30 apart
+- **Context.** Critic run 68's stats "not 9" (the user's choice to take it): the chart's "Land (km²)" (owned) beside the
+  Ranking's "Land held (km²)" (held, R78e) read as one measure; France's (#3f5fbf) and the United States' (#2a4d8f)
+  chart lines, ΔE 19, read as one blue (the map's neighbour rule needs only 15, for filled areas side by side).
+- **Decision.** The chart's and the nation panel's measure is "Owned land (km²)"; the Ranking's stays "Land held
+  (km²)". A chart's lines (`chartColours`, `src/shared/color.ts`), in their order, the first its nation's colour: a
+  line within CHART_MIN_DE (30) of a line above it takes the first mix toward white (15 % steps to 90 %), else toward
+  black, that clears every line above; with none, the mix furthest from its nearest, drawn dashed (six blues of one hue
+  cannot all be 30 apart by lightness). The legend and the hover's swatches as the line.
+- **Rejected.** A fixed chart palette (the nation's colour is how it is known on the map); dashes for every close
+  pair (colour first, dashes the last resort).
+- **Results.** 32019's year-20 world (`tools/diag/chartBlues.ts`), France selected: France #95a7dc, ΔE 37.5 from the
+  United States; the United Kingdom #dc7373, 31.9 from the Soviet Union; every line ≥ 31.9 from every other; the
+  names' first words differ; the shot looked at. Every six of 1938's nations in list order: each line ≥ 30 from those
+  above or dashed, under 5 % dashed (`chartColours.test.ts`); `charts1938.spec.ts` (new case) green.
+
 ### ADR-1042 · 2026-11-14 · proposed, the user's decision — R82f: what "a pile-on" counts
 - **Context.** R82f (critic run 68's R68-N5): `c68_piles.ts 365 --plain` on 39139-39147 and 41139-41147, no war over
   4:1 by count of nations. HEAD (after R82d) has 3 on those ten (ITA vs POR 1:5, IRQ vs SAU 7:1, NSP vs FRA 1:9), not

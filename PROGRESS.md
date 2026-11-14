@@ -153,3 +153,11 @@
   missiles (1952 on), which no rule stops (PLAN 6.2), and 3 bombers, 1.19 stops expected, 0 drawn. On HEAD, 37501/3,
   39503/7, 41501/3 over 22 years: 47 launches, 22 bombers, 8 stopped, 9.0 expected; the bombers that got through flew
   over their side's air (superiority 1). The share follows how late a seed's nuclear war comes, not a rule.
+
+## 2026-11-14 — R82h: owned land named apart; chart lines told apart (ADR-1043)
+
+- The chart's and the nation panel's "Land (km²)" is "Owned land (km²)", beside the Ranking's "Land held (km²)".
+  `chartColours`: a line within ΔE 30 of one above it is mixed toward white, else black, until clear; dashed if none.
+- 32019's year-20 world (built at HEAD), `tools/diag/chartBlues.mjs` with France selected: France #95a7dc, ΔE 37.5 from
+  the United States (was 19); the United Kingdom #dc7373, 31.9 from the Soviet Union; shot looked at. Specs:
+  `npx playwright test tests/e2e/charts1938.spec.ts --project=chromium` (2 green); `chartColours.test.ts` new.

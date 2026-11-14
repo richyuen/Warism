@@ -51,6 +51,9 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   replay (its built start; 0: plain 1938): capitals taken, once a pair, those far (no land of the taker's realm within
   `km` at the start), each in the taker's own war or joined (by which pact, on which side); the first 30 days'
   declarations; means per 100 nations alive (R81a, ADR-1033; ~2 min a seed for two years).
+- `npx tsx tools/diag/chartBlues.ts <save.bin> <out dir> [tag = FRA]` (dev server, `BASE`): a save in the page, the
+  Charts on owned land with the nation selected; the two land names, each line's colour, its nearest line's ΔE, dashed
+  or not; shots (R82h, ADR-1043).
 - `npx tsx tools/diag/nukeIntercepts.ts <seed> [years = 22]`: plain 1938's AI launches: missile or bomber, launcher,
   the target's holder, the launcher's air superiority over it, the interception chance in its last hour, burst or
   stopped; the stops against their expected sum (R82g; ~25 min a seed).

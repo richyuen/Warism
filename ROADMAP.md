@@ -62,10 +62,14 @@ Rules:
     missiles (from 1952 on), never stopped by design (PLAN 6.2), and 3 bombers with 1.19 stops expected, 0 drawn. On
     HEAD, six seeds 22 years: 47 launches, 22 bombers, 8 stopped against 9.0 expected; a bomber not stopped flies over
     its side's air (superiority 1, chance 0). `tools/diag/nukeIntercepts.ts`.
-  - [ ] R82h (run 68's stats "not 9"; the user's choice) The chart's "Land (km²)" (by owner) beside the Ranking's "Land
+  - [x] R82h (run 68's stats "not 9"; the user's choice) The chart's "Land (km²)" (by owner) beside the Ranking's "Land
     held (km²)" (by holder, R78e): names that tell them apart; France's and the United States' chart lines in
     near-identical blues: told apart. AT: on 32019's year-20 save the two names differ in their first word, and the two
     lines' colours differ by a set contrast; shots looked at.
+    Done (ADR-1043): "Owned land (km²)" beside "Land held (km²)"; a chart's lines at least ΔE 30 apart (a mix toward
+    white or black, dashed when none clears). 32019's year-20 world (HEAD's save), France selected: France #95a7dc,
+    ΔE 37.5 from the United States (was 19); every pair ≥ 31.9; shot looked at. `tools/diag/chartBlues.ts`,
+    `chartColours.test.ts`, `charts1938.spec.ts`.
   - [ ] R82i (run 68's AI nukes "not 9"; the user's choice) The ground-zero mark (R81c) sits over the struck stack's
     counter at about 10 s: the counter read through or beside it. AT: the critic's `c68_aimark.mjs` on 7019's year-20
     world: the counter of the stack at ground zero readable (not covered) at 2, 8 and 10 s; shots looked at.

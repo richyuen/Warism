@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'preact/hooks';
+import { chartColours } from '../shared/color';
 import { CHART_METRICS, seriesOf, topNations, type ChartMetric } from '../shared/statSeries';
 import { t, type MessageKey } from './i18n';
 import { displayName } from './NationPanel';
@@ -70,6 +71,10 @@ export function StatsChart({ load, refreshKey, nations, selected, labelOf, onClo
   const sx = (tk: number): number => PAD.l + (t1 > t0 ? ((tk - t0) / (t1 - t0)) * w : w / 2);
   const sy = (v: number): number => PAD.t + h - (vMax > 0 ? (v / vMax) * h : 0);
   const byId = new Map(nations.map((n) => [n.id, n]));
+  // Each line told apart from those above it (R82h: France's and the United States' blues, ΔE 19), in the legend too.
+  const drawn = chartColours(lines.map((l) => byId.get(l.id)?.color ?? 0x999999));
+  const colourOf = new Map(lines.map((l, i) => [l.id, hex(drawn[i]!.color)]));
+  const dashedOf = new Set(lines.filter((_, i) => drawn[i]!.dashed).map((l) => l.id));
   return (
     <aside class="history-panel stats-chart" data-testid="stats-chart" data-metric={metric}>
       <header class="ranking-head">
@@ -132,7 +137,9 @@ export function StatsChart({ load, refreshKey, nations, selected, labelOf, onClo
               data-nation={l.id}
               data-points={l.pts.length}
               class={l.id === selected ? 'chart-line selected' : 'chart-line'}
-              stroke={hex(byId.get(l.id)?.color ?? 0x999999)}
+              stroke={colourOf.get(l.id)}
+              stroke-dasharray={dashedOf.has(l.id) ? '6 3' : undefined}
+              data-dashed={dashedOf.has(l.id) ? '1' : undefined}
               points={l.pts.map(([tk, v]) => `${sx(tk).toFixed(1)},${sy(v).toFixed(1)}`).join(' ')}
             />
           ))}
@@ -145,7 +152,7 @@ export function StatsChart({ load, refreshKey, nations, selected, labelOf, onClo
             const s = sampleAt(l.pts, hoverTick);
             return s ? (
               <span key={l.id} class="nation-chip" data-testid="chart-hover-value" data-nation={l.id} data-value={s[1]}>
-                <span class="chip-swatch" style={{ background: hex(byId.get(l.id)?.color ?? 0x999999) }} />
+                <span class="chip-swatch" style={{ background: colourOf.get(l.id) }} />
                 {Math.round(s[1]).toLocaleString('en-US')}
               </span>
             ) : null;
@@ -154,8 +161,12 @@ export function StatsChart({ load, refreshKey, nations, selected, labelOf, onClo
       ) : null}
       <div class="chips chart-legend">
         {lines.map((l) => (
-          <span key={l.id} class="nation-chip" data-testid="chart-legend">
-            <span class="chip-swatch" style={{ background: hex(byId.get(l.id)?.color ?? 0x999999) }} />
+          <span key={l.id} class="nation-chip" data-testid="chart-legend" data-nation={l.id} data-colour={colourOf.get(l.id)}>
+            {/* A dashed line's swatch dashed as its line (R82h). */}
+            <span
+              class="chip-swatch"
+              style={{ background: dashedOf.has(l.id) ? `repeating-linear-gradient(90deg, ${colourOf.get(l.id)} 0 4px, transparent 4px 6px)` : colourOf.get(l.id) }}
+            />
             {byId.has(l.id) ? displayName(byId.get(l.id)!.name) : `#${l.id}`}
           </span>
         ))}
