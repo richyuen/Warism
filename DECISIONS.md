@@ -68,6 +68,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1041 · 2026-11-14 · accepted — R82d: a war on a neighbour by a colony costs its distance
+- **Context.** R68-N2: France took Brazil's capital within two years of plain 1938 on 4 of 5 seeds (6161, 41161, 41163,
+  41167), 8,220-9,172 km from Paris. Brazil is France's land neighbour by French Guiana (and Britain's by British
+  Guiana, whose war brought France in on 6161), so R78b's cost of a war across the sea never applied.
+- **Decision.** `homeNeighbours`: the nations bordering the land of `n` joined over its own provinces to its capital. A
+  land target not among them costs `colonyWarCost`, SEA_KM_COST (0.1) for each 1,000 km from `n`'s capital to that of
+  `t`'s realm, as a war across the sea does. A capital on no land of its own: no cost.
+- **Read.** `farConquests 0` on 6161, 41161, 41163, 41165, 41167: Brazil's capital taken on 0 (was 4); capitals taken
+  32.8 a seed (was 33.0), far ones 9.8 (was 9.2: Brazil now takes Venezuela's and Colombia's, the rest in Europe).
+  First-60-day declarations over 6,000 km: 0 of 97 on 41821-41839 (run 68: 3), 1 of 96 on 39821-39839 (run 68: 2).
+- **Pin.** Seed 99's year-one hash 95d9261f → 401d6856.
+
 ### ADR-1040 · 2026-11-14 · accepted — R82b: a stage's land taken in its window goes to its taker
 - **Context.** R68-N4: in D-Day's 50-day window the Allies took 0 of the beachhead's 51 cells and lost 137-142k
   against 17-39k. The cause: Normandy is Vichy's land held by the Germans; a track arrival on land of an owner at peace

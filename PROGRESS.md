@@ -109,3 +109,15 @@
   only if at war with the striker; else no row. Unit test (`carrierRaid1938.test.ts`, the strike's point on Britain's
   own land): red on the old rule, green now. Every row each hour of 20 years on 32019, 41019 and 7019: 87,697, 56,289
   and 98,471 rows, 0 on the striker's own nation, 0 on one at peace.
+
+## 2026-11-14 — R82d: no war on Brazil by French Guiana (R68-N2, ADR-1041)
+
+- A land neighbour bordering the attacker only by a colony costs as a war across the sea (capital to capital).
+  Brazil's capital taken by France on 0 of 5 seeds (was 4); declarations over 6,000 km in the first 60 days 0 and 1
+  on the critic's two sets (run 68: 3 and 2). Pin 95d9261f → 401d6856.
+- With the pin moved, the e2e specs that step the sim ran: `relations1938` counted the graph before day one's
+  statistics came (a war declared that day redrew it): it waits for them now. `relationsNamed1938` 39943 phone left 2
+  of 44 nations at war or allied unnamed in the denser world: the labels' search goes to 12 rings (was 8). And
+  `nukeRuins1938`, red since R81c (not this rule): its ground-zero dot, MARK_MS of the clock on the same overlay, sat
+  on Berlin's middle; the spec reads the ruin once the mark's time is over. `shipMarks1938` T3 red once, green twice
+  alone (GPU).

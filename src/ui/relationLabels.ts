@@ -41,8 +41,8 @@ export function labelBox(p: PlacedLabel, w: number, h: number): Box {
   return { x0, y0: p.y - h * 0.8, x1: x0 + w, y1: p.y + h * 0.2 };
 }
 
-/** The distances tried about a node: at its rim, then one to seven label heights further. */
-const RINGS = 8;
+/** The distances tried about a node: at its rim, then one to eleven label heights further (R82d: a denser world). */
+const RINGS = 12;
 
 const overlaps = (a: Box, b: Box): boolean => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
 const inside = (a: Box, v: Box): boolean => a.x0 >= v.x0 && a.x1 <= v.x1 && a.y0 >= v.y0 && a.y1 <= v.y1;

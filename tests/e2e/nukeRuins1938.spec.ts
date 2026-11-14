@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
 import { cellOf } from '../../src/sim/data/terrain';
+import { MARK_MS } from '../../src/render/fx/nuke';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 
 // PLAN 7.11b (critic run 7, semantic zoom 6 and map visuals 7: "a city that lost 1,025,202 people
@@ -48,6 +49,9 @@ test('a struck city shows it: Berlin before and ten days after a burst', async (
     });
   }, { x: bx, y: by });
   await page.waitForFunction(() => window.__warsim!.view!.ruins.length > 0, null, { timeout: 15_000 });
+  // The burst's own picture over: its ground-zero mark lasts MARK_MS of the clock (R81c), drawn on the same overlay,
+  // its dot at the middle; the ruin is what is read here.
+  await page.waitForFunction((ms) => window.__warsim!.view!.nukeFx.bursts.every((b) => performance.now() - b.born >= ms), MARK_MS, { timeout: 40_000 });
   const after = await look(page, bx, by, 150);
   await page.screenshot({ path: path.resolve('docs/evidence/7.11/b-berlin-150m-day10.png'), clip: { x: 400, y: 150, width: 600, height: 500 } });
   const far = await look(page, bx, by, 3000);

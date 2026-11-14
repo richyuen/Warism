@@ -143,6 +143,41 @@ export function neighbourMap(world: World): Map<number, Set<number>> {
   return out;
 }
 
+/**
+ * The nations bordering `n`'s home (R82d): its land joined over its own land (the coarse graph's provinces) to its
+ * capital's. A land neighbour of `n`'s that is not one borders it only by a colony (France and Brazil by French Guiana).
+ * Every neighbour when its capital is on no land of its own.
+ */
+export function homeNeighbours(world: World, n: number): Set<number> | null {
+  const g = navOf(world).graph;
+  const owner = world.cells.owner;
+  const nc = world.nations.cols;
+  const { w, h } = world.cells;
+  const cap = Math.min(h - 1, Math.max(0, Math.floor(nc.capitalY[n]!))) * w + ((Math.floor(nc.capitalX[n]!) % w) + w) % w;
+  const start = g.nodeOf[cap]!;
+  const ownerOf = (node: number): number => {
+    const c = g.centre[node] ?? -1;
+    return c >= 0 ? owner[c]! : 0;
+  };
+  if (start === 0 || ownerOf(start) !== n) return null;
+  const out = new Set<number>();
+  const seen = new Set([start]);
+  const queue = [start];
+  while (queue.length > 0) {
+    const a = queue.pop()!;
+    for (const b of g.adj[a] ?? []) {
+      const ob = ownerOf(b);
+      if (ob === n) {
+        if (!seen.has(b)) {
+          seen.add(b);
+          queue.push(b);
+        }
+      } else if (ob !== 0) out.add(ob);
+    }
+  }
+  return out;
+}
+
 /** Per nation (an overlord with its puppets): its army's men and its navy's weight in men (PLAN 4.6e2). */
 export function strengths(world: World): Float64Array {
   const s = new Float64Array(world.nations.highWater + 1);
@@ -393,7 +428,10 @@ export function warTarget(world: World, n: number, neighbours: readonly number[]
     }
     return best;
   };
-  const land = pick(neighbours);
+  // A land neighbour by a colony only (R82d, critic run 68's R68-N2: France on Brazil by French Guiana, taking Rio on 4
+  // of 5 seeds of plain 1938) costs as a war across the sea: SEA_KM_COST for each 1,000 km between the two capitals.
+  const home = homeNeighbours(world, n);
+  const land = pick(neighbours, undefined, (t) => (home === null || home.has(t) ? 0 : colonyWarCost(world, n, t)));
   if (land !== 0) return land;
   // Across the sea (R78b; critic run 67, R67-N2: Japan on the Spanish Republic, 12,739 km off, on its second day): a
   // target's utility less SEA_KM_COST for each 1,000 km to the capital of its realm (its overlord's for a puppet) from
@@ -402,6 +440,13 @@ export function warTarget(world: World, n: number, neighbours: readonly number[]
   // Indies, every target weaker than it scoring alike (the strength term capped).
   const far = seaTargetKm(world, n, powers === undefined || powers.has(n) ? Infinity : SEA_REACH_KM);
   return pick([...far.keys()].sort((a, b) => a - b), new Set(neighbours), (t) => seaWarCost(world, n, t, far.get(t)!));
+}
+
+/** What a war on `t`, a neighbour of `n`'s by a colony only, costs `n` (R82d): SEA_KM_COST a 1,000 km from capital to capital of `t`'s realm. */
+export function colonyWarCost(world: World, n: number, t: number): number {
+  const nc = world.nations.cols;
+  const r = nc.overlord[t] !== 0 ? nc.overlord[t]! : t;
+  return (SEA_KM_COST * seaKm(world, nc.capitalX[n]!, nc.capitalY[n]!, nc.capitalX[r]!, nc.capitalY[r]!)) / 1000;
 }
 
 /**

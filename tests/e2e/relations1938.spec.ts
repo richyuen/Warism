@@ -20,6 +20,8 @@ test('the relations graph: the start\'s ties, a kind switched off, a line read, 
   await page.goto('/?scenario=1938&paused=1&seed=7019');
   await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
   await page.evaluate(() => window.__warsim!.sim.step(24));
+  // The statistics of that day in (a war declared on it redraws the graph between two counts).
+  await page.waitForFunction(() => (window.__warsim!.hud.stats.value?.tick ?? 0) >= 24, null, { timeout: 60_000 });
   const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/R1') : info.outputPath();
   mkdirSync(out, { recursive: true });
 

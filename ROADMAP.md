@@ -40,7 +40,7 @@ Rules:
     the handover and the Allied loss under 2 × the German; the stage's other bars kept.
   - [x] R82c (R68-N1) "Carrier strike ashore: United States on United States": the row names the enemy the wings were
     sent against (or none). AT: no carrier row names the striker as its target on 32019 to year 20 and two seeds.
-  - [ ] R82d (R68-N2) European powers at war with Brazil in 1938: France takes Brazil's capital in two years on 4 of 5
+  - [x] R82d (R68-N2) European powers at war with Brazil in 1938: France takes Brazil's capital in two years on 4 of 5
     seeds. AT: `c68_farConquests.ts 0 6161,41161,41163,41165,41167`, France takes it on at most 1; the first-60-day
     declarations over 6,000 km on 41821-41839 at most run 68's elsewhere.
   - [ ] R82e (R68-N3) The Next line names D-Day's stage for what follows 6 June ("the beachhead secured"), not "D-Day"
