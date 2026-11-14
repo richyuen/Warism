@@ -22,6 +22,8 @@ const bin = process.argv[3] ?? 'critic/c54_seed7019_y20.bin';
 const outFile = process.argv[4] ?? `.cache/lookFps_${seed}.json`;
 const BASE = process.env.BASE ?? 'http://127.0.0.1:5354';
 const ZOOMS = [3000, 1200, 600, 120, 30];
+/** `FIXED=1` (ROADMAP R81h): as the critic's probe, the fight picked once, at load, and the camera left there. */
+const FIXED = process.env.FIXED === '1';
 
 interface Seen { on: number; engaged: number; el: number }
 interface Window { draws: number; frames: number; p95: number; worst: number; drawMs: number; drawMax: number }
@@ -48,8 +50,9 @@ await ev(() => {
   if (w.hud.paused.value) w.hud.togglePause();
 }, null);
 
-/** The camera on the busiest fight now, at `m` m/px. */
-const onFight = (m: number): Promise<void> => ev((m: number) => {
+/** The camera on the busiest fight now (with FIXED, the one of the first call), at `m` m/px. */
+let fixedAt: [number, number] | null = null;
+const onFight = (m: number): Promise<void> => ev(({ m, at }: { m: number; at: [number, number] | null }) => {
   const v = (window as any).__warsim.view;
   const pts: [number, number][] = [];
   for (let n = 1; n < 400; n++) {
@@ -59,8 +62,12 @@ const onFight = (m: number): Promise<void> => ev((m: number) => {
   }
   let best = pts[0] ?? [v.controller.cam.cx, v.controller.cam.cy], bn = -1;
   for (const p of pts) { let k = 0; for (const q of pts) if (Math.hypot(p[0] - q[0], p[1] - q[1]) < 6) k++; if (k > bn) { bn = k; best = p; } }
+  if (at) best = at;
   v.controller.set({ cx: best[0], cy: best[1], scale: (v.metresPerPx * v.controller.cam.scale) / m });
-}, m);
+  return best;
+}, { m, at: FIXED ? fixedAt : null }).then((best) => {
+  if (FIXED && !fixedAt) fixedAt = best as unknown as [number, number];
+});
 
 /** Formations and elements on the screen now. */
 const seen = (): Promise<Seen> => ev(() => {

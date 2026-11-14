@@ -23,6 +23,11 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   alliances, great and nuclear powers, then every war declared, those between great powers and between blocs, the
   leaders' men and disbandings monthly for five years. Saves the world at the track's end to
   `.cache/afterTrack_<seed>.sav.gz` and loads it from there after (R67a; ~10 min the first time).
+- `npx tsx tools/diag/lookFps.ts <seed> <save.bin> [out.json]` (after `npm run build` and `npx vite preview --port
+  5354 --host 127.0.0.1`; `BASE` for another port): a save at Max, at 3,000 to 30 m/px, three pairs of the two looks:
+  the view's draws a second, then a draw forced on every frame (frames a second, gaps, the draw's time). The camera
+  on the busiest fight before each (R53m); `FIXED=1`: picked once at load and left there, as the critic's probe
+  (ROADMAP R81h).
 - `npx tsx tools/diag/wingMark.ts <seed> [out dir]` (after `npm run build` and `npx vite preview --port 5355 --host
   127.0.0.1`): the critic's `w_wing` as a tool: Germany played, at war with Poland, its farthest fighter group sent
   to strike near Warsaw and followed; at ×1 at 3,000 and 250 m/px and ×5 at 3,000 m/px, 8 s each, the followed

@@ -68,3 +68,9 @@
 - The mark stood at the patrol's middle while its planes circle at a radius of the view's. A sortie's row carries
   its wing now (stride 12) and the mark stands on the wing's drawn planes: at 250 m/px the median 70 → 0 px (39927),
   265 → 0 (35127), 0 on 39929; 3,000 m/px 0. The 14 sortie and wing specs green. `tools/diag/wingMark.ts`.
+
+## 2026-11-14 — R81h: 120 m/px answered in BLOCKERS
+
+- The critic's 52.5-55.8 at 120 m/px is draws a second over a spot left empty (its fight picked once at load): here
+  48.8-57.5, while the browser draws 60.0-60.2 frames and a forced draw takes 0.7 ms (58.8-60 frames/s). The view
+  skips a draw that would change nothing (`frameAt`). No change; BLOCKERS has the numbers. `lookFps.ts` `FIXED=1`.

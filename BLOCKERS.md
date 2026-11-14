@@ -5,6 +5,22 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 
 ## Open
 
+### R81h: the critic's 52.5-55.8 "fps" at 120 m/px is the view's draws, not its frames; the bar read as written missed (2026-11-14)
+- **The bar:** on 7019's year-20 world at Max, the minimum of the critic's samples at 120 m/px at least 57 fps, the
+  other zooms kept; or the cause answered with numbers here.
+- **What was read** (`tools/diag/lookFps.ts` with `FIXED=1`, the critic's way: the fight picked once at load and the
+  camera left there; RTX 4070 Ti, HEAD `c42e975e`, 7019 year 20 built at HEAD): at 120 m/px the spot holds 0
+  formations by then. The view's draws a second (`view.frames`, the critic's number) 48.8-57.5; the browser's frames
+  in the same 4 s 60.0-60.2, gaps p95 17.6-18.0 ms; a draw forced on every frame 58.8-60 frames/s at 0.7 ms a draw
+  (longest 1.9). 30 m/px the same (draws 47.3-55.1, frames 60). With the camera put on a live fight before each
+  sample (`FIXED` unset, R53m's way) the draws are 60 at every zoom.
+- **The cause:** `MapView.frameAt` draws only when something on screen can have changed (a snapshot within 1.5 ticks,
+  the camera, an animation; "an idle map costs nothing"). Over an empty patch at Max some frames have none of these,
+  and the view skips their draw. The screen keeps the last frame, the same picture. No frame is slow.
+- **Left:** nothing in the game. Drawing every frame would make the count 60 for no picture changed. The critic's
+  probe reads the browser's frames, or `FIXED=0`'s live fight, to judge frame rate. No ROADMAP item: the cause is in
+  the measure. Nothing waits on the user.
+
 ### `seaRow1938`'s Speed x1 test red on this machine again, the code not its cause; on `tools/gate/knownRed.json` (2026-11-08, R53g)
 - **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
   with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a). Resolved once (docs/BLOCKERS_DONE.md,
