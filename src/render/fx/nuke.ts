@@ -8,6 +8,9 @@
  * - The shockwave (SHOCK_MS): a ring running out to SHOCK_RADII blast radii, fading as it goes.
  * - The mushroom cloud (CLOUD_MS): a fireball that rises on a stem and spreads into a cap,
  *   orange to smoke, and drifts away at the end.
+ * - The mark (MARK_MS; ROADMAP R81c, critic run 67 "the burst is a smudge at 937 m/px"): ground zero's ring, the blast
+ *   radius, dark-edged amber about a dot, under the cloud and after it, fading in its last MARK_FADE_MS: at a world
+ *   zoom the cloud is gone in nine seconds and the fallout's shade is no mark.
  *
  * Sizes follow the blast radius (sim's BLAST_KM × the yield's cube root; the equator's km per cell,
  * so a burst far from it is drawn smaller than it is: at 50° two-thirds) at the camera's scale, at
@@ -20,6 +23,8 @@ import { worldToScreen, itemOffsets, type Camera, type MapGeometry } from '../ca
 export const FLASH_MS = 700;
 export const SHOCK_MS = 2600;
 export const CLOUD_MS = 9000;
+export const MARK_MS = 20_000;
+const MARK_FADE_MS = 4000;
 /** The ring's reach in blast radii. */
 const SHOCK_RADII = 4;
 /** The least radius drawn, CSS px: a burst at T0 is seen. */
@@ -38,20 +43,20 @@ export interface Burst {
 
 export class NukeFx {
   bursts: Burst[] = [];
-  /** What the last `draw` put on screen (tests): flashes, rings, clouds. */
-  shown = [0, 0, 0];
+  /** What the last `draw` put on screen (tests): flashes, rings, clouds, marks. */
+  shown = [0, 0, 0, 0];
   until = -Infinity;
   /** Every burst drawn at this age, ms, whatever the clock (tests, screenshots); null: by the clock. */
   hold: number | null = null;
 
   /** Takes the bursts of a snapshot that arrived at `now`. */
   add(count: number, data: ArrayLike<number>, now: number): void {
-    this.bursts = this.bursts.filter((b) => now < b.born + CLOUD_MS);
+    this.bursts = this.bursts.filter((b) => now < b.born + MARK_MS);
     for (let i = 0; i < count; i++) {
       const o = i * EVENT_STRIDE;
       if (data[o + 2] !== EventKind.NukeDetonated) continue;
       this.bursts.push({ x: data[o + 5]!, y: data[o + 6]!, yieldN: Math.max(1, data[o + 4]!), born: now });
-      this.until = Math.max(this.until, now + CLOUD_MS);
+      this.until = Math.max(this.until, now + MARK_MS);
     }
     if (this.bursts.length > MAX_BURSTS) this.bursts.splice(0, this.bursts.length - MAX_BURSTS);
   }
@@ -72,18 +77,20 @@ export class NukeFx {
   }
 
   draw(ctx: CanvasRenderingContext2D, cam: Camera, geo: MapGeometry, vw: number, vh: number, now: number): void {
-    this.shown = [0, 0, 0];
+    this.shown = [0, 0, 0, 0];
     if (this.bursts.length === 0) return;
     const offs = itemOffsets(cam, geo, vw);
     ctx.save();
     for (const b of this.bursts) {
       const age = this.hold ?? now - b.born;
-      if (age < 0 || age >= CLOUD_MS) continue;
+      if (age < 0 || age >= MARK_MS) continue;
       const r = NukeFx.radiusPx(b, cam, geo);
       for (const off of offs) {
         const [x, y] = worldToScreen(cam, b.x + off, b.y, vw, vh);
         const reach = r * (SHOCK_RADII + 1);
         if (x < -reach || y < -reach || x > vw + reach || y > vh + reach) continue;
+        mark(ctx, x, y, r, age);
+        this.shown[3]!++;
         if (age < FLASH_MS) {
           flash(ctx, x, y, r, age / FLASH_MS, vw, vh);
           this.shown[0]!++;
@@ -92,12 +99,40 @@ export class NukeFx {
           ring(ctx, x, y, r, age / SHOCK_MS);
           this.shown[1]!++;
         }
-        cloud(ctx, x, y, r, age / CLOUD_MS);
-        this.shown[2]!++;
+        if (age < CLOUD_MS) {
+          cloud(ctx, x, y, r, age / CLOUD_MS);
+          this.shown[2]!++;
+        }
       }
     }
     ctx.restore();
   }
+}
+
+/** Ground zero's mark at `age` ms: the blast radius's ring, dark-edged amber, and a dot at its heart (R81c). */
+function mark(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, age: number): void {
+  const a = age < MARK_MS - MARK_FADE_MS ? 1 : (MARK_MS - age) / MARK_FADE_MS;
+  ctx.globalAlpha = 0.18 * a;
+  ctx.fillStyle = '#ffb02e';
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.globalAlpha = 0.85 * a;
+  ctx.strokeStyle = '#2a1a0c';
+  ctx.lineWidth = 5;
+  ctx.stroke();
+  ctx.globalAlpha = a;
+  ctx.strokeStyle = '#ffcf3a';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+  ctx.fillStyle = '#2a1a0c';
+  ctx.beginPath();
+  ctx.arc(x, y, 4.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#ffcf3a';
+  ctx.beginPath();
+  ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+  ctx.fill();
 }
 
 /** The flash at (x, y), t of its time: a white glow, the view whitened. */

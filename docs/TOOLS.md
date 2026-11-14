@@ -23,6 +23,9 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   alliances, great and nuclear powers, then every war declared, those between great powers and between blocs, the
   leaders' men and disbandings monthly for five years. Saves the world at the track's end to
   `.cache/afterTrack_<seed>.sav.gz` and loads it from there after (R67a; ~10 min the first time).
+- `npx tsx tools/diag/burstMark.ts <seed> <save.bin> [out dir]` (after `npm run build` and `npx vite preview --port
+  5355 --host 127.0.0.1`): a save run at Max to its first burst, then Speed ×1; the burst's effect drawn alone at 937
+  and 3,000 m/px at 1-10.3 s, its extent, and shots (ROADMAP R81c).
 - `npx tsx tools/diag/undoBars.ts <seed> <save.bin> [N = 20] [K = 2000]` (after `npm run build` and `npx vite preview
   --port 5355 --host 127.0.0.1`): ROADMAP R81b's undo bars on the GPU on a loaded world: a God act's command to its
   stats drawn with the undo's copy and without, the page's longest frame meanwhile, Undo to the loaded world drawn, and

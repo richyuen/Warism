@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { EVENT_STRIDE, EventKind } from '../../src/shared/events';
-import { CLOUD_MS, MIN_PX, NukeFx } from '../../src/render/fx/nuke';
+import { MARK_MS, MIN_PX, NukeFx } from '../../src/render/fx/nuke';
 import { THERMO_YIELD } from '../../src/shared/nuclear';
 
 // PLAN 6.6b: a burst's effects take the snapshot's `NukeDetonated` alone, are sized by the yield's
-// blast radius at the camera's scale (at least MIN_PX), live CLOUD_MS, and can be held at an age.
+// blast radius at the camera's scale (at least MIN_PX), live MARK_MS (the cloud, then ground zero's mark; ROADMAP
+// R81c), and can be held at an age.
 
 const ev = (kind: number, yieldN: number, x: number, y: number): number[] => {
   const r = new Array<number>(EVENT_STRIDE).fill(0);
@@ -13,13 +14,13 @@ const ev = (kind: number, yieldN: number, x: number, y: number): number[] => {
 };
 
 describe('a nuclear burst\'s effects (PLAN 6.6b)', () => {
-  it('takes the bursts of a snapshot, no other event; lives CLOUD_MS; a hold stops the clock', () => {
+  it('takes the bursts of a snapshot, no other event; lives MARK_MS; a hold stops the clock', () => {
     const fx = new NukeFx();
     fx.add(3, [...ev(EventKind.AirStrike, 1, 5, 5), ...ev(EventKind.NukeDetonated, 2, 10, 20), ...ev(EventKind.NukeCasualties, 1, 10, 20)], 1000);
     expect(fx.bursts).toEqual([{ x: 10, y: 20, yieldN: 2, born: 1000 }]);
-    expect(fx.animating(1000 + CLOUD_MS - 1)).toBe(true);
-    expect(fx.animating(1000 + CLOUD_MS)).toBe(false);
-    fx.add(0, [], 1000 + CLOUD_MS);
+    expect(fx.animating(1000 + MARK_MS - 1)).toBe(true);
+    expect(fx.animating(1000 + MARK_MS)).toBe(false);
+    fx.add(0, [], 1000 + MARK_MS);
     expect(fx.bursts).toEqual([]);
     fx.hold = 500;
     expect(fx.animating(0)).toBe(false);

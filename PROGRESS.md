@@ -35,3 +35,11 @@
   300 ms after: the save's ~95 ms in the browser had made the act +108 ms.
 - On the GPU, 7019 year 20: the act +15.5 ms p95, longest frame 16.8 ms, undo p95 317 ms, tick × 1.005.
   `tests/unit/godUndo1938.test.ts` 6/6, `tests/e2e/godUndo1938.spec.ts` (nine tools undone by their buttons) green.
+
+## 2026-11-14 — R81c: a burst readable at world zoom
+
+- Ground zero's mark: the blast radius's dark-edged amber ring about a dot, at least 18 px in radius, 20 s on the page's
+  clock (the cloud is gone in 9 s and the fallout's shade was all the critic saw at 937 m/px). At 10.3 s: God's H-bomb
+  on Paris 202 px across at 937 m/px and 66 at 3,000; 7019 year 20's first AI burst (atomic, August 1958) 58 and 42.
+  `tests/e2e/burstMark1938.spec.ts`, `tools/diag/burstMark.ts`; `nukeFx` unit and e2e tests take the fourth part.
+  Bench G on the GPU: T0 313.1 fps, T2 170.0 (release 313.3, 170.9).

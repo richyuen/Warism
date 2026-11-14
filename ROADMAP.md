@@ -48,9 +48,14 @@ Rules:
     Done: on the GPU (`tools/diag/undoBars.ts`) the act +15.5 ms p95, longest frame 16.8 ms, undo p95 317 ms, the tick
     × 1.005; `tests/unit/godUndo1938.test.ts` (hash and 30 days bit for bit on 5 and 7, one save, the rules after an
     undone revolt on 5 and 7, the replay running again); `tests/e2e/godUndo1938.spec.ts` (nine tools undone).
-  - [ ] R81c A burst readable at world zoom (AI nukes, map): at 937 and 3,000 m/px a burst a mark of at least 16 px
+  - [x] R81c A burst readable at world zoom (AI nukes, map): at 937 and 3,000 m/px a burst a mark of at least 16 px
     across with its ring, for at least 10 s at Speed x1, not a smudge. AT: the mark's size and lifetime read at both
     zooms on the critic's 7019 year-20 strike and God's H-bomb on Paris; shots looked at; frame budgets kept.
+    Done: ground zero's mark (the blast radius's ring about a dot, at least 18 px in radius) for 20 s, under the cloud
+    and after it; the effect read alone on a clear canvas. God's H-bomb on Paris at 10.3 s: 202 px at 937 m/px, 66 at
+    3,000 (`tests/e2e/burstMark1938.spec.ts`); 7019's year-20 world at HEAD has its first AI burst in August 1958, an
+    atomic one (the critic's run 67 world had an H-bomb in March): 58 and 42 px at 10.3 s
+    (`tools/diag/burstMark.ts`). Shots looked at.
   - [ ] R81d Germany's and Poland's flags at 250 m/px (map visuals; the critic's 39915 day 5): the label flags told
     apart at a glance. AT: of the two flags as drawn at 250 m/px, at least 30 % of their pixels differ by over 60; the
     other 1938 pairs at war in year 1 on two seeds read the same way, or listed.

@@ -44,14 +44,15 @@ test('a nuclear burst\'s flash, shockwave and cloud at T0, T1 and T2', async ({ 
   await page.getByTestId('nuke-close').click({ timeout: 15_000 });
 
   // T0 (6.5 km/px): the flash, the ring and the fireball, a mark at least MIN_PX.
-  expect(await shot(page, 3, 180)).toEqual([1, 1, 1]);
+  expect(await shot(page, 3, 180)).toEqual([1, 1, 1, 1]);
   await page.screenshot({ path: path.join(out, 'nuke-t0.png') });
   // T1 (1.2 km/px): the ring running out, the fireball rising.
-  expect(await shot(page, 16, 1300)).toEqual([0, 1, 1]);
+  expect(await shot(page, 16, 1300)).toEqual([0, 1, 1, 1]);
   await page.screenshot({ path: path.join(out, 'nuke-t1.png') });
   // T2 (196 m/px): the cloud, smoke now; the view a little above the burst for its height.
-  expect(await shot(page, 100, 4500, 2.2)).toEqual([0, 0, 1]);
+  expect(await shot(page, 100, 4500, 2.2)).toEqual([0, 0, 1, 1]);
   await page.screenshot({ path: path.join(out, 'nuke-t2.png') });
-  // Gone after its time.
-  expect(await shot(page, 16, 9500)).toEqual([0, 0, 0]);
+  // The cloud gone after its time, ground zero's mark kept (ROADMAP R81c); then that gone too.
+  expect(await shot(page, 16, 9500)).toEqual([0, 0, 0, 1]);
+  expect(await shot(page, 16, 20_500)).toEqual([0, 0, 0, 0]);
 });
