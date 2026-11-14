@@ -23,6 +23,10 @@
  *
  * The tag of the formation whose panel is open is lit and framed (PLAN 2.14f3), and takes its
  * place before any other: it is not the one that gives way or is left out.
+ *
+ * At a battle a tag can be short (ROADMAP R81i, ADR-1037, the user's decision): one line, its flag and strength, no name.
+ * The view makes short the tags of formations not in contact at 250 m/px and nearer while one in contact is in view; the
+ * layout and the drawing take each tag's own height.
  */
 import { PICKED_EDGE } from './markers';
 
@@ -37,6 +41,8 @@ export interface TagInput {
   engaged: boolean;
   /** The formation whose panel is open (PLAN 2.14f3). */
   picked?: boolean;
+  /** One line, flag and strength, no name (R81i): a formation not in contact at a battle. */
+  short?: boolean;
   x0: number;
   y0: number;
   x1: number;
@@ -51,6 +57,8 @@ export interface PlacedTag {
   name: string;
   engaged: boolean;
   picked: boolean;
+  /** One line, no name (R81i). */
+  short?: boolean;
   /** The tag's box, CSS px. */
   x: number;
   y: number;
@@ -67,11 +75,15 @@ export interface PlacedTag {
   flag: boolean;
 }
 
+/** m/px at and below which a battle's tags not in contact are short (R81i, ADR-1037). */
+export const BATTLE_TAG_M = 250;
 export const TAG_FLAG_W = 15;
 export const TAG_FLAG_H = 10;
 /** The flag's frame on a tag: light on the dark ground, so a flag's dark stripe at its edge is seen as the flag's. */
 export const TAG_FLAG_EDGE = 'rgba(196, 202, 210, 0.95)';
 export const TAG_PAD = 3;
+/** A short tag's padding above and below its line, px (R81i): one line in a chip, the flag's 12 px frame in its 16. */
+export const TAG_SHORT_PAD_Y = 2;
 /** Between a formation's elements and its tag, and between two tags, px. */
 export const TAG_GAP = 4;
 /** How far the frame of the picked formation's tag reaches out of its box, px: less than the gap, so it touches no neighbour. */
@@ -175,7 +187,6 @@ export function layoutTags(items: readonly TagInput[], measure: (text: string, f
   let left = 0;
   const pad = TAG_PAD * scale;
   const lineH = 12 * scale;
-  const h = 2 * lineH + 2 * pad;
   const edge = 2;
   const kept = avoid.map((o) => ({ x: o.x - TAG_GAP, y: o.y - TAG_GAP, w: o.w + 2 * TAG_GAP, h: o.h + 2 * TAG_GAP }));
   // The formations' elements; the placed tags; and each placed tag's reach, the square about
@@ -197,7 +208,10 @@ export function layoutTags(items: readonly TagInput[], measure: (text: string, f
     const vy0 = Math.max(it.y0, 0);
     const vy1 = Math.min(it.y1, vh);
     if (vx1 < vx0 || vy1 < vy0) return true;
-    const w = Math.ceil(Math.max(TAG_FLAG_W * scale + pad + measure(it.text, TAG_STRENGTH_FONT(scale)), measure(it.name, TAG_NAME_FONT(scale))) + 2 * pad);
+    const short = it.short === true;
+    const h = short ? lineH + 2 * TAG_SHORT_PAD_Y * scale : 2 * lineH + 2 * pad;
+    const top = TAG_FLAG_W * scale + pad + measure(it.text, TAG_STRENGTH_FONT(scale));
+    const w = Math.ceil((short ? top : Math.max(top, measure(it.name, TAG_NAME_FONT(scale)))) + 2 * pad);
     const x = Math.round(Math.min(Math.max((vx0 + vx1) / 2 - w / 2, edge), Math.max(edge, vw - w - edge)));
     const stepY = h + TAG_GAP;
     const stepX = w + TAG_GAP;
@@ -252,7 +266,7 @@ export function layoutTags(items: readonly TagInput[], measure: (text: string, f
         // Nor one that a tag placed before it is nearer to this block's middle than (PLAN
         // 4.2b1): it would have a line (ADR-188) where a place by the block has none.
         if (pass === 0 && tagNearer(tx, ty, far(box, tx, ty))) continue;
-        const tag: PlacedTag = { id: it.id, nation: it.nation, strength: it.strength, text: it.text, name: it.name, engaged: it.engaged, picked: it.picked === true, ...box, gap, line: gap > TAG_LINE_FROM, tx, ty, flag: false };
+        const tag: PlacedTag = { id: it.id, nation: it.nation, strength: it.strength, text: it.text, name: it.name, engaged: it.engaged, picked: it.picked === true, short, ...box, gap, line: gap > TAG_LINE_FROM, tx, ty, flag: false };
         const j = placed.push(tag) - 1;
         const was = byOwn.get(it.id);
         if (!was || gap < was.gap) byOwn.set(it.id, tag);
@@ -323,7 +337,8 @@ export function drawTags(ctx: CanvasRenderingContext2D, tags: PlacedTag[], alpha
     ctx.fillStyle = hex(t.nation);
     ctx.fillRect(t.x, t.y + 3 * scale, 2 * scale, t.h - 6 * scale);
     const fx = t.x + pad + 1;
-    const fy = t.y + pad + (lineH - TAG_FLAG_H * scale) / 2;
+    const py = t.short ? TAG_SHORT_PAD_Y * scale : pad;
+    const fy = t.y + py + (lineH - TAG_FLAG_H * scale) / 2;
     const flag = flagOf(t.nation);
     if (flag) {
       ctx.drawImage(flag, fx, fy, TAG_FLAG_W * scale, TAG_FLAG_H * scale);
@@ -336,7 +351,8 @@ export function drawTags(ctx: CanvasRenderingContext2D, tags: PlacedTag[], alpha
     t.flag = flag !== null;
     ctx.font = TAG_STRENGTH_FONT(scale);
     ctx.fillStyle = '#ffe28a';
-    ctx.fillText(t.text, fx + TAG_FLAG_W * scale + pad, t.y + pad + lineH / 2 + 0.5);
+    ctx.fillText(t.text, fx + TAG_FLAG_W * scale + pad, t.y + py + lineH / 2 + 0.5);
+    if (t.short) continue;
     ctx.font = TAG_NAME_FONT(scale);
     ctx.fillStyle = '#eef0f3';
     ctx.fillText(t.name, t.x + pad + 1, t.y + pad + lineH * 1.5 + 0.5);

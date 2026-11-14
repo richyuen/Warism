@@ -91,7 +91,7 @@ Rules:
 
 ## Batch 25 — run 67's "not 9" items (the user's decision, 2026-11-14, ADR-1032: before Batch 24)
 
-- [ ] R81 **Run 67's "not 9" items.**
+- [x] R81 **Run 67's "not 9" items.**
   - [x] R81a The free world's far conquests after 1975 (design objection; emergent dynamics). Measured on HEAD first
     (R78b's sea cost came after the critic's watch): a headless count of capitals taken in the first two years of a
     free 1975 start by a nation whose own capital is over 2,000 km from them, on 6161 and four seeds unseen. AT: at
@@ -158,6 +158,10 @@ Rules:
     and a selected or hovered one, keep the whole tag; elsewhere as now. AT: on the critic's case and two seeds
     (`tools/diag/battleTags.ts`), the tags' area in view at least 40 % less, every engaged formation's tag whole, 0
     overlapping, each formation in view tagged; shots before and after looked at.
+    Done (ADR-1037): the critic's case (39915, 7781 and 39917 alike, day 4, armour and infantry) 65,400 → 38,172 px²
+    (41.6 % less; 39.5 % with the chip at the two-line tag's padding, trimmed once to 2 px), 15 of 25 short, 0
+    engaged short, 0 overlapping, 0 untagged. 120, 60 and 30 m/px and a day-9 battle on two seeds the same; at 260
+    and 300 m/px all whole. A hero keeps its whole tag. `battleTags1938.spec.ts` (picked, selected, each hovered).
 
 ## Batch 24 — the replay to 1991 (the user's request, 2026-11-14; ADR-1031, after Batch 25)
 

@@ -187,3 +187,24 @@
   and 11 s, shots looked at (kept off `critic/`). Specs by hand: `burstCounter1938`, `burstMark1938`, `nukeFx1938`,
   `nukeRuins1938`, `nukeYield1938`, `nukeDemo1938` (chromium, 6 green).
 - Frame time: the same drawing split in two calls; with no burst the added call returns at once (no bench moved).
+
+## 2026-11-14 — R81i: the tags at a battle (ADR-1037, the user's decision)
+
+- At 250 m/px and nearer (`BATTLE_TAG_M`) with a formation in contact in view, the tag of one not in contact is one
+  line, its flag and strength (`TagInput.short`; the layout takes each tag's own height). Whole: the engaged, the
+  picked, the selected (a box selection counts), the hovered and a hero (its name is who it is: my choice, ADR-1037
+  did not name heroes). The hover is read on a mouse move by the tag, else the smallest elements' box under the mouse,
+  and kept while the mouse is in the box it was taken by (a tag grown whole and laid elsewhere would lose it, a
+  flicker); read again after a draw only when the camera or the snapshot moved.
+- `tools/diag/battleTags.ts` (gains the area, short and untagged counts, and a first day), the critic's case on 39915,
+  7781, 39917 (alike, day 4, armour and infantry): tags' area 65,400 → 39,576 px² (39.5 % less, under the 40 % bar)
+  with the chip at the two-line tag's 3 px padding; trimmed once to 2 px above and below (`TAG_SHORT_PAD_Y`, the
+  flag's 12 px frame in 16): 38,172 px², 41.6 % less. 15 of 25 short, 0 engaged short, 0 overlapping, 0 untagged, 0
+  unplaced. 120, 60, 30 m/px and a battle on day 9 (39915: 41 tags, 33 short; 7781: 40 and 24): 0 overlapping, 0
+  untagged, 0 engaged short. 260 m/px: all whole (39915 leaves 1 unplaced there, as HEAD's code does: no short tag
+  is drawn). At 30 m/px 4-6 engaged elements under a tag, all tags whole there (as before). Shots looked at.
+- Tests: `battleTags1938.spec.ts` (new: whole and short by the rule, picked, selected, each of the short tags hovered
+  and moved 1 px, 300 m/px all whole); `tags.test.ts` (a short tag's size, mixed heights crowded, and the grid layout's
+  reference carrying short tags). Specs by hand, chromium and swiftshader, 37 green: battleView, countryballs,
+  formationPanel, heroes, heroesRead, seamFight, tags, tagsCrowd, tankBattle, toBattle, battleTags.
+- Frame time: the same layout, less text drawn; the hover read on a mouse move over the last frame's tags.

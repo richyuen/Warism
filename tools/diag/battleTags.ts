@@ -7,8 +7,11 @@
  * the view whose tag is not drawn (a tag is a formation's: the tags are laid out per formation); and the engaged
  * formations' elements in the view that lie under a tag.
  *
+ * R81i (ADR-1037, the user's decision): also the tags' area in the view (px², each tag clipped to it), the engaged
+ * formations' tags drawn short (should be none), and the formations in the view (`tagInputs`) with no tag.
+ *
  * Usage: `npm run build`, `npx vite preview --port 5355 --host 127.0.0.1`, then
- * `npx tsx tools/diag/battleTags.ts [seeds = 39915] [m/px = 250] [out dir = .cache/battleTags]`.
+ * `npx tsx tools/diag/battleTags.ts [seeds = 39915] [m/px = 250] [out dir = .cache/battleTags] [first day = 0]`.
  */
 /* eslint-disable @typescript-eslint/no-explicit-any -- the page's debug handle, `window.__warsim`, is read untyped */
 import { mkdirSync } from 'node:fs';
@@ -20,6 +23,8 @@ import { GPU_ARGS } from '../gate/render';
 const seeds = (process.argv[2] ?? '39915').split(',').map(Number);
 const mpp = Number(process.argv[3] ?? 250);
 const outDir = process.argv[4] ?? '.cache/battleTags';
+/** The first day the camera may be put on a fight (R81i: a later battle than day 4's). */
+const minDay = Number(process.argv[5] ?? 0);
 const BASE = process.env.BASE ?? 'http://127.0.0.1:5355';
 mkdirSync(outDir, { recursive: true });
 const GER = TAGS_1938.indexOf('GER') + 1;
@@ -35,7 +40,7 @@ for (const seed of seeds) {
   await page.evaluate(({ a, d }) => (window as any).__warsim.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: GER, d: POL });
   let picks: { f: number; kind: string }[] = [];
   let day = 0;
-  for (let d = 0; d < 12; d++) {
+  for (let d = 0; d < Math.max(12, minDay + 8); d++) {
     await page.evaluate(async () => { const w = (window as any).__warsim; await w.sim.step(24); }, null);
     await page.waitForFunction((t) => ((window as any).__warsim.view.lastTick ?? 0) >= t, (d + 1) * 24, { timeout: 60_000 });
     day = d + 1;
@@ -45,7 +50,7 @@ for (const seed of seeds) {
     }, GER);
     const arm = all.filter((x) => /Armoured|Tank|Panzer/i.test(x.t));
     const inf = all.filter((x) => /Infantry/i.test(x.t));
-    if (arm.length > 0) {
+    if (arm.length > 0 && day >= minDay) {
       picks = [{ f: arm[0]!.f, kind: 'arm' }, ...(inf[0] ? [{ f: inf[0].f, kind: 'inf' }] : [])];
       break;
     }
@@ -64,7 +69,7 @@ for (const seed of seeds) {
     await page.waitForTimeout(300);
     const r = await page.evaluate(() => {
       const v = (window as any).__warsim.view;
-      const tags = v.tagRects as { id: number; x: number; y: number; w: number; h: number; name: string }[];
+      const tags = v.tagRects as { id: number; x: number; y: number; w: number; h: number; name: string; engaged: boolean; short?: boolean }[];
       const over: string[] = [];
       for (let i = 0; i < tags.length; i++)
         for (let j = i + 1; j < tags.length; j++) {
@@ -104,11 +109,16 @@ for (const seed of seeds) {
         els++;
         if (tags.some((t) => x >= t.x && x <= t.x + t.w && y >= t.y && y <= t.y + t.h)) covered++;
       }
-      return { tags: tags.length, over, inputs: inputs.length, left: v.tagsLeft, engaged, unshown, els, covered };
+      let area = 0;
+      for (const t of tags) area += Math.max(0, Math.min(t.x + t.w, vw) - Math.max(t.x, 0)) * Math.max(0, Math.min(t.y + t.h, vh) - Math.max(t.y, 0));
+      const shortEngaged = tags.filter((t) => t.engaged && t.short === true).length;
+      const shorts = tags.filter((t) => t.short === true).length;
+      const untagged = inputs.filter((t) => !tagged.has(t.id)).length;
+      return { area, shortEngaged, shorts, untagged, battle: v.tagBattle ?? null, tags: tags.length, over, inputs: inputs.length, left: v.tagsLeft, engaged, unshown, els, covered };
     });
     const tag = `${seed}_${p.kind}_d${day}`;
     await page.screenshot({ path: path.join(outDir, `${tag}.png`) });
-    console.log(`${seed} day ${day} ${p.kind} at ${mpp} m/px: ${r.tags} tags, ${r.over.length} overlapping${r.over.length ? ` (${r.over.slice(0, 4).join('; ')})` : ''}; ${r.inputs} stacks in view, ${r.left} left unplaced; ${r.engaged} engaged in view, ${r.unshown.length} unshown${r.unshown.length ? `: ${r.unshown.slice(0, 5).join(', ')}` : ''}; the engaged formations' elements in view ${r.els}, under a tag ${r.covered}`);
+    console.log(`${seed} day ${day} ${p.kind} at ${mpp} m/px: ${r.tags} tags, ${r.over.length} overlapping${r.over.length ? ` (${r.over.slice(0, 4).join('; ')})` : ''}; ${r.inputs} stacks in view, ${r.left} left unplaced; ${r.engaged} engaged in view, ${r.unshown.length} unshown${r.unshown.length ? `: ${r.unshown.slice(0, 5).join(', ')}` : ''}; the engaged formations' elements in view ${r.els}, under a tag ${r.covered}; tags' area ${Math.round(r.area)} px², ${r.shorts} short (${r.shortEngaged} engaged), ${r.untagged} in view untagged, battle ${r.battle}`);
   }
   await context.close();
 }

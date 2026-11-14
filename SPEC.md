@@ -1892,7 +1892,10 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   ship's hull `SHIP_ELEMENT_MIN_HULL_PX` (13); small sprites swap to one mark between `SMALL_FULL_PX`
   (5.5) and `SMALL_NONE_PX` (8). A formation on the march is drawn at `SPRITE_ALPHA_MIN` (0.45) to 1. Tags
   (flag, strength, name; `src/render/units/tags.ts`) stand clear of others' elements within `TAG_FAR`
-  (120 px), `TAG_TRIES` (5) places tried; contact lines join engaged formations; pointers show an
+  (120 px), `TAG_TRIES` (5) places tried. At a battle (`BATTLE_TAG_M`, 250 m/px, and nearer, a formation in contact
+  in view; ADR-1037) a tag of a formation not in contact is one line, flag and strength (`TAG_SHORT_PAD_Y` 2 px above
+  and below); the engaged, the picked, the selected, the hovered (by its tag or its elements' box) and a hero keep the
+  whole tag. Contact lines join engaged formations; pointers show an
   enemy off screen. Tank turrets turn to their shot (`TURN_MS` 180, held `HOLD_MS` 1500 or 1.5 ticks,
   back over `RETURN_MS` 600; `src/render/units/turrets.ts`), uploaded only when a facing changed; ships
   draw wakes.

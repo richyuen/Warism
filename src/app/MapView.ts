@@ -12,7 +12,7 @@ import type { LandingMark } from '../shared/protocol';
 import { drawCorridors, type CorridorMark } from '../render/fx/corridors';
 import { drawHolds, type HoldMark } from '../render/fx/holds';
 import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
-import { drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
+import { BATTLE_TAG_M, drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, type StackItem } from '../render/units/markerStacks';
 import { CounterLayer, counterNation, heroScaleAt, type CounterSource, type HeroCounter } from '../render/units/counters';
 import { drawSeaBattles } from '../render/units/seaBattles';
@@ -353,6 +353,17 @@ export class MapView {
       if (e.pointerType !== 'touch' || !this.mouseAt) return;
       this.mouseAt = null;
       this.readHover();
+    });
+    // The formation under a mouse at a battle (R81i): its tag is whole while the mouse is on it or its elements.
+    canvas.addEventListener('pointermove', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      const r = canvas.getBoundingClientRect();
+      this.tagMouse = e.buttons !== 0 ? null : { x: e.clientX - r.left, y: e.clientY - r.top };
+      if (this.readTagHover()) this.dirty = true;
+    });
+    canvas.addEventListener('pointerleave', () => {
+      this.tagMouse = null;
+      if (this.readTagHover()) this.dirty = true;
     });
     // The sea zone under the cursor in the sea-control mode (PLAN 4.10c), told when it changes.
     canvas.addEventListener('pointermove', (e) => {
@@ -2210,6 +2221,49 @@ export class MapView {
   tagsLeft = 0;
   /** The opacity the tags were drawn with last (tests). */
   tagOpacity = 0;
+  /** The formation under the mouse, by its tag or its elements in the last frame, or 0 (R81i: its tag whole at a battle). */
+  tagHover = 0;
+  /** The mouse on the canvas, CSS px, or null; and the box it took `tagHover` by (its short tag's, or its elements'). */
+  private tagMouse: { x: number; y: number } | null = null;
+  private tagHoverBox: { x0: number; y0: number; x1: number; y1: number } | null = null;
+  /** The snapshot and camera `tagHover` was last read at. */
+  private tagHoverRead: { snap: number; cx: number; cy: number; scale: number } = { snap: NaN, cx: NaN, cy: NaN, scale: NaN };
+
+  /**
+   * Reads `tagHover` from the mouse; true when it changed. The hovered formation is kept while the mouse is in the box it
+   * was taken by, its tag or its elements: grown whole, its tag can be laid elsewhere than its short one stood, and that
+   * would take the hover from it at the next move (a flicker).
+   */
+  private readTagHover(): boolean {
+    const m = this.tagMouse;
+    const was = this.tagHover;
+    const c = this.controller.cam;
+    this.tagHoverRead = { snap: this.snapArrival, cx: c.cx, cy: c.cy, scale: c.scale };
+    if (!m) {
+      this.tagHover = 0;
+      this.tagHoverBox = null;
+      return was !== 0;
+    }
+    const inBox = (b: { x0: number; y0: number; x1: number; y1: number } | null | undefined): boolean => !!b && m.x >= b.x0 && m.x <= b.x1 && m.y >= b.y0 && m.y <= b.y1;
+    const tagBox = (t: PlacedTag): { x0: number; y0: number; x1: number; y1: number } => ({ x0: t.x, y0: t.y, x1: t.x + t.w, y1: t.y + t.h });
+    if (was !== 0 && (inBox(this.tagHoverBox) || this.tagRects.some((t) => t.id === was && inBox(tagBox(t))) || this.tagInputs.some((b) => b.id === was && inBox(b)))) return false;
+    const t = this.tagRects.find((r) => inBox(tagBox(r)));
+    let id = t?.id ?? 0;
+    let box = t ? tagBox(t) : null;
+    if (!t) {
+      let area = Infinity;
+      for (const b of this.tagInputs) {
+        const a = (b.x1 - b.x0) * (b.y1 - b.y0);
+        if (a < area && inBox(b)) [id, area, box] = [b.id, a, { x0: b.x0, y0: b.y0, x1: b.x1, y1: b.y1 }];
+      }
+    }
+    this.tagHover = id;
+    this.tagHoverBox = box;
+    return id !== was;
+  }
+  /** Whether the last frame's tags were at a battle (R81i): BATTLE_TAG_M or nearer, a formation in contact in view (tests). */
+  tagBattle = false;
+
   /**
    * What the page has above the map that a tag does not stand under (PLAN 2.14f2): the war
    * banners and the bottom bar, as boxes in CSS px of the page. The game wires it; a view
@@ -2324,6 +2378,13 @@ export class MapView {
         y1: b[3],
       });
     }
+    // At a battle (R81i, ADR-1037, the user's decision): at BATTLE_TAG_M and nearer, with a formation in contact in the
+    // view, the tag of one not in contact is one line, its flag and strength; the engaged, the picked, the selected and
+    // the hovered keep the whole tag.
+    const inView = (it: TagInput): boolean => it.x1 >= 0 && it.x0 <= vw && it.y1 >= 0 && it.y0 <= vh;
+    this.tagBattle = this.metresPerPx <= BATTLE_TAG_M * 1.001 && items.some((it) => it.engaged && inView(it));
+    // A hero keeps its whole tag: its name is who it is (ROADMAP R81i).
+    if (this.tagBattle) for (const it of items) it.short = !it.engaged && !it.picked && !this.selectedFormations.has(it.id) && it.id !== this.tagHover && !this.heroAt(index.get(it.id)!);
     const ctx = this.overlay.getContext('2d')!;
     const measure = (text: string, font: string): number => {
       ctx.font = font;
@@ -3045,6 +3106,13 @@ export class MapView {
     this.draw(now);
     this.dirty = false;
     this.lastCam = { ...c };
+    // A tag hovered under a mouse that has not moved (R81i): a zoom, a pan or a snapshot changes what is under it. Read
+    // when those change, not because the hover did (a tag grown whole and laid elsewhere would be read off again).
+    const h = this.tagHoverRead;
+    if (this.tagMouse && (h.snap !== this.snapArrival || h.cx !== c.cx || h.cy !== c.cy || h.scale !== c.scale)) {
+      this.tagHoverBox = null;
+      if (this.readTagHover()) this.dirty = true;
+    }
     if (this.mouseAt) this.readHover();
     // A frame that leaves a unit animation unfinished is followed by another, however late that
     // one comes, so that the end of an animation is what stays on screen. The question is asked

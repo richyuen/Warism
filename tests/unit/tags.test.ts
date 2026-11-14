@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { layoutTags, TAG_FAR, TAG_FLAG_W, TAG_GAP, TAG_LINE_FROM, TAG_NAME_FONT, TAG_PAD, TAG_SIDES, TAG_STRENGTH_FONT, TAG_TRIES, type PlacedTag, type TagInput, type TagObstacle } from '../../src/render/units/tags';
+import { layoutTags, TAG_SHORT_PAD_Y, TAG_FAR, TAG_FLAG_W, TAG_GAP, TAG_LINE_FROM, TAG_NAME_FONT, TAG_PAD, TAG_SIDES, TAG_STRENGTH_FONT, TAG_TRIES, type PlacedTag, type TagInput, type TagObstacle } from '../../src/render/units/tags';
 
 // PLAN 2.14a: the tags of T2 and T3. The layout alone (the drawing is in tests/e2e/tags1938.spec.ts).
 
@@ -19,7 +19,6 @@ function layoutPlain(items: readonly TagInput[], measure: (text: string, font: s
   let left = 0;
   const pad = TAG_PAD * scale;
   const lineH = 12 * scale;
-  const h = 2 * lineH + 2 * pad;
   const edge = 2;
   const kept = avoid.map((o) => ({ x: o.x - TAG_GAP, y: o.y - TAG_GAP, w: o.w + 2 * TAG_GAP, h: o.h + 2 * TAG_GAP }));
   const sorted = [...items].sort((a, b) => Number(b.picked === true) - Number(a.picked === true) || b.strength - a.strength || a.id - b.id);
@@ -30,7 +29,11 @@ function layoutPlain(items: readonly TagInput[], measure: (text: string, font: s
     const vy0 = Math.max(it.y0, 0);
     const vy1 = Math.min(it.y1, vh);
     if (vx1 < vx0 || vy1 < vy0) return true;
-    const w = Math.ceil(Math.max(TAG_FLAG_W * scale + pad + measure(it.text, TAG_STRENGTH_FONT(scale)), measure(it.name, TAG_NAME_FONT(scale))) + 2 * pad);
+    // A short tag (R81i): one line, flag and strength.
+    const short = it.short === true;
+    const h = short ? lineH + 2 * TAG_SHORT_PAD_Y * scale : 2 * lineH + 2 * pad;
+    const top = TAG_FLAG_W * scale + pad + measure(it.text, TAG_STRENGTH_FONT(scale));
+    const w = Math.ceil((short ? top : Math.max(top, measure(it.name, TAG_NAME_FONT(scale)))) + 2 * pad);
     const x = Math.round(Math.min(Math.max((vx0 + vx1) / 2 - w / 2, edge), Math.max(edge, vw - w - edge)));
     const stepY = h + TAG_GAP;
     const stepX = w + TAG_GAP;
@@ -81,7 +84,7 @@ function layoutPlain(items: readonly TagInput[], measure: (text: string, font: s
         if (pass === 0 && placed.some((p) => far(p, tx, ty) < far(box, tx, ty))) continue;
         // How far the tag's box is from its elements' (0 when it lies on them).
         const gap = Math.max(vx0 - (box.x + w), box.x - vx1, vy0 - (box.y + h), box.y - vy1, 0);
-        placed.push({ id: it.id, nation: it.nation, strength: it.strength, text: it.text, name: it.name, engaged: it.engaged, picked: it.picked === true, ...box, gap, line: gap > TAG_LINE_FROM, tx: (vx0 + vx1) / 2, ty: (vy0 + vy1) / 2, flag: false });
+        placed.push({ id: it.id, nation: it.nation, strength: it.strength, text: it.text, name: it.name, engaged: it.engaged, picked: it.picked === true, short, ...box, gap, line: gap > TAG_LINE_FROM, tx: (vx0 + vx1) / 2, ty: (vy0 + vy1) / 2, flag: false });
         done = true;
         break;
       }
@@ -419,6 +422,8 @@ describe('formation tags: the layout by a grid (PLAN 7.1l4)', () => {
         const it = item(1 + i, 1000 * Math.floor(rnd() * 20), x0, y0, x0 + bw, y0 + bh);
         it.text = `${(it.strength / 1000).toFixed(1)}k`;
         it.picked = i === 3 && scene % 2 === 0;
+        // Short tags among whole ones (R81i) in half the scenes.
+        it.short = scene % 2 === 1 && i % 3 !== 0;
         items.push(it);
       }
       const avoid: TagObstacle[] = scene % 3 === 0 ? [{ x: vw / 2 - 150, y: vh - 40, w: 300, h: 40 }] : [];
@@ -432,5 +437,38 @@ describe('formation tags: the layout by a grid (PLAN 7.1l4)', () => {
     // The scenes have tags with lines and tags left out: each of the layout's questions is asked.
     expect(lines).toBeGreaterThan(100);
     expect(lefts).toBeGreaterThan(100);
+  });
+});
+
+describe('formation tags at a battle (ROADMAP R81i, ADR-1037)', () => {
+  it("a short tag is one line, its flag and strength: its own height and width, the name's room not taken", () => {
+    const whole = item(1, 9000, 100, 100, 140, 130);
+    const short = { ...item(2, 8000, 400, 100, 440, 130), short: true };
+    const { placed } = layoutTags([whole, short], measure, 800, 600);
+    const [a, b] = [placed.find((t) => t.id === 1)!, placed.find((t) => t.id === 2)!];
+    expect(a.short).toBe(false);
+    expect(b.short).toBe(true);
+    expect(a.h).toBe(2 * 12 + 2 * TAG_PAD);
+    expect(b.h).toBe(12 + 2 * TAG_SHORT_PAD_Y);
+    expect(b.w).toBe(Math.ceil(TAG_FLAG_W + TAG_PAD + measure('12.4k') + 2 * TAG_PAD));
+    expect(a.w).toBe(Math.ceil(measure('Infantry division 1') + 2 * TAG_PAD));
+    // Scaled.
+    const [s2] = layoutTags([short], measure, 800, 600, 1.5).placed;
+    expect(s2!.h).toBe(1.5 * (12 + 2 * TAG_SHORT_PAD_Y));
+  });
+
+  it('whole and short tags crowded together: none overlaps, each by its own height', () => {
+    const items: TagInput[] = [];
+    for (let i = 0; i < 60; i++) {
+      const x = 200 + (i % 10) * 18;
+      const y = 150 + Math.floor(i / 10) * 22;
+      items.push({ ...item(1 + i, 1000 * (i % 7), x, y, x + 12, y + 12), short: i % 3 !== 0 });
+    }
+    const { placed } = layoutTags(items, measure, 900, 700);
+    for (let i = 0; i < placed.length; i++) {
+      expect(placed[i]!.h).toBe(placed[i]!.short ? 12 + 2 * TAG_SHORT_PAD_Y : 2 * 12 + 2 * TAG_PAD);
+      for (let j = i + 1; j < placed.length; j++) expect(over(placed[i]!, placed[j]!), `${placed[i]!.id} / ${placed[j]!.id}`).toBe(false);
+    }
+    expect(placed.filter((t) => t.short).length).toBeGreaterThan(20);
   });
 });
