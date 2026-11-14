@@ -53,10 +53,15 @@ Rules:
     seeds. AT: `c68_piles.ts 365 --plain` on 39139-39147 and 41139-41147: no war over 4:1.
     Waits on the user (ADR-1042, proposed): HEAD has 3 over 4:1 on the ten; at birth 16 on 20 seeds by nations, 3 by
     realm; 0 by nations means narrowing ADR-887/889 (the user's) or fewer of 1938's wars. `tools/diag/pileSides.ts`.
-  - [ ] R82g (run 68's AI nukes "not 9"; the user's choice, 2026-11-14) No AI warhead intercepted: 47 launches on
+  - [x] R82g (run 68's AI nukes "not 9"; the user's choice, 2026-11-14) No AI warhead intercepted: 47 launches on
     37501/3 and 41501/3 over 22 years, 0 intercepted (run 67: 6 of 13 on 37501/3/7). Find whether a rule since run 67
     moved it (the pin moved with ADR-1025, ADR-1033, ADR-1041). AT: the interceptions on those seeds by `c68_nc`'s
     probe, with the cause named; if a regression, fixed and the share back to run 67's order.
+    Answered, not a regression: no nuclear or air rule changed since run 67 (plain 1938 moved by R78b and R82d alone).
+    At run 68's commit (`bfda9503`, replayed) 37501 and 41503 launch 13 and 16, as the critic counted: 26 of the 29
+    missiles (from 1952 on), never stopped by design (PLAN 6.2), and 3 bombers with 1.19 stops expected, 0 drawn. On
+    HEAD, six seeds 22 years: 47 launches, 22 bombers, 8 stopped against 9.0 expected; a bomber not stopped flies over
+    its side's air (superiority 1, chance 0). `tools/diag/nukeIntercepts.ts`.
   - [ ] R82h (run 68's stats "not 9"; the user's choice) The chart's "Land (km²)" (by owner) beside the Ranking's "Land
     held (km²)" (by holder, R78e): names that tell them apart; France's and the United States' chart lines in
     near-identical blues: told apart. AT: on 32019's year-20 save the two names differ in their first word, and the two

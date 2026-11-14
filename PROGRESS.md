@@ -145,3 +145,11 @@
   alliance, the count swollen by colonies beside Italy's Africa (ADR-889). By realm, 3: a nation alone on a member of
   a large alliance (NSP on FRA, GER on SWI, HUN on AUT). 0 by nations means narrowing ADR-887/889 (the user's) or
   fewer of 1938's wars, so the item waits on the user's choice; the loop takes R82g.
+
+## 2026-11-14 — R82g: no warhead intercepted, answered (not a regression)
+
+- No nuclear or air rule changed since run 67; plain 1938 moved by R78b and R82d only. `tools/diag/nukeIntercepts.ts`
+  at run 68's commit (a worktree at `bfda9503`): 37501 and 41503 launch 13 and 16 as the critic counted, 26 of the 29
+  missiles (1952 on), which no rule stops (PLAN 6.2), and 3 bombers, 1.19 stops expected, 0 drawn. On HEAD, 37501/3,
+  39503/7, 41501/3 over 22 years: 47 launches, 22 bombers, 8 stopped, 9.0 expected; the bombers that got through flew
+  over their side's air (superiority 1). The share follows how late a seed's nuclear war comes, not a rule.

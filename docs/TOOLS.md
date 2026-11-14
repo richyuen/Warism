@@ -51,6 +51,9 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   replay (its built start; 0: plain 1938): capitals taken, once a pair, those far (no land of the taker's realm within
   `km` at the start), each in the taker's own war or joined (by which pact, on which side); the first 30 days'
   declarations; means per 100 nations alive (R81a, ADR-1033; ~2 min a seed for two years).
+- `npx tsx tools/diag/nukeIntercepts.ts <seed> [years = 22]`: plain 1938's AI launches: missile or bomber, launcher,
+  the target's holder, the launcher's air superiority over it, the interception chance in its last hour, burst or
+  stopped; the stops against their expected sum (R82g; ~25 min a seed).
 - `npx tsx tools/diag/pileSides.ts <day> <seed>... [--all]`: plain 1938 hour by hour to `day`; each declaration in its
   hour with its sides by nations and by realm (a puppet with its overlord), why each member is there, and the
   declarer's utility terms; `--all` every declaration, else those born over 4:1 (R82f, ADR-1042; ~10 min a seed).
