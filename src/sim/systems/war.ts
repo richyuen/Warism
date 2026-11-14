@@ -386,20 +386,12 @@ function leaveWars(world: World, n: number, leaves: (own: readonly number[], ene
 }
 
 /**
- * Applies a declaration; returns the war or null (with a `WarRejected` event). A declaration on
- * a puppet is one on its overlord (PLAN 3.8e: the puppet used to stand alone): the overlord
- * leads the defenders, the event names it, and the peace is made with it. The puppet's own
- * allies and guarantors are called as before. An overlord's own overlord is not looked at.
- * `alone`: a war of independence (a holder on its rebels, a puppet that rises on its overlord)
- * is the two realms', and no alliance or guarantor is called (PLAN 3.8f: an alliance of 30 went
- * to war with one rebel province).
+ * The two sides a declaration of `attacker` on `target` calls (`declareWar`, the rules at its head), with no change to
+ * the world: the attackers, then the defenders, each leader first. Asked by the AI before it declares (ROADMAP R82f,
+ * ADR-1042: the sides it would face, not its guess of them). `whyNotWar` is not asked.
  */
-export function declareWar(world: World, attacker: number, target: number, alone = false): War | null {
+export function callSides(world: World, attacker: number, target: number, alone = false): [number[], number[]] {
   const nc = world.nations.cols;
-  if (whyNotWar(world, attacker, target) !== Refusal.None) {
-    world.out.emit(world.tick, EventKind.WarRejected, attacker, target, NaN, NaN);
-    return null;
-  }
   const defender = nc.overlord[target] || target;
   // Each side: leader + puppets, then its alliance (+ their puppets); defenders also gain their
   // guarantors. Nobody joins against a truce partner or twice.
@@ -509,6 +501,29 @@ export function declareWar(world: World, attacker: number, target: number, alone
   const step1 = without(called, () => true, (s) => [s === ATTACKERS ? attacker : defender]);
   const step2 = without(step1, (x) => nc.overlord[x] !== 0, (s, stand) => step1[s]!.filter((o) => stand.has(o)));
   const [a, d] = reach(without(step2, (x) => nc.overlord[x] === 0, (s, stand) => step2[s]!.filter((o) => stand.has(o))));
+  return [a, d];
+}
+
+/**
+ * Applies a declaration; returns the war or null (with a `WarRejected` event). A declaration on
+ * a puppet is one on its overlord (PLAN 3.8e: the puppet used to stand alone): the overlord
+ * leads the defenders, the event names it, and the peace is made with it. The puppet's own
+ * allies and guarantors are called as before. An overlord's own overlord is not looked at.
+ * `alone`: a war of independence (a holder on its rebels, a puppet that rises on its overlord)
+ * is the two realms', and no alliance or guarantor is called (PLAN 3.8f: an alliance of 30 went
+ * to war with one rebel province).
+ */
+export function declareWar(world: World, attacker: number, target: number, alone = false): War | null {
+  const nc = world.nations.cols;
+  if (whyNotWar(world, attacker, target) !== Refusal.None) {
+    world.out.emit(world.tick, EventKind.WarRejected, attacker, target, NaN, NaN);
+    return null;
+  }
+  const defender = nc.overlord[target] || target;
+  const [a, d] = callSides(world, attacker, target, alone);
+  const al = world.alliances;
+  const allies = (n: number): number[] => al.allianceOf(n)?.members.filter((m) => m !== n) ?? [];
+  const leader = (x: number): boolean => x === attacker || x === defender || x === target;
   // A side fights to the death when its leader does (PLAN 1.40 tuning: any member used to pass it
   // on, so whole alliance blocs fought every later war forever and fronts froze).
   const ftd = (side: number[]): boolean => nc.fightToDeath[side[0]!] === 1;
