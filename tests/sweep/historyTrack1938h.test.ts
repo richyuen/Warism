@@ -24,7 +24,8 @@ describe('the historical track checked to its end (ROADMAP R62k)', () => {
     // R69b, ADR-985; China out of the Soviet bloc at the split of 1960, R69c, ADR-986; Albania in 1961, R69d, ADR-987).
     // As handed over, before the free AI's first day (R71b, ADR-993).
     const members = (leader: string): string[] | undefined => run.handover.get(leader);
-    expect(members('USA')).toEqual(['BEL', 'DEN', 'ENG', 'FRA', 'FRG', 'GRE', 'ICE', 'ITA', 'LUX', 'NED', 'NOR', 'POR', 'TUR', 'USA'].sort());
+    // Canada in it from its patriation, free of Britain (R80k, ADR-1055).
+    expect(members('USA')).toEqual(['BEL', 'CAN', 'DEN', 'ENG', 'FRA', 'FRG', 'GRE', 'ICE', 'ITA', 'LUX', 'NED', 'NOR', 'POR', 'TUR', 'USA'].sort());
     // The Warsaw Pact dissolved on 1 July 1991 (R80i, ADR-1053); Russia's pact the CIS of the Alma-Ata Protocol, eleven
     // states (Georgia and the Baltic three outside), outside deterrence and aid (ADR-1031's answer 3).
     expect(members('SOV')).toEqual(['ARM', 'AZE', 'BLR', 'KAZ', 'KGZ', 'MDA', 'SOV', 'TJK', 'TKM', 'UKR', 'UZB']);

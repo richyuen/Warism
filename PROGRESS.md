@@ -316,3 +316,7 @@
   Iran's rising), the CIS 11 to 7, the leaders opposed only on seed 1 (Cuba's wars), 355-379 wars, no aid.
 - The deployed `years.json` equal to the local build (54 years); the previews served. Tools `afterTrackWhy.ts` and
   `callWhy.ts`.
+
+## 2026-11-14 — R80k: the dominions free on their dates (ADR-1055)
+
+- South Africa 1961, Canada 1982 (and NATO), Australia 1986 released; free at the yearly starts after; replay tests green.

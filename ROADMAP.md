@@ -253,5 +253,74 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
     beside it; outside deterrence, answer 3); 355-379 wars declared (after 1975: 354-499); no aid (no other bloc to
     aid against). The card's powers per year: the deployed `years.json` equal to the local build, 54 of 54 years by
     hash and powers (1991: USA SOV ENG FRA DEU PRC ITR); the previews of 1990 and 1991 served.
+    Done (ADR-1055): South Africa released on 1961-05-31 (the republic), Canada on 1982-04-17 (the Canada Act, and into
+    NATO), Australia on 1986-03-03 (the Australia Act). At the yearly starts: each a puppet of Britain to its date, no
+    one's from the first start after it (SAF from 1962, CAN from 1983, AST from 1987). The replay tests green
+    (`historyTrack1938h`'s handover NATO with Canada).
+  - [ ] R80l (found by R80b's run) The track's end leaves land held at peace: on the 1975 end hour of every seed (and in
+    a save of 2026-11-13) France holds 20 cells of Austria, the United States 1 of Austria and 6 of Japan, Britain 2 of
+    Italy, at peace with their owners (`diploInvariants`' `held`; during the track the timeline's `occupy` excuses
+    them). AT: `held` 0 on the end hour of four seeds, the land returned or its holder's hold explained and checked.
+  - [ ] R80c A great power's breakup and two unions: the Soviet Union into fifteen on 26 December 1991 (its army, navy
+    and air by the land they stand on; its arsenal as ADR-1031's answer 2), Germany on 3 October 1990, Yemen on 22 May
+    1990, with the existing `transfer`, births and annexations where they serve. AT: unit tests of each; worldInvariants
+    on the end hour of four seeds; no formation of a dead nation left.
+    Done (ADR-1046): `born` gains `forces` (`handForces`: land formations by their ground, fleets by their nearest port,
+    wings by their airbase or carrier; heroes and warheads stay); the unions are the existing `annex`, which moves land,
+    cores and forces. `breakup1938h.test.ts` (a Ukraine box born from the Soviet Union, a stand-in tag: its army,
+    the Black Sea fleets, Kiev's wings; the warheads Soviet; without `forces` none; FRG-GDR and YEM-SYE). `worldInvariants`
+    exports `hourChecks`. `tools/diag/breakup.ts` (the three events on the 1975 track's last day, MPL Ukraine's
+    stand-in), seeds 1-4, every hour to the end and 30 days on: 0 broken lines, no formation of a dead nation.
+  - [ ] R80d The nations of 1976-91 added dormant (the Soviet successors, Macedonia, Namibia, Zimbabwe, Eritrea's and
+    the period's rebel movements), the end moved to 31 December 1991 with no new event. AT: 1938-75 unchanged; the
+    yearly starts to 1991 built and their time on the Pages workflow measured (the deploy within its limit).
+    Done (ADR-1047): 44 nations dormant (30 states, 14 rebel movements; Zimbabwe is RHO renamed, Eritrea's front ELF,
+    both in), their colours distinct, simplified flags, names; the end 1991-12-31; the card says 1991. 1938-75
+    unchanged: seeds 1938 and 1 on 30 December 1975, HEAD and this tree at once, owner, controller, formations
+    (2,414 and 2,381: nation, place, strength), the living and the treasuries hash the same. `npm run saves` to 1991:
+    7 min 13 s locally (6 min 17 s to 1975), 54 starts, 63 MB (41 MB); the Pages run in PROGRESS.
+  - [ ] R80e Later techs (about 1976-91) as stat upgrades of the existing units (or the unit ADR-1031's answer 4 names).
+    AT: the techs held by 1991 by the great powers and by few new states; the pin moved only as the techs explain.
+    Done (ADR-1048): six techs of 1975-83 in `postwar.json` (microprocessors, precision-guided munitions,
+    fourth-generation jets, composite armour, attack helicopters, cruise missiles: 5-10 % modifiers, no new unit), the
+    last six of the 64 bits. `tools/diag/techsBy.ts` from the 1975 start to the 1991 end: the six great powers (SOV FRA
+    ENG CCP USA FRG), Italy, Japan and East Germany all six; the Netherlands 3, India 2; 145 living none.
+  - [ ] R80f 1976-80: Angola's war and Cuba's troops, the Ogaden, Vietnam into Cambodia and China into Vietnam, Uganda
+    and Tanzania, Iran's revolution, the Soviet Union into Afghanistan, Nicaragua, Zimbabwe. AT: as R71d: the map of
+    the period's end matched as the earlier maps; each event on its date; seeds 1-5 within the bars.
+    Done (ADR-1050): 65 events of 1976-80 and the map of 31 December 1980 (see the ADR); the identity Zimbabwe.
+    `historyMatch1938h` (to 1980, its `state80`): every map within its bars, the 1980 one 99.79 % whole, 99.5 % right,
+    strays 0.12 %; nothing passed over. `historyTrack1938h` and seeds 1-5 to the 1991 end: no line, no warning (after
+    ADR-1049). Left out: Sinai (all of it on 1982-04-25, R80g), the Litani operation (no war with Lebanon, no land
+    kept), the Canal Zone (no land of its own on the map).
+  - [x] R80g 1981-85: Iran and Iraq, the Falklands, Lebanon, Grenada, Poland's martial law, Chad and Libya. AT: as R80f.
+    Done (ADR-1051): 52 events of 1981-85 and the map of 31 December 1985; the identities GUNT, the TRNC, Burkina
+    Faso. From the 1981 start the 1985 map 99.79 % whole, 99.5 % right, strays 0.12 %, nothing passed over;
+    `historyMatch1938h` (to 1985, `state85`) and `historyTrack1938h` with seeds 1-5 to 1991 green, no warning. Left
+    out: the Golan law (Israel's already), Osirak and the Libya-Chad merger (no land), Grenada's one cell occupied (it
+    would end its state: a war, a hold and a white peace).
+  - [x] R80h 1986-89: Chad's war against Libya won, the Soviet Union out of Afghanistan, Panama, the revolutions of
+    1989 (regimes and the Eastern Bloc left). AT: as R80f.
+    Done (ADR-1052): 45 events of 1986-89 (and January 1990's end of Just Cause) and the map of 31 December 1989.
+    From the 1986 start the 1989 map 99.79 % whole, 99.5 % right, strays 0.12 %, nothing passed over;
+    `historyMatch1938h` (to 1989, `state89`) and the replay checks to 1991 in PROGRESS. The Eastern Bloc's members
+    leave it on the research's dates (Poland, Hungary, Bulgaria, Romania, Czechoslovakia); East Germany with the union.
+  - [x] R80i 1990-91: Namibia, Germany and Yemen united, Kuwait taken and freed, the Baltic states, Slovenia and Croatia,
+    the Soviet Union's end. AT: as R80f; the arsenals at the end as ADR-1031's answer 2.
+    Done (ADR-1053): 78 events of 1990-91 and the map of 30 December 1991; the identities Germany and Russia, the
+    CIS's name. From the 1990 start the 1991 map 99.80 % whole, 99.6 % right, strays 0.12 %, nothing passed over;
+    `historyMatch1938h` (to the track's end, `state91`) and `historyTrack1938h` with seeds 1-5 green, no warning. The
+    arsenals at the end CCP, ENG, FRA, SOV (Russia), USA: no warhead to a successor (answer 2); the handover NATO and
+    the CIS of eleven.
+  - [x] R80j The world after 1991: the blocs, the historical focus and aid re-measured from the 1991 handover, as R71g;
+    the start card's powers and previews for each new year. AT: as R71g's; the card's powers per year equal the
+    deployed `years.json`.
+    Done (ADR-1054; `afterTrack.ts`, seeds 1938, 1, 2, 20 years from the 1991 handover): NATO the bloc, whole on
+    1938 and 2 (14 of 14), 13 on seed 1 (Turkey, in year 9, taken by its own puppet Iran's rising: a war of
+    independence calls no ally, PLAN 3.8f; `callWhy.ts`); the CIS 11 at the end, 7 after 20 years (outside the lasting
+    rule, answer 3); the United States and Russia opposed 0, 662 and 0 days (seed 1: two American wars on Cuba, Russia
+    beside it; outside deterrence, answer 3); 355-379 wars declared (after 1975: 354-499); no aid (no other bloc to
+    aid against). The card's powers per year: the deployed `years.json` equal to the local build, 54 of 54 years by
+    hash and powers (1991: USA SOV ENG FRA DEU PRC ITR); the previews of 1990 and 1991 served.
   - [ ] R80k (ADR-1031's answer 5) The dominions free on their date in the track's data, the 1938 start
     unchanged. AT: Canada, Australia and South Africa no one's puppets at the yearly starts after it; the replay tests.

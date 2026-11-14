@@ -68,6 +68,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1055 · 2026-11-14 · accepted — R80k: the dominions free on their dates
+- **Rule** (ADR-1031's answer 5, from `docs/research/1976-91.md`'s dominions): `release` of South Africa on
+  1961-05-31 (the republic, out of the Commonwealth), of Canada on 1982-04-17 (the Canada Act) with Canada into
+  NATO the hour after (a member since 1949: as a puppet it fought with Britain), of Australia on 1986-03-03 (the
+  Australia Act). Not Australia's Statute adoption of 1942 (in effect from 1939): it would take Australia out of
+  Britain's war; not New Zealand (not in the answer).
+- **Consequences:** the replay from 1961 on moves (South Africa's own wars, Angola's, from 1975 are its own); every
+  start's hash moves with the timeline's, as at each timeline change. The plain 1938 scenario reads no timeline.
+- **Measured:** see ROADMAP R80k.
+
 ### ADR-1054 · 2026-11-14 · accepted — R80j: the world after 1991 measured
 - **Measured:** see ROADMAP R80j. As after 1975 (ADR-998) but by ADR-1031's answer 3: one lasting bloc (NATO), the
   CIS a pact the deterrence, lasting and aid rules do not cover, so its members' leaving and Russia's wars beside

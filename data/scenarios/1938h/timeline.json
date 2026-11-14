@@ -18359,6 +18359,12 @@
    "note": "Park Chung-hee's coup"
   },
   {
+   "date": "1961-05-31",
+   "kind": "release",
+   "subject": "SAF",
+   "note": "The Republic of South Africa: out of the Commonwealth"
+  },
+  {
    "date": "1961-06-19",
    "kind": "born",
    "nation": "KUW",
@@ -22071,6 +22077,21 @@
    "note": "Stanley taken"
   },
   {
+   "date": "1982-04-17",
+   "kind": "release",
+   "subject": "CAN",
+   "note": "The Canada Act proclaimed: Canada's constitution its own"
+  },
+  {
+   "date": "1982-04-17",
+   "hour": 1,
+   "kind": "allianceJoin",
+   "nation": "CAN",
+   "leader": "USA",
+   "nameKey": "alliance.nato",
+   "note": "Canada in NATO as since 1949"
+  },
+  {
    "date": "1982-04-25",
    "kind": "transfer",
    "to": "EGY",
@@ -22635,6 +22656,12 @@
    "nation": "PHI",
    "aggression": 20,
    "note": "People Power: Marcos leaves the Philippines"
+  },
+  {
+   "date": "1986-03-03",
+   "kind": "release",
+   "subject": "AST",
+   "note": "The Australia Act in force: the last ties to Britain's parliament cut"
   },
   {
    "date": "1986-10-21",
