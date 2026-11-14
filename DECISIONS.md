@@ -21,7 +21,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Read:** the release sweep judged again (`--from docs/sweeps/2026-11-14-sweep-release79.json`): ALL GREEN, the
   largest share over its bar on 2 seeds by land and 3 by income.
 
-### ADR-1031 · 2026-11-14 · proposed, the user's decision — The replay to 1991: the plan and its questions
+### ADR-1031 · 2026-11-14 · accepted (the user's decisions) — The replay to 1991: the plan and its questions
 - **The user:** "Let's also make a plan to extend history to 1991." The plan is ROADMAP's Batch 24 (R80a-k), split
   as R69 and R71 were: the research first, the rules the period needs, the nations and the end moved, then the events
   by period, then the world after the end.
@@ -48,3 +48,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
   5. Canada, Australia and South Africa Britain's puppets (ADR-17; the critic's objection since run 66), 53 years on at
      the end: free at a date of the replay (recommended: the Statute of Westminster's dominions free in the track's
      data, as R74c's names), or kept?
+- **Answered** (the user, 2026-11-14: "let's accept your recommendations and also do the critic's items first"): 1. the
+  critic's items first (Batch 25, ADR-1032), then Batch 24; 2. the Soviet arsenal to Russia alone; 3. NATO the one
+  lasting bloc after 1991, Russia and the CIS a pact outside the deterrence rule; 4. no new unit, the period's techs as
+  stat upgrades; 5. Canada, Australia and South Africa free on their dates in the track's data (R80k taken).
+
+### ADR-1032 · 2026-11-14 · accepted (the user's decision) — Batch 25: run 67's "not 9" items, before the replay to 1991
+- **The user:** the critic's items first, "though let's make sure there's a performance bar for one-step undo".
+- **The items** (ROADMAP R81a-h): the free world's far conquests after 1975 (measured first: R78b's sea cost came after
+  the critic saw them); a one-step undo of a God act; a burst readable at world zoom; Germany's and Poland's flags at
+  250 m/px; the relations graph's labels and truces; a battle's labels at 250 m/px; the followed fighter's mark at
+  250 m/px; 120 m/px over the late world.
+- **The undo's bar, from a measure:** a world save of seed 99 (headless, tsx) is 3.1-4.0 MB and takes 50-52 ms (median
+  of 7, years 0, 1 and 5), a load 75-79 ms. The undo holds one save, made in the worker before each God act (not each
+  tick). Its AT: on 7019's year-20 world on the page, (1) the time from a God act's click to its effect drawn, p95
+  over 20 acts, at most 100 ms more than with the undo off; (2) no frame of the map over 50 ms while the save is made
+  (the render thread is not blocked); (3) from Undo's click to the restored world drawn at most 500 ms, p95 over 20;
+  (4) the tick's mean with no act unchanged within ±3 % (paired runs), and the worker's memory at most one save more
+  (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
+  for bit as one never acted on (30 days, two seeds).

@@ -27,7 +27,38 @@ Rules:
   year, the replay to 1975, a faster tick, runs 63–67's findings, the gate on the GPU), in CHANGELOG.md for players; the
   items with their evidence in `docs/history/ROADMAP-release-2026-11-13.md`.
 
-## Batch 24 — the replay to 1991 (the user's request, 2026-11-14; ADR-1031: planned, waits on the user's answers)
+## Batch 25 — run 67's "not 9" items (the user's decision, 2026-11-14, ADR-1032: before Batch 24)
+
+- [ ] R81 **Run 67's "not 9" items.**
+  - [ ] R81a The free world's far conquests after 1975 (design objection; emergent dynamics). Measured on HEAD first
+    (R78b's sea cost came after the critic's watch): a headless count of capitals taken in the first two years of a
+    free 1975 start by a nation whose own capital is over 2,000 km from them, on 6161 and four seeds unseen. AT: at
+    most 1 a seed on average (the critic's 6161: Jordan's, Damascus, Algiers in under two years), the 1975 first-month
+    declarations still ≤ 1.2 × plain 1938's rate per nation; if HEAD already holds it, answered with the counts.
+  - [ ] R81b A one-step undo of a God act (God Mode): the world as it was before the last act, from one save the
+    worker holds; told in the bar and the ticker; ends nothing the act did not (the replay stays ended). AT: ADR-1032's
+    five bars (the act +≤ 100 ms p95, no frame over 50 ms while saving, undo ≤ 500 ms p95, the tick ±3 % and one save
+    held, the hash and the run after an undo bit for bit) on 7019's year-20 world; a Playwright spec of each God tool
+    undone; diploInvariants and worldInvariants after an undo on two seeds.
+  - [ ] R81c A burst readable at world zoom (AI nukes, map): at 937 and 3,000 m/px a burst a mark of at least 16 px
+    across with its ring, for at least 10 s at Speed x1, not a smudge. AT: the mark's size and lifetime read at both
+    zooms on the critic's 7019 year-20 strike and God's H-bomb on Paris; shots looked at; frame budgets kept.
+  - [ ] R81d Germany's and Poland's flags at 250 m/px (map visuals; the critic's 39915 day 5): the label flags told
+    apart at a glance. AT: of the two flags as drawn at 250 m/px, at least 30 % of their pixels differ by over 60; the
+    other 1938 pairs at war in year 1 on two seeds read the same way, or listed.
+  - [ ] R81e The relations graph (UI/UX): more nodes named, and a truce on its own edge, not only in the footer. AT: on
+    39939 and two seeds, desk 1600 × 900 and phone 390 × 844: every nation at war or in a pact named (or the 15
+    largest, whichever more), no two labels overlapping; each truce's edge drawn as a truce.
+  - [ ] R81f A battle's labels at 250 m/px (semantic zoom; 39915 day 5): no label over another, and each engaged
+    formation's (or its stack's) shown. AT: the overlaps counted on the critic's case and two seeds, 0; the labels'
+    count no lower than the stacks in view.
+  - [ ] R81g The followed fighter's mark at 250 m/px (aircraft): its median distance from its sorties at most 40 px (the
+    critic: 392 on 39927, 68 on 35127), 3,000 m/px as before (median ≤ 32). AT: `w_wing` on both seeds and one new.
+  - [ ] R81h 120 m/px over the late world (performance): 7019's year-20 world at Max, 52.5-55.8 fps there (60 at the
+    other zooms). Profiled first. AT: the minimum of the critic's samples at 120 m/px at least 57 fps, the other zooms
+    kept; or the cause answered with numbers in BLOCKERS (PROMPT step 10).
+
+## Batch 24 — the replay to 1991 (the user's request, 2026-11-14; ADR-1031, after Batch 25)
 
 Split as R69 and R71 were (1938-75 kept bit for bit, then the new years by period). Each item's AT keeps the nine replay
 tests and the track's checker green, and the 38 yearly starts of 1938-75 at their hashes unless the item says why not.
@@ -37,7 +68,8 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
     source), the nations to add with their land, the regimes, the wars and their fronts, the arsenals, and the maps
     to match at each period's end. AT: every event of R80f-i in it with its date and source; the nations' list.
   - [ ] R80b A bloc that ends: an event dissolves a bloc (the Warsaw Pact, 1 July 1991) and members leave it before
-    (1989-90); the Cold War's rules (ADR-981 deterrence, ADR-990 aid) with one leader left, as ADR-1031's answer 3. AT: a
+    (1989-90); after it NATO the one lasting bloc, Russia and the CIS a pact outside the deterrence rule (ADR-1031's
+    answer 3). AT: a
     unit test of the event; the blocs' checker on four seeds; 10 years after a 1991 end, the rule the answer names.
   - [ ] R80c A great power's breakup and two unions: the Soviet Union into fifteen on 26 December 1991 (its army, navy
     and air by the land they stand on; its arsenal as ADR-1031's answer 2), Germany on 3 October 1990, Yemen on 22 May
@@ -59,5 +91,5 @@ tests and the track's checker green, and the 38 yearly starts of 1938-75 at thei
   - [ ] R80j The world after 1991: the blocs, the historical focus and aid re-measured from the 1991 handover, as R71g;
     the start card's powers and previews for each new year. AT: as R71g's; the card's powers per year equal the
     deployed `years.json`.
-  - [ ] R80k (if ADR-1031's answer 5 frees them) The dominions free on their date in the track's data, the 1938 start
+  - [ ] R80k (ADR-1031's answer 5) The dominions free on their date in the track's data, the 1938 start
     unchanged. AT: Canada, Australia and South Africa no one's puppets at the yearly starts after it; the replay tests.
