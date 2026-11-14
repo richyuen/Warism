@@ -4,7 +4,8 @@
  * run it again.
  *
  * Each step runs whatever the one before it did: a red stage does not stop the run. The browser
- * suite runs in chunks of `E2E_CHUNK` spec files and the perf spec on its own project. A unit,
+ * suite runs as one step on the GPU (ADR-1029: 9 minutes), in chunks of `E2E_CHUNK` spec files on
+ * SwiftShader (about 40 minutes a chunk), and the perf spec on its own project. A unit,
  * sweep or browser test that fails is run again alone (its file, one worker) once; red is what
  * fails both times. Each step's result is written to `.cache/gate/review.json` under the code key
  * as soon as it is done, so a run cut off goes on where it stopped (`npm run check:review` again).
@@ -18,12 +19,13 @@
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { GPU, SUITE } from './render';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const DIR = path.join(ROOT, '.cache/gate');
 export const RECORD = path.join(DIR, 'review.json');
 export const KNOWN = 'tools/gate/knownRed.json';
-/** Spec files of the chromium project a chunk of the browser suite runs (about 40 minutes here). */
+/** Spec files a chunk of the browser suite runs on SwiftShader (about 40 minutes there); on the GPU the suite is one step. */
 export const E2E_CHUNK = 20;
 
 export interface StepRecord {
@@ -46,9 +48,9 @@ export interface Verdict {
   known: string[];
 }
 
-/** The steps of a run: the plain stages, the unit and sweep tests, a chunk of specs each, the perf spec. */
-export function reviewSteps(specs: number): string[] {
-  const e2e = Array.from({ length: Math.ceil(specs / E2E_CHUNK) }, (_, i) => `e2e:${i + 1}`);
+/** The steps of a run: the plain stages, the unit and sweep tests, the browser suite (on SwiftShader a chunk of specs each), the perf spec. */
+export function reviewSteps(specs: number, gpu = GPU): string[] {
+  const e2e = gpu ? ['e2e'] : Array.from({ length: Math.ceil(specs / E2E_CHUNK) }, (_, i) => `e2e:${i + 1}`);
   return ['typecheck', 'lint', 'build', 'test', 'test:sweep', ...e2e, 'e2e:perf'];
 }
 
@@ -239,7 +241,7 @@ export function e2eRuns(specs: readonly string[]): E2eRun[] {
   const perf = specs.filter((f) => f.endsWith('.perf.spec.ts'));
   const rest = specs.filter((f) => !f.endsWith('.perf.spec.ts'));
   const runs: E2eRun[] = [];
-  if (specs.length === 0 || rest.length > 0) runs.push({ project: 'chromium', args: [...rest, '--project=chromium'].join(' ') });
+  if (specs.length === 0 || rest.length > 0) runs.push({ project: 'chromium', args: [...rest, SUITE].join(' ') });
   if (specs.length === 0 || perf.length > 0) runs.push({ project: 'perf', args: [...perf, '--project=perf', '--no-deps'].join(' ') });
   return runs;
 }
@@ -255,7 +257,7 @@ export function e2eRedTwice(runs: readonly E2eRun[]): string[] {
     const stage = r.project === 'perf' ? 'e2e:perf' : 'e2e';
     const first = playwright(r.args, stage);
     if (first === null) red.push(`stage:${stage}`);
-    else red.push(...(r.project === 'perf' ? first : again(first, (f) => playwright(`--project=chromium --workers=1 ${f}`, stage))));
+    else red.push(...(r.project === 'perf' ? first : again(first, (f) => playwright(`${SUITE} --workers=1 ${f}`, stage))));
   }
   return red;
 }
@@ -280,10 +282,10 @@ function step(name: string, specs: string[]): string[] {
     return first === null ? ['stage:e2e:perf'] : first;
   }
   const i = Number(name.slice(4)) - 1;
-  const chunk = specs.slice(i * E2E_CHUNK, (i + 1) * E2E_CHUNK);
-  const first = playwright(`--project=chromium ${chunk.join(' ')}`, name);
+  const chunk = name === 'e2e' ? [] : specs.slice(i * E2E_CHUNK, (i + 1) * E2E_CHUNK);
+  const first = playwright([SUITE, ...chunk].join(' '), name);
   if (first === null) return [`stage:${name}`];
-  return again(first, (f) => playwright(`--project=chromium --workers=1 ${f}`, name));
+  return again(first, (f) => playwright(`${SUITE} --workers=1 ${f}`, name));
 }
 
 function main(): void {

@@ -952,3 +952,30 @@ from AoC are tagged **[AoC-DEVIATION]**.
   "Land held (km²)"; every share and the sweep stay by owner (ADR-52). Uranus on 39701: its window is fought, the
   attack through by its hour (ADR-1018). Germany's 1938 flag kept as it is: the user's decision (the labels differ also
   in the nation-colour strip about the chip).
+
+### ADR-1029 · 2026-11-13 · accepted (the user's decision) — R79a: the browser suite on the GPU; the review's suite one step; a pin move runs the specs that step
+- **Context.** The user asked for faster gates, the e2e of a pin move and `check:review` first. The pages drew on
+  SwiftShader (headless Chromium's default) on a machine with an RTX 4070 Ti, held to 4 workers because SwiftShader
+  starves its neighbours (PLAN 1.42f); the review ran the suite in 12 chunks of 20 spec files at about 40 min each.
+  Measured 2026-11-13, eight heavy 1938 specs: SwiftShader at 4 workers 222 s, the GPU at 4 83 s, at 8 56 s; the whole
+  chromium project on the GPU at 8 workers 8.7 min (437 tests). On the GPU five were red: `relations1938` by load
+  (green alone); `landingMark1938` and `landingMarkMore1938`'s tap by their own timing, a fixed 500 ms after
+  `showPlace` whose flight lasts 1-2 s (the camera still moving on both renderers; green on both once they wait for
+  the flight's end); `countryballs1938`'s helmet bands and `fades1938`'s tier cross-fades by their pixel measures
+  (148 for ≤ 48), red alone on the GPU and green on SwiftShader.
+- **Decision** (the user: "Yes, let's also do 3 too").
+  1. The pages draw on the GPU on Windows (`--enable-gpu --ignore-gpu-blocklist --use-angle=d3d11`,
+     `tools/gate/render.ts`), at up to 8 workers; elsewhere, or with `E2E_RENDER=software`, on SwiftShader at up to
+     4 as before. A test whose measure is SwiftShader's picture carries the tag `@swiftshader` and runs on the
+     `swiftshader` project, always on SwiftShader: the two above until R79b answers them. The perf specs stay on
+     SwiftShader (their budgets were set there). The gate's and the review's runs name both projects (`SUITE`).
+  2. `check:review` runs the browser suite as one step (`e2e`) on the GPU; in chunks of `E2E_CHUNK` on SwiftShader.
+  3. A move of the pin of seed 99 runs the specs whose world can move past its start (`runsTheSim`: a step, the
+     clock started, a game loaded or begun, a page not opened as a paused world) and the changed ones, not every
+     spec: 187 of 223. The 36 left out were each green on a build whose `step` throws (the probe live: `battleView1938`
+     red on it). A spec the rule misses is run by `check:review` before the release.
+  4. The landing specs wait for the camera's flight to end, not 500 ms (`landingClickWait`, `landingMark`,
+     `landingMarkMore`, `landingNeutral`, `landingVoyage`): no assertion changed.
+- **Consequences.** The gate's full e2e about 9 min here, a pin move's about 8; the review's suite about 9 min in
+  place of about 8 h. `relations1938` may be red by load at 8 workers and green alone, as the gate already judges.
+  Supersedes the 4-worker cap here (PLAN 1.42f still holds on SwiftShader) and amends ADR-825's "all of it".

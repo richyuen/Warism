@@ -63,7 +63,7 @@ test('with the mouse: the tooltip over a neutral coast says no landing; the refu
   await page.setViewportSize({ width: 1400, height: 800 });
   const div = await britain(page);
   await page.evaluate(([x, y]) => window.__warsim!.view!.showPlace(x + 0.5, y + 0.5), CALAIS);
-  await page.waitForTimeout(500);
+  await page.waitForFunction(() => !window.__warsim!.view!.controller.animating, null, { timeout: 15_000 });
   const box = (await page.locator('canvas').first().boundingBox())!;
   const [cx, cy] = [box.x + box.width / 2, box.y + box.height / 2];
   await page.mouse.move(cx + 3, cy + 3);

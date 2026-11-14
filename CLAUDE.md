@@ -29,12 +29,16 @@ Frozen records, searched and never edited: `PLAN.md`, `docs/PLAN_DONE.md`, `docs
   - Code: typecheck, lint, the unit tests whose imports reach a changed file (`vitest related`; all of
     them when something they stand on changed: `vitest.config.ts`, `tests/helpers/`, `data/`,
     `public/data/`, `tools/headless/`, `package.json`, the lock file), build, the e2e specs that
-    changed (all when a helper or the config changed, or the pin of seed 99 moved, ADR-825), and the
+    changed (all when a helper or the config changed; when the pin of seed 99 moved, those that step
+    the sim, ADR-825, ADR-1029), and the
     pinned hash of seed 99 when a sim input changed. A test red in a run is run again alone; red twice fails, unless it is on
     `tools/gate/knownRed.json` (machine-only reds, each with a BLOCKERS entry).
+  - The browser suite draws on the GPU on Windows at 8 workers (`tools/gate/render.ts`, ADR-1029; the whole
+    suite about 9 min); `E2E_RENDER=software` keeps SwiftShader. A test whose measure is SwiftShader's
+    picture is tagged `@swiftshader` (its own project); the perf specs stay on SwiftShader.
   - Run the whole unit suite by hand (`npm test`) when in doubt that the import graph covers a change.
-  - Run the specs of what you touch by hand (`npx playwright test <file>`; a perf spec with
-    `--project=perf --no-deps`). The pinned state hash of seed 99 after one year is
+  - Run the specs of what you touch by hand (`npx playwright test <file> --project=chromium
+    --project=swiftshader`; a perf spec with `--project=perf --no-deps`). The pinned state hash of seed 99 after one year is
     `tests/sweep/baselineHash.test.ts`: a rule change updates the pin and logs it in DECISIONS.
 - `npm run check:full`: every stage, whatever changed. `npm run check:review`: the same as a release
   check, each stage on its own, a failed test run again alone, resumable.

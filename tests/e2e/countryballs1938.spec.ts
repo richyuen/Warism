@@ -736,7 +736,9 @@ test('countryballs show their losses: cracks and plasters by the share of men le
 // thirds), at 10 m/px (T3, its eyes left out) and at 600 m/px (T1, the markers' balls, eyes and
 // all): the share of its pixels within 60 of its flag's top colour (≥ 0.4: its top shows), and the
 // share of black (≥ 0.2 on no Polish ball: the control). On 4a977fdb the German band was white.
-test('countryballs under a helmet show the flag that names them: German and Polish infantry apart', async ({ page }, info) => {
+// On SwiftShader (ADR-1029, ROADMAP R79b): on the GPU this measure reads otherwise; until that is answered, the
+// picture it was written for.
+test('countryballs under a helmet show the flag that names them: German and Polish infantry apart', { tag: '@swiftshader' }, async ({ page }, info) => {
   test.setTimeout(400_000);
   await page.setViewportSize({ width: 1400, height: 800 });
   await page.addInitScript(() => localStorage.setItem('warsim.unitLook', 'balls'));

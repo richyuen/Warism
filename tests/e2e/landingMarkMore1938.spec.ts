@@ -44,7 +44,7 @@ test('desk: Escape empties the selection, and the mark and the tooltip go at onc
   await page.setViewportSize({ width: 1600, height: 900 });
   await japanOne(page);
   await page.evaluate(([x, y]) => window.__warsim!.view!.showPlace(x, y), SHANGHAI);
-  await page.waitForTimeout(500);
+  await page.waitForFunction(() => !window.__warsim!.view!.controller.animating, null, { timeout: 15_000 });
   const box = (await page.locator('canvas').first().boundingBox())!;
   const [cx, cy] = [box.x + box.width / 2, box.y + box.height / 2];
   await page.mouse.move(cx + 3, cy + 3);
@@ -121,7 +121,7 @@ test.describe('a touch screen', () => {
       window.__warsim!.view!.select(0);
     });
     await page.evaluate(([x, y]) => window.__warsim!.view!.showPlace(x, y), FUZHOU);
-    await page.waitForTimeout(600);
+    await page.waitForFunction(() => !window.__warsim!.view!.controller.animating, null, { timeout: 15_000 });
     const box = (await page.locator('canvas').first().boundingBox())!;
     const [cx, cy] = [box.x + box.width / 2, box.y + box.height / 2];
     expect(await page.evaluate(() => window.__warsim!.player!.selectedCount.value)).toBe(1);
@@ -167,7 +167,7 @@ test("desk: all of Japan's divisions selected over Shanghai: the tooltip says ho
     return ids.length;
   }, JAP);
   await page.evaluate(([x, y]) => window.__warsim!.view!.showPlace(x, y), SHANGHAI);
-  await page.waitForTimeout(500);
+  await page.waitForFunction(() => !window.__warsim!.view!.controller.animating, null, { timeout: 15_000 });
   const box = (await page.locator('canvas').first().boundingBox())!;
   const [cx, cy] = [box.x + box.width / 2, box.y + box.height / 2];
   await page.mouse.move(cx + 3, cy + 3);

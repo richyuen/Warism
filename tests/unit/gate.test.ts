@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { e2eRuns, splitKnown } from '../../tools/gate/review';
-import { ALL_STAGES, changedFiles, gatedTrees, PIN_TEST, planE2e, planGate, planSweep, planUnit, worktreeTree } from '../../tools/gate/check';
+import { ALL_STAGES, changedFiles, gatedTrees, historySpecs, PIN_TEST, planE2e, planGate, planSweep, planUnit, runsTheSim, worktreeTree } from '../../tools/gate/check';
 
 // ADR-48, ADR-49: the gate is sized to what changed since HEAD. ADR-55: a clean tree that the
 // gate has already passed runs nothing. ADR-805: the plan's phase reviews no longer widen it; the
@@ -83,24 +83,52 @@ describe('gate plan (ADR-48, ADR-49)', () => {
     expect(planE2e([...code, 'tests/e2e/settle.ts'])).toMatchObject({ mode: 'full' });
     expect(planE2e([...code, 'playwright.config.ts'])).toMatchObject({ mode: 'full' });
     expect(planE2e(null)).toMatchObject({ mode: 'full' });
-    // ADR-825 (ROADMAP R19): the pin of seed 99 moved, with the rule that moved it: everything.
-    expect(planE2e(['src/sim/systems/elements.ts', PIN_TEST])).toMatchObject({ mode: 'full' });
+    // ADR-825 (ROADMAP R19), ADR-1029: the pin of seed 99 moved, with the rule that moved it: the
+    // specs whose world moves past its start, and the changed ones.
+    const history = (): string[] => ['tests/e2e/b1938.spec.ts'];
+    expect(planE2e(['src/sim/systems/elements.ts', PIN_TEST], history)).toMatchObject({ mode: 'changed', specs: ['tests/e2e/b1938.spec.ts'] });
+    expect(planE2e(['src/sim/systems/elements.ts', PIN_TEST, 'tests/e2e/a.spec.ts'], history)).toMatchObject({ mode: 'changed', specs: ['tests/e2e/a.spec.ts', 'tests/e2e/b1938.spec.ts'] });
+    expect(planE2e([PIN_TEST, 'tests/e2e/settle.ts'], history)).toMatchObject({ mode: 'full' });
     expect(planE2e(['src/sim/systems/elements.ts'])).toMatchObject({ mode: 'none' });
     // The critic's own files are not a change.
     expect(planE2e(['critic/scripts/x.spec.ts', 'src/app/hud.ts'])).toMatchObject({ mode: 'none' });
   });
 
+  // ADR-1029: a spec whose world never moves past its start cannot see a rule that moves the history.
+  it('a spec runs the sim when it steps it, starts its clock, loads a game or opens a page not paused', () => {
+    const none = (): null => null;
+    const still = "await page.goto('/?scenario=1938&paused=1&seed=99');\nawait page.evaluate(() => window.__warsim!.view!.select(3));";
+    expect(runsTheSim(still, none)).toBe(false);
+    expect(runsTheSim(`${still}\nawait page.evaluate(() => window.__warsim!.sim.step(24));`, none)).toBe(true);
+    expect(runsTheSim(`${still}\nawait page.getByTestId('pause-btn').click();`, none)).toBe(true);
+    expect(runsTheSim(`${still}\nawait page.keyboard.press('Space');`, none)).toBe(true);
+    expect(runsTheSim(`${still}\nawait page.getByTestId('settings-new-game').click();`, none)).toBe(true);
+    expect(runsTheSim("await page.goto('/?scenario=toy');", none)).toBe(true);
+    expect(runsTheSim("await page.goto('/');", none)).toBe(true);
+    expect(runsTheSim('await page.goto(url);', none)).toBe(true);
+    expect(runsTheSim('await page.goto(`/?scenario=1938h&paused=1&after=7`);', none)).toBe(true);
+    expect(runsTheSim('const x = 1;', none)).toBe(true);
+    // Through a helper of tests/e2e it imports.
+    const helper = (h: string): string | null => (h === 'reach' ? 'await page.evaluate(() => window.__warsim!.sim.step(1));' : null);
+    expect(runsTheSim(`import { reach } from './reach';\n${still}`, helper)).toBe(true);
+    expect(runsTheSim(`import { settle } from './settle';\n${still}`, helper)).toBe(false);
+    // This repository's specs: a battle needs its days; the camera spec has none.
+    const specs = historySpecs();
+    expect(specs).toContain('tests/e2e/battleView1938.spec.ts');
+    expect(specs).not.toContain('tests/e2e/camera.spec.ts');
+  });
+
   // A perf spec named alone ran the whole suite: the perf project depends on chromium (PLAN 4.7's tick).
   it('the e2e runs: a perf spec on its project without its dependency, the others on chromium', () => {
-    expect(e2eRuns(['tests/e2e/fire1938.spec.ts'])).toEqual([{ project: 'chromium', args: 'tests/e2e/fire1938.spec.ts --project=chromium' }]);
+    expect(e2eRuns(['tests/e2e/fire1938.spec.ts'])).toEqual([{ project: 'chromium', args: 'tests/e2e/fire1938.spec.ts --project=chromium --project=swiftshader' }]);
     expect(e2eRuns(['tests/e2e/provinces.perf.spec.ts'])).toEqual([{ project: 'perf', args: 'tests/e2e/provinces.perf.spec.ts --project=perf --no-deps' }]);
     expect(e2eRuns(['tests/e2e/a.spec.ts', 'tests/e2e/b.perf.spec.ts'])).toEqual([
-      { project: 'chromium', args: 'tests/e2e/a.spec.ts --project=chromium' },
+      { project: 'chromium', args: 'tests/e2e/a.spec.ts --project=chromium --project=swiftshader' },
       { project: 'perf', args: 'tests/e2e/b.perf.spec.ts --project=perf --no-deps' },
     ]);
-    // In full (ADR-779): chromium, then perf on its own (a red in chromium left perf not run).
+    // In full (ADR-779): chromium and swiftshader (ADR-1029), then perf on its own (a red in chromium left perf not run).
     expect(e2eRuns([])).toEqual([
-      { project: 'chromium', args: '--project=chromium' },
+      { project: 'chromium', args: '--project=chromium --project=swiftshader' },
       { project: 'perf', args: '--project=perf --no-deps' },
     ]);
   });

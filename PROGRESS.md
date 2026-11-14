@@ -291,3 +291,6 @@
 - R78c (ADR-1026): answered: the critic's out-of-battle sinkings are ships Japan's carriers sank, not its losses (270 → 185 in 3 years on 39061); `seaBattles` names the field `by`.
 - R78d (ADR-1027): answered: People's China's army after the track is worn by its wars (with the Soviet Union from day 420, a coalition from day 570) and rebuilt at 1 + income / 400 orders at a time.
 - R78e (ADR-1028): a strike named for the struck land's own city; the Ranking's Land list by land held, in km²; Uranus on 39701 answered; Germany's flag kept (the user). R78 done.
+- R79a (ADR-1029, the user's request): the browser suite on the GPU at 8 workers (the whole of it 8.6 min, about 8 h in
+  the review's chunks on SwiftShader); `check:review`'s suite one step; a pin move runs the 187 specs that step the sim;
+  the landing specs wait for the camera's flight. Two pixel tests on SwiftShader (`@swiftshader`) until R79b.

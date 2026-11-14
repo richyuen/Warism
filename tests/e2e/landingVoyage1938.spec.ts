@@ -69,7 +69,7 @@ test('an order over the sea: the tooltip says by sea; the panel says to port, wa
 
   // Over Belfast, the tooltip says the order goes by sea.
   await page.evaluate(([x, y]) => window.__warsim!.view!.showPlace(x, y), BELFAST);
-  await page.waitForTimeout(500);
+  await page.waitForFunction(() => !window.__warsim!.view!.controller.animating, null, { timeout: 15_000 });
   const box = (await page.locator('canvas').first().boundingBox())!;
   await page.mouse.move(box.x + box.width / 2 + 3, box.y + box.height / 2 + 3);
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);

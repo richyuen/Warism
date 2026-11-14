@@ -19,9 +19,11 @@ const record = (done: Record<string, string[]>, steps = ['lint', 'test', 'e2e:1'
 
 describe('npm run check:review (ADR-297)', () => {
   it('steps: the plain stages, the unit and sweep tests, a step a chunk of specs, the perf spec', () => {
-    expect(reviewSteps(2 * E2E_CHUNK + 1)).toEqual(['typecheck', 'lint', 'build', 'test', 'test:sweep', 'e2e:1', 'e2e:2', 'e2e:3', 'e2e:perf']);
-    expect(reviewSteps(E2E_CHUNK)).toContain('e2e:1');
-    expect(reviewSteps(E2E_CHUNK)).not.toContain('e2e:2');
+    // On SwiftShader in chunks; on the GPU the browser suite is one step (ADR-1029).
+    expect(reviewSteps(2 * E2E_CHUNK + 1, false)).toEqual(['typecheck', 'lint', 'build', 'test', 'test:sweep', 'e2e:1', 'e2e:2', 'e2e:3', 'e2e:perf']);
+    expect(reviewSteps(E2E_CHUNK, false)).toContain('e2e:1');
+    expect(reviewSteps(E2E_CHUNK, false)).not.toContain('e2e:2');
+    expect(reviewSteps(2 * E2E_CHUNK + 1, true)).toEqual(['typecheck', 'lint', 'build', 'test', 'test:sweep', 'e2e', 'e2e:perf']);
   });
 
   it('green: every step done and every red test known; a step not done or a red not known is not', () => {

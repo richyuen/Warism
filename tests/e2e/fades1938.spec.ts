@@ -54,7 +54,9 @@ const CROSSINGS: Crossing[] = [
   crossing('T1 → T0', 2000, 'markers', false),
 ];
 
-test('no popping: every tier change is a cross-fade whose frames differ by little, in both directions', async ({ page }, info) => {
+// On SwiftShader (ADR-1029, ROADMAP R79b): on the GPU this measure reads otherwise; until that is answered, the
+// picture it was written for.
+test('no popping: every tier change is a cross-fade whose frames differ by little, in both directions', { tag: '@swiftshader' }, async ({ page }, info) => {
   test.setTimeout(240_000);
   const evidence = process.env['EVIDENCE'] !== undefined;
   const out = evidence ? path.resolve(import.meta.dirname, '../../docs/evidence/2.7') : info.outputPath();
