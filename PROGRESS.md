@@ -136,3 +136,12 @@
   R82b) and `c68_nextline`: no day 6 June-25 July names D-Day (was 24 days), 0 page errors; the line fits the bar at
   1600 px. `tests/unit/trackTold1938h.test.ts`: a stage with its own window has no name (before a colon) of a named
   event of its window or the day before; red on the old note, green now.
+
+## 2026-11-14 — R82f: put to the user (ADR-1042, proposed)
+
+- HEAD (after R82d) has 3 wars over 4:1 at day 365 on the critic's ten (ITA vs POR 1:5, IRQ vs SAU 7:1, NSP vs FRA 1:9).
+  `tools/diag/pileSides.ts` reads each declaration at its birth: on those ten and 43101-43119 (odd), 16 born over 4:1
+  by nations on 11 of 20 seeds, 11 of them Italy (mostly with Germany) on a small member of the British-French
+  alliance, the count swollen by colonies beside Italy's Africa (ADR-889). By realm, 3: a nation alone on a member of
+  a large alliance (NSP on FRA, GER on SWI, HUN on AUT). 0 by nations means narrowing ADR-887/889 (the user's) or
+  fewer of 1938's wars, so the item waits on the user's choice; the loop takes R82g.

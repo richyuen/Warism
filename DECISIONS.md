@@ -68,6 +68,35 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1042 · 2026-11-14 · proposed, the user's decision — R82f: what "a pile-on" counts
+- **Context.** R82f (critic run 68's R68-N5): `c68_piles.ts 365 --plain` on 39139-39147 and 41139-41147, no war over
+  4:1 by count of nations. HEAD (after R82d) has 3 on those ten (ITA vs POR 1:5, IRQ vs SAU 7:1, NSP vs FRA 1:9), not
+  run 68's (each run's ten seeds read different wars; R82d moved the worlds). Read at their birth
+  (`tools/diag/pileSides.ts`, each declaration in its hour with its sides and the declarer's utility terms) on those
+  ten and ten unseen (43101-43119, odd): **16 declarations born over 4:1 by nations, on 11 of 20 seeds**. 11 of the 16
+  are Italy (aggression 80), most with Germany, on a small member of the British-French alliance: "2:12" is Italy and
+  Germany against Britain, France, the Netherlands, Switzerland, Luxembourg and seven of their colonies (Egypt, Sudan,
+  British East Africa, French West and Equatorial Africa, Tunisia; each beside Italy's Africa, ADR-889's reach). One is
+  an attacker's side: Iraq with Britain (its ally) and five British colonies on Saudi Arabia.
+- **The conflict (PROMPT step 4).** By nations, 0 needs one of: (1) the defender's allies no longer called at any
+  distance (ADR-887) or colonies beside the enemy no longer joining (ADR-889, the user's choice (a), 2026-11-08); or
+  (2) the AI not declaring these wars, most of which are 1938's war (Italy and Germany against the West). R53l's own bar
+  was this one, and the user accepted "Italy +1 ⚔ United Kingdom +10" (20887) as a front, ten colonies beside Italy's.
+- **Counted by realm** (a puppet with its overlord; the war chip's leader and its allies), the 16 are **3**, each a
+  nation alone on a member of a large alliance: Nationalist Spain on France 1:5 (41141; its utility 0.62: strength 0.01,
+  France at war 0.30, a claim 0.30), Germany alone on Switzerland 1:5 (41145), Hungary on Austria 1:6 (43109). The AI
+  weighs the target's allies at ALLY_WEIGHT 0.4 of their strength, and they join whole.
+- **Options.**
+  - (a) Recommended. The bar by realm (a colony counted with its ruler), and the AI judges a declaration by the sides
+    `declareWar` would call (one function for both), refusing one whose side would face over 4 realms to 1. It touches
+    only the lone attacker on a pact; ADR-887 and ADR-889 kept; the pin moves.
+  - (b) The bar by nations: colonies beside the enemy stay out of a war their ruler is called to as an ally (ADR-889
+    narrowed) and the defender's far allies join only within reach (ADR-887 narrowed). Fewer, smaller wars in 1938.
+  - (c) The bar as it stands, and the AI refuses any war whose sides by nations would be over 4:1: Italy's and
+    Germany's 1938 wars on the West mostly not declared (goal 1).
+  - (d) R82f closed as answered: the piles are fronts, as R53l's (a) said.
+- **Until the user decides** R82f waits (ROADMAP), and the loop takes R82g.
+
 ### ADR-1041 · 2026-11-14 · accepted — R82d: a war on a neighbour by a colony costs its distance
 - **Context.** R68-N2: France took Brazil's capital within two years of plain 1938 on 4 of 5 seeds (6161, 41161, 41163,
   41167), 8,220-9,172 km from Paris. Brazil is France's land neighbour by French Guiana (and Britain's by British

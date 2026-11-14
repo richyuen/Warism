@@ -51,6 +51,8 @@ Rules:
     not named as an event of its window (red on the old note).
   - [ ] R82f (R68-N5) Pile-ons at day 365: Germany against the Netherlands with 9-13 on the Dutch side on 4 of 5 new
     seeds. AT: `c68_piles.ts 365 --plain` on 39139-39147 and 41139-41147: no war over 4:1.
+    Waits on the user (ADR-1042, proposed): HEAD has 3 over 4:1 on the ten; at birth 16 on 20 seeds by nations, 3 by
+    realm; 0 by nations means narrowing ADR-887/889 (the user's) or fewer of 1938's wars. `tools/diag/pileSides.ts`.
   - [ ] R82g (run 68's AI nukes "not 9"; the user's choice, 2026-11-14) No AI warhead intercepted: 47 launches on
     37501/3 and 41501/3 over 22 years, 0 intercepted (run 67: 6 of 13 on 37501/3/7). Find whether a rule since run 67
     moved it (the pin moved with ADR-1025, ADR-1033, ADR-1041). AT: the interceptions on those seeds by `c68_nc`'s
