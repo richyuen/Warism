@@ -286,3 +286,5 @@
   aircraft 8, aiNukes 8); 0 blocking. Its findings filed as Batch 22, R78a-e, before the release checks (ADR-1023).
 - R78a (ADR-1024): the Normandy build-up and the Third Army: 97k Allied against 16.7k German in Normandy on 24 July,
   139k in France on 26 August; `trackFronts` counts arrivals in a window.
+- R78b (ADR-1025): a war across the sea costs 0.1 per 1,000 km to the target's capital: no Japanese declaration on a
+  European state on the critic's ten seeds, 2 declarations over 6,000 km (17). Pin 95d9261f; sweep limits 5 of 10.

@@ -121,7 +121,10 @@ test('ROADMAP R11: the relations graph names a war line\'s side, and zooms on a 
   test.setTimeout(240_000);
   const out = outDir(info);
   await page.setViewportSize({ width: 390, height: 844 });
-  await ready(page, '/?scenario=1938&paused=1&seed=4111');
+  // Seed 4113 since ROADMAP R78b (ADR-1025): seed 4111's day 120 graph names 19 nations whole and 18 zoomed, the
+  // zoomed view's middle holding fewer than the whole graph's; of 4111, 4113, 4117 and 4119 on days 90, 120 and 150 it
+  // alone names fewer zoomed (4113's day 120: 18, then 22).
+  await ready(page, '/?scenario=1938&paused=1&seed=4113');
   await step(page, 24 * 120);
   await page.getByTestId('relations-btn').click();
   const panel = page.getByTestId('relations-panel');

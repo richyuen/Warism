@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DECLARE_AT, RESTLESS, SEA_REACH_KM, WORLD_POWERS, greatPowers, neighbourMap, seaPowers, seaTargets, sides, strengths, warTarget, warUtility, worldPowers } from '../../src/sim/ai/strategic';
+import { DECLARE_AT, RESTLESS, SEA_REACH_KM, WORLD_POWERS, greatPowers, neighbourMap, seaPowers, seaTargetKm, seaTargets, seaWarCost, sides, strengths, warTarget, warUtility, worldPowers } from '../../src/sim/ai/strategic';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { destroyFormation } from '../../src/sim/systems/elements';
@@ -56,10 +56,17 @@ describe('a war across the sea (PLAN 7.82d)', () => {
     const u = (t: number): number => warUtility(w, ENG, t, attack, defence(t), 0, RESTLESS).u;
     const valid = (t: number): boolean => whyNotWar(w, ENG, t) === Refusal.None;
     expect(valid(ICE) && u(ICE) > DECLARE_AT).toBe(true);
-    // No land target: the sea's best over the bar (the highest utility, the lower id on a tie).
-    const best = over.filter(valid).reduce((b, t) => (u(t) > (b === 0 ? DECLARE_AT : u(b)) ? t : b), 0);
+    // No land target: the sea's best over the bar (the highest utility less the crossing's cost, R78b; the lower id on
+    // a tie).
+    const km = seaTargetKm(w, ENG);
+    const net = (t: number): number => u(t) - seaWarCost(w, ENG, t, km.get(t)!);
+    const best = over.filter(valid).reduce((b, t) => (net(t) > (b === 0 ? DECLARE_AT : net(b)) ? t : b), 0);
     expect(best).not.toBe(0);
     expect(warTarget(w, ENG, [], attack, defence, 0, RESTLESS)).toBe(best);
+    // R78b (critic run 67, R67-N2): the cost grows with the way to the target realm's capital: Iceland, 1,300 km from
+    // Glasgow, costs less than Japan across the world, by at least SEA_KM_COST for each 1,000 km between them.
+    expect(seaWarCost(w, ENG, ICE, km.get(ICE)!)).toBeLessThan(0.3);
+    expect(seaWarCost(w, ENG, id('JAP'), km.get(id('JAP'))!)).toBeGreaterThan(0.8);
     // A land target over the bar comes first, though the sea's may score higher.
     if (land.some((t) => valid(t) && u(t) > DECLARE_AT)) expect(land).toContain(warTarget(w, ENG, land, attack, defence, 0, RESTLESS));
     const other = over.find((t) => t !== ICE && valid(t) && u(t) > DECLARE_AT);

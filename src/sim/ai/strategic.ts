@@ -71,6 +71,13 @@ export const HEGEMON_SHARE = 0.25;
  * Mediterranean's length, the Bay of Bengal's crossing; not the Pacific or the Atlantic.
  */
 export const SEA_REACH_KM = 4000;
+/**
+ * The cost of a war across the sea in utility for each 1,000 km of sea to its target (R78b; critic run 67, R67-N2): in
+ * plain 1938's first 60 days Japan declared on a European state on 9 of 10 seeds (the Spanish Republic 12,739 km off),
+ * every coast a target to a power and the weakest scoring best. Measured to the target realm's capital (`warTarget`):
+ * 1.1 for Washington from Japan's ports; 0.2 for 2,000 km.
+ */
+export const SEA_KM_COST = 0.1;
 
 /** The war utility's weight of a neighbour's nuclear outrage (PLAN 6.5b). */
 export const PARIAH_WAR = 0.5;
@@ -326,30 +333,38 @@ export function rivalsApart(world: World, str: Float64Array, greats: Set<number>
  * group.
  */
 export function seaTargets(world: World, n: number, reach = Infinity): number[] {
+  return [...seaTargetKm(world, n, reach).keys()].sort((a, b) => a - b);
+}
+
+/**
+ * `seaTargets` with each one's distance (R78b): the km over the sea from the nearest of `n`'s transport groups at port to
+ * the nearest of its ports they reach.
+ */
+export function seaTargetKm(world: World, n: number, reach = Infinity): Map<number, number> {
   const groups = transportGroupsAtPort(world, n);
-  if (groups.length === 0) return [];
+  const out = new Map<number, number>();
+  if (groups.length === 0) return out;
   const c = world.formations.cols;
   const keys = waterKeys(world, n);
   const lift = new Set(groups.map((g) => keyAt(world, keys, c.x[g.fleet]!, c.y[g.fleet]!)));
   const z = seaOf(world);
   const water = portSeaOf(world);
   const ctl = world.cells.controller;
-  const out = new Set<number>();
   world.ports.forEach((p, i) => {
     const holder = ctl[p.cell]!;
     const at = water[i]!;
-    if (holder === 0 || holder === n || out.has(holder) || at < 0) return;
+    if (holder === 0 || holder === n || at < 0) return;
     const zone = z.zoneOf[at]!;
     if (zone === 0 || z.closed[zone] === 1 || !lift.has(keys[zone]!)) return;
     const sea = seaHolder(world, zone);
     if (sea !== 0 && world.wars.atWar(sea, n)) return;
-    if (reach < Infinity) {
-      const [px, py] = [(p.cell % world.cells.w) + 0.5, Math.floor(p.cell / world.cells.w) + 0.5];
-      if (!groups.some((g) => seaKm(world, c.x[g.fleet]!, c.y[g.fleet]!, px, py) <= reach)) return;
-    }
-    out.add(holder);
+    const [px, py] = [(p.cell % world.cells.w) + 0.5, Math.floor(p.cell / world.cells.w) + 0.5];
+    let km = Infinity;
+    for (const g of groups) km = Math.min(km, seaKm(world, c.x[g.fleet]!, c.y[g.fleet]!, px, py));
+    if (km > reach) return;
+    if (km < (out.get(holder) ?? Infinity)) out.set(holder, km);
   });
-  return [...out].sort((a, b) => a - b);
+  return out;
 }
 
 /**
@@ -366,19 +381,42 @@ export function seaTargets(world: World, n: number, reach = Infinity): number[] 
  * Republic of China on Taiwan declaring on the Ivory Coast and Liberia, 13,000 km off; People's China on Panama).
  */
 export function warTarget(world: World, n: number, neighbours: readonly number[], attack: number, defence: (t: number) => number, wars: number, restless: number, blocs: ReadonlySet<number> = new Set(), powers?: ReadonlySet<number>): number {
-  const pick = (among: readonly number[], skip?: ReadonlySet<number>): number => {
+  const pick = (among: readonly number[], skip?: ReadonlySet<number>, cost: (t: number) => number = () => 0): number => {
     let best = 0;
     let bestU = DECLARE_AT;
     for (const t of among) {
       if (skip?.has(t) || whyNotWar(world, n, t) !== Refusal.None) continue;
       // Deterrence (R67d, ADR-981): no war between the two blocs.
       if (!BLOC_PROBE.deterrenceOff && deterred(world, n, t, blocs)) continue;
-      const u = warUtility(world, n, t, attack, defence(t), wars, restless).u;
+      const u = warUtility(world, n, t, attack, defence(t), wars, restless).u - cost(t);
       if (u > bestU) [bestU, best] = [u, t];
     }
     return best;
   };
-  return pick(neighbours) || pick(seaTargets(world, n, powers === undefined || powers.has(n) ? Infinity : SEA_REACH_KM), new Set(neighbours));
+  const land = pick(neighbours);
+  if (land !== 0) return land;
+  // Across the sea (R78b; critic run 67, R67-N2: Japan on the Spanish Republic, 12,739 km off, on its second day): a
+  // target's utility less SEA_KM_COST for each 1,000 km to the capital of its realm (its overlord's for a puppet) from
+  // the nearest of `n`'s transport groups, or to its nearest port if that is further. The war is with the nation, not
+  // the port: by its ports Japan's next best were the United States by Guam (2,503 km) and the Netherlands by the
+  // Indies, every target weaker than it scoring alike (the strength term capped).
+  const far = seaTargetKm(world, n, powers === undefined || powers.has(n) ? Infinity : SEA_REACH_KM);
+  return pick([...far.keys()].sort((a, b) => a - b), new Set(neighbours), (t) => seaWarCost(world, n, t, far.get(t)!));
+}
+
+/**
+ * What a war across the sea on `t` costs `n` in utility (R78b): SEA_KM_COST for each 1,000 km to the capital of `t`'s
+ * realm from the nearest of `n`'s transport groups at port, or to its nearest port (`portKm`) if that is further.
+ */
+export function seaWarCost(world: World, n: number, t: number, portKm: number): number {
+  const nc = world.nations.cols;
+  const c = world.formations.cols;
+  const r = nc.overlord[t] !== 0 ? nc.overlord[t]! : t;
+  let km = portKm;
+  let cap = Infinity;
+  for (const g of transportGroupsAtPort(world, n)) cap = Math.min(cap, seaKm(world, c.x[g.fleet]!, c.y[g.fleet]!, nc.capitalX[r]!, nc.capitalY[r]!));
+  if (Number.isFinite(cap)) km = Math.max(km, cap);
+  return (SEA_KM_COST * km) / 1000;
 }
 
 /**

@@ -1140,6 +1140,8 @@ export class MapView {
   /** The panels over the map in canvas px (ROADMAP R34e: hero counters kept clear of them), read at most every COVER_MS. */
   private covered: ScreenRect[] = [];
   private coveredAt = -Infinity;
+  /** Whether the last frame drew a hero's counter: an idle map is drawn again when a panel over it moves (R78b). */
+  private heroesDrawn = false;
 
   /** The page's panels over the map, in the canvas's px (`covered`), read again after COVER_MS. */
   private coveredNow(now: number): readonly ScreenRect[] {
@@ -1152,9 +1154,16 @@ export class MapView {
       if (r.width <= 0 || r.height <= 0 || getComputedStyle(el).visibility === 'hidden') continue;
       out.push({ x: r.left - cr.left, y: r.top - cr.top, w: r.width, h: r.height });
     }
+    const moved = out.length !== this.covered.length || out.some((r, i) => {
+      const o = this.covered[i]!;
+      return r.x !== o.x || r.y !== o.y || r.w !== o.w || r.h !== o.h;
+    });
     this.covered = out;
+    this.coverMoved ||= moved;
     return out;
   }
+  /** Whether the panels over the map moved since the last frame's reading (`coveredNow`). */
+  private coverMoved = false;
   /** The air's fights, bombs and flak (PLAN 5.7b). */
   airFx = new AirFx();
   /** Nuclear bursts' flash, shockwave and cloud (PLAN 6.6b). */
@@ -2121,6 +2130,8 @@ export class MapView {
     // At the world's zoom a hero's counter is the others' size: at twice it, four covered Germany, France and Italy's
     // names in 1940 (ROADMAP R40d; critic run 48, R48-N3); twice from 5,000 m/px, blended between (R42c, R49-N1).
     this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls, heroes, heroScaleAt(this.metresPerPx), this.coveredNow(now));
+    this.heroesDrawn = heroes.length > 0;
+    this.coverMoved = false;
     // The voyages over the sea of the formations whose orders are shown (ROADMAP R17c), at every tier.
     const shownTo: OrderViewer = { picked: this.picked, selected: this.selectedFormations, player: this.selectionNation, nation: this.selected };
     const nationOf = new Map<number, number>();
@@ -3018,6 +3029,12 @@ export class MapView {
     const camMoved = c.cx !== this.lastCam.cx || c.cy !== this.lastCam.cy || c.scale !== this.lastCam.scale;
     const animating = this.unitsAnimating(now) || this.wrecks.animating(now) || this.hulls.animating(now) || (this.unitLook === 'balls' && this.deadBalls.animating(now));
     const interpolating = (this.tickMs > 0 && now - this.snapArrival < this.tickMs * 1.5) || animating || this.unitsAnimated;
+    // A panel that opens, closes or grows over an idle map moves the hero counters it covers (R78b: on a paused desk start
+    // the Ranking came after the last frame and Japan's two heroes stayed under it until the next).
+    if (this.heroesDrawn) {
+      this.coveredNow(now);
+      if (this.coverMoved) this.dirty = true;
+    }
     if (!(this.resize() || this.dirty || camMoved || interpolating)) return false;
     this.draw(now);
     this.dirty = false;

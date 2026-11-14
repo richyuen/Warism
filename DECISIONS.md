@@ -908,3 +908,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
   kept with the D-Day divisions to Cobra's stage, and the Third Army at Avranches on 1 August kept to Paris. Tool: a
   formation that comes into a stage's band in its window joins its side's cohort with its men then.
 - **Read.** As ROADMAP's R78a line. Track-only data and a diagnostic: plain games and the pin unchanged.
+
+### ADR-1025 · 2026-11-13 · accepted — R78b: a war across the sea costs its distance
+- **Context.** R67-N2: ADR-670 lets a power with no land target over the bar take the best sea target, and to a great
+  power every coast is one, the weakest scoring best: Japan on a European state in plain 1938's first 60 days on 9 of
+  10 seeds (the Spanish Republic, 12,739 km, on day 2).
+- **Decision.** The sea target's utility less `SEA_KM_COST` (0.1) per 1,000 km to the capital of its realm (its
+  overlord's for a puppet) from the nearest transport group at port, or to its nearest port if that is further
+  (`seaWarCost`). Measured to the port alone, the cost only moved Japan to the United States by Guam and the
+  Netherlands by the Indies: the war is with the nation.
+- **Read.** As ROADMAP's R78b line. The sweep's limits fall from 7 of 10 to 5 (R74h's), each on the largest income;
+  the column's mean is inside the spread of the last rule changes on these seeds, so no cause is named. The pin's move
+  logged in `tests/sweep/baselineHash.test.ts`. Tried and dropped: no cost on a power's land (limits 3 of 10).
+- **With it.** R34e's hero counters kept clear of panels on an idle map too: a frame is drawn when a panel over the map
+  moves and the last frame drew a hero (the gate's `heroesClear1938` 5521 red 2 of 3, on HEAD 1 of 3).

@@ -45,11 +45,23 @@ once; no critic run after them).
     engaged 162, 159, 190 of 200, the Allied cohort 235k of which 140k lost, the German 83-85k of which 26-39k;
     the whole range on 1938 10 of 23 large land fronts (bar 9), Uranus 5/8 at its hour as before. The nine replay
     tests green.
-  - [ ] R78b R67-N2: a great power declares across the world on a far minor (ADR-670's sea targets): Japan on a European
+  - [x] R78b R67-N2: a great power declares across the world on a far minor (ADR-670's sea targets): Japan on a European
     state in the first 60 days on 9 of 10 seeds, the United States on Lithuania once. A sea target weighed by its
     distance (or a claim, a neighbour's war, an ally's enemy). AT: `npx tsx critic/scripts/c67_firstdecl.ts 60` on
     39821-39839: no Japanese declaration on a European state, ≤ 5 declarations over 6,000 km; the sweep's verdicts
     kept, the pin's move logged.
+    Done (ADR-1025): a target across the sea scores its utility less `SEA_KM_COST` (0.1) for each 1,000 km to its
+    realm's capital (or its nearest port if further) from the nearest transport group at port. `c67_firstdecl.ts 60`
+    on 39821-39839: no Japanese declaration on a European state (before: 9 of 10 seeds; now Siam, 4,997 km, on 9), 2 of
+    96 declarations over 6,000 km (before 17 of 98). Pin c64a53fb → 95d9261f. Sweep on 1571-1580 (`2026-11-13-sweep-r78b`):
+    limits 5 of 10, not kept (R76c 7, R74h 5), each failure the largest income over 40 % (mean of the column 40.5 %;
+    R76c 34.2, R74h 41.9, R67's 39.5); riser, faller, no stasis, no break-up 10 of 10. A variant with no cost on a
+    power's land (Japan on the United States on 9 of 10 seeds) made it worse (limits 3, mean 43.1 %): dropped.
+    Seeded scenes moved: `farWait1938` to seed 5 from day 90, `enemyClickPanel1938` to seed 11's day 70,
+    `heroesRead1938`'s graph to seed 4113.
+    `heroesClear1938` on 5521 was red 2 of 3 alone, and 1 of 3 on HEAD before R78b: a paused desk start's Ranking came
+    after the last frame, and an idle map is not drawn again, so Japan's two heroes stayed under it. An idle map that
+    drew a hero is drawn again when a panel over it moves (`MapView.frameAt`): 5 of 5.
   - [ ] R78c R67-N3: Japan's fleets are lost out of battle far from home (39061: 194 ships, 56 in the Channel on days
     307-460; 32061: 179). A fleet losing ships month after month with no battle comes home or is laid up; the cause
     (strikes, shore fire, air) named first. AT: `seaBattles 39061 scenario --years 3` and `32061` under 60 Japanese

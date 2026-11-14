@@ -1621,7 +1621,8 @@ production and research. `src/sim/ai/`.
   transports at port reach, not iced or held by an enemy; a nation not among the powers only those within
   `SEA_REACH_KM`, 4000, of such a group, R74h). The powers (`seaPowers`, R76c): the seven of `worldPowers` (a
   share of the world's strength plus its income plus its warheads, the start card's measure) and the seven largest
-  navies. It declares on the best with probability
+  navies. A target across the sea scores its utility less `SEA_KM_COST` (0.1) for each 1,000 km to its realm's capital
+  from the nearest transport group, or to its nearest port if further (R78b). It declares on the best with probability
   `DECLARE_P` (0.25) × aggression ÷ 100.
 - **Threat pacts:** an unaligned nation whose neighbour of aggression ≥ `THREAT_AGGRESSION` (50) is over
   `THREAT_RATIO` (1.5) times stronger and not yet at war with it, with probability `ALLY_P` (0.3), joins
