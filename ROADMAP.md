@@ -35,7 +35,7 @@ Rules:
     are sent once, empty too. AT: the critic's `c68_undo2.mjs 41211` (nuke undone: 0 px differing from before) and
     `c68_loadruins.mjs 41203` (shot 02 equal to the fresh page's 04), as a spec comparing the picture before an act
     and after its Undo, not only the hash; every God tool in `godUndo1938.spec.ts` compared by picture too.
-  - [ ] R82b (R68-N4) Normandy fought for: the Allies take ground in D-Day's window (at least the Cotentin and Caen) and
+  - [x] R82b (R68-N4) Normandy fought for: the Allies take ground in D-Day's window (at least the Cotentin and Caen) and
     lose under 2 × the Germans. AT: `trackFronts` on 1938, 37701, 38701, 39701, 41701: D-Day's cells taken > 0 before
     the handover and the Allied loss under 2 × the German; the stage's other bars kept.
   - [ ] R82c (R68-N1) "Carrier strike ashore: United States on United States": the row names the enemy the wings were

@@ -68,6 +68,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1040 · 2026-11-14 · accepted — R82b: a stage's land taken in its window goes to its taker
+- **Context.** R68-N4: in D-Day's 50-day window the Allies took 0 of the beachhead's 51 cells and lost 137-142k
+  against 17-39k. The cause: Normandy is Vichy's land held by the Germans; a track arrival on land of an owner at peace
+  with it holds no cell (R74g), and land is only taken from a neighbouring cell held, so the Allies could take none; a
+  cell taken from the Germans would have gone to Vichy, its owner, at peace with the taker. Kept arrivals freed only 7
+  days before their stage was also tried: no difference (23 cells on 1938 either way), so it is not in.
+- **Decision.** In a stage's open window (`Track.takeOpen`): a track arrival holds its landing cell of that stage's land
+  whatever its owner, and a cell of it taken goes to the taker, not freed to its owner, as the stage will give it.
+- **Read.** `trackFronts` on 1938, 37701, 38701, 39701, 41701: 23, 23, 22, 17 and 15 of 51 cells taken in the window;
+  the Allies lose 26-34k against the Germans' 36-58k. Track-only: plain games and the pin unchanged.
+
 ### ADR-1039 · 2026-11-14 · accepted (the user's decision) — The critic runs when every batch is done
 - **The user:** "Can we make a rule to not run the critic until all open batches are done?"
 - **Decision:** the critic is spawned only when no batch in ROADMAP.md has an open item (PROMPT.md "RELEASES", the

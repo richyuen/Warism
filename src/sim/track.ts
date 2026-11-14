@@ -820,7 +820,9 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
       // Not of an owner it is at peace with (R74g: the Americans landing in Normandy on 5 June 1944, the land Vichy's,
       // held by the Germans): they stand on it, and the stage gives it.
       const owner = world.cells.owner[cell]!;
-      const ownerFoe = owner === holder || owner === 0 || world.wars.atWar(owner, id(e.nation));
+      // Unless it is the land of a stage open for its side (R82b, critic run 68's R68-N4: the D-Day divisions held no
+      // cell of Normandy, so they could take none from a neighbour, and the beachhead came only by the handover).
+      const ownerFoe = owner === holder || owner === 0 || world.wars.atWar(owner, id(e.nation)) || t.takeOpen(world, id(e.nation), holder, cell);
       if (why === Refusal.None && holder !== 0 && ownerFoe && world.wars.atWar(holder, id(e.nation))) world.setController(cell, id(e.nation), false, FlipCause.landing);
       // Kept where they arrive for the stage they came for (`kept`, R66d, ADR-976): the AI leaves them be until its
       // window of fighting opens (FIGHT_DAYS before its date, `playerHeld`), then has them for the attack; nobody

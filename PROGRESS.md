@@ -94,3 +94,11 @@
   the game that had it, against the same save in a fresh page (41203): **0 px** (before: 13,298). A city's name that
   takes its other free place after the load is left out of the count (its two boxes), and every city named before must
   be named again: a layout matter, not the world's.
+
+## 2026-11-14 — R82b: Normandy fought for (R68-N4, ADR-1040)
+
+- Cause: the Allies landed on Vichy-owned, German-held cells and were given none (R74g), so no neighbour cell to take
+  from; a taken cell would have gone back to Vichy. Now in a stage's open window the arrival holds its cell, and taken
+  stage land goes to the taker. `trackFronts` D-Day (51 cells): 1938 23 taken, Allies lost 26k vs 45k (was 0, 140k vs
+  26k); 37701 23, 34k vs 58k; 38701 22, 19k vs 53k; 39701 17, 34k vs 46k; 41701 15, 32k vs 36k. Kept-release at the
+  stage's own window tried, no difference, dropped. Gate green (two timing tests red in the run, green alone).
