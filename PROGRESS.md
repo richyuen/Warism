@@ -17,3 +17,13 @@
 - The user took the five recommendations and asked for the critic's items first, with a performance bar for the undo.
   A world save of seed 99 measured headless: 3.1-4.0 MB, save 50-52 ms, load 75-79 ms (years 0, 1, 5); the undo's five
   bars in ADR-1032. Batch 25, R81a-h, filed above Batch 24.
+
+## 2026-11-14 — R81a: a bloc is a defensive pact (ADR-1033)
+
+- Measured first (`tools/diag/farConquests.ts`): a free 1975 game took far capitals at 1.3-1.5 × plain 1938's rate per
+  nation, the excess NATO's members following a member's attack. Where the blocs are, a bloc is a defensive pact: none
+  of it called to a member's own war, to its defence the leader at any distance and the others within reach. On eight
+  unseen seeds far capitals per 100 nations 13.6 → 10.4 (plain 1938 10.4); first-month declarations × 0.98; blocs whole
+  and leaders apart 10 years after the track. The AT's own bar (≤ 1 a seed) re-scoped: plain 1938 has 9-12.
+- `tests/unit/blocDefensive1938h.test.ts` (red without the rule); `npm test` 2,444 of 2,446 green, the two timing tests
+  green alone. Plain games and the pin untouched (no blocs).

@@ -23,6 +23,10 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   alliances, great and nuclear powers, then every war declared, those between great powers and between blocs, the
   leaders' men and disbandings monthly for five years. Saves the world at the track's end to
   `.cache/afterTrack_<seed>.sav.gz` and loads it from there after (R67a; ~10 min the first time).
+- `npx tsx tools/diag/farConquests.ts <year|0> <after seed,...> [days = 730] [km = 500]`: a free game from a year of the
+  replay (its built start; 0: plain 1938): capitals taken, once a pair, those far (no land of the taker's realm within
+  `km` at the start), each in the taker's own war or joined (by which pact, on which side); the first 30 days'
+  declarations; means per 100 nations alive (R81a, ADR-1033; ~2 min a seed for two years).
 - `npx tsx tools/diag/fewNationWars.ts <N> <S0> [K] [Y]`: random worlds of N nations on K seeds, the day of each one's
   first war over Y years (R60d; ~25 s a seed at N = 3).
 - `npm run saves [-- <out> [last year]]`: 1938h's world on 1 January of each year of the track, gzipped, with

@@ -724,8 +724,8 @@ km², integers). A realm has one head: a puppet's overlord is never a puppet [AD
   attacker come only within `WAR_REACH_KM` (500) of the other side (`inReach`: land it controls, a
   spread over land and sea): its leader's realm, or any nation already on it, round by round until
   neither side grows, and a puppet only beside its overlord; the defender's allies and guarantors
-  keep their pact wherever they are [ADR-887, ADR-889]. A nation then stays out when it is `bound` to the
-  other side (at war with an enemy, a bond with it, a pledge either way, fighting beside it
+  keep their pact wherever they are [ADR-887, ADR-889], but a bloc's members (§7.2's blocs) [ADR-1033].
+  A nation then stays out when it is `bound` to the other side (at war with an enemy, a bond with it, a pledge either way, fighting beside it
   elsewhere) or is a `foe` of its own side (at war with one already on it) [ADR-808]; one in truce
   with the enemy leader is never called; the reach is asked again of those left, so one near only a
   nation that stayed out stays out too [ADR-889]. The two leaders and a named puppet stand. A guarantee
@@ -1639,6 +1639,9 @@ production and research. `src/sim/ai/`.
   Monthly, a bloc's leader aids a nation of neither bloc at war with a member of the other (R67e, ADR-990): AID_SHARE
   (5 %) of its income in gold, and while that side is losing a division of volunteers of its men and gold; at most
   AID_WARS (3) wars a month; a `BlocAid` row.
+  A bloc is a defensive pact (R81a, ADR-1033): none of it is called to a member's war of its own making (the attacker's
+  allies are not called when the attacker is of a bloc); to a member's defence its leader comes at any distance and its
+  other members only within reach, as an attacker's ally does; guarantors as before.
 
 ### 7.3 Operational AI
 `src/sim/ai/operational.ts`; every 6 hours, each nation at war with its army layer once a day

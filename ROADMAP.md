@@ -30,11 +30,16 @@ Rules:
 ## Batch 25 — run 67's "not 9" items (the user's decision, 2026-11-14, ADR-1032: before Batch 24)
 
 - [ ] R81 **Run 67's "not 9" items.**
-  - [ ] R81a The free world's far conquests after 1975 (design objection; emergent dynamics). Measured on HEAD first
+  - [x] R81a The free world's far conquests after 1975 (design objection; emergent dynamics). Measured on HEAD first
     (R78b's sea cost came after the critic's watch): a headless count of capitals taken in the first two years of a
     free 1975 start by a nation whose own capital is over 2,000 km from them, on 6161 and four seeds unseen. AT: at
     most 1 a seed on average (the critic's 6161: Jordan's, Damascus, Algiers in under two years), the 1975 first-month
     declarations still ≤ 1.2 × plain 1938's rate per nation; if HEAD already holds it, answered with the counts.
+    Done (ADR-1033): the bar re-scoped, plain 1938 itself at 9-12 a seed: far capitals (no land of the taker's realm
+    within 500 km at the start, once a pair) per 100 nations at most 1.2 × plain 1938's. HEAD × 1.30-1.5, 39 of 53
+    joined ones by NATO following a member's attack. A bloc a defensive pact (`declareWar`): on 40101-40115 13.6 →
+    10.4 per 100, plain 10.4 (× 1.00); first-month declarations × 0.98; blocs whole and leaders apart 10 years
+    (`afterTrack.ts 1938 10`). `tools/diag/farConquests.ts`; `tests/unit/blocDefensive1938h.test.ts`.
   - [ ] R81b A one-step undo of a God act (God Mode): the world as it was before the last act, from one save the
     worker holds; told in the bar and the ticker; ends nothing the act did not (the replay stays ended). AT: ADR-1032's
     five bars (the act +≤ 100 ms p95, no frame over 50 ms while saving, undo ≤ 500 ms p95, the tick ±3 % and one save

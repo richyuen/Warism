@@ -67,3 +67,34 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (4) the tick's mean with no act unchanged within ±3 % (paired runs), and the worker's memory at most one save more
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
+
+### ADR-1033 · 2026-11-14 · accepted — R81a: a bloc is a defensive pact; R81a's bar re-scoped
+- **Context.** Critic run 67's design objection: a free game from 1975 takes capitals far afield within months (Britain
+  Jordan's, Poland Algiers). R81a's AT, written before any measure, asked for at most 1 a seed of capitals taken over
+  2,000 km from the taker's capital in two years.
+- **Measured** (`tools/diag/farConquests.ts`, new): plain 1938 itself has 9-12 such a seed, so the bar was never
+  reachable and is re-scoped (my own unmeasured bar, not a user's). The measure too: a capital once for each taker and
+  loser (a moving capital fell again and again), and far when the taker's realm held no land within 500 km of it at the
+  start (great countries marching on a neighbour's capital are not the objection). On 6161 and 40011-40017 a free 1975
+  game took 21.6 far capitals a seed, 14.0 per 100 nations alive against plain 1938's 9.4 (× 1.5). Of those in a war
+  the taker did not lead, 39 of 53 came through NATO, on the attackers' side: NATO's members followed Turkey on Egypt
+  and Iraq and Greece on Algeria and took capitals 4,000-14,000 km from home. In a nation's own wars the rate per nation
+  was plain 1938's (7.1 against 6.3 per 100).
+- **Decision** (`declareWar`, `src/sim/systems/war.ts`): where the blocs are (ADR-981: the track's games once it has
+  ended, an arsenal in the world), a bloc is a defensive pact. None of it is called to a member's war of its own making
+  (an attacker of a bloc calls no ally); to a member's defence its leader comes at any distance and the other members
+  only within reach (`WAR_REACH_KM`), as an attacker's ally does (R53l); guarantors as before. Plain games, the replay
+  while it steers and the yearly starts are untouched (no blocs): the pin of seed 99 unchanged.
+- **The AT re-scoped:** far capitals per 100 nations alive in the first two years of a free 1975 game at most 1.2 ×
+  plain 1938's on the same seeds, read on seeds no tuning saw; the first month's declarations per nation at most 1.2 ×
+  plain 1938's (ADR-1015's bar).
+- **Read.** Eight unseen seeds (40101-40115, odd): far capitals per 100 nations 13.6 → 10.4, plain 1938 10.4 (× 1.30 →
+  × 1.00; paired difference −0.03, se 1.08); of 109 far capitals 105 now in the taker's own war. The first 30 days:
+  28 declarations on 5151, 6161, 40101, 40103 against plain 1938's 19, per nation × 0.98 (on 6161 alone × 1.32: its
+  1975 count 10 with or without the rule, the critic's; plain 1938's 5, 6 before R78b's pin). `afterTrack.ts 1938 10`:
+  both blocs whole every year (8 of 8, 14 of 14), their leaders never on opposite sides; 257 wars declared in ten years
+  (the critic's run before: 268).
+- **Stands on, checked green before and after:** ADR-887/889 (the reach; `realmWars`, `puppetDefended`, `alliances`
+  tests), ADR-981 (`blocs1938`), ADR-990 (`blocAid1938h`), ADR-1009/1015 (`trackFocus1938h`), and the unit suite
+  (`npm test`: 2,446, two timing tests red under load, green alone). `tests/unit/blocDefensive1938h.test.ts` (new) red
+  without the rule.

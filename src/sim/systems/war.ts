@@ -75,6 +75,7 @@ import { ATTACKERS, DEFENDERS, type War } from '../wars';
 import type { LandCounts } from '../landCounts';
 import { FlipCause, type World } from '../world';
 import { kmPerCell } from '../data/projection';
+import { blocsOf, strengths } from '../ai/strategic';
 
 export const WHITE_PEACE = 10;
 export const PUPPET_SCORE = 90;
@@ -415,6 +416,12 @@ export function declareWar(world: World, attacker: number, target: number, alone
       order.push(x);
     }
   };
+  // Where the blocs are (the track's games after it, ADR-981), a bloc is a defensive pact (ROADMAP R81a, ADR-1033): none
+  // of it is called to a member's war of its own making; to a member's defence the leader at any distance, the others
+  // within reach (below). Before, NATO's members followed Turkey on Egypt and Iraq and Greece on Algeria, and took
+  // capitals 4,000-14,000 km from home.
+  const blocs = world.track?.ended && world.warheads.size > 0 ? blocsOf(world, strengths(world)) : null;
+  const bloc = (n: number): boolean => blocs !== null && blocs.has(al.allianceOf(n)?.id ?? -1);
   add(ATTACKERS, defender, attacker);
   add(DEFENDERS, attacker, defender);
   if (!alone) {
@@ -424,7 +431,7 @@ export function declareWar(world: World, attacker: number, target: number, alone
       for (const m of allies(target)) add(DEFENDERS, attacker, m);
       for (const g of al.guarantorsOf(target)) add(DEFENDERS, attacker, g);
     }
-    for (const m of allies(attacker)) add(ATTACKERS, defender, m);
+    if (!bloc(attacker)) for (const m of allies(attacker)) add(ATTACKERS, defender, m);
   }
   // Within reach (ROADMAP R53l, ADR-887; R53k, ADR-889): an ally of the attacker, and a puppet of either side, join only
   // near the other side: its leader's realm, or any nation already on it, round by round until neither side grows (a
@@ -435,8 +442,14 @@ export function declareWar(world: World, attacker: number, target: number, alone
   // its colonies by France's).
   const realm = (l: number): number[] => withPuppets(world, l).concat(l === defender && target !== defender ? [target] : []);
   const seeds: [number[], number[]] = [realm(attacker), realm(defender)];
+  // A bloc's member called to the defenders joins within reach, as an attacker's ally does; its leader at any distance,
+  // a guarantor as before (ROADMAP R81a, ADR-1033).
+  const farBloc = (x: number): boolean => {
+    if (x === defender || x === target || !bloc(x) || al.allianceOf(x)!.leader === x) return false;
+    return !al.guarantorsOf(defender).includes(x) && !(target !== defender && al.guarantorsOf(target).includes(x));
+  };
   const reach = (sides: [number[], number[]]): [number[], number[]] => {
-    const keep: [Set<number>, Set<number>] = [new Set([attacker]), new Set([defender, ...sides[DEFENDERS].filter((x) => nc.overlord[x] === 0)])];
+    const keep: [Set<number>, Set<number>] = [new Set([attacker]), new Set([defender, ...sides[DEFENDERS].filter((x) => nc.overlord[x] === 0 && !farBloc(x))])];
     if (sides[DEFENDERS].includes(target)) keep[DEFENDERS].add(target);
     const placed = (x: number, s: number): boolean => nc.overlord[x] === 0 || x === target || keep[s]!.has(nc.overlord[x]!);
     for (let grew = true; grew; ) {
