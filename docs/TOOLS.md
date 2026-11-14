@@ -23,6 +23,10 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   alliances, great and nuclear powers, then every war declared, those between great powers and between blocs, the
   leaders' men and disbandings monthly for five years. Saves the world at the track's end to
   `.cache/afterTrack_<seed>.sav.gz` and loads it from there after (R67a; ~10 min the first time).
+- `npx tsx tools/diag/undoBars.ts <seed> <save.bin> [N = 20] [K = 2000]` (after `npm run build` and `npx vite preview
+  --port 5355 --host 127.0.0.1`): ROADMAP R81b's undo bars on the GPU on a loaded world: a God act's command to its
+  stats drawn with the undo's copy and without, the page's longest frame meanwhile, Undo to the loaded world drawn, and
+  the tick with an undo held and with none (ADR-1032, ADR-1034).
 - `npx tsx tools/diag/farConquests.ts <year|0> <after seed,...> [days = 730] [km = 500]`: a free game from a year of the
   replay (its built start; 0: plain 1938): capitals taken, once a pair, those far (no land of the taker's realm within
   `km` at the start), each in the taker's own war or joined (by which pact, on which side); the first 30 days'

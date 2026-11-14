@@ -374,9 +374,9 @@ export class SimClient {
     return () => this.refusedListeners.delete(l);
   }
 
-  /** Queues `cmd`; with `now` it is applied at once (between ticks; God Mode UI). */
-  command(cmd: Command, now = false): void {
-    this.send(now ? { type: 'cmd', cmd, now } : { type: 'cmd', cmd });
+  /** Queues `cmd`; with `now` it is applied at once (between ticks; God Mode UI). `act`: a God Mode act's, undoable (R81b). */
+  command(cmd: Command, now = false, act?: number): void {
+    this.send({ type: 'cmd', cmd, ...(now ? { now } : {}), ...(act !== undefined ? { act } : {}) });
   }
 
   /** One click's commands, applied together (ROADMAP R29a: the sim judges them as one hour's orders). */
@@ -385,8 +385,15 @@ export class SimClient {
     this.send({ type: 'cancelLanding', id });
   }
 
-  commands(cmds: Command[], now = false): void {
-    this.send(now ? { type: 'cmds', cmds, now } : { type: 'cmds', cmds });
+  commands(cmds: Command[], now = false, act?: number): void {
+    this.send({ type: 'cmds', cmds, ...(now ? { now } : {}), ...(act !== undefined ? { act } : {}) });
+  }
+
+  /** Undoes the last God Mode act (ROADMAP R81b): the world as it was before it, loaded as a `load` is. */
+  async undo(): Promise<SimStatus> {
+    const status = (await this.status({ type: 'undo' })).status;
+    for (const l of this.loadListeners) l();
+    return status;
   }
 
   setSpeed(speed: Speed): void {

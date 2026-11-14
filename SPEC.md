@@ -2104,6 +2104,15 @@ God's commands apply at once (`applyNow`), refused like any command (`inRange`, 
   puppet, leave, annex, donate; peace or to the death in each war; buffs (`BUFF_MAGNITUDE` 0.25 for
   `BUFF_HOURS` 720); revive, kill (two clicks). Placing forces for that nation (`spawnFormation`,
   `spawnFleet` free, `spawnWing`; no heroes).
+- **Undo** (ROADMAP R81b, ADR-1034): the last act taken back from the bar's Undo, which names the date it returns to.
+  An act is one click of a tool or the God tab, or one dragged stroke of the brush (`hud.command(cmd, 'act' | 'more')`;
+  the worker's `cmd` carries the act's id). Before an act's first command the worker copies the state's sections
+  (~10 ms on a late world) and packs them into a save's bytes 300 ms later (`PACK_AFTER_MS`, after the act's stats are
+  on the page); it holds one, the last act's, kept only if one of the act's commands was carried out. Any other
+  command (an order, an edit, a nation taken), a load and a new game drop it. `undo` loads it as a load does: the
+  world's hash is the one before the act and the game goes on as if never acted on, a replay of history the act ended
+  running again; the bar says "Undone: the world as it was on …" until the next act. Nothing is written to the
+  ticker or the history: they are of the world loaded.
 
 ### 9.5 Editor
 `src/sim/editor.ts`, `src/ui/EditorPanel.tsx`; docked right.

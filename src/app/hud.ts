@@ -479,7 +479,7 @@ export class Hud {
    * dragged stroke is one step of the editor's undo history.
    */
   private godPaint(tool: 'brush' | 'line', x: number, y: number, x2: number, y2: number, stroke: 'start' | 'more'): void {
-    this.command({ kind: 'editPaint', layer: 'nation', tool, x, y, x2, y2, r: BRUSH_RADIUS, value: this.selected.value, mask: null, stroke });
+    this.command({ kind: 'editPaint', layer: 'nation', tool, x, y, x2, y2, r: BRUSH_RADIUS, value: this.selected.value, mask: null, stroke }, stroke === 'start' ? 'act' : 'more');
   }
 
   /** A press at world (x, y): a brush stamps and opens a stroke; the line waits for the release. */
@@ -615,14 +615,36 @@ export class Hud {
   private commandFromTool = false;
   private picking = false;
 
-  /** Issues a God command, applied at once (also while paused). */
-  command(cmd: Command): void {
+  /**
+   * Issues a command, applied at once (also while paused). `god`: a God Mode act (ROADMAP R81b): 'act' begins one, the
+   * world saved before it for the bar's Undo; 'more' goes on with the one begun (a dragged stroke of the brush).
+   * Anything else (a player's order, an edit, a nation taken) is no act, and leaves nothing to undo.
+   */
+  command(cmd: Command, god?: 'act' | 'more'): void {
     this.refusal.value = 0;
     this.toolRefusal.value = 0;
     this.commandFromTool = this.picking;
     this.commandFor = this.selected.peek();
     if (cmd.kind === 'moveFormation' || cmd.kind === 'paradrop') this.orderedAt.value = new Map(this.orderedAt.peek()).set(cmd.id, this.orderSeq);
-    this.sim.command(cmd, true);
+    if (god === 'act') this.actSeq++;
+    if (god) this.undone.value = null;
+    this.sim.command(cmd, true, god ? this.actSeq : undefined);
+  }
+
+  /** The God Mode acts begun (R81b): each one's id, so the worker saves once for a dragged stroke. */
+  private actSeq = 0;
+  /** The date the last Undo went back to, said on the God Mode bar until the next act (R81b); null: none. */
+  readonly undone = signal<number | null>(null);
+
+  /** Undoes the last God Mode act (R81b): the world as it was before it; what was told of the world since goes. */
+  undoGod(tick: number): void {
+    this.dismissOrderNews();
+    this.refusal.value = 0;
+    this.toolRefusal.value = 0;
+    this.battleStart = null;
+    void this.sim.undo().then(() => {
+      this.undone.value = tick;
+    });
   }
 
   /**
@@ -692,33 +714,33 @@ export class Hud {
     if (tool === 'city') {
       // A city founded in the game (PLAN 7.4f18, AoC's God panel): a town at the cell clicked,
       // on the land of whoever holds it; the tool stays for the next one.
-      this.command({ kind: 'spawnCity', x: x + 0.5, y: y + 0.5, name: t('god.newCityName'), size: 2 });
+      this.command({ kind: 'spawnCity', x: x + 0.5, y: y + 0.5, name: t('god.newCityName'), size: 2 }, 'act');
       return true;
     }
     if (tool === 'raze') {
       // The city by the click (within two cells) is razed; the tool stays.
-      if (city !== 0) this.command({ kind: 'removeCity', city });
+      if (city !== 0) this.command({ kind: 'removeCity', city }, 'act');
       return true;
     }
     if (tool === 'nation') {
       // A nation set down (PLAN 7.4f26): the province clicked and the nearest of its holder's,
       // the size chosen in all; the tool stays for the next one, as Found city's.
-      if (province > 0) this.command({ kind: 'spawnNation', province, size: this.spawnSize.value });
+      if (province > 0) this.command({ kind: 'spawnNation', province, size: this.spawnSize.value }, 'act');
       return true;
     }
     if (tool === 'revolt') {
-      if (province > 0) this.command({ kind: 'spawnRevolt', province });
+      if (province > 0) this.command({ kind: 'spawnRevolt', province }, 'act');
       this.godTool.value = null;
     } else if (tool === 'nuke') {
       // God Mode's strike (PLAN 6.6a): a bomb at the cell clicked, at once.
-      this.command({ kind: 'godNuke', x: x + 0.5, y: y + 0.5, thermonuclear: this.nukeThermonuclear.peek() });
+      this.command({ kind: 'godNuke', x: x + 0.5, y: y + 0.5, thermonuclear: this.nukeThermonuclear.peek() }, 'act');
       this.godTool.value = null;
     } else if (tool === 'battle') {
       if (!this.battleStart) {
         this.battleStart = [x, y];
         return true;
       }
-      if (nation !== 0) this.command({ kind: 'forceBreakthrough', nation, x: this.battleStart[0], y: this.battleStart[1], toX: x, toY: y });
+      if (nation !== 0) this.command({ kind: 'forceBreakthrough', nation, x: this.battleStart[0], y: this.battleStart[1], toX: x, toY: y }, 'act');
       this.battleStart = null;
       this.godTool.value = null;
     }

@@ -2,6 +2,7 @@ import { SPAWN_NATION_MAX } from '../shared/commands';
 import type { Refusal } from '../shared/commands';
 import { REFUSAL_KEY, type GodToolId as GodTool } from './GodTab';
 import { t, type MessageKey } from './i18n';
+import { dateOfTick } from '../shared/calendar';
 
 const TOOLS: readonly GodTool[] = ['revolt', 'nation', 'battle', 'brush', 'nuke', 'city', 'raze'];
 /** The tools that act for the selected nation. */
@@ -22,6 +23,13 @@ export interface GodToolbarProps {
   refused?: number;
   /** While the historical track runs (ROADMAP R64a): any act ends it, said on the bar. */
   endsTrack?: boolean;
+  /** The tick the last God Mode act was made at, while it can be undone (ROADMAP R81b); absent: nothing to undo. */
+  undoTo?: number | undefined;
+  /** The tick the last Undo went back to, until the next act; null: none. */
+  undone?: number | null;
+  /** The game's first day, for the dates. */
+  startDay?: number;
+  onUndo?: (tick: number) => void;
 }
 
 /**
@@ -30,7 +38,11 @@ export interface GodToolbarProps {
  * shown as soon as God Mode is on, a nation selected or not. A nation's own God powers stay in the
  * God tab of its panel.
  */
-export function GodToolbar({ tool, onTool, spawnSize, onSpawnSize, thermonuclear, onThermonuclear, nationSelected, refused = 0, endsTrack = false }: GodToolbarProps) {
+export function GodToolbar({ tool, onTool, spawnSize, onSpawnSize, thermonuclear, onThermonuclear, nationSelected, refused = 0, endsTrack = false, undoTo, undone = null, startDay = 0, onUndo }: GodToolbarProps) {
+  const dateOf = (tick: number): string => {
+    const d = dateOfTick(startDay, tick);
+    return t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year });
+  };
   return (
     <div class="god-tools" data-testid="god-tools">
       <span class="god-tools-name">{t('god.tools')}</span>
@@ -44,6 +56,16 @@ export function GodToolbar({ tool, onTool, spawnSize, onSpawnSize, thermonuclear
           {t(`god.tool.${k}` as MessageKey)}
         </button>
       ))}
+      {undoTo !== undefined && onUndo ? (
+        <button type="button" class="bar-btn" data-testid="god-undo" title={t('god.undoTitle', { date: dateOf(undoTo) })} onClick={() => onUndo(undoTo)}>
+          {t('god.undo')}
+        </button>
+      ) : null}
+      {undone !== null && undoTo === undefined ? (
+        <span class="god-tools-hint" data-testid="god-undone" role="status">
+          {t('god.undone', { date: dateOf(undone) })}
+        </span>
+      ) : null}
       {tool === 'nuke' ? (
         <select class="god-tools-pick" data-testid="god-nuke-size" value={thermonuclear ? 'thermonuclear' : 'fission'} onChange={(e) => onThermonuclear((e.currentTarget as HTMLSelectElement).value === 'thermonuclear')}>
           <option value="fission">{t('god.nuke.fission')}</option>

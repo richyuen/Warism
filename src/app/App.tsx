@@ -188,6 +188,10 @@ export function App({
               nationSelected={hud.selected.value !== 0}
               refused={hud.toolRefusal.value}
               endsTrack={stats.trackNext !== undefined}
+              undoTo={stats.godUndo}
+              undone={hud.undone.value}
+              startDay={hud.startDay}
+              onUndo={(tick: number) => hud.undoGod(tick)}
             />
           ) : null
         }
@@ -455,7 +459,7 @@ export function App({
                   nukesEnabled: stats.nukesEnabled,
                   rules: stats.rules,
                   refusal: hud.refusal.value,
-                  onCommand: (c) => hud.command(c),
+                  onCommand: (c) => hud.command(c, 'act'),
                   endsTrack: stats.trackNext !== undefined,
                   place: player
                     ? { templates: hud.templates.value, armed: player.placeFor.value === nation.id ? player.placing.value : null, onArm: (t) => player.armPlace(t, nation.id) }

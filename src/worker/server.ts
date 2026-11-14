@@ -86,6 +86,8 @@ import { Sim } from '../sim/sim';
 import { CONTACT_CELLS, cellDist, contactsOf, deployOf, elementFacing, elementIndex, slotCount, slotPlace, wrapDx } from '../sim/systems/elements';
 import { blockReach, SLOT_SPACING } from '../sim/core/pose';
 import { upgradeState } from '../sim/core/upgrade';
+import { encodeSections, type Section } from '../sim/core/sections';
+import { collectSections } from '../sim/core/state';
 import { AssetStore } from './assets';
 import { airOf, buildMapCaches, Domain, portSeaOf, seaOf, TILE, type World } from '../sim/world';
 import { airHolders } from '../sim/systems/airSuperiority';
@@ -150,6 +152,17 @@ function falloutOf(world: World, n: number): number {
 function meansOf(world: World, n: number): { bombers: number; base: string | null; missiles: boolean } {
   const m = deliveryMeans(world, n);
   return { bombers: m.bombers, base: m.base >= 0 ? world.airbases[m.base]!.name : null, missiles: m.missiles };
+}
+
+/** How long after a God Mode act its undo's copy is packed (R81b): after the act's stats are on the page. */
+const PACK_AFTER_MS = 300;
+
+/** The world before a God Mode act (R81b): its sections copied, or packed into a save's bytes. */
+interface UndoWorld {
+  raw: Section[] | null;
+  bytes: Uint8Array | null;
+  tick: number;
+  act: number;
 }
 
 export class SimServer {
@@ -262,6 +275,75 @@ export class SimServer {
   /** Whether the game pauses at the tick of a nuclear strike (PLAN 7.109a): the host's setting, kept here so the pause is not a statistics message late. */
   private nukePause = false;
 
+  /** What the worker remembered of the world before a load (or an undo): another world now. */
+  private loaded(): void {
+    this.worldNo++;
+    this.newsFrom = -1;
+    this.labelVersion = -1; // the controller layer was replaced wholesale
+    this.unrestVersion = -1;
+    this.falloutSent = { day: -1, cells: -1 };
+    this.ruinsSent = { day: -1, count: -1 };
+    this.seaZonesSent = null;
+    this.seaHoldersSent = '';
+    // The loaded game's holders, at once (PLAN 5.8n); `airShown` outlives it, as `seaShown`.
+    this.airZonesSent = null;
+    this.airHoldersSent = '';
+    this.airDay = -1;
+    this.ordered.clear();
+    this.playerFleets.clear();
+    this.clearLandingRows();
+    this.statsTick = -1;
+    this.lastStatsMs = -1;
+    this.resetStreams();
+    this.undoHeld = null;
+    this.undoNext = null;
+  }
+
+  /**
+   * The world before the last God Mode act (ROADMAP R81b, ADR-1034), for a one-step undo: one save held, never more.
+   * `undoNext` is the world taken before a new act's first command; it becomes the held one only if one of the act's
+   * commands is carried out (an act refused whole keeps the act before it undoable). Taken as a copy of the state's
+   * sections (`raw`, ~10 ms and ~40 MB on a late 1938 world), packed into a save's bytes (~50 ms in Node, ~95 in the
+   * browser's worker; ~4 MB) `PACK_AFTER_MS` after the act (`packUndo`), once its stats are on the page: the act waits
+   * for the copy only.
+   */
+  private undoHeld: UndoWorld | null = null;
+  private undoNext: UndoWorld | null = null;
+
+  /** The held world packed into a save's bytes, its copy let go (R81b). */
+  private packUndo(): void {
+    const u = this.undoHeld;
+    if (u?.raw) {
+      u.bytes = encodeSections(u.raw);
+      u.raw = null;
+    }
+  }
+
+  /**
+   * Before a command is taken: a God Mode act's first command saves the world (its later ones, the strokes of one
+   * drag, do not); any other command (a player's order, an edit, a nation taken) drops the undo, so an undo never
+   * takes back more than the act and the time since it.
+   */
+  private beforeAct(act: number | undefined, now = false): void {
+    if (act === undefined || !now) {
+      this.undoHeld = null;
+      this.undoNext = null;
+      return;
+    }
+    if (this.undoHeld?.act === act || this.undoNext?.act === act) return;
+    const sim = this.requireSim();
+    this.undoNext = { raw: collectSections(sim.world.parts()).map((x) => ({ ...x, data: x.data.slice() })), bytes: null, tick: sim.tick, act };
+  }
+
+  /** The God Mode act undone: the world held before it, loaded as a `load` is. */
+  private undoAct(): void {
+    const held = this.undoHeld;
+    if (!held) return;
+    this.packUndo();
+    this.requireSim().load(held.bytes!);
+    this.loaded();
+  }
+
   /** Takes a command for the next tick boundary and notes a player's order to tell what becomes of it; false when refused. */
   private take(cmd: Command): boolean {
     const sim = this.requireSim();
@@ -293,7 +375,19 @@ export class SimServer {
    * next step would give (PLAN 1.32b); the snapshot and stats follow. Plain commands stay pending.
    */
   private applyNow(): void {
-    this.requireSim().applyNow((w) => this.drainEvents(w));
+    this.requireSim().applyNow((w) => {
+      // A God Mode act's save is held once one of its commands is carried out (R81b).
+      if (this.undoNext) {
+        const ev = w.out.events;
+        for (let i = 0; i < ev.length; i += 6)
+          if (ev[i + 1] === EventKind.CommandApplied) {
+            this.undoHeld = this.undoNext;
+            break;
+          }
+        this.undoNext = null;
+      }
+      this.drainEvents(w);
+    });
     this.forceSend = true;
     // God actions skip the (cheap) stats throttle, so panels update on the click. Labels
     // keep theirs (~40 ms a derivation; brush strokes come in bursts) and follow within
@@ -301,6 +395,12 @@ export class SimServer {
     this.statsTick = -1;
     this.lastStatsMs = -1;
     this.maybeSend();
+    // Packed once the act's stats have gone out (the stats pump runs after this message): the act waits for the copy only.
+    const held = this.undoHeld;
+    if (held?.raw)
+      setTimeout(() => {
+        if (this.undoHeld === held) this.packUndo();
+      }, PACK_AFTER_MS);
   }
 
   handle(msg: ToWorker, nowMs: number): void {
@@ -344,10 +444,17 @@ export class SimServer {
         this.reply(msg.reqId);
         break;
       case 'cmd':
+        this.beforeAct(msg.act, msg.now);
         if (this.take(msg.cmd) && msg.now) this.applyNow();
+        break;
+      case 'undo':
+        this.undoAct();
+        this.reply(msg.reqId);
+        this.warmLanes();
         break;
       case 'cancelLanding': {
         if (!this.sim) break;
+        this.beforeAct(undefined);
         const cmds = this.cancelOrders(this.sim.world, msg.id);
         for (const cmd of cmds) this.take(cmd);
         break;
@@ -356,6 +463,7 @@ export class SimServer {
         // One click's commands (ROADMAP R29a; critic run 40, R40-B2): all taken, then applied
         // together, so the sim judges them as one hour's orders, not one division at a time.
         let any = false;
+        if (this.sim) this.beforeAct(msg.act, msg.now);
         if (this.sim) this.noteCancels(this.sim.world, msg.cmds);
         for (const cmd of msg.cmds) any = this.take(cmd) || any;
         if (any && msg.now) this.applyNow();
@@ -419,24 +527,7 @@ export class SimServer {
         const track = this.requireSim().world.track;
         const built = msg.after !== undefined ? this.requireSim().hash() : undefined;
         if (msg.after !== undefined && track) track.afterSeed = msg.after >>> 0;
-        this.worldNo++;
-        this.newsFrom = -1;
-        this.labelVersion = -1; // the controller layer was replaced wholesale
-        this.unrestVersion = -1;
-        this.falloutSent = { day: -1, cells: -1 };
-        this.ruinsSent = { day: -1, count: -1 };
-        this.seaZonesSent = null;
-        this.seaHoldersSent = '';
-        // The loaded game's holders, at once (PLAN 5.8n); `airShown` outlives it, as `seaShown`.
-        this.airZonesSent = null;
-        this.airHoldersSent = '';
-        this.airDay = -1;
-        this.ordered.clear();
-        this.playerFleets.clear();
-        this.clearLandingRows();
-        this.statsTick = -1;
-        this.lastStatsMs = -1;
-        this.resetStreams();
+        this.loaded();
         if (up) {
           const s = this.requireSim();
           this.post({ type: 'reply', reqId: msg.reqId, status: { tick: s.tick, hash: s.hash(), upgraded: { fileHash: up.fileHash, added: up.added } } }, []);
@@ -522,6 +613,8 @@ export class SimServer {
     this.sim = new Sim(init);
     this.worldNo++;
     this.newsFrom = -1;
+    this.undoHeld = null;
+    this.undoNext = null;
     // Real-map scenarios get nation labels; province names name spawned nations.
     this.provinceNames = init.assets ? (JSON.parse(new TextDecoder().decode(init.assets.admin1Meta)) as Admin1Meta[]).map(provinceLabel) : null;
     this.labelVersion = -1;
@@ -766,7 +859,7 @@ export class SimServer {
     const news = this.newsFrom < 0 ? [] : tickerNews(world, this.newsFrom);
     const strikes = this.newsFrom < 0 ? [] : strikeRows(world, this.newsFrom, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? '');
     this.newsFrom = world.history.length;
-    this.post({ type: 'nationStats', tick: world.tick, nations, wars, dead, lives: this.lives.of(world), aiEnabled: world.settings.aiEnabled, nukesEnabled: world.settings.nukesEnabled, rules: { winnerTakesAll: world.settings.winnerTakesAll, revoltMode: world.settings.revoltMode, ceMode: world.settings.ceMode }, player: world.settings.player, playerAi: world.playerAi, edits: { undo: world.edits.undo.length, redo: world.edits.redo.length }, ticker: tickerRows(world, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? ''), news, strikes, world: this.worldNo, wings: playerWings(world), ...trackNext(world) }, []);
+    this.post({ type: 'nationStats', tick: world.tick, nations, wars, dead, lives: this.lives.of(world), aiEnabled: world.settings.aiEnabled, nukesEnabled: world.settings.nukesEnabled, rules: { winnerTakesAll: world.settings.winnerTakesAll, revoltMode: world.settings.revoltMode, ceMode: world.settings.ceMode }, player: world.settings.player, playerAi: world.playerAi, edits: { undo: world.edits.undo.length, redo: world.edits.redo.length }, ...(this.undoHeld ? { godUndo: this.undoHeld.tick } : {}), ticker: tickerRows(world, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? ''), news, strikes, world: this.worldNo, wings: playerWings(world), ...trackNext(world) }, []);
   }
 
   /**

@@ -65,13 +65,19 @@ export type ToWorker =
    * A command for the next tick boundary. `now` (God Mode UI, PLAN 1.32b) applies it at once,
    * between ticks, as `Sim.applyNow` does in Node; a plain `cmd` stays pending until the next step.
    */
-  | { type: 'cmd'; cmd: Command; now?: boolean }
+  | { type: 'cmd'; cmd: Command; now?: boolean; act?: number }
   /**
    * One click's commands (ROADMAP R29a; critic run 40, R40-B2): taken in order and, with `now`, applied
    * together at once, so the sim judges the click's orders as one hour's (`noteLeaving`,
    * `tellLandingsLeft`), not one division at a time.
    */
-  | { type: 'cmds'; cmds: Command[]; now?: boolean }
+  | { type: 'cmds'; cmds: Command[]; now?: boolean; act?: number }
+  /**
+   * The world as it was before the last God Mode act (ROADMAP R81b, ADR-1034): a God Mode command carries its act's
+   * `act` (one click, or one dragged stroke of the brush), and the worker saves the world before the first command of
+   * each new act; any other command drops the save. `undo` loads it, as a `load` does.
+   */
+  | { type: 'undo'; reqId: number }
   /** A landing's cancel from its row (ROADMAP R48a): those aboard sail back to its port, those ashore stop where they stand. */
   | { type: 'cancelLanding'; id: number }
   | { type: 'hash'; reqId: number }
@@ -483,7 +489,7 @@ export type FromWorker =
   /** Nation label curves (PLAN 1.29; LABEL_STRIDE records) and per-label names (i18n key, or '=' + literal). */
   | { type: 'labels'; data: Float64Array; names: string[] }
   /** Per-nation panel data and active wars (PLAN 1.31), at most once a second while ticks advance; the ticker's rows (PLAN 3.12c), the kinds of every major event since the message before (`news`, PLAN 3.12Rh2: the ticker's rows are the last five), and the number of the worker's world, which a new game or a load changes (PLAN 3.12d). */
-  | { type: 'nationStats'; tick: number; nations: NationStat[]; wars: WarStat[]; dead: { id: number; name: string; color: number }[]; lives: NationLife[]; aiEnabled: boolean; nukesEnabled: boolean; rules: WorldRules; player: number; playerAi: number; edits: { undo: number; redo: number }; ticker: TickerRow[]; news: number[]; strikes: TickerRow[]; world: number; wings: PlayerWing[]; trackNext?: TrackNext };
+  | { type: 'nationStats'; tick: number; nations: NationStat[]; wars: WarStat[]; dead: { id: number; name: string; color: number }[]; lives: NationLife[]; aiEnabled: boolean; nukesEnabled: boolean; rules: WorldRules; player: number; playerAi: number; edits: { undo: number; redo: number }; godUndo?: number; ticker: TickerRow[]; news: number[]; strikes: TickerRow[]; world: number; wings: PlayerWing[]; trackNext?: TrackNext };
 
 /** While the historical track runs (ROADMAP R62j1): its next event that has a name, and its hour. */
 export interface TrackNext {

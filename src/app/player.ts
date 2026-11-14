@@ -295,7 +295,7 @@ export class PlayerControl {
     if (t !== null && this.placeFor.value !== 0) {
       const domain = this.hud.templates.peek()[t]?.domain ?? 0;
       const at = { nation: this.placeFor.value, x: x + 0.5, y: y + 0.5, template: t };
-      this.hud.command(domain === 1 ? { kind: 'spawnFleet', ...at, free: true } : domain === 2 ? { kind: 'spawnWing', ...at } : { kind: 'spawnFormation', ...at, strength: 0 });
+      this.hud.command(domain === 1 ? { kind: 'spawnFleet', ...at, free: true } : domain === 2 ? { kind: 'spawnWing', ...at } : { kind: 'spawnFormation', ...at, strength: 0 }, 'act');
       return true;
     }
     const n = this.nation.value;

@@ -40,11 +40,14 @@ Rules:
     joined ones by NATO following a member's attack. A bloc a defensive pact (`declareWar`): on 40101-40115 13.6 →
     10.4 per 100, plain 10.4 (× 1.00); first-month declarations × 0.98; blocs whole and leaders apart 10 years
     (`afterTrack.ts 1938 10`). `tools/diag/farConquests.ts`; `tests/unit/blocDefensive1938h.test.ts`.
-  - [ ] R81b A one-step undo of a God act (God Mode): the world as it was before the last act, from one save the
-    worker holds; told in the bar and the ticker; ends nothing the act did not (the replay stays ended). AT: ADR-1032's
-    five bars (the act +≤ 100 ms p95, no frame over 50 ms while saving, undo ≤ 500 ms p95, the tick ±3 % and one save
-    held, the hash and the run after an undo bit for bit) on 7019's year-20 world; a Playwright spec of each God tool
-    undone; diploInvariants and worldInvariants after an undo on two seeds.
+  - [x] R81b A one-step undo of a God act (God Mode): the world as it was before the last act, from one copy the
+    worker holds; told on the bar (ADR-1034: not the ticker, and the replay runs again if the act ended it, as bar 5's
+    "bit for bit" needs). AT: ADR-1032's five bars (the act +≤ 100 ms p95, no frame over 50 ms while saving, undo
+    ≤ 500 ms p95, the tick ±3 % and one save held, the hash and the run after an undo bit for bit) on 7019's year-20
+    world; a Playwright spec of each God tool undone; diploInvariants and worldInvariants after an undo on two seeds.
+    Done: on the GPU (`tools/diag/undoBars.ts`) the act +15.5 ms p95, longest frame 16.8 ms, undo p95 317 ms, the tick
+    × 1.005; `tests/unit/godUndo1938.test.ts` (hash and 30 days bit for bit on 5 and 7, one save, the rules after an
+    undone revolt on 5 and 7, the replay running again); `tests/e2e/godUndo1938.spec.ts` (nine tools undone).
   - [ ] R81c A burst readable at world zoom (AI nukes, map): at 937 and 3,000 m/px a burst a mark of at least 16 px
     across with its ring, for at least 10 s at Speed x1, not a smudge. AT: the mark's size and lifetime read at both
     zooms on the critic's 7019 year-20 strike and God's H-bomb on Paris; shots looked at; frame budgets kept.

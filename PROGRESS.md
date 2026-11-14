@@ -27,3 +27,11 @@
   and leaders apart 10 years after the track. The AT's own bar (≤ 1 a seed) re-scoped: plain 1938 has 9-12.
 - `tests/unit/blocDefensive1938h.test.ts` (red without the rule); `npm test` 2,444 of 2,446 green, the two timing tests
   green alone. Plain games and the pin untouched (no blocs).
+
+## 2026-11-14 — R81b: a one-step undo of a God Mode act (ADR-1034)
+
+- The bar's Undo takes back the last act: the worker copies the world before each act (one held) and loads it. Told on
+  the bar only, and a replay the act ended runs again, as ADR-1032's bar 5 (bit for bit) needs. Copy at the act, packed
+  300 ms after: the save's ~95 ms in the browser had made the act +108 ms.
+- On the GPU, 7019 year 20: the act +15.5 ms p95, longest frame 16.8 ms, undo p95 317 ms, tick × 1.005.
+  `tests/unit/godUndo1938.test.ts` 6/6, `tests/e2e/godUndo1938.spec.ts` (nine tools undone by their buttons) green.

@@ -68,6 +68,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1034 · 2026-11-14 · accepted — R81b: the God Mode undo; what it tells, and the replay
+- **The conflict:** R81b's line said the undo is "told in the bar and the ticker" and "ends nothing the act did not (the
+  replay stays ended)"; ADR-1032's bar 5, the user's, says after an undo the hash is the one before the act and the run
+  goes on bit for bit as if never acted on. A ticker row written into the world, or the replay kept ended, changes the
+  hash. Bar 5 wins: the undo is said on the God Mode bar only ("Undone: the world as it was on …", until the next act),
+  and an act that ended the replay is undone with the replay running again. Said first to the user in the next message.
+- **Decision:** a God Mode act is one click of a tool or the God tab, or one dragged stroke of the brush, by its sender
+  (`hud.command(cmd, 'act' | 'more')`; the editor, a player's orders and setPlayer send none). The worker copies the
+  state's sections before an act's first command and holds one; it is kept only if one of the act's commands was
+  carried out; any other command, a load and a new game drop it; `undo` loads it through the load's own reset.
+- **The bars' first read failed bar 1:** a save in the browser's worker takes ~95 ms (50 in Node), and the act waited
+  for it (+108 ms p95). The copy is of the sections (~10 ms, ~40 MB for a moment), packed into a save's bytes 300 ms
+  after the act (`PACK_AFTER_MS`), once its stats are on the page.
+- **Read** (`tools/diag/undoBars.ts`, RTX 4070 Ti, 7019 year 20, 20 a bar): the act's command to its stats drawn p95
+  57.2 ms against 41.7 with no copy (+15.5, bar 100); the page's longest frame in the acts' windows 16.8 ms (bar 50);
+  Undo to the loaded world drawn median 314 ms, p95 317, max 415 (bar 500); the tick with an undo held / none over six
+  alternated pairs of 2,000 ticks from one save × 1.005 (bar ±3 %). Bar 5 and the one save:
+  `tests/unit/godUndo1938.test.ts`; the world's and diplomacy's rules hold after an undone revolt on seeds 5 and 7.
+
 ### ADR-1033 · 2026-11-14 · accepted — R81a: a bloc is a defensive pact; R81a's bar re-scoped
 - **Context.** Critic run 67's design objection: a free game from 1975 takes capitals far afield within months (Britain
   Jordan's, Poland Algiers). R81a's AT, written before any measure, asked for at most 1 a seed of capitals taken over
