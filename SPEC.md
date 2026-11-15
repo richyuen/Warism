@@ -1771,8 +1771,10 @@ to 27 July 1953, then sets the world free.
   a nation), the track ends for good: every switch returns to the usual rules, and the History has a row
   saying when and why. The occupations it excused go back in that hour: every cell held by a nation at peace with its
   owner returns to the owner, as at a peace, but a cell the intervening command itself changed (R84a, ADR-1060). Before
-  that, each war a hold of the timeline's freezes in that hour makes a white peace: the score the hold kept buys no land
-  (R84e, ADR-1063; Israel's war on Lebanon, held to 2000). A nation dead at the end that no later event brings back (`born`) has no revival left:
+  that, each war a hold of the timeline's freezes past the timeline's end makes a white peace: the score the hold kept
+  buys no land (R84e, ADR-1063; Israel's war on Lebanon, held to 2000). Any other held war goes on (R85b, ADR-1067):
+  its fronts open, its occupations kept, its score counted from the one it had (`War.scoreFrom`) and its days, men,
+  frontless days and peaks from the end, so a free start in 1942 or a God act in the replay keeps the Second World War. A nation dead at the end that no later event brings back (`born`) has no revival left:
   history ended it (R74c; Manchukuo, Tannu Tuva, Newfoundland). Built (R62j0, ADR-945): the first command applied while it runs ends it in that hour, before
   the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none. While it
   runs, the scenario's form, Take control, the God Mode bar, the nation's God tab (at its head) and the editor say

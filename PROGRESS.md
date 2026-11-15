@@ -434,3 +434,8 @@
 ## 2026-11-15 — R85a: aid judged by the blocs at the hour's start
 
 - R70-B2: the checker's bloc rule reads the blocs the hour before's call saw; `c70_free.ts 1991 51507 1825` 0 lines.
+
+## 2026-11-15 — R85b: a war held within the timeline goes on as the track ends (ADR-1067, the user's word)
+
+- Only wars held past the timeline's end make a white peace; the rest go on, their score from the end's, their clocks
+  restarted. The 1942 replay's God act keeps the Second World War (0 peaces in hour 1, the Eastern Front on at day 30).

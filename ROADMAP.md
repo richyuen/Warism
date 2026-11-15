@@ -40,13 +40,16 @@ each fixed before the critic runs again.
     checker reads the blocs at the hour's start.
     Done: `blocBreaks` judges an hour's aid by the blocs at its start (those its call of the hour before saw), the sim
     unchanged. `c70_free.ts 1991 51507 1825 free -` 0 broken lines (was 2); `blocEnd1938h.test` (red before).
-  - [ ] R85b (run 70's design objection, diplomacy; the user's word asked) Leaving the replay during a war the timeline
+  - [x] R85b (run 70's design objection, diplomacy; the user agreed, 2026-11-15) Leaving the replay during a war the timeline
     holds ends it: R84e's white peace of every held war on any end of the track (a God act, Take control, a free start
     from 1941-45; 1942: GER-SOV, GER-ENG, GER-USA and JAP-CHI end, 23,648 occupied cells to 473, Germany's 169
     formations left at peace in Soviet land). Proposed, the critic's alternative: white only the wars whose hold
     outlives the timeline (Lebanon's, to 2000); on an early end the hold lifts and the war goes on, its score reset
     so the kept score buys nothing, its occupations kept. AT: `c70_freewar.ts 1942 53542 god 30` and `take`: the four
     wars on at day 30, occupations kept; `1943`/`1944 free`: the wars on; `c70_endleb.ts 999` as now.
+    Done (ADR-1067): a war held past the timeline's end makes a white peace; any other held war goes on, its score
+    counted from the end's (`War.scoreFrom`) and its clocks restarted. 1942 God and Take control: 0 peaces in hour 1,
+    the Eastern Front on at day 30; 1943 and 1944 free the same; Lebanon white at the 1991 end. `trackEndHolds1938h`.
   - [ ] R85c (R70-N1) What ends with the replay is not told: the God bar's note, Take control's and the 1941-45 free
     card say nothing of the wars that end (after R85b, those whose hold outlives the timeline), and the end's peaces
     read as ordinary ones. AT: the notes and the card name it; the end's peace rows read as the replay's.

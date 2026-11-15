@@ -68,6 +68,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1067 · 2026-11-15 · accepted (the user's word) — R85b: a war held within the timeline goes on as the track ends
+- **Found** (critic run 70's design objection, R85b): R84e's white peace of every held war on any end of the track
+  ended the Second World War on a free start from 1941-45, any God act or Take control (1942 replay, one God act:
+  GER-SOV, GER-ENG, GER-USA and JAP-CHI at peace in hour 1, occupied cells 23,648 → 473, Germany's 169 formations at
+  peace in Soviet land). The critic's alternative, which the user agreed to: white only the wars whose hold outlives
+  the timeline; the others go on. Amends ADR-1063.
+- **Rule:** as the track ends, a war a hold freezes past the timeline's end (`Track.outlives`) makes a white peace, as
+  before. Any other held war goes on: `scoreFrom` (new, optional in the wars' JSON, absent 0) is set to its score, the
+  daily score counted from it, so the ground the hold kept buys nothing in its peace; its clocks restart (`startTick`,
+  `startMen`, `exhaustion`, `frontless`, the peaks), so the years frozen do not make it end at once by weariness, its
+  length or no front. A score reset alone kept the wars an hour: Germany and Britain made peace in hour 1 (frontless
+  since 1940) and Germany and the Soviet Union within 30 days.
+- **Read:** `c70_freewar.ts 1942 53542 god 30` and `take`: 0 peaces in hour 1, the Eastern Front on at day 30, 7 wars,
+  occupied 22,045 (the occupations of nations at peace back under ADR-1060: Iran, Iceland); 1943 and 1944 free: 0
+  peaces in hour 1, the wars on at day 30. `c70_endleb.ts 999`: Israel and Lebanon's white peace at the 1991 end, as
+  before. Plain 1938 has no track: the pin holds.
+- **Checked by** `trackEndHolds1938h.test` (a hold past a test timeline's end: white; Japan's war on China left in
+  1938: on, `scoreFrom` its score, its score about 0 a day on; red before).
+
 ### ADR-1066 · 2026-11-15 · accepted — R84i: an Undo puts the city names back as they stood at the act
 - **Found** (critic run 69, R69-N6; `c69_undo2.mjs 41211`): the city case's map after Undo differed by 130 px from
   before. The names keep the place they hold while it stays free, so where a name stands depends on the frames before;

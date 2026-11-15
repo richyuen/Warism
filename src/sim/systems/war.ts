@@ -675,7 +675,8 @@ export function warSystem(world: World): void {
     const [A, D] = war.sides;
     const oAD = occShare(land, A, D);
     const oDA = occShare(land, D, A);
-    war.score = Math.max(-100, Math.min(100, Math.round(200 * (oAD.rel - oDA.rel) + war.capitalBonus)));
+    // Counted from the score at the replay's end for a war it held (R85b, `scoreFrom`).
+    war.score = Math.max(-100, Math.min(100, Math.max(-100, Math.min(100, Math.round(200 * (oAD.rel - oDA.rel) + war.capitalBonus))) - (war.scoreFrom ?? 0)));
     notePeak(war, ATTACKERS, oAD.km2, world.tick);
     notePeak(war, DEFENDERS, oDA.km2, world.tick);
     const days = (world.tick - war.startTick) / 24;

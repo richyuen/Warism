@@ -17,6 +17,11 @@ export interface War {
   startTick: number;
   /** −100..100, positive when the attackers are winning (updated daily). */
   score: number;
+  /**
+   * The score the war had as the replay that held it ended (R85b, ADR-1067): its score counts from it, so the ground a
+   * hold of the timeline's kept buys nothing in its peace. Absent: 0.
+   */
+  scoreFrom?: number;
   /** Score points from capital captures (attackers' view). */
   capitalBonus: number;
   /** 0..100 per side (updated daily). */

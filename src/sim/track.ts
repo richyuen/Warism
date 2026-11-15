@@ -367,6 +367,12 @@ export class Track {
     return this.holdOf(a, b, tick, overlord) !== null;
   }
 
+  /** Whether the hold standing at `tick` between `a` and `b` outlives the timeline: its `until` past the end (R85b). */
+  outlives(a: number, b: number, tick: number, overlord: ArrayLike<number>): boolean {
+    const h = this.holdOf(a, b, tick, overlord);
+    return h !== null && h.until > this.endTick;
+  }
+
   /**
    * The first hold standing at `tick` between `a` and `b` (`held`'s, `frozen`'s), or null. R72b: the holds standing
    * found once a tick (`standing`), and no closure made a call; asked for each pair of formations each hour.
@@ -848,16 +854,34 @@ export function endTrack(world: World, why: number, kept?: ArrayLike<number>): v
   const t = world.track;
   if (!t || t.ended) return;
   // The wars a hold of the timeline's freezes as it ends (R84e, ADR-1063; critic run 69, R69-N1: Israel's 1982 war on
-  // Lebanon, held to 2000, annexed Lebanon in the end's hour by the score the hold had kept): a white peace, as their
-  // fronts stood. Asked before it ends, the holds lifting with it.
-  const frozen = world.wars.list.filter((war) => war.sides[0].some((a) => war.sides[1].some((b) => world.holds(a, b))));
+  // Lebanon, held to 2000, annexed Lebanon in the end's hour by the score the hold had kept). A war whose hold outlives
+  // the timeline: a white peace, as its fronts stood. Any other (R85b, ADR-1067; critic run 70's objection, the user's
+  // word: a God act in the 1942 replay ended the Second World War) goes on, its fronts open and its occupations kept,
+  // its score reset so the score the hold kept buys nothing. Asked before it ends, the holds lifting with it.
+  const pairs = (war: (typeof world.wars.list)[number], test: (a: number, b: number) => boolean): boolean => war.sides[0].some((a) => war.sides[1].some((b) => test(a, b)));
+  const overlord = world.nations.cols.overlord;
+  const frozen = world.wars.list.filter((war) => pairs(war, (a, b) => world.holds(a, b)));
+  const outlived = new Set(frozen.filter((war) => pairs(war, (a, b) => t.outlives(a, b, world.tick, overlord))));
   t.ended = true;
   t.endedAt = world.tick;
   t.changed = false;
   for (const war of frozen) {
     if (!world.wars.list.includes(war)) continue;
+    if (outlived.has(war)) {
+      war.score = 0;
+      makePeace(world, war);
+      continue;
+    }
+    // Begun again as the replay ends: its score counted from the one it has, its clocks from now (its days, its men,
+    // its days with no front, the most ground each side held: the years the hold froze it weary it no more).
+    war.scoreFrom = war.score + (war.scoreFrom ?? 0);
     war.score = 0;
-    makePeace(world, war);
+    war.startTick = world.tick;
+    war.startMen = [0, 0];
+    war.exhaustion = [0, 0];
+    war.frontless = 0;
+    delete war.peakHeld;
+    delete war.peakTick;
   }
   returnHeld(world, kept);
   // A nation history ended for good comes back no more (R74c, critic run 65: Manchukuo revived in 1979): dead at the
