@@ -316,3 +316,66 @@ describe('a name by the seam (PLAN 7.4f42)', () => {
     expect(box.x + box.w).toBeGreaterThan(0);
   });
 });
+
+// ROADMAP R84i (critic run 69's R69-N6): a city founded and undone gives the layer a new list twice. The list forgot every
+// name's place, and a name kept beside the dot where something had stood took the first place again (Warsaw's, under
+// the ranking box). The cities a new list shares with the last keep their names' places and their fades.
+describe('a new list of cities (ROADMAP R84i)', () => {
+  const stubCanvas = (w: number, h: number): HTMLCanvasElement => {
+    const ctx = new Proxy({}, { get: (_, k) => (k === 'measureText' ? (t: string) => ({ width: t.length * 7 }) : () => {}), set: () => true });
+    return { clientWidth: w, clientHeight: h, width: 0, height: 0, getContext: () => ctx } as unknown as HTMLCanvasElement;
+  };
+  it('keeps the place a name holds, through a city added and taken away', () => {
+    const geo = { w: 100, h: 50, kmPerCell: 1, wrapX: false };
+    const layer = new CityLabelLayer(stubCanvas(1000, 500), geo);
+    const city: CityPoint = { name: 'Warsaw', x: 50, y: 25, size: 5, capital: true };
+    layer.setCities([city]);
+    const cam = { cx: 50, cy: 25, scale: 10 }; // the city at 500, 250
+    const side = (): number | undefined => layer.lastPlaced.find((p) => !p.ghost && layer.city(p.index).name === 'Warsaw')?.side;
+    let now = 1000;
+    const frames = (obstacles: { x: number; y: number; w: number; h: number; clear: number }[] = []): void => {
+      for (let k = 0; k < 20; k++) layer.draw(cam, 1, (now += 50), obstacles);
+    };
+    // Something on its first place: it takes another, and keeps it once that is gone.
+    frames([{ x: 506, y: 240, w: 26, h: 29, clear: 2 }]);
+    const held = side();
+    expect(held).not.toBe(0);
+    frames();
+    expect(side()).toBe(held);
+    // A town founded before it in the list, then taken away: the name stays where it was.
+    const town: CityPoint = { name: 'New Town', x: 20, y: 10, size: 1, capital: false };
+    layer.setCities([town, city]);
+    frames();
+    expect(side()).toBe(held);
+    layer.setCities([city]);
+    frames();
+    expect(side()).toBe(held);
+  });
+
+  it("an Undo's recall puts the names back where they stood as the act began, the city razed and back", () => {
+    const geo = { w: 100, h: 50, kmPerCell: 1, wrapX: false };
+    const layer = new CityLabelLayer(stubCanvas(1000, 500), geo);
+    const city: CityPoint = { id: 7, name: 'Warsaw', x: 50, y: 25, size: 5, capital: true };
+    const other: CityPoint = { id: 8, name: 'Łódź', x: 30, y: 30, size: 4, capital: false };
+    layer.setCities([other, city]);
+    const cam = { cx: 50, cy: 25, scale: 10 };
+    const label = (): { side?: number; nameAlpha: number } | undefined => layer.lastPlaced.find((p) => !p.ghost && layer.city(p.index).name === 'Warsaw');
+    let now = 1000;
+    const frames = (obstacles: { x: number; y: number; w: number; h: number; clear: number }[] = []): void => {
+      for (let k = 0; k < 20; k++) layer.draw(cam, 1, (now += 50), obstacles);
+    };
+    frames([{ x: 506, y: 240, w: 26, h: 29, clear: 2 }]);
+    frames();
+    const held = label()!.side;
+    expect(held).not.toBe(0);
+    // The act: Warsaw razed. Its Undo: the world's list as before comes after the recall.
+    const m = layer.memory();
+    layer.setCities([other]);
+    frames();
+    layer.recall(m);
+    layer.setCities([other, city]);
+    layer.draw(cam, 1, (now += 50));
+    // At once at its place and shown whole: no fade in.
+    expect(label()).toMatchObject({ side: held, nameAlpha: 1 });
+  });
+});

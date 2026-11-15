@@ -140,6 +140,8 @@ export interface SimStatus {
   upgraded?: { fileHash: number; added: string[] };
   /** A load with `after` (a start from a year, R68b): the world's hash as loaded, before the second seed was set. */
   built?: number;
+  /** An Undo (R84i): the God Mode act undone, as the page numbered it. */
+  act?: number;
 }
 
 /** Per-nation record in `Snapshot.nations` (stride NATION_STRIDE). */

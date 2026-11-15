@@ -30,6 +30,8 @@ import { FADE_MS, progress, running, smooth, SwitchBank, ZOOM_HYSTERESIS, type S
 import { CITY_WEIGHT, MAP_FONT } from './fonts';
 
 export interface CityPoint {
+  /** The sim's city id, when it has one: with the name, what makes it the same city in a new list (R84i). */
+  id?: number;
   name: string;
   /** Position in cells (fractional). */
   x: number;
@@ -272,6 +274,17 @@ export function priorityOrder(cities: readonly CityPoint[]): number[] {
 }
 
 /** Draws the layout on a 2D canvas that overlays the map canvas. */
+/** What makes a city the same in a new list (R84i): its id and name, or its name and place. */
+const cityId = (c: CityPoint): string => (c.id !== undefined ? `${c.id}|${c.name}` : `${c.name}|${c.x}|${c.y}`);
+
+/** The layer's labels as they stand (`CityLabelLayer.memory`, R84i): each city's dot and name on or off, and its name's place. */
+export interface LabelMemory {
+  ids: string[];
+  dots: Map<number, boolean>;
+  names: Map<number, boolean>;
+  places: Map<number, NamePlace>;
+}
+
 export class CityLabelLayer {
   private readonly ctx: CanvasRenderingContext2D;
   private cities: CityPoint[] = [];
@@ -317,12 +330,62 @@ export class CityLabelLayer {
     return best;
   }
 
+  /** A memory `recall` gave, put back again on the next list (the Undo's world's, which comes after it). */
+  private pending: LabelMemory | null = null;
+
+  /**
+   * A new list keeps for each city it shares with the last its dot's and name's state and its name's place (R84i,
+   * critic run 69's R69-N6: a city founded and undone, the list changed twice, and Warsaw's name lost the place it held
+   * beside the ranking box for the first, under it). After a `recall`: the memory, on this list.
+   */
   setCities(cities: CityPoint[]): void {
+    const memory = this.pending ?? this.memory();
+    this.pending = null;
     this.cities = cities;
     this.order = priorityOrder(cities);
-    this.dots.clear();
-    this.names.clear();
+    this.put(memory);
+  }
+
+  /** The labels as they stand (R84i: taken as a God Mode act begins). */
+  memory(): LabelMemory {
+    this.pending = null;
+    return { ids: this.cities.map(cityId), dots: this.dots.snapshot(), names: this.names.snapshot(), places: new Map(this.places) };
+  }
+
+  /**
+   * The labels as `memory` took them (R84i: an Undo's, the act's): each city of the memory in the list now, and in the
+   * next list if one comes first, its dot and name at their states then with no fade, its name at its place then.
+   */
+  recall(m: LabelMemory): void {
+    this.put(m);
+    this.pending = m;
+  }
+
+  private put(m: LabelMemory): void {
+    const now = new Map<string, number>();
+    this.cities.forEach((c, i) => now.set(cityId(c), i));
+    const to = new Map<number, number>();
+    m.ids.forEach((id, i) => {
+      const j = now.get(id);
+      if (j !== undefined) to.set(i, j);
+    });
+    const remap = <V>(from: ReadonlyMap<number, V>, key: (k: number) => number | undefined): Map<number, V> => {
+      const out = new Map<number, V>();
+      for (const [k, v] of from) {
+        const j = key(k);
+        if (j !== undefined) out.set(j, v);
+      }
+      return out;
+    };
+    this.dots.recall(remap(m.dots, (i) => to.get(i)));
+    this.names.recall(remap(m.names, (i) => to.get(i)));
+    // `nameKey`: the city's index × 64 and its copy of the map.
+    const places = remap(m.places, (k) => {
+      const j = to.get(Math.floor(k / 64));
+      return j === undefined ? undefined : j * 64 + (k % 64);
+    });
     this.places.clear();
+    for (const [k, p] of places) this.places.set(k, p);
     this.ghosts = [];
   }
 

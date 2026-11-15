@@ -4,7 +4,7 @@
  * between the previous and current tick.
  */
 import type { ScreenRect } from '../render/units/clearOf';
-import { CityLabelLayer, NAME_CLEAR_PX, type NameObstacle } from '../render/labels/cityLabels';
+import { CityLabelLayer, NAME_CLEAR_PX, type LabelMemory, type NameObstacle } from '../render/labels/cityLabels';
 import { LABEL_STRIDE } from '../shared/nationLabels';
 import { FlagStore } from './flagStore';
 import { formationPips, type Pips } from '../render/units/pips';
@@ -214,6 +214,8 @@ export class MapView {
     return this.coast !== null && coastBit(this.coast, px, py);
   }
   private cities: MapLayers['cities'] = [];
+  /** The city labels as each recent God Mode act began, by its number (R84i): what its Undo puts back. */
+  private readonly labelMemories = new Map<number, LabelMemory>();
 
   /**
    * The cities to the layer of names and dots and to the buildings, each at the nearest point of
@@ -320,6 +322,17 @@ export class MapView {
     this.controller = new CameraController(canvas, geo, { cx: geo.w / 2, cy: geo.h / 2, scale: 0 });
     sim.onSnapshotReceived((s) => this.apply(s));
     sim.onLoad(() => this.worldLoaded());
+    // R84i (critic run 69's R69-N6): an Undo puts the city names back where they stood as the act began.
+    sim.onAct((act) => {
+      this.labelMemories.set(act, this.cityLabels.memory());
+      for (const k of this.labelMemories.keys()) if (k < act - 3) this.labelMemories.delete(k);
+    });
+    sim.onUndo((act) => {
+      const m = this.labelMemories.get(act);
+      if (m) this.cityLabels.recall(m);
+      this.labelMemories.clear();
+      this.dirty = true;
+    });
     this.controlGrid = new Uint16Array(geo.w * geo.h);
     this.ownerGrid = new Uint16Array(geo.w * geo.h);
     // A paint tool takes the primary button (PLAN 1.44): the press starts a stroke that follows

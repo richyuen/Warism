@@ -2133,7 +2133,9 @@ God's commands apply at once (`applyNow`), refused like any command (`inRange`, 
   command (an order, an edit, a nation taken), a load and a new game drop it. `undo` loads it as a load does: the
   world's hash is the one before the act and the game goes on as if never acted on, a replay of history the act ended
   running again; the bar says "Undone: the world as it was on …" until the next act. Nothing is written to the
-  ticker or the history: they are of the world loaded.
+  ticker or the history: they are of the world loaded. The map's city names are put back as they stood when the act
+  began (R84i, ADR-1066): the page keeps the layer's state at each act (`SimClient.onAct`, `CityLabelLayer.memory`)
+  and recalls it on the undo's reply, which names the act (`SimStatus.act`), on the list then and the next one.
 
 ### 9.5 Editor
 `src/sim/editor.ts`, `src/ui/EditorPanel.tsx`; docked right.

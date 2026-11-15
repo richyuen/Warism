@@ -93,8 +93,10 @@ each fixed before the release (ADR-1005); the release checks then run once on th
     Done (ADR-1065): the cause R82d's colony cost (A/B: without it 19 wars, 5 of 6); a piece of a nation's own land of
     500,000 km² or more is home. `fewNationWars 3 51401 6 10` 5 of 6 (15 wars); 39401-6 4 of 6. R82d's checks kept:
     Brazil's capital 0 of 5, first-60-day declarations over 6,000 km 0 of 98. `homeNeighbours.test`. Pin `4896702e`.
-  - [ ] R84i (R69-N6) Undoing "Found city" leaves the city's label next to it missing (Warsaw, 41211). AT: the crop
+  - [x] R84i (R69-N6) Undoing "Found city" leaves the city's label next to it missing (Warsaw, 41211). AT: the crop
     before and after the undo the same (`c69_undo2.mjs 41211`'s city case 0 px).
+    Done (ADR-1066): an Undo puts the city names back as they stood when the act began; a new city list keeps the
+    names it shares with the last. The critic's sequence on 41211 and 51211: 0 px in all five cases. `cities.test`.
   - [ ] R84j (run 69's small items) The heroes hint in a later year's free form says "seven great powers" (only the
     living have theirs); "was annexed" with a plural rebels' name ("Contras", "FMLN"), and the FMLN annexed by
     Honduras in a 1991 free game; Kuwait still Kuwait's the day after Iraq's war of 1990 (two days in history); 1 of 69

@@ -376,6 +376,7 @@ export class SimClient {
 
   /** Queues `cmd`; with `now` it is applied at once (between ticks; God Mode UI). `act`: a God Mode act's, undoable (R81b). */
   command(cmd: Command, now = false, act?: number): void {
+    this.actBegun(act);
     this.send({ type: 'cmd', cmd, ...(now ? { now } : {}), ...(act !== undefined ? { act } : {}) });
   }
 
@@ -386,6 +387,7 @@ export class SimClient {
   }
 
   commands(cmds: Command[], now = false, act?: number): void {
+    this.actBegun(act);
     this.send({ type: 'cmds', cmds, ...(now ? { now } : {}), ...(act !== undefined ? { act } : {}) });
   }
 
@@ -393,7 +395,30 @@ export class SimClient {
   async undo(): Promise<SimStatus> {
     const status = (await this.status({ type: 'undo' })).status;
     for (const l of this.loadListeners) l();
+    if (status.act !== undefined) for (const l of this.undoListeners) l(status.act);
     return status;
+  }
+
+  /** The last God Mode act begun, by its number (R84i). */
+  private lastAct: number | undefined;
+  private readonly actListeners = new Set<(act: number) => void>();
+  private readonly undoListeners = new Set<(act: number) => void>();
+  private actBegun(act: number | undefined): void {
+    if (act === undefined || act === this.lastAct) return;
+    this.lastAct = act;
+    for (const l of this.actListeners) l(act);
+  }
+
+  /** A God Mode act begins, before its first command is sent (R84i: the map's labels as they stand are kept for its Undo). */
+  onAct(l: (act: number) => void): () => void {
+    this.actListeners.add(l);
+    return () => this.actListeners.delete(l);
+  }
+
+  /** A God Mode act was undone, after the load's listeners (R84i). */
+  onUndo(l: (act: number) => void): () => void {
+    this.undoListeners.add(l);
+    return () => this.undoListeners.delete(l);
   }
 
   setSpeed(speed: Speed): void {

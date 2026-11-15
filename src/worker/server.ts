@@ -336,13 +336,14 @@ export class SimServer {
     this.undoNext = { raw: collectSections(sim.world.parts()).map((x) => ({ ...x, data: x.data.slice() })), bytes: null, tick: sim.tick, act };
   }
 
-  /** The God Mode act undone: the world held before it, loaded as a `load` is. */
-  private undoAct(): void {
+  /** The God Mode act undone: the world held before it, loaded as a `load` is. The act's number; undefined: none held. */
+  private undoAct(): number | undefined {
     const held = this.undoHeld;
-    if (!held) return;
+    if (!held) return undefined;
     this.packUndo();
     this.requireSim().load(held.bytes!);
     this.loaded();
+    return held.act;
   }
 
   /** Takes a command for the next tick boundary and notes a player's order to tell what becomes of it; false when refused. */
@@ -424,9 +425,9 @@ export class SimServer {
    * Replies with the status. `withHash` false (read-only queries: inspect, history, stats) skips
    * the 12 ms state hash on the 1938 map and reports NaN (review after PLAN 1.39a).
    */
-  private reply(reqId: number, bytes?: Uint8Array, withHash = true): void {
+  private reply(reqId: number, bytes?: Uint8Array, withHash = true, act?: number): void {
     const s = this.requireSim();
-    const status: SimStatus = { tick: s.tick, hash: withHash ? s.hash() : NaN };
+    const status: SimStatus = { tick: s.tick, hash: withHash ? s.hash() : NaN, ...(act !== undefined ? { act } : {}) };
     if (bytes) this.post({ type: 'reply', reqId, status, bytes }, [bytes.buffer]);
     else this.post({ type: 'reply', reqId, status }, []);
   }
@@ -448,11 +449,12 @@ export class SimServer {
         this.beforeAct(msg.act, msg.now);
         if (this.take(msg.cmd) && msg.now) this.applyNow();
         break;
-      case 'undo':
-        this.undoAct();
-        this.reply(msg.reqId);
+      case 'undo': {
+        const act = this.undoAct();
+        this.reply(msg.reqId, undefined, true, act);
         this.warmLanes();
         break;
+      }
       case 'cancelLanding': {
         if (!this.sim) break;
         this.beforeAct(undefined);

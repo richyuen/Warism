@@ -68,6 +68,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1066 · 2026-11-15 · accepted — R84i: an Undo puts the city names back as they stood at the act
+- **Found** (critic run 69, R69-N6; `c69_undo2.mjs 41211`): the city case's map after Undo differed by 130 px from
+  before. The names keep the place they hold while it stays free, so where a name stands depends on the frames before;
+  every new city list (a city founded, a nation spawned, a load) forgot all places, and Warsaw's name, held beside the
+  ranking box, took its first place again, under the box. Keeping each city's state through a new list (by its id and
+  name) fixed the city case and broke the nation and raze cases (about 1,000 px each, 0 before): the names an act's
+  marks had pushed aside stayed pushed.
+- **Rule:** a new list keeps the state of the cities it shares with the last. The page keeps the layer's state as each
+  God Mode act begins (`SimClient.onAct`, the last four); the worker's reply to `undo` names the act undone
+  (`SimStatus.act`), and `CityLabelLayer.recall` puts its state back, each name at its place then with no fade, on the
+  list in hand and on the next list (the undone world's, which follows).
+- **Read:** the critic's sequence (nuke, revolt, nation, city, raze) on 41211 and 51211: 0 px each case.
+- **Checked by** `cities.test` ("a new list of cities": the place kept through a city added and taken away, red before;
+  a recall after a razed city's list).
+
 ### ADR-1065 · 2026-11-15 · accepted — R84h: a large piece of a nation's own land is home
 - **Found** (critic run 69, R69-N5; `fewNationWars 3 51401 6 10`): 5 wars in ten years over six three-nation worlds,
   run 68 19. By A/B on HEAD, R82d's colony cost (ADR-1041) taken out: 19 wars, a war on 5 of 6. A random world's nations

@@ -134,6 +134,23 @@ export class SwitchBank<K> {
     this.changed = this.now;
   }
 
+  /** Each thing's state held (R84i): what `recall` puts back. */
+  snapshot(): Map<K, boolean> {
+    const out = new Map<K, boolean>();
+    for (const [key, e] of this.switches) if (e.s.on !== null) out.set(key, e.s.on);
+    return out;
+  }
+
+  /** The things as `snapshot` gave them, each at its state with no fade (R84i: an Undo's labels as they stood at the act). */
+  recall(states: ReadonlyMap<K, boolean>): void {
+    this.switches.clear();
+    for (const [key, on] of states) {
+      const s = new TimedSwitch(this.ms);
+      s.on = on;
+      this.switches.set(key, { s, frame: this.frames });
+    }
+  }
+
   /** `key` is a new thing (PLAN 7.4f23): what it was is forgotten, and it takes its state at once when next asked. */
   forget(key: K): void {
     this.switches.delete(key);

@@ -409,3 +409,9 @@
 - R69-N5: three-nation random worlds quiet since R82d's colony cost; with a piece of 500,000 km² or more counted as home,
   the critic's six worlds have a war on 5 (15 wars). R82d's own reads held. Tick mean 3.613 ms against 3.612.
 - Tests: `homeNeighbours.test` (red before). Pin `a6023887` → `4896702e`.
+
+## 2026-11-15 — R84i: an Undo puts the city names back as they stood at the act (ADR-1066)
+
+- R69-N6: the page keeps the city labels' state at each God Mode act and recalls it on its Undo; a new city list keeps
+  the names it shares with the last. `c69_undo2.mjs` 41211 and 51211: 0 px in all five cases (city was 128).
+- Tests: `cities.test` "a new list of cities" (two cases).
