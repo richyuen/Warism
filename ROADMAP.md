@@ -39,11 +39,15 @@ each fixed before the release (ADR-1005); the release checks then run once on th
     1946 51515 3` 0 pairs by year 1; `c69_free.ts 1962 51513 730 free heroes=on` no `held` line.
     Done (ADR-1060): `c69_heldfree.ts 1946 51515 3` 12 pairs / 21,338 cells → 0 at hour 1 and each year; `c69_free.ts`
     1962 51513 (heroes on), 1946 51515 (random diplomacy), 1954 51525, 1971 51517 (heroes on): no `held` line (only
-    R84b's economy lines); `trackEndHeld1938h.test` (red 3 of 4 before), `heldFree1938h.test` (sweep).
-  - [ ] R84b (R69-B2, blocking) Bloc aid breaks `worldInvariants`' economy rule in every free game from a Cold War year
+    R84b's economy lines); `trackEndHeld1938h.test` (red 3 of 4 before), `heldFree1938h.test` (sweep; `freeYears1938h.test` since R84b).
+  - [x] R84b (R69-B2, blocking) Bloc aid breaks `worldInvariants`' economy rule in every free game from a Cold War year
     (5-21 lines): the economy rule counts the month's aid (`BlocAid`, `AID_SHARE` of the giver's income), and the
     checkers run on free games from a Cold War year in a test. AT: `c69_free.ts 1975 51501 730 free -` and `1991 51507
     1825 free -` 0 economy lines.
+    Done (ADR-990's rule, ADR-914): the economy rule counts the hour's `BlocAid` rows at `AID_SHARE` of the giver's
+    income before the hour (the strategic AI pays before the month's accounts). `c69_free.ts` 1975 51501 730 and 1991
+    51507 1825 0 lines (13 and 21 before); 1954, 1962 (heroes on), 1983 51505 0. `freeYears1938h.test` (sweep, 7 min):
+    1946, 1954, 1962, 1975 free on two seeds, 120 days, every world rule set and `held`, 0.
   - [ ] R84c (R69-B3, blocking) A puppet made in the month's start hour pays that month's tribute (37009, France on
     Germany, 1 December 1941): it pays from the next month, or the peace runs after the payment. AT:
     `worldInvariants.ts 37009 1825` 0 broken.

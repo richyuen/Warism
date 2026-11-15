@@ -86,7 +86,8 @@ from AoC are tagged **[AoC-DEVIATION]**.
   to Japan in a game left free before 1972. The 1991 end and the replay itself are unchanged (0 held at the end,
   ADR-1056); the plain 1938 scenario has no track, so the pin of seed 99 does not move.
 - **Checked by** `trackEndHeld1938h.test` (left free, with options, by a paint, a refused command) and
-  `heldFree1938h.test` (sweep: 1946 and 1954 left free on two seeds, `held` at hour 1 and each of 60 days).
+  `freeYears1938h.test` (sweep: 1946, 1954, 1962 and 1975 left free on two seeds, `held` at hour 1 and each day;
+  `heldFree1938h.test` before R84b widened it).
 
 ### ADR-1059 · 2026-11-15 · accepted — R84k-l: the user's two hero bugs
 - **R84k.** A hero's row in the Overview opened its formation to be looked at (`openHero`: `selectFormation` and the

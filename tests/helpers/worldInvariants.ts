@@ -1,3 +1,4 @@
+import { AID_SHARE } from '../../src/sim/ai/strategic';
 import { heroBasin, returnPlace } from '../../src/sim/systems/heroes';
 import { isMonthStart } from '../../src/shared/calendar';
 import { EventKind } from '../../src/shared/events';
@@ -23,7 +24,7 @@ import { assets1938 } from './earth';
 //   economy  gold rises only at a month's start (the accounts, tribute), in the hour a nation is
 //            founded or returns, or in the hour it collapses or defaults after COLLAPSE_MONTHS
 //            bankrupt months (its debts void, PLAN 1.24), told by its row (R7); at a month's start by no more than the month's gross income and
-//            the tribute its puppets owe; a nation bankrupt after a month's start has each of its
+//            the tribute its puppets owe and a bloc leader's aid (R84b); a nation bankrupt after a month's start has each of its
 //            formations on land cut by the desertion share of its units (R4a);
 //   navy     a fleet not under way stands on water (a passage's hours are drawn over land); a land
 //            formation aboard (`World.embarked`) rides a fleet of its own nation that is there, and
@@ -77,6 +78,8 @@ const EPS = 1e-6;
 interface Before {
   living: number[];
   gold: number[];
+  /** Incomes before the hour: the strategic AI's aid pays from them, before the month's accounts (R84b). */
+  income: number[];
   /** The warheads each nation held, what it had paid toward the next, and the launches in flight, by id. */
   stock: Map<number, number>;
   paid: Map<number, number>;
@@ -125,6 +128,7 @@ function before(w: World): Before {
   const b: Before = {
     living: Array.from(nc.living),
     gold: Array.from(nc.gold),
+    income: Array.from(nc.income),
     stock: new Map([...w.warheads].map(([n, h]) => [n, h.stock])),
     paid: new Map([...w.warheads].map(([n, h]) => [n, h.paid])),
     launches: new Map(w.nukeLaunches.map((l) => [l.id, { ...l }])),
@@ -150,7 +154,16 @@ function economyBreaks(w: World, b: Before, events: number[], tag: (n: number) =
   // A collapse voids the nation's debts (PLAN 1.24): its gold may rise to 0 in that hour; so does a
   // default with nothing to fragment, told by its row (ROADMAP R7).
   const collapsed = new Set<number>();
-  for (let i = 0; i < events.length; i += 6) if (events[i + 1] === EventKind.NationCollapsed || events[i + 1] === EventKind.NationDefaulted) collapsed.add(events[i + 2]!);
+  // A bloc leader's aid (R67e, ADR-990; R84b): AID_SHARE of the giver's income to the aided, told by its row; paid by
+  // the strategic AI before the month's accounts, so of its income before the hour.
+  const aid = new Map<number, number>();
+  for (let i = 0; i < events.length; i += 6) {
+    if (events[i + 1] === EventKind.NationCollapsed || events[i + 1] === EventKind.NationDefaulted) collapsed.add(events[i + 2]!);
+    if (events[i + 1] === EventKind.BlocAid) {
+      const [giver, aided] = [events[i + 2]!, events[i + 3]!];
+      aid.set(aided, (aid.get(aided) ?? 0) + AID_SHARE * Math.max(0, b.income[giver] ?? 0));
+    }
+  }
   for (let n = 1; n < b.gold.length; n++) {
     if (b.living[n] !== 1 || nc.living[n] !== 1) continue; // founded, returned or dead in the hour
     if (collapsed.has(n)) continue;
@@ -160,7 +173,7 @@ function economyBreaks(w: World, b: Before, events: number[], tag: (n: number) =
       out.push(`economy: ${tag(n)}'s gold rose ${rise.toFixed(2)} outside a month's start`);
       continue;
     }
-    let owed = Math.max(0, nc.income[n]!);
+    let owed = Math.max(0, nc.income[n]!) + (aid.get(n) ?? 0);
     for (let p = 1; p < month.overlord.length; p++) if (month.overlord[p] === n) owed += TRIBUTE * (1 - month.autonomy[p]! / 100) * Math.max(0, nc.income[p]!);
     if (rise > owed + EPS * Math.max(1, owed)) out.push(`economy: ${tag(n)}'s gold rose ${rise.toFixed(2)} at a month's start, more than its income and tribute (${owed.toFixed(2)})`);
   }

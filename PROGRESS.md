@@ -359,3 +359,10 @@
   as at a peace; an intervening command's own changes (God's paint) kept. 1946 free: 12 pairs, 21,338 cells → 0, and
   0 after three years; the critic's `c69_free` on 1946, 1954, 1962 and 1971 free games: no `held` line.
 - Tests: `trackEndHeld1938h.test` (red before), `heldFree1938h.test` (sweep, 1946 and 1954 × two seeds, 60 days).
+
+## 2026-11-15 — R84b: bloc aid in the economy rule
+
+- R69-B2: `worldInvariants`' economy rule counts a bloc leader's aid (`BlocAid` rows, of the giver's income before the
+  hour). The critic's free games from 1975 and 1991: 13 and 21 lines → 0; 1954, 1962, 1983: 0.
+- `freeYears1938h.test` (the sweep test of R84a, widened and renamed): 1946, 1954, 1962 and 1975 free on two seeds,
+  120 days each, every world rule set and `held`: green in 7 min. Its red without the checker fix not run.
