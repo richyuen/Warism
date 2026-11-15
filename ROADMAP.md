@@ -33,11 +33,13 @@ Run 70 (focused): diplomacy 7, every other dimension 8. One blocking issue, four
 each fixed before the critic runs again.
 
 - [ ] R85 **Run 70's issues.**
-  - [ ] R85a (R70-B2, blocking) Bloc aid paid in the hour its bloc dissolves: the strategic AI pays at the month's
+  - [x] R85a (R70-B2, blocking) Bloc aid paid in the hour its bloc dissolves: the strategic AI pays at the month's
     start, before the alliance pass of that hour, and `diploInvariants`' bloc rule reads the blocs after it (1991 free,
     51507, 1993-09-01T01: USA's and Russia's aid, then Russia's alliance dissolved). AT: `c70_free.ts 1991 51507 1825
     free -` 0 broken lines; `c70_aidhour.ts 51507 1993-09-01` no `BlocAid` of a bloc gone after the hour, or the
     checker reads the blocs at the hour's start.
+    Done: `blocBreaks` judges an hour's aid by the blocs at its start (those its call of the hour before saw), the sim
+    unchanged. `c70_free.ts 1991 51507 1825 free -` 0 broken lines (was 2); `blocEnd1938h.test` (red before).
   - [ ] R85b (run 70's design objection, diplomacy; the user's word asked) Leaving the replay during a war the timeline
     holds ends it: R84e's white peace of every held war on any end of the track (a God act, Take control, a free start
     from 1941-45; 1942: GER-SOV, GER-ENG, GER-USA and JAP-CHI end, 23,648 occupied cells to 473, Germany's 169

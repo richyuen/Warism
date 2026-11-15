@@ -430,3 +430,7 @@
 - Scores: map 8 (was 7), diplomacy 7 (was 6), every other dimension 8. Blocking 1 (R70-B2, bloc aid in a dissolving
   bloc's hour); non-blocking R70-N1-N4; design objection: R84e ends the held wars on any departure from the track.
   Filed as Batch 29 (R85a-f).
+
+## 2026-11-15 — R85a: aid judged by the blocs at the hour's start
+
+- R70-B2: the checker's bloc rule reads the blocs the hour before's call saw; `c70_free.ts 1991 51507 1825` 0 lines.

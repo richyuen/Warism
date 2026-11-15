@@ -127,17 +127,27 @@ export function worldBreaks(w: World): string[] {
   return out;
 }
 
-/** The lines of `bloc` the world and the hour's `events` break (R80b): the blocs as `blocsOf` gives them now. */
+/** The blocs the last `blocBreaks` saw: of its world, as its hour ended (R85a). */
+let lastBlocs: { w: World; tick: number; size: number } | null = null;
+
+/**
+ * The lines of `bloc` the world and the hour's `events` break (R80b): the blocs as `blocsOf` gives them now. Aid is paid
+ * at the month's start, before the hour's alliance pass (R85a; critic run 70, R70-B2: 1991 free, 51507, Russia's
+ * alliance dissolved in the hour it paid): judged by the blocs at the hour's start, those the call of the hour before
+ * saw; with no such call, by the blocs now.
+ */
 export function blocBreaks(w: World, events: number[]): string[] {
   const out: string[] = [];
   const blocs = blocsOf(w, strengths(w));
+  const atStart = lastBlocs && lastBlocs.w === w && lastBlocs.tick === w.tick - 1 ? lastBlocs.size : blocs.size;
+  lastBlocs = { w, tick: w.tick, size: blocs.size };
   const ended = w.track?.blocsEnded() ?? new Set<number>();
   if (blocs.size > (ended.size > 0 ? 1 : 2)) out.push(`bloc: ${blocs.size} blocs${ended.size > 0 ? ' after a bloc ended' : ''}`);
   for (const id of blocs) {
     const a = w.alliances.list.find((x) => x.id === id);
     if (a && ended.has(a.leader)) out.push(`bloc: alliance ${id} led by ${tag(a.leader)}, whose bloc ended, is a bloc`);
   }
-  if (blocs.size < 2) for (let i = 0; i < events.length; i += 6) if (events[i + 1] === EventKind.BlocAid) out.push(`bloc: aid by ${tag(events[i + 2]!)} with ${blocs.size} bloc(s)`);
+  if (atStart < 2) for (let i = 0; i < events.length; i += 6) if (events[i + 1] === EventKind.BlocAid) out.push(`bloc: aid by ${tag(events[i + 2]!)} with ${atStart} bloc(s)`);
   return out;
 }
 

@@ -61,6 +61,22 @@ describe('a bloc that ends (ROADMAP R80b)', () => {
     expect(w.track!.blocsEnded()).toEqual(new Set([id('SOV')]));
   });
 
+  // ROADMAP R85a (critic run 70, R70-B2: 1991 free, 51507, Russia's alliance dissolved in the hour it paid aid): aid is
+  // paid at the hour's start, before the alliance pass, and is judged by the blocs then, those the hour before's call
+  // saw: two, no line. The hour after, with one bloc, a line.
+  it("the checker judges an hour's aid by the blocs at the hour's start", () => {
+    const { w } = world(PLAIN);
+    expect(blocBreaks(w, [])).toEqual([]);
+    const sov = w.alliances.allianceOf(id('SOV'))!;
+    for (const m of [...sov.members].filter((m) => m !== id('SOV'))) w.alliances.leave(m);
+    w.alliances.leave(id('SOV'));
+    expect(w.alliances.allianceOf(id('SOV'))).toBeUndefined();
+    w.tick++;
+    expect(blocBreaks(w, [w.tick, EventKind.BlocAid, id('SOV'), id('MON'), 0, 0])).toEqual([]);
+    w.tick++;
+    expect(blocBreaks(w, [w.tick, EventKind.BlocAid, id('ENG'), id('FRA'), 0, 0])).toHaveLength(1);
+  });
+
   it('after it the blocs are one; a pact the ended leader founds is outside deterrence, aid and the defensive pact', () => {
     // The control: two blocs.
     const plain = world(PLAIN).w;
