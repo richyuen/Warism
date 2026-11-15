@@ -869,7 +869,7 @@ export function endTrack(world: World, why: number, kept?: ArrayLike<number>): v
     if (!world.wars.list.includes(war)) continue;
     if (outlived.has(war)) {
       war.score = 0;
-      makePeace(world, war);
+      makePeace(world, war, true);
       continue;
     }
     // Begun again as the replay ends: its score counted from the one it has, its clocks from now (its days, its men,

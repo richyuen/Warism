@@ -63,7 +63,7 @@
 import { traitMod } from '../traits';
 import { isDayStart } from '../../shared/calendar';
 import { Refusal } from '../../shared/commands';
-import { Bond, EventKind, JoinedBy } from '../../shared/events';
+import { Bond, EventKind, JoinedBy, PEACE_BY_TRACK_END } from '../../shared/events';
 import { PEACE_ACCEPT_EXHAUSTION, peaceVerdict } from '../../shared/peace';
 import { Terrain } from '../../shared/terrain';
 import { annexNation, makePuppet, releasePuppet } from './puppets';
@@ -750,7 +750,8 @@ export function offerPeace(world: World, warId: number, from: number): boolean {
   return true;
 }
 
-export function makePeace(world: World, war: War): void {
+/** `byTrackEnd`: the historical track's end signs it (R86a), as its event says. */
+export function makePeace(world: World, war: War, byTrackEnd = false): void {
   const winner = war.score >= 0 ? ATTACKERS : DEFENDERS;
   const W = war.sides[winner]!;
   const L = war.sides[1 - winner]!;
@@ -789,7 +790,7 @@ export function makePeace(world: World, war: War): void {
   world.wars.end(war);
   // The peace before its terms (PLAN 3.12Rg2): the log read "annexed", "destroyed" and then a
   // peace with the dead.
-  world.out.emit(world.tick, EventKind.PeaceSigned, wl, ll, NaN, NaN);
+  world.out.emit(world.tick, EventKind.PeaceSigned, wl, ll, byTrackEnd ? PEACE_BY_TRACK_END : NaN, NaN);
   // A small losing leader is annexed outright by a decisive winner (PLAN 1.40 tuning: losing
   // rebels otherwise survived as rump states or puppets, and 50 years ended with 300–600 nations).
   // So is a statelet founded in play under STATELET_KM2 (PLAN 7.3d2, ADR-432): founded nations

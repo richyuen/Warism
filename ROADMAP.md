@@ -34,10 +34,13 @@ runs again: run 71's non-blocking issues and the defaults the critic should judg
 score at its bar).
 
 - [ ] R86 **Run 71's issues and the defaults.**
-  - [ ] R86a (R71-N1) A God "Make peace" in the replay is told "…as history's course ended": `endPeace` takes any
+  - [x] R86a (R71-N1) A God "Make peace" in the replay is told "…as history's course ended": `endPeace` takes any
     `PeaceSigned` followed by `TrackEnded` in the hour, and the God act signs its peace in the hour it ends the track.
     AT: `critic/scripts/c71_godpeace.mjs 1942 JAP 'United States'` reads "Japan made peace with United States" (or names
     the player's act); Lebanon's 1991 peace still reads "…as history's course ended".
+    Done: the end's peace carries `PEACE_BY_TRACK_END` in its event's x; History reads that, not the hour's
+    `TrackEnded`. A God peace in the hour its act ends the track reads as an ordinary peace; the end's own still
+    "…as history's course ended" (`trackEndHolds1938h.test`, red before).
   - [ ] R86b (R71-N2) A war R85b keeps has a ceiling of 100 − `scoreFrom` for the side ahead (`war.ts`,
     `clamp(clamp(raw) − scoreFrom)`): GER v SOV stops at 39 from April to August 1942, PUPPET_SCORE and
     PEACE_ACCEPT_SCORE out of reach. AT: `c71_warlong.ts 1942 54601 god 730` the score follows the front past

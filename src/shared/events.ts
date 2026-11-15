@@ -30,7 +30,10 @@ export const EventKind = {
   WarDeclared: 12,
   /** a = attacker, b = defender: dead, self, already at war, truce or puppet pair (global). */
   WarRejected: 13,
-  /** a = winning leader, b = losing leader (global). */
+  /**
+   * a = winning leader, b = losing leader (global); x = `PEACE_BY_TRACK_END` for a peace the historical track's end
+   * signs (ROADMAP R86a), else NaN; y = NaN.
+   */
   PeaceSigned: 14,
   /** a = nation, b = alliance id (global; PLAN 1.17). */
   AllianceLeft: 15,
@@ -311,6 +314,12 @@ export const JoinedBy = { alliance: 1, guarantee: 2, track: 3 } as const;
 /** Why the historical track ended (`TrackEnded`'s b; ROADMAP R62b, R62j). */
 /** `intervention` (R62j): the first command applied while it runs, a God Mode act, an editor edit or a nation taken. */
 /** `free` (R68b): a game started from a year of it to play free (`leaveTrack`). */
+/**
+ * `PeaceSigned`'s x for a peace the track's end signs (ROADMAP R86a; critic run 71, R71-N1: a God "Make peace" in the
+ * replay, signed in the hour its act ends the track, read "…as history's course ended").
+ */
+export const PEACE_BY_TRACK_END = 1;
+
 export const TrackEnd = { timelineChanged: 1, date: 2, intervention: 3, free: 4 } as const;
 
 /** The bonds a forced war broke (`BondsBroken`'s y; PLAN 7.175a). */

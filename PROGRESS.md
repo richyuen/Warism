@@ -461,3 +461,8 @@
 
 - Every dimension 8 (diplomacy 7→8), no blocking issue. Batch 30 (R86a–f) filed: run 71's five non-blocking issues and,
   for the user's word, heroes on by default in free play (Countryball is already the default, ADR-777).
+
+## 2026-11-15 — R86a: a God peace in the replay is the player's
+
+- R71-N1: the track's end marks the peaces it signs (`PEACE_BY_TRACK_END`); History no longer takes a God peace of the
+  same hour for one.

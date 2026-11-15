@@ -34,7 +34,7 @@
  * has it now. The row is then 'puppet' and names the overlord ("The war between Germany and
  * Albania ended: Albania is now a puppet of Italy").
  */
-import { EventKind, JoinedBy, TrackEnd } from '../shared/events';
+import { EventKind, JoinedBy, PEACE_BY_TRACK_END, TrackEnd } from '../shared/events';
 import { HISTORY_ROLES, nukeStrike, nukeToll, seaSide, TICKER_HOURS, TICKER_KINDS, TICKER_ONE_AN_HOUR, TICKER_ROWS, type HistoryAs, type HistoryRole, type HistoryRow, type TickerRow } from '../shared/history';
 import { HISTORY_STRIDE } from '../sim/history';
 import { toldByNote } from '../sim/track';
@@ -194,7 +194,7 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     const al = alliances.get(alId);
     const founding = kind === EventKind.AllianceJoined && !named.has(alId) && a === al?.founder;
     if (alId !== 0) named.add(alId);
-    const row: HistoryRow = { tick, kind, a, b, x: Number.isNaN(x) ? null : x, y: Number.isNaN(y) ? null : y, an: ra === 'town' ? townName(world, i, kind, a, defName) : name(ra, a), bn: name(rb, b), of: al ? nation(al.founder) : '' };
+    const row: HistoryRow = { tick, kind, a, b, x: Number.isNaN(x) || kind === EventKind.PeaceSigned ? null : x, y: Number.isNaN(y) ? null : y, an: ra === 'town' ? townName(world, i, kind, a, defName) : name(ra, a), bn: name(rb, b), of: al ? nation(al.founder) : '' };
     if (kind === EventKind.NationEliminated) risen.delete(a);
     if (kind === EventKind.NationSpawned) risen.add(a);
     const as = kind === EventKind.RevoltSpawned ? revoltAs(tick, a) : kind === EventKind.LandCeded && died.has(tick * NATION_KEY + b) ? 'left' : founding ? 'founded' : undefined;
@@ -324,11 +324,11 @@ function transferTold(world: World, tick: number, from: number, to?: number): bo
  */
 /**
  * Whether row `i`, a peace, is one the track's end made (R85c; critic run 70, R70-N1: the wars it ended read as ordinary
- * peaces): `endTrack` signs them, then logs `TrackEnded`, in the same hour.
+ * peaces): its x says so (R86a; critic run 71, R71-N1: a God peace signed in the hour its act ended the track read as
+ * the end's).
  */
 function endPeace(rows: ArrayLike<number>, i: number): boolean {
-  for (let j = i + HISTORY_STRIDE; j < rows.length && rows[j] === rows[i]; j += HISTORY_STRIDE) if (rows[j + 1] === EventKind.TrackEnded) return true;
-  return false;
+  return rows[i + 4] === PEACE_BY_TRACK_END;
 }
 
 function annexNote(world: World, tick: number, target: number, annexer: number): string {

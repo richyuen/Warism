@@ -75,6 +75,24 @@ describe("the timeline's frozen wars as the track ends (ROADMAP R84e, R85b)", ()
     expect(Math.abs(war.score)).toBeLessThanOrEqual(5);
   });
 
+  it("a God peace in the replay is the player's, though its act ends the track in that hour (R86a)", () => {
+    // Critic run 71, R71-N1: "Japan made peace with United States as history's course ended".
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w), options: { after: 51283 } });
+    sim.step(24, quiet);
+    const w = sim.world;
+    const [jap, chi] = [id('JAP'), id('CHI')];
+    const war = w.wars.between(jap, chi)!.war;
+    sim.command({ kind: 'forcePeace', war: war.id });
+    sim.step(1, quiet);
+    expect(w.track!.ended).toBe(true);
+    const rows = historyRows(w, (n) => `nation.${TAGS_1938H[n - 1]}`, () => '');
+    const ended = rows.find((r) => r.kind === EventKind.TrackEnded)!;
+    const peace = rows.find((r) => r.kind === EventKind.PeaceSigned && [r.a, r.b].sort().join() === [jap, chi].sort().join())!;
+    expect(peace.tick).toBe(ended.tick);
+    expect(peace.as).toBeUndefined();
+    expect(historyText(peace)).not.toMatch(/history's course ended/);
+  });
+
   it('a war no hold freezes goes on', () => {
     const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w), options: { after: 51283 } });
     sim.step(24, quiet);
