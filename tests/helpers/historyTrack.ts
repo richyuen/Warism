@@ -1,3 +1,4 @@
+import { project } from '../../src/sim/data/projection';
 import type { Admin1Meta } from '../../src/shared/admin1';
 import { dayOfIso } from '../../src/shared/calendar';
 import { Refusal } from '../../src/shared/commands';
@@ -31,6 +32,11 @@ export const END_COLOUR_DE = 30;
 
 /** The share of land held astray at a map's date (`MatchColumns.strayShare`) a seed is held to (ADR-968). */
 export const STRAY_BAR = 0.01;
+/**
+ * A place the timeline gives a nation by a date, read at noon on the scenario's own seed: [date, holder, lon, lat]. R84j
+ * (critic run 69: Kuwait still Kuwait's on 3 August 1990, overrun in two days): Kuwait City Iraq's on 3 August.
+ */
+export const HELD_BY: readonly [string, string, number, number][] = [['1990-08-03', 'IRQ', 47.98, 29.37]];
 
 const tag = (n: number): string => TAGS_1938H[n - 1] ?? `#${n}`;
 /** The refusals of an event that no longer applies on a seed (`TrackSkipped`'s why). */
@@ -83,6 +89,7 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
   const label = `seed ${seed}`;
   breaks.add(`${label} day 0`, worldBreaks(sim.world).filter((l) => !l.startsWith('held')));
   let handover = new Map<string, string[]>();
+  const heldAt = new Map(own ? HELD_BY.map((h) => [(dayOfIso(h[0]) - dayOfIso('1938-01-01')) * 24 + 12, h] as const) : []);
   while (!t.ended && sim.tick < hours) {
     meddle?.(sim.world);
     if (sim.tick >= t.endTick) handover = new Map(sim.world.alliances.list.map((a) => [tag(a.leader), a.members.map(tag).sort()]));
@@ -104,6 +111,14 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
       }
       breaks.add(where, silentExits(w, before, bonds.overlord, ev));
       if (w.tick % 24 === 0) breaks.add(where, worldBreaks(w).filter((l) => !l.startsWith('held') || !heldByTimeline(w, l)));
+      const hb = heldAt.get(w.tick);
+      if (hb) {
+        const [date, by, lon, lat] = hb;
+        const [u, v] = project(lon, lat);
+        const c = Math.floor(v * w.cells.h) * w.cells.w + Math.floor(u * w.cells.w);
+        const [o, h] = [w.cells.owner[c]!, w.cells.controller[c]!];
+        if (h !== TAGS_1938H.indexOf(by) + 1) breaks.add(`${label} ${date}`, [`held by: ${lon}° ${lat}° is ${tag(o)}'s, held by ${tag(h)}, not ${by}`]);
+      }
       const k = mapAt.get(w.tick);
       if (k !== undefined) {
         const { province, terrain, w: cw, h: ch } = w.cells;

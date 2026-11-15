@@ -415,3 +415,10 @@
 - R69-N6: the page keeps the city labels' state at each God Mode act and recalls it on its Undo; a new city list keeps
   the names it shares with the last. `c69_undo2.mjs` 41211 and 51211: 0 px in all five cases (city was 128).
 - Tests: `cities.test` "a new list of cities" (two cases).
+
+## 2026-11-15 — R84j: run 69's small items
+
+- Heroes hint ("still living at the start"); "were" for plural names (`nation.plural`, `historyPlural.test`); Kuwait
+  annexed on 3 August 1990 (`historyTrack1938h`'s `HELD_BY` check, green with the starts rebuilt); `seaBattles`' camera
+  for a battle wider than 400 m/px holds (39061: 62 of 62 seen). The FMLN's annexation in a 1991 free game not taken
+  (the free AI's war, by its rules).

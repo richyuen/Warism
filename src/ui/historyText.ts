@@ -83,6 +83,11 @@ function forcesLost({ men, guns, tanks }: NukeToll): string {
  * the row's a: "Sweden founded a Defensive Pact" (PLAN 3.12Rg1). A row with a third nation
  * (`cn`) has it as {c} (PLAN 3.12Rn).
  */
+/** Nation names that take a plural verb ("Contras", "Tamil Tigers"; `nation.plural`, R84j): by their key. */
+function pluralName(key: string): boolean {
+  return key.startsWith('nation.') && t('nation.plural' as MessageKey).split(' ').includes(key.slice(7));
+}
+
 export function historyText(r: HistoryRow): string {
   const [ra, rb] = HISTORY_ROLES[r.kind] ?? ['number', 'number'];
   const part = (role: string, v: number, name: string): string => {
@@ -127,6 +132,9 @@ export function historyText(r: HistoryRow): string {
   const decided = r.kind === EventKind.NukeDecided ?{ near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '', weighed: t(nukeWeighed(r.b / 1000)) } : {};
   // An event of the historical track: its name (ROADMAP R62j1).
   if (r.kind === EventKind.TrackEvent || r.as === 'track') return t('history.TrackEvent', { note: r.note ?? '' });
-  const s = t((offshore ? `${key}.offshore` : !r.bn && rb !== 'number' && rb !== 'side' && none in en ? none : key) as MessageKey, { a: part(ra, r.a, r.an), b: part(rb, r.b, r.bn), c: r.cn ? displayName(r.cn) : '', ...ships, ...strike, ...lost, ...decided, ...hero, ...means, ...power, ...broke, gold: gold(took) });
+  const chosen = offshore ? `${key}.offshore` : !r.bn && rb !== 'number' && rb !== 'side' && none in en ? none : key;
+  // A name that takes a plural verb (R84j; critic run 69: "Contras was annexed by Nicaragua"): the message's `.plural`.
+  const plural = ra === 'nation' && pluralName(r.an) && `${chosen}.plural` in en ? `${chosen}.plural` : chosen;
+  const s = t(plural as MessageKey, { a: part(ra, r.a, r.an), b: part(rb, r.b, r.bn), c: r.cn ? displayName(r.cn) : '', ...ships, ...strike, ...lost, ...decided, ...hero, ...means, ...power, ...broke, gold: gold(took) });
   return s.charAt(0).toLocaleUpperCase() + s.slice(1);
 }

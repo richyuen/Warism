@@ -7,7 +7,8 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
 - `npx tsx tools/diag/landingFuzz.ts [--seeds N] [--first S] [--jobs P]`: the landing checker on N fresh seeds × the
   critic's six shapes (default 50, 300 runs, ~30 min at 3 jobs); by hand only, not a step of the loop (ADR-916).
 - `npx tsx tools/diag/seaBattles.ts <seed> [scenario|random] [--years N]`: each sea battle with its place, sides,
-  ships and a camera; `tools/diag/seaBattlesLook.ts <its json>` (a preview on 4173) checks each is drawn (ADR-852),
+  ships and a camera (40 to 400 m/px; a battle whose fleets 400 m/px cannot hold, at the nearest two of opposite sides
+  at the scale they need, R84j); `tools/diag/seaBattlesLook.ts <its json>` (a preview on 4173) checks each is drawn (ADR-852),
   in the order of their first hours; one listed with no fleet is told "no fleet to see", not failed (R59e).
   Its `sinkings` are ships sunk from the air in an hour with no sea battle, `by` the nation of the carrier whose wings
   sank them, not the nation that lost them (R78c).

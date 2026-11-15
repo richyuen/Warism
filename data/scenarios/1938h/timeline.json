@@ -23191,7 +23191,15 @@
      "KUW"
     ]
    ],
-   "until": "1990-08-28"
+   "until": "1990-08-03"
+  },
+  {
+   "date": "1990-08-03",
+   "kind": "annex",
+   "annexer": "IRQ",
+   "target": "KUW",
+   "tell": "note",
+   "note": "Kuwait overrun in two days; Iraq proclaims it its 19th province on 28 August"
   },
   {
    "date": "1990-08-24",
@@ -23214,14 +23222,6 @@
     ]
    ],
    "until": "1997-07-19"
-  },
-  {
-   "date": "1990-08-28",
-   "kind": "annex",
-   "annexer": "IRQ",
-   "target": "KUW",
-   "tell": "note",
-   "note": "Iraq annexes Kuwait, its 19th province"
   },
   {
    "date": "1990-09-02",

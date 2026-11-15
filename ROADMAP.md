@@ -97,10 +97,17 @@ each fixed before the release (ADR-1005); the release checks then run once on th
     before and after the undo the same (`c69_undo2.mjs 41211`'s city case 0 px).
     Done (ADR-1066): an Undo puts the city names back as they stood when the act began; a new city list keeps the
     names it shares with the last. The critic's sequence on 41211 and 51211: 0 px in all five cases. `cities.test`.
-  - [ ] R84j (run 69's small items) The heroes hint in a later year's free form says "seven great powers" (only the
+  - [x] R84j (run 69's small items) The heroes hint in a later year's free form says "seven great powers" (only the
     living have theirs); "was annexed" with a plural rebels' name ("Contras", "FMLN"), and the FMLN annexed by
     Honduras in a 1991 free game; Kuwait still Kuwait's the day after Iraq's war of 1990 (two days in history); 1 of 69
     sea battles not seen at its camera (39061). AT: each case as the report states it.
+    Done: the heroes hint says "1938's seven great powers still living at the start"; a plural name takes "were"
+    (`nation.plural`: Contras, FMLN, Tamil Tigers, Afghan Mujahideen; `historyPlural.test`). Kuwait annexed by Iraq on
+    3 August 1990 (was 28 August, the note keeping the proclamation): `historyTrack1938h` checks Kuwait City Iraq's that
+    noon. `seaBattles`' camera of a battle too wide for 400 m/px is its nearest opposing pair at the scale they need:
+    39061 62 of 62 seen (t7308 at 536 m/px). Not taken: the FMLN annexed by Honduras in the 1991 free game, the free
+    AI by its rules (the FMLN-El Salvador war ends white with the track, ADR-1063; Honduras declares on the
+    two-province FMLN on day 24 and takes it in three days).
   - [x] R84k (the user, 2026-11-15) A hero opened from the played nation's Overview is selected but cannot be ordered
     (a click on the map moves nothing); clicked on the map it can. AT: `heroes1938.spec` (7.184c): Japan played, O-I's
     row clicked, the next map click sends `moveFormation` for O-I; red on the code before. Done (ADR-1059).

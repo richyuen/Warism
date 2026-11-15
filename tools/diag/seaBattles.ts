@@ -78,14 +78,29 @@ interface Track {
   camera: { cx: number; cy: number; mpp: number };
 }
 
-/** The middle of the fleets and a scale that holds them in about 700 px, 40 to 400 m/px. */
+/**
+ * The middle of the fleets and a scale that holds them in about 700 px, 40 to 400 m/px. Fleets spread wider than 400
+ * m/px holds (R84j; critic run 69: 39061 t7308, Japan's and France's fleets 19 cells apart in the Skagerrak at its first
+ * hour, none in the view): the nearest two of opposite sides, where the battle is fought, at the scale they need (their
+ * ships drawn as markers beyond 300 m/px).
+ */
 function camera(fleets: Fleet[]): { cx: number; cy: number; mpp: number } {
+  const span = (fs: Fleet[]): number => Math.max(Math.max(...fs.map((f) => f.x)) - Math.min(...fs.map((f) => f.x)), Math.max(...fs.map((f) => f.y)) - Math.min(...fs.map((f) => f.y)));
+  let cap = 400;
+  if ((span(fleets) * KM * 1000) / 700 > cap) {
+    let best: Fleet[] | null = null;
+    for (const p of fleets) for (const q of fleets) if (p.side === 'a' && q.side === 'b' && (best === null || span([p, q]) < span(best))) best = [p, q];
+    if (best) {
+      fleets = best;
+      cap = Infinity;
+    }
+  }
   const xs = fleets.map((f) => f.x);
   const ys = fleets.map((f) => f.y);
   const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
   const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
   const spanKm = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) * KM;
-  const mpp = Math.round(Math.min(400, Math.max(40, (spanKm * 1000) / 700)));
+  const mpp = Math.round(Math.min(cap, Math.max(40, (spanKm * 1000) / 700)));
   return { cx: Math.round(cx * 100) / 100, cy: Math.round(cy * 100) / 100, mpp };
 }
 
