@@ -67,6 +67,12 @@ export interface ReplayStart {
   free: boolean;
 }
 
+/**
+ * A new game from the title has the heroes on where the scenario offers them (ROADMAP R86f, the user's word of
+ * 2026-11-15: so the critic judges them; PLAN 7.184d had them off). The settings panel's form keeps the game's own.
+ */
+const HEROES_ON: GameOptions = { heroes: 'on' };
+
 export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, startYears, readSave, onContinue, checkScenarioFile, onScenarioFile, loadFailed, saveFailed = false, startFailed, startFailedFree = false, yearPreviewUrl }: TitleScreenProps) {
   // A refused start opens on the card that offers the replay, its notice there (R73).
   const [chosen, setChosen] = useState<ScenarioId>(() => (startFailed !== undefined ? (scenarios.find((s) => replays[s.id])?.id ?? scenarios[0]!.id) : scenarios[0]!.id));
@@ -325,10 +331,10 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
                   <p class="panel-note" data-testid="title-free-note">
                     {t('title.freeYearNote', { year })}
                   </p>
-                  <NewGameForm key={`${chosen}-free`} seed={seed} options={{}} sizes={own.sizes} defaultSize={replay.info.defaultSize} sizeFixed diplomacy={own.diplomacy} heroes={own.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} onStart={(s, o) => onStart(replay.id, replay.info.fixedSeed ?? 0, { ...o, after: s || 1 }, { year, free: true })} />
+                  <NewGameForm key={`${chosen}-free`} seed={seed} options={HEROES_ON} sizes={own.sizes} defaultSize={replay.info.defaultSize} sizeFixed diplomacy={own.diplomacy} heroes={own.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} onStart={(s, o) => onStart(replay.id, replay.info.fixedSeed ?? 0, { ...o, after: s || 1 }, { year, free: true })} />
                 </>
               ) : (
-                <NewGameForm key={chosen} seed={seed} options={{}} nationsRange={info.nationsRange} sizes={info.sizes} defaultSize={info.defaultSize} diplomacy={info.diplomacy} heroes={info.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={info.fixedSeed} onStart={(s, o) => onStart(chosen, s, o)} />
+                <NewGameForm key={chosen} seed={seed} options={HEROES_ON} nationsRange={info.nationsRange} sizes={info.sizes} defaultSize={info.defaultSize} diplomacy={info.diplomacy} heroes={info.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={info.fixedSeed} onStart={(s, o) => onStart(chosen, s, o)} />
               )}
             </div>
           </div>

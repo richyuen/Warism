@@ -69,7 +69,7 @@ export function spawnCity(world: World, x: number, y: number, name: string, size
 
 /**
  * Removes city row `id`; a capital moves to the nation's next city (or the field). Told in the
- * history (`CityRazed`, PLAN 7.33b) with its name: its definition's, or the one it was placed with.
+ * history (`CityRazed`, PLAN 7.33b) with its name: the one it was placed with or renamed to (R86e), or its definition's.
  */
 export function removeCity(world: World, id: number): boolean {
   if (!world.cities.has(id)) return false;
@@ -77,7 +77,7 @@ export function removeCity(world: World, id: number): boolean {
   const capitalOf = cc.capitalOf[id]!;
   const placed = world.cityNames.get(id);
   world.out.emit(world.tick, EventKind.CityRazed, cc.def[id]!, world.cells.owner[cc.cell[id]!]!, cc.x[id]!, cc.y[id]!);
-  if (cc.def[id] === NO_DEF && placed !== undefined) world.history.nameLast(EventKind.CityRazed, placed);
+  if (placed !== undefined) world.history.nameLast(EventKind.CityRazed, placed);
   const econ = world.cells.econ;
   econ[cc.cell[id]!] = Math.max(0, econ[cc.cell[id]!]! - cc.econ[id]!);
   world.cityNames.delete(id);

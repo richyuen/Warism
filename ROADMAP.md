@@ -33,7 +33,7 @@ Run 71 (focused): every dimension 8, no blocking issue. The user asked (2026-11-
 runs again: run 71's non-blocking issues and the defaults the critic should judge. Next: a full run (no blocking, every
 score at its bar).
 
-- [ ] R86 **Run 71's issues and the defaults.**
+- [x] R86 **Run 71's issues and the defaults.**
   - [x] R86a (R71-N1) A God "Make peace" in the replay is told "…as history's course ended": `endPeace` takes any
     `PeaceSigned` followed by `TrackEnded` in the hour, and the God act signs its peace in the hour it ends the track.
     AT: `critic/scripts/c71_godpeace.mjs 1942 JAP 'United States'` reads "Japan made peace with United States" (or names
@@ -64,13 +64,21 @@ score at its bar).
     of a year played free names the wars held past 1991 from the starts' index (`whitePeace`, `heldPastEnd`), only on a
     year that has one; on a phone the war banners give way to History, Relations, Settings and the Editor.
     `trackView1938h`, `replayYear1938h`, `phoneLayout1938` specs; `trackEndHolds1938h.test`.
-  - [ ] R86e (R71-N5, old) The cities keep their 1938 names to 1991: "Keijō, South Korea", "Heijō", "Peiping",
+  - [x] R86e (R71-N5, old) The cities keep their 1938 names to 1991: "Keijō, South Korea", "Heijō", "Peiping",
     "Léopoldville" on 31 December 1975 (ADR-18's 1938 names). AT: a city renamed in the timeline's years (Seoul 1945,
     Beijing 1949, Kinshasa 1966) reads its name of the day in the replay and in a free game started after it.
-  - [ ] R86f (the user's word) Heroes on by default in free play, so the critic judges them: the new-game form's heroes
+    Done: a timeline event `cityName` (the city nearest `at` within 15 km bears `as` from its day; `World.cityNames`,
+    saved, so a game played free from a built year has it; the worker shows it before the 1938 list's). 57 renames
+    1939-1991: Seoul, Pyongyang, Pusan 1945; Peking 1949 and the pinyin names 1979 (Beijing, Nanjing, Chongqing…);
+    Kinshasa and the Congo's 1966; Volgograd 1961; Leningrad to St Petersburg 1991. A razed city's row keeps the
+    name it bore. `cityNames1938h.test`. Yearly starts rebuilt (the timeline's hash).
+  - [x] R86f (the user's word) Heroes on by default in free play, so the critic judges them: the new-game form's heroes
     choice starts "on" where the scenario has heroes (PLAN 7.184d had it off). The sim's absent option stays off
     (seed 99's pin unchanged). AT: the form's heroes select reads "On" on first open, a game started from it has the
     heroes; a unit test of the form's default.
+    Done (ADR-1070): the title's forms start with heroes on (`HEROES_ON`); the settings panel keeps the game's own; the
+    sim's absent option stays off (pin held). `title.spec` (a game from the title has its 14 heroes), in place of a
+    unit test: the form's default is read where it is shown.
   - Countryball (the user's word): already the default unit look (`DEFAULT_UNIT_LOOK = 'balls'`, ADR-777); nothing to
     change. A browser that saved "Classic" keeps it (`warsim.unitLook`).
   - Not filed (every dimension at its bar, ADR-843 asks none): the design objection, ADR-1060 empties occupied France

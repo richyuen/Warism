@@ -143,7 +143,8 @@ test('the title screen starts the 1938 world with the chosen seed and options; M
   await page.getByTestId('opt-ce').selectOption('static');
   await page.screenshot({ path: path.join(evidence(info), 'title-options.png') });
   await Promise.all([page.waitForURL(/scenario=1938/), page.getByTestId('settings-new-game').click()]);
-  for (const p of ['seed=4242', 'looping=0', 'gold=equal', 'ce=static']) expect(page.url()).toContain(p);
+  // The heroes too: on at first in the title's form (R86f, ADR-1070).
+  for (const p of ['seed=4242', 'looping=0', 'gold=equal', 'ce=static', 'heroes=on']) expect(page.url()).toContain(p);
   await ready(page);
   await expect(page.getByTestId('title-screen')).toHaveCount(0);
 
@@ -155,7 +156,7 @@ test('the title screen starts the 1938 world with the chosen seed and options; M
   expect(s.settings.loopingMap).toBe(false);
   expect(s.settings.ceMode).toBe('static');
   expect(s.nations.filter((n) => n.living).length).toBe(nations); // the count the title screen showed
-  const node = new Sim({ scenario: '1938', seed: 4242, options: { loopingMap: false, gold: 'equal', ceMode: 'static' }, assets: assets1938(SIZE_1938.w) });
+  const node = new Sim({ scenario: '1938', seed: 4242, options: { loopingMap: false, gold: 'equal', ceMode: 'static', heroes: 'on' }, assets: assets1938(SIZE_1938.w) });
   expect((await page.evaluate(() => window.__warsim!.sim.hash())).hash).toBe(node.hash());
   await page.waitForTimeout(500); // let the first frames draw
   await page.screenshot({ path: path.join(evidence(info), 'started-1938.png') });
@@ -220,13 +221,13 @@ test('Continue resumes the autosave with the seed and options of its game', asyn
   await expect(page.getByTestId('title-save-date')).toHaveText('4 January 1938');
   await page.screenshot({ path: path.join(evidence(info), 'title-continue.png') });
   await Promise.all([page.waitForURL(/continue=1/), page.getByTestId('title-continue').click()]);
-  for (const p of ['scenario=1938', 'seed=77', 'looping=0']) expect(page.url()).toContain(p);
+  for (const p of ['scenario=1938', 'seed=77', 'looping=0', 'heroes=on']) expect(page.url()).toContain(p);
   await ready(page);
   await page.waitForFunction(() => window.__warsim!.hud.tick.value === 72, null, { timeout: 30_000 });
 
   // The same world, three days in, still without a looping map; the panel knows its seed and options.
   expect(await page.evaluate(() => window.__warsim!.sim.hash())).toEqual(left);
-  const node = new Sim({ scenario: '1938', seed: 77, options: { loopingMap: false }, assets: assets1938(SIZE_1938.w) });
+  const node = new Sim({ scenario: '1938', seed: 77, options: { loopingMap: false, heroes: 'on' }, assets: assets1938(SIZE_1938.w) });
   node.step(72);
   expect(left.hash).toBe(node.hash());
   expect(await page.evaluate(() => window.__warsim!.view!.wrapsX)).toBe(false);
@@ -675,4 +676,24 @@ test("a save and a scenario file lacking parts this version reads: refused on th
   await page.getByTestId('title-scenario-file').setInputFiles({ name: 'whole.warism-scenario', mimeType: 'application/octet-stream', buffer: Buffer.from(await encodeScenarioFile(header, bytes)) });
   await expect(page.getByTestId('title-file-pending')).toBeVisible();
   expect(errors).toEqual([]);
+});
+
+// ROADMAP R86f (the user's word, 2026-11-15: so the critic judges them): a new game from the title has the heroes on
+// where the scenario offers them; the settings panel's form keeps the game's own.
+test('a game from the title has the heroes on; the settings panel keeps the game\'s own choice', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto('/');
+  await page.getByTestId('title-scenario-1938').click();
+  await expect(page.getByTestId('opt-heroes')).toHaveValue('on');
+  await page.getByTestId('settings-seed').fill('77');
+  await Promise.all([page.waitForURL(/scenario=1938/), page.getByTestId('settings-new-game').click()]);
+  expect(page.url()).toContain('heroes=on');
+  await ready(page);
+  expect(await page.evaluate(() => window.__warsim!.view!.heroFormations().length)).toBe(14);
+  // A game started without them shows them off in its panel.
+  await page.goto('/?scenario=1938&paused=1&seed=77');
+  await ready(page);
+  await page.getByTestId('settings-btn').click();
+  await expect(page.getByTestId('opt-heroes')).toHaveValue('off');
 });

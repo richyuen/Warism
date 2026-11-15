@@ -1135,6 +1135,15 @@
    "target": "LIT"
   },
   {
+   "date": "1939-10-28",
+   "kind": "cityName",
+   "at": [
+    25.3166,
+    54.6834
+   ],
+   "as": "Vilnius"
+  },
+  {
    "date": "1939-11-15",
    "kind": "redeploy",
    "nation": "GER",
@@ -11650,6 +11659,15 @@
    "fightDays": 50
   },
   {
+   "date": "1944-07-27",
+   "kind": "cityName",
+   "at": [
+    24.03,
+    49.835
+   ],
+   "as": "Lvov"
+  },
+  {
    "date": "1944-07-30",
    "kind": "occupy",
    "by": "USA",
@@ -12321,6 +12339,15 @@
   },
   {
    "date": "1944-09-19",
+   "kind": "cityName",
+   "at": [
+    28.7549,
+    60.7039
+   ],
+   "as": "Vyborg"
+  },
+  {
+   "date": "1944-09-19",
    "kind": "leave",
    "nations": [
     "FIN"
@@ -12651,6 +12678,15 @@
    "kind": "allianceLeave",
    "nation": "HUN",
    "note": "Hungary out of the Axis"
+  },
+  {
+   "date": "1945-01-28",
+   "kind": "cityName",
+   "at": [
+    21.1199,
+    55.7204
+   ],
+   "as": "Klaipėda"
   },
   {
    "date": "1945-01-28",
@@ -13132,6 +13168,15 @@
    "autonomy": 30
   },
   {
+   "date": "1945-03-30",
+   "kind": "cityName",
+   "at": [
+    18.64,
+    54.36
+   ],
+   "as": "Gdańsk"
+  },
+  {
    "date": "1945-04-04",
    "kind": "occupy",
    "by": "SOV",
@@ -13610,6 +13655,15 @@
     ]
    ],
    "note": "Curaçao and Aruba"
+  },
+  {
+   "date": "1945-05-06",
+   "kind": "cityName",
+   "at": [
+    17.03,
+    51.1104
+   ],
+   "as": "Wrocław"
   },
   {
    "date": "1945-05-08",
@@ -14307,6 +14361,15 @@
    "note": "Okinawa"
   },
   {
+   "date": "1945-07-05",
+   "kind": "cityName",
+   "at": [
+    14.53,
+    53.4204
+   ],
+   "as": "Szczecin"
+  },
+  {
    "date": "1945-07-16",
    "kind": "bomb",
    "nation": "USA",
@@ -14359,6 +14422,33 @@
     32.75
    ],
    "note": "Nagasaki"
+  },
+  {
+   "date": "1945-08-15",
+   "kind": "cityName",
+   "at": [
+    126.9978,
+    37.5683
+   ],
+   "as": "Seoul"
+  },
+  {
+   "date": "1945-08-15",
+   "kind": "cityName",
+   "at": [
+    125.7527,
+    39.0214
+   ],
+   "as": "Pyongyang"
+  },
+  {
+   "date": "1945-08-15",
+   "kind": "cityName",
+   "at": [
+    129.0081,
+    35.097
+   ],
+   "as": "Pusan"
   },
   {
    "date": "1945-08-16",
@@ -14443,6 +14533,24 @@
     ]
    ],
    "note": "Manchukuo and Mengjiang dissolved: China in name"
+  },
+  {
+   "date": "1945-08-20",
+   "kind": "cityName",
+   "at": [
+    125.338,
+    43.867
+   ],
+   "as": "Changchun"
+  },
+  {
+   "date": "1945-08-20",
+   "kind": "cityName",
+   "at": [
+    123.448,
+    41.8069
+   ],
+   "as": "Shenyang"
   },
   {
    "date": "1945-08-20",
@@ -15044,6 +15152,24 @@
   },
   {
    "date": "1945-10-25",
+   "kind": "cityName",
+   "at": [
+    121.5683,
+    25.0358
+   ],
+   "as": "Taipei"
+  },
+  {
+   "date": "1945-10-25",
+   "kind": "cityName",
+   "at": [
+    120.2666,
+    22.6333
+   ],
+   "as": "Kaohsiung"
+  },
+  {
+   "date": "1945-10-25",
    "kind": "transfer",
    "to": "CHI",
    "from": [
@@ -15321,6 +15447,15 @@
   },
   {
    "date": "1946-07-04",
+   "kind": "cityName",
+   "at": [
+    20.4973,
+    54.7
+   ],
+   "as": "Kaliningrad"
+  },
+  {
+   "date": "1946-07-04",
    "kind": "release",
    "subject": "PHI",
    "note": "The Philippines independent"
@@ -15566,6 +15701,33 @@
     ]
    ],
    "note": "East Bengal"
+  },
+  {
+   "date": "1947-09-15",
+   "kind": "cityName",
+   "at": [
+    14.45,
+    45.33
+   ],
+   "as": "Rijeka"
+  },
+  {
+   "date": "1947-09-15",
+   "kind": "cityName",
+   "at": [
+    15.2623,
+    44.1201
+   ],
+   "as": "Zadar"
+  },
+  {
+   "date": "1947-09-15",
+   "kind": "cityName",
+   "at": [
+    13.8481,
+    44.8687
+   ],
+   "as": "Pula"
   },
   {
    "date": "1947-09-15",
@@ -16168,6 +16330,15 @@
    "note": "The Hashemite Kingdom of Jordan"
   },
   {
+   "date": "1949-05-16",
+   "kind": "cityName",
+   "at": [
+    114.2681,
+    30.582
+   ],
+   "as": "Wuhan"
+  },
+  {
    "date": "1949-05-23",
    "kind": "born",
    "nation": "FRG",
@@ -16519,6 +16690,15 @@
    "note": "Xinjiang joins"
   },
   {
+   "date": "1949-09-27",
+   "kind": "cityName",
+   "at": [
+    116.3863,
+    39.9308
+   ],
+   "as": "Peking"
+  },
+  {
    "date": "1949-10-01",
    "kind": "capital",
    "nation": "CCP",
@@ -16651,6 +16831,15 @@
    "nation": "CHI",
    "as": "ROC",
    "note": "The Republic of China on Taiwan"
+  },
+  {
+   "date": "1949-12-27",
+   "kind": "cityName",
+   "at": [
+    106.8275,
+    -6.1725
+   ],
+   "as": "Jakarta"
   },
   {
    "date": "1949-12-27",
@@ -17695,6 +17884,24 @@
    "note": "The Amami Islands returned to Japan (Okinawa American still)"
   },
   {
+   "date": "1954-02-01",
+   "kind": "cityName",
+   "at": [
+    87.5731,
+    43.807
+   ],
+   "as": "Ürümqi"
+  },
+  {
+   "date": "1954-04-25",
+   "kind": "cityName",
+   "at": [
+    111.6581,
+    40.8219
+   ],
+   "as": "Hohhot"
+  },
+  {
    "date": "1954-06-27",
    "kind": "regime",
    "nation": "GUA",
@@ -18309,6 +18516,15 @@
    "note": "Mauritania independent"
   },
   {
+   "date": "1961-03-20",
+   "kind": "cityName",
+   "at": [
+    71.4278,
+    51.1811
+   ],
+   "as": "Tselinograd"
+  },
+  {
    "date": "1961-04-16",
    "kind": "guarantee",
    "guarantor": "SOV",
@@ -18377,6 +18593,33 @@
    "note": "The Southern Cameroons join Cameroon"
   },
   {
+   "date": "1961-11-09",
+   "kind": "cityName",
+   "at": [
+    37.828,
+    48.0019
+   ],
+   "as": "Donetsk"
+  },
+  {
+   "date": "1961-11-10",
+   "kind": "cityName",
+   "at": [
+    44.498,
+    48.712
+   ],
+   "as": "Volgograd"
+  },
+  {
+   "date": "1961-11-10",
+   "kind": "cityName",
+   "at": [
+    68.7739,
+    38.56
+   ],
+   "as": "Dushanbe"
+  },
+  {
    "date": "1961-12-03",
    "kind": "allianceLeave",
    "nation": "ALB",
@@ -18425,6 +18668,15 @@
    "nation": "BUR",
    "aggression": 15,
    "note": "Ne Win's coup: the Burmese Way to Socialism"
+  },
+  {
+   "date": "1962-07-01",
+   "kind": "cityName",
+   "at": [
+    29.36,
+    -3.3761
+   ],
+   "as": "Bujumbura"
   },
   {
    "date": "1962-07-01",
@@ -19221,6 +19473,51 @@
    "nation": "IDN",
    "aggression": 30,
    "note": "Supersemar: Sukarno's power to Suharto"
+  },
+  {
+   "date": "1966-05-02",
+   "kind": "cityName",
+   "at": [
+    15.313,
+    -4.3278
+   ],
+   "as": "Kinshasa"
+  },
+  {
+   "date": "1966-05-02",
+   "kind": "cityName",
+   "at": [
+    27.4781,
+    -11.6781
+   ],
+   "as": "Lubumbashi"
+  },
+  {
+   "date": "1966-05-02",
+   "kind": "cityName",
+   "at": [
+    25.22,
+    0.52
+   ],
+   "as": "Kisangani"
+  },
+  {
+   "date": "1966-05-02",
+   "kind": "cityName",
+   "at": [
+    22.3981,
+    -5.8881
+   ],
+   "as": "Kananga"
+  },
+  {
+   "date": "1966-05-02",
+   "kind": "cityName",
+   "at": [
+    18.26,
+    0.04
+   ],
+   "as": "Mbandaka"
   },
   {
    "date": "1966-05-26",
@@ -20230,6 +20527,15 @@
    "note": "The Vientiane Agreement: the Pathet Lao keep their zone"
   },
   {
+   "date": "1973-04-06",
+   "kind": "cityName",
+   "at": [
+    15.0472,
+    12.115
+   ],
+   "as": "N'Djamena"
+  },
+  {
    "date": "1973-06-01",
    "kind": "transfer",
    "to": "KHR",
@@ -20848,6 +21154,15 @@
   },
   {
    "date": "1975-11-11",
+   "kind": "cityName",
+   "at": [
+    15.7581,
+    -12.748
+   ],
+   "as": "Huambo"
+  },
+  {
+   "date": "1975-11-11",
    "kind": "release",
    "subject": "ANG",
    "note": "Angola independent: the MPLA's People's Republic in Luanda"
@@ -21128,6 +21443,15 @@
    "against": "PLS"
   },
   {
+   "date": "1976-02-03",
+   "kind": "cityName",
+   "at": [
+    32.5872,
+    -25.9533
+   ],
+   "as": "Maputo"
+  },
+  {
    "date": "1976-02-08",
    "kind": "transfer",
    "to": "ANG",
@@ -21188,6 +21512,15 @@
     "SYC"
    ],
    "note": "Seychelles independent"
+  },
+  {
+   "date": "1976-07-02",
+   "kind": "cityName",
+   "at": [
+    106.6931,
+    10.782
+   ],
+   "as": "Ho Chi Minh City"
   },
   {
    "date": "1976-07-02",
@@ -21476,6 +21809,96 @@
     ]
    ],
    "until": "1989-09-26"
+  },
+  {
+   "date": "1979-01-01",
+   "kind": "cityName",
+   "at": [
+    116.3863,
+    39.9308
+   ],
+   "as": "Beijing"
+  },
+  {
+   "date": "1979-01-01",
+   "kind": "cityName",
+   "at": [
+    117.1981,
+    39.132
+   ],
+   "as": "Tianjin"
+  },
+  {
+   "date": "1979-01-01",
+   "kind": "cityName",
+   "at": [
+    120.3281,
+    36.0919
+   ],
+   "as": "Qingdao"
+  },
+  {
+   "date": "1979-01-01",
+   "kind": "cityName",
+   "at": [
+    106.593,
+    29.5669
+   ],
+   "as": "Chongqing"
+  },
+  {
+   "date": "1979-01-01",
+   "kind": "cityName",
+   "at": [
+    118.0781,
+    24.4519
+   ],
+   "as": "Xiamen"
+  },
+  {
+   "date": "1979-01-01",
+   "kind": "cityName",
+   "at": [
+    116.6681,
+    23.372
+   ],
+   "as": "Shantou"
+  },
+  {
+   "date": "1979-01-01",
+   "kind": "cityName",
+   "at": [
+    118.778,
+    32.052
+   ],
+   "as": "Nanjing"
+  },
+  {
+   "date": "1979-01-01",
+   "kind": "cityName",
+   "at": [
+    119.2981,
+    26.0819
+   ],
+   "as": "Fuzhou"
+  },
+  {
+   "date": "1979-01-01",
+   "kind": "cityName",
+   "at": [
+    114.928,
+    40.8319
+   ],
+   "as": "Zhangjiakou"
+  },
+  {
+   "date": "1979-01-01",
+   "kind": "cityName",
+   "at": [
+    121.6279,
+    38.9248
+   ],
+   "as": "Dalian"
   },
   {
    "date": "1979-01-07",
@@ -22913,6 +23336,15 @@
   },
   {
    "date": "1989-06-18",
+   "kind": "cityName",
+   "at": [
+    96.1647,
+    16.7853
+   ],
+   "as": "Yangon"
+  },
+  {
+   "date": "1989-06-18",
    "kind": "rename",
    "nation": "BUR",
    "as": "MMR",
@@ -23161,12 +23593,30 @@
    "note": "The last Indian peacekeepers leave Sri Lanka"
   },
   {
+   "date": "1990-05-04",
+   "kind": "cityName",
+   "at": [
+    39.3344,
+    48.5698
+   ],
+   "as": "Lugansk"
+  },
+  {
    "date": "1990-05-22",
    "kind": "annex",
    "annexer": "YEM",
    "target": "SYE",
    "tell": "note",
    "note": "Yemen united"
+  },
+  {
+   "date": "1990-07-17",
+   "kind": "cityName",
+   "at": [
+    35.89,
+    56.86
+   ],
+   "as": "Tver"
   },
   {
    "date": "1990-08-02",
@@ -23293,6 +23743,15 @@
    "note": "Aoun ousted: the Taif order in Lebanon"
   },
   {
+   "date": "1990-10-22",
+   "kind": "cityName",
+   "at": [
+    43.9981,
+    56.335
+   ],
+   "as": "Nizhny Novgorod"
+  },
+  {
    "date": "1991-01-17",
    "kind": "war",
    "attackers": [
@@ -23329,6 +23788,15 @@
     ]
    ],
    "until": "1991-02-28"
+  },
+  {
+   "date": "1991-01-25",
+   "kind": "cityName",
+   "at": [
+    50.1493,
+    53.197
+   ],
+   "as": "Samara"
   },
   {
    "date": "1991-01-26",
@@ -23369,6 +23837,15 @@
     ]
    ],
    "until": "1992-12-09"
+  },
+  {
+   "date": "1991-02-05",
+   "kind": "cityName",
+   "at": [
+    74.5833,
+    42.875
+   ],
+   "as": "Bishkek"
   },
   {
    "date": "1991-02-28",
@@ -23596,6 +24073,24 @@
    "note": "The Brioni Accords"
   },
   {
+   "date": "1991-08-24",
+   "kind": "cityName",
+   "at": [
+    24.03,
+    49.835
+   ],
+   "as": "Lviv"
+  },
+  {
+   "date": "1991-08-27",
+   "kind": "cityName",
+   "at": [
+    28.8577,
+    47.005
+   ],
+   "as": "Chișinău"
+  },
+  {
    "date": "1991-09-02",
    "kind": "born",
    "nation": "NKR",
@@ -23608,6 +24103,24 @@
     "AZE-1734"
    ],
    "note": "The Nagorno-Karabakh Republic proclaimed"
+  },
+  {
+   "date": "1991-09-04",
+   "kind": "cityName",
+   "at": [
+    60.598,
+    56.852
+   ],
+   "as": "Yekaterinburg"
+  },
+  {
+   "date": "1991-09-06",
+   "kind": "cityName",
+   "at": [
+    30.3141,
+    59.941
+   ],
+   "as": "St Petersburg"
   },
   {
    "date": "1991-09-06",

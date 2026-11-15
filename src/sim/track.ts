@@ -512,6 +512,31 @@ function peace(world: World, a: number, b: number, terms: 'white' | 'score'): Re
 }
 
 /** The nation's own city nearest `at` its capital (R62i2); passed over when it is already, or it holds no city. */
+/**
+ * A city renamed by the timeline (R86e): the city nearest `at` within CAPITAL_CITY_KM bears `as` from now
+ * (`World.cityNames`, saved with the world). One razed in play is not looked for again: nothing to rename, nothing told.
+ */
+function renameCity(world: World, at: readonly [number, number], as: string): Refusal {
+  const { w, h } = world.cells;
+  const [u, v] = project(at[0], at[1]);
+  const cc = world.cities.cols;
+  const reach = CAPITAL_CITY_KM / kmPerCell(w);
+  let best = 0;
+  let bestD = reach * reach;
+  world.cities.forEach((ci) => {
+    let dx = Math.abs(cc.x[ci]! - u * w);
+    dx = Math.min(dx, w - dx);
+    const dy = cc.y[ci]! - v * h;
+    const d = dx * dx + dy * dy;
+    if (d <= bestD) [best, bestD] = [ci, d];
+  });
+  if (best === 0) return Refusal.None;
+  if (world.cityNames.get(best) === as) return Refusal.NoEffect;
+  world.cityNames.set(best, as);
+  world.citiesVersion++;
+  return Refusal.None;
+}
+
 function moveCapital(world: World, n: number, at: readonly [number, number], city?: string): Refusal {
   const why = whyNot(world, n);
   if (why) return why;
@@ -1005,6 +1030,8 @@ function apply(world: World, t: Track, e: TimelineEvent): Refusal {
     }
     case 'capital':
       return moveCapital(world, id(e.nation), e.at, e.city);
+    case 'cityName':
+      return renameCity(world, e.at, e.as);
     case 'rename': {
       const n = id(e.nation);
       const why = whyNot(world, n);
@@ -1163,6 +1190,8 @@ function fallBackCell(world: World, start: number, n: number, inRing: ReadonlySe
 /** The first nation an event names. */
 function firstNation(t: Track, e: TimelineEvent): number {
   switch (e.kind) {
+    case 'cityName':
+      return 0;
     case 'war':
       return t.id(e.attackers[0]!);
     case 'join':

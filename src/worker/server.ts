@@ -1164,7 +1164,7 @@ export class SimServer {
     const cc = world.cities.cols;
     const out: { id: number; name: string; x: number; y: number; size: number; capitalOf: number }[] = [];
     world.cities.forEach((id) => {
-      const name = cities1938.cities[cc.def[id]!]?.name ?? world.cityNames.get(id);
+      const name = world.cityNames.get(id) ?? cities1938.cities[cc.def[id]!]?.name;
       if (name !== undefined) out.push({ id, name, x: cc.x[id]!, y: cc.y[id]!, size: cc.size[id]!, capitalOf: cc.capitalOf[id]! });
     });
     return out;
@@ -1179,7 +1179,7 @@ export class SimServer {
   /** A city row's plain name, '' when it has none. */
   private cityName(v: number): string {
     const world = this.requireSim().world;
-    return cities1938.cities[world.cities.cols.def[v]!]?.name ?? world.cityNames.get(v) ?? '';
+    return world.cityNames.get(v) ?? cities1938.cities[world.cities.cols.def[v]!]?.name ?? '';
   }
 
   /** The name of the city nearest (x, y), '' with none. */

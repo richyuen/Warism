@@ -628,6 +628,11 @@ export const TimelineEvent = z.discriminatedUnion('kind', [
   /** A seat moved (R62i2: Beijing, Taipei): the nation's own city nearest `at` becomes its capital. */
   // `city` (R74c): the seat's name, a city founded there when the nation has none of its own within CAPITAL_CITY_KM.
   z.strictObject({ ...when, kind: z.literal('capital'), nation: tag, at: lonLat, city: z.string().optional(), note: z.string().optional() }),
+  /**
+   * A city renamed (R86e; critic run 71, R71-N5: "Keijō, South Korea" in 1975): the city nearest `at`, within
+   * CAPITAL_CITY_KM, bears `as` from then, in the replay and in a game played free after it.
+   */
+  z.strictObject({ ...when, kind: z.literal('cityName'), at: lonLat, as: z.string().min(1) }),
 ]);
 export type TimelineEvent = z.infer<typeof TimelineEvent>;
 export const TimelineFile = z.strictObject({
@@ -677,6 +682,8 @@ export type TimelineFile = z.infer<typeof TimelineFile>;
 /** The tags an event names. */
 export function timelineTags(e: TimelineEvent): string[] {
   switch (e.kind) {
+    case 'cityName':
+      return [];
     case 'war':
       return [...e.attackers, ...e.defenders, ...(e.without ?? [])];
     case 'join':

@@ -19,7 +19,8 @@ export interface NewGameFormProps {
   sizeFixed?: boolean | undefined;
   /** The scenario starts with alliances or wars (PLAN 7.182): a choice to draw them by the seed. */
   diplomacy?: boolean | undefined;
-  /** The scenario has heroes (PLAN 7.184d): a choice to give the great powers theirs (off by default). */
+  /** The scenario has heroes (PLAN 7.184d): a choice to give the great powers theirs (`options`' default; the
+   * title's form starts it on, R86f). */
   heroes?: boolean | undefined;
   /** Label of the start button. */
   startLabel: string;

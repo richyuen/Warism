@@ -1844,7 +1844,9 @@ to 27 July 1953, then sets the world free.
   their wars held on them. The Chinese civil war by stages of transfer (R62i2, ADR-941): `capital` (a seat
   moved; with `city`, R74c, that city founded where the nation has none of its own within 15 km: Bonn) and `guarantee` with `end` (a pledge withdrawn). The Korean War to the armistice, its line drawn by
   transfer on the track's last day (R62i3, ADR-942). `rename` gives a nation a new name and flag (an identity,
-  state; R62i4, ADR-943); the track's nations and identities fly flags of their own (`1938h/flags.json`). After its
+  state; R62i4, ADR-943); the track's nations and identities fly flags of their own (`1938h/flags.json`). `cityName`
+  (R86e) renames the city nearest `at` (within 15 km) on its day, a name the world keeps (`World.cityNames`, saved), shown
+  before the 1938 list's: Seoul in 1945, Peking in 1949 and Beijing in 1979 (pinyin), Kinshasa in 1966. After its
   end the world is the AI's: its wars resume at an ordinary game's opening pace (R62i5, ADR-944). Checked on any seed
   by `tests/helpers/historyTrack.ts` (R62k, ADR-947): no event passed over but by rule, no war or peace off the
   timeline, the diplomatic rules kept. While it steers the invasion AI lands only within an objective of the lander's
@@ -2007,7 +2009,8 @@ builds).
   seed (0–0xffffffff, random once a visit; 1938 with none in the URL); nations for the random world
   (`RANDOM_NATIONS` 2–200, 60); map size where the map has more than one (`?size=` S, M, L); looping
   (`?looping=0`); aggression (`?aggr=random`); traits (`?traits=random`, 1–3, exclusions kept); diplomacy
-  where the scenario has any (`?diplo=random`); heroes where it has any (`?heroes=on`); gold (`?gold=`
+  where the scenario has any (`?diplo=random`); heroes where it has any (`?heroes=on`; on at first in the title's form, the settings panel's keeping
+  the game's own: R86f, ADR-1070); gold (`?gold=`
   random 0.25–2× or equal to the median); efficiency mode (`?ce=`, §5.3). A game starts paused
   (`paused=1`). A loaded world keeps its own seed and options. Until the world built in the worker sends
   its first stats (about 2 s), "Building the world…" stands over the map (R65c, ADR-962; not the toy world).

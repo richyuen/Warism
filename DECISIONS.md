@@ -68,6 +68,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1070 · 2026-11-15 · accepted (the user's decision) — R86f: a game from the title has the heroes on
+- **Decision** (the user, 2026-11-15: "make heroes the default setting for free play … so critic will judge it"): the
+  title's new-game forms (1938, a later year played free, the random world where it offers heroes) start with the heroes
+  on. The settings panel's form starts from the running game's options, as before; a URL with no `heroes` is a game
+  without them, so seed 99's pin and every test world stand. Countryball, the user's other default, already was
+  (ADR-777).
+- **Read:** `title.spec` (a game from the title has 14 heroes; a game without them shows them off in its panel).
+
 ### ADR-1069 · 2026-11-15 · accepted (the bar, the user's decision) — R86c: a nation whose home borders no nation reaches from its nearest target
 - **Found** (critic run 71, R71-N3; `fewNationWars 2 54421 6 10`): 3 of 6 two-nation worlds had no war in ten years.
   On 54421 each nation holds continents (79 and 39 million km²) that border nothing; the land border is by pieces of

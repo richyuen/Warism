@@ -481,3 +481,13 @@
 
 - R71-N4: one full note on a phone screen; the year card names the wars held past 1991 (index `whitePeace`) only where
   there are some; the war banners give way to History on a phone.
+
+## 2026-11-15 — R86e: the cities bear their names of the day
+
+- R71-N5: a timeline event `cityName`; 57 renames 1939-1991 (Seoul 1945, Peking 1949, Beijing 1979, Kinshasa 1966).
+  The yearly starts rebuilt for the timeline's hash.
+
+## 2026-11-15 — R86f: a game from the title has the heroes on (ADR-1070)
+
+- The user's word: the title's new-game forms start with heroes on, so the critic judges them; the settings panel keeps
+  the game's own. Batch 30 done.
