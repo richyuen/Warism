@@ -466,3 +466,8 @@
 
 - R71-N1: the track's end marks the peaces it signs (`PEACE_BY_TRACK_END`); History no longer takes a God peace of the
   same hour for one.
+
+## 2026-11-15 — R86b: a kept war's score has its whole range
+
+- R71-N2: the war score is clamped after `scoreFrom` is taken off, not before; Germany's 1942 war on the Soviet Union
+  goes past 39 (90 at its peace).

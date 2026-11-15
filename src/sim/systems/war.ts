@@ -675,8 +675,9 @@ export function warSystem(world: World): void {
     const [A, D] = war.sides;
     const oAD = occShare(land, A, D);
     const oDA = occShare(land, D, A);
-    // Counted from the score at the replay's end for a war it held (R85b, `scoreFrom`).
-    war.score = Math.max(-100, Math.min(100, Math.max(-100, Math.min(100, Math.round(200 * (oAD.rel - oDA.rel) + war.capitalBonus))) - (war.scoreFrom ?? 0)));
+    // Counted from the score at the replay's end for a war it held (R85b, `scoreFrom`), the ground's score unclamped
+    // until then (R86b; critic run 71, R71-N2: clamped first, a side ahead by 61 at the end stopped at 39 for months).
+    war.score = Math.max(-100, Math.min(100, Math.round(200 * (oAD.rel - oDA.rel) + war.capitalBonus) - (war.scoreFrom ?? 0)));
     notePeak(war, ATTACKERS, oAD.km2, world.tick);
     notePeak(war, DEFENDERS, oDA.km2, world.tick);
     const days = (world.tick - war.startTick) / 24;

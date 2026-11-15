@@ -75,6 +75,23 @@ describe("the timeline's frozen wars as the track ends (ROADMAP R84e, R85b)", ()
     expect(Math.abs(war.score)).toBeLessThanOrEqual(5);
   });
 
+  it("a war kept on has the whole range: no ceiling of 100 less the score it had (R86b)", () => {
+    // Critic run 71, R71-N2: the ground's score clamped before `scoreFrom` was taken from it, so Germany, 61 ahead of the
+    // Soviet Union at the 1942 end, stopped at 39 while it took European Russia.
+    const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w), options: { after: 51283 } });
+    sim.step(24, quiet);
+    const w = sim.world;
+    const war = w.wars.between(id('JAP'), id('CHI'))!.war;
+    sim.command({ kind: 'leaveTrack' });
+    sim.step(1, quiet);
+    const from = war.scoreFrom!;
+    expect(from).toBeGreaterThan(5);
+    // A ground's score far past 100 for the attackers: the capital bonus's whole reach on it.
+    war.capitalBonus += 200;
+    sim.step(24, quiet);
+    expect(w.wars.list.includes(war) ? war.score : 100).toBeGreaterThan(100 - from);
+  });
+
   it("a God peace in the replay is the player's, though its act ends the track in that hour (R86a)", () => {
     // Critic run 71, R71-N1: "Japan made peace with United States as history's course ended".
     const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w), options: { after: 51283 } });

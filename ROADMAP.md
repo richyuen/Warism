@@ -41,11 +41,14 @@ score at its bar).
     Done: the end's peace carries `PEACE_BY_TRACK_END` in its event's x; History reads that, not the hour's
     `TrackEnded`. A God peace in the hour its act ends the track reads as an ordinary peace; the end's own still
     "…as history's course ended" (`trackEndHolds1938h.test`, red before).
-  - [ ] R86b (R71-N2) A war R85b keeps has a ceiling of 100 − `scoreFrom` for the side ahead (`war.ts`,
+  - [x] R86b (R71-N2) A war R85b keeps has a ceiling of 100 − `scoreFrom` for the side ahead (`war.ts`,
     `clamp(clamp(raw) − scoreFrom)`): GER v SOV stops at 39 from April to August 1942, PUPPET_SCORE and
     PEACE_ACCEPT_SCORE out of reach. AT: `c71_warlong.ts 1942 54601 god 730` the score follows the front past
     100 − `scoreFrom` (the raw score unclamped before the subtraction), or SPEC states the ceiling and the banner shows
     it (Hearts of Iron IV's idea: "39 (from 61 at the replay's end)").
+    Done: the ground's score is clamped only after `scoreFrom` is taken from it. `c71_warlong.ts 1942 54601 god 730`:
+    GER v SOV 45 at day 90 (was 39), 65 at 150, 90 at its peace on 9 August 1942; JAP v CHI to 100 and a puppet.
+    `trackEndHolds1938h.test` (red before). A war with no `scoreFrom` scores as before; pin held.
   - [ ] R86c (R71-N3) Two-nation worlds with no war: `fewNationWars 2 54421 6 10` 3 of 6 with no war in ten years,
     land neighbours each time, treasuries unspent. AT: a war on at least 5 of 6; R85e's 53401 and R84h's 51401 held.
   - [ ] R86d (R71-N4, small) At 390 × 844 the R85c note stands three times on one screen (Take control, the God tab,
