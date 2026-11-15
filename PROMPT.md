@@ -104,10 +104,10 @@ from a critic run is done with every other open item before the critic runs agai
    critic's own probes (`critic/scripts`) are replayed on the code and what they find is fixed first.
 3. Focused runs until one has no blocking issue and every score at its bar; then the critic is spawned
    with "full run" (ADR-916, the user's decision). On a full report with no blocking issue and every
-   score at its bar, its non-blocking issues fixed first (step 2; ADR-1022), then: `npm run check:review`,
-   `npm run bench -- G --gpu-only` (budgets PASS), and the last nightly run (`.github/workflows/nightly.yml`: its
-   sweep, soak and checkers) green on a commit at or after the last change under `src/sim/` or `data/`. No sweep of
-   the release's own (ADR-1072, the user's decision): the nightly's and the weekly's take it; a red one is a ROADMAP item. A check that fails becomes a ROADMAP item, and so does each
+   score at its bar, its non-blocking issues fixed first (step 2; ADR-1022), then: `npm run check:review`
+   and `npm run bench -- G --gpu-only` (budgets PASS). No sweep is a release condition (ADR-1072, the user's
+   decision): the nightly and weekly runs (`.github/workflows/nightly.yml`) sweep `main` on their own, and a red one
+   is a ROADMAP item whenever it comes. A check that fails becomes a ROADMAP item, and so does each
    `WARNING historyTrack` line in check:review's output (the historical track's other seeds, ADR-950).
 4. When all hold: a CHANGELOG.md entry, then tag the commit `release-<YYYY-MM-DD>` (`git tag -a`,
    `git push --tags`). In the tag's commit, DECISIONS.md's ADRs and PROGRESS.md's entries move to

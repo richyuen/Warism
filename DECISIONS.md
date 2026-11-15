@@ -70,14 +70,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ### ADR-1072 · 2026-11-15 · accepted (the user's decision) — No sweep of the release's own
 - **The user:** "do we need to do a sweep at release at all, if we have periodic sweeps anyway." Then: "Yes, let's
-  drop it."
+  drop it", and: "no, let's not make sweeps a release condition at all."
 - **Found:** every push to `main` deploys (ADR-107), so the release tag holds nothing back from players; the nightly
   workflow sweeps `main` each night (4 seeds × 20 years, with the soak's saves and loads and the checkers on new
   seeds) and each Sunday 10 × 50 on seeds from 20000, never seen. The release's sweep (10 × 50, about 30 min, its
   save-and-load checks the soak's since ADR-959) checked the same a few days sooner.
-- **Decision:** PROMPT RELEASES step 3 drops the sweep on unseen seeds. In its place, the last nightly run green on a
-  commit at or after the last change under `src/sim/` or `data/`; the weekly's and the nightly's red runs are ROADMAP
-  items as any failed check. `npm run sweep` stays for an item's own figures (KEEPING WORK SHORT).
+- **Decision:** PROMPT RELEASES step 3 drops the sweep on unseen seeds, and no sweep takes its place as a release
+  condition: the release waits on no nightly or weekly run. Their red runs are ROADMAP items whenever they come. `npm run sweep` stays for an item's own figures (KEEPING WORK SHORT).
 
 ### ADR-1071 · 2026-11-15 · accepted — R87a: a capital goes back to its home city
 - **Found** (critic run 72, R72-N1; `c72_capsurvey.ts`): a capital moved by capture never went back. In the replay the
