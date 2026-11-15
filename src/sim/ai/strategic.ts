@@ -43,6 +43,7 @@ import { transportGroupsAtPort } from '../systems/amphibious';
 import { keyAt, seaKm, waterKeys } from '../systems/navalCombat';
 import { fleetMen, forceMen, seaHolder } from '../systems/seaControl';
 import { navOf, portSeaOf, seaOf, type World } from '../world';
+import { cellKm2ByRow } from '../landCounts';
 import { ATTACKERS } from '../wars';
 import { AiLayer, aiRuns } from './layers';
 
@@ -149,9 +150,17 @@ export function neighbourMap(world: World): Map<number, Set<number>> {
 }
 
 /**
+ * A piece of a nation's land not joined to its capital's that is at least this large (km²) is home, not a colony (R84h,
+ * ADR-1065): critic run 69's R69-N5, a three-nation random world whose nations' land lies on several continents in
+ * pieces of millions of km², every land border priced as a war across the sea. French Guiana is 84,000 km².
+ */
+export const HOME_KM2 = 500_000;
+
+/**
  * The nations bordering `n`'s home (R82d): its land joined over its own land (the coarse graph's provinces) to its
- * capital's. A land neighbour of `n`'s that is not one borders it only by a colony (France and Brazil by French Guiana).
- * Every neighbour when its capital is on no land of its own.
+ * capital's, and each other piece of its own of HOME_KM2 or more (R84h). A land neighbour of `n`'s that is not one
+ * borders it only by a colony (France and Brazil by French Guiana). Every neighbour when its capital is on no land of
+ * its own.
  */
 export function homeNeighbours(world: World, n: number): Set<number> | null {
   const g = navOf(world).graph;
@@ -166,19 +175,34 @@ export function homeNeighbours(world: World, n: number): Set<number> | null {
   };
   if (start === 0 || ownerOf(start) !== n) return null;
   const out = new Set<number>();
-  const seen = new Set([start]);
-  const queue = [start];
-  while (queue.length > 0) {
-    const a = queue.pop()!;
-    for (const b of g.adj[a] ?? []) {
-      const ob = ownerOf(b);
-      if (ob === n) {
-        if (!seen.has(b)) {
-          seen.add(b);
-          queue.push(b);
-        }
-      } else if (ob !== 0) out.add(ob);
+  const seen = new Set<number>();
+  const rowKm2 = cellKm2ByRow(w, h);
+  /** The piece of `n`'s land from `from`: its km² and the nations bordering it. */
+  const piece = (from: number): { km2: number; borders: Set<number> } => {
+    const borders = new Set<number>();
+    let km2 = 0;
+    seen.add(from);
+    const queue = [from];
+    while (queue.length > 0) {
+      const a = queue.pop()!;
+      km2 += g.cells[a]! * rowKm2[Math.floor(g.centre[a]! / w)]!;
+      for (const b of g.adj[a] ?? []) {
+        const ob = ownerOf(b);
+        if (ob === n) {
+          if (!seen.has(b)) {
+            seen.add(b);
+            queue.push(b);
+          }
+        } else if (ob !== 0) borders.add(ob);
+      }
     }
+    return { km2, borders };
+  };
+  for (const b of piece(start).borders) out.add(b);
+  for (let node = 1; node < g.nodeCount; node++) {
+    if (seen.has(node) || ownerOf(node) !== n) continue;
+    const p = piece(node);
+    if (p.km2 >= HOME_KM2) for (const b of p.borders) out.add(b);
   }
   return out;
 }

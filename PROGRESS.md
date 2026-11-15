@@ -403,3 +403,9 @@
 - R69-N4: no Soviet successor disbands in 1992 (four seeds), none a great power at the end (three seeds). Ukraine 23
   formations at the handover, Kazakhstan and Tajikistan none, Russia 339 on its reserve. Tool `successorPurse.ts`.
 - Tests: `breakup1938h.test` (R80c's case under a purse that keeps all; the bound).
+
+## 2026-11-15 — R84h: a large piece of a nation's own land is home (ADR-1065)
+
+- R69-N5: three-nation random worlds quiet since R82d's colony cost; with a piece of 500,000 km² or more counted as home,
+  the critic's six worlds have a war on 5 (15 wars). R82d's own reads held. Tick mean 3.613 ms against 3.612.
+- Tests: `homeNeighbours.test` (red before). Pin `a6023887` → `4896702e`.

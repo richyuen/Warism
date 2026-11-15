@@ -87,9 +87,12 @@ each fixed before the release (ADR-1005); the release checks then run once on th
     its income), the rest the giver's. `successorPurse.ts` on 999, 5151, 6161, 31337: no successor disbands in 1992
     (Kazakhstan 18 and Tajikistan 31 on 1 January before); `afterTrack.ts` on 37601, 1938, 1: great powers at the
     end and two years on none of the successors (Tajikistan on 37601 before). `breakup1938h.test` (5).
-  - [ ] R84h (R69-N5) Three-nation random worlds quiet since run 68 (5 wars in ten years over six worlds, against 19;
+  - [x] R84h (R69-N5) Three-nation random worlds quiet since run 68 (5 wars in ten years over six worlds, against 19;
     R82d's or R82f's `strategic.ts` the candidates): find the change by A/B and restore. AT: `fewNationWars 3 51401 6
     10` a war on at least 5 of 6 seeds, as run 68's commit.
+    Done (ADR-1065): the cause R82d's colony cost (A/B: without it 19 wars, 5 of 6); a piece of a nation's own land of
+    500,000 km² or more is home. `fewNationWars 3 51401 6 10` 5 of 6 (15 wars); 39401-6 4 of 6. R82d's checks kept:
+    Brazil's capital 0 of 5, first-60-day declarations over 6,000 km 0 of 98. `homeNeighbours.test`. Pin `4896702e`.
   - [ ] R84i (R69-N6) Undoing "Found city" leaves the city's label next to it missing (Warsaw, 41211). AT: the crop
     before and after the undo the same (`c69_undo2.mjs 41211`'s city case 0 px).
   - [ ] R84j (run 69's small items) The heroes hint in a later year's free form says "seven great powers" (only the

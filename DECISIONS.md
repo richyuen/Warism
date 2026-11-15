@@ -68,6 +68,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1065 · 2026-11-15 · accepted — R84h: a large piece of a nation's own land is home
+- **Found** (critic run 69, R69-N5; `fewNationWars 3 51401 6 10`): 5 wars in ten years over six three-nation worlds,
+  run 68 19. By A/B on HEAD, R82d's colony cost (ADR-1041) taken out: 19 wars, a war on 5 of 6. A random world's nations
+  hold land on several continents; on 51401 the second borders the third only by a piece of 585,000 km² away from its
+  capital's land, so every war it could make was priced as one across the sea. Measured and not used: a nation
+  bordering nobody at home exempt (Britain too: it took Brazil's war again, France taking Rio on 2 of 5 seeds); the
+  share of a nation's land joined to its capital (Britain 16 %, random nations 65-98 %) and its cores (all of it).
+- **Rule:** `homeNeighbours` counts as home, beside the capital's land, each piece of the nation's own land of
+  HOME_KM2 (500,000 km²) or more; a land neighbour of such a piece costs no war across the sea. The bar sits between
+  British Guiana (215,000 km²) and 51401's piece; at 1,000,000 km² the case read 4 of 6.
+- **Read:** `fewNationWars 3 51401 6 10` a war on 5 of 6, 15 wars (bar 5 of 6). On 39401-39406 4 of 6 (16 wars): the two
+  without border only by pieces of 6,000-327,000 km², French Guiana's size, which R82d keeps costly. ADR-1041's own:
+  `farConquests 0` on 6161, 41161-41167 Brazil's capital taken on 0 of 5, 33.8 capitals a seed, 9.4 far (ADR-1041:
+  32.8, 9.8); `c69_firstdecl 60` on 41821-41839 0 of 98 over 6,000 km. Tick (seed 99, a year, the same cores): mean
+  3.613 ms against 3.612; strategicAi 0.248 → 0.312-0.338 ms, its slow calls 130 → 350 in a world with more wars (an
+  hour's cache of the answer saved nothing and was taken out).
+- **Pin:** seed 99's year `a6023887` → `4896702e`.
+- **Checked by** `homeNeighbours.test` (France's home without Brazil, with Belgium; 51401's second nation's with the
+  third, red before).
+
 ### ADR-1064 · 2026-11-15 · accepted — R84g: a successor takes the forces its purse keeps
 - **Found** (critic run 69, R69-N4; `tools/diag/successorPurse.ts` from the 1991 start): `forces` (ADR-1046) handed a
   republic every Soviet formation on its soil. Tajikistan took 32 formations of 293 gold a month on a gross income of 4,
