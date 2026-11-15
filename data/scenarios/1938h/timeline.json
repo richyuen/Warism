@@ -19987,6 +19987,13 @@
    "note": "Bahrain independent"
   },
   {
+   "date": "1971-09-02",
+   "kind": "rename",
+   "nation": "EGY",
+   "as": "ARE",
+   "note": "The United Arab Republic becomes the Arab Republic of Egypt"
+  },
+  {
    "date": "1971-09-03",
    "kind": "born",
    "nation": "QAT",
@@ -19997,6 +20004,13 @@
     "QAT"
    ],
    "note": "Qatar independent"
+  },
+  {
+   "date": "1971-10-27",
+   "kind": "rename",
+   "nation": "BCO",
+   "as": "ZAI",
+   "note": "The Congo becomes Zaire"
   },
   {
    "date": "1971-12-02",
@@ -20112,6 +20126,13 @@
     ]
    ],
    "note": "Okinawa returned to Japan"
+  },
+  {
+   "date": "1972-05-22",
+   "kind": "rename",
+   "nation": "CEY",
+   "as": "LKA",
+   "note": "Ceylon becomes the Republic of Sri Lanka"
   },
   {
    "date": "1972-06-01",
@@ -20958,6 +20979,13 @@
     "TLS"
    ],
    "note": "Fretilin declares East Timor independent"
+  },
+  {
+   "date": "1975-11-30",
+   "kind": "rename",
+   "nation": "DAH",
+   "as": "BEN",
+   "note": "Dahomey becomes the People's Republic of Benin"
   },
   {
    "date": "1975-12-02",
@@ -22882,6 +22910,13 @@
     ]
    ],
    "until": "1992-04-28"
+  },
+  {
+   "date": "1989-06-18",
+   "kind": "rename",
+   "nation": "BUR",
+   "as": "MMR",
+   "note": "Burma becomes Myanmar"
   },
   {
    "date": "1989-06-30",

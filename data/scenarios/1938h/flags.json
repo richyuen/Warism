@@ -154,6 +154,11 @@
     "TRN": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ffffff"]}, {"t": "crescent", "cx": 0.45, "cy": 0.5, "r": 0.18, "color": "#e30a17", "cut": "#ffffff", "offset": 0.06}, {"t": "star", "cx": 0.6, "cy": 0.5, "r": 0.07, "color": "#e30a17"}]},
     "BFA": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ef2b2d", "#009e49"]}, {"t": "star", "cx": 0.5, "cy": 0.5, "r": 0.16, "color": "#fcd116"}]},
     "DEU": {"aspect": 1.667, "layers": [{"t": "stripes", "dir": "h", "colors": ["#000000", "#dd0000", "#ffce00"]}]},
-    "RUS": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ffffff", "#0039a6", "#d52b1e"]}]}
+    "RUS": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ffffff", "#0039a6", "#d52b1e"]}]},
+    "ARE": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ce1126", "#ffffff", "#000000"]}, {"t": "disc", "cx": 0.5, "cy": 0.5, "r": 0.11, "color": "#c09300"}]},
+    "ZAI": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#007a5e"]}, {"t": "disc", "cx": 0.5, "cy": 0.5, "r": 0.28, "color": "#f7d618"}, {"t": "rect", "x": 0.48, "y": 0.36, "w": 0.04, "h": 0.32, "color": "#ce1021"}, {"t": "disc", "cx": 0.5, "cy": 0.33, "r": 0.05, "color": "#ce1021"}]},
+    "LKA": {"aspect": 2, "layers": [{"t": "stripes", "dir": "h", "colors": ["#ffb700"]}, {"t": "rect", "x": 0.04, "y": 0.06, "w": 0.13, "h": 0.88, "color": "#00534e"}, {"t": "rect", "x": 0.19, "y": 0.06, "w": 0.13, "h": 0.88, "color": "#eb7400"}, {"t": "rect", "x": 0.36, "y": 0.06, "w": 0.6, "h": 0.88, "color": "#8d153a"}, {"t": "disc", "cx": 0.66, "cy": 0.5, "r": 0.2, "color": "#ffb700"}]},
+    "BEN": {"aspect": 1.5, "layers": [{"t": "stripes", "dir": "h", "colors": ["#008751"]}, {"t": "star", "cx": 0.16, "cy": 0.2, "r": 0.13, "color": "#e8112d"}]},
+    "MMR": {"aspect": 1.8, "layers": [{"t": "stripes", "dir": "h", "colors": ["#fe0000"]}, {"t": "rect", "x": 0, "y": 0, "w": 0.5, "h": 0.5, "color": "#0d1f8f"}, {"t": "disc", "cx": 0.25, "cy": 0.25, "r": 0.16, "color": "#ffffff"}, {"t": "disc", "cx": 0.25, "cy": 0.25, "r": 0.1, "color": "#0d1f8f"}, {"t": "star", "cx": 0.25, "cy": 0.25, "r": 0.06, "color": "#ffffff"}]}
   }
 }

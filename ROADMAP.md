@@ -71,9 +71,14 @@ each fixed before the release (ADR-1005); the release checks then run once on th
     Done (ADR-1063): the wars a hold freezes make a white peace as the track ends. `c69_endleb.ts 999`: `PeaceSigned
     ISR LEB`, no annexation, Lebanon living; 1983 free games on 51283, 999, 5151: Lebanon living at day 30 (white peace
     on day 0). `trackEndHolds1938h.test` (red before), `historyTrack1938h`.
-  - [ ] R84f (R69-N3) Names frozen while others change: Egypt (1971), Sri Lanka (1972), Benin (1975), Zaire (1971),
+  - [x] R84f (R69-N3) Names frozen while others change: Egypt (1971), Sri Lanka (1972), Benin (1975), Zaire (1971),
     Myanmar (1989) renamed on their dates. AT: the 1991 map's tooltip at 30° E 30° N reads Egypt; the 1992 Relations
     list has Sri Lanka, Benin, Zaire and Myanmar; the replay tests.
+    Done (ADR-943's renames, ADR-914): five `rename`s to identities of their own, each with its name, adjective and
+    flag: Egypt (`ARE`) 1971-09-02, Zaire (`ZAI`, the Kinshasa Congo) 1971-10-27, Sri Lanka (`LKA`) 1972-05-22, Benin
+    (`BEN`) 1975-11-30, Myanmar (`MMR`) 1989-06-18. `renamesLate1938h.test`; `historyTrack1938h` and
+    `historyMatch1938h` green (none passed over); `c69_ev91.mjs` on fresh starts, 27 December 1991: the tooltips read
+    Egypt (30° E 30° N), Sri Lanka, Benin, Zaire and Myanmar; Egypt's shot looked at.
   - [ ] R84g (R69-N4) The Soviet successors bankrupt on 1 January 1992 (Kazakhstan disbands 18, Tajikistan 31;
     Tajikistan a great power on 37601): a successor's forces within what its purse keeps (or a purse with them). AT:
     no successor disbands for want of pay in 1992 on four seeds; no successor but Russia and Ukraine a great power

@@ -390,3 +390,10 @@
 
 - R69-N1: Lebanon no longer annexed by Israel in the end's hour; a 1983 free game's Lebanon lives (three seeds, 30 days).
 - Tests: `trackEndHolds1938h.test` (red before), `historyTrack1938h`.
+
+## 2026-11-15 — R84f: the late replay's names (ADR-943)
+
+- R69-N3: Egypt 1971, Zaire 1971, Sri Lanka 1972, Benin 1975, Myanmar 1989 renamed on their dates (identities ARE,
+  ZAI, LKA, BEN, MMR, each with its name, adjective and flag). On the page on 27 December 1991 (`c69_ev91.mjs`, the
+  starts rebuilt) the five tooltips read the new names.
+- Tests: `renamesLate1938h.test`, `data-schemas`, `flagsByScenario`, `historyTrack1938h`, `historyMatch1938h`.
