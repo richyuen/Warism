@@ -468,7 +468,11 @@ export function warTarget(world: World, n: number, neighbours: readonly number[]
   // the port: by its ports Japan's next best were the United States by Guam (2,503 km) and the Netherlands by the
   // Indies, every target weaker than it scoring alike (the strength term capped).
   const far = seaTargetKm(world, n, powers === undefined || powers.has(n) ? Infinity : SEA_REACH_KM);
-  return pick([...far.keys()].sort((a, b) => a - b), new Set(neighbours), (t) => seaWarCost(world, n, t, far.get(t)!));
+  const targets = [...far.keys()].sort((a, b) => a - b);
+  // A nation with no land neighbour (R85e, ADR-1068; critic run 70, R70-N3: three-nation worlds of separate landmasses,
+  // every target over 4,000 km): its nearest across the sea is its neighbour, and each pays only the distance beyond it.
+  const base = neighbours.length === 0 && targets.length > 0 ? Math.min(...targets.map((t) => seaWarCost(world, n, t, far.get(t)!))) : 0;
+  return pick(targets, new Set(neighbours), (t) => seaWarCost(world, n, t, far.get(t)!) - base);
 }
 
 /**

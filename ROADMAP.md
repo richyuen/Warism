@@ -61,8 +61,11 @@ each fixed before the critic runs again.
     Done: `#d87820` (L* 60, near Belgium's ochre: the critic's colony-tint idea), every neighbour's bar cleared by ΔE
     3 or more on `neighbourColours`' pairs; `colours1991`, `nations`, `flagsByScenario` green; previews rebuilt. Pin
     `ae4ce317`.
-  - [ ] R85e (R70-N3, old) Three-nation worlds on 53401-53406: 3 of 6 with no war in ten years (as on run 69's commit).
+  - [x] R85e (R70-N3, old) Three-nation worlds on 53401-53406: 3 of 6 with no war in ten years (as on run 69's commit).
     AT: `fewNationWars 3 53401 6 10` a war on at least 5 of 6, R84h's 51401 case held.
+    Done (ADR-1068): a sea power at peace with no land neighbour orders a transport group; for a nation with no land
+    neighbour a target across the sea costs only the distance beyond its nearest. 53401 6 of 6 (25 wars); 51401 6 of
+    6; 39401 5 of 6. `landlessPowers.test`. Pin held.
   - [ ] R85f (R70-N4, small) "1 January 1992 Yugoslavia's air force struck Croatia this month" after the 31 December
     peace. AT: no month's air row for a pair at peace when the month closes, or one that says the war it was of.
   - Run 70's dimensions under the bar (ADR-843), each line taken or why not:

@@ -137,6 +137,7 @@ import { neighbours4 } from '../nav/grid';
 import { airfield, levyFormation, queueFormation, refillable, refillFormation, shipyard } from '../systems/production';
 import { freeDecks, liveCarriers, manDecks } from '../systems/air';
 import { foldHollow } from './hollow';
+import { neighbourMap, PACIFIST_BELOW, seaPowers, strengths } from './strategic';
 import { transportRoom } from '../systems/amphibious';
 import { passageOf } from '../systems/movement';
 import { frontReach } from './invasion';
@@ -427,6 +428,8 @@ export function economicAi(tables: EconomyTables, mix: BuildMix): (world: World)
     };
     // Who fights on land outnumbered, for the warship's saving and the order slots (PLAN 7.146, ADR-739).
     const outnumbered = world.settings.aiEnabled ? outnumberedOnLand(world, own) : new Set<number>();
+    /** The sea powers with no land neighbour, asked once a month when first wanted (R85e). */
+    let landless: Set<number> | undefined;
     world.nations.forEach((n) => {
       if (nc.living[n] !== 1) return;
       // Projected accounts for the month about to be charged (the AI runs before the economy).
@@ -519,7 +522,10 @@ export function economicAi(tables: EconomyTables, mix: BuildMix): (world: World)
       // no warship's saving: it holds while the island army outnumbers the room, for the war's length,
       // and its transports in training do not hold back 3b's warships (else none would come).
       const ferrying = !wants && mix.fleets !== undefined && atWar && income >= POOR_INCOME && wantsFerry(world, n, fleets.get(n) ?? []);
-      const ferry = ferrying && !transportsPending.has(n);
+      // A sea power at peace with no land neighbour (R85e, ADR-1068; critic run 70, R70-N3: three-nation worlds whose
+      // nations share no border, no war in ten years): a group to reach a target across the sea, as the landing's.
+      const reaching = !wants && !ferrying && mix.fleets !== undefined && !atWar && (landless ??= landlessPowers(world)).has(n) && income >= POOR_INCOME && !transportsPending.has(n) && wantsTransportAt(world, n, mix.fleets.transport, fleets.get(n) ?? [], tables.templateStrength[mix.infantry] ?? 0, null);
+      const ferry = (ferrying || reaching) && !transportsPending.has(n);
       // Nor does a carrier group in training (PLAN 7.141): its 800 days held every other warship of
       // the nation back, and the late navies thinned (transports at year 20 −9 %, ships sunk late −7 %
       // since ADR-726, critic run 16).
@@ -907,6 +913,19 @@ export function outnumberedOnLand(world: World, own: ReadonlyMap<number, readonl
  * A group of its with room under `division` men is not one (PLAN 7.55, ADR-598): its transports
  * sunk to one or two, it carries no division, and no ship is refilled.
  */
+/**
+ * The sea powers (`seaPowers`) that border no nation on land and are no pacifists (R85e, ADR-1068): with no land target,
+ * their wars are across the sea, and the strategic AI's sea targets need a transport group at port (`seaTargetKm`), which
+ * only a war ordered (`wantsTransport`).
+ */
+export function landlessPowers(world: World): Set<number> {
+  const nc = world.nations.cols;
+  const nb = neighbourMap(world);
+  const out = new Set<number>();
+  for (const n of seaPowers(world, strengths(world))) if ((nb.get(n)?.size ?? 0) === 0 && nc.aggression[n]! >= PACIFIST_BELOW) out.add(n);
+  return out;
+}
+
 export function wantsTransport(world: World, n: number, transport: number, own: readonly number[], division = 0): boolean {
   const f = world.formations.cols;
   if (own.some((id) => f.template[id] === transport && transportRoom(world, id) >= division)) return false;
@@ -929,6 +948,17 @@ export function wantsTransport(world: World, n: number, transport: number, own: 
     for (const e of other) if (world.wars.atWar(n, e)) foes.add(e);
   }
   if (foes.size === 0) return false;
+  return wantsTransportAt(world, n, transport, own, division, foes);
+}
+
+/**
+ * The rest of `wantsTransport`'s test (R85e): no group of `n`'s with `division`'s room, a port with water held by one of
+ * `foes` (null: any other nation's), and a free land formation of `n`'s on a land with a port it holds.
+ */
+export function wantsTransportAt(world: World, n: number, transport: number, own: readonly number[], division: number, foes: ReadonlySet<number> | null): boolean {
+  const f = world.formations.cols;
+  if (own.some((id) => f.template[id] === transport && transportRoom(world, id) >= division)) return false;
+  const { w, controller } = world.cells;
   const water = portSeaOf(world);
   const comp = navOf(world).grid.component;
   const lands = new Set<number>();
@@ -937,7 +967,7 @@ export function wantsTransport(world: World, n: number, transport: number, own: 
     if (water[i]! < 0) return;
     const holder = controller[p.cell]!;
     if (holder === n) lands.add(comp[p.cell]!);
-    else if (foes.has(holder)) target = true;
+    else if (holder !== 0 && (foes === null || foes.has(holder))) target = true;
   });
   if (!target || lands.size === 0) return false;
   let free = false;

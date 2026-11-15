@@ -68,6 +68,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1068 · 2026-11-15 · accepted — R85e: a nation with no land neighbour reaches across the sea
+- **Found** (critic run 70, R70-N3, old; `fewNationWars 3 53401 6 10`): 3 of 6 three-nation worlds had no war in ten
+  years. On 53404 and 53406 no two nations share a land border, so a war is only across the sea; the strategic AI's sea
+  targets need a transport group at port (`seaTargetKm`), and only a war ordered one (`wantsTransport`): no nation had
+  any at day 1,000. With groups built, R78b's cost (0.66-2.02 for targets 1,000-11,000 km off) was over every
+  utility. 53405: its borders by pieces under HOME_KM2 or of a nation of aggression 30.
+- **Rule:** a sea power (`seaPowers`) at peace that borders no nation on land and is no pacifist (`landlessPowers`)
+  orders a transport group as a landing's want does (`wantsTransportAt`, any other nation's port as the target),
+  ordered as the ferry's want (no other fleet held back). For a nation with no land neighbour, each target across the
+  sea costs only SEA_KM_COST for the distance beyond its nearest target's: that one is its neighbour.
+- **Read:** `fewNationWars 3 53401 6 10` a war on 6 of 6 (25 wars; run 70: 3 of 6); 51401 6 of 6 (R84h's bar 5);
+  39401 5 of 6. 60-nation random worlds, 5 years: 111, 100 and 97 wars on seeds 7-9 (before 111, 86, 90). Plain 1938
+  has no such power: the pin holds (`ae4ce317`).
+- **Checked by** `landlessPowers.test` (1938 none; 53404 all three, a war within 240 days; red before).
+
 ### ADR-1067 · 2026-11-15 · accepted (the user's word) — R85b: a war held within the timeline goes on as the track ends
 - **Found** (critic run 70's design objection, R85b): R84e's white peace of every held war on any end of the track
   ended the Second World War on a free start from 1941-45, any God act or Take control (1942 replay, one God act:
