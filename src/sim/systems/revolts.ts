@@ -586,6 +586,7 @@ export function spawnRebels(world: World, area: number[], holder: number, revive
   if (best !== 0) {
     capitalCell = cc.cell[best]!;
     cc.capitalOf[best] = id;
+    nc.homeCity[id] = best;
     nc.capitalX[id] = cc.x[best]!;
     nc.capitalY[id] = cc.y[best]!;
   } else {

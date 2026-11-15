@@ -497,3 +497,9 @@
 - Every dimension 8, no blocking issue; rule checkers 0 broken on new seeds, landingFuzz 0 of 90. Batch 31 (R87a–d)
   filed: the replay's captured capitals, History's names of the day, five renames left out, hero tags at world zoom.
   Then the release checks.
+
+## 2026-11-15 — R87a–d: run 72's issues (ADR-1071)
+
+- R72-N1: a capital goes back to its home city once held in safety (Moscow, Paris, Rome, Amman, Rangoon in the replay);
+  pin `ac4fab37`. R72-N2: History names a city as of its row's day. R72-N3: six renames more; starts rebuilt.
+  R72-N4: hero tags not piled at a panel's edge. Batch 31 done; next the release checks.

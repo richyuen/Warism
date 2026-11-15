@@ -309,6 +309,7 @@ describe('nothing of the sim joins the two edges of a map that does not loop (PL
         world.cities.forEach((city) => {
           if (cc.capitalOf[city] === GER) cc.capitalOf[city] = 0;
         });
+        nc.homeCity[GER] = 0; // no home city to go back to (R87a): Berlin is Germany's still, at peace
         // In the field, in the first column, on a cell that is not Germany's.
         nc.capitalX[GER] = 0.5;
         nc.capitalY[GER] = Y + 0.5;

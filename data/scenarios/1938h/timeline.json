@@ -18035,6 +18035,15 @@
    "note": "Spain's zone of Morocco to Morocco"
   },
   {
+   "date": "1956-05-24",
+   "kind": "cityName",
+   "at": [
+    82.9981,
+    25.3319
+   ],
+   "as": "Varanasi"
+  },
+  {
    "date": "1956-10-29",
    "hour": 17,
    "kind": "war",
@@ -20536,6 +20545,15 @@
    "as": "N'Djamena"
   },
   {
+   "date": "1973-04-24",
+   "kind": "cityName",
+   "at": [
+    -16.5917,
+    13.4539
+   ],
+   "as": "Banjul"
+  },
+  {
    "date": "1973-06-01",
    "kind": "transfer",
    "to": "KHR",
@@ -21443,6 +21461,15 @@
    "against": "PLS"
   },
   {
+   "date": "1976-01-01",
+   "kind": "cityName",
+   "at": [
+    47.5147,
+    -18.9147
+   ],
+   "as": "Antananarivo"
+  },
+  {
    "date": "1976-02-03",
    "kind": "cityName",
    "at": [
@@ -21899,6 +21926,15 @@
     38.9248
    ],
    "as": "Dalian"
+  },
+  {
+   "date": "1979-01-01",
+   "kind": "cityName",
+   "at": [
+    113.3231,
+    23.1469
+   ],
+   "as": "Guangzhou"
   },
   {
    "date": "1979-01-07",
@@ -22439,6 +22475,15 @@
    "note": "Martial law in Poland: Jaruzelski against Solidarity"
   },
   {
+   "date": "1982-01-01",
+   "kind": "cityName",
+   "at": [
+    90.4066,
+    23.725
+   ],
+   "as": "Dhaka"
+  },
+  {
    "date": "1982-03-14",
    "kind": "born",
    "nation": "CTR",
@@ -22544,6 +22589,15 @@
    "leader": "USA",
    "nameKey": "alliance.nato",
    "note": "Canada in NATO as since 1949"
+  },
+  {
+   "date": "1982-04-18",
+   "kind": "cityName",
+   "at": [
+    31.0428,
+    -17.8158
+   ],
+   "as": "Harare"
   },
   {
    "date": "1982-04-25",

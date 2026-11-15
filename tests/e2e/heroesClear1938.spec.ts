@@ -44,3 +44,30 @@ for (const [seed, days] of [[5521, 0], [1201, 0], [7019, 730]] as const) {
     await page.screenshot({ path: path.join(out, `heroes-clear-${seed}-d${days}.png`) });
   });
 }
+
+// ROADMAP R87d (critic run 72, R72-N4: with Relations open, Europe's heroes stood in a pile at its edge, far from their
+// units): a hero's counter whose place a panel covers is drawn beside it only near its place, and never over another's.
+test('desk, seed 55929, Relations open: no hero counter under it, none over another', async ({ page }) => {
+  test.setTimeout(300_000);
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?scenario=1938&paused=1&seed=55929&heroes=on');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.getByTestId('relations-btn').click();
+  await page.waitForTimeout(1500);
+  const { heroes, panel } = await page.evaluate(() => {
+    const v = window.__warsim!.view!;
+    const cr = document.querySelector('canvas')!.getBoundingClientRect();
+    const r = document.querySelector<HTMLElement>('.relations-panel')!.getBoundingClientRect();
+    return {
+      heroes: v.counters.drawn.filter((d) => d.hero !== undefined && d.alpha > 0.9).map((d) => ({ x: d.x + cr.left, y: d.y + cr.top, w: d.w, h: d.h, hero: d.hero! })),
+      panel: { x: r.left, y: r.top, w: r.width, h: r.height },
+    };
+  });
+  expect(panel.w).toBeGreaterThan(0);
+  expect(heroes.length, 'hero counters drawn').toBeGreaterThan(0);
+  expect(heroes.filter((h) => under(h, panel)).map((h) => h.hero)).toEqual([]);
+  const piled = heroes.flatMap((a, i) => heroes.slice(i + 1).filter((b) => under(a, b)).map((b) => `${a.hero}/${b.hero}`));
+  process.stderr.write(`R87d 55929: ${heroes.length} hero counters with Relations open, ${piled.length} over another\n`);
+  expect(piled).toEqual([]);
+  await page.screenshot({ path: test.info().outputPath('r87d-relations-55929.png') });
+});

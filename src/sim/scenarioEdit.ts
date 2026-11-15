@@ -60,6 +60,7 @@ export function spawnCity(world: World, x: number, y: number, name: string, size
   econ[cell] = Math.min(0xffffffff, before + Math.round(bonus));
   cc.econ[id] = econ[cell]! - before;
   world.cityNames.set(id, label);
+  world.cityFormer.delete(id); // a reused row's old names are not this town's
   world.supplyDirty = true;
   world.citiesVersion++;
   world.out.emit(world.tick, EventKind.CitySpawned, id, owner[cell]!, cc.x[id]!, cc.y[id]!);
@@ -81,7 +82,12 @@ export function removeCity(world: World, id: number): boolean {
   const econ = world.cells.econ;
   econ[cc.cell[id]!] = Math.max(0, econ[cc.cell[id]!]! - cc.econ[id]!);
   world.cityNames.delete(id);
+  world.cityFormer.delete(id);
   world.cities.remove(id);
+  const nc = world.nations.cols;
+  world.nations.forEach((n) => {
+    if (nc.homeCity[n] === id) nc.homeCity[n] = 0; // a razed seat is no home to go back to (R87a)
+  });
   if (capitalOf !== 0 && world.nations.has(capitalOf) && world.nations.cols.living[capitalOf] === 1) relocateCapital(world, capitalOf);
   world.supplyDirty = true;
   world.citiesVersion++;
@@ -99,6 +105,7 @@ export function setCapital(world: World, nation: number, id: number): boolean {
     if (cc.capitalOf[c] === nation) cc.capitalOf[c] = 0;
   });
   cc.capitalOf[id] = nation;
+  world.nations.cols.homeCity[nation] = id;
   world.nations.cols.capitalX[nation] = cc.x[id]!;
   world.nations.cols.capitalY[nation] = cc.y[id]!;
   world.supplyDirty = true;

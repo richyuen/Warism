@@ -45,6 +45,9 @@ export const NATION_SCHEMA = {
   color: 'u32',
   capitalX: 'f64',
   capitalY: 'f64',
+  /** The city its seat was set at, by its scenario, the timeline, the editor or its founding (ROADMAP R87a; 0: none, or a save
+   * from before it): a capital moved by capture or loss goes back to it once the nation holds it in safety. */
+  homeCity: 'u32',
   /** Owned cells; maintained by World.setOwner. */
   cells: 'u32',
   /** 1 = exists on the map; 0 = dead (revivable through cores, PLAN 1.20). */
@@ -399,7 +402,7 @@ class WorldCore implements Stateful {
     const log = new TextEncoder().encode(JSON.stringify({ log: w.commandLog, pending: w.pending }));
     const sorted = (m: Map<number, string>): [number, string][] => [...m].sort((a, b) => a[0] - b[0]);
     const flags = [...w.flags].sort((a, b) => a[0] - b[0]).map(([n, px]) => [n, Array.from(px)] as [number, number[]]);
-    const names = new TextEncoder().encode(JSON.stringify({ nations: sorted(w.names), cities: sorted(w.cityNames), flags }));
+    const names = new TextEncoder().encode(JSON.stringify({ nations: sorted(w.names), cities: sorted(w.cityNames), flags, ...(w.cityFormer.size > 0 ? { former: [...w.cityFormer].sort((a, b) => a[0] - b[0]) } : {}) }));
     // The paths of the formations on the march, by id: id, length, cells (PLAN 3.4Rl: a path is
     // found on the holders of the hour of its order, so it is state).
     const marching = [...w.paths].filter(([id]) => w.formations.has(id) && w.formations.cols.moving[id] === 1).sort((a, b) => a[0] - b[0]);
@@ -532,9 +535,10 @@ class WorldCore implements Stateful {
     const names = sections.find((s) => s.name === 'world.names');
     w.namesVersion++;
     // PLAN 1.32 saves hold a bare array of nation names; PLAN 1.36 adds city names.
-    const nm = names ? (JSON.parse(new TextDecoder().decode(names.data as Uint8Array)) as [number, string][] | { nations: [number, string][]; cities: [number, string][]; flags?: [number, number[]][] }) : [];
+    const nm = names ? (JSON.parse(new TextDecoder().decode(names.data as Uint8Array)) as [number, string][] | { nations: [number, string][]; cities: [number, string][]; flags?: [number, number[]][]; former?: [number, [number, string | null][]][] }) : [];
     w.names = new Map(Array.isArray(nm) ? nm : nm.nations);
     w.cityNames = new Map(Array.isArray(nm) ? [] : nm.cities);
+    w.cityFormer = new Map(Array.isArray(nm) ? [] : (nm.former ?? []));
     w.flags = new Map((Array.isArray(nm) ? [] : (nm.flags ?? [])).map(([n, px]) => [n, Uint32Array.from(px)]));
     w.flagsVersion++;
     // Saves from before PLAN 3.4Rl have no paths: each is found again at its formation's next step.
@@ -980,7 +984,7 @@ export class World {
   startDay = 0;
   rng: RngStreams;
   cells: CellLayers;
-  nations = new Table('nations', NATION_SCHEMA, 8, ['puppetAt']);
+  nations = new Table('nations', NATION_SCHEMA, 8, ['puppetAt', 'homeCity']);
   formations = new Table('formations', FORMATION_SCHEMA, 128);
   cities = new Table('cities', CITY_SCHEMA, 16);
   production = new Table('production', PRODUCTION_SCHEMA, 16);
@@ -1602,6 +1606,11 @@ export class World {
   identities = new Map<number, string>();
   /** Names of cities placed in the editor (PLAN 1.36), by city row; state, saved with `names`. */
   cityNames = new Map<number, string>();
+  /**
+   * The names a city bore before the timeline renamed it (ROADMAP R87b), oldest first: [the hour of the rename, the name
+   * till then, null for its definition's]. History names a row's city as of the row's hour. State, saved with `names`.
+   */
+  cityFormer = new Map<number, [number, string | null][]>();
   /** Commands queued since the last tick boundary, applied in seq order at the next tick. */
   pending: PendingCommand[] = [];
   nextCommandSeq = 0;

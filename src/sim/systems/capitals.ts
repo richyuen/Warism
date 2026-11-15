@@ -20,6 +20,11 @@
  * `CapitalMoved` alone: no `CapitalCaptured`, and no annexation under either setting. A nation
  * painted away whole is eliminated by it. Occupation with no war (controller ≠ owner) is not that.
  *
+ * Home (ROADMAP R87a, ADR-1071; critic run 72, R72-N1: the Soviet Union sat at Tashkent from 1941 to 1991, France at
+ * Cayenne): once a day (00:00), a nation whose seat a capture or a loss moved goes back to its home city (`homeCity`,
+ * the seat its scenario, the timeline, the editor or its founding set) when it owns and controls it, no other nation's
+ * capital stands there, and no land of a nation at war with it lies within CAPITAL_SAFE_STEPS (`CapitalMoved`).
+ *
  * Elimination: `living` = 0, its formations, production orders and research lines are removed, its wars end,
  * it leaves its alliance (`AllianceLeft`, and `AllianceDissolved` when one member is left), the land it occupied goes back to its owners and its land that others occupy becomes theirs
  * (`leaveLand`), `NationEliminated` is emitted.
@@ -62,6 +67,36 @@ export function capitalsSystem(world: World): void {
     if (nc.living[n] !== 1 || hasCity[n]) return;
     const cell = Math.floor(nc.capitalY[n]!) * w + Math.floor(nc.capitalX[n]!);
     if (controller[cell] !== n) relocateToField(world, n);
+  });
+  if (world.tick % 24 === 0) returnHome(world);
+}
+
+/** The seats moved by capture or loss go back to their home cities, held in safety (R87a; the header's "Home"). */
+function returnHome(world: World): void {
+  const cc = world.cities.cols;
+  const nc = world.nations.cols;
+  const { owner, controller } = world.cells;
+  const cities = world.cities;
+  let safe = -1;
+  world.nations.forEach((n) => {
+    const home = nc.homeCity[n]!;
+    if (home === 0 || nc.living[n] !== 1 || cities.alive[home] !== 1 || cc.capitalOf[home] !== 0) return;
+    const cell = cc.cell[home]!;
+    if (owner[cell] !== n || controller[cell] !== n) return;
+    const enemy = enemiesOf(world, n);
+    if (enemy) {
+      if (safe < 0) safe = world.atSize(CAPITAL_SAFE_STEPS);
+      if (enemyWithin(world, enemy, cell, safe) < safe) return;
+    }
+    world.cities.forEach((ci) => {
+      if (cc.capitalOf[ci] === n) cc.capitalOf[ci] = 0;
+    });
+    cc.capitalOf[home] = n;
+    nc.capitalX[n] = cc.x[home]!;
+    nc.capitalY[n] = cc.y[home]!;
+    world.supplyDirty = true;
+    world.citiesVersion++;
+    world.out.emit(world.tick, EventKind.CapitalMoved, n, home, cc.x[home]!, cc.y[home]!);
   });
 }
 

@@ -556,6 +556,11 @@ export class CounterLayer {
         const least = [0, step, -step].reduce((a, d) => (cover(d) < cover(a) ? d : a));
         groups.push({ lead: hero, members: [hero.id], dy: least, box: boxAt(least) });
       }
+      /**
+       * The hero counters drawn in this frame (R87d; critic run 72, R72-N4: with Relations open Europe's ten heroes stood
+       * in a pile at its edge): one moved beside a panel over one of them is not drawn while the panel covers its place.
+       */
+      const placed: [number, number, number, number][] = [];
       for (const g of groups) {
         const name = g.members.length > 1 ? `${g.lead.name} +${g.members.length - 1}` : g.lead.name;
         const w = widthOf(name) + 18;
@@ -571,9 +576,12 @@ export class CounterLayer {
           const y = Math.round(sy - h / 2);
           // Under a panel (the Ranking, a nation's): beside it, a thin line to its place (ROADMAP R34e).
           const [ox, oy] = [sx1 + (x - sx1) * hs, sy + (y - sy) * hs];
+          // Under a panel floating over the map's middle: not drawn while it covers it (R87d).
+          if (covered.some((r) => r.hides && over([r.x, r.y, r.w, r.h], ox, oy, w * hs, h * hs))) continue;
           const at = clearOf({ x: ox, y: oy, w: w * hs, h: h * hs }, covered, vw, vh);
           const [bx, by] = [at.x, at.y];
           if (bx !== ox || by !== oy) {
+            if (placed.some((b) => over(b, bx, by, w * hs, h * hs))) continue;
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = colorOf(g.lead.nation);
             ctx.lineWidth = 1.5;
@@ -584,6 +592,7 @@ export class CounterLayer {
             ctx.globalAlpha = 1;
           }
           box ??= [bx, by];
+          placed.push([bx, by, w * hs, h * hs]);
           this.boxes.push({ x: bx, y: by, w: w * hs, h: h * hs, alpha, own: 1 });
           this.paintHero(ctx, bx, by, w, h, hs, alpha, { ...g.lead, name }, widthOf, colorOf, flagOf, balls);
         }

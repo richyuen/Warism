@@ -68,6 +68,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1071 · 2026-11-15 · accepted — R87a: a capital goes back to its home city
+- **Found** (critic run 72, R72-N1; `c72_capsurvey.ts`): a capital moved by capture never went back. In the replay the
+  Soviet Union sat at Tashkent from October 1941 to 1991, France at Cayenne, Italy at Naples, Transjordan at Al Aqabah,
+  Burma at Chauk; a free year's land heroes started there. The same in free play: `relocateCapital` had no way home.
+- **Decision** (Hearts of Iron IV's idea, the critic's): a nation keeps its home city (`nations.homeCity`, saved; the
+  seat its scenario, the timeline's `capital` and `nationBorn`, the editor's Set capital or its founding set). Once a
+  day (00:00) it goes back there (`CapitalMoved`) when it owns and controls it, no other nation's capital stands there,
+  and no land of a nation at war with it lies within `CAPITAL_SAFE_STEPS` (the safety `relocateCapital` weighs).
+  STATE_FORMAT 4 (zeros, no home, in a save without it).
+- **Read:** seed 99's first year, one return (Siam, day 61); ten years of seeds 7 and 32: 25 and 14 returns, at most
+  two for a nation (no seat going to and fro). Pin `ae4ce317` → `ac4fab37`: the rule and the column.
+
 ### ADR-1070 · 2026-11-15 · accepted (the user's decision) — R86f: a game from the title has the heroes on
 - **Decision** (the user, 2026-11-15: "make heroes the default setting for free play … so critic will judge it"): the
   title's new-game forms (1938, a later year played free, the random world where it offers heroes) start with the heroes

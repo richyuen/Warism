@@ -32,20 +32,32 @@ Rules:
 Run 72 (full): every dimension 8, no blocking issue. RELEASES: its non-blocking issues fixed, then the release checks
 (`npm run check:review`, the sweep on unseen seeds, `npm run bench -- G --gpu-only`), CHANGELOG and the tag.
 
-- [ ] R87 **Run 72's issues.**
-  - [ ] R87a (R72-N1, old) A capital moved by capture never goes back: in the replay the Soviet Union sits at Tashkent
+- [x] R87 **Run 72's issues.**
+  - [x] R87a (R72-N1, old) A capital moved by capture never goes back: in the replay the Soviet Union sits at Tashkent
     from October 1941 to 1991, France at Cayenne from June 1940, Italy at Naples, Transjordan at Al Aqabah, Burma at
     Chauk; a free year's land heroes start there. AT: `critic/scripts/c72_capsurvey.ts` seats those five at their own
     capitals in 1946, 1975 and 1991; `c72_heroPlace.ts 1975` places the T-42 at Moscow and the Char 2C at Paris; a unit
     test of the rule (Hearts of Iron IV's idea: a nation seats itself again at its own capital city once it holds it).
-  - [ ] R87b (R72-N2, from R86e) History names past events with the newest name: "29 October 1941 … near Tver" in the
+    Done (ADR-1071): `nations.homeCity` (STATE_FORMAT 4), back at 00:00 when held and no enemy within
+    CAPITAL_SAFE_STEPS; a born nation's home its table capital's city (Burma: Rangoon). `c72_capsurvey` on the rebuilt
+    starts: 1946 1, 1975 2, 1991 2 away (Madrid, Peking/Beijing: the timeline's seats; was 7); a free 1975: the T-42 at
+    Moscow, the Char 2C at Paris. Pin `ae4ce317` → `ac4fab37`; seeds 7 and 32, ten years: 25 and 14 returns, at most 2 a
+    nation. `capitalHome1938.test.ts`.
+  - [x] R87b (R72-N2, from R86e) History names past events with the newest name: "29 October 1941 … near Tver" in the
     1991 replay, "2 April 1945 … near Kaliningrad". AT: `c72_histnames.mjs 1991 replay 1938 1991 28` reads "Kalinin"
     for 1941 and "Königsberg" for 1945; a unit test.
-  - [ ] R87c (R72-N3, R86e's list) Renames left out: Salisbury, Tananarive, Bathurst, Dacca and Canton to 1991. AT: on
+    Done: `World.cityFormer` (the names before each rename, saved); History, the ticker and strikes name a row's city as
+    of its hour (`formerName`). `cityNames1938h.test.ts`.
+  - [x] R87c (R72-N3, R86e's list) Renames left out: Salisbury, Tananarive, Bathurst, Dacca and Canton to 1991. AT: on
     1991-12-31 the map reads Harare, Antananarivo, Banjul, Dhaka and Guangzhou (`c72_ev91 1990`); the starts rebuilt.
-  - [ ] R87d (R72-N4, heroes on by default) Hero tags overlap counters and each other at world zoom, and an open panel
+    Done: six renames (Varanasi 1956, Banjul 1973, Antananarivo 1976, Guangzhou 1979, Dhaka 1982, Harare 1982); starts
+    rebuilt; `cityNames1938h.test.ts`.
+  - [x] R87d (R72-N4, heroes on by default) Hero tags overlap counters and each other at world zoom, and an open panel
     pushes them far from their units (`critic/shots/c72hp_55929_12000_1relations.png`). AT: `c72_heropanel.mjs 55929`
     shows each tag by its unit, or hidden while the panel covers it.
+    Done: under a panel floating over the map (Relations, History, the editor, the settings) a tag is hidden while it
+    covers its place; beside an edge panel (R34e) as before, over no other tag. `heroesClear1938.spec` (55929, Relations
+    open): none under it or over another (before: 13 drawn, one piled at its edge).
   - Not filed (every dimension at its bar, ADR-843 asks none): `slowClick` (ADR-914), the four named cases as run 71;
     three-nation worlds (55404, no war in ten years; two nations accepted by the user). The design objections, for the
     user's word: ADR-1060 empties occupied France as the replay is left (as run 71); heroes on by default while the land

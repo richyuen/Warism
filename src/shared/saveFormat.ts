@@ -12,7 +12,7 @@
  * not count. The section bytes' own layout version (`sections.ts`) is another matter: it changes
  * with the codec, not with the state.
  */
-export const STATE_FORMAT = 3; // 3: `nations.puppetAt` (ROADMAP R84c), zeros in a save without it
+export const STATE_FORMAT = 4; // 3: `nations.puppetAt` (ROADMAP R84c); 4: `nations.homeCity` (R87a); zeros in a save without them
 
 /** Whether a save written in `format` (absent: before the field) loads in this version. */
 export function sameStateFormat(format: number | undefined): boolean {

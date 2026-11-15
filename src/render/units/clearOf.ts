@@ -9,6 +9,11 @@ export interface ScreenRect {
   y: number;
   w: number;
   h: number;
+  /**
+   * A panel that floats over the middle of the map (Relations, History, the editor, the settings; ROADMAP R87d): a hero's
+   * counter whose place it covers is not drawn while it does, where one under a panel at the screen's edge stands beside it.
+   */
+  hides?: boolean;
 }
 
 const overlaps = (a: ScreenRect, b: ScreenRect): boolean => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;

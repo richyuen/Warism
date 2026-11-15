@@ -377,6 +377,7 @@ export function addCities(world: World, cities: readonly PlacedCity[]): void {
     if (p.capitalOf !== 0) {
       n.capitalX[p.capitalOf] = p.x;
       n.capitalY[p.capitalOf] = p.y;
+      n.homeCity[p.capitalOf] = id;
     }
   }
 }

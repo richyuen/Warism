@@ -689,7 +689,10 @@ gives the painted flag, else the scenario's (a tagged nation not `founded`), els
 **Death, collapse and revival** (`src/sim/systems/capitals.ts`, `src/sim/systems/revival.ts`):
 - *Capitals:* a nation that loses its capital moves it to its safest city up to
   `CAPITAL_SAFE_STEPS` (20) steps from the enemy, else its largest, else a field capital; with no core
-  held it dies (`holdsCore`). A winner-takes-all war annexes on the capital's fall.
+  held it dies (`holdsCore`). A winner-takes-all war annexes on the capital's fall. *Home* [ADR-1071]: once a day
+  (00:00) a nation goes back to its home city (`homeCity`: the seat its scenario, the timeline, the editor or its
+  founding set; never one a capture or a loss chose) when it owns and controls it, no other nation's capital stands
+  there and no land of a nation at war with it lies within `CAPITAL_SAFE_STEPS`.
 - *Death* (`eliminateNation`): its wars, truces, guarantees, alliance places, research and production
   orders end; its puppets go free; its land goes to the holders.
 - *Collapse:* after `COLLAPSE_MONTHS` (6) bankrupt months a nation's debts are voided, its puppets go
@@ -1846,7 +1849,8 @@ to 27 July 1953, then sets the world free.
   transfer on the track's last day (R62i3, ADR-942). `rename` gives a nation a new name and flag (an identity,
   state; R62i4, ADR-943); the track's nations and identities fly flags of their own (`1938h/flags.json`). `cityName`
   (R86e) renames the city nearest `at` (within 15 km) on its day, a name the world keeps (`World.cityNames`, saved), shown
-  before the 1938 list's: Seoul in 1945, Peking in 1949 and Beijing in 1979 (pinyin), Kinshasa in 1966. After its
+  before the 1938 list's: Seoul in 1945, Peking in 1949 and Beijing in 1979 (pinyin), Kinshasa in 1966. History names a
+  row's city as of the row's hour (R87b: the names it bore, `World.cityFormer`, saved): Kalinin in 1941. After its
   end the world is the AI's: its wars resume at an ordinary game's opening pace (R62i5, ADR-944). Checked on any seed
   by `tests/helpers/historyTrack.ts` (R62k, ADR-947): no event passed over but by rule, no war or peace off the
   timeline, the diplomatic rules kept. While it steers the invasion AI lands only within an objective of the lander's
@@ -1896,7 +1900,9 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   number is the men (`1.54M`, `12.3k`), a hero's its health; a hero has a counter of its own, `HERO_SCALE`
   its nation's, its nation's size from `HERO_SMALL_M` (10,000 m/px: the whole world in view, ROADMAP R40d), blended by
   zoom level to `HERO_FULL_M` (5,000; `heroScaleAt`, R42c: no jump at one step of the wheel), and no wider above its
-  nation's size than `HERO_SCREEN_SHARE` (a quarter) of the screen (the widest name's). Balls: the
+  nation's size than `HERO_SCREEN_SHARE` (a quarter) of the screen (the widest name's). One whose place a panel covers is
+  drawn beside the panel at the screen's edge (R34e), over no other hero's; under one floating over the map's middle
+  (Relations, History, the editor, the settings), not drawn while it covers it (R87d). Balls: the
   flag chip a ball of `COUNTER_BALL_R` (8 px) over the box's left end.
 - **T1 markers** (`src/render/units/markers.ts`, from `T1_MAX_M` to `T1_MIN_M`): a box with the NATO
   symbol, pips for its elements (fading in and out each; the strength bar only while no elements came),

@@ -532,6 +532,9 @@ function renameCity(world: World, at: readonly [number, number], as: string): Re
   });
   if (best === 0) return Refusal.None;
   if (world.cityNames.get(best) === as) return Refusal.NoEffect;
+  const former = world.cityFormer.get(best) ?? [];
+  former.push([world.tick, world.cityNames.get(best) ?? null]); // History's name before this hour (R87b)
+  world.cityFormer.set(best, former);
   world.cityNames.set(best, as);
   world.citiesVersion++;
   return Refusal.None;
@@ -569,6 +572,7 @@ function moveCapital(world: World, n: number, at: readonly [number, number], cit
   });
   cc.capitalOf[best] = n;
   const nc = world.nations.cols;
+  nc.homeCity[n] = best;
   nc.capitalX[n] = cc.x[best]!;
   nc.capitalY[n] = cc.y[best]!;
   world.out.emit(world.tick, EventKind.CapitalMoved, n, best, cc.x[best]!, cc.y[best]!);
@@ -767,16 +771,24 @@ function born(world: World, t: Track, n: number, from: readonly number[], land: 
   const cc = world.cities.cols;
   let best = 0;
   let bestD = Infinity;
+  // Its home (R87a): the city at its table's capital, whoever holds it now (Burma, born in March 1945 on the north,
+  // Rangoon taken in May), else its seat.
+  const reach = CAPITAL_CITY_KM / kmPerCell(w);
+  let home = 0;
+  let homeD = reach * reach;
   world.cities.forEach((ci) => {
-    if (owner[cc.cell[ci]!] !== n || cc.capitalOf[ci] !== 0) return;
     let dx = Math.abs(cc.x[ci]! - u * w);
     dx = Math.min(dx, w - dx);
     const dy = cc.y[ci]! - v * h;
     const d = dx * dx + dy * dy;
+    if (d <= homeD) [home, homeD] = [ci, d];
+    if (owner[cc.cell[ci]!] !== n || cc.capitalOf[ci] !== 0) return;
     if (d < bestD) [best, bestD] = [ci, d];
   });
+  nc.homeCity[n] = home;
   if (best !== 0) {
     cc.capitalOf[best] = n;
+    if (home === 0) nc.homeCity[n] = best;
     nc.capitalX[n] = cc.x[best]!;
     nc.capitalY[n] = cc.y[best]!;
   } else relocateCapital(world, n);

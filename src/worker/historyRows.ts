@@ -83,6 +83,20 @@ export function nearestCity(world: World, x: number, y: number, holder = 0): num
  */
 const NEAR_HOLDER_CELLS = 12;
 
+/**
+ * City row `row`'s name at hour `tick` when the timeline has renamed it since (ROADMAP R87b; critic run 72, R72-N2: "29
+ * October 1941 … near Tver"): the name it bore then, its definition's for null; undefined when its name now is the one.
+ */
+export function formerName(world: World, row: number, tick: number, defName: (def: number) => string): string | undefined {
+  const former = world.cityFormer.get(row);
+  if (former === undefined) return undefined;
+  for (const [at, was] of former) if (tick < at) return was ?? defName(world.cities.cols.def[row]!);
+  return undefined;
+}
+
+/** `cityName` as of hour `tick` (R87b). */
+const cityNameAt = (world: World, tick: number, cityName: (row: number) => string, defName: (def: number) => string) => (row: number): string => formerName(world, row, tick, defName) ?? cityName(row);
+
 /** The name ('=' + literal) of the city nearest a strike at (x, y), '' when it has none (PLAN 6.11c). */
 export function strikeNear(world: World, x: number, y: number, cityName: (row: number) => string): string {
   if (Number.isNaN(x) || Number.isNaN(y)) return '';
@@ -141,8 +155,10 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
   for (const a of world.alliances.past) alliances.set(a.id, a);
   for (const a of world.alliances.list) alliances.set(a.id, a);
   const nation = (v: number): string => (v !== 0 && world.nations.has(v) ? nationName(v) : '');
+  /** The hour of the row at hand: its cities are named as of it (R87b). */
+  let rowTick = 0;
   const city = (v: number): string => {
-    const n = v !== 0 && world.cities.has(v) ? cityName(v) : '';
+    const n = v !== 0 && world.cities.has(v) ? (formerName(world, v, rowTick, defName) ?? cityName(v)) : '';
     return n ? `=${n}` : '';
   };
   /** The city each Major Battle began near, by the battle's id. */
@@ -178,6 +194,7 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
   const out: HistoryRow[] = [];
   for (let i = 0; i < rows.length; i += HISTORY_STRIDE) {
     const [tick, kind, a, b, x, y] = [rows[i]!, rows[i + 1]!, rows[i + 2]!, rows[i + 3]!, rows[i + 4]!, rows[i + 5]!];
+    rowTick = tick;
     // A burst's forces destroyed are its strike's row (PLAN 7.32b), not a row of their own.
     if (kind === EventKind.NukeToll && i > 0 && tollAfter(rows, i - HISTORY_STRIDE)) continue;
     // A transfer the timeline tells by its note (R65c): not told again as land handed over, nor as a nation destroyed.
@@ -201,7 +218,7 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     if (as) row.as = as;
     const over = kind === EventKind.WarEnded ? nation(overlordThen(rows, i)) : '';
     if (over) [row.as, row.cn] = ['puppet', over];
-    const near = NEAR_KINDS.has(kind) ? strikeNear(world, x, y, cityName) : '';
+    const near = NEAR_KINDS.has(kind) ? strikeNear(world, x, y, cityNameAt(world, tick, cityName, defName)) : '';
     if (near) row.near = near;
     const toll = kind === EventKind.NukeCasualties ? tollAfter(rows, i) : undefined;
     if (toll) row.toll = toll;
@@ -352,14 +369,14 @@ function tickerRowAt(world: World, i: number, nation: (v: number) => string, cit
   // A side is its nation and a count (PLAN 5.11a: the air's rows); a strike the nation struck (PLAN 6.6a).
   // A city as History names it (ROADMAP R51a; critic run 52, R52-N4: the Breakthrough row lost its "near Berlin" here).
   const city = (v: number): string => {
-    const n = v !== 0 && world.cities.has(v) ? cityName(v) : '';
+    const n = v !== 0 && world.cities.has(v) ? (formerName(world, v, tick, defName) ?? cityName(v)) : '';
     return n ? `=${n}` : '';
   };
   const who = (role: HistoryRole, v: number): string => (role === 'nation' ? nation(v) : role === 'side' ? nation(seaSide(v).nation) : role === 'strike' ? nation(nukeStrike(v).nation) : role === 'hero' ? heroName(world, v) : role === 'city' ? city(v) : '');
   const row: TickerRow = { i: i / HISTORY_STRIDE, tick, kind, a, b, x: placed ? x : (nc.capitalX[at] ?? 0), y: placed ? y : (nc.capitalY[at] ?? 0), an: ra === 'side' ? who(ra, a) : ra === 'town' ? townName(world, i, kind, a, defName) : nation(a), bn: who(rb, b), of: '' };
   const over = kind === EventKind.WarEnded ? nation(overlordThen(rows, i)) : '';
   if (over) [row.as, row.cn] = ['puppet', over];
-  const near = NEAR_KINDS.has(kind) ? strikeNear(world, x, y, cityName) : '';
+  const near = NEAR_KINDS.has(kind) ? strikeNear(world, x, y, cityNameAt(world, tick, cityName, defName)) : '';
   if (near) row.near = near;
   const toll = kind === EventKind.NukeCasualties ? tollAfter(rows, i) : undefined;
   if (toll) row.toll = toll;
