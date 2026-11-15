@@ -1,0 +1,18 @@
+npx tsx critic/scripts/c70_heldfree.ts 1946 51515 3 > critic/c70_heldfree_1946.log 2>&1
+npx tsx critic/scripts/c70_free.ts 1962 51513 730 free heroes=on > critic/c70_free_1962_51513_free.log 2>&1
+npx tsx critic/scripts/c70_free.ts 1975 51501 730 free - > critic/c70_free_1975_51501_free.log 2>&1
+npx tsx critic/scripts/c70_free.ts 1991 51507 1825 free - > critic/c70_free_1991_51507_free.log 2>&1
+npx tsx critic/scripts/c70_free.ts 1983 51505 730 free - > critic/c70_free_1983_51505_free.log 2>&1
+npx tsx critic/scripts/c70_free.ts 1946 51515 730 free diplomacy=random > critic/c70_free_1946_51515_free.log 2>&1
+npx tsx critic/scripts/c70_endleb.ts 999 > critic/c70_endleb_999.log 2>&1
+npx tsx critic/scripts/c70_endleb.ts 53283 > critic/c70_endleb_53283.log 2>&1
+npx tsx tools/diag/successorPurse.ts 999 365 critic/c70_starts/1991.sav > critic/c70_successorPurse_999.log 2>&1
+npx tsx tools/diag/successorPurse.ts 53601 365 critic/c70_starts/1991.sav > critic/c70_successorPurse_53601.log 2>&1
+npx tsx tools/diag/neighbourColours.ts critic/c70_starts/1991.sav 30 > critic/c70_neighbourColours_1991.log 2>&1
+npx tsx critic/scripts/c70_free.ts 1950 53513 365 free - > critic/c70_free_1950_53513_free.log 2>&1
+npx tsx critic/scripts/c70_free.ts 1968 53515 365 free heroes=on > critic/c70_free_1968_53515_free.log 2>&1
+npx tsx critic/scripts/c70_free.ts 1979 53517 365 free - > critic/c70_free_1979_53517_free.log 2>&1
+npx tsx critic/scripts/c70_free.ts 1987 53519 365 free - > critic/c70_free_1987_53519_free.log 2>&1
+npx tsx critic/scripts/c70_heldfree.ts 1950 53521 2 > critic/c70_heldfree_1950.log 2>&1
+npx tsx critic/scripts/c70_heldfree.ts 1958 53523 2 > critic/c70_heldfree_1958.log 2>&1
+npx tsx critic/scripts/c70_free.ts 1989 53511 730 track - > critic/c70_free_1989_53511_track.log 2>&1

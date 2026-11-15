@@ -424,3 +424,9 @@
   (the free AI's war, by its rules).
 - Batch 28 done (R84a-l). The batch's line that the release checks follow with no critic run was wrong: run 69 had four
   blocking issues and two dimensions under their bars, so RELEASES step 2 runs the critic again, focused.
+
+## 2026-11-15 — Critic run 70 (focused, `b6bd706b`)
+
+- Scores: map 8 (was 7), diplomacy 7 (was 6), every other dimension 8. Blocking 1 (R70-B2, bloc aid in a dissolving
+  bloc's hour); non-blocking R70-N1-N4; design objection: R84e ends the held wars on any departure from the track.
+  Filed as Batch 29 (R85a-f).

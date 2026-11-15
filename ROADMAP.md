@@ -27,6 +27,42 @@ Rules:
   year, the replay to 1975, a faster tick, runs 63–67's findings, the gate on the GPU), in CHANGELOG.md for players; the
   items with their evidence in `docs/history/ROADMAP-release-2026-11-13.md`.
 
+## Batch 29 — critic run 70's issues (2026-11-15; focused on `b6bd706b`; RELEASES step 2, ADR-1005)
+
+Run 70 (focused): diplomacy 7, every other dimension 8. One blocking issue, four non-blocking and the slowClick cases;
+each fixed before the critic runs again.
+
+- [ ] R85 **Run 70's issues.**
+  - [ ] R85a (R70-B2, blocking) Bloc aid paid in the hour its bloc dissolves: the strategic AI pays at the month's
+    start, before the alliance pass of that hour, and `diploInvariants`' bloc rule reads the blocs after it (1991 free,
+    51507, 1993-09-01T01: USA's and Russia's aid, then Russia's alliance dissolved). AT: `c70_free.ts 1991 51507 1825
+    free -` 0 broken lines; `c70_aidhour.ts 51507 1993-09-01` no `BlocAid` of a bloc gone after the hour, or the
+    checker reads the blocs at the hour's start.
+  - [ ] R85b (run 70's design objection, diplomacy; the user's word asked) Leaving the replay during a war the timeline
+    holds ends it: R84e's white peace of every held war on any end of the track (a God act, Take control, a free start
+    from 1941-45; 1942: GER-SOV, GER-ENG, GER-USA and JAP-CHI end, 23,648 occupied cells to 473, Germany's 169
+    formations left at peace in Soviet land). Proposed, the critic's alternative: white only the wars whose hold
+    outlives the timeline (Lebanon's, to 2000); on an early end the hold lifts and the war goes on, its score reset
+    so the kept score buys nothing, its occupations kept. AT: `c70_freewar.ts 1942 53542 god 30` and `take`: the four
+    wars on at day 30, occupations kept; `1943`/`1944 free`: the wars on; `c70_endleb.ts 999` as now.
+  - [ ] R85c (R70-N1) What ends with the replay is not told: the God bar's note, Take control's and the 1941-45 free
+    card say nothing of the wars that end (after R85b, those whose hold outlives the timeline), and the end's peaces
+    read as ordinary ones. AT: the notes and the card name it; the end's peace rows read as the replay's.
+  - [ ] R85d (R70-N2) Belgian Congo recoloured near-black (`#334400`, L* 26 on the page; R84d). AT: its land L* ≥ 35
+    on the page, R84d's ΔE bars held (`colours1991.test`).
+  - [ ] R85e (R70-N3, old) Three-nation worlds on 53401-53406: 3 of 6 with no war in ten years (as on run 69's commit).
+    AT: `fewNationWars 3 53401 6 10` a war on at least 5 of 6, R84h's 51401 case held.
+  - [ ] R85f (R70-N4, small) "1 January 1992 Yugoslavia's air force struck Croatia this month" after the 31 December
+    peace. AT: no month's air row for a pair at peace when the month closes, or one that says the war it was of.
+  - Run 70's dimensions under the bar (ADR-843), each line taken or why not:
+    - Diplomacy, what the bar needs: `c70_free.ts 1991 51507 1825` 0 lines and `c70_aidhour` (taken: R85a).
+    - Objection, R84e ends the Second World War on any departure from the track: taken as R85b, for the user's word.
+    - Objection carried, R82f counted by realm: not taken; the user's choice (a), ADR-1042.
+    - Idea, Hearts of Iron IV's war joined in progress with its occupations: taken in R85b.
+  - Not filed (dimensions at their bar): R84g's successors with few formations (emergent 8); Europa Universalis'
+    colony tint (map 8; R85d mends the colour). `slowClick` (ADR-914, non-blocking): the named cases as run 69, and
+    53125 15101 g2 new from landingFuzz (1 of 90).
+
 ## Batch 28 — critic run 69's issues (2026-11-15; full run on `e5b97c8e`; RELEASES step 2, ADR-1005, ADR-1022)
 
 Run 69 (full): mapVisuals 7, diplomacy 6, every other dimension 8. Four blocking, five non-blocking and the small ones,

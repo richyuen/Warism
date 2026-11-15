@@ -1,0 +1,30 @@
+npx tsx tools/diag/worldInvariants.ts 37009 1825 > critic/c70_wi_37009.log 2>&1
+npm run sim -- --scenario 1938 --seed 7019 --years 20 --save critic/c70_seed7019_y20.bin > critic/c70_seed7019_save.log 2>&1
+npm run sim -- --scenario 1938 --seed 32019 --years 20 --save critic/c70_seed32019_y20.bin > critic/c70_seed32019_save.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 51401 6 10 > critic/c70_few3_51.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 39401 6 10 > critic/c70_few3.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 53001 scenario 1825 > critic/c70_diploinv_53001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 53003 random 1825 > critic/c70_diploinv_53003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 53005 scenario 1825 --heroes > critic/c70_diploinv_53005sh.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 53007 random 1825 --world random > critic/c70_diploinv_53007rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 53051 1825 > critic/c70_wi_53051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 53053 1825 --heroes > critic/c70_wi_53053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 53055 1825 --world random > critic/c70_wi_53055rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 53057 1825 --diplomacy random > critic/c70_wi_53057dr.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 53401 6 10 > critic/c70_few3_53.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33501 scenario 1825 > critic/c70_diploinv_33501s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 51001 scenario 1825 > critic/c70_diploinv_51001s.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 36009 1825 > critic/c70_wi_36009.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 51051 1825 > critic/c70_wi_51051.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 53059 4380 24 critic/c70_wd_53059.json > critic/c70_wd_53059.log 2>&1
+npx tsx tools/diag/seaBattles.ts 53061 scenario --years 3 --out critic/c70_sb_53061.json > critic/c70_sb_53061.log 2>&1
+npx tsx critic/scripts/c64_track.ts 53301 365 > critic/c70_track_53301.log 2>&1
+npx tsx critic/scripts/c64_track.ts 1938 365 > critic/c70_track_1938.log 2>&1
+npx tsx tools/diag/heldAtEnd.ts 53311 > critic/c70_heldAtEnd_53311.log 2>&1
+npx tsx critic/scripts/c70_piles.ts 365 --plain 53139 53141 53143 53145 53147 > critic/c70_piles_p53.log 2>&1
+npx tsx tools/diag/nukeIntercepts.ts 53501 22 > critic/c70_nukeIntercepts_53501.log 2>&1
+npx tsx critic/scripts/c70_nukecount.ts 53503 22 > critic/c70_nc/53503.log 2>&1
+npx tsx tools/diag/landingRows.ts all critic/c70_lrows_all.json > critic/c70_lrows_all.log 2>&1
+npx tsx critic/scripts/c70_afterTrack.ts 53601 10 critic/c70_atx_53601.json > critic/c70_atx_53601.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 30041 3517 120 30041 30,90 1 > critic/c70_li_30041_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 27037 15101 120 27037 30,90 2 > critic/c70_li_27037_15101_g2.log 2>&1

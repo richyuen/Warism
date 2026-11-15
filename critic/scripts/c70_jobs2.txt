@@ -1,0 +1,10 @@
+npx tsx critic/scripts/c70_farConquests.ts 0 6161,41161,41163,41165,41167 730 > critic/c70_farc_0_a.log 2>&1
+npx tsx critic/scripts/c70_farConquests.ts 0 53161,53163,53165,53167,53169 730 > critic/c70_farc_0_c.log 2>&1
+npx tsx critic/scripts/c70_firstdecl.ts 60 39821 39823 39825 39827 39829 39831 39833 39835 39837 39839 > critic/c70_firstdecl.log 2>&1
+npx tsx critic/scripts/c70_firstdecl.ts 60 53821 53823 53825 53827 53829 53831 53833 53835 53837 53839 > critic/c70_firstdecl_53.log 2>&1
+npx tsx critic/scripts/c70_piles.ts 365 --plain 51139 51141 51143 51145 51147 > critic/c70_piles_p51.log 2>&1
+npx tsx critic/scripts/c70_piles.ts 365 --plain 39139 39141 39143 39145 39147 > critic/c70_piles_p39.log 2>&1
+npx tsx critic/scripts/c70_afterTrack.ts 37601 10 critic/c70_atx_37601.json > critic/c70_atx_37601.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 51101 3517 120 51101 30,90 1 > critic/c70_li_51101_g1.log 2>&1
+npx tsx critic/scripts/c70_free.ts 1983 51517 365 free loopingMap=false > critic/c70_free_1983_51517_free.log 2>&1
+npx tsx critic/scripts/c70_farConquests.ts 1975 53161,53163,53165,53167,53169 730 > critic/c70_farc_1975_c.log 2>&1
