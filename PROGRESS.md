@@ -335,3 +335,8 @@
   (its partial `critic/scripts` left uncommitted).
 - Tests: `leaveTrack1938h.test`, `scenarios.test`, `data-schemas.test`; `title.spec`, `replayYear1938h.spec` and the
   1938h specs green (25).
+
+## 2026-11-15 — The deploy's saves fixed (ADR-1058)
+
+- R83b's `tick.ts` → `scenario1938.ts` import made a cycle the saves' esbuild bundle ran in the wrong order (`Domain`
+  undefined); the heroes' placer now given by `sim.ts`. The starts rebuilt equal the ones before.

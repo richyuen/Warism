@@ -68,6 +68,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1058 · 2026-11-15 · accepted — R83b's import cycle broke the deploy's saves
+- **Context.** R83b's `tick.ts` imported `scenario1938.ts` (for the heroes of a year played free). That module reads
+  `world.ts`'s `Domain` as it loads, and `world.ts` reaches `tick.ts`: in the esbuild bundle of `npm run saves`
+  (ADR-1001) `scenario1938.ts` ran first and `Domain` was undefined, so the Pages deploy failed at once (run
+  43662135735). Vite's build and vitest load the modules in another order: the gate was green.
+- **Decision.** `tick.ts` imports no scenario: `sim.ts`, which loads `scenario1938.ts` already, gives it the heroes'
+  placer (`setHeroPlacer`). No rule changed: the starts rebuilt equal the ones before, year by year (hashes).
+- **Consequences.** A change of the sim's imports is checked with `npm run saves` started (its bundle loads in a few
+  seconds) before it is pushed; the gate does not build that bundle.
+
 ### ADR-1057 · 2026-11-14 · accepted (the user's decisions) — R83: "World history", and a year played free with 1938's options
 - **Context.** The 1938 card starts the replay, or a free game, from any year of 1938-1991, but it was named "World,
   1938"; and a later year played free offered no seed and no option (the start is a saved world, the options were

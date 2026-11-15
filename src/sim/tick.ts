@@ -4,7 +4,15 @@
  */
 import { endTrack, runTrack } from './track';
 import { applyGameOptions } from './gameOptions';
-import { addHeroes1938 } from './scenario1938';
+
+/**
+ * The 1938 heroes' placer for `leaveTrack`'s options (R83b), set by `sim.ts`: tick.ts may not import scenario1938.ts,
+ * which reads `world.ts` as it loads (a cycle that left `Domain` undefined in the saves' bundle, ADR-1058).
+ */
+let placeHeroes: ((world: World) => void) | null = null;
+export function setHeroPlacer(f: (world: World) => void): void {
+  placeHeroes = f;
+}
 import { orderMission, orderRebase } from './systems/air';
 import { orderParadrop } from './systems/airLift';
 import { landingOrders, migrateLegacyLandings, tellLandingsLeft } from './systems/landings';
@@ -270,7 +278,7 @@ export function applyCommand(world: World, cmd: Command): Refusal {
         // nations are the start's, and its second seed is spent.
         const { size: _s, nations: _n, after: _a, ...o } = cmd.options;
         applyGameOptions(world, o);
-        if (o.heroes === 'on') addHeroes1938(world);
+        if (o.heroes === 'on') placeHeroes?.(world);
       }
       return Refusal.None;
     case 'declareWar': {
