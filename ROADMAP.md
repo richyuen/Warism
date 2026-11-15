@@ -27,6 +27,30 @@ Rules:
   year, the replay to 1975, a faster tick, runs 63–67's findings, the gate on the GPU), in CHANGELOG.md for players; the
   items with their evidence in `docs/history/ROADMAP-release-2026-11-13.md`.
 
+## Batch 31 — critic run 72's issues (2026-11-15; full on `2ae30ec6`; RELEASES step 3)
+
+Run 72 (full): every dimension 8, no blocking issue. RELEASES: its non-blocking issues fixed, then the release checks
+(`npm run check:review`, the sweep on unseen seeds, `npm run bench -- G --gpu-only`), CHANGELOG and the tag.
+
+- [ ] R87 **Run 72's issues.**
+  - [ ] R87a (R72-N1, old) A capital moved by capture never goes back: in the replay the Soviet Union sits at Tashkent
+    from October 1941 to 1991, France at Cayenne from June 1940, Italy at Naples, Transjordan at Al Aqabah, Burma at
+    Chauk; a free year's land heroes start there. AT: `critic/scripts/c72_capsurvey.ts` seats those five at their own
+    capitals in 1946, 1975 and 1991; `c72_heroPlace.ts 1975` places the T-42 at Moscow and the Char 2C at Paris; a unit
+    test of the rule (Hearts of Iron IV's idea: a nation seats itself again at its own capital city once it holds it).
+  - [ ] R87b (R72-N2, from R86e) History names past events with the newest name: "29 October 1941 … near Tver" in the
+    1991 replay, "2 April 1945 … near Kaliningrad". AT: `c72_histnames.mjs 1991 replay 1938 1991 28` reads "Kalinin"
+    for 1941 and "Königsberg" for 1945; a unit test.
+  - [ ] R87c (R72-N3, R86e's list) Renames left out: Salisbury, Tananarive, Bathurst, Dacca and Canton to 1991. AT: on
+    1991-12-31 the map reads Harare, Antananarivo, Banjul, Dhaka and Guangzhou (`c72_ev91 1990`); the starts rebuilt.
+  - [ ] R87d (R72-N4, heroes on by default) Hero tags overlap counters and each other at world zoom, and an open panel
+    pushes them far from their units (`critic/shots/c72hp_55929_12000_1relations.png`). AT: `c72_heropanel.mjs 55929`
+    shows each tag by its unit, or hidden while the panel covers it.
+  - Not filed (every dimension at its bar, ADR-843 asks none): `slowClick` (ADR-914), the four named cases as run 71;
+    three-nation worlds (55404, no war in ten years; two nations accepted by the user). The design objections, for the
+    user's word: ADR-1060 empties occupied France as the replay is left (as run 71); heroes on by default while the land
+    heroes' AI is short of its bar (ADR-795: 0.62 of lives at the top decile).
+
 ## Batch 30 — critic run 71's issues and two defaults (2026-11-15; focused on `df93b4c2`; the user's word)
 
 Run 71 (focused): every dimension 8, no blocking issue. The user asked (2026-11-15) for one fix batch before the critic

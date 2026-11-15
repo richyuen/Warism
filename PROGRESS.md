@@ -491,3 +491,9 @@
 
 - The user's word: the title's new-game forms start with heroes on, so the critic judges them; the settings panel keeps
   the game's own. Batch 30 done.
+
+## 2026-11-15 — critic run 72 (full, on `2ae30ec6`)
+
+- Every dimension 8, no blocking issue; rule checkers 0 broken on new seeds, landingFuzz 0 of 90. Batch 31 (R87a–d)
+  filed: the replay's captured capitals, History's names of the day, five renames left out, hero tags at world zoom.
+  Then the release checks.
