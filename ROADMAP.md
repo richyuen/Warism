@@ -27,6 +27,63 @@ Rules:
   year, the replay to 1975, a faster tick, runs 63–67's findings, the gate on the GPU), in CHANGELOG.md for players; the
   items with their evidence in `docs/history/ROADMAP-release-2026-11-13.md`.
 
+## Batch 28 — critic run 69's issues (2026-11-15; full run on `e5b97c8e`; RELEASES step 2, ADR-1005, ADR-1022)
+
+Run 69 (full): mapVisuals 7, diplomacy 6, every other dimension 8. Four blocking, five non-blocking and the small ones,
+each fixed before the release (ADR-1005); the release checks then run once on the fixed code (ADR-1022).
+
+- [ ] R84 **Run 69's issues.**
+  - [ ] R84a (R69-B1, blocking) A game played free from a year keeps the replay's occupations held at peace for years
+    (1946: 12 pairs, 21,338 cells at hour 1, 19,728 after three years; 1962: Okinawa's 6 cells): on `leaveTrack` the
+    occupations the track excused go back to their owners (or become a rule the checker reads). AT: `c69_heldfree.ts
+    1946 51515 3` 0 pairs by year 1; `c69_free.ts 1962 51513 730 free heroes=on` no `held` line.
+  - [ ] R84b (R69-B2, blocking) Bloc aid breaks `worldInvariants`' economy rule in every free game from a Cold War year
+    (5-21 lines): the economy rule counts the month's aid (`BlocAid`, `AID_SHARE` of the giver's income), and the
+    checkers run on free games from a Cold War year in a test. AT: `c69_free.ts 1975 51501 730 free -` and `1991 51507
+    1825 free -` 0 economy lines.
+  - [ ] R84c (R69-B3, blocking) A puppet made in the month's start hour pays that month's tribute (37009, France on
+    Germany, 1 December 1941): it pays from the next month, or the peace runs after the payment. AT:
+    `worldInvariants.ts 37009 1825` 0 broken.
+  - [ ] R84d (R69-B4, blocking) The Soviet successors drawn in their parent's colour (Russia and Georgia ΔE 1.3;
+    Kazakhstan-Uzbekistan 8.5, Ukraine-Moldova 10.2, Russia-Transnistria 14.3): new colours checked against their
+    land neighbours (the idea of Europa Universalis' release colours, taken). AT: every pair of land neighbours on
+    the 1991 map ΔE ≥ 30, Georgia and Russia first (a tool, as `chartBlues.ts`, on the map); `c69_ev91.mjs 1990 999
+    1991-12-27@caucasus:44:41.5:1500`.
+  - [ ] R84e (R69-N1) The track's last hour annexes Lebanon to Israel on every seed (the 1982 war held to 2000, the end
+    lifts the hold and the war's score annexes; a 1983 free game on day 5): the wars the timeline holds past the end
+    make a white peace at it, or the track's last events end them. AT: `c69_endleb.ts 999` no `NationAnnexed LEB ISR`
+    in the first week; the 1983 free game's Lebanon living.
+  - [ ] R84f (R69-N3) Names frozen while others change: Egypt (1971), Sri Lanka (1972), Benin (1975), Zaire (1971),
+    Myanmar (1989) renamed on their dates. AT: the 1991 map's tooltip at 30° E 30° N reads Egypt; the 1992 Relations
+    list has Sri Lanka, Benin, Zaire and Myanmar; the replay tests.
+  - [ ] R84g (R69-N4) The Soviet successors bankrupt on 1 January 1992 (Kazakhstan disbands 18, Tajikistan 31;
+    Tajikistan a great power on 37601): a successor's forces within what its purse keeps (or a purse with them). AT:
+    no successor disbands for want of pay in 1992 on four seeds; no successor but Russia and Ukraine a great power
+    at the end.
+  - [ ] R84h (R69-N5) Three-nation random worlds quiet since run 68 (5 wars in ten years over six worlds, against 19;
+    R82d's or R82f's `strategic.ts` the candidates): find the change by A/B and restore. AT: `fewNationWars 3 51401 6
+    10` a war on at least 5 of 6 seeds, as run 68's commit.
+  - [ ] R84i (R69-N6) Undoing "Found city" leaves the city's label next to it missing (Warsaw, 41211). AT: the crop
+    before and after the undo the same (`c69_undo2.mjs 41211`'s city case 0 px).
+  - [ ] R84j (run 69's small items) The heroes hint in a later year's free form says "seven great powers" (only the
+    living have theirs); "was annexed" with a plural rebels' name ("Contras", "FMLN"), and the FMLN annexed by
+    Honduras in a 1991 free game; Kuwait still Kuwait's the day after Iraq's war of 1990 (two days in history); 1 of 69
+    sea battles not seen at its camera (39061). AT: each case as the report states it.
+  - Run 69's dimensions under the bar (ADR-843), each line taken or why not:
+    - Map visuals, what the bar needs: Georgia ΔE ≥ 30 from Russia and every 1991 land pair so (taken: R84d); the
+      tooltip at 30° E 30° N reads Egypt (taken: R84f).
+    - Diplomacy, what the bar needs: `c69_heldfree` 0 pairs (R84a); `c69_free` 0 lines (R84b); `worldInvariants
+      37009` 0 (R84c); `c69_endleb` no annexation (R84e). All taken.
+    - Objection, the free 1975 world's far conquests (India in Helsinki, Finland in Karachi through a defensive pact):
+      not taken; ADR-1033's re-scoped bar is met (9.2-9.4 far capitals per 100 nations against 1938's 9.4-9.8).
+    - Objection, R82f counted by realm (1 against 5, 2 against 10 by nations): not taken; the user's choice (a),
+      ADR-1042.
+    - Objections carried (Stalingrad's handover, D-Day's ground at its handover, Spain on the 1941-49 card): not
+      taken; ADR-1018, ADR-1040, ADR-1019.
+    - Idea, a peace conference for a free start's standing occupations (Hearts of Iron IV): not taken; R84a returns
+      them as the track's own returns do, and a screen is a feature for the user to ask.
+    - Idea, colours checked against neighbours at a release (Europa Universalis): taken in R84d.
+
 ## Batch 27 — the title's card for the replay (the user's request, 2026-11-14; ADR-1057)
 
 - [x] R83 **One card for every year, and the options for a year played free.**

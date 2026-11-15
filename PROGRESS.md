@@ -340,3 +340,10 @@
 
 - R83b's `tick.ts` → `scenario1938.ts` import made a cycle the saves' esbuild bundle ran in the wrong order (`Domain`
   undefined); the heroes' placer now given by `sim.ts`. The starts rebuilt equal the ones before.
+
+## 2026-11-15 — Critic run 69 (full, on `e5b97c8e`)
+
+- Scores: map visuals 7, diplomacy 6; emergent, God Mode, editor, stats, UI/UX, performance, stability, semantic zoom,
+  naval, tanks, aircraft, AI nukes 8. Blocking 4 (R69-B1-B4), non-blocking 5 and small ones: Batch 28 (R84a-j).
+- Not the exit (ADR-829): no dimension under its bar three runs running; B4 is R80d's own claim not met, not a fix
+  that broke another item.
