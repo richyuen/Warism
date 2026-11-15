@@ -460,19 +460,29 @@ export function warTarget(world: World, n: number, neighbours: readonly number[]
   // A land neighbour by a colony only (R82d, critic run 68's R68-N2: France on Brazil by French Guiana, taking Rio on 4
   // of 5 seeds of plain 1938) costs as a war across the sea: SEA_KM_COST for each 1,000 km between the two capitals.
   const home = homeNeighbours(world, n);
-  const land = pick(neighbours, undefined, (t) => (home === null || home.has(t) ? 0 : colonyWarCost(world, n, t)));
+  const colony = (t: number): number => (home === null || home.has(t) ? 0 : colonyWarCost(world, n, t));
+  const reach = (): Map<number, number> => seaTargetKm(world, n, powers === undefined || powers.has(n) ? Infinity : SEA_REACH_KM);
+  // A nation whose home borders no nation (R85e, ADR-1068; R86c, critic run 71, R71-N3: two-nation worlds whose
+  // continents meet only on an island, by pieces of 155,000 km² and less, every target dear): its nearest target, by a
+  // colony or across the sea, is its neighbour, and each pays only the cost beyond it.
+  let far: Map<number, number> | undefined;
+  let base = 0;
+  if (neighbours.length === 0 || home?.size === 0) {
+    far = reach();
+    const costs = [...neighbours.map(colony), ...[...far].filter(([t]) => !neighbours.includes(t)).map(([t, km]) => seaWarCost(world, n, t, km))];
+    if (costs.length > 0) base = Math.min(...costs);
+  }
+  const land = pick(neighbours, undefined, (t) => colony(t) - base);
   if (land !== 0) return land;
   // Across the sea (R78b; critic run 67, R67-N2: Japan on the Spanish Republic, 12,739 km off, on its second day): a
   // target's utility less SEA_KM_COST for each 1,000 km to the capital of its realm (its overlord's for a puppet) from
   // the nearest of `n`'s transport groups, or to its nearest port if that is further. The war is with the nation, not
   // the port: by its ports Japan's next best were the United States by Guam (2,503 km) and the Netherlands by the
   // Indies, every target weaker than it scoring alike (the strength term capped).
-  const far = seaTargetKm(world, n, powers === undefined || powers.has(n) ? Infinity : SEA_REACH_KM);
-  const targets = [...far.keys()].sort((a, b) => a - b);
-  // A nation with no land neighbour (R85e, ADR-1068; critic run 70, R70-N3: three-nation worlds of separate landmasses,
-  // every target over 4,000 km): its nearest across the sea is its neighbour, and each pays only the distance beyond it.
-  const base = neighbours.length === 0 && targets.length > 0 ? Math.min(...targets.map((t) => seaWarCost(world, n, t, far.get(t)!))) : 0;
-  return pick(targets, new Set(neighbours), (t) => seaWarCost(world, n, t, far.get(t)!) - base);
+  far ??= reach();
+  const km = far;
+  const targets = [...km.keys()].sort((a, b) => a - b);
+  return pick(targets, new Set(neighbours), (t) => seaWarCost(world, n, t, km.get(t)!) - base);
 }
 
 /**

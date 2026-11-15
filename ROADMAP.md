@@ -49,8 +49,12 @@ score at its bar).
     Done: the ground's score is clamped only after `scoreFrom` is taken from it. `c71_warlong.ts 1942 54601 god 730`:
     GER v SOV 45 at day 90 (was 39), 65 at 150, 90 at its peace on 9 August 1942; JAP v CHI to 100 and a puppet.
     `trackEndHolds1938h.test` (red before). A war with no `scoreFrom` scores as before; pin held.
-  - [ ] R86c (R71-N3) Two-nation worlds with no war: `fewNationWars 2 54421 6 10` 3 of 6 with no war in ten years,
+  - [x] R86c (R71-N3) Two-nation worlds with no war: `fewNationWars 2 54421 6 10` 3 of 6 with no war in ten years,
     land neighbours each time, treasuries unspent. AT: a war on at least 5 of 6; R85e's 53401 and R84h's 51401 held.
+    Done (ADR-1069): R85e's discount for a nation whose home borders no nation too (54421: continents meeting on an
+    island only). 4 of 6; the other two are balance (utility's most 0.49 and 0.38 under 0.5 with no opportunity or
+    claim in a two-nation world): the user accepted 4 of 6 (2026-11-15). 53401 and 51401 6 of 6; plain 1938 and
+    60-nation worlds within noise, pin held, tick same. `landlessPowers.test` (red before).
   - [ ] R86d (R71-N4, small) At 390 × 844 the R85c note stands three times on one screen (Take control, the God tab,
     the map tools); "one history holds past 1991…" reads as a garden path and shows on every year's card; the war
     banners hide a row of History. AT: one note on the phone screen; the card's line only from 1983 on, plainly

@@ -68,6 +68,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1069 · 2026-11-15 · accepted (the bar, the user's decision) — R86c: a nation whose home borders no nation reaches from its nearest target
+- **Found** (critic run 71, R71-N3; `fewNationWars 2 54421 6 10`): 3 of 6 two-nation worlds had no war in ten years.
+  On 54421 each nation holds continents (79 and 39 million km²) that border nothing; the land border is by pieces of
+  155,000 km² and less on an island. Every land neighbour cost a colony's war (R82d: 1.7, by the capitals' distance),
+  and the sea pick skips land neighbours; R85e's discount reached only nations with no land neighbour at all.
+- **Rule** (widens ADR-1068): for a nation with no land neighbour or whose home (`homeNeighbours`) borders none, its
+  cheapest target, a colony's land neighbour or one across the sea, is its neighbour, and each target pays only the
+  cost beyond it. `landlessPowers` (the peace-time transport group) counts such a sea power too.
+- **Read:** `fewNationWars 2 54421 6 10` a war on 4 of 6 (54421's first on day 244). The other two are the AI's
+  balance: two nations have no opportunity or claim term, so the utility's most is aggression × (ratio − 1) +
+  RESTLESS, 0.49 (54425) and 0.38 (54426) under DECLARE_AT 0.5. The user accepted 4 of 6 (2026-11-15). 53401 6 of 6,
+  51401 6 of 6 held. In plain 1938 it reaches Denmark, Australia and Japan (by Korea; Japan, a sea power, is
+  `landlessPowers`' one): eight seeds × ten years, Japan's, Denmark's and Australia's declarations 72 against 69 at
+  HEAD, every nation's 1,018 against 1,035; 60-nation seeds 7-9, ten years, 170/138/138 against 170/144/135. Pin
+  held (`ae4ce317`); tick 3.31 ms against 3.32 ms, paired.
+
 ### ADR-1068 · 2026-11-15 · accepted — R85e: a nation with no land neighbour reaches across the sea
 - **Found** (critic run 70, R70-N3, old; `fewNationWars 3 53401 6 10`): 3 of 6 three-nation worlds had no war in ten
   years. On 53404 and 53406 no two nations share a land border, so a war is only across the sea; the strategic AI's sea
