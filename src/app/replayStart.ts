@@ -5,6 +5,7 @@
  * once (`leaveTrack`). A year not built, saved in another state format than this version reads, or not the world its
  * index says (its hash), is refused.
  */
+import type { GameOptions } from '../shared/gameOptions';
 import { sameStateFormat } from '../shared/saveFormat';
 import { unpackSave } from '../shared/saveCodec';
 import type { SimClient } from './simClient';
@@ -48,10 +49,16 @@ export function yearPreviewUrl(year: number): string {
 }
 
 /**
- * Loads year `year`'s world into `sim` with second seed `after`; `free` leaves the track. 1938's is the new world itself:
- * nothing loaded. Whether a world was loaded; throws when it cannot be.
+ * Loads year `year`'s world into `sim` with second seed `after`; `free` leaves the track, with the new-game `options`
+ * applied to the world as it does (ROADMAP R83b). 1938's is the new world itself: nothing loaded. Whether a world was
+ * loaded; throws when it cannot be.
  */
-export async function startFromYear(sim: SimClient, year: number, after: number | undefined, free: boolean): Promise<boolean> {
+/** Whether `o` asks for anything of the world (R83b): the second seed alone, or nothing, leaves the start as built. */
+export function hasOptions(o: GameOptions): boolean {
+  return Object.entries(o).some(([k, v]) => k !== 'after' && k !== 'size' && k !== 'nations' && v !== undefined && v !== 'scenario' && v !== 'off');
+}
+
+export async function startFromYear(sim: SimClient, year: number, after: number | undefined, free: boolean, options: GameOptions = {}): Promise<boolean> {
   const load = year !== 1938;
   if (load) {
     const entry = (await built()).find((y) => y.year === year);
@@ -62,6 +69,6 @@ export async function startFromYear(sim: SimClient, year: number, after: number 
     const { built: hash } = await sim.load(await unpackSave(new Uint8Array(await res.arrayBuffer())), false, after ?? 0);
     if (hash !== entry.hash) throw new Error(`the start of ${year} is not the world built (hash ${hash}, built ${entry.hash})`);
   }
-  if (free) sim.command({ kind: 'leaveTrack' }, true);
+  if (free) sim.command(hasOptions(options) ? { kind: 'leaveTrack', options } : { kind: 'leaveTrack' }, true);
   return load;
 }

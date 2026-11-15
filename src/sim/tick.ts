@@ -3,6 +3,8 @@
  * and reads no wall-clock time, render state or subscriptions.
  */
 import { endTrack, runTrack } from './track';
+import { applyGameOptions } from './gameOptions';
+import { addHeroes1938 } from './scenario1938';
 import { orderMission, orderRebase } from './systems/air';
 import { orderParadrop } from './systems/airLift';
 import { landingOrders, migrateLegacyLandings, tellLandingsLeft } from './systems/landings';
@@ -263,6 +265,13 @@ export function applyCommand(world: World, cmd: Command): Refusal {
     case 'leaveTrack':
       if (!world.track || world.track.ended) return Refusal.NoEffect;
       endTrack(world, TrackEnd.free);
+      if (cmd.options) {
+        // R83b: the options of 1938's form on the year's world, drawn from the second seed `endTrack` set; its size and
+        // nations are the start's, and its second seed is spent.
+        const { size: _s, nations: _n, after: _a, ...o } = cmd.options;
+        applyGameOptions(world, o);
+        if (o.heroes === 'on') addHeroes1938(world);
+      }
       return Refusal.None;
     case 'declareWar': {
       const why = whyNotWar(world, cmd.attacker, cmd.defender);

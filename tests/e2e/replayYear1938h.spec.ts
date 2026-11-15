@@ -153,13 +153,25 @@ test('the 1938 card: a slider of years, replay or free, reach the game', async (
     } else {
       await expect(page.getByTestId('title-desc')).toContainText('as history left it on 1 January 1941');
       await expect(page.getByTestId('title-desc')).not.toContainText('eve of the Second World War');
-      await expect(page.getByTestId('settings-fixed')).toContainText('1 January 1941 is the same in every game');
-      await expect(page.getByTestId('settings-fixed')).not.toContainText(/replay|same world every game/);
+      await expect(page.getByTestId('title-free-note')).toContainText('1 January 1941 is the same in every game');
+      await expect(page.getByTestId('title-free-note')).not.toContainText(/replay|same world every game/);
+      // 1938's form (R83b): the seed and every option, the map's size shown but the start's own.
+      await expect(page.getByTestId('settings-fixed')).toHaveCount(0);
+      await expect(page.getByTestId('settings-seed')).toBeVisible();
+      await expect(page.getByTestId('opt-size')).toBeDisabled();
+      await expect(page.getByTestId('opt-size')).toHaveValue('M');
+      await expect(page.getByTestId('opt-size-fixed')).toBeVisible();
+      await expect(page.getByTestId('opt-diplomacy')).toBeVisible();
+      await page.getByTestId('settings-seed').fill('4242');
+      await page.getByTestId('opt-aggression').selectOption('random');
       await page.screenshot({ path: test.info().outputPath('card-free-1941.png') });
     }
     if (mode === 'replay') await page.screenshot({ path: test.info().outputPath('card-replay-1941.png') });
     q = await started(/year=1941/);
     expect([q.get('scenario'), q.get('mode')]).toEqual(['1938h', mode]);
+    // Free: the replay's own seed builds the world, the one typed is the game's second (what follows the start), and
+    // the options go with it; no size.
+    if (mode === 'free') expect([q.get('seed'), q.get('after'), q.get('aggr'), q.get('size')]).toEqual(['1938', '4242', 'random', null]);
   }
   expect(errors).toEqual([]);
 });

@@ -4,6 +4,7 @@
  * tick and appended to the command log, so a save + log replays bit-identically.
  */
 import { TRAIT_MASK_END } from './traits';
+import type { GameOptions } from './gameOptions';
 
 export type Command =
   /**
@@ -75,8 +76,12 @@ export type Command =
   | { kind: 'paintControl'; nation: number; x: number; y: number; r: number; x2?: number; y2?: number }
   /** PLAN 1.16: `attacker` declares war on `defender` (each brings its puppets). */
   | { kind: 'declareWar'; attacker: number; defender: number }
-  /** Ends the historical track (R68b): a game started from a year of it to play free. NoEffect with none running. */
-  | { kind: 'leaveTrack' }
+  /**
+   * Ends the historical track (R68b): a game started from a year of it to play free. NoEffect with none running. With
+   * `options` (ROADMAP R83b) the new-game options are applied to the world once, after the track's end has reseeded it
+   * from the game's second seed: the year's start played free as 1938's is (the map's size and nations are the start's).
+   */
+  | { kind: 'leaveTrack'; options?: GameOptions }
   /**
    * PLAN 7.175a (ADR-780): the player's and God's war. The truce, alliance or puppet bond in its
    * way is broken (the attacker leaves its alliance, a puppet goes free, a truce ends) and war is

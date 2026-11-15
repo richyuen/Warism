@@ -27,6 +27,23 @@ Rules:
   year, the replay to 1975, a faster tick, runs 63–67's findings, the gate on the GPU), in CHANGELOG.md for players; the
   items with their evidence in `docs/history/ROADMAP-release-2026-11-13.md`.
 
+## Batch 27 — the title's card for the replay (the user's request, 2026-11-14; ADR-1057)
+
+- [x] R83 **One card for every year, and the options for a year played free.**
+  - [x] R83a The 1938 card named without a year (the user: "something without 1938 in the title would be more accurate
+    since you can start at multiple years"): "World history", its period "1938–1991" under the name in the list (the
+    replay's `endDate`, checked equal to its timeline's end), the random world's "1 January 1938" as before; the
+    card's heading the chosen year's world ("World, 1938" at 1938 too); the replay's own name "World history —
+    Replay". AT: `title.spec`'s list, period, heading, preview text and saved game's card; `scenarios.test`.
+    Done (ADR-1057).
+  - [x] R83b A later year played free with 1938's form (the user: "keep all the options that show up on 1938's version
+    of Play free, except gray out map size"; random diplomacy offered, not the default): the seed (the game's second,
+    what follows the start is drawn from it) and every option, the map's size shown, disabled, with its note; the
+    options applied once as the game leaves the replay (`leaveTrack`'s `options`), from the second seed. AT:
+    `leaveTrack1938h.test` (the options at the scenario's leave the world as `leaveTrack` alone; random aggression
+    differs from it and between two seeds; heroes on for the great powers living), `replayYear1938h.spec` (1941 free:
+    the form, the size disabled, the URL's seed 1938, `after` the one typed, `aggr=random`, no size). Done (ADR-1057).
+
 ## Batch 26 — critic run 68's issues (2026-11-14; RELEASES step 2, ADR-1005, ADR-1039: done with the open batches before the critic runs again)
 
   - [x] R82a (R68-B1, blocking; God Mode 7) Undo, and any load, leaves the undone burst's ruins and fallout drawn: the

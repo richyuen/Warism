@@ -46,4 +46,30 @@ describe('leaving the historical track (ROADMAP R68b)', () => {
     });
     expect(refused).toBe(1);
   });
+
+  // ROADMAP R83b: a year played free with 1938's options. They are applied once as the track ends, drawn from the game's
+  // second seed (so two seeds give two worlds); the options left at the scenario's leave the world as `leaveTrack` alone.
+  it('applies the new-game options as it leaves, from the second seed; none changes nothing', () => {
+    const free = (after: number, options?: Record<string, string>): Sim => {
+      const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w), options: { after } });
+      sim.step(24, quiet);
+      sim.command(options ? { kind: 'leaveTrack', options } : { kind: 'leaveTrack' });
+      sim.step(1, quiet);
+      return sim;
+    };
+    const aggr = (sim: Sim): number[] => Array.from(sim.world.nations.cols.aggression.slice(1, 40));
+    const plain = free(AFTER);
+    const scenario = free(AFTER, { aggression: 'scenario', traits: 'scenario', gold: 'scenario', diplomacy: 'scenario', heroes: 'off' });
+    // The world, not its log (which holds the command as given): as a scenario's export reads it.
+    expect(scenario.exportScenario().hash).toBe(plain.exportScenario().hash);
+    const a = free(AFTER, { aggression: 'random' });
+    const b = free(AFTER + 1, { aggression: 'random' });
+    expect(aggr(a)).not.toEqual(aggr(plain));
+    expect(aggr(a)).not.toEqual(aggr(b));
+    expect(a.world.commandLog.at(-1)?.cmd).toEqual({ kind: 'leaveTrack', options: { aggression: 'random' } });
+    // Heroes on: the great powers of 1938 still living have theirs.
+    const h = free(AFTER, { heroes: 'on' });
+    expect(h.world.heroRoster.length).toBeGreaterThan(0);
+    expect(plain.world.heroRoster.length).toBe(0);
+  });
 });

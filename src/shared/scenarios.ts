@@ -62,6 +62,8 @@ export interface ScenarioInfo {
    * an option, and a game's URL cannot change them.
    */
   fixedSeed?: number;
+  /** A replay of history's last year (ROADMAP R83a, `endDate`): the title's list names the card by its period. */
+  endYear?: number;
 }
 
 /** A size of a map: its id and its cells across and down. */
@@ -83,6 +85,7 @@ interface ScenarioJson {
   hidden?: boolean;
   size?: string;
   startDate: string;
+  endDate?: string;
   seed?: number;
   settings: { loopingMap: boolean };
 }
@@ -123,6 +126,7 @@ function info(id: ScenarioId, map: MapJson, scenario: ScenarioJson, nations: num
   return {
     geometry: SCENARIO_GEOMETRY[id],
     startDay: dayOfIso(scenario.startDate),
+    ...(scenario.endDate !== undefined ? { endYear: Number(scenario.endDate.slice(0, 4)) } : {}),
     nameKey: scenario.nameKey,
     descKey: scenario.descKey,
     mapNameKey: map.nameKey,

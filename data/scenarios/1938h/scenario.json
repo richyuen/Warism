@@ -5,6 +5,7 @@
   "map": "earth",
   "size": "M",
   "startDate": "1938-01-01",
+  "endDate": "1991-12-31",
   "base": "1938",
   "seed": 1938,
   "settings": {

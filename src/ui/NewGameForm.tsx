@@ -15,6 +15,8 @@ export interface NewGameFormProps {
   /** The sizes of the scenario's map and its own (PLAN 7.1b8): a picker where there is more than one. */
   sizes?: readonly MapSize[] | undefined;
   defaultSize?: string | undefined;
+  /** The map's size is the world's own and shown, not chosen (ROADMAP R83b: a later year's start, built at its size). */
+  sizeFixed?: boolean | undefined;
   /** The scenario starts with alliances or wars (PLAN 7.182): a choice to draw them by the seed. */
   diplomacy?: boolean | undefined;
   /** The scenario has heroes (PLAN 7.184d): a choice to give the great powers theirs (off by default). */
@@ -48,7 +50,7 @@ function withCe(opts: GameOptions, v: string): GameOptions {
  * The seed (or a random one) and the new-game options of PLAN 1.39b1, with the button that starts
  * the game. Shared by the title screen (PLAN 1.43) and the settings panel.
  */
-export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', diplomacy = false, heroes = false, startLabel, blocked, fixedSeed, fixedNote, onStart }: NewGameFormProps) {
+export function NewGameForm({ seed, options, nationsRange, rangeHint = true, sizes = [], defaultSize = 'M', sizeFixed = false, diplomacy = false, heroes = false, startLabel, blocked, fixedSeed, fixedNote, onStart }: NewGameFormProps) {
   const [next, setNext] = useState(String(seed));
   const [count, setCount] = useState(String(options.nations ?? nationsRange?.default ?? ''));
   const [opts, setOpts] = useState<GameOptions>(options);
@@ -66,7 +68,9 @@ export function NewGameForm({ seed, options, nationsRange, rangeHint = true, siz
   // The number of nations goes with the scenario that asks for it, and with no other.
   // So do the diplomacy drawn by the seed (PLAN 7.182) and the heroes (PLAN 7.184d; off is no option).
   const chosen = (): GameOptions => {
-    const { nations: _old, diplomacy: _d, heroes: _h, ...rest } = opts;
+    const { nations: _old, diplomacy: _d, heroes: _h, ...all } = opts;
+    const { size: _s, ...unsized } = all;
+    const rest = sizeFixed ? unsized : all;
     const drawn = diplomacy && opts.diplomacy === 'random' ? { ...rest, diplomacy: 'random' as const } : rest;
     const own = heroes && opts.heroes === 'on' ? { ...drawn, heroes: 'on' as const } : drawn;
     return nationsRange ? { ...own, nations: Number(count) } : own;
@@ -124,7 +128,9 @@ export function NewGameForm({ seed, options, nationsRange, rangeHint = true, siz
           <span class="form-name">{t('settings.size')}</span>
           <select
             data-testid="opt-size"
-            value={opts.size ?? defaultSize}
+            disabled={sizeFixed}
+            title={sizeFixed ? t('settings.sizeFixed') : undefined}
+            value={sizeFixed ? defaultSize : (opts.size ?? defaultSize)}
             onChange={(e) => {
               // The scenario's own size is no option at all: the URL of such a game says nothing of it.
               const v = (e.currentTarget as HTMLSelectElement).value;
@@ -139,6 +145,11 @@ export function NewGameForm({ seed, options, nationsRange, rangeHint = true, siz
             ))}
           </select>
         </label>
+      ) : null}
+      {sizes.length > 1 && sizeFixed ? (
+        <p class="form-hint form-note" data-testid="opt-size-fixed">
+          {t('settings.sizeFixed')}
+        </p>
       ) : null}
       <label class="form-row">
         <span class="form-name">{t('settings.looping')}</span>

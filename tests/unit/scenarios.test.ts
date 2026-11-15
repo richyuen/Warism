@@ -18,7 +18,9 @@ describe('scenario catalog (PLAN 1.43)', () => {
     for (const info of Object.values(SCENARIO_INFO)) {
       for (const key of [info.nameKey, info.descKey, info.mapNameKey]) expect(texts[key], key).toBeTruthy();
     }
-    expect(texts[SCENARIO_INFO['1938'].nameKey]).toBe('World, 1938');
+    // R83a: one card for 1938 and its replay, which start from any year of 1938-1991: named without a year.
+    expect(texts[SCENARIO_INFO['1938'].nameKey]).toBe('World history');
+    expect(SCENARIO_INFO['1938h'].endYear).toBe(1991);
     expect(texts[SCENARIO_INFO['1938'].mapNameKey]).toBe('Earth');
   });
 

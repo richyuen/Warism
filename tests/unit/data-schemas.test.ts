@@ -134,6 +134,8 @@ describe('invalid data fails with readable paths (PLAN 1.1)', () => {
       "scenarios/1938h/timeline.json: events[3]: 1937-12-31 is before the scenario's start",
     ]);
     expect(validateFile('scenarios/1938h/timeline.json', { events: [{ date: '1938-01-01', kind: 'war', attackers: [], defenders: ['POL'] }] }).length).toBeGreaterThan(0);
+    // A timeline's end is its scenario's `endDate` (ROADMAP R83a: the title's period is read from it).
+    expect(validateDataSet({ ...data, 'scenarios/1938h/timeline.json': { ...tl, end: '1990-12-31' } }).filter((l) => l.includes('endDate'))).toEqual(["scenarios/1938h/timeline.json: end 1990-12-31 is not its scenario's endDate 1991-12-31"]);
   });
 
   it('an identity a timeline gives has a flag in its scenario (ROADMAP R62i4)', () => {

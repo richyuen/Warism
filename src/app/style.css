@@ -1048,6 +1048,10 @@ textarea,
 .form-hint {
   opacity: 0.7;
 }
+.form-row select:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 .form-note {
   margin: 0 0 0.4rem;
   font-size: 0.8em;

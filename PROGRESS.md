@@ -326,3 +326,12 @@
 - 29 cells at the 1991 end on four seeds, all occupations of 1943-45 returned short: Austria's ring, Libya's coast
   cells, Okinawa. Fixed in the timeline; `held` 0 on seeds 1938, 1, 2, 3, checked by `historyTrack1938h`.
 - Batch 24 (R80) done: the replay to 1991. Next by PROMPT's RELEASES: the critic.
+
+## 2026-11-14 — R83: "World history", and a year played free with 1938's options (ADR-1057)
+
+- The user's request: the 1938 card renamed "World history" with "1938–1991" under it (the random world's date kept);
+  a later year played free shows 1938's form, the map size disabled, random diplomacy offered; the options applied
+  as the game leaves the replay, drawn from the form's seed. The critic run stopped by the user before it reported
+  (its partial `critic/scripts` left uncommitted).
+- Tests: `leaveTrack1938h.test`, `scenarios.test`, `data-schemas.test`; `title.spec`, `replayYear1938h.spec` and the
+  1938h specs green (25).

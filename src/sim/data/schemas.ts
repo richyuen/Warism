@@ -331,6 +331,8 @@ export const ScenarioMeta = z.strictObject({
   /** Map size id; absent = the map's default size. */
   size: z.string().optional(),
   startDate: date,
+  /** The last day of a replay of history (ROADMAP R83a): its timeline's `end`, checked equal; the title's period. */
+  endDate: date.optional(),
   /**
    * A scenario built from another's files (ROADMAP R62a, ADR-919: the historical track, `1938h`, from 1938's), with
    * only what it adds in its own directory.
@@ -1101,6 +1103,7 @@ export function validateDataSet(files: Readonly<Record<string, unknown>>): strin
     const tables = [meta?.base, dir].flatMap((d) => (d === undefined ? [] : [ok[`scenarios/${d}/nations.json`] as z.infer<typeof NationsFile> | undefined]));
     const known = new Set(tables.flatMap((n) => n?.nations.map((x) => x.tag) ?? []));
     if (known.size === 0) errors.push(`${f}: no valid nations.json for its scenario`);
+    if (t.end !== undefined && meta?.endDate !== t.end) errors.push(`${f}: end ${t.end ?? 'none'} is not its scenario's endDate ${meta?.endDate ?? 'none'}`);
     let last = '';
     t.events.forEach((e, i) => {
       const at = `${e.date} ${String(e.hour ?? 0).padStart(2, '0')}`;

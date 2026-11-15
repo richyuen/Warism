@@ -58,14 +58,17 @@ test('/ opens the title screen and no world', async ({ page }, info) => {
   const items = page.locator('[data-testid^="title-scenario-"]');
   await expect(items.first()).toHaveAttribute('data-testid', 'title-scenario-1938');
   await expect(items.first()).toHaveAttribute('aria-pressed', 'true');
-  await expect(items.first()).toContainText('World, 1938');
+  // Named without a year (R83a): the card starts from any year of the replay, its period under the name.
+  await expect(items.first()).toContainText('World history');
+  await expect(page.getByTestId('title-date-1938')).toHaveText('1938–1991');
+  await expect(page.getByTestId('title-date-random')).toHaveText('1 January 1938');
   await expect(page.getByTestId('title-scenario-toy')).toHaveCount(0);
   await expect(page.getByTestId('title-chosen')).toHaveText('World, 1938');
   await expect(page.getByTestId('title-start-date')).toHaveText('1 January 1938');
   // The chosen scenario's map (PLAN 1.43c): an image of its start, with nations in their colours
   // at known places and the sea between them; and how many nations there are.
   const preview = page.getByTestId('title-preview');
-  await expect(preview).toHaveAttribute('alt', 'Political map of World, 1938');
+  await expect(preview).toHaveAttribute('alt', 'The political map of the world on 1 January 1938');
   await expect.poll(() => preview.evaluate((img: HTMLImageElement) => (img.complete ? [img.naturalWidth, img.naturalHeight] : null))).toEqual([1024, 512]);
   const places = [
     { tag: 'SOV', lon: 60, lat: 60 },
@@ -213,7 +216,7 @@ test('Continue resumes the autosave with the seed and options of its game', asyn
 
   // The title screen offers it, with its scenario and its date.
   await expect(page.getByTestId('title-screen')).toHaveAttribute('data-save', 'found');
-  await expect(page.getByTestId('title-save')).toContainText('World, 1938');
+  await expect(page.getByTestId('title-save')).toContainText('World history');
   await expect(page.getByTestId('title-save-date')).toHaveText('4 January 1938');
   await page.screenshot({ path: path.join(evidence(info), 'title-continue.png') });
   await Promise.all([page.waitForURL(/continue=1/), page.getByTestId('title-continue').click()]);

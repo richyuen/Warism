@@ -348,7 +348,7 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
   } else if (scenarioId === '1938h' && params.get('year') !== null) {
     // A start from a year of the historical replay (ROADMAP R68b): its world of 1 January, the replay going on or left.
     try {
-      loaded = await startFromYear(sim, Number(params.get('year')), options.after, params.get('mode') === 'free');
+      loaded = await startFromYear(sim, Number(params.get('year')), options.after, params.get('mode') === 'free', options);
     } catch (err) {
       console.warn(`Warism: the start of ${params.get('year')} could not be loaded: ${err instanceof Error ? err.message : String(err)}`);
       // Its own notice (R73): the player's saved game is not what failed.

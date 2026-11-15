@@ -162,7 +162,9 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
                 <li key={s.id}>
                   <button type="button" class={`title-scenario${s.id === chosen ? ' active' : ''}`} data-testid={`title-scenario-${s.id}`} aria-pressed={s.id === chosen} onClick={() => setChosen(s.id)}>
                     <span class="title-scenario-name">{t(s.info.nameKey as MessageKey)}</span>
-                    <span class="title-scenario-date">{dateAt(s.info.startDay, 0)}</span>
+                    <span class="title-scenario-date" data-testid={`title-date-${s.id}`}>
+                      {replays[s.id]?.info.endYear !== undefined ? t('title.period', { from: dateOfTick(s.info.startDay, 0).year, to: replays[s.id]!.info.endYear! }) : dateAt(s.info.startDay, 0)}
+                    </span>
                   </button>
                 </li>
               ))}
@@ -236,7 +238,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
         </div>
         <section class="title-card title-detail" data-testid="title-detail">
           <h2 class="title-sub" data-testid="title-chosen">
-            {later ? t('title.worldOfYear', { year: later.year }) : t(own.nameKey as MessageKey)}
+            {later ? t('title.worldOfYear', { year: later.year }) : replay ? t('title.worldOfYear', { year }) : t(own.nameKey as MessageKey)}
           </h2>
           <div class="title-detail-grid">
             <div>
@@ -246,7 +248,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
                 src={preview}
                 width={1024}
                 height={512}
-                alt={later ? t('title.previewAltYear', { year: later.year }) : t(info.nationsRange ? 'title.previewAltExample' : 'title.previewAlt', { name: t(info.nameKey as MessageKey) })}
+                alt={later || replay ? t('title.previewAltYear', { year: later?.year ?? year }) : t(info.nationsRange ? 'title.previewAltExample' : 'title.previewAlt', { name: t(info.nameKey as MessageKey) })}
                 onError={(e) => {
                   // A site whose starts were built before their maps: the scenario's own.
                   const img = e.currentTarget;
@@ -307,8 +309,18 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
                   </button>
                 </div>
               ) : null}
-              {replay && replayed ? (
-                <NewGameForm key={`${chosen}-replay`} seed={seed} options={{}} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={replay.info.fixedSeed} fixedNote={history ? undefined : t('title.freeYearNote', { year })} onStart={(s, o) => onStart(replay.id, s, o, history && year === 1938 ? undefined : { year, free: !history })} />
+              {replay && history ? (
+                <NewGameForm key={`${chosen}-replay`} seed={seed} options={{}} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={replay.info.fixedSeed} onStart={(s, o) => onStart(replay.id, s, o, year === 1938 ? undefined : { year, free: false })} />
+              ) : replay && replayed ? (
+                // A later year played free (ROADMAP R83b): 1938's form, its seed the game's second one (`after`: the world
+                // after the year's start is drawn from it), its options applied to the year's world as it leaves the replay;
+                // the map's size the start's own.
+                <>
+                  <p class="panel-note" data-testid="title-free-note">
+                    {t('title.freeYearNote', { year })}
+                  </p>
+                  <NewGameForm key={`${chosen}-free`} seed={seed} options={{}} sizes={own.sizes} defaultSize={replay.info.defaultSize} sizeFixed diplomacy={own.diplomacy} heroes={own.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} onStart={(s, o) => onStart(replay.id, replay.info.fixedSeed ?? 0, { ...o, after: s || 1 }, { year, free: true })} />
+                </>
               ) : (
                 <NewGameForm key={chosen} seed={seed} options={{}} nationsRange={info.nationsRange} sizes={info.sizes} defaultSize={info.defaultSize} diplomacy={info.diplomacy} heroes={info.heroes} rangeHint={false} startLabel={t('title.start')} blocked={pending ? t('title.fileFirst') : undefined} fixedSeed={info.fixedSeed} onStart={(s, o) => onStart(chosen, s, o)} />
               )}

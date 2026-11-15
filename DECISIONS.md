@@ -68,6 +68,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1057 · 2026-11-14 · accepted (the user's decisions) — R83: "World history", and a year played free with 1938's options
+- **Context.** The 1938 card starts the replay, or a free game, from any year of 1938-1991, but it was named "World,
+  1938"; and a later year played free offered no seed and no option (the start is a saved world, the options were
+  applied only to a world built).
+- **Decision** (the user, 2026-11-14): the card "World history", "1938–1991" under it in the list (from the replay's
+  `endDate`, which the data check holds equal to its timeline's `end`); the random world's date as before; the
+  heading the chosen year's world; the replay "World history — Replay". A later year played free: 1938's form, the map
+  size shown but disabled, random diplomacy offered (not the default). The form's seed is the game's second seed
+  (`after`, R62d): the world is built from the replay's own seed and loaded from the year's start, and `leaveTrack`
+  applies the options once (`options`, logged with the command) after `endTrack` has reseeded the world from it, so
+  random aggression, traits, gold and diplomacy differ from seed to seed. Heroes on: those of 1938's seven great
+  powers still living (the 1938h tags begin with 1938's). Random diplomacy redraws every alliance and war of the
+  year, NATO's and the CIS's among them, as the user chose.
+- **Consequences:** the options at the scenario's are no command option at all (`hasOptions`), so such a start is
+  bit for bit the one before. A start with options is not checked in an e2e game (the starts are built at deploy, not
+  in the repo): the sim's side is `leaveTrack1938h.test`'s.
+
 ### ADR-1056 · 2026-11-14 · accepted — R80l: no land held at peace at the track's end
 - **Found** (`tools/diag/heldAtEnd.ts`, the 1991 end of seeds 1938, 1, 2, 3, the same on each): 29 cells held at peace,
   none a rule's: occupations of 1943-45 whose returns did not cover them. Austria's State Treaty (1955-10-25) a hand
