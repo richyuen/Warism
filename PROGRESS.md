@@ -443,3 +443,7 @@
 ## 2026-11-15 — R85c: what ends with the replay is told
 
 - The notes and the free card name the wars' fate (R85b); the end's peaces read "…as history's course ended".
+
+## 2026-11-15 — R85d: Belgian Congo readable
+
+- R70-N2: `#334400` → `#d87820` (L* 60), the neighbours' ΔE bars held. Pin `4896702e` → `ae4ce317`.

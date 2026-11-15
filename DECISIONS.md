@@ -175,6 +175,8 @@ from AoC are tagged **[AoC-DEVIATION]**.
   seed 99 `6e3344f5` → `a6023887`, no rule moved; the title's previews and the replay's starts rebuilt.
 - **Checked by** `colours1991.test` (the maps and the births) and `historyTrack1938h` (`colours`, the world's own
   map and drawn colours at the end).
+- **Mended** (R85d; critic run 70, R70-N2: Belgian Congo's `#334400` near-black, L* 26 on the page): `#d87820`, an orange
+  near Belgium's ochre, L* 60, every pair's bar cleared by ΔE 3 or more. Pin `4896702e` → `ae4ce317` (the colour alone).
 
 ### ADR-1061 · 2026-11-15 · accepted — R84c: a puppet's first month is the next
 - **Found** (critic run 69, R69-B3; `worldInvariants.ts 37009 1825`): on 1 December 1941's first hour France's peace

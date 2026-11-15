@@ -56,8 +56,11 @@ each fixed before the critic runs again.
     Done: the God bar's and tab's note, the editor's, Take control's, the replay's form note and the free year's card
     say the wars it froze go on and one held past 1991 ends in a white peace; a peace the end signs is told "…as
     history's course ended" (`history.PeaceSigned.trackEnd`; `trackEndHolds1938h.test`).
-  - [ ] R85d (R70-N2) Belgian Congo recoloured near-black (`#334400`, L* 26 on the page; R84d). AT: its land L* ≥ 35
+  - [x] R85d (R70-N2) Belgian Congo recoloured near-black (`#334400`, L* 26 on the page; R84d). AT: its land L* ≥ 35
     on the page, R84d's ΔE bars held (`colours1991.test`).
+    Done: `#d87820` (L* 60, near Belgium's ochre: the critic's colony-tint idea), every neighbour's bar cleared by ΔE
+    3 or more on `neighbourColours`' pairs; `colours1991`, `nations`, `flagsByScenario` green; previews rebuilt. Pin
+    `ae4ce317`.
   - [ ] R85e (R70-N3, old) Three-nation worlds on 53401-53406: 3 of 6 with no war in ten years (as on run 69's commit).
     AT: `fewNationWars 3 53401 6 10` a war on at least 5 of 6, R84h's 51401 case held.
   - [ ] R85f (R70-N4, small) "1 January 1992 Yugoslavia's air force struck Croatia this month" after the 31 December
