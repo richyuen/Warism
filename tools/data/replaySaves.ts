@@ -27,7 +27,7 @@ export interface ReplayYears {
   format: number;
   seed: number;
   /** Each year's start: its tick and hash, and its living nations (the title's card, R74b). */
-  years: { year: number; tick: number; hash: number; nations: number; powers: string[] }[];
+  years: { year: number; tick: number; hash: number; nations: number; powers: string[]; whitePeace: string[][] }[];
 }
 
 /** The nations living in a world (the title's "Nations", R74b). */
@@ -51,6 +51,18 @@ export const CARD_POWERS = WORLD_POWERS;
  */
 export function cardPowers(w: World): string[] {
   return worldPowers(w, strengths(w), CARD_POWERS).map((n) => w.identities.get(n) ?? (TAGS_1938H as readonly string[])[n - 1]!);
+}
+
+/**
+ * The wars of a start that the timeline holds past its end (R86d; critic run 71, R71-N4: the card said "one history
+ * holds past 1991 ends in a white peace" on every year): each war's two leaders' tags then, as `endTrack` would end them
+ * white on leaving the replay that hour.
+ */
+export function heldPastEnd(w: World): string[][] {
+  const t = w.track!;
+  const overlord = w.nations.cols.overlord;
+  const tagOf = (n: number): string => w.identities.get(n) ?? (TAGS_1938H as readonly string[])[n - 1]!;
+  return w.wars.list.filter((war) => war.sides[0].some((a) => war.sides[1].some((b) => t.outlives(a, b, w.tick, overlord)))).map((war) => [tagOf(war.sides[0][0]!), tagOf(war.sides[1][0]!)]);
 }
 
 const quiet = (w: World): void => {
@@ -91,7 +103,7 @@ if (/replaySaves\.(ts|mjs)$/.test(process.argv[1] ?? '')) {
     writeFileSync(path.join(out, `${year}.sav`), bytes);
     // The year's map for the title's card (R74b), as the scenarios' previews are drawn.
     writeFileSync(path.join(out, `${year}.png`), encodePng(previewOfWorld(sim.world), PREVIEW_W, PREVIEW_H));
-    index.years.push({ year, tick: sim.tick, hash: sim.hash(), nations: livingNations(sim.world), powers: cardPowers(sim.world) });
+    index.years.push({ year, tick: sim.tick, hash: sim.hash(), nations: livingNations(sim.world), powers: cardPowers(sim.world), whitePeace: heldPastEnd(sim.world) });
     process.stdout.write(`${year}: tick ${sim.tick}, ${Math.round(bytes.length / 1024)} KB, ${Math.round((Date.now() - t0) / 1000)} s\n`);
   }, last);
   writeFileSync(path.join(out, 'years.json'), JSON.stringify(index, null, 1) + '\n');

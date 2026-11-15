@@ -7,6 +7,7 @@ import { Sim } from '../../src/sim/sim';
 import type { World } from '../../src/sim/world';
 import { historyText } from '../../src/ui/historyText';
 import { historyRows } from '../../src/worker/historyRows';
+import { heldPastEnd } from '../../tools/data/replaySaves';
 import { assets1938 } from '../helpers/earth';
 
 // ROADMAP R84e (ADR-1063; critic run 69, R69-N1: Israel's 1982 war on Lebanon, held by the timeline to 2000, annexed
@@ -73,6 +74,17 @@ describe("the timeline's frozen wars as the track ends (ROADMAP R84e, R85b)", ()
     sim.step(24, quiet);
     expect(w.wars.list.includes(war)).toBe(true);
     expect(Math.abs(war.score)).toBeLessThanOrEqual(5);
+  });
+
+  it("a start's card names the wars held past the timeline's end, and none held within it (R86d)", () => {
+    const timeline: TimelineFile = { end: '1938-01-03', events: [{ date: '1938-01-01', hour: 1, kind: 'hold', sides: [['JAP'], ['CHI']], until: '1945-09-02' }] };
+    const past = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) }, timeline);
+    past.step(24, quiet);
+    expect(heldPastEnd(past.world)).toEqual([['JAP', 'CHI']]);
+    const within = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) });
+    within.step(24, quiet);
+    expect(within.world.holds(id('JAP'), id('CHI'))).toBe(true);
+    expect(heldPastEnd(within.world)).toEqual([]);
   });
 
   it("a war kept on has the whole range: no ceiling of 100 less the score it had (R86b)", () => {

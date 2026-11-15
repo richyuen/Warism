@@ -55,10 +55,15 @@ score at its bar).
     island only). 4 of 6; the other two are balance (utility's most 0.49 and 0.38 under 0.5 with no opportunity or
     claim in a two-nation world): the user accepted 4 of 6 (2026-11-15). 53401 and 51401 6 of 6; plain 1938 and
     60-nation worlds within noise, pin held, tick same. `landlessPowers.test` (red before).
-  - [ ] R86d (R71-N4, small) At 390 × 844 the R85c note stands three times on one screen (Take control, the God tab,
+  - [x] R86d (R71-N4, small) At 390 × 844 the R85c note stands three times on one screen (Take control, the God tab,
     the map tools); "one history holds past 1991…" reads as a garden path and shows on every year's card; the war
     banners hide a row of History. AT: one note on the phone screen; the card's line only from 1983 on, plainly
     worded; no History row under the banners at 390 × 844.
+    Done: the wars' sentence once on screen (the map tools while God Mode is on, else Take control's), the God tab's
+    and Take control's beside it one line; "…except a war it holds beyond 1991, which ends in a white peace". The card
+    of a year played free names the wars held past 1991 from the starts' index (`whitePeace`, `heldPastEnd`), only on a
+    year that has one; on a phone the war banners give way to History, Relations, Settings and the Editor.
+    `trackView1938h`, `replayYear1938h`, `phoneLayout1938` specs; `trackEndHolds1938h.test`.
   - [ ] R86e (R71-N5, old) The cities keep their 1938 names to 1991: "Keijō, South Korea", "Heijō", "Peiping",
     "Léopoldville" on 31 December 1975 (ADR-18's 1938 names). AT: a city renamed in the timeline's years (Seoul 1945,
     Beijing 1949, Kinshasa 1966) reads its name of the day in the replay and in a free game started after it.

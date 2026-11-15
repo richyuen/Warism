@@ -29,7 +29,7 @@ export interface TitleScreenProps {
    * under its map): the scenario it starts, and the years built for this site to start it from (1938 always).
    */
   replays?: Partial<Record<ScenarioId, { id: ScenarioId; info: ScenarioInfo }>>;
-  startYears?: () => Promise<{ year: number; nations?: number; powers?: string[] }[]>;
+  startYears?: () => Promise<{ year: number; nations?: number; powers?: string[]; whitePeace?: string[][] }[]>;
   /** The map of a later year's start (R74b, critic run 65 R65-N6); the scenario's own where it has none. */
   yearPreviewUrl?: (year: number) => string;
   /** The saved game to offer as Continue, if there is one (PLAN 1.43b). */
@@ -82,7 +82,7 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
   // once, with no confirmation").
   const [pending, setPending] = useState<{ file: File; name: string; scenario: ScenarioId; startDay: number; tick: number; upgraded?: readonly 'traits'[] } | null>(null);
   // The replay's years built for this site (R68c); 1938 alone until read, or without them.
-  const [built, setYears] = useState<{ year: number; nations?: number; powers?: string[] }[]>([]);
+  const [built, setYears] = useState<{ year: number; nations?: number; powers?: string[]; whitePeace?: string[][] }[]>([]);
   // On a card with a replay: replay history (or play free), from 1 January of `year`. A refused start opens in the mode
   // it was asked in, and at its year once the site's years are read and it is one of them (R76e, critic run 66 R66-N5).
   const [history, setHistory] = useState(startFailed !== undefined && !startFailedFree);
@@ -272,6 +272,12 @@ export function TitleScreen({ scenarios, previewUrl, onStart, replays = {}, star
                 </div>
               ) : null}
               <p class="title-desc" data-testid="title-desc">{later && !history ? t('title.freeYearDesc', { year: later.year }) : t((history && replay ? replay.info : own).descKey as MessageKey)}</p>
+              {/* R86d (critic run 71, R71-N4): the wars that end white as the year is played free, on the years that have them. */}
+              {later && !history && (later.whitePeace?.length ?? 0) > 0 ? (
+                <p class="title-desc" data-testid="title-white-peace">
+                  {t('title.freeYearWhite', { wars: later.whitePeace!.map(([a, b]) => t('title.warPair', { a: t(`nation.${a}` as MessageKey), b: t(`nation.${b}` as MessageKey) })).join('; ') })}
+                </p>
+              ) : null}
               {replay && startError !== undefined ? (
                 <div class="panel-warn" data-testid="title-start-error" ref={notice}>
                   {startError ? t('title.startFailed', { year: startError }) : t('title.startFailedAny')}

@@ -476,3 +476,8 @@
 
 - R71-N3: two-nation worlds meeting only on an island now go to war (54421 day 244); 4 of 6, the user accepted the
   other two as balance. Pin held; plain 1938 and 60-nation worlds within noise.
+
+## 2026-11-15 — R86d: the end's note once, the card's line where it holds
+
+- R71-N4: one full note on a phone screen; the year card names the wars held past 1991 (index `whitePeace`) only where
+  there are some; the war banners give way to History on a phone.

@@ -165,3 +165,28 @@ test('at Max the "Next" line names no event already past, and is there', async (
     expect(day(m![1]!), `${s.date} · ${s.next}`).toBeGreaterThanOrEqual(day(s.date));
   }
 });
+
+// ROADMAP R86d (critic run 71, R71-N4): at 390 × 844 with a nation chosen and God Mode on, the same four-line note stood
+// three times on one screen (Take control, the God tab, the map tools). The wars' sentence once, in the map tools; the
+// others say only that the act ends the replay.
+test('on a phone the note on the wars an end leaves stands once', async ({ page }) => {
+  test.setTimeout(240_000);
+  await page.setViewportSize({ width: 390, height: 844 });
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto('/?scenario=1938h&paused=1&after=7');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await stepTo(page, 30);
+  const ger = await page.evaluate(() => window.__warsim!.hud.stats.value!.nations.find((n) => n.name === 'nation.GER')?.id ?? 0);
+  await page.evaluate((n) => window.__warsim!.view!.select(n), ger);
+  // God Mode off: Take control's note says it whole.
+  await expect(page.getByTestId('take-ends-track')).toContainText('white peace');
+  await page.getByTestId('god-btn').click();
+  await page.getByTestId('tab-god').click();
+  await expect(page.getByTestId('god-tab-ends-track')).toHaveText('Any God Mode act ends the replay of history.');
+  await expect(page.getByTestId('take-ends-track')).toHaveText('Ends the replay of history: the world then goes its own way.');
+  await expect(page.getByTestId('god-ends-track')).toContainText('except a war it holds beyond 1991, which ends in a white peace');
+  await expect(page.getByText(/white peace/)).toHaveCount(1);
+  await page.screenshot({ path: test.info().outputPath('phone-notes.png') });
+  expect(errors).toEqual([]);
+});

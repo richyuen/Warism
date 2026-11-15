@@ -118,12 +118,13 @@ export function NationPanel({
           </button>
         ) : (
           <>
-            <button type="button" class="god-btn panel-control" data-testid="take-control" title={control.endsTrack ? t('track.endsIt') : undefined} onClick={control.onTake}>
+            <button type="button" class="god-btn panel-control" data-testid="take-control" title={control.endsTrack ? t('track.endsItWars') : undefined} onClick={control.onTake}>
               {t('player.take')}
             </button>
             {control.endsTrack ? (
               <p class="panel-note panel-warn" data-testid="take-ends-track">
-                {t('track.endsIt')}
+                {/* R86d (critic run 71, R71-N4): the wars' sentence once on screen, in the God tools while God Mode is on. */}
+                {t(god ? 'track.endsIt' : 'track.endsItWars')}
               </p>
             ) : null}
           </>

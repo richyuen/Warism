@@ -17,6 +17,8 @@ interface Built {
   nations?: number;
   /** Its great powers' tags, strongest first (R75b; none in an index built before it). */
   powers?: string[];
+  /** Its wars the timeline holds past its end, as two leaders' tags (R86d; none in an index built before it). */
+  whitePeace?: string[][];
 }
 
 /** The starts built for this site (`years.json`), or none where it has none (a local game without `npm run saves`). */
@@ -36,11 +38,12 @@ export interface ReplayYear {
   year: number;
   nations?: number;
   powers?: string[];
+  whitePeace?: string[][];
 }
 
 /** The years built for this site, with what the index has of each for the title's card (R74b, R75b). */
 export async function replayYears(): Promise<ReplayYear[]> {
-  return (await built()).map((y) => ({ year: y.year, ...(y.nations === undefined ? {} : { nations: y.nations }), ...(Array.isArray(y.powers) ? { powers: y.powers.filter((p) => typeof p === 'string') } : {}) }));
+  return (await built()).map((y) => ({ year: y.year, ...(y.nations === undefined ? {} : { nations: y.nations }), ...(Array.isArray(y.powers) ? { powers: y.powers.filter((p) => typeof p === 'string') } : {}), ...(Array.isArray(y.whitePeace) ? { whitePeace: y.whitePeace.filter((p) => Array.isArray(p) && p.length === 2 && p.every((x) => typeof x === 'string')) } : {}) }));
 }
 
 /** The map of a year's start, built beside it (`tools/data/replaySaves.ts`, R74b). */

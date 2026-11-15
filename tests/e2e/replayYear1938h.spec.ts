@@ -225,3 +225,33 @@ test("the 1938 card names the year's great powers", async ({ page }) => {
   expect(box!.x + box!.width).toBeLessThanOrEqual(1400);
   expect(errors).toEqual([]);
 });
+
+// ROADMAP R86d (critic run 71, R71-N4): "one history holds past 1991 ends in a white peace" read as a garden path, on
+// every year's card. The card of a year played free names the wars that end so, and only on a year that has one.
+test('a year played free names the wars history holds past 1991, and only where it has one', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  const years = [
+    { year: 1938, tick: 0, hash: 0, nations: 102, whitePeace: [] },
+    { year: 1960, tick: 1, hash: 0, nations: 124, whitePeace: [] },
+    { year: 1983, tick: 2, hash: 0, nations: 160, whitePeace: [['ISR', 'LEB']] },
+  ];
+  await page.route('**/data/scenarios/1938h/start/years.json', (r) => r.fulfill({ json: { format: STATE_FORMAT, seed: 1938, years } }));
+  await page.route('**/data/scenarios/1938h/start/*.png', (r) => r.fulfill({ path: 'public/data/scenarios/random/preview.png', contentType: 'image/png' }));
+  await page.goto('/');
+  await page.getByTestId('title-start-year').fill('1960');
+  await expect(page.getByTestId('title-chosen')).toHaveText('World, 1960');
+  await page.getByTestId('title-mode-free').click();
+  await expect(page.getByTestId('title-desc')).toContainText('go on from where their fronts stand.');
+  await expect(page.getByTestId('title-desc')).not.toContainText('1991');
+  await expect(page.getByTestId('title-white-peace')).toHaveCount(0);
+  await page.getByTestId('title-start-year').fill('1983');
+  await expect(page.getByTestId('title-white-peace')).toHaveText('History holds these past 1991, so they end at once in a white peace: Israel and Lebanon.');
+  await page.screenshot({ path: test.info().outputPath('card-white-peace-1983.png') });
+  // The replay's own card has none.
+  await page.getByTestId('title-mode-replay').click();
+  await expect(page.getByTestId('title-white-peace')).toHaveCount(0);
+  expect(errors).toEqual([]);
+});

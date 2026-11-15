@@ -2220,6 +2220,11 @@ button.unit-icon.on {
   #ui:has(.war-banners) .ticker.compact {
     bottom: calc(var(--bar-top, 2.8rem) + 0.4rem + 2.2rem);
   }
+  /* A full panel's rows, not the banners over them (ROADMAP R86d; critic run 71, R71-N4: at 390 × 844 the banners hid a
+     row of History), as the landings give way to them. */
+  #ui:has(.history-panel, .relations-panel, .settings-panel, .editor-panel) .war-banners {
+    display: none;
+  }
   .map-legend.foldable {
     top: 3.4rem;
     left: 0.5rem;

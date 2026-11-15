@@ -227,6 +227,12 @@ test.describe('the news at a phone\'s width', () => {
       await page.getByTestId('legend-toggle').tap();
       expect(await page.locator('[data-testid="map-legend"] .legend-row').count()).toBeGreaterThan(0);
       expect(inside((await box(page, 'map-legend'))!, W, H), 'the opened legend in view').toBe(true);
+      // R86d (critic run 71, R71-N4): History's rows, not the banners over them.
+      await page.getByTestId('history-btn').tap();
+      await expect(page.getByTestId('history-panel')).toBeVisible();
+      await expect(page.getByTestId('war-banners')).toBeHidden();
+      await page.getByTestId('history-btn').tap();
+      await expect(page.getByTestId('war-banners')).toBeVisible();
     });
   }
 });
