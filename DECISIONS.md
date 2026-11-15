@@ -68,6 +68,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1060 · 2026-11-15 · accepted — R84a: the track's occupations go back as it ends
+- **Found** (critic run 69, R69-B1): a game left free from a year of the replay kept the occupations the track had
+  excused (`historyTrack`'s `heldByTimeline`): from 1946, 12 pairs and 21,338 cells held at peace at hour 1 (Japan by
+  the United States and the Soviet Union, Manchuria and Iran, Austria's four zones, Italy's Libya, Iceland), 11 pairs
+  after three years; Okinawa's 6 cells from 1954 and 1962. Nothing gives such land back but a peace, and there was no
+  war to end. R80l (ADR-1056) had cleared them at the 1991 end only, by the timeline's own returns.
+- **Rule:** when the track ends, for any reason (`endTrack`: free, the date, an intervention, the timeline changed),
+  every cell held by a nation at peace with its owner goes back to the owner (`FlipCause.peace`), as a peace gives back
+  the land of the war it ends: the track's switches return to the usual rules (SPEC §7.7), and `held` holds from that
+  hour. Before the free game's options (`applyGameOptions`). Ended by an intervention, a cell the command itself
+  changed stays as it made it (the controllers before it kept by `applyPendingCommands`): God's paint of control at
+  peace is the act, not the track's.
+- **Consequences:** a 1946 free game starts with the twelve pairs' land its owners' (all of the 734 cells of Japan's
+  the Soviet Union held among them, as the 1938 map's owner is Japan); the Soviet and American armies on them stand on
+  land at peace, as after any peace. Okinawa goes back
+  to Japan in a game left free before 1972. The 1991 end and the replay itself are unchanged (0 held at the end,
+  ADR-1056); the plain 1938 scenario has no track, so the pin of seed 99 does not move.
+- **Checked by** `trackEndHeld1938h.test` (left free, with options, by a paint, a refused command) and
+  `heldFree1938h.test` (sweep: 1946 and 1954 left free on two seeds, `held` at hour 1 and each of 60 days).
+
 ### ADR-1059 · 2026-11-15 · accepted — R84k-l: the user's two hero bugs
 - **R84k.** A hero's row in the Overview opened its formation to be looked at (`openHero`: `selectFormation` and the
   camera), as for another nation's; the played nation's hero is now the order selection too, as a click on it on the

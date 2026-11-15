@@ -811,12 +811,13 @@ export function handForces(world: World, n: number, from: readonly number[]): vo
  * The track ends for good (R62d; the intervention's end is R62j): a `TrackEnded` row, and every stream of chance is
  * derived again from the second seed, so what follows differs from game to game (none rolled: the seed stays).
  */
-export function endTrack(world: World, why: number): void {
+export function endTrack(world: World, why: number, kept?: ArrayLike<number>): void {
   const t = world.track;
   if (!t || t.ended) return;
   t.ended = true;
   t.endedAt = world.tick;
   t.changed = false;
+  returnHeld(world, kept);
   // A nation history ended for good comes back no more (R74c, critic run 65: Manchukuo revived in 1979): dead at the
   // end, and no event of the rest of the timeline brings it back.
   const nc = world.nations.cols;
@@ -828,6 +829,24 @@ export function endTrack(world: World, why: number): void {
   if (t.afterSeed !== 0) {
     world.seed = t.afterSeed >>> 0;
     world.rng = new RngStreams(world.seed);
+  }
+}
+
+/**
+ * The occupations the track excused go back as it ends (R84a, ADR-1060; critic run 69, R69-B1): every cell held by a
+ * nation at peace with its owner returns to the owner, as a peace returns the land it ends the war over
+ * (`diploInvariants`' `held`). Before, a game left free in 1946 kept Japan, Manchuria and Iran occupied for years.
+ * `kept`: the controllers before the command whose success ended the track (an intervention); a cell that command
+ * changed (God's paint) stays as it made it.
+ */
+function returnHeld(world: World, kept?: ArrayLike<number>): void {
+  const { owner, controller } = world.cells;
+  for (let c = 0; c < owner.length; c++) {
+    const o = owner[c]!;
+    const k = controller[c]!;
+    if (o === 0 || k === 0 || k === o || world.wars.atWar(o, k)) continue;
+    if (kept && kept[c] !== k) continue;
+    world.setController(c, o, false, FlipCause.peace);
   }
 }
 

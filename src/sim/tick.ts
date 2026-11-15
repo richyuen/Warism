@@ -502,11 +502,14 @@ export function applyPendingCommands(world: World): void {
   for (const { seq, cmd } of queue) {
     world.commandLog.push({ tick: world.tick, seq, cmd });
     // After the command's own events: which of the two it is, is known only then (PLAN 2.17a).
+    // The controllers before a command that may end the track: what it changes stays as the track's occupations go back
+    // (R84a, ADR-1060).
+    const kept = world.track && !world.track.ended && cmd.kind !== 'leaveTrack' ? world.cells.controller.slice() : undefined;
     const why = applyCommand(world, cmd);
     world.out.emit(world.tick, why === Refusal.None ? EventKind.CommandApplied : EventKind.CommandRefused, seq, why, NaN, NaN);
     // The first intervention ends the historical track (R62j, SPEC §7.7): every command is a God Mode act, an editor
     // edit or the taking of a nation (a player's own orders come only after that). One refused changed nothing.
-    if (why === Refusal.None && world.track && !world.track.ended) endTrack(world, TrackEnd.intervention);
+    if (why === Refusal.None && world.track && !world.track.ended) endTrack(world, TrackEnd.intervention, kept);
   }
   // A division taken off its transports while others stay with them is told (ROADMAP R27c).
   tellLandingsLeft(world);

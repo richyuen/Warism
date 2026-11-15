@@ -33,10 +33,13 @@ Run 69 (full): mapVisuals 7, diplomacy 6, every other dimension 8. Four blocking
 each fixed before the release (ADR-1005); the release checks then run once on the fixed code (ADR-1022).
 
 - [ ] R84 **Run 69's issues.**
-  - [ ] R84a (R69-B1, blocking) A game played free from a year keeps the replay's occupations held at peace for years
+  - [x] R84a (R69-B1, blocking) A game played free from a year keeps the replay's occupations held at peace for years
     (1946: 12 pairs, 21,338 cells at hour 1, 19,728 after three years; 1962: Okinawa's 6 cells): on `leaveTrack` the
     occupations the track excused go back to their owners (or become a rule the checker reads). AT: `c69_heldfree.ts
     1946 51515 3` 0 pairs by year 1; `c69_free.ts 1962 51513 730 free heroes=on` no `held` line.
+    Done (ADR-1060): `c69_heldfree.ts 1946 51515 3` 12 pairs / 21,338 cells → 0 at hour 1 and each year; `c69_free.ts`
+    1962 51513 (heroes on), 1946 51515 (random diplomacy), 1954 51525, 1971 51517 (heroes on): no `held` line (only
+    R84b's economy lines); `trackEndHeld1938h.test` (red 3 of 4 before), `heldFree1938h.test` (sweep).
   - [ ] R84b (R69-B2, blocking) Bloc aid breaks `worldInvariants`' economy rule in every free game from a Cold War year
     (5-21 lines): the economy rule counts the month's aid (`BlocAid`, `AID_SHARE` of the giver's income), and the
     checkers run on free games from a Cold War year in a test. AT: `c69_free.ts 1975 51501 730 free -` and `1991 51507

@@ -352,3 +352,10 @@
 
 - The played nation's hero opened from its Overview row can be ordered (`heroes1938.spec`, red before the fix).
 - A later year played free takes its form's options to the start (`yearStartOptions`): 1960 free with heroes on has 12.
+
+## 2026-11-15 — R84a: the track's occupations go back as it ends (ADR-1060)
+
+- R69-B1: on any end of the track (free, date, intervention, timeline changed) land held at peace returns to its owner,
+  as at a peace; an intervening command's own changes (God's paint) kept. 1946 free: 12 pairs, 21,338 cells → 0, and
+  0 after three years; the critic's `c69_free` on 1946, 1954, 1962 and 1971 free games: no `held` line.
+- Tests: `trackEndHeld1938h.test` (red before), `heldFree1938h.test` (sweep, 1946 and 1954 × two seeds, 60 days).
