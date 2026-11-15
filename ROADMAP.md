@@ -69,6 +69,13 @@ each fixed before the release (ADR-1005); the release checks then run once on th
     living have theirs); "was annexed" with a plural rebels' name ("Contras", "FMLN"), and the FMLN annexed by
     Honduras in a 1991 free game; Kuwait still Kuwait's the day after Iraq's war of 1990 (two days in history); 1 of 69
     sea battles not seen at its camera (39061). AT: each case as the report states it.
+  - [x] R84k (the user, 2026-11-15) A hero opened from the played nation's Overview is selected but cannot be ordered
+    (a click on the map moves nothing); clicked on the map it can. AT: `heroes1938.spec` (7.184c): Japan played, O-I's
+    row clicked, the next map click sends `moveFormation` for O-I; red on the code before. Done (ADR-1059).
+  - [x] R84l (the user, 2026-11-15) A later year played free with heroes on has no heroes: the game kept `after` alone
+    for a scenario with a seed of its own, so none of the form's options reached the start (R83b's e2e checked the URL
+    only). AT: `gameUrl.test` (`yearStartOptions`); 1960 free with heroes on in the browser: 12 heroes (Germany's two
+    not, Germany dead). Done (ADR-1059).
   - Run 69's dimensions under the bar (ADR-843), each line taken or why not:
     - Map visuals, what the bar needs: Georgia ΔE ≥ 30 from Russia and every 1991 land pair so (taken: R84d); the
       tooltip at 30° E 30° N reads Egypt (taken: R84f).

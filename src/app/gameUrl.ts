@@ -31,6 +31,18 @@ export function optionsFromUrl(params: URLSearchParams): GameOptions {
   return o;
 }
 
+/**
+ * The options a game started from a year of a replay takes for its start (ROADMAP R83b, R84l): played free, the URL's
+ * options but the size and the nations (the start's own), with the game's second seed `after`; replayed, none. The
+ * world itself is built with the replay's seed and `after` alone (`fixedSeed`): these go to the start as it leaves the
+ * replay. Before R84l a later year's game took `after` alone, and the form's options never reached it.
+ */
+export function yearStartOptions(params: URLSearchParams, after: number | undefined): GameOptions {
+  if (params.get('year') === null || params.get('mode') !== 'free') return {};
+  const { size: _size, nations: _nations, after: _after, ...o } = optionsFromUrl(params);
+  return after !== undefined ? { ...o, after } : o;
+}
+
 /** `start` (ROADMAP R68c): the historical replay from 1 January of a year, going on or free (`?year=&mode=`). */
 export function newGameUrl(base: string, seed: number, o: GameOptions, start?: { year: number; free: boolean }): string {
   // A new game starts paused, so the new world can be looked at first.

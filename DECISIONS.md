@@ -68,6 +68,15 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1059 · 2026-11-15 · accepted — R84k-l: the user's two hero bugs
+- **R84k.** A hero's row in the Overview opened its formation to be looked at (`openHero`: `selectFormation` and the
+  camera), as for another nation's; the played nation's hero is now the order selection too, as a click on it on the
+  map makes it (`openHero(formation, of)`).
+- **R84l.** `game.tsx` gave a scenario with a seed of its own (the replay) its second seed alone, whatever the URL: a
+  later year played free (R83b) lost every option of its form. The start's options are read by `yearStartOptions`
+  (`gameUrl.ts`): free, the URL's but the size and nations; replayed, none. R83b's e2e had checked the URL, not the
+  game; the start itself is not in the repo, so the check is a unit test and a run on the local build.
+
 ### ADR-1058 · 2026-11-15 · accepted — R83b's import cycle broke the deploy's saves
 - **Context.** R83b's `tick.ts` imported `scenario1938.ts` (for the heroes of a year played free). That module reads
   `world.ts`'s `Domain` as it loads, and `world.ts` reaches `tick.ts`: in the esbuild bundle of `npm run saves`

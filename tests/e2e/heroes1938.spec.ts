@@ -413,6 +413,35 @@ test('PLAN 7.184c: a nation’s heroes first in its Overview; a row opens and fo
   await expect(rows.nth(0).getByTestId('hero-return')).toHaveText('returns in 60 days', { timeout: 15_000 });
   await expect(rows.nth(0)).toBeDisabled();
   await page.screenshot({ path: path.join(EVIDENCE_C, 'overview-japan-lost.png'), clip: { x: 0, y: 0, width: 420, height: 500 } });
+  // ROADMAP R84k: the played nation's hero, opened from its row, is the selection: a click on the map orders it to march,
+  // as when it is clicked on the map (before, the row opened it to be looked at only, and the click moved nothing).
+  await page.evaluate((n) => window.__warsim!.player!.take(n), JAP);
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), JAP);
+  const oi = await heroId(page, 'O-I');
+  await expect(rows.nth(1)).toBeEnabled();
+  await rows.nth(1).click();
+  await expect.poll(() => page.evaluate(() => window.__warsim!.hud.formationInfo.value?.id ?? 0)).toBe(oi);
+  expect(await page.evaluate(() => [...window.__warsim!.view!.selectedFormations])).toEqual([oi]);
+  const sent = await page.evaluate(() => {
+    const { hud, player } = window.__warsim!;
+    const at = hud.formationInfo.value!;
+    const out: { kind: string; id?: number }[] = [];
+    const commands = hud.commands.bind(hud);
+    hud.commands = (cs) => {
+      out.push(...(cs as { kind: string; id?: number }[]));
+      return commands(cs);
+    };
+    // A cell beside the hero, clicked off any counter (no formation under the CSS point).
+    player!.click(Math.floor(at.x) + 2, Math.floor(at.y), -10_000, -10_000, false);
+    hud.commands = commands;
+    return out.map((c) => [c.kind, c.id ?? 0]);
+  });
+  expect(sent).toEqual([['moveFormation', oi]]);
+  await page.evaluate(() => {
+    window.__warsim!.player!.take(0);
+    window.__warsim!.hud.selectFormation(0);
+  });
   // Poland has none.
   await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), POL);
   await expect(page.getByTestId('nation-panel')).toHaveAttribute('data-nation', String(POL));

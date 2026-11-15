@@ -347,3 +347,8 @@
   naval, tanks, aircraft, AI nukes 8. Blocking 4 (R69-B1-B4), non-blocking 5 and small ones: Batch 28 (R84a-j).
 - Not the exit (ADR-829): no dimension under its bar three runs running; B4 is R80d's own claim not met, not a fix
   that broke another item.
+
+## 2026-11-15 — R84k-l: the user's two hero bugs (ADR-1059)
+
+- The played nation's hero opened from its Overview row can be ordered (`heroes1938.spec`, red before the fix).
+- A later year played free takes its form's options to the start (`yearStartOptions`): 1960 free with heroes on has 12.

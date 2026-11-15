@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { continueUrl, newGameUrl, optionsFromUrl, stagedScenarioUrl, withLooping } from '../../src/app/gameUrl';
+import { continueUrl, newGameUrl, optionsFromUrl, stagedScenarioUrl, withLooping, yearStartOptions } from '../../src/app/gameUrl';
 import { checkScenarioFile } from '../../src/app/scenarioFiles';
 import { encodeScenarioFile, SCENARIO_FORMAT } from '../../src/shared/scenarioFile';
 import { SCENARIO_GEOMETRY } from '../../src/shared/scenarios';
@@ -96,5 +96,18 @@ describe('a scenario file on the title screen (PLAN 1.43b)', () => {
     await expect(checkScenarioFile(await file({ w: 1000, h: 500 }))).rejects.toThrow('scenario for 1938 1000×500; here 1938 is 1024×512, 2048×1024, 4096×2048');
     // A name on Object.prototype is not a scenario.
     await expect(checkScenarioFile(await file({ base: 'constructor' }))).rejects.toThrow('does not have');
+  });
+});
+
+// ROADMAP R84l: a later year played free takes the form's options to its start (heroes, aggression and the rest), its
+// second seed with them; its size and nations are the start's; a replayed year, or no year, none. Before, the game
+// kept `after` alone for a scenario with a seed of its own, and the heroes asked for never came.
+describe('the options of a start from a year (ROADMAP R84l)', () => {
+  it('free: the URL as the form wrote it, but the size; replayed or without a year: none', () => {
+    const url = newGameUrl('1938h', 1938, { heroes: 'on', aggression: 'random', loopingMap: false, size: 'L', after: 4242 }, { year: 1960, free: true });
+    expect(yearStartOptions(new URLSearchParams(url.slice(1)), 4242)).toEqual({ heroes: 'on', aggression: 'random', loopingMap: false, after: 4242 });
+    const replayed = newGameUrl('1938h', 1938, { heroes: 'on', after: 4242 }, { year: 1960, free: false });
+    expect(yearStartOptions(new URLSearchParams(replayed.slice(1)), 4242)).toEqual({});
+    expect(yearStartOptions(new URLSearchParams('scenario=1938h&heroes=on'), 4242)).toEqual({});
   });
 });

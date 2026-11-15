@@ -239,9 +239,22 @@ export class PlayerControl {
 
   /**
    * A hero's row in a nation's Overview (PLAN 7.184c), the nation played or not: its panel opens and
-   * the camera goes to it and follows it, as after a click on it on the map (PLAN 7.183).
+   * the camera goes to it and follows it, as after a click on it on the map (PLAN 7.183). The played nation's own hero
+   * (`of`) is the selection, ordered by the next click, as a click on it on the map makes it (ROADMAP R84k): before, it
+   * was only looked at, and a click on the map then moved nothing.
    */
-  openHero(formation: number): void {
+  openHero(formation: number, of = 0): void {
+    if (of !== 0 && of === this.nation.value) {
+      const sel = this.view.selectedFormations;
+      sel.clear();
+      sel.add(formation);
+      this.followedWing.value = null;
+      this.selectedCount.value = sel.size;
+      this.hud.selectFormation(formation);
+      this.view.followSelection(true);
+      this.view.requestDraw();
+      return;
+    }
     this.hud.selectFormation(formation);
     this.followPicked();
   }

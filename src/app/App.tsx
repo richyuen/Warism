@@ -418,7 +418,8 @@ export function App({
           onSelect={(id) => hud.onSelectNation(id)}
           onChip={player ? (id, x, y) => player.openChipMenu(id, x, y) : null}
           // A hero's row (PLAN 7.184c): its panel opened and the camera on it, following it (PLAN 7.183).
-          onHero={player ? (f) => player.openHero(f) : null}
+          // The played nation's hero is selected to be ordered, as a click on it on the map does (ROADMAP R84k).
+          onHero={player ? (f) => player.openHero(f, nation.id) : null}
           actions={
             player && stats && player.nation.value === nation.id
               ? {

@@ -9,7 +9,7 @@ import { Hud } from './hud';
 import { MapView } from './MapView';
 import { PlayerControl } from './player';
 import type { GameOptions } from '../shared/gameOptions';
-import { loadFailedUrl, optionsFromUrl, startFailedUrl, withLooping } from './gameUrl';
+import { loadFailedUrl, optionsFromUrl, startFailedUrl, withLooping, yearStartOptions } from './gameUrl';
 import { startFromYear } from './replayStart';
 import { importScenarioFile, readStagedScenario } from './scenarioFiles';
 import { saveScreenshot, Settings } from './settings';
@@ -48,12 +48,15 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
   // Its second seed alone (R62d): the URL's, or one rolled here for a game opened without one, kept by the autosave.
   const fixedAfter = (): GameOptions => ({ after: optionsFromUrl(params).after ?? ((Math.random() * 0xffffffff) >>> 0 || 1) });
   const options = scenario.fixedSeed !== undefined ? fixedAfter() : optionsFromUrl(params);
+  // A later year played free (R83b, R84l) takes the URL's options too: not for the world built (it is the replay's,
+  // replaced by the year's start), but for the start as it leaves the replay, and for the map's looping.
+  const yearOptions = scenario.fixedSeed !== undefined ? yearStartOptions(params, options.after) : {};
   // At the size the options ask, one of its map's (PLAN 7.1b6); the scenario's own otherwise.
   // A scenario file at another size than its scenario's own starts the game at its size (PLAN 7.1b8).
   if (staged?.size !== undefined) options.size = staged.size;
   if (options.size !== undefined && !mapSizes(scenarioId).includes(options.size)) delete options.size;
   const sized = options.size === undefined ? scenario.geometry : geometryOf(scenarioId, options.size);
-  const geometry = options.loopingMap === false ? { ...sized, wrapX: false } : sized;
+  const geometry = options.loopingMap === false || yearOptions.loopingMap === false ? { ...sized, wrapX: false } : sized;
   const view = params.get('view') === '0' ? null : new MapView(canvas, geometry, sim, scenario.nationTags, Number(params.get('maxTexture') ?? 0));
   const hud = new Hud(sim, scenario.startDay);
   // A forced paused start is shown so while the world is built (R70c; critic run 64: the bar said "Pause" until then).
@@ -348,7 +351,7 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
   } else if (scenarioId === '1938h' && params.get('year') !== null) {
     // A start from a year of the historical replay (ROADMAP R68b): its world of 1 January, the replay going on or left.
     try {
-      loaded = await startFromYear(sim, Number(params.get('year')), options.after, params.get('mode') === 'free', options);
+      loaded = await startFromYear(sim, Number(params.get('year')), options.after, params.get('mode') === 'free', yearOptions);
     } catch (err) {
       console.warn(`Warism: the start of ${params.get('year')} could not be loaded: ${err instanceof Error ? err.message : String(err)}`);
       // Its own notice (R73): the player's saved game is not what failed.
