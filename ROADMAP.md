@@ -32,7 +32,7 @@ Rules:
 Run 70 (focused): diplomacy 7, every other dimension 8. One blocking issue, four non-blocking and the slowClick cases;
 each fixed before the critic runs again.
 
-- [ ] R85 **Run 70's issues.**
+- [x] R85 **Run 70's issues.**
   - [x] R85a (R70-B2, blocking) Bloc aid paid in the hour its bloc dissolves: the strategic AI pays at the month's
     start, before the alliance pass of that hour, and `diploInvariants`' bloc rule reads the blocs after it (1991 free,
     51507, 1993-09-01T01: USA's and Russia's aid, then Russia's alliance dissolved). AT: `c70_free.ts 1991 51507 1825
@@ -66,8 +66,11 @@ each fixed before the critic runs again.
     Done (ADR-1068): a sea power at peace with no land neighbour orders a transport group; for a nation with no land
     neighbour a target across the sea costs only the distance beyond its nearest. 53401 6 of 6 (25 wars); 51401 6 of
     6; 39401 5 of 6. `landlessPowers.test`. Pin held.
-  - [ ] R85f (R70-N4, small) "1 January 1992 Yugoslavia's air force struck Croatia this month" after the 31 December
+  - [x] R85f (R70-N4, small) "1 January 1992 Yugoslavia's air force struck Croatia this month" after the 31 December
     peace. AT: no month's air row for a pair at peace when the month closes, or one that says the war it was of.
+    Done: the month's air rows are logged at the next month's start for the month past; they say so ("…over the
+    past month", was "this month"): on 1 January 1992 Yugoslavia's December raids read as December's.
+    `airHistory1938.test`, `airRead1938.spec`.
   - Run 70's dimensions under the bar (ADR-843), each line taken or why not:
     - Diplomacy, what the bar needs: `c70_free.ts 1991 51507 1825` 0 lines and `c70_aidhour` (taken: R85a).
     - Objection, R84e ends the Second World War on any departure from the track: taken as R85b, for the user's word.

@@ -26,8 +26,8 @@ test('a month of war: the air war in the ticker, the history and the nation pane
   await page.waitForFunction(() => window.__warsim!.view!.lastTick >= 24 * 31 + 2);
 
   // The ticker: the month's largest air war and raids.
-  await expect(page.getByText(/fought in the air this month/).first()).toBeVisible({ timeout: 20_000 });
-  await expect(page.getByText(/air force struck .+ this month/).first()).toBeVisible();
+  await expect(page.getByText(/fought in the air over the past month/).first()).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByText(/air force struck .+ over the past month/).first()).toBeVisible();
 
   // The nation panel: Germany's aircraft and losses, Poland's toll of the strikes.
   await page.evaluate((n) => window.__warsim!.view!.select(n), id('GER'));
@@ -44,8 +44,8 @@ test('a month of war: the air war in the ticker, the history and the nation pane
   // The history: its rows, by name and with their numbers.
   await page.evaluate(() => window.__warsim!.hud.toggleHistory());
   const history = page.getByTestId('history-panel');
-  await expect(history.getByText(/fought in the air this month: .+ lost [\d,]+ aircraft/).first()).toBeVisible({ timeout: 20_000 });
-  await expect(history.getByText(/Germany's air force struck Poland this month: [\d,]+ men, guns and vehicles lost/)).toBeVisible();
+  await expect(history.getByText(/fought in the air over the past month: .+ lost [\d,]+ aircraft/).first()).toBeVisible({ timeout: 20_000 });
+  await expect(history.getByText(/Germany's air force struck Poland over the past month: [\d,]+ men, guns and vehicles lost/)).toBeVisible();
   await page.screenshot({ path: path.join(out, 'air-history.png') });
   process.stderr.write(`1 February 1938: Germany ${ger.aircraft} aircraft, ${ger.lost} lost; Poland's toll of the strikes ${bombed}\n`);
 });

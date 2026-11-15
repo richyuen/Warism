@@ -63,7 +63,7 @@ describe('the air war in the history log (PLAN 5.11a)', () => {
     expect(raids.some(([, a, b]) => a === id('GER') && seaSide(b!).nation === id('POL')), 'Germany\'s raids on Poland').toBe(true);
     // Told by name, with their numbers.
     const told = historyRows(sim.world, (n) => `nation.${NATIONS_1938[n - 1]!.tag}`, () => '').filter((r) => r.kind === EventKind.AirWar || r.kind === EventKind.AirRaids).map(historyText);
-    expect(told.find((s) => s.includes('fought in the air'))).toMatch(/^.+ and .+ fought in the air this month: .+ lost [\d,]+ aircraft, .+ [\d,]+$/);
+    expect(told.find((s) => s.includes('fought in the air'))).toMatch(/^.+ and .+ fought in the air over the past month: .+ lost [\d,]+ aircraft, .+ [\d,]+$/);
     expect(told.find((s) => s.startsWith('Germany\'s air force struck Poland'))).toMatch(/: [\d,]+ men, guns and vehicles lost$/);
     // The ticker: one row of each, the month's largest (the last logged).
     const ticker = tickerRows(sim.world, (n) => `nation.${NATIONS_1938[n - 1]!.tag}`);

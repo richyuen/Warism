@@ -452,3 +452,7 @@
 
 - R70-N3: landless sea powers build a transport group at peace and judge sea targets from their nearest; three-nation
   worlds 53401-6 a war on 6 of 6 (was 3). Pin held; 60-nation worlds a few more wars (86→100, 90→97, 111 same).
+
+## 2026-11-15 — R85f: the month's air rows say they are of the month past
+
+- R70-N4: "…struck Croatia over the past month" (was "this month", logged at the next month's start). Batch 29 done.
