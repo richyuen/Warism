@@ -74,6 +74,8 @@ export const NATION_SCHEMA = {
   autonomy: 'f64',
   loyalty: 'f64',
   integration: 'f64',
+  /** The hour it became its overlord's puppet, plus 1 (0: a scenario's, or before R84c): its first month is the next. */
+  puppetAt: 'u32',
   /** Revolt suppression level 0..1 (PLAN 1.19) and, for a founded nation, its origin: the province of its capital when it was founded (PLAN 2.15b). */
   suppression: 'f64',
   origin: 'u32',
@@ -978,7 +980,7 @@ export class World {
   startDay = 0;
   rng: RngStreams;
   cells: CellLayers;
-  nations = new Table('nations', NATION_SCHEMA, 8);
+  nations = new Table('nations', NATION_SCHEMA, 8, ['puppetAt']);
   formations = new Table('formations', FORMATION_SCHEMA, 128);
   cities = new Table('cities', CITY_SCHEMA, 16);
   production = new Table('production', PRODUCTION_SCHEMA, 16);

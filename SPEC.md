@@ -793,7 +793,8 @@ km², integers). A realm has one head: a puppet's overlord is never a puppet [AD
 
 **Puppets** [ADR-31] (`src/sim/systems/puppets.ts`, monthly). Tiers: satellite under
 `SATELLITE_BELOW` (30) ≤ puppet < `VASSAL_FROM` (70) ≤ vassal. In order:
-0. A puppet of a dead overlord is free.
+0. A puppet of a dead overlord is free. A puppet made in the month's start hour (by a peace, God, an annexation that
+   hands it over; `nations.puppetAt`) takes none of these steps in it: its first month is the next [ADR-1061].
 1. Above `FREE_ABOVE` (90) autonomy it leaves freely.
 2. With autonomy ≥ `PROTEST_FROM` (10) and loyalty under `REVOLT_LOYALTY` (20) it rises: it leaves
    the wars it fought beside its overlord and an alliance it shares with it, and fights a war of

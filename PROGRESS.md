@@ -366,3 +366,9 @@
   hour). The critic's free games from 1975 and 1991: 13 and 21 lines → 0; 1954, 1962, 1983: 0.
 - `freeYears1938h.test` (the sweep test of R84a, widened and renamed): 1946, 1954, 1962 and 1975 free on two seeds,
   120 days each, every world rule set and `held`: green in 7 min. Its red without the checker fix not run.
+
+## 2026-11-15 — R84c: a puppet's first month is the next (ADR-1061)
+
+- R69-B3: a puppet made in a month's start hour (a peace's, God's, one handed over) takes no step of that hour's
+  monthly pass; a saved column `nations.puppetAt`. 37009 × 1825 days: 0 broken (1 before).
+- Pin `401d6856` → `6e3344f5`, by the column alone (the same without the rule). `puppetFirstMonth1938.test` red before.

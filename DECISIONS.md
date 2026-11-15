@@ -68,6 +68,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1061 · 2026-11-15 · accepted — R84c: a puppet's first month is the next
+- **Found** (critic run 69, R69-B3; `worldInvariants.ts 37009 1825`): on 1 December 1941's first hour France's peace
+  with Germany made Germany its puppet, and the puppet pass of the same hour (`puppets` after `war`) took Germany's
+  tribute for November, a month it was free: France's gold rose 644.68 against an income of 182.25.
+- **Rule:** a puppet made in a month's start hour takes no step of the monthly pass in it (release, rising, tribute,
+  integration, drift): its first month is the next. The hour is a new saved column, `nations.puppetAt` (the hour plus 1;
+  0 for a scenario's puppets and saves before it), set by `makePuppet` for the subject and the puppets it hands up, and
+  by `annexNation` for the puppets it hands over. Not the systems' order: a peace's puppet would then wait an hour for
+  nothing, and every month's revolts move with it.
+- **Pin:** seed 99's year `401d6856` → `6e3344f5`, the column alone: the same hash with the rule's skip taken out (no
+  puppet made in a month-start hour in that year).
+- **Save format:** `STATE_FORMAT` 2 → 3 (the title shows a format-2 autosave as from an older version, as at each new
+  column). The column may be absent from a save: a table loads a column it names `zeroIfAbsent` as zeros (`Table`),
+  so a save of before it (`landingLegacySave1938.test`'s) still loads, its puppets of before.
+- **A test changed with the rule:** `puppets.test`'s God puppet made at tick 0 paid January's tribute in that hour
+  ("already paid on 1 January", no ADR states it); now nothing in that hour against its twin, and the tribute on
+  1 February.
+- **Checked by** `puppetFirstMonth1938.test` (God's puppet in February's first hour: no tribute, no drift; March's
+  both; red before, 16.4 gold paid) and `worldInvariants.ts 37009 1825`: 0 broken (1 before).
+
 ### ADR-1060 · 2026-11-15 · accepted — R84a: the track's occupations go back as it ends
 - **Found** (critic run 69, R69-B1): a game left free from a year of the replay kept the occupations the track had
   excused (`historyTrack`'s `heldByTimeline`): from 1946, 12 pairs and 21,338 cells held at peace at hour 1 (Japan by

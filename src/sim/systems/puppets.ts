@@ -3,7 +3,9 @@
  * autonomy 0..100, loyalty 0..100 and integration progress 0..100. Tiers by autonomy:
  * satellite < SATELLITE_BELOW ≤ puppet < VASSAL_FROM ≤ vassal.
  *
- * Monthly (00:00 of day 1), for every living puppet, in nation-id order:
+ * Monthly (00:00 of day 1), for every living puppet, in nation-id order, but one made in that hour (`puppetAt`; its
+ * first month is the next: ROADMAP R84c, critic run 69's R69-B3, Germany paying France the tribute of a month it was
+ * free):
  *  1. Leaves freely when autonomy > FREE_ABOVE (`PuppetReleased`).
  *  2. Revolts when loyalty < REVOLT_LOYALTY and autonomy ≥ PROTEST_FROM: the bond is cut, it
  *     leaves the wars it fought beside its overlord and, if it shares an alliance with its
@@ -86,6 +88,8 @@ export function makePuppet(world: World, overlord: number, subject: number, auto
   nc.autonomy[subject] = Math.max(0, Math.min(100, autonomy));
   nc.loyalty[subject] = LOYALTY_BASE + LOYALTY_PER_AUTONOMY * nc.autonomy[subject]!;
   nc.integration[subject] = 0;
+  nc.puppetAt[subject] = world.tick + 1;
+  for (const p of handed) nc.puppetAt[p] = world.tick + 1;
   world.supplyDirty = true;
   world.out.emit(world.tick, EventKind.PuppetCreated, subject, overlord, NaN, NaN);
   // It does not go on fighting its overlord's realm or allies in another war (PLAN 3.8d); nor do its puppets.
@@ -131,7 +135,9 @@ export function annexNation(world: World, annexer: number, target: number): bool
   world.nations.forEach((p) => {
     if (nc.overlord[p] !== target) return;
     nc.overlord[p] = p === head ? 0 : head;
-    if (p !== head) handed.push(p);
+    if (p === head) return;
+    handed.push(p);
+    nc.puppetAt[p] = world.tick + 1; // the head's from this hour (R84c)
   });
   if (nc.overlord[target] !== 0) nc.overlord[target] = 0;
   // The blocs changed with no cell of the puppets changed (PLAN 3.12Rl): their land bore the mark
@@ -183,7 +189,7 @@ export function puppetSystem(world: World): void {
   const nc = world.nations.cols;
   world.nations.forEach((n) => {
     const o = nc.overlord[n]!;
-    if (o === 0 || nc.living[n] !== 1) return;
+    if (o === 0 || nc.living[n] !== 1 || nc.puppetAt[n] === world.tick + 1) return;
     if (nc.living[o] !== 1) {
       releasePuppet(world, n); // the overlord is gone: an old save's (a death frees them, ADR-174)
       return;

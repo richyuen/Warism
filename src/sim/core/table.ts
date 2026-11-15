@@ -49,8 +49,15 @@ export class Table<S extends Schema> {
   /** How often the table has moved to new arrays (growths, and every create while `volatile`). Not state. */
   moves = 0;
 
-  constructor(name: string, schema: S, initialCapacity = 64) {
+  /**
+   * Columns a save may lack (one from before them): loaded as zeros, a value each says means "as before the column came"
+   * (ROADMAP R84c: `nations.puppetAt`). Any other column absent fails the load.
+   */
+  readonly zeroIfAbsent: ReadonlySet<string>;
+
+  constructor(name: string, schema: S, initialCapacity = 64, zeroIfAbsent: readonly (keyof S & string)[] = []) {
     this.name = name;
+    this.zeroIfAbsent = new Set(zeroIfAbsent);
     this.schema = schema;
     this.keys = Object.keys(schema) as (keyof S & string)[];
     const cap = Math.max(2, initialCapacity);
@@ -180,6 +187,7 @@ export class Table<S extends Schema> {
     alive.set(takeSection(sections, `${this.name}.alive`, 'u8'));
     const cols = Table.allocCols(this.schema, cap);
     for (const key of this.keys) {
+      if (this.zeroIfAbsent.has(key) && !sections.some((s) => s.name === `${this.name}.${key}`)) continue; // zeros, as allocated
       const src = takeSection(sections, `${this.name}.${key}`, this.schema[key]!);
       if (src.length !== hw) throw new Error(`${this.name}.${key}: length ${src.length}, expected ${hw}`);
       (cols[key] as ArrayOf<DType>).set(src);

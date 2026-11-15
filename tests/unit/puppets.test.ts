@@ -35,17 +35,21 @@ describe('puppets (PLAN 1.18)', () => {
     const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
     const nc = s.world.nations.cols;
     s.command({ kind: 'createPuppet', overlord: GER, subject: AUT, autonomy: 40 });
-    const ev = run(s, 1); // tick 0 = 1 January: the monthly assessment runs after the command
+    const ev = run(s, 1); // tick 0 = 1 January: made in the month's start hour, its first month is February's (R84c)
     expect(kinds(ev, EventKind.PuppetCreated)).toEqual([[AUT, GER]]);
     expect(nc.overlord[AUT]).toBe(GER);
-    // Tribute on 1 February: compare against a twin without the puppet.
+    // Against a twin without the puppet: nothing paid on 1 January.
     const twin = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
     run(twin, 1);
-    const [gA, gT] = [nc.gold[AUT]!, twin.world.nations.cols.gold[AUT]!];
-    expect(gA).toBeLessThan(gT); // already paid on 1 January
-    const income = nc.income[AUT]!;
-    const before = nc.gold[GER]! - twin.world.nations.cols.gold[GER]!;
-    expect(before).toBeCloseTo(TRIBUTE * (1 - 40 / 100) * income, 6);
+    expect(nc.gold[AUT]).toBe(twin.world.nations.cols.gold[AUT]);
+    expect(nc.gold[GER]).toBe(twin.world.nations.cols.gold[GER]);
+    // Tribute on 1 February, in its hour: Austria's gold rises by less than its accounts, by the tribute.
+    run(s, toMonth(1) - 2);
+    const a = nc.gold[AUT]!;
+    run(s, 1);
+    const tribute = TRIBUTE * (1 - nc.autonomy[AUT]! / 100) * nc.income[AUT]!;
+    expect(tribute).toBeGreaterThan(0);
+    expect(nc.gold[AUT]! - a).toBeLessThan(nc.income[AUT]! - nc.expenses[AUT]! - tribute / 2);
   });
 
   it('release: freeing a puppet is immediate and free', () => {

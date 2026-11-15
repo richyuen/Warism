@@ -48,9 +48,12 @@ each fixed before the release (ADR-1005); the release checks then run once on th
     income before the hour (the strategic AI pays before the month's accounts). `c69_free.ts` 1975 51501 730 and 1991
     51507 1825 0 lines (13 and 21 before); 1954, 1962 (heroes on), 1983 51505 0. `freeYears1938h.test` (sweep, 7 min):
     1946, 1954, 1962, 1975 free on two seeds, 120 days, every world rule set and `held`, 0.
-  - [ ] R84c (R69-B3, blocking) A puppet made in the month's start hour pays that month's tribute (37009, France on
+  - [x] R84c (R69-B3, blocking) A puppet made in the month's start hour pays that month's tribute (37009, France on
     Germany, 1 December 1941): it pays from the next month, or the peace runs after the payment. AT:
     `worldInvariants.ts 37009 1825` 0 broken.
+    Done (ADR-1061): a puppet made in the month's start hour skips that hour's pass (`nations.puppetAt`).
+    `worldInvariants.ts 37009 1825` 0 broken (1 before); `puppetFirstMonth1938.test` (red before: 16.4 gold paid).
+    Pin `401d6856` → `6e3344f5`, the column alone.
   - [ ] R84d (R69-B4, blocking) The Soviet successors drawn in their parent's colour (Russia and Georgia ΔE 1.3;
     Kazakhstan-Uzbekistan 8.5, Ukraine-Moldova 10.2, Russia-Transnistria 14.3): new colours checked against their
     land neighbours (the idea of Europa Universalis' release colours, taken). AT: every pair of land neighbours on
