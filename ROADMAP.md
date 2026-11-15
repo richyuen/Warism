@@ -64,10 +64,13 @@ each fixed before the release (ADR-1005); the release checks then run once on th
     `#bb5500` against Russia's red. `colours1991.test` (≥ 30 at the end and from parents, ≥ 15 on every earlier map),
     `historyTrack1938h`'s `colours` on the world's own end map; `c69_ev91.mjs` on fresh starts: Georgia orange (shot
     looked at). Pin `6e3344f5` → `a6023887`; previews rebuilt.
-  - [ ] R84e (R69-N1) The track's last hour annexes Lebanon to Israel on every seed (the 1982 war held to 2000, the end
+  - [x] R84e (R69-N1) The track's last hour annexes Lebanon to Israel on every seed (the 1982 war held to 2000, the end
     lifts the hold and the war's score annexes; a 1983 free game on day 5): the wars the timeline holds past the end
     make a white peace at it, or the track's last events end them. AT: `c69_endleb.ts 999` no `NationAnnexed LEB ISR`
     in the first week; the 1983 free game's Lebanon living.
+    Done (ADR-1063): the wars a hold freezes make a white peace as the track ends. `c69_endleb.ts 999`: `PeaceSigned
+    ISR LEB`, no annexation, Lebanon living; 1983 free games on 51283, 999, 5151: Lebanon living at day 30 (white peace
+    on day 0). `trackEndHolds1938h.test` (red before), `historyTrack1938h`.
   - [ ] R84f (R69-N3) Names frozen while others change: Egypt (1971), Sri Lanka (1972), Benin (1975), Zaire (1971),
     Myanmar (1989) renamed on their dates. AT: the 1991 map's tooltip at 30° E 30° N reads Egypt; the 1992 Relations
     list has Sri Lanka, Benin, Zaire and Myanmar; the replay tests.

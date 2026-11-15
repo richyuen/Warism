@@ -814,9 +814,18 @@ export function handForces(world: World, n: number, from: readonly number[]): vo
 export function endTrack(world: World, why: number, kept?: ArrayLike<number>): void {
   const t = world.track;
   if (!t || t.ended) return;
+  // The wars a hold of the timeline's freezes as it ends (R84e, ADR-1063; critic run 69, R69-N1: Israel's 1982 war on
+  // Lebanon, held to 2000, annexed Lebanon in the end's hour by the score the hold had kept): a white peace, as their
+  // fronts stood. Asked before it ends, the holds lifting with it.
+  const frozen = world.wars.list.filter((war) => war.sides[0].some((a) => war.sides[1].some((b) => world.holds(a, b))));
   t.ended = true;
   t.endedAt = world.tick;
   t.changed = false;
+  for (const war of frozen) {
+    if (!world.wars.list.includes(war)) continue;
+    war.score = 0;
+    makePeace(world, war);
+  }
   returnHeld(world, kept);
   // A nation history ended for good comes back no more (R74c, critic run 65: Manchukuo revived in 1979): dead at the
   // end, and no event of the rest of the timeline brings it back.

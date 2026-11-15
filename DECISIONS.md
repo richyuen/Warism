@@ -68,6 +68,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1063 · 2026-11-15 · accepted — R84e: the frozen wars end white as the track ends
+- **Found** (critic run 69, R69-N1; `c69_endleb.ts`): the timeline holds Israel's 1982 war on Lebanon "until
+  2000-05-24". The end lifts every hold (`Track.holdOf` none once ended), and the AI's peace of that hour read the score
+  the frozen war had kept: `NationAnnexed LEB ISR` on 31 December 1991 on every seed, and on day 5 of a 1983 free game.
+- **Rule:** as the track ends, for any reason, each war in which two nations of opposite sides hold (`World.holds`,
+  asked before the end) makes a white peace in that hour (score 0, `makePeace`): its fronts stay as they stood, no
+  land changes hands by the hold's score, and its occupations go back with the others (ADR-1060).
+- **Consequences:** at the 1991 end (seed 999) the frozen wars of the end hour make their peace as before (the AI's,
+  the holds lifted: East Timor, Afghanistan, El Salvador, Sudan, Ceylon, Liberia, Lebanon), now white; Croatia's and
+  Sierra Leone's wars, which went on, end there too, and Somalia's four days early. A free game from a year ends the
+  holds standing then (1983: Lebanon's; from 1951 or 1952: Korea's, held 1950-53). The plain 1938 scenario has no
+  track: the pin holds.
+- **Checked by** `trackEndHolds1938h.test` (Japan's war on China held, its score a conquest's: a white peace as the
+  game is left, China's land the same; a war no hold freezes goes on; red before) and `historyTrack1938h`.
+
 ### ADR-1062 · 2026-11-15 · accepted — R84d: the replay's colours checked against land neighbours
 - **Found** (critic run 69, R69-B4, against R80d's "colours distinct"): Georgia drawn in Russia's red (ΔE 1.3),
   Kazakhstan and Uzbekistan 8.5, Ukraine and Moldova 10.2, Transnistria 14.3 from its parent. Counted on the world at

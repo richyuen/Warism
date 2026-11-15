@@ -385,3 +385,8 @@
   ΔE 30 (87 before), no birth under 30 from a parent (38). Georgia orange against Russia's red on the page
   (`c69_ev91.mjs`, the starts rebuilt). Tools `neighbourColours.ts`, `recolour1938h.ts`.
 - Tests: `colours1991.test`, `historyTrack1938h` (green, its `colours` at the end), `nations.test`, `flagsByScenario.test`. Pin `a6023887`.
+
+## 2026-11-15 — R84e: the frozen wars end white as the track ends (ADR-1063)
+
+- R69-N1: Lebanon no longer annexed by Israel in the end's hour; a 1983 free game's Lebanon lives (three seeds, 30 days).
+- Tests: `trackEndHolds1938h.test` (red before), `historyTrack1938h`.
