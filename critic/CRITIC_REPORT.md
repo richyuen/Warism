@@ -1,434 +1,443 @@
-# Critic report, run 70 (focused): Batch 28 (R84a–l), on `b6bd706b`
+# Critic report, run 71 (focused): Batch 29 (R85a–f), on `df93b4c2`
 
-- **Mode: focused.** The spawning message asks for no full run (CRITIC_PROMPT, ADR-915). Scored afresh:
-  - the dimensions run 69 scored under the bar or blocked on: map visuals (R69-B4) and diplomacy (R69-B1–B3);
-  - the dimensions the batch's files touch: God Mode (R84i), emergent dynamics (R84g, R84h), stats (R84j's rows),
-    UI/UX (R84j, R84k, R84l) and stability (the save format, `table.ts`).
-  - Carried from run 69, marked "carried": editor, performance, semantic zoom, naval, tanks, aircraft, AI nukes.
-- **Commit judged:** `b6bd706b1d46ea4b12b4b1481f819dbfffe8f52e`, HEAD at the start (`critic/c70_commit.txt`). The tree
-  had three untracked evidence PNGs under `docs/evidence/7.132/` (not the critic's).
-- **The last report:** run 69, full, on `e5b97c8e`. Four blocking issues (R69-B1–B4); map visuals 7, diplomacy 6,
-  every other dimension 8.
-- **What changed since:** 14 commits; 212 files, most of them the critic's own scripts.
-  - Under `src/sim`: `ai/strategic.ts`, `systems/puppets.ts`, `track.ts`, `sim.ts`, `tick.ts`, `world.ts` and
-    `core/table.ts`.
-  - Data: 81 nations recoloured, five late renames, `timeline.json`.
-  - App: the hero's Overview row (R84k), a free year's options (R84l), city labels on Undo (R84i).
-- **Due because the sim changed:** `git diff --stat e5b97c8e HEAD -- src/sim data public/data` is not empty, and it
-  touches `src/sim/ai/`, `src/sim/systems/`, `tick.ts` and `sim.ts`. So plain 1938 is not carried, and run 61's bulk
-  sets and Malta's 18 are due.
-- **Left out for time:**
-  - Run 61's bulk sets (396 landing setups, 153 stuck returns, 168 next voyages) and Malta's 18, though due. The bulk
-    chain was stopped before it began.
-  - From run 69's case table, not re-run:
-    - run 69's 35 page suites: `z_zoom`, `c_battle`, `w_wing`, `pl_planes`, `x_editor`, save and load, `loadruins`,
-      `loadscen`, bursts, the relations graph, `h_phone`, `h_blank`;
-    - the headless cases: `trackFronts` and `dday`, the track checker on 37301/3, 38301/3, 39301/3, 41301 and 51303,
-      `blocEnd`, `breakup`, `heldAtEnd` 51311/3, `freeburst`, `farlands`, `traits`, `air69`, `nukecount` on run 69's
-      seeds, workerDeterminism 32059/39059/41059, the 41019 and 51019 20-year runs, `repulse`;
-    - the performance chain. One tick measure of seed 99 was run alone at the end (Performance).
-  - Their dimensions are the carried ones, or they rest on what was run.
+- **Mode: focused.** The spawning message asks for no full run (CRITIC_PROMPT, ADR-915).
+- **Commit judged:** `df93b4c2a3099c802b7bd518218fd68450c5ccaa`, HEAD at the start (`critic/c71_commit.txt`). The tree had
+  three untracked evidence PNGs under `docs/evidence/7.132/` (not the critic's).
+- **The last report:** run 70, focused, on `b6bd706b`. One blocking issue (R70-B2); diplomacy 7, every other dimension 8.
+- **What changed since:** 7 commits (one of them run 70's report); 22 files outside `critic/`:
+  - `src/sim/ai/economic.ts`, `ai/strategic.ts` (R85e), `systems/war.ts`, `track.ts`, `wars.ts` (R85b);
+  - `src/worker/historyRows.ts`, `src/shared/history.ts`, `src/ui/i18n/en.json` (R85c, R85f);
+  - `data/scenarios/1938/nations.json` (R85d); `tests/helpers/diploInvariants.ts` (R85a).
+- **Scored afresh:**
+  - diplomacy (under the bar in run 70, and blocked on);
+  - the dimensions the batch's files touch: map visuals (R85d), emergent dynamics (R85b, R85e), God Mode (R85b, R85c),
+    stats (R85c, R85f), UI/UX (R85c's notes and card), stability (`War.scoreFrom`, new in the save), naval (R85e orders
+    transport groups in `economic.ts`).
+  - Carried from run 70 (and run 69), marked "carried": editor, performance, semantic zoom, tanks, aircraft, AI nukes.
+- **Due because the sim changed:** `git diff --stat b6bd706b HEAD -- src/sim data public/data` is not empty and touches
+  `src/sim/ai/` and `src/sim/systems/`. So plain 1938 is not carried, and run 61's bulk sets and Malta's 18 are due.
+  The 20-year saves end at new hashes (7019 `ab2bda3e`, 32019 `cfec21a0`); the builder's pin moved for the Congo colour
+  alone (R85d's "Mended" note in DECISIONS), so the hashes cannot show whether play moved. The figures that can
+  show it are the same as run 70's line for line (`farConquests`, `firstdecl`, `piles`, Diplomacy): plain 1938's play did
+  not move.
+- **Left out for time** (each a case of run 70's table not re-run, and why it moves nothing):
+  - Nothing of run 61's bulk sets or Malta's 18: all were run (Naval).
+  - run 70's page suites not tied to the batch: `c70_heroorder` (R84k), `c70_heroes60`, `c70_r83` (same URL, same
+    world), `c70_undo2 51211`/`c70_undo2y 53231` (one seed each of the two re-run), `sbl 39061`, and the 1990 replay's
+    full `c70_ev91` stops (only 3 January 1992 re-run). Their dimensions are carried or rest on the cases run.
+  - headless: `nukecount 53503`, `farConquests 1975` (53161–9), `piles` on 53139–47, `endhours`, `successorPurse
+    53601`, `fewNationWars 3 39401` (51401, 53401 and the new 54401 run instead), `seaBattles 53061`, and R69-N3's
+    names on 27 December 1991 (Egypt, Sri Lanka, Benin, Myanmar; Zaire was seen on 31 December 1975).
+  - the performance chain (frames). One tick measure of seed 99 was run alone at the end (Performance).
 - **Setup.**
-  - Build: `vite build --outDir critic/c70_dist`, exit 0.
-  - Starts: `npm run saves -- critic/c70_starts`, 54 years in 557 s, copied into the build
-    (`critic/scripts/c70_build.sh`).
-  - Served by `vite preview` on 127.0.0.1:5370. Browser: Playwright Chromium on the GPU at 1600 × 900 and 390 × 844.
-  - Run 69's probes were copied as `c70_*`, their port set to 5370; the comparers point at `c69_*`. New seed family:
-    53xxx (not used in the repo).
-  - Chains:
-    - `c70_runNamed.sh` (`c70_jobs.txt`);
-    - `c70_chainS.sh` (`c70_startsJobs.txt`, from the starts);
-    - `c70_chain2.sh` (`c70_jobs2.txt`, run 69's R82d/R82f cases);
-    - `c70_pagesR.sh` (the page cases);
-    - `landingFuzz --seeds 15 --first 53101`.
+  - Build: `vite build --outDir critic/c71_dist`, exit 0. Starts: `npm run saves -- critic/c71_starts`, 54 years, copied
+    into the build (`critic/scripts/c71_build.sh`).
+  - Served by `vite preview` on 127.0.0.1:5371; Playwright Chromium at 1600 × 900 and 390 × 844.
+  - Run 70's probes copied as `c71_*` (port 5371, `critic/c71_starts`). New seed family: 54xxx.
+  - Chains: `c71_runNamed.sh` (`c71_jobs.txt`, then landingFuzz `--seeds 15 --first 54101`), `c71_chainS.sh`
+    (`c71_startsJobs.txt`), `c71_chain3.sh` (`c71_jobs3.txt`), `c71_chain4.sh` (`c71_jobs4.txt`), `c71_pages.sh`,
+    `c71_pages2.sh` (with Malta's 18), `c71_chainBulk.sh`.
   - New probes:
-    - `c70_freewar.ts`: the wars, occupied land and stranded formations in the hour a game leaves the track, by a free
-      start, a God act or Take control (headless `setPlayer`);
-    - `c70_god42.mjs`: the same on the page;
-    - `c70_aidhour.ts`: the hour of a bloc-aid line;
-    - `c70_heroorder.mjs`: a hero ordered from its Overview row by a real mouse click;
-    - `c70_heroes60.mjs`: heroes in a later year played free.
-  - Run 69's commit `e5b97c8e` was put in `critic/wt`, with a `node_modules` junction and run 69's own starts
-    (`critic/c69_starts`), for the track's-end wars and the few-nation worlds. The junction was unlinked before
-    `git worktree remove` (`node_modules` intact after).
+    - `c71_godpeace.mjs`: a God Mode "Make peace" in the replay, and how History and the ticker tell it;
+    - `c71_warlong.ts`: every war standing as the track ends, followed to its peace (score, `scoreFrom`, land held and
+      owned);
+    - `c71_takescore.mjs`: the war banners' score a player reads after Take control in a WWII year;
+    - `c71_menloss.ts`: the armies and losses of the war's sides in the days after the end;
+    - `c71_saveload.ts`: a save made after the end, loaded and stepped beside the original;
+    - `c71_landless.ts`: R85e's landless sea powers in each built year; `c71_fewwhy.ts`: why a small world has no war;
+    - `c71_god42b.mjs`: `c70_god42` with the camera set (France); `c71_lab.py`: L*a*b* of a pixel of a shot.
 - **Incidents, disclosed:**
-  - `c70_pagesR.sh`'s first `c70_ev91` call had a log name over Windows' path limit (run 69's fault again). It was
-    re-run by hand with a short log name (`critic/c70_ev91_1990.log`).
-  - `c70_heroorder.mjs`'s first row was the Bismarck, and my click was on land. The game rightly refused it ("a fleet
-    goes only to water or a port"). The land hero (Maus) was run as row 1.
-  - `c70_god42.mjs`:
-    - its war-chip read finds nothing (wrong selector), so the wars are read from the ticker and the shots;
-    - its JSON's `after` key is overwritten by a shot path (the second seed is in the file name).
-  - I wrote `critic/c70_named.done` by hand to start the second chain while the first's last long jobs ran. I started
-    landingFuzz by hand after stopping the first chain's shell, which was waiting on one 54-year `afterTrack` job.
+  - `c71_warlong`'s first two runs had a wrong date formula (1910/1911) and followed only the wars with `scoreFrom`.
+    Both were fixed and re-run (`critic/c71_warlong_1942god.log`, `critic/c71_warlong_1943free.log` are the re-runs);
+    `owned` counts every cell of each side, so a peace's gain includes land from other wars of the same nations.
+  - `c71_takescore`'s first two runs read a wrong selector (`war-chips`); the 1942 Germany case was re-run with the war
+    banners' selector for 240 days (`critic/c71_ts_1942_GER_240_1600x900.json`).
+  - `c71_god42`'s war-chip read finds nothing (run 70's selector); the wars are read from the logs and the shots.
+  - My first `c71_nv.sh` ran without `c71_nvtrue.ts` (not copied): 168 runs of "module not found", read as 0. The probe
+    was copied and the set re-run; the figures given are the re-run's.
+  - My first `c71_afterTrack.ts 37601` failed at its end on a missing cache folder (`critic/c71_atcache`); it was
+    re-run.
 - **Writes outside `critic/` by tools at their defaults:** `npm run sim` to `.cache/runs/*.json`; `landingFuzz` to
   `.cache/landingFuzz/`.
 
 ## Verdict
 
-**One blocking issue (R70-B2), small.** All four of run 69's blocking issues are fixed on run 69's own cases, and so
-are its five non-blocking issues and its small items.
-
-R70-B2: in the 1991 free game named in R69-B2's bar, the bloc rule breaks in the hour a bloc dissolves, because the aid
-is paid before the alliance pass in that hour.
+**No blocking issue.** R70-B2 is fixed on its own case, and the bloc rule holds on two new seeds whose games see Russia's
+bloc end (on 54611, in the very hour of R70-B2's shape: Russia pays aid and its alliance is dissolved at 1994-01-01T01, and the
+rule, read hour by hour, breaks 0 times). Run 70's four
+non-blocking issues are fixed, and its design objection (R84e ending the Second World War) is taken as R85b and works:
+0 peaces in the first hour of a 1941, 1942 (God act and Take control), 1943 and 1944 game, and of the 1966 replay with a
+God act.
 
 **Scores that move:**
-- **Map visuals, 7 → 8:** R69-B4 is fixed. Georgia reads ΔE 33.5 from Russia on the page, and the four pairs run 69
-  named are 33.5–34.1 in the data. R69-N3's names are fixed too.
-- **Diplomacy, 6 → 7:** R69-B1–B3 and R69-N1 are fixed. Not 8, because of R70-B2, a rule a checker reports broken.
+- **Diplomacy, 7 → 8:** R70-B2 fixed, every checker 0 broken on new seeds, and R85b keeps the replay's wars.
 
-**The biggest thing a player will meet is under "Design objections":** leaving the track during the Second World
-War ends it in its first hour.
-- This happens with a free start from 1941–45, any God act or Take control.
-- Every war the timeline holds makes a white peace, and every occupation goes back. Germany's 169 formations
-  (1.07M men) stand in Soviet land at peace.
-- SPEC §7.7 specifies this since R84e (ADR-1063), so it is not scored. The player is not told why the war ended
-  (R70-N1, scored under God Mode and UI as readability).
+**What a player will meet first (non-blocking):**
+- **R71-N1:** a God Mode "Make peace" in the replay is told in History as "…made peace with … as history's course ended".
+  The player made it; and under R85b that war would not have ended with the track.
+- **R71-N2:** a war the track's end lets go on gets a ceiling of 100 − its `scoreFrom` for the side ahead, and the full
+  range for the side behind. In the 1942 replay after a God act, Germany's banner on the Soviet Union stops at "War
+  score 39" from 1 April to 29 August 1942 while Germany takes European Russia; on three seeds the war ends at exactly 39.
 
 **The rule checkers on new seeds:**
-- diploInvariants, 0 broken:
-  - 53001 (1938), 53003 (random), 53005 (heroes) and 53007 (random world), five years each;
-  - the named 33501 and 51001.
-- worldInvariants, every rule set, 0 broken:
-  - 53051, 53053 (heroes), 53055 (random world) and 53057 (random diplomacy);
-  - the named 36009 and 51051, and 37009 (R69-B3's own case).
-- `c70_free.ts`, the checkers' hourly and daily rules on games from built years, 0 broken on:
-  - 1946 (random diplomacy), 1950, 1962 (heroes on), 1968 (heroes on);
-  - 1975, 1979, 1983 (×2) and 1987;
-  - the track from 1989.
-  - **2 broken on 1991 51507** (R70-B2).
-- The track checker to 1991 (`c64_track.ts`): 0 broken lines on 1938 and the new 53301.
-- `heldAtEnd 53311`: 0. `heldfree` from 1950 (53521) and 1958 (53523): 0 pairs at hour 1 and in each of two years.
-- `landingInvariants` via `landingFuzz --seeds 15 --first 53101`: 1 of 90 runs broken, `slowClick` (53125 15101 g2),
-  under the 5 % bar (ADR-914), so non-blocking (`critic/c70_landingFuzz.log`).
-- `landingRows all`: 0 broken (`critic/c70_lrows_all.log`).
-- `workerDeterminism 53059`: `8abd99a9` on every arm.
-- `neighbourColours` on the world at the 1991 end (`critic/c70_starts/1991.sav`): 385 pairs, 0 under ΔE 30. Births
-  from a parent: 162 pairs, 0 under ΔE 30.
+- diploInvariants, 0 broken: 54001 (1938), 54003 (random diplomacy), 54005 (heroes), 54007 and 54011 (random world),
+  five years each.
+- worldInvariants, every rule set, 0 broken: 54051, 54053 (heroes), 54055 and 54061 (random world), 54057 (random
+  diplomacy).
+- `c71_free.ts` (the checkers' hourly and daily rules on games from built years), 0 broken lines on:
+  - one year each: 1941 54541, 1942 54542, 1943 54543, 1944 54544 (heroes), 1951 54551, 1966 54566 (random diplomacy);
+  - two years: 1975 51501 (run 70's);
+  - five years: 1991 51507 (run 70's), 54611 and 54612. Russia's alliance (SOV2) is gone by the end of 1994 in all three.
+- The track checker (`c64_track.ts`) to 1991 and two free years: 0 broken lines on 1938 and the new 54301.
+- `heldAtEnd 54311`: 0 held lines. `heldfree 1946 51515 3`: 0 pairs at hour 1 and each year.
+- `landingInvariants` via `landingFuzz --seeds 15 --first 54101`: 0 of 90 runs broken (`critic/c71_landingFuzz.log`; run 70: 1 of 90).
+- `landingRows all`: 115 cases, 20,321 hours, 0 broken (`critic/c71_lrows_all.log`).
+- `workerDeterminism 54059`: `459be807` on every arm.
 
 ## Scores
 
-### Map visuals and readability: 7 → **8** (scored afresh; moved up)
+### Map visuals and readability: 8 → **8** (scored afresh)
 
-**What I tested:**
-- `c70_ev91.mjs 1990 999` on the late replay at 600–20,000 m/px (`critic/c70_ev_1990_999.json`):
-  - Kuwait on 3 and 4 August 1990;
-  - the Caucasus, Egypt, Central Asia, Sri Lanka, Benin, Zaire and Myanmar on 27 December 1991;
-  - Europe on 3 January 1992.
-- The 1938 replay at 3,000–8,000 m/px: Europe, Africa, Central America, the Middle East and China
-  (`critic/shots/c70ev_1938_1938-01-02_*`).
-- `neighbourColours.ts` on the timeline's maps and on the world at the end.
-- Run 69's own measure (`critic/c70_mapcheck.log`): the page's pixels, and ΔE (CIE76) from `nations.json`.
-
-**Why 8.** Run 69's "what the bar needs" is met, by run 69's measure.
-- **R69-B4 fixed:**
-  - on the page at 1,500 m/px, Georgia reads (187,85,0) against Russia's (143,29,29): ΔE 33.5
-    (`critic/shots/c70ev_1990_1991-12-27_caucasus_1500m.png`; run 69 read 1.3);
-  - in the data, run 69's four pairs are all at or above 30:
-    - Russia and Georgia 33.5;
-    - Kazakhstan and Uzbekistan 33.5;
-    - Ukraine and Moldova 34.1;
-    - Russia and Transnistria 34.0.
-  - `neighbourColours critic/c70_starts/1991.sav 30`: 0 of 385 land pairs under ΔE 30 at the end
-    (`critic/c70_neighbourColours_1991.log`).
-- **R69-N3 fixed:** the tooltips of 27 December 1991 read Egypt (30° E 30° N), Sri Lanka, Benin, Zaire and Myanmar
-  (`critic/c70_ev_1990_999.json`, `critic/shots/c70ev_1990_1991-12-27_world_20000m.png`).
-- **The 1938 map with 20 nations recoloured** still reads: Europe at 3,000 m/px has every state distinct
-  (`critic/shots/c70ev_1938_1938-01-02_europe_3000m.png`).
-
-**Not 9:**
-- **R70-N2:** Belgian Congo is now `#334400`, read on the page as (51,68,0), L* 26. That is near the sea's 22 and
-  darker than any neighbour (Angola's L* is 40). Its grey name reads faintly, and the lakes on its border nearly vanish
-  (`critic/shots/c70ev_1938_congo_crop.png`, `critic/shots/c70ev_1938_1938-01-02_africa_8000m.png`). It has no
-  likeness to Belgium's `#b8a13a`.
-- **Earlier maps' close pairs,** which the builder's own bar on those maps (ΔE ≥ 15) allows:
-  - 17 pairs under 30 on 1 January 1938, the closest France and French West Africa (16.1) and China and Manchukuo
-    (17.7);
-  - Somalia and Djibouti 17.8 from 1980 (`critic/c70_neighbourColours_maps.log`).
-
-### Diplomacy, war, alliance, puppet, revolt depth: 6 → **7** (scored afresh; moved up)
-
-**Run 69's bar, case by case (all met):**
-- **R69-B1 fixed:** `c70_heldfree.ts 1946 51515 3` gives 0 pairs at hour 1 and in each of three years. Run 69 had
-  12 pairs and 21,338 cells (`critic/c70_heldfree_1946.log`). `c70_free.ts 1962 51513 730 free heroes=on`: 0 lines.
-- **R69-B2 fixed:**
-  - `c70_free.ts 1975 51501 730`: 0 lines (run 69: 13);
-  - `1991 51507 1825`: 0 economy lines (run 69: 21), but 2 bloc lines (R70-B2);
-  - `critic/c70_free_*_free.log`.
-- **R69-B3 fixed:** `worldInvariants.ts 37009 1825` gives 0 broken (`critic/c70_wi_37009.log`).
-- **R69-N1 fixed:** `c70_endleb.ts 999` and the new 53283 show `PeaceSigned ISR LEB` at 1991-12-31T00, with no
-  `NationAnnexed`. Lebanon joins an alliance in January 1992 (`critic/c70_endleb_*.log`).
-- **R82d held after R84h's change to it:**
-  - France takes Brazil's capital on 0 of 10 seeds (6161, 41161–41167 and the new 53161–53169);
-  - first-60-day declarations over 6,000 km: 0 of 96 (39821–39839) and 0 of 87 (53821–53839);
-  - logs: `critic/c70_farc_0_*.log`, `critic/c70_firstdecl*.log`.
-  - Far capitals per 100 nations: 9.2 on run 69's seeds (run 69: 9.2–9.4). On the new seeds it is 11.0, new seeds and
-    not compared.
-- **R82f held:** none over 4:1 by realm at day 365 (`pileSides`: ITA vs POR 1:2 and ITA vs FRA 2:3 on 53143/53147;
-  GER vs ENG and GER vs NED 2:5 on 51141/51143; `critic/c70_pileSides.log`). By nations, 1:5 to 2:10 (ADR-1042, an
-  objection carried).
-
-**Why 7, not 8:** R70-B2 (blocking): a rule a checker reports broken, on the 1991 free game R69-B2 was judged on.
-
-**What the bar needs back at 8:**
-- `c70_free.ts 1991 51507 1825 free -`: 0 broken lines.
-- `c70_aidhour.ts 51507 1993-09-01`: either no `BlocAid` row in the hour Russia's alliance dissolves, or the checker
-  reading the blocs at the hour's start.
-
-### Emergent world dynamics: 8 → 8 (scored afresh)
+**What I tested:** the 1938 replay at 3,000 and 8,000 m/px over central Africa (`c71_ev91 1938`), the 1990 replay on
+3 January 1992 over Europe, and the pixel colours of the Congo shot (`critic/scripts/c71_lab.py`).
 
 **Evidence for 8:**
-- **R69-N4 fixed:** `successorPurse.ts 999` and `53601` on the 1991 start show no successor disbanding in 1992
-  (`critic/c70_successorPurse_*.log`). Run 69 saw Kazakhstan disband 18 and Tajikistan 31.
-- **R69-N5, by its AT:** `fewNationWars 3 51401 6 10` gives a war on 5 of 6 seeds, 13 wars (the builder writes 15).
-  Run 69 had 5 wars on 3 of 6 (`critic/c70_few3_51.log`). On 39401–39406: 15 wars on 4 of 6 seeds (run 69: 10).
-- **Free games from built years go on with wars:**
-  - every `c70_free.ts` year from 1946 to 1991 has its first declarations within days;
-  - 1991 51507 to 1996 has wars every year (`critic/c70_free_1991_51507_free.log`).
+- **R70-N2 fixed.** Belgian Congo reads (216,120,32) on the page: L* 60.0, against run 70's 26. Its name and the lakes on
+  its eastern border read clearly (`critic/shots/c71ev_1938_1938-01-02_congo_3000m.png`, `critic/c71_congo_lab.txt`).
+  ΔE on the page from the land labelled French Equatorial Africa 97.0, Angola 73.7 and British East Africa 47.2, and from
+  the unlabelled red land to its south-east 39.2.
+- Europe on 3 January 1992 has every state distinct, Ukraine, Belarus, Moldova and the Baltics included
+  (`critic/shots/c71ev_1990_1992-01-03_europe_3000m.png`).
 
 **Not 9:**
-- **R70-N3: three-nation worlds on new seeds.** `fewNationWars 3 53401 6 10` gives 9 wars, with 3 of 6 worlds and no
-  war in ten years (`critic/c70_few3_53.log`). Run 69's commit gives the same, seed for seed
-  (`critic/c70_wt_few3_53.log`): old, so it moves no score.
-- **R84g's successors** (Design objections): 9 of the 14 republics born in 1991 hold 0 formations at the end.
+- **The earlier maps' close pairs**, which the builder's bar on those maps (ΔE ≥ 15) allows: France and French West
+  Africa 16.1 and China and Manchukuo 17.7 on 1 January 1938, as in run 70.
+- **One new pair under 30 from R85d:** Zaire and the FNLA on the 1975-12-30 map, ΔE 19.3; run 70's map had none
+  (`critic/c71_neighbourColours_1938.log` line 21 against `critic/c70_neighbourColours_maps.log` line 21).
+  - On the page, two oranges side by side, told apart by the border line and the FNLA's label
+    (`critic/shots/c71ev_1975_1975-12-31_angola_3000m.png`).
+  - It is above the builder's 15 by 4.3, and the 1991 end's world has 0 of 385 pairs under 30.
+- **R71-N5 (old, not from this batch): the cities keep their 1938 names to 1991** (ADR-18's 1938 names).
+  - On 31 December 1975, South Korea's capital reads "Keijō", the Japanese colonial name; its tooltip says "Keijō,
+    South Korea" (`critic/shots/c71ev_1975_1975-12-31_korea_1500m.png`).
+  - North Korea's capital reads "Heijō", People's China's "Peiping", and Zaire's "Léopoldville"
+    (`critic/shots/c71ev_1975_1975-12-31_china_4000m.png`, `…_angola_3000m.png`).
+  - ADR-18 chose 1938's names for the 1938 map; the replay to 1991 renames nations (R84d) but no city.
 
-### God Mode: 8 → 8 (scored afresh)
+### Diplomacy, war, alliance, puppet, revolt depth: 7 → **8** (scored afresh; moved up)
+
+**Run 70's bar, case by case (met):**
+- **R70-B2 fixed:** `c71_free.ts 1991 51507 1825 free -` gives 0 broken lines (run 70: 2 bloc lines)
+  (`critic/c71_free_1991_51507_free.log`).
+  - The fix is in the checker (the blocs at the hour's start), so 0 on 51507 is by construction. On HEAD's world the
+    1993-09-01 hour no longer dissolves Russia's alliance (`critic/c71_aidhour_51507.log`: two blocs before and after,
+    with `BlocAid` rows at T01).
+  - So the rule was judged on two games I did not pick, 54611 and 54612, five years each. In both, Russia's alliance
+    (SOV2) is gone by the end of 1994, and 0 lines are broken
+    (`critic/c71_free_1991_54611_free.log`, `critic/c71_free_1991_54612_free.log`).
+  - `c71_blocend.ts 54611 1825` reads the rule hour by hour and finds the hour: at 1994-01-01T01 Russia pays aid to
+    Somalia, the NPF and Tunisia, then Mongolia leaves and Russia's alliance is dissolved; the blocs go from two to one.
+    0 bloc lines are broken in five years (`critic/c71_blocend_54611.log`). That is R70-B2's case on a seed I did not
+    pick, judged as R85a says.
+- **Run 70's objection, taken as R85b (ADR-1067), works as specified:**
+
+  | Case (`c71_freewar.ts`) | Run 70 (`b6bd706b`) | Run 71 (`df93b4c2`) |
+  |---|---|---|
+  | 1942 replay, God act | 4 peaces in hour 1; occupied 23,648 → 473 | 0 peaces; 7 wars at day 30; occupied 22,045 at day 30 |
+  | 1942 replay, Take control | 4 peaces; 169 German formations in Soviet land at peace | 0 peaces; 22,151 occupied at day 30 |
+  | 1943 free | 5 of 5 wars end | 0 end; 6 wars at day 30 |
+  | 1944 free | 6 of 6 end | 0 end; 11 wars at day 30 |
+  | 1941 free | JAP-CHI and GER-ENG end | 0 end; 5 wars at day 30 |
+  | 1966 replay, God act | 3 of 3 end | 0 end in hour 1 |
+
+  Logs: `critic/c71_freewar_*.log`. On the page, the 1942 Eastern Front is still hatched an hour after a revolt in Brazil
+  (`critic/shots/c71g42_1942_replay_53542_0before_east.png` against `…_1after_east.png`). Lebanon's war, held to 2000,
+  still ends white at the 1991 end (`critic/c71_endleb_999.log`, `critic/c71_endleb_53283.log`: `PeaceSigned ISR LEB`
+  at 1991-12-31T00).
+- **The wars go on to real ends** (`critic/scripts/c71_warlong.ts`, every war followed):
+  - 1942 God act, three seeds (53542, 54601, 54602): Germany beats the Soviet Union between 2 September and 1 October 1942
+    at 39, and the land Germany owns grows by 30,800–42,000 cells (the 11,043 cells the hold had kept among them). Japan
+    makes China a puppet between 14 March and 20 April 1943 (`critic/c71_warlong_1942god*.log`).
+  - 1943 free, three seeds (53543, 54603, 54604): the Soviet Union wins between 26 May and 8 August 1943 at −90 to −100;
+    Japan puppets China in August or September 1943; Japan and the Allies end in 1944 (`critic/c71_warlong_1943free*.log`).
+  - Japan v China ends at 100 with China a puppet in all 8 runs from 1942–44 (God act, Take control, free); in the 1941
+    free game it has not ended after 365 days (`critic/c71_warlong_1941free.log`).
+  - 1944 free: the Soviet Union wins in May 1944 at −91; Italy, at war with Germany, wins at 86
+    (`critic/c71_warlong_1944free.log`). Korea from 1951 free ends in 38 days at −100 (`critic/c71_warlong_1951free.log`).
+- **The save keeps the new field:** a 1942 God-act game and a 1943 free game, saved at hour 24, loaded and stepped 30 days
+  beside the original: the same hash at every check, `scoreFrom` the same (`critic/c71_saveload_*.log`).
+- **R82d and R82f held, the same as run 70 line for line:**
+  - `farConquests 0` on 6161/41161–41167 and on 53161–53169: the same capitals, 9.2 far per 100 nations; France takes
+    Brazil's capital on none (`critic/c71_farc_0_*.log`, identical to `critic/c70_farc_0_*.log` but for timings);
+  - first-60-day declarations over 6,000 km: 0 of 96 (39821–39839) and 0 of 87 (53821–53839) (`critic/c71_firstdecl*.log`);
+  - `piles 365` on 39139–47 and 51139–47: none over 4:1, identical to run 70 (`critic/c71_piles_p*.log`); `pileSides 365
+    51141 51143 51145`: 0 over 4:1 by realm at day 365 (`critic/c71_pileSides_51.log`).
+  - These identical figures also show plain 1938's play unchanged by the batch (R85e has no landless power in 1938).
+
+**Why 8, not 9:**
+- **R71-N2 (non-blocking): a kept war's score has a ceiling of 100 − `scoreFrom` for the side ahead.**
+  - The cause: `war.ts:679` clamps the raw score to ±100 and then takes `scoreFrom` away. Every war's raw score is
+    clamped, so what R85b adds is the ceiling and its asymmetry. The side ahead as the track ends can gain at most
+    100 − `scoreFrom`; the side behind keeps the full range.
+  - What it puts out of reach (by the code; the thresholds were not all seen in play):
+    - PUPPET_SCORE (90) for a side ahead by more than 10: Germany (61) can never make the Soviet Union a puppet by score;
+    - PEACE_ACCEPT_SCORE (25) for a side ahead by more than 75: not seen (the largest `scoreFrom` in my logs is 74, GER v
+      SOV in 1944, a ceiling of 26).
+  - Seen:
+    - 1942: GER v SOV has `scoreFrom` 61. Its score reaches 39 by day 90 and stays there to the peace on all three seeds,
+      while Germany's hold of Soviet land grows from 24,838 to 41,228 cells (`critic/c71_warlong_1942god_54601.log`).
+    - Japan v China (`scoreFrom` 32) sits at 68 for 200 days while its hold grows from 7,702 to 12,427 cells
+      (`critic/c71_warlong_1942god.log`).
+    - On the page, Germany taken by Take control: "War score 39" on its Soviet banner at day 90, 120, 150, 180, 210 and
+      240, the fill at 69.5 % (`critic/c71_ts_1942_GER_240_1600x900.json`). By 29 August Germany holds 7.37M km², up
+      from 3.23M (`critic/shots/c71ts_1942_GER_240_1600x900_2war.png`).
+    - The side behind has the whole range: in 1943 the Soviet side reaches −100 when the raw score is −41
+      (`critic/c71_warlong_1943free.log`).
+  - SPEC §7.7 says the score is "counted from" the end's; it does not say that the side ahead is capped. Judged as
+    unspecified.
+  - Not a finding: Germany's peace at 39 makes the 11,043 cells the hold had kept German, as all occupied land goes to a
+    winner at 10 or more. SPEC says "its occupations kept", so that is the design.
+- **Small worlds** (emergent, below).
+
+### Emergent world dynamics: 8 → **8** (scored afresh)
 
 **Evidence for 8:**
-- **R69-N6 fixed.** `c70_undo2.mjs 41211` and the new 53211 give 0 px differing for nuke, revolt, nation, city and
-  raze undone (`critic/c70_undo2_pix.txt`; run 69: city 130 px). The city act founds "New Town" beside Łódź
-  (`critic/shots/c70u2_53211_city_1act.png`).
-- **On late worlds,** `c70_undo2y.mjs 51231` (1983 free) and the new 53231 give 0 px on all five acts, with the hash
-  back (`critic/c70_undo2y_pix.txt`). Run 69 had revolt 459, nation 219 and nuke 8,447 px.
-
-**Not 9, R70-N1** (the act's consequence is not told):
-- In the 1942 replay, a revolt in Brazil ("Free Mato Grosso") ends the Second World War in that hour, as SPEC §7.7
-  now says. The rows read "Germany made peace with Soviet Union" and "Germany made peace with United States".
-  Nothing says the peace is the replay's end, not the two powers' choice.
-- The God bar says only "Any God Mode act ends the replay of history."
-- Evidence: `critic/shots/c70g42_1942_replay_53542_0before_east.png` against
-  `critic/shots/c70g42_1942_replay_53542_1after_east.png`; `critic/c70_g42_1942_replay_53542.json`.
-
-### Editor and scenarios: 8 (carried from run 69)
-
-No file of the editor changed. In passing: run 69's 20-year save of 7019, made by `e5b97c8e`, loads on HEAD and runs a
-year (`critic/c70_loadold_7019.log`).
-
-### Stats and history: 8 → 8 (scored afresh)
-
-- **R84j's plural:** "FMLN were annexed by Honduras" in a 1991 free game at 390 × 844
-  (`critic/c70_rc_1991_free_390x844.json`).
-- **The free start's row:** "History's course left at the start of your game, and the world goes its own way"
-  (`critic/c70_r83_*.json`).
-- **The 1991 end's rows** (`critic/c70_ev_1990_999.json`):
-  - the white peaces of 31 December;
-  - "History's course ended on its last day…".
-  - Kuwait's stage line: Kuwait City is Iraq's by 4 August 00:00, the stage at noon on 3 August. At 3 August 00:00 it is
-    still Kuwait's, which is right by the stage's hour.
+- **R70-N3 fixed by its AT** (`fewNationWars 3 <seed> 6 10`):
+  - 53401–53406: a war on 6 of 6, 25 wars (run 70: 3 of 6, 9 wars) (`critic/c71_few3_53.log`);
+  - 51401: 6 of 6, 26 wars (`critic/c71_few3_51.log`);
+  - new 54401: 6 of 6, 16 wars; four nations, 54411: 6 of 6, 33 wars (`critic/c71_few3_54.log`, `critic/c71_few4_54.log`).
+- **60-nation random worlds, five years:** seeds 7, 8, 9 give 111, 100 and 97 wars, as ADR-1068 states; the new
+  54431–54433 give 109, 73 and 91 (`critic/c71_few60_*.log`).
+- **R85e touches no replay year:** `c71_landless.ts` finds no landless sea power in 1938 or any start from 1946 to 1991
+  (`critic/c71_landless_*.log`).
+- **The Second World War, kept by R85b, has outcomes worth watching** (diplomacy, above), and they differ by the year
+  left: Germany wins in the East from 1942, the Soviet Union from 1943 and 1944.
 
 **Not 9:**
-- **R70-N4:** "1 January 1992 Yugoslavia's air force struck Croatia this month: 2,096 men…" follows "31 December 1991
-  Yugoslavia made peace with Croatia". The monthly air row is dated the 1st and means the month before, so it reads as
-  a strike after the peace (`critic/shots/c70ev_1990_1992-01-03_europe_3000m.png`).
-- **R70-N1's rows,** above.
+- **R71-N3: two-nation worlds.** `fewNationWars 2 54421 6 10` gives 3 of 6 worlds with no war in ten years
+  (`critic/c71_few2_54.log`).
+  - The two nations share a land border in each (`critic/c71_fewwhy_2_54421.log`, `…_54425.log`, `…_54426.log`). So
+    R85e's rule does not reach them.
+  - 54421 has aggressions 59 and 20 and strengths of 1.8 to 1; the treasuries grow from 68k and 38k to 256k and 161k
+    by day 1,000, unspent.
+  - The form allows 2 nations (`RANDOM_NATIONS.min`). New seeds, not compared with run 70's commit.
+- **The year left decides the war** (observation, not filed). The replay's starts hand over armies that swing year to
+  year: Germany 1.17M men and the Soviet Union 727k on 1 January 1942; 630k and 2.75M on 1 January 1943
+  (`critic/c71_men0_*.log`, `critic/c71_menloss_*.log`). Every 1942 seed goes Germany's way, every 1943 seed the Soviet
+  Union's.
 
-### UI/UX and polish: 8 → 8 (scored afresh)
+### God Mode: 8 → **8** (scored afresh)
 
-- **R84k:** Germany taken by the panel's "Take control" (53184), heroes on; its Overview's Maus row clicked; then a
-  real mouse click on the map 140 px to its west.
-  - The Maus is the selection ("Playing Germany · 1 selected"); it marched 4.9 cells in 48 hours
-    (`critic/c70_ho_53184_GER.json`, `critic/shots/c70ho_53184_GER_1_*.png`).
-  - The Bismarck's row, clicked on land, gives "not done: a fleet goes only to water or a port": the order is sent and
-    rightly refused.
-- **R84l:** `/?…&heroes=on&year=1960&mode=free` (the form's URL) gives 12 heroes on the page at day 0 and day 10:
-  Yamato, O-I, USS Iowa, T28, Sovetsky Soyuz, T-42, HMS Hood, TOG II, Richelieu, Char 2C, Roma and P.100 Ercole
-  (`critic/c70_heroes_1960_53260.json`).
-- **R84j:** the heroes hint reads "1938's seven great powers still living at the start"
-  (`critic/shots/c70rc_1943_free_1600x900_card.png`).
-- **Same URL, same world:** 1960 free and 1983 free at desk and phone size, three loads each (`critic/c70_r83_*.json`).
-- **Page errors:** 0 in every page probe.
+**Evidence for 8:**
+- **R70-N1 fixed on the page.** The God bar, the God tab and Take control each say that the frozen wars go on and that
+  one held past 1991 ends in a white peace, at 1600 × 900 and 390 × 844 (`critic/c71_hgt_1600x900_god-world-ai.json`,
+  `critic/shots/c71hgt_390x844_tab.png`).
+- **A God act in the 1942 replay keeps the war** (Diplomacy, above).
+- **Undo:** `c71_undo2.mjs 41211`: 0 px for nuke, revolt, nation, city and raze undone. `c71_undo2y.mjs 51231` (1983):
+  0 px for four acts and the hash back on all five.
+  - The nuke's figure moved from run 70's 0 to 10,010 px. They are the war banners' row: after Undo the God bar shows
+    the line "Undone: the world as it was on 1 January 1983", which lifts the banners about 19 px.
+  - Run 70's shot had the same line but no banners, because its 1983 free start ended those wars in hour 1. Under R85b
+    they go on (`critic/shots/crop_c70u2y_51231_nuke_2undone_bottom.png` against `…c71u2y…_bottom.png`).
+  - The map is the same: run 70's and run 71's "before" shots differ by 0 px, and every pixel that differs lies in the
+    banners' row (`critic/c71_undo2_pix.txt`).
 
-**Not 9, R70-N1 on the card:**
-- The 1943 card under "Play free" says "The world as history left it on 1 January 1943, played on from there on its
-  own course". By its first hour the game has four peace rows and no world war
-  (`critic/shots/c70rc_1943_free_1600x900_card.png`, `critic/shots/c70g42_1943_free_53543_0before_east.png`).
-- No line on the card for 1941–45 says that the war ends when history is left.
+**Not 9, R71-N1:**
+- In the 1942 replay, Japan's God tab, "Peace" on its war with the United States. History then reads:
+  - "1 January 1942 Japan made peace with United States as history's course ended";
+  - then "History's course ended at your first intervention…".
+- The same with Germany and the Soviet Union at 390 × 844: "Germany made peace with Soviet Union as history's course
+  ended" (`critic/shots/c71gp_1942_GER_SovietUnion_390x844_2history.png`, `critic/c71_gp_1942_*.json`).
+- The cause: `endPeace` (`src/worker/historyRows.ts`) tells any peace followed by `TrackEnded` in the same hour as the
+  end's, and `applyPendingCommands` signs the God act's peace and then ends the track in that hour (`tick.ts:512`).
+- Two things are wrong with the row. The peace was the player's act, not history's end. And under R85b the track's end
+  does not end GER-SOV at all.
+- SPEC has no sentence on this row (R85c's wording is in `en.json` and ROADMAP only), so it is judged as unspecified:
+  a wrong row, non-blocking.
 
-### Performance: 8 (carried from run 69)
+### Editor and scenarios: 8 (carried from run 70)
 
-R84i's label memory (`render/timing.ts`) runs only on a God act. The seed-99 tick for 5 years, run alone after every other
-job: 2.322 ms mean against run 69's 2.195 (+6 %, inside the ±10 % of one sequential run), year 1 at the pin `4896702e`
-(`critic/c70_tick99.log`). Frames were not measured (left out for time).
+No file of the editor changed. Its note (`track.anyAct`) has R85c's wording.
 
-### Stability: 8 → 8 (scored afresh)
+### Stats and history: 8 → **8** (scored afresh)
 
-- **`workerDeterminism 53059`:** `8abd99a9` on every arm (plain, quiet, start, every).
-- **A save from before the new column** (`nations.puppetAt`, R84c's `zeroIfAbsent`) loads: run 69's 7019 year-20 save
-  runs a year on HEAD (hash `b92c568f`, `critic/c70_loadold_7019.log`).
-- **The 20-year runs** complete: 7019 `505a4102`, 32019 `cb474a57` (another world: the pin moved, ADR-1061, ADR-1062,
-  ADR-1065).
-- **Undo** gives the hash before the act on 1938 and 1983 worlds (God Mode). The same URL gives the same world (UI).
+**Evidence for 8:**
+- **R70-N4 fixed:** "1 January 1992 Yugoslavia's air force struck Croatia over the past month: 2,096 men…" now reads as
+  December's, after "31 December 1991 Yugoslavia made peace with Croatia as history's course ended"
+  (`critic/shots/c71ev_1990_1992-01-03_europe_3000m.png`, `critic/c71_ev_1990_999.json`).
+- **R70-N1's rows fixed:** the 1991 end's peaces read "…as history's course ended" (Somalia, Sierra Leone, Croatia, the
+  same shot).
+
+**Not 9:** R71-N1 (God Mode, above): a player's peace is told as the end's.
+
+### UI/UX and polish: 8 → **8** (scored afresh)
+
+**Evidence for 8:**
+- R85c's notes are on screen, not only in a title: Take control's note is a visible paragraph at 390 × 844
+  (`critic/shots/c71hgt_390x844_tab.png`).
+- The free year's card says the wars go on (`critic/shots/c71rc_1943_free_1600x900_card.png`,
+  `critic/shots/c71rc_1975_free_390x844_card.png`).
+- 0 page errors in every page probe.
+
+**Not 9 (small, non-blocking, R71-N4):**
+- At 390 × 844 with Germany selected and God Mode on, the same red note of four lines stands three times on one screen:
+  under Take control, at the top of the God tab and in the map tools (`critic/shots/c71hgt_390x844_tab.png`).
+- "one history holds past 1991 ends in a white peace" (the card) and "one it holds past 1991…" (the notes) read as a
+  garden path, and they are shown on every year's card, though only a start from 1983 or later has such a war.
+- At 390 × 844 the war banners float over History's list and hide a row (`c71gp_1942_GER_SovietUnion_390x844_2history.png`).
+  Not compared with run 70's commit.
+
+### Performance: 8 (carried from run 70)
+
+No file of the tick's systems changed beyond R85b's few lines and R85e's monthly test. The seed-99 tick for 5 years, run
+alone after every other job with the preview stopped: 2.340 ms mean against run 70's 2.322 (+0.8 %), year 1 at the pin
+`ae4ce317` (`critic/c71_tick99.log`). Frames were not measured (left out for time).
+
+### Stability: 8 → **8** (scored afresh)
+
+- **`workerDeterminism 54059`:** `459be807` on every arm (`critic/c71_wd_54059.log`).
+- **The new save field:** `c71_saveload.ts` 1942 God and 1943 free: equal hashes over 30 days after a load.
+- **The 20-year runs complete:** 7019 `ab2bda3e`, 32019 `cfec21a0`.
+- **Undo** gives the hash back on 1938 and 1983 worlds (God Mode).
 - **0 page errors** in every probe.
 
 ### Semantic zoom to unit level: 8 (carried from run 69)
 
-### Naval warfare: 8 (carried from run 69)
+### Naval warfare: 8 → **8** (scored afresh)
 
-- **landingFuzz `--seeds 15 --first 53101`:** 1 of 90 runs broken, `slowClick` (53125 15101 g2: t870's click of 271,273
-  not ashore after 9.5 days, its best way 2.4). That is under the 5 % bar, so non-blocking (`critic/c70_landingFuzz.log`,
-  `critic/c70_fuzz_53125_15101_g2.log`).
-- In passing: `seaBattles 39061`, with `seaBattlesLook` on the page, shows 62 of 62 battles seen at their camera
-  (R84j; run 69: 68 of 69) (`critic/c70_sbl_39061.log`). The new 53061: 65 battles.
+R85e makes a landless sea power at peace order a transport group (`economic.ts`).
+- **landingFuzz `--seeds 15 --first 54101`:** 0 of 90 runs broken, `slowClick` included (`critic/c71_landingFuzz.log`).
+- **`landingRows all`:** 115 cases, 0 broken (`critic/c71_lrows_all.log`).
+- **Run 61's bulk sets, due since run 70 and run this time** (`critic/scripts/c71_chainBulk.sh`), against run 69's:
+  - 396 named landing setups (`c71_liab.sh named`): 394 with 0 broken; the 2 breaks are the named `slowClick` cases
+    27037 15101 g2 and 30041 3517 g1, as run 69 (`critic/c71_liab_named.log` against `critic/c69_liab_named.log`);
+  - 153 stuck-return runs (`c71_sr.sh`): 0 returning-still spells on any; the checker breaks only 27037 15101 g2, as run
+    69 (`critic/c71_sr.log`);
+  - 168 next-voyage runs (`c71_nv.sh`): all 168 logs identical to run 69's but for timings; the same 3 broken (30041, 31157 and 31175, 3517 g1)
+    (`critic/c71_nv_cmp.txt`).
+  - The named setups' logs: 394 of 396 identical to run 69's; the 2 others differ only in a note's "days with no ground
+    gained" (0.8 → 0.9, 1.3 → 1.4) and one landing's length (2.0 → 1.7 days), each with 0 broken.
+    (`critic/c71_liab_named_cmp.txt`, `critic/c71_sr_cmp.txt`: 153 of 153 identical).
+- **Malta's 18** (`critic/scripts/c71_malta.sh`): every seed as run 69's, row for row. 11 thrown back near Catania and 7
+  with their transports broken off near Palermo; none held at Valletta (`critic/c71_malta.log` against
+  `critic/c69_malta.log`).
+- **The named `slowClick` cases** are as run 70: 30041 3517 g1 (13.0 days against 5.9), 27037 15101 g2 (8.2 against
+  1.2), 51101 3517 g1 (13.8 against 6.7) and 53125 15101 g2 (9.5 against 2.4) (`critic/c71_li_*.log`).
+- No 1938h year has a landless sea power, so the rule acts only in random worlds, where it brings the three-nation
+  worlds to war (Emergent).
 
 ### Tanks: 8 (carried from run 69)
 
 ### Aircraft: 8 (carried from run 69)
 
+R85f changes only the air rows' words (Stats).
+
 ### AI nuclear use: 8 (carried from run 69)
 
-In passing: `nukeIntercepts 53501` over 22 years has 5 missile launches on Chinese-held land
-(`critic/c70_nukeIntercepts_53501.log`). `nukecount 53503`: 0 launches in 22 years.
+In passing: `nukeIntercepts 53501` over 22 years has 5 missile launches, as run 70 (`critic/c71_nukeIntercepts_53501.log`).
 
 ## Blocking issues
 
-### R70-B2 (diplomacy, rules that agree; old rule, a new case): bloc aid paid in the hour its bloc dissolves (`bloc` rule)
-
-- **The checker's lines.** `c70_free.ts 1991 51507 1825 free -`, the free game named in R69-B2's bar
-  (`critic/c70_free_1991_51507_free.log`):
-  - "1993-09-01: bloc: aid by USA with 1 bloc(s)";
-  - "bloc: aid by SOV with 1 bloc(s)".
-- **The hour,** from `c70_aidhour.ts 51507 1993-09-01` (`critic/c70_aidhour_51507.log`):
-  - at 1993-09-01T01 the blocs are USA's (15) and Russia's (2) before the hour;
-  - in the hour, USA pays aid to People's China and Russia pays aid to Algeria, Niger and Libya (`BlocAid`);
-  - then Mongolia leaves and Russia's alliance is dissolved (`AllianceLeft`, `AllianceDissolved`);
-  - after the hour there is one bloc.
-  - The strategic AI pays at the month's start, before the alliance pass of the same hour. The checker
-    (`tests/helpers/diploInvariants.ts:140`) reads the blocs after the hour.
-- **Why blocking:** a rule checker reports it broken (CRITIC_PROMPT: every broken rule but `slowClick`).
-- **Fix:** either the checker reads the blocs at the hour's start, when aid is paid, or aid is paid after the
-  alliance pass.
-- **Seen fixed when:** `c70_free.ts 1991 51507 1825 free -` shows 0 broken lines.
+None.
 
 ## Non-blocking issues (prioritised)
 
-1. **R70-N1 (God Mode, UI, stats): the track's end ends the held wars without saying so.**
-   - **The case.** In the 1942 replay, one God act or Take control ends four wars in its hour: JAP-CHI, GER-ENG,
-     GER-SOV and GER-USA. In a 1943 free start, five end; in 1944, six. In each case the rows read as ordinary peaces.
-   - **What is missing.** The God bar's note ("Any God Mode act ends the replay of history"), Take control's note and
-     the 1941–45 free card ("played on from there on its own course") do not say that the war ends.
-   - **Evidence.** The headless cases are in Design objections. On the page:
-     - `critic/shots/c70g42_1942_replay_53542_1after_east.png` and `critic/c70_g42_1942_replay_53542.json`;
-     - `critic/c70_rc_1943_free_1600x900.json`.
-   - **Seen fixed when** the God bar, Take control and the card in 1941–45 say the wars held then will end in white
-     peace, and the end's peaces are told as the replay's ("…as history's course ended").
-2. **R70-N2 (map): Belgian Congo recoloured near-black** (`#334400`, L* 26 on the page).
-   - Its name reads faintly, and its border lakes almost vanish (`critic/shots/c70ev_1938_congo_crop.png`).
-   - **Seen fixed when** its land is at least as light as its neighbours' (L* ≥ 35).
-3. **R70-N3 (emergent, old): three-nation worlds on 53401–53406.** 3 of 6 have no war in ten years, the same on run 69's
-   commit.
-4. **R70-N4 (stats, small): the monthly air row after a peace.** "1 January 1992 Yugoslavia's air force struck
-   Croatia this month" follows the 31 December peace.
-5. **`slowClick` (ADR-914):** the named cases are as run 69:
-   - 30041 3517 g1: t729's click of 366, 13.0 days against 5.9;
-   - 27037 15101 g2: t2198's click of 277, 8.2 days against 1.2;
-   - 51101 3517 g1: t1505's click of 367, 13.8 days against 6.7.
-   - Logs: `critic/c70_li_*.log`.
-   - New, from landingFuzz (1 of 90): 53125 15101 g2, t870's click of 271,273 not ashore after 9.5 days against 2.4
-     (`critic/c70_fuzz_53125_15101_g2.log`).
+1. **R71-N1 (God Mode, stats): a God "Make peace" in the replay is told as the track's end's peace.**
+   - **The case:** `node critic/scripts/c71_godpeace.mjs 1942 JAP 'United States'` and `… 1942 GER 'Soviet Union' 390 844`.
+     History reads "Japan made peace with United States as history's course ended"
+     (`critic/c71_gp_1942_JAP_UnitedStates_1600x900.json`, `critic/shots/c71gp_1942_GER_SovietUnion_390x844_2history.png`).
+   - **The cause:** `endPeace` takes any `PeaceSigned` followed by `TrackEnded` in the hour. A God act's peace is signed
+     in the hour the act ends the track.
+   - **Seen fixed when** the same probe's row reads "Japan made peace with United States" (or one that names the player's
+     act), and a peace the end signs (Lebanon, 1991) still reads "…as history's course ended".
+2. **R71-N2 (diplomacy): a war kept by R85b has a score ceiling of 100 − `scoreFrom` for the side ahead.**
+   - **The case:** `npx tsx critic/scripts/c71_warlong.ts 1942 54601 god 730`: GER v SOV at 39 from day 90 to its
+     peace; `node critic/scripts/c71_takescore.mjs 1942 GER 240`: "War score 39" from April to August.
+   - **The cause:** `war.ts:679`, `clamp(clamp(raw) − scoreFrom)`. PUPPET_SCORE is out of reach for a side ahead by more
+     than 10, PEACE_ACCEPT_SCORE for one ahead by more than 75 (by the code).
+   - **Seen fixed when** the score follows the front past 100 − `scoreFrom` (for example `clamp(raw − scoreFrom)` with the
+     raw score unclamped), or SPEC states the ceiling and the banner shows it.
+3. **R71-N3 (emergent): two-nation worlds with no war.** `fewNationWars 2 54421 6 10`: 3 of 6 with no war in ten years,
+   neighbours on land each time. Seen fixed when a war is on at least 5 of 6.
+4. **R71-N4 (UI, small):** the R85c note three times on a phone screen; the card's "one history holds past 1991…" on
+   every year; the war banners over History at 390 × 844.
+5. **R71-N5 (map, old): 1938's city names to 1991.** "Keijō, South Korea", "Peiping" and "Léopoldville" on
+   31 December 1975 (`critic/shots/c71ev_1975_1975-12-31_korea_1500m.png`). Seen fixed when a city renamed in the
+   timeline's years (Seoul 1945, Beijing 1949, Kinshasa 1966) reads its name of the day in the replay and in a free game
+   started after it.
+6. **`slowClick` (ADR-914):** the four named cases as run 70 (30041 3517 g1, 27037 15101 g2, 51101 3517 g1, 53125
+   15101 g2; `critic/c71_li_*.log`). landingFuzz on 54101–54129: 0 of 90.
 
-## Run 69's cases re-run
+## Run 70's cases re-run
 
-| Run 69 case | Run 69 (`e5b97c8e`) | Run 70 (`b6bd706b`) | Evidence |
+| Run 70 case | Run 70 (`b6bd706b`) | Run 71 (`df93b4c2`) | Evidence |
 |---|---|---|---|
-| R69-B1 `heldfree 1946 51515 3` | 12 pairs, 21,338 cells at hour 1; 11 pairs after 3 years | **fixed**: 0 at hour 1 and each year | `critic/c70_heldfree_1946.log` |
-| R69-B1 `free 1962 51513 heroes=on` | held: USA on JAP 6 | **fixed**: 0 lines | `critic/c70_free_1962_51513_free.log` |
-| R69-B1 `free 1946 51515 diplomacy=random` | 12 held lines | **fixed**: 0 | `critic/c70_free_1946_51515_free.log` |
-| R69-B2 `free 1975 51501` | 13 economy lines | **fixed**: 0 | `critic/c70_free_1975_51501_free.log` |
-| R69-B2 `free 1991 51507 1825` | 21 economy lines | 0 economy; **2 bloc lines (R70-B2)** | `critic/c70_free_1991_51507_free.log` |
-| R69-B2 `free 1983 51505`, `51517` | 12, 5 | 0, 0 (51505 with options at their defaults this run) | `critic/c70_free_1983_*_free.log` |
-| R69-B3 `worldInvariants 37009 1825` | 1 broken | **fixed**: 0 | `critic/c70_wi_37009.log` |
-| R69-B4 Caucasus at 1,500 m/px | ΔE 1.3 | **fixed**: ΔE 33.5 on the page; the 4 pairs 33.5–34.1 | `critic/c70_mapcheck.log` |
-| R69-N1 `endleb 999` | `NationAnnexed LEB ISR` | **fixed**: white peace, Lebanon living (and 53283) | `critic/c70_endleb_*.log` |
-| R69-N3 names | UAR, Ceylon, Dahomey, Congo, Burma | **fixed**: Egypt, Sri Lanka, Benin, Zaire, Myanmar | `critic/c70_ev_1990_999.json` |
-| R69-N4 successors' purse | KAZ 18, TJK 31 disbanded | **fixed**: none disbands (999, 53601) | `critic/c70_successorPurse_*.log` |
-| R69-N5 `fewNationWars 3 51401` | 5 wars, 3 of 6 | **fixed by its AT**: 13 wars, 5 of 6 | `critic/c70_few3_51.log` |
-| R69-N5 `fewNationWars 3 39401` | 10 wars | 15 wars, 4 of 6 | `critic/c70_few3.log` |
-| R69-N6 `undo2 41211` city | 130 px | **fixed**: 0 px, every act (and 53211) | `critic/c70_undo2_pix.txt` |
-| `undo2y 51231` (1983) | revolt 459, nation 219, nuke 8,447 px | 0 px every act (and 53231) | `critic/c70_undo2y_pix.txt` |
-| Small: heroes hint | "seven great powers" | **fixed** | `critic/shots/c70rc_1943_free_1600x900_card.png` |
-| Small: "Contras was annexed" | "was" | **fixed**: "FMLN were annexed" | `critic/c70_rc_1991_free_390x844.json` |
-| Small: Kuwait | Kuwait's on 3 August 00:00 (stage then 28 August) | Iraq's by 4 August 00:00 (stage at noon on 3 August) | `critic/c70_ev_1990_999.json` |
-| Small: `sbl 39061` | 68 of 69 seen | 62 of 62 seen | `critic/c70_sbl_39061.log` |
-| `slowClick` 51101 3517 g1, 30041 g1, 27037 15101 g2 | broken | the same three breaks | `critic/c70_li_*.log` |
-| R82d `farConquests 0` 6161/41161–7 | France takes Brazil 0 of 5; 9.2–9.4 far per 100 | 0 of 5 (and 0 of 5 on 53161–9); 9.2 | `critic/c70_farc_0_*.log` |
-| R82d `firstdecl 60` | 1 of 96 (39821) | 0 of 96; 0 of 87 (53821) | `critic/c70_firstdecl*.log` |
-| R82f `piles 365` 39139–47, 51139–47 | ITA vs POR 1:5; GER vs ENG 2:10 by nations | ITA vs POR 1:5 (39147); GER vs ENG 2:9, GER vs NED 2:9 by nations; ≤ 2:5 by realm | `critic/c70_piles_*.log`, `critic/c70_pileSides.log` |
-| diploInvariants 33501, 51001; worldInvariants 36009, 51051 | 0 | 0 (another world: the pin moved) | `critic/c70_diploinv_*.log`, `critic/c70_wi_*.log` |
-| Track checker, 1938 | 0 broken | 0 (and 53301) | `critic/c70_track_*.log` |
-| `landingRows all` | 0 broken | 0 broken | `critic/c70_lrows_all.log` |
-| 7019, 32019, 20 years | `9d7cc54f`, `012f7230` | `505a4102`, `cb474a57` (the pin moved) | `critic/c70_seed*_save.log` |
-| landingFuzz (new seeds) | 1 of 90 `slowClick` (51101–) | 1 of 90 `slowClick` (53125 15101 g2), under the 5 % bar | `critic/c70_landingFuzz.log` |
-| Tick, seed 99, 5 years, alone | 2.195 ms mean | 2.322 ms mean (+6 %, within a single run's ±10 %); year 1's hash `4896702e`, the pin | `critic/c70_tick99.log` |
-| afterTrack 37601 (R69-N4's Tajikistan) | Tajikistan a great power at the end | **fixed**: no successor but Russia among the greats in 10 years | `critic/c70_atx_37601.log` |
-| R82d free 1975 far conquests (new seeds 53161–9) | — | 7.1 far per 100 (plain 1938 on the same seeds 11.0); new seeds, not compared | `critic/c70_farc_1975_c.log` |
-| Run 61's bulk sets, Malta's 18 (due) | — | **left out for time** | — |
-| Run 69's page suites, perf chain, other headless sets | — | **left out for time** (see the top) | — |
+| R70-B2 `free 1991 51507 1825` | 2 bloc lines | **fixed**: 0; and 0 on new 54611, 54612 (Russia's bloc gone in 1994) | `critic/c71_free_1991_*_free.log` |
+| R70-B2 `aidhour 51507 1993-09-01` | aid, then Russia's alliance dissolved in the hour | the hour has aid and no dissolution (another world: the starts were rebuilt on HEAD) | `critic/c71_aidhour_51507.log` |
+| R70-N1 God bar, Take control, card | no word of the wars | **fixed**: all three say the frozen wars go on | `critic/c71_hgt_*.json`, `critic/shots/c71rc_*` |
+| R70-N1 the end's peace rows | ordinary peace rows | **fixed**: "…as history's course ended"; but see R71-N1 | `critic/c71_ev_1990_999.json` |
+| R70-N2 Belgian Congo | L* 26 | **fixed**: L* 60.0 | `critic/c71_congo_lab.txt` |
+| R70-N3 `fewNationWars 3 53401` | 3 of 6, 9 wars | **fixed**: 6 of 6, 25 wars | `critic/c71_few3_53.log` |
+| R69-N5 `fewNationWars 3 51401` | 5 of 6, 13 wars | 6 of 6, 26 wars | `critic/c71_few3_51.log` |
+| R70-N4 air row after a peace | "this month" | **fixed**: "over the past month" | `critic/shots/c71ev_1990_1992-01-03_europe_3000m.png` |
+| Objection: R84e ends WWII (`freewar` 1941–44, 1966) | 2–6 wars end in hour 1 | **taken (R85b)**: 0 end in hour 1 | `critic/c71_freewar_*.log` |
+| `g42 1942 replay 53542` on the page | the Eastern Front gone | the front still hatched | `critic/shots/c71g42_1942_replay_53542_1after_east.png` |
+| `endleb 999`, `53283` | white peace at the end | the same | `critic/c71_endleb_*.log` |
+| `heldfree 1946 51515 3` | 0 | 0 | `critic/c71_heldfree_1946.log` |
+| `free 1975 51501 730` | 0 | 0 | `critic/c71_free_1975_51501_free.log` |
+| `undo2 41211`, `undo2y 51231` | 0 px every act | 0 px but the 1983 nuke: 10,010 px, the war banners' row lifted by the Undo line (the wars now go on); the map 0 px | `critic/c71_undo2_pix.txt` |
+| `slowClick` named (30041, 27037, 51101, 53125) | broken | the same four, the same figures | `critic/c71_li_*.log` |
+| `landingRows all` | 0 broken | 0 broken (115 cases) | `critic/c71_lrows_all.log` |
+| Track checker 1938 (and a new seed) | 0 (53301) | 0 (54301) | `critic/c71_track_*.log` |
+| `heldAtEnd` (new seed) | 0 (53311) | 0 (54311) | `critic/c71_heldAtEnd_54311.log` |
+| 7019, 32019, 20 years | `505a4102`, `cb474a57` | `ab2bda3e`, `cfec21a0` (the pin moved for a colour) | `critic/c71_seed*_save.log` |
+| Run 61's 396 landing setups (due; left out in run 70) | (run 69) 2 broken: 27037 15101 g2, 30041 3517 g1 | the same 2 | `critic/c71_liab_named.log` |
+| Run 61's 153 stuck returns | (run 69) 0 spells; 1 checker break (27037) | the same | `critic/c71_sr.log` |
+| Run 61's 168 next voyages | (run 69) 3 broken (30041, 31157, 31175, 3517 g1) | 168 of 168 identical; the same 3 | `critic/c71_nv.log` |
+| Malta's 18 (due; left out in run 70) | (run 69) 11 thrown back, 7 broke off | the same, row for row | `critic/c71_malta.log` |
+| landingFuzz (new seeds) | 1 of 90 `slowClick` (53101–) | 0 of 90 (54101–) | `critic/c71_landingFuzz.log` |
+| R82d `farConquests 0` (two sets) | 9.2 far per 100; France takes Brazil 0 of 10 | identical | `critic/c71_farc_0_*.log` |
+| R82d `firstdecl 60` | 0 of 96; 0 of 87 | 0 of 96; 0 of 87 | `critic/c71_firstdecl*.log` |
+| R82f `piles 365` 39139–47, 51139–47 | none over 4:1 | identical | `critic/c71_piles_p*.log` |
+| `successorPurse 999` | none disbands | identical | `critic/c71_successorPurse_999.log` |
+| `workerDeterminism` (new seed) | `8abd99a9` (53059) | `459be807` on every arm (54059) | `critic/c71_wd_54059.log` |
+| `fewNationWars 60` 7, 8, 9 (ADR-1068's figures) | — | 111, 100, 97 wars | `critic/c71_few60_7.log` |
+| R70-B2's shape on a new seed (`c71_blocend 54611`) | — | aid and dissolution in one hour (1994-01-01T01); 0 lines | `critic/c71_blocend_54611.log` |
+| `loadold`: run 70's 7019 year-20 save on HEAD | loads, runs a year | loads, runs a year (`8f6597c2`) | `critic/c71_loadold_7019.log` |
+| Run 70's 1942 start (no `scoreFrom`) left by a God act on HEAD | — | 0 peaces; the wars kept with `scoreFrom` | `critic/c71_warlong_oldstart_1942god.log` |
+| diploInvariants 33501, 51001, 53001; worldInvariants 36009, 51051, 37009 (R69-B3's) | 0 | 0 | `critic/c71_diploinv_*.log`, `critic/c71_wi_*.log` |
+| `free 1962 51513 heroes=on`, `free 1946 51515 diplomacy=random` | 0, 0 | 0, 0 | `critic/c71_free_19*_free.log` |
+| `free 1983 51505 730` | 0 | 0 | `critic/c71_free_1983_51505_free.log` |
+| `afterTrack 37601` (R69-N4's Tajikistan) | no successor but Russia among the greats; 293 declared in 10 years | identical | `critic/c71_atx_37601.log` |
+| `heldAtEnd 53311` | 0 | 0 | `critic/c71_heldAtEnd_53311.log` |
+| `nukeIntercepts 53501` | 5 launches in 22 years | 5 launches | `critic/c71_nukeIntercepts_53501.log` |
+| `workerDeterminism 53059` | `8abd99a9` every arm | `2d4a84c2` every arm (the pin moved for a colour) | `critic/c71_wd_53059.log` |
+| Tick, seed 99, 5 years, alone | 2.322 ms mean | 2.340 ms mean (+0.8 %); year 1 `ae4ce317`, the pin | `critic/c71_tick99.log` |
 
 ## Design objections (none blocking, no score lowered)
 
-- **R84e as SPEC states it ends the Second World War on any departure from the track** (ADR-1063; SPEC §7.7: "each war
-  a hold of the timeline's freezes in that hour makes a white peace"). The timeline holds the war's fronts until
-  1944–45, so a free start from 1941–45, any God act or Take control ends them all in that hour. R84a then returns
-  every occupation.
-  - **The cases** (`npx tsx critic/scripts/c70_freewar.ts <year> <after> <free|god|take> 30`):
-
-    | Case | HEAD `b6bd706b` | Run 69's commit `e5b97c8e` |
-    |---|---|---|
-    | 1942 replay, Take control of Germany (headless `setPlayer`) | 4 peaces in hour 1 (JAP-CHI, GER-ENG, GER-SOV, GER-USA); occupied cells 23,648 → 473; **GER: 169 formations, 1.07M men on Soviet land at peace** (`critic/c70_freewar_1942take.log`) | (the same path as God) |
-    | 1942 replay, one God act (a province's unrest) | 4 peaces; 23,648 → 473 (`critic/c70_freewar_1942god.log`) | 1 peace (ENG-GER); 22,047 kept; 5 wars on at day 30 (`critic/c70_wt_freewar_1942god.log`) |
-    | 1943 free | 5 of 5 wars end; 24,666 → 0 (`critic/c70_freewar_1943.log`) | 3 of 5 end; 10,922 kept (`critic/c70_wt_freewar_1943.log`) |
-    | 1944 free | 6 of 6 end; 25,092 → 0 (`critic/c70_freewar_1944free.log`) | 5 of 6 end; 16,949 kept (`critic/c70_wt_freewar_1944free.log`) |
-    | 1941 free | JAP-CHI and GER-ENG end; ITA-GRE goes on (`critic/c70_freewar_1941free.log`) | not run |
-    | 1966 replay, God act | VCG-INC, PTL-LAO, IDN-MAL end: 3 of 3 (`critic/c70_freewar_1966god.log`) | not run |
-
-  - **On the page**, the 1942 replay with one revolt in Brazil (`node critic/scripts/c70_god42.mjs 1942 53542
-    replay`):
-    - before: the Eastern Front hatched from Leningrad to the Crimea;
-    - after: the Soviet Union whole and red, with Germany's counters inside it
-    - (`critic/shots/c70g42_1942_replay_53542_0before_east.png`, `…_1after_east.png`).
-  - **The 1943 "Play free" card** promises "The world as history left it on 1 January 1943". The game opens with four
-    peace rows and "Germany declared war on Switzerland" (`critic/c70_rc_1943_free_1600x900.json`).
-  - **Old in part:** on run 69's commit, a free 1943–44 start already ended most of these wars in the first hour (by
-    the score the holds had kept, R69-N1's cause). That was unspecified, and no SPEC line covered it then.
-  - **Why it is wrong.** The replay's main use is taking a side in the war or touching it. Doing either ends the
-    war. Korea (1951–52) and Vietnam (1965–72) are the same case on a smaller scale.
-  - **The alternative.** End white only the wars whose hold outlives the timeline (Lebanon's, to 2000). On an early
-    end, lift the hold and keep the war, with its score reset so the kept score buys nothing, as Hearts of Iron IV's
-    joined wars keep their occupations.
-- **R84g hands the successors almost nothing** (ADR-1064). At the 1991 end, 9 of the 14 republics born from the
-  Soviet Union hold 0 formations (Belarus among them, gross income 51). Russia keeps 339 formations with an upkeep of
-  1,865 a month against a gross income of 852, and is kept afloat by a 108k treasury
-  (`critic/c70_successorPurse_999.log`). The rule fixes run 69's bankrupt Tajikistan by making Russia the only army
-  in eight of the new states.
-- **Carried:** R82f counted by realm (ADR-1042), and the free 1975 world's far conquests.
+- **ADR-1060 still empties occupied France in the hour the replay is left**, while R85b now keeps the war with Britain.
+  - In the 1941 replay, one revolt in Brazil gives the German zone of France back to Vichy: Paris and the Channel coast
+    turn from hatched grey to Vichy blue (`critic/shots/c71g42_1941_replay_53541_0before_france.png` against
+    `…_1after_france.png`). Vichy France's land goes from 2,564,185 to 2,842,023 km².
+  - Headless, a 1941 free start leaves Germany's 146 formations, 1.11M men, standing in Vichy France at peace after hour
+    1; in 1942 and 1943 the 1,388–2,302 cells go back too (`critic/c71_freewar_1941free.log`, `…_1942god.log`,
+    `…_1943.log`).
+  - ADR-1060 decided this ("every cell held by a nation at peace with its owner goes back"). With R85b keeping the war
+    on Britain, Germany loses the coast it fights from. The alternative: count an occupation the timeline set up by
+    armistice (France 1940, Indochina 1940–41) as the occupier's, as R85b counts the war's.
+- **Carried:** R82f counted by realm (ADR-1042); R84g's successors with few formations (run 70).
 
 ## Ideas from other games (not scored)
 
-- **Hearts of Iron IV** lets a player join a war in progress from any start date, with its occupations and war score
-  in hand. A free 1943 should open with the war on.
-- **Europa Universalis' map modes** give a colony a tint of its ruler's colour. Belgian Congo's new near-black is
-  neither its ruler's nor readable (R70-N2).
+- **Hearts of Iron IV** shows war score's parts (occupied land, battles, the capital) beside the bar. A banner that said
+  "39 (from 61 at the replay's end)" would explain R71-N2 even before it is fixed.
 
 ## Strengths (verified)
 
-- **Every one of run 69's named cases is fixed, on run 69's own probes and seeds:**
-  - the held land of a 1946 free game, 21,338 → 0 cells;
-  - the aid lines, 13 and 21 → 0 economy lines;
-  - 37009's tribute line;
-  - Georgia's colour, ΔE 1.3 → 33.5 on the page;
-  - Lebanon;
-  - the five late names;
-  - the successors' purses;
-  - the city label of Undo.
-- **Undo is now pixel-exact** on every God act, on a 1938 and a 1983 world, across four seeds. Run 69 had hundreds to
-  thousands of pixels on the late world.
+- **R85b turns the replay's main use into a game:** leaving it during the Second World War now keeps the war, and the
+  war ends on the field. Germany wins in the East from 1942 (3 of 3 seeds), the Soviet Union from 1943 (3 of 3) and 1944,
+  and Japan takes China in all 8 runs from 1942–44 (`critic/c71_warlong_*.log`); the save and load of these games is
+  exact.
+- **Every run 70 issue is fixed on run 70's own case**, and the checkers (diplo, world, track, held, worker determinism) are 0
+  broken on 21 new-seed runs, and landingFuzz on 90.

@@ -1,9 +1,9 @@
 {
-  "commit": "b6bd706b1d46ea4b12b4b1481f819dbfffe8f52e",
+  "commit": "df93b4c2a3099c802b7bd518218fd68450c5ccaa",
   "mode": "focused",
   "scores": {
     "mapVisuals": 8,
-    "diplomacyWarDepth": 7,
+    "diplomacyWarDepth": 8,
     "emergentDynamics": 8,
     "godMode": 8,
     "editorScenarios": 8,
@@ -17,13 +17,6 @@
     "aircraft": 8,
     "aiNukes": 8
   },
-  "blocking": [
-    {
-      "id": "R70-B2",
-      "title": "Bloc aid paid in the hour its bloc dissolves breaks diploInvariants' bloc rule (1991 free 51507)",
-      "evidence": "c70_free.ts 1991 51507 1825 free -: '1993-09-01: bloc: aid by USA with 1 bloc(s)', 'aid by SOV with 1 bloc(s)' (critic/c70_free_1991_51507_free.log); c70_aidhour.ts 51507 1993-09-01: at T01 BlocAid USA>CCP, SOV>ALG/NIG/LBY, then AllianceLeft MON, AllianceDissolved; blocs 2 before the hour, 1 after (critic/c70_aidhour_51507.log). The strategic AI pays before the alliance pass; tests/helpers/diploInvariants.ts:140 reads the blocs after the hour.",
-      "fix": "The checker reads the blocs at the hour's start, or aid is paid after the alliance pass. Seen fixed: c70_free.ts 1991 51507 1825 free - shows 0 broken lines."
-    }
-  ],
-  "timestamp": "2026-11-15T09:07:09-05:00"
+  "blocking": [],
+  "timestamp": "2026-11-15T12:14:32-05:00"
 }

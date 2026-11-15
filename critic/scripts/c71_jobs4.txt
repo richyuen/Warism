@@ -1,0 +1,14 @@
+npx tsx critic/scripts/c71_farConquests.ts 0 6161,41161,41163,41165,41167 730 > critic/c71_farc_0_a.log 2>&1
+npx tsx critic/scripts/c71_farConquests.ts 0 53161,53163,53165,53167,53169 730 > critic/c71_farc_0_c.log 2>&1
+npx tsx critic/scripts/c71_firstdecl.ts 60 39821 39823 39825 39827 39829 39831 39833 39835 39837 39839 > critic/c71_firstdecl.log 2>&1
+npx tsx critic/scripts/c71_firstdecl.ts 60 53821 53823 53825 53827 53829 53831 53833 53835 53837 53839 > critic/c71_firstdecl_53.log 2>&1
+npx tsx critic/scripts/c71_piles.ts 365 --plain 39139 39141 39143 39145 39147 > critic/c71_piles_p39.log 2>&1
+npx tsx critic/scripts/c71_piles.ts 365 --plain 51139 51141 51143 51145 51147 > critic/c71_piles_p51.log 2>&1
+npx tsx tools/diag/pileSides.ts 365 51141 51143 51145 --all > critic/c71_pileSides_51.log 2>&1
+npx tsx tools/diag/successorPurse.ts 999 365 critic/c71_starts/1991.sav > critic/c71_successorPurse_999.log 2>&1
+npx tsx tools/diag/heldAtEnd.ts 53311 > critic/c71_heldAtEnd_53311.log 2>&1
+npx tsx tools/diag/nukeIntercepts.ts 53501 22 > critic/c71_nukeIntercepts_53501.log 2>&1
+npx tsx critic/scripts/c71_afterTrack.ts 37601 10 critic/c71_atx_37601.json > critic/c71_atx_37601.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 53059 4380 24 critic/c71_wd_53059.json > critic/c71_wd_53059.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 37009 1825 > critic/c71_wi_37009.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 53001 scenario 1825 > critic/c71_diploinv_53001s.log 2>&1

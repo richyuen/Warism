@@ -1,0 +1,28 @@
+npx tsx tools/diag/fewNationWars.ts 3 53401 6 10 > critic/c71_few3_53.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 51401 6 10 > critic/c71_few3_51.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 54401 6 10 > critic/c71_few3_54.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 4 54411 6 10 > critic/c71_few4_54.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 2 54421 6 10 > critic/c71_few2_54.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 54001 scenario 1825 > critic/c71_diploinv_54001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 54003 random 1825 > critic/c71_diploinv_54003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 54005 scenario 1825 --heroes > critic/c71_diploinv_54005sh.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 54007 random 1825 --world random > critic/c71_diploinv_54007rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 54051 1825 > critic/c71_wi_54051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 54053 1825 --heroes > critic/c71_wi_54053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 54055 1825 --world random > critic/c71_wi_54055rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 54057 1825 --diplomacy random > critic/c71_wi_54057dr.log 2>&1
+npm run sim -- --scenario 1938 --seed 7019 --years 20 --save critic/c71_seed7019_y20.bin > critic/c71_seed7019_save.log 2>&1
+npm run sim -- --scenario 1938 --seed 32019 --years 20 --save critic/c71_seed32019_y20.bin > critic/c71_seed32019_save.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 54059 4380 24 critic/c71_wd_54059.json > critic/c71_wd_54059.log 2>&1
+npx tsx critic/scripts/c64_track.ts 1938 365 > critic/c71_track_1938.log 2>&1
+npx tsx critic/scripts/c64_track.ts 54301 365 > critic/c71_track_54301.log 2>&1
+npx tsx tools/diag/heldAtEnd.ts 54311 > critic/c71_heldAtEnd_54311.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 54011 random 1825 --world random > critic/c71_diploinv_54011rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 54061 1825 --world random > critic/c71_wi_54061rw.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 60 7 3 5 > critic/c71_few60_7.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 60 54431 3 5 > critic/c71_few60_54.log 2>&1
+npx tsx tools/diag/landingRows.ts all critic/c71_lrows_all.json > critic/c71_lrows_all.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 30041 3517 120 30041 30,90 1 > critic/c71_li_30041_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 27037 15101 120 27037 30,90 2 > critic/c71_li_27037_15101_g2.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 51101 3517 120 51101 30,90 1 > critic/c71_li_51101_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 53125 15101 120 53125 30,90 2 > critic/c71_li_53125_15101_g2.log 2>&1

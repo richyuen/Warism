@@ -1,0 +1,23 @@
+npx tsx critic/scripts/c71_free.ts 1991 51507 1825 free - > critic/c71_free_1991_51507_free.log 2>&1
+npx tsx critic/scripts/c71_free.ts 1942 54542 365 free - > critic/c71_free_1942_54542_free.log 2>&1
+npx tsx critic/scripts/c71_free.ts 1943 54543 365 free - > critic/c71_free_1943_54543_free.log 2>&1
+npx tsx critic/scripts/c71_free.ts 1944 54544 365 free heroes=on > critic/c71_free_1944_54544_free.log 2>&1
+npx tsx critic/scripts/c71_free.ts 1951 54551 365 free - > critic/c71_free_1951_54551_free.log 2>&1
+npx tsx critic/scripts/c71_free.ts 1966 54566 365 free diplomacy=random > critic/c71_free_1966_54566_free.log 2>&1
+npx tsx critic/scripts/c71_aidhour.ts 51507 1993-09-01 > critic/c71_aidhour_51507.log 2>&1
+npx tsx critic/scripts/c71_freewar.ts 1942 53542 god 30 > critic/c71_freewar_1942god.log 2>&1
+npx tsx critic/scripts/c71_freewar.ts 1942 53542 take 30 > critic/c71_freewar_1942take.log 2>&1
+npx tsx critic/scripts/c71_freewar.ts 1943 53543 free 30 > critic/c71_freewar_1943.log 2>&1
+npx tsx critic/scripts/c71_freewar.ts 1944 53544 free 30 > critic/c71_freewar_1944free.log 2>&1
+npx tsx critic/scripts/c71_freewar.ts 1941 53541 free 30 > critic/c71_freewar_1941free.log 2>&1
+npx tsx critic/scripts/c71_freewar.ts 1966 53566 god 30 > critic/c71_freewar_1966god.log 2>&1
+npx tsx critic/scripts/c71_endleb.ts 999 > critic/c71_endleb_999.log 2>&1
+npx tsx critic/scripts/c71_endleb.ts 53283 > critic/c71_endleb_53283.log 2>&1
+npx tsx critic/scripts/c71_warlong.ts 1951 54551 free 730 > critic/c71_warlong_1951free.log 2>&1
+npx tsx critic/scripts/c71_warlong.ts 1966 54566 god 730 > critic/c71_warlong_1966god.log 2>&1
+npx tsx critic/scripts/c71_warlong.ts 1942 54542 take 730 > critic/c71_warlong_1942take.log 2>&1
+npx tsx critic/scripts/c71_warlong.ts 1944 54544 free 730 > critic/c71_warlong_1944free.log 2>&1
+npx tsx critic/scripts/c71_heldfree.ts 1946 51515 3 > critic/c71_heldfree_1946.log 2>&1
+npx tsx critic/scripts/c71_free.ts 1975 51501 730 free - > critic/c71_free_1975_51501_free.log 2>&1
+npx tsx critic/scripts/c71_landless.ts 1975,1980,1985,1991 > critic/c71_landless_b.log 2>&1
+npx tsx tools/diag/neighbourColours.ts critic/c71_starts/1938.sav 30 > critic/c71_neighbourColours_1938.log 2>&1

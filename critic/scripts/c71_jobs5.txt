@@ -1,0 +1,10 @@
+npm run sim -- --scenario 1938 --seed 7019 --load critic/c70_seed7019_y20.bin --years 1 > critic/c71_loadold_7019.log 2>&1
+npx tsx critic/scripts/c71_warlong_oldstart.ts 1942 53542 god 60 > critic/c71_warlong_oldstart_1942god.log 2>&1
+npx tsx critic/scripts/c71_blocend.ts 54611 1825 > critic/c71_blocend_54611.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33501 scenario 1825 > critic/c71_diploinv_33501s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 51001 scenario 1825 > critic/c71_diploinv_51001s.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 36009 1825 > critic/c71_wi_36009.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 51051 1825 > critic/c71_wi_51051.log 2>&1
+npx tsx critic/scripts/c71_free.ts 1962 51513 730 free heroes=on > critic/c71_free_1962_51513_free.log 2>&1
+npx tsx critic/scripts/c71_free.ts 1946 51515 730 free diplomacy=random > critic/c71_free_1946_51515_free.log 2>&1
+npx tsx critic/scripts/c71_free.ts 1983 51505 730 free - > critic/c71_free_1983_51505_free.log 2>&1

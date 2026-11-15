@@ -456,3 +456,8 @@
 ## 2026-11-15 — R85f: the month's air rows say they are of the month past
 
 - R70-N4: "…struck Croatia over the past month" (was "this month", logged at the next month's start). Batch 29 done.
+
+## 2026-11-15 — critic run 71 (focused, on `df93b4c2`)
+
+- Every dimension 8 (diplomacy 7→8), no blocking issue. Batch 30 (R86a–f) filed: run 71's five non-blocking issues and,
+  for the user's word, heroes on by default in free play (Countryball is already the default, ADR-777).

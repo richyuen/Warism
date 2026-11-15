@@ -27,6 +27,41 @@ Rules:
   year, the replay to 1975, a faster tick, runs 63–67's findings, the gate on the GPU), in CHANGELOG.md for players; the
   items with their evidence in `docs/history/ROADMAP-release-2026-11-13.md`.
 
+## Batch 30 — critic run 71's issues and two defaults (2026-11-15; focused on `df93b4c2`; the user's word)
+
+Run 71 (focused): every dimension 8, no blocking issue. The user asked (2026-11-15) for one fix batch before the critic
+runs again: run 71's non-blocking issues and the defaults the critic should judge. Next: a full run (no blocking, every
+score at its bar).
+
+- [ ] R86 **Run 71's issues and the defaults.**
+  - [ ] R86a (R71-N1) A God "Make peace" in the replay is told "…as history's course ended": `endPeace` takes any
+    `PeaceSigned` followed by `TrackEnded` in the hour, and the God act signs its peace in the hour it ends the track.
+    AT: `critic/scripts/c71_godpeace.mjs 1942 JAP 'United States'` reads "Japan made peace with United States" (or names
+    the player's act); Lebanon's 1991 peace still reads "…as history's course ended".
+  - [ ] R86b (R71-N2) A war R85b keeps has a ceiling of 100 − `scoreFrom` for the side ahead (`war.ts`,
+    `clamp(clamp(raw) − scoreFrom)`): GER v SOV stops at 39 from April to August 1942, PUPPET_SCORE and
+    PEACE_ACCEPT_SCORE out of reach. AT: `c71_warlong.ts 1942 54601 god 730` the score follows the front past
+    100 − `scoreFrom` (the raw score unclamped before the subtraction), or SPEC states the ceiling and the banner shows
+    it (Hearts of Iron IV's idea: "39 (from 61 at the replay's end)").
+  - [ ] R86c (R71-N3) Two-nation worlds with no war: `fewNationWars 2 54421 6 10` 3 of 6 with no war in ten years,
+    land neighbours each time, treasuries unspent. AT: a war on at least 5 of 6; R85e's 53401 and R84h's 51401 held.
+  - [ ] R86d (R71-N4, small) At 390 × 844 the R85c note stands three times on one screen (Take control, the God tab,
+    the map tools); "one history holds past 1991…" reads as a garden path and shows on every year's card; the war
+    banners hide a row of History. AT: one note on the phone screen; the card's line only from 1983 on, plainly
+    worded; no History row under the banners at 390 × 844.
+  - [ ] R86e (R71-N5, old) The cities keep their 1938 names to 1991: "Keijō, South Korea", "Heijō", "Peiping",
+    "Léopoldville" on 31 December 1975 (ADR-18's 1938 names). AT: a city renamed in the timeline's years (Seoul 1945,
+    Beijing 1949, Kinshasa 1966) reads its name of the day in the replay and in a free game started after it.
+  - [ ] R86f (the user's word) Heroes on by default in free play, so the critic judges them: the new-game form's heroes
+    choice starts "on" where the scenario has heroes (PLAN 7.184d had it off). The sim's absent option stays off
+    (seed 99's pin unchanged). AT: the form's heroes select reads "On" on first open, a game started from it has the
+    heroes; a unit test of the form's default.
+  - Countryball (the user's word): already the default unit look (`DEFAULT_UNIT_LOOK = 'balls'`, ADR-777); nothing to
+    change. A browser that saved "Classic" keeps it (`warsim.unitLook`).
+  - Not filed (every dimension at its bar, ADR-843 asks none): the design objection, ADR-1060 empties occupied France
+    as the replay is left while R85b keeps the war on Britain (proposed: an armistice occupation the timeline set up
+    counts as the occupier's); for the user's word. `slowClick` (ADR-914): the four named cases as run 70.
+
 ## Batch 29 — critic run 70's issues (2026-11-15; focused on `b6bd706b`; RELEASES step 2, ADR-1005)
 
 Run 70 (focused): diplomacy 7, every other dimension 8. One blocking issue, four non-blocking and the slowClick cases;

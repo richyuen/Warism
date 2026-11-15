@@ -1,0 +1,11 @@
+npx tsx critic/scripts/c71_saveload.ts 1942 53542 god 24 30 > critic/c71_saveload_1942god.log 2>&1
+npx tsx critic/scripts/c71_warlong.ts 1942 53542 god 1095 > critic/c71_warlong_1942god.log 2>&1
+npx tsx critic/scripts/c71_warlong.ts 1942 54601 god 730 > critic/c71_warlong_1942god_54601.log 2>&1
+npx tsx critic/scripts/c71_warlong.ts 1942 54602 god 730 > critic/c71_warlong_1942god_54602.log 2>&1
+npx tsx critic/scripts/c71_warlong.ts 1943 53543 free 1095 > critic/c71_warlong_1943free.log 2>&1
+npx tsx critic/scripts/c71_warlong.ts 1943 54603 free 730 > critic/c71_warlong_1943free_54603.log 2>&1
+npx tsx critic/scripts/c71_warlong.ts 1943 54604 free 730 > critic/c71_warlong_1943free_54604.log 2>&1
+npx tsx critic/scripts/c71_saveload.ts 1943 53543 free 24 30 > critic/c71_saveload_1943free.log 2>&1
+npx tsx critic/scripts/c71_free.ts 1991 54611 1825 free - > critic/c71_free_1991_54611_free.log 2>&1
+npx tsx critic/scripts/c71_free.ts 1991 54612 1825 free - > critic/c71_free_1991_54612_free.log 2>&1
+npx tsx critic/scripts/c71_landless.ts 1938 > critic/c71_landless_1938.log 2>&1
