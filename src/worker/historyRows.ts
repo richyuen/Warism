@@ -211,6 +211,7 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     // An annexation the timeline tells by its note (R64d).
     const told = kind === EventKind.NationAnnexed ? annexNote(world, rows[i]!, a, b) : '';
     if (told) [row.as, row.note] = ['track', told];
+    if (kind === EventKind.PeaceSigned && endPeace(rows, i)) row.as = 'trackEnd';
     // Why it joined (ROADMAP R55i): its own sentence.
     // The historical track's end (ROADMAP R62d): its sentence by why.
     if (kind === EventKind.TrackEnded) row.as = b === TrackEnd.date ? 'date' : b === TrackEnd.intervention ? 'intervention' : b === TrackEnd.free ? 'free' : 'changed';
@@ -321,6 +322,15 @@ function transferTold(world: World, tick: number, from: number, to?: number): bo
  * The note of the timeline's annexation of `target` by `annexer` at `tick` that is told by its note (`tell: 'note'`,
  * ROADMAP R64d; critic run 62, R62-N4: "Germany was annexed by Soviet Union" after the four zones), else ''.
  */
+/**
+ * Whether row `i`, a peace, is one the track's end made (R85c; critic run 70, R70-N1: the wars it ended read as ordinary
+ * peaces): `endTrack` signs them, then logs `TrackEnded`, in the same hour.
+ */
+function endPeace(rows: ArrayLike<number>, i: number): boolean {
+  for (let j = i + HISTORY_STRIDE; j < rows.length && rows[j] === rows[i]; j += HISTORY_STRIDE) if (rows[j + 1] === EventKind.TrackEnded) return true;
+  return false;
+}
+
 function annexNote(world: World, tick: number, target: number, annexer: number): string {
   const t = world.track;
   if (!t) return '';
@@ -357,6 +367,7 @@ function tickerRowAt(world: World, i: number, nation: (v: number) => string, cit
   if (kind === EventKind.TrackEvent) row.note = world.track?.events[a - 1]?.note ?? '';
   const told = kind === EventKind.NationAnnexed ? annexNote(world, tick, a, b) : '';
   if (told) [row.as, row.note] = ['track', told];
+  if (kind === EventKind.PeaceSigned && endPeace(rows, i)) row.as = 'trackEnd';
   // The historical track's end (ROADMAP R64a): its sentence by why, as in History; no place, so the world's middle.
   if (kind === EventKind.TrackEnded) {
     row.as = b === TrackEnd.date ? 'date' : b === TrackEnd.intervention ? 'intervention' : b === TrackEnd.free ? 'free' : 'changed';

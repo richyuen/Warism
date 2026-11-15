@@ -439,3 +439,7 @@
 
 - Only wars held past the timeline's end make a white peace; the rest go on, their score from the end's, their clocks
   restarted. The 1942 replay's God act keeps the Second World War (0 peaces in hour 1, the Eastern Front on at day 30).
+
+## 2026-11-15 — R85c: what ends with the replay is told
+
+- The notes and the free card name the wars' fate (R85b); the end's peaces read "…as history's course ended".

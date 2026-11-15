@@ -50,9 +50,12 @@ each fixed before the critic runs again.
     Done (ADR-1067): a war held past the timeline's end makes a white peace; any other held war goes on, its score
     counted from the end's (`War.scoreFrom`) and its clocks restarted. 1942 God and Take control: 0 peaces in hour 1,
     the Eastern Front on at day 30; 1943 and 1944 free the same; Lebanon white at the 1991 end. `trackEndHolds1938h`.
-  - [ ] R85c (R70-N1) What ends with the replay is not told: the God bar's note, Take control's and the 1941-45 free
+  - [x] R85c (R70-N1) What ends with the replay is not told: the God bar's note, Take control's and the 1941-45 free
     card say nothing of the wars that end (after R85b, those whose hold outlives the timeline), and the end's peaces
     read as ordinary ones. AT: the notes and the card name it; the end's peace rows read as the replay's.
+    Done: the God bar's and tab's note, the editor's, Take control's, the replay's form note and the free year's card
+    say the wars it froze go on and one held past 1991 ends in a white peace; a peace the end signs is told "…as
+    history's course ended" (`history.PeaceSigned.trackEnd`; `trackEndHolds1938h.test`).
   - [ ] R85d (R70-N2) Belgian Congo recoloured near-black (`#334400`, L* 26 on the page; R84d). AT: its land L* ≥ 35
     on the page, R84d's ΔE bars held (`colours1991.test`).
   - [ ] R85e (R70-N3, old) Three-nation worlds on 53401-53406: 3 of 6 with no war in ten years (as on run 69's commit).

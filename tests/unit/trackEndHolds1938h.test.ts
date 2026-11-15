@@ -5,6 +5,8 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TAGS_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
 import type { World } from '../../src/sim/world';
+import { historyText } from '../../src/ui/historyText';
+import { historyRows } from '../../src/worker/historyRows';
 import { assets1938 } from '../helpers/earth';
 
 // ROADMAP R84e (ADR-1063; critic run 69, R69-N1: Israel's 1982 war on Lebanon, held by the timeline to 2000, annexed
@@ -46,6 +48,10 @@ describe("the timeline's frozen wars as the track ends (ROADMAP R84e, R85b)", ()
     expect(rows.filter(([k, a]) => (k === EventKind.NationAnnexed || k === EventKind.PuppetCreated) && a === chi)).toEqual([]);
     expect(w.nations.cols.living[chi]).toBe(1);
     expect(w.landCounts().owned[chi]).toBe(chinaLand);
+    // R85c (critic run 70, R70-N1): History tells it as the end's peace, not an ordinary one.
+    const peace = historyRows(w, (n) => `nation.${TAGS_1938H[n - 1]}`, () => '').find((r) => r.kind === EventKind.PeaceSigned && [r.a, r.b].sort().join() === [jap, chi].sort().join());
+    expect(peace?.as).toBe('trackEnd');
+    expect(historyText(peace!)).toMatch(/made peace with .* as history's course ended$/);
   });
 
   it('a war held to a date within the timeline goes on as the game is left, counted from then', () => {
