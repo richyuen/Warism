@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest';
+import { EventKind } from '../../src/shared/events';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TAGS_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
@@ -33,6 +34,8 @@ it('a year played free holds no land at peace and keeps the world rules, from fo
   const run = new Sim({ scenario: '1938h', seed: SEED_1938H, assets }, TIMELINE_1938H);
   const held: string[] = [];
   const breaks = new Breaks();
+  /** `BlocAid` rows by game: the economy rule is read on aid given (R84b), not only on months without it. */
+  const aided = new Map<string, number>();
   for (const date of YEARS) {
     run.step(run.world.track!.tickOf(date) - run.tick, quiet);
     expect(run.world.track?.ended, date).toBe(false);
@@ -50,12 +53,19 @@ it('a year played free holds no land at peace and keeps the world rules, from fo
       };
       look('hour 1');
       const h = hourChecks(sim.world, new Set(RULE_SETS), tag, label, breaks);
+      const check = (w: World): void => {
+        const ev = w.out.events;
+        for (let i = 0; i < ev.length; i += 6) if (ev[i + 1] === EventKind.BlocAid) aided.set(label, (aided.get(label) ?? 0) + 1);
+        h.check(w);
+      };
       for (let d = 1; d <= DAYS; d++) {
-        sim.step(24, h.check);
+        sim.step(24, check);
         look(`day ${d}`);
       }
     }
   }
   expect(held).toEqual([]);
   expect(breaks.lines).toEqual([]);
+  // With the scenario's diplomacy (two blocs) from 1962 and 1975, aid was given.
+  for (const date of ['1962-01-01', '1975-01-01']) expect(aided.get(`${date} after ${GAMES[0]!.after}`) ?? 0, date).toBeGreaterThan(0);
 }, 3_600_000);

@@ -372,3 +372,9 @@
 - R69-B3: a puppet made in a month's start hour (a peace's, God's, one handed over) takes no step of that hour's
   monthly pass; a saved column `nations.puppetAt`. 37009 × 1825 days: 0 broken (1 before).
 - Pin `401d6856` → `6e3344f5`, by the column alone (the same without the rule). `puppetFirstMonth1938.test` red before.
+
+## 2026-11-15 — R84b's sweep test reads aid given
+
+- `freeYears1938h.test` asserts `BlocAid` rows in the 1962 and 1975 games with the scenario's diplomacy; on the checker
+  of before R84b it is red (economy lines from 1954 and 1962), green on HEAD. The whole sweep suite alone: 23 of 23
+  files green (12 min 56 s), the first run since R84a and R84c.
