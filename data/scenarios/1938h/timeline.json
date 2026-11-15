@@ -17423,6 +17423,34 @@
    "note": "Libya independent: the United Kingdom of Libya"
   },
   {
+   "date": "1951-12-24",
+   "hour": 1,
+   "kind": "transfer",
+   "to": "LBY",
+   "from": [
+    "ITA"
+   ],
+   "ring": [
+    [
+     9.0,
+     34.0
+    ],
+    [
+     25.5,
+     34.0
+    ],
+    [
+     25.5,
+     19.5
+    ],
+    [
+     9.0,
+     19.5
+    ]
+   ],
+   "note": "Italy's last coast cells of Libya Libya's (R80l)"
+  },
+  {
    "date": "1952-02-18",
    "kind": "allianceJoin",
    "nation": "GRE",
@@ -17730,75 +17758,23 @@
    ],
    "ring": [
     [
-     9.4,
-     47.6
+     9.0,
+     49.3
     ],
     [
-     9.5,
-     46.9
+     17.6,
+     49.3
     ],
     [
-     10.4,
-     46.75
+     17.6,
+     46.2
     ],
     [
-     12.2,
-     46.65
-    ],
-    [
-     13.7,
-     46.45
-    ],
-    [
-     15.0,
-     46.55
-    ],
-    [
-     16.1,
-     46.75
-    ],
-    [
-     16.6,
-     47.5
-    ],
-    [
-     17.2,
-     48.0
-    ],
-    [
-     16.95,
-     48.65
-    ],
-    [
-     16.0,
-     48.8
-    ],
-    [
-     15.0,
-     49.05
-    ],
-    [
-     13.8,
-     48.75
-    ],
-    [
-     13.0,
-     48.3
-    ],
-    [
-     12.9,
-     47.7
-    ],
-    [
-     11.0,
-     47.4
-    ],
-    [
-     10.2,
-     47.3
+     9.0,
+     46.2
     ]
    ],
-   "note": "The Austrian State Treaty: the last occupation troops leave Austria"
+   "note": "The Austrian State Treaty: the last occupation troops leave Austria (all of Austria's land, its edges too: R80l)"
   },
   {
    "date": "1955-10-26",
@@ -20109,6 +20085,33 @@
     "VNM-484"
    ],
    "note": "The Easter Offensive: Quảng Trị and Lộc Ninh"
+  },
+  {
+   "date": "1972-05-15",
+   "kind": "occupy",
+   "by": "JAP",
+   "of": [
+    "JAP"
+   ],
+   "ring": [
+    [
+     122.5,
+     31.5
+    ],
+    [
+     132.0,
+     31.5
+    ],
+    [
+     132.0,
+     24.0
+    ],
+    [
+     122.5,
+     24.0
+    ]
+   ],
+   "note": "Okinawa returned to Japan"
   },
   {
    "date": "1972-06-01",

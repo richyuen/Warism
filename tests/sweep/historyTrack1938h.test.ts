@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { SEED_1938H, TAGS_1938H } from '../../src/sim/scenario1938h';
 import { declareWar } from '../../src/sim/systems/war';
+import { useTags, worldBreaks } from '../helpers/diploInvariants';
 import { arsenals, historyTrack } from '../helpers/historyTrack';
 
 // ROADMAP R62k (ADR-947): the historical track's checker (`tests/helpers/historyTrack.ts`) from 1938 to the track's
@@ -20,6 +21,10 @@ describe('the historical track checked to its end (ROADMAP R62k)', () => {
     // R69f (ADR-989): the arsenals of the track's end history's: no West German, none before its nation's bomb (China's
     // of 1964 since R71f, ADR-997).
     expect(arsenals(run.sim.world)).toEqual(['CCP', 'ENG', 'FRA', 'SOV', 'USA']);
+    // R80l (ADR-1056): no land held at peace on the end hour (`held`): the occupations of 1943-45 all returned (the
+    // zones of Austria to its edges, Italy's last coast of Libya, Okinawa in 1972).
+    useTags((n) => TAGS_1938H[n - 1] ?? `#${n}`);
+    expect(worldBreaks(run.sim.world).filter((l) => l.startsWith('held'))).toEqual([]);
     // R67b (ADR-980): the blocs it hands over, each under its leader with its members (West Germany in NATO from 1955,
     // R69b, ADR-985; China out of the Soviet bloc at the split of 1960, R69c, ADR-986; Albania in 1961, R69d, ADR-987).
     // As handed over, before the free AI's first day (R71b, ADR-993).

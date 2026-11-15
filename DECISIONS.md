@@ -68,6 +68,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1056 · 2026-11-14 · accepted — R80l: no land held at peace at the track's end
+- **Found** (`tools/diag/heldAtEnd.ts`, the 1991 end of seeds 1938, 1, 2, 3, the same on each): 29 cells held at peace,
+  none a rule's: occupations of 1943-45 whose returns did not cover them. Austria's State Treaty (1955-10-25) a hand
+  ring inside the border: France's 20 cells (12 of them Austria's land on a German province of the map) and the United
+  States' 1 left. Libya's birth (1951-12-24) by country code: two coast cells off the province map, Italy's and
+  Britain's held. Okinawa: the research's reversion (1972-05-15) never in the timeline (the maps compare owners, and
+  Japan owned it).
+- **Rule:** the data, no code. An owner's `occupy` of its own land takes back only its cells, so Austria's return is a
+  box over its land; a `transfer` of Italy's last cells in Libya's box the hour after Libya's birth; Okinawa's return
+  by Japan's `occupy` on its date. `historyTrack1938h` checks `held` on the end hour.
+- **Consequences:** the replay moves from 1951 (each start's hash with the timeline's).
+
 ### ADR-1055 · 2026-11-14 · accepted — R80k: the dominions free on their dates
 - **Rule** (ADR-1031's answer 5, from `docs/research/1976-91.md`'s dominions): `release` of South Africa on
   1961-05-31 (the republic, out of the Commonwealth), of Canada on 1982-04-17 (the Canada Act) with Canada into

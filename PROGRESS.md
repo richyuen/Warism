@@ -320,3 +320,9 @@
 ## 2026-11-14 — R80k: the dominions free on their dates (ADR-1055)
 
 - South Africa 1961, Canada 1982 (and NATO), Australia 1986 released; free at the yearly starts after; replay tests green.
+
+## 2026-11-14 — R80l: no land held at peace at the track's end (ADR-1056)
+
+- 29 cells at the 1991 end on four seeds, all occupations of 1943-45 returned short: Austria's ring, Libya's coast
+  cells, Okinawa. Fixed in the timeline; `held` 0 on seeds 1938, 1, 2, 3, checked by `historyTrack1938h`.
+- Batch 24 (R80) done: the replay to 1991. Next by PROMPT's RELEASES: the critic.

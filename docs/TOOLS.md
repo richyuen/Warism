@@ -28,6 +28,10 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   member that leaves a bloc of the track's end (living, its alliance, who holds its capital, its wars) and each war
   with the blocs' leaders on opposite sides; `WATCH` prints each change of those nations' wars with each side's men
   (R80j).
+- `[FRESH=1] npx tsx tools/diag/heldAtEnd.ts [seed]`: the land held at peace on the track's end hour (`held`), each
+  pair's cells by province (a cell off the province map by its lon/lat) and the last `occupy` that named them. Seed
+  1938 from the end year's built start; `FRESH=1` steps it from 1938 (after a timeline change; a stale start is
+  refused). ~25 min a seed from 1938 (R80l).
 - `npx tsx tools/diag/callWhy.ts <seed> <day> <attacker> <target> <who>`: from the same save, the hour before a
   declaration: `who`'s alliance and the blocs, truces, wars, guarantees, overlords, and `callSides`' sides; that
   hour's world kept in `.cache/callWhy_<seed>_<day>.sav.gz` (R80j).
