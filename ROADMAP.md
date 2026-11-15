@@ -79,10 +79,14 @@ each fixed before the release (ADR-1005); the release checks then run once on th
     (`BEN`) 1975-11-30, Myanmar (`MMR`) 1989-06-18. `renamesLate1938h.test`; `historyTrack1938h` and
     `historyMatch1938h` green (none passed over); `c69_ev91.mjs` on fresh starts, 27 December 1991: the tooltips read
     Egypt (30° E 30° N), Sri Lanka, Benin, Zaire and Myanmar; Egypt's shot looked at.
-  - [ ] R84g (R69-N4) The Soviet successors bankrupt on 1 January 1992 (Kazakhstan disbands 18, Tajikistan 31;
+  - [x] R84g (R69-N4) The Soviet successors bankrupt on 1 January 1992 (Kazakhstan disbands 18, Tajikistan 31;
     Tajikistan a great power on 37601): a successor's forces within what its purse keeps (or a purse with them). AT:
     no successor disbands for want of pay in 1992 on four seeds; no successor but Russia and Ukraine a great power
     at the end.
+    Done (ADR-1064): a breakup hands only the forces the successor's purse keeps (the economic AI's peace share of
+    its income), the rest the giver's. `successorPurse.ts` on 999, 5151, 6161, 31337: no successor disbands in 1992
+    (Kazakhstan 18 and Tajikistan 31 on 1 January before); `afterTrack.ts` on 37601, 1938, 1: great powers at the
+    end and two years on none of the successors (Tajikistan on 37601 before). `breakup1938h.test` (5).
   - [ ] R84h (R69-N5) Three-nation random worlds quiet since run 68 (5 wars in ten years over six worlds, against 19;
     R82d's or R82f's `strategic.ts` the candidates): find the change by A/B and restore. AT: `fewNationWars 3 51401 6
     10` a war on at least 5 of 6 seeds, as run 68's commit.

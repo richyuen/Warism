@@ -397,3 +397,9 @@
   ZAI, LKA, BEN, MMR, each with its name, adjective and flag). On the page on 27 December 1991 (`c69_ev91.mjs`, the
   starts rebuilt) the five tooltips read the new names.
 - Tests: `renamesLate1938h.test`, `data-schemas`, `flagsByScenario`, `historyTrack1938h`, `historyMatch1938h`.
+
+## 2026-11-15 — R84g: a successor takes the forces its purse keeps (ADR-1064)
+
+- R69-N4: no Soviet successor disbands in 1992 (four seeds), none a great power at the end (three seeds). Ukraine 23
+  formations at the handover, Kazakhstan and Tajikistan none, Russia 339 on its reserve. Tool `successorPurse.ts`.
+- Tests: `breakup1938h.test` (R80c's case under a purse that keeps all; the bound).

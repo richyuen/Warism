@@ -754,10 +754,25 @@ function born(world: World, t: Track, n: number, from: readonly number[], land: 
 }
 
 /**
+ * What a nation's books keep (R84g, ADR-1064), set by `sim.ts` (track.ts may not import the economic AI, which reads
+ * this module through `ai/layers.ts`): `keep`, the army upkeep a month its economic AI holds in peace (`peaceShare` of
+ * its gross income on the land it has now), and `upkeep`, a formation's a month. Null: every force handed, as before.
+ */
+export type Purse = (world: World, n: number) => { keep: number; upkeep: (id: number) => number };
+let purseOf: Purse | null = null;
+export function setPurse(f: Purse): void {
+  purseOf = f;
+}
+
+/**
  * A breakup's forces (R80c, ADR-1046): of the givers `from`, each land formation standing on `n`'s land, each fleet
  * whose nearest port (by its water) is on `n`'s land, with the formations aboard, and each air wing at an airbase on
  * `n`'s land or on a carrier handed over, becomes `n`'s; a wing handed over flies no mission or sortie it had. A hero is
  * its roster nation's and stays (ADR-812). The warheads are not forces: they stay the givers' (ADR-1031's answer 2).
+ * Only as many as its purse keeps (R84g, ADR-1064; critic run 69, R69-N4: Tajikistan handed 32 formations of 293 gold
+ * a month on an income of 4, Kazakhstan 26, both disbanding on their first New Year): the formations by id, each with
+ * the formations aboard it, while their upkeep stays within `keep`; the rest stay their givers' (Russia's 201st
+ * Division in Tajikistan).
  */
 export function handForces(world: World, n: number, from: readonly number[]): void {
   const of = new Set(from.filter((x) => x !== n));
@@ -804,7 +819,25 @@ export function handForces(world: World, n: number, from: readonly number[]): vo
       world.sorties.delete(id);
     }
   });
-  for (const id of hand) f.nation[id] = n;
+  const purse = purseOf?.(world, n);
+  if (!purse) {
+    for (const id of hand) f.nation[id] = n;
+    return;
+  }
+  // A fleet and those aboard it go together; within the purse by id.
+  const aboard = new Map<number, number[]>();
+  for (const id of hand) {
+    const e = world.embarked.get(id);
+    if (e && fleets.has(e.fleet)) aboard.set(e.fleet, [...(aboard.get(e.fleet) ?? []), id]);
+  }
+  let spent = 0;
+  for (const id of [...hand].filter((x) => !world.embarked.has(x) || !fleets.has(world.embarked.get(x)!.fleet)).sort((a, b) => a - b)) {
+    const group = [id, ...(aboard.get(id) ?? [])];
+    const cost = group.reduce((s, x) => s + purse.upkeep(x), 0);
+    if (spent + cost > purse.keep) continue;
+    spent += cost;
+    for (const x of group) f.nation[x] = n;
+  }
 }
 
 /**

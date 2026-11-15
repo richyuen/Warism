@@ -1,10 +1,11 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import type { TimelineFile } from '../../src/sim/data/schemas';
 import { validateFile } from '../../src/sim/data/schemas';
 import { unproject } from '../../src/sim/data/projection';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TAGS_1938H } from '../../src/sim/scenario1938h';
-import { Sim } from '../../src/sim/sim';
+import { PURSE_1938, Sim } from '../../src/sim/sim';
+import { setPurse } from '../../src/sim/track';
 import type { World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
 
@@ -43,7 +44,11 @@ describe('a breakup and two unions (ROADMAP R80c)', () => {
     expect(validateFile('scenarios/1938h/timeline.json', born(true))).toEqual([]);
   });
 
+  afterEach(() => setPurse(PURSE_1938));
+
   it("a nation born with `forces` takes the giver's army, navy and air on its land; the warheads stay", () => {
+    // The handing over itself, with a purse that keeps all (R84g bounds it: below).
+    setPurse(() => ({ keep: Infinity, upkeep: () => 0 }));
     const SOV = id('SOV');
     let before: { land: number[]; fleets: number[]; wings: number[] } = { land: [], fleets: [], wings: [] };
     const w = run(born(true), (w) => {
@@ -87,6 +92,38 @@ describe('a breakup and two unions (ROADMAP R80c)', () => {
     // The arsenal: the Soviet Union's alone.
     expect(w.warheads.get(SOV)?.stock).toBe(50);
     expect(w.warheads.has(T)).toBe(false);
+  });
+
+  // ROADMAP R84g (ADR-1064; critic run 69, R69-N4: Tajikistan and Kazakhstan handed armies of 293 and 156 gold a month
+  // on incomes of 4 and 12, disbanding them on their first New Year): a successor takes only what its purse keeps, the
+  // army upkeep its economic AI holds in peace; the rest stay the giver's, on the same land.
+  it("it takes only as many as its purse keeps; the rest stay the giver's", () => {
+    const SOV = id('SOV');
+    const T = id('TCY');
+    const onBox: number[] = [];
+    const w = run(born(true), (w) => {
+      const f = w.formations.cols;
+      w.formations.forEach((i) => {
+        if (f.nation[i] === SOV && !w.heroes.has(i) && !w.isWing(i) && !w.isFleet(i) && !w.offLand(i) && inBox(lonLat(w, i))) onBox.push(i);
+      });
+    });
+    const f = w.formations.cols;
+    const p = PURSE_1938(w, T);
+    const keep = p.keep;
+    let spent = 0;
+    let mine = 0;
+    w.formations.forEach((i) => {
+      if (f.nation[i] !== T) return;
+      mine++;
+      spent += p.upkeep(i);
+    });
+    const onItsLand = onBox.filter((i) => w.cells.owner[Math.floor(f.y[i]!) * w.cells.w + Math.floor(f.x[i]!)] === T);
+    expect(onItsLand.length).toBeGreaterThan(10);
+    // Some handed, not all; within the purse (as it stood at the birth; within a few per cent of now).
+    expect(mine).toBeGreaterThan(0);
+    expect(onItsLand.filter((i) => f.nation[i] === SOV).length).toBeGreaterThan(0);
+    expect(spent).toBeLessThanOrEqual(keep * 1.05);
+    expect(onItsLand.every((i) => f.nation[i] === T || f.nation[i] === SOV)).toBe(true);
   });
 
   it('without `forces` a birth leaves the forces where they were', () => {

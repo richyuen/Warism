@@ -8,9 +8,10 @@ import { loadBytes, saveBytes, stateHash } from './core/state';
 import { applyPendingCommands, setHeroPlacer, step, type System } from './tick';
 import { addHeroes1938, BUILD_MIX_1938, createWorld1938, ECONOMY_TABLES_1938, size1938 } from './scenario1938';
 import { addDormantNations1938h, startTrack1938h } from './scenario1938h';
+import { setPurse, type Purse } from './track';
 import type { TimelineFile } from './data/schemas';
 import { allianceSystem } from './systems/alliances';
-import { economicAi, startAir } from './ai/economic';
+import { economicAi, peaceShare, startAir } from './ai/economic';
 import { operationalAiOf } from './ai/operational';
 import { strategicAi } from './ai/strategic';
 import { invasionAi } from './ai/invasion';
@@ -40,7 +41,7 @@ import { orgLossSystem, retreatSystem } from './systems/retreat';
 import { supplySystem } from './systems/supply';
 import { territorySystem } from './systems/territory';
 import { warSystem } from './systems/war';
-import { economySystem } from './systems/economy';
+import { economySystem, monthlyAccounts, UPKEEP_SCALE } from './systems/economy';
 import { createRandomWorld } from './randomWorld';
 import { createToyWorld, TOY_SYSTEMS } from './toy';
 import { buildMapCaches, type World } from './world';
@@ -48,6 +49,20 @@ import { buildMapCaches, type World } from './world';
 /** The systems of the 1938 rules by name, in their order (several are closures without one). */
 // A year played free with heroes on places 1938's (R83b); the placer is given here, where scenario1938.ts is loaded.
 setHeroPlacer((w) => void addHeroes1938(w));
+/** A successor's purse for the forces a breakup hands it (R84g, ADR-1064): the economic AI's own measures. */
+export const PURSE_1938: Purse = (w, n) => {
+  const t = ECONOMY_TABLES_1938;
+  const { gross } = monthlyAccounts(w, t);
+  const f = w.formations.cols;
+  return {
+    keep: peaceShare(w.nations.cols.aggression[n]!) * Math.max(0, gross[n]!),
+    upkeep: (id) => {
+      const full = t.templateStrength[f.template[id]!] ?? 0;
+      return full > 0 ? (UPKEEP_SCALE * (t.templateUpkeep[f.template[id]!] ?? 0) * f.strength[id]!) / full : 0;
+    },
+  };
+};
+setPurse(PURSE_1938);
 
 const SYSTEM_NAMES_1938 = ['buffs', 'strategicAi', 'operationalAi', 'invasionAi', 'navalAi', 'airAi', 'production', 'research', 'nuclear', 'economicAi', 'economy', 'efficiency', 'supply', 'repatriation', 'movement', 'amphibious', 'air', 'retreat', 'combat', 'playerOrders', 'navalCombat', 'bombardment', 'seaControl', 'orgLoss', 'territory', 'capitals', 'war', 'alliances', 'puppets', 'revolts', 'collapse', 'heroes', 'stats'] as const;
 

@@ -68,6 +68,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1064 · 2026-11-15 · accepted — R84g: a successor takes the forces its purse keeps
+- **Found** (critic run 69, R69-N4; `tools/diag/successorPurse.ts` from the 1991 start): `forces` (ADR-1046) handed a
+  republic every Soviet formation on its soil. Tajikistan took 32 formations of 293 gold a month on a gross income of 4,
+  Kazakhstan 26 of 156 on 11.6; on 1 January 1992 they disbanded 31 and 18 for want of pay (the economic AI's rule),
+  the Baltic three some each month; Tajikistan a great power at the end on 37601.
+- **Rule:** a breakup hands the giver's forces (ADR-1046's, unchanged in what is eligible) only while their upkeep stays
+  within the successor's purse, the army upkeep its economic AI holds in peace (`peaceShare` of its aggression, of the
+  gross income of the land it has at the birth); by id, a fleet with those aboard it as one; the rest stay the
+  giver's, where they stand (Russia's 201st Division in Tajikistan). The measures are the economic AI's, given to
+  `track.ts` by `sim.ts` (`setPurse`, as the heroes' placer: the economic AI reads `track.ts` through `ai/layers.ts`).
+  Not "a purse with them": gold would only put the disbanding off, and the army it kept would make a great power of a
+  republic of 4 gold a month. ADR-1031's answer 2 (the user's) is the arsenal's, Russia's alone, and stands.
+- **Consequences:** on 31 December 1991 Ukraine holds 23 formations (30 before), the Baltic three 1-3, Uzbekistan 2,
+  Kazakhstan and Tajikistan none; Russia 339 (227), its books carried by its reserve (108,341 gold). No successor
+  disbands in 1992 on 999, 5151, 6161, 31337. The pin and 1938-90 are unchanged (no `forces` before 1991).
+- **Checked by** `breakup1938h.test` (R80c's handing over under a purse that keeps all; the bound under 1938's purse).
+
 ### ADR-1063 · 2026-11-15 · accepted — R84e: the frozen wars end white as the track ends
 - **Found** (critic run 69, R69-N1; `c69_endleb.ts`): the timeline holds Israel's 1982 war on Lebanon "until
   2000-05-24". The end lifts every hold (`Track.holdOf` none once ended), and the AI's peace of that hour read the score
