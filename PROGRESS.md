@@ -422,3 +422,5 @@
   annexed on 3 August 1990 (`historyTrack1938h`'s `HELD_BY` check, green with the starts rebuilt); `seaBattles`' camera
   for a battle wider than 400 m/px holds (39061: 62 of 62 seen). The FMLN's annexation in a 1991 free game not taken
   (the free AI's war, by its rules).
+- Batch 28 done (R84a-l). The batch's line that the release checks follow with no critic run was wrong: run 69 had four
+  blocking issues and two dimensions under their bars, so RELEASES step 2 runs the critic again, focused.

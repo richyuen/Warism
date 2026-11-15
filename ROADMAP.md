@@ -30,9 +30,10 @@ Rules:
 ## Batch 28 — critic run 69's issues (2026-11-15; full run on `e5b97c8e`; RELEASES step 2, ADR-1005, ADR-1022)
 
 Run 69 (full): mapVisuals 7, diplomacy 6, every other dimension 8. Four blocking, five non-blocking and the small ones,
-each fixed before the release (ADR-1005); the release checks then run once on the fixed code (ADR-1022).
+each fixed before the release (ADR-1005). Then the critic again, focused (RELEASES step 2: ADR-1022's release checks
+with no critic run are for a full run with no blocking issue and every score at its bar, which this was not).
 
-- [ ] R84 **Run 69's issues.**
+- [x] R84 **Run 69's issues.**
   - [x] R84a (R69-B1, blocking) A game played free from a year keeps the replay's occupations held at peace for years
     (1946: 12 pairs, 21,338 cells at hour 1, 19,728 after three years; 1962: Okinawa's 6 cells): on `leaveTrack` the
     occupations the track excused go back to their owners (or become a rule the checker reads). AT: `c69_heldfree.ts
