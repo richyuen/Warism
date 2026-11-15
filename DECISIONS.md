@@ -68,6 +68,28 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (one held, never one per act); (5) after an undo the world's hash is the one before the act and the run goes on bit
   for bit as one never acted on (30 days, two seeds).
 
+### ADR-1062 · 2026-11-15 · accepted — R84d: the replay's colours checked against land neighbours
+- **Found** (critic run 69, R69-B4, against R80d's "colours distinct"): Georgia drawn in Russia's red (ΔE 1.3),
+  Kazakhstan and Uzbekistan 8.5, Ukraine and Moldova 10.2, Transnistria 14.3 from its parent. Counted on the world at
+  the track's end (`tools/diag/neighbourColours.ts`): 87 of its 385 pairs of land neighbours under ΔE 30 (Equatorial
+  Guinea on Cameroon 1.9, Guyana on Brazil 3.9, the Polisario on Algeria 4.1), and 38 births under 30 from a parent.
+- **Rule (the bars):** ΔE (CIE76) of two nations that share a land border at least 30 on the map of the track's end
+  (the timeline's last map, and the world's own at its end hour), and of a nation born of others from each of them
+  wherever they lie; at least 15 (1938's bar, `nations.test`) on the start and every earlier map. The idea of Europa
+  Universalis' release colours, taken: a successor's colour is checked against its parent's and its neighbours'.
+- **Palette:** `tools/diag/recolour1938h.ts`, greedy on those pairs: the closest pair under its bar first, one of the
+  two recoloured (a nation the replay adds before one of 1938's) to the colour of a 16-step grid nearest its own
+  that clears all its pairs by 3, readable (L* 25-85), clear of the water's and unowned land's colours and ΔE 3 from
+  every other nation's (none shares one, `flagsByScenario.test`). 81
+  nations: 61 of the replay's (Georgia `#bb5500`, Kazakhstan `#22ccbb`, Moldova `#5533bb`, Transnistria `#ee2244`)
+  and 20 of 1938's (Sweden, Poland, Turkey, Cuba, Greece, Egypt, Iraq, the Chinese Communists, the Belgian Congo
+  and others): one palette for both scenarios (the replay is 1938's world from 1938's files, ADR-919), not an
+  override of the replay's own. Russia keeps the Soviet Union's red.
+- **Consequences:** plain 1938 draws those twenty in their new colours (`nations.color` is saved state): the pin of
+  seed 99 `6e3344f5` → `a6023887`, no rule moved; the title's previews and the replay's starts rebuilt.
+- **Checked by** `colours1991.test` (the maps and the births) and `historyTrack1938h` (`colours`, the world's own
+  map and drawn colours at the end).
+
 ### ADR-1061 · 2026-11-15 · accepted — R84c: a puppet's first month is the next
 - **Found** (critic run 69, R69-B3; `worldInvariants.ts 37009 1825`): on 1 December 1941's first hour France's peace
   with Germany made Germany its puppet, and the puppet pass of the same hour (`puppets` after `war`) took Germany's

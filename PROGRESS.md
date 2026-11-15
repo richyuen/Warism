@@ -378,3 +378,10 @@
 - `freeYears1938h.test` asserts `BlocAid` rows in the 1962 and 1975 games with the scenario's diplomacy; on the checker
   of before R84b it is red (economy lines from 1954 and 1962), green on HEAD. The whole sweep suite alone: 23 of 23
   files green (12 min 56 s), the first run since R84a and R84c.
+
+## 2026-11-15 — R84d: the replay's colours against land neighbours (ADR-1062)
+
+- R69-B4: 81 nations recoloured, 20 of them plain 1938's; on the world at the 1991 end 0 pairs of land neighbours under
+  ΔE 30 (87 before), no birth under 30 from a parent (38). Georgia orange against Russia's red on the page
+  (`c69_ev91.mjs`, the starts rebuilt). Tools `neighbourColours.ts`, `recolour1938h.ts`.
+- Tests: `colours1991.test`, `historyTrack1938h` (green, its `colours` at the end), `nations.test`, `flagsByScenario.test`. Pin `a6023887`.

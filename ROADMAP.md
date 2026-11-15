@@ -54,11 +54,16 @@ each fixed before the release (ADR-1005); the release checks then run once on th
     Done (ADR-1061): a puppet made in the month's start hour skips that hour's pass (`nations.puppetAt`).
     `worldInvariants.ts 37009 1825` 0 broken (1 before); `puppetFirstMonth1938.test` (red before: 16.4 gold paid).
     Pin `401d6856` → `6e3344f5`, the column alone.
-  - [ ] R84d (R69-B4, blocking) The Soviet successors drawn in their parent's colour (Russia and Georgia ΔE 1.3;
+  - [x] R84d (R69-B4, blocking) The Soviet successors drawn in their parent's colour (Russia and Georgia ΔE 1.3;
     Kazakhstan-Uzbekistan 8.5, Ukraine-Moldova 10.2, Russia-Transnistria 14.3): new colours checked against their
     land neighbours (the idea of Europa Universalis' release colours, taken). AT: every pair of land neighbours on
     the 1991 map ΔE ≥ 30, Georgia and Russia first (a tool, as `chartBlues.ts`, on the map); `c69_ev91.mjs 1990 999
     1991-12-27@caucasus:44:41.5:1500`.
+    Done (ADR-1062): 81 nations recoloured (20 of 1938's) by `tools/diag/recolour1938h.ts` on the pairs of
+    `neighbourColours.ts`: the world at the 1991 end 87 pairs under ΔE 30 → 0, births from a parent 38 → 0; Georgia
+    `#bb5500` against Russia's red. `colours1991.test` (≥ 30 at the end and from parents, ≥ 15 on every earlier map),
+    `historyTrack1938h`'s `colours` on the world's own end map; `c69_ev91.mjs` on fresh starts: Georgia orange (shot
+    looked at). Pin `6e3344f5` → `a6023887`; previews rebuilt.
   - [ ] R84e (R69-N1) The track's last hour annexes Lebanon to Israel on every seed (the 1982 war held to 2000, the end
     lifts the hold and the war's score annexes; a 1983 free game on day 5): the wars the timeline holds past the end
     make a white peace at it, or the track's last events end them. AT: `c69_endleb.ts 999` no `NationAnnexed LEB ISR`

@@ -9,6 +9,8 @@ import type { World } from '../../src/sim/world';
 import { matchColumns, referenceHolders, referenceOwners } from '../../tools/diag/historyMatch';
 import { Breaks, bondsOf, membersOf, silentExits, useTags, worldBreaks } from './diploInvariants';
 import { assets1938 } from './earth';
+import { neighbourPairs } from './neighbours';
+import { deltaE } from '../../src/shared/color';
 
 // ROADMAP R62k (ADR-947): the historical track's checker, on any seed, from its start to its end.
 //   skip    no timeline event passed over but by rule: one that no longer applies on that seed (a party dead or not
@@ -18,9 +20,14 @@ import { assets1938 } from './earth';
 //   exit, realm, held  the diplomatic rules of `diploInvariants` (ADR-803) through the track, `held` save the land
 //           the timeline occupies at peace (an armistice's line, a zone of occupation): its holder is then the
 //           timeline's, as its maps' `occupied`.
+//   colours on the scenario's own seed, at the end: every two nations that share a land border on the world's map
+//           differ by END_COLOUR_DE (ΔE CIE76) in the colours drawn (`nations.color`; ROADMAP R84d, critic run 69);
 //   strays  on another seed than the scenario's: on each of the timeline's maps with `occupied`, land held by another
 //           than history's where history had it unchanged from the start under STRAY_BAR (ADR-968; the scenario's own
 //           seed is held to it by `historyMatch1938h`).
+
+/** The least ΔE of two land neighbours' colours on the world's map at the track's end (R84d; the critic's bar). */
+export const END_COLOUR_DE = 30;
 
 /** The share of land held astray at a map's date (`MatchColumns.strayShare`) a seed is held to (ADR-968). */
 export const STRAY_BAR = 0.01;
@@ -110,6 +117,14 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
       before = membersOf(w);
       bonds = bondsOf(w);
     });
+  }
+  if (own && t.ended && sim.tick >= t.endTick) {
+    const nc = sim.world.nations.cols;
+    const { owner, w: cw, h: ch } = sim.world.cells;
+    for (const [a, b] of neighbourPairs(owner, cw, ch)) {
+      const d = deltaE(nc.color[a]!, nc.color[b]!);
+      if (d < END_COLOUR_DE) breaks.add(`${label} end`, [`colours: ${tag(a)} and ${tag(b)} share a border, ΔE ${d.toFixed(1)}`]);
+    }
   }
   return { lines: breaks.lines, skipped, end: sim.tick, sim, handover };
 }
