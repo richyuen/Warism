@@ -21,3 +21,10 @@ export function loadMapFonts(): Promise<void> {
     () => undefined,
   );
 }
+
+/**
+ * The face of the numbers on the counters and the markers (ROADMAP R95, ADR-1087, the user's choice): the game's
+ * own, Lato's Bold, so that a number is as wide on every machine. It was the system's (Segoe UI here, another
+ * elsewhere), and the plates were laid out by this machine's.
+ */
+export const UNIT_FONT = MAP_FONT;

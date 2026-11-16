@@ -11,6 +11,7 @@
  * the end they are replaced by the target level, already at the same positions. No counter
  * appears or disappears anywhere except under a counter in the same place.
  */
+import { UNIT_FONT } from '../labels/fonts';
 import { progress, running } from '../timing';
 import { Ball2dCache, drawBall2dCached } from './ball2d';
 import { HERO_SCALE } from './ballShader';
@@ -484,7 +485,7 @@ export class CounterLayer {
     this.boxes = [];
     ctx.save();
     ctx.imageSmoothingEnabled = false;
-    ctx.font = '700 10px system-ui, sans-serif';
+    ctx.font = `700 10px ${UNIT_FONT}`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     const widths = new Map<string, number>();

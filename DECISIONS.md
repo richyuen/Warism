@@ -242,3 +242,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
   heroes' counters keep clear of the clock (`COVER_SELECTOR`).
 - **The bars' share:** 1.12 % and 1.76 % of a 1600 × 900 view, 2.88 together; the one bar was 2.93.
 - **Consequences:** the bar is narrower by the clock's members and wraps onto a second row later than it did.
+
+### ADR-1087 · 2026-11-16 · accepted (the user's decision) — R95: no pips under a marker; a strength bar and a larger number in Lato
+- **The user:** "What are the little boxes inside the counters?"; "What if we get rid of the pips? Does that
+  help?"; "Were the pips based on critic request?"; "Let's try to build that version — no pips, thin strength
+  bar, larger number on a wider plate"; of the face: "It makes sense to use Lato anyway", "Let's use Lato".
+- **It replaces ADR-498** (PLAN 7.21c2: a pip for each element under a T1 marker) and ADR-535's count of them. They
+  answered critic run 8 ("at 900 m/px nothing of the units shows but counters") and run 9, which did not see the
+  pips as elements. The user was told so before deciding. **For the next critic run:** at T1 a formation's elements
+  are not shown, by the user's choice; a formation is its symbol, its strength bar and its men. The elements are
+  drawn from T2 in.
+- **Decision** (`markers.ts`): under the box (26 by 17, as it was) a plate 34 px wide: a strength bar of 2 px (the
+  formation's men of its full strength, a hero's health; green, yellow under a half, red under a quarter) and the
+  men in type of 11 px. A marker is 34 by 34 px (26 by 41). `NUDGE_MAX_PX` follows the height as it did (8).
+- **The face** (`UNIT_FONT`): Lato's Bold for the markers' and the counters' numbers and the stacks' tags. They were
+  the system's face (Segoe UI here), so a plate's fit was this machine's. Measured in the page, Bold of 11 px:
+  "12.5k" 27.7 px in Lato, 28.1 in Segoe UI; "405.0k" 34.1 and 34.4. Barlow Condensed (20.2 and 27.0) was tried
+  and not taken: at the same size it read smaller and was a second face to bundle.
+- **Why not the whole marker larger** (the first try, 1.25 times): it broke nine tests of rules that stand on the
+  box's size (BLOCKERS, resolved by this). With the box as it is, eight of them held at once.
+- **Consequences:** the worker still sends the elements from T1 (PLAN 7.21c1): the handover to T2 has them in hand.
+  The view no longer lays out pips at each snapshot. A click on the plate's 4 px beside the box is not on the marker.

@@ -169,7 +169,7 @@ changed only where the feature they test changed.
     `trackView1938h` looked for the track's line in a `footer` (it reads the plate the line is in now).
     `barNarrow1938` and `phoneLayout1938` green. The heroes' counters keep clear of the clock as of the other
     plates. Shots: `docs/evidence/R94c/`.
-- [ ] R95 **The markers of T1.** Left out of R93: the box with a unit's symbol has its men in type of 9 px under
+- [x] R95 **The markers of T1.** Left out of R93: the box with a unit's symbol has its men in type of 9 px under
   it, and a stack's count in a tag of the same. The number larger, on a plate as the counters'. AT: the number's
   height in px at the far end of T1 (2,000 m/px), its bar set from a shot; the markers' bound on a pixel's change
   in a frame kept (ADR-71, ADR-72); `markerStacks`' rules with the new sizes.
@@ -186,6 +186,17 @@ changed only where the feature they test changed.
   So the item is these rules given the new size, not a factor at the call: `MARKER_SHRINK`, `NUDGE_MAX_PX`,
   `STACK_UNDER`, the frames' and the clicks' boxes, each with its test; or the number alone larger on a plate wider
   than the box. More markers fold into stacks at a front with a larger box: the user's to weigh.
+  Done (ADR-1087, the user's decisions of 2026-11-16: "What if we get rid of the pips?", then the trial asked for,
+  then "Let's use Lato"): no pips; under the box a plate of 34 px with a strength bar and the men in Lato's Bold of
+  11 px (9 px of the system's face before); the box as it was, the marker 34 by 34 px (26 by 41). The counters'
+  numbers in Lato too. Of the first try's nine red tests eight were green at once (the T1 to T2 change's jump and
+  the two nations' markers among them: the box did not grow). `countryballs1938`'s wings: a plate hid one wing tip
+  more than the count allows (49 of 62, bar 50); planes under a plate are not judged (36 of 36 then).
+  `heroStack1938`: the test clicked where the hero's marker had been before the camera followed the fleet just
+  opened; it reads the place again. Gone with the pips: `pips.ts`, `pips.test.ts`, `markers1938`'s pip checks and
+  its count of pips at 900 m/px (critic run 9's case); Spain's two weeks of war are read on the strength bars.
+  Not measured as the AT said: the number's height in px at 2,000 m/px against a bar from a shot; it is type of 11
+  px at every zoom of T1. Shots: `docs/evidence/R95/`.
 
 ## Released
 

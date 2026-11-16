@@ -523,8 +523,8 @@ export interface TemplateInfo {
   /** The techs a nation must know to raise it, as bits (PLAN 3.1a; `NationStat.techs`). */
   techs: readonly [number, number];
   /**
-   * Its elements by the atlas frame of their unit's class (`frameOf`), in its order: what a T1
-   * marker's pips are laid out by (PLAN 7.21c2).
+   * Its elements by the atlas frame of their unit's class (`frameOf`), in its order (what a T1
+   * marker's pips were laid out by, PLAN 7.21c2 to ROADMAP R95).
    */
   parts: readonly { frame: number; count: number }[];
   /** A hero's (PLAN 7.184): drawn as any, never in a list to build or place. */

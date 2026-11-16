@@ -48,6 +48,10 @@ test('T1: Bismarck at Kiel covers no fleet, and each opens with a click', async 
   const opened = await page.evaluate(() => window.__warsim!.hud.formation.value);
   expect(fleet.members, 'the click on the fleets opened one of them').toContain(opened);
   await page.keyboard.press('Escape');
-  await page.mouse.click(cb.x + hero!.x + hero!.w / 2, cb.y + hero!.y + 10);
+  // Where the hero's marker is drawn now: the camera follows the formation just opened, and the map moved under
+  // the first click's place (R95: found when the markers' height changed and the old place fell outside the box).
+  await page.waitForTimeout(600);
+  const now = (await rects(page)).find((r) => r.id === BISMARCK)!;
+  await page.mouse.click(cb.x + now.x + now.w / 2, cb.y + now.y + 10);
   await expect.poll(() => page.evaluate(() => window.__warsim!.hud.formation.value)).toBe(BISMARCK);
 });

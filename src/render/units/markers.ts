@@ -1,6 +1,6 @@
 /**
  * T1 operational markers (SPEC §8, PLAN 2.1): per formation a box with its type symbol, a flag
- * chip, under it a pip for each of its elements (PLAN 7.21c2, `pips.ts`; a strength bar, strength
+ * chip, under it a strength bar (ROADMAP R95; a pip for each of its elements until then, strength
  * / full template strength, while its elements are not in hand) and the strength number; an order
  * arrow to its march target; a red outline while engaged; crossed swords at Major Battles.
  * Markers of one nation that stand on each other are one marker (`markerStacks.ts`): the
@@ -16,7 +16,7 @@ import { worldToScreen, itemOffsets, type Camera, type MapGeometry } from '../ca
 import { FADE_MS, smooth } from '../timing';
 import type { StackedMarker } from './markerStacks';
 import { drawBall2d, type Prop2d } from './ball2d';
-import { drawPips, PIP_PANEL_H, type Pips } from './pips';
+import { UNIT_FONT } from '../labels/fonts';
 import { HERO_SCALE } from './ballShader';
 
 /** The ink of a retreat's badge on a T1 marker (PLAN 7.4g2). */
@@ -35,10 +35,6 @@ export interface MarkerInput {
   retreating?: boolean;
   /** Order target in cells, or null. */
   target: [number, number] | null;
-  /** Its elements' pips (PLAN 7.21c2), when the snapshot brought its elements; none: the strength bar. */
-  pips?: Pips | null;
-  /** The pips' share of the panel, 0 to 1 (a fade of their own when they come or go); the bar has the rest. */
-  pipsIn?: number;
   /**
    * A fleet's way left (PLAN 4.7d): the points its order line turns at, `x, y` in cells by
    * twos, the first where it stands; the line goes along them and not straight to `target`.
@@ -172,8 +168,8 @@ export interface PlacedMarker {
   text: string;
   /** The formations it stands for, itself first: more than one for a stack (PLAN 2.7s1). */
   members: number[];
-  /** Its lead's elements drawn as pips in this frame (the living pips; PLAN 7.34b): 0 while its strength bar shows. */
-  pips: number;
+  /** What its strength bar shows (ROADMAP R95): its formation's men of its full strength, 0 to 1 (a hero's health). */
+  share: number;
   /** Whether it has the frame of the formation whose panel is open: it is that formation, or its stack holds it (PLAN 2.14f3). */
   picked: boolean;
   /** A stack's tag, on the box's corner and reaching out of it (CSS px): what a city name keeps clear of besides the box (PLAN 2.7u). */
@@ -188,14 +184,22 @@ export const T1_MIN_M = 300;
 export const T1_MAX_M = 2000;
 const BOX_W = 26;
 const BOX_H = 17;
-/** The row of the strength number under the pips. */
-const NUMBER_H = 11;
 /**
- * A marker's footprint in CSS px at unit size 1: the box, and under it the pips (or the strength
- * bar) and the number. 29 px high until PLAN 7.21c2 (the bar and the number in 12).
+ * Under the box (ROADMAP R95, ADR-1087, the user's decision of 2026-11-16: no pips, a thin strength bar, a larger
+ * number on a wider plate): the bar's row, the number's row, the number's type, and the plate's width (wider than the
+ * box by 4 px a side: "12.5k" in Lato's Bold of 11 px is 27.7 px wide, "405.0k" 34.1). Until R95 a pip for each
+ * element stood there (PLAN 7.21c2, ADR-498), in a panel of 13 px over a number of 9 px.
  */
-export const MARKER_W = BOX_W;
-export const MARKER_H = BOX_H + PIP_PANEL_H + NUMBER_H;
+const BAR_ROW_H = 4;
+const NUMBER_H = 13;
+const NUMBER_PX = 11;
+const PLATE_W = 34;
+/**
+ * A marker's footprint in CSS px at unit size 1: the plate's width, and the box with the strength
+ * bar and the number under it: 34 by 34 (26 by 41 with the pips, PLAN 7.21c2 to ROADMAP R95).
+ */
+export const MARKER_W = PLATE_W;
+export const MARKER_H = BOX_H + BAR_ROW_H + NUMBER_H;
 const CHIP_W = 9;
 const CHIP_H = 6;
 
@@ -506,7 +510,7 @@ export function drawMarkers(
   const sprites = new Map<string, HTMLCanvasElement>();
   // Boxes, back to front by y; a hero's above the others (PLAN 7.184b3), its pips and number not under theirs.
   const order = [...markers].sort((a, b) => Number(a.hero ?? false) - Number(b.hero ?? false) || a.y - b.y || a.id - b.id);
-  ctx.font = '600 9px system-ui, sans-serif';
+  ctx.font = `700 9px ${UNIT_FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
   // Each with the size its marker is drawn at (a hero's is larger: PLAN 7.184b3).
@@ -559,37 +563,33 @@ export function drawMarkers(
         ctx.scale(ms, ms);
         ctx.translate(-px, -py);
       }
-      // The pips (or the strength bar) and the number under the box, on their dark backing. They
-      // have an opacity of their own: on the way to T2 they stay while the box goes (PLAN 2.7c).
-      // A stack shows its lead's pips; its tag says how many it stands for (ADR-498).
+      // The strength bar and the number under the box, on their dark plate. They have an opacity of
+      // their own: on the way to T2 they stay while the box goes (PLAN 2.7c). A stack's number is
+      // its men together, its bar its lead's; its tag says how many it stands for.
       const text = m.health !== undefined ? `${Math.round(m.health * 100)}%` : strengthText(stack?.strength ?? m.strength);
       // Not those of a formation in contact (PLAN 2.14f4, ADR-92): its elements come in at the
       // block deployed against the enemy, up to 43 px from here at the boundary, and the bar
       // would linger beside the group and not on it. They go with the box.
       const bar = (m.engaged ? boxAlpha : barAlpha) * part;
-      let pipsDrawn = 0;
+      // What the bar shows: its men of its full strength (a hero's health).
+      const share = m.health ?? (m.full > 0 ? Math.max(0, Math.min(1, m.strength / m.full)) : 1);
       if (bar > 0.01) {
         ctx.globalAlpha = bar;
         ctx.fillStyle = 'rgba(16, 18, 24, 0.82)';
-        ctx.fillRect(x - 1, y + BOX_H, BOX_W + 2, PIP_PANEL_H + NUMBER_H);
+        const plateX = x - (PLATE_W - BOX_W) / 2;
+        ctx.fillRect(plateX, y + BOX_H, PLATE_W, BAR_ROW_H + NUMBER_H);
         // How many formations it stands for: a tag, drawn after all the boxes (below).
         if (members.length > 1) tags.push({ px, py, x, y, text: `×${members.length}`, alpha: bar, of: placed.length, s: ms });
-        const pipsIn = m.pips && m.pips.count > 0 ? Math.max(0, Math.min(1, m.pipsIn ?? 1)) : 0;
-        if (pipsIn < 0.99) {
-          // No elements in hand (a wing's are never sent; a formation's come a snapshot after the
-          // tier): the strength bar in the panel's middle.
-          ctx.globalAlpha = bar * (1 - pipsIn);
-          const f = m.health ?? (m.full > 0 ? Math.max(0, Math.min(1, m.strength / m.full)) : 1);
-          const by = y + BOX_H + Math.floor(PIP_PANEL_H / 2);
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-          ctx.fillRect(x, by, BOX_W, 2);
-          ctx.fillStyle = f > 0.5 ? '#8bd17c' : f > 0.25 ? '#f1c40f' : '#e74c3c';
-          ctx.fillRect(x, by, Math.round(BOX_W * f), 2);
-        }
-        if (pipsIn > 0.01) pipsDrawn = drawPips(ctx, m.pips!, x, y + BOX_H, BOX_W, bar * pipsIn);
-        ctx.globalAlpha = bar;
+        // The strength bar, the plate's width.
+        const f = share;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.fillRect(plateX + 1, y + BOX_H + 1, PLATE_W - 2, 2);
+        ctx.fillStyle = f > 0.5 ? '#8bd17c' : f > 0.25 ? '#f1c40f' : '#e74c3c';
+        ctx.fillRect(plateX + 1, y + BOX_H + 1, Math.round((PLATE_W - 2) * f), 2);
         ctx.fillStyle = '#ffe28a';
-        ctx.fillText(text, x + BOX_W / 2, y + BOX_H + PIP_PANEL_H + 1);
+        ctx.font = `700 ${NUMBER_PX}px ${UNIT_FONT}`;
+        ctx.fillText(text, x + BOX_W / 2, y + BOX_H + BAR_ROW_H + 1);
+        ctx.font = `700 9px ${UNIT_FONT}`;
       }
       // The box, about its centre: at rest as it always was, on the way to T2 smaller and fainter.
       if (boxAlpha * part > 0.01) {
@@ -629,7 +629,7 @@ export function drawMarkers(
       if (back && boxAlpha * part > 0.01) retreats.push({ px, py, x, y, alpha: boxAlpha * part, s: ms });
       const marked = picked !== 0 && members.includes(picked);
       if (marked && boxAlpha * part > 0.01) frames.push({ px, py, x, y, alpha: boxAlpha * part, s: ms });
-      placed.push({ id: m.id, nation: m.nation, retreating: back && boxAlpha * part > 0.01, wx: m.x, wy: m.y, alpha: boxAlpha * part, bar, own: part, scale: morph.scale, x: px - (BOX_W / 2) * ms, y: py - (BOX_H / 2) * ms, w: BOX_W * ms, h: MARKER_H * ms, text, members, pips: pipsDrawn, picked: marked });
+      placed.push({ id: m.id, nation: m.nation, retreating: back && boxAlpha * part > 0.01, wx: m.x, wy: m.y, alpha: boxAlpha * part, bar, own: part, scale: morph.scale, x: px - (BOX_W / 2) * ms, y: py - (BOX_H / 2) * ms, w: BOX_W * ms, h: MARKER_H * ms, text, members, share, picked: marked });
     }
   }
   // A retreat's badge on the box's top-left corner, above every box (the stack's tag is on the

@@ -606,7 +606,11 @@ test('countryballs far out and in the air: counters and markers are flag balls; 
   let winged = 0;
   let flagged = 0;
   // A vee's planes fly 0.8 to 0.9 of a span apart: their balls do not touch, their wings may.
-  const clear = planes.filter((p) => planes.every((q) => q === p || Math.hypot(q.x - p.x, q.y - p.y) > p.span * 0.75) && p.x > 20 && p.y > 20);
+  // And clear of the markers, which are drawn over the planes (R95: a marker's plate is 34 px wide, 8 more than its
+  // box was, and hid one more wing tip than the count allows for): a plane under a plate is not one to judge the wings of.
+  const plates = await page.evaluate(() => window.__warsim!.view!.markerRects.filter((r) => r.alpha > 0.5).map((r) => ({ x: r.x - 4, y: r.y, w: r.w + 8, h: r.h })));
+  const underPlate = (p: PlaneAt): boolean => plates.some((m) => p.x + p.span / 2 > m.x && p.x - p.span / 2 < m.x + m.w && p.y + p.span / 2 > m.y && p.y - p.span / 2 < m.y + m.h);
+  const clear = planes.filter((p) => planes.every((q) => q === p || Math.hypot(q.x - p.x, q.y - p.y) > p.span * 0.75) && p.x > 20 && p.y > 20 && !underPlate(p));
   for (const p of clear) {
     const k = planeLook(img, p, await flagColours(page, p.nation), await tintOf(page, p.nation));
     if (k.flag) flagged++;

@@ -106,7 +106,7 @@ export function stackMarkers(items: readonly StackItem[], w: number, h: number, 
  * No shown box is moved further than this from its formation, px. 7 of a marker 29 px high since
  * PLAN 6.9 (6 before): on Spain's front, day 14 of seed 1938, two pairs of markers stayed a hair
  * over a quarter under each other with their boxes 6 px out. Since PLAN 7.21c2 the same share of
- * the marker's height (41 px with its pips: 10; ADR-498).
+ * the marker's height (41 px with its pips: 10; ADR-498; 34 px since ROADMAP R95: 8).
  */
 export const NUDGE_MAX_PX = Math.round((MARKER_H * 7) / 29);
 /** A box eases to a new place over this long. */

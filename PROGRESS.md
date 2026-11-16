@@ -167,3 +167,16 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - Seen through the batch and not chased: in each whole run of the browser suite under 8 workers one or two tests
   red that are green alone, others each time (`historyMine1938`, `settings1938`, `bench-pages`, `maxGlide1938`,
   `coast1938`, `shipMarks1938`).
+
+## 2026-11-16 — R95: no pips; a strength bar and a larger number in Lato (ADR-1087, the user's decision)
+
+- Under a T1 marker's box: a plate of 34 px with a strength bar and the men in Lato's Bold of 11 px. The pips and
+  their module are gone. The counters' numbers in Lato too.
+- The trial's run (the whole browser suite and the unit tests): of the first try's nine, eight green; red:
+  `countryballs1938`'s wings (a plate over a wing tip), `heroStack1938` (the test's stale place), and the pips' own
+  three (`markers1938`'s count, `pips.test.ts`, `specRefs` of SPEC's line). All mended or gone with the feature.
+- The whole suite on the final code: 467 of 467 browser tests; 2,528 of 2,529 unit tests, `snapshot-perf` (a timing,
+  on the watch list) red under the full run and green alone three times of three.
+- Found on the way: `specRefs.test.ts` red since R94a's commit (SPEC named `chromeCover1938` as a word, not by its
+  path): R94a's last commit changed documents only and the gate ran nothing. SPEC cites the path now.
+- Shots: `docs/evidence/R95/` (the Fujian front before and after; the three faces side by side).

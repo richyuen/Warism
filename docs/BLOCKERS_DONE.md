@@ -3,6 +3,18 @@
 The resolved entries of BLOCKERS.md, moved here on 2026-11-02 (ADR-804) in the order they stood. Searched, not
 read. New resolved entries are moved here when they are resolved.
 
+### RESOLVED 2026-11-16 (ADR-1087: the user's choice, no pips and the number on a wider plate) · R95: the markers of T1 drawn 1.25 times their size break the rules that stand on their size
+- **The bar:** the number under a marker larger and readable at the far end of T1, the markers' bound on a pixel's
+  change in a frame kept (48 of 255; ADR-71, ADR-72), `markerStacks`' rules with the new sizes.
+- **What was tried** (one try, not kept): `MARKER_SCALE` 1.25 at the view's two uses of the marker's size (the
+  stacks' frame and `drawMarkers`), as `COUNTER_SCALE` in R93. The whole browser suite: 459 of 468, nine red.
+- **What moved:** the T1 to T2 change's largest jump 58.7 (bar 48); 7 pairs of two nations' markers more than a
+  quarter on each other where 1 was the bar; the frames of the picked and the selected, two click tests, three
+  counts of countryballs. The list is in ROADMAP R95.
+- **Left:** the rules that hold the marker's size (`MARKER_SHRINK`, `NUDGE_MAX_PX`, `STACK_UNDER`, the frames, the
+  clicks) set for the new size, each with its test; or the number alone on a wider plate. A larger marker folds more
+  of a front into stacks. **Waits on the user:** which of the two, and whether more stacking at a front is wanted.
+
 ### RESOLVED 2026-11-11 (ADR-968: the user's decision, the two bars re-scoped and the set-down applied) · R66b/c: the fronts' armies wait on two replay bars that HEAD passes on seed 1938's luck alone (2026-11-11)
 - **The change** (`docs/patches/R66c-set-down.patch`, off `9dff3d7f`; `git apply` it): an `occupy` sets the land
   formations of those who held its land down on their own nearest land behind the new line, and a `withdraw` (not a

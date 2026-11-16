@@ -1902,7 +1902,7 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   folded; a phone's rows and the rows beside a panel are as they were.
 - **The ranking** (ROADMAP R94a, ADR-1084): closed on a desk until the bar's Statistics opens it, folded to its
   title on a phone; kept as the player left it (`warsim.showStats`). The panels cover at most 6 % of a 1600 × 900
-  view at the start (`chromeCover1938`).
+  view at the start (`tests/e2e/chromeCover1938.spec.ts`).
 - **A counter's size** (ROADMAP R93, ADR-1083): drawn `COUNTER_SCALE` (1.25) times its own px and the unit size:
   a plate of 17.5 px with round corners (`COUNTER_CORNER`), a number of 12.5 px.
 - **T0 counters** (`src/render/units/counters.ts`): a counter a formation, clustered by screen distance
@@ -1935,7 +1935,9 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   `FLASH_ALPHA` (0.32) fading over `FLASH_MS` (900 ms of the player's time), on the names' canvas under the names;
   the newest `FLASH_MAX_CELLS` (3,000).
 - **T1 markers** (`src/render/units/markers.ts`, from `T1_MAX_M` to `T1_MIN_M`): a box with the NATO
-  symbol, pips for its elements (fading in and out each; the strength bar only while no elements came),
+  symbol, under it on a plate of 34 px a strength bar (its men of its full strength; green, yellow under a half,
+  red under a quarter) and its men in Lato's Bold of 11 px (ROADMAP R95, ADR-1087, the user's decision: no pips; a
+  marker is 34 by 34 px; `UNIT_FONT`, the counters' numbers too),
   order arrows (a fleet's along its turning points), crossed swords while engaged. A land formation's march is a
   movement arrow (`src/render/units/moveArrows.ts`, ROADMAP R89a, R89b, ADR-1074, ADR-1075; at every tier): an
   advance (`advances`: of a nation at war, to a cell an enemy holds or within `ADVANCE_REACH_KM`, 100, of an enemy's
