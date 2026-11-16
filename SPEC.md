@@ -1936,9 +1936,11 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   north-west (`FAR_RELIEF` 0.12 either way) and a fill darker toward its border and coast (`FAR_EDGE` 0.84), by
   the share the ground of T2 and T3 leaves them. The first two from `farShade`'s texture, made once from the
   elevation. `MapView.farShades` off: flat fills (tests).
-- **Fronts** (ROADMAP R90a, ADR-1078; `mapShader.ts`, `ground.ts`): where the land two nations at war hold meets,
-  the border is a hot red line (`FRONT_CORE_RGB`, at least `FRONT_CORE_PX` 1.1 px either side) with a red glow
-  (`FRONT_GLOW_RGB`, `FRONT_GLOW` 0.7 on the line, over `FRONT_GLOW_PX` 7 px), at every zoom, in the modes of the
+- **Fronts** (ROADMAP R90a, ADR-1078; R99, ADR-1091; `mapShader.ts`, `ground.ts`): where the land two nations at
+  war hold meets, the border is a line of fire, each part a half width either side of it: a red glow
+  (`FRONT_GLOW_RGB`, `FRONT_GLOW` 0.6 on the line, over `FRONT_GLOW_PX` 12 px), a dark casing (`FRONT_CASE_RGB`,
+  `FRONT_CASE` 0.7, to `FRONT_CASE_PX` 4.4 px), a band of orange red (`FRONT_BAND_RGB`, to `FRONT_BAND_PX` 3.2 px)
+  and a core near white (`FRONT_CORE_RGB`, at least `FRONT_CORE_PX` 1.5 px), at every zoom, in the modes of the
   palette's fills. Who is at war: `warTable` (512 nations a side), `MapRenderer.setWars` from the snapshot's `wars`.
 - **The flash of land taken** (ROADMAP R90b, ADR-1079; `src/render/fx/flashes.ts`): each cell a snapshot brings
   under a new holder (not the sea, not land no one held; not a game's first snapshot) is a soft white patch,

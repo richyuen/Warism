@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
+import { FRONT_CORE_RGB } from '../../src/render/map/ground';
 import { cellOf } from '../../src/sim/data/terrain';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 import { lookAt, open1938 } from './mapView';
@@ -26,7 +27,7 @@ interface Fronts {
 
 /** The map's picture at rest: the front's line along the border of `a` and `b`, and along that of `a` and `c`. */
 function fronts(page: Page, a: number, b: number, c: number): Promise<Fronts> {
-  return page.evaluate(({ a, b, c }) => {
+  return page.evaluate(({ a, b, c, core }) => {
     const v = window.__warsim!.view!;
     const canvas = document.getElementById('map') as HTMLCanvasElement;
     const gl = canvas.getContext('webgl2')!;
@@ -34,11 +35,11 @@ function fronts(page: Page, a: number, b: number, c: number): Promise<Fronts> {
     const [w, h] = [canvas.width, canvas.height];
     const px = new Uint8Array(w * h * 4);
     gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, px);
-    // The line's colour (255, 92, 66), read from the bottom row up.
+    // The colour of the line's core (`FRONT_CORE_RGB`), read from the bottom row up.
     const isHot = (x: number, y: number): boolean => {
       if (x < 0 || y < 0 || x >= w || y >= h) return false;
       const i = ((h - 1 - y) * w + x) * 4;
-      return Math.abs(px[i]! - 255) + Math.abs(px[i + 1]! - 92) + Math.abs(px[i + 2]! - 66) < 50;
+      return Math.abs(px[i]! - core[0]!) + Math.abs(px[i + 1]! - core[1]!) + Math.abs(px[i + 2]! - core[2]!) < 50;
     };
     let hot = 0;
     for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (isHot(x, y)) hot++;
@@ -73,7 +74,7 @@ function fronts(page: Page, a: number, b: number, c: number): Promise<Fronts> {
     const first = border(a, b);
     const other = border(a, c).filter(([x, y]) => first.every(([fx, fy]) => Math.hypot(fx - x, fy - y) > 2 * reach + 12 * k));
     return { points: first.length, lit: first.filter(([x, y]) => near(x, y)).length, otherPoints: other.length, otherLit: other.filter(([x, y]) => near(x, y)).length, hot };
-  }, { a, b, c });
+  }, { a, b, c, core: FRONT_CORE_RGB.map((x) => Math.round(255 * x)) });
 }
 
 test('a front: the border between two nations at war glows red, a border at peace does not, and it is gone at the peace', async ({ page }, info) => {

@@ -262,3 +262,9 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - On 8d272bac, each run alone: the unit suite 2,541 of 2,542 (`snapshot-perf` timed out in the run and is green
   alone); the sweep tests 23 files of 23; `npm run sweep:quick` (10 seeds by 20 years) limits on 10 of 10 seeds, a
   riser and a faller on each, nukes used on 9, the saves' twins equal.
+
+## 2026-11-16 — R99: a front is brighter and plainer (ADR-1091, the user's request)
+
+- The front's line: a glow of 12 px, a dark casing, an orange band, a core near white (`ground.ts`,
+  `mapShader.ts`). `fronts1938.spec.ts` reads the core's colour from the constant; green, its bars unchanged.
+  Shots in `docs/evidence/R99/`.

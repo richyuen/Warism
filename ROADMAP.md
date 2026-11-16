@@ -288,6 +288,16 @@ though Rush makes sense either way".
     and 13 %): within what two sets of seeds differ by. The operational AI 0.35 ms a tick on seed 99's first year
     (0.53 in R97b's profile, under other runs' load): no slower. Test: `tests/unit/invadedFront1938.test.ts`.
 
+## Batch 35 — the fronts seen (the user's request, 2026-11-16)
+
+- [x] R99 **A front is brighter and plainer** (ADR-1091; the user: "Can we make the fronts brighter and more
+  obvious?"). R90a's front was a line of light red 2.2 px wide with a red glow: on a red or pink fill (Poland's,
+  the Soviet Union's) it was little more than the border. Now, from the outside in: a red glow over 12 px, a dark
+  casing to 4.4 px, a band of orange red to 3.2 px, a core near white to 1.5 px (each a half width). At every zoom
+  as before. `fronts1938.spec.ts` reads the core's colour from `FRONT_CORE_RGB`; its bars as they were (the front on
+  113 of 113 points of the German-Polish border, 0 of the German-Czech). Shots: `docs/evidence/R99/` (20,000,
+  4,000, 600 and 150 m/px).
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

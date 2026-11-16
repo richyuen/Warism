@@ -18,7 +18,7 @@ import { AIR_CONTESTED_COLOR, AIR_HELD_TINT, FALLOUT_COLOR, FALLOUT_FADE, FALLOU
 
 const AIR_CONTESTED_RGB = [16, 8, 0].map((s) => (((AIR_CONTESTED_COLOR >> s) & 255) / 255).toFixed(3)).join(', ');
 const FALLOUT_RGB = [16, 8, 0].map((s) => (((FALLOUT_COLOR >> s) & 255) / 255).toFixed(3)).join(', ');
-import { BORDER_BAND, BORDER_CAST, FAR_EDGE, FAR_EDGE_BAND, FAR_RELIEF, FAR_SEA_DEEP, FAR_SEA_SHALLOW, FRONT_CORE_PX, FRONT_CORE_RGB, FRONT_GLOW, FRONT_GLOW_PX, FRONT_GLOW_RGB, FRONT_NATIONS, GROUND_CAST, HATCH_AT_GROUND, OCCUPIED_CAST, SEA_DEEP, SEA_DEPTH_FULL, SEA_DEPTH_KNEE, SEA_SHALLOW } from './ground';
+import { BORDER_BAND, BORDER_CAST, FAR_EDGE, FAR_EDGE_BAND, FAR_RELIEF, FAR_SEA_DEEP, FAR_SEA_SHALLOW, FRONT_BAND_PX, FRONT_BAND_RGB, FRONT_CASE, FRONT_CASE_PX, FRONT_CASE_RGB, FRONT_CORE_PX, FRONT_CORE_RGB, FRONT_GLOW, FRONT_GLOW_PX, FRONT_GLOW_RGB, FRONT_NATIONS, GROUND_CAST, HATCH_AT_GROUND, OCCUPIED_CAST, SEA_DEEP, SEA_DEPTH_FULL, SEA_DEPTH_KNEE, SEA_SHALLOW } from './ground';
 
 export const MAP_VS = `#version 300 es
 precision highp float;
@@ -571,12 +571,15 @@ void main() {
     vec3 lineCol = cellCoast ? col * 0.8 : mix(col, vec3(0.06, 0.06, 0.08), 0.8);
     col = mix(col, lineCol, a * (cellCoast ? 0.55 : 1.0));
     if (front) {
-      // The glow, falling off either side of the line; then the line itself, hot, over the border's dark one.
+      // From the outside in (ROADMAP R99): the glow, the dark casing, the orange band, the core near white.
       float g = exp(-pxDist * pxDist / (glowW * glowW * 0.3));
       col = mix(col, vec3(${FRONT_GLOW_RGB.map((c) => c.toFixed(3)).join(', ')}), g * ${FRONT_GLOW.toFixed(2)});
+      float caseW = ${FRONT_CASE_PX.toFixed(2)} * uDpr;
+      col = mix(col, vec3(${FRONT_CASE_RGB.map((c) => c.toFixed(3)).join(', ')}), (1.0 - smoothstep(caseW - 0.5, caseW + 0.5, pxDist)) * ${FRONT_CASE.toFixed(2)});
+      float bandW = ${FRONT_BAND_PX.toFixed(2)} * uDpr;
+      col = mix(col, vec3(${FRONT_BAND_RGB.map((c) => c.toFixed(3)).join(', ')}), 1.0 - smoothstep(bandW - 0.5, bandW + 0.5, pxDist));
       float coreW = max(halfW, ${FRONT_CORE_PX.toFixed(2)} * uDpr);
-      float core = 1.0 - smoothstep(coreW - 0.5, coreW + 0.5, pxDist);
-      col = mix(col, vec3(${FRONT_CORE_RGB.map((c) => c.toFixed(3)).join(', ')}), core);
+      col = mix(col, vec3(${FRONT_CORE_RGB.map((c) => c.toFixed(3)).join(', ')}), 1.0 - smoothstep(coreW - 0.5, coreW + 0.5, pxDist));
     }
   }
   // Fine coast line on the land side.

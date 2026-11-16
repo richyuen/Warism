@@ -390,3 +390,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
   3.5 % is passed on 10 of 12 seeds where 12). A block over 20 km from the one it faces on 4 seeds of 12 where 1
   (`formationFight1938`). And two faults older than this rule (BLOCKERS): a tag or an enemy's pointer under the top
   clock or the war banners takes no hover or click.
+
+### ADR-1091 · 2026-11-16 · accepted (the user's request) — R99: a front is a line of fire, with a core near white
+- **Asked:** "Can we make the fronts brighter and more obvious?" ADR-1078's line was (1, 0.36, 0.26), 1.1 px
+  either side, in a red glow of 7 px: a red line on a red or pink nation, and thin at the zooms a war is watched at.
+- **Decision** (`ground.ts`, `mapShader.ts`), each a half width in CSS px, from the outside in:
+  - the glow, `FRONT_GLOW_RGB` (1, 0.14, 0.07), `FRONT_GLOW` 0.6 on the line, over `FRONT_GLOW_PX` 12 (was 0.7 over 7);
+  - a dark casing, `FRONT_CASE_RGB` (0.16, 0.02, 0.02), `FRONT_CASE` 0.7 of the pixel, to `FRONT_CASE_PX` 4.4: the
+    line's edge on a light fill (yellow, white);
+  - a band, `FRONT_BAND_RGB` (1, 0.22, 0.08), to `FRONT_BAND_PX` 3.2;
+  - the core, `FRONT_CORE_RGB` (1, 0.95, 0.62), to `FRONT_CORE_PX` 1.5: no nation's fill is so light a yellow, so
+    it is told on red, on grey and on yellow.
+- **Not done:** a pulse. The map's pass has no clock and the view draws when something changes; a front that
+  moved in time would have it draw every frame.
+- **The test:** `fronts1938.spec.ts` looked for the old line's colour by its numbers; it reads `FRONT_CORE_RGB`
+  now. No bar changed.
+- **Consequences:** the map's picture changes wherever two nations at war touch; the whole browser suite run on it.
+  No sim input: the pin of seed 99 stands.

@@ -106,20 +106,27 @@ export function seaShade(depth: number): number {
 }
 
 /**
- * A front (ROADMAP R90a, ADR-1078): the border between the land two nations at war hold has a red
- * line with a glow, at every zoom (on the ground of T2 and T3 too: whose the land is, is the front). `FRONT_NATIONS`: the war table's side (nations of an
- * id under it; a border of one above it is drawn as at peace). `FRONT_CORE_PX`: the least half
- * width of the line, CSS px (the border's own where that is wider). `FRONT_GLOW_PX`: how far the
- * glow reaches either side, CSS px, and `FRONT_GLOW` its share of the pixel on the line. The
- * colours as 0..1 RGB: the line's (a hot red, light enough to be told from a red nation's fill)
- * and the glow's.
+ * A front (ROADMAP R90a, ADR-1078; brighter since R99, ADR-1091, the user's request): the border between the
+ * land two nations at war hold is a line of fire, at every zoom (on the ground of T2 and T3 too: whose the land
+ * is, is the front). From the outside in, each a half width in CSS px either side of the border: a red glow
+ * (`FRONT_GLOW_RGB`, `FRONT_GLOW` of the pixel on the line, falling off over `FRONT_GLOW_PX`); a dark casing
+ * (`FRONT_CASE_RGB`, `FRONT_CASE` of the pixel, to `FRONT_CASE_PX`), so that the line is told on a light fill; a
+ * band of orange red (`FRONT_BAND_RGB`, to `FRONT_BAND_PX`); and the core, near white (`FRONT_CORE_RGB`, to
+ * `FRONT_CORE_PX`, the border's own half width where that is more), told on a red fill and a dark one.
+ * `FRONT_NATIONS`: the war table's side (nations of an id under it; a border of one above it is drawn as at
+ * peace). The colours as 0..1 RGB.
  */
 export const FRONT_NATIONS = 512;
-export const FRONT_CORE_PX = 1.1;
-export const FRONT_GLOW_PX = 7;
-export const FRONT_GLOW = 0.7;
-export const FRONT_CORE_RGB: readonly [number, number, number] = [1, 0.36, 0.26];
-export const FRONT_GLOW_RGB: readonly [number, number, number] = [0.93, 0.08, 0.06];
+export const FRONT_CORE_PX = 1.5;
+export const FRONT_BAND_PX = 3.2;
+export const FRONT_CASE_PX = 4.4;
+export const FRONT_CASE = 0.7;
+export const FRONT_GLOW_PX = 12;
+export const FRONT_GLOW = 0.6;
+export const FRONT_CORE_RGB: readonly [number, number, number] = [1, 0.95, 0.62];
+export const FRONT_BAND_RGB: readonly [number, number, number] = [1, 0.22, 0.08];
+export const FRONT_CASE_RGB: readonly [number, number, number] = [0.16, 0.02, 0.02];
+export const FRONT_GLOW_RGB: readonly [number, number, number] = [1, 0.14, 0.07];
 
 /** The war table for the map's pass: FRONT_NATIONS squared, 1 where the two nations are at war. `pairs`: `a0, b0, a1, b1, …`. */
 export function warTable(pairs: ArrayLike<number>): Uint8Array {
