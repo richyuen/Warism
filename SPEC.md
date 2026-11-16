@@ -1894,6 +1894,9 @@ The renderer draws the snapshot the worker sends (§2.2); nothing it draws is si
 
 ### 8.2 Forces by tier
 Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e specs `classic`).
+- **The ranking** (ROADMAP R94a, ADR-1084): closed on a desk until the bar's Statistics opens it, folded to its
+  title on a phone; kept as the player left it (`warsim.showStats`). The panels cover at most 6 % of a 1600 × 900
+  view at the start (`chromeCover1938`).
 - **A counter's size** (ROADMAP R93, ADR-1083): drawn `COUNTER_SCALE` (1.25) times its own px and the unit size:
   a plate of 17.5 px with round corners (`COUNTER_CORNER`), a number of 12.5 px.
 - **T0 counters** (`src/render/units/counters.ts`): a counter a formation, clustered by screen distance

@@ -123,3 +123,13 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   the runs of R91 and R90: the counters' plates and numbers are drawn at a scale of 1.25, one run, not a pair);
   T2 159.3 fps, 5.0 ms. PASS (budgets 60 and 30 fps, 6 ms).
 - Shots: `docs/evidence/R93/` (both looks at 6,000 m/px).
+
+## 2026-11-16 — R94a: the ranking closed until asked for (ADR-1084)
+
+- The panels were 13.3 % of a 1600 × 900 view at the start (17.6 % in August 1939 on seed 99), the ranking 7.9 of
+  them. Closed on a desk until Statistics opens it: 5.4 % and 9.7 %. A phone's is folded to its title as before.
+  R94 split in three: R94b (the news) and R94c (the date and speed at the top) are open.
+- Tests: `chromeCover1938.spec.ts` (three sizes of view). The whole browser suite on the first try: 13 red, all
+  of the ranking open at the start; then the phone's fold kept, and by hand the 14 specs of the ranking, the
+  panels and the bar (40 tests green).
+- Shots: `docs/evidence/R94a/` (August 1939 before and after).

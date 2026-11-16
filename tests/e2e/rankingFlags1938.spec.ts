@@ -10,6 +10,8 @@ import type {} from '../../src/app/testApi';
 test('the ranking\'s rows: each nation\'s flag, and a bar in its colour by its share of the first', async ({ page }, info) => {
   test.setTimeout(120_000);
   await page.setViewportSize({ width: 1400, height: 800 });
+  // The ranking open, as a player who asked for it has it (ROADMAP R94a: closed on a desk until asked for).
+  await page.addInitScript(() => localStorage.setItem('warsim.showStats', '1'));
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
   const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/7.4') : info.outputPath();

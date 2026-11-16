@@ -17,6 +17,8 @@ for (const [name, width, height] of [['desk', 1600, 900], ['phone', 390, 844]] a
   test(`${name}: every name of the 1938 start whole in every list, the panel in view`, async ({ page }, info) => {
     test.setTimeout(150_000);
     await page.setViewportSize({ width, height });
+    // The ranking open, as a player who asked for it has it (ROADMAP R94a: closed on a desk until asked for).
+    await page.addInitScript(() => localStorage.setItem('warsim.showStats', '1'));
     await page.goto('/?scenario=1938&paused=1&seed=20895');
     await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
     const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/R34') : info.outputPath();

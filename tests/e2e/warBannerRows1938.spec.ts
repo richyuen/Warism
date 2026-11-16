@@ -15,6 +15,8 @@ for (const [w, h] of [[1400, 800], [1920, 1080]] as const) {
   test(`${w} × ${h}: at most two rows of war banners, the rest a "+N"; opaque panels`, async ({ page }) => {
     test.setTimeout(120_000);
     await page.setViewportSize({ width: w, height: h });
+    // The ranking open, as a player who asked for it has it (ROADMAP R94a: closed on a desk until asked for).
+    await page.addInitScript(() => localStorage.setItem('warsim.showStats', '1'));
     await page.goto('/?scenario=1938&paused=1&seed=1938');
     await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
     const pairs = PAIRS.map(([a, b]) => [id(a), id(b)] as const).filter(([a, b]) => a > 0 && b > 0);

@@ -241,7 +241,11 @@ export class Hud {
       });
   }
   /** Statistics ranking (PLAN 1.31b): shown and metric, both persisted. */
-  readonly showStats = signal(true);
+  /**
+   * The ranking, as the player left it; null: not chosen yet (ROADMAP R94a, ADR-1084). Then it is closed on a desk (it
+   * was 8 % of a 1600 × 900 view, open from the start) and folded to its title on a phone, as it was (ADR-760).
+   */
+  readonly showStats = signal<boolean | null>(null);
   readonly rankMetric = signal<RankList>('land');
   /** Buildable templates of the scenario (PLAN 1.33b), from the worker's map layers. */
   readonly templates = signal<TemplateInfo[]>([]);
@@ -306,7 +310,8 @@ export class Hud {
       this.templates.value = m.templates;
       this.techs.value = m.techs;
     });
-    this.showStats.value = load(KEY_SHOW_STATS) !== '0';
+    const shown = load(KEY_SHOW_STATS);
+    this.showStats.value = shown === '1' ? true : shown === '0' ? false : null;
     const metric = load(KEY_RANK_METRIC);
     if ((RANK_LISTS as readonly string[]).includes(metric ?? '')) this.rankMetric.value = metric as RankList;
     // A loaded world's formations are others, whatever their ids and counts (a load does not raise the counts).
@@ -546,8 +551,9 @@ export class Hud {
     this.showRelations.value = !this.showRelations.value;
   }
 
-  toggleStats(): void {
-    this.showStats.value = !this.showStats.value;
+  /** Opens or closes the ranking; `shown`: whether it is shown now (not chosen yet, that is the layout's to say). */
+  toggleStats(shown: boolean = this.showStats.value ?? false): void {
+    this.showStats.value = !shown;
     store(KEY_SHOW_STATS, this.showStats.value ? '1' : '0');
   }
 

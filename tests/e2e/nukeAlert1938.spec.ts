@@ -83,6 +83,8 @@ test('God Mode\'s strike: the alert banner, its go-to and the auto-pause option'
 test('the alert: the panels of the centre below it; it goes after its days, not while paused', async ({ page }, info) => {
   test.setTimeout(180_000);
   await page.setViewportSize({ width: 1400, height: 800 });
+  // The ranking open, as a player who asked for it has it (ROADMAP R94a: closed on a desk until asked for).
+  await page.addInitScript(() => localStorage.setItem('warsim.showStats', '1'));
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
   await page.waitForFunction(() => window.__warsim!.sim.mapLayers !== null, null, { timeout: 60_000 });

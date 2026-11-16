@@ -136,7 +136,22 @@ changed only where the feature they test changed.
   plates stay (the user's decision, ADR-762 kept, ADR-1073). A slimmer top bar with the date and the speed in its
   middle; the ranking closed until asked for; the news one line that opens. AT: the share of a 1600 × 900 view the
   panels cover at the start, measured before, and its bar set from that; the phone layout's specs green.
-
+  Measured first, at 1600 × 900 on seed 99: the panels cover 13.3 % of the view at the start and 17.6 % in August
+  1939: the ranking 7.9, the bar 2.9, the news 2.9, the war banners 2.5, the legend 0.9, the title 0.5.
+  - [x] R94a The ranking closed on a desk until the bar's Statistics opens it, and kept as the player left it; on
+    a phone folded to its title as it was (ADR-760 stands). AT: at most 6 % of a 1600 × 900 view under the panels
+    at the start.
+    Done (ADR-1084): 5.37 % at the start (13.29), 9.70 % in August 1939 (17.62). `chromeCover1938.spec.ts` (three
+    sizes of view: 5.37 % of 1600 × 900, 3.73 % of 1920 × 1080, 7.55 % of 1280 × 800; the ranking, opened, 7.9 to
+    11.1 % of them). `phoneLayout1938` holds the desk's rule (closed, opened by the button, kept over a reload) and
+    the phone's (as before); five specs of the ranking open it by the stored choice. Shots: `docs/evidence/R94a/`.
+  - [ ] R94b The news one line that opens: the newest event, the rest on a click. The rules the rows have from the
+    critic's runs (R42b, R43c, R49-N3, R59c: the player's orders' news, the sea battles' rows, a phone's two rows)
+    hold in the opened list and are listed in the item's ADR, each with its test green before and after. AT: the
+    news at most 1 % of a 1600 × 900 view until opened (2.9 % in August 1939 on seed 99).
+  - [ ] R94c The date and the speed in a slim bar at the top's middle. It changes the bar's order, the user's of
+    2026-10-29 (ADR-763); the phone's bar (PLAN 7.169) is not to lose a button from reach. AT: `barNarrow1938` and
+    `phoneLayout1938` green; the bars together no more of the view than the bar is now (2.9 % of 1600 × 900).
 - [ ] R95 **The markers of T1.** Left out of R93: the box with a unit's symbol has its men in type of 9 px under
   it, and a stack's count in a tag of the same. The number larger, on a plate as the counters'. AT: the number's
   height in px at the far end of T1 (2,000 m/px), its bar set from a shot; the markers' bound on a pixel's change

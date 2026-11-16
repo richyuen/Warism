@@ -200,3 +200,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
   what the unit-size setting of 1.25 would be, were there one.
 - **Not in this:** the markers of T1 (R95).
 - **Consequences:** fewer counters stand side by side in a crowded view; more are folded into a neighbour's "+n".
+
+### ADR-1084 · 2026-11-16 · accepted — R94a: the ranking is closed on a desk until asked for; R94 in three parts
+- **Stands on:** ADR-1073 (the user's choice of the chrome: "ranking collapsed by default"; the gunmetal plates
+  kept). ADR-760 (the user's: on a phone the ranking folded to its title) stands.
+- **Measured** at 1600 × 900, seed 99: the panels 13.3 % of the view at the start, 17.6 % in August 1939; the
+  ranking alone 7.9 %.
+- **Decision:** `Hud.showStats` is the player's choice or none yet. None yet: closed on a desk, folded to its title
+  on a phone. The bar's Statistics opens and closes it, and the choice is kept (`warsim.showStats`). A player who
+  had it open before keeps it: only one who never touched it sees the change.
+- **The bar:** at most 6 % of a 1600 × 900 view under the panels at the start (5.37 measured; 5 % of 1920 × 1080
+  and 8 % of 1280 × 800, where the same panels are more of a smaller view).
+- **R94 split:** R94b the news as one line that opens, R94c the date and the speed at the top. Each changes a
+  layout the user set (ADR-760's news on a phone, ADR-763's order of the bar) and rules the critic's runs added
+  to the rows: they are taken one at a time, each naming what it replaces.
+- **Tests that stood on the ranking open at the start:** five open it by the stored choice, as a player who asked
+  for it has it; `phoneLayout1938`'s desk case tests the new rule.

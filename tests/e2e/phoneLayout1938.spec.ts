@@ -238,19 +238,36 @@ test.describe('the news at a phone\'s width', () => {
 });
 
 // The user's choice (2026-10-29, ADR-760): on a phone the ranking took a third of the view. It is
-// folded to its title, top right, and a tap opens it, in view; a desktop's is open as it was.
+// folded to its title, top right, and a tap opens it, in view; a desktop's is closed until the bar's Statistics
+// opens it (ROADMAP R94a, ADR-1084: it was open from the start, 8 % of the view).
 test.describe('the ranking at a phone\'s width', () => {
   test.use({ hasTouch: true });
   for (const [W, H] of [[390, 844], [844, 390], [1280, 800]] as const) {
-    test(`at ${W} × ${H}: the ranking folded to its title on a phone, open on a desktop`, async ({ page }) => {
+    test(`at ${W} × ${H}: the ranking folded to its title on a phone, closed until asked for on a desktop`, async ({ page }) => {
       test.setTimeout(120_000);
       await page.setViewportSize({ width: W, height: H });
       await page.goto('/?scenario=1938&paused=1&seed=1938');
       await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
       const rows = page.getByTestId('rank-row');
       if (W > 600 && H > 500) {
+        // A desk (ROADMAP R94a, ADR-1084): closed until asked for by the bar's Statistics, then open, with no fold of
+        // its own; and closed again by the same button.
         await expect(page.getByTestId('ranking-toggle')).toHaveCount(0);
+        await expect(page.getByTestId('stats-ranking')).toHaveCount(0);
+        await expect(page.getByTestId('stats-btn')).toHaveAttribute('aria-pressed', 'false');
+        await page.getByTestId('stats-btn').click();
         await expect(rows).toHaveCount(15);
+        await expect(page.getByTestId('ranking-toggle')).toHaveCount(0);
+        await expect(page.getByTestId('stats-btn')).toHaveAttribute('aria-pressed', 'true');
+        // Kept as the player left it: open after a reload, closed after closing it and a reload.
+        await page.reload();
+        await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+        await expect(rows).toHaveCount(15);
+        await page.getByTestId('stats-btn').click();
+        await expect(page.getByTestId('stats-ranking')).toHaveCount(0);
+        await page.reload();
+        await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+        await expect(page.getByTestId('stats-ranking')).toHaveCount(0);
         return;
       }
       await expect(page.getByTestId('ranking-toggle')).toBeVisible();

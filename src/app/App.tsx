@@ -74,6 +74,8 @@ export function App({
   const [scenarioStatus, setScenarioStatus] = useState('');
   // A phone's width (ADR-760): the ticker, the war banners and the legend take less of the map.
   const phone = usePhone();
+  // The ranking (ROADMAP R94a): as the player left it; not chosen yet, closed on a desk and folded to its title on a phone.
+  const statsShown = hud.showStats.value ?? phone;
   // On a phone, a God tool acting for the selected nation (Breakthrough, Territory) takes map clicks that its panel would
   // cover (ROADMAP R55h; critic run 55: Germany's panel lay over Berlin and Warsaw): the panel is closed while it is on.
   const toolOnMap = phone && (hud.godTool.value === 'battle' || hud.godTool.value === 'brush');
@@ -172,8 +174,8 @@ export function App({
         onSpeed={(l) => hud.setSpeedLevel(l)}
         mapMode={hud.mapMode.value}
         onMapMode={(m) => hud.setMapMode(m)}
-        showStats={hud.showStats.value}
-        onToggleStats={stats ? () => hud.toggleStats() : undefined}
+        showStats={statsShown}
+        onToggleStats={stats ? () => hud.toggleStats(statsShown) : undefined}
         godMode={hud.godMode.value}
         onToggleGod={stats ? () => hud.toggleGod() : undefined}
         godTools={
@@ -381,7 +383,7 @@ export function App({
           onClose={() => hud.toggleRelations()}
         />
       ) : null}
-      {stats && hud.showStats.value && !hud.showEditor.value ? (
+      {stats && statsShown && !hud.showEditor.value ? (
         <StatsRanking nations={stats.nations} lives={stats.lives} dead={stats.dead} metric={hud.rankMetric.value} selected={hud.selected.value} onMetric={(m) => hud.setRankMetric(m)} onSelect={(id) => hud.onSelectNation(id)} onCharts={() => hud.toggleCharts()} flagUrlOf={(id) => (view && flagVersion >= 0 ? view.flags.urlOf(id) : null)} phone={phone} />
       ) : null}
       {formationTitle ? (
