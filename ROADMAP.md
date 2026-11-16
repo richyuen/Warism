@@ -24,7 +24,7 @@ world, theatre and tactical zoom in `docs/evidence/<item>/`, looked at; `npm run
 goal 5, its figures logged; and the specs that read the pixels it changes (found by a search before the change) green,
 changed only where the feature they test changed.
 
-- [ ] R89 **Thick movement arrows.** Seen on seed 99 in August 1939: a march's line is 1.5 px, dashed and yellow, one a
+- [x] R89 **Thick movement arrows.** Seen on seed 99 in August 1939: a march's line is 1.5 px, dashed and yellow, one a
   formation, drawn only for a selected nation; with China selected the Fujian front is some 40 lines across one another,
   and with no nation selected a war shows no movement at all. 428 of 997 formations had a march in that hour.
   - [x] R89a The arrow: a filled, tapered body with a head, in a pale tint of the nation's colour with a dark rim,
