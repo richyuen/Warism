@@ -298,6 +298,20 @@ though Rush makes sense either way".
   113 of 113 points of the German-Polish border, 0 of the German-Czech). Shots: `docs/evidence/R99/` (20,000,
   4,000, 600 and 150 m/px).
 
+## Batch 36 — before the next critic (the user: "Let's do them all", 2026-11-16)
+
+- [x] R100 **No tag or enemy's pointer under the top clock or the war banners** (BLOCKERS, 2026-11-16). Two causes:
+  the clock was not among the boxes the tags and pointers keep clear of (`tagObstacles`); the banners' row took the
+  pointer over its whole box, the gaps and the room beside a short last row too. The clock is among them; the row
+  takes no pointer, its banners do. `tests/e2e/tagsOnMap1938.spec.ts`: `battleTags1938`'s scene on seeds 39915, 1
+  and 11, at 250, 120 and 10 m/px (77 tags and 3 pointers a seed): 11, 16 and 11 points under a box before, none now.
+- [ ] R101 **The tags of a crowded front** (R98c's finding: `tagsCrowd1938`'s bar passed on 10 of 12 seeds where 12).
+  The bar of 3.5 % on the twelve, no more tags left out, the layout no slower.
+- [ ] R102 **Seed 5309: Germany does not take Prague** in the war forced on Czechoslovakia (PROGRESS, R97b): which
+  rule, and whether its army is at that front.
+- [ ] R103 **A nation massed on answers** (ADR-1089's "not built"): the target of a massing brings its own army to
+  that border. Measured against R97b's bars before it is kept.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

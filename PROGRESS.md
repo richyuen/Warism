@@ -268,3 +268,8 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - The front's line: a glow of 12 px, a dark casing, an orange band, a core near white (`ground.ts`,
   `mapShader.ts`). `fronts1938.spec.ts` reads the core's colour from the constant; green, its bars unchanged.
   Shots in `docs/evidence/R99/`.
+
+## 2026-11-16 — R100: no tag or pointer under the clock or the banners' row
+
+- `.topclock` among `tagObstacles`; `.war-banners` takes no pointer, its children do (`#ui > *` gave it one).
+  `tests/e2e/tagsOnMap1938.spec.ts`, red before on its three seeds. The BLOCKERS entry to `docs/BLOCKERS_DONE.md`.

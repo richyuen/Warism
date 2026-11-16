@@ -1527,3 +1527,19 @@ PLAN 1.42 did not decide are under PLAN 7.3.
 - **Left:** the lift's size (827: 69 at Nome, a port, two groups, both acting; `wantsFerry` keeps one
   transport group in training at a time). ADR-662: (a) commit the rule + PLAN 7.98 for the lift
   (recommended), (b) commit the rule, no task, (c) drop it. The code is restored; the pin unchanged.
+
+### 2026-11-16 — a tag or an enemy's pointer under the top clock or the war banners takes no hover or click (found in R98c's scans)
+- **Seen:** `battleTags1938` on seed 39915 with R98c: the short tag of formation 4 is drawn at x 592, y 2 (50 x 16
+  px), `elementFromPoint` there is `DIV.topclock` (ADR-1086), and the hover does not reach the map; on another seed
+  formation 42's tag at 1065, 835 lies under `DIV.war-banners`. `enemyPointer1938`: a pointer drawn at y 10 on the top
+  edge is not clicked through at x 676 to 904 and is at 500, 1172 and 1273 (that it is the clock is read from that
+  range, not from `elementFromPoint`).
+- **Older than R98c:** only `operational.ts` differs between the two builds compared; the old scenes did not put a tag
+  there. The two specs were re-aimed at scenes that do not (seed 2; the search from day 19).
+- **Not done:** the tags and pointers kept clear of the chrome, or the chrome letting the pointer through there. An
+  item for the next batch.
+- **Resolved (2026-11-16, ROADMAP R100):** two causes, each read with `elementFromPoint`. The top clock (ADR-1086) was
+  not among the boxes the tags and the pointers keep clear of (`tagObstacles`, `game.tsx`): it is. The banners' row
+  took the pointer over its own box, between the banners and beside a short last row, where the tags may stand: the
+  row takes none now, its banners do. `tests/e2e/tagsOnMap1938.spec.ts`: red before on seeds 39915, 1 and 11 (11, 16
+  and 11 points of tags and pointers under a box), none after.

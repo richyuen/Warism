@@ -675,6 +675,13 @@ textarea,
   gap: 0.3rem;
   /* Right of an open panel on the left, whose right edge is at 18.9 rem and 2 px, and as far from the right, at every UI size (PLAN 3.12Rh, 3.12Rh4). */
   max-width: min(60%, calc(100% - 39rem));
+  /* The row's own box takes no pointer (ROADMAP R100): between the banners and beside a short last row the map does. */
+}
+#ui > .war-banners {
+  pointer-events: none;
+}
+.war-banners > * {
+  pointer-events: auto;
 }
 .war-banner {
   display: flex;

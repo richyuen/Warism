@@ -114,17 +114,6 @@ the state of 3.10c1a's game read by today's code), France (nation 19) against It
   worth (31 sectors in the Sahara that nobody attacks). Both are balance, and wait for
   Phase 7 (ADR-58).
 
-### 2026-11-16 — a tag or an enemy's pointer under the top clock or the war banners takes no hover or click (found in R98c's scans)
-- **Seen:** `battleTags1938` on seed 39915 with R98c: the short tag of formation 4 is drawn at x 592, y 2 (50 x 16
-  px), `elementFromPoint` there is `DIV.topclock` (ADR-1086), and the hover does not reach the map; on another seed
-  formation 42's tag at 1065, 835 lies under `DIV.war-banners`. `enemyPointer1938`: a pointer drawn at y 10 on the top
-  edge is not clicked through at x 676 to 904 and is at 500, 1172 and 1273 (that it is the clock is read from that
-  range, not from `elementFromPoint`).
-- **Older than R98c:** only `operational.ts` differs between the two builds compared; the old scenes did not put a tag
-  there. The two specs were re-aimed at scenes that do not (seed 2; the search from day 19).
-- **Not done:** the tags and pointers kept clear of the chrome, or the chrome letting the pointer through there. An
-  item for the next batch.
-
 ## Watch list
 
 In `docs/BLOCKERS_WATCH.md` (ADR-918): searched, not read.
