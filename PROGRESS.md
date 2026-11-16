@@ -67,3 +67,12 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - `npm run bench -- G`: T0 302.3 fps, the map's pass 0.520 ms of GPU a frame (0.512 to 0.515 before; budget 1); T2
   161.0 fps, 1.078 ms (budget 2), draw cpu 4.9 ms: PASS.
 - Shots: `docs/evidence/R90a/` (peace at 4,000 m/px; the war at six zooms).
+
+## 2026-11-15 — R90b: land taken flashes (ADR-1079); R90 done
+
+- Each cell that changes hands with a snapshot is a soft white patch for 900 ms (`src/render/fx/flashes.ts`), under
+  the names; none at a start or a load.
+- Tests: `flashes.test.ts` (4); `flash1938.spec.ts` (two sizes of paint by three zooms; the start, the same holder,
+  a load). The whole browser suite by hand on the change: 458 passed in 10.0 min.
+- `npm run bench -- G`: T0 290.7 fps, T2 162.0 fps, draw cpu 4.9 ms, PASS.
+- Shot: `docs/evidence/R90b/flash-1500.png` (the first look, a white blot, is in ADR-1079).

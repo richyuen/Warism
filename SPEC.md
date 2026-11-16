@@ -1908,6 +1908,10 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   the border is a hot red line (`FRONT_CORE_RGB`, at least `FRONT_CORE_PX` 1.1 px either side) with a red glow
   (`FRONT_GLOW_RGB`, `FRONT_GLOW` 0.7 on the line, over `FRONT_GLOW_PX` 7 px), at every zoom, in the modes of the
   palette's fills. Who is at war: `warTable` (512 nations a side), `MapRenderer.setWars` from the snapshot's `wars`.
+- **The flash of land taken** (ROADMAP R90b, ADR-1079; `src/render/fx/flashes.ts`): each cell a snapshot brings
+  under a new holder (not the sea, not land no one held; not a game's first snapshot) is a soft white patch,
+  `FLASH_ALPHA` (0.32) fading over `FLASH_MS` (900 ms of the player's time), on the names' canvas under the names;
+  the newest `FLASH_MAX_CELLS` (3,000).
 - **T1 markers** (`src/render/units/markers.ts`, from `T1_MAX_M` to `T1_MIN_M`): a box with the NATO
   symbol, pips for its elements (fading in and out each; the strength bar only while no elements came),
   order arrows (a fleet's along its turning points), crossed swords while engaged. A land formation's march is a

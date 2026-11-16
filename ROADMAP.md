@@ -62,7 +62,7 @@ changed only where the feature they test changed.
     name lies on an arrow, 3 not told from it (Germany's pale grey name on its pale grey arrows; bar a tenth). The 15
     specs of the names' canvas, the voyages and the landings' marks green (40 tests). `npm run bench -- G` PASS (T0
     297.3 fps, T2 159.4 fps, draw cpu 5.0 ms). Shots: `docs/evidence/R89c/` (the voyages' lines not shot).
-- [ ] R90 **Fronts that glow.** At world zoom a war is a hatched patch and a small burst. The border between two
+- [x] R90 **Fronts that glow.** At world zoom a war is a hatched patch and a small burst. The border between two
   nations at war gets a glowing red line at world and theatre zoom, and land that changed hands in the last days
   flashes once. AT: a spec on the 1938 world with a war declared by God Mode: the line's pixels along the shared
   border and none along a border at peace; gone at the peace.
@@ -74,9 +74,16 @@ changed only where the feature they test changed.
     of 10 at 150), on 0 of the German-Czech border's (75 to 141 points); none in peace before, none after the peace.
     `warTable.test.ts` (3). The whole browser suite green on the change (457). `npm run bench -- G` PASS (the
     map's pass 0.520 ms of GPU a frame at T0, from 0.513; budget 1). Shots: `docs/evidence/R90a/`.
-  - [ ] R90b The flash: land that changed hands in the last days flashes once. AT: a spec that takes a cell by God
+  - [x] R90b The flash: land that changed hands in the last days flashes once. AT: a spec that takes a cell by God
     Mode's paint and reads its pixels brighter than its fill for the flash's time and its fill after; nothing flashes
     at a load or at the start.
+    Done (ADR-1079): each cell a snapshot brings under a new holder is a soft white patch for 900 ms of the player's
+    time, on the names' canvas under the names (`src/render/fx/flashes.ts`). `flashes.test.ts` (4);
+    `flash1938.spec.ts`: a paint of radius 1 and of 3 at 8,000, 1,500 and 600 m/px: 5 and 29 cells flash, white at
+    30 ms and less half way, none after 960 ms; none at the start, none where the holder is the same, none at a
+    load. The first look (0.6 opaque, 1.15 cells) made a province taken a white blot: 0.32 and 0.85. The whole
+    browser suite green on the change (458). `npm run bench -- G` PASS (T0 290.7 fps, T2 162.0). Shot:
+    `docs/evidence/R90b/flash-1500.png`.
 - [ ] R91 **The map's ground.** The sea is one flat colour and each nation one flat fill. The sea darker with depth
   and lighter over the shelf along the coasts; inside each nation's border a soft darker edge; faint relief under the
   political colours. AT: the political map's colours still tell every pair of neighbours apart (the check the nation

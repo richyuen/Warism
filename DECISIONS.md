@@ -110,3 +110,17 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **The flash** of land that changed hands is R90b: it needs a time for each cell, which the pass does not have.
 - **Consequences:** the map's picture changes wherever two nations at war touch; the whole browser suite was run on
   it. One more texture for the pass (15 of the 16 a WebGL2 context must give).
+
+### ADR-1079 · 2026-11-15 · accepted — R90b: the flash is of the player's time, of each cell that changes hands
+- **The item said** "land that changed hands in the last days flashes once". A flash measured in the game's days
+  is no flash at the speeds the game is watched at (a day is a fraction of a second at ×5 and nothing at Max), and
+  the map's pass has no time for each cell.
+- **Decision:** the view compares each snapshot's holders with those it had (`changedCells`: another holder, and
+  neither the sea nor land no one held) and lights those cells: a soft white patch, `FLASH_ALPHA` (0.32) falling to
+  nothing over `FLASH_MS` (900 ms of the player's time), `FLASH_RADIUS_CELLS` (0.85) wide and at least
+  `FLASH_MIN_PX` (1.5), on the names' canvas under the arrows and the names. The newest `FLASH_MAX_CELLS` (3,000).
+  None for a game's first snapshot, at a start or after a load. The view draws on while one fades.
+- **Found on the way:** at 0.6 and 1.15 cells the patches of a province taken at once ran together into a white
+  blot that hid the map; at 0.32 and 0.85 they are a sheen.
+- **Consequences:** at Max a front that moves every tick shimmers along its length; that is the war moving. A
+  picture drawn at a time far ahead (the tests' `now + 1e6`) has no flash in it.

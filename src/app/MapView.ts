@@ -11,6 +11,7 @@ import { formationPips, type Pips } from '../render/units/pips';
 import type { LandingMark } from '../shared/protocol';
 import { drawCorridors, type CorridorMark } from '../render/fx/corridors';
 import { drawHolds, type HoldMark } from '../render/fx/holds';
+import { changedCells, ControlFlashes } from '../render/fx/flashes';
 import { advances, arrowFill, drawMoveArrows, groupMarches, type DrawnArrow, type March } from '../render/units/moveArrows';
 import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderLine, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { BATTLE_TAG_M, drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
@@ -669,6 +670,10 @@ export class MapView {
   /** Copies what the view needs; the snapshot's buffers go back to the worker next frame. */
   private apply(s: Snapshot): void {
     const T = s.tiles.size;
+    // The cells that change hands with this snapshot flash (ROADMAP R90b): not those of a game's first snapshot,
+    // at a start or after a load.
+    const flash = this.lastTick >= 0 && !this.loaded;
+    const taken: number[] = [];
     for (let k = 0; k < s.tiles.count; k++) {
       const t = s.tiles.ids[k]!;
       const tx = t % s.tiles.tilesX;
@@ -680,10 +685,13 @@ export class MapView {
         if (y >= this.geo.h) break;
         const x0 = tx * T;
         const n = Math.min(T, this.geo.w - x0);
+        if (flash) changedCells(this.controlGrid.subarray(y * this.geo.w + x0, y * this.geo.w + x0 + n), s.tiles.controller.subarray(k * T * T + r * T, k * T * T + r * T + n), n, x0, y, taken);
         this.controlGrid.set(s.tiles.controller.subarray(k * T * T + r * T, k * T * T + r * T + n), y * this.geo.w + x0);
         this.ownerGrid.set(s.tiles.owner.subarray(k * T * T + r * T, k * T * T + r * T + n), y * this.geo.w + x0);
       }
     }
+    if (flash) this.flashes.add(taken, performance.now());
+    else this.flashes.clear();
     this.atWar.clear();
     this.warPairs.clear();
     for (let i = 0; i + 1 < s.wars.length; i += 2) {
@@ -2231,6 +2239,9 @@ export class MapView {
     this.landingEdges = this.marks.map((k) => drawLandingMark(ctx, k, cam, this.geo, vw, vh, this.unitScale));
   }
 
+  /** The flashes of land that changed hands (ROADMAP R90b); tests read how many cells flash. */
+  readonly flashes = new ControlFlashes();
+
   /** How near an enemy's formation a march ends and is an advance, km (ROADMAP R89b): a day's march or two. */
   static readonly ADVANCE_REACH_KM = 100;
 
@@ -3195,7 +3206,7 @@ export class MapView {
     // or units still interpolating toward the latest tick. An idle map costs nothing.
     const c = this.controller.cam;
     const camMoved = c.cx !== this.lastCam.cx || c.cy !== this.lastCam.cy || c.scale !== this.lastCam.scale;
-    const animating = this.unitsAnimating(now) || this.wrecks.animating(now) || this.hulls.animating(now) || (this.unitLook === 'balls' && this.deadBalls.animating(now));
+    const animating = this.flashes.animating(now) || this.unitsAnimating(now) || this.wrecks.animating(now) || this.hulls.animating(now) || (this.unitLook === 'balls' && this.deadBalls.animating(now));
     const interpolating = (this.tickMs > 0 && now - this.snapArrival < this.tickMs * 1.5) || animating || this.unitsAnimated;
     // A panel that opens, closes or grows over an idle map moves the hero counters it covers (R78b: on a paused desk start
     // the Ranking came after the last frame and Japan's two heroes stayed under it until the next).
@@ -3329,7 +3340,9 @@ export class MapView {
    */
   private drawCityLayer(cam: Camera, dpr: number, now: number, arrows = true): void {
     this.cityLabels.draw(cam, dpr, now, this.nameObstacles(cam), (ctx) => {
-      // The marches' arrows first (ROADMAP R89c): under the nations' names and the cities'.
+      // The flashes of land that changed hands (ROADMAP R90b), then the marches' arrows (R89c): under the nations'
+      // names and the cities'.
+      if (arrows) this.flashes.draw(ctx, cam, this.geo, this.canvas.clientWidth, this.canvas.clientHeight, now, itemOffsets(cam, this.geo, this.canvas.clientWidth));
       if (arrows) this.drawArrows(ctx, cam, now);
       else this.moveArrows = [];
       drawNationLabels(ctx, this.nationLabels, LABEL_FONT, (id) => this.ownColor.get(id), this.glyphSprites);
