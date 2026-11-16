@@ -2,6 +2,37 @@
 
 What each release of Warism brought, for players. Play it at https://richyuen.github.io/Warism/
 
+## release-2026-11-15 — history to 1991, an undo for God Mode, and heroes on
+
+**New**
+- **History replayed to 1991.** The historical track goes on to the Soviet Union's end: Angola, the Ogaden, Cambodia,
+  Iran and Iraq, the Falklands, Lebanon, Chad and Libya, Afghanistan, the revolutions of 1989, Germany and Yemen
+  united, Kuwait taken and freed, the Baltic states, Slovenia and Croatia, and the Soviet Union into fifteen on 26
+  December 1991. The Eastern Bloc dissolves, the dominions go free on their dates, and the world after 1991 is the AI's
+  with NATO and the CIS.
+- **Cities take their names of the day.** Seoul in 1945, Peking and then Beijing, Kinshasa, Volgograd, Harare,
+  St Petersburg; the History names each event's city as it was called then (Kalinin in 1941, Königsberg in 1945).
+- **An undo for God Mode:** one step back puts the world as it was before your last act.
+- **Heroes are on** in a new game from the title screen; Countryballs stay the default look.
+- A burst reads at world zoom with its mark on the struck stack; the relations graph names more nations and shows
+  truces; a battle's labels and tags stay apart close in.
+
+**Changed**
+- A capital taken in war goes back to its own city once the nation holds it in safety: in the replay Moscow, Paris,
+  Rome, Amman and Rangoon are their nations' seats again after the war.
+- A bloc is a defensive pact. Island nations go to war across the sea from their nearest targets, so small worlds see
+  wars.
+- Leaving the replay during a war: a war the timeline holds to a later date goes on from where its fronts stand,
+  keeping its score's whole range; one held beyond 1991 ends in a white peace, and the year's card says so.
+- With a panel such as Relations open, the heroes' tags under it are hidden instead of piling at its edge.
+
+**Fixes**
+- A bloc's aid is no longer paid in the hour the bloc dissolves; a nation made a puppet at a month's start no longer
+  pays that month's tribute.
+- The Soviet successors no longer go bankrupt on 1 January 1992 and have their own colours; names that changed
+  (Egypt, Sri Lanka, Benin, Zaire) change on their day.
+- A God "Make peace" in the replay is told as yours, not as the end of history's course.
+
 ## release-2026-11-13 — history to 1975, a start from any year, and the Cold War
 
 **New**
