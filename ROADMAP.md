@@ -66,6 +66,17 @@ changed only where the feature they test changed.
   nations at war gets a glowing red line at world and theatre zoom, and land that changed hands in the last days
   flashes once. AT: a spec on the 1938 world with a war declared by God Mode: the line's pixels along the shared
   border and none along a border at peace; gone at the peace.
+  - [x] R90a The line: where the land two nations at war hold meets, a hot red line with a red glow 7 px either side,
+    in the map's own pass (the border it already finds), at every zoom (ADR-1078).
+    Done: `mapShader.ts` with a war table (`warTable`, 512 nations a side), `MapRenderer.setWars`.
+    `fronts1938.spec.ts`: Germany on Poland at 1, 6 and 48 hours, at 20,000, 8,000, 4,000, 1,500, 600 and 150 m/px:
+    the line on every point of the German-Polish border in view (113 of 113 from 1,500 m/px out, 45 of 45 at 600, 10
+    of 10 at 150), on 0 of the German-Czech border's (75 to 141 points); none in peace before, none after the peace.
+    `warTable.test.ts` (3). The whole browser suite green on the change (457). `npm run bench -- G` PASS (the
+    map's pass 0.520 ms of GPU a frame at T0, from 0.513; budget 1). Shots: `docs/evidence/R90a/`.
+  - [ ] R90b The flash: land that changed hands in the last days flashes once. AT: a spec that takes a cell by God
+    Mode's paint and reads its pixels brighter than its fill for the flash's time and its fill after; nothing flashes
+    at a load or at the start.
 - [ ] R91 **The map's ground.** The sea is one flat colour and each nation one flat fill. The sea darker with depth
   and lighter over the shelf along the coasts; inside each nation's border a soft darker edge; faint relief under the
   political colours. AT: the political map's colours still tell every pair of neighbours apart (the check the nation

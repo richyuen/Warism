@@ -104,3 +104,31 @@ export function seaShade(depth: number): number {
   const t = Math.min(1, Math.log(1 + Math.max(0, depth) / SEA_DEPTH_KNEE) / Math.log(1 + SEA_DEPTH_FULL / SEA_DEPTH_KNEE));
   return SEA_SHALLOW + (SEA_DEEP - SEA_SHALLOW) * t;
 }
+
+/**
+ * A front (ROADMAP R90a, ADR-1078): the border between the land two nations at war hold has a red
+ * line with a glow, at every zoom (on the ground of T2 and T3 too: whose the land is, is the front). `FRONT_NATIONS`: the war table's side (nations of an
+ * id under it; a border of one above it is drawn as at peace). `FRONT_CORE_PX`: the least half
+ * width of the line, CSS px (the border's own where that is wider). `FRONT_GLOW_PX`: how far the
+ * glow reaches either side, CSS px, and `FRONT_GLOW` its share of the pixel on the line. The
+ * colours as 0..1 RGB: the line's (a hot red, light enough to be told from a red nation's fill)
+ * and the glow's.
+ */
+export const FRONT_NATIONS = 512;
+export const FRONT_CORE_PX = 1.1;
+export const FRONT_GLOW_PX = 7;
+export const FRONT_GLOW = 0.7;
+export const FRONT_CORE_RGB: readonly [number, number, number] = [1, 0.36, 0.26];
+export const FRONT_GLOW_RGB: readonly [number, number, number] = [0.93, 0.08, 0.06];
+
+/** The war table for the map's pass: FRONT_NATIONS squared, 1 where the two nations are at war. `pairs`: `a0, b0, a1, b1, …`. */
+export function warTable(pairs: ArrayLike<number>): Uint8Array {
+  const t = new Uint8Array(FRONT_NATIONS * FRONT_NATIONS);
+  for (let i = 0; i + 1 < pairs.length; i += 2) {
+    const [a, b] = [pairs[i]!, pairs[i + 1]!];
+    if (a === 0 || b === 0 || a >= FRONT_NATIONS || b >= FRONT_NATIONS) continue;
+    t[a * FRONT_NATIONS + b] = 1;
+    t[b * FRONT_NATIONS + a] = 1;
+  }
+  return t;
+}

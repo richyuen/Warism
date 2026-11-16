@@ -56,3 +56,14 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - `npm run bench -- G`: T0 297.3 fps, T2 159.4 fps, draw cpu 5.0 ms, PASS (as R89b).
 - Shots: `docs/evidence/R89c/` (before and after at 1,500 and 600 m/px). The voyages' new lines were not shot; their
   specs are green.
+
+## 2026-11-15 — R90a: the fronts glow (ADR-1078)
+
+- The border between what two nations at war hold is a hot red line with a glow, drawn by the map's own pass from a
+  war table. R90 split: R90a this line, R90b the flash of land that changed hands (open).
+- Tests: `warTable.test.ts` (3); `fronts1938.spec.ts` (Germany on Poland, three hours by six zooms: every point of
+  the border at war lit, none of a border at peace, none before the war or after the peace). The whole browser suite
+  by hand on the change: `npx playwright test --project=chromium --project=swiftshader`, 457 passed in 10.1 min.
+- `npm run bench -- G`: T0 302.3 fps, the map's pass 0.520 ms of GPU a frame (0.512 to 0.515 before; budget 1); T2
+  161.0 fps, 1.078 ms (budget 2), draw cpu 4.9 ms: PASS.
+- Shots: `docs/evidence/R90a/` (peace at 4,000 m/px; the war at six zooms).

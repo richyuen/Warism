@@ -91,3 +91,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
   is the arrow's plain fill (the name not told from it). Measured 3 of 89 in the German-Polish war: Germany's pale
   grey name on its own pale grey arrows. R92 (the names' new look) is told to keep a name told from a pale arrow.
 - **Consequences:** an arrow under a nation's name is partly hidden by its letters; under a marker, by the box.
+
+### ADR-1078 · 2026-11-15 · accepted — R90a: a front is the border of what two nations at war hold, drawn by the map's pass
+- **Found:** the map's pass already finds, at each pixel, the two strongest holders (`uController`) and its distance
+  to the border between them, for the dark border line. Whether those two are at war is all a front needs.
+- **Decision:**
+  - A war table, `FRONT_NATIONS` (512) a side, one byte a pair (`warTable`, `MapRenderer.setWars`, from the
+    snapshot's `wars`; uploaded when the pairs change). A nation of an id from 512 has no front drawn (the 1938 world
+    has 102 nations and those founded in a game).
+  - Where the two holders are at war, in the modes of the palette's fills: a glow of `FRONT_GLOW_RGB` (0.93, 0.08,
+    0.06), `FRONT_GLOW` (0.7) of the pixel on the line, falling off over `FRONT_GLOW_PX` (7 CSS px) either side;
+    over it the line, `FRONT_CORE_RGB` (1, 0.36, 0.26), at least `FRONT_CORE_PX` (1.1) either side, the border's own
+    width where that is more. Hot and light, so that it is told from a red nation's fill.
+  - At every zoom, on the ground of T2 and T3 too: the first try faded it out with the ground, and it was gone at
+    600 m/px, inside T1.
+  - Land against sea is no front; the holders are what counts, not the owners (an occupied province's edge is the
+    front).
+- **The flash** of land that changed hands is R90b: it needs a time for each cell, which the pass does not have.
+- **Consequences:** the map's picture changes wherever two nations at war touch; the whole browser suite was run on
+  it. One more texture for the pass (15 of the 16 a WebGL2 context must give).

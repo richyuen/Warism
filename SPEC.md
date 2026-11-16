@@ -1904,6 +1904,10 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   drawn beside the panel at the screen's edge (R34e), over no other hero's; under one floating over the map's middle
   (Relations, History, the editor, the settings), not drawn while it covers it (R87d). Balls: the
   flag chip a ball of `COUNTER_BALL_R` (8 px) over the box's left end.
+- **Fronts** (ROADMAP R90a, ADR-1078; `mapShader.ts`, `ground.ts`): where the land two nations at war hold meets,
+  the border is a hot red line (`FRONT_CORE_RGB`, at least `FRONT_CORE_PX` 1.1 px either side) with a red glow
+  (`FRONT_GLOW_RGB`, `FRONT_GLOW` 0.7 on the line, over `FRONT_GLOW_PX` 7 px), at every zoom, in the modes of the
+  palette's fills. Who is at war: `warTable` (512 nations a side), `MapRenderer.setWars` from the snapshot's `wars`.
 - **T1 markers** (`src/render/units/markers.ts`, from `T1_MAX_M` to `T1_MIN_M`): a box with the NATO
   symbol, pips for its elements (fading in and out each; the strength bar only while no elements came),
   order arrows (a fleet's along its turning points), crossed swords while engaged. A land formation's march is a

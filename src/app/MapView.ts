@@ -693,6 +693,8 @@ export class MapView {
       this.atWar.add(b);
       this.warPairs.add(a < b ? a * 65536 + b : b * 65536 + a);
     }
+    // The fronts (ROADMAP R90a): the borders between what two nations at war hold.
+    if (this.map.setWars(s.wars)) this.dirty = true;
     // What the view knows of each nation is what this snapshot says, and of no other nation: a
     // snapshot has a row for every nation of its world. A world loaded into a running game can
     // have fewer (PLAN 2.7q): the flag of a nation made by a revolt stayed over its capital after

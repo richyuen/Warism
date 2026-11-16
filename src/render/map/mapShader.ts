@@ -18,7 +18,7 @@ import { AIR_CONTESTED_COLOR, AIR_HELD_TINT, FALLOUT_COLOR, FALLOUT_FADE, FALLOU
 
 const AIR_CONTESTED_RGB = [16, 8, 0].map((s) => (((AIR_CONTESTED_COLOR >> s) & 255) / 255).toFixed(3)).join(', ');
 const FALLOUT_RGB = [16, 8, 0].map((s) => (((FALLOUT_COLOR >> s) & 255) / 255).toFixed(3)).join(', ');
-import { BORDER_BAND, BORDER_CAST, GROUND_CAST, HATCH_AT_GROUND, OCCUPIED_CAST, SEA_DEEP, SEA_DEPTH_FULL, SEA_DEPTH_KNEE, SEA_SHALLOW } from './ground';
+import { BORDER_BAND, BORDER_CAST, FRONT_CORE_PX, FRONT_CORE_RGB, FRONT_GLOW, FRONT_GLOW_PX, FRONT_GLOW_RGB, FRONT_NATIONS, GROUND_CAST, HATCH_AT_GROUND, OCCUPIED_CAST, SEA_DEEP, SEA_DEPTH_FULL, SEA_DEPTH_KNEE, SEA_SHALLOW } from './ground';
 
 export const MAP_VS = `#version 300 es
 precision highp float;
@@ -60,6 +60,7 @@ uniform highp usampler2D uSeaZone;  // sea zone per cell (0 = none; PLAN 4.7a)
 uniform highp usampler2D uSeaHolder; // the nation that holds each zone, 128 wide (0 = none)
 uniform highp usampler2D uAirZone;  // air zone per cell (0 = none; PLAN 5.7c)
 uniform highp usampler2D uAirHolder; // who holds each air zone's air, 128 wide (0 = none, 65535 = contested)
+uniform highp usampler2D uWar;      // 1 where two nations are at war, by their ids (ROADMAP R90a; warTable in ground.ts)
 uniform vec3 uTerrainCol[12];
 #ifdef GROUND
 uniform highp isampler2D uElevation; // the land's height in metres, one texel a cell (PLAN 2.8a)
@@ -532,7 +533,13 @@ void main() {
   // Borders between the two strongest ids (land–land only when the fine coast is drawn), constant
   // width in screen px. |∇d| ≤ 2√2 per cell (each axis' derivative weights sum to ≤ 1), so
   // pixels with d·uScale beyond (halfW + 1)·2√2 are surely off the border and skip the pass.
-  if (!water && n > 1 && !(uHasLand == 1 && cellCoast) && d * uScale < (halfW + 1.0) * 2.83) {
+  // A front (ROADMAP R90a): the two are at war. Its glow reaches further than the line, so it is looked for further.
+  float glowW = ${FRONT_GLOW_PX.toFixed(1)} * uDpr;
+  bool front = false;
+  if (uMode == 0 && !water && n > 1 && !cellCoast && best < ${FRONT_NATIONS}u && secondId < ${FRONT_NATIONS}u && d * uScale < (glowW + 1.0) * 2.83) {
+    front = texelFetch(uWar, ivec2(int(secondId), int(best)), 0).r != 0u;
+  }
+  if (!water && n > 1 && !(uHasLand == 1 && cellCoast) && (front || d * uScale < (halfW + 1.0) * 2.83)) {
     // Distance to the iso-line d = 0 in device px: d / |∇d|, with ∇ per cell → per px (÷ uScale).
     vec2 gd = vec2(0.0);
     for (int j = 0; j < 4; j++) {
@@ -547,6 +554,14 @@ void main() {
     float a = (1.0 - smoothstep(halfW - 0.5, halfW + 0.5, pxDist)) * fade;
     vec3 lineCol = cellCoast ? col * 0.8 : mix(col, vec3(0.06, 0.06, 0.08), 0.8);
     col = mix(col, lineCol, a * (cellCoast ? 0.55 : 1.0));
+    if (front) {
+      // The glow, falling off either side of the line; then the line itself, hot, over the border's dark one.
+      float g = exp(-pxDist * pxDist / (glowW * glowW * 0.3));
+      col = mix(col, vec3(${FRONT_GLOW_RGB.map((c) => c.toFixed(3)).join(', ')}), g * ${FRONT_GLOW.toFixed(2)});
+      float coreW = max(halfW, ${FRONT_CORE_PX.toFixed(2)} * uDpr);
+      float core = 1.0 - smoothstep(coreW - 0.5, coreW + 0.5, pxDist);
+      col = mix(col, vec3(${FRONT_CORE_RGB.map((c) => c.toFixed(3)).join(', ')}), core);
+    }
   }
   // Fine coast line on the land side.
   if (uHasLand == 1 && !water) {
