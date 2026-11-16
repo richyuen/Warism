@@ -10,6 +10,10 @@ import { lookAt, open1938 } from './mapView';
 // formation on the march. In a war at 2000 m/px the lines were a web of dashed yellow lines from
 // formations off the screen (the critic of 2026-10-07; N4, N5). Drawn: the formation whose panel
 // is open, the player's selection and own nation, and the nation whose panel is open.
+//
+// ROADMAP R89a (ADR-1074): a march so shown is a movement arrow, thick and in a pale tint of its
+// nation's colour, from the formation along the start of its way; the dashed yellow line along the
+// whole way is drawn for the formation picked or selected alone (and for the fleets).
 
 const { w: W, h: H } = SIZE_1938;
 const nation = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
@@ -23,6 +27,18 @@ function lines(page: Page, ids: number[]): Promise<number[]> {
     const v = window.__warsim!.view!;
     v.draw();
     return v.orderLineIds.filter((id) => ids.includes(id)).sort((a, b) => a - b);
+  }, ids);
+}
+
+/** The movement arrows of the last frame that stand for one of `ids`: their nations, their marches among `ids`, and the overlay's pixel inside each. */
+function arrows(page: Page, ids: number[]): Promise<{ nation: number; ids: number[]; width: number; px: number[] }[]> {
+  return page.evaluate((ids) => {
+    const v = window.__warsim!.view!;
+    v.draw();
+    const c = document.querySelector('canvas.map-nations') as HTMLCanvasElement;
+    const k = c.width / c.clientWidth;
+    const g = c.getContext('2d')!;
+    return v.moveArrows.filter((a) => a.ids.some((id) => ids.includes(id))).map((a) => ({ nation: a.nation, ids: a.ids.filter((id) => ids.includes(id)).sort((p, q) => p - q), width: a.width, px: Array.from(g.getImageData(Math.round(a.x * k), Math.round(a.y * k), 1, 1).data) }));
   }, ids);
 }
 
@@ -71,17 +87,30 @@ test('order lines at T1: for the formation and nation looked at and the player\'
   expect(await lines(page, ids)).toEqual([]);
   expect(await page.evaluate(() => window.__warsim!.view!.orderLineIds.length), 'no line of any formation').toBe(0);
   expect(await linePixels(page), 'no line on the overlay').toBeLessThanOrEqual(bare);
+  expect(await arrows(page, ids), 'no arrow of the three').toEqual([]);
   await page.screenshot({ path: path.join(out, 'b-lines-none.png') });
 
   // A formation's panel open: its line alone.
   await page.evaluate((id) => void (window.__warsim!.view!.pickedFormation = id), picked.pol[0]!);
   expect(await lines(page, ids)).toEqual([picked.pol[0]!]);
   expect(await linePixels(page), 'its line on the overlay').toBeGreaterThan(bare + 30);
+  // And its arrow, alone (R89a): Poland's, filled.
+  const one = await arrows(page, ids);
+  expect(one.map((a) => [a.nation, a.ids])).toEqual([[POL, [picked.pol[0]!]]]);
+  expect(one[0]!.px[3], 'the arrow is filled').toBeGreaterThan(200);
+  expect(one[0]!.width).toBeGreaterThanOrEqual(5);
   await page.evaluate(() => void (window.__warsim!.view!.pickedFormation = 0));
 
   // Poland's panel open: the lines of both Polish formations, not the German one.
   await page.evaluate((n) => window.__warsim!.view!.select(n), POL);
   expect(await lines(page, ids)).toEqual([...picked.pol].sort((a, b) => a - b));
+  // As arrows (R89a), one or two (two that start together and head the same way are one), each filled; and no dashed
+  // line along a whole way: that is the picked formation's.
+  const pol = await arrows(page, ids);
+  expect(pol.every((a) => a.nation === POL), 'Polish arrows alone').toBe(true);
+  expect(pol.flatMap((a) => a.ids).sort((a, b) => a - b)).toEqual([...picked.pol].sort((a, b) => a - b));
+  for (const a of pol) expect(a.px[3], 'the arrow is filled').toBeGreaterThan(200);
+  expect(await linePixels(page), 'no dashed line for a nation looked at').toBeLessThanOrEqual(bare);
   await page.screenshot({ path: path.join(out, 'b-lines-poland.png') });
   await page.evaluate(() => window.__warsim!.view!.select(0));
   expect(await lines(page, ids)).toEqual([]);

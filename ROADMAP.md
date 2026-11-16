@@ -27,12 +27,18 @@ changed only where the feature they test changed.
 - [ ] R89 **Thick movement arrows.** Seen on seed 99 in August 1939: a march's line is 1.5 px, dashed and yellow, one a
   formation, drawn only for a selected nation; with China selected the Fujian front is some 40 lines across one another,
   and with no nation selected a war shows no movement at all. 428 of 997 formations had a march in that hour.
-  - [ ] R89a The arrow: a filled, tapered body along the march's way (`formWay`, its turns rounded), a head, in the
-    nation's colour with a dark rim; its width from the men it stands for, between a least and a most (the bounds and
-    the scale in the ADR of the item). Formations of one nation whose marches start and end near each other are one
-    arrow of their men together (a stack of markers, `markerStacks.ts`, is one already). AT: a unit test of the
-    grouping (pure: the same formations give the same arrows, every marching formation in one arrow) and of the width
-    (more men never a narrower arrow); the Fujian shot with no arrow lying across another of its nation.
+  - [x] R89a The arrow: a filled, tapered body with a head, in a pale tint of the nation's colour with a dark rim,
+    from the formation along the start of its way (`formWay`, its turns rounded); its width from the men it stands for,
+    5 to 22 px (ADR-1074). Formations of one nation that start near each other and head the same way are one arrow of
+    their men together; an arrow that would cross one of its nation stops before it. The dashed line along a whole way
+    stays for the fleets and for a formation picked or selected. AT: a unit test of the grouping (pure: the same
+    formations give the same arrows, every marching formation in one arrow) and of the width (more men never a
+    narrower arrow); the Fujian shot with no arrow lying across another of its nation.
+    Done: `src/render/units/moveArrows.ts`; `moveArrows.test.ts` (15), `orderLines1938.spec.ts` with the arrows,
+    `player1938.spec.ts` green. Fujian, seed 99, August 1939, China selected: 131 crossings among 38 arrows drawn to
+    their ends (the first try), 0 among 35 at 600 m/px and 0 among 25 at 1,500; 12 of 99 marches at 600 m/px have no
+    arrow of their own drawn (cut to nothing beside a wider one). The draw 0.1 ms slower at most (p50 2.3 to 2.4 ms at
+    600 m/px); `npm run bench -- G` PASS (T0 310.8 fps, T2 174.2). Shots: `docs/evidence/R89a/`.
   - [ ] R89b Whose arrows (the user's decision, ADR-1073): every nation at war shows its advances, a march whose end
     is on land an enemy holds or within reach of an enemy formation, as bold arrows, selected or not; a march behind
     the lines is thin and faint, and drawn for the selected nation and formations only, as now (`orderShown`). AT:

@@ -11,7 +11,8 @@ import { formationPips, type Pips } from '../render/units/pips';
 import type { LandingMark } from '../shared/protocol';
 import { drawCorridors, type CorridorMark } from '../render/fx/corridors';
 import { drawHolds, type HoldMark } from '../render/fx/holds';
-import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
+import { arrowFill, drawMoveArrows, groupMarches, type DrawnArrow, type March } from '../render/units/moveArrows';
+import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderLine, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { BATTLE_TAG_M, drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, type StackItem } from '../render/units/markerStacks';
 import { CounterLayer, counterNation, heroScaleAt, type CounterSource, type HeroCounter } from '../render/units/counters';
@@ -2124,6 +2125,7 @@ export class MapView {
     this.markerOpacity = alpha;
     this.markerRects = [];
     this.orderLineIds = [];
+    this.moveArrows = [];
     const ctx = this.overlay.getContext('2d')!;
     // The nation's own colour in every map mode (the palette carries the mode's colours).
     const hex = (id: number): string => `#${(this.ownColor.get(id) ?? 0x888888).toString(16).padStart(6, '0')}`;
@@ -2204,6 +2206,8 @@ export class MapView {
         strength: this.formStrength[i]!,
         full: t?.men ?? 0,
         symbol: t?.symbol ?? 'infantry',
+        naval: t?.domain === 1,
+        wayShown: t?.domain === 1 || this.formIds[i] === this.picked || this.selectedFormations.has(this.formIds[i]!),
         engaged: (this.formFlags[i]! & FormationFlag.engaged) !== 0,
         retreating: (this.formFlags[i]! & FormationFlag.retreating) !== 0,
         target: moving ? [(target % w) + 0.5, Math.floor(target / w) + 0.5] : null,
@@ -2217,6 +2221,19 @@ export class MapView {
     this.pipStates.end();
     // (The boxes do not move while they shrink into the T2 sprites: ADR-72.)
     const stacks = this.markerStacks.frame(items, MARKER_W * this.unitScale, MARKER_H * this.unitScale, now, this.morph.scale < 1);
+    // The marches' arrows (ROADMAP R89a) under the boxes, fading with them.
+    const marches: March[] = [];
+    for (const m of markers) {
+      const line = m.naval ? null : orderLine(m, this.geo);
+      if (line) marches.push({ id: m.id, nation: m.nation, men: m.strength, line });
+    }
+    this.moveArrows = [];
+    if (alpha > 0.01 && marches.length > 0) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      this.moveArrows = drawMoveArrows(ctx, groupMarches(marches, cam.scale), (x, y) => worldToScreen(cam, x, y, vw, vh), itemOffsets(cam, this.geo, vw), vw, vh, (n) => arrowFill(this.ownColor.get(n) ?? 0x888888), this.unitScale);
+      ctx.restore();
+    }
     this.markerRects = drawMarkers(ctx, markers, this.majors, cam, this.geo, vw, vh, share, hex, flagOf, this.unitScale, this.morph, stacks, this.picked, this.unitLook === 'balls');
     // A held landing's transports joined to the fleet that holds them (ROADMAP R53e), over the markers (at 1500 m/px
     // the transports' marker hid its ring).
@@ -2227,6 +2244,9 @@ export class MapView {
 
   /** The formations whose order lines the markers of the last frame drew (PLAN 7.4b; tests). */
   orderLineIds: number[] = [];
+
+  /** The movement arrows of the last frame (ROADMAP R89a), the markers' and the close tiers' (tests). */
+  moveArrows: DrawnArrow[] = [];
 
   /** The tags of the formations in the view at T2 and T3, as they were drawn last (PLAN 2.14a; tests, and the names keep clear of them). */
   tagRects: PlacedTag[] = [];
@@ -2594,26 +2614,35 @@ export class MapView {
     const viewer: OrderViewer = { picked: this.picked, selected: this.selectedFormations, player: this.selectionNation, nation: this.selected };
     const w = this.geo.w;
     const t = this.tickProgress(now);
+    // The fleets' dashed lines and the marches' arrows (ROADMAP R89a).
     const orders: OrderArrow[] = [];
+    const marches: March[] = [];
     for (let i = 0; i < this.formIds.length; i++) {
       if ((this.formFlags[i]! & FormationFlag.moving) === 0 || !orderShown(this.formIds[i]!, this.formNation[i]!, viewer)) continue;
       const target = this.formTarget[i]!;
       const ws = this.formWayStart[i]!;
       const we = this.formWayStart[i + 1]!;
-      orders.push({
+      const order: OrderArrow = {
         x: this.formX[i]!,
         y: this.formY[i]!,
         target: [(target % w) + 0.5, Math.floor(target / w) + 0.5],
         way: we - ws >= 4 ? this.formWay.subarray(ws, we) : null,
         from: this.shownAt(i, t),
-      });
+      };
+      const naval = this.templates[this.formTemplate[i]!]?.domain === 1;
+      if (naval || this.formIds[i] === this.picked || this.selectedFormations.has(this.formIds[i]!)) orders.push(order);
+      if (!naval) marches.push({ id: this.formIds[i]!, nation: this.formNation[i]!, men: this.formStrength[i]!, line: orderLine(order, this.geo)! });
       if (!this.orderLineIds.includes(this.formIds[i]!)) this.orderLineIds.push(this.formIds[i]!);
     }
-    if (orders.length === 0) return;
+    if (orders.length === 0 && marches.length === 0) return;
     const ctx = this.overlay.getContext('2d')!;
+    const [vw, vh] = [this.canvas.clientWidth, this.canvas.clientHeight];
     ctx.save();
     ctx.globalAlpha = alpha;
-    drawOrderArrows(ctx, orders, cam, this.geo, this.canvas.clientWidth, this.canvas.clientHeight, true);
+    const drawn = drawMoveArrows(ctx, groupMarches(marches, cam.scale), (x, y) => worldToScreen(cam, x, y, vw, vh), itemOffsets(cam, this.geo, vw), vw, vh, (n) => arrowFill(this.ownColor.get(n) ?? 0x888888), this.unitScale);
+    // With the markers' while the two tiers hand over.
+    this.moveArrows = this.markerOpacity > 0.01 ? [...this.moveArrows, ...drawn] : drawn;
+    drawOrderArrows(ctx, orders, cam, this.geo, vw, vh, true);
     ctx.restore();
   }
 

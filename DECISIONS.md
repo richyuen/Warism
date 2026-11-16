@@ -28,3 +28,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
   another game (CLAUDE.md's hard rule), its painted units not taken; each item within the frame budgets of goal 5.
 - **Consequences:** "continue" takes R89a. The widths, the grouping's reach and each item's bars are set in the
   item, with an ADR where they are a new bound.
+
+### ADR-1074 · 2026-11-15 · accepted — R89a: a movement arrow is the start of a march's way; its bounds
+- **Found:** the item as filed drew each arrow along the whole way and made one of marches that start and end near
+  each other. On the Fujian front of seed 99 (August 1939, China selected, 600 m/px) that was 38 thick arrows, most
+  from beyond the screen to a handful of ends, with 131 crossings among them: the dashed web, thicker. And in the
+  nation's own colour an arrow on its own land was not seen (China's yellow on yellow).
+- **Decision:**
+  - An arrow is drawn from where the formation stands along the first `ARROW_LONG_PX` (70) of its way and
+    `ARROW_LONG_WIDTHS` (3) of its own widths more: where a force is going, not the whole of its way. The whole way,
+    the dashed line, stays for the fleets (a way over the sea) and for a formation picked or selected.
+  - Width: `ARROW_MIN_PX` 5 at `ARROW_MIN_MEN` 2,000 men or fewer, `ARROW_MAX_PX` 22 at `ARROW_MAX_MEN` 400,000 or
+    more, by the logarithm between; times the unit size. Tail 0.4 of the neck; head 2.1 widths wide, 1.7 long.
+  - One arrow: marches of one nation that start within `GROUP_START_PX` (44, a marker and a half) and head within
+    `GROUP_TURN` (40°) of the strongest's heading; their men together, along the strongest's way.
+  - No crossing within a nation: an arrow of fewer men stops `CROSS_GAP_PX` (4) before the side of one it would
+    cross; one cut to under `ARROW_SHORTEST_PX` (10) is not drawn.
+  - Fill: the nation's colour `ARROW_PALE` (half) of the way to white, a dark rim.
+- **Consequences:** on that front 0 crossings among 35 arrows at 600 m/px (12 of 99 marches with no arrow of their
+  own drawn, each beside a wider one). Whose arrows are drawn is unchanged until R89b (`orderShown`). ROADMAP R89a's
+  text follows this.

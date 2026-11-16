@@ -1906,7 +1906,13 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   flag chip a ball of `COUNTER_BALL_R` (8 px) over the box's left end.
 - **T1 markers** (`src/render/units/markers.ts`, from `T1_MAX_M` to `T1_MIN_M`): a box with the NATO
   symbol, pips for its elements (fading in and out each; the strength bar only while no elements came),
-  order arrows (a fleet's along its turning points), crossed swords while engaged. Markers that overlap
+  order arrows (a fleet's along its turning points), crossed swords while engaged. A land formation's march is a
+  movement arrow (`src/render/units/moveArrows.ts`, ROADMAP R89a, ADR-1074; at T1 to T3, for the formations whose
+  orders are shown): filled, tapered, in its nation's colour half way to white with a dark rim, from the formation
+  along the first `ARROW_LONG_PX` (70) and three of its widths of its way; `ARROW_MIN_PX` (5) wide at 2,000 men to
+  `ARROW_MAX_PX` (22) at 400,000, by the logarithm. Marches of a nation that start within `GROUP_START_PX` (44) and
+  head within `GROUP_TURN` (40°) are one arrow of their men; one that would cross another of its nation stops before
+  it. The dashed line along the whole way is the fleets', and that of a formation picked or selected. Markers that overlap
   stack (`STACK_UNDER` 0.25, `STACK_HOLD` 0.1), nudged at most `NUDGE_MAX_PX` (10) over `NUDGE_MS` (150
   ms). Balls: the box a ball of `MARKER_BALL_R` (9.5 px) wearing its symbol's prop (`markerProp`:
   treads, wheels, hull, helmet), eyes left or right to its order, a red ring while engaged.

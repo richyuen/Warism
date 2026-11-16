@@ -44,6 +44,13 @@ export interface MarkerInput {
    * twos, the first where it stands; the line goes along them and not straight to `target`.
    */
   way?: ArrayLike<number> | null;
+  /**
+   * Its order drawn as the dashed line along its whole way (ROADMAP R89a): a fleet's, and that of a formation
+   * picked or selected. A land formation's march is a movement arrow (`moveArrows`), drawn by the view.
+   */
+  wayShown?: boolean;
+  /** A fleet: its order is never a movement arrow. */
+  naval?: boolean;
   /** A hero's (PLAN 7.184b3): its marker HERO_SCALE × the others' about its place, never in a stack. */
   hero?: boolean;
   /** A hero's health 0..1 (ROADMAP R11): its number and bar read it, not its men, which stay whole. */
@@ -366,8 +373,30 @@ export interface OrderArrow {
 }
 
 /**
+ * The way of an order in cells, `x, y` by twos: from where the formation is drawn, then its way's
+ * turns (each on the near side of the one before: `wayLine`), or straight to its target (the copy
+ * of it nearest the formation on a world that wraps). Null with no target.
+ */
+export function orderLine(m: OrderArrow, geo: MapGeometry): number[] | null {
+  if (!m.target) return null;
+  const line: number[] = m.from ? [m.from[0], m.from[1]] : [m.x, m.y];
+  const way = m.way;
+  if (way && way.length >= 4) {
+    const dx = m.x - way[0]!;
+    for (let i = 2; i < way.length; i += 2) line.push(way[i]! + dx, way[i + 1]!);
+  } else {
+    let tx = m.target[0];
+    if (geo.wrapX && Math.abs(tx - m.x) > geo.w / 2) tx += tx < m.x ? geo.w : -geo.w;
+    line.push(tx, m.target[1]);
+  }
+  return line;
+}
+
+/**
  * Order arrows (PLAN 2.1; 4.7d, 7.4g3: along the way): a dashed line from each formation along
  * its way's turns, or straight to its target, with an arrow head; at the canvas's alpha. The
+ * fleets' and the picked or selected formations' since ROADMAP R89a (a land formation's march is
+ * a movement arrow, `moveArrows`): the
  * markers draw them at T1, the view at T2 and T3 (the user's request of 2026-10-29).
  */
 export function drawOrderArrows(
@@ -385,19 +414,8 @@ export function drawOrderArrows(
   ctx.lineWidth = 1.5;
   ctx.setLineDash([4, 3]);
   for (const m of orders) {
-    if (!m.target) continue;
-    // The points of the line in cells: the formation, then a fleet's turns (each on the near side
-    // of the one before: `wayLine`), or the target.
-    const line: number[] = m.from ? [m.from[0], m.from[1]] : [m.x, m.y];
-    const way = m.way;
-    if (way && way.length >= 4) {
-      const dx = m.x - way[0]!;
-      for (let i = 2; i < way.length; i += 2) line.push(way[i]! + dx, way[i + 1]!);
-    } else {
-      let tx = m.target[0];
-      if (geo.wrapX && Math.abs(tx - m.x) > geo.w / 2) tx += tx < m.x ? geo.w : -geo.w;
-      line.push(tx, m.target[1]);
-    }
+    const line = orderLine(m, geo);
+    if (!line) continue;
     for (const off of offs) {
       const pts: [number, number][] = [];
       let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity];
@@ -481,8 +499,8 @@ export function drawMarkers(
   ctx.globalAlpha = boxAlpha;
   ctx.imageSmoothingEnabled = false;
   const offs = itemOffsets(cam, geo, vw);
-  // Order arrows below the boxes.
-  if (boxAlpha > 0.01) drawOrderArrows(ctx, markers, cam, geo, vw, vh);
+  // The order lines of the fleets and of what is picked below the boxes (the marches' arrows are the view's, under these).
+  if (boxAlpha > 0.01) drawOrderArrows(ctx, markers.filter((m) => m.wayShown), cam, geo, vw, vh);
   // Pictures of the boxes, made when a morph needs them (one for each nation, symbol and state).
   const sprites = new Map<string, HTMLCanvasElement>();
   // Boxes, back to front by y; a hero's above the others (PLAN 7.184b3), its pips and number not under theirs.
