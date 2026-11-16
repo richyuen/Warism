@@ -213,23 +213,36 @@ export interface NameInk {
 /** Neither of a nation's colour: dark letters with a light edge. */
 const PLAIN_INK: NameInk = { fill: 'rgba(20, 22, 30, 0.82)', edge: 'rgba(255, 255, 255, 0.55)' };
 
-/** Under this luminance a nation's colour is dark, and its name a lighter shade of it. */
-export const DARK_NATION = 0.16;
+/**
+ * Over this luminance a nation's colour is light, and its name dark on it: white letters on it
+ * would be told from the land by less than the names were before ROADMAP R92a (a contrast of 2).
+ */
+export const LIGHT_NATION = 0.45;
+/** A name's letters: how whole, and the shade of its land its edge (or, on a light land, its letters) is. */
+export const NAME_ALPHA = 0.92;
+export const NAME_SHADE = 0.3;
+
+/** The luminance of a colour (0xRRGGBB), 0 to 1, as the contrast of two colours is reckoned. */
+export function luminance(rgb: number): number {
+  const lin = (v: number): number => ((v /= 255) <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * lin((rgb >> 16) & 255) + 0.7152 * lin((rgb >> 8) & 255) + 0.0722 * lin(rgb & 255);
+}
 
 /**
- * A name's ink from its nation's colour (0xRRGGBB; PLAN 7.4a, ADR-440), as AoC draws its names: a
- * shade of the land's own colour, darker than the land, with a thin edge lighter than it. Over a
- * dark land (Germany's grey) the letters are the lighter shade and the edge the darker. The
- * nation's own colour in every map mode, as its markers have it (PLAN 2.7i).
+ * A name's ink from its nation's colour (0xRRGGBB; ROADMAP R92a, ADR-1081, the user's decision
+ * of ADR-1073: "white capitals with a soft shadow"): white letters with an edge of a deep shade of
+ * the land's own colour, which is the shadow that tells them from the land and from a pale arrow
+ * under them. Over a light land (Japan's, Austria's: `LIGHT_NATION`) the other way round, the
+ * letters that deep shade and the edge white. The nation's own colour in every map mode, as its
+ * markers have it (PLAN 2.7i). Until R92a a name was a darker shade of its land with a lighter
+ * edge (PLAN 7.4a, ADR-440).
  */
 export function nameInk(rgb: number): NameInk {
   const c = [(rgb >> 16) & 255, (rgb >> 8) & 255, rgb & 255] as const;
-  const lin = (v: number): number => ((v /= 255) <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
-  const lum = 0.2126 * lin(c[0]) + 0.7152 * lin(c[1]) + 0.0722 * lin(c[2]);
-  const dark = c.map((v) => Math.round(v * 0.42));
-  const light = c.map((v) => Math.round(v + (255 - v) * 0.45));
+  const deep = c.map((v) => Math.round(v * NAME_SHADE));
   const css = (v: readonly number[], a: number): string => `rgba(${v[0]}, ${v[1]}, ${v[2]}, ${a})`;
-  return lum < DARK_NATION ? { fill: css(light, 0.82), edge: css(dark, 0.6) } : { fill: css(dark, 0.82), edge: css(light, 0.6) };
+  const white = [255, 255, 255];
+  return luminance(rgb) > LIGHT_NATION ? { fill: css(deep, NAME_ALPHA), edge: css(white, 0.6) } : { fill: css(white, NAME_ALPHA), edge: css(deep, 0.8) };
 }
 
 /** The canvas the glyphs are drawn into once, and its 2D context. */
@@ -303,6 +316,11 @@ export class GlyphSprites {
       this.sprites.clear();
       this.shelfX = this.shelfY = this.shelfH = 0;
       this.restarts++;
+      // And the atlas is wiped (ROADMAP R92a): a new glyph cleared its own box alone, and beside and below it stood
+      // what was there before, read across the box's side by a piece drawn at an angle until the next glyph took the
+      // place: a sliver of a letter for one frame, a pop of 59 of 255.
+      a.ctx.setTransform(1, 0, 0, 1, 0, 0);
+      a.ctx.clearRect(0, 0, ATLAS_PX, ATLAS_PX);
     }
     const sp = { x: this.shelfX, y: this.shelfY, w, h };
     this.shelfX += w;
@@ -310,6 +328,12 @@ export class GlyphSprites {
     const g = a.ctx;
     g.setTransform(1, 0, 0, 1, 0, 0);
     g.clearRect(sp.x, sp.y, w, h);
+    // Drawn inside its box and a px clear of its sides (ROADMAP R92a): a piece drawn at an angle reads a px across
+    // its box's side, and nothing of a letter is to stand there, its own or its neighbour's.
+    g.save();
+    g.beginPath();
+    g.rect(sp.x + 1, sp.y + 1, w - 2, h - 2);
+    g.clip();
     g.setTransform(scale, 0, 0, scale, sp.x + w / 2, sp.y + h / 2);
     g.font = `${NAME_WEIGHT} ${size}px ${font}`;
     g.textAlign = 'center';
@@ -320,6 +344,7 @@ export class GlyphSprites {
     g.fillStyle = ink.fill;
     g.strokeText(ch, 0, 0);
     g.fillText(ch, 0, 0);
+    g.restore();
     this.sprites.set(key, sp);
     this.made++;
     return sp;

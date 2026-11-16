@@ -90,3 +90,14 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - `npm run bench -- G`: the map's pass 0.556 ms of GPU a frame at T0 (0.520 before, budget 1), 1.154 at T2 (1.078,
   budget 2); T0 290.5 fps, T2 162.3 fps, PASS.
 - Shots: `docs/evidence/R91/` (before and after at 20,000 and 4,000 m/px; after at 10,000 and 2,200).
+
+## 2026-11-15 — R92a: the names white (ADR-1081)
+
+- A nation's name is white with an edge of its land's deep shade; dark on the 19 light lands of 1938. R92 split:
+  R92b, the turn and the size of a name, is open.
+- Tests: `nationLabelLayout.test.ts` (19; the least contrast 2.08, 1.99 before; a restart wipes the atlas, a glyph
+  is clipped to its box). The whole browser suite by hand: the first run 456 of 458, `bench-pages` green alone and
+  `labelFades1938` red twice (a pop of 59, bar 48). Its cause, found by drawing the frames about the pixel: the glyph
+  atlas left its old glyphs standing when it started again (ADR-1081). Mended; the suite again: 458 passed in 10.1 min.
+- No change to the frame: the glyphs are drawn once into the atlas as before, in another ink.
+- Shots: `docs/evidence/R92a/` (before and after at 20,000 and 4,000 m/px).

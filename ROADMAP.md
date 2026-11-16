@@ -103,6 +103,16 @@ changed only where the feature they test changed.
   a pale arrow under it (R89c: Germany's pale name is not, on its own arrows; a white name needs its shadow there). AT: the
   label tests with the new bounds on a name's angle and size; every name's contrast against its nation's colour at
   the bar the labels have now.
+  - [x] R92a The ink: white letters with an edge of a deep shade of the land's colour (the soft shadow); over a
+    light land (luminance over 0.45: Japan, Austria, Finland) the letters that shade and the edge white (ADR-1081).
+    Done: `nameInk`. `nationLabelLayout.test.ts` (19): every name of 1938 told from its land by a contrast of 2 at
+    least (the least 2.08, Tibet; 1.99 before, Portugal), 84 of 103 names white. On the way: `labelFades1938` red, a
+    pop of 59 of 255 (bar 48) in one frame: a sliver of a letter beside a name, what a full glyph atlas left standing
+    when it started again. The atlas is wiped at a restart and each glyph drawn a px clear of its box's sides; the
+    largest jump 40. The whole browser suite on the change. Shots: `docs/evidence/R92a/`.
+  - [ ] R92b The turn and the size: a name's baseline no steeper than a bound the item sets ("POLAND" runs nearly
+    upright), its curve gentler, a small nation's name no larger than its land lets it be. AT: the label tests with
+    the new bounds on a name's angle and size, on the 1938 map and two random worlds.
 - [ ] R93 **Counters.** A small ball and a small number. A dark rounded plate with the flag chip and a larger number,
   a stack's count as a tab. The countryballs stay in the countryball look (the user: "we need to keep countryballs
   on countryball mode - they can be bigger though if you think that will look nicer"): the plate is the classic

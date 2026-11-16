@@ -151,3 +151,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Consequences:** the map's pass is 7 % dearer at T0 (0.520 to 0.556 ms of GPU a frame, budget 1): not within
   the bench's noise, as the item's AT asked, and logged as that. The darker edge reaches a cell and a half: under
   2 px at the world's zoom. A wider one needs the distance to the border over more cells than the pass reads.
+
+### ADR-1081 · 2026-11-15 · accepted — R92a: a name is white with an edge of its land's deep shade
+- **Stands on:** ADR-1073 (the user's decision: "white upright country names with soft shadow"). It replaces
+  ADR-440 (PLAN 7.4a: a name a darker shade of its land with a lighter edge, as AoC draws its names).
+- **Decision:** `nameInk`: white letters at `NAME_ALPHA` (0.92), their edge the land's colour at `NAME_SHADE`
+  (0.3) of itself, 0.8 opaque: the shadow that tells a white letter from its land and from a pale arrow under it
+  (R89c's weak spot was Germany's pale grey name on its pale grey arrows). Over a land of a luminance over
+  `LIGHT_NATION` (0.45) the other way round: letters of that deep shade, a white edge. A name with no nation's
+  colour keeps the plain dark ink.
+- **The bar:** every name of 1938 told from its land by a contrast of 2 or more (letters over land, by their
+  opacity). The names before had 1.99 at the least (Portugal); these 2.08 (Tibet). 0.45 is where white on the land
+  falls to that bar: 84 of the 103 names are white, 19 dark on light lands.
+- **Found by `labelFades1938`** (no pixel of the names' layers changes by more than 48 of 255 in a frame): with
+  this ink a pixel changed by 59, at four crossings of the zoom by turns as other things were tried (the letters'
+  opacity, a finer ladder of sizes, boxes of an even size: none of them it). The frames showed a sliver of a
+  letter in empty ground beside "Austria" for one frame. The glyph atlas, when full, forgot its glyphs and began
+  again at its corner, but each new glyph cleared its own box alone: beside and below it stood the old glyphs, and
+  a piece drawn at an angle reads a px across its box's side, until the next glyph took the place. The names
+  before had the same slivers under the bar (a darker ink). Now the atlas is wiped when it starts again, and each
+  glyph is drawn inside its box a px clear of its sides. The largest jump of the test's 20 crossings: 40.
+- **Consequences:** the turn and the size of a name are R92b.

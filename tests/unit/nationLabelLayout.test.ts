@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { ATLAS_PX, DARK_NATION, drawNationLabels, EDGE, GlyphSprites, nationNameKey, fadeNationLabels, ladderPx, layoutNationLabels, MIN_PX, nameInk, TRACKING, type NameState, type PlacedNationLabel } from '../../src/render/labels/nationLabels';
+import { ATLAS_PX, drawNationLabels, EDGE, GlyphSprites, nationNameKey, fadeNationLabels, ladderPx, layoutNationLabels, LIGHT_NATION, luminance, MIN_PX, NAME_SHADE, nameInk, TRACKING, type NameState, type PlacedNationLabel } from '../../src/render/labels/nationLabels';
 import { FADE_MS, SwitchBank, ZOOM_HYSTERESIS } from '../../src/render/timing';
 import { LABEL_STRIDE } from '../../src/shared/nationLabels';
+import { NATIONS_1938 } from '../../src/sim/scenario1938';
 
 // PLAN 2.7e: the curved nation names as states. The layout is pure: it says what is wanted at a
 // zoom, told by the view what is on and what still fades out. (That names are sized by area,
@@ -200,20 +201,43 @@ describe('nation names in the hand of AoC (PLAN 7.4a, ADR-440)', () => {
     expect(l!.glyphs.map((g) => g.ch)).toEqual(['İ', 'X']);
   });
 
-  it('a name is a darker shade of its land with a lighter edge; over a dark land the other way round', () => {
+  it('a name is white with an edge of a deep shade of its land; over a light land the other way round (R92a)', () => {
     const rgb = (css: string): number[] => /rgba\((\d+), (\d+), (\d+)/.exec(css)!.slice(1, 4).map(Number);
-    const sum = (v: number[]): number => v[0]! + v[1]! + v[2]!;
     const pink = 0xc84b64; // Poland
     const ink = nameInk(pink);
-    expect(sum(rgb(ink.fill))).toBeLessThan(0xc8 + 0x4b + 0x64);
-    expect(sum(rgb(ink.edge))).toBeGreaterThan(0xc8 + 0x4b + 0x64);
-    // Of the land's hue: red stays the largest channel.
-    expect(rgb(ink.fill)[0]).toBe(Math.max(...rgb(ink.fill)));
-    const grey = 0x5a5a5a; // Germany: a luminance of 0.10, under DARK_NATION
-    expect(((0x5a / 255 + 0.055) / 1.055) ** 2.4).toBeLessThan(DARK_NATION);
-    const dark = nameInk(grey);
-    expect(sum(rgb(dark.fill))).toBeGreaterThan(3 * 0x5a);
-    expect(sum(rgb(dark.edge))).toBeLessThan(3 * 0x5a);
+    expect(rgb(ink.fill)).toEqual([255, 255, 255]);
+    expect(rgb(ink.edge)).toEqual([0xc8, 0x4b, 0x64].map((v) => Math.round(v * NAME_SHADE)));
+    // Of the land's hue: red stays the largest channel of the edge.
+    expect(rgb(ink.edge)[0]).toBe(Math.max(...rgb(ink.edge)));
+    // Germany's dark grey: white too.
+    expect(rgb(nameInk(0x5a5a5a).fill)).toEqual([255, 255, 255]);
+    // Japan's off-white, over LIGHT_NATION: dark letters, a white edge.
+    const japan = 0xf0ead6;
+    expect(luminance(japan)).toBeGreaterThan(LIGHT_NATION);
+    const light = nameInk(japan);
+    expect(rgb(light.fill)).toEqual([0xf0, 0xea, 0xd6].map((v) => Math.round(v * NAME_SHADE)));
+    expect(rgb(light.edge)).toEqual([255, 255, 255]);
+  });
+
+  it('every name of 1938 is told from its land by a contrast of 2 at least: more than before R92a (1.99 the least)', () => {
+    const contrast = (a: number, b: number): number => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+    let least = Infinity;
+    let which = '';
+    let white = 0;
+    for (const n of NATIONS_1938) {
+      const land = parseInt(n.color.slice(1), 16);
+      const m = /rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(nameInk(land).fill)!;
+      const a = Number(m[4]);
+      // The letters over the land, as they are drawn: by their opacity.
+      const over = [1, 2, 3].map((i, k) => Math.round(Number(m[i]) * a + ((land >> (16 - 8 * k)) & 255) * (1 - a)));
+      const c = contrast(luminance(land), luminance((over[0]! << 16) | (over[1]! << 8) | over[2]!));
+      if (c < least) [least, which] = [c, n.tag];
+      if (m[1] === '255' && m[2] === '255' && m[3] === '255') white++;
+    }
+    process.stderr.write(`names of 1938: the least contrast ${least.toFixed(2)} (${which}); ${white} of ${NATIONS_1938.length} white\n`);
+    expect(least).toBeGreaterThanOrEqual(2);
+    // White is the rule: four names in five at least.
+    expect(white / NATIONS_1938.length).toBeGreaterThan(0.8);
   });
 
   it('each name is drawn in the ink of its own nation, and without a colour in the plain one', () => {
@@ -236,11 +260,15 @@ describe('the names drawn from a glyph atlas (PLAN 7.4f29)', () => {
   /** An atlas canvas that counts what is drawn into it. */
   const atlasCanvas = () => {
     const drawn: string[] = [];
+    /** The box each glyph was clipped to, and each rectangle cleared (ROADMAP R92a). */
+    const clips: number[][] = [];
+    const cleared: number[][] = [];
     const ctx = {
-      setTransform: () => {}, clearRect: () => {}, strokeText: (ch: string) => drawn.push(ch), fillText: () => {},
+      setTransform: () => {}, clearRect: (...r: number[]) => cleared.push(r), strokeText: (ch: string) => drawn.push(ch), fillText: () => {},
+      save: () => {}, restore: () => {}, beginPath: () => {}, rect: (...r: number[]) => clips.push(r), clip: () => {},
       font: '', textAlign: '', textBaseline: '', lineJoin: '', lineWidth: 0, strokeStyle: '', fillStyle: '',
     } as unknown as CanvasRenderingContext2D;
-    return { canvas: { atlas: true } as unknown as CanvasImageSource, ctx, drawn };
+    return { canvas: { atlas: true } as unknown as CanvasImageSource, ctx, drawn, clips, cleared };
   };
   /** The page's canvas at `dpr`: each piece drawn, its source and the size it is drawn at. */
   const target = (dpr: number) => {
@@ -287,6 +315,14 @@ describe('the names drawn from a glyph atlas (PLAN 7.4f29)', () => {
     drawNationLabels(t.ctx, [label(1, many, 64)], 'sans-serif', () => 0x336699, sprites);
     expect(sprites.restarts).toBeGreaterThanOrEqual(2);
     expect(sprites.size).toBeLessThan(300);
+    // Each restart wipes the whole atlas (ROADMAP R92a): what stood beside a new glyph's box was read across its side.
+    expect(a.cleared.filter((r) => r[0] === 0 && r[1] === 0 && r[2] === ATLAS_PX && r[3] === ATLAS_PX)).toHaveLength(sprites.restarts);
+    // And each glyph is drawn inside its box, a px clear of its sides.
+    expect(a.clips).toHaveLength(300);
+    for (const [k, c] of a.clips.entries()) {
+      const box = a.cleared.filter((r) => r[2] !== ATLAS_PX)[k]!;
+      expect(c).toEqual([box[0]! + 1, box[1]! + 1, box[2]! - 2, box[3]! - 2]);
+    }
     // Every glyph drawn, each from inside the atlas.
     expect(t.out).toHaveLength(300);
     for (const p of t.out) {
