@@ -256,3 +256,9 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - The pin of seed 99 a49837a3 -> 1fe6205e. Tests of a seed's history re-aimed (DECISIONS, ADR-1090).
 - A slip of the loop's: the unit suite and the sweep tests were run at once and starved each other (42 tests timed
   out); run again each alone.
+
+## 2026-11-16 — R98c checked whole (the user's request)
+
+- On 8d272bac, each run alone: the unit suite 2,541 of 2,542 (`snapshot-perf` timed out in the run and is green
+  alone); the sweep tests 23 files of 23; `npm run sweep:quick` (10 seeds by 20 years) limits on 10 of 10 seeds, a
+  riser and a faller on each, nukes used on 9, the saves' twins equal.
