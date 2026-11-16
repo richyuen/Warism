@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { MASS_BAR_DAYS, MASS_DAYS, MASS_NEAR_CELLS, MASS_PROBE, MASS_READY, beginMassing, massPoints, massStep, unprepared } from '../../src/sim/ai/massing';
+import { MASS_BAR_DAYS, MASS_DAYS, MASS_NEAR_CELLS, MASS_PROBE, MASS_READY, MASS_SECOND, beginMassing, massPoints, massStep, unprepared } from '../../src/sim/ai/massing';
+import { homeNeighbours, neighbourMap, outnumbered, PILE_PROBE, stillDeclares } from '../../src/sim/ai/strategic';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { declareWar } from '../../src/sim/systems/war';
@@ -140,4 +141,79 @@ describe('massing (ROADMAP R97b)', () => {
     expect(x.world.massing.size).toBe(0);
     expect(x.world.massBarred.size).toBe(0);
   });
+
+  it('a nation at war declares a second war only where MASS_SECOND of its men stand at that border', () => {
+    const w = quiet(1).world;
+    const neighbours = [...neighbourMap(w).get(GER)!].filter((t) => massPoints(w, GER, t).length > 0).sort((a, b) => a - b);
+    expect(neighbours.length).toBeGreaterThan(3);
+    // At peace none is refused for it.
+    expect(unprepared(w, GER, neighbours, 0, 0).size).toBe(0);
+    const never = unprepared(w, GER, neighbours, 0, 1);
+    for (const t of neighbours) {
+      const [near, all] = atBorder(w, GER, t);
+      expect(never.has(t), `neighbour ${t}: ${near} of ${all} men at its border`).toBe(near < MASS_SECOND * all);
+    }
+    // Germany's army as 1938 begins: at some borders and not at others.
+    expect(never.size).toBeGreaterThan(0);
+    expect(never.size).toBeLessThan(neighbours.length);
+    // A neighbour by a colony only is the landings', whatever stands there.
+    expect(unprepared(w, GER, neighbours, 0, 1, () => false).size).toBe(0);
+  });
+
+  it('a neighbour by a colony only is declared on at once: Britain and the Netherlands, on Borneo', () => {
+    const w = quiet(1).world;
+    const [ENG, NED] = ['ENG', 'NED'].map(nationId) as [number, number];
+    expect(massPoints(w, ENG, NED).length).toBeGreaterThan(0);
+    const home = homeNeighbours(w, ENG);
+    expect(home !== null && !home.has(NED)).toBe(true);
+    expect(beginMassing(w, ENG, NED, 0, false)).toBe(false);
+    expect(w.massing.size).toBe(0);
+  });
+
+  it('the delayed declaration asks the rules of the choice again: gold, bankruptcy, the pile of realms', () => {
+    const w = quiet(1).world;
+    const nc = w.nations.cols;
+    const none = new Set<number>();
+    expect(stillDeclares(w, GER, CZS, none)).toBe(!outnumbered(w, GER, CZS));
+    expect(stillDeclares(w, GER, POL, none)).toBe(!outnumbered(w, GER, POL));
+    PILE_PROBE.off = true;
+    try {
+      expect(stillDeclares(w, GER, POL, none)).toBe(true);
+      const gold = nc.gold[GER]!;
+      nc.gold[GER] = -1;
+      expect(stillDeclares(w, GER, POL, none)).toBe(false);
+      nc.gold[GER] = gold;
+      nc.bankrupt[GER] = 1;
+      expect(stillDeclares(w, GER, POL, none)).toBe(false);
+      nc.bankrupt[GER] = 0;
+      expect(stillDeclares(w, GER, POL, none)).toBe(true);
+    } finally {
+      delete PILE_PROBE.off;
+    }
+  });
+
+  it("the strategic AI's own war (seed 99): prepared, then declared with its army at the border", () => {
+    const s = new Sim({ scenario: '1938', seed: 99, assets: assets1938(W) });
+    const w = s.world;
+    let prepared: { n: number; t: number; share: number } | null = null;
+    let begun = 0;
+    for (let d = 0; d < 120 && !prepared; d++) {
+      const was = new Map([...w.massing].map(([n, m]) => [n, m.target]));
+      s.step(24, (x) => {
+        x.out.events.length = 0;
+        x.out.fires.length = 0;
+      });
+      for (const [n] of w.massing) if (!was.has(n)) begun++;
+      // No nation that prepares a war chose it while at war.
+      for (const [n, t] of was) {
+        if (w.massing.has(n) || !w.wars.atWar(n, t) || massPoints(w, n, t).length === 0) continue;
+        const [near, all] = atBorder(w, n, t);
+        prepared = { n, t, share: near / all };
+      }
+    }
+    expect(begun, 'massings begun in 120 days').toBeGreaterThan(0);
+    expect(prepared, 'a war declared from a massing in 120 days').not.toBeNull();
+    // A day of the war has passed since the declaration at MASS_READY: its army is still there.
+    expect(prepared!.share).toBeGreaterThan(MASS_READY - 0.1);
+  }, 240_000);
 });

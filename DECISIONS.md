@@ -327,6 +327,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
   ADR-703 (`askMove`, the same refusals' memory); R62e (the historical track: `strategicAi` does not run while it
   steers, so no massing); R75a's focus (it scales the draw of the choice, as before). MAX_WARS: a massing nation is
   in no war. The checkers of war and peace on the twelve seeds: none broken.
+- **After the commit (the advisor's review):** every sweep test (`tests/sweep/`, 23 files, the ten-year ones) green on
+  the rule; the gate runs the pin alone. The checkers also over the options (ADR-804): seed 99 with random
+  diplomacy, seed 7 with heroes, seed 7 in the random world, a year each, none broken. No invariant of the
+  massing's own was added to the checker: a nation declared on in a day's turn is massing and at war until the
+  next day's step gives its massing up, so "none massing is at war" does not hold of a day's end.
+- **The tick:** the borders' armies were read for every nation of the day's turn before its draw: the strategic AI
+  0.38 -> 0.49 ms a tick on seed 99's two years. The draw is now first (it reads the seed, the day and the nation
+  alone): the targets are weighed only on a day the nation would declare; 0.20 ms a tick, the same hash.
+  `stillDeclares` named and tested.
+- **Seed 5309 looked at:** the war forced on Czechoslovakia there is Germany, Italy and Japan against France, the
+  Soviet Union, Romania and Yugoslavia from its first day, and Germany loses land in both histories (530 of its
+  cells held by others on day 80 before the rule, 751 with it); with the rule two more wars find it by day 80. No
+  massing is in it.
+- **Not checked:** `formationFight1938`'s scan had two seeds of eight (2 and 13) with a block over the 20 km the
+  spec allows (20.0 and 22.5); whether they were so before the rule was not run.
 - **The pin of seed 99:** ac4fab37 -> a49837a3 (the wars of its year are begun later and at their borders).
 - **Tests re-aimed, none weakened:** `farWait1938` (seed 7 from day 90: the first refused march of a seed is on
   another day), `nukeMeansLost1938` (seed 1; on 5309 Prague is not taken in 300 days of the new history),

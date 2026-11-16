@@ -217,3 +217,15 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   at a seed, a day or a formation that holds their scene (DECISIONS, ADR-1089).
 - Not looked into: on seed 5309 Germany, in the war the test forces on Czechoslovakia, no longer takes Prague in
   300 days. No massing is in that war (Germany is at war); the world about it differs.
+
+## 2026-11-16 — R97b, after its commit: the sweep tests, four more tests, the draw first
+
+- Every sweep test green (23 files); the checkers over random diplomacy, heroes and the random world, none broken.
+- `massing1938.test.ts` 10: the second war's rule, a neighbour by a colony, `stillDeclares`, and the strategic AI's
+  own war prepared and declared (seed 99).
+- The strategic AI's draw before its weighing of targets: 0.20 ms a tick where 0.49 (0.38 before the rule), the
+  same hash.
+- Open: no run past three years was read for what a massed army leaves open at its other borders (`npm run
+  sweep:quick` started after this commit). The war the user asked of, Germany's on Poland by God Mode, is not
+  touched by this rule: a war declared by hand, or on a nation, still finds the army where it stood (ADR-1089's
+  option c, not built). In the twelve seeds' three years the AI itself began none on Poland with the rule.

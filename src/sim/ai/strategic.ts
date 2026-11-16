@@ -618,6 +618,18 @@ export const BLOC_PROBE: { lastingOff?: boolean; deterrenceOff?: boolean } = {};
 /** Diagnostics only (`tools/diag/pileSides.ts`): `off` declares as before R82f, the sides not asked. */
 export const PILE_PROBE: { off?: boolean } = {};
 
+/**
+ * Whether `n`, its army at the border of the war on `t` it chose weeks ago (ROADMAP R97b, `massStep`), would still
+ * declare it by the rules of the choice that `whyNotWar` does not hold: its gold, the blocs' deterrence (ADR-981) and
+ * the pile of realms (ADR-1042).
+ */
+export function stillDeclares(world: World, n: number, t: number, blocs: ReadonlySet<number>): boolean {
+  const nc = world.nations.cols;
+  if (nc.gold[n]! < 0 || nc.bankrupt[n] === 1) return false;
+  if (!BLOC_PROBE.deterrenceOff && deterred(world, n, t, blocs)) return false;
+  return PILE_PROBE.off === true || !outnumbered(world, n, t);
+}
+
 export function strategicAi(world: World): void {
   // The historical track's wars, peaces and pacts are its timeline's (ROADMAP R62e).
   if (!world.settings.aiEnabled || !isDayStart(world.tick) || world.steered) return;
@@ -632,10 +644,8 @@ export function strategicAi(world: World): void {
   // The wars being prepared (ROADMAP R97b): each day, their armies to their borders, and the declarations.
   let massBlocs: ReadonlySet<number> | undefined;
   massStep(world, day, (n, t) => {
-    if (nc.gold[n]! < 0 || nc.bankrupt[n] === 1) return false;
     massBlocs ??= world.track?.ended && world.warheads.size > 0 ? blocsOf(world, strengths(world)) : new Set<number>();
-    if (!BLOC_PROBE.deterrenceOff && deterred(world, n, t, massBlocs)) return false;
-    return PILE_PROBE.off === true || !outnumbered(world, n, t);
+    return stillDeclares(world, n, t, massBlocs);
   });
   const actors: number[] = [];
   world.nations.forEach((n) => {
@@ -663,7 +673,10 @@ export function strategicAi(world: World): void {
     // War.
     const wars = warsOf(world, n);
     // Not while it prepares one (R97b): one war is prepared at a time.
-    if (wars < MAX_WARS && !world.massing.has(n) && nc.aggression[n]! >= PACIFIST_BELOW && nc.gold[n]! >= 0 && nc.bankrupt[n] !== 1) {
+    // The day's draw first (R97b): it reads the seed, the day and the nation alone, and the targets are weighed (the
+    // dearest part of the turn, and the borders' armies since R97b) only on a day it would declare.
+    const draws = hashToUnit(hash32(world.seed, day, n, SALT_WAR)) < (focus * DECLARE_P * nc.aggression[n]!) / 100;
+    if (draws && wars < MAX_WARS && !world.massing.has(n) && nc.aggression[n]! >= PACIFIST_BELOW && nc.gold[n]! >= 0 && nc.bankrupt[n] !== 1) {
       powers ??= seaPowers(world, str);
       // Not a neighbour barred after a massing given up, nor, in a war already, one at whose border its army is not (R97b).
       let home: Set<number> | null | undefined;
@@ -674,7 +687,7 @@ export function strategicAi(world: World): void {
       const never = unprepared(world, n, neighbours, day, wars, atHome);
       const target = (refused: ReadonlySet<number>): number => warTarget(world, n, neighbours, withAllies(n), defence, wars, wars === 0 ? restlessOf(world, n) : 0, blocs, powers, never.size === 0 ? refused : new Set([...never, ...refused]));
       const best = target(new Set());
-      if (best !== 0 && hashToUnit(hash32(world.seed, day, n, SALT_WAR)) < (focus * DECLARE_P * nc.aggression[n]!) / 100) {
+      if (best !== 0) {
         // Not one it would fight outnumbered over PILE_REALMS realms to 1 (R82f, ADR-1042): its next best, if any.
         const t = firstNotOutnumbered(world, n, (refused) => (refused.size === 0 ? best : target(refused)));
         // A nation at peace with a border to its target brings its army there first (R97b, `beginMassing`).
