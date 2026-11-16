@@ -65,6 +65,7 @@ const BRUSH_RADIUS = 5;
 
 export type GodTool = 'revolt' | 'nation' | 'battle' | 'brush' | 'nuke' | 'city' | 'raze';
 const KEY_SHOW_STATS = 'warsim.showStats';
+const KEY_NEWS_OPEN = 'warsim.newsOpen';
 /** The economy tab's parts are asked for at most this often while the game runs (PLAN 7.4f34). */
 const ECONOMY_MS = 500;
 const KEY_RANK_METRIC = 'warsim.rankMetric';
@@ -310,6 +311,7 @@ export class Hud {
       this.templates.value = m.templates;
       this.techs.value = m.techs;
     });
+    this.newsOpen.value = load(KEY_NEWS_OPEN) === '1';
     const shown = load(KEY_SHOW_STATS);
     this.showStats.value = shown === '1' ? true : shown === '0' ? false : null;
     const metric = load(KEY_RANK_METRIC);
@@ -549,6 +551,17 @@ export class Hud {
   toggleRelations(): void {
     if (!this.showRelations.value) this.closeCentre('relations');
     this.showRelations.value = !this.showRelations.value;
+  }
+
+  /**
+   * The news on a desk (ROADMAP R94b, ADR-1085): the latest event alone until opened (the earlier ones were 2.9 % of a
+   * 1600 × 900 view with a year's news), and kept as the player left it.
+   */
+  readonly newsOpen = signal(false);
+
+  toggleNews(): void {
+    this.newsOpen.value = !this.newsOpen.value;
+    store(KEY_NEWS_OPEN, this.newsOpen.value ? '1' : '0');
   }
 
   /** Opens or closes the ranking; `shown`: whether it is shown now (not chosen yet, that is the layout's to say). */

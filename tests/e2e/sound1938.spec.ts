@@ -24,6 +24,8 @@ const sound = (page: Page): Promise<{ asked: string[]; sounded: number; volume: 
 
 test('sound: a war declared is a cue, the volume and the mute are kept, a loaded game is silent about its past', async ({ page }, info) => {
   test.setTimeout(240_000);
+  // The news opened, as a player who asked for the earlier rows has it (ROADMAP R94b: on a desk the latest alone until then).
+  await page.addInitScript(() => localStorage.setItem('warsim.newsOpen', '1'));
   await open(page);
   await page.evaluate(() => {
     window.__warsim!.settings.setMuted(false);

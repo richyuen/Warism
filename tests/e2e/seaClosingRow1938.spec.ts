@@ -35,6 +35,8 @@ async function stepHours(page: Page, n: number): Promise<number> {
 test('a sea battle whose fleets are closing has its row, which shows both fleets (the critic\'s Germany–UK, seed 2081)', async ({ page }, info) => {
   test.setTimeout(300_000);
   await page.setViewportSize({ width: 1400, height: 800 });
+  // The news opened, as a player who asked for the earlier rows has it (ROADMAP R94b: on a desk the latest alone until then).
+  await page.addInitScript(() => localStorage.setItem('warsim.newsOpen', '1'));
   await page.goto('/?scenario=1938&paused=1&seed=2081');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
   const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/7.41') : info.outputPath();

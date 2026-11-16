@@ -53,6 +53,8 @@ async function picture(page: Page, file: string, ms = 400): Promise<{ sorties: n
 test('the air battle demo: the first air fight of a war at T0, T1 and T2, and the air-superiority mode', async ({ page }, info) => {
   test.setTimeout(500_000);
   await page.setViewportSize({ width: 1400, height: 800 });
+  // The news opened, as a player who asked for the earlier rows has it (ROADMAP R94b: on a desk the latest alone until then).
+  await page.addInitScript(() => localStorage.setItem('warsim.newsOpen', '1'));
   await open1938(page, 1);
   const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/5.7') : info.outputPath();
   mkdirSync(out, { recursive: true });

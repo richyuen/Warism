@@ -37,6 +37,8 @@ async function groundOf(page: Page, nation: number): Promise<[number, number]> {
 test("playing Manchukuo: Japan reads its overlord and the shared war, no alliance offered; Force war's exit in the ticker", async ({ page }, info) => {
   test.setTimeout(180_000);
   await page.setViewportSize({ width: 1400, height: 800 });
+  // The news opened, as a player who asked for the earlier rows has it (ROADMAP R94b: on a desk the latest alone until then).
+  await page.addInitScript(() => localStorage.setItem('warsim.newsOpen', '1'));
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
   await page.evaluate((n) => window.__warsim!.player!.take(n), MAN);

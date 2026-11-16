@@ -172,7 +172,8 @@ test.describe('the Cancel button', () => {
 // The user's choice (2026-10-29, ADR-760): on a phone the news took the map's lower half (the
 // ticker's rows, a column of war banners and the legend over each other). At a phone's width the
 // ticker is two rows, the war banners one row of two and a "+N" that opens the rest, the legend
-// folded to its title top left; none lies on another or on the bar. A desktop's is as it was.
+// folded to its title top left; none lies on another or on the bar. A desktop's, opened, is as it was (until
+// opened it is its latest row: ROADMAP R94b, `ticker1938`).
 test.describe('the news at a phone\'s width', () => {
   test.use({ hasTouch: true });
   for (const [W, H] of [[390, 844], [844, 390], [1280, 800]] as const) {
@@ -181,6 +182,8 @@ test.describe('the news at a phone\'s width', () => {
       // A phone upright or on its side (the user's report: landscape too).
       const phone = W <= 600 || H <= 500;
       await page.setViewportSize({ width: W, height: H });
+      // The news opened, as a player who asked for the earlier rows has it (ROADMAP R94b: on a desk the latest alone until then).
+      await page.addInitScript(() => localStorage.setItem('warsim.newsOpen', '1'));
       await page.goto('/?scenario=1938&paused=1&seed=1938');
       await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
       const wars = await page.evaluate(async () => {

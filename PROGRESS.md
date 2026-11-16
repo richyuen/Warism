@@ -133,3 +133,14 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   of the ranking open at the start; then the phone's fold kept, and by hand the 14 specs of the ranking, the
   panels and the bar (40 tests green).
 - Shots: `docs/evidence/R94a/` (August 1939 before and after).
+
+## 2026-11-16 — R94b: the news one line until opened (ADR-1085)
+
+- On a desk the news is its latest event and the first sea battle until "N more" opens the rest. The orders'
+  news, a phone's rows and the rows beside a panel are as they were.
+- August 1939, seed 99: the news 0.85 % of a 1600 × 900 view (2.87), the panels 7.68 % (9.70; 17.62 before R94).
+- Tests: `ticker1938.spec.ts`'s new test. The whole browser suite on the first try: 9 red, tests of the earlier
+  rows, which open the news by the stored choice now; one of them (`ticker1938`'s room beside a panel) had found
+  the opening row 12 px over the panel's foot: no such row beside a panel. By hand after: those nine specs,
+  `chromeCover1938`, `phoneLayout1938` (green). The whole suite was not run again on the last change.
+- Shots: `docs/evidence/R94b/` (August 1939 before and after).

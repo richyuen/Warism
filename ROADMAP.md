@@ -145,10 +145,18 @@ changed only where the feature they test changed.
     sizes of view: 5.37 % of 1600 × 900, 3.73 % of 1920 × 1080, 7.55 % of 1280 × 800; the ranking, opened, 7.9 to
     11.1 % of them). `phoneLayout1938` holds the desk's rule (closed, opened by the button, kept over a reload) and
     the phone's (as before); five specs of the ranking open it by the stored choice. Shots: `docs/evidence/R94a/`.
-  - [ ] R94b The news one line that opens: the newest event, the rest on a click. The rules the rows have from the
+  - [x] R94b The news one line that opens: the newest event, the rest on a click. The rules the rows have from the
     critic's runs (R42b, R43c, R49-N3, R59c: the player's orders' news, the sea battles' rows, a phone's two rows)
     hold in the opened list and are listed in the item's ADR, each with its test green before and after. AT: the
     news at most 1 % of a 1600 × 900 view until opened (2.9 % in August 1939 on seed 99).
+    Done (ADR-1085): on a desk the latest event and the first sea battle until the row above them ("N more") opens
+    the rest; the choice kept. Not folded: the player's orders' news (R42b, R49-N3). As they were: a phone's two
+    rows (ADR-760, R43c), and the rows beside a panel, which has no such row (PLAN 3.12Rh; its room is the rows').
+    August 1939, seed 99, 1600 × 900: the news 0.85 % of the view (2.87), the panels 7.68 % (9.70); measured by
+    the item's script, not held by a spec. `ticker1938.spec.ts`'s new test (none, one, two, three and five events;
+    opened, folded, kept over a reload; none on a phone). The whole browser suite on the first try: 9 red, each a
+    test of the earlier rows: they open the news by the stored choice; then those nine specs, `chromeCover1938`
+    and `phoneLayout1938` by hand (green). Shots: `docs/evidence/R94b/`.
   - [ ] R94c The date and the speed in a slim bar at the top's middle. It changes the bar's order, the user's of
     2026-10-29 (ADR-763); the phone's bar (PLAN 7.169) is not to lose a button from reach. AT: `barNarrow1938` and
     `phoneLayout1938` green; the bars together no more of the view than the bar is now (2.9 % of 1600 × 900).

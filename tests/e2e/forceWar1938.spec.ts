@@ -41,6 +41,8 @@ async function groundOf(page: Page, nation: number): Promise<[number, number]> {
 test('the menu says the standing; "Force war" on an ally makes the war and leaves the alliance; a neutral reads "Declare war"', async ({ page }, info) => {
   test.setTimeout(180_000);
   await page.setViewportSize({ width: 1400, height: 800 });
+  // The news opened, as a player who asked for the earlier rows has it (ROADMAP R94b: on a desk the latest alone until then).
+  await page.addInitScript(() => localStorage.setItem('warsim.newsOpen', '1'));
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
   await page.waitForFunction((n) => window.__warsim!.view!.formationsOf(n).length > 3, ITA, { timeout: 60_000 });

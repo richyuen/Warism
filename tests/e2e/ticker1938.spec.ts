@@ -15,6 +15,8 @@ const id = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag)
 test('the ticker: a God Mode war is told at once, and its row flies the camera there', async ({ page }, info) => {
   test.setTimeout(180_000);
   await page.setViewportSize({ width: 1400, height: 800 });
+  // The news opened, as a player who asked for the earlier rows has it (ROADMAP R94b: on a desk the latest alone until then).
+  await page.addInitScript(() => localStorage.setItem('warsim.newsOpen', '1'));
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
   await page.waitForFunction(() => window.__warsim!.sim.mapLayers !== null, null, { timeout: 60_000 });
@@ -106,6 +108,8 @@ test('the ticker: a God Mode war is told at once, and its row flies the camera t
 test('the ticker keeps its room beside a panel at its full height and the war banners, at every UI size', async ({ page }, info) => {
   test.setTimeout(180_000);
   await page.setViewportSize({ width: 1400, height: 640 });
+  // The news opened, as a player who asked for the earlier rows has it (ROADMAP R94b: on a desk the latest alone until then).
+  await page.addInitScript(() => localStorage.setItem('warsim.newsOpen', '1'));
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
   const [GER, POL, SWE, NOR] = [id('GER'), id('POL'), id('SWE'), id('NOR')];
@@ -343,4 +347,74 @@ test('three carrier strikes of the same words: one ticker row, "×3", that flies
   await expect(rows).toHaveCount(1);
   await expect(rows).toContainText('Carrier strike ashore: United States on Greece');
   await expect(rows).toContainText('×3');
+});
+
+// ROADMAP R94b (ADR-1085): on a desk the news is its latest event until opened; a row above it says how many more
+// there are, opens them and folds them again; the choice is kept. Swept over how many events there are.
+test('the news on a desk: the latest event alone, "N more" opens the earlier ones and folds them, and the choice is kept', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  const rows = page.getByTestId('ticker-row');
+  const more = page.getByTestId('ticker-more');
+  /** Makes `n` more events: wars declared between nations not yet at war, one a tick, each waited for in the news. The events the news holds then. */
+  const events = (n: number): Promise<number> => page.evaluate(async (n) => {
+    const w = window.__warsim!;
+    const ids = w.hud.stats.value!.nations.map((x) => x.id);
+    const held = (): number => w.hud.stats.value!.ticker.length;
+    const newest = (): number => w.hud.stats.value!.ticker.at(-1)?.i ?? -1;
+    const cursor = window as unknown as { __pair?: number };
+    let made = 0;
+    for (let k = cursor.__pair ?? 0; made < n && 2 * k + 1 < ids.length; k++) {
+      cursor.__pair = k + 1;
+      const before = newest();
+      w.sim.command({ kind: 'declareWar', attacker: ids[2 * k]!, defender: ids[2 * k + 1]! });
+      await w.sim.step(1);
+      // The news comes with the statistics, once a second at most; a war refused (allies, a puppet) brings none.
+      for (let t = 0; t < 30 && newest() === before; t++) await new Promise((done) => setTimeout(done, 100));
+      if (newest() !== before) made++;
+    }
+    if (made < n) throw new Error(`only ${made} of ${n} events made`);
+    return held();
+  }, n);
+  // No news: no row and nothing to open.
+  await expect(rows).toHaveCount(0);
+  await expect(more).toHaveCount(0);
+  // One event: its row, and nothing more to open.
+  expect(await events(1)).toBe(1);
+  await expect(rows).toHaveCount(1);
+  await expect(more).toHaveCount(0);
+  // Two, three and five: the latest alone, and how many more the news holds.
+  for (const n of [1, 1, 2]) {
+    const held = await events(n);
+    expect(held, 'the news holds the events').toBeGreaterThan(1);
+    await expect(more).toHaveAttribute('data-more', String(held - 1));
+    await expect(rows).toHaveCount(1);
+    await expect(more).toHaveAttribute('aria-expanded', 'false');
+    await expect(more).toContainText(`${held - 1} more`);
+  }
+  const latest = await rows.first().textContent();
+  // Opened: every row, the latest last as it was; the row above folds them.
+  await more.click();
+  await expect(more).toHaveAttribute('aria-expanded', 'true');
+  expect(await rows.count()).toBeGreaterThanOrEqual(4);
+  expect(await rows.last().textContent()).toBe(latest);
+  // The opened list stands on the bar's top as the one row did, inside the view.
+  const box = (await page.getByTestId('ticker').boundingBox())!;
+  expect(box.y).toBeGreaterThan(0);
+  expect(box.y + box.height).toBeLessThan((await page.getByTestId('bottombar').boundingBox())!.y + 1);
+  // Kept over a reload; then folded, and that kept.
+  await page.reload();
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  expect(await page.evaluate(() => localStorage.getItem('warsim.newsOpen'))).toBe('1');
+  await events(3);
+  await expect(more).toHaveAttribute('aria-expanded', 'true');
+  expect(await rows.count()).toBeGreaterThanOrEqual(3);
+  await more.click();
+  await expect(rows).toHaveCount(1);
+  expect(await page.evaluate(() => localStorage.getItem('warsim.newsOpen'))).toBe('0');
+  // A phone has no such row: its two rows are as they were (`phoneLayout1938`).
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(more).toHaveCount(0);
 });

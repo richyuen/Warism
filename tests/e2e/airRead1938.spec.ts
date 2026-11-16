@@ -16,6 +16,8 @@ const first = (s: string | null): number => Number(((s ?? '').match(/[\d,]+/)?.[
 test('a month of war: the air war in the ticker, the history and the nation panel', async ({ page }, info) => {
   test.setTimeout(240_000);
   await page.setViewportSize({ width: 1400, height: 800 });
+  // The news opened, as a player who asked for the earlier rows has it (ROADMAP R94b: on a desk the latest alone until then).
+  await page.addInitScript(() => localStorage.setItem('warsim.newsOpen', '1'));
   await page.goto('/?scenario=1938&paused=1&seed=1');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
   const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/5.11') : info.outputPath();

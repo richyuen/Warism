@@ -1894,6 +1894,9 @@ The renderer draws the snapshot the worker sends (§2.2); nothing it draws is si
 
 ### 8.2 Forces by tier
 Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e specs `classic`).
+- **The news on a desk** (ROADMAP R94b, ADR-1085): the latest event and the first sea battle until the row above
+  them ("N more") opens the rest; kept as the player left it (`warsim.newsOpen`). The player's orders' news is not
+  folded; a phone's rows and the rows beside a panel are as they were.
 - **The ranking** (ROADMAP R94a, ADR-1084): closed on a desk until the bar's Statistics opens it, folded to its
   title on a phone; kept as the player left it (`warsim.showStats`). The panels cover at most 6 % of a 1600 × 900
   view at the start (`chromeCover1938`).

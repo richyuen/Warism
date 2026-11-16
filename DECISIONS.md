@@ -216,3 +216,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   to the rows: they are taken one at a time, each naming what it replaces.
 - **Tests that stood on the ranking open at the start:** five open it by the stored choice, as a player who asked
   for it has it; `phoneLayout1938`'s desk case tests the new rule.
+
+### ADR-1085 · 2026-11-16 · accepted — R94b: the news on a desk is its latest event until opened
+- **Stands on:** ADR-1073 (the user's choice of the chrome: "one-line news"). It changes what
+  `phoneLayout1938` said of a desk ("a desktop's is as it was": every row), for the unopened news alone.
+- **Decision** (`Ticker`, `Hud.newsOpen`, kept as `warsim.newsOpen`):
+  - On a desk, until opened: the latest event and the first sea battle. A row above them, "▸ N more", opens the
+    earlier events and the other sea battles; "▾ Latest only" folds them. No row with nothing more to show.
+  - Not folded: the player's orders' news. R42b and R49-N3 were of such a row not on the screen.
+  - As they were: a phone's rows (ADR-760, R43c, ADR-837); the rows beside a panel (`short`: two events, a sea
+    battle, two orders), where there is no row to open them: the first try put it there, and the news stood 12 px
+    over the panel's foot (`ticker1938`'s room test, PLAN 3.12Rh). Folded, the latest event stands beside a panel.
+- **Measured:** August 1939, seed 99, 1600 × 900: the news 0.85 % of the view, from 2.87.
+- **Tests of the earlier rows** (nine) open the news by the stored choice, as a player who asked for them has it.

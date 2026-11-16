@@ -222,6 +222,8 @@ export function App({
           rows={stats.ticker}
           short={formationTitle !== null || nation !== null}
           compact={phone}
+          open={hud.newsOpen.value}
+          onToggle={() => hud.toggleNews()}
           startDay={hud.startDay}
           onPlace={(x, y) => hud.onShowPlace(x, y)}
           orders={orders}

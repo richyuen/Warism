@@ -25,11 +25,18 @@ const TICKER_SHORT = 2;
  * ADR-837: critic run 49, R49-N3, the at-port division's row hidden behind the other). A phone has no hover for a
  * row's tooltip: there the first tap on an order row told by its brief opens it to its full words (the names of a
  * loss of several), and the next flies to it (ROADMAP R43c; critic run 50, R50-N3).
+ * On a desk (ROADMAP R94b, ADR-1085) the news is one line until `open`: the latest event, and the first sea battle
+ * with it; a row above them says how many more there are and opens them, and folds them again. The player's orders'
+ * news is not folded: what became of an order is not to be looked for (R42b, R49-N3). A phone's two rows are as they
+ * were. Beside a panel (`short`) there is no such row: the panel leaves the room of the rows and no more (PLAN
+ * 3.12Rh); folded, the latest event stands there, opened, the last two as before.
  */
 export function Ticker({
   rows,
   short,
   compact = false,
+  open = true,
+  onToggle,
   startDay,
   onPlace,
   orders = [],
@@ -41,6 +48,9 @@ export function Ticker({
   short: boolean;
   /** A phone's width: two rows in all. */
   compact?: boolean;
+  /** On a desk: the earlier events and sea battles shown (R94b); not `open`, the latest alone. With `onToggle`, the row that opens and folds them. */
+  open?: boolean;
+  onToggle?: () => void;
   startDay: number;
   onPlace: (x: number, y: number) => void;
   /**
@@ -65,13 +75,23 @@ export function Ticker({
     return t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year });
   };
   const phoneSea = lastOrders.length === 0 ? merged.slice(0, 1) : [];
-  const [evs, ss, os] = compact
+  const [allEvs, allSs, os] = compact
     ? [lastOrders.length > 1 ? [] : rows.slice(lastOrders.length + phoneSea.length > 0 ? -1 : -TICKER_SHORT), phoneSea, lastOrders]
     : short
       ? [rows.slice(-TICKER_SHORT), orders.length > 1 ? [] : merged.slice(0, 1), orders.slice(-2)]
       : [rows, merged, orders];
+  // On a desk, until opened: the latest event and the first sea battle (R94b).
+  const fold = !compact && !open;
+  const evs = fold ? allEvs.slice(-1) : allEvs;
+  const ss = fold ? allSs.slice(0, 1) : allSs;
+  const more = allEvs.length - Math.min(1, allEvs.length) + allSs.length - Math.min(1, allSs.length);
   return (
     <div class={compact ? 'ticker short compact' : short ? 'ticker short' : 'ticker'} data-testid="ticker" role="log" aria-live="polite" aria-label={t('ticker.title')}>
+      {!compact && !short && onToggle && more > 0 ? (
+        <button type="button" class="ticker-toggle" data-testid="ticker-more" data-more={more} aria-expanded={open} title={t(open ? 'ticker.fewerTitle' : 'ticker.moreTitle')} onClick={onToggle}>
+          {open ? t('ticker.fewer') : t('ticker.more', { n: more })}
+        </button>
+      ) : null}
       <ol>
         {evs.map((r) => {
           return (
