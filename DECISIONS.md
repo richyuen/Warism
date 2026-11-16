@@ -407,3 +407,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
   now. No bar changed.
 - **Consequences:** the map's picture changes wherever two nations at war touch; the whole browser suite run on it.
   No sim input: the pin of seed 99 stands.
+
+### ADR-1092 · 2026-11-16 · accepted — R101: a tag has a place at each corner of its block
+- **Found:** on a front made dense by ADR-1090 the tags over `TAG_FAR` (120 px) from their blocks are whole tags of
+  formations in contact, 138 to 412 px off in steps of a tag's height or width: the layout's places were a column
+  above and below the block and a row beside it, and a neighbour's block or tag stands on the near ones.
+- **Decision** (`tags.ts`): the rings under `TAG_CORNER_RINGS` (1) have, after their four places, a place at each
+  corner of the block (the tag's corner at the block's, `TAG_GAP` off). Not for the first pass (the places "by the
+  block" are the four, as before). In the rings' fixed order. The cheapest question (within `TAG_FAR`) is asked
+  before the grids'.
+- **Not** the engaged tags made short where they find no place: "the engaged keep the whole tag" is the user's
+  (ADR-1037).
+- **Tried:** every place sorted by its measured distance, with more of them: the fewest far tags (18 of 3,372), but
+  the order turned on a part of a px, so a tag changed its place between two pictures of one world
+  (`godUndoPicture1938`), and the bench's draw was 13.4 ms where 4.6. Two rings of corners: 28 far, the draw 6.8 ms.
+  One ring: 42 far (76 before), 21 left out (31), the draw 5.0 ms.
+- **Tests:** `tests/unit/tags.test.ts`: its plain layout (the grid's twin) has the same places; `PLACES` is counted
+  from the layout (no fewer than the rings' four each); "three columns side by side" has no tag off with a line now
+  (the middle one stands at its corner): asserted so. `tagsCrowd1938` back on seed 1938. No bar changed.

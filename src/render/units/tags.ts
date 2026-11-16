@@ -92,6 +92,8 @@ export const TAG_PICKED_REACH = 3;
 export const TAG_TRIES = 5;
 /** The places of a ring at most: the layout takes none beside a block where the view has no room, and the tests count by this. */
 export const TAG_SIDES = 4;
+/** The rings that have places off the block's corners too (ROADMAP R101): the first, a tag at each corner; the next, those a step further out. */
+export const TAG_CORNER_RINGS = 1;
 /** A tag further than this from its elements has a line to them: the gap, and a px for the rounding of its place. */
 export const TAG_LINE_FROM = TAG_GAP + 1;
 /**
@@ -237,6 +239,22 @@ export function layoutTags(items: readonly TagInput[], measure: (text: string, f
       if (lx >= edge) tries.push({ x: lx, y });
       if (rx <= maxX) tries.push({ x: rx, y });
       if (k === 0) byBlock = tries.length;
+      // The places off the block's corners, of the first rings (ROADMAP R101): a tag whose corner is at the block's. On a
+      // crowded front the places straight above, below and beside a block are its neighbours' blocks and tags, and the
+      // next free one of those was 140 to 400 px off where a corner's was free. After the ring's four, in a fixed
+      // order and not by their measured distance: a block that moves a part of a px keeps its tag's place.
+      if (k < TAG_CORNER_RINGS) {
+        for (const sy of [-1, 1]) {
+          for (const sx of [-1, 1]) {
+            // Of this ring: the corner's own place a step further out one way, the other, and both (the first ring's: the corner's own).
+            for (const [i, j] of k === 0 ? [[0, 0]] : [...Array.from({ length: k }, (_, n) => [k, n]), ...Array.from({ length: k }, (_, n) => [n, k]), [k, k]]) {
+              const cx = Math.round(sx < 0 ? vx0 - TAG_GAP - w - j! * stepX : vx1 + TAG_GAP + j! * stepX);
+              const cy = Math.round(sy < 0 ? above - i! * stepY : below + i! * stepY);
+              if (cx >= edge && cx <= maxX && cy >= edge && cy <= maxY) tries.push({ x: cx, y: cy });
+            }
+          }
+        }
+      }
     }
     const tx = (vx0 + vx1) / 2;
     const ty = (vy0 + vy1) / 2;
@@ -252,10 +270,11 @@ export function layoutTags(items: readonly TagInput[], measure: (text: string, f
         const box = { x: at.x, y: at.y, w, h };
         const bx1 = box.x + w;
         const by1 = box.y + h;
-        if (kept.some((o) => overlap(o, box)) || tags.some(box.x, box.y, bx1, by1, (j) => overlap(placed[j]!, box))) continue;
-        // How far the tag's box is from its elements' (0 when it lies on them).
+        // How far the tag's box is from its elements' (0 when it lies on them). A clear place only within TAG_FAR: asked
+        // first, it is the cheapest question.
         const gap = Math.max(vx0 - (box.x + w), box.x - vx1, vy0 - (box.y + h), box.y - vy1, 0);
         if (clear && gap > TAG_FAR * scale) continue;
+        if (kept.some((o) => overlap(o, box)) || tags.some(box.x, box.y, bx1, by1, (j) => overlap(placed[j]!, box))) continue;
         if (clear && blocks.some(box.x, box.y, bx1, by1, (j) => items[j] !== it && box.x < items[j]!.x1 && items[j]!.x0 < bx1 && box.y < items[j]!.y1 && items[j]!.y0 < by1)) continue;
         // Not on a block whose own tag stands off it, or has none (PLAN 7.5 before critic run 15,
         // ADR-713): a reader takes the tag on it for that block's. Until then any free place: in an

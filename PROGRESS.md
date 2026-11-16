@@ -273,3 +273,9 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 
 - `.topclock` among `tagObstacles`; `.war-banners` takes no pointer, its children do (`#ui > *` gave it one).
   `tests/e2e/tagsOnMap1938.spec.ts`, red before on its three seeds. The BLOCKERS entry to `docs/BLOCKERS_DONE.md`.
+
+## 2026-11-16 — R101: the tags of a crowded front (ADR-1092)
+
+- A place at each corner of a block (`TAG_CORNER_RINGS`). Twelve seeds of `tagsCrowd1938`'s scene: far tags 76 -> 42,
+  left out 31 -> 21, every seed within 3.5 % (four were over). The bench's T2 draw 4.6 -> 5.0 ms.
+- Two wider tries not kept (ROADMAP): one made a tag's place turn on a part of a px, both cost the bench its line.

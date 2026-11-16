@@ -10,13 +10,15 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // Since ROADMAP R98c (ADR-1090, the invaded front) seed 1: on seed 1938 the fifteen views hold 300 tags at 60 m/px where
 // they held 94, and 14 of them (4.7 %) stand over 120 px off. Of seeds 1, 2, 3, 5, 7, 11, 13, 1938 to 1941 and 4242, ten
 // are within the 3.5 % (0 to 3.3 %; seed 1: 1 of 176) and two are not (1938, and 7 with 14 of 224).
+// Since ROADMAP R101 (a place at each corner of a block) seed 1938 again, the scene's own: 7 of 301 at 60 m/px (2.3 %);
+// those twelve seeds 0 to 3.1 % (42 tags of 3,357 at the two zooms where 76 of 3,347, and 21 left out where 31).
 
 const id = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
 
 test('the tags of formations in contact: apart, by their own blocks, not far out', async ({ page }) => {
   test.setTimeout(300_000);
   await page.setViewportSize({ width: 1400, height: 800 });
-  await page.goto('/?scenario=1938&paused=1&seed=1');
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
   await page.evaluate(async ([g, p]) => {
     const s = window.__warsim!.sim;

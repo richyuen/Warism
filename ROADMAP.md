@@ -305,8 +305,18 @@ though Rush makes sense either way".
   pointer over its whole box, the gaps and the room beside a short last row too. The clock is among them; the row
   takes no pointer, its banners do. `tests/e2e/tagsOnMap1938.spec.ts`: `battleTags1938`'s scene on seeds 39915, 1
   and 11, at 250, 120 and 10 m/px (77 tags and 3 pointers a seed): 11, 16 and 11 points under a box before, none now.
-- [ ] R101 **The tags of a crowded front** (R98c's finding: `tagsCrowd1938`'s bar passed on 10 of 12 seeds where 12).
-  The bar of 3.5 % on the twelve, no more tags left out, the layout no slower.
+- [x] R101 **The tags of a crowded front** (ADR-1092; R98c's finding). `tagsCrowd1938`'s scene on twelve seeds (1, 2,
+  3, 5, 7, 11, 13, 1938 to 1941, 4242; fifteen views at 60 and at 12 m/px) after R100: 76 tags of 3,347 over 120 px
+  from their blocks and 31 left out; at 60 m/px seeds 7, 13, 1938 and 1940 over the 3.5 % (7.6, 4.3, 4.7, 3.6). The far
+  ones are whole tags of formations in contact, 138 to 412 px off: the places straight above, below and beside a
+  block are its neighbours'. Now a tag has a place at each corner of its block too (`TAG_CORNER_RINGS` 1), after the
+  first ring's four: 42 far of 3,357 and 21 left out; every seed within the bar (the most 3.1 %, seed 7). The engaged
+  keep the whole tag (ADR-1037 stands). `tagsCrowd1938` on seed 1938 again, its own. The bench's T2 (384 divisions in
+  view): the draw's CPU 4.6 -> 5.0 ms (its line 6), 164 fps where 178.
+  - Tried, not kept: the places sorted by their measured distance, with two more columns and rows of them (18 far, 6
+    left out): a block that moved a part of a px changed its tag's place (`godUndoPicture1938` red on it), and the
+    bench's draw 13.4 ms. Two rings of corners in a fixed order (28 far, 15 left out): the bench's draw 6.8 ms, over
+    its line.
 - [ ] R102 **Seed 5309: Germany does not take Prague** in the war forced on Czechoslovakia (PROGRESS, R97b): which
   rule, and whether its army is at that front.
 - [ ] R103 **A nation massed on answers** (ADR-1089's "not built"): the target of a massing brings its own army to

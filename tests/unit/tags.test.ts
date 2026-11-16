@@ -1,12 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { layoutTags, TAG_SHORT_PAD_Y, TAG_FAR, TAG_FLAG_W, TAG_GAP, TAG_LINE_FROM, TAG_NAME_FONT, TAG_PAD, TAG_SIDES, TAG_STRENGTH_FONT, TAG_TRIES, type PlacedTag, type TagInput, type TagObstacle } from '../../src/render/units/tags';
+import { layoutTags, TAG_CORNER_RINGS, TAG_SHORT_PAD_Y, TAG_FAR, TAG_FLAG_W, TAG_GAP, TAG_LINE_FROM, TAG_NAME_FONT, TAG_PAD, TAG_SIDES, TAG_STRENGTH_FONT, TAG_TRIES, type PlacedTag, type TagInput, type TagObstacle } from '../../src/render/units/tags';
 
 // PLAN 2.14a: the tags of T2 and T3. The layout alone (the drawing is in tests/e2e/tags1938.spec.ts).
 
 const measure = (text: string): number => text.length * 6;
 const item = (id: number, strength: number, x0: number, y0: number, x1: number, y1: number): TagInput => ({ id, nation: 1, strength, text: '12.4k', name: `Infantry division ${id}`, engaged: false, x0, y0, x1, y1 });
 /** The places a tag tries: the rings, four sides each (PLAN 3.7g; two sides until then). */
-const PLACES = TAG_SIDES * TAG_TRIES;
+// The tags that find a place about one block in the middle of the view, where every place has room. Since ROADMAP R101
+// the rings' places (TAG_SIDES a ring) and those off the block's corners, as many as do not lie on each other.
+const PLACES = layoutTags(Array.from({ length: 150 }, (_, k) => item(k + 1, 9000 - k, 670, 380, 730, 420)), measure, 1400, 800).placed.length;
 const over = (a: { x: number; y: number; w: number; h: number }, b: { x: number; y: number; w: number; h: number }): boolean => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 
 // PLAN 7.1l4: the layout asks its questions of the boxes in a grid, not of every box. This is
@@ -59,6 +61,19 @@ function layoutPlain(items: readonly TagInput[], measure: (text: string, font: s
       if (lx >= edge) tries.push({ x: lx, y });
       if (rx <= maxX) tries.push({ x: rx, y });
       if (k === 0) byBlock = tries.length;
+      // ROADMAP R101: the places off the block's corners, of the first rings.
+      if (k < TAG_CORNER_RINGS) {
+        for (const sy of [-1, 1]) {
+          for (const sx of [-1, 1]) {
+            // Of this ring: the corner's own place a step further out one way, the other, and both (the first ring's: the corner's own).
+            for (const [i, j] of k === 0 ? [[0, 0]] : [...Array.from({ length: k }, (_, n) => [k, n]), ...Array.from({ length: k }, (_, n) => [n, k]), [k, k]]) {
+              const cx = Math.round(sx < 0 ? vx0 - TAG_GAP - w - j! * stepX : vx1 + TAG_GAP + j! * stepX);
+              const cy = Math.round(sy < 0 ? above - i! * stepY : below + i! * stepY);
+              if (cx >= edge && cx <= maxX && cy >= edge && cy <= maxY) tries.push({ x: cx, y: cy });
+            }
+          }
+        }
+      }
     }
     const tx = (vx0 + vx1) / 2;
     const ty = (vy0 + vy1) / 2;
@@ -144,6 +159,7 @@ describe('formation tags: the layout (PLAN 2.14a)', () => {
   it('more formations on one spot than there are places: the weakest are left out and counted, none overlaps', () => {
     // Since PLAN 3.7g a ring of places has four (above, below, left, right), not two: the
     // block is in the middle of the view, where every one of them has room.
+    expect(PLACES).toBeGreaterThanOrEqual(TAG_SIDES * TAG_TRIES);
     const many = Array.from({ length: PLACES + 3 }, (_, k) => item(k + 1, 9000 - k, 670, 380, 730, 420));
     const { placed, left } = layoutTags(many, measure, 1400, 800);
     expect(placed.length + left).toBe(many.length);
@@ -182,7 +198,8 @@ describe('formation tags: the layout (PLAN 2.14a)', () => {
     const east = item(419, 6700, 729, 419, 745, 450);
     const columns = [west, mid, east];
 
-    it('three columns side by side: no tag lies on another formation\'s elements, the western one\'s is left of its block, and one stands off with a line', () => {
+    // Since ROADMAP R101 the middle one's tag stands at its block's corner, by it, where it stood off with a line.
+    it('three columns side by side: no tag lies on another formation\'s elements, the western one\'s is left of its block, and each is by its own with no line', () => {
       const { placed, left } = layoutTags(columns, measure, 1400, 800);
       expect(left).toBe(0);
       for (const t of placed) for (const f of columns) if (f.id !== t.id) expect(over(t, box(f)), `the tag of ${t.id} on the elements of ${f.id}`).toBe(false);
@@ -193,9 +210,10 @@ describe('formation tags: the layout (PLAN 2.14a)', () => {
       expect(w.line).toBe(false);
       // A tag by its block has no line; one that gave way has one, to the middle of its elements.
       for (const t of placed) expect(t.line, `the line of ${t.id}, ${t.gap} px off`).toBe(t.gap > TAG_GAP + 1);
-      const off = placed.filter((t) => t.line);
-      expect(off.map((t) => t.id)).toEqual([431]);
-      expect([off[0]!.tx, off[0]!.ty]).toEqual([(705 + 719) / 2, (408 + 439) / 2]);
+      expect(placed.filter((t) => t.line).map((t) => t.id)).toEqual([]);
+      const m = tagOf(placed, 431);
+      expect(m.gap).toBeLessThanOrEqual(TAG_GAP + 1);
+      expect([m.tx, m.ty]).toEqual([(705 + 719) / 2, (408 + 439) / 2]);
     });
 
     it('the layout does not depend on the order of the list', () => {
