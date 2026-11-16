@@ -12,7 +12,7 @@ import { assets1938 } from '../helpers/earth';
 // whole way (5–6 ms), and was asked again every MARCH_DAYS: the operational AI's largest cost.
 
 describe('a refused march from afar waits (PLAN 7.117, ADR-703)', () => {
-  it('seed 5: the first formation refused waits FAR_RETRY_DAYS with no order refused, and the wait is saved', () => {
+  it('seed 7: the first formation refused waits FAR_RETRY_DAYS with no order refused, and the wait is saved', () => {
     // Seed 5 from day 90 since R78b (a war across the sea costs its distance): seed 7 has none in its first 400 days on
     // that history; 1 on day 384, 2 on 135, 3 on 142, 4 on 343, 5 on 124 (formation 29), 6 on 320; none from day 180
     // within the 120 days looked at (`tools/diag/firstWait.ts`).
@@ -42,8 +42,10 @@ describe('a refused march from afar waits (PLAN 7.117, ADR-703)', () => {
     // Seed 4 from day 180 since ADR-723 (PLAN 7.133, the wings over the sea): seeds 7 and 99 have none in
     // their first 400 days on that history, seeds 1-6 each one (4: day 185; `tools/diag/firstWait.ts`).
     // Seed 7 from day 180 since ADR-711 (PLAN 7.5 before critic run 15); before, seed 99 from day 90.
+    // Seed 7 from day 90 since ADR-1089 (ROADMAP R97b, the wars prepared): 99 on day 86, 5 on 87 and 6 on 89, before
+    // the start; 7 on day 98 (formation 345); 3 on 164, 4 on 211, 2 on 263, 1 on 302 (`tools/diag/firstWait.ts`).
     const START = 90;
-    const s = at1938(5, START * 24);
+    const s = at1938(7, START * 24);
     const w = s.world;
     const refused = new Map<number, number[]>();
     const step = (): void =>

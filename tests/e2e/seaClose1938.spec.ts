@@ -25,16 +25,19 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // Since ROADMAP R53k (ADR-889, reach to the other side) the rows of 949 and 1678 no longer happen; the same scan
 // (80 days) gives French and Soviet battle fleets at 1127, 5.4 km, and British destroyers against a Nationalist
 // Spanish cruiser squadron at 1305, 12 km.
+// Since ROADMAP R97b (ADR-1089, the wars prepared) the same four battles stand at other hours (the wars about them are
+// begun later): the same scan (80 days) gives the carrier group against submarines at 166, the battle fleet against
+// submarines at 211, the French and Soviet battle fleets at 1463 and the destroyers against the cruisers at 1641.
 
 const id = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
 
 /** The game's rows: about the hour the row has stood two hours running (`seaPairs`), its two sides, and what fights. */
 const CASES = [
   { hour: 45, a: 'ENG', b: 'GER', what: 'destroyers against a battle fleet, 32 km' },
-  { hour: 164, a: 'ENG', b: 'ITA', what: 'a carrier group against submarines, 12 km' },
-  { hour: 363, a: 'ENG', b: 'ITA', what: 'a battle fleet against submarines, 6 km' },
-  { hour: 1127, a: 'FRA', b: 'SOV', what: 'a battle fleet against a battle fleet, 5.4 km' },
-  { hour: 1305, a: 'ENG', b: 'NSP', what: 'destroyers against a cruiser squadron, 12 km' },
+  { hour: 166, a: 'ENG', b: 'ITA', what: 'a carrier group against submarines, 6 km' },
+  { hour: 211, a: 'ENG', b: 'ITA', what: 'a battle fleet against submarines, 6 km' },
+  { hour: 1463, a: 'FRA', b: 'SOV', what: 'a battle fleet against a battle fleet, 5.4 km' },
+  { hour: 1641, a: 'ENG', b: 'NSP', what: 'destroyers against a cruiser squadron, 12 km' },
 ] as const;
 
 /** After a flight of the camera: until it is over, and a snapshot of the new view. */

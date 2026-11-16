@@ -277,7 +277,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **As it was:** a nation or a formation looked at shows its other marches faint (`orderShown`).
 - **Consequences:** a front where no one moves over the line has no arrow; its red line (R90a) says where it is.
 
-### ADR-1089 · 2026-11-16 · proposed (the user's decision) — R97b: how an attacker comes to be at its border when its war begins
+### ADR-1089 · 2026-11-16 · the user's decision: a — R97b: how an attacker comes to be at its border when its war begins
 - **Found (R97a):** in 118 of 221 of the AI's own wars between leaders with a land border the attacker has no man
   within 300 km of that border as it declares, and where it has none the defender is ahead in land after a month
   more often than the attacker (46 % against 31 %). The operational AI allots formations to a front that has an
@@ -294,4 +294,45 @@ from AoC are tagged **[AoC-DEVIATION]**.
     all together (no "one a sector in eight days" for a front just made). No new state; the defender still has
     the first days, a big attacker's march of weeks still leaves its border open at first.
 - **The loop's recommendation:** a, with c's quick march kept for the wars others begin on it.
-- **Waits on the user.** Nothing of R97b is built.
+- **Decided (the user, 2026-11-16): a, "Mass, then declare".** Built as `src/sim/ai/massing.ts`:
+  - The strategic AI's choice (its utility, its draw, the pile of ADR-1042) begins a massing where it declared, for
+    a nation in no war whose army is its AI's, on a neighbour of its home (`homeNeighbours`) that it holds land
+    beside. `World.massing` (nation -> target, day), saved. One at a time; it chooses no other war meanwhile.
+  - Each day: `MASS_SHARE` (0.7) of its land formations on the border's land (`NavGrid.component`; those over a sea
+    are not this border's army) are to be within `MASS_NEAR_CELLS` (15, 300 km) of a point of the border (one a
+    sector of 4 cells) or on the march to one; the nearest of the rest are ordered there (`askMove`).
+  - It declares when `MASS_READY` (0.5) of its men there are at the border, if it would still declare: `whyNotWar`,
+    its gold, ADR-1042's pile and ADR-981's deterrence are asked again that day (weeks have passed, and alliances
+    are made in them); else the war is given up.
+  - Given up: after `MASS_DAYS` (90), the target then barred to it for `MASS_BAR_DAYS` (365; `World.massBarred`,
+    saved); when it is at war (called by an ally, or declared on); when its AI's diplomacy or army is off; when the
+    border is gone.
+  - A nation at war prepares none; it declares a second war on a neighbour of its home only where `MASS_SECOND`
+    (0.15) of its men stand at that border. This is option b for second wars only: without it (measured, six
+    seeds) the wars not prepared were 56 of 136, the defender ahead in 25 of them and the attacker with no man near
+    in 30.
+  - Not built: the neighbour's answer to a massing it sees, and c's quick march. The target does nothing of it.
+- **Tried:** `MASS_DAYS` 45: the Soviet Union on Finland, Estonia or Turkey and France on Germany did not arrive;
+  90 gave 26 % more wars prepared on the six seeds and the defender ahead in 8 % where 16 %. Every land
+  neighbour massed on: Britain and France stood 60 days "preparing" a war on the Netherlands over Borneo and
+  Guiana with no army there (`nukeOutrage1938.test.ts` went red on it, and is green unchanged since).
+- **Measured**, twelve seeds by three years (ROADMAP R97b): the attacker with no man within 300 km of the border
+  53 % -> 6 %; the defender ahead in land after a month 25 % -> 10 %; the attacker ahead 51 % -> 84 %.
+- **The bar of the wars' number re-scoped (the user's decision, 2026-11-16):** R97b asked that the wars begun be no
+  fewer than four fifths; the wars with a border are 71 % (542 -> 385). Those lost are the wars in which nothing
+  moved or the defender advanced; the wars in which the attacker is ahead after a month are 218 -> 219. The bar is
+  that number, no fewer.
+- **Could contradict (ADR-803), read:** ADR-1042 and ADR-981 (asked again at the declaration); ADR-759 (the layers:
+  a massing needs both the diplomacy's and the army's, and leaves a formation on the player's order alone);
+  ADR-703 (`askMove`, the same refusals' memory); R62e (the historical track: `strategicAi` does not run while it
+  steers, so no massing); R75a's focus (it scales the draw of the choice, as before). MAX_WARS: a massing nation is
+  in no war. The checkers of war and peace on the twelve seeds: none broken.
+- **The pin of seed 99:** ac4fab37 -> a49837a3 (the wars of its year are begun later and at their borders).
+- **Tests re-aimed, none weakened:** `farWait1938` (seed 7 from day 90: the first refused march of a seed is on
+  another day), `nukeMeansLost1938` (seed 1; on 5309 Prague is not taken in 300 days of the new history),
+  `airHolderFighting1938` (the wars of seed 8217's first ten days are not begun so soon: the case found by what it
+  is, a nation at war elsewhere the top flyer of a zone of others' land, on seed 4 day 24: Britain over France's).
+  Of the browser's, six whose scene is a seed's history, each by its own scan: `enemyClickPanel1938` (seed 7 day 70
+  of 18 seed-days), `fightCamera1938` (formation 752 for 746, no longer in contact), `formationFight1938` (seed 1 of
+  8), `nukeMeansLost1938` (seed 1), `seaClose1938` (the same four battles at their new hours, `seaPairs`),
+  `smallMark1938` (the first armour fire from day 25, where from day 7). No bar of any was changed.

@@ -199,3 +199,21 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   ahead in land at day 30 in 51 %, the defender in 24 %, none taken in 25 %; the attacker with no man within 300 km
   of the border as it declares in 118 (53 %), and there the defender is ahead more often than the attacker.
 - No code of the game changed. Figures: `.cache/r97/own-<seed>.json` (not committed).
+
+## 2026-11-16 — R97b: mass, then declare (ADR-1089, the user's choice); R97 done
+
+- `src/sim/ai/massing.ts`, `World.massing` and `World.massBarred` (saved), the strategic AI's declaration through
+  it; `tests/unit/massing1938.test.ts` (6).
+- Twelve seeds by three years, before and after: the attacker with no man within 300 km of its border 53 % -> 6 %,
+  the defender ahead in land after a month 25 % -> 10 %, the attacker ahead 51 % -> 84 %. The wars with a border
+  71 % of what they were, under the four fifths R97b asked: the bar re-scoped by the user to the wars in which the
+  attacker is ahead (218 -> 219).
+- Found on the way: the first rule massed on neighbours by a colony (Britain on the Netherlands over Borneo, 60
+  days and given up): `nukeOutrage1938.test.ts` showed it. The delayed declaration asks ADR-1042's and ADR-981's
+  rules again (the advisor's review).
+- The pin of seed 99 ac4fab37 -> a49837a3. Three tests of a seed's luck re-aimed (DECISIONS, ADR-1089).
+- The whole unit suite: green but `snapshot-perf` and `scenario1938`'s build time under the load of other runs,
+  both green alone. The browser suite was not run whole: the gate's specs for a pin move (397), six of them re-aimed
+  at a seed, a day or a formation that holds their scene (DECISIONS, ADR-1089).
+- Not looked into: on seed 5309 Germany, in the war the test forces on Czechoslovakia, no longer takes Prague in
+  300 days. No massing is in that war (Germany is at war); the world about it differs.

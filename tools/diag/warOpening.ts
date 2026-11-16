@@ -7,12 +7,14 @@
  * 327 cells of Germany after 30 days and Germany 107 of Poland, Poland's formations moving 2 hours in and Germany's a
  * day in. `--force A,D` makes that war at the first hour; without it the wars are the AI's own.
  *
- * Usage: npx tsx tools/diag/warOpening.ts <out.json> [--years N = 3] [--force GER,POL] [--neighbours] <seed> [...]
+ * Usage: npx tsx tools/diag/warOpening.ts <out.json> [--years N = 3] [--force GER,POL] [--neighbours] [--no-massing] <seed> [...]
+ * `--no-massing`: wars declared as before ROADMAP R97b (no army brought to the border first), for the comparison.
  * `--neighbours`: only the wars whose two leaders share a land border as the war begins (a war over a sea has no front
  * to move over in a month). One line a war, a summary a seed, then `done:`. Each war also with the two leaders' men
  * within 300 km of their border as it begins, and the land of each leader the other holds (a side's colonies apart).
  */
 import { writeFileSync } from 'node:fs';
+import { MASS_DAYS, MASS_PROBE } from '../../src/sim/ai/massing';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { loadAssets1938 } from '../headless/assets';
@@ -27,6 +29,9 @@ for (let i = 0; i < argv.length; i++) {
   if (argv[i] === '--years') years = Number(argv[++i]);
   else if (argv[i] === '--force') force = argv[++i]!.split(',') as [string, string];
   else if (argv[i] === '--neighbours') neighbours = true;
+  else if (argv[i] === '--no-massing') MASS_PROBE.off = true;
+  else if (argv[i] === '--mass-days') MASS_PROBE.days = Number(argv[++i]);
+  else if (argv[i] === '--mass-second') MASS_PROBE.second = Number(argv[++i]);
   else seeds.push(Number(argv[i]));
 }
 const tag = (n: number): string => TAGS_1938[n - 1] ?? `#${n}`;
@@ -45,6 +50,8 @@ interface Row {
   /** Members of each side as it begins. */
   sides: [string[], string[]];
   border: boolean;
+  /** The attacker had prepared this war: it was massing against the defender the day before (ROADMAP R97b). */
+  massed: boolean;
   /** The two leaders' men within NEAR_CELLS of their shared border as the war begins (land formations), and the border's cells. */
   nearFront: [number, number];
   borderCells: number;
@@ -107,6 +114,34 @@ for (const seed of seeds) {
   };
 
   const days = years * 365;
+  // The wars prepared (ROADMAP R97b): as they were the day before, and what became of each.
+  let was = new Map<number, { target: number; since: number }>();
+  const mass = { begun: 0, declared: 0, daysToDeclare: 0, givenUp: 0, atWarElsewhere: 0, timedOut: 0, other: 0 };
+  // A war prepared against a puppet is led by its overlord.
+  const massedOn = (a: number, d: number): boolean => {
+    const t = was.get(a)?.target;
+    return t !== undefined && (t === d || w.nations.cols.overlord[t] === d);
+  };
+  const lateList: string[] = [];
+  const massEnds = (day: number): void => {
+    for (const [n, m] of was) {
+      const now = w.massing.get(n);
+      if (now && now.target === m.target && now.since === m.since) continue;
+      if (w.wars.atWar(n, m.target)) {
+        mass.declared++;
+        mass.daysToDeclare += day - m.since;
+      } else {
+        mass.givenUp++;
+        if (w.wars.list.some((x) => x.sides[0].includes(n) || x.sides[1].includes(n))) mass.atWarElsewhere++;
+        else if (day - m.since > (MASS_PROBE.days ?? MASS_DAYS)) {
+          mass.timedOut++;
+          lateList.push(`${tag(n)}-${tag(m.target)}`);
+        }
+        else mass.other++;
+      }
+    }
+    for (const [n, m] of w.massing) if (was.get(n)?.since !== m.since || was.get(n)?.target !== m.target) mass.begun++;
+  };
   for (let day = 1; day <= days; day++) {
     // The first hour apart: a forced war is made in it, and is a war of day 0.
     s.step(day === 1 ? 1 : 24, quiet);
@@ -118,7 +153,7 @@ for (const seed of seeds) {
         const fr = front(a, d);
         const border = fr.cells > 0;
         if (neighbours && !border) continue;
-        const row: Row = { seed, war: war.id, startDay: 0, forced: true, attacker: tag(a), defender: tag(d), sides: [war.sides[0].map(tag), war.sides[1].map(tag)], border, nearFront: fr.near, borderCells: fr.cells, attFirst: 0, defFirst: 0, days: [], ran: 0 };
+        const row: Row = { seed, war: war.id, startDay: 0, forced: true, attacker: tag(a), defender: tag(d), sides: [war.sides[0].map(tag), war.sides[1].map(tag)], border, massed: massedOn(a, d), nearFront: fr.near, borderCells: fr.cells, attFirst: 0, defFirst: 0, days: [], ran: 0 };
         open.set(war.id, { row, att: new Set(war.sides[0]), def: new Set(war.sides[1]) });
       }
       s.step(23, quiet);
@@ -130,9 +165,11 @@ for (const seed of seeds) {
       const fr = front(a, d);
       const border = fr.cells > 0;
       if (neighbours && !border) continue;
-      const row: Row = { seed, war: war.id, startDay: day, forced: false, attacker: tag(a), defender: tag(d), sides: [war.sides[0].map(tag), war.sides[1].map(tag)], border, nearFront: fr.near, borderCells: fr.cells, attFirst: 0, defFirst: 0, days: [], ran: 0 };
+      const row: Row = { seed, war: war.id, startDay: day, forced: false, attacker: tag(a), defender: tag(d), sides: [war.sides[0].map(tag), war.sides[1].map(tag)], border, massed: massedOn(a, d), nearFront: fr.near, borderCells: fr.cells, attFirst: 0, defFirst: 0, days: [], ran: 0 };
       open.set(war.id, { row, att: new Set(war.sides[0]), def: new Set(war.sides[1]) });
     }
+    massEnds(day);
+    was = new Map([...w.massing].map(([n, m]) => [n, { ...m }]));
     if (open.size === 0) continue;
     // One pass over the land held by another than its owner: by owner and holder.
     const held = new Map<number, number>();
@@ -200,6 +237,7 @@ for (const seed of seeds) {
   const full = mine.filter((r) => r.border && r.ran >= 30 && r.days.length > 0);
   const defAhead = full.filter((r) => r.days.at(-1)!.defHolds > r.days.at(-1)!.attHolds).length;
   const defFirst = full.filter((r) => r.defFirst !== 0 && (r.attFirst === 0 || r.defFirst < r.attFirst)).length;
+  process.stderr.write(`seed ${seed} massing: ${mass.begun} begun, ${mass.declared} declared (after ${mass.declared ? (mass.daysToDeclare / mass.declared).toFixed(1) : '-'} days on average), ${mass.givenUp} given up (${mass.atWarElsewhere} at war by then, ${mass.timedOut} late, ${mass.other} else); ${mine.filter((r) => r.massed).length} of ${mine.length} wars prepared; late: ${lateList.join(' ')}\n`);
   process.stderr.write(`seed ${seed}: ${mine.length} wars, ${full.length} with a border that ran 30 days; the defender ahead in land at day 30 in ${defAhead}, the defender's first order over the front before the attacker's in ${defFirst}\n`);
 }
 writeFileSync(out, JSON.stringify(rows, null, 1));

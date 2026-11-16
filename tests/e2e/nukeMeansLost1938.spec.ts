@@ -18,7 +18,8 @@ const id = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag)
 test("a holder's last means of delivery lost is in the history: Czechoslovakia's bombers lost with Prague (PLAN 7.37b3)", async ({ page }) => {
   test.setTimeout(300_000);
   await page.setViewportSize({ width: 1400, height: 800 });
-  await open1938(page, 5309);
+  // Seed 1 since ROADMAP R97b (ADR-1089): on seed 5309 Prague is not taken in 300 days of the new history.
+  await open1938(page, 1);
   const [CZS, GER] = [id('CZS'), id('GER')];
   await page.getByTestId('editor-btn').click();
   await page.getByTestId('editor-nation').selectOption(String(CZS));

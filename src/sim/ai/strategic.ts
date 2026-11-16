@@ -16,7 +16,9 @@
  *              + RESTLESS × min(1, years n has been at peace / RESTLESS_YEARS)  (in no war; PLAN 7.14)
  * over neighbours t that are valid targets; the best t with utility > DECLARE_AT is attacked
  * with probability DECLARE_P × aggression/100. With no neighbour over the bar, the same over the
- * nations it could land on across the sea (`seaTargets`, PLAN 7.82d).
+ * nations it could land on across the sea (`seaTargets`, PLAN 7.82d). A nation in no war that holds
+ * land beside its target's does not declare at once: it brings its army to that border first and
+ * declares when it stands there (ROADMAP R97b, ADR-1089; `massing.ts`).
  * Stalemate peace: a war older than STALEMATE_DAYS with |score| < STALEMATE_SCORE and both
  * sides' exhaustion > STALEMATE_EXHAUSTION ends in peace on its score.
  * Alliances: an unaligned nation bordering an aggressive (≥ THREAT_AGGRESSION) neighbour more
@@ -46,6 +48,7 @@ import { navOf, portSeaOf, seaOf, type World } from '../world';
 import { cellKm2ByRow } from '../landCounts';
 import { ATTACKERS } from '../wars';
 import { AiLayer, aiRuns } from './layers';
+import { beginMassing, massStep, unprepared } from './massing';
 
 export const STAGGER = 7;
 /** Nations below this aggression never start wars (they still defend, ally and make peace). */
@@ -626,6 +629,14 @@ export function strategicAi(world: World): void {
     if ((world.tick - w.startTick) / 24 < STALEMATE_DAYS || Math.abs(w.score) >= STALEMATE_SCORE) continue;
     if (w.exhaustion[0] > STALEMATE_EXHAUSTION && w.exhaustion[1] > STALEMATE_EXHAUSTION) makePeace(world, w);
   }
+  // The wars being prepared (ROADMAP R97b): each day, their armies to their borders, and the declarations.
+  let massBlocs: ReadonlySet<number> | undefined;
+  massStep(world, day, (n, t) => {
+    if (nc.gold[n]! < 0 || nc.bankrupt[n] === 1) return false;
+    massBlocs ??= world.track?.ended && world.warheads.size > 0 ? blocsOf(world, strengths(world)) : new Set<number>();
+    if (!BLOC_PROBE.deterrenceOff && deterred(world, n, t, massBlocs)) return false;
+    return PILE_PROBE.off === true || !outnumbered(world, n, t);
+  });
   const actors: number[] = [];
   world.nations.forEach((n) => {
     // The diplomacy's layer of the AI (ADR-759).
@@ -651,14 +662,23 @@ export function strategicAi(world: World): void {
     const neighbours = [...(nb.get(n) ?? [])].sort((a, b) => a - b);
     // War.
     const wars = warsOf(world, n);
-    if (wars < MAX_WARS && nc.aggression[n]! >= PACIFIST_BELOW && nc.gold[n]! >= 0 && nc.bankrupt[n] !== 1) {
+    // Not while it prepares one (R97b): one war is prepared at a time.
+    if (wars < MAX_WARS && !world.massing.has(n) && nc.aggression[n]! >= PACIFIST_BELOW && nc.gold[n]! >= 0 && nc.bankrupt[n] !== 1) {
       powers ??= seaPowers(world, str);
-      const target = (refused: ReadonlySet<number>): number => warTarget(world, n, neighbours, withAllies(n), defence, wars, wars === 0 ? restlessOf(world, n) : 0, blocs, powers, refused);
+      // Not a neighbour barred after a massing given up, nor, in a war already, one at whose border its army is not (R97b).
+      let home: Set<number> | null | undefined;
+      const atHome = (t: number): boolean => {
+        if (home === undefined) home = homeNeighbours(world, n);
+        return home === null || home.has(t);
+      };
+      const never = unprepared(world, n, neighbours, day, wars, atHome);
+      const target = (refused: ReadonlySet<number>): number => warTarget(world, n, neighbours, withAllies(n), defence, wars, wars === 0 ? restlessOf(world, n) : 0, blocs, powers, never.size === 0 ? refused : new Set([...never, ...refused]));
       const best = target(new Set());
       if (best !== 0 && hashToUnit(hash32(world.seed, day, n, SALT_WAR)) < (focus * DECLARE_P * nc.aggression[n]!) / 100) {
         // Not one it would fight outnumbered over PILE_REALMS realms to 1 (R82f, ADR-1042): its next best, if any.
         const t = firstNotOutnumbered(world, n, (refused) => (refused.size === 0 ? best : target(refused)));
-        if (t !== 0) declareWar(world, n, t);
+        // A nation at peace with a border to its target brings its army there first (R97b, `beginMassing`).
+        if (t !== 0 && !beginMassing(world, n, t, day, atHome(t))) declareWar(world, n, t);
       }
     }
     // Alliances against a threat.

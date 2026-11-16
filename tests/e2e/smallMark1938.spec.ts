@@ -21,8 +21,12 @@ import { armourFires, busiest } from '../helpers/armourFire';
 // The view 1400 × 800 since the rules after `bcbc99c` (PLAN 7.37 to 7.48) moved the scene: at
 // 900 × 560 34 of its 88 tanks were off the canvas and 51 covered, 3 read; all 88 on it now, 5 read.
 
-/** From the first week's end: the first hour of armour fire after it (`armourFires`). */
-const FROM = 24 * 7;
+/**
+ * From day 25: the first hour of armour fire after it (`armourFires`). From the first week's end until ROADMAP R97b
+ * (ADR-1089, the wars prepared): the first such hour from days 7 to 20 is then one scene whose tanks stand under each
+ * other's sprites (4 read where 5 are asked); from days 25, 30, 35, 40, 50, 60 and 75 the scene has its 5.
+ */
+const FROM = 24 * 25;
 const HULLS: readonly number[] = [Frame.tank, Frame.tankMedium, Frame.tankHeavy];
 /** A tank element's least size at T2, CSS px: `TANK_ELEMENT_MIN_PX` (PLAN 7.9d, ADR-471), over `elementPx`. */
 const TANK_PX = 8;

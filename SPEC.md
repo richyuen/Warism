@@ -1637,6 +1637,14 @@ production and research. `src/sim/ai/`.
   `DECLARE_P` (0.25) × aggression ÷ 100, unless the side `declareWar` would call against it (`callSides`) has over
   `PILE_REALMS` (4) realms (nations that are no puppet) for each of its own: then on its next best so judged, or none
   (R82f, ADR-1042).
+- **Mass, then declare** (R97b, ADR-1089; `ai/massing.ts`): a nation in no war that so chooses a war on a neighbour
+  of its home does not declare at once. It brings `MASS_SHARE` (0.7) of its land formations on the border's land to
+  within `MASS_NEAR_CELLS` (15) of the border and declares when `MASS_READY` (0.5) of its men there stand so, if it
+  would still declare that day (`whyNotWar`, its gold, the pile, the blocs' deterrence). It gives the war up after
+  `MASS_DAYS` (90), that target then barred to it for `MASS_BAR_DAYS` (365), or when it is at war. A nation at war
+  declares a second war on a neighbour of its home only with `MASS_SECOND` (0.15) of its men at that border. A
+  neighbour by a colony only, and a target across the sea, are declared on at once. `World.massing` and
+  `World.massBarred`, saved. Test: `tests/unit/massing1938.test.ts`.
 - **Threat pacts:** an unaligned nation whose neighbour of aggression ≥ `THREAT_AGGRESSION` (50) is over
   `THREAT_RATIO` (1.5) times stronger and not yet at war with it, with probability `ALLY_P` (0.3), joins
   the strongest neighbouring alliance without that neighbour that `canJoin` allows (a great power avoids

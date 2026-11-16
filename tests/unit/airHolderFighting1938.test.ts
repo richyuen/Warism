@@ -15,17 +15,20 @@ import { nationId } from '../helpers/sim1938';
 // now one fighting there: at war with a nation that flew in the zone or holds land in it.
 
 const { w: W, h: H } = SIZE_1938;
-const [GER, POL, YUG] = ['GER', 'POL', 'YUG'].map(nationId) as [number, number, number];
+const [GER, POL] = ['GER', 'POL'].map(nationId) as [number, number];
 
 describe("an air zone's holder is one fighting there (PLAN 7.8)", () => {
-  const sim = new Sim({ scenario: '1938', seed: 8217, assets: assets1938(W) });
+  // Seed 4 on day 24 since ADR-1089 (ROADMAP R97b, the wars prepared): the wars of seed 8217's first ten days are
+  // not begun so soon, and Yugoslavia flies over no one. The case is found by what it is, whoever's: on seed 4 Britain,
+  // at war elsewhere, the top flyer of a zone over France's, Nationalist Spain's and Morocco's land (zone 136).
+  const sim = new Sim({ scenario: '1938', seed: 4, assets: assets1938(W) });
   const world = sim.world;
   sim.command({ kind: 'declareWar', attacker: GER, defender: POL });
-  sim.step(24 * 10);
+  sim.step(24 * 24);
   const air = airOf(world);
   const holders = airHolders(world, air.count);
 
-  it("a zone of Poland's land where Yugoslavia flew the most and fights no one: not Yugoslavia's; Warsaw's Poland's, Germany's or contested", () => {
+  it("a zone of others' land where a nation at war elsewhere flew the most and fights no one: not its own; Warsaw's Poland's, Germany's or contested", () => {
     // Since PLAN 7.36b's smaller zones (ADR-560) Yugoslavia's climbs out are no longer in Warsaw's
     // zone but in one of Poland's land to its south (zone 63 on day 10): the case is found, not named.
     const land = new Map<number, Set<number>>();
@@ -38,10 +41,11 @@ describe("an air zone's holder is one fighting there (PLAN 7.8)", () => {
     const cases = [...world.airPower].filter(([z, by]) => {
       const top = [...by].sort((a, b) => b[1] - a[1] || a[0] - b[0])[0]![0];
       const others = [...by.keys(), ...(land.get(z) ?? [])];
-      return top === YUG && land.get(z)?.has(POL) && !others.some((m) => world.wars.atWar(YUG, m));
+      const inWar = world.wars.list.some((x) => x.sides[0].includes(top) || x.sides[1].includes(top));
+      return inWar && (land.get(z)?.size ?? 0) > 0 && !land.get(z)!.has(top) && !others.some((m) => world.wars.atWar(top, m));
     });
-    expect(cases.length, "a zone of Poland's land where Yugoslavia flew the most, at war with no one there").toBeGreaterThan(0);
-    for (const [z] of cases) expect(holders[z], `zone ${z}`).not.toBe(YUG);
+    expect(cases.length, "a zone of others' land where a nation at war elsewhere flew the most, at war with no one there").toBeGreaterThan(0);
+    for (const [z, by] of cases) expect(holders[z], `zone ${z}`).not.toBe([...by].sort((a, b) => b[1] - a[1] || a[0] - b[0])[0]![0]);
     const [x, y] = cellOf(21.01, 52.23, W, H);
     const z = air.zoneOf[Math.floor(y) * W + Math.floor(x)]!;
     process.stderr.write(`Warsaw's zone ${z}: holder ${holders[z]} (Poland ${POL}, Germany ${GER}, contested ${AIR_CONTESTED})\n`);

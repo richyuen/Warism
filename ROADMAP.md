@@ -215,7 +215,7 @@ changed only where the feature they test changed.
 The user, of Germany's war on Poland in R96's shot, where the only arrows over the front were Poland's: "Can you
 look into the Germany-Poland war?", then "Yes add a roadmap item and let's do it".
 
-- [ ] R97 **The attacker is not at its own front.**
+- [x] R97 **The attacker is not at its own front.**
   - [x] R97a Measured (`tools/diag/warOpening.ts`). The forced war (seed 1938, Germany on Poland by God Mode on
     the first day): after 30 days Poland holds 327 cells of Germany and Germany 107 of Poland; Germany's men 564k
     to 440k, Poland's 419k to 246k; France and its colonies join at once and 60 % of Germany's men stand west of
@@ -229,12 +229,23 @@ look into the Germany-Poland war?", then "Yes add a roadmap item and let's do it
     none of them, the attacker ahead in 31 % of 41 wars and the defender in 46 %; nine tenths or more of them,
     90 % of 53 and 1 %. (In 77 more neither leader has a man there.) The planner allots formations to a front
     only once there is an enemy on it, and the far ones come one a sector in eight days (`MARCH_DAYS`).
-  - [ ] R97b The rule: an attacker's army at the border when its war begins. Which rule is the user's to choose
-    (DECISIONS, ADR-1089 proposed). AT, for whichever: on the six seeds and six unseen, of the AI's wars between
-    leaders with a border that run a month, the attacker with no man within 300 km of the border in at most a
-    tenth (53 % now), and the defender ahead in land at day 30 in at most 15 % (24 %); the wars begun a year no
-    fewer than four fifths of what they are now; the checkers of war and peace green on those seeds (ADR-803,
-    ADR-804); the pin of seed 99 moved in its own commit.
+  - [x] R97b **Mass, then declare** (ADR-1089, the user's choice; `src/sim/ai/massing.ts`). A nation in no war that
+    has chosen a war on a neighbour of its home first brings its army to that border (seven tenths of its formations
+    on that land, the nearest first) and declares when half its men there stand within 300 km of it, if it would
+    still declare by the rules of the choice; it gives up after 90 days, the target then barred to it for a year, or
+    when a war finds it first. A nation at war declares a second on a neighbour of its home only with 15 % of its men
+    at that border. A neighbour by a colony only, or across the sea, as before. Measured (`warOpening.ts`, three
+    years; six seeds seen and six unseen, 31001-31006, before and after): of the wars between leaders with a
+    border that ran a month, the attacker with no man within 300 km of the border 53 % -> 6 % (bar: a tenth); the
+    defender ahead in land at day 30 25 % -> 10 % (bar: 15 %), on the unseen six 27 % -> 13 %; the attacker ahead
+    51 % -> 84 %; no land taken 24 % -> 6 %; the attacker ordering nothing over the front in the month 61 wars -> 1.
+    **The bar of the wars' number, re-scoped (the user's decision, 2026-11-16):** the wars with a border begun fell
+    to 71 % (542 -> 385 on the twelve), under the four fifths asked; those lost are the wars in which the defender
+    was ahead or no land was taken, and the wars in which the attacker is ahead after a month are as many (218 ->
+    219): the bar is that number, no fewer. The checkers of war and peace (ADR-803) on the twelve seeds, a year
+    each: none broken. Shots: `docs/evidence/R97/` (seed 99, the Soviet Union on Romania: begun on day 40, 790,000 men
+    at the border on day 70, the war on day 71). The pin of seed 99 moved with the rule (the pin's own rule: in the
+    commit of the change), not apart as this item first said.
 
 ## Released
 
