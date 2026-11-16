@@ -1896,7 +1896,7 @@ export class MapView {
     const dpr = window.devicePixelRatio || 1;
     this.drawLabels(cam, dpr, now); // wipes the overlay first
     this.drawFlags(cam, now);
-    this.drawCityLayer(cam, dpr, now);
+    this.drawCityLayer(cam, dpr, now, false);
     this.dirty = true;
   }
 
@@ -2126,7 +2126,6 @@ export class MapView {
     this.markerOpacity = alpha;
     this.markerRects = [];
     this.orderLineIds = [];
-    this.moveArrows = [];
     const ctx = this.overlay.getContext('2d')!;
     // The nation's own colour in every map mode (the palette carries the mode's colours).
     const hex = (id: number): string => `#${(this.ownColor.get(id) ?? 0x888888).toString(16).padStart(6, '0')}`;
@@ -2158,11 +2157,6 @@ export class MapView {
     // The air's fights, bombs and flak (PLAN 5.7b), with the sorties; at T3 a strike's bombs on
     // the men it hit, its formation's drawn elements (PLAN 5.9).
     this.airFx.draw(ctx, cam, this.geo, vw, vh, now, airFxSize(cam.scale, this.unitScale), this.shares.individuals, (f) => this.elementPlaces(f));
-    // The marches' arrows (ROADMAP R89a, R89b) under the counters and the markers, with whichever is drawn: the
-    // counters' share beyond T1, the boxes' at it (they fade into the sprites, whose arrows are `drawCloseOrders`').
-    const far = this.metresPerPx > T1_MAX_M ? 1 - share : 0;
-    const arrowsIn = Math.max(far, alpha);
-    this.moveArrows = arrowsIn > 0.01 ? this.drawMarches(this.marchesShown({ picked: this.picked, selected: this.selectedFormations, player: this.selectionNation, nation: this.selected }), cam, arrowsIn) : [];
     // At the world's zoom a hero's counter is the others' size: at twice it, four covered Germany, France and Italy's
     // names in 1940 (ROADMAP R40d; critic run 48, R48-N3); twice from 5,000 m/px, blended between (R42c, R49-N1).
     this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls, heroes, heroScaleAt(this.metresPerPx), this.coveredNow(now));
@@ -2280,10 +2274,28 @@ export class MapView {
     return marches;
   }
 
-  /** Draws the arrows of `marches` on the overlay at `alpha` (ROADMAP R89a) and returns them. */
-  private drawMarches(marches: readonly March[], cam: Camera, alpha: number): DrawnArrow[] {
+  /**
+   * The marches' arrows of the frame (ROADMAP R89a, R89b), on the names' canvas under the names (R89c): a nation's
+   * name and a city's read over a pale arrow, and were not read under one (until R89c the arrows were on the
+   * overlay with the units, over every name). So they are under the counters, the markers and the tags too. With
+   * whichever unit layer is drawn: the counters' share beyond T1 and the boxes' at it, from where the formations
+   * stand; the sprites' at T2 and T3, from where each is drawn between ticks.
+   */
+  private drawArrows(ctx: CanvasRenderingContext2D, cam: Camera, now: number): void {
+    const viewer: OrderViewer = { picked: this.picked, selected: this.selectedFormations, player: this.selectionNation, nation: this.selected };
+    const boxes = this.shares.markers * this.morph.box;
+    const far = Math.max(this.metresPerPx > T1_MAX_M ? 1 - this.shares.markers : 0, boxes);
+    const close = Math.min(this.shares.elements, 1 - boxes);
+    const t = this.tickProgress(now);
+    this.moveArrows = [
+      ...(far > 0.01 ? this.drawMarches(ctx, this.marchesShown(viewer), cam, far) : []),
+      ...(close > 0.01 ? this.drawMarches(ctx, this.marchesShown(viewer, (i) => this.shownAt(i, t)), cam, close) : []),
+    ];
+  }
+
+  /** Draws the arrows of `marches` at `alpha` (ROADMAP R89a) and returns them. */
+  private drawMarches(ctx: CanvasRenderingContext2D, marches: readonly March[], cam: Camera, alpha: number): DrawnArrow[] {
     if (alpha <= 0.01 || marches.length === 0) return [];
-    const ctx = this.overlay.getContext('2d')!;
     const [vw, vh] = [this.canvas.clientWidth, this.canvas.clientHeight];
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -2664,7 +2676,7 @@ export class MapView {
     const viewer: OrderViewer = { picked: this.picked, selected: this.selectedFormations, player: this.selectionNation, nation: this.selected };
     const w = this.geo.w;
     const t = this.tickProgress(now);
-    // The fleets' dashed lines, those of what is picked or selected, and the marches' arrows (ROADMAP R89a, R89b).
+    // The fleets' dashed lines and those of what is picked or selected (the marches' arrows are `drawArrows`').
     const orders: OrderArrow[] = [];
     for (let i = 0; i < this.formIds.length; i++) {
       if ((this.formFlags[i]! & FormationFlag.moving) === 0 || !orderShown(this.formIds[i]!, this.formNation[i]!, viewer)) continue;
@@ -2681,9 +2693,6 @@ export class MapView {
         from: this.shownAt(i, t),
       });
     }
-    const drawn = this.drawMarches(this.marchesShown(viewer, (i) => this.shownAt(i, t)), cam, alpha);
-    // With the markers' while the two tiers hand over.
-    this.moveArrows = this.markerOpacity > 0.01 ? [...this.moveArrows, ...drawn] : drawn;
     if (orders.length === 0) return;
     const ctx = this.overlay.getContext('2d')!;
     ctx.save();
@@ -3316,8 +3325,13 @@ export class MapView {
    * stood under the letters of its own nation's. A small name over a large one reads; the other
    * way round it does not. The units and the flags, on the overlay, are above both as before.
    */
-  private drawCityLayer(cam: Camera, dpr: number, now: number): void {
-    this.cityLabels.draw(cam, dpr, now, this.nameObstacles(cam), (ctx) => drawNationLabels(ctx, this.nationLabels, LABEL_FONT, (id) => this.ownColor.get(id), this.glyphSprites));
+  private drawCityLayer(cam: Camera, dpr: number, now: number, arrows = true): void {
+    this.cityLabels.draw(cam, dpr, now, this.nameObstacles(cam), (ctx) => {
+      // The marches' arrows first (ROADMAP R89c): under the nations' names and the cities'.
+      if (arrows) this.drawArrows(ctx, cam, now);
+      else this.moveArrows = [];
+      drawNationLabels(ctx, this.nationLabels, LABEL_FONT, (id) => this.ownColor.get(id), this.glyphSprites);
+    });
   }
 
   /** The nation names' widths and their glyphs', at LABEL_MEASURE_PX (`drawLabels`). */

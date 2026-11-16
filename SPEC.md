@@ -1914,7 +1914,9 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   along the first `ARROW_LONG_PX` (70) and three of its widths of its way; `ARROW_MIN_PX` (5) wide at 2,000 men to
   `ARROW_MAX_PX` (22) at 400,000, by the logarithm. Marches of a nation that start within `GROUP_START_PX` (44) and
   head within `GROUP_TURN` (40°) are one arrow of their men; one that would cross another of its nation stops before
-  it. The dashed line along the whole way is the fleets', and that of a formation picked or selected. Markers that overlap
+  it. Drawn on the names' canvas under the nations' names and the cities' (R89c, ADR-1077): no name is under an arrow.
+  The dashed line along the whole way is the fleets', and that of a formation picked or selected, with a dark edge
+  at every tier, as the voyages' lines have. Markers that overlap
   stack (`STACK_UNDER` 0.25, `STACK_HOLD` 0.1), nudged at most `NUDGE_MAX_PX` (10) over `NUDGE_MS` (150
   ms). Balls: the box a ball of `MARKER_BALL_R` (9.5 px) wearing its symbol's prop (`markerProp`:
   treads, wheels, hull, helmet), eyes left or right to its order, a red ring while engaged.

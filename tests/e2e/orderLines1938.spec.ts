@@ -35,7 +35,7 @@ function arrows(page: Page, ids: number[]): Promise<{ nation: number; ids: numbe
   return page.evaluate((ids) => {
     const v = window.__warsim!.view!;
     v.draw();
-    const c = document.querySelector('canvas.map-nations') as HTMLCanvasElement;
+    const c = document.querySelector('canvas.map-cities') as HTMLCanvasElement;
     const k = c.width / c.clientWidth;
     const g = c.getContext('2d')!;
     return v.moveArrows.filter((a) => a.ids.some((id) => ids.includes(id))).map((a) => ({ nation: a.nation, faint: a.faint, ids: a.ids.filter((id) => ids.includes(id)).sort((p, q) => p - q), width: a.width, px: Array.from(g.getImageData(Math.round(a.x * k), Math.round(a.y * k), 1, 1).data) }));
@@ -163,6 +163,8 @@ test('a war shows its advances as arrows with nothing selected; a nation looked 
   }
   await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: GER, d: POL });
   let most = 0;
+  /** The points of arrows' middle lines under a nation's name, over the zooms looked at, and those where the name is not told from the arrow. */
+  const under = { points: 0, lost: 0 };
   for (const hour of [6, 24, 48, 96]) {
     await page.evaluate((h) => window.__warsim!.sim.step(h - window.__warsim!.view!.lastTick), hour);
     await page.waitForFunction((h) => window.__warsim!.view!.lastTick >= h, hour, { timeout: 60_000 });
@@ -178,6 +180,63 @@ test('a war shows its advances as arrows with nothing selected; a nation looked 
         expect(none.bold.length, `the war's advances at ${m} m/px`).toBeGreaterThan(0);
         expect(new Set(none.bold).has(GER) || new Set(none.bold).has(POL), 'of Germany or Poland').toBe(true);
         await page.screenshot({ path: path.join(out, `war-none-${m}.png`) });
+        // No name under an arrow (R89c): the arrows are on the names' canvas, below the names. Every pixel a name or a
+        // city's dot fills whole in the picture of the names alone is that pixel in the frame's; and where a nation's
+        // name, which lets its ground through, lies on an arrow, the pixel is not the arrow's plain fill.
+        const names = await page.evaluate(() => {
+          const v = window.__warsim!.view!;
+          const c = document.querySelector('canvas.map-cities') as HTMLCanvasElement;
+          const g = c.getContext('2d')!;
+          const k = c.width / c.clientWidth;
+          const now = performance.now() + 60_000;
+          v.draw(now);
+          const full = g.getImageData(0, 0, c.width, c.height).data;
+          const drawn = v.moveArrows.map((a) => ({ x: Math.round(a.x * k), y: Math.round(a.y * k), way: a.way, width: a.width }));
+          v.drawLabelLayers(now);
+          const alone = g.getImageData(0, 0, c.width, c.height).data;
+          v.draw(now);
+          let whole = 0;
+          let changed = 0;
+          for (let i = 0; i < alone.length; i += 4) {
+            if (alone[i + 3]! < 255) continue;
+            whole++;
+            if (Math.abs(alone[i]! - full[i]!) + Math.abs(alone[i + 1]! - full[i + 1]!) + Math.abs(alone[i + 2]! - full[i + 2]!) > 6) changed++;
+          }
+          // Along each arrow's middle line: the points a nation's name lies on (its body: an alpha of its own from 150, short of whole), and those of
+          // them that are the colour the arrow has where no name is.
+          let onName = 0;
+          let lost = 0;
+          let arrowPx = 0;
+          for (const a of drawn) {
+            const at = (x: number, y: number): number => (Math.round(y) * c.width + Math.round(x)) * 4;
+            // The arrow's plain fill: a point of its middle line with no name on it.
+            let plain = -1;
+            const pts: number[] = [];
+            for (let s = 2; s < a.way.length; s += 2) {
+              for (let t = 0; t <= 1; t += 0.05) {
+                const [x, y] = [(a.way[s - 2]! + (a.way[s]! - a.way[s - 2]!) * t) * k, (a.way[s - 1]! + (a.way[s + 1]! - a.way[s - 1]!) * t) * k];
+                if (x < 0 || y < 0 || x >= c.width || y >= c.height) continue;
+                pts.push(at(x, y));
+              }
+            }
+            for (const i of pts) if (alone[i + 3]! === 0 && full[i + 3]! > 250) plain = i;
+            if (plain < 0) continue;
+            for (const i of pts) {
+              if (full[i + 3]! > 250) arrowPx++;
+              if (alone[i + 3]! < 150 || alone[i + 3]! === 255) continue;
+              onName++;
+              if (Math.abs(full[i]! - full[plain]!) + Math.abs(full[i + 1]! - full[plain + 1]!) + Math.abs(full[i + 2]! - full[plain + 2]!) < 12) lost++;
+            }
+          }
+          return { whole, changed, onName, lost, arrowPx, arrows: drawn.length };
+        });
+        process.stderr.write(`names at ${m} m/px: ${names.whole} px filled whole, ${names.changed} changed by the arrows; ${names.onName} points of ${names.arrows} arrows under a nation's name, ${names.lost} of them the arrow's plain fill
+`);
+        expect(names.whole, 'names and dots in view').toBeGreaterThan(200);
+        expect(names.changed, `${m} m/px: a name's or a dot's pixel changed by an arrow`).toBe(0);
+        expect(names.arrowPx, 'the arrows are on the canvas of the names').toBeGreaterThan(50);
+        under.points += names.onName;
+        under.lost += names.lost;
       }
       // Poland looked at: the same bold arrows, and its other marches faint, Poland's alone.
       await page.evaluate((n) => window.__warsim!.view!.select(n), POL);
@@ -188,5 +247,11 @@ test('a war shows its advances as arrows with nothing selected; a nation looked 
       await page.evaluate(() => window.__warsim!.view!.select(0));
     }
   }
+  // At most a tenth (ADR-1077): a pale name on a pale arrow of its own nation (Germany's grey name on its grey arrows)
+  // is the arrow's colour there; every other name is told from the arrow under it.
+  process.stderr.write(`a nation's name on an arrow: ${under.lost} of ${under.points} points not told from the arrow
+`);
+  expect(under.points, 'names on arrows were looked at').toBeGreaterThan(20);
+  expect(under.lost, `a nation's name lost on an arrow, of ${under.points} points`).toBeLessThanOrEqual(under.points / 10);
   process.stderr.write(`GER v POL, 6 to 96 hours, 4000 to 600 m/px: at most ${most} bold arrows in view\n`);
 });

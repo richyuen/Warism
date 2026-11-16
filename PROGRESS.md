@@ -45,3 +45,14 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - `npm run bench -- G` no longer runs the software rasteriser's stages; `--software` adds them. `--gpu-only` is still
   taken. Run after the change: `npm run bench -- G` in 31 s (several minutes before): GPU T0 305.1 fps, T2 163.1 fps
   with 10,752 sprites, draw cpu 4.9 ms, PASS; the software rasteriser's record of 2026-11-11 kept.
+
+## 2026-11-15 — R89c: no name under an arrow (ADR-1077); R89 done
+
+- The arrows are drawn on the names' canvas, under the names (they were on the overlay, over them). The voyages'
+  lines and the order lines at T1 have a dark edge, as the landing's mark.
+- Tests: `orderLines1938.spec.ts` (0 of the names' whole pixels changed by arrows at three zooms; 3 of 89 points of a
+  nation's name on an arrow not told from it, bar a tenth). By hand: the 15 specs that read the names' canvas, the
+  voyages or the landings' marks, with `fleetOrder1938` and `player1938` (40 tests green).
+- `npm run bench -- G`: T0 297.3 fps, T2 159.4 fps, draw cpu 5.0 ms, PASS (as R89b).
+- Shots: `docs/evidence/R89c/` (before and after at 1,500 and 600 m/px). The voyages' new lines were not shot; their
+  specs are green.

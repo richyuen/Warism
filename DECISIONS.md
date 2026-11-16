@@ -76,3 +76,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   as before. `--gpu-only` is still taken and changes nothing. `docs/bench/G-game.json` keeps the software rasteriser's
   last record and its two pictures, marked with their date.
 - **Consequences:** PROMPT RELEASES step 3's `npm run bench -- G --gpu-only` is the same run as `-- G`.
+
+### ADR-1077 · 2026-11-15 · accepted — R89c: the arrows under the names, on the names' canvas
+- **Found:** the nations' names and the cities' are drawn on a canvas of their own under the overlay (PLAN 2.7t), and
+  the arrows were on the overlay with the units: a filled arrow covered whatever name it crossed ("POLAND"'s P under
+  an arrow's head at 1,500 m/px). `nameObstacles` keeps the cities' names off the markers and says why not off the
+  order lines: "names that gave way to every arrow would leave a front without names".
+- **Decision:** the arrows are drawn first on the names' canvas (`drawCityLayer`'s `under`), so under the nations'
+  names, the cities' dots and names, and all of the overlay (counters, markers, tags, the dashed lines). No name gives
+  way to an arrow and none is covered by one. The picture of the names alone (`drawLabelLayers`, the names' tests)
+  has no arrows. The voyages' lines are drawn twice, a dark edge then the colour, and the order lines have their dark
+  edge at T1 too: the arrows' rim.
+- **The bar:** of the points of arrows' middle lines that a nation's name lies on, at most a tenth where the picture
+  is the arrow's plain fill (the name not told from it). Measured 3 of 89 in the German-Polish war: Germany's pale
+  grey name on its own pale grey arrows. R92 (the names' new look) is told to keep a name told from a pale arrow.
+- **Consequences:** an arrow under a nation's name is partly hidden by its letters; under a marker, by the box.

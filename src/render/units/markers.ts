@@ -406,7 +406,7 @@ export function drawOrderArrows(
   geo: MapGeometry,
   vw: number,
   vh: number,
-  /** A dark edge under the line and its head, wider: for the light ground of the close tiers. */
+  /** A dark edge under the line and its head, wider: at every tier since ROADMAP R89c (once for the light ground of the close tiers alone). */
   edge = false,
 ): void {
   const offs = itemOffsets(cam, geo, vw);
@@ -500,7 +500,8 @@ export function drawMarkers(
   ctx.imageSmoothingEnabled = false;
   const offs = itemOffsets(cam, geo, vw);
   // The order lines of the fleets and of what is picked below the boxes (the marches' arrows are the view's, under these).
-  if (boxAlpha > 0.01) drawOrderArrows(ctx, markers.filter((m) => m.wayShown), cam, geo, vw, vh);
+  // With the dark edge at T1 too (ROADMAP R89c): the movement arrows' rim.
+  if (boxAlpha > 0.01) drawOrderArrows(ctx, markers.filter((m) => m.wayShown), cam, geo, vw, vh, true);
   // Pictures of the boxes, made when a morph needs them (one for each nation, symbol and state).
   const sprites = new Map<string, HTMLCanvasElement>();
   // Boxes, back to front by y; a hero's above the others (PLAN 7.184b3), its pips and number not under theirs.
@@ -825,8 +826,8 @@ export function drawVoyages(ctx: CanvasRenderingContext2D, voyages: Float32Array
   if (voyages.length === 0) return;
   const offs = itemOffsets(cam, geo, vw);
   ctx.save();
-  ctx.lineWidth = 1.5 * scale;
-  ctx.strokeStyle = 'rgba(232, 244, 255, 0.9)';
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
   for (let i = 0; i + stride <= voyages.length; i += stride) {
     if (!shown(voyages[i]!)) continue;
     const line = [voyages[i + 2]!, voyages[i + 3]!, voyages[i + 4]!, voyages[i + 5]!, voyages[i + 6]!, voyages[i + 7]!];
@@ -838,20 +839,26 @@ export function drawVoyages(ctx: CanvasRenderingContext2D, voyages: Float32Array
       const xs = pts.map((p) => p[0]);
       const ys = pts.map((p) => p[1]);
       if (Math.max(...xs) < 0 || Math.min(...xs) > vw || Math.max(...ys) < 0 || Math.min(...ys) > vh) continue;
-      ctx.setLineDash([6 * scale, 4 * scale]);
-      ctx.beginPath();
-      ctx.moveTo(pts[0]![0], pts[0]![1]);
-      for (const p of pts.slice(1)) ctx.lineTo(p[0], p[1]);
-      ctx.stroke();
-      ctx.setLineDash([]);
-      const [lx, ly] = pts[pts.length - 1]!;
-      ctx.beginPath();
-      ctx.arc(lx, ly, 5 * scale, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(lx, ly, 1.5 * scale, 0, Math.PI * 2);
-      ctx.fillStyle = ctx.strokeStyle;
-      ctx.fill();
+      // Drawn twice (ROADMAP R89c: with the movement arrows' dark rim, as the landing's mark has it): the dark edge,
+      // wider, then the colour on it.
+      for (const [style, width] of [[LANDING_MARK_EDGE, 4.5], ['rgba(232, 244, 255, 0.95)', 2]] as const) {
+        ctx.strokeStyle = style;
+        ctx.fillStyle = style;
+        ctx.lineWidth = width * scale;
+        ctx.setLineDash([6 * scale, 4 * scale]);
+        ctx.beginPath();
+        ctx.moveTo(pts[0]![0], pts[0]![1]);
+        for (const p of pts.slice(1)) ctx.lineTo(p[0], p[1]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        const [lx, ly] = pts[pts.length - 1]!;
+        ctx.beginPath();
+        ctx.arc(lx, ly, 5 * scale, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(lx, ly, 1.5 * scale, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
   }
   ctx.restore();

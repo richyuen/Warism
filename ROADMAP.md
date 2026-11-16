@@ -51,10 +51,17 @@ changed only where the feature they test changed.
     26 arrows of 13 nations in the world's view at 20,000 m/px, 18 over the Fujian front at 4,000. The arrows 0.1 to
     0.15 ms of a draw; `npm run bench -- G` PASS (T0 294.9 fps, T2 161.0 fps, draw cpu 5.0 ms of 6, from 4.7).
     Shots: `docs/evidence/R89b/`.
-  - [ ] R89c Names and arrows: the names no longer under a filled arrow (`MapView`'s rule for the dashed lines says a
+  - [x] R89c Names and arrows: the names no longer under a filled arrow (`MapView`'s rule for the dashed lines says a
     line across a name leaves it to be read; a filled arrow does not). The voyages' and landings' lines stay dashed,
     in the arrows' rim and weight. AT: a spec that no country name or city name is covered by an arrow by more than a
     share the item sets; the voyage and landing specs green.
+    Done (ADR-1077): the arrows are drawn on the names' canvas, under the nations' names and the cities' (they were on
+    the overlay with the units, over every name); the voyages' lines and the order lines at T1 have the dark edge the
+    landing's mark has. `orderLines1938.spec.ts`: Germany on Poland at 48 hours, at 4,000, 1,500 and 600 m/px: of
+    3,628, 2,573 and 609 pixels a name or a dot fills whole, 0 changed by the arrows; of 89 points where a nation's
+    name lies on an arrow, 3 not told from it (Germany's pale grey name on its pale grey arrows; bar a tenth). The 15
+    specs of the names' canvas, the voyages and the landings' marks green (40 tests). `npm run bench -- G` PASS (T0
+    297.3 fps, T2 159.4 fps, draw cpu 5.0 ms). Shots: `docs/evidence/R89c/` (the voyages' lines not shot).
 - [ ] R90 **Fronts that glow.** At world zoom a war is a hatched patch and a small burst. The border between two
   nations at war gets a glowing red line at world and theatre zoom, and land that changed hands in the last days
   flashes once. AT: a spec on the 1938 world with a war declared by God Mode: the line's pixels along the shared
@@ -64,7 +71,8 @@ changed only where the feature they test changed.
   political colours. AT: the political map's colours still tell every pair of neighbours apart (the check the nation
   colours have now); the shots; the frame time of the world zoom unchanged within the bench's noise.
 - [ ] R92 **Country names.** Dark, heavily rimmed and steeply turned ("POLAND" runs nearly upright). White capitals
-  with a soft shadow, a gentler turn and curve, a small nation's name no larger than its land lets it be. AT: the
+  with a soft shadow, a gentler turn and curve, a small nation's name no larger than its land lets it be; told from
+  a pale arrow under it (R89c: Germany's pale name is not, on its own arrows; a white name needs its shadow there). AT: the
   label tests with the new bounds on a name's angle and size; every name's contrast against its nation's colour at
   the bar the labels have now.
 - [ ] R93 **Counters.** A small ball and a small number. A dark rounded plate with the flag chip and a larger number,
