@@ -72,47 +72,44 @@ export const FAINT_ALPHA = 0.5;
  */
 export const ARROW_LEAST_PX = 26;
 
+/** How far apart the points of a way are looked at for whose land they are on, cells (`advances`). */
+export const ADVANCE_STEP = 0.5;
+
 /**
- * The marches that are advances (ROADMAP R89b, ADR-1073: "every nation at war shows its advances"): of a nation at
- * war, to a place an enemy holds (`holderAt` its end, `atWar` with the marcher) or within `reach` of an enemy's
- * formation (`foes`: every land formation of a nation at war; the same units as the ends). The rest are marches
- * behind the lines. Pure.
+ * The marches that are advances (ROADMAP R96, ADR-1088, the user's request: "only show arrows if a country is
+ * invading another country or pushing through a front"): of a nation at war, whose way within its next `reach` (the
+ * way's own units, cells) is on land an enemy holds (`holderAt` a point, `atWar` with the marcher): it crosses the
+ * front, or is over it and goes on. Looked at every ADVANCE_STEP of the way and at its end. The rest are marches
+ * behind the lines, reinforcements on their way to a front among them: until R96 a march that ended within 100 km of
+ * an enemy's formation was an advance too (R89b, ADR-1075), and a front had an arrow for each division coming up
+ * behind it. Pure.
  */
 export function advances(
-  ends: readonly { id: number; nation: number; x: number; y: number }[],
+  marches: readonly { id: number; nation: number; line: ArrayLike<number> }[],
   holderAt: (x: number, y: number) => number,
   atWar: (a: number, b: number) => boolean,
-  foes: readonly { nation: number; x: number; y: number }[],
   reach: number,
 ): Set<number> {
   const out = new Set<number>();
-  // The foes by the square of `reach` they stand in: an end looks at the nine about its own.
-  const size = Math.max(reach, 1e-9);
-  const squares = new Map<number, { nation: number; x: number; y: number }[]>();
-  const key = (sx: number, sy: number): number => sx * 65536 + sy;
-  for (const f of foes) {
-    const k = key(Math.floor(f.x / size), Math.floor(f.y / size));
-    const list = squares.get(k);
-    if (list) list.push(f);
-    else squares.set(k, [f]);
-  }
-  for (const e of ends) {
-    const holder = holderAt(e.x, e.y);
-    if (holder !== 0 && holder !== e.nation && atWar(e.nation, holder)) {
-      out.add(e.id);
-      continue;
-    }
-    const [sx, sy] = [Math.floor(e.x / size), Math.floor(e.y / size)];
-    near: for (let dy = -1; dy <= 1; dy++) {
-      for (let dx = -1; dx <= 1; dx++) {
-        for (const f of squares.get(key(sx + dx, sy + dy)) ?? []) {
-          if (f.nation !== e.nation && Math.hypot(f.x - e.x, f.y - e.y) <= reach && atWar(e.nation, f.nation)) {
-            out.add(e.id);
-            break near;
-          }
-        }
+  for (const m of marches) {
+    const enemy = (x: number, y: number): boolean => {
+      const holder = holderAt(x, y);
+      return holder !== 0 && holder !== m.nation && atWar(m.nation, holder);
+    };
+    const l = m.line;
+    let left = reach;
+    let found = l.length >= 2 && enemy(l[0]!, l[1]!);
+    for (let i = 2; i < l.length && !found && left > 0; i += 2) {
+      const [ax, ay, bx, by] = [l[i - 2]!, l[i - 1]!, l[i]!, l[i + 1]!];
+      const seg = Math.hypot(bx - ax, by - ay);
+      const far = Math.min(seg, left);
+      for (let d = Math.min(ADVANCE_STEP, far); !found; d = Math.min(d + ADVANCE_STEP, far)) {
+        found = seg > 0 && enemy(ax + ((bx - ax) * d) / seg, ay + ((by - ay) * d) / seg);
+        if (d >= far) break;
       }
+      left -= seg;
     }
+    if (found) out.add(m.id);
   }
   return out;
 }
@@ -365,8 +362,9 @@ export function drawMoveArrows(
   const drawn: DrawnArrow[] = [];
   ctx.save();
   ctx.lineJoin = 'round';
-  // The most men first: a thin arrow lies over a wide one.
-  const order = [...arrows].sort((a, b) => b.men - a.men || a.ids[0]! - b.ids[0]!);
+  // The bold before the faint (ROADMAP R96): an advance is never cut short for a march behind the lines, whatever
+  // their men (with a nation looked at, one of its advances was: 10 bold arrows where 11 were without it).
+  const order = [...arrows].sort((a, b) => Number(Boolean(a.faint)) - Number(Boolean(b.faint)) || b.men - a.men || a.ids[0]! - b.ids[0]!);
   // By nation and copy of the world: the arrows drawn so far.
   const before = new Map<string, { way: number[]; width: number; box: number[] }[]>();
   // The outlines by nation, faint or bold: one path, one rim and one fill each (those of a nation do not cross).

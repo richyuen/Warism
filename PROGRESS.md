@@ -180,3 +180,13 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - Found on the way: `specRefs.test.ts` red since R94a's commit (SPEC named `chromeCover1938` as a word, not by its
   path): R94a's last commit changed documents only and the gate ran nothing. SPEC cites the path now.
 - Shots: `docs/evidence/R95/` (the Fujian front before and after; the three faces side by side).
+
+## 2026-11-16 — R96: arrows only over a front (ADR-1088, the user's request)
+
+- An advance is a march whose way within 100 km is on land an enemy holds; a march that only ends near an enemy's
+  formation is behind the lines. Bold arrows are drawn before faint ones.
+- Tests: `moveArrows.test.ts` (21); by hand `orderLines1938.spec.ts` and `player1938.spec.ts` (7 green): Germany
+  on Poland at most 18 bold arrows in view (40).
+- No change to the frame worth a figure: fewer arrows are drawn; the advances are found once a snapshot from the
+  ways the snapshot brings.
+- Shots: `docs/evidence/R96/` (the German-Polish war and the Fujian front, before and after).

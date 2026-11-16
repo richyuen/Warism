@@ -263,3 +263,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   box's size (BLOCKERS, resolved by this). With the box as it is, eight of them held at once.
 - **Consequences:** the worker still sends the elements from T1 (PLAN 7.21c1): the handover to T2 has them in hand.
   The view no longer lays out pips at each snapshot. A click on the plate's 4 px beside the box is not on the marker.
+
+### ADR-1088 · 2026-11-16 · accepted (the user's request) — R96: an advance is a march onto land an enemy holds
+- **The user:** "for non selected countries, can we only show arrows if a country is invading another country or
+  pushing through a front (more like Hearts of Iron IV)?"
+- **It changes ADR-1075** (R89b): a march that ended within 100 km of an enemy's land formation was an advance.
+  That made every reinforcement on its way to a front a bold arrow.
+- **Decision** (`advances`, `MapView.findAdvances`): an advance is a land march of a nation at war, not a retreat,
+  whose way within its next `ADVANCE_REACH_KM` (100 km, along the way, looked at every half cell) is on land held
+  by a nation it is at war with: it crosses the front, or stands over it. Its own land an enemy holds counts: a
+  counter-attack is over a front too. Bold arrows are drawn before faint ones: none is cut short for a march
+  behind the lines.
+- **As it was:** a nation or a formation looked at shows its other marches faint (`orderShown`).
+- **Consequences:** a front where no one moves over the line has no arrow; its red line (R90a) says where it is.

@@ -198,6 +198,18 @@ changed only where the feature they test changed.
   Not measured as the AT said: the number's height in px at 2,000 m/px against a bar from a shot; it is type of 11
   px at every zoom of T1. Shots: `docs/evidence/R95/`.
 
+- [x] R96 **Arrows only over a front** (the user's request, 2026-11-16: "for non selected countries, can we only
+  show arrows if a country is invading another country or pushing through a front (more like Hearts of Iron IV)?").
+  Until R96 a march that ended within 100 km of an enemy's formation was an advance too (R89b): a front had an
+  arrow for each division coming up behind it. AT: no bold arrow for a march whose way does not reach land an enemy
+  holds; the war spec's sweep green.
+  Done (ADR-1088): an advance is a march of a nation at war whose way, within its next 100 km, is on land an enemy
+  holds; a retreat is none. `moveArrows.test.ts` (21). `orderLines1938.spec.ts`: Germany on Poland, 6 to 96 hours
+  at four zooms: at most 18 bold arrows in view (40 before). It found one thing: with a nation looked at, one of
+  its faint arrows cut a bold one short (10 bold arrows where 11 were); the bold are drawn first now. Seed 99,
+  August 1939: the Fujian front's arrows are those into and out of the pocket (shots). The marches of a nation
+  looked at are as they were, faint. Shots: `docs/evidence/R96/`.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

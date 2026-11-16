@@ -190,27 +190,45 @@ describe('two arrows of a nation do not cross (R89a)', () => {
   });
 });
 
-describe('which marches are advances (R89b)', () => {
-  // Nations 1 and 2 at war, 3 at peace with both. Nation 2 holds x >= 100; 1 the rest; 3 the row y >= 200.
+describe('which marches are advances (R96: onto land an enemy holds)', () => {
+  // Nations 1 and 2 at war, 3 at peace with both. Nation 2 holds x >= 100; 1 the rest; 3 the rows y >= 200.
   const holderAt = (x: number, y: number): number => (y >= 200 ? 3 : x >= 100 ? 2 : 1);
   const atWar = (a: number, b: number): boolean => (a === 1 && b === 2) || (a === 2 && b === 1);
-  const end = (id: number, nation: number, x: number, y: number): { id: number; nation: number; x: number; y: number } => ({ id, nation, x, y });
+  const way = (id: number, nation: number, ...line: number[]): { id: number; nation: number; line: number[] } => ({ id, nation, line });
+  const ids = (s: Set<number>): number[] => [...s].sort((a, b) => a - b);
 
-  it('to land an enemy holds: an advance; to its own or to a neutral, far from any enemy: not', () => {
-    const got = advances([end(1, 1, 120, 50), end(2, 1, 40, 50), end(3, 1, 40, 250), end(4, 2, 60, 50), end(5, 3, 120, 50)], holderAt, atWar, [], 5);
-    expect([...got].sort()).toEqual([1, 4]);
+  it('over the front within reach: an advance; behind it, however near the front or the enemy, not', () => {
+    const got = advances([
+      way(1, 1, 97, 50, 104, 50), // over the front 3 cells on
+      way(2, 1, 60, 50, 90, 50), // toward the front, its end 10 cells short of it: a reinforcement
+      way(3, 1, 99, 30, 99, 70), // along the front a cell behind it
+      way(4, 2, 103, 50, 96, 50), // the other side's, over the front the other way
+      way(5, 1, 40, 195, 40, 210), // into a neutral's land
+      way(6, 3, 97, 50, 104, 50), // a nation at peace, over the same front
+    ], holderAt, atWar, 5);
+    expect(ids(got)).toEqual([1, 4]);
   });
 
-  it('to within reach of a formation of an enemy, on its own land: an advance; just beyond reach, or near a neutral: not', () => {
-    const foes = [{ nation: 2, x: 50, y: 50 }, { nation: 3, x: 20, y: 20 }, { nation: 1, x: 80, y: 80 }];
+  it('the front beyond the reach of the way is not looked at; just within it, it is', () => {
     for (const reach of [1, 5, 12]) {
-      const got = advances([end(1, 1, 50 + reach, 50), end(2, 1, 50 + reach + 0.01, 50), end(3, 1, 20, 20), end(4, 1, 80, 80), end(5, 1, 50 + reach * 0.7, 50 + reach * 0.7)], holderAt, atWar, foes, reach);
-      expect([...got].sort(), `reach ${reach}`).toEqual([1, 5]);
+      const got = advances([way(1, 1, 100 - reach + 0.2, 50, 130, 50), way(2, 1, 100 - reach - 0.6, 50, 130, 50)], holderAt, atWar, reach);
+      expect(ids(got), `reach ${reach}`).toEqual([1]);
     }
   });
 
-  it('a nation at peace has no advance, wherever it marches', () => {
-    expect(advances([end(1, 3, 120, 50), end(2, 3, 40, 50)], holderAt, atWar, [{ nation: 1, x: 40, y: 50 }, { nation: 2, x: 120, y: 50 }], 5).size).toBe(0);
+  it('already on the enemy\u2019s land and going on, or coming back from it: an advance while it stands there', () => {
+    expect(ids(advances([way(1, 1, 110, 50, 120, 50), way(2, 1, 101, 50, 80, 50)], holderAt, atWar, 5))).toEqual([1, 2]);
+  });
+
+  it('along a way with a turn: the enemy\u2019s land after the turn counts, by the way\u2019s length and not as the crow flies', () => {
+    // North 3 cells, then east over the front: 3 + 2.5 cells along the way.
+    const bent = way(1, 1, 98, 50, 98, 47, 104, 47);
+    expect(ids(advances([bent], holderAt, atWar, 6))).toEqual([1]);
+    expect(ids(advances([bent], holderAt, atWar, 4))).toEqual([]);
+  });
+
+  it('a way of one point or none is no advance unless it stands on the enemy\u2019s land', () => {
+    expect(ids(advances([way(1, 1, 50, 50), way(2, 1), way(3, 1, 120, 50)], holderAt, atWar, 5))).toEqual([3]);
   });
 
   it('an advance and a march behind the lines from one place the same way are two arrows, the one faint', () => {

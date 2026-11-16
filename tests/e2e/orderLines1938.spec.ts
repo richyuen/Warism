@@ -251,7 +251,8 @@ test('a war shows its advances as arrows with nothing selected; a nation looked 
   // is the arrow's colour there; every other name is told from the arrow under it.
   process.stderr.write(`a nation's name on an arrow: ${under.lost} of ${under.points} points not told from the arrow
 `);
-  expect(under.points, 'names on arrows were looked at').toBeGreaterThan(20);
+  // (Fewer since ROADMAP R96: only the marches over the front have arrows with nothing looked at.)
+  expect(under.points, 'names on arrows were looked at').toBeGreaterThan(5);
   expect(under.lost, `a nation's name lost on an arrow, of ${under.points} points`).toBeLessThanOrEqual(under.points / 10);
   process.stderr.write(`GER v POL, 6 to 96 hours, 4000 to 600 m/px: at most ${most} bold arrows in view\n`);
 });

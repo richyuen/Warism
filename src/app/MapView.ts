@@ -2200,28 +2200,30 @@ export class MapView {
   /** The flashes of land that changed hands (ROADMAP R90b); tests read how many cells flash. */
   readonly flashes = new ControlFlashes();
 
-  /** How near an enemy's formation a march ends and is an advance, km (ROADMAP R89b): a day's march or two. */
+  /** How far along its way a march is looked at for the enemy's land, km (ROADMAP R96): a day's march or two. */
   static readonly ADVANCE_REACH_KM = 100;
 
-  /** The formations on an advance (ROADMAP R89b; `advances`), as of the last snapshot. */
+  /** The formations on an advance (ROADMAP R96; `advances`), as of the last snapshot. */
   private advancing = new Set<number>();
 
-  /** Which marches of the snapshot are advances: of a nation at war, to land an enemy holds or to near an enemy's formation. */
+  /** Which marches of the snapshot are advances: of a nation at war, onto land an enemy holds within the reach; not a retreat. */
   private findAdvances(): void {
     const w = this.geo.w;
-    const ends: { id: number; nation: number; x: number; y: number }[] = [];
-    const foes: { nation: number; x: number; y: number }[] = [];
+    const marches: { id: number; nation: number; line: number[] }[] = [];
     for (let i = 0; i < this.formIds.length; i++) {
       const nation = this.formNation[i]!;
       if (!this.atWar.has(nation) || this.templates[this.formTemplate[i]!]?.domain !== 0) continue;
-      foes.push({ nation, x: this.formX[i]!, y: this.formY[i]! });
-      if ((this.formFlags[i]! & FormationFlag.moving) === 0) continue;
+      if ((this.formFlags[i]! & FormationFlag.moving) === 0 || (this.formFlags[i]! & FormationFlag.retreating) !== 0) continue;
       const target = this.formTarget[i]!;
-      ends.push({ id: this.formIds[i]!, nation, x: (target % w) + 0.5, y: Math.floor(target / w) + 0.5 });
+      const ws = this.formWayStart[i]!;
+      const we = this.formWayStart[i + 1]!;
+      const line = orderLine({ x: this.formX[i]!, y: this.formY[i]!, target: [(target % w) + 0.5, Math.floor(target / w) + 0.5], way: we - ws >= 4 ? this.formWay.subarray(ws, we) : null }, this.geo)!;
+      marches.push({ id: this.formIds[i]!, nation, line });
     }
-    const holderAt = (x: number, y: number): number => this.controlGrid[Math.floor(y) * w + Math.floor(x)] ?? 0;
+    // A way over the map's seam has cells beyond its width: whose they are is read at the cell's own place.
+    const holderAt = (x: number, y: number): number => this.controlGrid[Math.floor(y) * w + (((Math.floor(x) % w) + w) % w)] ?? 0;
     const atWar = (a: number, b: number): boolean => this.warPairs.has(a < b ? a * 65536 + b : b * 65536 + a);
-    this.advancing = advances(ends, holderAt, atWar, foes, MapView.ADVANCE_REACH_KM / this.geo.kmPerCell);
+    this.advancing = advances(marches, holderAt, atWar, MapView.ADVANCE_REACH_KM / this.geo.kmPerCell);
   }
 
   /**

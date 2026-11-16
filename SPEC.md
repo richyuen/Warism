@@ -1940,8 +1940,8 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   marker is 34 by 34 px; `UNIT_FONT`, the counters' numbers too),
   order arrows (a fleet's along its turning points), crossed swords while engaged. A land formation's march is a
   movement arrow (`src/render/units/moveArrows.ts`, ROADMAP R89a, R89b, ADR-1074, ADR-1075; at every tier): an
-  advance (`advances`: of a nation at war, to a cell an enemy holds or within `ADVANCE_REACH_KM`, 100, of an enemy's
-  land formation) bold and for every viewer, never shorter than `ARROW_LEAST_PX` (26); any other march faint
+  advance (`advances`, ROADMAP R96, ADR-1088: of a nation at war, its way within its next `ADVANCE_REACH_KM`, 100,
+  on land an enemy holds; not a retreat) bold and for every viewer, never shorter than `ARROW_LEAST_PX` (26); any other march faint
   (`FAINT_WIDE` 0.6 of the width, `FAINT_ALPHA` 0.5) and for the formations whose orders are shown. Filled, tapered, in its nation's colour half way to white with a dark rim, from the formation
   along the first `ARROW_LONG_PX` (70) and three of its widths of its way; `ARROW_MIN_PX` (5) wide at 2,000 men to
   `ARROW_MAX_PX` (22) at 400,000, by the logarithm. Marches of a nation that start within `GROUP_START_PX` (44) and
