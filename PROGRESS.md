@@ -190,3 +190,12 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - No change to the frame worth a figure: fewer arrows are drawn; the advances are found once a snapshot from the
   ways the snapshot brings.
 - Shots: `docs/evidence/R96/` (the German-Polish war and the Fujian front, before and after).
+
+## 2026-11-16 — R97a: a war's opening measured; R97b waits on the user (ADR-1089 proposed)
+
+- `tools/diag/warOpening.ts`. The forced German-Polish war of the tests: Poland ahead in land by three to one after
+  a month, Germany's army split by France's joining and East Prussia all but empty.
+- The AI's own wars, six seeds by three years, 221 between leaders with a border that ran a month: the attacker
+  ahead in land at day 30 in 51 %, the defender in 24 %, none taken in 25 %; the attacker with no man within 300 km
+  of the border as it declares in 118 (53 %), and there the defender is ahead more often than the attacker.
+- No code of the game changed. Figures: `.cache/r97/own-<seed>.json` (not committed).

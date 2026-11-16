@@ -210,6 +210,32 @@ changed only where the feature they test changed.
   August 1939: the Fujian front's arrows are those into and out of the pocket (shots). The marches of a nation
   looked at are as they were, faint. Shots: `docs/evidence/R96/`.
 
+## Batch 33 — a war's opening (the user's request, 2026-11-16)
+
+The user, of Germany's war on Poland in R96's shot, where the only arrows over the front were Poland's: "Can you
+look into the Germany-Poland war?", then "Yes add a roadmap item and let's do it".
+
+- [ ] R97 **The attacker is not at its own front.**
+  - [x] R97a Measured (`tools/diag/warOpening.ts`). The forced war (seed 1938, Germany on Poland by God Mode on
+    the first day): after 30 days Poland holds 327 cells of Germany and Germany 107 of Poland; Germany's men 564k
+    to 440k, Poland's 419k to 246k; France and its colonies join at once and 60 % of Germany's men stand west of
+    Berlin; East Prussia has 3 formations and loses 157 of its 208 cells. Poland plans 18 hours before Germany: the
+    planners' stagger by a nation's number (`STAGGER`), not the side. Then the AI's own wars, six seeds (99, 7,
+    1938, 4483, 2081, 6047) by three years: 287 wars between leaders with a land border, 221 that ran a month.
+    Of the two leaders' land after 30 days: the attacker ahead in 113 (51 %), the defender in 52 (24 %), none
+    taken in 56 (25 %); in 30 the attacker ordered nothing over the front in the month (Brazil on Colombia in three
+    seeds, four nations on Bolivia, China on Tibet). The cause, read at the declaration: in 118 of the 221 the
+    attacker has no man within 300 km of the border. By the attacker's share of the two leaders' men near it:
+    none of them, the attacker ahead in 31 % of 41 wars and the defender in 46 %; nine tenths or more of them,
+    90 % of 53 and 1 %. (In 77 more neither leader has a man there.) The planner allots formations to a front
+    only once there is an enemy on it, and the far ones come one a sector in eight days (`MARCH_DAYS`).
+  - [ ] R97b The rule: an attacker's army at the border when its war begins. Which rule is the user's to choose
+    (DECISIONS, ADR-1089 proposed). AT, for whichever: on the six seeds and six unseen, of the AI's wars between
+    leaders with a border that run a month, the attacker with no man within 300 km of the border in at most a
+    tenth (53 % now), and the defender ahead in land at day 30 in at most 15 % (24 %); the wars begun a year no
+    fewer than four fifths of what they are now; the checkers of war and peace green on those seeds (ADR-803,
+    ADR-804); the pin of seed 99 moved in its own commit.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

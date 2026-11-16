@@ -79,3 +79,6 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
 - `npm run saves [-- <out> [last year]]`: 1938h's world on 1 January of each year of the track, gzipped, with
   `years.json` (format, seed, each year's tick and hash), for a start from a year (R68a, ADR-983); the Pages workflow
   builds them into `dist`; locally into `public/data/scenarios/1938h/start/` (gitignored). ~7 min, ~1 MB a year.
+- `npx tsx tools/diag/warOpening.ts <out.json> [--years N] [--force GER,POL] [--neighbours] <seed> [...]`: each war
+  that begins in a run of the 1938 world, its first month: the two sides' land the other holds by day, the
+  formations ordered over the front, the leaders' men within 300 km of their border as it begins (ROADMAP R97a).

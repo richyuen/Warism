@@ -276,3 +276,22 @@ from AoC are tagged **[AoC-DEVIATION]**.
   behind the lines.
 - **As it was:** a nation or a formation looked at shows its other marches faint (`orderShown`).
 - **Consequences:** a front where no one moves over the line has no arrow; its red line (R90a) says where it is.
+
+### ADR-1089 · 2026-11-16 · proposed (the user's decision) — R97b: how an attacker comes to be at its border when its war begins
+- **Found (R97a):** in 118 of 221 of the AI's own wars between leaders with a land border the attacker has no man
+  within 300 km of that border as it declares, and where it has none the defender is ahead in land after a month
+  more often than the attacker (46 % against 31 %). The operational AI allots formations to a front that has an
+  enemy on it; before the declaration there is none, so the army is where the last war or the start left it.
+- **Options:**
+  - **a. Mass, then declare.** The strategic AI, having chosen its war, first orders a share of its army to the
+    border and declares when enough of it stands there (or gives the war up after a time). Nearest to what a
+    player does and to Hearts of Iron IV; the build-up is seen on the map before the war. The largest change:
+    a state between peace and war, saved, and rules for what the neighbour does on seeing it.
+  - **b. Declare only from where the army is.** A war is declared only on a neighbour at whose border enough of
+    the army already stands. Small and easy to check; but armies do not go to a border of themselves, so most
+    declarations would be refused until something else moved them, and wars would be fewer.
+  - **c. Come at once.** As now at the declaration, but the planner sends the army to the new front at once and
+    all together (no "one a sector in eight days" for a front just made). No new state; the defender still has
+    the first days, a big attacker's march of weeks still leaves its border open at first.
+- **The loop's recommendation:** a, with c's quick march kept for the wars others begin on it.
+- **Waits on the user.** Nothing of R97b is built.
