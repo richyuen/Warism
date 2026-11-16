@@ -26,6 +26,12 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // Since ROADMAP R97b (ADR-1089, the wars prepared) seed 11's day 70 has four of the twelve under a German counter (the
 // clicked one 3). Of seeds 3, 5, 7, 11, 13 and 4441 on days 50, 60 and 70, seed 7's day 70 is the one with 12 of 12 as
 // drawn and the clicked one 9 or more (11); the others' clicked one 2 to 7.
+// Since ROADMAP R98c (ADR-1090, the invaded front) an army stands closer on the front its land is entered at, and Poland
+// has under twelve formations by day 70 on some seeds: on 90 scene-days (Germany and Poland on 14 seeds, days 10 to 70,
+// and four other pairs) the clicked one opens 9 times once, with 10 formations left, and 5 to 7 at most where all twelve
+// are drawn. The clicked one's bar is 5 where it was 9 (the user's decision, 2026-11-16): it says the scene has
+// formations standing alone, and the two rules below it are the click's. Seed 11's day 20: 12 of 12 as drawn, the
+// clicked one 6.
 
 const tag = (t: string): number => NATIONS_1938.findIndex((n) => n.tag === t) + 1;
 
@@ -121,7 +127,7 @@ async function front(page: Page, seed: number, a: number, label: string, b: numb
 }
 
 const cases = [
-  { seed: 7, a: 'GER', label: 'Poland', b: 'POL', days: 70, clickedAtLeast: 9 },
+  { seed: 11, a: 'GER', label: 'Poland', b: 'POL', days: 20, clickedAtLeast: 5 },
   { seed: 6827, a: 'JAP', label: 'China', b: 'CHI', days: 45, clickedAtLeast: 1 },
 ];
 

@@ -28,6 +28,8 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // Since ROADMAP R97b (ADR-1089, the wars prepared) the same four battles stand at other hours (the wars about them are
 // begun later): the same scan (80 days) gives the carrier group against submarines at 166, the battle fleet against
 // submarines at 211, the French and Soviet battle fleets at 1463 and the destroyers against the cruisers at 1641.
+// Since ROADMAP R98c (ADR-1090, the invaded front) the destroyers meet the cruisers at another hour: the same scan (80 days)
+// gives them at 1477, 12 km; the other four stand at their hours.
 
 const id = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
 
@@ -37,7 +39,7 @@ const CASES = [
   { hour: 166, a: 'ENG', b: 'ITA', what: 'a carrier group against submarines, 6 km' },
   { hour: 211, a: 'ENG', b: 'ITA', what: 'a battle fleet against submarines, 6 km' },
   { hour: 1463, a: 'FRA', b: 'SOV', what: 'a battle fleet against a battle fleet, 5.4 km' },
-  { hour: 1641, a: 'ENG', b: 'NSP', what: 'destroyers against a cruiser squadron, 12 km' },
+  { hour: 1477, a: 'ENG', b: 'NSP', what: 'destroyers against a cruiser squadron, 12 km' },
 ] as const;
 
 /** After a flight of the camera: until it is over, and a snapshot of the new view. */

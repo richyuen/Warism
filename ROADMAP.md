@@ -253,7 +253,7 @@ The user, told that R97b's rule is of the wars the AI chooses and not of Germany
 already go to the front in a god mode declared war?", then, of measuring the arrivals first and of the rush: "Yes,
 though Rush makes sense either way".
 
-- [ ] R98 **An army comes to a front just made.**
+- [x] R98 **An army comes to a front just made.**
   - [x] R98a Measured (`tools/diag/frontArrivals.ts 1938 GER,POL 30 FRA`). They do go, and at once: of Germany's
     564,000 men 45 % stand far from every front as the war begins, 12 % a day later (34 % on the march), and its
     marches are in by day 7. The trickle is the 12 %: 7 formations stand still far from the fronts until day 25
@@ -263,7 +263,7 @@ though Rush makes sense either way".
     of 300 km that the two fronts share in the middle of Germany), while Poland has 80 % of its own at Germany's on
     the first day and 97 % by day 21. Germany wins the west (120 cells of France's on day 30, France's men
     528,000 -> 263,000) and loses the east (Poland 328 of its cells, it 107 of Poland's).
-  - [ ] R98b **Rush**, tried and not kept (2026-11-16). Built as: a formation far from every front (beyond
+  - [x] R98b **Rush**, tried and not kept (2026-11-16). Built as: a formation far from every front (beyond
     `DEPLOY_RANGE_CELLS`, 60 cells, 1,200 km) that no sector with nobody took goes to the nearest sector of its
     nation's front that has a threat. Found:
     - In R98a's war it gives no order: the month's figures are the same to the man. Germany's 7 formations that stand
@@ -276,6 +276,17 @@ though Rush makes sense either way".
     - What would change R98a's war is the user's to choose (none built): the reserve let go where its front loses
       ground; how an army is shared between two fronts (Germany wins the west with half its army and loses the east
       with the other); whether a guarantor joins a war on the day it is declared.
+  - [x] R98c **The invaded front has the more of the army** (ADR-1090; the user's choice of R98b's three: "Let's do
+    2"). In the allotment a threatened sector at whose front cell the enemy stands on the planner's own land weighs
+    `INVADED_WEIGHT` (4) times its threat; not while the historical track steers. R98a's war, day 30, on four seeds
+    (1938, 99, 7, 4483), before -> with it: Germany's cells held by Poland 328, 210, 218, 215 -> 95, 65, 84, 110;
+    by France 31, 68, 66, 30 -> 1 on each; France's held by Germany 120, 61, 50, 112 -> 255, 141, 142, 228;
+    Poland's held by Germany 107, 109, 161, 124 -> 61, 83, 59, 14 (it defends its east where it attacked);
+    Germany's men left 439, 406, 429, 452 thousand -> 463, 459, 456, 460. A weight of 2 gives about half of it
+    (Poland 172, 123, 125, 184). The AI's own wars, R97b's six seen seeds by three years, weights 1, 2, 4: the
+    attacker ahead in land at day 30 in 86, 82, 81 % and the defender in 7, 7, 13 % (the six unseen at weight 1: 83
+    and 13 %): within what two sets of seeds differ by. The operational AI 0.35 ms a tick on seed 99's first year
+    (0.53 in R97b's profile, under other runs' load): no slower. Test: `tests/unit/invadedFront1938.test.ts`.
 
 ## Released
 

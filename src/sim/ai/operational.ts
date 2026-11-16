@@ -110,6 +110,14 @@ let range2 = range * range;
  */
 export const MARCH_DAYS = 8;
 /**
+ * A threatened sector where the enemy stands on the planner's own land weighs this many times its threat in the
+ * allotment (ROADMAP R98c, ADR-1090): Germany, with half its army at each of two fronts, won France's land and lost
+ * its own to Poland (R98a).
+ */
+export const INVADED_WEIGHT = 4;
+/** A probe's weight in place of INVADED_WEIGHT (`tools/diag/frontArrivals.ts --invaded W`; 1: as before R98c). Never set by the game. */
+export const SHIFT_PROBE: { weight?: number } = {};
+/**
  * A formation to spare goes to a sector that has nobody up to this many times
  * DEPLOY_RANGE_CELLS away (PLAN 3.10c1d, ADR-191): the far end of its front, not another theatre.
  */
@@ -1096,6 +1104,25 @@ function planNation(world: World, n: number, fighting: Set<number>, frontier: Ma
   if (probeReach) for (let ci = 0; ci < classCell.length; ci++) reachedOf(ci);
   if (timing) timing.classes = classCell.length;
   mark();
+  /**
+   * INVADED_WEIGHT for a sector at whose own front cell (`hold`) an enemy holds a cell beside it that is the
+   * planner's own land (R98c); 1 elsewhere, in every sector while the historical track steers, and while the probe's
+   * weight is 1.
+   */
+  const invadedWeight = (hold: number): number => {
+    const weight = SHIFT_PROBE.weight ?? INVADED_WEIGHT;
+    // Not while the historical track steers (R62e): its timeline names what is to be taken, and when (`aim`).
+    if (weight === 1 || world.steered) return 1;
+    const { owner, controller, h } = world.cells;
+    const x = hold % w;
+    const y = (hold - x) / w;
+    const lost = (c: number): boolean => owner[c] === n && controller[c] !== n && enemyOf[controller[c]!] === 1;
+    if (y > 0 && lost(hold - w)) return weight;
+    if (y < h - 1 && lost(hold + w)) return weight;
+    if (x > 0 ? lost(hold - 1) : loop && lost(hold + w - 1)) return weight;
+    if (x < w - 1 ? lost(hold + 1) : loop && lost(hold - w + 1)) return weight;
+    return 1;
+  };
   // Reserve: the farthest RESERVE share of free formations within range of a sector they reach
   // stays put.
   const nearest = new Map<number, number>();
@@ -1285,7 +1312,9 @@ function planNation(world: World, n: number, fighting: Set<number>, frontier: Ma
     // A sector within one of the track's objectives is taken as threatened (ROADMAP R63, ADR-951): the timeline names
     // it to be taken, empty or not. Before, the threatened sectors took every formation within their reach, and an
     // objective's empty land had none (1938h: the front 7 cells short of an empty Paris from 6 to 22 June 1940).
-    const heat = (k: number): number => Math.max(list[front[k]!]!.threat, aim(k) > 1 ? THREAT_UNIT : 0);
+    // × INVADED_WEIGHT where the enemy stands on the planner's own land at the sector's cell (ROADMAP R98c, ADR-1090):
+    // of two fronts, the one that loses ground at home has the more of the army.
+    const heat = (k: number): number => Math.max(list[front[k]!]!.threat, aim(k) > 1 ? THREAT_UNIT : 0) * invadedWeight(list[front[k]!]!.hold);
     for (let k = 0; k < front.length; k++) (heat(k) > 0 ? hot : cold).push(k);
     const nearHot = new Set(hot.length > 0 ? ids.filter((id) => hot.some((k) => dist2(id, list[front[k]!]!) <= range2)) : []);
     const near = nearHot.size;

@@ -1683,7 +1683,9 @@ production and research. `src/sim/ai/`.
   garrisons.
 - **Allotment:** threatened sectors are filled first in proportion to threat, the others by 1 + threat ÷
   `THREAT_UNIT` (10,000), each at least one while formations last, nearest first; a march under way
-  keeps its sector unless it must yield.
+  keeps its sector unless it must yield. A threatened sector where the enemy stands on the planner's own land
+  weighs `INVADED_WEIGHT` (4) times its threat (R98c, ADR-1090; not while the historical track steers): of two
+  fronts, the one that loses ground at home has the more of the army. Test: `tests/unit/invadedFront1938.test.ts`.
 - **Orders:** a sector whose allotted strength is ≥ `OFFENSIVE_RATIO` (1.5) × its threat attacks (a
   threat of 0 always): its formations march on the enemy cell beside its front nearest its centre; with
   armour among them (≥ `SPEARHEAD_ARMOUR` (0.5) of a template's upkeep in tanks) the armour attacks and

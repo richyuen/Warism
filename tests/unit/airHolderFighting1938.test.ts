@@ -24,7 +24,9 @@ describe("an air zone's holder is one fighting there (PLAN 7.8)", () => {
   const sim = new Sim({ scenario: '1938', seed: 4, assets: assets1938(W) });
   const world = sim.world;
   sim.command({ kind: 'declareWar', attacker: GER, defender: POL });
-  sim.step(24 * 24);
+  // Day 40 since ROADMAP R98c (ADR-1090, the invaded front): the case is not on day 24 of that history; on day 40 of
+  // seed 4, and on day 70 of seeds 1 and 7.
+  sim.step(24 * 40);
   const air = airOf(world);
   const holders = airHolders(world, air.count);
 

@@ -16,9 +16,13 @@ import { settle } from './settle';
 // After three weeks: the panel of each of their formations in contact leads to a view at T3
 // with its elements and its enemy's; and a day watched on one fight leaves a mark (the fallen,
 // a gun, a hull) where strength was lost.
+// Since ROADMAP R98c (ADR-1090, the invaded front) the armour fight watched from day 21 of Germany's war (formation 41
+// against 581) costs 4 of strength in its day and leaves one mark, where the pictures ask an hour with two. Of days 18,
+// 21, 24 and 27 on this seed and day 21 on seeds 5382 to 5386, both wars, that one alone falls short (the others' watched
+// fights cost 99 to 2,111 and leave 16 to 277 marks): day 24, where it costs 814 and leaves 107.
 
 const SEED = 5381;
-const DAYS = 21;
+const DAYS = 24;
 /** Days past `DAYS` within which the scene is looked for. */
 const LATER = 14;
 const nation = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;

@@ -43,10 +43,10 @@ interface Ball {
   flag: number[];
 }
 
-async function open(page: Page): Promise<void> {
+async function open(page: Page, seed = 1938): Promise<void> {
   await page.setViewportSize({ width: 1400, height: 800 });
   await page.addInitScript(() => localStorage.setItem('warsim.unitLook', 'balls'));
-  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.goto(`/?scenario=1938&paused=1&seed=${seed}`);
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
 }
 
@@ -627,9 +627,13 @@ test('countryballs far out and in the air: counters and markers are flag balls; 
 // plaster on its cheek at 1/2, a second of each at 1/4. A German and a Polish infantry division
 // fight until a battalion has lost half; at 15 m/px each ball's hurt level is its share's, and a
 // ball at level 2 or more has the plaster's colour on its cheek.
+// Since ROADMAP R98c (ADR-1090, the invaded front) on seed 1938 the two are sent apart before either has lost half (5 cells
+// apart at hour 229, the Polish one fighting another division): no battalion of theirs in the view. Of seeds 1, 2, 3, 5,
+// 7, 11, 13, 99, 1938, 4242, 4483, 5381 and 7019, the test passes on 7, 99, 4242, 4483, 5381 and 7019:
+// seed 7019, the one of the tests below.
 test('countryballs show their losses: cracks and plasters by the share of men left', async ({ page }, info) => {
   test.setTimeout(300_000);
-  await open(page);
+  await open(page, 7019);
   const [px, py] = cellOf(16.3, 52.4, W, H);
   const GER = id('GER');
   const POL = id('POL');

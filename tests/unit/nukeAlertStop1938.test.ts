@@ -74,7 +74,9 @@ describe('the worker stops at a nuclear strike (PLAN 7.109a)', () => {
     expect(srv.ticking, 'paused again').toBe(false);
     const ticks = strikeTicks(s);
     expect(ticks, 'the second strike').toHaveLength(2);
-    expect(ticks[1]! - ticks[0]!, 'a day apart at most').toBeLessThanOrEqual(24);
+    // Three days apart since ROADMAP R98c (ADR-1090, the invaded front): Poland strikes in hour 25 as before, France in
+    // hour 97 where 49 (48 to 72 hours apart on seeds 1 to 8). The pause at each is what is tested, the line below.
+    expect(ticks[1]! - ticks[0]!, 'three days apart at most').toBeLessThanOrEqual(72);
     expect(s.world.tick, 'at the end of its hour').toBe(ticks[1]! + 1);
   });
 

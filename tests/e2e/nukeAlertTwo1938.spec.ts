@@ -83,7 +83,9 @@ test('at Max with the pause on, the game stops within a day of each AI strike, a
   const second = await runToPause(page);
   const all = await strikes(page);
   expect(all, 'two strikes').toHaveLength(2);
-  expect(all[1]! - all[0]!, 'a day apart at most').toBeLessThanOrEqual(24);
+  // Three days apart since ROADMAP R98c (ADR-1090, the invaded front; the user's decision): Poland strikes in hour 25
+  // as before, France in hour 97 where 49. The pause within a day of each strike is what is tested, above and below.
+  expect(all[1]! - all[0]!, 'three days apart at most').toBeLessThanOrEqual(72);
   expect(second - all[1]!, `paused at tick ${second}, the strike at ${all[1]}`).toBeLessThanOrEqual(24);
   await expect(page.getByTestId('nuke-alert')).toHaveCount(2);
   await expect(page.getByTestId('nuke-alert-text').nth(0)).toHaveText(STRIKE_BANNER);

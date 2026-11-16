@@ -3,7 +3,8 @@
  * (God Mode's `declareWar` on the first day of the 1938 world): how much of each is at their front, how much at
  * another front, how much on the march, and how much stands far from every front and still.
  *
- * Usage: npx tsx tools/diag/frontArrivals.ts <seed> <ATT,DEF> [days = 30] [THIRD]
+ * Usage: npx tsx tools/diag/frontArrivals.ts <seed> <ATT,DEF> [days = 30] [THIRD] [--invaded W]
+ * `--invaded W`: W in place of the operational AI's INVADED_WEIGHT (1: as before ROADMAP R98c).
  * `THIRD`: a nation that joins the war (France, for Germany's on Poland): the attacker's front with it too, both ways.
  *
  * A line a day for each of the two: its men (land formations); the share within NEAR_CELLS (300 km) of its
@@ -11,11 +12,14 @@
  * the share of the rest on the march; the share of the rest standing ("idle"); and the cells of the other's land
  * it holds.
  */
+import { SHIFT_PROBE } from '../../src/sim/ai/operational';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { loadAssets1938 } from '../headless/assets';
 
 const NEAR_CELLS = 15;
+const at = process.argv.indexOf('--invaded');
+if (at >= 0) SHIFT_PROBE.weight = Number(process.argv.splice(at, 2)[1]);
 const seed = Number(process.argv[2] ?? 1938);
 const [A, D] = (process.argv[3] ?? 'GER,POL').split(',').map((t) => TAGS_1938.indexOf(t) + 1) as [number, number];
 const days = Number(process.argv[4] ?? 30);

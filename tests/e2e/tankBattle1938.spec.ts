@@ -40,7 +40,11 @@ const { w: W } = SIZE_1938;
 // 120, nor seeds 3–6; seed 2 has them on day 24.
 // Seed 1 again since ROADMAP R16b (ADR-822: nation traits act in the sim): seed 2 then had none
 // from day 14 to 120, nor seeds 3 and 4; seed 1 has them on day 23 (seed 5 on day 77).
-const SEED = 1;
+// Seed 2 again since ROADMAP R98c (ADR-1090, the invaded front): seed 1's first such four hours are on day 65 (a
+// Czechoslovak division), where at 12 m/px a tank the view holds is of an element that fires with no shot of its own in
+// the page's hour to read its turret against, and it has none from day 67 to 120; nor has seed 3 from day 14. Seed 2 has
+// them on day 20 (seeds 4, 5 and 6 on days 40, 42 and 45, each passing all of this spec).
+const SEED = 2;
 const FIRST_DAY = 14;
 const LAST_DAY = 120;
 /** Elements of tanks that fire in the view of the first stepped stop. */

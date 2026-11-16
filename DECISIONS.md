@@ -351,3 +351,42 @@ from AoC are tagged **[AoC-DEVIATION]**.
   of 18 seed-days), `fightCamera1938` (formation 752 for 746, no longer in contact), `formationFight1938` (seed 1 of
   8), `nukeMeansLost1938` (seed 1), `seaClose1938` (the same four battles at their new hours, `seaPairs`),
   `smallMark1938` (the first armour fire from day 25, where from day 7). No bar of any was changed.
+
+### ADR-1090 · 2026-11-16 · the user's decision — R98c: the invaded front has the more of the army
+- **Found (R98a, R98b):** in Germany's war on Poland by God Mode its army goes to its fronts at once; what stands
+  still is the planner's reserve. The allotment shares the formations among the threatened sectors by their threat
+  (ADR-634), France joins on the first day, and half the army stands at each front: Germany takes France's land
+  and loses its own to Poland. The rush of far formations (R98b) gave no order in that war and opened the wars of
+  six seeds no better: not kept.
+- **Offered:** the reserve let go where its front loses ground; the army shared between two fronts by where it
+  loses; a guarantor's joining delayed. **The user: "Let's do 2".**
+- **Decision:** in the allotment (`heat`), a threatened sector at whose own front cell an enemy holds a cell beside
+  it that is the planner's own land (its owner the planner) weighs `INVADED_WEIGHT` times its threat. 4: of 1, 2
+  and 4 on four seeds of that war the land Germany loses falls with each (Poland's 328 -> 172 -> 95 on seed 1938),
+  and with 4 France holds 1 cell of Germany's on each seed where 30 to 68.
+- **Not while the historical track steers** (`world.steered`): with the weight in every world the track of seed 1938
+  passed an event over (`historyTrack1938h`, `historyMatch1938h` red); the timeline's objectives say what is to be
+  taken there (ADR-951's `aim`).
+- **Could contradict (ADR-803), read:** ADR-634 (the threatened first: the shares among them change, not who is
+  threatened); ADR-951 (an objective's sector is taken as threatened: the weight multiplies its heat too, but not
+  on the track); ADR-53 (a march under way keeps its sector: unchanged); ADR-187 (a sector takes only the
+  formations within its range: unchanged, so two fronts far apart are still manned each from its own).
+- **The pin of seed 99:** a49837a3 -> 1fe6205e.
+- **Tests re-aimed, no bar changed:** of the unit suite `farWait1938` (seed 99), `airSpread` (day 8: on days 1 to 5 one
+  German formation or none is in contact), `airHolderFighting1938` (day 40). Of the browser's, eleven, each by its own
+  scan: `battleTags1938` (seed 2), `countryballs1938`'s losses (seed 7019), `enemyPointer1938` (the search from day
+  19), `fallen1938` (formation 542), `fightCamera1938` (759 for 752), `fightSeen1938` (day 24), `formationFight1938`
+  (seed 2), `seaClose1938` (hour 1477), `tagsCrowd1938` (seed 1), `tankBattle1938` (seed 2), `zoomDemo1938` (from day
+  34).
+- **Two bars changed (the user's decisions, 2026-11-16):**
+  - The two strikes of `nukeAlertStop1938.test.ts` and `nukeAlertTwo1938.spec.ts`: three days apart at most where a
+    day ("Yes to nuclear but do we need up to 7 days?": no; 72 hours is the scene's own). Poland strikes in hour 25
+    as before, France in hour 97 where 49. The pause on each strike's tick is asserted as before.
+  - `enemyClickPanel1938.spec.ts`, Germany and Poland: the clicked formation's own panel at least 5 times of 12
+    where 9 ("Lower to 5"), on seed 11's day 20 (6). On 90 scene-days it is 9 once, with 10 formations left. That the
+    panel is of what is drawn (12 of 12) and never one's own unselected is asserted as before.
+- **Seen in the scans, real and not hidden by a seed:** the tags of formations in contact are more and closer (12
+  seeds, 15 views at 60 m/px: 1,509 tags -> 2,526; those over 120 px off 0.6 % -> 2.3 %; `tagsCrowd1938`'s bar of
+  3.5 % is passed on 10 of 12 seeds where 12). A block over 20 km from the one it faces on 4 seeds of 12 where 1
+  (`formationFight1938`). And two faults older than this rule (BLOCKERS): a tag or an enemy's pointer under the top
+  clock or the war banners takes no hover or click.

@@ -15,6 +15,7 @@
  */
 import { writeFileSync } from 'node:fs';
 import { MASS_DAYS, MASS_PROBE } from '../../src/sim/ai/massing';
+import { SHIFT_PROBE } from '../../src/sim/ai/operational';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { loadAssets1938 } from '../headless/assets';
@@ -30,6 +31,7 @@ for (let i = 0; i < argv.length; i++) {
   else if (argv[i] === '--force') force = argv[++i]!.split(',') as [string, string];
   else if (argv[i] === '--neighbours') neighbours = true;
   else if (argv[i] === '--no-massing') MASS_PROBE.off = true;
+  else if (argv[i] === '--invaded') SHIFT_PROBE.weight = Number(argv[++i]);
   else if (argv[i] === '--mass-days') MASS_PROBE.days = Number(argv[++i]);
   else if (argv[i] === '--mass-second') MASS_PROBE.second = Number(argv[++i]);
   else seeds.push(Number(argv[i]));

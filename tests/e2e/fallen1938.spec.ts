@@ -30,11 +30,13 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // 1,677 on day 22, in contact all of it).
 // Division 565 again since ROADMAP R53k (ADR-889, reach to the other side; 555 no longer in contact on day 21; 565 loses
 // 572 on day 22, in contact all of it).
+// Division 542 since ROADMAP R98c (ADR-1090, the invaded front; 565 no longer in contact on day 21; 542 loses 704 on day
+// 22, in contact all of it; of the same scan's 14 in contact, 543 loses 1,176 in 21 of its hours).
 
 const nation = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
 const GER = nation('GER');
 const POL = nation('POL');
-const POLE = 565;
+const POLE = 542;
 const VIEW = { width: 1600, height: 900 };
 const HOURS = 24;
 const key = (h: { element: number; figure: number }): string => `${h.element}:${h.figure}`;

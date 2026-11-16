@@ -9,6 +9,10 @@ import { TAGS_1938 } from '../../src/sim/scenario1938';
 // line (flag and strength, no name); the engaged keep the whole tag, and so do the picked, a selected and a hovered one
 // (the hover held when the grown tag moves: the mouse moved 1 px still has it). None overlap; every formation in view
 // has its tag. At 300 m/px every tag whole, as before. Shots at 250 m/px looked at.
+// Since ROADMAP R98c (ADR-1090, the invaded front) the critic's seed has the first armoured formation engaged (40) where
+// the short tag of formation 4 is drawn at the view's top edge, under the top bar's clock: the mouse there is on the bar,
+// not the map. Seeds 1, 11, 13, 1938 and 4483 have a short tag under the bar or the war banners too; of seeds 1, 2, 3, 5, 7, 11, 13, 99, 1938, 4242, 4483 and 5381,
+// seed 2 is the first with every short tag on the map (and 3, 5, 7, 99, 4242, 5381).
 
 const GER = TAGS_1938.indexOf('GER') + 1;
 const POL = TAGS_1938.indexOf('POL') + 1;
@@ -36,7 +40,7 @@ const byId = (r: Read, id: number): Read['tags'][number] => r.tags.find((t) => t
 test("at a battle at 250 m/px the tags not in contact are one line; the engaged, picked, selected and hovered whole", async ({ page }, info) => {
   test.setTimeout(240_000);
   await page.setViewportSize({ width: 1600, height: 900 });
-  await page.goto('/?scenario=1938&paused=1&seed=39915');
+  await page.goto('/?scenario=1938&paused=1&seed=2');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.sim.mapLayers !== null, null, { timeout: 60_000 });
   await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: GER, d: POL });
   let armour = 0;

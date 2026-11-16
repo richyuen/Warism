@@ -20,8 +20,10 @@ import type {} from '../../src/app/testApi';
 // on through a lull of a day) six of them are not in contact on day 21 (380, 389, 408, 427, 442, 488), each replaced
 // so (386, 390, 410, 429, 443, 489: the formation's `engaged` on day 21, headless). Since ROADMAP R97b (ADR-1089, the wars
 // prepared) Nationalist Spain's 746 is not in contact on day 21: 752, the next of its template that is.
+// Since ROADMAP R98c (ADR-1090, the invaded front) 752 is not in contact on day 21 (the other seven are; `engaged` on
+// day 21, headless): 759, the next of its template that is.
 
-const IDS = [386, 390, 410, 429, 443, 474, 489, 752];
+const IDS = [386, 390, 410, 429, 443, 474, 489, 759];
 
 test("a land formation's \"To its fight\": it and the enemy it faces drawn in the view, the critic's 8 of 8", async ({ page }, info) => {
   test.setTimeout(600_000);

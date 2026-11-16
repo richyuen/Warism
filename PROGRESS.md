@@ -245,3 +245,14 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - The rush for the far formations (beyond 1,200 km of every front) gives no order in that war, and on six seeds by
   three years the wars open no better with it (the defender ahead 11 % where 7 %). Reverted. R98 is open: what would
   change that war is three choices of the user's (ROADMAP R98b).
+
+## 2026-11-16 — R98c: the invaded front has the more of the army (ADR-1090, the user's choice); R98 done
+
+- `INVADED_WEIGHT` 4 in the operational AI's allotment; `tests/unit/invadedFront1938.test.ts`. Germany's war on
+  Poland and France, day 30, four seeds: its land held by Poland about a third to a half of what it was, by France
+  1 cell; more of France's taken, less of Poland's.
+- The sweep tests found the historical track of seed 1938 passing an event over with it: the weight is 1 while the
+  track steers. The sweep tests then: 21 files green as they ran, and those two and the pin green after.
+- The pin of seed 99 a49837a3 -> 1fe6205e. Tests of a seed's history re-aimed (DECISIONS, ADR-1090).
+- A slip of the loop's: the unit suite and the sweep tests were run at once and starved each other (42 tests timed
+  out); run again each alone.

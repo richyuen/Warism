@@ -23,8 +23,10 @@ describe("the air AI's patrols over the front (seed 6047, Germany on Poland and 
     const c = w.formations.cols;
     const rules = w.rules!;
     // The AI decides first in a tick, on the state the hour before left; the systems of a step see
-    // its tick before it is counted, so day 4's missions are given in the step from hour 96.
-    sim.step(96);
+    // its tick before it is counted, so day 8's missions are given in the step from hour 192.
+    // Day 8 since ROADMAP R98c (ADR-1090, the invaded front): on days 1 to 5 one German formation or none is in contact
+    // (the army goes first to where its land is entered), on day 8 nine.
+    sim.step(192);
     // Each with where its patrol is set (PLAN 7.24d): its block's middle, as the state stands.
     const own: { id: number; x: number; y: number; px: number; py: number }[] = [];
     withFreshDeployments(w, () =>

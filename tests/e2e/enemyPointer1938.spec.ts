@@ -15,9 +15,15 @@ import { settle } from './settle';
 // (measured, PLAN 7.34d). Where the enemy it is in contact with is off the frame: one pointer
 // toward it at the frame's edge, in its colour, and a click on it takes the camera to that enemy,
 // whose elements are then in the frame. Where the enemy is in the frame: no pointer for it.
+// Since ROADMAP R98c (ADR-1090, the invaded front) the first formation with its enemy off the frame (13 on day 6, then 14
+// on day 8 and 41 on day 14) has its pointer at the frame's top edge under the top bar's clock (842, 870 and 712 px
+// across, 10 down), where a click is the bar's and not the map's. Looked for from days 0, 6, 12 and 18 on seeds 1, 2, 3
+// and 4483: from day 18 the critic's seed has it at the bottom edge (formation 16 on day 19), and the days start there.
 
 const id = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
 const M_PER_PX = 10;
+/** The days stepped before the formations in contact are looked at. */
+const FROM_DAY = 18;
 
 async function stepDay(page: Page): Promise<void> {
   await page.evaluate(async () => {
@@ -77,7 +83,8 @@ test("the critic's 4483 case at 10 m/px: the enemy of a formation in contact in 
 
   let inFrame = 0;
   let pointed: { f: number; day: number } | null = null;
-  for (let day = 1; day <= 6 && pointed === null; day++) {
+  for (let d = 0; d < FROM_DAY; d++) await stepDay(page);
+  for (let day = FROM_DAY + 1; day <= FROM_DAY + 6 && pointed === null; day++) {
     await stepDay(page);
     const forms = await page.evaluate((n) => {
       const v = window.__warsim!.view!;

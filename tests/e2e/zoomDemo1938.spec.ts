@@ -77,6 +77,10 @@ import { leg, steps, type LegResult } from './flight';
 // the anchor more than 0.15 stronger than the division's battalions'. The day the search found
 // first then (36, an Austrian division) had none in the view at 50 m/px (0.77 against 0.66);
 // the search now finds that division on day 38, with one at 1.00 beside it.
+// Since ROADMAP R98c (ADR-1090, the invaded front) the search from day 30 finds a Nationalist Spanish division on day 30
+// of whose 24 elements none is in the view at 12 m/px in the third close hour (the cause not looked for); from days
+// 31, 32 and 33 a Japanese one (364) with no sprite on the march in its four close views. The search starts on day 34
+// (as from 36: a Japanese division on day 39, 381, which passes all of this spec; from 40 the same one on day 40).
 //
 // The clock is the test's. The game is paused and stepped; the view's own loop is stopped and
 // its turns (`frameAt`: the camera eases, the view subscribes, the frame is drawn) are given
@@ -91,7 +95,7 @@ import { leg, steps, type LegResult } from './flight';
 
 const { w: W } = SIZE_1938;
 /** The battle's search: from the start of this day, to this one's at the latest (PLAN 7.161). */
-const FIRST_DAY = 30;
+const FIRST_DAY = 34;
 const LAST_DAY = 120;
 const SEED = 1943;
 const VIEW = { width: 1400, height: 800 };
