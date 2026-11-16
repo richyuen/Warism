@@ -237,3 +237,11 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - `tools/diag/frontArrivals.ts`. Germany's war on Poland by God Mode: its army is at its fronts within a week but
   for 12 % of it, which stands far and still for 25 days; half of it faces France, who joins on the first day, and
   Poland brings all of its own. The rush (R98b) is of that 12 %; the rest is two fronts against 947,000 men.
+
+## 2026-11-16 — R98b: the rush tried and not kept
+
+- The 12 % of Germany's army that stands still in R98a's war is the planner's reserve (`RESERVE`), not a trickle:
+  R98a's reading of it was wrong, and is corrected in ROADMAP.
+- The rush for the far formations (beyond 1,200 km of every front) gives no order in that war, and on six seeds by
+  three years the wars open no better with it (the defender ahead 11 % where 7 %). Reverted. R98 is open: what would
+  change that war is three choices of the user's (ROADMAP R98b).

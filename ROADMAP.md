@@ -263,11 +263,19 @@ though Rush makes sense either way".
     of 300 km that the two fronts share in the middle of Germany), while Poland has 80 % of its own at Germany's on
     the first day and 97 % by day 21. Germany wins the west (120 cells of France's on day 30, France's men
     528,000 -> 263,000) and loses the east (Poland 328 of its cells, it 107 of Poland's).
-  - [ ] R98b **Rush**: a formation far from every front and standing still goes to a front of its nation's at once,
-    whether or not the sector has somebody. AT: in R98a's war Germany's idle share at most 2 % from day 7 (12 %
-    until day 25 now); on R97b's twelve seeds by three years the defender ahead in land at day 30 no more often
-    than now (10 %) and the attacker ahead no less (84 %); the strategic and operational AI's ms a tick on seed 99's
-    two years no more than 5 % over now; the checkers of war and peace green; the sweep tests green.
+  - [ ] R98b **Rush**, tried and not kept (2026-11-16). Built as: a formation far from every front (beyond
+    `DEPLOY_RANGE_CELLS`, 60 cells, 1,200 km) that no sector with nobody took goes to the nearest sector of its
+    nation's front that has a threat. Found:
+    - In R98a's war it gives no order: the month's figures are the same to the man. Germany's 7 formations that stand
+      still are not far ones: they are the reserve (`RESERVE`, 0.15: of the formations within the range of a sector
+      the farthest 15 % stay put), 7 of 50. R98a called them a trickle; they are a rule.
+    - Elsewhere it gives 60 orders in two years of seed 99 (32 more refused) and 137 of seed 7. On R97b's six seen
+      seeds by three years, with it and without: the attacker ahead in land at day 30 in 80 % of the wars where 86 %,
+      the defender in 11 % where 7 %, the attacker with no man within 300 km in 10 % where 5 %. No better; by this
+      item's own bar (no worse) it fails. Reverted; nothing of it is in the game.
+    - What would change R98a's war is the user's to choose (none built): the reserve let go where its front loses
+      ground; how an army is shared between two fronts (Germany wins the west with half its army and loses the east
+      with the other); whether a guarantor joins a war on the day it is declared.
 
 ## Released
 
