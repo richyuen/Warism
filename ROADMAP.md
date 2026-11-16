@@ -132,7 +132,7 @@ changed only where the feature they test changed.
   Not done: the markers of T1 (the boxes with a unit's symbol and its number under it) are as they were; the
   item's "number readable at the far end of T1" is not measured. Filed as R95. `npm run bench -- G` PASS, T0
   slower in its one run (268.8 fps, 290 to 302 before; budget 60). Shots: `docs/evidence/R93/`.
-- [ ] R94 **Chrome.** The ranking, the news, the war banners and the bottom bar are all open at once. The gunmetal
+- [x] R94 **Chrome.** The ranking, the news, the war banners and the bottom bar are all open at once. The gunmetal
   plates stay (the user's decision, ADR-762 kept, ADR-1073). A slimmer top bar with the date and the speed in its
   middle; the ranking closed until asked for; the news one line that opens. AT: the share of a 1600 × 900 view the
   panels cover at the start, measured before, and its bar set from that; the phone layout's specs green.
@@ -157,9 +157,18 @@ changed only where the feature they test changed.
     opened, folded, kept over a reload; none on a phone). The whole browser suite on the first try: 9 red, each a
     test of the earlier rows: they open the news by the stored choice; then those nine specs, `chromeCover1938`
     and `phoneLayout1938` by hand (green). Shots: `docs/evidence/R94b/`.
-  - [ ] R94c The date and the speed in a slim bar at the top's middle. It changes the bar's order, the user's of
+  - [x] R94c The date and the speed in a slim bar at the top's middle. It changes the bar's order, the user's of
     2026-10-29 (ADR-763); the phone's bar (PLAN 7.169) is not to lose a button from reach. AT: `barNarrow1938` and
     `phoneLayout1938` green; the bars together no more of the view than the bar is now (2.9 % of 1600 × 900).
+    Done (ADR-1086): on a desk Pause, the speed and the date (with the track's next event) are the clock, a
+    gunmetal plate at the top's middle; the bar keeps God Mode, the map, Statistics, History, Relations, the Editor
+    and Settings in the user's order. On a phone all of them are in the bar as they were. The bars together 2.88 %
+    of a 1600 × 900 view (the one bar 2.93). `chromeCover1938.spec.ts`: at four sizes of view the clock at the
+    middle, one row, clear of the title and above the alert's place, its width kept as its words change, and it
+    runs, pauses and speeds the game; on a phone none. The whole browser suite on the first try: 462 of 463,
+    `trackView1938h` looked for the track's line in a `footer` (it reads the plate the line is in now).
+    `barNarrow1938` and `phoneLayout1938` green. The heroes' counters keep clear of the clock as of the other
+    plates. Shots: `docs/evidence/R94c/`.
 - [ ] R95 **The markers of T1.** Left out of R93: the box with a unit's symbol has its men in type of 9 px under
   it, and a stack's count in a tag of the same. The number larger, on a plate as the counters'. AT: the number's
   height in px at the far end of T1 (2,000 m/px), its bar set from a shot; the markers' bound on a pixel's change

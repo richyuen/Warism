@@ -144,3 +144,15 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   the opening row 12 px over the panel's foot: no such row beside a panel. By hand after: those nine specs,
   `chromeCover1938`, `phoneLayout1938` (green). The whole suite was not run again on the last change.
 - Shots: `docs/evidence/R94b/` (August 1939 before and after).
+
+## 2026-11-16 — R94c: the clock at the top's middle (ADR-1086); R94 done
+
+- On a desk Pause, the speed and the date are a plate at the top's middle; the bar keeps the rest in its order. A
+  phone's bar is as it was.
+- Tests: `chromeCover1938.spec.ts` (the clock at four sizes of view; none on a phone). The whole browser suite on
+  the first try: 462 of 463; `trackView1938h` looked for the line's bar as a `footer`. By hand after the last
+  changes (the plate's gunmetal, the heroes' counters clear of it): `chromeCover1938`, `trackView1938h`,
+  `barNarrow1938`, `heroesClear1938`, `heroesRead1938`, `nukeAlert1938`, `phoneLayout1938` (green). The whole suite
+  was not run again on those two.
+- The panels of a 1600 × 900 view in August 1939 on seed 99: 17.62 % before R94, 7.62 % now.
+- Shots: `docs/evidence/R94c/` (August 1939 before and after).

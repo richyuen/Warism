@@ -64,6 +64,29 @@ textarea,
   opacity: 0.75;
 }
 
+/* The clock (ROADMAP R94c): pause, the speed and the date in a plate at the top's middle, on a desk. */
+.topclock {
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 1rem);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem 0.5rem;
+  padding: 0.25rem 0.6rem;
+  background: rgba(20, 24, 32, 0.85);
+  border: 1px solid rgba(214, 178, 94, 0.55);
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+  user-select: none;
+}
+.topclock > * {
+  flex-shrink: 0;
+}
+
 /* Bottom bar (PLAN 1.8): date, pause, speed. */
 .bottombar {
   position: absolute;
@@ -1545,6 +1568,7 @@ body {
   color: var(--ui-text);
 }
 .topbar,
+.topclock,
 .bottombar,
 .map-legend,
 .nation-panel,
@@ -2118,6 +2142,9 @@ button.unit-icon.on {
 }
 .bottombar {
   padding: calc(0.3rem - 4px) calc(0.6rem - 4px);
+}
+.topclock {
+  padding: calc(0.25rem - 4px) calc(0.6rem - 4px);
 }
 .map-legend {
   padding: 3px 5px;

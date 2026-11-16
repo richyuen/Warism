@@ -1894,6 +1894,9 @@ The renderer draws the snapshot the worker sends (§2.2); nothing it draws is si
 
 ### 8.2 Forces by tier
 Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e specs `classic`).
+- **The clock** (ROADMAP R94c, ADR-1086; `BottomBar.tsx`): on a desk Pause, the speed and the date are a plate at
+  the top's middle (`topclock`), the bar keeping the rest in the user's order (ADR-763); on a phone they are in
+  the bar.
 - **The news on a desk** (ROADMAP R94b, ADR-1085): the latest event and the first sea battle until the row above
   them ("N more") opens the rest; kept as the player left it (`warsim.newsOpen`). The player's orders' news is not
   folded; a phone's rows and the rows beside a panel are as they were.

@@ -229,3 +229,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
     over the panel's foot (`ticker1938`'s room test, PLAN 3.12Rh). Folded, the latest event stands beside a panel.
 - **Measured:** August 1939, seed 99, 1600 × 900: the news 0.85 % of the view, from 2.87.
 - **Tests of the earlier rows** (nine) open the news by the stored choice, as a player who asked for them has it.
+
+### ADR-1086 · 2026-11-16 · accepted — R94c: on a desk Pause, the speed and the date are a plate at the top's middle
+- **Stands on:** ADR-1073 (the user's choice of the chrome: "slim top bar with date and speed centred"). It
+  changes ADR-763 (the user's order of the bar, 2026-10-29: Pause, speed, God Mode, map, Statistics, History,
+  Editor, the date, Settings) on a desk: three of its members leave the bar; those that stay keep their order.
+- **Decision** (`BottomBar.tsx`, `.topclock`): the clock, a gunmetal plate at the top's middle: Pause or Resume,
+  the speed down, its label, the speed up, the date with "Paused" and the historical track's next event under it.
+  The same elements, with their reserved widths (ADR-763: the plate does not change its width as its words do).
+  On a phone there is no clock: the bar is as it was, every button in reach (PLAN 7.169).
+- **What stands at the top's middle:** the alert of a nuclear strike, 3.4rem down: the clock ends above it. The
+  heroes' counters keep clear of the clock (`COVER_SELECTOR`).
+- **The bars' share:** 1.12 % and 1.76 % of a 1600 × 900 view, 2.88 together; the one bar was 2.93.
+- **Consequences:** the bar is narrower by the clock's members and wraps onto a second row later than it did.

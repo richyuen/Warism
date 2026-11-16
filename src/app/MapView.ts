@@ -43,7 +43,7 @@ const COVER_MS = 250;
 const MAX_GAP_CAP_MS = 1000;
 const MAX_GAP_WEIGHT = 0.25;
 /** The panels that lie over the map (ROADMAP R34e): a hero's counter under one is drawn beside it. */
-const COVER_SELECTOR = '.topbar, .bottombar, .stats-ranking, .nation-panel, .formation-panel, .history-panel, .relations-panel, .editor-panel, .settings-panel, .map-legend, .landings-bar';
+const COVER_SELECTOR = '.topbar, .topclock, .bottombar, .stats-ranking, .nation-panel, .formation-panel, .history-panel, .relations-panel, .editor-panel, .settings-panel, .map-legend, .landings-bar';
 /** Of those, the ones that float over the map's middle (R87d; critic run 72, R72-N4): a hero's counter under one is not drawn. */
 const HIDES_SELECTOR = '.history-panel, .relations-panel, .editor-panel, .settings-panel';
 const FLAG_MIN_SCALE = 3;

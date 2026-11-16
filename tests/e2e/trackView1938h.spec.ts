@@ -48,7 +48,8 @@ for (const size of SIZES) {
     if (size.name === 'desktop') {
       const long = await line.evaluate((e) => {
         const was = [...e.childNodes];
-        const bar = e.closest('footer')!;
+        // The plate the line is in: the clock at the top's middle on a desk (ROADMAP R94c), the bar on a phone.
+        const bar = e.closest('.topclock, footer')!;
         const h = bar.getBoundingClientRect().height;
         const out = ['Next, 1 January 1960: Cameroon independent', 'Next, 6 June 1944: D-Day: the British and Canadians at Gold, Juno and Sword'].map((s) => {
           e.textContent = s;
