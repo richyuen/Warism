@@ -1907,6 +1907,9 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
 - **A nation's name** (ROADMAP R92a, ADR-1081; `nameInk`): white letters with an edge of a deep shade of the land's
   colour (`NAME_SHADE` 0.3); over a light land (`LIGHT_NATION`, a luminance over 0.45) letters of that shade with
   a white edge. Every name of 1938 has a contrast of 2 or more against its land.
+  Its baseline (`deriveLabels.ts`, R92b, ADR-1082) is turned at most `MAX_TILT` (30 degrees) from level: a land with
+  a steeper long axis has its name across it at 30 degrees, unless that is under `STEEP_KEEP` (0.4) of the name
+  along its axis; it bows at most `MAX_BEND` (0.15) of its length.
 - **The shades of T0 and T1** (ROADMAP R91, ADR-1080; `ground.ts`, `mapShader.ts`): in the political modes the sea
   by its depth (`FAR_SEA_SHALLOW` 1.2 to `FAR_SEA_DEEP` 0.8 of its colour), the land by its relief lit from the
   north-west (`FAR_RELIEF` 0.12 either way) and a fill darker toward its border and coast (`FAR_EDGE` 0.84), by

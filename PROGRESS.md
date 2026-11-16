@@ -101,3 +101,14 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   atlas left its old glyphs standing when it started again (ADR-1081). Mended; the suite again: 458 passed in 10.1 min.
 - No change to the frame: the glyphs are drawn once into the atlas as before, in another ink.
 - Shots: `docs/evidence/R92a/` (before and after at 20,000 and 4,000 m/px).
+
+## 2026-11-16 — R92b: a name's turn and bow (ADR-1082); R92 done
+
+- A name is turned at most 30 degrees from level and bows at most 0.15 of its length; the narrow steep lands keep
+  their names along their axes.
+- Tests: `nationLabels.test.ts` (8). The whole browser suite by hand: 457 of 458, `maxGlide1938` (the units' glide at
+  Max, a timing) red once and green alone four times of four.
+- Since R91 each whole run under 8 workers has had one test red that is green alone, another each time
+  (`historyMine1938`, `settings1938`, `bench-pages`, `maxGlide1938`): none of them reads the map's picture. Watched.
+- No change to the frame: the curves are the worker's, made every few seconds as before.
+- Shots: `docs/evidence/R92b/` (before and after at 20,000 and 4,000 m/px).

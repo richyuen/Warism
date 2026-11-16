@@ -172,3 +172,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
   before had the same slivers under the bar (a darker ink). Now the atlas is wiped when it starts again, and each
   glyph is drawn inside its box a px clear of its sides. The largest jump of the test's 20 crossings: 40.
 - **Consequences:** the turn and the size of a name are R92b.
+
+### ADR-1082 · 2026-11-16 · accepted — R92b: a name is turned at most 30 degrees, and bows at most 0.15 of its length
+- **Stands on:** ADR-1073 (the user's decision: "white upright country names"). It changes PLAN 1.29's rule (a
+  name along its land's long axis, whatever the axis).
+- **Found:** "POLAND" ran at 60 degrees, "UNITED KINGDOM" and "ITALY" near upright: the long axis of a land
+  that is as broad as it is long is an accident of its shape.
+- **Decision** (`deriveLabels.ts`):
+  - `MAX_TILT` 30 degrees. A land whose axis is within it: as before. A steeper one: the baseline at 30 degrees,
+    leaning the way the axis does, through the land's middle; its ends and its mid-line from the cells within a
+    strip about that line (half the land's spread across it, two cells at least), so the name is as long as the
+    land is there and not as its shadow on the line; the two ends as far to the line's side as each other.
+  - `STEEP_KEEP` 0.4: where the name across would be under 0.4 of the name along the axis, the land keeps the
+    name along its axis however steep (Sweden, Chile, Norway's coast): across them there is no room for one.
+  - `MAX_BEND` 0.15: the baseline's middle no further from its chord's than 0.15 of the name's length.
+- **The size** follows: the layout sizes a name by its baseline's length and the land's thickness, so a name
+  across a land is no larger than the land is across ("ITALY" and "UNITED KINGDOM" are smaller than they were).
+- **Consequences:** some names are smaller and come in at a closer zoom than before.

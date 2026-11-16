@@ -98,7 +98,7 @@ changed only where the feature they test changed.
   code: 457 of 458, `historyMine1938` red once and green alone six times of six. Not within the bench's noise: the map's pass 0.556 ms of GPU a frame at T0, from 0.520 (budget 1), and
   1.154 at T2, from 1.078 (budget 2); `npm run bench -- G` PASS (T0 290.5 fps, T2 162.3). The edge is under 2 px at
   the world's zoom and is seen from about 4,000 m/px in. Shots: `docs/evidence/R91/`.
-- [ ] R92 **Country names.** Dark, heavily rimmed and steeply turned ("POLAND" runs nearly upright). White capitals
+- [x] R92 **Country names.** Dark, heavily rimmed and steeply turned ("POLAND" runs nearly upright). White capitals
   with a soft shadow, a gentler turn and curve, a small nation's name no larger than its land lets it be; told from
   a pale arrow under it (R89c: Germany's pale name is not, on its own arrows; a white name needs its shadow there). AT: the
   label tests with the new bounds on a name's angle and size; every name's contrast against its nation's colour at
@@ -110,9 +110,14 @@ changed only where the feature they test changed.
     pop of 59 of 255 (bar 48) in one frame: a sliver of a letter beside a name, what a full glyph atlas left standing
     when it started again. The atlas is wiped at a restart and each glyph drawn a px clear of its box's sides; the
     largest jump 40. The whole browser suite on the change. Shots: `docs/evidence/R92a/`.
-  - [ ] R92b The turn and the size: a name's baseline no steeper than a bound the item sets ("POLAND" runs nearly
+  - [x] R92b The turn and the size: a name's baseline no steeper than a bound the item sets ("POLAND" runs nearly
     upright), its curve gentler, a small nation's name no larger than its land lets it be. AT: the label tests with
     the new bounds on a name's angle and size, on the 1938 map and two random worlds.
+    Done (ADR-1082): a baseline at most 30 degrees from level; a land whose long axis is steeper has its name
+    across it at 30 degrees, as long as the land is there, unless that is under 0.4 of the name along its axis (the
+    narrow lands keep theirs: Sweden, Chile); a bow of at most 0.15 of the length. `nationLabels.test.ts` (8): slabs
+    at 13 angles, a strip, a boomerang. The whole browser suite: 457 of 458, `maxGlide1938` green alone. Not done as the AT said: the bounds
+    are tested on made shapes at every angle, not on two random worlds. Shots: `docs/evidence/R92b/`.
 - [ ] R93 **Counters.** A small ball and a small number. A dark rounded plate with the flag chip and a larger number,
   a stack's count as a tab. The countryballs stay in the countryball look (the user: "we need to keep countryballs
   on countryball mode - they can be bigger though if you think that will look nicer"): the plate is the classic

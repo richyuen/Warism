@@ -12,6 +12,17 @@
 
 export const MIN_CELLS = 24;
 
+/**
+ * The turn and the curve of a name (ROADMAP R92b, ADR-1082; the user: "white upright country names"; "POLAND" ran
+ * at 60 degrees). A baseline is turned at most MAX_TILT from level: a land whose long axis is steeper has its name
+ * along the axis at MAX_TILT through its middle, as long as the land is there (`fit` with a strip). Unless the land
+ * is so narrow that such a name would be under STEEP_KEEP of the one along its axis (Chile, Norway): that land keeps
+ * the name along its axis. And a baseline bows at most MAX_BEND of its length to either side.
+ */
+export const MAX_TILT = (30 * Math.PI) / 180;
+export const STEEP_KEEP = 0.4;
+export const MAX_BEND = 0.15;
+
 export function deriveNationLabels(controller: Uint16Array, w: number, h: number, wrapX: boolean, capitals: ReadonlyMap<number, number> = new Map()): Float64Array {
   const n = w * h;
   const comp = new Int32Array(n).fill(-1);
@@ -105,49 +116,81 @@ function labelOf(xs: number[], ys: number[]): number[] | null {
     syy += dy * dy;
     sxy += dx * dy;
   }
-  const theta = 0.5 * Math.atan2(2 * sxy, sxx - syy);
-  let ux = Math.cos(theta);
-  let uy = Math.sin(theta);
-  if (ux < 0) {
-    ux = -ux;
-    uy = -uy;
-  }
+  // The long axis, read left to right: its angle from level, within a quarter turn either way.
+  let theta = 0.5 * Math.atan2(2 * sxy, sxx - syy);
+  if (Math.cos(theta) < 0) theta += Math.PI;
+  theta = Math.atan2(Math.sin(theta), Math.cos(theta));
+  const along = fit(xs, ys, mx, my, theta, false);
+  if (Math.abs(theta) <= MAX_TILT) return along;
+  // Steeper than a name is turned: across the land at MAX_TILT, through its middle.
+  const level = fit(xs, ys, mx, my, Math.sign(theta) * MAX_TILT, true);
+  if (!along) return level;
+  return level && level[6]! >= STEEP_KEEP * along[6]! ? level : along;
+}
+
+/**
+ * The baseline along the axis at `theta` through (mx, my). `strip`: the axis is not the land's long one, so the
+ * name's reach is the land's along that line, not the whole land's shadow on it: only the cells within a strip
+ * about the line count for its ends and its mid-line.
+ */
+function fit(xs: number[], ys: number[], mx: number, my: number, theta: number, strip: boolean): number[] | null {
+  const m = xs.length;
+  const ux = Math.cos(theta);
+  const uy = Math.sin(theta);
   const vx = -uy;
   const vy = ux;
-  const t = new Float64Array(m);
-  const s = new Float64Array(m);
+  const tAll = new Float64Array(m);
+  const sAll = new Float64Array(m);
+  let s2 = 0;
   for (let i = 0; i < m; i++) {
     const dx = xs[i]! - mx;
     const dy = ys[i]! - my;
-    t[i] = dx * ux + dy * uy;
-    s[i] = dx * vx + dy * vy;
+    tAll[i] = dx * ux + dy * uy;
+    sAll[i] = dx * vx + dy * vy;
+    s2 += sAll[i]! * sAll[i]!;
   }
+  const spread = Math.sqrt(s2 / m);
+  // The strip: half the land's spread across the line either side of it, two cells at least.
+  const half = strip ? Math.max(2, 0.5 * spread) : Infinity;
+  const keep: number[] = [];
+  for (let i = 0; i < m; i++) if (Math.abs(sAll[i]!) <= half) keep.push(i);
+  if (keep.length < 3) return null;
+  const t = Float64Array.from(keep, (i) => tAll[i]!);
+  const s = Float64Array.from(keep, (i) => sAll[i]!);
+  const k = keep.length;
   const sorted = Float64Array.from(t).sort();
-  const lo = sorted[Math.floor(0.05 * (m - 1))]!;
-  const hi = sorted[Math.floor(0.95 * (m - 1))]!;
+  const lo = sorted[Math.floor(0.05 * (k - 1))]!;
+  const hi = sorted[Math.floor(0.95 * (k - 1))]!;
   const L = hi - lo;
   if (L < 3) return null;
-  let s2 = 0;
-  for (let i = 0; i < m; i++) s2 += s[i]! * s[i]!;
-  const thickness = 1.2 * Math.sqrt(s2 / m);
-  const at = (frac: number): [number, number] => {
+  const thickness = 1.2 * spread;
+  /** The land's middle across the line at `frac` of the reach: where along the line, and how far to its side. */
+  const mid = (frac: number): [number, number] => {
     const ti = lo + frac * L;
     let sum = 0;
     let cnt = 0;
-    for (let i = 0; i < m; i++) {
+    for (let i = 0; i < k; i++) {
       if (Math.abs(t[i]! - ti) < L / 10) {
         sum += s[i]!;
         cnt++;
       }
     }
-    const si = cnt > 0 ? sum / cnt : 0;
-    return [mx + ti * ux + si * vx, my + ti * uy + si * vy];
+    return [ti, cnt > 0 ? sum / cnt : 0];
   };
-  const p0 = at(0.1);
-  const p1 = at(0.5);
-  const p2 = at(0.9);
+  const point = ([ti, si]: [number, number]): [number, number] => [mx + ti * ux + si * vx, my + ti * uy + si * vy];
+  const [m0, m1, m2] = [mid(0.1), mid(0.5), mid(0.9)];
+  // Across a land at MAX_TILT the two ends stand as far to the line's side as each other: the chord is at MAX_TILT,
+  // and no steeper for the land's lean (at 75 degrees a slab's name came out at 32).
+  if (strip) m0[1] = m2[1] = (m0[1] + m2[1]) / 2;
+  const p0 = point(m0);
+  const p2 = point(m2);
+  let p1 = point(m1);
+  // The bow: the middle no further from the chord's middle than MAX_BEND of the length.
+  const [bx, by] = [p1[0] - 0.5 * (p0[0] + p2[0]), p1[1] - 0.5 * (p0[1] + p2[1])];
+  const bow = Math.hypot(bx, by);
+  const most = MAX_BEND * 0.8 * L;
+  if (bow > most) p1 = [0.5 * (p0[0] + p2[0]) + (bx * most) / bow, 0.5 * (p0[1] + p2[1]) + (by * most) / bow];
   const cx = 2 * p1[0] - 0.5 * (p0[0] + p2[0]);
   const cy = 2 * p1[1] - 0.5 * (p0[1] + p2[1]);
   return [p0[0], p0[1], cx, cy, p2[0], p2[1], 0.8 * L, thickness];
 }
-
