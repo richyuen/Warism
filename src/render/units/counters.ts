@@ -35,6 +35,13 @@ export const NAVAL = 1 << 16;
 /** A counter's nation as a source gives it: `nation` + NAVAL for a fleet. */
 /** The radius of a counter's ball in the ball look, CSS px (before the unit size; PLAN 7.174f). */
 export const COUNTER_BALL_R = 8;
+/**
+ * A counter is drawn this many times the size its box is laid out at in its own px (ROADMAP R93, ADR-1083; the user:
+ * "they can be bigger"): a plate of 17.5 px with a number of 12.5 px, where it was 14 and 10. Times the unit size.
+ */
+export const COUNTER_SCALE = 1.25;
+/** The radius of a counter's corners, in its own px (ROADMAP R93). */
+export const COUNTER_CORNER = 3;
 
 export function counterNation(nation: number, fleet: boolean): number {
   return fleet ? nation + NAVAL : nation;
@@ -678,17 +685,31 @@ export class CounterLayer {
       ctx.translate(-sx, -sy);
     }
     // A navy's counter (PLAN 4.10a): a sea-blue box and frame with a hull under its strength.
+    // A plate with round corners (ROADMAP R93); square where the canvas has no `roundRect`.
+    const round = typeof ctx.roundRect === 'function';
     ctx.fillStyle = naval ? 'rgba(14, 38, 72, 0.9)' : 'rgba(16, 18, 24, 0.85)';
-    ctx.fillRect(x, y, w, h);
+    if (round) {
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, COUNTER_CORNER);
+      ctx.fill();
+    } else ctx.fillRect(x, y, w, h);
     const flag = flagOf(nation);
     if (!balls) {
       ctx.fillStyle = colorOf(nation);
-      ctx.fillRect(x + 1, y + 1, 12, h - 2);
+      if (round) {
+        ctx.beginPath();
+        ctx.roundRect(x + 1, y + 1, 12, h - 2, [COUNTER_CORNER - 1, 0, 0, COUNTER_CORNER - 1]);
+        ctx.fill();
+      } else ctx.fillRect(x + 1, y + 1, 12, h - 2);
       if (flag) ctx.drawImage(flag, x + 2, y + 3, 10, 8);
     }
     ctx.strokeStyle = naval ? '#8ec5ff' : 'rgba(0, 0, 0, 0.9)';
     ctx.lineWidth = 1;
-    ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+    if (round) {
+      ctx.beginPath();
+      ctx.roundRect(x + 0.5, y + 0.5, w - 1, h - 1, COUNTER_CORNER);
+      ctx.stroke();
+    } else ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
     // In the ball look the chip is a countryball over the box's left end (a fleet's hull is the box's own).
     if (balls) drawBall2dCached(ctx, this.ballCache, x + 7, y + h / 2, COUNTER_BALL_R, { flag, tint: colorOf(nation), look: 1, prop: 'none' });
     if (naval) {

@@ -1894,6 +1894,8 @@ The renderer draws the snapshot the worker sends (§2.2); nothing it draws is si
 
 ### 8.2 Forces by tier
 Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e specs `classic`).
+- **A counter's size** (ROADMAP R93, ADR-1083): drawn `COUNTER_SCALE` (1.25) times its own px and the unit size:
+  a plate of 17.5 px with round corners (`COUNTER_CORNER`), a number of 12.5 px.
 - **T0 counters** (`src/render/units/counters.ts`): a counter a formation, clustered by screen distance
   (`CLUSTER_PX` 64, levels to `MAX_LEVEL` 14, ± `HYSTERESIS` 0.15 of a level, split or merge over
   `SPLIT_MS` 250 ms), overlapping ones folded (`FOLD_GAP_PX` 2, `FOLD_HOLD_PX` 6, `FOLD_MS` 250); the

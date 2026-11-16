@@ -189,3 +189,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **The size** follows: the layout sizes a name by its baseline's length and the land's thickness, so a name
   across a land is no larger than the land is across ("ITALY" and "UNITED KINGDOM" are smaller than they were).
 - **Consequences:** some names are smaller and come in at a closer zoom than before.
+
+### ADR-1083 · 2026-11-16 · accepted — R93: the counters of T0 a quarter larger, with round corners
+- **Stands on:** ADR-1073 (the user: "we need to keep countryballs on countryball mode - they can be bigger").
+- **Found:** the counter of T0 (`counters.ts`) was the plate the item asked for (dark, a flag chip or a
+  countryball, the men, "+n" for the nations folded in), 14 px high with a number of 10.
+- **Decision:** the view draws the counters at the unit size times `COUNTER_SCALE` (1.25): a plate of 17.5 px, a
+  number of 12.5, a countryball of radius 10; the plate's corners round (`COUNTER_CORNER` 3 of its own px). The
+  layout (declutter, the folds, the names and flags that keep clear of the boxes) is told the larger boxes: it is
+  what the unit-size setting of 1.25 would be, were there one.
+- **Not in this:** the markers of T1 (R95).
+- **Consequences:** fewer counters stand side by side in a crowded view; more are folded into a neighbour's "+n".

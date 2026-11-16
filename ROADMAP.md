@@ -118,16 +118,29 @@ changed only where the feature they test changed.
     narrow lands keep theirs: Sweden, Chile); a bow of at most 0.15 of the length. `nationLabels.test.ts` (8): slabs
     at 13 angles, a strip, a boomerang. The whole browser suite: 457 of 458, `maxGlide1938` green alone. Not done as the AT said: the bounds
     are tested on made shapes at every angle, not on two random worlds. Shots: `docs/evidence/R92b/`.
-- [ ] R93 **Counters.** A small ball and a small number. A dark rounded plate with the flag chip and a larger number,
+- [x] R93 **Counters.** A small ball and a small number. A dark rounded plate with the flag chip and a larger number,
   a stack's count as a tab. The countryballs stay in the countryball look (the user: "we need to keep countryballs
   on countryball mode - they can be bigger though if you think that will look nicer"): the plate is the classic
   look's and the ball's label; the ball itself may grow. AT: both looks shot at T1; the marker tests' bound on a
   pixel's change in a frame (ADR-71, ADR-72) kept; the number readable at the far end of T1 (its height in px, the
   bar set in the item).
+  Done (ADR-1083): found on HEAD first: the counter of T0 was a dark plate with its flag chip, its number and
+  "+n" already; it was small (14 px, a number of 10). Drawn `COUNTER_SCALE` (1.25) times that, 17.5 px with a
+  number of 12.5, with round corners; in the countryball look its chip is the countryball still, larger with it.
+  `counters1938.spec.ts`'s second test: the plate's height at each of the five unit sizes in both looks. The whole
+  browser suite on the change: 456 of 458, `coast1938` and `shipMarks1938` green alone four times of four each.
+  Not done: the markers of T1 (the boxes with a unit's symbol and its number under it) are as they were; the
+  item's "number readable at the far end of T1" is not measured. Filed as R95. `npm run bench -- G` PASS, T0
+  slower in its one run (268.8 fps, 290 to 302 before; budget 60). Shots: `docs/evidence/R93/`.
 - [ ] R94 **Chrome.** The ranking, the news, the war banners and the bottom bar are all open at once. The gunmetal
   plates stay (the user's decision, ADR-762 kept, ADR-1073). A slimmer top bar with the date and the speed in its
   middle; the ranking closed until asked for; the news one line that opens. AT: the share of a 1600 × 900 view the
   panels cover at the start, measured before, and its bar set from that; the phone layout's specs green.
+
+- [ ] R95 **The markers of T1.** Left out of R93: the box with a unit's symbol has its men in type of 9 px under
+  it, and a stack's count in a tag of the same. The number larger, on a plate as the counters'. AT: the number's
+  height in px at the far end of T1 (2,000 m/px), its bar set from a shot; the markers' bound on a pixel's change
+  in a frame kept (ADR-71, ADR-72); `markerStacks`' rules with the new sizes.
 
 ## Released
 

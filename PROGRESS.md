@@ -112,3 +112,14 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   (`historyMine1938`, `settings1938`, `bench-pages`, `maxGlide1938`): none of them reads the map's picture. Watched.
 - No change to the frame: the curves are the worker's, made every few seconds as before.
 - Shots: `docs/evidence/R92b/` (before and after at 20,000 and 4,000 m/px).
+
+## 2026-11-16 — R93: the counters larger (ADR-1083)
+
+- The counters of T0 are drawn 1.25 times their size, with round corners; countryballs still in their look. The
+  markers of T1 are not touched: R95 filed.
+- Tests: `counters1938.spec.ts` (the plate's height at five unit sizes in two looks). The whole browser suite by
+  hand: 456 of 458; `coast1938` and `shipMarks1938` red once, green alone four times of four each.
+- The frame: `npm run bench -- G`: T0 268.8 fps, p95 7.5 ms, draw cpu 2.5 ms (290 to 302 fps, 5.0 ms and 2.4 ms in
+  the runs of R91 and R90: the counters' plates and numbers are drawn at a scale of 1.25, one run, not a pair);
+  T2 159.3 fps, 5.0 ms. PASS (budgets 60 and 30 fps, 6 ms).
+- Shots: `docs/evidence/R93/` (both looks at 6,000 m/px).

@@ -16,7 +16,7 @@ import { advances, arrowFill, drawMoveArrows, groupMarches, type DrawnArrow, typ
 import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderLine, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { BATTLE_TAG_M, drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, type StackItem } from '../render/units/markerStacks';
-import { CounterLayer, counterNation, heroScaleAt, type CounterSource, type HeroCounter } from '../render/units/counters';
+import { COUNTER_SCALE, CounterLayer, counterNation, heroScaleAt, type CounterSource, type HeroCounter } from '../render/units/counters';
 import { drawSeaBattles } from '../render/units/seaBattles';
 import { FlagAtlas, NO_FLAG_SLOT } from '../render/units/flagAtlas';
 import { BallState, HERO_BIT, HERO_SCALE, HURT_SHIFT, hurtLevel } from '../render/units/ballShader';
@@ -2178,7 +2178,7 @@ export class MapView {
     this.airFx.draw(ctx, cam, this.geo, vw, vh, now, airFxSize(cam.scale, this.unitScale), this.shares.individuals, (f) => this.elementPlaces(f));
     // At the world's zoom a hero's counter is the others' size: at twice it, four covered Germany, France and Italy's
     // names in 1940 (ROADMAP R40d; critic run 48, R48-N3); twice from 5,000 m/px, blended between (R42c, R49-N1).
-    this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale, balls, heroes, heroScaleAt(this.metresPerPx), this.coveredNow(now));
+    this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale * COUNTER_SCALE, balls, heroes, heroScaleAt(this.metresPerPx), this.coveredNow(now));
     this.heroesDrawn = heroes.length > 0;
     this.coverMoved = false;
     // The voyages over the sea of the formations whose orders are shown (ROADMAP R17c), at every tier.
