@@ -5,6 +5,18 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 
 ## Open
 
+### R95: the markers of T1 drawn 1.25 times their size break the rules that stand on their size (2026-11-16)
+- **The bar:** the number under a marker larger and readable at the far end of T1, the markers' bound on a pixel's
+  change in a frame kept (48 of 255; ADR-71, ADR-72), `markerStacks`' rules with the new sizes.
+- **What was tried** (one try, not kept): `MARKER_SCALE` 1.25 at the view's two uses of the marker's size (the
+  stacks' frame and `drawMarkers`), as `COUNTER_SCALE` in R93. The whole browser suite: 459 of 468, nine red.
+- **What moved:** the T1 to T2 change's largest jump 58.7 (bar 48); 7 pairs of two nations' markers more than a
+  quarter on each other where 1 was the bar; the frames of the picked and the selected, two click tests, three
+  counts of countryballs. The list is in ROADMAP R95.
+- **Left:** the rules that hold the marker's size (`MARKER_SHRINK`, `NUDGE_MAX_PX`, `STACK_UNDER`, the frames, the
+  clicks) set for the new size, each with its test; or the number alone on a wider plate. A larger marker folds more
+  of a front into stacks. **Waits on the user:** which of the two, and whether more stacking at a front is wanted.
+
 ### R81h: the critic's 52.5-55.8 "fps" at 120 m/px is the view's draws, not its frames; the bar read as written missed (2026-11-14)
 - **The bar:** on 7019's year-20 world at Max, the minimum of the critic's samples at 120 m/px at least 57 fps, the
   other zooms kept; or the cause answered with numbers here.

@@ -156,3 +156,14 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   was not run again on those two.
 - The panels of a 1600 × 900 view in August 1939 on seed 99: 17.62 % before R94, 7.62 % now.
 - Shots: `docs/evidence/R94c/` (August 1939 before and after).
+
+## 2026-11-16 — R95 tried and not kept; Batch 32 stands at R95
+
+- The markers of T1 drawn 1.25 times their size: nine browser tests red, each a rule that stands on the marker's
+  size (the T1 to T2 change's jump 58.7 of 255, bar 48; two nations' markers on each other; frames, clicks,
+  countryballs). Reverted; the findings in ROADMAP R95 and BLOCKERS.md. No code of it is in the tree.
+- Batch 32: R89 to R94 done (the arrows, the fronts, the map's ground, the names, the counters, the chrome). R95
+  is open and waits on the user's choice (BLOCKERS.md), so no critic run yet (ADR-1039).
+- Seen through the batch and not chased: in each whole run of the browser suite under 8 workers one or two tests
+  red that are green alone, others each time (`historyMine1938`, `settings1938`, `bench-pages`, `maxGlide1938`,
+  `coast1938`, `shipMarks1938`).

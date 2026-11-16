@@ -173,6 +173,19 @@ changed only where the feature they test changed.
   it, and a stack's count in a tag of the same. The number larger, on a plate as the counters'. AT: the number's
   height in px at the far end of T1 (2,000 m/px), its bar set from a shot; the markers' bound on a pixel's change
   in a frame kept (ADR-71, ADR-72); `markerStacks`' rules with the new sizes.
+  First try (2026-11-16, not kept; BLOCKERS.md): the markers drawn 1.25 times their footprint, as the counters
+  were in R93. The number read well (the Fujian front at 600 m/px), and nine browser tests went red, each a rule
+  that stands on the marker's size:
+  - the T1 to T2 change: a pixel's largest change in a frame 58.7 of 255, bar 48 (`fades1938`; `MARKER_SHRINK`
+    0.13 was set for a box of 26 by 17, ADR-71, ADR-72);
+  - markers of two nations on each other: 7 pairs more than a quarter on each other (`markerStacks1938`;
+    `NUDGE_MAX_PX` 10 is of the old box), and the markers back from T2 not where they rest;
+  - the frame of a selected or picked formation (`player1938`, `orderLines1938`), the clicks on a marker
+    (`enemyClickPanel1938`, `formationPanel1938`), the countryballs' counts and their flags under a helmet
+    (`countryballs1938`).
+  So the item is these rules given the new size, not a factor at the call: `MARKER_SHRINK`, `NUDGE_MAX_PX`,
+  `STACK_UNDER`, the frames' and the clicks' boxes, each with its test; or the number alone larger on a plate wider
+  than the box. More markers fold into stacks at a front with a larger box: the user's to weigh.
 
 ## Released
 
