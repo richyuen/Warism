@@ -247,6 +247,28 @@ look into the Germany-Poland war?", then "Yes add a roadmap item and let's do it
     at the border on day 70, the war on day 71). The pin of seed 99 moved with the rule (the pin's own rule: in the
     commit of the change), not apart as this item first said.
 
+## Batch 34 — a war declared on a nation, or by hand (the user's request, 2026-11-16)
+
+The user, told that R97b's rule is of the wars the AI chooses and not of Germany's on Poland by God Mode: "They don't
+already go to the front in a god mode declared war?", then, of measuring the arrivals first and of the rush: "Yes,
+though Rush makes sense either way".
+
+- [ ] R98 **An army comes to a front just made.**
+  - [x] R98a Measured (`tools/diag/frontArrivals.ts 1938 GER,POL 30 FRA`). They do go, and at once: of Germany's
+    564,000 men 45 % stand far from every front as the war begins, 12 % a day later (34 % on the march), and its
+    marches are in by day 7. The trickle is the 12 %: 7 formations stand still far from the fronts until day 25
+    (the planner sends a far formation only to a sector that has nobody, one a sector). The greater part is the
+    numbers: France and its colonies join on the first day, and Germany's 564,000 face Poland's 419,000 and
+    France's 528,000. About half its army stands at each front through the month (40-57 % at Poland's, by a zone
+    of 300 km that the two fronts share in the middle of Germany), while Poland has 80 % of its own at Germany's on
+    the first day and 97 % by day 21. Germany wins the west (120 cells of France's on day 30, France's men
+    528,000 -> 263,000) and loses the east (Poland 328 of its cells, it 107 of Poland's).
+  - [ ] R98b **Rush**: a formation far from every front and standing still goes to a front of its nation's at once,
+    whether or not the sector has somebody. AT: in R98a's war Germany's idle share at most 2 % from day 7 (12 %
+    until day 25 now); on R97b's twelve seeds by three years the defender ahead in land at day 30 no more often
+    than now (10 %) and the attacker ahead no less (84 %); the strategic and operational AI's ms a tick on seed 99's
+    two years no more than 5 % over now; the checkers of war and peace green; the sweep tests green.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

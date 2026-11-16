@@ -84,3 +84,6 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   that begins in a run of the 1938 world, its first month: the two sides' land the other holds by day, the
   formations ordered over the front, the leaders' men within 300 km of their border as it begins (ROADMAP R97a);
   whether it was prepared, and what became of each massing (R97b). `--no-massing`: the wars declared as before R97b.
+- `npx tsx tools/diag/frontArrivals.ts <seed> <ATT,DEF> [days] [THIRD]`: a war declared by hand on the first day:
+  by day, each of the two armies' share at their front, at another front, on the march and standing far from every
+  front, and the land each holds of the other's (ROADMAP R98a).

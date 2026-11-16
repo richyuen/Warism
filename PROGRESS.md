@@ -229,3 +229,11 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   sweep:quick` started after this commit). The war the user asked of, Germany's on Poland by God Mode, is not
   touched by this rule: a war declared by hand, or on a nation, still finds the army where it stood (ADR-1089's
   option c, not built). In the twelve seeds' three years the AI itself began none on Poland with the rule.
+
+## 2026-11-16 — R97b's quick sweep read; R98a: the arrivals at a front just made, measured
+
+- `npm run sweep:quick` on R97b (10 seeds by 20 years, `.cache/`): the limits on 10 of 10 seeds (land changing, the
+  nations alive, a war in four fifths of the years), a riser and a faller on 10, no stasis on 10, no break-up on 10.
+- `tools/diag/frontArrivals.ts`. Germany's war on Poland by God Mode: its army is at its fronts within a week but
+  for 12 % of it, which stands far and still for 25 days; half of it faces France, who joins on the first day, and
+  Poland brings all of its own. The rush (R98b) is of that 12 %; the rest is two fronts against 947,000 men.
