@@ -58,6 +58,12 @@ Run 72 (full): every dimension 8, no blocking issue. RELEASES: its non-blocking 
     Done: under a panel floating over the map (Relations, History, the editor, the settings) a tag is hidden while it
     covers its place; beside an edge panel (R34e) as before, over no other tag. `heroesClear1938.spec` (55929, Relations
     open): none under it or over another (before: 13 drawn, one piled at its edge).
+- [ ] R88 **The release checks** (PROMPT step 3; no sweep, ADR-1072).
+  - [x] R88a check:review's `WARNING historyTrack` (seed 3): "event 1085 (1987-09-11 peace, The ceasefire: the Aouzou
+    strip Libyan) passed over, why 11": the hold of the GUNT and Libya's war on Habré ended on 1987-01-02, and the AI
+    made the peace itself before the ceasefire. AT: the hold to 1987-09-11; `historyTrack1938hSeed3` with no warning.
+    Done: the hold to the ceasefire's day; `historyTrack1938hSeed3`, `historyTrack1938h` and `historyMatch1938h` green,
+    no warning; starts rebuilt.
   - Not filed (every dimension at its bar, ADR-843 asks none): `slowClick` (ADR-914), the four named cases as run 71;
     three-nation worlds (55404, no war in ten years; two nations accepted by the user). The design objections, for the
     user's word: ADR-1060 empties occupied France as the replay is left (as run 71); heroes on by default while the land

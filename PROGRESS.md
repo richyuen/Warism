@@ -503,3 +503,8 @@
 - R72-N1: a capital goes back to its home city once held in safety (Moscow, Paris, Rome, Amman, Rangoon in the replay);
   pin `ac4fab37`. R72-N2: History names a city as of its row's day. R72-N3: six renames more; starts rebuilt.
   R72-N4: hero tags not piled at a panel's edge. Batch 31 done; next the release checks.
+
+## 2026-11-15 — R88a: the Chad war held to its ceasefire
+
+- check:review green (454 + 1 alone of 455 browser tests, 0 known red); its one `WARNING historyTrack` (seed 3, the
+  1987 ceasefire passed over: the AI's own peace first) mended by holding the war to 1987-09-11. Starts rebuilt.
