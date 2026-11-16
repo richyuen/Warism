@@ -279,3 +279,9 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - A place at each corner of a block (`TAG_CORNER_RINGS`). Twelve seeds of `tagsCrowd1938`'s scene: far tags 76 -> 42,
   left out 31 -> 21, every seed within 3.5 % (four were over). The bench's T2 draw 4.6 -> 5.0 ms.
 - Two wider tries not kept (ROADMAP): one made a tag's place turn on a part of a px, both cost the bench its line.
+
+## 2026-11-16 — R102: seed 5309's Prague read; no fault
+
+- `tools/diag/pragueFall.ts`. Prague falls on day 17 on HEAD (day 15, 34, 61 with the two rules of R97b and R98c on
+  or off); Germany's army is at that front in each; it fights five nations from the first day. No rule changed.
+  `nukeMeansLost1938` back on seed 5309.

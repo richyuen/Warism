@@ -88,3 +88,6 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   by day, each of the two armies' share at their front, at another front, on the march and standing far from every
   front, and the land each holds of the other's (ROADMAP R98a). `--invaded W` (and `warOpening.ts`'s): W for the
   operational AI's `INVADED_WEIGHT` (1: as before R98c).
+- `npx tsx tools/diag/pragueFall.ts <seed> [days] [--no-massing] [--invaded W]`: Germany's war on Czechoslovakia by
+  God Mode on the first day: who holds Prague every ten days, Germany's men and their share at that front, the land
+  each holds of the other's, Germany's enemies (ROADMAP R102).

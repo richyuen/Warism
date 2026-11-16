@@ -29,9 +29,11 @@ const defName = (d: number): string => cities1938.cities[d]?.name ?? '';
 const cityName = (w: World) => (v: number): string => defName(w.cities.cols.def[v]!) || (w.cityNames.get(v) ?? '');
 
 function czechoslovakia(warheads: number): Sim {
-  // Seed 1 since ADR-1089 (ROADMAP R97b, the wars prepared): on seed 5309 Prague is not taken in 300 days of that
-  // history; on seeds 1, 2, 3, 5 and 6 its means are lost on day 18.
-  const s = new Sim({ scenario: '1938', seed: 1, assets: assets1938(W) });
+  // Seed 1 from ADR-1089 (ROADMAP R97b: on seed 5309 Prague was not taken in 300 days of that history) to ROADMAP
+  // R102, which read that war (`tools/diag/pragueFall.ts`): Germany fights Czechoslovakia's guarantors from the first
+  // day, most of its army is at that front, and the day Prague falls turns on the rules about it (day 15, 17, 34 or
+  // 61 as two of them are on or off). Since ADR-1090 the means are lost on day 15 on the critic's seed again: 5309.
+  const s = new Sim({ scenario: '1938', seed: 5309, assets: assets1938(W) });
   const w = s.world;
   const rules = w.rules!;
   const template = rules.templates.findIndex((t) => t.elements.length > 0 && rules.units[t.elements[0]!.unit]!.cls === 'bomber_str');

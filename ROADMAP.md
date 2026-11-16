@@ -317,8 +317,14 @@ though Rush makes sense either way".
     left out): a block that moved a part of a px changed its tag's place (`godUndoPicture1938` red on it), and the
     bench's draw 13.4 ms. Two rings of corners in a fixed order (28 far, 15 left out): the bench's draw 6.8 ms, over
     its line.
-- [ ] R102 **Seed 5309: Germany does not take Prague** in the war forced on Czechoslovakia (PROGRESS, R97b): which
-  rule, and whether its army is at that front.
+- [x] R102 **Seed 5309: Germany does not take Prague** in the war forced on Czechoslovakia (PROGRESS, R97b). Read
+  with `tools/diag/pragueFall.ts` (that war, 120 days): no fault of the army's place. On HEAD Prague falls on day 17
+  (and is taken back by day 20); with ADR-1090's weight at 1, on day 34; with no massing, day 15; with neither, day
+  61. In all four Germany is at war from the first day with Czechoslovakia, Romania, Yugoslavia, France and the Soviet
+  Union (the guarantors), 62 % of its men within 300 km of the Czech border on day 1 and 73 to 100 % after, and
+  Czechoslovakia holds 100 to 300 cells of Germany's for most of it: a war Germany is losing on five fronts, in which
+  the day a city falls is the seed's and the rules' luck. `nukeMeansLost1938` is on seed 5309 again (the means lost
+  on day 15). No rule changed.
 - [ ] R103 **A nation massed on answers** (ADR-1089's "not built"): the target of a massing brings its own army to
   that border. Measured against R97b's bars before it is kept.
 
