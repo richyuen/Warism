@@ -48,3 +48,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Consequences:** on that front 0 crossings among 35 arrows at 600 m/px (12 of 99 marches with no arrow of their
   own drawn, each beside a wider one). Whose arrows are drawn is unchanged until R89b (`orderShown`). ROADMAP R89a's
   text follows this.
+
+### ADR-1075 · 2026-11-15 · accepted — R89b: what an advance is; arrows at the world's zoom
+- **Stands on:** ADR-1073 (the user's decision: every nation at war shows its advances; marches behind the lines
+  faint, for what is looked at). It changes ADR-441 (PLAN 7.4b: an order line only for what is looked at) for the
+  advances alone; the dashed lines of whole ways are as ADR-441 has them.
+- **Decision:**
+  - An advance (`advances`, found once a snapshot): a land march of a nation at war whose end is on a cell an enemy
+    holds (`controlGrid`, a nation it is at war with), or within `ADVANCE_REACH_KM` (100 km, a day's march or two) of
+    a land formation of an enemy. Every other march is behind the lines.
+  - Advances are bold arrows for every viewer, at every tier: under the counters beyond T1 too (the markers drew
+    order lines from T1 in). Marches behind the lines are faint (`FAINT_WIDE` 0.6 of the width, `FAINT_ALPHA` 0.5)
+    and drawn for `orderShown` alone. A faint and a bold march are never one arrow.
+  - A bold arrow is never shorter than `ARROW_LEAST_PX` (26): at the world's zoom a march of 100 km is 5 px, and is
+    drawn that long along its heading, a sign of where it goes.
+- **Consequences:** a march in peace, of a nation looked at, is a faint arrow (`orderLines1938.spec.ts`'s first test
+  follows). At 20,000 m/px many arrows start under their nation's counter and show only their heads; R90's fronts are
+  what a war is read by at that zoom.

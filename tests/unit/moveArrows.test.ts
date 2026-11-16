@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ARROW_LONG_PX, ARROW_MAX_MEN, ARROW_MAX_PX, ARROW_MIN_MEN, ARROW_MIN_PX, ARROW_SHORTEST_PX, ARROW_TAIL, CROSS_GAP_PX, GROUP_START_PX, HEAD_WIDE, arrowFill, arrowOutline, arrowWidth, cutAtCrossing, groupMarches, roundedWay, wayStart, type March } from '../../src/render/units/moveArrows';
+import { ARROW_LONG_PX, ARROW_MAX_MEN, ARROW_MAX_PX, ARROW_MIN_MEN, ARROW_MIN_PX, ARROW_SHORTEST_PX, ARROW_TAIL, CROSS_GAP_PX, GROUP_START_PX, HEAD_WIDE, advances, arrowFill, arrowOutline, arrowWidth, cutAtCrossing, groupMarches, roundedWay, wayStart, type March } from '../../src/render/units/moveArrows';
 
 // ROADMAP R89a (ADR-1073, ADR-1074): a march is a thick arrow, as wide as its men are many; the
 // marches of a nation that start together and head the same way are one arrow.
@@ -187,6 +187,35 @@ describe('two arrows of a nation do not cross (R89a)', () => {
       expect(cut.slice(0, 2)).toEqual(way.slice(0, 2));
     }
     expect(cuts, 'the scatter has crossings').toBeGreaterThan(100);
+  });
+});
+
+describe('which marches are advances (R89b)', () => {
+  // Nations 1 and 2 at war, 3 at peace with both. Nation 2 holds x >= 100; 1 the rest; 3 the row y >= 200.
+  const holderAt = (x: number, y: number): number => (y >= 200 ? 3 : x >= 100 ? 2 : 1);
+  const atWar = (a: number, b: number): boolean => (a === 1 && b === 2) || (a === 2 && b === 1);
+  const end = (id: number, nation: number, x: number, y: number): { id: number; nation: number; x: number; y: number } => ({ id, nation, x, y });
+
+  it('to land an enemy holds: an advance; to its own or to a neutral, far from any enemy: not', () => {
+    const got = advances([end(1, 1, 120, 50), end(2, 1, 40, 50), end(3, 1, 40, 250), end(4, 2, 60, 50), end(5, 3, 120, 50)], holderAt, atWar, [], 5);
+    expect([...got].sort()).toEqual([1, 4]);
+  });
+
+  it('to within reach of a formation of an enemy, on its own land: an advance; just beyond reach, or near a neutral: not', () => {
+    const foes = [{ nation: 2, x: 50, y: 50 }, { nation: 3, x: 20, y: 20 }, { nation: 1, x: 80, y: 80 }];
+    for (const reach of [1, 5, 12]) {
+      const got = advances([end(1, 1, 50 + reach, 50), end(2, 1, 50 + reach + 0.01, 50), end(3, 1, 20, 20), end(4, 1, 80, 80), end(5, 1, 50 + reach * 0.7, 50 + reach * 0.7)], holderAt, atWar, foes, reach);
+      expect([...got].sort(), `reach ${reach}`).toEqual([1, 5]);
+    }
+  });
+
+  it('a nation at peace has no advance, wherever it marches', () => {
+    expect(advances([end(1, 3, 120, 50), end(2, 3, 40, 50)], holderAt, atWar, [{ nation: 1, x: 40, y: 50 }, { nation: 2, x: 120, y: 50 }], 5).size).toBe(0);
+  });
+
+  it('an advance and a march behind the lines from one place the same way are two arrows, the one faint', () => {
+    const a = groupMarches([{ ...march(1, 5, 3_000, 100, 50, 130, 50), faint: true }, march(2, 5, 9_000, 100, 50, 130, 50), { ...march(3, 5, 1_000, 100, 50, 130, 51), faint: true }], 10);
+    expect(a.map((x) => [x.ids, Boolean(x.faint), x.men])).toEqual([[[2], false, 9_000], [[1, 3], true, 4_000]]);
   });
 });
 

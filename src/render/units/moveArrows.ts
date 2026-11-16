@@ -21,6 +21,8 @@ export interface March {
   nation: number;
   men: number;
   line: ArrayLike<number>;
+  /** A march behind the lines (ROADMAP R89b): thin and faint, and never one arrow with an advance. */
+  faint?: boolean;
 }
 
 /** An arrow: the marches it stands for, its lead's first, their men together, along the start of the lead's way. */
@@ -29,6 +31,7 @@ export interface MoveArrow {
   men: number;
   ids: number[];
   line: ArrayLike<number>;
+  faint?: boolean;
 }
 
 /** The least and the most width of an arrow's body at its neck, CSS px (before the unit size). */
@@ -58,6 +61,61 @@ export const GROUP_TURN = (40 * Math.PI) / 180;
 /** The radius a turn of the way is rounded with, CSS px, and the points a rounded turn is drawn with. */
 export const TURN_RADIUS_PX = 28;
 const TURN_STEPS = 6;
+
+/** A faint arrow's width as a share of a bold one's of its men, and its opacity (ROADMAP R89b). */
+export const FAINT_WIDE = 0.6;
+export const FAINT_ALPHA = 0.5;
+/**
+ * The least length of a bold arrow, CSS px (before the unit size): an advance whose way is shorter on the screen (at
+ * the world's zoom most are: 100 km is 5 px at 20,000 m/px) is drawn this long along its heading, as a sign of where
+ * it goes.
+ */
+export const ARROW_LEAST_PX = 26;
+
+/**
+ * The marches that are advances (ROADMAP R89b, ADR-1073: "every nation at war shows its advances"): of a nation at
+ * war, to a place an enemy holds (`holderAt` its end, `atWar` with the marcher) or within `reach` of an enemy's
+ * formation (`foes`: every land formation of a nation at war; the same units as the ends). The rest are marches
+ * behind the lines. Pure.
+ */
+export function advances(
+  ends: readonly { id: number; nation: number; x: number; y: number }[],
+  holderAt: (x: number, y: number) => number,
+  atWar: (a: number, b: number) => boolean,
+  foes: readonly { nation: number; x: number; y: number }[],
+  reach: number,
+): Set<number> {
+  const out = new Set<number>();
+  // The foes by the square of `reach` they stand in: an end looks at the nine about its own.
+  const size = Math.max(reach, 1e-9);
+  const squares = new Map<number, { nation: number; x: number; y: number }[]>();
+  const key = (sx: number, sy: number): number => sx * 65536 + sy;
+  for (const f of foes) {
+    const k = key(Math.floor(f.x / size), Math.floor(f.y / size));
+    const list = squares.get(k);
+    if (list) list.push(f);
+    else squares.set(k, [f]);
+  }
+  for (const e of ends) {
+    const holder = holderAt(e.x, e.y);
+    if (holder !== 0 && holder !== e.nation && atWar(e.nation, holder)) {
+      out.add(e.id);
+      continue;
+    }
+    const [sx, sy] = [Math.floor(e.x / size), Math.floor(e.y / size)];
+    near: for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        for (const f of squares.get(key(sx + dx, sy + dy)) ?? []) {
+          if (f.nation !== e.nation && Math.hypot(f.x - e.x, f.y - e.y) <= reach && atWar(e.nation, f.nation)) {
+            out.add(e.id);
+            break near;
+          }
+        }
+      }
+    }
+  }
+  return out;
+}
 
 /** How far toward white an arrow's fill is from its nation's colour: on its own land the colour itself is not seen. */
 export const ARROW_PALE = 0.5;
@@ -97,42 +155,69 @@ export function wayStart(line: ArrayLike<number>, long: number): number[] {
   return out;
 }
 
-/** The heading of a way, radians: from its start to its point `long` along it. */
+/** The heading of a way, radians: from its start to its point `long` along it (`wayStart`'s last, with nothing made). */
 function heading(line: ArrayLike<number>, long: number): number {
-  const s = wayStart(line, long);
-  return Math.atan2(s[s.length - 1]! - s[1]!, s[s.length - 2]! - s[0]!);
+  let left = long;
+  let [x, y] = [line[0]!, line[1]!];
+  for (let i = 2; i < line.length; i += 2) {
+    const seg = Math.hypot(line[i]! - x, line[i + 1]! - y);
+    if (seg >= left) {
+      if (seg > 0) [x, y] = [x + ((line[i]! - x) * left) / seg, y + ((line[i + 1]! - y) * left) / seg];
+      break;
+    }
+    [x, y] = [line[i]!, line[i + 1]!];
+    left -= seg;
+  }
+  return Math.atan2(y - line[1]!, x - line[0]!);
 }
 
 /**
  * The arrows of `marches`, `scale` px a cell. The marches by their men, the most first (then by
  * id): each joins the first arrow of its nation whose lead starts within GROUP_START_PX of it and
- * heads within GROUP_TURN of its heading, or leads an arrow of its own. Every march is in one
- * arrow; a march with no way (fewer than two points) is in none.
+ * heads within GROUP_TURN of its heading, and is faint or bold as it is, or leads an arrow of its
+ * own. Every march is in one arrow; a march with no way (fewer than two points) is in none.
  */
 export function groupMarches(marches: readonly March[], scale: number): MoveArrow[] {
   const order = marches.filter((m) => m.line.length >= 4).sort((a, b) => b.men - a.men || a.id - b.id);
   const arrows: (MoveArrow & { heading: number })[] = [];
   const reach = GROUP_START_PX / scale;
   const long = ARROW_LONG_PX / scale;
+  // The arrows by the square of `reach` their lead starts in: a march looks at the nine about its own.
+  const squares = new Map<number, number[]>();
+  const square = (sx: number, sy: number): number => sx * 65536 + sy;
   for (const m of order) {
     const l = m.line;
     const h = heading(l, long);
-    let home: MoveArrow | undefined;
-    for (const a of arrows) {
-      if (a.nation !== m.nation || Math.hypot(a.line[0]! - l[0]!, a.line[1]! - l[1]!) > reach) continue;
-      const turn = Math.abs(a.heading - h);
-      if (Math.min(turn, 2 * Math.PI - turn) > GROUP_TURN) continue;
-      home = a;
-      break;
+    const [sx, sy] = [Math.floor(l[0]! / reach), Math.floor(l[1]! / reach)];
+    let home = -1;
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        const list = squares.get(square(sx + dx, sy + dy));
+        if (!list) continue;
+        for (const k of list) {
+          // The first made of those it may join: the one of the most men.
+          if (home >= 0 && k > home) break;
+          const a = arrows[k]!;
+          if (a.nation !== m.nation || Boolean(a.faint) !== Boolean(m.faint) || Math.hypot(a.line[0]! - l[0]!, a.line[1]! - l[1]!) > reach) continue;
+          const turn = Math.abs(a.heading - h);
+          if (Math.min(turn, 2 * Math.PI - turn) > GROUP_TURN) continue;
+          home = k;
+          break;
+        }
+      }
     }
-    if (home) {
-      home.men += m.men;
-      home.ids.push(m.id);
+    if (home >= 0) {
+      arrows[home]!.men += m.men;
+      arrows[home]!.ids.push(m.id);
     } else {
-      arrows.push({ nation: m.nation, men: m.men, ids: [m.id], line: l, heading: h });
+      const key = square(sx, sy);
+      const list = squares.get(key);
+      if (list) list.push(arrows.length);
+      else squares.set(key, [arrows.length]);
+      arrows.push({ nation: m.nation, men: m.men, ids: [m.id], line: l, heading: h, ...(m.faint ? { faint: true } : {}) });
     }
   }
-  return arrows.map(({ nation, men, ids, line }) => ({ nation, men, ids, line }));
+  return arrows.map(({ heading: _, ...a }) => a);
 }
 
 /** The way with its turns rounded (each by a curve of at most `radius`, and of half its shorter leg): `x, y` by twos. */
@@ -201,6 +286,13 @@ export function arrowOutline(pts: ArrayLike<number>, width: number): number[] | 
   return out;
 }
 
+/** The box of a way: `x0, y0, x1, y1`. */
+export function boxOf(way: ArrayLike<number>): [number, number, number, number] {
+  let [x0, y0, x1, y1] = [Infinity, Infinity, -Infinity, -Infinity];
+  for (let i = 0; i < way.length; i += 2) [x0, y0, x1, y1] = [Math.min(x0, way[i]!), Math.min(y0, way[i + 1]!), Math.max(x1, way[i]!), Math.max(y1, way[i + 1]!)];
+  return [x0, y0, x1, y1];
+}
+
 /** The gap an arrow cut short keeps from the side of the one it would cross, CSS px. */
 export const CROSS_GAP_PX = 4;
 
@@ -210,7 +302,11 @@ export const CROSS_GAP_PX = 4;
  * not lie across each other; the one of fewer men, drawn after, stops before the other. A way that
  * crosses none is given back as it is; one that would stop at its own start is empty of length.
  */
-export function cutAtCrossing(way: ArrayLike<number>, others: readonly { way: ArrayLike<number>; width: number }[]): number[] {
+export function cutAtCrossing(way: ArrayLike<number>, others: readonly { way: ArrayLike<number>; width: number; box?: readonly number[] }[]): number[] {
+  // Those whose box (`x0, y0, x1, y1`, when given) the way's own does not touch cannot cross it.
+  const [x0, y0, x1, y1] = boxOf(way);
+  others = others.filter((o) => !o.box || (o.box[0]! <= x1 && o.box[2]! >= x0 && o.box[1]! <= y1 && o.box[3]! >= y0));
+  if (others.length === 0) return Array.from(way);
   let at = 0;
   let best = Infinity;
   for (let i = 2; i < way.length; i += 2) {
@@ -239,6 +335,7 @@ export interface DrawnArrow {
   nation: number;
   men: number;
   ids: number[];
+  faint: boolean;
   width: number;
   /** A point a third along it: inside the body. */
   x: number;
@@ -249,8 +346,10 @@ export interface DrawnArrow {
 
 /**
  * Draws `arrows` (already in the CSS-px transform of `ctx`, at its alpha): each along the start
- * of its way, filled in `colorOf` its nation with a dark rim; the most men first, one of fewer
- * cut short before one of its nation it would cross (`cutAtCrossing`). `project` gives a cell's place on the screen
+ * of its way, filled in `colorOf` its nation with a dark rim (a nation's in one path, the nations
+ * in the order of their strongest arrows); the most men first, one of fewer
+ * cut short before one of its nation it would cross (`cutAtCrossing`); a faint one thinner and
+ * at FAINT_ALPHA, a bold one never shorter than ARROW_LEAST_PX. `project` gives a cell's place on the screen
  * for each copy of the world in `offs`. Returns what it drew.
  */
 export function drawMoveArrows(
@@ -269,9 +368,11 @@ export function drawMoveArrows(
   // The most men first: a thin arrow lies over a wide one.
   const order = [...arrows].sort((a, b) => b.men - a.men || a.ids[0]! - b.ids[0]!);
   // By nation and copy of the world: the arrows drawn so far.
-  const before = new Map<string, { way: number[]; width: number }[]>();
+  const before = new Map<string, { way: number[]; width: number; box: number[] }[]>();
+  // The outlines by nation, faint or bold: one path, one rim and one fill each (those of a nation do not cross).
+  const paths = new Map<string, { nation: number; faint: boolean; outlines: number[][] }>();
   for (const a of order) {
-    const width = arrowWidth(a.men) * size;
+    const width = arrowWidth(a.men) * size * (a.faint ? FAINT_WIDE : 1);
     for (const off of offs) {
       const way: number[] = [];
       let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity];
@@ -283,23 +384,45 @@ export function drawMoveArrows(
       if (x1 < 0 || x0 > vw || y1 < 0 || y0 > vh) continue;
       const key = `${a.nation}/${off}`;
       const earlier = before.get(key) ?? [];
-      const stub = cutAtCrossing(wayStart(way, (ARROW_LONG_PX + ARROW_LONG_WIDTHS * arrowWidth(a.men)) * size), earlier);
+      let start = wayStart(way, (ARROW_LONG_PX + ARROW_LONG_WIDTHS * arrowWidth(a.men)) * size);
+      if (!a.faint) {
+        // A bold arrow of a short way: straight along its heading, ARROW_LEAST_PX long.
+        const [ex, ey] = [start[start.length - 2]! - start[0]!, start[start.length - 1]! - start[1]!];
+        const far = Math.hypot(ex, ey);
+        const least = ARROW_LEAST_PX * size;
+        if (far < least && far > 0) start = [start[0]!, start[1]!, start[0]! + (ex * least) / far, start[1]! + (ey * least) / far];
+      }
+      // Its stretch off the screen (the way may go on across it): not drawn.
+      const edge = width * HEAD_WIDE;
+      const box = boxOf(start);
+      if (box[2] < -edge || box[0] > vw + edge || box[3] < -edge || box[1] > vh + edge) continue;
+      const stub = cutAtCrossing(start, earlier);
       const o = arrowOutline(stub, width);
       if (!o) continue;
-      earlier.push({ way: stub, width });
+      earlier.push({ way: stub, width, box: boxOf(stub) });
       before.set(key, earlier);
-      ctx.beginPath();
+      const pk = `${a.nation}/${a.faint ? 1 : 0}`;
+      const path = paths.get(pk);
+      if (path) path.outlines.push(o);
+      else paths.set(pk, { nation: a.nation, faint: Boolean(a.faint), outlines: [o] });
+      const [mx, my] = alongWay(stub, 1 / 3);
+      drawn.push({ nation: a.nation, men: a.men, ids: a.ids, faint: Boolean(a.faint), width, x: mx, y: my, way: stub });
+    }
+  }
+  const alpha = ctx.globalAlpha;
+  ctx.strokeStyle = 'rgba(12, 14, 20, 0.9)';
+  ctx.lineWidth = 3;
+  for (const p of paths.values()) {
+    ctx.globalAlpha = p.faint ? alpha * FAINT_ALPHA : alpha;
+    ctx.beginPath();
+    for (const o of p.outlines) {
       ctx.moveTo(o[0]!, o[1]!);
       for (let i = 2; i < o.length; i += 2) ctx.lineTo(o[i]!, o[i + 1]!);
       ctx.closePath();
-      ctx.strokeStyle = 'rgba(12, 14, 20, 0.9)';
-      ctx.lineWidth = 3;
-      ctx.stroke();
-      ctx.fillStyle = colorOf(a.nation);
-      ctx.fill();
-      const [mx, my] = alongWay(stub, 1 / 3);
-      drawn.push({ nation: a.nation, men: a.men, ids: a.ids, width, x: mx, y: my, way: stub });
     }
+    ctx.stroke();
+    ctx.fillStyle = colorOf(p.nation);
+    ctx.fill();
   }
   ctx.restore();
   return drawn;

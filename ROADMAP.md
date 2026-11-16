@@ -39,11 +39,18 @@ changed only where the feature they test changed.
     their ends (the first try), 0 among 35 at 600 m/px and 0 among 25 at 1,500; 12 of 99 marches at 600 m/px have no
     arrow of their own drawn (cut to nothing beside a wider one). The draw 0.1 ms slower at most (p50 2.3 to 2.4 ms at
     600 m/px); `npm run bench -- G` PASS (T0 310.8 fps, T2 174.2). Shots: `docs/evidence/R89a/`.
-  - [ ] R89b Whose arrows (the user's decision, ADR-1073): every nation at war shows its advances, a march whose end
-    is on land an enemy holds or within reach of an enemy formation, as bold arrows, selected or not; a march behind
-    the lines is thin and faint, and drawn for the selected nation and formations only, as now (`orderShown`). AT:
-    `orderLines1938.spec.ts` with the new rule; a page count on seed 99 of the arrows drawn at world zoom with no
-    selection, its bar set from the shot (a war read at a glance, not a web).
+  - [x] R89b Whose arrows (the user's decision, ADR-1073): every nation at war shows its advances, a march whose end
+    is on land an enemy holds or within reach of an enemy formation, as bold arrows, selected or not, from the world's
+    counters to the sprites; a march behind the lines is thin and faint, and drawn for the selected nation and
+    formations only, as before (`orderShown`). AT: `orderLines1938.spec.ts` with the new rule; a page count on seed 99
+    of the arrows drawn at world zoom with no selection, its bar set from the shot (a war read at a glance, not a web).
+    Done: `advances` (reach 100 km, ADR-1075), faint arrows 0.6 of the width at half the opacity, a bold one never
+    under 26 px. `moveArrows.test.ts` (19); `orderLines1938.spec.ts`'s second test: Germany on Poland at 6, 24, 48 and
+    96 hours, at 4,000, 1,500, 600 and 100 m/px: no arrow in peace, none of a nation at peace, none faint with nothing
+    looked at, none across another of its nation, at most 40 in view (bar 60). Seed 99, August 1939, nothing selected:
+    26 arrows of 13 nations in the world's view at 20,000 m/px, 18 over the Fujian front at 4,000. The arrows 0.1 to
+    0.15 ms of a draw; `npm run bench -- G` PASS (T0 294.9 fps, T2 161.0 fps, draw cpu 5.0 ms of 6, from 4.7).
+    Shots: `docs/evidence/R89b/`.
   - [ ] R89c Names and arrows: the names no longer under a filled arrow (`MapView`'s rule for the dashed lines says a
     line across a name leaves it to be read; a filled arrow does not). The voyages' and landings' lines stay dashed,
     in the arrows' rim and weight. AT: a spec that no country name or city name is covered by an arrow by more than a

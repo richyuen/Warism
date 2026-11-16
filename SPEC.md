@@ -1907,8 +1907,10 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
 - **T1 markers** (`src/render/units/markers.ts`, from `T1_MAX_M` to `T1_MIN_M`): a box with the NATO
   symbol, pips for its elements (fading in and out each; the strength bar only while no elements came),
   order arrows (a fleet's along its turning points), crossed swords while engaged. A land formation's march is a
-  movement arrow (`src/render/units/moveArrows.ts`, ROADMAP R89a, ADR-1074; at T1 to T3, for the formations whose
-  orders are shown): filled, tapered, in its nation's colour half way to white with a dark rim, from the formation
+  movement arrow (`src/render/units/moveArrows.ts`, ROADMAP R89a, R89b, ADR-1074, ADR-1075; at every tier): an
+  advance (`advances`: of a nation at war, to a cell an enemy holds or within `ADVANCE_REACH_KM`, 100, of an enemy's
+  land formation) bold and for every viewer, never shorter than `ARROW_LEAST_PX` (26); any other march faint
+  (`FAINT_WIDE` 0.6 of the width, `FAINT_ALPHA` 0.5) and for the formations whose orders are shown. Filled, tapered, in its nation's colour half way to white with a dark rim, from the formation
   along the first `ARROW_LONG_PX` (70) and three of its widths of its way; `ARROW_MIN_PX` (5) wide at 2,000 men to
   `ARROW_MAX_PX` (22) at 400,000, by the logarithm. Marches of a nation that start within `GROUP_START_PX` (44) and
   head within `GROUP_TURN` (40°) are one arrow of their men; one that would cross another of its nation stops before

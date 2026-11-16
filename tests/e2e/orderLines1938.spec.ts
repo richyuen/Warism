@@ -31,14 +31,14 @@ function lines(page: Page, ids: number[]): Promise<number[]> {
 }
 
 /** The movement arrows of the last frame that stand for one of `ids`: their nations, their marches among `ids`, and the overlay's pixel inside each. */
-function arrows(page: Page, ids: number[]): Promise<{ nation: number; ids: number[]; width: number; px: number[] }[]> {
+function arrows(page: Page, ids: number[]): Promise<{ nation: number; ids: number[]; faint: boolean; width: number; px: number[] }[]> {
   return page.evaluate((ids) => {
     const v = window.__warsim!.view!;
     v.draw();
     const c = document.querySelector('canvas.map-nations') as HTMLCanvasElement;
     const k = c.width / c.clientWidth;
     const g = c.getContext('2d')!;
-    return v.moveArrows.filter((a) => a.ids.some((id) => ids.includes(id))).map((a) => ({ nation: a.nation, ids: a.ids.filter((id) => ids.includes(id)).sort((p, q) => p - q), width: a.width, px: Array.from(g.getImageData(Math.round(a.x * k), Math.round(a.y * k), 1, 1).data) }));
+    return v.moveArrows.filter((a) => a.ids.some((id) => ids.includes(id))).map((a) => ({ nation: a.nation, faint: a.faint, ids: a.ids.filter((id) => ids.includes(id)).sort((p, q) => p - q), width: a.width, px: Array.from(g.getImageData(Math.round(a.x * k), Math.round(a.y * k), 1, 1).data) }));
   }, ids);
 }
 
@@ -97,8 +97,11 @@ test('order lines at T1: for the formation and nation looked at and the player\'
   // And its arrow, alone (R89a): Poland's, filled.
   const one = await arrows(page, ids);
   expect(one.map((a) => [a.nation, a.ids])).toEqual([[POL, [picked.pol[0]!]]]);
-  expect(one[0]!.px[3], 'the arrow is filled').toBeGreaterThan(200);
-  expect(one[0]!.width).toBeGreaterThanOrEqual(5);
+  // In peace a march is behind the lines (R89b): faint, at half the opacity, and thinner.
+  expect(one[0]!.faint, 'a march in peace is faint').toBe(true);
+  expect(one[0]!.px[3], 'the arrow is filled, faintly').toBeGreaterThan(100);
+  // (No upper bound on that pixel: the picked formation's dashed line runs along the arrow's middle.)
+  expect(one[0]!.width).toBeGreaterThanOrEqual(3);
   await page.evaluate(() => void (window.__warsim!.view!.pickedFormation = 0));
 
   // Poland's panel open: the lines of both Polish formations, not the German one.
@@ -109,7 +112,7 @@ test('order lines at T1: for the formation and nation looked at and the player\'
   const pol = await arrows(page, ids);
   expect(pol.every((a) => a.nation === POL), 'Polish arrows alone').toBe(true);
   expect(pol.flatMap((a) => a.ids).sort((a, b) => a - b)).toEqual([...picked.pol].sort((a, b) => a - b));
-  for (const a of pol) expect(a.px[3], 'the arrow is filled').toBeGreaterThan(200);
+  for (const a of pol) expect(a.px[3], 'the arrow is filled, faintly').toBeGreaterThan(100);
   expect(await linePixels(page), 'no dashed line for a nation looked at').toBeLessThanOrEqual(bare);
   await page.screenshot({ path: path.join(out, 'b-lines-poland.png') });
   await page.evaluate(() => window.__warsim!.view!.select(0));
@@ -123,4 +126,67 @@ test('order lines at T1: for the formation and nation looked at and the player\'
   await page.evaluate(() => window.__warsim!.sim.step(1));
   await expect.poll(() => page.evaluate(() => window.__warsim!.view!.selectionNation)).toBe(GER);
   expect(await lines(page, ids)).toEqual(picked.ger);
+});
+
+// ROADMAP R89b (ADR-1073, the user's decision): every nation at war shows its advances as bold arrows, with nothing
+// selected; the marches behind the lines, faint, are those of what is looked at. Swept over the war's hours and the
+// zooms from the world's counters to the sprites.
+test('a war shows its advances as arrows with nothing selected; a nation looked at its other marches, faint', async ({ page }, info) => {
+  test.setTimeout(240_000);
+  await open1938(page, 1938);
+  const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/R89b') : info.outputPath();
+  mkdirSync(out, { recursive: true });
+  const [cx, cy] = cellOf(19, 52, W, H);
+  /** The arrows of the last frame: the bold ones' nations, the faint ones' nations, and whether each bold one's nation is at war. */
+  const seen = (): Promise<{ bold: number[]; faint: number[]; atPeace: number[]; crossing: number }> => page.evaluate(() => {
+    const v = window.__warsim!.view!;
+    v.draw();
+    const atWar = (v as unknown as { atWar: Set<number> }).atWar;
+    const a = v.moveArrows;
+    const side = (p: number[], i: number, x: number, y: number): number => Math.sign((p[i + 2]! - p[i]!) * (y - p[i + 1]!) - (p[i + 3]! - p[i + 1]!) * (x - p[i]!));
+    let crossing = 0;
+    for (let i = 0; i < a.length; i++) {
+      for (let j = i + 1; j < a.length; j++) {
+        if (a[i]!.nation !== a[j]!.nation) continue;
+        const [p, q] = [a[i]!.way, a[j]!.way];
+        let hit = false;
+        for (let s = 0; s + 3 < p.length && !hit; s += 2) for (let t = 0; t + 3 < q.length && !hit; t += 2) hit = side(p, s, q[t]!, q[t + 1]!) * side(p, s, q[t + 2]!, q[t + 3]!) < 0 && side(q, t, p[s]!, p[s + 1]!) * side(q, t, p[s + 2]!, p[s + 3]!) < 0;
+        if (hit) crossing++;
+      }
+    }
+    return { bold: a.filter((x) => !x.faint).map((x) => x.nation), faint: a.filter((x) => x.faint).map((x) => x.nation), atPeace: a.filter((x) => !x.faint && !atWar.has(x.nation)).map((x) => x.nation), crossing };
+  });
+  // In peace over Poland and Germany: no arrow at any zoom.
+  for (const m of [4000, 1500, 600]) {
+    await lookAt(page, cx, cy, m);
+    expect((await seen()).bold, `no arrow in peace at ${m} m/px`).toEqual([]);
+  }
+  await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: GER, d: POL });
+  let most = 0;
+  for (const hour of [6, 24, 48, 96]) {
+    await page.evaluate((h) => window.__warsim!.sim.step(h - window.__warsim!.view!.lastTick), hour);
+    await page.waitForFunction((h) => window.__warsim!.view!.lastTick >= h, hour, { timeout: 60_000 });
+    for (const m of [4000, 1500, 600, 100]) {
+      await lookAt(page, cx, cy, m);
+      const none = await seen();
+      expect(none.atPeace, `hour ${hour}, ${m} m/px: a bold arrow of a nation at peace`).toEqual([]);
+      expect(none.faint, `hour ${hour}, ${m} m/px: no faint arrow with nothing looked at`).toEqual([]);
+      expect(none.crossing, `hour ${hour}, ${m} m/px: arrows of one nation across each other`).toBe(0);
+      expect(none.bold.length, `hour ${hour}, ${m} m/px: a war read at a glance, not a web`).toBeLessThanOrEqual(60);
+      if (m >= 600) most = Math.max(most, none.bold.length);
+      if (hour === 48 && m >= 600) {
+        expect(none.bold.length, `the war's advances at ${m} m/px`).toBeGreaterThan(0);
+        expect(new Set(none.bold).has(GER) || new Set(none.bold).has(POL), 'of Germany or Poland').toBe(true);
+        await page.screenshot({ path: path.join(out, `war-none-${m}.png`) });
+      }
+      // Poland looked at: the same bold arrows, and its other marches faint, Poland's alone.
+      await page.evaluate((n) => window.__warsim!.view!.select(n), POL);
+      const pol = await seen();
+      expect(pol.bold.length, `hour ${hour}, ${m} m/px: the advances the same with Poland looked at`).toBe(none.bold.length);
+      expect(pol.faint.every((n) => n === POL), `hour ${hour}, ${m} m/px: faint arrows of Poland alone`).toBe(true);
+      if (hour === 48 && m === 1500) await page.screenshot({ path: path.join(out, 'war-poland-1500.png') });
+      await page.evaluate(() => window.__warsim!.view!.select(0));
+    }
+  }
+  process.stderr.write(`GER v POL, 6 to 96 hours, 4000 to 600 m/px: at most ${most} bold arrows in view\n`);
 });
