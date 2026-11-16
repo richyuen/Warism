@@ -32,6 +32,7 @@ function measure(page: Page): Promise<{ same: boolean; hashOn: string; hashOff: 
     const gl = c.getContext('webgl2')!;
     const now = performance.now() + 1e6; // every fade is over
     v.instances = false; // the ground alone: what stands on it has a spec of its own (groundThings1938)
+    v.farShades = false; // and against flat fills: the shades of T0 and T1 (ROADMAP R91) are not the relief of T2
     const read = (relief: boolean): Uint8Array => {
       v.relief = relief;
       v.draw(now);

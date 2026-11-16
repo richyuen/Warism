@@ -124,3 +124,30 @@ from AoC are tagged **[AoC-DEVIATION]**.
   blot that hid the map; at 0.32 and 0.85 they are a sheen.
 - **Consequences:** at Max a front that moves every tick shimmers along its length; that is the war moving. A
   picture drawn at a time far ahead (the tests' `now + 1e6`) has no flash in it.
+
+### ADR-1080 · 2026-11-15 · accepted — R91: the shades of T0 and T1; their bounds; what the tests of flat fills do
+- **Found:** the pass of T0 and T1 is compiled without the ground's loop over the heights because that loop cost
+  half as much again at T0 (PLAN 2.8a). The elevation has the sea floor. The pass already has, for the border line,
+  how far a pixel is inland of the border between the two strongest holders (0 on it, 1 about a cell and a half in).
+- **Decision:** three factors on a fill's colour in the political modes, by the share the ground of T2 and T3
+  leaves them:
+  - the sea, `FAR_SEA_SHALLOW` (1.2) at the shore to `FAR_SEA_DEEP` (0.8) at 6,000 m, by the log ramp of the sea of
+    T2 (`seaDepthShare`);
+  - the land's light from the north-west, at most `FAR_RELIEF` (0.12) either way, the slope 12 times steeper than
+    it is and the mean of nine cells;
+  - the fill toward its border and coast, `FAR_EDGE` (0.84) on the border, whole from `FAR_EDGE_BAND` (1) inland.
+  The first two from one texture of two bytes a cell made once from the elevation (`farShade`): one bilinear lookup
+  a pixel, no loop. The pass has 16 textures now, the least a WebGL2 context must give.
+- **The bar:** every pair of neighbours of 1938 told apart by ΔE over 12 at the darkest and the lightest shade
+  (15 unshaded, `nations.test.ts`). Edge 0.8 and relief 0.14 gave 11.5 for France and French West Africa; the
+  strengths were eased to 12.9, the bar kept.
+- **Tests of flat fills:** `MapView.farShades` (on by default) turns the shades off. Used by the tests that tell
+  water, land or a nation by its one colour, or find the largest fill as one colour (`measureGround`,
+  `hillshade1938`, `coast1938`, `lakeT1`, `seaControl1938`): they test the coast, the lakes, the sea's holders and
+  the ground of T2, which the shades are not. `seaDepth1938`'s "at T1 one colour" was this feature's opposite and
+  is changed with it: flat, one colour; shaded, the bank lighter and the ocean darker by the far ramp.
+  The shades are not tied to `relief`: with the ground of T2 on or off the map of T0 and T1 is one picture, as
+  `coastPicture1938` and `hillshade1938` hold.
+- **Consequences:** the map's pass is 7 % dearer at T0 (0.520 to 0.556 ms of GPU a frame, budget 1): not within
+  the bench's noise, as the item's AT asked, and logged as that. The darker edge reaches a cell and a half: under
+  2 px at the world's zoom. A wider one needs the distance to the border over more cells than the pass reads.

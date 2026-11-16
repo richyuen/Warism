@@ -1981,6 +1981,15 @@ export class MapView {
     this.groundThings.draw(vw, vh, dpr, share);
   }
 
+  /** The shades of T0 and T1 (ROADMAP R91: the sea's depth, the land's light, a fill's darker edge). Off: flat fills (tests that tell water or a nation by its one colour). */
+  get farShades(): boolean {
+    return this.map.farShades;
+  }
+  set farShades(on: boolean) {
+    this.map.farShades = on;
+    this.dirty = true;
+  }
+
   /** The ground's relief at T2 and T3 (PLAN 2.8a). Off: the map of T0 and T1 at every zoom (tests compare the two). */
   get relief(): boolean {
     return this.map.relief;

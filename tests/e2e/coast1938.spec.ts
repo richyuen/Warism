@@ -57,6 +57,8 @@ test('the fine land mask draws the coast; terrain mode shows terrain', async ({ 
   await page.setViewportSize({ width: 1200, height: 700 });
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.view!.lastTick === 0, null, { timeout: 60_000 });
+  // Flat fills (ROADMAP R91): this test tells water and land by their one colour; the shades of T0 and T1 have farShade.test.ts and seaDepth1938.
+  await page.evaluate(() => void (window.__warsim!.view!.farShades = false));
   await page.waitForFunction(() => window.__warsim!.view!.hasFineCoast, null, { timeout: 60_000 });
   const sea = [0x1d, 0x35, 0x57];
   // At T1 beyond the ground's band, where the sea is one colour: 800 m/px (40 px to a cell, 489

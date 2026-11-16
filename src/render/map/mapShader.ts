@@ -18,7 +18,7 @@ import { AIR_CONTESTED_COLOR, AIR_HELD_TINT, FALLOUT_COLOR, FALLOUT_FADE, FALLOU
 
 const AIR_CONTESTED_RGB = [16, 8, 0].map((s) => (((AIR_CONTESTED_COLOR >> s) & 255) / 255).toFixed(3)).join(', ');
 const FALLOUT_RGB = [16, 8, 0].map((s) => (((FALLOUT_COLOR >> s) & 255) / 255).toFixed(3)).join(', ');
-import { BORDER_BAND, BORDER_CAST, FRONT_CORE_PX, FRONT_CORE_RGB, FRONT_GLOW, FRONT_GLOW_PX, FRONT_GLOW_RGB, FRONT_NATIONS, GROUND_CAST, HATCH_AT_GROUND, OCCUPIED_CAST, SEA_DEEP, SEA_DEPTH_FULL, SEA_DEPTH_KNEE, SEA_SHALLOW } from './ground';
+import { BORDER_BAND, BORDER_CAST, FAR_EDGE, FAR_EDGE_BAND, FAR_RELIEF, FAR_SEA_DEEP, FAR_SEA_SHALLOW, FRONT_CORE_PX, FRONT_CORE_RGB, FRONT_GLOW, FRONT_GLOW_PX, FRONT_GLOW_RGB, FRONT_NATIONS, GROUND_CAST, HATCH_AT_GROUND, OCCUPIED_CAST, SEA_DEEP, SEA_DEPTH_FULL, SEA_DEPTH_KNEE, SEA_SHALLOW } from './ground';
 
 export const MAP_VS = `#version 300 es
 precision highp float;
@@ -61,6 +61,8 @@ uniform highp usampler2D uSeaHolder; // the nation that holds each zone, 128 wid
 uniform highp usampler2D uAirZone;  // air zone per cell (0 = none; PLAN 5.7c)
 uniform highp usampler2D uAirHolder; // who holds each air zone's air, 128 wide (0 = none, 65535 = contested)
 uniform highp usampler2D uWar;      // 1 where two nations are at war, by their ids (ROADMAP R90a; warTable in ground.ts)
+uniform sampler2D uShade;           // the shades of T0 and T1: the land's light and the sea's depth share (ROADMAP R91; farShade in ground.ts)
+uniform float uFar;                 // how much of them shows, 0..1 (0: flat fills)
 uniform vec3 uTerrainCol[12];
 #ifdef GROUND
 uniform highp isampler2D uElevation; // the land's height in metres, one texel a cell (PLAN 2.8a)
@@ -370,6 +372,14 @@ void main() {
   // Land the cell rule called water takes the strongest land id around it.
   uint fid = best != 0u ? best : secondId;
 
+  // The shades of T0 and T1 (ROADMAP R91), by what the ground of T2 and T3 leaves them.
+  float far = uFar;
+#ifdef GROUND
+  far *= 1.0 - uDetail;
+#endif
+  vec2 shade = far > 0.0 ? texture(uShade, luv).rg : vec2(0.502, 0.0);
+  vec3 seaFill = pal(0u) * mix(1.0, mix(${FAR_SEA_SHALLOW.toFixed(3)}, ${FAR_SEA_DEEP.toFixed(3)}, shade.g), far);
+
   vec3 col;
   if (uMode == 5) {
     // Fallout (PLAN 6.3c): the political colours faded, and over them the fallout's colour by its
@@ -402,7 +412,7 @@ void main() {
     uint holder = zone == 0u ? 0u : texelFetch(uSeaHolder, ivec2(int(zone % 128u), int(zone / 128u)), 0).r;
     col = holder == 0u ? pal(0u) : mix(pal(0u), pal(holder), ${SEA_HELD_TINT.toFixed(3)});
   } else if (water) {
-    col = pal(0u);
+    col = uMode == 0 ? seaFill : pal(0u);
 #ifdef GROUND
     // The sea floor at T2 and T3 (PLAN 4.7f): shallows lighter, the deep darker, by the ground's share.
     col *= mix(1.0, seaShadeAt(cellPos), uDetail);
@@ -423,6 +433,12 @@ void main() {
     col = unrestCol(u);
   } else {
     col = fid == 0u ? vec3(0.62, 0.62, 0.58) : pal(fid);
+    if (uMode == 0 && far > 0.0) {
+      // The land's light, and the fill darker toward its border and its coast.
+      float inland = n > 1 ? acc[bi] - second : 1.0;
+      float lit = 1.0 + ${FAR_RELIEF.toFixed(3)} * (shade.r * 2.0 - 1.004);
+      col *= mix(1.0, lit * mix(${FAR_EDGE.toFixed(3)}, 1.0, smoothstep(0.0, ${FAR_EDGE_BAND.toFixed(3)}, inland)), far);
+    }
   }
 
   // Occupation (controller ≠ rightful owner), smoothed with the same weights so the
@@ -569,7 +585,7 @@ void main() {
     float a = coarseLand ? (1.0 - smoothstep(halfW - 0.5, halfW + 0.5, (cov - 0.5) / covW)) * (1.0 - fineShare) : 0.0;
     if (fineLand) a += (1.0 - smoothstep(halfW - 0.5, halfW + 0.5, (fine - 0.5) / fineW)) * fineShare;
     col = mix(col, col * 0.62, a * 0.8);
-    if (fineShare > 0.0) col = mix(pal(0u), col, landShare);
+    if (fineShare > 0.0) col = mix(uMode == 0 ? seaFill : pal(0u), col, landShare);
   }
   outColor = vec4(col, 1.0);
 }

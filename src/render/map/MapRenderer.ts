@@ -6,7 +6,7 @@
 import * as twgl from 'twgl.js';
 import { splitCoord, type Camera } from '../camera';
 import type { LandMask } from '../../shared/landMask';
-import { FRONT_NATIONS, groundUniform, warTable } from './ground';
+import { farShade, FRONT_NATIONS, groundUniform, warTable } from './ground';
 import { MAP_FS, MAP_FS_GROUND, MAP_VS } from './mapShader';
 
 export interface MapRendererOptions {
@@ -58,6 +58,7 @@ export class MapRenderer {
   private seaZoneTex: WebGLTexture;
   private seaHolderTex: WebGLTexture;
   private warTex: WebGLTexture;
+  private shadeTex: WebGLTexture;
   private warKey = '';
   /** The air zones and who holds each one's air (PLAN 5.7c), as the sea's. */
   private airZoneTex: WebGLTexture;
@@ -71,6 +72,8 @@ export class MapRenderer {
   /** The land's height in metres, one texel a cell (PLAN 2.8a); a 1×1 placeholder until the worker sends it. */
   private elevationTex: WebGLTexture;
   private hasElevation = false;
+  /** Whether the shades of T0 and T1 are drawn (ROADMAP R91): the sea's depth, the land's light, a fill's darker edge. Off: flat fills (tests that count a fill's pixels). */
+  farShades = true;
   /** Whether the ground's relief is drawn where the zoom shows it (off: the map of T0 and T1 at every zoom). */
   relief = true;
   private readonly ground = groundUniform();
@@ -109,6 +112,7 @@ export class MapRenderer {
     this.provinceTex = this.makeTexture(gl.R16UI, gl.RED_INTEGER, gl.UNSIGNED_SHORT, 1, 1, new Uint16Array([0]), gl.NEAREST);
     this.seaZoneTex = this.makeTexture(gl.R16UI, gl.RED_INTEGER, gl.UNSIGNED_SHORT, 1, 1, new Uint16Array([0]), gl.NEAREST);
     this.seaHolderTex = this.makeTexture(gl.R16UI, gl.RED_INTEGER, gl.UNSIGNED_SHORT, 1, 1, new Uint16Array([0]), gl.NEAREST);
+    this.shadeTex = this.makeTexture(gl.RG8, gl.RG, gl.UNSIGNED_BYTE, 1, 1, new Uint8Array([128, 0]), gl.LINEAR);
     this.warTex = this.makeTexture(gl.R8UI, gl.RED_INTEGER, gl.UNSIGNED_BYTE, FRONT_NATIONS, FRONT_NATIONS, warTable([]), gl.NEAREST);
     this.airZoneTex = this.makeTexture(gl.R16UI, gl.RED_INTEGER, gl.UNSIGNED_SHORT, 1, 1, new Uint16Array([0]), gl.NEAREST);
     this.airHolderTex = this.makeTexture(gl.R16UI, gl.RED_INTEGER, gl.UNSIGNED_SHORT, 1, 1, new Uint16Array([0]), gl.NEAREST);
@@ -165,6 +169,10 @@ export class MapRenderer {
     this.gl.deleteTexture(this.elevationTex);
     this.elevationTex = this.makeTexture(this.gl.R16I, this.gl.RED_INTEGER, this.gl.SHORT, w, h, data, this.gl.NEAREST);
     this.hasElevation = true;
+    // The shades of T0 and T1 (ROADMAP R91): made once from the heights, read with one lookup a pixel.
+    this.gl.deleteTexture(this.shadeTex);
+    this.shadeTex = this.makeTexture(this.gl.RG8, this.gl.RG, this.gl.UNSIGNED_BYTE, w, h, farShade(w, h, data, this.opts.cellM, this.opts.wrapX), this.gl.LINEAR);
+    if (this.opts.wrapX) this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.REPEAT);
   }
 
   /** Province per cell (map size) for the revolts mode (PLAN 1.30b). */
@@ -385,6 +393,8 @@ export class MapRenderer {
       uSeaZone: this.seaZoneTex,
       uSeaHolder: this.seaHolderTex,
       uWar: this.warTex,
+      uShade: this.shadeTex,
+      uFar: this.farShades && this.hasElevation ? 1 : 0,
       uAirZone: this.airZoneTex,
       uAirHolder: this.airHolderTex,
       uTerrainCol: this.terrainColors,
@@ -419,6 +429,7 @@ export class MapRenderer {
     gl.deleteTexture(this.seaZoneTex);
     gl.deleteTexture(this.seaHolderTex);
     gl.deleteTexture(this.warTex);
+    gl.deleteTexture(this.shadeTex);
     gl.deleteTexture(this.airZoneTex);
     gl.deleteTexture(this.airHolderTex);
     gl.deleteTexture(this.elevationTex);

@@ -50,6 +50,8 @@ export function measureGround(page: Page): Promise<GroundMeasure> {
   return page.evaluate(() => {
     const v = window.__warsim!.view!;
     v.instances = false;
+    // Against flat fills (ROADMAP R91): the largest fill is found as one colour; the shades of T0 and T1 are not the ground's.
+    v.farShades = false;
     const c = document.getElementById('map') as HTMLCanvasElement;
     const gl = c.getContext('webgl2')!;
     const now = performance.now() + 1e6; // every fade is over

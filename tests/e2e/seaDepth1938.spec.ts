@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
-import { seaShade } from '../../src/render/map/ground';
+import { FAR_SEA_DEEP, FAR_SEA_SHALLOW, seaDepthShare, seaShade } from '../../src/render/map/ground';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { lookAt, open1938 } from './mapView';
@@ -29,18 +29,32 @@ async function middle(page: Page, lon: number, lat: number, m: number): Promise<
   });
 }
 
-test('the sea by its depth at T2: the Dogger Bank light, the South Pacific dark; at T1 one colour', async ({ page }, info) => {
+test('the sea by its depth: the Dogger Bank light, the South Pacific dark, at T2 by the ramp of the ground and at T1 by that of the far shades; flat, one colour', async ({ page }, info) => {
   test.setTimeout(150_000);
   await page.setViewportSize({ width: 1400, height: 800 });
   await open1938(page, 1938);
   const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/4.7') : info.outputPath();
   mkdirSync(out, { recursive: true });
   const [bank, ocean] = [[2.5, 54.8], [-130, -40]] as const;
+  // The sea's one colour: T1 with the shades of T0 and T1 off (ROADMAP R91; until R91 the sea of T1 was this).
+  await page.evaluate(() => void (window.__warsim!.view!.farShades = false));
   const t1 = [await middle(page, bank[0], bank[1], 1000), await middle(page, ocean[0], ocean[1], 1000)];
+  await page.evaluate(() => void (window.__warsim!.view!.farShades = true));
+  const far = [await middle(page, bank[0], bank[1], 1000), await middle(page, ocean[0], ocean[1], 1000)];
+  const world = [await middle(page, bank[0], bank[1], 8000), await middle(page, ocean[0], ocean[1], 8000)];
   const t2 = [await middle(page, bank[0], bank[1], 100), await middle(page, ocean[0], ocean[1], 100)];
   console.log(`T1 bank ${t1[0]} ocean ${t1[1]}; T2 bank ${t2[0]} ocean ${t2[1]}`);
-  // At T1 the same colour.
+  // Flat, the same colour.
   expect(Math.abs(lum(t1[0]!) - lum(t1[1]!))).toBeLessThan(3);
+  // With the shades of T0 and T1 (R91): the bank lighter than that colour and the ocean darker, by the far ramp for a
+  // depth of 15 to 60 m and of 3,000 m and more; at T1 and from the world's zoom alike.
+  const farAt = (depth: number): number => FAR_SEA_SHALLOW + (FAR_SEA_DEEP - FAR_SEA_SHALLOW) * seaDepthShare(depth);
+  console.log(`far shades: T1 bank ${far[0]} ocean ${far[1]}; 8000 m/px bank ${world[0]} ocean ${world[1]}`);
+  for (const [name, p] of [['T1', far], ['8000 m/px', world]] as const) {
+    expect(lum(p[0]!) / lum(t1[0]!), `${name}: the bank lighter`).toBeGreaterThan(farAt(60) * 0.97);
+    expect(lum(p[1]!) / lum(t1[1]!), `${name}: the ocean darker`).toBeLessThan(farAt(3000) * 1.03);
+    expect(lum(p[0]!) / lum(p[1]!), `${name}: the bank against the ocean`).toBeGreaterThan(1.25);
+  }
   // At T2 the bank lighter than the sea's colour, the ocean darker: as the ramp has it for a
   // depth of 15 to 40 m and of 4,000 m and more (within the light of the hillshade: none at sea).
   expect(lum(t2[0]!) / lum(t1[0]!)).toBeGreaterThan(seaShade(60) * 0.95);

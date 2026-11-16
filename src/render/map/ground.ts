@@ -132,3 +132,76 @@ export function warTable(pairs: ArrayLike<number>): Uint8Array {
   }
   return t;
 }
+
+/**
+ * The ground of T0 and T1 (ROADMAP R91, ADR-1080): until R91 the sea was one colour and a nation
+ * one fill. Three shades on the fills, each a factor of the colour, by the share the ground of T2
+ * and T3 leaves them (that ground has its own depth and relief):
+ * - the sea by its depth, `FAR_SEA_SHALLOW` over the shelves to `FAR_SEA_DEEP` over the basins
+ *   (`seaDepthShare`, the log ramp of `seaShade`);
+ * - the land by its relief, lit from the north-west, at most `FAR_RELIEF` lighter or darker;
+ * - a nation's land toward its border and its coast, `FAR_EDGE` of its colour on the border and
+ *   whole from `FAR_EDGE_BAND` inland (the difference of the two strongest holders' weights, as
+ *   `BORDER_BAND`).
+ * The first two are read from one texture made once from the elevation (`farShade`), one bilinear
+ * lookup a pixel: the pass of T0 and T1 has no loop over the heights (it cost half as much again
+ * when it had, PLAN 2.8a).
+ */
+export const FAR_SEA_SHALLOW = 1.2;
+export const FAR_SEA_DEEP = 0.8;
+export const FAR_RELIEF = 0.12;
+export const FAR_EDGE = 0.84;
+export const FAR_EDGE_BAND = 1;
+/** How much steeper than it is the land is lit at T0 and T1, and how soon a slope's light is at its most. */
+export const FAR_RELIEF_SCALE = 12;
+export const FAR_RELIEF_GAIN = 2.2;
+
+/** How far down the sea's ramp a depth is, 0 (the shore) to 1 (SEA_DEPTH_FULL metres and deeper). */
+export function seaDepthShare(depth: number): number {
+  return Math.min(1, Math.log(1 + Math.max(0, depth) / SEA_DEPTH_KNEE) / Math.log(1 + SEA_DEPTH_FULL / SEA_DEPTH_KNEE));
+}
+
+/** The least and the most a fill's colour is multiplied by at T0 and T1: the land's, and the sea's. */
+export const FAR_LAND_RANGE: readonly [number, number] = [FAR_EDGE * (1 - FAR_RELIEF), 1 + FAR_RELIEF];
+export const FAR_SEA_RANGE: readonly [number, number] = [FAR_SEA_DEEP, FAR_SEA_SHALLOW];
+
+/**
+ * The shades of T0 and T1 from the elevation (`elev`: metres, `w` × `h`, one a cell, the sea below
+ * 0; `cellM` metres to a cell): two bytes a cell. The first: the land's light, 128 on level ground
+ * and at sea, more where it faces the north-west; the mean of the cell and the eight about it (one
+ * height in 20 km is a facet a cell without). The second: the sea's depth share, 0 on land and at
+ * the shore to 255 at SEA_DEPTH_FULL. `wrapX`: the map goes round, west of the first column is
+ * the last.
+ */
+export function farShade(w: number, h: number, elev: ArrayLike<number>, cellM: number, wrapX: boolean): Uint8Array {
+  const light = new Float32Array(w * h);
+  const at = (x: number, y: number): number => {
+    const cx = wrapX ? (x + w) % w : Math.min(w - 1, Math.max(0, x));
+    return Math.max(0, elev[Math.min(h - 1, Math.max(0, y)) * w + cx]!);
+  };
+  // The light: north-west and above, as the ground of T2 and T3 has it.
+  const [lx, ly, lz] = [-0.5, -0.5, Math.SQRT1_2];
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      if (elev[y * w + x]! <= 0) continue;
+      const sx = ((at(x + 1, y) - at(x - 1, y)) / (2 * cellM)) * FAR_RELIEF_SCALE;
+      const sy = ((at(x, y + 1) - at(x, y - 1)) / (2 * cellM)) * FAR_RELIEF_SCALE;
+      const lit = (-sx * lx - sy * ly + lz) / Math.hypot(sx, sy, 1) / lz - 1;
+      light[y * w + x] = Math.tanh(lit * FAR_RELIEF_GAIN);
+    }
+  }
+  const out = new Uint8Array(w * h * 2);
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      let sum = 0;
+      for (let dy = -1; dy <= 1; dy++) {
+        const yy = Math.min(h - 1, Math.max(0, y + dy));
+        for (let dx = -1; dx <= 1; dx++) sum += light[yy * w + (wrapX ? (x + dx + w) % w : Math.min(w - 1, Math.max(0, x + dx)))]!;
+      }
+      const e = elev[y * w + x]!;
+      out[(y * w + x) * 2] = e > 0 ? Math.round(128 + 127 * (sum / 9)) : 128;
+      out[(y * w + x) * 2 + 1] = Math.round(255 * seaDepthShare(-e));
+    }
+  }
+  return out;
+}

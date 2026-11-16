@@ -84,10 +84,20 @@ changed only where the feature they test changed.
     load. The first look (0.6 opaque, 1.15 cells) made a province taken a white blot: 0.32 and 0.85. The whole
     browser suite green on the change (458). `npm run bench -- G` PASS (T0 290.7 fps, T2 162.0). Shot:
     `docs/evidence/R90b/flash-1500.png`.
-- [ ] R91 **The map's ground.** The sea is one flat colour and each nation one flat fill. The sea darker with depth
+- [x] R91 **The map's ground.** The sea is one flat colour and each nation one flat fill. The sea darker with depth
   and lighter over the shelf along the coasts; inside each nation's border a soft darker edge; faint relief under the
   political colours. AT: the political map's colours still tell every pair of neighbours apart (the check the nation
   colours have now); the shots; the frame time of the world zoom unchanged within the bench's noise.
+  Done (ADR-1080): the shades of T0 and T1 in the map's pass, the sea's depth and the land's light from one texture
+  made once from the elevation (`farShade`), the fill 0.84 of its colour on a border and whole a cell and a half
+  inland. `farShade.test.ts` (6): the 206 pairs of neighbours of 1938 at the darkest and the lightest shade, the
+  least ΔE 12.9 (France and French West Africa at 0.74; bar 12, unshaded 15); the first strengths (edge 0.8, relief
+  0.14) gave 11.5 and were eased, not the bar. `seaDepth1938.spec.ts` follows the feature (the sea of T1 was one
+  colour: now the Dogger Bank 34,62,102 and the South Pacific 24,43,71 at T1 and at 8,000 m/px); five specs that
+  tell water or a fill by its one colour measure with `view.farShades` off. The whole browser suite on the final
+  code: 457 of 458, `historyMine1938` red once and green alone six times of six. Not within the bench's noise: the map's pass 0.556 ms of GPU a frame at T0, from 0.520 (budget 1), and
+  1.154 at T2, from 1.078 (budget 2); `npm run bench -- G` PASS (T0 290.5 fps, T2 162.3). The edge is under 2 px at
+  the world's zoom and is seen from about 4,000 m/px in. Shots: `docs/evidence/R91/`.
 - [ ] R92 **Country names.** Dark, heavily rimmed and steeply turned ("POLAND" runs nearly upright). White capitals
   with a soft shadow, a gentler turn and curve, a small nation's name no larger than its land lets it be; told from
   a pale arrow under it (R89c: Germany's pale name is not, on its own arrows; a white name needs its shadow there). AT: the

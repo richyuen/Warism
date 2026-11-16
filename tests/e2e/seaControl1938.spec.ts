@@ -39,6 +39,8 @@ test('the sea-control mode tints the zones held with their holders\' colours: Sc
   await page.setViewportSize({ width: 1400, height: 800 });
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.view!.lastTick === 0, null, { timeout: 60_000 });
+  // Flat fills (ROADMAP R91): this test tells water and land by their one colour; the shades of T0 and T1 have farShade.test.ts and seaDepth1938.
+  await page.evaluate(() => void (window.__warsim!.view!.farShades = false));
   await page.waitForFunction(() => window.__warsim!.view!.hasFineCoast, null, { timeout: 60_000 });
   // The first day's sea control (the first tick) reaches the page.
   await page.evaluate(() => window.__warsim!.sim.step(2));

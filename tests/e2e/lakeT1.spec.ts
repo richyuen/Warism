@@ -62,6 +62,8 @@ test('a lake the coverage has not: water at T1 as at T2, the coverage\'s land at
   expect(lx, 'a lake of the mask that the coverage has not, in Europe').toBeGreaterThan(0);
   await page.setViewportSize({ width: 1400, height: 800 });
   await open1938(page, 1938);
+  // Flat fills (ROADMAP R91): this test tells water and land by their one colour; the shades of T0 and T1 have farShade.test.ts and seaDepth1938.
+  await page.evaluate(() => void (window.__warsim!.view!.farShades = false));
   const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/4.7') : info.outputPath();
   mkdirSync(out, { recursive: true });
   // The sea's colour at T1 (the middle of the South Pacific).

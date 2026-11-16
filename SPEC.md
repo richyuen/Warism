@@ -1904,6 +1904,11 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   drawn beside the panel at the screen's edge (R34e), over no other hero's; under one floating over the map's middle
   (Relations, History, the editor, the settings), not drawn while it covers it (R87d). Balls: the
   flag chip a ball of `COUNTER_BALL_R` (8 px) over the box's left end.
+- **The shades of T0 and T1** (ROADMAP R91, ADR-1080; `ground.ts`, `mapShader.ts`): in the political modes the sea
+  by its depth (`FAR_SEA_SHALLOW` 1.2 to `FAR_SEA_DEEP` 0.8 of its colour), the land by its relief lit from the
+  north-west (`FAR_RELIEF` 0.12 either way) and a fill darker toward its border and coast (`FAR_EDGE` 0.84), by
+  the share the ground of T2 and T3 leaves them. The first two from `farShade`'s texture, made once from the
+  elevation. `MapView.farShades` off: flat fills (tests).
 - **Fronts** (ROADMAP R90a, ADR-1078; `mapShader.ts`, `ground.ts`): where the land two nations at war hold meets,
   the border is a hot red line (`FRONT_CORE_RGB`, at least `FRONT_CORE_PX` 1.1 px either side) with a red glow
   (`FRONT_GLOW_RGB`, `FRONT_GLOW` 0.7 on the line, over `FRONT_GLOW_PX` 7 px), at every zoom, in the modes of the

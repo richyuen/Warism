@@ -76,3 +76,17 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   a load). The whole browser suite by hand on the change: 458 passed in 10.0 min.
 - `npm run bench -- G`: T0 290.7 fps, T2 162.0 fps, draw cpu 4.9 ms, PASS.
 - Shot: `docs/evidence/R90b/flash-1500.png` (the first look, a white blot, is in ADR-1079).
+
+## 2026-11-15 — R91: the map's ground at T0 and T1 (ADR-1080)
+
+- The sea by its depth, the land by its relief, a fill darker toward its border, in the map's pass from one
+  texture made from the elevation.
+- Tests: `farShade.test.ts` (6; neighbours' least ΔE 12.9, bar 12). The whole browser suite on the first try: 9
+  failed of 458. Seven told water or a fill by its one colour or compared the map with the ground of T2 on and
+  off: the shades untied from `relief`, and `view.farShades` off where a test needs flat fills (ADR-1080).
+  `seaDepth1938` changed with the feature. `invasion1938` and `occupiedGround1938` passed alone and after.
+  The suite again on the final code: 457 passed, 1 failed (`historyMine1938`, the phone's History panel), green
+  alone six times of six after (`--repeat-each=3`): a test of the panel, red once under the whole suite's load.
+- `npm run bench -- G`: the map's pass 0.556 ms of GPU a frame at T0 (0.520 before, budget 1), 1.154 at T2 (1.078,
+  budget 2); T0 290.5 fps, T2 162.3 fps, PASS.
+- Shots: `docs/evidence/R91/` (before and after at 20,000 and 4,000 m/px; after at 10,000 and 2,200).
