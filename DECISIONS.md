@@ -65,3 +65,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Consequences:** a march in peace, of a nation looked at, is a faint arrow (`orderLines1938.spec.ts`'s first test
   follows). At 20,000 m/px many arrows start under their nation's counter and show only their heads; R90's fronts are
   what a war is read by at that zoom.
+
+### ADR-1076 · 2026-11-15 · accepted (the user's decision) — Bench G runs on the GPU alone unless asked
+- **The user:** "do we need the software bench?", then: "yes accept your recommendation".
+- **Found:** bench G's software rasteriser is reported and never judged; the release's run leaves it out (ADR-959).
+  Its figures are 1 to 3 fps against budgets of 60 and 30 and move by more than a factor of two between runs of one
+  build (T2 2.4 fps, then 0.9, on 2026-11-15); it is most of G's time, over 7 minutes in three runs of seven that
+  evening. The gate's `@swiftshader` project and the perf specs on SwiftShader are another thing and stay.
+- **Decision:** `npm run bench -- G` runs the GPU's stages alone. `--software` adds the software rasteriser's, reported
+  as before. `--gpu-only` is still taken and changes nothing. `docs/bench/G-game.json` keeps the software rasteriser's
+  last record and its two pictures, marked with their date.
+- **Consequences:** PROMPT RELEASES step 3's `npm run bench -- G --gpu-only` is the same run as `-- G`.

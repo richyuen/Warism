@@ -56,7 +56,8 @@ Frozen records, searched and never edited: `PLAN.md`, `docs/PLAN_DONE.md`, `docs
 - `npm run sweep` (10 seeds × 50 years, report in `docs/sweeps/`; `--first`, `--tag`) and
   `npm run sweep:quick` (10 × 20, report in `.cache/`).
 - `npm run soak -- --scenario 1938 --seed 99 --minutes 30 --affinity 0xFFFF`.
-- `npm run bench` (`-- G`: the game's frame budgets alone).
+- `npm run bench` (`-- G`: the game's frame budgets alone, on the GPU; `--software` adds the software rasteriser,
+  reported and never judged, several minutes more; ADR-1076).
 - `npm run saves [-- <out> [last year]]`: the replay's yearly starts (R68a; built by the Pages workflow, gitignored
   in `public/data/scenarios/1938h/start/`; ~7 min).
 - `npm run data` / `npm run data -- --check`: data pipeline. `npm run data -- --previews`: only the

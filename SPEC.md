@@ -2307,9 +2307,10 @@ every test red twice is on the known reds [ADR-297].
   the real GPU (ANGLE with `--enable-gpu --ignore-gpu-blocklist`; without them SwiftShader). Pages
   `bench.html?b=A` (map), `B` and `BP` (proxies), `P` (precision, run by an e2e spec), `R` (the
   province raster). `G` is the game itself, judged against the frame budgets of §1 on this
-  machine's GPU, with the software rasteriser reported beside it (`tools/bench/game.ts`); it exits 1
-  when a judged budget is missed. `--gpu-only` leaves the software rasteriser out, its last figures
-  and pictures kept (the release's run, ADR-959). Results and screenshots go to `docs/bench/`.
+  machine's GPU (`tools/bench/game.ts`); it exits 1 when a judged budget is missed. `--software` runs
+  it on the software rasteriser too, reported and never judged (ADR-1076, the user's decision: not run
+  unless asked for; its last figures and pictures are kept). `--gpu-only` (ADR-959) is the default and
+  is still taken. Results and screenshots go to `docs/bench/`.
 
 ### 10.5 The nightly run
 `.github/workflows/nightly.yml`, every night on `main` (no GPU, so no e2e or bench): typecheck, lint,

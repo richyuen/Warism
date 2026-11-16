@@ -1,10 +1,11 @@
 // `npm run bench [-- A B …]`: builds, serves the production bundle and runs the render
 // benchmarks in Chromium on the real GPU (ANGLE/D3D11 on Windows; headless still uses the
 // GPU with these flags). Results → docs/bench/<name>.json, screenshots → docs/bench/*.png.
-// G is the game itself (PLAN 7.1j, `game.ts`): the frame budgets on this machine's GPU, judged,
-// and on the software rasteriser beside it; it exits 1 when the judged budgets are not met.
-// `--gpu-only` runs G on the GPU alone (the release check, ADR-959): the software rasteriser is reported, never judged,
-// and takes most of G's time; its last figures and pictures are kept.
+// G is the game itself (PLAN 7.1j, `game.ts`): the frame budgets on this machine's GPU, judged;
+// it exits 1 when they are not met. `--software` runs it on the software rasteriser too (ADR-1076,
+// the user's decision): reported, never judged, about 1 to 3 fps and most of G's time when run, so
+// not run unless asked for; its last figures and pictures are kept. `--gpu-only` (ADR-959) is the
+// default now, and still taken.
 import { chromium, type Page } from '@playwright/test';
 import { spawn, execSync, type ChildProcess } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -16,7 +17,7 @@ const root = path.resolve(import.meta.dirname, '../..');
 const outDir = path.join(root, 'docs/bench');
 const PORT = 4174;
 const GPU_ARGS = ['--use-angle=d3d11', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-gpu-vsync', '--disable-frame-rate-limit'];
-/** Bench G's settings (PLAN 7.1j): this machine's GPU, judged; the software rasteriser beside it. */
+/** Bench G's settings (PLAN 7.1j): this machine's GPU, judged; the software rasteriser beside it with `--software` (ADR-1076). */
 const GAME_SETTINGS: Setting[] = [
   { name: 'gpu', args: GPU_ARGS, judged: true },
   { name: 'swiftshader', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu-vsync', '--disable-frame-rate-limit'], judged: false },
@@ -135,7 +136,7 @@ async function main(): Promise<void> {
 
 /** Bench G: each setting in a browser of its own; the report says the budget and pass or fail. */
 async function runGame(): Promise<void> {
-  const gpuOnly = process.argv.includes('--gpu-only');
+  const gpuOnly = !process.argv.includes('--software');
   const run = GAME_SETTINGS.filter((s) => !gpuOnly || s.judged);
   const settings = [];
   for (const setting of run) {
@@ -151,7 +152,7 @@ async function runGame(): Promise<void> {
     }
   }
   const judged = settings.flatMap((s) => s.cases.filter((c) => c.pass !== null));
-  // With --gpu-only the unjudged settings keep their last record, so the file always holds every setting.
+  // Without --software the unjudged settings keep their last record, so the file always holds every setting.
   if (gpuOnly) {
     try {
       const last = JSON.parse(readFileSync(path.join(outDir, 'G-game.json'), 'utf8')) as { date?: string; settings?: { setting: string; kept?: string }[] };

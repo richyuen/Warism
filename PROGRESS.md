@@ -39,3 +39,9 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - The bench's SwiftShader stage (reported, not judged) took over 7 minutes in three runs of seven this evening and was
   cut off by my own time limit; left to run, it ended. `-- G --gpu-only` is the run to time a change by.
 - Shots: `docs/evidence/R89b/`.
+
+## 2026-11-15 — Bench G on the GPU alone unless asked (ADR-1076, the user's decision)
+
+- `npm run bench -- G` no longer runs the software rasteriser's stages; `--software` adds them. `--gpu-only` is still
+  taken. Run after the change: `npm run bench -- G` in 31 s (several minutes before): GPU T0 305.1 fps, T2 163.1 fps
+  with 10,752 sprites, draw cpu 4.9 ms, PASS; the software rasteriser's record of 2026-11-11 kept.
