@@ -32,6 +32,10 @@ import { NATIONS_1938 } from '../../src/sim/scenario1938';
 // are drawn. The clicked one's bar is 5 where it was 9 (the user's decision, 2026-11-16): it says the scene has
 // formations standing alone, and the two rules below it are the click's. Seed 11's day 20: 12 of 12 as drawn, the
 // clicked one 6.
+// Since ROADMAP R125 (ADR-1110, the markers' tighter rule; red from it, found at R137's gate) a marker in a stack or parted
+// from another stands up to 13 px off its formation: the click is at the middle of the marker drawn for it. More stand
+// in stacks: of seeds 3, 5, 7, 11, 13 and 4441 on days 10, 20, 30, 50 and 70 (on R137's rules), every click opens what is
+// drawn and none one's own; the clicked one opens 0 to 4 times of twelve but on seed 7's day 70, 5.
 
 const tag = (t: string): number => NATIONS_1938.findIndex((n) => n.tag === t) + 1;
 
@@ -107,13 +111,18 @@ async function front(page: Page, seed: number, a: number, label: string, b: numb
       await page.evaluate(([x, y]) => window.__warsim!.view!.controller.set({ cx: x, cy: y, scale: 12 }), await drawnAt(id));
       await page.waitForTimeout(k === 0 ? 400 : 300);
     }
-    const drawn = await page.evaluate(() => {
+    // At its counter (ROADMAP R137's gate: since R125, ADR-1110, a marker in a stack or parted from another stands up to
+    // 13 px off its formation, and a click at the formation's place hit nothing on 3 of seed 11's twelve): the middle of
+    // the marker drawn for it, or the formation's place where it has none.
+    const drawn = await page.evaluate((id) => {
       const v = window.__warsim!.view!;
       const c = document.getElementById('map') as HTMLCanvasElement;
-      const f = v.formationPick(c.clientWidth / 2, c.clientHeight / 2);
-      return { drawn: f, drawnNation: v.formationNation(f) };
-    });
-    await page.mouse.click(800, 450);
+      const r = v.markerRects.find((m) => m.id === id || m.members.includes(id));
+      const [x, y] = r ? [r.x + r.w / 2, r.y + r.h / 2] : [c.clientWidth / 2, c.clientHeight / 2];
+      const f = v.formationPick(x, y);
+      return { drawn: f, drawnNation: v.formationNation(f), x, y };
+    }, id);
+    await page.mouse.click(drawn.x, drawn.y);
     await page.waitForTimeout(500);
     const r = await page.evaluate(() => {
       const v = window.__warsim!.view!;
@@ -121,13 +130,13 @@ async function front(page: Page, seed: number, a: number, label: string, b: numb
       const panel = fp ? Number(fp.dataset['formation']) : null;
       return { panel, panelNation: panel === null ? 0 : v.formationNation(panel), sel: [...v.selectedFormations] };
     });
-    out.push({ clicked: id, ...drawn, ...r });
+    out.push({ clicked: id, drawn: drawn.drawn, drawnNation: drawn.drawnNation, ...r });
   }
   return out;
 }
 
 const cases = [
-  { seed: 11, a: 'GER', label: 'Poland', b: 'POL', days: 20, clickedAtLeast: 5 },
+  { seed: 7, a: 'GER', label: 'Poland', b: 'POL', days: 70, clickedAtLeast: 5 },
   { seed: 6827, a: 'JAP', label: 'China', b: 'CHI', days: 45, clickedAtLeast: 1 },
 ];
 
