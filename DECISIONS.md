@@ -599,3 +599,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   one of a war's kinds (`WAR_KINDS`: "my wars only" shows it).
 - **When seen and not when begun:** a massing begun is the nation's own secret, and many are given up unseen.
 - **The pin of seed 99:** bf16e257 -> a5dbeae6.
+
+### ADR-1108 · 2026-11-17 · proposed (the user's decision) — R124 and R125: the hero's counter over a nation's, and the markers' quarter
+- **R124.** Built: of its three steps a hero's counter takes the first that covers no nation's counter
+  (`counters.ts`); ROADMAP R8 keeps it within a step. Not enough at 6,000 m/px, where it is twice the size (R42c).
+  Options: (a) the others' size where it would cover a counter; (b) two steps; (c) as it is.
+- **R125.** Options: (a) the quarter of PLAN 2.7s1 and 2.7s2 to 2 % and none, the nudge to 13 px (measured: the
+  critic's target met on its three days; ten unit tests to rewrite; boxes further from their formations, more
+  stacks); (b) as it is: no worse than run 72, and no score rests on it.
+- **Recommended:** R125 (a) at the far end of T1 only (1,200 m/px and farther), where a cell is 10 px and a marker
+  26; R124 (a). Neither built: both change rules that earlier items set on purpose.

@@ -487,16 +487,25 @@ Each with the critic's own "seen fixed when" (`critic/CRITIC_REPORT.md`).
   Colombia are barred still). Test: `tests/unit/massing1938.test.ts`. The pin of seed 99 stands.
   - Not looked at: worlds of three (the same six seeds now: the first war on day 476, 20, 111, 44, 1,680, 1,819),
     where each has another neighbour and the rule does not apply.
-- [ ] R124 **R73-N4: hero tags on counters in play** at 6,000 m/px (R72-N4's first half). AT:
-  `node critic/scripts/c73_look.mjs 56901 1600 900 45,180,400`: no hero's tag over a counter's number on day 400.
-- [ ] R125 **R73-N5: markers over one another at 1,200 to 1,800 m/px** (old). AT:
-  `node critic/scripts/c73_markers.mjs 56951 head 1600 900 1675,372 10,20,30 1800,1200,600`: the pairs at 1,800
-  under a quarter of the markers on each day.
-- [ ] R126 **R73-N6: the phone**: the opened banners cover the ticker; the first cue covers "Ranking". AT:
-  `node critic/scripts/c73_look.mjs 56903 390 844 60,240 phone`.
-- [ ] R127 **R73's small things**: wars with nothing in their first month (16 of 111); `slowClick`'s five named
-  cases; "1202: not done, no water there" (a fleet by its number); "COMMUNIST CHINA" under its capital's flag.
+- [x] R126 **R73-N6: the phone**: the ticker gives way while the banners are opened (they stood on its rows); the
+  first cue stands under the top bar and the legend's toggle. Test: `tests/e2e/reviewBatch1938.spec.ts`.
+- [x] R127 **R73's small things**, what was a fault: a fleet's refusal names it ("Destroyer flotilla 1202: not done,
+  no water there" where "1202: …": the refusals only a fleet's order has). Not items: the wars with nothing in
+  their first month (16 of 111, a measure; R98's and R123's ground), `slowClick`'s named cases (ADR-914's list),
+  "COMMUNIST CHINA" under its capital's flag (the names' fitting: with the odd-shaped names of Batch 38's foot).
 
+Left of run 73, for the user (not ticked, not open: each wants a choice):
+- **R124, R73-N4: hero tags on counters in play** at 6,000 m/px. Done of it: a hero's counter takes, of its place
+  and a step up or down (R8's rule: no further), the first that covers no nation's counter. In the critic's scene
+  (`c73_look.mjs 56901 1600 900 45,180,400`, day 400) T-42, Bismarck, Roma and HMS Hood still stand on a counter
+  each: a hero's counter is twice the others' size there (R42c) and a step is not room enough. What would do it:
+  the hero's counter the others' size where it would cover one, or R8's step widened. The user's.
+- **R125, R73-N5: markers over one another at 1,200 to 1,800 m/px.** Measured with the critic's probe
+  (`c73_markers.mjs 56951 … 1675,372 10,20,30 1800`), the pairs that overlap of the markers, days 10, 20, 30: now 24
+  of 60, 47 of 71, 39 of 72. With a marker stacked into its nation's from 2 % under (25 %), parted from another's
+  to none (24 %) and moved up to 13 px (8): 5 of 48, 8 of 53, 13 of 59, under the critic's quarter on each day; with
+  8 px, 18 of 59 on day 30, over. It rewrites PLAN 2.7s1's and 2.7s2's quarter (ten unit tests are of it), moves a
+  box further from its formation and puts more formations behind a "×n". Not built; the user's.
 The critic's design objections not items of their own: ADR-1060 (German formations at peace in Vichy France after a
 1941 free start) and heroes on by default (ADR-1070), as run 72: the user's earlier decisions, not re-opened.
 

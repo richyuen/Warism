@@ -2408,6 +2408,15 @@ button.unit-icon.on {
     width: auto;
     max-width: 30rem;
   }
+  /* The banners opened (ROADMAP R126; critic run 73, R73-N6: their rows stood on the ticker's two): the ticker gives
+     way while they are open, as it does to a panel. */
+  #ui:has(.war-banners.opened) .ticker.compact {
+    display: none;
+  }
+  /* The first cue under the ranking's and the legend's toggles, not on them (R73-N6). */
+  #ui > .first-cue {
+    top: 6.6rem;
+  }
   #ui:has(.war-banners) .ticker.compact {
     bottom: calc(var(--bar-top, 2.8rem) + 0.4rem + 2.2rem);
   }

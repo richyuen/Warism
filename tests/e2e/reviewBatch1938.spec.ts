@@ -163,3 +163,32 @@ test("the played nation's war is on the row of banners, however small; with none
   await expect(page.getByTestId('war-banner').first()).toHaveAttribute('data-war', String(least.id), { timeout: 20_000 });
   await expect(page.getByTestId('war-banner')).toHaveCount(3);
 });
+
+// ROADMAP R126 (critic run 73, R73-N6): on a phone the opened banners stood on the ticker's rows, and the first cue on
+// the ranking's toggle.
+test('a phone: the ticker gives way to the opened banners; the first cue stands under the toggles', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() => {
+    if (localStorage.getItem('warsim.cueSeen') === null) sessionStorage.setItem('warsim.cueAsked', '1');
+  });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(ready, null, { timeout: 60_000 });
+  const cue = (await page.getByTestId('first-cue').boundingBox())!;
+  for (const toggle of ['legend-toggle', 'topbar']) {
+    const b = (await page.getByTestId(toggle).boundingBox())!;
+    expect(cue.y, `the cue under ${toggle}`).toBeGreaterThanOrEqual(b.y + b.height);
+  }
+  await page.getByTestId('first-cue-close').click();
+  const pairs = [['GER', 'POL'], ['ITA', 'YUG'], ['BUL', 'ALB'], ['SOV', 'FIN']].map(([a, d]) => [id(a!), id(d!)] as const);
+  await page.evaluate((pairs) => {
+    for (const [attacker, defender] of pairs) window.__warsim!.sim.command({ kind: 'declareWar', attacker, defender });
+  }, pairs);
+  await page.evaluate(() => window.__warsim!.sim.step(24));
+  await expect(page.getByTestId('war-more')).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByTestId('ticker')).toBeVisible();
+  await page.getByTestId('war-more').click();
+  await expect(page.getByTestId('ticker')).toBeHidden();
+  await page.getByTestId('war-more').click();
+  await expect(page.getByTestId('ticker')).toBeVisible();
+});

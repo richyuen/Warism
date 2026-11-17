@@ -361,3 +361,10 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 ## 2026-11-17 — R122: a massing seen is told (ADR-1107)
 
 - `MassingSeen`, `World.massTold`. The pin of seed 99 bf16e257 -> a5dbeae6.
+
+## 2026-11-17 — R126, R127; R124 in part; R125 measured and left (ADR-1108, proposed)
+
+- R126: the phone's ticker gives way to opened banners; the cue lower. R127: a fleet named in its refusal.
+- R124: the step that covers no counter; the critic's scene still has four hero counters on counters. R125: the
+  tighter stacking meets the critic's target and rewrites the quarter: for the user. The critic's probes run here
+  against a preview of the build on port 5373.
