@@ -581,7 +581,7 @@ The full run's non-blocking issues, fixed before the release's checks; no critic
   at 600, 2 and 2 (6, 9); at 400, 2 and 2 (7, 4); 1,800 as R125 left it (12 of 59; 9 of 47). Tests:
   `tests/unit/markerStacks.test.ts`; by hand `markerStacks1938`, `markers1938`, `handover1938`, `heroStack1938`
   (7 green).
-- [x] R132 **R75-N1: the banners change places by the second while the game runs** (COMMIT; ADR-1114 (b), the user's
+- [x] R132 **R75-N1: the banners change places by the second while the game runs** (8d3b417e; ADR-1114 (b), the user's
   decision; R130's order: a war with a battle first). A war is fought 10 days after a battle (`WarsFought`, the worker);
   while more wars than the row, a war keeps the place and slot it took for 20 days (`heldRow`), the played nation's at
   once; a row with room is R121's order. AT as the user took it: `c75_bannerFlip.mjs 57901 150 head 60` row 3, cursor
