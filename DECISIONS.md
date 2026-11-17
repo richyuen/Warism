@@ -538,3 +538,32 @@ from AoC are tagged **[AoC-DEVIATION]**.
   zoom and at most a quarter of the counters. The names keep clear of the counters as they did (`nameObstacles`),
   and find room.
 - **Not the markers of T1:** who faces whom is what that tier shows (PLAN 2.7s1); left.
+
+### ADR-1101 · 2026-11-16 · accepted (the user: "use your best judgment … I automatically accept your recommendations in advance") — Batch 38: the war banners in one row; what the names keep clear of
+- **Was:** `MAX_BANNERS` 6, two rows on a desk (PLAN 7.4f6, the critic's N16: three rows were too many); a phone 2
+  and a "+N" (ADR-760). The review: with the ticker and the bar they cover the map's foot for a whole war.
+- **Decision:** `DESK_BANNERS` 3 in one row, the "+N" a button on a desk too; opened, the six in two rows. The
+  newest war first (`startTick`, then the id): with three shown, the war just begun is the one wanted.
+- **The names** keep clear of the banners (`NAME_COVER_SELECTOR`). First tried with every box the tags keep clear of
+  (the ticker's rows, the bars): `godUndoPicture1938` went red, a city named before an act not named after its undo,
+  for a row of the ticker and then for the bottom bar's height with God Mode's tools. Names that give way to boxes
+  that come and go blink; the banners stay.
+- **R115:** the banner's title in words and its score in figures. The figure was first under the title, beside the
+  bar: the banner grew 7 px and stood on the ticker (`phoneLayout1938`); at the title's end it adds no height.
+
+### ADR-1102 · 2026-11-16 · accepted (the same) — Batch 38: a first cue, for a game started from the title screen
+- **Decision:** the title screen marks the game it starts (`sessionStorage`), the game's page shows the cue once and
+  keeps that it was seen (`localStorage`). A game opened by a link has none: a link is given to one who knows, and
+  the suite's 470 specs open games so.
+- It takes no pointer but on its button: the first click on the map is the map's.
+
+### ADR-1103 · 2026-11-16 · accepted (the same) — Batch 38: the units' signs, a counter's band, a tag's bar
+- **The legend's line behind a "?":** always shown it put the panels at 6.6 % of the map at 1600 by 900 and 9.3 %
+  at 1280 by 800, over `chromeCover1938`'s 6 and 8 % (R94a's bars). The bars stand.
+- **`COUNTER_STRIPE`** 3 px of the nation's colour left of the flag; the box 3 px wider. Not in the ball look.
+- **A tag's bar** (`TagInput.share`, `TAG_BAR_PX` 2): inside the tag's box, so the layout is as it was.
+
+### ADR-1104 · 2026-11-16 · accepted (the same) — Batch 38: what of the review was not built, and why
+- **The settings' tabs:** headed parts in one panel. **The dark sprites' rim:** ADR-888's tint stands. **The grey
+  banner:** PLAN 7.4f35's, on purpose. **The phone's tools behind a menu, the ticker's column:** layouts of their
+  own. **The coasts, the odd-shaped names:** ROADMAP, Batch 38's foot.

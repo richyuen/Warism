@@ -43,6 +43,12 @@ export const COUNTER_BALL_R = 8;
 export const COUNTER_SCALE = 1.25;
 /** The radius of a counter's corners, in its own px (ROADMAP R93). */
 export const COUNTER_CORNER = 3;
+/**
+ * A band of the nation's own colour at a counter's left end, in its own px (ROADMAP R112, ADR-1103): the colour stood
+ * under the flag, a px of it seen. Two red flags of 10 px (the Soviet Union's, Communist China's) are one flag; their
+ * nations' colours on the map are not.
+ */
+export const COUNTER_STRIPE = 3;
 
 export function counterNation(nation: number, fleet: boolean): number {
   return fleet ? nation + NAVAL : nation;
@@ -508,7 +514,7 @@ export class CounterLayer {
     };
     const h = 14;
     // Flag chip, the strength, and "+n" for the other nations folded in.
-    const boxWidth = (strength: number, others: number): number => widthOf(strengthText(strength)) + 18 + (others > 0 ? widthOf(`+${others}`) + BADGE_GAP : 0);
+    const boxWidth = (strength: number, others: number): number => widthOf(strengthText(strength)) + 18 + COUNTER_STRIPE + (others > 0 ? widthOf(`+${others}`) + BADGE_GAP : 0);
     const shown = this.declutter(src, cam.scale, now, alpha > 0.01, (total, others) => [boxWidth(total, others) * size, h * size], geo.wrapX ? { w: geo.w, cx: cam.cx } : undefined);
     const offs = itemOffsets(cam, geo, vw);
     // Small first, so the big stacks stay on top.
@@ -544,7 +550,7 @@ export class CounterLayer {
     // counter whose place is in the view kept whole in it ("+1" was cut by the screen's edge).
     // No larger than the others where its box would be over HERO_SCREEN_SHARE of the screen's width (ROADMAP R42c;
     // critic run 49, R49-N1: "P.100 Ercole" 148 px, 38 % of a phone's): the widest name's.
-    const widest = heroes.reduce((m, hero) => Math.max(m, widthOf(hero.name) + 18), 0);
+    const widest = heroes.reduce((m, hero) => Math.max(m, widthOf(hero.name) + 18 + COUNTER_STRIPE), 0);
     const room = widest > 0 ? (HERO_SCREEN_SHARE * vw) / (widest * size) : heroScale;
     const hs = size * Math.max(1, Math.min(heroScale, room));
     if (alpha > 0.01) {
@@ -552,7 +558,7 @@ export class CounterLayer {
       const groups: { lead: HeroCounter; members: number[]; dy: number; box: [number, number, number, number] }[] = [];
       const over = (a: [number, number, number, number], x: number, y: number, w: number, hh: number): boolean => !(x >= a[0] + a[2] || x + w <= a[0] || y >= a[1] + a[3] || y + hh <= a[1]);
       for (const hero of heroes) {
-        const w = widthOf(hero.name) + 18;
+        const w = widthOf(hero.name) + 18 + COUNTER_STRIPE;
         const [sx, sy0] = worldToScreen(cam, hero.x, hero.y, vw, vh);
         const boxAt = (dy: number): [number, number, number, number] => [sx - (w / 2) * hs, sy0 + dy - (h / 2) * hs, w * hs, h * hs];
         const dy = [0, step, -step].find((d) => groups.every((g) => !over(g.box, ...boxAt(d))));
@@ -583,7 +589,7 @@ export class CounterLayer {
       const placed: [number, number, number, number][] = [];
       for (const g of groups) {
         const name = g.members.length > 1 ? `${g.lead.name} +${g.members.length - 1}` : g.lead.name;
-        const w = widthOf(name) + 18;
+        const w = widthOf(name) + 18 + COUNTER_STRIPE;
         let box: [number, number] | null = null;
         for (const off of offs) {
           const [sx, sy0] = worldToScreen(cam, g.lead.x + off, g.lead.y, vw, vh);
@@ -690,6 +696,8 @@ export class CounterLayer {
     flagOf: (nation: number) => CanvasImageSource | null,
     balls: boolean,
   ): void {
+    // The band of the nation's colour (ROADMAP R112): not in the ball look, whose ball is over the box's end.
+    const stripe = balls ? 0 : COUNTER_STRIPE;
     ctx.save();
     ctx.globalAlpha = a;
     if (size !== 1) {
@@ -711,10 +719,10 @@ export class CounterLayer {
       ctx.fillStyle = colorOf(nation);
       if (round) {
         ctx.beginPath();
-        ctx.roundRect(x + 1, y + 1, 12, h - 2, [COUNTER_CORNER - 1, 0, 0, COUNTER_CORNER - 1]);
+        ctx.roundRect(x + 1, y + 1, 12 + stripe, h - 2, [COUNTER_CORNER - 1, 0, 0, COUNTER_CORNER - 1]);
         ctx.fill();
-      } else ctx.fillRect(x + 1, y + 1, 12, h - 2);
-      if (flag) ctx.drawImage(flag, x + 2, y + 3, 10, 8);
+      } else ctx.fillRect(x + 1, y + 1, 12 + stripe, h - 2);
+      if (flag) ctx.drawImage(flag, x + 2 + stripe, y + 3, 10, 8);
     }
     ctx.strokeStyle = naval ? '#8ec5ff' : 'rgba(0, 0, 0, 0.9)';
     ctx.lineWidth = 1;
@@ -728,18 +736,18 @@ export class CounterLayer {
     if (naval) {
       ctx.fillStyle = '#8ec5ff';
       ctx.beginPath();
-      ctx.moveTo(x + 14, y + h - 4);
+      ctx.moveTo(x + 14 + stripe, y + h - 4);
       ctx.lineTo(x + w - 2, y + h - 4);
       ctx.lineTo(x + w - 5, y + h - 2);
-      ctx.lineTo(x + 16, y + h - 2);
+      ctx.lineTo(x + 16 + stripe, y + h - 2);
       ctx.closePath();
       ctx.fill();
     }
     ctx.fillStyle = naval ? '#d6ecff' : '#ffe28a';
-    ctx.fillText(text, x + 15, y + h / 2 + (naval ? -0.5 : 0.5));
+    ctx.fillText(text, x + 15 + stripe, y + h / 2 + (naval ? -0.5 : 0.5));
     if (others > 0) {
       ctx.fillStyle = '#b4bdcb';
-      ctx.fillText(`+${others}`, x + 15 + widthOf(text) + BADGE_GAP, y + h / 2 + 0.5);
+      ctx.fillText(`+${others}`, x + 15 + stripe + widthOf(text) + BADGE_GAP, y + h / 2 + 0.5);
     }
     ctx.restore();
   }

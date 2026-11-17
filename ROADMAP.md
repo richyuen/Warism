@@ -414,6 +414,52 @@ hero is one tank.
 After the next critic (the user's choice of the order): the ground of the close zooms (relief, rivers, roads); a
 war seen from the world's zoom (a mark where the fighting is heaviest).
 
+## Batch 38 — the review of the game's pictures (the user, 2026-11-16: "use your best judgment and try to implement
+1, 3, 4, 5, 6, 7, 9, 10, 11, 12, and editor styling. I automatically accept your recommendations in advance")
+
+A sub-agent's review of 42 pictures (PROGRESS, 2026-11-16); its numbers in brackets. What needs the user is left and
+said. The critic when the batch is done.
+
+- [x] R110 **The bottom of the screen** [1] (ADR-1101). The war banners in one row on a desk (`DESK_BANNERS` 3, the
+  newest wars first), the rest behind a "+n" that opens them (to `MAX_BANNERS`, two rows, as it was); a phone as it
+  was. A city's or a nation's name keeps clear of the banners. Not of the bars and the ticker's rows: a name under a
+  bar is not seen either way, and one that gave way to each row of the ticker would blink (`godUndoPicture1938` red
+  on both tries). `warBannerRows1938`, `phoneLayout1938`, `settings1938` and `toBattle1938` follow the one row.
+  - Not done: the ticker's rows moved to a column of their own; the tags kept from under the bottom bar (they were
+    already: `tagObstacles`).
+- [x] R111 **The counters' signs said** [3]. A "?" in the legend's title shows a line: "Flag and number: the men
+  there. Blue: a fleet. +n, ×n: more beneath it" (at the close zooms: the tag's parts, its bar, the red edge and the
+  line of contact). Behind the "?" because shown always it took the panels past `chromeCover1938`'s 6 % of the map.
+  A nation's panel: "581,184 · 95 formations" where "581,184 (95)".
+- [x] R112 **A counter's edge in its nation's colour** [4] (`COUNTER_STRIPE`, 3 px left of the flag). Not done: the
+  Relations graph's and the ranking's flags.
+- [x] R113 **A first cue** [5] (ADR-1102; `src/ui/FirstCue.tsx`): three lines under the clock for the first game
+  started from the title screen, closed by its button or the first Resume, not shown again; only its button takes
+  the pointer. Not for a game opened by its link.
+- [x] R114 **A battle read at the close zooms** [6]. A tag has a bar of its men of its full strength along its foot
+  (green, yellow under a half, red under a quarter, as the T1 marker's; a hero's its health), and the legend's "?"
+  says what the red edge and the line between two units are.
+  - Not done: a light rim on dark sprites (their tint on light ground is ADR-888's, measured).
+- [x] R115 **A war banner says what it is** [7]: its title in words ("Germany and 1 more (attacking) against Poland
+  and 4 more", whose way the score goes and what the bar is), the score in figures at its end, the bar's middle
+  marked. Not changed: a war with no battle now is grey (PLAN 7.4f35, on purpose: its click has nowhere to go).
+- [x] R116 **The settings panel whole** [9]: two headed parts ("Display and sound", "New game", a rule between),
+  its foot clear of its last row, a thin bar that says it scrolls. Not tabs: twelve specs open the panel and use the
+  new game's form at once, and a player would have one click more to it.
+- [x] R119 **The phone's top bar** [12]: the date and "Paused" in it. Not done: the bottom bar's buttons behind a
+  menu.
+- [x] R120 **The editor's file inputs** in the game's look: the browser's button styled as the panels' (the editor's
+  and the title screen's); the input is the browser's still, its "No file chosen" in the panel's type.
+- Tests: `tests/e2e/reviewBatch1938.spec.ts` (3). Shots: `docs/evidence/R110/`.
+
+Left of the review, for the user (not built):
+- **Coasts as smooth as borders** [10]. Tried in the map's pass, twice: a Catmull-Rom curve through the coverage's
+  texels, and the shore softened over its first pixel. Neither changed the picture to the eye: the steps are the
+  land mask's own texels (2.4 km: 3 px at 800 m/px), and the coverage is a mask, 0 or 1. It wants a smoothed
+  coverage made with the data, and the sim's shore kept with it. Reverted.
+- **The name of a nation of an odd shape** [11] (a year on: "GERMANY" over a rump, "BULGARIA" bent). The names'
+  fitting is a system of its own with its specs; a change of how a name is fitted needs its own item.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

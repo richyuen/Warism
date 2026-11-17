@@ -22,6 +22,7 @@ import { LandingsBar } from '../ui/LandingsBar';
 import { NukeAlerts } from '../ui/NukeAlert';
 import { GodToolbar } from '../ui/GodToolbar';
 import { noticeOld, orderNewsBrief, orderNewsText, staleNotice } from '../ui/orderNewsText';
+import { FirstCue } from '../ui/FirstCue';
 import { TopBar } from '../ui/TopBar';
 import type { Hud } from './hud';
 import type { PlayerControl } from './player';
@@ -151,12 +152,15 @@ export function App({
   return (
     <>
       <TopBar
+        date={dateText(hud.date())}
+        paused={hud.paused.value}
         playing={
           player && player.nation.value !== 0
             ? { name: nameOf(player.nation.value) ?? `#${player.nation.value}`, selected: player.selectedCount.value, onOpen: () => hud.onSelectNation(player.nation.value) }
             : null
         }
       />
+      <FirstCue paused={hud.paused.value} />
       {/* The world built in the worker (R65c; critic run 63: a grey map, no nations, for 2 s at a start, a file's or
           plain 1938's): said over the map until its first stats. The toy world has none. */}
       {!stats && scenarioIdOf(base) !== 'toy' ? (

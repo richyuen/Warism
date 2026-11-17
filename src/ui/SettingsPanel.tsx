@@ -61,6 +61,8 @@ export function SettingsPanel({ uiScale, unitScale, uiScales, uiOffered, unitSca
           ×
         </button>
       </header>
+      {/* Two headed parts (ROADMAP R116): what changes this game's look and sound at once, and what a new game is made with. */}
+      <div class="panel-sub settings-part">{t('settings.display')}</div>
       <label class="form-row">
         <span class="form-name">{t('settings.uiSize')}</span>
         <select data-testid="settings-ui-scale" value={uiScale} onChange={(e) => onUiScale(Number((e.currentTarget as HTMLSelectElement).value))}>
@@ -117,7 +119,7 @@ export function SettingsPanel({ uiScale, unitScale, uiScales, uiOffered, unitSca
           {t('settings.menu')}
         </button>
       </div>
-      <div class="panel-sub">{t('settings.newGame')}</div>
+      <div class="panel-sub settings-part settings-part-new">{t('settings.newGame')}</div>
       <div class="form-row">
         <span class="form-name" data-testid="settings-current-seed">
           {t('settings.currentSeed', { seed })}

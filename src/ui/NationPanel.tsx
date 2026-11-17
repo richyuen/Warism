@@ -213,7 +213,7 @@ export function NationPanel({
           ) : null}
           {row('panel.land', num(nation.area), 'stat-land')}
           {row('panel.landShare', `${(nation.landShare * 100).toFixed(1)}%`, 'stat-land-share')}
-          {row('panel.army', `${num(nation.men)} (${nation.formations})`, 'stat-army')}
+          {row('panel.army', t('panel.armyOf', { men: num(nation.men), n: nation.formations }), 'stat-army')}
           {nation.warheads > 0 ? row('panel.warheads', num(nation.warheads), 'stat-warheads') : null}
           {nation.restraint ? (
             // Why a holder at war does not strike (PLAN 7.37f), in its war that weighs most.

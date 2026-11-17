@@ -10,6 +10,11 @@ import { displayName } from './NationPanel';
 export const MAX_BANNERS = 6;
 /** Banners on a phone's width (the user's choice of 2026-10-29, ADR-760): one row; "+N" opens the rest, up to MAX_BANNERS. */
 export const PHONE_BANNERS = 2;
+/**
+ * Banners on a desk until "+N" opens the rest (ROADMAP R110, ADR-1101): one row. At MAX_BANNERS they stood two rows
+ * deep over the map, with the ticker and the bar a fifth of the view's height in a year of wars.
+ */
+export const DESK_BANNERS = 3;
 const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
 
 /**
@@ -21,7 +26,7 @@ const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
 export function WarBanners({ wars, byId, onSelect, onBattle, phone = false }: { wars: WarStat[]; byId: Map<number, NationStat>; onSelect: (id: number) => void; onBattle: (war: number) => void; phone?: boolean }) {
   const [opened, setOpened] = useState(false);
   if (wars.length === 0) return null;
-  const shown = phone && !opened ? PHONE_BANNERS : MAX_BANNERS;
+  const shown = opened ? MAX_BANNERS : phone ? PHONE_BANNERS : DESK_BANNERS;
   const side = (ids: number[]) => {
     const lead = byId.get(ids[0] ?? 0);
     return (
@@ -32,10 +37,19 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false }: { 
       </span>
     );
   };
+  // The newest war first (ROADMAP R110): with one row, the war just begun is the one a banner is wanted for.
+  const newest = [...wars].sort((a, b) => b.startTick - a.startTick || b.id - a.id);
+  /** A side in words: its leader, and how many more (the banner's title; ROADMAP R115). */
+  const sideName = (ids: number[]): string => {
+    const lead = byId.get(ids[0] ?? 0);
+    const name = lead ? displayName(lead.name) : '?';
+    return ids.length > 1 ? t('wars.sideMore', { name, n: ids.length - 1 }) : name;
+  };
   return (
-    <div class={phone && opened ? 'war-banners opened' : 'war-banners'} data-testid="war-banners">
-      {wars.slice(0, shown).map((w) => (
-        <button key={w.id} class={w.battle ? 'war-banner' : 'war-banner war-quiet'} data-testid="war-banner" data-war={w.id} data-battle={w.battle ? '1' : '0'} title={`${t('wars.score', { n: Math.round(w.score) })}
+    <div class={opened ? 'war-banners opened' : 'war-banners'} data-testid="war-banners">
+      {newest.slice(0, shown).map((w) => (
+        <button key={w.id} class={w.battle ? 'war-banner' : 'war-banner war-quiet'} data-testid="war-banner" data-war={w.id} data-battle={w.battle ? '1' : '0'} title={`${t('wars.who', { a: sideName(w.attackers), d: sideName(w.defenders) })}
+${t(w.score > 0 ? 'wars.scoreAttackers' : w.score < 0 ? 'wars.scoreDefenders' : 'wars.scoreEven', { n: Math.abs(Math.round(w.score)) })}
 ${t(w.battle ? 'wars.toBattle' : 'wars.noBattle')}`}
           onClick={() => {
             onSelect(w.attackers[0] ?? 0);
@@ -46,20 +60,18 @@ ${t(w.battle ? 'wars.toBattle' : 'wars.noBattle')}`}
             {side(w.attackers)}
             <span class="war-swords">{'⚔'}</span>
             {side(w.defenders)}
+            <span class="war-score-n" data-testid="war-score-n">{Math.round(w.score) > 0 ? `+${Math.round(w.score)}` : String(Math.round(w.score))}</span>
           </span>
           <span class="war-score">
             <span class="war-score-fill" style={{ width: `${Math.max(0, Math.min(100, 50 + w.score / 2))}%` }} />
+            <span class="war-score-mid" />
           </span>
         </button>
       ))}
-      {phone && (opened || wars.length > shown) ? (
+      {opened || wars.length > shown ? (
         <button type="button" class="war-more war-more-btn" data-testid="war-more" aria-expanded={opened} title={t(opened ? 'wars.fewer' : 'wars.more')} onClick={() => setOpened(!opened)}>
           {opened ? '−' : `+${wars.length - shown}`}
         </button>
-      ) : wars.length > shown ? (
-        <span class="war-more" data-testid="war-more">
-          +{wars.length - shown}
-        </span>
       ) : null}
     </div>
   );

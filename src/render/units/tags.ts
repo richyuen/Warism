@@ -43,6 +43,8 @@ export interface TagInput {
   picked?: boolean;
   /** One line, flag and strength, no name (R81i): a formation not in contact at a battle. */
   short?: boolean;
+  /** Its men of its full strength, 0 to 1 (ROADMAP R114): the bar along the tag's foot. None: no bar. */
+  share?: number;
   x0: number;
   y0: number;
   x1: number;
@@ -53,6 +55,8 @@ export interface PlacedTag {
   id: number;
   nation: number;
   strength: number;
+  /** Its men of its full strength (ROADMAP R114), where known. */
+  share?: number;
   text: string;
   name: string;
   engaged: boolean;
@@ -85,6 +89,8 @@ export const TAG_PAD = 3;
 /** A short tag's padding above and below its line, px (R81i): one line in a chip, the flag's 12 px frame in its 16. */
 export const TAG_SHORT_PAD_Y = 2;
 /** Between a formation's elements and its tag, and between two tags, px. */
+/** The height of a tag's bar of its men of its full strength, px (ROADMAP R114). */
+export const TAG_BAR_PX = 2;
 export const TAG_GAP = 4;
 /** How far the frame of the picked formation's tag reaches out of its box, px: less than the gap, so it touches no neighbour. */
 export const TAG_PICKED_REACH = 3;
@@ -285,7 +291,7 @@ export function layoutTags(items: readonly TagInput[], measure: (text: string, f
         // Nor one that a tag placed before it is nearer to this block's middle than (PLAN
         // 4.2b1): it would have a line (ADR-188) where a place by the block has none.
         if (pass === 0 && tagNearer(tx, ty, far(box, tx, ty))) continue;
-        const tag: PlacedTag = { id: it.id, nation: it.nation, strength: it.strength, text: it.text, name: it.name, engaged: it.engaged, picked: it.picked === true, short, ...box, gap, line: gap > TAG_LINE_FROM, tx, ty, flag: false };
+        const tag: PlacedTag = { ...(it.share !== undefined ? { share: it.share } : {}), id: it.id, nation: it.nation, strength: it.strength, text: it.text, name: it.name, engaged: it.engaged, picked: it.picked === true, short, ...box, gap, line: gap > TAG_LINE_FROM, tx, ty, flag: false };
         const j = placed.push(tag) - 1;
         const was = byOwn.get(it.id);
         if (!was || gap < was.gap) byOwn.set(it.id, tag);
@@ -371,6 +377,17 @@ export function drawTags(ctx: CanvasRenderingContext2D, tags: PlacedTag[], alpha
     ctx.font = TAG_STRENGTH_FONT(scale);
     ctx.fillStyle = '#ffe28a';
     ctx.fillText(t.text, fx + TAG_FLAG_W * scale + pad, t.y + py + lineH / 2 + 0.5);
+    // Its men of its full strength, a bar along the tag's foot (ROADMAP R114): green, yellow under a half, red under
+    // a quarter, as the T1 marker's. Which of two tags in a fight is the worse off is read without the numbers.
+    if (t.share !== undefined) {
+      const bw = t.w - 6 * scale;
+      const by = t.y + t.h - TAG_BAR_PX * scale - 1;
+      const f = Math.min(1, Math.max(0, t.share));
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.16)';
+      ctx.fillRect(t.x + 3 * scale, by, bw, TAG_BAR_PX * scale);
+      ctx.fillStyle = f > 0.5 ? '#8bd17c' : f > 0.25 ? '#f1c40f' : '#e74c3c';
+      ctx.fillRect(t.x + 3 * scale, by, bw * f, TAG_BAR_PX * scale);
+    }
     if (t.short) continue;
     ctx.font = TAG_NAME_FONT(scale);
     ctx.fillStyle = '#eef0f3';

@@ -333,3 +333,11 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - A review of 42 pictures of the game by a sub-agent (the user's request): twelve ideas, told to the user; none
   built. Its nine map-mode pictures all showed the political colours: a fault of the capture or of the modes, not
   yet known.
+
+## 2026-11-16 — Batch 38: nine of the review's eleven (ADR-1101 to ADR-1104)
+
+- R110 to R116, R119, R120 built; `tests/e2e/reviewBatch1938.spec.ts`. The coasts tried twice and reverted; the
+  odd-shaped names not begun. Both in ROADMAP for the user.
+- The whole browser suite on the batch before its last fixes: 467 green, five red (`chromeCover1938` twice for the
+  legend's line, `godUndoPicture1938` for the names, `heroesRead1938` and `maxGlide1938` in the run and green
+  alone); the first two mended and their specs green.

@@ -347,6 +347,8 @@ test('weeks into Germany against Poland the banner leads to two formations front
     day += 10;
   }
   expect(await wars(), 'no tenth day to the 150th has eight wars').toBeGreaterThanOrEqual(8);
+  // The six of them, opened (one row of three on a desk since ROADMAP R110).
+  await page.getByTestId('war-more').click();
   // Every banner shown says what its click would find (PLAN 2.14f5b3): lit with a battle, dim without.
   await expect.poll(async () => page.evaluate(async () => {
     const wrong: string[] = [];

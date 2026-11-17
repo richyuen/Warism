@@ -39,6 +39,8 @@ export function MapLegend({
   phone?: boolean;
 }) {
   const [open, setOpen] = useState(false);
+  // What the units' signs say (ROADMAP R111): behind a "?" in the title, so the legend covers no more of the map until asked.
+  const [signs, setSigns] = useState(false);
   const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
   return (
     <aside class={phone ? 'map-legend foldable' : 'map-legend'} data-testid="map-legend" data-mode={mode} data-open={phone ? String(open) : undefined}>
@@ -47,7 +49,12 @@ export function MapLegend({
           {open ? '▾' : '▸'} {t(`mapMode.${mode}` as MessageKey)}
         </button>
       ) : (
-        <div class="legend-title">{t(`mapMode.${mode}` as MessageKey)}</div>
+        <div class="legend-title">
+          {t(`mapMode.${mode}` as MessageKey)}
+          <button type="button" class="legend-signs" data-testid="legend-signs" aria-expanded={signs} title={t('legend.signs')} onClick={() => setSigns(!signs)}>
+            ?
+          </button>
+        </div>
       )}
       {phone && !open ? null : (
         <>
@@ -58,6 +65,12 @@ export function MapLegend({
           <span>{t((key === 'legend.occupied' && groundShown ? 'legend.occupiedTint' : key) as MessageKey)}</span>
         </div>
       ))}
+      {/* What the units' signs say (ROADMAP R111): on every mode, the counters and markers are the same. A phone's opened legend has it. */}
+      {signs || phone ? (
+        <div class="legend-row legend-units" data-testid="legend-units">
+          <span>{t(groundShown ? 'legend.unitsClose' : 'legend.units')}</span>
+        </div>
+      ) : null}
       {mode === 'seaControl' ? (
         <>
           {seaHolders.slice(0, SEA_HOLDERS_SHOWN).map((h) => (

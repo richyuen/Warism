@@ -63,6 +63,10 @@ textarea,
 .topbar-tagline {
   opacity: 0.75;
 }
+/* The date in the top bar (ROADMAP R119): at a phone's width only, where the bar's width was empty. */
+.topbar-date {
+  display: none;
+}
 
 /* The clock (ROADMAP R94c): pause, the speed and the date in a plate at the top's middle, on a desk. */
 .topclock {
@@ -683,6 +687,67 @@ textarea,
 .war-banners > * {
   pointer-events: auto;
 }
+/* The first cue (ROADMAP R113): under the clock, in the panels' look; only its button takes the pointer. */
+#ui > .first-cue {
+  position: absolute;
+  top: 3.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: min(26rem, calc(100% - 1.5rem));
+  box-sizing: border-box;
+  padding: 0.6rem 0.9rem;
+  background: rgba(20, 24, 32, 0.92);
+  border: 1px solid rgba(214, 178, 94, 0.7);
+  border-radius: 0.5rem;
+  color: #f1e6d2;
+  font-size: 0.9rem;
+  pointer-events: none;
+  z-index: 3;
+}
+.first-cue ul {
+  margin: 0 0 0.5rem;
+  padding-left: 1.1rem;
+}
+.first-cue li {
+  margin: 0.15rem 0;
+}
+.first-cue-close {
+  pointer-events: auto;
+  display: block;
+  margin-left: auto;
+  padding: 0.25rem 0.8rem;
+  font: inherit;
+  cursor: pointer;
+  background: rgba(233, 196, 106, 0.35);
+  color: #fff3c4;
+  border: 1px solid rgba(214, 178, 94, 0.7);
+  border-radius: 0.3rem;
+}
+/* The "?" in the legend's title that shows the line of the units' signs (ROADMAP R111). */
+.legend-signs {
+  float: right;
+  margin-left: 0.5rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  padding: 0;
+  line-height: 1;
+  font: inherit;
+  font-size: 0.75rem;
+  color: inherit;
+  background: rgba(214, 178, 94, 0.15);
+  border: 1px solid rgba(214, 178, 94, 0.45);
+  border-radius: 50%;
+  cursor: pointer;
+}
+/* The legend's line of the units' signs (ROADMAP R111): smaller, under the mode's own rows. */
+.legend-units {
+  margin-top: 0.25rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid rgba(214, 200, 176, 0.25);
+  font-size: 0.72rem;
+  opacity: 0.85;
+  max-width: 15rem;
+}
 .war-banner {
   display: flex;
   flex-direction: column;
@@ -728,9 +793,29 @@ textarea,
   color: #f1e6d2;
   opacity: 0.3;
 }
+/* The score in figures at the title's end, and the bar's middle marked, so that it is read as a share (ROADMAP R115). */
 .war-score {
+  position: relative;
   height: 3px;
   background: rgba(255, 255, 255, 0.2);
+}
+.war-score-mid {
+  position: absolute;
+  left: 50%;
+  top: -1px;
+  width: 1px;
+  height: 5px;
+  background: rgba(241, 230, 210, 0.8);
+}
+.war-score-n {
+  margin-left: auto;
+  padding-left: 0.3rem;
+  opacity: 0.8;
+  font-variant-numeric: tabular-nums;
+}
+/* One row until "+N" opens the rest (ROADMAP R110). */
+.war-banners:not(.opened) {
+  flex-wrap: nowrap;
 }
 .war-score-fill {
   display: block;
@@ -830,6 +915,31 @@ textarea,
   color: inherit;
   font: inherit;
   cursor: pointer;
+}
+/* A file's input in the game's look (ROADMAP R120; the review: the browser's own grey button and "No file chosen" in
+   the editor and on the title screen): its button as a `god-btn`, its words in the panel's type. The input is the
+   browser's still. */
+#ui input[type='file'],
+.title-screen input[type='file'] {
+  color: inherit;
+  font: inherit;
+  font-size: 0.85em;
+  max-width: 100%;
+}
+#ui input[type='file']::file-selector-button,
+.title-screen input[type='file']::file-selector-button {
+  margin-right: 0.5rem;
+  padding: 0.15rem 0.45rem;
+  background: rgba(214, 178, 94, 0.15);
+  border: 1px solid rgba(214, 178, 94, 0.45);
+  border-radius: 0.25rem;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+#ui input[type='file']::file-selector-button:hover,
+.title-screen input[type='file']::file-selector-button:hover {
+  background: rgba(214, 178, 94, 0.3);
 }
 .god-btn.active {
   background: rgba(231, 111, 81, 0.45);
@@ -967,8 +1077,25 @@ textarea,
   opacity: 0.7;
 }
 /* Its rows do not shrink: in a low view the panel scrolls them in its box (PLAN 3.12Rh5). */
-.settings-panel {
+#ui .settings-panel {
   overflow-y: auto;
+  /* Its last row clear of the panel's foot, and a bar that says it scrolls (ROADMAP R116; the review: "the bottom button is
+     cut off"). */
+  padding-bottom: 0.9rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(214, 178, 94, 0.7) transparent;
+  scrollbar-gutter: stable;
+}
+/* The panel's two parts, each under its head; the second set off by a rule. */
+.settings-panel .settings-part {
+  color: #e9c46a;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.settings-panel .settings-part-new {
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(214, 178, 94, 0.45);
 }
 .history-filters input {
   width: 5.5rem;
@@ -2177,6 +2304,17 @@ button.unit-icon.on {
   }
   .topbar-tagline {
     display: none;
+  }
+  .topbar {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .topbar-date {
+    display: inline;
+    margin-left: auto;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
   }
   .stats-ranking {
     top: 3.4rem;

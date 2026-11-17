@@ -6,6 +6,9 @@ export interface TopBarProps {
    * tagline's place, and a click on it opens its panel. None played: the tagline.
    */
   playing?: { name: string; selected: number; onOpen: () => void } | null;
+  /** The date in words and whether the game is paused (ROADMAP R119): shown in the bar at a phone's width, where the bar was empty and the date in the bottom bar's third row. */
+  date?: string;
+  paused?: boolean;
 }
 
 /**
@@ -13,7 +16,7 @@ export interface TopBarProps {
  * picker is gone (the user's request, ADR-763): the release build offers English alone; a
  * tester's pseudo-locale is the stored `warsim.locale` (`src/ui/i18n`).
  */
-export function TopBar({ playing }: TopBarProps = {}) {
+export function TopBar({ playing, date, paused = false }: TopBarProps = {}) {
   return (
     <header class="topbar" data-testid="topbar">
       <span class="topbar-title" data-testid="app-title">
@@ -26,6 +29,12 @@ export function TopBar({ playing }: TopBarProps = {}) {
       ) : (
         <span class="topbar-tagline">{t('app.tagline')}</span>
       )}
+      {date ? (
+        <span class="topbar-date" data-testid="topbar-date">
+          {date}
+          {paused ? <span class="bar-paused"> · {t('bar.paused')}</span> : null}
+        </span>
+      ) : null}
     </header>
   );
 }

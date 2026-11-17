@@ -201,7 +201,11 @@ test.describe('the news at a phone\'s width', () => {
 
       if (!phone) {
         expect(await rows(), 'the desktop ticker is not cut to two').toBeGreaterThan(2);
+        // One row on a desk since ROADMAP R110 (`DESK_BANNERS`, 3), the rest behind "+N" as on a phone.
+        expect(await banners()).toBe(3);
+        await page.getByTestId('war-more').click();
         expect(await banners()).toBe(6);
+        await page.getByTestId('war-more').click();
         await expect(page.getByTestId('legend-toggle')).toHaveCount(0);
         return;
       }

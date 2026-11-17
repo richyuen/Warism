@@ -45,6 +45,8 @@ const MAX_GAP_WEIGHT = 0.25;
 /** The panels that lie over the map (ROADMAP R34e): a hero's counter under one is drawn beside it. */
 const COVER_SELECTOR = '.topbar, .topclock, .bottombar, .stats-ranking, .nation-panel, .formation-panel, .history-panel, .relations-panel, .editor-panel, .settings-panel, .map-legend, .landings-bar';
 /** Of those, the ones that float over the map's middle (R87d; critic run 72, R72-N4): a hero's counter under one is not drawn. */
+/** The page's lasting boxes a city's or a nation's name keeps clear of (ROADMAP R110): the war banners. Not the bars: a name under one is not seen whether it gives way or not, and the bottom bar's height changes with God Mode's tools (the spec godUndoPicture1938). */
+const NAME_COVER_SELECTOR = '.war-banner, .war-more';
 const HIDES_SELECTOR = '.history-panel, .relations-panel, .editor-panel, .settings-panel';
 const FLAG_MIN_SCALE = 3;
 const FLAG_PX_W = 24;
@@ -1918,6 +1920,15 @@ export class MapView {
     // laid out after the names of this one.
     if (this.tactical.near === true) for (const g of this.tagRects) out.push({ x: g.x, y: g.y, w: g.w, h: g.h, clear: NAME_CLEAR_PX });
     for (const f of this.flagRects) out.push({ x: f.x - 1, y: f.y - 1, w: f.w + 2, h: f.h + 2 });
+    // The page's boxes that stay where they are for a war or a game (ROADMAP R110): a city's name under a banner was not
+    // read. Not the ticker's rows and the notices, which come and go: a name that gave way to each would blink.
+    if (typeof document !== 'undefined') {
+      const at = this.canvas.getBoundingClientRect();
+      for (const el of document.querySelectorAll<HTMLElement>(NAME_COVER_SELECTOR)) {
+        const r = el.getBoundingClientRect();
+        if (r.width > 0 && r.height > 0) out.push({ x: r.left - at.left, y: r.top - at.top, w: r.width, h: r.height });
+      }
+    }
     return out;
   }
 
@@ -2466,6 +2477,8 @@ export class MapView {
         name: this.formationName(id, this.formTemplate[i]!),
         engaged: (this.formFlags[i]! & FormationFlag.engaged) !== 0,
         picked: id === this.picked,
+        // Its men of its template's (ROADMAP R114); a hero's tag reads its health.
+        ...(this.formHealth[i] !== undefined && this.formHealth[i] !== NO_HEALTH ? { share: this.formHealth[i]! / 100 } : (this.templates[this.formTemplate[i]!]?.men ?? 0) > 0 ? { share: this.formStrength[i]! / this.templates[this.formTemplate[i]!]!.men } : {}),
         x0: b[0],
         y0: b[1],
         x1: b[2],
