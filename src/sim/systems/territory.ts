@@ -38,12 +38,21 @@ import { acrossOf } from '../nav/crossings';
 import { neighbours4 } from '../nav/grid';
 import { CORRIDOR_PRESSURE, CORRIDOR_RATE, inCorridor } from './majorBattles';
 import { FlipCause, type FlipCauseId, navOf, type World } from '../world';
+import { heroHealth } from './heroes';
 import { blocOf } from './supply';
 
 export const PRESSURE_RADIUS = 2;
 /** Abstract province garrison, in the same units as formation pressure (≈ 1,000 men at d = 0). */
 export const GARRISON = 1;
 export const HOLD_TICKS = 16;
+/**
+ * The men a land hero presses on the front as, at its full health (ROADMAP R104a, ADR-1095, the user's decision): a
+ * division's. A hero is one element (the Char 2C: one tank, a strength of a few men), and by its men alone it took
+ * no cell: ordered over a border it stood before it until other formations took the ground. `HERO_PRESSURE_PROBE`:
+ * a test's switch, the men counted as before.
+ */
+export const HERO_PRESSURE_MEN = 10_000;
+export const HERO_PRESSURE_PROBE: { off?: boolean } = {};
 
 /**
  * The hours a cell is held under pressure before it flips, in `world` (PLAN 7.1b4): `HOLD_TICKS`
@@ -242,7 +251,9 @@ export function territorySystem(world: World): void {
     const nation = f.nation[id]!;
     // On the retreat it holds no ground (PLAN 3.5a), and a fleet none (PLAN 4.2b).
     if (!fighting.has(nation) || f.retreat[id]! > 0 || world.offLand(id)) return;
-    const base = (f.strength[id]! / 1000) * (0.5 + 0.5 * f.supply[id]!);
+    // A hero as a division's men, by its health (ROADMAP R104a).
+    const men = world.heroes.has(id) && HERO_PRESSURE_PROBE.off !== true ? Math.max(f.strength[id]!, HERO_PRESSURE_MEN * heroHealth(world, id)) : f.strength[id]!;
+    const base = (men / 1000) * (0.5 + 0.5 * f.supply[id]!);
     const cx = Math.floor(f.x[id]!);
     const cy = Math.floor(f.y[id]!);
     // No frontier cell in the blocks its reach falls in: nothing to press (PLAN 7.1h). The reach

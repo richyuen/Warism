@@ -921,7 +921,7 @@ export interface SeaHint {
 
 /** What became of a player's order (PLAN 4.9c; `orderNews`). */
 export interface OrderNews {
-  kind: 'refused' | 'repulsed' | 'thrownAshore' | 'landedAway' | 'unescorted' | 'sentHome' | 'leftLanding' | 'nextVoyage' | 'lostAtSea' | 'transportsSunk' | 'sameLanding';
+  kind: 'refused' | 'repulsed' | 'thrownAshore' | 'landedAway' | 'unescorted' | 'sentHome' | 'leftLanding' | 'nextVoyage' | 'lostAtSea' | 'transportsSunk' | 'sameLanding' | 'waitsFront';
   id: number;
   nation: number;
   /** A `RejectReason` for `refused`; for `sentHome` how many were sent home (ROADMAP R21d); for `transportsSunk` 1 when another group was called (R39a); for `sameLanding` how many the click ordered (R34j); for `nextVoyage` 1 when still marching as its landing sailed (R57b); else 0. */

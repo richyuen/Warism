@@ -33,7 +33,7 @@ import { carrierStrikes, inShipReach, nearestOwnPort, strikeTarget } from '../si
 import { landedAway } from '../sim/systems/amphibious';
 import { CORRIDOR_HALF_WIDTH, CORRIDOR_LEN } from '../sim/systems/majorBattles';
 import { heldBy, heldByFleet, LandingState, landingOfDivision, landingRows, nextVoyageHours, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
-import { marchHoursLeft } from '../sim/systems/movement';
+import { marchHoursLeft, waitsForFront } from '../sim/systems/movement';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -165,6 +165,9 @@ interface UndoWorld {
   act: number;
 }
 
+/** A player's march that has waited before an enemy's cell this many hours is told of (ROADMAP R104b): a day. */
+export const WAIT_TOLD_HOURS = 24;
+
 export class SimServer {
   sim: Sim | null = null;
   readonly pool = new BufferPool();
@@ -225,7 +228,7 @@ export class SimServer {
    * The formations a player ordered, to the cell of the order (PLAN 4.9c): what becomes of it is
    * told. `before`: the order it replaced, which stands again if this one is refused.
    */
-  private ordered = new Map<number, { target: number; before: number | undefined; once?: number }>();
+  private ordered = new Map<number, { target: number; before: number | undefined; once?: number; waits?: number; waitTold?: boolean }>();
   /** The played nation's fleets that have been on a player's order since the game was opened or loaded (ROADMAP R35d). */
   private playerFleets = new Set<number>();
   /**
@@ -1827,6 +1830,20 @@ export class SimServer {
       this.eventQueue.push(this.nextEventSeq++, ev[i]!, ev[i + 1]!, ev[i + 2]!, b, ev[i + 4]!, ev[i + 5]!);
     }
     ev.length = 0;
+    // A march of the player's that has stood before an enemy's cell for WAIT_TOLD_HOURS (ROADMAP R104b): told once an
+    // order, that it waits for the front (it showed "on the march" and stood, with no word why).
+    for (const [id, o] of this.ordered) {
+      if (o.once !== undefined) continue;
+      if (!waitsForFront(world, id)) {
+        if (o.waits !== undefined) delete o.waits;
+        continue;
+      }
+      o.waits ??= world.tick;
+      if (o.waitTold === true || world.tick - o.waits < WAIT_TOLD_HOURS) continue;
+      o.waitTold = true;
+      const c = world.formations.cols;
+      this.post({ type: 'orderNews', news: { kind: 'waitsFront', id, nation: c.nation[id]!, reason: 0, x: c.x[id]!, y: c.y[id]!, tick: world.tick } }, []);
+    }
     // A wing's order or a paradrop told nothing of in its hour was given (PLAN 5.8v3): what the
     // formation was ordered before stands again, as after a refusal.
     for (const [id, o] of this.ordered) {

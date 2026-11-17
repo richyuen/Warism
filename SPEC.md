@@ -1018,7 +1018,7 @@ month's start only).
   of a strait across a war; kept from the border index, updated round each flip, not saved.
 - **Pressure:** every land formation of a nation at war (not on retreat) puts strength ÷ 1000 × (0.5 +
   0.5 × supply) × (1 − d ÷ (R + 1)) on the frontier cells within `PRESSURE_RADIUS` R (2, scaled;
-  Chebyshev d), kept per nation.
+  Chebyshev d), kept per nation. A land hero as `HERO_PRESSURE_MEN` (10,000) men by its health (R104a, ADR-1095).
 - **A frontier cell held by D:** its defence is (`GARRISON` (1) + the pressure of D's bloc and of D's
   side) × (1 + D's `fortStrength`, §3.4).
   Each nation A at war with D that controls a 4-neighbour scores the pressure of A and those beside it

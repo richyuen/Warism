@@ -721,6 +721,21 @@ function holdsInFight(world: World, id: number): boolean {
   return world.formations.cols.engaged[id] === 1 && world.playerOrders.get(id)?.through !== true;
 }
 
+/**
+ * Whether land formation `id` on the march waits for the front (PLAN 1.14; ROADMAP R104b): its next step is onto the
+ * ground of a nation at war with its own, which it enters only once the territory system has taken the cell. Not in
+ * a fight it holds in, nor on the retreat (which walks over such ground).
+ */
+export function waitsForFront(world: World, id: number): boolean {
+  const c = world.formations.cols;
+  if (!world.formations.has(id) || c.moving[id] !== 1 || c.retreat[id] !== 0 || holdsInFight(world, id)) return false;
+  const path = world.paths.get(id);
+  const i = c.pathStep[id]!;
+  if (!path || i >= path.length - 1) return false;
+  const holder = world.cells.controller[path[i + 1]!]!;
+  return holder !== 0 && holder !== c.nation[id] && world.wars.atWar(c.nation[id]!, holder);
+}
+
 /** Land formation `id`'s pace on the march, km an hour on ground of cost 1 (its fuel and its buffs; in contact, WITHDRAW_SPEED of it). */
 export function marchKmPerHour(world: World, id: number, rule: TemplateRule): number {
   const c = world.formations.cols;

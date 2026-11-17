@@ -306,3 +306,9 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - R103's commit rests on its third gate: the second was red twice on `relationsNamed1938` (BLOCKERS).
 - Evidence files for R101, R102, R103 (`docs/evidence/`); `tags.test.ts` pins the count of places (20, as before).
 - The user's decision (ADR-1094): the bar of the attacker with no man near its border is 15 %.
+
+## 2026-11-16 — R104: a hero takes ground; a march that waits for the front is told of (ADR-1095)
+
+- `HERO_PRESSURE_MEN` in `territory.ts`; `waitsForFront` in `movement.ts`; the worker's `waitsFront` news and its
+  words. `tests/unit/heroFront1938.test.ts`: the Char 2C alone against Spain, 0 cells in ten days before, 31 now.
+- Batch 37 opened (R104 to R109) by the user's "Accept your recommendations".

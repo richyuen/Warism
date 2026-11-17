@@ -22,6 +22,7 @@ export function orderNewsText(n: OrderNews, name: string, count = 1): string {
   if (n.kind === 'lostAtSea') return t('order.lostAtSea', { name });
   if (n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalled' : 'order.transportsSunk', { name });
   if (n.kind === 'sentHome') return n.reason > 1 ? t('order.sentHomeMany', { name, more: n.reason - 1 }) : t('order.sentHome', { name });
+  if (n.kind === 'waitsFront') return t('order.waitsFront', { name });
   return t('order.refused', { name, why: t(`order.why.${n.reason}` as MessageKey) });
 }
 
@@ -46,6 +47,7 @@ export function orderNewsBrief(n: OrderNews, count: number, name: string): strin
   if (n.kind === 'lostAtSea') return t('order.lostAtSeaOneBrief', { name: tag });
   if (n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalledOneBrief' : 'order.transportsSunkOneBrief', { name: tag });
   if (n.kind === 'sentHome') return n.reason > 1 ? t('order.sentHomeManyBrief', { name: tag, more: n.reason - 1 }) : t('order.sentHomeBrief', { name: tag });
+  if (n.kind === 'waitsFront') return t('order.waitsFrontBrief', { name: tag });
   return t('order.refusedBrief', { name: tag, why: t(`order.whyBrief.${n.reason}` as MessageKey) });
 }
 
@@ -77,7 +79,7 @@ export function staleNotice(seen: Map<number, string>, n: OrderNews & { seq: num
   // The same landing clicked again (R34j): true until the next order.
   if (n.kind === 'leftLanding' || n.kind === 'transportsSunk' || n.kind === 'sameLanding') return orderedAt !== undefined && n.seq < orderedAt;
   // The next voyage: true until it sails, or the next order (R37b).
-  if (n.kind !== 'refused' && n.kind !== 'nextVoyage') return false;
+  if (n.kind !== 'refused' && n.kind !== 'nextVoyage' && n.kind !== 'waitsFront') return false;
   if (orderedAt !== undefined && n.seq < orderedAt) return true;
   if (!info || info.id !== n.id || info.tick < n.tick) return false;
   const now = stateOf(info);

@@ -352,6 +352,35 @@ though Rush makes sense either way".
     again when it sees the answer.
   - Tests: `tests/unit/massAnswer1938.test.ts` (5). The pin of seed 99 1fe6205e -> bf16e257.
 
+## Batch 37 — a front read (the user's requests, 2026-11-16: "Let's do both", "Accept your recommendations")
+
+Found as the user played France against the two Spains: the Char 2C, ordered over the border, stood at it "on the
+march" for days. No formation walks onto an enemy's ground: a cell is taken by the pressure of men (SPEC §5.2), and a
+hero is one tank.
+
+- [x] R104 **A hero takes ground, and a formation that waits says so** (ADR-1095, the user's decisions).
+  - (a) A land hero presses on the front as `HERO_PRESSURE_MEN` (10,000) men by its health, where its own (the Char
+    2C: one tank). France the player's with its army's AI off, at war with Nationalist Spain, the Char 2C ordered
+    three cells into Spain (seed 7): before, it waits before the border all of ten days and France holds no cell;
+    now it waits 21 hours of them and France holds 31 cells of Spain's.
+  - (b) A march of the player's, of any formation, that has waited before an enemy's cell for `WAIT_TOLD_HOURS` (24)
+    is told of once an order: "it waits at the front. The ground ahead is the enemy's, and it goes on when that
+    ground is taken: sooner with more troops beside it" (the ticker: "waits for the ground ahead to be taken"). Its
+    panel's notice goes when its state does, as a refusal's.
+  - Test: `tests/unit/heroFront1938.test.ts`. The pin of seed 99 stands (no hero in that world).
+  - Of the user's picture: "Char 2C: not done, only sea there" is the refusal of a click on sea with none of its
+    land within three cells; the cells of that front are land. Not reproduced; left.
+- [ ] R105 **Ground being taken is seen**: the stretch of a front where a cell is being taken fills toward the side
+  that takes it.
+- [ ] R106 **Movement arrows by side**: the arrows in their nations' colours, another nation's thinner; the dotted
+  line for the player's own orders only.
+- [ ] R107 **Occupied land read at the close zooms**: stripes of the occupier's colour, an edge at the old border.
+- [ ] R108 **Fewer counters at the world's zoom** over the names.
+- [ ] R109 **Names and tags at the middle zooms**: a nation's name not under the tags.
+
+After the next critic (the user's choice of the order): the ground of the close zooms (relief, rivers, roads); a
+war seen from the world's zoom (a mark where the fighting is heaviest).
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

@@ -461,3 +461,18 @@ from AoC are tagged **[AoC-DEVIATION]**.
   declared at once, which are more (93 -> 138 on the twelve seeds).
 - **The user: "Yes, we can move the bar to 15%."** The bar is 15 %. Why the wars declared at once are more was not
   looked into, and is not asked for.
+
+### ADR-1095 · 2026-11-16 · the user's decision ("Let's do both (the second for normal units)") — R104: a hero presses as a division; a march that waits for the front is told of
+- **Found** as the user played France against the two Spains: the Char 2C ordered over Nationalist Spain's border
+  stood before it, drawn on the march. PLAN 1.14: a formation enters an enemy's cell only once the territory system
+  has taken it; SPEC §5.2: by pressure, a formation's men ÷ 1000; a hero is one element. In a run of it the cell was
+  taken six days on, when France's divisions came.
+- **Decision (a):** a land hero's pressure is of `HERO_PRESSURE_MEN` (10,000) men × its health (`heroHealth`), or its
+  own men where more (`territory.ts`). In fights it is as it was. Only where the option of heroes is on.
+- **Decision (b):** the worker, for each formation on a player's order (`ordered`): where `waitsForFront`
+  (`movement.ts`: on the march, not holding in a fight, its next step onto the ground of a nation at war with its
+  own) has held for `WAIT_TOLD_HOURS` (24) on end, an `orderNews` of kind `waitsFront`, once an order. For every
+  land formation, not heroes alone (the user's words). A day: a front that moves takes a cell in 16 hours, and the
+  wait behind it is no news.
+- **Not done:** anything on the map that shows the ground being taken (R105).
+- **The pin of seed 99** stands: that world has no hero, and (b) is the worker's.

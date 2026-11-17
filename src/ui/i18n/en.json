@@ -1097,6 +1097,8 @@
   "order.nextVoyageBrief": "{name}: waits for the next voyage",
   "order.nextVoyageBrief.days": "{name}: next voyage in about {days} days",
   "order.nextVoyageBrief.one": "{name}: next voyage in about a day",
+  "order.waitsFront": "{name}: it waits at the front. The ground ahead is the enemy's, and it goes on when that ground is taken: sooner with more troops beside it.",
+  "order.waitsFrontBrief": "{name}: waits for the ground ahead to be taken",
   "order.sameLanding": "{name}: already bound for this landing; the order changes nothing.",
   "order.sameLandingMany": "{name} and {more} more: already bound for this landing; the order changes nothing.",
   "order.sameLandingBrief": "{name}: already bound there; nothing changes",
