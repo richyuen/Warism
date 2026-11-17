@@ -30,8 +30,15 @@
  * already stand at that border (`unprepared`): its army is on its fronts, and a war begun where none of it stands
  * was the same empty front.
  *
- * State: `World.massing` and `World.massBarred`, saved while not empty. The target is not told and does nothing of
- * it: R97b's first rule.
+ * The target's answer (ROADMAP R103, ADR-1093): a nation that sees an army gathered at its border brings its own
+ * there. Seen: MASS_SEEN of the massing nation's men on the border's land stand at the border. The target then, each
+ * day while it is so, orders its formations to its own points of that border as the massing nation does its own
+ * (MASS_SHARE of them, the nearest first), if it is in no war (its army is on its fronts), prepares no war of its
+ * own, and its army is its AI's. Massed on by two, it answers the one with the more men at its border (the lower
+ * number on a tie). It does nothing else: no alliance asked, no war of its own. A massing given up leaves its army
+ * where it stands. No state: read from `World.massing` each day.
+ *
+ * State: `World.massing` and `World.massBarred`, saved while not empty.
  */
 import { Refusal } from '../../shared/commands';
 import { hypot } from '../core/dmath';
@@ -55,9 +62,11 @@ export const MASS_READY = 0.5;
 export const MASS_BAR_DAYS = 365;
 /** A nation in a war declares on a land neighbour only with this share of its men at that border. */
 export const MASS_SECOND = 0.15;
+/** A massing is seen by its target when this share of the massing nation's men stand at the border (ROADMAP R103). */
+export const MASS_SEEN = 0.25;
 
-/** A probe's switch (`tools/diag/warOpening.ts --no-massing`; a test): off, wars are declared as before R97b. Never set by the game. */
-export const MASS_PROBE: { off: boolean; days?: number; second?: number } = { off: false };
+/** A probe's switch (`tools/diag/warOpening.ts --no-massing`; a test): off, wars are declared as before R97b; `noAnswer`, the target does nothing of a massing, as before R103. Never set by the game. */
+export const MASS_PROBE: { off: boolean; days?: number; second?: number; noAnswer?: boolean } = { off: false };
 
 /** Whether `n` is in a war. */
 function inWar(world: World, n: number): boolean {
@@ -219,7 +228,8 @@ export function massStep(world: World, day: number, still: (n: number, t: number
     for (const [key, until] of [...world.massBarred]) if (day >= until || nc.living[key >>> 16] !== 1 || nc.living[key & 65535] !== 1) world.massBarred.delete(key);
   }
   if (world.massing.size === 0) return;
-  const f = world.formations.cols;
+  /** The massings seen today, by target: the massing nation with the most men at that border. */
+  const seen = new Map<number, { by: number; menNear: number }>();
   for (const [n, m] of [...world.massing].sort((a, b) => a[0] - b[0])) {
     const t = m.target;
     const over =
@@ -243,15 +253,35 @@ export function massStep(world: World, day: number, still: (n: number, t: number
       if (still(n, t)) declareWar(world, n, t);
       continue;
     }
-    // MASS_SHARE of them at the border or on the march to it: the nearest of the rest are ordered there.
-    const want = Math.ceil(MASS_SHARE * mine.length);
-    let have = mine.filter((x) => x.near <= MASS_NEAR_CELLS || x.marching).length;
-    if (have >= want) continue;
-    const pass = passageOf(world, n);
-    const rest = mine.filter((x) => x.near > MASS_NEAR_CELLS && !x.marching && f.retreat[x.id] === 0 && f.home[x.id] === 0 && f.engaged[x.id] !== 1 && !playerHeld(world, x.id)).sort((a, b) => a.near - b.near || a.id - b.id);
-    for (const x of rest) {
-      if (have >= want) break;
-      if (askMove(world, x.id, x.point, pass) === 'ok') have++;
+    gather(world, n, mine);
+    // Seen by its target (ROADMAP R103): of those massing on one nation, the one with the more men at its border.
+    if (MASS_PROBE.noAnswer !== true && men > 0 && menNear >= MASS_SEEN * men) {
+      const was = seen.get(t);
+      if (was === undefined || menNear > was.menNear) seen.set(t, { by: n, menNear });
     }
+  }
+  for (const [t, { by }] of [...seen].sort((a, b) => a[0] - b[0])) {
+    // By now `by` may have declared on another, or `t` been declared on: a nation at war has its fronts.
+    if (!world.massing.has(by) || world.massing.has(t) || nc.living[t] !== 1 || inWar(world, t) || !aiRuns(world, t, AiLayer.army)) continue;
+    const points = massPoints(world, t, by);
+    if (points.length > 0) gather(world, t, standing(world, t, points).mine);
+  }
+}
+
+/**
+ * MASS_SHARE of `n`'s formations of a border (`mine`, of `standing`) at the border or on the march to it: the nearest
+ * of the rest are ordered to their nearest points (`askMove`); one refused, in a fight, on the player's order or going
+ * home is left where it is.
+ */
+function gather(world: World, n: number, mine: Standing['mine']): void {
+  const f = world.formations.cols;
+  const want = Math.ceil(MASS_SHARE * mine.length);
+  let have = mine.filter((x) => x.near <= MASS_NEAR_CELLS || x.marching).length;
+  if (have >= want) return;
+  const pass = passageOf(world, n);
+  const rest = mine.filter((x) => x.near > MASS_NEAR_CELLS && !x.marching && f.retreat[x.id] === 0 && f.home[x.id] === 0 && f.engaged[x.id] !== 1 && !playerHeld(world, x.id)).sort((a, b) => a.near - b.near || a.id - b.id);
+  for (const x of rest) {
+    if (have >= want) break;
+    if (askMove(world, x.id, x.point, pass) === 'ok') have++;
   }
 }

@@ -1644,7 +1644,10 @@ production and research. `src/sim/ai/`.
   `MASS_DAYS` (90), that target then barred to it for `MASS_BAR_DAYS` (365), or when it is at war. A nation at war
   declares a second war on a neighbour of its home only with `MASS_SECOND` (0.15) of its men at that border. A
   neighbour by a colony only, and a target across the sea, are declared on at once. `World.massing` and
-  `World.massBarred`, saved. Test: `tests/unit/massing1938.test.ts`.
+  `World.massBarred`, saved. Test: `tests/unit/massing1938.test.ts`. **The target answers** (R103, ADR-1093): once
+  `MASS_SEEN` (0.25) of the massing nation's men stand at the border, the target, if in no war, preparing none and
+  its army its AI's, brings `MASS_SHARE` of its own formations to its side of it the same way; of two massing on
+  it, the one with the more men there. Test: `tests/unit/massAnswer1938.test.ts`.
 - **Threat pacts:** an unaligned nation whose neighbour of aggression ≥ `THREAT_AGGRESSION` (50) is over
   `THREAT_RATIO` (1.5) times stronger and not yet at war with it, with probability `ALLY_P` (0.3), joins
   the strongest neighbouring alliance without that neighbour that `canJoin` allows (a great power avoids

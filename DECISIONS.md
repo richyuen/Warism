@@ -425,3 +425,27 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Tests:** `tests/unit/tags.test.ts`: its plain layout (the grid's twin) has the same places; `PLACES` is counted
   from the layout (no fewer than the rings' four each); "three columns side by side" has no tag off with a line now
   (the middle one stands at its corner): asserted so. `tagsCrowd1938` back on seed 1938. No bar changed.
+
+### ADR-1093 · 2026-11-16 · accepted (the user: "Let's do them all") — R103: the target of a massing brings its army to that border
+- **Was:** ADR-1089's first rule: "the target is not told and does nothing of it". A massing takes weeks and is
+  seen on the map; the neighbour's army stood where it was until the war.
+- **Decision** (`massing.ts`, `massStep`): a massing is seen by its target when `MASS_SEEN` (0.25) of the massing
+  nation's men on the border's land stand at the border. The target then, each day, does with its own formations
+  and its own points of that border what the massing nation does (`gather`: `MASS_SHARE` of them at the border or
+  on the march, the nearest of the rest ordered there; one in a fight, going home, refused or on the player's order
+  left). Not when it is in a war (its army is on its fronts by the operational AI), when it prepares a war itself
+  (one plan at a time), or when its army is not its AI's. Massed on by two: the one with the more men at its border,
+  the lower number on a tie. Read from `World.massing` each day: nothing saved, nothing to undo when the massing is
+  given up (its army stays).
+- **The narrowest answer, on purpose:** no alliance asked, no pre-emption, and the massing nation does not think
+  again for it (it asks the rules of the choice again as it declares, ADR-1089; the target's army at the border is
+  not among them).
+- **Measured** (ROADMAP R103): twelve seeds by three years, without and with: the attacker ahead after a month in 231
+  wars and 231, the defender in 41 and 40, the wars with a border 413 and 408. R97b's bars of those hold.
+- **R97b's third bar is over on both arms:** the attacker with no man within 300 km of the border in 10.5 % of the
+  wars without the answer and 11.0 % with it (30 and 32 wars), where a tenth was set and 6 % measured before
+  ADR-1090. Two wars between the arms; the drift is older than this rule. Left to the user.
+- **Could contradict (ADR-803), read:** ADR-1089 (its "not built": built); ADR-759 (the layers: the target's army
+  layer is asked, a formation on the player's order left); ADR-703 (`askMove`'s memory of refusals: the same);
+  R62e (no massing while the historical track steers, so no answer).
+- **The pin of seed 99:** 1fe6205e -> bf16e257.

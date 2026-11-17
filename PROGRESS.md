@@ -285,3 +285,14 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - `tools/diag/pragueFall.ts`. Prague falls on day 17 on HEAD (day 15, 34, 61 with the two rules of R97b and R98c on
   or off); Germany's army is at that front in each; it fights five nations from the first day. No rule changed.
   `nukeMeansLost1938` back on seed 5309.
+
+## 2026-11-16 — R103: a nation massed on brings its army to that border (ADR-1093); Batch 36 done
+
+- `massStep`'s answer and `gather`; `tests/unit/massAnswer1938.test.ts` (5). Twelve seeds by three years with and
+  without: the attacker ahead after a month in 231 wars on both, the defender in 40 and 41.
+- Found by the measure, older than this item: the attacker with no man within 300 km of its border in 10.5 to 11 %
+  of the wars, over R97b's tenth (6 % then). In ROADMAP and ADR-1093 for the user.
+- The pin of seed 99 1fe6205e -> bf16e257.
+- Checked whole, each alone: the unit suite 2,544 of 2,547 (`snapshot-perf` and `scenario1938`'s build time under the
+  run's load; `specRefs` on the new test not yet in git, green once staged); the sweep tests 23 files of 23;
+  `sweep:quick` limits on 10 of 10 seeds; the checkers of war and peace on six seeds to day 180, none broken.

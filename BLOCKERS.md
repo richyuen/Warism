@@ -114,6 +114,18 @@ the state of 3.10c1a's game read by today's code), France (nation 19) against It
   worth (31 sectors in the Sahara that nobody attacks). Both are balance, and wait for
   Phase 7 (ADR-58).
 
+### 2026-11-16 — `relationsNamed1938`, seed 39943 on the phone: a nation at war or allied is unnamed in one run of three (found at R103's gate)
+- **Seen:** the same world a year on, the same build: "74 nations drawn, 43 at war or allied, 71 named", and of the
+  43 none unnamed in two runs and one (`n5`) in the third; run the gate's way (the file, one worker) 1 red of 3, the
+  test by itself 0 of 3. R103's first gate had it red in the run and green alone; the second red twice; the third
+  is the one committed on.
+- **Older than R103:** the same test was red in two of the day's four whole runs of the browser suite before it (R99's
+  and R101's, on the world before the pin moved) and green alone each time.
+- **Not known:** whether the panel's labels are laid out once before something they are measured by is ready (the
+  font, the panel's size) and not again, or the spec reads before the panel has settled (it waits for more than 3
+  labels, then reads). The first is the game's fault, the second the test's.
+- **Not done:** the cause found. Not put on `tools/gate/knownRed.json`: it is not a machine's red.
+
 ## Watch list
 
 In `docs/BLOCKERS_WATCH.md` (ADR-918): searched, not read.

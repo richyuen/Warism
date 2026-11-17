@@ -325,8 +325,22 @@ though Rush makes sense either way".
   Czechoslovakia holds 100 to 300 cells of Germany's for most of it: a war Germany is losing on five fronts, in which
   the day a city falls is the seed's and the rules' luck. `nukeMeansLost1938` is on seed 5309 again (the means lost
   on day 15). No rule changed.
-- [ ] R103 **A nation massed on answers** (ADR-1089's "not built"): the target of a massing brings its own army to
-  that border. Measured against R97b's bars before it is kept.
+- [x] R103 **A nation massed on answers** (ADR-1093; ADR-1089's "not built"). The target of a massing, once
+  `MASS_SEEN` (a quarter) of the massing nation's men stand at the border, brings its own army to its side of it as
+  the other does (`MASS_SHARE` of its formations, the nearest first), each day while it is so: if it is in no war,
+  prepares none itself and its army is its AI's. Of two massing on it, the one with the more men at its border. No
+  state. Alone (seed 1, the AI off): the Soviet Union on Romania, seen on day 9 of 31, Romania at the border 8 % ->
+  69 %; Italy on Yugoslavia 0 -> 76 %; the Soviet Union on Finland 0 -> 78 %; on Turkey seen on day 44 of 57 and
+  Turkey's army not arrived. Measured, R97b's twelve seeds by three years, without it and with it: the wars with a
+  border 413 and 408; of those that ran a month the attacker ahead in land at day 30 in 231 and 231 (80 and 79 %; the
+  bar no fewer than 219), the defender in 41 and 40 (14 %; the bar 15 %), no land taken in 15 and 20. The opening is
+  not changed by it that the measure shows; the army is at the border as the war begins.
+  - **Over R97b's bar on both, and not by this item:** the attacker with no man within 300 km of the border 30 of
+    287 (10.5 %) without it and 32 of 291 (11.0 %) with it, where R97b measured 6 % and set a tenth. The measure
+    between is R98c's (the weight of the invaded front); not looked into here. The user's to judge.
+  - Not built: the target asking an alliance or a guarantee, a war of its own first, the massing nation thinking
+    again when it sees the answer.
+  - Tests: `tests/unit/massAnswer1938.test.ts` (5). The pin of seed 99 1fe6205e -> bf16e257.
 
 ## Released
 
