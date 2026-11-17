@@ -1,427 +1,613 @@
-# Critic report, run 74 (focused): Batch 39 (R121–R127) on `6cc762ea`
+# Critic report, run 75 (full): Batches 40 and 41 (R125, R128 to R131) and the whole brief, on `e830930e`
 
-- **Mode: focused.** The spawning message asks for a focused run (CRITIC_PROMPT, ADR-915). Run 73 was focused, with no
-  blocking issue and UI/UX at 7, its bar.
-- **Time:** 03:47 to 05:36, an hour and fifty minutes: over the hour a focused run aims at, because the bulk
-  landing sets were due (40 minutes) and the performance figures were then taken alone (15).
-- **Commit judged:** `6cc762eae9feccfd7d6dcbba0765055e066a9a7b`, HEAD at the start (`critic/c74_commit.txt`).
-- **The last report:** run 73, focused, on `a9814c43`: no blocking issue; UI/UX and polish 7, every other dimension 8.
-- **What changed since run 73:** 5 commits (Batch 39), 22 files outside `critic/`, 12 of them under `src/`:
-  - R121 (ADR-1105): the banners' row is the played nation's wars, then the largest by the men of the two sides' nations;
-  - R122 (ADR-1107): `MassingSeen`, a row in the ticker and History once a massing, when a quarter of the massing
-    nation's men stand at the border;
-  - R123 (ADR-1106, the user's): a nation with one living neighbour declares when its massing runs out;
-  - R124 in part (ADR-1108, proposed): a hero's counter takes the step that covers no nation's counter;
-  - R126: on a phone the ticker gives way to opened banners, the first cue under the top plates;
-  - R125 measured and left for the user; R127 none built.
-- **Due because the sim changed:** `git diff --stat a9814c43 HEAD -- src/sim data public/data` is 4 files
-  (`ai/massing.ts`, `ai/strategic.ts`, `history.ts`, `world.ts`). Plain 1938 is not carried by ADR-959: the diff touches
-  `src/sim/ai/` and the 20-year saves end at new hashes (7019 `165d4b75`, 32019 `6d77a72d`; run 73: `f0783b09`,
-  `37285b1d`). The worlds themselves are run 73's: both seeds end year 20 with the same nations, formations and
-  flipped cells (80, 1,421, 21,830 and 84, 968, 31,074); eleven of run 73's plain-1938 logs and thirteen of its
-  built-year logs are the same line for line (below); the hash moved because the history, which now has the massing
-  rows, is state. Run 61's bulk sets and
-  Malta's 18 were run again all the same.
-- **Scored afresh** (the changed files touch them): map visuals and semantic zoom (`render/units/counters.ts`),
-  diplomacy and emergent dynamics (`ai/massing.ts`, `ai/strategic.ts`), stats and history (`shared/history.ts`,
-  `sim/history.ts`, `shared/events.ts`), UI (`ui/WarBanners.tsx`, `app/style.css`, `App.tsx`; and it was the score that
-  moved), stability (`sim/world.ts`: a new saved section), performance (the counters' drawing has new work each frame).
-- **Carried from run 73, with a check each:** God Mode, editor and scenarios, naval, tanks, aircraft, AI nukes. No file
-  of theirs changed. Their page probes and checkers were still run on new seeds (57xxx), and for naval the bulk sets.
-- **Left out for time, of run 73's named cases:** the twelve-year watch on 55941 (a five-year watch alone on a new seed
-  was run; plain 1938 is run 73's world, see above); the nuke A/B on ten seeds (`nukecount 55503` and
-  `nukeIntercepts 53501` are the same line for line as run 73's); `tagsChrome 56973`, `stripe 56981`, `waits 56961`
-  and `56963`, `detvp`; `heroCeiling`; `few3 51401`; `menloss`; the phone's "banners over
-  History".
+- **Mode: full.** The spawning message asks for a full run (CRITIC_PROMPT, ADR-915, ADR-916). Run 74 was focused, with
+  no blocking issue and semantic zoom at 7, under its bar of 8. Every dimension is scored afresh.
+- **Time:** 06:48 to 09:20, two and a half hours. A full run is not bounded.
+- **Commit judged:** `e830930ec2c121f12ef5e746fa6151db5497ca48`, HEAD at the start (`critic/c75_commit.txt`).
+- **The last report:** run 74, focused, on `6cc762ea`: no blocking issue; UI/UX 8; semantic zoom 7; every other
+  dimension 8 (six of them carried). The last full run was run 72 (`2ae30ec6`).
+- **What changed since run 74:** 3 commits, 15 files outside `critic/` and the documents, 11 of them under `src/`:
+  - R128 (ADR-1109): R124's step, which chose a hero's counter anew each frame, taken out of `counters.ts`;
+  - R129 (ADR-1109): `MassingCalledOff`, a row in the ticker and History when a massing that was told ends with no
+    war on its target;
+  - R130 (ADR-1109): the banners' row has a war with a battle before one without;
+  - R125 (ADR-1110, the user's decision): from 1,200 m/px out the T1 markers are stacked and parted by a tighter rule;
+  - R131 (ADR-1112): a hero's marker at T1 keeps its side of its unit and moves at 6 px a frame at most;
+  - R124 left as it is (ADR-1111, the user's decision).
+- **Due because the sim changed:** `git diff --stat 6cc762ea HEAD -- src/sim data public/data` is 2 files
+  (`ai/massing.ts`, `history.ts`). Plain 1938 is not carried by ADR-959 (the diff touches `src/sim/ai/`, and the
+  20-year saves end at new hashes: 7019 `068f1066`, 32019 `a75df50c`; run 74: `165d4b75`, `6d77a72d`). The worlds are
+  run 74's: both seeds have the same nations, formations and flipped cells in every one of the twenty years (80, 1,421,
+  21,830 and 84, 968, 31,074 at the end); the hash moved because the history, which now has the called-off rows, is
+  state. Run 61's bulk sets and Malta's 18 were run again all the same.
+- **An earlier run 75 was begun and died.** `critic/` held 215 `c75_*` scripts and 60 outputs of a run started at 06:00
+  on `c8023172` (its `c75_commit.txt`), which ended in fork failures (`c75_buildchain.log`) before it wrote a report.
+  I moved every output of it to `critic/c75_stale_c8023172/` and cite none; its scripts (copies of run 74's on the
+  seed family 58xxx, with `c75_massOff.mjs`, `c75_bannerFlip.mjs` and a `c75_massTold.ts` that reads the new kind) I
+  read and used. The build and the starts were made again from HEAD.
+- **Files named `c74_*` that are not run 74's:** six are newer than its report (05:40 to 06:41, the builder's runs of
+  the critic's probes: `c74_hp_r124_*`, `c74_hp_r128_*`, `c74_mk_r125_*`, `c74_br_57901_1600x900.json`). None is
+  used. Run 74's figures are from its report, from its logs older than 05:36, or from its build run again beside
+  HEAD.
+- **Left out:** no dimension. Of run 74's left-outs, all were run but the nuke A/B against run 72's commit: the
+  nuclear rules have not changed since run 72 (`git diff 2ae30ec6 HEAD -- src/sim/systems/nuclear.ts` is empty), so
+  there is nothing to compare; the launches were counted on six seeds on HEAD instead.
 - **Probe failures of mine, disclosed:**
-  - `c74_g_editor 57921` stood on a paused page (as run 73's did on a nuclear strike) and I stopped its process by its
-    id after ten minutes; its pictures to the third day are kept (`critic/shots/c74g_57921_*.png`), its log is empty.
-  - `c74_hist 32019` stopped again on the "Charts" button of a closed ranking (I did not mend the copy); its kind
-    counts were read before that, and the charts were opened by `c74_charts 57995`.
-  - `c74_seaclick 57913`: no sea battle's row in sixty days on that seed; not run again (naval is carried).
-  - The two `afterTrack` runs failed at first for a missing folder of mine (`critic/c74_atcache`) and were run again.
-  - A command of mine that stopped a waiting chain by its command line also stopped its own shell; nothing was
-    written by it. The chain was started again from two new scripts (`c74_chainBulk.sh`, `c74_chainPerf.sh`).
-  - The job list was copied from run 73's with the seeds changed 56xxx to 57xxx but the log names kept: a log named
-    `c74_diploinv_56001s.log` is seed 57001's (each log's own first line says its seed).
-  - Run 73's `c73_warOpening.log` on disk is a later, empty run ("0 wars"); run 73's figures for it are from its
-    report.
+  - `c75_g_editor 58921` stood again on the pause of a nuclear strike (as in runs 73 and 74). The cause is the
+    probe's: it waited for the clock while the game, as designed, waits for the player at the alert. I stopped it by
+    its process id, made the probe read the alert and resume (`critic/scripts/c75_g_editor.mjs`), and ran it twice
+    more: both whole (`critic/c75_g_editor.58921.rerun2.log`).
+  - `c75_hist`, `c75_x_trackend91`: the "Charts" button is inside the ranking since R94a and the probes clicked where
+    it was (run 74's `hist` stopped there too). Mended and run whole.
+  - `c75_seaclick 58913`: no row in sixty days, as in run 74: the probe stepped a day at a time and a sea battle's
+    row is there only while it is fought. Mended to two hours a step: the row is found on day 6 of 58061.
+  - `c75_monkey.mjs 58807` (my new probe): its first run stopped answering after 241 s. The page's renderer was idle
+    (0.00 CPU-seconds in 4 s); I stopped the probe by its process id. With a timeout on every act the same seed and
+    three more runs went to their ends with no act timed out, so I count it as the probe's, cause not found.
+  - Arguments of mine: `c75_massOff.mjs` and `c75_massHist.mjs` want a tag where I gave a name (their "Take control"
+    step failed; the rows before it were read; run again with tags); `c75_bannerFlip.mjs` looked a nation up by a
+    name the page does not hold (mended to a tag); one `c75_ev91` log name was too long for the file system (run
+    again under a short name); `c75_histnames … 67` asks for a filter that does not exist (run 72's own note). `c75_rw_random 58965` printed
+    nothing to its log; its JSON has a random world and the toy world run 390 days each with 0 errors and its
+    readers of the wars and nations empty (the probe's selectors are stale), so I cite it for nothing but that.
+  - `c75_chainBulk.out` was overwritten by a second, guarded start of the chain ("already running"); the chain's own
+    log and results are whole.
 - **Setup.**
-  - Build: `vite build --outDir critic/c74_dist`, exit 0; starts: `npm run saves -- critic/c74_starts`, copied into the
-    build (`critic/scripts/c74_build.sh`). Served by `vite preview` on 127.0.0.1:5375; run 73's build
-    (`critic/c73_dist`, `a9814c43`, its own starts) on 5373 for the comparisons. Playwright Chromium at 1600 × 900 and
-    390 × 844. No worktree was needed: every headless figure that could be compared is the same as run 73's logs.
-  - Run 73's probes copied as `c74_*` (prefixes, port and seed family changed). New seed family: 57xxx.
-  - Chains: `c74_runNamed.sh` (`c74_jobsAll.txt`, then `landingFuzz --seeds 15 --first 57101`), `c74_chainS.sh`
-    (`c74_startsJobs.txt`), `c74_pages.sh`, `c74_pagesN.sh` (run 73's named page cases), `c74_chainBulk.sh` (the bulk
-    sets, Malta), `c74_chainPerf.sh` (performance, alone, last).
-  - New probes: `c74_heroPop.mjs` (does a hero's counter jump while zooming, panning and running; both builds),
-    `c74_bannerRank.mjs` (R121's row day by day, a nation taken and released; both builds), `c74_massTold.ts` (R122's
-    rows against the wars that follow; R123 on and off), `c74_massSave.ts` and `c74_massSave2.ts` (`massTold` over a
-    save), `c74_massHist.mjs` (the row in History, its export, "my wars only", the ticker's click),
-    `c74_undo2_pix.py`.
-- **At the end:** both preview servers stopped by the process ids that held ports 5375 and 5373, no Playwright browser
-  left; no worktree was made. A `vite preview` on port 4174 that was running before I began is not mine and was left. `git status` shows nothing new outside `critic/` (the eight untracked PNGs under
-  `docs/evidence/7.132/` were there before).
+  - Build: `vite build --outDir critic/c75_dist`, exit 0; starts: `npm run saves -- critic/c75_starts`, 54 years in
+    599 s, exit 0, copied into the build (`critic/scripts/c75_build.sh`). HEAD's build served by `vite preview` on
+    127.0.0.1:5377; run 74's build (`critic/c74_dist`, `6cc762ea`) on 5378 for the comparisons. Playwright Chromium
+    on the GPU at 1600 × 900, 390 × 844, 844 × 390, 1280 × 720, and for the frames 2560 × 1440 and 3840 × 2160.
+  - Chains: `c75_runNamed.sh` (`c75_jobsAll.txt`, 114 headless cases six at a time, then `landingFuzz --seeds 15
+    --first 58101`), `c75_chainS.sh` (`c75_startsJobs.txt`, 40 cases from the built years), `c75_chainBulk.sh` (the
+    bulk sets, Malta), `c75_suiteF.sh` (the whole page suite of run 72 on new seeds, about 95 probes),
+    `c75_lane2.sh` (run 74's, 73's, 72's and 71's named page cases and the batch's own), `c75_pagesZ.sh` (semantic
+    zoom on both builds), `c75_lane3.sh` to `c75_lane6.sh` (my new probes and the mended ones), `c75_chainPerf.sh`
+    (performance, alone, last). New seed family: 58xxx.
+  - New probes: `c75_markerPop.mjs` (does a T1 marker leap or pop while the wheel is turned through 1,200 m/px and
+    while the game runs; both builds), `c75_bannerFrames.mjs` (the banners' strip second by second),
+    `c75_monkey.mjs` (random clicks, drags, wheel, keys and buttons for five and ten minutes, desk and touch),
+    `c75_resize.mjs` (nine window sizes in a running game), `c75_evAround.ts` (the events of two nations about a
+    day), `c75_warAt100.ts` (wars that stand at ±100), `c75_interceptTold.ts` (which nuclear kinds reach History).
+- **At the end:** my three preview servers (5377 HEAD's build, 5378 run 74's, 5376 run 73's for one comparison)
+  stopped by the process ids that held their ports; no Playwright browser or probe of mine left; no worktree was
+  made. A `vite preview` on port 5373 that was running before I began (started 06:27, not mine) was left. `git status`
+  shows nothing new outside `critic/` (the eight untracked PNGs under `docs/evidence/7.132/` were there before).
 - **Writes outside `critic/` by tools at their defaults:** `npm run sim` to `.cache/runs/*.json`; `landingFuzz` to
-  `.cache/landingFuzz/`.
-- **Memory:** the machine had 0.3 to 0.6 GB free for most of the run (its committed memory near its limit before my
-  jobs, 80 of 83 GB, of which my processes held about 15); six to ten sims at once, nothing reaped.
+  `.cache/landingFuzz/`; `trackFronts` to `.cache/trackFronts_*.json`.
+- **Memory:** 11 to 21 GB free throughout; six sims and up to five browsers at once, nothing reaped.
 
 ## Verdict
 
-**No blocking issue.** Every rule checker is 0 broken on new seeds: 10 runs of five or ten years, 5 free-year games,
-landingFuzz 0 of 90, `landingRows all` 0 of 115 cases; and on run 73's seeds. The bulk landing sets (717 runs) are run 73's
-line for line: no rule broken but `slowClick`, in the four runs run 73 had. Run 73's first, third and sixth findings
-are fixed on their own cases, its second as SPEC now has it; its fourth and fifth stand.
+**No blocking issue.** Every rule checker is 0 broken on new seeds: 13 runs of five or ten years (diploInvariants 7,
+worldInvariants 6; three of them over ten years), 9 free-year games, `landingFuzz` 0 of 90, `landingRows all` 0 of 115
+cases; and on the last runs' seeds. The bulk landing sets (717 runs) are run 74's line for line: no rule broken but
+`slowClick`, in the same four runs. No page error in any probe output that records them, among them 36 minutes of
+random input at four sizes and three twelve-year watches. One page look of the builder's, `seaBattlesLook`, ends
+"NOT SEEN" on 1 of its 97 battles; I traced it to the look's own list (the side not seen had been sunk whole within
+the battle's one hour) and do not count it blocking: the case and the trace are under naval.
 
-**Two scores move.**
-- **UI/UX and polish 7 → 8.** R73-N1, the case that took it to 7, is fixed on its own probe: a played Germany's three
-  wars are the row at every sample of 150 days (0 of 3 on run 73's build, the same start and after-seed), and R73-N6 is
-  fixed on its pictures.
-- **Semantic zoom 8 → 7, under its bar of 8** (R74-N1). R124's half-built rule makes the heroes' counters jump: over
-  nine notches of the mouse's wheel (9,000 m/px in to 3,686 and out again) a hero's counter leaps 25 to 78 px from one
-  drawn frame to the next 41 times on HEAD and 4 times on run 73's build (seed 56901); 36 times and never on a second
-  seed (57905). With the game running at ×5 and the
-  camera still, 77 leaps in twenty seconds where run 73's build has 34 (12 and 4 on the second seed). And the thing the
-  rule was for is not reached: T-42 and Roma still stand on counters in the critic's scene. The heroes are on in a game
-  from the title, so this is what a new player zooms through.
+**Two scores move, against each other.**
+- **Semantic zoom 7 → 8, at its bar.** R74-N1 is fixed on its own probe on both builds side by side: zooming 9,000 to
+  4,000 m/px a hero's counter leaps 1, 0 and 1 times on HEAD where run 74's build has 38, 28 and 50 (seeds 56901,
+  57905 and a new one, 58905); by the mouse's wheel 4, 0 and 4 against 43, 41 and 37. Run 74's bars for it are met:
+  seven to the figure, and the eighth (36 leaps running where the bar said 34) at the count run 73's build itself
+  gives today, 36. R125 and R131, built since, hold on their own measures.
+- **UI/UX and polish 8 → 7, at its bar** (R75-N1). R130's order makes the banners change places as battles begin
+  and end: with the game running at the speed it loads with (×5), the row changed 41, 25 and 29 times in a minute on
+  HEAD and 6, 5 and 7 times on run 74's build (seeds 57901, 57903, 58901, the same days); the banner under a resting
+  cursor became another war's 18, 0 and 19 times against 1, 0 and 0. Run 74's finding (wars with no battle on the row
+  while fought ones were behind "+n") is fixed by it: 0 of 440 banner-days where 181 of 438.
 
 **What a player will meet first (non-blocking):**
-- **R74-N1:** hero counters hop up and down while zooming and while the game runs (above).
-- **R74-N2:** a massing told and then given up is never called off: 14 rows of 112 on six seeds of three years were
-  followed by no war and by no word that the army went home. (That the row comes a median of 3 days before its war
-  is as SPEC has it, and is under "Design objections".)
-- **R74-N3:** with no nation played the row is the wars of the largest nations, fighting or not: on 31 May 1938 of
-  seed 57901 all three banners are of wars with no battle while Japan's war in China, the one drawn on the map, is
-  behind "+3". No worse than run 73's order by the same count (41 % of banner-days against 44 %).
-- **R73-N4 and R73-N5 stand as they were** (the builder left both for the user, ADR-1108, proposed).
+- **R75-N1:** the banners swap places every second or two while a war's battles come and go (above).
+- **R75-N2:** a bomber stopped short with a warhead is told nowhere: the event has no row and no words. In an
+  editor game with ten warheads given to Poland, History has "Poland decided on a nuclear strike near Berlin" on 14
+  and on 15 February, one strike on the 15th, and the stockpile at 8: one warhead gone with no word of it (that it
+  was a bomber stopped short is my inference; the event itself I did not read).
+- **R75-N3:** a massing can be called off in the hour its nation goes to war with the target by another door
+  (France on Germany, seed 58619, day 884): 1 of 21 call-offs on twelve seeds.
+- **Just inside 1,200 m/px the markers are heaped as they were:** 21 pairs on one another of 58 at 1,150 m/px where
+  1,300 has 6 of 53 (seed 58951, day 30): zooming in a notch makes the front harder to read. ADR-1110 is the user's
+  decision and this is under "Design objections".
 
 **The rule checkers on new seeds:**
-- diploInvariants, 0 broken: 57001, 57005 (heroes) (1938), 57003 (random diplomacy), 57007 (random world), five years;
-  57009 (heroes), ten years. Run 73's 33501: 0 (`critic/c74_diploinv_*.log`).
-- worldInvariants, every rule set, 0 broken: 57051, 57053 (heroes), 57055 (random world), 57057 (random diplomacy),
-  five years; 57065 (heroes), ten years. Run 73's 36009: 0 (`critic/c74_wi_*.log`).
-- `c74_free.ts`, 0 broken lines: 1942 57542, 1951 57551, 1966 57566 (random diplomacy), 1975 57575 (two years), 1991
-  57611 (five years), all with heroes; run 73's 51501, 51505: 0 (`critic/c74_free_*_free.log`).
-- `blocend 54611`: 0 bloc lines in five years. `heldfree 1946`: 0. `clampend`: none at ±100. `repulse 55071`, `57073`:
-  0. `landingRows all`: 115 cases, 20,321 hours, 0 broken (`critic/c74_lrows_all.log`).
-- `landingFuzz --seeds 15 --first 57101`: **0 of 90** runs broken, `slowClick` included (`critic/c74_landingFuzz.log`).
-- `workerDeterminism 54059`: `3f823012` on every arm; 57059: `8d1be792` on every arm (`critic/c74_wd_*.log`).
-- The builder's measures of a war's first month on new seeds (`tools/diag/warOpening.ts`, 57211, 57213, 57215, three
-  years: 128 wars, 57 with a border that ran a month): the attacker with no man within 300 km of the border in 7 of 57
-  (12.3 %; the user's bar 15 %, ADR-1094); the defender ahead in land at day 30 in 9 of 57 (15.8 %; the bar 15 %; run
-  73: 9 of 71, 12.7 %). It is the seeds: on run 73's own three (56211, 56213, 56215) HEAD has 9 and 9 of 71, to the
-  war what run 73 had (`critic/c74_warOpening_56.json`). No finding. Of the 42 wars prepared by a massing on the new
-  seeds, 0 began with no man near (`critic/c74_warOpening.log`, `critic/c74_warOpening.json`).
+- diploInvariants, 0 broken: 58001, 58005 and 58013 (heroes) (1938), 58003 (random diplomacy), 58007 (random world),
+  five years; 58009 (heroes) and 58011 (random diplomacy, heroes), ten years. Runs 73's and 74's 33501 and 57001: 0
+  (`critic/c75_diploinv_*.log`).
+- worldInvariants, every rule set, 0 broken: 58051, 58053 and 58063 (heroes), 58055 (random world), 58057 (random
+  diplomacy), five years; 58065 (heroes), ten years. 36009 and 57051: 0 (`critic/c75_wi_*.log`).
+- `c75_free.ts`, 0 broken lines: 1942 58542, 1946 58546, 1951 58551, 1962 58562 (a year each), 1966 58566 (random
+  diplomacy), 1975 58575 and 1983 58583 (two years), 1991 58611 (five years), all with heroes; 1946 51515 (random
+  diplomacy, two years); runs 73's 51501 and 51505: 0 (`critic/c75_free_*_free.log`).
+- `blocend 54611`: 0 bloc lines in five years. `heldfree 1946`: 0. `heldAtEnd` 54311 and 58311: 0. `clampend`: none
+  at ±100. `repulse` 55071, 58073: 0. `landingRows all`: 115 cases, 20,321 hours, 0 broken
+  (`critic/c75_lrows_all.log`).
+- `landingFuzz --seeds 15 --first 58101`: **0 of 90** runs broken, `slowClick` included
+  (`critic/c75_landingFuzz.log`).
+- `workerDeterminism` 54059: `3f823012` on every arm (as run 74); 58059: `9880185a` on every arm
+  (`critic/c75_wd_*.log`).
+- The builder's measures of a war's first month (`tools/diag/warOpening.ts`, three years a seed): on new seeds
+  58211, 58213, 58215, 155 wars, 62 with a border that ran a month: the attacker with no man within 300 km in 4
+  (6.5 %; the user's bar 15 %, ADR-1094), the defender ahead in land at day 30 in 10 (16.1 %; the bar 15 %). On run
+  74's seeds (57211…) HEAD has 7 and 9 of 57, and on run 73's (56211…) 9 and 9 of 71: to the war what those runs had
+  (`critic/c75_warOpening*.json`, read with run 74's own file). Over the nine seeds the defender is ahead in 28 of
+  190 (14.7 %): the share moves a point either side of the bar by the seeds, as run 74 found; no finding. Of the 68
+  wars prepared by a massing on the new seeds, 0 began with no man near.
 
 ## Scores
 
-### Map visuals and readability: 8 → **8** (scored afresh)
+### Map visuals and readability: 8 → **8**
 
-**What I tested:** run 73's `look` at desk and phone size on its seeds (56901, 56903: the cue, the chrome, two fronts
-at five zooms, 110 shots), its `markers` case, the heroes with a panel open, and the new `heroPop` on two seeds and
-both builds.
+**What I tested:** run 73's `look` at desk and phone size on its seeds and on two new ones (56901, 56903, 58901,
+58903: the cue, the chrome, two fronts at five zooms, the world, Europe and Asia; 209 shots), run 73's `markers` case
+on both builds and on a new seed and a phone, the heroes with a panel open, `tagsChrome` on two seeds, `stripe`, the
+window at nine sizes.
 
 **Evidence for 8:**
-- **The fronts as run 73 judged them:** the Japanese-Chinese front on 18 February 1938 is a white-cored line with the
-  taken ground hatched and the arrows by side (`critic/shots/c74look_56901_1600x900_d45_f0_1200m.png`); the tiers below
-  it are as they were (`…_f0_600m.png`, `…_f0_100m.png`, `…_f0_30m.png`). 0 page errors in both looks.
-- **R72-N4's mended half holds:** with Relations open no hero's counter is piled at the panel's edge
-  (`critic/shots/c74hp_55929_12000_1relations.png`).
-- **A massing can now be found on the map from its row:** the ticker's "8 March 1938 Soviet Union is massing its army
-  on the border of Romania", clicked, brings the border to 938 m/px with the Soviet columns from Zhytomyr down to it
-  (`critic/shots/c74mh_56211_tickerclick.png`, `critic/c74_mh_56211.log`).
+- **The fronts read at every tier:** a front by Salum on 1 July 1938 is a white-cored line, the taken land
+  hatched, the arrows by side and two named divisions (an Italian and a colonial one) in contact at 250 m/px
+  (`critic/shots/c75look_56901_1600x900_d180_f0_250m.png`), their men as countryballs with the line of contact at
+  30 m/px (`…_f0_30m.png`). 0 page errors in the four looks.
+- **R73-N5 is mended where the user chose (R125), on both builds** (`c75_markers.mjs 56951 … 10,20,30`, the Japanese
+  front in China): pairs of markers on one another at 1,800 m/px 3, 10 and 12 of 48, 54 and 59 on HEAD; 24, 47 and 39
+  of 60, 71 and 72 on run 74's build, to the figure what run 74 had. At 1,200: 1, 3, 7 against 5, 12, 17
+  (`critic/c75_mk_head_desk.log`, `critic/c75_mk_c74build_desk.log`). The builder's own figures are these but one
+  pair (it gives 9 on day 20). On a new seed (58951, days 30 and 60): 10 and 12 of 47 and 46 at 1,800 against 39 and
+  40 of 59 and 56 (`critic/c75_mk_headn_desk.log`, `critic/c75_mk_c74n_desk.log`). The numbers that were under
+  other boxes can be read: `critic/shots/c75mk_head_56951_1600x900_d30_1800m.png` beside
+  `critic/shots/c75mk_c74build_56951_1600x900_d30_1800m.png`. On a phone the same front is stacks of ×17, ×11 and
+  ×10 with their numbers clear (`critic/shots/c75phone_56903_390x844_d240_f0_1200m.png`).
+- **A massing called off goes to its border from the ticker** (R129): the row of 12 November 1938, clicked, puts the
+  camera on the Soviet-Romanian border at 938 m/px (`critic/c75_mo_58623.log`); a call-off whose border is gone
+  (France on a Switzerland annexed that day; the event has no place) still lands in France
+  (`critic/shots/c75mo_57613_tickerclick.png`).
+- **The window resized in a running game:** nine sizes from 320 × 568 to 2560 × 1440 and back: the canvas the
+  window's size each time, no page wider than the window, no chrome off the screen, 60 frames a second, 0 errors
+  (`critic/c75_resize_58821.log`, `critic/shots/c75rs_58821_320x568.png`).
+- `tagsChrome` 56973 and 58973: 9 and 0 tags, none under the chrome, no pair on one another; R72-N4's mended half
+  holds (`critic/shots/c75hp_55929_12000_1relations.png`).
 
 **Not 9:**
-- **R73-N4 stands (R124, built in part).** In the same scene (seed 56901, the four-hundredth day, Europe at 6,000
-  m/px) T-42 still covers "293.9k" and Roma two Italian counters; Maus and Bismarck have changed places and Bismarck
-  now covers a German counter (`critic/shots/c74look_56901_1600x900_d400_2eur6000.png` beside run 73's
-  `critic/shots/c73look_56901_1600x900_d400_2eur6000.png`). ROADMAP says so itself ("T-42, Bismarck, Roma and HMS
-  Hood still stand on a counter each").
-- **R74-N1** (scored under semantic zoom, once): the counters that R124 moves now move every few frames.
-- **R73-N5 stands, to the figure:** `markers 56951`, days 10, 20, 30 at 1,800 m/px: 24, 47, 39 pairs over one another
-  of 60, 71, 72 markers; at 1,200: 5, 12, 17. The same as run 73 (`critic/c74_mk_head_desk.log`).
-- On a phone at the world's zoom the heroes' counters cover Europe whole
-  (`critic/shots/c74phone_56903_390x844_d60_0asleft.png`); "COMMUNIST CHINA" is still under its capital's flag.
+- **Inside 1,200 m/px the heap is as it was** (design objection, below): at 1,150 m/px 11, 16 (56951) and 21, 21
+  (58951) pairs where 1,250 to 1,300 has 2, 6 and 6, 8 (`critic/c75_mk_headx_desk.log`,
+  `critic/c75_mk_headn_desk.log`; `critic/shots/c75mp_head_56951_d30_live_1150.png`: the numbers about Jinan cannot
+  be read).
+- **One marker more covered than before:** on day 10 at 1,200 m/px the one pair left on HEAD has a marker over 60 %
+  under another, where run 74's build, with 5 pairs, had none over 30 % (`critic/c75_mk_head_desk.log`,
+  `critic/c75_mk_c74build_desk.log`; `critic/shots/c75mk_head_56951_1600x900_d10_1200m.png`).
+- **Where two armies meet in a battle the far rule leaves a heap too:** 58951 on day 60 at 1,300 m/px, the fight west
+  of Xingtai: "1…", "42.0k", "32.1", "126.0k" under other boxes (`critic/shots/c75mp_head_58951_d60_1300.png`). The
+  boxes of two nations are moved 13 px at most.
+- **Hero names on counters at 6,000 m/px** (R73-N4): T-42 still covers "293.9k", Roma a counter's number
+  (`critic/shots/c75look_56901_1600x900_d400_2eur6000.png`). Left as it is by the user (ADR-1111): under "Design
+  objections" now.
+- On a phone at the world's zoom the heroes' names cover Europe whole at the first sight of a new game
+  (`critic/shots/c75t2_1938_58203_390x844_2start.png`); "COMMUNIST CHINA" is still under its capital's flag.
 
-### Diplomacy, war, alliance, puppet, revolt depth: 8 → **8** (scored afresh)
+### Diplomacy, war, alliance, puppet, revolt depth: 8 → **8**
 
 **Evidence for 8:**
 - **Every checker 0 broken** on new seeds (above), with heroes, random diplomacy and the random world.
-- **A massing is told (R122), and the row leads somewhere:** on run 73's case (seed 56211) History has "Soviet Union is
-  massing its army on the border of Romania" on 8 March 1938, six days before the declaration; the ticker has it, its
-  click goes to the border, "my wars only" as Romania shows it, the kind's filter lists seven massings in 67 days, and
-  the CSV and JSON have it as `MassingSeen` (`critic/c74_ms_56211.log`, `critic/c74_mh_56211.log`,
-  `critic/c74_mh_56211.csv`, `critic/shots/c74mh_56211_kind.png`).
-- **No row twice:** 112 rows on six seeds of three years, none of a nation already told in that massing
-  (`critic/c74_massTold_a.log`, `critic/c74_massTold_b.log`).
-- **Run 73's same-seed measures are the same line for line:** `farConquests 0` (both sets), `firstdecl` (53 and 59,
-  none over 6,000 km), `piles` on fifteen seeds (none over 4:1), `pileSides 51`, `warlong 1942 54601 god` (peace at 90
-  on 18 September 1942), `freewar` 1941, 1942, 1944, `clampend`, `blocend 54611`
-  (`critic/c74_farc_0_*.log`, `critic/c74_firstdecl*.log`, `critic/c74_piles_*.log`, `critic/c74_warlong_*.log`).
-- **The invaded front:** `frontArrivals 57205 GER,POL 60`: on day 60 Poland has 4,000 men left and holds 22 of
-  Germany's cells; `pragueFall` 57201 and 57203: Prague taken on days 14 and 15 (`critic/c74_fa_56205.log`,
-  `critic/c74_prague_5620*.log`).
+- **R74-N2 fixed on its own probe (R129)** (`npx tsx critic/scripts/c75_massTold.ts 3 …`): on run 74's six seeds 114
+  massings told, 97 followed by their war, 15 given up: 13 called off in a row of their own, and 2 that the probe
+  lists "in silence" were at war with their target by then (the war came by another declaration). Run 74: 14 of
+  112 given up with no word. The United Kingdom's massing on Mozambique of run 74's example (seed 56211) is now
+  called off on day 855, 74 days after it was told. On six new seeds (58611 to 58621): 94 told, 83 followed, 11 given
+  up, 8 called off, 3 at war with the target (`critic/c75_massTold_a.log`, `_b.log`, `_n1.log`, `_n2.log`).
+- **None told twice in one massing; none told again within days of a call-off:** 0 "twice" in 208 rows; a pair told
+  again after a call-off only in a ten-year world of three nations, 988 and 2,276 days later
+  (`critic/c75_massTold_r3.log`).
+- **The row on the page:** History's kind "Massing called off" (1 of 355 events in 320 days of 58623; 12 of 3,118 in
+  twenty years of 32019), "my wars only" as Romania has both the massing and its call-off, the CSV and JSON have
+  `MassingCalledOff` with both nations (`critic/c75_mo_58623.log`, `critic/shots/c75mo_58623_mine.png`,
+  `critic/c75_mo_57613.log`).
+- **A game saved with a massing told** loads, and after 120 days is at the unbroken game's hash with the same rows
+  (58623: `00b09e5d` twice, 4 rows and 4; `critic/c75_massTold_sl.log`).
+- **The last runs' same-seed measures are the same lines:** `farConquests 0` (both sets), `firstdecl` (53 and 59
+  first declarations, none over 6,000 km), `piles` on fifteen seeds (none over 4:1), `pileSides 51`, `warlong 1942
+  54601 god` and `1943 free`, `freewar` 1941, 1942, 1944, `clampend`, `blocend 54611`, `afterTrack 55601` (the
+  leaders opposed 533 days) and `37601` (0) (`critic/c75_farc_0_*.log`, `critic/c75_firstdecl*.log`,
+  `critic/c75_piles_*.log`, `critic/c75_warlong_*.log`, `critic/c75_atx_*.log`).
+- **The invaded front:** `frontArrivals 58205 GER,POL 60`: on day 60 Poland has 22,000 men in 17 formations, 84 % of
+  them at the German front, and holds 41 of Germany's cells; `58207 JAP,CHI`: 93 % of China's 703,000 at the
+  Japanese front; `pragueFall` 58201 and 58203: Prague taken on days 13 and 14 (`critic/c75_fa_5820*.log`,
+  `critic/c75_prague_5820*.log`).
+- **The relations graph says what the state is:** `rg_relations` on three seeds, desk and phone: each kind of tie
+  read back from the panel ("Austria is a puppet of Italy", "Germany and Lithuania are at truce, 420 days left"), 0
+  errors (`critic/c75_rg_relations.*.log`).
 
 **Not 9:**
-- **R74-N2: a false alarm is never called off** (`c74_massTold.ts`, seeds 56211, 57611, 57613, 57615, 57617, 57619,
-  three years each). Of 112 rows 14 were of a war that never came (12.5 %; 2 more were still open at the end), and
-  nothing says so: the United Kingdom "is massing its army on the border of Mozambique" on 56211 and gives it up 74
-  days later in silence; Brazil on Bolivia, 36 days; the Soviet Union on Turkey, 27. SPEC and ADR-1107 say nothing of
-  a massing given up; ROADMAP lists it as not built ("a row when a massing is given up"), with "an arrow or a mark on
-  the map at the border".
-- **As specified, and measured:** 96 rows were followed by their war, after a median of 3 days (a day or less in 24,
-  two days or less in 39, a week or less in 70); 56 wars that a massing prepared had no row (37 % of the 152). Read
-  on two of the seeds (19 such wars, `critic/c74_massTold_why.log`): in none was the nation still marked as told from
-  an earlier massing; 11 were declared a day or two after the massing began (Germany on the Soviet Union on day 343
-  of 56211, the largest war of that game), 8 after 9 to 39 days (Brazil on Venezuela, Saudi Arabia on Yemen). The
-  rule counts the men at the border once a day and declares, at half, before it tells, at a quarter: these were at
-  half the first day they were at a quarter. Why a massing of 39 days goes from under a quarter to half in a day was
-  not read. SPEC has the row at a quarter of the men ("That day, once a massing"); the declaration of the same day
-  stands in for it. Neither lowers anything; both are under "Design objections".
-- **Wars in which nothing happens for a month:** on run 73's three seeds 16 of 111, as run 73; on the three new ones
-  9 of the 85 that ran thirty days (`critic/c74_warOpening_56.log`, `critic/c74_warOpening.log`).
-- **The bloc leaders at war after the track (run 72's observation), as it was:** `afterTrack 55601`: the United
-  States and the Soviet Union on opposite sides for 533 days of ten years, as run 73; 37601: 0 days
-  (`critic/c74_atx_55601.log`, `critic/c74_atx_37601.log`); `blocend 54611`: 0 bloc lines broken.
+- **R75-N3: called off, and at war with the target in the same hour.** Seed 58619: France's massing on Germany, told
+  on day 794, runs out its ninety days; at hour 0 of day 884 the events are `MassingCalledOff FRA GER`, then
+  Italy and Japan joining Germany's side of a war and France joining the other (`critic/c75_ev_58619_fra_ger.log`;
+  "CALLED OFF BUT AT WAR at the day's end" in `critic/c75_massTold_n2.log`). SPEC has the row "if it then ends with no
+  war on its target", which holds for that instant; a reader has "France has called off its massing on the border of
+  Germany" and France at war with Germany under one date. 1 of the 21 call-offs of the twelve seeds.
+- **As specified, and measured:** a massed war with no row before it (declared the first day its men are counted at
+  the border) is still common: on the six new seeds 141 of 274 declarations had no massing the day before, and the
+  massings that were told were told a median of 3 days ahead. Under "Design objections", as in run 74.
+- **A war that stands at ±100:** Japan's war in China is at −100 for 738 days on end on seed 7019 (13.4 % of that
+  game's war-days are at ±100) and at +100 for 321 on 58203 (`critic/c75_war100_*.log`). China and both Spains fight
+  to the death (`data/scenarios/1938/nations.json`), as SPEC has it; nothing on the banner or its tooltip says so
+  (the words are only in the refusal of a peace the player offers), so a watcher sees a decided score and a war that
+  does not end.
+- **Wars with no cell held by either side at day 30:** 20 of the 103 that ran a month on the new seeds; 11 of 82 on
+  run 74's seeds on both commits (`critic/c75_warOpening.json`, `critic/c74_warOpening.json`).
+- The bloc leaders at war after the track, as it was: 533 days of ten years on 55601, 303 on the track's own seed,
+  0 on 37601 (`critic/c75_atx_*.log`).
 
-### Emergent world dynamics: 8 → **8** (scored afresh)
+### Emergent world dynamics: 8 → **8**
 
 **Evidence for 8:**
-- **R73-N3 fixed on its own measure (R123):** `fewNationWars 2 55421 6 10`, the first war's day on run 72's commit →
-  run 73's → HEAD: 55421 13 → 476 → 104; 55423 2,323 → none → 2,414; 55425 90 → 665 → 181; 55426 27 → none → 118. A
-  war in ten years in 5 worlds of 6 (run 73: 3; run 72: 5). 55421 and 55426 have theirs within a year, which is what
-  run 73 asked. The second set (54421): 54422 5 → 475 → 96; 4 of 6 with a war, as both runs before
-  (`critic/c74_few2_55.log`, `critic/c74_few2_54.log`).
-- **Worlds of three gain from it too** (ROADMAP: "not looked at … the rule does not apply"; it does, where one of the
-  three has one neighbour): 55406 40 → 510 → 131, 53401 376 → 944 → 580 (`critic/c74_few3_55.log`,
-  `critic/c74_few3_53.log`). Checked with the rule off (`c74_massTold.ts 10 --random 3 --no-alone 55406 53401`): 1 war
-  each in ten years, every massing told given up; with it on, 6 and 5 wars
-  (`critic/c74_massTold_r3_noalone.log`, `critic/c74_massTold_r3.log`).
-- **The rule does not reach 1938:** three seeds of three years with `MASS_PROBE.alone` off end at the same hashes as
-  with it on (`ecde4587`, `f3faec05`, `247dd550`): no nation with one neighbour ran a massing out, as ADR-1106 says
-  (`critic/c74_massTold_noalone.log` against `critic/c74_massTold_a.log`, `…_b.log`).
-- **Plain 1938 is run 73's world:** the twenty-year games of 7019, 32019 and 7019 with heroes end with the same
-  nations, formations, declarations and capitals taken as run 73's (`critic/c74_seed7019_save.log`,
-  `critic/c74_hero_7019_20.log`); sixty nations (55431–3): 91, 87, 56 wars, as run 73.
-- **Five years on the page, alone:** 57941 with heroes, 1938 to the end of 1942: wars on the row at every year's end
-  ("Soviet Union +4 ⚔ Japan +5", "France +4 ⚔ Italy +2", "Iraq +8 ⚔ Iran +3", "Finland ⚔ Soviet Union", "France +1 ⚔
-  Germany +1"), 98 nations down to 92 by way of 93 and 96, "Bulgaria returned", 0 page errors
-  (`critic/c74_lwalone_57941.json`, `critic/shots/c74lwalone_57941_y03_world.png`). The Soviet Union is on two or
-  three of the three banners in four of the five years (R74-N3).
+- **Three twelve-year watches on the page** (58941 with heroes, 58943 and 58945 plain; 1938 to 1950): wars on the row
+  at every year's end and the map redrawn each time: Italy's green over North Africa and Arabia by 1943 on 58941,
+  Germany and Italy at war by 1948 (`critic/shots/c75lwhon_58941_y05_world.png`, `…_y10_world.png`); "Poland +7 ⚔ Netherlands
+  +12", "United Kingdom +7 ⚔ Japan +12", "Brazil +3 ⚔ Argentina +1" on 58945; nations 100 → 76, 98 → 81, 95 → 75 by
+  way of rises (87, 91, 88: nations revived and born); 0 page errors (`critic/c75_lwhon_58941.json`,
+  `critic/c75_lwplain_58943.json`, `critic/c75_lwplain2_58945.json`).
+- **A thing that looked like a broken rule and is not:** on 58943 "Communist China was destroyed" (26 December 1945)
+  and "Japan made peace with Communist China" (10 December 1948). Traced headless: `NationRevived CCP` on day 3,834,
+  its capital taken on day 3,965, peace and a puppet on day 3,996 (`critic/c75_ev_58943_ccp.log`).
+- **Twenty years headless:** 7019 and 32019 plain (80 and 84 nations at the end), 7019 and a new 58019 with heroes
+  (72 and 86 nations; 12 and 9 heroes alive; 4 detonations in 7019's last year), 58021 with heroes for twelve
+  (`critic/c75_seed*_save.log`, `critic/c75_hero_*.log`). 7019 with heroes is run 74's game year for year (the
+  same nations, formations, declarations, peaces, capitals and detonations in each of twenty lines).
+- **Small worlds as run 74 left them** (`fewNationWars`, ten years): two nations 55421: a war in 5 of 6, the first
+  on days 104, 20, 2,414, 181, 118 (run 74's lines); 54421: 4 of 6; three nations 53401: 6 of 6; 51401: 6 of 6;
+  55401: 4 of 6. New families: two nations 58421: 5 of 6 (days 1,251, 124, 2,231, 139, 47); three nations 58401: 6 of
+  6. Sixty nations (55431 to 55433): 91, 87, 56 wars (`critic/c75_few*.log`).
+- **The leaders' order changes:** `topArea 58097`, 25 years: the first three by land changed 4 times
+  (`critic/c75_toparea_58097.log`). After the track, a year: 67 and 59 wars declared on two seeds
+  (`critic/c75_track_*.log`).
 
 **Not 9:**
-- **A two-nation world now waits at least its ninety days:** the first war of the worlds R123 mends is on day 96 to
-  181 where run 72 had day 5 to 90; 55424, 54425 and 54426 still have no war in ten years, and three nations 55401
-  and 55404 none, as run 72 and 73. A new family (57401–6, three nations): first wars on days 1,538, 601, 1,266,
-  none, 1,130, 61 (`critic/c74_few3_56.log`; new seeds, not compared).
-- Brazil's massing on Colombia is given up "late" on each of the three new seeds too, and on run 73's
-  (`critic/c74_warOpening.log`, `critic/c74_warOpening_56.log`): as decided (ADR-1089, ADR-1106).
+- 55424, 54425, 54426 and a new 58422 (two nations), 55401, 55404 and 57404 (three) have no war in ten years.
+- Brazil's massing on Colombia is given up "late" on each of the nine seeds of `warOpening`, and the United
+  Kingdom's on Angola on five: the same false alarms game after game (as decided, ADR-1089).
 
-### God Mode: 8 (carried from run 73; no file of it changed)
+### God Mode: 8 → **8**
 
-- Checked: `q_god_tools 57919`: revolt, spawn, breakthrough, territory, found and raze a city, each told
-  ("4 January 1938 Prague in Czechoslovakia was razed"); `a_god_nuke 57917`: its 23 pictures and 0 errors
-  (`critic/c74_q_god_tools.57919.log`, `critic/c74_a_57917.json`).
-- Undo: `undo2 41211` and `undo2y 51231`: 0 px of the map differ after the undo for nuke, revolt, nation, city and
-  raze (`critic/c74_undo2_pix.txt`; my crop of the map, 680,000 px; run 73 had 9 px for the nuke a year on).
-- `godpeace 1942 JAP`: "Japan made peace with United States"; the phone's God tab; `god42 1942 53542 replay`, which
-  run 73 left out: the note "Any God Mode act ends the replay of history…" and 0 errors
-  (`critic/c74_godpeace.*.log`, `critic/c74_god42.1942_53542_replay.log`).
+**Evidence for 8:**
+- **Every tool, told:** `q_god_tools 58919`: revolt ("Free Greater Poland Voivodeship was set up on land of
+  Poland"), spawn, breakthrough, territory, found a city, raze ("4 January 1938 Prague in Czechoslovakia was razed"),
+  each in the ticker (`critic/c75_q_god_tools.58919.log`); `a_god_nuke 58917`: hydrogen and atomic bombs with the
+  alert, the cloud and the charts, 0 errors (`critic/c75_a_58917.json`); `kwhist 58951`: God's breakthrough in
+  History and both exports (`critic/c75_kwhist.58951.log`).
+- **Undo:** `undo2 41211`, `undo2y 51231` and `53231`: nuke, revolt, nation, city and raze each undone
+  (`critic/c75_undo2*.log`).
+- **God in the replay:** `godpeace 1942 JAP` and `GER`: "Japan made peace with United States", "Germany made peace
+  with Soviet Union", with "History's course ended at your first intervention"; `god42 1942 replay`: the note that
+  any God act ends the replay; the phone's God tab; `h_god`, `h_interv` at both sizes: 0 errors
+  (`critic/c75_godpeace.*.log`, `critic/c75_god42.*.log`, `critic/c75_h_godtab.*.log`).
+- **Under random input:** God Mode's buttons and map tools were among the 5,900 buttons the monkeys pressed (a bomb
+  armed and the map clicked, Undo, the nation panel's God tab: `critic/shots/c75mky_58807_1280x720_241.png`) with no
+  page error (stability).
 
-### Editor and scenarios: 8 (carried from run 73; no file of it changed)
+**Not 9:** a God peace in the replay decides the war by the year it is made in (run 71's observation, not measured
+again); the nuke's Undo was not compared pixel by pixel this run (run 74: 0 px).
 
-- Checked: `x_editor 57443` (paint, undo, redo, export and load from the title: owners `[1,1,1]`); the standoff file
-  loads (`critic/c74_os2_scen.*.log`); the 1983 free card and its start, with "History's course left at the start of
-  your game" (`critic/c74_x_replaycard.1983_free.log`). `g_editor 57921` was stopped (above); its fleets, the refusal
-  and the warheads are in its pictures (`critic/shots/c74g_57921_03_refusal.png`).
+### Editor and scenarios: 8 → **8**
 
-### Stats and history: 8 → **8** (scored afresh)
+**Evidence for 8:**
+- **An edited scenario, played to the end of its story** (`g_editor 58921`, whole for the first time since run 72):
+  fleets placed for Germany and Britain, ten warheads given to Poland, a refusal read, the scenario exported, loaded
+  from the title, wars declared: a sea battle on day 1, the alert "Poland struck Germany with an atomic bomb near
+  Berlin: 334,000 civilians killed; 295 men lost" on 15 February, "Poland lost its last means to deliver its
+  warheads: Germany took its airbase near Warsaw" on the 26th, Poland's capital taken, 0 errors
+  (`critic/c75_g_58921.json`, `critic/shots/c75g_58921_15_nuke_alert.png`, `critic/shots/c75g_58921_03_refusal.png`).
+- **Paint, undo, redo, export, load:** `x_editor 32443`: French cells painted German, undone and redone (owners
+  [19,19,19] ↔ [1,1,1]), exported and loaded from the title as painted; `32441`: with a scenario file
+  chosen the title's own Start is disabled and says "A scenario file is chosen: start it or cancel it under Scenario
+  file" (`critic/c75_x_editor.*.log`); bad files refused with the Start gone (`critic/c75_x_badfiles.log`); the
+  standoff file loads in 4.6 s (`critic/c75_os2_scen.*.log`).
+- **The title's forms:** heroes "On", look "balls", 14 heroes in a 1938 game and 12 in a free 1946, 1975 or 1991, at
+  desk and phone, 0 errors (`critic/c75_title2.*.log`); the free cards of 1943, 1975, 1983 and 1991
+  (`critic/c75_x_replaycard.*.log`); a random large world for 90 days at 58.7 to 60 fps
+  (`critic/c75_x_play.rnd_large_random_large_90.log`); a world of three nations (`critic/c75_x_few.58403_3_3.log`).
+- **The replay's years:** 54 starts built from HEAD; `capsurvey`: 2 of 154 nations seated away from their capital in
+  1975, the timeline's two; `histnames`: "29 October 1941 A major battle began near Kalinin" in the 1975 and 1991
+  replays; `ev91`: Kuwait in August 1990, the Soviet Union's end, the capitals of 1991 (`critic/c75_capsurvey.log`,
+  `critic/c75_histnames.*.log`, `critic/c75_ev91_kuwait.log`).
 
-- **The new kind is whole:** a filter of its own ("Army massing on a border": 7 of 112 events in 67 days of 56211, 52
-  of 3,106 in twenty years of 32019), a type in both exports, a place the ticker goes to
-  (`critic/c74_mh_56211.log`, `critic/c74_hist.32019_*.log`).
-- **Run 73's names hold:** "29 October 1941 A major battle began near Kalinin" in the 1991 and 1975 replays; Harare,
-  Antananarivo, Dhaka, Banjul and "Paris · capital, France" on 31 December 1991; `capsurvey`: 2 of 154, the
-  timeline's two (`critic/c74_histnames.*.log`, `critic/c74_ev91.1990_*.log`, `critic/c74_capsurvey.log`).
-- **The ranking and the charts:** the ranking by owned land, a chart of five nations (`critic/c74_charts_57995.log`,
-  `critic/shots/c74ch_57995_2charts.png`). The export of 32019's year-20 world: CSV and JSON
-  (`critic/c74_dl_32019.json`).
-- **Not 9:** R74-N2 (no row for a massing given up); a row in History cannot be clicked to its place, only the
-  ticker's can; a refused order still names a fleet by nothing (R127: "none built").
+**Not 9:** R75-N2 was met here (the editor's Poland has bombers and no missiles); a refused order still names a fleet
+by nothing.
 
-### UI/UX and polish: 7 → **8** (scored afresh)
+### Stats and history: 8 → **8**
 
-**Why it moves: R73-N1, the case that lowered it, on both builds.**
-- **HEAD:** `AFTER=4242 node critic/scripts/c74_bannerOwn.mjs 1942 GER Germany 150`: on days 30 to 150 the row is
-  "Germany +6 ⚔ United States +1", "Germany +2 ⚔ United Kingdom +20", "Germany +6 ⚔ Soviet Union +3": "of the
-  player's on the banners: 3" at every sample, and first of the six when "+8" is opened
-  (`critic/c74_bo_1942_GER_after4242.log`, `critic/shots/c74bo_1942_GER_1600x900_closed.png`).
-- **Run 73's build, the same start and after-seed, run again beside it** (`TAG=c73build AFTER=4242
-  BASE=http://127.0.0.1:5373 node critic/scripts/c74_bannerOwn.mjs 1942 GER Germany 150`): 0 of the three at every
-  sample ("Thailand ⚔ Vichy France", "Soviet Union ⚔ Iraq", "France ⚔ Brazil", then "Bulgaria +3 ⚔ Turkey +2",
-  "Argentina ⚔ Bolivia", "Peru ⚔ Bolivia"), 0 among the six opened, as run 73 had it
-  (`critic/c74_bo_c73build_1942_GER_after4242.log`).
-- **Taken and released, on a new seed:** plain 1938 57901, day 150: Greece's war on Yugoslavia is behind "+3"; Greece
-  taken, "Greece +2 ⚔ Yugoslavia +2" is the first banner; released, the row is as it was
-  (`critic/c74_br_57901.log`, `critic/shots/c74br_57901_1600x900_taken.png`); the same on 57903.
-- **The phone:** its two banners are two of Germany's three at every sample
-  (`critic/c74_bo_1942_GER_after4242_phone.log`).
-- **R73-N6 fixed on its pictures (R126):** with "+3" opened on a phone the banners stand where the ticker was and
-  cover nothing; the first cue is under the "Political" and "Ranking" plates
-  (`critic/shots/c74phone_56903_390x844_d60_c0more.png`, `critic/shots/c74phone_56903_390x844_2start.png`).
-- **The row is steady:** in 149 days of each of two seeds the row's set changed on 12 and 14 days and its order alone
-  on none (`critic/c74_br_57901.log`, `critic/c74_br_57903.log`).
-
-- **R73-N2, which run 73 listed under "also not 8", is told:** a row in the ticker and in History, with a kind of its
-  own and a click that goes to the border (diplomacy, above). What is left of it is the rule's (R74-N2 and the
-  objection to its timing), not the interface's.
-
-**Evidence that it is an 8 again** (run 72's and 73's, checked): the first cue once (`cueAfterResume` 0,
-`cueSecondGame` 0 at both sizes); the phone's layout probe 0 clipped, 0 off-screen in 14 states
-(`critic/c74_p_phone..log`); orders by mouse 7 of 7 to Warsaw, 7 closer after ten days
-(`critic/c74_x_mouse.57421_10_1600_900.log`); keys; Continue at the unbroken game's hash
-(`critic/c74_x_continue.57415_40_GER_60.log`); 0 page errors in every probe of this run.
+**Evidence for 8:**
+- **History of a twenty-year world, whole** (`hist 32019`, the probe mended): 3,118 events, each of 30 kinds
+  filtered in 154 to 172 ms, "Massing called off" 12, "Army massing on a border" 52, "Nuclear strike" 5; the charts
+  opened from the ranking (`critic/c75_hist.32019_*.log`); the heroes' world of 7019: 3,458 events, "Hero lost" 150
+  and "Hero back" 150 (`critic/c75_hist.7019_*.log`).
+- **Export:** 3,118 of 3,118 events to CSV (3,120 lines) and JSON (`critic/c75_dl_32019.json`).
+- **Ranking and charts:** `charts 58995`: the ranking by owned land, a chart of five nations, ten measures to choose
+  (`critic/c75_charts_58995.log`, `critic/shots/c75ch_58995_2charts.png`).
+- **The replay's History:** blank "Next" lines 0 of 1,089 (`critic/c75_h_blank.120.log`); the Greek civil war's rows
+  (`critic/c75_h_next.1030_96_greece.log`); "joined" rows of 540 days (`critic/c75_histgrep.*.log`).
 
 **Not 9:**
-- **R74-N3: with no nation played, the largest nations' wars hold the row whether or not they are fought.** The size
-  is the men of every nation of the two sides (ADR-1105), not the men in the war. Seed 57901, 31 May 1938: "Soviet
-  Union ⚔ Norway +2", "Italy ⚔ Nationalist Spain +1 0" and "Nationalist Spain ⚔ Portugal +2", none with a battle, the
-  second at a score of 0 for a month; Japan's war in China and Greece's in Yugoslavia, both with battles, are behind
-  "+3" (`critic/shots/c74br_57901_1600x900_d150.png`). SPEC's entry of the banners says nothing of the row of three
-  or of its order. Over 150 days 181 of 438 banner-days are of a war with no
-  battle while one with a battle is behind "+n"; 111 of 440 on 57903. Run 73's build, newest first, on 57901: 195 of
-  440. No worse; no score moves on it.
-- The same for a player on a phone: of Germany's three the two shown are the United States' (score 0, no battle
-  drawn) and the United Kingdom's; the Soviet war, at +57, is behind "+9"
-  (`critic/c74_bo_1942_GER_after4242_phone.log`).
-- While the banners are opened on a phone there is no ticker at all (R126, as built): news is not seen until "−".
-- The first cue on a phone still says "Scroll to zoom" and "Click", and covers two heroes' counters.
+- **R75-N2:** of the six nuclear kinds, `NukeLaunched`, `NukeIntercepted` and `NukeDetonated` are in neither History
+  nor the ticker and have no words (`critic/c75_interceptTold.log`); a burst is told by `NukeCasualties`, a bomber
+  stopped short by nothing.
+- A row in History cannot be clicked to its place (only the ticker's can).
 
-### Performance: 8 → **8** (scored afresh)
+### UI/UX and polish: 8 → **7**
 
-Run alone, last, after every other chain had ended, pinned to the performance cores
-(`critic/scripts/c74_chainPerf.sh`, `critic/c74_pf.status`: 05:13 to 05:28):
-- **Tick, seed 99, five years:** 1.890 ms mean (run 73: 1.884), year 1 at `a5dbeae6`, the new pin
-  (`critic/c74_tick99.log`). With heroes: 1.765 ms (run 73: 1.750) (`critic/c74_tick99h.log`). The same.
-- **Frames, HEAD's 7019 year-20 world** (`c74_pf_lookfps`): 57.3 to 60.2 fps at 3,000, 1,200, 600, 120 and 30 m/px in
-  both looks; the worst frames 155 ms (Countryballs, 1,200 m/px), 108 and 103 ms, once each (run 73: 117 ms once)
-  (`critic/c74_pf_lookfps.log`).
-- **`tools/diag/lookFps.ts` on the same world:** 57.7 to 59.5 forced frames/s at every tier, p95 17.9 to 18.3 ms, a
-  draw 0.8 to 3 ms (the longest 6.2) (`critic/c74_lookfps.log`).
-- **Five years on the page, alone** (57941, heroes): 58.6 to 59.3 fps every year, the longest gap 67 ms, none over
-  half a second (`critic/c74_lw_57941_alone.log`).
-- **Touch and the individual tier:** 58.8 to 59.3 fps with and without a selection
-  (`critic/c74_tm_touch.alone.log`); `x_indfps 32111`: 58.9 to 60 fps at 28, 18 and 12 m/px, the worst frame 67 ms
-  (`critic/c74_xi.log`).
-- **R124's work each frame costs nothing seen:** at 6,000 m/px with eight heroes, running at ×5 beside the other
-  chains, 1,194 frames in twenty seconds on HEAD and 1,196 on run 73's build (`critic/c74_hp_head_56901.log`,
-  `critic/c74_hp_c73build_56901.log`).
-- **Not 9:** single frames of 155, 108 and 103 ms in the frames' probe; year 6 and later of a watch alone were not
-  run (as run 73).
+**Why it moves: R75-N1, the same seeds and days on both builds, run at the same time**
+(`BASE=<build> node critic/scripts/c75_bannerFlip.mjs <seed> <day> <tag> 60`: plain 1938 with heroes, Resume at the
+speed as loaded, the row read every 100 ms for a minute, which is 60 days).
 
-### Stability: 8 → **8** (scored afresh)
+| | run 74's build (`6cc762ea`) | HEAD |
+|---|---|---|
+| 57901, day 150: the row changed | 6 times (its order alone 1) | **41** (2) |
+| … a banner held its place under 2 s | 1 time | **73** |
+| … the banner under a resting cursor became another war's | 1 time | **18** |
+| 57903, day 120: the row changed | 5 | **25** |
+| … under 2 s | 1 | **30** |
+| 58901, day 200 (a new seed): the row changed | 7 (2) | **29** (16) |
+| … under 2 s; under the cursor | 2; 0 | **33**; **19** |
+| 57901 on a phone (two banners): the row changed | 4 | **36** |
+| … under the finger | 1 | **22** |
+| 57901, Japan played: the row changed | 1 | **20** |
+| 58901, Germany played | not run | 25 (under the cursor 16) |
 
-- **The new saved section:** a game saved while a massing is told (57621: Italy on Austria and France on the Spanish
-  Republic) loads with `massTold` [15, 19] as saved, saves again to the same 3,439,416 bytes, and after 120 days is
-  at the unbroken game's hash with the same massing rows and none of the two told again; the same on 57611 and 57623
-  (`critic/c74_massSave.log`, `critic/c74_massSave2.log` printed by `c74_massSave2.ts`).
-- **An old save:** run 73's 7019 year-20 save, made before `world.massTold` was a section, loads on HEAD and runs a
-  year (`d9855177`, 78 nations; `critic/c74_loadold_7019.log`). Run 73's 1975 replay start on HEAD ends its track and runs 30 days
-  (`critic/c74_oldsave_1975.log`).
-- `workerDeterminism` 54059 and 57059: every arm the same. The page's save, loaded twice: `4270962851` each time
-  (`critic/c74_saveload_page.57937_200.log`); a 1942 God game headless, the same over 30 days
-  (`critic/c74_saveload_1942god.log`); Continue (above).
-- **Long runs:** twenty years of 7019, 32019 and 7019 with heroes (12 heroes alive), ten years of two checkers.
+- **What it looks like:** twelve pictures a second apart (`critic/shots/c75bfr_head_58901_00.png` to `…_11.png`,
+  `critic/c75_bfr_head_58901.log`): "Italy +1 ⚔ Nationalist Spain +1" and "Soviet Union +1 ⚔ Japan +4" change places
+  at seconds 1, 3 and 9. On 58901 the last five seconds of the minute are one pair swapping each second
+  (`critic/c75_bf_head_58901.log`: "15b 18b 11q → 18b 15q 11q → 15b 18b 11q", `b` a war with a battle).
+- **The cause, as far as the code shows it:** `WarBanners.tsx` sorts by `battle` before the sides' men, and a war's
+  `battle` goes on and off by the hour. ADR-1109 says "a banner's place can change as a battle begins and ends" and
+  measured it by the day (the order alone on 7 days of 149); by the second, at ×5, it is a row that does not hold
+  still, and a click meant for one war can land on another.
+- **What R130 was for is reached:** `bannerRank` 57901: 0 of 440 banner-days of a war with no battle while a fought
+  one was behind "+n" (run 74: 181 of 438); 57903: 0 of 440 (111); a new 58901 and a phone on 58903: 0
+  (`critic/c75_br_*.log`). Japan's war in China is on the row on every sampled day.
+
+**What holds it at 7** (each checked in this run):
+- **R73-N1 holds with R130:** a played Germany in 1942 has wars of its own on all three banners at every sample of
+  150 days (from day 120 the third is the Bulgarian war it joined, which has a battle; the war on the United States,
+  quiet at 0, is behind "+8" and first of the three when opened); taken and released on 57901, 57903 and 58901: the
+  taken nation's war first, the row as before after (`critic/c75_bo_1942_GER_after4242.log`, `critic/c75_br_*.log`).
+- **The whole page suite** at 1600 × 900, 390 × 844 and 844 × 390: the phone's layout 0 clipped and 0 off-screen in
+  10 states (`critic/c75_p_phone..log`); orders by mouse 7 of 7 to Warsaw, 6 closer after ten days
+  (`critic/c75_x_mouse.58421_10_1600_900.log`); keys; the first cue once (`cueAfterResume` 0, `cueSecondGame` 0 at
+  both sizes on four seeds); Continue at the unbroken game's hash (`critic/c75_x_continue.58415_40_GER_60.log`); the
+  peace button enabled at +25 and refused with its reason at +0, at two sizes (`critic/c75_peacebtn.*.log`,
+  `critic/shots/c75pb_58217_GER_POL_844x390_enabled_d20.png`); ten wars' buttons in a phone's panel
+  (`critic/c75_manywars.*.log`); a landing's bar, box, cancel and hold (`critic/c75_lbar.*.log`,
+  `critic/c75_turnback.*.log`); the world built in 4.4 to 5.3 s to its statistics (`critic/c75_x_building.*.log`).
+- **Random input:** 36 minutes of it at 1600 × 900, 1280 × 720, 390 × 844 and 844 × 390 (touch): 15,500 acts, 0
+  page errors, the game running and drawing at the end of each (stability).
 - 0 page errors in every probe of this run.
 
-### Semantic zoom to unit level: 8 → **7** (scored afresh; its bar is 8)
+**Not 8:** R75-N1. **Also not 9:** while the banners are opened on a phone there is no ticker; the first cue on a
+phone says "Scroll to zoom" and "Click"; the button to the title in Settings leaves at once, with no question (the
+game is autosaved and "Continue" brings it back; a monkey found it within 40 s).
 
-**Why it moves: R74-N1, the same seeds on both builds** (`node critic/scripts/c74_heroPop.mjs <seed> <day> <tag>`,
-`BASE` HEAD's build or run 73's; a leap is a hero's counter moved over 12 px against its own place between two
-frames).
+**What an 8 needs** (the bar is 7 and is met; this is the way back): `node critic/scripts/c75_bannerFlip.mjs 57901 150
+head 60` and `… 58901 200 head 60` with "the row changed" at 10 or fewer and "the banner under a resting cursor
+changed" at 2 or fewer (run 74's build: 6, 7 and 1, 0), with `c75_bannerRank.mjs 57901 150` still under 44 quiet
+banner-days of 440 (a tenth).
 
-| | run 73's build (`a9814c43`) | HEAD |
-|---|---|---|
-| 56901, day 430, zoom 9,000 → 4,000 m/px in 120 steps, paused | 1 leap | **38** (Maus 11, Bismarck 11, P.100 Ercole 9, …), 23 to 47 px |
-| 57905, day 230, the same zoom | 0 | **28** |
-| 56901, the camera still at 6,000 m/px, 120 steps of 6 h | 6 | **19** |
-| 57905, the same | 12 | **48** |
-| 56901, running at ×5 for 20 s (1,194 frames, 20 days) | 34 | **77** |
-| 57905, the same | 4 | **12** |
-| panning 480 px, paused (both seeds) | 2, 3 | 2, 3 |
-| 56901, day 430, **the mouse's wheel**: nine notches, 9,000 → 3,686 → 11,250 m/px, every drawn frame (157) | 4 (HMS Hood) | **41** (eight heroes), 25 to 78 px |
-| 57905, day 230, the same wheel (114 frames) | 0 | **36** (ten heroes) |
+### Performance: 8 → **8**
 
-- **By the wheel as a player turns it** (`WHEEL=1`, the last two rows): four notches in and five out, sampled at each
-  drawn frame: 41 and 36 leaps over 157 and 114 frames on HEAD, 4 and 0 over 158 and 135 on run 73's build
-  (`critic/c74_hpw_head_56901.log`, `critic/c74_hpw_c73build_56901.log`, `critic/c74_hpw_head_57905.log`,
-  `critic/c74_hpw_c73build_57905.log`).
-- **What it looks like:** two steps of the zoom 42 m/px apart: Maus above Bismarck in one, Bismarck above Maus in the
-  next, each over a different counter (`critic/shots/crop_c74hp_head_zoom_f1_f2.png`, from
-  `critic/shots/c74hp_head_56901_zoom_f1.png` and `…_f2.png`); the same leaps back at steps 3, 7, 8, 9, 10
-  (`critic/c74_hp_head_56901.log`).
-- **The cause, as far as the code shows it:** R124 (`src/render/units/counters.ts`) picks, each frame, the first of a
-  hero's three steps that covers no nation's counter of that frame, with no memory of the last frame's choice. The
-  nations' counters fold and unfold as the zoom changes and move as armies do, so the pick flips. Panning moves both
-  alike, and has no more leaps than before.
-- **And it does not do what it was for:** R73-N4's scene still has heroes on counters (map visuals, above).
-- The frame rate is not touched by it: 1,194 frames in twenty seconds on HEAD and 1,196 on run 73's build, with the
-  other chains running.
+Run alone, last, after every other chain had ended, pinned to the performance cores
+(`critic/scripts/c75_chainPerf.sh`, `critic/c75_pf.status`: 08:39 to 09:05):
+- **Tick, seed 99, five years:** 1.858 ms mean (run 74: 1.890), year 1 at `a5dbeae6`, the pin
+  (`critic/c75_tick99.log`). With heroes: 1.738 ms (run 74: 1.765) (`critic/c75_tick99h.log`). The same.
+- **Frames, HEAD's 7019 year-20 world** (`c75_pf_lookfps`): 59.2 to 60.2 fps at 3,000, 1,200, 600, 120 and 30 m/px in
+  both looks and panning; the worst frames 105 and 104 ms, once each (run 74: 155, 108, 103)
+  (`critic/c75_pf_lookfps.log`). The heroes' year-20 world of 7019: 59.2 to 60.2 fps, the worst 115 ms
+  (`critic/c75_pf_lookfps_h.log`).
+- **A large screen (new):** the same world and probe at 2560 × 1440: 59.0 to 60.2 fps, the worst frame 111 ms; at
+  3840 × 2160: 58.9 to 60.3 fps, the worst 116 ms (`critic/c75_pf_lookfps_qhd.log`, `critic/c75_pf_lookfps_4k.log`;
+  `critic/shots/c75pf_7019_4k_1200m.png` is 3840 × 2160). The frame rate does not fall with the pixels.
+- **`tools/diag/lookFps.ts` on the same world:** 59.6 to 60 forced frames/s at every tier, p95 17.8 to 18.1 ms, a
+  draw 0.8 to 2.7 ms (the longest 5.1) (`critic/c75_lookfps.log`).
+- **Twelve years on the page, alone** (58941, heroes, 1938 to 1950): 59.8 to 60 fps every year, the longest gap
+  83 ms, none over half a second, a year in 16 to 29 s (`critic/c75_lw_58941_alone.log`). The three twelve-year
+  watches run beside the other chains: 59.6 to 60 fps, the longest gap 150 ms, none over half a second.
+- **Touch and the individual tier:** 59.6 and 59.9 fps without and with a selection
+  (`critic/c75_tm_touch.alone.log`); `x_indfps 32111`: 59.6 to 60 fps at 28, 18 and 12 m/px, the worst frame 67 ms
+  (`critic/c75_xi.log`).
+- **R125's tighter rule and R131's lifts cost nothing seen** (not run alone: beside the other chains, the two
+  builds at the same time, four scenes of four measures each): with the wheel turned through T1 and the game
+  running the frames are 16.6 to 17.0 ms at the median and 18.6 to 21.8 ms at the 95th centile on HEAD, 16.6 to
+  17.9 and 18.4 to 25.2 on run 74's build (`critic/c75_mp_*.log`).
+- **Not 9:** one frame of 101 to 116 ms in each measure where the look is changed to Classic at 1,200 and at 120 m/px,
+  at every screen size; a tick of 399 ms in the first year of the heroes game and the first year's mean at 2.7 to
+  2.9 ms where the later years have 1.1 to 1.8.
 
-**What holds it at 7:** every tier is there and reads as before: `z_zoom 57911`, 18 steps from 6,000 to 3 m/px on one
-division: units drawn from 1,573 m/px (8,533) to 64 at 3 m/px, the men from 28 m/px (10,705), 0 errors
-(`critic/c74_z_zoom.57911.log`); the fronts at 1,200, 600, 250, 100 and 30 m/px at desk and phone size; the heroes at
-every tier (`critic/c74_hero.57425_300_hon.log`); the phone's tap on a counter opens its panel
-(`critic/c74_phz.57933_40.log`).
+### Stability: 8 → **8**
 
-**What to fix:** a hero's counter should keep its step from frame to frame unless its place is taken, or R124 should
-be taken out until it is built whole.
+**Evidence for 8:**
+- **Random input** (`c75_monkey.mjs`, new: clicks, right clicks, drags, wheel, keys, and every shown button, tab,
+  select and checkbox, God Mode and the editor among them): 58803 (1600 × 900, 5 min), 58807 (1280 × 720, 5 min),
+  58815 (1600 × 900, 10 min), 58811 (390 × 844 touch, 5 min), 58813 and 58809 (844 × 390 touch, 5 and 4 min), 58801
+  (2 min): 15,500 acts in all, 5,900 of them on buttons, **0 page errors, the tick moving and 269 to 301 frames
+  drawn in the 5 s after each**; in the four run after every act had a timeout of 8 s (58807, 58811, 58813, 58815:
+  10,400 acts) none timed out (`critic/c75_monkey_*.log`, `critic/c75_mky_*.json`). One earlier run of
+  58807 is disclosed above; 58805 left the game by the Settings panel's button to the title after 40 s (as built: the
+  game is autosaved).
+- **Save and load:** the page's save loaded twice, the same hash each time and the same after 200 days more
+  (`critic/c75_saveload_page.58937_200.log`); a 1942 God game headless, `ae20f897` on both arms after 30 days
+  (`critic/c75_saveload_1942god.log`); a game saved with a massing told (diplomacy); Continue (UI).
+- **Old saves:** run 74's 7019 year-20 save loads on HEAD and runs a year (`75b9c02a`, 78 nations;
+  `critic/c75_loadold_7019.log`); run 74's 1975 replay
+  start on HEAD runs 30 days (`critic/c75_oldsave_1975.log`).
+- **Determinism:** `workerDeterminism` 54059 and 58059, every arm the same.
+- **Long runs:** twenty years headless four times, twelve years on the page three times (0 errors, 0 gaps over half a
+  second), ten years of three checker runs.
+- **The window resized nine times in a running game:** 0 errors (map visuals).
+- 0 page errors in the 225 probe outputs that record them (`node critic/scripts/c75_errscan.mjs`: the six it lists
+  are the probes' own arguments, above).
 
-**What the bar needs** (cases the builder can run, HEAD's build served on `BASE`):
-- `node critic/scripts/c74_heroPop.mjs 56901 400 head` prints "zoom 9,000 -> 4,000 m/px in 120 frames: jumps" at 2 or
-  fewer (run 73's build: 1) and "running 20 s" at 34 or fewer;
-- `node critic/scripts/c74_heroPop.mjs 57905 200 head`: zoom jumps 2 or fewer (run 73's build: 0) and "running 20 s"
-  at 4 or fewer (run 73's build: 4);
-- `WHEEL=1 node critic/scripts/c74_heroPop.mjs 56901 430 head` and `… 57905 230 head`: "leaps" at 4 or fewer and at 2
-  or fewer (run 73's build: 4 and 0);
-- and R73-N5 no worse (`c74_markers.mjs 56951 …`: 24, 47, 39 pairs at 1,800 m/px).
-The zoom's and the wheel's counts are the firm ones (paused, the same each run: 40 and 38 in two runs of the first);
-the running count varies a little with the frames drawn.
+**Not 9:** a tick of 0.35 to 1.6 s once in a twenty-year heroes game (`max 846.9`, `1633.0` ms in
+`critic/c75_hero_*.log`, run beside five other sims).
 
-### Naval warfare: 8 (carried from run 73; no file of it changed)
+### Semantic zoom to unit level: 7 → **8**
 
-- **landingFuzz `--seeds 15 --first 57101`: 0 of 90** broken, `slowClick` included: the run's rate is 0 of 90.
-- **The named `slowClick` cases as run 73:** 30041 (13.0 d against 5.9), 51101 (13.8 against 6.7) and 53125 (9.5
-  against 2.4) break it; 27037 does not (`critic/c74_li_*.log`).
-- **Run 61's bulk sets (due), against run 73's, file by file** (`critic/scripts/c74_bulkcmp.sh`): the 396 named
-  landing setups, the 153 stuck returns and the 168 next voyages: **717 of 717 runs the same line for line** as run
-  73's. The same four runs break a rule, each `slowClick`: 30041 3517 g1 of the setups; 30041, 31157 and 31175 3517 g1
-  of the next voyages (`critic/c74_liab_named_cmp.txt`, `critic/c74_sr_cmp.txt`, `critic/c74_nv_cmp.txt`).
-- **Malta's 18:** 12 thrown back near Catania and 6 broken off near Palermo, row for row as run 73
-  (`critic/c74_malta.log`).
-- **Sea battles:** 57061, 68 in three years (`critic/c74_sb_56061.log`); `landingRows all` 0 broken.
+**Why it moves: run 74's own probe and bars, on both builds at the same time** (`node critic/scripts/c75_heroPop.mjs
+<seed> <day> <tag>`, `BASE` HEAD's build or run 74's; a leap is a hero's counter moved over 12 px against its own
+place between two frames).
 
-### Tanks: 8 (carried from run 73; no file of it changed)
+| | run 74's build (`6cc762ea`) | HEAD | run 74's bar |
+|---|---|---|---|
+| 56901, day 400, zoom 9,000 → 4,000 m/px in 120 steps | 38 leaps | **1** | 2 or fewer |
+| 57905, day 200, the same zoom | 28 | **0** | 2 or fewer |
+| 58905, day 300 (a new seed), the same | 50 | **1** | |
+| 56901, running at ×5 for 20 s | 78 | **36** (run 73's build today: 36) | 34 or fewer |
+| 57905, the same | 12 | **4** | 4 or fewer |
+| 58905, the same | 87 | **17** | |
+| 56901, day 430, the wheel, nine notches | 43 | **4** | 4 or fewer |
+| 57905, day 230, the wheel | 41 | **0** | 2 or fewer |
+| 58905, day 330, the wheel | 37 | **4** | |
+| 56901 and 57905, the camera still, 120 steps of 6 h | 19, 49 | **6, 12** | (run 73's build: 6, 12) |
+| panning 480 px (three seeds) | 2, 3, 1 | 2, 3, 1 | |
 
-- Checked: `breakthrough 57979`: 27 formations engaged by day 7 (run 73's 56979: 27); `c_battle 57915`: an armoured
-  division's fight at 250, 80, 25 and 15 m/px, wrecks and contact drawn; `heroBattle 57081`: the P.100 in battle 97 of
-  728 days at war (`critic/c74_k_breakthrough.57979.log`, `critic/c74_c_battle.57915.log`,
-  `critic/c74_heroBattle_56081.log`).
+- Run 74's build gives run 74's own figures again (38, 28, 77 → 78, 41 → 43, 36 → 41), so the two columns are one
+  measure. Seven of the eight bars are met to the figure. The eighth, the running count on 56901, is 36 where the
+  bar is 34: that bar was run 73's build's count in run 74, and run 73's build run again here gives 36 too, the
+  same heroes the same number of times (Bismarck 10, Roma 18, Maus 8), as does HEAD run alone a second time.
+  `counters.ts` is run 73's file again (`git diff a9814c43 HEAD -- src/render/units/counters.ts` is empty). So the
+  bar is met in what it asked: no more leaps than before R124 (`critic/c75_hp_*.log`, `critic/c75_hpw_*.log`,
+  `critic/c75_hp_c73build_56901.log`, `critic/c75_hp_headalone_56901.log`).
+- **R73-N5 no worse, which was the last bar: much better** (map visuals: 3, 10, 12 pairs at 1,800 m/px where 24, 47,
+  39).
+- **R131 on its own measure, both builds** (`c75_markerPop.mjs`, new: every drawn frame of the wheel turned from
+  2,000 to 655 m/px and back, then the game running 15 s at 1,800 and at 1,150 m/px; a leap is a marker moved over
+  12 px against its formation's place in one frame):
 
-### Aircraft: 8 (carried from run 73, which carried it from run 72; no file of the air war changed)
+  | scene | run 74's build | HEAD |
+  |---|---|---|
+  | 56951, day 30, China: the wheel | 6 leaps, a hero's marker up to 32 px a frame | **0**, 6 px |
+  | … running at 1,800; at 1,150 m/px | 11; 14 leaps, up to 185 px | **0; 0**, 5 px |
+  | 56901, day 400, Europe: the wheel; running | 5; 0 and 2, up to 145 px | **0; 0**, 5 px |
+  | 58905, day 300, Europe: the wheel; running | 1; 11 and 0, up to 208 px | **0; 0**, 6 px |
+  | 58951, day 60, China (no hero in the view) | 0 | 0 |
 
-- Checked: `pl_planes 57925`: the wings' marks at every tier in both looks, down to 1 at 25 m/px; `w_wing 57927`: a
-  followed wing flying with its mark, 0 px from it with another panel open
-  (`critic/c74_pl_planes.57925_GER_POL_5375.log`, `critic/c74_w_wing.57927.log`).
+  The builder's claim (no move over 6 px a frame) holds: the largest is 6.0 (`critic/c75_mp_*.log`).
+- **R125's change of rule at 1,200 m/px is not seen as a pop:** gliding 1,300 → 1,100 m/px in 90 frames, four
+  scenes: 0 leaps, 0 markers whose opacity jumped, the largest move of a box in a frame 3.3 px; the frames 16.6 ms at
+  the median and 18.4 to 18.8 at the 95th centile on both builds, so the tighter rule costs nothing seen
+  (`critic/c75_mp_head_*.log` against `critic/c75_mp_c74build_*.log`).
+- **Every tier is there:** `z_zoom 58911`, 18 steps from 6,000 to 3 m/px on one division: units drawn from
+  1,573 m/px (8,504) to 64 at 3 m/px, the men from 28 m/px (10,710), the followed division on screen at the end
+  (`critic/c75_z_zoom.58911.log`); an armoured division's fight at 250, 80, 25 and 10 m/px
+  (`critic/shots/c75c_58915_arm_0025m.png`); the heroes at every tier from the world's zoom to 2,500 m/px at desk and phone
+  size (`critic/c75_hero.*.log`); the phone's tap on a counter opens its panel with its elements
+  (`critic/c75_phz.58933_40.log`); Normandy on 5 June 1944 from 3,000 to 12 m/px (`critic/c75_h_zoom..log`).
 
-### AI nuclear use: 8 (carried from run 73, which carried it from run 72; no file of the nuclear rules changed)
+**Not 9:** the heap inside 1,200 m/px and in a two-nation battle (map visuals); hero names on counters at 6,000
+m/px; a hero's counter still leaps now and then with the camera still as the armies under it move (6 and 12 times
+in 30 days of the game, as before R124).
 
-- Checked: `nukecount 55503` and `nukeIntercepts 53501` over 22 years: 2 launches each, the same lines as run 73;
-  57501: 0 launches in 22 years (run 73's 56501: 0) (`critic/c74_nc_*.log`, `critic/c74_nukeIntercepts_53501.log`). HEAD's 7019 year-20
-  save on the page for 400 days: no strike, 0 errors (`critic/c74_an_ainuke.7019_*.log`). The ten-seed A/B was not run
-  again.
+### Naval warfare: 8 → **8**
+
+**Evidence for 8:**
+- **landingFuzz `--seeds 15 --first 58101`: 0 of 90** broken, `slowClick` included: this run's rate is 0 of 90.
+- **Run 61's bulk sets (due), against run 74's, file by file** (`critic/scripts/c75_bulkcmp.sh`): the 396 named
+  landing setups, the 153 stuck returns and the 168 next voyages: **717 of 717 runs the same line for line**. The
+  same four runs break a rule, each `slowClick`: 30041 3517 g1 of the setups; 30041, 31157 and 31175 3517 g1 of the
+  next voyages (`critic/c75_liab_named_cmp.txt`, `critic/c75_sr_cmp.txt`, `critic/c75_nv_cmp.txt`).
+- **Malta's 18:** 12 thrown back near Catania and 6 broken off near Palermo, row for row as run 74
+  (`critic/c75_malta.log`). On a new seed a landing held up at sea under British attack
+  (`critic/shots/c75lh_ita_malta_58905_h90_250m.png`: "Valletta from Rome: at sea: under attack by United Kingdom,
+  held up") goes on and ends "over: 2 landed" (`critic/c75_lhold.58905_*.log`); who holds Valletta after it I did
+  not read.
+- **A sea battle as a player finds it** (`seaclick 58061`, mended): the ticker's "⚓ Sea battle: Japan against Siam"
+  on 6 January 1938, clicked, puts the camera on a cruiser squadron and a submarine flotilla in the Gulf of Thailand
+  inside the battle's ring (`critic/shots/c75sc_58061_click.png`, `critic/c75_sc_58061.json`).
+- **Every sea battle looked at on the page at its camera** (`tools/diag/seaBattlesLook.ts`): 39061: 65 of 65 seen
+  with both sides' ships in the view (3 listed with one side alone), 0 page errors; 58061: 31 of 32 (below)
+  (`critic/c75_sbl_39061.log`, `critic/c75_sbl_58061.log`).
+- **Sea battles headless:** 58061: 32 in three years and 18 sinkings by carriers' wings; 39061: 65 and 80; a random
+  world 58067: 69 in two years (`critic/c75_sb_*.log`). In twenty years of 7019 with heroes History has 319 "Sea
+  battle" rows and 168 "Convoys raided".
+- **Landings on the page, new seeds:** Britain's three divisions ashore at Bremerhaven ("over: 3 landed"), Japan's at
+  Shanghai, a German landing whose transports were sunk told as such, a cancelled one back at Tokyo with "the AI
+  commands them again" (`critic/c75_lland.*.log`, `critic/c75_turnback.*.log`); the next voyage's words
+  (`critic/c75_nvpage.58211_*.log`).
+- **In the editor's game** a sea battle on the first day and Britain's 39 formations afloat down to 25 in 120 days
+  (`critic/c75_g_58921.json`).
+
+**Not 9:**
+- **`seaBattlesLook` ends with "NOT SEEN" once (exit 1) on 58061:** t5712, Germany against Sweden in the Baltic, a
+  battle begun and over in one hour: only Sweden's 23 ships are in the view
+  (`critic/seaBattles_58061_shots/t5712_GER_SWE.png`). Traced: the German fleet that fought (1204, 3 cells off) is
+  gone at the hour's end, sunk whole (Germany lost 4 ships), and the two German fleets the list gives for the
+  battle (1199 and 1203) are others, 16 and 6 cells away, taken up by the list's search of 16 cells about a one-hour
+  battle (`critic/c75_fleetsAt_58061_5712.log`, `npx tsx critic/scripts/c75_fleetsAt.ts 58061 5712 1113,239.5`).
+  Nothing German was left there to draw, so I count it the look's own listing and not a battle hidden from the
+  player; it is not one of the rule checkers, and it is not blocking. It is new all the same: run 72 had 43 of 43.
+- The named `slowClick` cases as run 74 (30041: 15.4 days against 5.9; 51101 and 53125 break it, 27037 does not;
+  `critic/c75_li_*.log`); Malta thrown back or broken off in all 18 of its own runs.
+
+### Tanks: 8 → **8**
+
+**Evidence for 8:**
+- `breakthrough 58979`: 27 formations engaged by day 7 (run 74's 57979: 27); `kw_breakthrough 58923`: 47 by day 7
+  with the corridor told (`critic/c75_k_breakthrough.58979.log`, `critic/c75_kw_breakthrough.58923.log`).
+- **An armoured division's fight at every tier:** `c_battle 58915` and `7781`: Armoured division 40 against a Polish
+  infantry division on 10 January 1938 at 3,000, 900, 250, 80, 25 and 10 m/px, the line of contact, the fire and the
+  Maus beside it (`critic/shots/c75c_58915_arm_0025m.png`, `critic/c75_c_battle.*.log`).
+- **The land heroes:** `tools/diag/heroCeiling.ts` on ten new seeds × 3 years (58181 to 58190): 100 of 144 lives at
+  or above their nation's top-decile regular, 0.69 (run 72: 79 of 127, 0.62; ADR-795 closed the AT at 0.64)
+  (`critic/c75_heroCeiling3_*.log`); `heroBattle 58081`: the P.100 in battle 76 of 677 days at war
+  (`critic/c75_heroBattle_58081.log`).
+- **D-Day and Stalingrad on the page:** 5 June 1944 at 600 m/px with the German divisions about Caen and "Next, 5
+  June 1944: D-Day: the American divisions at Omaha and Utah" (`critic/shots/c75st_normandyD_600.png`); `dday`: on 26
+  July the Allies 233,000 men in Normandy against Germany's 22,000 (`critic/c75_dday_1938.log`); "The German Fourth
+  Panzer Army at Stalingrad" on 24 October 1942 (`critic/c75_x_stage.stalin_*.log`).
+
+**Not 9:** on 7019 the P.100 is in battle 42 of 1,065 days at war (`critic/c75_heroBattle_7019.log`): a hero tank
+seldom seen fighting on that seed.
+
+### Aircraft: 8 → **8**
+
+**Evidence for 8:**
+- `pl_planes 58925`: the wings' marks at every tier in both looks: 42 at 3,000 m/px, 30 at 1,200, 12 at 600, 7 at
+  250, down to 1 at 25 (`critic/c75_pl_planes.58925_GER_POL_5377.log`,
+  `critic/shots/c75pl_58925_GER_POL_5377_0250m_balls.png`).
+- `w_wing 58927`: a followed wing flying with its mark in 56 of 56 samples at 3,000 m/px (median 0 px from it, the
+  90th centile 67), and 0 px from it with another panel open (`critic/c75_w_wing.58927.log`).
+- **The air war is told and counted:** the month's rows in every watch ("Japan's air force struck China over the past
+  month: 9,637 men, guns and vehicles lost"), 660 "Air raids" and 256 "Air war" rows in twenty years of 32019; a
+  nation's panel has its aircraft, losses and men lost to strikes
+  (`critic/shots/c75mky_58807_1280x720_241.png`: Nationalist Spain, 63 aircraft, 57 lost, 799 lost to air strikes).
+- **A carrier strike in the ticker** in every game watched ("⚓ Carrier strike ashore: Japan on China ×3").
+
+**Not 9:** a bomber shot down with a warhead is not told (R75-N2); the air war is read from monthly rows and marks,
+with no fight of wings to watch at the close tiers.
+
+### AI nuclear use: 8 → **8**
+
+**Evidence for 8:**
+- **Three AI strikes on the page, with the pause, the alert and "Go to":** on 58505's year-13 world "Poland struck
+  Switzerland with an atomic bomb near Krasino: 2,000 civilians killed; 33,566 men and 120 guns lost" (15 January
+  1951) and "Poland struck United Kingdom with an atomic bomb near Århus: 4,000 civilians killed; 142,068 men, 523
+  guns and 612 tanks lost" (16 March 1951), the scorch at Århus under the British markers
+  (`critic/c75_an_58505y13.json`, `critic/shots/c75an_58505y13_1_z00600.png`); on 7019's heroes world "United Kingdom
+  struck United States with an atomic bomb near Mezen: 0 civilians killed; 100,881 men and 384 guns lost" (19 July
+  1958) (`critic/c75_an_h7019y20.json`). And the editor's Poland on Berlin (editor).
+- **Counts over 22 years** (`nukecount`): new seeds 58501: 37 launches, 58503: 17, 58507: 0; 55501: 25, 55503: 2 (run
+  74's line), 55507: 0; every launch a burst (`critic/c75_nc_*.log`); `nukeIntercepts 53501`: 2 launches, both
+  missiles, as run 74.
+- **Restraint is told:** "Poland decided on a nuclear strike near Berlin, after long hesitation"; "lost its last
+  means to deliver its warheads" when the airbase fell.
+
+**Not 9:**
+- **R75-N2: a warhead's bomber stopped short is told nowhere.** `EventKind.NukeIntercepted` is emitted by
+  `src/sim/systems/nuclear.ts` and is in no list of History, the ticker or the strings
+  (`critic/c75_interceptTold.log`): that much is read from the code and the lists. The instance is inferred: in
+  the editor's game there are two decisions on Berlin a day apart, one strike, and the stockpile 10 → 8
+  (`critic/c75_g_editor.58921.rerun2.log`, "nuclear rows by kind"; `critic/c75_g_58921.json`, `polWarheads`); a
+  launch takes a warhead and its arrival is a burst or `NukeIntercepted`, but I did not read the event, and SPEC
+  also lets a nation scrap warheads it cannot pay for, untold. In plain games it is rare (0 of 81 launches stopped on six seeds: the
+  AI's bombs come late, by missile); it is what a player who gives an early nation bombs in the editor or God Mode
+  will meet.
+- Plain 7019 and 32019 year-20 worlds: no strike in 400 days of the page (as run 72); strikes come in some years of
+  some seeds (0, 0, 2, 17, 25, 37 in 22 years).
 
 ## Blocking issues
 
@@ -429,94 +615,124 @@ None.
 
 ## Non-blocking issues (prioritised)
 
-1. **R74-N1 (semantic zoom, map; R124): the heroes' counters leap while zooming and while the game runs.**
-   - **The case:** `BASE=<HEAD's build> node critic/scripts/c74_heroPop.mjs 56901 400 head`: 38 leaps in the zoom
-     (run 73's build: 1), 77 in twenty seconds running (34); 57905 200: 28 (0) and 12 (4).
-   - **Seen fixed when** the zoom's leaps are 2 or fewer on both seeds and the running leaps no more than run 73's
-     build's (34 and 4).
-2. **R74-N2 (diplomacy, stats; R122): a massing told and given up is never called off.**
-   `npx tsx critic/scripts/c74_massTold.ts 3 56211 57611 57613` and `… 3 57615 57617 57619`: 14 of 112 rows with no
-   war and no word after (up to 74 days). **Seen fixed when** a massing told and given up has a row of its own in
-   the ticker and History (that probe's "GIVEN UP … no row of it" on no line).
-3. **R74-N3 (UI; R121): wars with no battle hold the row while fought ones are behind "+n".**
-   `node critic/scripts/c74_bannerRank.mjs 57901 150`: 181 of 438 banner-days; 31 May 1938 has three quiet banners
-   and Japan's war in China behind "+3". **Seen fixed when** that count is under a tenth of the banner-days on 57901
-   and 57903 (a war's size by the men engaged, or a war with a battle before one without).
-4. **R73-N4 (map): hero tags on counters in play**, as run 73: `node critic/scripts/c74_look.mjs 56901 1600 900
-   45,180,400`, the day-400 Europe at 6,000 m/px. Left for the user (ADR-1108, proposed).
-5. **R73-N5 (map, zoom): markers over one another at 1,200 to 1,800 m/px**, to the figure as run 73. Left for the
-   user (ADR-1108, proposed).
-6. **Small worlds:** 55424, 54425, 54426 (two nations) and 55401, 55404 (three) still have no war in ten years.
-7. **Wars with nothing in their first month:** 9 of 85 (`tools/diag/warOpening.ts … 57211 57213 57215`).
-8. **`slowClick` (ADR-914):** this run's rate on new seeds 0 of 90; the named cases as run 73. The bulk sets: the same four runs as run 73 (30041 twice, 31157, 31175).
-9. **Small things:** on a phone no ticker while the banners are opened; the first cue's "Scroll" and "Click" on a
-   phone; "COMMUNIST CHINA" under its capital's flag; a fleet refused by no name (R127, none built).
+1. **R75-N1 (UI; R130): the banners change places by the second while the game runs.**
+   - **The case:** `BASE=<HEAD's build> node critic/scripts/c75_bannerFlip.mjs 57901 150 head 60`: the row changed 41
+     times in a minute (run 74's build: 6), a banner held its place under 2 s 73 times (1), the banner under a
+     resting cursor changed 18 times (1); `… 58901 200 head 60`: 29 (7), 33 (2), 19 (0).
+   - **Seen fixed when** both print "the row changed" at 10 or fewer and "the banner under a resting cursor changed"
+     at 2 or fewer, and `c75_bannerRank.mjs 57901 150` stays under 44 quiet banner-days (a battle of the last days,
+     not of the hour; or a place kept for some seconds once taken).
+2. **R75-N2 (AI nukes, stats, aircraft): a bomber stopped short with a warhead is told nowhere.**
+   `npx tsx critic/scripts/c75_interceptTold.ts`: `NukeIntercepted` in History's kinds false, in the ticker's false,
+   strings 0. The instance (inferred): `EXTRA='&heroes=on' node critic/scripts/c75_g_editor.mjs 58921`: "Nuclear
+   decision" 2 rows, "Nuclear strike" 1, warheads 10 → 8. **Seen fixed when** `c75_interceptTold.ts` prints the kind
+   in History's kinds and the ticker's with strings over 0 (a row that says who, where, and that the bomber was
+   stopped).
+3. **R75-N3 (diplomacy; R129): "called off" and at war with the target under one date.**
+   `npx tsx critic/scripts/c75_massTold.ts 3 58617 58619 58621`: "d884 FRA>GER CALLED OFF BUT AT WAR at the day's
+   end"; `npx tsx critic/scripts/c75_evAround.ts 58619 880 886 FRA,GER`. **Seen fixed when** that line is on no seed
+   of the twelve (the call-off held to the hour's end, or not told when its nation is at war with the target by
+   then).
+4. **Small worlds:** 55424, 54425, 54426, 58422 (two nations) and 55401, 55404, 57404 (three) have no war in ten
+   years.
+5. **Wars with no cell held by either side at day 30:** 20 of 103 (`tools/diag/warOpening.ts … 58211 58213 58215`).
+6. **A war at ±100 with nothing saying why it goes on:** `npx tsx critic/scripts/c75_warAt100.ts 7019 5 off`: Japan
+   and China at −100 for 738 days on end. **Seen fixed when** the banner or its tooltip says a side fights to the
+   death.
+7. **`slowClick` (ADR-914):** this run's rate on new seeds 0 of 90; the named cases and the bulk sets' four runs as
+   run 74.
+8. **`seaBattlesLook` exits 1 on 58061** (`npx tsx tools/diag/seaBattles.ts 58061 scenario --years 3 --out f.json`,
+   then `npx tsx tools/diag/seaBattlesLook.ts f.json`): t5712 GER v SWE "NOT SEEN"; the side not seen was sunk whole
+   in the battle's one hour and the list names two bystanders for it (naval). **Seen fixed when** that run ends
+   32 of 32, or 31 seen and 1 "no fleet to see".
+9. **Small things:** on a phone the heroes' names over Europe at the world's zoom; no ticker while the banners are
+   opened; the first cue's "Scroll" and "Click"; "COMMUNIST CHINA" under its capital's flag; a row of History
+   cannot be clicked to its place; a fleet refused by no name; "A major battle began near Hammerfest" twice under 1
+   January 1942 after a God peace in the replay (`critic/shots/c75gp_1942_GER_SovietUnion_390x844_2history.png`); "France has called off its massing on the border of
+   Switzerland" one row above "Switzerland was annexed by Germany" of the same day
+   (`critic/shots/c75mo_57613_tickerclick.png`).
 
-## Run 73's cases re-run
+## Run 74's cases re-run
 
-| Run 73 case | Run 73 (`a9814c43`) | Run 74 (`6cc762ea`) | Evidence |
+| Run 74 case | Run 74 (`6cc762ea`) | Run 75 (`e830930e`) | Evidence |
 |---|---|---|---|
-| R73-N1 `bannerOwn 1942 GER` (AFTER=4242) | 0 of Germany's three on the row, 0 of the six opened | **fixed**: 3 of 3 at every sample, first when opened | `critic/c74_bo_1942_GER_after4242.log` |
-| R73-N1 on the phone | none from day 30 | 2 of the phone's 2 at every sample | `critic/c74_bo_1942_GER_after4242_phone.log` |
-| `takescore 1942 GER 240` | Germany's wars on the row to day 60 | a war of Germany's on the row at every sample to day 240 (three of three to day 150) | `critic/c74_takescore_1942_GER_240.log` |
-| R73-N2 `massSeen 56211` | no row before the declaration | **fixed, by the letter**: "massing words" on days 55 and 65 (other nations' massings); the Soviet row itself on 8 March (day 67), the war on 14 March | `critic/c74_ms_56211.log` |
-| R73-N3 `few2 55421` | 3 of 6 with a war; 55426 and 55421: none, day 476 | **fixed**: 5 of 6; days 118 and 104 | `critic/c74_few2_55.log` |
-| `few2 54421` | 4 of 6; 54422 day 475 | 4 of 6; day 96 | `critic/c74_few2_54.log` |
-| `few3 55401`, `53401` | 4 of 6, 6 of 6; 55406 day 510, 53401 day 944 | 4 of 6, 6 of 6; days 131 and 580 | `critic/c74_few3_*.log` |
-| `few60 55431` | 91, 87, 56 wars | the same | `critic/c74_few60_55.log` |
-| R73-N4 `look 56901`, day 400, Europe at 6,000 | T-42 and Roma on counters | the same, and Bismarck on one (R124 in part) | `critic/shots/c74look_56901_1600x900_d400_2eur6000.png` |
-| R73-N5 `markers 56951` | 24, 47, 39 pairs at 1,800; 5, 12, 17 at 1,200 | the same | `critic/c74_mk_head_desk.log` |
-| R73-N6 `look 56903` phone | opened banners over the ticker; the cue over "Ranking" | **fixed** | `critic/shots/c74phone_56903_390x844_d60_c0more.png` |
-| Wars with nothing in a month | 16 of 111 | 9 of 85 (new seeds) | `critic/c74_warOpening.log` |
-| `warOpening`'s bars | 12.7 % and 12.7 % of 71 | 12.3 % and 15.8 % of 57 (new seeds; noise) | `critic/c74_warOpening.json` |
-| `slowClick` named four | 3 broken, 27037 0 | the same figures | `critic/c74_li_*.log` |
-| landingFuzz (new seeds) | 0 of 90 | 0 of 90 | `critic/c74_landingFuzz.log` |
-| Run 61's 396 setups, 153 returns, 168 voyages | 1, 0, 3 broken, all `slowClick` | the same; 717 of 717 runs identical line for line | `critic/c74_*_cmp.txt` |
-| Malta's 18 | 12 thrown back, 6 broke off | the same rows | `critic/c74_malta.log` |
-| `capsurvey`, `heroPlace` 1975 and 1991, `endleb` | 2 of 154; Moscow, Paris | the same lines | `critic/c74_capsurvey.log` |
-| `histnames` 1991 and 1975, `ev91` 1975 and 1990 | Kalinin; Harare, Dhaka… | the same | `critic/c74_histnames.*.log` |
-| `warlong 1942 54601 god`, `1943 free` | at 90 on 18 Sep 1942 | the same lines | `critic/c74_warlong_*.log` |
-| `freewar` 1941, 1942, 1944; `clampend`; `heldfree 1946`; `blocend 54611`; `saveload 1942 god` | 0 peaces in hour 1; none; 0; 0; same | the same lines | `critic/c74_freewar_*.log` |
-| `free` 51501, 51505 | 0 | 0 | `critic/c74_free_*_free.log` |
-| `godpeace 1942 JAP` | "Japan made peace with United States" | the same | `critic/c74_godpeace.*.log` |
-| `g42 1942 replay 53542` | not read (my arguments) | run: the note shown, 0 errors | `critic/c74_god42.1942_53542_replay.log` |
-| `undo2 41211`, `undo2y 51231` | 0 px; nuke 9 px | 0 px on the map for all ten (my crop) | `critic/c74_undo2_pix.txt` |
-| `heropanel 55929` | no pile at Relations' edge | the same | `critic/shots/c74hp_55929_12000_1relations.png` |
-| `farConquests 0`, `firstdecl`, `piles` (15 seeds), `pileSides 51` | 10.2, 10.4; 0 of 53, 59; none over 4:1 | the same lines | `critic/c74_farc_0_*.log` |
-| `workerDeterminism 54059` | `7733f316` on every arm | `3f823012` on every arm (the history is state) | `critic/c74_wd_54059.log` |
-| 7019, 32019, 20 years | `f0783b09`, `37285b1d` | `165d4b75`, `6d77a72d`; the same nations, formations, flipped cells | `critic/c74_seed*_save.log` |
-| `nukecount 55503`; `nukeIntercepts 53501` | 2; 2 launches | the same lines | `critic/c74_nc_55503.log` |
-| `afterTrack 55601`, `37601` | the leaders opposed 533 days; 0 | 533 days; 0 | `critic/c74_atx_*.log` |
-| `x_stage normandyD` (the objection to R110) | the Soviet war behind "+n" in June 1944 | on the row: "Germany +5 ⚔ Soviet Union +3 +50" | `critic/c74_x_stage.normandyD_*.log` |
-| Tick, seed 99, alone | 1.884 ms | 1.890 ms; year 1 at the new pin | `critic/c74_tick99.log` |
-| Tick, seed 99 with heroes, alone | 1.750 ms | 1.765 ms | `critic/c74_tick99h.log` |
-| Frames on the 7019 year-20 world | 58.3 to 60.2 fps | 57.3 to 60.2 fps | `critic/c74_pf_lookfps.log` |
-| `loadold` 7019 (the run before's save) | loads, runs a year | loads, runs a year (`d9855177`) | `critic/c74_loadold_7019.log` |
-| Objection: ADR-1060 empties occupied France | 146 German formations at peace in Vichy | the same lines | `critic/c74_freewar_1941free.log` |
+| R74-N1 `heroPop 56901 400`: zoom; running | 38; 77 | **fixed**: 1; 36 (run 74's build beside it: 38; 78) | `critic/c75_hp_head_56901.log` |
+| R74-N1 `heroPop 57905 200` | 28; 12 | **fixed**: 0; 4 | `critic/c75_hp_head_57905.log` |
+| R74-N1 by the wheel, 56901 and 57905 | 41; 36 | **fixed**: 4; 0 | `critic/c75_hpw_head_*.log` |
+| R74-N2 `massTold`, six seeds | 14 of 112 given up with no word | **fixed**: 13 called off in a row; 2 at war with the target by then | `critic/c75_massTold_a.log`, `_b.log` |
+| R74-N3 `bannerRank 57901 150` | 181 of 438 quiet banner-days | **fixed**: 0 of 440; and R75-N1 in its place | `critic/c75_br_57901.log` |
+| `bannerRank 57903` | 111 of 440 | 0 of 440 | `critic/c75_br_57903.log` |
+| "The row is steady" (57901, 57903, by the day) | its set changed on 12 and 14 days, its order alone on none | its set on 27 and 26 days, its order alone on 8 and 2 | `critic/c75_br_*.log` |
+| R73-N1 `bannerOwn 1942 GER` (AFTER=4242) | 3 of Germany's three on the row | wars of Germany's on all three banners at every sample (a war it joined, with a battle, for the quiet one on the United States from day 120) | `critic/c75_bo_1942_GER_after4242.log` |
+| … on the phone | 2 of 2 | 2 of 2 | `critic/c75_bo_1942_GER_after4242_phone.log` |
+| `takescore 1942 GER 240` | a war of Germany's on the row at every sample | the same | `critic/c75_takescore_1942_GER_240.log` |
+| R73-N2 `massSeen 56211` | the Soviet row on 8 March, the war on 14 March | the same rows; "France has called off its massing on the border of Spanish Republic" on 20 February new | `critic/c75_ms_56211.log` |
+| R73-N3 `few2 55421`, `54421` | 5 of 6; 4 of 6 | the same lines | `critic/c75_few2_5*.log` |
+| `few3 55401`, `53401`, `57401` | 4 of 6, 6 of 6, 5 of 6 | the same lines | `critic/c75_few3_*.log` |
+| `few60 55431` | 91, 87, 56 wars | the same | `critic/c75_few60_55.log` |
+| R73-N4 `look 56901`, day 400, Europe at 6,000 | T-42, Roma and Bismarck on counters | T-42 and Roma on counters (R124's step out); the user's decision now | `critic/shots/c75look_56901_1600x900_d400_2eur6000.png` |
+| R73-N5 `markers 56951` | 24, 47, 39 pairs at 1,800; 5, 12, 17 at 1,200 | **fixed from 1,200 out**: 3, 10, 12; 1, 3, 7 | `critic/c75_mk_head_desk.log` |
+| Wars with nothing in a month (57211…) | 9 of 85 (its count) | 11 of 82 with no cell held at day 30 on both commits (my count) | `critic/c75_warOpening_57.json` |
+| `warOpening`'s bars (57211…; 56211…) | 12.3 % and 15.8 % of 57; 9 and 9 of 71 | the same wars | `critic/c75_warOpening_5*.json` |
+| `slowClick` named four | 3 broken, 27037 0 | the same | `critic/c75_li_*.log` |
+| landingFuzz (new seeds) | 0 of 90 | 0 of 90 | `critic/c75_landingFuzz.log` |
+| Run 61's 396 setups, 153 returns, 168 voyages | 1, 0, 3 broken, all `slowClick` | the same; 717 of 717 runs identical line for line | `critic/c75_*_cmp.txt` |
+| Malta's 18 | 12 thrown back, 6 broke off | the same rows | `critic/c75_malta.log` |
+| `capsurvey`, `heroPlace` 1975 and 1991, `endleb` | 2 of 154; the capitals | the same lines | `critic/c75_capsurvey.log` |
+| `histnames` 1991 and 1975, `ev91` 1975 and 1990 | Kalinin; Harare, Dhaka… | the same | `critic/c75_histnames.*.log` |
+| `warlong 1942 54601 god`, `1943 free` | peace on 18 Sep 1942 at 90 … | the same lines | `critic/c75_warlong_*.log` |
+| `freewar` 1941, 1942, 1944; `clampend`; `heldfree 1946`; `blocend 54611`; `saveload 1942 god` | none; 0; 0; same | the same lines | `critic/c75_freewar_*.log` |
+| `free` 51501, 51505 | 0 | 0 | `critic/c75_free_*_free.log` |
+| `godpeace 1942 JAP`; `god42 1942 replay` | "Japan made peace with United States"; the note | the same | `critic/c75_godpeace.*.log` |
+| `undo2 41211`, `undo2y 51231` | each undone, 0 px | each undone (pixels not compared) | `critic/c75_undo2*.log` |
+| `heropanel 55929` | no pile at Relations' edge | the same | `critic/shots/c75hp_55929_12000_1relations.png` |
+| `farConquests 0`, `firstdecl`, `piles`, `pileSides 51` | 0 of 53, 59; none over 4:1 | the same lines | `critic/c75_farc_0_*.log` |
+| `workerDeterminism 54059` | `3f823012` on every arm | `3f823012` on every arm | `critic/c75_wd_54059.log` |
+| 7019, 32019, 20 years | `165d4b75`, `6d77a72d` | `068f1066`, `a75df50c`; the same nations, formations and flipped cells every year | `critic/c75_seed*_save.log` |
+| 7019 with heroes, 20 years | 72 nations, 1,014 formations, 12 heroes | the same in every year's line | `critic/c75_hero_7019_20.log` |
+| `nukecount 55503`; `nukeIntercepts 53501` | 2; 2 launches | the same lines | `critic/c75_nc_55503.log` |
+| `afterTrack 55601`, `37601` | 533 days; 0 | 533 days; 0 | `critic/c75_atx_*.log` |
+| `x_stage normandyD` | "Germany +5 ⚔ Soviet Union +3 +50" on the row | the same | `critic/c75_x_stage.normandyD_*.log` |
+| `g_editor` | stopped on a paused page | whole (the probe mended) | `critic/c75_g_58921.json` |
+| `hist 32019`, `seaclick` | stopped at "Charts"; no row | whole (the probes mended) | `critic/c75_hist.32019_*.log`, `critic/c75_sc_58061.json` |
+| Left out by run 74: `tagsChrome`, `stripe`, `waits` ×2, `detvp`, `heroCeiling`, `few3 51401`, `menloss`, the phone's banners over History, the twelve-year watch | | all run: 0 tags under the chrome; 0 stripes; the waits' words; one hash a step; 0.69; 6 of 6; the armies' lines; none over History; three watches | `critic/c75_tagsChrome_*.log`, `critic/c75_detvp.log`, `critic/c75_menloss_*.log` |
+| Tick, seed 99, alone | 1.890 ms | 1.858 ms; year 1 at the pin `a5dbeae6` | `critic/c75_tick99.log` |
+| Tick, seed 99 with heroes, alone | 1.765 ms | 1.738 ms | `critic/c75_tick99h.log` |
+| Frames on the 7019 year-20 world | 57.3 to 60.2 fps; worst 155 ms | 59.2 to 60.2 fps; worst 105 ms | `critic/c75_pf_lookfps.log` |
+| `lookFps`, touch, `x_indfps` | 57.7 to 59.5; 58.8 to 59.3; 58.9 to 60 | 59.6 to 60; 59.6 to 59.9; 59.6 to 60 | `critic/c75_lookfps.log` |
+| `loadold` 7019 (the run before's save) | loads, runs a year | loads, runs a year (`75b9c02a`) | `critic/c75_loadold_7019.log` |
 
 ## Design objections (none blocking, no score lowered)
 
-- **SPEC §"The target answers" and ADR-1107: the row "when seen and not when begun".** Told at a quarter of the men at
-  the border, the row is the war's last three days (the median of 96; a day or less in a quarter of them) and not
-  its weeks: in run 73's case close to a million Soviet men were on the march from early February, the row is of 8
-  March and the war of 14 March. And a massing first counted with half its men there is declared untold (56 of 152
-  massed wars). A row when the army sets out would make it the warning R73-N2 asked for
-  (`critic/c74_massTold_a.log`, `critic/c74_massTold_b.log`).
-- ADR-1105 (the row's order) is recorded as accepted and is not in SPEC, so what it leaves is judged as any other
-  behaviour: R74-N3, non-blocking, no score moved.
-- **ADR-1106** as decided: a lone nation's war now opens with its army away. Not measured here.
-- **ADR-1089's give-up**, **ADR-1060** and **heroes on by default (ADR-1070)** as run 73: not re-measured.
+- **ADR-1110 (the user's decision): the tighter rule "at the far end of T1 only".** The rule stops at 1,200 m/px, so
+  the view a notch nearer is the more heaped of the two: 21 pairs of 58 markers at 1,150 m/px against 6 of 53 at 1,300
+  on the same front and day (`critic/c75_mk_headn_desk.log`), and R73-N5's own 1,200 figures (5, 12, 17) now stand
+  just inside the line. A player zooming in to read a crowded front loses the numbers at the step where he expects
+  more. The same rule to T1's near end, or eased in between 1,200 and 600, would answer it.
+- **ADR-1111 (the user's decision): R124 left as it is.** Hero names on counters' numbers at 6,000 m/px stand
+  (`critic/shots/c75look_56901_1600x900_d400_2eur6000.png`), and on a phone they are most of what Europe shows at the
+  world's zoom.
+- **SPEC §"The target answers" and ADR-1107: the row "when seen and not when begun"**, as run 74: a median of 3 days
+  between the row and its war, and 141 of 274 declarations on six new seeds with no massing the day before.
+- **ADR-1109's R130** is recorded as accepted and its row's order is not in SPEC, so what it leaves is judged as any
+  other behaviour: R75-N1.
+- **ADR-1060** and **heroes on by default (ADR-1070)** as run 74: not measured again.
 
 ## Ideas from other games (not scored)
 
-- **Hearts of Iron IV** holds a unit's counter where it is until it must move, and fades a change in; a hero's counter
-  that slid to its new step over a quarter of a second, and only when its old one was taken, would read as a move and
-  not as a flicker.
-- **Victoria 3** ranks its wars by the battalions in them: the row by the men engaged would put the fought war first.
+- **Hearts of Iron IV** keeps a war's place in its list while it lasts and marks the fought one with a pulsing
+  sword: a battle shown on the banner, and not by the banner's place, would keep both of R130's aims.
+- **Victoria 3** shows on a war's tile why it cannot end yet (the war goals still pressed): a "to the death" mark
+  on a banner at ±100 would tell the watcher what the score cannot.
+- **DEFCON** names every warhead shot down: the intercepted bomber is the best news a defender gets.
 
 ## Strengths (verified)
 
-- **Run 73's first and third findings are mended on their own cases:** a played Germany has its three wars as the row
-  at every sample where it had none, and two-nation worlds that had no war in ten years have one within four months.
-- **A massing can be followed from a line of news to the map:** the ticker's row, clicked, shows the Soviet columns at
-  Romania's border six days before the war, and the row is saved, filtered, exported and never told twice in 112.
+- **Run 74's three findings are mended on their own probes, with both builds side by side:** the heroes' counters
+  leap 1, 0 and 1 times in a zoom where 38, 28 and 50; a massing given up is called off in a row of its own (13 of
+  the 15 that needed one, the other two at war by then); no quiet war holds the row while a fought one is hidden.
+- **The crowded front at the middle zooms can be read:** 12 pairs of markers on one another where 39 on the same day
+  of the same game, the hidden numbers out in the open, with no pop at the change of rule and no frame time added.
+- **Nothing broke under 15,500 random acts:** seven monkeys at four sizes, God Mode and the editor among their
+  buttons, 0 page errors and the game running at the end of each; and the frame rate is the same 59 to 60 at
+  3840 × 2160 as at 1600 × 900.

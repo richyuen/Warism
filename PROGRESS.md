@@ -400,3 +400,11 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   2. `main` as it was: the user's decision, R124 left as it is.
 - Next, by the user's word ("After this, let's run the full critic"): the critic, full run.
 
+## 2026-11-17 — critic run 75 (full, on e830930e; asked for by the user)
+
+- Scores: map 8, diplomacy 8, emergent 8, God Mode 8, editor 8, stats 8, UI/UX 7 (was 8; its bar 7), performance 8,
+  stability 8, semantic zoom 8 (was 7; its bar 8), naval 8, tanks 8, aircraft 8, AI nukes 8. Blocking: 0.
+- R74-N1 seen fixed (R128), R125 and R131 hold on their measures. UI/UX fell by R75-N1: R130's order makes the
+  banners change places by the second. Batch 42 (R132 to R137). A full run where the process had a focused one next
+  (semantic zoom was under its bar): the user's word.
+

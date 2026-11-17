@@ -570,6 +570,40 @@ Closed by the user's decision (ADR-1111: "ok let's accept your recommendation"),
   army's. The AT (none over a counter's number) is not met by a size. And R128's bars: `c74_heroPop.mjs 56901 400`
   and `57905 200`, the zoom's jumps 4 and 4 (the bar 2; `main` 1 and 0), running 20 s 36 and 2 (34 and 4).
 
+## Batch 42 — critic run 75's findings (full, on e830930e; no blocking issue; every score at its bar: semantic zoom
+7 -> 8, UI/UX 8 -> 7)
+
+The full run's non-blocking issues, fixed before the release's checks; no critic run after them (ADR-1022).
+- [ ] R132 **R75-N1: the banners change places by the second while the game runs** (R130's order: a war with a
+  battle first). AT: `c75_bannerFlip.mjs 57901 150 head 60` and `… 58901 200 head 60` print "the row changed" at 10
+  or fewer and "the banner under a resting cursor changed" at 2 or fewer (now 41 and 18; 29 and 19), and
+  `c75_bannerRank.mjs 57901 150` stays under 44 quiet banner-days of 440 (now 0).
+- [ ] R133 **R75-N2: a bomber stopped short with a warhead is told nowhere** (`NukeIntercepted` has no row in the
+  ticker or History and no words). AT: `npx tsx critic/scripts/c75_interceptTold.ts` prints the kind in History's
+  kinds and the ticker's, strings over 0; the row says who, where, and that the bomber was stopped.
+- [ ] R134 **R75-N3: a massing "called off" and at war with its target under one date** (R129; France on Germany,
+  seed 58619, day 884: 1 of 21 call-offs on twelve seeds; and "France has called off its massing on the border of
+  Switzerland" a row above "Switzerland was annexed by Germany" of the same day). AT:
+  `npx tsx critic/scripts/c75_massTold.ts 3 58617 58619 58621` and the run's other nine seeds: no "CALLED OFF BUT AT
+  WAR at the day's end" line.
+- [ ] R135 **A war at ±100 with nothing saying why it goes on** (`c75_warAt100.ts 7019 5 off`: Japan and China at
+  −100 for 738 days). AT: the banner or its tooltip says that a side fights to the death, in a browser test on that
+  case.
+- [ ] R136 **`seaBattlesLook` exits 1 on 58061** (`tools/diag/seaBattles.ts 58061 scenario --years 3`, then
+  `seaBattlesLook.ts`): t5712 GER v SWE "NOT SEEN": the side sunk whole in the battle's one hour, two bystanders
+  named for it. AT: that run ends 32 of 32, or 31 seen and 1 "no fleet to see".
+- [ ] R137 **"A major battle began near Hammerfest" twice under 1 January 1942** after a God peace in the replay
+  (`critic/shots/c75gp_1942_GER_SovietUnion_390x844_2history.png`). AT: the case as a test, one row.
+Run 75's other lines, not items: small worlds of two and three with no war in ten years (55424, 54425, 54426, 58422;
+55401, 55404, 57404: R123's rule is for a nation with one neighbour); wars with no cell held by either side at day 30
+(20 of 103, a measure); `slowClick`'s named cases (0 of 90 on new seeds); on a phone the heroes' names over Europe at
+the world's zoom, no ticker while the banners are opened (R126, on purpose), the cue's "Scroll" and "Click",
+"COMMUNIST CHINA" under its flag, a row of History not clicked to its place, a fleet refused by no name (R127).
+The critic's design objections, the user's (not items): ADR-1110's rule stops at 1,200 m/px, so a notch nearer is the
+more heaped (21 pairs of 58 markers at 1,150 m/px, 6 of 53 at 1,300: the same rule to T1's near end, or eased in
+between 1,200 and 600, would answer it); ADR-1111 (R124 left as it is); ADR-1107's row "when seen"; ADR-1060 and
+heroes on by default (ADR-1070).
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for
