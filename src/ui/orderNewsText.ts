@@ -1,4 +1,3 @@
-import { RejectReason } from '../shared/events';
 import type { FormationDetail, OrderNews } from '../shared/protocol';
 import { t, type MessageKey } from './i18n';
 
@@ -37,10 +36,7 @@ export function orderNewsBrief(n: OrderNews, count: number, name: string): strin
   if (count > 1 && n.kind === 'lostAtSea') return t('order.lostAtSeaBrief', { count });
   if (count > 1 && n.kind === 'transportsSunk') return t(n.reason === 1 ? 'order.transportsSunkCalledBrief' : 'order.transportsSunkBrief', { count });
   // A division is told by its number ("366"), as its counter on the map; a hero or a wing by its name.
-  // A fleet by its name too (ROADMAP R127; critic run 73: "1202: not done, no water there" read as a division): the
-  // refusals only a fleet's order has.
-  const fleets = n.kind === 'refused' && FLEET_REASONS.has(n.reason);
-  const tag = !fleets && name.endsWith(` ${n.id}`) ? String(n.id) : name;
+  const tag = name.endsWith(` ${n.id}`) ? String(n.id) : name;
   if (n.kind === 'repulsed') return t('order.repulsedBrief', { name: tag });
   if (n.kind === 'thrownAshore') return n.at ? t('order.thrownAshoreBrief', { name: tag, at: n.at }) : t('order.thrownAshoreNoPlaceBrief', { name: tag });
   if (n.kind === 'landedAway') return n.at ? t('order.landedAwayAtBrief', { name: tag, at: n.at }) : t('order.landedAwayBrief', { name: tag });
@@ -54,9 +50,6 @@ export function orderNewsBrief(n: OrderNews, count: number, name: string): strin
   if (n.kind === 'waitsFront') return t('order.waitsFrontBrief', { name: tag });
   return t('order.refusedBrief', { name: tag, why: t(`order.whyBrief.${n.reason}` as MessageKey) });
 }
-
-/** The refusals only a fleet's order has (`RejectReason.NotWater`, `Convoy`): its row names it in full. */
-const FLEET_REASONS: ReadonlySet<number> = new Set([RejectReason.NotWater, RejectReason.Convoy]);
 
 /** How many hours a panel's notice is news; after, it is drawn as history, muted (ROADMAP R58c): three days. */
 export const NOTICE_OLD_HOURS = 72;

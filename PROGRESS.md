@@ -368,3 +368,6 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - R124: the step that covers no counter; the critic's scene still has four hero counters on counters. R125: the
   tighter stacking meets the critic's target and rewrites the quarter: for the user. The critic's probes run here
   against a preview of the build on port 5373.
+- R127's fleet name taken out again: the whole browser suite had `orderRowsBrief1938` red on it (a division's order
+  has the same refusal). The suite else: 468 green; `heroes1938` twice and `nukeAlertTwo1938` red in the run and green
+  alone, `maxGlide1938` red alone too this time (red in every whole run of the day, green alone before).

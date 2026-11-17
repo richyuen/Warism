@@ -489,9 +489,10 @@ Each with the critic's own "seen fixed when" (`critic/CRITIC_REPORT.md`).
     where each has another neighbour and the rule does not apply.
 - [x] R126 **R73-N6: the phone**: the ticker gives way while the banners are opened (they stood on its rows); the
   first cue stands under the top bar and the legend's toggle. Test: `tests/e2e/reviewBatch1938.spec.ts`.
-- [x] R127 **R73's small things**, what was a fault: a fleet's refusal names it ("Destroyer flotilla 1202: not done,
-  no water there" where "1202: …": the refusals only a fleet's order has). Not items: the wars with nothing in
-  their first month (16 of 111, a measure; R98's and R123's ground), `slowClick`'s named cases (ADR-914's list),
+- [x] R127 **R73's small things**: none built. A fleet named in its refusal ("1202: not done, no water there") was
+  tried by the refusal's reason and taken out: a division's order over the sea has that reason too
+  (`orderRowsBrief1938` red on it); it wants the formation's kind in the news, a small item of its own. Not items: the
+  wars with nothing in their first month (16 of 111, a measure), `slowClick`'s named cases (ADR-914's list),
   "COMMUNIST CHINA" under its capital's flag (the names' fitting: with the odd-shaped names of Batch 38's foot).
 
 Left of run 73, for the user (not ticked, not open: each wants a choice):

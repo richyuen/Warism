@@ -69,14 +69,12 @@ describe('a single order row has a brief beside a panel (ROADMAP R43b)', () => {
     const seen = new Set<string>();
     for (let r = 1; r <= 20; r++) {
       const s = orderNewsBrief(one('refused', r), 1, 'Square infantry division 366');
-      // By its number; the refusals only a fleet's order has (9, 19) by its whole name (ROADMAP R127).
-      expect(s, String(r)).toMatch(r === 9 || r === 19 ? /^Square infantry division 366: not done, / : /^366: not done, /);
+      expect(s, String(r)).toMatch(/^366: not done, /);
       expect(s).not.toContain('order.');
       expect(s.length).toBeLessThan(orderNewsText(one('refused', r), 'Square infantry division 366').length);
       seen.add(s);
     }
     expect(seen.size).toBe(20);
-    expect(orderNewsBrief(one('refused', 9), 1, 'Destroyer flotilla 1202')).toBe('Destroyer flotilla 1202: not done, no water there');
   });
 });
 
