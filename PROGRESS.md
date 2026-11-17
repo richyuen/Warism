@@ -393,3 +393,10 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   over the same markers, a reach of two cells of the grid where one.
 - R131 filed: a hero's marker at T1 leaps with the zoom (on HEAD too).
 
+## 2026-11-17 — R131 (ADR-1112); R124's (a) measured and not taken (ADR-1111, the user's decision)
+
+- R131: `HeroLifts`. The wheel run of R125: no move of a hero's marker over 6 px a frame (the largest 5.0).
+- R124: (a) on branch `r124-fit`: 5 of 7 pairs left in the critic's scene, the zoom's jumps 4 and 4 over the bar of
+  2. `main` as it was: the user's decision, R124 left as it is.
+- Next, by the user's word ("After this, let's run the full critic"): the critic, full run.
+

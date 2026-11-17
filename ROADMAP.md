@@ -537,7 +537,7 @@ on purpose), the cue's "Scroll" and "Click" on a phone, "COMMUNIST CHINA" under 
 
 ## Batch 41 — R124 and R125, the user's decision ("Accept recommendations for R124 and R125 and let's work on them")
 
-- [x] R125 **R73-N5: markers over one another at 1,200 to 1,800 m/px** (ADR-1110; ADR-1108's (a) at the far end of
+- [x] R125 **R73-N5: markers over one another at 1,200 to 1,800 m/px** (2c9b7ca1; ADR-1110; ADR-1108's (a) at the far end of
   T1). From 1,200 m/px out a marker more than 2 % under its nation's is in its stack, two boxes on each other are
   parted to nothing, a box at most 13 px from its formation; nearer, the quarter as it was. AT, the critic's probe on
   this build (`c74_markers.mjs 56951 r125 1600 900 1675,372 10,20,30 1800,1200,600`, a preview on port 5373), the
@@ -551,15 +551,24 @@ on purpose), the cue's "Scroll" and "Click" on a phone, "COMMUNIST CHINA" under 
   - Seen in the wheel's run, not of this rule: a hero's marker (R34g's step clear of the markers of the frame, id
     1469 at Linyi) leaps as the zoom changes: 6 and 1 leaps on HEAD's build, 4 and 5 on this (on this one a frame
     below its unit while the boxes ease across 1,200 m/px). An item of its own: R131.
-- [ ] R124 **R73-N4: hero tags on counters in play at 6,000 m/px** (ADR-1108's (a): the hero's counter the others'
-  size where it would cover a nation's counter; its place a function of where the heroes stand, ADR-1109). AT: the
-  critic's scene (`c74_look.mjs 56901 1600 900 45,180,400`, day 400, Europe at 6,000 m/px): no hero's counter over a
-  counter's number; and R128's bars hold (`c74_heroPop.mjs 56901 400` and `57905 200`: the zoom's jumps 2 or fewer,
-  running 20 s 34 and 4 or fewer; `WHEEL=1` 4 and 2 or fewer).
-- [ ] R131 **A hero's marker leaps at T1 as the zoom changes** (R34g's `heroClear` chooses above or below anew each
-  frame against the frame's markers; seen in R125's wheel run). AT: R125's wheel run (seed 56951, day 30, 900 to
-  1,758 m/px and back; 1,100 to 1,375 and back): the hero's marker moves over 6 px in a frame at most twice a pass
-  (its step up and its step back), never to the other side of its unit for a frame.
+- [x] R131 **A hero's marker leaps at T1 as the zoom changes** (R34g's `heroClear` chose above or below anew each
+  frame against the frame's markers; seen in R125's wheel run). `HeroLifts` (`markers.ts`): the marker keeps the
+  side it stands on while it must stand off, and goes to its place at 0.3 px a ms, a frame reckoned at 20 ms at
+  most (6 px a frame); one new to the view, or not drawn for half a second, stands there at once. AT, R125's wheel
+  run (seed 56951, day 30, 900 to 1,758 m/px and back; 1,100 to 1,375 and back; every drawn frame): no move over
+  6 px in a frame, the largest 5.0 (HEAD's build 6 and 1 leaps of up to 34 px; R125's 4 and 5, up to 136). Tests:
+  `tests/unit/heroLifts.test.ts`; by hand `heroes1938`, `heroesClear1938`, `heroStack1938`, `heroesRead1938`,
+  `markerStacks1938`, `markers1938` (26 green).
+
+Closed by the user's decision (ADR-1111: "ok let's accept your recommendation"), left as it is:
+- **R124, R73-N4: hero tags on counters in play at 6,000 m/px.** ADR-1108's (a) built and measured, not on `main`
+  (branch `r124-fit`): a hero's counter drawn, about its place, at the largest size from the others' to its own
+  that is clear of the nations' counters (`heroFit`), eased. The critic's scene (seed 56901, day 400, Europe at
+  6,000 m/px; hero counters over a nation's counter): 7 pairs on `main`, 5 with it, and 5 with every hero forced to
+  the others' size: HMS Hood on all of "95.7k", Maus on 40 % of "31.0k", Roma on 14 % of "47.5k" and 2 % of
+  "13.4k", Richelieu on 4 % of "385.5k". A hero stands with its nation's army; at any size its counter is on that
+  army's. The AT (none over a counter's number) is not met by a size. And R128's bars: `c74_heroPop.mjs 56901 400`
+  and `57905 200`, the zoom's jumps 4 and 4 (the bar 2; `main` 1 and 0), running 20 s 36 and 2 (34 and 4).
 
 ## Released
 

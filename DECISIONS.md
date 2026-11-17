@@ -632,3 +632,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **What it costs:** from 1,200 m/px out more formations behind a "×n" and a box up to 13 px from its formation.
   `markerStacks1938.spec.ts`'s bound on a box's distance at 1,900, 1,800 and 1,200 m/px is the rule's of that zoom
   (13 px, where 8).
+
+### ADR-1111 · 2026-11-17 · the user's decision ("ok let's accept your recommendation") — R124: the size does not do it; left as it is
+- **ADR-1108's (a), taken by the user, built and measured** (branch `r124-fit`, not on `main`): in the critic's scene
+  5 of the 7 hero counters that stand on a nation's counter still do at the others' size; the critic's zoom probe
+  counts 4 leaps on each of its two seeds where R128's bar is 2; and most of Europe's heroes are then the small size
+  (R42c's twice, lost where the armies are).
+- **Options:** (1) as `main` is: the heroes' counters their size, some on a counter (map visuals 8 with it); (2) (a)
+  all the same, from the branch; (3) a step off the counter it stands on, kept from frame to frame (ADR-1108's (b)
+  with a memory; not measured; the kind of rule R128 took out).
+- **Recommended, and taken:** (1). R124 is closed as it stands; the branch is kept.
+
+### ADR-1112 · 2026-11-17 · accepted — R131: a hero's marker keeps its side and moves at a speed
+- **Was (R34g):** `heroClear` put a hero's marker above or below the markers it covers, chosen in each frame.
+- **Decision:** `HeroLifts`: the side kept while it stands off; the move to its place at `HERO_LIFT_PX_MS` (0.3),
+  a frame reckoned at 20 ms at most. `MapView.unitsAnimating` is true while one moves.
+- **What it costs:** a marker that stood below stays below where above would now cover less, until it is clear on
+  its place; for up to half a second after the markers about it change it can stand on one.
+

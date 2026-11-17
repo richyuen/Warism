@@ -128,7 +128,14 @@ export function markerMorph(p: number): { elements: number; morph: MarkerMorph }
  * (ROADMAP R34g): where it is if it covers none; else just above those it covers, or just below them, whichever
  * covers less of the others (above when even).
  */
-export function heroClear(placed: readonly { x: number; y: number; w: number; h: number; alpha: number }[], px: number, py: number, ms: number): number {
+export function heroClear(
+  placed: readonly { x: number; y: number; w: number; h: number; alpha: number }[],
+  px: number,
+  py: number,
+  ms: number,
+  /** The side it stood on in the last frame (ROADMAP R131): -1 above, 1 below, 0 on its place. It keeps it while it must stand off. */
+  side = 0,
+): number {
   const rectAt = (cy: number): [number, number, number, number] => [px - (BOX_W / 2) * ms, cy - (BOX_H / 2) * ms, BOX_W * ms, MARKER_H * ms];
   const cover = (cy: number): number => {
     const [x, y, w, h] = rectAt(cy);
@@ -144,7 +151,64 @@ export function heroClear(placed: readonly { x: number; y: number; w: number; h:
   // Above them clear of a stack's tag too, which stands 6 px over its box.
   const up = top - 8 - (MARKER_H - BOX_H / 2) * ms;
   const down = bottom + 2 + (BOX_H / 2) * ms;
+  if (side !== 0) return side > 0 ? down : up;
   return cover(down) < cover(up) ? down : up;
+}
+
+/** A hero's marker moves to where it stands clear at this speed at most, px a ms (ROADMAP R131): 6 px a frame. */
+export const HERO_LIFT_PX_MS = 0.3;
+/** The longest frame the move is reckoned by, ms: a slow frame is no leap. */
+const HERO_LIFT_FRAME_MS = 20;
+
+/**
+ * How far each hero's marker stands from its formation, from frame to frame (ROADMAP R131). `heroClear` chose its
+ * place anew in each frame against that frame's markers: as the zoom changed it leapt 30 px at a step, and for a
+ * frame to the other side of its unit while the boxes about it eased (R125's wheel run, seed 56951, day 30). Now it
+ * keeps its side while it stands off, and goes to its place at HERO_LIFT_PX_MS. One new to the view, or not drawn
+ * for half a second, stands there at once.
+ */
+export class HeroLifts {
+  private was = new Map<number, { lift: number; at: number }>();
+  private now = new Map<number, { lift: number; at: number }>();
+  private moving = false;
+
+  begin(): void {
+    this.now = new Map();
+    this.moving = false;
+  }
+
+  /** The side `key`'s marker stood on in the last frame: -1 above its formation, 1 below, 0 on it or new. */
+  side(key: number): number {
+    return Math.sign(this.was.get(key)?.lift ?? 0);
+  }
+
+  /** The lift drawn at `now` for a marker that should stand `want` px from its formation. */
+  lift(key: number, want: number, now: number): number {
+    const was = this.was.get(key);
+    let lift = want;
+    if (was && now >= was.at && now - was.at < 500) {
+      const most = HERO_LIFT_PX_MS * Math.min(HERO_LIFT_FRAME_MS, now - was.at);
+      lift = was.lift + Math.max(-most, Math.min(most, want - was.lift));
+      if (Math.abs(lift - want) > 0.01) this.moving = true;
+    }
+    this.now.set(key, { lift, at: now });
+    return lift;
+  }
+
+  end(): void {
+    this.was = this.now;
+  }
+
+  /** True while a hero's marker is on its way (the view keeps redrawing). */
+  animating(): boolean {
+    return this.moving;
+  }
+
+  clear(): void {
+    this.was.clear();
+    this.now.clear();
+    this.moving = false;
+  }
 }
 
 export interface PlacedMarker {
@@ -494,11 +558,18 @@ export function drawMarkers(
   picked = 0,
   /** The ball look (PLAN 7.174f): each box a countryball. */
   balls = false,
+  /** The heroes' markers from frame to frame, and the frame's time (ROADMAP R131). None: each where `heroClear` puts it. */
+  lifts?: HeroLifts,
+  now = 0,
 ): PlacedMarker[] {
+  lifts?.begin();
   const placed: PlacedMarker[] = [];
   const boxAlpha = alpha * morph.box;
   const barAlpha = alpha * morph.bar;
-  if (Math.max(boxAlpha, barAlpha) <= 0.01) return placed;
+  if (Math.max(boxAlpha, barAlpha) <= 0.01) {
+    lifts?.end();
+    return placed;
+  }
   ctx.save();
   ctx.globalAlpha = boxAlpha;
   ctx.imageSmoothingEnabled = false;
@@ -527,7 +598,8 @@ export function drawMarkers(
   for (const m of order) {
     // A hero's marker is HERO_SCALE × the others' (PLAN 7.184b3).
     const ms = m.hero ? size * HERO_SCALE : size;
-    for (const off of offs) {
+    for (let copy = 0; copy < offs.length; copy++) {
+      const off = offs[copy]!;
       const stack = stacks?.get(m.id);
       // The box stands on its formation, or a few px from it to keep clear of a marker of
       // another nation (PLAN 2.7s2); the order arrow starts at the formation.
@@ -537,7 +609,9 @@ export function drawMarkers(
       // A hero's marker over others (ROADMAP R34g; critic run 30, R30-N4: Bismarck's hid the German fleets'
       // "×3" at Kiel, and every click opened Bismarck): stepped clear of them, a line to its place.
       if (m.hero) {
-        py = heroClear(placed, px, py, ms);
+        const key = m.id * 4 + copy;
+        const clear = heroClear(placed, px, py, ms, lifts?.side(key) ?? 0);
+        py = lifts ? py + lifts.lift(key, clear - py, now) : clear;
         if (py !== fy) {
           ctx.save();
           ctx.globalAlpha = boxAlpha;
@@ -714,6 +788,7 @@ export function drawMarkers(
     }
   }
   ctx.restore();
+  lifts?.end();
   return placed;
 }
 

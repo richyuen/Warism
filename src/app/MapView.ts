@@ -13,7 +13,7 @@ import { drawCorridors, type CorridorMark } from '../render/fx/corridors';
 import { drawHolds, type HoldMark } from '../render/fx/holds';
 import { changedCells, ControlFlashes } from '../render/fx/flashes';
 import { advances, arrowFill, drawMoveArrows, groupMarches, type DrawnArrow, type March } from '../render/units/moveArrows';
-import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderLine, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
+import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, HeroLifts, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderLine, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { BATTLE_TAG_M, drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, stackRuleAt, type StackItem } from '../render/units/markerStacks';
 import { COUNTER_SCALE, CounterLayer, counterNation, heroScaleAt, type CounterSource, type HeroCounter, quietAlphaAt } from '../render/units/counters';
@@ -1301,6 +1301,8 @@ export class MapView {
   markerRects: PlacedMarker[] = [];
   /** The stacks of the T1 markers: which are in one, and the fade of a change (PLAN 2.7s1). */
   readonly markerStacks = new MarkerStacks();
+  /** The heroes' markers at T1 from frame to frame (ROADMAP R131). */
+  readonly heroLifts = new HeroLifts();
   markerOpacity = 0;
   /** T0 counters (PLAN 2.2). */
   readonly counters = new CounterLayer();
@@ -1340,7 +1342,7 @@ export class MapView {
    */
   unitsAnimating(now = performance.now()): boolean {
     const handing = this.handover.animating(now) || this.tactical.animating(now) || this.close.animating(now) || this.flagsIn.animating(now) || this.cityLabels.animating(now) || this.nameStates.animating(now);
-    return this.counters.animating(now) || this.quietCounters.animating(now) || this.markerStacks.animating(now) || handing || running(now, this.flagMoveStart, FLAG_MOVE_MS) || this.fire.animating(now) || this.turretAims.animating(now) || this.wrecks.bursting(now) || this.airFx.animating(now) || this.nukeFx.animating(now);
+    return this.counters.animating(now) || this.quietCounters.animating(now) || this.markerStacks.animating(now) || this.heroLifts.animating() || handing || running(now, this.flagMoveStart, FLAG_MOVE_MS) || this.fire.animating(now) || this.turretAims.animating(now) || this.wrecks.bursting(now) || this.airFx.animating(now) || this.nukeFx.animating(now);
   }
 
   /** Opacity of the element sprites, their figures and their fire in the frame being drawn: in as the T1 markers go out. */
@@ -2178,6 +2180,7 @@ export class MapView {
     if (share * Math.max(this.morph.box, this.morph.bar) <= 0.01) {
       // No markers: the next ones take their places in their stacks at once.
       this.markerStacks.clear();
+      this.heroLifts.clear();
       // A held landing's transports joined to the fleet that holds them (ROADMAP R53e), over the counters.
       this.holdMarks = drawHolds(ctx, this.holds, cam, this.geo, vw, vh, tint, this.unitScale);
       // The landing an order under the cursor is for (ADR-827, ROADMAP R27b), over everything.
@@ -2222,7 +2225,7 @@ export class MapView {
     }
     // (The boxes do not move while they shrink into the T2 sprites: ADR-72.)
     const stacks = this.markerStacks.frame(items, MARKER_W * this.unitScale, MARKER_H * this.unitScale, now, this.morph.scale < 1, stackRuleAt(this.metresPerPx));
-    this.markerRects = drawMarkers(ctx, markers, this.majors, cam, this.geo, vw, vh, share, hex, flagOf, this.unitScale, this.morph, stacks, this.picked, this.unitLook === 'balls');
+    this.markerRects = drawMarkers(ctx, markers, this.majors, cam, this.geo, vw, vh, share, hex, flagOf, this.unitScale, this.morph, stacks, this.picked, this.unitLook === 'balls', this.heroLifts, now);
     // A held landing's transports joined to the fleet that holds them (ROADMAP R53e), over the markers (at 1500 m/px
     // the transports' marker hid its ring).
     this.holdMarks = drawHolds(ctx, this.holds, cam, this.geo, vw, vh, tint, this.unitScale);
