@@ -607,7 +607,7 @@ The full run's non-blocking issues, fixed before the release's checks; no critic
   the sides of a war between its two nations, and of a side that lost ships only those near that lost strength in the
   hour (t5712 GER v SWE: Germany's ships sunk whole, two German fleets 6 and 15 cells off listed for it). AT: that run
   32 of 32 seen, exit 0 (7 listed with one side alone); 39061, two years: 63 of 63.
-- [x] R137 **"A major battle began near Hammerfest" twice under 1 January 1942** (COMMIT; ADR-1117) after a God peace in the
+- [x] R137 **"A major battle began near Hammerfest" twice under 1 January 1942** (62e60c9c; ADR-1117) after a God peace in the
   replay (`critic/shots/c75gp_1942_GER_SovietUnion_390x844_2history.png`). A group that would begin a Major Battle
   within `MATCH_CELLS` of one continued that hour joins it. AT: the case on `1942.sav` (Germany and the Soviet Union at
   peace by God, four hours): one "began" row near Hammerfest (two before); as a test,
