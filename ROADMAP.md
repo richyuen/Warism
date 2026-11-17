@@ -460,6 +460,34 @@ Left of the review, for the user (not built):
 - **The name of a nation of an odd shape** [11] (a year on: "GERMANY" over a rump, "BULGARIA" bent). The names'
   fitting is a system of its own with its specs; a change of how a name is fitted needs its own item.
 
+## Batch 39 — critic run 73's findings (focused, on a9814c43; no blocking issue; UI/UX 8 -> 7, at its bar)
+
+Each with the critic's own "seen fixed when" (`critic/CRITIC_REPORT.md`).
+
+- [ ] R121 **R73-N1: the wars a played nation leads are on the banners** (R110's newest-first put them behind
+  "+n": 0 of Germany's three on the row or among the six opened, days 30 to 150 of a 1942 start). AT:
+  `AFTER=4242 node critic/scripts/c73_bannerOwn.mjs 1942 GER Germany 150` prints the player's wars on the banners,
+  over 0 at every sample. With it the critic's design objection: with no nation played, the largest wars before
+  the newest (mid-June 1944 of the replay: the Soviet war behind "+n").
+- [ ] R122 **R73-N2: a massing is told** (R97b, R103): no ticker or History row and no arrow before the
+  declaration. AT: `node critic/scripts/c73_massSeen.mjs 56211 'Soviet Union' Romania 1218,300 40,55,65,72,75`:
+  "history of the two" or "massing words" not empty on day 55 or 65.
+- [ ] R123 **R73-N3: small worlds wait longer for their first war, or for ever** (the cause not read; R97b's
+  give-up and bar the likely rule, the critic's design objection to ADR-1089). AT:
+  `npx tsx tools/diag/fewNationWars.ts 2 55421 6 10`: 55426 and 55421 have their first war within a year.
+- [ ] R124 **R73-N4: hero tags on counters in play** at 6,000 m/px (R72-N4's first half). AT:
+  `node critic/scripts/c73_look.mjs 56901 1600 900 45,180,400`: no hero's tag over a counter's number on day 400.
+- [ ] R125 **R73-N5: markers over one another at 1,200 to 1,800 m/px** (old). AT:
+  `node critic/scripts/c73_markers.mjs 56951 head 1600 900 1675,372 10,20,30 1800,1200,600`: the pairs at 1,800
+  under a quarter of the markers on each day.
+- [ ] R126 **R73-N6: the phone**: the opened banners cover the ticker; the first cue covers "Ranking". AT:
+  `node critic/scripts/c73_look.mjs 56903 390 844 60,240 phone`.
+- [ ] R127 **R73's small things**: wars with nothing in their first month (16 of 111); `slowClick`'s five named
+  cases; "1202: not done, no water there" (a fleet by its number); "COMMUNIST CHINA" under its capital's flag.
+
+The critic's design objections not items of their own: ADR-1060 (German formations at peace in Vichy France after a
+1941 free start) and heroes on by default (ADR-1070), as run 72: the user's earlier decisions, not re-opened.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

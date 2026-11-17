@@ -341,3 +341,10 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - The whole browser suite on the batch before its last fixes: 467 green, five red (`chromeCover1938` twice for the
   legend's line, `godUndoPicture1938` for the names, `heroesRead1938` and `maxGlide1938` in the run and green
   alone); the first two mended and their specs green.
+
+## 2026-11-17 — critic run 73 (focused, on a9814c43)
+
+- Scores: map 8, diplomacy 8, emergent 8, God Mode 8, editor 8, stats 8, UI/UX 7 (was 8; its bar 7), performance 8,
+  stability 8, semantic zoom 8, naval 8, tanks 8, aircraft 8 and AI nukes 8 (carried). Blocking: 0.
+- UI/UX fell by R73-N1: R110's newest-first row left the wars a played nation leads off the banners. Its six
+  non-blocking issues and the small things are Batch 39 (R121 to R127).

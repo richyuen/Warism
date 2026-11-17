@@ -1,0 +1,48 @@
+npx tsx tools/diag/diploInvariants.ts 56001 scenario 1825 > critic/c73_diploinv_56001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 56003 random 1825 > critic/c73_diploinv_56003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 56005 scenario 1825 --heroes > critic/c73_diploinv_56005sh.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 56007 random 1825 --world random > critic/c73_diploinv_56007rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 56051 1825 > critic/c73_wi_56051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 56053 1825 --heroes > critic/c73_wi_56053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 56055 1825 --world random > critic/c73_wi_56055rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 56057 1825 --diplomacy random > critic/c73_wi_56057dr.log 2>&1
+npm run sim -- --scenario 1938 --seed 7019 --years 20 --save critic/c73_seed7019_y20.bin > critic/c73_seed7019_save.log 2>&1
+npm run sim -- --scenario 1938 --seed 32019 --years 20 --save critic/c73_seed32019_y20.bin > critic/c73_seed32019_save.log 2>&1
+npx tsx critic/scripts/c73_heroRun.ts 7019 20 critic/c73_hseed7019_y20.bin > critic/c73_hero_7019_20.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 30041 3517 120 30041 30,90 1 > critic/c73_li_30041_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 27037 15101 120 27037 30,90 2 > critic/c73_li_27037_15101_g2.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 51101 3517 120 51101 30,90 1 > critic/c73_li_51101_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 53125 15101 120 53125 30,90 2 > critic/c73_li_53125_15101_g2.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 55401 6 10 > critic/c73_few3_55.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 2 55421 6 10 > critic/c73_few2_55.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 2 54421 6 10 > critic/c73_few2_54.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 53401 6 10 > critic/c73_few3_53.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 60 55431 3 5 > critic/c73_few60_55.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 56401 6 10 > critic/c73_few3_56.log 2>&1
+npx tsx critic/scripts/c73_farConquests.ts 0 6161,41161,41163,41165,41167 730 > critic/c73_farc_0_a.log 2>&1
+npx tsx critic/scripts/c73_farConquests.ts 0 53161,53163,53165,53167,53169 730 > critic/c73_farc_0_c.log 2>&1
+npx tsx critic/scripts/c73_firstdecl.ts 60 39821 39823 39825 39827 39829 39831 39833 39835 39837 39839 > critic/c73_firstdecl.log 2>&1
+npx tsx critic/scripts/c73_firstdecl.ts 60 55821 55823 55825 55827 55829 55831 55833 55835 55837 55839 > critic/c73_firstdecl_55.log 2>&1
+npx tsx critic/scripts/c73_piles.ts 365 --plain 39139 39141 39143 39145 39147 > critic/c73_piles_p39.log 2>&1
+npx tsx critic/scripts/c73_piles.ts 365 --plain 51139 51141 51143 51145 51147 > critic/c73_piles_p51.log 2>&1
+npx tsx critic/scripts/c73_piles.ts 365 55139 55141 55143 55145 55147 > critic/c73_piles_h55.log 2>&1
+npx tsx tools/diag/pileSides.ts 365 51141 51143 51145 --all > critic/c73_pileSides_51.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 54059 4380 24 critic/c73_wd_54059.json > critic/c73_wd_54059.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 56059 4380 24 critic/c73_wd_56059.json > critic/c73_wd_56059.log 2>&1
+npx tsx tools/diag/landingRows.ts all critic/c73_lrows_all.json > critic/c73_lrows_all.log 2>&1
+npx tsx tools/diag/seaBattles.ts 56061 scenario --years 3 --out critic/c73_sb_56061.json > critic/c73_sb_56061.log 2>&1
+npx tsx critic/scripts/c73_repulse.ts 55071 ENG GER 1023.5,275.5 1072.5,259.5 3 critic/c73_repulse_55071.json 500 12 > critic/c73_repulse_55071.log 2>&1
+npx tsx critic/scripts/c73_repulse.ts 56073 JAP CHI 1818.5,385.5 1715.5,413.5 3 critic/c73_repulse_56073.json 400 12 > critic/c73_repulse_56073.log 2>&1
+npx tsx tools/diag/nukeIntercepts.ts 53501 22 > critic/c73_nukeIntercepts_53501.log 2>&1
+npx tsx critic/scripts/c73_nukecount.ts 55503 22 > critic/c73_nc_55503.log 2>&1
+npx tsx critic/scripts/c73_nukecount.ts 56501 22 > critic/c73_nc_56501.log 2>&1
+npx tsx tools/diag/heroBattle.ts 56081 3 > critic/c73_heroBattle_56081.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 56009 scenario 3650 --heroes > critic/c73_diploinv_56009sh_10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 56065 3650 --heroes > critic/c73_wi_56065h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33501 scenario 1825 > critic/c73_diploinv_33501s.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 36009 1825 > critic/c73_wi_36009.log 2>&1
+npx tsx tools/diag/warOpening.ts critic/c73_warOpening.json --years 3 > critic/c73_warOpening.log 2>&1
+npx tsx tools/diag/pragueFall.ts 56201 > critic/c73_prague_56201.log 2>&1
+npx tsx tools/diag/pragueFall.ts 56203 > critic/c73_prague_56203.log 2>&1
+npx tsx tools/diag/frontArrivals.ts 56205 GER,POL 60 > critic/c73_fa_56205.log 2>&1
+npx tsx tools/diag/frontArrivals.ts 56207 JAP,CHI 60 > critic/c73_fa_56207.log 2>&1

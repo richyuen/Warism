@@ -1,6 +1,6 @@
 {
-  "commit": "2ae30ec61d80ac6f6d461cbfc2763ad12070da10",
-  "mode": "full",
+  "commit": "a9814c439339558b34af94b92f0212b13867a515",
+  "mode": "focused",
   "scores": {
     "mapVisuals": 8,
     "diplomacyWarDepth": 8,
@@ -8,7 +8,7 @@
     "godMode": 8,
     "editorScenarios": 8,
     "statsHistory": 8,
-    "uiUxPolish": 8,
+    "uiUxPolish": 7,
     "performance": 8,
     "stability": 8,
     "semanticZoom": 8,
@@ -18,5 +18,5 @@
     "aiNukes": 8
   },
   "blocking": [],
-  "timestamp": "2026-11-15T16:55:00-05:00"
+  "timestamp": "2026-11-17T00:46:00-05:00"
 }
