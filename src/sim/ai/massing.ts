@@ -66,7 +66,7 @@ export const MASS_SECOND = 0.15;
 export const MASS_SEEN = 0.25;
 
 /** A probe's switch (`tools/diag/warOpening.ts --no-massing`; a test): off, wars are declared as before R97b; `noAnswer`, the target does nothing of a massing, as before R103. Never set by the game. */
-export const MASS_PROBE: { off: boolean; days?: number; second?: number; noAnswer?: boolean } = { off: false };
+export const MASS_PROBE: { off: boolean; days?: number; second?: number; noAnswer?: boolean; alone?: boolean } = { off: false };
 
 /** Whether `n` is in a war. */
 function inWar(world: World, n: number): boolean {
@@ -219,9 +219,10 @@ export function unprepared(world: World, n: number, neighbours: readonly number[
  * The day's step of every massing (the module's head); `day`: tick / 24. `still(n, t)`: whether the strategic AI
  * would still declare `n`'s war on `t` today by its rules that `whyNotWar` does not hold (its gold, the pile of
  * realms of ADR-1042, the blocs' deterrence of ADR-981), asked as the war is to be declared: weeks have passed
- * since it was chosen, and alliances are made in them. A war it would not is given up.
+ * since it was chosen, and alliances are made in them. A war it would not is given up. `alone(n, t)`: whether `t`
+ * is the only neighbour `n` has (ROADMAP R123): its massing past its days is then a declaration, not a bar.
  */
-export function massStep(world: World, day: number, still: (n: number, t: number) => boolean): void {
+export function massStep(world: World, day: number, still: (n: number, t: number) => boolean, alone: (n: number, t: number) => boolean = () => false): void {
   const nc = world.nations.cols;
   // The bars past their day or of a nation that is no more, once a month.
   if (world.massBarred.size > 0 && day % 30 === 0) {
@@ -243,8 +244,14 @@ export function massStep(world: World, day: number, still: (n: number, t: number
     const points = over || late ? [] : massPoints(world, n, t);
     if (points.length === 0) {
       world.massing.delete(n);
-      // Given up for its time: its army did not come to that border. Not tried again for MASS_BAR_DAYS.
-      if (late && !over) world.massBarred.set(n * 65536 + t, day + MASS_BAR_DAYS);
+      // Given up for its time: its army did not come to that border. Not tried again for MASS_BAR_DAYS. But a nation
+      // with no other neighbour (`alone`; ROADMAP R123, ADR-1106, the user's decision) declares all the same, if it
+      // still would: barred from its one neighbour it had no war at all (critic run 73, R73-N3: worlds of two nations
+      // with a war in their first month had none in ten years), and a war begun with its army away is a war.
+      if (late && !over) {
+        if (MASS_PROBE.alone !== false && alone(n, t) && still(n, t)) declareWar(world, n, t);
+        else world.massBarred.set(n * 65536 + t, day + MASS_BAR_DAYS);
+      }
       continue;
     }
     const { mine, men, menNear } = standing(world, n, points);

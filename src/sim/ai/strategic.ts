@@ -643,9 +643,14 @@ export function strategicAi(world: World): void {
   }
   // The wars being prepared (ROADMAP R97b): each day, their armies to their borders, and the declarations.
   let massBlocs: ReadonlySet<number> | undefined;
+  let aloneMap: Map<number, Set<number>> | undefined;
   massStep(world, day, (n, t) => {
     massBlocs ??= world.track?.ended && world.warheads.size > 0 ? blocsOf(world, strengths(world)) : new Set<number>();
     return stillDeclares(world, n, t, massBlocs);
+  }, (n, t) => {
+    // Whether `t` is `n`'s one living neighbour (ROADMAP R123): asked as a massing runs out, rarely.
+    aloneMap ??= neighbourMap(world);
+    return [...(aloneMap.get(n) ?? [])].every((m) => m === t || world.nations.cols.living[m] !== 1);
   });
   const actors: number[] = [];
   world.nations.forEach((n) => {

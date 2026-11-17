@@ -575,3 +575,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   `men`), then by `startTick` and the id. No nation played: the largest wars.
 - **What it costs:** a war just declared between two small nations is behind "+n" until it is among the three
   largest. The ticker tells its declaration.
+
+### ADR-1106 · 2026-11-17 · the user's decision ("Ok let's try it") — R123: a massing past its days is a war for a nation with one neighbour
+- **Asked:** why a massing has a limit. A nation massing chooses no other war; one whose army cannot come to a
+  border (Brazil's with Colombia, over the Amazon) would prepare for ever, and the year's bar keeps it from choosing
+  that border again each week (ADR-1089).
+- **Critic run 73 (R73-N3):** in a world of two nations the barred neighbour is the only one: no war in ten years
+  where there was one in the first month. Measured here with and without the massing: 3 worlds of 6 and 5.
+- **Offered:** declare all the same after the 90 days; a shorter bar; leave it. Recommended, and taken: the first,
+  for a nation with no other neighbour to turn to.
+- **Decision** (`massStep`'s `alone`, given by the strategic AI: every other neighbour of `neighbourMap` dead or
+  none): at the limit such a nation declares if `still` (its gold, the pile, the blocs); else, and every other
+  nation, the bar as before. A war with its army away, where there was none.
+- **The pin of seed 99** stands: in the 1938 world's first year no nation with one neighbour runs a massing out.

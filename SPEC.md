@@ -1641,7 +1641,8 @@ production and research. `src/sim/ai/`.
   of its home does not declare at once. It brings `MASS_SHARE` (0.7) of its land formations on the border's land to
   within `MASS_NEAR_CELLS` (15) of the border and declares when `MASS_READY` (0.5) of its men there stand so, if it
   would still declare that day (`whyNotWar`, its gold, the pile, the blocs' deterrence). It gives the war up after
-  `MASS_DAYS` (90), that target then barred to it for `MASS_BAR_DAYS` (365), or when it is at war. A nation at war
+  `MASS_DAYS` (90), that target then barred to it for `MASS_BAR_DAYS` (365), or when it is at war; a nation with no
+  other living neighbour declares at that limit all the same (R123, ADR-1106). A nation at war
   declares a second war on a neighbour of its home only with `MASS_SECOND` (0.15) of its men at that border. A
   neighbour by a colony only, and a target across the sea, are declared on at once. `World.massing` and
   `World.massBarred`, saved. Test: `tests/unit/massing1938.test.ts`. **The target answers** (R103, ADR-1093): once

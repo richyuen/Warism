@@ -119,6 +119,29 @@ describe('massing (ROADMAP R97b)', () => {
     expect(w.massBarred.size).toBe(0);
   });
 
+  // ROADMAP R123 (ADR-1106, the user's decision; critic run 73, R73-N3): barred from its one neighbour a nation had no
+  // war at all. With no other neighbour its massing past its days is a declaration, if it still would declare.
+  it('a massing past its days of a nation with no other neighbour is a war, not a bar', () => {
+    const late = (alone: boolean, still: boolean): World => {
+      const w = quiet(1).world;
+      w.massing.set(GER, { target: POL, since: 0 });
+      massStep(w, MASS_DAYS + 1, () => still, () => alone);
+      expect(w.massing.has(GER)).toBe(false);
+      return w;
+    };
+    const war = late(true, true);
+    expect(war.wars.atWar(GER, POL)).toBe(true);
+    expect(war.massBarred.size).toBe(0);
+    // With another neighbour to turn to, as before: barred for a year, no war.
+    const barred = late(false, true);
+    expect(barred.wars.atWar(GER, POL)).toBe(false);
+    expect(barred.massBarred.get(GER * 65536 + POL)).toBe(MASS_DAYS + 1 + MASS_BAR_DAYS);
+    // Alone, and it would no longer declare (its gold, the blocs): barred too.
+    const unwilling = late(true, false);
+    expect(unwilling.wars.atWar(GER, POL)).toBe(false);
+    expect(unwilling.massBarred.size).toBe(1);
+  });
+
   it('a nation at war prepares none: it declares as before, and the probe switches the rule off', () => {
     const s = quiet(1);
     const w = s.world;

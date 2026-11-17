@@ -2,12 +2,19 @@
  * ROADMAP R60d (critic run 61, R61-N4: "small random worlds never go to war"): a random world of N nations on K seeds
  * from S0, Y years each: the day of its first war (−1: none), how many wars, how many nations living at the end.
  *
- * Usage: `npx tsx tools/diag/fewNationWars.ts <N> <S0> [K = 10] [Y = 10]`; one line a seed, then `done:`.
+ * Usage: `npx tsx tools/diag/fewNationWars.ts <N> <S0> [K = 10] [Y = 10] [--no-massing]`; one line a seed, then `done:`.
+ * `--no-massing`: wars declared as before ROADMAP R97b (ROADMAP R123).
  * About 25 s a seed at N = 3 over 10 years.
  */
+import { MASS_PROBE } from '../../src/sim/ai/massing';
 import { Sim } from '../../src/sim/sim';
 import { loadAssets1938 } from '../headless/assets';
 
+const off = process.argv.indexOf('--no-massing');
+if (off >= 0) {
+  process.argv.splice(off, 1);
+  MASS_PROBE.off = true;
+}
 const [nS, s0S, kS, yS] = process.argv.slice(2);
 const N = Number(nS);
 const S0 = Number(s0S);

@@ -352,3 +352,8 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 ## 2026-11-17 — R121: the played nation's wars first on the banners (ADR-1105)
 
 - `WarBanners`' order; `reviewBatch1938` has its case. The first of Batch 39; R122 to R127 open.
+
+## 2026-11-17 — R123: a nation with one neighbour declares when its massing runs out (ADR-1106, the user's decision)
+
+- `massStep`'s `alone`; `fewNationWars.ts --no-massing`. Six worlds of two nations, ten years: a war in 3 before,
+  5 now (5 with no massing at all). The sweep tests and `sweep:quick` not run on it: the pin stands.

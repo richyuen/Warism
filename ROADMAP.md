@@ -474,9 +474,16 @@ Each with the critic's own "seen fixed when" (`critic/CRITIC_REPORT.md`).
 - [ ] R122 **R73-N2: a massing is told** (R97b, R103): no ticker or History row and no arrow before the
   declaration. AT: `node critic/scripts/c73_massSeen.mjs 56211 'Soviet Union' Romania 1218,300 40,55,65,72,75`:
   "history of the two" or "massing words" not empty on day 55 or 65.
-- [ ] R123 **R73-N3: small worlds wait longer for their first war, or for ever** (the cause not read; R97b's
-  give-up and bar the likely rule, the critic's design objection to ADR-1089). AT:
-  `npx tsx tools/diag/fewNationWars.ts 2 55421 6 10`: 55426 and 55421 have their first war within a year.
+- [x] R123 **R73-N3: small worlds wait longer for their first war, or for ever** (ADR-1106, the user's decision:
+  "Ok let's try it"). The cause read: `fewNationWars.ts 2 55421 6 10` with R97b's massing and without it
+  (`--no-massing`): a war in 3 worlds of 6 and in 5; the first war on day 476, 20, none, none, 665, none and on day
+  13, 20, 2,323, none, 90, 27. A massing past its 90 days barred its target for a year, and in a world of two the
+  target is the only one. Now a nation whose massing runs out and that has no other living neighbour declares all
+  the same, if it still would by the rules of the choice: a war in 5 of 6, the first on day 104, 20, 2,414, none,
+  181, 118. The critic's AT (55426 and 55421 within a year): met. With another neighbour, as it was (Brazil and
+  Colombia are barred still). Test: `tests/unit/massing1938.test.ts`. The pin of seed 99 stands.
+  - Not looked at: worlds of three (the same six seeds now: the first war on day 476, 20, 111, 44, 1,680, 1,819),
+    where each has another neighbour and the rule does not apply.
 - [ ] R124 **R73-N4: hero tags on counters in play** at 6,000 m/px (R72-N4's first half). AT:
   `node critic/scripts/c73_look.mjs 56901 1600 900 45,180,400`: no hero's tag over a counter's number on day 400.
 - [ ] R125 **R73-N5: markers over one another at 1,200 to 1,800 m/px** (old). AT:
