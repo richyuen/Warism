@@ -700,3 +700,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   R75-N3: France's massing on Germany ran out at hour 0 of day 884 of 58619 and France joined a war on Germany in that
   hour; France's on Switzerland was called off a row above Switzerland's annexation.
 - Checked: diploInvariants' `massOffBreaks`, every hour of its runs. The pin of seed 99 unmoved.
+
+### ADR-1117 · 2026-11-17 · accepted — R137: one Major Battle at a place in an hour
+- **Decision** (`majorBattles.ts`, `join`): a group of `MAJOR_MEN` or more with no Major Battle left to continue within
+  `MATCH_CELLS`, but within `MATCH_CELLS` of one continued that hour, joins it (its camps and men added, the camp that
+  shares a nation with the battle's other camp taken as that one) and begins none. "One group a battle an hour" (SPEC
+  §5.4) stands for continuing; the losses are as before (the group's formations were in a Major Battle either way).
+- **Why:** critic run 75, the 1942 replay after a God peace of Germany and the Soviet Union: "A major battle began near
+  Hammerfest" twice under 1 January 1942. In the hour after the start a German-British group continued battle 84 and
+  the British and Indian army at the same place (153,000 men) began battle 86 (`.cache/zzHammer.ts` on `1942.sav`; one
+  row with the rule).
+- **Stands on:** SPEC §5.4, ADR-883 (R53g, a lull of a day goes on): `majorBattles.test.ts`' five tests green before
+  and after.
+- **The pin of seed 99:** a5dbeae6 -> 3374082b. `farWait1938` to seed 6 (seed 99 has no wait in its first 400 days now).

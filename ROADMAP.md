@@ -607,8 +607,11 @@ The full run's non-blocking issues, fixed before the release's checks; no critic
   the sides of a war between its two nations, and of a side that lost ships only those near that lost strength in the
   hour (t5712 GER v SWE: Germany's ships sunk whole, two German fleets 6 and 15 cells off listed for it). AT: that run
   32 of 32 seen, exit 0 (7 listed with one side alone); 39061, two years: 63 of 63.
-- [ ] R137 **"A major battle began near Hammerfest" twice under 1 January 1942** after a God peace in the replay
-  (`critic/shots/c75gp_1942_GER_SovietUnion_390x844_2history.png`). AT: the case as a test, one row.
+- [x] R137 **"A major battle began near Hammerfest" twice under 1 January 1942** (COMMIT; ADR-1117) after a God peace in the
+  replay (`critic/shots/c75gp_1942_GER_SovietUnion_390x844_2history.png`). A group that would begin a Major Battle
+  within `MATCH_CELLS` of one continued that hour joins it. AT: the case on `1942.sav` (Germany and the Soviet Union at
+  peace by God, four hours): one "began" row near Hammerfest (two before); as a test,
+  `majorBattles.test.ts` "one Major Battle at a place in an hour" (red on the old rule). The pin a5dbeae6 -> 3374082b.
 Run 75's other lines, not items: small worlds of two and three with no war in ten years (55424, 54425, 54426, 58422;
 55401, 55404, 57404: R123's rule is for a nation with one neighbour); wars with no cell held by either side at day 30
 (20 of 103, a measure); `slowClick`'s named cases (0 of 90 on new seeds); on a phone the heroes' names over Europe at

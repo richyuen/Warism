@@ -6,7 +6,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { combatSystem } from '../../src/sim/systems/combat';
 import { destroyFormation } from '../../src/sim/systems/elements';
-import { CORRIDOR_DAYS, inCorridor, MAJOR_END_HOURS, MAJOR_LOSS_MULT, MAJOR_MEN } from '../../src/sim/systems/majorBattles';
+import { CORRIDOR_DAYS, inCorridor, MAJOR_END_HOURS, MAJOR_LOSS_MULT, MAJOR_MEN, updateMajorBattles } from '../../src/sim/systems/majorBattles';
 import { territorySystem } from '../../src/sim/systems/territory';
 import { FIRE_STRIDE, type World } from '../../src/sim/world';
 import { assets1938 } from '../helpers/earth';
@@ -194,5 +194,39 @@ describe('Major Battles (PLAN 1.23)', () => {
       return t.hash();
     };
     expect(run(true)).toBe(run(false));
+  });
+});
+
+// ROADMAP R137 (critic run 75: the 1942 replay after a God peace, "A major battle began near Hammerfest" twice in two
+// hours): a small group continued the battle there, and the large one beside it began another at the same place. A
+// group that would begin a Major Battle where one was continued that hour joins it.
+describe('one Major Battle at a place in an hour (ROADMAP R137)', () => {
+  it('a large group beside a battle a small group continued joins it; one far off begins its own', () => {
+    const s = emptyWar();
+    const w = s.world;
+    const { ger, pol } = clash(w, 1);
+    const f = w.formations.cols;
+    const big = [...Array.from({ length: 8 }, () => addDivision(w, POL, X0 + 1.5, Y0 + 0.5)), addDivision(w, GER, X0 + 0.5, Y0 + 0.5)];
+    for (const id of big) f.strength[id] = MAJOR_MEN / 8;
+    // The hour before: the large group begins it.
+    updateMajorBattles(w, [big]);
+    expect(ofKind(w, EventKind.MajorBattleStarted)).toHaveLength(1);
+    w.out.events.length = 0;
+    w.tick++;
+    // This hour: the small group first (it continues the battle), then the large one at the same place.
+    const inMajor = updateMajorBattles(w, [[...ger, ...pol], big]);
+    expect(ofKind(w, EventKind.MajorBattleStarted), 'no second battle at the place').toEqual([]);
+    expect(w.battles.majors).toHaveLength(1);
+    const mb = w.battles.majors[0]!;
+    expect(mb.camps.flat().sort()).toEqual([GER, POL].sort());
+    expect(mb.men[0] + mb.men[1]).toBeCloseTo([...ger, ...pol, ...big].reduce((sum, id) => sum + f.strength[id]!, 0), 0);
+    for (const id of [...ger, ...pol, ...big]) expect(inMajor.has(id)).toBe(true);
+    // A large group far off (over MATCH_CELLS) begins its own.
+    const far = [...Array.from({ length: 8 }, () => addDivision(w, POL, X0 + 30.5, Y0 + 0.5)), addDivision(w, GER, X0 + 29.5, Y0 + 0.5)];
+    for (const id of far) f.strength[id] = MAJOR_MEN / 8;
+    w.tick++;
+    updateMajorBattles(w, [[...ger, ...pol], big, far]);
+    expect(ofKind(w, EventKind.MajorBattleStarted)).toHaveLength(1);
+    expect(w.battles.majors).toHaveLength(2);
   });
 });

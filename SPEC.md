@@ -1159,7 +1159,8 @@ A nation's `ceLocked` (God's `lockEfficiency`) keeps its value in any mode; `set
 `src/sim/systems/majorBattles.ts`; its records (majors, corridors, history) are saved with the world.
 - A battle whose two camps hold ≥ `MAJOR_MEN` (120,000) men is a Major Battle, named after the nearest
   city; a later group within `MATCH_CELLS` (3) of its starting place continues it (one group a battle
-  an hour). Its losses are × 1.5 (§5.2). It ends when no group continues it and a camp has no men within
+  an hour; a group of `MAJOR_MEN` within `MATCH_CELLS` of one already continued that hour joins it, and begins
+  none: R137, ADR-1117). Its losses are × 1.5 (§5.2). It ends when no group continues it and a camp has no men within
   `END_CELLS` (5), or when no group has continued it for `MAJOR_END_HOURS` (24; a lull with both camps there goes
   on, and its marker with it: R53g, ADR-883): the winner is the camp with more men within `END_CELLS`, the last
   count breaking a tie.

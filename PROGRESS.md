@@ -459,3 +459,14 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   sunk whole, the two German fleets 6 and 15 cells off no longer listed; one Swedish fleet.
 - `seaBattles.ts 58061 scenario --years 3` then `seaBattlesLook.ts`: 32 of 32 seen, exit 0 (31 of 32, exit 1). 39061,
   two years: 63 of 63. A tool's change: no sim, no tick time.
+
+## 2026-11-17 — R137: one Major Battle at a place in an hour (ADR-1117); Batch 42's items done but R132
+
+- The critic's case on `public/data/scenarios/1938h/start/1942.sav`, Germany's peace with the Soviet Union by God, the
+  hours after: battle 86 began beside 84 near Hammerfest; with the rule, one row, battle 84 with both groups' men.
+- Tests: `majorBattles.test.ts` (one new: red on the old rule), `farWait1938` to seed 6 (`firstWait.ts`: 99, 7, 1, 2
+  none in 400 days; 6 on day 93). The pin a5dbeae6 -> 3374082b.
+- `seaClose1938`: the destroyers against the cruisers at hour 1641 (`seaPairs.ts 3613 80`), as before R98c.
+- Found at its gate (the pin moved: the whole suite): `enemyClickPanel1938` red since R125 (a marker up to 13 px off its
+  formation; 857ceeeb: the click at the counter, the scene seed 7's day 70); `relationsNamed1938` on 39939's phone
+  (4febbde7: twenty rings for a label). BLOCKERS' entry on 39943's phone left open: its red was one run of three.

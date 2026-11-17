@@ -76,8 +76,18 @@ export function updateMajorBattles(world: World, groups: readonly number[][]): S
     const total = men[0] + men[1];
     const cx = (sx[0]! + sx[1]!) / Math.max(1, total);
     const cy = (sy[0]! + sy[1]!) / Math.max(1, total);
-    let mb = world.battles.majors.find((m) => !seen.has(m) && (m.x - cx) * (m.x - cx) + (m.y - cy) * (m.y - cy) <= world.atSize(MATCH_CELLS) * world.atSize(MATCH_CELLS));
+    const near = (m: MajorBattle): boolean => (m.x - cx) * (m.x - cx) + (m.y - cy) * (m.y - cy) <= world.atSize(MATCH_CELLS) * world.atSize(MATCH_CELLS);
+    let mb = world.battles.majors.find((m) => !seen.has(m) && near(m));
     if (!mb && total < MAJOR_MEN) continue;
+    // A group that would begin a Major Battle where one was continued this hour joins it (ROADMAP R137; critic run 75:
+    // the 1942 replay after a God peace, "A major battle began near Hammerfest" twice in two hours at one place, a
+    // German-British group continuing it and the British and Indian army beside it beginning another).
+    const joined = mb ? undefined : world.battles.majors.find((m) => seen.has(m) && near(m));
+    if (joined) {
+      join(joined, camps, men, sx, sy);
+      for (const id of g) inMajor.add(id);
+      continue;
+    }
     if (!mb) {
       mb = { id: world.battles.nextId++, city: nearestCity(world, cx, cy), x: cx, y: cy, startTick: world.tick, lastTick: world.tick, camps, men, centroid: [[cx, cy], [cx, cy]] };
       world.battles.majors.push(mb);
@@ -117,6 +127,22 @@ export function updateMajorBattles(world: World, groups: readonly number[][]): S
   }
   world.battles.corridors = world.battles.corridors.filter((c) => c.untilTick > world.tick);
   return inMajor;
+}
+
+/**
+ * Adds a group's camps and men to Major Battle `mb`, matched already this hour (R137): its camp that shares a nation
+ * with `mb`'s other camp is that one; the centroids weighed by men.
+ */
+function join(mb: MajorBattle, camps: [number[], number[]], men: [number, number], sx: number[], sy: number[]): void {
+  const swap = camps[0].some((n) => mb.camps[1].includes(n)) || camps[1].some((n) => mb.camps[0].includes(n));
+  for (const k of [0, 1] as const) {
+    const to = swap ? 1 - k : k;
+    for (const n of camps[k]) if (!mb.camps[to]!.includes(n)) mb.camps[to]!.push(n);
+    const before = mb.men[to]!;
+    const sum = before + men[k];
+    if (sum > 0) mb.centroid[to] = [(mb.centroid[to]![0] * before + sx[k]!) / sum, (mb.centroid[to]![1] * before + sy[k]!) / sum];
+    mb.men[to] = sum;
+  }
 }
 
 /** The living nation of `camp` with the most men in formations (lowest id on ties). */
