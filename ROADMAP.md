@@ -597,7 +597,7 @@ The full run's non-blocking issues, fixed before the release's checks; no critic
   hour's end, if its nation is not at war with the target by then, both living (`tellMassingsOff`). AT:
   `npx tsx critic/scripts/c75_massTold.ts 3` on 57611 to 57621 and 58611 to 58621: no "CALLED OFF BUT AT WAR" line (1
   before). Checker: diploInvariants' `massOffBreaks`. Tests: `tests/unit/massOffTold1938.test.ts`, `massAnswer1938`.
-- [x] R135 **A war at ±100 with nothing saying why it goes on** (COMMIT; `c75_warAt100.ts 7019 5 off`: Japan and China at
+- [x] R135 **A war at ±100 with nothing saying why it goes on** (ab534f9c; `c75_warAt100.ts 7019 5 off`: Japan and China at
   −100 for 738 days). The banner's title says which side fights to the death and what that means ("no peace is made,
   whatever the score; the war ends when one side holds three quarters of the other's land, or after five years"; SPEC
   §2's suing and offers, CAPITULATE, MAX_WAR_DAYS). AT: `tests/e2e/warToDeath1938.spec.ts` on seed 7019: China's line on
