@@ -2,6 +2,41 @@
 
 What each release of Warism brought, for players. Play it at https://richyuen.github.io/Warism/
 
+## release-2026-11-17 — the map's new look, fronts you can read, and wars that open at their fronts
+
+**New**
+- **The map's new look.** The sea darkens with depth and lightens over the shelf along the coasts, each nation's
+  land has a soft darker edge and faint relief, and country names are white capitals with a soft shadow, gently
+  turned and no larger than their land.
+- **Fronts you can see.** The border where two nations at war meet glows red with a bright core, ground being taken
+  glows in the taker's colour before it changes hands, and occupied land is banded in the occupier's colour close in.
+- **Movement arrows that tell a story.** A march is a thick arrow, drawn only where it pushes into land an enemy
+  holds; with a nation played or looked at, the other nations' arrows are drawn thinner.
+- **Counters on a plate:** the nation's flag, a stripe of its colour and a larger number; a "?" in the legend says
+  what each sign means. At the world's zoom only the counters of nations at war are shown, and a battle's tag shows
+  its men against its full strength close in.
+- **A first cue** for a new player: three lines under the clock in the first game.
+- **The war banners say what a war is:** who attacks whom and with how many allies, the score, whether there is a
+  battle to go to, and, for a side that fights to the death, why the war goes on at any score.
+- Troops massed on a border are told in the ticker and History, and so is a massing called off; a bomber carrying a
+  warhead that is stopped short of its target is told.
+
+**Changed**
+- A war opens at its front: the attacker's army stands at its own border, an army comes to a front just made (a war
+  declared by hand, or on a nation the AI had not planned for), and a nation massed against answers.
+- The wars of the nation you play come first on the banners, and a banner keeps its place for some days instead of
+  changing places by the second.
+- Small worlds wait longer for their first war; a nation with one neighbour declares when its massing runs out.
+- On a desk the war banners are one row; the settings panel is in two parts; the phone's top bar shows the date and
+  "Paused"; the editor's file buttons are in the game's look.
+- Markers at the far zooms stay apart and keep their sides as you zoom, and a hero's marker no longer leaps.
+
+**Fixes**
+- No tag or pointer hides under the clock or the war banners, and a crowded front's tags stay apart.
+- Germany takes Prague in a war forced on Czechoslovakia.
+- One major battle at a place in an hour: History no longer tells the same battle twice.
+- The relations graph names every nation at war or allied on a phone.
+
 ## release-2026-11-15 — history to 1991, an undo for God Mode, and heroes on
 
 **New**

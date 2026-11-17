@@ -2,6 +2,9 @@
 
 Suspicions and intermittent reds not worth an open entry; searched, not read (ADR-918). An entry that becomes a problem moves to `BLOCKERS.md`'s open entries.
 
+- **2026-11-17: `nukeAlertTwo1938` "at Max with the pause off"** red in a whole browser run twice (R137's gate, the
+  release's check:review), green alone each time. Back to BLOCKERS if it is red alone.
+
 - **2026-11-17, from BLOCKERS: `relationsNamed1938`, seed 39943 on the phone** (red 1 run of 3 at R103's gate): green 3 of
   3 alone after 4febbde7 (a label sought up to nineteen heights off its node; 39939's phone red on R137's world, green
   with it). Back to BLOCKERS if a whole run has it red again.
