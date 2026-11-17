@@ -5,6 +5,13 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 
 ## Open
 
+### R132: the banners' row still by the second, or R121's largest war first; one or the other (2026-11-17, ADR-1114)
+- **The bar:** `c75_bannerFlip.mjs 57901 150 head 60` and `… 58901 200 head 60`: the row changed 10 or fewer, the
+  banner under a resting cursor 2 or fewer; `c75_bannerRank.mjs 57901 150` under 44 quiet banner-days of 440.
+- **What moved** (branch `r132-hold`): 41 and 18 to 5 and 3 on 57901; 29 and 19 to 4 and 0 on 58901; bannerRank 0 to
+  45. The rule that met all three (6 and 1; 4 and 2; 36) turned `reviewBatch1938`'s two R121 tests red.
+- **Left:** the user's choice of ADR-1114's options. Nothing else waits on it.
+
 ### R81h: the critic's 52.5-55.8 "fps" at 120 m/px is the view's draws, not its frames; the bar read as written missed (2026-11-14)
 - **The bar:** on 7019's year-20 world at Max, the minimum of the critic's samples at 120 m/px at least 57 fps, the
   other zooms kept; or the cause answered with numbers here.

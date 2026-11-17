@@ -422,3 +422,9 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   (PROMPT.md, RELEASES, steps 3 and 4).
 - Kept aside: branch `r124-fit` (R124's (a), not taken, ADR-1111).
 
+
+## 2026-11-17 — R132 not met; to BLOCKERS and the user (ADR-1114)
+
+- Six rules tried on branch `r132-hold` (aafda250); the critic's probes on each. The one that met the three bars (a
+  place held 20 days in its slot) turned R121's `reviewBatch1938` red; the one that keeps R121 reads the cursor 3 (bar
+  2) and bannerRank 45 (bar under 44). `main` unchanged. Next: R133.

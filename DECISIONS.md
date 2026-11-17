@@ -663,3 +663,27 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **What it costs:** nearer than 1,200 m/px too, a few more formations behind a "×n" and a box up to 13 px from its
   formation.
 
+
+### ADR-1114 · 2026-11-17 · proposed, the user's decision — R132: a still row of banners against R121's largest war first
+- **The case** (critic run 75, R75-N1; R130's order, a war with a battle now first): the row changed 41 times a minute
+  at ×5 on 57901 and the banner under a resting cursor 18; the bar 10 and 2 (and 58901), with `c75_bannerRank 57901`
+  under 44 quiet banner-days of 440.
+- **Tried** (branch `r132-hold`, aafda250; the probes on a preview of each build, 60 s at ×5):
+  - "Fought" for 3 days after a battle (the worker's `WarsFought`), then by men: 57901 24 and 9; 58901 9 and 2.
+  - 10 days: 12 and 6; 5 and 0; bannerRank 23.
+  - 10 days, and a war that took a place keeps it 10 days: 11 and 6. Kept in its slot too: 9 and 3; 5 and 2; 22.
+  - Kept 20 days in its slot: 6 and 1 twice (5 and 1); 4 and 2; bannerRank 36 and 41. All three bars met, but
+    `reviewBatch1938` red twice (R121's: Germany's war on Poland first on a row with room; with five wars and none
+    played, the smallest off the row and the largest first): a small war of the start held its slot and its place.
+  - The row by men, a war twice a held one's size taking its place: 8 and 3; bannerRank 43. A war going ahead of the
+    one before it at 1.25 times its men: 8 and 3; 43.
+  - Held and kept in its slot only while more wars than the row (a row with room is the order; R121's specs green):
+    5 and 3; 4 and 0; bannerRank 45.
+- **What is learnt:** the cursor's changes left are one war, the largest (Soviet Union on Norway, 57901), that goes ten
+  days and more without a battle and comes back: it leaves and comes back at the head. The same rule read 1 and 3 in
+  two runs; the probe reads the stats once a second and the worker sees a battle only then.
+- **Options:** (a) R132's bar as the critic wrote it, with R121's specs changed: a war takes the first slot only when a
+  slot is free or its hold ends (the row stays where it was; a great new war can wait 20 days behind "+n" unless it is
+  the played nation's); (b) the bar for the cursor at 3 a minute and bannerRank under 50, with the last rule (row 5,
+  R121 kept); (c) R130's order as on `main`, R75-N1 left (UI/UX 7 is at its bar).
+- **Recommended:** (b): the row changes 5 times a minute where 41, and a great war still comes to the front.

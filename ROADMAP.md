@@ -585,6 +585,8 @@ The full run's non-blocking issues, fixed before the release's checks; no critic
   battle first). AT: `c75_bannerFlip.mjs 57901 150 head 60` and `… 58901 200 head 60` print "the row changed" at 10
   or fewer and "the banner under a resting cursor changed" at 2 or fewer (now 41 and 18; 29 and 19), and
   `c75_bannerRank.mjs 57901 150` stays under 44 quiet banner-days of 440 (now 0).
+  - Not met (BLOCKERS; ADR-1114, proposed, the user's decision): six rules on branch `r132-hold`; the one that met the
+    bars turned R121's `reviewBatch1938` red, the one that keeps R121 reads 5 and 3, 4 and 0, bannerRank 45.
 - [ ] R133 **R75-N2: a bomber stopped short with a warhead is told nowhere** (`NukeIntercepted` has no row in the
   ticker or History and no words). AT: `npx tsx critic/scripts/c75_interceptTold.ts` prints the kind in History's
   kinds and the ticker's, strings over 0; the row says who, where, and that the bomber was stopped.
