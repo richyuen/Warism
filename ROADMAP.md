@@ -597,9 +597,12 @@ The full run's non-blocking issues, fixed before the release's checks; no critic
   hour's end, if its nation is not at war with the target by then, both living (`tellMassingsOff`). AT:
   `npx tsx critic/scripts/c75_massTold.ts 3` on 57611 to 57621 and 58611 to 58621: no "CALLED OFF BUT AT WAR" line (1
   before). Checker: diploInvariants' `massOffBreaks`. Tests: `tests/unit/massOffTold1938.test.ts`, `massAnswer1938`.
-- [ ] R135 **A war at ±100 with nothing saying why it goes on** (`c75_warAt100.ts 7019 5 off`: Japan and China at
-  −100 for 738 days). AT: the banner or its tooltip says that a side fights to the death, in a browser test on that
-  case.
+- [x] R135 **A war at ±100 with nothing saying why it goes on** (COMMIT; `c75_warAt100.ts 7019 5 off`: Japan and China at
+  −100 for 738 days). The banner's title says which side fights to the death and what that means ("no peace is made,
+  whatever the score; the war ends when one side holds three quarters of the other's land, or after five years"; SPEC
+  §2's suing and offers, CAPITULATE, MAX_WAR_DAYS). AT: `tests/e2e/warToDeath1938.spec.ts` on seed 7019: China's line on
+  Japan's war, both Spains' on theirs, none on a war of neither; the war at −100 on days 700 to 800 of 7019 has China's
+  flag on (checked headless).
 - [ ] R136 **`seaBattlesLook` exits 1 on 58061** (`tools/diag/seaBattles.ts 58061 scenario --years 3`, then
   `seaBattlesLook.ts`): t5712 GER v SWE "NOT SEEN": the side sunk whole in the battle's one hour, two bystanders
   named for it. AT: that run ends 32 of 32, or 31 seen and 1 "no fleet to see".

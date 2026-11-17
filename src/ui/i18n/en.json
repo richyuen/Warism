@@ -762,6 +762,8 @@
   "wars.scoreEven": "War score even: the bar is the attackers' share, half full",
   "wars.toBattle": "Click: to its largest battle",
   "wars.noBattle": "No battle now",
+  "wars.toDeath": "{name} fights to the death: no peace is made, whatever the score; the war ends when one side holds three quarters of the other's land, or after five years",
+  "wars.toDeathBoth": "{a} and {d} fight to the death: no peace is made, whatever the score; the war ends when one side holds three quarters of the other's land, or after five years",
   "wars.more": "Show the other wars",
   "wars.fewer": "Show fewer wars",
   "legend.fold": "Fold the legend",

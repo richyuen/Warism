@@ -52,12 +52,25 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     const name = lead ? displayName(lead.name) : '?';
     return ids.length > 1 ? t('wars.sideMore', { name, n: ids.length - 1 }) : name;
   };
+  /**
+   * Why a war goes on at any score (ROADMAP R135; critic run 75: Japan's war in China at −100 for 738 days, and only a
+   * peace refused said why): a side fighting to the death makes no peace (SPEC §2: no suit, no offer accepted).
+   */
+  const deathLine = (w: WarStat): string => {
+    const lead = (ids: number[]): string => {
+      const n = byId.get(ids[0] ?? 0);
+      return n ? displayName(n.name) : '?';
+    };
+    if (w.toDeath[0] && w.toDeath[1]) return `\n${t('wars.toDeathBoth', { a: lead(w.attackers), d: lead(w.defenders) })}`;
+    if (w.toDeath[0] || w.toDeath[1]) return `\n${t('wars.toDeath', { name: lead(w.toDeath[0] ? w.attackers : w.defenders) })}`;
+    return '';
+  };
   return (
     <div class={opened ? 'war-banners opened' : 'war-banners'} data-testid="war-banners">
       {newest.slice(0, shown).map((w) => (
-        <button key={w.id} class={w.battle ? 'war-banner' : 'war-banner war-quiet'} data-testid="war-banner" data-war={w.id} data-battle={w.battle ? '1' : '0'} title={`${t('wars.who', { a: sideName(w.attackers), d: sideName(w.defenders) })}
+        <button key={w.id} class={w.battle ? 'war-banner' : 'war-banner war-quiet'} data-testid="war-banner" data-war={w.id} data-battle={w.battle ? '1' : '0'} data-death={w.toDeath[0] || w.toDeath[1] ? '1' : '0'} title={`${t('wars.who', { a: sideName(w.attackers), d: sideName(w.defenders) })}
 ${t(w.score > 0 ? 'wars.scoreAttackers' : w.score < 0 ? 'wars.scoreDefenders' : 'wars.scoreEven', { n: Math.abs(Math.round(w.score)) })}
-${t(w.battle ? 'wars.toBattle' : 'wars.noBattle')}`}
+${t(w.battle ? 'wars.toBattle' : 'wars.noBattle')}${deathLine(w)}`}
           onClick={() => {
             onSelect(w.attackers[0] ?? 0);
             onBattle(w.id);

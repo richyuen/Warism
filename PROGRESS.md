@@ -443,3 +443,11 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   (58615, d105) too, Switzerland dead. Every silent give-up of the run is at war with its target or the target dead.
 - `massOffBreaks` in diploInvariants (every hour); tests `tests/unit/massOffTold1938.test.ts`, `massAnswer1938`. Gate
   green with every unit test (`snapshot-perf` red under load, green alone). No tick time measured: one list read an hour.
+
+## 2026-11-17 — R135: a war banner says which side fights to the death
+
+- The banner's title: "China fights to the death: no peace is made, whatever the score; the war ends when one side
+  holds three quarters of the other's land, or after five years" (both sides: "A and B fight to the death"), and
+  `data-death`. Seed 7019 (the critic's `c75_warAt100.ts 7019 5 off`): Japan's war in China at −100 on days 700 to 800,
+  China's flag on, the line its banner's.
+- By hand: `warToDeath1938` (new), `reviewBatch1938`, `toBattle1938`, `warBannerRows1938` (10 green on both projects).
