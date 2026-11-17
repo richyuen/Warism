@@ -603,9 +603,10 @@ The full run's non-blocking issues, fixed before the release's checks; no critic
   §2's suing and offers, CAPITULATE, MAX_WAR_DAYS). AT: `tests/e2e/warToDeath1938.spec.ts` on seed 7019: China's line on
   Japan's war, both Spains' on theirs, none on a war of neither; the war at −100 on days 700 to 800 of 7019 has China's
   flag on (checked headless).
-- [ ] R136 **`seaBattlesLook` exits 1 on 58061** (`tools/diag/seaBattles.ts 58061 scenario --years 3`, then
-  `seaBattlesLook.ts`): t5712 GER v SWE "NOT SEEN": the side sunk whole in the battle's one hour, two bystanders
-  named for it. AT: that run ends 32 of 32, or 31 seen and 1 "no fleet to see".
+- [x] R136 **`seaBattlesLook` exits 1 on 58061** (COMMIT; `tools/diag/seaBattles.ts`). A one-hour battle's fleets: of
+  the sides of a war between its two nations, and of a side that lost ships only those near that lost strength in the
+  hour (t5712 GER v SWE: Germany's ships sunk whole, two German fleets 6 and 15 cells off listed for it). AT: that run
+  32 of 32 seen, exit 0 (7 listed with one side alone); 39061, two years: 63 of 63.
 - [ ] R137 **"A major battle began near Hammerfest" twice under 1 January 1942** after a God peace in the replay
   (`critic/shots/c75gp_1942_GER_SovietUnion_390x844_2history.png`). AT: the case as a test, one row.
 Run 75's other lines, not items: small worlds of two and three with no war in ten years (55424, 54425, 54426, 58422;

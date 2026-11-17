@@ -451,3 +451,11 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   `data-death`. Seed 7019 (the critic's `c75_warAt100.ts 7019 5 off`): Japan's war in China at −100 on days 700 to 800,
   China's flag on, the line its banner's.
 - By hand: `warToDeath1938` (new), `reviewBatch1938`, `toBattle1938`, `warBannerRows1938` (10 green on both projects).
+
+## 2026-11-17 — R136: `seaBattles`' one-hour battles list the fleets that fought
+
+- A one-hour battle's fleets: of the nations on the two sides of a war between its two (not another war's), and of a
+  side that lost ships only the fleets near that lost strength in the hour. 58061 t5712 GER v SWE: Germany's 4 ships
+  sunk whole, the two German fleets 6 and 15 cells off no longer listed; one Swedish fleet.
+- `seaBattles.ts 58061 scenario --years 3` then `seaBattlesLook.ts`: 32 of 32 seen, exit 0 (31 of 32, exit 1). 39061,
+  two years: 63 of 63. A tool's change: no sim, no tick time.

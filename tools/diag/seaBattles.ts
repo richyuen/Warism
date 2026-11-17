@@ -9,8 +9,8 @@
  * each came in with, and the ships each side lost. The camera to see it at its first hour: (cx, cy) the middle of its
  * fleets then (cells, as `view.controller` takes them), and a scale (m/px) that holds them all with room, 40 to 400
  * m/px. A battle begun and over in one hour (`oneHour`) is never in `world.seaBattles` at an hour's end: its fleets
- * are those of its sides' nations (or at war with them) within 16 cells of its place then. Each carrier sinking out
- * of a battle (`CarrierSunk`): its tick, place and ships. One line a battle on
+ * are those of its sides' nations (or on a side of a war between them) within 16 cells of its place then. Each carrier
+ * sinking out of a battle (`CarrierSunk`): its tick, place and ships. One line a battle on
  * stderr; the JSON to `--out` (default `.cache/seaBattles_<seed>.json`); then `done:`.
  */
 import { writeFileSync } from 'node:fs';
@@ -19,6 +19,7 @@ import { EventKind } from '../../src/shared/events';
 import { seaSide } from '../../src/shared/history';
 import { kmPerCell } from '../../src/sim/data/projection';
 import { seaOf, type SeaBattle, type World } from '../../src/sim/world';
+import { elementIndex } from '../../src/sim/systems/elements';
 import { TAGS_1938 } from '../../src/sim/scenario1938';
 import { loadAssets1938 } from '../headless/assets';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
@@ -113,14 +114,20 @@ const NEAR_CELLS = 16;
 /**
  * The fleets about (x, y) as an hour ends: a battle begun and over in one hour (its record made and dropped in the
  * tick) is never seen in `world.seaBattles`; its fleets are those of its sides' first nations `a` and `b`, or of a
- * nation at war with either, there (a side whose ships were all sunk leaves the other alone).
+ * nation on a side of a war between the two, there (a side whose ships were all sunk leaves the other alone). Not of a
+ * nation at war with one of them in another war (ROADMAP R136; critic run 75: 58061 t5712 GER v SWE, Sweden's fleet
+ * sunk whole in its hour, two fleets of Germany's other enemies near it listed as Sweden's side and not in the view).
  */
 function fleetsNear(w: World, x: number, y: number, a: number, b: number): Fleet[] {
   const c = w.formations.cols;
-  const side = (n: number): boolean => n === a || n === b || w.wars.atWar(n, a) || w.wars.atWar(n, b);
+  const fought = new Set<number>([a, b]);
+  for (const war of w.wars.list) {
+    const [s0, s1] = war.sides;
+    if ((s0.includes(a) && s1.includes(b)) || (s0.includes(b) && s1.includes(a))) for (const n of [...s0, ...s1]) fought.add(n);
+  }
   return w.formations
     .ids()
-    .filter((id) => w.isFleet(id) && Math.hypot(c.x[id]! - x, c.y[id]! - y) <= NEAR_CELLS && side(c.nation[id]!))
+    .filter((id) => w.isFleet(id) && Math.hypot(c.x[id]! - x, c.y[id]! - y) <= NEAR_CELLS && fought.has(c.nation[id]!))
     .map((id) => ({ id, nation: tag(c.nation[id]!), side: sideOf(w, c.nation[id]!, a, b), ships: 0, x: c.x[id]!, y: c.y[id]! }));
 }
 
@@ -134,6 +141,26 @@ function fleetsOf(w: World, rec: SeaBattle): Fleet[] {
   return rec.fleets.flatMap((id, k) => (w.formations.has(id) ? [{ id, nation: tag(c.nation[id]!), side: sideOf(w, c.nation[id]!, rec.a, rec.b), ships: rec.ships[k] ?? 0, x: c.x[id]!, y: c.y[id]! }] : []));
 }
 
+/** Each fleet's strength (its live elements' summed) at the last hour's end: which fleets lost ships in an hour. */
+let strengthBefore = new Map<number, number>();
+const fleetStrengths = (w: World): Map<number, number> => {
+  const idx = elementIndex(w);
+  const ec = w.elements.cols;
+  const out = new Map<number, number>();
+  for (const id of w.formations.ids()) if (w.isFleet(id)) out.set(id, (idx.get(id) ?? []).reduce((sum, e) => sum + Math.max(0, ec.strength[e]!), 0));
+  return out;
+};
+/**
+ * A one-hour battle's fleets of a side that lost ships in it: those near that lost strength in the hour; none when none
+ * did, its fleets in the battle sunk whole (ROADMAP R136; critic run 75: 58061 t5712 GER v SWE, Germany's 4 ships sunk
+ * and two German fleets 6 and 15 cells off, in no battle, listed as its side). A side that lost nothing keeps those
+ * near.
+ */
+const fought = (w: World, near: Fleet[], lostA: number, lostB: number): Fleet[] => {
+  const now = fleetStrengths(w);
+  const hit = (f: Fleet): boolean => (now.get(f.id) ?? 0) < (strengthBefore.get(f.id) ?? 0);
+  return near.filter((f) => ((f.side === 'a' ? lostA : lostB) > 0 ? hit(f) : true));
+};
 const tracks = new Map<SeaBattle, Track>();
 const battles: Battle[] = [];
 // Ships sunk from the air in an hour with no sea battle (`CarrierSunk`): `by` is the CARRIER's nation, whose wings sank
@@ -160,9 +187,9 @@ for (let h = 0; h < hours; h++) {
         const rec = gone.find((r) => r.x === x && r.y === y) ?? gone[0];
         const tr = rec ? tracks.get(rec)! : undefined;
         if (rec) tracks.delete(rec);
-        const near = tr ? [] : fleetsNear(w, x, y, seaSide(ev[i + 2]!).nation, seaSide(ev[i + 3]!).nation);
         const A = seaSide(ev[i + 2]!);
         const B = seaSide(ev[i + 3]!);
+        const near = tr ? [] : fought(w, fleetsNear(w, x, y, A.nation, B.nation), A.ships, B.ships);
         const sea = seaOf(w);
         const zone = sea.zoneOf[Math.floor(y) * w.cells.w + Math.floor(x)] ?? 0;
         const b: Battle = {
@@ -192,6 +219,7 @@ for (let h = 0; h < hours; h++) {
     for (const r of [...tracks.keys()]) if (!w.seaBattles.includes(r)) tracks.delete(r);
     w.out.events.length = 0;
     w.out.fires.length = 0;
+    strengthBefore = fleetStrengths(w);
   });
 }
 const report = { seed, diplomacy, world, years, battles, sinkings, wallS: Math.round((performance.now() - t0) / 1000) };
