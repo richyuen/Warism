@@ -555,19 +555,13 @@ export class CounterLayer {
     const hs = size * Math.max(1, Math.min(heroScale, room));
     if (alpha > 0.01) {
       const step = (h + 2) * hs;
-      // The nations' counters of this frame, as drawn (the boxes of every copy of the world).
-      const counterBoxes = this.boxes.filter((b) => b.alpha >= 0.5).map((b): [number, number, number, number] => [b.x, b.y, b.w, b.h]);
       const groups: { lead: HeroCounter; members: number[]; dy: number; box: [number, number, number, number] }[] = [];
       const over = (a: [number, number, number, number], x: number, y: number, w: number, hh: number): boolean => !(x >= a[0] + a[2] || x + w <= a[0] || y >= a[1] + a[3] || y + hh <= a[1]);
       for (const hero of heroes) {
         const w = widthOf(hero.name) + 18 + COUNTER_STRIPE;
         const [sx, sy0] = worldToScreen(cam, hero.x, hero.y, vw, vh);
         const boxAt = (dy: number): [number, number, number, number] => [sx - (w / 2) * hs, sy0 + dy - (h / 2) * hs, w * hs, h * hs];
-        // First a step that covers no hero's counter and no nation's (ROADMAP R124; critic run 73, R73-N4: in play at
-        // 6,000 m/px a hero's name stood on a counter's number), within a step of its place (ROADMAP R8); with none, as before:
-        // the first of three that covers no hero's.
-        const free = (d: number): boolean => groups.every((g) => !over(g.box, ...boxAt(d)));
-        const dy = [0, step, -step].find((d) => free(d) && counterBoxes.every((b) => !over(b, ...boxAt(d)))) ?? [0, step, -step].find(free);
+        const dy = [0, step, -step].find((d) => groups.every((g) => !over(g.box, ...boxAt(d))));
         if (dy !== undefined) {
           groups.push({ lead: hero, members: [hero.id], dy, box: boxAt(dy) });
           continue;

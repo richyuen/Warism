@@ -1648,7 +1648,8 @@ production and research. `src/sim/ai/`.
   `World.massBarred`, saved. Test: `tests/unit/massing1938.test.ts`. **The target answers** (R103, ADR-1093): once
   `MASS_SEEN` (0.25) of the massing nation's men stand at the border, the target, if in no war, preparing none and
   its army its AI's, brings `MASS_SHARE` of its own formations to its side of it the same way; of two massing on
-  it, the one with the more men there. That day, once a massing, `MassingSeen` is told in the ticker and the history
+  it, the one with the more men there. That day, once a massing, `MassingSeen` is told in the ticker and the history, and `MassingCalledOff` if it then
+  ends with no war on its target (R129, ADR-1109)
   (R122, ADR-1107; `World.massTold`, saved). Test: `tests/unit/massAnswer1938.test.ts`.
 - **Threat pacts:** an unaligned nation whose neighbour of aggression ≥ `THREAT_AGGRESSION` (50) is over
   `THREAT_RATIO` (1.5) times stronger and not yet at war with it, with probability `ALLY_P` (0.3), joins

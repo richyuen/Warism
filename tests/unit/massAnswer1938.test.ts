@@ -188,9 +188,14 @@ describe("a massing's target answers (ROADMAP R103)", () => {
     const w = s.world;
     expect(beginMassing(w, SOV, ROM, 0)).toBe(true);
     const told: number[] = [];
+    // ROADMAP R129 (critic run 74, R74-N2): told and given up, it is called off in a row of its own.
+    const off: number[] = [];
     const read = (): void => {
       const ev = w.out.events;
-      for (let i = 0; i < ev.length; i += 6) if (ev[i + 1] === EventKind.MassingSeen) told.push(ev[i]! / 24, ev[i + 2]!, ev[i + 3]!);
+      for (let i = 0; i < ev.length; i += 6) {
+        if (ev[i + 1] === EventKind.MassingSeen) told.push(ev[i]! / 24, ev[i + 2]!, ev[i + 3]!);
+        if (ev[i + 1] === EventKind.MassingCalledOff) off.push(ev[i + 2]!, ev[i + 3]!);
+      }
       ev.length = 0;
     };
     let seenOn = -1;
@@ -220,6 +225,13 @@ describe("a massing's target answers (ROADMAP R103)", () => {
       s.step(24, read);
     }
     massStep(w, w.tick / 24, () => false);
+    read();
     expect(w.massTold.size).toBe(0);
+    expect(w.massing.has(SOV)).toBe(false);
+    expect(off).toEqual([SOV, ROM]);
+    const called = historyRows(w, (n) => `nation.${n === SOV ? 'SOV' : n === ROM ? 'ROM' : ''}`, () => '', () => '').filter((r) => r.kind === EventKind.MassingCalledOff);
+    expect(called).toHaveLength(1);
+    expect(historyText(called[0]!)).toBe('Soviet Union has called off its massing on the border of Romania');
+    expect(TICKER_KINDS.has(EventKind.MassingCalledOff)).toBe(true);
   }, 240_000);
 });

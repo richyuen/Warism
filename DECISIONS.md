@@ -609,3 +609,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
   stacks); (b) as it is: no worse than run 72, and no score rests on it.
 - **Recommended:** R125 (a) at the far end of T1 only (1,200 m/px and farther), where a cell is 10 px and a marker
   26; R124 (a). Neither built: both change rules that earlier items set on purpose.
+
+### ADR-1109 · 2026-11-17 · accepted — R128 to R130: R124's step taken out; a massing called off; a fought war before a quiet one
+- **R128.** Critic run 74 (semantic zoom 8 -> 7, under its bar): a hero's counter that takes the step clear of the
+  nations' counters leaps as they move, 38 times in a zoom where once. The step is out; ADR-1108's R124 stays the
+  user's, with this learnt: a hero's place must be a function of where the heroes stand, not of the frame's
+  counters.
+- **R129.** `EventKind.MassingCalledOff` (85), emitted by `massStep` where a massing ends and `World.massTold` had
+  it, unless its nation is at war with the target or one of the two is dead. A history, ticker and war kind.
+- **R130.** `WarBanners`' order: `battle` before the sides' men. A banner's place can change as a battle begins and
+  ends (the critic's probe: the row's order alone changed on 7 days of 149).

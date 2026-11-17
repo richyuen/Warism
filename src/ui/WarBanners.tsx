@@ -43,7 +43,9 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
   const men = (w: WarStat): number => [...w.attackers, ...w.defenders].reduce((sum, n) => sum + (byId.get(n)?.men ?? 0), 0);
   const mine = (w: WarStat): number => (player !== 0 && (w.attackers.includes(player) || w.defenders.includes(player)) ? 1 : 0);
   const size = new Map(wars.map((w) => [w.id, men(w)]));
-  const newest = [...wars].sort((a, b) => mine(b) - mine(a) || size.get(b.id)! - size.get(a.id)! || b.startTick - a.startTick || b.id - a.id);
+  // A war with a battle now before one without (ROADMAP R130; critic run 74, R74-N3: by the sides' men alone three quiet
+  // wars held the row and Japan's war in China was behind "+3").
+  const newest = [...wars].sort((a, b) => mine(b) - mine(a) || Number(b.battle) - Number(a.battle) || size.get(b.id)! - size.get(a.id)! || b.startTick - a.startTick || b.id - a.id);
   /** A side in words: its leader, and how many more (the banner's title; ROADMAP R115). */
   const sideName = (ids: number[]): string => {
     const lead = byId.get(ids[0] ?? 0);

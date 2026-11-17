@@ -229,14 +229,21 @@ export function massStep(world: World, day: number, still: (n: number, t: number
   if (world.massBarred.size > 0 && day % 30 === 0) {
     for (const [key, until] of [...world.massBarred]) if (day >= until || nc.living[key >>> 16] !== 1 || nc.living[key & 65535] !== 1) world.massBarred.delete(key);
   }
-  // Told of once a massing (ROADMAP R122): those of massings over are forgotten.
+  // Told of once a massing (ROADMAP R122): those of massings no longer there are forgotten (ended by another hand: a
+  // load of a save without them, a nation's end).
   for (const n of [...world.massTold]) if (!world.massing.has(n)) world.massTold.delete(n);
+  /** A massing that was told of ends with no war on its target: called off, in a row of its own (ROADMAP R129). */
+  const over = (n: number, t: number): void => {
+    if (!world.massTold.delete(n) || world.wars.atWar(n, t) || nc.living[n] !== 1 || nc.living[t] !== 1) return;
+    const p = massPoints(world, n, t)[0];
+    world.out.emit(world.tick, EventKind.MassingCalledOff, n, t, p === undefined ? NaN : (p % world.cells.w) + 0.5, p === undefined ? NaN : Math.floor(p / world.cells.w) + 0.5);
+  };
   if (world.massing.size === 0) return;
   /** The massings seen today, by target: the massing nation with the most men at that border. */
   const seen = new Map<number, { by: number; menNear: number }>();
   for (const [n, m] of [...world.massing].sort((a, b) => a[0] - b[0])) {
     const t = m.target;
-    const over =
+    const ended =
       nc.living[n] !== 1 ||
       nc.living[t] !== 1 ||
       !aiRuns(world, n, AiLayer.diplomacy) ||
@@ -244,23 +251,25 @@ export function massStep(world: World, day: number, still: (n: number, t: number
       inWar(world, n) ||
       whyNotWar(world, n, t) !== Refusal.None;
     const late = day - m.since > (MASS_PROBE.days ?? MASS_DAYS);
-    const points = over || late ? [] : massPoints(world, n, t);
+    const points = ended || late ? [] : massPoints(world, n, t);
     if (points.length === 0) {
       world.massing.delete(n);
       // Given up for its time: its army did not come to that border. Not tried again for MASS_BAR_DAYS. But a nation
       // with no other neighbour (`alone`; ROADMAP R123, ADR-1106, the user's decision) declares all the same, if it
       // still would: barred from its one neighbour it had no war at all (critic run 73, R73-N3: worlds of two nations
       // with a war in their first month had none in ten years), and a war begun with its army away is a war.
-      if (late && !over) {
+      if (late && !ended) {
         if (MASS_PROBE.alone !== false && alone(n, t) && still(n, t)) declareWar(world, n, t);
         else world.massBarred.set(n * 65536 + t, day + MASS_BAR_DAYS);
       }
+      over(n, t);
       continue;
     }
     const { mine, men, menNear } = standing(world, n, points);
     if (men > 0 && menNear >= MASS_READY * men) {
       world.massing.delete(n);
       if (still(n, t)) declareWar(world, n, t);
+      over(n, t);
       continue;
     }
     gather(world, n, mine);

@@ -513,16 +513,21 @@ The critic's design objections not items of their own: ADR-1060 (German formatio
 ## Batch 40 — critic run 74's findings (focused, on 6cc762ea; no blocking issue; UI/UX 7 -> 8; semantic zoom 8 -> 7,
 under its bar of 8)
 
-- [ ] R128 **R74-N1: the heroes' counters leap while zooming and while the game runs** (R124's step that covers no
-  counter: the counters move, and the hero's step with them: 38 leaps in a zoom where 1 on run 73's build). AT:
-  `node critic/scripts/c74_heroPop.mjs 56901 400 head` and `57905 200`: the zoom's leaps 2 or fewer on both seeds,
-  the running leaps no more than run 73's build's (34 and 4).
-- [ ] R129 **R74-N2: a massing told and given up is called off** (R122: 14 of 112 rows with no war and no word
-  after). AT: `npx tsx critic/scripts/c74_massTold.ts 3 56211 57611 57613`: "GIVEN UP … no row of it" on no line.
-- [ ] R130 **R74-N3: wars with no battle hold the banners' row while fought ones are behind "+n"** (R121's size by
-  the sides' men: 181 of 438 banner-days). AT: `node critic/scripts/c74_bannerRank.mjs 57901 150` and 57903: under a
-  tenth of the banner-days.
-
+- [x] R128 **R74-N1: the heroes' counters leap while zooming and while the game runs.** R124's step (the one that
+  covers no nation's counter) taken out: the counters move with the armies and the zoom, and the hero's step with
+  them. The heroes' places as on run 73's build. The critic's probe on this build (`c74_heroPop.mjs`, a preview on
+  port 5373): the zoom's leaps 1 (seed 56901) and 0 (57905), where 38 and 28; running 20 s, 36 and 4 (run 73's
+  build 34 and 4: the same code, a run by the clock). R124 (R73-N4) is the user's still (ADR-1108): what it wants
+  must not turn on where the counters are in a frame.
+- [x] R129 **R74-N2: a massing told and given up is called off** (ADR-1109): `MassingCalledOff`, a row of the ticker
+  and the history when a massing that was told of ends with no war on its target (given up for its time, the war no
+  longer wanted as its army stands ready, its nation at war elsewhere): "Soviet Union has called off its massing on
+  the border of Romania". Test: `tests/unit/massAnswer1938.test.ts`. The pin of seed 99 stands. The critic's probe
+  (`c74_massTold.ts`, three years by three seeds) is the next run's.
+- [x] R130 **R74-N3: wars with no battle hold the banners' row while fought ones are behind "+n"**: the row's order
+  is the played nation's wars, then a war with a battle before one without, then the sides' men, then the newest.
+  The critic's probe on this build (`c74_bannerRank.mjs 57901 150`): of 440 banner-days, 62 of a war with no
+  battle, none of them while a war with a battle was behind "+n" (181 of 438 before).
 Run 74's other lines, not items: R73-N4 and R73-N5 (ADR-1108, the user's); small worlds of two and three with no war
 in ten years (55424, 54425, 54426; 55401, 55404: R123's rule is for a nation with one neighbour); wars with nothing
 in their first month (9 of 85); `slowClick`'s named cases; the phone's ticker gone while the banners are opened (R126,

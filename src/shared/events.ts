@@ -312,6 +312,12 @@ export const EventKind = {
    * massing, when `MASS_SEEN` of its men stand there (`massStep`).
    */
   MassingSeen: 84,
+  /**
+   * A massing that was told of (`MassingSeen`) is over with no war on its target (ROADMAP R129, ADR-1109; critic
+   * run 74, R74-N2: 14 of 112 told with no war and no word after): a = the nation, b = the neighbour, x/y = a
+   * point of the border where there is one still, else NaN.
+   */
+  MassingCalledOff: 85,
 } as const;
 
 /** Why a nation joined a war (`WarJoined`'s y). */

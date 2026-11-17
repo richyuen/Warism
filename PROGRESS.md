@@ -378,3 +378,8 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   8; under its bar of 8); God Mode, editor, naval, tanks, aircraft and AI nukes 8 (carried). Blocking: 0.
 - Run 73's R73-N1, N2 and N3 seen fixed. Semantic zoom fell by R74-N1: R124's step made the heroes' counters leap.
   Batch 40 (R128 to R130).
+
+## 2026-11-17 — R128 to R130 (ADR-1109): Batch 40 done
+
+- R128: R124's step out of `counters.ts`. R129: `MassingCalledOff`. R130: a war with a battle first on the row.
+  The critic's probes for R128 and R130 run here and met; R129's is the next run's.
