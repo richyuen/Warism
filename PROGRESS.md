@@ -414,3 +414,11 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   at 1,150 m/px 16 -> 6 and 21 -> 3; at 600, 6 -> 2 and 9 -> 2.
 - By hand: `markerStacks1938`, `markers1938`, `handover1938`, `heroStack1938` (7 green).
 
+## 2026-11-17 — where the loop stands
+
+- Next: R132, the first open item of Batch 42 (then R133 to R137). The tree is clean and pushed.
+- After Batch 42: run 75 was the full run with no blocking issue and every score at its bar, so no critic run
+  follows its fixes (ADR-1022): `npm run check:review`, `npm run bench -- G --gpu-only`, then the release
+  (PROMPT.md, RELEASES, steps 3 and 4).
+- Kept aside: branch `r124-fit` (R124's (a), not taken, ADR-1111).
+

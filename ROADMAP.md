@@ -551,7 +551,7 @@ on purpose), the cue's "Scroll" and "Click" on a phone, "COMMUNIST CHINA" under 
   - Seen in the wheel's run, not of this rule: a hero's marker (R34g's step clear of the markers of the frame, id
     1469 at Linyi) leaps as the zoom changes: 6 and 1 leaps on HEAD's build, 4 and 5 on this (on this one a frame
     below its unit while the boxes ease across 1,200 m/px). An item of its own: R131.
-- [x] R131 **A hero's marker leaps at T1 as the zoom changes** (R34g's `heroClear` chose above or below anew each
+- [x] R131 **A hero's marker leaps at T1 as the zoom changes** (e830930e; R34g's `heroClear` chose above or below anew each
   frame against the frame's markers; seen in R125's wheel run). `HeroLifts` (`markers.ts`): the marker keeps the
   side it stands on while it must stand off, and goes to its place at 0.3 px a ms, a frame reckoned at 20 ms at
   most (6 px a frame); one new to the view, or not drawn for half a second, stands there at once. AT, R125's wheel
@@ -574,7 +574,7 @@ Closed by the user's decision (ADR-1111: "ok let's accept your recommendation"),
 7 -> 8, UI/UX 8 -> 7)
 
 The full run's non-blocking issues, fixed before the release's checks; no critic run after them (ADR-1022).
-- [x] R125b **The markers' tight rule at every zoom of T1** (ADR-1113, the user's decision: "R125 lets extend"; the
+- [x] R125b **The markers' tight rule at every zoom of T1** (32f1e5b7; ADR-1113, the user's decision: "R125 lets extend"; the
   critic's objection to ADR-1110: a notch nearer than 1,200 m/px was the more heaped). AT, the critic's probe on this
   build (`c74_markers.mjs`, seeds 56951 and 58951, `1675,372`, day 30), the pairs on one another: at 1,150 m/px 6 of
   53 and 3 of 52 markers (16 of 54 and 21 of 58 before), no more than at 1,300 (5 and 6); at 900, 6 and 2 (17, 11);
