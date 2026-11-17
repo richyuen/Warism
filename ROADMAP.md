@@ -510,6 +510,26 @@ Left of run 73, for the user (not ticked, not open: each wants a choice):
 The critic's design objections not items of their own: ADR-1060 (German formations at peace in Vichy France after a
 1941 free start) and heroes on by default (ADR-1070), as run 72: the user's earlier decisions, not re-opened.
 
+## Batch 40 — critic run 74's findings (focused, on 6cc762ea; no blocking issue; UI/UX 7 -> 8; semantic zoom 8 -> 7,
+under its bar of 8)
+
+- [ ] R128 **R74-N1: the heroes' counters leap while zooming and while the game runs** (R124's step that covers no
+  counter: the counters move, and the hero's step with them: 38 leaps in a zoom where 1 on run 73's build). AT:
+  `node critic/scripts/c74_heroPop.mjs 56901 400 head` and `57905 200`: the zoom's leaps 2 or fewer on both seeds,
+  the running leaps no more than run 73's build's (34 and 4).
+- [ ] R129 **R74-N2: a massing told and given up is called off** (R122: 14 of 112 rows with no war and no word
+  after). AT: `npx tsx critic/scripts/c74_massTold.ts 3 56211 57611 57613`: "GIVEN UP … no row of it" on no line.
+- [ ] R130 **R74-N3: wars with no battle hold the banners' row while fought ones are behind "+n"** (R121's size by
+  the sides' men: 181 of 438 banner-days). AT: `node critic/scripts/c74_bannerRank.mjs 57901 150` and 57903: under a
+  tenth of the banner-days.
+
+Run 74's other lines, not items: R73-N4 and R73-N5 (ADR-1108, the user's); small worlds of two and three with no war
+in ten years (55424, 54425, 54426; 55401, 55404: R123's rule is for a nation with one neighbour); wars with nothing
+in their first month (9 of 85); `slowClick`'s named cases; the phone's ticker gone while the banners are opened (R126,
+on purpose), the cue's "Scroll" and "Click" on a phone, "COMMUNIST CHINA" under its flag, a fleet's refusal.
+
+**What the bar needs** (semantic zoom, ADR-843): R128 mended, which is this run's whole fall.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

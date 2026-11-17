@@ -1,0 +1,26 @@
+npx tsx critic/scripts/c74_capsurvey.ts > critic/c74_capsurvey.log 2>&1
+npx tsx critic/scripts/c74_heroPlace.ts 1975 > critic/c74_heroPlace_1975.log 2>&1
+npx tsx critic/scripts/c74_heroPlace.ts 1991 > critic/c74_heroPlace_1991.log 2>&1
+npx tsx critic/scripts/c74_warlong.ts 1942 54601 god 730 > critic/c74_warlong_1942god_54601.log 2>&1
+npx tsx critic/scripts/c74_warlong.ts 1943 53543 free 1095 > critic/c74_warlong_1943free.log 2>&1
+npx tsx critic/scripts/c74_endleb.ts 999 > critic/c74_endleb_999.log 2>&1
+npx tsx critic/scripts/c74_free.ts 1991 57611 1825 free heroes=on > critic/c74_free_1991_56611_free.log 2>&1
+npx tsx critic/scripts/c74_free.ts 1942 57542 365 free heroes=on > critic/c74_free_1942_56542_free.log 2>&1
+npx tsx critic/scripts/c74_free.ts 1951 57551 365 free heroes=on > critic/c74_free_1951_56551_free.log 2>&1
+npx tsx critic/scripts/c74_free.ts 1975 57575 730 free heroes=on > critic/c74_free_1975_56575_free.log 2>&1
+npx tsx critic/scripts/c74_free.ts 1966 57566 365 free diplomacy=random,heroes=on > critic/c74_free_1966_56566_free.log 2>&1
+npx tsx critic/scripts/c74_free.ts 1975 51501 730 free - > critic/c74_free_1975_51501_free.log 2>&1
+npx tsx critic/scripts/c74_free.ts 1983 51505 730 free - > critic/c74_free_1983_51505_free.log 2>&1
+npx tsx critic/scripts/c74_freewar.ts 1942 53542 god 30 > critic/c74_freewar_1942god.log 2>&1
+npx tsx critic/scripts/c74_freewar.ts 1941 53541 free 30 > critic/c74_freewar_1941free.log 2>&1
+npx tsx critic/scripts/c74_freewar.ts 1944 53544 free 30 > critic/c74_freewar_1944free.log 2>&1
+npx tsx critic/scripts/c74_saveload.ts 1942 53542 god 24 30 > critic/c74_saveload_1942god.log 2>&1
+npx tsx critic/scripts/c74_blocend.ts 54611 1825 > critic/c74_blocend_54611.log 2>&1
+npx tsx tools/diag/heldAtEnd.ts 54311 > critic/c74_heldAtEnd_54311.log 2>&1
+npx tsx critic/scripts/c74_heldfree.ts 1946 51515 3 > critic/c74_heldfree_1946.log 2>&1
+npx tsx critic/scripts/c74_clampend.ts > critic/c74_clampend.log 2>&1
+npx tsx critic/scripts/c74_afterTrack.ts 55601 10 critic/c74_atx_55601.json > critic/c74_atx_55601.log 2>&1
+npx tsx critic/scripts/c74_afterTrack.ts 37601 10 critic/c74_atx_37601.json > critic/c74_atx_37601.log 2>&1
+npx tsx critic/scripts/c64_track.ts 57301 365 > critic/c74_track_56301.log 2>&1
+npx tsx tools/diag/neighbourColours.ts critic/c74_starts/1938.sav 30 > critic/c74_neighbourColours_1938.log 2>&1
+npx tsx critic/scripts/c74_oldsave.ts 1975 30 critic/c73_starts > critic/c74_oldsave_1975.log 2>&1

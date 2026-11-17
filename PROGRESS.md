@@ -371,3 +371,10 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - R127's fleet name taken out again: the whole browser suite had `orderRowsBrief1938` red on it (a division's order
   has the same refusal). The suite else: 468 green; `heroes1938` twice and `nukeAlertTwo1938` red in the run and green
   alone, `maxGlide1938` red alone too this time (red in every whole run of the day, green alone before).
+
+## 2026-11-17 — critic run 74 (focused, on 6cc762ea)
+
+- Scores: map 8, diplomacy 8, emergent 8, stats 8, UI/UX 8 (was 7), performance 8, stability 8, semantic zoom 7 (was
+  8; under its bar of 8); God Mode, editor, naval, tanks, aircraft and AI nukes 8 (carried). Blocking: 0.
+- Run 73's R73-N1, N2 and N3 seen fixed. Semantic zoom fell by R74-N1: R124's step made the heroes' counters leap.
+  Batch 40 (R128 to R130).

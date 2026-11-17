@@ -1,5 +1,5 @@
 {
-  "commit": "a9814c439339558b34af94b92f0212b13867a515",
+  "commit": "6cc762eae9feccfd7d6dcbba0765055e066a9a7b",
   "mode": "focused",
   "scores": {
     "mapVisuals": 8,
@@ -8,15 +8,15 @@
     "godMode": 8,
     "editorScenarios": 8,
     "statsHistory": 8,
-    "uiUxPolish": 7,
+    "uiUxPolish": 8,
     "performance": 8,
     "stability": 8,
-    "semanticZoom": 8,
+    "semanticZoom": 7,
     "naval": 8,
     "tanks": 8,
     "aircraft": 8,
     "aiNukes": 8
   },
   "blocking": [],
-  "timestamp": "2026-11-17T00:46:00-05:00"
+  "timestamp": "2026-11-17T05:36:00-05:00"
 }
