@@ -112,6 +112,30 @@ export function heroScaleAt(metresPerPx: number): number {
   return 1 + (HERO_SCALE - 1) * Math.min(1, Math.max(0, k));
 }
 
+/** A hero's counter comes down from its full size to the others' in this long, where it would cover a nation's (ROADMAP R124). */
+export const HERO_SHRINK_MS = 250;
+/** And grows back to its full size in this long: slower, so that a counter passing by is not a flutter. */
+export const HERO_GROW_MS = 600;
+
+/**
+ * The size of a hero's counter (ROADMAP R124, ADR-1108, the user's decision; critic run 73, R73-N4: T-42's counter
+ * on "293.9k"): `full` where it covers no nation's counter, else the largest from `least` (the others' size) up
+ * at which its box, `w` by `h` at size 1 about (cx, cy), is clear of `others` by a px; `least` where it would cover
+ * one even so. Its place is not moved (ADR-1109: a hero's place is a function of where the heroes stand); the size
+ * is a continuous function of where the counters stand, so a counter that comes nearer makes it a little smaller
+ * and never makes it leap.
+ */
+export function heroFit(others: readonly { x: number; y: number; w: number; h: number }[], cx: number, cy: number, w: number, h: number, least: number, full: number): number {
+  let fit = full;
+  for (const b of others) {
+    const dx = Math.abs(cx - (b.x + b.w / 2));
+    const dy = Math.abs(cy - (b.y + b.h / 2));
+    fit = Math.min(fit, Math.max((2 * dx - b.w - 2) / w, (2 * dy - b.h - 2) / h));
+    if (fit <= least) return least;
+  }
+  return fit;
+}
+
 /** A hero at T0 (PLAN 7.184b3): its own counter, HERO_SCALE × a nation's, with its name. */
 export interface HeroCounter {
   id: number;
@@ -339,8 +363,16 @@ export class CounterLayer {
 
   /** True while a split/merge or a fold animation runs (the view keeps redrawing). */
   animating(now: number): boolean {
-    return (this.trans !== null && running(now, this.trans.start, SPLIT_MS)) || running(now, this.foldStart, FOLD_MS);
+    return (this.trans !== null && running(now, this.trans.start, SPLIT_MS)) || running(now, this.foldStart, FOLD_MS) || this.heroSizing;
   }
+
+  /**
+   * How much smaller than its full size each hero's counter was drawn in the last frame, and when (ROADMAP R124):
+   * by its lead's id. A hero with none (new to the view, or not drawn for half a second) takes its size at once.
+   */
+  private heroLess = new Map<number, { less: number; at: number }>();
+  /** A hero's counter is on its way to its size: the view keeps drawing. */
+  private heroSizing = false;
 
   /**
    * Declutters `items` (already laid out, in cells) at `scale` px per cell and returns what to
@@ -587,10 +619,38 @@ export class CounterLayer {
        * in a pile at its edge): one moved beside a panel over one of them is not drawn while the panel covers its place.
        */
       const placed: [number, number, number, number][] = [];
+      // The nations' counters of this frame that are more there than not: what a hero's counter is sized by (R124).
+      const nations = this.boxes.filter((b) => b.own >= 0.5);
+      const less = new Map<number, { less: number; at: number }>();
+      this.heroSizing = false;
+      const full = hs;
       for (const g of groups) {
         const name = g.members.length > 1 ? `${g.lead.name} +${g.members.length - 1}` : g.lead.name;
         const w = widthOf(name) + 18 + COUNTER_STRIPE;
         let box: [number, number] | null = null;
+        // Its size (R124): the layout above is by the full size `full`, a function of the zoom and the heroes alone;
+        // here the counter is drawn smaller about the same place where it would cover a nation's, eased.
+        let hs = full;
+        if (full > size) {
+          let want = full;
+          for (const off of offs) {
+            const [sx, sy0] = worldToScreen(cam, g.lead.x + off, g.lead.y, vw, vh);
+            const sy = sy0 + g.dy;
+            if (sx - (w / 2) * full > vw || sy - (h / 2) * full > vh || sx + (w / 2) * full < 0 || sy + (h / 2) * full < 0) continue;
+            want = Math.min(want, heroFit(nations, sx, sy, w, h, size, full));
+          }
+          let d = full - want;
+          const was = this.heroLess.get(g.lead.id);
+          if (was && now >= was.at && now - was.at < 500) {
+            const dt = now - was.at;
+            // No smaller than the others' at any zoom: what it was less by, within this zoom's range.
+            const from = Math.min(was.less, full - size);
+            d = from + Math.max(-(dt / HERO_GROW_MS) * size, Math.min((dt / HERO_SHRINK_MS) * size, d - from));
+            if (Math.abs(d - (full - want)) > 1e-3) this.heroSizing = true;
+          }
+          less.set(g.lead.id, { less: d, at: now });
+          hs = full - d;
+        }
         for (const off of offs) {
           const [sx, sy0] = worldToScreen(cam, g.lead.x + off, g.lead.y, vw, vh);
           let sx1 = sx;
@@ -624,6 +684,10 @@ export class CounterLayer {
         }
         if (box) this.drawn.push({ key: `hero:${g.lead.id}`, nation: g.lead.nation, naval: g.lead.naval, wx: g.lead.x, wy: g.lead.y, alpha, strength: 0, text: name, others: g.members.length - 1, folded: false, x: box[0], y: box[1], w: w * hs, h: h * hs, hero: g.lead.id, heroes: g.members });
       }
+      this.heroLess = less;
+    } else {
+      this.heroLess.clear();
+      this.heroSizing = false;
     }
     ctx.restore();
   }
