@@ -348,3 +348,7 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   stability 8, semantic zoom 8, naval 8, tanks 8, aircraft 8 and AI nukes 8 (carried). Blocking: 0.
 - UI/UX fell by R73-N1: R110's newest-first row left the wars a played nation leads off the banners. Its six
   non-blocking issues and the small things are Batch 39 (R121 to R127).
+
+## 2026-11-17 — R121: the played nation's wars first on the banners (ADR-1105)
+
+- `WarBanners`' order; `reviewBatch1938` has its case. The first of Batch 39; R122 to R127 open.

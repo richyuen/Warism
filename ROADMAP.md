@@ -464,11 +464,13 @@ Left of the review, for the user (not built):
 
 Each with the critic's own "seen fixed when" (`critic/CRITIC_REPORT.md`).
 
-- [ ] R121 **R73-N1: the wars a played nation leads are on the banners** (R110's newest-first put them behind
-  "+n": 0 of Germany's three on the row or among the six opened, days 30 to 150 of a 1942 start). AT:
-  `AFTER=4242 node critic/scripts/c73_bannerOwn.mjs 1942 GER Germany 150` prints the player's wars on the banners,
-  over 0 at every sample. With it the critic's design objection: with no nation played, the largest wars before
-  the newest (mid-June 1944 of the replay: the Soviet war behind "+n").
+- [x] R121 **R73-N1: the wars a played nation leads are on the banners** (ADR-1105). The row's order: the played
+  nation's wars first, then the largest by the men of their two sides, then the newest (R110 had the newest first:
+  0 of a played Germany's three wars on the row or among the six opened). With no nation played, the largest (the
+  critic's objection: in June 1944 of the replay the Soviet war was behind "+n"). Test:
+  `tests/e2e/reviewBatch1938.spec.ts` (five wars: the smallest behind "+n", and first once its leader is played).
+  `toBattle1938` opens "+n" for its quiet war. The critic's own probe (`c73_bannerOwn.mjs`) not run here: it is
+  the next critic run's.
 - [ ] R122 **R73-N2: a massing is told** (R97b, R103): no ticker or History row and no arrow before the
   declaration. AT: `node critic/scripts/c73_massSeen.mjs 56211 'Soviet Union' Romania 1218,300 40,55,65,72,75`:
   "history of the two" or "massing words" not empty on day 55 or 65.

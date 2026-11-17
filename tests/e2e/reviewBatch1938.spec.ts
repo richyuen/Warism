@@ -129,3 +129,37 @@ test('the settings in two headed parts; a file\'s input in the game\'s look; the
   expect(d.x + d.width, 'the date inside the bar').toBeLessThanOrEqual(bar.x + bar.width + 0.5);
   expect(d.y).toBeGreaterThanOrEqual(bar.y);
 });
+
+// ROADMAP R121 (critic run 73, R73-N1): with one row of banners, newest first, the wars a played nation led were
+// behind "+n". The row is the played nation's wars first, then the largest by their sides' men.
+test("the played nation's war is on the row of banners, however small; with none played, the largest wars", async ({ page }) => {
+  test.setTimeout(180_000);
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(ready, null, { timeout: 60_000 });
+  // Three wars more than the two of the start; Bulgaria's on Albania the smallest of the five.
+  const pairs = [['GER', 'POL'], ['ITA', 'YUG'], ['BUL', 'ALB']].map(([a, d]) => [id(a!), id(d!)] as const);
+  await page.evaluate((pairs) => {
+    for (const [attacker, defender] of pairs) window.__warsim!.sim.command({ kind: 'declareWar', attacker, defender });
+  }, pairs);
+  await page.evaluate(() => window.__warsim!.sim.step(24));
+  await expect(page.getByTestId('war-more')).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByTestId('war-banner')).toHaveCount(3);
+  // The war of the fewest men of its two sides, and the one of the most.
+  const wars = await page.evaluate(() => {
+    const st = window.__warsim!.hud.stats.value!;
+    const men = new Map(st.nations.map((n) => [n.id, n.men]));
+    return st.wars.map((w) => ({ id: w.id, lead: w.attackers[0]!, men: [...w.attackers, ...w.defenders].reduce((s, n) => s + (men.get(n) ?? 0), 0) })).sort((a, b) => a.men - b.men);
+  });
+  expect(wars.length).toBeGreaterThanOrEqual(5);
+  const [least, most] = [wars[0]!, wars[wars.length - 1]!];
+  const banner = (war: number) => page.locator(`[data-testid="war-banner"][data-war="${war}"]`);
+  await expect(banner(least.id), 'the smallest war behind "+n" with none played').toHaveCount(0);
+  await expect(page.getByTestId('war-banner').first()).toHaveAttribute('data-war', String(most.id));
+  // Its leader played: its war first.
+  await page.evaluate((n) => window.__warsim!.view!.select(n), least.lead);
+  await page.getByTestId('take-control').click();
+  await expect(page.getByTestId('player-label')).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByTestId('war-banner').first()).toHaveAttribute('data-war', String(least.id), { timeout: 20_000 });
+  await expect(page.getByTestId('war-banner')).toHaveCount(3);
+});

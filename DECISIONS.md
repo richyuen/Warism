@@ -567,3 +567,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **The settings' tabs:** headed parts in one panel. **The dark sprites' rim:** ADR-888's tint stands. **The grey
   banner:** PLAN 7.4f35's, on purpose. **The phone's tools behind a menu, the ticker's column:** layouts of their
   own. **The coasts, the odd-shaped names:** ROADMAP, Batch 38's foot.
+
+### ADR-1105 · 2026-11-17 · accepted — R121: the banners' row is the played nation's wars, then the largest
+- **Was (ADR-1101):** the newest war first. Critic run 73 (R73-N1, UI/UX 8 -> 7): a played Germany's three wars
+  were behind "+n", and not among the six it opened.
+- **Decision:** by whether the played nation is in the war, then by the men of the two sides' nations (the stats'
+  `men`), then by `startTick` and the id. No nation played: the largest wars.
+- **What it costs:** a war just declared between two small nations is behind "+n" until it is among the three
+  largest. The ticker tells its declaration.

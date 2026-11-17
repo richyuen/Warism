@@ -96,6 +96,8 @@ test('a click on a war\'s banner brings its largest battle into view', async ({ 
   expect(quietWar.battle).toBe(false);
   expect(await page.evaluate((id) => window.__warsim!.sim.warBattle(id), quietWar.id)).toBeNull();
   const quiet = page.locator(`[data-testid="war-banner"][data-war="${quietWar.id}"]`);
+  // Among the smaller wars, behind "+N" on a desk's one row (ROADMAP R110, R121): opened.
+  if ((await quiet.count()) === 0) await page.getByTestId('war-more').click();
   await expect(quiet).toHaveAttribute('data-battle', '0', { timeout: 20_000 });
   await expect(banner).toHaveAttribute('data-battle', '1', { timeout: 20_000 });
   await expect(quiet).toHaveAttribute('title', /No battle now/);

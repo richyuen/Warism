@@ -23,7 +23,7 @@ const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
  * and brings the war's largest battle into view (`onBattle`, PLAN 2.14e). The swords are lit
  * while the war has a battle to go to and dim while it has none (PLAN 2.14f5b3, ADR-96).
  */
-export function WarBanners({ wars, byId, onSelect, onBattle, phone = false }: { wars: WarStat[]; byId: Map<number, NationStat>; onSelect: (id: number) => void; onBattle: (war: number) => void; phone?: boolean }) {
+export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, player = 0 }: { wars: WarStat[]; byId: Map<number, NationStat>; onSelect: (id: number) => void; onBattle: (war: number) => void; phone?: boolean; /** The nation played, 0 for none: its wars are the first banners (ROADMAP R121). */ player?: number }) {
   const [opened, setOpened] = useState(false);
   if (wars.length === 0) return null;
   const shown = opened ? MAX_BANNERS : phone ? PHONE_BANNERS : DESK_BANNERS;
@@ -37,8 +37,13 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false }: { 
       </span>
     );
   };
-  // The newest war first (ROADMAP R110): with one row, the war just begun is the one a banner is wanted for.
-  const newest = [...wars].sort((a, b) => b.startTick - a.startTick || b.id - a.id);
+  // Which wars the one row is for (ROADMAP R121; critic run 73, R73-N1: newest first, the three wars a played Germany
+  // led were behind "+n", and in June 1944 of the replay so was the Soviet war): the played nation's own first, then
+  // the largest by the men of the two sides, then the newest.
+  const men = (w: WarStat): number => [...w.attackers, ...w.defenders].reduce((sum, n) => sum + (byId.get(n)?.men ?? 0), 0);
+  const mine = (w: WarStat): number => (player !== 0 && (w.attackers.includes(player) || w.defenders.includes(player)) ? 1 : 0);
+  const size = new Map(wars.map((w) => [w.id, men(w)]));
+  const newest = [...wars].sort((a, b) => mine(b) - mine(a) || size.get(b.id)! - size.get(a.id)! || b.startTick - a.startTick || b.id - a.id);
   /** A side in words: its leader, and how many more (the banner's title; ROADMAP R115). */
   const sideName = (ids: number[]): string => {
     const lead = byId.get(ids[0] ?? 0);
