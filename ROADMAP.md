@@ -592,7 +592,7 @@ The full run's non-blocking issues, fixed before the release's checks; no critic
   the ticker's true, strings 2 (false, false, 0). The row: "Germany's bomber carrying a warhead was stopped short of its
   target near Warsaw: no burst" (`docs/evidence/R133/`). Tests: `tests/unit/nukeInterceptTold1938.test.ts`,
   `tests/e2e/nukeInterceptTold1938.spec.ts`.
-- [x] R134 **R75-N3: a massing "called off" and at war with its target under one date** (COMMIT; ADR-1116; R129; France on
+- [x] R134 **R75-N3: a massing "called off" and at war with its target under one date** (3bbee032; ADR-1116; R129; France on
   Germany, seed 58619, day 884; France's on Switzerland a row above Switzerland's annexation). A call-off is told at the
   hour's end, if its nation is not at war with the target by then, both living (`tellMassingsOff`). AT:
   `npx tsx critic/scripts/c75_massTold.ts 3` on 57611 to 57621 and 58611 to 58621: no "CALLED OFF BUT AT WAR" line (1
