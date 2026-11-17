@@ -693,3 +693,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   nuclear cue: "{a}'s bomber carrying a warhead was stopped short of its target near {city}: no burst". Its event as
   it was (b the launch's number), so the diagnostic tools read it as before. Only a bomber is ever stopped
   (`interceptChance`: a missile 0), so the row says bomber.
+
+### ADR-1116 · 2026-11-17 · accepted — R134: a massing's call-off told at the hour's end
+- `massStep` queues a call-off (`World.massOff`, empty between ticks, not saved); `step` tells it after every system of
+  the hour (`tellMassingsOff`), if its nation is not at war with the target by then and both live. Critic run 75's
+  R75-N3: France's massing on Germany ran out at hour 0 of day 884 of 58619 and France joined a war on Germany in that
+  hour; France's on Switzerland was called off a row above Switzerland's annexation.
+- Checked: diploInvariants' `massOffBreaks`, every hour of its runs. The pin of seed 99 unmoved.

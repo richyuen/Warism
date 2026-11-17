@@ -190,6 +190,23 @@ export function pileBreaks(w: World, events: number[]): string[] {
 }
 
 /** Steps `s` by `ticks` hours, checking `exit`, `rise` and `pile` every hour and `held` and `realm` each day. */
+/**
+ * A massing called off (`MassingCalledOff`, ROADMAP R129) in the hour's `events` whose nation is at war with its target
+ * at the hour's end, or one of the two dead (R134; critic run 75, R75-N3: France's call-off on Germany and its war with
+ * Germany by an alliance's call under one date; France's on Switzerland a row above Switzerland's annexation).
+ */
+export function massOffBreaks(w: World, events: number[]): string[] {
+  const out: string[] = [];
+  const nc = w.nations.cols;
+  for (let i = 0; i < events.length; i += 6) {
+    if (events[i + 1] !== EventKind.MassingCalledOff) continue;
+    const [n, t] = [events[i + 2]!, events[i + 3]!];
+    if (w.wars.atWar(n, t)) out.push(`massing: ${tag(n)}'s on ${tag(t)} called off, and at war with it at the hour's end`);
+    if (nc.living[n] !== 1 || nc.living[t] !== 1) out.push(`massing: ${tag(n)}'s on ${tag(t)} called off, one of the two dead`);
+  }
+  return out;
+}
+
 function stepChecked(s: Sim, ticks: number, breaks: Breaks, label: string): void {
   let before = membersOf(s.world);
   let bonds = bondsOf(s.world);
@@ -198,6 +215,7 @@ function stepChecked(s: Sim, ticks: number, breaks: Breaks, label: string): void
     breaks.add(where, silentExits(w, before, bonds.overlord, w.out.events));
     breaks.add(where, riseBreaks(w, bonds, w.out.events));
     breaks.add(where, pileBreaks(w, w.out.events));
+    breaks.add(where, massOffBreaks(w, w.out.events));
     if (w.tick % 24 === 0) breaks.add(where, worldBreaks(w));
     w.out.events.length = 0;
     w.out.fires.length = 0;

@@ -223,6 +223,17 @@ export function unprepared(world: World, n: number, neighbours: readonly number[
  * since it was chosen, and alliances are made in them. A war it would not is given up. `alone(n, t)`: whether `t`
  * is the only neighbour `n` has (ROADMAP R123): its massing past its days is then a declaration, not a bar.
  */
+/**
+ * The tick's call-offs (`World.massOff`), told after every system of the tick (ROADMAP R134): those whose nation is not
+ * at war with the target by then, both living.
+ */
+export function tellMassingsOff(world: World): void {
+  if (world.massOff.length === 0) return;
+  const nc = world.nations.cols;
+  for (const { n, t, x, y } of world.massOff) if (!world.wars.atWar(n, t) && nc.living[n] === 1 && nc.living[t] === 1) world.out.emit(world.tick, EventKind.MassingCalledOff, n, t, x, y);
+  world.massOff = [];
+}
+
 export function massStep(world: World, day: number, still: (n: number, t: number) => boolean, alone: (n: number, t: number) => boolean = () => false): void {
   const nc = world.nations.cols;
   // The bars past their day or of a nation that is no more, once a month.
@@ -232,11 +243,15 @@ export function massStep(world: World, day: number, still: (n: number, t: number
   // Told of once a massing (ROADMAP R122): those of massings no longer there are forgotten (ended by another hand: a
   // load of a save without them, a nation's end).
   for (const n of [...world.massTold]) if (!world.massing.has(n)) world.massTold.delete(n);
-  /** A massing that was told of ends with no war on its target: called off, in a row of its own (ROADMAP R129). */
+  /**
+   * A massing that was told of ends with no war on its target: called off, in a row of its own (ROADMAP R129), told at
+   * the tick's end (`tellMassingsOff`; R134: France's ended at hour 0 and France went to war with Germany in that hour by
+   * another door, under one date).
+   */
   const over = (n: number, t: number): void => {
     if (!world.massTold.delete(n) || world.wars.atWar(n, t) || nc.living[n] !== 1 || nc.living[t] !== 1) return;
     const p = massPoints(world, n, t)[0];
-    world.out.emit(world.tick, EventKind.MassingCalledOff, n, t, p === undefined ? NaN : (p % world.cells.w) + 0.5, p === undefined ? NaN : Math.floor(p / world.cells.w) + 0.5);
+    world.massOff.push({ n, t, x: p === undefined ? NaN : (p % world.cells.w) + 0.5, y: p === undefined ? NaN : Math.floor(p / world.cells.w) + 0.5 });
   };
   if (world.massing.size === 0) return;
   /** The massings seen today, by target: the massing nation with the most men at that border. */

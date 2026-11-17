@@ -435,3 +435,11 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - Tests: `tests/unit/nukeInterceptTold1938.test.ts`; `tests/e2e/nukeInterceptTold1938.spec.ts` (Germany's bombers at
   Warsaw, the first stopped short; the row in the ticker and in History, `docs/evidence/R133/`). Gate green, the pin
   of seed 99 unmoved. No tick time measured: one more kind kept in the log, rows only where a bomber is stopped.
+
+## 2026-11-17 — R134: a massing's call-off told at the hour's end (ADR-1116)
+
+- `c75_massTold.ts 3` on the twelve seeds (57611 to 57621, 58611 to 58621): no "CALLED OFF BUT AT WAR" line (58619: 1
+  before). France's on Germany (58619, d884) is now given up with no row, at war with it; France's on Switzerland
+  (58615, d105) too, Switzerland dead. Every silent give-up of the run is at war with its target or the target dead.
+- `massOffBreaks` in diploInvariants (every hour); tests `tests/unit/massOffTold1938.test.ts`, `massAnswer1938`. Gate
+  green with every unit test (`snapshot-perf` red under load, green alone). No tick time measured: one list read an hour.

@@ -1562,6 +1562,11 @@ export class World {
   /** The nations whose massing has been told of (`MassingSeen`, ROADMAP R122): once a massing; saved while not empty. */
   massTold = new Set<number>();
   /**
+   * The massings told of that ended in this tick with no war on their target (ROADMAP R129, R134): told at the tick's end
+   * (`tellMassingsOff`), if their nation is not at war with it by then. Not state: empty between ticks.
+   */
+  massOff: { n: number; t: number; x: number; y: number }[] = [];
+  /**
    * The air wings' bases (PLAN 5.1d), by wing: an airbase's index + 1, or a carrier's fleet as its
    * id negated; 0 for a wing whose carrier is gone (`airSystem` loses it). State, saved while not empty.
    */

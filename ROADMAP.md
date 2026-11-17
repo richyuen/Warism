@@ -592,11 +592,11 @@ The full run's non-blocking issues, fixed before the release's checks; no critic
   the ticker's true, strings 2 (false, false, 0). The row: "Germany's bomber carrying a warhead was stopped short of its
   target near Warsaw: no burst" (`docs/evidence/R133/`). Tests: `tests/unit/nukeInterceptTold1938.test.ts`,
   `tests/e2e/nukeInterceptTold1938.spec.ts`.
-- [ ] R134 **R75-N3: a massing "called off" and at war with its target under one date** (R129; France on Germany,
-  seed 58619, day 884: 1 of 21 call-offs on twelve seeds; and "France has called off its massing on the border of
-  Switzerland" a row above "Switzerland was annexed by Germany" of the same day). AT:
-  `npx tsx critic/scripts/c75_massTold.ts 3 58617 58619 58621` and the run's other nine seeds: no "CALLED OFF BUT AT
-  WAR at the day's end" line.
+- [x] R134 **R75-N3: a massing "called off" and at war with its target under one date** (COMMIT; ADR-1116; R129; France on
+  Germany, seed 58619, day 884; France's on Switzerland a row above Switzerland's annexation). A call-off is told at the
+  hour's end, if its nation is not at war with the target by then, both living (`tellMassingsOff`). AT:
+  `npx tsx critic/scripts/c75_massTold.ts 3` on 57611 to 57621 and 58611 to 58621: no "CALLED OFF BUT AT WAR" line (1
+  before). Checker: diploInvariants' `massOffBreaks`. Tests: `tests/unit/massOffTold1938.test.ts`, `massAnswer1938`.
 - [ ] R135 **A war at ±100 with nothing saying why it goes on** (`c75_warAt100.ts 7019 5 off`: Japan and China at
   −100 for 738 days). AT: the banner or its tooltip says that a side fights to the death, in a browser test on that
   case.

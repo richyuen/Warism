@@ -16,6 +16,7 @@ export function setHeroPlacer(f: (world: World) => void): void {
 import { orderMission, orderRebase } from './systems/air';
 import { orderParadrop } from './systems/airLift';
 import { landingOrders, migrateLegacyLandings, tellLandingsLeft } from './systems/landings';
+import { tellMassingsOff } from './ai/massing';
 import { finiteCommand, inRange, Refusal, type Command } from '../shared/commands';
 import { EventKind, TrackEnd } from '../shared/events';
 import { destroyFormation, equipFormation } from './systems/elements';
@@ -526,5 +527,7 @@ export function step(world: World, systems: readonly System[]): void {
   if (world.track) runTrack(world);
   for (const s of systems) s(world);
   tellMeansLost(world, held);
+  // A massing called off in the tick, told if its nation is not at war with the target by its end (ROADMAP R134).
+  tellMassingsOff(world);
   world.tick++;
 }
