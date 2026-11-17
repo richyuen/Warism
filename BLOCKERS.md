@@ -21,16 +21,6 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
   probe reads the browser's frames, or `FIXED=0`'s live fight, to judge frame rate. No ROADMAP item: the cause is in
   the measure. Nothing waits on the user.
 
-### `seaRow1938`'s Speed x1 test red on this machine again, the code not its cause; on `tools/gate/knownRed.json` (2026-11-08, R53g)
-- **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
-  with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a). Resolved once (docs/BLOCKERS_DONE.md,
-  2026-11-03: green alone in a review).
-- **What was read:** red in R53g's gate and again alone; then alone 1 of 2 with R53g, and on HEAD `db7953f0`'s battle
-  rule (R53g's sim change stashed) 1 of 3. Each run the same battle, 25–27 frames in 6 s (SwiftShader), 6 ticks, at most
-  1 German tracer and 4 British at once; it passes when the one German tracer and a British one share a frame. The machine
-  idle (load 5 %, no node or Chrome left over).
-- **Left:** the test leaves the list when it passes here twice running. The test is not changed. Nothing waits on the user.
-
 ### PLAN 7.83c: supply's beach layer −7 %, short of `dd3b730` + 0.03 (2026-10-23)
 - **The bar:** supply's mean a tick on a year from HEAD's year-4 save of seed 99 at most `dd3b730`'s rules'
   + 0.03 (0.168 ms; 0.153 against the pairs' own HEAD), the year's hash f278491d and the pin unchanged.
@@ -64,13 +54,6 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 - **What is left:** PLAN 7.90. The USA's 12 groups hold 288,000 men against about 1.35 million in the two
   piles; a round trip carries 4–8 divisions. No decision of the user's waits on it; the loop takes it after
   PLAN 7.80b.
-
-### `godUi1938` "Revive after a Kill": France's name not on the map after its revival (2026-10-18, PLAN 7.25d)
-Red at `7302970` (before 7.25d's change, stashed) and after it: `expect.poll(... nationLabels ...
-l.id === FRA ...).toEqual(['France'])` gets `[]` after 15 s (`tests/e2e/godUi1938.spec.ts:474`);
-France revived on 8,659 cells (10,474 before the Kill). The other nine tests of the file green. Not
-tried: when it was last green (the e2e suite runs in full at a phase review), whether the label is
-placed and dropped or never placed. Left to the next phase review's run (`npm run check:review`).
 
 ### Sweep on seeds 701–710: no stasis on 7 of 10 (2026-10-18, PLAN 7.18g)
 `docs/sweeps/2026-10-18-sweep-718g.md`: the same five largest nations 22, 20 and 20 years running on
@@ -113,18 +96,6 @@ the state of 3.10c1a's game read by today's code), France (nation 19) against It
   chose the share over it: "a front that is emptied to fill another"); what a far sector is
   worth (31 sectors in the Sahara that nobody attacks). Both are balance, and wait for
   Phase 7 (ADR-58).
-
-### 2026-11-16 — `relationsNamed1938`, seed 39943 on the phone: a nation at war or allied is unnamed in one run of three (found at R103's gate)
-- **Seen:** the same world a year on, the same build: "74 nations drawn, 43 at war or allied, 71 named", and of the
-  43 none unnamed in two runs and one (`n5`) in the third; run the gate's way (the file, one worker) 1 red of 3, the
-  test by itself 0 of 3. R103's first gate had it red in the run and green alone; the second red twice; the third
-  is the one committed on.
-- **Older than R103:** the same test was red in two of the day's four whole runs of the browser suite before it (R99's
-  and R101's, on the world before the pin moved) and green alone each time.
-- **Not known:** whether the panel's labels are laid out once before something they are measured by is ready (the
-  font, the panel's size) and not again, or the spec reads before the panel has settled (it waits for more than 3
-  labels, then reads). The first is the game's fault, the second the test's.
-- **Not done:** the cause found. Not put on `tools/gate/knownRed.json`: it is not a machine's red.
 
 ## Watch list
 

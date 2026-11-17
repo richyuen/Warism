@@ -476,3 +476,12 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - `r132-hold`'s last rule on `main` (R135's `data-death` kept). The critic's probes on this build: 57901 row 3, cursor 1;
   58901 5, 0; bannerRank 46 (bar under 50); 57903, the phone and Japan played as in ROADMAP. 45 banner specs green.
 - Next: the release checks (PROMPT.md, RELEASES 3): `npm run check:review`, `npm run bench -- G --gpu-only`.
+
+## 2026-11-17 — BLOCKERS looked at (the user's question)
+
+- Closed: `seaRow1938`'s Speed x1 (green 3 of 3 on both projects; off `tools/gate/knownRed.json`), `godUi1938`'s "Revive
+  after a Kill" (the file green 3 of 3). To the watch list: `relationsNamed1938` 39943's phone (green 3 of 3 after
+  4febbde7). Left open: R81h (the measure, nothing in the game), PLAN 7.83b, 7.83c, 7.89, 3.10c1d2 (October's AI bars,
+  each measured on rules since changed), the sweep's stasis on 701–710 (no sweep is a release condition, ADR-1072),
+  `seaBattleSeen1938` under load (the release's `check:review` judges it).
+

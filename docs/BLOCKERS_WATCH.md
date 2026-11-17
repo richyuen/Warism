@@ -2,6 +2,10 @@
 
 Suspicions and intermittent reds not worth an open entry; searched, not read (ADR-918). An entry that becomes a problem moves to `BLOCKERS.md`'s open entries.
 
+- **2026-11-17, from BLOCKERS: `relationsNamed1938`, seed 39943 on the phone** (red 1 run of 3 at R103's gate): green 3 of
+  3 alone after 4febbde7 (a label sought up to nineteen heights off its node; 39939's phone red on R137's world, green
+  with it). Back to BLOCKERS if a whole run has it red again.
+
 
 - **From the tenth independent read (PLAN 4.8a, 2026-10-12), suspicions not run:**
   - the economic AI lays up a standing fleet without asking `world.embarked`: transports with

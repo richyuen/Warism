@@ -3,6 +3,23 @@
 The resolved entries of BLOCKERS.md, moved here on 2026-11-02 (ADR-804) in the order they stood. Searched, not
 read. New resolved entries are moved here when they are resolved.
 
+### RESOLVED 2026-11-17 (green 3 runs of 3 on both projects, off `tools/gate/knownRed.json`) · `seaRow1938`'s Speed x1 test red on this machine again, the code not its cause; on `tools/gate/knownRed.json` (2026-11-08, R53g)
+- **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
+  with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a). Resolved once (docs/BLOCKERS_DONE.md,
+  2026-11-03: green alone in a review).
+- **What was read:** red in R53g's gate and again alone; then alone 1 of 2 with R53g, and on HEAD `db7953f0`'s battle
+  rule (R53g's sim change stashed) 1 of 3. Each run the same battle, 25–27 frames in 6 s (SwiftShader), 6 ticks, at most
+  1 German tracer and 4 British at once; it passes when the one German tracer and a British one share a frame. The machine
+  idle (load 5 %, no node or Chrome left over).
+- **Left:** the test leaves the list when it passes here twice running. The test is not changed. Nothing waits on the user.
+
+### RESOLVED 2026-11-17 (the file green 3 runs of 3 on both projects, France named) · `godUi1938` "Revive after a Kill": France's name not on the map after its revival (2026-10-18, PLAN 7.25d)
+Red at `7302970` (before 7.25d's change, stashed) and after it: `expect.poll(... nationLabels ...
+l.id === FRA ...).toEqual(['France'])` gets `[]` after 15 s (`tests/e2e/godUi1938.spec.ts:474`);
+France revived on 8,659 cells (10,474 before the Kill). The other nine tests of the file green. Not
+tried: when it was last green (the e2e suite runs in full at a phase review), whether the label is
+placed and dropped or never placed. Left to the next phase review's run (`npm run check:review`).
+
 ### RESOLVED 2026-11-17 (ADR-1114 (b), the user's decision) · R132: the banners' row still by the second, or R121's largest war first
 - **The bar:** `c75_bannerFlip.mjs 57901 150 head 60` and `… 58901 200 head 60`: the row changed 10 or fewer, the
   banner under a resting cursor 2 or fewer; `c75_bannerRank.mjs 57901 150` under 44 quiet banner-days of 440.
