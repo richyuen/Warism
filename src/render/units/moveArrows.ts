@@ -114,8 +114,17 @@ export function advances(
   return out;
 }
 
-/** How far toward white an arrow's fill is from its nation's colour: on its own land the colour itself is not seen. */
-export const ARROW_PALE = 0.5;
+/**
+ * How far toward white an arrow's fill is from its nation's colour: on its own land the colour itself is not seen.
+ * 0.3 since ROADMAP R106 (ADR-1097; 0.5 before): at 0.5 two nations' arrows side by side were two pale greys, told
+ * by where they pointed.
+ */
+export const ARROW_PALE = 0.3;
+/**
+ * With a nation looked at or played (`own` of `drawMoveArrows`), the width of another nation's arrow as a share of
+ * one of its men (ROADMAP R106): one's own marches read first.
+ */
+export const OTHER_WIDE = 0.7;
 
 /** The fill of an arrow of the nation whose colour is `own` (0xRRGGBB), as CSS. */
 export function arrowFill(own: number): string {
@@ -347,7 +356,8 @@ export interface DrawnArrow {
  * in the order of their strongest arrows); the most men first, one of fewer
  * cut short before one of its nation it would cross (`cutAtCrossing`); a faint one thinner and
  * at FAINT_ALPHA, a bold one never shorter than ARROW_LEAST_PX. `project` gives a cell's place on the screen
- * for each copy of the world in `offs`. Returns what it drew.
+ * for each copy of the world in `offs`. `own`: the nation looked at or played, whose arrows are whole where the
+ * others' are OTHER_WIDE of their width (0: every nation's whole). Returns what it drew.
  */
 export function drawMoveArrows(
   ctx: CanvasRenderingContext2D,
@@ -358,6 +368,7 @@ export function drawMoveArrows(
   vh: number,
   colorOf: (nation: number) => string,
   size = 1,
+  own = 0,
 ): DrawnArrow[] {
   const drawn: DrawnArrow[] = [];
   ctx.save();
@@ -371,6 +382,9 @@ export function drawMoveArrows(
   const paths = new Map<string, { nation: number; faint: boolean; outlines: number[][] }>();
   for (const a of order) {
     const width = arrowWidth(a.men) * size * (a.faint ? FAINT_WIDE : 1);
+    // Another nation's is drawn thinner (ROADMAP R106) along the same stretch: where it is cut, and whether it is drawn,
+    // is by its whole width, so that looking at a nation hides no advance (R96).
+    const thin = own !== 0 && a.nation !== own ? OTHER_WIDE : 1;
     for (const off of offs) {
       const way: number[] = [];
       let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity];
@@ -395,8 +409,9 @@ export function drawMoveArrows(
       const box = boxOf(start);
       if (box[2] < -edge || box[0] > vw + edge || box[3] < -edge || box[1] > vh + edge) continue;
       const stub = cutAtCrossing(start, earlier);
-      const o = arrowOutline(stub, width);
-      if (!o) continue;
+      const whole = arrowOutline(stub, width);
+      if (!whole) continue;
+      const o = thin === 1 ? whole : (arrowOutline(stub, width * thin) ?? whole);
       earlier.push({ way: stub, width, box: boxOf(stub) });
       before.set(key, earlier);
       const pk = `${a.nation}/${a.faint ? 1 : 0}`;
@@ -404,7 +419,7 @@ export function drawMoveArrows(
       if (path) path.outlines.push(o);
       else paths.set(pk, { nation: a.nation, faint: Boolean(a.faint), outlines: [o] });
       const [mx, my] = alongWay(stub, 1 / 3);
-      drawn.push({ nation: a.nation, men: a.men, ids: a.ids, faint: Boolean(a.faint), width, x: mx, y: my, way: stub });
+      drawn.push({ nation: a.nation, men: a.men, ids: a.ids, faint: Boolean(a.faint), width: width * thin, x: mx, y: my, way: stub });
     }
   }
   const alpha = ctx.globalAlpha;

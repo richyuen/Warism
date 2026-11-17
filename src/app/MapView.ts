@@ -2267,19 +2267,21 @@ export class MapView {
     const far = Math.max(this.metresPerPx > T1_MAX_M ? 1 - this.shares.markers : 0, boxes);
     const close = Math.min(this.shares.elements, 1 - boxes);
     const t = this.tickProgress(now);
+    // The nation played, else the one looked at (ROADMAP R106): its arrows whole, the others' thinner.
+    const own = this.selectionNation || this.selected;
     this.moveArrows = [
-      ...(far > 0.01 ? this.drawMarches(ctx, this.marchesShown(viewer), cam, far) : []),
-      ...(close > 0.01 ? this.drawMarches(ctx, this.marchesShown(viewer, (i) => this.shownAt(i, t)), cam, close) : []),
+      ...(far > 0.01 ? this.drawMarches(ctx, this.marchesShown(viewer), cam, far, own) : []),
+      ...(close > 0.01 ? this.drawMarches(ctx, this.marchesShown(viewer, (i) => this.shownAt(i, t)), cam, close, own) : []),
     ];
   }
 
   /** Draws the arrows of `marches` at `alpha` (ROADMAP R89a) and returns them. */
-  private drawMarches(ctx: CanvasRenderingContext2D, marches: readonly March[], cam: Camera, alpha: number): DrawnArrow[] {
+  private drawMarches(ctx: CanvasRenderingContext2D, marches: readonly March[], cam: Camera, alpha: number, own = 0): DrawnArrow[] {
     if (alpha <= 0.01 || marches.length === 0) return [];
     const [vw, vh] = [this.canvas.clientWidth, this.canvas.clientHeight];
     ctx.save();
     ctx.globalAlpha = alpha;
-    const drawn = drawMoveArrows(ctx, groupMarches(marches, cam.scale), (x, y) => worldToScreen(cam, x, y, vw, vh), itemOffsets(cam, this.geo, vw), vw, vh, (n) => arrowFill(this.ownColor.get(n) ?? 0x888888), this.unitScale);
+    const drawn = drawMoveArrows(ctx, groupMarches(marches, cam.scale), (x, y) => worldToScreen(cam, x, y, vw, vh), itemOffsets(cam, this.geo, vw), vw, vh, (n) => arrowFill(this.ownColor.get(n) ?? 0x888888), this.unitScale, own);
     ctx.restore();
     return drawn;
   }

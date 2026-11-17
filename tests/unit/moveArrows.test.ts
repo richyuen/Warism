@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ARROW_LONG_PX, ARROW_MAX_MEN, ARROW_MAX_PX, ARROW_MIN_MEN, ARROW_MIN_PX, ARROW_SHORTEST_PX, ARROW_TAIL, CROSS_GAP_PX, GROUP_START_PX, HEAD_WIDE, advances, arrowFill, arrowOutline, arrowWidth, cutAtCrossing, groupMarches, roundedWay, wayStart, type March } from '../../src/render/units/moveArrows';
+import { ARROW_PALE, OTHER_WIDE, ARROW_LONG_PX, ARROW_MAX_MEN, ARROW_MAX_PX, ARROW_MIN_MEN, ARROW_MIN_PX, ARROW_SHORTEST_PX, ARROW_TAIL, CROSS_GAP_PX, GROUP_START_PX, HEAD_WIDE, advances, arrowFill, arrowOutline, arrowWidth, cutAtCrossing, drawMoveArrows, groupMarches, roundedWay, wayStart, type March } from '../../src/render/units/moveArrows';
 
 // ROADMAP R89a (ADR-1073, ADR-1074): a march is a thick arrow, as wide as its men are many; the
 // marches of a nation that start together and head the same way are one arrow.
@@ -239,8 +239,33 @@ describe('which marches are advances (R96: onto land an enemy holds)', () => {
 
 describe("an arrow's fill (R89a)", () => {
   it('half the way from its nation\'s colour to white', () => {
-    expect(arrowFill(0x000000)).toBe('rgb(128, 128, 128)');
-    expect(arrowFill(0xff0080)).toBe('rgb(255, 128, 192)');
+    // ARROW_PALE of the way to white (0.3 since ROADMAP R106; 0.5 before, and these were 128, 128, 128 and 255, 128, 192).
+    expect(ARROW_PALE).toBe(0.3);
+    expect(arrowFill(0x000000)).toBe('rgb(77, 77, 77)');
+    expect(arrowFill(0xff0080)).toBe('rgb(255, 77, 166)');
     expect(arrowFill(0xffffff)).toBe('rgb(255, 255, 255)');
+  });
+});
+
+describe("another nation's arrow with a nation looked at (ROADMAP R106)", () => {
+  // A context that draws nothing: the arrows' widths are what is read.
+  const ctx = { save() {}, restore() {}, beginPath() {}, moveTo() {}, lineTo() {}, closePath() {}, stroke() {}, fill() {}, globalAlpha: 1, lineJoin: '', strokeStyle: '', lineWidth: 0, fillStyle: '' } as unknown as CanvasRenderingContext2D;
+  const arrows = [
+    { nation: 1, men: 20_000, ids: [1], line: [10, 10, 200, 10] },
+    { nation: 2, men: 20_000, ids: [2], line: [10, 100, 200, 100] },
+  ];
+  const widths = (own?: number): number[] => drawMoveArrows(ctx, arrows, (x, y) => [x, y], [0], 400, 300, () => '#fff', 1, own).sort((a, b) => a.nation - b.nation).map((a) => a.width);
+
+  it('its own whole, the other OTHER_WIDE of its width; with none looked at, both whole', () => {
+    const [a, b] = widths();
+    expect(a).toBe(arrowWidth(20_000));
+    expect(b).toBe(a);
+    const [mine, theirs] = widths(1);
+    expect(mine).toBe(a);
+    expect(theirs).toBeCloseTo(OTHER_WIDE * a!, 6);
+    expect(OTHER_WIDE).toBeLessThan(1);
+    const [x, y] = widths(2);
+    expect(y).toBe(a);
+    expect(x).toBeCloseTo(OTHER_WIDE * a!, 6);
   });
 });

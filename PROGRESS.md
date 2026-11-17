@@ -317,3 +317,10 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 
 - `takingCells`, the snapshot's `taking`, `src/render/fx/taking.ts`. The first glow (orange alone, faint) was not
   seen at 1,500 m/px: the taker's colour in a stronger glow.
+
+## 2026-11-16 — R106, R107: the arrows by side; occupied land in bands (ADR-1097, ADR-1098)
+
+- R106: `ARROW_PALE` 0.3, `OTHER_WIDE`. Thinner in the layout it dropped an advance with a nation looked at
+  (`orderLines1938` red): thinner in the drawing alone.
+- R107: bands and the dashed old border in the map's pass, on the ground only. One run of the browser suite for
+  the two, and one commit.

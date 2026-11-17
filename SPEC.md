@@ -1945,6 +1945,10 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   `FRONT_CASE` 0.7, to `FRONT_CASE_PX` 4.4 px), a band of orange red (`FRONT_BAND_RGB`, to `FRONT_BAND_PX` 3.2 px)
   and a core near white (`FRONT_CORE_RGB`, at least `FRONT_CORE_PX` 1.5 px), at every zoom, in the modes of the
   palette's fills. Who is at war: `warTable` (512 nations a side), `MapRenderer.setWars` from the snapshot's `wars`.
+- **Occupied land on the ground of T2 and T3** (ROADMAP R107, ADR-1098; `mapShader.ts`): diagonal bands of the
+  occupier's cast (`OCCUPIED_BAND_PX` 34, `OCCUPIED_BAND_DUTY` 0.4; the fill `OCCUPIED_BAND_CAST` 0.5 on a band,
+  `OCCUPIED_GAP_CAST` 0.18 between), and a dashed dark line (`OLD_BORDER` 0.6, `OLD_BORDER_PX` 1.2,
+  `OLD_BORDER_DASH_PX` 9) where the holder's own land meets what it occupies. The far tiers: the hatching.
 - **Ground being taken** (ROADMAP R105, ADR-1096; `src/render/fx/taking.ts`): each cell of the snapshot's `taking`
   (`takingCells`: hold progress 1 to 255) has a hot glow (`TAKING_GLOW_RGB`, `TAKING_GLOW_CELLS` 1.15 cells,
   `TAKING_GLOW_MIN` 0.25 to `TAKING_GLOW_MAX` 0.7 by its progress) and in it the colour of the nation taking it

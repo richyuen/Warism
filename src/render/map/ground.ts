@@ -87,6 +87,21 @@ export const BORDER_CAST = 0.62;
 /** 0.42 until PLAN 7.4f14 (ADR-449): French-held Germany was a blue field that read as a lake. */
 export const OCCUPIED_CAST = 0.3;
 export const BORDER_BAND = 0.6;
+/**
+ * Occupied land on the ground of T2 and T3 (ROADMAP R107, ADR-1097): broad bands of the occupier's cast, where it was
+ * one even cast (`OCCUPIED_CAST`) that read as a haze over the terrain; and a dashed dark line where the occupier's
+ * own land ends and what it occupies begins, the border as it was. `OCCUPIED_BAND_PX`: a band and the gap after it,
+ * CSS px along the diagonal; `OCCUPIED_BAND_DUTY`: the band's share of that; the fill's share of the ground's colour
+ * on a band and between two (their mean about `OCCUPIED_CAST`, so the land is no more of the occupier's colour than
+ * it was: ADR-449's lake). `OLD_BORDER`: the line's share of the pixel, its dashes `OLD_BORDER_DASH_PX` long.
+ */
+export const OCCUPIED_BAND_PX = 34;
+export const OCCUPIED_BAND_DUTY = 0.4;
+export const OCCUPIED_BAND_CAST = 0.5;
+export const OCCUPIED_GAP_CAST = 0.18;
+export const OLD_BORDER = 0.6;
+export const OLD_BORDER_PX = 1.2;
+export const OLD_BORDER_DASH_PX = 9;
 
 /**
  * The sea at T2 and T3 by its depth (PLAN 4.7f): the elevation's sea floor (to 10 m) lightens

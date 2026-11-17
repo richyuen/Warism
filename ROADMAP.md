@@ -379,9 +379,22 @@ hero is one tank.
   (the fifth day, at 4,000, 1,500 and 600 m/px).
   - Not done: the glow moving in time (a pulse); a mark on a stretch that is pressed and holds (nothing is drawn
     there, as on one nobody presses).
-- [ ] R106 **Movement arrows by side**: the arrows in their nations' colours, another nation's thinner; the dotted
-  line for the player's own orders only.
-- [ ] R107 **Occupied land read at the close zooms**: stripes of the occupier's colour, an edge at the old border.
+- [x] R106 **Movement arrows by side** (ADR-1097). The arrows were their nations' colours half-way to white: two
+  nations' side by side two pale greys. Now three tenths of the way (`ARROW_PALE` 0.3), and with a nation played or
+  looked at another nation's arrow is drawn `OTHER_WIDE` (0.7) of its width, along the same stretch (where it is
+  cut and whether it is drawn are by its whole width: R96's "looking at a nation hides no advance" holds,
+  `orderLines1938`). The dotted line was the picked and the selected formations' alone already (R89a): unchanged.
+  Tests: `tests/unit/moveArrows.test.ts`. Shots: `docs/evidence/R106/`.
+  - Seen in the shot: a faint arrow (a march behind the lines) of a nation on its own land is harder to see than
+    it was (pink on pink at half opacity); the bold ones read by their dark rim.
+- [x] R107 **Occupied land read at the close zooms** (ADR-1098). On the ground of T2 and T3 occupied land was one
+  even cast of the occupier's colour (`OCCUPIED_CAST` 0.3), a haze. Now broad diagonal bands of it (34 px a band and
+  its gap, the fill 0.5 of the ground's colour on a band and 0.18 between: about as much of the colour in all), and
+  a dashed dark line where the occupier's own land ends and what it occupies begins. The legend there: "Banded in
+  the occupier's colour: occupied land". The far zooms' hatching as it was. `occupiedGround1938`, `occupation1938`
+  and `legendOccupied1938` green unchanged. Shots: `docs/evidence/R107/` (Japan on China's land at 150 and 20 m/px;
+  France on Germany's at 300 and 150, with the old border, the front, the glow of R105 and the arrows of R106).
+  - No test of its own measures the bands or the line: the shots are its evidence.
 - [ ] R108 **Fewer counters at the world's zoom** over the names.
 - [ ] R109 **Names and tags at the middle zooms**: a nation's name not under the tags.
 

@@ -18,7 +18,7 @@ import { AIR_CONTESTED_COLOR, AIR_HELD_TINT, FALLOUT_COLOR, FALLOUT_FADE, FALLOU
 
 const AIR_CONTESTED_RGB = [16, 8, 0].map((s) => (((AIR_CONTESTED_COLOR >> s) & 255) / 255).toFixed(3)).join(', ');
 const FALLOUT_RGB = [16, 8, 0].map((s) => (((FALLOUT_COLOR >> s) & 255) / 255).toFixed(3)).join(', ');
-import { BORDER_BAND, BORDER_CAST, FAR_EDGE, FAR_EDGE_BAND, FAR_RELIEF, FAR_SEA_DEEP, FAR_SEA_SHALLOW, FRONT_BAND_PX, FRONT_BAND_RGB, FRONT_CASE, FRONT_CASE_PX, FRONT_CASE_RGB, FRONT_CORE_PX, FRONT_CORE_RGB, FRONT_GLOW, FRONT_GLOW_PX, FRONT_GLOW_RGB, FRONT_NATIONS, GROUND_CAST, HATCH_AT_GROUND, OCCUPIED_CAST, SEA_DEEP, SEA_DEPTH_FULL, SEA_DEPTH_KNEE, SEA_SHALLOW } from './ground';
+import { OCCUPIED_BAND_CAST, OCCUPIED_BAND_DUTY, OCCUPIED_BAND_PX, OCCUPIED_GAP_CAST, OLD_BORDER, OLD_BORDER_DASH_PX, OLD_BORDER_PX, BORDER_BAND, BORDER_CAST, FAR_EDGE, FAR_EDGE_BAND, FAR_RELIEF, FAR_SEA_DEEP, FAR_SEA_SHALLOW, FRONT_BAND_PX, FRONT_BAND_RGB, FRONT_CASE, FRONT_CASE_PX, FRONT_CASE_RGB, FRONT_CORE_PX, FRONT_CORE_RGB, FRONT_GLOW, FRONT_GLOW_PX, FRONT_GLOW_RGB, FRONT_NATIONS, GROUND_CAST, HATCH_AT_GROUND, OCCUPIED_CAST, SEA_DEEP, SEA_DEPTH_FULL, SEA_DEPTH_KNEE, SEA_SHALLOW } from './ground';
 
 export const MAP_VS = `#version 300 es
 precision highp float;
@@ -473,8 +473,23 @@ void main() {
     // How far inland: 0 on a border, 1 where no other id is within two cells.
     float inland = n > 1 ? acc[bi] - second : 1.0;
     float fillShare = mix(${BORDER_CAST.toFixed(3)}, ${GROUND_CAST.toFixed(3)}, smoothstep(0.0, ${BORDER_BAND.toFixed(3)}, inland));
-    if (occ[bi] > 0.5 * acc[bi]) fillShare = max(fillShare, ${OCCUPIED_CAST.toFixed(3)});
+    float oshare = occ[bi] / max(acc[bi], 1e-4);
+    if (oshare > 0.5) {
+      // Broad bands of the occupier's cast (ROADMAP R107), soft at their edges; between two, less of it.
+      float along = fract((gl_FragCoord.x + gl_FragCoord.y) / (${OCCUPIED_BAND_PX.toFixed(1)} * uDpr));
+      float soft = 1.5 / ${OCCUPIED_BAND_PX.toFixed(1)};
+      float band = smoothstep(0.0, soft, along) * (1.0 - smoothstep(${OCCUPIED_BAND_DUTY.toFixed(3)}, ${OCCUPIED_BAND_DUTY.toFixed(3)} + soft, along));
+      fillShare = max(fillShare, mix(${OCCUPIED_GAP_CAST.toFixed(3)}, ${OCCUPIED_BAND_CAST.toFixed(3)}, band));
+    }
     col = mix(col, mix(terr, col, fillShare), uDetail);
+    // The border as it was (ROADMAP R107): where the holder's own land ends and what it occupies begins, a dashed
+    // dark line. Not at a front (the two strongest ids are then two holders, and the front has its own line).
+    float ow = fwidth(oshare);
+    if (ow > 0.0 && oshare > 0.02 && oshare < 0.98 && inland > 0.5) {
+      float edge = 1.0 - smoothstep(${OLD_BORDER_PX.toFixed(2)} * uDpr - 0.5, ${OLD_BORDER_PX.toFixed(2)} * uDpr + 0.5, abs(oshare - 0.5) / ow);
+      float dash = step(0.5, fract((gl_FragCoord.x - gl_FragCoord.y) / (2.0 * ${OLD_BORDER_DASH_PX.toFixed(1)} * uDpr)));
+      col = mix(col, vec3(0.06, 0.06, 0.08), edge * dash * ${OLD_BORDER.toFixed(2)} * uDetail);
+    }
   }
 #endif
 

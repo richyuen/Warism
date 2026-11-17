@@ -494,3 +494,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
   did not say who takes the cell.
 - **Not done:** a pulse (the view draws when something changes); a mark where a front is pressed and holds.
 - **No sim input:** the pin of seed 99 stands.
+
+### ADR-1097 · 2026-11-16 · accepted (the user: "Accept your recommendations") — R106: the arrows nearer their nations' colours; another nation's thinner
+- **Was (ADR-1073):** an arrow's fill half-way from its nation's colour to white, every nation's as wide as its men.
+- **Decision:** `ARROW_PALE` 0.3. `drawMoveArrows` takes `own` (the nation played, else the one looked at): another
+  nation's arrow is drawn `OTHER_WIDE` (0.7) of its width. The layout (the stretch, the cut before a crossing, the
+  shortest drawn) stays by the whole width: thinner in the layout, an advance of Germany's was dropped with Poland
+  looked at (12 arrows -> 11, `orderLines1938`, R96's rule).
+- **Not changed:** the dotted order line (the picked and the selected only, R89a).
+
+### ADR-1098 · 2026-11-16 · accepted (the user: "Accept your recommendations") — R107: occupied land in broad bands on the ground, and the old border dashed
+- **Was:** PLAN 2.11f took the 7-px hatching off the ground of T2 and T3 (it lay over the whole view where a front
+  had moved) and left the occupier's cast, even; ADR-449 lowered that cast from 0.42 (French-held Germany "read as
+  a lake"). At 20 to 30 m/px in the user's picture the cast over Spain's ground is a grey haze.
+- **Decision** (`mapShader.ts`, `ground.ts`), on the ground only (by `uDetail`):
+  - bands along the diagonal, `OCCUPIED_BAND_PX` (34) a band and its gap, the band `OCCUPIED_BAND_DUTY` (0.4) of it,
+    soft-edged: the fill's share `OCCUPIED_BAND_CAST` (0.5) on a band, `OCCUPIED_GAP_CAST` (0.18) between. Their mean
+    0.31: no more of the occupier's colour over the land than ADR-449 left.
+  - where the holder's own land meets what it occupies (the occupied share of the strongest holder's weight crossing
+    a half, away from a front), a dark line of `OLD_BORDER_PX` (1.2) in dashes of `OLD_BORDER_DASH_PX` (9), `OLD_BORDER`
+    (0.6) of the pixel.
+- **Against PLAN 2.11f, read:** that took a fine weave off the ground; these are bands five times as broad, and the
+  7-px measure of `occupiedGround1938` (the hatching's contrast under a fifth of T1's) holds unchanged.
+- **No sim input.**
