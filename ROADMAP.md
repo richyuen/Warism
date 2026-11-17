@@ -14,6 +14,39 @@ Rules:
 - A batch ends with a critic run and a release tag (`release-<YYYY-MM-DD>`, PROMPT.md "Releases"; a
   second on one day takes a letter, `release-2026-11-03b`, ADR-820).
 
+## Batch 43 — the user's decision of 2026-11-17 ("Let's do 1-6" of the recommendations after release-2026-11-17)
+
+- [ ] R138 **The nightly's ten-year tests run out of time** (`.github/workflows/nightly.yml`, job `ten-year`,
+  `timeout-minutes: 60`): cancelled at 60 min on 2026-11-13, 11-15 and 11-17 (runs 43412792679, 43705787921,
+  44077095528); 53–54 min on the nights it ended. Also the 11-16 red (43855142847): `specRefs` §8 and
+  `snapshot-perf` in the unit job; green on 11-17, the cause named in the item's evidence. AT: three nightly runs in a
+  row green, the ten-year job's longest under 45 min (split over jobs or made cheaper; a longer limit alone is an ADR,
+  the user's decision).
+- [ ] R139 **Wars in which nothing is taken** (run 75's non-blocking 5: 20 of 103 wars with no cell held by either
+  side at day 30; BLOCKERS' France's far end and the USA's lift stand near it). Find the cause first on the critic's
+  seeds; one cause a commit. AT: `npx tsx tools/diag/warOpening.ts` on 58211, 58213, 58215 (and two seeds no tuning
+  has seen): wars with no cell held at day 30 under 10 % (19 % now), the opening bars of ADR-1094 kept. Checker:
+  the rule it changes, in diploInvariants or its kin.
+- [ ] R140 **The same great powers for decades** (BLOCKERS "Sweep on seeds 701–710: no stasis on 7 of 10",
+  2026-10-18: the same five largest nations 20–22 years running on 702, 704, 706). Measure on HEAD first (a sweep
+  on seeds no tuning has seen); if it holds, the cause found is an item of its own. AT: a 10 × 50 sweep, the same
+  five largest for 20 years or more on none of the 10; or the entry closed with HEAD's figures.
+- [ ] R141 **A row of History flies to its place** (run 75's small things: "a row of History cannot be clicked to
+  its place"; the ticker's rows do, `PLACE_VIEW_KM`). AT: a Playwright spec, every History kind with a place (a
+  battle, an annexation, a strike, a capital, a revolt) on two seeds, at 1600 × 900 and 390 × 844: a click puts the
+  place in the view; a row with no place is not offered as a link.
+- [ ] R142 **The director: a camera that goes to what happens** (goal 1; an idea, unmeasured). A switch in the bottom
+  bar: the camera flies to a new war's front, a Major Battle, a nuclear strike or a capital taken (the ticker's and
+  `battleView`'s places), stays some seconds, and goes on; the player's pan, zoom or click hands the camera back.
+  The page's alone, no sim rule. AT: 10 min at 1 day/s on two seeds: at least 80 % of the ticker's war and battle
+  rows visited, no cut within 4 s of the last, a manual pan or zoom stops it within a frame; 60 fps held (`npm run
+  bench -- G`).
+- [ ] R143 **The borders' time-lapse** (goals 1 and 2; an idea, unmeasured). The cells that changed owner each month,
+  saved (a new section, in `UPGRADABLE_SECTIONS`), and a slider in History or Charts that plays the map from the
+  start to now. AT: on two seeds, the time-lapse's map at each 1 January equals the ownership of a run stopped
+  there; the record under 5 % of a 50-year save; 60 fps while it plays; save and load bit-identical, the pin moved
+  only if the hash takes the section (ADR).
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for
