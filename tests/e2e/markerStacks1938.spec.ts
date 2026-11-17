@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
-import { NUDGE_MAX_PX } from '../../src/render/units/markerStacks';
+import { stackRuleAt } from '../../src/render/units/markerStacks';
 import { strengthText } from '../../src/render/units/markers';
 import { cellOf } from '../../src/sim/data/terrain';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
@@ -117,7 +117,8 @@ test('T1 markers of two nations that stand on each other move apart by a few px'
     console.log(`${mPerPx} m/px: ${markers.length} markers; more than a quarter under another: ${deep.length} pairs; ${off.filter((d) => d > 0.75).length} boxes off their formations, the furthest ${Math.max(...off).toFixed(1)} px`);
     expect(deep, `${mPerPx} m/px`).toEqual([]);
     // (A box is drawn on whole px: up to 0.71 px from its formation with no move at all.)
-    expect(Math.max(...off), `${mPerPx} m/px: the furthest box from its formation`).toBeLessThanOrEqual(NUDGE_MAX_PX + 0.75);
+    // (From 1,200 m/px out the rule's 13 px, ROADMAP R125, ADR-1108: 8 before, and nearer in still.)
+    expect(Math.max(...off), `${mPerPx} m/px: the furthest box from its formation`).toBeLessThanOrEqual(stackRuleAt(mPerPx).nudgeMax + 0.75);
     if (mPerPx !== 1200) await page.screenshot({ path: path.join(out, `markers-apart-spain-${mPerPx}m.png`) });
   }
 });

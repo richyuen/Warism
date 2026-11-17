@@ -495,7 +495,7 @@ Each with the critic's own "seen fixed when" (`critic/CRITIC_REPORT.md`).
   wars with nothing in their first month (16 of 111, a measure), `slowClick`'s named cases (ADR-914's list),
   "COMMUNIST CHINA" under its capital's flag (the names' fitting: with the odd-shaped names of Batch 38's foot).
 
-Left of run 73, for the user (not ticked, not open: each wants a choice):
+Left of run 73, for the user (each wanted a choice; taken on 2026-11-17, ADR-1108's recommendations: Batch 41):
 - **R124, R73-N4: hero tags on counters in play** at 6,000 m/px. Done of it: a hero's counter takes, of its place
   and a step up or down (R8's rule: no further), the first that covers no nation's counter. In the critic's scene
   (`c73_look.mjs 56901 1600 900 45,180,400`, day 400) T-42, Bismarck, Roma and HMS Hood still stand on a counter
@@ -534,6 +534,32 @@ in their first month (9 of 85); `slowClick`'s named cases; the phone's ticker go
 on purpose), the cue's "Scroll" and "Click" on a phone, "COMMUNIST CHINA" under its flag, a fleet's refusal.
 
 **What the bar needs** (semantic zoom, ADR-843): R128 mended, which is this run's whole fall.
+
+## Batch 41 — R124 and R125, the user's decision ("Accept recommendations for R124 and R125 and let's work on them")
+
+- [x] R125 **R73-N5: markers over one another at 1,200 to 1,800 m/px** (ADR-1110; ADR-1108's (a) at the far end of
+  T1). From 1,200 m/px out a marker more than 2 % under its nation's is in its stack, two boxes on each other are
+  parted to nothing, a box at most 13 px from its formation; nearer, the quarter as it was. AT, the critic's probe on
+  this build (`c74_markers.mjs 56951 r125 1600 900 1675,372 10,20,30 1800,1200,600`, a preview on port 5373), the
+  pairs on one another of the markers, days 10, 20, 30: at 1,800 m/px 3 of 48, 9 of 54, 12 of 59 (the bar: under a
+  quarter each day; 24 of 60, 47 of 71, 39 of 72 before); at 1,200, 0, 3 and 7 (5, 12, 17); at 600, 0, 4, 6 (the
+  rule there is the old one). The wheel across 1,200 m/px on that front, day 30 (900 to 1,758 and back; 1,100 to
+  1,375 and back; every drawn frame): no marker of a stack or parted box moved over 6 px in a frame, none's opacity
+  changed by over a half. Tests: `tests/unit/markerStacks.test.ts` (five new; the 29 of the quarter untouched),
+  `tests/e2e/markerStacks1938.spec.ts` (its bound on a box's distance is the rule's of the zoom), `markers1938`,
+  `handover1938`.
+  - Seen in the wheel's run, not of this rule: a hero's marker (R34g's step clear of the markers of the frame, id
+    1469 at Linyi) leaps as the zoom changes: 6 and 1 leaps on HEAD's build, 4 and 5 on this (on this one a frame
+    below its unit while the boxes ease across 1,200 m/px). An item of its own: R131.
+- [ ] R124 **R73-N4: hero tags on counters in play at 6,000 m/px** (ADR-1108's (a): the hero's counter the others'
+  size where it would cover a nation's counter; its place a function of where the heroes stand, ADR-1109). AT: the
+  critic's scene (`c74_look.mjs 56901 1600 900 45,180,400`, day 400, Europe at 6,000 m/px): no hero's counter over a
+  counter's number; and R128's bars hold (`c74_heroPop.mjs 56901 400` and `57905 200`: the zoom's jumps 2 or fewer,
+  running 20 s 34 and 4 or fewer; `WHEEL=1` 4 and 2 or fewer).
+- [ ] R131 **A hero's marker leaps at T1 as the zoom changes** (R34g's `heroClear` chooses above or below anew each
+  frame against the frame's markers; seen in R125's wheel run). AT: R125's wheel run (seed 56951, day 30, 900 to
+  1,758 m/px and back; 1,100 to 1,375 and back): the hero's marker moves over 6 px in a frame at most twice a pass
+  (its step up and its step back), never to the other side of its unit for a frame.
 
 ## Released
 

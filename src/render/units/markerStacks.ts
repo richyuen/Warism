@@ -18,6 +18,11 @@
  * box by a few px, never further than `NUDGE_MAX_PX` from its formation, until neither is more
  * than a quarter under the other. Where the boxes stand is a function of where the formations
  * stand and of nothing else (PLAN 2.7v); a box eases to a new place over NUDGE_MS.
+ *
+ * From FAR_FROM_M out (1,200 m/px to T1's far end; ROADMAP R125, ADR-1108, the user's decision) the rule is
+ * tighter, `STACK_RULE_FAR`: a marker any more than a fiftieth under its nation's is in it, two nations' are parted
+ * to nothing, and a box may stand 13 px from its formation. Critic runs 73 and 74 (R73-N5): on the front of Japan
+ * and China at 1,800 m/px 47 pairs of 71 markers were on one another, the numbers of half a heap hidden.
  */
 import { FADE_MS, progress, running, smooth, SwitchBank } from '../timing';
 import { MARKER_H } from './markers';
@@ -50,6 +55,20 @@ export const STACK_UNDER = 0.25;
 /** A marker in a stack comes out once it is under its lead by less than this share. */
 export const STACK_HOLD = 0.1;
 
+/** The limits the markers are stacked and parted by. */
+export interface StackRule {
+  /** More than this share of its box under a stronger marker of its nation: it goes into that one. */
+  under: number;
+  /** A marker in a stack comes out once it is under its lead by no more than this share (less than `under`). */
+  hold: number;
+  /** Two shown boxes more than this share on each other move apart. */
+  partOver: number;
+  /** They move until this share is left under. */
+  partTo: number;
+  /** No shown box is moved further than this from its formation, px. */
+  nudgeMax: number;
+}
+
 /** The share of a box `w` × `h` at centre `a` that lies under one at centre `b`. */
 export function shareUnder(a: { x: number; y: number }, b: { x: number; y: number }, w: number, h: number): number {
   const ox = w - Math.abs(a.x - b.x);
@@ -63,7 +82,7 @@ export function shareUnder(a: { x: number; y: number }, b: { x: number; y: numbe
  * than STACK_HOLD for one that `held`: it is in a stack already). A stack's box does not grow,
  * so one pass settles it.
  */
-export function stackMarkers(items: readonly StackItem[], w: number, h: number, held: (id: number) => boolean = () => false): Map<number, Stack> {
+export function stackMarkers(items: readonly StackItem[], w: number, h: number, held: (id: number) => boolean = () => false, rule: StackRule = STACK_RULE): Map<number, Stack> {
   const out = new Map<number, Stack>();
   // The shown markers by the cell of a grid of boxes: a marker can only be under one in its own
   // cell or a neighbouring one. Every formation of the world is here, in every frame at T1: for
@@ -72,7 +91,7 @@ export function stackMarkers(items: readonly StackItem[], w: number, h: number, 
   const leads = new Map<number, StackItem[]>();
   const cellOf = (x: number, y: number): number => (Math.floor(x / w) + 0x8000) * 0x10000 + Math.floor(y / h) + 0x8000;
   for (const it of [...items].sort((a, b) => b.strength - a.strength || a.id - b.id)) {
-    const limit = held(it.id) ? STACK_HOLD : STACK_UNDER;
+    const limit = held(it.id) ? rule.hold : rule.under;
     let lead: StackItem | null = null;
     let most = limit;
     for (let dx = -1; dx <= 1; dx++)
@@ -114,10 +133,24 @@ export const NUDGE_MS = 150;
 /** Boxes are moved until neither is under the other by more than this (a little under the quarter, for room). */
 const NUDGE_TO = 0.24;
 
-/** The markers that a move of at most NUDGE_MAX_PX each could bring onto each one of `items`, by id. */
-function withinReach(items: readonly StackItem[], w: number, h: number): Map<number, StackItem[]> {
+/** The rule of PLAN 2.7s1 and 2.7s2: the quarter. Nearer than FAR_FROM_M. */
+export const STACK_RULE: StackRule = { under: STACK_UNDER, hold: STACK_HOLD, partOver: STACK_UNDER, partTo: NUDGE_TO, nudgeMax: NUDGE_MAX_PX };
+/** Metres a pixel from which the markers are stacked and parted by STACK_RULE_FAR (ROADMAP R125): a cell is 10 px there and a marker 26. */
+export const FAR_FROM_M = 1200;
+/**
+ * The rule from FAR_FROM_M out (ROADMAP R125, ADR-1108): hardly any of a box under another. 13 px of a marker 34
+ * high: with 8 the critic's front had 18 pairs of 59 markers on one another on its thirtieth day, with 13, 13.
+ */
+export const STACK_RULE_FAR: StackRule = { under: 0.02, hold: 0, partOver: 0.001, partTo: 0, nudgeMax: Math.round((MARKER_H * 13) / 34) };
+/** The rule at `metresPerPx` (1,200 itself is far: a camera set to it reads a hair either side). */
+export function stackRuleAt(metresPerPx: number): StackRule {
+  return metresPerPx >= FAR_FROM_M * 0.999 ? STACK_RULE_FAR : STACK_RULE;
+}
+
+/** The markers that a move of at most `rule.nudgeMax` each could bring onto each one of `items`, by id. */
+function withinReach(items: readonly StackItem[], w: number, h: number, rule: StackRule): Map<number, StackItem[]> {
   // By the cell of a grid of boxes, where the formations stand: a box moved by at most
-  // NUDGE_MAX_PX can only meet one from its own cell or a neighbouring one.
+  // `rule.nudgeMax` can only meet one within `span` cells.
   const cells = new Map<number, StackItem[]>();
   const cellOf = (x: number, y: number): number => (Math.floor(x / w) + 0x8000) * 0x10000 + Math.floor(y / h) + 0x8000;
   for (const it of items) {
@@ -125,13 +158,13 @@ function withinReach(items: readonly StackItem[], w: number, h: number): Map<num
     if (there) there.push(it);
     else cells.set(cellOf(it.x, it.y), [it]);
   }
-  const reach = w + 2 * NUDGE_MAX_PX;
+  const reach = w + 2 * rule.nudgeMax;
   const span = Math.ceil(reach / w);
   const near = new Map<number, StackItem[]>();
   for (const it of items) {
     const list: StackItem[] = [];
     for (let dx = -span; dx <= span; dx++)
-      for (let dy = -span; dy <= span; dy++) for (const o of cells.get(cellOf(it.x + dx * w, it.y + dy * h)) ?? []) if (o.id !== it.id && Math.abs(o.x - it.x) < reach && Math.abs(o.y - it.y) < h + 2 * NUDGE_MAX_PX) list.push(o);
+      for (let dy = -span; dy <= span; dy++) for (const o of cells.get(cellOf(it.x + dx * w, it.y + dy * h)) ?? []) if (o.id !== it.id && Math.abs(o.x - it.x) < reach && Math.abs(o.y - it.y) < h + 2 * rule.nudgeMax) list.push(o);
     near.set(it.id, list);
   }
   return near;
@@ -149,7 +182,8 @@ export type PartingWay = 'shorter' | 'between';
  * apart by half each, to NUDGE_TO; no box further than NUDGE_MAX_PX from its formation. Every
  * box starts on its formation. `near`: `withinReach` of these items or of more.
  */
-export function partAlong(items: readonly StackItem[], w: number, h: number, way: PartingWay, near: ReadonlyMap<number, readonly StackItem[]> = withinReach(items, w, h)): Map<number, [number, number]> {
+export function partAlong(items: readonly StackItem[], w: number, h: number, way: PartingWay, near?: ReadonlyMap<number, readonly StackItem[]>, rule: StackRule = STACK_RULE): Map<number, [number, number]> {
+  near ??= withinReach(items, w, h, rule);
   const out = new Map<number, [number, number]>();
   for (const it of items) out.set(it.id, [0, 0]);
   const at = (it: StackItem): { x: number; y: number } => {
@@ -158,9 +192,9 @@ export function partAlong(items: readonly StackItem[], w: number, h: number, way
   };
   const clamp = (o: [number, number]): void => {
     const d = Math.hypot(o[0], o[1]);
-    if (d > NUDGE_MAX_PX) {
-      o[0] *= NUDGE_MAX_PX / d;
-      o[1] *= NUDGE_MAX_PX / d;
+    if (d > rule.nudgeMax) {
+      o[0] *= rule.nudgeMax / d;
+      o[1] *= rule.nudgeMax / d;
     }
   };
   for (let round = 0; round < 8; round++) {
@@ -169,11 +203,11 @@ export function partAlong(items: readonly StackItem[], w: number, h: number, way
       for (const b of near.get(a.id)!) {
         if (b.id < a.id) continue; // each pair once
         const [pa, pb] = [at(a), at(b)];
-        if (shareUnder(pa, pb, w, h) <= STACK_UNDER) continue;
+        if (shareUnder(pa, pb, w, h) <= rule.partOver) continue;
         any = true;
         const ox = w - Math.abs(pa.x - pb.x);
         const oy = h - Math.abs(pa.y - pb.y);
-        const area = NUDGE_TO * w * h;
+        const area = rule.partTo * w * h;
         const [oa, ob] = [out.get(a.id)!, out.get(b.id)!];
         const sx = pa.x < pb.x || (pa.x === pb.x && a.id < b.id) ? -1 : 1;
         const sy = pa.y < pb.y || (pa.y === pb.y && a.id < b.id) ? -1 : 1;
@@ -228,9 +262,9 @@ export function partAlong(items: readonly StackItem[], w: number, h: number, way
  *   middle still on each other; along the lines between them each box uses its 6 px both ways.
  *   The groups the shorter way parts stand as before.
  */
-export function nudgeApart(items: readonly StackItem[], w: number, h: number): Map<number, [number, number]> {
-  const near = withinReach(items, w, h);
-  const out = partAlong(items, w, h, 'shorter', near);
+export function nudgeApart(items: readonly StackItem[], w: number, h: number, rule: StackRule = STACK_RULE): Map<number, [number, number]> {
+  const near = withinReach(items, w, h, rule);
+  const out = partAlong(items, w, h, 'shorter', near, rule);
   /** By how much the pairs among `group` are over the quarter, summed, with the moves `moves`. */
   const over = (group: readonly StackItem[], moves: Map<number, [number, number]>): number => {
     let sum = 0;
@@ -239,7 +273,7 @@ export function nudgeApart(items: readonly StackItem[], w: number, h: number): M
       for (const b of near.get(a.id)!) {
         if (b.id < a.id) continue;
         const ob = moves.get(b.id)!;
-        sum += Math.max(0, shareUnder({ x: a.x + oa[0], y: a.y + oa[1] }, { x: b.x + ob[0], y: b.y + ob[1] }, w, h) - STACK_UNDER);
+        sum += Math.max(0, shareUnder({ x: a.x + oa[0], y: a.y + oa[1] }, { x: b.x + ob[0], y: b.y + ob[1] }, w, h) - rule.partOver);
       }
     }
     return sum;
@@ -258,7 +292,7 @@ export function nudgeApart(items: readonly StackItem[], w: number, h: number): M
         }
     // By id: the same markers give the same moves, however the group was found.
     group.sort((a, b) => a.id - b.id);
-    const other = partAlong(group, w, h, 'between', near);
+    const other = partAlong(group, w, h, 'between', near, rule);
     if (over(group, other) < over(group, out)) for (const it of group) out.set(it.id, other.get(it.id)!);
   }
   return out;
@@ -296,9 +330,10 @@ export class MarkerStacks {
   /**
    * The markers of a frame at `now`. `still`: the boxes keep the moves they have (the morph into
    * T2 shrinks each box about its place, and the one back grows it there: ADR-72); a box with
-   * none stands where it will rest.
+   * none stands where it will rest. `rule`: `stackRuleAt` the zoom; a change of it is a change like any other
+   * (a fade into the stack, a box eased to its new place).
    */
-  frame(items: readonly StackItem[], w: number, h: number, now: number, still = false): Map<number, StackedMarker> {
+  frame(items: readonly StackItem[], w: number, h: number, now: number, still = false, rule: StackRule = STACK_RULE): Map<number, StackedMarker> {
     this.shown.frame(now);
     // An id that is another formation's now: what the dead one had (its fade, its stack, its box's
     // move) is not the new one's. It is new to the view and takes its place at once (PLAN 7.4f24).
@@ -314,7 +349,7 @@ export class MarkerStacks {
       }
     }
     this.generations = generations;
-    const stacks = stackMarkers(items, w, h, (id) => this.inStack.has(id));
+    const stacks = stackMarkers(items, w, h, (id) => this.inStack.has(id), rule);
     const leads = items.filter((it) => stacks.get(it.id)!.into === null);
     let to: Map<number, [number, number]>;
     if (still) {
@@ -325,9 +360,9 @@ export class MarkerStacks {
       to = new Map();
       for (const it of leads) {
         const m = this.moves.get(it.id);
-        to.set(it.id, m ? m.to : ((rest ??= nudgeApart(leads, w, h)).get(it.id) ?? [0, 0]));
+        to.set(it.id, m ? m.to : ((rest ??= nudgeApart(leads, w, h, rule)).get(it.id) ?? [0, 0]));
       }
-    } else to = nudgeApart(leads, w, h);
+    } else to = nudgeApart(leads, w, h, rule);
     const moves = new Map<number, { from: [number, number]; to: [number, number]; start: number }>();
     const out = new Map<number, StackedMarker>();
     const inStack = new Set<number>();

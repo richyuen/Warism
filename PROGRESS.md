@@ -383,3 +383,13 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 
 - R128: R124's step out of `counters.ts`. R129: `MassingCalledOff`. R130: a war with a battle first on the row.
   The critic's probes for R128 and R130 run here and met; R129's is the next run's.
+
+## 2026-11-17 — R125: the markers' rule from 1,200 m/px out (ADR-1110, the user's decision)
+
+- `StackRule`, `STACK_RULE_FAR`, `stackRuleAt` (`markerStacks.ts`); `MapView` gives the rule of the zoom.
+- The critic's probe, pairs on one another at 1,800 m/px, days 10, 20, 30: 3 of 48, 9 of 54, 12 of 59 (24 of 60, 47
+  of 71, 39 of 72). At 1,200: 0, 3, 7 (5, 12, 17).
+- By hand: `markerStacks1938`, `markers1938`, `handover1938` (6 green). No frame time measured: the same passes
+  over the same markers, a reach of two cells of the grid where one.
+- R131 filed: a hero's marker at T1 leaps with the zoom (on HEAD too).
+

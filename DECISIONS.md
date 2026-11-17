@@ -600,7 +600,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **When seen and not when begun:** a massing begun is the nation's own secret, and many are given up unseen.
 - **The pin of seed 99:** bf16e257 -> a5dbeae6.
 
-### ADR-1108 · 2026-11-17 · proposed (the user's decision) — R124 and R125: the hero's counter over a nation's, and the markers' quarter
+### ADR-1108 · 2026-11-17 · the user's decision ("Accept recommendations for R124 and R125"; built as ADR-1110) — R124 and R125: the hero's counter over a nation's, and the markers' quarter
 - **R124.** Built: of its three steps a hero's counter takes the first that covers no nation's counter
   (`counters.ts`); ROADMAP R8 keeps it within a step. Not enough at 6,000 m/px, where it is twice the size (R42c).
   Options: (a) the others' size where it would cover a counter; (b) two steps; (c) as it is.
@@ -619,3 +619,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   it, unless its nation is at war with the target or one of the two is dead. A history, ticker and war kind.
 - **R130.** `WarBanners`' order: `battle` before the sides' men. A banner's place can change as a battle begins and
   ends (the critic's probe: the row's order alone changed on 7 days of 149).
+
+### ADR-1110 · 2026-11-17 · the user's decision ("Accept recommendations for R124 and R125 and let's work on them") — R125: the markers' rule from 1,200 m/px out
+- **Taken:** ADR-1108's recommendation for R125: (a), at the far end of T1 only.
+- **Decision** (`markerStacks.ts`: `StackRule`, `stackRuleAt`): from `FAR_FROM_M` (1,200 m/px; a camera set to it
+  counts as far) to T1's far end the markers are stacked and parted by `STACK_RULE_FAR`: a marker more than 2 % under
+  a stronger one of its nation is in it (out again when nothing of it is under); two shown boxes with anything on
+  each other are parted to nothing; a box at most 13 px from its formation. Nearer than 1,200 m/px the quarter of
+  PLAN 2.7s1 and 2.7s2 as it was (`STACK_RULE`: 25 %, 10 %, to 24 %, 8 px), and its unit tests untouched.
+- **A change of the rule** as the zoom crosses 1,200 m/px is a change like any other: a fade into the stack, a box
+  eased over `NUDGE_MS`. No hysteresis: the wheel crosses it once a pass.
+- **What it costs:** from 1,200 m/px out more formations behind a "×n" and a box up to 13 px from its formation.
+  `markerStacks1938.spec.ts`'s bound on a box's distance at 1,900, 1,800 and 1,200 m/px is the rule's of that zoom
+  (13 px, where 8).
