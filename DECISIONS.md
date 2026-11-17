@@ -687,3 +687,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
   the played nation's); (b) the bar for the cursor at 3 a minute and bannerRank under 50, with the last rule (row 5,
   R121 kept); (c) R130's order as on `main`, R75-N1 left (UI/UX 7 is at its bar).
 - **Recommended:** (b): the row changes 5 times a minute where 41, and a great war still comes to the front.
+
+### ADR-1115 · 2026-11-17 · accepted — R133: a warhead's bomber stopped short is told
+- `NukeIntercepted` (54) is a History kind, a ticker kind and a war kind, with the city nearest its target and the
+  nuclear cue: "{a}'s bomber carrying a warhead was stopped short of its target near {city}: no burst". Its event as
+  it was (b the launch's number), so the diagnostic tools read it as before. Only a bomber is ever stopped
+  (`interceptChance`: a missile 0), so the row says bomber.

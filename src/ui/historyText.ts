@@ -122,7 +122,8 @@ export function historyText(r: HistoryRow): string {
   // A burst's toll found without its strike's row (PLAN 7.32b; the log has it right after the strike).
   const lost = r.kind === EventKind.NukeToll ? { near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '', forces: lostOrNone(nukeToll(r.b)) } : {};
   // A holder's last means lost (PLAN 7.37b3): the airbase's city.
-  const means = r.kind === EventKind.NukeMeansLost ? { near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '' } : {};
+  // A warhead's bomber stopped short (ROADMAP R133): the city nearest its target.
+  const means = r.kind === EventKind.NukeMeansLost || r.kind === EventKind.NukeIntercepted ? { near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '' } : {};
   // A new nuclear power (PLAN 7.37i): its income's rank, "largest income", "2nd largest income".
   const power = r.kind === EventKind.NuclearPower ? { rank: incomeRank(r.b) } : {};
   // A forced war's bonds broken (PLAN 7.175a): "alliance and truce".

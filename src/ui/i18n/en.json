@@ -1301,6 +1301,8 @@
   "history.bond.puppet": "puppet bond",
   "history.bond.truce": "truce",
   "history.type.NukeMeansLost": "Nuclear means lost",
+  "history.type.NukeIntercepted": "Nuclear strike stopped",
+  "history.NukeIntercepted": "{a}'s bomber carrying a warhead was stopped short of its target{near}: no burst",
   "history.NukeMeansLost": "{a} lost its last means to deliver its warheads: {b} took its airbase{near}, and its strategic bombers were lost with it",
   "history.NukeMeansLost.none": "{a} lost its last means to deliver its warheads: its last strategic bomber group{near} was lost",
   "history.type.NuclearPower": "New nuclear power",

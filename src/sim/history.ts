@@ -42,6 +42,8 @@ export const HISTORY_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.NukeCasualties,
   EventKind.NukeDecided,
   EventKind.NukeToll,
+  // A warhead's bomber stopped short (ROADMAP R133; critic run 75, R75-N2: told nowhere).
+  EventKind.NukeIntercepted,
   // God Mode's acts (PLAN 7.33b): a nation set down, a city founded or razed.
   EventKind.NationSpawned,
   EventKind.CitySpawned,

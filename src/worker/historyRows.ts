@@ -135,8 +135,8 @@ function townName(world: World, i: number, kind: number, a: number, defName: (de
   return n ? `=${n}` : '';
 }
 
-/** The kinds whose row names the city nearest its place: a strike (PLAN 6.11c), a decision to strike (PLAN 7.25c), a toll without its strike (PLAN 7.32b), a holder's last means lost (PLAN 7.37b3). */
-const NEAR_KINDS: ReadonlySet<number> = new Set([EventKind.NukeCasualties, EventKind.NukeDecided, EventKind.NukeToll, EventKind.NukeMeansLost, EventKind.HeroLost, EventKind.HeroReturned]);
+/** The kinds whose row names the city nearest its place: a strike (PLAN 6.11c), a decision to strike (PLAN 7.25c), a toll without its strike (PLAN 7.32b), a holder's last means lost (PLAN 7.37b3), a bomber stopped short (ROADMAP R133). */
+const NEAR_KINDS: ReadonlySet<number> = new Set([EventKind.NukeCasualties, EventKind.NukeIntercepted, EventKind.NukeDecided, EventKind.NukeToll, EventKind.NukeMeansLost, EventKind.HeroLost, EventKind.HeroReturned]);
 
 /** A hero's name, by its roster row (ROADMAP R12): its template's i18n key, '' for a row the roster has not. */
 function heroName(world: World, row: number): string {

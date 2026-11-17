@@ -94,6 +94,8 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.NukeDecided]: ['nation', 'number'],
   // A burst's forces destroyed (PLAN 7.32b): read into its strike's row, not a row of its own.
   [EventKind.NukeToll]: ['nation', 'number'],
+  // A warhead's bomber stopped short of its target (ROADMAP R133): the nation that sent it, the launch's number.
+  [EventKind.NukeIntercepted]: ['nation', 'number'],
   // God Mode's acts (PLAN 7.33b): a nation set down on another's land, a town founded or razed in it.
   [EventKind.NationSpawned]: ['nation', 'nation'],
   [EventKind.CitySpawned]: ['town', 'nation'],
@@ -189,6 +191,8 @@ export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([
   EventKind.NationRevived,
   // A nuclear strike (PLAN 6.5a).
   EventKind.NukeCasualties,
+  // A warhead's bomber stopped short (ROADMAP R133).
+  EventKind.NukeIntercepted,
   // The month's air war (PLAN 5.11a): its largest row of each kind (`tickerRows`).
   EventKind.AirWar,
   EventKind.AirRaids,
@@ -268,6 +272,7 @@ export const WAR_KINDS: ReadonlySet<number> = new Set([
   EventKind.AirRaids,
   EventKind.NukeCasualties,
   EventKind.NukeDecided,
+  EventKind.NukeIntercepted,
   EventKind.NukeMeansLost,
   EventKind.GodBreakthrough,
   EventKind.MassingSeen,

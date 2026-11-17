@@ -428,3 +428,10 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - Six rules tried on branch `r132-hold` (aafda250); the critic's probes on each. The one that met the three bars (a
   place held 20 days in its slot) turned R121's `reviewBatch1938` red; the one that keeps R121 reads the cursor 3 (bar
   2) and bannerRank 45 (bar under 44). `main` unchanged. Next: R133.
+
+## 2026-11-17 — R133: a warhead's bomber stopped short is told (ADR-1115)
+
+- `c75_interceptTold.ts`: NukeIntercepted in History's kinds true, the ticker's true, strings 2 (false, false, 0).
+- Tests: `tests/unit/nukeInterceptTold1938.test.ts`; `tests/e2e/nukeInterceptTold1938.spec.ts` (Germany's bombers at
+  Warsaw, the first stopped short; the row in the ticker and in History, `docs/evidence/R133/`). Gate green, the pin
+  of seed 99 unmoved. No tick time measured: one more kind kept in the log, rows only where a bomber is stopped.

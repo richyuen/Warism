@@ -1537,7 +1537,8 @@ combat, AA.
   is stopped short by a hashed roll under `BOMBER_INTERCEPT` (0.8) × (1 − the defender's superiority),
   or if lost. A missile flies from the capital, at most `MISSILE_KM` (10,000 km) at `MISSILE_KMH`
   (20,000 km/h), and nothing stops it. Missile first, then bomber. `NukeMeansLost` when the last means
-  goes.
+  goes. A bomber stopped short is told (`NukeIntercepted`: History, the ticker, a war's rows; the city nearest its
+  target; ROADMAP R133).
 - **The decision** (`nukeDecisions`, daily, at war; a living nation with a warhead, its nukes AI layer
   on, no overlord, nukes allowed): it weighs, in each war, strikes on the enemy's capitals and up to
   `NUKE_TARGETS` (6) places where enemy land formations are most massed, on land the enemy owns and

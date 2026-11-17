@@ -33,6 +33,8 @@ const CUE_OF_KIND: Readonly<Record<number, Cue>> = {
   [EventKind.GodBreakthrough]: 'capital',
   // A holder's last means of delivery lost (PLAN 7.37b3): a fall, as a capital's.
   [EventKind.NukeMeansLost]: 'capital',
+  // A warhead's bomber stopped short (ROADMAP R133): the nuclear cue, as the strike it was.
+  [EventKind.NukeIntercepted]: 'nuke',
   // A new nuclear power (PLAN 7.37i): the nuclear cue.
   [EventKind.NuclearPower]: 'nuke',
   // An army massing on a border (ROADMAP R122): soft, a town's: a warning, not yet the war.
