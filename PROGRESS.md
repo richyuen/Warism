@@ -470,3 +470,9 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - Found at its gate (the pin moved: the whole suite): `enemyClickPanel1938` red since R125 (a marker up to 13 px off its
   formation; 857ceeeb: the click at the counter, the scene seed 7's day 70); `relationsNamed1938` on 39939's phone
   (4febbde7: twenty rings for a label). BLOCKERS' entry on 39943's phone left open: its red was one run of three.
+
+## 2026-11-17 — R132 by the user's decision (ADR-1114 (b)); Batch 42 done
+
+- `r132-hold`'s last rule on `main` (R135's `data-death` kept). The critic's probes on this build: 57901 row 3, cursor 1;
+  58901 5, 0; bannerRank 46 (bar under 50); 57903, the phone and Japan played as in ROADMAP. 45 banner specs green.
+- Next: the release checks (PROMPT.md, RELEASES 3): `npm run check:review`, `npm run bench -- G --gpu-only`.

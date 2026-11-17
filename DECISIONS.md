@@ -664,7 +664,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
   formation.
 
 
-### ADR-1114 · 2026-11-17 · proposed, the user's decision — R132: a still row of banners against R121's largest war first
+### ADR-1114 · 2026-11-17 · the user's decision ("Accept your recommendation": (b)) — R132: a still row of banners against R121's largest war first
 - **The case** (critic run 75, R75-N1; R130's order, a war with a battle now first): the row changed 41 times a minute
   at ×5 on 57901 and the banner under a resting cursor 18; the bar 10 and 2 (and 58901), with `c75_bannerRank 57901`
   under 44 quiet banner-days of 440.
@@ -687,6 +687,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
   the played nation's); (b) the bar for the cursor at 3 a minute and bannerRank under 50, with the last rule (row 5,
   R121 kept); (c) R130's order as on `main`, R75-N1 left (UI/UX 7 is at its bar).
 - **Recommended:** (b): the row changes 5 times a minute where 41, and a great war still comes to the front.
+- **Taken (b):** the bar for R132 is the row changed 10 or fewer times a minute, the banner under a resting cursor 3 or
+  fewer, `c75_bannerRank 57901 150` under 50 quiet banner-days of 440. The rule (`WarsFought`, `heldRow`): a war is
+  fought for FOUGHT_TICKS (10 days) after a battle the worker saw; while there are more wars than the row shows, a war that
+  took its place keeps it HOLD_TICKS (20 days) and its slot, the played nation's wars first at once; a row with room is the
+  order (R121). Not state: the worker's and the page's, none in a save.
 
 ### ADR-1115 · 2026-11-17 · accepted — R133: a warhead's bomber stopped short is told
 - `NukeIntercepted` (54) is a History kind, a ticker kind and a war kind, with the city nearest its target and the

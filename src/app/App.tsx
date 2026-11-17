@@ -266,7 +266,7 @@ export function App({
       {stats && hud.nukeAlerts.value.length > 0 ? (
         <NukeAlerts alerts={hud.nukeAlerts.value} onGo={(r) => hud.onShowPlace(r.x, r.y)} onClose={(r) => (hud.nukeAlerts.value = hud.nukeAlerts.value.filter((a) => a.row.i !== r.i))} />
       ) : null}
-      {stats ? <WarBanners wars={stats.wars} byId={byId} onSelect={(id) => hud.onSelectNation(id)} onBattle={(war) => hud.toBattle(war)} phone={phone} player={player?.nation.value ?? 0} /> : null}
+      {stats ? <WarBanners wars={stats.wars} byId={byId} onSelect={(id) => hud.onSelectNation(id)} onBattle={(war) => hud.toBattle(war)} phone={phone} player={player?.nation.value ?? 0} tick={stats.tick} world={stats.world} /> : null}
       {hud.showSettings.value ? (
         <SettingsPanel
           uiScale={settings.uiApplied.value}

@@ -581,12 +581,13 @@ The full run's non-blocking issues, fixed before the release's checks; no critic
   at 600, 2 and 2 (6, 9); at 400, 2 and 2 (7, 4); 1,800 as R125 left it (12 of 59; 9 of 47). Tests:
   `tests/unit/markerStacks.test.ts`; by hand `markerStacks1938`, `markers1938`, `handover1938`, `heroStack1938`
   (7 green).
-- [ ] R132 **R75-N1: the banners change places by the second while the game runs** (R130's order: a war with a
-  battle first). AT: `c75_bannerFlip.mjs 57901 150 head 60` and `… 58901 200 head 60` print "the row changed" at 10
-  or fewer and "the banner under a resting cursor changed" at 2 or fewer (now 41 and 18; 29 and 19), and
-  `c75_bannerRank.mjs 57901 150` stays under 44 quiet banner-days of 440 (now 0).
-  - Not met (BLOCKERS; ADR-1114, proposed, the user's decision): six rules on branch `r132-hold`; the one that met the
-    bars turned R121's `reviewBatch1938` red, the one that keeps R121 reads 5 and 3, 4 and 0, bannerRank 45.
+- [x] R132 **R75-N1: the banners change places by the second while the game runs** (COMMIT; ADR-1114 (b), the user's
+  decision; R130's order: a war with a battle first). A war is fought 10 days after a battle (`WarsFought`, the worker);
+  while more wars than the row, a war keeps the place and slot it took for 20 days (`heldRow`), the played nation's at
+  once; a row with room is R121's order. AT as the user took it: `c75_bannerFlip.mjs 57901 150 head 60` row 3, cursor
+  1 (41, 18 before); `… 58901 200` 5, 0 (29, 19); `c75_bannerRank.mjs 57901 150` 46 of 440 (bar under 50); taken and
+  released, the row as before. Also 57903 day 120: 4, 0 (25); the phone: 4, 3 (36, 22); Japan played: 2, 0 (20).
+  Tests: `tests/unit/warsFought.test.ts`; by hand the 11 banner specs (45 green on both projects).
 - [x] R133 **R75-N2: a bomber stopped short with a warhead is told nowhere** (653b6e2e; ADR-1115; `NukeIntercepted` had no row
   in the ticker or History and no words). AT: `npx tsx critic/scripts/c75_interceptTold.ts`: in History's kinds true,
   the ticker's true, strings 2 (false, false, 0). The row: "Germany's bomber carrying a warhead was stopped short of its

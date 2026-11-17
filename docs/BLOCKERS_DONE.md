@@ -3,6 +3,15 @@
 The resolved entries of BLOCKERS.md, moved here on 2026-11-02 (ADR-804) in the order they stood. Searched, not
 read. New resolved entries are moved here when they are resolved.
 
+### RESOLVED 2026-11-17 (ADR-1114 (b), the user's decision) · R132: the banners' row still by the second, or R121's largest war first
+- **The bar:** `c75_bannerFlip.mjs 57901 150 head 60` and `… 58901 200 head 60`: the row changed 10 or fewer, the
+  banner under a resting cursor 2 or fewer; `c75_bannerRank.mjs 57901 150` under 44 quiet banner-days of 440.
+- **What moved** (branch `r132-hold`): 41 and 18 to 5 and 3 on 57901; 29 and 19 to 4 and 0 on 58901; bannerRank 0 to
+  45. The rule that met all three (6 and 1; 4 and 2; 36) turned `reviewBatch1938`'s two R121 tests red.
+- **Left:** the user's choice of ADR-1114's options. Nothing else waits on it.
+- **RESOLVED 2026-11-17** (ADR-1114 (b), the user's decision: "Accept your recommendation"): the bar for the cursor at
+  3 a minute and bannerRank under 50; the last rule on `main`. 57901 row 3, cursor 1; 58901 5, 0; bannerRank 46.
+
 ### RESOLVED 2026-11-16 (ADR-1087: the user's choice, no pips and the number on a wider plate) · R95: the markers of T1 drawn 1.25 times their size break the rules that stand on their size
 - **The bar:** the number under a marker larger and readable at the far end of T1, the markers' bound on a pixel's
   change in a frame kept (48 of 255; ADR-71, ADR-72), `markerStacks`' rules with the new sizes.

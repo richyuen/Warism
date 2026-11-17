@@ -22,6 +22,7 @@ import { wayLine } from '../shared/wayLine';
 import { encodeRuns } from '../shared/mapImport';
 import { historyRows, nearestCity, strikeRows, struckSince, tickerNews, tickerRows } from './historyRows';
 import { Lives } from './lives';
+import { WarsFought } from './warsFought';
 import { fileOffsets } from './files';
 import { economyBreakdown } from '../sim/systems/economy';
 import { largestBattle, warsWithBattle } from '../sim/systems/warBattle';
@@ -273,6 +274,8 @@ export class SimServer {
   private worldNo = 0;
   /** Each nation's life from the history (PLAN 7.4f28): the ranking's lists of a life. */
   private readonly lives = new Lives();
+  /** The wars fought in the last days, for the banners' order (ROADMAP R132). */
+  private readonly warsFought = new WarsFought();
   private lastStatsMs = -1;
   /** The log's length at the last statistics message: the next one's news begins there (PLAN 3.12Rh2). Below 0: a world's first message, whose log is its past. */
   private newsFrom = -1;
@@ -1031,8 +1034,9 @@ export class SimServer {
     const enemies = new Map<number, Set<number>>();
     const wars: WarStat[] = [];
     const fighting = warsWithBattle(world);
+    const fought = this.warsFought.of(world, world.wars.list.map((w) => w.id), fighting);
     for (const war of world.wars.list) {
-      wars.push({ id: war.id, attackers: [...war.sides[0]], defenders: [...war.sides[1]], score: war.score, startTick: war.startTick, battle: fighting.has(war.id), toDeath: [war.fightToDeath[0], war.fightToDeath[1]], exhaustion: [war.exhaustion[0], war.exhaustion[1]] });
+      wars.push({ id: war.id, attackers: [...war.sides[0]], defenders: [...war.sides[1]], score: war.score, startTick: war.startTick, battle: fighting.has(war.id), fought: fought.has(war.id), toDeath: [war.fightToDeath[0], war.fightToDeath[1]], exhaustion: [war.exhaustion[0], war.exhaustion[1]] });
       for (const [a, b] of [[war.sides[0], war.sides[1]], [war.sides[1], war.sides[0]]] as const) {
         for (const x of a) {
           const set = enemies.get(x) ?? new Set<number>();

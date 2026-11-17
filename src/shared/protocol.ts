@@ -878,6 +878,11 @@ export interface WarStat {
    * ADR-96; `warsWithBattle`). True where `warBattle` has an answer, as of this message's tick.
    */
   battle: boolean;
+  /**
+   * Whether the war had a battle within the last `FOUGHT_TICKS` (10 days) as the worker saw it, `battle` among them: the
+   * banners' order (ROADMAP R132, `WarsFought`).
+   */
+  fought: boolean;
   /** Whether each side fights to the death (PLAN 7.4f15: God Mode's toggle shows it). */
   toDeath: [boolean, boolean];
   /** Each side's exhaustion (PLAN 7.175c: whether an offer of peace would be accepted, `peaceVerdict`). */
