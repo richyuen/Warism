@@ -334,10 +334,19 @@ though Rush makes sense either way".
   Turkey's army not arrived. Measured, R97b's twelve seeds by three years, without it and with it: the wars with a
   border 413 and 408; of those that ran a month the attacker ahead in land at day 30 in 231 and 231 (80 and 79 %; the
   bar no fewer than 219), the defender in 41 and 40 (14 %; the bar 15 %), no land taken in 15 and 20. The opening is
-  not changed by it that the measure shows; the army is at the border as the war begins.
+  not changed by it that the measure shows.
+  - **Little of it in the AI's own wars** (`docs/evidence/R103/opening.md`): of the wars prepared, the defender's men
+    within 300 km of the front as the war begins are a median 5 % of its army without the answer and 10 % with it
+    (the mean 38 and 41 %), and it has no man there in 128 of 269 and 126 of 278. The answer moves an army where
+    the rule is driven alone; in a world at play the target is at war itself, or is seen late, or is far. Why, by
+    its shares, is not measured.
   - **Over R97b's bar on both, and not by this item:** the attacker with no man within 300 km of the border 30 of
-    287 (10.5 %) without it and 32 of 291 (11.0 %) with it, where R97b measured 6 % and set a tenth. The measure
-    between is R98c's (the weight of the invaded front); not looked into here. The user's to judge.
+    287 (10.5 %) without it and 32 of 291 (11.0 %) with it, where R97b's build has 14 of 216 (6.5 %) on the same
+    twelve seeds and the bar is a tenth. The rise is in the wars declared at once (by a nation at war already, or
+    on a neighbour by a colony): 93 of them with a border on R97b's build, 138 now, and of those that ran a month
+    the attacker with no man near in 13 of 43 then and 28 of 80 now; of the wars prepared, 1 of 173 then and 2 of
+    207 now. Between the two builds is R98c (ADR-1090), which was measured for it on six seeds only (12 % at its
+    weight of 4 where 9 %) and not read against this bar. The user's to judge.
   - Not built: the target asking an alliance or a guarantee, a war of its own first, the massing nation thinking
     again when it sees the answer.
   - Tests: `tests/unit/massAnswer1938.test.ts` (5). The pin of seed 99 1fe6205e -> bf16e257.

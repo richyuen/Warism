@@ -296,3 +296,12 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - Checked whole, each alone: the unit suite 2,544 of 2,547 (`snapshot-perf` and `scenario1938`'s build time under the
   run's load; `specRefs` on the new test not yet in git, green once staged); the sweep tests 23 files of 23;
   `sweep:quick` limits on 10 of 10 seeds; the checkers of war and peace on six seeds to day 180, none broken.
+
+## 2026-11-16 — Batch 36 read again (the advisor's review)
+
+- R103 in the AI's own wars: the defender's men near the front as a prepared war begins a median 5 % -> 10 % of its
+  army: little. ROADMAP's "the army is at the border as the war begins" taken out.
+- The bar over (the attacker with no man near, 10.5 to 11 % where a tenth): the rise since R97b's build (6.5 %) is in
+  the wars declared at once, 93 -> 138 of them; R98c between. For the user.
+- R103's commit rests on its third gate: the second was red twice on `relationsNamed1938` (BLOCKERS).
+- Evidence files for R101, R102, R103 (`docs/evidence/`); `tags.test.ts` pins the count of places (20, as before).

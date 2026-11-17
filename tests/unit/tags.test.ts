@@ -159,7 +159,8 @@ describe('formation tags: the layout (PLAN 2.14a)', () => {
   it('more formations on one spot than there are places: the weakest are left out and counted, none overlaps', () => {
     // Since PLAN 3.7g a ring of places has four (above, below, left, right), not two: the
     // block is in the middle of the view, where every one of them has room.
-    expect(PLACES).toBeGreaterThanOrEqual(TAG_SIDES * TAG_TRIES);
+    // The corners' places lie on the rings' of a pile on one spot: as many find a place as before ROADMAP R101.
+    expect(PLACES).toBe(TAG_SIDES * TAG_TRIES);
     const many = Array.from({ length: PLACES + 3 }, (_, k) => item(k + 1, 9000 - k, 670, 380, 730, 420));
     const { placed, left } = layoutTags(many, measure, 1400, 800);
     expect(placed.length + left).toBe(many.length);

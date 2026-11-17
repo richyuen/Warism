@@ -399,8 +399,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
   - a dark casing, `FRONT_CASE_RGB` (0.16, 0.02, 0.02), `FRONT_CASE` 0.7 of the pixel, to `FRONT_CASE_PX` 4.4: the
     line's edge on a light fill (yellow, white);
   - a band, `FRONT_BAND_RGB` (1, 0.22, 0.08), to `FRONT_BAND_PX` 3.2;
-  - the core, `FRONT_CORE_RGB` (1, 0.95, 0.62), to `FRONT_CORE_PX` 1.5: no nation's fill is so light a yellow, so
-    it is told on red, on grey and on yellow.
+  - the core, `FRONT_CORE_RGB` (1, 0.95, 0.62), to `FRONT_CORE_PX` 1.5: light on red, on grey and on yellow. (At
+    8,000 m/px and further the picture at peace has 464 to 805 px within the test's reach of that colour, none at
+    1,500 and nearer; which fill they are was not looked into. The test's bars are of the line along a border.)
 - **Not done:** a pulse. The map's pass has no clock and the view draws when something changes; a front that
   moved in time would have it draw every frame.
 - **The test:** `fronts1938.spec.ts` looked for the old line's colour by its numbers; it reads `FRONT_CORE_RGB`
@@ -443,8 +444,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Measured** (ROADMAP R103): twelve seeds by three years, without and with: the attacker ahead after a month in 231
   wars and 231, the defender in 41 and 40, the wars with a border 413 and 408. R97b's bars of those hold.
 - **R97b's third bar is over on both arms:** the attacker with no man within 300 km of the border in 10.5 % of the
-  wars without the answer and 11.0 % with it (30 and 32 wars), where a tenth was set and 6 % measured before
-  ADR-1090. Two wars between the arms; the drift is older than this rule. Left to the user.
+  wars without the answer and 11.0 % with it (30 and 32 wars), where a tenth was set and R97b's build has 6.5 % on
+  the same seeds. The rise is in the wars declared at once, which are more (93 -> 138 with a border) and more often
+  empty (13 of 43 -> 28 of 80); ADR-1090 lies between the builds. Left to the user.
+- **In the AI's own wars the answer shows little:** the defender's men near the front as a prepared war begins, a
+  median 5 % of its army without and 10 % with (`docs/evidence/R103/opening.md`).
+- **Not tested:** two nations massing on one target (the rule is in the code and above; no scene of it was made).
 - **Could contradict (ADR-803), read:** ADR-1089 (its "not built": built); ADR-759 (the layers: the target's army
   layer is asked, a formation on the player's order left); ADR-703 (`askMove`'s memory of refusals: the same);
   R62e (no massing while the historical track steers, so no answer).
