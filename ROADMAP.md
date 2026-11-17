@@ -346,7 +346,8 @@ though Rush makes sense either way".
     on a neighbour by a colony): 93 of them with a border on R97b's build, 138 now, and of those that ran a month
     the attacker with no man near in 13 of 43 then and 28 of 80 now; of the wars prepared, 1 of 173 then and 2 of
     207 now. Between the two builds is R98c (ADR-1090), which was measured for it on six seeds only (12 % at its
-    weight of 4 where 9 %) and not read against this bar. The user's to judge.
+    weight of 4 where 9 %) and not read against this bar. **The user (2026-11-16): the bar is 15 %** ("we can move
+    the bar to 15%"): 10.5 and 11.0 % are within it.
   - Not built: the target asking an alliance or a guarantee, a war of its own first, the massing nation thinking
     again when it sees the answer.
   - Tests: `tests/unit/massAnswer1938.test.ts` (5). The pin of seed 99 1fe6205e -> bf16e257.

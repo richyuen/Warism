@@ -454,3 +454,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   layer is asked, a formation on the player's order left); ADR-703 (`askMove`'s memory of refusals: the same);
   R62e (no massing while the historical track steers, so no answer).
 - **The pin of seed 99:** 1fe6205e -> bf16e257.
+
+### ADR-1094 · 2026-11-16 · the user's decision — R97b's bar of the attacker with no man near its border: 15 %
+- **Was:** a tenth of the wars between leaders with a border that ran a month (ADR-1089; 6.5 % on R97b's build).
+- **Measured since** (ADR-1093): 10.5 % on the build of ADR-1090, 11.0 % with ADR-1093's answer; the rise in the wars
+  declared at once, which are more (93 -> 138 on the twelve seeds).
+- **The user: "Yes, we can move the bar to 15%."** The bar is 15 %. Why the wars declared at once are more was not
+  looked into, and is not asked for.
