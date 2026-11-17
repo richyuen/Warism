@@ -312,3 +312,8 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 - `HERO_PRESSURE_MEN` in `territory.ts`; `waitsForFront` in `movement.ts`; the worker's `waitsFront` news and its
   words. `tests/unit/heroFront1938.test.ts`: the Char 2C alone against Spain, 0 cells in ten days before, 31 now.
 - Batch 37 opened (R104 to R109) by the user's "Accept your recommendations".
+
+## 2026-11-16 — R105: ground being taken is seen (ADR-1096)
+
+- `takingCells`, the snapshot's `taking`, `src/render/fx/taking.ts`. The first glow (orange alone, faint) was not
+  seen at 1,500 m/px: the taker's colour in a stronger glow.

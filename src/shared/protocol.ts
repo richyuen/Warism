@@ -310,6 +310,8 @@ export interface Snapshot {
   elements: SnapshotElements;
   /** Active Major Battles as flat [x, y, …] (battle markers, PLAN 2.1). */
   majors: Float32Array;
+  /** The cells being taken (ROADMAP R105, `takingCells`): `cell · 256 + progress`, progress 1 to 255 of the hold. */
+  taking: Uint32Array;
   /**
    * Land formations on a voyage (ROADMAP R17c), VOYAGE_STRIDE each: [id, state, fromX, fromY, waterX,
    * waterY, landX, landY]: `VoyageState`; where the sea leg starts (its port's water while it goes to

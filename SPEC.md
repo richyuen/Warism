@@ -1945,6 +1945,11 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   `FRONT_CASE` 0.7, to `FRONT_CASE_PX` 4.4 px), a band of orange red (`FRONT_BAND_RGB`, to `FRONT_BAND_PX` 3.2 px)
   and a core near white (`FRONT_CORE_RGB`, at least `FRONT_CORE_PX` 1.5 px), at every zoom, in the modes of the
   palette's fills. Who is at war: `warTable` (512 nations a side), `MapRenderer.setWars` from the snapshot's `wars`.
+- **Ground being taken** (ROADMAP R105, ADR-1096; `src/render/fx/taking.ts`): each cell of the snapshot's `taking`
+  (`takingCells`: hold progress 1 to 255) has a hot glow (`TAKING_GLOW_RGB`, `TAKING_GLOW_CELLS` 1.15 cells,
+  `TAKING_GLOW_MIN` 0.25 to `TAKING_GLOW_MAX` 0.7 by its progress) and in it the colour of the nation taking it
+  (`takerOf`; `TAKING_RADIUS_CELLS` 0.75, `TAKING_ALPHA_MIN` 0.2 to `TAKING_ALPHA_MAX` 0.85), on the names' canvas
+  under the flashes.
 - **The flash of land taken** (ROADMAP R90b, ADR-1079; `src/render/fx/flashes.ts`): each cell a snapshot brings
   under a new holder (not the sea, not land no one held; not a game's first snapshot) is a soft white patch,
   `FLASH_ALPHA` (0.32) fading over `FLASH_MS` (900 ms of the player's time), on the names' canvas under the names;

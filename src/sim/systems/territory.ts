@@ -94,6 +94,20 @@ function onFrontier(world: World, c: number): boolean {
   return false;
 }
 
+/**
+ * The cells being taken (ROADMAP R105): each with hold progress, as `cell · 256 + progress`, progress 1 to 255 of the
+ * hold (`holdHours`); ascending. For the map's glow of ground being taken; read, never state.
+ */
+export function takingCells(world: World): number[] {
+  const flip = world.cells.flip;
+  const hold = holdHours(world);
+  const out: number[] = [];
+  for (const c of flippingOf(world)) {
+    const p = flip[c]!;
+    if (p > 0) out.push(c * 256 + Math.max(1, Math.min(255, Math.round((255 * p) / hold))));
+  }
+  return out.sort((x, y) => x - y);
+}
 /** Cells with non-zero hold progress (derived from `cells.flip`; rebuilt by a scan when null). */
 function flippingOf(world: World): Set<number> {
   if (world.flipping) return world.flipping;

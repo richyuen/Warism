@@ -476,3 +476,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
   wait behind it is no news.
 - **Not done:** anything on the map that shows the ground being taken (R105).
 - **The pin of seed 99** stands: that world has no hero, and (b) is the worker's.
+
+### ADR-1096 · 2026-11-16 · accepted (the user: "Accept your recommendations") — R105: the cells being taken are told to the map, and glow
+- **Was:** a front's line (ADR-1078, ADR-1091) says where the front stands and the flash (ADR-1079) where it just
+  moved; that a cell is being taken, and how near it is, was the sim's alone (`cells.flip`). A formation ordered
+  onto such ground stands and waits (ADR-1095), and nothing on the map said the ground was on its way.
+- **Decision:**
+  - `takingCells(world)` (`territory.ts`): the cells with hold progress (`flippingOf`, a set the territory system
+    keeps: no scan of the grid), each `cell · 256 + progress`, progress 1 to 255 of `holdHours`. In the snapshot as
+    `taking` (a `Uint32Array`, the whole world's: some hundreds in a war).
+  - The view (`src/render/fx/taking.ts`, on the names' canvas under the flashes): a soft patch of a hot orange
+    (`TAKING_GLOW_RGB`, 1.15 cells, opacity 0.25 to 0.7 by the progress) and in it one of the taker's colour (0.75
+    cells, 0.2 to 0.85): the taker read from the picture, the holder of a cell beside it at war with the cell's
+    (`takerOf`); with none found, the glow alone.
+  - Not in the map's pass: it has 15 of its 16 textures, and the patch is of the kind of the flash.
+- **First tried:** the orange glow alone, 0.1 to 0.6 at 0.8 cells: not seen under the units at 1,500 m/px, and it
+  did not say who takes the cell.
+- **Not done:** a pulse (the view draws when something changes); a mark where a front is pressed and holds.
+- **No sim input:** the pin of seed 99 stands.

@@ -3,6 +3,7 @@
  * formations → instanced markers) and renders every animation frame with GPU interpolation
  * between the previous and current tick.
  */
+import { drawTaking, takerOf } from '../render/fx/taking';
 import type { ScreenRect } from '../render/units/clearOf';
 import { CityLabelLayer, NAME_CLEAR_PX, type LabelMemory, type NameObstacle } from '../render/labels/cityLabels';
 import { LABEL_STRIDE } from '../shared/nationLabels';
@@ -766,6 +767,7 @@ export class MapView {
     this.formWay = f.way.slice(0, f.wayStart[f.count] ?? 0);
     this.findAdvances();
     this.majors = s.majors.slice();
+    this.taking = s.taking.slice();
     this.voyages = s.voyages.slice();
     this.seas = s.seas.slice();
     this.holds = s.holds.slice();
@@ -1145,6 +1147,11 @@ export class MapView {
   private formWayStart = new Uint32Array(1);
   private formWay = new Float32Array(0);
   private majors = new Float32Array(0);
+  /** The cells being taken, as the snapshot packs them (ROADMAP R105), and how many glows the last frame drew of them. */
+  taking = new Uint32Array(0);
+  takingDrawn = 0;
+  /** The glow of ground being taken drawn (a test's switch). */
+  takingShown = true;
   /** The voyages over the sea (ROADMAP R17c; `Snapshot.voyages`). */
   private voyages = new Float32Array(0);
   private seas = new Float32Array(0);
@@ -3302,6 +3309,8 @@ export class MapView {
     this.cityLabels.draw(cam, dpr, now, this.nameObstacles(cam), (ctx) => {
       // The flashes of land that changed hands (ROADMAP R90b), then the marches' arrows (R89c): under the nations'
       // names and the cities'.
+      // The glow of ground being taken (ROADMAP R105), under the flashes.
+      this.takingDrawn = arrows && this.takingShown ? drawTaking(ctx, this.taking, this.geo.w, cam, this.canvas.clientWidth, this.canvas.clientHeight, itemOffsets(cam, this.geo, this.canvas.clientWidth), (c) => this.ownColor.get(takerOf(this.controlGrid, this.geo.w, c, (x, y) => this.warPairs.has(x < y ? x * 65536 + y : y * 65536 + x))) ?? null) : 0;
       if (arrows) this.flashes.draw(ctx, cam, this.geo, this.canvas.clientWidth, this.canvas.clientHeight, now, itemOffsets(cam, this.geo, this.canvas.clientWidth));
       if (arrows) this.drawArrows(ctx, cam, now);
       else this.moveArrows = [];

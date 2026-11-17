@@ -34,6 +34,7 @@ import { landedAway } from '../sim/systems/amphibious';
 import { CORRIDOR_HALF_WIDTH, CORRIDOR_LEN } from '../sim/systems/majorBattles';
 import { heldBy, heldByFleet, LandingState, landingOfDivision, landingRows, nextVoyageHours, seaHint, seaOrderLanding, voyageOf } from '../sim/systems/landings';
 import { marchHoursLeft, waitsForFront } from '../sim/systems/movement';
+import { takingCells } from '../sim/systems/territory';
 import { isLand } from '../shared/terrain';
 import { chartRows } from '../sim/stats';
 import { aircraftOf } from '../sim/systems/airCombat';
@@ -2316,6 +2317,7 @@ export class SimServer {
       wars,
       formations: { count: fc, id: fid, generation: fgen, nation: fnat, x: fx, y: fy, prevX: fpx, prevY: fpy, block: fblock, facing: ffacing, strength: fstr, template: ftpl, flags: fflags, target: ftarget, enemy: fenemy, health: fhealth, wayStart: fwayStart, way: fway },
       majors,
+      taking: Uint32Array.from(takingCells(world)),
       voyages: Float32Array.from(this.voyages(world)),
       seas,
       holds: Float32Array.from(this.holds(world)),

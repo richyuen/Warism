@@ -370,8 +370,15 @@ hero is one tank.
   - Test: `tests/unit/heroFront1938.test.ts`. The pin of seed 99 stands (no hero in that world).
   - Of the user's picture: "Char 2C: not done, only sea there" is the refusal of a click on sea with none of its
     land within three cells; the cells of that front are land. Not reproduced; left.
-- [ ] R105 **Ground being taken is seen**: the stretch of a front where a cell is being taken fills toward the side
-  that takes it.
+- [x] R105 **Ground being taken is seen** (ADR-1096). A cell whose holder is being out-pressed (its `flip` counter
+  rising to the hold) has a hot glow and, in it, the colour of the nation that takes it, both the stronger the
+  nearer the cell is to changing hands; a stretch with none is held. The snapshot's `taking` (`takingCells`: the
+  cell and its progress, 1 to 255); drawn with the flashes, under the names (`src/render/fx/taking.ts`). Germany
+  against Poland, five days: 2,578 cell-hours told, 87 cells fell, each told the hour before with its hold all but
+  done. Tests: `tests/unit/takingCells1938.test.ts`, `tests/e2e/taking1938.spec.ts`. Shots: `docs/evidence/R105/`
+  (the fifth day, at 4,000, 1,500 and 600 m/px).
+  - Not done: the glow moving in time (a pulse); a mark on a stretch that is pressed and holds (nothing is drawn
+    there, as on one nobody presses).
 - [ ] R106 **Movement arrows by side**: the arrows in their nations' colours, another nation's thinner; the dotted
   line for the player's own orders only.
 - [ ] R107 **Occupied land read at the close zooms**: stripes of the occupier's colour, an edge at the old border.
