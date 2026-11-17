@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { FAR_FROM_M, MarkerStacks, NUDGE_MAX_PX, NUDGE_MS, nudgeApart, partAlong, shareUnder, STACK_HOLD, STACK_RULE, STACK_RULE_FAR, STACK_UNDER, stackMarkers, stackRuleAt, type StackItem } from '../../src/render/units/markerStacks';
+import { MarkerStacks, NUDGE_MAX_PX, NUDGE_MS, nudgeApart, partAlong, shareUnder, STACK_HOLD, STACK_RULE, STACK_RULE_TIGHT, STACK_UNDER, stackMarkers, type StackItem } from '../../src/render/units/markerStacks';
 import { FADE_MS } from '../../src/render/timing';
 
 // PLAN 2.7s1: markers of one nation that stand on each other are one marker. On Spain's front
@@ -539,26 +539,23 @@ describe('back from T2: a cleared layer drawn still (PLAN 2.7z)', () => {
   });
 });
 
-// ROADMAP R125 (ADR-1108, the user's decision; critic runs 73 and 74, R73-N5): from 1,200 m/px out the markers are
-// stacked and parted by a tighter rule. On the front of Japan and China at 1,800 m/px 47 pairs of 71 markers were on
+// ROADMAP R125 (ADR-1110, ADR-1113, the user's decisions; critic runs 73 to 75, R73-N5): the view's markers are
+// stacked and parted by a tighter rule than the quarter, at every zoom of T1. On the front of Japan and China at 1,800 m/px 47 pairs of 71 markers were on
 // one another.
-describe('the rule at the far end of T1 (ROADMAP R125)', () => {
+describe("the view's rule (ROADMAP R125)", () => {
   const under = (r: Map<number, [number, number]>, a: StackItem, b: StackItem): number =>
     shareUnder({ x: a.x + r.get(a.id)![0], y: a.y + r.get(a.id)![1] }, { x: b.x + r.get(b.id)![0], y: b.y + r.get(b.id)![1] }, W, H);
   const far = (r: Map<number, [number, number]>): number => Math.max(...[...r.values()].map(([dx, dy]) => Math.hypot(dx, dy)));
 
-  it('is the rule from 1,200 m/px out, and the quarter nearer', () => {
-    expect(FAR_FROM_M).toBe(1200);
-    for (const mpp of [2300, 1800, 1200, 1199.99]) expect(stackRuleAt(mpp), `${mpp} m/px`).toBe(STACK_RULE_FAR);
-    for (const mpp of [1190, 1100, 600, 300]) expect(stackRuleAt(mpp), `${mpp} m/px`).toBe(STACK_RULE);
+  it('is tighter than the quarter, which stands as what the functions take when given none', () => {
     expect(STACK_RULE).toEqual({ under: STACK_UNDER, hold: STACK_HOLD, partOver: STACK_UNDER, partTo: 0.24, nudgeMax: NUDGE_MAX_PX });
     // A marker in a stack stays longer than one goes in, by either rule.
-    expect(STACK_RULE_FAR.hold).toBeLessThan(STACK_RULE_FAR.under);
-    expect(STACK_RULE_FAR.nudgeMax).toBeGreaterThan(NUDGE_MAX_PX);
+    expect(STACK_RULE_TIGHT.hold).toBeLessThan(STACK_RULE_TIGHT.under);
+    expect(STACK_RULE_TIGHT.nudgeMax).toBeGreaterThan(NUDGE_MAX_PX);
   });
 
   it("a marker a twentieth under its nation's goes into it, and stays while any of it is under", () => {
-    const at = (dx: number, held: boolean, rule = STACK_RULE_FAR): number[] => shown(stackMarkers([m(1, 7, 0, 0, 500), m(2, 7, dx, 0, 300)], W, H, (id) => held && id === 2, rule));
+    const at = (dx: number, held: boolean, rule = STACK_RULE_TIGHT): number[] => shown(stackMarkers([m(1, 7, 0, 0, 500), m(2, 7, dx, 0, 300)], W, H, (id) => held && id === 2, rule));
     // 24.7 px apart: a twentieth under. By the quarter two markers, by the far rule one.
     expect(shareUnder({ x: 0, y: 0 }, { x: 24.7, y: 0 }, W, H)).toBeCloseTo(0.05, 12);
     expect(at(24.7, false, STACK_RULE)).toEqual([1, 2]);
@@ -568,24 +565,24 @@ describe('the rule at the far end of T1 (ROADMAP R125)', () => {
     expect(at(25.74, true)).toEqual([1]);
     expect(at(26, true)).toEqual([1, 2]);
     // Two nations' are never one marker.
-    expect(shown(stackMarkers([m(1, 7, 0, 0, 500), m(2, 8, 3, 0, 300)], W, H, () => false, STACK_RULE_FAR))).toEqual([1, 2]);
+    expect(shown(stackMarkers([m(1, 7, 0, 0, 500), m(2, 8, 3, 0, 300)], W, H, () => false, STACK_RULE_TIGHT))).toEqual([1, 2]);
   });
 
   it("two nations' boxes are parted to nothing, each no further than the rule's 13 px", () => {
     // 6 px apart: 20 px to part, 10 each. The quarter's 8 px could not.
     const [a, b] = [m(1, 7, 0, 0, 500), m(2, 8, 6, 0, 300)];
-    const r = nudgeApart([a, b], W, H, STACK_RULE_FAR);
-    expect(under(r, a, b)).toBeLessThanOrEqual(STACK_RULE_FAR.partOver);
+    const r = nudgeApart([a, b], W, H, STACK_RULE_TIGHT);
+    expect(under(r, a, b)).toBeLessThanOrEqual(STACK_RULE_TIGHT.partOver);
     expect(r.get(1)![0]).toBeCloseTo(-10, 6);
     expect(r.get(2)![0]).toBeCloseTo(10, 6);
     // A fifth under: left by the quarter, parted by the far rule.
     const [c, d] = [m(1, 7, 0, 0, 500), m(2, 8, 20.8, 0, 300)];
     expect(nudgeApart([c, d], W, H).get(1)).toEqual([0, 0]);
-    expect(under(nudgeApart([c, d], W, H, STACK_RULE_FAR), c, d)).toBeLessThanOrEqual(STACK_RULE_FAR.partOver);
+    expect(under(nudgeApart([c, d], W, H, STACK_RULE_TIGHT), c, d)).toBeLessThanOrEqual(STACK_RULE_TIGHT.partOver);
     // On one spot: 13 px each is all they get, and they are left on each other.
     const [e, f] = [m(1, 7, 0, 0, 500), m(2, 8, 0, 0, 300)];
-    const s = nudgeApart([e, f], W, H, STACK_RULE_FAR);
-    expect(far(s)).toBeLessThanOrEqual(STACK_RULE_FAR.nudgeMax + 1e-9);
+    const s = nudgeApart([e, f], W, H, STACK_RULE_TIGHT);
+    expect(far(s)).toBeLessThanOrEqual(STACK_RULE_TIGHT.nudgeMax + 1e-9);
   });
 
   it('2,000 random clusters: no box further than 13 px, the same markers the same moves, never more on each other than by the quarter', () => {
@@ -601,9 +598,9 @@ describe('the rule at the far end of T1 (ROADMAP R125)', () => {
     for (let k = 0; k < 2000; k++) {
       const n = 2 + Math.floor(rnd() * 7);
       const items = Array.from({ length: n }, (_, i) => m(i + 1, 1 + i, rnd() * 110, rnd() * 100, 100));
-      const r = nudgeApart(items, W, H, STACK_RULE_FAR);
-      expect(far(r), `cluster ${k}`).toBeLessThanOrEqual(STACK_RULE_FAR.nudgeMax + 1e-9);
-      expect(nudgeApart(items, W, H, STACK_RULE_FAR), `cluster ${k}`).toEqual(r);
+      const r = nudgeApart(items, W, H, STACK_RULE_TIGHT);
+      expect(far(r), `cluster ${k}`).toBeLessThanOrEqual(STACK_RULE_TIGHT.nudgeMax + 1e-9);
+      expect(nudgeApart(items, W, H, STACK_RULE_TIGHT), `cluster ${k}`).toEqual(r);
       quarter += pairsOn(items, nudgeApart(items, W, H));
       tight += pairsOn(items, r);
     }
@@ -618,14 +615,14 @@ describe('the rule at the far end of T1 (ROADMAP R125)', () => {
     const near = stacks.frame(items, W, H, 0, false, STACK_RULE);
     expect([near.get(1)!.alpha, near.get(2)!.alpha, near.get(3)!.alpha]).toEqual([1, 1, 1]);
     expect([near.get(1)!.dy, near.get(3)!.dy]).toEqual([0, 0]);
-    // The zoom crosses 1,200 m/px: the second fades into the first, the third's box eases away.
-    const first = stacks.frame(items, W, H, 1000, false, STACK_RULE_FAR);
+    // The rule changes: the second fades into the first, the third's box eases away.
+    const first = stacks.frame(items, W, H, 1000, false, STACK_RULE_TIGHT);
     expect(first.get(2)!.alpha).toBe(1);
     expect(first.get(3)!.dy).toBe(0);
     expect(stacks.animating(1000)).toBe(true);
-    const mid = stacks.frame(items, W, H, 1000 + NUDGE_MS / 2, false, STACK_RULE_FAR);
+    const mid = stacks.frame(items, W, H, 1000 + NUDGE_MS / 2, false, STACK_RULE_TIGHT);
     expect(mid.get(3)!.dy).toBeGreaterThan(0);
-    const rest = stacks.frame(items, W, H, 1000 + FADE_MS + NUDGE_MS + 1, false, STACK_RULE_FAR);
+    const rest = stacks.frame(items, W, H, 1000 + FADE_MS + NUDGE_MS + 1, false, STACK_RULE_TIGHT);
     expect(rest.get(2)!.alpha).toBe(0);
     expect(rest.get(1)!.members).toEqual([1, 2]);
     expect(rest.get(3)!.dy - rest.get(1)!.dy).toBeGreaterThanOrEqual(H - 23.2 - 1e-6);

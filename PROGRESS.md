@@ -408,3 +408,9 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   banners change places by the second. Batch 42 (R132 to R137). A full run where the process had a focused one next
   (semantic zoom was under its bar): the user's word.
 
+## 2026-11-17 — R125b: the markers' tight rule at every zoom of T1 (ADR-1113, the user's decision)
+
+- `STACK_RULE_TIGHT` is the view's rule; `stackRuleAt` gone. Day 30 on the critic's two fronts, pairs on one another
+  at 1,150 m/px 16 -> 6 and 21 -> 3; at 600, 6 -> 2 and 9 -> 2.
+- By hand: `markerStacks1938`, `markers1938`, `handover1938`, `heroStack1938` (7 green).
+

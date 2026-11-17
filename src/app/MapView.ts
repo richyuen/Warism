@@ -15,7 +15,7 @@ import { changedCells, ControlFlashes } from '../render/fx/flashes';
 import { advances, arrowFill, drawMoveArrows, groupMarches, type DrawnArrow, type March } from '../render/units/moveArrows';
 import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, HeroLifts, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderLine, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { BATTLE_TAG_M, drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
-import { MarkerStacks, stackRuleAt, type StackItem } from '../render/units/markerStacks';
+import { MarkerStacks, STACK_RULE_TIGHT, type StackItem } from '../render/units/markerStacks';
 import { COUNTER_SCALE, CounterLayer, counterNation, heroScaleAt, type CounterSource, type HeroCounter, quietAlphaAt } from '../render/units/counters';
 import { drawSeaBattles } from '../render/units/seaBattles';
 import { FlagAtlas, NO_FLAG_SLOT } from '../render/units/flagAtlas';
@@ -2224,7 +2224,7 @@ export class MapView {
       });
     }
     // (The boxes do not move while they shrink into the T2 sprites: ADR-72.)
-    const stacks = this.markerStacks.frame(items, MARKER_W * this.unitScale, MARKER_H * this.unitScale, now, this.morph.scale < 1, stackRuleAt(this.metresPerPx));
+    const stacks = this.markerStacks.frame(items, MARKER_W * this.unitScale, MARKER_H * this.unitScale, now, this.morph.scale < 1, STACK_RULE_TIGHT);
     this.markerRects = drawMarkers(ctx, markers, this.majors, cam, this.geo, vw, vh, share, hex, flagOf, this.unitScale, this.morph, stacks, this.picked, this.unitLook === 'balls', this.heroLifts, now);
     // A held landing's transports joined to the fleet that holds them (ROADMAP R53e), over the markers (at 1500 m/px
     // the transports' marker hid its ring).

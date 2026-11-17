@@ -574,6 +574,13 @@ Closed by the user's decision (ADR-1111: "ok let's accept your recommendation"),
 7 -> 8, UI/UX 8 -> 7)
 
 The full run's non-blocking issues, fixed before the release's checks; no critic run after them (ADR-1022).
+- [x] R125b **The markers' tight rule at every zoom of T1** (ADR-1113, the user's decision: "R125 lets extend"; the
+  critic's objection to ADR-1110: a notch nearer than 1,200 m/px was the more heaped). AT, the critic's probe on this
+  build (`c74_markers.mjs`, seeds 56951 and 58951, `1675,372`, day 30), the pairs on one another: at 1,150 m/px 6 of
+  53 and 3 of 52 markers (16 of 54 and 21 of 58 before), no more than at 1,300 (5 and 6); at 900, 6 and 2 (17, 11);
+  at 600, 2 and 2 (6, 9); at 400, 2 and 2 (7, 4); 1,800 as R125 left it (12 of 59; 9 of 47). Tests:
+  `tests/unit/markerStacks.test.ts`; by hand `markerStacks1938`, `markers1938`, `handover1938`, `heroStack1938`
+  (7 green).
 - [ ] R132 **R75-N1: the banners change places by the second while the game runs** (R130's order: a war with a
   battle first). AT: `c75_bannerFlip.mjs 57901 150 head 60` and `… 58901 200 head 60` print "the row changed" at 10
   or fewer and "the banner under a resting cursor changed" at 2 or fewer (now 41 and 18; 29 and 19), and
@@ -599,9 +606,8 @@ Run 75's other lines, not items: small worlds of two and three with no war in te
 (20 of 103, a measure); `slowClick`'s named cases (0 of 90 on new seeds); on a phone the heroes' names over Europe at
 the world's zoom, no ticker while the banners are opened (R126, on purpose), the cue's "Scroll" and "Click",
 "COMMUNIST CHINA" under its flag, a row of History not clicked to its place, a fleet refused by no name (R127).
-The critic's design objections, the user's (not items): ADR-1110's rule stops at 1,200 m/px, so a notch nearer is the
-more heaped (21 pairs of 58 markers at 1,150 m/px, 6 of 53 at 1,300: the same rule to T1's near end, or eased in
-between 1,200 and 600, would answer it); ADR-1111 (R124 left as it is); ADR-1107's row "when seen"; ADR-1060 and
+The critic's design objections, the user's (not items): ADR-1110's rule stopping at 1,200 m/px (taken: R125b);
+ADR-1111 (R124 left as it is); ADR-1107's row "when seen"; ADR-1060 and
 heroes on by default (ADR-1070).
 
 ## Released

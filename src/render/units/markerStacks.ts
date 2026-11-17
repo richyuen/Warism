@@ -19,10 +19,12 @@
  * than a quarter under the other. Where the boxes stand is a function of where the formations
  * stand and of nothing else (PLAN 2.7v); a box eases to a new place over NUDGE_MS.
  *
- * From FAR_FROM_M out (1,200 m/px to T1's far end; ROADMAP R125, ADR-1108, the user's decision) the rule is
- * tighter, `STACK_RULE_FAR`: a marker any more than a fiftieth under its nation's is in it, two nations' are parted
- * to nothing, and a box may stand 13 px from its formation. Critic runs 73 and 74 (R73-N5): on the front of Japan
- * and China at 1,800 m/px 47 pairs of 71 markers were on one another, the numbers of half a heap hidden.
+ * The view's rule is tighter than that quarter (ROADMAP R125, ADR-1110, ADR-1113, the user's decisions),
+ * `STACK_RULE_TIGHT`: a marker any more than a fiftieth under its nation's is in it, two nations' are parted to
+ * nothing, and a box may stand 13 px from its formation. Critic runs 73 and 74 (R73-N5): on the front of Japan and
+ * China at 1,800 m/px 47 pairs of 71 markers were on one another, the numbers of half a heap hidden. At every zoom
+ * of T1: from 1,200 m/px out only (ADR-1110), a notch nearer was the more heaped (critic run 75: 21 pairs of 58
+ * markers at 1,150 m/px, 6 of 53 at 1,300).
  */
 import { FADE_MS, progress, running, smooth, SwitchBank } from '../timing';
 import { MARKER_H } from './markers';
@@ -133,19 +135,13 @@ export const NUDGE_MS = 150;
 /** Boxes are moved until neither is under the other by more than this (a little under the quarter, for room). */
 const NUDGE_TO = 0.24;
 
-/** The rule of PLAN 2.7s1 and 2.7s2: the quarter. Nearer than FAR_FROM_M. */
+/** The rule of PLAN 2.7s1 and 2.7s2: the quarter. What these functions take when given none; the view gives STACK_RULE_TIGHT. */
 export const STACK_RULE: StackRule = { under: STACK_UNDER, hold: STACK_HOLD, partOver: STACK_UNDER, partTo: NUDGE_TO, nudgeMax: NUDGE_MAX_PX };
-/** Metres a pixel from which the markers are stacked and parted by STACK_RULE_FAR (ROADMAP R125): a cell is 10 px there and a marker 26. */
-export const FAR_FROM_M = 1200;
 /**
- * The rule from FAR_FROM_M out (ROADMAP R125, ADR-1108): hardly any of a box under another. 13 px of a marker 34
+ * The view's rule (ROADMAP R125, ADR-1110, ADR-1113): hardly any of a box under another. 13 px of a marker 34
  * high: with 8 the critic's front had 18 pairs of 59 markers on one another on its thirtieth day, with 13, 13.
  */
-export const STACK_RULE_FAR: StackRule = { under: 0.02, hold: 0, partOver: 0.001, partTo: 0, nudgeMax: Math.round((MARKER_H * 13) / 34) };
-/** The rule at `metresPerPx` (1,200 itself is far: a camera set to it reads a hair either side). */
-export function stackRuleAt(metresPerPx: number): StackRule {
-  return metresPerPx >= FAR_FROM_M * 0.999 ? STACK_RULE_FAR : STACK_RULE;
-}
+export const STACK_RULE_TIGHT: StackRule = { under: 0.02, hold: 0, partOver: 0.001, partTo: 0, nudgeMax: Math.round((MARKER_H * 13) / 34) };
 
 /** The markers that a move of at most `rule.nudgeMax` each could bring onto each one of `items`, by id. */
 function withinReach(items: readonly StackItem[], w: number, h: number, rule: StackRule): Map<number, StackItem[]> {
@@ -330,8 +326,8 @@ export class MarkerStacks {
   /**
    * The markers of a frame at `now`. `still`: the boxes keep the moves they have (the morph into
    * T2 shrinks each box about its place, and the one back grows it there: ADR-72); a box with
-   * none stands where it will rest. `rule`: `stackRuleAt` the zoom; a change of it is a change like any other
-   * (a fade into the stack, a box eased to its new place).
+   * none stands where it will rest. `rule`: the view's is STACK_RULE_TIGHT; a change of it is a change like
+   * any other (a fade into the stack, a box eased to its new place).
    */
   frame(items: readonly StackItem[], w: number, h: number, now: number, still = false, rule: StackRule = STACK_RULE): Map<number, StackedMarker> {
     this.shown.frame(now);

@@ -650,3 +650,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **What it costs:** a marker that stood below stays below where above would now cover less, until it is clear on
   its place; for up to half a second after the markers about it change it can stand on one.
 
+### ADR-1113 · 2026-11-17 · the user's decision ("R125 lets extend") — R125: the tight rule at every zoom of T1
+- **Was (ADR-1110):** `STACK_RULE_FAR` from 1,200 m/px out, the quarter nearer. Critic run 75's objection: a notch
+  nearer than the line was the more heaped (seed 58951, day 30: 21 pairs of 58 markers at 1,150 m/px, 6 of 53 at
+  1,300).
+- **Decision:** the view's rule is the tight one at every zoom of T1 (`STACK_RULE_TIGHT`; `stackRuleAt` and
+  `FAR_FROM_M` are gone). The quarter (`STACK_RULE`) stays as what the functions take when given none, with PLAN
+  2.7s1's and 2.7s2's unit tests.
+- **Measured** (`c74_markers.mjs`, seeds 56951 and 58951, day 30, pairs on one another before -> after): 1,150 m/px
+  16 -> 6 and 21 -> 3; 900, 17 -> 6 and 11 -> 2; 600, 6 -> 2 and 9 -> 2; 400, 7 -> 2 and 4 -> 2. The markers shown:
+  54 -> 53 and 58 -> 52 at 1,150; 35 -> 31 and 34 -> 30 at 600.
+- **What it costs:** nearer than 1,200 m/px too, a few more formations behind a "×n" and a box up to 13 px from its
+  formation.
+
