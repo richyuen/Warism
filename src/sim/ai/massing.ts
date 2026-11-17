@@ -41,6 +41,7 @@
  * State: `World.massing` and `World.massBarred`, saved while not empty.
  */
 import { Refusal } from '../../shared/commands';
+import { EventKind } from '../../shared/events';
 import { hypot } from '../core/dmath';
 import { passageOf } from '../systems/movement';
 import { declareWar, whyNotWar } from '../systems/war';
@@ -228,6 +229,8 @@ export function massStep(world: World, day: number, still: (n: number, t: number
   if (world.massBarred.size > 0 && day % 30 === 0) {
     for (const [key, until] of [...world.massBarred]) if (day >= until || nc.living[key >>> 16] !== 1 || nc.living[key & 65535] !== 1) world.massBarred.delete(key);
   }
+  // Told of once a massing (ROADMAP R122): those of massings over are forgotten.
+  for (const n of [...world.massTold]) if (!world.massing.has(n)) world.massTold.delete(n);
   if (world.massing.size === 0) return;
   /** The massings seen today, by target: the massing nation with the most men at that border. */
   const seen = new Map<number, { by: number; menNear: number }>();
@@ -261,6 +264,12 @@ export function massStep(world: World, day: number, still: (n: number, t: number
       continue;
     }
     gather(world, n, mine);
+    // Seen: told of, once (ROADMAP R122).
+    if (men > 0 && menNear >= MASS_SEEN * men && !world.massTold.has(n)) {
+      world.massTold.add(n);
+      const p = points[Math.floor(points.length / 2)]!;
+      world.out.emit(world.tick, EventKind.MassingSeen, n, t, (p % world.cells.w) + 0.5, Math.floor(p / world.cells.w) + 0.5);
+    }
     // Seen by its target (ROADMAP R103): of those massing on one nation, the one with the more men at its border.
     if (MASS_PROBE.noAnswer !== true && men > 0 && menNear >= MASS_SEEN * men) {
       const was = seen.get(t);

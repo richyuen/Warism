@@ -459,6 +459,7 @@ class WorldCore implements Stateful {
       // The wars being prepared (ROADMAP R97b): [nation, target, day] each, only while there is one.
       ...(w.massing.size === 0 ? [] : [{ name: 'world.massing', dtype: 'i32' as const, data: Int32Array.from([...w.massing].sort((a, b) => a[0] - b[0]).flatMap(([n, m]) => [n, m.target, m.since])) }]),
       // The targets barred after a massing given up (ROADMAP R97b): [nation × 65536 + target, day] each, only while there is one.
+      ...(w.massTold.size === 0 ? [] : [{ name: 'world.massTold', dtype: 'i32' as const, data: Int32Array.from([...w.massTold].sort((a, b) => a - b)) }]),
       ...(w.massBarred.size === 0 ? [] : [{ name: 'world.massBarred', dtype: 'i32' as const, data: Int32Array.from([...w.massBarred].sort((a, b) => a[0] - b[0]).flat()) }]),
       ...(w.farWait.size === 0 ? [] : [{ name: 'world.farWait', dtype: 'i32' as const, data: Int32Array.from([...w.farWait].sort((a, b) => a[0] - b[0]).flat()) }]),
       // Landings whose groups were destroyed since the landing system's hour (ROADMAP R40b; critic run 48, R48-N1:
@@ -638,6 +639,7 @@ class WorldCore implements Stateful {
     const mass = sections.find((s) => s.name === 'world.massing')?.data as Int32Array | undefined;
     for (let at = 0; mass && at < mass.length; at += 3) w.massing.set(mass[at]!, { target: mass[at + 1]!, since: mass[at + 2]! });
     w.massBarred = new Map();
+    w.massTold = new Set((sections.find((s) => s.name === 'world.massTold')?.data as Int32Array | undefined) ?? []);
     const bars = sections.find((s) => s.name === 'world.massBarred')?.data as Int32Array | undefined;
     for (let at = 0; bars && at < bars.length; at += 2) w.massBarred.set(bars[at]!, bars[at + 1]!);
     w.farWait = new Map();
@@ -1557,6 +1559,8 @@ export class World {
    * goes when it is read past its day.
    */
   massBarred = new Map<number, number>();
+  /** The nations whose massing has been told of (`MassingSeen`, ROADMAP R122): once a massing; saved while not empty. */
+  massTold = new Set<number>();
   /**
    * The air wings' bases (PLAN 5.1d), by wing: an airbase's index + 1, or a carrier's fleet as its
    * id negated; 0 for a wing whose carrier is gone (`airSystem` loses it). State, saved while not empty.

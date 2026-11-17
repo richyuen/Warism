@@ -306,6 +306,12 @@ export const EventKind = {
    * aided, x/y = the aided's capital. Monthly while the war lasts; with volunteers, a division queued for the aided.
    */
   BlocAid: 83,
+  /**
+   * An army is seen gathered at a border (ROADMAP R122, ADR-1107; critic run 73, R73-N2: "a massing is told
+   * nowhere"): a = the massing nation, b = the neighbour it masses on, x/y = a point of that border. Once a
+   * massing, when `MASS_SEEN` of its men stand there (`massStep`).
+   */
+  MassingSeen: 84,
 } as const;
 
 /** Why a nation joined a war (`WarJoined`'s y). */

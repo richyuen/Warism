@@ -471,9 +471,12 @@ Each with the critic's own "seen fixed when" (`critic/CRITIC_REPORT.md`).
   `tests/e2e/reviewBatch1938.spec.ts` (five wars: the smallest behind "+n", and first once its leader is played).
   `toBattle1938` opens "+n" for its quiet war. The critic's own probe (`c73_bannerOwn.mjs`) not run here: it is
   the next critic run's.
-- [ ] R122 **R73-N2: a massing is told** (R97b, R103): no ticker or History row and no arrow before the
-  declaration. AT: `node critic/scripts/c73_massSeen.mjs 56211 'Soviet Union' Romania 1218,300 40,55,65,72,75`:
-  "history of the two" or "massing words" not empty on day 55 or 65.
+- [x] R122 **R73-N2: a massing is told** (ADR-1107). `MassingSeen` (a new event, in the history and the ticker, among
+  a war's kinds): once a massing, the day `MASS_SEEN` (a quarter) of the massing nation's men stand at the border:
+  "Soviet Union is massing its army on the border of Romania". `World.massTold` (saved while not empty) keeps that
+  it was told: none again after a load. Test: `tests/unit/massAnswer1938.test.ts`. The pin of seed 99 bf16e257 ->
+  a5dbeae6 (the history is state). The critic's probe (`c73_massSeen.mjs`) is the next run's.
+  - Not built: an arrow or a mark on the map at the border; a row when a massing is given up.
 - [x] R123 **R73-N3: small worlds wait longer for their first war, or for ever** (ADR-1106, the user's decision:
   "Ok let's try it"). The cause read: `fewNationWars.ts 2 55421 6 10` with R97b's massing and without it
   (`--no-massing`): a war in 3 worlds of 6 and in 5; the first war on day 476, 20, none, none, 665, none and on day

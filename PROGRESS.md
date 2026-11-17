@@ -357,3 +357,7 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
 
 - `massStep`'s `alone`; `fewNationWars.ts --no-massing`. Six worlds of two nations, ten years: a war in 3 before,
   5 now (5 with no massing at all). The sweep tests and `sweep:quick` not run on it: the pin stands.
+
+## 2026-11-17 — R122: a massing seen is told (ADR-1107)
+
+- `MassingSeen`, `World.massTold`. The pin of seed 99 bf16e257 -> a5dbeae6.

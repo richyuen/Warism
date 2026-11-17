@@ -127,6 +127,7 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   // An event of the track by its name (ROADMAP R62j1): its number, the nation it names first.
   [EventKind.TrackEvent]: ['number', 'nation'],
   [EventKind.BlocAid]: ['nation', 'nation'],
+  [EventKind.MassingSeen]: ['nation', 'nation'],
 };
 
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */
@@ -200,6 +201,8 @@ export const TICKER_KINDS: ReadonlySet<number> = new Set<number>([
   // A new nuclear power (PLAN 7.37i).
   EventKind.NuclearPower,
   // The bonds a forced war broke (PLAN 7.175a), told before its declaration.
+  // An army gathered at a border (ROADMAP R122): the war it prepares is weeks off, and is watched for.
+  EventKind.MassingSeen,
   EventKind.BondsBroken,
   // The historical track's events by their names (ROADMAP R62j1), and its end (R64a).
   EventKind.TrackEvent,
@@ -265,6 +268,7 @@ export const WAR_KINDS: ReadonlySet<number> = new Set([
   EventKind.NukeDecided,
   EventKind.NukeMeansLost,
   EventKind.GodBreakthrough,
+  EventKind.MassingSeen,
   EventKind.BondsBroken,
   EventKind.GuaranteeLapsed,
   EventKind.HeroLost,

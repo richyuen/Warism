@@ -35,6 +35,8 @@ const CUE_OF_KIND: Readonly<Record<number, Cue>> = {
   [EventKind.NukeMeansLost]: 'capital',
   // A new nuclear power (PLAN 7.37i): the nuclear cue.
   [EventKind.NuclearPower]: 'nuke',
+  // An army massing on a border (ROADMAP R122): soft, a town's: a warning, not yet the war.
+  [EventKind.MassingSeen]: 'town',
   // A forced war's bonds broken (PLAN 7.175a): the war's cue, its declaration in the same hour.
   [EventKind.BondsBroken]: 'war',
   // A war left (PLAN 7.192): out of a war, as a peace; a revolt: a war of independence, the war's.

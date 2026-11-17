@@ -588,3 +588,14 @@ from AoC are tagged **[AoC-DEVIATION]**.
   none): at the limit such a nation declares if `still` (its gold, the pile, the blocs); else, and every other
   nation, the bar as before. A war with its army away, where there was none.
 - **The pin of seed 99** stands: in the 1938 world's first year no nation with one neighbour runs a massing out.
+
+### ADR-1107 · 2026-11-17 · accepted — R122: a massing seen is told of, once
+- **Critic run 73 (R73-N2):** close to a million Soviet men come to Romania's border in five weeks, and the ticker
+  and History have no row of it.
+- **Decision:** `EventKind.MassingSeen` (84; a the massing nation, b its target, the place a point of the border),
+  emitted by `massStep` the day the massing is seen (ADR-1093's `MASS_SEEN`: when its target would answer), once:
+  `World.massTold`, a set of the nations told of, emptied of a massing that is over, saved as `world.massTold` while
+  not empty (a save without it loads as none told). A history kind (so state, saved and hashed), a ticker kind and
+  one of a war's kinds (`WAR_KINDS`: "my wars only" shows it).
+- **When seen and not when begun:** a massing begun is the nation's own secret, and many are given up unseen.
+- **The pin of seed 99:** bf16e257 -> a5dbeae6.

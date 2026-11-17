@@ -1,9 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { MASS_DAYS, MASS_NEAR_CELLS, MASS_PROBE, MASS_SEEN, MASS_SHARE, beginMassing, massPoints, massStep } from '../../src/sim/ai/massing';
+import { EventKind } from '../../src/shared/events';
+import { TICKER_KINDS } from '../../src/shared/history';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { declareWar } from '../../src/sim/systems/war';
 import { navOf, type World } from '../../src/sim/world';
+import { historyText } from '../../src/ui/historyText';
+import { historyRows } from '../../src/worker/historyRows';
 import { assets1938 } from '../helpers/earth';
 import { nationId } from '../helpers/sim1938';
 
@@ -176,5 +180,46 @@ describe("a massing's target answers (ROADMAP R103)", () => {
     // No more than its share is ordered: the rest stay where they stood.
     expect(there).toBeLessThanOrEqual(Math.ceil(MASS_SHARE * all) + 1);
     expect(there).toBeGreaterThanOrEqual(Math.floor(MASS_SHARE * all) - 2);
+  }, 240_000);
+
+  // ROADMAP R122 (ADR-1107; critic run 73, R73-N2: "a massing is told nowhere"): once a massing, when it is seen.
+  it('a massing seen is told of once, in the ticker and History, and not again after a load', () => {
+    const s = quiet();
+    const w = s.world;
+    expect(beginMassing(w, SOV, ROM, 0)).toBe(true);
+    const told: number[] = [];
+    const read = (): void => {
+      const ev = w.out.events;
+      for (let i = 0; i < ev.length; i += 6) if (ev[i + 1] === EventKind.MassingSeen) told.push(ev[i]! / 24, ev[i + 2]!, ev[i + 3]!);
+      ev.length = 0;
+    };
+    let seenOn = -1;
+    for (let d = 0; d < 20 && w.massing.has(SOV); d++) {
+      if (seenOn < 0 && shareAt(w, SOV, ROM) >= MASS_SEEN) seenOn = d;
+      massStep(w, w.tick / 24, () => false);
+      read();
+      if (d === 12) {
+        // A save between: the massing told of is not told again.
+        const u = quiet();
+        u.load(s.save());
+        expect([...u.world.massTold]).toEqual([SOV]);
+        massStep(u.world, u.world.tick / 24, () => false);
+        expect(u.world.out.events.filter((_, i) => i % 6 === 1).includes(EventKind.MassingSeen)).toBe(false);
+      }
+      s.step(24, read);
+    }
+    expect(seenOn).toBeGreaterThan(2);
+    expect(told).toEqual([seenOn, SOV, ROM]);
+    const rows = historyRows(w, (n) => `nation.${n === SOV ? 'SOV' : n === ROM ? 'ROM' : ''}`, () => '', () => '').filter((r) => r.kind === EventKind.MassingSeen);
+    expect(rows).toHaveLength(1);
+    expect(historyText(rows[0]!)).toBe('Soviet Union is massing its army on the border of Romania');
+    expect(TICKER_KINDS.has(EventKind.MassingSeen)).toBe(true);
+    // Over (given up here: the war it would declare is not declared): forgotten.
+    for (let d = 0; d < 60 && w.massing.has(SOV); d++) {
+      massStep(w, w.tick / 24, () => false);
+      s.step(24, read);
+    }
+    massStep(w, w.tick / 24, () => false);
+    expect(w.massTold.size).toBe(0);
   }, 240_000);
 });
