@@ -395,9 +395,22 @@ hero is one tank.
   and `legendOccupied1938` green unchanged. Shots: `docs/evidence/R107/` (Japan on China's land at 150 and 20 m/px;
   France on Germany's at 300 and 150, with the old border, the front, the glow of R105 and the arrows of R106).
   - No test of its own measures the bands or the line: the shots are its evidence.
-- [ ] R108 **Fewer counters at the world's zoom** over the names.
-- [ ] R109 **Names and tags at the middle zooms**: a nation's name not under the tags.
-
+- [x] R108 **Fewer counters at the world's zoom** (ADR-1099, the user's choice: "Counters: 1"). The counters of a
+  nation at war with no one fade out between `QUIET_FROM_M` (8,000) and `QUIET_GONE_M` (12,000) metres a pixel; the
+  nation played or looked at keeps its own. Over Europe at 20,000 m/px at the start of 1938: 81 counters -> 10, those
+  of the 7 nations at war. Test: `tests/e2e/quietCounters1938.spec.ts`. Shots: `docs/evidence/R108/`.
+  - Beyond 8,000 m/px they are a layer of their own under the others (`quietCounters`), so a counter's number and
+    "+n" are of what is seen. At that zoom the counters folded across the two kinds come apart at once, at full
+    opacity: the one place a counter appears without a fade (the layer's rule of PLAN 1.45b, here not kept).
+  - Six specs of the counters' machinery (`counters1938`, `countersRest1938`, `declutter1938`, `heroes1938`,
+    `lateFrame1938`, `seamItems1938`) keep every nation's counters by the view's switch (`quietCountersKept`): what
+    they measure is the fold, the rest and the sum, on the dense picture.
+- [x] R109 **Names and tags at the middle zooms** (ADR-1100, the user's choice: "Names: 1", the tags thin out).
+  `CLUSTER_PX` 128 where 64: the counters' grid a level coarser at every zoom. Germany's war on Poland, day 5, at
+  4,000 m/px over central Europe: 91 counters -> 72, and FRANCE, ITALY, UNITED KINGDOM and POLAND are read where
+  counters stood on their letters. Shots: `docs/evidence/R109/`. `tests/unit/counters.test.ts` and
+  `countersRest1938` take their zooms from the constant.
+  - Not touched: the markers of T1 (2,000 m/px and nearer), which stand on a name as they did.
 After the next critic (the user's choice of the order): the ground of the close zooms (relief, rivers, roads); a
 war seen from the world's zoom (a mark where the fighting is heaviest).
 

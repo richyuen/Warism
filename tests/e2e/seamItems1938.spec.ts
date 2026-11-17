@@ -20,6 +20,14 @@ test('a counter and a marker by the seam are drawn as they reach into the view',
   await page.setViewportSize({ width: VW, height: VH });
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  // Every nation's counters at the world's zoom, as before ROADMAP R108 (its own spec: `quietCounters1938`): what is read here is the counters' own machinery.
+  await page.evaluate(() => {
+    const v = window.__warsim!.view!;
+    v.quietCountersKept = true;
+    v.requestDraw();
+  });
+  // The fold of the counters that join the layer run out.
+  await page.waitForTimeout(800);
   await page.evaluate(() => {
     const h = window.__warsim!.hud;
     if (h.showStats.value) h.toggleStats();

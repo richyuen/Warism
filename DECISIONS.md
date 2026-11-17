@@ -517,3 +517,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Against PLAN 2.11f, read:** that took a fine weave off the ground; these are bands five times as broad, and the
   7-px measure of `occupiedGround1938` (the hatching's contrast under a fifth of T1's) holds unchanged.
 - **No sim input.**
+
+### ADR-1099 · 2026-11-16 · the user's decision ("Counters: 1") — R108: the counters of nations at peace fade out at the world's zoom
+- **Offered:** 1, those of nations at peace fade out between about 8,000 and 12,000 m/px, the nation played or
+  looked at kept; 2, the counters merged by alliance. **The user: 1.**
+- **Decision:** `quietAlphaAt` (`counters.ts`): 1 to `QUIET_FROM_M`, 0 from `QUIET_GONE_M`, by the zoom's level
+  between. Beyond `QUIET_FROM_M` the view gives the formations of a nation at war with no one (and not played or
+  looked at) to a second `CounterLayer`, drawn first at that opacity; the rest to the first as before.
+- **Two layers and not one opacity a counter:** a counter's number is the sum of what is folded into it and its
+  "+n" their count (PLAN 1.45b). In one layer a nation at war folded into a stronger neighbour at peace would
+  fade with it, and a counter seen would count nations not seen.
+- **What it costs:** at 8,000 m/px the two kinds stop folding into each other at once, and a counter that was
+  under another's "+n" stands by itself with no fade. The layer's rule (no counter appears but under one in its
+  place) is not kept there.
+- **Peaceful armies are not on the map at the world's zoom.** The user's choice, said with the offer.
+
+### ADR-1100 · 2026-11-16 · the user's decision ("Names: 1") — R109: the counters' grid a level coarser
+- **Offered:** 1, the tags thin out until one zooms closer; 2, the nations' names give way. **The user: 1.**
+- **Decision:** `CLUSTER_PX` 128 (64): a cluster's cell about 128 px on the screen, so a level coarser at every
+  zoom and at most a quarter of the counters. The names keep clear of the counters as they did (`nameObstacles`),
+  and find room.
+- **Not the markers of T1:** who faces whom is what that tier shows (PLAN 2.7s1); left.

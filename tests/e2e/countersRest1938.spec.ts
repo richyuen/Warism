@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import type {} from '../../src/app/testApi';
+import { CLUSTER_PX } from '../../src/render/units/counters';
 import { settle } from './settle';
 
 // PLAN 2.7f (ADR-74, finding 1): after a burst of wheel notches at T0 the counters' cluster level
@@ -19,11 +20,19 @@ test('T0 counters come to rest after a burst of wheel notches', async ({ page })
   await page.setViewportSize({ width: 1400, height: 800 });
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.sim.mapLayers !== null, null, { timeout: 60_000 });
-  // Over central Europe, at the zoom where the counters' continuous level is 4.3.
-  await page.evaluate((lv) => {
+  // Every nation's counters at the world's zoom, as before ROADMAP R108 (its own spec: `quietCounters1938`): what is read here is the counters' own machinery.
+  await page.evaluate(() => {
     const v = window.__warsim!.view!;
-    v.controller.set({ cx: v.controller.cam.cx, cy: v.controller.cam.cy, scale: 64 / 2 ** lv });
-  }, START_LEVEL);
+    v.quietCountersKept = true;
+    v.requestDraw();
+  });
+  // The fold of the counters that join the layer run out.
+  await page.waitForTimeout(800);
+  // Over central Europe, at the zoom where the counters' continuous level is 4.3.
+  await page.evaluate(({ lv, px }) => {
+    const v = window.__warsim!.view!;
+    v.controller.set({ cx: v.controller.cam.cx, cy: v.controller.cam.cy, scale: px / 2 ** lv });
+  }, { lv: START_LEVEL, px: CLUSTER_PX });
   await settle(page);
   const before = await page.evaluate(() => ({ level: window.__warsim!.view!.counters.level, mPerPx: window.__warsim!.view!.metresPerPx }));
   expect(before.level).toBe(4);
@@ -39,7 +48,7 @@ test('T0 counters come to rest after a burst of wheel notches', async ({ page })
   // The camera eases to its target; then a second for what the zoom started to run out.
   await page.waitForFunction(() => !window.__warsim!.view!.controller.animating, null, { timeout: 10_000 });
   const rested = await page.evaluate(() => ({ scale: window.__warsim!.view!.controller.cam.scale, at: performance.now() }));
-  expect(Math.log2(64 / rested.scale)).toBeCloseTo(START_LEVEL + NOTCHES * Math.log2(1.25), 2);
+  expect(Math.log2(CLUSTER_PX / rested.scale)).toBeCloseTo(START_LEVEL + NOTCHES * Math.log2(1.25), 2);
   // (A plain wait, not `settle`: that draws frames itself, and the frames drawn are counted below.)
   await page.waitForFunction((at) => performance.now() > at + 1000, rested.at);
 
@@ -57,7 +66,7 @@ test('T0 counters come to rest after a burst of wheel notches', async ({ page })
     }
     return { levels: [...levels], animating, drawn: v.frames - frames };
   });
-  console.log(`at rest at ${Math.log2(64 / rested.scale).toFixed(2)} levels: level ${seen.levels.join(', ')}; ${seen.animating} samples animating; ${seen.drawn} frames drawn in 2 s`);
+  console.log(`at rest at ${Math.log2(CLUSTER_PX / rested.scale).toFixed(2)} levels: level ${seen.levels.join(', ')}; ${seen.animating} samples animating; ${seen.drawn} frames drawn in 2 s`);
   expect(seen.levels).toHaveLength(1);
   expect(seen.animating).toBe(0);
   expect(seen.drawn).toBeLessThanOrEqual(2);

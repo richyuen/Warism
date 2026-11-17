@@ -116,11 +116,23 @@ export interface HeroCounter {
   name: string;
 }
 
-export const CLUSTER_PX = 64;
+/** 128 since ROADMAP R109 (ADR-1100, the user's choice; 64 before): a level coarser at every zoom, so that the nations' names are read between the counters. */
+export const CLUSTER_PX = 128;
 export const HYSTERESIS = 0.15;
 export const SPLIT_MS = 250;
 export const MAX_LEVEL = 14;
 
+/**
+ * The counters of nations at peace at the world's zoom (ROADMAP R108, ADR-1099, the user's choice): whole to
+ * QUIET_FROM_M metres a pixel, gone from QUIET_GONE_M, between them by the zoom's level (the log of the metres a
+ * pixel). Not the nation played or looked at, which keeps its counters. At the world's zoom Europe at peace was a
+ * pile of counters over its nations' names ("1.39M +6"), and a war's own were among them.
+ */
+export const QUIET_FROM_M = 8000;
+export const QUIET_GONE_M = 12000;
+export function quietAlphaAt(metresPerPx: number): number {
+  return Math.min(1, Math.max(0, Math.log(QUIET_GONE_M / metresPerPx) / Math.log(QUIET_GONE_M / QUIET_FROM_M)));
+}
 /** The clustering level for `scale` CSS px per cell, keeping `current` within its hysteresis band. */
 export function clusterLevel(scale: number, current: number | null): number {
   const lv = Math.log2(CLUSTER_PX / scale);

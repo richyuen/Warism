@@ -16,7 +16,7 @@ import { advances, arrowFill, drawMoveArrows, groupMarches, type DrawnArrow, typ
 import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderLine, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { BATTLE_TAG_M, drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, type StackItem } from '../render/units/markerStacks';
-import { COUNTER_SCALE, CounterLayer, counterNation, heroScaleAt, type CounterSource, type HeroCounter } from '../render/units/counters';
+import { COUNTER_SCALE, CounterLayer, counterNation, heroScaleAt, type CounterSource, type HeroCounter, quietAlphaAt } from '../render/units/counters';
 import { drawSeaBattles } from '../render/units/seaBattles';
 import { FlagAtlas, NO_FLAG_SLOT } from '../render/units/flagAtlas';
 import { BallState, HERO_BIT, HERO_SCALE, HURT_SHIFT, hurtLevel } from '../render/units/ballShader';
@@ -1302,6 +1302,10 @@ export class MapView {
   markerOpacity = 0;
   /** T0 counters (PLAN 2.2). */
   readonly counters = new CounterLayer();
+  /** The counters of nations at peace beyond QUIET_FROM_M (ROADMAP R108): a layer of their own, under the others, fading out. */
+  readonly quietCounters = new CounterLayer();
+  /** Nations at peace keep their counters at the world's zoom (a test's switch: as before R108). */
+  quietCountersKept = false;
   /**
    * Which of two unit layers shows at each tier boundary, and the cross-fade between them (PLAN
    * 1.45a, 2.7b): T0 counters ↔ T1 markers, T1 markers ↔ T2 element sprites, T2 sprites ↔ T3
@@ -1334,7 +1338,7 @@ export class MapView {
    */
   unitsAnimating(now = performance.now()): boolean {
     const handing = this.handover.animating(now) || this.tactical.animating(now) || this.close.animating(now) || this.flagsIn.animating(now) || this.cityLabels.animating(now) || this.nameStates.animating(now);
-    return this.counters.animating(now) || this.markerStacks.animating(now) || handing || running(now, this.flagMoveStart, FLAG_MOVE_MS) || this.fire.animating(now) || this.turretAims.animating(now) || this.wrecks.bursting(now) || this.airFx.animating(now) || this.nukeFx.animating(now);
+    return this.counters.animating(now) || this.quietCounters.animating(now) || this.markerStacks.animating(now) || handing || running(now, this.flagMoveStart, FLAG_MOVE_MS) || this.fire.animating(now) || this.turretAims.animating(now) || this.wrecks.bursting(now) || this.airFx.animating(now) || this.nukeFx.animating(now);
   }
 
   /** Opacity of the element sprites, their figures and their fire in the frame being drawn: in as the T1 markers go out. */
@@ -1888,6 +1892,7 @@ export class MapView {
     // only with room to spare beside one. A flag stands by its capital's dot, a pixel from the
     // place of the capital's name: no clearance, or no capital's name could stand there.
     if (counters) for (const b of this.counters.boxes) if (b.own >= 0.5) out.push({ x: b.x, y: b.y, w: b.w, h: b.h, clear: NAME_CLEAR_PX });
+    if (counters) for (const b of this.quietCounters.boxes) if (b.own >= 0.5 && b.alpha >= 0.5) out.push({ x: b.x, y: b.y, w: b.w, h: b.h, clear: NAME_CLEAR_PX });
     if (markers) {
       // The T1 markers, which move with their armies every tick: the box with its backing (a
       // pixel around it, and the half pixel its corner is rounded by), the bar and the number
@@ -2097,6 +2102,11 @@ export class MapView {
     this.fire.draw(ctx, cam, this.geo, vw, vh, now, this.elementOpacity, this.unitScale, close);
   }
 
+  /** Whether `nation`'s counters fade out at the world's zoom (ROADMAP R108): at war with no one, and not the nation played or looked at. */
+  private quietNation(nation: number): boolean {
+    return !this.atWar.has(nation) && nation !== this.selectionNation && nation !== this.selected;
+  }
+
   /** T1 operational markers (PLAN 2.1) and T0 counters (PLAN 2.2) on the overlay. */
   private drawUnitMarkers(cam: Camera, now: number): void {
     // T0 counters, T1 markers or T2 sprites: timed handovers, so at rest only one layer is drawn
@@ -2111,13 +2121,16 @@ export class MapView {
     const hex = (id: number): string => `#${(this.ownColor.get(id) ?? 0x888888).toString(16).padStart(6, '0')}`;
     const flagOf = (n: number): CanvasImageSource | null => this.flags.canvasOf(n);
     const src: CounterSource[] = [];
+    // Beyond QUIET_FROM_M the nations at peace are a layer of their own that fades out (ROADMAP R108).
+    const quiet: CounterSource[] = [];
+    const quietAlpha = this.quietCountersKept ? 1 : quietAlphaAt(this.metresPerPx);
     // A hero is a counter of its own, larger, with its name (PLAN 7.184b3): not in its nation's.
     const heroes: HeroCounter[] = [];
     // A fleet is a counter of its own, drawn as a navy's (PLAN 4.10a).
     for (let i = 0; i < this.formIds.length; i++) {
       const naval = this.templates[this.formTemplate[i]!]?.domain === 1;
       if (this.heroAt(i)) heroes.push({ id: this.formIds[i]!, nation: this.formNation[i]!, naval, x: this.formX[i]!, y: this.formY[i]!, name: this.formationName(this.formIds[i]!, this.formTemplate[i]!) });
-      else src.push({ x: this.formX[i]!, y: this.formY[i]!, nation: counterNation(this.formNation[i]!, naval), strength: this.formStrength[i]! });
+      else (quietAlpha < 1 && this.quietNation(this.formNation[i]!) ? quiet : src).push({ x: this.formX[i]!, y: this.formY[i]!, nation: counterNation(this.formNation[i]!, naval), strength: this.formStrength[i]! });
     }
     const vw = this.canvas.clientWidth;
     const vh = this.canvas.clientHeight;
@@ -2139,6 +2152,8 @@ export class MapView {
     this.airFx.draw(ctx, cam, this.geo, vw, vh, now, airFxSize(cam.scale, this.unitScale), this.shares.individuals, (f) => this.elementPlaces(f));
     // At the world's zoom a hero's counter is the others' size: at twice it, four covered Germany, France and Italy's
     // names in 1940 (ROADMAP R40d; critic run 48, R48-N3); twice from 5,000 m/px, blended between (R42c, R49-N1).
+    // Those at peace first, under the others (ROADMAP R108).
+    this.quietCounters.draw(ctx, quiet, cam, this.geo, vw, vh, (1 - share) * quietAlpha, now, hex, flagOf, this.unitScale * COUNTER_SCALE, balls);
     this.counters.draw(ctx, src, cam, this.geo, vw, vh, 1 - share, now, hex, flagOf, this.unitScale * COUNTER_SCALE, balls, heroes, heroScaleAt(this.metresPerPx), this.coveredNow(now));
     this.heroesDrawn = heroes.length > 0;
     this.coverMoved = false;

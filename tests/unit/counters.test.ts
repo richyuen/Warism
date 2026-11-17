@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
+import { CLUSTER_PX,
   buildClusters,
   clusterKey,
   clusterLevel,
@@ -26,7 +26,7 @@ const SRC: CounterSource[] = Array.from({ length: 400 }, () => ({ x: rnd() * 200
 
 describe('T0 counters (PLAN 2.2)', () => {
   it('levels follow the zoom with ±0.15 hysteresis', () => {
-    const at = (lv: number): number => 64 / 2 ** lv; // scale where the continuous level is lv
+    const at = (lv: number): number => CLUSTER_PX / 2 ** lv; // scale where the continuous level is lv
     expect(clusterLevel(at(5), null)).toBe(5);
     expect(clusterLevel(at(5.6), 5)).toBe(5); // inside the band
     expect(clusterLevel(at(5.5 + HYSTERESIS + 0.01), 5)).toBe(6);
@@ -53,7 +53,7 @@ describe('T0 counters (PLAN 2.2)', () => {
 
   it('splits animate from the parent centroid to the children, merges the reverse', () => {
     const L = new CounterLayer();
-    const scale = (lv: number): number => 64 / 2 ** lv;
+    const scale = (lv: number): number => CLUSTER_PX / 2 ** lv;
     L.layout(SRC, scale(7), 0, true);
     expect(L.level).toBe(7);
     // Zoom in one level: split. At t=0 the children sit on their parent; at the end on themselves.
@@ -90,7 +90,7 @@ describe('T0 counters (PLAN 2.2)', () => {
   // started the way back: counters splitting and merging every 250 ms at a resting camera.
   describe('the level comes to rest', () => {
     const FRAME = 16;
-    const scaleAt = (lv: number): number => 64 / 2 ** lv;
+    const scaleAt = (lv: number): number => CLUSTER_PX / 2 ** lv;
     const FEW = SRC.slice(0, 16); // the level does not depend on what is clustered
     /**
      * Draws frames 16 ms apart with the zoom `lvAt(t)` (in levels) until `restAt`, then for
@@ -144,8 +144,8 @@ describe('T0 counters (PLAN 2.2)', () => {
 
   it('invisible layers follow the zoom without animating', () => {
     const L = new CounterLayer();
-    L.layout(SRC, 64 / 2 ** 8, 0, false);
-    L.layout(SRC, 64 / 2 ** 3, 10, false);
+    L.layout(SRC, CLUSTER_PX / 2 ** 8, 0, false);
+    L.layout(SRC, CLUSTER_PX / 2 ** 3, 10, false);
     expect(L.level).toBe(3);
     expect(L.animating(10)).toBe(false);
   });
@@ -282,7 +282,7 @@ describe('counter declutter (PLAN 1.45b)', () => {
 // were further apart (a gate run under load saw 2 counters over central Europe, every other run 3).
 describe('the counters at rest after a step of the camera (PLAN 2.7l)', () => {
   const boxOf = (_total: number, others: number): [number, number] => [others > 0 ? 50 : 40, 14];
-  const scaleAt = (lv: number): number => 64 / 2 ** lv;
+  const scaleAt = (lv: number): number => CLUSTER_PX / 2 ** lv;
   /**
    * Draws frames `dt` ms apart from `t0` at the zoom of `lv` levels, as the view does: until two
    * frames in a row leave nothing animating. Returns the counters then shown and the time.

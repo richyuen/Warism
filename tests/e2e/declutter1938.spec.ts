@@ -46,6 +46,14 @@ test('T0 counters never overlap: what does not fit is folded into a neighbour, a
   await page.setViewportSize({ width: VW, height: VH });
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.sim.mapLayers !== null, null, { timeout: 60_000 });
+  // Every nation's counters at the world's zoom, as before ROADMAP R108 (its own spec: `quietCounters1938`): what is read here is the counters' own machinery.
+  await page.evaluate(() => {
+    const v = window.__warsim!.view!;
+    v.quietCountersKept = true;
+    v.requestDraw();
+  });
+  // The fold of the counters that join the layer run out.
+  await page.waitForTimeout(800);
   const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/1.45') : info.outputPath();
   mkdirSync(out, { recursive: true });
   const europe = { x: 560, y: 150, width: 420, height: 320 }; // where the critic's crop of the pile-up was
@@ -181,6 +189,14 @@ test('the T0 counters at rest after a step are the same whatever the time betwee
   await page.setViewportSize({ width: VW, height: VH });
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.sim.mapLayers !== null, null, { timeout: 60_000 });
+  // Every nation's counters at the world's zoom, as before ROADMAP R108 (its own spec: `quietCounters1938`): what is read here is the counters' own machinery.
+  await page.evaluate(() => {
+    const v = window.__warsim!.view!;
+    v.quietCountersKept = true;
+    v.requestDraw();
+  });
+  // The fold of the counters that join the layer run out.
+  await page.waitForTimeout(800);
   const [x0, y0] = cellOf(5, 55, W, H);
   const [x1, y1] = cellOf(25, 45, W, H);
 

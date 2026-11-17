@@ -1949,6 +1949,9 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   occupier's cast (`OCCUPIED_BAND_PX` 34, `OCCUPIED_BAND_DUTY` 0.4; the fill `OCCUPIED_BAND_CAST` 0.5 on a band,
   `OCCUPIED_GAP_CAST` 0.18 between), and a dashed dark line (`OLD_BORDER` 0.6, `OLD_BORDER_PX` 1.2,
   `OLD_BORDER_DASH_PX` 9) where the holder's own land meets what it occupies. The far tiers: the hatching.
+- **The counters at the world's zoom** (ROADMAP R108, ADR-1099; R109, ADR-1100; `counters.ts`): a cluster's cell is
+  about `CLUSTER_PX` (128) px. The counters of a nation at war with no one, not played and not looked at, fade out
+  from `QUIET_FROM_M` (8,000 m/px) to `QUIET_GONE_M` (12,000), a layer of their own under the others.
 - **Ground being taken** (ROADMAP R105, ADR-1096; `src/render/fx/taking.ts`): each cell of the snapshot's `taking`
   (`takingCells`: hold progress 1 to 255) has a hot glow (`TAKING_GLOW_RGB`, `TAKING_GLOW_CELLS` 1.15 cells,
   `TAKING_GLOW_MIN` 0.25 to `TAKING_GLOW_MAX` 0.7 by its progress) and in it the colour of the nation taking it

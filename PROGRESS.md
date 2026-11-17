@@ -324,3 +324,12 @@ movement arrows first), the user's choices in ADR-1073. Documents only; no code.
   (`orderLines1938` red): thinner in the drawing alone.
 - R107: bands and the dashed old border in the map's pass, on the ground only. One run of the browser suite for
   the two, and one commit.
+
+## 2026-11-16 — R108, R109: fewer counters (ADR-1099, ADR-1100, the user's choices); Batch 37 done
+
+- R108: `quietAlphaAt`, `MapView.quietCounters`. R109: `CLUSTER_PX` 128. The whole browser suite on the two: 463
+  green, eight specs of the counters red on the new picture (six given the switch, `countersRest1938` its zoom
+  from the constant) and `nukeAlertTwo1938` red in the run.
+- A review of 42 pictures of the game by a sub-agent (the user's request): twelve ideas, told to the user; none
+  built. Its nine map-mode pictures all showed the political colours: a fault of the capture or of the modes, not
+  yet known.
