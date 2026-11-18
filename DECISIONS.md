@@ -78,7 +78,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
-## ADR-1120 · 2026-11-18 · proposed, the user's decision · R140: a top five held 20 years, the bar or ADR-750
+## ADR-1120 · 2026-11-18 · accepted, option (b) (the user's decision: "Let's do b") · R140: a top five held 20 years, the bar or ADR-750
 
 - **The conflict.** R140's AT (Batch 43, the user's decision of 2026-11-17) asks that no seed of a 10 × 50 sweep keep
   the same five largest nations for 20 years or more. ADR-750 (the user's decision) has it that a stable top is a valid
@@ -94,7 +94,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
   (b) Keep ADR-750: R140 closed with HEAD's figures (2 of 10), the entry to the watch list; R144 dropped.
   (c) Judge another measure of the top's movement (realms rather than nations, or the top three, or the largest's
   share), with its bar.
-- **Until the user decides**, R140 and R144 are not taken; the loop goes on to R141.
+- **The user's decision** (2026-11-18): (b). ADR-750 stands: a stable top is a valid world, reported by the sweep and
+  not judged. R140 closed with HEAD's figures (2 of 10, 72006 22 years, 72007 20); its BLOCKERS entry to the watch list;
+  R144 dropped.
 
 ---
 

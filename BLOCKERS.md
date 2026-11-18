@@ -65,22 +65,6 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
   piles; a round trip carries 4–8 divisions. No decision of the user's waits on it; the loop takes it after
   PLAN 7.80b.
 
-### R140: the same five largest for 20 years or more on 2 of 10 seeds of HEAD (2026-11-18; first on 701–710, 2026-10-18, PLAN 7.18g)
-- **The bar** (ROADMAP R140): a 10 × 50 sweep on seeds no tuning has seen, the same five largest nations by land (as a
-  set) for 20 years or more on none of the 10. Reported, not judged, by the sweep since ADR-750 ("a stable top is a
-  valid world", the user's decision).
-- **What moved:** `docs/sweeps/2026-11-18-sweep-r140.md` (72001–72010, on 40938ff7): 72006 22 years (years 10–31) and
-  72007 20 years (10–29), both the Soviet Union, the United Kingdom, the United States, Brazil and Australia; the
-  other eight 7–17. Before: 701–710 three (22, 20, 20); release79's 1581–1590 none (at most 14).
-- **The cause read** (`.cache/r140/top.ts`, the eight largest and their days at war each year): the United States is in
-  the longest-held set on every seed of the three sweeps (30 of 30) and Australia on most; on 72006 Australia was at
-  war 0 days in years 9–27 and the United States 0 in 22 of 32 years; 72007 alike. Their land does not move, so the set
-  holds while the other three keep their places. On 72006 the sixth stood 5.6–5.8 M km² against Australia's 8.34; on
-  72007 China came to 8.20–8.23 in years 14–20 and did not pass it. The set forms after year 8, when 11–28 M km² change
-  hands on every seed (the colonies taken into their overlords: France and Britain doubling on 72006).
-- **Left:** ADR-1120 (proposed, the user's decision): the bar or ADR-750, and what would change it. R144 is the cause's
-  item; it waits on that answer.
-
 ### `seaBattleSeen1938` red in parallel runs under load (2026-10-17, PLAN 7.4f38, 7.4f40)
 Red twice this day in large parallel e2e runs (53 spec files with PLAN 7.4f38's change, 7 with
 7.4f40's, two unrelated changes), green alone five times (both changes and HEAD before them) and

@@ -5,6 +5,11 @@ Suspicions and intermittent reds not worth an open entry; searched, not read (AD
 - **2026-11-17: `nukeAlertTwo1938` "at Max with the pause off"** red in a whole browser run twice (R137's gate, the
   release's check:review), green alone each time. Back to BLOCKERS if it is red alone.
 
+- **2026-11-18, from BLOCKERS: the same five largest 20 years or more** (R140: 2 of 10 on 72001-72010, 72006 22 years and
+  72007 20; 3 of 10 on 701-710, 0 on 1581-1590). A stable top is a valid world (ADR-750; ADR-1120 (b), the user's
+  decision): reported by the sweep, not judged. The cause read: the United States and Australia at war on few days of
+  decades. Back to BLOCKERS if the user asks for the bar again.
+
 - **2026-11-17, from BLOCKERS: `relationsNamed1938`, seed 39943 on the phone** (red 1 run of 3 at R103's gate): green 3 of
   3 alone after 4febbde7 (a label sought up to nineteen heights off its node; 39939's phone red on R137's world, green
   with it). Back to BLOCKERS if a whole run has it red again.
