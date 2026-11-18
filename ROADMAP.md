@@ -159,18 +159,25 @@ RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking on
   and the ticker hidden (R153). AT: the probe's `resume.ranHours` is 0, or resuming closes the plate; a case in the spec.
   d58a116a: resuming closes the plate (`togglePause`); probe `after.open` false at both sizes; the spec's case clicks
   the bar's Resume.
-- [ ] R159 **R77-N2: R156's track rows told wrongly.** "{nation} occupies" goes before notes that are already sentences
+- [x] R159 **R77-N2: R156's track rows told wrongly.** "{nation} occupies" goes before notes that are already sentences
   ("Kerch retaken", "The line of 1941-12-01"), and occupy's `by` is not always the note's actor; still bare: "Crete",
   "Salonika", "↳ Dalmatia", "Italy's zone", "Egypt clear". AT: `npx tsx critic/scripts/c77_trackTexts.ts` lists no row
   of `critic/c77_trackTexts_odd.txt`'s kinds; the 1941 page shows no "The line of 1941-…"; a unit test runs every
   timeline note through `trackText`.
+  COMMIT: only a note that is a bare place (every word a capital's but "and"/"of", no colon, not "To …") is told,
+  each kind its own way ("Dalmatia to Italy", "Romania joins the war"), "The" small inside; a note in the nation's
+  own name as it is. Five notes written: "Uranus and Little Saturn: the Red Army's advance", the four "The line of
+  1941-…" as "Barbarossa: the German front". `c77_trackTexts.ts`: none of the 41 odd rows told; `trackText.test.ts`
+  runs all 1,207 notes (a sentence kept as written; 69 told). The 1941 page: no "occupies The", no "line of 1941".
 - [ ] R160 **R77-N3: R147 brings back war openings with nothing taken.** `c77_woAB.sh`: HEAD 14 of 88 with no cell
   held at day 30 (defender ahead 20.3 %), `--lift-far` 7 of 96 (15.5 %). AT: on run 76's nine seeds HEAD is back near
   14 of 276 (under 6 %), with `c77_firstdecl.ts 60` still 0 over 6,000 km; or the trade kept by an ADR for the user.
 - [ ] R161 **R132's bar on 57901.** `bannerRank 57901 150`: 51, 33, 42. AT: three runs each under 44.
-- [ ] R162 **Small things:** a banner "Nationalist Spain ⚔ Portugal +2 +32 ☠" (the allies' count and the score side by
+- [x] R162 **Small things:** a banner "Nationalist Spain ⚔ Portugal +2 +32 ☠" (the allies' count and the score side by
   side, both with a plus). AT: a case in a spec. `slowClick` (0 of 90) stays as ADR-914; `dirHand`'s phone History act
   not judged by the critic, not filed.
+  COMMIT: a side's allies are "& 2" (its title "Portugal and 2 more"); `warToDeath1938`'s case: each allies mark
+  "& n", no banner with two plus numbers.
 
 ## Released
 

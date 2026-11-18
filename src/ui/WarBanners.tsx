@@ -51,7 +51,12 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
       <span class="war-side">
         <span class="chip-swatch" style={{ background: hex(lead?.color ?? 0x777777) }} />
         {lead ? displayName(lead.name) : '?'}
-        {ids.length > 1 ? <span class="war-allies">+{ids.length - 1}</span> : null}
+        {/* "& 2", not "+2" beside the score's "+32" (R162, critic run 77). */}
+        {ids.length > 1 ? (
+          <span class="war-allies" data-testid="war-allies" title={t('wars.sideMore', { name: lead ? displayName(lead.name) : '?', n: ids.length - 1 })}>
+            {t('wars.alliesShort', { n: ids.length - 1 })}
+          </span>
+        ) : null}
       </span>
     );
   };

@@ -140,16 +140,36 @@ export function historyText(r: HistoryRow): string {
   return s.charAt(0).toLocaleUpperCase() + s.slice(1);
 }
 
-/** The kinds of the timeline whose note may be a bare place or name (ROADMAP R156): told with what happened there. */
-const BARE_KINDS = new Set(['occupy', 'objective', 'nuke', 'allianceJoin']);
+/** The kinds of the timeline whose note may be a bare place (ROADMAP R156): told with what happened there. */
+const PLACE_KINDS = new Set(['occupy', 'objective', 'nuke', 'transfer']);
+/** The kinds whose bare note is the nation's own name ("Romania"): told as its joining (R159). */
+const JOIN_KINDS = new Set(['allianceJoin', 'join']);
+
+/**
+ * Whether a timeline note is a bare place or name (R159, critic run 77: "Kerch retaken" and "The line of 1941-12-01" were
+ * told as places): every word a capital's but "and" and "of", no colon, not a direction ("To El Alamein").
+ */
+export function bareNote(note: string): boolean {
+  if (!note || note.includes(':') || /^To /.test(note)) return false;
+  return note
+    .split(/[\s,()]+/)
+    .filter((w) => w !== '')
+    .every((w) => w === 'and' || w === 'of' || /^\p{Lu}/u.test(w));
+}
 
 /**
  * A row of the historical track: its note (ROADMAP R62j1). A note that is a bare place ("Northern Malaya", "Warsaw"; critic
- * run 76) is told by its kind and its nation (R156): one that says itself (a colon in it, or the nation named) as it is.
+ * run 76) is told by its kind and its nation (R156); a sentence, a name with a colon, or a note of another kind as it is
+ * (R159). A leading "The" goes small inside the sentence ("Japan occupies the Philippines").
  */
 export function trackText(r: Pick<HistoryRow, 'note' | 'trackKind' | 'bn' | 'kind'>): string {
   const note = r.note ?? '';
   const nation = r.bn ? displayName(r.bn) : '';
-  if (r.kind !== EventKind.TrackEvent || !r.trackKind || !BARE_KINDS.has(r.trackKind) || !note || note.includes(':') || (nation && note.includes(nation)) || (!nation && r.trackKind !== 'allianceJoin')) return t('history.TrackEvent', { note });
-  return t(`history.track.${r.trackKind}` as MessageKey, { nation, note });
+  const kind = r.trackKind ?? '';
+  const plain = (): string => t('history.TrackEvent', { note });
+  if (r.kind !== EventKind.TrackEvent || !nation || !bareNote(note)) return plain();
+  if (JOIN_KINDS.has(kind)) return note === nation ? t(`history.track.${kind}` as MessageKey, { nation }) : plain();
+  // A note that is the nation's own name, or part of it ("French Indochina occupies Indochina"), as it is.
+  if (!PLACE_KINDS.has(kind) || nation.includes(note)) return plain();
+  return t(`history.track.${kind}` as MessageKey, { nation, note: note.replace(/^The /, 'the ') });
 }

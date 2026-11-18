@@ -27,6 +27,10 @@ test('a war banner says which side fights to the death and why the war goes on (
   const poland = await titleOf('Poland');
   expect(poland).not.toContain('to the death');
   await expect(page.locator('[data-testid="war-banner"][data-death="1"]')).toHaveCount(2);
+  // R162 (critic run 77: "Portugal +2 +32 ☠"): a side's allies are "& n", not a second number with a plus by the score.
+  await expect(page.getByTestId('war-allies').first()).toBeVisible({ timeout: 20_000 });
+  for (const a of await page.getByTestId('war-allies').allInnerTexts()) expect(a).toMatch(/^& \d+$/);
+  for (const b of await page.getByTestId('war-banner').allInnerTexts()) expect(b.replace(/\s+/g, ' ')).not.toMatch(/\+\d+ ?\+\d+/);
 
   // R156 (critic run 76): on a phone there is no hover. The two are marked on their banners; opened, each says it in words.
   await page.setViewportSize({ width: 390, height: 844 });

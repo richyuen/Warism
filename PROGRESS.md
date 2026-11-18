@@ -231,3 +231,10 @@
 
 - A month's owner dead now is named in the tooltip (from the stats' dead list); a click on it picks nothing. Resuming
   closes the plate. The critic's probe green at both sizes; a case in `timeLapse1938.spec.ts`, red without the fix.
+
+## 2026-11-18 — R159, R162: track rows judged on the timeline's notes; a banner's allies
+
+- Only a bare place is told ("Japan occupies Northern Malaya", "Dalmatia to Italy"); a sentence is kept as written. A
+  unit test runs every note of the timeline; five notes written ("Barbarossa: the German front" for "The line of
+  1941-…"). None of the critic's 41 odd rows told.
+- A banner's allies read "& 2", not "+2" beside the score's "+32".

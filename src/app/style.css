@@ -784,6 +784,7 @@ textarea,
   gap: 0.2rem;
 }
 .war-allies {
+  margin-left: 0.25rem;
   opacity: 0.7;
 }
 .war-swords {
