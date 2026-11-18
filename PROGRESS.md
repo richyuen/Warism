@@ -35,3 +35,13 @@
   not looked at first 16.4 % both ways; the attacker with no man near 14.9 % (bar 15 %). One war removed, not a cause.
 - Next: a table of causes over the 55 (the attacker's wars at the declaration, its plans, days to the first order,
   aboard and ashore, landings thrown back), before any rule.
+- Corrected: of the 55, 52 are between leaders with no land border; GER-LAT 58219, POL-#104 58221 and SAU-YEM 61007
+  have one (1, 6 and 33 cells).
+- The cause table (`.cache/r139/causes.ts`, ten seeds): of the 52, 47 attackers were in another war as they declared;
+  28 had landing turns "noArmy", 10 "noTransports", 4 "noTarget". Two kinds of "noArmy": no free army (Japan at war
+  with China, Germany with Poland and Norway) and transports stranded (Italy's one group at Mogadishu, on the land of
+  its 267,000 standing men in Italy, none of whom can march there; `sailToMost` sails only for another land).
+  A bar on wars across the sea in a war would cost: 104 such wars ran a month, 53 held land by day 30.
+- Japan on Siam, 58211, hour by hour (`.cache/r139/japan2.ts`): its landing turn runs on the day of the declaration
+  (the table's tracer missed it) and sends formation 374 to Shanghai's port from 64 cells off; at about 1.5 cells a
+  day it is still marching on day 21, and the turns after find no one else ("noArmy").
